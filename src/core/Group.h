@@ -18,19 +18,62 @@
 #ifndef KEEPASSX_GROUP_H
 #define KEEPASSX_GROUP_H
 
+#include <QtGui/QImage>
+
 #include "Entry.h"
+#include "TimeInfo.h"
 #include "Uuid.h"
 
-class Group {
+class Database;
+
+class Group : public QObject
+{
+    Q_OBJECT
+
+public:
+    Group();
+    Uuid uuid() const;
+    QString name() const;
+    QString notes() const;
+    QImage icon() const;
+    TimeInfo timeInfo() const;
+    bool isExpanded() const;
+    QString defaultAutoTypeSequence() const;
+    Entry* lastTopVisibleEntry() const;
+
+    void setUuid(const Uuid& uuid);
+    void setName(const QString& name);
+    void setNotes(const QString& notes);
+    void setIcon(int iconNumber);
+    void setIcon(const Uuid& uuid);
+    void setTimeInfo(const TimeInfo& timeInfo);
+    void setExpanded(bool expanded);
+    void setDefaultAutoTypeSequence(const QString& sequence);
+    void setLastTopVisibleEntry(Entry* entry);
+
+    void setParent(Group* parent);
+    void setParent(Database* db);
+
+    QList<Group*> children() const;
+    QList<Entry*> entries() const;
+    void addEntry(Entry* entry);
+    void removeEntry(Entry* entry);
+
 private:
+    Database* m_db;
     Uuid m_uuid;
     QString m_name;
     QString m_notes;
-    int m_icon;
+    int m_iconNumber;
     Uuid m_customIcon;
+    TimeInfo m_timeInfo;
     bool m_isExpanded;
+    QString m_defaultAutoTypeSequence;
+    Entry* m_lastTopVisibleEntry;
+    QList<Group*> m_children;
+    QList<Entry*> m_entries;
 
-    QList<Entry> m_children;
+    Group* m_parent;
 };
 
 #endif // KEEPASSX_GROUP_H

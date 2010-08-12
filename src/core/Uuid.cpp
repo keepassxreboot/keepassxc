@@ -17,11 +17,13 @@
 
 #include "Uuid.h"
 
-Uuid::Uuid() : m_data(16, 0)
+const int Uuid::length = 16;
+
+Uuid::Uuid() : m_data(length, 0)
 {
 }
 
-Uuid::Uuid(bool generate) : m_data(16, 0)
+Uuid::Uuid(bool generate) : m_data(length, 0)
 {
     if (generate) {
         while (isNull()) {

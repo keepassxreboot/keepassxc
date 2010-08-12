@@ -18,10 +18,37 @@
 #ifndef KEEPASSX_DBTIMEINFO_H
 #define KEEPASSX_DBTIMEINFO_H
 
+#include <QtCore/QDateTime>
+
 class TimeInfo
 {
 public:
     TimeInfo();
+
+    QDateTime lastModificationTime() const;
+    QDateTime creationTime() const;
+    QDateTime lastAccessTime() const;
+    QDateTime expiryTime() const;
+    bool expires() const;
+    int usageCount() const;
+    QDateTime locationChanged() const;
+
+    void setLastModificationTime(const QDateTime& dateTime);
+    void setCreationTime(const QDateTime& dateTime);
+    void setLastAccessTime(const QDateTime& dateTime);
+    void setExpiryTime(const QDateTime& dateTime);
+    void setExpires(bool expires);
+    void setUsageCount(int count);
+    void setLocationChanged(const QDateTime& dateTime);
+
+private:
+    QDateTime m_lastModificationTime;
+    QDateTime m_creationTime;
+    QDateTime m_lastAccessTime;
+    QDateTime m_expiryTime;
+    bool m_expires;
+    int m_usageCount;
+    QDateTime m_locationChanged;
 };
 
 #endif // KEEPASSX_DBTIMEINFO_H

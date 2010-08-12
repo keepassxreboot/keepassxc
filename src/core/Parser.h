@@ -20,10 +20,14 @@
 
 #include <QtCore/QDateTime>
 #include <QtCore/QXmlStreamReader>
+#include <QtGui/QColor>
 
 #include "Uuid.h"
 
 class Database;
+class Entry;
+class Group;
+class Metadata;
 
 class Parser : public QObject
 {
@@ -41,24 +45,33 @@ private:
     void parseIcon();
     void parseCustomData();
     void parseRoot();
-    void parseGroup();
-    void parseEntry();
-    void parseEntryString();
-    void parseEntryBinary();
-    void parseAutoType();
-    void parseAutoTypeAssoc();
+    Group* parseGroup();
+    Entry* parseEntry();
+    void parseEntryString(Entry* entry);
+    void parseEntryBinary(Entry* entry);
+    void parseAutoType(Entry* entry);
+    void parseAutoTypeAssoc(Entry* entry);
     void parseEntryHistory();
-    void parseTimes();
+    TimeInfo parseTimes();
 
     QString readString();
     bool readBool();
     QDateTime readDateTime();
-    int readInt();
+    QColor readColor();
+    int readNumber();
     Uuid readUuid();
     QByteArray readBinary();
 
+    Group* getGroup(const Uuid& uuid);
+    Entry* getEntry(const Uuid& uuid);
+    void raiseError();
+
     QXmlStreamReader m_xml;
     Database* m_db;
+    Metadata* m_meta;
+    Group* m_tmpParent;
+    QList<Group*> m_groups;
+    QList<Entry*> m_entries;
 };
 
 #endif // KEEPASSX_PARSER_H

@@ -27,20 +27,30 @@
 
 class Metadata;
 
-class Database
+class Database : public QObject
 {
+    Q_OBJECT
+
 public:
     Database(const QString& filename);
     Group* rootGroup();
+    void setRootGroup(Group* group);
+    Metadata* metadata();
+    static QImage icon(int number);
+    QImage customIcon(const Uuid& uuid);
+    Entry* resolveEntry(const Uuid& uuid);
+    Group* resolveGroup(const Uuid& uuid);
 
 private:
     void open();
+    Entry* recFindEntry(const Uuid& uuid, Group* group);
+    Group* recFindGroup(const Uuid& uuid, Group* group);
 
     QString m_filename;
     Metadata* m_metadata;
     Group* m_rootGroup;
-    QHash<Uuid, QImage> customImages;
-    DbAttribute unhandledAttirbute;
+    QHash<Uuid, QImage> m_customIcons;
+    DbAttribute m_unhandledAttirbute;
 };
 
 #endif // KEEPASSX_DATABASE_H

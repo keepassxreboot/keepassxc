@@ -32,6 +32,7 @@ public:
     bool isNull() const;
     bool operator==(const Uuid& other) const;
     bool operator!=(const Uuid& other) const;
+    static const int length;
 
 private:
     QByteArray m_data;

@@ -18,21 +18,73 @@
 #ifndef KEEPASSX_ENTRY_H
 #define KEEPASSX_ENTRY_H
 
+#include <QtCore/QHash>
+#include <QtCore/QUrl>
+#include <QtGui/QColor>
+#include <QtGui/QImage>
+
+#include "TimeInfo.h"
 #include "Uuid.h"
 
-#include <QtCore/QHash>
+class Group;
 
-class Entry
+struct AutoTypeAssociation
 {
+    QString window;
+    QString sequence;
+};
+
+class Entry : public QObject
+{
+    Q_OBJECT
+
 public:
     Entry();
+    Uuid uuid() const;
+    QImage icon() const;
+    QColor foregroundColor() const;
+    QColor backgroundColor() const;
+    QString overrideUrl() const;
+    TimeInfo timeInfo() const;
+    bool autoTypeEnabled() const;
+    int autoTypeObfuscation() const;
+    QString defaultAutoTypeSequence() const;
+    const QList<AutoTypeAssociation>& autoTypeAssociations() const;
+    const QHash<QString, QString>& attributes() const;
+    const QHash<QString, QByteArray>& attachments() const;
+
+    void setUuid(const Uuid& uuid);
+    void setIcon(int iconNumber);
+    void setIcon(const Uuid& uuid);
+    void setForegroundColor(const QColor& color);
+    void setBackgroundColor(const QColor& color);
+    void setOverrideUrl(const QString& url);
+    void setTimeInfo(const TimeInfo& timeInfo);
+    void setAutoTypeEnabled(bool enable);
+    void setAutoTypeObfuscation(int obfuscation);
+    void setDefaultAutoTypeSequence(const QString& sequence);
+    void addAutoTypeAssociation(const AutoTypeAssociation& assoc);
+    void addAttribute(const QString& key, const QString& value);
+    void addAttachment(const QString& key, const QByteArray& value);
+
+    void setGroup(Group* group);
 
 private:
     Uuid m_uuid;
-    int m_icon;
+    int m_iconNumber;
     Uuid m_customIcon;
+    QColor m_foregroundColor;
+    QColor m_backgroundColor;
+    QString m_overrideUrl;
+    TimeInfo m_timeInfo;
+    bool m_autoTypeEnabled;
+    int m_autoTypeObfuscation;
+    QString m_defaultAutoTypeSequence;
+    QList<AutoTypeAssociation> m_autoTypeAssociations;
     QHash<QString, QString> m_attributes;
     QHash<QString, QByteArray> m_binaries;
+
+    Group* m_group;
 };
 
 #endif // KEEPASSX_ENTRY_H

@@ -24,112 +24,117 @@ Metadata::Metadata()
 QString Metadata::generator() const
 {
     return m_generator;
-};
+}
 
 QString Metadata::name() const
 {
     return m_name;
-};
+}
 
 QDateTime Metadata::nameChanged() const
 {
     return m_nameChanged;
-};
+}
 
 QString Metadata::description() const
 {
     return m_description;
-};
+}
 
 QDateTime Metadata::descriptionChanged() const
 {
     return m_descriptionChanged;
-};
+}
 
 QString Metadata::defaultUserName() const
 {
     return m_defaultUserName;
-};
+}
+
+QDateTime Metadata::defaultUserNameChanged() const
+{
+    return m_defaultUserNameChanged;
+}
 
 int Metadata::maintenanceHistoryDays() const
 {
     return m_maintenanceHistoryDays;
-};
+}
 
 bool Metadata::protectTitle() const
 {
     return m_protectTitle;
-};
+}
 
 bool Metadata::protectUsername() const
 {
     return m_protectUsername;
-};
+}
 
 bool Metadata::protectPassword() const
 {
     return m_protectPassword;
-};
+}
 
 bool Metadata::protectUrl() const
 {
     return m_protectUrl;
-};
+}
 
 bool Metadata::protectNotes() const
 {
     return m_protectNotes;
-};
+}
 
 bool Metadata::autoEnableVisualHiding() const
 {
     return m_autoEnableVisualHiding;
-};
+}
 
 QHash<Uuid, QImage> Metadata::customIcons() const
 {
     return m_customIcons;
-};
+}
 
 bool Metadata::recycleBinEnabled() const
 {
     return m_recycleBinEnabled;
-};
+}
 
 Uuid Metadata::recycleBinUuid() const
 {
     return m_recycleBinUuid;
-};
+}
 
 QDateTime Metadata::recycleBinChanged() const
 {
     return m_recycleBinChanged;
-};
+}
 
 Uuid Metadata::entryTemplatesGroup() const
 {
     return m_entryTemplatesGroup;
-};
+}
 
 QDateTime Metadata::entryTemplatesGroupChanged() const
 {
     return m_entryTemplatesGroupChanged;
-};
+}
 
 Uuid Metadata::lastSelectedGroup() const
 {
     return m_lastSelectedGroup;
-};
+}
 
 Uuid Metadata::lastTopVisibleGroup() const
 {
     return m_lastTopVisibleGroup;
-};
+}
 
 QHash<QString, QString> Metadata::customFields() const
 {
     return m_customFields;
-};
+}
 
 void Metadata::setGenerator(const QString& value)
 {
@@ -159,6 +164,11 @@ void Metadata::setDescriptionChanged(const QDateTime& value)
 void Metadata::setDefaultUserName(const QString& value)
 {
     m_defaultUserName = value;
+}
+
+void Metadata::setDefaultUserNameChanged(const QDateTime& value)
+{
+    m_defaultUserNameChanged = value;
 }
 
 void Metadata::setMaintenanceHistoryDays(int value)

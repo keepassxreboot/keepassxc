@@ -28,8 +28,75 @@ Database::Database(const QString& filename)
 
 }
 
+Group* Database::rootGroup()
+{
+    return m_rootGroup;
+}
+
+void Database::setRootGroup(Group* group)
+{
+    m_rootGroup = group;
+    group->setParent(this);
+}
+
+Metadata* Database::metadata()
+{
+    return m_metadata;
+}
+
 void Database::open()
 {
     Parser* parser = new Parser(this);
     parser->parse(m_filename);
+}
+
+QImage Database::icon(int number)
+{
+    // TODO implement
+    return QImage();
+}
+
+QImage Database::customIcon(const Uuid& uuid)
+{
+    return m_customIcons[uuid];
+}
+
+Entry* Database::resolveEntry(const Uuid& uuid)
+{
+    return recFindEntry(uuid, m_rootGroup);
+}
+
+Entry* Database::recFindEntry(const Uuid& uuid, Group* group)
+{
+    Q_FOREACH (Entry* entry, group->entries()) {
+        if (entry->uuid() == uuid)
+            return entry;
+    }
+
+    Q_FOREACH (Group* child, group->children()) {
+        Entry* result = recFindEntry(uuid, child);
+        if (result)
+            return result;
+    }
+
+    return 0;
+}
+
+Group* Database::resolveGroup(const Uuid& uuid)
+{
+    return recFindGroup(uuid, m_rootGroup);
+}
+
+Group* Database::recFindGroup(const Uuid& uuid, Group* group)
+{
+    if (group->uuid() == uuid)
+        return group;
+
+    Q_FOREACH (Group* child, group->children()) {
+       Group* result = recFindGroup(uuid, child);
+       if (result)
+           return result;
+    }
+
+    return 0;
 }

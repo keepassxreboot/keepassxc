@@ -20,3 +20,72 @@
 TimeInfo::TimeInfo()
 {
 }
+
+QDateTime TimeInfo::lastModificationTime() const
+{
+    return m_lastModificationTime;
+}
+
+QDateTime TimeInfo::creationTime() const
+{
+    return m_creationTime;
+}
+
+QDateTime TimeInfo::lastAccessTime() const
+{
+    return m_lastAccessTime;
+}
+
+QDateTime TimeInfo::expiryTime() const
+{
+    return m_expiryTime;
+}
+
+bool TimeInfo::expires() const
+{
+    return m_expires;
+}
+
+int TimeInfo::usageCount() const
+{
+    return m_usageCount;
+}
+QDateTime TimeInfo::locationChanged() const
+{
+    return m_locationChanged;
+}
+
+void TimeInfo::setLastModificationTime(const QDateTime& dateTime)
+{
+    m_lastModificationTime = dateTime;
+}
+
+void TimeInfo::setCreationTime(const QDateTime& dateTime)
+{
+    m_creationTime = dateTime;
+}
+
+void TimeInfo::setLastAccessTime(const QDateTime& dateTime)
+{
+    m_lastAccessTime = dateTime;
+}
+
+void TimeInfo::setExpiryTime(const QDateTime& dateTime)
+{
+    m_expiryTime = dateTime;
+}
+
+void TimeInfo::setExpires(bool expires)
+{
+    m_expires = expires;
+}
+
+void TimeInfo::setUsageCount(int count)
+{
+    m_usageCount = count;
+}
+
+void TimeInfo::setLocationChanged(const QDateTime& dateTime)
+{
+    m_locationChanged = dateTime;
+}

@@ -35,6 +35,7 @@ public:
     QString description() const;
     QDateTime descriptionChanged() const;
     QString defaultUserName() const;
+    QDateTime defaultUserNameChanged() const;
     int maintenanceHistoryDays() const;
     bool protectTitle() const;
     bool protectUsername() const;
@@ -58,6 +59,7 @@ public:
     void setDescription(const QString& value);
     void setDescriptionChanged(const QDateTime& value);
     void setDefaultUserName(const QString& value);
+    void setDefaultUserNameChanged(const QDateTime& value);
     void setMaintenanceHistoryDays(int value);
     void setProtectTitle(bool value);
     void setProtectUsername(bool value);
@@ -84,6 +86,7 @@ private:
     QString m_description;
     QDateTime m_descriptionChanged;
     QString m_defaultUserName;
+    QDateTime m_defaultUserNameChanged;
     int m_maintenanceHistoryDays;
 
     bool m_protectTitle;
