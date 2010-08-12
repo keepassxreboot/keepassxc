@@ -22,6 +22,7 @@
 #include <QtCore/QXmlStreamReader>
 #include <QtGui/QColor>
 
+#include "TimeInfo.h"
 #include "Uuid.h"
 
 class Database;

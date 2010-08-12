@@ -212,7 +212,7 @@ void Parser::parseRoot()
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Group") {
             Group* rootGroup = parseGroup();
-            if (rootgroup) {
+            if (rootGroup) {
                 rootGroup->setParent(m_db);
             }
         }
