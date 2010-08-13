@@ -19,8 +19,9 @@
 
 #include "Group.h"
 
-Entry::Entry() : m_group(0)
+Entry::Entry()
 {
+    m_group = 0;
 }
 
 Uuid Entry::uuid() const
@@ -31,6 +32,7 @@ Uuid Entry::uuid() const
 QImage Entry::icon() const
 {
     // TODO implement
+    return QImage();
 }
 
 QColor Entry::foregroundColor() const
@@ -85,6 +87,7 @@ const QHash<QString, QByteArray>& Entry::attachments() const
 
 void Entry::setUuid(const Uuid& uuid)
 {
+    Q_ASSERT(!uuid.isNull());
     m_uuid = uuid;
 }
 
@@ -153,7 +156,7 @@ void Entry::addAttachment(const QString& key, const QByteArray& value)
 void Entry::setGroup(Group* group)
 {
     if (m_group) {
-        group->removeEntry(this);
+        m_group->removeEntry(this);
     }
     group->addEntry(this);
     m_group = group;

@@ -17,8 +17,16 @@
 
 #include "Metadata.h"
 
-Metadata::Metadata()
+#include "Database.h"
+
+Metadata::Metadata(Database* parent) : QObject(parent)
 {
+    m_generator = "KeePassX";
+    m_maintenanceHistoryDays = 365;
+    m_recycleBin = 0;
+    m_entryTemplatesGroup = 0;
+    m_lastSelectedGroup = 0;
+    m_lastTopVisibleGroup = 0;
 }
 
 QString Metadata::generator() const
@@ -101,9 +109,9 @@ bool Metadata::recycleBinEnabled() const
     return m_recycleBinEnabled;
 }
 
-Uuid Metadata::recycleBinUuid() const
+const Group* Metadata::recycleBin() const
 {
-    return m_recycleBinUuid;
+    return m_recycleBin;
 }
 
 QDateTime Metadata::recycleBinChanged() const
@@ -111,7 +119,7 @@ QDateTime Metadata::recycleBinChanged() const
     return m_recycleBinChanged;
 }
 
-Uuid Metadata::entryTemplatesGroup() const
+const Group* Metadata::entryTemplatesGroup() const
 {
     return m_entryTemplatesGroup;
 }
@@ -121,12 +129,12 @@ QDateTime Metadata::entryTemplatesGroupChanged() const
     return m_entryTemplatesGroupChanged;
 }
 
-Uuid Metadata::lastSelectedGroup() const
+const Group* Metadata::lastSelectedGroup() const
 {
     return m_lastSelectedGroup;
 }
 
-Uuid Metadata::lastTopVisibleGroup() const
+const Group* Metadata::lastTopVisibleGroup() const
 {
     return m_lastTopVisibleGroup;
 }
@@ -208,6 +216,7 @@ void Metadata::setAutoEnableVisualHiding(bool value)
 
 void Metadata::addCustomIcon(const Uuid& uuid, const QImage& image)
 {
+    Q_ASSERT(!uuid.isNull());
     Q_ASSERT(!m_customIcons.contains(uuid));
 
     m_customIcons.insert(uuid, image);
@@ -215,6 +224,7 @@ void Metadata::addCustomIcon(const Uuid& uuid, const QImage& image)
 
 void Metadata::removeCustomIcon(const Uuid& uuid)
 {
+    Q_ASSERT(!uuid.isNull());
     Q_ASSERT(m_customIcons.contains(uuid));
 
     m_customIcons.remove(uuid);
@@ -225,9 +235,9 @@ void Metadata::setRecycleBinEnabled(bool value)
     m_recycleBinEnabled = value;
 }
 
-void Metadata::setRecycleBinUuid(const Uuid& value)
+void Metadata::setRecycleBin(Group* group)
 {
-    m_recycleBinUuid = value;
+    m_recycleBin = group;
 }
 
 void Metadata::setRecycleBinChanged(const QDateTime& value)
@@ -235,9 +245,9 @@ void Metadata::setRecycleBinChanged(const QDateTime& value)
     m_recycleBinChanged = value;
 }
 
-void Metadata::setEntryTemplatesGroup(const Uuid& value)
+void Metadata::setEntryTemplatesGroup(Group* group)
 {
-    m_entryTemplatesGroup = value;
+    m_entryTemplatesGroup = group;
 }
 
 void Metadata::setEntryTemplatesGroupChanged(const QDateTime& value)
@@ -245,14 +255,14 @@ void Metadata::setEntryTemplatesGroupChanged(const QDateTime& value)
     m_entryTemplatesGroupChanged = value;
 }
 
-void Metadata::setLastSelectedGroup(const Uuid& value)
+void Metadata::setLastSelectedGroup(Group* group)
 {
-    m_lastSelectedGroup = value;
+    m_lastSelectedGroup = group;
 }
 
-void Metadata::setLastTopVisibleGroup(const Uuid& value)
+void Metadata::setLastTopVisibleGroup(Group* group)
 {
-    m_lastTopVisibleGroup = value;
+    m_lastTopVisibleGroup = group;
 }
 
 void Metadata::addCustomField(const QString& key, const QString& value)

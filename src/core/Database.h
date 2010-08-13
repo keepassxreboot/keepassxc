@@ -32,7 +32,7 @@ class Database : public QObject
     Q_OBJECT
 
 public:
-    Database(const QString& filename);
+    Database();
     Group* rootGroup();
     void setRootGroup(Group* group);
     Metadata* metadata();
@@ -42,11 +42,9 @@ public:
     Group* resolveGroup(const Uuid& uuid);
 
 private:
-    void open();
     Entry* recFindEntry(const Uuid& uuid, Group* group);
     Group* recFindGroup(const Uuid& uuid, Group* group);
 
-    QString m_filename;
     Metadata* m_metadata;
     Group* m_rootGroup;
     QHash<Uuid, QImage> m_customIcons;

@@ -22,8 +22,10 @@
 
 #include "Database.h"
 
-Group::Group() : m_parent(0)
+Group::Group()
 {
+    m_parent = 0;
+    m_db = 0;
 }
 
 Uuid Group::uuid() const
@@ -118,23 +120,38 @@ void Group::setLastTopVisibleEntry(Entry* entry)
 
 void Group::setParent(Group* parent)
 {
+    Q_ASSERT(parent != 0);
+
     if (m_parent) {
         m_parent->m_children.removeAll(this);
     }
+    else if (m_db) {
+        m_db->setRootGroup(0);
+    }
 
+    m_parent = parent;
     m_db = parent->m_db;
     QObject::setParent(parent);
+
+    parent->m_children << this;
 }
 
 void Group::setParent(Database* db)
 {
-    if (m_db) {
+    Q_ASSERT(db != 0);
+
+    if (m_parent) {
+        m_parent->m_children.removeAll(this);
+    }
+    else if (m_db) {
         m_db->setRootGroup(0);
     }
 
     m_parent = 0;
     m_db = db;
     QObject::setParent(db);
+
+    db->setRootGroup(this);
 }
 
 QList<Group*> Group::children() const

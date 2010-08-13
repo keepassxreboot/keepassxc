@@ -13,13 +13,15 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-project(keepassx)
+project(KeePassX)
 
 cmake_minimum_required(VERSION 2.6.0)
 
-set( keepassx_VERSION "0.9.0" )
+option(WITH_TESTS "Enable building of unit tests" ON)
 
-add_Definitions(-D'KEEPASSX_VERSION="${keepassx_VERSION}"')
+set( KEEPASSX_VERSION "0.9.0" )
+
+add_definitions(-DQT_NO_KEYWORDS -Wall)
 
 if( APPLE OR MINGW )
     set( PROGNAME KeePassX )
@@ -27,10 +29,19 @@ else( APPLE OR MINGW )
     set( PROGNAME keepassx )
 endif( APPLE OR MINGW )
 
-set(QT_MIN_VERSION "4.3.0")
-set(QT_USE_QTXML TRUE)
+if( WITH_TESTS )
+    enable_testing()
+    set(QT_USE_QTTEST TRUE)
+endif( WITH_TESTS )
+
+set(QT_MIN_VERSION "4.6.0")
 set(QT_USE_QTMAIN TRUE)
 find_package(Qt4 REQUIRED)
 include(${QT_USE_FILE})
 
+find_package(Automoc4 REQUIRED)
+
 add_subdirectory(src)
+if( WITH_TESTS )
+    add_subdirectory(tests)
+endif( WITH_TESTS )

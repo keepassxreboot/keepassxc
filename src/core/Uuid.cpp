@@ -39,10 +39,9 @@ Uuid::Uuid(const QByteArray& data)
     m_data = data;
 }
 
-
-QString Uuid::toString() const
+QString Uuid::toBase64() const
 {
-    return m_data.toHex();
+    return m_data.toBase64();
 }
 
 QByteArray Uuid::toByteArray() const

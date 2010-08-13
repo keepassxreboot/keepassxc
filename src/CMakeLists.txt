@@ -13,8 +13,11 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+include_directories( ${CMAKE_CURRENT_BINARY_DIR} )
+
+configure_file( config-keepassx.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx.h )
+
 set(keepassx_SOURCES
-    main.cpp
     core/Database.cpp
     core/DbAttribute.cpp
     core/Entry.cpp
@@ -25,18 +28,7 @@ set(keepassx_SOURCES
     core/Uuid.cpp
 )
 
-set(keepassx_HEADERS
-    core/Database.h
-    core/DbAttribute.h
-    core/Entry.h
-    core/Group.h
-    core/Metadata.h
-    core/Parser.h
-    core/TimeInfo.h
-    core/Uuid.h
-)
+automoc4_add_library( keepassx_core STATIC ${keepassx_SOURCES} )
 
-qt4_wrap_cpp( keepassx_MOC ${keepassx_HEADERS} )
-
-add_executable( ${PROGNAME} WIN32 MACOSX_BUNDLE ${keepassx_SOURCES} ${keepassx_MOC} )
-target_link_libraries( ${PROGNAME} ${QT_LIBRARIES} )
+add_executable( ${PROGNAME} WIN32 MACOSX_BUNDLE main.cpp )
+target_link_libraries( ${PROGNAME} keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} )

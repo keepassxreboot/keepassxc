@@ -17,6 +17,7 @@
 
 #include "Parser.h"
 
+#include <QtCore/QDebug>
 #include <QtCore/QFile>
 
 #include "Database.h"
@@ -35,22 +36,29 @@ bool Parser::parse(const QString& filename)
     m_xml.setDevice(&file);
 
     m_tmpParent = new Group();
+    m_tmpParent->setParent(m_db);
 
     if (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "KeePassFile") {
             parseKeePassFile();
         }
-        else {
-            raiseError();
-        }
     }
 
-    if (!m_tmpParent->children().isEmpty()) {
-        delete m_tmpParent;
+    if (!m_xml.error() && !m_tmpParent->children().isEmpty()) {
         raiseError();
     }
 
+    delete m_tmpParent;
+
     return !m_xml.error();
+}
+
+QString Parser::errorMsg()
+{
+    return QString("%1\nLine %2, column %3")
+            .arg(m_xml.errorString())
+            .arg(m_xml.lineNumber())
+            .arg(m_xml.columnNumber());
 }
 
 void Parser::parseKeePassFile()
@@ -65,7 +73,7 @@ void Parser::parseKeePassFile()
             parseRoot();
         }
         else {
-            m_xml.skipCurrentElement();
+            skipCurrentElement();
         }
     }
 }
@@ -109,28 +117,28 @@ void Parser::parseMeta()
             m_meta->setRecycleBinEnabled(readBool());
         }
         else if (m_xml.name() == "RecycleBinUUID") {
-            m_meta->setRecycleBinUuid(readUuid());
+            m_meta->setRecycleBin(getGroup(readUuid()));
         }
         else if (m_xml.name() == "RecycleBinChanged") {
             m_meta->setRecycleBinChanged(readDateTime());
         }
         else if (m_xml.name() == "EntryTemplatesGroup") {
-            m_meta->setEntryTemplatesGroup(readUuid());
+            m_meta->setEntryTemplatesGroup(getGroup(readUuid()));
         }
         else if (m_xml.name() == "EntryTemplatesGroupChanged") {
             m_meta->setEntryTemplatesGroupChanged(readDateTime());
         }
         else if (m_xml.name() == "LastSelectedGroup") {
-            m_meta->setLastSelectedGroup(readUuid());
+            m_meta->setLastSelectedGroup(getGroup(readUuid()));
         }
         else if (m_xml.name() == "LastTopVisibleGroup") {
-            m_meta->setLastTopVisibleGroup(readUuid());
+            m_meta->setLastTopVisibleGroup(getGroup(readUuid()));
         }
         else if (m_xml.name() == "CustomData") {
             parseCustomData();
         }
         else {
-            m_xml.skipCurrentElement();
+            skipCurrentElement();
         }
     }
 }
@@ -159,7 +167,7 @@ void Parser::parseMemoryProtection()
             m_meta->setAutoEnableVisualHiding(readBool());
         }
         else {
-            m_xml.skipCurrentElement();
+            skipCurrentElement();
         }
     }
 }
@@ -173,7 +181,7 @@ void Parser::parseCustomIcons()
             parseIcon();
         }
         else {
-            m_xml.skipCurrentElement();
+            skipCurrentElement();
         }
     }
 }
@@ -193,7 +201,7 @@ void Parser::parseIcon()
             m_meta->addCustomIcon(uuid, image);
         }
         else {
-            m_xml.skipCurrentElement();
+            skipCurrentElement();
         }
     }
 }
@@ -202,7 +210,10 @@ void Parser::parseCustomData()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "CustomData");
 
-    // TODO
+    // TODO implement
+    while (!m_xml.error() && m_xml.readNextStartElement()) {
+        skipCurrentElement();
+    }
 }
 
 void Parser::parseRoot()
@@ -218,9 +229,10 @@ void Parser::parseRoot()
         }
         else if (m_xml.name() == "DeletedObjects") {
             // TODO implement
+            skipCurrentElement();
         }
         else {
-            m_xml.skipCurrentElement();
+            skipCurrentElement();
         }
     }
 }
@@ -237,7 +249,7 @@ Group* Parser::parseGroup()
                 raiseError();
             }
             else {
-               group = getGroup(uuid);
+                group = getGroup(uuid);
            }
         }
         else if (m_xml.name() == "Name") {
@@ -268,16 +280,14 @@ Group* Parser::parseGroup()
         }
         else if (m_xml.name() == "EnableAutoType") {
             // TODO implement
+            skipCurrentElement();
         }
         else if (m_xml.name() == "EnableSearching") {
             // TODO implement
+            skipCurrentElement();
         }
         else if (m_xml.name() == "LastTopVisibleEntry") {
-            Uuid uuid = readUuid();
-            if (uuid.isNull())
-                group->setLastTopVisibleEntry(0);
-            else
-                group->setLastTopVisibleEntry(getEntry(uuid));
+            group->setLastTopVisibleEntry(getEntry(readUuid()));
         }
         else if (m_xml.name() == "Group") {
             Group* newGroup = parseGroup();
@@ -292,7 +302,7 @@ Group* Parser::parseGroup()
             }
         }
         else {
-            m_xml.skipCurrentElement();
+            skipCurrentElement();
         }
     }
 
@@ -349,9 +359,11 @@ Entry* Parser::parseEntry()
             parseEntryHistory();
         }
         else {
-            m_xml.skipCurrentElement();
+            skipCurrentElement();
         }
     }
+
+    return entry;
 }
 
 void Parser::parseEntryString(Entry *entry)
@@ -367,7 +379,7 @@ void Parser::parseEntryString(Entry *entry)
             entry->addAttribute(key, readString());
         }
         else {
-            m_xml.skipCurrentElement();
+            skipCurrentElement();
         }
     }
 }
@@ -385,7 +397,7 @@ void Parser::parseEntryBinary(Entry *entry)
             entry->addAttachment(key, readBinary());
         }
         else {
-            m_xml.skipCurrentElement();
+            skipCurrentElement();
         }
     }
 }
@@ -408,7 +420,7 @@ void Parser::parseAutoType(Entry* entry)
             parseAutoTypeAssoc(entry);
         }
         else {
-            m_xml.skipCurrentElement();
+            skipCurrentElement();
         }
     }
 }
@@ -427,7 +439,7 @@ void Parser::parseAutoTypeAssoc(Entry *entry)
             entry->addAutoTypeAssociation(assoc);
         }
         else {
-            m_xml.skipCurrentElement();
+            skipCurrentElement();
         }
     }
 }
@@ -439,9 +451,10 @@ void Parser::parseEntryHistory()
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Entry") {
             // TODO implement
+            skipCurrentElement();
         }
         else {
-            m_xml.skipCurrentElement();
+            skipCurrentElement();
         }
     }
 }
@@ -474,7 +487,7 @@ TimeInfo Parser::parseTimes()
             timeInfo.setLocationChanged(readDateTime());
         }
         else {
-            m_xml.skipCurrentElement();
+            skipCurrentElement();
         }
     }
 
@@ -490,14 +503,15 @@ bool Parser::readBool()
 {
     QString str = readString();
 
-    if (str == "True") {
+    if (str.compare(QLatin1String("True"), Qt::CaseInsensitive) == 0) {
         return true;
     }
-    else if (str == "False") {
+    else if (str.compare(QLatin1String("False"), Qt::CaseInsensitive) == 0) {
         return false;
     }
     else {
         raiseError();
+        return false;
     }
 }
 
@@ -516,6 +530,11 @@ QDateTime Parser::readDateTime()
 QColor Parser::readColor()
 {
     QString colorStr = readString();
+
+    if (colorStr.isEmpty()) {
+        return QColor();
+    }
+
     if (colorStr.length() != 7 || colorStr[0] != '#') {
         raiseError();
         return QColor();
@@ -525,7 +544,7 @@ QColor Parser::readColor()
     for (int i=0; i<= 2; i++) {
         QString rgbPartStr = colorStr.mid(1 + 2*i, 2);
         bool ok;
-        int rgbPart = rgbPartStr.toInt(&ok);
+        int rgbPart = rgbPartStr.toInt(&ok, 16);
         if (!ok || rgbPart > 255) {
             raiseError();
             return QColor();
@@ -563,7 +582,7 @@ Uuid Parser::readUuid()
         return Uuid();
     }
     else {
-        return Uuid(readBinary());
+        return Uuid(uuidBin);
     }
 }
 
@@ -574,6 +593,10 @@ QByteArray Parser::readBinary()
 
 Group* Parser::getGroup(const Uuid& uuid)
 {
+    if (uuid.isNull()) {
+        return 0;
+    }
+
     Q_FOREACH (Group* group, m_groups) {
         if (group->uuid() == uuid) {
             return group;
@@ -589,6 +612,10 @@ Group* Parser::getGroup(const Uuid& uuid)
 
 Entry* Parser::getEntry(const Uuid& uuid)
 {
+    if (uuid.isNull()) {
+        return 0;
+    }
+
     Q_FOREACH (Entry* entry, m_entries) {
         if (entry->uuid() == uuid) {
             return entry;
@@ -605,4 +632,10 @@ Entry* Parser::getEntry(const Uuid& uuid)
 void Parser::raiseError()
 {
     m_xml.raiseError(tr("Invalid database file"));
+}
+
+void Parser::skipCurrentElement()
+{
+    qDebug() << "Parser::skipCurrentElement(): skip: " << m_xml.name();
+    m_xml.skipCurrentElement();
 }

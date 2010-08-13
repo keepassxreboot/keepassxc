@@ -20,12 +20,12 @@
 #include <QtCore/QFile>
 #include <QtCore/QXmlStreamReader>
 
+#include "Metadata.h"
 #include "Parser.h"
 
-Database::Database(const QString& filename)
+Database::Database()
 {
-    m_filename = filename;
-
+    m_metadata = new Metadata(this);
 }
 
 Group* Database::rootGroup()
@@ -35,19 +35,13 @@ Group* Database::rootGroup()
 
 void Database::setRootGroup(Group* group)
 {
+    Q_ASSERT(group == 0 || group->parent() == this);
     m_rootGroup = group;
-    group->setParent(this);
 }
 
 Metadata* Database::metadata()
 {
     return m_metadata;
-}
-
-void Database::open()
-{
-    Parser* parser = new Parser(this);
-    parser->parse(m_filename);
 }
 
 QImage Database::icon(int number)

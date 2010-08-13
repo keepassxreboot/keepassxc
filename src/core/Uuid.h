@@ -27,7 +27,7 @@ public:
     Uuid();
     Uuid(bool generate);
     Uuid(const QByteArray& data);
-    QString toString() const;
+    QString toBase64() const;
     QByteArray toByteArray() const;
     bool isNull() const;
     bool operator==(const Uuid& other) const;

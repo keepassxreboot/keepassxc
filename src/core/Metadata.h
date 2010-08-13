@@ -24,10 +24,15 @@
 #include <QtCore/QHash>
 #include <QtGui/QImage>
 
-class Metadata
+class Database;
+class Group;
+
+class Metadata : public QObject
 {
+    Q_OBJECT
+
 public:
-    Metadata();
+    Metadata(Database* parent);
 
     QString generator() const;
     QString name() const;
@@ -45,12 +50,12 @@ public:
     bool autoEnableVisualHiding() const;
     QHash<Uuid, QImage> customIcons() const;
     bool recycleBinEnabled() const;
-    Uuid recycleBinUuid() const;
+    const Group* recycleBin() const;
     QDateTime recycleBinChanged() const;
-    Uuid entryTemplatesGroup() const;
+    const Group* entryTemplatesGroup() const;
     QDateTime entryTemplatesGroupChanged() const;
-    Uuid lastSelectedGroup() const;
-    Uuid lastTopVisibleGroup() const;
+    const Group* lastSelectedGroup() const;
+    const Group* lastTopVisibleGroup() const;
     QHash<QString, QString> customFields() const;
 
     void setGenerator(const QString& value);
@@ -70,12 +75,12 @@ public:
     void addCustomIcon(const Uuid& uuid, const QImage& image);
     void removeCustomIcon(const Uuid& uuid);
     void setRecycleBinEnabled(bool value);
-    void setRecycleBinUuid(const Uuid& value);
+    void setRecycleBin(Group* group);
     void setRecycleBinChanged(const QDateTime& value);
-    void setEntryTemplatesGroup(const Uuid& value);
+    void setEntryTemplatesGroup(Group* group);
     void setEntryTemplatesGroupChanged(const QDateTime& value);
-    void setLastSelectedGroup(const Uuid& value);
-    void setLastTopVisibleGroup(const Uuid& value);
+    void setLastSelectedGroup(Group* group);
+    void setLastTopVisibleGroup(Group* group);
     void addCustomField(const QString& key, const QString& value);
     void removeCustomField(const QString& key);
 
@@ -99,12 +104,12 @@ private:
     QHash<Uuid, QImage> m_customIcons;
 
     bool m_recycleBinEnabled;
-    Uuid m_recycleBinUuid;
+    Group* m_recycleBin;
     QDateTime m_recycleBinChanged;
-    Uuid m_entryTemplatesGroup;
+    Group* m_entryTemplatesGroup;
     QDateTime m_entryTemplatesGroupChanged;
-    Uuid m_lastSelectedGroup;
-    Uuid m_lastTopVisibleGroup;
+    Group* m_lastSelectedGroup;
+    Group* m_lastTopVisibleGroup;
 
     QHash<QString, QString> m_customFields;
 };

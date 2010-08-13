@@ -37,6 +37,7 @@ class Parser : public QObject
 public:
     Parser(Database* db);
     bool parse(const QString& filename);
+    QString errorMsg();
 
 private:
     void parseKeePassFile();
@@ -66,6 +67,7 @@ private:
     Group* getGroup(const Uuid& uuid);
     Entry* getEntry(const Uuid& uuid);
     void raiseError();
+    void skipCurrentElement();
 
     QXmlStreamReader m_xml;
     Database* m_db;
