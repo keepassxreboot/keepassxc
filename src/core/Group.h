@@ -54,12 +54,15 @@ public:
     void setParent(Group* parent);
     void setParent(Database* db);
 
+    const Database* database() const;
     QList<Group*> children() const;
     QList<Entry*> entries() const;
     void addEntry(Entry* entry);
     void removeEntry(Entry* entry);
 
 private:
+    void recSetDatabase(Database* db);
+
     Database* m_db;
     Uuid m_uuid;
     QString m_name;

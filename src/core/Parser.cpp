@@ -260,8 +260,12 @@ Group* Parser::parseGroup()
         }
         else if (m_xml.name() == "IconID") {
             int iconId = readNumber();
-            if (iconId != 0)
+            if (iconId < 0) {
+                raiseError();
+            }
+            else if (iconId != 0) {
                 group->setIcon(iconId);
+            }
         }
         else if (m_xml.name() == "CustomIconUUID") {
             Uuid uuid = readUuid();
@@ -326,8 +330,12 @@ Entry* Parser::parseEntry()
         }
         else if (m_xml.name() == "IconID") {
             int iconId = readNumber();
-            if (iconId != 0)
+            if (iconId < 0) {
+                raiseError();
+            }
+            else if (iconId != 0) {
                 entry->setIcon(iconId);
+            }
         }
         else if (m_xml.name() == "CustomIconUUID") {
             Uuid uuid = readUuid();

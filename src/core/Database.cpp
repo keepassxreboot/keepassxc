@@ -50,7 +50,7 @@ QImage Database::icon(int number)
     return QImage();
 }
 
-QImage Database::customIcon(const Uuid& uuid)
+QImage Database::customIcon(const Uuid& uuid) const
 {
     return m_customIcons[uuid];
 }

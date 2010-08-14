@@ -26,6 +26,7 @@
 #include "TimeInfo.h"
 #include "Uuid.h"
 
+class Database;
 class Group;
 
 struct AutoTypeAssociation
@@ -85,6 +86,7 @@ private:
     QHash<QString, QByteArray> m_binaries;
 
     Group* m_group;
+    const Database* m_db;
 };
 
 #endif // KEEPASSX_ENTRY_H

@@ -88,12 +88,16 @@ void Group::setNotes(const QString& notes)
 
 void Group::setIcon(int iconNumber)
 {
+    Q_ASSERT(iconNumber >= 0);
+
     m_iconNumber = iconNumber;
     m_customIcon = Uuid();
 }
 
 void Group::setIcon(const Uuid& uuid)
 {
+    Q_ASSERT(!uuid.isNull());
+
     m_iconNumber = 0;
     m_customIcon = uuid;
 }
@@ -130,7 +134,11 @@ void Group::setParent(Group* parent)
     }
 
     m_parent = parent;
-    m_db = parent->m_db;
+
+    if (m_db != parent->m_db) {
+        recSetDatabase(parent->m_db);
+    }
+
     QObject::setParent(parent);
 
     parent->m_children << this;
@@ -148,10 +156,16 @@ void Group::setParent(Database* db)
     }
 
     m_parent = 0;
-    m_db = db;
+    recSetDatabase(db);
+
     QObject::setParent(db);
 
     db->setRootGroup(this);
+}
+
+const Database* Group::database() const
+{
+    return m_db;
 }
 
 QList<Group*> Group::children() const
@@ -166,10 +180,21 @@ QList<Entry*> Group::entries() const
 
 void Group::addEntry(Entry *entry)
 {
+    Q_ASSERT(entry != 0);
+
     m_entries << entry;
 }
 
 void Group::removeEntry(Entry* entry)
 {
     m_entries.removeAll(entry);
+}
+
+void Group::recSetDatabase(Database* db)
+{
+    m_db = db;
+
+    Q_FOREACH (Group* group, m_children) {
+        group->recSetDatabase(db);
+    }
 }

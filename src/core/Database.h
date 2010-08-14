@@ -37,7 +37,7 @@ public:
     void setRootGroup(Group* group);
     Metadata* metadata();
     static QImage icon(int number);
-    QImage customIcon(const Uuid& uuid);
+    QImage customIcon(const Uuid& uuid) const;
     Entry* resolveEntry(const Uuid& uuid);
     Group* resolveGroup(const Uuid& uuid);
 

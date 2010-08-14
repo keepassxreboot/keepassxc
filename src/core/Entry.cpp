@@ -17,11 +17,13 @@
 
 #include "Entry.h"
 
+#include "Database.h"
 #include "Group.h"
 
 Entry::Entry()
 {
     m_group = 0;
+    m_db = 0;
 }
 
 Uuid Entry::uuid() const
@@ -31,8 +33,12 @@ Uuid Entry::uuid() const
 
 QImage Entry::icon() const
 {
-    // TODO implement
-    return QImage();
+    Q_ASSERT(m_iconNumber != 0 || !m_customIcon.isNull());
+
+    if (m_iconNumber == 0)
+        return m_db->customIcon(m_customIcon);
+    else
+        return Database::icon(m_iconNumber);
 }
 
 QColor Entry::foregroundColor() const
@@ -88,17 +94,22 @@ const QHash<QString, QByteArray>& Entry::attachments() const
 void Entry::setUuid(const Uuid& uuid)
 {
     Q_ASSERT(!uuid.isNull());
+
     m_uuid = uuid;
 }
 
 void Entry::setIcon(int iconNumber)
 {
+    Q_ASSERT(iconNumber >= 0);
+
     m_iconNumber = iconNumber;
     m_customIcon = Uuid();
 }
 
 void Entry::setIcon(const Uuid& uuid)
 {
+    Q_ASSERT(!uuid.isNull());
+
     m_iconNumber = 0;
     m_customIcon = uuid;
 }
@@ -160,5 +171,6 @@ void Entry::setGroup(Group* group)
     }
     group->addEntry(this);
     m_group = group;
+    m_db = group->database();
     QObject::setParent(group);
 }
