@@ -25,8 +25,8 @@ class Uuid
 {
 public:
     Uuid();
-    explicit Uuid(bool generate);
     explicit Uuid(const QByteArray& data);
+    static Uuid random();
     QString toBase64() const;
     QByteArray toByteArray() const;
     bool isNull() const;

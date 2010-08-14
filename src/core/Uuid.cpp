@@ -25,20 +25,17 @@ Uuid::Uuid() : m_data(length, 0)
 {
 }
 
-Uuid::Uuid(bool generate) : m_data(length, 0)
-{
-    if (generate) {
-        while (isNull()) {
-            // TODO
-        }
-    }
-}
-
 Uuid::Uuid(const QByteArray& data)
 {
     Q_ASSERT(data.size() == 16);
 
     m_data = data;
+}
+
+Uuid Uuid::random() {
+    QByteArray randomAray;
+    // TODO fill with random data
+    return Uuid(randomAray);
 }
 
 QString Uuid::toBase64() const

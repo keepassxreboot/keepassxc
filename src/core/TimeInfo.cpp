@@ -19,6 +19,7 @@
 
 TimeInfo::TimeInfo()
 {
+    m_expires = false;
 }
 
 QDateTime TimeInfo::lastModificationTime() const
