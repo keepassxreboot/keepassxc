@@ -31,7 +31,6 @@ void TestGroup::testParenting()
 {
     Database* db = new Database();
     Group* tmpRoot = new Group();
-    tmpRoot->setParent(db);
 
     Group* g1 = new Group();
     Group* g2 = new Group();
@@ -51,6 +50,11 @@ void TestGroup::testParenting()
     QVERIFY(g2->parent() == g1);
     QVERIFY(g3->parent() == g1);
     QVERIFY(g4->parent() == g3);
+
+    QVERIFY(g1->database() == db);
+    QVERIFY(g2->database() == db);
+    QVERIFY(g3->database() == db);
+    QVERIFY(g4->database() == db);
 
     QVERIFY(tmpRoot->children().size() == 0);
     QVERIFY(g1->children().size() == 2);

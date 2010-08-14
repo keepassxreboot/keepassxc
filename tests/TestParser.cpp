@@ -76,15 +76,29 @@ void TestParser::testMetadata()
     QCOMPARE(m_db->metadata()->entryTemplatesGroupChanged(), genDT(2010, 8, 8, 17, 24, 19));
     QVERIFY(m_db->metadata()->lastSelectedGroup() != 0);
     QCOMPARE(m_db->metadata()->lastSelectedGroup()->name(), QLatin1String("NewDatabase"));
-    QVERIFY(m_db->metadata()->lastTopVisibleGroup() != 0);
-    QCOMPARE(m_db->metadata()->lastTopVisibleGroup()->name(), QLatin1String("NewDatabase"));
+    QVERIFY(m_db->metadata()->lastTopVisibleGroup() == m_db->metadata()->lastSelectedGroup());
 }
 
 void TestParser::testGroups()
 {
+    QVERIFY(m_db->rootGroup() != 0);
     QVERIFY(m_db->rootGroup()->name() == QLatin1String("NewDatabase"));
     QVERIFY(m_db->rootGroup()->uuid().toBase64() == QLatin1String("zKuE27EWr0mlU75b2SRkTQ=="));
     QVERIFY(m_db->rootGroup()->isExpanded() == true);
+    TimeInfo ti = m_db->rootGroup()->timeInfo();
+    QVERIFY(ti.lastModificationTime() == genDT(2010, 8, 8, 17, 24, 27));
+    QVERIFY(ti.creationTime() == genDT(2010, 8, 7, 17, 24, 27));
+    QVERIFY(ti.lastAccessTime() == genDT(2010, 8, 9, 9, 9, 44));
+    QVERIFY(ti.expiryTime() == genDT(2010, 8, 8, 17, 24, 17));
+    QVERIFY(ti.expires() == false);
+    QVERIFY(ti.usageCount() == 2);
+    QVERIFY(ti.locationChanged() == genDT(2010, 8, 8, 17, 24, 27));
+
+    QVERIFY(m_db->rootGroup()->children().size() == 3);
+    QVERIFY(m_db->rootGroup()->children().at(0)->uuid().toBase64() == "abLbFtNUfEi5TmbaxiW6yg==");
+    QVERIFY(m_db->rootGroup()->children().at(1)->uuid().toBase64() == "u1lTRAICOkWv5QSl2xyU8w==");
+    QVERIFY(m_db->rootGroup()->children().at(2)->uuid().toBase64() == "7PAwxNhPaE2klutz45i2xg==");
+    QVERIFY(m_db->metadata()->recycleBin() == m_db->rootGroup()->children().at(2));
 }
 
 QTEST_MAIN(TestParser);

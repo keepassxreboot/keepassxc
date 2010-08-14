@@ -34,7 +34,7 @@
 			<IconID>49</IconID>
 			<Times>
 				<LastModificationTime>2010-08-08T17:24:27Z</LastModificationTime>
-				<CreationTime>2010-08-08T17:24:27Z</CreationTime>
+				<CreationTime>2010-08-07T17:24:27Z</CreationTime>
 				<LastAccessTime>2010-08-09T09:09:44Z</LastAccessTime>
 				<ExpiryTime>2010-08-08T17:24:17Z</ExpiryTime>
 				<Expires>False</Expires>
@@ -125,86 +125,6 @@
 				<Name>Windows</Name>
 				<Notes />
 				<IconID>38</IconID>
-				<Times>
-					<LastModificationTime>2010-08-08T17:24:53Z</LastModificationTime>
-					<CreationTime>2010-08-08T17:24:53Z</CreationTime>
-					<LastAccessTime>2010-08-08T17:24:53Z</LastAccessTime>
-					<ExpiryTime>2010-08-08T17:24:17Z</ExpiryTime>
-					<Expires>False</Expires>
-					<UsageCount>0</UsageCount>
-					<LocationChanged>2010-08-08T17:24:53Z</LocationChanged>
-				</Times>
-				<IsExpanded>True</IsExpanded>
-				<DefaultAutoTypeSequence />
-				<EnableAutoType>null</EnableAutoType>
-				<EnableSearching>null</EnableSearching>
-				<LastTopVisibleEntry>AAAAAAAAAAAAAAAAAAAAAA==</LastTopVisibleEntry>
-			</Group>
-			<Group>
-				<UUID>bFe1/LfewEuvlTsT8nJRRg==</UUID>
-				<Name>Network</Name>
-				<Notes />
-				<IconID>3</IconID>
-				<Times>
-					<LastModificationTime>2010-08-08T17:24:53Z</LastModificationTime>
-					<CreationTime>2010-08-08T17:24:53Z</CreationTime>
-					<LastAccessTime>2010-08-08T17:24:53Z</LastAccessTime>
-					<ExpiryTime>2010-08-08T17:24:17Z</ExpiryTime>
-					<Expires>False</Expires>
-					<UsageCount>0</UsageCount>
-					<LocationChanged>2010-08-08T17:24:53Z</LocationChanged>
-				</Times>
-				<IsExpanded>True</IsExpanded>
-				<DefaultAutoTypeSequence />
-				<EnableAutoType>null</EnableAutoType>
-				<EnableSearching>null</EnableSearching>
-				<LastTopVisibleEntry>AAAAAAAAAAAAAAAAAAAAAA==</LastTopVisibleEntry>
-			</Group>
-			<Group>
-				<UUID>wHmj/+6vTkOpG/eeVp3yjg==</UUID>
-				<Name>Internet</Name>
-				<Notes />
-				<IconID>1</IconID>
-				<Times>
-					<LastModificationTime>2010-08-08T17:24:53Z</LastModificationTime>
-					<CreationTime>2010-08-08T17:24:53Z</CreationTime>
-					<LastAccessTime>2010-08-08T17:24:53Z</LastAccessTime>
-					<ExpiryTime>2010-08-08T17:24:17Z</ExpiryTime>
-					<Expires>False</Expires>
-					<UsageCount>0</UsageCount>
-					<LocationChanged>2010-08-08T17:24:53Z</LocationChanged>
-				</Times>
-				<IsExpanded>True</IsExpanded>
-				<DefaultAutoTypeSequence />
-				<EnableAutoType>null</EnableAutoType>
-				<EnableSearching>null</EnableSearching>
-				<LastTopVisibleEntry>AAAAAAAAAAAAAAAAAAAAAA==</LastTopVisibleEntry>
-			</Group>
-			<Group>
-				<UUID>9QLqqFgc5EC7ptm2TI1hDA==</UUID>
-				<Name>eMail</Name>
-				<Notes />
-				<IconID>19</IconID>
-				<Times>
-					<LastModificationTime>2010-08-08T17:24:53Z</LastModificationTime>
-					<CreationTime>2010-08-08T17:24:53Z</CreationTime>
-					<LastAccessTime>2010-08-08T17:24:53Z</LastAccessTime>
-					<ExpiryTime>2010-08-08T17:24:17Z</ExpiryTime>
-					<Expires>False</Expires>
-					<UsageCount>0</UsageCount>
-					<LocationChanged>2010-08-08T17:24:53Z</LocationChanged>
-				</Times>
-				<IsExpanded>True</IsExpanded>
-				<DefaultAutoTypeSequence />
-				<EnableAutoType>null</EnableAutoType>
-				<EnableSearching>null</EnableSearching>
-				<LastTopVisibleEntry>AAAAAAAAAAAAAAAAAAAAAA==</LastTopVisibleEntry>
-			</Group>
-			<Group>
-				<UUID>wQru0ArOaEOy0uUio3subA==</UUID>
-				<Name>Homebanking</Name>
-				<Notes />
-				<IconID>37</IconID>
 				<Times>
 					<LastModificationTime>2010-08-08T17:24:53Z</LastModificationTime>
 					<CreationTime>2010-08-08T17:24:53Z</CreationTime>
