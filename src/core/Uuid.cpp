@@ -17,6 +17,8 @@
 
 #include "Uuid.h"
 
+#include <QtCore/QHash>
+
 const int Uuid::length = 16;
 
 Uuid::Uuid() : m_data(length, 0)

@@ -35,7 +35,7 @@ class Parser : public QObject
     Q_OBJECT
 
 public:
-    Parser(Database* db);
+    explicit Parser(Database* db);
     bool parse(const QString& filename);
     QString errorMsg();
 

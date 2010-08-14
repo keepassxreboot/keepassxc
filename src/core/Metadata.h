@@ -32,7 +32,7 @@ class Metadata : public QObject
     Q_OBJECT
 
 public:
-    Metadata(Database* parent);
+    explicit Metadata(Database* parent);
 
     QString generator() const;
     QString name() const;
