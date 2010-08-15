@@ -20,6 +20,7 @@
 
 #include <QtCore/QAbstractItemModel>
 
+class Database;
 class Group;
 
 class GroupModel : public QAbstractItemModel
@@ -27,8 +28,7 @@ class GroupModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    explicit GroupModel(const Group* rootGroup, QObject* parent = 0);
-    void setRootGroup(const Group* group);
+    explicit GroupModel(const Database* db, QObject* parent = 0);
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const;
     int columnCount(const QModelIndex& parent = QModelIndex()) const;
@@ -41,6 +41,10 @@ private:
     QModelIndex createIndex(int row, int column, const Group* group) const;
     const Group* groupFromIndex(const QModelIndex& index) const;
 
+private Q_SLOTS:
+    void groupChanged(const Group* group);
+
+private:
     const Group* m_root;
 };
 

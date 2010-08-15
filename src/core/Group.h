@@ -56,12 +56,15 @@ public:
     void setParent(Database* db);
 
     const Database* database() const;
-    QList<const Group*> children() const;
     QList<Group*> children();
-    QList<const Entry*> entries() const;
+    QList<const Group*> children() const;
     QList<Entry*> entries();
+    QList<const Entry*> entries() const;
     void addEntry(Entry* entry);
     void removeEntry(Entry* entry);
+
+Q_SIGNALS:
+    void groupChanged(const Group* group);
 
 private:
     void recSetDatabase(Database* db);

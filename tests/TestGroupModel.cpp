@@ -15,9 +15,11 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QtTest/QSignalSpy>
 #include <QtTest/QTest>
 
 #include "modeltest.h"
+#include "core/Database.h"
 #include "core/Group.h"
 #include "gui/GroupModel.h"
 
@@ -31,7 +33,10 @@ private Q_SLOTS:
 
 void TestGroupModel::test()
 {
+    Database* db = new Database();
+
     Group* groupRoot = new Group();
+    groupRoot->setParent(db);
     groupRoot->setName("groupRoot");
 
     Group* group1 = new Group();
@@ -54,7 +59,7 @@ void TestGroupModel::test()
     group2->setName("group2");
     group2->setParent(groupRoot);
 
-    GroupModel* model = new GroupModel(groupRoot, this);
+    GroupModel* model = new GroupModel(db, this);
 
     new ModelTest(model, this);
 
@@ -72,7 +77,13 @@ void TestGroupModel::test()
     QVERIFY(model->data(index121) == "group121");
     QVERIFY(model->data(index2) == "group2");
 
+    QSignalSpy spy(model, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)));
+    group11->setName("test");
+    group121->setIcon(4);
+    QVERIFY(spy.count() == 2);
+
     delete groupRoot;
+    delete db;
 }
 
 QTEST_MAIN(TestGroupModel);

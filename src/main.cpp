@@ -32,7 +32,7 @@ int main(int argc, char **argv)
     Parser* parser = new Parser(db);
     parser->parse(QString(KEEPASSX_TEST_DIR).append("/NewDatabase.xml"));
 
-    GroupModel groupModel(db->rootGroup());
+    GroupModel groupModel(db);
 
     QTreeView view;
     view.setModel(&groupModel);

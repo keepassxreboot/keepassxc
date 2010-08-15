@@ -35,6 +35,7 @@ Uuid::Uuid(const QByteArray& data)
 Uuid Uuid::random() {
     QByteArray randomAray;
     // TODO fill with random data
+    randomAray.fill(1, 16);
     return Uuid(randomAray);
 }
 

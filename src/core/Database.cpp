@@ -33,6 +33,11 @@ Group* Database::rootGroup()
     return m_rootGroup;
 }
 
+const Group* Database::rootGroup() const
+{
+    return m_rootGroup;
+}
+
 void Database::setRootGroup(Group* group)
 {
     Q_ASSERT(group == 0 || group->database() == this);

@@ -15,6 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QtTest/QSignalSpy>
 #include <QtTest/QTest>
 
 #include "core/Database.h"
@@ -65,6 +66,15 @@ void TestGroup::testParenting()
     QVERIFY(g1->children().at(0) == g2);
     QVERIFY(g1->children().at(1) == g3);
     QVERIFY(g3->children().contains(g4));
+
+    QSignalSpy spy(db, SIGNAL(groupChanged(const Group*)));
+    g2->setName("test");
+    g4->setName("test");
+    g3->setName("test");
+    g1->setName("test");
+    g3->setIcon(Uuid::random());
+    g1->setIcon(2);
+    QVERIFY(spy.count() == 6);
 }
 
 QTEST_MAIN(TestGroup);

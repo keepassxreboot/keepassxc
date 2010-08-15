@@ -79,6 +79,8 @@ void Group::setUuid(const Uuid& uuid)
 void Group::setName(const QString& name)
 {
     m_name = name;
+
+    Q_EMIT groupChanged(this);
 }
 
 void Group::setNotes(const QString& notes)
@@ -92,6 +94,8 @@ void Group::setIcon(int iconNumber)
 
     m_iconNumber = iconNumber;
     m_customIcon = Uuid();
+
+    Q_EMIT groupChanged(this);
 }
 
 void Group::setIcon(const Uuid& uuid)
@@ -100,6 +104,8 @@ void Group::setIcon(const Uuid& uuid)
 
     m_iconNumber = 0;
     m_customIcon = uuid;
+
+    Q_EMIT groupChanged(this);
 }
 
 void Group::setTimeInfo(const TimeInfo& timeInfo)
@@ -135,6 +141,7 @@ void Group::setParent(Group* parent)
         m_parent->m_children.removeAll(this);
     }
     else if (m_db) {
+        // parent was a Database
         m_db->setRootGroup(0);
     }
 
@@ -173,6 +180,11 @@ const Database* Group::database() const
     return m_db;
 }
 
+QList<Group*> Group::children()
+{
+    return m_children;
+}
+
 QList<const Group*> Group::children() const
 {
     QList<const Group*> constChildren;
@@ -183,9 +195,9 @@ QList<const Group*> Group::children() const
     return constChildren;
 }
 
-QList<Group*> Group::children()
+QList<Entry*> Group::entries()
 {
-    return m_children;
+    return m_entries;
 }
 
 QList<const Entry*> Group::entries() const
@@ -196,11 +208,6 @@ QList<const Entry*> Group::entries() const
     }
 
     return constEntries;
-}
-
-QList<Entry*> Group::entries()
-{
-    return m_entries;
 }
 
 void Group::addEntry(Entry *entry)
@@ -217,6 +224,9 @@ void Group::removeEntry(Entry* entry)
 
 void Group::recSetDatabase(Database* db)
 {
+    disconnect(SIGNAL(groupChanged(const Group*)), m_db);
+    connect(this, SIGNAL(groupChanged(const Group*)), db, SIGNAL(groupChanged(const Group*)));
+
     m_db = db;
 
     Q_FOREACH (Group* group, m_children) {

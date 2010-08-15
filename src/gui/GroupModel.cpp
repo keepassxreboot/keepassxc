@@ -17,21 +17,19 @@
 
 #include "GroupModel.h"
 
+#include "core/Database.h"
 #include "core/Group.h"
 
-GroupModel::GroupModel(const Group* rootGroup, QObject* parent) : QAbstractItemModel(parent)
+GroupModel::GroupModel(const Database* db, QObject* parent) : QAbstractItemModel(parent)
 {
-    m_root = rootGroup;
-}
-
-void GroupModel::setRootGroup(const Group* group)
-{
-    m_root = group;
+    m_root = db->rootGroup();
+    connect(db, SIGNAL(groupChanged(const Group*)), SLOT(groupChanged(const Group*)));
 }
 
 int GroupModel::rowCount(const QModelIndex& parent) const
 {
     if (!parent.isValid()) {
+        // we have exactly 1 root item
         return 1;
     }
     else {
@@ -75,11 +73,13 @@ QModelIndex GroupModel::parent(const QModelIndex& index) const
     const Group* parentGroup = childGroup->parentGroup();
 
     if (!parentGroup) {
+        // index is already the root group
         return QModelIndex();
     }
     else {
         const Group* grandParentGroup = parentGroup->parentGroup();
         if (!grandParentGroup) {
+            // parent is the root group
             return createIndex(0, 0, parentGroup);
         }
         else {
@@ -90,12 +90,21 @@ QModelIndex GroupModel::parent(const QModelIndex& index) const
 
 QVariant GroupModel::data(const QModelIndex& index, int role) const
 {
-    if (!index.isValid() || role != Qt::DisplayRole) {
+    if (!index.isValid()) {
         return QVariant();
     }
 
     const Group* group = groupFromIndex(index);
-    return group->name();
+
+    if (role == Qt::DisplayRole) {
+        return group->name();
+    }
+    else if (role == Qt::DecorationRole) {
+        return group->icon();
+    }
+    else {
+        return QVariant();
+    }
 }
 
 QVariant GroupModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -117,4 +126,19 @@ const Group* GroupModel::groupFromIndex(const QModelIndex& index) const
     Q_ASSERT(index.internalPointer());
 
     return static_cast<const Group*>(index.internalPointer());
+}
+
+void GroupModel::groupChanged(const Group* group)
+{
+    int row;
+
+    if (!group->parentGroup()) {
+        row = 0;
+    }
+    else {
+        row = group->parentGroup()->children().indexOf(group);
+    }
+
+    QModelIndex index = createIndex(row, 0, group);
+    Q_EMIT dataChanged(index, index);
 }

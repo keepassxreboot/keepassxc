@@ -34,12 +34,16 @@ class Database : public QObject
 public:
     Database();
     Group* rootGroup();
+    const Group* rootGroup() const;
     void setRootGroup(Group* group);
     Metadata* metadata();
     static QImage icon(int number);
     QImage customIcon(const Uuid& uuid) const;
     Entry* resolveEntry(const Uuid& uuid);
     Group* resolveGroup(const Uuid& uuid);
+
+Q_SIGNALS:
+    void groupChanged(const Group* group);
 
 private:
     Entry* recFindEntry(const Uuid& uuid, Group* group);
