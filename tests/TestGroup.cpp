@@ -62,8 +62,8 @@ void TestGroup::testParenting()
     QVERIFY(g3->children().size() == 1);
     QVERIFY(g4->children().size() == 0);
 
-    QVERIFY(g1->children().contains(g2));
-    QVERIFY(g1->children().contains(g3));
+    QVERIFY(g1->children().at(0) == g2);
+    QVERIFY(g1->children().at(1) == g3);
     QVERIFY(g3->children().contains(g4));
 }
 

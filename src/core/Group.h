@@ -51,12 +51,15 @@ public:
     void setDefaultAutoTypeSequence(const QString& sequence);
     void setLastTopVisibleEntry(Entry* entry);
 
+    const Group* parentGroup() const;
     void setParent(Group* parent);
     void setParent(Database* db);
 
     const Database* database() const;
-    QList<Group*> children() const;
-    QList<Entry*> entries() const;
+    QList<const Group*> children() const;
+    QList<Group*> children();
+    QList<const Entry*> entries() const;
+    QList<Entry*> entries();
     void addEntry(Entry* entry);
     void removeEntry(Entry* entry);
 

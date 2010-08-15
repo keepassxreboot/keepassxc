@@ -122,6 +122,11 @@ void Group::setLastTopVisibleEntry(Entry* entry)
     m_lastTopVisibleEntry = entry;
 }
 
+const Group* Group::parentGroup() const
+{
+    return m_parent;
+}
+
 void Group::setParent(Group* parent)
 {
     Q_ASSERT(parent != 0);
@@ -168,12 +173,32 @@ const Database* Group::database() const
     return m_db;
 }
 
-QList<Group*> Group::children() const
+QList<const Group*> Group::children() const
+{
+    QList<const Group*> constChildren;
+    Q_FOREACH (Group* group, m_children) {
+        constChildren << group;
+    }
+
+    return constChildren;
+}
+
+QList<Group*> Group::children()
 {
     return m_children;
 }
 
-QList<Entry*> Group::entries() const
+QList<const Entry*> Group::entries() const
+{
+    QList<const Entry*> constEntries;
+    Q_FOREACH (Entry* entry, m_entries) {
+        constEntries << entry;
+    }
+
+    return constEntries;
+}
+
+QList<Entry*> Group::entries()
 {
     return m_entries;
 }

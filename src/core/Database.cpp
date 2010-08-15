@@ -35,7 +35,7 @@ Group* Database::rootGroup()
 
 void Database::setRootGroup(Group* group)
 {
-    Q_ASSERT(group == 0 || group->parent() == this);
+    Q_ASSERT(group == 0 || group->database() == this);
     m_rootGroup = group;
 }
 

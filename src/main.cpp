@@ -15,9 +15,29 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QtGui/QApplication>
+#include <QtGui/QTreeView>
+
 #include "core/Database.h"
+#include "core/Parser.h"
+#include "gui/GroupModel.h"
+
+#include "../tests/config-keepassx-tests.h"
 
 int main(int argc, char **argv)
 {
+    QApplication app(argc, argv);
 
+    Database* db= new Database();
+    Parser* parser = new Parser(db);
+    parser->parse(QString(KEEPASSX_TEST_DIR).append("/NewDatabase.xml"));
+
+    GroupModel groupModel(db->rootGroup());
+
+    QTreeView view;
+    view.setModel(&groupModel);
+    view.setHeaderHidden(true);
+    view.expandAll();
+    view.show();
+    return app.exec();
 }

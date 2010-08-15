@@ -13,7 +13,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-include_directories( ${CMAKE_CURRENT_BINARY_DIR} )
+include_directories( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} )
 
 configure_file( config-keepassx.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx.h )
 
@@ -26,6 +26,7 @@ set(keepassx_SOURCES
     core/Parser.cpp
     core/TimeInfo.cpp
     core/Uuid.cpp
+    gui/GroupModel.cpp
 )
 
 automoc4_add_library( keepassx_core STATIC ${keepassx_SOURCES} )
