@@ -58,11 +58,11 @@ void TestGroup::testParenting()
     QVERIFY(g3->database() == db);
     QVERIFY(g4->database() == db);
 
-    QVERIFY(tmpRoot->children().size() == 0);
-    QVERIFY(g1->children().size() == 2);
-    QVERIFY(g2->children().size() == 0);
-    QVERIFY(g3->children().size() == 1);
-    QVERIFY(g4->children().size() == 0);
+    QCOMPARE(tmpRoot->children().size(), 0);
+    QCOMPARE(g1->children().size(), 2);
+    QCOMPARE(g2->children().size(), 0);
+    QCOMPARE(g3->children().size(), 1);
+    QCOMPARE(g4->children().size(), 0);
 
     QVERIFY(g1->children().at(0) == g2);
     QVERIFY(g1->children().at(1) == g3);
@@ -75,7 +75,7 @@ void TestGroup::testParenting()
     g1->setName("test");
     g3->setIcon(Uuid::random());
     g1->setIcon(2);
-    QVERIFY(spy.count() == 6);
+    QCOMPARE(spy.count(), 6);
 }
 
 void TestGroup::testSignals()

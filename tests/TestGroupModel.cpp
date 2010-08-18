@@ -70,12 +70,12 @@ void TestGroupModel::test()
     QModelIndex index121 = model->index(0, 0, index12);
     QModelIndex index2 = model->index(1, 0, indexRoot);
 
-    QVERIFY(model->data(indexRoot) == "groupRoot");
-    QVERIFY(model->data(index1) == "group1");
-    QVERIFY(model->data(index11) == "group11");
-    QVERIFY(model->data(index12) == "group12");
-    QVERIFY(model->data(index121) == "group121");
-    QVERIFY(model->data(index2) == "group2");
+    QCOMPARE(model->data(indexRoot).toString(), QString("groupRoot"));
+    QCOMPARE(model->data(index1).toString(), QString("group1"));
+    QCOMPARE(model->data(index11).toString(), QString("group11"));
+    QCOMPARE(model->data(index12).toString(), QString("group12"));
+    QCOMPARE(model->data(index121).toString(), QString("group121"));
+    QCOMPARE(model->data(index2).toString(), QString("group2"));
 
     QSignalSpy spy1(model, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)));
     group11->setName("test");
