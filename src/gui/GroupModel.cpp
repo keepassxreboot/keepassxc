@@ -23,7 +23,11 @@
 GroupModel::GroupModel(const Database* db, QObject* parent) : QAbstractItemModel(parent)
 {
     m_root = db->rootGroup();
-    connect(db, SIGNAL(groupChanged(const Group*)), SLOT(groupChanged(const Group*)));
+    connect(db, SIGNAL(groupDataChanged(const Group*)), SLOT(groupDataChanged(const Group*)));
+    connect(db, SIGNAL(groupAboutToAdd(const Group*,int)), SLOT(groupAboutToAdd(const Group*,int)));
+    connect(db, SIGNAL(groupAdded()), SLOT(groupAdded()));
+    connect(db, SIGNAL(groupAboutToRemove(const Group*)), SLOT(groupAboutToRemove(const Group*)));
+    connect(db, SIGNAL(groupRemoved()), SLOT(groupRemoved()));
 }
 
 int GroupModel::rowCount(const QModelIndex& parent) const
@@ -69,8 +73,12 @@ QModelIndex GroupModel::parent(const QModelIndex& index) const
         return QModelIndex();
     }
 
-    const Group* childGroup = groupFromIndex(index);
-    const Group* parentGroup = childGroup->parentGroup();
+    return parent(groupFromIndex(index));
+}
+
+QModelIndex GroupModel::parent(const Group* group) const
+{
+    const Group* parentGroup = group->parentGroup();
 
     if (!parentGroup) {
         // index is already the root group
@@ -128,7 +136,7 @@ const Group* GroupModel::groupFromIndex(const QModelIndex& index) const
     return static_cast<const Group*>(index.internalPointer());
 }
 
-void GroupModel::groupChanged(const Group* group)
+void GroupModel::groupDataChanged(const Group* group)
 {
     int row;
 
@@ -141,4 +149,33 @@ void GroupModel::groupChanged(const Group* group)
 
     QModelIndex index = createIndex(row, 0, group);
     Q_EMIT dataChanged(index, index);
+}
+
+void GroupModel::groupAboutToRemove(const Group* group)
+{
+    Q_ASSERT(group->parentGroup());
+
+    QModelIndex parentIndex = parent(group);
+    int pos = group->parentGroup()->children().indexOf(group);
+
+    beginRemoveRows(parentIndex, pos, pos);
+}
+
+void GroupModel::groupRemoved()
+{
+    endRemoveRows();
+}
+
+void GroupModel::groupAboutToAdd(const Group* group, int index)
+{
+    Q_ASSERT(group->parentGroup());
+
+    QModelIndex parentIndex = parent(group);
+
+    beginInsertRows(parentIndex, index, index);
+}
+
+void GroupModel::groupAdded()
+{
+    endInsertRows();
 }

@@ -43,7 +43,11 @@ public:
     Group* resolveGroup(const Uuid& uuid);
 
 Q_SIGNALS:
-    void groupChanged(const Group* group);
+    void groupDataChanged(const Group* group);
+    void groupAboutToAdd(const Group* group, int index);
+    void groupAdded();
+    void groupAboutToRemove(const Group* group);
+    void groupRemoved();
 
 private:
     Entry* recFindEntry(const Uuid& uuid, Group* group);

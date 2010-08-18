@@ -40,9 +40,14 @@ public:
 private:
     QModelIndex createIndex(int row, int column, const Group* group) const;
     const Group* groupFromIndex(const QModelIndex& index) const;
+    QModelIndex parent(const Group* group) const;
 
 private Q_SLOTS:
-    void groupChanged(const Group* group);
+    void groupDataChanged(const Group* group);
+    void groupAboutToRemove(const Group* group);
+    void groupRemoved();
+    void groupAboutToAdd(const Group* group, int index);
+    void groupAdded();
 
 private:
     const Group* m_root;

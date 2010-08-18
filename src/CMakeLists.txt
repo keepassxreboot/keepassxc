@@ -31,5 +31,5 @@ set(keepassx_SOURCES
 
 automoc4_add_library( keepassx_core STATIC ${keepassx_SOURCES} )
 
-add_executable( ${PROGNAME} WIN32 MACOSX_BUNDLE main.cpp )
+automoc4_add_executable( ${PROGNAME} WIN32 MACOSX_BUNDLE main.cpp )
 target_link_libraries( ${PROGNAME} keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} )

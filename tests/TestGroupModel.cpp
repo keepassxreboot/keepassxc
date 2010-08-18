@@ -77,10 +77,22 @@ void TestGroupModel::test()
     QVERIFY(model->data(index121) == "group121");
     QVERIFY(model->data(index2) == "group2");
 
-    QSignalSpy spy(model, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)));
+    QSignalSpy spy1(model, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)));
     group11->setName("test");
     group121->setIcon(4);
-    QVERIFY(spy.count() == 2);
+    QCOMPARE(spy1.count(), 2);
+
+    QSignalSpy spyAboutToAdd(model, SIGNAL(rowsAboutToBeInserted(const QModelIndex&,int,int)));
+    QSignalSpy spyAdded(model, SIGNAL(rowsInserted(const QModelIndex&,int,int)));
+    QSignalSpy spyAboutToRemove(model, SIGNAL(rowsAboutToBeRemoved(const QModelIndex&,int,int)));
+    QSignalSpy spyRemoved(model, SIGNAL(rowsRemoved(const QModelIndex&,int,int)));
+
+    group12->setParent(group1, 0);
+
+    QCOMPARE(spyAboutToAdd.count(), 1);
+    QCOMPARE(spyAdded.count(), 1);
+    QCOMPARE(spyAboutToRemove.count(), 1);
+    QCOMPARE(spyRemoved.count(), 1);
 
     delete groupRoot;
     delete db;

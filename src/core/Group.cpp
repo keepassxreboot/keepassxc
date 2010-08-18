@@ -80,7 +80,7 @@ void Group::setName(const QString& name)
 {
     m_name = name;
 
-    Q_EMIT groupChanged(this);
+    Q_EMIT dataChanged(this);
 }
 
 void Group::setNotes(const QString& notes)
@@ -95,7 +95,7 @@ void Group::setIcon(int iconNumber)
     m_iconNumber = iconNumber;
     m_customIcon = Uuid();
 
-    Q_EMIT groupChanged(this);
+    Q_EMIT dataChanged(this);
 }
 
 void Group::setIcon(const Uuid& uuid)
@@ -105,7 +105,7 @@ void Group::setIcon(const Uuid& uuid)
     m_iconNumber = 0;
     m_customIcon = uuid;
 
-    Q_EMIT groupChanged(this);
+    Q_EMIT dataChanged(this);
 }
 
 void Group::setTimeInfo(const TimeInfo& timeInfo)
@@ -133,9 +133,16 @@ const Group* Group::parentGroup() const
     return m_parent;
 }
 
-void Group::setParent(Group* parent)
+void Group::setParent(Group* parent, int index)
 {
-    Q_ASSERT(parent != 0);
+    Q_ASSERT(parent);
+    Q_ASSERT(index >= -1 && index <= parent->children().size());
+
+    if (index == -1) {
+        index = parent->children().size();
+    }
+
+    Q_EMIT aboutToRemove(this);
 
     if (m_parent) {
         m_parent->m_children.removeAll(this);
@@ -145,6 +152,8 @@ void Group::setParent(Group* parent)
         m_db->setRootGroup(0);
     }
 
+    Q_EMIT removed();
+
     m_parent = parent;
 
     if (m_db != parent->m_db) {
@@ -153,12 +162,18 @@ void Group::setParent(Group* parent)
 
     QObject::setParent(parent);
 
-    parent->m_children << this;
+    Q_EMIT aboutToAdd(this, index);
+
+    parent->m_children.insert(index, this);
+
+    Q_EMIT added();
 }
 
 void Group::setParent(Database* db)
 {
-    Q_ASSERT(db != 0);
+    Q_ASSERT(db);
+
+    Q_EMIT aboutToRemove(this);
 
     if (m_parent) {
         m_parent->m_children.removeAll(this);
@@ -166,6 +181,8 @@ void Group::setParent(Database* db)
     else if (m_db) {
         m_db->setRootGroup(0);
     }
+
+    Q_EMIT removed();
 
     m_parent = 0;
     recSetDatabase(db);
@@ -224,8 +241,17 @@ void Group::removeEntry(Entry* entry)
 
 void Group::recSetDatabase(Database* db)
 {
-    disconnect(SIGNAL(groupChanged(const Group*)), m_db);
-    connect(this, SIGNAL(groupChanged(const Group*)), db, SIGNAL(groupChanged(const Group*)));
+    disconnect(SIGNAL(dataChanged(const Group*)), m_db);
+    disconnect(SIGNAL(aboutToRemove(const Group*)), m_db);
+    disconnect(SIGNAL(removed()), m_db);
+    disconnect(SIGNAL(aboutToAdd(const Group*,int)), m_db);
+    disconnect(SIGNAL(added()), m_db);
+
+    connect(this, SIGNAL(dataChanged(const Group*)), db, SIGNAL(groupDataChanged(const Group*)));
+    connect(this, SIGNAL(aboutToRemove(const Group*)), db, SIGNAL(groupAboutToRemove(const Group*)));
+    connect(this, SIGNAL(removed()), db, SIGNAL(groupRemoved()));
+    connect(this, SIGNAL(aboutToAdd(const Group*,int)), db, SIGNAL(groupAboutToAdd(const Group*,int)));
+    connect(this, SIGNAL(added()), db, SIGNAL(groupAdded()));
 
     m_db = db;
 

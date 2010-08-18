@@ -26,6 +26,7 @@ class TestGroup : public QObject
 
 private Q_SLOTS:
     void testParenting();
+    void testSignals();
 };
 
 void TestGroup::testParenting()
@@ -67,7 +68,7 @@ void TestGroup::testParenting()
     QVERIFY(g1->children().at(1) == g3);
     QVERIFY(g3->children().contains(g4));
 
-    QSignalSpy spy(db, SIGNAL(groupChanged(const Group*)));
+    QSignalSpy spy(db, SIGNAL(groupDataChanged(const Group*)));
     g2->setName("test");
     g4->setName("test");
     g3->setName("test");
@@ -75,6 +76,30 @@ void TestGroup::testParenting()
     g3->setIcon(Uuid::random());
     g1->setIcon(2);
     QVERIFY(spy.count() == 6);
+}
+
+void TestGroup::testSignals()
+{
+    Database* db = new Database();
+    Group* root = new Group();
+    root->setParent(db);
+
+    Group* g1 = new Group();
+    Group* g2 = new Group();
+    g1->setParent(root);
+    g2->setParent(root);
+
+    QSignalSpy spyAboutToAdd(db, SIGNAL(groupAboutToAdd(const Group*,int)));
+    QSignalSpy spyAdded(db, SIGNAL(groupAdded()));
+    QSignalSpy spyAboutToRemove(db, SIGNAL(groupAboutToRemove(const Group*)));
+    QSignalSpy spyRemoved(db, SIGNAL(groupRemoved()));
+
+    g2->setParent(root, 0);
+
+    QCOMPARE(spyAboutToAdd.count(), 1);
+    QCOMPARE(spyAdded.count(), 1);
+    QCOMPARE(spyAboutToRemove.count(), 1);
+    QCOMPARE(spyRemoved.count(), 1);
 }
 
 QTEST_MAIN(TestGroup);

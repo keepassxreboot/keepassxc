@@ -52,7 +52,7 @@ public:
     void setLastTopVisibleEntry(Entry* entry);
 
     const Group* parentGroup() const;
-    void setParent(Group* parent);
+    void setParent(Group* parent, int index = -1);
     void setParent(Database* db);
 
     const Database* database() const;
@@ -64,7 +64,11 @@ public:
     void removeEntry(Entry* entry);
 
 Q_SIGNALS:
-    void groupChanged(const Group* group);
+    void dataChanged(const Group* group);
+    void aboutToRemove(const Group* group);
+    void removed();
+    void aboutToAdd(const Group* group, int index);
+    void added();
 
 private:
     void recSetDatabase(Database* db);
