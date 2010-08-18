@@ -71,3 +71,6 @@ target_link_libraries( testparser keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_
 
 add_unit_test( testgroupmodel TestGroupModel.cpp modeltest.cpp )
 target_link_libraries( testgroupmodel keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} )
+
+add_unit_test( testentrymodel TestEntryModel.cpp modeltest.cpp )
+target_link_libraries( testentrymodel keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} )

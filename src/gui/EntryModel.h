@@ -15,42 +15,37 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_GROUPMODEL_H
-#define KEEPASSX_GROUPMODEL_H
+#ifndef KEEPASSX_ENTRYMODEL_H
+#define KEEPASSX_ENTRYMODEL_H
 
-#include <QtCore/QAbstractItemModel>
+#include <QtCore/QAbstractTableModel>
 
-class Database;
+class Entry;
 class Group;
 
-class GroupModel : public QAbstractItemModel
+class EntryModel : public QAbstractTableModel
 {
     Q_OBJECT
 
 public:
-    explicit GroupModel(const Database* db, QObject* parent = 0);
-
+    explicit EntryModel(QObject* parent = 0);
     int rowCount(const QModelIndex& parent = QModelIndex()) const;
     int columnCount(const QModelIndex& parent = QModelIndex()) const;
-    QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
-    QModelIndex parent(const QModelIndex& index) const;
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
-private:
-    QModelIndex createIndex(int row, int column, const Group* group) const;
-    const Group* groupFromIndex(const QModelIndex& index) const;
-    QModelIndex parent(const Group* group) const;
+public Q_SLOTS:
+    void setGroup(const Group* group);
 
 private Q_SLOTS:
-    void groupDataChanged(const Group* group);
-    void groupAboutToRemove(const Group* group);
-    void groupRemoved();
-    void groupAboutToAdd(const Group* group, int index);
-    void groupAdded();
+    void entryAboutToAdd(const Entry* entry);
+    void entryAdded();
+    void entryAboutToRemove(const Entry* entry);
+    void entryRemoved();
+    void entryDataChanged(const Entry* entry);
 
 private:
-    const Group* m_root;
+    const Group* m_group;
 };
 
-#endif // KEEPASSX_GROUPMODEL_H
+#endif // KEEPASSX_ENTRYMODEL_H

@@ -27,6 +27,7 @@ class TestGroup : public QObject
 private Q_SLOTS:
     void testParenting();
     void testSignals();
+    void testEntries();
 };
 
 void TestGroup::testParenting()
@@ -100,6 +101,25 @@ void TestGroup::testSignals()
     QCOMPARE(spyAdded.count(), 1);
     QCOMPARE(spyAboutToRemove.count(), 1);
     QCOMPARE(spyRemoved.count(), 1);
+
+    delete db;
+}
+
+void TestGroup::testEntries()
+{
+    Group* group = new Group();
+
+    Entry* entry1 = new Entry();
+    entry1->setGroup(group);
+
+    Entry* entry2 = new Entry();
+    entry2->setGroup(group);
+
+    QCOMPARE(group->entries().size(), 2);
+    QVERIFY(group->entries().at(0) == entry1);
+    QVERIFY(group->entries().at(1) == entry2);
+
+    delete group;
 }
 
 QTEST_MAIN(TestGroup);

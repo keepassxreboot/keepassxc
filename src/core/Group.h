@@ -32,6 +32,7 @@ class Group : public QObject
 
 public:
     Group();
+    ~Group();
     Uuid uuid() const;
     QString name() const;
     QString notes() const;
@@ -65,10 +66,18 @@ public:
 
 Q_SIGNALS:
     void dataChanged(const Group* group);
-    void aboutToRemove(const Group* group);
-    void removed();
+
     void aboutToAdd(const Group* group, int index);
     void added();
+    void aboutToRemove(const Group* group);
+    void removed();
+
+    void entryAboutToAdd(const Entry* entry);
+    void entryAdded();
+    void entryAboutToRemove(const Entry* entry);
+    void entryRemoved();
+
+    void entryDataChanged(const Entry* entry);
 
 private:
     void recSetDatabase(Database* db);

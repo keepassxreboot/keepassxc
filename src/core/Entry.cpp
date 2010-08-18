@@ -26,6 +26,11 @@ Entry::Entry()
     m_db = 0;
 }
 
+Entry::~Entry()
+{
+    // TODO notify group
+}
+
 Uuid Entry::uuid() const
 {
     return m_uuid;
@@ -182,6 +187,11 @@ void Entry::addAutoTypeAssociation(const AutoTypeAssociation& assoc)
 void Entry::addAttribute(const QString& key, const QString& value)
 {
     m_attributes.insert(key, value);
+
+    // TODO add all visible oclumns
+    if (key == "Title") {
+        Q_EMIT dataChanged(this);
+    }
 }
 
 void Entry::addAttachment(const QString& key, const QByteArray& value)
@@ -191,27 +201,27 @@ void Entry::addAttachment(const QString& key, const QByteArray& value)
 
 void Entry::setTitle(const QString& title)
 {
-    m_attributes.insert("Title", title);
+    addAttribute("Title", title);
 }
 
 void Entry::setUrl(const QString& url)
 {
-    m_attributes.insert("URL", url);
+    addAttribute("URL", url);
 }
 
 void Entry::setUsername(const QString& username)
 {
-    m_attributes.insert("UserName", username);
+    addAttribute("UserName", username);
 }
 
 void Entry::setPassword(const QString& password)
 {
-    m_attributes.insert("Password", password);
+    addAttribute("Password", password);
 }
 
 void Entry::setNotes(const QString& notes)
 {
-    m_attributes.insert("Notes", notes);
+    addAttribute("Notes", notes);
 }
 
 void Entry::setGroup(Group* group)

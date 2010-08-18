@@ -28,6 +28,11 @@ Group::Group()
     m_db = 0;
 }
 
+Group::~Group()
+{
+    // TODO notify parent
+}
+
 Uuid Group::uuid() const
 {
     return m_uuid;
@@ -229,14 +234,24 @@ QList<const Entry*> Group::entries() const
 
 void Group::addEntry(Entry *entry)
 {
-    Q_ASSERT(entry != 0);
+    Q_ASSERT(entry);
+
+    Q_EMIT entryAboutToAdd(entry);
 
     m_entries << entry;
+    connect(entry, SIGNAL(dataChanged(const Entry*)), SIGNAL(entryDataChanged(const Entry*)));
+
+    Q_EMIT entryAdded();
 }
 
 void Group::removeEntry(Entry* entry)
 {
+    Q_EMIT entryAboutToRemove(entry);
+
+    entry->disconnect(this);
     m_entries.removeAll(entry);
+
+    Q_EMIT entryRemoved();
 }
 
 void Group::recSetDatabase(Database* db)

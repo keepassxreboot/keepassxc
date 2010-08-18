@@ -41,6 +41,7 @@ class Entry : public QObject
 
 public:
     Entry();
+    ~Entry();
     Uuid uuid() const;
     QImage icon() const;
     QColor foregroundColor() const;
@@ -79,6 +80,9 @@ public:
     void setNotes(const QString& notes);
 
     void setGroup(Group* group);
+
+Q_SIGNALS:
+    void dataChanged(const Entry* entry);
 
 private:
     Uuid m_uuid;
