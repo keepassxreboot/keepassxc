@@ -53,6 +53,11 @@ public:
     const QList<AutoTypeAssociation>& autoTypeAssociations() const;
     const QHash<QString, QString>& attributes() const;
     const QHash<QString, QByteArray>& attachments() const;
+    QString title() const;
+    QString url() const;
+    QString username() const;
+    QString password() const;
+    QString notes() const;
 
     void setUuid(const Uuid& uuid);
     void setIcon(int iconNumber);
@@ -67,6 +72,11 @@ public:
     void addAutoTypeAssociation(const AutoTypeAssociation& assoc);
     void addAttribute(const QString& key, const QString& value);
     void addAttachment(const QString& key, const QByteArray& value);
+    void setTitle(const QString& title);
+    void setUrl(const QString& url);
+    void setUsername(const QString& username);
+    void setPassword(const QString& password);
+    void setNotes(const QString& notes);
 
     void setGroup(Group* group);
 

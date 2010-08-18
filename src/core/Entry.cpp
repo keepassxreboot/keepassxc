@@ -91,6 +91,31 @@ const QHash<QString, QByteArray>& Entry::attachments() const
     return m_binaries;
 }
 
+QString Entry::title() const
+{
+    return m_attributes.value("Title");
+}
+
+QString Entry::url() const
+{
+    return m_attributes.value("URL");
+}
+
+QString Entry::username() const
+{
+    return m_attributes.value("UserName");
+}
+
+QString Entry::password() const
+{
+    return m_attributes.value("Password");
+}
+
+QString Entry::notes() const
+{
+    return m_attributes.value("Notes");
+}
+
 void Entry::setUuid(const Uuid& uuid)
 {
     Q_ASSERT(!uuid.isNull());
@@ -162,6 +187,31 @@ void Entry::addAttribute(const QString& key, const QString& value)
 void Entry::addAttachment(const QString& key, const QByteArray& value)
 {
     m_binaries.insert(key, value);
+}
+
+void Entry::setTitle(const QString& title)
+{
+    m_attributes.insert("Title", title);
+}
+
+void Entry::setUrl(const QString& url)
+{
+    m_attributes.insert("URL", url);
+}
+
+void Entry::setUsername(const QString& username)
+{
+    m_attributes.insert("UserName", username);
+}
+
+void Entry::setPassword(const QString& password)
+{
+    m_attributes.insert("Password", password);
+}
+
+void Entry::setNotes(const QString& notes)
+{
+    m_attributes.insert("Notes", notes);
 }
 
 void Entry::setGroup(Group* group)
