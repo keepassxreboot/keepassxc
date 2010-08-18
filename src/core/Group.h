@@ -37,6 +37,8 @@ public:
     QString name() const;
     QString notes() const;
     QImage icon() const;
+    int iconNumber() const;
+    Uuid iconUuid() const;
     TimeInfo timeInfo() const;
     bool isExpanded() const;
     QString defaultAutoTypeSequence() const;

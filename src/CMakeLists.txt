@@ -26,6 +26,7 @@ set(keepassx_SOURCES
     core/Parser.cpp
     core/TimeInfo.cpp
     core/Uuid.cpp
+    core/Writer.cpp
     gui/EntryModel.cpp
     gui/GroupModel.cpp
 )

@@ -44,6 +44,8 @@ public:
     ~Entry();
     Uuid uuid() const;
     QImage icon() const;
+    int iconNumber() const;
+    Uuid iconUuid() const;
     QColor foregroundColor() const;
     QColor backgroundColor() const;
     QString overrideUrl() const;

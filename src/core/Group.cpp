@@ -56,6 +56,16 @@ QImage Group::icon() const
         return Database::icon(m_iconNumber);
 }
 
+int Group::iconNumber() const
+{
+    return m_iconNumber;
+}
+
+Uuid Group::iconUuid() const
+{
+    return m_customIcon;
+}
+
 TimeInfo Group::timeInfo() const
 {
     return m_timeInfo;

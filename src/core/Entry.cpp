@@ -46,6 +46,16 @@ QImage Entry::icon() const
         return Database::icon(m_iconNumber);
 }
 
+int Entry::iconNumber() const
+{
+    return m_iconNumber;
+}
+
+Uuid Entry::iconUuid() const
+{
+    return m_customIcon;
+}
+
 QColor Entry::foregroundColor() const
 {
     return m_foregroundColor;
