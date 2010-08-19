@@ -283,12 +283,37 @@ Group* Parser::parseGroup()
             group->setDefaultAutoTypeSequence(readString());
         }
         else if (m_xml.name() == "EnableAutoType") {
-            // TODO implement
-            skipCurrentElement();
+            QString str = readString();
+
+            if (str.compare("null", Qt::CaseInsensitive) == 0) {
+                group->setAutoTypeEnabled(-1);
+            }
+            else if (str.compare("true", Qt::CaseInsensitive) == 0) {
+                group->setAutoTypeEnabled(1);
+            }
+            else if (str.compare("false", Qt::CaseInsensitive) == 0) {
+                group->setAutoTypeEnabled(0);
+            }
+            else {
+                raiseError();
+            }
+
         }
         else if (m_xml.name() == "EnableSearching") {
-            // TODO implement
-            skipCurrentElement();
+            QString str = readString();
+
+            if (str.compare("null", Qt::CaseInsensitive) == 0) {
+                group->setSearchingEnabled(-1);
+            }
+            else if (str.compare("true", Qt::CaseInsensitive) == 0) {
+                group->setSearchingEnabled(1);
+            }
+            else if (str.compare("false", Qt::CaseInsensitive) == 0) {
+                group->setSearchingEnabled(0);
+            }
+            else {
+                raiseError();
+            }
         }
         else if (m_xml.name() == "LastTopVisibleEntry") {
             group->setLastTopVisibleEntry(getEntry(readUuid()));
@@ -511,10 +536,10 @@ bool Parser::readBool()
 {
     QString str = readString();
 
-    if (str.compare(QLatin1String("True"), Qt::CaseInsensitive) == 0) {
+    if (str.compare("True", Qt::CaseInsensitive) == 0) {
         return true;
     }
-    else if (str.compare(QLatin1String("False"), Qt::CaseInsensitive) == 0) {
+    else if (str.compare("False", Qt::CaseInsensitive) == 0) {
         return false;
     }
     else {

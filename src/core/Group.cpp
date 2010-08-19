@@ -81,6 +81,16 @@ QString Group::defaultAutoTypeSequence() const
     return m_defaultAutoTypeSequence;
 }
 
+int Group::autoTypeEnabled() const
+{
+    return m_autoTypeEnabled;
+}
+
+int Group::searchingEnabed() const
+{
+    return m_searchingEnabled;
+}
+
 Entry* Group::lastTopVisibleEntry() const
 {
     return m_lastTopVisibleEntry;
@@ -136,6 +146,20 @@ void Group::setExpanded(bool expanded)
 void Group::setDefaultAutoTypeSequence(const QString& sequence)
 {
     m_defaultAutoTypeSequence = sequence;
+}
+
+void Group::setAutoTypeEnabled(int enable)
+{
+    Q_ASSERT(enable >= -1 && enable <= 1);
+
+    m_autoTypeEnabled = enable;
+}
+
+void Group::setSearchingEnabled(int enable)
+{
+    Q_ASSERT(enable >= -1 && enable <= 1);
+
+    m_searchingEnabled = enable;
 }
 
 void Group::setLastTopVisibleEntry(Entry* entry)

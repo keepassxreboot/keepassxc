@@ -42,6 +42,8 @@ public:
     TimeInfo timeInfo() const;
     bool isExpanded() const;
     QString defaultAutoTypeSequence() const;
+    int autoTypeEnabled() const;
+    int searchingEnabed() const;
     Entry* lastTopVisibleEntry() const;
 
     void setUuid(const Uuid& uuid);
@@ -52,6 +54,8 @@ public:
     void setTimeInfo(const TimeInfo& timeInfo);
     void setExpanded(bool expanded);
     void setDefaultAutoTypeSequence(const QString& sequence);
+    void setAutoTypeEnabled(int enable);
+    void setSearchingEnabled(int enable);
     void setLastTopVisibleEntry(Entry* entry);
 
     const Group* parentGroup() const;
@@ -93,6 +97,8 @@ private:
     TimeInfo m_timeInfo;
     bool m_isExpanded;
     QString m_defaultAutoTypeSequence;
+    int m_autoTypeEnabled;
+    int m_searchingEnabled;
     Entry* m_lastTopVisibleEntry;
     QList<Group*> m_children;
     QList<Entry*> m_entries;

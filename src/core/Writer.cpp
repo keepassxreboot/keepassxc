@@ -147,8 +147,33 @@ void Writer::writeGroup(const Group* group)
     writeTimes(group->timeInfo());
     writeBool("IsExpanded", group->isExpanded());
     writeString("DefaultAutoTypeSequence", group->defaultAutoTypeSequence());
-    // TODO EnableAutoType
-    // TODO EnableSearching
+
+    int autoTypeEnabled = group->autoTypeEnabled();
+    QString autoTypeEnabledStr;
+    if (autoTypeEnabled == -1) {
+        autoTypeEnabledStr = "null";
+    }
+    else if (autoTypeEnabled == 0) {
+        autoTypeEnabledStr = "false";
+    }
+    else {
+        autoTypeEnabledStr = "true";
+    }
+    writeString("EnableAutoType", autoTypeEnabledStr);
+
+    int searchingEnabed = group->searchingEnabed();
+    QString searchingEnabedStr;
+    if (searchingEnabed == -1) {
+        searchingEnabedStr = "null";
+    }
+    else if (searchingEnabed == 0) {
+        searchingEnabedStr = "false";
+    }
+    else {
+        searchingEnabedStr = "true";
+    }
+    writeString("EnableSearching", searchingEnabedStr);
+
     writeUuid("LastTopVisibleEntry", group->lastTopVisibleEntry());
 
     Q_FOREACH (const Group* child, group->children()) {
