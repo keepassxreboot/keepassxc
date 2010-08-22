@@ -124,6 +124,20 @@ QVariant GroupModel::headerData(int section, Qt::Orientation orientation, int ro
     return QVariant();
 }
 
+QModelIndex GroupModel::index(const Group* group) const
+{
+    int row;
+
+    if (!group->parentGroup()) {
+        row = 0;
+    }
+    else {
+        row = group->parentGroup()->children().indexOf(group);
+    }
+
+    return createIndex(row, 0, group);
+}
+
 QModelIndex GroupModel::createIndex(int row, int column, const Group* group) const
 {
     return QAbstractItemModel::createIndex(row, column, const_cast<Group*>(group));
@@ -138,17 +152,8 @@ const Group* GroupModel::groupFromIndex(const QModelIndex& index) const
 
 void GroupModel::groupDataChanged(const Group* group)
 {
-    int row;
-
-    if (!group->parentGroup()) {
-        row = 0;
-    }
-    else {
-        row = group->parentGroup()->children().indexOf(group);
-    }
-
-    QModelIndex index = createIndex(row, 0, group);
-    Q_EMIT dataChanged(index, index);
+    QModelIndex ix = index(group);
+    Q_EMIT dataChanged(ix, ix);
 }
 
 void GroupModel::groupAboutToRemove(const Group* group)

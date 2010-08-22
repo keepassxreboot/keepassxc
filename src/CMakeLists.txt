@@ -29,6 +29,7 @@ set(keepassx_SOURCES
     core/Writer.cpp
     gui/EntryModel.cpp
     gui/GroupModel.cpp
+    gui/GroupView.cpp
 )
 
 automoc4_add_library( keepassx_core STATIC ${keepassx_SOURCES} )

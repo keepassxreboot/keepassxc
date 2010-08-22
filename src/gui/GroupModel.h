@@ -29,6 +29,8 @@ class GroupModel : public QAbstractItemModel
 
 public:
     explicit GroupModel(const Database* db, QObject* parent = 0);
+    QModelIndex index(const Group* group) const;
+    const Group* groupFromIndex(const QModelIndex& index) const;
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const;
     int columnCount(const QModelIndex& parent = QModelIndex()) const;
@@ -39,7 +41,6 @@ public:
 
 private:
     QModelIndex createIndex(int row, int column, const Group* group) const;
-    const Group* groupFromIndex(const QModelIndex& index) const;
     QModelIndex parent(const Group* group) const;
 
 private Q_SLOTS:
