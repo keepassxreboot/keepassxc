@@ -37,7 +37,8 @@ class Writer : public QObject
 
 public:
     Writer(Database* db);
-    bool write(const QString& filename);
+    void write(QIODevice* device);
+    void write(const QString& filename);
 
 private:
     void writeMetadata();

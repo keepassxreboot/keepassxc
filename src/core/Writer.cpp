@@ -18,6 +18,7 @@
 #include "Writer.h"
 
 #include <QtCore/QBuffer>
+#include <QtCore/QFile>
 
 #include "core/Database.h"
 #include "core/Metadata.h"
@@ -33,8 +34,10 @@ Writer::Writer(Database* db)
 
 }
 
-bool Writer::write(const QString& filename)
+void Writer::write(QIODevice* device)
 {
+    m_xml.setDevice(device);
+
     m_xml.writeStartDocument("1.0", true);
 
     m_xml.writeStartElement("KeePassFile");
@@ -45,8 +48,13 @@ bool Writer::write(const QString& filename)
     m_xml.writeEndElement();
 
     m_xml.writeEndDocument();
+}
 
-    return true; // TODO
+void Writer::write(const QString& filename)
+{
+    QFile file(filename);
+    file.open(QIODevice::WriteOnly);
+    write(&file);
 }
 
 void Writer::writeMetadata()
@@ -132,6 +140,8 @@ void Writer::writeRoot()
     m_xml.writeStartElement("Root");
 
     writeGroup(m_db->rootGroup());
+    m_xml.writeStartElement("DeletedObjects");
+    m_xml.writeEndElement();
 
     m_xml.writeEndElement();
 }
@@ -143,7 +153,10 @@ void Writer::writeGroup(const Group* group)
     writeUuid("UUID", group->uuid());
     writeString("Name", group->name());
     writeNumber("IconID", group->iconNumber());
-    writeUuid("CustomIconUUID", group->iconUuid());
+
+    if (!group->iconUuid().isNull()) {
+        writeUuid("CustomIconUUID", group->iconUuid());
+    }
     writeTimes(group->timeInfo());
     writeBool("IsExpanded", group->isExpanded());
     writeString("DefaultAutoTypeSequence", group->defaultAutoTypeSequence());
@@ -176,12 +189,12 @@ void Writer::writeGroup(const Group* group)
 
     writeUuid("LastTopVisibleEntry", group->lastTopVisibleEntry());
 
-    Q_FOREACH (const Group* child, group->children()) {
-        writeGroup(child);
-    }
-
     Q_FOREACH (const Entry* entry, group->entries()) {
         writeEntry(entry);
+    }
+
+    Q_FOREACH (const Group* child, group->children()) {
+        writeGroup(child);
     }
 
     m_xml.writeEndElement();
@@ -208,7 +221,9 @@ void Writer::writeEntry(const Entry* entry)
 
     writeUuid("UUID", entry->uuid());
     writeNumber("IconID", entry->iconNumber());
-    writeUuid("CustomIconUUID", entry->iconUuid());
+    if (!entry->iconUuid().isNull()) {
+        writeUuid("CustomIconUUID", entry->iconUuid());
+    }
     writeColor("ForegroundColor", entry->foregroundColor());
     writeColor("BackgroundColor", entry->backgroundColor());
     writeString("OverrideURL", entry->overrideUrl());
@@ -291,7 +306,7 @@ void Writer::writeBool(const QString& qualifiedName, bool b)
 
 void Writer::writeDateTime(const QString& qualifiedName, const QDateTime& dateTime)
 {
-    writeString(qualifiedName, dateTime.toString(Qt::ISODate));
+    writeString(qualifiedName, dateTime.toUTC().toString(Qt::ISODate).append('Z'));
 }
 
 void Writer::writeUuid(const QString& qualifiedName, const Uuid& uuid)
