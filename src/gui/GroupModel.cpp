@@ -20,13 +20,13 @@
 #include "core/Database.h"
 #include "core/Group.h"
 
-GroupModel::GroupModel(const Database* db, QObject* parent) : QAbstractItemModel(parent)
+GroupModel::GroupModel(Database* db, QObject* parent) : QAbstractItemModel(parent)
 {
     m_root = db->rootGroup();
-    connect(db, SIGNAL(groupDataChanged(const Group*)), SLOT(groupDataChanged(const Group*)));
-    connect(db, SIGNAL(groupAboutToAdd(const Group*,int)), SLOT(groupAboutToAdd(const Group*,int)));
+    connect(db, SIGNAL(groupDataChanged(Group*)), SLOT(groupDataChanged(Group*)));
+    connect(db, SIGNAL(groupAboutToAdd(Group*,int)), SLOT(groupAboutToAdd(Group*,int)));
     connect(db, SIGNAL(groupAdded()), SLOT(groupAdded()));
-    connect(db, SIGNAL(groupAboutToRemove(const Group*)), SLOT(groupAboutToRemove(const Group*)));
+    connect(db, SIGNAL(groupAboutToRemove(Group*)), SLOT(groupAboutToRemove(Group*)));
     connect(db, SIGNAL(groupRemoved()), SLOT(groupRemoved()));
 }
 
@@ -55,7 +55,7 @@ QModelIndex GroupModel::index(int row, int column, const QModelIndex& parent) co
         return QModelIndex();
     }
 
-    const Group* group;
+    Group* group;
 
     if (!parent.isValid()) {
         group = m_root;
@@ -76,9 +76,9 @@ QModelIndex GroupModel::parent(const QModelIndex& index) const
     return parent(groupFromIndex(index));
 }
 
-QModelIndex GroupModel::parent(const Group* group) const
+QModelIndex GroupModel::parent(Group* group) const
 {
-    const Group* parentGroup = group->parentGroup();
+    Group* parentGroup = group->parentGroup();
 
     if (!parentGroup) {
         // index is already the root group
@@ -102,7 +102,7 @@ QVariant GroupModel::data(const QModelIndex& index, int role) const
         return QVariant();
     }
 
-    const Group* group = groupFromIndex(index);
+    Group* group = groupFromIndex(index);
 
     if (role == Qt::DisplayRole) {
         return group->name();
@@ -124,7 +124,7 @@ QVariant GroupModel::headerData(int section, Qt::Orientation orientation, int ro
     return QVariant();
 }
 
-QModelIndex GroupModel::index(const Group* group) const
+QModelIndex GroupModel::index(Group* group) const
 {
     int row;
 
@@ -138,25 +138,20 @@ QModelIndex GroupModel::index(const Group* group) const
     return createIndex(row, 0, group);
 }
 
-QModelIndex GroupModel::createIndex(int row, int column, const Group* group) const
-{
-    return QAbstractItemModel::createIndex(row, column, const_cast<Group*>(group));
-}
-
-const Group* GroupModel::groupFromIndex(const QModelIndex& index) const
+Group* GroupModel::groupFromIndex(const QModelIndex& index) const
 {
     Q_ASSERT(index.internalPointer());
 
-    return static_cast<const Group*>(index.internalPointer());
+    return static_cast<Group*>(index.internalPointer());
 }
 
-void GroupModel::groupDataChanged(const Group* group)
+void GroupModel::groupDataChanged(Group* group)
 {
     QModelIndex ix = index(group);
     Q_EMIT dataChanged(ix, ix);
 }
 
-void GroupModel::groupAboutToRemove(const Group* group)
+void GroupModel::groupAboutToRemove(Group* group)
 {
     Q_ASSERT(group->parentGroup());
 
@@ -171,7 +166,7 @@ void GroupModel::groupRemoved()
     endRemoveRows();
 }
 
-void GroupModel::groupAboutToAdd(const Group* group, int index)
+void GroupModel::groupAboutToAdd(Group* group, int index)
 {
     Q_ASSERT(group->parentGroup());
 

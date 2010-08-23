@@ -26,7 +26,7 @@ EntryModel::EntryModel(QObject* parent)
 {
 }
 
-void EntryModel::setGroup(const Group* group)
+void EntryModel::setGroup(Group* group)
 {
     beginResetModel();
 
@@ -34,11 +34,11 @@ void EntryModel::setGroup(const Group* group)
         disconnect(m_group, 0, this, 0);
     }
     m_group = group;
-    connect(group, SIGNAL(entryAboutToAdd(const Entry*)), SLOT(entryAboutToAdd(const Entry*)));
+    connect(group, SIGNAL(entryAboutToAdd(Entry*)), SLOT(entryAboutToAdd(Entry*)));
     connect(group, SIGNAL(entryAdded()), SLOT(entryAdded()));
-    connect(group, SIGNAL(entryAboutToRemove(const Entry*)), SLOT(entryAboutToRemove(const Entry*)));
+    connect(group, SIGNAL(entryAboutToRemove(Entry*)), SLOT(entryAboutToRemove(Entry*)));
     connect(group, SIGNAL(entryRemoved()), SLOT(entryRemoved()));
-    connect(group, SIGNAL(entryDataChanged(const Entry*)), SLOT(entryDataChanged(const Entry*)));
+    connect(group, SIGNAL(entryDataChanged(Entry*)), SLOT(entryDataChanged(Entry*)));
 
     endResetModel();
 }
@@ -66,7 +66,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         return QVariant();
     }
 
-    const Entry* entry = m_group->entries().at(index.row());
+    Entry* entry = m_group->entries().at(index.row());
 
     // TODO implement other columns
     if (role == Qt::DisplayRole) {
@@ -90,7 +90,7 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
     return QVariant();
 }
 
-void EntryModel::entryAboutToAdd(const Entry* entry)
+void EntryModel::entryAboutToAdd(Entry* entry)
 {
     Q_UNUSED(entry);
 
@@ -102,7 +102,7 @@ void EntryModel::entryAdded()
     endInsertRows();
 }
 
-void EntryModel::entryAboutToRemove(const Entry* entry)
+void EntryModel::entryAboutToRemove(Entry* entry)
 {
     beginRemoveRows(QModelIndex(), m_group->entries().indexOf(entry), m_group->entries().indexOf(entry));
 }
@@ -112,7 +112,7 @@ void EntryModel::entryRemoved()
     endRemoveRows();
 }
 
-void EntryModel::entryDataChanged(const Entry* entry)
+void EntryModel::entryDataChanged(Entry* entry)
 {
     int row = m_group->entries().indexOf(entry);
     qDebug("%d", index(row, 0).row());

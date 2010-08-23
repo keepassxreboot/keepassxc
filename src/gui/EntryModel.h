@@ -35,17 +35,17 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
 public Q_SLOTS:
-    void setGroup(const Group* group);
+    void setGroup(Group* group);
 
 private Q_SLOTS:
-    void entryAboutToAdd(const Entry* entry);
+    void entryAboutToAdd(Entry* entry);
     void entryAdded();
-    void entryAboutToRemove(const Entry* entry);
+    void entryAboutToRemove(Entry* entry);
     void entryRemoved();
-    void entryDataChanged(const Entry* entry);
+    void entryDataChanged(Entry* entry);
 
 private:
-    const Group* m_group;
+    Group* m_group;
 };
 
 #endif // KEEPASSX_ENTRYMODEL_H

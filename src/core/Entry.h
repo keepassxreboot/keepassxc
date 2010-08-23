@@ -84,7 +84,7 @@ public:
     void setGroup(Group* group);
 
 Q_SIGNALS:
-    void dataChanged(const Entry* entry);
+    void dataChanged(Entry* entry);
 
 private:
     Uuid m_uuid;

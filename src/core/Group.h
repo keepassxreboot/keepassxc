@@ -58,6 +58,7 @@ public:
     void setSearchingEnabled(int enable);
     void setLastTopVisibleEntry(Entry* entry);
 
+    Group* parentGroup();
     const Group* parentGroup() const;
     void setParent(Group* parent, int index = -1);
     void setParent(Database* db);
@@ -71,19 +72,19 @@ public:
     void removeEntry(Entry* entry);
 
 Q_SIGNALS:
-    void dataChanged(const Group* group);
+    void dataChanged(Group* group);
 
-    void aboutToAdd(const Group* group, int index);
+    void aboutToAdd(Group* group, int index);
     void added();
-    void aboutToRemove(const Group* group);
+    void aboutToRemove(Group* group);
     void removed();
 
-    void entryAboutToAdd(const Entry* entry);
+    void entryAboutToAdd(Entry* entry);
     void entryAdded();
-    void entryAboutToRemove(const Entry* entry);
+    void entryAboutToRemove(Entry* entry);
     void entryRemoved();
 
-    void entryDataChanged(const Entry* entry);
+    void entryDataChanged(Entry* entry);
 
 private:
     void recSetDatabase(Database* db);

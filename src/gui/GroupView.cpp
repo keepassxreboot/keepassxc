@@ -31,16 +31,16 @@ GroupView::GroupView(Database* db, QWidget* parent) : QTreeView(parent)
 
 void GroupView::expandedChanged(const QModelIndex& index)
 {
-    Group* group = const_cast<Group*>(m_model->groupFromIndex(index));
+    Group* group = m_model->groupFromIndex(index);
     group->setExpanded(isExpanded(index));
 }
 
-void GroupView::recInitExpanded(const Group* group)
+void GroupView::recInitExpanded(Group* group)
 {
     QModelIndex index = m_model->index(group);
     setExpanded(index, group->isExpanded());
 
-    Q_FOREACH (const Group* child, group->children()) {
+    Q_FOREACH (Group* child, group->children()) {
         recInitExpanded(child);
     }
 }

@@ -34,9 +34,10 @@ public:
 
 private Q_SLOTS:
     void expandedChanged(const QModelIndex& index);
+    void emitGroupChanged(const QModelIndex& index);
 
 private:
-    void recInitExpanded(const Group* group);
+    void recInitExpanded(Group* group);
 
     GroupModel* m_model;
 };

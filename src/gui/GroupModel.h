@@ -28,9 +28,9 @@ class GroupModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    explicit GroupModel(const Database* db, QObject* parent = 0);
-    QModelIndex index(const Group* group) const;
-    const Group* groupFromIndex(const QModelIndex& index) const;
+    explicit GroupModel(Database* db, QObject* parent = 0);
+    QModelIndex index(Group* group) const;
+    Group* groupFromIndex(const QModelIndex& index) const;
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const;
     int columnCount(const QModelIndex& parent = QModelIndex()) const;
@@ -40,18 +40,17 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
 private:
-    QModelIndex createIndex(int row, int column, const Group* group) const;
-    QModelIndex parent(const Group* group) const;
+    QModelIndex parent(Group* group) const;
 
 private Q_SLOTS:
-    void groupDataChanged(const Group* group);
-    void groupAboutToRemove(const Group* group);
+    void groupDataChanged(Group* group);
+    void groupAboutToRemove(Group* group);
     void groupRemoved();
-    void groupAboutToAdd(const Group* group, int index);
+    void groupAboutToAdd(Group* group, int index);
     void groupAdded();
 
 private:
-    const Group* m_root;
+    Group* m_root;
 };
 
 #endif // KEEPASSX_GROUPMODEL_H

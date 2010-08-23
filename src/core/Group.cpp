@@ -167,6 +167,11 @@ void Group::setLastTopVisibleEntry(Entry* entry)
     m_lastTopVisibleEntry = entry;
 }
 
+Group* Group::parentGroup()
+{
+    return m_parent;
+}
+
 const Group* Group::parentGroup() const
 {
     return m_parent;
@@ -273,7 +278,7 @@ void Group::addEntry(Entry *entry)
     Q_EMIT entryAboutToAdd(entry);
 
     m_entries << entry;
-    connect(entry, SIGNAL(dataChanged(const Entry*)), SIGNAL(entryDataChanged(const Entry*)));
+    connect(entry, SIGNAL(dataChanged(Entry*)), SIGNAL(entryDataChanged(Entry*)));
 
     Q_EMIT entryAdded();
 }
@@ -290,16 +295,16 @@ void Group::removeEntry(Entry* entry)
 
 void Group::recSetDatabase(Database* db)
 {
-    disconnect(SIGNAL(dataChanged(const Group*)), m_db);
-    disconnect(SIGNAL(aboutToRemove(const Group*)), m_db);
+    disconnect(SIGNAL(dataChanged(Group*)), m_db);
+    disconnect(SIGNAL(aboutToRemove(Group*)), m_db);
     disconnect(SIGNAL(removed()), m_db);
-    disconnect(SIGNAL(aboutToAdd(const Group*,int)), m_db);
+    disconnect(SIGNAL(aboutToAdd(Group*,int)), m_db);
     disconnect(SIGNAL(added()), m_db);
 
-    connect(this, SIGNAL(dataChanged(const Group*)), db, SIGNAL(groupDataChanged(const Group*)));
-    connect(this, SIGNAL(aboutToRemove(const Group*)), db, SIGNAL(groupAboutToRemove(const Group*)));
+    connect(this, SIGNAL(dataChanged(Group*)), db, SIGNAL(groupDataChanged(Group*)));
+    connect(this, SIGNAL(aboutToRemove(Group*)), db, SIGNAL(groupAboutToRemove(Group*)));
     connect(this, SIGNAL(removed()), db, SIGNAL(groupRemoved()));
-    connect(this, SIGNAL(aboutToAdd(const Group*,int)), db, SIGNAL(groupAboutToAdd(const Group*,int)));
+    connect(this, SIGNAL(aboutToAdd(Group*,int)), db, SIGNAL(groupAboutToAdd(Group*,int)));
     connect(this, SIGNAL(added()), db, SIGNAL(groupAdded()));
 
     m_db = db;

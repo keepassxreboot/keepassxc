@@ -69,7 +69,7 @@ void TestGroup::testParenting()
     QVERIFY(g1->children().at(1) == g3);
     QVERIFY(g3->children().contains(g4));
 
-    QSignalSpy spy(db, SIGNAL(groupDataChanged(const Group*)));
+    QSignalSpy spy(db, SIGNAL(groupDataChanged(Group*)));
     g2->setName("test");
     g4->setName("test");
     g3->setName("test");
@@ -90,9 +90,9 @@ void TestGroup::testSignals()
     g1->setParent(root);
     g2->setParent(root);
 
-    QSignalSpy spyAboutToAdd(db, SIGNAL(groupAboutToAdd(const Group*,int)));
+    QSignalSpy spyAboutToAdd(db, SIGNAL(groupAboutToAdd(Group*,int)));
     QSignalSpy spyAdded(db, SIGNAL(groupAdded()));
-    QSignalSpy spyAboutToRemove(db, SIGNAL(groupAboutToRemove(const Group*)));
+    QSignalSpy spyAboutToRemove(db, SIGNAL(groupAboutToRemove(Group*)));
     QSignalSpy spyRemoved(db, SIGNAL(groupRemoved()));
 
     g2->setParent(root, 0);
