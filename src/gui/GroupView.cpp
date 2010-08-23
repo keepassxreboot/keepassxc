@@ -23,21 +23,21 @@
 
 GroupView::GroupView(Database* db, QWidget* parent) : QTreeView(parent)
 {
-    model = new GroupModel(db, this);
-    QTreeView::setModel(model);
+    m_model = new GroupModel(db, this);
+    QTreeView::setModel(m_model);
     recInitExpanded(db->rootGroup());
     setHeaderHidden(true);
 }
 
 void GroupView::expandedChanged(const QModelIndex& index)
 {
-    Group* group = const_cast<Group*>(model->groupFromIndex(index));
+    Group* group = const_cast<Group*>(m_model->groupFromIndex(index));
     group->setExpanded(isExpanded(index));
 }
 
 void GroupView::recInitExpanded(const Group* group)
 {
-    QModelIndex index = model->index(group);
+    QModelIndex index = m_model->index(group);
     setExpanded(index, group->isExpanded());
 
     Q_FOREACH (const Group* child, group->children()) {
