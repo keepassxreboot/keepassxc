@@ -24,6 +24,9 @@ EntryView::EntryView(QWidget* parent)
 {
     m_model = new EntryModel(this);
     QTreeView::setModel(m_model);
+
+    setUniformRowHeights(true);
+    setRootIsDecorated(false);
 }
 
 void EntryView::setGroup(Group* group)

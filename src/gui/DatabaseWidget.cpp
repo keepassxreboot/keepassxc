@@ -18,6 +18,7 @@
 #include "DatabaseWidget.h"
 
 #include <QtGui/QHBoxLayout>
+#include <QtGui/QSplitter>
 
 #include "EntryView.h"
 #include "GroupView.h"
@@ -25,13 +26,17 @@
 DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     : QWidget(parent)
 {
-    m_groupView = new GroupView(db);
-    m_entryView = new EntryView();
+    QLayout* layout = new QHBoxLayout(this);
+    QSplitter* splitter = new QSplitter(this);
+
+    m_groupView = new GroupView(db, splitter);
+    m_entryView = new EntryView(splitter);
 
     connect(m_groupView, SIGNAL(groupChanged(Group*)), m_entryView, SLOT(setGroup(Group*)));
 
-    QHBoxLayout* layout = new QHBoxLayout();
-    layout->addWidget(m_groupView);
-    layout->addWidget(m_entryView);
+    splitter->addWidget(m_groupView);
+    splitter->addWidget(m_entryView);
+
+    layout->addWidget(splitter);
     setLayout(layout);
 }

@@ -29,6 +29,8 @@ GroupView::GroupView(Database* db, QWidget* parent) : QTreeView(parent)
     setHeaderHidden(true);
 
     connect(this, SIGNAL(clicked(const QModelIndex&)), SLOT(emitGroupChanged(const QModelIndex&)));
+
+    setUniformRowHeights(true);
 }
 
 void GroupView::expandedChanged(const QModelIndex& index)
