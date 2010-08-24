@@ -27,7 +27,9 @@ set(keepassx_SOURCES
     core/TimeInfo.cpp
     core/Uuid.cpp
     core/Writer.cpp
+    gui/DatabaseWidget.cpp
     gui/EntryModel.cpp
+    gui/EntryView.cpp
     gui/GroupModel.cpp
     gui/GroupView.cpp
 )

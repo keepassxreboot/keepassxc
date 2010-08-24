@@ -15,34 +15,23 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_GROUPVIEW_H
-#define KEEPASSX_GROUPVIEW_H
+#include "DatabaseWidget.h"
 
-#include <QtGui/QTreeView>
+#include <QtGui/QHBoxLayout>
 
-class Database;
-class Group;
-class GroupModel;
+#include "EntryView.h"
+#include "GroupView.h"
 
-class GroupView : public QTreeView
+DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
+    : QWidget(parent)
 {
-    Q_OBJECT
+    m_groupView = new GroupView(db);
+    m_entryView = new EntryView();
 
-public:
-    GroupView(Database* db, QWidget* parent = 0);
-    void setModel(QAbstractItemModel* model);
+    connect(m_groupView, SIGNAL(groupChanged(Group*)), m_entryView, SLOT(setGroup(Group*)));
 
-Q_SIGNALS:
-    void groupChanged(Group* group);
-
-private Q_SLOTS:
-    void expandedChanged(const QModelIndex& index);
-    void emitGroupChanged(const QModelIndex& index);
-
-private:
-    void recInitExpanded(Group* group);
-
-    GroupModel* m_model;
-};
-
-#endif // KEEPASSX_GROUPVIEW_H
+    QHBoxLayout* layout = new QHBoxLayout();
+    layout->addWidget(m_groupView);
+    layout->addWidget(m_entryView);
+    setLayout(layout);
+}

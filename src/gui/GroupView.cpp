@@ -27,6 +27,8 @@ GroupView::GroupView(Database* db, QWidget* parent) : QTreeView(parent)
     QTreeView::setModel(m_model);
     recInitExpanded(db->rootGroup());
     setHeaderHidden(true);
+
+    connect(this, SIGNAL(clicked(const QModelIndex&)), SLOT(emitGroupChanged(const QModelIndex&)));
 }
 
 void GroupView::expandedChanged(const QModelIndex& index)
@@ -43,6 +45,11 @@ void GroupView::recInitExpanded(Group* group)
     Q_FOREACH (Group* child, group->children()) {
         recInitExpanded(child);
     }
+}
+
+void GroupView::emitGroupChanged(const QModelIndex& index)
+{
+    Q_EMIT groupChanged(m_model->groupFromIndex(index));
 }
 
 void GroupView::setModel(QAbstractItemModel* model)
