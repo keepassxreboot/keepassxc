@@ -72,9 +72,9 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
     if (role == Qt::DisplayRole) {
         return entry->title();
     }
-    else if (role == Qt::DecorationRole) {
+    /*else if (role == Qt::DecorationRole) {
         return entry->icon();
-    }
+    }*/
     else {
         return QVariant();
     }
@@ -115,6 +115,5 @@ void EntryModel::entryRemoved()
 void EntryModel::entryDataChanged(Entry* entry)
 {
     int row = m_group->entries().indexOf(entry);
-    qDebug("%d", index(row, 0).row());
     Q_EMIT dataChanged(index(row, 0), index(row, columnCount()-1));
 }

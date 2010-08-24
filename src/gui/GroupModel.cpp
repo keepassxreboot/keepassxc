@@ -108,9 +108,10 @@ QVariant GroupModel::data(const QModelIndex& index, int role) const
     if (role == Qt::DisplayRole) {
         return group->name();
     }
-    else if (role == Qt::DecorationRole) {
+    // TODO enable
+    /*else if (role == Qt::DecorationRole) {
         return group->icon();
-    }
+    }*/
     else {
         return QVariant();
     }
