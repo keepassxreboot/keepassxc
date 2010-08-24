@@ -21,7 +21,8 @@
 #include "core/Group.h"
 #include "gui/GroupModel.h"
 
-GroupView::GroupView(Database* db, QWidget* parent) : QTreeView(parent)
+GroupView::GroupView(Database* db, QWidget* parent)
+    : QTreeView(parent)
 {
     m_model = new GroupModel(db, this);
     QTreeView::setModel(m_model);

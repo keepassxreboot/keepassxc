@@ -19,7 +19,8 @@
 
 #include "Database.h"
 
-Metadata::Metadata(Database* parent) : QObject(parent)
+Metadata::Metadata(Database* parent)
+    : QObject(parent)
 {
     m_generator = "KeePassX";
     m_maintenanceHistoryDays = 365;

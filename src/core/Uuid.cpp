@@ -21,7 +21,8 @@
 
 const int Uuid::length = 16;
 
-Uuid::Uuid() : m_data(length, 0)
+Uuid::Uuid()
+    : m_data(length, 0)
 {
 }
 

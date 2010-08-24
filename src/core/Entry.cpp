@@ -40,10 +40,12 @@ QImage Entry::icon() const
 {
     Q_ASSERT(m_iconNumber != 0 || !m_customIcon.isNull());
 
-    if (m_iconNumber == 0)
+    if (m_iconNumber == 0) {
         return m_db->customIcon(m_customIcon);
-    else
+    }
+    else {
         return Database::icon(m_iconNumber);
+    }
 }
 
 int Entry::iconNumber() const

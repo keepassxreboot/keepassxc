@@ -20,7 +20,8 @@
 #include "core/Database.h"
 #include "core/Group.h"
 
-GroupModel::GroupModel(Database* db, QObject* parent) : QAbstractItemModel(parent)
+GroupModel::GroupModel(Database* db, QObject* parent)
+    : QAbstractItemModel(parent)
 {
     m_root = db->rootGroup();
     connect(db, SIGNAL(groupDataChanged(Group*)), SLOT(groupDataChanged(Group*)));

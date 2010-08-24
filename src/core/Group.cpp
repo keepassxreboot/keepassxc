@@ -50,10 +50,12 @@ QString Group::notes() const
 
 QImage Group::icon() const
 {
-    if (m_iconNumber == 0)
+    if (m_iconNumber == 0) {
         return m_db->customIcon(m_customIcon);
-    else
+    }
+    else {
         return Database::icon(m_iconNumber);
+    }
 }
 
 int Group::iconNumber() const
