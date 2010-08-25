@@ -20,8 +20,6 @@
 
 #include "Group.h"
 
-#include "DbAttribute.h"
-
 #include <QtCore/QHash>
 #include <QtGui/QImage>
 
@@ -64,7 +62,6 @@ private:
     Metadata* m_metadata;
     Group* m_rootGroup;
     QHash<Uuid, QImage> m_customIcons;
-    DbAttribute m_unhandledAttirbute;
     QList<DeletedObject> m_deletedObjects;
 };
 

@@ -46,6 +46,7 @@ private:
     void parseCustomIcons();
     void parseIcon();
     void parseCustomData();
+    void parseCustomDataItem();
     void parseRoot();
     Group* parseGroup();
     void parseDeletedObjects();

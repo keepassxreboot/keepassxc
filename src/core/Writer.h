@@ -46,6 +46,7 @@ private:
     void writeCustomIcons();
     void writeIcon(const Uuid& uuid, const QImage& image);
     void writeCustomData();
+    void writeCustomDataItem(const QString& key, const QString& value);
     void writeRoot();
     void writeGroup(const Group* group);
     void writeTimes(const TimeInfo& ti);

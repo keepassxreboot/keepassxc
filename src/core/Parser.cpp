@@ -210,9 +210,31 @@ void Parser::parseCustomData()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "CustomData");
 
-    // TODO implement
     while (!m_xml.error() && m_xml.readNextStartElement()) {
-        skipCurrentElement();
+        if (m_xml.name() == "Item") {
+            parseCustomDataItem();
+        }
+        else {
+            skipCurrentElement();
+        }
+    }
+}
+
+void Parser::parseCustomDataItem()
+{
+    Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Item");
+
+    QString key;
+    while (!m_xml.error() && m_xml.readNextStartElement()) {
+        if (m_xml.name() == "Key") {
+            key = readString();
+        }
+        else if (m_xml.name() == "Value") {
+            m_meta->addCustomField(key, readString());
+        }
+        else {
+            skipCurrentElement();
+        }
     }
 }
 

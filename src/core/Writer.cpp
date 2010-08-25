@@ -100,8 +100,9 @@ void Writer::writeCustomIcons()
 {
     m_xml.writeStartElement("CustomIcons");
 
-    Q_FOREACH (const Uuid& uuid, m_meta->customIcons().keys()) {
-        writeIcon(uuid, m_meta->customIcons().value(uuid));
+    QHash<Uuid, QImage> customIcons = m_meta->customIcons();
+    Q_FOREACH (const Uuid& uuid, customIcons.keys()) {
+        writeIcon(uuid, customIcons.value(uuid));
     }
 
     m_xml.writeEndElement();
@@ -127,7 +128,20 @@ void Writer::writeCustomData()
 {
     m_xml.writeStartElement("CustomData");
 
-    // TODO implement
+    QHash<QString, QString> customFields = m_meta->customFields();
+    Q_FOREACH (const QString& key, customFields.keys()) {
+        writeCustomDataItem(key, customFields.value(key));
+    }
+
+    m_xml.writeEndElement();
+}
+
+void Writer::writeCustomDataItem(const QString& key, const QString& value)
+{
+    m_xml.writeStartElement("Item");
+
+    writeString("Key", key);
+    writeString("Value", value);
 
     m_xml.writeEndElement();
 }

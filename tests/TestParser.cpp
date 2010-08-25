@@ -40,7 +40,8 @@ class TestParser : public QObject
 private Q_SLOTS:
     void initTestCase();
     void testMetadata();
-    void testCustomIcon();
+    void testCustomIcons();
+    void testCustomData();
     void testGroupRoot();
     void testGroup1();
     void testGroup2();
@@ -97,7 +98,7 @@ void TestParser::testMetadata()
     QVERIFY(m_db->metadata()->lastTopVisibleGroup() == m_db->metadata()->lastSelectedGroup());
 }
 
-void TestParser::testCustomIcon()
+void TestParser::testCustomIcons()
 {
     QCOMPARE(m_db->metadata()->customIcons().size(), 1);
     Uuid uuid = Uuid::fromBase64("++vyI+daLk6omox4a6kQGA==");
@@ -113,6 +114,15 @@ void TestParser::testCustomIcon()
             QCOMPARE(qBlue(rgb), 128);
         }
     }
+}
+
+void TestParser::testCustomData()
+{
+    QHash<QString, QString> customFields = m_db->metadata()->customFields();
+
+    QCOMPARE(customFields.size(), 2);
+    QCOMPARE(customFields.value("A Sample Test Key"), QString("valu"));
+    QCOMPARE(customFields.value("custom key"), QString("blub"));
 }
 
 void TestParser::testGroupRoot()

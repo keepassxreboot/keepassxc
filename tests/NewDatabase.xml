@@ -30,7 +30,16 @@
 		<EntryTemplatesGroupChanged>2010-08-08T17:24:19Z</EntryTemplatesGroupChanged>
 		<LastSelectedGroup>lmU+9n0aeESKZvcEze+bRg==</LastSelectedGroup>
 		<LastTopVisibleGroup>lmU+9n0aeESKZvcEze+bRg==</LastTopVisibleGroup>
-		<CustomData />
+		<CustomData>
+			<Item>
+				<Key>A Sample Test Key</Key>
+				<Value>valu</Value>
+			</Item>
+			<Item>
+				<Key>custom key</Key>
+				<Value>blub</Value>
+			</Item>
+		</CustomData>
 	</Meta>
 	<Root>
 		<Group>
