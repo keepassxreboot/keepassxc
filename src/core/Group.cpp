@@ -248,14 +248,9 @@ QList<Group*> Group::children()
     return m_children;
 }
 
-QList<const Group*> Group::children() const
+const QList<Group*>& Group::children() const
 {
-    QList<const Group*> constChildren;
-    Q_FOREACH (Group* group, m_children) {
-        constChildren << group;
-    }
-
-    return constChildren;
+    return m_children;
 }
 
 QList<Entry*> Group::entries()
@@ -263,14 +258,9 @@ QList<Entry*> Group::entries()
     return m_entries;
 }
 
-QList<const Entry*> Group::entries() const
+const QList<Entry*>& Group::entries() const
 {
-    QList<const Entry*> constEntries;
-    Q_FOREACH (Entry* entry, m_entries) {
-        constEntries << entry;
-    }
-
-    return constEntries;
+    return m_entries;
 }
 
 void Group::addEntry(Entry *entry)

@@ -65,9 +65,9 @@ public:
 
     const Database* database() const;
     QList<Group*> children();
-    QList<const Group*> children() const;
+    const QList<Group*>& children() const;
     QList<Entry*> entries();
-    QList<const Entry*> entries() const;
+    const QList<Entry*>& entries() const;
     void addEntry(Entry* entry);
     void removeEntry(Entry* entry);
 
