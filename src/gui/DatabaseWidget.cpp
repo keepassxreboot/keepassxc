@@ -32,6 +32,16 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_groupView = new GroupView(db, splitter);
     m_entryView = new EntryView(splitter);
 
+    QSizePolicy policy;
+
+    policy = m_groupView->sizePolicy();
+    policy.setHorizontalStretch(30);
+    m_groupView->setSizePolicy(policy);
+
+    policy = m_entryView->sizePolicy();
+    policy.setHorizontalStretch(70);
+    m_entryView->setSizePolicy(policy);
+
     connect(m_groupView, SIGNAL(groupChanged(Group*)), m_entryView, SLOT(setGroup(Group*)));
 
     splitter->addWidget(m_groupView);
