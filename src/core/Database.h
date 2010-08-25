@@ -27,6 +27,12 @@
 
 class Metadata;
 
+struct DeletedObject
+{
+    Uuid uuid;
+    QDateTime deletionTime;
+};
+
 class Database : public QObject
 {
     Q_OBJECT
@@ -41,6 +47,8 @@ public:
     QImage customIcon(const Uuid& uuid) const;
     Entry* resolveEntry(const Uuid& uuid);
     Group* resolveGroup(const Uuid& uuid);
+    QList<DeletedObject> deletedObjects();
+    void addDeletedObject(const DeletedObject& delObj);
 
 Q_SIGNALS:
     void groupDataChanged(Group* group);
@@ -57,6 +65,7 @@ private:
     Group* m_rootGroup;
     QHash<Uuid, QImage> m_customIcons;
     DbAttribute m_unhandledAttirbute;
+    QList<DeletedObject> m_deletedObjects;
 };
 
 #endif // KEEPASSX_DATABASE_H

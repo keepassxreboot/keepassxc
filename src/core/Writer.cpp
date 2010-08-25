@@ -20,7 +20,6 @@
 #include <QtCore/QBuffer>
 #include <QtCore/QFile>
 
-#include "core/Database.h"
 #include "core/Metadata.h"
 
 Writer::Writer(Database* db)
@@ -29,7 +28,7 @@ Writer::Writer(Database* db)
     , m_meta(db->metadata())
 {
     m_xml.setAutoFormatting(true);
-    m_xml.setAutoFormattingIndent(-1);
+    m_xml.setAutoFormattingIndent(-1); // 1 tab
     m_xml.setCodec("UTF-8");
 
 }
@@ -140,7 +139,11 @@ void Writer::writeRoot()
     m_xml.writeStartElement("Root");
 
     writeGroup(m_db->rootGroup());
+
     m_xml.writeStartElement("DeletedObjects");
+
+
+
     m_xml.writeEndElement();
 
     m_xml.writeEndElement();
@@ -215,6 +218,27 @@ void Writer::writeTimes(const TimeInfo& ti)
     m_xml.writeEndElement();
 }
 
+void Writer::writeDeletedObjects()
+{
+    m_xml.writeStartElement("DeletedObjects");
+
+    Q_FOREACH (const DeletedObject& delObj, m_db->deletedObjects()) {
+        writeDeletedObject(delObj);
+    }
+
+    m_xml.writeEndElement();
+}
+
+void Writer::writeDeletedObject(const DeletedObject& delObj)
+{
+    m_xml.writeStartElement("DeletedObject");
+
+    writeUuid("UUID", delObj.uuid);
+    writeDateTime("DeletionTime", delObj.deletionTime);
+
+    m_xml.writeEndElement();
+}
+
 void Writer::writeEntry(const Entry* entry)
 {
     m_xml.writeStartElement("Entry");
@@ -278,8 +302,10 @@ void Writer::writeEntryHistory(const Entry* entry)
 {
     m_xml.writeStartElement("History");
 
-    // TODO implement
-    Q_UNUSED(entry);
+    const QList<Entry*>& historyItems = entry->historyItems();
+    Q_FOREACH (const Entry* item, historyItems) {
+        writeEntry(item);
+    }
 
     m_xml.writeEndElement();
 }

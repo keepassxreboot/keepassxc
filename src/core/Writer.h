@@ -23,11 +23,11 @@
 #include <QtGui/QColor>
 #include <QtGui/QImage>
 
+#include "core/Database.h"
 #include "core/Entry.h"
 #include "core/TimeInfo.h"
 #include "core/Uuid.h"
 
-class Database;
 class Group;
 class Metadata;
 
@@ -49,6 +49,8 @@ private:
     void writeRoot();
     void writeGroup(const Group* group);
     void writeTimes(const TimeInfo& ti);
+    void writeDeletedObjects();
+    void writeDeletedObject(const DeletedObject& delObj);
     void writeEntry(const Entry* entry);
     void writeAutoType(const Entry* entry);
     void writeAutoTypeAssoc(const AutoTypeAssociation& assoc);

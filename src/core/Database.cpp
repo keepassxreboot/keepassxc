@@ -99,3 +99,13 @@ Group* Database::recFindGroup(const Uuid& uuid, Group* group)
 
     return 0;
 }
+
+QList<DeletedObject> Database::deletedObjects()
+{
+    return m_deletedObjects;
+}
+
+void Database::addDeletedObject(const DeletedObject& delObj)
+{
+    m_deletedObjects.append(delObj);
+}

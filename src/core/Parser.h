@@ -48,12 +48,14 @@ private:
     void parseCustomData();
     void parseRoot();
     Group* parseGroup();
-    Entry* parseEntry();
+    void parseDeletedObjects();
+    void parseDeletedObject();
+    Entry* parseEntry(bool history);
     void parseEntryString(Entry* entry);
     void parseEntryBinary(Entry* entry);
     void parseAutoType(Entry* entry);
     void parseAutoTypeAssoc(Entry* entry);
-    void parseEntryHistory();
+    void parseEntryHistory(Entry* entry);
     TimeInfo parseTimes();
 
     QString readString();

@@ -81,7 +81,12 @@ public:
     void setPassword(const QString& password);
     void setNotes(const QString& notes);
 
+    QList<Entry*> historyItems();
+    const QList<Entry*>& historyItems() const;
+    void addHistoryItem(Entry* entry);
+
     void setGroup(Group* group);
+
 
 Q_SIGNALS:
     void dataChanged(Entry* entry);
@@ -101,6 +106,7 @@ private:
     QHash<QString, QString> m_attributes;
     QHash<QString, QByteArray> m_binaries;
 
+    QList<Entry*> m_history;
     Group* m_group;
     const Database* m_db;
 };

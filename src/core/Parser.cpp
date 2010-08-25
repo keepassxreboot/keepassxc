@@ -228,8 +228,7 @@ void Parser::parseRoot()
             }
         }
         else if (m_xml.name() == "DeletedObjects") {
-            // TODO implement
-            skipCurrentElement();
+            parseDeletedObjects();
         }
         else {
             skipCurrentElement();
@@ -325,7 +324,7 @@ Group* Parser::parseGroup()
             }
         }
         else if (m_xml.name() == "Entry") {
-            Entry* newEntry = parseEntry();
+            Entry* newEntry = parseEntry(false);
             if (newEntry) {
                 newEntry->setGroup(group);
             }
@@ -338,7 +337,48 @@ Group* Parser::parseGroup()
     return group;
 }
 
-Entry* Parser::parseEntry()
+void Parser::parseDeletedObjects()
+{
+    Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "DeletedObjects");
+
+    while (!m_xml.error() && m_xml.readNextStartElement()) {
+        if (m_xml.name() == "DeletedObject") {
+            parseDeletedObject();
+        }
+        else {
+            skipCurrentElement();
+        }
+    }
+}
+
+void Parser::parseDeletedObject()
+{
+    Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "DeletedObject");
+
+    DeletedObject delObj;
+
+    while (!m_xml.error() && m_xml.readNextStartElement()) {
+        if (m_xml.name() == "UUID") {
+            Uuid uuid = readUuid();
+            if (uuid.isNull()) {
+                raiseError();
+            }
+            else {
+                delObj.uuid = uuid;
+            }
+        }
+        else if (m_xml.name() == "DeletionTime") {
+            delObj.deletionTime = readDateTime();
+        }
+        else {
+            skipCurrentElement();
+        }
+    }
+
+    m_db->addDeletedObject(delObj);
+}
+
+Entry* Parser::parseEntry(bool history)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Entry");
 
@@ -350,8 +390,13 @@ Entry* Parser::parseEntry()
                 raiseError();
             }
             else {
-               entry = getEntry(uuid);
-           }
+                if (history) {
+                    entry = new Entry();
+                }
+                else {
+                    entry = getEntry(uuid);
+                }
+            }
         }
         else if (m_xml.name() == "IconID") {
             int iconId = readNumber();
@@ -389,7 +434,12 @@ Entry* Parser::parseEntry()
             parseAutoType(entry);
         }
         else if (m_xml.name() == "History") {
-            parseEntryHistory();
+            if (history) {
+                raiseError();
+            }
+            else {
+                parseEntryHistory(entry);
+            }
         }
         else {
             skipCurrentElement();
@@ -477,14 +527,14 @@ void Parser::parseAutoTypeAssoc(Entry *entry)
     }
 }
 
-void Parser::parseEntryHistory()
+void Parser::parseEntryHistory(Entry* entry)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "History");
 
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Entry") {
-            // TODO implement
-            skipCurrentElement();
+            Entry* historyItem = parseEntry(true);
+            entry->addHistoryItem(historyItem);
         }
         else {
             skipCurrentElement();

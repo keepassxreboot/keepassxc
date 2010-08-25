@@ -29,6 +29,7 @@ Entry::Entry()
 Entry::~Entry()
 {
     // TODO notify group
+    qDeleteAll(m_history);
 }
 
 Uuid Entry::uuid() const
@@ -234,6 +235,23 @@ void Entry::setPassword(const QString& password)
 void Entry::setNotes(const QString& notes)
 {
     addAttribute("Notes", notes);
+}
+
+QList<Entry*> Entry::historyItems()
+{
+    return m_history;
+}
+
+const QList<Entry*>& Entry::historyItems() const
+{
+    return m_history;
+}
+
+void Entry::addHistoryItem(Entry* entry)
+{
+    Q_ASSERT(!entry->parent());
+
+    m_history.append(entry);
 }
 
 void Entry::setGroup(Group* group)
