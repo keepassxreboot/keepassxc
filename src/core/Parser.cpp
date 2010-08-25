@@ -262,7 +262,7 @@ Group* Parser::parseGroup()
             if (iconId < 0) {
                 raiseError();
             }
-            else if (iconId != 0) {
+            else {
                 group->setIcon(iconId);
             }
         }
@@ -403,7 +403,7 @@ Entry* Parser::parseEntry(bool history)
             if (iconId < 0) {
                 raiseError();
             }
-            else if (iconId != 0) {
+            else {
                 entry->setIcon(iconId);
             }
         }
