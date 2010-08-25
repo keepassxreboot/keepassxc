@@ -70,6 +70,12 @@ bool Uuid::operator!=(const Uuid& other) const
     return !operator==(other);
 }
 
+Uuid Uuid::fromBase64(const QString& str)
+{
+    QByteArray data = QByteArray::fromBase64(str.toAscii());
+    return Uuid(data);
+}
+
 uint qHash(const Uuid& key)
 {
     return qHash(key.toByteArray());
