@@ -139,12 +139,7 @@ void Writer::writeRoot()
     m_xml.writeStartElement("Root");
 
     writeGroup(m_db->rootGroup());
-
-    m_xml.writeStartElement("DeletedObjects");
-
-
-
-    m_xml.writeEndElement();
+    writeDeletedObjects();
 
     m_xml.writeEndElement();
 }
