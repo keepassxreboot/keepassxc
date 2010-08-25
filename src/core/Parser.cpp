@@ -392,6 +392,7 @@ Entry* Parser::parseEntry(bool history)
             else {
                 if (history) {
                     entry = new Entry();
+                    entry->setUuid(uuid);
                 }
                 else {
                     entry = getEntry(uuid);
