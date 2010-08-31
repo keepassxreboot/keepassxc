@@ -65,10 +65,10 @@ QDateTime TestParser::genDT(int year, int month, int day, int hour, int min, int
 
 void TestParser::initTestCase()
 {
-    m_db = new Database();
-    KeePass2XmlReader* reader = new KeePass2XmlReader(m_db);
+    KeePass2XmlReader* reader = new KeePass2XmlReader();
     QString xmlFile = QString(KEEPASSX_TEST_DIR).append("/NewDatabase.xml");
-    QVERIFY(reader->parse(xmlFile));
+    m_db = reader->readDatabase(xmlFile);
+    QVERIFY(!reader->error());
 }
 
 void TestParser::testMetadata()

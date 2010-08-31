@@ -15,24 +15,18 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtGui/QApplication>
-#include <QtGui/QTreeView>
+#ifndef KEEPASSX_DATABASEWRITER_H
+#define KEEPASSX_DATABASEWRITER_H
 
-#include "core/Database.h"
-#include "format/KeePass2XmlReader.h"
-#include "gui/DatabaseWidget.h"
+#include <QtCore/QString>
 
-#include "../tests/config-keepassx-tests.h"
+class Database;
+class QIODevice;
 
-int main(int argc, char **argv)
+class DatabaseWriter
 {
-    QApplication app(argc, argv);
+public:
+    virtual void writeDatabase(QIODevice* device, Database* db) = 0;
+};
 
-    KeePass2XmlReader* reader = new KeePass2XmlReader();
-    Database* db = reader->readDatabase(QString(KEEPASSX_TEST_DIR).append("/NewDatabase.xml"));
-
-    DatabaseWidget dbWidget(db);
-    dbWidget.show();
-
-    return app.exec();
-}
+#endif // KEEPASSX_DATABASEWRITER_H

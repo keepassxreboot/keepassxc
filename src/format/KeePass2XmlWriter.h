@@ -15,14 +15,15 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_WRITER_H
-#define KEEPASSX_WRITER_H
+#ifndef KEEPASSX_KEEPASS2XMLWRITER_H
+#define KEEPASSX_KEEPASS2XMLWRITER_H
 
 #include <QtCore/QDateTime>
 #include <QtCore/QXmlStreamWriter>
 #include <QtGui/QColor>
 #include <QtGui/QImage>
 
+#include "DatabaseWriter.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/TimeInfo.h"
@@ -31,14 +32,14 @@
 class Group;
 class Metadata;
 
-class KeePass2XmlWriter : public QObject
+class KeePass2XmlWriter : public DatabaseWriter
 {
-    Q_OBJECT
-
 public:
-    KeePass2XmlWriter(Database* db);
-    void write(QIODevice* device);
-    void write(const QString& filename);
+    KeePass2XmlWriter();
+    void writeDatabase(QIODevice* device, Database* db);
+    void writeDatabase(const QString& filename, Database* db);
+    bool error();
+    QString errorString();
 
 private:
     void writeMetadata();
@@ -73,4 +74,4 @@ private:
     Metadata* m_meta;
 };
 
-#endif // KEEPASSX_WRITER_H
+#endif // KEEPASSX_KEEPASS2XMLWRITER_H

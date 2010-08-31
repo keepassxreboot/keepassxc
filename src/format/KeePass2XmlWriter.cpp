@@ -22,19 +22,20 @@
 
 #include "core/Metadata.h"
 
-KeePass2XmlWriter::KeePass2XmlWriter(Database* db)
-    : QObject(db)
-    , m_db(db)
-    , m_meta(db->metadata())
+KeePass2XmlWriter::KeePass2XmlWriter()
+    : m_db(0)
+    , m_meta(0)
 {
     m_xml.setAutoFormatting(true);
     m_xml.setAutoFormattingIndent(-1); // 1 tab
     m_xml.setCodec("UTF-8");
-
 }
 
-void KeePass2XmlWriter::write(QIODevice* device)
+void KeePass2XmlWriter::writeDatabase(QIODevice* device, Database* db)
 {
+    m_db = db;
+    m_meta = db->metadata();
+
     m_xml.setDevice(device);
 
     m_xml.writeStartDocument("1.0", true);
@@ -49,11 +50,11 @@ void KeePass2XmlWriter::write(QIODevice* device)
     m_xml.writeEndDocument();
 }
 
-void KeePass2XmlWriter::write(const QString& filename)
+void KeePass2XmlWriter::writeDatabase(const QString& filename, Database* db)
 {
     QFile file(filename);
     file.open(QIODevice::WriteOnly);
-    write(&file);
+    writeDatabase(&file, db);
 }
 
 void KeePass2XmlWriter::writeMetadata()

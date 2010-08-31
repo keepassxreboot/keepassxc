@@ -23,17 +23,18 @@
 #include "core/Database.h"
 #include "core/Metadata.h"
 
-KeePass2XmlReader::KeePass2XmlReader(Database* db)
+KeePass2XmlReader::KeePass2XmlReader()
+    : m_db(0)
+    , m_meta(0)
 {
-    m_db = db;
-    m_meta = db->metadata();
 }
 
-bool KeePass2XmlReader::parse(const QString& filename)
+Database* KeePass2XmlReader::readDatabase(QIODevice* device)
 {
-    QFile file(filename);
-    file.open(QIODevice::ReadOnly | QIODevice::Text);
-    m_xml.setDevice(&file);
+    m_xml.setDevice(device);
+
+    m_db = new Database();
+    m_meta = m_db->metadata();
 
     m_tmpParent = new Group();
     m_tmpParent->setParent(m_db);
@@ -50,10 +51,22 @@ bool KeePass2XmlReader::parse(const QString& filename)
 
     delete m_tmpParent;
 
-    return !m_xml.error();
+    return m_db;
 }
 
-QString KeePass2XmlReader::errorMsg()
+Database* KeePass2XmlReader::readDatabase(const QString& filename)
+{
+    QFile file(filename);
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    return readDatabase(&file);
+}
+
+bool KeePass2XmlReader::error()
+{
+    return m_xml.hasError();
+}
+
+QString KeePass2XmlReader::errorString()
 {
     return QString("%1\nLine %2, column %3")
             .arg(m_xml.errorString())

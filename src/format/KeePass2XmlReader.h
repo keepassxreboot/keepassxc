@@ -15,13 +15,15 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_PARSER_H
-#define KEEPASSX_PARSER_H
+#ifndef KEEPASSX_KEEPASS2XMLREADER_H
+#define KEEPASSX_KEEPASS2XMLREADER_H
 
+#include <QtCore/QCoreApplication>
 #include <QtCore/QDateTime>
 #include <QtCore/QXmlStreamReader>
 #include <QtGui/QColor>
 
+#include "DatabaseReader.h"
 #include "core/TimeInfo.h"
 #include "core/Uuid.h"
 
@@ -30,14 +32,16 @@ class Entry;
 class Group;
 class Metadata;
 
-class KeePass2XmlReader : public QObject
+class KeePass2XmlReader : public DatabaseReader
 {
-    Q_OBJECT
+    Q_DECLARE_TR_FUNCTIONS(KeePass2XmlReader);
 
 public:
-    explicit KeePass2XmlReader(Database* db);
-    bool parse(const QString& filename);
-    QString errorMsg();
+    KeePass2XmlReader();
+    Database* readDatabase(QIODevice* device);
+    Database* readDatabase(const QString& filename);
+    bool error();
+    QString errorString();
 
 private:
     void parseKeePassFile();
@@ -80,4 +84,4 @@ private:
     QList<Entry*> m_entries;
 };
 
-#endif // KEEPASSX_PARSER_H
+#endif // KEEPASSX_KEEPASS2XMLREADER_H
