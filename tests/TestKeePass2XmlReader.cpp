@@ -19,7 +19,7 @@
 
 #include "core/Database.h"
 #include "core/Metadata.h"
-#include "core/Parser.h"
+#include "format/KeePass2XmlReader.h"
 #include "config-keepassx-tests.h"
 
 namespace QTest {
@@ -66,9 +66,9 @@ QDateTime TestParser::genDT(int year, int month, int day, int hour, int min, int
 void TestParser::initTestCase()
 {
     m_db = new Database();
-    Parser* parser = new Parser(m_db);
+    KeePass2XmlReader* reader = new KeePass2XmlReader(m_db);
     QString xmlFile = QString(KEEPASSX_TEST_DIR).append("/NewDatabase.xml");
-    QVERIFY(parser->parse(xmlFile));
+    QVERIFY(reader->parse(xmlFile));
 }
 
 void TestParser::testMetadata()

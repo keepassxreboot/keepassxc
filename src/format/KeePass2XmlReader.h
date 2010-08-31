@@ -22,20 +22,20 @@
 #include <QtCore/QXmlStreamReader>
 #include <QtGui/QColor>
 
-#include "TimeInfo.h"
-#include "Uuid.h"
+#include "core/TimeInfo.h"
+#include "core/Uuid.h"
 
 class Database;
 class Entry;
 class Group;
 class Metadata;
 
-class Parser : public QObject
+class KeePass2XmlReader : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit Parser(Database* db);
+    explicit KeePass2XmlReader(Database* db);
     bool parse(const QString& filename);
     QString errorMsg();
 

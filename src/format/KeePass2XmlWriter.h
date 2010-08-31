@@ -31,12 +31,12 @@
 class Group;
 class Metadata;
 
-class Writer : public QObject
+class KeePass2XmlWriter : public QObject
 {
     Q_OBJECT
 
 public:
-    Writer(Database* db);
+    KeePass2XmlWriter(Database* db);
     void write(QIODevice* device);
     void write(const QString& filename);
 

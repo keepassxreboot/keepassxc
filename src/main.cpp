@@ -19,7 +19,7 @@
 #include <QtGui/QTreeView>
 
 #include "core/Database.h"
-#include "core/Parser.h"
+#include "format/KeePass2XmlReader.h"
 #include "gui/DatabaseWidget.h"
 
 #include "../tests/config-keepassx-tests.h"
@@ -28,9 +28,9 @@ int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
 
-    Database* db= new Database();
-    Parser* parser = new Parser(db);
-    parser->parse(QString(KEEPASSX_TEST_DIR).append("/NewDatabase.xml"));
+    Database* db = new Database();
+    KeePass2XmlReader* reader = new KeePass2XmlReader(db);
+    reader->parse(QString(KEEPASSX_TEST_DIR).append("/NewDatabase.xml"));
 
     DatabaseWidget dbWidget(db);
     dbWidget.show();

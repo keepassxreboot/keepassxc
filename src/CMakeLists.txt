@@ -22,10 +22,10 @@ set(keepassx_SOURCES
     core/Entry.cpp
     core/Group.cpp
     core/Metadata.cpp
-    core/Parser.cpp
     core/TimeInfo.cpp
     core/Uuid.cpp
-    core/Writer.cpp
+    format/KeePass2XmlReader.cpp
+    format/KeePass2XmlWriter.cpp
     gui/DatabaseWidget.cpp
     gui/EntryModel.cpp
     gui/EntryView.cpp

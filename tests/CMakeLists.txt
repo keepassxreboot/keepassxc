@@ -66,8 +66,8 @@ endmacro (ADD_UNIT_TEST)
 add_unit_test( testgroup TestGroup.cpp )
 target_link_libraries( testgroup keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} )
 
-add_unit_test( testparser TestParser.cpp )
-target_link_libraries( testparser keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} )
+add_unit_test( testkeepass2xmlreader TestKeePass2XmlReader.cpp )
+target_link_libraries( testkeepass2xmlreader keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} )
 
 add_unit_test( testgroupmodel TestGroupModel.cpp modeltest.cpp )
 target_link_libraries( testgroupmodel keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} )

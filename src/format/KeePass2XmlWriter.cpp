@@ -15,14 +15,14 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Writer.h"
+#include "KeePass2XmlWriter.h"
 
 #include <QtCore/QBuffer>
 #include <QtCore/QFile>
 
 #include "core/Metadata.h"
 
-Writer::Writer(Database* db)
+KeePass2XmlWriter::KeePass2XmlWriter(Database* db)
     : QObject(db)
     , m_db(db)
     , m_meta(db->metadata())
@@ -33,7 +33,7 @@ Writer::Writer(Database* db)
 
 }
 
-void Writer::write(QIODevice* device)
+void KeePass2XmlWriter::write(QIODevice* device)
 {
     m_xml.setDevice(device);
 
@@ -49,14 +49,14 @@ void Writer::write(QIODevice* device)
     m_xml.writeEndDocument();
 }
 
-void Writer::write(const QString& filename)
+void KeePass2XmlWriter::write(const QString& filename)
 {
     QFile file(filename);
     file.open(QIODevice::WriteOnly);
     write(&file);
 }
 
-void Writer::writeMetadata()
+void KeePass2XmlWriter::writeMetadata()
 {
     m_xml.writeStartElement("Meta");
 
@@ -82,7 +82,7 @@ void Writer::writeMetadata()
     m_xml.writeEndElement();
 }
 
-void Writer::writeMemoryProtection()
+void KeePass2XmlWriter::writeMemoryProtection()
 {
     m_xml.writeStartElement("MemoryProtection");
 
@@ -96,7 +96,7 @@ void Writer::writeMemoryProtection()
     m_xml.writeEndElement();
 }
 
-void Writer::writeCustomIcons()
+void KeePass2XmlWriter::writeCustomIcons()
 {
     m_xml.writeStartElement("CustomIcons");
 
@@ -108,7 +108,7 @@ void Writer::writeCustomIcons()
     m_xml.writeEndElement();
 }
 
-void Writer::writeIcon(const Uuid& uuid, const QImage& image)
+void KeePass2XmlWriter::writeIcon(const Uuid& uuid, const QImage& image)
 {
     m_xml.writeStartElement("Icon");
 
@@ -124,7 +124,7 @@ void Writer::writeIcon(const Uuid& uuid, const QImage& image)
     m_xml.writeEndElement();
 }
 
-void Writer::writeCustomData()
+void KeePass2XmlWriter::writeCustomData()
 {
     m_xml.writeStartElement("CustomData");
 
@@ -136,7 +136,7 @@ void Writer::writeCustomData()
     m_xml.writeEndElement();
 }
 
-void Writer::writeCustomDataItem(const QString& key, const QString& value)
+void KeePass2XmlWriter::writeCustomDataItem(const QString& key, const QString& value)
 {
     m_xml.writeStartElement("Item");
 
@@ -146,7 +146,7 @@ void Writer::writeCustomDataItem(const QString& key, const QString& value)
     m_xml.writeEndElement();
 }
 
-void Writer::writeRoot()
+void KeePass2XmlWriter::writeRoot()
 {
     Q_ASSERT(m_db->rootGroup());
 
@@ -158,7 +158,7 @@ void Writer::writeRoot()
     m_xml.writeEndElement();
 }
 
-void Writer::writeGroup(const Group* group)
+void KeePass2XmlWriter::writeGroup(const Group* group)
 {
     m_xml.writeStartElement("Group");
 
@@ -212,7 +212,7 @@ void Writer::writeGroup(const Group* group)
     m_xml.writeEndElement();
 }
 
-void Writer::writeTimes(const TimeInfo& ti)
+void KeePass2XmlWriter::writeTimes(const TimeInfo& ti)
 {
     m_xml.writeStartElement("Times");
 
@@ -227,7 +227,7 @@ void Writer::writeTimes(const TimeInfo& ti)
     m_xml.writeEndElement();
 }
 
-void Writer::writeDeletedObjects()
+void KeePass2XmlWriter::writeDeletedObjects()
 {
     m_xml.writeStartElement("DeletedObjects");
 
@@ -238,7 +238,7 @@ void Writer::writeDeletedObjects()
     m_xml.writeEndElement();
 }
 
-void Writer::writeDeletedObject(const DeletedObject& delObj)
+void KeePass2XmlWriter::writeDeletedObject(const DeletedObject& delObj)
 {
     m_xml.writeStartElement("DeletedObject");
 
@@ -248,7 +248,7 @@ void Writer::writeDeletedObject(const DeletedObject& delObj)
     m_xml.writeEndElement();
 }
 
-void Writer::writeEntry(const Entry* entry)
+void KeePass2XmlWriter::writeEntry(const Entry* entry)
 {
     m_xml.writeStartElement("Entry");
 
@@ -282,7 +282,7 @@ void Writer::writeEntry(const Entry* entry)
     m_xml.writeEndElement();
 }
 
-void Writer::writeAutoType(const Entry* entry)
+void KeePass2XmlWriter::writeAutoType(const Entry* entry)
 {
     m_xml.writeStartElement("AutoType");
 
@@ -297,7 +297,7 @@ void Writer::writeAutoType(const Entry* entry)
     m_xml.writeEndElement();
 }
 
-void Writer::writeAutoTypeAssoc(const AutoTypeAssociation& assoc)
+void KeePass2XmlWriter::writeAutoTypeAssoc(const AutoTypeAssociation& assoc)
 {
     m_xml.writeStartElement("Association");
 
@@ -307,7 +307,7 @@ void Writer::writeAutoTypeAssoc(const AutoTypeAssociation& assoc)
     m_xml.writeEndElement();
 }
 
-void Writer::writeEntryHistory(const Entry* entry)
+void KeePass2XmlWriter::writeEntryHistory(const Entry* entry)
 {
     m_xml.writeStartElement("History");
 
@@ -319,17 +319,17 @@ void Writer::writeEntryHistory(const Entry* entry)
     m_xml.writeEndElement();
 }
 
-void Writer::writeString(const QString& qualifiedName, const QString& string)
+void KeePass2XmlWriter::writeString(const QString& qualifiedName, const QString& string)
 {
     m_xml.writeTextElement(qualifiedName, string);
 }
 
-void Writer::writeNumber(const QString& qualifiedName, int number)
+void KeePass2XmlWriter::writeNumber(const QString& qualifiedName, int number)
 {
     writeString(qualifiedName, QString::number(number));
 }
 
-void Writer::writeBool(const QString& qualifiedName, bool b)
+void KeePass2XmlWriter::writeBool(const QString& qualifiedName, bool b)
 {
     if (b) {
         writeString(qualifiedName, "True");
@@ -339,17 +339,17 @@ void Writer::writeBool(const QString& qualifiedName, bool b)
     }
 }
 
-void Writer::writeDateTime(const QString& qualifiedName, const QDateTime& dateTime)
+void KeePass2XmlWriter::writeDateTime(const QString& qualifiedName, const QDateTime& dateTime)
 {
     writeString(qualifiedName, dateTime.toUTC().toString(Qt::ISODate).append('Z'));
 }
 
-void Writer::writeUuid(const QString& qualifiedName, const Uuid& uuid)
+void KeePass2XmlWriter::writeUuid(const QString& qualifiedName, const Uuid& uuid)
 {
     writeString(qualifiedName, uuid.toBase64());
 }
 
-void Writer::writeUuid(const QString& qualifiedName, const Group* group)
+void KeePass2XmlWriter::writeUuid(const QString& qualifiedName, const Group* group)
 {
     if (group) {
         writeUuid(qualifiedName, group->uuid());
@@ -359,7 +359,7 @@ void Writer::writeUuid(const QString& qualifiedName, const Group* group)
     }
 }
 
-void Writer::writeUuid(const QString& qualifiedName, const Entry* entry)
+void KeePass2XmlWriter::writeUuid(const QString& qualifiedName, const Entry* entry)
 {
     if (entry) {
         writeUuid(qualifiedName, entry->uuid());
@@ -369,12 +369,12 @@ void Writer::writeUuid(const QString& qualifiedName, const Entry* entry)
     }
 }
 
-void Writer::writeBinary(const QString& qualifiedName, const QByteArray& ba)
+void KeePass2XmlWriter::writeBinary(const QString& qualifiedName, const QByteArray& ba)
 {
     writeString(qualifiedName, QString::fromAscii(ba.toBase64()));
 }
 
-void Writer::writeColor(const QString& qualifiedName, const QColor& color)
+void KeePass2XmlWriter::writeColor(const QString& qualifiedName, const QColor& color)
 {
     QString colorStr = QString("#%1%2%3").arg(colorPartToString(color.red()))
             .arg(colorPartToString(color.green()))
@@ -383,7 +383,7 @@ void Writer::writeColor(const QString& qualifiedName, const QColor& color)
     writeString(qualifiedName, colorStr);
 }
 
-QString Writer::colorPartToString(int value)
+QString KeePass2XmlWriter::colorPartToString(int value)
 {
     QString str = QString::number(value, 16).toUpper();
     if (str.length() == 1) {

@@ -21,7 +21,6 @@
 #include <QtCore/QXmlStreamReader>
 
 #include "Metadata.h"
-#include "Parser.h"
 
 Database::Database()
 {
