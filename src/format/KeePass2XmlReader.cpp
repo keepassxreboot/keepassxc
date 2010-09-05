@@ -696,7 +696,7 @@ int KeePass2XmlReader::readNumber()
 Uuid KeePass2XmlReader::readUuid()
 {
     QByteArray uuidBin = readBinary();
-    if (uuidBin.length() != Uuid::length) {
+    if (uuidBin.length() != Uuid::LENGTH) {
         raiseError();
         return Uuid();
     }

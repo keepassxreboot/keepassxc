@@ -19,10 +19,10 @@
 
 #include <QtCore/QHash>
 
-const int Uuid::length = 16;
+const int Uuid::LENGTH = 16;
 
 Uuid::Uuid()
-    : m_data(length, 0)
+    : m_data(LENGTH, 0)
 {
 }
 
