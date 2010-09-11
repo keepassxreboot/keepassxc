@@ -17,6 +17,8 @@ project(KeePassX)
 
 cmake_minimum_required(VERSION 2.6.0)
 
+set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake )
+
 option(WITH_TESTS "Enable building of unit tests" ON)
 
 set( KEEPASSX_VERSION "0.9.0" )
@@ -40,6 +42,8 @@ find_package(Qt4 REQUIRED)
 include(${QT_USE_FILE})
 
 find_package(Automoc4 REQUIRED)
+
+find_package(Libgcrypt REQUIRED)
 
 add_subdirectory(src)
 if( WITH_TESTS )

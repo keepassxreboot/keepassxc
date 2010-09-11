@@ -24,6 +24,10 @@ set(keepassx_SOURCES
     core/Metadata.cpp
     core/TimeInfo.cpp
     core/Uuid.cpp
+    crypto/Crypto.cpp
+    crypto/CryptoHash.cpp
+    crypto/Random.cpp
+    crypto/SymmetricCipher.cpp
     format/KeePass2XmlReader.cpp
     format/KeePass2XmlWriter.cpp
     gui/DatabaseWidget.cpp
@@ -36,4 +40,4 @@ set(keepassx_SOURCES
 automoc4_add_library( keepassx_core STATIC ${keepassx_SOURCES} )
 
 automoc4_add_executable( ${PROGNAME} WIN32 MACOSX_BUNDLE main.cpp )
-target_link_libraries( ${PROGNAME} keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} )
+target_link_libraries( ${PROGNAME} keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${LIBGCRYPT_LIBS} )

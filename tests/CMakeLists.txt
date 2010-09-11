@@ -63,14 +63,22 @@ macro (ADD_UNIT_TEST _test_NAME)
 endmacro (ADD_UNIT_TEST)
 
 
+# TODO automocify?
+
 add_unit_test( testgroup TestGroup.cpp )
-target_link_libraries( testgroup keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} )
+target_link_libraries( testgroup keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} ${LIBGCRYPT_LIBS} )
 
 add_unit_test( testkeepass2xmlreader TestKeePass2XmlReader.cpp )
-target_link_libraries( testkeepass2xmlreader keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} )
+target_link_libraries( testkeepass2xmlreader keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} ${LIBGCRYPT_LIBS} )
 
 add_unit_test( testgroupmodel TestGroupModel.cpp modeltest.cpp )
-target_link_libraries( testgroupmodel keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} )
+target_link_libraries( testgroupmodel keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} ${LIBGCRYPT_LIBS} )
 
 add_unit_test( testentrymodel TestEntryModel.cpp modeltest.cpp )
-target_link_libraries( testentrymodel keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} )
+target_link_libraries( testentrymodel keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} ${LIBGCRYPT_LIBS} )
+
+add_unit_test( testcryptohash TestCryptoHash.cpp )
+target_link_libraries( testcryptohash keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} ${LIBGCRYPT_LIBS} )
+
+add_unit_test( testsymmetriccipher TestSymmetricCipher.cpp )
+target_link_libraries( testsymmetriccipher keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} ${LIBGCRYPT_LIBS} )
