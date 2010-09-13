@@ -21,7 +21,7 @@
 
 #include <gcrypt.h>
 
-bool Crypto::m_initiated(false);
+bool Crypto::m_initalized(false);
 
 int gcry_qt_mutex_init(void** p_sys)
 {
@@ -63,7 +63,7 @@ Crypto::Crypto()
 
 void Crypto::init()
 {
-    if (m_initiated) {
+    if (m_initalized) {
         return;
     }
 
@@ -71,7 +71,7 @@ void Crypto::init()
     gcry_check_version(0);
     gcry_control(GCRYCTL_INITIALIZATION_FINISHED, 0);
 
-    m_initiated = true;
+    m_initalized = true;
 }
 
 bool Crypto::selfTest()

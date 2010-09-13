@@ -26,7 +26,7 @@ public:
 
 private:
     Crypto();
-    static bool m_initiated;
+    static bool m_initalized;
 };
 
 #endif // KEEPASSX_CRYPTO_H

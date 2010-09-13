@@ -91,9 +91,9 @@ Group* Database::recFindGroup(const Uuid& uuid, Group* group)
         return group;
 
     Q_FOREACH (Group* child, group->children()) {
-       Group* result = recFindGroup(uuid, child);
-       if (result)
-           return result;
+        Group* result = recFindGroup(uuid, child);
+        if (result)
+            return result;
     }
 
     return 0;
