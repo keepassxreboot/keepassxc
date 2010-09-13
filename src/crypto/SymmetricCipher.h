@@ -45,8 +45,12 @@ public:
     SymmetricCipher(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
                     SymmetricCipher::Direction direction, const QByteArray& key, const QByteArray& iv);
     ~SymmetricCipher();
+
     QByteArray process(const QByteArray& data);
     void processInPlace(QByteArray& data);
+
+    void reset();
+    int blockSize() const;
 
 private:
     SymmetricCipherPrivate* const d_ptr;

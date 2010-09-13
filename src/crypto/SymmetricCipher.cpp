@@ -25,6 +25,8 @@ public:
     gcry_cipher_hd_t ctx;
     SymmetricCipher::Direction direction;
     QByteArray key;
+    QByteArray iv;
+    int blockSize;
 };
 
 SymmetricCipher::SymmetricCipher(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
@@ -35,6 +37,7 @@ SymmetricCipher::SymmetricCipher(SymmetricCipher::Algorithm algo, SymmetricCiphe
 
     d->direction = direction;
     d->key = key;
+    d->iv = iv;
 
     int algoGcrypt;
 
@@ -68,10 +71,15 @@ SymmetricCipher::SymmetricCipher(SymmetricCipher::Algorithm algo, SymmetricCiphe
 
     error = gcry_cipher_open(&d->ctx, algoGcrypt, modeGcrypt, 0);
     Q_ASSERT(error == 0); // TODO real error checking
-    error = gcry_cipher_setkey(d->ctx, d->key.constData(), d->key.size()); // TODO is key copied to gcrypt data structure?
+    error = gcry_cipher_setkey(d->ctx, d->key.constData(), d->key.size());
     Q_ASSERT(error == 0);
-    error = gcry_cipher_setiv(d->ctx, iv.constData(), iv.size());
+    error = gcry_cipher_setiv(d->ctx, d->iv.constData(), d->iv.size());
     Q_ASSERT(error == 0);
+
+    size_t blockSizeT;
+    error = gcry_cipher_algo_info(algoGcrypt, GCRYCTL_GET_BLKLEN, 0, &blockSizeT);
+    Q_ASSERT(error == 0);
+    d->blockSize = blockSizeT;
 }
 
 SymmetricCipher::~SymmetricCipher()
@@ -122,4 +130,23 @@ void SymmetricCipher::processInPlace(QByteArray& data)
     }
 
     Q_ASSERT(error == 0);
+}
+
+void SymmetricCipher::reset()
+{
+    Q_D(SymmetricCipher);
+
+    gcry_error_t error;
+
+    error = gcry_cipher_reset(d->ctx);
+    Q_ASSERT(error == 0);
+    error = gcry_cipher_setiv(d->ctx, d->iv.constData(), d->iv.size());
+    Q_ASSERT(error == 0);
+}
+
+int SymmetricCipher::blockSize() const
+{
+    Q_D(const SymmetricCipher);
+
+    return d->blockSize;
 }

@@ -43,7 +43,8 @@ CryptoHash::CryptoHash(CryptoHash::Algorithm algo)
         break;
     }
 
-    gcry_md_open(&d->ctx, algoGcrypt, 0); // TODO error handling
+    gcry_error_t error = gcry_md_open(&d->ctx, algoGcrypt, 0);
+    Q_ASSERT(error == 0); // TODO error handling
 
     d->hashLen = gcry_md_get_algo_dlen(algoGcrypt);
 }
