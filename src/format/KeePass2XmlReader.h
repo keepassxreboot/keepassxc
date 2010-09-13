@@ -23,7 +23,6 @@
 #include <QtCore/QXmlStreamReader>
 #include <QtGui/QColor>
 
-#include "DatabaseReader.h"
 #include "core/TimeInfo.h"
 #include "core/Uuid.h"
 
@@ -32,7 +31,7 @@ class Entry;
 class Group;
 class Metadata;
 
-class KeePass2XmlReader : public DatabaseReader
+class KeePass2XmlReader
 {
     Q_DECLARE_TR_FUNCTIONS(KeePass2XmlReader);
 

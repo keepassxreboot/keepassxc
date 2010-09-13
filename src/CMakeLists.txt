@@ -19,6 +19,7 @@ configure_file( config-keepassx.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepa
 
 set(keepassx_SOURCES
     core/Database.cpp
+    core/Endian.cpp
     core/Entry.cpp
     core/Group.cpp
     core/Metadata.cpp
@@ -28,6 +29,7 @@ set(keepassx_SOURCES
     crypto/CryptoHash.cpp
     crypto/Random.cpp
     crypto/SymmetricCipher.cpp
+    format/KeePass2Reader.cpp
     format/KeePass2XmlReader.cpp
     format/KeePass2XmlWriter.cpp
     gui/DatabaseWidget.cpp
@@ -35,6 +37,11 @@ set(keepassx_SOURCES
     gui/EntryView.cpp
     gui/GroupModel.cpp
     gui/GroupView.cpp
+    keys/CompositeKey.cpp
+    keys/PasswordKey.cpp
+    streams/HashedBlockStream.cpp
+    streams/LayeredStream.cpp
+    streams/SymmetricCipherStream.cpp
 )
 
 automoc4_add_library( keepassx_core STATIC ${keepassx_SOURCES} )

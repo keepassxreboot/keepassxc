@@ -23,7 +23,6 @@
 #include <QtGui/QColor>
 #include <QtGui/QImage>
 
-#include "DatabaseWriter.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/TimeInfo.h"
@@ -32,7 +31,7 @@
 class Group;
 class Metadata;
 
-class KeePass2XmlWriter : public DatabaseWriter
+class KeePass2XmlWriter
 {
 public:
     KeePass2XmlWriter();

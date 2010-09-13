@@ -1,0 +1,53 @@
+ /*
+ *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 2 or (at your option)
+ *  version 3 of the License.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#ifndef KEEPASSX_KEEPASS2_H
+#define KEEPASSX_KEEPASS2_H
+
+#include <QtCore/QtGlobal>
+
+namespace KeePass2
+{
+    const quint32 SIGNATURE_1 = 0x9AA2D903;
+    const quint32 SIGNATURE_2 = 0xB54BFB67;
+    const quint32 FILE_VERSION = 0x00020000;
+    const quint32 FILE_VERSION_CRITICAL_MASK = 0xFFFF0000;
+
+    enum HeaderFieldID
+    {
+        EndOfHeader = 0,
+        Comment = 1,
+        CipherID = 2,
+        CompressionFlags = 3,
+        MasterSeed = 4,
+        TransformSeed = 5,
+        TransformRounds = 6,
+        EncryptionIV = 7,
+        ProtectedStreamKey = 8,
+        StreamStartBytes = 9,
+        InnerRandomStreamID = 10
+    };
+
+    enum CompressionAlgorithm
+    {
+        CompressionNone = 0,
+        CompressionGZip = 1,
+        CompressionCount = 2
+    };
+}
+
+#endif // KEEPASSX_KEEPASS2_H

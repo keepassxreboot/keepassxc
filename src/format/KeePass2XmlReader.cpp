@@ -57,7 +57,7 @@ Database* KeePass2XmlReader::readDatabase(QIODevice* device)
 Database* KeePass2XmlReader::readDatabase(const QString& filename)
 {
     QFile file(filename);
-    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    file.open(QIODevice::ReadOnly);
     return readDatabase(&file);
 }
 
