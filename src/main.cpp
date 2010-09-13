@@ -19,8 +19,12 @@
 #include <QtGui/QTreeView>
 
 #include "core/Database.h"
+#include "crypto/Crypto.h"
+#include "format/KeePass2Reader.h"
 #include "format/KeePass2XmlReader.h"
 #include "gui/DatabaseWidget.h"
+#include "keys/CompositeKey.h"
+#include "keys/PasswordKey.h"
 
 #include "../tests/config-keepassx-tests.h"
 
@@ -28,8 +32,18 @@ int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
 
-    KeePass2XmlReader* reader = new KeePass2XmlReader();
-    Database* db = reader->readDatabase(QString(KEEPASSX_TEST_DIR).append("/NewDatabase.xml"));
+    Crypto::init();
+
+    CompositeKey key;
+    PasswordKey password;
+    password.setPassword("a");
+    key.addKey(password);
+
+    KeePass2Reader* xreader = new KeePass2Reader();
+    Database* db = xreader->readDatabase(QString(KEEPASSX_TEST_DIR).append("/NewDatabase.kdbx"), key);
+
+    //KeePass2XmlReader* reader = new KeePass2XmlReader();
+    //Database* db = reader->readDatabase(QString(KEEPASSX_TEST_DIR).append("/NewDatabase.xml"));
 
     DatabaseWidget dbWidget(db);
     dbWidget.show();

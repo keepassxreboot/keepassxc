@@ -15,10 +15,12 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QtCore/QBuffer>
 #include <QtTest/QTest>
 
 #include "crypto/Crypto.h"
 #include "crypto/SymmetricCipher.h"
+#include "streams/SymmetricCipherStream.h"
 
 class TestSymmetricCipher : public QObject
 {
@@ -27,6 +29,7 @@ class TestSymmetricCipher : public QObject
 private Q_SLOTS:
     void initTestCase();
     void testAes256CbcEncryption();
+    void testAes256CbcDecryption();
 };
 
 void TestSymmetricCipher::initTestCase()
@@ -40,11 +43,52 @@ void TestSymmetricCipher::testAes256CbcEncryption()
 
     QByteArray key = QByteArray::fromHex("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4");
     QByteArray iv = QByteArray::fromHex("000102030405060708090a0b0c0d0e0f");
-    QByteArray plain = QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172a");
+    QByteArray plainText = QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172a");
+    plainText.append(QByteArray::fromHex("ae2d8a571e03ac9c9eb76fac45af8e51"));
+    QByteArray cipherText = QByteArray::fromHex("f58c4c04d6e5f1ba779eabfb5f7bfbd6");
+    cipherText.append(QByteArray::fromHex("9cfc4e967edb808d679f777bc6702c7d"));
 
-    SymmetricCipher encrypt(SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Encrypt, key, iv);
-    QCOMPARE(QString(encrypt.process(plain).toHex()),
-             QString("f58c4c04d6e5f1ba779eabfb5f7bfbd6"));
+    SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Encrypt, key, iv);
+    QCOMPARE(cipher.blockSize(), 16);
+
+    QCOMPARE(QString(cipher.process(plainText).toHex()),
+             QString(cipherText.toHex()));
+}
+
+void TestSymmetricCipher::testAes256CbcDecryption()
+{
+    QByteArray key = QByteArray::fromHex("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4");
+    QByteArray iv = QByteArray::fromHex("000102030405060708090a0b0c0d0e0f");
+    QByteArray cipherText = QByteArray::fromHex("f58c4c04d6e5f1ba779eabfb5f7bfbd6");
+    cipherText.append(QByteArray::fromHex("9cfc4e967edb808d679f777bc6702c7d"));
+    QByteArray plainText = QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172a");
+    plainText.append(QByteArray::fromHex("ae2d8a571e03ac9c9eb76fac45af8e51"));
+
+    SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Decrypt, key, iv);
+    QCOMPARE(cipher.blockSize(), 16);
+
+    QCOMPARE(QString(cipher.process(cipherText).toHex()),
+             QString(plainText.toHex()));
+
+    QBuffer buffer(&cipherText);
+    SymmetricCipherStream stream(&buffer, SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Decrypt, key, iv);
+    buffer.open(QIODevice::ReadOnly);
+    stream.open(QIODevice::ReadOnly);
+
+    QCOMPARE(QString(stream.read(10).toHex()),
+             QString(plainText.left(10).toHex()));
+    buffer.reset();
+    stream.reset();
+    QCOMPARE(QString(stream.read(20).toHex()),
+             QString(plainText.left(20).toHex()));
+    buffer.reset();
+    stream.reset();
+    QCOMPARE(QString(stream.read(16).toHex()),
+             QString(plainText.left(16).toHex()));
+    buffer.reset();
+    stream.reset();
+    QCOMPARE(QString(stream.read(100).toHex()),
+             QString(plainText.toHex()));
 }
 
 QTEST_MAIN(TestSymmetricCipher);
