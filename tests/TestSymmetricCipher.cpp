@@ -53,6 +53,30 @@ void TestSymmetricCipher::testAes256CbcEncryption()
 
     QCOMPARE(QString(cipher.process(plainText).toHex()),
              QString(cipherText.toHex()));
+
+    QBuffer buffer;
+    SymmetricCipherStream stream(&buffer, SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Encrypt, key, iv);
+    buffer.open(QIODevice::WriteOnly);
+    stream.open(QIODevice::WriteOnly);
+
+    buffer.reset();
+    buffer.buffer().clear();
+    stream.reset();
+    stream.write(plainText.left(16));
+    QCOMPARE(QString(buffer.data().toHex()), QString(cipherText.left(16).toHex()));
+
+    buffer.reset();
+    buffer.buffer().clear();
+    stream.reset();
+    stream.write(plainText.left(10));
+    QCOMPARE(QString(buffer.data().toHex()), QString());
+
+    buffer.reset();
+    buffer.buffer().clear();
+    stream.reset();
+    stream.write(plainText.left(10));
+    stream.close();
+    QCOMPARE(buffer.data().size(), 16);
 }
 
 void TestSymmetricCipher::testAes256CbcDecryption()

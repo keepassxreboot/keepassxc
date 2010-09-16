@@ -31,6 +31,7 @@ public:
     SymmetricCipherStream(QIODevice* baseDevice, SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
                           SymmetricCipher::Direction direction, const QByteArray& key, const QByteArray& iv);
     bool reset();
+    void close();
 
 protected:
     qint64 readData(char* data, qint64 maxSize);
@@ -43,7 +44,8 @@ private:
     SymmetricCipher* m_cipher;
     QByteArray m_buffer;
     int m_bufferPos;
-    bool m_eof;
+    bool m_bufferFilling;
+    bool m_error;
 };
 
 #endif // KEEPASSX_SYMMETRICCIPHERSTREAM_H
