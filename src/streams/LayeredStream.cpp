@@ -36,23 +36,40 @@ QString LayeredStream::errorString() const
 
 bool LayeredStream::open(QIODevice::OpenMode mode)
 {
-    // filter out all other modes
-    mode &= QIODevice::ReadWrite;
-
-    if (mode == QIODevice::ReadWrite) {
-        qWarning("Reading and writing at the same time is not supported.");
+    if (isOpen()) {
+        qWarning("LayeredStream::open: Device is already open.");
         return false;
     }
-    else if (openMode() & mode) {
-        return true;
+
+    bool readMode = (mode & QIODevice::ReadOnly);
+    bool writeMode = (mode & QIODevice::WriteOnly);
+
+    if (readMode && writeMode) {
+        qWarning("LayeredStream::open: Reading and writing at the same time is not supported.");
+        return false;
     }
-    else if (!(m_baseDevice->openMode() & mode)) {
-        qWarning("Base device is not opened correctly.");
+    else if (!readMode && !writeMode) {
+        qWarning("LayeredStream::open: Must be opened in read or write mode.");
+        return false;
+    }
+    else if ((readMode && !m_baseDevice->isReadable()) ||
+             (writeMode && !m_baseDevice->isWritable())) {
+        qWarning("LayeredStream::open: Base device is not opened correctly.");
         return false;
     }
     else {
-        setOpenMode(mode | QIODevice::Unbuffered);
-        return true;
+        if (mode & QIODevice::Append) {
+            qWarning("LayeredStream::open: QIODevice::Append is not supported.");
+            mode = mode & ~QIODevice::Append;
+        }
+        if (mode & QIODevice::Truncate) {
+            qWarning("LayeredStream::open: QIODevice::Truncate is not supported.");
+            mode = mode & ~QIODevice::Truncate;
+        }
+
+        mode = mode | QIODevice::Unbuffered;
+
+        return QIODevice::open(mode);
     }
 }
 
