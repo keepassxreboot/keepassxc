@@ -25,10 +25,16 @@ class TestGroup : public QObject
     Q_OBJECT
 
 private Q_SLOTS:
+    void initTestCase();
     void testParenting();
     void testSignals();
     void testEntries();
 };
+
+void TestGroup::initTestCase()
+{
+    qRegisterMetaType<Group*>("Group*");
+}
 
 void TestGroup::testParenting()
 {

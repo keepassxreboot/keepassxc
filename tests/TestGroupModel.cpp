@@ -28,8 +28,14 @@ class TestGroupModel : public QObject
     Q_OBJECT
 
 private Q_SLOTS:
+    void initTestCase();
     void test();
 };
+
+void TestGroupModel::initTestCase()
+{
+    qRegisterMetaType<QModelIndex>("QModelIndex");
+}
 
 void TestGroupModel::test()
 {

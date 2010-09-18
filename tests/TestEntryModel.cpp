@@ -28,13 +28,17 @@ class TestEntryModel : public QObject
     Q_OBJECT
 
 private Q_SLOTS:
+    void initTestCase();
     void test();
 };
 
-void TestEntryModel::test()
+void TestEntryModel::initTestCase()
 {
     qRegisterMetaType<QModelIndex>("QModelIndex");
+}
 
+void TestEntryModel::test()
+{
     Group* group1 = new Group();
     Group* group2 = new Group();
 
@@ -93,7 +97,5 @@ void TestEntryModel::test()
 }
 
 QTEST_MAIN(TestEntryModel);
-
-Q_DECLARE_METATYPE(QModelIndex);
 
 #include "TestEntryModel.moc"
