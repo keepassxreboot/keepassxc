@@ -59,21 +59,21 @@ void TestSymmetricCipher::testAes256CbcEncryption()
     buffer.open(QIODevice::WriteOnly);
     stream.open(QIODevice::WriteOnly);
 
+    QVERIFY(stream.reset());
     buffer.reset();
     buffer.buffer().clear();
-    stream.reset();
     stream.write(plainText.left(16));
     QCOMPARE(QString(buffer.data().toHex()), QString(cipherText.left(16).toHex()));
 
+    QVERIFY(stream.reset());
     buffer.reset();
     buffer.buffer().clear();
-    stream.reset();
     stream.write(plainText.left(10));
     QCOMPARE(QString(buffer.data().toHex()), QString());
 
+    QVERIFY(stream.reset());
     buffer.reset();
     buffer.buffer().clear();
-    stream.reset();
     stream.write(plainText.left(10));
     stream.close();
     QCOMPARE(buffer.data().size(), 16);

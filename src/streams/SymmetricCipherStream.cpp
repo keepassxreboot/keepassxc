@@ -29,11 +29,18 @@ SymmetricCipherStream::SymmetricCipherStream(QIODevice* baseDevice, SymmetricCip
 
 bool SymmetricCipherStream::reset()
 {
+    if (isWritable()) {
+        if (!writeBlock()) {
+            return false;
+        }
+    }
+
     m_buffer.clear();
     m_bufferPos = 0;
     m_bufferFilling = false;
     m_error = false;
     m_cipher->reset();
+
     return true;
 }
 
@@ -133,6 +140,7 @@ bool SymmetricCipherStream::writeBlock()
         return true;
     }
     else if (m_buffer.size() != m_cipher->blockSize()) {
+        // PKCS7 padding
         int padLen = m_cipher->blockSize() - m_buffer.size();
         for (int i=m_buffer.size(); i<m_cipher->blockSize(); i++) {
             m_buffer.append(static_cast<char>(padLen));
