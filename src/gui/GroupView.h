@@ -29,7 +29,7 @@ class GroupView : public QTreeView
     Q_OBJECT
 
 public:
-    GroupView(Database* db, QWidget* parent = 0);
+    explicit GroupView(Database* db, QWidget* parent = 0);
     void setModel(QAbstractItemModel* model);
 
 Q_SIGNALS:

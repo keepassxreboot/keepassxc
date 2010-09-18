@@ -50,11 +50,12 @@ int gcry_qt_mutex_unlock(void** p_sys)
 static const struct gcry_thread_cbs gcry_threads_qt =
 {
     GCRY_THREAD_OPTION_USER,
-    NULL,
+    0,
     gcry_qt_mutex_init,
     gcry_qt_mutex_destroy,
     gcry_qt_mutex_lock,
-    gcry_qt_mutex_unlock
+    gcry_qt_mutex_unlock,
+    0, 0, 0, 0, 0, 0, 0, 0
 };
 
 Crypto::Crypto()

@@ -135,7 +135,7 @@ bool HashedBlockStream::readHashedBlock()
     }
 
     if (m_blockSize == 0) {
-        if (hash.count(static_cast<char>(0)) != 32) {
+        if (hash.count('\0') != 32) {
             // TODO error
             Q_ASSERT(false);
             return false;

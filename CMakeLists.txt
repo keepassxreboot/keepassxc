@@ -23,7 +23,7 @@ option(WITH_TESTS "Enable building of unit tests" ON)
 
 set( KEEPASSX_VERSION "0.9.0" )
 
-add_definitions(-DQT_NO_KEYWORDS -Wall)
+add_definitions(-DQT_NO_KEYWORDS -fno-exceptions -fno-rtti -Wall -Wextra -Wundef -Wold-style-cast -Wnon-virtual-dtor)
 
 if( APPLE OR MINGW )
     set( PROGNAME KeePassX )
