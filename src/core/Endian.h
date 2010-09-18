@@ -38,6 +38,14 @@ namespace Endian
     quint32 readUInt32(QIODevice* device, QSysInfo::Endian byteOrder, bool* ok);
     qint64 readInt64(QIODevice* device, QSysInfo::Endian byteOrder, bool* ok);
     quint64 readUInt64(QIODevice* device, QSysInfo::Endian byteOrder, bool* ok);
+
+    QByteArray int16ToBytes(qint16 num, QSysInfo::Endian byteOrder);
+    QByteArray int32ToBytes(qint32 num, QSysInfo::Endian byteOrder);
+    QByteArray int64ToBytes(qint64 num, QSysInfo::Endian byteOrder);
+
+    bool writeInt16(qint16 num, QIODevice* device, QSysInfo::Endian byteOrder);
+    bool writeInt32(qint32 num, QIODevice* device, QSysInfo::Endian byteOrder);
+    bool writeInt64(qint64 num, QIODevice* device, QSysInfo::Endian byteOrder);
 };
 
 #endif // KEEPASSX_ENDIAN_H

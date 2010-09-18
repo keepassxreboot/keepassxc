@@ -18,9 +18,9 @@
 #ifndef KEEPASSX_HASHEDBLOCKSTREAM_H
 #define KEEPASSX_HASHEDBLOCKSTREAM_H
 
+#include <QtCore/QSysInfo>
+
 #include "LayeredStream.h"
-#include "core/Endian.h"
-#include "crypto/CryptoHash.h"
 
 class HashedBlockStream : public LayeredStream
 {
@@ -30,6 +30,7 @@ public:
     explicit HashedBlockStream(QIODevice* baseDevice);
     HashedBlockStream(QIODevice* baseDevice, qint32 blockSize);
 
+    bool reset();
     void close();
 
 protected:
@@ -47,6 +48,7 @@ private:
     int m_bufferPos;
     quint32 m_blockIndex;
     bool m_eof;
+    bool m_error;
 };
 
 #endif // KEEPASSX_HASHEDBLOCKSTREAM_H
