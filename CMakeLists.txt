@@ -23,7 +23,11 @@ option(WITH_TESTS "Enable building of unit tests" ON)
 
 set( KEEPASSX_VERSION "0.9.0" )
 
-add_definitions(-DQT_NO_KEYWORDS -fno-exceptions -fno-rtti -Wall -Wextra -Wundef -Wold-style-cast -Wnon-virtual-dtor)
+if(CMAKE_COMPILER_IS_GNUCXX)
+    add_definitions(-DQT_NO_KEYWORDS -DQT_NO_EXCEPTIONS -fno-exceptions -fno-rtti
+                    -ansi -Wall -Wextra -Wundef -Wold-style-cast -Wnon-virtual-dtor -Wcast-align
+                    -Wpointer-arith -Wformat-security -Woverloaded-virtual -Wno-long-long)
+endif(CMAKE_COMPILER_IS_GNUCXX)
 
 if( APPLE OR MINGW )
     set( PROGNAME KeePassX )
