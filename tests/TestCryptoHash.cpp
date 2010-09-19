@@ -40,18 +40,18 @@ void TestCryptoHash::test()
     QVERIFY(Crypto::selfTest());
 
     CryptoHash cryptoHash1(CryptoHash::Sha256);
-    QCOMPARE(QString(cryptoHash1.result().toHex()),
-             QString("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"));
+    QCOMPARE(cryptoHash1.result(),
+             QByteArray::fromHex("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"));
 
     QByteArray source2 = QString("KeePassX").toAscii();
-    QString result2 = CryptoHash::hash(source2, CryptoHash::Sha256).toHex();
-    QCOMPARE(result2, QString("0b56e5f65263e747af4a833bd7dd7ad26a64d7a4de7c68e52364893dca0766b4"));
+    QByteArray result2 = CryptoHash::hash(source2, CryptoHash::Sha256);
+    QCOMPARE(result2, QByteArray::fromHex("0b56e5f65263e747af4a833bd7dd7ad26a64d7a4de7c68e52364893dca0766b4"));
 
     CryptoHash cryptoHash3(CryptoHash::Sha256);
     cryptoHash3.addData(QString("KeePa").toAscii());
     cryptoHash3.addData(QString("ssX").toAscii());
-    QCOMPARE(QString(cryptoHash3.result().toHex()),
-             QString("0b56e5f65263e747af4a833bd7dd7ad26a64d7a4de7c68e52364893dca0766b4"));
+    QCOMPARE(cryptoHash3.result(),
+             QByteArray::fromHex("0b56e5f65263e747af4a833bd7dd7ad26a64d7a4de7c68e52364893dca0766b4"));
 }
 
 QTEST_MAIN(TestCryptoHash);

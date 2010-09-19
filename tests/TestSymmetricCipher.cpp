@@ -51,8 +51,8 @@ void TestSymmetricCipher::testAes256CbcEncryption()
     SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Encrypt, key, iv);
     QCOMPARE(cipher.blockSize(), 16);
 
-    QCOMPARE(QString(cipher.process(plainText).toHex()),
-             QString(cipherText.toHex()));
+    QCOMPARE(cipher.process(plainText),
+             cipherText);
 
     QBuffer buffer;
     SymmetricCipherStream stream(&buffer, SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Encrypt, key, iv);
@@ -63,13 +63,13 @@ void TestSymmetricCipher::testAes256CbcEncryption()
     buffer.reset();
     buffer.buffer().clear();
     stream.write(plainText.left(16));
-    QCOMPARE(QString(buffer.data().toHex()), QString(cipherText.left(16).toHex()));
+    QCOMPARE(buffer.data(), cipherText.left(16));
 
     QVERIFY(stream.reset());
     buffer.reset();
     buffer.buffer().clear();
     stream.write(plainText.left(10));
-    QCOMPARE(QString(buffer.data().toHex()), QString());
+    QCOMPARE(buffer.data(), QByteArray());
 
     QVERIFY(stream.reset());
     buffer.reset();
@@ -91,28 +91,28 @@ void TestSymmetricCipher::testAes256CbcDecryption()
     SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Decrypt, key, iv);
     QCOMPARE(cipher.blockSize(), 16);
 
-    QCOMPARE(QString(cipher.process(cipherText).toHex()),
-             QString(plainText.toHex()));
+    QCOMPARE(cipher.process(cipherText),
+             plainText);
 
     QBuffer buffer(&cipherText);
     SymmetricCipherStream stream(&buffer, SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Decrypt, key, iv);
     buffer.open(QIODevice::ReadOnly);
     stream.open(QIODevice::ReadOnly);
 
-    QCOMPARE(QString(stream.read(10).toHex()),
-             QString(plainText.left(10).toHex()));
+    QCOMPARE(stream.read(10),
+             plainText.left(10));
     buffer.reset();
     stream.reset();
-    QCOMPARE(QString(stream.read(20).toHex()),
-             QString(plainText.left(20).toHex()));
+    QCOMPARE(stream.read(20),
+             plainText.left(20));
     buffer.reset();
     stream.reset();
-    QCOMPARE(QString(stream.read(16).toHex()),
-             QString(plainText.left(16).toHex()));
+    QCOMPARE(stream.read(16),
+             plainText.left(16));
     buffer.reset();
     stream.reset();
-    QCOMPARE(QString(stream.read(100).toHex()),
-             QString(plainText.toHex()));
+    QCOMPARE(stream.read(100),
+             plainText);
 }
 
 QTEST_MAIN(TestSymmetricCipher);
