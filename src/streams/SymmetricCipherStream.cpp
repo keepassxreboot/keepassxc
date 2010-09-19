@@ -17,8 +17,9 @@
 
 #include "SymmetricCipherStream.h"
 
-SymmetricCipherStream::SymmetricCipherStream(QIODevice* baseDevice, SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
-                      SymmetricCipher::Direction direction, const QByteArray& key, const QByteArray& iv)
+SymmetricCipherStream::SymmetricCipherStream(QIODevice* baseDevice, SymmetricCipher::Algorithm algo,
+                                             SymmetricCipher::Mode mode, SymmetricCipher::Direction direction,
+                                             const QByteArray& key, const QByteArray& iv)
                           : LayeredStream(baseDevice)
                           , m_bufferPos(0)
                           , m_bufferFilling(false)

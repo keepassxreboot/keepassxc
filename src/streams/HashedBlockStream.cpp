@@ -40,6 +40,7 @@ HashedBlockStream::HashedBlockStream(QIODevice* baseDevice, qint32 blockSize)
 
 void HashedBlockStream::init()
 {
+    m_buffer.clear();
     m_bufferPos = 0;
     m_blockIndex = 0;
     m_eof = false;
@@ -62,7 +63,6 @@ bool HashedBlockStream::reset()
     }
 
     init();
-    m_buffer.clear();
 
     return true;
 }
