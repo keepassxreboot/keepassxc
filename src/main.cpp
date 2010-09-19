@@ -22,7 +22,7 @@
 #include "crypto/Crypto.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2XmlReader.h"
-#include "gui/DatabaseWidget.h"
+#include "gui/MainWindow.h"
 #include "keys/CompositeKey.h"
 #include "keys/PasswordKey.h"
 
@@ -45,8 +45,9 @@ int main(int argc, char **argv)
     //KeePass2XmlReader* reader = new KeePass2XmlReader();
     //Database* db = reader->readDatabase(QString(KEEPASSX_TEST_DIR).append("/NewDatabase.xml"));
 
-    DatabaseWidget dbWidget(db);
-    dbWidget.show();
+    MainWindow mainWindow;
+    mainWindow.show();
+    mainWindow.addDatabase(db);
 
     return app.exec();
 }

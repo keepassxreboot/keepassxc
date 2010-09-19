@@ -37,12 +37,19 @@ set(keepassx_SOURCES
     gui/EntryView.cpp
     gui/GroupModel.cpp
     gui/GroupView.cpp
+    gui/MainWindow.cpp
     keys/CompositeKey.cpp
     keys/PasswordKey.cpp
     streams/HashedBlockStream.cpp
     streams/LayeredStream.cpp
     streams/SymmetricCipherStream.cpp
 )
+
+set(keepassx_FORMS
+    gui/MainWindow.ui
+)
+
+qt4_wrap_ui(keepassx_SOURCES ${keepassx_FORMS})
 
 automoc4_add_library( keepassx_core STATIC ${keepassx_SOURCES} )
 
