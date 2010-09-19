@@ -71,6 +71,9 @@ target_link_libraries( testgroup keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_L
 add_unit_test( testkeepass2xmlreader TestKeePass2XmlReader.cpp )
 target_link_libraries( testkeepass2xmlreader keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} ${LIBGCRYPT_LIBS} )
 
+add_unit_test( testkeepass2reader TestKeePass2Reader.cpp )
+target_link_libraries( testkeepass2reader keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} ${LIBGCRYPT_LIBS} )
+
 add_unit_test( testgroupmodel TestGroupModel.cpp modeltest.cpp )
 target_link_libraries( testgroupmodel keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} ${LIBGCRYPT_LIBS} )
 

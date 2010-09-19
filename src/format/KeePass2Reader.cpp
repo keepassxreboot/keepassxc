@@ -74,6 +74,7 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
 
     if (realStart != m_streamStartBytes) {
         raiseError("4");
+        return 0;
     }
 
     HashedBlockStream hashedStream(&cipherStream);

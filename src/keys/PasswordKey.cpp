@@ -19,6 +19,15 @@
 
 #include "crypto/CryptoHash.h"
 
+PasswordKey::PasswordKey()
+{
+}
+
+PasswordKey::PasswordKey(const QString& password)
+{
+    setPassword(password);
+}
+
 QByteArray PasswordKey::rawKey() const
 {
     return m_key;
