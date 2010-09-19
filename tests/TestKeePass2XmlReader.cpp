@@ -33,7 +33,7 @@ namespace QTest {
     }
 }
 
-class TestParser : public QObject
+class TestKeePass2XmlReader : public QObject
 {
     Q_OBJECT
 
@@ -56,22 +56,23 @@ private:
     Database* m_db;
 };
 
-QDateTime TestParser::genDT(int year, int month, int day, int hour, int min, int second)
+QDateTime TestKeePass2XmlReader::genDT(int year, int month, int day, int hour, int min, int second)
 {
     QDate date(year, month, day);
     QTime time(hour, min, second);
     return QDateTime(date, time, Qt::UTC);
 }
 
-void TestParser::initTestCase()
+void TestKeePass2XmlReader::initTestCase()
 {
     KeePass2XmlReader* reader = new KeePass2XmlReader();
     QString xmlFile = QString(KEEPASSX_TEST_DIR).append("/NewDatabase.xml");
     m_db = reader->readDatabase(xmlFile);
+    QVERIFY(m_db);
     QVERIFY(!reader->error());
 }
 
-void TestParser::testMetadata()
+void TestKeePass2XmlReader::testMetadata()
 {
     QCOMPARE(m_db->metadata()->generator(), QString("KeePass"));
     QCOMPARE(m_db->metadata()->name(), QString("ANAME"));
@@ -98,7 +99,7 @@ void TestParser::testMetadata()
     QVERIFY(m_db->metadata()->lastTopVisibleGroup() == m_db->metadata()->lastSelectedGroup());
 }
 
-void TestParser::testCustomIcons()
+void TestKeePass2XmlReader::testCustomIcons()
 {
     QCOMPARE(m_db->metadata()->customIcons().size(), 1);
     Uuid uuid = Uuid::fromBase64("++vyI+daLk6omox4a6kQGA==");
@@ -115,7 +116,7 @@ void TestParser::testCustomIcons()
     }
 }
 
-void TestParser::testCustomData()
+void TestKeePass2XmlReader::testCustomData()
 {
     QHash<QString, QString> customFields = m_db->metadata()->customFields();
 
@@ -124,7 +125,7 @@ void TestParser::testCustomData()
     QCOMPARE(customFields.value("custom key"), QString("blub"));
 }
 
-void TestParser::testGroupRoot()
+void TestKeePass2XmlReader::testGroupRoot()
 {
     const Group* group = m_db->rootGroup();
     QVERIFY(group);
@@ -153,7 +154,7 @@ void TestParser::testGroupRoot()
     QCOMPARE(group->entries().size(), 2);
 }
 
-void TestParser::testGroup1()
+void TestKeePass2XmlReader::testGroup1()
 {
     const Group* group = m_db->rootGroup()->children().at(0);
 
@@ -169,7 +170,7 @@ void TestParser::testGroup1()
     QVERIFY(!group->lastTopVisibleEntry());
 }
 
-void TestParser::testGroup2()
+void TestKeePass2XmlReader::testGroup2()
 {
     const Group* group = m_db->rootGroup()->children().at(1);
 
@@ -189,7 +190,7 @@ void TestParser::testGroup2()
     QCOMPARE(entry->title(), QString("Subsub Entry"));
 }
 
-void TestParser::testEntry1()
+void TestKeePass2XmlReader::testEntry1()
 {
     const Entry* entry = m_db->rootGroup()->entries().at(0);
 
@@ -233,7 +234,7 @@ void TestParser::testEntry1()
     QCOMPARE(assoc1.sequence, QString(""));
 }
 
-void TestParser::testEntry2()
+void TestKeePass2XmlReader::testEntry2()
 {
     const Entry* entry = m_db->rootGroup()->entries().at(1);
 
@@ -273,7 +274,7 @@ void TestParser::testEntry2()
     QCOMPARE(assoc2.sequence, QString("{Title}{UserName} test"));
 }
 
-void TestParser::testEntryHistory()
+void TestKeePass2XmlReader::testEntryHistory()
 {
     const Entry* entryMain = m_db->rootGroup()->entries().first();
     QCOMPARE(entryMain->historyItems().size(), 2);
@@ -301,7 +302,7 @@ void TestParser::testEntryHistory()
     }
 }
 
-void TestParser::testDeletedObjects()
+void TestKeePass2XmlReader::testDeletedObjects()
 {
     QList<DeletedObject> objList = m_db->deletedObjects();
     DeletedObject delObj;
@@ -317,6 +318,6 @@ void TestParser::testDeletedObjects()
     QVERIFY(objList.isEmpty());
 }
 
-QTEST_MAIN(TestParser);
+QTEST_MAIN(TestKeePass2XmlReader);
 
-#include "TestParser.moc"
+#include "TestKeePass2XmlReader.moc"
