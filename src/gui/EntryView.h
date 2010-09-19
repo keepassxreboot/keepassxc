@@ -20,6 +20,7 @@
 
 #include <QtGui/QTreeView>
 
+class Entry;
 class EntryModel;
 class Group;
 
@@ -33,6 +34,12 @@ public:
 
 public Q_SLOTS:
     void setGroup(Group* group);
+
+private Q_SLOTS:
+    void emitEntryActivated(const QModelIndex& index);
+
+Q_SIGNALS:
+    void entryActivated(Entry* entry);
 
 private:
     EntryModel* m_model;

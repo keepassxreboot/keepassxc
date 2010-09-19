@@ -34,6 +34,11 @@ void EntryView::setGroup(Group* group)
     m_model->setGroup(group);
 }
 
+void EntryView::emitEntryActivated(const QModelIndex& index)
+{
+    Q_EMIT entryActivated(m_model->entryFromIndex(index));
+}
+
 void EntryView::setModel(QAbstractItemModel* model)
 {
     Q_UNUSED(model);

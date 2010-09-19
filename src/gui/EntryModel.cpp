@@ -26,6 +26,12 @@ EntryModel::EntryModel(QObject* parent)
 {
 }
 
+Entry* EntryModel::entryFromIndex(const QModelIndex& index) const
+{
+    Q_ASSERT(index.isValid() && index.row() < m_group->entries().size());
+    return m_group->entries().at(index.row());
+}
+
 void EntryModel::setGroup(Group* group)
 {
     beginResetModel();
@@ -66,7 +72,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         return QVariant();
     }
 
-    Entry* entry = m_group->entries().at(index.row());
+    Entry* entry = entryFromIndex(index);
 
     // TODO implement other columns
     if (role == Qt::DisplayRole) {
