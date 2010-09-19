@@ -21,7 +21,7 @@
 #include <QtCore/QDateTime>
 #include <QtCore/QXmlStreamWriter>
 #include <QtGui/QColor>
-#include <QtGui/QImage>
+#include <QtGui/QIcon>
 
 #include "core/Database.h"
 #include "core/Entry.h"
@@ -44,7 +44,7 @@ private:
     void writeMetadata();
     void writeMemoryProtection();
     void writeCustomIcons();
-    void writeIcon(const Uuid& uuid, const QImage& image);
+    void writeIcon(const Uuid& uuid, const QIcon& icon);
     void writeCustomData();
     void writeCustomDataItem(const QString& key, const QString& value);
     void writeRoot();

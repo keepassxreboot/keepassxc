@@ -18,7 +18,9 @@
 #include "Entry.h"
 
 #include "Database.h"
+#include "DatabaseIcons.h"
 #include "Group.h"
+#include "Metadata.h"
 
 Entry::Entry()
 {
@@ -37,15 +39,13 @@ Uuid Entry::uuid() const
     return m_uuid;
 }
 
-QImage Entry::icon() const
+QIcon Entry::icon() const
 {
-    Q_ASSERT(m_iconNumber != 0 || !m_customIcon.isNull());
-
-    if (m_iconNumber == 0) {
-        return m_db->customIcon(m_customIcon);
+    if (m_customIcon.isNull()) {
+        return DatabaseIcons::icon(m_iconNumber);
     }
     else {
-        return Database::icon(m_iconNumber);
+        return m_db->metadata()->customIcon(m_customIcon);
     }
 }
 

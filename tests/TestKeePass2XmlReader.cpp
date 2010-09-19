@@ -103,9 +103,8 @@ void TestParser::testCustomIcons()
     QCOMPARE(m_db->metadata()->customIcons().size(), 1);
     Uuid uuid = Uuid::fromBase64("++vyI+daLk6omox4a6kQGA==");
     QVERIFY(m_db->metadata()->customIcons().contains(uuid));
-    const QImage& img = m_db->metadata()->customIcons()[uuid];
-    QCOMPARE(img.width(), 16);
-    QCOMPARE(img.height(), 16);
+    QIcon icon = m_db->metadata()->customIcon(uuid);
+    QImage img = icon.pixmap(16, 16).toImage();
     for (int x=0; x<16; x++) {
         for (int y=0; y<16; y++) {
             QRgb rgb = img.pixel(x, y);

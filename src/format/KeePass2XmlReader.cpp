@@ -209,9 +209,9 @@ void KeePass2XmlReader::parseIcon()
             uuid = readUuid();
         }
         else if (m_xml.name() == "Data") {
-            QImage image;
-            image.loadFromData(readBinary());
-            m_meta->addCustomIcon(uuid, image);
+            QPixmap pixmap;
+            pixmap.loadFromData(readBinary());
+            m_meta->addCustomIcon(uuid, QIcon(pixmap));
         }
         else {
             skipCurrentElement();
@@ -445,8 +445,9 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
         }
         else if (m_xml.name() == "CustomIconUUID") {
             Uuid uuid = readUuid();
-            if (!uuid.isNull())
+            if (!uuid.isNull()) {
                 entry->setIcon(uuid);
+            }
         }
         else if (m_xml.name() == "ForegroundColor") {
             entry->setForegroundColor(readColor());
@@ -755,6 +756,6 @@ void KeePass2XmlReader::raiseError()
 
 void KeePass2XmlReader::skipCurrentElement()
 {
-    qDebug() << "KeePass2XmlReader::skipCurrentElement(): skip: " << m_xml.name();
+    qWarning() << "KeePass2XmlReader::skipCurrentElement(): skip: " << m_xml.name();
     m_xml.skipCurrentElement();
 }

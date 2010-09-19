@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_GROUP_H
 #define KEEPASSX_GROUP_H
 
-#include <QtGui/QImage>
+#include <QtGui/QIcon>
 
 #include "Entry.h"
 #include "TimeInfo.h"
@@ -36,7 +36,7 @@ public:
     Uuid uuid() const;
     QString name() const;
     QString notes() const;
-    QImage icon() const;
+    QIcon icon() const;
     int iconNumber() const;
     Uuid iconUuid() const;
     TimeInfo timeInfo() const;

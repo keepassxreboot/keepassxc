@@ -78,9 +78,9 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
     if (role == Qt::DisplayRole) {
         return entry->title();
     }
-    /*else if (role == Qt::DecorationRole) {
+    else if (role == Qt::DecorationRole) {
         return entry->icon();
-    }*/
+    }
     else {
         return QVariant();
     }

@@ -21,6 +21,8 @@
 #include "Group.h"
 
 #include "Database.h"
+#include "DatabaseIcons.h"
+#include "Metadata.h"
 
 Group::Group()
 {
@@ -48,13 +50,13 @@ QString Group::notes() const
     return m_notes;
 }
 
-QImage Group::icon() const
+QIcon Group::icon() const
 {
-    if (m_iconNumber == 0) {
-        return m_db->customIcon(m_customIcon);
+    if (m_customIcon.isNull()) {
+        return DatabaseIcons::icon(m_iconNumber);
     }
     else {
-        return Database::icon(m_iconNumber);
+        return m_db->metadata()->customIcon(m_customIcon);
     }
 }
 

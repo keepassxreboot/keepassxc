@@ -10,3 +10,26 @@ This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
+
+--------------------------------------------------------------------
+
+Format-Specification: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?op=file&rev=135
+Name: KeePassX
+Maintainer: Felix Geyer <debfx@fobos.de>
+Source: http://www.keepassx.org/
+
+Copyright: 2010, Felix Geyer <debfx@fobos.de>
+License: GPL-2 or GPL-3
+
+Files: cmake/FindLibgcrypt.cmake
+Copyright: 2006, Pino Toscano <toscano.pino@tiscali.it>
+           2008, Modestas Vainius <modestas@vainius.eu>
+License: BSD
+
+Files: share/icons/entries/*.png
+Copyright: 2003-2004, David Vignoni <david@icon-king.com>
+License: LGPL-2.1
+
+Files: tests/modeltest.*
+Copyright: 2007, Trolltech ASA
+License: GPL-2

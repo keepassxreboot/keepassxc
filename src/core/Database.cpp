@@ -48,15 +48,9 @@ Metadata* Database::metadata()
     return m_metadata;
 }
 
-QImage Database::icon(int number)
+const Metadata* Database::metadata() const
 {
-    // TODO implement
-    return QImage();
-}
-
-QImage Database::customIcon(const Uuid& uuid) const
-{
-    return m_customIcons[uuid];
+    return m_metadata;
 }
 
 Entry* Database::resolveEntry(const Uuid& uuid)

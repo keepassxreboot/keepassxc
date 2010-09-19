@@ -21,7 +21,7 @@
 #include <QtCore/QHash>
 #include <QtCore/QUrl>
 #include <QtGui/QColor>
-#include <QtGui/QImage>
+#include <QtGui/QIcon>
 
 #include "TimeInfo.h"
 #include "Uuid.h"
@@ -43,7 +43,7 @@ public:
     Entry();
     ~Entry();
     Uuid uuid() const;
-    QImage icon() const;
+    QIcon icon() const;
     int iconNumber() const;
     Uuid iconUuid() const;
     QColor foregroundColor() const;

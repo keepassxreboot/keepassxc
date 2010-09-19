@@ -21,7 +21,7 @@
 #include "Group.h"
 
 #include <QtCore/QHash>
-#include <QtGui/QImage>
+#include <QtGui/QIcon>
 
 class Metadata;
 
@@ -41,8 +41,7 @@ public:
     const Group* rootGroup() const;
     void setRootGroup(Group* group);
     Metadata* metadata();
-    static QImage icon(int number);
-    QImage customIcon(const Uuid& uuid) const;
+    const Metadata* metadata() const;
     Entry* resolveEntry(const Uuid& uuid);
     Group* resolveGroup(const Uuid& uuid);
     QList<DeletedObject> deletedObjects();
@@ -61,7 +60,6 @@ private:
 
     Metadata* m_metadata;
     Group* m_rootGroup;
-    QHash<Uuid, QImage> m_customIcons;
     QList<DeletedObject> m_deletedObjects;
 };
 
