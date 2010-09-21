@@ -19,6 +19,8 @@
 
 #include <QtCore/QHash>
 
+#include "crypto/Random.h"
+
 const int Uuid::LENGTH = 16;
 
 Uuid::Uuid()
@@ -34,10 +36,7 @@ Uuid::Uuid(const QByteArray& data)
 }
 
 Uuid Uuid::random() {
-    QByteArray randomAray;
-    // TODO fill with random data
-    randomAray.fill(1, 16);
-    return Uuid(randomAray);
+    return Uuid(Random::randomArray(16));
 }
 
 QString Uuid::toBase64() const
