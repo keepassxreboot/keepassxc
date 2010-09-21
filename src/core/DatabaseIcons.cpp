@@ -22,7 +22,8 @@ DatabaseIcons* DatabaseIcons::m_instance(0);
 
 QIcon DatabaseIcons::icon(int index)
 {
-    if (index >= iconCount()) {
+    if (index < 0 || index >= iconCount()) {
+        qWarning("DatabaseIcons::icon: invalid icon index %d", index);
         return QIcon();
     }
 
@@ -112,7 +113,7 @@ DatabaseIcons::DatabaseIcons()
 
     Q_ASSERT(m_indexToName.size() == iconCount());
 }
-#include <QFile>
+
 QIcon DatabaseIcons::getIconInternal(int index)
 {
     if (m_iconCache.contains(index)) {
