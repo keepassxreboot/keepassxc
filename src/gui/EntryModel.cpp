@@ -63,7 +63,7 @@ int EntryModel::columnCount(const QModelIndex& parent) const
 {
     Q_UNUSED(parent);
 
-    return 1;
+    return 3;
 }
 
 QVariant EntryModel::data(const QModelIndex& index, int role) const
@@ -74,23 +74,33 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
 
     Entry* entry = entryFromIndex(index);
 
-    // TODO implement other columns
     if (role == Qt::DisplayRole) {
-        return entry->title();
+        switch (index.column()) {
+        case 0:
+            return entry->title();
+        case 1:
+            return entry->username();
+        case 2:
+            return entry->url();
+        }
     }
-    else if (role == Qt::DecorationRole) {
+    else if ((role == Qt::DecorationRole) && (index.column() == 0)) {
         return entry->icon();
     }
-    else {
-        return QVariant();
-    }
+
+    return QVariant();
 }
 QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    Q_UNUSED(section);
-
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
-        return tr("Title");
+        switch (section) {
+        case 0:
+            return tr("Title");
+        case 1:
+            return tr("Username");
+        case 2:
+            return tr("URL");
+        }
     }
 
     return QVariant();
