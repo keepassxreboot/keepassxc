@@ -30,13 +30,13 @@ Uuid::Uuid()
 
 Uuid::Uuid(const QByteArray& data)
 {
-    Q_ASSERT(data.size() == 16);
+    Q_ASSERT(data.size() == LENGTH);
 
     m_data = data;
 }
 
 Uuid Uuid::random() {
-    return Uuid(Random::randomArray(16));
+    return Uuid(Random::randomArray(LENGTH));
 }
 
 QString Uuid::toBase64() const
