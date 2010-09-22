@@ -17,10 +17,10 @@
 
 #include "KeePass2XmlReader.h"
 
-#include <QtCore/QDebug>
 #include <QtCore/QFile>
 
 #include "core/Database.h"
+#include "core/DatabaseIcons.h"
 #include "core/Metadata.h"
 
 KeePass2XmlReader::KeePass2XmlReader()
@@ -298,6 +298,9 @@ Group* KeePass2XmlReader::parseGroup()
                 raiseError();
             }
             else {
+                if (iconId >= DatabaseIcons::iconCount()) {
+                    qWarning("KeePass2XmlReader::parseGroup: icon id \"%d\" not supported", iconId);
+                }
                 group->setIcon(iconId);
             }
         }
@@ -756,6 +759,6 @@ void KeePass2XmlReader::raiseError()
 
 void KeePass2XmlReader::skipCurrentElement()
 {
-    qWarning() << "KeePass2XmlReader::skipCurrentElement(): skip: " << m_xml.name();
+    qWarning("KeePass2XmlReader::skipCurrentElement: skip element \"%s\"", qPrintable(m_xml.name().toString()));
     m_xml.skipCurrentElement();
 }
