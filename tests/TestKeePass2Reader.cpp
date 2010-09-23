@@ -31,6 +31,7 @@ class TestKeePass2Reader : public QObject
 private Q_SLOTS:
     void initTestCase();
     void testNonAscii();
+    void testCompressed();
 };
 
 void TestKeePass2Reader::initTestCase()
@@ -48,6 +49,18 @@ void TestKeePass2Reader::testNonAscii()
     QVERIFY(db);
     QVERIFY(!reader->error());
     QCOMPARE(db->metadata()->name(), QString("NonAsciiTest"));
+}
+
+void TestKeePass2Reader::testCompressed()
+{
+    QString filename = QString(KEEPASSX_TEST_DIR).append("/Compressed.kdbx");
+    CompositeKey key;
+    key.addKey(PasswordKey(""));
+    KeePass2Reader* reader = new KeePass2Reader();
+    Database* db = reader->readDatabase(filename, key);
+    QVERIFY(db);
+    QVERIFY(!reader->error());
+    QCOMPARE(db->metadata()->name(), QString("Compressed"));
 }
 
 QTEST_MAIN(TestKeePass2Reader);

@@ -49,6 +49,8 @@ find_package(Automoc4 REQUIRED)
 
 find_package(Libgcrypt REQUIRED)
 
+find_package(ZLIB REQUIRED)
+
 add_subdirectory(src)
 if( WITH_TESTS )
     add_subdirectory(tests)

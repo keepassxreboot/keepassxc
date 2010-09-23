@@ -30,6 +30,10 @@ Files: share/icons/entries/*.png
 Copyright: 2003-2004, David Vignoni <david@icon-king.com>
 License: LGPL-2.1
 
+Files: src/streams/qtiocompressor.*, src/streams/QtIOCompressor
+Copyright: 2009, Nokia Corporation and/or its subsidiary(-ies)
+License: LGPL-2.1 or GPL-3
+
 Files: tests/modeltest.*
 Copyright: 2007, Trolltech ASA
 License: GPL-2

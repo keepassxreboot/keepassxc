@@ -23,6 +23,7 @@
 #include "core/Endian.h"
 #include "core/Uuid.h"
 #include "keys/CompositeKey.h"
+#include "format/KeePass2.h"
 
 class Database;
 
@@ -59,7 +60,7 @@ private:
     bool m_headerEnd;
 
     Uuid m_cipher;
-    int m_compression;
+    KeePass2::CompressionAlgorithm m_compression;
     QByteArray m_masterSeed;
     QByteArray m_transformSeed;
     quint64 m_transformRounds;

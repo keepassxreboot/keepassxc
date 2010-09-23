@@ -43,6 +43,7 @@ set(keepassx_SOURCES
     keys/PasswordKey.cpp
     streams/HashedBlockStream.cpp
     streams/LayeredStream.cpp
+    streams/qtiocompressor.cpp
     streams/SymmetricCipherStream.cpp
 )
 
@@ -55,4 +56,4 @@ qt4_wrap_ui(keepassx_SOURCES ${keepassx_FORMS})
 automoc4_add_library( keepassx_core STATIC ${keepassx_SOURCES} )
 
 automoc4_add_executable( ${PROGNAME} WIN32 MACOSX_BUNDLE main.cpp )
-target_link_libraries( ${PROGNAME} keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${LIBGCRYPT_LIBS} )
+target_link_libraries( ${PROGNAME} keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${LIBGCRYPT_LIBS} ${ZLIB_LIBRARIES} )

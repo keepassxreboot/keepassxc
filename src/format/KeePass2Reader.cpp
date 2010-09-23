@@ -21,10 +21,10 @@
 #include <QtCore/QFile>
 #include <QtCore/QIODevice>
 
-#include "KeePass2.h"
 #include "KeePass2XmlReader.h"
 #include "crypto/CryptoHash.h"
 #include "streams/HashedBlockStream.h"
+#include "streams/QtIOCompressor"
 #include "streams/SymmetricCipherStream.h"
 
 const QSysInfo::Endian KeePass2Reader::BYTEORDER = QSysInfo::LittleEndian;
@@ -80,8 +80,22 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
     HashedBlockStream hashedStream(&cipherStream);
     hashedStream.open(QIODevice::ReadOnly);
 
+    QIODevice* xmlDevice;
+    QScopedPointer<QtIOCompressor> ioCompressor;
+
+    if (m_compression == KeePass2::CompressionNone) {
+        xmlDevice = &hashedStream;
+    }
+    else {
+        ioCompressor.reset(new QtIOCompressor(&hashedStream));
+        ioCompressor->setStreamFormat(QtIOCompressor::GzipFormat);
+        ioCompressor->open(QIODevice::ReadOnly);
+        xmlDevice = ioCompressor.data();
+    }
+
     KeePass2XmlReader xmlReader;
-    Database* db = xmlReader.readDatabase(&hashedStream);
+    Database* db = xmlReader.readDatabase(xmlDevice);
+    // TODO forward error messages from xmlReader
     return db;
 }
 
@@ -208,7 +222,7 @@ void KeePass2Reader::setCompressionFlags(const QByteArray& data)
             raiseError("");
         }
         else {
-            m_compression = id;
+            m_compression = static_cast<KeePass2::CompressionAlgorithm>(id);
         }
     }
 }
