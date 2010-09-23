@@ -24,7 +24,7 @@ option(WITH_TESTS "Enable building of unit tests" ON)
 set( KEEPASSX_VERSION "0.9.0" )
 
 if(CMAKE_COMPILER_IS_GNUCXX)
-    add_definitions(-DQT_NO_KEYWORDS -DQT_NO_EXCEPTIONS -fno-exceptions -fno-rtti
+    add_definitions(-DQT_NO_KEYWORDS -DQT_NO_EXCEPTIONS -DQT_NO_STL -fno-exceptions -fno-rtti
                     -ansi -Wall -Wextra -Wundef -Wold-style-cast -Wnon-virtual-dtor -Wcast-align
                     -Wpointer-arith -Wformat-security -Woverloaded-virtual -Wno-long-long)
 
