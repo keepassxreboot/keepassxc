@@ -27,6 +27,8 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     add_definitions(-DQT_NO_KEYWORDS -DQT_NO_EXCEPTIONS -fno-exceptions -fno-rtti
                     -ansi -Wall -Wextra -Wundef -Wold-style-cast -Wnon-virtual-dtor -Wcast-align
                     -Wpointer-arith -Wformat-security -Woverloaded-virtual -Wno-long-long)
+
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-add-needed")
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
 if( APPLE OR MINGW )

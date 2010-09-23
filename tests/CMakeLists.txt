@@ -84,7 +84,7 @@ add_unit_test( testcryptohash TestCryptoHash.cpp )
 target_link_libraries( testcryptohash keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} ${LIBGCRYPT_LIBS} ${ZLIB_LIBRARIES} )
 
 add_unit_test( testsymmetriccipher TestSymmetricCipher.cpp )
-target_link_libraries( testsymmetriccipher keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} ${LIBGCRYPT_LIBS} )
+target_link_libraries( testsymmetriccipher keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} ${LIBGCRYPT_LIBS} ${ZLIB_LIBRARIES}  )
 
 add_unit_test( testhashedblockstream TestHashedBlockStream.cpp )
-target_link_libraries( testhashedblockstream keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} ${LIBGCRYPT_LIBS} )
+target_link_libraries( testhashedblockstream keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} ${LIBGCRYPT_LIBS} ${ZLIB_LIBRARIES}  )
