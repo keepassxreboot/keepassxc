@@ -53,6 +53,20 @@ find_package(Libgcrypt REQUIRED)
 
 find_package(ZLIB REQUIRED)
 
+include(CheckCXXSourceCompiles)
+check_cxx_source_compiles("
+    #include <zlib.h>
+
+    #if !defined(ZLIB_VERNUM) || (ZLIB_VERNUM < 0x1200)
+        #error zlib 1.2.x or higher is required to use the gzip format
+    #endif
+
+    int main() { return 0; }" ZLIB_SUPPORTS_GZIP)
+
+if(NOT ZLIB_SUPPORTS_GZIP)
+    message(FATAL_ERROR "zlib 1.2.x or higher is required to use the gzip format")
+endif(NOT ZLIB_SUPPORTS_GZIP)
+
 add_subdirectory(src)
 if( WITH_TESTS )
     add_subdirectory(tests)
