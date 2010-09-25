@@ -28,6 +28,11 @@ SymmetricCipherStream::SymmetricCipherStream(QIODevice* baseDevice, SymmetricCip
     m_cipher = new SymmetricCipher(algo, mode, direction, key, iv);
 }
 
+SymmetricCipherStream::~SymmetricCipherStream()
+{
+    close();
+}
+
 bool SymmetricCipherStream::reset()
 {
     if (isWritable()) {

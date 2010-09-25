@@ -74,6 +74,11 @@ QString Entry::overrideUrl() const
     return m_overrideUrl;
 }
 
+QString Entry::tags() const
+{
+    return m_tags;
+}
+
 TimeInfo Entry::timeInfo() const
 {
     return m_timeInfo;
@@ -170,6 +175,11 @@ void Entry::setBackgroundColor(const QColor& color)
 void Entry::setOverrideUrl(const QString& url)
 {
     m_overrideUrl = url;
+}
+
+void Entry::setTags(const QString& tags)
+{
+    m_tags = tags;
 }
 
 void Entry::setTimeInfo(const TimeInfo& timeInfo)

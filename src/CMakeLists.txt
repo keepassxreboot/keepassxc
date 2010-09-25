@@ -31,6 +31,7 @@ set(keepassx_SOURCES
     crypto/Random.cpp
     crypto/SymmetricCipher.cpp
     format/KeePass2Reader.cpp
+    format/KeePass2Writer.cpp
     format/KeePass2XmlReader.cpp
     format/KeePass2XmlWriter.cpp
     gui/DatabaseWidget.cpp

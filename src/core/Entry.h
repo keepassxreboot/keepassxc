@@ -49,6 +49,7 @@ public:
     QColor foregroundColor() const;
     QColor backgroundColor() const;
     QString overrideUrl() const;
+    QString tags() const;
     TimeInfo timeInfo() const;
     bool autoTypeEnabled() const;
     int autoTypeObfuscation() const;
@@ -68,6 +69,7 @@ public:
     void setForegroundColor(const QColor& color);
     void setBackgroundColor(const QColor& color);
     void setOverrideUrl(const QString& url);
+    void setTags(const QString& tags);
     void setTimeInfo(const TimeInfo& timeInfo);
     void setAutoTypeEnabled(bool enable);
     void setAutoTypeObfuscation(int obfuscation);
@@ -98,6 +100,7 @@ private:
     QColor m_foregroundColor;
     QColor m_backgroundColor;
     QString m_overrideUrl;
+    QString m_tags;
     TimeInfo m_timeInfo;
     bool m_autoTypeEnabled;
     int m_autoTypeObfuscation;

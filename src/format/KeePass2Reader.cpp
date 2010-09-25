@@ -21,37 +21,37 @@
 #include <QtCore/QFile>
 #include <QtCore/QIODevice>
 
-#include "KeePass2XmlReader.h"
+#include "core/Database.h"
 #include "crypto/CryptoHash.h"
+#include "format/KeePass2.h"
+#include "format/KeePass2XmlReader.h"
 #include "streams/HashedBlockStream.h"
 #include "streams/QtIOCompressor"
 #include "streams/SymmetricCipherStream.h"
 
-const QSysInfo::Endian KeePass2Reader::BYTEORDER = QSysInfo::LittleEndian;
-
 Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& key)
 {
+    m_db = new Database();
     m_device = device;
     m_error = false;
     m_errorStr = QString();
     m_headerEnd = false;
-    m_cipher = Uuid();
 
     bool ok;
 
-    quint32 signature1 = Endian::readUInt32(m_device, BYTEORDER, &ok);
+    quint32 signature1 = Endian::readUInt32(m_device, KeePass2::BYTEORDER, &ok);
     if (!ok || signature1 != KeePass2::SIGNATURE_1) {
         raiseError("1");
         return 0;
     }
 
-    quint32 signature2 = Endian::readUInt32(m_device, BYTEORDER, &ok);
+    quint32 signature2 = Endian::readUInt32(m_device, KeePass2::BYTEORDER, &ok);
     if (!ok || signature2 != KeePass2::SIGNATURE_2) {
         raiseError("2");
         return 0;
     }
 
-    quint32 version = Endian::readUInt32(m_device, BYTEORDER, &ok) & KeePass2::FILE_VERSION_CRITICAL_MASK;
+    quint32 version = Endian::readUInt32(m_device, KeePass2::BYTEORDER, &ok) & KeePass2::FILE_VERSION_CRITICAL_MASK;
     quint32 expectedVersion = KeePass2::FILE_VERSION & KeePass2::FILE_VERSION_CRITICAL_MASK;
     // TODO do we support old Kdbx versions?
     if (!ok || (version != expectedVersion)) {
@@ -62,9 +62,12 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
     while (readHeaderField() && !error()) {
     }
 
+    QByteArray transformedMasterKey = key.transform(m_db->transformSeed(), m_db->transformRounds());
+    m_db->setTransformedMasterKey(transformedMasterKey);
+
     CryptoHash hash(CryptoHash::Sha256);
     hash.addData(m_masterSeed);
-    hash.addData(key.transform(m_transformSeed, m_transformRounds));
+    hash.addData(transformedMasterKey);
     QByteArray finalKey = hash.result();
 
     SymmetricCipherStream cipherStream(device, SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Decrypt, finalKey, m_encryptionIV);
@@ -83,7 +86,7 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
     QIODevice* xmlDevice;
     QScopedPointer<QtIOCompressor> ioCompressor;
 
-    if (m_compression == KeePass2::CompressionNone) {
+    if (m_db->compressionAlgo() == Database::CompressionNone) {
         xmlDevice = &hashedStream;
     }
     else {
@@ -94,9 +97,9 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
     }
 
     KeePass2XmlReader xmlReader;
-    Database* db = xmlReader.readDatabase(xmlDevice);
+    xmlReader.readDatabase(xmlDevice, m_db);
     // TODO forward error messages from xmlReader
-    return db;
+    return m_db;
 }
 
 Database* KeePass2Reader::readDatabase(const QString& filename, const CompositeKey& key)
@@ -136,7 +139,7 @@ bool KeePass2Reader::readHeaderField()
     quint8 fieldID = fieldIDArray.at(0);
 
     bool ok;
-    quint16 fieldLen = Endian::readUInt16(m_device, BYTEORDER, &ok);
+    quint16 fieldLen = Endian::readUInt16(m_device, KeePass2::BYTEORDER, &ok);
     if (!ok) {
         raiseError("");
         return false;
@@ -206,7 +209,14 @@ void KeePass2Reader::setCipher(const QByteArray& data)
         raiseError("");
     }
     else {
-        m_cipher = Uuid(data);
+        Uuid uuid(data);
+
+        if (uuid != KeePass2::CIPHER_AES) {
+            raiseError("");
+        }
+        else {
+            m_db->setCipher(uuid);
+        }
     }
 }
 
@@ -216,13 +226,13 @@ void KeePass2Reader::setCompressionFlags(const QByteArray& data)
         raiseError("");
     }
     else {
-        quint32 id = Endian::bytesToUInt32(data, BYTEORDER);
+        quint32 id = Endian::bytesToUInt32(data, KeePass2::BYTEORDER);
 
-        if (id >= KeePass2::CompressionCount) {
+        if (id > Database::CompressionAlgorithmMax) {
             raiseError("");
         }
         else {
-            m_compression = static_cast<KeePass2::CompressionAlgorithm>(id);
+            m_db->setCompressionAlgo(static_cast<Database::CompressionAlgorithm>(id));
         }
     }
 }
@@ -243,7 +253,7 @@ void KeePass2Reader::setTransformSeed(const QByteArray& data)
         raiseError("");
     }
     else {
-        m_transformSeed = data;
+        m_db->setTransformSeed(data);
     }
 }
 
@@ -253,7 +263,7 @@ void KeePass2Reader::setTansformRounds(const QByteArray& data)
         raiseError("");
     }
     else {
-        m_transformRounds = Endian::bytesToUInt64(data, BYTEORDER);
+        m_db->setTransformRounds(Endian::bytesToUInt64(data, KeePass2::BYTEORDER));
     }
 }
 

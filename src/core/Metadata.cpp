@@ -145,6 +145,21 @@ const Group* Metadata::lastTopVisibleGroup() const
     return m_lastTopVisibleGroup;
 }
 
+QDateTime Metadata::masterKeyChanged() const
+{
+    return m_masterKeyChanged;
+}
+
+int Metadata::masterKeyChangeRec() const
+{
+    return m_masterKeyChangeRec;
+}
+
+int Metadata::masterKeyChangeForce() const
+{
+    return m_masterKeyChangeForce;
+}
+
 QHash<QString, QString> Metadata::customFields() const
 {
     return m_customFields;
@@ -269,6 +284,21 @@ void Metadata::setLastSelectedGroup(Group* group)
 void Metadata::setLastTopVisibleGroup(Group* group)
 {
     m_lastTopVisibleGroup = group;
+}
+
+void Metadata::setMasterKeyChanged(const QDateTime& value)
+{
+    m_masterKeyChanged = value;
+}
+
+void Metadata::setMasterKeyChangeRec(int value)
+{
+    m_masterKeyChangeRec = value;
+}
+
+void Metadata::setMasterKeyChangeForce(int value)
+{
+    m_masterKeyChangeForce = value;
 }
 
 void Metadata::addCustomField(const QString& key, const QString& value)

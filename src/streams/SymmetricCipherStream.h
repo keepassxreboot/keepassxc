@@ -30,6 +30,7 @@ class SymmetricCipherStream : public LayeredStream
 public:
     SymmetricCipherStream(QIODevice* baseDevice, SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
                           SymmetricCipher::Direction direction, const QByteArray& key, const QByteArray& iv);
+    ~SymmetricCipherStream();
     bool reset();
     void close();
 

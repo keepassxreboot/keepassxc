@@ -26,6 +26,7 @@ class LayeredStream : public QIODevice
 
 public:
     explicit LayeredStream(QIODevice* baseDevice);
+    virtual ~LayeredStream();
 
     bool isSequential() const;
     virtual QString errorString() const;

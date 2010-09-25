@@ -38,6 +38,11 @@ HashedBlockStream::HashedBlockStream(QIODevice* baseDevice, qint32 blockSize)
     init();
 }
 
+HashedBlockStream::~HashedBlockStream()
+{
+    close();
+}
+
 void HashedBlockStream::init()
 {
     m_buffer.clear();

@@ -20,12 +20,18 @@
 
 #include <QtCore/QtGlobal>
 
+#include "core/Uuid.h"
+
 namespace KeePass2
 {
     const quint32 SIGNATURE_1 = 0x9AA2D903;
     const quint32 SIGNATURE_2 = 0xB54BFB67;
     const quint32 FILE_VERSION = 0x00020000;
     const quint32 FILE_VERSION_CRITICAL_MASK = 0xFFFF0000;
+
+    const QSysInfo::Endian BYTEORDER = QSysInfo::LittleEndian;
+
+    const Uuid CIPHER_AES = Uuid(QByteArray::fromHex("31c1f2e6bf714350be5805216afc5aff"));
 
     enum HeaderFieldID
     {
@@ -40,13 +46,6 @@ namespace KeePass2
         ProtectedStreamKey = 8,
         StreamStartBytes = 9,
         InnerRandomStreamID = 10
-    };
-
-    enum CompressionAlgorithm
-    {
-        CompressionNone = 0,
-        CompressionGZip = 1,
-        CompressionCount = 2
     };
 }
 

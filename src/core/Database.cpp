@@ -102,3 +102,61 @@ void Database::addDeletedObject(const DeletedObject& delObj)
 {
     m_deletedObjects.append(delObj);
 }
+
+Uuid Database::cipher() const
+{
+    return m_cipher;
+}
+
+Database::CompressionAlgorithm Database::compressionAlgo() const
+{
+    return m_compressionAlgo;
+}
+
+QByteArray Database::transformSeed() const
+{
+    return m_transformSeed;
+}
+
+quint64 Database::transformRounds() const
+{
+    return m_transformRounds;
+}
+
+QByteArray Database::transformedMasterKey() const
+{
+    return m_transformedMasterKey;
+}
+
+void Database::setCipher(const Uuid& cipher)
+{
+    Q_ASSERT(!cipher.isNull());
+
+    m_cipher = cipher;
+}
+
+void Database::setCompressionAlgo(Database::CompressionAlgorithm algo)
+{
+    Q_ASSERT(static_cast<quint32>(algo) <= CompressionAlgorithmMax);
+
+    m_compressionAlgo = algo;
+}
+
+void Database::setTransformSeed(const QByteArray& seed)
+{
+    Q_ASSERT(seed.size() == 32);
+
+    m_transformSeed = seed;
+}
+
+void Database::setTransformRounds(quint64 rounds)
+{
+    m_transformRounds = rounds;
+}
+
+void Database::setTransformedMasterKey(QByteArray& key)
+{
+    Q_ASSERT(key.size() == 32);
+
+    m_transformedMasterKey = key;
+}

@@ -29,11 +29,11 @@ KeePass2XmlReader::KeePass2XmlReader()
 {
 }
 
-Database* KeePass2XmlReader::readDatabase(QIODevice* device)
+void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db)
 {
     m_xml.setDevice(device);
 
-    m_db = new Database();
+    m_db = db;
     m_meta = m_db->metadata();
 
     m_tmpParent = new Group();
@@ -50,8 +50,13 @@ Database* KeePass2XmlReader::readDatabase(QIODevice* device)
     }
 
     delete m_tmpParent;
+}
 
-    return m_db;
+Database* KeePass2XmlReader::readDatabase(QIODevice* device)
+{
+    Database* db = new Database();
+    readDatabase(device, db);
+    return db;
 }
 
 Database* KeePass2XmlReader::readDatabase(const QString& filename)
@@ -119,6 +124,15 @@ void KeePass2XmlReader::parseMeta()
         }
         else if (m_xml.name() == "MaintenanceHistoryDays") {
             m_meta->setMaintenanceHistoryDays(readNumber());
+        }
+        else if (m_xml.name() == "MasterKeyChanged") {
+            m_meta->setMasterKeyChanged(readDateTime());
+        }
+        else if (m_xml.name() == "MasterKeyChangeRec") {
+            m_meta->setMasterKeyChangeRec(readNumber());
+        }
+        else if (m_xml.name() == "MasterKeyChangeForce") {
+            m_meta->setMasterKeyChangeForce(readNumber());
         }
         else if (m_xml.name() == "MemoryProtection") {
             parseMemoryProtection();
@@ -460,6 +474,9 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
         }
         else if (m_xml.name() == "OverrideURL") {
             entry->setOverrideUrl(readString());
+        }
+        else if (m_xml.name() == "Tags") {
+            entry->setTags(readString());
         }
         else if (m_xml.name() == "Times") {
             entry->setTimeInfo(parseTimes());

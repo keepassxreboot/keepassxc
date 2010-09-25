@@ -38,6 +38,7 @@ class KeePass2XmlReader
 public:
     KeePass2XmlReader();
     Database* readDatabase(QIODevice* device);
+    void readDatabase(QIODevice* device, Database* db);
     Database* readDatabase(const QString& filename);
     bool error();
     QString errorString();

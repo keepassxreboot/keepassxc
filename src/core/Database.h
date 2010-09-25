@@ -36,6 +36,13 @@ class Database : public QObject
     Q_OBJECT
 
 public:
+    enum CompressionAlgorithm
+    {
+        CompressionNone = 0,
+        CompressionGZip = 1
+    };
+    static const quint32 CompressionAlgorithmMax = CompressionGZip;
+
     Database();
     Group* rootGroup();
     const Group* rootGroup() const;
@@ -46,6 +53,18 @@ public:
     Group* resolveGroup(const Uuid& uuid);
     QList<DeletedObject> deletedObjects();
     void addDeletedObject(const DeletedObject& delObj);
+
+    Uuid cipher() const;
+    Database::CompressionAlgorithm compressionAlgo() const;
+    QByteArray transformSeed() const;
+    quint64 transformRounds() const;
+    QByteArray transformedMasterKey() const;
+
+    void setCipher(const Uuid& cipher);
+    void setCompressionAlgo(Database::CompressionAlgorithm algo);
+    void setTransformSeed(const QByteArray& seed);
+    void setTransformRounds(quint64 rounds);
+    void setTransformedMasterKey(QByteArray& key);
 
 Q_SIGNALS:
     void groupDataChanged(Group* group);
@@ -61,6 +80,12 @@ private:
     Metadata* m_metadata;
     Group* m_rootGroup;
     QList<DeletedObject> m_deletedObjects;
+
+    Uuid m_cipher;
+    CompressionAlgorithm m_compressionAlgo;
+    QByteArray m_transformSeed;
+    quint64 m_transformRounds;
+    QByteArray m_transformedMasterKey;
 };
 
 #endif // KEEPASSX_DATABASE_H

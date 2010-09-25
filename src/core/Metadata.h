@@ -57,6 +57,9 @@ public:
     QDateTime entryTemplatesGroupChanged() const;
     const Group* lastSelectedGroup() const;
     const Group* lastTopVisibleGroup() const;
+    QDateTime masterKeyChanged() const;
+    int masterKeyChangeRec() const;
+    int masterKeyChangeForce() const;
     QHash<QString, QString> customFields() const;
 
     void setGenerator(const QString& value);
@@ -82,6 +85,9 @@ public:
     void setEntryTemplatesGroupChanged(const QDateTime& value);
     void setLastSelectedGroup(Group* group);
     void setLastTopVisibleGroup(Group* group);
+    void setMasterKeyChanged(const QDateTime& value);
+    void setMasterKeyChangeRec(int value);
+    void setMasterKeyChangeForce(int value);
     void addCustomField(const QString& key, const QString& value);
     void removeCustomField(const QString& key);
 
@@ -111,6 +117,10 @@ private:
     QDateTime m_entryTemplatesGroupChanged;
     Group* m_lastSelectedGroup;
     Group* m_lastTopVisibleGroup;
+
+    QDateTime m_masterKeyChanged;
+    int m_masterKeyChangeRec;
+    int m_masterKeyChangeForce;
 
     QHash<QString, QString> m_customFields;
 };

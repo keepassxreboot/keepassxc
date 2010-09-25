@@ -24,6 +24,11 @@ LayeredStream::LayeredStream(QIODevice* baseDevice)
     connect(baseDevice, SIGNAL(aboutToClose()), SLOT(closeStream()));
 }
 
+LayeredStream::~LayeredStream()
+{
+    close();
+}
+
 bool LayeredStream::isSequential() const
 {
     return true;

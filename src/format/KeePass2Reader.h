@@ -23,7 +23,6 @@
 #include "core/Endian.h"
 #include "core/Uuid.h"
 #include "keys/CompositeKey.h"
-#include "format/KeePass2.h"
 
 class Database;
 
@@ -52,18 +51,13 @@ private:
     void setStreamStartBytes(const QByteArray& data);
     void setInnerRandomStreamID(const QByteArray& data);
 
-    static const QSysInfo::Endian BYTEORDER;
-
     QIODevice* m_device;
     bool m_error;
     QString m_errorStr;
     bool m_headerEnd;
 
-    Uuid m_cipher;
-    KeePass2::CompressionAlgorithm m_compression;
+    Database* m_db;
     QByteArray m_masterSeed;
-    QByteArray m_transformSeed;
-    quint64 m_transformRounds;
     QByteArray m_encryptionIV;
     QByteArray m_streamStartBytes;
 };

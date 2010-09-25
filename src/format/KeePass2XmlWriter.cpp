@@ -53,7 +53,7 @@ void KeePass2XmlWriter::writeDatabase(QIODevice* device, Database* db)
 void KeePass2XmlWriter::writeDatabase(const QString& filename, Database* db)
 {
     QFile file(filename);
-    file.open(QIODevice::WriteOnly);
+    file.open(QIODevice::WriteOnly|QIODevice::Truncate);
     writeDatabase(&file, db);
 }
 
@@ -69,6 +69,9 @@ void KeePass2XmlWriter::writeMetadata()
     writeString("DefaultUserName", m_meta->defaultUserName());
     writeDateTime("DefaultUserNameChanged", m_meta->defaultUserNameChanged());
     writeNumber("MaintenanceHistoryDays", m_meta->maintenanceHistoryDays());
+    writeDateTime("MasterKeyChanged", m_meta->masterKeyChanged());
+    writeNumber("MasterKeyChangeRec", m_meta->masterKeyChangeRec());
+    writeNumber("MasterKeyChangeForce", m_meta->masterKeyChangeForce());
     writeMemoryProtection();
     writeCustomIcons();
     writeBool("RecycleBinEnabled", m_meta->recycleBinEnabled());
@@ -263,16 +266,17 @@ void KeePass2XmlWriter::writeEntry(const Entry* entry)
     writeColor("ForegroundColor", entry->foregroundColor());
     writeColor("BackgroundColor", entry->backgroundColor());
     writeString("OverrideURL", entry->overrideUrl());
+    writeString("Tags", entry->tags());
     writeTimes(entry->timeInfo());
 
-    Q_FOREACH (const QString& key, entry->attributes()) {
+    Q_FOREACH (const QString& key, entry->attributes().keys()) {
         m_xml.writeStartElement("String");
         writeString("Key", key);
         writeString("Value", entry->attributes().value(key));
         m_xml.writeEndElement();
     }
 
-    Q_FOREACH (const QString& key, entry->attachments()) {
+    Q_FOREACH (const QString& key, entry->attachments().keys()) {
         m_xml.writeStartElement("Binary");
         writeString("Key", key);
         writeBinary("Value", entry->attachments().value(key));
