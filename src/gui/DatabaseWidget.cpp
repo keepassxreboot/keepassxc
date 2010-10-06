@@ -20,14 +20,16 @@
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QSplitter>
 
+#include "EditEntryWidget.h"
 #include "EntryView.h"
 #include "GroupView.h"
 
 DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
-    : QWidget(parent)
+    : QStackedWidget(parent)
 {
-    QLayout* layout = new QHBoxLayout(this);
-    QSplitter* splitter = new QSplitter(this);
+    m_mainWidget = new QWidget(this);
+    QLayout* layout = new QHBoxLayout(m_mainWidget);
+    QSplitter* splitter = new QSplitter(m_mainWidget);
 
     m_groupView = new GroupView(db, splitter);
     m_entryView = new EntryView(splitter);
@@ -42,11 +44,31 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     policy.setHorizontalStretch(70);
     m_entryView->setSizePolicy(policy);
 
-    connect(m_groupView, SIGNAL(groupChanged(Group*)), m_entryView, SLOT(setGroup(Group*)));
-
     splitter->addWidget(m_groupView);
     splitter->addWidget(m_entryView);
 
     layout->addWidget(splitter);
-    setLayout(layout);
+    m_mainWidget->setLayout(layout);
+
+    m_editWidget = new EditEntryWidget();
+
+    addWidget(m_mainWidget);
+    addWidget(m_editWidget);
+
+    connect(m_groupView, SIGNAL(groupChanged(Group*)), m_entryView, SLOT(setGroup(Group*)));
+    connect(m_entryView, SIGNAL(entryActivated(Entry*)), SLOT(switchToEdit(Entry*)));
+    connect(m_editWidget, SIGNAL(editFinished()), SLOT(switchToView()));
+
+    setCurrentIndex(0);
+}
+
+void DatabaseWidget::switchToView()
+{
+    setCurrentIndex(0);
+}
+
+void DatabaseWidget::switchToEdit(Entry* entry)
+{
+    m_editWidget->loadEntry(entry);
+    setCurrentIndex(1);
 }

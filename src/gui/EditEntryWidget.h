@@ -15,33 +15,49 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_DATABASEWIDGET_H
-#define KEEPASSX_DATABASEWIDGET_H
+#ifndef KEEPASSX_EDITENTRYWIDGET_H
+#define KEEPASSX_EDITENTRYWIDGET_H
 
-#include <QtGui/QStackedWidget>
+#include <QtCore/QScopedPointer>
+#include <QtGui/QWidget>
 
-class Database;
-class EditEntryWidget;
 class Entry;
-class EntryView;
-class GroupView;
+class QListWidget;
+class QStackedLayout;
 
-class DatabaseWidget : public QStackedWidget
+namespace Ui {
+    class EditEntryWidget;
+    class EditEntryWidgetMain;
+    class EditEntryWidgetNotes;
+}
+
+class EditEntryWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit DatabaseWidget(Database* db, QWidget* parent = 0);
+    explicit EditEntryWidget(QWidget* parent = 0);
+    ~EditEntryWidget();
+
+    void loadEntry(Entry* entry);
+
+Q_SIGNALS:
+    void editFinished();
 
 private Q_SLOTS:
-    void switchToView();
-    void switchToEdit(Entry* entry);
+    void saveEntry();
+    void cancel();
 
 private:
+    Entry* m_entry;
+
+    QScopedPointer<Ui::EditEntryWidget> m_ui;
+    QScopedPointer<Ui::EditEntryWidgetMain> m_mainUi;
+    QScopedPointer<Ui::EditEntryWidgetNotes> m_notesUi;
     QWidget* m_mainWidget;
-    EditEntryWidget* m_editWidget;
-    GroupView* m_groupView;
-    EntryView* m_entryView;
+    QWidget* m_notesWidget;
+
+    Q_DISABLE_COPY(EditEntryWidget)
 };
 
-#endif // KEEPASSX_DATABASEWIDGET_H
+#endif // KEEPASSX_EDITENTRYWIDGET_H

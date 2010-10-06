@@ -17,6 +17,8 @@
 
 #include "GroupView.h"
 
+#include <QtCore/QMetaObject>
+
 #include "core/Database.h"
 #include "core/Group.h"
 #include "gui/GroupModel.h"
@@ -26,12 +28,17 @@ GroupView::GroupView(Database* db, QWidget* parent)
 {
     m_model = new GroupModel(db, this);
     QTreeView::setModel(m_model);
-    recInitExpanded(db->rootGroup());
     setHeaderHidden(true);
+    setUniformRowHeights(true);
 
     connect(this, SIGNAL(clicked(const QModelIndex&)), SLOT(emitGroupChanged(const QModelIndex&)));
 
-    setUniformRowHeights(true);
+    recInitExpanded(db->rootGroup());
+
+    setCurrentIndex(m_model->index(0, 0));
+    // invoke later so the EntryView is connected
+    QMetaObject::invokeMethod(this, "emitGroupChanged", Qt::QueuedConnection,
+                              Q_ARG(QModelIndex, m_model->index(0, 0)));
 }
 
 void GroupView::expandedChanged(const QModelIndex& index)

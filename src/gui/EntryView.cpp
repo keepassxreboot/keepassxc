@@ -27,6 +27,8 @@ EntryView::EntryView(QWidget* parent)
 
     setUniformRowHeights(true);
     setRootIsDecorated(false);
+
+    connect(this, SIGNAL(activated(const QModelIndex&)), SLOT(emitEntryActivated(const QModelIndex&)));
 }
 
 void EntryView::setGroup(Group* group)

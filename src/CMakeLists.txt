@@ -35,6 +35,7 @@ set(keepassx_SOURCES
     format/KeePass2XmlReader.cpp
     format/KeePass2XmlWriter.cpp
     gui/DatabaseWidget.cpp
+    gui/EditEntryWidget.cpp
     gui/EntryModel.cpp
     gui/EntryView.cpp
     gui/GroupModel.cpp
@@ -49,6 +50,9 @@ set(keepassx_SOURCES
 )
 
 set(keepassx_FORMS
+    gui/EditEntryWidget.ui
+    gui/EditEntryWidgetMain.ui
+    gui/EditEntryWidgetNotes.ui
     gui/MainWindow.ui
 )
 

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>EditEntryWidgetMain</class>
+ <widget class="QWidget" name="EditEntryWidgetMain">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>372</width>
+    <height>301</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="titleLabel">
+     <property name="text">
+      <string>Title:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="titleEdit"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="usernameLabel">
+     <property name="text">
+      <string>Username:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="usernameEdit"/>
+   </item>
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="urlEdit"/>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="urlLabel">
+     <property name="text">
+      <string>URL:</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
