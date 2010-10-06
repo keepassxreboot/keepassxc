@@ -264,6 +264,11 @@ void Entry::addHistoryItem(Entry* entry)
     m_history.append(entry);
 }
 
+Group* Entry::group()
+{
+    return m_group;
+}
+
 void Entry::setGroup(Group* group)
 {
     if (m_group) {

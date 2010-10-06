@@ -87,6 +87,7 @@ public:
     const QList<Entry*>& historyItems() const;
     void addHistoryItem(Entry* entry);
 
+    Group* group();
     void setGroup(Group* group);
 
 

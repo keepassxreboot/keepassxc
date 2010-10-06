@@ -24,6 +24,7 @@
 #include <QtGui/QStackedLayout>
 
 #include "core/Entry.h"
+#include "core/Group.h"
 
 EditEntryWidget::EditEntryWidget(QWidget* parent)
     : QWidget(parent)
@@ -35,6 +36,11 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_notesWidget(new QWidget(this))
 {
     m_ui->setupUi(this);
+
+    QFont headerLabelFont = m_ui->headerLabel->font();
+    headerLabelFont.setBold(true);
+    headerLabelFont.setPointSize(headerLabelFont.pointSize() + 2);
+    m_ui->headerLabel->setFont(headerLabelFont);
 
     m_ui->categoryList->addItem(tr("Entry"));
     m_ui->categoryList->addItem(tr("Description"));
@@ -59,6 +65,8 @@ EditEntryWidget::~EditEntryWidget()
 void EditEntryWidget::loadEntry(Entry* entry)
 {
     m_entry = entry;
+
+    m_ui->headerLabel->setText(m_entry->group()->name()+" > "+tr("Edit entry"));
 
     m_mainUi->titleEdit->setText(entry->title());
     m_mainUi->usernameEdit->setText(entry->username());
