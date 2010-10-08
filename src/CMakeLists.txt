@@ -30,6 +30,7 @@ set(keepassx_SOURCES
     crypto/CryptoHash.cpp
     crypto/Random.cpp
     crypto/SymmetricCipher.cpp
+    format/KeePass2.h
     format/KeePass2Reader.cpp
     format/KeePass2Writer.cpp
     format/KeePass2XmlReader.cpp
@@ -42,6 +43,7 @@ set(keepassx_SOURCES
     gui/GroupView.cpp
     gui/MainWindow.cpp
     keys/CompositeKey.cpp
+    keys/Key.h
     keys/PasswordKey.cpp
     streams/HashedBlockStream.cpp
     streams/LayeredStream.cpp
