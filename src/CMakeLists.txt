@@ -29,7 +29,15 @@ set(keepassx_SOURCES
     crypto/Crypto.cpp
     crypto/CryptoHash.cpp
     crypto/Random.cpp
+    crypto/salsa20/ecrypt-config.h
+    crypto/salsa20/ecrypt-machine.h
+    crypto/salsa20/ecrypt-portable.h
+    crypto/salsa20/ecrypt-sync.h
+    crypto/salsa20/salsa20.c
     crypto/SymmetricCipher.cpp
+    crypto/SymmetricCipherBackend.h
+    crypto/SymmetricCipherGcrypt.cpp
+    crypto/SymmetricCipherSalsa20.cpp
     format/KeePass2.h
     format/KeePass2Reader.cpp
     format/KeePass2Writer.cpp

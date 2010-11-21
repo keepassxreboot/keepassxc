@@ -15,38 +15,23 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KEEPASSX_SYMMETRICCIPHER_H
-#define KEEPASSX_SYMMETRICCIPHER_H
+#ifndef KEEPASSX_SYMMETRICCIPHERGCRYPT_H
+#define KEEPASSX_SYMMETRICCIPHERGCRYPT_H
 
-#include <QtCore/QByteArray>
+#include "SymmetricCipherBackend.h"
 
-class SymmetricCipherBackend;
+#include <gcrypt.h>
 
-class SymmetricCipher
+class SymmetricCipherGcrypt : public SymmetricCipherBackend
 {
 public:
-    enum Algorithm
-    {
-        Aes256,
-        Salsa20
-    };
-
-    enum Mode
-    {
-        Cbc,
-        Ecb,
-        Stream
-    };
-
-    enum Direction
-    {
-        Decrypt,
-        Encrypt
-    };
-
-    SymmetricCipher(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
-                    SymmetricCipher::Direction direction, const QByteArray& key, const QByteArray& iv);
-    ~SymmetricCipher();
+    ~SymmetricCipherGcrypt();
+    void setAlgorithm(SymmetricCipher::Algorithm algo);
+    void setMode(SymmetricCipher::Mode mode);
+    void setDirection(SymmetricCipher::Direction direction);
+    void init();
+    void setKey(const QByteArray& key);
+    void setIv(const QByteArray& iv);
 
     QByteArray process(const QByteArray& data);
     void processInPlace(QByteArray& data);
@@ -55,8 +40,13 @@ public:
     int blockSize() const;
 
 private:
-    Q_DISABLE_COPY(SymmetricCipher)
-    SymmetricCipherBackend* m_backend;
+    gcry_cipher_hd_t m_ctx;
+    int m_algo;
+    int m_mode;
+    SymmetricCipher::Direction m_direction;
+    QByteArray m_key;
+    QByteArray m_iv;
+    int m_blockSize;
 };
 
-#endif // KEEPASSX_SYMMETRICCIPHER_H
+#endif // KEEPASSX_SYMMETRICCIPHERGCRYPT_H

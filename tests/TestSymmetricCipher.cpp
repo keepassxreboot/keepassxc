@@ -30,6 +30,7 @@ private Q_SLOTS:
     void initTestCase();
     void testAes256CbcEncryption();
     void testAes256CbcDecryption();
+    void testSalsa20();
 };
 
 void TestSymmetricCipher::initTestCase()
@@ -113,6 +114,59 @@ void TestSymmetricCipher::testAes256CbcDecryption()
     stream.reset();
     QCOMPARE(stream.read(100),
              plainText);
+}
+
+void TestSymmetricCipher::testSalsa20()
+{
+    // http://www.ecrypt.eu.org/stream/svn/viewcvs.cgi/ecrypt/trunk/submissions/salsa20/full/verified.test-vectors?logsort=rev&rev=210&view=markup
+
+    QByteArray key = QByteArray::fromHex("F3F4F5F6F7F8F9FAFBFCFDFEFF000102030405060708090A0B0C0D0E0F101112");
+    QByteArray iv = QByteArray::fromHex("0000000000000000");
+
+    SymmetricCipher cipher(SymmetricCipher::Salsa20, SymmetricCipher::Stream, SymmetricCipher::Encrypt, key, iv);
+
+    QByteArray cipherTextA;
+    for (int i=0; i<8; i++) {
+        cipherTextA.append(cipher.process(QByteArray(64, '\0')));
+    }
+    cipher.reset();
+
+    QByteArray cipherTextB = cipher.process(QByteArray(512, '\0'));
+    cipher.reset();
+
+    QByteArray expectedCipherText1;
+    expectedCipherText1.append(QByteArray::fromHex("B4C0AFA503BE7FC29A62058166D56F8F"));
+    expectedCipherText1.append(QByteArray::fromHex("5D27DC246F75B9AD8760C8C39DFD8749"));
+    expectedCipherText1.append(QByteArray::fromHex("2D3B76D5D9637F009EADA14458A52DFB"));
+    expectedCipherText1.append(QByteArray::fromHex("09815337E72672681DDDC24633750D83"));
+
+    QByteArray expectedCipherText2;
+    expectedCipherText2.append(QByteArray::fromHex("DBBA0683DF48C335A9802EEF02522563"));
+    expectedCipherText2.append(QByteArray::fromHex("54C9F763C3FDE19131A6BB7B85040624"));
+    expectedCipherText2.append(QByteArray::fromHex("B1D6CD4BF66D16F7482236C8602A6D58"));
+    expectedCipherText2.append(QByteArray::fromHex("505EEDCCA0B77AED574AB583115124B9"));
+
+    QByteArray expectedCipherText3;
+    expectedCipherText3.append(QByteArray::fromHex("F0C5F98BAE05E019764EF6B65E0694A9"));
+    expectedCipherText3.append(QByteArray::fromHex("04CB9EC9C10C297B1AB1A6052365BB78"));
+    expectedCipherText3.append(QByteArray::fromHex("E55D3C6CB9F06184BA7D425A92E7E987"));
+    expectedCipherText3.append(QByteArray::fromHex("757FC5D9AFD7082418DD64125CA6F2B6"));
+
+    QByteArray expectedCipherText4;
+    expectedCipherText4.append(QByteArray::fromHex("5A5FB5C8F0AFEA471F0318A4A2792F7A"));
+    expectedCipherText4.append(QByteArray::fromHex("A5C67B6D6E0F0DDB79961C34E3A564BA"));
+    expectedCipherText4.append(QByteArray::fromHex("2EECE78D9AFF45E510FEAB1030B102D3"));
+    expectedCipherText4.append(QByteArray::fromHex("9DFCECB77F5798F7D2793C0AB09C7A04"));
+
+    QCOMPARE(cipherTextA.mid(0, 64), expectedCipherText1);
+    QCOMPARE(cipherTextA.mid(192, 64), expectedCipherText2);
+    QCOMPARE(cipherTextA.mid(256, 64), expectedCipherText3);
+    QCOMPARE(cipherTextA.mid(448, 64), expectedCipherText4);
+
+    QCOMPARE(cipherTextB.mid(0, 64), expectedCipherText1);
+    QCOMPARE(cipherTextB.mid(192, 64), expectedCipherText2);
+    QCOMPARE(cipherTextB.mid(256, 64), expectedCipherText3);
+    QCOMPARE(cipherTextB.mid(448, 64), expectedCipherText4);
 }
 
 QTEST_MAIN(TestSymmetricCipher);

@@ -65,6 +65,7 @@ Crypto::Crypto()
 void Crypto::init()
 {
     if (m_initalized) {
+        qWarning("Crypto::init: already initalized");
         return;
     }
 

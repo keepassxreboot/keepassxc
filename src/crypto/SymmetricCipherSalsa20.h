@@ -15,38 +15,22 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KEEPASSX_SYMMETRICCIPHER_H
-#define KEEPASSX_SYMMETRICCIPHER_H
+#ifndef KEEPASSX_SYMMETRICCIPHERSALSA20_H
+#define KEEPASSX_SYMMETRICCIPHERSALSA20_H
 
-#include <QtCore/QByteArray>
+#include "SymmetricCipherBackend.h"
+#include "salsa20/ecrypt-sync.h"
 
-class SymmetricCipherBackend;
-
-class SymmetricCipher
+class SymmetricCipherSalsa20 : public SymmetricCipherBackend
 {
 public:
-    enum Algorithm
-    {
-        Aes256,
-        Salsa20
-    };
-
-    enum Mode
-    {
-        Cbc,
-        Ecb,
-        Stream
-    };
-
-    enum Direction
-    {
-        Decrypt,
-        Encrypt
-    };
-
-    SymmetricCipher(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
-                    SymmetricCipher::Direction direction, const QByteArray& key, const QByteArray& iv);
-    ~SymmetricCipher();
+    ~SymmetricCipherSalsa20();
+    void setAlgorithm(SymmetricCipher::Algorithm algo);
+    void setMode(SymmetricCipher::Mode mode);
+    void setDirection(SymmetricCipher::Direction direction);
+    void init();
+    void setKey(const QByteArray& key);
+    void setIv(const QByteArray& iv);
 
     QByteArray process(const QByteArray& data);
     void processInPlace(QByteArray& data);
@@ -55,8 +39,9 @@ public:
     int blockSize() const;
 
 private:
-    Q_DISABLE_COPY(SymmetricCipher)
-    SymmetricCipherBackend* m_backend;
+    ECRYPT_ctx m_ctx;
+    QByteArray m_key;
+    QByteArray m_iv;
 };
 
-#endif // KEEPASSX_SYMMETRICCIPHER_H
+#endif // KEEPASSX_SYMMETRICCIPHERSALSA20_H
