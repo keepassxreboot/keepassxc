@@ -15,6 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "TestKeePass2Reader.h"
+
 #include <QtTest/QTest>
 
 #include "config-keepassx-tests.h"
@@ -23,16 +25,6 @@
 #include "crypto/Crypto.h"
 #include "format/KeePass2Reader.h"
 #include "keys/PasswordKey.h"
-
-class TestKeePass2Reader : public QObject
-{
-    Q_OBJECT
-
-private Q_SLOTS:
-    void initTestCase();
-    void testNonAscii();
-    void testCompressed();
-};
 
 void TestKeePass2Reader::initTestCase()
 {
@@ -64,5 +56,3 @@ void TestKeePass2Reader::testCompressed()
 }
 
 QTEST_MAIN(TestKeePass2Reader);
-
-#include "TestKeePass2Reader.moc"

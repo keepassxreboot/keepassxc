@@ -47,8 +47,6 @@ set(QT_USE_QTMAIN TRUE)
 find_package(Qt4 REQUIRED)
 include(${QT_USE_FILE})
 
-find_package(Automoc4 REQUIRED)
-
 find_package(Libgcrypt REQUIRED)
 
 find_package(ZLIB REQUIRED)

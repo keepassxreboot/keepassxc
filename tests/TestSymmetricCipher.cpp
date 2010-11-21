@@ -15,23 +15,14 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "TestSymmetricCipher.h"
+
 #include <QtCore/QBuffer>
 #include <QtTest/QTest>
 
 #include "crypto/Crypto.h"
 #include "crypto/SymmetricCipher.h"
 #include "streams/SymmetricCipherStream.h"
-
-class TestSymmetricCipher : public QObject
-{
-    Q_OBJECT
-
-private Q_SLOTS:
-    void initTestCase();
-    void testAes256CbcEncryption();
-    void testAes256CbcDecryption();
-    void testSalsa20();
-};
 
 void TestSymmetricCipher::initTestCase()
 {
@@ -170,5 +161,3 @@ void TestSymmetricCipher::testSalsa20()
 }
 
 QTEST_MAIN(TestSymmetricCipher);
-
-#include "TestSymmetricCipher.moc"

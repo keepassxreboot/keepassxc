@@ -16,29 +16,10 @@
 */
 
 #include "CompositeKey.h"
-
-#include <QtCore/QThread>
+#include "CompositeKey_p.h"
 
 #include "crypto/CryptoHash.h"
 #include "crypto/SymmetricCipher.h"
-
-class KeyTransformation : public QThread
-{
-    Q_OBJECT
-
-public:
-    KeyTransformation(const QByteArray& key, const QByteArray& seed, int rounds);
-    QByteArray result();
-
-protected:
-    void run();
-
-private:
-    QByteArray m_key;
-    QByteArray m_seed;
-    int m_rounds;
-    QByteArray m_result;
-};
 
 CompositeKey::~CompositeKey()
 {
@@ -109,5 +90,3 @@ QByteArray KeyTransformation::result()
 {
     return m_result;
 }
-
-#include "KeyTransformation.moc"

@@ -15,6 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "TestKeePass2XmlReader.h"
+
 #include <QtTest/QTest>
 
 #include "core/Database.h"
@@ -32,29 +34,6 @@ namespace QTest {
         return qstrdup(ba.data());
     }
 }
-
-class TestKeePass2XmlReader : public QObject
-{
-    Q_OBJECT
-
-private Q_SLOTS:
-    void initTestCase();
-    void testMetadata();
-    void testCustomIcons();
-    void testCustomData();
-    void testGroupRoot();
-    void testGroup1();
-    void testGroup2();
-    void testEntry1();
-    void testEntry2();
-    void testEntryHistory();
-    void testDeletedObjects();
-
-private:
-    QDateTime genDT(int year, int month, int day, int hour, int min, int second);
-
-    Database* m_db;
-};
 
 QDateTime TestKeePass2XmlReader::genDT(int year, int month, int day, int hour, int min, int second)
 {
@@ -319,5 +298,3 @@ void TestKeePass2XmlReader::testDeletedObjects()
 }
 
 QTEST_MAIN(TestKeePass2XmlReader);
-
-#include "TestKeePass2XmlReader.moc"

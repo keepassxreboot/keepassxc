@@ -51,12 +51,32 @@ set(keepassx_SOURCES
     gui/GroupView.cpp
     gui/MainWindow.cpp
     keys/CompositeKey.cpp
+    keys/CompositeKey_p.h
     keys/Key.h
     keys/PasswordKey.cpp
     streams/HashedBlockStream.cpp
     streams/LayeredStream.cpp
     streams/qtiocompressor.cpp
     streams/SymmetricCipherStream.cpp
+)
+
+set(keepassx_MOC
+    core/Database.h
+    core/Entry.h
+    core/Group.h
+    core/Metadata.h
+    gui/DatabaseWidget.h
+    gui/EditEntryWidget.h
+    gui/EntryModel.h
+    gui/EntryView.h
+    gui/GroupModel.h
+    gui/GroupView.h
+    gui/MainWindow.h
+    keys/CompositeKey_p.h
+    streams/HashedBlockStream.h
+    streams/LayeredStream.h
+    streams/qtiocompressor.h
+    streams/SymmetricCipherStream.h
 )
 
 set(keepassx_FORMS
@@ -67,8 +87,9 @@ set(keepassx_FORMS
 )
 
 qt4_wrap_ui(keepassx_SOURCES ${keepassx_FORMS})
+qt4_wrap_cpp(keepassx_SOURCES ${keepassx_MOC})
 
-automoc4_add_library( keepassx_core STATIC ${keepassx_SOURCES} )
+add_library( keepassx_core STATIC ${keepassx_SOURCES} )
 
-automoc4_add_executable( ${PROGNAME} WIN32 MACOSX_BUNDLE main.cpp )
+add_executable( ${PROGNAME} WIN32 MACOSX_BUNDLE main.cpp )
 target_link_libraries( ${PROGNAME} keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${LIBGCRYPT_LIBS} ${ZLIB_LIBRARIES} )

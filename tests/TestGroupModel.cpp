@@ -15,6 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "TestGroupModel.h"
+
 #include <QtTest/QSignalSpy>
 #include <QtTest/QTest>
 
@@ -22,15 +24,6 @@
 #include "core/Database.h"
 #include "core/Group.h"
 #include "gui/GroupModel.h"
-
-class TestGroupModel : public QObject
-{
-    Q_OBJECT
-
-private Q_SLOTS:
-    void initTestCase();
-    void test();
-};
 
 void TestGroupModel::initTestCase()
 {
@@ -105,5 +98,3 @@ void TestGroupModel::test()
 }
 
 QTEST_MAIN(TestGroupModel);
-
-#include "TestGroupModel.moc"

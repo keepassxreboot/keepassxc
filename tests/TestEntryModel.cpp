@@ -15,6 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "TestEntryModel.h"
+
 #include <QtTest/QSignalSpy>
 #include <QtTest/QTest>
 
@@ -22,15 +24,6 @@
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "gui/EntryModel.h"
-
-class TestEntryModel : public QObject
-{
-    Q_OBJECT
-
-private Q_SLOTS:
-    void initTestCase();
-    void test();
-};
 
 void TestEntryModel::initTestCase()
 {
@@ -97,5 +90,3 @@ void TestEntryModel::test()
 }
 
 QTEST_MAIN(TestEntryModel);
-
-#include "TestEntryModel.moc"

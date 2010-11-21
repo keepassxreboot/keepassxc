@@ -15,19 +15,12 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "TestCryptoHash.h"
+
 #include <QtTest/QTest>
 
 #include "crypto/Crypto.h"
 #include "crypto/CryptoHash.h"
-
-class TestCryptoHash : public QObject
-{
-    Q_OBJECT
-
-private Q_SLOTS:
-    void initTestCase();
-    void test();
-};
 
 void TestCryptoHash::initTestCase()
 {
@@ -55,5 +48,3 @@ void TestCryptoHash::test()
 }
 
 QTEST_MAIN(TestCryptoHash);
-
-#include "TestCryptoHash.moc"

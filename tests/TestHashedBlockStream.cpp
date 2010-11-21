@@ -15,18 +15,12 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "TestHashedBlockStream.h"
+
 #include <QtCore/QBuffer>
 #include <QtTest/QTest>
 
 #include "streams/HashedBlockStream.h"
-
-class TestHashedBlockStream : public QObject
-{
-    Q_OBJECT
-
-private Q_SLOTS:
-    void testWriteRead();
-};
 
 void TestHashedBlockStream::testWriteRead()
 {
@@ -70,5 +64,3 @@ void TestHashedBlockStream::testWriteRead()
 }
 
 QTEST_MAIN(TestHashedBlockStream);
-
-#include "TestHashedBlockStream.moc"

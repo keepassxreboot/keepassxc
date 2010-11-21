@@ -15,21 +15,12 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "TestGroup.h"
+
 #include <QtTest/QSignalSpy>
 #include <QtTest/QTest>
 
 #include "core/Database.h"
-
-class TestGroup : public QObject
-{
-    Q_OBJECT
-
-private Q_SLOTS:
-    void initTestCase();
-    void testParenting();
-    void testSignals();
-    void testEntries();
-};
 
 void TestGroup::initTestCase()
 {
@@ -129,5 +120,3 @@ void TestGroup::testEntries()
 }
 
 QTEST_MAIN(TestGroup);
-
-#include "TestGroup.moc"

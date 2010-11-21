@@ -19,21 +19,44 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_SOURCE_DIR}/src)
 set( KEEPASSX_TEST_TREE ${CMAKE_SOURCE_DIR}/tests )
 configure_file( config-keepassx-tests.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx-tests.h )
 
-macro (ADD_UNIT_TEST _test_NAME)
-    set(_srcList ${ARGN})
-    set(_targetName ${_test_NAME})
-    if( ${ARGV1} STREQUAL "TESTNAME" )
-        set(_targetName ${ARGV2})
-        list(REMOVE_AT _srcList 0 1)
-    endif( ${ARGV1} STREQUAL "TESTNAME" )
+MACRO(PARSE_ARGUMENTS prefix arg_names option_names)
+  SET(DEFAULT_ARGS)
+  FOREACH(arg_name ${arg_names})
+    SET(${prefix}_${arg_name})
+  ENDFOREACH(arg_name)
+  FOREACH(option ${option_names})
+    SET(${prefix}_${option} FALSE)
+  ENDFOREACH(option)
 
-    set(_nogui)
-    list(GET ${_srcList} 0 first_PARAM)
-    if( ${first_PARAM} STREQUAL "NOGUI" )
-        set(_nogui "NOGUI")
-    endif( ${first_PARAM} STREQUAL "NOGUI" )
+  SET(current_arg_name DEFAULT_ARGS)
+  SET(current_arg_list)
+  FOREACH(arg ${ARGN})
+    SET(larg_names ${arg_names})
+    LIST(FIND larg_names "${arg}" is_arg_name)
+    IF (is_arg_name GREATER -1)
+      SET(${prefix}_${current_arg_name} ${current_arg_list})
+      SET(current_arg_name ${arg})
+      SET(current_arg_list)
+    ELSE (is_arg_name GREATER -1)
+      SET(loption_names ${option_names})
+      LIST(FIND loption_names "${arg}" is_option)
+      IF (is_option GREATER -1)
+             SET(${prefix}_${arg} TRUE)
+      ELSE (is_option GREATER -1)
+             SET(current_arg_list ${current_arg_list} ${arg})
+      ENDIF (is_option GREATER -1)
+    ENDIF (is_arg_name GREATER -1)
+  ENDFOREACH(arg)
+  SET(${prefix}_${current_arg_name} ${current_arg_list})
+ENDMACRO(PARSE_ARGUMENTS)
 
-    automoc4_add_executable( ${_test_NAME} ${_srcList} )
+macro (ADD_UNIT_TEST)
+    parse_arguments( TEST "NAME;SOURCES;MOCS;LIBS" "" ${ARGN} )
+    set(_test_NAME ${TEST_NAME})
+    set(_srcList ${TEST_SOURCES})
+    qt4_wrap_cpp( _srcList ${TEST_MOCS} )
+    add_executable( ${_test_NAME} ${_srcList} )
+    target_link_libraries( ${_test_NAME} ${TEST_LIBS} )
 
     if(NOT TEST_OUTPUT)
         set(TEST_OUTPUT plaintext)
@@ -43,9 +66,9 @@ macro (ADD_UNIT_TEST _test_NAME)
     get_target_property( loc ${_test_NAME} LOCATION )
 
     if (KDE4_TEST_OUTPUT STREQUAL "xml")
-        add_test( ${_targetName} ${loc} -xml -o ${_targetName}.tml)
+        add_test( ${_test_NAME} ${loc} -xml -o ${_test_NAME}.tml)
     else (KDE4_TEST_OUTPUT STREQUAL "xml")
-        add_test( ${_targetName} ${loc} )
+        add_test( ${_test_NAME} ${loc} )
     endif (KDE4_TEST_OUTPUT STREQUAL "xml")
 
     if (NOT MSVC_IDE)   #not needed for the ide
@@ -63,28 +86,31 @@ macro (ADD_UNIT_TEST _test_NAME)
 endmacro (ADD_UNIT_TEST)
 
 
-# TODO automocify?
+set(TEST_LIBRARIES
+    keepassx_core
+    ${QT_QTCORE_LIBRARY}
+    ${QT_QTGUI_LIBRARY}
+    ${QT_QTTEST_LIBRARY}
+    ${LIBGCRYPT_LIBS}
+    ${ZLIB_LIBRARIES}
+)
 
-add_unit_test( testgroup TestGroup.cpp )
-target_link_libraries( testgroup keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} ${LIBGCRYPT_LIBS} ${ZLIB_LIBRARIES} )
+set(modeltest_SOURCRS modeltest.cpp)
+qt4_wrap_cpp( modeltest_SOURCRS modeltest.h )
+add_library( modeltest STATIC ${modeltest_SOURCRS} )
 
-add_unit_test( testkeepass2xmlreader TestKeePass2XmlReader.cpp )
-target_link_libraries( testkeepass2xmlreader keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} ${LIBGCRYPT_LIBS} ${ZLIB_LIBRARIES} )
+add_unit_test(NAME testgroup SOURCES TestGroup.cpp MOCS TestGroup.h LIBS ${TEST_LIBRARIES} )
 
-add_unit_test( testkeepass2reader TestKeePass2Reader.cpp )
-target_link_libraries( testkeepass2reader keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} ${LIBGCRYPT_LIBS} ${ZLIB_LIBRARIES} )
+add_unit_test(NAME testkeepass2xmlreader SOURCES TestKeePass2XmlReader.cpp MOCS TestKeePass2XmlReader.h LIBS ${TEST_LIBRARIES})
 
-add_unit_test( testgroupmodel TestGroupModel.cpp modeltest.cpp )
-target_link_libraries( testgroupmodel keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} ${LIBGCRYPT_LIBS} ${ZLIB_LIBRARIES} )
+add_unit_test(NAME testkeepass2reader SOURCES TestKeePass2Reader.cpp MOCS TestKeePass2Reader.h LIBS ${TEST_LIBRARIES})
 
-add_unit_test( testentrymodel TestEntryModel.cpp modeltest.cpp )
-target_link_libraries( testentrymodel keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} ${LIBGCRYPT_LIBS} ${ZLIB_LIBRARIES} )
+add_unit_test(NAME testgroupmodel SOURCES TestGroupModel.cpp MOCS TestGroupModel.h LIBS ${TEST_LIBRARIES} modeltest)
 
-add_unit_test( testcryptohash TestCryptoHash.cpp )
-target_link_libraries( testcryptohash keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} ${LIBGCRYPT_LIBS} ${ZLIB_LIBRARIES} )
+add_unit_test(NAME testentrymodel SOURCES TestEntryModel.cpp MOCS TestEntryModel.h LIBS ${TEST_LIBRARIES} modeltest)
 
-add_unit_test( testsymmetriccipher TestSymmetricCipher.cpp )
-target_link_libraries( testsymmetriccipher keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} ${LIBGCRYPT_LIBS} ${ZLIB_LIBRARIES}  )
+add_unit_test(NAME testcryptohash SOURCES TestCryptoHash.cpp MOCS TestCryptoHash.h LIBS ${TEST_LIBRARIES})
 
-add_unit_test( testhashedblockstream TestHashedBlockStream.cpp )
-target_link_libraries( testhashedblockstream keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} ${LIBGCRYPT_LIBS} ${ZLIB_LIBRARIES}  )
+add_unit_test(NAME testsymmetriccipher SOURCES TestSymmetricCipher.cpp MOCS TestSymmetricCipher.h LIBS ${TEST_LIBRARIES})
+
+add_unit_test(NAME testhashedblockstream SOURCES TestHashedBlockStream.cpp MOCS TestHashedBlockStream.h LIBS ${TEST_LIBRARIES})
