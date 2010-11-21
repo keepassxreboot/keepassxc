@@ -23,25 +23,25 @@
 
 bool Crypto::m_initalized(false);
 
-int gcry_qt_mutex_init(void** p_sys)
+static int gcry_qt_mutex_init(void** p_sys)
 {
     *p_sys = new QMutex();
     return 0;
 }
 
-int gcry_qt_mutex_destroy(void** p_sys)
+static int gcry_qt_mutex_destroy(void** p_sys)
 {
     delete reinterpret_cast<QMutex*>(*p_sys);
     return 0;
 }
 
-int gcry_qt_mutex_lock(void** p_sys)
+static int gcry_qt_mutex_lock(void** p_sys)
 {
     reinterpret_cast<QMutex*>(*p_sys)->lock();
     return 0;
 }
 
-int gcry_qt_mutex_unlock(void** p_sys)
+static int gcry_qt_mutex_unlock(void** p_sys)
 {
     reinterpret_cast<QMutex*>(*p_sys)->unlock();
     return 0;

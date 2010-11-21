@@ -20,10 +20,10 @@
 SymmetricCipherStream::SymmetricCipherStream(QIODevice* baseDevice, SymmetricCipher::Algorithm algo,
                                              SymmetricCipher::Mode mode, SymmetricCipher::Direction direction,
                                              const QByteArray& key, const QByteArray& iv)
-                          : LayeredStream(baseDevice)
-                          , m_bufferPos(0)
-                          , m_bufferFilling(false)
-                          , m_error(false)
+    : LayeredStream(baseDevice)
+    , m_bufferPos(0)
+    , m_bufferFilling(false)
+    , m_error(false)
 {
     m_cipher = new SymmetricCipher(algo, mode, direction, key, iv);
 }
