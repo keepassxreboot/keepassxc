@@ -60,6 +60,7 @@ private:
     QByteArray m_masterSeed;
     QByteArray m_encryptionIV;
     QByteArray m_streamStartBytes;
+    QByteArray m_protectedStreamKey;
 };
 
 #endif // KEEPASSX_KEEPASS2READER_H

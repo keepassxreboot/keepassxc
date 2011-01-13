@@ -30,13 +30,14 @@
 
 class Group;
 class Metadata;
+class SymmetricCipher;
 
 class KeePass2XmlWriter
 {
 public:
     KeePass2XmlWriter();
-    void writeDatabase(QIODevice* device, Database* db);
-    void writeDatabase(const QString& filename, Database* db);
+    void writeDatabase(QIODevice* device, Database* db, SymmetricCipher* cipher = 0);
+    void writeDatabase(const QString& filename, Database* db, SymmetricCipher* cipher = 0);
     bool error();
     QString errorString();
 
@@ -71,6 +72,7 @@ private:
     QXmlStreamWriter m_xml;
     Database* m_db;
     Metadata* m_meta;
+    SymmetricCipher* m_cipher;
 };
 
 #endif // KEEPASSX_KEEPASS2XMLWRITER_H

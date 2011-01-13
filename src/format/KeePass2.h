@@ -47,6 +47,12 @@ namespace KeePass2
         StreamStartBytes = 9,
         InnerRandomStreamID = 10
     };
+
+    enum ProtectedStreamAlgo
+    {
+        ArcFourVariant = 1,
+        Salsa20 = 2
+    };
 }
 
 #endif // KEEPASSX_KEEPASS2_H

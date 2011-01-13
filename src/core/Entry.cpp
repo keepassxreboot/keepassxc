@@ -114,6 +114,16 @@ const QHash<QString, QByteArray>& Entry::attachments() const
     return m_binaries;
 }
 
+bool Entry::isAttributeProtected(const QString& key) const
+{
+    return m_protectedAttributes.contains(key);
+}
+
+bool Entry::isAttachmentProtected(const QString& key) const
+{
+    return m_protectedAttachments.contains(key);
+}
+
 QString Entry::title() const
 {
     return m_attributes.value("Title");
@@ -207,9 +217,12 @@ void Entry::addAutoTypeAssociation(const AutoTypeAssociation& assoc)
     m_autoTypeAssociations << assoc;
 }
 
-void Entry::addAttribute(const QString& key, const QString& value)
+void Entry::addAttribute(const QString& key, const QString& value, bool protect)
 {
     m_attributes.insert(key, value);
+    if (protect) {
+        m_protectedAttributes.insert(key);
+    }
 
     // TODO add all visible oclumns
     if (key == "Title") {
@@ -217,9 +230,24 @@ void Entry::addAttribute(const QString& key, const QString& value)
     }
 }
 
-void Entry::addAttachment(const QString& key, const QByteArray& value)
+void Entry::removeAttribute(const QString& key)
+{
+    m_attributes.remove(key);
+    m_protectedAttributes.remove(key);
+}
+
+void Entry::addAttachment(const QString& key, const QByteArray& value, bool protect)
 {
     m_binaries.insert(key, value);
+    if (protect) {
+        m_protectedAttachments.insert(key);
+    }
+}
+
+void Entry::removeAttachment(const QString& key)
+{
+    m_binaries.remove(key);
+    m_protectedAttachments.remove(key);
 }
 
 void Entry::setTitle(const QString& title)

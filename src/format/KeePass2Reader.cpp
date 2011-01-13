@@ -62,6 +62,8 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
     while (readHeaderField() && !error()) {
     }
 
+    // TODO check if all header fields have been parsed
+
     QByteArray transformedMasterKey = key.transform(m_db->transformSeed(), m_db->transformRounds());
     m_db->setTransformedMasterKey(transformedMasterKey);
 
@@ -96,8 +98,14 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
         xmlDevice = ioCompressor.data();
     }
 
+    QByteArray protectedStreamKey = CryptoHash::hash(m_protectedStreamKey, CryptoHash::Sha256);
+    QByteArray protectedStreamIv("\xE8\x30\x09\x4B\x97\x20\x5D\x2A");
+
+    SymmetricCipher protectedStream(SymmetricCipher::Salsa20, SymmetricCipher::Stream, SymmetricCipher::Decrypt,
+                                    protectedStreamKey, protectedStreamIv);
+
     KeePass2XmlReader xmlReader;
-    xmlReader.readDatabase(xmlDevice, m_db);
+    xmlReader.readDatabase(xmlDevice, m_db, &protectedStream);
     // TODO forward error messages from xmlReader
     return m_db;
 }
@@ -279,7 +287,12 @@ void KeePass2Reader::setEncryptionIV(const QByteArray& data)
 
 void KeePass2Reader::setProtectedStreamKey(const QByteArray& data)
 {
-    // TODO ignore?
+    if (data.size() != 32) {
+        raiseError("");
+    }
+    else {
+        m_protectedStreamKey = data;
+    }
 }
 
 void KeePass2Reader::setStreamStartBytes(const QByteArray& data)
@@ -294,5 +307,14 @@ void KeePass2Reader::setStreamStartBytes(const QByteArray& data)
 
 void KeePass2Reader::setInnerRandomStreamID(const QByteArray& data)
 {
-    // TODO ignore?
+    if (data.size() != 4) {
+        raiseError("");
+    }
+    else {
+        quint32 id = Endian::bytesToUInt32(data, KeePass2::BYTEORDER);
+
+        if (id != KeePass2::Salsa20) {
+            raiseError("");
+        }
+    }
 }

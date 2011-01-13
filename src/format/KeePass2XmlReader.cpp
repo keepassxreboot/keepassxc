@@ -24,17 +24,19 @@
 #include "core/Metadata.h"
 
 KeePass2XmlReader::KeePass2XmlReader()
-    : m_db(0)
+    : m_cipher(0)
+    , m_db(0)
     , m_meta(0)
 {
 }
 
-void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db)
+void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db, SymmetricCipher* cipher)
 {
     m_xml.setDevice(device);
 
     m_db = db;
     m_meta = m_db->metadata();
+    m_cipher = cipher;
 
     m_tmpParent = new Group();
     m_tmpParent->setParent(m_db);
@@ -516,7 +518,21 @@ void KeePass2XmlReader::parseEntryString(Entry *entry)
             key = readString();
         }
         else if (m_xml.name() == "Value") {
-            entry->addAttribute(key, readString());
+            QXmlStreamAttributes attr = m_xml.attributes();
+            QString value = readString();
+
+            bool isProtected = attr.hasAttribute("Protected") && (attr.value("Protected") == "True");
+
+            if (isProtected && !value.isEmpty()) {
+                if (m_cipher) {
+                    value = m_cipher->process(QByteArray::fromBase64(value.toAscii()));
+                }
+                else {
+                    raiseError();
+                }
+            }
+
+            entry->addAttribute(key, value, isProtected);
         }
         else {
             skipCurrentElement();
@@ -534,7 +550,16 @@ void KeePass2XmlReader::parseEntryBinary(Entry *entry)
             key = readString();
         }
         else if (m_xml.name() == "Value") {
-            entry->addAttachment(key, readBinary());
+            QByteArray value = readBinary();
+            QXmlStreamAttributes attr = m_xml.attributes();
+
+            bool isProtected = attr.hasAttribute("Protected") && (attr.value("Protected") == "True");
+
+            if (isProtected && !value.isEmpty()) {
+                m_cipher->processInPlace(value);
+            }
+
+            entry->addAttachment(key, value, isProtected);
         }
         else {
             skipCurrentElement();

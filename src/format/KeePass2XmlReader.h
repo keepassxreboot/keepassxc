@@ -25,11 +25,13 @@
 
 #include "core/TimeInfo.h"
 #include "core/Uuid.h"
+#include "crypto/SymmetricCipher.h"
 
 class Database;
 class Entry;
 class Group;
 class Metadata;
+class SymmetricCipher;
 
 class KeePass2XmlReader
 {
@@ -38,7 +40,7 @@ class KeePass2XmlReader
 public:
     KeePass2XmlReader();
     Database* readDatabase(QIODevice* device);
-    void readDatabase(QIODevice* device, Database* db);
+    void readDatabase(QIODevice* device, Database* db, SymmetricCipher* cipher = 0);
     Database* readDatabase(const QString& filename);
     bool error();
     QString errorString();
@@ -77,6 +79,7 @@ private:
     void skipCurrentElement();
 
     QXmlStreamReader m_xml;
+    SymmetricCipher* m_cipher;
     Database* m_db;
     Metadata* m_meta;
     Group* m_tmpParent;

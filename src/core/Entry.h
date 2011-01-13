@@ -19,6 +19,7 @@
 #define KEEPASSX_ENTRY_H
 
 #include <QtCore/QHash>
+#include <QtCore/QSet>
 #include <QtCore/QUrl>
 #include <QtGui/QColor>
 #include <QtGui/QIcon>
@@ -57,6 +58,8 @@ public:
     const QList<AutoTypeAssociation>& autoTypeAssociations() const;
     const QHash<QString, QString>& attributes() const;
     const QHash<QString, QByteArray>& attachments() const;
+    bool isAttributeProtected(const QString& key) const;
+    bool isAttachmentProtected(const QString& key) const;
     QString title() const;
     QString url() const;
     QString username() const;
@@ -75,8 +78,10 @@ public:
     void setAutoTypeObfuscation(int obfuscation);
     void setDefaultAutoTypeSequence(const QString& sequence);
     void addAutoTypeAssociation(const AutoTypeAssociation& assoc);
-    void addAttribute(const QString& key, const QString& value);
-    void addAttachment(const QString& key, const QByteArray& value);
+    void addAttribute(const QString& key, const QString& value, bool protect = false);
+    void removeAttribute(const QString& key);
+    void addAttachment(const QString& key, const QByteArray& value, bool protect = false);
+    void removeAttachment(const QString& key);
     void setTitle(const QString& title);
     void setUrl(const QString& url);
     void setUsername(const QString& username);
@@ -109,6 +114,8 @@ private:
     QList<AutoTypeAssociation> m_autoTypeAssociations;
     QHash<QString, QString> m_attributes;
     QHash<QString, QByteArray> m_binaries;
+    QSet<QString> m_protectedAttributes;
+    QSet<QString> m_protectedAttachments;
 
     QList<Entry*> m_history;
     Group* m_group;
