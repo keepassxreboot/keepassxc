@@ -224,7 +224,7 @@ void Entry::addAttribute(const QString& key, const QString& value, bool protect)
         m_protectedAttributes.insert(key);
     }
 
-    // TODO add all visible oclumns
+    // TODO add all visible columns
     if (key == "Title") {
         Q_EMIT dataChanged(this);
     }
