@@ -45,11 +45,13 @@ void KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
 
     QByteArray masterSeed = Random::randomArray(32);
     QByteArray encryptionIV = Random::randomArray(16);
+    QByteArray protectedStreamKey = Random::randomArray(32);
     QByteArray startBytes = Random::randomArray(32);
     QByteArray endOfHeader = "\r\n\r\n";
 
     CryptoHash hash(CryptoHash::Sha256);
     hash.addData(masterSeed);
+    Q_ASSERT(!db->transformedMasterKey().isEmpty());
     hash.addData(db->transformedMasterKey());
     QByteArray finalKey = hash.result();
 
@@ -64,7 +66,9 @@ void KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
     CHECK_RETURN(writeHeaderField(KeePass2::TransformSeed, db->transformSeed()));
     CHECK_RETURN(writeHeaderField(KeePass2::TransformRounds, Endian::int64ToBytes(db->transformRounds(), KeePass2::BYTEORDER)));
     CHECK_RETURN(writeHeaderField(KeePass2::EncryptionIV, encryptionIV));
+    CHECK_RETURN(writeHeaderField(KeePass2::ProtectedStreamKey, protectedStreamKey));
     CHECK_RETURN(writeHeaderField(KeePass2::StreamStartBytes, startBytes));
+    CHECK_RETURN(writeHeaderField(KeePass2::InnerRandomStreamID, Endian::int32ToBytes(KeePass2::Salsa20, KeePass2::BYTEORDER)));
     CHECK_RETURN(writeHeaderField(KeePass2::EndOfHeader, endOfHeader));
 
     SymmetricCipherStream cipherStream(device, SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Encrypt, finalKey, encryptionIV);
@@ -87,8 +91,11 @@ void KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
         m_device = ioCompressor.data();
     }
 
+    SymmetricCipher protectedStream(SymmetricCipher::Salsa20, SymmetricCipher::Stream, SymmetricCipher::Encrypt,
+                                    CryptoHash::hash(protectedStreamKey, CryptoHash::Sha256), KeePass2::INNER_STREAM_SALSA20_IV);
+
     KeePass2XmlWriter xmlWriter;
-    xmlWriter.writeDatabase(m_device, db);
+    xmlWriter.writeDatabase(m_device, db, &protectedStream);
 }
 
 bool KeePass2Writer::writeData(const QByteArray& data)

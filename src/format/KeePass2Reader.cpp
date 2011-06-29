@@ -98,10 +98,9 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
     }
 
     QByteArray protectedStreamKey = CryptoHash::hash(m_protectedStreamKey, CryptoHash::Sha256);
-    QByteArray protectedStreamIv("\xE8\x30\x09\x4B\x97\x20\x5D\x2A");
 
     SymmetricCipher protectedStream(SymmetricCipher::Salsa20, SymmetricCipher::Stream, SymmetricCipher::Decrypt,
-                                    protectedStreamKey, protectedStreamIv);
+                                    protectedStreamKey, KeePass2::INNER_STREAM_SALSA20_IV);
 
     KeePass2XmlReader xmlReader;
     xmlReader.readDatabase(xmlDevice, m_db, &protectedStream);

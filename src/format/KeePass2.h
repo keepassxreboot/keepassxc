@@ -33,6 +33,8 @@ namespace KeePass2
 
     const Uuid CIPHER_AES = Uuid(QByteArray::fromHex("31c1f2e6bf714350be5805216afc5aff"));
 
+    const QByteArray INNER_STREAM_SALSA20_IV("\xE8\x30\x09\x4B\x97\x20\x5D\x2A");
+
     enum HeaderFieldID
     {
         EndOfHeader = 0,
