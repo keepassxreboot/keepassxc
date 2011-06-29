@@ -386,6 +386,8 @@ void KeePass2XmlWriter::writeBool(const QString& qualifiedName, bool b)
 
 void KeePass2XmlWriter::writeDateTime(const QString& qualifiedName, const QDateTime& dateTime)
 {
+    Q_ASSERT(dateTime.isValid());
+
     writeString(qualifiedName, dateTime.toUTC().toString(Qt::ISODate).append('Z'));
 }
 
@@ -421,9 +423,13 @@ void KeePass2XmlWriter::writeBinary(const QString& qualifiedName, const QByteArr
 
 void KeePass2XmlWriter::writeColor(const QString& qualifiedName, const QColor& color)
 {
-    QString colorStr = QString("#%1%2%3").arg(colorPartToString(color.red()))
-            .arg(colorPartToString(color.green()))
-            .arg(colorPartToString(color.blue()));
+    QString colorStr;
+
+    if (color.isValid()) {
+      colorStr = QString("#%1%2%3").arg(colorPartToString(color.red()))
+              .arg(colorPartToString(color.green()))
+              .arg(colorPartToString(color.blue()));
+    }
 
     writeString(qualifiedName, colorStr);
 }
