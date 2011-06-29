@@ -41,6 +41,9 @@ void TestKeePass2Reader::testNonAscii()
     QVERIFY(db);
     QVERIFY(!reader->error());
     QCOMPARE(db->metadata()->name(), QString("NonAsciiTest"));
+
+    delete db;
+    delete reader;
 }
 
 void TestKeePass2Reader::testCompressed()
@@ -53,6 +56,9 @@ void TestKeePass2Reader::testCompressed()
     QVERIFY(db);
     QVERIFY(!reader->error());
     QCOMPARE(db->metadata()->name(), QString("Compressed"));
+
+    delete db;
+    delete reader;
 }
 
 QTEST_MAIN(TestKeePass2Reader);

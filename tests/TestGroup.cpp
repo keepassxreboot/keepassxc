@@ -17,6 +17,7 @@
 
 #include "TestGroup.h"
 
+#include <QtCore/QPointer>
 #include <QtTest/QSignalSpy>
 #include <QtTest/QTest>
 
@@ -32,10 +33,11 @@ void TestGroup::testParenting()
     Database* db = new Database();
     Group* tmpRoot = new Group();
 
-    Group* g1 = new Group();
-    Group* g2 = new Group();
-    Group* g3 = new Group();
-    Group* g4 = new Group();
+    QPointer<Group> g1 = new Group();
+    QPointer<Group> g2 = new Group();
+    QPointer<Group> g3 = new Group();
+    QPointer<Group> g4 = new Group();
+
     g1->setParent(tmpRoot);
     g2->setParent(tmpRoot);
     g3->setParent(tmpRoot);
@@ -74,12 +76,21 @@ void TestGroup::testParenting()
     g3->setIcon(Uuid::random());
     g1->setIcon(2);
     QCOMPARE(spy.count(), 6);
+
+    delete db;
+
+    QVERIFY(g1.isNull());
+    QVERIFY(g2.isNull());
+    QVERIFY(g3.isNull());
+    QVERIFY(g4.isNull());
+
+    delete tmpRoot;
 }
 
 void TestGroup::testSignals()
 {
     Database* db = new Database();
-    Group* root = new Group();
+    QPointer<Group> root = new Group();
     root->setParent(db);
 
     Group* g1 = new Group();
@@ -100,16 +111,18 @@ void TestGroup::testSignals()
     QCOMPARE(spyRemoved.count(), 1);
 
     delete db;
+
+    QVERIFY(root.isNull());
 }
 
 void TestGroup::testEntries()
 {
     Group* group = new Group();
 
-    Entry* entry1 = new Entry();
+    QPointer<Entry> entry1 = new Entry();
     entry1->setGroup(group);
 
-    Entry* entry2 = new Entry();
+    QPointer<Entry> entry2 = new Entry();
     entry2->setGroup(group);
 
     QCOMPARE(group->entries().size(), 2);
@@ -117,6 +130,9 @@ void TestGroup::testEntries()
     QVERIFY(group->entries().at(1) == entry2);
 
     delete group;
+
+    QVERIFY(entry1.isNull());
+    QVERIFY(entry2.isNull());
 }
 
 QTEST_MAIN(TestGroup);

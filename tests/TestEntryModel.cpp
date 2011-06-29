@@ -45,7 +45,7 @@ void TestEntryModel::test()
 
     EntryModel* model = new EntryModel(this);
 
-    new ModelTest(model, this);
+    ModelTest* modelTest = new ModelTest(model, this);
 
     model->setGroup(group1);
 
@@ -87,6 +87,9 @@ void TestEntryModel::test()
 
     delete group1;
     delete group2;
+
+    delete modelTest;
+    delete model;
 }
 
 QTEST_MAIN(TestEntryModel);

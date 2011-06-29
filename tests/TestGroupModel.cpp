@@ -60,7 +60,7 @@ void TestGroupModel::test()
 
     GroupModel* model = new GroupModel(db, this);
 
-    new ModelTest(model, this);
+    ModelTest* modelTest = new ModelTest(model, this);
 
     QModelIndex indexRoot = model->index(0, 0);
     QModelIndex index1 = model->index(0, 0, indexRoot);
@@ -95,6 +95,9 @@ void TestGroupModel::test()
 
     delete groupRoot;
     delete db;
+
+    delete modelTest;
+    delete model;
 }
 
 QTEST_MAIN(TestGroupModel);
