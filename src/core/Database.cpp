@@ -21,6 +21,7 @@
 #include <QtCore/QXmlStreamReader>
 
 #include "Metadata.h"
+#include "crypto/Random.h"
 
 Database::Database()
 {
@@ -142,21 +143,18 @@ void Database::setCompressionAlgo(Database::CompressionAlgorithm algo)
     m_compressionAlgo = algo;
 }
 
-void Database::setTransformSeed(const QByteArray& seed)
-{
-    Q_ASSERT(seed.size() == 32);
-
-    m_transformSeed = seed;
-}
-
 void Database::setTransformRounds(quint64 rounds)
 {
     m_transformRounds = rounds;
 }
 
-void Database::setTransformedMasterKey(QByteArray& key)
+void Database::setKey(const CompositeKey& key, const QByteArray& transformSeed)
 {
-    Q_ASSERT(key.size() == 32);
+    m_transformSeed = transformSeed;
+    m_transformedMasterKey = key.transform(transformSeed, transformRounds());
+}
 
-    m_transformedMasterKey = key;
+void Database::setKey(const CompositeKey& key)
+{
+    setKey(key, Random::randomArray(32));
 }

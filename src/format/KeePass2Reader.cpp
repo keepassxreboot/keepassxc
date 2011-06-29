@@ -64,12 +64,11 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
 
     // TODO check if all header fields have been parsed
 
-    QByteArray transformedMasterKey = key.transform(m_db->transformSeed(), m_db->transformRounds());
-    m_db->setTransformedMasterKey(transformedMasterKey);
+    m_db->setKey(key, m_transformSeed);
 
     CryptoHash hash(CryptoHash::Sha256);
     hash.addData(m_masterSeed);
-    hash.addData(transformedMasterKey);
+    hash.addData(m_db->transformedMasterKey());
     QByteArray finalKey = hash.result();
 
     SymmetricCipherStream cipherStream(device, SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Decrypt, finalKey, m_encryptionIV);
@@ -261,7 +260,7 @@ void KeePass2Reader::setTransformSeed(const QByteArray& data)
         raiseError("");
     }
     else {
-        m_db->setTransformSeed(data);
+        m_transformSeed = data;
     }
 }
 

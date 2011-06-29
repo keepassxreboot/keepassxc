@@ -23,6 +23,8 @@
 #include <QtCore/QHash>
 #include <QtGui/QIcon>
 
+#include "keys/CompositeKey.h"
+
 class Metadata;
 
 struct DeletedObject
@@ -62,9 +64,9 @@ public:
 
     void setCipher(const Uuid& cipher);
     void setCompressionAlgo(Database::CompressionAlgorithm algo);
-    void setTransformSeed(const QByteArray& seed);
     void setTransformRounds(quint64 rounds);
-    void setTransformedMasterKey(QByteArray& key);
+    void setKey(const CompositeKey& key, const QByteArray& transformSeed);
+    void setKey(const CompositeKey& key);
 
 Q_SIGNALS:
     void groupDataChanged(Group* group);
