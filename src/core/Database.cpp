@@ -22,10 +22,16 @@
 
 #include "Metadata.h"
 #include "crypto/Random.h"
+#include "format/KeePass2.h"
 
 Database::Database()
 {
     m_metadata = new Metadata(this);
+    m_rootGroup = 0;
+
+    m_cipher = KeePass2::CIPHER_AES;
+    m_compressionAlgo = CompressionNone; // TODO change to CompressionGZip?
+    m_transformRounds = 1000; // TODO random number
 }
 
 Group* Database::rootGroup()

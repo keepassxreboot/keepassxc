@@ -28,6 +28,14 @@ Metadata::Metadata(Database* parent)
     m_entryTemplatesGroup = 0;
     m_lastSelectedGroup = 0;
     m_lastTopVisibleGroup = 0;
+
+    QDateTime now = QDateTime::currentDateTime();
+    m_nameChanged = now;
+    m_descriptionChanged = now;
+    m_defaultUserNameChanged = now;
+    m_recycleBinChanged = now;
+    m_entryTemplatesGroupChanged = now;
+    m_masterKeyChanged = now;
 }
 
 QString Metadata::generator() const

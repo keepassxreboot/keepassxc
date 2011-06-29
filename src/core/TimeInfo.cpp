@@ -20,6 +20,14 @@
 TimeInfo::TimeInfo()
 {
     m_expires = false;
+    m_usageCount = 0; // TODO ???
+
+    QDateTime now = QDateTime::currentDateTime();
+    m_lastModificationTime = now;
+    m_creationTime = now;
+    m_lastAccessTime = now;
+    m_expiryTime = now;
+    m_locationChanged = now;
 }
 
 QDateTime TimeInfo::lastModificationTime() const

@@ -28,6 +28,8 @@ Group::Group()
 {
     m_parent = 0;
     m_db = 0;
+
+    m_iconNumber = 0; // TODO change?
 }
 
 Group::~Group()

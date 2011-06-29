@@ -26,6 +26,8 @@ Entry::Entry()
 {
     m_group = 0;
     m_db = 0;
+
+    m_iconNumber = 0; // TODO change?
 }
 
 Entry::~Entry()
