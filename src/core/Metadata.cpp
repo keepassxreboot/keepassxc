@@ -36,6 +36,14 @@ Metadata::Metadata(Database* parent)
     m_recycleBinChanged = now;
     m_entryTemplatesGroupChanged = now;
     m_masterKeyChanged = now;
+
+    m_protectTitle = false;
+    m_protectUsername = false;
+    m_protectPassword = true;
+    m_protectUrl = false;
+    m_protectNotes = false;
+
+    // TODO initalize all members
 }
 
 QString Metadata::generator() const
