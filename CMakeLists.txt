@@ -72,6 +72,7 @@ if(NOT ZLIB_SUPPORTS_GZIP)
 endif(NOT ZLIB_SUPPORTS_GZIP)
 
 add_subdirectory(src)
+add_subdirectory(utils)
 if( WITH_TESTS )
     add_subdirectory(tests)
 endif( WITH_TESTS )
