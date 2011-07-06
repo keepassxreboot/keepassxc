@@ -29,6 +29,11 @@
 #include "streams/QtIOCompressor"
 #include "streams/SymmetricCipherStream.h"
 
+KeePass2Reader::KeePass2Reader()
+{
+    m_saveXml = false;
+}
+
 Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& key)
 {
     m_db = new Database();
@@ -102,6 +107,15 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
     SymmetricCipher protectedStream(SymmetricCipher::Salsa20, SymmetricCipher::Stream, SymmetricCipher::Decrypt,
                                     protectedStreamKey, KeePass2::INNER_STREAM_SALSA20_IV);
 
+    QScopedPointer<QBuffer> buffer;
+
+    if (m_saveXml) {
+        m_xmlData = xmlDevice->readAll();
+        buffer.reset(new QBuffer(&m_xmlData));
+        buffer->open(QIODevice::ReadOnly);
+        xmlDevice = buffer.data();
+    }
+
     KeePass2XmlReader xmlReader;
     xmlReader.readDatabase(xmlDevice, m_db, &protectedStream);
     // TODO forward error messages from xmlReader
@@ -126,6 +140,16 @@ QString KeePass2Reader::errorString()
 {
     // TODO
     return QString();
+}
+
+void KeePass2Reader::setSaveXml(bool save)
+{
+    m_saveXml = save;
+}
+
+QByteArray KeePass2Reader::xmlData()
+{
+    return m_xmlData;
 }
 
 void KeePass2Reader::raiseError(const QString& str)

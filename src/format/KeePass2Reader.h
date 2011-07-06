@@ -31,10 +31,13 @@ class KeePass2Reader
     Q_DECLARE_TR_FUNCTIONS(KeePass2Reader);
 
 public:
+    KeePass2Reader();
     Database* readDatabase(QIODevice* device, const CompositeKey& key);
     Database* readDatabase(const QString& filename, const CompositeKey& key);
     bool error();
     QString errorString();
+    void setSaveXml(bool save);
+    QByteArray xmlData();
 
 private:
     void raiseError(const QString& str);
@@ -55,6 +58,8 @@ private:
     bool m_error;
     QString m_errorStr;
     bool m_headerEnd;
+    bool m_saveXml;
+    QByteArray m_xmlData;
 
     Database* m_db;
     QByteArray m_masterSeed;
