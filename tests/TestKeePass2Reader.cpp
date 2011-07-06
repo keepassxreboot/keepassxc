@@ -61,4 +61,33 @@ void TestKeePass2Reader::testCompressed()
     delete reader;
 }
 
+void TestKeePass2Reader::testProtectedStrings()
+{
+    QString filename = QString(KEEPASSX_TEST_DIR).append("/ProtectedStrings.kdbx");
+    CompositeKey key;
+    key.addKey(PasswordKey("masterpw"));
+    KeePass2Reader* reader = new KeePass2Reader();
+    Database* db = reader->readDatabase(filename, key);
+    QVERIFY(db);
+    QVERIFY(!reader->error());
+    QCOMPARE(db->metadata()->name(), QString("Protected Strings Test"));
+
+    Entry* entry = db->rootGroup()->entries().at(0);
+
+    QCOMPARE(entry->title(), QString("Sample Entry"));
+    QCOMPARE(entry->username(), QString("Protected User Name"));
+    QCOMPARE(entry->password(), QString("ProtectedPassword"));
+    QCOMPARE(entry->attributes().value("TestProtected"), QString("ABC"));
+    QCOMPARE(entry->attributes().value("TestUnprotected"), QString("DEF"));
+
+    QVERIFY(!db->metadata()->protectTitle());
+    QVERIFY(db->metadata()->protectUsername());
+    QVERIFY(db->metadata()->protectPassword());
+    QVERIFY(entry->isAttributeProtected("TestProtected"));
+    QVERIFY(!entry->isAttributeProtected("TestUnprotected"));
+
+    delete db;
+    delete reader;
+}
+
 QTEST_MAIN(TestKeePass2Reader);

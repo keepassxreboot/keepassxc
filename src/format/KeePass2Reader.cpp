@@ -24,6 +24,7 @@
 #include "core/Database.h"
 #include "crypto/CryptoHash.h"
 #include "format/KeePass2.h"
+#include "format/KeePass2RandomStream.h"
 #include "format/KeePass2XmlReader.h"
 #include "streams/HashedBlockStream.h"
 #include "streams/QtIOCompressor"
@@ -102,10 +103,7 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
         xmlDevice = ioCompressor.data();
     }
 
-    QByteArray protectedStreamKey = CryptoHash::hash(m_protectedStreamKey, CryptoHash::Sha256);
-
-    SymmetricCipher protectedStream(SymmetricCipher::Salsa20, SymmetricCipher::Stream, SymmetricCipher::Decrypt,
-                                    protectedStreamKey, KeePass2::INNER_STREAM_SALSA20_IV);
+    KeePass2RandomStream randomStream(m_protectedStreamKey);
 
     QScopedPointer<QBuffer> buffer;
 
@@ -117,7 +115,7 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
     }
 
     KeePass2XmlReader xmlReader;
-    xmlReader.readDatabase(xmlDevice, m_db, &protectedStream);
+    xmlReader.readDatabase(xmlDevice, m_db, &randomStream);
     // TODO forward error messages from xmlReader
     return m_db;
 }

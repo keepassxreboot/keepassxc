@@ -15,20 +15,25 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTKEEPASS2READER_H
-#define KEEPASSX_TESTKEEPASS2READER_H
+#ifndef KEEPASSX_TESTKEEPASS2WRITER_H
+#define KEEPASSX_TESTKEEPASS2WRITER_H
 
 #include <QtCore/QObject>
 
-class TestKeePass2Reader : public QObject
+class Database;
+
+class TestKeePass2Writer : public QObject
 {
     Q_OBJECT
 
 private Q_SLOTS:
     void initTestCase();
-    void testNonAscii();
-    void testCompressed();
-    void testProtectedStrings();
+    void testBasic();
+    void testProtectedAttributes();
+
+private:
+    Database* m_dbOrg;
+    Database* m_dbTest;
 };
 
-#endif // KEEPASSX_TESTKEEPASS2READER_H
+#endif // KEEPASSX_TESTKEEPASS2WRITER_H

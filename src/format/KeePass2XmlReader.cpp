@@ -22,21 +22,22 @@
 #include "core/Database.h"
 #include "core/DatabaseIcons.h"
 #include "core/Metadata.h"
+#include "format/KeePass2RandomStream.h"
 
 KeePass2XmlReader::KeePass2XmlReader()
-    : m_cipher(0)
+    : m_randomStream(0)
     , m_db(0)
     , m_meta(0)
 {
 }
 
-void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db, SymmetricCipher* cipher)
+void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream)
 {
     m_xml.setDevice(device);
 
     m_db = db;
     m_meta = m_db->metadata();
-    m_cipher = cipher;
+    m_randomStream = randomStream;
 
     m_tmpParent = new Group();
     m_tmpParent->setParent(m_db);
@@ -524,8 +525,8 @@ void KeePass2XmlReader::parseEntryString(Entry *entry)
             bool isProtected = attr.hasAttribute("Protected") && (attr.value("Protected") == "True");
 
             if (isProtected && !value.isEmpty()) {
-                if (m_cipher) {
-                    value = m_cipher->process(QByteArray::fromBase64(value.toAscii()));
+                if (m_randomStream) {
+                    value = m_randomStream->process(QByteArray::fromBase64(value.toAscii()));
                 }
                 else {
                     raiseError();
@@ -556,7 +557,7 @@ void KeePass2XmlReader::parseEntryBinary(Entry *entry)
             bool isProtected = attr.hasAttribute("Protected") && (attr.value("Protected") == "True");
 
             if (isProtected && !value.isEmpty()) {
-                m_cipher->processInPlace(value);
+                m_randomStream->processInPlace(value);
             }
 
             entry->addAttachment(key, value, isProtected);

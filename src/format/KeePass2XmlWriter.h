@@ -29,15 +29,15 @@
 #include "core/Uuid.h"
 
 class Group;
+class KeePass2RandomStream;
 class Metadata;
-class SymmetricCipher;
 
 class KeePass2XmlWriter
 {
 public:
     KeePass2XmlWriter();
-    void writeDatabase(QIODevice* device, Database* db, SymmetricCipher* cipher = 0);
-    void writeDatabase(const QString& filename, Database* db, SymmetricCipher* cipher = 0);
+    void writeDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream = 0);
+    void writeDatabase(const QString& filename, Database* db, KeePass2RandomStream* randomStream = 0);
     bool error();
     QString errorString();
 
@@ -72,7 +72,7 @@ private:
     QXmlStreamWriter m_xml;
     Database* m_db;
     Metadata* m_meta;
-    SymmetricCipher* m_cipher;
+    KeePass2RandomStream* m_randomStream;
 };
 
 #endif // KEEPASSX_KEEPASS2XMLWRITER_H

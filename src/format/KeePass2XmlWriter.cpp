@@ -21,23 +21,23 @@
 #include <QtCore/QFile>
 
 #include "core/Metadata.h"
-#include "crypto/SymmetricCipher.h"
+#include "format/KeePass2RandomStream.h"
 
 KeePass2XmlWriter::KeePass2XmlWriter()
     : m_db(0)
     , m_meta(0)
-    , m_cipher(0)
+    , m_randomStream(0)
 {
     m_xml.setAutoFormatting(true);
     m_xml.setAutoFormattingIndent(-1); // 1 tab
     m_xml.setCodec("UTF-8");
 }
 
-void KeePass2XmlWriter::writeDatabase(QIODevice* device, Database* db, SymmetricCipher* cipher)
+void KeePass2XmlWriter::writeDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream)
 {
     m_db = db;
     m_meta = db->metadata();
-    m_cipher = cipher;
+    m_randomStream = randomStream;
 
     m_xml.setDevice(device);
 
@@ -53,11 +53,11 @@ void KeePass2XmlWriter::writeDatabase(QIODevice* device, Database* db, Symmetric
     m_xml.writeEndDocument();
 }
 
-void KeePass2XmlWriter::writeDatabase(const QString& filename, Database* db, SymmetricCipher* cipher)
+void KeePass2XmlWriter::writeDatabase(const QString& filename, Database* db, KeePass2RandomStream* randomStream)
 {
     QFile file(filename);
     file.open(QIODevice::WriteOnly|QIODevice::Truncate);
-    writeDatabase(&file, db, cipher);
+    writeDatabase(&file, db, randomStream);
 }
 
 void KeePass2XmlWriter::writeMetadata()
@@ -281,21 +281,24 @@ void KeePass2XmlWriter::writeEntry(const Entry* entry)
                          ((key == "URL") && m_meta->protectUrl()) ||
                          ((key == "Notes") && m_meta->protectNotes()) ||
                          entry->isAttributeProtected(key) ) &&
-                       m_cipher;
+                       m_randomStream;
 
-        m_xml.writeStartElement("Key");
+        writeString("Key", key);
+
+        m_xml.writeStartElement("Value");
+        QString value;
+
         if (protect) {
             m_xml.writeAttribute("Protected", "True");
-        }
-        m_xml.writeCharacters(key);
-        m_xml.writeEndElement();
-
-        if (protect) {
-            writeBinary("Value", m_cipher->process(entry->attributes().value(key).toUtf8()));
+            QByteArray rawData = m_randomStream->process(entry->attributes().value(key).toUtf8());
+            value = QString::fromAscii(rawData.toBase64());
         }
         else {
-            writeString("Value", entry->attributes().value(key));
+            value = entry->attributes().value(key);
         }
+
+        m_xml.writeCharacters(value);
+        m_xml.writeEndElement();
 
         m_xml.writeEndElement();
     }
@@ -303,20 +306,24 @@ void KeePass2XmlWriter::writeEntry(const Entry* entry)
     Q_FOREACH (const QString& key, entry->attachments().keys()) {
         m_xml.writeStartElement("Binary");
 
-        bool protect = entry->isAttachmentProtected(key) && m_cipher;
-        m_xml.writeStartElement("Key");
-        if (protect) {
-            m_xml.writeAttribute("Protected", "True");
-        }
-        m_xml.writeCharacters(key);
-        m_xml.writeEndElement();
+        bool protect = entry->isAttachmentProtected(key) && m_randomStream;
+
+        writeString("Key", key);
+
+        m_xml.writeStartElement("Value");
+        QString value;
 
         if (protect) {
-            writeBinary("Value", m_cipher->process(entry->attachments().value(key)));
+            m_xml.writeAttribute("Protected", "True");
+            QByteArray rawData = m_randomStream->process(entry->attachments().value(key));
+            value = QString::fromAscii(rawData.toBase64());
         }
         else {
-            writeBinary("Value", entry->attachments().value(key));
+            value = entry->attachments().value(key);
         }
+
+        m_xml.writeCharacters(value);
+        m_xml.writeEndElement();
 
         m_xml.writeEndElement();
     }

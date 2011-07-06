@@ -30,8 +30,8 @@
 class Database;
 class Entry;
 class Group;
+class KeePass2RandomStream;
 class Metadata;
-class SymmetricCipher;
 
 class KeePass2XmlReader
 {
@@ -40,7 +40,7 @@ class KeePass2XmlReader
 public:
     KeePass2XmlReader();
     Database* readDatabase(QIODevice* device);
-    void readDatabase(QIODevice* device, Database* db, SymmetricCipher* cipher = 0);
+    void readDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream = 0);
     Database* readDatabase(const QString& filename);
     bool error();
     QString errorString();
@@ -79,7 +79,7 @@ private:
     void skipCurrentElement();
 
     QXmlStreamReader m_xml;
-    SymmetricCipher* m_cipher;
+    KeePass2RandomStream* m_randomStream;
     Database* m_db;
     Metadata* m_meta;
     Group* m_tmpParent;

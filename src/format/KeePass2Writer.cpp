@@ -23,6 +23,7 @@
 #include "core/Endian.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
+#include "format/KeePass2RandomStream.h"
 #include "format/KeePass2XmlWriter.h"
 #include "streams/HashedBlockStream.h"
 #include "streams/QtIOCompressor"
@@ -91,11 +92,10 @@ void KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
         m_device = ioCompressor.data();
     }
 
-    SymmetricCipher protectedStream(SymmetricCipher::Salsa20, SymmetricCipher::Stream, SymmetricCipher::Encrypt,
-                                    CryptoHash::hash(protectedStreamKey, CryptoHash::Sha256), KeePass2::INNER_STREAM_SALSA20_IV);
+    KeePass2RandomStream randomStream(protectedStreamKey);
 
     KeePass2XmlWriter xmlWriter;
-    xmlWriter.writeDatabase(m_device, db, &protectedStream);
+    xmlWriter.writeDatabase(m_device, db, &randomStream);
 }
 
 bool KeePass2Writer::writeData(const QByteArray& data)
