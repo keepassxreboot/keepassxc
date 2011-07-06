@@ -114,3 +114,5 @@ add_unit_test(NAME testcryptohash SOURCES TestCryptoHash.cpp MOCS TestCryptoHash
 add_unit_test(NAME testsymmetriccipher SOURCES TestSymmetricCipher.cpp MOCS TestSymmetricCipher.h LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testhashedblockstream SOURCES TestHashedBlockStream.cpp MOCS TestHashedBlockStream.h LIBS ${TEST_LIBRARIES})
+
+add_unit_test(NAME testkeepass2randomstream SOURCES TestKeePass2RandomStream.cpp MOCS TestKeePass2RandomStream.h LIBS ${TEST_LIBRARIES})
