@@ -22,12 +22,16 @@
 Metadata::Metadata(Database* parent)
     : QObject(parent)
 {
-    m_generator = "KeePassX";
-    m_maintenanceHistoryDays = 365;
     m_recycleBin = 0;
     m_entryTemplatesGroup = 0;
     m_lastSelectedGroup = 0;
     m_lastTopVisibleGroup = 0;
+
+    m_generator = "KeePassX";
+    m_maintenanceHistoryDays = 365;
+    m_recycleBinEnabled = true;
+    m_masterKeyChangeRec = -1;
+    m_masterKeyChangeForce = -1;
 
     QDateTime now = QDateTime::currentDateTime();
     m_nameChanged = now;
@@ -42,8 +46,6 @@ Metadata::Metadata(Database* parent)
     m_protectPassword = true;
     m_protectUrl = false;
     m_protectNotes = false;
-
-    // TODO initalize all members
 }
 
 QString Metadata::generator() const

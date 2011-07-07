@@ -29,7 +29,9 @@ Entry::Entry()
     m_group = 0;
     m_db = 0;
 
-    m_iconNumber = 0; // TODO change?
+    m_iconNumber = 0;
+    m_autoTypeEnabled = true;
+    m_autoTypeObfuscation = 0;
 
     Q_FOREACH (const QString& key, m_defaultAttibutes) {
         addAttribute(key, "");

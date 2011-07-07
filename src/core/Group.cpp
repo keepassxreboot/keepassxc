@@ -30,7 +30,10 @@ Group::Group()
     m_db = 0;
     m_lastTopVisibleEntry = 0;
 
-    m_iconNumber = 0; // TODO change?
+    m_iconNumber = 48;
+    m_isExpanded = true;
+    m_autoTypeEnabled = Inherit;
+    m_searchingEnabled = Inherit;
 }
 
 Group::~Group()

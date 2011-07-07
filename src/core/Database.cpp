@@ -30,8 +30,8 @@ Database::Database()
     m_rootGroup = 0;
 
     m_cipher = KeePass2::CIPHER_AES;
-    m_compressionAlgo = CompressionNone; // TODO change to CompressionGZip?
-    m_transformRounds = 1000; // TODO random number
+    m_compressionAlgo = CompressionGZip;
+    m_transformRounds = 50000;
 }
 
 Group* Database::rootGroup()
