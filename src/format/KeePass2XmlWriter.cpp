@@ -182,31 +182,9 @@ void KeePass2XmlWriter::writeGroup(const Group* group)
     writeBool("IsExpanded", group->isExpanded());
     writeString("DefaultAutoTypeSequence", group->defaultAutoTypeSequence());
 
-    int autoTypeEnabled = group->autoTypeEnabled();
-    QString autoTypeEnabledStr;
-    if (autoTypeEnabled == -1) {
-        autoTypeEnabledStr = "null";
-    }
-    else if (autoTypeEnabled == 0) {
-        autoTypeEnabledStr = "false";
-    }
-    else {
-        autoTypeEnabledStr = "true";
-    }
-    writeString("EnableAutoType", autoTypeEnabledStr);
+    writeTriState("EnableAutoType", group->autoTypeEnabled());
 
-    int searchingEnabed = group->searchingEnabed();
-    QString searchingEnabedStr;
-    if (searchingEnabed == -1) {
-        searchingEnabedStr = "null";
-    }
-    else if (searchingEnabed == 0) {
-        searchingEnabedStr = "false";
-    }
-    else {
-        searchingEnabedStr = "true";
-    }
-    writeString("EnableSearching", searchingEnabedStr);
+    writeTriState("EnableSearching", group->searchingEnabed());
 
     writeUuid("LastTopVisibleEntry", group->lastTopVisibleEntry());
 
@@ -439,6 +417,23 @@ void KeePass2XmlWriter::writeColor(const QString& qualifiedName, const QColor& c
     }
 
     writeString(qualifiedName, colorStr);
+}
+
+void KeePass2XmlWriter::writeTriState(const QString& qualifiedName, Group::TriState triState)
+{
+    QString value;
+
+    if (triState == Group::Inherit) {
+        value = "null";
+    }
+    else if (triState == Group::Enable) {
+        value = "true";
+    }
+    else {
+        value = "false";
+    }
+
+    writeString(qualifiedName, value);
 }
 
 QString KeePass2XmlWriter::colorPartToString(int value)

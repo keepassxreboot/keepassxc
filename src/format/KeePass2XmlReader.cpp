@@ -340,13 +340,13 @@ Group* KeePass2XmlReader::parseGroup()
             QString str = readString();
 
             if (str.compare("null", Qt::CaseInsensitive) == 0) {
-                group->setAutoTypeEnabled(-1);
+                group->setAutoTypeEnabled(Group::Inherit);
             }
             else if (str.compare("true", Qt::CaseInsensitive) == 0) {
-                group->setAutoTypeEnabled(1);
+                group->setAutoTypeEnabled(Group::Enable);
             }
             else if (str.compare("false", Qt::CaseInsensitive) == 0) {
-                group->setAutoTypeEnabled(0);
+                group->setAutoTypeEnabled(Group::Disable);
             }
             else {
                 raiseError();
@@ -357,13 +357,13 @@ Group* KeePass2XmlReader::parseGroup()
             QString str = readString();
 
             if (str.compare("null", Qt::CaseInsensitive) == 0) {
-                group->setSearchingEnabled(-1);
+                group->setSearchingEnabled(Group::Inherit);
             }
             else if (str.compare("true", Qt::CaseInsensitive) == 0) {
-                group->setSearchingEnabled(1);
+                group->setSearchingEnabled(Group::Enable);
             }
             else if (str.compare("false", Qt::CaseInsensitive) == 0) {
-                group->setSearchingEnabled(0);
+                group->setSearchingEnabled(Group::Disable);
             }
             else {
                 raiseError();

@@ -88,12 +88,12 @@ QString Group::defaultAutoTypeSequence() const
     return m_defaultAutoTypeSequence;
 }
 
-int Group::autoTypeEnabled() const
+Group::TriState Group::autoTypeEnabled() const
 {
     return m_autoTypeEnabled;
 }
 
-int Group::searchingEnabed() const
+Group::TriState Group::searchingEnabed() const
 {
     return m_searchingEnabled;
 }
@@ -155,17 +155,13 @@ void Group::setDefaultAutoTypeSequence(const QString& sequence)
     m_defaultAutoTypeSequence = sequence;
 }
 
-void Group::setAutoTypeEnabled(int enable)
+void Group::setAutoTypeEnabled(TriState enable)
 {
-    Q_ASSERT(enable >= -1 && enable <= 1);
-
     m_autoTypeEnabled = enable;
 }
 
-void Group::setSearchingEnabled(int enable)
+void Group::setSearchingEnabled(TriState enable)
 {
-    Q_ASSERT(enable >= -1 && enable <= 1);
-
     m_searchingEnabled = enable;
 }
 

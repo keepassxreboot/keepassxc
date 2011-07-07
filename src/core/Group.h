@@ -31,6 +31,8 @@ class Group : public QObject
     Q_OBJECT
 
 public:
+    enum TriState { Inherit, Enable, Disable };
+
     Group();
     ~Group();
     Uuid uuid() const;
@@ -42,8 +44,8 @@ public:
     TimeInfo timeInfo() const;
     bool isExpanded() const;
     QString defaultAutoTypeSequence() const;
-    int autoTypeEnabled() const;
-    int searchingEnabed() const;
+    Group::TriState autoTypeEnabled() const;
+    Group::TriState searchingEnabed() const;
     Entry* lastTopVisibleEntry() const;
 
     void setUuid(const Uuid& uuid);
@@ -54,8 +56,8 @@ public:
     void setTimeInfo(const TimeInfo& timeInfo);
     void setExpanded(bool expanded);
     void setDefaultAutoTypeSequence(const QString& sequence);
-    void setAutoTypeEnabled(int enable);
-    void setSearchingEnabled(int enable);
+    void setAutoTypeEnabled(TriState enable);
+    void setSearchingEnabled(TriState enable);
     void setLastTopVisibleEntry(Entry* entry);
 
     Group* parentGroup();
@@ -98,8 +100,8 @@ private:
     TimeInfo m_timeInfo;
     bool m_isExpanded;
     QString m_defaultAutoTypeSequence;
-    int m_autoTypeEnabled;
-    int m_searchingEnabled;
+    TriState m_autoTypeEnabled;
+    TriState m_searchingEnabled;
     Entry* m_lastTopVisibleEntry;
     QList<Group*> m_children;
     QList<Entry*> m_entries;
