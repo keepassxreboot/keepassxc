@@ -22,12 +22,18 @@
 #include "Group.h"
 #include "Metadata.h"
 
+const QStringList Entry::m_defaultAttibutes(QStringList() << "Title" << "URL" << "UserName" << "Password" << "Notes");
+
 Entry::Entry()
 {
     m_group = 0;
     m_db = 0;
 
     m_iconNumber = 0; // TODO change?
+
+    Q_FOREACH (const QString& key, m_defaultAttibutes) {
+        addAttribute(key, "");
+    }
 }
 
 Entry::~Entry()
@@ -226,14 +232,15 @@ void Entry::addAttribute(const QString& key, const QString& value, bool protect)
         m_protectedAttributes.insert(key);
     }
 
-    // TODO add all visible columns
-    if (key == "Title") {
+    if (isDefaultAttributue(key)) {
         Q_EMIT dataChanged(this);
     }
 }
 
 void Entry::removeAttribute(const QString& key)
 {
+    Q_ASSERT(!isDefaultAttributue(key));
+
     m_attributes.remove(key);
     m_protectedAttributes.remove(key);
 }
@@ -308,4 +315,9 @@ void Entry::setGroup(Group* group)
     m_group = group;
     m_db = group->database();
     QObject::setParent(group);
+}
+
+bool Entry::isDefaultAttributue(const QString& key)
+{
+    return m_defaultAttibutes.contains(key);
 }

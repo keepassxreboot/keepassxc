@@ -95,6 +95,7 @@ public:
     Group* group();
     void setGroup(Group* group);
 
+    static bool isDefaultAttributue(const QString& key);
 
 Q_SIGNALS:
     void dataChanged(Entry* entry);
@@ -120,6 +121,7 @@ private:
     QList<Entry*> m_history;
     Group* m_group;
     const Database* m_db;
+    const static QStringList m_defaultAttibutes;
 };
 
 #endif // KEEPASSX_ENTRY_H
