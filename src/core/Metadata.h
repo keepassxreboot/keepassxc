@@ -18,11 +18,11 @@
 #ifndef KEEPASSX_METADATA_H
 #define KEEPASSX_METADATA_H
 
-#include "Uuid.h"
-
 #include <QtCore/QDateTime>
 #include <QtCore/QHash>
 #include <QtGui/QIcon>
+
+#include "core/Uuid.h"
 
 class Database;
 class Group;

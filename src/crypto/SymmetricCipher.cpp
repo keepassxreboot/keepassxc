@@ -17,8 +17,8 @@
 
 #include "SymmetricCipher.h"
 
-#include "SymmetricCipherGcrypt.h"
-#include "SymmetricCipherSalsa20.h"
+#include "crypto/SymmetricCipherGcrypt.h"
+#include "crypto/SymmetricCipherSalsa20.h"
 
 SymmetricCipher::SymmetricCipher(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
                                  SymmetricCipher::Direction direction, const QByteArray& key, const QByteArray& iv)

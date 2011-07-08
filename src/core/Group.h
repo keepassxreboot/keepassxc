@@ -20,10 +20,10 @@
 
 #include <QtGui/QIcon>
 
-#include "Database.h"
-#include "Entry.h"
-#include "TimeInfo.h"
-#include "Uuid.h"
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "core/TimeInfo.h"
+#include "core/Uuid.h"
 
 class Group : public QObject
 {

@@ -15,8 +15,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "config-keepassx.h"
 #include "DatabaseIcons.h"
+
+#include "config-keepassx.h"
 
 DatabaseIcons* DatabaseIcons::m_instance(0);
 

@@ -18,8 +18,8 @@
 #ifndef KEEPASSX_SYMMETRICCIPHERSALSA20_H
 #define KEEPASSX_SYMMETRICCIPHERSALSA20_H
 
-#include "SymmetricCipherBackend.h"
-#include "salsa20/ecrypt-sync.h"
+#include "crypto/SymmetricCipherBackend.h"
+#include "crypto/salsa20/ecrypt-sync.h"
 
 class SymmetricCipherSalsa20 : public SymmetricCipherBackend
 {

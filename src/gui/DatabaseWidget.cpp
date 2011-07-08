@@ -20,9 +20,9 @@
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QSplitter>
 
-#include "EditEntryWidget.h"
-#include "EntryView.h"
-#include "GroupView.h"
+#include "gui/EditEntryWidget.h"
+#include "gui/EntryView.h"
+#include "gui/GroupView.h"
 
 DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     : QStackedWidget(parent)

@@ -20,8 +20,8 @@
 
 #include "Group.h"
 
-#include "DatabaseIcons.h"
-#include "Metadata.h"
+#include "core/DatabaseIcons.h"
+#include "core/Metadata.h"
 
 Group::Group()
 {

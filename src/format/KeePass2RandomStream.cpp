@@ -17,8 +17,8 @@
 
 #include "KeePass2RandomStream.h"
 
-#include "format/KeePass2.h"
 #include "crypto/CryptoHash.h"
+#include "format/KeePass2.h"
 
 KeePass2RandomStream::KeePass2RandomStream(QByteArray key)
     : m_cipher(SymmetricCipher::Salsa20, SymmetricCipher::Stream, SymmetricCipher::Encrypt,

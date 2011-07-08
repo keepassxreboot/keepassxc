@@ -17,7 +17,7 @@
 
 #include "CryptoHash.h"
 
-#include "gcrypt.h"
+#include <gcrypt.h>
 
 class CryptoHashPrivate
 {

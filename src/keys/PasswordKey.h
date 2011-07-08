@@ -20,7 +20,7 @@
 
 #include <QtCore/QString>
 
-#include "Key.h"
+#include "keys/Key.h"
 
 class PasswordKey : public Key
 {

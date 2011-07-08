@@ -17,10 +17,10 @@
 
 #include "Entry.h"
 
-#include "Database.h"
-#include "DatabaseIcons.h"
-#include "Group.h"
-#include "Metadata.h"
+#include "core/Database.h"
+#include "core/DatabaseIcons.h"
+#include "core/Group.h"
+#include "core/Metadata.h"
 
 const QStringList Entry::m_defaultAttibutes(QStringList() << "Title" << "URL" << "UserName" << "Password" << "Notes");
 

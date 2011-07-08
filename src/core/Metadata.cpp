@@ -17,7 +17,7 @@
 
 #include "Metadata.h"
 
-#include "Database.h"
+#include "core/Database.h"
 
 Metadata::Metadata(Database* parent)
     : QObject(parent)

@@ -20,8 +20,8 @@
 
 #include <QtCore/QByteArray>
 
-#include "LayeredStream.h"
 #include "crypto/SymmetricCipher.h"
+#include "streams/LayeredStream.h"
 
 class SymmetricCipherStream : public LayeredStream
 {

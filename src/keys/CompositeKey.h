@@ -20,7 +20,7 @@
 
 #include <QtCore/QList>
 
-#include "Key.h"
+#include "keys/Key.h"
 
 class CompositeKey : public Key
 {

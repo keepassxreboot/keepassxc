@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_SYMMETRICCIPHERBACKEND_H
 #define KEEPASSX_SYMMETRICCIPHERBACKEND_H
 
-#include "SymmetricCipher.h"
+#include "crypto/SymmetricCipher.h"
 
 class SymmetricCipherBackend
 {

@@ -20,7 +20,7 @@
 
 #include <QtCore/QSysInfo>
 
-#include "LayeredStream.h"
+#include "streams/LayeredStream.h"
 
 class HashedBlockStream : public LayeredStream
 {

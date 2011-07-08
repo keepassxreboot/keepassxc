@@ -17,7 +17,7 @@
 
 #include "EntryView.h"
 
-#include "EntryModel.h"
+#include "gui/EntryModel.h"
 
 EntryView::EntryView(QWidget* parent)
     : QTreeView(parent)

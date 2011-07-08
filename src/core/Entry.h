@@ -24,8 +24,8 @@
 #include <QtGui/QColor>
 #include <QtGui/QIcon>
 
-#include "TimeInfo.h"
-#include "Uuid.h"
+#include "core/TimeInfo.h"
+#include "core/Uuid.h"
 
 class Database;
 class Group;

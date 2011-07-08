@@ -17,9 +17,9 @@
 
 #include "MainWindow.h"
 
-#include "DatabaseWidget.h"
 #include "core/Database.h"
 #include "core/Metadata.h"
+#include "gui/DatabaseWidget.h"
 
 MainWindow::MainWindow()
 {
