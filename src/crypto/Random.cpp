@@ -21,7 +21,7 @@
 
 void Random::randomize(QByteArray& ba)
 {
-    gcry_randomize(ba.data(), ba.size(), GCRY_STRONG_RANDOM);
+    randomize(ba.data(), ba.size());
 }
 
 QByteArray Random::randomArray(int len)
@@ -32,6 +32,23 @@ QByteArray Random::randomArray(int len)
     randomize(ba);
 
     return ba;
+}
+
+quint32 Random::randomUInt(quint32 limit)
+{
+    quint32 rand;
+    randomize(&rand, 4);
+    return (rand % limit);
+}
+
+quint32 Random::randomUIntRange(quint32 min, quint32 max)
+{
+    return min + randomUInt(max - min);
+}
+
+void Random::randomize(void* data, int len)
+{
+    gcry_randomize(data, len, GCRY_STRONG_RANDOM);
 }
 
 Random::Random()

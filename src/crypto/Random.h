@@ -26,7 +26,18 @@ public:
     static void randomize(QByteArray& ba);
     static QByteArray randomArray(int len);
 
+    /**
+     * Generate a random quint32 in the range [0, @p limit)
+     */
+    static quint32 randomUInt(quint32 limit);
+
+    /**
+     * Generate a random quint32 in the range [@p min, @p max)
+     */
+    static quint32 randomUIntRange(quint32 min, quint32 max);
+
 private:
+    static void randomize(void* data, int len);
     Random();
 };
 
