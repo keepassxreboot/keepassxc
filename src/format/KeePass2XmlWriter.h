@@ -25,6 +25,7 @@
 
 #include "core/Database.h"
 #include "core/Entry.h"
+#include "core/Group.h"
 #include "core/TimeInfo.h"
 #include "core/Uuid.h"
 

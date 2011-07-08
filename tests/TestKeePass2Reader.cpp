@@ -21,6 +21,7 @@
 
 #include "config-keepassx-tests.h"
 #include "core/Database.h"
+#include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
 #include "format/KeePass2Reader.h"

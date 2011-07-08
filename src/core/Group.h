@@ -20,11 +20,10 @@
 
 #include <QtGui/QIcon>
 
+#include "Database.h"
 #include "Entry.h"
 #include "TimeInfo.h"
 #include "Uuid.h"
-
-class Database;
 
 class Group : public QObject
 {
@@ -63,15 +62,12 @@ public:
     Group* parentGroup();
     const Group* parentGroup() const;
     void setParent(Group* parent, int index = -1);
-    void setParent(Database* db);
 
     const Database* database() const;
     QList<Group*> children();
     const QList<Group*>& children() const;
     QList<Entry*> entries();
     const QList<Entry*>& entries() const;
-    void addEntry(Entry* entry);
-    void removeEntry(Entry* entry);
 
 Q_SIGNALS:
     void dataChanged(Group* group);
@@ -89,6 +85,10 @@ Q_SIGNALS:
     void entryDataChanged(Entry* entry);
 
 private:
+    void addEntry(Entry* entry);
+    void removeEntry(Entry* entry);
+    void setParent(Database* db);
+
     void recSetDatabase(Database* db);
 
     Database* m_db;
@@ -107,6 +107,9 @@ private:
     QList<Entry*> m_entries;
 
     Group* m_parent;
+
+    friend void Database::setRootGroup(Group* group);
+    friend void Entry::setGroup(Group *group);
 };
 
 #endif // KEEPASSX_GROUP_H

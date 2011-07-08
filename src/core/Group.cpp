@@ -20,7 +20,6 @@
 
 #include "Group.h"
 
-#include "Database.h"
 #include "DatabaseIcons.h"
 #include "Metadata.h"
 
@@ -238,8 +237,6 @@ void Group::setParent(Database* db)
     recSetDatabase(db);
 
     QObject::setParent(db);
-
-    db->setRootGroup(this);
 }
 
 const Database* Group::database() const

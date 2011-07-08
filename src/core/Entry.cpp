@@ -55,6 +55,7 @@ QIcon Entry::icon() const
         return DatabaseIcons::icon(m_iconNumber);
     }
     else {
+        // TODO check if m_db is 0
         return m_db->metadata()->customIcon(m_customIcon);
     }
 }

@@ -22,6 +22,7 @@
 #include <QtTest/QTest>
 
 #include "core/Database.h"
+#include "core/Group.h"
 
 void TestGroup::initTestCase()
 {
@@ -46,7 +47,7 @@ void TestGroup::testParenting()
     g2->setParent(g1);
     g4->setParent(g3);
     g3->setParent(g1);
-    g1->setParent(db);
+    db->setRootGroup(g1);
 
     QVERIFY(g1->parent() == db);
     QVERIFY(g2->parent() == g1);
@@ -91,7 +92,7 @@ void TestGroup::testSignals()
 {
     Database* db = new Database();
     QPointer<Group> root = new Group();
-    root->setParent(db);
+    db->setRootGroup(root);
 
     Group* g1 = new Group();
     Group* g2 = new Group();

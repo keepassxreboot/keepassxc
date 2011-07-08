@@ -98,6 +98,9 @@ public:
     static bool isDefaultAttributue(const QString& key);
 
 Q_SIGNALS:
+    /**
+     * Emitted when a default attribute has been changed.
+     */
     void dataChanged(Entry* entry);
 
 private:

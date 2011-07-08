@@ -21,6 +21,7 @@
 
 #include "core/Database.h"
 #include "core/DatabaseIcons.h"
+#include "core/Group.h"
 #include "core/Metadata.h"
 #include "format/KeePass2RandomStream.h"
 
@@ -40,7 +41,7 @@ void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Ra
     m_randomStream = randomStream;
 
     m_tmpParent = new Group();
-    m_tmpParent->setParent(m_db);
+    m_db->setRootGroup(m_tmpParent);
 
     if (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "KeePassFile") {
@@ -276,7 +277,7 @@ void KeePass2XmlReader::parseRoot()
         if (m_xml.name() == "Group") {
             Group* rootGroup = parseGroup();
             if (rootGroup) {
-                rootGroup->setParent(m_db);
+                m_db->setRootGroup(rootGroup);
             }
         }
         else if (m_xml.name() == "DeletedObjects") {

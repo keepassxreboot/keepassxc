@@ -20,6 +20,7 @@
 #include <QtTest/QTest>
 
 #include "core/Database.h"
+#include "core/Group.h"
 #include "core/Metadata.h"
 #include "format/KeePass2XmlReader.h"
 #include "config-keepassx-tests.h"

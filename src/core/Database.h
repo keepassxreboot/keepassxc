@@ -18,13 +18,15 @@
 #ifndef KEEPASSX_DATABASE_H
 #define KEEPASSX_DATABASE_H
 
-#include "Group.h"
-
+#include <QtCore/QDateTime>
 #include <QtCore/QHash>
 #include <QtGui/QIcon>
 
+#include "core/Uuid.h"
 #include "keys/CompositeKey.h"
 
+class Entry;
+class Group;
 class Metadata;
 
 struct DeletedObject
@@ -48,7 +50,12 @@ public:
     Database();
     Group* rootGroup();
     const Group* rootGroup() const;
+
+    /**
+     * Sets group as the root group and takes ownership of it.
+     */
     void setRootGroup(Group* group);
+
     Metadata* metadata();
     const Metadata* metadata() const;
     Entry* resolveEntry(const Uuid& uuid);
@@ -66,6 +73,10 @@ public:
     void setCompressionAlgo(Database::CompressionAlgorithm algo);
     void setTransformRounds(quint64 rounds);
     void setKey(const CompositeKey& key, const QByteArray& transformSeed);
+
+    /**
+     * Sets the database key and generates a random transform seed.
+     */
     void setKey(const CompositeKey& key);
 
 Q_SIGNALS:

@@ -20,7 +20,8 @@
 #include <QtCore/QFile>
 #include <QtCore/QXmlStreamReader>
 
-#include "Metadata.h"
+#include "core/Group.h"
+#include "core/Metadata.h"
 #include "crypto/Random.h"
 #include "format/KeePass2.h"
 
@@ -46,7 +47,10 @@ const Group* Database::rootGroup() const
 
 void Database::setRootGroup(Group* group)
 {
-    Q_ASSERT(group == 0 || group->database() == this);
+    if (group != 0) {
+        group->setParent(this);
+    }
+
     m_rootGroup = group;
 }
 

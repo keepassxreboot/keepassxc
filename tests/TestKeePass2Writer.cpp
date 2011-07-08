@@ -21,13 +21,13 @@
 #include <QtTest/QTest>
 
 #include "core/Database.h"
+#include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
 #include "keys/PasswordKey.h"
 
-#include "format/KeePass2XmlWriter.h"
 void TestKeePass2Writer::initTestCase()
 {
     Crypto::init();
@@ -40,13 +40,12 @@ void TestKeePass2Writer::initTestCase()
     m_dbOrg->metadata()->setName("TESTDB");
     Group* group = new Group();
     group->setUuid(Uuid::random());
-    group->setParent(m_dbOrg);
     m_dbOrg->setRootGroup(group);
     Entry* entry = new Entry();
     entry->setUuid(Uuid::random());
     entry->addAttribute("test", "protectedTest", true);
     QVERIFY(entry->isAttributeProtected("test"));
-    group->addEntry(entry);
+    entry->setGroup(group);
 
     QBuffer buffer;
     buffer.open(QBuffer::ReadWrite);

@@ -35,7 +35,7 @@ void TestGroupModel::test()
     Database* db = new Database();
 
     Group* groupRoot = new Group();
-    groupRoot->setParent(db);
+    db->setRootGroup(groupRoot);
     groupRoot->setName("groupRoot");
 
     Group* group1 = new Group();
