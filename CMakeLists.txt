@@ -23,6 +23,10 @@ option(WITH_TESTS "Enable building of unit tests" ON)
 
 set( KEEPASSX_VERSION "0.9.0" )
 
+if ( ${CMAKE_SYSTEM_NAME} MATCHES "SunOS" )
+  set (SOLARIS true)
+endif( ${CMAKE_SYSTEM_NAME} MATCHES "SunOS" )
+
 if(CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ansi -fno-common -fno-exceptions -fno-rtti")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DQT_NO_KEYWORDS -DQT_NO_EXCEPTIONS -DQT_NO_STL")
@@ -34,9 +38,9 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wwrite-strings -Wformat-security -Werror-implicit-function-declaration")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wmissing-format-attribute -Wno-long-long")
 
-    if( UNIX AND NOT APPLE )
-        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-add-needed -Wl,--as-needed -Wl,--no-undefined")
-    endif( UNIX AND NOT APPLE )
+    if( UNIX AND NOT APPLE AND NOT SOLARIS )
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-add-needed -Wl,--as-needed -Wl,--no-undefined" )
+    endif( UNIX AND NOT APPLE AND NOT SOLARIS)
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
 if( APPLE OR MINGW )
