@@ -19,6 +19,7 @@
 #define KEEPASSX_ENTRY_H
 
 #include <QtCore/QHash>
+#include <QtCore/QPointer>
 #include <QtCore/QSet>
 #include <QtCore/QUrl>
 #include <QtGui/QColor>
@@ -122,7 +123,7 @@ private:
     QSet<QString> m_protectedAttachments;
 
     QList<Entry*> m_history;
-    Group* m_group;
+    QPointer<Group> m_group;
     const Database* m_db;
     const static QStringList m_defaultAttibutes;
 };

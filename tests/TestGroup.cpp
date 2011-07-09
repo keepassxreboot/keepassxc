@@ -32,6 +32,7 @@ void TestGroup::initTestCase()
 void TestGroup::testParenting()
 {
     Database* db = new Database();
+    QPointer<Group> rootGroup = db->rootGroup();
     Group* tmpRoot = new Group();
 
     QPointer<Group> g1 = new Group();
@@ -47,9 +48,9 @@ void TestGroup::testParenting()
     g2->setParent(g1);
     g4->setParent(g3);
     g3->setParent(g1);
-    db->setRootGroup(g1);
+    g1->setParent(db->rootGroup());
 
-    QVERIFY(g1->parent() == db);
+    QVERIFY(g1->parent() == rootGroup);
     QVERIFY(g2->parent() == g1);
     QVERIFY(g3->parent() == g1);
     QVERIFY(g4->parent() == g3);
@@ -60,11 +61,13 @@ void TestGroup::testParenting()
     QVERIFY(g4->database() == db);
 
     QCOMPARE(tmpRoot->children().size(), 0);
+    QCOMPARE(rootGroup->children().size(), 1);
     QCOMPARE(g1->children().size(), 2);
     QCOMPARE(g2->children().size(), 0);
     QCOMPARE(g3->children().size(), 1);
     QCOMPARE(g4->children().size(), 0);
 
+    QVERIFY(rootGroup->children().at(0) == g1);
     QVERIFY(g1->children().at(0) == g2);
     QVERIFY(g1->children().at(1) == g3);
     QVERIFY(g3->children().contains(g4));
@@ -80,6 +83,7 @@ void TestGroup::testParenting()
 
     delete db;
 
+    QVERIFY(rootGroup.isNull());
     QVERIFY(g1.isNull());
     QVERIFY(g2.isNull());
     QVERIFY(g3.isNull());
@@ -91,8 +95,7 @@ void TestGroup::testParenting()
 void TestGroup::testSignals()
 {
     Database* db = new Database();
-    QPointer<Group> root = new Group();
-    db->setRootGroup(root);
+    QPointer<Group> root = db->rootGroup();
 
     Group* g1 = new Group();
     Group* g2 = new Group();
@@ -134,6 +137,40 @@ void TestGroup::testEntries()
 
     QVERIFY(entry1.isNull());
     QVERIFY(entry2.isNull());
+}
+
+void TestGroup::testDeleteSignals()
+{
+    Database* db = new Database();
+    Group* groupRoot = db->rootGroup();
+    Group* groupChild = new Group();
+    Group* groupChildChild = new Group();
+    groupRoot->setObjectName("groupRoot");
+    groupChild->setObjectName("groupChild");
+    groupChildChild->setObjectName("groupChildChild");
+    groupChild->setParent(groupRoot);
+    groupChildChild->setParent(groupChild);
+    QSignalSpy spyAboutToRemove(db, SIGNAL(groupAboutToRemove(Group*)));
+    QSignalSpy spyRemoved(db, SIGNAL(groupRemoved()));
+
+    delete groupChild;
+    QVERIFY(groupRoot->children().isEmpty());
+    QCOMPARE(spyAboutToRemove.count(), 1);
+    QCOMPARE(spyRemoved.count(), 1);
+    delete db;
+
+
+    Group* group = new Group();
+    Entry* entry = new Entry();
+    entry->setGroup(group);
+    QSignalSpy spyEntryAboutToRemove(group, SIGNAL(entryAboutToRemove(Entry*)));
+    QSignalSpy spyEntryRemoved(group, SIGNAL(entryRemoved()));
+
+    delete entry;
+    QVERIFY(group->entries().isEmpty());
+    QCOMPARE(spyEntryAboutToRemove.count(), 1);
+    QCOMPARE(spyEntryRemoved.count(), 1);
+    delete group;
 }
 
 QTEST_MAIN(TestGroup);

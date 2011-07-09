@@ -18,6 +18,7 @@
 #ifndef KEEPASSX_GROUP_H
 #define KEEPASSX_GROUP_H
 
+#include <QtCore/QPointer>
 #include <QtGui/QIcon>
 
 #include "core/Database.h"
@@ -90,8 +91,9 @@ private:
     void setParent(Database* db);
 
     void recSetDatabase(Database* db);
+    void cleanupParent();
 
-    Database* m_db;
+    QPointer<Database> m_db;
     Uuid m_uuid;
     QString m_name;
     QString m_notes;
@@ -106,9 +108,10 @@ private:
     QList<Group*> m_children;
     QList<Entry*> m_entries;
 
-    Group* m_parent;
+    QPointer<Group> m_parent;
 
     friend void Database::setRootGroup(Group* group);
+    friend Entry::~Entry();
     friend void Entry::setGroup(Group *group);
 };
 

@@ -29,6 +29,7 @@ private Q_SLOTS:
     void testParenting();
     void testSignals();
     void testEntries();
+    void testDeleteSignals();
 };
 
 #endif // KEEPASSX_TESTGROUP_H

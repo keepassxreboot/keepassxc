@@ -28,7 +28,7 @@
 Database::Database()
 {
     m_metadata = new Metadata(this);
-    m_rootGroup = 0;
+    setRootGroup(new Group());
 
     m_cipher = KeePass2::CIPHER_AES;
     m_compressionAlgo = CompressionGZip;
@@ -47,11 +47,10 @@ const Group* Database::rootGroup() const
 
 void Database::setRootGroup(Group* group)
 {
-    if (group != 0) {
-        group->setParent(this);
-    }
+    Q_ASSERT(group);
 
     m_rootGroup = group;
+    m_rootGroup->setParent(this);
 }
 
 Metadata* Database::metadata()

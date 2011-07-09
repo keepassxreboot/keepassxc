@@ -34,27 +34,32 @@ void TestGroupModel::test()
 {
     Database* db = new Database();
 
-    Group* groupRoot = new Group();
-    db->setRootGroup(groupRoot);
+    Group* groupRoot = db->rootGroup();
+    groupRoot->setObjectName("groupRoot");
     groupRoot->setName("groupRoot");
 
     Group* group1 = new Group();
+    group1->setObjectName("group1");
     group1->setName("group1");
     group1->setParent(groupRoot);
 
     Group* group11 = new Group();
+    group1->setObjectName("group11");
     group11->setName("group11");
     group11->setParent(group1);
 
     Group* group12 = new Group();
+    group1->setObjectName("group12");
     group12->setName("group12");
     group12->setParent(group1);
 
     Group* group121 = new Group();
+    group1->setObjectName("group121");
     group121->setName("group121");
     group121->setParent(group12);
 
     Group* group2 = new Group();
+    group1->setObjectName("group2");
     group2->setName("group2");
     group2->setParent(groupRoot);
 
@@ -93,7 +98,9 @@ void TestGroupModel::test()
     QCOMPARE(spyAboutToRemove.count(), 1);
     QCOMPARE(spyRemoved.count(), 1);
 
-    delete groupRoot;
+    // test removing a group that has children
+    delete group1;
+
     delete db;
 
     delete modelTest;

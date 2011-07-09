@@ -40,7 +40,10 @@ Entry::Entry()
 
 Entry::~Entry()
 {
-    // TODO notify group
+    if (m_group) {
+        m_group->removeEntry(this);
+    }
+
     qDeleteAll(m_history);
 }
 

@@ -38,9 +38,8 @@ void TestKeePass2Writer::initTestCase()
     m_dbOrg = new Database();
     m_dbOrg->setKey(key);
     m_dbOrg->metadata()->setName("TESTDB");
-    Group* group = new Group();
+    Group* group = m_dbOrg->rootGroup();
     group->setUuid(Uuid::random());
-    m_dbOrg->setRootGroup(group);
     Entry* entry = new Entry();
     entry->setUuid(Uuid::random());
     entry->addAttribute("test", "protectedTest", true);

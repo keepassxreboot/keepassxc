@@ -41,7 +41,6 @@ void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Ra
     m_randomStream = randomStream;
 
     m_tmpParent = new Group();
-    m_db->setRootGroup(m_tmpParent);
 
     if (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "KeePassFile") {
@@ -49,6 +48,7 @@ void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Ra
         }
     }
 
+    // TODO check if m_tmpParent doesn't have entries
     if (!m_xml.error() && !m_tmpParent->children().isEmpty()) {
         raiseError();
     }
@@ -277,7 +277,9 @@ void KeePass2XmlReader::parseRoot()
         if (m_xml.name() == "Group") {
             Group* rootGroup = parseGroup();
             if (rootGroup) {
+                Group* oldRoot = m_db->rootGroup();
                 m_db->setRootGroup(rootGroup);
+                delete oldRoot;
             }
         }
         else if (m_xml.name() == "DeletedObjects") {
@@ -302,7 +304,7 @@ Group* KeePass2XmlReader::parseGroup()
             }
             else {
                 group = getGroup(uuid);
-           }
+            }
         }
         else if (m_xml.name() == "Name") {
             group->setName(readString());

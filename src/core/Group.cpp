@@ -37,7 +37,7 @@ Group::Group()
 
 Group::~Group()
 {
-    // TODO notify parent
+    cleanupParent();
 }
 
 Uuid Group::uuid() const
@@ -186,22 +186,14 @@ void Group::setParent(Group* parent, int index)
 {
     Q_ASSERT(parent);
     Q_ASSERT(index >= -1 && index <= parent->children().size());
+    // setting a new parent for root groups is not allowed
+    Q_ASSERT(!m_db || (m_db->rootGroup() != this));
 
     if (index == -1) {
         index = parent->children().size();
     }
 
-    Q_EMIT aboutToRemove(this);
-
-    if (m_parent) {
-        m_parent->m_children.removeAll(this);
-    }
-    else if (m_db) {
-        // parent was a Database
-        m_db->setRootGroup(0);
-    }
-
-    Q_EMIT removed();
+    cleanupParent();
 
     m_parent = parent;
 
@@ -222,16 +214,7 @@ void Group::setParent(Database* db)
 {
     Q_ASSERT(db);
 
-    Q_EMIT aboutToRemove(this);
-
-    if (m_parent) {
-        m_parent->m_children.removeAll(this);
-    }
-    else if (m_db) {
-        m_db->setRootGroup(0);
-    }
-
-    Q_EMIT removed();
+    cleanupParent();
 
     m_parent = 0;
     recSetDatabase(db);
@@ -295,6 +278,7 @@ void Group::recSetDatabase(Database* db)
     disconnect(SIGNAL(added()), m_db);
 
     connect(this, SIGNAL(dataChanged(Group*)), db, SIGNAL(groupDataChanged(Group*)));
+
     connect(this, SIGNAL(aboutToRemove(Group*)), db, SIGNAL(groupAboutToRemove(Group*)));
     connect(this, SIGNAL(removed()), db, SIGNAL(groupRemoved()));
     connect(this, SIGNAL(aboutToAdd(Group*,int)), db, SIGNAL(groupAboutToAdd(Group*,int)));
@@ -304,5 +288,14 @@ void Group::recSetDatabase(Database* db)
 
     Q_FOREACH (Group* group, m_children) {
         group->recSetDatabase(db);
+    }
+}
+
+void Group::cleanupParent()
+{
+    if (m_parent) {
+        Q_EMIT aboutToRemove(this);
+        m_parent->m_children.removeAll(this);
+        Q_EMIT removed();
     }
 }
