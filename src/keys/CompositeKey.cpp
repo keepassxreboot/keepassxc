@@ -16,10 +16,11 @@
 */
 
 #include "CompositeKey.h"
-#include "CompositeKey_p.h"
 
 #include "crypto/CryptoHash.h"
 #include "crypto/SymmetricCipher.h"
+
+#include <QtCore/QtConcurrentRun>
 
 CompositeKey::~CompositeKey()
 {
@@ -47,46 +48,30 @@ QByteArray CompositeKey::transform(const QByteArray& seed, int rounds) const
 {
     QByteArray key = rawKey();
 
-    KeyTransformation* transform1 = new KeyTransformation(key.left(16), seed, rounds);
-    KeyTransformation* transform2 = new KeyTransformation(key.right(16), seed, rounds);
-
-    transform1->start();
-    transform2->start();
-
-    transform1->wait();
-    transform2->wait();
+    QFuture<QByteArray> future1 = QtConcurrent::run(transformKeyRaw, key.left(16), seed, rounds);
+    QFuture<QByteArray> future2 = QtConcurrent::run(transformKeyRaw, key.right(16), seed, rounds);
 
     QByteArray transformed;
-    transformed.append(transform1->result());
-    transformed.append(transform2->result());
+    transformed.append(future1.result());
+    transformed.append(future2.result());
 
     return CryptoHash::hash(transformed, CryptoHash::Sha256);
+}
+
+QByteArray CompositeKey::transformKeyRaw(const QByteArray& key, const QByteArray& seed, int rounds) {
+    QByteArray iv(16, 0);
+    SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Ecb, SymmetricCipher::Encrypt, seed, iv);
+
+    QByteArray result = key;
+
+    for (int i=0; i<rounds; i++) {
+        cipher.processInPlace(result);
+    }
+
+    return result;
 }
 
 void CompositeKey::addKey(const Key& key)
 {
     m_keys.append(key.clone());
-}
-
-KeyTransformation::KeyTransformation(const QByteArray& key, const QByteArray& seed, int rounds)
-    : m_key(key)
-    , m_seed(seed)
-    , m_rounds(rounds)
-    , m_result(key)
-{
-}
-
-void KeyTransformation::run()
-{
-    QByteArray iv(16, 0);
-    SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Ecb, SymmetricCipher::Encrypt, m_seed, iv);
-
-    for (int i=0; i<m_rounds; i++) {
-        cipher.processInPlace(m_result);
-    }
-}
-
-QByteArray KeyTransformation::result()
-{
-    return m_result;
 }

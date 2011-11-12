@@ -52,7 +52,6 @@ set(keepassx_SOURCES
     gui/GroupView.cpp
     gui/MainWindow.cpp
     keys/CompositeKey.cpp
-    keys/CompositeKey_p.h
     keys/Key.h
     keys/PasswordKey.cpp
     streams/HashedBlockStream.cpp
@@ -73,7 +72,6 @@ set(keepassx_MOC
     gui/GroupModel.h
     gui/GroupView.h
     gui/MainWindow.h
-    keys/CompositeKey_p.h
     streams/HashedBlockStream.h
     streams/LayeredStream.h
     streams/qtiocompressor.h
