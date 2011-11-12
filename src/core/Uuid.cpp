@@ -52,8 +52,9 @@ QByteArray Uuid::toByteArray() const
 bool Uuid::isNull() const
 {
     for (int i=0; i<m_data.size(); ++i) {
-        if (m_data[i] != 0)
+        if (m_data[i] != 0) {
             return false;
+        }
     }
 
     return true;
