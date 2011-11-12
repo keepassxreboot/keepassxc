@@ -20,11 +20,10 @@
 
 #include <QtCore/QCoreApplication>
 
-#include "core/Endian.h"
-#include "core/Uuid.h"
 #include "keys/CompositeKey.h"
 
 class Database;
+class QIODevice;
 
 class KeePass2Reader
 {

@@ -22,6 +22,7 @@
 #include <QtCore/QIODevice>
 
 #include "core/Database.h"
+#include "core/Endian.h"
 #include "crypto/CryptoHash.h"
 #include "format/KeePass2.h"
 #include "format/KeePass2RandomStream.h"
