@@ -17,12 +17,18 @@
 
 #include "TestKeePass2RandomStream.h"
 
+#include <QtTest/QTest>
+
+#include "crypto/Crypto.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/SymmetricCipher.h"
 #include "format/KeePass2.h"
 #include "format/KeePass2RandomStream.h"
 
-#include <QtTest/QTest>
+void TestKeePass2RandomStream::initTestCase()
+{
+    Crypto::init();
+}
 
 void TestKeePass2RandomStream::test()
 {

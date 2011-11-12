@@ -23,10 +23,12 @@
 
 #include "core/Database.h"
 #include "core/Group.h"
+#include "crypto/Crypto.h"
 
 void TestGroup::initTestCase()
 {
     qRegisterMetaType<Group*>("Group*");
+    Crypto::init();
 }
 
 void TestGroup::testParenting()

@@ -20,7 +20,13 @@
 #include <QtCore/QBuffer>
 #include <QtTest/QTest>
 
+#include "crypto/Crypto.h"
 #include "streams/HashedBlockStream.h"
+
+void TestHashedBlockStream::initTestCase()
+{
+    Crypto::init();
+}
 
 void TestHashedBlockStream::testWriteRead()
 {
