@@ -91,4 +91,4 @@ qt4_wrap_cpp(keepassx_SOURCES ${keepassx_MOC})
 add_library( keepassx_core STATIC ${keepassx_SOURCES} )
 
 add_executable( ${PROGNAME} WIN32 MACOSX_BUNDLE main.cpp )
-target_link_libraries( ${PROGNAME} keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${LIBGCRYPT_LIBS} ${ZLIB_LIBRARIES} )
+target_link_libraries( ${PROGNAME} keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${GCRYPT_LIBRARIES} ${ZLIB_LIBRARIES} )
