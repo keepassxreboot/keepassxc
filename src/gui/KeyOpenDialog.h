@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,19 +15,35 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "MainWindow.h"
+#ifndef KEEPASSX_KEYOPENDIALOG_H
+#define KEEPASSX_KEYOPENDIALOG_H
 
-#include "core/Database.h"
-#include "core/Metadata.h"
-#include "gui/DatabaseManager.h"
-#include "gui/DatabaseWidget.h"
+#include <QtCore/QScopedPointer>
+#include <QtGui/QDialog>
 
-MainWindow::MainWindow()
-{
-    setupUi(this);
+#include "keys/CompositeKey.h"
 
-    m_dbManager = new DatabaseManager(tabWidget);
-
-    connect(actionOpenDatabase, SIGNAL(triggered()), m_dbManager, SLOT(openDatabase()));
-    connect(actionQuit, SIGNAL(triggered()), SLOT(close()));
+namespace Ui {
+    class KeyOpenDialog;
 }
+
+class KeyOpenDialog : public QDialog
+{
+    Q_OBJECT
+
+public:
+    explicit KeyOpenDialog(QWidget* parent = 0);
+    ~KeyOpenDialog();
+    CompositeKey key();
+
+private Q_SLOTS:
+    void createKey();
+
+private:
+    QScopedPointer<Ui::KeyOpenDialog> m_ui;
+    CompositeKey m_key;
+
+    Q_DISABLE_COPY(KeyOpenDialog)
+};
+
+#endif // KEEPASSX_KEYOPENDIALOG_H

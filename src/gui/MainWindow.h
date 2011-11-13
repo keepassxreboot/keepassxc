@@ -21,6 +21,7 @@
 #include "ui_MainWindow.h"
 
 class Database;
+class DatabaseManager;
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {
@@ -28,7 +29,9 @@ class MainWindow : public QMainWindow, private Ui::MainWindow
 
 public:
     MainWindow();
-    void addDatabase(Database* db);
+
+private:
+    DatabaseManager* m_dbManager;
 };
 
 #endif // KEEPASSX_MAINWINDOW_H

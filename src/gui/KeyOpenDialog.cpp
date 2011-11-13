@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,19 +15,36 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "MainWindow.h"
+#include "KeyOpenDialog.h"
+#include "ui_KeyOpenDialog.h"
 
-#include "core/Database.h"
-#include "core/Metadata.h"
-#include "gui/DatabaseManager.h"
-#include "gui/DatabaseWidget.h"
+#include "keys/PasswordKey.h"
 
-MainWindow::MainWindow()
+KeyOpenDialog::KeyOpenDialog(QWidget* parent)
+    : QDialog(parent)
+    , m_ui(new Ui::KeyOpenDialog())
 {
-    setupUi(this);
+    m_ui->setupUi(this);
 
-    m_dbManager = new DatabaseManager(tabWidget);
+    connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(createKey()));
+}
 
-    connect(actionOpenDatabase, SIGNAL(triggered()), m_dbManager, SLOT(openDatabase()));
-    connect(actionQuit, SIGNAL(triggered()), SLOT(close()));
+KeyOpenDialog::~KeyOpenDialog()
+{
+}
+
+CompositeKey KeyOpenDialog::key()
+{
+    return m_key;
+}
+
+void KeyOpenDialog::createKey()
+{
+    if (m_ui->checkPassword->isChecked()) {
+        m_key.addKey(PasswordKey(m_ui->editPassword->text()));
+    }
+
+    if (m_ui->checkKeyFile->isChecked()) {
+        // TODO read key file
+    }
 }

@@ -20,6 +20,12 @@
       <property name="currentIndex">
        <number>-1</number>
       </property>
+      <property name="tabsClosable">
+       <bool>true</bool>
+      </property>
+      <property name="movable">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
    </layout>
@@ -37,6 +43,8 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionOpenDatabase"/>
+    <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -57,6 +65,11 @@
   <action name="actionAbout">
    <property name="text">
     <string>About</string>
+   </property>
+  </action>
+  <action name="actionOpenDatabase">
+   <property name="text">
+    <string>Open database</string>
    </property>
   </action>
  </widget>

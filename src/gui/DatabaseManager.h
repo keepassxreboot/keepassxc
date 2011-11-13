@@ -1,0 +1,67 @@
+/*
+ *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 2 or (at your option)
+ *  version 3 of the License.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#ifndef KEEPASSX_DATABASEMANAGER_H
+#define KEEPASSX_DATABASEMANAGER_H
+
+#include <QtCore/QHash>
+#include <QtCore/QObject>
+
+#include "format/KeePass2Reader.h"
+#include "format/KeePass2Writer.h"
+
+class QFile;
+class QTabWidget;
+
+struct DatabaseManagerStruct
+{
+    DatabaseManagerStruct();
+
+    QFile* file;
+    QWidget* dbWidget;
+    bool modified;
+    bool readOnly;
+};
+
+class DatabaseManager : public QObject
+{
+    Q_OBJECT
+
+public:
+    DatabaseManager(QTabWidget* tabWidget);
+    void openDatabase(const QString& fileName);
+    void closeDatabase(Database* db);
+
+public Q_SLOTS:
+    void openDatabase();
+    void closeDatabase(int index);
+
+private Q_SLOTS:
+    void updateTabName(Database* db);
+
+private:
+    int databaseIndex(Database* db);
+    Database* indexDatabase(int index);
+
+    QTabWidget* m_tabWidget;
+    QWidget* m_window;
+    KeePass2Reader m_reader;
+    KeePass2Writer m_writer;
+    QHash<Database*, DatabaseManagerStruct> m_dbList;
+};
+
+#endif // KEEPASSX_DATABASEMANAGER_H

@@ -44,12 +44,14 @@ set(keepassx_SOURCES
     format/KeePass2Writer.cpp
     format/KeePass2XmlReader.cpp
     format/KeePass2XmlWriter.cpp
+    gui/DatabaseManager.cpp
     gui/DatabaseWidget.cpp
     gui/EditEntryWidget.cpp
     gui/EntryModel.cpp
     gui/EntryView.cpp
     gui/GroupModel.cpp
     gui/GroupView.cpp
+    gui/KeyOpenDialog.cpp
     gui/MainWindow.cpp
     keys/CompositeKey.cpp
     keys/Key.h
@@ -65,12 +67,14 @@ set(keepassx_MOC
     core/Entry.h
     core/Group.h
     core/Metadata.h
+    gui/DatabaseManager.h
     gui/DatabaseWidget.h
     gui/EditEntryWidget.h
     gui/EntryModel.h
     gui/EntryView.h
     gui/GroupModel.h
     gui/GroupView.h
+    gui/KeyOpenDialog.h
     gui/MainWindow.h
     streams/HashedBlockStream.h
     streams/LayeredStream.h
@@ -82,6 +86,7 @@ set(keepassx_FORMS
     gui/EditEntryWidget.ui
     gui/EditEntryWidgetMain.ui
     gui/EditEntryWidgetNotes.ui
+    gui/KeyOpenDialog.ui
     gui/MainWindow.ui
 )
 
