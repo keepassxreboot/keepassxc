@@ -91,7 +91,12 @@ public:
     void addCustomField(const QString& key, const QString& value);
     void removeCustomField(const QString& key);
 
+Q_SIGNALS:
+    void nameTextChanged(Database* db);
+
 private:
+    Database* m_parent;
+
     QString m_generator;
     QString m_name;
     QDateTime m_nameChanged;

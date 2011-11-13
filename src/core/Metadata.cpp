@@ -21,6 +21,7 @@
 
 Metadata::Metadata(Database* parent)
     : QObject(parent)
+    , m_parent(parent)
 {
     m_recycleBin = 0;
     m_entryTemplatesGroup = 0;
@@ -191,6 +192,8 @@ void Metadata::setGenerator(const QString& value)
 void Metadata::setName(const QString& value)
 {
     m_name = value;
+
+    Q_EMIT nameTextChanged(m_parent);
 }
 
 void Metadata::setNameChanged(const QDateTime& value)
