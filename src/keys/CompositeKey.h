@@ -25,8 +25,11 @@
 class CompositeKey : public Key
 {
 public:
+    CompositeKey();
+    CompositeKey(const CompositeKey& key);
     ~CompositeKey();
     CompositeKey* clone() const;
+    CompositeKey& operator=(const CompositeKey& key);
 
     QByteArray rawKey() const;
     QByteArray transform(const QByteArray& seed, int rounds) const;

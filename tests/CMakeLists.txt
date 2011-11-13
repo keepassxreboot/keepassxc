@@ -103,6 +103,8 @@ add_unit_test(NAME testgroup SOURCES TestGroup.cpp MOCS TestGroup.h LIBS ${TEST_
 
 add_unit_test(NAME testkeepass2xmlreader SOURCES TestKeePass2XmlReader.cpp MOCS TestKeePass2XmlReader.h LIBS ${TEST_LIBRARIES})
 
+add_unit_test(NAME testkeys SOURCES TestKeys.cpp MOCS TestKeys.h LIBS ${TEST_LIBRARIES})
+
 add_unit_test(NAME testkeepass2reader SOURCES TestKeePass2Reader.cpp MOCS TestKeePass2Reader.h LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testkeepass2writer SOURCES TestKeePass2Writer.cpp MOCS TestKeePass2Writer.h LIBS ${TEST_LIBRARIES})

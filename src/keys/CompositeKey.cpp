@@ -22,6 +22,15 @@
 
 #include <QtCore/QtConcurrentRun>
 
+CompositeKey::CompositeKey()
+{
+}
+
+CompositeKey::CompositeKey(const CompositeKey& key)
+{
+    *this = key;
+}
+
 CompositeKey::~CompositeKey()
 {
     qDeleteAll(m_keys);
@@ -32,6 +41,14 @@ CompositeKey* CompositeKey::clone() const
     return new CompositeKey(*this);
 }
 
+CompositeKey& CompositeKey::operator=(const CompositeKey& key)
+{
+    Q_FOREACH (Key* subKey, key.m_keys) {
+        m_keys.append(subKey->clone());
+    }
+
+    return *this;
+}
 
 QByteArray CompositeKey::rawKey() const
 {
@@ -46,6 +63,9 @@ QByteArray CompositeKey::rawKey() const
 
 QByteArray CompositeKey::transform(const QByteArray& seed, int rounds) const
 {
+    Q_ASSERT(seed.size() == 32);
+    Q_ASSERT(rounds > 0);
+
     QByteArray key = rawKey();
 
     QFuture<QByteArray> future1 = QtConcurrent::run(transformKeyRaw, key.left(16), seed, rounds);
