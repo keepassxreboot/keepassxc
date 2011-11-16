@@ -38,6 +38,8 @@ public:
 
 private Q_SLOTS:
     void createKey();
+    void togglePassword(bool checked);
+    void activatePassword();
 
 private:
     QScopedPointer<Ui::KeyOpenDialog> m_ui;

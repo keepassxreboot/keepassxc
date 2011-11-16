@@ -26,6 +26,8 @@ KeyOpenDialog::KeyOpenDialog(QWidget* parent)
 {
     m_ui->setupUi(this);
 
+    connect(m_ui->buttonTogglePassword, SIGNAL(toggled(bool)), SLOT(togglePassword(bool)));
+    connect(m_ui->editPassword, SIGNAL(textChanged(QString)), SLOT(activatePassword()));
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(createKey()));
 }
 
@@ -47,4 +49,14 @@ void KeyOpenDialog::createKey()
     if (m_ui->checkKeyFile->isChecked()) {
         // TODO read key file
     }
+}
+
+void KeyOpenDialog::togglePassword(bool checked)
+{
+    m_ui->editPassword->setEchoMode(checked ? QLineEdit::Password : QLineEdit::Normal);
+}
+
+void KeyOpenDialog::activatePassword()
+{
+    m_ui->checkPassword->setChecked(true);
 }
