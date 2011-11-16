@@ -30,6 +30,9 @@ class MainWindow : public QMainWindow, private Ui::MainWindow
 public:
     MainWindow();
 
+private Q_SLOTS:
+    void currentTabChanged(int index);
+
 private:
     DatabaseManager* m_dbManager;
 };

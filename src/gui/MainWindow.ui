@@ -41,9 +41,12 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>Database</string>
     </property>
-    <addaction name="actionOpenDatabase"/>
+    <addaction name="actionDatabaseNew"/>
+    <addaction name="actionDatabaseOpen"/>
+    <addaction name="actionDatabaseSave"/>
+    <addaction name="actionDatabaseClose"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -67,9 +70,30 @@
     <string>About</string>
    </property>
   </action>
-  <action name="actionOpenDatabase">
+  <action name="actionDatabaseOpen">
    <property name="text">
     <string>Open database</string>
+   </property>
+  </action>
+  <action name="actionDatabaseSave">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Save database</string>
+   </property>
+  </action>
+  <action name="actionDatabaseClose">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Close database</string>
+   </property>
+  </action>
+  <action name="actionDatabaseNew">
+   <property name="text">
+    <string>New database</string>
    </property>
   </action>
  </widget>

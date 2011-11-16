@@ -42,6 +42,15 @@ DatabaseManager::DatabaseManager(QTabWidget* tabWidget)
     connect(m_tabWidget, SIGNAL(tabCloseRequested(int)), SLOT(closeDatabase(int)));
 }
 
+void DatabaseManager::newDatabase()
+{
+    DatabaseManagerStruct dbStruct;
+    Database* db = new Database();
+    dbStruct.dbWidget = new DatabaseWidget(db, m_tabWidget);
+
+    insertDatabase(db, dbStruct);
+}
+
 void DatabaseManager::openDatabase()
 {
     QString fileName = QFileDialog::getOpenFileName(m_window, tr("Open database"), QString(),
@@ -82,12 +91,7 @@ void DatabaseManager::openDatabase(const QString& fileName)
     dbStruct.file = file.take();
     dbStruct.dbWidget = new DatabaseWidget(db, m_tabWidget);
 
-    m_dbList.insert(db, dbStruct);
-
-    m_tabWidget->addTab(dbStruct.dbWidget, "");
-    updateTabName(db);
-
-    connect(db->metadata(), SIGNAL(nameTextChanged(Database*)), SLOT(updateTabName(Database*)));
+    insertDatabase(db, dbStruct);
 }
 
 void DatabaseManager::closeDatabase(Database* db)
@@ -108,9 +112,36 @@ void DatabaseManager::closeDatabase(Database* db)
     delete db;
 }
 
+void DatabaseManager::saveDatabase(Database* db)
+{
+    DatabaseManagerStruct& dbStruct = m_dbList[db];
+
+    // TODO ensure that the data is actually written to disk
+    dbStruct.file->reset();
+    m_writer.writeDatabase(dbStruct.file, db);
+    dbStruct.file->resize(dbStruct.file->pos());
+    dbStruct.file->flush();
+
+    dbStruct.modified = false;
+    updateTabName(db);
+}
+
 void DatabaseManager::closeDatabase(int index)
 {
+    if (index == -1) {
+        index = m_tabWidget->currentIndex();
+    }
+
     closeDatabase(indexDatabase(index));
+}
+
+void DatabaseManager::saveDatabase(int index)
+{
+    if (index == -1) {
+        index = m_tabWidget->currentIndex();
+    }
+
+    saveDatabase(indexDatabase(index));
 }
 
 void DatabaseManager::updateTabName(Database* db)
@@ -120,14 +151,26 @@ void DatabaseManager::updateTabName(Database* db)
 
     const DatabaseManagerStruct& dbStruct = m_dbList.value(db);
 
-    QString filename = QFileInfo(*dbStruct.file).completeBaseName();
-
     QString tabName;
-    if (db->metadata()->name().isEmpty()) {
-        tabName = filename;
+
+    if (dbStruct.file) {
+
+        QString filename = QFileInfo(*dbStruct.file).completeBaseName();
+
+        if (db->metadata()->name().isEmpty()) {
+            tabName = filename;
+        }
+        else {
+            tabName = QString("%1 [%2]").arg(db->metadata()->name().arg(filename));
+        }
     }
     else {
-        tabName = QString("%1 [%2]").arg(db->metadata()->name().arg(filename));
+        if (db->metadata()->name().isEmpty()) {
+            tabName = tr("New database");
+        }
+        else {
+            tabName = QString("%1 [%2]").arg(db->metadata()->name().arg(tr("New database")));
+        }
     }
 
     m_tabWidget->setTabText(index, tabName);
@@ -152,4 +195,14 @@ Database* DatabaseManager::indexDatabase(int index)
     }
 
     return 0;
+}
+
+void DatabaseManager::insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct)
+{
+    m_dbList.insert(db, dbStruct);
+
+    m_tabWidget->addTab(dbStruct.dbWidget, "");
+    updateTabName(db);
+
+    connect(db->metadata(), SIGNAL(nameTextChanged(Database*)), SLOT(updateTabName(Database*)));
 }

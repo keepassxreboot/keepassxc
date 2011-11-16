@@ -44,11 +44,14 @@ class DatabaseManager : public QObject
 public:
     DatabaseManager(QTabWidget* tabWidget);
     void openDatabase(const QString& fileName);
+    void saveDatabase(Database* db);
     void closeDatabase(Database* db);
 
 public Q_SLOTS:
+    void newDatabase();
     void openDatabase();
-    void closeDatabase(int index);
+    void saveDatabase(int index = -1);
+    void closeDatabase(int index = -1);
 
 private Q_SLOTS:
     void updateTabName(Database* db);
@@ -56,6 +59,7 @@ private Q_SLOTS:
 private:
     int databaseIndex(Database* db);
     Database* indexDatabase(int index);
+    void insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct);
 
     QTabWidget* m_tabWidget;
     QWidget* m_window;

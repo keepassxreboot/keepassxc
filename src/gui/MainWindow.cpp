@@ -28,6 +28,19 @@ MainWindow::MainWindow()
 
     m_dbManager = new DatabaseManager(tabWidget);
 
-    connect(actionOpenDatabase, SIGNAL(triggered()), m_dbManager, SLOT(openDatabase()));
+    connect(tabWidget, SIGNAL(currentChanged(int)), SLOT(currentTabChanged(int)));
+
+    connect(actionDatabaseNew, SIGNAL(triggered()), m_dbManager, SLOT(newDatabase()));
+    connect(actionDatabaseOpen, SIGNAL(triggered()), m_dbManager, SLOT(openDatabase()));
+    connect(actionDatabaseSave, SIGNAL(triggered()), m_dbManager, SLOT(saveDatabase()));
+    connect(actionDatabaseClose, SIGNAL(triggered()), m_dbManager, SLOT(closeDatabase()));
     connect(actionQuit, SIGNAL(triggered()), SLOT(close()));
+}
+
+void MainWindow::currentTabChanged(int index)
+{
+    bool hasTab = (index != -1);
+
+    actionDatabaseSave->setEnabled(hasTab);
+    actionDatabaseClose->setEnabled(hasTab);
 }
