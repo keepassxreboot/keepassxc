@@ -48,7 +48,6 @@ endif( APPLE OR MINGW )
 
 if( WITH_TESTS )
     enable_testing()
-    set(QT_USE_QTTEST TRUE)
 endif( WITH_TESTS )
 
 find_package(Qt4 4.6.0 REQUIRED QtCore QtGui QtTest)
