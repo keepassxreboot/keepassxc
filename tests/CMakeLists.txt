@@ -16,6 +16,8 @@
 set( EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR} )
 include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_SOURCE_DIR}/src)
 
+add_definitions(-DQT_TEST_LIB)
+
 set( KEEPASSX_TEST_TREE ${CMAKE_SOURCE_DIR}/tests )
 configure_file( config-keepassx-tests.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx-tests.h )
 

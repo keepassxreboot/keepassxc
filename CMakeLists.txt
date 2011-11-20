@@ -50,10 +50,12 @@ if( WITH_TESTS )
     set(QT_USE_QTTEST TRUE)
 endif( WITH_TESTS )
 
-set(QT_MIN_VERSION "4.6.0")
-set(QT_USE_QTMAIN TRUE)
-find_package(Qt4 REQUIRED)
-include(${QT_USE_FILE})
+find_package(Qt4 4.6.0 REQUIRED QtCore QtGui QtTest)
+add_definitions(${QT_DEFINITIONS} -DQT_CORE_LIB -DQT_GUI_LIB)
+set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_DEBUG QT_DEBUG)
+set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_RELEASE QT_NO_DEBUG)
+set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_RELWITHDEBINFO QT_NO_DEBUG)
+set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_MINSIZEREL QT_NO_DEBUG)
 
 find_package(Gcrypt REQUIRED)
 
@@ -73,7 +75,7 @@ if(NOT ZLIB_SUPPORTS_GZIP)
     message(FATAL_ERROR "zlib 1.2.x or higher is required to use the gzip format")
 endif(NOT ZLIB_SUPPORTS_GZIP)
 
-include_directories(${GCRYPT_INCLUDE_DIR} ${ZLIB_INCLUDE_DIR})
+include_directories(${QT_INCLUDE_DIR} ${GCRYPT_INCLUDE_DIR} ${ZLIB_INCLUDE_DIR})
 
 add_subdirectory(src)
 add_subdirectory(utils)
