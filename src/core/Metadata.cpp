@@ -47,6 +47,7 @@ Metadata::Metadata(Database* parent)
     m_protectPassword = true;
     m_protectUrl = false;
     m_protectNotes = false;
+    m_autoEnableVisualHiding = false;
 }
 
 QString Metadata::generator() const
