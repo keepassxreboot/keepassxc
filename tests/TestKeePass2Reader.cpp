@@ -34,7 +34,7 @@ void TestKeePass2Reader::initTestCase()
 
 void TestKeePass2Reader::testNonAscii()
 {
-    QString filename = QString(KEEPASSX_TEST_DIR).append("/NonAscii.kdbx");
+    QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/NonAscii.kdbx");
     CompositeKey key;
     key.addKey(PasswordKey(QString::fromUtf8("\xce\x94\xc3\xb6\xd8\xb6")));
     KeePass2Reader* reader = new KeePass2Reader();
@@ -49,7 +49,7 @@ void TestKeePass2Reader::testNonAscii()
 
 void TestKeePass2Reader::testCompressed()
 {
-    QString filename = QString(KEEPASSX_TEST_DIR).append("/Compressed.kdbx");
+    QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/Compressed.kdbx");
     CompositeKey key;
     key.addKey(PasswordKey(""));
     KeePass2Reader* reader = new KeePass2Reader();
@@ -64,7 +64,7 @@ void TestKeePass2Reader::testCompressed()
 
 void TestKeePass2Reader::testProtectedStrings()
 {
-    QString filename = QString(KEEPASSX_TEST_DIR).append("/ProtectedStrings.kdbx");
+    QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/ProtectedStrings.kdbx");
     CompositeKey key;
     key.addKey(PasswordKey("masterpw"));
     KeePass2Reader* reader = new KeePass2Reader();

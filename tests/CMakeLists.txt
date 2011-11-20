@@ -18,7 +18,7 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_SOURCE_DIR}/src)
 
 add_definitions(-DQT_TEST_LIB)
 
-set( KEEPASSX_TEST_TREE ${CMAKE_SOURCE_DIR}/tests )
+set( KEEPASSX_TEST_DATA_DIR ${CMAKE_CURRENT_SOURCE_DIR}/data )
 configure_file( config-keepassx-tests.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx-tests.h )
 
 MACRO(PARSE_ARGUMENTS prefix arg_names option_names)

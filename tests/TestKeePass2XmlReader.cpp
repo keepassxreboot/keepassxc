@@ -64,7 +64,7 @@ QDateTime TestKeePass2XmlReader::genDT(int year, int month, int day, int hour, i
 void TestKeePass2XmlReader::initTestCase()
 {
     KeePass2XmlReader* reader = new KeePass2XmlReader();
-    QString xmlFile = QString(KEEPASSX_TEST_DIR).append("/NewDatabase.xml");
+    QString xmlFile = QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.xml");
     m_db = reader->readDatabase(xmlFile);
     QVERIFY(m_db);
     QVERIFY(!reader->error());
