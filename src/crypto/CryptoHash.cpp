@@ -19,6 +19,8 @@
 
 #include <gcrypt.h>
 
+#include "crypto/Crypto.h"
+
 class CryptoHashPrivate
 {
 public:
@@ -30,6 +32,8 @@ CryptoHash::CryptoHash(CryptoHash::Algorithm algo)
     : d_ptr(new CryptoHashPrivate())
 {
     Q_D(CryptoHash);
+
+    Q_ASSERT(Crypto::initalized());
 
     int algoGcrypt;
 

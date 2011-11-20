@@ -19,6 +19,8 @@
 
 #include <gcrypt.h>
 
+#include "crypto/Crypto.h"
+
 void Random::randomize(QByteArray& ba)
 {
     randomize(ba.data(), ba.size());
@@ -48,6 +50,8 @@ quint32 Random::randomUIntRange(quint32 min, quint32 max)
 
 void Random::randomize(void* data, int len)
 {
+    Q_ASSERT(Crypto::initalized());
+
     gcry_randomize(data, len, GCRY_STRONG_RANDOM);
 }
 
