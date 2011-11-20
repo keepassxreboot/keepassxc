@@ -17,6 +17,13 @@
 
 #include "SymmetricCipherGcrypt.h"
 
+#include "crypto/Crypto.h"
+
+SymmetricCipherGcrypt::SymmetricCipherGcrypt()
+{
+    Q_ASSERT(Crypto::initalized());
+}
+
 SymmetricCipherGcrypt::~SymmetricCipherGcrypt()
 {
     gcry_cipher_close(m_ctx);

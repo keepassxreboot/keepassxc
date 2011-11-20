@@ -22,6 +22,7 @@ class Crypto
 {
 public:
     static void init();
+    static bool initalized();
     static bool selfTest();
 
 private:

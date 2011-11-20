@@ -76,6 +76,11 @@ void Crypto::init()
     m_initalized = true;
 }
 
+bool Crypto::initalized()
+{
+    return m_initalized;
+}
+
 bool Crypto::selfTest()
 {
     return (gcry_control(GCRYCTL_SELFTEST) == 0);

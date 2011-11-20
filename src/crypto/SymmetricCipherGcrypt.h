@@ -25,6 +25,7 @@
 class SymmetricCipherGcrypt : public SymmetricCipherBackend
 {
 public:
+    SymmetricCipherGcrypt();
     ~SymmetricCipherGcrypt();
     void setAlgorithm(SymmetricCipher::Algorithm algo);
     void setMode(SymmetricCipher::Mode mode);
