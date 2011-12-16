@@ -43,4 +43,6 @@ void MainWindow::currentTabChanged(int index)
 
     actionDatabaseSave->setEnabled(hasTab);
     actionDatabaseClose->setEnabled(hasTab);
+    actionEntryNew->setEnabled(hasTab);
+    actionGroupNew->setEnabled(hasTab);
 }
