@@ -54,6 +54,7 @@ set(keepassx_SOURCES
     gui/KeyOpenDialog.cpp
     gui/MainWindow.cpp
     keys/CompositeKey.cpp
+    keys/FileKey.cpp
     keys/Key.h
     keys/PasswordKey.cpp
     streams/HashedBlockStream.cpp

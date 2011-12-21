@@ -27,6 +27,10 @@ class TestKeys : public QObject
 private Q_SLOTS:
     void initTestCase();
     void testComposite();
+    void testFileKey();
+    void testFileKey_data();
+    void testCreateFileKey();
+    void testFileKeyError();
 };
 
 #endif // KEEPASSX_TESTKEYS_H
