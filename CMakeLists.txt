@@ -28,11 +28,11 @@ add_definitions(-DQT_NO_KEYWORDS -DQT_NO_EXCEPTIONS -DQT_NO_STL -DQT_STRICT_ITER
 if(CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ansi -fno-common -fno-exceptions -fno-rtti")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wundef -Wold-style-cast -Wnon-virtual-dtor -Wcast-align")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wpointer-arith -Wformat-security -Woverloaded-virtual -Wno-long-long")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wpointer-arith -Werror=format-security -Woverloaded-virtual -Wno-long-long")
 
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ansi -fno-common")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wundef -Wcast-align -Wchar-subscripts -Wpointer-arith")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wwrite-strings -Wformat-security -Werror-implicit-function-declaration")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wwrite-strings -Werror=format-security -Werror=implicit-function-declaration")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wmissing-format-attribute -Wno-long-long")
 
     if( CMAKE_SYSTEM_NAME STREQUAL "Linux" )
