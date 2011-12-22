@@ -29,14 +29,17 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ansi -fno-common -fno-exceptions -fno-rtti")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wundef -Wold-style-cast -Wnon-virtual-dtor -Wcast-align")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wpointer-arith -Werror=format-security -Woverloaded-virtual -Wno-long-long")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstack-protector --param=ssp-buffer-size=4 -D_FORTIFY_SOURCE=2")
 
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ansi -fno-common")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wundef -Wcast-align -Wchar-subscripts -Wpointer-arith")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wwrite-strings -Werror=format-security -Werror=implicit-function-declaration")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wmissing-format-attribute -Wno-long-long")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstack-protector --param=ssp-buffer-size=4 -D_FORTIFY_SOURCE=2")
 
     if( CMAKE_SYSTEM_NAME STREQUAL "Linux" )
-        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-add-needed -Wl,--as-needed -Wl,--no-undefined" )
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-add-needed -Wl,--as-needed -Wl,--no-undefined")
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-z,relro")
     endif( CMAKE_SYSTEM_NAME STREQUAL "Linux" )
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
