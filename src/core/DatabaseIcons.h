@@ -15,6 +15,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef KEEPASSX_DATABASEICONS_H
+#define KEEPASSX_DATABASEICONS_H
+
 #include <QtCore/QHash>
 #include <QtGui/QIcon>
 
@@ -35,3 +38,5 @@ private:
     QList<QString> m_indexToName;
     QHash<int,QIcon> m_iconCache;
 };
+
+#endif // KEEPASSX_DATABASEICONS_H
