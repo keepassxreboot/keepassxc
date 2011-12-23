@@ -20,6 +20,7 @@ configure_file( config-keepassx.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepa
 set(keepassx_SOURCES
     core/Database.cpp
     core/DatabaseIcons.cpp
+    core/DataPath.cpp
     core/Endian.cpp
     core/Entry.cpp
     core/Group.cpp

@@ -17,7 +17,7 @@
 
 #include "DatabaseIcons.h"
 
-#include "config-keepassx.h"
+#include "core/DataPath.h"
 
 DatabaseIcons* DatabaseIcons::m_instance(0);
 
@@ -121,8 +121,8 @@ QIcon DatabaseIcons::getIconInternal(int index)
         return m_iconCache.value(index);
     }
     else {
-        // TODO search multiple paths
-        QIcon icon(QString(KEEPASSX_SOURCE_DIR).append("/share/icons/database/").append(m_indexToName.at(index)));
+        QString iconPath = QString("icons/database/").append(m_indexToName.at(index));
+        QIcon icon(DataPath::getPath(iconPath));
 
         m_iconCache.insert(index, icon);
         return icon;
