@@ -100,7 +100,7 @@ void KeyOpenDialog::setOkButtonEnabled()
 void KeyOpenDialog::browseKeyFile()
 {
     QString filters = QString("%1 (*);;%2 (*.key)").arg(tr("All files"), tr("Key files"));
-    QString filename = QFileDialog::getOpenFileName(this, "Select key file", QString(), filters);
+    QString filename = QFileDialog::getOpenFileName(this, tr("Select key file"), QString(), filters);
 
     if (!filename.isEmpty()) {
         m_ui->comboKeyFile->setItemText(0, filename);
