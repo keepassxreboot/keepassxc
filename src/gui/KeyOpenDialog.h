@@ -40,6 +40,9 @@ private Q_SLOTS:
     void createKey();
     void togglePassword(bool checked);
     void activatePassword();
+    void activateKeyFile();
+    void setOkButtonEnabled();
+    void browseKeyFile();
 
 private:
     QScopedPointer<Ui::KeyOpenDialog> m_ui;

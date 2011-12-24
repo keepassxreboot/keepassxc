@@ -18,6 +18,10 @@
 #include "KeyOpenDialog.h"
 #include "ui_KeyOpenDialog.h"
 
+#include <QtGui/QFileDialog>
+#include <QtGui/QMessageBox>
+
+#include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
 KeyOpenDialog::KeyOpenDialog(QWidget* parent)
@@ -26,9 +30,21 @@ KeyOpenDialog::KeyOpenDialog(QWidget* parent)
 {
     m_ui->setupUi(this);
 
+    m_ui->comboKeyFile->addItem("");
+    m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
+
     connect(m_ui->buttonTogglePassword, SIGNAL(toggled(bool)), SLOT(togglePassword(bool)));
+    connect(m_ui->buttonBrowseFile, SIGNAL(clicked()), SLOT(browseKeyFile()));
+
     connect(m_ui->editPassword, SIGNAL(textChanged(QString)), SLOT(activatePassword()));
+    connect(m_ui->comboKeyFile, SIGNAL(editTextChanged(QString)), SLOT(activateKeyFile()));
+
+    connect(m_ui->checkPassword, SIGNAL(toggled(bool)), SLOT(setOkButtonEnabled()));
+    connect(m_ui->checkKeyFile, SIGNAL(toggled(bool)), SLOT(setOkButtonEnabled()));
+    connect(m_ui->comboKeyFile, SIGNAL(editTextChanged(QString)), SLOT(setOkButtonEnabled()));
+
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(createKey()));
+    connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
 }
 
 KeyOpenDialog::~KeyOpenDialog()
@@ -47,8 +63,16 @@ void KeyOpenDialog::createKey()
     }
 
     if (m_ui->checkKeyFile->isChecked()) {
-        // TODO read key file
+        FileKey key;
+        QString errorMsg;
+        if (!key.load(m_ui->comboKeyFile->currentText(), &errorMsg)) {
+            QMessageBox::warning(this, tr("Error"), tr("Can't open key file:\n%1").arg(errorMsg));
+            return;
+        }
+        m_key.addKey(key);
     }
+
+    accept();
 }
 
 void KeyOpenDialog::togglePassword(bool checked)
@@ -59,4 +83,26 @@ void KeyOpenDialog::togglePassword(bool checked)
 void KeyOpenDialog::activatePassword()
 {
     m_ui->checkPassword->setChecked(true);
+}
+
+void KeyOpenDialog::activateKeyFile()
+{
+    m_ui->checkKeyFile->setChecked(true);
+}
+
+void KeyOpenDialog::setOkButtonEnabled()
+{
+    bool enable = m_ui->checkPassword->isChecked() || (m_ui->checkKeyFile->isChecked() && !m_ui->comboKeyFile->currentText().isEmpty());
+
+    m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(enable);
+}
+
+void KeyOpenDialog::browseKeyFile()
+{
+    QString filters = QString("%1 (*);;%2 (*.key)").arg(tr("All files"), tr("Key files"));
+    QString filename = QFileDialog::getOpenFileName(this, "Select key file", QString(), filters);
+
+    if (!filename.isEmpty()) {
+        m_ui->comboKeyFile->setItemText(0, filename);
+    }
 }
