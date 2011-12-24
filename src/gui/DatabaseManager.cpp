@@ -241,6 +241,8 @@ void DatabaseManager::insertDatabase(Database* db, const DatabaseManagerStruct& 
 
     m_tabWidget->addTab(dbStruct.dbWidget, "");
     updateTabName(db);
+    int index = databaseIndex(db);
+    m_tabWidget->setCurrentIndex(index);
 
     connect(db->metadata(), SIGNAL(nameTextChanged(Database*)), SLOT(updateTabName(Database*)));
 }
