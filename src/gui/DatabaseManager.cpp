@@ -135,7 +135,7 @@ void DatabaseManager::saveDatabase(Database* db)
 void DatabaseManager::saveDatabaseAs(Database* db)
 {
     QString fileName = QFileDialog::getSaveFileName(m_window, tr("Save database as"),
-                                                            QString(), tr("KeePass 2 Database").append(" (*.kdbx)"));
+                                                    QString(), tr("KeePass 2 Database").append(" (*.kdbx)"));
     if (!fileName.isEmpty()) {
         DatabaseManagerStruct& dbStruct = m_dbList[db];
 
