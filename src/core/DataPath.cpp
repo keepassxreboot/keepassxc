@@ -46,11 +46,11 @@ DataPath::DataPath()
     }
 #endif
 #ifdef Q_WS_MAC
-    else if (testSetDir(QCoreApplication::applicationDirPath() + "/../Resources/keepassx") {
+    else if (testSetDir(QCoreApplication::applicationDirPath() + "/../Resources/keepassx")) {
     }
 #endif
 #ifdef Q_WS_WIN
-    else if (testSetDir(QCoreApplication::applicationDirPath() + "/share") {
+    else if (testSetDir(QCoreApplication::applicationDirPath() + "/share")) {
     }
 #endif
 
@@ -60,8 +60,6 @@ DataPath::DataPath()
     else {
         m_basePath = QDir::cleanPath(m_basePath) + "/";
     }
-
-    qDebug("%s", m_basePath.toAscii().constData());
 }
 
 bool DataPath::testSetDir(const QString& dir)
