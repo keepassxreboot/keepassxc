@@ -36,7 +36,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -46,6 +46,7 @@
     <addaction name="actionDatabaseNew"/>
     <addaction name="actionDatabaseOpen"/>
     <addaction name="actionDatabaseSave"/>
+    <addaction name="actionDatabaseSaveAs"/>
     <addaction name="actionDatabaseClose"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
@@ -176,6 +177,14 @@
    </property>
    <property name="text">
     <string>Delete group</string>
+   </property>
+  </action>
+  <action name="actionDatabaseSaveAs">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Save database as</string>
    </property>
   </action>
  </widget>
