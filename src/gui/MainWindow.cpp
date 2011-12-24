@@ -33,6 +33,7 @@ MainWindow::MainWindow()
     connect(actionDatabaseNew, SIGNAL(triggered()), m_dbManager, SLOT(newDatabase()));
     connect(actionDatabaseOpen, SIGNAL(triggered()), m_dbManager, SLOT(openDatabase()));
     connect(actionDatabaseSave, SIGNAL(triggered()), m_dbManager, SLOT(saveDatabase()));
+    connect(actionDatabaseSaveAs, SIGNAL(triggered()), m_dbManager, SLOT(saveDatabaseAs()));
     connect(actionDatabaseClose, SIGNAL(triggered()), m_dbManager, SLOT(closeDatabase()));
     connect(actionQuit, SIGNAL(triggered()), SLOT(close()));
 }
@@ -42,6 +43,7 @@ void MainWindow::currentTabChanged(int index)
     bool hasTab = (index != -1);
 
     actionDatabaseSave->setEnabled(hasTab);
+    actionDatabaseSaveAs->setEnabled(hasTab);
     actionDatabaseClose->setEnabled(hasTab);
     actionEntryNew->setEnabled(hasTab);
     actionGroupNew->setEnabled(hasTab);

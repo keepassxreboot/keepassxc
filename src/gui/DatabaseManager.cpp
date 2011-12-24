@@ -65,6 +65,7 @@ void DatabaseManager::openDatabase(const QString& fileName)
     DatabaseManagerStruct dbStruct;
 
     QScopedPointer<QFile> file(new QFile(fileName));
+    // TODO error handling
     if (!file->open(QIODevice::ReadWrite)) {
         if (!file->open(QIODevice::ReadOnly)) {
             // can only open read-only
@@ -117,13 +118,41 @@ void DatabaseManager::saveDatabase(Database* db)
     DatabaseManagerStruct& dbStruct = m_dbList[db];
 
     // TODO ensure that the data is actually written to disk
-    dbStruct.file->reset();
-    m_writer.writeDatabase(dbStruct.file, db);
-    dbStruct.file->resize(dbStruct.file->pos());
-    dbStruct.file->flush();
+    if (dbStruct.file) {
+        dbStruct.file->reset();
+        m_writer.writeDatabase(dbStruct.file, db);
+        dbStruct.file->resize(dbStruct.file->pos());
+        dbStruct.file->flush();
 
-    dbStruct.modified = false;
-    updateTabName(db);
+        dbStruct.modified = false;
+        updateTabName(db);
+    }
+    else {
+        saveDatabaseAs(db);
+    }
+}
+
+void DatabaseManager::saveDatabaseAs(Database* db)
+{
+    QString fileName = QFileDialog::getSaveFileName(m_window, tr("Save database as"),
+                                                            QString(), tr("KeePass 2 Database").append(" (*.kdbx)"));
+    if (!fileName.isEmpty()) {
+        DatabaseManagerStruct& dbStruct = m_dbList[db];
+
+        delete dbStruct.file;
+        QScopedPointer<QFile> file(new QFile(fileName));
+        // TODO error handling
+        if (!file->open(QIODevice::ReadWrite)) {
+            return;
+        }
+        dbStruct.file = file.take();
+        // TODO ensure that the data is actually written to disk
+        m_writer.writeDatabase(dbStruct.file, db);
+        dbStruct.file->flush();
+
+        dbStruct.modified = false;
+        updateTabName(db);
+    }
 }
 
 void DatabaseManager::closeDatabase(int index)
@@ -142,6 +171,14 @@ void DatabaseManager::saveDatabase(int index)
     }
 
     saveDatabase(indexDatabase(index));
+}
+
+void DatabaseManager::saveDatabaseAs(int index)
+{
+    if (index == -1) {
+        index = m_tabWidget->currentIndex();
+    }
+    saveDatabaseAs(indexDatabase(index));
 }
 
 void DatabaseManager::updateTabName(Database* db)

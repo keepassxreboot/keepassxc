@@ -45,12 +45,14 @@ public:
     DatabaseManager(QTabWidget* tabWidget);
     void openDatabase(const QString& fileName);
     void saveDatabase(Database* db);
+    void saveDatabaseAs(Database* db);
     void closeDatabase(Database* db);
 
 public Q_SLOTS:
     void newDatabase();
     void openDatabase();
     void saveDatabase(int index = -1);
+    void saveDatabaseAs(int index = -1);
     void closeDatabase(int index = -1);
 
 private Q_SLOTS:
