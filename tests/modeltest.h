@@ -1,25 +1,44 @@
 /****************************************************************************
 **
-** Copyright (C) 2007 Trolltech ASA. All rights reserved.
+** Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies).
+** All rights reserved.
+** Contact: Nokia Corporation (qt-info@nokia.com)
 **
-** This file is part of the Qt Concurrent project on Trolltech Labs.
+** This file is part of the test suite of the Qt Toolkit.
 **
-** This file may be used under the terms of the GNU General Public
-** License version 2.0 as published by the Free Software Foundation
-** and appearing in the file LICENSE.GPL-2 included in the packaging of
-** this file.  Please review the following information to ensure GNU
-** General Public Licensing requirements will be met:
-** http://www.trolltech.com/products/qt/opensource.html
+** $QT_BEGIN_LICENSE:LGPL$
+** GNU Lesser General Public License Usage
+** This file may be used under the terms of the GNU Lesser General Public
+** License version 2.1 as published by the Free Software Foundation and
+** appearing in the file LICENSE.LGPL included in the packaging of this
+** file. Please review the following information to ensure the GNU Lesser
+** General Public License version 2.1 requirements will be met:
+** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
-** If you are unsure which license is appropriate for your use, please
-** review the following information:
-** http://www.trolltech.com/products/qt/licensing.html or contact the
-** sales department at sales@trolltech.com.
+** In addition, as a special exception, Nokia gives you certain additional
+** rights. These rights are described in the Nokia Qt LGPL Exception
+** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
 **
-** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
-** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+** GNU General Public License Usage
+** Alternatively, this file may be used under the terms of the GNU General
+** Public License version 3.0 as published by the Free Software Foundation
+** and appearing in the file LICENSE.GPL included in the packaging of this
+** file. Please review the following information to ensure the GNU General
+** Public License version 3.0 requirements will be met:
+** http://www.gnu.org/copyleft/gpl.html.
+**
+** Other Usage
+** Alternatively, this file may be used in accordance with the terms and
+** conditions contained in a signed written agreement between you and Nokia.
+**
+**
+**
+**
+**
+** $QT_END_LICENSE$
 **
 ****************************************************************************/
+
 
 #ifndef MODELTEST_H
 #define MODELTEST_H
@@ -30,47 +49,46 @@
 
 class ModelTest : public QObject
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    ModelTest(QAbstractItemModel *model, QObject *parent = 0);
+  ModelTest( QAbstractItemModel *model, QObject *parent = 0 );
 
 private Q_SLOTS:
-    void nonDestructiveBasicTest();
-    void rowCount();
-    void columnCount();
-    void hasIndex();
-    void index();
-    void parent();
-    void data();
+  void nonDestructiveBasicTest();
+  void rowCount();
+  void columnCount();
+  void hasIndex();
+  void index();
+  void parent();
+  void data();
 
 protected Q_SLOTS:
-    void runAllTests();
-    void layoutAboutToBeChanged();
-    void layoutChanged();
-    void rowsAboutToBeInserted(const QModelIndex &parent, int start, int end);
-    void rowsInserted(const QModelIndex & parent, int start, int end);
-    void rowsAboutToBeRemoved(const QModelIndex &parent, int start, int end);
-    void rowsRemoved(const QModelIndex & parent, int start, int end);
+  void runAllTests();
+  void layoutAboutToBeChanged();
+  void layoutChanged();
+  void rowsAboutToBeInserted( const QModelIndex &parent, int start, int end );
+  void rowsInserted( const QModelIndex & parent, int start, int end );
+  void rowsAboutToBeRemoved( const QModelIndex &parent, int start, int end );
+  void rowsRemoved( const QModelIndex & parent, int start, int end );
 
 private:
-    void checkChildren(const QModelIndex &parent, int currentDepth = 0);
+  void checkChildren( const QModelIndex &parent, int currentDepth = 0 );
 
-    QAbstractItemModel *model;
+  QAbstractItemModel *model;
 
-    struct Changing
-    {
-        QModelIndex parent;
-        int oldSize;
-        QVariant last;
-        QVariant next;
-    };
-    QStack<Changing> insert;
-    QStack<Changing> remove;
+  struct Changing {
+    QModelIndex parent;
+    int oldSize;
+    QVariant last;
+    QVariant next;
+  };
+  QStack<Changing> insert;
+  QStack<Changing> remove;
 
-    bool fetchingMore;
+  bool fetchingMore;
 
-    QList<QPersistentModelIndex> changing;
+  QList<QPersistentModelIndex> changing;
 };
 
 #endif
