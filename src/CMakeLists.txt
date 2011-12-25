@@ -18,6 +18,7 @@ include_directories( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} )
 configure_file( config-keepassx.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx.h )
 
 set(keepassx_SOURCES
+    core/Config.cpp
     core/Database.cpp
     core/DatabaseIcons.cpp
     core/DataPath.cpp

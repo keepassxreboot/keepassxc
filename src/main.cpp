@@ -31,6 +31,7 @@
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
+    // don't set applicationName or organizationName as that changes QDesktopServices::storageLocation
 
     Crypto::init();
 
