@@ -191,22 +191,23 @@ void DatabaseManager::updateTabName(Database* db)
     QString tabName;
 
     if (dbStruct.file) {
-
-        QString filename = QFileInfo(*dbStruct.file).completeBaseName();
+        QFileInfo fileInfo(*dbStruct.file);
 
         if (db->metadata()->name().isEmpty()) {
-            tabName = filename;
+            tabName = fileInfo.fileName();
         }
         else {
-            tabName = QString("%1 [%2]").arg(db->metadata()->name().arg(filename));
+            tabName = db->metadata()->name();
         }
+
+        m_tabWidget->setTabToolTip(index, fileInfo.absoluteFilePath());
     }
     else {
         if (db->metadata()->name().isEmpty()) {
             tabName = tr("New database");
         }
         else {
-            tabName = QString("%1 [%2]").arg(db->metadata()->name().arg(tr("New database")));
+            tabName = QString("%1 [%2]").arg(db->metadata()->name(), tr("New database"));
         }
     }
 
