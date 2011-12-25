@@ -32,7 +32,7 @@ class KeyOpenDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit KeyOpenDialog(QWidget* parent = 0);
+    explicit KeyOpenDialog(const QString& filename, QWidget* parent = 0);
     ~KeyOpenDialog();
     CompositeKey key();
 
@@ -47,6 +47,7 @@ private Q_SLOTS:
 private:
     QScopedPointer<Ui::KeyOpenDialog> m_ui;
     CompositeKey m_key;
+    QString m_filename;
 
     Q_DISABLE_COPY(KeyOpenDialog)
 };

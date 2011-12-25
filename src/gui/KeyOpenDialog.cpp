@@ -21,16 +21,17 @@
 #include <QtGui/QFileDialog>
 #include <QtGui/QMessageBox>
 
+#include "core/Config.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
-KeyOpenDialog::KeyOpenDialog(QWidget* parent)
+KeyOpenDialog::KeyOpenDialog(const QString& filename, QWidget* parent)
     : QDialog(parent)
     , m_ui(new Ui::KeyOpenDialog())
+    , m_filename(filename)
 {
     m_ui->setupUi(this);
 
-    m_ui->comboKeyFile->addItem("");
     m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
 
     connect(m_ui->buttonTogglePassword, SIGNAL(toggled(bool)), SLOT(togglePassword(bool)));
@@ -45,6 +46,12 @@ KeyOpenDialog::KeyOpenDialog(QWidget* parent)
 
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(createKey()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
+
+    QHash<QString,QVariant> lastKeyFiles = config()->get("LastKeyFiles").toHash();
+    if (lastKeyFiles.contains(m_filename)) {
+        m_ui->checkKeyFile->setChecked(true);
+        m_ui->comboKeyFile->addItem(lastKeyFiles[m_filename].toString());
+    }
 }
 
 KeyOpenDialog::~KeyOpenDialog()
@@ -62,15 +69,24 @@ void KeyOpenDialog::createKey()
         m_key.addKey(PasswordKey(m_ui->editPassword->text()));
     }
 
+    QHash<QString,QVariant> lastKeyFiles = config()->get("LastKeyFiles").toHash();
+
     if (m_ui->checkKeyFile->isChecked()) {
         FileKey key;
+        QString keyFilename = m_ui->comboKeyFile->currentText();
         QString errorMsg;
-        if (!key.load(m_ui->comboKeyFile->currentText(), &errorMsg)) {
+        if (!key.load(keyFilename, &errorMsg)) {
             QMessageBox::warning(this, tr("Error"), tr("Can't open key file:\n%1").arg(errorMsg));
             return;
         }
         m_key.addKey(key);
+        lastKeyFiles[m_filename] = keyFilename;
     }
+    else {
+        lastKeyFiles.remove(m_filename);
+    }
+
+    config()->set("LastKeyFiles", lastKeyFiles);
 
     accept();
 }
@@ -103,6 +119,6 @@ void KeyOpenDialog::browseKeyFile()
     QString filename = QFileDialog::getOpenFileName(this, tr("Select key file"), QString(), filters);
 
     if (!filename.isEmpty()) {
-        m_ui->comboKeyFile->setItemText(0, filename);
+        m_ui->comboKeyFile->lineEdit()->setText(filename);
     }
 }

@@ -80,7 +80,7 @@ void DatabaseManager::openDatabase(const QString& fileName)
     Database* db;
 
     do {
-        QScopedPointer<KeyOpenDialog> keyDialog(new KeyOpenDialog(m_window));
+        QScopedPointer<KeyOpenDialog> keyDialog(new KeyOpenDialog(fileName, m_window));
         if (keyDialog->exec() == QDialog::Rejected) {
             return;
         }
