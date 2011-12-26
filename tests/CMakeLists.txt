@@ -122,3 +122,8 @@ add_unit_test(NAME testsymmetriccipher SOURCES TestSymmetricCipher.cpp MOCS Test
 add_unit_test(NAME testhashedblockstream SOURCES TestHashedBlockStream.cpp MOCS TestHashedBlockStream.h LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testkeepass2randomstream SOURCES TestKeePass2RandomStream.cpp MOCS TestKeePass2RandomStream.h LIBS ${TEST_LIBRARIES})
+
+
+if(WITH_GUI_TESTS)
+    add_subdirectory(gui)
+endif(WITH_GUI_TESTS)
