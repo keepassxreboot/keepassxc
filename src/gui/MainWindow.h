@@ -18,23 +18,30 @@
 #ifndef KEEPASSX_MAINWINDOW_H
 #define KEEPASSX_MAINWINDOW_H
 
-#include "ui_MainWindow.h"
+#include <QtGui/QMainWindow>
 
 class Database;
 class DatabaseManager;
+namespace Ui {
+    class MainWindow;
+}
 
-class MainWindow : public QMainWindow, private Ui::MainWindow
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
     MainWindow();
+    ~MainWindow();
 
 private Q_SLOTS:
     void currentTabChanged(int index);
 
 private:
+    QScopedPointer<Ui::MainWindow> m_ui;
     DatabaseManager* m_dbManager;
+
+    Q_DISABLE_COPY(MainWindow)
 };
 
 #endif // KEEPASSX_MAINWINDOW_H

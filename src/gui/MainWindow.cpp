@@ -16,6 +16,7 @@
  */
 
 #include "MainWindow.h"
+#include "ui_MainWindow.h"
 
 #include "core/Database.h"
 #include "core/Metadata.h"
@@ -23,28 +24,33 @@
 #include "gui/DatabaseWidget.h"
 
 MainWindow::MainWindow()
+    : m_ui(new Ui::MainWindow())
 {
-    setupUi(this);
+    m_ui->setupUi(this);
 
-    m_dbManager = new DatabaseManager(tabWidget);
+    m_dbManager = new DatabaseManager(m_ui->tabWidget);
 
-    connect(tabWidget, SIGNAL(currentChanged(int)), SLOT(currentTabChanged(int)));
+    connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(currentTabChanged(int)));
 
-    connect(actionDatabaseNew, SIGNAL(triggered()), m_dbManager, SLOT(newDatabase()));
-    connect(actionDatabaseOpen, SIGNAL(triggered()), m_dbManager, SLOT(openDatabase()));
-    connect(actionDatabaseSave, SIGNAL(triggered()), m_dbManager, SLOT(saveDatabase()));
-    connect(actionDatabaseSaveAs, SIGNAL(triggered()), m_dbManager, SLOT(saveDatabaseAs()));
-    connect(actionDatabaseClose, SIGNAL(triggered()), m_dbManager, SLOT(closeDatabase()));
-    connect(actionQuit, SIGNAL(triggered()), SLOT(close()));
+    connect(m_ui->actionDatabaseNew, SIGNAL(triggered()), m_dbManager, SLOT(newDatabase()));
+    connect(m_ui->actionDatabaseOpen, SIGNAL(triggered()), m_dbManager, SLOT(openDatabase()));
+    connect(m_ui->actionDatabaseSave, SIGNAL(triggered()), m_dbManager, SLOT(saveDatabase()));
+    connect(m_ui->actionDatabaseSaveAs, SIGNAL(triggered()), m_dbManager, SLOT(saveDatabaseAs()));
+    connect(m_ui->actionDatabaseClose, SIGNAL(triggered()), m_dbManager, SLOT(closeDatabase()));
+    connect(m_ui->actionQuit, SIGNAL(triggered()), SLOT(close()));
+}
+
+MainWindow::~MainWindow()
+{
 }
 
 void MainWindow::currentTabChanged(int index)
 {
     bool hasTab = (index != -1);
 
-    actionDatabaseSave->setEnabled(hasTab);
-    actionDatabaseSaveAs->setEnabled(hasTab);
-    actionDatabaseClose->setEnabled(hasTab);
-    actionEntryNew->setEnabled(hasTab);
-    actionGroupNew->setEnabled(hasTab);
+    m_ui->actionDatabaseSave->setEnabled(hasTab);
+    m_ui->actionDatabaseSaveAs->setEnabled(hasTab);
+    m_ui->actionDatabaseClose->setEnabled(hasTab);
+    m_ui->actionEntryNew->setEnabled(hasTab);
+    m_ui->actionGroupNew->setEnabled(hasTab);
 }
