@@ -158,11 +158,13 @@ void DatabaseManager::saveDatabase(Database* db)
 
 void DatabaseManager::saveDatabaseAs(Database* db)
 {
+    DatabaseManagerStruct& dbStruct = m_dbList[db];
+    QString oldFileName = QString();
+    if (dbStruct.file)
+        oldFileName = dbStruct.fileName;
     QString fileName = fileDialog()->getSaveFileName(m_window, tr("Save database as"),
-                                                     QString(), tr("KeePass 2 Database").append(" (*.kdbx)"));
+                                                     oldFileName, tr("KeePass 2 Database").append(" (*.kdbx)"));
     if (!fileName.isEmpty()) {
-        DatabaseManagerStruct& dbStruct = m_dbList[db];
-
         delete dbStruct.file;
         QScopedPointer<QFile> file(new QFile(fileName));
         // TODO error handling
