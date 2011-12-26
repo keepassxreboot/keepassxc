@@ -40,11 +40,10 @@
 ****************************************************************************/
 
 
-#include <QtGui/QtGui>
-
 #include "modeltest.h"
 
-#include <QtTest/QtTest>
+#include <QtCore/QDebug>
+#include <QtTest/QTest>
 
 Q_DECLARE_METATYPE ( QModelIndex )
 
