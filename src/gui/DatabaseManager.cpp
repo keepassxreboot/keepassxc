@@ -62,14 +62,12 @@ void DatabaseManager::openDatabase()
 
 void DatabaseManager::openDatabase(const QString& fileName)
 {
-    DatabaseManagerStruct dbStruct;
-
     QScopedPointer<QFile> file(new QFile(fileName));
     // TODO error handling
     if (!file->open(QIODevice::ReadWrite)) {
         if (!file->open(QIODevice::ReadOnly)) {
             // can only open read-only
-            dbStruct.readOnly = true;
+            m_curDbStruct.readOnly = true;
         }
         else {
             // can't open
@@ -77,22 +75,47 @@ void DatabaseManager::openDatabase(const QString& fileName)
         }
     }
 
-    Database* db;
+    m_curDbStruct.file = file.take();
+    m_curDbStruct.fileName = QFileInfo(fileName).absoluteFilePath();
 
-    do {
-        QScopedPointer<KeyOpenDialog> keyDialog(new KeyOpenDialog(fileName, m_window));
-        if (keyDialog->exec() == QDialog::Rejected) {
-            return;
-        }
+    openDatabaseDialog();
+}
 
-        file->reset();
-        db = m_reader.readDatabase(file.data(), keyDialog->key());
-    } while (!db);
+void DatabaseManager::openDatabaseDialog()
+{
+    m_curKeyDialog = new KeyOpenDialog(m_curDbStruct.fileName, m_window);
+    connect(m_curKeyDialog, SIGNAL(accepted()), SLOT(openDatabaseRead()));
+    connect(m_curKeyDialog, SIGNAL(rejected()), SLOT(openDatabaseCleanup()));
+    m_curKeyDialog->setModal(true);
+    m_curKeyDialog->show();
+}
 
-    dbStruct.file = file.take();
-    dbStruct.dbWidget = new DatabaseWidget(db, m_tabWidget);
+void DatabaseManager::openDatabaseRead()
+{
+    m_curDbStruct.file->reset();
+    Database* db = m_reader.readDatabase(m_curDbStruct.file, m_curKeyDialog->key());
+    delete m_curKeyDialog;
+    m_curKeyDialog = 0;
 
-    insertDatabase(db, dbStruct);
+    if (!db) {
+        openDatabaseDialog();
+    }
+    else {
+        m_curDbStruct.dbWidget = new DatabaseWidget(db, m_tabWidget);
+        insertDatabase(db, m_curDbStruct);
+        m_curDbStruct = DatabaseManagerStruct();
+    }
+}
+
+void DatabaseManager::openDatabaseCleanup()
+{
+    delete m_curKeyDialog;
+    m_curKeyDialog = 0;
+
+    if (m_curDbStruct.file) {
+        delete m_curDbStruct.file;
+    }
+    m_curDbStruct = DatabaseManagerStruct();
 }
 
 void DatabaseManager::closeDatabase(Database* db)
@@ -151,6 +174,7 @@ void DatabaseManager::saveDatabaseAs(Database* db)
         dbStruct.file->flush();
 
         dbStruct.modified = false;
+        dbStruct.fileName = QFileInfo(fileName).absoluteFilePath();
         updateTabName(db);
     }
 }
@@ -200,7 +224,7 @@ void DatabaseManager::updateTabName(Database* db)
             tabName = db->metadata()->name();
         }
 
-        m_tabWidget->setTabToolTip(index, fileInfo.absoluteFilePath());
+        m_tabWidget->setTabToolTip(index, dbStruct.fileName);
     }
     else {
         if (db->metadata()->name().isEmpty()) {
