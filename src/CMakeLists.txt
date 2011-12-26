@@ -51,6 +51,7 @@ set(keepassx_SOURCES
     gui/EditEntryWidget.cpp
     gui/EntryModel.cpp
     gui/EntryView.cpp
+    gui/FileDialog.cpp
     gui/GroupModel.cpp
     gui/GroupView.cpp
     gui/KeyOpenDialog.cpp

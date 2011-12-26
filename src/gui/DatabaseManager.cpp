@@ -18,13 +18,13 @@
 #include "DatabaseManager.h"
 
 #include <QtCore/QFileInfo>
-#include <QtGui/QFileDialog>
 #include <QtGui/QTabWidget>
 
 #include "core/Database.h"
 #include "core/Metadata.h"
 #include "format/KeePass2XmlReader.h"
 #include "gui/DatabaseWidget.h"
+#include "gui/FileDialog.h"
 #include "gui/KeyOpenDialog.h"
 
 DatabaseManagerStruct::DatabaseManagerStruct()
@@ -53,8 +53,8 @@ void DatabaseManager::newDatabase()
 
 void DatabaseManager::openDatabase()
 {
-    QString fileName = QFileDialog::getOpenFileName(m_window, tr("Open database"), QString(),
-                                                    tr("KeePass 2 Database").append(" (*.kdbx)"));
+    QString fileName = fileDialog()->getOpenFileName(m_window, tr("Open database"), QString(),
+                                                     tr("KeePass 2 Database").append(" (*.kdbx)"));
     if (!fileName.isEmpty()) {
         openDatabase(fileName);
     }
@@ -134,8 +134,8 @@ void DatabaseManager::saveDatabase(Database* db)
 
 void DatabaseManager::saveDatabaseAs(Database* db)
 {
-    QString fileName = QFileDialog::getSaveFileName(m_window, tr("Save database as"),
-                                                    QString(), tr("KeePass 2 Database").append(" (*.kdbx)"));
+    QString fileName = fileDialog()->getSaveFileName(m_window, tr("Save database as"),
+                                                     QString(), tr("KeePass 2 Database").append(" (*.kdbx)"));
     if (!fileName.isEmpty()) {
         DatabaseManagerStruct& dbStruct = m_dbList[db];
 

@@ -18,10 +18,10 @@
 #include "KeyOpenDialog.h"
 #include "ui_KeyOpenDialog.h"
 
-#include <QtGui/QFileDialog>
 #include <QtGui/QMessageBox>
 
 #include "core/Config.h"
+#include "gui/FileDialog.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
@@ -116,7 +116,7 @@ void KeyOpenDialog::setOkButtonEnabled()
 void KeyOpenDialog::browseKeyFile()
 {
     QString filters = QString("%1 (*);;%2 (*.key)").arg(tr("All files"), tr("Key files"));
-    QString filename = QFileDialog::getOpenFileName(this, tr("Select key file"), QString(), filters);
+    QString filename = fileDialog()->getOpenFileName(this, tr("Select key file"), QString(), filters);
 
     if (!filename.isEmpty()) {
         m_ui->comboKeyFile->lineEdit()->setText(filename);
