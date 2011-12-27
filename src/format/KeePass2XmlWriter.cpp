@@ -169,6 +169,8 @@ void KeePass2XmlWriter::writeRoot()
 
 void KeePass2XmlWriter::writeGroup(const Group* group)
 {
+    Q_ASSERT(!group->uuid().isNull());
+
     m_xml.writeStartElement("Group");
 
     writeUuid("UUID", group->uuid());
@@ -237,6 +239,8 @@ void KeePass2XmlWriter::writeDeletedObject(const DeletedObject& delObj)
 
 void KeePass2XmlWriter::writeEntry(const Entry* entry)
 {
+    Q_ASSERT(!entry->uuid().isNull());
+
     m_xml.writeStartElement("Entry");
 
     writeUuid("UUID", entry->uuid());

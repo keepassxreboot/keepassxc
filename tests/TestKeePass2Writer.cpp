@@ -45,6 +45,10 @@ void TestKeePass2Writer::initTestCase()
     entry->addAttribute("test", "protectedTest", true);
     QVERIFY(entry->isAttributeProtected("test"));
     entry->setGroup(group);
+    Group* groupNew = new Group();
+    groupNew->setUuid(Uuid::random());
+    groupNew->setName("TESTGROUP");
+    groupNew->setParent(group);
 
     QBuffer buffer;
     buffer.open(QBuffer::ReadWrite);
@@ -63,6 +67,7 @@ void TestKeePass2Writer::testBasic()
 {
     QCOMPARE(m_dbTest->metadata()->name(), m_dbOrg->metadata()->name());
     QVERIFY(m_dbTest->rootGroup());
+    QCOMPARE(m_dbTest->rootGroup()->children()[0]->name(), m_dbOrg->rootGroup()->children()[0]->name());
 }
 
 void TestKeePass2Writer::testProtectedAttributes()

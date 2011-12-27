@@ -23,11 +23,13 @@
 #include "modeltest.h"
 #include "core/Database.h"
 #include "core/Group.h"
+#include "crypto/Crypto.h"
 #include "gui/GroupModel.h"
 
 void TestGroupModel::initTestCase()
 {
     qRegisterMetaType<QModelIndex>("QModelIndex");
+    Crypto::init();
 }
 
 void TestGroupModel::test()

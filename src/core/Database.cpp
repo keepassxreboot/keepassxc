@@ -29,6 +29,7 @@ Database::Database()
 {
     m_metadata = new Metadata(this);
     setRootGroup(new Group());
+    rootGroup()->setUuid(Uuid::random());
 
     m_cipher = KeePass2::CIPHER_AES;
     m_compressionAlgo = CompressionGZip;

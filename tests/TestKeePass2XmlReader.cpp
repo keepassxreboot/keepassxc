@@ -22,6 +22,7 @@
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "crypto/Crypto.h"
 #include "format/KeePass2XmlReader.h"
 #include "config-keepassx-tests.h"
 
@@ -63,6 +64,8 @@ QDateTime TestKeePass2XmlReader::genDT(int year, int month, int day, int hour, i
 
 void TestKeePass2XmlReader::initTestCase()
 {
+    Crypto::init();
+
     KeePass2XmlReader* reader = new KeePass2XmlReader();
     QString xmlFile = QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.xml");
     m_db = reader->readDatabase(xmlFile);
