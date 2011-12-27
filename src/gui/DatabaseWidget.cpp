@@ -28,7 +28,7 @@
 DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     : QStackedWidget(parent)
     , m_newGroup(0)
-    , m_newGroupParent(0)
+    , m_newParent(0)
 {
     m_mainWidget = new QWidget(this);
     QLayout* layout = new QHBoxLayout(m_mainWidget);
@@ -78,11 +78,19 @@ EntryView* DatabaseWidget::entryView()
     return m_entryView;
 }
 
+void DatabaseWidget::createEntry()
+{
+    m_newEntry = new Entry();
+    m_newEntry->setUuid(Uuid::random());
+    m_newParent = m_groupView->currentGroup();
+    switchToEntryEdit(m_newEntry, true);
+}
+
 void DatabaseWidget::createGroup()
 {
     m_newGroup = new Group();
     m_newGroup->setUuid(Uuid::random());
-    m_newGroupParent = m_groupView->currentGroup();
+    m_newParent = m_groupView->currentGroup();
     switchToGroupEdit(m_newGroup, true);
 }
 
@@ -90,14 +98,25 @@ void DatabaseWidget::switchToView(bool accepted)
 {
     if (m_newGroup) {
         if (accepted) {
-            m_newGroup->setParent(m_newGroupParent);
+            m_newGroup->setParent(m_newParent);
         }
         else {
             delete m_newGroup;
         }
 
         m_newGroup = 0;
-        m_newGroupParent = 0;
+        m_newParent = 0;
+    }
+    else if (m_newEntry) {
+        if (accepted) {
+            m_newEntry->setGroup(m_newParent);
+        }
+        else {
+            delete m_newEntry;
+        }
+
+        m_newEntry = 0;
+        m_newParent = 0;
     }
 
     setCurrentIndex(0);
@@ -105,7 +124,12 @@ void DatabaseWidget::switchToView(bool accepted)
 
 void DatabaseWidget::switchToEntryEdit(Entry* entry)
 {
-    m_editEntryWidget->loadEntry(entry);
+    switchToEntryEdit(entry, false);
+}
+
+void DatabaseWidget::switchToEntryEdit(Entry* entry, bool create)
+{
+    m_editEntryWidget->loadEntry(entry, create, m_groupView->currentGroup()->name());
     setCurrentIndex(1);
 }
 
@@ -116,11 +140,10 @@ void DatabaseWidget::switchToGroupEdit(Group* group, bool create)
 }
 void DatabaseWidget::switchToEntryEdit()
 {
-    // TODO switchToEntryEdit(m_entryView->currentEntry());
+    // TODO switchToEntryEdit(m_entryView->currentEntry(), false);
 }
 
 void DatabaseWidget::switchToGroupEdit()
 {
     switchToGroupEdit(m_groupView->currentGroup(), false);
 }
-

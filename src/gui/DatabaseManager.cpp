@@ -206,6 +206,13 @@ void DatabaseManager::saveDatabaseAs(int index)
     saveDatabaseAs(indexDatabase(index));
 }
 
+void DatabaseManager::createEntry()
+{
+    Database* db = indexDatabase(m_tabWidget->currentIndex());
+    DatabaseWidget* dbWidget = m_dbList[db].dbWidget;
+    dbWidget->createEntry();
+}
+
 void DatabaseManager::createGroup()
 {
     Database* db = indexDatabase(m_tabWidget->currentIndex());

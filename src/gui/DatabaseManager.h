@@ -57,6 +57,7 @@ public Q_SLOTS:
     void saveDatabase(int index = -1);
     void saveDatabaseAs(int index = -1);
     void closeDatabase(int index = -1);
+    void createEntry();
     void createGroup();
     void editGroup();
 

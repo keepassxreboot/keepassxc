@@ -62,11 +62,16 @@ EditEntryWidget::~EditEntryWidget()
 {
 }
 
-void EditEntryWidget::loadEntry(Entry* entry)
+void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupName)
 {
     m_entry = entry;
 
-    m_ui->headerLabel->setText(m_entry->group()->name()+" > "+tr("Edit entry"));
+    if (create) {
+        m_ui->headerLabel->setText(groupName+" > "+tr("Add entry"));
+    }
+    else {
+        m_ui->headerLabel->setText(groupName+" > "+tr("Edit entry"));
+    }
 
     m_mainUi->titleEdit->setText(entry->title());
     m_mainUi->usernameEdit->setText(entry->username());

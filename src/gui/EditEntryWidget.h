@@ -39,7 +39,7 @@ public:
     explicit EditEntryWidget(QWidget* parent = 0);
     ~EditEntryWidget();
 
-    void loadEntry(Entry* entry);
+    void loadEntry(Entry* entry, bool create, const QString& groupName);
 
 Q_SIGNALS:
     void editFinished(bool accepted);

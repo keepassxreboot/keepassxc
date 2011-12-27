@@ -38,6 +38,7 @@ public:
     EntryView* entryView();
 
 public Q_SLOTS:
+    void createEntry();
     void createGroup();
     void switchToEntryEdit();
     void switchToGroupEdit();
@@ -45,6 +46,7 @@ public Q_SLOTS:
 private Q_SLOTS:
     void switchToView(bool accepted);
     void switchToEntryEdit(Entry* entry);
+    void switchToEntryEdit(Entry* entry, bool create);
     void switchToGroupEdit(Group* entry, bool create);
 
 private:
@@ -54,7 +56,8 @@ private:
     GroupView* m_groupView;
     EntryView* m_entryView;
     Group* m_newGroup;
-    Group* m_newGroupParent;
+    Entry* m_newEntry;
+    Group* m_newParent;
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H
