@@ -41,6 +41,11 @@ GroupView::GroupView(Database* db, QWidget* parent)
                               Q_ARG(QModelIndex, m_model->index(0, 0)));
 }
 
+Group* GroupView::currentGroup()
+{
+    return m_model->groupFromIndex(currentIndex());
+}
+
 void GroupView::expandedChanged(const QModelIndex& index)
 {
     Group* group = m_model->groupFromIndex(index);

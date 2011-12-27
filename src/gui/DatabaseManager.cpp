@@ -25,6 +25,7 @@
 #include "format/KeePass2XmlReader.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/FileDialog.h"
+#include "gui/GroupView.h"
 #include "gui/KeyOpenDialog.h"
 
 DatabaseManagerStruct::DatabaseManagerStruct()
@@ -203,6 +204,20 @@ void DatabaseManager::saveDatabaseAs(int index)
         index = m_tabWidget->currentIndex();
     }
     saveDatabaseAs(indexDatabase(index));
+}
+
+void DatabaseManager::createGroup()
+{
+    Database* db = indexDatabase(m_tabWidget->currentIndex());
+    DatabaseWidget* dbWidget = m_dbList[db].dbWidget;
+    dbWidget->createGroup();
+}
+
+void DatabaseManager::editGroup()
+{
+    Database* db = indexDatabase(m_tabWidget->currentIndex());
+    DatabaseWidget* dbWidget = m_dbList[db].dbWidget;
+    dbWidget->switchToGroupEdit();
 }
 
 void DatabaseManager::updateTabName(Database* db)

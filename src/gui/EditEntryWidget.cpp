@@ -85,11 +85,12 @@ void EditEntryWidget::saveEntry()
 
     m_entry->setNotes(m_notesUi->notesEdit->toPlainText());
 
-    cancel();
+    m_entry = 0;
+    Q_EMIT editFinished(true);
 }
 
 void EditEntryWidget::cancel()
 {
     m_entry = 0;
-    Q_EMIT editFinished();
+    Q_EMIT editFinished(false);
 }

@@ -24,6 +24,7 @@
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
 
+class DatabaseWidget;
 class KeyOpenDialog;
 class QFile;
 class QTabWidget;
@@ -33,7 +34,7 @@ struct DatabaseManagerStruct
     DatabaseManagerStruct();
 
     QFile* file;
-    QWidget* dbWidget;
+    DatabaseWidget* dbWidget;
     QString fileName;
     bool modified;
     bool readOnly;
@@ -56,6 +57,8 @@ public Q_SLOTS:
     void saveDatabase(int index = -1);
     void saveDatabaseAs(int index = -1);
     void closeDatabase(int index = -1);
+    void createGroup();
+    void editGroup();
 
 private Q_SLOTS:
     void updateTabName(Database* db);

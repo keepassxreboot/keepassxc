@@ -22,8 +22,10 @@
 
 class Database;
 class EditEntryWidget;
+class EditGroupWidget;
 class Entry;
 class EntryView;
+class Group;
 class GroupView;
 
 class DatabaseWidget : public QStackedWidget
@@ -32,16 +34,27 @@ class DatabaseWidget : public QStackedWidget
 
 public:
     explicit DatabaseWidget(Database* db, QWidget* parent = 0);
+    GroupView* groupView();
+    EntryView* entryView();
+
+public Q_SLOTS:
+    void createGroup();
+    void switchToEntryEdit();
+    void switchToGroupEdit();
 
 private Q_SLOTS:
-    void switchToView();
-    void switchToEdit(Entry* entry);
+    void switchToView(bool accepted);
+    void switchToEntryEdit(Entry* entry);
+    void switchToGroupEdit(Group* entry, bool create);
 
 private:
     QWidget* m_mainWidget;
-    EditEntryWidget* m_editWidget;
+    EditEntryWidget* m_editEntryWidget;
+    EditGroupWidget* m_editGroupWidget;
     GroupView* m_groupView;
     EntryView* m_entryView;
+    Group* m_newGroup;
+    Group* m_newGroupParent;
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H

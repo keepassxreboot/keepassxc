@@ -49,6 +49,7 @@ set(keepassx_SOURCES
     gui/DatabaseManager.cpp
     gui/DatabaseWidget.cpp
     gui/EditEntryWidget.cpp
+    gui/EditGroupWidget.cpp
     gui/EntryModel.cpp
     gui/EntryView.cpp
     gui/FileDialog.cpp
@@ -74,6 +75,7 @@ set(keepassx_MOC
     gui/DatabaseManager.h
     gui/DatabaseWidget.h
     gui/EditEntryWidget.h
+    gui/EditGroupWidget.h
     gui/EntryModel.h
     gui/EntryView.h
     gui/GroupModel.h
@@ -90,6 +92,7 @@ set(keepassx_FORMS
     gui/EditEntryWidget.ui
     gui/EditEntryWidgetMain.ui
     gui/EditEntryWidgetNotes.ui
+    gui/EditGroupWidget.ui
     gui/KeyOpenDialog.ui
     gui/MainWindow.ui
 )

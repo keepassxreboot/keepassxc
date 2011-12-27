@@ -21,11 +21,14 @@
 #include <QtGui/QSplitter>
 
 #include "gui/EditEntryWidget.h"
+#include "gui/EditGroupWidget.h"
 #include "gui/EntryView.h"
 #include "gui/GroupView.h"
 
 DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     : QStackedWidget(parent)
+    , m_newGroup(0)
+    , m_newGroupParent(0)
 {
     m_mainWidget = new QWidget(this);
     QLayout* layout = new QHBoxLayout(m_mainWidget);
@@ -50,25 +53,74 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     layout->addWidget(splitter);
     m_mainWidget->setLayout(layout);
 
-    m_editWidget = new EditEntryWidget();
+    m_editEntryWidget = new EditEntryWidget();
+    m_editGroupWidget = new EditGroupWidget();
 
     addWidget(m_mainWidget);
-    addWidget(m_editWidget);
+    addWidget(m_editEntryWidget);
+    addWidget(m_editGroupWidget);
 
     connect(m_groupView, SIGNAL(groupChanged(Group*)), m_entryView, SLOT(setGroup(Group*)));
-    connect(m_entryView, SIGNAL(entryActivated(Entry*)), SLOT(switchToEdit(Entry*)));
-    connect(m_editWidget, SIGNAL(editFinished()), SLOT(switchToView()));
+    connect(m_entryView, SIGNAL(entryActivated(Entry*)), SLOT(switchToEntryEdit(Entry*)));
+    connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
+    connect(m_editGroupWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
 
     setCurrentIndex(0);
 }
 
-void DatabaseWidget::switchToView()
+GroupView* DatabaseWidget::groupView()
 {
+    return m_groupView;
+}
+
+EntryView* DatabaseWidget::entryView()
+{
+    return m_entryView;
+}
+
+void DatabaseWidget::createGroup()
+{
+    m_newGroup = new Group();
+    m_newGroup->setUuid(Uuid::random());
+    m_newGroupParent = m_groupView->currentGroup();
+    switchToGroupEdit(m_newGroup, true);
+}
+
+void DatabaseWidget::switchToView(bool accepted)
+{
+    if (m_newGroup) {
+        if (accepted) {
+            m_newGroup->setParent(m_newGroupParent);
+        }
+        else {
+            delete m_newGroup;
+        }
+
+        m_newGroup = 0;
+        m_newGroupParent = 0;
+    }
+
     setCurrentIndex(0);
 }
 
-void DatabaseWidget::switchToEdit(Entry* entry)
+void DatabaseWidget::switchToEntryEdit(Entry* entry)
 {
-    m_editWidget->loadEntry(entry);
+    m_editEntryWidget->loadEntry(entry);
     setCurrentIndex(1);
 }
+
+void DatabaseWidget::switchToGroupEdit(Group* group, bool create)
+{
+    m_editGroupWidget->loadGroup(group, create);
+    setCurrentIndex(2);
+}
+void DatabaseWidget::switchToEntryEdit()
+{
+    // TODO switchToEntryEdit(m_entryView->currentEntry());
+}
+
+void DatabaseWidget::switchToGroupEdit()
+{
+    switchToGroupEdit(m_groupView->currentGroup(), false);
+}
+

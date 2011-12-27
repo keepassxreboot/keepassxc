@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,49 +15,40 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_EDITENTRYWIDGET_H
-#define KEEPASSX_EDITENTRYWIDGET_H
+#ifndef KEEPASSX_GROUPDIALOG_H
+#define KEEPASSX_GROUPDIALOG_H
 
 #include <QtCore/QScopedPointer>
 #include <QtGui/QWidget>
 
-class Entry;
-class QListWidget;
-class QStackedLayout;
+#include "core/Group.h"
 
 namespace Ui {
-    class EditEntryWidget;
-    class EditEntryWidgetMain;
-    class EditEntryWidgetNotes;
+    class EditGroupWidget;
 }
 
-class EditEntryWidget : public QWidget
+class EditGroupWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit EditEntryWidget(QWidget* parent = 0);
-    ~EditEntryWidget();
+    EditGroupWidget(QWidget* parent = 0);
+    ~EditGroupWidget();
 
-    void loadEntry(Entry* entry);
+    void loadGroup(Group* group, bool create);
 
 Q_SIGNALS:
     void editFinished(bool accepted);
 
 private Q_SLOTS:
-    void saveEntry();
+    void save();
     void cancel();
 
 private:
-    Entry* m_entry;
+    QScopedPointer<Ui::EditGroupWidget> m_ui;
+    Group* m_group;
 
-    QScopedPointer<Ui::EditEntryWidget> m_ui;
-    QScopedPointer<Ui::EditEntryWidgetMain> m_mainUi;
-    QScopedPointer<Ui::EditEntryWidgetNotes> m_notesUi;
-    QWidget* m_mainWidget;
-    QWidget* m_notesWidget;
-
-    Q_DISABLE_COPY(EditEntryWidget)
+    Q_DISABLE_COPY(EditGroupWidget)
 };
 
-#endif // KEEPASSX_EDITENTRYWIDGET_H
+#endif // KEEPASSX_GROUPDIALOG_H

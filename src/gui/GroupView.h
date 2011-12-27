@@ -31,6 +31,7 @@ class GroupView : public QTreeView
 public:
     explicit GroupView(Database* db, QWidget* parent = 0);
     void setModel(QAbstractItemModel* model);
+    Group* currentGroup();
 
 Q_SIGNALS:
     void groupChanged(Group* group);
