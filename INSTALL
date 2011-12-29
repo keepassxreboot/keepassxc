@@ -1,0 +1,14 @@
+Building:
+=========
+mkdir build
+cd build
+cmake .. [-DCMAKE_INSTALL_PREFIX=/usr/local] [-DWITH_GUI_TESTS=ON]
+make [-jX]
+
+Installing:
+===========
+make install [DESTDIR=X]
+
+Run tests:
+==========
+make test [CTEST_OUTPUT_ON_FAILURE=1] [ARGS+=-jX] [ARGS+="-E testgui"]
