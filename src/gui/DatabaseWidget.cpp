@@ -28,6 +28,7 @@
 DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     : QStackedWidget(parent)
     , m_newGroup(0)
+    , m_newEntry(0)
     , m_newParent(0)
 {
     m_mainWidget = new QWidget(this);
