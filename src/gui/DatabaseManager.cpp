@@ -123,11 +123,11 @@ void DatabaseManager::openDatabaseCleanup()
 
 void DatabaseManager::emitEntrySelectionChanged()
 {
-    Database* db = indexDatabase(m_tabWidget->currentIndex());
+    DatabaseWidget* dbWidget = currentDatabaseWidget();
 
     bool isSingleEntrySelected = false;
-    if (db) {
-        isSingleEntrySelected = m_dbList[db].dbWidget->entryView()->isSingleEntrySelected();
+    if (dbWidget) {
+        isSingleEntrySelected = dbWidget->entryView()->isSingleEntrySelected();
     }
 
     Q_EMIT entrySelectionChanged(isSingleEntrySelected);
@@ -225,30 +225,22 @@ void DatabaseManager::saveDatabaseAs(int index)
 
 void DatabaseManager::createEntry()
 {
-    Database* db = indexDatabase(m_tabWidget->currentIndex());
-    DatabaseWidget* dbWidget = m_dbList[db].dbWidget;
-    dbWidget->createEntry();
+    currentDatabaseWidget()->createEntry();
 }
 
 void DatabaseManager::editEntry()
 {
-    Database* db = indexDatabase(m_tabWidget->currentIndex());
-    DatabaseWidget* dbWidget = m_dbList[db].dbWidget;
-    dbWidget->switchToEntryEdit();
+    currentDatabaseWidget()->switchToEntryEdit();
 }
 
 void DatabaseManager::createGroup()
 {
-    Database* db = indexDatabase(m_tabWidget->currentIndex());
-    DatabaseWidget* dbWidget = m_dbList[db].dbWidget;
-    dbWidget->createGroup();
+    currentDatabaseWidget()->createGroup();
 }
 
 void DatabaseManager::editGroup()
 {
-    Database* db = indexDatabase(m_tabWidget->currentIndex());
-    DatabaseWidget* dbWidget = m_dbList[db].dbWidget;
-    dbWidget->switchToGroupEdit();
+    currentDatabaseWidget()->switchToGroupEdit();
 }
 
 void DatabaseManager::updateTabName(Database* db)
@@ -316,4 +308,15 @@ void DatabaseManager::insertDatabase(Database* db, const DatabaseManagerStruct& 
 
     connect(db->metadata(), SIGNAL(nameTextChanged(Database*)), SLOT(updateTabName(Database*)));
     connect(dbStruct.dbWidget->entryView(), SIGNAL(entrySelectionChanged()), SLOT(emitEntrySelectionChanged()));
+}
+
+DatabaseWidget* DatabaseManager::currentDatabaseWidget()
+{
+    Database* db = indexDatabase(m_tabWidget->currentIndex());
+    if (db) {
+        return m_dbList[db].dbWidget;
+    }
+    else {
+        return 0;
+    }
 }

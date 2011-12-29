@@ -50,6 +50,7 @@ public:
     void saveDatabase(Database* db);
     void saveDatabaseAs(Database* db);
     void closeDatabase(Database* db);
+    DatabaseWidget* currentDatabaseWidget();
 
 public Q_SLOTS:
     void newDatabase();
