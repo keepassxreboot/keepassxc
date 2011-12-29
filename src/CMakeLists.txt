@@ -104,3 +104,4 @@ add_library( keepassx_core STATIC ${keepassx_SOURCES} )
 
 add_executable( ${PROGNAME} WIN32 MACOSX_BUNDLE main.cpp )
 target_link_libraries( ${PROGNAME} keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${GCRYPT_LIBRARIES} ${ZLIB_LIBRARIES} )
+install(TARGETS ${PROGNAME} DESTINATION ${BIN_INSTALL_DIR})
