@@ -20,6 +20,8 @@
 
 #include <QtCore/QObject>
 
+class MainWindow;
+
 class TestGui : public QObject
 {
     Q_OBJECT
@@ -27,6 +29,11 @@ class TestGui : public QObject
 private Q_SLOTS:
     void initTestCase();
     void testOpenDatabase();
+    void testTabs();
+    void cleanupTestCase();
+
+private:
+    MainWindow* m_mainWindow;
 };
 
 #endif // KEEPASSX_TESTGUI_H

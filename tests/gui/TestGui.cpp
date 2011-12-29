@@ -32,28 +32,37 @@
 void TestGui::initTestCase()
 {
     Crypto::init();
+    m_mainWindow = new MainWindow();
 }
 
 void TestGui::testOpenDatabase()
 {
-    MainWindow mainWindow;
-    mainWindow.show();
-    QAction* actionDatabaseOpen = mainWindow.findChild<QAction*>("actionDatabaseOpen");
+    m_mainWindow->show();
+    QAction* actionDatabaseOpen = m_mainWindow->findChild<QAction*>("actionDatabaseOpen");
     fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx"));
     actionDatabaseOpen->trigger();
+    QWidget* keyDialog = m_mainWindow->findChild<QWidget*>("KeyOpenDialog");
+    QVERIFY(keyDialog);
+    QTest::qWaitForWindowShown(keyDialog);
 
-    QTest::qWait(500);
-
-    QLineEdit* editPassword = QApplication::activeWindow()->findChild<QLineEdit*>("editPassword");
+    QLineEdit* editPassword = keyDialog->findChild<QLineEdit*>("editPassword");
     QVERIFY(editPassword);
     QTest::keyClicks(editPassword, "a");
 
-    QDialogButtonBox* buttonBox = QApplication::activeWindow()->findChild<QDialogButtonBox*>("buttonBox");
+    QDialogButtonBox* buttonBox = keyDialog->findChild<QDialogButtonBox*>("buttonBox");
     QTest::mouseClick(buttonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+}
 
-    QTabWidget* tabWidget = mainWindow.findChild<QTabWidget*>("tabWidget");
+void TestGui::testTabs()
+{
+    QTabWidget* tabWidget = m_mainWindow->findChild<QTabWidget*>("tabWidget");
     QCOMPARE(tabWidget->count(), 1);
     QCOMPARE(tabWidget->tabText(tabWidget->currentIndex()), QString("NewDatabase.kdbx"));
+}
+
+void TestGui::cleanupTestCase()
+{
+   delete m_mainWindow;
 }
 
 QTEST_MAIN(TestGui);
