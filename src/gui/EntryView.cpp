@@ -29,6 +29,7 @@ EntryView::EntryView(QWidget* parent)
     setRootIsDecorated(false);
 
     connect(this, SIGNAL(activated(const QModelIndex&)), SLOT(emitEntryActivated(const QModelIndex&)));
+    connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(entrySelectionChanged()));
 }
 
 void EntryView::setGroup(Group* group)
@@ -45,4 +46,15 @@ void EntryView::setModel(QAbstractItemModel* model)
 {
     Q_UNUSED(model);
     Q_ASSERT(false);
+}
+
+Entry* EntryView::currentEntry()
+{
+    // TODO use selection instead of current?
+    return m_model->entryFromIndex(currentIndex());
+}
+
+bool EntryView::isSingleEntrySelected()
+{
+    return (selectionModel()->selectedRows().size() == 1);
 }

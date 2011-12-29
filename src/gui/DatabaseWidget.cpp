@@ -140,7 +140,7 @@ void DatabaseWidget::switchToGroupEdit(Group* group, bool create)
 }
 void DatabaseWidget::switchToEntryEdit()
 {
-    // TODO switchToEntryEdit(m_entryView->currentEntry(), false);
+    switchToEntryEdit(m_entryView->currentEntry(), false);
 }
 
 void DatabaseWidget::switchToGroupEdit()

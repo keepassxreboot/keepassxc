@@ -31,6 +31,8 @@ class EntryView : public QTreeView
 public:
     explicit EntryView(QWidget* parent = 0);
     void setModel(QAbstractItemModel* model);
+    Entry* currentEntry();
+    bool isSingleEntrySelected();
 
 public Q_SLOTS:
     void setGroup(Group* group);
@@ -40,6 +42,7 @@ private Q_SLOTS:
 
 Q_SIGNALS:
     void entryActivated(Entry* entry);
+    void entrySelectionChanged();
 
 private:
     EntryModel* m_model;

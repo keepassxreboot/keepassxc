@@ -25,6 +25,7 @@
 #include "format/KeePass2XmlReader.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/FileDialog.h"
+#include "gui/EntryView.h"
 #include "gui/GroupView.h"
 #include "gui/KeyOpenDialog.h"
 
@@ -41,6 +42,7 @@ DatabaseManager::DatabaseManager(QTabWidget* tabWidget)
     , m_window(tabWidget->window())
 {
     connect(m_tabWidget, SIGNAL(tabCloseRequested(int)), SLOT(closeDatabase(int)));
+    connect(m_tabWidget, SIGNAL(currentChanged(int)), SLOT(emitEntrySelectionChanged()));
 }
 
 void DatabaseManager::newDatabase()
@@ -117,6 +119,18 @@ void DatabaseManager::openDatabaseCleanup()
         delete m_curDbStruct.file;
     }
     m_curDbStruct = DatabaseManagerStruct();
+}
+
+void DatabaseManager::emitEntrySelectionChanged()
+{
+    Database* db = indexDatabase(m_tabWidget->currentIndex());
+
+    bool isSingleEntrySelected = false;
+    if (db) {
+        isSingleEntrySelected = m_dbList[db].dbWidget->entryView()->isSingleEntrySelected();
+    }
+
+    Q_EMIT entrySelectionChanged(isSingleEntrySelected);
 }
 
 void DatabaseManager::closeDatabase(Database* db)
@@ -216,6 +230,13 @@ void DatabaseManager::createEntry()
     dbWidget->createEntry();
 }
 
+void DatabaseManager::editEntry()
+{
+    Database* db = indexDatabase(m_tabWidget->currentIndex());
+    DatabaseWidget* dbWidget = m_dbList[db].dbWidget;
+    dbWidget->switchToEntryEdit();
+}
+
 void DatabaseManager::createGroup()
 {
     Database* db = indexDatabase(m_tabWidget->currentIndex());
@@ -294,4 +315,5 @@ void DatabaseManager::insertDatabase(Database* db, const DatabaseManagerStruct& 
     m_tabWidget->setCurrentIndex(index);
 
     connect(db->metadata(), SIGNAL(nameTextChanged(Database*)), SLOT(updateTabName(Database*)));
+    connect(dbStruct.dbWidget->entryView(), SIGNAL(entrySelectionChanged()), SLOT(emitEntrySelectionChanged()));
 }

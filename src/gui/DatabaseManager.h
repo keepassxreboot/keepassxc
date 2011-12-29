@@ -58,6 +58,7 @@ public Q_SLOTS:
     void saveDatabaseAs(int index = -1);
     void closeDatabase(int index = -1);
     void createEntry();
+    void editEntry();
     void createGroup();
     void editGroup();
 
@@ -66,6 +67,10 @@ private Q_SLOTS:
     void openDatabaseDialog();
     void openDatabaseRead();
     void openDatabaseCleanup();
+    void emitEntrySelectionChanged();
+
+Q_SIGNALS:
+    void entrySelectionChanged(bool singleEntrySelected);
 
 private:
     int databaseIndex(Database* db);

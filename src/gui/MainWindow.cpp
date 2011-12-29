@@ -31,6 +31,8 @@ MainWindow::MainWindow()
     m_dbManager = new DatabaseManager(m_ui->tabWidget);
 
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(currentTabChanged(int)));
+    connect(m_dbManager, SIGNAL(entrySelectionChanged(bool)), m_ui->actionEntryEdit, SLOT(setEnabled(bool)));
+    connect(m_dbManager, SIGNAL(entrySelectionChanged(bool)), m_ui->actionEntryDelete, SLOT(setEnabled(bool)));
 
     connect(m_ui->actionDatabaseNew, SIGNAL(triggered()), m_dbManager, SLOT(newDatabase()));
     connect(m_ui->actionDatabaseOpen, SIGNAL(triggered()), m_dbManager, SLOT(openDatabase()));
@@ -38,6 +40,7 @@ MainWindow::MainWindow()
     connect(m_ui->actionDatabaseSaveAs, SIGNAL(triggered()), m_dbManager, SLOT(saveDatabaseAs()));
     connect(m_ui->actionDatabaseClose, SIGNAL(triggered()), m_dbManager, SLOT(closeDatabase()));
     connect(m_ui->actionEntryNew, SIGNAL(triggered()), m_dbManager, SLOT(createEntry()));
+    connect(m_ui->actionEntryEdit, SIGNAL(triggered()), m_dbManager, SLOT(editEntry()));
     connect(m_ui->actionGroupNew, SIGNAL(triggered()), m_dbManager, SLOT(createGroup()));
     connect(m_ui->actionGroupEdit, SIGNAL(triggered()), m_dbManager, SLOT(editGroup()));
     connect(m_ui->actionQuit, SIGNAL(triggered()), SLOT(close()));
