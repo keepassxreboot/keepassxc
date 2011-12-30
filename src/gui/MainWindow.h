@@ -20,8 +20,6 @@
 
 #include <QtGui/QMainWindow>
 
-class Database;
-class DatabaseManager;
 namespace Ui {
     class MainWindow;
 }
@@ -39,7 +37,6 @@ private Q_SLOTS:
 
 private:
     QScopedPointer<Ui::MainWindow> m_ui;
-    DatabaseManager* m_dbManager;
 
     Q_DISABLE_COPY(MainWindow)
 };

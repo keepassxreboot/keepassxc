@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "DatabaseManager.h"
+#include "DatabaseTabWidget.h"
 
 #include <QtCore/QFileInfo>
 #include <QtGui/QTabWidget>
@@ -37,24 +37,24 @@ DatabaseManagerStruct::DatabaseManagerStruct()
 {
 }
 
-DatabaseManager::DatabaseManager(QTabWidget* tabWidget)
-    : m_tabWidget(tabWidget)
-    , m_window(tabWidget->window())
+DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
+    : QTabWidget(parent)
+    , m_window(parent->window())
 {
-    connect(m_tabWidget, SIGNAL(tabCloseRequested(int)), SLOT(closeDatabase(int)));
-    connect(m_tabWidget, SIGNAL(currentChanged(int)), SLOT(emitEntrySelectionChanged()));
+    connect(this, SIGNAL(tabCloseRequested(int)), SLOT(closeDatabase(int)));
+    connect(this, SIGNAL(currentChanged(int)), SLOT(emitEntrySelectionChanged()));
 }
 
-void DatabaseManager::newDatabase()
+void DatabaseTabWidget::newDatabase()
 {
     DatabaseManagerStruct dbStruct;
     Database* db = new Database();
-    dbStruct.dbWidget = new DatabaseWidget(db, m_tabWidget);
+    dbStruct.dbWidget = new DatabaseWidget(db, this);
 
     insertDatabase(db, dbStruct);
 }
 
-void DatabaseManager::openDatabase()
+void DatabaseTabWidget::openDatabase()
 {
     QString fileName = fileDialog()->getOpenFileName(m_window, tr("Open database"), QString(),
                                                      tr("KeePass 2 Database").append(" (*.kdbx)"));
@@ -63,7 +63,7 @@ void DatabaseManager::openDatabase()
     }
 }
 
-void DatabaseManager::openDatabase(const QString& fileName)
+void DatabaseTabWidget::openDatabase(const QString& fileName)
 {
     QScopedPointer<QFile> file(new QFile(fileName));
     // TODO error handling
@@ -84,7 +84,7 @@ void DatabaseManager::openDatabase(const QString& fileName)
     openDatabaseDialog();
 }
 
-void DatabaseManager::openDatabaseDialog()
+void DatabaseTabWidget::openDatabaseDialog()
 {
     m_curKeyDialog = new KeyOpenDialog(m_curDbStruct.fileName, m_window);
     connect(m_curKeyDialog, SIGNAL(accepted()), SLOT(openDatabaseRead()));
@@ -93,7 +93,7 @@ void DatabaseManager::openDatabaseDialog()
     m_curKeyDialog->show();
 }
 
-void DatabaseManager::openDatabaseRead()
+void DatabaseTabWidget::openDatabaseRead()
 {
     m_curDbStruct.file->reset();
     Database* db = m_reader.readDatabase(m_curDbStruct.file, m_curKeyDialog->key());
@@ -104,13 +104,13 @@ void DatabaseManager::openDatabaseRead()
         openDatabaseDialog();
     }
     else {
-        m_curDbStruct.dbWidget = new DatabaseWidget(db, m_tabWidget);
+        m_curDbStruct.dbWidget = new DatabaseWidget(db, this);
         insertDatabase(db, m_curDbStruct);
         m_curDbStruct = DatabaseManagerStruct();
     }
 }
 
-void DatabaseManager::openDatabaseCleanup()
+void DatabaseTabWidget::openDatabaseCleanup()
 {
     delete m_curKeyDialog;
     m_curKeyDialog = 0;
@@ -121,7 +121,7 @@ void DatabaseManager::openDatabaseCleanup()
     m_curDbStruct = DatabaseManagerStruct();
 }
 
-void DatabaseManager::emitEntrySelectionChanged()
+void DatabaseTabWidget::emitEntrySelectionChanged()
 {
     DatabaseWidget* dbWidget = currentDatabaseWidget();
 
@@ -133,7 +133,7 @@ void DatabaseManager::emitEntrySelectionChanged()
     Q_EMIT entrySelectionChanged(isSingleEntrySelected);
 }
 
-void DatabaseManager::closeDatabase(Database* db)
+void DatabaseTabWidget::closeDatabase(Database* db)
 {
     Q_ASSERT(db);
 
@@ -146,12 +146,12 @@ void DatabaseManager::closeDatabase(Database* db)
     int index = databaseIndex(db);
     Q_ASSERT(index != -1);
 
-    m_tabWidget->removeTab(index);
+    removeTab(index);
     delete dbStruct.dbWidget;
     delete db;
 }
 
-void DatabaseManager::saveDatabase(Database* db)
+void DatabaseTabWidget::saveDatabase(Database* db)
 {
     DatabaseManagerStruct& dbStruct = m_dbList[db];
 
@@ -170,7 +170,7 @@ void DatabaseManager::saveDatabase(Database* db)
     }
 }
 
-void DatabaseManager::saveDatabaseAs(Database* db)
+void DatabaseTabWidget::saveDatabaseAs(Database* db)
 {
     DatabaseManagerStruct& dbStruct = m_dbList[db];
     QString oldFileName;
@@ -197,53 +197,53 @@ void DatabaseManager::saveDatabaseAs(Database* db)
     }
 }
 
-void DatabaseManager::closeDatabase(int index)
+void DatabaseTabWidget::closeDatabase(int index)
 {
     if (index == -1) {
-        index = m_tabWidget->currentIndex();
+        index = currentIndex();
     }
 
     closeDatabase(indexDatabase(index));
 }
 
-void DatabaseManager::saveDatabase(int index)
+void DatabaseTabWidget::saveDatabase(int index)
 {
     if (index == -1) {
-        index = m_tabWidget->currentIndex();
+        index = currentIndex();
     }
 
     saveDatabase(indexDatabase(index));
 }
 
-void DatabaseManager::saveDatabaseAs(int index)
+void DatabaseTabWidget::saveDatabaseAs(int index)
 {
     if (index == -1) {
-        index = m_tabWidget->currentIndex();
+        index = currentIndex();
     }
     saveDatabaseAs(indexDatabase(index));
 }
 
-void DatabaseManager::createEntry()
+void DatabaseTabWidget::createEntry()
 {
     currentDatabaseWidget()->createEntry();
 }
 
-void DatabaseManager::editEntry()
+void DatabaseTabWidget::editEntry()
 {
     currentDatabaseWidget()->switchToEntryEdit();
 }
 
-void DatabaseManager::createGroup()
+void DatabaseTabWidget::createGroup()
 {
     currentDatabaseWidget()->createGroup();
 }
 
-void DatabaseManager::editGroup()
+void DatabaseTabWidget::editGroup()
 {
     currentDatabaseWidget()->switchToGroupEdit();
 }
 
-void DatabaseManager::updateTabName(Database* db)
+void DatabaseTabWidget::updateTabName(Database* db)
 {
     int index = databaseIndex(db);
     Q_ASSERT(index != -1);
@@ -262,7 +262,7 @@ void DatabaseManager::updateTabName(Database* db)
             tabName = db->metadata()->name();
         }
 
-        m_tabWidget->setTabToolTip(index, dbStruct.fileName);
+        setTabToolTip(index, dbStruct.fileName);
     }
     else {
         if (db->metadata()->name().isEmpty()) {
@@ -273,18 +273,18 @@ void DatabaseManager::updateTabName(Database* db)
         }
     }
 
-    m_tabWidget->setTabText(index, tabName);
+    setTabText(index, tabName);
 }
 
-int DatabaseManager::databaseIndex(Database* db)
+int DatabaseTabWidget::databaseIndex(Database* db)
 {
     QWidget* dbWidget = m_dbList.value(db).dbWidget;
-    return m_tabWidget->indexOf(dbWidget);
+    return indexOf(dbWidget);
 }
 
-Database* DatabaseManager::indexDatabase(int index)
+Database* DatabaseTabWidget::indexDatabase(int index)
 {
-    QWidget* dbWidget = m_tabWidget->widget(index);
+    QWidget* dbWidget = widget(index);
 
     QHashIterator<Database*, DatabaseManagerStruct> i(m_dbList);
     while (i.hasNext()) {
@@ -297,22 +297,22 @@ Database* DatabaseManager::indexDatabase(int index)
     return 0;
 }
 
-void DatabaseManager::insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct)
+void DatabaseTabWidget::insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct)
 {
     m_dbList.insert(db, dbStruct);
 
-    m_tabWidget->addTab(dbStruct.dbWidget, "");
+    addTab(dbStruct.dbWidget, "");
     updateTabName(db);
     int index = databaseIndex(db);
-    m_tabWidget->setCurrentIndex(index);
+    setCurrentIndex(index);
 
     connect(db->metadata(), SIGNAL(nameTextChanged(Database*)), SLOT(updateTabName(Database*)));
     connect(dbStruct.dbWidget->entryView(), SIGNAL(entrySelectionChanged()), SLOT(emitEntrySelectionChanged()));
 }
 
-DatabaseWidget* DatabaseManager::currentDatabaseWidget()
+DatabaseWidget* DatabaseTabWidget::currentDatabaseWidget()
 {
-    Database* db = indexDatabase(m_tabWidget->currentIndex());
+    Database* db = indexDatabase(currentIndex());
     if (db) {
         return m_dbList[db].dbWidget;
     }

@@ -46,7 +46,7 @@ set(keepassx_SOURCES
     format/KeePass2Writer.cpp
     format/KeePass2XmlReader.cpp
     format/KeePass2XmlWriter.cpp
-    gui/DatabaseManager.cpp
+    gui/DatabaseTabWidget.cpp
     gui/DatabaseWidget.cpp
     gui/EditEntryWidget.cpp
     gui/EditGroupWidget.cpp
@@ -72,7 +72,7 @@ set(keepassx_MOC
     core/Entry.h
     core/Group.h
     core/Metadata.h
-    gui/DatabaseManager.h
+    gui/DatabaseTabWidget.h
     gui/DatabaseWidget.h
     gui/EditEntryWidget.h
     gui/EditGroupWidget.h

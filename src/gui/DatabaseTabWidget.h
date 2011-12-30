@@ -20,6 +20,7 @@
 
 #include <QtCore/QHash>
 #include <QtCore/QObject>
+#include <QtGui/QTabWidget>
 
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
@@ -40,12 +41,12 @@ struct DatabaseManagerStruct
     bool readOnly;
 };
 
-class DatabaseManager : public QObject
+class DatabaseTabWidget : public QTabWidget
 {
     Q_OBJECT
 
 public:
-    DatabaseManager(QTabWidget* tabWidget);
+    DatabaseTabWidget(QWidget* parent);
     void openDatabase(const QString& fileName);
     void saveDatabase(Database* db);
     void saveDatabaseAs(Database* db);
@@ -78,7 +79,6 @@ private:
     Database* indexDatabase(int index);
     void insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct);
 
-    QTabWidget* m_tabWidget;
     QWidget* m_window;
     KeePass2Reader m_reader;
     KeePass2Writer m_writer;
