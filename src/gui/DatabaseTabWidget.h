@@ -48,9 +48,6 @@ class DatabaseTabWidget : public QTabWidget
 public:
     DatabaseTabWidget(QWidget* parent);
     void openDatabase(const QString& fileName);
-    void saveDatabase(Database* db);
-    void saveDatabaseAs(Database* db);
-    void closeDatabase(Database* db);
     DatabaseWidget* currentDatabaseWidget();
 
 public Q_SLOTS:
@@ -75,6 +72,9 @@ Q_SIGNALS:
     void entrySelectionChanged(bool singleEntrySelected);
 
 private:
+    void saveDatabase(Database* db);
+    void saveDatabaseAs(Database* db);
+    void closeDatabase(Database* db);
     int databaseIndex(Database* db);
     Database* indexDatabase(int index);
     void insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct);
