@@ -25,6 +25,7 @@
 #include <QtGui/QPushButton>
 
 #include "config-keepassx-tests.h"
+#include "tests.h"
 #include "crypto/Crypto.h"
 #include "gui/FileDialog.h"
 #include "gui/MainWindow.h"
@@ -65,4 +66,4 @@ void TestGui::cleanupTestCase()
    delete m_mainWindow;
 }
 
-QTEST_MAIN(TestGui);
+KEEPASSX_QTEST_GUI_MAIN(TestGui)

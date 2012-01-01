@@ -19,6 +19,7 @@
 
 #include <QtTest/QTest>
 
+#include "tests.h"
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -321,4 +322,4 @@ void TestKeePass2XmlReader::testDeletedObjects()
     QVERIFY(objList.isEmpty());
 }
 
-QTEST_MAIN(TestKeePass2XmlReader);
+KEEPASSX_QTEST_CORE_MAIN(TestKeePass2XmlReader)

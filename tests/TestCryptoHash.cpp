@@ -19,6 +19,7 @@
 
 #include <QtTest/QTest>
 
+#include "tests.h"
 #include "crypto/Crypto.h"
 #include "crypto/CryptoHash.h"
 
@@ -47,4 +48,4 @@ void TestCryptoHash::test()
              QByteArray::fromHex("0b56e5f65263e747af4a833bd7dd7ad26a64d7a4de7c68e52364893dca0766b4"));
 }
 
-QTEST_MAIN(TestCryptoHash);
+KEEPASSX_QTEST_CORE_MAIN(TestCryptoHash)

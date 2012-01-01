@@ -19,6 +19,7 @@
 
 #include <QtTest/QTest>
 
+#include "tests.h"
 #include "crypto/Crypto.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/SymmetricCipher.h"
@@ -77,4 +78,4 @@ void TestKeePass2RandomStream::test()
     QCOMPARE(randomStreamData, cipherData);
 }
 
-QTEST_MAIN(TestKeePass2RandomStream);
+KEEPASSX_QTEST_CORE_MAIN(TestKeePass2RandomStream)

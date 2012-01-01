@@ -21,6 +21,7 @@
 #include <QtTest/QSignalSpy>
 #include <QtTest/QTest>
 
+#include "tests.h"
 #include "core/Database.h"
 #include "core/Group.h"
 #include "crypto/Crypto.h"
@@ -175,4 +176,4 @@ void TestGroup::testDeleteSignals()
     delete group;
 }
 
-QTEST_MAIN(TestGroup);
+KEEPASSX_QTEST_CORE_MAIN(TestGroup)

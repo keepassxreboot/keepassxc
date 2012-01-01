@@ -21,6 +21,7 @@
 #include <QtTest/QTest>
 
 #include "config-keepassx-tests.h"
+#include "tests.h"
 #include "core/Database.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
@@ -144,4 +145,4 @@ void TestKeys::testFileKeyError()
     errorMsg = "";
 }
 
-QTEST_MAIN(TestKeys);
+KEEPASSX_QTEST_CORE_MAIN(TestKeys)

@@ -21,6 +21,7 @@
 #include <QtTest/QTest>
 
 #include "modeltest.h"
+#include "tests.h"
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "gui/EntryModel.h"
@@ -92,4 +93,4 @@ void TestEntryModel::test()
     delete model;
 }
 
-QTEST_MAIN(TestEntryModel);
+KEEPASSX_QTEST_CORE_MAIN(TestEntryModel)

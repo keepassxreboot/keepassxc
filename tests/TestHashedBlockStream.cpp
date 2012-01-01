@@ -20,6 +20,7 @@
 #include <QtCore/QBuffer>
 #include <QtTest/QTest>
 
+#include "tests.h"
 #include "crypto/Crypto.h"
 #include "streams/HashedBlockStream.h"
 
@@ -69,4 +70,4 @@ void TestHashedBlockStream::testWriteRead()
     buffer.buffer().clear();
 }
 
-QTEST_MAIN(TestHashedBlockStream);
+KEEPASSX_QTEST_CORE_MAIN(TestHashedBlockStream)

@@ -20,6 +20,7 @@
 #include <QtCore/QBuffer>
 #include <QtTest/QTest>
 
+#include "tests.h"
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -78,4 +79,4 @@ void TestKeePass2Writer::testProtectedAttributes()
     QCOMPARE(entry->isAttributeProtected("test"), true);
 }
 
-QTEST_MAIN(TestKeePass2Writer);
+KEEPASSX_QTEST_CORE_MAIN(TestKeePass2Writer)

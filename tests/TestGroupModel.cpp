@@ -21,6 +21,7 @@
 #include <QtTest/QTest>
 
 #include "modeltest.h"
+#include "tests.h"
 #include "core/Database.h"
 #include "core/Group.h"
 #include "crypto/Crypto.h"
@@ -109,4 +110,4 @@ void TestGroupModel::test()
     delete model;
 }
 
-QTEST_MAIN(TestGroupModel);
+KEEPASSX_QTEST_CORE_MAIN(TestGroupModel)

@@ -20,6 +20,7 @@
 #include <QtTest/QTest>
 
 #include "config-keepassx-tests.h"
+#include "tests.h"
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -91,4 +92,4 @@ void TestKeePass2Reader::testProtectedStrings()
     delete reader;
 }
 
-QTEST_MAIN(TestKeePass2Reader);
+QTEST_MAIN(TestKeePass2Reader)

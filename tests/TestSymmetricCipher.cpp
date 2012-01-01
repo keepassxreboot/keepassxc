@@ -20,6 +20,7 @@
 #include <QtCore/QBuffer>
 #include <QtTest/QTest>
 
+#include "tests.h"
 #include "crypto/Crypto.h"
 #include "crypto/SymmetricCipher.h"
 #include "streams/SymmetricCipherStream.h"
@@ -160,4 +161,4 @@ void TestSymmetricCipher::testSalsa20()
     QCOMPARE(cipherTextB.mid(448, 64), expectedCipherText4);
 }
 
-QTEST_MAIN(TestSymmetricCipher);
+KEEPASSX_QTEST_CORE_MAIN(TestSymmetricCipher)
