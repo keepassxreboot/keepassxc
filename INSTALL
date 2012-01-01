@@ -2,7 +2,7 @@ Building:
 =========
 mkdir build
 cd build
-cmake .. [-DCMAKE_INSTALL_PREFIX=/usr/local] [-DWITH_GUI_TESTS=ON]
+cmake .. [-DCMAKE_INSTALL_PREFIX=/usr/local] [-DCMAKE_VERBOSE_MAKEFILE=ON] [-DWITH_GUI_TESTS=ON]
 make [-jX]
 
 Installing:
