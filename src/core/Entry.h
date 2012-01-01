@@ -23,7 +23,9 @@
 #include <QtCore/QSet>
 #include <QtCore/QUrl>
 #include <QtGui/QColor>
-#include <QtGui/QIcon>
+#include <QtGui/QImage>
+#include <QtGui/QPixmap>
+#include <QtGui/QPixmapCache>
 
 #include "core/TimeInfo.h"
 #include "core/Uuid.h"
@@ -45,7 +47,8 @@ public:
     Entry();
     ~Entry();
     Uuid uuid() const;
-    QIcon icon() const;
+    QImage icon() const;
+    QPixmap iconPixmap() const;
     int iconNumber() const;
     Uuid iconUuid() const;
     QColor foregroundColor() const;
@@ -125,6 +128,7 @@ private:
     QList<Entry*> m_history;
     QPointer<Group> m_group;
     const Database* m_db;
+    QPixmapCache::Key m_pixmapCacheKey;
     const static QStringList m_defaultAttibutes;
 };
 

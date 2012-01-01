@@ -227,9 +227,9 @@ void KeePass2XmlReader::parseIcon()
             uuid = readUuid();
         }
         else if (m_xml.name() == "Data") {
-            QPixmap pixmap;
-            pixmap.loadFromData(readBinary());
-            m_meta->addCustomIcon(uuid, QIcon(pixmap));
+            QImage icon;
+            icon.loadFromData(readBinary());
+            m_meta->addCustomIcon(uuid, icon);
         }
         else {
             skipCurrentElement();
@@ -318,7 +318,7 @@ Group* KeePass2XmlReader::parseGroup()
                 raiseError();
             }
             else {
-                if (iconId >= DatabaseIcons::iconCount()) {
+                if (iconId >= databaseIcons()->iconCount()) {
                     qWarning("KeePass2XmlReader::parseGroup: icon id \"%d\" not supported", iconId);
                 }
                 group->setIcon(iconId);

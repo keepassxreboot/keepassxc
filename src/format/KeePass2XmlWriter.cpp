@@ -107,7 +107,7 @@ void KeePass2XmlWriter::writeCustomIcons()
 {
     m_xml.writeStartElement("CustomIcons");
 
-    QHash<Uuid, QIcon> customIcons = m_meta->customIcons();
+    QHash<Uuid, QImage> customIcons = m_meta->customIcons();
     Q_FOREACH (const Uuid& uuid, customIcons.keys()) {
         writeIcon(uuid, customIcons.value(uuid));
     }
@@ -115,18 +115,17 @@ void KeePass2XmlWriter::writeCustomIcons()
     m_xml.writeEndElement();
 }
 
-void KeePass2XmlWriter::writeIcon(const Uuid& uuid, const QIcon& icon)
+void KeePass2XmlWriter::writeIcon(const Uuid& uuid, const QImage& icon)
 {
     m_xml.writeStartElement("Icon");
 
     writeUuid("UUID", uuid);
 
-    QPixmap pixmap = icon.pixmap(16, 16);
-
     QByteArray ba;
     QBuffer buffer(&ba);
     buffer.open(QIODevice::WriteOnly);
-    pixmap.save(&buffer, "PNG");
+    // TODO check !icon.save()
+    icon.save(&buffer, "PNG");
     buffer.close();
     writeBinary("Data", ba);
 

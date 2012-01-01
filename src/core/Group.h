@@ -19,7 +19,9 @@
 #define KEEPASSX_GROUP_H
 
 #include <QtCore/QPointer>
-#include <QtGui/QIcon>
+#include <QtGui/QImage>
+#include <QtGui/QPixmap>
+#include <QtGui/QPixmapCache>
 
 #include "core/Database.h"
 #include "core/Entry.h"
@@ -38,7 +40,8 @@ public:
     Uuid uuid() const;
     QString name() const;
     QString notes() const;
-    QIcon icon() const;
+    QImage icon() const;
+    QPixmap iconPixmap() const;
     int iconNumber() const;
     Uuid iconUuid() const;
     TimeInfo timeInfo() const;
@@ -109,6 +112,7 @@ private:
     QList<Entry*> m_entries;
 
     QPointer<Group> m_parent;
+    QPixmapCache::Key m_pixmapCacheKey;
 
     friend void Database::setRootGroup(Group* group);
     friend Entry::~Entry();

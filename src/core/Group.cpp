@@ -55,13 +55,31 @@ QString Group::notes() const
     return m_notes;
 }
 
-QIcon Group::icon() const
+QImage Group::icon() const
 {
     if (m_customIcon.isNull()) {
-        return DatabaseIcons::icon(m_iconNumber);
+        return databaseIcons()->icon(m_iconNumber);
     }
     else {
+        // TODO check if m_db is 0
         return m_db->metadata()->customIcon(m_customIcon);
+    }
+}
+
+QPixmap Group::iconPixmap() const
+{
+    if (m_customIcon.isNull()) {
+        return databaseIcons()->iconPixmap(m_iconNumber);
+    }
+    else {
+        QPixmap pixmap;
+        if (!QPixmapCache::find(m_pixmapCacheKey, &pixmap)) {
+            // TODO check if m_db is 0
+            pixmap = QPixmap::fromImage(m_db->metadata()->customIcon(m_customIcon));
+            *const_cast<QPixmapCache::Key*>(&m_pixmapCacheKey) = QPixmapCache::insert(pixmap);
+        }
+
+        return pixmap;
     }
 }
 
@@ -129,6 +147,8 @@ void Group::setIcon(int iconNumber)
     m_iconNumber = iconNumber;
     m_customIcon = Uuid();
 
+    m_pixmapCacheKey = QPixmapCache::Key();
+
     Q_EMIT dataChanged(this);
 }
 
@@ -138,6 +158,8 @@ void Group::setIcon(const Uuid& uuid)
 
     m_iconNumber = 0;
     m_customIcon = uuid;
+
+    m_pixmapCacheKey = QPixmapCache::Key();
 
     Q_EMIT dataChanged(this);
 }

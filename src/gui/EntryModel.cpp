@@ -85,7 +85,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         }
     }
     else if ((role == Qt::DecorationRole) && (index.column() == 0)) {
-        return entry->icon();
+        return entry->iconPixmap();
     }
 
     return QVariant();

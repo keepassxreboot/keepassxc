@@ -18,25 +18,28 @@
 #ifndef KEEPASSX_DATABASEICONS_H
 #define KEEPASSX_DATABASEICONS_H
 
-#include <QtCore/QHash>
-#include <QtGui/QIcon>
+#include <QtCore/QVector>
+#include <QtGui/QImage>
+#include <QtGui/QPixmap>
+#include <QtGui/QPixmapCache>
 
 class DatabaseIcons
 {
 public:
-    static QIcon icon(int index);
-    static int iconCount();
-
-private:
-    static DatabaseIcons* m_instance;
+    QImage icon(int index);
+    QPixmap iconPixmap(int index);
+    int iconCount();
 
 private:
     DatabaseIcons();
-    QIcon getIconInternal(int index);
 
-    bool m_initalized;
-    QList<QString> m_indexToName;
-    QHash<int,QIcon> m_iconCache;
+    QVector<QString> m_indexToName;
+    QVector<QImage> m_iconCache;
+    QVector<QPixmapCache::Key> m_pixmapCacheKeys;
+
+    friend DatabaseIcons* databaseIcons();
 };
+
+DatabaseIcons* databaseIcons();
 
 #endif // KEEPASSX_DATABASEICONS_H

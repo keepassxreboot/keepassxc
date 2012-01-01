@@ -19,20 +19,40 @@
 
 #include "core/DataPath.h"
 
-DatabaseIcons* DatabaseIcons::m_instance(0);
-
-QIcon DatabaseIcons::icon(int index)
+QImage DatabaseIcons::icon(int index)
 {
     if (index < 0 || index >= iconCount()) {
         qWarning("DatabaseIcons::icon: invalid icon index %d", index);
-        return QIcon();
+        return QImage();
     }
 
-    if (!m_instance) {
-        m_instance = new DatabaseIcons();
+    if (!m_iconCache[index].isNull()) {
+        return m_iconCache[index];
+    }
+    else {
+        QString iconPath = QString("icons/database/").append(m_indexToName.at(index));
+        QImage icon(DataPath::getPath(iconPath));
+
+        m_iconCache[index] = icon;
+        return icon;
+    }
+}
+
+QPixmap DatabaseIcons::iconPixmap(int index)
+{
+    if (index < 0 || index >= iconCount()) {
+        qWarning("DatabaseIcons::iconPixmap: invalid icon index %d", index);
+        return QPixmap();
     }
 
-    return m_instance->getIconInternal(index);
+    QPixmap pixmap;
+
+    if (!QPixmapCache::find(m_pixmapCacheKeys[index], &pixmap)) {
+        pixmap = QPixmap::fromImage(icon(index));
+        m_pixmapCacheKeys[index] = QPixmapCache::insert(pixmap);
+    }
+
+    return pixmap;
 }
 
 int DatabaseIcons::iconCount()
@@ -42,6 +62,7 @@ int DatabaseIcons::iconCount()
 
 DatabaseIcons::DatabaseIcons()
 {
+    m_indexToName.reserve(iconCount());
     m_indexToName.append("C00_Password.png");
     m_indexToName.append("C01_Package_Network.png");
     m_indexToName.append("C02_MessageBox_Warning.png");
@@ -113,18 +134,20 @@ DatabaseIcons::DatabaseIcons()
     m_indexToName.append("C68_BlackBerry.png");
 
     Q_ASSERT(m_indexToName.size() == iconCount());
+
+    m_iconCache.reserve(iconCount());
+    m_iconCache.resize(iconCount());
+    m_pixmapCacheKeys.reserve(iconCount());
+    m_pixmapCacheKeys.resize(iconCount());
 }
 
-QIcon DatabaseIcons::getIconInternal(int index)
+DatabaseIcons* databaseIcons()
 {
-    if (m_iconCache.contains(index)) {
-        return m_iconCache.value(index);
-    }
-    else {
-        QString iconPath = QString("icons/database/").append(m_indexToName.at(index));
-        QIcon icon(DataPath::getPath(iconPath));
+    static DatabaseIcons* instance(0);
 
-        m_iconCache.insert(index, icon);
-        return icon;
+    if (!instance) {
+        instance = new DatabaseIcons();
     }
+
+    return instance;
 }

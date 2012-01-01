@@ -20,7 +20,7 @@
 
 #include <QtCore/QDateTime>
 #include <QtCore/QHash>
-#include <QtGui/QIcon>
+#include <QtGui/QImage>
 
 #include "core/Uuid.h"
 
@@ -48,8 +48,8 @@ public:
     bool protectUrl() const;
     bool protectNotes() const;
     bool autoEnableVisualHiding() const;
-    QIcon customIcon(const Uuid& uuid) const;
-    QHash<Uuid, QIcon> customIcons() const;
+    QImage customIcon(const Uuid& uuid) const;
+    QHash<Uuid, QImage> customIcons() const;
     bool recycleBinEnabled() const;
     const Group* recycleBin() const;
     QDateTime recycleBinChanged() const;
@@ -76,7 +76,7 @@ public:
     void setProtectUrl(bool value);
     void setProtectNotes(bool value);
     void setAutoEnableVisualHiding(bool value);
-    void addCustomIcon(const Uuid& uuid, const QIcon& icon);
+    void addCustomIcon(const Uuid& uuid, const QImage& icon);
     void removeCustomIcon(const Uuid& uuid);
     void setRecycleBinEnabled(bool value);
     void setRecycleBin(Group* group);
@@ -113,7 +113,7 @@ private:
     bool m_protectNotes;
     bool m_autoEnableVisualHiding;
 
-    QHash<Uuid, QIcon> m_customIcons;
+    QHash<Uuid, QImage> m_customIcons;
 
     bool m_recycleBinEnabled;
     Group* m_recycleBin;

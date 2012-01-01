@@ -120,12 +120,12 @@ bool Metadata::autoEnableVisualHiding() const
     return m_autoEnableVisualHiding;
 }
 
-QIcon Metadata::customIcon(const Uuid& uuid) const
+QImage Metadata::customIcon(const Uuid& uuid) const
 {
     return m_customIcons.value(uuid);
 }
 
-QHash<Uuid, QIcon> Metadata::customIcons() const
+QHash<Uuid, QImage> Metadata::customIcons() const
 {
     return m_customIcons;
 }
@@ -257,7 +257,7 @@ void Metadata::setAutoEnableVisualHiding(bool value)
     m_autoEnableVisualHiding = value;
 }
 
-void Metadata::addCustomIcon(const Uuid& uuid, const QIcon& icon)
+void Metadata::addCustomIcon(const Uuid& uuid, const QImage& icon)
 {
     Q_ASSERT(!uuid.isNull());
     Q_ASSERT(!m_customIcons.contains(uuid));

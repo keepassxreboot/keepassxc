@@ -109,7 +109,7 @@ QVariant GroupModel::data(const QModelIndex& index, int role) const
         return group->name();
     }
     else if (role == Qt::DecorationRole) {
-        return group->icon();
+        return group->iconPixmap();
     }
     else {
         return QVariant();
