@@ -48,7 +48,7 @@ QIcon DataPath::applicationIcon()
         Q_FOREACH (const QString& size, pngSizes) {
             icon.addFile(QString("%1/icons/application/%2x%2/apps/keepassx.png").arg(m_instance->m_basePath, size));
         }
-        icon.addFile(QString("%1/icons/application/scalable/apps/keepassx.svg").arg(m_instance->m_basePath));
+        icon.addFile(QString("%1/icons/application/scalable/apps/keepassx.svgz").arg(m_instance->m_basePath));
     }
 #endif
 
