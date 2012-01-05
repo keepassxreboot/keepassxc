@@ -16,3 +16,8 @@
 file(GLOB DATABASE_ICONS icons/database/*.png)
 
 install(FILES ${DATABASE_ICONS} DESTINATION ${DATA_INSTALL_DIR}/icons/database)
+
+if(UNIX AND NOT APPLE)
+    install(DIRECTORY icons/application/ DESTINATION share/icons/hicolor
+            FILES_MATCHING PATTERN "*.png" PATTERN "*.svg")
+endif(UNIX AND NOT APPLE)
