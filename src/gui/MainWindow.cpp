@@ -19,6 +19,7 @@
 #include "ui_MainWindow.h"
 
 #include "core/Database.h"
+#include "core/DataPath.h"
 #include "core/Metadata.h"
 #include "gui/DatabaseWidget.h"
 
@@ -26,6 +27,8 @@ MainWindow::MainWindow()
     : m_ui(new Ui::MainWindow())
 {
     m_ui->setupUi(this);
+
+    setWindowIcon(DataPath::applicationIcon());
 
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(currentTabChanged(int)));
     connect(m_ui->tabWidget, SIGNAL(entrySelectionChanged(bool)), m_ui->actionEntryEdit, SLOT(setEnabled(bool)));

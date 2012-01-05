@@ -33,6 +33,28 @@ QString DataPath::getPath(const QString& name)
     return m_instance->m_basePath + name;
 }
 
+QIcon DataPath::applicationIcon()
+{
+    if (!m_instance) {
+        m_instance = new DataPath();
+    }
+
+    QIcon icon = QIcon::fromTheme("keepassx");
+
+#if defined(QT_DEBUG) || defined(Q_WS_MAC) || defined(Q_WS_WIN)
+    if (icon.isNull()) {
+        QStringList pngSizes;
+        pngSizes << "16" << "24" << "32" << "48" << "64" << "128";
+        Q_FOREACH (const QString& size, pngSizes) {
+            icon.addFile(QString("%1/icons/application/%2x%2/apps/keepassx.png").arg(m_instance->m_basePath, size));
+        }
+        icon.addFile(QString("%1/icons/application/scalable/apps/keepassx.svg").arg(m_instance->m_basePath));
+    }
+#endif
+
+    return icon;
+}
+
 DataPath::DataPath()
 {
     if (false) {

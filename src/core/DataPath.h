@@ -19,11 +19,13 @@
 #define KEEPASSX_DATAPATH_H
 
 #include <QtCore/QString>
+#include <QtGui/QIcon>
 
 class DataPath
 {
 public:
     static QString getPath(const QString& name);
+    static QIcon applicationIcon();
 
 private:
     DataPath();
