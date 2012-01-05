@@ -31,7 +31,7 @@ QImage DatabaseIcons::icon(int index)
     }
     else {
         QString iconPath = QString("icons/database/").append(m_indexToName.at(index));
-        QImage icon(DataPath::getPath(iconPath));
+        QImage icon(dataPath()->getPath(iconPath));
 
         m_iconCache[index] = icon;
         return icon;

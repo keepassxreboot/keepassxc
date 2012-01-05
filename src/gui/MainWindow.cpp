@@ -28,7 +28,7 @@ MainWindow::MainWindow()
 {
     m_ui->setupUi(this);
 
-    setWindowIcon(DataPath::applicationIcon());
+    setWindowIcon(dataPath()->applicationIcon());
 
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(currentTabChanged(int)));
     connect(m_ui->tabWidget, SIGNAL(entrySelectionChanged(bool)), m_ui->actionEntryEdit, SLOT(setEnabled(bool)));

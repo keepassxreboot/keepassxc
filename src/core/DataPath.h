@@ -24,15 +24,18 @@
 class DataPath
 {
 public:
-    static QString getPath(const QString& name);
-    static QIcon applicationIcon();
+    QString getPath(const QString& name);
+    QIcon applicationIcon();
 
 private:
     DataPath();
     bool testSetDir(const QString& dir);
 
-    static DataPath* m_instance;
     QString m_basePath;
+
+    friend DataPath* dataPath();
 };
+
+DataPath* dataPath();
 
 #endif // KEEPASSX_DATAPATH_H

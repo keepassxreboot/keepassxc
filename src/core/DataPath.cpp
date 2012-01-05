@@ -22,23 +22,13 @@
 
 #include "config-keepassx.h"
 
-DataPath* DataPath::m_instance(0);
-
 QString DataPath::getPath(const QString& name)
 {
-    if (!m_instance) {
-        m_instance = new DataPath();
-    }
-
-    return m_instance->m_basePath + name;
+    return m_basePath + name;
 }
 
 QIcon DataPath::applicationIcon()
 {
-    if (!m_instance) {
-        m_instance = new DataPath();
-    }
-
     QIcon icon = QIcon::fromTheme("keepassx");
 
 #if defined(QT_DEBUG) || defined(Q_WS_MAC) || defined(Q_WS_WIN)
@@ -46,9 +36,9 @@ QIcon DataPath::applicationIcon()
         QStringList pngSizes;
         pngSizes << "16" << "24" << "32" << "48" << "64" << "128";
         Q_FOREACH (const QString& size, pngSizes) {
-            icon.addFile(QString("%1/icons/application/%2x%2/apps/keepassx.png").arg(m_instance->m_basePath, size));
+            icon.addFile(QString("%1/icons/application/%2x%2/apps/keepassx.png").arg(m_basePath, size));
         }
-        icon.addFile(QString("%1/icons/application/scalable/apps/keepassx.svgz").arg(m_instance->m_basePath));
+        icon.addFile(QString("%1/icons/application/scalable/apps/keepassx.svgz").arg(m_basePath));
     }
 #endif
 
@@ -93,4 +83,15 @@ bool DataPath::testSetDir(const QString& dir)
     else {
         return false;
     }
+}
+
+DataPath* dataPath()
+{
+    static DataPath* instance = 0;
+
+    if (!instance) {
+        instance = new DataPath();
+    }
+
+    return instance;
 }
