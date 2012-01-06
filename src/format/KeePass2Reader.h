@@ -33,7 +33,7 @@ public:
     KeePass2Reader();
     Database* readDatabase(QIODevice* device, const CompositeKey& key);
     Database* readDatabase(const QString& filename, const CompositeKey& key);
-    bool error();
+    bool hasError();
     QString errorString();
     void setSaveXml(bool save);
     QByteArray xmlData();

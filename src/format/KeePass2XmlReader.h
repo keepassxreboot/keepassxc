@@ -42,7 +42,7 @@ public:
     Database* readDatabase(QIODevice* device);
     void readDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream = 0);
     Database* readDatabase(const QString& filename);
-    bool error();
+    bool hasError();
     QString errorString();
 
 private:
@@ -75,7 +75,7 @@ private:
 
     Group* getGroup(const Uuid& uuid);
     Entry* getEntry(const Uuid& uuid);
-    void raiseError();
+    void raiseError(int internalNumber);
     void skipCurrentElement();
 
     QXmlStreamReader m_xml;

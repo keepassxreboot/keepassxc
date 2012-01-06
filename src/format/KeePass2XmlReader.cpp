@@ -34,6 +34,7 @@ KeePass2XmlReader::KeePass2XmlReader()
 
 void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream)
 {
+    m_xml.clear();
     m_xml.setDevice(device);
 
     m_db = db;
@@ -48,9 +49,9 @@ void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Ra
         }
     }
 
-    // TODO check if m_tmpParent doesn't have entries
     if (!m_xml.error() && !m_tmpParent->children().isEmpty()) {
-        raiseError();
+        qWarning("KeePass2XmlReader::readDatabase: found %d invalid entry references",
+                 m_tmpParent->children().size());
     }
 
     delete m_tmpParent;
@@ -70,7 +71,7 @@ Database* KeePass2XmlReader::readDatabase(const QString& filename)
     return readDatabase(&file);
 }
 
-bool KeePass2XmlReader::error()
+bool KeePass2XmlReader::hasError()
 {
     return m_xml.hasError();
 }
@@ -300,7 +301,7 @@ Group* KeePass2XmlReader::parseGroup()
         if (m_xml.name() == "UUID") {
             Uuid uuid = readUuid();
             if (uuid.isNull()) {
-                raiseError();
+                raiseError(1);
             }
             else {
                 group = getGroup(uuid);
@@ -315,7 +316,7 @@ Group* KeePass2XmlReader::parseGroup()
         else if (m_xml.name() == "IconID") {
             int iconId = readNumber();
             if (iconId < 0) {
-                raiseError();
+                raiseError(2);
             }
             else {
                 if (iconId >= databaseIcons()->iconCount()) {
@@ -352,7 +353,7 @@ Group* KeePass2XmlReader::parseGroup()
                 group->setAutoTypeEnabled(Group::Disable);
             }
             else {
-                raiseError();
+                raiseError(3);
             }
 
         }
@@ -369,7 +370,7 @@ Group* KeePass2XmlReader::parseGroup()
                 group->setSearchingEnabled(Group::Disable);
             }
             else {
-                raiseError();
+                raiseError(4);
             }
         }
         else if (m_xml.name() == "LastTopVisibleEntry") {
@@ -419,7 +420,7 @@ void KeePass2XmlReader::parseDeletedObject()
         if (m_xml.name() == "UUID") {
             Uuid uuid = readUuid();
             if (uuid.isNull()) {
-                raiseError();
+                raiseError(5);
             }
             else {
                 delObj.uuid = uuid;
@@ -445,7 +446,7 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
         if (m_xml.name() == "UUID") {
             Uuid uuid = readUuid();
             if (uuid.isNull()) {
-                raiseError();
+                raiseError(6);
             }
             else {
                 if (history) {
@@ -460,7 +461,7 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
         else if (m_xml.name() == "IconID") {
             int iconId = readNumber();
             if (iconId < 0) {
-                raiseError();
+                raiseError(7);
             }
             else {
                 entry->setIcon(iconId);
@@ -498,7 +499,7 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
         }
         else if (m_xml.name() == "History") {
             if (history) {
-                raiseError();
+                raiseError(8);
             }
             else {
                 parseEntryHistory(entry);
@@ -532,7 +533,7 @@ void KeePass2XmlReader::parseEntryString(Entry *entry)
                     value = m_randomStream->process(QByteArray::fromBase64(value.toAscii()));
                 }
                 else {
-                    raiseError();
+                    raiseError(9);
                 }
             }
 
@@ -679,7 +680,7 @@ bool KeePass2XmlReader::readBool()
         return false;
     }
     else {
-        raiseError();
+        raiseError(10);
         return false;
     }
 }
@@ -690,7 +691,7 @@ QDateTime KeePass2XmlReader::readDateTime()
     QDateTime dt = QDateTime::fromString(str, Qt::ISODate);
 
     if (!dt.isValid()) {
-        raiseError();
+        raiseError(11);
     }
 
     return dt;
@@ -705,7 +706,7 @@ QColor KeePass2XmlReader::readColor()
     }
 
     if (colorStr.length() != 7 || colorStr[0] != '#') {
-        raiseError();
+        raiseError(12);
         return QColor();
     }
 
@@ -715,7 +716,7 @@ QColor KeePass2XmlReader::readColor()
         bool ok;
         int rgbPart = rgbPartStr.toInt(&ok, 16);
         if (!ok || rgbPart > 255) {
-            raiseError();
+            raiseError(13);
             return QColor();
         }
 
@@ -738,7 +739,7 @@ int KeePass2XmlReader::readNumber()
     bool ok;
     int result = readString().toInt(&ok);
     if (!ok) {
-        raiseError();
+        raiseError(14);
     }
     return result;
 }
@@ -747,7 +748,7 @@ Uuid KeePass2XmlReader::readUuid()
 {
     QByteArray uuidBin = readBinary();
     if (uuidBin.length() != Uuid::LENGTH) {
-        raiseError();
+        raiseError(15);
         return Uuid();
     }
     else {
@@ -798,9 +799,9 @@ Entry* KeePass2XmlReader::getEntry(const Uuid& uuid)
     return entry;
 }
 
-void KeePass2XmlReader::raiseError()
+void KeePass2XmlReader::raiseError(int internalNumber)
 {
-    m_xml.raiseError(tr("Invalid database file"));
+    m_xml.raiseError(tr("Invalid database file (error no %1).").arg(QString::number(internalNumber)));
 }
 
 void KeePass2XmlReader::skipCurrentElement()

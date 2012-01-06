@@ -41,7 +41,7 @@ void TestKeePass2Reader::testNonAscii()
     KeePass2Reader* reader = new KeePass2Reader();
     Database* db = reader->readDatabase(filename, key);
     QVERIFY(db);
-    QVERIFY(!reader->error());
+    QVERIFY(!reader->hasError());
     QCOMPARE(db->metadata()->name(), QString("NonAsciiTest"));
 
     delete db;
@@ -56,7 +56,7 @@ void TestKeePass2Reader::testCompressed()
     KeePass2Reader* reader = new KeePass2Reader();
     Database* db = reader->readDatabase(filename, key);
     QVERIFY(db);
-    QVERIFY(!reader->error());
+    QVERIFY(!reader->hasError());
     QCOMPARE(db->metadata()->name(), QString("Compressed"));
 
     delete db;
@@ -71,7 +71,7 @@ void TestKeePass2Reader::testProtectedStrings()
     KeePass2Reader* reader = new KeePass2Reader();
     Database* db = reader->readDatabase(filename, key);
     QVERIFY(db);
-    QVERIFY(!reader->error());
+    QVERIFY(!reader->hasError());
     QCOMPARE(db->metadata()->name(), QString("Protected Strings Test"));
 
     Entry* entry = db->rootGroup()->entries().at(0);

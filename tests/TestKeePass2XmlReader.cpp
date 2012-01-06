@@ -71,7 +71,7 @@ void TestKeePass2XmlReader::initTestCase()
     QString xmlFile = QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.xml");
     m_db = reader->readDatabase(xmlFile);
     QVERIFY(m_db);
-    QVERIFY(!reader->error());
+    QVERIFY(!reader->hasError());
 }
 
 void TestKeePass2XmlReader::testMetadata()

@@ -57,7 +57,7 @@ int main(int argc, char **argv)
     reader.setSaveXml(true);
     reader.readDatabase(&dbFile, key);
 
-    if (reader.error()) {
+    if (reader.hasError()) {
         qCritical("Error while reading the database.");
         return 1;
     }

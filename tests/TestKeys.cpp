@@ -77,7 +77,7 @@ void TestKeys::testFileKey()
 
     Database* db = reader.readDatabase(dbFilename, compositeKey);
     QVERIFY(db);
-    QVERIFY(!reader.error());
+    QVERIFY(!reader.hasError());
     QCOMPARE(db->metadata()->name(), QString("%1 Database").arg(name));
 
     delete db;
@@ -122,7 +122,7 @@ void TestKeys::testCreateFileKey()
     KeePass2Reader reader;
     Database* dbRead = reader.readDatabase(&dbBuffer, compositeKey);
     QVERIFY(dbRead);
-    QVERIFY(!reader.error());
+    QVERIFY(!reader.hasError());
     QCOMPARE(dbRead->metadata()->name(), dbName);
     delete dbRead;
 }

@@ -38,7 +38,8 @@ KeePass2Reader::KeePass2Reader()
 
 Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& key)
 {
-    m_db = new Database();
+    QScopedPointer<Database> db(new Database());
+    m_db = db.data();
     m_device = device;
     m_error = false;
     m_errorStr = QString();
@@ -48,13 +49,13 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
 
     quint32 signature1 = Endian::readUInt32(m_device, KeePass2::BYTEORDER, &ok);
     if (!ok || signature1 != KeePass2::SIGNATURE_1) {
-        raiseError("1");
+        raiseError(tr("Not a KeePass database."));
         return 0;
     }
 
     quint32 signature2 = Endian::readUInt32(m_device, KeePass2::BYTEORDER, &ok);
     if (!ok || signature2 != KeePass2::SIGNATURE_2) {
-        raiseError("2");
+        raiseError(tr("Not a KeePass database."));
         return 0;
     }
 
@@ -62,11 +63,11 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
     quint32 expectedVersion = KeePass2::FILE_VERSION & KeePass2::FILE_VERSION_CRITICAL_MASK;
     // TODO do we support old Kdbx versions?
     if (!ok || (version != expectedVersion)) {
-        raiseError("3");
+        raiseError(tr("Unsupported KeePass database version."));
         return 0;
     }
 
-    while (readHeaderField() && !error()) {
+    while (readHeaderField() && !hasError()) {
     }
 
     // TODO check if all header fields have been parsed
@@ -84,7 +85,7 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
     QByteArray realStart = cipherStream.read(32);
 
     if (realStart != m_streamStartBytes) {
-        raiseError("4");
+        raiseError(tr("Wrong key or database file is corrupt."));
         return 0;
     }
 
@@ -117,28 +118,41 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
 
     KeePass2XmlReader xmlReader;
     xmlReader.readDatabase(xmlDevice, m_db, &randomStream);
-    // TODO forward error messages from xmlReader
-    return m_db;
+
+    if (xmlReader.hasError()) {
+        raiseError(xmlReader.errorString());
+        return 0;
+    }
+
+    return db.take();
 }
 
 Database* KeePass2Reader::readDatabase(const QString& filename, const CompositeKey& key)
 {
     QFile file(filename);
-    file.open(QFile::ReadOnly);
-    Database* db = readDatabase(&file, key);
-    // TODO check for QFile errors
-    return db;
+    if (!file.open(QFile::ReadOnly)) {
+        raiseError(file.errorString());
+        return 0;
+    }
+
+    QScopedPointer<Database> db(readDatabase(&file, key));
+
+    if (file.error() != QFile::NoError) {
+        raiseError(file.errorString());
+        return 0;
+    }
+
+    return db.take();
 }
 
-bool KeePass2Reader::error()
+bool KeePass2Reader::hasError()
 {
     return m_error;
 }
 
 QString KeePass2Reader::errorString()
 {
-    // TODO
-    return QString();
+    return m_errorStr;
 }
 
 void KeePass2Reader::setSaveXml(bool save)
@@ -153,9 +167,8 @@ QByteArray KeePass2Reader::xmlData()
 
 void KeePass2Reader::raiseError(const QString& str)
 {
-    // TODO
-    qWarning("KeePass2Reader error: %s", qPrintable(str));
     m_error = true;
+    m_errorStr = str;
 }
 
 bool KeePass2Reader::readHeaderField()
