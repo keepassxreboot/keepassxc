@@ -24,7 +24,7 @@
 class DataPath
 {
 public:
-    QString getPath(const QString& name);
+    QString path(const QString& name);
     QIcon applicationIcon();
 
 private:

@@ -22,7 +22,7 @@
 
 #include "config-keepassx.h"
 
-QString DataPath::getPath(const QString& name)
+QString DataPath::path(const QString& name)
 {
     return m_basePath + name;
 }
