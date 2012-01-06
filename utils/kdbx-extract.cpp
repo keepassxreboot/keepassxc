@@ -25,6 +25,7 @@
 #include "crypto/Crypto.h"
 #include "format/KeePass2Reader.h"
 #include "keys/CompositeKey.h"
+#include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
 int main(int argc, char **argv)
@@ -32,16 +33,23 @@ int main(int argc, char **argv)
     QCoreApplication app(argc, argv);
 
     if (app.arguments().size() != 3) {
-        qCritical("Usage: kdbx-extract <password> <kdbx file>");
+        qCritical("Usage: kdbx-extract <password/key file> <kdbx file>");
         return 1;
     }
 
     Crypto::init();
 
     CompositeKey key;
-    PasswordKey password;
-    password.setPassword(app.arguments().at(1));
-    key.addKey(password);
+    if (QFile::exists(app.arguments().at(1))) {
+        FileKey fileKey;
+        fileKey.load(app.arguments().at(1));
+        key.addKey(fileKey);
+    }
+    else {
+        PasswordKey password;
+        password.setPassword(app.arguments().at(1));
+        key.addKey(password);
+    }
 
     QFile dbFile(app.arguments().at(2));
     if (!dbFile.exists()) {
