@@ -258,6 +258,9 @@ void Entry::setAttribute(const QString& key, const QString& value, bool protect)
     if (protect) {
         m_protectedAttributes.insert(key);
     }
+    else {
+        m_protectedAttributes.remove(key);
+    }
 
     if (isDefaultAttributue(key)) {
         Q_EMIT dataChanged(this);
@@ -277,6 +280,9 @@ void Entry::setAttachment(const QString& key, const QByteArray& value, bool prot
     m_binaries.insert(key, value);
     if (protect) {
         m_protectedAttachments.insert(key);
+    }
+    else {
+        m_protectedAttachments.remove(key);
     }
 }
 
