@@ -54,6 +54,10 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     Q_ASSERT(m_ui->categoryList->model()->rowCount() == m_ui->stackedWidget->count());
 
     connect(m_ui->categoryList, SIGNAL(currentRowChanged(int)), m_ui->stackedWidget, SLOT(setCurrentIndex(int)));
+
+    connect(m_mainUi->togglePasswordButton, SIGNAL(toggled(bool)), SLOT(togglePassword(bool)));
+    connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
+
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(saveEntry()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(cancel()));
 }
@@ -76,6 +80,11 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupN
     m_mainUi->titleEdit->setText(entry->title());
     m_mainUi->usernameEdit->setText(entry->username());
     m_mainUi->urlEdit->setText(entry->url());
+    m_mainUi->passwordEdit->setText(entry->password());
+    m_mainUi->passwordRepeatEdit->setText(entry->password());
+    m_mainUi->expireCheck->setChecked(entry->timeInfo().expires());
+    m_mainUi->expireDatePicker->setDateTime(entry->timeInfo().expiryTime());
+    m_mainUi->togglePasswordButton->setChecked(true);
 
     m_notesUi->notesEdit->setPlainText(entry->notes());
 
@@ -87,6 +96,10 @@ void EditEntryWidget::saveEntry()
     m_entry->setTitle(m_mainUi->titleEdit->text());
     m_entry->setUsername(m_mainUi->usernameEdit->text());
     m_entry->setUrl(m_mainUi->urlEdit->text());
+    // TODO check password repeat field
+    m_entry->setPassword(m_mainUi->passwordEdit->text());
+    m_entry->timeInfo().setExpires(m_mainUi->expireCheck->isChecked());
+    m_entry->timeInfo().setExpiryTime(m_mainUi->expireDatePicker->dateTime());
 
     m_entry->setNotes(m_notesUi->notesEdit->toPlainText());
 
@@ -98,4 +111,10 @@ void EditEntryWidget::cancel()
 {
     m_entry = 0;
     Q_EMIT editFinished(false);
+}
+
+void EditEntryWidget::togglePassword(bool checked)
+{
+    m_mainUi->passwordEdit->setEchoMode(checked ? QLineEdit::Password : QLineEdit::Normal);
+    m_mainUi->passwordRepeatEdit->setEchoMode(checked ? QLineEdit::Password : QLineEdit::Normal);
 }

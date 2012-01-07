@@ -47,6 +47,7 @@ Q_SIGNALS:
 private Q_SLOTS:
     void saveEntry();
     void cancel();
+    void togglePassword(bool checked);
 
 private:
     Entry* m_entry;
