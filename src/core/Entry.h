@@ -82,9 +82,9 @@ public:
     void setAutoTypeObfuscation(int obfuscation);
     void setDefaultAutoTypeSequence(const QString& sequence);
     void addAutoTypeAssociation(const AutoTypeAssociation& assoc);
-    void addAttribute(const QString& key, const QString& value, bool protect = false);
+    void setAttribute(const QString& key, const QString& value, bool protect = false);
     void removeAttribute(const QString& key);
-    void addAttachment(const QString& key, const QByteArray& value, bool protect = false);
+    void setAttachment(const QString& key, const QByteArray& value, bool protect = false);
     void removeAttachment(const QString& key);
     void setTitle(const QString& title);
     void setUrl(const QString& url);

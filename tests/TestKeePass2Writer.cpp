@@ -43,7 +43,7 @@ void TestKeePass2Writer::initTestCase()
     group->setUuid(Uuid::random());
     Entry* entry = new Entry();
     entry->setUuid(Uuid::random());
-    entry->addAttribute("test", "protectedTest", true);
+    entry->setAttribute("test", "protectedTest", true);
     QVERIFY(entry->isAttributeProtected("test"));
     entry->setGroup(group);
     Group* groupNew = new Group();

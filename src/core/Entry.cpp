@@ -34,7 +34,7 @@ Entry::Entry()
     m_autoTypeObfuscation = 0;
 
     Q_FOREACH (const QString& key, m_defaultAttibutes) {
-        addAttribute(key, "");
+        setAttribute(key, "");
     }
 }
 
@@ -252,7 +252,7 @@ void Entry::addAutoTypeAssociation(const AutoTypeAssociation& assoc)
     m_autoTypeAssociations << assoc;
 }
 
-void Entry::addAttribute(const QString& key, const QString& value, bool protect)
+void Entry::setAttribute(const QString& key, const QString& value, bool protect)
 {
     m_attributes.insert(key, value);
     if (protect) {
@@ -272,7 +272,7 @@ void Entry::removeAttribute(const QString& key)
     m_protectedAttributes.remove(key);
 }
 
-void Entry::addAttachment(const QString& key, const QByteArray& value, bool protect)
+void Entry::setAttachment(const QString& key, const QByteArray& value, bool protect)
 {
     m_binaries.insert(key, value);
     if (protect) {
@@ -288,27 +288,27 @@ void Entry::removeAttachment(const QString& key)
 
 void Entry::setTitle(const QString& title)
 {
-    addAttribute("Title", title);
+    setAttribute("Title", title);
 }
 
 void Entry::setUrl(const QString& url)
 {
-    addAttribute("URL", url);
+    setAttribute("URL", url);
 }
 
 void Entry::setUsername(const QString& username)
 {
-    addAttribute("UserName", username);
+    setAttribute("UserName", username);
 }
 
 void Entry::setPassword(const QString& password)
 {
-    addAttribute("Password", password);
+    setAttribute("Password", password);
 }
 
 void Entry::setNotes(const QString& notes)
 {
-    addAttribute("Notes", notes);
+    setAttribute("Notes", notes);
 }
 
 QList<Entry*> Entry::historyItems()
