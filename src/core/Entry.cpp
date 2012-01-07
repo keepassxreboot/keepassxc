@@ -262,14 +262,14 @@ void Entry::setAttribute(const QString& key, const QString& value, bool protect)
         m_protectedAttributes.remove(key);
     }
 
-    if (isDefaultAttributue(key)) {
+    if (isDefaultAttribute(key)) {
         Q_EMIT dataChanged(this);
     }
 }
 
 void Entry::removeAttribute(const QString& key)
 {
-    Q_ASSERT(!isDefaultAttributue(key));
+    Q_ASSERT(!isDefaultAttribute(key));
 
     m_attributes.remove(key);
     m_protectedAttributes.remove(key);
@@ -350,7 +350,7 @@ void Entry::setGroup(Group* group)
     QObject::setParent(group);
 }
 
-bool Entry::isDefaultAttributue(const QString& key)
+bool Entry::isDefaultAttribute(const QString& key)
 {
     return m_defaultAttibutes.contains(key);
 }

@@ -99,7 +99,7 @@ public:
     Group* group();
     void setGroup(Group* group);
 
-    static bool isDefaultAttributue(const QString& key);
+    static bool isDefaultAttribute(const QString& key);
 
 Q_SIGNALS:
     /**
