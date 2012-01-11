@@ -30,7 +30,7 @@ public:
         Sha256
     };
 
-    CryptoHash(CryptoHash::Algorithm algo);
+    explicit CryptoHash(CryptoHash::Algorithm algo);
     ~CryptoHash();
     void addData(const QByteArray& data);
     void reset();
@@ -40,7 +40,8 @@ public:
 
 private:
     CryptoHashPrivate* const d_ptr;
-    Q_DECLARE_PRIVATE(CryptoHash);
+
+    Q_DECLARE_PRIVATE(CryptoHash)
 };
 
 #endif // KEEPASSX_CRYPTOHASH_H

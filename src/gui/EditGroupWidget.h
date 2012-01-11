@@ -32,7 +32,7 @@ class EditGroupWidget : public QWidget
     Q_OBJECT
 
 public:
-    EditGroupWidget(QWidget* parent = 0);
+    explicit EditGroupWidget(QWidget* parent = 0);
     ~EditGroupWidget();
 
     void loadGroup(Group* group, bool create);

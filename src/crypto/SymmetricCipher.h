@@ -55,8 +55,9 @@ public:
     int blockSize() const;
 
 private:
-    Q_DISABLE_COPY(SymmetricCipher)
     SymmetricCipherBackend* m_backend;
+
+    Q_DISABLE_COPY(SymmetricCipher)
 };
 
 #endif // KEEPASSX_SYMMETRICCIPHER_H

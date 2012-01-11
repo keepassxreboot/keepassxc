@@ -25,7 +25,7 @@
 class KeePass2RandomStream
 {
 public:
-    KeePass2RandomStream(QByteArray key);
+    explicit KeePass2RandomStream(const QByteArray& key);
     QByteArray randomBytes(int size);
     QByteArray process(const QByteArray& data);
     void processInPlace(QByteArray& data);

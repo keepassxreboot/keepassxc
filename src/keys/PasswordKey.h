@@ -26,7 +26,7 @@ class PasswordKey : public Key
 {
 public:
     PasswordKey();
-    PasswordKey(const QString& password);
+    explicit PasswordKey(const QString& password);
     QByteArray rawKey() const;
     void setPassword(const QString& password);
     PasswordKey* clone() const;

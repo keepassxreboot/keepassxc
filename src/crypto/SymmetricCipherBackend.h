@@ -23,7 +23,7 @@
 class SymmetricCipherBackend
 {
 public:
-    virtual ~SymmetricCipherBackend() {};
+    virtual ~SymmetricCipherBackend() {}
     virtual void setAlgorithm(SymmetricCipher::Algorithm algo) = 0;
     virtual void setMode(SymmetricCipher::Mode mode) = 0;
     virtual void setDirection(SymmetricCipher::Direction direction) = 0;

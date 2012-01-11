@@ -20,7 +20,7 @@
 #include "crypto/CryptoHash.h"
 #include "format/KeePass2.h"
 
-KeePass2RandomStream::KeePass2RandomStream(QByteArray key)
+KeePass2RandomStream::KeePass2RandomStream(const QByteArray& key)
     : m_cipher(SymmetricCipher::Salsa20, SymmetricCipher::Stream, SymmetricCipher::Encrypt,
           CryptoHash::hash(key, CryptoHash::Sha256), KeePass2::INNER_STREAM_SALSA20_IV)
     , m_offset(0)

@@ -27,7 +27,7 @@ class QIODevice;
 
 class KeePass2Reader
 {
-    Q_DECLARE_TR_FUNCTIONS(KeePass2Reader);
+    Q_DECLARE_TR_FUNCTIONS(KeePass2Reader)
 
 public:
     KeePass2Reader();

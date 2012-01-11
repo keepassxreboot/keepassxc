@@ -46,7 +46,7 @@ class DatabaseTabWidget : public QTabWidget
     Q_OBJECT
 
 public:
-    DatabaseTabWidget(QWidget* parent);
+    explicit DatabaseTabWidget(QWidget* parent);
     void openDatabase(const QString& fileName);
     DatabaseWidget* currentDatabaseWidget();
 

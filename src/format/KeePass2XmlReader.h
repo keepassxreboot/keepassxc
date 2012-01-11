@@ -35,7 +35,7 @@ class Metadata;
 
 class KeePass2XmlReader
 {
-    Q_DECLARE_TR_FUNCTIONS(KeePass2XmlReader);
+    Q_DECLARE_TR_FUNCTIONS(KeePass2XmlReader)
 
 public:
     KeePass2XmlReader();
