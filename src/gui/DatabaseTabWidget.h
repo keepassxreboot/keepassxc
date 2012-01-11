@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_DATABASEMANAGER_H
-#define KEEPASSX_DATABASEMANAGER_H
+#ifndef KEEPASSX_DATABASETABWIDGET_H
+#define KEEPASSX_DATABASETABWIDGET_H
 
 #include <QtCore/QHash>
 #include <QtCore/QObject>
@@ -87,4 +87,4 @@ private:
     KeyOpenDialog* m_curKeyDialog;
 };
 
-#endif // KEEPASSX_DATABASEMANAGER_H
+#endif // KEEPASSX_DATABASETABWIDGET_H
