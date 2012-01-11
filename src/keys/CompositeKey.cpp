@@ -36,6 +36,12 @@ CompositeKey::~CompositeKey()
     qDeleteAll(m_keys);
 }
 
+void CompositeKey::clear()
+{
+    qDeleteAll(m_keys);
+    m_keys.clear();
+}
+
 CompositeKey* CompositeKey::clone() const
 {
     return new CompositeKey(*this);

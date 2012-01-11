@@ -28,6 +28,7 @@ public:
     CompositeKey();
     CompositeKey(const CompositeKey& key);
     ~CompositeKey();
+    void clear();
     CompositeKey* clone() const;
     CompositeKey& operator=(const CompositeKey& key);
 

@@ -56,6 +56,17 @@ void TestKeys::testComposite()
     QVERIFY(compositeKey2->transform(QByteArray(32, '\0'), 1).size() == 32);
 
     delete compositeKey2;
+
+    CompositeKey* compositeKey3 = new CompositeKey();
+    CompositeKey* compositeKey4 = new CompositeKey();
+
+    compositeKey3->addKey(PasswordKey("test"));
+    compositeKey3->clear();
+
+    QCOMPARE(compositeKey3->rawKey(), compositeKey4->rawKey());
+
+    delete compositeKey3;
+    delete compositeKey4;
 }
 
 void TestKeys::testFileKey()
