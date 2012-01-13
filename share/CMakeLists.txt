@@ -19,8 +19,8 @@ install(FILES ${DATABASE_ICONS} DESTINATION ${DATA_INSTALL_DIR}/icons/database)
 
 if(UNIX AND NOT APPLE)
     install(DIRECTORY icons/application/ DESTINATION share/icons/hicolor
-            FILES_MATCHING PATTERN "*.png" PATTERN "*.svg")
+            FILES_MATCHING PATTERN "*.png" PATTERN "*.svgz")
 else(UNIX AND NOT APPLE)
     install(DIRECTORY icons/application/ DESTINATION ${DATA_INSTALL_DIR}/icons/application
-            FILES_MATCHING PATTERN "*.png" PATTERN "*.svg")
+            FILES_MATCHING PATTERN "*.png" PATTERN "*.svgz")
 endif(UNIX AND NOT APPLE)
