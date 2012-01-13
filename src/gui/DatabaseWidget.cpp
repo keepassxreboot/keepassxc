@@ -18,8 +18,10 @@
 #include "DatabaseWidget.h"
 
 #include <QtGui/QHBoxLayout>
+#include <QtGui/QLabel>
 #include <QtGui/QSplitter>
 
+#include "gui/ChangeMasterKeyWidget.h"
 #include "gui/EditEntryWidget.h"
 #include "gui/EditGroupWidget.h"
 #include "gui/EntryView.h"
@@ -27,6 +29,7 @@
 
 DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     : QStackedWidget(parent)
+    , m_db(db)
     , m_newGroup(0)
     , m_newEntry(0)
     , m_newParent(0)
@@ -56,15 +59,23 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
 
     m_editEntryWidget = new EditEntryWidget();
     m_editGroupWidget = new EditGroupWidget();
+    m_changeMasterKeyWidget = new ChangeMasterKeyWidget();
+    m_changeMasterKeyWidget->headlineLabel()->setText(tr("Change master key"));
+    QFont headlineLabelFont = m_changeMasterKeyWidget->headlineLabel()->font();
+    headlineLabelFont.setBold(true);
+    headlineLabelFont.setPointSize(headlineLabelFont.pointSize() + 2);
+    m_changeMasterKeyWidget->headlineLabel()->setFont(headlineLabelFont);
 
     addWidget(m_mainWidget);
     addWidget(m_editEntryWidget);
     addWidget(m_editGroupWidget);
+    addWidget(m_changeMasterKeyWidget);
 
     connect(m_groupView, SIGNAL(groupChanged(Group*)), m_entryView, SLOT(setGroup(Group*)));
     connect(m_entryView, SIGNAL(entryActivated(Entry*)), SLOT(switchToEntryEdit(Entry*)));
     connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
     connect(m_editGroupWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
+    connect(m_changeMasterKeyWidget, SIGNAL(editFinished(bool)), SLOT(updateMasterKey(bool)));
 
     setCurrentIndex(0);
 }
@@ -139,6 +150,16 @@ void DatabaseWidget::switchToGroupEdit(Group* group, bool create)
     m_editGroupWidget->loadGroup(group, create);
     setCurrentIndex(2);
 }
+
+void DatabaseWidget::updateMasterKey(bool accepted)
+{
+    if (accepted) {
+        m_db->setKey(m_changeMasterKeyWidget->newMasterKey());
+    }
+
+    setCurrentIndex(0);
+}
+
 void DatabaseWidget::switchToEntryEdit()
 {
     switchToEntryEdit(m_entryView->currentEntry(), false);
@@ -147,4 +168,10 @@ void DatabaseWidget::switchToEntryEdit()
 void DatabaseWidget::switchToGroupEdit()
 {
     switchToGroupEdit(m_groupView->currentGroup(), false);
+}
+
+void DatabaseWidget::switchToMasterKeyChange()
+{
+    m_changeMasterKeyWidget->clearForms();
+    setCurrentIndex(3);
 }

@@ -36,7 +36,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>20</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -48,6 +48,8 @@
     <addaction name="actionDatabaseSave"/>
     <addaction name="actionDatabaseSaveAs"/>
     <addaction name="actionDatabaseClose"/>
+    <addaction name="separator"/>
+    <addaction name="actionChangeMasterKey"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -185,6 +187,14 @@
    </property>
    <property name="text">
     <string>Save database as</string>
+   </property>
+  </action>
+  <action name="actionChangeMasterKey">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Change master key</string>
    </property>
   </action>
  </widget>

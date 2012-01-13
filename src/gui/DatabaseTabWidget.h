@@ -56,10 +56,14 @@ public Q_SLOTS:
     void saveDatabase(int index = -1);
     void saveDatabaseAs(int index = -1);
     void closeDatabase(int index = -1);
+    void changeMasterKey();
     void createEntry();
     void editEntry();
     void createGroup();
     void editGroup();
+
+Q_SIGNALS:
+    void entrySelectionChanged(bool singleEntrySelected);
 
 private Q_SLOTS:
     void updateTabName(Database* db);
@@ -67,9 +71,6 @@ private Q_SLOTS:
     void openDatabaseRead();
     void openDatabaseCleanup();
     void emitEntrySelectionChanged();
-
-Q_SIGNALS:
-    void entrySelectionChanged(bool singleEntrySelected);
 
 private:
     void saveDatabase(Database* db);

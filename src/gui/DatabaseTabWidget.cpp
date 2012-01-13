@@ -223,6 +223,11 @@ void DatabaseTabWidget::saveDatabaseAs(int index)
     saveDatabaseAs(indexDatabase(index));
 }
 
+void DatabaseTabWidget::changeMasterKey()
+{
+    currentDatabaseWidget()->switchToMasterKeyChange();
+}
+
 void DatabaseTabWidget::createEntry()
 {
     currentDatabaseWidget()->createEntry();

@@ -20,6 +20,7 @@
 
 #include <QtGui/QStackedWidget>
 
+class ChangeMasterKeyWidget;
 class Database;
 class EditEntryWidget;
 class EditGroupWidget;
@@ -42,17 +43,21 @@ public Q_SLOTS:
     void createGroup();
     void switchToEntryEdit();
     void switchToGroupEdit();
+    void switchToMasterKeyChange();
 
 private Q_SLOTS:
     void switchToView(bool accepted);
     void switchToEntryEdit(Entry* entry);
     void switchToEntryEdit(Entry* entry, bool create);
     void switchToGroupEdit(Group* entry, bool create);
+    void updateMasterKey(bool accepted);
 
 private:
+    Database* m_db;
     QWidget* m_mainWidget;
     EditEntryWidget* m_editEntryWidget;
     EditGroupWidget* m_editGroupWidget;
+    ChangeMasterKeyWidget* m_changeMasterKeyWidget;
     GroupView* m_groupView;
     EntryView* m_entryView;
     Group* m_newGroup;

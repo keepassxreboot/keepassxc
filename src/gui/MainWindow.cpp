@@ -39,6 +39,7 @@ MainWindow::MainWindow()
     connect(m_ui->actionDatabaseSave, SIGNAL(triggered()), m_ui->tabWidget, SLOT(saveDatabase()));
     connect(m_ui->actionDatabaseSaveAs, SIGNAL(triggered()), m_ui->tabWidget, SLOT(saveDatabaseAs()));
     connect(m_ui->actionDatabaseClose, SIGNAL(triggered()), m_ui->tabWidget, SLOT(closeDatabase()));
+    connect(m_ui->actionChangeMasterKey, SIGNAL(triggered()), m_ui->tabWidget, SLOT(changeMasterKey()));
     connect(m_ui->actionEntryNew, SIGNAL(triggered()), m_ui->tabWidget, SLOT(createEntry()));
     connect(m_ui->actionEntryEdit, SIGNAL(triggered()), m_ui->tabWidget, SLOT(editEntry()));
     connect(m_ui->actionGroupNew, SIGNAL(triggered()), m_ui->tabWidget, SLOT(createGroup()));
@@ -60,4 +61,5 @@ void MainWindow::currentTabChanged(int index)
     m_ui->actionEntryNew->setEnabled(hasTab);
     m_ui->actionGroupNew->setEnabled(hasTab);
     m_ui->actionGroupEdit->setEnabled(hasTab);
+    m_ui->actionChangeMasterKey->setEnabled(hasTab);
 }
