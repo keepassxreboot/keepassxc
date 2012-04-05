@@ -86,7 +86,7 @@ void DatabaseTabWidget::openDatabase(const QString& fileName)
 
 void DatabaseTabWidget::openDatabaseDialog()
 {
-    m_curKeyDialog = new DatabaseOpenDialog(m_curDbStruct.fileName, m_window);
+    m_curKeyDialog = new DatabaseOpenDialog(m_curDbStruct.file, m_curDbStruct.fileName, m_window);
     connect(m_curKeyDialog, SIGNAL(accepted()), SLOT(openDatabaseRead()));
     connect(m_curKeyDialog, SIGNAL(rejected()), SLOT(openDatabaseCleanup()));
     m_curKeyDialog->setModal(true);
@@ -95,19 +95,14 @@ void DatabaseTabWidget::openDatabaseDialog()
 
 void DatabaseTabWidget::openDatabaseRead()
 {
-    m_curDbStruct.file->reset();
-    Database* db = m_reader.readDatabase(m_curDbStruct.file, m_curKeyDialog->key());
+    Database* db = m_curKeyDialog->database();
+
     delete m_curKeyDialog;
     m_curKeyDialog = 0;
 
-    if (!db) {
-        openDatabaseDialog();
-    }
-    else {
-        m_curDbStruct.dbWidget = new DatabaseWidget(db, this);
-        insertDatabase(db, m_curDbStruct);
-        m_curDbStruct = DatabaseManagerStruct();
-    }
+    m_curDbStruct.dbWidget = new DatabaseWidget(db, this);
+    insertDatabase(db, m_curDbStruct);
+    m_curDbStruct = DatabaseManagerStruct();
 }
 
 void DatabaseTabWidget::openDatabaseCleanup()

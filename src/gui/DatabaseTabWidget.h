@@ -81,7 +81,6 @@ private:
     void insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct);
 
     QWidget* m_window;
-    KeePass2Reader m_reader;
     KeePass2Writer m_writer;
     QHash<Database*, DatabaseManagerStruct> m_dbList;
     DatabaseManagerStruct m_curDbStruct;

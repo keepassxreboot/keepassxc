@@ -22,12 +22,15 @@
 
 #include "core/Config.h"
 #include "gui/FileDialog.h"
+#include "format/KeePass2Reader.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
-DatabaseOpenDialog::DatabaseOpenDialog(const QString& filename, QWidget* parent)
+DatabaseOpenDialog::DatabaseOpenDialog(QFile* file, QString filename, QWidget* parent)
     : QDialog(parent)
     , m_ui(new Ui::DatabaseOpenDialog())
+    , m_db(0)
+    , m_file(file)
     , m_filename(filename)
 {
     m_ui->setupUi(this);
@@ -44,7 +47,7 @@ DatabaseOpenDialog::DatabaseOpenDialog(const QString& filename, QWidget* parent)
     connect(m_ui->checkKeyFile, SIGNAL(toggled(bool)), SLOT(setOkButtonEnabled()));
     connect(m_ui->comboKeyFile, SIGNAL(editTextChanged(QString)), SLOT(setOkButtonEnabled()));
 
-    connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(createKey()));
+    connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(openDatabase()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
 
     QHash<QString,QVariant> lastKeyFiles = config()->get("LastKeyFiles").toHash();
@@ -58,15 +61,18 @@ DatabaseOpenDialog::~DatabaseOpenDialog()
 {
 }
 
-CompositeKey DatabaseOpenDialog::key()
+Database* DatabaseOpenDialog::database()
 {
-    return m_key;
+    return m_db;
 }
 
-void DatabaseOpenDialog::createKey()
+void DatabaseOpenDialog::openDatabase()
 {
+    KeePass2Reader reader;
+    CompositeKey masterKey;
+
     if (m_ui->checkPassword->isChecked()) {
-        m_key.addKey(PasswordKey(m_ui->editPassword->text()));
+        masterKey.addKey(PasswordKey(m_ui->editPassword->text()));
     }
 
     QHash<QString,QVariant> lastKeyFiles = config()->get("LastKeyFiles").toHash();
@@ -79,7 +85,7 @@ void DatabaseOpenDialog::createKey()
             QMessageBox::warning(this, tr("Error"), tr("Can't open key file:\n%1").arg(errorMsg));
             return;
         }
-        m_key.addKey(key);
+        masterKey.addKey(key);
         lastKeyFiles[m_filename] = keyFilename;
     }
     else {
@@ -88,7 +94,16 @@ void DatabaseOpenDialog::createKey()
 
     config()->set("LastKeyFiles", lastKeyFiles);
 
-    accept();
+    m_file->reset();
+    m_db = reader.readDatabase(m_file, masterKey);
+
+    if (m_db) {
+        accept();
+    }
+    else {
+        QMessageBox::warning(this, tr("Error"), tr("Unable to open the database.\n%1").arg(reader.errorString()));
+        m_ui->editPassword->clear();
+    }
 }
 
 void DatabaseOpenDialog::togglePassword(bool checked)

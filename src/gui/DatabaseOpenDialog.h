@@ -23,6 +23,9 @@
 
 #include "keys/CompositeKey.h"
 
+class Database;
+class QFile;
+
 namespace Ui {
     class DatabaseOpenDialog;
 }
@@ -32,12 +35,12 @@ class DatabaseOpenDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit DatabaseOpenDialog(const QString& filename, QWidget* parent = 0);
+    explicit DatabaseOpenDialog(QFile* file, QString filename, QWidget* parent = 0);
     ~DatabaseOpenDialog();
-    CompositeKey key();
+    Database* database();
 
 private Q_SLOTS:
-    void createKey();
+    void openDatabase();
     void togglePassword(bool checked);
     void activatePassword();
     void activateKeyFile();
@@ -46,7 +49,8 @@ private Q_SLOTS:
 
 private:
     QScopedPointer<Ui::DatabaseOpenDialog> m_ui;
-    CompositeKey m_key;
+    Database* m_db;
+    QFile* m_file;
     QString m_filename;
 
     Q_DISABLE_COPY(DatabaseOpenDialog)
