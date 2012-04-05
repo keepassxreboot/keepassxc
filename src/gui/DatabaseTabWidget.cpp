@@ -22,7 +22,6 @@
 
 #include "core/Database.h"
 #include "core/Metadata.h"
-#include "format/KeePass2XmlReader.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/FileDialog.h"
 #include "gui/EntryView.h"

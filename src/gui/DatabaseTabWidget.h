@@ -22,7 +22,6 @@
 #include <QtCore/QObject>
 #include <QtGui/QTabWidget>
 
-#include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
 
 class DatabaseWidget;
