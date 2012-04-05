@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "KeyOpenDialog.h"
-#include "ui_KeyOpenDialog.h"
+#include "DatabaseOpenDialog.h"
+#include "ui_DatabaseOpenDialog.h"
 
 #include <QtGui/QMessageBox>
 
@@ -25,9 +25,9 @@
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
-KeyOpenDialog::KeyOpenDialog(const QString& filename, QWidget* parent)
+DatabaseOpenDialog::DatabaseOpenDialog(const QString& filename, QWidget* parent)
     : QDialog(parent)
-    , m_ui(new Ui::KeyOpenDialog())
+    , m_ui(new Ui::DatabaseOpenDialog())
     , m_filename(filename)
 {
     m_ui->setupUi(this);
@@ -54,16 +54,16 @@ KeyOpenDialog::KeyOpenDialog(const QString& filename, QWidget* parent)
     }
 }
 
-KeyOpenDialog::~KeyOpenDialog()
+DatabaseOpenDialog::~DatabaseOpenDialog()
 {
 }
 
-CompositeKey KeyOpenDialog::key()
+CompositeKey DatabaseOpenDialog::key()
 {
     return m_key;
 }
 
-void KeyOpenDialog::createKey()
+void DatabaseOpenDialog::createKey()
 {
     if (m_ui->checkPassword->isChecked()) {
         m_key.addKey(PasswordKey(m_ui->editPassword->text()));
@@ -91,29 +91,29 @@ void KeyOpenDialog::createKey()
     accept();
 }
 
-void KeyOpenDialog::togglePassword(bool checked)
+void DatabaseOpenDialog::togglePassword(bool checked)
 {
     m_ui->editPassword->setEchoMode(checked ? QLineEdit::Password : QLineEdit::Normal);
 }
 
-void KeyOpenDialog::activatePassword()
+void DatabaseOpenDialog::activatePassword()
 {
     m_ui->checkPassword->setChecked(true);
 }
 
-void KeyOpenDialog::activateKeyFile()
+void DatabaseOpenDialog::activateKeyFile()
 {
     m_ui->checkKeyFile->setChecked(true);
 }
 
-void KeyOpenDialog::setOkButtonEnabled()
+void DatabaseOpenDialog::setOkButtonEnabled()
 {
     bool enable = m_ui->checkPassword->isChecked() || (m_ui->checkKeyFile->isChecked() && !m_ui->comboKeyFile->currentText().isEmpty());
 
     m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(enable);
 }
 
-void KeyOpenDialog::browseKeyFile()
+void DatabaseOpenDialog::browseKeyFile()
 {
     QString filters = QString("%1 (*);;%2 (*.key)").arg(tr("All files"), tr("Key files"));
     QString filename = fileDialog()->getOpenFileName(this, tr("Select key file"), QString(), filters);

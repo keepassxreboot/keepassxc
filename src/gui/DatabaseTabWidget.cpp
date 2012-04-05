@@ -27,7 +27,7 @@
 #include "gui/FileDialog.h"
 #include "gui/EntryView.h"
 #include "gui/GroupView.h"
-#include "gui/KeyOpenDialog.h"
+#include "gui/DatabaseOpenDialog.h"
 
 DatabaseManagerStruct::DatabaseManagerStruct()
     : file(0)
@@ -86,7 +86,7 @@ void DatabaseTabWidget::openDatabase(const QString& fileName)
 
 void DatabaseTabWidget::openDatabaseDialog()
 {
-    m_curKeyDialog = new KeyOpenDialog(m_curDbStruct.fileName, m_window);
+    m_curKeyDialog = new DatabaseOpenDialog(m_curDbStruct.fileName, m_window);
     connect(m_curKeyDialog, SIGNAL(accepted()), SLOT(openDatabaseRead()));
     connect(m_curKeyDialog, SIGNAL(rejected()), SLOT(openDatabaseCleanup()));
     m_curKeyDialog->setModal(true);

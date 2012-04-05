@@ -24,16 +24,16 @@
 #include "keys/CompositeKey.h"
 
 namespace Ui {
-    class KeyOpenDialog;
+    class DatabaseOpenDialog;
 }
 
-class KeyOpenDialog : public QDialog
+class DatabaseOpenDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit KeyOpenDialog(const QString& filename, QWidget* parent = 0);
-    ~KeyOpenDialog();
+    explicit DatabaseOpenDialog(const QString& filename, QWidget* parent = 0);
+    ~DatabaseOpenDialog();
     CompositeKey key();
 
 private Q_SLOTS:
@@ -45,11 +45,11 @@ private Q_SLOTS:
     void browseKeyFile();
 
 private:
-    QScopedPointer<Ui::KeyOpenDialog> m_ui;
+    QScopedPointer<Ui::DatabaseOpenDialog> m_ui;
     CompositeKey m_key;
     QString m_filename;
 
-    Q_DISABLE_COPY(KeyOpenDialog)
+    Q_DISABLE_COPY(DatabaseOpenDialog)
 };
 
 #endif // KEEPASSX_KEYOPENDIALOG_H

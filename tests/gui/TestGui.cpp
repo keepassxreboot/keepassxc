@@ -42,7 +42,7 @@ void TestGui::testOpenDatabase()
     QAction* actionDatabaseOpen = m_mainWindow->findChild<QAction*>("actionDatabaseOpen");
     fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx"));
     actionDatabaseOpen->trigger();
-    QWidget* keyDialog = m_mainWindow->findChild<QWidget*>("KeyOpenDialog");
+    QWidget* keyDialog = m_mainWindow->findChild<QWidget*>("DatabaseOpenDialog");
     QVERIFY(keyDialog);
     QTest::qWaitForWindowShown(keyDialog);
 

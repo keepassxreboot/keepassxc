@@ -26,7 +26,7 @@
 #include "format/KeePass2Writer.h"
 
 class DatabaseWidget;
-class KeyOpenDialog;
+class DatabaseOpenDialog;
 class QFile;
 class QTabWidget;
 
@@ -85,7 +85,7 @@ private:
     KeePass2Writer m_writer;
     QHash<Database*, DatabaseManagerStruct> m_dbList;
     DatabaseManagerStruct m_curDbStruct;
-    KeyOpenDialog* m_curKeyDialog;
+    DatabaseOpenDialog* m_curKeyDialog;
 };
 
 #endif // KEEPASSX_DATABASETABWIDGET_H
