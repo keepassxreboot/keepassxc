@@ -214,19 +214,24 @@ void TestKeePass2XmlReader::testEntry1()
     QCOMPARE(ti.usageCount(), 8);
     QCOMPARE(ti.locationChanged(), genDT(2010, 8, 25, 16, 13, 54));
 
-    QHash<QString,QString> attrs = entry->attributes();
-    QCOMPARE(attrs.take("Notes"), QString("Notes"));
-    QCOMPARE(attrs.take("Password"), QString("Password"));
-    QCOMPARE(attrs.take("Title"), QString("Sample Entry 1"));
-    QCOMPARE(attrs.take("URL"), QString(""));
-    QCOMPARE(attrs.take("UserName"), QString("User Name"));
+    QList<QString> attrs = entry->attributes();
+    QCOMPARE(entry->attributeValue("Notes"), QString("Notes"));
+    QVERIFY(attrs.removeOne("Notes"));
+    QCOMPARE(entry->attributeValue("Password"), QString("Password"));
+    QVERIFY(attrs.removeOne("Password"));
+    QCOMPARE(entry->attributeValue("Title"), QString("Sample Entry 1"));
+    QVERIFY(attrs.removeOne("Title"));
+    QCOMPARE(entry->attributeValue("URL"), QString(""));
+    QVERIFY(attrs.removeOne("URL"));
+    QCOMPARE(entry->attributeValue("UserName"), QString("User Name"));
+    QVERIFY(attrs.removeOne("UserName"));
     QVERIFY(attrs.isEmpty());
 
-    QCOMPARE(entry->title(), entry->attributes().value("Title"));
-    QCOMPARE(entry->url(), entry->attributes().value("URL"));
-    QCOMPARE(entry->username(), entry->attributes().value("UserName"));
-    QCOMPARE(entry->password(), entry->attributes().value("Password"));
-    QCOMPARE(entry->notes(), entry->attributes().value("Notes"));
+    QCOMPARE(entry->title(), entry->attributeValue("Title"));
+    QCOMPARE(entry->url(), entry->attributeValue("URL"));
+    QCOMPARE(entry->username(), entry->attributeValue("UserName"));
+    QCOMPARE(entry->password(), entry->attributeValue("Password"));
+    QCOMPARE(entry->notes(), entry->attributeValue("Notes"));
 
     QCOMPARE(entry->attachments().size(), 0);
     QCOMPARE(entry->autoTypeEnabled(), false);
@@ -253,18 +258,25 @@ void TestKeePass2XmlReader::testEntry2()
     const TimeInfo ti = entry->timeInfo();
     QCOMPARE(ti.usageCount(), 7);
 
-    QHash<QString,QString> attrs = entry->attributes();
-    QCOMPARE(attrs.take("CustomString"), QString("isavalue"));
-    QCOMPARE(attrs.take("Notes"), QString(""));
-    QCOMPARE(attrs.take("Password"), QString("Jer60Hz8o9XHvxBGcRqT"));
-    QCOMPARE(attrs.take("Protected String"), QString("y")); // TODO should have a protection attribute
-    QCOMPARE(attrs.take("Title"), QString("Sample Entry 2"));
-    QCOMPARE(attrs.take("URL"), QString("http://www.keepassx.org/"));
-    QCOMPARE(attrs.take("UserName"), QString("notDEFUSERNAME"));
+    QList<QString> attrs = entry->attributes();
+    QCOMPARE(entry->attributeValue("CustomString"), QString("isavalue"));
+    QVERIFY(attrs.removeOne("CustomString"));
+    QCOMPARE(entry->attributeValue("Notes"), QString(""));
+    QVERIFY(attrs.removeOne("Notes"));
+    QCOMPARE(entry->attributeValue("Password"), QString("Jer60Hz8o9XHvxBGcRqT"));
+    QVERIFY(attrs.removeOne("Password"));
+    QCOMPARE(entry->attributeValue("Protected String"), QString("y")); // TODO should have a protection attribute
+    QVERIFY(attrs.removeOne("Protected String"));
+    QCOMPARE(entry->attributeValue("Title"), QString("Sample Entry 2"));
+    QVERIFY(attrs.removeOne("Title"));
+    QCOMPARE(entry->attributeValue("URL"), QString("http://www.keepassx.org/"));
+    QVERIFY(attrs.removeOne("URL"));
+    QCOMPARE(entry->attributeValue("UserName"), QString("notDEFUSERNAME"));
+    QVERIFY(attrs.removeOne("UserName"));
     QVERIFY(attrs.isEmpty());
 
     QCOMPARE(entry->attachments().size(), 1);
-    QCOMPARE(QString(entry->attachments().value("testattach.txt")), QString("42"));
+    QCOMPARE(QString(entry->attachmentValue("testattach.txt")), QString("42"));
 
     QCOMPARE(entry->autoTypeEnabled(), true);
     QCOMPARE(entry->autoTypeObfuscation(), 1);

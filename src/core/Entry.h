@@ -60,8 +60,10 @@ public:
     int autoTypeObfuscation() const;
     QString defaultAutoTypeSequence() const;
     const QList<AutoTypeAssociation>& autoTypeAssociations() const;
-    const QHash<QString, QString>& attributes() const;
-    const QHash<QString, QByteArray>& attachments() const;
+    const QList<QString>& attributes() const;
+    QString attributeValue(const QString& key) const;
+    const QList<QString>& attachments() const;
+    QByteArray attachmentValue(const QString& key) const;
     bool isAttributeProtected(const QString& key) const;
     bool isAttachmentProtected(const QString& key) const;
     QString title() const;
@@ -121,7 +123,9 @@ private:
     QString m_defaultAutoTypeSequence;
     QList<AutoTypeAssociation> m_autoTypeAssociations;
     QHash<QString, QString> m_attributes;
+    QList<QString> m_attributesKeys;
     QHash<QString, QByteArray> m_binaries;
+    QList<QString> m_binariesKeys;
     QSet<QString> m_protectedAttributes;
     QSet<QString> m_protectedAttachments;
 

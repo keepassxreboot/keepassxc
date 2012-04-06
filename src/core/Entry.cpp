@@ -135,14 +135,24 @@ const QList<AutoTypeAssociation>& Entry::autoTypeAssociations() const
     return m_autoTypeAssociations;
 }
 
-const QHash<QString, QString>& Entry::attributes() const
+const QList<QString>& Entry::attributes() const
 {
-    return m_attributes;
+    return m_attributesKeys;
 }
 
-const QHash<QString, QByteArray>& Entry::attachments() const
+QString Entry::attributeValue(const QString& key) const
 {
-    return m_binaries;
+    return m_attributes.value(key);
+}
+
+const QList<QString>& Entry::attachments() const
+{
+    return m_binariesKeys;
+}
+
+QByteArray Entry::attachmentValue(const QString& key) const
+{
+    return m_binaries.value(key);
 }
 
 bool Entry::isAttributeProtected(const QString& key) const
@@ -254,7 +264,12 @@ void Entry::addAutoTypeAssociation(const AutoTypeAssociation& assoc)
 
 void Entry::setAttribute(const QString& key, const QString& value, bool protect)
 {
+    if (!m_attributes.contains(key)) {
+        m_attributesKeys.append(key);
+    }
+
     m_attributes.insert(key, value);
+
     if (protect) {
         m_protectedAttributes.insert(key);
     }
@@ -271,13 +286,19 @@ void Entry::removeAttribute(const QString& key)
 {
     Q_ASSERT(!isDefaultAttribute(key));
 
+    m_attributesKeys.removeOne(key);
     m_attributes.remove(key);
     m_protectedAttributes.remove(key);
 }
 
 void Entry::setAttachment(const QString& key, const QByteArray& value, bool protect)
 {
+    if (!m_binaries.contains(key)) {
+        m_binariesKeys.append(key);
+    }
+
     m_binaries.insert(key, value);
+
     if (protect) {
         m_protectedAttachments.insert(key);
     }
@@ -288,6 +309,7 @@ void Entry::setAttachment(const QString& key, const QByteArray& value, bool prot
 
 void Entry::removeAttachment(const QString& key)
 {
+    m_binariesKeys.removeOne(key);
     m_binaries.remove(key);
     m_protectedAttachments.remove(key);
 }

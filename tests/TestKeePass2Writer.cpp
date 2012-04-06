@@ -75,7 +75,7 @@ void TestKeePass2Writer::testProtectedAttributes()
 {
     QCOMPARE(m_dbTest->rootGroup()->entries().size(), 1);
     Entry* entry = m_dbTest->rootGroup()->entries().at(0);
-    QCOMPARE(entry->attributes().value("test"), QString("protectedTest"));
+    QCOMPARE(entry->attributeValue("test"), QString("protectedTest"));
     QCOMPARE(entry->isAttributeProtected("test"), true);
 }
 
