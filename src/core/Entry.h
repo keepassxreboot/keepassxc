@@ -109,6 +109,18 @@ Q_SIGNALS:
      */
     void dataChanged(Entry* entry);
 
+    void attributeChanged(QString key);
+    void attributeAboutToBeAdded(QString key);
+    void attributeAdded(QString key);
+    void attributeAboutToBeRemoved(QString key);
+    void attributeRemoved(QString key);
+
+    void attachmentChanged(QString key);
+    void attachmentAboutToBeAdded(QString key);
+    void attachmentAdded(QString key);
+    void attachmentAboutToBeRemoved(QString key);
+    void attachmentRemoved(QString key);
+
 private:
     Uuid m_uuid;
     int m_iconNumber;

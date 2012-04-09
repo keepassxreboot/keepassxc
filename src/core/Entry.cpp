@@ -264,6 +264,13 @@ void Entry::addAutoTypeAssociation(const AutoTypeAssociation& assoc)
 
 void Entry::setAttribute(const QString& key, const QString& value, bool protect)
 {
+    bool addAttribute = !m_attributes.contains(key);
+    bool defaultAttribute = isDefaultAttribute(key);
+
+    if (addAttribute && !defaultAttribute) {
+        Q_EMIT attributeAboutToBeAdded(key);
+    }
+
     m_attributes.insert(key, value);
 
     if (protect) {
@@ -273,8 +280,14 @@ void Entry::setAttribute(const QString& key, const QString& value, bool protect)
         m_protectedAttributes.remove(key);
     }
 
-    if (isDefaultAttribute(key)) {
+    if (defaultAttribute) {
         Q_EMIT dataChanged(this);
+    }
+    else if (addAttribute) {
+        Q_EMIT attributeAdded(key);
+    }
+    else {
+        Q_EMIT attributeChanged(key);
     }
 }
 
@@ -282,12 +295,27 @@ void Entry::removeAttribute(const QString& key)
 {
     Q_ASSERT(!isDefaultAttribute(key));
 
+    if (!m_attributes.contains(key)) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    Q_EMIT attributeAboutToBeRemoved(key);
+
     m_attributes.remove(key);
     m_protectedAttributes.remove(key);
+
+    Q_EMIT attributeRemoved(key);
 }
 
 void Entry::setAttachment(const QString& key, const QByteArray& value, bool protect)
 {
+    bool addAttachment = !m_binaries.contains(key);
+
+    if (addAttachment) {
+        Q_EMIT attachmentAboutToBeAdded(key);
+    }
+
     m_binaries.insert(key, value);
 
     if (protect) {
@@ -296,12 +324,28 @@ void Entry::setAttachment(const QString& key, const QByteArray& value, bool prot
     else {
         m_protectedAttachments.remove(key);
     }
+
+    if (addAttachment) {
+        Q_EMIT attachmentAdded(key);
+    }
+    else {
+        Q_EMIT attachmentChanged(key);
+    }
 }
 
 void Entry::removeAttachment(const QString& key)
 {
+    if (!m_binaries.contains(key)) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    Q_EMIT attachmentAboutToBeRemoved(key);
+
     m_binaries.remove(key);
     m_protectedAttachments.remove(key);
+
+    Q_EMIT attachmentRemoved(key);
 }
 
 void Entry::setTitle(const QString& title)
