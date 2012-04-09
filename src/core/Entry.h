@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_ENTRY_H
 #define KEEPASSX_ENTRY_H
 
-#include <QtCore/QHash>
+#include <QtCore/QMap>
 #include <QtCore/QPointer>
 #include <QtCore/QSet>
 #include <QtCore/QUrl>
@@ -60,9 +60,9 @@ public:
     int autoTypeObfuscation() const;
     QString defaultAutoTypeSequence() const;
     const QList<AutoTypeAssociation>& autoTypeAssociations() const;
-    const QList<QString>& attributes() const;
+    const QList<QString> attributes() const;
     QString attributeValue(const QString& key) const;
-    const QList<QString>& attachments() const;
+    const QList<QString> attachments() const;
     QByteArray attachmentValue(const QString& key) const;
     bool isAttributeProtected(const QString& key) const;
     bool isAttachmentProtected(const QString& key) const;
@@ -122,10 +122,8 @@ private:
     int m_autoTypeObfuscation;
     QString m_defaultAutoTypeSequence;
     QList<AutoTypeAssociation> m_autoTypeAssociations;
-    QHash<QString, QString> m_attributes;
-    QList<QString> m_attributesKeys;
-    QHash<QString, QByteArray> m_binaries;
-    QList<QString> m_binariesKeys;
+    QMap<QString, QString> m_attributes;
+    QMap<QString, QByteArray> m_binaries;
     QSet<QString> m_protectedAttributes;
     QSet<QString> m_protectedAttachments;
 
