@@ -27,6 +27,7 @@ set(keepassx_SOURCES
     core/Group.cpp
     core/Metadata.cpp
     core/TimeInfo.cpp
+    core/Tools.cpp
     core/Uuid.cpp
     crypto/Crypto.cpp
     crypto/CryptoHash.cpp
