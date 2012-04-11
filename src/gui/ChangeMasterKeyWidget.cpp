@@ -18,6 +18,8 @@
 #include "ChangeMasterKeyWidget.h"
 #include "ui_ChangeMasterKeyWidget.h"
 
+#include <QtGui/QMessageBox>
+
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
@@ -61,7 +63,20 @@ void ChangeMasterKeyWidget::generateKey()
     m_key.clear();
 
     if (m_ui->passwordGroup->isChecked()) {
-        m_key.addKey(PasswordKey(m_ui->enterPasswordEdit->text()));
+        if (m_ui->enterPasswordEdit->text() == m_ui->repeatPasswordEdit->text()) {
+            if (m_ui->enterPasswordEdit->text().isEmpty()) {
+                if (QMessageBox::question(this, tr("Question"), tr("Do you really want to use an empty string as password?"), QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes) {
+                    return;
+                }
+            }
+            m_key.addKey(PasswordKey(m_ui->enterPasswordEdit->text()));
+        }
+        else {
+            QMessageBox::warning(this, tr("Error"), tr("Different passwords supplied."));
+            m_ui->enterPasswordEdit->setText("");
+            m_ui->repeatPasswordEdit->setText("");
+            return;
+        }
     }
     if (m_ui->keyFileGroup->isChecked()) {
         FileKey fileKey;
