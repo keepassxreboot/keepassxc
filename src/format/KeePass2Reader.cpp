@@ -72,7 +72,7 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
 
     // TODO check if all header fields have been parsed
 
-    m_db->setKey(key, m_transformSeed);
+    m_db->setKey(key, m_transformSeed, false);
 
     CryptoHash hash(CryptoHash::Sha256);
     hash.addData(m_masterSeed);

@@ -90,11 +90,16 @@ public:
     void setMasterKeyChangeForce(int value);
     void addCustomField(const QString& key, const QString& value);
     void removeCustomField(const QString& key);
+    void setUpdateDatetime(bool value);
 
 Q_SIGNALS:
     void nameTextChanged(Database* db);
+    void modified();
 
 private:
+    template <class T> inline bool set(T& property, const T& value, QDateTime& dateTime);
+    template <class T> inline bool set(T& property, const T& value);
+
     Database* m_parent;
 
     QString m_generator;
@@ -128,6 +133,8 @@ private:
     int m_masterKeyChangeForce;
 
     QHash<QString, QString> m_customFields;
+
+    bool m_updateDatetime;
 };
 
 #endif // KEEPASSX_METADATA_H

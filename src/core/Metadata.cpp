@@ -48,6 +48,37 @@ Metadata::Metadata(Database* parent)
     m_protectUrl = false;
     m_protectNotes = false;
     m_autoEnableVisualHiding = false;
+
+    m_updateDatetime = true;
+}
+
+template <class T> bool Metadata::set(T& property, const T& value) {
+    if (property != value) {
+        property = value;
+        Q_EMIT modified();
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+template <class T> bool Metadata::set(T& property, const T& value, QDateTime& dateTime) {
+    if (property != value) {
+        property = value;
+        if (m_updateDatetime) {
+            dateTime = QDateTime::currentDateTime();
+        }
+        Q_EMIT modified();
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+void Metadata::setUpdateDatetime(bool value) {
+    m_updateDatetime = value;
 }
 
 QString Metadata::generator() const
@@ -187,14 +218,14 @@ QHash<QString, QString> Metadata::customFields() const
 
 void Metadata::setGenerator(const QString& value)
 {
-    m_generator = value;
+    set(m_generator, value);
 }
 
 void Metadata::setName(const QString& value)
 {
-    m_name = value;
-
-    Q_EMIT nameTextChanged(m_parent);
+    if (set(m_name, value, m_nameChanged)) {
+        Q_EMIT nameTextChanged(m_parent);
+    }
 }
 
 void Metadata::setNameChanged(const QDateTime& value)
@@ -204,7 +235,7 @@ void Metadata::setNameChanged(const QDateTime& value)
 
 void Metadata::setDescription(const QString& value)
 {
-    m_description = value;
+    set(m_description, value, m_descriptionChanged);
 }
 
 void Metadata::setDescriptionChanged(const QDateTime& value)
@@ -214,7 +245,7 @@ void Metadata::setDescriptionChanged(const QDateTime& value)
 
 void Metadata::setDefaultUserName(const QString& value)
 {
-    m_defaultUserName = value;
+    set(m_defaultUserName, value, m_defaultUserNameChanged);
 }
 
 void Metadata::setDefaultUserNameChanged(const QDateTime& value)
@@ -224,37 +255,37 @@ void Metadata::setDefaultUserNameChanged(const QDateTime& value)
 
 void Metadata::setMaintenanceHistoryDays(int value)
 {
-    m_maintenanceHistoryDays = value;
+    set(m_maintenanceHistoryDays, value);
 }
 
 void Metadata::setProtectTitle(bool value)
 {
-    m_protectTitle = value;
+    set(m_protectTitle, value);
 }
 
 void Metadata::setProtectUsername(bool value)
 {
-    m_protectUsername = value;
+    set(m_protectUsername, value);
 }
 
 void Metadata::setProtectPassword(bool value)
 {
-    m_protectPassword = value;
+    set(m_protectPassword, value);
 }
 
 void Metadata::setProtectUrl(bool value)
 {
-    m_protectUrl = value;
+    set(m_protectUrl, value);
 }
 
 void Metadata::setProtectNotes(bool value)
 {
-    m_protectNotes = value;
+    set(m_protectNotes, value);
 }
 
 void Metadata::setAutoEnableVisualHiding(bool value)
 {
-    m_autoEnableVisualHiding = value;
+    set(m_autoEnableVisualHiding, value);
 }
 
 void Metadata::addCustomIcon(const Uuid& uuid, const QImage& icon)
@@ -263,6 +294,7 @@ void Metadata::addCustomIcon(const Uuid& uuid, const QImage& icon)
     Q_ASSERT(!m_customIcons.contains(uuid));
 
     m_customIcons.insert(uuid, icon);
+    Q_EMIT modified();
 }
 
 void Metadata::removeCustomIcon(const Uuid& uuid)
@@ -271,16 +303,17 @@ void Metadata::removeCustomIcon(const Uuid& uuid)
     Q_ASSERT(m_customIcons.contains(uuid));
 
     m_customIcons.remove(uuid);
+    Q_EMIT modified();
 }
 
 void Metadata::setRecycleBinEnabled(bool value)
 {
-    m_recycleBinEnabled = value;
+    set(m_recycleBinEnabled, value);
 }
 
 void Metadata::setRecycleBin(Group* group)
 {
-    m_recycleBin = group;
+    set(m_recycleBin, group, m_recycleBinChanged);
 }
 
 void Metadata::setRecycleBinChanged(const QDateTime& value)
@@ -290,7 +323,7 @@ void Metadata::setRecycleBinChanged(const QDateTime& value)
 
 void Metadata::setEntryTemplatesGroup(Group* group)
 {
-    m_entryTemplatesGroup = group;
+    set(m_entryTemplatesGroup, group, m_entryTemplatesGroupChanged);
 }
 
 void Metadata::setEntryTemplatesGroupChanged(const QDateTime& value)
@@ -300,12 +333,12 @@ void Metadata::setEntryTemplatesGroupChanged(const QDateTime& value)
 
 void Metadata::setLastSelectedGroup(Group* group)
 {
-    m_lastSelectedGroup = group;
+    set(m_lastSelectedGroup, group);
 }
 
 void Metadata::setLastTopVisibleGroup(Group* group)
 {
-    m_lastTopVisibleGroup = group;
+    set(m_lastTopVisibleGroup, group);
 }
 
 void Metadata::setMasterKeyChanged(const QDateTime& value)
@@ -315,12 +348,12 @@ void Metadata::setMasterKeyChanged(const QDateTime& value)
 
 void Metadata::setMasterKeyChangeRec(int value)
 {
-    m_masterKeyChangeRec = value;
+    set(m_masterKeyChangeRec, value);
 }
 
 void Metadata::setMasterKeyChangeForce(int value)
 {
-    m_masterKeyChangeForce = value;
+    set(m_masterKeyChangeForce, value);
 }
 
 void Metadata::addCustomField(const QString& key, const QString& value)
@@ -328,6 +361,7 @@ void Metadata::addCustomField(const QString& key, const QString& value)
     Q_ASSERT(!m_customFields.contains(key));
 
     m_customFields.insert(key, value);
+    Q_EMIT modified();
 }
 
 void Metadata::removeCustomField(const QString& key)
@@ -335,4 +369,5 @@ void Metadata::removeCustomField(const QString& key)
     Q_ASSERT(m_customFields.contains(key));
 
     m_customFields.remove(key);
+    Q_EMIT modified();
 }

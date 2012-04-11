@@ -34,6 +34,8 @@ Database::Database()
     m_cipher = KeePass2::CIPHER_AES;
     m_compressionAlgo = CompressionGZip;
     m_transformRounds = 50000;
+
+    connect(m_metadata, SIGNAL(modified()), this, SIGNAL(modified()));
 }
 
 Group* Database::rootGroup()
@@ -158,10 +160,13 @@ void Database::setTransformRounds(quint64 rounds)
     m_transformRounds = rounds;
 }
 
-void Database::setKey(const CompositeKey& key, const QByteArray& transformSeed)
+void Database::setKey(const CompositeKey& key, const QByteArray& transformSeed, bool updateChangedTime)
 {
     m_transformSeed = transformSeed;
     m_transformedMasterKey = key.transform(transformSeed, transformRounds());
+    if (updateChangedTime) {
+        m_metadata->setMasterKeyChanged(QDateTime::currentDateTime());
+    }
     Q_EMIT modified();
 }
 

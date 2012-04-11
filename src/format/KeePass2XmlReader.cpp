@@ -39,6 +39,8 @@ void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Ra
 
     m_db = db;
     m_meta = m_db->metadata();
+    m_meta->setUpdateDatetime(false);
+
     m_randomStream = randomStream;
 
     m_tmpParent = new Group();
@@ -60,6 +62,8 @@ void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Ra
                      m_tmpParent->children().size());
         }
     }
+
+    m_meta->setUpdateDatetime(true);
 
     delete m_tmpParent;
 }
