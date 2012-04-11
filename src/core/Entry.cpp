@@ -234,10 +234,13 @@ void Entry::setIcon(const Uuid& uuid)
 {
     Q_ASSERT(!uuid.isNull());
 
-    if (set(m_customIcon, uuid)) {
+    if (m_customIcon != uuid) {
+        m_customIcon = uuid;
         m_iconNumber = 0;
 
         m_pixmapCacheKey = QPixmapCache::Key();
+
+        Q_EMIT modified();
     }
 }
 
