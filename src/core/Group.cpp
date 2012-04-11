@@ -304,7 +304,9 @@ void Group::addEntry(Entry *entry)
 
     m_entries << entry;
     connect(entry, SIGNAL(dataChanged(Entry*)), SIGNAL(entryDataChanged(Entry*)));
+    connect(entry, SIGNAL(modified()), this, SIGNAL(modified()));
 
+    Q_EMIT modified();
     Q_EMIT entryAdded();
 }
 
@@ -314,7 +316,7 @@ void Group::removeEntry(Entry* entry)
 
     entry->disconnect(this);
     m_entries.removeAll(entry);
-
+    Q_EMIT modified();
     Q_EMIT entryRemoved();
 }
 

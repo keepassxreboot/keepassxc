@@ -101,6 +101,8 @@ public:
     Group* group();
     void setGroup(Group* group);
 
+    void setUpdateTimeinfo(bool value);
+
     static bool isDefaultAttribute(const QString& key);
 
 Q_SIGNALS:
@@ -120,6 +122,8 @@ Q_SIGNALS:
     void attachmentAdded(QString key);
     void attachmentAboutToBeRemoved(QString key);
     void attachmentRemoved(QString key);
+
+    void modified();
 
 private:
     Uuid m_uuid;
@@ -144,6 +148,9 @@ private:
     const Database* m_db;
     QPixmapCache::Key m_pixmapCacheKey;
     const static QStringList m_defaultAttibutes;
+    bool m_updateTimeinfo;
+
+    template <class T> inline bool set(T& property, const T& value);
 };
 
 #endif // KEEPASSX_ENTRY_H

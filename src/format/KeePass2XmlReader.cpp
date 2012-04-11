@@ -68,6 +68,10 @@ void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Ra
         group->setUpdateTimeinfo(true);
     }
 
+    Q_FOREACH (Entry* entry, m_entries) {
+        entry->setUpdateTimeinfo(true);
+    }
+
     delete m_tmpParent;
 }
 
@@ -808,6 +812,7 @@ Entry* KeePass2XmlReader::getEntry(const Uuid& uuid)
     }
 
     Entry* entry = new Entry();
+    entry->setUpdateTimeinfo(false);
     entry->setUuid(uuid);
     entry->setGroup(m_tmpParent);
     m_entries << entry;

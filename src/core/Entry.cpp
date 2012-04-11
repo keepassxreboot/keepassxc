@@ -28,6 +28,7 @@ Entry::Entry()
 {
     m_group = 0;
     m_db = 0;
+    m_updateTimeinfo = true;
 
     m_iconNumber = 0;
     m_autoTypeEnabled = true;
@@ -45,6 +46,25 @@ Entry::~Entry()
     }
 
     qDeleteAll(m_history);
+}
+
+template <class T> bool Entry::set(T& property, const T& value) {
+    if (property != value) {
+        property = value;
+        if (m_updateTimeinfo) {
+            m_timeInfo.setLastModificationTime(QDateTime::currentDateTime());
+            m_timeInfo.setLastAccessTime(QDateTime::currentDateTime());
+        }
+        Q_EMIT modified();
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+void Entry::setUpdateTimeinfo(bool value) {
+    m_updateTimeinfo = value;
 }
 
 Uuid Entry::uuid() const
@@ -193,48 +213,52 @@ QString Entry::notes() const
 void Entry::setUuid(const Uuid& uuid)
 {
     Q_ASSERT(!uuid.isNull());
-
-    m_uuid = uuid;
+    set(m_uuid, uuid);
 }
 
 void Entry::setIcon(int iconNumber)
 {
     Q_ASSERT(iconNumber >= 0);
 
-    m_iconNumber = iconNumber;
-    m_customIcon = Uuid();
+    if (m_iconNumber != iconNumber || !m_customIcon.isNull()) {
+        m_iconNumber = iconNumber;
+        m_customIcon = Uuid();
 
-    m_pixmapCacheKey = QPixmapCache::Key();
+        m_pixmapCacheKey = QPixmapCache::Key();
+
+        Q_EMIT modified();
+    }
 }
 
 void Entry::setIcon(const Uuid& uuid)
 {
     Q_ASSERT(!uuid.isNull());
 
-    m_iconNumber = 0;
-    m_customIcon = uuid;
+    if (set(m_customIcon, uuid)) {
+        m_iconNumber = 0;
 
-    m_pixmapCacheKey = QPixmapCache::Key();
+        m_pixmapCacheKey = QPixmapCache::Key();
+    }
 }
 
 void Entry::setForegroundColor(const QColor& color)
 {
-    m_foregroundColor = color;
+    set(m_foregroundColor, color);
 }
 
 void Entry::setBackgroundColor(const QColor& color)
 {
-    m_backgroundColor = color;
+    set(m_backgroundColor, color);
 }
 
 void Entry::setOverrideUrl(const QString& url)
 {
-    m_overrideUrl = url;
+    set(m_overrideUrl, url);
 }
 
 void Entry::setTags(const QString& tags)
 {
-    m_tags = tags;
+    set(m_tags, tags);
 }
 
 void Entry::setTimeInfo(const TimeInfo& timeInfo)
@@ -244,26 +268,29 @@ void Entry::setTimeInfo(const TimeInfo& timeInfo)
 
 void Entry::setAutoTypeEnabled(bool enable)
 {
-    m_autoTypeEnabled = enable;
+    set(m_autoTypeEnabled, enable);
 }
 
 void Entry::setAutoTypeObfuscation(int obfuscation)
 {
-    m_autoTypeObfuscation = obfuscation;
+    set(m_autoTypeObfuscation, obfuscation);
 }
 
 void Entry::setDefaultAutoTypeSequence(const QString& sequence)
 {
-    m_defaultAutoTypeSequence = sequence;
+    set(m_defaultAutoTypeSequence, sequence);
 }
 
 void Entry::addAutoTypeAssociation(const AutoTypeAssociation& assoc)
 {
     m_autoTypeAssociations << assoc;
+    Q_EMIT modified();
 }
 
 void Entry::setAttribute(const QString& key, const QString& value, bool protect)
 {
+    bool emitModified = false;
+
     bool addAttribute = !m_attributes.contains(key);
     bool defaultAttribute = isDefaultAttribute(key);
 
@@ -271,13 +298,23 @@ void Entry::setAttribute(const QString& key, const QString& value, bool protect)
         Q_EMIT attributeAboutToBeAdded(key);
     }
 
-    m_attributes.insert(key, value);
+    if (addAttribute || m_attributes.value(key) != value) {
+        m_attributes.insert(key, value);
+        emitModified = true;
+    }
 
     if (protect) {
+        if (!m_protectedAttributes.contains(key)) {
+            emitModified = true;
+        }
         m_protectedAttributes.insert(key);
     }
-    else {
-        m_protectedAttributes.remove(key);
+    else if (m_protectedAttributes.remove(key)) {
+        emitModified = true;
+    }
+
+    if (emitModified) {
+        Q_EMIT modified();
     }
 
     if (defaultAttribute) {
@@ -306,23 +343,28 @@ void Entry::removeAttribute(const QString& key)
     m_protectedAttributes.remove(key);
 
     Q_EMIT attributeRemoved(key);
+    Q_EMIT modified();
 }
 
 void Entry::setAttachment(const QString& key, const QByteArray& value, bool protect)
 {
+    bool emitModified = false;
     bool addAttachment = !m_binaries.contains(key);
 
-    if (addAttachment) {
+    if (addAttachment || m_binaries.value(key) != value) {
         Q_EMIT attachmentAboutToBeAdded(key);
+        m_binaries.insert(key, value);
+        emitModified = true;
     }
-
-    m_binaries.insert(key, value);
 
     if (protect) {
+        if (!m_protectedAttachments.contains(key)) {
+            emitModified = true;
+        }
         m_protectedAttachments.insert(key);
     }
-    else {
-        m_protectedAttachments.remove(key);
+    else if (m_protectedAttachments.remove(key)) {
+        emitModified = true;
     }
 
     if (addAttachment) {
@@ -330,6 +372,10 @@ void Entry::setAttachment(const QString& key, const QByteArray& value, bool prot
     }
     else {
         Q_EMIT attachmentChanged(key);
+    }
+
+    if (emitModified) {
+        Q_EMIT modified();
     }
 }
 
@@ -346,6 +392,7 @@ void Entry::removeAttachment(const QString& key)
     m_protectedAttachments.remove(key);
 
     Q_EMIT attachmentRemoved(key);
+    Q_EMIT modified();
 }
 
 void Entry::setTitle(const QString& title)
@@ -388,6 +435,7 @@ void Entry::addHistoryItem(Entry* entry)
     Q_ASSERT(!entry->parent());
 
     m_history.append(entry);
+    Q_EMIT modified();
 }
 
 Group* Entry::group()
