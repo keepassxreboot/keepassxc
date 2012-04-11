@@ -174,6 +174,7 @@ void KeePass2XmlWriter::writeGroup(const Group* group)
 
     writeUuid("UUID", group->uuid());
     writeString("Name", group->name());
+    writeString("Notes", group->notes());
     writeNumber("IconID", group->iconNumber());
 
     if (!group->iconUuid().isNull()) {
