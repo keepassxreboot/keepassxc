@@ -81,7 +81,7 @@ void ChangeMasterKeyWidget::generateKey()
     if (m_ui->keyFileGroup->isChecked()) {
         FileKey fileKey;
         QString errorMsg;
-        if (!fileKey.load(m_ui->keyFileCombo->currentText()), &errorMsg) {
+        if (!fileKey.load(m_ui->keyFileCombo->currentText(), &errorMsg)) {
             // TODO error handling
         }
         m_key.addKey(fileKey);
