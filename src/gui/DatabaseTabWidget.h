@@ -54,7 +54,9 @@ public Q_SLOTS:
     void openDatabase();
     void saveDatabase(int index = -1);
     void saveDatabaseAs(int index = -1);
-    void closeDatabase(int index = -1);
+    bool closeDatabase(int index = -1);
+    void closeDatabaseFromSender();
+    bool closeAllDatabases();
     void changeMasterKey();
     void createEntry();
     void editEntry();
@@ -70,13 +72,15 @@ private Q_SLOTS:
     void openDatabaseRead();
     void openDatabaseCleanup();
     void emitEntrySelectionChanged();
+    void modified();
 
 private:
     void saveDatabase(Database* db);
     void saveDatabaseAs(Database* db);
-    void closeDatabase(Database* db);
+    bool closeDatabase(Database* db);
     int databaseIndex(Database* db);
     Database* indexDatabase(int index);
+    Database* databaseFromDatabaseWidget(DatabaseWidget* dbWidget);
     void insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct);
 
     QWidget* m_window;

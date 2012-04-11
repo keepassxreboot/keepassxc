@@ -18,6 +18,8 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
+#include <QtGui/QCloseEvent>
+
 #include "core/Database.h"
 #include "core/DataPath.h"
 #include "core/Metadata.h"
@@ -63,3 +65,13 @@ void MainWindow::currentTabChanged(int index)
     m_ui->actionGroupEdit->setEnabled(hasTab);
     m_ui->actionChangeMasterKey->setEnabled(hasTab);
 }
+
+void MainWindow::closeEvent(QCloseEvent *event) {
+    if (!m_ui->tabWidget->closeAllDatabases()) {
+        event->ignore();
+    }
+    else {
+        event->accept();
+    }
+}
+

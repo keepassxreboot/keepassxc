@@ -38,6 +38,9 @@ public:
     GroupView* groupView();
     EntryView* entryView();
 
+Q_SIGNALS:
+    void closeRequest();
+
 public Q_SLOTS:
     void createEntry();
     void createGroup();

@@ -19,6 +19,7 @@
 
 #include <QtCore/QFileInfo>
 #include <QtGui/QTabWidget>
+#include <QtGui/QMessageBox>
 
 #include "core/Database.h"
 #include "core/Metadata.h"
@@ -51,6 +52,8 @@ void DatabaseTabWidget::newDatabase()
     dbStruct.dbWidget = new DatabaseWidget(db, this);
 
     insertDatabase(db, dbStruct);
+
+    dbStruct.dbWidget->switchToMasterKeyChange();
 }
 
 void DatabaseTabWidget::openDatabase()
@@ -127,22 +130,42 @@ void DatabaseTabWidget::emitEntrySelectionChanged()
     Q_EMIT entrySelectionChanged(isSingleEntrySelected);
 }
 
-void DatabaseTabWidget::closeDatabase(Database* db)
+bool DatabaseTabWidget::closeDatabase(Database* db)
 {
     Q_ASSERT(db);
 
     const DatabaseManagerStruct& dbStruct = m_dbList.value(db);
-
-    if (dbStruct.modified) {
-        // TODO message box
-    }
-
     int index = databaseIndex(db);
     Q_ASSERT(index != -1);
+    if (dbStruct.modified) {
+        QMessageBox::StandardButton result =
+            QMessageBox::question(
+            this, tr("Save changes?"),
+            tr("\"%1\" was modified.\nSave changes?").arg(tabText(index)),
+            QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Yes);
+        if (result == QMessageBox::Yes) {
+            saveDatabase(db);
+        }
+        else if (result == QMessageBox::Cancel) {
+            return false;
+        }
+    }
 
     removeTab(index);
+    m_dbList.remove(db);
+    delete dbStruct.file;
     delete dbStruct.dbWidget;
     delete db;
+    return true;
+}
+
+bool DatabaseTabWidget::closeAllDatabases() {
+    while (!m_dbList.isEmpty()) {
+        if (!closeDatabase()) {
+            return false;
+        }
+    }
+    return true;
 }
 
 void DatabaseTabWidget::saveDatabase(Database* db)
@@ -192,13 +215,21 @@ void DatabaseTabWidget::saveDatabaseAs(Database* db)
     }
 }
 
-void DatabaseTabWidget::closeDatabase(int index)
+bool DatabaseTabWidget::closeDatabase(int index)
 {
     if (index == -1) {
         index = currentIndex();
     }
 
-    closeDatabase(indexDatabase(index));
+    return closeDatabase(indexDatabase(index));
+}
+
+void DatabaseTabWidget::closeDatabaseFromSender()
+{
+    Q_ASSERT(sender());
+    DatabaseWidget* dbWidget = static_cast<DatabaseWidget*>(sender());
+    Database* db = databaseFromDatabaseWidget(dbWidget);
+    closeDatabase(db);
 }
 
 void DatabaseTabWidget::saveDatabase(int index)
@@ -272,7 +303,9 @@ void DatabaseTabWidget::updateTabName(Database* db)
             tabName = QString("%1 [%2]").arg(db->metadata()->name(), tr("New database"));
         }
     }
-
+    if (dbStruct.modified) {
+        tabName.append("*");
+    }
     setTabText(index, tabName);
 }
 
@@ -297,6 +330,19 @@ Database* DatabaseTabWidget::indexDatabase(int index)
     return 0;
 }
 
+Database* DatabaseTabWidget::databaseFromDatabaseWidget(DatabaseWidget* dbWidget)
+{
+    QHashIterator<Database*, DatabaseManagerStruct> i(m_dbList);
+    while (i.hasNext()) {
+        i.next();
+        if (i.value().dbWidget == dbWidget) {
+            return i.key();
+        }
+    }
+
+    return 0;
+}
+
 void DatabaseTabWidget::insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct)
 {
     m_dbList.insert(db, dbStruct);
@@ -308,6 +354,8 @@ void DatabaseTabWidget::insertDatabase(Database* db, const DatabaseManagerStruct
 
     connect(db->metadata(), SIGNAL(nameTextChanged(Database*)), SLOT(updateTabName(Database*)));
     connect(dbStruct.dbWidget->entryView(), SIGNAL(entrySelectionChanged()), SLOT(emitEntrySelectionChanged()));
+    connect(dbStruct.dbWidget, SIGNAL(closeRequest()), SLOT(closeDatabase()));
+    connect(db, SIGNAL(modified()), SLOT(modified()));
 }
 
 DatabaseWidget* DatabaseTabWidget::currentDatabaseWidget()
@@ -318,5 +366,16 @@ DatabaseWidget* DatabaseTabWidget::currentDatabaseWidget()
     }
     else {
         return 0;
+    }
+}
+
+void DatabaseTabWidget::modified()
+{
+    Q_ASSERT(sender());
+    Database* db = static_cast<Database*>(sender());
+    DatabaseManagerStruct& dbStruct = m_dbList[db];
+    if (!dbStruct.modified) {
+        dbStruct.modified = true;
+        updateTabName(db);
     }
 }

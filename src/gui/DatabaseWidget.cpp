@@ -155,6 +155,11 @@ void DatabaseWidget::updateMasterKey(bool accepted)
 {
     if (accepted) {
         m_db->setKey(m_changeMasterKeyWidget->newMasterKey());
+
+    }
+    else if (m_db->transformedMasterKey().isEmpty()) { // TODO other test?
+        Q_EMIT closeRequest();
+        return;
     }
 
     setCurrentIndex(0);
