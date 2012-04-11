@@ -49,9 +49,16 @@ void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Ra
         }
     }
 
-    if (!m_xml.error() && !m_tmpParent->children().isEmpty()) {
-        qWarning("KeePass2XmlReader::readDatabase: found %d invalid entry references",
-                 m_tmpParent->children().size());
+    if (!m_xml.error()) {
+        if (!m_tmpParent->children().isEmpty()) {
+            qWarning("KeePass2XmlReader::readDatabase: found %d invalid group reference(s)",
+                     m_tmpParent->children().size());
+        }
+
+        if (!m_tmpParent->entries().isEmpty()) {
+            qWarning("KeePass2XmlReader::readDatabase: found %d invalid entry reference(s)",
+                     m_tmpParent->children().size());
+        }
     }
 
     delete m_tmpParent;
