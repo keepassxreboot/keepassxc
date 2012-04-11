@@ -33,11 +33,32 @@ Group::Group()
     m_isExpanded = true;
     m_autoTypeEnabled = Inherit;
     m_searchingEnabled = Inherit;
+
+    m_updateTimeinfo = true;
 }
 
 Group::~Group()
 {
     cleanupParent();
+}
+
+template <class T> bool Group::set(T& property, const T& value) {
+    if (property != value) {
+        property = value;
+        if (m_updateTimeinfo) {
+            m_timeInfo.setLastModificationTime(QDateTime::currentDateTime());
+            m_timeInfo.setLastAccessTime(QDateTime::currentDateTime());
+        }
+        Q_EMIT modified();
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+void Group::setUpdateTimeinfo(bool value) {
+    m_updateTimeinfo = value;
 }
 
 Uuid Group::uuid() const
@@ -125,43 +146,47 @@ Entry* Group::lastTopVisibleEntry() const
 
 void Group::setUuid(const Uuid& uuid)
 {
-    m_uuid = uuid;
+    set(m_uuid, uuid);
 }
 
 void Group::setName(const QString& name)
 {
-    m_name = name;
-
-    Q_EMIT dataChanged(this);
+    if (set(m_name, name)) {
+        Q_EMIT dataChanged(this);
+    }
 }
 
 void Group::setNotes(const QString& notes)
 {
-    m_notes = notes;
+    set(m_notes, notes);
 }
 
 void Group::setIcon(int iconNumber)
 {
     Q_ASSERT(iconNumber >= 0);
 
-    m_iconNumber = iconNumber;
-    m_customIcon = Uuid();
+    if (m_iconNumber != iconNumber || !m_customIcon.isNull()) {
+        m_iconNumber = iconNumber;
+        m_customIcon = Uuid();
 
-    m_pixmapCacheKey = QPixmapCache::Key();
+        m_pixmapCacheKey = QPixmapCache::Key();
 
-    Q_EMIT dataChanged(this);
+        Q_EMIT modified();
+        Q_EMIT dataChanged(this);
+    }
 }
 
 void Group::setIcon(const Uuid& uuid)
 {
     Q_ASSERT(!uuid.isNull());
 
-    m_iconNumber = 0;
-    m_customIcon = uuid;
+    if (set(m_customIcon, uuid)) {
+        m_iconNumber = 0;
 
-    m_pixmapCacheKey = QPixmapCache::Key();
+        m_pixmapCacheKey = QPixmapCache::Key();
 
-    Q_EMIT dataChanged(this);
+        Q_EMIT dataChanged(this);
+    }
 }
 
 void Group::setTimeInfo(const TimeInfo& timeInfo)
@@ -171,27 +196,27 @@ void Group::setTimeInfo(const TimeInfo& timeInfo)
 
 void Group::setExpanded(bool expanded)
 {
-    m_isExpanded = expanded;
+    set(m_isExpanded, expanded);
 }
 
 void Group::setDefaultAutoTypeSequence(const QString& sequence)
 {
-    m_defaultAutoTypeSequence = sequence;
+    set(m_defaultAutoTypeSequence, sequence);
 }
 
 void Group::setAutoTypeEnabled(TriState enable)
 {
-    m_autoTypeEnabled = enable;
+    set(m_autoTypeEnabled, enable);
 }
 
 void Group::setSearchingEnabled(TriState enable)
 {
-    m_searchingEnabled = enable;
+    set(m_searchingEnabled, enable);
 }
 
 void Group::setLastTopVisibleEntry(Entry* entry)
 {
-    m_lastTopVisibleEntry = entry;
+    set(m_lastTopVisibleEntry, entry);
 }
 
 Group* Group::parentGroup()
@@ -215,6 +240,7 @@ void Group::setParent(Group* parent, int index)
         index = parent->children().size();
     }
 
+
     cleanupParent();
 
     m_parent = parent;
@@ -229,6 +255,7 @@ void Group::setParent(Group* parent, int index)
 
     parent->m_children.insert(index, this);
 
+    Q_EMIT modified();
     Q_EMIT added();
 }
 
@@ -298,13 +325,14 @@ void Group::recSetDatabase(Database* db)
     disconnect(SIGNAL(removed()), m_db);
     disconnect(SIGNAL(aboutToAdd(Group*,int)), m_db);
     disconnect(SIGNAL(added()), m_db);
+    disconnect(SIGNAL(modified()), m_db);
 
     connect(this, SIGNAL(dataChanged(Group*)), db, SIGNAL(groupDataChanged(Group*)));
-
     connect(this, SIGNAL(aboutToRemove(Group*)), db, SIGNAL(groupAboutToRemove(Group*)));
     connect(this, SIGNAL(removed()), db, SIGNAL(groupRemoved()));
     connect(this, SIGNAL(aboutToAdd(Group*,int)), db, SIGNAL(groupAboutToAdd(Group*,int)));
     connect(this, SIGNAL(added()), db, SIGNAL(groupAdded()));
+    connect(this, SIGNAL(modified()), db, SIGNAL(modified()));
 
     m_db = db;
 
@@ -318,6 +346,7 @@ void Group::cleanupParent()
     if (m_parent) {
         Q_EMIT aboutToRemove(this);
         m_parent->m_children.removeAll(this);
+        Q_EMIT modified();
         Q_EMIT removed();
     }
 }

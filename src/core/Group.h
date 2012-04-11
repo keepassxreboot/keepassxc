@@ -63,6 +63,8 @@ public:
     void setSearchingEnabled(TriState enable);
     void setLastTopVisibleEntry(Entry* entry);
 
+    void setUpdateTimeinfo(bool value);
+
     Group* parentGroup();
     const Group* parentGroup() const;
     void setParent(Group* parent, int index = -1);
@@ -88,7 +90,11 @@ Q_SIGNALS:
 
     void entryDataChanged(Entry* entry);
 
+    void modified();
+
 private:
+    template <class T> inline bool set(T& property, const T& value);
+
     void addEntry(Entry* entry);
     void removeEntry(Entry* entry);
     void setParent(Database* db);
@@ -113,6 +119,8 @@ private:
 
     QPointer<Group> m_parent;
     QPixmapCache::Key m_pixmapCacheKey;
+
+    bool m_updateTimeinfo;
 
     friend void Database::setRootGroup(Group* group);
     friend Entry::~Entry();
