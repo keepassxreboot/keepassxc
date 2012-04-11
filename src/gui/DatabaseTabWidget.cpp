@@ -138,10 +138,14 @@ bool DatabaseTabWidget::closeDatabase(Database* db)
     int index = databaseIndex(db);
     Q_ASSERT(index != -1);
     if (dbStruct.modified) {
+        QString dbName = tabText(index);
+        if (dbName.right(1) == "*") {
+            dbName.chop(1);
+        }
         QMessageBox::StandardButton result =
             QMessageBox::question(
             this, tr("Save changes?"),
-            tr("\"%1\" was modified.\nSave changes?").arg(tabText(index)),
+            tr("\"%1\" was modified.\nSave changes?").arg(dbName),
             QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Yes);
         if (result == QMessageBox::Yes) {
             saveDatabase(db);
