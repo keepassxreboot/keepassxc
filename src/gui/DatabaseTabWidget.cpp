@@ -174,7 +174,7 @@ void DatabaseTabWidget::saveDatabaseAs(Database* db)
     QString fileName = fileDialog()->getSaveFileName(m_window, tr("Save database as"),
                                                      oldFileName, tr("KeePass 2 Database").append(" (*.kdbx)"));
     if (!fileName.isEmpty()) {
-        delete dbStruct.file;
+        QFile* oldFile = dbStruct.file;
         QScopedPointer<QFile> file(new QFile(fileName));
         // TODO error handling
         if (!file->open(QIODevice::ReadWrite)) {
@@ -184,6 +184,7 @@ void DatabaseTabWidget::saveDatabaseAs(Database* db)
         // TODO ensure that the data is actually written to disk
         m_writer.writeDatabase(dbStruct.file, db);
         dbStruct.file->flush();
+        delete oldFile;
 
         dbStruct.modified = false;
         dbStruct.fileName = QFileInfo(fileName).absoluteFilePath();
