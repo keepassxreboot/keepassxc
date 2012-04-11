@@ -88,6 +88,7 @@ Q_SIGNALS:
     void groupAdded();
     void groupAboutToRemove(Group* group);
     void groupRemoved();
+    void modified();
 
 private:
     Entry* recFindEntry(const Uuid& uuid, Group* group);

@@ -162,6 +162,7 @@ void Database::setKey(const CompositeKey& key, const QByteArray& transformSeed)
 {
     m_transformSeed = transformSeed;
     m_transformedMasterKey = key.transform(transformSeed, transformRounds());
+    Q_EMIT modified();
 }
 
 void Database::setKey(const CompositeKey& key)
