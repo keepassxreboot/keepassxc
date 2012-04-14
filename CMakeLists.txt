@@ -26,7 +26,7 @@ set( KEEPASSX_VERSION "0.9.0" )
 
 add_definitions(-DQT_NO_KEYWORDS -DQT_NO_EXCEPTIONS -DQT_NO_STL -DQT_STRICT_ITERATORS)
 
-if(CMAKE_COMPILER_IS_GNUCXX)
+if(CMAKE_COMPILER_IS_GNUCXX OR (${CMAKE_CXX_COMPILER} MATCHES "clang(\\+\\+)?$"))
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ansi -fno-common -fno-exceptions -fno-rtti")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wundef -Wold-style-cast -Wnon-virtual-dtor -Wcast-align")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wpointer-arith -Wformat=2 -Werror=format-security -Woverloaded-virtual -Wno-long-long")
@@ -42,7 +42,7 @@ if(CMAKE_COMPILER_IS_GNUCXX)
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-add-needed -Wl,--as-needed -Wl,--no-undefined")
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-z,relro")
     endif( CMAKE_SYSTEM_NAME STREQUAL "Linux" )
-endif(CMAKE_COMPILER_IS_GNUCXX)
+endif(CMAKE_COMPILER_IS_GNUCXX OR (${CMAKE_CXX_COMPILER} MATCHES "clang(\\+\\+)?$"))
 
 if( APPLE OR MINGW )
     set( PROGNAME KeePassX )
