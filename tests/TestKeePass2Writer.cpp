@@ -44,8 +44,8 @@ void TestKeePass2Writer::initTestCase()
     group->setNotes("I'm a note!");
     Entry* entry = new Entry();
     entry->setUuid(Uuid::random());
-    entry->setAttribute("test", "protectedTest", true);
-    QVERIFY(entry->isAttributeProtected("test"));
+    entry->attributes()->set("test", "protectedTest", true);
+    QVERIFY(entry->attributes()->isProtected("test"));
     entry->setGroup(group);
     Group* groupNew = new Group();
     groupNew->setUuid(Uuid::random());
@@ -79,8 +79,8 @@ void TestKeePass2Writer::testProtectedAttributes()
 {
     QCOMPARE(m_dbTest->rootGroup()->entries().size(), 1);
     Entry* entry = m_dbTest->rootGroup()->entries().at(0);
-    QCOMPARE(entry->attributeValue("test"), QString("protectedTest"));
-    QCOMPARE(entry->isAttributeProtected("test"), true);
+    QCOMPARE(entry->attributes()->value("test"), QString("protectedTest"));
+    QCOMPARE(entry->attributes()->isProtected("test"), true);
 }
 
 KEEPASSX_QTEST_CORE_MAIN(TestKeePass2Writer)

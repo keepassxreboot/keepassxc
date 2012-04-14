@@ -27,6 +27,8 @@
 #include <QtGui/QPixmap>
 #include <QtGui/QPixmapCache>
 
+#include "core/EntryAttachments.h"
+#include "core/EntryAttributes.h"
 #include "core/TimeInfo.h"
 #include "core/Uuid.h"
 
@@ -60,17 +62,15 @@ public:
     int autoTypeObfuscation() const;
     QString defaultAutoTypeSequence() const;
     const QList<AutoTypeAssociation>& autoTypeAssociations() const;
-    const QList<QString> attributes() const;
-    QString attributeValue(const QString& key) const;
-    const QList<QString> attachments() const;
-    QByteArray attachmentValue(const QString& key) const;
-    bool isAttributeProtected(const QString& key) const;
-    bool isAttachmentProtected(const QString& key) const;
     QString title() const;
     QString url() const;
     QString username() const;
     QString password() const;
     QString notes() const;
+    EntryAttributes* attributes();
+    const EntryAttributes* attributes() const;
+    EntryAttachments* attachments();
+    const EntryAttachments* attachments() const;
 
     void setUuid(const Uuid& uuid);
     void setIcon(int iconNumber);
@@ -84,10 +84,6 @@ public:
     void setAutoTypeObfuscation(int obfuscation);
     void setDefaultAutoTypeSequence(const QString& sequence);
     void addAutoTypeAssociation(const AutoTypeAssociation& assoc);
-    void setAttribute(const QString& key, const QString& value, bool protect = false);
-    void removeAttribute(const QString& key);
-    void setAttachment(const QString& key, const QByteArray& value, bool protect = false);
-    void removeAttachment(const QString& key);
     void setTitle(const QString& title);
     void setUrl(const QString& url);
     void setUsername(const QString& username);
@@ -103,27 +99,16 @@ public:
 
     void setUpdateTimeinfo(bool value);
 
-    static bool isDefaultAttribute(const QString& key);
-
 Q_SIGNALS:
     /**
      * Emitted when a default attribute has been changed.
      */
     void dataChanged(Entry* entry);
 
-    void attributeChanged(QString key);
-    void attributeAboutToBeAdded(QString key);
-    void attributeAdded(QString key);
-    void attributeAboutToBeRemoved(QString key);
-    void attributeRemoved(QString key);
-
-    void attachmentChanged(QString key);
-    void attachmentAboutToBeAdded(QString key);
-    void attachmentAdded(QString key);
-    void attachmentAboutToBeRemoved(QString key);
-    void attachmentRemoved(QString key);
-
     void modified();
+
+private Q_SLOTS:
+    void emitDataChanged();
 
 private:
     Uuid m_uuid;
@@ -138,16 +123,13 @@ private:
     int m_autoTypeObfuscation;
     QString m_defaultAutoTypeSequence;
     QList<AutoTypeAssociation> m_autoTypeAssociations;
-    QMap<QString, QString> m_attributes;
-    QMap<QString, QByteArray> m_binaries;
-    QSet<QString> m_protectedAttributes;
-    QSet<QString> m_protectedAttachments;
+    EntryAttributes* m_attributes;
+    EntryAttachments* m_attachments;
 
     QList<Entry*> m_history;
     QPointer<Group> m_group;
     const Database* m_db;
     QPixmapCache::Key m_pixmapCacheKey;
-    const static QStringList m_defaultAttibutes;
     bool m_updateTimeinfo;
 
     template <class T> inline bool set(T& property, const T& value);

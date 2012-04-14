@@ -22,8 +22,6 @@
 #include "core/Group.h"
 #include "core/Metadata.h"
 
-const QStringList Entry::m_defaultAttibutes(QStringList() << "Title" << "URL" << "UserName" << "Password" << "Notes");
-
 Entry::Entry()
 {
     m_group = 0;
@@ -34,9 +32,12 @@ Entry::Entry()
     m_autoTypeEnabled = true;
     m_autoTypeObfuscation = 0;
 
-    Q_FOREACH (const QString& key, m_defaultAttibutes) {
-        setAttribute(key, "");
-    }
+    m_attributes = new EntryAttributes(this);
+    connect(m_attributes, SIGNAL(modified()), this, SIGNAL(modified()));
+    connect(m_attributes, SIGNAL(defaultKeyModified()), SLOT(emitDataChanged()));
+
+    m_attachments = new EntryAttachments(this);
+    connect(m_attachments, SIGNAL(modified()), this, SIGNAL(modified()));
 }
 
 Entry::~Entry()
@@ -155,59 +156,49 @@ const QList<AutoTypeAssociation>& Entry::autoTypeAssociations() const
     return m_autoTypeAssociations;
 }
 
-const QList<QString> Entry::attributes() const
-{
-    return m_attributes.keys();
-}
-
-QString Entry::attributeValue(const QString& key) const
-{
-    return m_attributes.value(key);
-}
-
-const QList<QString> Entry::attachments() const
-{
-    return m_binaries.keys();
-}
-
-QByteArray Entry::attachmentValue(const QString& key) const
-{
-    return m_binaries.value(key);
-}
-
-bool Entry::isAttributeProtected(const QString& key) const
-{
-    return m_protectedAttributes.contains(key);
-}
-
-bool Entry::isAttachmentProtected(const QString& key) const
-{
-    return m_protectedAttachments.contains(key);
-}
-
 QString Entry::title() const
 {
-    return m_attributes.value("Title");
+    return m_attributes->value("Title");
 }
 
 QString Entry::url() const
 {
-    return m_attributes.value("URL");
+    return m_attributes->value("URL");
 }
 
 QString Entry::username() const
 {
-    return m_attributes.value("UserName");
+    return m_attributes->value("UserName");
 }
 
 QString Entry::password() const
 {
-    return m_attributes.value("Password");
+    return m_attributes->value("Password");
 }
 
 QString Entry::notes() const
 {
-    return m_attributes.value("Notes");
+    return m_attributes->value("Notes");
+}
+
+EntryAttributes* Entry::attributes()
+{
+    return m_attributes;
+}
+
+const EntryAttributes* Entry::attributes() const
+{
+    return m_attributes;
+}
+
+EntryAttachments* Entry::attachments()
+{
+    return m_attachments;
+}
+
+const EntryAttachments* Entry::attachments() const
+{
+    return m_attachments;
 }
 
 void Entry::setUuid(const Uuid& uuid)
@@ -290,137 +281,29 @@ void Entry::addAutoTypeAssociation(const AutoTypeAssociation& assoc)
     Q_EMIT modified();
 }
 
-void Entry::setAttribute(const QString& key, const QString& value, bool protect)
-{
-    bool emitModified = false;
-
-    bool addAttribute = !m_attributes.contains(key);
-    bool defaultAttribute = isDefaultAttribute(key);
-
-    if (addAttribute && !defaultAttribute) {
-        Q_EMIT attributeAboutToBeAdded(key);
-    }
-
-    if (addAttribute || m_attributes.value(key) != value) {
-        m_attributes.insert(key, value);
-        emitModified = true;
-    }
-
-    if (protect) {
-        if (!m_protectedAttributes.contains(key)) {
-            emitModified = true;
-        }
-        m_protectedAttributes.insert(key);
-    }
-    else if (m_protectedAttributes.remove(key)) {
-        emitModified = true;
-    }
-
-    if (emitModified) {
-        Q_EMIT modified();
-    }
-
-    if (defaultAttribute) {
-        Q_EMIT dataChanged(this);
-    }
-    else if (addAttribute) {
-        Q_EMIT attributeAdded(key);
-    }
-    else {
-        Q_EMIT attributeChanged(key);
-    }
-}
-
-void Entry::removeAttribute(const QString& key)
-{
-    Q_ASSERT(!isDefaultAttribute(key));
-
-    if (!m_attributes.contains(key)) {
-        Q_ASSERT(false);
-        return;
-    }
-
-    Q_EMIT attributeAboutToBeRemoved(key);
-
-    m_attributes.remove(key);
-    m_protectedAttributes.remove(key);
-
-    Q_EMIT attributeRemoved(key);
-    Q_EMIT modified();
-}
-
-void Entry::setAttachment(const QString& key, const QByteArray& value, bool protect)
-{
-    bool emitModified = false;
-    bool addAttachment = !m_binaries.contains(key);
-
-    if (addAttachment || m_binaries.value(key) != value) {
-        Q_EMIT attachmentAboutToBeAdded(key);
-        m_binaries.insert(key, value);
-        emitModified = true;
-    }
-
-    if (protect) {
-        if (!m_protectedAttachments.contains(key)) {
-            emitModified = true;
-        }
-        m_protectedAttachments.insert(key);
-    }
-    else if (m_protectedAttachments.remove(key)) {
-        emitModified = true;
-    }
-
-    if (addAttachment) {
-        Q_EMIT attachmentAdded(key);
-    }
-    else {
-        Q_EMIT attachmentChanged(key);
-    }
-
-    if (emitModified) {
-        Q_EMIT modified();
-    }
-}
-
-void Entry::removeAttachment(const QString& key)
-{
-    if (!m_binaries.contains(key)) {
-        Q_ASSERT(false);
-        return;
-    }
-
-    Q_EMIT attachmentAboutToBeRemoved(key);
-
-    m_binaries.remove(key);
-    m_protectedAttachments.remove(key);
-
-    Q_EMIT attachmentRemoved(key);
-    Q_EMIT modified();
-}
-
 void Entry::setTitle(const QString& title)
 {
-    setAttribute("Title", title);
+    m_attributes->set("Title", title);
 }
 
 void Entry::setUrl(const QString& url)
 {
-    setAttribute("URL", url);
+    m_attributes->set("URL", url);
 }
 
 void Entry::setUsername(const QString& username)
 {
-    setAttribute("UserName", username);
+    m_attributes->set("UserName", username);
 }
 
 void Entry::setPassword(const QString& password)
 {
-    setAttribute("Password", password);
+    m_attributes->set("Password", password);
 }
 
 void Entry::setNotes(const QString& notes)
 {
-    setAttribute("Notes", notes);
+    m_attributes->set("Notes", notes);
 }
 
 QList<Entry*> Entry::historyItems()
@@ -457,7 +340,7 @@ void Entry::setGroup(Group* group)
     QObject::setParent(group);
 }
 
-bool Entry::isDefaultAttribute(const QString& key)
+void Entry::emitDataChanged()
 {
-    return m_defaultAttibutes.contains(key);
+    Q_EMIT dataChanged(this);
 }

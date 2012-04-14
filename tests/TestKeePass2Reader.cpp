@@ -79,14 +79,14 @@ void TestKeePass2Reader::testProtectedStrings()
     QCOMPARE(entry->title(), QString("Sample Entry"));
     QCOMPARE(entry->username(), QString("Protected User Name"));
     QCOMPARE(entry->password(), QString("ProtectedPassword"));
-    QCOMPARE(entry->attributeValue("TestProtected"), QString("ABC"));
-    QCOMPARE(entry->attributeValue("TestUnprotected"), QString("DEF"));
+    QCOMPARE(entry->attributes()->value("TestProtected"), QString("ABC"));
+    QCOMPARE(entry->attributes()->value("TestUnprotected"), QString("DEF"));
 
     QVERIFY(!db->metadata()->protectTitle());
     QVERIFY(db->metadata()->protectUsername());
     QVERIFY(db->metadata()->protectPassword());
-    QVERIFY(entry->isAttributeProtected("TestProtected"));
-    QVERIFY(!entry->isAttributeProtected("TestUnprotected"));
+    QVERIFY(entry->attributes()->isProtected("TestProtected"));
+    QVERIFY(!entry->attributes()->isProtected("TestUnprotected"));
 
     delete db;
     delete reader;

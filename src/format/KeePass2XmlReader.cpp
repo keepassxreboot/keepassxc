@@ -555,7 +555,7 @@ void KeePass2XmlReader::parseEntryString(Entry *entry)
                 }
             }
 
-            entry->setAttribute(key, value, isProtected);
+            entry->attributes()->set(key, value, isProtected);
         }
         else {
             skipCurrentElement();
@@ -582,7 +582,7 @@ void KeePass2XmlReader::parseEntryBinary(Entry *entry)
                 m_randomStream->processInPlace(value);
             }
 
-            entry->setAttachment(key, value, isProtected);
+            entry->attachments()->set(key, value, isProtected);
         }
         else {
             skipCurrentElement();

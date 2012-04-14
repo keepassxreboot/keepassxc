@@ -254,7 +254,7 @@ void KeePass2XmlWriter::writeEntry(const Entry* entry)
     writeString("Tags", entry->tags());
     writeTimes(entry->timeInfo());
 
-    Q_FOREACH (const QString& key, entry->attributes()) {
+    Q_FOREACH (const QString& key, entry->attributes()->keys()) {
         m_xml.writeStartElement("String");
 
         bool protect = ( ((key == "Title") && m_meta->protectTitle()) ||
@@ -262,7 +262,7 @@ void KeePass2XmlWriter::writeEntry(const Entry* entry)
                          ((key == "Password") && m_meta->protectPassword()) ||
                          ((key == "URL") && m_meta->protectUrl()) ||
                          ((key == "Notes") && m_meta->protectNotes()) ||
-                         entry->isAttributeProtected(key) ) &&
+                         entry->attributes()->isProtected(key) ) &&
                        m_randomStream;
 
         writeString("Key", key);
@@ -272,11 +272,11 @@ void KeePass2XmlWriter::writeEntry(const Entry* entry)
 
         if (protect) {
             m_xml.writeAttribute("Protected", "True");
-            QByteArray rawData = m_randomStream->process(entry->attributeValue(key).toUtf8());
+            QByteArray rawData = m_randomStream->process(entry->attributes()->value(key).toUtf8());
             value = QString::fromAscii(rawData.toBase64());
         }
         else {
-            value = entry->attributeValue(key);
+            value = entry->attributes()->value(key);
         }
 
         m_xml.writeCharacters(value);
@@ -285,10 +285,10 @@ void KeePass2XmlWriter::writeEntry(const Entry* entry)
         m_xml.writeEndElement();
     }
 
-    Q_FOREACH (const QString& key, entry->attachments()) {
+    Q_FOREACH (const QString& key, entry->attachments()->keys()) {
         m_xml.writeStartElement("Binary");
 
-        bool protect = entry->isAttachmentProtected(key) && m_randomStream;
+        bool protect = entry->attachments()->isProtected(key) && m_randomStream;
 
         writeString("Key", key);
 
@@ -297,11 +297,11 @@ void KeePass2XmlWriter::writeEntry(const Entry* entry)
 
         if (protect) {
             m_xml.writeAttribute("Protected", "True");
-            QByteArray rawData = m_randomStream->process(entry->attachmentValue(key));
+            QByteArray rawData = m_randomStream->process(entry->attachments()->value(key));
             value = QString::fromAscii(rawData.toBase64());
         }
         else {
-            value = entry->attachmentValue(key);
+            value = entry->attachments()->value(key);
         }
 
         m_xml.writeCharacters(value);

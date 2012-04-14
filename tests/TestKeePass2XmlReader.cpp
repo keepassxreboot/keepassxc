@@ -214,26 +214,26 @@ void TestKeePass2XmlReader::testEntry1()
     QCOMPARE(ti.usageCount(), 8);
     QCOMPARE(ti.locationChanged(), genDT(2010, 8, 25, 16, 13, 54));
 
-    QList<QString> attrs = entry->attributes();
-    QCOMPARE(entry->attributeValue("Notes"), QString("Notes"));
+    QList<QString> attrs = entry->attributes()->keys();
+    QCOMPARE(entry->attributes()->value("Notes"), QString("Notes"));
     QVERIFY(attrs.removeOne("Notes"));
-    QCOMPARE(entry->attributeValue("Password"), QString("Password"));
+    QCOMPARE(entry->attributes()->value("Password"), QString("Password"));
     QVERIFY(attrs.removeOne("Password"));
-    QCOMPARE(entry->attributeValue("Title"), QString("Sample Entry 1"));
+    QCOMPARE(entry->attributes()->value("Title"), QString("Sample Entry 1"));
     QVERIFY(attrs.removeOne("Title"));
-    QCOMPARE(entry->attributeValue("URL"), QString(""));
+    QCOMPARE(entry->attributes()->value("URL"), QString(""));
     QVERIFY(attrs.removeOne("URL"));
-    QCOMPARE(entry->attributeValue("UserName"), QString("User Name"));
+    QCOMPARE(entry->attributes()->value("UserName"), QString("User Name"));
     QVERIFY(attrs.removeOne("UserName"));
     QVERIFY(attrs.isEmpty());
 
-    QCOMPARE(entry->title(), entry->attributeValue("Title"));
-    QCOMPARE(entry->url(), entry->attributeValue("URL"));
-    QCOMPARE(entry->username(), entry->attributeValue("UserName"));
-    QCOMPARE(entry->password(), entry->attributeValue("Password"));
-    QCOMPARE(entry->notes(), entry->attributeValue("Notes"));
+    QCOMPARE(entry->title(), entry->attributes()->value("Title"));
+    QCOMPARE(entry->url(), entry->attributes()->value("URL"));
+    QCOMPARE(entry->username(), entry->attributes()->value("UserName"));
+    QCOMPARE(entry->password(), entry->attributes()->value("Password"));
+    QCOMPARE(entry->notes(), entry->attributes()->value("Notes"));
 
-    QCOMPARE(entry->attachments().size(), 0);
+    QCOMPARE(entry->attachments()->keys().size(), 0);
     QCOMPARE(entry->autoTypeEnabled(), false);
     QCOMPARE(entry->autoTypeObfuscation(), 0);
     QCOMPARE(entry->defaultAutoTypeSequence(), QString(""));
@@ -258,25 +258,25 @@ void TestKeePass2XmlReader::testEntry2()
     const TimeInfo ti = entry->timeInfo();
     QCOMPARE(ti.usageCount(), 7);
 
-    QList<QString> attrs = entry->attributes();
-    QCOMPARE(entry->attributeValue("CustomString"), QString("isavalue"));
+    QList<QString> attrs = entry->attributes()->keys();
+    QCOMPARE(entry->attributes()->value("CustomString"), QString("isavalue"));
     QVERIFY(attrs.removeOne("CustomString"));
-    QCOMPARE(entry->attributeValue("Notes"), QString(""));
+    QCOMPARE(entry->attributes()->value("Notes"), QString(""));
     QVERIFY(attrs.removeOne("Notes"));
-    QCOMPARE(entry->attributeValue("Password"), QString("Jer60Hz8o9XHvxBGcRqT"));
+    QCOMPARE(entry->attributes()->value("Password"), QString("Jer60Hz8o9XHvxBGcRqT"));
     QVERIFY(attrs.removeOne("Password"));
-    QCOMPARE(entry->attributeValue("Protected String"), QString("y")); // TODO should have a protection attribute
+    QCOMPARE(entry->attributes()->value("Protected String"), QString("y")); // TODO should have a protection attribute
     QVERIFY(attrs.removeOne("Protected String"));
-    QCOMPARE(entry->attributeValue("Title"), QString("Sample Entry 2"));
+    QCOMPARE(entry->attributes()->value("Title"), QString("Sample Entry 2"));
     QVERIFY(attrs.removeOne("Title"));
-    QCOMPARE(entry->attributeValue("URL"), QString("http://www.keepassx.org/"));
+    QCOMPARE(entry->attributes()->value("URL"), QString("http://www.keepassx.org/"));
     QVERIFY(attrs.removeOne("URL"));
-    QCOMPARE(entry->attributeValue("UserName"), QString("notDEFUSERNAME"));
+    QCOMPARE(entry->attributes()->value("UserName"), QString("notDEFUSERNAME"));
     QVERIFY(attrs.removeOne("UserName"));
     QVERIFY(attrs.isEmpty());
 
-    QCOMPARE(entry->attachments().size(), 1);
-    QCOMPARE(QString(entry->attachmentValue("testattach.txt")), QString("42"));
+    QCOMPARE(entry->attachments()->keys().size(), 1);
+    QCOMPARE(QString(entry->attachments()->value("testattach.txt")), QString("42"));
 
     QCOMPARE(entry->autoTypeEnabled(), true);
     QCOMPARE(entry->autoTypeObfuscation(), 1);
@@ -299,7 +299,6 @@ void TestKeePass2XmlReader::testEntryHistory()
         const Entry* entry = entryMain->historyItems().at(0);
         QCOMPARE(entry->uuid(), entryMain->uuid());
         QVERIFY(!entry->parent());
-        QCOMPARE(entry->children().size(), 0);
         QCOMPARE(entry->timeInfo().lastModificationTime(), genDT(2010, 8, 25, 16, 13, 54));
         QCOMPARE(entry->timeInfo().usageCount(), 3);
         QCOMPARE(entry->title(), QString("Sample Entry"));
@@ -310,7 +309,6 @@ void TestKeePass2XmlReader::testEntryHistory()
         const Entry* entry = entryMain->historyItems().at(1);
         QCOMPARE(entry->uuid(), entryMain->uuid());
         QVERIFY(!entry->parent());
-        QCOMPARE(entry->children().size(), 0);
         QCOMPARE(entry->timeInfo().lastModificationTime(), genDT(2010, 8, 25, 16, 15, 43));
         QCOMPARE(entry->timeInfo().usageCount(), 7);
         QCOMPARE(entry->title(), QString("Sample Entry 1"));

@@ -24,6 +24,8 @@ set(keepassx_SOURCES
     core/DataPath.cpp
     core/Endian.cpp
     core/Entry.cpp
+    core/EntryAttachments.cpp
+    core/EntryAttributes.cpp
     core/Group.cpp
     core/Metadata.cpp
     core/TimeInfo.cpp
@@ -72,6 +74,8 @@ set(keepassx_SOURCES
 set(keepassx_MOC
     core/Database.h
     core/Entry.h
+    core/EntryAttachments.h
+    core/EntryAttributes.h
     core/Group.h
     core/Metadata.h
     gui/ChangeMasterKeyWidget.h
