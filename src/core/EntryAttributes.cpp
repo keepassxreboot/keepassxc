@@ -22,9 +22,7 @@ const QStringList EntryAttributes::m_defaultAttibutes(QStringList() << "Title" <
 EntryAttributes::EntryAttributes(QObject* parent)
     : QObject(parent)
 {
-    Q_FOREACH (const QString& key, m_defaultAttibutes) {
-        set(key, "");
-    }
+    clear();
 }
 
 QList<QString> EntryAttributes::keys() const
@@ -123,10 +121,18 @@ void EntryAttributes::copyFrom(const EntryAttributes* other)
 
 void EntryAttributes::clear()
 {
+    if (m_attributes.keys().size() == m_defaultAttibutes.size() && m_protectedAttributes.isEmpty()) {
+        return;
+    }
+
     Q_EMIT aboutToBeReset();
 
     m_attributes.clear();
     m_protectedAttributes.clear();
+
+    Q_FOREACH (const QString& key, m_defaultAttibutes) {
+        m_attributes.insert(key, "");
+    }
 
     Q_EMIT reset();
     Q_EMIT modified();

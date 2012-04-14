@@ -112,6 +112,10 @@ void EntryAttachments::copyFrom(const EntryAttachments* other)
 
 void EntryAttachments::clear()
 {
+    if (m_attachments.isEmpty()) {
+        return;
+    }
+
     Q_EMIT aboutToBeReset();
 
     m_attachments.clear();
