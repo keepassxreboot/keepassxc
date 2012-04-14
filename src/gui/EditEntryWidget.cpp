@@ -66,6 +66,7 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
 
     m_attributesModel = new EntryAttributesModel(m_advancedWidget);
     m_advancedUi->attributesView->setModel(m_attributesModel);
+    m_entryAttachments = new EntryAttachments(this);
 
     Q_ASSERT(m_ui->categoryList->model()->rowCount() == m_ui->stackedWidget->count());
 
