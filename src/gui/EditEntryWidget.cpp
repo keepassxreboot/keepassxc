@@ -105,7 +105,7 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupN
 
     m_notesUi->notesEdit->setPlainText(entry->notes());
 
-    m_entryAttributes->copyFrom(entry->attributes());
+    m_entryAttributes->copyCustomKeysFrom(entry->attributes());
     m_attributesModel->setEntryAttributes(m_entryAttributes);
     m_entryAttachments->copyFrom(entry->attachments());
     m_attachmentsModel->setEntryAttachments(m_entryAttachments);
@@ -125,7 +125,7 @@ void EditEntryWidget::saveEntry()
 
     m_entry->setNotes(m_notesUi->notesEdit->toPlainText());
 
-    m_entry->attributes()->copyFrom(m_entryAttributes);
+    m_entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
     m_entryAttributes->clear();
     m_entry->attachments()->copyFrom(m_entryAttachments);
     m_entryAttachments->clear();

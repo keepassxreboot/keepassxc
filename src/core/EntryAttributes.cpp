@@ -17,7 +17,7 @@
 
 #include "EntryAttributes.h"
 
-const QStringList EntryAttributes::m_defaultAttibutes(QStringList() << "Title" << "URL" << "UserName" << "Password" << "Notes");
+const QStringList EntryAttributes::DEFAULT_ATTRIBUTES(QStringList() << "Title" << "URL" << "UserName" << "Password" << "Notes");
 
 EntryAttributes::EntryAttributes(QObject* parent)
     : QObject(parent)
@@ -99,38 +99,63 @@ void EntryAttributes::remove(const QString& key)
     Q_EMIT modified();
 }
 
-void EntryAttributes::copyFrom(const EntryAttributes* other)
+void EntryAttributes::copyCustomKeysFrom(const EntryAttributes* other)
 {
-    if (*this != *other) {
-        Q_EMIT aboutToBeReset();
-
-        m_attributes.clear();
-        m_protectedAttributes.clear();
-
-        Q_FOREACH (const QString& key, other->keys()) {
-            m_attributes.insert(key, other->value(key));
-            if (other->isProtected(key)) {
-                m_protectedAttributes.insert(key);
-            }
-        }
-
-        Q_EMIT reset();
-        Q_EMIT modified();
-    }
-}
-
-void EntryAttributes::clear()
-{
-    if (m_attributes.keys().size() == m_defaultAttibutes.size() && m_protectedAttributes.isEmpty()) {
+    if (!areCustomKeysDifferent(other)) {
         return;
     }
 
     Q_EMIT aboutToBeReset();
 
+    // remove all non-default keys
+    Q_FOREACH (const QString& key, keys()) {
+        if (!isDefaultAttribute(key)) {
+            m_attributes.remove(key);
+            m_protectedAttributes.remove(key);
+        }
+    }
+
+    Q_FOREACH (const QString& key, other->keys()) {
+        if (!isDefaultAttribute(key)) {
+            m_attributes.insert(key, other->value(key));
+            if (other->isProtected(key)) {
+                m_protectedAttributes.insert(key);
+            }
+        }
+    }
+
+    Q_EMIT reset();
+    Q_EMIT modified();
+}
+
+bool EntryAttributes::areCustomKeysDifferent(const EntryAttributes* other)
+{
+    // check if they are equal ignoring the order of the keys
+    if (keys().toSet() != other->keys().toSet()) {
+        return true;
+    }
+
+    Q_FOREACH (const QString& key, keys()) {
+        if (isDefaultAttribute(key)) {
+            continue;
+        }
+
+        if (isProtected(key) != other->isProtected(key) || value(key) != other->value(key)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void EntryAttributes::clear()
+{
+    Q_EMIT aboutToBeReset();
+
     m_attributes.clear();
     m_protectedAttributes.clear();
 
-    Q_FOREACH (const QString& key, m_defaultAttibutes) {
+    Q_FOREACH (const QString& key, DEFAULT_ATTRIBUTES) {
         m_attributes.insert(key, "");
     }
 
@@ -138,12 +163,7 @@ void EntryAttributes::clear()
     Q_EMIT modified();
 }
 
-bool EntryAttributes::operator!=(const EntryAttributes& other) const
-{
-    return m_attributes != other.m_attributes || m_protectedAttributes != other.m_protectedAttributes;
-}
-
 bool EntryAttributes::isDefaultAttribute(const QString& key)
 {
-    return m_defaultAttibutes.contains(key);
+    return DEFAULT_ATTRIBUTES.contains(key);
 }

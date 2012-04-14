@@ -34,10 +34,11 @@ public:
     bool isProtected(const QString& key) const;
     void set(const QString& key, const QString& value, bool protect = false);
     void remove(const QString& key);
-    void copyFrom(const EntryAttributes* other);
+    void copyCustomKeysFrom(const EntryAttributes* other);
     void clear();
-    bool operator!=(const EntryAttributes& other) const;
+    bool areCustomKeysDifferent(const EntryAttributes* other);
 
+    const static QStringList DEFAULT_ATTRIBUTES;
     static bool isDefaultAttribute(const QString& key);
 
 Q_SIGNALS:
@@ -54,7 +55,6 @@ Q_SIGNALS:
 private:
     QMap<QString, QString> m_attributes;
     QSet<QString> m_protectedAttributes;
-    const static QStringList m_defaultAttibutes;
 };
 
 #endif // KEEPASSX_ENTRYATTRIBUTES_H
