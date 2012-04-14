@@ -283,27 +283,27 @@ void Entry::addAutoTypeAssociation(const AutoTypeAssociation& assoc)
 
 void Entry::setTitle(const QString& title)
 {
-    m_attributes->set("Title", title);
+    m_attributes->set("Title", title, m_attributes->isProtected("Title"));
 }
 
 void Entry::setUrl(const QString& url)
 {
-    m_attributes->set("URL", url);
+    m_attributes->set("URL", url, m_attributes->isProtected("URL"));
 }
 
 void Entry::setUsername(const QString& username)
 {
-    m_attributes->set("UserName", username);
+    m_attributes->set("UserName", username, m_attributes->isProtected("UserName"));
 }
 
 void Entry::setPassword(const QString& password)
 {
-    m_attributes->set("Password", password);
+    m_attributes->set("Password", password, m_attributes->isProtected("Password"));
 }
 
 void Entry::setNotes(const QString& notes)
 {
-    m_attributes->set("Notes", notes);
+    m_attributes->set("Notes", notes, m_attributes->isProtected("Notes"));
 }
 
 QList<Entry*> Entry::historyItems()
