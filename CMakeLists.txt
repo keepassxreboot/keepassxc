@@ -39,8 +39,8 @@ if(CMAKE_COMPILER_IS_GNUCXX OR (${CMAKE_CXX_COMPILER} MATCHES "clang(\\+\\+)?$")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstack-protector --param=ssp-buffer-size=4 -D_FORTIFY_SOURCE=2")
 
     if( CMAKE_SYSTEM_NAME STREQUAL "Linux" )
-        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-add-needed -Wl,--as-needed -Wl,--no-undefined")
-        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-z,relro")
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--no-add-needed -Wl,--as-needed -Wl,--no-undefined")
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-z,relro")
     endif( CMAKE_SYSTEM_NAME STREQUAL "Linux" )
 endif(CMAKE_COMPILER_IS_GNUCXX OR (${CMAKE_CXX_COMPILER} MATCHES "clang(\\+\\+)?$"))
 
