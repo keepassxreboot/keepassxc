@@ -39,7 +39,9 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     QSplitter* splitter = new QSplitter(m_mainWidget);
 
     m_groupView = new GroupView(db, splitter);
+    m_groupView->setObjectName("groupView");
     m_entryView = new EntryView(splitter);
+    m_entryView->setObjectName("entryView");
 
     QSizePolicy policy;
 
@@ -58,7 +60,9 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_mainWidget->setLayout(layout);
 
     m_editEntryWidget = new EditEntryWidget();
+    m_editEntryWidget->setObjectName("editEntryWidget");
     m_editGroupWidget = new EditGroupWidget();
+    m_editGroupWidget->setObjectName("editGroupWidget");
     m_changeMasterKeyWidget = new ChangeMasterKeyWidget();
     m_changeMasterKeyWidget->headlineLabel()->setText(tr("Change master key"));
     QFont headlineLabelFont = m_changeMasterKeyWidget->headlineLabel()->font();

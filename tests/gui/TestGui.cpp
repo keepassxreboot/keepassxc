@@ -27,6 +27,10 @@
 #include "config-keepassx-tests.h"
 #include "tests.h"
 #include "crypto/Crypto.h"
+#include "gui/DatabaseTabWidget.h"
+#include "gui/DatabaseWidget.h"
+#include "gui/EditEntryWidget.h"
+#include "gui/EntryView.h"
 #include "gui/FileDialog.h"
 #include "gui/MainWindow.h"
 
@@ -52,12 +56,35 @@ void TestGui::testOpenDatabase()
 
     QDialogButtonBox* buttonBox = keyDialog->findChild<QDialogButtonBox*>("buttonBox");
     QTest::mouseClick(buttonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTest::qWait(20);
 }
 
 void TestGui::testTabs()
 {
     QTabWidget* tabWidget = m_mainWindow->findChild<QTabWidget*>("tabWidget");
     QCOMPARE(tabWidget->count(), 1);
+    QCOMPARE(tabWidget->tabText(tabWidget->currentIndex()), QString("NewDatabase.kdbx"));
+}
+
+void TestGui::testEditEntry()
+{
+    DatabaseTabWidget* tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
+    DatabaseWidget* dbWidget = tabWidget->currentDatabaseWidget();
+    EntryView* entryView = dbWidget->findChild<EntryView*>("entryView");
+    QModelIndex item = entryView->model()->index(0, 0);
+    QRect itemRect = entryView->visualRect(item);
+    QTest::mouseClick(entryView->viewport(), Qt::LeftButton, Qt::NoModifier, itemRect.center());
+    QTest::qWait(20);
+    QAction* actionEntryEdit = m_mainWindow->findChild<QAction*>("actionEntryEdit");
+    QVERIFY(actionEntryEdit->isEnabled());
+    actionEntryEdit->trigger();
+    QTest::qWait(20);
+    EditEntryWidget* editEntryWidget = dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+    QDialogButtonBox* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
+    QVERIFY(editEntryWidgetButtonBox);
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTest::qWait(20);
+    // make sure the database isn't marked as modified
     QCOMPARE(tabWidget->tabText(tabWidget->currentIndex()), QString("NewDatabase.kdbx"));
 }
 
