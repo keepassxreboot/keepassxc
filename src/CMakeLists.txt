@@ -103,6 +103,7 @@ set(keepassx_FORMS
     gui/ChangeMasterKeyWidget.ui
     gui/DatabaseOpenDialog.ui
     gui/EditEntryWidget.ui
+    gui/EditEntryWidgetAdvanced.ui
     gui/EditEntryWidgetMain.ui
     gui/EditEntryWidgetNotes.ui
     gui/EditGroupWidget.ui

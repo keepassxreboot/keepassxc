@@ -17,6 +17,7 @@
 
 #include "EditEntryWidget.h"
 #include "ui_EditEntryWidget.h"
+#include "ui_EditEntryWidgetAdvanced.h"
 #include "ui_EditEntryWidgetMain.h"
 #include "ui_EditEntryWidgetNotes.h"
 
@@ -25,6 +26,8 @@
 
 #include "core/Entry.h"
 #include "core/Group.h"
+#include "gui/EntryAttachmentsModel.h"
+#include "gui/EntryAttributesModel.h"
 
 EditEntryWidget::EditEntryWidget(QWidget* parent)
     : QWidget(parent)
@@ -32,8 +35,10 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_ui(new Ui::EditEntryWidget())
     , m_mainUi(new Ui::EditEntryWidgetMain())
     , m_notesUi(new Ui::EditEntryWidgetNotes())
+    , m_advancedUi(new Ui::EditEntryWidgetAdvanced())
     , m_mainWidget(new QWidget(this))
     , m_notesWidget(new QWidget(this))
+    , m_advancedWidget(new QWidget(this))
 {
     m_ui->setupUi(this);
 
@@ -44,12 +49,23 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
 
     m_ui->categoryList->addItem(tr("Entry"));
     m_ui->categoryList->addItem(tr("Description"));
+    m_ui->categoryList->addItem(tr("Advanced"));
 
     m_mainUi->setupUi(m_mainWidget);
     m_ui->stackedWidget->addWidget(m_mainWidget);
 
     m_notesUi->setupUi(m_notesWidget);
     m_ui->stackedWidget->addWidget(m_notesWidget);
+
+    m_advancedUi->setupUi(m_advancedWidget);
+    m_ui->stackedWidget->addWidget(m_advancedWidget);
+
+    m_attachmentsModel = new EntryAttachmentsModel(m_advancedWidget);
+    m_advancedUi->attachmentsView->setModel(m_attachmentsModel);
+    m_entryAttributes = new EntryAttributes(this);
+
+    m_attributesModel = new EntryAttributesModel(m_advancedWidget);
+    m_advancedUi->attributesView->setModel(m_attributesModel);
 
     Q_ASSERT(m_ui->categoryList->model()->rowCount() == m_ui->stackedWidget->count());
 
@@ -88,6 +104,11 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupN
 
     m_notesUi->notesEdit->setPlainText(entry->notes());
 
+    m_entryAttributes->copyFrom(entry->attributes());
+    m_attributesModel->setEntryAttributes(m_entryAttributes);
+    m_entryAttachments->copyFrom(entry->attachments());
+    m_attachmentsModel->setEntryAttachments(m_entryAttachments);
+
     m_ui->categoryList->setCurrentRow(0);
 }
 
@@ -102,6 +123,11 @@ void EditEntryWidget::saveEntry()
     m_entry->timeInfo().setExpiryTime(m_mainUi->expireDatePicker->dateTime());
 
     m_entry->setNotes(m_notesUi->notesEdit->toPlainText());
+
+    m_entry->attributes()->copyFrom(m_entryAttributes);
+    m_entryAttributes->clear();
+    m_entry->attachments()->copyFrom(m_entryAttachments);
+    m_entryAttachments->clear();
 
     m_entry = 0;
     Q_EMIT editFinished(true);

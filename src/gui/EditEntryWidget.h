@@ -22,11 +22,16 @@
 #include <QtGui/QWidget>
 
 class Entry;
+class EntryAttachments;
+class EntryAttachmentsModel;
+class EntryAttributes;
+class EntryAttributesModel;
 class QListWidget;
 class QStackedLayout;
 
 namespace Ui {
     class EditEntryWidget;
+    class EditEntryWidgetAdvanced;
     class EditEntryWidgetMain;
     class EditEntryWidgetNotes;
 }
@@ -55,8 +60,14 @@ private:
     QScopedPointer<Ui::EditEntryWidget> m_ui;
     QScopedPointer<Ui::EditEntryWidgetMain> m_mainUi;
     QScopedPointer<Ui::EditEntryWidgetNotes> m_notesUi;
+    QScopedPointer<Ui::EditEntryWidgetAdvanced> m_advancedUi;
     QWidget* m_mainWidget;
     QWidget* m_notesWidget;
+    QWidget* m_advancedWidget;
+    EntryAttachmentsModel* m_attachmentsModel;
+    EntryAttributesModel* m_attributesModel;
+    EntryAttachments* m_entryAttachments;
+    EntryAttributes* m_entryAttributes;
 
     Q_DISABLE_COPY(EditEntryWidget)
 };
