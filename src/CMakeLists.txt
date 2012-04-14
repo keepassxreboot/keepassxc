@@ -55,6 +55,8 @@ set(keepassx_SOURCES
     gui/DatabaseWidget.cpp
     gui/EditEntryWidget.cpp
     gui/EditGroupWidget.cpp
+    gui/EntryAttachmentsModel.cpp
+    gui/EntryAttributesModel.cpp
     gui/EntryModel.cpp
     gui/EntryView.cpp
     gui/FileDialog.cpp
@@ -84,6 +86,8 @@ set(keepassx_MOC
     gui/DatabaseWidget.h
     gui/EditEntryWidget.h
     gui/EditGroupWidget.h
+    gui/EntryAttachmentsModel.h
+    gui/EntryAttributesModel.h
     gui/EntryModel.h
     gui/EntryView.h
     gui/GroupModel.h

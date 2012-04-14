@@ -27,6 +27,8 @@ class TestEntryModel : public QObject
 private Q_SLOTS:
     void initTestCase();
     void test();
+    void testAttachmentsModel();
+    void testAttributesModel();
 };
 
 #endif // KEEPASSX_TESTENTRYMODEL_H

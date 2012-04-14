@@ -25,6 +25,8 @@
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "gui/EntryModel.h"
+#include "gui/EntryAttachmentsModel.h"
+#include "gui/EntryAttributesModel.h"
 
 void TestEntryModel::initTestCase()
 {
@@ -88,6 +90,96 @@ void TestEntryModel::test()
 
     delete group1;
     delete group2;
+
+    delete modelTest;
+    delete model;
+}
+
+void TestEntryModel::testAttachmentsModel()
+{
+    EntryAttachments* entryAttachments = new EntryAttachments(this);
+
+    EntryAttachmentsModel* model = new EntryAttachmentsModel(this);
+    ModelTest* modelTest = new ModelTest(model, this);
+
+    QCOMPARE(model->rowCount(), 0);
+    model->setEntryAttachments(entryAttachments);
+    QCOMPARE(model->rowCount(), 0);
+
+    QSignalSpy spyDataChanged(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)));
+    QSignalSpy spyAboutToAdd(model, SIGNAL(rowsAboutToBeInserted(QModelIndex,int,int)));
+    QSignalSpy spyAdded(model, SIGNAL(rowsInserted(QModelIndex,int,int)));
+    QSignalSpy spyAboutToRemove(model, SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)));
+    QSignalSpy spyRemoved(model, SIGNAL(rowsRemoved(QModelIndex,int,int)));
+
+    entryAttachments->set("first", QByteArray("123"));
+
+    entryAttachments->set("2nd", QByteArray("456"));
+    entryAttachments->set("2nd", QByteArray("789"));
+
+    QCOMPARE(model->data(model->index(0, 0)).toString(), QString("2nd"));
+
+    entryAttachments->remove("first");
+
+    QCOMPARE(spyDataChanged.count(), 1);
+    QCOMPARE(spyAboutToAdd.count(), 2);
+    QCOMPARE(spyAdded.count(), 2);
+    QCOMPARE(spyAboutToRemove.count(), 1);
+    QCOMPARE(spyRemoved.count(), 1);
+
+    QSignalSpy spyReset(model, SIGNAL(modelReset()));
+    entryAttachments->clear();
+    model->setEntryAttachments(0);
+    QCOMPARE(spyReset.count(), 2);
+    QCOMPARE(model->rowCount(), 0);
+
+    delete modelTest;
+    delete model;
+    delete entryAttachments;
+}
+
+void TestEntryModel::testAttributesModel()
+{
+    EntryAttributes* entryAttributes = new EntryAttributes(this);
+
+    EntryAttributesModel* model = new EntryAttributesModel(this);
+    ModelTest* modelTest = new ModelTest(model, this);
+
+    QCOMPARE(model->rowCount(), 0);
+    model->setEntryAttributes(entryAttributes);
+    QCOMPARE(model->rowCount(), 0);
+
+    QSignalSpy spyDataChanged(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)));
+    QSignalSpy spyAboutToAdd(model, SIGNAL(rowsAboutToBeInserted(QModelIndex,int,int)));
+    QSignalSpy spyAdded(model, SIGNAL(rowsInserted(QModelIndex,int,int)));
+    QSignalSpy spyAboutToRemove(model, SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)));
+    QSignalSpy spyRemoved(model, SIGNAL(rowsRemoved(QModelIndex,int,int)));
+
+    entryAttributes->set("first", "123");
+
+    entryAttributes->set("2nd", "456");
+    entryAttributes->set("2nd", "789");
+
+    QCOMPARE(model->data(model->index(0, 0)).toString(), QString("2nd"));
+    QCOMPARE(model->data(model->index(0, 1)).toString(), QString("789"));
+
+    entryAttributes->remove("first");
+
+    // make sure these don't generate messages
+    entryAttributes->set("Title", "test");
+    entryAttributes->set("Notes", "test");
+
+    QCOMPARE(spyDataChanged.count(), 1);
+    QCOMPARE(spyAboutToAdd.count(), 2);
+    QCOMPARE(spyAdded.count(), 2);
+    QCOMPARE(spyAboutToRemove.count(), 1);
+    QCOMPARE(spyRemoved.count(), 1);
+
+    QSignalSpy spyReset(model, SIGNAL(modelReset()));
+    entryAttributes->clear();
+    model->setEntryAttributes(0);
+    QCOMPARE(spyReset.count(), 2);
+    QCOMPARE(model->rowCount(), 0);
 
     delete modelTest;
     delete model;
