@@ -92,4 +92,4 @@ void TestKeePass2Reader::testProtectedStrings()
     delete reader;
 }
 
-QTEST_MAIN(TestKeePass2Reader)
+KEEPASSX_QTEST_CORE_MAIN(TestKeePass2Reader)
