@@ -37,6 +37,7 @@ Entry::Entry()
 
     m_attachments = new EntryAttachments(this);
     connect(m_attachments, SIGNAL(modified()), this, SIGNAL(modified()));
+    connect(this, SIGNAL(modified()), this, SLOT(updateTimeinfo()));
 }
 
 Entry::~Entry()
@@ -48,13 +49,10 @@ Entry::~Entry()
     qDeleteAll(m_history);
 }
 
-template <class T> bool Entry::set(T& property, const T& value) {
+template <class T> bool Entry::set(T& property, const T& value)
+{
     if (property != value) {
         property = value;
-        if (m_updateTimeinfo) {
-            m_timeInfo.setLastModificationTime(QDateTime::currentDateTime());
-            m_timeInfo.setLastAccessTime(QDateTime::currentDateTime());
-        }
         Q_EMIT modified();
         return true;
     }
@@ -63,7 +61,17 @@ template <class T> bool Entry::set(T& property, const T& value) {
     }
 }
 
-void Entry::setUpdateTimeinfo(bool value) {
+void Entry::updateTimeinfo()
+{
+    if (m_updateTimeinfo) {
+        m_timeInfo.setLastModificationTime(QDateTime::currentDateTime());
+        m_timeInfo.setLastAccessTime(QDateTime::currentDateTime());
+    }
+}
+
+
+void Entry::setUpdateTimeinfo(bool value)
+{
     m_updateTimeinfo = value;
 }
 

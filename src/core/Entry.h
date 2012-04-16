@@ -109,6 +109,7 @@ Q_SIGNALS:
 
 private Q_SLOTS:
     void emitDataChanged();
+    void updateTimeinfo();
 
 private:
     const Database* database() const;
