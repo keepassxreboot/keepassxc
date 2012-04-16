@@ -33,7 +33,6 @@ MainWindow::MainWindow()
 
     setWindowIcon(dataPath()->applicationIcon());
 
-    connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(setMenuActionState()));
     connect(m_ui->tabWidget, SIGNAL(entrySelectionChanged(bool)), SLOT(setMenuActionState()));
     connect(m_ui->tabWidget, SIGNAL(currentWidgetIndexChanged(int)), SLOT(setMenuActionState(int)));
 
