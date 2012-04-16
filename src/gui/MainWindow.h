@@ -36,7 +36,8 @@ protected:
      void closeEvent(QCloseEvent *event);
 
 private Q_SLOTS:
-    void currentTabChanged(int index);
+    void setMenuActionState(int index = -1);
+
 
 private:
     QScopedPointer<Ui::MainWindow> m_ui;

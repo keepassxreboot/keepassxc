@@ -65,6 +65,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void entrySelectionChanged(bool singleEntrySelected);
+    void currentWidgetIndexChanged(int index);
 
 private Q_SLOTS:
     void updateTabName(Database* db);

@@ -41,6 +41,7 @@ public:
 
 Q_SIGNALS:
     void closeRequest();
+    void currentIndexChanged(int index);
 
 public Q_SLOTS:
     void createEntry();
@@ -48,6 +49,7 @@ public Q_SLOTS:
     void switchToEntryEdit();
     void switchToGroupEdit();
     void switchToMasterKeyChange();
+    void setCurrentIndex(int index);
 
 private Q_SLOTS:
     void switchToView(bool accepted);

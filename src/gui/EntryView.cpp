@@ -35,6 +35,7 @@ EntryView::EntryView(QWidget* parent)
 void EntryView::setGroup(Group* group)
 {
     m_model->setGroup(group);
+    Q_EMIT entrySelectionChanged();
 }
 
 void EntryView::emitEntryActivated(const QModelIndex& index)

@@ -24,6 +24,7 @@
 #include "core/DataPath.h"
 #include "core/Metadata.h"
 #include "gui/DatabaseWidget.h"
+#include "gui/EntryView.h"
 
 MainWindow::MainWindow()
     : m_ui(new Ui::MainWindow())
@@ -32,9 +33,9 @@ MainWindow::MainWindow()
 
     setWindowIcon(dataPath()->applicationIcon());
 
-    connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(currentTabChanged(int)));
-    connect(m_ui->tabWidget, SIGNAL(entrySelectionChanged(bool)), m_ui->actionEntryEdit, SLOT(setEnabled(bool)));
-    connect(m_ui->tabWidget, SIGNAL(entrySelectionChanged(bool)), m_ui->actionEntryDelete, SLOT(setEnabled(bool)));
+    connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(setMenuActionState()));
+    connect(m_ui->tabWidget, SIGNAL(entrySelectionChanged(bool)), SLOT(setMenuActionState()));
+    connect(m_ui->tabWidget, SIGNAL(currentWidgetIndexChanged(int)), SLOT(setMenuActionState(int)));
 
     connect(m_ui->actionDatabaseNew, SIGNAL(triggered()), m_ui->tabWidget, SLOT(newDatabase()));
     connect(m_ui->actionDatabaseOpen, SIGNAL(triggered()), m_ui->tabWidget, SLOT(openDatabase()));
@@ -53,17 +54,75 @@ MainWindow::~MainWindow()
 {
 }
 
-void MainWindow::currentTabChanged(int index)
+void MainWindow::setMenuActionState(int index)
 {
-    bool hasTab = (index != -1);
+    if (m_ui->tabWidget->currentIndex() != -1)
+    {
+        m_ui->actionDatabaseClose->setEnabled(true);
+        DatabaseWidget* dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+        Q_ASSERT(dbWidget);
 
-    m_ui->actionDatabaseSave->setEnabled(hasTab);
-    m_ui->actionDatabaseSaveAs->setEnabled(hasTab);
-    m_ui->actionDatabaseClose->setEnabled(hasTab);
-    m_ui->actionEntryNew->setEnabled(hasTab);
-    m_ui->actionGroupNew->setEnabled(hasTab);
-    m_ui->actionGroupEdit->setEnabled(hasTab);
-    m_ui->actionChangeMasterKey->setEnabled(hasTab);
+        if (index == -1) {
+            index = dbWidget->currentIndex();
+        }
+
+        switch(index) {
+            case 0:  // view
+                m_ui->actionEntryNew->setEnabled(true);
+                m_ui->actionGroupNew->setEnabled(true);
+                if (dbWidget->entryView()->currentIndex().isValid()) {
+                   m_ui->actionEntryEdit->setEnabled(true);
+                   m_ui->actionEntryDelete->setEnabled(true);
+                }
+                else {
+                    m_ui->actionEntryEdit->setEnabled(false);
+                    m_ui->actionEntryDelete->setEnabled(false);
+                }
+                m_ui->actionGroupEdit->setEnabled(true);
+                // TODO
+                /*
+                if () { //check if root group selected
+                        m_ui->actiocGroupDelete->setEnabled(true);
+                }
+                else {
+                    m_ui->actiocGroupDelete->setEnabled(false);
+                }
+                */
+                m_ui->actionChangeMasterKey->setEnabled(true);
+                m_ui->actionDatabaseSave->setEnabled(true);
+                m_ui->actionDatabaseSaveAs->setEnabled(true);
+                break;
+            case 1:  // entry edit
+            case 2:  // group edit
+            case 3:  // change master key
+                m_ui->actionEntryNew->setEnabled(false);
+                m_ui->actionGroupNew->setEnabled(false);
+                m_ui->actionEntryEdit->setEnabled(false);
+                m_ui->actionGroupEdit->setEnabled(false);
+                m_ui->actionEntryDelete->setEnabled(false);
+                m_ui->actiocGroupDelete->setEnabled(false);
+                m_ui->actionChangeMasterKey->setEnabled(false);
+                m_ui->actionDatabaseSave->setEnabled(false);
+                m_ui->actionDatabaseSaveAs->setEnabled(false);
+                break;
+            default:
+                Q_ASSERT(false);
+        }
+        m_ui->actionDatabaseClose->setEnabled(true);
+    }
+    else {
+        m_ui->actionEntryNew->setEnabled(false);
+        m_ui->actionGroupNew->setEnabled(false);
+        m_ui->actionEntryEdit->setEnabled(false);
+        m_ui->actionGroupEdit->setEnabled(false);
+        m_ui->actionEntryDelete->setEnabled(false);
+        m_ui->actiocGroupDelete->setEnabled(false);
+        m_ui->actionChangeMasterKey->setEnabled(false);
+        m_ui->actionDatabaseSave->setEnabled(false);
+        m_ui->actionDatabaseSaveAs->setEnabled(false);
+
+        m_ui->actionDatabaseClose->setEnabled(false);
+    }
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
@@ -74,4 +133,6 @@ void MainWindow::closeEvent(QCloseEvent *event) {
         event->accept();
     }
 }
+
+
 
