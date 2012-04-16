@@ -161,7 +161,7 @@ void DatabaseWidget::updateMasterKey(bool accepted)
         m_db->setKey(m_changeMasterKeyWidget->newMasterKey());
 
     }
-    else if (m_db->transformedMasterKey().isEmpty()) { // TODO other test?
+    else if (m_db->hasKey()) {
         Q_EMIT closeRequest();
         return;
     }
@@ -183,4 +183,9 @@ void DatabaseWidget::switchToMasterKeyChange()
 {
     m_changeMasterKeyWidget->clearForms();
     setCurrentIndex(3);
+}
+
+bool DatabaseWidget::dbHasKey()
+{
+    return m_db->hasKey();
 }

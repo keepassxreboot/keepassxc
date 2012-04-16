@@ -27,6 +27,7 @@
 
 Database::Database()
 {
+    m_hasKey = false;
     m_metadata = new Metadata(this);
     setRootGroup(new Group());
     rootGroup()->setUuid(Uuid::random());
@@ -164,6 +165,7 @@ void Database::setKey(const CompositeKey& key, const QByteArray& transformSeed, 
 {
     m_transformSeed = transformSeed;
     m_transformedMasterKey = key.transform(transformSeed, transformRounds());
+    m_hasKey = true;
     if (updateChangedTime) {
         m_metadata->setMasterKeyChanged(QDateTime::currentDateTime());
     }
@@ -173,4 +175,9 @@ void Database::setKey(const CompositeKey& key, const QByteArray& transformSeed, 
 void Database::setKey(const CompositeKey& key)
 {
     setKey(key, Random::randomArray(32));
+}
+
+bool Database::hasKey()
+{
+    return m_hasKey;
 }

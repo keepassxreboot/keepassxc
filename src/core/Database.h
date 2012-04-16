@@ -81,6 +81,7 @@ public:
      * Sets the database key and generates a random transform seed.
      */
     void setKey(const CompositeKey& key);
+    bool hasKey();
 
 Q_SIGNALS:
     void groupDataChanged(Group* group);
@@ -103,6 +104,8 @@ private:
     QByteArray m_transformSeed;
     quint64 m_transformRounds;
     QByteArray m_transformedMasterKey;
+
+    bool m_hasKey;
 };
 
 #endif // KEEPASSX_DATABASE_H

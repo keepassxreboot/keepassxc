@@ -37,6 +37,7 @@ public:
     explicit DatabaseWidget(Database* db, QWidget* parent = 0);
     GroupView* groupView();
     EntryView* entryView();
+    bool dbHasKey();
 
 Q_SIGNALS:
     void closeRequest();
