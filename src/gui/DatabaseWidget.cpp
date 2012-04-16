@@ -161,7 +161,7 @@ void DatabaseWidget::updateMasterKey(bool accepted)
         m_db->setKey(m_changeMasterKeyWidget->newMasterKey());
 
     }
-    else if (m_db->hasKey()) {
+    else if (!m_db->hasKey()) {
         Q_EMIT closeRequest();
         return;
     }
