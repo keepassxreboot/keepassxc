@@ -313,6 +313,22 @@ void Entry::setNotes(const QString& notes)
     m_attributes->set("Notes", notes, m_attributes->isProtected("Notes"));
 }
 
+void Entry::setExpires(const bool& value)
+{
+    if (m_timeInfo.expires() != value) {
+        m_timeInfo.setExpires(value);
+        Q_EMIT modified();
+    }
+}
+
+void Entry::setExpiryTime(const QDateTime& dateTime)
+{
+    if (m_timeInfo.expiryTime() != dateTime) {
+        m_timeInfo.setExpiryTime(dateTime);
+        Q_EMIT modified();
+    }
+}
+
 QList<Entry*> Entry::historyItems()
 {
     return m_history;

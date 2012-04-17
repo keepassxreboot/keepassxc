@@ -120,8 +120,10 @@ void EditEntryWidget::saveEntry()
     m_entry->setUrl(m_mainUi->urlEdit->text());
     // TODO check password repeat field
     m_entry->setPassword(m_mainUi->passwordEdit->text());
-    m_entry->timeInfo().setExpires(m_mainUi->expireCheck->isChecked());
-    m_entry->timeInfo().setExpiryTime(m_mainUi->expireDatePicker->dateTime());
+    m_entry->setExpires(m_mainUi->expireCheck->isChecked());
+    QDateTime dateTime(m_mainUi->expireDatePicker->dateTime());
+    dateTime.setTimeSpec(Qt::UTC);
+    m_entry->setExpiryTime(dateTime);
 
     m_entry->setNotes(m_notesUi->notesEdit->toPlainText());
 

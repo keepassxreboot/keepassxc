@@ -89,6 +89,8 @@ public:
     void setUsername(const QString& username);
     void setPassword(const QString& password);
     void setNotes(const QString& notes);
+    void setExpires(const bool& value);
+    void setExpiryTime(const QDateTime& dateTime);
 
     QList<Entry*> historyItems();
     const QList<Entry*>& historyItems() const;
