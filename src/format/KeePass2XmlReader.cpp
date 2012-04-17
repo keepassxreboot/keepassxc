@@ -70,6 +70,9 @@ void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Ra
 
     Q_FOREACH (Entry* entry, m_entries) {
         entry->setUpdateTimeinfo(true);
+        Q_FOREACH(Entry* histEntry, entry->historyItems()) {
+            histEntry->setUpdateTimeinfo(true);
+        }
     }
 
     delete m_tmpParent;
@@ -469,6 +472,7 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
             else {
                 if (history) {
                     entry = new Entry();
+                    entry->setUpdateTimeinfo(false);
                     entry->setUuid(uuid);
                 }
                 else {
