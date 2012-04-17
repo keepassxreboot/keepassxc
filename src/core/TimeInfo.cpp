@@ -22,7 +22,7 @@ TimeInfo::TimeInfo()
     m_expires = false;
     m_usageCount = 0;
 
-    QDateTime now = QDateTime::currentDateTime();
+    QDateTime now = QDateTime::currentDateTimeUtc();
     m_lastModificationTime = now;
     m_creationTime = now;
     m_lastAccessTime = now;

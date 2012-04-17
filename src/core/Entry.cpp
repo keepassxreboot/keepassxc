@@ -64,8 +64,8 @@ template <class T> bool Entry::set(T& property, const T& value)
 void Entry::updateTimeinfo()
 {
     if (m_updateTimeinfo) {
-        m_timeInfo.setLastModificationTime(QDateTime::currentDateTime());
-        m_timeInfo.setLastAccessTime(QDateTime::currentDateTime());
+        m_timeInfo.setLastModificationTime(QDateTime::currentDateTimeUtc());
+        m_timeInfo.setLastAccessTime(QDateTime::currentDateTimeUtc());
     }
 }
 

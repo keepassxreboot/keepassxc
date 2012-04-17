@@ -34,7 +34,7 @@ Metadata::Metadata(Database* parent)
     m_masterKeyChangeRec = -1;
     m_masterKeyChangeForce = -1;
 
-    QDateTime now = QDateTime::currentDateTime();
+    QDateTime now = QDateTime::currentDateTimeUtc();
     m_nameChanged = now;
     m_descriptionChanged = now;
     m_defaultUserNameChanged = now;
@@ -67,7 +67,7 @@ template <class T> bool Metadata::set(T& property, const T& value, QDateTime& da
     if (property != value) {
         property = value;
         if (m_updateDatetime) {
-            dateTime = QDateTime::currentDateTime();
+            dateTime = QDateTime::currentDateTimeUtc();
         }
         Q_EMIT modified();
         return true;

@@ -167,7 +167,7 @@ void Database::setKey(const CompositeKey& key, const QByteArray& transformSeed, 
     m_transformedMasterKey = key.transform(transformSeed, transformRounds());
     m_hasKey = true;
     if (updateChangedTime) {
-        m_metadata->setMasterKeyChanged(QDateTime::currentDateTime());
+        m_metadata->setMasterKeyChanged(QDateTime::currentDateTimeUtc());
     }
     Q_EMIT modified();
 }

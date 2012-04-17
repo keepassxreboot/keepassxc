@@ -46,8 +46,8 @@ template <class T> bool Group::set(T& property, const T& value) {
     if (property != value) {
         property = value;
         if (m_updateTimeinfo) {
-            m_timeInfo.setLastModificationTime(QDateTime::currentDateTime());
-            m_timeInfo.setLastAccessTime(QDateTime::currentDateTime());
+            m_timeInfo.setLastModificationTime(QDateTime::currentDateTimeUtc());
+            m_timeInfo.setLastAccessTime(QDateTime::currentDateTimeUtc());
         }
         Q_EMIT modified();
         return true;
