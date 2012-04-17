@@ -92,6 +92,9 @@ Q_SIGNALS:
 
     void modified();
 
+private Q_SLOTS:
+    void updateTimeinfo();
+
 private:
     template <class T> inline bool set(T& property, const T& value);
 

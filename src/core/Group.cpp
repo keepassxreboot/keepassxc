@@ -35,6 +35,8 @@ Group::Group()
     m_searchingEnabled = Inherit;
 
     m_updateTimeinfo = true;
+
+    connect(this, SIGNAL(modified()), this, SLOT(updateTimeinfo()));
 }
 
 Group::~Group()
@@ -45,15 +47,19 @@ Group::~Group()
 template <class T> bool Group::set(T& property, const T& value) {
     if (property != value) {
         property = value;
-        if (m_updateTimeinfo) {
-            m_timeInfo.setLastModificationTime(QDateTime::currentDateTimeUtc());
-            m_timeInfo.setLastAccessTime(QDateTime::currentDateTimeUtc());
-        }
         Q_EMIT modified();
         return true;
     }
     else {
         return false;
+    }
+}
+
+void Group::updateTimeinfo()
+{
+    if (m_updateTimeinfo) {
+        m_timeInfo.setLastModificationTime(QDateTime::currentDateTimeUtc());
+        m_timeInfo.setLastAccessTime(QDateTime::currentDateTimeUtc());
     }
 }
 
@@ -304,7 +310,7 @@ void Group::addEntry(Entry *entry)
 
     m_entries << entry;
     connect(entry, SIGNAL(dataChanged(Entry*)), SIGNAL(entryDataChanged(Entry*)));
-    connect(entry, SIGNAL(modified()), this, SIGNAL(modified()));
+    connect(entry, SIGNAL(modified()), m_db, SIGNAL(modified()));
 
     Q_EMIT modified();
     Q_EMIT entryAdded();
