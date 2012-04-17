@@ -105,6 +105,16 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>titleEdit</tabstop>
+  <tabstop>usernameEdit</tabstop>
+  <tabstop>urlEdit</tabstop>
+  <tabstop>passwordEdit</tabstop>
+  <tabstop>passwordRepeatEdit</tabstop>
+  <tabstop>togglePasswordButton</tabstop>
+  <tabstop>expireCheck</tabstop>
+  <tabstop>expireDatePicker</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
