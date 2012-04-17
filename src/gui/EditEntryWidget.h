@@ -46,6 +46,10 @@ public:
 
     void loadEntry(Entry* entry, bool create, const QString& groupName);
 
+    static const QColor normalColor;
+    static const QColor correctSoFarColor;
+    static const QColor errorColor;
+
 Q_SIGNALS:
     void editFinished(bool accepted);
 
@@ -53,6 +57,7 @@ private Q_SLOTS:
     void saveEntry();
     void cancel();
     void togglePassword(bool checked);
+    void setPasswordCheckColors();
 
 private:
     Entry* m_entry;
@@ -68,6 +73,8 @@ private:
     EntryAttributesModel* m_attributesModel;
     EntryAttachments* m_entryAttachments;
     EntryAttributes* m_entryAttributes;
+
+    bool passwordsEqual();
 
     Q_DISABLE_COPY(EditEntryWidget)
 };

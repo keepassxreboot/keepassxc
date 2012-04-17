@@ -23,6 +23,7 @@
 
 #include <QtGui/QListWidget>
 #include <QtGui/QStackedLayout>
+#include <QtGui/QMessageBox>
 
 #include "core/Entry.h"
 #include "core/Group.h"
@@ -74,6 +75,8 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
 
     connect(m_mainUi->togglePasswordButton, SIGNAL(toggled(bool)), SLOT(togglePassword(bool)));
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
+    connect(m_mainUi->passwordEdit, SIGNAL(textEdited(QString)), SLOT(setPasswordCheckColors()));
+    connect(m_mainUi->passwordRepeatEdit, SIGNAL(textEdited(QString)), SLOT(setPasswordCheckColors()));
 
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(saveEntry()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(cancel()));
@@ -82,6 +85,10 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
 EditEntryWidget::~EditEntryWidget()
 {
 }
+
+const QColor EditEntryWidget::normalColor = Qt::white;
+const QColor EditEntryWidget::correctSoFarColor = QColor(255, 205, 15);
+const QColor EditEntryWidget::errorColor = QColor(255, 125, 125);
 
 void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupName)
 {
@@ -99,6 +106,7 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupN
     m_mainUi->urlEdit->setText(entry->url());
     m_mainUi->passwordEdit->setText(entry->password());
     m_mainUi->passwordRepeatEdit->setText(entry->password());
+    setPasswordCheckColors();
     m_mainUi->expireCheck->setChecked(entry->timeInfo().expires());
     m_mainUi->expireDatePicker->setDateTime(entry->timeInfo().expiryTime());
     m_mainUi->togglePasswordButton->setChecked(true);
@@ -118,7 +126,10 @@ void EditEntryWidget::saveEntry()
     m_entry->setTitle(m_mainUi->titleEdit->text());
     m_entry->setUsername(m_mainUi->usernameEdit->text());
     m_entry->setUrl(m_mainUi->urlEdit->text());
-    // TODO check password repeat field
+    if (!passwordsEqual()) {
+        QMessageBox::warning(this, tr("Error"), tr("Different passwords supplied."));
+        return;
+    }
     m_entry->setPassword(m_mainUi->passwordEdit->text());
     m_entry->setExpires(m_mainUi->expireCheck->isChecked());
     QDateTime dateTime(m_mainUi->expireDatePicker->dateTime());
@@ -146,4 +157,26 @@ void EditEntryWidget::togglePassword(bool checked)
 {
     m_mainUi->passwordEdit->setEchoMode(checked ? QLineEdit::Password : QLineEdit::Normal);
     m_mainUi->passwordRepeatEdit->setEchoMode(checked ? QLineEdit::Password : QLineEdit::Normal);
+}
+
+bool EditEntryWidget::passwordsEqual()
+{
+    return m_mainUi->passwordEdit->text() == m_mainUi->passwordRepeatEdit->text();
+}
+
+void EditEntryWidget::setPasswordCheckColors()
+{
+    QPalette pal;
+    if (passwordsEqual()) {
+        pal.setColor(QPalette::Base, normalColor);
+    }
+    else {
+        if (m_mainUi->passwordEdit->text().startsWith(m_mainUi->passwordRepeatEdit->text())) {
+            pal.setColor(QPalette::Base, correctSoFarColor);
+        }
+        else {
+            pal.setColor(QPalette::Base, errorColor);
+        }
+    }
+    m_mainUi->passwordRepeatEdit->setPalette(pal);
 }
