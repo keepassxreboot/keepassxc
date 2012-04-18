@@ -188,12 +188,12 @@ void Database::recycleEntry(Entry* entry)
         if (!m_metadata->recycleBin()) {
             Group* recycleBin = new Group();
             recycleBin->setUuid(Uuid::random());
-            recycleBin->setName("Recycle Bin");
+            recycleBin->setName(tr("Recycle Bin"));
             recycleBin->setIcon(43);
             recycleBin->setParent(rootGroup());
             m_metadata->setRecycleBin(recycleBin);
         }
-        m_metadata->addEntryToRecycleBin(entry);
+        entry->setGroup(metadata()->recycleBin());
     }
     else {
         delete entry;

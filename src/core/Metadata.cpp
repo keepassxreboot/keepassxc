@@ -167,6 +167,11 @@ bool Metadata::recycleBinEnabled() const
     return m_recycleBinEnabled;
 }
 
+Group* Metadata::recycleBin()
+{
+    return m_recycleBin;
+}
+
 const Group* Metadata::recycleBin() const
 {
     return m_recycleBin;
@@ -371,9 +376,4 @@ void Metadata::removeCustomField(const QString& key)
 
     m_customFields.remove(key);
     Q_EMIT modified();
-}
-
-void Metadata::addEntryToRecycleBin(Entry* entry)
-{
-    entry->setGroup(m_recycleBin);
 }

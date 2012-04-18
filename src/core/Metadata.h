@@ -26,7 +26,6 @@
 
 class Database;
 class Group;
-class Entry;
 
 class Metadata : public QObject
 {
@@ -52,6 +51,7 @@ public:
     QImage customIcon(const Uuid& uuid) const;
     QHash<Uuid, QImage> customIcons() const;
     bool recycleBinEnabled() const;
+    Group* recycleBin();
     const Group* recycleBin() const;
     QDateTime recycleBinChanged() const;
     const Group* entryTemplatesGroup() const;
@@ -92,8 +92,6 @@ public:
     void addCustomField(const QString& key, const QString& value);
     void removeCustomField(const QString& key);
     void setUpdateDatetime(bool value);
-
-    void addEntryToRecycleBin(Entry* entry);
 
 Q_SIGNALS:
     void nameTextChanged(Database* db);
