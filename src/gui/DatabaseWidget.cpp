@@ -185,11 +185,6 @@ void DatabaseWidget::switchToMasterKeyChange()
     setCurrentIndex(3);
 }
 
-void DatabaseWidget::setCurrentIndex(int index) {
-    QStackedWidget::setCurrentIndex(index);
-    Q_EMIT currentIndexChanged(index);
-}
-
 bool DatabaseWidget::dbHasKey()
 {
     return m_db->hasKey();

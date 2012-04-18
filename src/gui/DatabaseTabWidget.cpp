@@ -360,7 +360,7 @@ void DatabaseTabWidget::insertDatabase(Database* db, const DatabaseManagerStruct
     connect(dbStruct.dbWidget->entryView(), SIGNAL(entrySelectionChanged()), SLOT(emitEntrySelectionChanged()));
     connect(dbStruct.dbWidget, SIGNAL(closeRequest()), SLOT(closeDatabase()));
     connect(db, SIGNAL(modified()), SLOT(modified()));
-    connect(dbStruct.dbWidget, SIGNAL(currentIndexChanged(int)), this, SIGNAL(currentWidgetIndexChanged(int)));
+    connect(dbStruct.dbWidget, SIGNAL(currentChanged(int)), this, SIGNAL(currentWidgetIndexChanged(int)));
 }
 
 DatabaseWidget* DatabaseTabWidget::currentDatabaseWidget()
