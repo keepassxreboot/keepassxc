@@ -111,6 +111,8 @@ private Q_SLOTS:
     void emitDataChanged();
 
 private:
+    const Database* database() const;
+
     Uuid m_uuid;
     int m_iconNumber;
     Uuid m_customIcon;
@@ -128,7 +130,6 @@ private:
 
     QList<Entry*> m_history;
     QPointer<Group> m_group;
-    const Database* m_db;
     QPixmapCache::Key m_pixmapCacheKey;
     bool m_updateTimeinfo;
 

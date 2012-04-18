@@ -25,7 +25,6 @@
 Entry::Entry()
 {
     m_group = 0;
-    m_db = 0;
     m_updateTimeinfo = true;
 
     m_iconNumber = 0;
@@ -79,8 +78,8 @@ QImage Entry::icon() const
         return databaseIcons()->icon(m_iconNumber);
     }
     else {
-        // TODO check if m_db is 0
-        return m_db->metadata()->customIcon(m_customIcon);
+        // TODO check if database() is 0
+        return database()->metadata()->customIcon(m_customIcon);
     }
 }
 
@@ -92,8 +91,8 @@ QPixmap Entry::iconPixmap() const
     else {
         QPixmap pixmap;
         if (!QPixmapCache::find(m_pixmapCacheKey, &pixmap)) {
-            // TODO check if m_db is 0
-            pixmap = QPixmap::fromImage(m_db->metadata()->customIcon(m_customIcon));
+            // TODO check if database() is 0
+            pixmap = QPixmap::fromImage(database()->metadata()->customIcon(m_customIcon));
             *const_cast<QPixmapCache::Key*>(&m_pixmapCacheKey) = QPixmapCache::insert(pixmap);
         }
 
@@ -336,11 +335,20 @@ void Entry::setGroup(Group* group)
     }
     group->addEntry(this);
     m_group = group;
-    m_db = group->database();
     QObject::setParent(group);
 }
 
 void Entry::emitDataChanged()
 {
     Q_EMIT dataChanged(this);
+}
+
+const Database* Entry::database() const
+{
+    if (m_group) {
+        return m_group->database();
+    }
+    else {
+        return 0;
+    }
 }
