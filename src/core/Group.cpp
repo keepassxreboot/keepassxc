@@ -35,8 +35,6 @@ Group::Group()
     m_searchingEnabled = Inherit;
 
     m_updateTimeinfo = true;
-
-    connect(this, SIGNAL(modified()), this, SLOT(updateTimeinfo()));
 }
 
 Group::~Group()
@@ -47,6 +45,7 @@ Group::~Group()
 template <class T> bool Group::set(T& property, const T& value) {
     if (property != value) {
         property = value;
+        updateTimeinfo();
         Q_EMIT modified();
         return true;
     }
@@ -177,6 +176,7 @@ void Group::setIcon(int iconNumber)
 
         m_pixmapCacheKey = QPixmapCache::Key();
 
+        updateTimeinfo();
         Q_EMIT modified();
         Q_EMIT dataChanged(this);
     }

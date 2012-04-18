@@ -92,9 +92,6 @@ Q_SIGNALS:
 
     void modified();
 
-private Q_SLOTS:
-    void updateTimeinfo();
-
 private:
     template <class T> inline bool set(T& property, const T& value);
 
@@ -128,6 +125,8 @@ private:
     friend void Database::setRootGroup(Group* group);
     friend Entry::~Entry();
     friend void Entry::setGroup(Group *group);
+
+    void updateTimeinfo();
 };
 
 #endif // KEEPASSX_GROUP_H
