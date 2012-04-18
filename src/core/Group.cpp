@@ -310,7 +310,9 @@ void Group::addEntry(Entry *entry)
 
     m_entries << entry;
     connect(entry, SIGNAL(dataChanged(Entry*)), SIGNAL(entryDataChanged(Entry*)));
-    connect(entry, SIGNAL(modified()), m_db, SIGNAL(modified()));
+    if (m_db) {
+        connect(entry, SIGNAL(modified()), m_db, SIGNAL(modified()));
+    }
 
     Q_EMIT modified();
     Q_EMIT entryAdded();
@@ -334,6 +336,11 @@ void Group::recSetDatabase(Database* db)
     disconnect(SIGNAL(aboutToAdd(Group*,int)), m_db);
     disconnect(SIGNAL(added()), m_db);
     disconnect(SIGNAL(modified()), m_db);
+
+    Q_FOREACH (Entry* entry, m_entries) {
+        entry->disconnect(m_db);
+        connect(entry, SIGNAL(modified()), db, SIGNAL(modified()));
+    }
 
     connect(this, SIGNAL(dataChanged(Group*)), db, SIGNAL(groupDataChanged(Group*)));
     connect(this, SIGNAL(aboutToRemove(Group*)), db, SIGNAL(groupAboutToRemove(Group*)));

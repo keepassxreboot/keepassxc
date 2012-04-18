@@ -71,6 +71,11 @@ void TestModified::testSignals()
     QCOMPARE(spyModified.count(), spyCount);
     QCOMPARE(spyModified2.count(), spyCount2);
 
+    entry1->setTitle("test");
+    spyCount2++;
+    QCOMPARE(spyModified.count(), spyCount);
+    QCOMPARE(spyModified2.count(), spyCount2);
+
     QPointer<Entry> entry2 = new Entry();
     entry2->setGroup(g2);
     spyCount++;
