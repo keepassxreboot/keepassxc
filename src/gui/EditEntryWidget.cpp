@@ -123,13 +123,13 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupN
 
 void EditEntryWidget::saveEntry()
 {
-    m_entry->setTitle(m_mainUi->titleEdit->text());
-    m_entry->setUsername(m_mainUi->usernameEdit->text());
-    m_entry->setUrl(m_mainUi->urlEdit->text());
     if (!passwordsEqual()) {
         QMessageBox::warning(this, tr("Error"), tr("Different passwords supplied."));
         return;
     }
+    m_entry->setTitle(m_mainUi->titleEdit->text());
+    m_entry->setUsername(m_mainUi->usernameEdit->text());
+    m_entry->setUrl(m_mainUi->urlEdit->text());
     m_entry->setPassword(m_mainUi->passwordEdit->text());
     m_entry->setExpires(m_mainUi->expireCheck->isChecked());
     QDateTime dateTime(m_mainUi->expireDatePicker->dateTime());
