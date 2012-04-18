@@ -20,7 +20,8 @@
 #include "core/Config.h"
 
 QString FileDialog::getOpenFileName(QWidget* parent, const QString& caption, QString dir,
-                                    const QString& filter, QString* selectedFilter, QFileDialog::Options options)
+                                    const QString& filter, QString* selectedFilter,
+                                    QFileDialog::Options options)
 {
     if (!m_nextFileName.isEmpty()) {
         QString result = m_nextFileName;
@@ -32,7 +33,8 @@ QString FileDialog::getOpenFileName(QWidget* parent, const QString& caption, QSt
             dir = config()->get("LastDir").toString();
         }
 
-        QString result = QFileDialog::getOpenFileName(parent, caption, dir, filter, selectedFilter, options);
+        QString result = QFileDialog::getOpenFileName(parent, caption, dir, filter,
+                                                      selectedFilter, options);
 
         if (!result.isEmpty()) {
             config()->set("LastDir", QFileInfo(result).absolutePath());
@@ -43,7 +45,8 @@ QString FileDialog::getOpenFileName(QWidget* parent, const QString& caption, QSt
 }
 
 QString FileDialog::getSaveFileName(QWidget* parent, const QString& caption, QString dir,
-                                    const QString& filter, QString* selectedFilter, QFileDialog::Options options)
+                                    const QString& filter, QString* selectedFilter,
+                                    QFileDialog::Options options)
 {
     if (!m_nextFileName.isEmpty()) {
         QString result = m_nextFileName;
@@ -55,7 +58,8 @@ QString FileDialog::getSaveFileName(QWidget* parent, const QString& caption, QSt
             dir = config()->get("LastDir").toString();
         }
 
-        QString result = QFileDialog::getSaveFileName(parent, caption, dir, filter, selectedFilter, options);
+        QString result = QFileDialog::getSaveFileName(parent, caption, dir, filter,
+                                                      selectedFilter, options);
 
         if (!result.isEmpty()) {
             config()->set("LastDir", QFileInfo(result).absolutePath());

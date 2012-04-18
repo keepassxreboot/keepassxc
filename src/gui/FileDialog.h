@@ -23,10 +23,12 @@
 class FileDialog
 {
 public:
-    QString getOpenFileName(QWidget* parent = 0, const QString& caption = QString(), QString dir = QString(),
-                            const QString& filter = QString(), QString* selectedFilter = 0, QFileDialog::Options options = 0);
-    QString getSaveFileName(QWidget* parent = 0, const QString& caption = QString(), QString dir = QString(),
-                            const QString& filter = QString(), QString* selectedFilter = 0, QFileDialog::Options options = 0);
+    QString getOpenFileName(QWidget* parent = 0, const QString& caption = QString(),
+                            QString dir = QString(), const QString& filter = QString(),
+                            QString* selectedFilter = 0, QFileDialog::Options options = 0);
+    QString getSaveFileName(QWidget* parent = 0, const QString& caption = QString(),
+                            QString dir = QString(), const QString& filter = QString(),
+                            QString* selectedFilter = 0, QFileDialog::Options options = 0);
 
     /**
      * Sets the result of the next get* method call.
