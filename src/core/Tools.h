@@ -18,11 +18,13 @@
 #ifndef KEEPASSX_TOOLS_H
 #define KEEPASSX_TOOLS_H
 
+#include <QtCore/QObject>
 #include <QtCore/QString>
 
 namespace Tools {
 
 QString humanReadableFileSize(qint64 bytes);
+bool hasChild(const QObject* parent, const QObject* child);
 
 } // namespace Tools
 

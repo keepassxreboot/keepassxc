@@ -38,4 +38,17 @@ QString humanReadableFileSize(qint64 bytes)
     return QString("%1 %2").arg(QLocale().toString(size, 'f', 2), units.at(i));
 }
 
+bool hasChild(const QObject* parent, const QObject* child)
+{
+    if (!parent || !child) {
+        return false;
+    }
+    Q_FOREACH (QObject* c, parent->children()) {
+        if (child == c || hasChild(c, child)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 } // namespace Tools
