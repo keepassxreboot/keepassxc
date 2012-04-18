@@ -186,11 +186,14 @@ void Group::setIcon(const Uuid& uuid)
 {
     Q_ASSERT(!uuid.isNull());
 
-    if (set(m_customIcon, uuid)) {
+    if (m_customIcon != uuid) {
+        m_customIcon = uuid;
         m_iconNumber = 0;
 
         m_pixmapCacheKey = QPixmapCache::Key();
 
+        updateTimeinfo();
+        Q_EMIT modified();
         Q_EMIT dataChanged(this);
     }
 }
