@@ -28,6 +28,7 @@
 
 void TestGroup::initTestCase()
 {
+    qRegisterMetaType<Entry*>("Entry*");
     qRegisterMetaType<Group*>("Group*");
     Crypto::init();
 }
