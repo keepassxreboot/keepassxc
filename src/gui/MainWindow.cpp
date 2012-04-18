@@ -56,8 +56,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::setMenuActionState(int index)
 {
-    if (m_ui->tabWidget->currentIndex() != -1)
-    {
+    if (m_ui->tabWidget->currentIndex() != -1) {
         m_ui->actionDatabaseClose->setEnabled(true);
         DatabaseWidget* dbWidget = m_ui->tabWidget->currentDatabaseWidget();
         Q_ASSERT(dbWidget);

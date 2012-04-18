@@ -50,7 +50,7 @@ DatabaseOpenDialog::DatabaseOpenDialog(QFile* file, QString filename, QWidget* p
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(openDatabase()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
 
-    QHash<QString,QVariant> lastKeyFiles = config()->get("LastKeyFiles").toHash();
+    QHash<QString, QVariant> lastKeyFiles = config()->get("LastKeyFiles").toHash();
     if (lastKeyFiles.contains(m_filename)) {
         m_ui->checkKeyFile->setChecked(true);
         m_ui->comboKeyFile->addItem(lastKeyFiles[m_filename].toString());
@@ -75,7 +75,7 @@ void DatabaseOpenDialog::openDatabase()
         masterKey.addKey(PasswordKey(m_ui->editPassword->text()));
     }
 
-    QHash<QString,QVariant> lastKeyFiles = config()->get("LastKeyFiles").toHash();
+    QHash<QString, QVariant> lastKeyFiles = config()->get("LastKeyFiles").toHash();
 
     if (m_ui->checkKeyFile->isChecked()) {
         FileKey key;
