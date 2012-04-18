@@ -323,7 +323,9 @@ void Group::removeEntry(Entry* entry)
     Q_EMIT entryAboutToRemove(entry);
 
     entry->disconnect(this);
-    entry->disconnect(m_db);
+    if (m_db) {
+        entry->disconnect(m_db);
+    }
     m_entries.removeAll(entry);
     Q_EMIT modified();
     Q_EMIT entryRemoved();
@@ -331,15 +333,19 @@ void Group::removeEntry(Entry* entry)
 
 void Group::recSetDatabase(Database* db)
 {
-    disconnect(SIGNAL(dataChanged(Group*)), m_db);
-    disconnect(SIGNAL(aboutToRemove(Group*)), m_db);
-    disconnect(SIGNAL(removed()), m_db);
-    disconnect(SIGNAL(aboutToAdd(Group*,int)), m_db);
-    disconnect(SIGNAL(added()), m_db);
-    disconnect(SIGNAL(modified()), m_db);
+    if (m_db) {
+        disconnect(SIGNAL(dataChanged(Group*)), m_db);
+        disconnect(SIGNAL(aboutToRemove(Group*)), m_db);
+        disconnect(SIGNAL(removed()), m_db);
+        disconnect(SIGNAL(aboutToAdd(Group*,int)), m_db);
+        disconnect(SIGNAL(added()), m_db);
+        disconnect(SIGNAL(modified()), m_db);
+    }
 
     Q_FOREACH (Entry* entry, m_entries) {
-        entry->disconnect(m_db);
+        if (m_db) {
+            entry->disconnect(m_db);
+        }
         connect(entry, SIGNAL(modified()), db, SIGNAL(modified()));
     }
 
