@@ -23,6 +23,7 @@
 #include <QtGui/QMessageBox>
 
 #include "core/Metadata.h"
+#include "core/Tools.h"
 #include "gui/ChangeMasterKeyWidget.h"
 #include "gui/EditEntryWidget.h"
 #include "gui/EditGroupWidget.h"
@@ -107,7 +108,8 @@ void DatabaseWidget::createEntry()
 
 void DatabaseWidget::deleteEntry()
 {
-    if (!m_db->metadata()->recycleBinEnabled()) {
+    bool inRecylceBin = Tools::hasChild(m_db->metadata()->recycleBin(), m_entryView->currentEntry());
+    if (inRecylceBin || !m_db->metadata()->recycleBinEnabled()) {
         QMessageBox::StandardButton result = QMessageBox::question(
             this, tr("Question"), tr("Do you really want to delete this entry for good?"),
             QMessageBox::Yes | QMessageBox::No);
