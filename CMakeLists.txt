@@ -21,6 +21,7 @@ set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake )
 
 option(WITH_TESTS "Enable building of unit tests" ON)
 option(WITH_GUI_TESTS "Enable building of GUI tests" OFF)
+option(WITH_LTO "Enable Link Time Optimization (LTO)" OFF)
 
 set( KEEPASSX_VERSION "0.9.0" )
 
@@ -55,6 +56,22 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_COMPILER_IS_CLANG)
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-z,relro")
     endif( CMAKE_SYSTEM_NAME STREQUAL "Linux" )
 endif(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_COMPILER_IS_CLANG)
+
+if(WITH_LTO)
+  include(CheckCXXCompilerFlag)
+
+  if(CMAKE_COMPILER_IS_GNUCXX)
+    check_cxx_compiler_flag("-flto -fuse-linker-plugin" LTO_AVAILABLE)
+
+    if(LTO_AVAILABLE)
+      add_compiler_flags("-flto -fuse-linker-plugin")
+    else()
+      message(FATAL_ERROR "This version of gcc doesn't support LTO")
+    endif(LTO_AVAILABLE)
+  else()
+    message(FATAL_ERROR "LTO is only supported with gcc")
+  endif(CMAKE_COMPILER_IS_GNUCXX)
+endif(WITH_LTO)
 
 if( APPLE OR MINGW )
     set( PROGNAME KeePassX )
