@@ -148,7 +148,7 @@ bool SymmetricCipherStream::writeBlock()
     else if (m_buffer.size() != m_cipher->blockSize()) {
         // PKCS7 padding
         int padLen = m_cipher->blockSize() - m_buffer.size();
-        for (int i=m_buffer.size(); i<m_cipher->blockSize(); i++) {
+        for (int i = m_buffer.size(); i < m_cipher->blockSize(); i++) {
             m_buffer.append(static_cast<char>(padLen));
         }
     }

@@ -90,7 +90,7 @@ void TestGui::testEditEntry()
 
 void TestGui::cleanupTestCase()
 {
-   delete m_mainWindow;
+    delete m_mainWindow;
 }
 
 KEEPASSX_QTEST_GUI_MAIN(TestGui)

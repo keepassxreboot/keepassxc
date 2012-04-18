@@ -27,8 +27,7 @@
 #endif
 #include <QtCore/QIODevice>
 
-namespace Endian
-{
+namespace Endian {
 
 qint16 bytesToInt16(const QByteArray& ba, QSysInfo::Endian byteOrder)
 {

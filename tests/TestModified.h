@@ -31,4 +31,4 @@ private Q_SLOTS:
     void testEntrySets();
 };
 
-#endif
+#endif // KEEPASSX_TESTMODIFIED_H

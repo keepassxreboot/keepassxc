@@ -38,7 +38,7 @@ public:
     void clear();
     bool areCustomKeysDifferent(const EntryAttributes* other);
 
-    const static QStringList DEFAULT_ATTRIBUTES;
+    static const QStringList DEFAULT_ATTRIBUTES;
     static bool isDefaultAttribute(const QString& key);
 
 Q_SIGNALS:
@@ -51,7 +51,7 @@ Q_SIGNALS:
     void removed(QString key);
     void aboutToBeReset();
     void reset();
-    
+
 private:
     QMap<QString, QString> m_attributes;
     QSet<QString> m_protectedAttributes;

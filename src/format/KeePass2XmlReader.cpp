@@ -376,7 +376,6 @@ Group* KeePass2XmlReader::parseGroup()
             else {
                 raiseError(3);
             }
-
         }
         else if (m_xml.name() == "EnableSearching") {
             QString str = readString();
@@ -733,7 +732,7 @@ QColor KeePass2XmlReader::readColor()
     }
 
     QColor color;
-    for (int i=0; i<= 2; i++) {
+    for (int i = 0; i <= 2; i++) {
         QString rgbPartStr = colorStr.mid(1 + 2*i, 2);
         bool ok;
         int rgbPart = rgbPartStr.toInt(&ok, 16);

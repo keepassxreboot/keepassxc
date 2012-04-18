@@ -65,7 +65,7 @@ void MainWindow::setMenuActionState(int index)
             index = dbWidget->currentIndex();
         }
 
-        switch(index) {
+        switch (index) {
             case 0:  // view
                 m_ui->actionEntryNew->setEnabled(true);
                 m_ui->actionGroupNew->setEnabled(true);

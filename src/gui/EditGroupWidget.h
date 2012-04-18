@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_GROUPDIALOG_H
-#define KEEPASSX_GROUPDIALOG_H
+#ifndef KEEPASSX_EDITGROUPWIDGET_H
+#define KEEPASSX_EDITGROUPWIDGET_H
 
 #include <QtCore/QScopedPointer>
 #include <QtGui/QWidget>
@@ -51,4 +51,4 @@ private:
     Q_DISABLE_COPY(EditGroupWidget)
 };
 
-#endif // KEEPASSX_GROUPDIALOG_H
+#endif // KEEPASSX_EDITGROUPWIDGET_H

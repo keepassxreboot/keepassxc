@@ -62,17 +62,24 @@ void KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
     CHECK_RETURN(writeData(Endian::int32ToBytes(KeePass2::FILE_VERSION, KeePass2::BYTEORDER)));
 
     CHECK_RETURN(writeHeaderField(KeePass2::CipherID, db->cipher().toByteArray()));
-    CHECK_RETURN(writeHeaderField(KeePass2::CompressionFlags, Endian::int32ToBytes(db->compressionAlgo(), KeePass2::BYTEORDER)));
+    CHECK_RETURN(writeHeaderField(KeePass2::CompressionFlags,
+                                  Endian::int32ToBytes(db->compressionAlgo(),
+                                                       KeePass2::BYTEORDER)));
     CHECK_RETURN(writeHeaderField(KeePass2::MasterSeed, masterSeed));
     CHECK_RETURN(writeHeaderField(KeePass2::TransformSeed, db->transformSeed()));
-    CHECK_RETURN(writeHeaderField(KeePass2::TransformRounds, Endian::int64ToBytes(db->transformRounds(), KeePass2::BYTEORDER)));
+    CHECK_RETURN(writeHeaderField(KeePass2::TransformRounds,
+                                  Endian::int64ToBytes(db->transformRounds(),
+                                                       KeePass2::BYTEORDER)));
     CHECK_RETURN(writeHeaderField(KeePass2::EncryptionIV, encryptionIV));
     CHECK_RETURN(writeHeaderField(KeePass2::ProtectedStreamKey, protectedStreamKey));
     CHECK_RETURN(writeHeaderField(KeePass2::StreamStartBytes, startBytes));
-    CHECK_RETURN(writeHeaderField(KeePass2::InnerRandomStreamID, Endian::int32ToBytes(KeePass2::Salsa20, KeePass2::BYTEORDER)));
+    CHECK_RETURN(writeHeaderField(KeePass2::InnerRandomStreamID,
+                                  Endian::int32ToBytes(KeePass2::Salsa20,
+                                                       KeePass2::BYTEORDER)));
     CHECK_RETURN(writeHeaderField(KeePass2::EndOfHeader, endOfHeader));
 
-    SymmetricCipherStream cipherStream(device, SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Encrypt, finalKey, encryptionIV);
+    SymmetricCipherStream cipherStream(device, SymmetricCipher::Aes256, SymmetricCipher::Cbc,
+                                       SymmetricCipher::Encrypt, finalKey, encryptionIV);
     cipherStream.open(QIODevice::WriteOnly);
     m_device = &cipherStream;
     CHECK_RETURN(writeData(startBytes));

@@ -53,7 +53,7 @@ QByteArray KeePass2RandomStream::process(const QByteArray& data)
     QByteArray result;
     result.resize(data.size());
 
-    for (int i=0; i<data.size(); i++) {
+    for (int i = 0; i < data.size(); i++) {
         result[i] = data[i] ^ randomData[i];
     }
 
@@ -64,7 +64,7 @@ void KeePass2RandomStream::processInPlace(QByteArray& data)
 {
     QByteArray randomData = randomBytes(data.size());
 
-    for (int i=0; i<data.size(); i++) {
+    for (int i = 0; i < data.size(); i++) {
         data[i] = data[i] ^ randomData[i];
     }
 }

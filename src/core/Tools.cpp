@@ -20,7 +20,9 @@
 #include <QtCore/QLocale>
 #include <QtCore/QStringList>
 
-QString Tools::humanReadableFileSize(qint64 bytes)
+namespace Tools {
+
+QString humanReadableFileSize(qint64 bytes)
 {
     double size = bytes;
 
@@ -35,3 +37,5 @@ QString Tools::humanReadableFileSize(qint64 bytes)
 
     return QString("%1 %2").arg(QLocale().toString(size, 'f', 2), units.at(i));
 }
+
+} // namespace Tools

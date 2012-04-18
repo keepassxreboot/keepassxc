@@ -79,7 +79,8 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
     hash.addData(m_db->transformedMasterKey());
     QByteArray finalKey = hash.result();
 
-    SymmetricCipherStream cipherStream(device, SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Decrypt, finalKey, m_encryptionIV);
+    SymmetricCipherStream cipherStream(device, SymmetricCipher::Aes256, SymmetricCipher::Cbc,
+                                       SymmetricCipher::Decrypt, finalKey, m_encryptionIV);
     cipherStream.open(QIODevice::ReadOnly);
 
     QByteArray realStart = cipherStream.read(32);

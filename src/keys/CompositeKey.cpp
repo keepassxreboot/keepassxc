@@ -17,10 +17,10 @@
 
 #include "CompositeKey.h"
 
+#include <QtCore/QtConcurrentRun>
+
 #include "crypto/CryptoHash.h"
 #include "crypto/SymmetricCipher.h"
-
-#include <QtCore/QtConcurrentRun>
 
 CompositeKey::CompositeKey()
 {
@@ -90,7 +90,7 @@ QByteArray CompositeKey::transformKeyRaw(const QByteArray& key, const QByteArray
 
     QByteArray result = key;
 
-    for (int i=0; i<rounds; i++) {
+    for (int i = 0; i < rounds; i++) {
         cipher.processInPlace(result);
     }
 

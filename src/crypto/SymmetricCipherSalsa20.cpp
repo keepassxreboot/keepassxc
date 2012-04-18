@@ -44,7 +44,7 @@ void SymmetricCipherSalsa20::init()
 
 void SymmetricCipherSalsa20::setKey(const QByteArray& key)
 {
-    Q_ASSERT( (key.size() == 16) || (key.size() == 32) );
+    Q_ASSERT((key.size() == 16) || (key.size() == 32));
 
     m_key = key;
     ECRYPT_keysetup(&m_ctx, reinterpret_cast<const u8*>(m_key.constData()), m_key.size()*8, 64);
@@ -60,7 +60,7 @@ void SymmetricCipherSalsa20::setIv(const QByteArray& iv)
 
 QByteArray SymmetricCipherSalsa20::process(const QByteArray& data)
 {
-    Q_ASSERT( (data.size() < blockSize()) || ((data.size() % blockSize())==0) );
+    Q_ASSERT((data.size() < blockSize()) || ((data.size() % blockSize()) == 0));
 
     QByteArray result;
     result.resize(data.size());
@@ -73,7 +73,7 @@ QByteArray SymmetricCipherSalsa20::process(const QByteArray& data)
 
 void SymmetricCipherSalsa20::processInPlace(QByteArray& data)
 {
-    Q_ASSERT( (data.size() < blockSize()) || ((data.size() % blockSize())==0) );
+    Q_ASSERT((data.size() < blockSize()) || ((data.size() % blockSize()) == 0));
 
     ECRYPT_encrypt_bytes(&m_ctx, reinterpret_cast<const u8*>(data.constData()),
                          reinterpret_cast<u8*>(data.data()), data.size());

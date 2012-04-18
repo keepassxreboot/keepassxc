@@ -23,8 +23,8 @@
 
 class QIODevice;
 
-namespace Endian
-{
+namespace Endian {
+
     qint16 bytesToInt16(const QByteArray& ba, QSysInfo::Endian byteOrder);
     quint16 bytesToUInt16(const QByteArray& ba, QSysInfo::Endian byteOrder);
     qint32 bytesToInt32(const QByteArray& ba, QSysInfo::Endian byteOrder);
@@ -46,6 +46,7 @@ namespace Endian
     bool writeInt16(qint16 num, QIODevice* device, QSysInfo::Endian byteOrder);
     bool writeInt32(qint32 num, QIODevice* device, QSysInfo::Endian byteOrder);
     bool writeInt64(qint64 num, QIODevice* device, QSysInfo::Endian byteOrder);
-};
+
+} // namespace Endian
 
 #endif // KEEPASSX_ENDIAN_H

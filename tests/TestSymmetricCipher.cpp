@@ -41,14 +41,16 @@ void TestSymmetricCipher::testAes256CbcEncryption()
     QByteArray cipherText = QByteArray::fromHex("f58c4c04d6e5f1ba779eabfb5f7bfbd6");
     cipherText.append(QByteArray::fromHex("9cfc4e967edb808d679f777bc6702c7d"));
 
-    SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Encrypt, key, iv);
+    SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Encrypt,
+                           key, iv);
     QCOMPARE(cipher.blockSize(), 16);
 
     QCOMPARE(cipher.process(plainText),
              cipherText);
 
     QBuffer buffer;
-    SymmetricCipherStream stream(&buffer, SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Encrypt, key, iv);
+    SymmetricCipherStream stream(&buffer, SymmetricCipher::Aes256, SymmetricCipher::Cbc,
+                                 SymmetricCipher::Encrypt, key, iv);
     buffer.open(QIODevice::WriteOnly);
     stream.open(QIODevice::WriteOnly);
 
@@ -88,7 +90,8 @@ void TestSymmetricCipher::testAes256CbcDecryption()
              plainText);
 
     QBuffer buffer(&cipherText);
-    SymmetricCipherStream stream(&buffer, SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Decrypt, key, iv);
+    SymmetricCipherStream stream(&buffer, SymmetricCipher::Aes256, SymmetricCipher::Cbc,
+                                 SymmetricCipher::Decrypt, key, iv);
     buffer.open(QIODevice::ReadOnly);
     stream.open(QIODevice::ReadOnly);
 
@@ -118,7 +121,7 @@ void TestSymmetricCipher::testSalsa20()
     SymmetricCipher cipher(SymmetricCipher::Salsa20, SymmetricCipher::Stream, SymmetricCipher::Encrypt, key, iv);
 
     QByteArray cipherTextA;
-    for (int i=0; i<8; i++) {
+    for (int i = 0; i < 8; i++) {
         cipherTextA.append(cipher.process(QByteArray(64, '\0')));
     }
     cipher.reset();

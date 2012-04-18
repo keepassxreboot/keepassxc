@@ -24,6 +24,6 @@ namespace Tools {
 
 QString humanReadableFileSize(qint64 bytes);
 
-}
+} // namespace Tools
 
 #endif // KEEPASSX_TOOLS_H

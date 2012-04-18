@@ -35,17 +35,6 @@ int main(int argc, char **argv)
 
     Crypto::init();
 
-    CompositeKey key;
-    PasswordKey password;
-    password.setPassword("a");
-    key.addKey(password);
-
-    //KeePass2Reader* xreader = new KeePass2Reader();
-    //Database* db = xreader->readDatabase(QString(KEEPASSX_TEST_DIR).append("/NewDatabase.kdbx"), key);
-
-    //KeePass2XmlReader* reader = new KeePass2XmlReader();
-    //Database* db = reader->readDatabase(QString(KEEPASSX_TEST_DIR).append("/NewDatabase.xml"));
-
     MainWindow mainWindow;
     mainWindow.show();
 

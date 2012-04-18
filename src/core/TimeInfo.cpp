@@ -59,6 +59,7 @@ int TimeInfo::usageCount() const
 {
     return m_usageCount;
 }
+
 QDateTime TimeInfo::locationChanged() const
 {
     return m_locationChanged;

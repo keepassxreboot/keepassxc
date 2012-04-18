@@ -52,7 +52,7 @@ void TestKeePass2RandomStream::test()
     QByteArray cipherData;
     cipherData.resize(SIZE);
 
-    for (int i=0; i<SIZE; i++) {
+    for (int i = 0; i < SIZE; i++) {
         cipherData[i] = data[i] ^ cipherPad[i];
     }
 

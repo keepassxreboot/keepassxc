@@ -110,8 +110,8 @@ void TestKeePass2XmlReader::testCustomIcons()
     QCOMPARE(icon.width(), 16);
     QCOMPARE(icon.height(), 16);
 
-    for (int x=0; x<16; x++) {
-        for (int y=0; y<16; y++) {
+    for (int x = 0; x < 16; x++) {
+        for (int y = 0; y < 16; y++) {
             QRgb rgb = icon.pixel(x, y);
             QCOMPARE(qRed(rgb), 128);
             QCOMPARE(qGreen(rgb), 0);

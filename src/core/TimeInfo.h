@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_DBTIMEINFO_H
-#define KEEPASSX_DBTIMEINFO_H
+#ifndef KEEPASSX_TIMEINFO_H
+#define KEEPASSX_TIMEINFO_H
 
 #include <QtCore/QDateTime>
 
@@ -51,4 +51,4 @@ private:
     QDateTime m_locationChanged;
 };
 
-#endif // KEEPASSX_DBTIMEINFO_H
+#endif // KEEPASSX_TIMEINFO_H

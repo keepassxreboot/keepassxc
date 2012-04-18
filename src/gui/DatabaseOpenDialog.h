@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KEYOPENDIALOG_H
-#define KEEPASSX_KEYOPENDIALOG_H
+#ifndef KEEPASSX_DATABASEOPENDIALOG_H
+#define KEEPASSX_DATABASEOPENDIALOG_H
 
 #include <QtCore/QScopedPointer>
 #include <QtGui/QDialog>
@@ -56,4 +56,4 @@ private:
     Q_DISABLE_COPY(DatabaseOpenDialog)
 };
 
-#endif // KEEPASSX_KEYOPENDIALOG_H
+#endif // KEEPASSX_DATABASEOPENDIALOG_H

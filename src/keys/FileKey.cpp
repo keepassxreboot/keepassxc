@@ -34,39 +34,39 @@ bool FileKey::load(QIODevice* device)
         return false;
     }
 
-   if (device->size() == 0) {
-       return false;
-   }
+    if (device->size() == 0) {
+        return false;
+    }
 
-   if (!device->reset()) {
-       return false;
-   }
-   if (loadXml(device)) {
-       return true;
-   }
+    if (!device->reset()) {
+        return false;
+    }
+    if (loadXml(device)) {
+        return true;
+    }
 
-   if (!device->reset()) {
-       return false;
-   }
-   if (loadBinary(device)) {
-       return true;
-   }
+    if (!device->reset()) {
+        return false;
+    }
+    if (loadBinary(device)) {
+        return true;
+    }
 
-   if (!device->reset()) {
-       return false;
-   }
-   if (loadHex(device)) {
-       return true;
-   }
+    if (!device->reset()) {
+        return false;
+    }
+    if (loadHex(device)) {
+        return true;
+    }
 
-   if (!device->reset()) {
-       return false;
-   }
-   if (loadHashed(device)) {
-       return true;
-   }
+    if (!device->reset()) {
+        return false;
+    }
+    if (loadHashed(device)) {
+        return true;
+    }
 
-   return false;
+    return false;
 }
 
 bool FileKey::load(const QString& fileName, QString* errorMsg)

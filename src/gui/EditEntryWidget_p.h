@@ -26,7 +26,7 @@
 class CategoryListViewDelegate : public QStyledItemDelegate
 {
 public:
-    CategoryListViewDelegate(QObject *parent) : QStyledItemDelegate(parent) {}
+    explicit CategoryListViewDelegate(QObject *parent) : QStyledItemDelegate(parent) {}
 
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
     {
@@ -39,7 +39,7 @@ public:
 class CategoryListWidget : public QListWidget
 {
 public:
-    CategoryListWidget(QWidget* parent = 0) : QListWidget(parent)
+    explicit CategoryListWidget(QWidget* parent = 0) : QListWidget(parent)
     {
         setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
         setItemDelegate(new CategoryListViewDelegate(this));
