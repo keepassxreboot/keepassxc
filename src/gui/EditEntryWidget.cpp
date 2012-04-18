@@ -108,7 +108,7 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupN
     m_mainUi->passwordRepeatEdit->setText(entry->password());
     setPasswordCheckColors();
     m_mainUi->expireCheck->setChecked(entry->timeInfo().expires());
-    m_mainUi->expireDatePicker->setDateTime(entry->timeInfo().expiryTime());
+    m_mainUi->expireDatePicker->setDateTime(entry->timeInfo().expiryTime().toLocalTime());
     m_mainUi->togglePasswordButton->setChecked(true);
 
     m_notesUi->notesEdit->setPlainText(entry->notes());
@@ -132,9 +132,7 @@ void EditEntryWidget::saveEntry()
     m_entry->setUrl(m_mainUi->urlEdit->text());
     m_entry->setPassword(m_mainUi->passwordEdit->text());
     m_entry->setExpires(m_mainUi->expireCheck->isChecked());
-    QDateTime dateTime(m_mainUi->expireDatePicker->dateTime());
-    dateTime.setTimeSpec(Qt::UTC);
-    m_entry->setExpiryTime(dateTime);
+    m_entry->setExpiryTime(m_mainUi->expireDatePicker->dateTime().toUTC());
 
     m_entry->setNotes(m_notesUi->notesEdit->toPlainText());
 
