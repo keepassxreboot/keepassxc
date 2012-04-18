@@ -89,9 +89,17 @@ void TestModified::testSignals()
     g4->setParent(g3);
     QCOMPARE(spyModified.count(), ++spyCount);
 
+    delete g4;
+    QCOMPARE(spyModified.count(), ++spyCount);
+
+    delete entry2;
+    QCOMPARE(spyModified2.count(), ++spyCount2);
+
+    QCOMPARE(spyModified.count(), spyCount);
     QCOMPARE(spyModified2.count(), spyCount2);
 
     delete db;
+    delete db2;
 }
 
 void TestModified::testGroupSets()
