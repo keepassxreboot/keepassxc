@@ -20,12 +20,15 @@
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QLabel>
 #include <QtGui/QSplitter>
+#include <QtGui/QMessageBox>
 
+#include "core/Metadata.h"
 #include "gui/ChangeMasterKeyWidget.h"
 #include "gui/EditEntryWidget.h"
 #include "gui/EditGroupWidget.h"
 #include "gui/EntryView.h"
 #include "gui/GroupView.h"
+
 
 DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     : QStackedWidget(parent)
@@ -104,7 +107,20 @@ void DatabaseWidget::createEntry()
 
 void DatabaseWidget::deleteEntry()
 {
-    delete m_entryView->currentEntry();
+    if (!m_db->metadata()->recycleBinEnabled()) {
+        QMessageBox::StandardButton result = QMessageBox::question(
+            this, tr("Question"), tr("Do you really want to delete this entry for good?"),
+            QMessageBox::Yes | QMessageBox::No);
+        if (result == QMessageBox::Yes) {
+            delete m_entryView->currentEntry();
+        }
+        else {
+            return;
+        }
+    }
+    else {
+        m_db->recycleEntry(m_entryView->currentEntry());
+    }
 }
 
 void DatabaseWidget::createGroup()

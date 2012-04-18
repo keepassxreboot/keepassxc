@@ -82,6 +82,7 @@ public:
      */
     void setKey(const CompositeKey& key);
     bool hasKey();
+    void recycleEntry(Entry* entry);
 
 Q_SIGNALS:
     void groupDataChanged(Group* group);

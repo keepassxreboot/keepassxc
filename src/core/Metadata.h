@@ -26,6 +26,7 @@
 
 class Database;
 class Group;
+class Entry;
 
 class Metadata : public QObject
 {
@@ -91,6 +92,8 @@ public:
     void addCustomField(const QString& key, const QString& value);
     void removeCustomField(const QString& key);
     void setUpdateDatetime(bool value);
+
+    void addEntryToRecycleBin(Entry* entry);
 
 Q_SIGNALS:
     void nameTextChanged(Database* db);

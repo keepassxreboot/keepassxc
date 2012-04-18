@@ -18,6 +18,7 @@
 #include "Metadata.h"
 
 #include "core/Database.h"
+#include "core/Entry.h"
 
 Metadata::Metadata(Database* parent)
     : QObject(parent)
@@ -370,4 +371,9 @@ void Metadata::removeCustomField(const QString& key)
 
     m_customFields.remove(key);
     Q_EMIT modified();
+}
+
+void Metadata::addEntryToRecycleBin(Entry* entry)
+{
+    entry->setGroup(m_recycleBin);
 }
