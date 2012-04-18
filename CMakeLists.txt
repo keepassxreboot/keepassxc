@@ -24,25 +24,37 @@ option(WITH_GUI_TESTS "Enable building of GUI tests" OFF)
 
 set( KEEPASSX_VERSION "0.9.0" )
 
+if("${CMAKE_CXX_COMPILER}" MATCHES "clang(\\+\\+)?$" OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+  set(CMAKE_COMPILER_IS_CLANG 1)
+endif("${CMAKE_CXX_COMPILER}" MATCHES "clang(\\+\\+)?$" OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+
+macro(add_compiler_flags FLAGS)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FLAGS}")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${FLAGS}")
+endmacro(add_compiler_flags)
+
 add_definitions(-DQT_NO_KEYWORDS -DQT_NO_EXCEPTIONS -DQT_NO_STL -DQT_STRICT_ITERATORS)
 
-if(CMAKE_COMPILER_IS_GNUCXX OR (${CMAKE_CXX_COMPILER} MATCHES "clang(\\+\\+)?$"))
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ansi -fno-common -fno-exceptions -fno-rtti")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wundef -Wold-style-cast -Wnon-virtual-dtor -Wcast-align")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wpointer-arith -Wformat=2 -Werror=format-security -Woverloaded-virtual -Wno-long-long")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstack-protector --param=ssp-buffer-size=4 -D_FORTIFY_SOURCE=2")
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_COMPILER_IS_CLANG)
+    add_compiler_flags("-ansi -fno-common -fstack-protector -D_FORTIFY_SOURCE=2")
+    add_compiler_flags("-Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long")
+    add_compiler_flags("-Wformat=2 -Werror=format-security -Wmissing-format-attribute")
 
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ansi -fno-common")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wundef -Wcast-align -Wchar-subscripts -Wpointer-arith")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wwrite-strings -Wformat=2 -Werror=format-security -Werror=implicit-function-declaration")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wmissing-format-attribute -Wno-long-long")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstack-protector --param=ssp-buffer-size=4 -D_FORTIFY_SOURCE=2")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-exceptions -fno-rtti")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wchar-subscripts -Wwrite-strings -Werror=implicit-function-declaration")
+
+    if(CMAKE_COMPILER_IS_GNUCXX)
+      add_compiler_flags("-Wcast-align --param=ssp-buffer-size=4")
+    else()
+      add_compiler_flags("-mllvm -stack-protector-buffer-size=4")
+    endif(CMAKE_COMPILER_IS_GNUCXX)
 
     if( CMAKE_SYSTEM_NAME STREQUAL "Linux" )
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--no-add-needed -Wl,--as-needed -Wl,--no-undefined")
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-z,relro")
     endif( CMAKE_SYSTEM_NAME STREQUAL "Linux" )
-endif(CMAKE_COMPILER_IS_GNUCXX OR (${CMAKE_CXX_COMPILER} MATCHES "clang(\\+\\+)?$"))
+endif(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_COMPILER_IS_CLANG)
 
 if( APPLE OR MINGW )
     set( PROGNAME KeePassX )
