@@ -88,6 +88,11 @@ void TestModified::testSignals()
     QCOMPARE(spyModified.count(), spyCount);
     QCOMPARE(spyModified2.count(), spyCount2);
 
+    entry2->setTitle("test2");
+    spyCount2++;
+    QCOMPARE(spyModified.count(), spyCount);
+    QCOMPARE(spyModified2.count(), spyCount2);
+
     Group* g3 = new Group();
     g3->setParent(root);
     spyCount++;

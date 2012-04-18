@@ -323,6 +323,7 @@ void Group::removeEntry(Entry* entry)
     Q_EMIT entryAboutToRemove(entry);
 
     entry->disconnect(this);
+    entry->disconnect(m_db);
     m_entries.removeAll(entry);
     Q_EMIT modified();
     Q_EMIT entryRemoved();
