@@ -268,6 +268,11 @@ void DatabaseTabWidget::editEntry()
     currentDatabaseWidget()->switchToEntryEdit();
 }
 
+void DatabaseTabWidget::deleteEntry()
+{
+    currentDatabaseWidget()->deleteEntry();
+}
+
 void DatabaseTabWidget::createGroup()
 {
     currentDatabaseWidget()->createGroup();

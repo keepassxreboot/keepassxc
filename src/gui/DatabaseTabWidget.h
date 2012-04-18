@@ -60,6 +60,7 @@ public Q_SLOTS:
     void changeMasterKey();
     void createEntry();
     void editEntry();
+    void deleteEntry();
     void createGroup();
     void editGroup();
 

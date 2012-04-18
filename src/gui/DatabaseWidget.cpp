@@ -102,6 +102,11 @@ void DatabaseWidget::createEntry()
     switchToEntryEdit(m_newEntry, true);
 }
 
+void DatabaseWidget::deleteEntry()
+{
+    delete m_entryView->currentEntry();
+}
+
 void DatabaseWidget::createGroup()
 {
     m_newGroup = new Group();

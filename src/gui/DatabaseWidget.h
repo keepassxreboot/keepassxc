@@ -38,6 +38,7 @@ public:
     GroupView* groupView();
     EntryView* entryView();
     bool dbHasKey();
+    void deleteEntry();
 
 Q_SIGNALS:
     void closeRequest();
