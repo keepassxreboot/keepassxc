@@ -347,6 +347,10 @@ void Group::removeEntry(Entry* entry)
     entry->disconnect(this);
     if (m_db) {
         entry->disconnect(m_db);
+        DeletedObject delObject;
+        delObject.deletionTime = QDateTime::currentDateTimeUtc();
+        delObject.uuid = entry->uuid();
+        m_db->addDeletedObject(delObject);
     }
     m_entries.removeAll(entry);
     Q_EMIT modified();
