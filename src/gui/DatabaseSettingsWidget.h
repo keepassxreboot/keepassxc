@@ -35,8 +35,12 @@ public:
     explicit DatabaseSettingsWidget(QWidget* parent = 0);
     ~DatabaseSettingsWidget();
 
-    void setForms(int transformRounds);
+    void setForms(QString dbName, QString dbDescription,
+                  bool recylceBinEnabled, int transformRounds);
     quint64 transformRounds();
+    QString dbName();
+    QString dbDescription();
+    bool recylceBinEnabled();
 
 Q_SIGNALS:
     void editFinished(bool accepted);
@@ -48,6 +52,9 @@ private Q_SLOTS:
 private:
     QScopedPointer<Ui::DatabaseSettingsWidget> m_ui;
 
+    QString m_dbName;
+    QString m_dbDescription;
+    bool m_recylceBinEnabled;
     quint64 m_transformRounds;
 
     Q_DISABLE_COPY(DatabaseSettingsWidget)

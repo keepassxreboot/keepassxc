@@ -198,6 +198,9 @@ void DatabaseWidget::updateSettings(bool accepted)
 {
     if (accepted) {
         m_db->updateKey(m_databaseSettingsWidget->transformRounds());
+        m_db->metadata()->setDescription(m_databaseSettingsWidget->dbDescription());
+        m_db->metadata()->setRecycleBinEnabled(m_databaseSettingsWidget->recylceBinEnabled());
+        m_db->metadata()->setName(m_databaseSettingsWidget->dbName());
     }
 
     setCurrentIndex(0);
@@ -221,7 +224,10 @@ void DatabaseWidget::switchToMasterKeyChange()
 
 void DatabaseWidget::switchToDatabaseSettings()
 {
-    m_databaseSettingsWidget->setForms(m_db->transformRounds());
+    m_databaseSettingsWidget->setForms(m_db->metadata()->name(),
+                                       m_db->metadata()->description(),
+                                       m_db->metadata()->recycleBinEnabled(),
+                                       m_db->transformRounds());
     setCurrentIndex(4);
 }
 
