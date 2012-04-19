@@ -31,10 +31,17 @@ ChangeMasterKeyWidget::ChangeMasterKeyWidget(QWidget* parent)
 
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(generateKey()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
+    connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), SLOT(togglePassword(bool)));
 }
 
 ChangeMasterKeyWidget::~ChangeMasterKeyWidget()
 {
+}
+
+void ChangeMasterKeyWidget::togglePassword(bool checked)
+{
+    m_ui->enterPasswordEdit->setEchoMode(checked ? QLineEdit::Password : QLineEdit::Normal);
+    m_ui->repeatPasswordEdit->setEchoMode(checked ? QLineEdit::Password : QLineEdit::Normal);
 }
 
 void ChangeMasterKeyWidget::clearForms()
@@ -45,6 +52,7 @@ void ChangeMasterKeyWidget::clearForms()
     m_ui->enterPasswordEdit->setText("");
     m_ui->repeatPasswordEdit->setText("");
     m_ui->keyFileGroup->setChecked(false);
+    m_ui->togglePasswordButton->setChecked(true);
     // TODO clear m_ui->keyFileCombo
 }
 

@@ -45,6 +45,7 @@ Q_SIGNALS:
 private Q_SLOTS:
     void generateKey();
     void reject();
+    void togglePassword(bool checked);
 
 private:
     QScopedPointer<Ui::ChangeMasterKeyWidget> m_ui;

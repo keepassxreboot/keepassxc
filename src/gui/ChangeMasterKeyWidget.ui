@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>438</width>
-    <height>237</height>
+    <height>242</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -62,6 +62,12 @@
          <widget class="QToolButton" name="togglePasswordButton">
           <property name="text">
            <string>...</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
