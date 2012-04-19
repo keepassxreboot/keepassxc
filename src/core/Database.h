@@ -81,6 +81,7 @@ public:
      * Sets the database key and generates a random transform seed.
      */
     void setKey(const CompositeKey& key);
+    void updateKey(quint64 rounds);
     bool hasKey();
     void recycleEntry(Entry* entry);
 
@@ -105,6 +106,8 @@ private:
     QByteArray m_transformSeed;
     quint64 m_transformRounds;
     QByteArray m_transformedMasterKey;
+
+    CompositeKey m_key;
 
     bool m_hasKey;
 };

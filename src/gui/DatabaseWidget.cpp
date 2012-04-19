@@ -25,6 +25,7 @@
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "gui/ChangeMasterKeyWidget.h"
+#include "gui/DatabaseSettingsWidget.h"
 #include "gui/EditEntryWidget.h"
 #include "gui/EditGroupWidget.h"
 #include "gui/EntryView.h"
@@ -73,17 +74,19 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     headlineLabelFont.setBold(true);
     headlineLabelFont.setPointSize(headlineLabelFont.pointSize() + 2);
     m_changeMasterKeyWidget->headlineLabel()->setFont(headlineLabelFont);
-
+    m_databaseSettingsWidget = new DatabaseSettingsWidget();
     addWidget(m_mainWidget);
     addWidget(m_editEntryWidget);
     addWidget(m_editGroupWidget);
     addWidget(m_changeMasterKeyWidget);
+    addWidget(m_databaseSettingsWidget);
 
     connect(m_groupView, SIGNAL(groupChanged(Group*)), m_entryView, SLOT(setGroup(Group*)));
     connect(m_entryView, SIGNAL(entryActivated(Entry*)), SLOT(switchToEntryEdit(Entry*)));
     connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
     connect(m_editGroupWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
     connect(m_changeMasterKeyWidget, SIGNAL(editFinished(bool)), SLOT(updateMasterKey(bool)));
+    connect(m_databaseSettingsWidget, SIGNAL(editFinished(bool)), SLOT(updateSettings(bool)));
 
     setCurrentIndex(0);
 }
@@ -191,6 +194,15 @@ void DatabaseWidget::updateMasterKey(bool accepted)
     setCurrentIndex(0);
 }
 
+void DatabaseWidget::updateSettings(bool accepted)
+{
+    if (accepted) {
+        m_db->updateKey(m_databaseSettingsWidget->transformRounds());
+    }
+
+    setCurrentIndex(0);
+}
+
 void DatabaseWidget::switchToEntryEdit()
 {
     switchToEntryEdit(m_entryView->currentEntry(), false);
@@ -205,6 +217,12 @@ void DatabaseWidget::switchToMasterKeyChange()
 {
     m_changeMasterKeyWidget->clearForms();
     setCurrentIndex(3);
+}
+
+void DatabaseWidget::switchToDatabaseSettings()
+{
+    m_databaseSettingsWidget->setForms(m_db->transformRounds());
+    setCurrentIndex(4);
 }
 
 bool DatabaseWidget::dbHasKey()

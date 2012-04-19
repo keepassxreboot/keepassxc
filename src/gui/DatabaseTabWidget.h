@@ -58,6 +58,7 @@ public Q_SLOTS:
     void closeDatabaseFromSender();
     bool closeAllDatabases();
     void changeMasterKey();
+    void changeDatabaseSettings();
     void createEntry();
     void editEntry();
     void deleteEntry();

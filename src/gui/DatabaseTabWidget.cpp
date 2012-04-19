@@ -258,6 +258,11 @@ void DatabaseTabWidget::changeMasterKey()
     currentDatabaseWidget()->switchToMasterKeyChange();
 }
 
+void DatabaseTabWidget::changeDatabaseSettings()
+{
+    currentDatabaseWidget()->switchToDatabaseSettings();
+}
+
 void DatabaseTabWidget::createEntry()
 {
     currentDatabaseWidget()->createEntry();

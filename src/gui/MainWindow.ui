@@ -50,6 +50,7 @@
     <addaction name="actionDatabaseClose"/>
     <addaction name="separator"/>
     <addaction name="actionChangeMasterKey"/>
+    <addaction name="actionChangeDatabaseSettings"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -196,6 +197,17 @@
    </property>
    <property name="text">
     <string>Change master key</string>
+   </property>
+  </action>
+  <action name="actionChangeDatabaseSettings">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Database settings</string>
+   </property>
+   <property name="toolTip">
+    <string>Database settings</string>
    </property>
   </action>
  </widget>

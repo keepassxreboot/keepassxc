@@ -167,6 +167,7 @@ void Database::setTransformRounds(quint64 rounds)
 
 void Database::setKey(const CompositeKey& key, const QByteArray& transformSeed, bool updateChangedTime)
 {
+    m_key = key;
     m_transformSeed = transformSeed;
     m_transformedMasterKey = key.transform(transformSeed, transformRounds());
     m_hasKey = true;
@@ -179,6 +180,16 @@ void Database::setKey(const CompositeKey& key, const QByteArray& transformSeed, 
 void Database::setKey(const CompositeKey& key)
 {
     setKey(key, Random::randomArray(32));
+}
+
+void Database::updateKey(quint64 rounds)
+{
+    if (m_transformRounds != rounds) {
+        m_transformRounds = rounds;
+        m_transformedMasterKey = m_key.transform(m_transformSeed, transformRounds());
+        m_metadata->setMasterKeyChanged(QDateTime::currentDateTimeUtc());
+        Q_EMIT modified();
+    }
 }
 
 bool Database::hasKey()
