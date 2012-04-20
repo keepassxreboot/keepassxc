@@ -76,6 +76,7 @@ private Q_SLOTS:
     void openDatabaseCleanup();
     void emitEntrySelectionChanged();
     void modified();
+    void toggleTabbar();
 
 private:
     void saveDatabase(Database* db);

@@ -45,6 +45,19 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     connect(this, SIGNAL(currentChanged(int)), SLOT(emitEntrySelectionChanged()));
 }
 
+void DatabaseTabWidget::toggleTabbar() {
+    if (count() > 1) {
+        if (!tabBar()->isVisible()) {
+            tabBar()->show();
+        }
+    }
+    else {
+        if (tabBar()->isVisible()) {
+            tabBar()->hide();
+        }
+    }
+}
+
 void DatabaseTabWidget::newDatabase()
 {
     DatabaseManagerStruct dbStruct;
@@ -156,6 +169,7 @@ bool DatabaseTabWidget::closeDatabase(Database* db)
     }
 
     removeTab(index);
+    toggleTabbar();
     m_dbList.remove(db);
     delete dbStruct.file;
     delete dbStruct.dbWidget;
@@ -362,6 +376,7 @@ void DatabaseTabWidget::insertDatabase(Database* db, const DatabaseManagerStruct
     m_dbList.insert(db, dbStruct);
 
     addTab(dbStruct.dbWidget, "");
+    toggleTabbar();
     updateTabName(db);
     int index = databaseIndex(db);
     setCurrentIndex(index);
