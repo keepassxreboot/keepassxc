@@ -67,6 +67,7 @@ public:
     Group* resolveGroup(const Uuid& uuid);
     QList<DeletedObject> deletedObjects();
     void addDeletedObject(const DeletedObject& delObj);
+    void addDeletedObject(const Uuid& uuid);
 
     Uuid cipher() const;
     Database::CompressionAlgorithm compressionAlgo() const;

@@ -300,6 +300,11 @@ void Group::setParent(Database* db)
     QObject::setParent(db);
 }
 
+Database* Group::database()
+{
+    return m_db;
+}
+
 const Database* Group::database() const
 {
     return m_db;
@@ -418,27 +423,14 @@ void Group::cleanupParent()
 void Group::recCreateDelObjects()
 {
     if (m_db) {
-        DeletedObject delGroup;
-        delGroup.deletionTime = QDateTime::currentDateTimeUtc();
-        delGroup.uuid = m_uuid;
-        m_db->addDeletedObject(delGroup);
+        m_db->addDeletedObject(m_uuid);
 
         Q_FOREACH (Entry* entry, m_entries) {
-            DeletedObject delEntry;
-            delEntry.deletionTime = QDateTime::currentDateTimeUtc();
-            delEntry.uuid = entry->uuid();
-            m_db->addDeletedObject(delEntry);
+            m_db->addDeletedObject(entry->uuid());
         }
 
         Q_FOREACH (Group* group, m_children) {
             group->recCreateDelObjects();
         }
-    }
-}
-
-void Group::addDeletedObject(const DeletedObject& delObj)
-{
-    if (m_db) {
-        m_db->addDeletedObject(delObj);
     }
 }

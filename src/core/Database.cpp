@@ -121,6 +121,15 @@ void Database::addDeletedObject(const DeletedObject& delObj)
     m_deletedObjects.append(delObj);
 }
 
+void Database::addDeletedObject(const Uuid& uuid)
+{
+    DeletedObject delObj;
+    delObj.deletionTime = QDateTime::currentDateTimeUtc();
+    delObj.uuid = uuid;
+
+    addDeletedObject(delObj);
+}
+
 Uuid Database::cipher() const
 {
     return m_cipher;

@@ -69,13 +69,13 @@ public:
     const Group* parentGroup() const;
     void setParent(Group* parent, int index = -1);
 
+    Database* database();
     const Database* database() const;
     QList<Group*> children();
     const QList<Group*>& children() const;
     QList<Entry*> entries();
     const QList<Entry*>& entries() const;
     QList<Entry*> entriesRecursive(bool includeHistoryItems = false);
-    void addDeletedObject(const DeletedObject& delObj);
 
 
 Q_SIGNALS:
