@@ -359,7 +359,7 @@ void Entry::setGroup(Group* group)
 {
     if (m_group) {
         m_group->removeEntry(this);
-        if (m_group->database() != group->database()) {
+        if (m_group->database() != group->database() && m_group->database()) {
             m_group->database()->addDeletedObject(m_uuid);
         }
     }
