@@ -150,11 +150,22 @@ bool DatabaseTabWidget::closeDatabase(Database* db)
     const DatabaseManagerStruct& dbStruct = m_dbList.value(db);
     int index = databaseIndex(db);
     Q_ASSERT(index != -1);
-    if (dbStruct.modified) {
-        QString dbName = tabText(index);
-        if (dbName.right(1) == "*") {
-            dbName.chop(1);
+
+    QString dbName = tabText(index);
+    if (dbName.right(1) == "*") {
+        dbName.chop(1);
+    }
+    if (dbStruct.dbWidget->currentIndex() != 0) {
+        QMessageBox::StandardButton result =
+            QMessageBox::question(
+            this, tr("Close?"),
+            tr("\"%1\" is in edit mode.\nClose anyway?").arg(dbName),
+            QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+        if (result == QMessageBox::No) {
+            return false;
         }
+    }
+    if (dbStruct.modified) {
         QMessageBox::StandardButton result =
             QMessageBox::question(
             this, tr("Save changes?"),
