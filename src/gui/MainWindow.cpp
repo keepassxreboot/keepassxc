@@ -35,6 +35,8 @@ MainWindow::MainWindow()
 
     connect(m_ui->tabWidget, SIGNAL(entrySelectionChanged(bool)), SLOT(setMenuActionState()));
     connect(m_ui->tabWidget, SIGNAL(currentWidgetIndexChanged(int)), SLOT(setMenuActionState(int)));
+    connect(m_ui->tabWidget, SIGNAL(tabNameChanged()), SLOT(updateWindowTitle()));
+    connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(updateWindowTitle()));
 
     connect(m_ui->actionDatabaseNew, SIGNAL(triggered()), m_ui->tabWidget, SLOT(newDatabase()));
     connect(m_ui->actionDatabaseOpen, SIGNAL(triggered()), m_ui->tabWidget, SLOT(openDatabase()));
@@ -55,6 +57,8 @@ MainWindow::MainWindow()
 MainWindow::~MainWindow()
 {
 }
+
+const QString MainWindow::m_baseWindowTitle = "KeePassX";
 
 void MainWindow::setMenuActionState(int index)
 {
@@ -128,6 +132,17 @@ void MainWindow::setMenuActionState(int index)
     }
 }
 
+void MainWindow::updateWindowTitle()
+{
+    int index = m_ui->tabWidget->currentIndex();
+    if (index == -1) {
+        setWindowTitle(m_baseWindowTitle);
+    }
+    else {
+        setWindowTitle(m_ui->tabWidget->tabText(index).append(" - ").append(m_baseWindowTitle));
+    }
+}
+
 void MainWindow::closeEvent(QCloseEvent *event) {
     if (!m_ui->tabWidget->closeAllDatabases()) {
         event->ignore();
@@ -136,6 +151,3 @@ void MainWindow::closeEvent(QCloseEvent *event) {
         event->accept();
     }
 }
-
-
-

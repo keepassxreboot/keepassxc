@@ -351,6 +351,7 @@ void DatabaseTabWidget::updateTabName(Database* db)
         tabName.append("*");
     }
     setTabText(index, tabName);
+    Q_EMIT tabNameChanged();
 }
 
 int DatabaseTabWidget::databaseIndex(Database* db)
