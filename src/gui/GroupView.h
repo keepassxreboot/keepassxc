@@ -39,6 +39,7 @@ Q_SIGNALS:
 private Q_SLOTS:
     void expandedChanged(const QModelIndex& index);
     void emitGroupChanged(const QModelIndex& index);
+    void emitGroupChanged();
 
 private:
     void recInitExpanded(Group* group);

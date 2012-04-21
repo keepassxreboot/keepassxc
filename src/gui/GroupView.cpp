@@ -31,7 +31,8 @@ GroupView::GroupView(Database* db, QWidget* parent)
     setHeaderHidden(true);
     setUniformRowHeights(true);
 
-    connect(this, SIGNAL(clicked(const QModelIndex&)), SLOT(emitGroupChanged(const QModelIndex&)));
+    connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+            SLOT(emitGroupChanged()));
 
     recInitExpanded(db->rootGroup());
 
@@ -71,4 +72,9 @@ void GroupView::setModel(QAbstractItemModel* model)
 {
     Q_UNUSED(model);
     Q_ASSERT(false);
+}
+
+void GroupView::emitGroupChanged()
+{
+    Q_EMIT groupChanged(currentGroup());
 }
