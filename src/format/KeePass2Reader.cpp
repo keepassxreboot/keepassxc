@@ -60,9 +60,8 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
     }
 
     quint32 version = Endian::readUInt32(m_device, KeePass2::BYTEORDER, &ok) & KeePass2::FILE_VERSION_CRITICAL_MASK;
-    quint32 expectedVersion = KeePass2::FILE_VERSION & KeePass2::FILE_VERSION_CRITICAL_MASK;
-    // TODO do we support old Kdbx versions?
-    if (!ok || (version != expectedVersion)) {
+    quint32 maxVersion = KeePass2::FILE_VERSION & KeePass2::FILE_VERSION_CRITICAL_MASK;
+    if (!ok || (version < KeePass2::FILE_VERSION_MIN) || (version > maxVersion)) {
         raiseError(tr("Unsupported KeePass database version."));
         return 0;
     }

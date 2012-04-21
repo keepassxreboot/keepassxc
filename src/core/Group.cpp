@@ -305,6 +305,25 @@ const QList<Entry*>& Group::entries() const
     return m_entries;
 }
 
+QList<Entry*> Group::entriesRecursive(bool includeHistoryItems)
+{
+    QList<Entry*> entryList;
+
+    entryList.append(m_entries);
+
+    if (includeHistoryItems) {
+        Q_FOREACH (Entry* entry, m_entries) {
+            entryList.append(entry->historyItems());
+        }
+    }
+
+    Q_FOREACH (Group* group, m_children) {
+        entryList.append(group->entriesRecursive(includeHistoryItems));
+    }
+
+    return entryList;
+}
+
 void Group::addEntry(Entry *entry)
 {
     Q_ASSERT(entry);

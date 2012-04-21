@@ -20,6 +20,7 @@
 
 #include <QtCore/QDateTime>
 #include <QtCore/QHash>
+#include <QtGui/QColor>
 #include <QtGui/QImage>
 
 #include "core/Uuid.h"
@@ -42,12 +43,13 @@ public:
     QString defaultUserName() const;
     QDateTime defaultUserNameChanged() const;
     int maintenanceHistoryDays() const;
+    QColor color() const;
     bool protectTitle() const;
     bool protectUsername() const;
     bool protectPassword() const;
     bool protectUrl() const;
     bool protectNotes() const;
-    bool autoEnableVisualHiding() const;
+    // bool autoEnableVisualHiding() const;
     QImage customIcon(const Uuid& uuid) const;
     QHash<Uuid, QImage> customIcons() const;
     bool recycleBinEnabled() const;
@@ -61,6 +63,8 @@ public:
     QDateTime masterKeyChanged() const;
     int masterKeyChangeRec() const;
     int masterKeyChangeForce() const;
+    int historyMaxItems() const;
+    int historyMaxSize() const;
     QHash<QString, QString> customFields() const;
 
     void setGenerator(const QString& value);
@@ -71,12 +75,13 @@ public:
     void setDefaultUserName(const QString& value);
     void setDefaultUserNameChanged(const QDateTime& value);
     void setMaintenanceHistoryDays(int value);
+    void setColor(const QColor& value);
     void setProtectTitle(bool value);
     void setProtectUsername(bool value);
     void setProtectPassword(bool value);
     void setProtectUrl(bool value);
     void setProtectNotes(bool value);
-    void setAutoEnableVisualHiding(bool value);
+    // void setAutoEnableVisualHiding(bool value);
     void addCustomIcon(const Uuid& uuid, const QImage& icon);
     void removeCustomIcon(const Uuid& uuid);
     void setRecycleBinEnabled(bool value);
@@ -89,6 +94,8 @@ public:
     void setMasterKeyChanged(const QDateTime& value);
     void setMasterKeyChangeRec(int value);
     void setMasterKeyChangeForce(int value);
+    void setHistoryMaxItems(int value);
+    void setHistoryMaxSize(int value);
     void addCustomField(const QString& key, const QString& value);
     void removeCustomField(const QString& key);
     void setUpdateDatetime(bool value);
@@ -111,13 +118,14 @@ private:
     QString m_defaultUserName;
     QDateTime m_defaultUserNameChanged;
     int m_maintenanceHistoryDays;
+    QColor m_color;
 
     bool m_protectTitle;
     bool m_protectUsername;
     bool m_protectPassword;
     bool m_protectUrl;
     bool m_protectNotes;
-    bool m_autoEnableVisualHiding;
+    // bool m_autoEnableVisualHiding;
 
     QHash<Uuid, QImage> m_customIcons;
 
@@ -132,6 +140,8 @@ private:
     QDateTime m_masterKeyChanged;
     int m_masterKeyChangeRec;
     int m_masterKeyChangeForce;
+    int m_historyMaxItems;
+    int m_historyMaxSize;
 
     QHash<QString, QString> m_customFields;
 

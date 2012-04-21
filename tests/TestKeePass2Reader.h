@@ -29,6 +29,7 @@ private Q_SLOTS:
     void testNonAscii();
     void testCompressed();
     void testProtectedStrings();
+    void testFormat200();
 };
 
 #endif // KEEPASSX_TESTKEEPASS2READER_H

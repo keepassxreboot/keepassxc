@@ -82,14 +82,44 @@ void TestKeePass2Reader::testProtectedStrings()
     QCOMPARE(entry->attributes()->value("TestProtected"), QString("ABC"));
     QCOMPARE(entry->attributes()->value("TestUnprotected"), QString("DEF"));
 
-    QVERIFY(!db->metadata()->protectTitle());
-    QVERIFY(db->metadata()->protectUsername());
     QVERIFY(db->metadata()->protectPassword());
     QVERIFY(entry->attributes()->isProtected("TestProtected"));
     QVERIFY(!entry->attributes()->isProtected("TestUnprotected"));
 
     delete db;
     delete reader;
+}
+
+void TestKeePass2Reader::testFormat200()
+{
+    QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/Format200.kdbx");
+    CompositeKey key;
+    key.addKey(PasswordKey("a"));
+    KeePass2Reader* reader = new KeePass2Reader();
+    Database* db = reader->readDatabase(filename, key);
+    QVERIFY(db);
+    QVERIFY(!reader->hasError());
+
+    QCOMPARE(db->rootGroup()->name(), QString("Format200"));
+    QVERIFY(!db->metadata()->protectTitle());
+    QVERIFY(db->metadata()->protectUsername());
+    QVERIFY(!db->metadata()->protectPassword());
+    QVERIFY(db->metadata()->protectUrl());
+    QVERIFY(!db->metadata()->protectNotes());
+
+    QCOMPARE(db->rootGroup()->entries().size(), 1);
+    Entry* entry = db->rootGroup()->entries().at(0);
+
+    QCOMPARE(entry->title(), QString("Sample Entry"));
+    QCOMPARE(entry->username(), QString("User Name"));
+    QCOMPARE(entry->attachments()->keys().size(), 2);
+    QCOMPARE(entry->attachments()->value("myattach.txt"), QByteArray("abcdefghijk"));
+    QCOMPARE(entry->attachments()->value("test.txt"), QByteArray("this is a test"));
+
+    QCOMPARE(entry->historyItems().size(), 2);
+    QCOMPARE(entry->historyItems().at(0)->attachments()->keys().size(), 0);
+    QCOMPARE(entry->historyItems().at(1)->attachments()->keys().size(), 1);
+    QCOMPARE(entry->historyItems().at(1)->attachments()->value("myattach.txt"), QByteArray("abcdefghijk"));
 }
 
 KEEPASSX_QTEST_CORE_MAIN(TestKeePass2Reader)

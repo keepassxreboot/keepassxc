@@ -84,12 +84,15 @@ void TestKeePass2XmlReader::testMetadata()
     QCOMPARE(m_db->metadata()->defaultUserName(), QString("DEFUSERNAME"));
     QCOMPARE(m_db->metadata()->defaultUserNameChanged(), genDT(2010, 8, 8, 17, 27, 45));
     QCOMPARE(m_db->metadata()->maintenanceHistoryDays(), 127);
+    QCOMPARE(m_db->metadata()->color(), QColor(0xff, 0xef, 0x00));
+    QCOMPARE(m_db->metadata()->masterKeyChanged(), genDT(2012, 4, 5, 17, 9, 34));
+    QCOMPARE(m_db->metadata()->masterKeyChangeRec(), 101);
+    QCOMPARE(m_db->metadata()->masterKeyChangeForce(), -1);
     QCOMPARE(m_db->metadata()->protectTitle(), false);
     QCOMPARE(m_db->metadata()->protectUsername(), true);
     QCOMPARE(m_db->metadata()->protectPassword(), false);
     QCOMPARE(m_db->metadata()->protectUrl(), true);
     QCOMPARE(m_db->metadata()->protectNotes(), false);
-    QCOMPARE(m_db->metadata()->autoEnableVisualHiding(), false);
     QCOMPARE(m_db->metadata()->recycleBinEnabled(), true);
     QVERIFY(m_db->metadata()->recycleBin() != 0);
     QCOMPARE(m_db->metadata()->recycleBin()->name(), QString("Recycle Bin"));
@@ -99,6 +102,8 @@ void TestKeePass2XmlReader::testMetadata()
     QVERIFY(m_db->metadata()->lastSelectedGroup() != 0);
     QCOMPARE(m_db->metadata()->lastSelectedGroup()->name(), QString("NewDatabase"));
     QVERIFY(m_db->metadata()->lastTopVisibleGroup() == m_db->metadata()->lastSelectedGroup());
+    QCOMPARE(m_db->metadata()->historyMaxItems(), -1);
+    QCOMPARE(m_db->metadata()->historyMaxSize(), 5242880);
 }
 
 void TestKeePass2XmlReader::testCustomIcons()
@@ -199,11 +204,13 @@ void TestKeePass2XmlReader::testEntry1()
     const Entry* entry = m_db->rootGroup()->entries().at(0);
 
     QCOMPARE(entry->uuid().toBase64(), QString("+wSUOv6qf0OzW8/ZHAs2sA=="));
+    QCOMPARE(entry->historyItems().size(), 2);
     QCOMPARE(entry->iconNumber(), 0);
     QCOMPARE(entry->iconUuid(), Uuid());
     QVERIFY(!entry->foregroundColor().isValid());
     QVERIFY(!entry->backgroundColor().isValid());
     QCOMPARE(entry->overrideUrl(), QString(""));
+    QCOMPARE(entry->tags(), QString("a b c"));
 
     const TimeInfo ti = entry->timeInfo();
     QCOMPARE(ti.lastModificationTime(), genDT(2010, 8, 25, 16, 19, 25));
@@ -216,14 +223,19 @@ void TestKeePass2XmlReader::testEntry1()
 
     QList<QString> attrs = entry->attributes()->keys();
     QCOMPARE(entry->attributes()->value("Notes"), QString("Notes"));
+    QVERIFY(!entry->attributes()->isProtected("Notes"));
     QVERIFY(attrs.removeOne("Notes"));
     QCOMPARE(entry->attributes()->value("Password"), QString("Password"));
+    QVERIFY(!entry->attributes()->isProtected("Password"));
     QVERIFY(attrs.removeOne("Password"));
     QCOMPARE(entry->attributes()->value("Title"), QString("Sample Entry 1"));
+    QVERIFY(!entry->attributes()->isProtected("Title"));
     QVERIFY(attrs.removeOne("Title"));
     QCOMPARE(entry->attributes()->value("URL"), QString(""));
+    QVERIFY(entry->attributes()->isProtected("URL"));
     QVERIFY(attrs.removeOne("URL"));
     QCOMPARE(entry->attributes()->value("UserName"), QString("User Name"));
+    QVERIFY(entry->attributes()->isProtected("UserName"));
     QVERIFY(attrs.removeOne("UserName"));
     QVERIFY(attrs.isEmpty());
 
@@ -233,7 +245,13 @@ void TestKeePass2XmlReader::testEntry1()
     QCOMPARE(entry->password(), entry->attributes()->value("Password"));
     QCOMPARE(entry->notes(), entry->attributes()->value("Notes"));
 
-    QCOMPARE(entry->attachments()->keys().size(), 0);
+    QCOMPARE(entry->attachments()->keys().size(), 1);
+    QCOMPARE(entry->attachments()->value("myattach.txt"), QByteArray("abcdefghijk"));
+    QCOMPARE(entry->historyItems().at(0)->attachments()->keys().size(), 1);
+    QCOMPARE(entry->historyItems().at(0)->attachments()->value("myattach.txt"), QByteArray("0123456789"));
+    QCOMPARE(entry->historyItems().at(1)->attachments()->keys().size(), 1);
+    QCOMPARE(entry->historyItems().at(1)->attachments()->value("myattach.txt"), QByteArray("abcdefghijk"));
+
     QCOMPARE(entry->autoTypeEnabled(), false);
     QCOMPARE(entry->autoTypeObfuscation(), 0);
     QCOMPARE(entry->defaultAutoTypeSequence(), QString(""));
@@ -254,6 +272,7 @@ void TestKeePass2XmlReader::testEntry2()
     QCOMPARE(entry->foregroundColor(), QColor(255, 0, 0));
     QCOMPARE(entry->backgroundColor(), QColor(255, 255, 0));
     QCOMPARE(entry->overrideUrl(), QString("http://override.net/"));
+    QCOMPARE(entry->tags(), QString(""));
 
     const TimeInfo ti = entry->timeInfo();
     QCOMPARE(ti.usageCount(), 7);
@@ -276,7 +295,7 @@ void TestKeePass2XmlReader::testEntry2()
     QVERIFY(attrs.isEmpty());
 
     QCOMPARE(entry->attachments()->keys().size(), 1);
-    QCOMPARE(QString(entry->attachments()->value("testattach.txt")), QString("42"));
+    QCOMPARE(QString(entry->attachments()->value("myattach.txt")), QString("abcdefghijk"));
 
     QCOMPARE(entry->autoTypeEnabled(), true);
     QCOMPARE(entry->autoTypeObfuscation(), 1);

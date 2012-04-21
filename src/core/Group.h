@@ -74,6 +74,7 @@ public:
     const QList<Group*>& children() const;
     QList<Entry*> entries();
     const QList<Entry*>& entries() const;
+    QList<Entry*> entriesRecursive(bool includeHistoryItems = false);
 
 Q_SIGNALS:
     void dataChanged(Group* group);

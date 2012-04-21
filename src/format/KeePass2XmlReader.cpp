@@ -17,6 +17,7 @@
 
 #include "KeePass2XmlReader.h"
 
+#include <QtCore/QBuffer>
 #include <QtCore/QFile>
 
 #include "core/Database.h"
@@ -24,6 +25,7 @@
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "format/KeePass2RandomStream.h"
+#include "streams/QtIOCompressor"
 
 KeePass2XmlReader::KeePass2XmlReader()
     : m_randomStream(0)
@@ -61,6 +63,27 @@ void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Ra
             qWarning("KeePass2XmlReader::readDatabase: found %d invalid entry reference(s)",
                      m_tmpParent->children().size());
         }
+    }
+
+    QSet<QString> poolKeys = m_binaryPool.keys().toSet();
+    QSet<QString> entryKeys = m_binaryMap.keys().toSet();
+    QSet<QString> unmappedKeys = entryKeys - poolKeys;
+    QSet<QString> unusedKeys = poolKeys - entryKeys;
+
+    if (!unmappedKeys.isEmpty()) {
+        raiseError(17);
+    }
+
+    if (!m_xml.error()) {
+        Q_FOREACH (const QString& key, unusedKeys) {
+            qWarning("KeePass2XmlReader::readDatabase: found unused key \"%s\"", qPrintable(key));
+        }
+    }
+
+    QHash<QString, QPair<Entry*, QString> >::const_iterator i;
+    for (i = m_binaryMap.constBegin(); i != m_binaryMap.constEnd(); ++i) {
+        QPair<Entry*, QString> target = i.value();
+        target.first->attachments()->set(target.second, m_binaryPool[i.key()]);
     }
 
     m_meta->setUpdateDatetime(true);
@@ -151,6 +174,9 @@ void KeePass2XmlReader::parseMeta()
         else if (m_xml.name() == "MaintenanceHistoryDays") {
             m_meta->setMaintenanceHistoryDays(readNumber());
         }
+        else if (m_xml.name() == "Color") {
+            m_meta->setColor(readColor());
+        }
         else if (m_xml.name() == "MasterKeyChanged") {
             m_meta->setMasterKeyChanged(readDateTime());
         }
@@ -187,6 +213,15 @@ void KeePass2XmlReader::parseMeta()
         else if (m_xml.name() == "LastTopVisibleGroup") {
             m_meta->setLastTopVisibleGroup(getGroup(readUuid()));
         }
+        else if (m_xml.name() == "HistoryMaxItems") {
+            m_meta->setHistoryMaxItems(readNumber());
+        }
+        else if (m_xml.name() == "HistoryMaxSize") {
+            m_meta->setHistoryMaxSize(readNumber());
+        }
+        else if (m_xml.name() == "Binaries") {
+            parseBinaries();
+        }
         else if (m_xml.name() == "CustomData") {
             parseCustomData();
         }
@@ -216,9 +251,9 @@ void KeePass2XmlReader::parseMemoryProtection()
         else if (m_xml.name() == "ProtectNotes") {
             m_meta->setProtectNotes(readBool());
         }
-        else if (m_xml.name() == "AutoEnableVisualHiding") {
+        /*else if (m_xml.name() == "AutoEnableVisualHiding") {
             m_meta->setAutoEnableVisualHiding(readBool());
-        }
+        }*/
         else {
             skipCurrentElement();
         }
@@ -252,6 +287,37 @@ void KeePass2XmlReader::parseIcon()
             QImage icon;
             icon.loadFromData(readBinary());
             m_meta->addCustomIcon(uuid, icon);
+        }
+        else {
+            skipCurrentElement();
+        }
+    }
+}
+
+void KeePass2XmlReader::parseBinaries()
+{
+    Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Binaries");
+
+    while (!m_xml.error() && m_xml.readNextStartElement()) {
+        if (m_xml.name() == "Binary") {
+            QXmlStreamAttributes attr = m_xml.attributes();
+
+            QString id = attr.value("ID").toString();
+
+            QByteArray data;
+            if (attr.value("Compressed").compare("True", Qt::CaseInsensitive) == 0) {
+                data = readCompressedBinary();
+            }
+            else {
+                data = readBinary();
+            }
+
+            if (m_binaryPool.contains(id)) {
+                qWarning("KeePass2XmlReader::parseBinaries: overwriting binary item \"%s\"",
+                         qPrintable(id));
+            }
+
+            m_binaryPool.insert(id, data);
         }
         else {
             skipCurrentElement();
@@ -547,7 +613,8 @@ void KeePass2XmlReader::parseEntryString(Entry *entry)
             QXmlStreamAttributes attr = m_xml.attributes();
             QString value = readString();
 
-            bool isProtected = attr.hasAttribute("Protected") && (attr.value("Protected") == "True");
+            bool isProtected = attr.value("Protected") == "True";
+            bool protectInMemory = attr.value("ProtectInMemory") == "True";
 
             if (isProtected && !value.isEmpty()) {
                 if (m_randomStream) {
@@ -558,7 +625,7 @@ void KeePass2XmlReader::parseEntryString(Entry *entry)
                 }
             }
 
-            entry->attributes()->set(key, value, isProtected);
+            entry->attributes()->set(key, value, isProtected || protectInMemory);
         }
         else {
             skipCurrentElement();
@@ -576,16 +643,24 @@ void KeePass2XmlReader::parseEntryBinary(Entry *entry)
             key = readString();
         }
         else if (m_xml.name() == "Value") {
-            QByteArray value = readBinary();
             QXmlStreamAttributes attr = m_xml.attributes();
 
-            bool isProtected = attr.hasAttribute("Protected") && (attr.value("Protected") == "True");
-
-            if (isProtected && !value.isEmpty()) {
-                m_randomStream->processInPlace(value);
+            if (attr.hasAttribute("Ref")) {
+                m_binaryMap.insertMulti(attr.value("Ref").toString(), qMakePair(entry, key));
+                m_xml.skipCurrentElement();
             }
+            else {
+                // format compatbility
+                QByteArray value = readBinary();
+                bool isProtected = attr.hasAttribute("Protected")
+                        && (attr.value("Protected") == "True");
 
-            entry->attachments()->set(key, value, isProtected);
+                if (isProtected && !value.isEmpty()) {
+                    m_randomStream->processInPlace(value);
+                }
+
+                entry->attachments()->set(key, value);
+            }
         }
         else {
             skipCurrentElement();
@@ -780,6 +855,38 @@ Uuid KeePass2XmlReader::readUuid()
 QByteArray KeePass2XmlReader::readBinary()
 {
     return QByteArray::fromBase64(readString().toAscii());
+}
+
+QByteArray KeePass2XmlReader::readCompressedBinary()
+{
+    QByteArray rawData = readBinary();
+
+    QBuffer buffer(&rawData);
+    buffer.open(QIODevice::ReadOnly);
+
+    QtIOCompressor compressor(&buffer);
+    compressor.setStreamFormat(QtIOCompressor::GzipFormat);
+    compressor.open(QIODevice::ReadOnly);
+
+    QByteArray result;
+    qint64 readBytes = 0;
+    qint64 readResult;
+    do {
+        result.resize(result.size() + 16384);
+        readResult = compressor.read(result.data() + readBytes, result.size() - readBytes);
+        if (readResult > 0) {
+            readBytes += readResult;
+        }
+    } while (readResult > 0);
+
+    if (readResult == -1) {
+        raiseError(16);
+        return QByteArray();
+    }
+    else {
+        result.resize(static_cast<int>(readBytes));
+        return result;
+    }
 }
 
 Group* KeePass2XmlReader::getGroup(const Uuid& uuid)

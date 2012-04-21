@@ -9,13 +9,16 @@
 		<DefaultUserName>DEFUSERNAME</DefaultUserName>
 		<DefaultUserNameChanged>2010-08-08T17:27:45Z</DefaultUserNameChanged>
 		<MaintenanceHistoryDays>127</MaintenanceHistoryDays>
+		<Color>#FFEF00</Color>
+		<MasterKeyChanged>2012-04-05T17:09:34Z</MasterKeyChanged>
+		<MasterKeyChangeRec>101</MasterKeyChangeRec>
+		<MasterKeyChangeForce>-1</MasterKeyChangeForce>
 		<MemoryProtection>
 			<ProtectTitle>False</ProtectTitle>
 			<ProtectUserName>True</ProtectUserName>
 			<ProtectPassword>False</ProtectPassword>
 			<ProtectURL>True</ProtectURL>
 			<ProtectNotes>False</ProtectNotes>
-			<AutoEnableVisualHiding>False</AutoEnableVisualHiding>
 		</MemoryProtection>
 		<CustomIcons>
 			<Icon>
@@ -30,6 +33,12 @@
 		<EntryTemplatesGroupChanged>2010-08-08T17:24:19Z</EntryTemplatesGroupChanged>
 		<LastSelectedGroup>lmU+9n0aeESKZvcEze+bRg==</LastSelectedGroup>
 		<LastTopVisibleGroup>lmU+9n0aeESKZvcEze+bRg==</LastTopVisibleGroup>
+		<HistoryMaxItems>-1</HistoryMaxItems>
+		<HistoryMaxSize>5242880</HistoryMaxSize>
+		<Binaries>
+			<Binary ID="0" Compressed="True">H4sIAAAAAAAEAO29B2AcSZYlJi9tynt/SvVK1+B0oQiAYBMk2JBAEOzBiM3mkuwdaUcjKasqgcplVmVdZhZAzO2dvPfee++999577733ujudTif33/8/XGZkAWz2zkrayZ4hgKrIHz9+fB8/InZ29+7t3//0wcHD/wfGx4SmCgAAAA==</Binary>
+			<Binary ID="1" Compressed="True">H4sIAAAAAAAEAO29B2AcSZYlJi9tynt/SvVK1+B0oQiAYBMk2JBAEOzBiM3mkuwdaUcjKasqgcplVmVdZhZAzO2dvPfee++999577733ujudTif33/8/XGZkAWz2zkrayZ4hgKrIHz9+fB8/IrLJdJafX8yLn377/wCfD1fOCwAAAA==</Binary>
+		</Binaries>
 		<CustomData>
 			<Item>
 				<Key>A Sample Test Key</Key>
@@ -67,6 +76,7 @@
 				<ForegroundColor />
 				<BackgroundColor />
 				<OverrideURL />
+				<Tags>a b c</Tags>
 				<Times>
 					<LastModificationTime>2010-08-25T16:19:25Z</LastModificationTime>
 					<CreationTime>2010-08-25T16:13:54Z</CreationTime>
@@ -90,12 +100,16 @@
 				</String>
 				<String>
 					<Key>URL</Key>
-					<Value />
+					<Value ProtectInMemory="True" />
 				</String>
 				<String>
 					<Key>UserName</Key>
-					<Value>User Name</Value>
+					<Value ProtectInMemory="True">User Name</Value>
 				</String>
+				<Binary>
+					<Key>myattach.txt</Key>
+					<Value Ref="1" />
+				</Binary>
 				<AutoType>
 					<Enabled>False</Enabled>
 					<DataTransferObfuscation>0</DataTransferObfuscation>
@@ -111,6 +125,7 @@
 						<ForegroundColor />
 						<BackgroundColor />
 						<OverrideURL />
+						<Tags />
 						<Times>
 							<LastModificationTime>2010-08-25T16:13:54Z</LastModificationTime>
 							<CreationTime>2010-08-25T16:13:54Z</CreationTime>
@@ -140,6 +155,10 @@
 							<Key>UserName</Key>
 							<Value>User Name</Value>
 						</String>
+						<Binary>
+							<Key>myattach.txt</Key>
+							<Value Ref="0" />
+						</Binary>
 						<AutoType>
 							<Enabled>True</Enabled>
 							<DataTransferObfuscation>0</DataTransferObfuscation>
@@ -155,6 +174,7 @@
 						<ForegroundColor />
 						<BackgroundColor />
 						<OverrideURL />
+						<Tags />
 						<Times>
 							<LastModificationTime>2010-08-25T16:15:43Z</LastModificationTime>
 							<CreationTime>2010-08-25T16:13:54Z</CreationTime>
@@ -184,6 +204,10 @@
 							<Key>UserName</Key>
 							<Value>User Name</Value>
 						</String>
+						<Binary>
+							<Key>myattach.txt</Key>
+							<Value Ref="1" />
+						</Binary>
 						<AutoType>
 							<Enabled>True</Enabled>
 							<DataTransferObfuscation>0</DataTransferObfuscation>
@@ -202,6 +226,7 @@
 				<ForegroundColor>#FF0000</ForegroundColor>
 				<BackgroundColor>#FFFF00</BackgroundColor>
 				<OverrideURL>http://override.net/</OverrideURL>
+				<Tags />
 				<Times>
 					<LastModificationTime>2010-08-25T16:20:24Z</LastModificationTime>
 					<CreationTime>2010-08-25T16:15:45Z</CreationTime>
@@ -233,15 +258,15 @@
 				</String>
 				<String>
 					<Key>URL</Key>
-					<Value>http://www.keepassx.org/</Value>
+					<Value ProtectInMemory="True">http://www.keepassx.org/</Value>
 				</String>
 				<String>
 					<Key>UserName</Key>
-					<Value>notDEFUSERNAME</Value>
+					<Value ProtectInMemory="True">notDEFUSERNAME</Value>
 				</String>
 				<Binary>
-					<Key>testattach.txt</Key>
-					<Value>NDI=</Value>
+					<Key>myattach.txt</Key>
+					<Value Ref="1" />
 				</Binary>
 				<AutoType>
 					<Enabled>True</Enabled>
@@ -322,6 +347,7 @@
 						<ForegroundColor />
 						<BackgroundColor />
 						<OverrideURL />
+						<Tags />
 						<Times>
 							<LastModificationTime>2010-08-25T16:21:15Z</LastModificationTime>
 							<CreationTime>2010-08-25T16:20:45Z</CreationTime>
@@ -384,6 +410,7 @@
 					<ForegroundColor />
 					<BackgroundColor />
 					<OverrideURL />
+					<Tags />
 					<Times>
 						<LastModificationTime>2010-08-25T16:20:32Z</LastModificationTime>
 						<CreationTime>2010-08-25T16:20:27Z</CreationTime>

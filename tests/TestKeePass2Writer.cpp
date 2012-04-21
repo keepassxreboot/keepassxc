@@ -46,6 +46,8 @@ void TestKeePass2Writer::initTestCase()
     entry->setUuid(Uuid::random());
     entry->attributes()->set("test", "protectedTest", true);
     QVERIFY(entry->attributes()->isProtected("test"));
+    entry->attachments()->set("myattach.txt", QByteArray("this is an attachment"));
+    entry->attachments()->set("aaa.txt", QByteArray("also an attachment"));
     entry->setGroup(group);
     Group* groupNew = new Group();
     groupNew->setUuid(Uuid::random());
@@ -81,6 +83,14 @@ void TestKeePass2Writer::testProtectedAttributes()
     Entry* entry = m_dbTest->rootGroup()->entries().at(0);
     QCOMPARE(entry->attributes()->value("test"), QString("protectedTest"));
     QCOMPARE(entry->attributes()->isProtected("test"), true);
+}
+
+void TestKeePass2Writer::testAttachments()
+{
+    Entry* entry = m_dbTest->rootGroup()->entries().at(0);
+    QCOMPARE(entry->attachments()->keys().size(), 2);
+    QCOMPARE(entry->attachments()->value("myattach.txt"), QByteArray("this is an attachment"));
+    QCOMPARE(entry->attachments()->value("aaa.txt"), QByteArray("also an attachment"));
 }
 
 KEEPASSX_QTEST_CORE_MAIN(TestKeePass2Writer)

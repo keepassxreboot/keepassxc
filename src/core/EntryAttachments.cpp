@@ -32,12 +32,7 @@ QByteArray EntryAttachments::value(const QString& key) const
     return m_attachments.value(key);
 }
 
-bool EntryAttachments::isProtected(const QString& key) const
-{
-    return m_protectedAttachments.contains(key);
-}
-
-void EntryAttachments::set(const QString& key, const QByteArray& value, bool protect)
+void EntryAttachments::set(const QString& key, const QByteArray& value)
 {
     bool emitModified = false;
     bool addAttachment = !m_attachments.contains(key);
@@ -48,17 +43,6 @@ void EntryAttachments::set(const QString& key, const QByteArray& value, bool pro
 
     if (addAttachment || m_attachments.value(key) != value) {
         m_attachments.insert(key, value);
-        emitModified = true;
-    }
-
-    if (protect != m_protectedAttachments.contains(key)) {
-        if (protect) {
-            m_protectedAttachments.insert(key);
-        }
-        else {
-            m_protectedAttachments.remove(key);
-        }
-
         emitModified = true;
     }
 
@@ -84,7 +68,6 @@ void EntryAttachments::remove(const QString& key)
     Q_EMIT aboutToBeRemoved(key);
 
     m_attachments.remove(key);
-    m_protectedAttachments.remove(key);
 
     Q_EMIT removed(key);
     Q_EMIT modified();
@@ -96,13 +79,9 @@ void EntryAttachments::copyFrom(const EntryAttachments* other)
         Q_EMIT aboutToBeReset();
 
         m_attachments.clear();
-        m_protectedAttachments.clear();
 
         Q_FOREACH (const QString& key, other->keys()) {
             m_attachments.insert(key, other->value(key));
-            if (other->isProtected(key)) {
-                m_protectedAttachments.insert(key);
-            }
         }
 
         Q_EMIT reset();
@@ -119,7 +98,6 @@ void EntryAttachments::clear()
     Q_EMIT aboutToBeReset();
 
     m_attachments.clear();
-    m_protectedAttachments.clear();
 
     Q_EMIT reset();
     Q_EMIT modified();
@@ -127,5 +105,5 @@ void EntryAttachments::clear()
 
 bool EntryAttachments::operator!=(const EntryAttachments& other) const
 {
-    return m_attachments != other.m_attachments || m_protectedAttachments != other.m_protectedAttachments;
+    return m_attachments != other.m_attachments;
 }

@@ -20,6 +20,8 @@
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDateTime>
+#include <QtCore/QHash>
+#include <QtCore/QPair>
 #include <QtCore/QXmlStreamReader>
 #include <QtGui/QColor>
 
@@ -51,6 +53,7 @@ private:
     void parseMemoryProtection();
     void parseCustomIcons();
     void parseIcon();
+    void parseBinaries();
     void parseCustomData();
     void parseCustomDataItem();
     void parseRoot();
@@ -72,6 +75,7 @@ private:
     int readNumber();
     Uuid readUuid();
     QByteArray readBinary();
+    QByteArray readCompressedBinary();
 
     Group* getGroup(const Uuid& uuid);
     Entry* getEntry(const Uuid& uuid);
@@ -85,6 +89,8 @@ private:
     Group* m_tmpParent;
     QList<Group*> m_groups;
     QList<Entry*> m_entries;
+    QHash<QString, QByteArray> m_binaryPool;
+    QHash<QString, QPair<Entry*, QString> > m_binaryMap;
 };
 
 #endif // KEEPASSX_KEEPASS2XMLREADER_H

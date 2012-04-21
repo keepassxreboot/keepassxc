@@ -34,6 +34,8 @@ Metadata::Metadata(Database* parent)
     m_recycleBinEnabled = true;
     m_masterKeyChangeRec = -1;
     m_masterKeyChangeForce = -1;
+    m_historyMaxItems = 10;
+    m_historyMaxSize = 6291456;
 
     QDateTime now = QDateTime::currentDateTimeUtc();
     m_nameChanged = now;
@@ -48,7 +50,7 @@ Metadata::Metadata(Database* parent)
     m_protectPassword = true;
     m_protectUrl = false;
     m_protectNotes = false;
-    m_autoEnableVisualHiding = false;
+    // m_autoEnableVisualHiding = false;
 
     m_updateDatetime = true;
 }
@@ -122,6 +124,11 @@ int Metadata::maintenanceHistoryDays() const
     return m_maintenanceHistoryDays;
 }
 
+QColor Metadata::color() const
+{
+    return m_color;
+}
+
 bool Metadata::protectTitle() const
 {
     return m_protectTitle;
@@ -147,10 +154,10 @@ bool Metadata::protectNotes() const
     return m_protectNotes;
 }
 
-bool Metadata::autoEnableVisualHiding() const
+/*bool Metadata::autoEnableVisualHiding() const
 {
     return m_autoEnableVisualHiding;
-}
+}*/
 
 QImage Metadata::customIcon(const Uuid& uuid) const
 {
@@ -217,6 +224,16 @@ int Metadata::masterKeyChangeForce() const
     return m_masterKeyChangeForce;
 }
 
+int Metadata::historyMaxItems() const
+{
+    return m_historyMaxItems;
+}
+
+int Metadata::historyMaxSize() const
+{
+    return m_historyMaxSize;
+}
+
 QHash<QString, QString> Metadata::customFields() const
 {
     return m_customFields;
@@ -264,6 +281,11 @@ void Metadata::setMaintenanceHistoryDays(int value)
     set(m_maintenanceHistoryDays, value);
 }
 
+void Metadata::setColor(const QColor& value)
+{
+    set(m_color, value);
+}
+
 void Metadata::setProtectTitle(bool value)
 {
     set(m_protectTitle, value);
@@ -289,10 +311,10 @@ void Metadata::setProtectNotes(bool value)
     set(m_protectNotes, value);
 }
 
-void Metadata::setAutoEnableVisualHiding(bool value)
+/*void Metadata::setAutoEnableVisualHiding(bool value)
 {
     set(m_autoEnableVisualHiding, value);
-}
+}*/
 
 void Metadata::addCustomIcon(const Uuid& uuid, const QImage& icon)
 {
@@ -360,6 +382,16 @@ void Metadata::setMasterKeyChangeRec(int value)
 void Metadata::setMasterKeyChangeForce(int value)
 {
     set(m_masterKeyChangeForce, value);
+}
+
+void Metadata::setHistoryMaxItems(int value)
+{
+    set(m_historyMaxItems, value);
+}
+
+void Metadata::setHistoryMaxSize(int value)
+{
+    set(m_historyMaxSize, value);
 }
 
 void Metadata::addCustomField(const QString& key, const QString& value)

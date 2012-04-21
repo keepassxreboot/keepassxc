@@ -29,8 +29,7 @@ public:
     explicit EntryAttachments(QObject* parent = 0);
     QList<QString> keys() const;
     QByteArray value(const QString& key) const;
-    bool isProtected(const QString& key) const;
-    void set(const QString& key, const QByteArray& value, bool protect = false);
+    void set(const QString& key, const QByteArray& value);
     void remove(const QString& key);
     void copyFrom(const EntryAttachments* other);
     void clear();
@@ -48,7 +47,6 @@ Q_SIGNALS:
 
 private:
     QMap<QString, QByteArray> m_attachments;
-    QSet<QString> m_protectedAttachments;
 };
 
 #endif // KEEPASSX_ENTRYATTACHMENTS_H

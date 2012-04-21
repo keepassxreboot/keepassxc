@@ -22,6 +22,7 @@
 
 #include "core/Metadata.h"
 #include "format/KeePass2RandomStream.h"
+#include "streams/QtIOCompressor"
 
 KeePass2XmlWriter::KeePass2XmlWriter()
     : m_db(0)
@@ -38,6 +39,8 @@ void KeePass2XmlWriter::writeDatabase(QIODevice* device, Database* db, KeePass2R
     m_db = db;
     m_meta = db->metadata();
     m_randomStream = randomStream;
+
+    generateIdMap();
 
     m_xml.setDevice(device);
 
@@ -60,6 +63,21 @@ void KeePass2XmlWriter::writeDatabase(const QString& filename, Database* db, Kee
     writeDatabase(&file, db, randomStream);
 }
 
+void KeePass2XmlWriter::generateIdMap()
+{
+    QList<Entry*> allEntries = m_db->rootGroup()->entriesRecursive(true);
+    int nextId = 0;
+
+    Q_FOREACH (Entry* entry, allEntries) {
+        Q_FOREACH (const QString& key, entry->attachments()->keys()) {
+            QByteArray data = entry->attachments()->value(key);
+            if (!m_idMap.contains(data)) {
+                m_idMap.insert(data, nextId++);
+            }
+        }
+    }
+}
+
 void KeePass2XmlWriter::writeMetadata()
 {
     m_xml.writeStartElement("Meta");
@@ -72,6 +90,7 @@ void KeePass2XmlWriter::writeMetadata()
     writeString("DefaultUserName", m_meta->defaultUserName());
     writeDateTime("DefaultUserNameChanged", m_meta->defaultUserNameChanged());
     writeNumber("MaintenanceHistoryDays", m_meta->maintenanceHistoryDays());
+    writeColor("Color", m_meta->color());
     writeDateTime("MasterKeyChanged", m_meta->masterKeyChanged());
     writeNumber("MasterKeyChangeRec", m_meta->masterKeyChangeRec());
     writeNumber("MasterKeyChangeForce", m_meta->masterKeyChangeForce());
@@ -84,6 +103,9 @@ void KeePass2XmlWriter::writeMetadata()
     writeDateTime("EntryTemplatesGroupChanged", m_meta->entryTemplatesGroupChanged());
     writeUuid("LastSelectedGroup", m_meta->lastSelectedGroup());
     writeUuid("LastTopVisibleGroup", m_meta->lastTopVisibleGroup());
+    writeNumber("HistoryMaxItems", m_meta->historyMaxItems());
+    writeNumber("HistoryMaxSize", m_meta->historyMaxSize());
+    writeBinaries();
     writeCustomData();
 
     m_xml.writeEndElement();
@@ -98,7 +120,7 @@ void KeePass2XmlWriter::writeMemoryProtection()
     writeBool("ProtectPassword", m_meta->protectPassword());
     writeBool("ProtectURL", m_meta->protectUrl());
     writeBool("ProtectNotes", m_meta->protectNotes());
-    writeBool("AutoEnableVisualHiding", m_meta->autoEnableVisualHiding());
+    // writeBool("AutoEnableVisualHiding", m_meta->autoEnableVisualHiding());
 
     m_xml.writeEndElement();
 }
@@ -128,6 +150,43 @@ void KeePass2XmlWriter::writeIcon(const Uuid& uuid, const QImage& icon)
     icon.save(&buffer, "PNG");
     buffer.close();
     writeBinary("Data", ba);
+
+    m_xml.writeEndElement();
+}
+
+void KeePass2XmlWriter::writeBinaries()
+{
+    m_xml.writeStartElement("Binaries");
+
+    QHash<QByteArray, int>::const_iterator i;
+    for (i = m_idMap.constBegin(); i != m_idMap.constEnd(); ++i) {
+        m_xml.writeStartElement("Binary");
+
+        m_xml.writeAttribute("ID", QString::number(i.value()));
+
+        if (m_db->compressionAlgo() == Database::CompressionGZip) {
+            m_xml.writeAttribute("Compressed", "True");
+
+            QBuffer buffer;
+            buffer.open(QIODevice::ReadWrite);
+
+            QtIOCompressor compressor(&buffer);
+            compressor.setStreamFormat(QtIOCompressor::GzipFormat);
+            compressor.open(QIODevice::WriteOnly);
+
+            qint64 bytesWritten = compressor.write(i.key());
+            Q_ASSERT(bytesWritten == i.key().size());
+            compressor.close();
+
+            buffer.seek(0);
+            m_xml.writeCharacters(QString::fromAscii(buffer.readAll().toBase64()));
+        }
+        else {
+            m_xml.writeCharacters(QString::fromAscii(i.key().toBase64()));
+        }
+
+        m_xml.writeEndElement();
+    }
 
     m_xml.writeEndElement();
 }
@@ -262,8 +321,7 @@ void KeePass2XmlWriter::writeEntry(const Entry* entry)
                          ((key == "Password") && m_meta->protectPassword()) ||
                          ((key == "URL") && m_meta->protectUrl()) ||
                          ((key == "Notes") && m_meta->protectNotes()) ||
-                         entry->attributes()->isProtected(key) ) &&
-                       m_randomStream;
+                         entry->attributes()->isProtected(key) );
 
         writeString("Key", key);
 
@@ -271,9 +329,15 @@ void KeePass2XmlWriter::writeEntry(const Entry* entry)
         QString value;
 
         if (protect) {
-            m_xml.writeAttribute("Protected", "True");
-            QByteArray rawData = m_randomStream->process(entry->attributes()->value(key).toUtf8());
-            value = QString::fromAscii(rawData.toBase64());
+            if (m_randomStream) {
+                m_xml.writeAttribute("Protected", "True");
+                QByteArray rawData = m_randomStream->process(entry->attributes()->value(key).toUtf8());
+                value = QString::fromAscii(rawData.toBase64());
+            }
+            else {
+                m_xml.writeAttribute("ProtectInMemory", "True");
+                value = entry->attributes()->value(key);
+            }
         }
         else {
             value = entry->attributes()->value(key);
@@ -288,23 +352,10 @@ void KeePass2XmlWriter::writeEntry(const Entry* entry)
     Q_FOREACH (const QString& key, entry->attachments()->keys()) {
         m_xml.writeStartElement("Binary");
 
-        bool protect = entry->attachments()->isProtected(key) && m_randomStream;
-
         writeString("Key", key);
 
         m_xml.writeStartElement("Value");
-        QString value;
-
-        if (protect) {
-            m_xml.writeAttribute("Protected", "True");
-            QByteArray rawData = m_randomStream->process(entry->attachments()->value(key));
-            value = QString::fromAscii(rawData.toBase64());
-        }
-        else {
-            value = entry->attachments()->value(key);
-        }
-
-        m_xml.writeCharacters(value);
+        m_xml.writeAttribute("Ref", QString::number(m_idMap[entry->attachments()->value(key)]));
         m_xml.writeEndElement();
 
         m_xml.writeEndElement();
