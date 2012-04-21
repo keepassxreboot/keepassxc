@@ -94,7 +94,7 @@ Q_SIGNALS:
     void modified();
 
 private:
-    template <class T> inline bool set(T& property, const T& value);
+    template <class P, class V> inline bool set(P& property, const V& value);
 
     void addEntry(Entry* entry);
     void removeEntry(Entry* entry);
@@ -114,7 +114,7 @@ private:
     QString m_defaultAutoTypeSequence;
     TriState m_autoTypeEnabled;
     TriState m_searchingEnabled;
-    Entry* m_lastTopVisibleEntry;
+    QPointer<Entry> m_lastTopVisibleEntry;
     QList<Group*> m_children;
     QList<Entry*> m_entries;
 

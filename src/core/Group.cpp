@@ -42,7 +42,7 @@ Group::~Group()
     cleanupParent();
 }
 
-template <class T> bool Group::set(T& property, const T& value) {
+template <class P, class V> bool Group::set(P& property, const V& value) {
     if (property != value) {
         property = value;
         updateTimeinfo();
