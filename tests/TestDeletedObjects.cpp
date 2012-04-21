@@ -33,8 +33,7 @@ void TestDeletedObjects::initTestCase()
 
 void TestDeletedObjects::createAndDelete(Database* db, int delObjectsSize)
 {
-
-    QVERIFY(db->deletedObjects().size() == delObjectsSize);
+    QCOMPARE(db->deletedObjects().size(), delObjectsSize);
     Group* root = db->rootGroup();
     int rootChildrenCount = root->children().size();
 
@@ -43,9 +42,9 @@ void TestDeletedObjects::createAndDelete(Database* db, int delObjectsSize)
     Uuid gUuid = Uuid::random();
     g->setUuid(gUuid);
     delete g;
-    QVERIFY(db->deletedObjects().size() == ++delObjectsSize);
-    QVERIFY(db->deletedObjects().at(delObjectsSize-1).uuid == gUuid);
-    QVERIFY(rootChildrenCount == root->children().size());
+    QCOMPARE(db->deletedObjects().size(), ++delObjectsSize);
+    QCOMPARE(db->deletedObjects().at(delObjectsSize-1).uuid, gUuid);
+    QCOMPARE(rootChildrenCount, root->children().size());
 
     Group* g1 = new Group();
     g1->setParent(root);
