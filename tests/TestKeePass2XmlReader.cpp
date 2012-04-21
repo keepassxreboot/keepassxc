@@ -32,7 +32,7 @@ namespace QTest {
     char *toString(const Uuid &uuid)
     {
         QByteArray ba = "Uuid(";
-        ba += uuid.toBase64();
+        ba += uuid.toBase64().toAscii().constData();
         ba += ")";
         return qstrdup(ba.data());
     }
