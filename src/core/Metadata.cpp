@@ -19,16 +19,12 @@
 
 #include "core/Database.h"
 #include "core/Entry.h"
+#include "core/Group.h"
 
 Metadata::Metadata(Database* parent)
     : QObject(parent)
     , m_parent(parent)
 {
-    m_recycleBin = 0;
-    m_entryTemplatesGroup = 0;
-    m_lastSelectedGroup = 0;
-    m_lastTopVisibleGroup = 0;
-
     m_generator = "KeePassX";
     m_maintenanceHistoryDays = 365;
     m_recycleBinEnabled = true;
@@ -55,7 +51,8 @@ Metadata::Metadata(Database* parent)
     m_updateDatetime = true;
 }
 
-template <class T> bool Metadata::set(T& property, const T& value) {
+template <class P, class V> bool Metadata::set(P& property, const V& value)
+{
     if (property != value) {
         property = value;
         Q_EMIT modified();
@@ -66,7 +63,7 @@ template <class T> bool Metadata::set(T& property, const T& value) {
     }
 }
 
-template <class T> bool Metadata::set(T& property, const T& value, QDateTime& dateTime) {
+template <class P, class V> bool Metadata::set(P& property, const V& value, QDateTime& dateTime) {
     if (property != value) {
         property = value;
         if (m_updateDatetime) {

@@ -20,6 +20,7 @@
 
 #include <QtCore/QDateTime>
 #include <QtCore/QHash>
+#include <QtCore/QPointer>
 #include <QtGui/QColor>
 #include <QtGui/QImage>
 
@@ -105,8 +106,8 @@ Q_SIGNALS:
     void modified();
 
 private:
-    template <class T> inline bool set(T& property, const T& value, QDateTime& dateTime);
-    template <class T> inline bool set(T& property, const T& value);
+    template <class P, class V> bool set(P& property, const V& value);
+    template <class P, class V> bool set(P& property, const V& value, QDateTime& dateTime);
 
     Database* m_parent;
 
@@ -130,12 +131,12 @@ private:
     QHash<Uuid, QImage> m_customIcons;
 
     bool m_recycleBinEnabled;
-    Group* m_recycleBin;
+    QPointer<Group> m_recycleBin;
     QDateTime m_recycleBinChanged;
-    Group* m_entryTemplatesGroup;
+    QPointer<Group> m_entryTemplatesGroup;
     QDateTime m_entryTemplatesGroupChanged;
-    Group* m_lastSelectedGroup;
-    Group* m_lastTopVisibleGroup;
+    QPointer<Group> m_lastSelectedGroup;
+    QPointer<Group> m_lastTopVisibleGroup;
 
     QDateTime m_masterKeyChanged;
     int m_masterKeyChangeRec;
