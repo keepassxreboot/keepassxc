@@ -86,6 +86,7 @@ public:
     void updateKey(quint64 rounds);
     bool hasKey();
     void recycleEntry(Entry* entry);
+    void recycleGroup(Group* group);
 
 Q_SIGNALS:
     void groupDataChanged(Group* group);
@@ -98,6 +99,8 @@ Q_SIGNALS:
 private:
     Entry* recFindEntry(const Uuid& uuid, Group* group);
     Group* recFindGroup(const Uuid& uuid, Group* group);
+
+    void createRecycleBin();
 
     Metadata* m_metadata;
     Group* m_rootGroup;

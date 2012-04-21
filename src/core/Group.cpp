@@ -35,11 +35,30 @@ Group::Group()
     m_searchingEnabled = Inherit;
 
     m_updateTimeinfo = true;
+    m_emitSignals = true;
 }
 
 Group::~Group()
 {
     cleanupParent();
+    m_emitSignals = false;
+    if (m_db && m_parent) {
+
+        QList<Entry*> entries = m_entries;
+        Q_FOREACH (Entry* entry, entries) {
+            delete entry;
+        }
+
+        QList<Group*> children = m_children;
+        Q_FOREACH (Group* group, children) {
+            delete group;
+        }
+
+        DeletedObject delGroup;
+        delGroup.deletionTime = QDateTime::currentDateTimeUtc();
+        delGroup.uuid = m_uuid;
+        m_db->addDeletedObject(delGroup);
+    }
 }
 
 template <class P, class V> bool Group::set(P& property, const V& value) {
@@ -64,6 +83,11 @@ void Group::updateTimeinfo()
 
 void Group::setUpdateTimeinfo(bool value) {
     m_updateTimeinfo = value;
+}
+
+bool Group::emitSignals()
+{
+    return m_emitSignals;
 }
 
 Uuid Group::uuid() const
@@ -255,6 +279,7 @@ void Group::setParent(Group* parent, int index)
     m_parent = parent;
 
     if (m_db != parent->m_db) {
+        recCreateDelObjects();
         recSetDatabase(parent->m_db);
     }
 
@@ -342,19 +367,19 @@ void Group::addEntry(Entry *entry)
 
 void Group::removeEntry(Entry* entry)
 {
-    Q_EMIT entryAboutToRemove(entry);
+    if (m_emitSignals) {
+        Q_EMIT entryAboutToRemove(entry);
+    }
 
     entry->disconnect(this);
     if (m_db) {
         entry->disconnect(m_db);
-        DeletedObject delObject;
-        delObject.deletionTime = QDateTime::currentDateTimeUtc();
-        delObject.uuid = entry->uuid();
-        m_db->addDeletedObject(delObject);
     }
     m_entries.removeAll(entry);
-    Q_EMIT modified();
-    Q_EMIT entryRemoved();
+    if (m_emitSignals) {
+        Q_EMIT modified();
+        Q_EMIT entryRemoved();
+    }
 }
 
 void Group::recSetDatabase(Database* db)
@@ -392,9 +417,41 @@ void Group::recSetDatabase(Database* db)
 void Group::cleanupParent()
 {
     if (m_parent) {
-        Q_EMIT aboutToRemove(this);
+        if (m_parent->emitSignals()) {
+            Q_EMIT aboutToRemove(this);
+        }
         m_parent->m_children.removeAll(this);
-        Q_EMIT modified();
-        Q_EMIT removed();
+        if (m_parent->emitSignals()) {
+            Q_EMIT modified();
+            Q_EMIT removed();
+        }
+    }
+}
+
+void Group::recCreateDelObjects()
+{
+    if (m_db) {
+        DeletedObject delGroup;
+        delGroup.deletionTime = QDateTime::currentDateTimeUtc();
+        delGroup.uuid = m_uuid;
+        m_db->addDeletedObject(delGroup);
+
+        Q_FOREACH (Entry* entry, m_entries) {
+            DeletedObject delEntry;
+            delEntry.deletionTime = QDateTime::currentDateTimeUtc();
+            delEntry.uuid = entry->uuid();
+            m_db->addDeletedObject(delEntry);
+        }
+
+        Q_FOREACH (Group* group, m_children) {
+            group->recCreateDelObjects();
+        }
+    }
+}
+
+void Group::addDeletedObject(const DeletedObject& delObj)
+{
+    if (m_db) {
+        m_db->addDeletedObject(delObj);
     }
 }

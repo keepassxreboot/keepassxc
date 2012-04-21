@@ -66,6 +66,7 @@ public Q_SLOTS:
     void deleteEntry();
     void createGroup();
     void editGroup();
+    void deleteGroup();
 
 Q_SIGNALS:
     void entrySelectionChanged(bool singleEntrySelected);

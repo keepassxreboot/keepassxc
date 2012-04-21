@@ -302,6 +302,11 @@ void DatabaseTabWidget::editGroup()
     currentDatabaseWidget()->switchToGroupEdit();
 }
 
+void DatabaseTabWidget::deleteGroup()
+{
+    currentDatabaseWidget()->deleteGroup();
+}
+
 void DatabaseTabWidget::updateTabName(Database* db)
 {
     int index = databaseIndex(db);

@@ -40,6 +40,8 @@ public:
     EntryView* entryView();
     bool dbHasKey();
     void deleteEntry();
+    void deleteGroup();
+    bool canDeleteCurrentGoup();
 
 Q_SIGNALS:
     void closeRequest();

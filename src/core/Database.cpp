@@ -197,20 +197,38 @@ bool Database::hasKey()
     return m_hasKey;
 }
 
+void Database::createRecycleBin()
+{
+    Group* recycleBin = new Group();
+    recycleBin->setUuid(Uuid::random());
+    recycleBin->setName(tr("Recycle Bin"));
+    recycleBin->setIcon(43);
+    recycleBin->setParent(rootGroup());
+    m_metadata->setRecycleBin(recycleBin);
+}
+
 void Database::recycleEntry(Entry* entry)
 {
     if (m_metadata->recycleBinEnabled()) {
         if (!m_metadata->recycleBin()) {
-            Group* recycleBin = new Group();
-            recycleBin->setUuid(Uuid::random());
-            recycleBin->setName(tr("Recycle Bin"));
-            recycleBin->setIcon(43);
-            recycleBin->setParent(rootGroup());
-            m_metadata->setRecycleBin(recycleBin);
+            createRecycleBin();
         }
         entry->setGroup(metadata()->recycleBin());
     }
     else {
         delete entry;
+    }
+}
+
+void Database::recycleGroup(Group* group)
+{
+     if (m_metadata->recycleBinEnabled()) {
+        if (!m_metadata->recycleBin()) {
+            createRecycleBin();
+        }
+        group->setParent(metadata()->recycleBin());
+    }
+    else {
+        delete group;
     }
 }

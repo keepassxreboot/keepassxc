@@ -44,6 +44,11 @@ Entry::~Entry()
 {
     if (m_group) {
         m_group->removeEntry(this);
+
+        DeletedObject delEntry;
+        delEntry.deletionTime = QDateTime::currentDateTimeUtc();
+        delEntry.uuid = m_uuid;
+        m_group->addDeletedObject(delEntry);
     }
 
     qDeleteAll(m_history);
@@ -356,7 +361,14 @@ void Entry::setGroup(Group* group)
 {
     if (m_group) {
         m_group->removeEntry(this);
+        if (m_group->database() != group->database()) {
+            DeletedObject delEntry;
+            delEntry.deletionTime = QDateTime::currentDateTimeUtc();
+            delEntry.uuid = m_uuid;
+            m_group->addDeletedObject(delEntry);
+        }
     }
+
     group->addEntry(this);
     m_group = group;
     QObject::setParent(group);

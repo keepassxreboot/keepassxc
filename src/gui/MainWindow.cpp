@@ -48,6 +48,7 @@ MainWindow::MainWindow()
     connect(m_ui->actionEntryDelete, SIGNAL(triggered()), m_ui->tabWidget, SLOT(deleteEntry()));
     connect(m_ui->actionGroupNew, SIGNAL(triggered()), m_ui->tabWidget, SLOT(createGroup()));
     connect(m_ui->actionGroupEdit, SIGNAL(triggered()), m_ui->tabWidget, SLOT(editGroup()));
+    connect(m_ui->actionGroupDelete, SIGNAL(triggered()), m_ui->tabWidget, SLOT(deleteGroup()));
     connect(m_ui->actionQuit, SIGNAL(triggered()), SLOT(close()));
 }
 
@@ -79,15 +80,13 @@ void MainWindow::setMenuActionState(int index)
                     m_ui->actionEntryDelete->setEnabled(false);
                 }
                 m_ui->actionGroupEdit->setEnabled(true);
-                // TODO
-                /*
-                if () { //check if root group selected
-                        m_ui->actiocGroupDelete->setEnabled(true);
+
+                if (dbWidget->canDeleteCurrentGoup()) {
+                        m_ui->actionGroupDelete->setEnabled(true);
                 }
                 else {
-                    m_ui->actiocGroupDelete->setEnabled(false);
+                    m_ui->actionGroupDelete->setEnabled(false);
                 }
-                */
                 m_ui->actionChangeMasterKey->setEnabled(true);
                 m_ui->actionChangeDatabaseSettings->setEnabled(true);
                 m_ui->actionDatabaseSave->setEnabled(true);
@@ -102,7 +101,7 @@ void MainWindow::setMenuActionState(int index)
                 m_ui->actionEntryEdit->setEnabled(false);
                 m_ui->actionGroupEdit->setEnabled(false);
                 m_ui->actionEntryDelete->setEnabled(false);
-                m_ui->actiocGroupDelete->setEnabled(false);
+                m_ui->actionGroupDelete->setEnabled(false);
                 m_ui->actionChangeMasterKey->setEnabled(false);
                 m_ui->actionChangeDatabaseSettings->setEnabled(false);
                 m_ui->actionDatabaseSave->setEnabled(false);
@@ -119,7 +118,7 @@ void MainWindow::setMenuActionState(int index)
         m_ui->actionEntryEdit->setEnabled(false);
         m_ui->actionGroupEdit->setEnabled(false);
         m_ui->actionEntryDelete->setEnabled(false);
-        m_ui->actiocGroupDelete->setEnabled(false);
+        m_ui->actionGroupDelete->setEnabled(false);
         m_ui->actionChangeMasterKey->setEnabled(false);
         m_ui->actionChangeDatabaseSettings->setEnabled(false);
         m_ui->actionDatabaseSave->setEnabled(false);

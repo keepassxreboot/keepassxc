@@ -75,6 +75,9 @@ public:
     QList<Entry*> entries();
     const QList<Entry*>& entries() const;
     QList<Entry*> entriesRecursive(bool includeHistoryItems = false);
+    bool emitSignals();
+    void addDeletedObject(const DeletedObject& delObj);
+
 
 Q_SIGNALS:
     void dataChanged(Group* group);
@@ -102,6 +105,7 @@ private:
 
     void recSetDatabase(Database* db);
     void cleanupParent();
+    void recCreateDelObjects();
 
     QPointer<Database> m_db;
     Uuid m_uuid;
@@ -122,6 +126,7 @@ private:
     QPixmapCache::Key m_pixmapCacheKey;
 
     bool m_updateTimeinfo;
+    bool m_emitSignals;
 
     friend void Database::setRootGroup(Group* group);
     friend Entry::~Entry();

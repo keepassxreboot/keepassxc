@@ -74,7 +74,7 @@
     </property>
     <addaction name="actionGroupNew"/>
     <addaction name="actionGroupEdit"/>
-    <addaction name="actiocGroupDelete"/>
+    <addaction name="actionGroupDelete"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEntries"/>
@@ -175,7 +175,7 @@
     <string>Edit group</string>
    </property>
   </action>
-  <action name="actiocGroupDelete">
+  <action name="actionGroupDelete">
    <property name="enabled">
     <bool>false</bool>
    </property>

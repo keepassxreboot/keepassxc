@@ -119,9 +119,6 @@ void DatabaseWidget::deleteEntry()
         if (result == QMessageBox::Yes) {
             delete m_entryView->currentEntry();
         }
-        else {
-            return;
-        }
     }
     else {
         m_db->recycleEntry(m_entryView->currentEntry());
@@ -134,6 +131,24 @@ void DatabaseWidget::createGroup()
     m_newGroup->setUuid(Uuid::random());
     m_newParent = m_groupView->currentGroup();
     switchToGroupEdit(m_newGroup, true);
+}
+
+void DatabaseWidget::deleteGroup()
+{
+    Q_ASSERT(canDeleteCurrentGoup());
+
+    bool inRecylceBin = Tools::hasChild(m_db->metadata()->recycleBin(), m_groupView->currentGroup());
+    if (inRecylceBin || !m_db->metadata()->recycleBinEnabled()) {
+        QMessageBox::StandardButton result = QMessageBox::question(
+            this, tr("Question"), tr("Do you really want to delete this group for good?"),
+            QMessageBox::Yes | QMessageBox::No);
+        if (result == QMessageBox::Yes) {
+            delete m_groupView->currentGroup();
+        }
+    }
+    else {
+        m_db->recycleGroup(m_groupView->currentGroup());
+    }
 }
 
 void DatabaseWidget::switchToView(bool accepted)
@@ -234,4 +249,11 @@ void DatabaseWidget::switchToDatabaseSettings()
 bool DatabaseWidget::dbHasKey()
 {
     return m_db->hasKey();
+}
+
+bool DatabaseWidget::canDeleteCurrentGoup()
+{
+    bool isRootGroup = m_db->rootGroup() == m_groupView->currentGroup();
+    bool isRecycleBin = m_db->metadata()->recycleBin() == m_groupView->currentGroup();
+    return !isRootGroup && !isRecycleBin;
 }
