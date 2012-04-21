@@ -67,12 +67,12 @@ void TestDeletedObjects::createAndDelete(Database* db, int delObjectsSize)
     delete g1;
     delObjectsSize += 4;
 
-    QVERIFY(db->deletedObjects().size() == delObjectsSize);
-    QVERIFY(db->deletedObjects().at(delObjectsSize-4).uuid == e1Uuid);
-    QVERIFY(db->deletedObjects().at(delObjectsSize-3).uuid == e2Uuid);
-    QVERIFY(db->deletedObjects().at(delObjectsSize-2).uuid == g2Uuid);
-    QVERIFY(db->deletedObjects().at(delObjectsSize-1).uuid == g1Uuid);
-    QVERIFY(rootChildrenCount == root->children().size());
+    QCOMPARE(db->deletedObjects().size(), delObjectsSize);
+    QCOMPARE(db->deletedObjects().at(delObjectsSize-4).uuid, e1Uuid);
+    QCOMPARE(db->deletedObjects().at(delObjectsSize-3).uuid, e2Uuid);
+    QCOMPARE(db->deletedObjects().at(delObjectsSize-2).uuid, g2Uuid);
+    QCOMPARE(db->deletedObjects().at(delObjectsSize-1).uuid, g1Uuid);
+    QCOMPARE(rootChildrenCount, root->children().size());
 
     Entry* e3 = new Entry();
     e3->setGroup(root);
@@ -81,11 +81,9 @@ void TestDeletedObjects::createAndDelete(Database* db, int delObjectsSize)
 
     delete e3;
 
-    QVERIFY(db->deletedObjects().size() == ++delObjectsSize);
-    QVERIFY(db->deletedObjects().at(delObjectsSize-1).uuid == e3Uuid);
-    QVERIFY(rootChildrenCount == root->children().size());
-
-
+    QCOMPARE(db->deletedObjects().size(), ++delObjectsSize);
+    QCOMPARE(db->deletedObjects().at(delObjectsSize-1).uuid, e3Uuid);
+    QCOMPARE(rootChildrenCount, root->children().size());
 }
 
 void TestDeletedObjects::testDeletedObjectsFromFile()
