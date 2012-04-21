@@ -125,6 +125,8 @@ add_unit_test(NAME testkeepass2randomstream SOURCES TestKeePass2RandomStream.cpp
 
 add_unit_test(NAME testmodified SOURCES TestModified.cpp MOCS TestModified.h LIBS ${TEST_LIBRARIES})
 
+add_unit_test(NAME testdeletedobjects SOURCES TestDeletedObjects.cpp MOCS TestDeletedObjects.h LIBS ${TEST_LIBRARIES})
+
 
 if(WITH_GUI_TESTS)
     add_subdirectory(gui)
