@@ -49,6 +49,8 @@ CompositeKey* CompositeKey::clone() const
 
 CompositeKey& CompositeKey::operator=(const CompositeKey& key)
 {
+    clear();
+
     Q_FOREACH (Key* subKey, key.m_keys) {
         m_keys.append(subKey->clone());
     }
