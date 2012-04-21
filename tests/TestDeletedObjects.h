@@ -33,7 +33,6 @@ private Q_SLOTS:
     void initTestCase();
     void testDeletedObjectsFromFile();
     void testDeletedObjectsFromNewDb();
-
 };
 
 #endif // KEEPASSX_TESTDELETEDOBJECTS_H

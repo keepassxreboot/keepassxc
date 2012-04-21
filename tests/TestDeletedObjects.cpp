@@ -92,6 +92,8 @@ void TestDeletedObjects::testDeletedObjectsFromFile()
     Database* db = reader->readDatabase(xmlFile);
 
     createAndDelete(db, 2);
+
+    delete db;
 }
 
 void TestDeletedObjects::testDeletedObjectsFromNewDb()
@@ -99,6 +101,8 @@ void TestDeletedObjects::testDeletedObjectsFromNewDb()
     Database* db = new Database();
 
     createAndDelete(db, 0);
+
+    delete db;
 }
 
 KEEPASSX_QTEST_CORE_MAIN(TestDeletedObjects)

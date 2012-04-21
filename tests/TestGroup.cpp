@@ -188,7 +188,7 @@ void TestGroup::testDeleteSignals()
     delete group2;
     QCOMPARE(spyEntryAboutToRemove2.count(), 0);
     QCOMPARE(spyEntryRemoved2.count(), 0);
-
+    delete db2;
 }
 
 KEEPASSX_QTEST_CORE_MAIN(TestGroup)
