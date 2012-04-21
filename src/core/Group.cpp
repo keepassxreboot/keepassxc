@@ -35,22 +35,22 @@ Group::Group()
     m_searchingEnabled = Inherit;
 
     m_updateTimeinfo = true;
-    m_emitSignals = true;
 }
 
 Group::~Group()
 {
     cleanupParent();
-    m_emitSignals = false;
+    this->blockSignals(true);
     if (m_db && m_parent) {
-
         QList<Entry*> entries = m_entries;
         Q_FOREACH (Entry* entry, entries) {
+            entry->blockSignals(true);
             delete entry;
         }
 
         QList<Group*> children = m_children;
         Q_FOREACH (Group* group, children) {
+            group->blockSignals(true);
             delete group;
         }
 
@@ -83,11 +83,6 @@ void Group::updateTimeinfo()
 
 void Group::setUpdateTimeinfo(bool value) {
     m_updateTimeinfo = value;
-}
-
-bool Group::emitSignals()
-{
-    return m_emitSignals;
 }
 
 Uuid Group::uuid() const
@@ -367,19 +362,15 @@ void Group::addEntry(Entry *entry)
 
 void Group::removeEntry(Entry* entry)
 {
-    if (m_emitSignals) {
-        Q_EMIT entryAboutToRemove(entry);
-    }
+    Q_EMIT entryAboutToRemove(entry);
 
     entry->disconnect(this);
     if (m_db) {
         entry->disconnect(m_db);
     }
     m_entries.removeAll(entry);
-    if (m_emitSignals) {
-        Q_EMIT modified();
-        Q_EMIT entryRemoved();
-    }
+    Q_EMIT modified();
+    Q_EMIT entryRemoved();
 }
 
 void Group::recSetDatabase(Database* db)
@@ -417,14 +408,10 @@ void Group::recSetDatabase(Database* db)
 void Group::cleanupParent()
 {
     if (m_parent) {
-        if (m_parent->emitSignals()) {
-            Q_EMIT aboutToRemove(this);
-        }
+        Q_EMIT aboutToRemove(this);
         m_parent->m_children.removeAll(this);
-        if (m_parent->emitSignals()) {
-            Q_EMIT modified();
-            Q_EMIT removed();
-        }
+        Q_EMIT modified();
+        Q_EMIT removed();
     }
 }
 

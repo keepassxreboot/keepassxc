@@ -175,6 +175,20 @@ void TestGroup::testDeleteSignals()
     QCOMPARE(spyEntryAboutToRemove.count(), 1);
     QCOMPARE(spyEntryRemoved.count(), 1);
     delete group;
+
+    Database* db2 = new Database();
+    Group* groupRoot2 = db2->rootGroup();
+    Group* group2 = new Group();
+    group2->setParent(groupRoot2);
+    Entry* entry2 = new Entry();
+    entry2->setGroup(group2);
+    QSignalSpy spyEntryAboutToRemove2(group2, SIGNAL(entryAboutToRemove(Entry*)));
+    QSignalSpy spyEntryRemoved2(group2, SIGNAL(entryRemoved()));
+
+    delete group2;
+    QCOMPARE(spyEntryAboutToRemove2.count(), 0);
+    QCOMPARE(spyEntryRemoved2.count(), 0);
+
 }
 
 KEEPASSX_QTEST_CORE_MAIN(TestGroup)
