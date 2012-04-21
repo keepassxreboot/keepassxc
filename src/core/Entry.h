@@ -41,6 +41,8 @@ struct AutoTypeAssociation
     QString sequence;
 };
 
+Q_DECLARE_TYPEINFO(AutoTypeAssociation, Q_MOVABLE_TYPE);
+
 class Entry : public QObject
 {
     Q_OBJECT

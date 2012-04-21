@@ -34,6 +34,8 @@ struct DeletedObject
     QDateTime deletionTime;
 };
 
+Q_DECLARE_TYPEINFO(DeletedObject, Q_MOVABLE_TYPE);
+
 class Database : public QObject
 {
     Q_OBJECT

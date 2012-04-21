@@ -39,6 +39,8 @@ private:
     QByteArray m_data;
 };
 
+Q_DECLARE_TYPEINFO(Uuid, Q_MOVABLE_TYPE);
+
 uint qHash(const Uuid& key);
 
 #endif // KEEPASSX_UUID_H

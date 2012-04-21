@@ -40,6 +40,8 @@ struct DatabaseManagerStruct
     bool readOnly;
 };
 
+Q_DECLARE_TYPEINFO(DatabaseManagerStruct, Q_MOVABLE_TYPE);
+
 class DatabaseTabWidget : public QTabWidget
 {
     Q_OBJECT
