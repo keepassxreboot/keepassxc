@@ -25,10 +25,6 @@
 
 Group::Group()
 {
-    m_parent = 0;
-    m_db = 0;
-    m_lastTopVisibleEntry = 0;
-
     m_iconNumber = 48;
     m_isExpanded = true;
     m_autoTypeEnabled = Inherit;

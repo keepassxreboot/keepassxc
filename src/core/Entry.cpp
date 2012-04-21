@@ -24,7 +24,6 @@
 
 Entry::Entry()
 {
-    m_group = 0;
     m_updateTimeinfo = true;
 
     m_iconNumber = 0;
