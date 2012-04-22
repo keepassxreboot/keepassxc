@@ -54,6 +54,8 @@ void ChangeMasterKeyWidget::clearForms()
     m_ui->keyFileGroup->setChecked(false);
     m_ui->togglePasswordButton->setChecked(true);
     // TODO clear m_ui->keyFileCombo
+
+    m_ui->enterPasswordEdit->setFocus();
 }
 
 CompositeKey ChangeMasterKeyWidget::newMasterKey()

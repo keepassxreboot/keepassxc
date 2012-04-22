@@ -151,6 +151,17 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>passwordGroup</tabstop>
+  <tabstop>enterPasswordEdit</tabstop>
+  <tabstop>repeatPasswordEdit</tabstop>
+  <tabstop>togglePasswordButton</tabstop>
+  <tabstop>keyFileGroup</tabstop>
+  <tabstop>keyFileCombo</tabstop>
+  <tabstop>browseKeyFileButton</tabstop>
+  <tabstop>createKeyFileButton</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
