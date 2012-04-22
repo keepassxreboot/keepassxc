@@ -362,7 +362,10 @@ void KeePass2XmlWriter::writeEntry(const Entry* entry)
     }
 
     writeAutoType(entry);
-    writeEntryHistory(entry);
+    // write history only for entries that are not history items
+    if (entry->parent()) {
+        writeEntryHistory(entry);
+    }
 
     m_xml.writeEndElement();
 }
