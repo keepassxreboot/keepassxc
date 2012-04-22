@@ -67,11 +67,11 @@ void TestKeePass2XmlReader::initTestCase()
 {
     Crypto::init();
 
-    KeePass2XmlReader* reader = new KeePass2XmlReader();
+    KeePass2XmlReader reader;
     QString xmlFile = QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.xml");
-    m_db = reader->readDatabase(xmlFile);
+    m_db = reader.readDatabase(xmlFile);
     QVERIFY(m_db);
-    QVERIFY(!reader->hasError());
+    QVERIFY(!reader.hasError());
 }
 
 void TestKeePass2XmlReader::testMetadata()
@@ -349,6 +349,11 @@ void TestKeePass2XmlReader::testDeletedObjects()
     QCOMPARE(delObj.deletionTime, genDT(2010, 8, 25, 16, 14, 14));
 
     QVERIFY(objList.isEmpty());
+}
+
+void TestKeePass2XmlReader::cleanupTestCase()
+{
+    delete m_db;
 }
 
 KEEPASSX_QTEST_CORE_MAIN(TestKeePass2XmlReader)

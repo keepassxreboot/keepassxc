@@ -39,6 +39,7 @@ private Q_SLOTS:
     void testEntry2();
     void testEntryHistory();
     void testDeletedObjects();
+    void cleanupTestCase();
 
 private:
     QDateTime genDT(int year, int month, int day, int hour, int min, int second);

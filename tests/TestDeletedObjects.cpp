@@ -87,9 +87,9 @@ void TestDeletedObjects::createAndDelete(Database* db, int delObjectsSize)
 
 void TestDeletedObjects::testDeletedObjectsFromFile()
 {
-    KeePass2XmlReader* reader = new KeePass2XmlReader();
+    KeePass2XmlReader reader;
     QString xmlFile = QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.xml");
-    Database* db = reader->readDatabase(xmlFile);
+    Database* db = reader.readDatabase(xmlFile);
 
     createAndDelete(db, 2);
 
@@ -154,6 +154,7 @@ void TestDeletedObjects::testDatabaseChange()
     QCOMPARE(db->deletedObjects().size(), delObjectsSize);
     QCOMPARE(db2->deletedObjects().size(), delObjectsSize2);
 
+    delete group;
     delete db;
     delete db2;
 }

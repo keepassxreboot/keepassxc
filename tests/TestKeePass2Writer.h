@@ -31,6 +31,7 @@ private Q_SLOTS:
     void testBasic();
     void testProtectedAttributes();
     void testAttachments();
+    void cleanupTestCase();
 
 private:
     Database* m_dbOrg;

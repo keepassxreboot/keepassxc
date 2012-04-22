@@ -38,14 +38,13 @@ void TestKeePass2Reader::testNonAscii()
     QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/NonAscii.kdbx");
     CompositeKey key;
     key.addKey(PasswordKey(QString::fromUtf8("\xce\x94\xc3\xb6\xd8\xb6")));
-    KeePass2Reader* reader = new KeePass2Reader();
-    Database* db = reader->readDatabase(filename, key);
+    KeePass2Reader reader;
+    Database* db = reader.readDatabase(filename, key);
     QVERIFY(db);
-    QVERIFY(!reader->hasError());
+    QVERIFY(!reader.hasError());
     QCOMPARE(db->metadata()->name(), QString("NonAsciiTest"));
 
     delete db;
-    delete reader;
 }
 
 void TestKeePass2Reader::testCompressed()
@@ -53,14 +52,13 @@ void TestKeePass2Reader::testCompressed()
     QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/Compressed.kdbx");
     CompositeKey key;
     key.addKey(PasswordKey(""));
-    KeePass2Reader* reader = new KeePass2Reader();
-    Database* db = reader->readDatabase(filename, key);
+    KeePass2Reader reader;
+    Database* db = reader.readDatabase(filename, key);
     QVERIFY(db);
-    QVERIFY(!reader->hasError());
+    QVERIFY(!reader.hasError());
     QCOMPARE(db->metadata()->name(), QString("Compressed"));
 
     delete db;
-    delete reader;
 }
 
 void TestKeePass2Reader::testProtectedStrings()
@@ -68,10 +66,10 @@ void TestKeePass2Reader::testProtectedStrings()
     QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/ProtectedStrings.kdbx");
     CompositeKey key;
     key.addKey(PasswordKey("masterpw"));
-    KeePass2Reader* reader = new KeePass2Reader();
-    Database* db = reader->readDatabase(filename, key);
+    KeePass2Reader reader;
+    Database* db = reader.readDatabase(filename, key);
     QVERIFY(db);
-    QVERIFY(!reader->hasError());
+    QVERIFY(!reader.hasError());
     QCOMPARE(db->metadata()->name(), QString("Protected Strings Test"));
 
     Entry* entry = db->rootGroup()->entries().at(0);
@@ -87,7 +85,6 @@ void TestKeePass2Reader::testProtectedStrings()
     QVERIFY(!entry->attributes()->isProtected("TestUnprotected"));
 
     delete db;
-    delete reader;
 }
 
 void TestKeePass2Reader::testFormat200()
@@ -95,10 +92,10 @@ void TestKeePass2Reader::testFormat200()
     QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/Format200.kdbx");
     CompositeKey key;
     key.addKey(PasswordKey("a"));
-    KeePass2Reader* reader = new KeePass2Reader();
-    Database* db = reader->readDatabase(filename, key);
+    KeePass2Reader reader;
+    Database* db = reader.readDatabase(filename, key);
     QVERIFY(db);
-    QVERIFY(!reader->hasError());
+    QVERIFY(!reader.hasError());
 
     QCOMPARE(db->rootGroup()->name(), QString("Format200"));
     QVERIFY(!db->metadata()->protectTitle());
@@ -120,6 +117,8 @@ void TestKeePass2Reader::testFormat200()
     QCOMPARE(entry->historyItems().at(0)->attachments()->keys().size(), 0);
     QCOMPARE(entry->historyItems().at(1)->attachments()->keys().size(), 1);
     QCOMPARE(entry->historyItems().at(1)->attachments()->value("myattach.txt"), QByteArray("abcdefghijk"));
+
+    delete db;
 }
 
 KEEPASSX_QTEST_CORE_MAIN(TestKeePass2Reader)

@@ -93,4 +93,10 @@ void TestKeePass2Writer::testAttachments()
     QCOMPARE(entry->attachments()->value("aaa.txt"), QByteArray("also an attachment"));
 }
 
+void TestKeePass2Writer::cleanupTestCase()
+{
+    delete m_dbOrg;
+    delete m_dbTest;
+}
+
 KEEPASSX_QTEST_CORE_MAIN(TestKeePass2Writer)
