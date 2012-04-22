@@ -357,6 +357,10 @@ Group* Entry::group()
 
 void Entry::setGroup(Group* group)
 {
+    if (m_group == group) {
+        return;
+    }
+
     if (m_group) {
         m_group->removeEntry(this);
         if (m_group->database() != group->database() && m_group->database()) {
@@ -367,6 +371,10 @@ void Entry::setGroup(Group* group)
     group->addEntry(this);
     m_group = group;
     QObject::setParent(group);
+
+    if (m_updateTimeinfo) {
+        m_timeInfo.setLocationChanged(QDateTime::currentDateTimeUtc());
+    }
 }
 
 void Entry::emitDataChanged()

@@ -264,6 +264,9 @@ void Group::setParent(Group* parent, int index)
         index = parent->children().size();
     }
 
+    if (m_parent == parent && index == parent->children().indexOf(this)) {
+        return;
+    }
 
     cleanupParent();
 
@@ -279,6 +282,10 @@ void Group::setParent(Group* parent, int index)
     Q_EMIT aboutToAdd(this, index);
 
     parent->m_children.insert(index, this);
+
+    if (m_updateTimeinfo) {
+        m_timeInfo.setLocationChanged(QDateTime::currentDateTimeUtc());
+    }
 
     Q_EMIT modified();
     Q_EMIT added();
