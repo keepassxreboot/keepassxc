@@ -105,4 +105,57 @@ void TestDeletedObjects::testDeletedObjectsFromNewDb()
     delete db;
 }
 
+void TestDeletedObjects::testDatabaseChange()
+{
+    Database* db = new Database();
+    Group* root = db->rootGroup();
+    int delObjectsSize = 0;
+    Database* db2 = new Database();
+    Group* root2 = db2->rootGroup();
+    int delObjectsSize2 = 0;
+
+    Entry* e = new Entry();
+    e->setGroup(root);
+
+    QCOMPARE(db->deletedObjects().size(), delObjectsSize);
+    QCOMPARE(db2->deletedObjects().size(), delObjectsSize2);
+
+    e->setGroup(root2);
+
+    QCOMPARE(db->deletedObjects().size(), ++delObjectsSize);
+    QCOMPARE(db2->deletedObjects().size(), delObjectsSize2);
+
+    delete e;
+
+    QCOMPARE(db->deletedObjects().size(), delObjectsSize);
+    QCOMPARE(db2->deletedObjects().size(), ++delObjectsSize2);
+
+    Group* g1 = new Group();
+    g1->setParent(root);
+    Uuid g1Uuid = Uuid::random();
+    g1->setUuid(g1Uuid);
+    Entry* e1 = new Entry();
+    e1->setGroup(g1);
+    Uuid e1Uuid = Uuid::random();
+    e1->setUuid(e1Uuid);
+    g1->setParent(root2);
+
+    delObjectsSize += 2;
+    QCOMPARE(db->deletedObjects().size(), delObjectsSize);
+    QCOMPARE(db2->deletedObjects().size(), delObjectsSize2);
+    QCOMPARE(db->deletedObjects().at(delObjectsSize-2).uuid, e1Uuid);
+    QCOMPARE(db->deletedObjects().at(delObjectsSize-1).uuid, g1Uuid);
+
+    Group* group = new Group();
+    Entry* entry = new Entry();
+    entry->setGroup(group);
+    entry->setGroup(root);
+
+    QCOMPARE(db->deletedObjects().size(), delObjectsSize);
+    QCOMPARE(db2->deletedObjects().size(), delObjectsSize2);
+
+    delete db;
+    delete db2;
+}
+
 KEEPASSX_QTEST_CORE_MAIN(TestDeletedObjects)
