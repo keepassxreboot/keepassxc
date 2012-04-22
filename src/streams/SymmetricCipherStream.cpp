@@ -21,11 +21,12 @@ SymmetricCipherStream::SymmetricCipherStream(QIODevice* baseDevice, SymmetricCip
                                              SymmetricCipher::Mode mode, SymmetricCipher::Direction direction,
                                              const QByteArray& key, const QByteArray& iv)
     : LayeredStream(baseDevice)
+    , m_cipher(new SymmetricCipher(algo, mode, direction, key, iv))
     , m_bufferPos(0)
     , m_bufferFilling(false)
     , m_error(false)
 {
-    m_cipher = new SymmetricCipher(algo, mode, direction, key, iv);
+
 }
 
 SymmetricCipherStream::~SymmetricCipherStream()
