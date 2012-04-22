@@ -426,8 +426,6 @@ void Group::cleanupParent()
 void Group::recCreateDelObjects()
 {
     if (m_db) {
-        m_db->addDeletedObject(m_uuid);
-
         Q_FOREACH (Entry* entry, m_entries) {
             m_db->addDeletedObject(entry->uuid());
         }
@@ -435,5 +433,6 @@ void Group::recCreateDelObjects()
         Q_FOREACH (Group* group, m_children) {
             group->recCreateDelObjects();
         }
+        m_db->addDeletedObject(m_uuid);
     }
 }
