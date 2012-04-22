@@ -88,6 +88,15 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>checkPassword</tabstop>
+  <tabstop>editPassword</tabstop>
+  <tabstop>buttonTogglePassword</tabstop>
+  <tabstop>checkKeyFile</tabstop>
+  <tabstop>comboKeyFile</tabstop>
+  <tabstop>buttonBrowseFile</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

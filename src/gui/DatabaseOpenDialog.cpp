@@ -55,6 +55,8 @@ DatabaseOpenDialog::DatabaseOpenDialog(QFile* file, QString filename, QWidget* p
         m_ui->checkKeyFile->setChecked(true);
         m_ui->comboKeyFile->addItem(lastKeyFiles[m_filename].toString());
     }
+
+    m_ui->editPassword->setFocus();
 }
 
 DatabaseOpenDialog::~DatabaseOpenDialog()
