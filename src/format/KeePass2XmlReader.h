@@ -87,8 +87,8 @@ private:
     Database* m_db;
     Metadata* m_meta;
     Group* m_tmpParent;
-    QList<Group*> m_groups;
-    QList<Entry*> m_entries;
+    QHash<Uuid, Group*> m_groups;
+    QHash<Uuid, Entry*> m_entries;
     QHash<QString, QByteArray> m_binaryPool;
     QHash<QString, QPair<Entry*, QString> > m_binaryMap;
 };

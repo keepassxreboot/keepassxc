@@ -82,18 +82,21 @@ void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Ra
 
     QHash<QString, QPair<Entry*, QString> >::const_iterator i;
     for (i = m_binaryMap.constBegin(); i != m_binaryMap.constEnd(); ++i) {
-        QPair<Entry*, QString> target = i.value();
+        const QPair<Entry*, QString>& target = i.value();
         target.first->attachments()->set(target.second, m_binaryPool[i.key()]);
     }
 
     m_meta->setUpdateDatetime(true);
-    Q_FOREACH (Group* group, m_groups) {
-        group->setUpdateTimeinfo(true);
+    QHash<Uuid, Group*>::const_iterator iGroup;
+    for (iGroup = m_groups.constBegin(); iGroup != m_groups.constEnd(); ++iGroup) {
+        iGroup.value()->setUpdateTimeinfo(true);
     }
 
-    Q_FOREACH (Entry* entry, m_entries) {
-        entry->setUpdateTimeinfo(true);
-        Q_FOREACH(Entry* histEntry, entry->historyItems()) {
+    QHash<Uuid, Entry*>::const_iterator iEntry;
+    for (iEntry = m_entries.constBegin(); iEntry != m_entries.constEnd(); ++iEntry) {
+        iEntry.value()->setUpdateTimeinfo(true);
+
+        Q_FOREACH (Entry* histEntry, iEntry.value()->historyItems()) {
             histEntry->setUpdateTimeinfo(true);
         }
     }
@@ -895,18 +898,17 @@ Group* KeePass2XmlReader::getGroup(const Uuid& uuid)
         return 0;
     }
 
-    Q_FOREACH (Group* group, m_groups) {
-        if (group->uuid() == uuid) {
-            return group;
-        }
+    if (m_groups.contains(uuid)) {
+        return m_groups.value(uuid);
     }
-
-    Group* group = new Group();
-    group->setUpdateTimeinfo(false);
-    group->setUuid(uuid);
-    group->setParent(m_tmpParent);
-    m_groups << group;
-    return group;
+    else {
+        Group* group = new Group();
+        group->setUpdateTimeinfo(false);
+        group->setUuid(uuid);
+        group->setParent(m_tmpParent);
+        m_groups.insert(uuid, group);
+        return group;
+    }
 }
 
 Entry* KeePass2XmlReader::getEntry(const Uuid& uuid)
@@ -915,18 +917,17 @@ Entry* KeePass2XmlReader::getEntry(const Uuid& uuid)
         return 0;
     }
 
-    Q_FOREACH (Entry* entry, m_entries) {
-        if (entry->uuid() == uuid) {
-            return entry;
-        }
+    if (m_entries.contains(uuid)) {
+        return m_entries.value(uuid);
     }
-
-    Entry* entry = new Entry();
-    entry->setUpdateTimeinfo(false);
-    entry->setUuid(uuid);
-    entry->setGroup(m_tmpParent);
-    m_entries << entry;
-    return entry;
+    else {
+        Entry* entry = new Entry();
+        entry->setUpdateTimeinfo(false);
+        entry->setUuid(uuid);
+        entry->setGroup(m_tmpParent);
+        m_entries.insert(uuid, entry);
+        return entry;
+    }
 }
 
 void KeePass2XmlReader::raiseError(int internalNumber)
