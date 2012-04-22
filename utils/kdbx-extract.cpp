@@ -66,7 +66,7 @@ int main(int argc, char **argv)
     reader.readDatabase(&dbFile, key);
 
     if (reader.hasError()) {
-        qCritical("Error while reading the database.");
+        qCritical("Error while reading the database:\n%s", qPrintable(reader.errorString()));
         return 1;
     }
 
