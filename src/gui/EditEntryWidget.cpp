@@ -119,6 +119,8 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupN
     m_attachmentsModel->setEntryAttachments(m_entryAttachments);
 
     m_ui->categoryList->setCurrentRow(0);
+
+    m_mainUi->titleEdit->setFocus();
 }
 
 void EditEntryWidget::saveEntry()

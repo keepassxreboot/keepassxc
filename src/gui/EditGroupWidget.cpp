@@ -51,6 +51,8 @@ void EditGroupWidget::loadGroup(Group* group, bool create)
 
     m_ui->editName->setText(m_group->name());
     m_ui->editNotes->setPlainText(m_group->notes());
+
+    m_ui->editName->setFocus();
 }
 
 void EditGroupWidget::save()

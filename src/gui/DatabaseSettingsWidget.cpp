@@ -45,6 +45,8 @@ void DatabaseSettingsWidget::setForms(QString dbName, QString dbDescription,
         m_ui->recycleBinEnabledCheckBox->setCheckState(Qt::Unchecked);
     }
     m_ui->transformRoundsSpinBox->setValue(transformRounds);
+
+    m_ui->dbNameEdit->setFocus();
 }
 
 quint64 DatabaseSettingsWidget::transformRounds()
