@@ -105,6 +105,7 @@ void DatabaseWidget::createEntry()
 {
     m_newEntry = new Entry();
     m_newEntry->setUuid(Uuid::random());
+    m_newEntry->setUsername(m_db->metadata()->defaultUserName());
     m_newParent = m_groupView->currentGroup();
     switchToEntryEdit(m_newEntry, true);
 }
@@ -240,6 +241,7 @@ void DatabaseWidget::updateSettings(bool accepted)
     if (accepted) {
         m_db->updateKey(m_databaseSettingsWidget->transformRounds());
         m_db->metadata()->setDescription(m_databaseSettingsWidget->dbDescription());
+        m_db->metadata()->setDefaultUserName(m_databaseSettingsWidget->defaultUsername());
         m_db->metadata()->setRecycleBinEnabled(m_databaseSettingsWidget->recylceBinEnabled());
         m_db->metadata()->setName(m_databaseSettingsWidget->dbName());
     }
@@ -267,6 +269,7 @@ void DatabaseWidget::switchToDatabaseSettings()
 {
     m_databaseSettingsWidget->setForms(m_db->metadata()->name(),
                                        m_db->metadata()->description(),
+                                       m_db->metadata()->defaultUserName(),
                                        m_db->metadata()->recycleBinEnabled(),
                                        m_db->transformRounds());
     setCurrentIndex(4);

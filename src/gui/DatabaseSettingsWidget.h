@@ -37,10 +37,12 @@ public:
     ~DatabaseSettingsWidget();
 
     void setForms(QString dbName, QString dbDescription,
-                  bool recylceBinEnabled, int transformRounds);
+                  QString defaultUsername, bool recylceBinEnabled,
+                  int transformRounds);
     quint64 transformRounds();
     QString dbName();
     QString dbDescription();
+    QString defaultUsername();
     bool recylceBinEnabled();
 
 Q_SIGNALS:
@@ -55,6 +57,7 @@ private:
 
     QString m_dbName;
     QString m_dbDescription;
+    QString m_defaultUsername;
     bool m_recylceBinEnabled;
     quint64 m_transformRounds;
 

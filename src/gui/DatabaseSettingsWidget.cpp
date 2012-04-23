@@ -34,7 +34,8 @@ DatabaseSettingsWidget::~DatabaseSettingsWidget()
 }
 
 void DatabaseSettingsWidget::setForms(QString dbName, QString dbDescription,
-                                      bool recylceBinEnabled, int transformRounds)
+                                      QString defaultUsername, bool recylceBinEnabled,
+                                      int transformRounds)
 {
     m_ui->dbNameEdit->setText(dbName);
     m_ui->dbDescriptionEdit->setText(dbDescription);
@@ -44,6 +45,7 @@ void DatabaseSettingsWidget::setForms(QString dbName, QString dbDescription,
     else {
         m_ui->recycleBinEnabledCheckBox->setCheckState(Qt::Unchecked);
     }
+    m_ui->defaultUsernameEdit->setText(defaultUsername);
     m_ui->transformRoundsSpinBox->setValue(transformRounds);
 
     m_ui->dbNameEdit->setFocus();
@@ -64,6 +66,11 @@ QString DatabaseSettingsWidget::dbDescription()
     return m_dbDescription;
 }
 
+QString DatabaseSettingsWidget::defaultUsername()
+{
+    return m_defaultUsername;
+}
+
 bool DatabaseSettingsWidget::recylceBinEnabled()
 {
     return m_recylceBinEnabled;
@@ -73,6 +80,7 @@ void DatabaseSettingsWidget::changeSettings()
 {
     m_dbName = m_ui->dbNameEdit->text();
     m_dbDescription = m_ui->dbDescriptionEdit->text();
+    m_defaultUsername = m_ui->defaultUsernameEdit->text();
     if (m_ui->recycleBinEnabledCheckBox->checkState() == Qt::Checked) {
         m_recylceBinEnabled = true;
     }
