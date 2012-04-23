@@ -29,6 +29,8 @@ GroupModel::GroupModel(Database* db, QObject* parent)
     connect(db, SIGNAL(groupAdded()), SLOT(groupAdded()));
     connect(db, SIGNAL(groupAboutToRemove(Group*)), SLOT(groupAboutToRemove(Group*)));
     connect(db, SIGNAL(groupRemoved()), SLOT(groupRemoved()));
+    connect(db, SIGNAL(groupAboutToMove(Group*,Group*,int)), SLOT(groupAboutToMove(Group*,Group*,int)));
+    connect(db, SIGNAL(groupMoved()), SLOT(groupMoved()));
 }
 
 int GroupModel::rowCount(const QModelIndex& parent) const
@@ -179,4 +181,25 @@ void GroupModel::groupAboutToAdd(Group* group, int index)
 void GroupModel::groupAdded()
 {
     endInsertRows();
+}
+
+void GroupModel::groupAboutToMove(Group* group, Group* toGroup, int pos)
+{
+    Q_ASSERT(group->parentGroup());
+
+    QModelIndex oldParentIndex = parent(group);
+    QModelIndex newParentIndex = index(toGroup);
+    int oldPos = group->parentGroup()->children().indexOf(group);
+    if (group->parentGroup() == toGroup && pos > oldPos) {
+        // beginMoveRows() has a bit different semantics than Group::setParent() and
+        // QList::move() when the new position is greater than the old
+        pos++;
+    }
+
+    beginMoveRows(oldParentIndex, oldPos, oldPos, newParentIndex, pos);
+}
+
+void GroupModel::groupMoved()
+{
+    endMoveRows();
 }

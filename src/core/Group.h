@@ -85,6 +85,11 @@ Q_SIGNALS:
     void added();
     void aboutToRemove(Group* group);
     void removed();
+    /**
+     * Group moved within the database.
+     */
+    void aboutToMove(Group* group, Group* toGroup, int index);
+    void moved();
 
     void entryAboutToAdd(Entry* entry);
     void entryAdded();

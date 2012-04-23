@@ -260,35 +260,47 @@ void Group::setParent(Group* parent, int index)
     // setting a new parent for root groups is not allowed
     Q_ASSERT(!m_db || (m_db->rootGroup() != this));
 
+    bool moveWithinDatabase = (m_db && m_db == parent->m_db);
+
     if (index == -1) {
         index = parent->children().size();
     }
 
-    if (m_parent == parent && index == parent->children().indexOf(this)) {
+    if (m_parent == parent && parent->children().indexOf(this) == index) {
         return;
     }
 
-    cleanupParent();
-
-    m_parent = parent;
-
-    if (m_db != parent->m_db) {
-        recCreateDelObjects();
-        recSetDatabase(parent->m_db);
+    if (!moveWithinDatabase) {
+        cleanupParent();
+        m_parent = parent;
+        if (parent->m_db) {
+            recCreateDelObjects();
+            recSetDatabase(parent->m_db);
+        }
+        QObject::setParent(parent);
+        Q_EMIT aboutToAdd(this, index);
+        parent->m_children.insert(index, this);
     }
-
-    QObject::setParent(parent);
-
-    Q_EMIT aboutToAdd(this, index);
-
-    parent->m_children.insert(index, this);
+    else {
+        Q_EMIT aboutToMove(this, parent, index);
+        m_parent->m_children.removeAll(this);
+        m_parent = parent;
+        QObject::setParent(parent);
+        parent->m_children.insert(index, this);
+    }
 
     if (m_updateTimeinfo) {
         m_timeInfo.setLocationChanged(QDateTime::currentDateTimeUtc());
     }
 
     Q_EMIT modified();
-    Q_EMIT added();
+
+    if (!moveWithinDatabase) {
+        Q_EMIT added();
+    }
+    else {
+        Q_EMIT moved();
+    }
 }
 
 void Group::setParent(Database* db)
@@ -389,6 +401,8 @@ void Group::recSetDatabase(Database* db)
         disconnect(SIGNAL(removed()), m_db);
         disconnect(SIGNAL(aboutToAdd(Group*,int)), m_db);
         disconnect(SIGNAL(added()), m_db);
+        disconnect(SIGNAL(aboutToMove(Group*,Group*,int)), m_db);
+        disconnect(SIGNAL(moved()), m_db);
         disconnect(SIGNAL(modified()), m_db);
     }
 
@@ -404,6 +418,8 @@ void Group::recSetDatabase(Database* db)
     connect(this, SIGNAL(removed()), db, SIGNAL(groupRemoved()));
     connect(this, SIGNAL(aboutToAdd(Group*,int)), db, SIGNAL(groupAboutToAdd(Group*,int)));
     connect(this, SIGNAL(added()), db, SIGNAL(groupAdded()));
+    connect(this, SIGNAL(aboutToMove(Group*,Group*,int)), db, SIGNAL(groupAboutToMove(Group*,Group*,int)));
+    connect(this, SIGNAL(moved()), db, SIGNAL(groupMoved()));
     connect(this, SIGNAL(modified()), db, SIGNAL(modified()));
 
     m_db = db;

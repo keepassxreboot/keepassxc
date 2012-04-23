@@ -52,6 +52,9 @@ void TestModified::testSignals()
     g2->setParent(root);
     QCOMPARE(spyModified.count(), ++spyCount);
 
+    g2->setParent(root, 0);
+    QCOMPARE(spyModified.count(), ++spyCount);
+
     Entry* entry1 = new Entry();
     entry1->setGroup(g1);
     QCOMPARE(spyModified.count(), ++spyCount);

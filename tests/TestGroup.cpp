@@ -99,26 +99,82 @@ void TestGroup::testParenting()
 void TestGroup::testSignals()
 {
     Database* db = new Database();
+    Database* db2 = new Database();
     QPointer<Group> root = db->rootGroup();
-
-    Group* g1 = new Group();
-    Group* g2 = new Group();
-    g1->setParent(root);
-    g2->setParent(root);
 
     QSignalSpy spyAboutToAdd(db, SIGNAL(groupAboutToAdd(Group*,int)));
     QSignalSpy spyAdded(db, SIGNAL(groupAdded()));
     QSignalSpy spyAboutToRemove(db, SIGNAL(groupAboutToRemove(Group*)));
     QSignalSpy spyRemoved(db, SIGNAL(groupRemoved()));
+    QSignalSpy spyAboutToMove(db, SIGNAL(groupAboutToMove(Group*,Group*,int)));
+    QSignalSpy spyMoved(db, SIGNAL(groupMoved()));
 
-    g2->setParent(root, 0);
+    QSignalSpy spyAboutToAdd2(db2, SIGNAL(groupAboutToAdd(Group*,int)));
+    QSignalSpy spyAdded2(db2, SIGNAL(groupAdded()));
+    QSignalSpy spyAboutToRemove2(db2, SIGNAL(groupAboutToRemove(Group*)));
+    QSignalSpy spyRemoved2(db2, SIGNAL(groupRemoved()));
+    QSignalSpy spyAboutToMove2(db2, SIGNAL(groupAboutToMove(Group*,Group*,int)));
+    QSignalSpy spyMoved2(db2, SIGNAL(groupMoved()));
 
+    Group* g1 = new Group();
+    Group* g2 = new Group();
+
+    g1->setParent(root);
     QCOMPARE(spyAboutToAdd.count(), 1);
     QCOMPARE(spyAdded.count(), 1);
+    QCOMPARE(spyAboutToRemove.count(), 0);
+    QCOMPARE(spyRemoved.count(), 0);
+    QCOMPARE(spyAboutToMove.count(), 0);
+    QCOMPARE(spyMoved.count(), 0);
+
+    g2->setParent(root);
+    QCOMPARE(spyAboutToAdd.count(), 2);
+    QCOMPARE(spyAdded.count(), 2);
+    QCOMPARE(spyAboutToRemove.count(), 0);
+    QCOMPARE(spyRemoved.count(), 0);
+    QCOMPARE(spyAboutToMove.count(), 0);
+    QCOMPARE(spyMoved.count(), 0);
+
+    g2->setParent(root, 0);
+    QCOMPARE(spyAboutToAdd.count(), 2);
+    QCOMPARE(spyAdded.count(), 2);
+    QCOMPARE(spyAboutToRemove.count(), 0);
+    QCOMPARE(spyRemoved.count(), 0);
+    QCOMPARE(spyAboutToMove.count(), 1);
+    QCOMPARE(spyMoved.count(), 1);
+
+    g1->setParent(g2);
+    QCOMPARE(spyAboutToAdd.count(), 2);
+    QCOMPARE(spyAdded.count(), 2);
+    QCOMPARE(spyAboutToRemove.count(), 0);
+    QCOMPARE(spyRemoved.count(), 0);
+    QCOMPARE(spyAboutToMove.count(), 2);
+    QCOMPARE(spyMoved.count(), 2);
+
+    delete g1;
+    QCOMPARE(spyAboutToAdd.count(), 2);
+    QCOMPARE(spyAdded.count(), 2);
     QCOMPARE(spyAboutToRemove.count(), 1);
     QCOMPARE(spyRemoved.count(), 1);
+    QCOMPARE(spyAboutToMove.count(), 2);
+    QCOMPARE(spyMoved.count(), 2);
+
+    g2->setParent(db2->rootGroup());
+    QCOMPARE(spyAboutToAdd.count(), 2);
+    QCOMPARE(spyAdded.count(), 2);
+    QCOMPARE(spyAboutToRemove.count(), 2);
+    QCOMPARE(spyRemoved.count(), 2);
+    QCOMPARE(spyAboutToMove.count(), 2);
+    QCOMPARE(spyMoved.count(), 2);
+    QCOMPARE(spyAboutToAdd2.count(), 1);
+    QCOMPARE(spyAdded2.count(), 1);
+    QCOMPARE(spyAboutToRemove2.count(), 0);
+    QCOMPARE(spyRemoved2.count(), 0);
+    QCOMPARE(spyAboutToMove2.count(), 0);
+    QCOMPARE(spyMoved2.count(), 0);
 
     delete db;
+    delete db2;
 
     QVERIFY(root.isNull());
 }

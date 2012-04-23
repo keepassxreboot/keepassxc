@@ -48,6 +48,8 @@ private Q_SLOTS:
     void groupRemoved();
     void groupAboutToAdd(Group* group, int index);
     void groupAdded();
+    void groupAboutToMove(Group* group, Group* toGroup, int pos);
+    void groupMoved();
 
 private:
     Group* m_root;
