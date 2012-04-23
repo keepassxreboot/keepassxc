@@ -64,7 +64,7 @@ Config::Config()
 
     userPath += "keepassx2.ini";
 
-    m_settings = new QSettings(userPath, QSettings::IniFormat);
+    m_settings.reset(new QSettings(userPath, QSettings::IniFormat));
 }
 
 Config* config()

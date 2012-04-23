@@ -45,7 +45,7 @@ private Q_SLOTS:
     void cancel();
 
 private:
-    QScopedPointer<Ui::EditGroupWidget> m_ui;
+    const QScopedPointer<Ui::EditGroupWidget> m_ui;
     Group* m_group;
 
     Q_DISABLE_COPY(EditGroupWidget)

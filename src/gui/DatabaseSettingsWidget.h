@@ -50,7 +50,7 @@ private Q_SLOTS:
     void reject();
 
 private:
-    QScopedPointer<Ui::DatabaseSettingsWidget> m_ui;
+    const QScopedPointer<Ui::DatabaseSettingsWidget> m_ui;
 
     QString m_dbName;
     QString m_dbDescription;

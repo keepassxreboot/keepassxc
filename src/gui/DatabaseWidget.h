@@ -63,7 +63,7 @@ private Q_SLOTS:
     void updateSettings(bool accepted);
 
 private:
-    Database* m_db;
+    Database* const m_db;
     QWidget* m_mainWidget;
     EditEntryWidget* m_editEntryWidget;
     EditGroupWidget* m_editGroupWidget;

@@ -22,24 +22,8 @@
 
 SymmetricCipher::SymmetricCipher(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
                                  SymmetricCipher::Direction direction, const QByteArray& key, const QByteArray& iv)
+    : m_backend(createBackend(algo, mode, direction))
 {
-    switch (algo) {
-    case SymmetricCipher::Aes256:
-        m_backend = new SymmetricCipherGcrypt();
-        break;
-
-    case SymmetricCipher::Salsa20:
-        m_backend = new SymmetricCipherSalsa20();
-        break;
-
-    default:
-        Q_ASSERT(false);
-        break;
-    }
-
-    m_backend->setAlgorithm(algo);
-    m_backend->setMode(mode);
-    m_backend->setDirection(direction);
     m_backend->init();
     m_backend->setKey(key);
     m_backend->setIv(iv);
@@ -47,7 +31,22 @@ SymmetricCipher::SymmetricCipher(SymmetricCipher::Algorithm algo, SymmetricCiphe
 
 SymmetricCipher::~SymmetricCipher()
 {
-    delete m_backend;
+}
+
+SymmetricCipherBackend* SymmetricCipher::createBackend(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
+                                                       SymmetricCipher::Direction direction)
+{
+    switch (algo) {
+    case SymmetricCipher::Aes256:
+        return new SymmetricCipherGcrypt(algo, mode, direction);
+
+    case SymmetricCipher::Salsa20:
+        return new SymmetricCipherSalsa20(algo, mode, direction);
+
+    default:
+        Q_ASSERT(false);
+        return 0;
+    }
 }
 
 QByteArray SymmetricCipher::process(const QByteArray& data)

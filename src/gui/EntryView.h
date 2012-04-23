@@ -45,7 +45,7 @@ Q_SIGNALS:
     void entrySelectionChanged();
 
 private:
-    EntryModel* m_model;
+    EntryModel* const m_model;
 };
 
 #endif // KEEPASSX_ENTRYVIEW_H

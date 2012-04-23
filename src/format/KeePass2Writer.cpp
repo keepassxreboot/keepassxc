@@ -33,7 +33,8 @@
 #define CHECK_RETURN_FALSE(x) if (!(x)) return false;
 
 KeePass2Writer::KeePass2Writer()
-    : m_error(false)
+    : m_device(0)
+    , m_error(false)
 {
 }
 

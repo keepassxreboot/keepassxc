@@ -21,8 +21,8 @@
 
 EntryView::EntryView(QWidget* parent)
     : QTreeView(parent)
+    , m_model(new EntryModel(this))
 {
-    m_model = new EntryModel(this);
     QTreeView::setModel(m_model);
 
     setUniformRowHeights(true);

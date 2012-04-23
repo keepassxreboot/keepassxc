@@ -44,7 +44,7 @@ private Q_SLOTS:
 private:
     void recInitExpanded(Group* group);
 
-    GroupModel* m_model;
+    GroupModel* const m_model;
 };
 
 #endif // KEEPASSX_GROUPVIEW_H

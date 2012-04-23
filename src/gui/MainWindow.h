@@ -39,9 +39,8 @@ private Q_SLOTS:
     void setMenuActionState(int index = -1);
     void updateWindowTitle();
 
-
 private:
-    QScopedPointer<Ui::MainWindow> m_ui;
+    const QScopedPointer<Ui::MainWindow> m_ui;
     static const QString m_baseWindowTitle;
 
     Q_DISABLE_COPY(MainWindow)

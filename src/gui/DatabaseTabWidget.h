@@ -91,7 +91,7 @@ private:
     Database* databaseFromDatabaseWidget(DatabaseWidget* dbWidget);
     void insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct);
 
-    QWidget* m_window;
+    QWidget* const m_window;
     KeePass2Writer m_writer;
     QHash<Database*, DatabaseManagerStruct> m_dbList;
     DatabaseManagerStruct m_curDbStruct;

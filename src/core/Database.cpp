@@ -26,15 +26,14 @@
 #include "format/KeePass2.h"
 
 Database::Database()
+    : m_metadata(new Metadata(this))
+    , m_cipher(KeePass2::CIPHER_AES)
+    , m_compressionAlgo(CompressionGZip)
+    , m_transformRounds(50000)
+    , m_hasKey(false)
 {
-    m_hasKey = false;
-    m_metadata = new Metadata(this);
     setRootGroup(new Group());
     rootGroup()->setUuid(Uuid::random());
-
-    m_cipher = KeePass2::CIPHER_AES;
-    m_compressionAlgo = CompressionGZip;
-    m_transformRounds = 50000;
 
     connect(m_metadata, SIGNAL(modified()), this, SIGNAL(modified()));
 }

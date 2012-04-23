@@ -48,10 +48,10 @@ private Q_SLOTS:
     void browseKeyFile();
 
 private:
-    QScopedPointer<Ui::DatabaseOpenDialog> m_ui;
+    const QScopedPointer<Ui::DatabaseOpenDialog> m_ui;
     Database* m_db;
-    QFile* m_file;
-    QString m_filename;
+    QFile* const m_file;
+    const QString m_filename;
 
     Q_DISABLE_COPY(DatabaseOpenDialog)
 };

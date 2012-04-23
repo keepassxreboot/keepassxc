@@ -36,7 +36,7 @@ protected:
     qint64 readData(char* data, qint64 maxSize);
     qint64 writeData(const char* data, qint64 maxSize);
 
-    QIODevice* m_baseDevice;
+    QIODevice* const m_baseDevice;
 
 private Q_SLOTS:
     void closeStream();

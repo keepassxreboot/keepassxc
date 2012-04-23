@@ -109,7 +109,7 @@ private:
     template <class P, class V> bool set(P& property, const V& value);
     template <class P, class V> bool set(P& property, const V& value, QDateTime& dateTime);
 
-    Database* m_parent;
+    Database* const m_parent;
 
     QString m_generator;
     QString m_name;

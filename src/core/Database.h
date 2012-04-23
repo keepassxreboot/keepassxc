@@ -105,7 +105,7 @@ private:
 
     void createRecycleBin();
 
-    Metadata* m_metadata;
+    Metadata* const m_metadata;
     Group* m_rootGroup;
     QList<DeletedObject> m_deletedObjects;
 
@@ -116,7 +116,6 @@ private:
     QByteArray m_transformedMasterKey;
 
     CompositeKey m_key;
-
     bool m_hasKey;
 };
 

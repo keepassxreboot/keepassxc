@@ -19,6 +19,7 @@
 #define KEEPASSX_SYMMETRICCIPHER_H
 
 #include <QtCore/QByteArray>
+#include <QtCore/QScopedPointer>
 
 class SymmetricCipherBackend;
 
@@ -55,7 +56,10 @@ public:
     int blockSize() const;
 
 private:
-    SymmetricCipherBackend* m_backend;
+    static SymmetricCipherBackend* createBackend(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
+                                                 SymmetricCipher::Direction direction);
+
+    const QScopedPointer<SymmetricCipherBackend> m_backend;
 
     Q_DISABLE_COPY(SymmetricCipher)
 };

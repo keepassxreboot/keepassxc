@@ -19,9 +19,14 @@
 
 #include "crypto/Crypto.h"
 
-SymmetricCipherGcrypt::SymmetricCipherGcrypt()
+SymmetricCipherGcrypt::SymmetricCipherGcrypt(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
+                                             SymmetricCipher::Direction direction)
+    : m_algo(GCRY_CIPHER_AES256)
+    , m_mode(gcryptMode(mode))
+    , m_direction(direction)
 {
     Q_ASSERT(Crypto::initalized());
+    Q_ASSERT(algo == SymmetricCipher::Aes256);
 }
 
 SymmetricCipherGcrypt::~SymmetricCipherGcrypt()
@@ -29,39 +34,19 @@ SymmetricCipherGcrypt::~SymmetricCipherGcrypt()
     gcry_cipher_close(m_ctx);
 }
 
-void SymmetricCipherGcrypt::setAlgorithm(SymmetricCipher::Algorithm algo)
-{
-    switch (algo) {
-    case SymmetricCipher::Aes256:
-        m_algo = GCRY_CIPHER_AES256;
-        break;
-
-    default:
-        Q_ASSERT(false);
-        break;
-    }
-}
-
-void SymmetricCipherGcrypt::setMode(SymmetricCipher::Mode mode)
+int SymmetricCipherGcrypt::gcryptMode(SymmetricCipher::Mode mode)
 {
     switch (mode) {
     case SymmetricCipher::Ecb:
-        m_mode = GCRY_CIPHER_MODE_ECB;
-        break;
+        return GCRY_CIPHER_MODE_ECB;
 
     case SymmetricCipher::Cbc:
-        m_mode = GCRY_CIPHER_MODE_CBC;
-        break;
+        return GCRY_CIPHER_MODE_CBC;
 
     default:
         Q_ASSERT(false);
-        break;
+        return -1;
     }
-}
-
-void SymmetricCipherGcrypt::setDirection(SymmetricCipher::Direction direction)
-{
-    m_direction = direction;
 }
 
 void SymmetricCipherGcrypt::init()

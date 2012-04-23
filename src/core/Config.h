@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_CONFIG_H
 #define KEEPASSX_CONFIG_H
 
-
+#include <QtCore/QScopedPointer>
 #include <QtCore/QVariant>
 
 class QSettings;
@@ -32,7 +32,7 @@ public:
 private:
     Config();
 
-    QSettings* m_settings;
+    QScopedPointer<QSettings> m_settings;
 
     friend Config* config();
 };

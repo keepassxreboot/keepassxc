@@ -117,6 +117,7 @@ private Q_SLOTS:
 
 private:
     const Database* database() const;
+    template <class T> inline bool set(T& property, const T& value);
 
     Uuid m_uuid;
     int m_iconNumber;
@@ -137,8 +138,6 @@ private:
     QPointer<Group> m_group;
     QPixmapCache::Key m_pixmapCacheKey;
     bool m_updateTimeinfo;
-
-    template <class T> inline bool set(T& property, const T& value);
 };
 
 #endif // KEEPASSX_ENTRY_H

@@ -25,8 +25,8 @@
 
 GroupView::GroupView(Database* db, QWidget* parent)
     : QTreeView(parent)
+    , m_model(new GroupModel(db, this))
 {
-    m_model = new GroupModel(db, this);
     QTreeView::setModel(m_model);
     setHeaderHidden(true);
     setUniformRowHeights(true);

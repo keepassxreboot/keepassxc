@@ -37,9 +37,9 @@ public:
     void addKey(const Key& key);
 
 private:
-    QList<Key*> m_keys;
-
     static QByteArray transformKeyRaw(const QByteArray& key, const QByteArray& seed, int rounds);
+
+    QList<Key*> m_keys;
 };
 
 #endif // KEEPASSX_COMPOSITEKEY_H

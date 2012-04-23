@@ -24,6 +24,8 @@
 class SymmetricCipherSalsa20 : public SymmetricCipherBackend
 {
 public:
+    SymmetricCipherSalsa20(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
+                           SymmetricCipher::Direction direction);
     ~SymmetricCipherSalsa20();
     void setAlgorithm(SymmetricCipher::Algorithm algo);
     void setMode(SymmetricCipher::Mode mode);

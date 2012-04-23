@@ -25,11 +25,9 @@
 class SymmetricCipherGcrypt : public SymmetricCipherBackend
 {
 public:
-    SymmetricCipherGcrypt();
+    SymmetricCipherGcrypt(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
+                          SymmetricCipher::Direction direction);
     ~SymmetricCipherGcrypt();
-    void setAlgorithm(SymmetricCipher::Algorithm algo);
-    void setMode(SymmetricCipher::Mode mode);
-    void setDirection(SymmetricCipher::Direction direction);
     void init();
     void setKey(const QByteArray& key);
     void setIv(const QByteArray& iv);
@@ -41,10 +39,12 @@ public:
     int blockSize() const;
 
 private:
+    static int gcryptMode(SymmetricCipher::Mode mode);
+
     gcry_cipher_hd_t m_ctx;
-    int m_algo;
-    int m_mode;
-    SymmetricCipher::Direction m_direction;
+    const int m_algo;
+    const int m_mode;
+    const SymmetricCipher::Direction m_direction;
     QByteArray m_key;
     QByteArray m_iv;
     int m_blockSize;

@@ -17,25 +17,20 @@
 
 #include "SymmetricCipherSalsa20.h"
 
-SymmetricCipherSalsa20::~SymmetricCipherSalsa20()
-{
-}
-
-void SymmetricCipherSalsa20::setAlgorithm(SymmetricCipher::Algorithm algo)
+SymmetricCipherSalsa20::SymmetricCipherSalsa20(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
+                       SymmetricCipher::Direction direction)
 {
     Q_ASSERT(algo == SymmetricCipher::Salsa20);
     Q_UNUSED(algo);
-}
 
-void SymmetricCipherSalsa20::setMode(SymmetricCipher::Mode mode)
-{
     Q_ASSERT(mode == SymmetricCipher::Stream);
     Q_UNUSED(mode);
+
+    Q_UNUSED(direction);
 }
 
-void SymmetricCipherSalsa20::setDirection(SymmetricCipher::Direction direction)
+SymmetricCipherSalsa20::~SymmetricCipherSalsa20()
 {
-    Q_UNUSED(direction);
 }
 
 void SymmetricCipherSalsa20::init()

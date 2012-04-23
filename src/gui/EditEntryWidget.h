@@ -60,21 +60,21 @@ private Q_SLOTS:
     void setPasswordCheckColors();
 
 private:
+        bool passwordsEqual();
+
     Entry* m_entry;
 
-    QScopedPointer<Ui::EditEntryWidget> m_ui;
-    QScopedPointer<Ui::EditEntryWidgetMain> m_mainUi;
-    QScopedPointer<Ui::EditEntryWidgetNotes> m_notesUi;
-    QScopedPointer<Ui::EditEntryWidgetAdvanced> m_advancedUi;
-    QWidget* m_mainWidget;
-    QWidget* m_notesWidget;
-    QWidget* m_advancedWidget;
+    const QScopedPointer<Ui::EditEntryWidget> m_ui;
+    const QScopedPointer<Ui::EditEntryWidgetMain> m_mainUi;
+    const QScopedPointer<Ui::EditEntryWidgetNotes> m_notesUi;
+    const QScopedPointer<Ui::EditEntryWidgetAdvanced> m_advancedUi;
+    QWidget* const m_mainWidget;
+    QWidget* const m_notesWidget;
+    QWidget* const m_advancedWidget;
     EntryAttachmentsModel* m_attachmentsModel;
     EntryAttributesModel* m_attributesModel;
     EntryAttachments* m_entryAttachments;
     EntryAttributes* m_entryAttributes;
-
-    bool passwordsEqual();
 
     Q_DISABLE_COPY(EditEntryWidget)
 };
