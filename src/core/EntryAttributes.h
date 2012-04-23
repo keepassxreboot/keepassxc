@@ -35,8 +35,11 @@ public:
     void set(const QString& key, const QString& value, bool protect = false);
     void remove(const QString& key);
     void copyCustomKeysFrom(const EntryAttributes* other);
-    void clear();
     bool areCustomKeysDifferent(const EntryAttributes* other);
+    void clear();
+    EntryAttributes& operator=(const EntryAttributes& other);
+    bool operator==(const EntryAttributes& other) const;
+    bool operator!=(const EntryAttributes& other) const;
 
     static const QStringList DEFAULT_ATTRIBUTES;
     static bool isDefaultAttribute(const QString& key);

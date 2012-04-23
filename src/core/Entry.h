@@ -43,6 +43,21 @@ struct AutoTypeAssociation
 
 Q_DECLARE_TYPEINFO(AutoTypeAssociation, Q_MOVABLE_TYPE);
 
+struct EntryData
+{
+    int iconNumber;
+    Uuid customIcon;
+    QColor foregroundColor;
+    QColor backgroundColor;
+    QString overrideUrl;
+    QString tags;
+    bool autoTypeEnabled;
+    int autoTypeObfuscation;
+    QString defaultAutoTypeSequence;
+    QList<AutoTypeAssociation> autoTypeAssociations;
+    TimeInfo timeInfo;
+};
+
 class Entry : public QObject
 {
     Q_OBJECT
@@ -97,6 +112,12 @@ public:
     QList<Entry*> historyItems();
     const QList<Entry*>& historyItems() const;
     void addHistoryItem(Entry* entry);
+    /**
+     * Call before and after set*() methods to create a history item
+     * if the entry has been changed.
+     */
+    void beginUpdate();
+    void endUpdate();
 
     Group* group();
     void setGroup(Group* group);
@@ -114,27 +135,20 @@ Q_SIGNALS:
 private Q_SLOTS:
     void emitDataChanged();
     void updateTimeinfo();
+    void updateModifiedSinceBegin();
 
 private:
     const Database* database() const;
     template <class T> inline bool set(T& property, const T& value);
 
     Uuid m_uuid;
-    int m_iconNumber;
-    Uuid m_customIcon;
-    QColor m_foregroundColor;
-    QColor m_backgroundColor;
-    QString m_overrideUrl;
-    QString m_tags;
-    TimeInfo m_timeInfo;
-    bool m_autoTypeEnabled;
-    int m_autoTypeObfuscation;
-    QString m_defaultAutoTypeSequence;
-    QList<AutoTypeAssociation> m_autoTypeAssociations;
+    EntryData m_data;
     EntryAttributes* m_attributes;
     EntryAttachments* m_attachments;
 
     QList<Entry*> m_history;
+    Entry* m_tmpHistoryItem;
+    bool m_modifiedSinceBegin;
     QPointer<Group> m_group;
     QPixmapCache::Key m_pixmapCacheKey;
     bool m_updateTimeinfo;

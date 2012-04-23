@@ -29,6 +29,7 @@ private Q_SLOTS:
     void testSignals();
     void testGroupSets();
     void testEntrySets();
+    void testHistoryItem();
 };
 
 #endif // KEEPASSX_TESTMODIFIED_H

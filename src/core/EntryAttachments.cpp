@@ -73,22 +73,6 @@ void EntryAttachments::remove(const QString& key)
     Q_EMIT modified();
 }
 
-void EntryAttachments::copyFrom(const EntryAttachments* other)
-{
-    if (*this != *other) {
-        Q_EMIT aboutToBeReset();
-
-        m_attachments.clear();
-
-        Q_FOREACH (const QString& key, other->keys()) {
-            m_attachments.insert(key, other->value(key));
-        }
-
-        Q_EMIT reset();
-        Q_EMIT modified();
-    }
-}
-
 void EntryAttachments::clear()
 {
     if (m_attachments.isEmpty()) {
@@ -103,7 +87,26 @@ void EntryAttachments::clear()
     Q_EMIT modified();
 }
 
+bool EntryAttachments::operator==(const EntryAttachments& other) const
+{
+    return m_attachments == other.m_attachments;
+}
+
 bool EntryAttachments::operator!=(const EntryAttachments& other) const
 {
     return m_attachments != other.m_attachments;
+}
+
+EntryAttachments& EntryAttachments::operator=(EntryAttachments& other)
+{
+    if (*this != other) {
+        Q_EMIT aboutToBeReset();
+
+        m_attachments = other.m_attachments;
+
+        Q_EMIT reset();
+        Q_EMIT modified();
+    }
+
+    return *this;
 }

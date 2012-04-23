@@ -285,4 +285,63 @@ void TestModified::testEntrySets()
     delete db;
 }
 
+void TestModified::testHistoryItem()
+{
+    Entry* entry = new Entry();
+    QDateTime created = entry->timeInfo().creationTime();
+    entry->setUuid(Uuid::random());
+    entry->setTitle("a");
+    entry->setTags("a");
+
+    EntryAttributes* attributes = new EntryAttributes();
+    attributes->copyCustomKeysFrom(entry->attributes());
+
+    Entry* historyEntry;
+
+    int historyItemsSize = 0;
+
+    entry->beginUpdate();
+    entry->setTitle("a");
+    entry->setTags("a");
+    entry->setOverrideUrl("");
+    entry->endUpdate();
+    QCOMPARE(entry->historyItems().size(), historyItemsSize);
+
+    QDateTime modified = entry->timeInfo().lastModificationTime();
+    QTest::qSleep(10);
+    entry->beginUpdate();
+    entry->setTitle("b");
+    entry->endUpdate();
+    QCOMPARE(entry->historyItems().size(), ++historyItemsSize);
+    historyEntry = entry->historyItems().at(historyItemsSize - 1);
+    QCOMPARE(historyEntry->title(), QString("a"));
+    QCOMPARE(historyEntry->uuid(), entry->uuid());
+    QCOMPARE(historyEntry->tags(), entry->tags());
+    QCOMPARE(historyEntry->overrideUrl(), entry->overrideUrl());
+    QCOMPARE(historyEntry->timeInfo().creationTime(), created);
+    QCOMPARE(historyEntry->timeInfo().lastModificationTime(), modified);
+
+    entry->beginUpdate();
+    entry->setTags("b");
+    entry->endUpdate();
+    QCOMPARE(entry->historyItems().size(), ++historyItemsSize);
+    QCOMPARE(entry->historyItems().at(historyItemsSize - 1)->tags(), QString("a"));
+
+    entry->beginUpdate();
+    entry->attachments()->set("test", QByteArray("value"));
+    entry->endUpdate();
+    QCOMPARE(entry->historyItems().size(), ++historyItemsSize);
+    QCOMPARE(entry->historyItems().at(historyItemsSize - 1)->attachments()->keys().size(), 0);
+
+    attributes->set("k", "myvalue");
+    entry->beginUpdate();
+    entry->attributes()->copyCustomKeysFrom(attributes);
+    entry->endUpdate();
+    QCOMPARE(entry->historyItems().size(), ++historyItemsSize);
+    QVERIFY(!entry->historyItems().at(historyItemsSize - 1)->attributes()->keys().contains("k"));
+
+    delete attributes;
+    delete entry;
+}
+
 KEEPASSX_QTEST_CORE_MAIN(TestModified)

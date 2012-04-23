@@ -25,10 +25,11 @@
 Entry::Entry()
 {
     m_updateTimeinfo = true;
+    m_tmpHistoryItem = 0;
 
-    m_iconNumber = 0;
-    m_autoTypeEnabled = true;
-    m_autoTypeObfuscation = 0;
+    m_data.iconNumber = 0;
+    m_data.autoTypeEnabled = true;
+    m_data.autoTypeObfuscation = 0;
 
     m_attributes = new EntryAttributes(this);
     connect(m_attributes, SIGNAL(modified()), this, SIGNAL(modified()));
@@ -37,6 +38,8 @@ Entry::Entry()
     m_attachments = new EntryAttachments(this);
     connect(m_attachments, SIGNAL(modified()), this, SIGNAL(modified()));
     connect(this, SIGNAL(modified()), this, SLOT(updateTimeinfo()));
+
+    connect(this, SIGNAL(modified()), SLOT(updateModifiedSinceBegin()));
 }
 
 Entry::~Entry()
@@ -67,11 +70,10 @@ template <class T> bool Entry::set(T& property, const T& value)
 void Entry::updateTimeinfo()
 {
     if (m_updateTimeinfo) {
-        m_timeInfo.setLastModificationTime(QDateTime::currentDateTimeUtc());
-        m_timeInfo.setLastAccessTime(QDateTime::currentDateTimeUtc());
+        m_data.timeInfo.setLastModificationTime(QDateTime::currentDateTimeUtc());
+        m_data.timeInfo.setLastAccessTime(QDateTime::currentDateTimeUtc());
     }
 }
-
 
 void Entry::setUpdateTimeinfo(bool value)
 {
@@ -85,25 +87,25 @@ Uuid Entry::uuid() const
 
 QImage Entry::icon() const
 {
-    if (m_customIcon.isNull()) {
-        return databaseIcons()->icon(m_iconNumber);
+    if (m_data.customIcon.isNull()) {
+        return databaseIcons()->icon(m_data.iconNumber);
     }
     else {
         // TODO check if database() is 0
-        return database()->metadata()->customIcon(m_customIcon);
+        return database()->metadata()->customIcon(m_data.customIcon);
     }
 }
 
 QPixmap Entry::iconPixmap() const
 {
-    if (m_customIcon.isNull()) {
-        return databaseIcons()->iconPixmap(m_iconNumber);
+    if (m_data.customIcon.isNull()) {
+        return databaseIcons()->iconPixmap(m_data.iconNumber);
     }
     else {
         QPixmap pixmap;
         if (!QPixmapCache::find(m_pixmapCacheKey, &pixmap)) {
             // TODO check if database() is 0
-            pixmap = QPixmap::fromImage(database()->metadata()->customIcon(m_customIcon));
+            pixmap = QPixmap::fromImage(database()->metadata()->customIcon(m_data.customIcon));
             *const_cast<QPixmapCache::Key*>(&m_pixmapCacheKey) = QPixmapCache::insert(pixmap);
         }
 
@@ -113,57 +115,57 @@ QPixmap Entry::iconPixmap() const
 
 int Entry::iconNumber() const
 {
-    return m_iconNumber;
+    return m_data.iconNumber;
 }
 
 Uuid Entry::iconUuid() const
 {
-    return m_customIcon;
+    return m_data.customIcon;
 }
 
 QColor Entry::foregroundColor() const
 {
-    return m_foregroundColor;
+    return m_data.foregroundColor;
 }
 
 QColor Entry::backgroundColor() const
 {
-    return m_backgroundColor;
+    return m_data.backgroundColor;
 }
 
 QString Entry::overrideUrl() const
 {
-    return m_overrideUrl;
+    return m_data.overrideUrl;
 }
 
 QString Entry::tags() const
 {
-    return m_tags;
+    return m_data.tags;
 }
 
 TimeInfo Entry::timeInfo() const
 {
-    return m_timeInfo;
+    return m_data.timeInfo;
 }
 
 bool Entry::autoTypeEnabled() const
 {
-    return m_autoTypeEnabled;
+    return m_data.autoTypeEnabled;
 }
 
 int Entry::autoTypeObfuscation() const
 {
-    return m_autoTypeObfuscation;
+    return m_data.autoTypeObfuscation;
 }
 
 QString Entry::defaultAutoTypeSequence() const
 {
-    return m_defaultAutoTypeSequence;
+    return m_data.defaultAutoTypeSequence;
 }
 
 const QList<AutoTypeAssociation>& Entry::autoTypeAssociations() const
 {
-    return m_autoTypeAssociations;
+    return m_data.autoTypeAssociations;
 }
 
 QString Entry::title() const
@@ -221,9 +223,9 @@ void Entry::setIcon(int iconNumber)
 {
     Q_ASSERT(iconNumber >= 0);
 
-    if (m_iconNumber != iconNumber || !m_customIcon.isNull()) {
-        m_iconNumber = iconNumber;
-        m_customIcon = Uuid();
+    if (m_data.iconNumber != iconNumber || !m_data.customIcon.isNull()) {
+        m_data.iconNumber = iconNumber;
+        m_data.customIcon = Uuid();
 
         m_pixmapCacheKey = QPixmapCache::Key();
 
@@ -235,9 +237,9 @@ void Entry::setIcon(const Uuid& uuid)
 {
     Q_ASSERT(!uuid.isNull());
 
-    if (m_customIcon != uuid) {
-        m_customIcon = uuid;
-        m_iconNumber = 0;
+    if (m_data.customIcon != uuid) {
+        m_data.customIcon = uuid;
+        m_data.iconNumber = 0;
 
         m_pixmapCacheKey = QPixmapCache::Key();
 
@@ -247,47 +249,47 @@ void Entry::setIcon(const Uuid& uuid)
 
 void Entry::setForegroundColor(const QColor& color)
 {
-    set(m_foregroundColor, color);
+    set(m_data.foregroundColor, color);
 }
 
 void Entry::setBackgroundColor(const QColor& color)
 {
-    set(m_backgroundColor, color);
+    set(m_data.backgroundColor, color);
 }
 
 void Entry::setOverrideUrl(const QString& url)
 {
-    set(m_overrideUrl, url);
+    set(m_data.overrideUrl, url);
 }
 
 void Entry::setTags(const QString& tags)
 {
-    set(m_tags, tags);
+    set(m_data.tags, tags);
 }
 
 void Entry::setTimeInfo(const TimeInfo& timeInfo)
 {
-    m_timeInfo = timeInfo;
+    m_data.timeInfo = timeInfo;
 }
 
 void Entry::setAutoTypeEnabled(bool enable)
 {
-    set(m_autoTypeEnabled, enable);
+    set(m_data.autoTypeEnabled, enable);
 }
 
 void Entry::setAutoTypeObfuscation(int obfuscation)
 {
-    set(m_autoTypeObfuscation, obfuscation);
+    set(m_data.autoTypeObfuscation, obfuscation);
 }
 
 void Entry::setDefaultAutoTypeSequence(const QString& sequence)
 {
-    set(m_defaultAutoTypeSequence, sequence);
+    set(m_data.defaultAutoTypeSequence, sequence);
 }
 
 void Entry::addAutoTypeAssociation(const AutoTypeAssociation& assoc)
 {
-    m_autoTypeAssociations << assoc;
+    m_data.autoTypeAssociations << assoc;
     Q_EMIT modified();
 }
 
@@ -318,16 +320,16 @@ void Entry::setNotes(const QString& notes)
 
 void Entry::setExpires(const bool& value)
 {
-    if (m_timeInfo.expires() != value) {
-        m_timeInfo.setExpires(value);
+    if (m_data.timeInfo.expires() != value) {
+        m_data.timeInfo.setExpires(value);
         Q_EMIT modified();
     }
 }
 
 void Entry::setExpiryTime(const QDateTime& dateTime)
 {
-    if (m_timeInfo.expiryTime() != dateTime) {
-        m_timeInfo.setExpiryTime(dateTime);
+    if (m_data.timeInfo.expiryTime() != dateTime) {
+        m_data.timeInfo.setExpiryTime(dateTime);
         Q_EMIT modified();
     }
 }
@@ -345,9 +347,44 @@ const QList<Entry*>& Entry::historyItems() const
 void Entry::addHistoryItem(Entry* entry)
 {
     Q_ASSERT(!entry->parent());
+    Q_ASSERT(entry->uuid() == uuid());
 
     m_history.append(entry);
     Q_EMIT modified();
+}
+
+void Entry::beginUpdate()
+{
+    Q_ASSERT(!m_tmpHistoryItem);
+
+    m_tmpHistoryItem = new Entry();
+    m_tmpHistoryItem->setUpdateTimeinfo(false);
+    m_tmpHistoryItem->m_uuid = m_uuid;
+    m_tmpHistoryItem->m_data = m_data;
+    *m_tmpHistoryItem->m_attributes = *m_attributes;
+    *m_tmpHistoryItem->m_attachments = *m_attachments;
+
+    m_modifiedSinceBegin = false;
+}
+
+void Entry::endUpdate()
+{
+    Q_ASSERT(m_tmpHistoryItem);
+
+    if (m_modifiedSinceBegin) {
+        m_tmpHistoryItem->setUpdateTimeinfo(true);
+        addHistoryItem(m_tmpHistoryItem);
+    }
+    else {
+        delete m_tmpHistoryItem;
+    }
+
+    m_tmpHistoryItem = 0;
+}
+
+void Entry::updateModifiedSinceBegin()
+{
+    m_modifiedSinceBegin = true;
 }
 
 Group* Entry::group()
@@ -373,7 +410,7 @@ void Entry::setGroup(Group* group)
     QObject::setParent(group);
 
     if (m_updateTimeinfo) {
-        m_timeInfo.setLocationChanged(QDateTime::currentDateTimeUtc());
+        m_data.timeInfo.setLocationChanged(QDateTime::currentDateTimeUtc());
     }
 }
 

@@ -115,7 +115,7 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupN
 
     m_entryAttributes->copyCustomKeysFrom(entry->attributes());
     m_attributesModel->setEntryAttributes(m_entryAttributes);
-    m_entryAttachments->copyFrom(entry->attachments());
+    *m_entryAttachments = *entry->attachments();
     m_attachmentsModel->setEntryAttachments(m_entryAttachments);
 
     m_ui->categoryList->setCurrentRow(0);
@@ -127,6 +127,9 @@ void EditEntryWidget::saveEntry()
         QMessageBox::warning(this, tr("Error"), tr("Different passwords supplied."));
         return;
     }
+
+    m_entry->beginUpdate();
+
     m_entry->setTitle(m_mainUi->titleEdit->text());
     m_entry->setUsername(m_mainUi->usernameEdit->text());
     m_entry->setUrl(m_mainUi->urlEdit->text());
@@ -138,8 +141,10 @@ void EditEntryWidget::saveEntry()
 
     m_entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
     m_entryAttributes->clear();
-    m_entry->attachments()->copyFrom(m_entryAttachments);
+    *m_entry->attachments() = *m_entryAttachments;
     m_entryAttachments->clear();
+
+    m_entry->endUpdate();
 
     m_entry = 0;
     Q_EMIT editFinished(true);
