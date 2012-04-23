@@ -87,6 +87,7 @@ void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Ra
     }
 
     m_meta->setUpdateDatetime(true);
+
     QHash<Uuid, Group*>::const_iterator iGroup;
     for (iGroup = m_groups.constBegin(); iGroup != m_groups.constEnd(); ++iGroup) {
         iGroup.value()->setUpdateTimeinfo(true);

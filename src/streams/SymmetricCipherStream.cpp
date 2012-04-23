@@ -26,7 +26,6 @@ SymmetricCipherStream::SymmetricCipherStream(QIODevice* baseDevice, SymmetricCip
     , m_bufferFilling(false)
     , m_error(false)
 {
-
 }
 
 SymmetricCipherStream::~SymmetricCipherStream()

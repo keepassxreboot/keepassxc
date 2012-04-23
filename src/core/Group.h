@@ -110,6 +110,7 @@ private:
     void recSetDatabase(Database* db);
     void cleanupParent();
     void recCreateDelObjects();
+    void updateTimeinfo();
 
     QPointer<Database> m_db;
     Uuid m_uuid;
@@ -134,8 +135,6 @@ private:
     friend void Database::setRootGroup(Group* group);
     friend Entry::~Entry();
     friend void Entry::setGroup(Group *group);
-
-    void updateTimeinfo();
 };
 
 #endif // KEEPASSX_GROUP_H
