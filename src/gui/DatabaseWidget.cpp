@@ -151,6 +151,32 @@ void DatabaseWidget::deleteGroup()
     }
 }
 
+int DatabaseWidget::addWidget(QWidget* w)
+{
+    w->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+
+    int index = QStackedWidget::addWidget(w);
+
+    adjustSize();
+
+    return index;
+}
+
+void DatabaseWidget::setCurrentIndex(int index)
+{
+    if (currentWidget()) {
+        currentWidget()->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    }
+
+    QStackedWidget::setCurrentIndex(index);
+
+    if (currentWidget()) {
+        currentWidget()->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    }
+
+    adjustSize();
+}
+
 void DatabaseWidget::switchToView(bool accepted)
 {
     if (m_newGroup) {

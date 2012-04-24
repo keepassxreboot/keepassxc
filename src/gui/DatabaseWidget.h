@@ -42,6 +42,8 @@ public:
     void deleteEntry();
     void deleteGroup();
     bool canDeleteCurrentGoup();
+    int addWidget(QWidget* w);
+    void setCurrentIndex(int index);
 
 Q_SIGNALS:
     void closeRequest();
