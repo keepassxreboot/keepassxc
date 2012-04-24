@@ -1,5 +1,5 @@
 KeePassX - http://www.keepassx.org/
-Copyright (C) 2010-2011 Felix Geyer <debfx@fobos.de>
+Copyright (C) 2010-2012 Felix Geyer <debfx@fobos.de>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,7 +18,8 @@ Upstream-Name: KeePassX
 Upstream-Contact: Felix Geyer <debfx@fobos.de>
 Source: http://www.keepassx.org/
 
-Copyright: 2010-2011, Felix Geyer <debfx@fobos.de>
+Copyright: 2010-2012, Felix Geyer <debfx@fobos.de>
+           2011-2012, Florian Geyer <blueice@fobos.de>
 License: GPL-2 or GPL-3
 
 Files: share/icons/database/*.png
@@ -36,5 +37,5 @@ Copyright: is in public domain
 License: -
 
 Files: src/streams/qtiocompressor.*, src/streams/QtIOCompressor, tests/modeltest.*
-Copyright: 2009-2011, Nokia Corporation and/or its subsidiary(-ies)
+Copyright: 2009-2012, Nokia Corporation and/or its subsidiary(-ies)
 License: LGPL-2.1 or GPL-3
