@@ -19,7 +19,8 @@
 #define KEEPASSX_DATABASESETTINGSWIDGET_H
 
 #include <QtCore/QScopedPointer>
-#include <QtGui/QWidget>
+
+#include "gui/DialogyWidget.h"
 
 class QAbstractButton;
 
@@ -27,7 +28,7 @@ namespace Ui {
     class DatabaseSettingsWidget;
 }
 
-class DatabaseSettingsWidget : public QWidget
+class DatabaseSettingsWidget : public DialogyWidget
 {
     Q_OBJECT
 

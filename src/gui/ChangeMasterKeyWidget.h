@@ -19,8 +19,8 @@
 #define KEEPASSX_CHANGEMASTERKEYWIDGET_H
 
 #include <QtCore/QScopedPointer>
-#include <QtGui/QWidget>
 
+#include "gui/DialogyWidget.h"
 #include "keys/CompositeKey.h"
 
 class QLabel;
@@ -28,7 +28,7 @@ namespace Ui {
     class ChangeMasterKeyWidget;
 }
 
-class ChangeMasterKeyWidget : public QWidget
+class ChangeMasterKeyWidget : public DialogyWidget
 {
     Q_OBJECT
 

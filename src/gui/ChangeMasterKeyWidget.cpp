@@ -24,7 +24,7 @@
 #include "keys/PasswordKey.h"
 
 ChangeMasterKeyWidget::ChangeMasterKeyWidget(QWidget* parent)
-    : QWidget(parent)
+    : DialogyWidget(parent)
     , m_ui(new Ui::ChangeMasterKeyWidget())
 {
     m_ui->setupUi(this);

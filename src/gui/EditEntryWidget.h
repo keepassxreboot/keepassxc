@@ -19,7 +19,8 @@
 #define KEEPASSX_EDITENTRYWIDGET_H
 
 #include <QtCore/QScopedPointer>
-#include <QtGui/QWidget>
+
+#include "gui/DialogyWidget.h"
 
 class Entry;
 class EntryAttachments;
@@ -36,7 +37,7 @@ namespace Ui {
     class EditEntryWidgetNotes;
 }
 
-class EditEntryWidget : public QWidget
+class EditEntryWidget : public DialogyWidget
 {
     Q_OBJECT
 

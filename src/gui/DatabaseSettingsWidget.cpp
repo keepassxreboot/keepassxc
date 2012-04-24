@@ -20,7 +20,7 @@
 
 
 DatabaseSettingsWidget::DatabaseSettingsWidget(QWidget* parent)
-    : QWidget(parent)
+    : DialogyWidget(parent)
     , m_ui(new Ui::DatabaseSettingsWidget())
 {
     m_ui->setupUi(this);

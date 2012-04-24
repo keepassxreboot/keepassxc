@@ -31,7 +31,7 @@
 #include "gui/EntryAttributesModel.h"
 
 EditEntryWidget::EditEntryWidget(QWidget* parent)
-    : QWidget(parent)
+    : DialogyWidget(parent)
     , m_entry(0)
     , m_ui(new Ui::EditEntryWidget())
     , m_mainUi(new Ui::EditEntryWidgetMain())

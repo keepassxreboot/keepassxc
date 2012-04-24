@@ -19,7 +19,8 @@
 #define KEEPASSX_EDITGROUPWIDGET_H
 
 #include <QtCore/QScopedPointer>
-#include <QtGui/QWidget>
+
+#include "gui/DialogyWidget.h"
 
 #include "core/Group.h"
 
@@ -27,7 +28,7 @@ namespace Ui {
     class EditGroupWidget;
 }
 
-class EditGroupWidget : public QWidget
+class EditGroupWidget : public DialogyWidget
 {
     Q_OBJECT
 

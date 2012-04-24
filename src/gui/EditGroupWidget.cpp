@@ -19,7 +19,7 @@
 #include "ui_EditGroupWidget.h"
 
 EditGroupWidget::EditGroupWidget(QWidget* parent)
-    : QWidget(parent)
+    : DialogyWidget(parent)
     , m_ui(new Ui::EditGroupWidget())
     , m_group(0)
 {
