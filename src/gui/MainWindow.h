@@ -20,6 +20,8 @@
 
 #include <QtGui/QMainWindow>
 
+#include "gui/DatabaseWidget.h"
+
 namespace Ui {
     class MainWindow;
 }
@@ -37,7 +39,7 @@ protected:
      void closeEvent(QCloseEvent *event);
 
 private Q_SLOTS:
-    void setMenuActionState(int index = -1);
+    void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::None);
     void updateWindowTitle();
 
 private:

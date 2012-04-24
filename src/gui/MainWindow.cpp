@@ -34,7 +34,7 @@ MainWindow::MainWindow()
     setWindowIcon(dataPath()->applicationIcon());
 
     connect(m_ui->tabWidget, SIGNAL(entrySelectionChanged(bool)), SLOT(setMenuActionState()));
-    connect(m_ui->tabWidget, SIGNAL(currentWidgetIndexChanged(int)), SLOT(setMenuActionState(int)));
+    connect(m_ui->tabWidget, SIGNAL(currentWidgetModeChanged(DatabaseWidget::Mode)), SLOT(setMenuActionState(DatabaseWidget::Mode)));
     connect(m_ui->tabWidget, SIGNAL(tabNameChanged()), SLOT(updateWindowTitle()));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(updateWindowTitle()));
 
@@ -65,19 +65,19 @@ void MainWindow::openDatabase(const QString& fileName, const QString& pw, const 
 
 const QString MainWindow::m_baseWindowTitle = "KeePassX";
 
-void MainWindow::setMenuActionState(int index)
+void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 {
     if (m_ui->tabWidget->currentIndex() != -1) {
         m_ui->actionDatabaseClose->setEnabled(true);
         DatabaseWidget* dbWidget = m_ui->tabWidget->currentDatabaseWidget();
         Q_ASSERT(dbWidget);
 
-        if (index == -1) {
-            index = dbWidget->currentIndex();
+        if (mode == DatabaseWidget::None) {
+            mode = dbWidget->currentMode();
         }
 
-        switch (index) {
-            case 0:  // view
+        switch (mode) {
+            case DatabaseWidget::ViewMode:
                 m_ui->actionEntryNew->setEnabled(true);
                 m_ui->actionGroupNew->setEnabled(true);
                 if (dbWidget->entryView()->currentIndex().isValid()) {
@@ -101,10 +101,7 @@ void MainWindow::setMenuActionState(int index)
                 m_ui->actionDatabaseSave->setEnabled(true);
                 m_ui->actionDatabaseSaveAs->setEnabled(true);
                 break;
-            case 1:  // entry edit
-            case 2:  // group edit
-            case 3:  // change master key
-            case 4:  // database settings
+            case DatabaseWidget::EditMode:
                 m_ui->actionEntryNew->setEnabled(false);
                 m_ui->actionGroupNew->setEnabled(false);
                 m_ui->actionEntryEdit->setEnabled(false);

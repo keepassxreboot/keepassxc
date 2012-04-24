@@ -31,7 +31,6 @@
 #include "gui/EntryView.h"
 #include "gui/GroupView.h"
 
-
 DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     : QStackedWidget(parent)
     , m_db(db)
@@ -87,8 +86,34 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_editGroupWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
     connect(m_changeMasterKeyWidget, SIGNAL(editFinished(bool)), SLOT(updateMasterKey(bool)));
     connect(m_databaseSettingsWidget, SIGNAL(editFinished(bool)), SLOT(updateSettings(bool)));
+    connect(this, SIGNAL(currentChanged(int)), this, SLOT(emitCurrentModeChanged()));
 
     setCurrentIndex(0);
+}
+
+DatabaseWidget::Mode DatabaseWidget::currentMode()
+{
+    switch (currentIndex()) {
+        case -1:
+            return DatabaseWidget::None;
+            break;
+        case 0:
+            return DatabaseWidget::ViewMode;
+            break;
+        case 1:  // entry edit
+        case 2:  // group edit
+        case 3:  // change master key
+        case 4:  // database settings
+            return DatabaseWidget::EditMode;
+            break;
+    }
+
+    return DatabaseWidget::None;
+}
+
+void DatabaseWidget::emitCurrentModeChanged()
+{
+    Q_EMIT currentModeChanged(currentMode());
 }
 
 GroupView* DatabaseWidget::groupView()

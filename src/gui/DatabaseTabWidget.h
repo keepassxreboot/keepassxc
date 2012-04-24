@@ -23,6 +23,7 @@
 #include <QtGui/QTabWidget>
 
 #include "format/KeePass2Writer.h"
+#include "gui/DatabaseWidget.h"
 
 class DatabaseWidget;
 class DatabaseOpenDialog;
@@ -71,7 +72,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void entrySelectionChanged(bool singleEntrySelected);
-    void currentWidgetIndexChanged(int index);
+    void currentWidgetModeChanged(DatabaseWidget::Mode);
     void tabNameChanged();
 
 private Q_SLOTS:

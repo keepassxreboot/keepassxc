@@ -35,6 +35,13 @@ class DatabaseWidget : public QStackedWidget
     Q_OBJECT
 
 public:
+    enum Mode
+    {
+        None = 0,
+        ViewMode = 1,
+        EditMode = 2
+    };
+
     explicit DatabaseWidget(Database* db, QWidget* parent = 0);
     GroupView* groupView();
     EntryView* entryView();
@@ -44,9 +51,11 @@ public:
     bool canDeleteCurrentGoup();
     int addWidget(QWidget* w);
     void setCurrentIndex(int index);
+    DatabaseWidget::Mode currentMode();
 
 Q_SIGNALS:
     void closeRequest();
+    void currentModeChanged(DatabaseWidget::Mode);
 
 public Q_SLOTS:
     void createEntry();
@@ -63,6 +72,7 @@ private Q_SLOTS:
     void switchToGroupEdit(Group* entry, bool create);
     void updateMasterKey(bool accepted);
     void updateSettings(bool accepted);
+    void emitCurrentModeChanged();
 
 private:
     Database* const m_db;

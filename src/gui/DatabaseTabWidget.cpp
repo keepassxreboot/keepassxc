@@ -160,7 +160,7 @@ bool DatabaseTabWidget::closeDatabase(Database* db)
     if (dbName.right(1) == "*") {
         dbName.chop(1);
     }
-    if (dbStruct.dbWidget->currentIndex() != 0) {
+    if (dbStruct.dbWidget->currentMode() == DatabaseWidget::EditMode){
         QMessageBox::StandardButton result =
             QMessageBox::question(
             this, tr("Close?"),
@@ -407,7 +407,7 @@ void DatabaseTabWidget::insertDatabase(Database* db, const DatabaseManagerStruct
     connect(dbStruct.dbWidget->entryView(), SIGNAL(entrySelectionChanged()), SLOT(emitEntrySelectionChanged()));
     connect(dbStruct.dbWidget, SIGNAL(closeRequest()), SLOT(closeDatabase()));
     connect(db, SIGNAL(modified()), SLOT(modified()));
-    connect(dbStruct.dbWidget, SIGNAL(currentChanged(int)), this, SIGNAL(currentWidgetIndexChanged(int)));
+    connect(dbStruct.dbWidget, SIGNAL(currentModeChanged(DatabaseWidget::Mode)), this, SIGNAL(currentWidgetModeChanged(DatabaseWidget::Mode)));
 }
 
 DatabaseWidget* DatabaseTabWidget::currentDatabaseWidget()
