@@ -60,6 +60,13 @@ bool Uuid::isNull() const
     return true;
 }
 
+Uuid& Uuid::operator=(const Uuid& other)
+{
+    m_data = other.m_data;
+
+    return *this;
+}
+
 bool Uuid::operator==(const Uuid& other) const
 {
     return m_data == other.m_data;
@@ -79,4 +86,20 @@ Uuid Uuid::fromBase64(const QString& str)
 uint qHash(const Uuid& key)
 {
     return qHash(key.toByteArray());
+}
+
+QDataStream& operator<<(QDataStream& stream, const Uuid& uuid)
+{
+    return stream << uuid.toByteArray();
+}
+
+QDataStream& operator>>(QDataStream& stream, Uuid& uuid)
+{
+    QByteArray data;
+    stream >> data;
+    if (data.size() == Uuid::LENGTH) {
+        uuid = Uuid(data);
+    }
+
+    return stream;
 }

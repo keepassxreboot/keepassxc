@@ -30,6 +30,7 @@ public:
     QString toBase64() const;
     QByteArray toByteArray() const;
     bool isNull() const;
+    Uuid& operator=(const Uuid& other);
     bool operator==(const Uuid& other) const;
     bool operator!=(const Uuid& other) const;
     static const int LENGTH;
@@ -42,5 +43,8 @@ private:
 Q_DECLARE_TYPEINFO(Uuid, Q_MOVABLE_TYPE);
 
 uint qHash(const Uuid& key);
+
+QDataStream& operator<<(QDataStream& stream, const Uuid& uuid);
+QDataStream& operator>>(QDataStream& stream, Uuid& uuid);
 
 #endif // KEEPASSX_UUID_H
