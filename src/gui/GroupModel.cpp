@@ -17,8 +17,11 @@
 
 #include "GroupModel.h"
 
+#include <QtCore/QMimeData>
+
 #include "core/Database.h"
 #include "core/Group.h"
+#include "core/Tools.h"
 
 GroupModel::GroupModel(Database* db, QObject* parent)
     : QAbstractItemModel(parent)
@@ -148,6 +151,103 @@ Group* GroupModel::groupFromIndex(const QModelIndex& index) const
     return static_cast<Group*>(index.internalPointer());
 }
 
+Qt::DropActions GroupModel::supportedDropActions() const
+{
+    return Qt::MoveAction;
+}
+
+Qt::ItemFlags GroupModel::flags(const QModelIndex& modelIndex) const
+{
+    if (!modelIndex.isValid()) {
+        return Qt::NoItemFlags;
+    }
+    else if (modelIndex == index(0, 0)) {
+        return QAbstractItemModel::flags(modelIndex) | Qt::ItemIsDropEnabled;
+    }
+    else {
+        return QAbstractItemModel::flags(modelIndex) | Qt::ItemIsDropEnabled | Qt::ItemIsDragEnabled;
+    }
+}
+
+bool GroupModel::dropMimeData(const QMimeData* data, Qt::DropAction action,
+                              int row, int column, const QModelIndex& parent)
+{
+    Q_UNUSED(column);
+
+    if (!data || (action != Qt::MoveAction) || !parent.isValid()) {
+        return false;
+    }
+
+    // check if the format is supported
+    QStringList types = mimeTypes();
+    Q_ASSERT(!types.isEmpty());
+    QString format = types.at(0);
+    if (!data->hasFormat(format)) {
+        return false;
+    }
+
+    if (row > rowCount(parent)) {
+        row = rowCount(parent);
+    }
+
+    // decode and insert
+    QByteArray encoded = data->data(format);
+    QDataStream stream(&encoded, QIODevice::ReadOnly);
+    Uuid dbUuid;
+    Uuid groupUuid;
+    stream >> dbUuid >> groupUuid;
+
+    Database* db = Database::databaseByUuid(dbUuid);
+    if (!db) {
+        return false;
+    }
+    Group* dragGroup = db->resolveGroup(groupUuid);
+    if (!dragGroup || !Tools::hasChild(db, dragGroup) || dragGroup == db->rootGroup()) {
+        return false;
+    }
+
+    Group* parentGroup = groupFromIndex(parent);
+
+    if (dragGroup == parentGroup || Tools::hasChild(dragGroup, parentGroup)) {
+        return false;
+    }
+
+    if (parentGroup == dragGroup->parent() && row > parentGroup->children().indexOf(dragGroup)) {
+        row--;
+    }
+
+    dragGroup->setParent(parentGroup, row);
+    return true;
+}
+
+QStringList GroupModel::mimeTypes() const
+{
+    QStringList types;
+    types << QLatin1String("application/x-keepassx-group");
+    return types;
+}
+
+QMimeData* GroupModel::mimeData(const QModelIndexList& indexes) const
+{
+    if (indexes.isEmpty()) {
+        return 0;
+    }
+
+    QMimeData* data = new QMimeData();
+    QByteArray encoded;
+    QDataStream stream(&encoded, QIODevice::WriteOnly);
+
+    for (int i = 0; i < indexes.size(); i++) {
+        if (!indexes[i].isValid()) {
+            continue;
+        }
+        stream << m_root->database()->uuid() << groupFromIndex(indexes[i])->uuid();
+    }
+
+    data->setData(mimeTypes().first(), encoded);
+    return data;
+}
+
 void GroupModel::groupDataChanged(Group* group)
 {
     QModelIndex ix = index(group);
@@ -196,7 +296,9 @@ void GroupModel::groupAboutToMove(Group* group, Group* toGroup, int pos)
         pos++;
     }
 
-    beginMoveRows(oldParentIndex, oldPos, oldPos, newParentIndex, pos);
+    bool moveResult = beginMoveRows(oldParentIndex, oldPos, oldPos, newParentIndex, pos);
+    Q_UNUSED(moveResult);
+    Q_ASSERT(moveResult);
 }
 
 void GroupModel::groupMoved()

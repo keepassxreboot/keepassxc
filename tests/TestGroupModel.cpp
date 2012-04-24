@@ -91,7 +91,7 @@ void TestGroupModel::test()
     QSignalSpy spyMoved(model, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)));
 
     Group* group2 = new Group();
-    group1->setObjectName("group2");
+    group2->setObjectName("group2");
     group2->setName("group2");
     group2->setParent(groupRoot);
     QModelIndex index2 = model->index(1, 0, indexRoot);

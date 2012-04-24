@@ -38,6 +38,12 @@ public:
     QModelIndex parent(const QModelIndex& index) const;
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+    Qt::DropActions supportedDropActions() const;
+    Qt::ItemFlags flags(const QModelIndex& modelIndex) const;
+    bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column,
+                      const QModelIndex& parent);
+    QStringList mimeTypes() const;
+    QMimeData* mimeData(const QModelIndexList& indexes) const;
 
 private:
     QModelIndex parent(Group* group) const;

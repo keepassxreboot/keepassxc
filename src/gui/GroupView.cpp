@@ -40,6 +40,10 @@ GroupView::GroupView(Database* db, QWidget* parent)
     // invoke later so the EntryView is connected
     QMetaObject::invokeMethod(this, "emitGroupChanged", Qt::QueuedConnection,
                               Q_ARG(QModelIndex, m_model->index(0, 0)));
+
+    setDragEnabled(true);
+    viewport()->setAcceptDrops(true);
+    setDropIndicatorShown(true);
 }
 
 Group* GroupView::currentGroup()
