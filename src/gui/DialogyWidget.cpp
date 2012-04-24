@@ -59,32 +59,23 @@ void DialogyWidget::keyPressEvent(QKeyEvent *e)
     }
 }
 
-bool DialogyWidget::clickButton(QDialogButtonBox::StandardButton button)
+bool DialogyWidget::clickButton(QDialogButtonBox::StandardButton standardButton)
 {
-    Q_ASSERT(button == QDialogButtonBox::Ok || button == QDialogButtonBox::Cancel);
+    QPushButton* pb = qobject_cast<QPushButton*>(focusWidget());
+    if (pb && pb->isVisible() && pb->isEnabled() && pb->hasFocus()) {
+        pb->click();
+        return true;
+    }
 
     QList<QDialogButtonBox*> buttonBoxes = findChildren<QDialogButtonBox*>();
     for (int i = 0; i < buttonBoxes.size(); ++i) {
         QDialogButtonBox* buttonBox = buttonBoxes.at(i);
-        QPushButton* pb;
-        QPushButton* pbCancel = buttonBox->button(QDialogButtonBox::Cancel);
-        if (button == QDialogButtonBox::Ok) {
-            if (pbCancel && pbCancel->isVisible() && pbCancel->isEnabled() && pbCancel->hasFocus()) {
-                pbCancel->click();
-                return true;
-            }
-            pb = buttonBox->button(button);
-        }
-        else {
-            pb = pbCancel;
-        }
-
-        if (pb) {
-            if (pb->isVisible() && pb->isEnabled()) {
-                pb->click();
-                return true;
-            }
+        pb = buttonBox->button(standardButton);
+        if (pb && pb->isVisible() && pb->isEnabled()) {
+            pb->click();
+            return true;
         }
     }
+
     return false;
 }

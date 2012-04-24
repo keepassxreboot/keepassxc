@@ -32,7 +32,7 @@ protected:
     virtual void keyPressEvent(QKeyEvent *e);
 
 private:
-    bool clickButton(QDialogButtonBox::StandardButton button);
+    bool clickButton(QDialogButtonBox::StandardButton standardButton);
 
 };
 
