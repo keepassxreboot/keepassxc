@@ -264,6 +264,10 @@ void Group::setParent(Group* parent, int index)
 
     if (index == -1) {
         index = parent->children().size();
+
+        if (parentGroup() == parent) {
+            index--;
+        }
     }
 
     if (m_parent == parent && parent->children().indexOf(this) == index) {
@@ -279,6 +283,7 @@ void Group::setParent(Group* parent, int index)
         }
         QObject::setParent(parent);
         Q_EMIT aboutToAdd(this, index);
+        Q_ASSERT(index <= parent->m_children.size());
         parent->m_children.insert(index, this);
     }
     else {
@@ -286,6 +291,7 @@ void Group::setParent(Group* parent, int index)
         m_parent->m_children.removeAll(this);
         m_parent = parent;
         QObject::setParent(parent);
+        Q_ASSERT(index <= parent->m_children.size());
         parent->m_children.insert(index, this);
     }
 

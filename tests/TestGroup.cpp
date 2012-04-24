@@ -135,6 +135,14 @@ void TestGroup::testSignals()
     QCOMPARE(spyAboutToMove.count(), 0);
     QCOMPARE(spyMoved.count(), 0);
 
+    g2->setParent(root);
+    QCOMPARE(spyAboutToAdd.count(), 2);
+    QCOMPARE(spyAdded.count(), 2);
+    QCOMPARE(spyAboutToRemove.count(), 0);
+    QCOMPARE(spyRemoved.count(), 0);
+    QCOMPARE(spyAboutToMove.count(), 0);
+    QCOMPARE(spyMoved.count(), 0);
+
     g2->setParent(root, 0);
     QCOMPARE(spyAboutToAdd.count(), 2);
     QCOMPARE(spyAdded.count(), 2);
