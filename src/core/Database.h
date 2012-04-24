@@ -49,6 +49,7 @@ public:
     static const quint32 CompressionAlgorithmMax = CompressionGZip;
 
     Database();
+    ~Database();
     Group* rootGroup();
     const Group* rootGroup() const;
 
@@ -89,6 +90,13 @@ public:
     void recycleEntry(Entry* entry);
     void recycleGroup(Group* group);
 
+    /**
+     * Returns a unique id that is only valid as long as the Database exists.
+     */
+    Uuid uuid();
+
+    static Database* databaseByUuid(const Uuid& uuid);
+
 Q_SIGNALS:
     void groupDataChanged(Group* group);
     void groupAboutToAdd(Group* group, int index);
@@ -117,6 +125,9 @@ private:
 
     CompositeKey m_key;
     bool m_hasKey;
+
+    Uuid m_uuid;
+    static QHash<Uuid, Database*> m_uuidMap;
 };
 
 #endif // KEEPASSX_DATABASE_H

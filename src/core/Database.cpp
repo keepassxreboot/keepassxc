@@ -25,17 +25,27 @@
 #include "crypto/Random.h"
 #include "format/KeePass2.h"
 
+QHash<Uuid, Database*> Database::m_uuidMap;
+
 Database::Database()
     : m_metadata(new Metadata(this))
     , m_cipher(KeePass2::CIPHER_AES)
     , m_compressionAlgo(CompressionGZip)
     , m_transformRounds(50000)
     , m_hasKey(false)
+    , m_uuid(Uuid::random())
 {
     setRootGroup(new Group());
     rootGroup()->setUuid(Uuid::random());
 
+    m_uuidMap.insert(m_uuid, this);
+
     connect(m_metadata, SIGNAL(modified()), this, SIGNAL(modified()));
+}
+
+Database::~Database()
+{
+    m_uuidMap.remove(m_uuid);
 }
 
 Group* Database::rootGroup()
@@ -239,4 +249,14 @@ void Database::recycleGroup(Group* group)
     else {
         delete group;
     }
+}
+
+Uuid Database::uuid()
+{
+    return m_uuid;
+}
+
+Database* Database::databaseByUuid(const Uuid& uuid)
+{
+    return m_uuidMap.value(uuid, 0);
 }
