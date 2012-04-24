@@ -68,6 +68,18 @@ Database* DatabaseOpenDialog::database()
     return m_db;
 }
 
+void DatabaseOpenDialog::enterKey(const QString& pw, const QString& keyFile)
+{
+    if (!pw.isNull()) {
+        m_ui->editPassword->setText(pw);
+    }
+    if (!keyFile.isEmpty()) {
+        m_ui->checkKeyFile->setText(keyFile);
+    }
+
+    openDatabase();
+}
+
 void DatabaseOpenDialog::openDatabase()
 {
     KeePass2Reader reader;

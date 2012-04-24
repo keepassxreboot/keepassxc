@@ -58,6 +58,11 @@ MainWindow::~MainWindow()
 {
 }
 
+void MainWindow::openDatabase(const QString& fileName, const QString& pw, const QString& keyFile)
+{
+    m_ui->tabWidget->openDatabase(fileName, pw, keyFile);
+}
+
 const QString MainWindow::m_baseWindowTitle = "KeePassX";
 
 void MainWindow::setMenuActionState(int index)

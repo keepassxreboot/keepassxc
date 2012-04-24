@@ -78,7 +78,8 @@ void DatabaseTabWidget::openDatabase()
     }
 }
 
-void DatabaseTabWidget::openDatabase(const QString& fileName)
+void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
+                                     const QString& keyFile)
 {
     QScopedPointer<QFile> file(new QFile(fileName));
     // TODO error handling
@@ -96,16 +97,20 @@ void DatabaseTabWidget::openDatabase(const QString& fileName)
     m_curDbStruct.file = file.take();
     m_curDbStruct.fileName = QFileInfo(fileName).absoluteFilePath();
 
-    openDatabaseDialog();
+    openDatabaseDialog(pw, keyFile);
 }
 
-void DatabaseTabWidget::openDatabaseDialog()
+void DatabaseTabWidget::openDatabaseDialog(const QString& pw, const QString& keyFile)
 {
     m_curKeyDialog = new DatabaseOpenDialog(m_curDbStruct.file, m_curDbStruct.fileName, m_window);
     connect(m_curKeyDialog, SIGNAL(accepted()), SLOT(openDatabaseRead()));
     connect(m_curKeyDialog, SIGNAL(rejected()), SLOT(openDatabaseCleanup()));
     m_curKeyDialog->setModal(true);
     m_curKeyDialog->show();
+
+    if (!pw.isNull() || !keyFile.isEmpty()) {
+        m_curKeyDialog->enterKey(pw, keyFile);
+    }
 }
 
 void DatabaseTabWidget::openDatabaseRead()

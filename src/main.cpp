@@ -15,28 +15,46 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QtCore/QFile>
 #include <QtGui/QApplication>
 #include <QtGui/QTreeView>
 
-#include "core/Database.h"
 #include "crypto/Crypto.h"
-#include "format/KeePass2Reader.h"
-#include "format/KeePass2XmlReader.h"
 #include "gui/MainWindow.h"
 #include "keys/CompositeKey.h"
 #include "keys/PasswordKey.h"
 
-#include "../tests/config-keepassx-tests.h"
-
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
-    // don't set applicationName or organizationName as that changes QDesktopServices::storageLocation
+    // don't set applicationName or organizationName as that changes
+    // QDesktopServices::storageLocation()
 
     Crypto::init();
 
+    QString filename;
+    QString password;
+
+    const QStringList args = app.arguments();
+    for (int i = 0; i < args.size(); i++) {
+        if (args[i] == "--password" && args.size() > (i + 1)) {
+            password = args[i + 1];
+            i++;
+        }
+        else if (!args[i].startsWith("-") && QFile::exists(args[i])) {
+            filename = args[i];
+        }
+        else {
+            qWarning("Unkown argument \"%s\"", qPrintable(args[i]));
+        }
+    }
+
     MainWindow mainWindow;
     mainWindow.show();
+
+    if (!filename.isEmpty()) {
+        mainWindow.openDatabase(filename, password, QString());
+    }
 
     return app.exec();
 }

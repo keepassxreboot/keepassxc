@@ -31,6 +31,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow();
     ~MainWindow();
+    void openDatabase(const QString& fileName, const QString& pw, const QString& keyFile);
 
 protected:
      void closeEvent(QCloseEvent *event);

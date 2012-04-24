@@ -48,7 +48,8 @@ class DatabaseTabWidget : public QTabWidget
 
 public:
     explicit DatabaseTabWidget(QWidget* parent);
-    void openDatabase(const QString& fileName);
+    void openDatabase(const QString& fileName, const QString& pw = QString(),
+                      const QString& keyFile = QString());
     DatabaseWidget* currentDatabaseWidget();
 
 public Q_SLOTS:
@@ -75,7 +76,7 @@ Q_SIGNALS:
 
 private Q_SLOTS:
     void updateTabName(Database* db);
-    void openDatabaseDialog();
+    void openDatabaseDialog(const QString& pw = QString(), const QString& keyFile = QString());
     void openDatabaseRead();
     void openDatabaseCleanup();
     void emitEntrySelectionChanged();

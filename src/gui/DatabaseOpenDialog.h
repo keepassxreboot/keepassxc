@@ -38,6 +38,7 @@ public:
     explicit DatabaseOpenDialog(QFile* file, QString filename, QWidget* parent = 0);
     ~DatabaseOpenDialog();
     Database* database();
+    void enterKey(const QString& pw, const QString& keyFile);
 
 private Q_SLOTS:
     void openDatabase();
