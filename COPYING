@@ -13,9 +13,9 @@ GNU General Public License for more details.
 
 --------------------------------------------------------------------
 
-Format-Specification: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?op=file&rev=135
-Name: KeePassX
-Maintainer: Felix Geyer <debfx@fobos.de>
+Format-Specification: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: KeePassX
+Upstream-Contact: Felix Geyer <debfx@fobos.de>
 Source: http://www.keepassx.org/
 
 Copyright: 2010-2011, Felix Geyer <debfx@fobos.de>
