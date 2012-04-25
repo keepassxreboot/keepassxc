@@ -94,21 +94,19 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
 DatabaseWidget::Mode DatabaseWidget::currentMode()
 {
     switch (currentIndex()) {
-        case -1:
-            return DatabaseWidget::None;
-            break;
-        case 0:
-            return DatabaseWidget::ViewMode;
-            break;
-        case 1:  // entry edit
-        case 2:  // group edit
-        case 3:  // change master key
-        case 4:  // database settings
-            return DatabaseWidget::EditMode;
-            break;
+    case -1:
+        return DatabaseWidget::None;
+    case 0:
+        return DatabaseWidget::ViewMode;
+    case 1:  // entry edit
+    case 2:  // group edit
+    case 3:  // change master key
+    case 4:  // database settings
+        return DatabaseWidget::EditMode;
+    default:
+        Q_ASSERT(false);
+        return DatabaseWidget::None;
     }
-
-    return DatabaseWidget::None;
 }
 
 void DatabaseWidget::emitCurrentModeChanged()

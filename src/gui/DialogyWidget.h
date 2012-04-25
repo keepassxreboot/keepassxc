@@ -33,7 +33,6 @@ protected:
 
 private:
     bool clickButton(QDialogButtonBox::StandardButton standardButton);
-
 };
 
 #endif // KEEPASSX_DIALOGYWIDGET_H

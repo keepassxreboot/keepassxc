@@ -115,7 +115,8 @@ void DatabaseOpenDialog::openDatabase()
         accept();
     }
     else {
-        QMessageBox::warning(this, tr("Error"), tr("Unable to open the database.\n%1").arg(reader.errorString()));
+        QMessageBox::warning(this, tr("Error"), tr("Unable to open the database.\n%1")
+                             .arg(reader.errorString()));
         m_ui->editPassword->clear();
     }
 }
@@ -137,7 +138,8 @@ void DatabaseOpenDialog::activateKeyFile()
 
 void DatabaseOpenDialog::setOkButtonEnabled()
 {
-    bool enable = m_ui->checkPassword->isChecked() || (m_ui->checkKeyFile->isChecked() && !m_ui->comboKeyFile->currentText().isEmpty());
+    bool enable = m_ui->checkPassword->isChecked()
+            || (m_ui->checkKeyFile->isChecked() && !m_ui->comboKeyFile->currentText().isEmpty());
 
     m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(enable);
 }

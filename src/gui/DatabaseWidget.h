@@ -37,9 +37,9 @@ class DatabaseWidget : public QStackedWidget
 public:
     enum Mode
     {
-        None = 0,
-        ViewMode = 1,
-        EditMode = 2
+        None,
+        ViewMode,
+        EditMode
     };
 
     explicit DatabaseWidget(Database* db, QWidget* parent = 0);
@@ -55,7 +55,7 @@ public:
 
 Q_SIGNALS:
     void closeRequest();
-    void currentModeChanged(DatabaseWidget::Mode);
+    void currentModeChanged(DatabaseWidget::Mode mode);
 
 public Q_SLOTS:
     void createEntry();

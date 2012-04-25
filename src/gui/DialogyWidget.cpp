@@ -20,7 +20,6 @@
 #include <QtGui/QDialogButtonBox>
 #include <QtGui/QPushButton>
 #include <QtGui/QKeyEvent>
-#include <QtCore/QDebug>
 
 DialogyWidget::DialogyWidget(QWidget* parent)
     : QWidget(parent)
@@ -30,7 +29,7 @@ DialogyWidget::DialogyWidget(QWidget* parent)
 void DialogyWidget::keyPressEvent(QKeyEvent *e)
 {
 #ifdef Q_WS_MAC
-    if(e->modifiers() == Qt::ControlModifier && e->key() == Qt::Key_Period) {
+    if (e->modifiers() == Qt::ControlModifier && e->key() == Qt::Key_Period) {
         if (!clickButton(QDialogButtonBox::Cancel)) {
             e->ignore();
         }
