@@ -584,30 +584,30 @@ void ModelTest::rowsAboutToBeMoved( const QModelIndex &srcParent, int start, int
 void ModelTest::rowsMoved( const QModelIndex &srcParent, int start, int end, const QModelIndex &destParent, int destinationRow )
 {
     Changing cd = insert.pop();
-    Q_ASSERT ( cd.parent == destParent );
+    QVERIFY ( cd.parent == destParent );
     if (srcParent == destParent) {
-        Q_ASSERT ( cd.oldSize == model->rowCount ( destParent ) );
+        QVERIFY ( cd.oldSize == model->rowCount ( destParent ) );
 
         // TODO: Find out what I can assert here about last and next.
-        // Q_ASSERT ( cd.last == model->data ( model->index ( destinationRow - 1, 0, cd.parent ) ) );
-        // Q_ASSERT ( cd.next == model->data ( model->index ( destinationRow + (end - start + 1), 0, cd.parent ) ) );
+        // QVERIFY ( cd.last == model->data ( model->index ( destinationRow - 1, 0, cd.parent ) ) );
+        // QVERIFY ( cd.next == model->data ( model->index ( destinationRow + (end - start + 1), 0, cd.parent ) ) );
     }
     else {
-        Q_ASSERT ( cd.oldSize + ( end - start + 1 ) == model->rowCount ( destParent ) );
+        QVERIFY ( cd.oldSize + ( end - start + 1 ) == model->rowCount ( destParent ) );
 
-        Q_ASSERT ( cd.last == model->data ( model->index ( destinationRow - 1, 0, cd.parent ) ) );
-        Q_ASSERT ( cd.next == model->data ( model->index ( destinationRow + (end - start + 1), 0, cd.parent ) ) );
+        QVERIFY ( cd.last == model->data ( model->index ( destinationRow - 1, 0, cd.parent ) ) );
+        QVERIFY ( cd.next == model->data ( model->index ( destinationRow + (end - start + 1), 0, cd.parent ) ) );
     }
 
     Changing cs = remove.pop();
-    Q_ASSERT ( cs.parent == srcParent );
+    QVERIFY ( cs.parent == srcParent );
     if (srcParent == destParent) {
-      Q_ASSERT ( cs.oldSize == model->rowCount ( srcParent ) );
+      QVERIFY ( cs.oldSize == model->rowCount ( srcParent ) );
     }
     else {
-      Q_ASSERT ( cs.oldSize - ( end - start + 1 ) == model->rowCount ( srcParent ) );
+      QVERIFY ( cs.oldSize - ( end - start + 1 ) == model->rowCount ( srcParent ) );
 
-      Q_ASSERT ( cs.last == model->data ( model->index ( start - 1, 0, srcParent ) ) );
-      Q_ASSERT ( cs.next == model->data ( model->index ( start, 0, srcParent ) ) );
+      QVERIFY ( cs.last == model->data ( model->index ( start - 1, 0, srcParent ) ) );
+      QVERIFY ( cs.next == model->data ( model->index ( start, 0, srcParent ) ) );
     }
 }
