@@ -2,8 +2,15 @@ Building:
 =========
 mkdir build
 cd build
-cmake .. [-DCMAKE_INSTALL_PREFIX=/usr/local] [-DCMAKE_VERBOSE_MAKEFILE=ON] [-DWITH_GUI_TESTS=ON]
+cmake .. [CMAKE PARAMETERS]
 make [-jX]
+
+Common cmake parameters:
+========================
+-DCMAKE_INSTALL_PREFIX=/usr/local
+-DCMAKE_VERBOSE_MAKEFILE=ON
+-DCMAKE_BUILD_TYPE=<RelWithDebInfo/Debug/Release>
+-DWITH_GUI_TESTS=ON
 
 Installing:
 ===========
