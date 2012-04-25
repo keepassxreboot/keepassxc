@@ -76,6 +76,17 @@ void TestGroup::testParenting()
     QVERIFY(g1->children().at(1) == g3);
     QVERIFY(g3->children().contains(g4));
 
+    Group* g5 = new Group();
+    Group* g6 = new Group();
+    g5->setParent(db->rootGroup());
+    g6->setParent(db->rootGroup());
+    QVERIFY(db->rootGroup()->children().at(1) == g5);
+    QVERIFY(db->rootGroup()->children().at(2) == g6);
+
+    g5->setParent(db->rootGroup());
+    QVERIFY(db->rootGroup()->children().at(1) == g6);
+    QVERIFY(db->rootGroup()->children().at(2) == g5);
+
     QSignalSpy spy(db, SIGNAL(groupDataChanged(Group*)));
     g2->setName("test");
     g4->setName("test");
@@ -180,6 +191,33 @@ void TestGroup::testSignals()
     QCOMPARE(spyRemoved2.count(), 0);
     QCOMPARE(spyAboutToMove2.count(), 0);
     QCOMPARE(spyMoved2.count(), 0);
+
+    Group* g3 = new Group();
+    Group* g4 = new Group();
+
+    g3->setParent(root);
+    QCOMPARE(spyAboutToAdd.count(), 3);
+    QCOMPARE(spyAdded.count(), 3);
+    QCOMPARE(spyAboutToRemove.count(), 2);
+    QCOMPARE(spyRemoved.count(), 2);
+    QCOMPARE(spyAboutToMove.count(), 2);
+    QCOMPARE(spyMoved.count(), 2);
+
+    g4->setParent(root);
+    QCOMPARE(spyAboutToAdd.count(), 4);
+    QCOMPARE(spyAdded.count(), 4);
+    QCOMPARE(spyAboutToRemove.count(), 2);
+    QCOMPARE(spyRemoved.count(), 2);
+    QCOMPARE(spyAboutToMove.count(), 2);
+    QCOMPARE(spyMoved.count(), 2);
+
+    g3->setParent(root);
+    QCOMPARE(spyAboutToAdd.count(), 4);
+    QCOMPARE(spyAdded.count(), 4);
+    QCOMPARE(spyAboutToRemove.count(), 2);
+    QCOMPARE(spyRemoved.count(), 2);
+    QCOMPARE(spyAboutToMove.count(), 3);
+    QCOMPARE(spyMoved.count(), 3);
 
     delete db;
     delete db2;
