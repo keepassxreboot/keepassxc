@@ -33,7 +33,7 @@ CompositeKey::CompositeKey(const CompositeKey& key)
 
 CompositeKey::~CompositeKey()
 {
-    qDeleteAll(m_keys);
+    clear();
 }
 
 void CompositeKey::clear()
@@ -51,8 +51,8 @@ CompositeKey& CompositeKey::operator=(const CompositeKey& key)
 {
     clear();
 
-    Q_FOREACH (Key* subKey, key.m_keys) {
-        m_keys.append(subKey->clone());
+    Q_FOREACH (const Key* subKey, key.m_keys) {
+        addKey(*subKey);
     }
 
     return *this;
@@ -62,7 +62,7 @@ QByteArray CompositeKey::rawKey() const
 {
     CryptoHash cryptoHash(CryptoHash::Sha256);
 
-    Q_FOREACH (Key* key, m_keys) {
+    Q_FOREACH (const Key* key, m_keys) {
         cryptoHash.addData(key->rawKey());
     }
 
@@ -86,9 +86,11 @@ QByteArray CompositeKey::transform(const QByteArray& seed, int rounds) const
     return CryptoHash::hash(transformed, CryptoHash::Sha256);
 }
 
-QByteArray CompositeKey::transformKeyRaw(const QByteArray& key, const QByteArray& seed, int rounds) {
+QByteArray CompositeKey::transformKeyRaw(const QByteArray& key, const QByteArray& seed,
+                                         int rounds) {
     QByteArray iv(16, 0);
-    SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Ecb, SymmetricCipher::Encrypt, seed, iv);
+    SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Ecb,
+                           SymmetricCipher::Encrypt, seed, iv);
 
     QByteArray result = key;
 

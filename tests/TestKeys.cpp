@@ -42,27 +42,32 @@ void TestKeys::testComposite()
     PasswordKey* passwordKey1 = new PasswordKey();
     PasswordKey* passwordKey2 = new PasswordKey("test");
 
+    // make sure that addKey() creates a copy of the keys
     compositeKey1->addKey(*passwordKey1);
     compositeKey1->addKey(*passwordKey2);
     delete passwordKey1;
     delete passwordKey2;
 
-    QVERIFY(compositeKey1->transform(QByteArray(32, '\0'), 1).size() == 32);
+    QByteArray transformed = compositeKey1->transform(QByteArray(32, '\0'), 1);
+    QCOMPARE(transformed.size(), 32);
 
     // make sure the subkeys are copied
     CompositeKey* compositeKey2 = compositeKey1->clone();
     delete compositeKey1;
-
-    QVERIFY(compositeKey2->transform(QByteArray(32, '\0'), 1).size() == 32);
-
+    QCOMPARE(compositeKey2->transform(QByteArray(32, '\0'), 1), transformed);
     delete compositeKey2;
 
     CompositeKey* compositeKey3 = new CompositeKey();
     CompositeKey* compositeKey4 = new CompositeKey();
 
+    // test clear()
     compositeKey3->addKey(PasswordKey("test"));
     compositeKey3->clear();
+    QCOMPARE(compositeKey3->rawKey(), compositeKey4->rawKey());
 
+    // test assignment operator
+    compositeKey3->addKey(PasswordKey("123"));
+    *compositeKey4 = *compositeKey3;
     QCOMPARE(compositeKey3->rawKey(), compositeKey4->rawKey());
 
     delete compositeKey3;
