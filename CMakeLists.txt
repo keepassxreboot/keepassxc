@@ -152,7 +152,7 @@ if(NOT ZLIB_SUPPORTS_GZIP)
     message(FATAL_ERROR "zlib 1.2.x or higher is required to use the gzip format")
 endif(NOT ZLIB_SUPPORTS_GZIP)
 
-include_directories(${QT_INCLUDE_DIR} ${GCRYPT_INCLUDE_DIR} ${ZLIB_INCLUDE_DIR})
+include_directories(SYSTEM ${QT_INCLUDE_DIR} ${GCRYPT_INCLUDE_DIR} ${ZLIB_INCLUDE_DIR})
 
 add_subdirectory(src)
 add_subdirectory(share)
