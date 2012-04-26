@@ -23,6 +23,7 @@
 #include <QtGui/QDialogButtonBox>
 #include <QtGui/QLineEdit>
 #include <QtGui/QPushButton>
+#include <QtGui/QToolBar>
 
 #include "config-keepassx-tests.h"
 #include "tests.h"
@@ -38,11 +39,12 @@ void TestGui::initTestCase()
 {
     Crypto::init();
     m_mainWindow = new MainWindow();
+    m_mainWindow->show();
+    QTest::qWaitForWindowShown(m_mainWindow);
 }
 
 void TestGui::testOpenDatabase()
 {
-    m_mainWindow->show();
     QAction* actionDatabaseOpen = m_mainWindow->findChild<QAction*>("actionDatabaseOpen");
     fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx"));
     actionDatabaseOpen->trigger();
@@ -75,11 +77,18 @@ void TestGui::testEditEntry()
     QRect itemRect = entryView->visualRect(item);
     QTest::mouseClick(entryView->viewport(), Qt::LeftButton, Qt::NoModifier, itemRect.center());
     QTest::qWait(20);
-    QAction* actionEntryEdit = m_mainWindow->findChild<QAction*>("actionEntryEdit");
-    QVERIFY(actionEntryEdit->isEnabled());
-    actionEntryEdit->trigger();
+
+    QAction* entryEditAction = m_mainWindow->findChild<QAction*>("actionEntryEdit");
+    QVERIFY(entryEditAction->isEnabled());
+    QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
+    QWidget* entryEditWidget = toolBar->widgetForAction(entryEditAction);
+    QVERIFY(entryEditWidget->isVisible());
+    QVERIFY(entryEditWidget->isEnabled());
+    QTest::mouseClick(entryEditWidget, Qt::LeftButton);
     QTest::qWait(20);
+
     EditEntryWidget* editEntryWidget = dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+    QVERIFY(dbWidget->currentWidget() == editEntryWidget);
     QDialogButtonBox* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
     QVERIFY(editEntryWidgetButtonBox);
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
