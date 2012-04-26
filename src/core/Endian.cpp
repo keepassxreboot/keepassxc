@@ -67,17 +67,17 @@ qint64 bytesToInt64(const QByteArray& ba, QSysInfo::Endian byteOrder)
 
 quint16 bytesToUInt16(const QByteArray& ba, QSysInfo::Endian byteOrder)
 {
-    return bytesToInt16(ba, byteOrder);
+    return static_cast<quint16>(bytesToInt16(ba, byteOrder));
 }
 
 quint32 bytesToUInt32(const QByteArray& ba, QSysInfo::Endian byteOrder)
 {
-    return bytesToInt32(ba, byteOrder);
+    return static_cast<quint32>(bytesToInt32(ba, byteOrder));
 }
 
 quint64 bytesToUInt64(const QByteArray& ba, QSysInfo::Endian byteOrder)
 {
-    return bytesToInt64(ba, byteOrder);
+    return static_cast<quint64>(bytesToInt64(ba, byteOrder));
 }
 
 qint16 readInt16(QIODevice* device, QSysInfo::Endian byteOrder, bool* ok)
@@ -90,7 +90,7 @@ qint16 readInt16(QIODevice* device, QSysInfo::Endian byteOrder, bool* ok)
     }
     else {
         *ok = true;
-        return bytesToUInt16(ba, byteOrder);
+        return bytesToInt16(ba, byteOrder);
     }
 }
 
@@ -104,7 +104,7 @@ qint32 readInt32(QIODevice* device, QSysInfo::Endian byteOrder, bool* ok)
     }
     else {
         *ok = true;
-        return bytesToUInt32(ba, byteOrder);
+        return bytesToInt32(ba, byteOrder);
     }
 }
 
@@ -118,23 +118,23 @@ qint64 readInt64(QIODevice* device, QSysInfo::Endian byteOrder, bool* ok)
     }
     else {
         *ok = true;
-        return bytesToUInt64(ba, byteOrder);
+        return bytesToInt64(ba, byteOrder);
     }
 }
 
 quint16 readUInt16(QIODevice* device, QSysInfo::Endian byteOrder, bool* ok)
 {
-    return readInt16(device, byteOrder, ok);
+    return static_cast<quint16>(readInt16(device, byteOrder, ok));
 }
 
 quint32 readUInt32(QIODevice* device, QSysInfo::Endian byteOrder, bool* ok)
 {
-    return readInt32(device, byteOrder, ok);
+    return static_cast<quint32>(readInt32(device, byteOrder, ok));
 }
 
 quint64 readUInt64(QIODevice* device, QSysInfo::Endian byteOrder, bool* ok)
 {
-    return readInt64(device, byteOrder, ok);
+    return static_cast<quint64>(readInt64(device, byteOrder, ok));
 }
 
 QByteArray int16ToBytes(qint16 num, QSysInfo::Endian byteOrder)

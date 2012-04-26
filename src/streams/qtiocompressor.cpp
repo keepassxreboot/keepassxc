@@ -553,7 +553,6 @@ qint64 QtIOCompressor::readData(char *data, qint64 maxSize)
                 return -1;
             case Z_BUF_ERROR: // No more input and zlib can not privide more output - Not an error, we can try to read again when we have more input.
                 return 0;
-            break;
         }
     // Loop util data buffer is full or we reach the end of the input stream.
     } while (d->zlibStream.avail_out != 0 && status != Z_STREAM_END);
