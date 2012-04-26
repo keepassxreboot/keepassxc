@@ -17,6 +17,8 @@
 
 #include "EntryModel.h"
 
+#include <QtCore/QMimeData>
+
 #include "core/Entry.h"
 #include "core/Group.h"
 
@@ -24,6 +26,7 @@ EntryModel::EntryModel(QObject* parent)
     : QAbstractTableModel(parent)
     , m_group(0)
 {
+    setSupportedDragActions(Qt::MoveAction);
 }
 
 Entry* EntryModel::entryFromIndex(const QModelIndex& index) const
@@ -104,6 +107,49 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
     }
 
     return QVariant();
+}
+
+Qt::DropActions EntryModel::supportedDropActions() const
+{
+    return 0;
+}
+
+Qt::ItemFlags EntryModel::flags(const QModelIndex& modelIndex) const
+{
+    if (!modelIndex.isValid()) {
+        return Qt::NoItemFlags;
+    }
+    else {
+        return QAbstractItemModel::flags(modelIndex) | Qt::ItemIsDragEnabled;
+    }
+}
+
+QStringList EntryModel::mimeTypes() const
+{
+    QStringList types;
+    types << QLatin1String("application/x-keepassx-entry");
+    return types;
+}
+
+QMimeData* EntryModel::mimeData(const QModelIndexList& indexes) const
+{
+    if (indexes.isEmpty()) {
+        return 0;
+    }
+
+    QMimeData* data = new QMimeData();
+    QByteArray encoded;
+    QDataStream stream(&encoded, QIODevice::WriteOnly);
+
+    for (int i = 0; i < indexes.size(); i++) {
+        if (!indexes[i].isValid()) {
+            continue;
+        }
+        stream << m_group->database()->uuid() << entryFromIndex(indexes[i])->uuid();
+    }
+
+    data->setData(mimeTypes().first(), encoded);
+    return data;
 }
 
 void EntryModel::entryAboutToAdd(Entry* entry)

@@ -27,6 +27,7 @@ EntryView::EntryView(QWidget* parent)
 
     setUniformRowHeights(true);
     setRootIsDecorated(false);
+    setDragEnabled(true);
 
     connect(this, SIGNAL(activated(const QModelIndex&)), SLOT(emitEntryActivated(const QModelIndex&)));
     connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(entrySelectionChanged()));

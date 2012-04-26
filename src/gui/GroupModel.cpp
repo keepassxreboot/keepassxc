@@ -180,9 +180,10 @@ bool GroupModel::dropMimeData(const QMimeData* data, Qt::DropAction action,
 
     // check if the format is supported
     QStringList types = mimeTypes();
-    Q_ASSERT(!types.isEmpty());
-    QString format = types.at(0);
-    if (!data->hasFormat(format)) {
+    Q_ASSERT(types.size() == 2);
+    bool isGroup = data->hasFormat(types.at(0));
+    bool isEntry = data->hasFormat(types.at(1));
+    if (!isGroup && !isEntry) {
         return false;
     }
 
@@ -191,39 +192,52 @@ bool GroupModel::dropMimeData(const QMimeData* data, Qt::DropAction action,
     }
 
     // decode and insert
-    QByteArray encoded = data->data(format);
+    QByteArray encoded = data->data(isGroup ? types.at(0) : types.at(1));
     QDataStream stream(&encoded, QIODevice::ReadOnly);
     Uuid dbUuid;
-    Uuid groupUuid;
-    stream >> dbUuid >> groupUuid;
+    Uuid itemUuid;
+    stream >> dbUuid >> itemUuid;
 
     Database* db = Database::databaseByUuid(dbUuid);
     if (!db) {
         return false;
     }
-    Group* dragGroup = db->resolveGroup(groupUuid);
-    if (!dragGroup || !Tools::hasChild(db, dragGroup) || dragGroup == db->rootGroup()) {
-        return false;
-    }
 
     Group* parentGroup = groupFromIndex(parent);
 
-    if (dragGroup == parentGroup || Tools::hasChild(dragGroup, parentGroup)) {
-        return false;
+    if (isGroup) {
+        Group* dragGroup = db->resolveGroup(itemUuid);
+        if (!dragGroup || !Tools::hasChild(db, dragGroup) || dragGroup == db->rootGroup()) {
+            return false;
+        }
+
+        if (dragGroup == parentGroup || Tools::hasChild(dragGroup, parentGroup)) {
+            return false;
+        }
+
+        if (parentGroup == dragGroup->parent() && row > parentGroup->children().indexOf(dragGroup)) {
+            row--;
+        }
+
+        dragGroup->setParent(parentGroup, row);
+    }
+    else {
+        Entry* dragEntry = db->resolveEntry(itemUuid);
+        if (!dragEntry || !Tools::hasChild(db, dragEntry) || row != -1) {
+            return false;
+        }
+
+        dragEntry->setGroup(parentGroup);
     }
 
-    if (parentGroup == dragGroup->parent() && row > parentGroup->children().indexOf(dragGroup)) {
-        row--;
-    }
-
-    dragGroup->setParent(parentGroup, row);
     return true;
 }
 
 QStringList GroupModel::mimeTypes() const
 {
     QStringList types;
-    types << QLatin1String("application/x-keepassx-group");
+    types << "application/x-keepassx-group";
+    types << "application/x-keepassx-entry";
     return types;
 }
 

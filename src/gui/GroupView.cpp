@@ -18,6 +18,7 @@
 #include "GroupView.h"
 
 #include <QtCore/QMetaObject>
+#include <QtGui/QDragMoveEvent>
 
 #include "core/Database.h"
 #include "core/Group.h"
@@ -44,6 +45,17 @@ GroupView::GroupView(Database* db, QWidget* parent)
     setDragEnabled(true);
     viewport()->setAcceptDrops(true);
     setDropIndicatorShown(true);
+}
+
+void GroupView::dragMoveEvent(QDragMoveEvent* event)
+{
+    QTreeView::dragMoveEvent(event);
+
+    // entries may only be dropped on groups
+    if (event->isAccepted() && event->mimeData()->hasFormat("application/x-keepassx-entry")
+            && (dropIndicatorPosition() == AboveItem || dropIndicatorPosition() == BelowItem)) {
+        event->ignore();
+    }
 }
 
 Group* GroupView::currentGroup()

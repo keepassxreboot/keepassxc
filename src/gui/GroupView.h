@@ -41,6 +41,9 @@ private Q_SLOTS:
     void emitGroupChanged(const QModelIndex& index);
     void emitGroupChanged();
 
+protected:
+    void dragMoveEvent(QDragMoveEvent* event);
+
 private:
     void recInitExpanded(Group* group);
 
