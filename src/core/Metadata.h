@@ -52,6 +52,7 @@ public:
     bool protectNotes() const;
     // bool autoEnableVisualHiding() const;
     QImage customIcon(const Uuid& uuid) const;
+    bool containsCustomIcon(const Uuid& uuid) const;
     QHash<Uuid, QImage> customIcons() const;
     bool recycleBinEnabled() const;
     Group* recycleBin();

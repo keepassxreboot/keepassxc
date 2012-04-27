@@ -161,6 +161,11 @@ QImage Metadata::customIcon(const Uuid& uuid) const
     return m_customIcons.value(uuid);
 }
 
+bool Metadata::containsCustomIcon(const Uuid& uuid) const
+{
+    return m_customIcons.contains(uuid);
+}
+
 QHash<Uuid, QImage> Metadata::customIcons() const
 {
     return m_customIcons;

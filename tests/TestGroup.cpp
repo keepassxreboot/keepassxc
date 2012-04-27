@@ -24,6 +24,7 @@
 #include "tests.h"
 #include "core/Database.h"
 #include "core/Group.h"
+#include "core/Metadata.h"
 #include "crypto/Crypto.h"
 
 void TestGroup::initTestCase()
@@ -291,6 +292,46 @@ void TestGroup::testDeleteSignals()
     QCOMPARE(spyEntryAboutToRemove2.count(), 0);
     QCOMPARE(spyEntryRemoved2.count(), 0);
     delete db2;
+}
+
+void TestGroup::testCopyCustomIcon()
+{
+    Database* dbSource = new Database();
+
+    Uuid groupIconUuid = Uuid::random();
+    QImage groupIcon(16, 16, QImage::Format_RGB32);
+    groupIcon.setPixel(0, 0, qRgb(255, 0, 0));
+    dbSource->metadata()->addCustomIcon(groupIconUuid, groupIcon);
+
+    Uuid entryIconUuid = Uuid::random();
+    QImage entryIcon(16, 16, QImage::Format_RGB32);
+    entryIcon.setPixel(0, 0, qRgb(255, 0, 0));
+    dbSource->metadata()->addCustomIcon(entryIconUuid, entryIcon);
+
+    Group* group = new Group();
+    group->setParent(dbSource->rootGroup());
+    group->setIcon(groupIconUuid);
+    QCOMPARE(group->icon(), groupIcon);
+
+    Entry* entry = new Entry();
+    entry->setGroup(dbSource->rootGroup());
+    entry->setIcon(entryIconUuid);
+    QCOMPARE(entry->icon(), entryIcon);
+
+    Database* dbTarget = new Database();
+
+    group->setParent(dbTarget->rootGroup());
+    QVERIFY(dbTarget->metadata()->containsCustomIcon(groupIconUuid));
+    QCOMPARE(dbTarget->metadata()->customIcon(groupIconUuid), groupIcon);
+    QCOMPARE(group->icon(), groupIcon);
+
+    entry->setGroup(dbTarget->rootGroup());
+    QVERIFY(dbTarget->metadata()->containsCustomIcon(entryIconUuid));
+    QCOMPARE(dbTarget->metadata()->customIcon(entryIconUuid), entryIcon);
+    QCOMPARE(entry->icon(), entryIcon);
+
+    delete dbSource;
+    delete dbTarget;
 }
 
 KEEPASSX_QTEST_CORE_MAIN(TestGroup)

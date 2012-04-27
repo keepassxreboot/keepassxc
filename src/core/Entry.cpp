@@ -404,6 +404,13 @@ void Entry::setGroup(Group* group)
         m_group->removeEntry(this);
         if (m_group->database() && m_group->database() != group->database()) {
             m_group->database()->addDeletedObject(m_uuid);
+
+            // copy custom icon to the new database
+            if (!iconUuid().isNull() && group->database()
+                    && m_group->database()->metadata()->containsCustomIcon(iconUuid())
+                    && !group->database()->metadata()->containsCustomIcon(iconUuid())) {
+                group->database()->metadata()->addCustomIcon(iconUuid(), icon());
+            }
         }
     }
 

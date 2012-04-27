@@ -276,6 +276,13 @@ void Group::setParent(Group* parent, int index)
         m_parent = parent;
         if (m_db) {
             recCreateDelObjects();
+
+            // copy custom icon to the new database
+            if (!iconUuid().isNull() && parent->m_db
+                    && m_db->metadata()->containsCustomIcon(iconUuid())
+                    && !parent->m_db->metadata()->containsCustomIcon(iconUuid())) {
+                parent->m_db->metadata()->addCustomIcon(iconUuid(), icon());
+            }
         }
         if (m_db != parent->m_db) {
             recSetDatabase(parent->m_db);
