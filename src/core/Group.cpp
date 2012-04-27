@@ -1,22 +1,19 @@
 /*
-    <one line to give the program's name and a brief idea of what it does.>
-    Copyright (C) <year>  <name of author>
-
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License along
-    with this program; if not, write to the Free Software Foundation, Inc.,
-    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-
-*/
+ *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 2 or (at your option)
+ *  version 3 of the License.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "Group.h"
 
@@ -277,8 +274,10 @@ void Group::setParent(Group* parent, int index)
     if (!moveWithinDatabase) {
         cleanupParent();
         m_parent = parent;
-        if (parent->m_db) {
+        if (m_db) {
             recCreateDelObjects();
+        }
+        if (m_db != parent->m_db) {
             recSetDatabase(parent->m_db);
         }
         QObject::setParent(parent);
@@ -312,6 +311,7 @@ void Group::setParent(Group* parent, int index)
 void Group::setParent(Database* db)
 {
     Q_ASSERT(db);
+    Q_ASSERT(db->rootGroup() == this);
 
     cleanupParent();
 
@@ -373,6 +373,7 @@ QList<Entry*> Group::entriesRecursive(bool includeHistoryItems)
 void Group::addEntry(Entry *entry)
 {
     Q_ASSERT(entry);
+    Q_ASSERT(!m_entries.contains(entry));
 
     Q_EMIT entryAboutToAdd(entry);
 
@@ -388,6 +389,8 @@ void Group::addEntry(Entry *entry)
 
 void Group::removeEntry(Entry* entry)
 {
+    Q_ASSERT(m_entries.contains(entry));
+
     Q_EMIT entryAboutToRemove(entry);
 
     entry->disconnect(this);
@@ -416,17 +419,21 @@ void Group::recSetDatabase(Database* db)
         if (m_db) {
             entry->disconnect(m_db);
         }
-        connect(entry, SIGNAL(modified()), db, SIGNAL(modified()));
+        if (db) {
+            connect(entry, SIGNAL(modified()), db, SIGNAL(modified()));
+        }
     }
 
-    connect(this, SIGNAL(dataChanged(Group*)), db, SIGNAL(groupDataChanged(Group*)));
-    connect(this, SIGNAL(aboutToRemove(Group*)), db, SIGNAL(groupAboutToRemove(Group*)));
-    connect(this, SIGNAL(removed()), db, SIGNAL(groupRemoved()));
-    connect(this, SIGNAL(aboutToAdd(Group*,int)), db, SIGNAL(groupAboutToAdd(Group*,int)));
-    connect(this, SIGNAL(added()), db, SIGNAL(groupAdded()));
-    connect(this, SIGNAL(aboutToMove(Group*,Group*,int)), db, SIGNAL(groupAboutToMove(Group*,Group*,int)));
-    connect(this, SIGNAL(moved()), db, SIGNAL(groupMoved()));
-    connect(this, SIGNAL(modified()), db, SIGNAL(modified()));
+    if (db) {
+        connect(this, SIGNAL(dataChanged(Group*)), db, SIGNAL(groupDataChanged(Group*)));
+        connect(this, SIGNAL(aboutToRemove(Group*)), db, SIGNAL(groupAboutToRemove(Group*)));
+        connect(this, SIGNAL(removed()), db, SIGNAL(groupRemoved()));
+        connect(this, SIGNAL(aboutToAdd(Group*,int)), db, SIGNAL(groupAboutToAdd(Group*,int)));
+        connect(this, SIGNAL(added()), db, SIGNAL(groupAdded()));
+        connect(this, SIGNAL(aboutToMove(Group*,Group*,int)), db, SIGNAL(groupAboutToMove(Group*,Group*,int)));
+        connect(this, SIGNAL(moved()), db, SIGNAL(groupMoved()));
+        connect(this, SIGNAL(modified()), db, SIGNAL(modified()));
+    }
 
     m_db = db;
 
