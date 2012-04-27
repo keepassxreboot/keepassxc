@@ -36,6 +36,7 @@ GroupView::GroupView(Database* db, QWidget* parent)
             SLOT(emitGroupChanged()));
 
     recInitExpanded(db->rootGroup());
+    connect(this, SIGNAL(expanded(QModelIndex)), this, SLOT(expandedChanged(QModelIndex)));
 
     setCurrentIndex(m_model->index(0, 0));
     // invoke later so the EntryView is connected
