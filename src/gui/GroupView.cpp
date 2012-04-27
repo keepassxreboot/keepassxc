@@ -72,12 +72,17 @@ void GroupView::expandedChanged(const QModelIndex& index)
 
 void GroupView::recInitExpanded(Group* group)
 {
-    QModelIndex index = m_model->index(group);
-    setExpanded(index, group->isExpanded());
+    expandGroup(group, group->isExpanded());
 
     Q_FOREACH (Group* child, group->children()) {
         recInitExpanded(child);
     }
+}
+
+void GroupView::expandGroup(Group* group, bool expand)
+{
+    QModelIndex index = m_model->index(group);
+    setExpanded(index, expand);
 }
 
 void GroupView::emitGroupChanged(const QModelIndex& index)
@@ -94,4 +99,9 @@ void GroupView::setModel(QAbstractItemModel* model)
 void GroupView::emitGroupChanged()
 {
     Q_EMIT groupChanged(currentGroup());
+}
+
+void GroupView::setCurrentGroup(Group* group)
+{
+    setCurrentIndex(m_model->index(group));
 }

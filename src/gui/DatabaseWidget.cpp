@@ -206,6 +206,8 @@ void DatabaseWidget::switchToView(bool accepted)
     if (m_newGroup) {
         if (accepted) {
             m_newGroup->setParent(m_newParent);
+            m_groupView->setCurrentGroup(m_newGroup);
+            m_groupView->expandGroup(m_newParent);
         }
         else {
             delete m_newGroup;

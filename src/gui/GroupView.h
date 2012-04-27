@@ -32,6 +32,8 @@ public:
     explicit GroupView(Database* db, QWidget* parent = 0);
     void setModel(QAbstractItemModel* model);
     Group* currentGroup();
+    void setCurrentGroup(Group* group);
+    void expandGroup(Group* group, bool expand = true);
 
 Q_SIGNALS:
     void groupChanged(Group* group);
