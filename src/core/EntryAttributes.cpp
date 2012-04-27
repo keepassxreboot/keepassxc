@@ -100,6 +100,23 @@ void EntryAttributes::remove(const QString& key)
     Q_EMIT modified();
 }
 
+void EntryAttributes::rename(const QString& oldKey, const QString& newKey)
+{
+    Q_ASSERT(!isDefaultAttribute(oldKey));
+    Q_ASSERT(!isDefaultAttribute(newKey));
+
+    if (!m_attributes.contains(oldKey)) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    QString data = value(oldKey);
+    bool protect = isProtected(oldKey);
+
+    remove(oldKey);
+    set(newKey, data, protect);
+}
+
 void EntryAttributes::copyCustomKeysFrom(const EntryAttributes* other)
 {
     if (!areCustomKeysDifferent(other)) {

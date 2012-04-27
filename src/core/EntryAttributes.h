@@ -34,6 +34,7 @@ public:
     bool isProtected(const QString& key) const;
     void set(const QString& key, const QString& value, bool protect = false);
     void remove(const QString& key);
+    void rename(const QString& oldKey, const QString& newKey);
     void copyCustomKeysFrom(const EntryAttributes* other);
     bool areCustomKeysDifferent(const EntryAttributes* other);
     void clear();
