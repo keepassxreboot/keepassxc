@@ -83,22 +83,72 @@ QVariant EntryAttributesModel::headerData(int section, Qt::Orientation orientati
 
 QVariant EntryAttributesModel::data(const QModelIndex& index, int role) const
 {
-    if (!index.isValid()) {
+    if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::EditRole)) {
         return QVariant();
     }
 
-    if (role == Qt::DisplayRole) {
-        QString key = m_attributes.at(index.row());
+    QString key = m_attributes.at(index.row());
 
-        if (index.column() == 0) {
-            return key;
-        }
-        else {
-            return m_entryAttributes->value(key);
-        }
+    if (index.column() == 0) {
+        return key;
+    }
+    else {
+        return m_entryAttributes->value(key);
+    }
+}
+
+bool EntryAttributesModel::setData(const QModelIndex& index, const QVariant& value, int role)
+{
+    if (!index.isValid() || role != Qt::EditRole || value.type() != QVariant::String
+            || value.toString().isEmpty()) {
+        return false;
     }
 
-    return QVariant();
+    QString oldKey = m_attributes.at(index.row());
+
+    if (index.column() == 0) {
+        if (EntryAttributes::isDefaultAttribute(value.toString())) {
+            return false;
+        }
+        m_entryAttributes->rename(oldKey, value.toString());
+    }
+    else {
+        m_entryAttributes->set(oldKey, value.toString());
+    }
+
+    return true;
+}
+
+Qt::ItemFlags EntryAttributesModel::flags(const QModelIndex& index) const
+{
+    if (!index.isValid()) {
+        return Qt::NoItemFlags;
+    }
+    else {
+        return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
+    }
+}
+
+QModelIndex EntryAttributesModel::indexByKey(const QString& key) const
+{
+    int row = m_attributes.indexOf(key);
+
+    if (row == -1) {
+        return QModelIndex();
+    }
+    else {
+        return index(row, 0);
+    }
+}
+
+QString EntryAttributesModel::keyByIndex(const QModelIndex& index) const
+{
+    if (!index.isValid()) {
+        return QString();
+    }
+    else {
+        return m_attributes.at(index.row());
+    }
 }
 
 void EntryAttributesModel::attributeChange(QString key)
