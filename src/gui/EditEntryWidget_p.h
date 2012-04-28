@@ -28,7 +28,7 @@ class CategoryListViewDelegate : public QStyledItemDelegate
 public:
     explicit CategoryListViewDelegate(QObject *parent) : QStyledItemDelegate(parent) {}
 
-    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+    QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
     {
         QSize size = QStyledItemDelegate::sizeHint(option, index);
         size.setHeight(qMax(size.height(), 22));

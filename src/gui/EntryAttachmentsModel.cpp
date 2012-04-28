@@ -100,13 +100,13 @@ QVariant EntryAttachmentsModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-void EntryAttachmentsModel::attachmentChange(QString key)
+void EntryAttachmentsModel::attachmentChange(const QString& key)
 {
     int row = m_entryAttachments->keys().indexOf(key);
     Q_EMIT dataChanged(index(row, 0), index(row, columnCount()-1));
 }
 
-void EntryAttachmentsModel::attachmentAboutToAdd(QString key)
+void EntryAttachmentsModel::attachmentAboutToAdd(const QString& key)
 {
     QList<QString> rows = m_entryAttachments->keys();
     rows.append(key);
@@ -120,7 +120,7 @@ void EntryAttachmentsModel::attachmentAdd()
     endInsertRows();
 }
 
-void EntryAttachmentsModel::attachmentAboutToRemove(QString key)
+void EntryAttachmentsModel::attachmentAboutToRemove(const QString& key)
 {
     int row = m_entryAttachments->keys().indexOf(key);
     beginRemoveRows(QModelIndex(), row, row);

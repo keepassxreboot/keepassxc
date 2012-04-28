@@ -141,14 +141,14 @@ QString EntryAttributesModel::keyByIndex(const QModelIndex& index) const
     }
 }
 
-void EntryAttributesModel::attributeChange(QString key)
+void EntryAttributesModel::attributeChange(const QString& key)
 {
     int row = m_attributes.indexOf(key);
     Q_ASSERT(row != -1);
     Q_EMIT dataChanged(index(row, 0), index(row, columnCount()-1));
 }
 
-void EntryAttributesModel::attributeAboutToAdd(QString key)
+void EntryAttributesModel::attributeAboutToAdd(const QString& key)
 {
     QList<QString> rows = m_attributes;
     rows.append(key);
@@ -163,7 +163,7 @@ void EntryAttributesModel::attributeAdd()
     endInsertRows();
 }
 
-void EntryAttributesModel::attributeAboutToRemove(QString key)
+void EntryAttributesModel::attributeAboutToRemove(const QString& key)
 {
     int row = m_attributes.indexOf(key);
     beginRemoveRows(QModelIndex(), row, row);
@@ -175,7 +175,7 @@ void EntryAttributesModel::attributeRemove()
     endRemoveRows();
 }
 
-void EntryAttributesModel::attributeAboutToRename(QString oldKey, QString newKey)
+void EntryAttributesModel::attributeAboutToRename(const QString& oldKey, const QString& newKey)
 {
     int oldRow = m_attributes.indexOf(oldKey);
 
@@ -198,7 +198,7 @@ void EntryAttributesModel::attributeAboutToRename(QString oldKey, QString newKey
     }
 }
 
-void EntryAttributesModel::attributeRename(QString oldKey, QString newKey)
+void EntryAttributesModel::attributeRename(const QString& oldKey, const QString& newKey)
 {
     Q_UNUSED(oldKey);
 

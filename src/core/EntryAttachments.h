@@ -38,11 +38,11 @@ public:
 
 Q_SIGNALS:
     void modified();
-    void keyModified(QString key);
-    void aboutToBeAdded(QString key);
-    void added(QString key);
-    void aboutToBeRemoved(QString key);
-    void removed(QString key);
+    void keyModified(const QString& key);
+    void aboutToBeAdded(const QString& key);
+    void added(const QString& key);
+    void aboutToBeRemoved(const QString& key);
+    void removed(const QString& key);
     void aboutToBeReset();
     void reset();
 

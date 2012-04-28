@@ -35,10 +35,10 @@ public:
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
 
 private Q_SLOTS:
-    void attachmentChange(QString key);
-    void attachmentAboutToAdd(QString key);
+    void attachmentChange(const QString& key);
+    void attachmentAboutToAdd(const QString& key);
     void attachmentAdd();
-    void attachmentAboutToRemove(QString key);
+    void attachmentAboutToRemove(const QString& key);
     void attachmentRemove();
     void aboutToReset();
     void reset();

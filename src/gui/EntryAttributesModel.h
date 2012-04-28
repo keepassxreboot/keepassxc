@@ -39,13 +39,13 @@ public:
     QString keyByIndex(const QModelIndex& index) const;
 
 private Q_SLOTS:
-    void attributeChange(QString key);
-    void attributeAboutToAdd(QString key);
+    void attributeChange(const QString& key);
+    void attributeAboutToAdd(const QString& key);
     void attributeAdd();
-    void attributeAboutToRemove(QString key);
+    void attributeAboutToRemove(const QString& key);
     void attributeRemove();
-    void attributeAboutToRename(QString oldKey, QString newKey);
-    void attributeRename(QString oldKey, QString newKey);
+    void attributeAboutToRename(const QString& oldKey, const QString& newKey);
+    void attributeRename(const QString& oldKey, const QString& newKey);
     void aboutToReset();
     void reset();
 

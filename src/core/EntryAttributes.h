@@ -48,13 +48,13 @@ public:
 Q_SIGNALS:
     void modified();
     void defaultKeyModified();
-    void customKeyModified(QString key);
-    void aboutToBeAdded(QString key);
-    void added(QString key);
-    void aboutToBeRemoved(QString key);
-    void removed(QString key);
-    void aboutToRename(QString oldKey, QString newKey);
-    void renamed(QString oldKey, QString newKey);
+    void customKeyModified(const QString& key);
+    void aboutToBeAdded(const QString& key);
+    void added(const QString& key);
+    void aboutToBeRemoved(const QString& key);
+    void removed(const QString& key);
+    void aboutToRename(const QString& oldKey, const QString& newKey);
+    void renamed(const QString& oldKey, const QString& newKey);
     void aboutToBeReset();
     void reset();
 
