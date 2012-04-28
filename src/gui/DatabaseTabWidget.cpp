@@ -85,12 +85,12 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
     // TODO error handling
     if (!file->open(QIODevice::ReadWrite)) {
         if (!file->open(QIODevice::ReadOnly)) {
-            // can only open read-only
-            m_curDbStruct.readOnly = true;
-        }
-        else {
             // can't open
             return;
+        }
+        else {
+            // can only open read-only
+            m_curDbStruct.readOnly = true;
         }
     }
 
