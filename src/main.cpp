@@ -36,7 +36,7 @@ int main(int argc, char **argv)
     QString password;
 
     const QStringList args = app.arguments();
-    for (int i = 0; i < args.size(); i++) {
+    for (int i = 1; i < args.size(); i++) {
         if (args[i] == "--password" && args.size() > (i + 1)) {
             password = args[i + 1];
             i++;
