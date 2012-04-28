@@ -18,8 +18,11 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QTableView" name="attributesView">
-        <property name="showGrid">
+       <widget class="AttributesListView" name="attributesView"/>
+      </item>
+      <item>
+       <widget class="QPlainTextEdit" name="attributesEdit">
+        <property name="enabled">
          <bool>false</bool>
         </property>
        </widget>
@@ -35,6 +38,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="editAttributeButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="text">
            <string>Edit</string>
           </property>
@@ -42,6 +48,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="removeAttributeButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="text">
            <string>Remove</string>
           </property>
@@ -121,6 +130,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>AttributesListView</class>
+   <extends>QListView</extends>
+   <header>gui/EditEntryWidget_p.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

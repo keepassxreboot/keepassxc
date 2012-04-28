@@ -59,4 +59,27 @@ public:
     }
 };
 
+class AttributesListView : public QListView
+{
+public:
+    explicit AttributesListView(QWidget* parent = 0) : QListView(parent)
+    {
+        setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+        setItemDelegate(new CategoryListViewDelegate(this));
+    }
+
+    virtual QSize sizeHint() const
+    {
+        QSize sizeHint = QListView::sizeHint();
+
+        int width = sizeHintForColumn(0) + frameWidth() * 2 + 5;
+        if (verticalScrollBar()->isVisible()) {
+            width += verticalScrollBar()->width();
+        }
+        sizeHint.setWidth(width);
+
+        return sizeHint;
+    }
+};
+
 #endif // KEEPASSX_EDITENTRYWIDGET_P_H

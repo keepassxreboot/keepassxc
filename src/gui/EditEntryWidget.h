@@ -18,6 +18,7 @@
 #ifndef KEEPASSX_EDITENTRYWIDGET_H
 #define KEEPASSX_EDITENTRYWIDGET_H
 
+#include <QtCore/QAbstractItemModel>
 #include <QtCore/QScopedPointer>
 
 #include "gui/DialogyWidget.h"
@@ -59,9 +60,13 @@ private Q_SLOTS:
     void cancel();
     void togglePassword(bool checked);
     void setPasswordCheckColors();
+    void insertAttribute();
+    void editCurrentAttribute();
+    void removeCurrentAttribute();
+    void updateCurrentAttribute();
 
 private:
-        bool passwordsEqual();
+    bool passwordsEqual();
 
     Entry* m_entry;
 
@@ -76,6 +81,7 @@ private:
     EntryAttributesModel* m_attributesModel;
     EntryAttachments* m_entryAttachments;
     EntryAttributes* m_entryAttributes;
+    QPersistentModelIndex m_currentAttribute;
 
     Q_DISABLE_COPY(EditEntryWidget)
 };

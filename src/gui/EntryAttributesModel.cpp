@@ -23,6 +23,7 @@
 EntryAttributesModel::EntryAttributesModel(QObject* parent)
     : QAbstractListModel(parent)
     , m_entryAttributes(0)
+    , m_nextRenameDataChange(false)
 {
 }
 
@@ -43,6 +44,9 @@ void EntryAttributesModel::setEntryAttributes(EntryAttributes* entryAttributes)
         connect(m_entryAttributes, SIGNAL(added(QString)), SLOT(attributeAdd()));
         connect(m_entryAttributes, SIGNAL(aboutToBeRemoved(QString)), SLOT(attributeAboutToRemove(QString)));
         connect(m_entryAttributes, SIGNAL(removed(QString)), SLOT(attributeRemove()));
+        connect(m_entryAttributes, SIGNAL(aboutToRename(QString,QString)),
+                SLOT(attributeAboutToRename(QString,QString)));
+        connect(m_entryAttributes, SIGNAL(renamed(QString,QString)), SLOT(attributeRename(QString,QString)));
         connect(m_entryAttributes, SIGNAL(aboutToBeReset()), SLOT(aboutToReset()));
         connect(m_entryAttributes, SIGNAL(reset()), SLOT(reset()));
     }
@@ -169,6 +173,46 @@ void EntryAttributesModel::attributeRemove()
 {
     updateAttributes();
     endRemoveRows();
+}
+
+void EntryAttributesModel::attributeAboutToRename(QString oldKey, QString newKey)
+{
+    int oldRow = m_attributes.indexOf(oldKey);
+
+    QList<QString> rows = m_attributes;
+    rows.removeOne(oldKey);
+    rows.append(newKey);
+    qSort(rows);
+    int newRow = rows.indexOf(newKey);
+    if (newRow > oldRow) {
+        newRow++;
+    }
+
+    if (oldRow != newRow) {
+        bool result = beginMoveRows(QModelIndex(), oldRow, oldRow, QModelIndex(), newRow);
+        Q_UNUSED(result);
+        Q_ASSERT(result);
+    }
+    else {
+        m_nextRenameDataChange = true;
+    }
+}
+
+void EntryAttributesModel::attributeRename(QString oldKey, QString newKey)
+{
+    Q_UNUSED(oldKey);
+
+    updateAttributes();
+
+    if (!m_nextRenameDataChange) {
+        endMoveRows();
+    }
+    else {
+        m_nextRenameDataChange = false;
+
+        QModelIndex keyIndex = index(m_attributes.indexOf(newKey), 0);
+        Q_EMIT dataChanged(keyIndex, keyIndex);
+    }
 }
 
 void EntryAttributesModel::aboutToReset()

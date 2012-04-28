@@ -44,6 +44,8 @@ private Q_SLOTS:
     void attributeAdd();
     void attributeAboutToRemove(QString key);
     void attributeRemove();
+    void attributeAboutToRename(QString oldKey, QString newKey);
+    void attributeRename(QString oldKey, QString newKey);
     void aboutToReset();
     void reset();
 
@@ -52,6 +54,7 @@ private:
 
     EntryAttributes* m_entryAttributes;
     QList<QString> m_attributes;
+    bool m_nextRenameDataChange;
 };
 
 #endif // KEEPASSX_ENTRYATTRIBUTESMODEL_H

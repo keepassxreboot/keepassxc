@@ -53,6 +53,8 @@ Q_SIGNALS:
     void added(QString key);
     void aboutToBeRemoved(QString key);
     void removed(QString key);
+    void aboutToRename(QString oldKey, QString newKey);
+    void renamed(QString oldKey, QString newKey);
     void aboutToBeReset();
     void reset();
 

@@ -61,13 +61,21 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     m_advancedUi->setupUi(m_advancedWidget);
     m_ui->stackedWidget->addWidget(m_advancedWidget);
 
-    m_attachmentsModel = new EntryAttachmentsModel(m_advancedWidget);
-    m_advancedUi->attachmentsView->setModel(m_attachmentsModel);
-    m_entryAttributes = new EntryAttributes(this);
-
-    m_attributesModel = new EntryAttributesModel(m_advancedWidget);
-    m_advancedUi->attributesView->setModel(m_attributesModel);
     m_entryAttachments = new EntryAttachments(this);
+    m_attachmentsModel = new EntryAttachmentsModel(m_advancedWidget);
+    m_attachmentsModel->setEntryAttachments(m_entryAttachments);
+    m_advancedUi->attachmentsView->setModel(m_attachmentsModel);
+
+    m_entryAttributes = new EntryAttributes(this);
+    m_attributesModel = new EntryAttributesModel(m_advancedWidget);
+    m_attributesModel->setEntryAttributes(m_entryAttributes);
+    m_advancedUi->attributesView->setModel(m_attributesModel);
+    connect(m_advancedUi->addAttributeButton, SIGNAL(clicked()), SLOT(insertAttribute()));
+    connect(m_advancedUi->editAttributeButton, SIGNAL(clicked()), SLOT(editCurrentAttribute()));
+    connect(m_advancedUi->removeAttributeButton, SIGNAL(clicked()), SLOT(removeCurrentAttribute()));
+    connect(m_advancedUi->attributesView->selectionModel(),
+            SIGNAL(currentChanged(QModelIndex,QModelIndex)),
+            SLOT(updateCurrentAttribute()));
 
     Q_ASSERT(m_ui->categoryList->model()->rowCount() == m_ui->stackedWidget->count());
 
@@ -114,11 +122,16 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupN
     m_notesUi->notesEdit->setPlainText(entry->notes());
 
     m_entryAttributes->copyCustomKeysFrom(entry->attributes());
-    m_attributesModel->setEntryAttributes(m_entryAttributes);
     *m_entryAttachments = *entry->attachments();
-    m_attachmentsModel->setEntryAttachments(m_entryAttachments);
 
     m_ui->categoryList->setCurrentRow(0);
+
+    if (m_attributesModel->rowCount() != 0) {
+        m_advancedUi->attributesView->setCurrentIndex(m_attributesModel->index(0, 0));
+    }
+    else {
+        m_advancedUi->attributesEdit->setEnabled(false);
+    }
 
     m_mainUi->titleEdit->setFocus();
 }
@@ -129,6 +142,14 @@ void EditEntryWidget::saveEntry()
         QMessageBox::warning(this, tr("Error"), tr("Different passwords supplied."));
         return;
     }
+
+    if (m_advancedUi->attributesView->currentIndex().isValid()) {
+        QString key = m_attributesModel->keyByIndex(m_advancedUi->attributesView->currentIndex());
+        m_entryAttributes->set(key, m_advancedUi->attributesEdit->toPlainText(),
+                               m_entryAttributes->isProtected(key));
+    }
+
+    m_currentAttribute = QPersistentModelIndex();
 
     m_entry->beginUpdate();
 
@@ -142,19 +163,23 @@ void EditEntryWidget::saveEntry()
     m_entry->setNotes(m_notesUi->notesEdit->toPlainText());
 
     m_entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
-    m_entryAttributes->clear();
     *m_entry->attachments() = *m_entryAttachments;
-    m_entryAttachments->clear();
 
     m_entry->endUpdate();
 
     m_entry = 0;
+    m_entryAttributes->clear();
+    m_entryAttachments->clear();
+
     Q_EMIT editFinished(true);
 }
 
 void EditEntryWidget::cancel()
 {
     m_entry = 0;
+    m_entryAttributes->clear();
+    m_entryAttachments->clear();
+
     Q_EMIT editFinished(false);
 }
 
@@ -184,4 +209,66 @@ void EditEntryWidget::setPasswordCheckColors()
         }
     }
     m_mainUi->passwordRepeatEdit->setPalette(pal);
+}
+
+void EditEntryWidget::insertAttribute()
+{
+    QString name = tr("New attribute");
+    int i = 1;
+
+    while (m_entryAttributes->keys().contains(name)) {
+        name = QString("%1 %2").arg(tr("New attribute")).arg(i);
+        i++;
+    }
+
+    m_entryAttributes->set(name, "");
+    QModelIndex index = m_attributesModel->indexByKey(name);
+
+    m_advancedUi->attributesView->setCurrentIndex(index);
+    m_advancedUi->attributesView->edit(index);
+}
+
+void EditEntryWidget::editCurrentAttribute()
+{
+    QModelIndex index = m_advancedUi->attributesView->currentIndex();
+
+    if (index.isValid()) {
+        m_advancedUi->attributesView->edit(index);
+    }
+}
+
+void EditEntryWidget::removeCurrentAttribute()
+{
+    QModelIndex index = m_advancedUi->attributesView->currentIndex();
+
+    if (index.isValid()) {
+        m_entryAttributes->remove(m_attributesModel->keyByIndex(index));
+    }
+}
+
+void EditEntryWidget::updateCurrentAttribute()
+{
+    QModelIndex newIndex = m_advancedUi->attributesView->currentIndex();
+
+    if (m_currentAttribute != newIndex) {
+        if (m_currentAttribute.isValid()) {
+            QString key = m_attributesModel->keyByIndex(m_currentAttribute);
+            m_entryAttributes->set(key, m_advancedUi->attributesEdit->toPlainText(),
+                                   m_entryAttributes->isProtected(key));
+        }
+
+        if (newIndex.isValid()) {
+            QString key = m_attributesModel->keyByIndex(newIndex);
+            m_advancedUi->attributesEdit->setPlainText(m_entryAttributes->value(key));
+            m_advancedUi->attributesEdit->setEnabled(true);
+        }
+        else {
+            m_advancedUi->attributesEdit->setPlainText("");
+            m_advancedUi->attributesEdit->setEnabled(false);
+        }
+
+        m_advancedUi->editAttributeButton->setEnabled(newIndex.isValid());
+        m_advancedUi->removeAttributeButton->setEnabled(newIndex.isValid());
+        m_currentAttribute = newIndex;
+    }
 }
