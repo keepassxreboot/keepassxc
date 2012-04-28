@@ -41,7 +41,7 @@ class CategoryListWidget : public QListWidget
 public:
     explicit CategoryListWidget(QWidget* parent = 0) : QListWidget(parent)
     {
-        setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
+        setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
         setItemDelegate(new CategoryListViewDelegate(this));
     }
 
