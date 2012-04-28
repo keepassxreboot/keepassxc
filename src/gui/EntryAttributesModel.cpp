@@ -178,6 +178,7 @@ void EntryAttributesModel::aboutToReset()
 
 void EntryAttributesModel::reset()
 {
+    updateAttributes();
     endResetModel();
 }
 
