@@ -138,7 +138,9 @@ void DatabaseWidget::deleteEntry()
     bool inRecylceBin = Tools::hasChild(m_db->metadata()->recycleBin(), m_entryView->currentEntry());
     if (inRecylceBin || !m_db->metadata()->recycleBinEnabled()) {
         QMessageBox::StandardButton result = QMessageBox::question(
-            this, tr("Question"), tr("Do you really want to delete this entry for good?"),
+            this, tr("Delete entry?"),
+            tr("Do you really want to delete the entry \"%1\" for good?")
+            .arg(m_entryView->currentEntry()->title()),
             QMessageBox::Yes | QMessageBox::No);
         if (result == QMessageBox::Yes) {
             delete m_entryView->currentEntry();
@@ -164,7 +166,9 @@ void DatabaseWidget::deleteGroup()
     bool inRecylceBin = Tools::hasChild(m_db->metadata()->recycleBin(), m_groupView->currentGroup());
     if (inRecylceBin || !m_db->metadata()->recycleBinEnabled()) {
         QMessageBox::StandardButton result = QMessageBox::question(
-            this, tr("Question"), tr("Do you really want to delete this group for good?"),
+            this, tr("Delete group?"),
+            tr("Do you really want to delete the group \"%1\" for good?")
+            .arg(m_groupView->currentGroup()->name()),
             QMessageBox::Yes | QMessageBox::No);
         if (result == QMessageBox::Yes) {
             delete m_groupView->currentGroup();
