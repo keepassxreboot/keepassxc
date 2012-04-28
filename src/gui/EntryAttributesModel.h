@@ -18,11 +18,11 @@
 #ifndef KEEPASSX_ENTRYATTRIBUTESMODEL_H
 #define KEEPASSX_ENTRYATTRIBUTESMODEL_H
 
-#include <QtCore/QAbstractTableModel>
+#include <QtCore/QAbstractListModel>
 
 class EntryAttributes;
 
-class EntryAttributesModel : public QAbstractTableModel
+class EntryAttributesModel : public QAbstractListModel
 {
     Q_OBJECT
 

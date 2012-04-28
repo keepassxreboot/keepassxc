@@ -21,7 +21,7 @@
 #include "core/Tools.h"
 
 EntryAttributesModel::EntryAttributesModel(QObject* parent)
-    : QAbstractTableModel(parent)
+    : QAbstractListModel(parent)
     , m_entryAttributes(0)
 {
 }
@@ -64,21 +64,17 @@ int EntryAttributesModel::columnCount(const QModelIndex& parent) const
 {
     Q_UNUSED(parent);
 
-    return 2;
+    return 1;
 }
 
 QVariant EntryAttributesModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if ((orientation == Qt::Horizontal) && (role == Qt::DisplayRole)) {
-        switch (section) {
-        case 0:
-            return tr("Name");
-        case 1:
-            return tr("Value");
-        }
+    if ((orientation == Qt::Horizontal) && (role == Qt::DisplayRole) && (section == 0)) {
+        return tr("Name");
     }
-
-    return QVariant();
+    else {
+        return QVariant();
+    }
 }
 
 QVariant EntryAttributesModel::data(const QModelIndex& index, int role) const
@@ -87,14 +83,7 @@ QVariant EntryAttributesModel::data(const QModelIndex& index, int role) const
         return QVariant();
     }
 
-    QString key = m_attributes.at(index.row());
-
-    if (index.column() == 0) {
-        return key;
-    }
-    else {
-        return m_entryAttributes->value(key);
-    }
+    return m_attributes.at(index.row());
 }
 
 bool EntryAttributesModel::setData(const QModelIndex& index, const QVariant& value, int role)
@@ -105,16 +94,13 @@ bool EntryAttributesModel::setData(const QModelIndex& index, const QVariant& val
     }
 
     QString oldKey = m_attributes.at(index.row());
+    QString newKey = value.toString();
 
-    if (index.column() == 0) {
-        if (EntryAttributes::isDefaultAttribute(value.toString())) {
-            return false;
-        }
-        m_entryAttributes->rename(oldKey, value.toString());
+    if (EntryAttributes::isDefaultAttribute(newKey)
+            || m_entryAttributes->keys().contains(newKey)) {
+        return false;
     }
-    else {
-        m_entryAttributes->set(oldKey, value.toString());
-    }
+    m_entryAttributes->rename(oldKey, newKey);
 
     return true;
 }

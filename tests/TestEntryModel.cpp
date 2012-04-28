@@ -161,7 +161,6 @@ void TestEntryModel::testAttributesModel()
     entryAttributes->set("2nd", "789");
 
     QCOMPARE(model->data(model->index(0, 0)).toString(), QString("2nd"));
-    QCOMPARE(model->data(model->index(0, 1)).toString(), QString("789"));
 
     entryAttributes->remove("first");
 
