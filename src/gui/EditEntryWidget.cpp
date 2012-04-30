@@ -130,6 +130,7 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupN
         m_advancedUi->attributesView->setCurrentIndex(m_attributesModel->index(0, 0));
     }
     else {
+        m_advancedUi->attributesEdit->setPlainText("");
         m_advancedUi->attributesEdit->setEnabled(false);
     }
 
