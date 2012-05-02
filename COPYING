@@ -32,6 +32,17 @@ Copyright: 2006, Otto Salminen
            2011, Felix Geyer <debfx@fobos.de>
 License: GPL-2
 
+Files: share/icons/application/22x22/action/dialog-close.png, share/icons/application/22x22/action/dialog-ok.png,
+       share/icons/application/22x22/status/dialog-error.png, share/icons/application/22x22/status/dialog-information.png,
+       share/icons/application/22x22/status/dialog-warning.png
+Copyright: 2007, Nuno Pinheiro <nuno@oxygen-icons.org>
+           2007, David Vignoni <david@icon-king.com>
+           2007, David Miller <miller@oxygen-icons.org>
+           2007, Johann Ollivier Lapeyre <johann@oxygen-icons.org>
+           2007, Kenneth Wimer <kwwii@bootsplash.org>
+           2007, Riccardo Iaconelli <riccardo@oxygen-icons.org>
+License: LGPL-3+
+
 Files: src/crypto/salsa20/*
 Copyright: is in public domain
 License: -

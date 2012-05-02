@@ -38,7 +38,7 @@ QIcon DataPath::icon(const QString& category, const QString& name)
 
     if (icon.isNull()) {
         QStringList pngSizes;
-        pngSizes << "16" << "24" << "32" << "48" << "64" << "128";
+        pngSizes << "16" << "22" << "24" << "32" << "48" << "64" << "128";
         QString filename;
         Q_FOREACH (const QString& size, pngSizes) {
             filename = QString("%1/icons/application/%2x%2/%3/%4.png").arg(m_basePath, size, category, name);
