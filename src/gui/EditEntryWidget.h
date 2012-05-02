@@ -64,6 +64,9 @@ private Q_SLOTS:
     void editCurrentAttribute();
     void removeCurrentAttribute();
     void updateCurrentAttribute();
+    void insertAttachment();
+    void saveCurrentAttachment();
+    void removeCurrentAttachment();
 
 private:
     bool passwordsEqual();

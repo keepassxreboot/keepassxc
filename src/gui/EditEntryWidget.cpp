@@ -21,14 +21,17 @@
 #include "ui_EditEntryWidgetMain.h"
 #include "ui_EditEntryWidgetNotes.h"
 
+#include <QtGui/QDesktopServices>
 #include <QtGui/QListWidget>
 #include <QtGui/QStackedLayout>
 #include <QtGui/QMessageBox>
 
 #include "core/Entry.h"
 #include "core/Group.h"
+#include "core/Tools.h"
 #include "gui/EntryAttachmentsModel.h"
 #include "gui/EntryAttributesModel.h"
+#include "gui/FileDialog.h"
 
 EditEntryWidget::EditEntryWidget(QWidget* parent)
     : DialogyWidget(parent)
@@ -65,6 +68,9 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     m_attachmentsModel = new EntryAttachmentsModel(m_advancedWidget);
     m_attachmentsModel->setEntryAttachments(m_entryAttachments);
     m_advancedUi->attachmentsView->setModel(m_attachmentsModel);
+    connect(m_advancedUi->saveAttachmentButton, SIGNAL(clicked()), SLOT(saveCurrentAttachment()));
+    connect(m_advancedUi->addAttachmentButton, SIGNAL(clicked()), SLOT(insertAttachment()));
+    connect(m_advancedUi->removeAttachmentButton, SIGNAL(clicked()), SLOT(removeCurrentAttachment()));
 
     m_entryAttributes = new EntryAttributes(this);
     m_attributesModel = new EntryAttributesModel(m_advancedWidget);
@@ -272,4 +278,70 @@ void EditEntryWidget::updateCurrentAttribute()
         m_advancedUi->removeAttributeButton->setEnabled(newIndex.isValid());
         m_currentAttribute = newIndex;
     }
+}
+
+void EditEntryWidget::insertAttachment()
+{
+    // TODO save last used dir
+    QString filename = fileDialog()->getOpenFileName(this, tr("Select file"),
+                QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation));
+    if (filename.isEmpty() || !QFile::exists(filename)) {
+        return;
+    }
+
+    QFile file(filename);
+    if (!file.open(QIODevice::ReadOnly)) {
+        QMessageBox::warning(this, tr("Error"),
+                tr("Unable to open file:\n").append(file.errorString()));
+        return;
+    }
+
+    QByteArray data;
+    if (!Tools::readAllFromDevice(&file, data)) {
+        QMessageBox::warning(this, tr("Error"),
+                tr("Unable to open file:\n").append(file.errorString()));
+        return;
+    }
+
+    m_entryAttachments->set(QFileInfo(filename).fileName(), data);
+}
+
+void EditEntryWidget::saveCurrentAttachment()
+{
+    QModelIndex index = m_advancedUi->attachmentsView->currentIndex();
+    if (!index.isValid()) {
+        return;
+    }
+
+    QString filename = m_attachmentsModel->keyByIndex(index);
+    // TODO save last used dir
+    QDir dir(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation));
+    QString savePath = fileDialog()->getSaveFileName(this, tr("Save attachment"),
+                                                       dir.filePath(filename));
+    if (!savePath.isEmpty()) {
+        QByteArray attachmentData = m_entryAttachments->value(filename);
+
+        QFile file(savePath);
+        if (!file.open(QIODevice::WriteOnly)) {
+            QMessageBox::warning(this, tr("Error"),
+                    tr("Unable to save the attachment:\n").append(file.errorString()));
+            return;
+        }
+        if (file.write(attachmentData) != attachmentData.size()) {
+            QMessageBox::warning(this, tr("Error"),
+                    tr("Unable to save the attachment:\n").append(file.errorString()));
+            return;
+        }
+    }
+}
+
+void EditEntryWidget::removeCurrentAttachment()
+{
+    QModelIndex index = m_advancedUi->attachmentsView->currentIndex();
+    if (!index.isValid()) {
+        return;
+    }
+
+    QString key = m_attachmentsModel->keyByIndex(index);
+    m_entryAttachments->remove(key);
 }
