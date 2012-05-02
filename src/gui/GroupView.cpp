@@ -38,6 +38,7 @@ GroupView::GroupView(Database* db, QWidget* parent)
     recInitExpanded(db->rootGroup());
     connect(this, SIGNAL(expanded(QModelIndex)), this, SLOT(expandedChanged(QModelIndex)));
     connect(this, SIGNAL(collapsed(QModelIndex)), this, SLOT(expandedChanged(QModelIndex)));
+    connect(m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(syncExpandedState(QModelIndex,int,int)));
 
     setCurrentIndex(m_model->index(0, 0));
     // invoke later so the EntryView is connected
@@ -100,6 +101,14 @@ void GroupView::setModel(QAbstractItemModel* model)
 void GroupView::emitGroupChanged()
 {
     Q_EMIT groupChanged(currentGroup());
+}
+
+void GroupView::syncExpandedState(const QModelIndex& parent, int start, int end)
+{
+    for (int row = start; row <= end; row++) {
+        Group* group = m_model->groupFromIndex(m_model->index(row, 0, parent));
+        recInitExpanded(group);
+    }
 }
 
 void GroupView::setCurrentGroup(Group* group)

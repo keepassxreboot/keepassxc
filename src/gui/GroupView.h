@@ -42,6 +42,7 @@ private Q_SLOTS:
     void expandedChanged(const QModelIndex& index);
     void emitGroupChanged(const QModelIndex& index);
     void emitGroupChanged();
+    void syncExpandedState(const QModelIndex& parent, int start, int end);
 
 protected:
     void dragMoveEvent(QDragMoveEvent* event);
