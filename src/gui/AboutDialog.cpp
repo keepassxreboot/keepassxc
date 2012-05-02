@@ -19,17 +19,21 @@
 #include "ui_AboutDialog.h"
 
 #include "config-keepassx.h"
+#include "core/DataPath.h"
 
 AboutDialog::AboutDialog(QWidget* parent)
     : QDialog(parent)
     , m_ui(new Ui::AboutDialog())
 {
     m_ui->setupUi(this);
+
     m_ui->nameLabel->setText(m_ui->nameLabel->text() + " " + KEEPASSX_VERSION);
     QFont nameLabelFont = m_ui->nameLabel->font();
     nameLabelFont.setBold(true);
     nameLabelFont.setPointSize(nameLabelFont.pointSize() + 4);
     m_ui->nameLabel->setFont(nameLabelFont);
+
+    m_ui->iconLabel->setPixmap(dataPath()->applicationIcon().pixmap(48));
 
     setAttribute(Qt::WA_DeleteOnClose);
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(close()));
