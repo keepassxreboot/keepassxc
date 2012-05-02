@@ -377,7 +377,7 @@ QList<Entry*> Group::entriesRecursive(bool includeHistoryItems)
     return entryList;
 }
 
-void Group::addEntry(Entry *entry)
+void Group::addEntry(Entry* entry)
 {
     Q_ASSERT(entry);
     Q_ASSERT(!m_entries.contains(entry));

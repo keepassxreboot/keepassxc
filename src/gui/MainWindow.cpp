@@ -170,7 +170,7 @@ void MainWindow::showAboutDialog()
     aboutDialog->show();
 }
 
-void MainWindow::closeEvent(QCloseEvent *event) {
+void MainWindow::closeEvent(QCloseEvent* event) {
     if (!m_ui->tabWidget->closeAllDatabases()) {
         event->ignore();
     }

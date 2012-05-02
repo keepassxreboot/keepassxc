@@ -24,7 +24,7 @@
 #include "keys/CompositeKey.h"
 #include "keys/PasswordKey.h"
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
     QApplication app(argc, argv);
     // don't set applicationName or organizationName as that changes

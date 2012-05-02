@@ -215,7 +215,7 @@ QByteArray FileKey::loadXmlKey(QXmlStreamReader& xmlReader)
     return data;
 }
 
-bool FileKey::loadBinary(QIODevice *device)
+bool FileKey::loadBinary(QIODevice* device)
 {
     if (device->size() != 32) {
         return false;
@@ -225,7 +225,7 @@ bool FileKey::loadBinary(QIODevice *device)
     return true;
 }
 
-bool FileKey::loadHex(QIODevice *device)
+bool FileKey::loadHex(QIODevice* device)
 {
     if (device->size() != 64) {
         return false;
@@ -247,7 +247,7 @@ bool FileKey::loadHex(QIODevice *device)
     return true;
 }
 
-bool FileKey::loadHashed(QIODevice *device)
+bool FileKey::loadHashed(QIODevice* device)
 {
     CryptoHash cryptoHash(CryptoHash::Sha256);
 

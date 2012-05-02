@@ -36,7 +36,7 @@ public:
     void openDatabase(const QString& fileName, const QString& pw, const QString& keyFile);
 
 protected:
-     void closeEvent(QCloseEvent *event);
+     void closeEvent(QCloseEvent* event);
 
 private Q_SLOTS:
     void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::None);

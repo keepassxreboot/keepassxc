@@ -605,7 +605,7 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
     return entry;
 }
 
-void KeePass2XmlReader::parseEntryString(Entry *entry)
+void KeePass2XmlReader::parseEntryString(Entry* entry)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "String");
 
@@ -638,7 +638,7 @@ void KeePass2XmlReader::parseEntryString(Entry *entry)
     }
 }
 
-void KeePass2XmlReader::parseEntryBinary(Entry *entry)
+void KeePass2XmlReader::parseEntryBinary(Entry* entry)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Binary");
 
@@ -696,7 +696,7 @@ void KeePass2XmlReader::parseAutoType(Entry* entry)
     }
 }
 
-void KeePass2XmlReader::parseAutoTypeAssoc(Entry *entry)
+void KeePass2XmlReader::parseAutoTypeAssoc(Entry* entry)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Association");
 

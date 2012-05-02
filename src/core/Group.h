@@ -134,7 +134,7 @@ private:
 
     friend void Database::setRootGroup(Group* group);
     friend Entry::~Entry();
-    friend void Entry::setGroup(Group *group);
+    friend void Entry::setGroup(Group* group);
 };
 
 #endif // KEEPASSX_GROUP_H
