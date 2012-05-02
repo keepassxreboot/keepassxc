@@ -81,9 +81,12 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="QTableView" name="attachmentsView">
-        <property name="showGrid">
-         <bool>false</bool>
+       <widget class="QListView" name="attachmentsView">
+        <property name="flow">
+         <enum>QListView::LeftToRight</enum>
+        </property>
+        <property name="isWrapping" stdset="0">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
