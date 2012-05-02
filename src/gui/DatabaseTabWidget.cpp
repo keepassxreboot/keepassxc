@@ -22,6 +22,7 @@
 #include <QtGui/QMessageBox>
 
 #include "core/Database.h"
+#include "core/Group.h"
 #include "core/Metadata.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/FileDialog.h"
@@ -62,6 +63,7 @@ void DatabaseTabWidget::newDatabase()
 {
     DatabaseManagerStruct dbStruct;
     Database* db = new Database();
+    db->rootGroup()->setName(tr("Root"));
     dbStruct.dbWidget = new DatabaseWidget(db, this);
 
     insertDatabase(db, dbStruct);
