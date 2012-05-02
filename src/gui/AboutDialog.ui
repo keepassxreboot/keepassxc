@@ -47,7 +47,7 @@
    <item>
     <widget class="QLabel" name="label_3">
      <property name="text">
-      <string>KeePassX is distributed under the term of the GNU General Public License (GPL) version 3 or (at your option) version 3.</string>
+      <string>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
