@@ -24,6 +24,7 @@
 #include "core/DatabaseIcons.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/Tools.h"
 #include "format/KeePass2RandomStream.h"
 #include "streams/QtIOCompressor"
 
@@ -873,24 +874,10 @@ QByteArray KeePass2XmlReader::readCompressedBinary()
     compressor.open(QIODevice::ReadOnly);
 
     QByteArray result;
-    qint64 readBytes = 0;
-    qint64 readResult;
-    do {
-        result.resize(result.size() + 16384);
-        readResult = compressor.read(result.data() + readBytes, result.size() - readBytes);
-        if (readResult > 0) {
-            readBytes += readResult;
-        }
-    } while (readResult > 0);
-
-    if (readResult == -1) {
+    if (!Tools::readAllFromDevice(&compressor, result)) {
         raiseError(16);
-        return QByteArray();
     }
-    else {
-        result.resize(static_cast<int>(readBytes));
-        return result;
-    }
+    return result;
 }
 
 Group* KeePass2XmlReader::getGroup(const Uuid& uuid)

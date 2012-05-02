@@ -21,10 +21,13 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 
+class QIODevice;
+
 namespace Tools {
 
 QString humanReadableFileSize(qint64 bytes);
 bool hasChild(const QObject* parent, const QObject* child);
+bool readAllFromDevice(QIODevice* device, QByteArray& data);
 
 } // namespace Tools
 

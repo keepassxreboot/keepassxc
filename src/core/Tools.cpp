@@ -17,6 +17,7 @@
 
 #include "Tools.h"
 
+#include <QtCore/QIODevice>
 #include <QtCore/QLocale>
 #include <QtCore/QStringList>
 
@@ -49,6 +50,29 @@ bool hasChild(const QObject* parent, const QObject* child)
         }
     }
     return false;
+}
+
+bool readAllFromDevice(QIODevice* device, QByteArray& data)
+{
+    QByteArray result;
+    qint64 readBytes = 0;
+    qint64 readResult;
+    do {
+        result.resize(result.size() + 16384);
+        readResult = device->read(result.data() + readBytes, result.size() - readBytes);
+        if (readResult > 0) {
+            readBytes += readResult;
+        }
+    } while (readResult > 0);
+
+    if (readResult == -1) {
+        return false;
+    }
+    else {
+        result.resize(static_cast<int>(readBytes));
+        data = result;
+        return true;
+    }
 }
 
 } // namespace Tools
