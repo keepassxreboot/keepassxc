@@ -75,13 +75,6 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="1">
-      <widget class="QCheckBox" name="recycleBinEnabledCheckBox">
-       <property name="text">
-        <string>Recycle bin</string>
-       </property>
-      </widget>
-     </item>
      <item row="4" column="1">
       <widget class="QLineEdit" name="defaultUsernameEdit">
        <property name="enabled">
@@ -93,6 +86,16 @@
       <widget class="QLabel" name="defaultUsernameLabel">
        <property name="text">
         <string>Default username:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QCheckBox" name="recycleBinEnabledCheckBox"/>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Use recycle bin:</string>
        </property>
       </widget>
      </item>
