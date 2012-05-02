@@ -257,6 +257,8 @@ bool DatabaseTabWidget::closeDatabase(int index)
         index = currentIndex();
     }
 
+    setCurrentIndex(index);
+
     return closeDatabase(indexDatabase(index));
 }
 
@@ -265,6 +267,8 @@ void DatabaseTabWidget::closeDatabaseFromSender()
     Q_ASSERT(sender());
     DatabaseWidget* dbWidget = static_cast<DatabaseWidget*>(sender());
     Database* db = databaseFromDatabaseWidget(dbWidget);
+    int index = databaseIndex(db);
+    setCurrentIndex(index);
     closeDatabase(db);
 }
 
