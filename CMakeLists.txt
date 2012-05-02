@@ -24,7 +24,7 @@ option(WITH_GUI_TESTS "Enable building of GUI tests" OFF)
 option(WITH_LTO "Enable Link Time Optimization (LTO)" OFF)
 option(WITH_PIE "Build as Position-independent executable (PIE)" OFF)
 
-set( KEEPASSX_VERSION "0.9.0" )
+set( KEEPASSX_VERSION "2.0 alpha 1" )
 
 if("${CMAKE_C_COMPILER}" MATCHES "clang$" OR "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
   set(CMAKE_COMPILER_IS_CLANG 1)
