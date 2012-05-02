@@ -29,18 +29,28 @@ QString DataPath::path(const QString& name)
 
 QIcon DataPath::applicationIcon()
 {
-    QIcon icon = QIcon::fromTheme("keepassx");
+    return icon("apps", "keepassx");
+}
 
-#if defined(QT_DEBUG) || defined(Q_WS_MAC) || defined(Q_WS_WIN)
+QIcon DataPath::icon(const QString& category, const QString& name)
+{
+    QIcon icon = QIcon::fromTheme(name);
+
     if (icon.isNull()) {
         QStringList pngSizes;
         pngSizes << "16" << "24" << "32" << "48" << "64" << "128";
+        QString filename;
         Q_FOREACH (const QString& size, pngSizes) {
-            icon.addFile(QString("%1/icons/application/%2x%2/apps/keepassx.png").arg(m_basePath, size));
+            filename = QString("%1/icons/application/%2x%2/%3/%4.png").arg(m_basePath, size, category, name);
+            if (QFile::exists(filename)) {
+                icon.addFile(filename);
+            }
         }
-        icon.addFile(QString("%1/icons/application/scalable/apps/keepassx.svgz").arg(m_basePath));
+        filename = QString("%1/icons/application/scalable/%3/%4.svgz").arg(m_basePath, category, name);
+        if (QFile::exists(filename)) {
+            icon.addFile(filename);
+        }
     }
-#endif
 
     return icon;
 }
