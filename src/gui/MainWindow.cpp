@@ -23,6 +23,7 @@
 #include "core/Database.h"
 #include "core/DataPath.h"
 #include "core/Metadata.h"
+#include "gui/AboutDialog.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/EntryView.h"
 
@@ -69,6 +70,7 @@ MainWindow::MainWindow()
     connect(m_ui->actionGroupDelete, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(deleteGroup()));
     connect(m_ui->actionQuit, SIGNAL(triggered()), SLOT(close()));
+    connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
 }
 
 MainWindow::~MainWindow()
@@ -160,6 +162,12 @@ void MainWindow::updateWindowTitle()
     else {
         setWindowTitle(m_ui->tabWidget->tabText(index).append(" - ").append(m_baseWindowTitle));
     }
+}
+
+void MainWindow::showAboutDialog()
+{
+    AboutDialog* aboutDialog = new AboutDialog(this);
+    aboutDialog->show();
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {

@@ -49,6 +49,7 @@ set(keepassx_SOURCES
     format/KeePass2Writer.cpp
     format/KeePass2XmlReader.cpp
     format/KeePass2XmlWriter.cpp
+    gui/AboutDialog.cpp
     gui/ChangeMasterKeyWidget.cpp
     gui/DatabaseOpenDialog.cpp
     gui/DatabaseSettingsWidget.cpp
@@ -82,6 +83,7 @@ set(keepassx_MOC
     core/EntryAttributes.h
     core/Group.h
     core/Metadata.h
+    gui/AboutDialog.h
     gui/ChangeMasterKeyWidget.h
     gui/DatabaseOpenDialog.h
     gui/DatabaseSettingsWidget.h
@@ -104,6 +106,7 @@ set(keepassx_MOC
 )
 
 set(keepassx_FORMS
+    gui/AboutDialog.ui
     gui/ChangeMasterKeyWidget.ui
     gui/DatabaseOpenDialog.ui
     gui/DatabaseSettingsWidget.ui

@@ -41,6 +41,7 @@ protected:
 private Q_SLOTS:
     void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::None);
     void updateWindowTitle();
+    void showAboutDialog();
 
 private:
     const QScopedPointer<Ui::MainWindow> m_ui;
