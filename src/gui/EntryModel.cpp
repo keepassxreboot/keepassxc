@@ -35,6 +35,13 @@ Entry* EntryModel::entryFromIndex(const QModelIndex& index) const
     return m_group->entries().at(index.row());
 }
 
+QModelIndex EntryModel::indexFromEntry(Entry* entry) const
+{
+    int row = m_group->entries().indexOf(entry);
+    Q_ASSERT(row != -1);
+    return index(row, 0);
+}
+
 void EntryModel::setGroup(Group* group)
 {
     beginResetModel();

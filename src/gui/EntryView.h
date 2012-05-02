@@ -33,6 +33,7 @@ public:
     void setModel(QAbstractItemModel* model);
     Entry* currentEntry();
     bool isSingleEntrySelected();
+    void setCurrentEntry(Entry* entry);
 
 public Q_SLOTS:
     void setGroup(Group* group);

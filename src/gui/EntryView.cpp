@@ -60,3 +60,8 @@ bool EntryView::isSingleEntrySelected()
 {
     return (selectionModel()->selectedRows().size() == 1);
 }
+
+void EntryView::setCurrentEntry(Entry* entry)
+{
+    setCurrentIndex(m_model->indexFromEntry(entry));
+}

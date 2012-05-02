@@ -30,6 +30,7 @@ class EntryModel : public QAbstractTableModel
 public:
     explicit EntryModel(QObject* parent = 0);
     Entry* entryFromIndex(const QModelIndex& index) const;
+    QModelIndex indexFromEntry(Entry* entry) const;
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const;
     int columnCount(const QModelIndex& parent = QModelIndex()) const;

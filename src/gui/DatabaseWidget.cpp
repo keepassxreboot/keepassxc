@@ -223,6 +223,8 @@ void DatabaseWidget::switchToView(bool accepted)
     else if (m_newEntry) {
         if (accepted) {
             m_newEntry->setGroup(m_newParent);
+            m_entryView->setFocus();
+            m_entryView->setCurrentEntry(m_newEntry);
         }
         else {
             delete m_newEntry;
