@@ -18,11 +18,11 @@
 #ifndef KEEPASSX_ENTRYATTACHMENTSMODEL_H
 #define KEEPASSX_ENTRYATTACHMENTSMODEL_H
 
-#include <QtCore/QAbstractTableModel>
+#include <QtCore/QAbstractListModel>
 
 class EntryAttachments;
 
-class EntryAttachmentsModel : public QAbstractTableModel
+class EntryAttachmentsModel : public QAbstractListModel
 {
     Q_OBJECT
 
@@ -31,8 +31,8 @@ public:
     void setEntryAttachments(EntryAttachments* entry);
     int rowCount(const QModelIndex& parent = QModelIndex()) const;
     int columnCount(const QModelIndex& parent = QModelIndex()) const;
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
+    QString keyByIndex(const QModelIndex& index) const;
 
 private Q_SLOTS:
     void attachmentChange(const QString& key);

@@ -117,7 +117,7 @@ void TestEntryModel::testAttachmentsModel()
     entryAttachments->set("2nd", QByteArray("456"));
     entryAttachments->set("2nd", QByteArray("789"));
 
-    QCOMPARE(model->data(model->index(0, 0)).toString(), QString("2nd"));
+    QCOMPARE(model->data(model->index(0, 0)).toString().left(4), QString("2nd "));
 
     entryAttachments->remove("first");
 

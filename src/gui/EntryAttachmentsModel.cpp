@@ -21,7 +21,7 @@
 #include "core/Tools.h"
 
 EntryAttachmentsModel::EntryAttachmentsModel(QObject* parent)
-    : QAbstractTableModel(parent)
+    : QAbstractListModel(parent)
     , m_entryAttachments(0)
 {
 }
@@ -63,21 +63,7 @@ int EntryAttachmentsModel::columnCount(const QModelIndex& parent) const
 {
     Q_UNUSED(parent);
 
-    return 2;
-}
-
-QVariant EntryAttachmentsModel::headerData(int section, Qt::Orientation orientation, int role) const
-{
-    if ((orientation == Qt::Horizontal) && (role == Qt::DisplayRole)) {
-        switch (section) {
-        case 0:
-            return tr("Name");
-        case 1:
-            return tr("Size");
-        }
-    }
-
-    return QVariant();
+    return 1;
 }
 
 QVariant EntryAttachmentsModel::data(const QModelIndex& index, int role) const
@@ -86,18 +72,24 @@ QVariant EntryAttachmentsModel::data(const QModelIndex& index, int role) const
         return QVariant();
     }
 
-    if (role == Qt::DisplayRole) {
-        QString key = m_entryAttachments->keys().at(index.row());
+    if (role == Qt::DisplayRole && index.column() == 0) {
+        QString key = keyByIndex(index);
 
-        if (index.column() == 0) {
-            return key;
-        }
-        else {
-            return Tools::humanReadableFileSize(m_entryAttachments->value(key).size());
-        }
+        return QString("%1 (%2)").arg(key,
+                Tools::humanReadableFileSize(m_entryAttachments->value(key).size()));
+    }
+    else {
+        return QVariant();
+    }
+}
+
+QString EntryAttachmentsModel::keyByIndex(const QModelIndex& index) const
+{
+    if (!index.isValid()) {
+        return QString();
     }
 
-    return QVariant();
+    return m_entryAttachments->keys().at(index.row());
 }
 
 void EntryAttachmentsModel::attachmentChange(const QString& key)
