@@ -76,12 +76,12 @@ QByteArray CompositeKey::transform(const QByteArray& seed, int rounds) const
 
     QByteArray key = rawKey();
 
-    QFuture<QByteArray> future1 = QtConcurrent::run(transformKeyRaw, key.left(16), seed, rounds);
-    QFuture<QByteArray> future2 = QtConcurrent::run(transformKeyRaw, key.right(16), seed, rounds);
+    QFuture<QByteArray> future = QtConcurrent::run(transformKeyRaw, key.left(16), seed, rounds);
+    QByteArray result2 = transformKeyRaw(key.right(16), seed, rounds);
 
     QByteArray transformed;
-    transformed.append(future1.result());
-    transformed.append(future2.result());
+    transformed.append(future.result());
+    transformed.append(result2);
 
     return CryptoHash::hash(transformed, CryptoHash::Sha256);
 }
