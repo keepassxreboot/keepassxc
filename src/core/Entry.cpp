@@ -337,6 +337,19 @@ void Entry::setExpiryTime(const QDateTime& dateTime)
     }
 }
 
+int Entry::getHistSize() {
+    int size = 0;
+
+    for(int i=0 ; i<m_history.size() ; i++) {
+        size += m_history[i]->getSize();
+    }
+    return size;
+}
+
+int Entry::getSize() {
+    return attributes()->attributesSize() + attachments()->attachmentsSize();
+}
+
 QList<Entry*> Entry::historyItems()
 {
     return m_history;
@@ -353,7 +366,20 @@ void Entry::addHistoryItem(Entry* entry)
     Q_ASSERT(entry->uuid() == uuid());
 
     m_history.append(entry);
+    truncateHistory();
     Q_EMIT modified();
+}
+
+void Entry::truncateHistory() {
+    const Database *db = database();
+    if(db) {
+        while(m_history.size() > db->metadata()->historyMaxItems()) {
+            m_history.removeFirst();
+        }
+        while(getHistSize() > db->metadata()->historyMaxSize()) {
+            m_history.removeFirst();
+        }
+    }
 }
 
 void Entry::beginUpdate()

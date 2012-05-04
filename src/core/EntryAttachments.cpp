@@ -32,6 +32,11 @@ QByteArray EntryAttachments::value(const QString& key) const
     return m_attachments.value(key);
 }
 
+int EntryAttachments::dataSize(const QString& key)
+{
+    return m_attachments.value(key).size();
+}
+
 void EntryAttachments::set(const QString& key, const QByteArray& value)
 {
     bool emitModified = false;
@@ -85,6 +90,15 @@ void EntryAttachments::clear()
 
     Q_EMIT reset();
     Q_EMIT modified();
+}
+
+int EntryAttachments::attachmentsSize() {
+    int size = 0;
+
+    Q_FOREACH (const QString& key, keys()) {
+        size += dataSize(key);
+    }
+    return size;
 }
 
 bool EntryAttachments::operator==(const EntryAttachments& other) const

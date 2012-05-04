@@ -108,10 +108,14 @@ public:
     void setNotes(const QString& notes);
     void setExpires(const bool& value);
     void setExpiryTime(const QDateTime& dateTime);
+    int getHistSize();
+    int getSize();
 
     QList<Entry*> historyItems();
     const QList<Entry*>& historyItems() const;
     void addHistoryItem(Entry* entry);
+    void truncateHistory();
+
     /**
      * Call before and after set*() methods to create a history item
      * if the entry has been changed.

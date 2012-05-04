@@ -36,6 +36,11 @@ QString EntryAttributes::value(const QString& key) const
     return m_attributes.value(key);
 }
 
+int EntryAttributes::valueSize(const QString& key)
+{
+    return m_attributes.value(key).size() * sizeof(QChar);
+}
+
 bool EntryAttributes::isProtected(const QString& key) const
 {
     return m_protectedAttributes.contains(key);
@@ -221,6 +226,15 @@ void EntryAttributes::clear()
 
     Q_EMIT reset();
     Q_EMIT modified();
+}
+
+int EntryAttributes::attributesSize() {
+    int size = 0;
+
+    Q_FOREACH (const QString& key, keys()) {
+        size += valueSize(key);
+    }
+    return size;
 }
 
 bool EntryAttributes::isDefaultAttribute(const QString& key)

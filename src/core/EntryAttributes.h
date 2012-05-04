@@ -22,6 +22,7 @@
 #include <QtCore/QSet>
 #include <QtCore/QObject>
 #include <QtCore/QStringList>
+#include <QtCore/QChar>
 
 class EntryAttributes : public QObject
 {
@@ -31,6 +32,7 @@ public:
     explicit EntryAttributes(QObject* parent = 0);
     QList<QString> keys() const;
     QString value(const QString& key) const;
+    int valueSize(const QString& key);
     bool isProtected(const QString& key) const;
     void set(const QString& key, const QString& value, bool protect = false);
     void remove(const QString& key);
@@ -38,10 +40,10 @@ public:
     void copyCustomKeysFrom(const EntryAttributes* other);
     bool areCustomKeysDifferent(const EntryAttributes* other);
     void clear();
+    int attributesSize();
     EntryAttributes& operator=(const EntryAttributes& other);
     bool operator==(const EntryAttributes& other) const;
     bool operator!=(const EntryAttributes& other) const;
-
     static const QStringList DEFAULT_ATTRIBUTES;
     static bool isDefaultAttribute(const QString& key);
 
