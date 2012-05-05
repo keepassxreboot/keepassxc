@@ -162,7 +162,7 @@ bool DatabaseTabWidget::closeDatabase(Database* db)
     if (dbName.right(1) == "*") {
         dbName.chop(1);
     }
-    if (dbStruct.dbWidget->currentMode() == DatabaseWidget::EditMode) {
+    if (dbStruct.dbWidget->currentMode() == DatabaseWidget::EditMode && db->hasKey()) {
         QMessageBox::StandardButton result =
             QMessageBox::question(
             this, tr("Close?"),
