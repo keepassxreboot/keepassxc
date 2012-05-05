@@ -413,7 +413,7 @@ void DatabaseTabWidget::insertDatabase(Database* db, const DatabaseManagerStruct
             SLOT(updateTabName(Database*)));
     connect(dbStruct.dbWidget->entryView(), SIGNAL(entrySelectionChanged()),
             SLOT(emitEntrySelectionChanged()));
-    connect(dbStruct.dbWidget, SIGNAL(closeRequest()), SLOT(closeDatabase()));
+    connect(dbStruct.dbWidget, SIGNAL(closeRequest()), SLOT(closeDatabaseFromSender()));
     connect(db, SIGNAL(modified()), SLOT(modified()));
     connect(dbStruct.dbWidget, SIGNAL(currentModeChanged(DatabaseWidget::Mode)),
             SIGNAL(currentWidgetModeChanged(DatabaseWidget::Mode)));
