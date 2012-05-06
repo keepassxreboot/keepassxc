@@ -88,7 +88,10 @@ void HashedBlockStream::close()
 
 qint64 HashedBlockStream::readData(char* data, qint64 maxSize)
 {
-    if (m_eof) {
+    if (m_error) {
+        return -1;
+    }
+    else if (m_eof) {
         return 0;
     }
 
@@ -98,7 +101,12 @@ qint64 HashedBlockStream::readData(char* data, qint64 maxSize)
     while (bytesRemaining > 0) {
         if (m_bufferPos == m_buffer.size()) {
             if (!readHashedBlock()) {
-                return maxSize - bytesRemaining;
+                if (m_error) {
+                    return -1;
+                }
+                else {
+                    return maxSize - bytesRemaining;
+                }
             }
         }
 
@@ -120,29 +128,25 @@ bool HashedBlockStream::readHashedBlock()
 
     quint32 index = Endian::readUInt32(m_baseDevice, BYTEORDER, &ok);
     if (!ok || index != m_blockIndex) {
-        // TODO error
-        Q_ASSERT(false);
+        m_error = true;
         return false;
     }
 
     QByteArray hash = m_baseDevice->read(32);
     if (hash.size() != 32) {
-        // TODO error
-        Q_ASSERT(false);
+        m_error = true;
         return false;
     }
 
     m_blockSize = Endian::readInt32(m_baseDevice, BYTEORDER, &ok);
     if (!ok || m_blockSize < 0) {
-        // TODO error
-        Q_ASSERT(false);
+        m_error = true;
         return false;
     }
 
     if (m_blockSize == 0) {
         if (hash.count('\0') != 32) {
-            // TODO error
-            Q_ASSERT(false);
+            m_error = true;
             return false;
         }
 
@@ -152,14 +156,12 @@ bool HashedBlockStream::readHashedBlock()
 
     m_buffer = m_baseDevice->read(m_blockSize);
     if (m_buffer.size() != m_blockSize) {
-        // TODO error
-        Q_ASSERT(false);
+        m_error = true;
         return false;
     }
 
     if (hash != CryptoHash::hash(m_buffer, CryptoHash::Sha256)) {
-        // TODO error
-        Q_ASSERT(false);
+        m_error = true;
         return false;
     }
 
@@ -206,8 +208,7 @@ qint64 HashedBlockStream::writeData(const char* data, qint64 maxSize)
 bool HashedBlockStream::writeHashedBlock()
 {
     if (!Endian::writeInt32(m_blockIndex, m_baseDevice, BYTEORDER)) {
-        // TODO error
-        Q_ASSERT(false);
+        m_error = true;
         return false;
     }
     m_blockIndex++;
@@ -221,21 +222,18 @@ bool HashedBlockStream::writeHashedBlock()
     }
 
     if (m_baseDevice->write(hash) != hash.size()) {
-        // TODO error
-        Q_ASSERT(false);
+        m_error = true;
         return false;
     }
 
     if (!Endian::writeInt32(m_buffer.size(), m_baseDevice, BYTEORDER)) {
-        // TODO error
-        Q_ASSERT(false);
+        m_error = true;
         return false;
     }
 
     if (!m_buffer.isEmpty()) {
         if (m_baseDevice->write(m_buffer) != m_buffer.size()) {
-            // TODO error
-            Q_ASSERT(false);
+            m_error = true;
             return false;
         }
 
