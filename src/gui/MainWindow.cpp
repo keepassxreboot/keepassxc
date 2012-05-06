@@ -33,6 +33,7 @@ MainWindow::MainWindow()
     m_ui->setupUi(this);
 
     setWindowIcon(dataPath()->applicationIcon());
+    m_ui->toolBar->toggleViewAction()->setText(tr("Show toolbar"));
 
     connect(m_ui->tabWidget, SIGNAL(entrySelectionChanged(bool)),
             SLOT(setMenuActionState()));
