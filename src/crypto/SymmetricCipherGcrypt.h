@@ -20,6 +20,7 @@
 
 #include <gcrypt.h>
 
+#include "crypto/SymmetricCipher.h"
 #include "crypto/SymmetricCipherBackend.h"
 
 class SymmetricCipherGcrypt : public SymmetricCipherBackend
@@ -34,6 +35,7 @@ public:
 
     QByteArray process(const QByteArray& data);
     void processInPlace(QByteArray& data);
+    void processInPlace(QByteArray& data, int rounds);
 
     void reset();
     int blockSize() const;

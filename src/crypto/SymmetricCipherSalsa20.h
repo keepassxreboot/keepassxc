@@ -18,6 +18,7 @@
 #ifndef KEEPASSX_SYMMETRICCIPHERSALSA20_H
 #define KEEPASSX_SYMMETRICCIPHERSALSA20_H
 
+#include "crypto/SymmetricCipher.h"
 #include "crypto/SymmetricCipherBackend.h"
 #include "crypto/salsa20/ecrypt-sync.h"
 
@@ -36,6 +37,7 @@ public:
 
     QByteArray process(const QByteArray& data);
     void processInPlace(QByteArray& data);
+    void processInPlace(QByteArray& data, int rounds);
 
     void reset();
     int blockSize() const;

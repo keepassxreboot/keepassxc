@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_SYMMETRICCIPHERBACKEND_H
 #define KEEPASSX_SYMMETRICCIPHERBACKEND_H
 
-#include "crypto/SymmetricCipher.h"
+#include <QtCore/QByteArray>
 
 class SymmetricCipherBackend
 {
@@ -30,6 +30,7 @@ public:
 
     virtual QByteArray process(const QByteArray& data) = 0;
     virtual void processInPlace(QByteArray& data) = 0;
+    virtual void processInPlace(QByteArray& data, int rounds) = 0;
 
     virtual void reset() = 0;
     virtual int blockSize() const = 0;

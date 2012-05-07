@@ -74,6 +74,16 @@ void SymmetricCipherSalsa20::processInPlace(QByteArray& data)
                          reinterpret_cast<u8*>(data.data()), data.size());
 }
 
+void SymmetricCipherSalsa20::processInPlace(QByteArray& data, int rounds)
+{
+    Q_ASSERT((data.size() < blockSize()) || ((data.size() % blockSize()) == 0));
+
+    for (int i = 0; i != rounds; ++i) {
+        ECRYPT_encrypt_bytes(&m_ctx, reinterpret_cast<const u8*>(data.constData()),
+                             reinterpret_cast<u8*>(data.data()), data.size());
+    }
+}
+
 void SymmetricCipherSalsa20::reset()
 {
     ECRYPT_ivsetup(&m_ctx, reinterpret_cast<const u8*>(m_iv.constData()));

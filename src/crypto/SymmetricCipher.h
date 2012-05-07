@@ -21,7 +21,7 @@
 #include <QtCore/QByteArray>
 #include <QtCore/QScopedPointer>
 
-class SymmetricCipherBackend;
+#include "crypto/SymmetricCipherBackend.h"
 
 class SymmetricCipher
 {
@@ -49,8 +49,18 @@ public:
                     SymmetricCipher::Direction direction, const QByteArray& key, const QByteArray& iv);
     ~SymmetricCipher();
 
-    QByteArray process(const QByteArray& data);
-    void processInPlace(QByteArray& data);
+    inline QByteArray process(const QByteArray& data) {
+        return m_backend->process(data);
+    }
+
+    inline void processInPlace(QByteArray& data) {
+        m_backend->processInPlace(data);
+    }
+
+    inline void processInPlace(QByteArray& data, int rounds) {
+        Q_ASSERT(rounds > 0);
+        m_backend->processInPlace(data, rounds);
+    }
 
     void reset();
     int blockSize() const;

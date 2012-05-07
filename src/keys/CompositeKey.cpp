@@ -94,9 +94,7 @@ QByteArray CompositeKey::transformKeyRaw(const QByteArray& key, const QByteArray
 
     QByteArray result = key;
 
-    for (int i = 0; i < rounds; i++) {
-        cipher.processInPlace(result);
-    }
+    cipher.processInPlace(result, rounds);
 
     return result;
 }

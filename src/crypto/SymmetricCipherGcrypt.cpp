@@ -113,6 +113,26 @@ void SymmetricCipherGcrypt::processInPlace(QByteArray& data)
     Q_ASSERT(error == 0);
 }
 
+void SymmetricCipherGcrypt::processInPlace(QByteArray& data, int rounds)
+{
+    // TODO check block size
+
+    gcry_error_t error;
+
+    if (m_direction == SymmetricCipher::Decrypt) {
+        for (int i = 0; i != rounds; ++i) {
+            error = gcry_cipher_decrypt(m_ctx, data.data(), data.size(), 0, 0);
+            Q_ASSERT(error == 0);
+        }
+    }
+    else {
+        for (int i = 0; i != rounds; ++i) {
+            error = gcry_cipher_encrypt(m_ctx, data.data(), data.size(), 0, 0);
+            Q_ASSERT(error == 0);
+        }
+    }
+}
+
 void SymmetricCipherGcrypt::reset()
 {
     gcry_error_t error;

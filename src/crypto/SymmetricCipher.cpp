@@ -49,16 +49,6 @@ SymmetricCipherBackend* SymmetricCipher::createBackend(SymmetricCipher::Algorith
     }
 }
 
-QByteArray SymmetricCipher::process(const QByteArray& data)
-{
-    return m_backend->process(data);
-}
-
-void SymmetricCipher::processInPlace(QByteArray& data)
-{
-    m_backend->processInPlace(data);
-}
-
 void SymmetricCipher::reset()
 {
     m_backend->reset();
