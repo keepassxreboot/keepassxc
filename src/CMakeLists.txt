@@ -99,6 +99,7 @@ set(keepassx_MOC
     gui/GroupModel.h
     gui/GroupView.h
     gui/MainWindow.h
+    keys/CompositeKey_p.h
     streams/HashedBlockStream.h
     streams/LayeredStream.h
     streams/qtiocompressor.h

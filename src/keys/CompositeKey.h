@@ -36,6 +36,8 @@ public:
     QByteArray transform(const QByteArray& seed, int rounds) const;
     void addKey(const Key& key);
 
+    static int transformKeyBenchmark(int msec);
+
 private:
     static QByteArray transformKeyRaw(const QByteArray& key, const QByteArray& seed,
                                       int rounds);

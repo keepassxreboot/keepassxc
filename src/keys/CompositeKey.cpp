@@ -16,8 +16,10 @@
 */
 
 #include "CompositeKey.h"
+#include "CompositeKey_p.h"
 
 #include <QtCore/QtConcurrentRun>
+#include <QtCore/QTime>
 
 #include "crypto/CryptoHash.h"
 #include "crypto/SymmetricCipher.h"
@@ -102,4 +104,49 @@ QByteArray CompositeKey::transformKeyRaw(const QByteArray& key, const QByteArray
 void CompositeKey::addKey(const Key& key)
 {
     m_keys.append(key.clone());
+}
+
+int CompositeKey::transformKeyBenchmark(int msec)
+{
+    TransformKeyBenchmarkThread thread1(msec);
+    TransformKeyBenchmarkThread thread2(msec);
+
+    thread1.start();
+    thread2.start();
+
+    thread1.wait();
+    thread2.wait();
+
+    return qMin(thread1.rounds(), thread2.rounds());
+}
+
+
+TransformKeyBenchmarkThread::TransformKeyBenchmarkThread(int msec)
+    : m_msec(msec)
+    , m_rounds(0)
+{
+    Q_ASSERT(msec > 0);
+}
+
+int TransformKeyBenchmarkThread::rounds()
+{
+    return m_rounds;
+}
+
+void TransformKeyBenchmarkThread::run()
+{
+    QByteArray key = QByteArray('\x7E', 32);
+    QByteArray seed = QByteArray('\x4B', 32);
+    QByteArray iv(16, 0);
+
+    SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Ecb,
+                           SymmetricCipher::Encrypt, seed, iv);
+
+    QTime t;
+    t.start();
+
+    do {
+        cipher.processInPlace(key, 100);
+        m_rounds += 100;
+    } while (t.elapsed() < m_msec);
 }
