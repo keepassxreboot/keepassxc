@@ -57,7 +57,7 @@ public:
         m_backend->processInPlace(data);
     }
 
-    inline void processInPlace(QByteArray& data, int rounds) {
+    inline void processInPlace(QByteArray& data, quint64 rounds) {
         Q_ASSERT(rounds > 0);
         m_backend->processInPlace(data, rounds);
     }

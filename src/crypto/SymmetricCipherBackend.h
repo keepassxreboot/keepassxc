@@ -30,7 +30,7 @@ public:
 
     virtual QByteArray process(const QByteArray& data) = 0;
     virtual void processInPlace(QByteArray& data) = 0;
-    virtual void processInPlace(QByteArray& data, int rounds) = 0;
+    virtual void processInPlace(QByteArray& data, quint64 rounds) = 0;
 
     virtual void reset() = 0;
     virtual int blockSize() const = 0;

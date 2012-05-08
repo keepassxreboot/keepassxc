@@ -33,14 +33,14 @@ public:
     CompositeKey& operator=(const CompositeKey& key);
 
     QByteArray rawKey() const;
-    QByteArray transform(const QByteArray& seed, int rounds) const;
+    QByteArray transform(const QByteArray& seed, quint64 rounds) const;
     void addKey(const Key& key);
 
     static int transformKeyBenchmark(int msec);
 
 private:
     static QByteArray transformKeyRaw(const QByteArray& key, const QByteArray& seed,
-                                      int rounds);
+                                      quint64 rounds);
 
     QList<Key*> m_keys;
 };

@@ -37,7 +37,7 @@ public:
 
     QByteArray process(const QByteArray& data);
     void processInPlace(QByteArray& data);
-    void processInPlace(QByteArray& data, int rounds);
+    void processInPlace(QByteArray& data, quint64 rounds);
 
     void reset();
     int blockSize() const;

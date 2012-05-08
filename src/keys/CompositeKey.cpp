@@ -71,7 +71,7 @@ QByteArray CompositeKey::rawKey() const
     return cryptoHash.result();
 }
 
-QByteArray CompositeKey::transform(const QByteArray& seed, int rounds) const
+QByteArray CompositeKey::transform(const QByteArray& seed, quint64 rounds) const
 {
     Q_ASSERT(seed.size() == 32);
     Q_ASSERT(rounds > 0);
@@ -89,7 +89,7 @@ QByteArray CompositeKey::transform(const QByteArray& seed, int rounds) const
 }
 
 QByteArray CompositeKey::transformKeyRaw(const QByteArray& key, const QByteArray& seed,
-                                         int rounds) {
+                                         quint64 rounds) {
     QByteArray iv(16, 0);
     SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Ecb,
                            SymmetricCipher::Encrypt, seed, iv);
