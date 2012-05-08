@@ -36,7 +36,7 @@ SymmetricCipherStream::~SymmetricCipherStream()
 bool SymmetricCipherStream::reset()
 {
     if (isWritable()) {
-        if (!writeBlock()) {
+        if (!writeBlock(true)) {
             return false;
         }
     }
@@ -53,7 +53,7 @@ bool SymmetricCipherStream::reset()
 void SymmetricCipherStream::close()
 {
     if (isWritable()) {
-        writeBlock();
+        writeBlock(true);
     }
 
     LayeredStream::close();
@@ -63,13 +63,22 @@ qint64 SymmetricCipherStream::readData(char* data, qint64 maxSize)
 {
     Q_ASSERT(maxSize >= 0);
 
+    if (m_error) {
+        return -1;
+    }
+
     qint64 bytesRemaining = maxSize;
     qint64 offset = 0;
 
     while (bytesRemaining > 0) {
         if ((m_bufferPos == m_buffer.size()) || m_bufferFilling) {
             if (!readBlock()) {
-                return maxSize - bytesRemaining;
+                if (m_error) {
+                    return -1;
+                }
+                else {
+                    return maxSize - bytesRemaining;
+                }
             }
         }
 
@@ -102,7 +111,32 @@ bool SymmetricCipherStream::readBlock()
         m_cipher->processInPlace(m_buffer);
         m_bufferPos = 0;
         m_bufferFilling = false;
-        return true;
+
+        if (m_baseDevice->atEnd()) {
+            // PKCS7 padding
+            quint8 padLength = m_buffer.at(m_buffer.size() - 1);
+
+            if (padLength == m_cipher->blockSize()) {
+                Q_ASSERT(m_buffer == QByteArray(m_cipher->blockSize(), m_cipher->blockSize()));
+                // full block with just padding: discard
+                m_buffer.clear();
+                return false;
+            }
+            else if (padLength > m_cipher->blockSize()) {
+                // invalid padding
+                m_error = true;
+                return false;
+            }
+            else {
+                Q_ASSERT(m_buffer.right(padLength) == QByteArray(padLength, padLength));
+                // resize buffer to strip padding
+                m_buffer.resize(m_cipher->blockSize() - padLength);
+                return true;
+            }
+        }
+        else {
+            return true;
+        }
     }
 }
 
@@ -111,7 +145,7 @@ qint64 SymmetricCipherStream::writeData(const char* data, qint64 maxSize)
     Q_ASSERT(maxSize >= 0);
 
     if (m_error) {
-        return 0;
+        return -1;
     }
 
     qint64 bytesRemaining = maxSize;
@@ -126,7 +160,7 @@ qint64 SymmetricCipherStream::writeData(const char* data, qint64 maxSize)
         bytesRemaining -= bytesToCopy;
 
         if (m_buffer.size() == m_cipher->blockSize()) {
-            if (!writeBlock()) {
+            if (!writeBlock(false)) {
                 if (m_error) {
                     return -1;
                 }
@@ -140,17 +174,17 @@ qint64 SymmetricCipherStream::writeData(const char* data, qint64 maxSize)
     return maxSize;
 }
 
-bool SymmetricCipherStream::writeBlock()
+bool SymmetricCipherStream::writeBlock(bool lastBlock)
 {
-    if (m_buffer.isEmpty()) {
-        return true;
-    }
-    else if (m_buffer.size() != m_cipher->blockSize()) {
+    if (lastBlock) {
         // PKCS7 padding
         int padLen = m_cipher->blockSize() - m_buffer.size();
-        for (int i = m_buffer.size(); i < m_cipher->blockSize(); i++) {
+        for (int i = 0; i < padLen; i++) {
             m_buffer.append(static_cast<char>(padLen));
         }
+    }
+    else if (m_buffer.isEmpty()) {
+        return true;
     }
 
     m_cipher->processInPlace(m_buffer);

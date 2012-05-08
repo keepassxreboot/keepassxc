@@ -53,18 +53,20 @@ void TestSymmetricCipher::testAes256CbcEncryption()
                                  SymmetricCipher::Encrypt, key, iv);
     buffer.open(QIODevice::WriteOnly);
     stream.open(QIODevice::WriteOnly);
-
     QVERIFY(stream.reset());
+
     buffer.reset();
     buffer.buffer().clear();
     stream.write(plainText.left(16));
     QCOMPARE(buffer.data(), cipherText.left(16));
-
     QVERIFY(stream.reset());
+    // make sure padding is written
+    QCOMPARE(buffer.data().size(), 32);
+
     buffer.reset();
     buffer.buffer().clear();
     stream.write(plainText.left(10));
-    QCOMPARE(buffer.data(), QByteArray());
+    QVERIFY(buffer.data().isEmpty());
 
     QVERIFY(stream.reset());
     buffer.reset();
@@ -89,7 +91,9 @@ void TestSymmetricCipher::testAes256CbcDecryption()
     QCOMPARE(cipher.process(cipherText),
              plainText);
 
-    QBuffer buffer(&cipherText);
+    // padded with 16 0x16 bytes
+    QByteArray cipherTextPadded = cipherText + QByteArray::fromHex("3a3aa5e0213db1a9901f9036cf5102d2");
+    QBuffer buffer(&cipherTextPadded);
     SymmetricCipherStream stream(&buffer, SymmetricCipher::Aes256, SymmetricCipher::Cbc,
                                  SymmetricCipher::Decrypt, key, iv);
     buffer.open(QIODevice::ReadOnly);
@@ -162,6 +166,31 @@ void TestSymmetricCipher::testSalsa20()
     QCOMPARE(cipherTextB.mid(192, 64), expectedCipherText2);
     QCOMPARE(cipherTextB.mid(256, 64), expectedCipherText3);
     QCOMPARE(cipherTextB.mid(448, 64), expectedCipherText4);
+}
+
+void TestSymmetricCipher::testPadding()
+{
+    QByteArray key = QByteArray::fromHex("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4");
+    QByteArray iv = QByteArray::fromHex("000102030405060708090a0b0c0d0e0f");
+    QByteArray plainText = QByteArray::fromHex("6bc1bee22e409f96e93d");
+
+    QBuffer buffer;
+    buffer.open(QIODevice::ReadWrite);
+
+    SymmetricCipherStream streamEnc(&buffer, SymmetricCipher::Aes256, SymmetricCipher::Cbc,
+                                    SymmetricCipher::Encrypt, key, iv);
+    streamEnc.open(QIODevice::WriteOnly);
+    streamEnc.write(plainText);
+    streamEnc.close();
+    buffer.reset();
+    // make sure padding is written
+    QCOMPARE(buffer.buffer().size(), 16);
+
+    SymmetricCipherStream streamDec(&buffer, SymmetricCipher::Aes256, SymmetricCipher::Cbc,
+                                    SymmetricCipher::Decrypt, key, iv);
+    streamDec.open(QIODevice::ReadOnly);
+    QByteArray decrypted = streamDec.readAll();
+    QCOMPARE(decrypted, plainText);
 }
 
 KEEPASSX_QTEST_CORE_MAIN(TestSymmetricCipher)

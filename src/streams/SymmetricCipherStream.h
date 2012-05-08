@@ -41,7 +41,7 @@ protected:
 
 private:
     bool readBlock();
-    bool writeBlock();
+    bool writeBlock(bool lastBlock);
 
     const QScopedPointer<SymmetricCipher> m_cipher;
     QByteArray m_buffer;
