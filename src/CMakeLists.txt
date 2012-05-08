@@ -43,6 +43,8 @@ set(keepassx_SOURCES
     crypto/SymmetricCipherBackend.h
     crypto/SymmetricCipherGcrypt.cpp
     crypto/SymmetricCipherSalsa20.cpp
+    format/KeePass1.h
+    format/KeePass1Reader.cpp
     format/KeePass2.h
     format/KeePass2RandomStream.cpp
     format/KeePass2Reader.cpp

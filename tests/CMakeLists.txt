@@ -127,6 +127,7 @@ add_unit_test(NAME testmodified SOURCES TestModified.cpp MOCS TestModified.h LIB
 
 add_unit_test(NAME testdeletedobjects SOURCES TestDeletedObjects.cpp MOCS TestDeletedObjects.h LIBS ${TEST_LIBRARIES})
 
+add_unit_test(NAME testkeepass1reader SOURCES TestKeePass1Reader.cpp MOCS TestKeePass1Reader.h LIBS ${TEST_LIBRARIES})
 
 if(WITH_GUI_TESTS)
     add_subdirectory(gui)
