@@ -75,4 +75,13 @@ bool readAllFromDevice(QIODevice* device, QByteArray& data)
     }
 }
 
+QDateTime currentDateTimeUtc ()
+{
+#if QT_VERSION >= 0x040700
+     return QDateTime::currentDateTimeUtc();
+#else
+     return QDateTime::currentDateTime().toUTC();
+#endif
+}
+
 } // namespace Tools

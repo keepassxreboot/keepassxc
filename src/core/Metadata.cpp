@@ -20,6 +20,7 @@
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
+#include "core/Tools.h"
 
 Metadata::Metadata(Database* parent)
     : QObject(parent)
@@ -33,7 +34,7 @@ Metadata::Metadata(Database* parent)
     m_historyMaxItems = 10;
     m_historyMaxSize = 6291456;
 
-    QDateTime now = QDateTime::currentDateTimeUtc();
+    QDateTime now = Tools::currentDateTimeUtc();
     m_nameChanged = now;
     m_descriptionChanged = now;
     m_defaultUserNameChanged = now;
@@ -67,7 +68,7 @@ template <class P, class V> bool Metadata::set(P& property, const V& value, QDat
     if (property != value) {
         property = value;
         if (m_updateDatetime) {
-            dateTime = QDateTime::currentDateTimeUtc();
+            dateTime = Tools::currentDateTimeUtc();
         }
         Q_EMIT modified();
         return true;

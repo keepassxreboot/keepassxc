@@ -19,6 +19,7 @@
 
 #include "core/DatabaseIcons.h"
 #include "core/Metadata.h"
+#include "core/Tools.h"
 
 Group::Group()
 {
@@ -48,7 +49,7 @@ Group::~Group()
         }
 
         DeletedObject delGroup;
-        delGroup.deletionTime = QDateTime::currentDateTimeUtc();
+        delGroup.deletionTime = Tools::currentDateTimeUtc();
         delGroup.uuid = m_uuid;
         m_db->addDeletedObject(delGroup);
     }
@@ -69,8 +70,8 @@ template <class P, class V> bool Group::set(P& property, const V& value) {
 void Group::updateTimeinfo()
 {
     if (m_updateTimeinfo) {
-        m_timeInfo.setLastModificationTime(QDateTime::currentDateTimeUtc());
-        m_timeInfo.setLastAccessTime(QDateTime::currentDateTimeUtc());
+        m_timeInfo.setLastModificationTime(Tools::currentDateTimeUtc());
+        m_timeInfo.setLastAccessTime(Tools::currentDateTimeUtc());
     }
 }
 
@@ -302,7 +303,7 @@ void Group::setParent(Group* parent, int index)
     }
 
     if (m_updateTimeinfo) {
-        m_timeInfo.setLocationChanged(QDateTime::currentDateTimeUtc());
+        m_timeInfo.setLocationChanged(Tools::currentDateTimeUtc());
     }
 
     Q_EMIT modified();

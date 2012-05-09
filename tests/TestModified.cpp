@@ -23,6 +23,7 @@
 #include "tests.h"
 #include "core/Database.h"
 #include "core/Group.h"
+#include "core/Tools.h"
 #include "crypto/Crypto.h"
 
 void TestModified::initTestCase()
@@ -233,7 +234,7 @@ void TestModified::testEntrySets()
     entry->setExpires(entry->timeInfo().expires());
     QCOMPARE(spyModified.count(), spyCount);
 
-    entry->setExpiryTime(QDateTime::currentDateTimeUtc().addYears(1));
+    entry->setExpiryTime(Tools::currentDateTimeUtc().addYears(1));
     QCOMPARE(spyModified.count(), ++spyCount);
     entry->setExpiryTime(entry->timeInfo().expiryTime());
     QCOMPARE(spyModified.count(), spyCount);

@@ -21,6 +21,7 @@
 #include "core/DatabaseIcons.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/Tools.h"
 
 Entry::Entry()
 {
@@ -70,8 +71,8 @@ template <class T> bool Entry::set(T& property, const T& value)
 void Entry::updateTimeinfo()
 {
     if (m_updateTimeinfo) {
-        m_data.timeInfo.setLastModificationTime(QDateTime::currentDateTimeUtc());
-        m_data.timeInfo.setLastAccessTime(QDateTime::currentDateTimeUtc());
+        m_data.timeInfo.setLastModificationTime(Tools::currentDateTimeUtc());
+        m_data.timeInfo.setLastAccessTime(Tools::currentDateTimeUtc());
     }
 }
 
@@ -419,7 +420,7 @@ void Entry::setGroup(Group* group)
     QObject::setParent(group);
 
     if (m_updateTimeinfo) {
-        m_data.timeInfo.setLocationChanged(QDateTime::currentDateTimeUtc());
+        m_data.timeInfo.setLocationChanged(Tools::currentDateTimeUtc());
     }
 }
 

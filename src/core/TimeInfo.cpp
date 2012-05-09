@@ -17,12 +17,14 @@
 
 #include "TimeInfo.h"
 
+#include "core/Tools.h"
+
 TimeInfo::TimeInfo()
 {
     m_expires = false;
     m_usageCount = 0;
 
-    QDateTime now = QDateTime::currentDateTimeUtc();
+    QDateTime now = Tools::currentDateTimeUtc();
     m_lastModificationTime = now;
     m_creationTime = now;
     m_lastAccessTime = now;

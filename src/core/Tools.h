@@ -20,6 +20,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QString>
+#include <QtCore/QDateTime>
 
 class QIODevice;
 
@@ -28,6 +29,7 @@ namespace Tools {
 QString humanReadableFileSize(qint64 bytes);
 bool hasChild(const QObject* parent, const QObject* child);
 bool readAllFromDevice(QIODevice* device, QByteArray& data);
+QDateTime currentDateTimeUtc();
 
 } // namespace Tools
 
