@@ -69,21 +69,25 @@ QDateTime TimeInfo::locationChanged() const
 
 void TimeInfo::setLastModificationTime(const QDateTime& dateTime)
 {
+    Q_ASSERT(dateTime.timeSpec() == Qt::UTC);
     m_lastModificationTime = dateTime;
 }
 
 void TimeInfo::setCreationTime(const QDateTime& dateTime)
 {
+    Q_ASSERT(dateTime.timeSpec() == Qt::UTC);
     m_creationTime = dateTime;
 }
 
 void TimeInfo::setLastAccessTime(const QDateTime& dateTime)
 {
+    Q_ASSERT(dateTime.timeSpec() == Qt::UTC);
     m_lastAccessTime = dateTime;
 }
 
 void TimeInfo::setExpiryTime(const QDateTime& dateTime)
 {
+    Q_ASSERT(dateTime.timeSpec() == Qt::UTC);
     m_expiryTime = dateTime;
 }
 
@@ -99,5 +103,6 @@ void TimeInfo::setUsageCount(int count)
 
 void TimeInfo::setLocationChanged(const QDateTime& dateTime)
 {
+    Q_ASSERT(dateTime.timeSpec() == Qt::UTC);
     m_locationChanged = dateTime;
 }
