@@ -18,6 +18,7 @@
 #ifndef KEEPASSX_TESTKEEPASS1READER_H
 #define KEEPASSX_TESTKEEPASS1READER_H
 
+#include <QtCore/QDateTime>
 #include <QtCore/QObject>
 
 class TestKeePass1Reader : public QObject
@@ -27,6 +28,9 @@ class TestKeePass1Reader : public QObject
 private Q_SLOTS:
     void initTestCase();
     void testBasic();
+
+private:
+    static QDateTime genDT(int year, int month, int day, int hour, int min);
 };
 
 #endif // KEEPASSX_TESTKEEPASS1READER_H

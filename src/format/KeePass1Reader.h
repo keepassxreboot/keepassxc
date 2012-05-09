@@ -19,8 +19,12 @@
 #define KEEPASSX_KEEPASS1READER_H
 
 #include <QtCore/QCoreApplication>
+#include <QtCore/QDateTime>
+#include <QtCore/QHash>
 
 class Database;
+class Entry;
+class Group;
 class SymmetricCipherStream;
 class QIODevice;
 
@@ -49,9 +53,16 @@ private:
                                     qint64 contentPos);
     QByteArray key(const QByteArray& password, const QByteArray& keyfileData);
     bool verifyKey(SymmetricCipherStream* cipherStream);
+    Group* readGroup(QIODevice* cipherStream);
+    Entry* readEntry(QIODevice* cipherStream);
+    bool constructGroupTree(const QList<Group*> groups);
+    bool parseMetaStream(const Entry* entry);
     void raiseError(const QString& str);
+    static QDateTime dateFromPackedStruct(const QByteArray& data);
+    static bool isMetaStream(const Entry* entry);
 
     Database* m_db;
+    Group* m_tmpParent;
     QIODevice* m_device;
     quint32 m_encryptionFlags;
     QByteArray m_masterSeed;
@@ -59,6 +70,9 @@ private:
     QByteArray m_contentHashHeader;
     QByteArray m_transformSeed;
     quint32 m_transformRounds;
+    QHash<quint32, Group*> m_groupIds;
+    QHash<Group*, quint32> m_groupLevels;
+    QHash<QByteArray, Entry*> m_entryUuids;
 
     bool m_error;
     QString m_errorStr;

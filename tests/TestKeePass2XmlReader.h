@@ -42,7 +42,7 @@ private Q_SLOTS:
     void cleanupTestCase();
 
 private:
-    QDateTime genDT(int year, int month, int day, int hour, int min, int second);
+    static QDateTime genDT(int year, int month, int day, int hour, int min, int second);
 
     Database* m_db;
 };
