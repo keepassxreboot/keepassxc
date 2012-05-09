@@ -28,7 +28,9 @@ class EntryAttachments;
 class EntryAttachmentsModel;
 class EntryAttributes;
 class EntryAttributesModel;
-class QListWidget;
+class DefaultIconModel;
+class CustomIconModel;
+class Metadata;
 class QStackedLayout;
 
 namespace Ui {
@@ -36,6 +38,7 @@ namespace Ui {
     class EditEntryWidgetAdvanced;
     class EditEntryWidgetMain;
     class EditEntryWidgetNotes;
+    class EditEntryWidgetIcons;
 }
 
 class EditEntryWidget : public DialogyWidget
@@ -46,7 +49,7 @@ public:
     explicit EditEntryWidget(QWidget* parent = 0);
     ~EditEntryWidget();
 
-    void loadEntry(Entry* entry, bool create, const QString& groupName);
+    void loadEntry(Entry* entry, bool create, const QString& groupName, Metadata* metadata);
 
     static const QColor normalColor;
     static const QColor correctSoFarColor;
@@ -67,24 +70,35 @@ private Q_SLOTS:
     void insertAttachment();
     void saveCurrentAttachment();
     void removeCurrentAttachment();
+    void addCustomIcon();
+    void removeCustomIcon();
+    void updateIndexDefaultIcons(bool checked);
+    void updateIndexCustomIcons(bool checked);
+    void updateRadioButtonDefaultIcons();
+    void updateRadioButtonCustomIcons();
 
 private:
     bool passwordsEqual();
 
     Entry* m_entry;
+    Metadata* m_metadata;
 
     const QScopedPointer<Ui::EditEntryWidget> m_ui;
     const QScopedPointer<Ui::EditEntryWidgetMain> m_mainUi;
     const QScopedPointer<Ui::EditEntryWidgetNotes> m_notesUi;
     const QScopedPointer<Ui::EditEntryWidgetAdvanced> m_advancedUi;
+    const QScopedPointer<Ui::EditEntryWidgetIcons> m_iconsUi;
     QWidget* const m_mainWidget;
     QWidget* const m_notesWidget;
     QWidget* const m_advancedWidget;
+    QWidget* const m_iconsWidget;
     EntryAttachmentsModel* m_attachmentsModel;
     EntryAttributesModel* m_attributesModel;
     EntryAttachments* m_entryAttachments;
     EntryAttributes* m_entryAttributes;
     QPersistentModelIndex m_currentAttribute;
+    DefaultIconModel* m_defaultIconModel;
+    CustomIconModel* m_customIconModel;
 
     Q_DISABLE_COPY(EditEntryWidget)
 };

@@ -67,6 +67,7 @@ set(keepassx_SOURCES
     gui/FileDialog.cpp
     gui/GroupModel.cpp
     gui/GroupView.cpp
+    gui/IconModels.cpp
     gui/MainWindow.cpp
     keys/CompositeKey.cpp
     keys/FileKey.cpp
@@ -100,6 +101,7 @@ set(keepassx_MOC
     gui/EntryView.h
     gui/GroupModel.h
     gui/GroupView.h
+    gui/IconModels.h
     gui/MainWindow.h
     keys/CompositeKey_p.h
     streams/HashedBlockStream.h
@@ -115,6 +117,7 @@ set(keepassx_FORMS
     gui/DatabaseSettingsWidget.ui
     gui/EditEntryWidget.ui
     gui/EditEntryWidgetAdvanced.ui
+    gui/EditEntryWidgetIcons.ui
     gui/EditEntryWidgetMain.ui
     gui/EditEntryWidgetNotes.ui
     gui/EditGroupWidget.ui

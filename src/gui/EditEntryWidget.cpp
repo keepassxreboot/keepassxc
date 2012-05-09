@@ -20,15 +20,17 @@
 #include "ui_EditEntryWidgetAdvanced.h"
 #include "ui_EditEntryWidgetMain.h"
 #include "ui_EditEntryWidgetNotes.h"
+#include "ui_EditEntryWidgetIcons.h"
 
 #include <QtGui/QDesktopServices>
-#include <QtGui/QListWidget>
 #include <QtGui/QStackedLayout>
 #include <QtGui/QMessageBox>
 
 #include "core/Entry.h"
 #include "core/Group.h"
+#include "core/Metadata.h"
 #include "core/Tools.h"
+#include "gui/IconModels.h"
 #include "gui/EntryAttachmentsModel.h"
 #include "gui/EntryAttributesModel.h"
 #include "gui/FileDialog.h"
@@ -40,9 +42,11 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_mainUi(new Ui::EditEntryWidgetMain())
     , m_notesUi(new Ui::EditEntryWidgetNotes())
     , m_advancedUi(new Ui::EditEntryWidgetAdvanced())
+    , m_iconsUi(new Ui::EditEntryWidgetIcons())
     , m_mainWidget(new QWidget(this))
     , m_notesWidget(new QWidget(this))
     , m_advancedWidget(new QWidget(this))
+    , m_iconsWidget(new QWidget(this))
 {
     m_ui->setupUi(this);
 
@@ -54,6 +58,7 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     m_ui->categoryList->addItem(tr("Entry"));
     m_ui->categoryList->addItem(tr("Description"));
     m_ui->categoryList->addItem(tr("Advanced"));
+    m_ui->categoryList->addItem(tr("Icon"));
 
     m_mainUi->setupUi(m_mainWidget);
     m_ui->stackedWidget->addWidget(m_mainWidget);
@@ -63,6 +68,9 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
 
     m_advancedUi->setupUi(m_advancedWidget);
     m_ui->stackedWidget->addWidget(m_advancedWidget);
+
+    m_iconsUi->setupUi(m_iconsWidget);
+    m_ui->stackedWidget->addWidget(m_iconsWidget);
 
     m_entryAttachments = new EntryAttachments(this);
     m_attachmentsModel = new EntryAttachmentsModel(m_advancedWidget);
@@ -92,6 +100,23 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     connect(m_mainUi->passwordEdit, SIGNAL(textEdited(QString)), SLOT(setPasswordCheckColors()));
     connect(m_mainUi->passwordRepeatEdit, SIGNAL(textEdited(QString)), SLOT(setPasswordCheckColors()));
 
+    m_defaultIconModel = new DefaultIconModel(m_iconsWidget);
+    m_iconsUi->defaultIconsView->setModel(m_defaultIconModel);
+
+    m_customIconModel = new CustomIconModel(m_iconsWidget);
+    m_iconsUi->customIconsView->setModel(m_customIconModel);
+
+    connect(m_iconsUi->defaultIconsView, SIGNAL(clicked(QModelIndex)),
+            this, SLOT(updateRadioButtonDefaultIcons()));
+    connect(m_iconsUi->customIconsView, SIGNAL(clicked(QModelIndex)),
+            this, SLOT(updateRadioButtonCustomIcons()));
+    connect(m_iconsUi->defaultIconsRadio, SIGNAL(toggled(bool)),
+            this, SLOT(updateIndexDefaultIcons(bool)));
+    connect(m_iconsUi->customIconsRadio, SIGNAL(toggled(bool)),
+            this, SLOT(updateIndexCustomIcons(bool)));
+    connect(m_iconsUi->addButton, SIGNAL(clicked()), SLOT(addCustomIcon()));
+    connect(m_iconsUi->deleteButton, SIGNAL(clicked()), SLOT(removeCustomIcon()));
+
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(saveEntry()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(cancel()));
 }
@@ -104,9 +129,11 @@ const QColor EditEntryWidget::normalColor = Qt::white;
 const QColor EditEntryWidget::correctSoFarColor = QColor(255, 205, 15);
 const QColor EditEntryWidget::errorColor = QColor(255, 125, 125);
 
-void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupName)
+void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupName,
+                                Metadata* metadata)
 {
     m_entry = entry;
+    m_metadata = metadata;
 
     if (create) {
         m_ui->headerLabel->setText(groupName+" > "+tr("Add entry"));
@@ -140,6 +167,34 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupN
         m_advancedUi->attributesEdit->setEnabled(false);
     }
 
+    if (metadata) {
+        m_iconsWidget->setEnabled(true);
+
+        m_customIconModel->setIcons(metadata->customIcons());
+
+        Uuid iconUuid = entry->iconUuid();
+        if (iconUuid.isNull()) {
+            int iconNumber = entry->iconNumber();
+            m_iconsUi->defaultIconsView->setCurrentIndex(m_defaultIconModel->index(iconNumber, 0));
+            m_iconsUi->defaultIconsRadio->setChecked(true);
+
+        }
+        else {
+            QModelIndex index = m_customIconModel->indexFromUuid(iconUuid);
+            if (index.isValid()) {
+                m_iconsUi->customIconsView->setCurrentIndex(index);
+                m_iconsUi->customIconsRadio->setChecked(true);
+            }
+            else {
+                m_iconsUi->defaultIconsView->setCurrentIndex(m_defaultIconModel->index(0, 0));
+                m_iconsUi->defaultIconsRadio->setChecked(true);
+            }
+        }
+    }
+    else {
+        m_iconsWidget->setEnabled(false);
+    }
+
     m_mainUi->titleEdit->setFocus();
 }
 
@@ -171,6 +226,25 @@ void EditEntryWidget::saveEntry()
 
     m_entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
     *m_entry->attachments() = *m_entryAttachments;
+
+    if (m_iconsUi->defaultIconsRadio->isChecked()) {
+        QModelIndex index = m_iconsUi->defaultIconsView->currentIndex();
+        if (index.isValid()) {
+            m_entry->setIcon(index.row());
+        }
+        else {
+            m_entry->setIcon(0);
+        }
+    }
+    else {
+        QModelIndex index = m_iconsUi->customIconsView->currentIndex();
+        if (index.isValid()) {
+            m_entry->setIcon(m_customIconModel->uuidFromIndex(m_iconsUi->customIconsView->currentIndex()));
+        }
+        else {
+            m_entry->setIcon(0);
+        }
+    }
 
     m_entry->endUpdate();
 
@@ -344,4 +418,67 @@ void EditEntryWidget::removeCurrentAttachment()
 
     QString key = m_attachmentsModel->keyByIndex(index);
     m_entryAttachments->remove(key);
+}
+
+void EditEntryWidget::addCustomIcon()
+{
+    if (m_metadata) {
+        QString filename = QFileDialog::getOpenFileName(
+                    this, tr("Select Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
+        QImage image(filename);
+        if (!image.isNull()) {
+            m_metadata->addCustomIcon(Uuid::random(), image.scaled(16, 16));
+            m_customIconModel->setIcons(m_metadata->customIcons());
+        }
+        else {
+            ; // TODO show error
+        }
+    }
+
+}
+
+void EditEntryWidget::removeCustomIcon()
+{
+    if (m_metadata) {
+        QModelIndex index = m_iconsUi->customIconsView->currentIndex();
+        if (index.isValid()) {
+            m_metadata->removeCustomIcon(m_customIconModel->uuidFromIndex(index));
+            m_customIconModel->setIcons(m_metadata->customIcons());
+        }
+        else {
+            // TODO show error
+        }
+    }
+}
+
+void EditEntryWidget::updateIndexDefaultIcons(bool check)
+{
+    if (check) {
+        QModelIndex index = m_iconsUi->defaultIconsView->currentIndex();
+        if (!index.isValid())
+        {
+            m_iconsUi->defaultIconsView->setCurrentIndex(m_defaultIconModel->index(0, 0));
+        }
+    }
+}
+
+void EditEntryWidget::updateIndexCustomIcons(bool check)
+{
+    if (check) {
+        QModelIndex index = m_iconsUi->customIconsView->currentIndex();
+        if (!index.isValid())
+        {
+            m_iconsUi->customIconsView->setCurrentIndex(m_customIconModel->index(0, 0));;
+        }
+    }
+}
+
+void EditEntryWidget::updateRadioButtonDefaultIcons()
+{
+    m_iconsUi->defaultIconsRadio->setChecked(true);
+}
+
+void EditEntryWidget::updateRadioButtonCustomIcons()
+{
+    m_iconsUi->customIconsRadio->setChecked(true);
 }
