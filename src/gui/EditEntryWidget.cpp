@@ -422,8 +422,11 @@ void EditEntryWidget::removeCurrentAttachment()
 void EditEntryWidget::addCustomIcon()
 {
     if (m_metadata) {
+        QString filter = QString("%1 (%2);;%3 (*.*)").arg(tr("Images"),
+                    Tools::imageReaderFilter(), tr("All files"));
+
         QString filename = QFileDialog::getOpenFileName(
-                    this, tr("Select Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
+                    this, tr("Select Image"), "", filter);
         if (!filename.isEmpty()) {
             QImage image(filename);
             if (!image.isNull()) {

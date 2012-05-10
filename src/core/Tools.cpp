@@ -20,6 +20,7 @@
 #include <QtCore/QIODevice>
 #include <QtCore/QLocale>
 #include <QtCore/QStringList>
+#include <QtGui/QImageReader>
 
 namespace Tools {
 
@@ -82,6 +83,24 @@ QDateTime currentDateTimeUtc ()
 #else
      return QDateTime::currentDateTime().toUTC();
 #endif
+}
+
+QString imageReaderFilter()
+{
+    QList<QByteArray> formats = QImageReader::supportedImageFormats();
+    QStringList formatsStringList;
+
+    Q_FOREACH (const QByteArray& format, formats) {
+        for (int i = 0; i < format.size(); i++) {
+            if (!QChar(format.at(i)).isLetterOrNumber()) {
+                continue;
+            }
+        }
+
+        formatsStringList.append("*." + QString::fromAscii(format).toLower());
+    }
+
+    return formatsStringList.join(" ");
 }
 
 } // namespace Tools
