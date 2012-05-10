@@ -36,6 +36,7 @@ private Q_SLOTS:
     void testFileKey_data();
     void testCompositeKey();
     void testTwofish();
+    void testCP1252Password();
     void cleanupTestCase();
 
 private:

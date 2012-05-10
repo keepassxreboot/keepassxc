@@ -196,6 +196,24 @@ void TestKeePass1Reader::testTwofish()
     delete db;
 }
 
+void TestKeePass1Reader::testCP1252Password()
+{
+    QString name = "CP-1252";
+
+    KeePass1Reader reader;
+
+    QString dbFilename = QString("%1/%2.kdb").arg(QString(KEEPASSX_TEST_DATA_DIR), name);
+    QString password = QString::fromUtf8("\xe2\x80\x9e\x70\x61\x73\x73\x77\x6f\x72\x64\xe2\x80\x9d");
+
+    Database* db = reader.readDatabase(dbFilename, password, QByteArray());
+    QVERIFY(db);
+    QVERIFY(!reader.hasError());
+    QCOMPARE(db->rootGroup()->children().size(), 1);
+    QCOMPARE(db->rootGroup()->children().at(0)->name(), name);
+
+    delete db;
+}
+
 void TestKeePass1Reader::cleanupTestCase()
 {
     delete m_db;
