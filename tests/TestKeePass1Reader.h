@@ -32,6 +32,9 @@ private Q_SLOTS:
     void testBasic();
     void testCustomIcons();
     void testGroupExpanded();
+    void testFileKey();
+    void testFileKey_data();
+    void testCompositeKey();
     void cleanupTestCase();
 
 private:

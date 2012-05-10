@@ -17,6 +17,7 @@
 
 #include "TestKeePass1Reader.h"
 
+#include <QtCore/QFile>
 #include <QtTest/QTest>
 
 #include "config-keepassx-tests.h"
@@ -120,6 +121,62 @@ void TestKeePass1Reader::testGroupExpanded()
     QCOMPARE(m_db->rootGroup()->children().at(0)->children().at(0)->isExpanded(), true);
     QCOMPARE(m_db->rootGroup()->children().at(0)->children().at(0)->children().at(0)->isExpanded(),
              false);
+}
+
+void TestKeePass1Reader::testFileKey()
+{
+    QFETCH(QString, type);
+
+    QString name = QString("FileKey").append(type);
+
+    KeePass1Reader reader;
+
+    QString dbFilename = QString("%1/%2.kdb").arg(QString(KEEPASSX_TEST_DATA_DIR), name);
+    QString keyFilename = QString("%1/%2.key").arg(QString(KEEPASSX_TEST_DATA_DIR), name);
+
+    QFile file(keyFilename);
+    QVERIFY(file.open(QIODevice::ReadOnly));
+    QByteArray keyData = KeePass1Reader::readKeyfile(&file);
+    QVERIFY(!keyData.isEmpty());
+
+    Database* db = reader.readDatabase(dbFilename, QString(), keyData);
+    QVERIFY(db);
+    QVERIFY(!reader.hasError());
+    QCOMPARE(db->rootGroup()->children().size(), 1);
+    QCOMPARE(db->rootGroup()->children().at(0)->name(), name);
+
+    delete db;
+}
+
+void TestKeePass1Reader::testFileKey_data()
+{
+    QTest::addColumn<QString>("type");
+    QTest::newRow("Binary") << QString("Binary");
+    QTest::newRow("Hex") << QString("Hex");
+    QTest::newRow("Hashed") << QString("Hashed");
+}
+
+void TestKeePass1Reader::testCompositeKey()
+{
+    QString name = "CompositeKey";
+
+    KeePass1Reader reader;
+
+    QString dbFilename = QString("%1/%2.kdb").arg(QString(KEEPASSX_TEST_DATA_DIR), name);
+    QString keyFilename = QString("%1/FileKeyHex.key").arg(QString(KEEPASSX_TEST_DATA_DIR));
+
+    QFile file(keyFilename);
+    QVERIFY(file.open(QIODevice::ReadOnly));
+    QByteArray keyData = KeePass1Reader::readKeyfile(&file);
+    QVERIFY(!keyData.isEmpty());
+
+    Database* db = reader.readDatabase(dbFilename, "mypassword", keyData);
+    QVERIFY(db);
+    QVERIFY(!reader.hasError());
+    QCOMPARE(db->rootGroup()->children().size(), 1);
+    QCOMPARE(db->rootGroup()->children().at(0)->name(), name);
+
+    delete db;
 }
 
 void TestKeePass1Reader::cleanupTestCase()
