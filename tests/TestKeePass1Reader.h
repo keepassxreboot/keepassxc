@@ -22,7 +22,6 @@
 #include <QtCore/QObject>
 
 class Database;
-class QIODevice;
 
 class TestKeePass1Reader : public QObject
 {
@@ -43,6 +42,7 @@ private Q_SLOTS:
 
 private:
     static QDateTime genDT(int year, int month, int day, int hour, int min);
+    static void reopenDatabase(Database* db, const QString& password, const QString& keyfileName);
 
     Database* m_db;
 };

@@ -102,6 +102,8 @@ void TestKeePass1Reader::testBasic()
     QCOMPARE(group2->name(), QString("eMail"));
     QCOMPARE(group2->entries().size(), 1);
     QCOMPARE(group2->iconNumber(), 19);
+
+    reopenDatabase(m_db, "masterpw", QString());
 }
 
 void TestKeePass1Reader::testMasterKey()
@@ -154,6 +156,8 @@ void TestKeePass1Reader::testFileKey()
     QCOMPARE(db->rootGroup()->children().size(), 1);
     QCOMPARE(db->rootGroup()->children().at(0)->name(), name);
 
+    reopenDatabase(db, QString(), keyFilename);
+
     delete db;
 }
 
@@ -179,6 +183,8 @@ void TestKeePass1Reader::testCompositeKey()
     QVERIFY(!reader.hasError());
     QCOMPARE(db->rootGroup()->children().size(), 1);
     QCOMPARE(db->rootGroup()->children().at(0)->name(), name);
+
+    reopenDatabase(db, "mypassword", keyFilename);
 
     delete db;
 }
@@ -228,6 +234,33 @@ QDateTime TestKeePass1Reader::genDT(int year, int month, int day, int hour, int 
     QDate date(year, month, day);
     QTime time(hour, min, 0);
     return QDateTime(date, time, Qt::UTC);
+}
+
+void TestKeePass1Reader::reopenDatabase(Database* db, const QString& password, const QString& keyfileName)
+{
+    QBuffer buffer;
+    buffer.open(QIODevice::ReadWrite);
+
+    KeePass2Writer writer;
+    writer.writeDatabase(&buffer, db);
+    QVERIFY(!writer.error());
+    QVERIFY(buffer.seek(0));
+
+    CompositeKey key;
+    if (!password.isNull()) {
+        key.addKey(PasswordKey(password));
+    }
+    if (!keyfileName.isEmpty()) {
+        FileKey fileKey;
+        QVERIFY(fileKey.load(keyfileName));
+        key.addKey(fileKey);
+    }
+
+    KeePass2Reader reader;
+    Database* newDb = reader.readDatabase(&buffer, key);
+    QVERIFY(newDb);
+    QVERIFY(!reader.hasError());
+    delete newDb;
 }
 
 KEEPASSX_QTEST_CORE_MAIN(TestKeePass1Reader)
