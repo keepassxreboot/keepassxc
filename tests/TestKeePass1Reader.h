@@ -21,6 +21,8 @@
 #include <QtCore/QDateTime>
 #include <QtCore/QObject>
 
+class Database;
+
 class TestKeePass1Reader : public QObject
 {
     Q_OBJECT
@@ -28,9 +30,14 @@ class TestKeePass1Reader : public QObject
 private Q_SLOTS:
     void initTestCase();
     void testBasic();
+    void testCustomIcons();
+    void testGroupExpanded();
+    void cleanupTestCase();
 
 private:
     static QDateTime genDT(int year, int month, int day, int hour, int min);
+
+    Database* m_db;
 };
 
 #endif // KEEPASSX_TESTKEEPASS1READER_H

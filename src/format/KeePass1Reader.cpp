@@ -19,11 +19,13 @@
 
 #include <QtCore/QFile>
 #include <QtCore/QTextCodec>
+#include <QtGui/QImage>
 
 #include "core/Database.h"
 #include "core/Endian.h"
 #include "core/Entry.h"
 #include "core/Group.h"
+#include "core/Metadata.h"
 #include "crypto/CryptoHash.h"
 #include "format/KeePass1.h"
 #include "keys/CompositeKey.h"
@@ -170,9 +172,7 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
 
     Q_FOREACH (Entry* entry, entries) {
         if (isMetaStream(entry)) {
-            if (!parseMetaStream(entry)) {
-                return 0;
-            }
+            parseMetaStream(entry);
 
             delete entry;
         }
@@ -189,11 +189,9 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
         group->setUpdateTimeinfo(true);
     }
 
-    Q_FOREACH (Entry* entry, entries) {
+    Q_FOREACH (Entry* entry, m_db->rootGroup()->entriesRecursive()) {
         entry->setUpdateTimeinfo(true);
     }
-
-
 
     return db.take();
 }
@@ -607,7 +605,7 @@ bool KeePass1Reader::constructGroupTree(const QList<Group*> groups)
         else {
             for (int j = (i - 1); j >= 0; j--) {
                 if (m_groupLevels.value(groups[j]) < level) {
-                    if ((m_groupLevels.value(groups[j]) - level) != 1) {
+                    if ((level - m_groupLevels.value(groups[j])) != 1) {
                         return false;
                     }
 
@@ -625,9 +623,127 @@ bool KeePass1Reader::constructGroupTree(const QList<Group*> groups)
     return true;
 }
 
-bool KeePass1Reader::parseMetaStream(const Entry* entry)
+void KeePass1Reader::parseMetaStream(const Entry* entry)
 {
-    // TODO: implement
+    QByteArray data = entry->attachments()->value("bin-stream");
+
+    if (entry->notes() == "KPX_GROUP_TREE_STATE") {
+        if (!parseGroupTreeState(data)) {
+            qWarning("Unable to parse group tree state metastream.");
+        }
+    }
+    else if (entry->notes() == "KPX_CUSTOM_ICONS_4") {
+        if (!parseCustomIcons4(data)) {
+            qWarning("Unable to parse custom icons metastream.");
+        }
+    }
+    else {
+        qWarning("Ignoring unknown metastream \"%s\".", entry->notes().toLocal8Bit().constData());
+    }
+}
+
+bool KeePass1Reader::parseGroupTreeState(const QByteArray& data)
+{
+    if (data.size() < 4) {
+        return false;
+    }
+
+    int pos = 0;
+    quint32 num = Endian::bytesToUInt32(data.mid(pos, 4), KeePass1::BYTEORDER);
+    pos += 4;
+
+    if ((data.size() - 4) != (num * 5)) {
+        return false;
+    }
+
+    for (quint32 i = 0; i < num; i++) {
+        quint32 groupId = Endian::bytesToUInt32(data.mid(pos, 4), KeePass1::BYTEORDER);
+        pos += 4;
+
+        bool expanded = data.at(pos);
+        pos += 1;
+
+        if (m_groupIds.contains(groupId)) {
+            m_groupIds[groupId]->setExpanded(expanded);
+        }
+    }
+
+    return true;
+}
+
+bool KeePass1Reader::parseCustomIcons4(const QByteArray& data)
+{
+    if (data.size() < 12) {
+        return false;
+    }
+
+    int pos = 0;
+
+    quint32 numIcons = Endian::bytesToUInt32(data.mid(pos, 4), KeePass1::BYTEORDER);
+    pos += 4;
+
+    quint32 numEntries = Endian::bytesToUInt32(data.mid(pos, 4), KeePass1::BYTEORDER);
+    pos += 4;
+
+    quint32 numGroups = Endian::bytesToUInt32(data.mid(pos, 4), KeePass1::BYTEORDER);
+    pos += 4;
+
+    QList<Uuid> iconUuids;
+
+    for (quint32 i = 0; i < numIcons; i++) {
+        if (data.size() < (pos + 4)) {
+            return false;
+        }
+        quint32 iconSize = Endian::bytesToUInt32(data.mid(pos, 4), KeePass1::BYTEORDER);
+        pos += 4;
+
+        if (data.size() < (pos + iconSize)) {
+            return false;
+        }
+        QImage icon = QImage::fromData(data.mid(pos, iconSize));
+        pos += iconSize;
+
+        if (icon.width() != 16 || icon.height() != 16) {
+            icon = icon.scaled(16, 16);
+        }
+
+        Uuid uuid = Uuid::random();
+        iconUuids.append(uuid);
+        m_db->metadata()->addCustomIcon(uuid, icon);
+    }
+
+    if (data.size() < (pos + numEntries * 20)) {
+        return false;
+    }
+
+    for (quint32 i = 0; i < numEntries; i++) {
+        QByteArray entryUuid = data.mid(pos, 16);
+        pos += 16;
+
+        int iconId = Endian::bytesToUInt32(data.mid(pos, 4), KeePass1::BYTEORDER);
+        pos += 4;
+
+        if (m_entryUuids.contains(entryUuid) && (iconId < iconUuids.size())) {
+            m_entryUuids[entryUuid]->setIcon(iconUuids[iconId]);
+        }
+    }
+
+    if (data.size() < (pos + numGroups * 8)) {
+        return false;
+    }
+
+    for (quint32 i = 0; i < numGroups; i++) {
+        quint32 groupId = Endian::bytesToUInt32(data.mid(pos, 4), KeePass1::BYTEORDER);
+        pos += 4;
+
+        int iconId = Endian::bytesToUInt32(data.mid(pos, 4), KeePass1::BYTEORDER);
+        pos += 4;
+
+        if (m_groupIds.contains(groupId) && (iconId < iconUuids.size())) {
+            m_groupIds[groupId]->setIcon(iconUuids[iconId]);
+        }
+    }
+
     return true;
 }
 

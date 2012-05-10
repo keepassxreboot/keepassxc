@@ -56,7 +56,9 @@ private:
     Group* readGroup(QIODevice* cipherStream);
     Entry* readEntry(QIODevice* cipherStream);
     bool constructGroupTree(const QList<Group*> groups);
-    bool parseMetaStream(const Entry* entry);
+    void parseMetaStream(const Entry* entry);
+    bool parseGroupTreeState(const QByteArray& data);
+    bool parseCustomIcons4(const QByteArray& data);
     void raiseError(const QString& str);
     static QDateTime dateFromPackedStruct(const QByteArray& data);
     static bool isMetaStream(const Entry* entry);
