@@ -26,8 +26,12 @@ DefaultIconModel::DefaultIconModel(QObject* parent) :
 
 int DefaultIconModel::rowCount(const QModelIndex& parent) const
 {
-    Q_UNUSED(parent);
-    return databaseIcons()->iconCount();
+    if (!parent.isValid()) {
+        return databaseIcons()->iconCount();
+    }
+    else {
+        return 0;
+    }
 }
 
 QVariant DefaultIconModel::data(const QModelIndex& index, int role) const
@@ -69,8 +73,12 @@ void CustomIconModel::setIcons(QHash<Uuid, QImage> icons)
 
 int CustomIconModel::rowCount(const QModelIndex& parent) const
 {
-    Q_UNUSED(parent);
-    return m_icons.size();
+    if (!parent.isValid()) {
+        return m_icons.size();
+    }
+    else {
+        return 0;
+    }
 }
 
 QVariant CustomIconModel::data(const QModelIndex& index, int role) const
@@ -98,7 +106,7 @@ QModelIndex CustomIconModel::indexFromUuid(const Uuid& uuid) const
     QHash<int, Uuid>::const_iterator iter;
     for (iter = m_uuids.constBegin(); iter != m_uuids.constEnd(); ++iter) {
         if (iter.value() == uuid) {
-            return createIndex(iter.key(), 0);
+            return index(iter.key(), 0);
         }
     }
     return QModelIndex();

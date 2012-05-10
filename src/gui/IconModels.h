@@ -26,6 +26,7 @@
 class DefaultIconModel : public QAbstractListModel
 {
     Q_OBJECT
+
 public:
     explicit DefaultIconModel(QObject* parent = 0);
 
@@ -36,6 +37,7 @@ public:
 class CustomIconModel : public QAbstractListModel
 {
     Q_OBJECT
+
 public:
     explicit CustomIconModel(QObject* parent = 0);
 
@@ -48,7 +50,6 @@ public:
 private:
     QHash<Uuid, QImage> m_icons;
     QHash<int, Uuid> m_uuids;
-
 };
 
 #endif // KEEPASSX_ICONMODELS_H

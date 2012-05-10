@@ -177,7 +177,6 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupN
             int iconNumber = entry->iconNumber();
             m_iconsUi->defaultIconsView->setCurrentIndex(m_defaultIconModel->index(iconNumber, 0));
             m_iconsUi->defaultIconsRadio->setChecked(true);
-
         }
         else {
             QModelIndex index = m_customIconModel->indexFromUuid(iconUuid);
@@ -425,16 +424,17 @@ void EditEntryWidget::addCustomIcon()
     if (m_metadata) {
         QString filename = QFileDialog::getOpenFileName(
                     this, tr("Select Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
-        QImage image(filename);
-        if (!image.isNull()) {
-            m_metadata->addCustomIcon(Uuid::random(), image.scaled(16, 16));
-            m_customIconModel->setIcons(m_metadata->customIcons());
-        }
-        else {
-            ; // TODO show error
+        if (!filename.isEmpty()) {
+            QImage image(filename);
+            if (!image.isNull()) {
+                m_metadata->addCustomIcon(Uuid::random(), image.scaled(16, 16));
+                m_customIconModel->setIcons(m_metadata->customIcons());
+            }
+            else {
+                // TODO: show error
+            }
         }
     }
-
 }
 
 void EditEntryWidget::removeCustomIcon()
@@ -442,11 +442,9 @@ void EditEntryWidget::removeCustomIcon()
     if (m_metadata) {
         QModelIndex index = m_iconsUi->customIconsView->currentIndex();
         if (index.isValid()) {
+            // TODO: check if the icon is used in history items or other entries
             m_metadata->removeCustomIcon(m_customIconModel->uuidFromIndex(index));
             m_customIconModel->setIcons(m_metadata->customIcons());
-        }
-        else {
-            // TODO show error
         }
     }
 }
@@ -455,8 +453,7 @@ void EditEntryWidget::updateIndexDefaultIcons(bool check)
 {
     if (check) {
         QModelIndex index = m_iconsUi->defaultIconsView->currentIndex();
-        if (!index.isValid())
-        {
+        if (!index.isValid()) {
             m_iconsUi->defaultIconsView->setCurrentIndex(m_defaultIconModel->index(0, 0));
         }
     }
@@ -466,9 +463,8 @@ void EditEntryWidget::updateIndexCustomIcons(bool check)
 {
     if (check) {
         QModelIndex index = m_iconsUi->customIconsView->currentIndex();
-        if (!index.isValid())
-        {
-            m_iconsUi->customIconsView->setCurrentIndex(m_customIconModel->index(0, 0));;
+        if (!index.isValid()) {
+            m_iconsUi->customIconsView->setCurrentIndex(m_customIconModel->index(0, 0));
         }
     }
 }
