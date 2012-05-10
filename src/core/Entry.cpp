@@ -337,17 +337,8 @@ void Entry::setExpiryTime(const QDateTime& dateTime)
     }
 }
 
-int Entry::getHistSize() {
-    int size = 0;
-
-    for(int i=0 ; i<m_history.size() ; i++) {
-        size += m_history[i]->getSize();
-    }
-    return size;
-}
-
-int Entry::getSize() {
-    return attributes()->attributesSize() + attachments()->attachmentsSize();
+int Entry::getSize(QList<QByteArray>* foundAttachements) {
+    return attributes()->attributesSize() + attachments()->attachmentsSize(foundAttachements);
 }
 
 QList<Entry*> Entry::historyItems()
@@ -366,18 +357,49 @@ void Entry::addHistoryItem(Entry* entry)
     Q_ASSERT(entry->uuid() == uuid());
 
     m_history.append(entry);
-    truncateHistory();
     Q_EMIT modified();
 }
 
 void Entry::truncateHistory() {
     const Database *db = database();
     if(db) {
-        while(m_history.size() > db->metadata()->historyMaxItems()) {
-            m_history.removeFirst();
+        int histMaxItems = db->metadata()->historyMaxItems();
+        if (histMaxItems > -1) {
+            int historyCount = 0;
+            QMutableListIterator<Entry*> i(m_history);
+            i.toBack();
+            while (i.hasPrevious()) {
+                historyCount++;
+                Entry* entry = i.previous();
+                if (historyCount > histMaxItems) {
+                    delete entry;
+                    i.remove();
+                }
+            }
         }
-        while(getHistSize() > db->metadata()->historyMaxSize()) {
-            m_history.removeFirst();
+
+        int histMaxSize = db->metadata()->historyMaxSize();
+        if (histMaxSize > -1) {
+            int size = 0;
+            QList<QByteArray>* foundAttachements = new QList<QByteArray>();
+            attachments()->attachmentsSize(foundAttachements);
+
+            QMutableListIterator<Entry*> i(m_history);
+            i.toBack();
+            while (i.hasPrevious()) {
+                Entry* entry = i.previous();
+                if (size > histMaxSize) {
+                    delete entry;
+                    i.remove();
+                }
+                else {
+                    size += entry->getSize(foundAttachements);
+                    if (size > histMaxSize) {
+                        delete entry;
+                        i.remove();
+                    }
+                }
+            }
         }
     }
 }
@@ -399,10 +421,10 @@ void Entry::beginUpdate()
 void Entry::endUpdate()
 {
     Q_ASSERT(m_tmpHistoryItem);
-
     if (m_modifiedSinceBegin) {
         m_tmpHistoryItem->setUpdateTimeinfo(true);
         addHistoryItem(m_tmpHistoryItem);
+        truncateHistory();
     }
     else {
         delete m_tmpHistoryItem;

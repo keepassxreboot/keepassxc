@@ -36,11 +36,6 @@ QString EntryAttributes::value(const QString& key) const
     return m_attributes.value(key);
 }
 
-int EntryAttributes::valueSize(const QString& key)
-{
-    return m_attributes.value(key).size() * sizeof(QChar);
-}
-
 bool EntryAttributes::isProtected(const QString& key) const
 {
     return m_protectedAttributes.contains(key);
@@ -231,8 +226,10 @@ void EntryAttributes::clear()
 int EntryAttributes::attributesSize() {
     int size = 0;
 
-    Q_FOREACH (const QString& key, keys()) {
-        size += valueSize(key);
+    QMapIterator<QString, QString> i(m_attributes);
+    while (i.hasNext()) {
+        i.next();
+        size += i.value().toUtf8().size();
     }
     return size;
 }
