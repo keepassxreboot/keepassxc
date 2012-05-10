@@ -20,6 +20,7 @@
 #include <QtCore/QFile>
 #include <QtCore/QXmlStreamReader>
 
+#include "core/Tools.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
 
@@ -233,7 +234,7 @@ bool FileKey::loadHex(QIODevice* device)
 
     QByteArray data = device->readAll();
 
-    if (!isHex(data)) {
+    if (!Tools::isHex(data)) {
         return false;
     }
 
@@ -259,17 +260,6 @@ bool FileKey::loadHashed(QIODevice* device)
     }
 
     m_key = cryptoHash.result();
-
-    return true;
-}
-
-bool FileKey::isHex(const QByteArray& ba)
-{
-    Q_FOREACH (char c, ba) {
-        if ( !( (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F') ) ) {
-            return false;
-        }
-    }
 
     return true;
 }

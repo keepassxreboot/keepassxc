@@ -42,7 +42,6 @@ private:
     bool loadBinary(QIODevice* device);
     bool loadHex(QIODevice* device);
     bool loadHashed(QIODevice* device);
-    static bool isHex(const QByteArray& ba);
 
     QByteArray m_key;
 };

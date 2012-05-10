@@ -31,6 +31,7 @@ bool hasChild(const QObject* parent, const QObject* child);
 bool readAllFromDevice(QIODevice* device, QByteArray& data);
 QDateTime currentDateTimeUtc();
 QString imageReaderFilter();
+bool isHex(const QByteArray& ba);
 
 } // namespace Tools
 
