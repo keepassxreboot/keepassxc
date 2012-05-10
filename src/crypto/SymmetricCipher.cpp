@@ -38,6 +38,7 @@ SymmetricCipherBackend* SymmetricCipher::createBackend(SymmetricCipher::Algorith
 {
     switch (algo) {
     case SymmetricCipher::Aes256:
+    case SymmetricCipher::Twofish:
         return new SymmetricCipherGcrypt(algo, mode, direction);
 
     case SymmetricCipher::Salsa20:

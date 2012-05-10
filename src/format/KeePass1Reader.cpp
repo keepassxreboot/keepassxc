@@ -272,7 +272,8 @@ SymmetricCipherStream* KeePass1Reader::testKeys(const QString& password, const Q
                     SymmetricCipher::Cbc, SymmetricCipher::Decrypt, finalKey, m_encryptionIV));
         }
         else {
-            // TODO twofish
+            cipherStream.reset(new SymmetricCipherStream(m_device, SymmetricCipher::Twofish,
+                    SymmetricCipher::Cbc, SymmetricCipher::Decrypt, finalKey, m_encryptionIV));
         }
 
         cipherStream->open(QIODevice::ReadOnly);

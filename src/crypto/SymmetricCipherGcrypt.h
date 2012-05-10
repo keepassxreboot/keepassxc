@@ -41,6 +41,7 @@ public:
     int blockSize() const;
 
 private:
+    static int gcryptAlgo(SymmetricCipher::Algorithm algo);
     static int gcryptMode(SymmetricCipher::Mode mode);
 
     gcry_cipher_hd_t m_ctx;

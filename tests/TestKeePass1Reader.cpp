@@ -179,6 +179,23 @@ void TestKeePass1Reader::testCompositeKey()
     delete db;
 }
 
+void TestKeePass1Reader::testTwofish()
+{
+    QString name = "Twofish";
+
+    KeePass1Reader reader;
+
+    QString dbFilename = QString("%1/%2.kdb").arg(QString(KEEPASSX_TEST_DATA_DIR), name);
+
+    Database* db = reader.readDatabase(dbFilename, "masterpw", QByteArray());
+    QVERIFY(db);
+    QVERIFY(!reader.hasError());
+    QCOMPARE(db->rootGroup()->children().size(), 1);
+    QCOMPARE(db->rootGroup()->children().at(0)->name(), name);
+
+    delete db;
+}
+
 void TestKeePass1Reader::cleanupTestCase()
 {
     delete m_db;

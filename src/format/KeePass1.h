@@ -20,8 +20,6 @@
 
 #include <QtCore/QtGlobal>
 
-#include "core/Uuid.h"
-
 namespace KeePass1
 {
     const quint32 SIGNATURE_1 = 0x9AA2D903;

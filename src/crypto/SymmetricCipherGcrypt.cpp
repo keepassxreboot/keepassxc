@@ -21,17 +21,31 @@
 
 SymmetricCipherGcrypt::SymmetricCipherGcrypt(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
                                              SymmetricCipher::Direction direction)
-    : m_algo(GCRY_CIPHER_AES256)
+    : m_algo(gcryptAlgo(algo))
     , m_mode(gcryptMode(mode))
     , m_direction(direction)
 {
     Q_ASSERT(Crypto::initalized());
-    Q_ASSERT(algo == SymmetricCipher::Aes256);
 }
 
 SymmetricCipherGcrypt::~SymmetricCipherGcrypt()
 {
     gcry_cipher_close(m_ctx);
+}
+
+int SymmetricCipherGcrypt::gcryptAlgo(SymmetricCipher::Algorithm algo)
+{
+    switch (algo) {
+    case SymmetricCipher::Aes256:
+        return GCRY_CIPHER_AES256;
+
+    case SymmetricCipher::Twofish:
+        return GCRY_CIPHER_TWOFISH;
+
+    default:
+        Q_ASSERT(false);
+        return -1;
+    }
 }
 
 int SymmetricCipherGcrypt::gcryptMode(SymmetricCipher::Mode mode)

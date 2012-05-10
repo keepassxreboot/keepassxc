@@ -29,6 +29,7 @@ public:
     enum Algorithm
     {
         Aes256,
+        Twofish,
         Salsa20
     };
 
