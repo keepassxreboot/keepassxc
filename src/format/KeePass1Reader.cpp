@@ -198,6 +198,11 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
             delete entry;
         }
         else {
+            quint32 groupId = m_entryGroupIds.value(entry);
+            if (!m_groupIds.contains(groupId)) {
+                return 0;
+            }
+            entry->setGroup(m_groupIds.value(groupId));
             entry->setUuid(Uuid::random());
         }
     }
@@ -540,7 +545,7 @@ Entry* KeePass1Reader::readEntry(QIODevice* cipherStream)
                 return 0;
             }
             quint32 groupId = Endian::bytesToUInt32(fieldData, KeePass1::BYTEORDER);
-            entry->setGroup(m_groupIds.value(groupId));
+            m_entryGroupIds.insert(entry.data(), groupId);
             break;
         }
         case 0x0003:

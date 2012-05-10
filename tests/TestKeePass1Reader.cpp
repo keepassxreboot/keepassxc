@@ -47,6 +47,8 @@ void TestKeePass1Reader::initTestCase()
 
 void TestKeePass1Reader::testBasic()
 {
+    QVERIFY(m_db->deletedObjects().isEmpty());
+
     QCOMPARE(m_db->rootGroup()->children().size(), 2);
 
     Group* group1 = m_db->rootGroup()->children().at(0);

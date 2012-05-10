@@ -76,6 +76,7 @@ private:
     QHash<quint32, Group*> m_groupIds;
     QHash<Group*, quint32> m_groupLevels;
     QHash<QByteArray, Entry*> m_entryUuids;
+    QHash<Entry*, quint32> m_entryGroupIds;
 
     bool m_error;
     QString m_errorStr;
