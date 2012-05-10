@@ -38,6 +38,7 @@ public:
                            const QByteArray& keyfileData);
     Database* readDatabase(const QString& filename, const QString& password,
                            const QByteArray& keyfileData);
+    static QByteArray readKeyfile(QIODevice* device);
     bool hasError();
     QString errorString();
 

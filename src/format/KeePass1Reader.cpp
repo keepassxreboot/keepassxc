@@ -26,6 +26,7 @@
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/Tools.h"
 #include "crypto/CryptoHash.h"
 #include "format/KeePass1.h"
 #include "keys/CompositeKey.h"
@@ -314,17 +315,13 @@ bool KeePass1Reader::verifyKey(SymmetricCipherStream* cipherStream)
 {
     CryptoHash contentHash(CryptoHash::Sha256);
     QByteArray buffer;
-    buffer.resize(16384);
-    qint64 readResult;
+
     do {
-        readResult = cipherStream->read(buffer.data(), buffer.size());
-        if (readResult > 0) {
-            if (readResult != buffer.size()) {
-                buffer.resize(readResult);
-            }
-            contentHash.addData(buffer);
+        if (!Tools::readFromDevice(cipherStream, buffer)) {
+            return false;
         }
-    } while (readResult == buffer.size());
+        contentHash.addData(buffer);
+    } while (!buffer.isEmpty());
 
     return contentHash.result() == m_contentHashHeader;
 }
@@ -789,6 +786,49 @@ bool KeePass1Reader::isMetaStream(const Entry* entry)
             && entry->username() == "SYSTEM"
             && entry->url() == "$"
             && entry->iconNumber() == 0;
+}
+
+QByteArray KeePass1Reader::readKeyfile(QIODevice* device)
+{
+    if (device->size() == 0) {
+        return QByteArray();
+    }
+
+    if (device->size() == 32) {
+        QByteArray data = device->read(32);
+        if (data.size() != 32) {
+            return QByteArray();
+        }
+
+        return data;
+    }
+
+    if (device->size() == 64) {
+        QByteArray data = device->read(64);
+
+        if (data.size() != 64) {
+            return QByteArray();
+        }
+
+        if (Tools::isHex(data)) {
+            return QByteArray::fromHex(data);
+        }
+        else {
+            device->seek(0);
+        }
+    }
+
+    CryptoHash cryptoHash(CryptoHash::Sha256);
+    QByteArray buffer;
+
+    do {
+        if (!Tools::readFromDevice(device, buffer)) {
+            return QByteArray();
+        }
+        cryptoHash.addData(buffer);
+    } while (!buffer.isEmpty());
+
+    return cryptoHash.result();
 }
 
 
