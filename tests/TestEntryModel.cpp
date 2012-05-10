@@ -22,15 +22,19 @@
 
 #include "modeltest.h"
 #include "tests.h"
+#include "core/DatabaseIcons.h"
 #include "core/Entry.h"
 #include "core/Group.h"
+#include "crypto/Crypto.h"
 #include "gui/EntryModel.h"
 #include "gui/EntryAttachmentsModel.h"
 #include "gui/EntryAttributesModel.h"
+#include "gui/IconModels.h"
 
 void TestEntryModel::initTestCase()
 {
     qRegisterMetaType<QModelIndex>("QModelIndex");
+    Crypto::init();
 }
 
 void TestEntryModel::test()
@@ -179,6 +183,36 @@ void TestEntryModel::testAttributesModel()
     model->setEntryAttributes(0);
     QCOMPARE(spyReset.count(), 2);
     QCOMPARE(model->rowCount(), 0);
+
+    delete modelTest;
+    delete model;
+}
+
+void TestEntryModel::testDefaultIconModel()
+{
+    DefaultIconModel* model = new DefaultIconModel(this);
+    ModelTest* modelTest = new ModelTest(model, this);
+
+    QCOMPARE(model->rowCount(), databaseIcons()->iconCount());
+
+    delete modelTest;
+    delete model;
+}
+
+void TestEntryModel::testCustomIconModel()
+{
+    CustomIconModel* model = new CustomIconModel(this);
+    ModelTest* modelTest = new ModelTest(model, this);
+
+    QCOMPARE(model->rowCount(), 0);
+
+    QHash<Uuid, QImage> icons;
+    Uuid iconUuid = Uuid::random();
+    QImage icon;
+    icons.insert(iconUuid, icon);
+
+    model->setIcons(icons);
+    QCOMPARE(model->uuidFromIndex(model->index(0, 0)), iconUuid);
 
     delete modelTest;
     delete model;
