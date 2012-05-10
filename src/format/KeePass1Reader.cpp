@@ -177,6 +177,9 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
 
             delete entry;
         }
+        else {
+            entry->setUuid(Uuid::random());
+        }
     }
 
     Q_ASSERT(m_tmpParent->children().isEmpty());

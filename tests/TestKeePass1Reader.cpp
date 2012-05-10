@@ -46,12 +46,14 @@ void TestKeePass1Reader::testBasic()
     QCOMPARE(m_db->rootGroup()->children().size(), 2);
 
     Group* group1 = m_db->rootGroup()->children().at(0);
+    QVERIFY(!group1->uuid().isNull());
     QCOMPARE(group1->name(), QString("Internet"));
     QCOMPARE(group1->children().size(), 2);
     QCOMPARE(group1->entries().size(), 2);
     QCOMPARE(group1->iconNumber(), 1);
 
     Entry* entry11 = group1->entries().at(0);
+    QVERIFY(!entry11->uuid().isNull());
     QCOMPARE(entry11->title(), QString("Test entry"));
     QCOMPARE(entry11->iconNumber(), 1);
     QCOMPARE(entry11->username(), QString("I"));
