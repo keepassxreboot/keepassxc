@@ -53,6 +53,22 @@ bool hasChild(const QObject* parent, const QObject* child)
     return false;
 }
 
+bool readFromDevice(QIODevice* device, QByteArray& data, int size)
+{
+    QByteArray buffer;
+    buffer.resize(size);
+
+    qint64 readResult = device->read(buffer.data(), size);
+    if (readResult == -1) {
+        return false;
+    }
+    else {
+        buffer.resize(readResult);
+        data = buffer;
+        return true;
+    }
+}
+
 bool readAllFromDevice(QIODevice* device, QByteArray& data)
 {
     QByteArray result;

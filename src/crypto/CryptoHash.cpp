@@ -66,6 +66,10 @@ void CryptoHash::addData(const QByteArray& data)
 {
     Q_D(CryptoHash);
 
+    if (data.isEmpty()) {
+        return;
+    }
+
     gcry_md_write(d->ctx, data.constData(), data.size());
 }
 

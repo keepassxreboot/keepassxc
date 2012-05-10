@@ -222,8 +222,14 @@ bool FileKey::loadBinary(QIODevice* device)
         return false;
     }
 
-    m_key = device->readAll();
-    return true;
+    QByteArray data;
+    if (!Tools::readAllFromDevice(device, data) || data.size() != 32) {
+        return false;
+    }
+    else {
+        m_key = data;
+        return true;
+    }
 }
 
 bool FileKey::loadHex(QIODevice* device)
@@ -232,7 +238,10 @@ bool FileKey::loadHex(QIODevice* device)
         return false;
     }
 
-    QByteArray data = device->readAll();
+    QByteArray data;
+    if (!Tools::readAllFromDevice(device, data) || data.size() != 64) {
+        return false;
+    }
 
     if (!Tools::isHex(data)) {
         return false;
@@ -253,11 +262,12 @@ bool FileKey::loadHashed(QIODevice* device)
     CryptoHash cryptoHash(CryptoHash::Sha256);
 
     QByteArray buffer;
-
-    while (!device->atEnd()) {
-        buffer = device->read(1024);
+    do {
+        if (!Tools::readFromDevice(device, buffer)) {
+            return false;
+        }
         cryptoHash.addData(buffer);
-    }
+    } while (!buffer.isEmpty());
 
     m_key = cryptoHash.result();
 
