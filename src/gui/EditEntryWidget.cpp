@@ -459,6 +459,11 @@ void EditEntryWidget::updateIndexDefaultIcons(bool check)
         if (!index.isValid()) {
             m_iconsUi->defaultIconsView->setCurrentIndex(m_defaultIconModel->index(0, 0));
         }
+        else {
+            m_iconsUi->defaultIconsView->selectionModel()->
+                    setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
+        }
+        m_iconsUi->customIconsView->selectionModel()->clearSelection();
     }
 }
 
@@ -469,6 +474,11 @@ void EditEntryWidget::updateIndexCustomIcons(bool check)
         if (!index.isValid()) {
             m_iconsUi->customIconsView->setCurrentIndex(m_customIconModel->index(0, 0));
         }
+        else {
+            m_iconsUi->customIconsView->selectionModel()->
+                    setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
+        }
+        m_iconsUi->defaultIconsView->selectionModel()->clearSelection();
     }
 }
 
