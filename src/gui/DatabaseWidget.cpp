@@ -276,6 +276,8 @@ void DatabaseWidget::updateSettings(bool accepted)
         m_db->metadata()->setDefaultUserName(m_databaseSettingsWidget->defaultUsername());
         m_db->metadata()->setRecycleBinEnabled(m_databaseSettingsWidget->recylceBinEnabled());
         m_db->metadata()->setName(m_databaseSettingsWidget->dbName());
+        m_db->metadata()->setHistoryMaxItems(m_databaseSettingsWidget->historyMaxItems());
+        m_db->metadata()->setHistoryMaxSize(m_databaseSettingsWidget->historyMaxSize());
     }
 
     setCurrentIndex(0);
@@ -303,7 +305,9 @@ void DatabaseWidget::switchToDatabaseSettings()
                                        m_db->metadata()->description(),
                                        m_db->metadata()->defaultUserName(),
                                        m_db->metadata()->recycleBinEnabled(),
-                                       m_db->transformRounds());
+                                       m_db->transformRounds(),
+                                       m_db->metadata()->historyMaxItems(),
+                                       m_db->metadata()->historyMaxSize());
     setCurrentIndex(4);
 }
 

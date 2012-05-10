@@ -69,6 +69,9 @@ public:
     int historyMaxSize() const;
     QHash<QString, QString> customFields() const;
 
+    static const int defaultHistoryMaxItems;
+    static const int defaultHistoryMaxSize;
+
     void setGenerator(const QString& value);
     void setName(const QString& value);
     void setNameChanged(const QDateTime& value);

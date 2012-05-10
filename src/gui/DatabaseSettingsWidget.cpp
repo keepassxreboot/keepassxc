@@ -18,6 +18,8 @@
 #include "DatabaseSettingsWidget.h"
 #include "ui_DatabaseSettingsWidget.h"
 
+#include "core/Metadata.h"
+
 
 DatabaseSettingsWidget::DatabaseSettingsWidget(QWidget* parent)
     : DialogyWidget(parent)
@@ -27,6 +29,10 @@ DatabaseSettingsWidget::DatabaseSettingsWidget(QWidget* parent)
 
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(changeSettings()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
+    connect(m_ui->historyMaxItemsCheckBox, SIGNAL(stateChanged(int)),
+            this, SLOT(toggleHistoryMaxItemsSpinBox(int)));
+    connect(m_ui->historyMaxSizeCheckBox, SIGNAL(stateChanged(int)),
+            this, SLOT(toggleHistoryMaxSizeSpinBox(int)));
 }
 
 DatabaseSettingsWidget::~DatabaseSettingsWidget()
@@ -35,7 +41,8 @@ DatabaseSettingsWidget::~DatabaseSettingsWidget()
 
 void DatabaseSettingsWidget::setForms(QString dbName, QString dbDescription,
                                       QString defaultUsername, bool recylceBinEnabled,
-                                      int transformRounds)
+                                      int transformRounds, int historyMaxItems,
+                                      int historyMaxSize)
 {
     m_ui->dbNameEdit->setText(dbName);
     m_ui->dbDescriptionEdit->setText(dbDescription);
@@ -47,6 +54,22 @@ void DatabaseSettingsWidget::setForms(QString dbName, QString dbDescription,
     }
     m_ui->defaultUsernameEdit->setText(defaultUsername);
     m_ui->transformRoundsSpinBox->setValue(transformRounds);
+    if (historyMaxItems > -1) {
+        m_ui->historyMaxItemsSpinBox->setValue(historyMaxItems);
+        m_ui->historyMaxItemsCheckBox->setChecked(true);
+    }
+    else {
+        m_ui->historyMaxItemsSpinBox->setValue(Metadata::defaultHistoryMaxItems);
+        m_ui->historyMaxItemsCheckBox->setChecked(false);
+    }
+    if (historyMaxSize > -1) {
+        m_ui->historyMaxSizeSpinBox->setValue(historyMaxSize);
+        m_ui->historyMaxSizeCheckBox->setChecked(true);
+    }
+    else {
+        m_ui->historyMaxSizeSpinBox->setValue(Metadata::defaultHistoryMaxSize);
+        m_ui->historyMaxSizeCheckBox->setChecked(false);
+    }
 
     m_ui->dbNameEdit->setFocus();
 }
@@ -76,6 +99,16 @@ bool DatabaseSettingsWidget::recylceBinEnabled()
     return m_recylceBinEnabled;
 }
 
+int DatabaseSettingsWidget::historyMaxItems()
+{
+    return m_historyMaxItems;
+}
+
+int DatabaseSettingsWidget::historyMaxSize()
+{
+    return m_historyMaxSize;
+}
+
 void DatabaseSettingsWidget::changeSettings()
 {
     m_dbName = m_ui->dbNameEdit->text();
@@ -88,6 +121,19 @@ void DatabaseSettingsWidget::changeSettings()
         m_recylceBinEnabled = false;
     }
     m_transformRounds = m_ui->transformRoundsSpinBox->value();
+    if (m_ui->historyMaxItemsCheckBox->isChecked()) {
+        m_historyMaxItems = m_ui->historyMaxItemsSpinBox->value();
+    }
+    else {
+        m_historyMaxItems = -1;
+    }
+    if (m_ui->historyMaxSizeCheckBox->isChecked()) {
+        m_historyMaxSize = m_ui->historyMaxSizeSpinBox->value();
+    }
+    else {
+        m_historyMaxSize = -1;
+    }
+
 
     Q_EMIT editFinished(true);
 }
@@ -97,3 +143,23 @@ void DatabaseSettingsWidget::reject()
     Q_EMIT editFinished(false);
 }
 
+void DatabaseSettingsWidget::toggleHistoryMaxItemsSpinBox(int state)
+{
+    if (state == Qt::Checked) {
+        m_ui->historyMaxItemsSpinBox->setEnabled(true);
+    }
+    else {
+        m_ui->historyMaxItemsSpinBox->setEnabled(false);
+    }
+}
+
+void DatabaseSettingsWidget::toggleHistoryMaxSizeSpinBox(int state)
+{
+    if (state == Qt::Checked) {
+        m_ui->historyMaxSizeSpinBox->setEnabled(true);
+    }
+    else {
+        m_ui->historyMaxSizeSpinBox->setEnabled(false);
+    }
+
+}

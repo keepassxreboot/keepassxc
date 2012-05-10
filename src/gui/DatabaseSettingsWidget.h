@@ -38,12 +38,15 @@ public:
 
     void setForms(QString dbName, QString dbDescription,
                   QString defaultUsername, bool recylceBinEnabled,
-                  int transformRounds);
+                  int transformRounds, int historyMaxItems,
+                  int historyMaxSize);
     quint64 transformRounds();
     QString dbName();
     QString dbDescription();
     QString defaultUsername();
     bool recylceBinEnabled();
+    int historyMaxItems();
+    int historyMaxSize();
 
 Q_SIGNALS:
     void editFinished(bool accepted);
@@ -51,6 +54,8 @@ Q_SIGNALS:
 private Q_SLOTS:
     void changeSettings();
     void reject();
+    void toggleHistoryMaxItemsSpinBox(int state);
+    void toggleHistoryMaxSizeSpinBox(int state);
 
 private:
     const QScopedPointer<Ui::DatabaseSettingsWidget> m_ui;
@@ -60,6 +65,8 @@ private:
     QString m_defaultUsername;
     bool m_recylceBinEnabled;
     quint64 m_transformRounds;
+    int m_historyMaxItems;
+    int m_historyMaxSize;
 
     Q_DISABLE_COPY(DatabaseSettingsWidget)
 };
