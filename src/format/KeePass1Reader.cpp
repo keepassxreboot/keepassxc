@@ -842,7 +842,7 @@ QByteArray KeePass1Key::rawKey() const
     }
     else {
         CryptoHash keyHash(CryptoHash::Sha256);
-        keyHash.addData(m_password);
+        keyHash.addData(CryptoHash::hash(m_password, CryptoHash::Sha256));
         keyHash.addData(m_keyfileData);
         return keyHash.result();
     }
