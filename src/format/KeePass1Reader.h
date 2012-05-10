@@ -35,10 +35,9 @@ class KeePass1Reader
 public:
     KeePass1Reader();
     Database* readDatabase(QIODevice* device, const QString& password,
-                           const QByteArray& keyfileData);
+                           QIODevice* keyfileDevice);
     Database* readDatabase(const QString& filename, const QString& password,
-                           const QByteArray& keyfileData);
-    static QByteArray readKeyfile(QIODevice* device);
+                           const QString& keyfileName);
     bool hasError();
     QString errorString();
 
@@ -61,6 +60,7 @@ private:
     bool parseGroupTreeState(const QByteArray& data);
     bool parseCustomIcons4(const QByteArray& data);
     void raiseError(const QString& str);
+    static QByteArray readKeyfile(QIODevice* device);
     static QDateTime dateFromPackedStruct(const QByteArray& data);
     static bool isMetaStream(const Entry* entry);
 

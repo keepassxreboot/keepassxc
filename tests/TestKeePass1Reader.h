@@ -22,6 +22,7 @@
 #include <QtCore/QObject>
 
 class Database;
+class QIODevice;
 
 class TestKeePass1Reader : public QObject
 {
@@ -30,6 +31,7 @@ class TestKeePass1Reader : public QObject
 private Q_SLOTS:
     void initTestCase();
     void testBasic();
+    void testMasterKey();
     void testCustomIcons();
     void testGroupExpanded();
     void testFileKey();

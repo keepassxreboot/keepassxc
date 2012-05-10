@@ -30,6 +30,8 @@
 #include "crypto/CryptoHash.h"
 #include "format/KeePass1.h"
 #include "keys/CompositeKey.h"
+#include "keys/FileKey.h"
+#include "keys/PasswordKey.h"
 #include "streams/SymmetricCipherStream.h"
 
 class KeePass1Key : public CompositeKey
@@ -52,8 +54,26 @@ KeePass1Reader::KeePass1Reader()
 }
 
 Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& password,
-                                       const QByteArray& keyfileData)
+                                       QIODevice* keyfileDevice)
 {
+    QByteArray keyfileData;
+    FileKey newFileKey;
+
+    if (keyfileDevice) {
+        keyfileData = readKeyfile(keyfileDevice);
+
+        if (keyfileData.isEmpty()) {
+            return 0;
+        }
+        if (!keyfileDevice->seek(0)) {
+            return 0;
+        }
+
+        if (!newFileKey.load(keyfileDevice)) {
+            return 0;
+        }
+    }
+
     QScopedPointer<Database> db(new Database());
     QScopedPointer<Group> tmpParent(new Group());
     m_db = db.data();
@@ -197,22 +217,41 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
         entry->setUpdateTimeinfo(true);
     }
 
+    CompositeKey key;
+    if (!password.isEmpty()) {
+        key.addKey(PasswordKey(password));
+    }
+    if (keyfileDevice) {
+        key.addKey(newFileKey);
+    }
+
+    db->setKey(key);
+
     return db.take();
 }
 
 Database* KeePass1Reader::readDatabase(const QString& filename, const QString& password,
-                                       const QByteArray& keyfileData)
+                                       const QString& keyfileName)
 {
-    QFile file(filename);
-    if (!file.open(QFile::ReadOnly)) {
-        raiseError(file.errorString());
+    QFile dbFile(filename);
+    if (!dbFile.open(QFile::ReadOnly)) {
+        raiseError(dbFile.errorString());
         return 0;
     }
 
-    QScopedPointer<Database> db(readDatabase(&file, password, keyfileData));
+    QScopedPointer<QFile> keyFile;
+    if (!keyfileName.isEmpty()) {
+        keyFile.reset(new QFile(keyfileName));
+        if (!keyFile->open(QFile::ReadOnly)) {
+            raiseError(keyFile->errorString());
+            return 0;
+        }
+    }
 
-    if (file.error() != QFile::NoError) {
-        raiseError(file.errorString());
+    QScopedPointer<Database> db(readDatabase(&dbFile, password, keyFile.data()));
+
+    if (dbFile.error() != QFile::NoError) {
+        raiseError(dbFile.errorString());
         return 0;
     }
 

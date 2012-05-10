@@ -17,7 +17,7 @@
 
 #include "TestKeePass1Reader.h"
 
-#include <QtCore/QFile>
+#include <QtCore/QBuffer>
 #include <QtTest/QTest>
 
 #include "config-keepassx-tests.h"
@@ -28,6 +28,10 @@
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
 #include "format/KeePass1Reader.h"
+#include "format/KeePass2Reader.h"
+#include "format/KeePass2Writer.h"
+#include "keys/FileKey.h"
+#include "keys/PasswordKey.h"
 
 void TestKeePass1Reader::initTestCase()
 {
@@ -36,7 +40,7 @@ void TestKeePass1Reader::initTestCase()
     QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/basic.kdb");
 
     KeePass1Reader reader;
-    m_db = reader.readDatabase(filename, "masterpw", QByteArray());
+    m_db = reader.readDatabase(filename, "masterpw", 0);
     QVERIFY(m_db);
     QVERIFY(!reader.hasError());
 }
@@ -98,6 +102,12 @@ void TestKeePass1Reader::testBasic()
     QCOMPARE(group2->iconNumber(), 19);
 }
 
+void TestKeePass1Reader::testMasterKey()
+{
+    QVERIFY(m_db->hasKey());
+    QCOMPARE(m_db->transformRounds(), static_cast<quint64>(713));
+}
+
 void TestKeePass1Reader::testCustomIcons()
 {
     QCOMPARE(m_db->metadata()->customIcons().size(), 1);
@@ -136,12 +146,7 @@ void TestKeePass1Reader::testFileKey()
     QString dbFilename = QString("%1/%2.kdb").arg(QString(KEEPASSX_TEST_DATA_DIR), name);
     QString keyFilename = QString("%1/%2.key").arg(QString(KEEPASSX_TEST_DATA_DIR), name);
 
-    QFile file(keyFilename);
-    QVERIFY(file.open(QIODevice::ReadOnly));
-    QByteArray keyData = KeePass1Reader::readKeyfile(&file);
-    QVERIFY(!keyData.isEmpty());
-
-    Database* db = reader.readDatabase(dbFilename, QString(), keyData);
+    Database* db = reader.readDatabase(dbFilename, QString(), keyFilename);
     QVERIFY(db);
     QVERIFY(!reader.hasError());
     QCOMPARE(db->rootGroup()->children().size(), 1);
@@ -167,12 +172,7 @@ void TestKeePass1Reader::testCompositeKey()
     QString dbFilename = QString("%1/%2.kdb").arg(QString(KEEPASSX_TEST_DATA_DIR), name);
     QString keyFilename = QString("%1/FileKeyHex.key").arg(QString(KEEPASSX_TEST_DATA_DIR));
 
-    QFile file(keyFilename);
-    QVERIFY(file.open(QIODevice::ReadOnly));
-    QByteArray keyData = KeePass1Reader::readKeyfile(&file);
-    QVERIFY(!keyData.isEmpty());
-
-    Database* db = reader.readDatabase(dbFilename, "mypassword", keyData);
+    Database* db = reader.readDatabase(dbFilename, "mypassword", keyFilename);
     QVERIFY(db);
     QVERIFY(!reader.hasError());
     QCOMPARE(db->rootGroup()->children().size(), 1);
@@ -189,7 +189,7 @@ void TestKeePass1Reader::testTwofish()
 
     QString dbFilename = QString("%1/%2.kdb").arg(QString(KEEPASSX_TEST_DATA_DIR), name);
 
-    Database* db = reader.readDatabase(dbFilename, "masterpw", QByteArray());
+    Database* db = reader.readDatabase(dbFilename, "masterpw", 0);
     QVERIFY(db);
     QVERIFY(!reader.hasError());
     QCOMPARE(db->rootGroup()->children().size(), 1);
@@ -207,7 +207,7 @@ void TestKeePass1Reader::testCP1252Password()
     QString dbFilename = QString("%1/%2.kdb").arg(QString(KEEPASSX_TEST_DATA_DIR), name);
     QString password = QString::fromUtf8("\xe2\x80\x9e\x70\x61\x73\x73\x77\x6f\x72\x64\xe2\x80\x9d");
 
-    Database* db = reader.readDatabase(dbFilename, password, QByteArray());
+    Database* db = reader.readDatabase(dbFilename, password, 0);
     QVERIFY(db);
     QVERIFY(!reader.hasError());
     QCOMPARE(db->rootGroup()->children().size(), 1);
