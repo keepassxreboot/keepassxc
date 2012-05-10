@@ -83,6 +83,7 @@ private:
     Entry* m_entry;
     Metadata* m_metadata;
 
+    bool m_create;
     const QScopedPointer<Ui::EditEntryWidget> m_ui;
     const QScopedPointer<Ui::EditEntryWidgetMain> m_mainUi;
     const QScopedPointer<Ui::EditEntryWidgetNotes> m_notesUi;

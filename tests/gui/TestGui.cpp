@@ -28,10 +28,12 @@
 #include "config-keepassx-tests.h"
 #include "tests.h"
 #include "crypto/Crypto.h"
+#include "core/Entry.h"
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/EditEntryWidget.h"
 #include "gui/EntryView.h"
+#include "gui/EntryModel.h"
 #include "gui/FileDialog.h"
 #include "gui/MainWindow.h"
 
@@ -95,6 +97,58 @@ void TestGui::testEditEntry()
     QTest::qWait(20);
     // make sure the database isn't marked as modified
     QCOMPARE(tabWidget->tabText(tabWidget->currentIndex()), QString("NewDatabase.kdbx"));
+}
+
+void TestGui::testAddEntry()
+{
+    DatabaseTabWidget* tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
+    DatabaseWidget* dbWidget = tabWidget->currentDatabaseWidget();
+
+    EntryView* entryView = dbWidget->findChild<EntryView*>("entryView");
+    QAction* entryNewAction = m_mainWindow->findChild<QAction*>("actionEntryNew");
+    QVERIFY(entryNewAction->isEnabled());
+    QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
+    QWidget* entryNewWidget = toolBar->widgetForAction(entryNewAction);
+    QVERIFY(entryNewWidget->isVisible());
+    QVERIFY(entryNewWidget->isEnabled());
+
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QTest::qWait(20);
+
+    QCOMPARE(dbWidget->currentMode(), DatabaseWidget::EditMode);
+
+    EditEntryWidget* editEntryWidget = dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+    QLineEdit* titleEdit = editEntryWidget->findChild<QLineEdit*>("titleEdit");
+    QTest::keyClicks(titleEdit, "test");
+    QTest::qWait(20);
+
+    QDialogButtonBox* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTest::qWait(20);
+
+    QCOMPARE(dbWidget->currentMode(), DatabaseWidget::ViewMode);
+    QModelIndex item = entryView->model()->index(1, 0);
+    Entry* entry = static_cast<EntryModel*>(entryView->model())->entryFromIndex(item);
+
+    QCOMPARE(entry->title(), QString("test"));
+    QCOMPARE(entry->historyItems().size(), 0);
+    QCOMPARE(tabWidget->tabText(tabWidget->currentIndex()), QString("NewDatabase.kdbx*"));
+
+    QAction* entryEditAction = m_mainWindow->findChild<QAction*>("actionEntryEdit");
+    QVERIFY(entryEditAction->isEnabled());
+    QWidget* entryEditWidget = toolBar->widgetForAction(entryEditAction);
+    QVERIFY(entryEditWidget->isVisible());
+    QVERIFY(entryEditWidget->isEnabled());
+    QTest::mouseClick(entryEditWidget, Qt::LeftButton);
+    QTest::qWait(20);
+
+    QCOMPARE(dbWidget->currentMode(), DatabaseWidget::EditMode);
+    QTest::keyClicks(titleEdit, "something");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTest::qWait(20);
+
+    QCOMPARE(entry->title(), QString("testsomething"));
+    QCOMPARE(entry->historyItems().size(), 1);
 }
 
 void TestGui::cleanupTestCase()

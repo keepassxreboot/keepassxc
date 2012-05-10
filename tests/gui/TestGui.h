@@ -31,6 +31,7 @@ private Q_SLOTS:
     void testOpenDatabase();
     void testTabs();
     void testEditEntry();
+    void testAddEntry();
     void cleanupTestCase();
 
 private:

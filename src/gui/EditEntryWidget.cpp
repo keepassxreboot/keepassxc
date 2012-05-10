@@ -134,6 +134,7 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupN
 {
     m_entry = entry;
     m_metadata = metadata;
+    m_create = create;
 
     if (create) {
         m_ui->headerLabel->setText(groupName+" > "+tr("Add entry"));
@@ -212,7 +213,9 @@ void EditEntryWidget::saveEntry()
 
     m_currentAttribute = QPersistentModelIndex();
 
-    m_entry->beginUpdate();
+    if (!m_create) {
+        m_entry->beginUpdate();
+    }
 
     m_entry->setTitle(m_mainUi->titleEdit->text());
     m_entry->setUsername(m_mainUi->usernameEdit->text());
@@ -245,7 +248,9 @@ void EditEntryWidget::saveEntry()
         }
     }
 
-    m_entry->endUpdate();
+    if (!m_create) {
+        m_entry->endUpdate();
+    }
 
     m_entry = 0;
     m_entryAttributes->clear();
