@@ -21,12 +21,13 @@
 
 #include "crypto/Crypto.h"
 #include "gui/MainWindow.h"
+#include "core/KeePassApp.h"
 #include "keys/CompositeKey.h"
 #include "keys/PasswordKey.h"
 
 int main(int argc, char** argv)
 {
-    QApplication app(argc, argv);
+    KeePassApp app(argc, argv);
     // don't set applicationName or organizationName as that changes
     // QDesktopServices::storageLocation()
 
@@ -50,6 +51,7 @@ int main(int argc, char** argv)
     }
 
     MainWindow mainWindow;
+    app.setMainWindow(&mainWindow);
     mainWindow.show();
 
     if (!filename.isEmpty()) {
