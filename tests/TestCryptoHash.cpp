@@ -30,7 +30,7 @@ void TestCryptoHash::initTestCase()
 
 void TestCryptoHash::test()
 {
-    // TODO move somewhere else
+    // TODO: move somewhere else
     QVERIFY(Crypto::selfTest());
 
     CryptoHash cryptoHash1(CryptoHash::Sha256);

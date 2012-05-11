@@ -84,7 +84,7 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
                                      const QString& keyFile)
 {
     QScopedPointer<QFile> file(new QFile(fileName));
-    // TODO error handling
+    // TODO: error handling
     if (!file->open(QIODevice::ReadWrite)) {
         if (!file->open(QIODevice::ReadOnly)) {
             // can't open
@@ -208,7 +208,7 @@ void DatabaseTabWidget::saveDatabase(Database* db)
 {
     DatabaseManagerStruct& dbStruct = m_dbList[db];
 
-    // TODO ensure that the data is actually written to disk
+    // TODO: ensure that the data is actually written to disk
     if (dbStruct.file) {
         dbStruct.file->reset();
         m_writer.writeDatabase(dbStruct.file, db);
@@ -235,12 +235,12 @@ void DatabaseTabWidget::saveDatabaseAs(Database* db)
     if (!fileName.isEmpty()) {
         QFile* oldFile = dbStruct.file;
         QScopedPointer<QFile> file(new QFile(fileName));
-        // TODO error handling
+        // TODO: error handling
         if (!file->open(QIODevice::ReadWrite)) {
             return;
         }
         dbStruct.file = file.take();
-        // TODO ensure that the data is actually written to disk
+        // TODO: ensure that the data is actually written to disk
         m_writer.writeDatabase(dbStruct.file, db);
         dbStruct.file->flush();
         delete oldFile;

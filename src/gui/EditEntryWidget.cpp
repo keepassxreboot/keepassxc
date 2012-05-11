@@ -360,7 +360,7 @@ void EditEntryWidget::updateCurrentAttribute()
 
 void EditEntryWidget::insertAttachment()
 {
-    // TODO save last used dir
+    // TODO: save last used dir
     QString filename = fileDialog()->getOpenFileName(this, tr("Select file"),
                 QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation));
     if (filename.isEmpty() || !QFile::exists(filename)) {
@@ -392,7 +392,7 @@ void EditEntryWidget::saveCurrentAttachment()
     }
 
     QString filename = m_attachmentsModel->keyByIndex(index);
-    // TODO save last used dir
+    // TODO: save last used dir
     QDir dir(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation));
     QString savePath = fileDialog()->getSaveFileName(this, tr("Save attachment"),
                                                        dir.filePath(filename));

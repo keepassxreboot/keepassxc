@@ -63,7 +63,7 @@ void EntryView::setModel(QAbstractItemModel* model)
 
 Entry* EntryView::currentEntry()
 {
-    // TODO use selection instead of current?
+    // TODO: use selection instead of current?
     return m_model->entryFromIndex(m_sortModel->mapToSource(currentIndex()));
 }
 

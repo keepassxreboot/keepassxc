@@ -69,7 +69,7 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
     while (readHeaderField() && !hasError()) {
     }
 
-    // TODO check if all header fields have been parsed
+    // TODO: check if all header fields have been parsed
 
     m_db->setKey(key, m_transformSeed, false);
 

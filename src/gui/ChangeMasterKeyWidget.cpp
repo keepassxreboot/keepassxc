@@ -53,7 +53,7 @@ void ChangeMasterKeyWidget::clearForms()
     m_ui->repeatPasswordEdit->setText("");
     m_ui->keyFileGroup->setChecked(false);
     m_ui->togglePasswordButton->setChecked(true);
-    // TODO clear m_ui->keyFileCombo
+    // TODO: clear m_ui->keyFileCombo
 
     m_ui->enterPasswordEdit->setFocus();
 }
@@ -94,7 +94,7 @@ void ChangeMasterKeyWidget::generateKey()
         FileKey fileKey;
         QString errorMsg;
         if (!fileKey.load(m_ui->keyFileCombo->currentText(), &errorMsg)) {
-            // TODO error handling
+            // TODO: error handling
         }
         m_key.addKey(fileKey);
     }

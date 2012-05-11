@@ -268,7 +268,7 @@ void TestKeePass2XmlReader::testEntry2()
     QCOMPARE(entry->uuid().toBase64(), QString("4jbADG37hkiLh2O0qUdaOQ=="));
     QCOMPARE(entry->iconNumber(), 0);
     QCOMPARE(entry->iconUuid().toBase64(), QString("++vyI+daLk6omox4a6kQGA=="));
-    // TODO test entry->icon()
+    // TODO: test entry->icon()
     QCOMPARE(entry->foregroundColor(), QColor(255, 0, 0));
     QCOMPARE(entry->backgroundColor(), QColor(255, 255, 0));
     QCOMPARE(entry->overrideUrl(), QString("http://override.net/"));
@@ -284,7 +284,7 @@ void TestKeePass2XmlReader::testEntry2()
     QVERIFY(attrs.removeOne("Notes"));
     QCOMPARE(entry->attributes()->value("Password"), QString("Jer60Hz8o9XHvxBGcRqT"));
     QVERIFY(attrs.removeOne("Password"));
-    QCOMPARE(entry->attributes()->value("Protected String"), QString("y")); // TODO should have a protection attribute
+    QCOMPARE(entry->attributes()->value("Protected String"), QString("y")); // TODO: should have a protection attribute
     QVERIFY(attrs.removeOne("Protected String"));
     QCOMPARE(entry->attributes()->value("Title"), QString("Sample Entry 2"));
     QVERIFY(attrs.removeOne("Title"));

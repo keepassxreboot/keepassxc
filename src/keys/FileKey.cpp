@@ -192,7 +192,7 @@ bool FileKey::loadXmlMeta(QXmlStreamReader& xmlReader)
 
     while (!xmlReader.error() && xmlReader.readNextStartElement()) {
         if (xmlReader.name() == "Version") {
-            // TODO error message about incompatible key file version
+            // TODO: error message about incompatible key file version
             if (xmlReader.readElementText() == "1.00") {
                 corectVersion = true;
             }
@@ -208,7 +208,7 @@ QByteArray FileKey::loadXmlKey(QXmlStreamReader& xmlReader)
 
     while (!xmlReader.error() && xmlReader.readNextStartElement()) {
         if (xmlReader.name() == "Data") {
-            // TODO do we need to enforce a specific data.size()?
+            // TODO: do we need to enforce a specific data.size()?
             data = QByteArray::fromBase64(xmlReader.readElementText().toAscii());
         }
     }

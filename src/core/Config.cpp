@@ -53,7 +53,7 @@ Config::Config()
 
     userPath += "/keepassx/";
 #elif defined(Q_WS_MAC)
-    // TODO where to store the config on mac?
+    // TODO: where to store the config on mac?
     userPath = homePath;
     userPath += "/.keepassx/";
 #elif defined(Q_WS_WIN)

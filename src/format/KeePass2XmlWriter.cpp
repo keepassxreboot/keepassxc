@@ -146,7 +146,7 @@ void KeePass2XmlWriter::writeIcon(const Uuid& uuid, const QImage& icon)
     QByteArray ba;
     QBuffer buffer(&ba);
     buffer.open(QIODevice::WriteOnly);
-    // TODO check !icon.save()
+    // TODO: check !icon.save()
     icon.save(&buffer, "PNG");
     buffer.close();
     writeBinary("Data", ba);

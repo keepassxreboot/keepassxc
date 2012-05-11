@@ -191,7 +191,7 @@ bool SymmetricCipherStream::writeBlock(bool lastBlock)
 
     if (m_baseDevice->write(m_buffer) != m_buffer.size()) {
         m_error = true;
-        // TODO copy error string
+        // TODO: copy error string
         return false;
     }
     else {

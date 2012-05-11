@@ -100,7 +100,7 @@ QImage Group::icon() const
         return databaseIcons()->icon(m_iconNumber);
     }
     else {
-        // TODO check if m_db is 0
+        // TODO: check if m_db is 0
         return m_db->metadata()->customIcon(m_customIcon);
     }
 }
@@ -113,7 +113,7 @@ QPixmap Group::iconPixmap() const
     else {
         QPixmap pixmap;
         if (!QPixmapCache::find(m_pixmapCacheKey, &pixmap)) {
-            // TODO check if m_db is 0
+            // TODO: check if m_db is 0
             pixmap = QPixmap::fromImage(m_db->metadata()->customIcon(m_customIcon));
             *const_cast<QPixmapCache::Key*>(&m_pixmapCacheKey) = QPixmapCache::insert(pixmap);
         }

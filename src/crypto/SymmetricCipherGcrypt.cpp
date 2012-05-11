@@ -68,7 +68,7 @@ void SymmetricCipherGcrypt::init()
     gcry_error_t error;
 
     error = gcry_cipher_open(&m_ctx, m_algo, m_mode, 0);
-    Q_ASSERT(error == 0); // TODO real error checking
+    Q_ASSERT(error == 0); // TODO: real error checking
 
     size_t blockSizeT;
     error = gcry_cipher_algo_info(m_algo, GCRYCTL_GET_BLKLEN, 0, &blockSizeT);
@@ -92,7 +92,7 @@ void SymmetricCipherGcrypt::setIv(const QByteArray& iv)
 
 QByteArray SymmetricCipherGcrypt::process(const QByteArray& data)
 {
-    // TODO check block size
+    // TODO: check block size
 
     QByteArray result;
     result.resize(data.size());
@@ -113,7 +113,7 @@ QByteArray SymmetricCipherGcrypt::process(const QByteArray& data)
 
 void SymmetricCipherGcrypt::processInPlace(QByteArray& data)
 {
-    // TODO check block size
+    // TODO: check block size
 
     gcry_error_t error;
 
@@ -129,7 +129,7 @@ void SymmetricCipherGcrypt::processInPlace(QByteArray& data)
 
 void SymmetricCipherGcrypt::processInPlace(QByteArray& data, quint64 rounds)
 {
-    // TODO check block size
+    // TODO: check block size
 
     gcry_error_t error;
 
