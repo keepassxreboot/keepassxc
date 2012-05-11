@@ -23,6 +23,7 @@
 #include "tests.h"
 #include "core/Database.h"
 #include "core/Group.h"
+#include "core/Metadata.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 
@@ -293,7 +294,6 @@ void TestModified::testHistoryItem()
     entry->setUuid(Uuid::random());
     entry->setTitle("a");
     entry->setTags("a");
-
     EntryAttributes* attributes = new EntryAttributes();
     attributes->copyCustomKeysFrom(entry->attributes());
 
@@ -321,6 +321,7 @@ void TestModified::testHistoryItem()
     QCOMPARE(historyEntry->overrideUrl(), entry->overrideUrl());
     QCOMPARE(historyEntry->timeInfo().creationTime(), created);
     QCOMPARE(historyEntry->timeInfo().lastModificationTime(), modified);
+    QCOMPARE(historyEntry->historyItems().size(), 0);
 
     entry->beginUpdate();
     entry->setTags("b");
@@ -343,6 +344,127 @@ void TestModified::testHistoryItem()
 
     delete attributes;
     delete entry;
+
+    Database* db = new Database();
+    Group* root = db->rootGroup();
+    db->metadata()->setHistoryMaxItems(3);
+    db->metadata()->setHistoryMaxSize(-1);
+
+    Entry* historyEntry2;
+    Entry* entry2 = new Entry();
+    entry2->setGroup(root);
+    entry2->beginUpdate();
+    entry2->setTitle("1");
+    entry2->endUpdate();
+
+    entry2->beginUpdate();
+    entry2->setTitle("2");
+    entry2->endUpdate();
+    entry2->beginUpdate();
+    entry2->setTitle("3");
+    entry2->endUpdate();
+    QCOMPARE(entry2->historyItems().size(), 3);
+
+    entry2->beginUpdate();
+    entry2->setTitle("4");
+    entry2->endUpdate();
+    QCOMPARE(entry2->historyItems().size(), 3);
+
+    db->metadata()->setHistoryMaxItems(1);
+
+    entry2->beginUpdate();
+    entry2->setTitle("5");
+    entry2->endUpdate();
+    QCOMPARE(entry2->historyItems().size(), 1);
+
+    historyEntry2 = entry2->historyItems().at(0);
+    QCOMPARE(historyEntry2->title(), QString("4"));
+
+    db->metadata()->setHistoryMaxItems(-1);
+
+    for (int i = 0; i < 20; i++) {
+        entry2->beginUpdate();
+        entry2->setTitle("6");
+        entry2->endUpdate();
+        entry2->beginUpdate();
+        entry2->setTitle("6b");
+        entry2->endUpdate();
+    }
+    QCOMPARE(entry2->historyItems().size(), 41);
+
+    db->metadata()->setHistoryMaxItems(0);
+
+    entry2->beginUpdate();
+    entry2->setTitle("7");
+    entry2->endUpdate();
+    QCOMPARE(entry2->historyItems().size(), 0);
+
+    db->metadata()->setHistoryMaxItems(-1);
+    db->metadata()->setHistoryMaxSize(17000);
+
+    entry2->beginUpdate();
+    entry2->attachments()->set("test", QByteArray(18000, 'X'));
+    entry2->endUpdate();
+    QCOMPARE(entry2->historyItems().size(), 1);
+
+    historyEntry2 = entry2->historyItems().at(0);
+    QCOMPARE(historyEntry2->title(), QString("7"));
+
+    entry2->beginUpdate();
+    entry2->setTitle("8");
+    entry2->endUpdate();
+    QCOMPARE(entry2->historyItems().size(), 2);
+
+    entry2->beginUpdate();
+    entry2->attachments()->remove("test");
+    entry2->endUpdate();
+    QCOMPARE(entry2->historyItems().size(), 0);
+
+    entry2->beginUpdate();
+    entry2->attachments()->set("test2", QByteArray(6000, 'a'));
+    entry2->endUpdate();
+    QCOMPARE(entry2->historyItems().size(), 1);
+
+    entry2->beginUpdate();
+    entry2->attachments()->set("test3", QByteArray(6000, 'b'));
+    entry2->endUpdate();
+    QCOMPARE(entry2->historyItems().size(), 2);
+
+    entry2->beginUpdate();
+    entry2->attachments()->set("test4", QByteArray(6000, 'c'));
+    entry2->endUpdate();
+    QCOMPARE(entry2->historyItems().size(), 3);
+
+    entry2->beginUpdate();
+    entry2->attachments()->set("test5", QByteArray(6000, 'd'));
+    entry2->endUpdate();
+    QCOMPARE(entry2->historyItems().size(), 4);
+
+    Entry* entry3 = new Entry();
+    entry3->setGroup(root);
+    QCOMPARE(entry3->historyItems().size(), 0);
+
+    entry3->beginUpdate();
+    entry3->attachments()->set("test", QByteArray(6000, 'a'));
+    entry3->endUpdate();
+    QCOMPARE(entry3->historyItems().size(), 1);
+
+    entry3->beginUpdate();
+    entry3->attachments()->set("test", QByteArray(6000, 'b'));
+    entry3->endUpdate();
+    QCOMPARE(entry3->historyItems().size(), 2);
+
+    entry3->beginUpdate();
+    entry3->attachments()->set("test", QByteArray(6000, 'c'));
+    entry3->endUpdate();
+    QCOMPARE(entry3->historyItems().size(), 3);
+
+    entry3->beginUpdate();
+    entry3->attachments()->set("test", QByteArray(6000, 'd'));
+    entry3->endUpdate();
+    QCOMPARE(entry3->historyItems().size(), 2);
+
+    delete db;
 }
 
 KEEPASSX_QTEST_CORE_MAIN(TestModified)
