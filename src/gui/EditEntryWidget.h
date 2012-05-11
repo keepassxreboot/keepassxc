@@ -72,8 +72,8 @@ private Q_SLOTS:
     void removeCurrentAttachment();
     void addCustomIcon();
     void removeCustomIcon();
-    void updateIndexDefaultIcons(bool checked);
-    void updateIndexCustomIcons(bool checked);
+    void updateWidgetsDefaultIcons(bool checked);
+    void updateWidgetsCustomIcons(bool checked);
     void updateRadioButtonDefaultIcons();
     void updateRadioButtonCustomIcons();
 

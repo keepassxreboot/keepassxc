@@ -111,9 +111,9 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     connect(m_iconsUi->customIconsView, SIGNAL(clicked(QModelIndex)),
             this, SLOT(updateRadioButtonCustomIcons()));
     connect(m_iconsUi->defaultIconsRadio, SIGNAL(toggled(bool)),
-            this, SLOT(updateIndexDefaultIcons(bool)));
+            this, SLOT(updateWidgetsDefaultIcons(bool)));
     connect(m_iconsUi->customIconsRadio, SIGNAL(toggled(bool)),
-            this, SLOT(updateIndexCustomIcons(bool)));
+            this, SLOT(updateWidgetsCustomIcons(bool)));
     connect(m_iconsUi->addButton, SIGNAL(clicked()), SLOT(addCustomIcon()));
     connect(m_iconsUi->deleteButton, SIGNAL(clicked()), SLOT(removeCustomIcon()));
 
@@ -457,7 +457,7 @@ void EditEntryWidget::removeCustomIcon()
     }
 }
 
-void EditEntryWidget::updateIndexDefaultIcons(bool check)
+void EditEntryWidget::updateWidgetsDefaultIcons(bool check)
 {
     if (check) {
         QModelIndex index = m_iconsUi->defaultIconsView->currentIndex();
@@ -469,10 +469,12 @@ void EditEntryWidget::updateIndexDefaultIcons(bool check)
                     setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
         }
         m_iconsUi->customIconsView->selectionModel()->clearSelection();
+        m_iconsUi->addButton->setEnabled(false);
+        m_iconsUi->deleteButton->setEnabled(false);
     }
 }
 
-void EditEntryWidget::updateIndexCustomIcons(bool check)
+void EditEntryWidget::updateWidgetsCustomIcons(bool check)
 {
     if (check) {
         QModelIndex index = m_iconsUi->customIconsView->currentIndex();
@@ -484,6 +486,8 @@ void EditEntryWidget::updateIndexCustomIcons(bool check)
                     setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
         }
         m_iconsUi->defaultIconsView->selectionModel()->clearSelection();
+        m_iconsUi->addButton->setEnabled(true);
+        m_iconsUi->deleteButton->setEnabled(true);
     }
 }
 
