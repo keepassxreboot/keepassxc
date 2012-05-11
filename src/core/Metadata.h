@@ -68,6 +68,7 @@ public:
     int historyMaxItems() const;
     int historyMaxSize() const;
     QHash<QString, QString> customFields() const;
+    const Database* database() const;
 
     static const int defaultHistoryMaxItems;
     static const int defaultHistoryMaxSize;

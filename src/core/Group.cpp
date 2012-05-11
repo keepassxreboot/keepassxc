@@ -359,7 +359,7 @@ const QList<Entry*>& Group::entries() const
     return m_entries;
 }
 
-QList<Entry*> Group::entriesRecursive(bool includeHistoryItems)
+QList<Entry*> Group::entriesRecursive(bool includeHistoryItems) const
 {
     QList<Entry*> entryList;
 

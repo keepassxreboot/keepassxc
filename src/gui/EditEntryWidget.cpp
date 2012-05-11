@@ -450,9 +450,27 @@ void EditEntryWidget::removeCustomIcon()
     if (m_metadata) {
         QModelIndex index = m_iconsUi->customIconsView->currentIndex();
         if (index.isValid()) {
-            // TODO: check if the icon is used in history items or other entries
-            m_metadata->removeCustomIcon(m_customIconModel->uuidFromIndex(index));
-            m_customIconModel->setIcons(m_metadata->customIcons());
+            QList<Entry*> allEntries = m_metadata->database()->rootGroup()->entriesRecursive(true);
+            Uuid uuid = m_customIconModel->uuidFromIndex(index);
+
+            int iconUsedCount = 0;
+            QListIterator<Entry*> i(allEntries);
+            while (i.hasNext()) {
+                Entry* entry = i.next();
+                if (uuid == entry->iconUuid() && entry != m_entry) {
+                    iconUsedCount++;
+                }
+            }
+
+            if (iconUsedCount == 0) {
+                m_metadata->removeCustomIcon(uuid);
+                m_customIconModel->setIcons(m_metadata->customIcons());
+            }
+            else {
+                QMessageBox::information(this, tr("Icon still used!"),
+                                         tr("Can't delete icon. Still used by %1 entries.")
+                                         .arg(iconUsedCount));
+            }
         }
     }
 }

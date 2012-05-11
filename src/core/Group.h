@@ -75,7 +75,7 @@ public:
     const QList<Group*>& children() const;
     QList<Entry*> entries();
     const QList<Entry*>& entries() const;
-    QList<Entry*> entriesRecursive(bool includeHistoryItems = false);
+    QList<Entry*> entriesRecursive(bool includeHistoryItems = false) const;
 
 
 Q_SIGNALS:

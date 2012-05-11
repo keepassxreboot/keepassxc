@@ -415,3 +415,8 @@ void Metadata::removeCustomField(const QString& key)
     m_customFields.remove(key);
     Q_EMIT modified();
 }
+
+const Database* Metadata::database() const
+{
+    return m_parent;
+}
