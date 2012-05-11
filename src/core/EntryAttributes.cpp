@@ -46,13 +46,14 @@ void EntryAttributes::set(const QString& key, const QString& value, bool protect
     bool emitModified = false;
 
     bool addAttribute = !m_attributes.contains(key);
+    bool changeValue = !addAttribute && (m_attributes.value(key) != value);
     bool defaultAttribute = isDefaultAttribute(key);
 
     if (addAttribute && !defaultAttribute) {
         Q_EMIT aboutToBeAdded(key);
     }
 
-    if (addAttribute || m_attributes.value(key) != value) {
+    if (addAttribute || changeValue) {
         m_attributes.insert(key, value);
         emitModified = true;
     }
@@ -71,7 +72,7 @@ void EntryAttributes::set(const QString& key, const QString& value, bool protect
         Q_EMIT modified();
     }
 
-    if (defaultAttribute) {
+    if (defaultAttribute && changeValue) {
         Q_EMIT defaultKeyModified();
     }
     else if (addAttribute) {
