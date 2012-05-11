@@ -231,6 +231,7 @@ void Entry::setIcon(int iconNumber)
         m_pixmapCacheKey = QPixmapCache::Key();
 
         Q_EMIT modified();
+        emitDataChanged();
     }
 }
 
@@ -245,6 +246,7 @@ void Entry::setIcon(const Uuid& uuid)
         m_pixmapCacheKey = QPixmapCache::Key();
 
         Q_EMIT modified();
+        emitDataChanged();
     }
 }
 
