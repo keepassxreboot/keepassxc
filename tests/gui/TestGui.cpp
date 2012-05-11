@@ -33,7 +33,6 @@
 #include "gui/DatabaseWidget.h"
 #include "gui/EditEntryWidget.h"
 #include "gui/EntryView.h"
-#include "gui/EntryModel.h"
 #include "gui/FileDialog.h"
 #include "gui/MainWindow.h"
 
@@ -128,7 +127,7 @@ void TestGui::testAddEntry()
 
     QCOMPARE(dbWidget->currentMode(), DatabaseWidget::ViewMode);
     QModelIndex item = entryView->model()->index(1, 0);
-    Entry* entry = static_cast<EntryModel*>(entryView->model())->entryFromIndex(item);
+    Entry* entry = entryView->entryFromIndex(item);
 
     QCOMPARE(entry->title(), QString("test"));
     QCOMPARE(entry->historyItems().size(), 0);

@@ -23,6 +23,7 @@
 class Entry;
 class EntryModel;
 class Group;
+class QSortFilterProxyModel;
 
 class EntryView : public QTreeView
 {
@@ -34,6 +35,7 @@ public:
     Entry* currentEntry();
     bool isSingleEntrySelected();
     void setCurrentEntry(Entry* entry);
+    Entry* entryFromIndex(const QModelIndex& index);
 
 public Q_SLOTS:
     void setGroup(Group* group);
@@ -47,6 +49,7 @@ Q_SIGNALS:
 
 private:
     EntryModel* const m_model;
+    QSortFilterProxyModel* const m_sortModel;
 };
 
 #endif // KEEPASSX_ENTRYVIEW_H

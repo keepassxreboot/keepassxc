@@ -17,20 +17,31 @@
 
 #include "EntryView.h"
 
+#include <QtGui/QSortFilterProxyModel>
+
 #include "gui/EntryModel.h"
 
 EntryView::EntryView(QWidget* parent)
     : QTreeView(parent)
     , m_model(new EntryModel(this))
+    , m_sortModel(new QSortFilterProxyModel(this))
 {
-    QTreeView::setModel(m_model);
+    m_sortModel->setSourceModel(m_model);
+    m_sortModel->setDynamicSortFilter(true);
+    m_sortModel->setSortLocaleAware(true);
+    m_sortModel->setSortCaseSensitivity(Qt::CaseInsensitive);
+    m_sortModel->setSupportedDragActions(m_model->supportedDragActions());
+    QTreeView::setModel(m_sortModel);
 
     setUniformRowHeights(true);
     setRootIsDecorated(false);
     setDragEnabled(true);
+    setSortingEnabled(true);
 
     connect(this, SIGNAL(activated(const QModelIndex&)), SLOT(emitEntryActivated(const QModelIndex&)));
     connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(entrySelectionChanged()));
+
+    sortByColumn(0, Qt::AscendingOrder);
 }
 
 void EntryView::setGroup(Group* group)
@@ -41,7 +52,7 @@ void EntryView::setGroup(Group* group)
 
 void EntryView::emitEntryActivated(const QModelIndex& index)
 {
-    Q_EMIT entryActivated(m_model->entryFromIndex(index));
+    Q_EMIT entryActivated(entryFromIndex(index));
 }
 
 void EntryView::setModel(QAbstractItemModel* model)
@@ -53,7 +64,7 @@ void EntryView::setModel(QAbstractItemModel* model)
 Entry* EntryView::currentEntry()
 {
     // TODO use selection instead of current?
-    return m_model->entryFromIndex(currentIndex());
+    return m_model->entryFromIndex(m_sortModel->mapToSource(currentIndex()));
 }
 
 bool EntryView::isSingleEntrySelected()
@@ -63,5 +74,15 @@ bool EntryView::isSingleEntrySelected()
 
 void EntryView::setCurrentEntry(Entry* entry)
 {
-    setCurrentIndex(m_model->indexFromEntry(entry));
+    setCurrentIndex(m_sortModel->mapFromSource(m_model->indexFromEntry(entry)));
+}
+
+Entry* EntryView::entryFromIndex(const QModelIndex& index)
+{
+    if (index.isValid()) {
+        return m_model->entryFromIndex(m_sortModel->mapToSource(index));
+    }
+    else {
+        return 0;
+    }
 }
