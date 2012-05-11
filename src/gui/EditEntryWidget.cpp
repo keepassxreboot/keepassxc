@@ -450,25 +450,34 @@ void EditEntryWidget::removeCustomIcon()
     if (m_metadata) {
         QModelIndex index = m_iconsUi->customIconsView->currentIndex();
         if (index.isValid()) {
-            QList<Entry*> allEntries = m_metadata->database()->rootGroup()->entriesRecursive(true);
-            Uuid uuid = m_customIconModel->uuidFromIndex(index);
-
+            Uuid iconUuid = m_customIconModel->uuidFromIndex(index);
             int iconUsedCount = 0;
-            QListIterator<Entry*> i(allEntries);
-            while (i.hasNext()) {
-                Entry* entry = i.next();
-                if (uuid == entry->iconUuid() && entry != m_entry) {
+
+            QList<Entry*> allEntries = m_metadata->database()->rootGroup()->entriesRecursive(true);
+            QListIterator<Entry*> iEntries(allEntries);
+            while (iEntries.hasNext()) {
+                Entry* entry = iEntries.next();
+                if (iconUuid == entry->iconUuid() && entry != m_entry) {
+                    iconUsedCount++;
+                }
+            }
+
+            QList<const Group*> allGroups = m_metadata->database()->rootGroup()->groupsRecursive(true);
+            QListIterator<const Group*> iGroups(allGroups);
+            while (iGroups.hasNext()) {
+                const Group* group = iGroups.next();
+                if (iconUuid == group->iconUuid()) {
                     iconUsedCount++;
                 }
             }
 
             if (iconUsedCount == 0) {
-                m_metadata->removeCustomIcon(uuid);
+                m_metadata->removeCustomIcon(iconUuid);
                 m_customIconModel->setIcons(m_metadata->customIcons());
             }
             else {
-                QMessageBox::information(this, tr("Icon still used!"),
-                                         tr("Can't delete icon. Still used by %1 entries.")
+                QMessageBox::information(this, tr("Can't delete icon!"),
+                                         tr("Can't delete icon. Still used by %1 items.")
                                          .arg(iconUsedCount));
             }
         }
