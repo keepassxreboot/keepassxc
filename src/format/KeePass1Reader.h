@@ -36,6 +36,8 @@ public:
     KeePass1Reader();
     Database* readDatabase(QIODevice* device, const QString& password,
                            QIODevice* keyfileDevice);
+    Database* readDatabase(QIODevice* device, const QString& password,
+                           const QString& keyfileName);
     Database* readDatabase(const QString& filename, const QString& password,
                            const QString& keyfileName);
     bool hasError();

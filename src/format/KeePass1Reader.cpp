@@ -235,15 +235,9 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
     return db.take();
 }
 
-Database* KeePass1Reader::readDatabase(const QString& filename, const QString& password,
+Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& password,
                                        const QString& keyfileName)
 {
-    QFile dbFile(filename);
-    if (!dbFile.open(QFile::ReadOnly)) {
-        raiseError(dbFile.errorString());
-        return 0;
-    }
-
     QScopedPointer<QFile> keyFile;
     if (!keyfileName.isEmpty()) {
         keyFile.reset(new QFile(keyfileName));
@@ -253,14 +247,28 @@ Database* KeePass1Reader::readDatabase(const QString& filename, const QString& p
         }
     }
 
-    QScopedPointer<Database> db(readDatabase(&dbFile, password, keyFile.data()));
+    QScopedPointer<Database> db(readDatabase(device, password, keyFile.data()));
+
+    return db.take();
+}
+
+Database* KeePass1Reader::readDatabase(const QString& filename, const QString& password,
+                                       const QString& keyfileName)
+{
+    QFile dbFile(filename);
+    if (!dbFile.open(QFile::ReadOnly)) {
+        raiseError(dbFile.errorString());
+        return 0;
+    }
+
+    Database* db = readDatabase(&dbFile, password, keyfileName);
 
     if (dbFile.error() != QFile::NoError) {
         raiseError(dbFile.errorString());
         return 0;
     }
 
-    return db.take();
+    return db;
 }
 
 bool KeePass1Reader::hasError()

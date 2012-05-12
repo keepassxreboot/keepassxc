@@ -26,7 +26,7 @@
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
-DatabaseOpenDialog::DatabaseOpenDialog(QFile* file, QString filename, QWidget* parent)
+DatabaseOpenDialog::DatabaseOpenDialog(QFile* file, const QString& filename, QWidget* parent)
     : QDialog(parent)
     , m_ui(new Ui::DatabaseOpenDialog())
     , m_db(0)

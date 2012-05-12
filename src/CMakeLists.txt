@@ -68,6 +68,7 @@ set(keepassx_SOURCES
     gui/GroupModel.cpp
     gui/GroupView.cpp
     gui/IconModels.cpp
+    gui/KeePass1OpenDialog.cpp
     gui/MainWindow.cpp
     keys/CompositeKey.cpp
     keys/FileKey.cpp

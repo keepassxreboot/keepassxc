@@ -52,6 +52,8 @@
     <addaction name="actionChangeMasterKey"/>
     <addaction name="actionChangeDatabaseSettings"/>
     <addaction name="separator"/>
+    <addaction name="actionImportKeePass1"/>
+    <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -207,6 +209,11 @@
    </property>
    <property name="toolTip">
     <string>Database settings</string>
+   </property>
+  </action>
+  <action name="actionImportKeePass1">
+   <property name="text">
+    <string>Import KeePass 1 database</string>
    </property>
   </action>
  </widget>

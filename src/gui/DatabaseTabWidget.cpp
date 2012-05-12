@@ -24,11 +24,12 @@
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
-#include "gui/DatabaseWidget.h"
-#include "gui/FileDialog.h"
-#include "gui/EntryView.h"
-#include "gui/GroupView.h"
 #include "gui/DatabaseOpenDialog.h"
+#include "gui/DatabaseWidget.h"
+#include "gui/EntryView.h"
+#include "gui/FileDialog.h"
+#include "gui/GroupView.h"
+#include "gui/KeePass1OpenDialog.h"
 
 DatabaseManagerStruct::DatabaseManagerStruct()
     : file(0)
@@ -113,6 +114,30 @@ void DatabaseTabWidget::openDatabaseDialog(const QString& pw, const QString& key
     if (!pw.isNull() || !keyFile.isEmpty()) {
         m_curKeyDialog->enterKey(pw, keyFile);
     }
+}
+
+void DatabaseTabWidget::importKeePass1Database()
+{
+    QString fileName = fileDialog()->getOpenFileName(this, tr("Open KeePass 1 database"), QString(),
+            tr("KeePass 1 database") + " (*.kdb);;" + tr("All files (*)"));
+
+    if (fileName.isEmpty()) {
+        return;
+    }
+
+    QScopedPointer<QFile> file(new QFile(fileName));
+    // TODO: error handling
+    if (!file->open(QIODevice::ReadOnly)) {
+        return;
+    }
+
+    m_curDbStruct.modified = true;
+
+    m_curKeyDialog = new KeePass1OpenDialog(file.take(), fileName, m_window);
+    connect(m_curKeyDialog, SIGNAL(accepted()), SLOT(openDatabaseRead()));
+    connect(m_curKeyDialog, SIGNAL(rejected()), SLOT(openDatabaseCleanup()));
+    m_curKeyDialog->setModal(true);
+    m_curKeyDialog->show();
 }
 
 void DatabaseTabWidget::openDatabaseRead()

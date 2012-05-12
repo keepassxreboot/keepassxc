@@ -35,25 +35,28 @@ class DatabaseOpenDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit DatabaseOpenDialog(QFile* file, QString filename, QWidget* parent = 0);
+    DatabaseOpenDialog(QFile* file, const QString& filename, QWidget* parent = 0);
     ~DatabaseOpenDialog();
     Database* database();
     void enterKey(const QString& pw, const QString& keyFile);
 
+protected Q_SLOTS:
+    virtual void openDatabase();
+
 private Q_SLOTS:
-    void openDatabase();
     void togglePassword(bool checked);
     void activatePassword();
     void activateKeyFile();
     void setOkButtonEnabled();
     void browseKeyFile();
 
-private:
+protected:
     const QScopedPointer<Ui::DatabaseOpenDialog> m_ui;
     Database* m_db;
     QFile* const m_file;
     const QString m_filename;
 
+private:
     Q_DISABLE_COPY(DatabaseOpenDialog)
 };
 
