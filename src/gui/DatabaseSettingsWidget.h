@@ -56,6 +56,7 @@ private Q_SLOTS:
     void reject();
     void toggleHistoryMaxItemsSpinBox(int state);
     void toggleHistoryMaxSizeSpinBox(int state);
+    void transformRoundsBenchmark();
 
 private:
     const QScopedPointer<Ui::DatabaseSettingsWidget> m_ui;

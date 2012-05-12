@@ -19,7 +19,7 @@
 #include "ui_DatabaseSettingsWidget.h"
 
 #include "core/Metadata.h"
-
+#include "keys/CompositeKey.h"
 
 DatabaseSettingsWidget::DatabaseSettingsWidget(QWidget* parent)
     : DialogyWidget(parent)
@@ -33,6 +33,7 @@ DatabaseSettingsWidget::DatabaseSettingsWidget(QWidget* parent)
             this, SLOT(toggleHistoryMaxItemsSpinBox(int)));
     connect(m_ui->historyMaxSizeCheckBox, SIGNAL(stateChanged(int)),
             this, SLOT(toggleHistoryMaxSizeSpinBox(int)));
+    connect(m_ui->transformBenchmarkButton, SIGNAL(clicked()), SLOT(transformRoundsBenchmark()));
 }
 
 DatabaseSettingsWidget::~DatabaseSettingsWidget()
@@ -162,4 +163,11 @@ void DatabaseSettingsWidget::toggleHistoryMaxSizeSpinBox(int state)
         m_ui->historyMaxSizeSpinBox->setEnabled(false);
     }
 
+}
+
+void DatabaseSettingsWidget::transformRoundsBenchmark()
+{
+    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+    m_ui->transformRoundsSpinBox->setValue(CompositeKey::transformKeyBenchmark(1000));
+    QApplication::restoreOverrideCursor();
 }

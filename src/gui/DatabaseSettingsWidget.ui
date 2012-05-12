@@ -59,22 +59,6 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
-      <widget class="QSpinBox" name="transformRoundsSpinBox">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimum">
-        <number>1</number>
-       </property>
-       <property name="maximum">
-        <number>1000000000</number>
-       </property>
-      </widget>
-     </item>
      <item row="4" column="0">
       <widget class="QLabel" name="defaultUsernameLabel">
        <property name="text">
@@ -161,6 +145,33 @@
        </item>
       </layout>
      </item>
+     <item row="3" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QSpinBox" name="transformRoundsSpinBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>1000000000</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="transformBenchmarkButton">
+         <property name="text">
+          <string>Benchmark</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
     </layout>
    </item>
    <item>
@@ -188,7 +199,6 @@
  <tabstops>
   <tabstop>dbNameEdit</tabstop>
   <tabstop>dbDescriptionEdit</tabstop>
-  <tabstop>transformRoundsSpinBox</tabstop>
   <tabstop>defaultUsernameEdit</tabstop>
   <tabstop>recycleBinEnabledCheckBox</tabstop>
   <tabstop>buttonBox</tabstop>
