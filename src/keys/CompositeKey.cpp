@@ -135,8 +135,8 @@ int TransformKeyBenchmarkThread::rounds()
 
 void TransformKeyBenchmarkThread::run()
 {
-    QByteArray key = QByteArray('\x7E', 32);
-    QByteArray seed = QByteArray('\x4B', 32);
+    QByteArray key = QByteArray(16, '\x7E');
+    QByteArray seed = QByteArray(32, '\x4B');
     QByteArray iv(16, 0);
 
     SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Ecb,
