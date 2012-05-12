@@ -20,6 +20,7 @@
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QLabel>
 #include <QtGui/QSplitter>
+#include <QtGui/QLineEdit>
 #include <QtGui/QMessageBox>
 
 #include "core/Metadata.h"
@@ -53,12 +54,22 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     policy.setHorizontalStretch(30);
     m_groupView->setSizePolicy(policy);
 
-    policy = m_entryView->sizePolicy();
+    QWidget* widget = new QWidget();
+    policy = widget->sizePolicy();
     policy.setHorizontalStretch(70);
-    m_entryView->setSizePolicy(policy);
+    widget->setSizePolicy(policy);
 
     splitter->addWidget(m_groupView);
-    splitter->addWidget(m_entryView);
+
+    QVBoxLayout* vLayout = new QVBoxLayout();
+    QHBoxLayout* hLayout = new QHBoxLayout();
+    hLayout->addWidget(new QLabel("Find:"));
+    m_searchEdit = new QLineEdit();
+    hLayout->addWidget(m_searchEdit);
+    vLayout->addLayout(hLayout);
+    vLayout->addWidget(m_entryView);
+    widget->setLayout(vLayout);
+    splitter->addWidget(widget);
 
     layout->addWidget(splitter);
     m_mainWidget->setLayout(layout);
@@ -87,6 +98,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_changeMasterKeyWidget, SIGNAL(editFinished(bool)), SLOT(updateMasterKey(bool)));
     connect(m_databaseSettingsWidget, SIGNAL(editFinished(bool)), SLOT(updateSettings(bool)));
     connect(this, SIGNAL(currentChanged(int)), this, SLOT(emitCurrentModeChanged()));
+    connect(m_searchEdit, SIGNAL(returnPressed()), this, SLOT(search()));
 
     setCurrentIndex(0);
 }
@@ -309,6 +321,15 @@ void DatabaseWidget::switchToDatabaseSettings()
                                        m_db->metadata()->historyMaxItems(),
                                        m_db->metadata()->historyMaxSize());
     setCurrentIndex(4);
+}
+
+void DatabaseWidget::search()
+{
+    Group* searchGroup = m_db->rootGroup();
+    QList<Entry*> searchResult = searchGroup->search(m_searchEdit->text(), Qt::CaseInsensitive);
+
+    m_groupView->setCurrentIndex(QModelIndex());
+    m_entryView->search(searchResult);
 }
 
 bool DatabaseWidget::dbHasKey()

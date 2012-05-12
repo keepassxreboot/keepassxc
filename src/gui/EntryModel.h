@@ -41,6 +41,12 @@ public:
     QStringList mimeTypes() const;
     QMimeData* mimeData(const QModelIndexList& indexes) const;
 
+    void setEntries(QList<Entry*> entries);
+
+Q_SIGNALS:
+    void switchedToSearch();
+    void switchedToView();
+
 public Q_SLOTS:
     void setGroup(Group* group);
 
@@ -53,6 +59,11 @@ private Q_SLOTS:
 
 private:
     Group* m_group;
+    QList<Entry*> m_entries;
+    QList<const Group*> m_allGroups;
+
+    void severConnections();
+    void makeConnections(const Group* group);
 };
 
 #endif // KEEPASSX_ENTRYMODEL_H

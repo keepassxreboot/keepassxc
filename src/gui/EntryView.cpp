@@ -40,6 +40,8 @@ EntryView::EntryView(QWidget* parent)
 
     connect(this, SIGNAL(activated(const QModelIndex&)), SLOT(emitEntryActivated(const QModelIndex&)));
     connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(entrySelectionChanged()));
+    connect(m_model, SIGNAL(switchedToSearch()), this, SLOT(switchToSearch()));
+    connect(m_model, SIGNAL(switchedToView()), this, SLOT(switchToView()));
 
     sortByColumn(0, Qt::AscendingOrder);
 }
@@ -47,6 +49,12 @@ EntryView::EntryView(QWidget* parent)
 void EntryView::setGroup(Group* group)
 {
     m_model->setGroup(group);
+    Q_EMIT entrySelectionChanged();
+}
+
+void EntryView::search(QList<Entry*> entries)
+{
+    m_model->setEntries(entries);
     Q_EMIT entrySelectionChanged();
 }
 
@@ -85,4 +93,14 @@ Entry* EntryView::entryFromIndex(const QModelIndex& index)
     else {
         return 0;
     }
+}
+
+void EntryView::switchToSearch()
+{
+    showColumn(0);
+}
+
+void EntryView::switchToView()
+{
+    hideColumn(0);
 }

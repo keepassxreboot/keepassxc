@@ -74,7 +74,7 @@ void TestGui::testEditEntry()
     DatabaseTabWidget* tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
     DatabaseWidget* dbWidget = tabWidget->currentDatabaseWidget();
     EntryView* entryView = dbWidget->findChild<EntryView*>("entryView");
-    QModelIndex item = entryView->model()->index(0, 0);
+    QModelIndex item = entryView->model()->index(0, 1);
     QRect itemRect = entryView->visualRect(item);
     QTest::mouseClick(entryView->viewport(), Qt::LeftButton, Qt::NoModifier, itemRect.center());
     QTest::qWait(20);
@@ -126,7 +126,7 @@ void TestGui::testAddEntry()
     QTest::qWait(20);
 
     QCOMPARE(dbWidget->currentMode(), DatabaseWidget::ViewMode);
-    QModelIndex item = entryView->model()->index(1, 0);
+    QModelIndex item = entryView->model()->index(1, 1);
     Entry* entry = entryView->entryFromIndex(item);
 
     QCOMPARE(entry->title(), QString("test"));

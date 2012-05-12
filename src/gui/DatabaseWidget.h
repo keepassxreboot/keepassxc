@@ -20,6 +20,8 @@
 
 #include <QtGui/QStackedWidget>
 
+class QLineEdit;
+
 class ChangeMasterKeyWidget;
 class DatabaseSettingsWidget;
 class Database;
@@ -64,6 +66,7 @@ public Q_SLOTS:
     void switchToGroupEdit();
     void switchToMasterKeyChange();
     void switchToDatabaseSettings();
+    void search();
 
 private Q_SLOTS:
     void switchToView(bool accepted);
@@ -86,6 +89,7 @@ private:
     Group* m_newGroup;
     Entry* m_newEntry;
     Group* m_newParent;
+    QLineEdit* m_searchEdit;
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H

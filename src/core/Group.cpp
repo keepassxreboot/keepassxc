@@ -487,3 +487,45 @@ void Group::recCreateDelObjects()
         m_db->addDeletedObject(m_uuid);
     }
 }
+
+QList<Entry*> Group::search(const QString& searchTerm, Qt::CaseSensitivity caseSensitivity,
+                            bool resolveInherit)
+{
+    QList<Entry*> searchResult;
+    if (includeInSearch(resolveInherit)) {
+        Q_FOREACH (Entry* entry, m_entries) {
+            if (entry->match(searchTerm, caseSensitivity)) {
+                searchResult.append(entry);
+            }
+        }
+        Q_FOREACH (Group* group, m_children) {
+            searchResult.append(group->search(searchTerm, caseSensitivity, false));
+        }
+    }
+    return searchResult;
+}
+
+bool Group::includeInSearch(bool resolveInherit)
+{
+    switch (m_searchingEnabled) {
+    case Inherit:
+        if (!m_parent) {
+            return true;
+        }
+        else {
+            if (resolveInherit) {
+                return m_parent->includeInSearch(true);
+            }
+            else {
+                return true;
+            }
+        }
+    case Enable:
+        return true;
+    case Disable:
+        return false;
+    default:
+        Q_ASSERT(false);
+        return false;
+    }
+}

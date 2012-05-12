@@ -76,8 +76,10 @@ public:
     QList<Entry*> entries();
     const QList<Entry*>& entries() const;
     QList<Entry*> entriesRecursive(bool includeHistoryItems = false) const;
-    QList<const Group *> groupsRecursive(bool includeSelf) const;
+    QList<const Group*> groupsRecursive(bool includeSelf) const;
 
+    QList<Entry*> search(const QString& searchTerm, Qt::CaseSensitivity caseSensitivity,
+                         bool resolveInherit = true);
 
 Q_SIGNALS:
     void dataChanged(Group* group);
@@ -136,6 +138,8 @@ private:
     friend void Database::setRootGroup(Group* group);
     friend Entry::~Entry();
     friend void Entry::setGroup(Group* group);
+
+    bool includeInSearch(bool resolveInherit);
 };
 
 #endif // KEEPASSX_GROUP_H

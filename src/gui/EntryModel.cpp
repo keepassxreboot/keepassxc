@@ -31,45 +31,67 @@ EntryModel::EntryModel(QObject* parent)
 
 Entry* EntryModel::entryFromIndex(const QModelIndex& index) const
 {
-    Q_ASSERT(index.isValid() && index.row() < m_group->entries().size());
-    return m_group->entries().at(index.row());
+    Q_ASSERT(index.isValid() && index.row() < m_entries.size());
+    return m_entries.at(index.row());
 }
 
 QModelIndex EntryModel::indexFromEntry(Entry* entry) const
 {
-    int row = m_group->entries().indexOf(entry);
+    int row = m_entries.indexOf(entry);
     Q_ASSERT(row != -1);
     return index(row, 0);
 }
 
 void EntryModel::setGroup(Group* group)
 {
-    if (group == m_group) {
+    if (!group || group == m_group) {
         return;
     }
 
     beginResetModel();
 
-    if (m_group) {
-        disconnect(m_group, 0, this, 0);
-    }
+    severConnections();
+
     m_group = group;
-    connect(group, SIGNAL(entryAboutToAdd(Entry*)), SLOT(entryAboutToAdd(Entry*)));
-    connect(group, SIGNAL(entryAdded()), SLOT(entryAdded()));
-    connect(group, SIGNAL(entryAboutToRemove(Entry*)), SLOT(entryAboutToRemove(Entry*)));
-    connect(group, SIGNAL(entryRemoved()), SLOT(entryRemoved()));
-    connect(group, SIGNAL(entryDataChanged(Entry*)), SLOT(entryDataChanged(Entry*)));
+    m_entries = group->entries();
+
+    makeConnections(group);
 
     endResetModel();
+    Q_EMIT switchedToView();
+}
+
+void EntryModel::setEntries(QList<Entry*> entries)
+{
+    beginResetModel();
+
+    severConnections();
+
+    m_group = 0;
+    m_allGroups.clear();
+    m_entries = entries;
+
+    if (entries.count() > 0) {
+        m_allGroups = entries.at(0)->group()->database()->rootGroup()->groupsRecursive(true);
+    }
+
+    QListIterator<const Group*> iGroups(m_allGroups);
+    while (iGroups.hasNext()) {
+        const Group* group = iGroups.next();
+        makeConnections(group);
+    }
+
+    endResetModel();
+    Q_EMIT switchedToSearch();
 }
 
 int EntryModel::rowCount(const QModelIndex& parent) const
 {
-    if (!m_group || parent.isValid()) {
+    if (parent.isValid()) {
         return 0;
     }
     else {
-        return m_group->entries().size();
+        return m_entries.size();
     }
 }
 
@@ -77,7 +99,7 @@ int EntryModel::columnCount(const QModelIndex& parent) const
 {
     Q_UNUSED(parent);
 
-    return 3;
+    return 4;
 }
 
 QVariant EntryModel::data(const QModelIndex& index, int role) const
@@ -91,15 +113,26 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
     if (role == Qt::DisplayRole) {
         switch (index.column()) {
         case 0:
-            return entry->title();
+            if (entry->group()) {
+                return entry->group()->name();
+            }
         case 1:
-            return entry->username();
+            return entry->title();
         case 2:
+            return entry->username();
+        case 3:
             return entry->url();
         }
     }
-    else if ((role == Qt::DecorationRole) && (index.column() == 0)) {
-        return entry->iconPixmap();
+    else if (role == Qt::DecorationRole) {
+        switch (index.column()) {
+        case 0:
+            if (entry->group()) {
+                return entry->group()->iconPixmap();
+            }
+        case 1:
+            return entry->iconPixmap();
+        }
     }
 
     return QVariant();
@@ -109,10 +142,12 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
         switch (section) {
         case 0:
-            return tr("Title");
+            return tr("Group");
         case 1:
-            return tr("Username");
+            return tr("Title");
         case 2:
+            return tr("Username");
+        case 3:
             return tr("URL");
         }
     }
@@ -156,7 +191,8 @@ QMimeData* EntryModel::mimeData(const QModelIndexList& indexes) const
         if (!indexes[i].isValid()) {
             continue;
         }
-        stream << m_group->database()->uuid() << entryFromIndex(indexes[i])->uuid();
+        Entry* entry = entryFromIndex(indexes[i]);
+        stream << entry->group()->database()->uuid() << entry->uuid();
     }
 
     data->setData(mimeTypes().first(), encoded);
@@ -167,26 +203,61 @@ void EntryModel::entryAboutToAdd(Entry* entry)
 {
     Q_UNUSED(entry);
 
-    beginInsertRows(QModelIndex(), m_group->entries().size(), m_group->entries().size());
+    beginInsertRows(QModelIndex(), m_entries.size(), m_entries.size());
+    if (!m_group) {
+        m_entries.append(entry);
+    }
 }
 
 void EntryModel::entryAdded()
 {
+    if (m_group) {
+        m_entries = m_group->entries();
+    }
     endInsertRows();
 }
 
 void EntryModel::entryAboutToRemove(Entry* entry)
 {
-    beginRemoveRows(QModelIndex(), m_group->entries().indexOf(entry), m_group->entries().indexOf(entry));
+    beginRemoveRows(QModelIndex(), m_entries.indexOf(entry), m_entries.indexOf(entry));
+    if (!m_group) {
+        m_entries.removeAll(entry);
+    }
 }
 
 void EntryModel::entryRemoved()
 {
+    if (m_group) {
+        m_entries = m_group->entries();
+    }
+
     endRemoveRows();
 }
 
 void EntryModel::entryDataChanged(Entry* entry)
 {
-    int row = m_group->entries().indexOf(entry);
+    int row = m_entries.indexOf(entry);
     Q_EMIT dataChanged(index(row, 0), index(row, columnCount()-1));
+}
+
+void EntryModel::severConnections()
+{
+    if (m_group) {
+        disconnect(m_group, 0, this, 0);
+    }
+
+    QListIterator<const Group*> i(m_allGroups);
+    while (i.hasNext()) {
+        const Group* group = i.next();
+        disconnect(group, 0, this, 0);
+    }
+}
+
+void EntryModel::makeConnections(const Group *group)
+{
+    connect(group, SIGNAL(entryAboutToAdd(Entry*)), SLOT(entryAboutToAdd(Entry*)));
+    connect(group, SIGNAL(entryAdded()), SLOT(entryAdded()));
+    connect(group, SIGNAL(entryAboutToRemove(Entry*)), SLOT(entryAboutToRemove(Entry*)));
+    connect(group, SIGNAL(entryRemoved()), SLOT(entryRemoved()));
+    connect(group, SIGNAL(entryDataChanged(Entry*)), SLOT(entryDataChanged(Entry*)));
 }

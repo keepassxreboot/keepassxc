@@ -36,12 +36,15 @@ public:
     bool isSingleEntrySelected();
     void setCurrentEntry(Entry* entry);
     Entry* entryFromIndex(const QModelIndex& index);
+    void search(QList<Entry *> entries);
 
 public Q_SLOTS:
     void setGroup(Group* group);
 
 private Q_SLOTS:
     void emitEntryActivated(const QModelIndex& index);
+    void switchToSearch();
+    void switchToView();
 
 Q_SIGNALS:
     void entryActivated(Entry* entry);

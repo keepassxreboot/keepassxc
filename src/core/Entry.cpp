@@ -465,8 +465,9 @@ void Entry::setGroup(Group* group)
         }
     }
 
-    group->addEntry(this);
     m_group = group;
+    group->addEntry(this);
+
     QObject::setParent(group);
 
     if (m_updateTimeinfo) {
@@ -487,4 +488,12 @@ const Database* Entry::database() const
     else {
         return 0;
     }
+}
+
+bool Entry::match(const QString& searchTerm, Qt::CaseSensitivity caseSensitivity)
+{
+    return title().contains(searchTerm, caseSensitivity) ||
+            username().contains(searchTerm, caseSensitivity) ||
+            url().contains(searchTerm, caseSensitivity) ||
+            notes().contains(searchTerm, caseSensitivity);
 }
