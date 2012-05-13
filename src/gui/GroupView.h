@@ -43,6 +43,7 @@ private Q_SLOTS:
     void emitGroupChanged(const QModelIndex& index);
     void emitGroupChanged();
     void syncExpandedState(const QModelIndex& parent, int start, int end);
+    void currentChanged(const QModelIndex &current, const QModelIndex &previous);
 
 protected:
     void dragMoveEvent(QDragMoveEvent* event);

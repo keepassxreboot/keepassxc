@@ -32,9 +32,6 @@ GroupView::GroupView(Database* db, QWidget* parent)
     setHeaderHidden(true);
     setUniformRowHeights(true);
 
-    connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
-            SLOT(emitGroupChanged()));
-
     recInitExpanded(db->rootGroup());
     connect(this, SIGNAL(expanded(QModelIndex)), this, SLOT(expandedChanged(QModelIndex)));
     connect(this, SIGNAL(collapsed(QModelIndex)), this, SLOT(expandedChanged(QModelIndex)));
@@ -114,6 +111,13 @@ void GroupView::syncExpandedState(const QModelIndex& parent, int start, int end)
         Group* group = m_model->groupFromIndex(m_model->index(row, 0, parent));
         recInitExpanded(group);
     }
+}
+
+void GroupView::currentChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    Q_UNUSED(current);
+    Q_UNUSED(previous);
+    emitGroupChanged();
 }
 
 void GroupView::setCurrentGroup(Group* group)
