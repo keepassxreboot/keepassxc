@@ -48,7 +48,7 @@ public:
     bool isExpanded() const;
     QString defaultAutoTypeSequence() const;
     Group::TriState autoTypeEnabled() const;
-    Group::TriState searchingEnabed() const;
+    Group::TriState searchingEnabled() const;
     Entry* lastTopVisibleEntry() const;
 
     void setUuid(const Uuid& uuid);

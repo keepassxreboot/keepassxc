@@ -152,7 +152,7 @@ Group::TriState Group::autoTypeEnabled() const
     return m_autoTypeEnabled;
 }
 
-Group::TriState Group::searchingEnabed() const
+Group::TriState Group::searchingEnabled() const
 {
     return m_searchingEnabled;
 }

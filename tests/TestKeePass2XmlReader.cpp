@@ -154,7 +154,7 @@ void TestKeePass2XmlReader::testGroupRoot()
     QCOMPARE(ti.locationChanged(), genDT(2010, 8, 8, 17, 24, 27));
     QCOMPARE(group->defaultAutoTypeSequence(), QString(""));
     QCOMPARE(group->autoTypeEnabled(), Group::Inherit);
-    QCOMPARE(group->searchingEnabed(), Group::Inherit);
+    QCOMPARE(group->searchingEnabled(), Group::Inherit);
     QCOMPARE(group->lastTopVisibleEntry()->uuid().toBase64(), QString("+wSUOv6qf0OzW8/ZHAs2sA=="));
 
     QCOMPARE(group->children().size(), 3);
@@ -175,7 +175,7 @@ void TestKeePass2XmlReader::testGroup1()
     QCOMPARE(group->isExpanded(), true);
     QCOMPARE(group->defaultAutoTypeSequence(), QString("{Password}{ENTER}"));
     QCOMPARE(group->autoTypeEnabled(), Group::Enable);
-    QCOMPARE(group->searchingEnabed(), Group::Disable);
+    QCOMPARE(group->searchingEnabled(), Group::Disable);
     QVERIFY(!group->lastTopVisibleEntry());
 }
 

@@ -245,7 +245,7 @@ void KeePass2XmlWriter::writeGroup(const Group* group)
 
     writeTriState("EnableAutoType", group->autoTypeEnabled());
 
-    writeTriState("EnableSearching", group->searchingEnabed());
+    writeTriState("EnableSearching", group->searchingEnabled());
 
     writeUuid("LastTopVisibleEntry", group->lastTopVisibleEntry());
 
