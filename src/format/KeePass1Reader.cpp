@@ -112,49 +112,42 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
     m_masterSeed = m_device->read(16);
     if (m_masterSeed.size() != 16) {
         // TODO: error
-        Q_ASSERT(false);
         return 0;
     }
 
     m_encryptionIV = m_device->read(16);
     if (m_encryptionIV.size() != 16) {
         // TODO: error
-        Q_ASSERT(false);
         return 0;
     }
 
     quint32 numGroups = Endian::readUInt32(m_device, KeePass1::BYTEORDER, &ok);
     if (!ok) {
         // TODO: error
-        Q_ASSERT(false);
         return 0;
     }
 
     quint32 numEntries = Endian::readUInt32(m_device, KeePass1::BYTEORDER, &ok);
     if (!ok) {
         // TODO: error
-        Q_ASSERT(false);
         return 0;
     }
 
     m_contentHashHeader = m_device->read(32);
     if (m_contentHashHeader.size() != 32) {
         // TODO: error
-        Q_ASSERT(false);
         return 0;
     }
 
     m_transformSeed = m_device->read(32);
     if (m_transformSeed.size() != 32) {
         // TODO: error
-        Q_ASSERT(false);
         return 0;
     }
 
     m_transformRounds = Endian::readUInt32(m_device, KeePass1::BYTEORDER, &ok);
     if (!ok) {
         // TODO: error
-        Q_ASSERT(false);
         return 0;
     }
     m_db->setTransformRounds(m_transformRounds);
@@ -165,7 +158,6 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
 
     if (!cipherStream) {
         // TODO: error
-        Q_ASSERT(false);
         return 0;
     }
 
@@ -339,7 +331,6 @@ SymmetricCipherStream* KeePass1Reader::testKeys(const QString& password, const Q
         cipherStream->close();
         if (!m_device->seek(contentPos)) {
             // TODO: error
-            Q_ASSERT(false);
             return 0;
         }
         cipherStream->open(QIODevice::ReadOnly);
@@ -409,7 +400,6 @@ Group* KeePass1Reader::readGroup(QIODevice* cipherStream)
         QByteArray fieldData = cipherStream->read(fieldSize);
         if (fieldData.size() != fieldSize) {
             // TODO: error
-            Q_ASSERT(false);
             return 0;
         }
 
@@ -533,7 +523,6 @@ Entry* KeePass1Reader::readEntry(QIODevice* cipherStream)
         QByteArray fieldData = cipherStream->read(fieldSize);
         if (fieldData.size() != fieldSize) {
             // TODO: error
-            Q_ASSERT(false);
             return 0;
         }
 
