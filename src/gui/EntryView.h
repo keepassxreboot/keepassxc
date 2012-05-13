@@ -37,6 +37,7 @@ public:
     void setCurrentEntry(Entry* entry);
     Entry* entryFromIndex(const QModelIndex& index);
     void search(QList<Entry *> entries);
+    bool inSearch();
 
 public Q_SLOTS:
     void setGroup(Group* group);
@@ -53,6 +54,7 @@ Q_SIGNALS:
 private:
     EntryModel* const m_model;
     QSortFilterProxyModel* const m_sortModel;
+    bool m_inSearch;
 };
 
 #endif // KEEPASSX_ENTRYVIEW_H

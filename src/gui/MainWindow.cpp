@@ -102,8 +102,13 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 
         switch (mode) {
         case DatabaseWidget::ViewMode:
-            m_ui->actionEntryNew->setEnabled(true);
-            m_ui->actionGroupNew->setEnabled(true);
+            if (dbWidget->entryView()->inSearch()) {
+                m_ui->actionEntryNew->setEnabled(false);
+            }
+            else {
+                m_ui->actionEntryNew->setEnabled(true);
+            }
+
             if (dbWidget->entryView()->currentIndex().isValid()) {
                m_ui->actionEntryEdit->setEnabled(true);
                m_ui->actionEntryDelete->setEnabled(true);
@@ -112,13 +117,21 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
                 m_ui->actionEntryEdit->setEnabled(false);
                 m_ui->actionEntryDelete->setEnabled(false);
             }
-            m_ui->actionGroupEdit->setEnabled(true);
 
-            if (dbWidget->canDeleteCurrentGoup()) {
-                    m_ui->actionGroupDelete->setEnabled(true);
+            if (dbWidget->entryView()->inSearch()) {
+                m_ui->actionGroupNew->setEnabled(false);
+                m_ui->actionGroupEdit->setEnabled(false);
+                m_ui->actionGroupDelete->setEnabled(false);
             }
             else {
-                m_ui->actionGroupDelete->setEnabled(false);
+                m_ui->actionGroupNew->setEnabled(true);
+                m_ui->actionGroupEdit->setEnabled(true);
+                if (dbWidget->canDeleteCurrentGoup()) {
+                    m_ui->actionGroupDelete->setEnabled(true);
+                }
+                else {
+                    m_ui->actionGroupDelete->setEnabled(false);
+                }
             }
             m_ui->actionChangeMasterKey->setEnabled(true);
             m_ui->actionChangeDatabaseSettings->setEnabled(true);

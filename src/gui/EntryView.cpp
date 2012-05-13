@@ -25,6 +25,7 @@ EntryView::EntryView(QWidget* parent)
     : QTreeView(parent)
     , m_model(new EntryModel(this))
     , m_sortModel(new QSortFilterProxyModel(this))
+    , m_inSearch(false)
 {
     m_sortModel->setSourceModel(m_model);
     m_sortModel->setDynamicSortFilter(true);
@@ -56,6 +57,11 @@ void EntryView::search(QList<Entry*> entries)
 {
     m_model->setEntries(entries);
     Q_EMIT entrySelectionChanged();
+}
+
+bool EntryView::inSearch()
+{
+    return m_inSearch;
 }
 
 void EntryView::emitEntryActivated(const QModelIndex& index)
@@ -98,9 +104,11 @@ Entry* EntryView::entryFromIndex(const QModelIndex& index)
 void EntryView::switchToSearch()
 {
     showColumn(0);
+    m_inSearch = true;
 }
 
 void EntryView::switchToView()
 {
     hideColumn(0);
+    m_inSearch = false;
 }
