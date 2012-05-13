@@ -44,6 +44,10 @@ QModelIndex EntryModel::indexFromEntry(Entry* entry) const
 
 void EntryModel::setGroup(Group* group)
 {
+    if (group == m_group) {
+        return;
+    }
+
     beginResetModel();
 
     if (m_group) {
