@@ -55,6 +55,7 @@ public:
     void setCurrentIndex(int index);
     DatabaseWidget::Mode currentMode();
 
+
 Q_SIGNALS:
     void closeRequest();
     void currentModeChanged(DatabaseWidget::Mode mode);
@@ -90,6 +91,8 @@ private:
     Entry* m_newEntry;
     Group* m_newParent;
     QLineEdit* m_searchEdit;
+
+    void truncateHistories();
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H

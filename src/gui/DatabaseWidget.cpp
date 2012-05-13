@@ -288,8 +288,12 @@ void DatabaseWidget::updateSettings(bool accepted)
         m_db->metadata()->setDefaultUserName(m_databaseSettingsWidget->defaultUsername());
         m_db->metadata()->setRecycleBinEnabled(m_databaseSettingsWidget->recylceBinEnabled());
         m_db->metadata()->setName(m_databaseSettingsWidget->dbName());
-        m_db->metadata()->setHistoryMaxItems(m_databaseSettingsWidget->historyMaxItems());
-        m_db->metadata()->setHistoryMaxSize(m_databaseSettingsWidget->historyMaxSize());
+        if (m_db->metadata()->historyMaxItems() != m_databaseSettingsWidget->historyMaxItems() ||
+                m_db->metadata()->historyMaxSize() != m_databaseSettingsWidget->historyMaxSize()) {
+            m_db->metadata()->setHistoryMaxItems(m_databaseSettingsWidget->historyMaxItems());
+            m_db->metadata()->setHistoryMaxSize(m_databaseSettingsWidget->historyMaxSize());
+            truncateHistories();
+        }
     }
 
     setCurrentIndex(0);
@@ -342,4 +346,14 @@ bool DatabaseWidget::canDeleteCurrentGoup()
     bool isRootGroup = m_db->rootGroup() == m_groupView->currentGroup();
     bool isRecycleBin = m_db->metadata()->recycleBin() == m_groupView->currentGroup();
     return !isRootGroup && !isRecycleBin;
+}
+
+void DatabaseWidget::truncateHistories()
+{
+    QList<Entry*> allEntries = m_db->rootGroup()->entriesRecursive(false);
+    QListIterator<Entry*> i(allEntries);
+    while (i.hasNext()) {
+        Entry* entry = i.next();
+        entry->truncateHistory();
+    }
 }
