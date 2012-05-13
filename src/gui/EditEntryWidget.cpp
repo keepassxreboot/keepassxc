@@ -130,10 +130,10 @@ const QColor EditEntryWidget::correctSoFarColor = QColor(255, 205, 15);
 const QColor EditEntryWidget::errorColor = QColor(255, 125, 125);
 
 void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupName,
-                                Metadata* metadata)
+                                Database* database)
 {
     m_entry = entry;
-    m_metadata = metadata;
+    m_database = database;
     m_create = create;
 
     if (create) {
@@ -168,10 +168,10 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupN
         m_advancedUi->attributesEdit->setEnabled(false);
     }
 
-    if (metadata) {
+    if (database) {
         m_iconsWidget->setEnabled(true);
 
-        m_customIconModel->setIcons(metadata->customIcons());
+        m_customIconModel->setIcons(database->metadata()->customIcons());
 
         Uuid iconUuid = entry->iconUuid();
         if (iconUuid.isNull()) {
@@ -426,7 +426,7 @@ void EditEntryWidget::removeCurrentAttachment()
 
 void EditEntryWidget::addCustomIcon()
 {
-    if (m_metadata) {
+    if (m_database) {
         QString filter = QString("%1 (%2);;%3 (*.*)").arg(tr("Images"),
                     Tools::imageReaderFilter(), tr("All files"));
 
@@ -435,8 +435,8 @@ void EditEntryWidget::addCustomIcon()
         if (!filename.isEmpty()) {
             QImage image(filename);
             if (!image.isNull()) {
-                m_metadata->addCustomIcon(Uuid::random(), image.scaled(16, 16));
-                m_customIconModel->setIcons(m_metadata->customIcons());
+                m_database->metadata()->addCustomIcon(Uuid::random(), image.scaled(16, 16));
+                m_customIconModel->setIcons(m_database->metadata()->customIcons());
             }
             else {
                 // TODO: show error
@@ -447,13 +447,13 @@ void EditEntryWidget::addCustomIcon()
 
 void EditEntryWidget::removeCustomIcon()
 {
-    if (m_metadata) {
+    if (m_database) {
         QModelIndex index = m_iconsUi->customIconsView->currentIndex();
         if (index.isValid()) {
             Uuid iconUuid = m_customIconModel->uuidFromIndex(index);
             int iconUsedCount = 0;
 
-            QList<Entry*> allEntries = m_metadata->database()->rootGroup()->entriesRecursive(true);
+            QList<Entry*> allEntries = m_database->rootGroup()->entriesRecursive(true);
             QListIterator<Entry*> iEntries(allEntries);
             while (iEntries.hasNext()) {
                 Entry* entry = iEntries.next();
@@ -462,7 +462,7 @@ void EditEntryWidget::removeCustomIcon()
                 }
             }
 
-            QList<const Group*> allGroups = m_metadata->database()->rootGroup()->groupsRecursive(true);
+            QList<const Group*> allGroups = m_database->rootGroup()->groupsRecursive(true);
             QListIterator<const Group*> iGroups(allGroups);
             while (iGroups.hasNext()) {
                 const Group* group = iGroups.next();
@@ -472,8 +472,8 @@ void EditEntryWidget::removeCustomIcon()
             }
 
             if (iconUsedCount == 0) {
-                m_metadata->removeCustomIcon(iconUuid);
-                m_customIconModel->setIcons(m_metadata->customIcons());
+                m_database->metadata()->removeCustomIcon(iconUuid);
+                m_customIconModel->setIcons(m_database->metadata()->customIcons());
             }
             else {
                 QMessageBox::information(this, tr("Can't delete icon!"),

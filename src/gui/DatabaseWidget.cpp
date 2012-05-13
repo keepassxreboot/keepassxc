@@ -245,7 +245,7 @@ void DatabaseWidget::switchToEntryEdit(Entry* entry)
 void DatabaseWidget::switchToEntryEdit(Entry* entry, bool create)
 {
     m_editEntryWidget->loadEntry(entry, create, m_groupView->currentGroup()->name(),
-                                 m_db->metadata());
+                                 m_db);
     setCurrentIndex(1);
 }
 

@@ -23,6 +23,7 @@
 
 #include "gui/DialogyWidget.h"
 
+class Database;
 class Entry;
 class EntryAttachments;
 class EntryAttachmentsModel;
@@ -49,7 +50,7 @@ public:
     explicit EditEntryWidget(QWidget* parent = 0);
     ~EditEntryWidget();
 
-    void loadEntry(Entry* entry, bool create, const QString& groupName, Metadata* metadata);
+    void loadEntry(Entry* entry, bool create, const QString& groupName, Database* database);
 
     static const QColor normalColor;
     static const QColor correctSoFarColor;
@@ -81,7 +82,7 @@ private:
     bool passwordsEqual();
 
     Entry* m_entry;
-    Metadata* m_metadata;
+    Database* m_database;
 
     bool m_create;
     const QScopedPointer<Ui::EditEntryWidget> m_ui;
