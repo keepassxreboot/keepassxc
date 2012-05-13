@@ -222,6 +222,8 @@ void Database::createRecycleBin()
     recycleBin->setUuid(Uuid::random());
     recycleBin->setName(tr("Recycle Bin"));
     recycleBin->setIcon(43);
+    recycleBin->setSearchingEnabled(Group::Disable);
+    recycleBin->setAutoTypeEnabled(Group::Disable);
     recycleBin->setParent(rootGroup());
     m_metadata->setRecycleBin(recycleBin);
 }
