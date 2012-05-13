@@ -334,4 +334,69 @@ void TestGroup::testCopyCustomIcon()
     delete dbTarget;
 }
 
+void TestGroup::testSearch()
+{
+    Group* groupRoot = new Group();
+    Group* group1 = new Group();
+    Group* group2 = new Group();
+    Group* group3 = new Group();
+
+    group1->setParent(groupRoot);
+    group2->setParent(groupRoot);
+    group3->setParent(groupRoot);
+
+    Group* group11 = new Group();
+
+    group11->setParent(group1);
+
+    Group* group21 = new Group();
+    Group* group211 = new Group();
+    Group* group2111 = new Group();
+
+    group21->setParent(group2);
+    group211->setParent(group21);
+    group2111->setParent(group211);
+
+    group1->setSearchingEnabled(Group::Disable);
+    group11->setSearchingEnabled(Group::Enable);
+
+    Entry* eRoot = new Entry();
+    eRoot->setNotes("test search term test");
+    eRoot->setGroup(groupRoot);
+
+    Entry* eRoot2 = new Entry();
+    eRoot2->setNotes("test term test");
+    eRoot2->setGroup(groupRoot);
+
+    Entry* e1 = new Entry();
+    e1->setNotes("test search term test");
+    e1->setGroup(group1);
+
+    Entry* e2111 = new Entry();
+    e2111->setNotes("test search term test");
+    e2111->setGroup(group2111);
+
+    Entry* e2111b = new Entry();
+    e2111b->setNotes("test search test");
+    e2111b->setGroup(group2111);
+
+    Entry* e3 = new Entry();
+    e3->setNotes("test search term test");
+    e3->setGroup(group3);
+
+    Entry* e3b = new Entry();
+    e3b->setNotes("test search test");
+    e3b->setGroup(group3);
+
+    QList<Entry*> searchResult;
+
+    searchResult = groupRoot->search("search term", Qt::CaseInsensitive);
+    QCOMPARE(searchResult.count(), 3);
+
+    searchResult = group211->search("search term", Qt::CaseInsensitive);
+    QCOMPARE(searchResult.count(), 1);
+
+    delete groupRoot;
+}
+
 KEEPASSX_QTEST_CORE_MAIN(TestGroup)
