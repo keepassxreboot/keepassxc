@@ -129,9 +129,10 @@ void KeePass2XmlWriter::writeCustomIcons()
 {
     m_xml.writeStartElement("CustomIcons");
 
-    QHash<Uuid, QImage> customIcons = m_meta->customIcons();
-    Q_FOREACH (const Uuid& uuid, customIcons.keys()) {
-        writeIcon(uuid, customIcons.value(uuid));
+    QListIterator<Uuid> i(m_meta->customIconsOrder());
+    while (i.hasNext()) {
+        Uuid uuid = i.next();
+        writeIcon(uuid, m_meta->customIcon(uuid));
     }
 
     m_xml.writeEndElement();

@@ -54,6 +54,7 @@ public:
     QImage customIcon(const Uuid& uuid) const;
     bool containsCustomIcon(const Uuid& uuid) const;
     QHash<Uuid, QImage> customIcons() const;
+    QList<Uuid> customIconsOrder() const;
     bool recycleBinEnabled() const;
     Group* recycleBin();
     const Group* recycleBin() const;
@@ -134,6 +135,7 @@ private:
     // bool m_autoEnableVisualHiding;
 
     QHash<Uuid, QImage> m_customIcons;
+    QList<Uuid> m_customIconsOrder;
 
     bool m_recycleBinEnabled;
     QPointer<Group> m_recycleBin;

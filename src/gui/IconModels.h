@@ -43,13 +43,13 @@ public:
 
     virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
     virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
-    void setIcons(QHash<Uuid, QImage> icons);
+    void setIcons(QHash<Uuid, QImage> icons, QList<Uuid> iconsOrder);
     Uuid uuidFromIndex(const QModelIndex& index) const;
     QModelIndex indexFromUuid(const Uuid& uuid) const;
 
 private:
     QHash<Uuid, QImage> m_icons;
-    QHash<int, Uuid> m_uuids;
+    QList<Uuid> m_iconsOrder;
 };
 
 #endif // KEEPASSX_ICONMODELS_H

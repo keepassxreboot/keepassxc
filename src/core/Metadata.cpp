@@ -175,6 +175,11 @@ QHash<Uuid, QImage> Metadata::customIcons() const
     return m_customIcons;
 }
 
+QList<Uuid> Metadata::customIconsOrder() const
+{
+    return m_customIconsOrder;
+}
+
 bool Metadata::recycleBinEnabled() const
 {
     return m_recycleBinEnabled;
@@ -328,6 +333,8 @@ void Metadata::addCustomIcon(const Uuid& uuid, const QImage& icon)
     Q_ASSERT(!m_customIcons.contains(uuid));
 
     m_customIcons.insert(uuid, icon);
+    m_customIconsOrder.append(uuid);
+    Q_ASSERT(m_customIcons.count() == m_customIconsOrder.count());
     Q_EMIT modified();
 }
 
@@ -337,6 +344,8 @@ void Metadata::removeCustomIcon(const Uuid& uuid)
     Q_ASSERT(m_customIcons.contains(uuid));
 
     m_customIcons.remove(uuid);
+    m_customIconsOrder.removeAll(uuid);
+    Q_ASSERT(m_customIcons.count() == m_customIconsOrder.count());
     Q_EMIT modified();
 }
 

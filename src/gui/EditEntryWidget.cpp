@@ -171,7 +171,8 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupN
     if (database) {
         m_iconsWidget->setEnabled(true);
 
-        m_customIconModel->setIcons(database->metadata()->customIcons());
+        m_customIconModel->setIcons(database->metadata()->customIcons(),
+                                    database->metadata()->customIconsOrder());
 
         Uuid iconUuid = entry->iconUuid();
         if (iconUuid.isNull()) {
@@ -436,7 +437,8 @@ void EditEntryWidget::addCustomIcon()
             QImage image(filename);
             if (!image.isNull()) {
                 m_database->metadata()->addCustomIcon(Uuid::random(), image.scaled(16, 16));
-                m_customIconModel->setIcons(m_database->metadata()->customIcons());
+                m_customIconModel->setIcons(m_database->metadata()->customIcons(),
+                                            m_database->metadata()->customIconsOrder());
             }
             else {
                 // TODO: show error
@@ -473,7 +475,8 @@ void EditEntryWidget::removeCustomIcon()
 
             if (iconUsedCount == 0) {
                 m_database->metadata()->removeCustomIcon(iconUuid);
-                m_customIconModel->setIcons(m_database->metadata()->customIcons());
+                m_customIconModel->setIcons(m_database->metadata()->customIcons(),
+                                            m_database->metadata()->customIconsOrder());
             }
             else {
                 QMessageBox::information(this, tr("Can't delete icon!"),

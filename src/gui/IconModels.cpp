@@ -54,19 +54,13 @@ CustomIconModel::CustomIconModel(QObject* parent) :
 {
 }
 
-void CustomIconModel::setIcons(QHash<Uuid, QImage> icons)
+void CustomIconModel::setIcons(QHash<Uuid, QImage> icons, QList<Uuid> iconsOrder)
 {
     beginResetModel();
 
     m_icons = icons;
-    m_uuids.clear();
-    QHash<Uuid, QImage>::const_iterator iter;
-    int i = 0;
-    for (iter = m_icons.constBegin(); iter != m_icons.constEnd(); ++iter) {
-        m_uuids.insert(i, iter.key());
-        i++;
-    }
-    Q_ASSERT(m_uuids.count() == m_icons.size());
+    m_iconsOrder = iconsOrder;
+    Q_ASSERT(m_icons.count() == m_iconsOrder.count());
 
     endResetModel();
 }
@@ -88,7 +82,8 @@ QVariant CustomIconModel::data(const QModelIndex& index, int role) const
     }
 
     if (role == Qt::DecorationRole) {
-        return m_icons.value(uuidFromIndex(index));
+        Uuid uuid = m_iconsOrder.value(index.row());
+        return m_icons.value(uuid);
     }
 
     return QVariant();
@@ -98,16 +93,16 @@ Uuid CustomIconModel::uuidFromIndex(const QModelIndex& index) const
 {
     Q_ASSERT(index.isValid());
 
-    return m_uuids.value(index.row());
+    return m_iconsOrder.value(index.row());
 }
 
 QModelIndex CustomIconModel::indexFromUuid(const Uuid& uuid) const
 {
-    QHash<int, Uuid>::const_iterator iter;
-    for (iter = m_uuids.constBegin(); iter != m_uuids.constEnd(); ++iter) {
-        if (iter.value() == uuid) {
-            return index(iter.key(), 0);
-        }
+    int idx = m_iconsOrder.indexOf(uuid);
+    if (idx > -1) {
+        return index(idx, 0);
     }
-    return QModelIndex();
+    else {
+        return QModelIndex();
+    }
 }
