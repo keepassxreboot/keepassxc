@@ -436,9 +436,12 @@ void EditEntryWidget::addCustomIcon()
         if (!filename.isEmpty()) {
             QImage image(filename);
             if (!image.isNull()) {
-                m_database->metadata()->addCustomIcon(Uuid::random(), image.scaled(16, 16));
+                Uuid uuid = Uuid::random();
+                m_database->metadata()->addCustomIcon(uuid, image.scaled(16, 16));
                 m_customIconModel->setIcons(m_database->metadata()->customIcons(),
                                             m_database->metadata()->customIconsOrder());
+                QModelIndex index = m_customIconModel->indexFromUuid(uuid);
+                m_iconsUi->customIconsView->setCurrentIndex(index);
             }
             else {
                 // TODO: show error
@@ -477,6 +480,12 @@ void EditEntryWidget::removeCustomIcon()
                 m_database->metadata()->removeCustomIcon(iconUuid);
                 m_customIconModel->setIcons(m_database->metadata()->customIcons(),
                                             m_database->metadata()->customIconsOrder());
+                if (m_customIconModel->rowCount() > 0) {
+                    m_iconsUi->customIconsView->setCurrentIndex(m_customIconModel->index(0, 0));
+                }
+                else {
+                    updateRadioButtonDefaultIcons();
+                }
             }
             else {
                 QMessageBox::information(this, tr("Can't delete icon!"),
@@ -495,8 +504,7 @@ void EditEntryWidget::updateWidgetsDefaultIcons(bool check)
             m_iconsUi->defaultIconsView->setCurrentIndex(m_defaultIconModel->index(0, 0));
         }
         else {
-            m_iconsUi->defaultIconsView->selectionModel()->
-                    setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
+            m_iconsUi->defaultIconsView->setCurrentIndex(index);
         }
         m_iconsUi->customIconsView->selectionModel()->clearSelection();
         m_iconsUi->addButton->setEnabled(false);
@@ -512,8 +520,7 @@ void EditEntryWidget::updateWidgetsCustomIcons(bool check)
             m_iconsUi->customIconsView->setCurrentIndex(m_customIconModel->index(0, 0));
         }
         else {
-            m_iconsUi->customIconsView->selectionModel()->
-                    setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
+            m_iconsUi->customIconsView->setCurrentIndex(index);
         }
         m_iconsUi->defaultIconsView->selectionModel()->clearSelection();
         m_iconsUi->addButton->setEnabled(true);
