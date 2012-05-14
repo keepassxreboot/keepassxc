@@ -60,6 +60,7 @@ set(keepassx_SOURCES
     gui/DialogyWidget.cpp
     gui/EditEntryWidget.cpp
     gui/EditGroupWidget.cpp
+    gui/EditWidget.cpp
     gui/EntryAttachmentsModel.cpp
     gui/EntryAttributesModel.cpp
     gui/EntryModel.cpp
@@ -96,6 +97,7 @@ set(keepassx_MOC
     gui/DialogyWidget.h
     gui/EditEntryWidget.h
     gui/EditGroupWidget.h
+    gui/EditWidget.h
     gui/EntryAttachmentsModel.h
     gui/EntryAttributesModel.h
     gui/EntryModel.h
@@ -122,6 +124,7 @@ set(keepassx_FORMS
     gui/EditEntryWidgetMain.ui
     gui/EditEntryWidgetNotes.ui
     gui/EditGroupWidget.ui
+    gui/EditWidget.ui
     gui/MainWindow.ui
 )
 
