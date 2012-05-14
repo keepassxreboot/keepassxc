@@ -123,7 +123,7 @@ set(keepassx_FORMS
     gui/EditEntryWidgetIcons.ui
     gui/EditEntryWidgetMain.ui
     gui/EditEntryWidgetNotes.ui
-    gui/EditGroupWidget.ui
+    gui/EditGroupWidgetMain.ui
     gui/EditWidget.ui
     gui/MainWindow.ui
 )

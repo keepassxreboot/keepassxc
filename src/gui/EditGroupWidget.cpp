@@ -16,22 +16,26 @@
  */
 
 #include "EditGroupWidget.h"
-#include "ui_EditGroupWidget.h"
+#include "ui_EditGroupWidgetMain.h"
+#include "ui_EditWidget.h"
 
 EditGroupWidget::EditGroupWidget(QWidget* parent)
-    : DialogyWidget(parent)
-    , m_ui(new Ui::EditGroupWidget())
+    : EditWidget(parent)
+    , m_mainUi(new Ui::EditGroupWidgetMain())
+    , m_editGroupWidgetMain(new QWidget())
     , m_group(0)
 {
-    m_ui->setupUi(this);
+    m_mainUi->setupUi(m_editGroupWidgetMain);
 
-    QFont labelHeaderFont = m_ui->labelHeader->font();
+    add(tr("Group"), m_editGroupWidgetMain);
+
+    QFont labelHeaderFont = headlineLabel()->font();
     labelHeaderFont.setBold(true);
     labelHeaderFont.setPointSize(labelHeaderFont.pointSize() + 2);
-    m_ui->labelHeader->setFont(labelHeaderFont);
+    headlineLabel()->setFont(labelHeaderFont);
 
-    connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(save()));
-    connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(cancel()));
+    connect(this, SIGNAL(accepted()), SLOT(save()));
+    connect(this, SIGNAL(rejected()), SLOT(cancel()));
 }
 
 EditGroupWidget::~EditGroupWidget()
@@ -43,22 +47,24 @@ void EditGroupWidget::loadGroup(Group* group, bool create)
     m_group = group;
 
     if (create) {
-        m_ui->labelHeader->setText(tr("Add group"));
+        headlineLabel()->setText(tr("Add group"));
     }
     else {
-        m_ui->labelHeader->setText(tr("Edit group"));
+        headlineLabel()->setText(tr("Edit group"));
     }
 
-    m_ui->editName->setText(m_group->name());
-    m_ui->editNotes->setPlainText(m_group->notes());
+    m_mainUi->editName->setText(m_group->name());
+    m_mainUi->editNotes->setPlainText(m_group->notes());
 
-    m_ui->editName->setFocus();
+    setCurrentRow(0);
+
+    m_mainUi->editName->setFocus();
 }
 
 void EditGroupWidget::save()
 {
-    m_group->setName(m_ui->editName->text());
-    m_group->setNotes(m_ui->editNotes->toPlainText());
+    m_group->setName(m_mainUi->editName->text());
+    m_group->setNotes(m_mainUi->editNotes->toPlainText());
 
     m_group = 0;
     Q_EMIT editFinished(true);

@@ -1,35 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>EditGroupWidget</class>
- <widget class="QWidget" name="EditGroupWidget">
+ <class>EditGroupWidgetMain</class>
+ <widget class="QWidget" name="EditGroupWidgetMain">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>544</width>
-    <height>263</height>
+    <width>676</width>
+    <height>334</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <widget class="QLabel" name="labelHeader"/>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>1</width>
-       <height>3</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
    <item>
     <layout class="QFormLayout" name="formLayout">
      <property name="fieldGrowthPolicy">
@@ -56,16 +37,6 @@
       <widget class="QPlainTextEdit" name="editNotes"/>
      </item>
     </layout>
-   </item>
-   <item>
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
    </item>
   </layout>
  </widget>

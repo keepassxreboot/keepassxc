@@ -20,15 +20,15 @@
 
 #include <QtCore/QScopedPointer>
 
-#include "gui/DialogyWidget.h"
-
+#include "gui/EditWidget.h"
 #include "core/Group.h"
 
 namespace Ui {
-    class EditGroupWidget;
+    class EditGroupWidgetMain;
+    class EditWidget;
 }
 
-class EditGroupWidget : public DialogyWidget
+class EditGroupWidget : public EditWidget
 {
     Q_OBJECT
 
@@ -46,7 +46,8 @@ private Q_SLOTS:
     void cancel();
 
 private:
-    const QScopedPointer<Ui::EditGroupWidget> m_ui;
+    const QScopedPointer<Ui::EditGroupWidgetMain> m_mainUi;
+    QWidget* m_editGroupWidgetMain;
     Group* m_group;
 
     Q_DISABLE_COPY(EditGroupWidget)
