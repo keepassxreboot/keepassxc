@@ -351,9 +351,7 @@ bool DatabaseWidget::canDeleteCurrentGoup()
 void DatabaseWidget::truncateHistories()
 {
     QList<Entry*> allEntries = m_db->rootGroup()->entriesRecursive(false);
-    QListIterator<Entry*> i(allEntries);
-    while (i.hasNext()) {
-        Entry* entry = i.next();
+    Q_FOREACH (Entry* entry, allEntries) {
         entry->truncateHistory();
     }
 }

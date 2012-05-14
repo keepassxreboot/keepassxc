@@ -459,18 +459,14 @@ void EditEntryWidget::removeCustomIcon()
             int iconUsedCount = 0;
 
             QList<Entry*> allEntries = m_database->rootGroup()->entriesRecursive(true);
-            QListIterator<Entry*> iEntries(allEntries);
-            while (iEntries.hasNext()) {
-                Entry* entry = iEntries.next();
+            Q_FOREACH (const Entry* entry, allEntries) {
                 if (iconUuid == entry->iconUuid() && entry != m_entry) {
                     iconUsedCount++;
                 }
             }
 
             QList<const Group*> allGroups = m_database->rootGroup()->groupsRecursive(true);
-            QListIterator<const Group*> iGroups(allGroups);
-            while (iGroups.hasNext()) {
-                const Group* group = iGroups.next();
+            Q_FOREACH (const Group* group, allGroups) {
                 if (iconUuid == group->iconUuid()) {
                     iconUsedCount++;
                 }

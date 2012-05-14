@@ -75,9 +75,7 @@ void EntryModel::setEntries(const QList<Entry*>& entries)
         m_allGroups = entries.at(0)->group()->database()->rootGroup()->groupsRecursive(true);
     }
 
-    QListIterator<const Group*> iGroups(m_allGroups);
-    while (iGroups.hasNext()) {
-        const Group* group = iGroups.next();
+    Q_FOREACH (const Group* group, m_allGroups) {
         makeConnections(group);
     }
 
@@ -248,9 +246,7 @@ void EntryModel::severConnections()
         disconnect(m_group, 0, this, 0);
     }
 
-    QListIterator<const Group*> i(m_allGroups);
-    while (i.hasNext()) {
-        const Group* group = i.next();
+    Q_FOREACH (const Group* group, m_allGroups) {
         disconnect(group, 0, this, 0);
     }
 }
