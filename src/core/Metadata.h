@@ -34,7 +34,7 @@ class Metadata : public QObject
     Q_OBJECT
 
 public:
-    explicit Metadata(Database* parent);
+    explicit Metadata(QObject* parent = 0);
 
     QString generator() const;
     QString name() const;
@@ -69,7 +69,6 @@ public:
     int historyMaxItems() const;
     int historyMaxSize() const;
     QHash<QString, QString> customFields() const;
-    const Database* database() const;
 
     static const int defaultHistoryMaxItems;
     static const int defaultHistoryMaxSize;
@@ -108,14 +107,12 @@ public:
     void setUpdateDatetime(bool value);
 
 Q_SIGNALS:
-    void nameTextChanged(Database* db);
+    void nameTextChanged();
     void modified();
 
 private:
     template <class P, class V> bool set(P& property, const V& value);
     template <class P, class V> bool set(P& property, const V& value, QDateTime& dateTime);
-
-    Database* const m_parent;
 
     QString m_generator;
     QString m_name;

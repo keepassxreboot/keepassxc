@@ -105,6 +105,7 @@ Q_SIGNALS:
     void groupRemoved();
     void groupAboutToMove(Group* group, Group* toGroup, int index);
     void groupMoved();
+    void nameTextChanged();
     void modified();
 
 private:

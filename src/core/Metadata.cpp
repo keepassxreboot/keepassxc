@@ -17,14 +17,12 @@
 
 #include "Metadata.h"
 
-#include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Tools.h"
 
-Metadata::Metadata(Database* parent)
+Metadata::Metadata(QObject* parent)
     : QObject(parent)
-    , m_parent(parent)
 {
     m_generator = "KeePassX";
     m_maintenanceHistoryDays = 365;
@@ -258,7 +256,7 @@ void Metadata::setGenerator(const QString& value)
 void Metadata::setName(const QString& value)
 {
     if (set(m_name, value, m_nameChanged)) {
-        Q_EMIT nameTextChanged(m_parent);
+        Q_EMIT nameTextChanged();
     }
 }
 
@@ -423,9 +421,4 @@ void Metadata::removeCustomField(const QString& key)
 
     m_customFields.remove(key);
     Q_EMIT modified();
-}
-
-const Database* Metadata::database() const
-{
-    return m_parent;
 }

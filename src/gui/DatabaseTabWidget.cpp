@@ -390,6 +390,13 @@ void DatabaseTabWidget::updateTabName(Database* db)
     Q_EMIT tabNameChanged();
 }
 
+void DatabaseTabWidget::updateTabNameFromSender()
+{
+    Q_ASSERT(qobject_cast<Database*>(sender()));
+
+    updateTabName(static_cast<Database*>(sender()));
+}
+
 int DatabaseTabWidget::databaseIndex(Database* db)
 {
     QWidget* dbWidget = m_dbList.value(db).dbWidget;
@@ -434,8 +441,7 @@ void DatabaseTabWidget::insertDatabase(Database* db, const DatabaseManagerStruct
     int index = databaseIndex(db);
     setCurrentIndex(index);
 
-    connect(db->metadata(), SIGNAL(nameTextChanged(Database*)),
-            SLOT(updateTabName(Database*)));
+    connect(db, SIGNAL(nameTextChanged()), SLOT(updateTabNameFromSender()));
     connect(dbStruct.dbWidget->entryView(), SIGNAL(entrySelectionChanged()),
             SLOT(emitEntrySelectionChanged()));
     connect(dbStruct.dbWidget, SIGNAL(closeRequest()), SLOT(closeDatabaseFromSender()));
@@ -457,7 +463,8 @@ DatabaseWidget* DatabaseTabWidget::currentDatabaseWidget()
 
 void DatabaseTabWidget::modified()
 {
-    Q_ASSERT(sender());
+    Q_ASSERT(qobject_cast<Database*>(sender()));
+
     Database* db = static_cast<Database*>(sender());
     DatabaseManagerStruct& dbStruct = m_dbList[db];
     if (!dbStruct.modified) {

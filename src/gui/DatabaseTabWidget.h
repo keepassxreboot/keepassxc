@@ -78,6 +78,7 @@ Q_SIGNALS:
 
 private Q_SLOTS:
     void updateTabName(Database* db);
+    void updateTabNameFromSender();
     void openDatabaseDialog(const QString& pw = QString(), const QString& keyFile = QString());
     void openDatabaseRead();
     void openDatabaseCleanup();

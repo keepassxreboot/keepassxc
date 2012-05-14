@@ -42,6 +42,7 @@ Database::Database()
     m_uuidMap.insert(m_uuid, this);
 
     connect(m_metadata, SIGNAL(modified()), this, SIGNAL(modified()));
+    connect(m_metadata, SIGNAL(nameTextChanged()), this, SIGNAL(nameTextChanged()));
 }
 
 Database::~Database()
