@@ -116,6 +116,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             if (entry->group()) {
                 return entry->group()->name();
             }
+            break;
         case 1:
             return entry->title();
         case 2:
@@ -130,6 +131,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             if (entry->group()) {
                 return entry->group()->iconPixmap();
             }
+            break;
         case 1:
             return entry->iconPixmap();
         }
