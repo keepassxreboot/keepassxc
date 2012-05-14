@@ -37,6 +37,8 @@ GroupView::GroupView(Database* db, QWidget* parent)
     connect(this, SIGNAL(collapsed(QModelIndex)), this, SLOT(expandedChanged(QModelIndex)));
     connect(m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(syncExpandedState(QModelIndex,int,int)));
 
+    connect(selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), SLOT(emitGroupChanged()));
+
     setCurrentIndex(m_model->index(0, 0));
     // invoke later so the EntryView is connected
     QMetaObject::invokeMethod(this, "emitGroupChanged", Qt::QueuedConnection,
@@ -111,13 +113,6 @@ void GroupView::syncExpandedState(const QModelIndex& parent, int start, int end)
         Group* group = m_model->groupFromIndex(m_model->index(row, 0, parent));
         recInitExpanded(group);
     }
-}
-
-void GroupView::currentChanged(const QModelIndex &current, const QModelIndex &previous)
-{
-    Q_UNUSED(current);
-    Q_UNUSED(previous);
-    emitGroupChanged();
 }
 
 void GroupView::setCurrentGroup(Group* group)
