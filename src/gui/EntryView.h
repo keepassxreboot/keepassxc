@@ -36,7 +36,7 @@ public:
     bool isSingleEntrySelected();
     void setCurrentEntry(Entry* entry);
     Entry* entryFromIndex(const QModelIndex& index);
-    void search(QList<Entry *> entries);
+    void search(const QList<Entry*>& entries);
     bool inSearch();
 
 public Q_SLOTS:

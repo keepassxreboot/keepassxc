@@ -61,7 +61,7 @@ void EntryModel::setGroup(Group* group)
     Q_EMIT switchedToView();
 }
 
-void EntryModel::setEntries(QList<Entry*> entries)
+void EntryModel::setEntries(const QList<Entry*>& entries)
 {
     beginResetModel();
 

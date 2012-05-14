@@ -53,7 +53,7 @@ void EntryView::setGroup(Group* group)
     Q_EMIT entrySelectionChanged();
 }
 
-void EntryView::search(QList<Entry*> entries)
+void EntryView::search(const QList<Entry*>& entries)
 {
     m_model->setEntries(entries);
     Q_EMIT entrySelectionChanged();

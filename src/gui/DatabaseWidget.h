@@ -79,6 +79,8 @@ private Q_SLOTS:
     void emitCurrentModeChanged();
 
 private:
+    void truncateHistories();
+
     Database* const m_db;
     QWidget* m_mainWidget;
     EditEntryWidget* m_editEntryWidget;
@@ -91,8 +93,6 @@ private:
     Entry* m_newEntry;
     Group* m_newParent;
     QLineEdit* m_searchEdit;
-
-    void truncateHistories();
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H

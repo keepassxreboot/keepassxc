@@ -36,8 +36,8 @@ public:
     explicit DatabaseSettingsWidget(QWidget* parent = 0);
     ~DatabaseSettingsWidget();
 
-    void setForms(QString dbName, QString dbDescription,
-                  QString defaultUsername, bool recylceBinEnabled,
+    void setForms(const QString& dbName, const QString& dbDescription,
+                  const QString& defaultUsername, bool recylceBinEnabled,
                   int transformRounds, int historyMaxItems,
                   int historyMaxSize);
     quint64 transformRounds();

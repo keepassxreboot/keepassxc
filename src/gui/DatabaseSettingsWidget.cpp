@@ -40,8 +40,8 @@ DatabaseSettingsWidget::~DatabaseSettingsWidget()
 {
 }
 
-void DatabaseSettingsWidget::setForms(QString dbName, QString dbDescription,
-                                      QString defaultUsername, bool recylceBinEnabled,
+void DatabaseSettingsWidget::setForms(const QString& dbName, const QString& dbDescription,
+                                      const QString& defaultUsername, bool recylceBinEnabled,
                                       int transformRounds, int historyMaxItems,
                                       int historyMaxSize)
 {
@@ -162,7 +162,6 @@ void DatabaseSettingsWidget::toggleHistoryMaxSizeSpinBox(int state)
     else {
         m_ui->historyMaxSizeSpinBox->setEnabled(false);
     }
-
 }
 
 void DatabaseSettingsWidget::transformRoundsBenchmark()

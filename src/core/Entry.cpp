@@ -362,43 +362,45 @@ void Entry::addHistoryItem(Entry* entry)
 
 void Entry::truncateHistory() {
     const Database *db = database();
-    if(db) {
-        int histMaxItems = db->metadata()->historyMaxItems();
-        if (histMaxItems > -1) {
-            int historyCount = 0;
-            QMutableListIterator<Entry*> i(m_history);
-            i.toBack();
-            while (i.hasPrevious()) {
-                historyCount++;
-                Entry* entry = i.previous();
-                if (historyCount > histMaxItems) {
-                    delete entry;
-                    i.remove();
-                }
+
+    if (!db) {
+        return;
+    }
+
+    int histMaxItems = db->metadata()->historyMaxItems();
+    if (histMaxItems > -1) {
+        int historyCount = 0;
+        QMutableListIterator<Entry*> i(m_history);
+        i.toBack();
+        while (i.hasPrevious()) {
+            historyCount++;
+            Entry* entry = i.previous();
+            if (historyCount > histMaxItems) {
+                delete entry;
+                i.remove();
             }
         }
+    }
 
-        int histMaxSize = db->metadata()->historyMaxSize();
-        if (histMaxSize > -1) {
-            int size = 0;
-            QList<QByteArray>* foundAttachements = new QList<QByteArray>();
-            attachments()->attachmentsSize(foundAttachements);
+    int histMaxSize = db->metadata()->historyMaxSize();
+    if (histMaxSize > -1) {
+        int size = 0;
+        QList<QByteArray>* foundAttachements = new QList<QByteArray>();
+        attachments()->attachmentsSize(foundAttachements);
 
-            QMutableListIterator<Entry*> i(m_history);
-            i.toBack();
-            while (i.hasPrevious()) {
-                Entry* entry = i.previous();
-                if (size > histMaxSize) {
-                    delete entry;
-                    i.remove();
-                }
-                else {
-                    size += entry->getSize(foundAttachements);
-                    if (size > histMaxSize) {
-                        delete entry;
-                        i.remove();
-                    }
-                }
+        QMutableListIterator<Entry*> i(m_history);
+        i.toBack();
+        while (i.hasPrevious()) {
+            Entry* entry = i.previous();
+
+            // don't calculate size if it's already above the maximum
+            if (size <= histMaxSize) {
+                size += entry->getSize(foundAttachements);
+            }
+
+            if (size > histMaxSize) {
+                delete entry;
+                i.remove();
             }
         }
     }

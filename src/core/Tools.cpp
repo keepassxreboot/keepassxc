@@ -92,7 +92,7 @@ bool readAllFromDevice(QIODevice* device, QByteArray& data)
     }
 }
 
-QDateTime currentDateTimeUtc ()
+QDateTime currentDateTimeUtc()
 {
 #if QT_VERSION >= 0x040700
      return QDateTime::currentDateTimeUtc();

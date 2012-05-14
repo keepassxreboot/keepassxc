@@ -32,7 +32,7 @@ public:
     void set(const QString& key, const QByteArray& value);
     void remove(const QString& key);
     void clear();
-    int attachmentsSize(QList<QByteArray> *foundAttachements);
+    int attachmentsSize(QList<QByteArray>* foundAttachements);
     bool operator==(const EntryAttachments& other) const;
     bool operator!=(const EntryAttachments& other) const;
     EntryAttachments& operator=(EntryAttachments& other);
