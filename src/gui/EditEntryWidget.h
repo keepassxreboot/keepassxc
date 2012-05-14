@@ -52,7 +52,6 @@ public:
 
     void loadEntry(Entry* entry, bool create, const QString& groupName, Database* database);
 
-    static const QColor NormalColor;
     static const QColor CorrectSoFarColor;
     static const QColor ErrorColor;
 

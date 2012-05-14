@@ -125,7 +125,6 @@ EditEntryWidget::~EditEntryWidget()
 {
 }
 
-const QColor EditEntryWidget::NormalColor = Qt::white;
 const QColor EditEntryWidget::CorrectSoFarColor = QColor(255, 205, 15);
 const QColor EditEntryWidget::ErrorColor = QColor(255, 125, 125);
 
@@ -282,19 +281,21 @@ bool EditEntryWidget::passwordsEqual()
 
 void EditEntryWidget::setPasswordCheckColors()
 {
-    QPalette pal;
     if (passwordsEqual()) {
-        pal.setColor(QPalette::Base, NormalColor);
+        m_mainUi->passwordRepeatEdit->setStyleSheet("");
     }
     else {
+        QString stylesheet = "QLineEdit { background: %1; }";
+
         if (m_mainUi->passwordEdit->text().startsWith(m_mainUi->passwordRepeatEdit->text())) {
-            pal.setColor(QPalette::Base, CorrectSoFarColor);
+            stylesheet = stylesheet.arg(CorrectSoFarColor.name());
         }
         else {
-            pal.setColor(QPalette::Base, ErrorColor);
+            stylesheet = stylesheet.arg(ErrorColor.name());
         }
+
+        m_mainUi->passwordRepeatEdit->setStyleSheet(stylesheet);
     }
-    m_mainUi->passwordRepeatEdit->setPalette(pal);
 }
 
 void EditEntryWidget::insertAttribute()
