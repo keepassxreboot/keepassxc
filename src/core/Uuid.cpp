@@ -21,22 +21,22 @@
 
 #include "crypto/Random.h"
 
-const int Uuid::LENGTH = 16;
+const int Uuid::Length = 16;
 
 Uuid::Uuid()
-    : m_data(LENGTH, 0)
+    : m_data(Length, 0)
 {
 }
 
 Uuid::Uuid(const QByteArray& data)
 {
-    Q_ASSERT(data.size() == LENGTH);
+    Q_ASSERT(data.size() == Length);
 
     m_data = data;
 }
 
 Uuid Uuid::random() {
-    return Uuid(Random::randomArray(LENGTH));
+    return Uuid(Random::randomArray(Length));
 }
 
 QString Uuid::toBase64() const
@@ -97,7 +97,7 @@ QDataStream& operator>>(QDataStream& stream, Uuid& uuid)
 {
     QByteArray data;
     stream >> data;
-    if (data.size() == Uuid::LENGTH) {
+    if (data.size() == Uuid::Length) {
         uuid = Uuid(data);
     }
 

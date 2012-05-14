@@ -52,9 +52,9 @@ public:
 
     void loadEntry(Entry* entry, bool create, const QString& groupName, Database* database);
 
-    static const QColor normalColor;
-    static const QColor correctSoFarColor;
-    static const QColor errorColor;
+    static const QColor NormalColor;
+    static const QColor CorrectSoFarColor;
+    static const QColor ErrorColor;
 
 Q_SIGNALS:
     void editFinished(bool accepted);

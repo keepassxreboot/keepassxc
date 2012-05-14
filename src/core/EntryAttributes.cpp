@@ -17,8 +17,8 @@
 
 #include "EntryAttributes.h"
 
-const QStringList EntryAttributes::DEFAULT_ATTRIBUTES(QStringList() << "Title" << "URL"
-                                                      << "UserName" << "Password" << "Notes");
+const QStringList EntryAttributes::DefaultAttributes(QStringList() << "Title" << "URL"
+                                                     << "UserName" << "Password" << "Notes");
 
 EntryAttributes::EntryAttributes(QObject* parent)
     : QObject(parent)
@@ -215,7 +215,7 @@ void EntryAttributes::clear()
     m_attributes.clear();
     m_protectedAttributes.clear();
 
-    Q_FOREACH (const QString& key, DEFAULT_ATTRIBUTES) {
+    Q_FOREACH (const QString& key, DefaultAttributes) {
         m_attributes.insert(key, "");
     }
 
@@ -236,5 +236,5 @@ int EntryAttributes::attributesSize() {
 
 bool EntryAttributes::isDefaultAttribute(const QString& key)
 {
-    return DEFAULT_ATTRIBUTES.contains(key);
+    return DefaultAttributes.contains(key);
 }

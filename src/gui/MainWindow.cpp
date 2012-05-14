@@ -87,7 +87,7 @@ void MainWindow::openDatabase(const QString& fileName, const QString& pw, const 
     m_ui->tabWidget->openDatabase(fileName, pw, keyFile);
 }
 
-const QString MainWindow::m_baseWindowTitle = "KeePassX";
+const QString MainWindow::BaseWindowTitle = "KeePassX";
 
 void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 {
@@ -175,10 +175,10 @@ void MainWindow::updateWindowTitle()
 {
     int index = m_ui->tabWidget->currentIndex();
     if (index == -1) {
-        setWindowTitle(m_baseWindowTitle);
+        setWindowTitle(BaseWindowTitle);
     }
     else {
-        setWindowTitle(m_ui->tabWidget->tabText(index).append(" - ").append(m_baseWindowTitle));
+        setWindowTitle(m_ui->tabWidget->tabText(index).append(" - ").append(BaseWindowTitle));
     }
 }
 

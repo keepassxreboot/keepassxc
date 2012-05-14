@@ -114,6 +114,7 @@ private:
     void cleanupParent();
     void recCreateDelObjects();
     void updateTimeinfo();
+    bool includeInSearch(bool resolveInherit);
 
     QPointer<Database> m_db;
     Uuid m_uuid;
@@ -138,8 +139,6 @@ private:
     friend void Database::setRootGroup(Group* group);
     friend Entry::~Entry();
     friend void Entry::setGroup(Group* group);
-
-    bool includeInSearch(bool resolveInherit);
 };
 
 #endif // KEEPASSX_GROUP_H

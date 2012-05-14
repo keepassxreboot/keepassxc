@@ -43,7 +43,7 @@ private:
     bool readHashedBlock();
     bool writeHashedBlock();
 
-    static const QSysInfo::Endian BYTEORDER;
+    static const QSysInfo::Endian ByteOrder;
     qint32 m_blockSize;
     QByteArray m_buffer;
     int m_bufferPos;

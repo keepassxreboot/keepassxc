@@ -125,9 +125,9 @@ EditEntryWidget::~EditEntryWidget()
 {
 }
 
-const QColor EditEntryWidget::normalColor = Qt::white;
-const QColor EditEntryWidget::correctSoFarColor = QColor(255, 205, 15);
-const QColor EditEntryWidget::errorColor = QColor(255, 125, 125);
+const QColor EditEntryWidget::NormalColor = Qt::white;
+const QColor EditEntryWidget::CorrectSoFarColor = QColor(255, 205, 15);
+const QColor EditEntryWidget::ErrorColor = QColor(255, 125, 125);
 
 void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupName,
                                 Database* database)
@@ -284,14 +284,14 @@ void EditEntryWidget::setPasswordCheckColors()
 {
     QPalette pal;
     if (passwordsEqual()) {
-        pal.setColor(QPalette::Base, normalColor);
+        pal.setColor(QPalette::Base, NormalColor);
     }
     else {
         if (m_mainUi->passwordEdit->text().startsWith(m_mainUi->passwordRepeatEdit->text())) {
-            pal.setColor(QPalette::Base, correctSoFarColor);
+            pal.setColor(QPalette::Base, CorrectSoFarColor);
         }
         else {
-            pal.setColor(QPalette::Base, errorColor);
+            pal.setColor(QPalette::Base, ErrorColor);
         }
     }
     m_mainUi->passwordRepeatEdit->setPalette(pal);

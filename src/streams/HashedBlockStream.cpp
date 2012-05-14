@@ -22,7 +22,7 @@
 #include "core/Endian.h"
 #include "crypto/CryptoHash.h"
 
-const QSysInfo::Endian HashedBlockStream::BYTEORDER = QSysInfo::LittleEndian;
+const QSysInfo::Endian HashedBlockStream::ByteOrder = QSysInfo::LittleEndian;
 
 HashedBlockStream::HashedBlockStream(QIODevice* baseDevice)
     : LayeredStream(baseDevice)
@@ -126,7 +126,7 @@ bool HashedBlockStream::readHashedBlock()
 {
     bool ok;
 
-    quint32 index = Endian::readUInt32(m_baseDevice, BYTEORDER, &ok);
+    quint32 index = Endian::readUInt32(m_baseDevice, ByteOrder, &ok);
     if (!ok || index != m_blockIndex) {
         m_error = true;
         return false;
@@ -138,7 +138,7 @@ bool HashedBlockStream::readHashedBlock()
         return false;
     }
 
-    m_blockSize = Endian::readInt32(m_baseDevice, BYTEORDER, &ok);
+    m_blockSize = Endian::readInt32(m_baseDevice, ByteOrder, &ok);
     if (!ok || m_blockSize < 0) {
         m_error = true;
         return false;
@@ -207,7 +207,7 @@ qint64 HashedBlockStream::writeData(const char* data, qint64 maxSize)
 
 bool HashedBlockStream::writeHashedBlock()
 {
-    if (!Endian::writeInt32(m_blockIndex, m_baseDevice, BYTEORDER)) {
+    if (!Endian::writeInt32(m_blockIndex, m_baseDevice, ByteOrder)) {
         m_error = true;
         return false;
     }
@@ -226,7 +226,7 @@ bool HashedBlockStream::writeHashedBlock()
         return false;
     }
 
-    if (!Endian::writeInt32(m_buffer.size(), m_baseDevice, BYTEORDER)) {
+    if (!Endian::writeInt32(m_buffer.size(), m_baseDevice, ByteOrder)) {
         m_error = true;
         return false;
     }

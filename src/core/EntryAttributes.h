@@ -43,7 +43,7 @@ public:
     bool operator==(const EntryAttributes& other) const;
     bool operator!=(const EntryAttributes& other) const;
 
-    static const QStringList DEFAULT_ATTRIBUTES;
+    static const QStringList DefaultAttributes;
     static bool isDefaultAttribute(const QString& key);
 
 Q_SIGNALS:

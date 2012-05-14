@@ -60,7 +60,7 @@ void DatabaseSettingsWidget::setForms(const QString& dbName, const QString& dbDe
         m_ui->historyMaxItemsCheckBox->setChecked(true);
     }
     else {
-        m_ui->historyMaxItemsSpinBox->setValue(Metadata::defaultHistoryMaxItems);
+        m_ui->historyMaxItemsSpinBox->setValue(Metadata::DefaultHistoryMaxItems);
         m_ui->historyMaxItemsCheckBox->setChecked(false);
     }
     if (historyMaxSize > -1) {
@@ -68,7 +68,7 @@ void DatabaseSettingsWidget::setForms(const QString& dbName, const QString& dbDe
         m_ui->historyMaxSizeCheckBox->setChecked(true);
     }
     else {
-        m_ui->historyMaxSizeSpinBox->setValue(Metadata::defaultHistoryMaxSize);
+        m_ui->historyMaxSizeSpinBox->setValue(Metadata::DefaultHistoryMaxSize);
         m_ui->historyMaxSizeCheckBox->setChecked(false);
     }
 

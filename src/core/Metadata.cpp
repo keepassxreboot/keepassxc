@@ -29,8 +29,8 @@ Metadata::Metadata(QObject* parent)
     m_recycleBinEnabled = true;
     m_masterKeyChangeRec = -1;
     m_masterKeyChangeForce = -1;
-    m_historyMaxItems = defaultHistoryMaxItems;
-    m_historyMaxSize = defaultHistoryMaxSize;
+    m_historyMaxItems = DefaultHistoryMaxItems;
+    m_historyMaxSize = DefaultHistoryMaxSize;
 
     QDateTime now = Tools::currentDateTimeUtc();
     m_nameChanged = now;
@@ -50,8 +50,8 @@ Metadata::Metadata(QObject* parent)
     m_updateDatetime = true;
 }
 
-const int Metadata::defaultHistoryMaxItems = 10;
-const int Metadata::defaultHistoryMaxSize = 6291456;
+const int Metadata::DefaultHistoryMaxItems = 10;
+const int Metadata::DefaultHistoryMaxSize = 6291456;
 
 template <class P, class V> bool Metadata::set(P& property, const V& value)
 {

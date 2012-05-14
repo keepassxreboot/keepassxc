@@ -247,7 +247,7 @@ bool KeePass2Reader::readHeaderField()
 
 void KeePass2Reader::setCipher(const QByteArray& data)
 {
-    if (data.size() != Uuid::LENGTH) {
+    if (data.size() != Uuid::Length) {
         raiseError("");
     }
     else {

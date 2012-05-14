@@ -44,8 +44,9 @@ private Q_SLOTS:
     void showAboutDialog();
 
 private:
+    static const QString BaseWindowTitle;
+
     const QScopedPointer<Ui::MainWindow> m_ui;
-    static const QString m_baseWindowTitle;
 
     Q_DISABLE_COPY(MainWindow)
 };
