@@ -43,11 +43,11 @@ class EditWidgetIcons : public QWidget
     Q_OBJECT
 
 public:
-    explicit EditWidgetIcons(QWidget *parent = 0);
+    explicit EditWidgetIcons(QWidget* parent = 0);
     ~EditWidgetIcons();
 
     IconStruct save();
-    void load(Uuid currentUuid, Database *database, IconStruct iconStruct);
+    void load(Uuid currentUuid, Database* database, IconStruct iconStruct);
 
 private Q_SLOTS:
     void addCustomIcon();
