@@ -68,17 +68,11 @@ IconStruct EditWidgetIcons::save()
         if (index.isValid()) {
             iconStruct.number = index.row();
         }
-        else {
-            iconStruct.number = 0;
-        }
     }
     else {
         QModelIndex index = m_ui->customIconsView->currentIndex();
         if (index.isValid()) {
             iconStruct.uuid = m_customIconModel->uuidFromIndex(m_ui->customIconsView->currentIndex());
-        }
-        else {
-            iconStruct.number = 0;
         }
     }
 
@@ -152,10 +146,18 @@ void EditWidgetIcons::removeCustomIcon()
             Uuid iconUuid = m_customIconModel->uuidFromIndex(index);
             int iconUsedCount = 0;
 
-            QList<Entry*> allEntries = m_database->rootGroup()->entriesRecursive(false);
-            Q_FOREACH (const Entry* entry, allEntries) {
-                if (iconUuid == entry->iconUuid() && m_currentUuid != entry->uuid()) {
-                    iconUsedCount++;
+            QList<Entry*> allEntries = m_database->rootGroup()->entriesRecursive(true);
+            QList<Entry*> historyEntriesWithSameIcon;
+
+            Q_FOREACH (Entry* entry, allEntries) {
+                bool isHistoryEntry = !entry->group();
+                if (iconUuid == entry->iconUuid()) {
+                    if (isHistoryEntry) {
+                        historyEntriesWithSameIcon << entry;
+                    }
+                    else if (m_currentUuid != entry->uuid()) {
+                        iconUsedCount++;
+                    }
                 }
             }
 
@@ -167,9 +169,13 @@ void EditWidgetIcons::removeCustomIcon()
             }
 
             if (iconUsedCount == 0) {
+                Q_FOREACH (Entry* entry, historyEntriesWithSameIcon) {
+                    entry->setUpdateTimeinfo(false);
+                    entry->setIcon(0);
+                    entry->setUpdateTimeinfo(true);
+                }
+
                 m_database->metadata()->removeCustomIcon(iconUuid);
-                // TODO update icons of history items
-                // with updateTimeinfo = false
                 m_customIconModel->setIcons(m_database->metadata()->customIcons(),
                                             m_database->metadata()->customIconsOrder());
                 if (m_customIconModel->rowCount() > 0) {
