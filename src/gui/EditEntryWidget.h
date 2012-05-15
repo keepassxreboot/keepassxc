@@ -24,14 +24,12 @@
 #include "gui/EditWidget.h"
 
 class Database;
+class EditWidgetIcons;
 class Entry;
 class EntryAttachments;
 class EntryAttachmentsModel;
 class EntryAttributes;
 class EntryAttributesModel;
-class DefaultIconModel;
-class CustomIconModel;
-class Metadata;
 class QStackedLayout;
 
 namespace Ui {
@@ -39,7 +37,6 @@ namespace Ui {
     class EditEntryWidgetMain;
     class EditEntryWidgetNotes;
     class EditWidget;
-    class EditWidgetIcons;
 }
 
 class EditEntryWidget : public EditWidget
@@ -70,12 +67,6 @@ private Q_SLOTS:
     void insertAttachment();
     void saveCurrentAttachment();
     void removeCurrentAttachment();
-    void addCustomIcon();
-    void removeCustomIcon();
-    void updateWidgetsDefaultIcons(bool checked);
-    void updateWidgetsCustomIcons(bool checked);
-    void updateRadioButtonDefaultIcons();
-    void updateRadioButtonCustomIcons();
 
 private:
     bool passwordsEqual();
@@ -87,18 +78,15 @@ private:
     const QScopedPointer<Ui::EditEntryWidgetMain> m_mainUi;
     const QScopedPointer<Ui::EditEntryWidgetNotes> m_notesUi;
     const QScopedPointer<Ui::EditEntryWidgetAdvanced> m_advancedUi;
-    const QScopedPointer<Ui::EditWidgetIcons> m_iconsUi;
     QWidget* const m_mainWidget;
     QWidget* const m_notesWidget;
     QWidget* const m_advancedWidget;
-    QWidget* const m_iconsWidget;
+    EditWidgetIcons* const m_iconsWidget;
     EntryAttachmentsModel* m_attachmentsModel;
     EntryAttributesModel* m_attributesModel;
     EntryAttachments* m_entryAttachments;
     EntryAttributes* m_entryAttributes;
     QPersistentModelIndex m_currentAttribute;
-    DefaultIconModel* m_defaultIconModel;
-    CustomIconModel* m_customIconModel;
 
     Q_DISABLE_COPY(EditEntryWidget)
 };
