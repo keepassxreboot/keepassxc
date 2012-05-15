@@ -262,6 +262,7 @@ void Metadata::setName(const QString& value)
 
 void Metadata::setNameChanged(const QDateTime& value)
 {
+    Q_ASSERT(value.timeSpec() == Qt::UTC);
     m_nameChanged = value;
 }
 
@@ -272,6 +273,7 @@ void Metadata::setDescription(const QString& value)
 
 void Metadata::setDescriptionChanged(const QDateTime& value)
 {
+    Q_ASSERT(value.timeSpec() == Qt::UTC);
     m_descriptionChanged = value;
 }
 
@@ -282,6 +284,7 @@ void Metadata::setDefaultUserName(const QString& value)
 
 void Metadata::setDefaultUserNameChanged(const QDateTime& value)
 {
+    Q_ASSERT(value.timeSpec() == Qt::UTC);
     m_defaultUserNameChanged = value;
 }
 
@@ -359,6 +362,7 @@ void Metadata::setRecycleBin(Group* group)
 
 void Metadata::setRecycleBinChanged(const QDateTime& value)
 {
+    Q_ASSERT(value.timeSpec() == Qt::UTC);
     m_recycleBinChanged = value;
 }
 
@@ -369,6 +373,7 @@ void Metadata::setEntryTemplatesGroup(Group* group)
 
 void Metadata::setEntryTemplatesGroupChanged(const QDateTime& value)
 {
+    Q_ASSERT(value.timeSpec() == Qt::UTC);
     m_entryTemplatesGroupChanged = value;
 }
 
@@ -384,6 +389,7 @@ void Metadata::setLastTopVisibleGroup(Group* group)
 
 void Metadata::setMasterKeyChanged(const QDateTime& value)
 {
+    Q_ASSERT(value.timeSpec() == Qt::UTC);
     m_masterKeyChanged = value;
 }
 

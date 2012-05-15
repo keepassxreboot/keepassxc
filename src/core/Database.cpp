@@ -129,6 +129,7 @@ QList<DeletedObject> Database::deletedObjects()
 
 void Database::addDeletedObject(const DeletedObject& delObj)
 {
+    Q_ASSERT(delObj.deletionTime.timeSpec() == Qt::UTC);
     m_deletedObjects.append(delObj);
 }
 
