@@ -61,6 +61,7 @@ set(keepassx_SOURCES
     gui/EditEntryWidget.cpp
     gui/EditGroupWidget.cpp
     gui/EditWidget.cpp
+    gui/EditWidgetIcons.cpp
     gui/EntryAttachmentsModel.cpp
     gui/EntryAttributesModel.cpp
     gui/EntryModel.cpp
@@ -98,6 +99,7 @@ set(keepassx_MOC
     gui/EditEntryWidget.h
     gui/EditGroupWidget.h
     gui/EditWidget.h
+    gui/EditWidgetIcons.h
     gui/EntryAttachmentsModel.h
     gui/EntryAttributesModel.h
     gui/EntryModel.h
