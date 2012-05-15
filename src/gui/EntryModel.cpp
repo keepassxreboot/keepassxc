@@ -18,7 +18,9 @@
 #include "EntryModel.h"
 
 #include <QtCore/QMimeData>
+#include <QtGui/QFont>
 
+#include "core/DatabaseIcons.h"
 #include "core/Entry.h"
 #include "core/Group.h"
 
@@ -131,8 +133,20 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             }
             break;
         case 1:
-            return entry->iconPixmap();
+            if (entry->isExpired()) {
+                return databaseIcons()->iconPixmap(databaseIcons()->expiredIconIndex());
+            }
+            else {
+                return entry->iconPixmap();
+            }
         }
+    }
+    else if (role == Qt::FontRole) {
+        QFont font;
+        if (entry->isExpired()) {
+            font.setStrikeOut(true);
+        }
+        return font;
     }
 
     return QVariant();

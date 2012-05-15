@@ -18,8 +18,10 @@
 #include "GroupModel.h"
 
 #include <QtCore/QMimeData>
+#include <QtGui/QFont>
 
 #include "core/Database.h"
+#include "core/DatabaseIcons.h"
 #include "core/Group.h"
 #include "core/Tools.h"
 
@@ -114,7 +116,19 @@ QVariant GroupModel::data(const QModelIndex& index, int role) const
         return group->name();
     }
     else if (role == Qt::DecorationRole) {
-        return group->iconPixmap();
+        if (group->isExpired()) {
+            return databaseIcons()->iconPixmap(databaseIcons()->expiredIconIndex());
+        }
+        else {
+            return group->iconPixmap();
+        }
+    }
+    else if (role == Qt::FontRole) {
+        QFont font;
+        if (group->isExpired()) {
+            font.setStrikeOut(true);
+        }
+        return font;
     }
     else {
         return QVariant();

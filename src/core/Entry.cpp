@@ -196,6 +196,11 @@ QString Entry::notes() const
     return m_attributes->value("Notes");
 }
 
+bool Entry::isExpired() const
+{
+    return m_data.timeInfo.expires() && m_data.timeInfo.expiryTime() < Tools::currentDateTimeUtc();
+}
+
 EntryAttributes* Entry::attributes()
 {
     return m_attributes;

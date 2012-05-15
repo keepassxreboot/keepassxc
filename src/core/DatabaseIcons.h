@@ -29,6 +29,7 @@ public:
     QImage icon(int index);
     QPixmap iconPixmap(int index);
     int iconCount();
+    int expiredIconIndex();
 
 private:
     DatabaseIcons();

@@ -84,6 +84,7 @@ public:
     QString username() const;
     QString password() const;
     QString notes() const;
+    bool isExpired() const;
     EntryAttributes* attributes();
     const EntryAttributes* attributes() const;
     EntryAttachments* attachments();

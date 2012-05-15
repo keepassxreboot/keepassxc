@@ -50,6 +50,7 @@ public:
     Group::TriState autoTypeEnabled() const;
     Group::TriState searchingEnabled() const;
     Entry* lastTopVisibleEntry() const;
+    bool isExpired() const;
 
     static const int DefaultIconNumber;
 

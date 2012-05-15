@@ -164,6 +164,11 @@ Entry* Group::lastTopVisibleEntry() const
     return m_lastTopVisibleEntry;
 }
 
+bool Group::isExpired() const
+{
+    return m_timeInfo.expires() && m_timeInfo.expiryTime() < Tools::currentDateTimeUtc();
+}
+
 void Group::setUuid(const Uuid& uuid)
 {
     set(m_uuid, uuid);

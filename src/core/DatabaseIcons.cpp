@@ -60,6 +60,11 @@ int DatabaseIcons::iconCount()
     return 69;
 }
 
+int DatabaseIcons::expiredIconIndex()
+{
+    return 45;
+}
+
 DatabaseIcons::DatabaseIcons()
 {
     m_indexToName.reserve(iconCount());
