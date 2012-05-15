@@ -21,8 +21,7 @@
 #include <QtCore/QScopedPointer>
 #include <QtGui/QLabel>
 
-#include <gui/DialogyWidget.h>
-
+#include "gui/DialogyWidget.h"
 
 namespace Ui {
     class EditWidget;
@@ -33,7 +32,7 @@ class EditWidget : public DialogyWidget
     Q_OBJECT
 
 public:
-    explicit EditWidget(QWidget *parent = 0);
+    explicit EditWidget(QWidget* parent = 0);
     ~EditWidget();
 
     void add(const QString& labelText, QWidget* widget);

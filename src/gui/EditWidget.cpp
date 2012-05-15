@@ -18,7 +18,7 @@
 #include "EditWidget.h"
 #include "ui_EditWidget.h"
 
-EditWidget::EditWidget(QWidget *parent)
+EditWidget::EditWidget(QWidget* parent)
     : DialogyWidget(parent)
     ,  m_ui(new Ui::EditWidget())
 {
@@ -50,4 +50,3 @@ QLabel* EditWidget::headlineLabel()
 {
     return m_ui->headerLabel;
 }
-

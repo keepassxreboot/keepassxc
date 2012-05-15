@@ -251,7 +251,7 @@ void EntryModel::severConnections()
     }
 }
 
-void EntryModel::makeConnections(const Group *group)
+void EntryModel::makeConnections(const Group* group)
 {
     connect(group, SIGNAL(entryAboutToAdd(Entry*)), SLOT(entryAboutToAdd(Entry*)));
     connect(group, SIGNAL(entryAdded()), SLOT(entryAdded()));

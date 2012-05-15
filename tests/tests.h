@@ -21,7 +21,7 @@
 #include <QtTest/QTest>
 
 #define KEEPASSX_QTEST_CORE_MAIN(TestObject) \
-int main(int argc, char *argv[]) \
+int main(int argc, char* argv[]) \
 { \
     QCoreApplication app(argc, argv); \
     TestObject tc; \

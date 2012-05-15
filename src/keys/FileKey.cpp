@@ -152,7 +152,7 @@ bool FileKey::create(const QString& fileName, QString* errorMsg)
     }
 }
 
-bool FileKey::loadXml(QIODevice *device)
+bool FileKey::loadXml(QIODevice* device)
 {
     QXmlStreamReader xmlReader(device);
 

@@ -29,16 +29,16 @@
 
 namespace QTest {
     template<>
-    char *toString(const Uuid &uuid)
+    char* toString(const Uuid& uuid)
     {
         QByteArray ba = "Uuid(";
         ba += uuid.toBase64().toAscii().constData();
         ba += ")";
-        return qstrdup(ba.data());
+        return qstrdup(ba.constData());
     }
 
     template<>
-    char *toString(const Group::TriState &triState)
+    char* toString(const Group::TriState& triState)
     {
         QString value;
 

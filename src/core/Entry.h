@@ -126,7 +126,7 @@ public:
     void setGroup(Group* group);
 
     void setUpdateTimeinfo(bool value);
-    bool match(const QString &searchTerm, Qt::CaseSensitivity caseSensitivity);
+    bool match(const QString& searchTerm, Qt::CaseSensitivity caseSensitivity);
 
 Q_SIGNALS:
     /**
