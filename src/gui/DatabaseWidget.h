@@ -77,6 +77,7 @@ private Q_SLOTS:
     void updateMasterKey(bool accepted);
     void updateSettings(bool accepted);
     void emitCurrentModeChanged();
+    void clearLastGroup(Group* group);
 
 private:
     void truncateHistories();
@@ -93,6 +94,7 @@ private:
     Entry* m_newEntry;
     Group* m_newParent;
     QLineEdit* m_searchEdit;
+    Group* m_lastGroup;
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H

@@ -92,6 +92,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     addWidget(m_databaseSettingsWidget);
 
     connect(m_groupView, SIGNAL(groupChanged(Group*)), m_entryView, SLOT(setGroup(Group*)));
+    connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(clearLastGroup(Group*)));
     connect(m_entryView, SIGNAL(entryActivated(Entry*)), SLOT(switchToEntryEdit(Entry*)));
     connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
     connect(m_editGroupWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
@@ -256,8 +257,14 @@ void DatabaseWidget::switchToEntryEdit(Entry* entry)
 
 void DatabaseWidget::switchToEntryEdit(Entry* entry, bool create)
 {
-    m_editEntryWidget->loadEntry(entry, create, m_groupView->currentGroup()->name(),
-                                 m_db);
+    Group* group = m_groupView->currentGroup();
+    if (!group) {
+        Q_ASSERT(m_entryView->inSearch());
+        group = m_lastGroup;
+    }
+    Q_ASSERT(group);
+
+    m_editEntryWidget->loadEntry(entry, create, group->name(), m_db);
     setCurrentIndex(1);
 }
 
@@ -332,6 +339,11 @@ void DatabaseWidget::search()
     Group* searchGroup = m_db->rootGroup();
     QList<Entry*> searchResult = searchGroup->search(m_searchEdit->text(), Qt::CaseInsensitive);
 
+    Group* group = m_groupView->currentGroup();
+    if (group) {
+        m_lastGroup = m_groupView->currentGroup();
+    }
+
     m_groupView->setCurrentIndex(QModelIndex());
     m_entryView->search(searchResult);
 }
@@ -353,5 +365,12 @@ void DatabaseWidget::truncateHistories()
     QList<Entry*> allEntries = m_db->rootGroup()->entriesRecursive(false);
     Q_FOREACH (Entry* entry, allEntries) {
         entry->truncateHistory();
+    }
+}
+
+void DatabaseWidget::clearLastGroup(Group* group)
+{
+    if (group) {
+        m_lastGroup = 0;
     }
 }
