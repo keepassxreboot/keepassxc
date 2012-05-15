@@ -119,11 +119,11 @@ set(keepassx_FORMS
     gui/DatabaseOpenDialog.ui
     gui/DatabaseSettingsWidget.ui
     gui/EditEntryWidgetAdvanced.ui
-    gui/EditEntryWidgetIcons.ui
     gui/EditEntryWidgetMain.ui
     gui/EditEntryWidgetNotes.ui
     gui/EditGroupWidgetMain.ui
     gui/EditWidget.ui
+    gui/EditWidgetIcons.ui
     gui/MainWindow.ui
 )
 

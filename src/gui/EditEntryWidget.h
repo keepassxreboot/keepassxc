@@ -38,8 +38,8 @@ namespace Ui {
     class EditEntryWidgetAdvanced;
     class EditEntryWidgetMain;
     class EditEntryWidgetNotes;
-    class EditEntryWidgetIcons;
     class EditWidget;
+    class EditWidgetIcons;
 }
 
 class EditEntryWidget : public EditWidget
@@ -87,7 +87,7 @@ private:
     const QScopedPointer<Ui::EditEntryWidgetMain> m_mainUi;
     const QScopedPointer<Ui::EditEntryWidgetNotes> m_notesUi;
     const QScopedPointer<Ui::EditEntryWidgetAdvanced> m_advancedUi;
-    const QScopedPointer<Ui::EditEntryWidgetIcons> m_iconsUi;
+    const QScopedPointer<Ui::EditWidgetIcons> m_iconsUi;
     QWidget* const m_mainWidget;
     QWidget* const m_notesWidget;
     QWidget* const m_advancedWidget;

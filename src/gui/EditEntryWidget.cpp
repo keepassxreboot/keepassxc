@@ -16,11 +16,11 @@
  */
 
 #include "EditEntryWidget.h"
-#include "ui_EditWidget.h"
 #include "ui_EditEntryWidgetAdvanced.h"
 #include "ui_EditEntryWidgetMain.h"
 #include "ui_EditEntryWidgetNotes.h"
-#include "ui_EditEntryWidgetIcons.h"
+#include "ui_EditWidget.h"
+#include "ui_EditWidgetIcons.h"
 
 #include <QtGui/QDesktopServices>
 #include <QtGui/QStackedLayout>
@@ -41,7 +41,7 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_mainUi(new Ui::EditEntryWidgetMain())
     , m_notesUi(new Ui::EditEntryWidgetNotes())
     , m_advancedUi(new Ui::EditEntryWidgetAdvanced())
-    , m_iconsUi(new Ui::EditEntryWidgetIcons())
+    , m_iconsUi(new Ui::EditWidgetIcons())
     , m_mainWidget(new QWidget(this))
     , m_notesWidget(new QWidget(this))
     , m_advancedWidget(new QWidget(this))
