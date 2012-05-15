@@ -52,6 +52,7 @@ private:
     QWidget* const m_editGroupWidgetMain;
     EditWidgetIcons* const m_editGroupWidgetIcons;
     Group* m_group;
+    Database* m_database;
 
     Q_DISABLE_COPY(EditGroupWidget)
 };

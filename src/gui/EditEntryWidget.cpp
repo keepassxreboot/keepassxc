@@ -27,6 +27,7 @@
 #include <QtGui/QMessageBox>
 
 #include "core/Entry.h"
+#include "core/Metadata.h"
 #include "core/Tools.h"
 #include "gui/EditWidgetIcons.h"
 #include "gui/EntryAttachmentsModel.h"
@@ -175,7 +176,10 @@ void EditEntryWidget::saveEntry()
 
     IconStruct iconStruct = m_iconsWidget->save();
 
-    if (iconStruct.uuid.isNull()) {
+    if (iconStruct.number < 0) {
+        m_entry->setIcon(Entry::DefaultIconNumber);
+    }
+    else if (iconStruct.uuid.isNull()) {
         m_entry->setIcon(iconStruct.number);
     }
     else {
@@ -187,6 +191,7 @@ void EditEntryWidget::saveEntry()
     }
 
     m_entry = 0;
+    m_database = 0;
     m_entryAttributes->clear();
     m_entryAttachments->clear();
 
@@ -195,7 +200,13 @@ void EditEntryWidget::saveEntry()
 
 void EditEntryWidget::cancel()
 {
+    if (!m_entry->iconUuid().isNull() &&
+            !m_database->metadata()->containsCustomIcon(m_entry->iconUuid())) {
+        m_entry->setIcon(Entry::DefaultIconNumber);
+    }
+
     m_entry = 0;
+    m_database = 0;
     m_entryAttributes->clear();
     m_entryAttachments->clear();
 

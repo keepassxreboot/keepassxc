@@ -19,6 +19,7 @@
 #include "ui_EditGroupWidgetMain.h"
 #include "ui_EditWidget.h"
 
+#include "core/Metadata.h"
 #include "gui/EditWidgetIcons.h"
 
 EditGroupWidget::EditGroupWidget(QWidget* parent)
@@ -49,6 +50,7 @@ EditGroupWidget::~EditGroupWidget()
 void EditGroupWidget::loadGroup(Group* group, bool create, Database* database)
 {
     m_group = group;
+    m_database = database;
 
     if (create) {
         headlineLabel()->setText(tr("Add group"));
@@ -76,7 +78,10 @@ void EditGroupWidget::save()
 
     IconStruct iconStruct = m_editGroupWidgetIcons->save();
 
-    if (iconStruct.uuid.isNull()) {
+    if (iconStruct.number < 0) {
+        m_group->setIcon(Group::DefaultIconNumber);
+    }
+    else if (iconStruct.uuid.isNull()) {
         m_group->setIcon(iconStruct.number);
     }
     else {
@@ -84,11 +89,18 @@ void EditGroupWidget::save()
     }
 
     m_group = 0;
+    m_database = 0;
     Q_EMIT editFinished(true);
 }
 
 void EditGroupWidget::cancel()
 {
+    if (!m_group->iconUuid().isNull() &&
+            !m_database->metadata()->containsCustomIcon(m_group->iconUuid())) {
+        m_group->setIcon(Entry::DefaultIconNumber);
+    }
+
     m_group = 0;
+    m_database = 0;
     Q_EMIT editFinished(false);
 }

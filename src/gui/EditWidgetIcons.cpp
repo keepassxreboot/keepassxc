@@ -62,11 +62,17 @@ EditWidgetIcons::~EditWidgetIcons()
 
 IconStruct EditWidgetIcons::save()
 {
+    Q_ASSERT(m_database);
+    Q_ASSERT(!m_currentUuid.isNull());
+
     IconStruct iconStruct;
     if (m_ui->defaultIconsRadio->isChecked()) {
         QModelIndex index = m_ui->defaultIconsView->currentIndex();
         if (index.isValid()) {
             iconStruct.number = index.row();
+        }
+        else {
+            Q_ASSERT(false);
         }
     }
     else {
@@ -74,42 +80,43 @@ IconStruct EditWidgetIcons::save()
         if (index.isValid()) {
             iconStruct.uuid = m_customIconModel->uuidFromIndex(m_ui->customIconsView->currentIndex());
         }
+        else {
+            iconStruct.number = -1;
+        }
     }
 
+    m_database = 0;
+    m_currentUuid = Uuid();
     return iconStruct;
 }
 
 void EditWidgetIcons::load(Uuid currentUuid, Database* database, IconStruct iconStruct)
 {
+    Q_ASSERT(database);
+    Q_ASSERT(!currentUuid.isNull());
+
     m_database = database;
     m_currentUuid = currentUuid;
 
-    if (database) {
-        this->setEnabled(true);
+    m_customIconModel->setIcons(database->metadata()->customIcons(),
+                                database->metadata()->customIconsOrder());
 
-        m_customIconModel->setIcons(database->metadata()->customIcons(),
-                                    database->metadata()->customIconsOrder());
-
-        Uuid iconUuid = iconStruct.uuid;
-        if (iconUuid.isNull()) {
-            int iconNumber = iconStruct.number;
-            m_ui->defaultIconsView->setCurrentIndex(m_defaultIconModel->index(iconNumber, 0));
-            m_ui->defaultIconsRadio->setChecked(true);
-        }
-        else {
-            QModelIndex index = m_customIconModel->indexFromUuid(iconUuid);
-            if (index.isValid()) {
-                m_ui->customIconsView->setCurrentIndex(index);
-                m_ui->customIconsRadio->setChecked(true);
-            }
-            else {
-                m_ui->defaultIconsView->setCurrentIndex(m_defaultIconModel->index(0, 0));
-                m_ui->defaultIconsRadio->setChecked(true);
-            }
-        }
+    Uuid iconUuid = iconStruct.uuid;
+    if (iconUuid.isNull()) {
+        int iconNumber = iconStruct.number;
+        m_ui->defaultIconsView->setCurrentIndex(m_defaultIconModel->index(iconNumber, 0));
+        m_ui->defaultIconsRadio->setChecked(true);
     }
     else {
-        this->setEnabled(false);
+        QModelIndex index = m_customIconModel->indexFromUuid(iconUuid);
+        if (index.isValid()) {
+            m_ui->customIconsView->setCurrentIndex(index);
+            m_ui->customIconsRadio->setChecked(true);
+        }
+        else {
+            m_ui->defaultIconsView->setCurrentIndex(m_defaultIconModel->index(0, 0));
+            m_ui->defaultIconsRadio->setChecked(true);
+        }
     }
 }
 
