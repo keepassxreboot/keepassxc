@@ -19,15 +19,19 @@
 #include "ui_EditGroupWidgetMain.h"
 #include "ui_EditWidget.h"
 
+#include "gui/EditWidgetIcons.h"
+
 EditGroupWidget::EditGroupWidget(QWidget* parent)
     : EditWidget(parent)
     , m_mainUi(new Ui::EditGroupWidgetMain())
     , m_editGroupWidgetMain(new QWidget())
+    , m_editGroupWidgetIcons(new EditWidgetIcons())
     , m_group(0)
 {
     m_mainUi->setupUi(m_editGroupWidgetMain);
 
     add(tr("Group"), m_editGroupWidgetMain);
+    add(tr("Icon"), m_editGroupWidgetIcons);
 
     QFont labelHeaderFont = headlineLabel()->font();
     labelHeaderFont.setBold(true);
@@ -42,7 +46,7 @@ EditGroupWidget::~EditGroupWidget()
 {
 }
 
-void EditGroupWidget::loadGroup(Group* group, bool create)
+void EditGroupWidget::loadGroup(Group* group, bool create, Database* database)
 {
     m_group = group;
 
@@ -57,6 +61,10 @@ void EditGroupWidget::loadGroup(Group* group, bool create)
     m_mainUi->editNotes->setPlainText(m_group->notes());
 
     setCurrentRow(0);
+    IconStruct iconStruct;
+    iconStruct.uuid = group->iconUuid();
+    iconStruct.number = group->iconNumber();
+    m_editGroupWidgetIcons->load(group->uuid(), database, iconStruct);
 
     m_mainUi->editName->setFocus();
 }
@@ -65,6 +73,15 @@ void EditGroupWidget::save()
 {
     m_group->setName(m_mainUi->editName->text());
     m_group->setNotes(m_mainUi->editNotes->toPlainText());
+
+    IconStruct iconStruct = m_editGroupWidgetIcons->save();
+
+    if (iconStruct.uuid.isNull()) {
+        m_group->setIcon(iconStruct.number);
+    }
+    else {
+        m_group->setIcon(iconStruct.uuid);
+    }
 
     m_group = 0;
     Q_EMIT editFinished(true);

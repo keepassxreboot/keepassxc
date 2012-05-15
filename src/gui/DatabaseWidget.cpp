@@ -263,7 +263,7 @@ void DatabaseWidget::switchToEntryEdit(Entry* entry, bool create)
 
 void DatabaseWidget::switchToGroupEdit(Group* group, bool create)
 {
-    m_editGroupWidget->loadGroup(group, create);
+    m_editGroupWidget->loadGroup(group, create, m_db);
     setCurrentIndex(2);
 }
 

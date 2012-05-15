@@ -23,6 +23,8 @@
 #include "gui/EditWidget.h"
 #include "core/Group.h"
 
+class EditWidgetIcons;
+
 namespace Ui {
     class EditGroupWidgetMain;
     class EditWidget;
@@ -36,7 +38,7 @@ public:
     explicit EditGroupWidget(QWidget* parent = 0);
     ~EditGroupWidget();
 
-    void loadGroup(Group* group, bool create);
+    void loadGroup(Group* group, bool create, Database* database);
 
 Q_SIGNALS:
     void editFinished(bool accepted);
@@ -48,6 +50,7 @@ private Q_SLOTS:
 private:
     const QScopedPointer<Ui::EditGroupWidgetMain> m_mainUi;
     QWidget* const m_editGroupWidgetMain;
+    EditWidgetIcons* const m_editGroupWidgetIcons;
     Group* m_group;
 
     Q_DISABLE_COPY(EditGroupWidget)

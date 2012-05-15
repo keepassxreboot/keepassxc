@@ -47,7 +47,7 @@ public:
     ~EditWidgetIcons();
 
     IconStruct save();
-    void load(Database* database, IconStruct iconStruct);
+    void load(Uuid currentUuid, Database *database, IconStruct iconStruct);
 
 private Q_SLOTS:
     void addCustomIcon();
