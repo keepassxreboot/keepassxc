@@ -58,7 +58,6 @@ public:
     void setCurrentIndex(int index);
     DatabaseWidget::Mode currentMode();
 
-
 Q_SIGNALS:
     void closeRequest();
     void currentModeChanged(DatabaseWidget::Mode mode);
@@ -73,7 +72,9 @@ public Q_SLOTS:
     void search();
 
 private Q_SLOTS:
+    void switchBackToEntryEdit();
     void switchToView(bool accepted);
+    void switchToHistoryView(Entry *entry);
     void switchToEntryEdit(Entry* entry);
     void switchToEntryEdit(Entry* entry, bool create);
     void switchToGroupEdit(Group* entry, bool create);
@@ -89,6 +90,7 @@ private:
     Database* const m_db;
     QWidget* m_mainWidget;
     EditEntryWidget* m_editEntryWidget;
+    EditEntryWidget* m_historyEditEntryWidget;
     EditGroupWidget* m_editGroupWidget;
     ChangeMasterKeyWidget* m_changeMasterKeyWidget;
     DatabaseSettingsWidget* m_databaseSettingsWidget;

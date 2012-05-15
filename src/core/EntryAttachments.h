@@ -35,7 +35,7 @@ public:
     int attachmentsSize(QList<QByteArray>* foundAttachements);
     bool operator==(const EntryAttachments& other) const;
     bool operator!=(const EntryAttachments& other) const;
-    EntryAttachments& operator=(EntryAttachments& other);
+    EntryAttachments& operator=(const EntryAttachments& other);
 
 Q_SIGNALS:
     void modified();

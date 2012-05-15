@@ -68,6 +68,7 @@ set(keepassx_SOURCES
     gui/entry/EditEntryWidget.cpp
     gui/entry/EntryAttachmentsModel.cpp
     gui/entry/EntryAttributesModel.cpp
+    gui/entry/EntryHistoryModel.cpp
     gui/entry/EntryModel.cpp
     gui/entry/EntryView.cpp
     gui/group/EditGroupWidget.cpp
@@ -105,6 +106,7 @@ set(keepassx_MOC
     gui/entry/EditEntryWidget.h
     gui/entry/EntryAttachmentsModel.h
     gui/entry/EntryAttributesModel.h
+    gui/entry/EntryHistoryModel.h
     gui/entry/EntryModel.h
     gui/entry/EntryView.h
     gui/group/EditGroupWidget.h
@@ -126,6 +128,7 @@ set(keepassx_FORMS
     gui/EditWidgetIcons.ui
     gui/MainWindow.ui
     gui/entry/EditEntryWidgetAdvanced.ui
+    gui/entry/EditEntryWidgetHistory.ui
     gui/entry/EditEntryWidgetMain.ui
     gui/entry/EditEntryWidgetNotes.ui
     gui/group/EditGroupWidgetMain.ui

@@ -111,7 +111,7 @@ bool EntryAttachments::operator!=(const EntryAttachments& other) const
     return m_attachments != other.m_attachments;
 }
 
-EntryAttachments& EntryAttachments::operator=(EntryAttachments& other)
+EntryAttachments& EntryAttachments::operator=(const EntryAttachments& other)
 {
     if (*this != other) {
         Q_EMIT aboutToBeReset();

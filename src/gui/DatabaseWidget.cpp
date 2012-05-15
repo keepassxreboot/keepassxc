@@ -85,6 +85,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
 
     m_editEntryWidget = new EditEntryWidget();
     m_editEntryWidget->setObjectName("editEntryWidget");
+    m_historyEditEntryWidget = new EditEntryWidget();
     m_editGroupWidget = new EditGroupWidget();
     m_editGroupWidget->setObjectName("editGroupWidget");
     m_changeMasterKeyWidget = new ChangeMasterKeyWidget();
@@ -99,11 +100,14 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     addWidget(m_editGroupWidget);
     addWidget(m_changeMasterKeyWidget);
     addWidget(m_databaseSettingsWidget);
+    addWidget(m_historyEditEntryWidget);
 
     connect(m_groupView, SIGNAL(groupChanged(Group*)), m_entryView, SLOT(setGroup(Group*)));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(clearLastGroup(Group*)));
     connect(m_entryView, SIGNAL(entryActivated(Entry*)), SLOT(switchToEntryEdit(Entry*)));
     connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
+    connect(m_editEntryWidget, SIGNAL(historyEntryActivated(Entry*)), SLOT(switchToHistoryView(Entry*)));
+    connect(m_historyEditEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchBackToEntryEdit()));
     connect(m_editGroupWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
     connect(m_changeMasterKeyWidget, SIGNAL(editFinished(bool)), SLOT(updateMasterKey(bool)));
     connect(m_databaseSettingsWidget, SIGNAL(editFinished(bool)), SLOT(updateSettings(bool)));
@@ -125,6 +129,7 @@ DatabaseWidget::Mode DatabaseWidget::currentMode()
     case 2:  // group edit
     case 3:  // change master key
     case 4:  // database settings
+    case 5:  // entry history
         return DatabaseWidget::EditMode;
     default:
         Q_ASSERT(false);
@@ -270,6 +275,17 @@ void DatabaseWidget::switchToView(bool accepted)
     setCurrentIndex(0);
 }
 
+void DatabaseWidget::switchToHistoryView(Entry* entry)
+{
+    m_historyEditEntryWidget->loadEntry(entry, false, true, "", m_db);
+    setCurrentIndex(5);
+}
+
+void DatabaseWidget::switchBackToEntryEdit()
+{
+    setCurrentIndex(1);
+}
+
 void DatabaseWidget::switchToEntryEdit(Entry* entry)
 {
     switchToEntryEdit(entry, false);
@@ -284,7 +300,7 @@ void DatabaseWidget::switchToEntryEdit(Entry* entry, bool create)
     }
     Q_ASSERT(group);
 
-    m_editEntryWidget->loadEntry(entry, create, group->name(), m_db);
+    m_editEntryWidget->loadEntry(entry, create, false, group->name(), m_db);
     setCurrentIndex(1);
 }
 

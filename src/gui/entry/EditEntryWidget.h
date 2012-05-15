@@ -30,11 +30,13 @@ class EntryAttachments;
 class EntryAttachmentsModel;
 class EntryAttributes;
 class EntryAttributesModel;
+class EntryHistoryModel;
 class QStackedLayout;
 
 namespace Ui {
     class EditEntryWidgetAdvanced;
     class EditEntryWidgetMain;
+    class EditEntryWidgetHistory;
     class EditEntryWidgetNotes;
     class EditWidget;
 }
@@ -47,13 +49,15 @@ public:
     explicit EditEntryWidget(QWidget* parent = 0);
     ~EditEntryWidget();
 
-    void loadEntry(Entry* entry, bool create, const QString& groupName, Database* database);
+    void loadEntry(Entry* entry, bool create, bool history, const QString& groupName,
+                   Database *database);
 
     static const QColor CorrectSoFarColor;
     static const QColor ErrorColor;
 
 Q_SIGNALS:
     void editFinished(bool accepted);
+    void historyEntryActivated(Entry* entry);
 
 private Q_SLOTS:
     void saveEntry();
@@ -67,23 +71,29 @@ private Q_SLOTS:
     void insertAttachment();
     void saveCurrentAttachment();
     void removeCurrentAttachment();
+    void emitHistoryEntryActivated(const QModelIndex &index);
 
 private:
     bool passwordsEqual();
+    void setForms(const Entry* entry);
 
     Entry* m_entry;
     Database* m_database;
 
     bool m_create;
+    bool m_history;
     const QScopedPointer<Ui::EditEntryWidgetMain> m_mainUi;
     const QScopedPointer<Ui::EditEntryWidgetNotes> m_notesUi;
     const QScopedPointer<Ui::EditEntryWidgetAdvanced> m_advancedUi;
+    const QScopedPointer<Ui::EditEntryWidgetHistory> m_historyUi;
     QWidget* const m_mainWidget;
     QWidget* const m_notesWidget;
     QWidget* const m_advancedWidget;
     EditWidgetIcons* const m_iconsWidget;
+    QWidget* const m_historyWidget;
     EntryAttachmentsModel* m_attachmentsModel;
     EntryAttributesModel* m_attributesModel;
+    EntryHistoryModel* m_historyModel;
     EntryAttachments* m_entryAttachments;
     EntryAttributes* m_entryAttributes;
     QPersistentModelIndex m_currentAttribute;

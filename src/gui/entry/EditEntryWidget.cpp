@@ -17,6 +17,7 @@
 
 #include "EditEntryWidget.h"
 #include "ui_EditEntryWidgetAdvanced.h"
+#include "ui_EditEntryWidgetHistory.h"
 #include "ui_EditEntryWidgetMain.h"
 #include "ui_EditEntryWidgetNotes.h"
 #include "ui_EditWidget.h"
@@ -33,6 +34,7 @@
 #include "gui/FileDialog.h"
 #include "gui/entry/EntryAttachmentsModel.h"
 #include "gui/entry/EntryAttributesModel.h"
+#include "gui/entry/EntryHistoryModel.h"
 
 EditEntryWidget::EditEntryWidget(QWidget* parent)
     : EditWidget(parent)
@@ -40,10 +42,12 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_mainUi(new Ui::EditEntryWidgetMain())
     , m_notesUi(new Ui::EditEntryWidgetNotes())
     , m_advancedUi(new Ui::EditEntryWidgetAdvanced())
+    , m_historyUi(new Ui::EditEntryWidgetHistory())
     , m_mainWidget(new QWidget())
     , m_notesWidget(new QWidget())
     , m_advancedWidget(new QWidget())
     , m_iconsWidget(new EditWidgetIcons())
+    , m_historyWidget(new QWidget())
 {
     QFont headerLabelFont = headlineLabel()->font();
     headerLabelFont.setBold(true);
@@ -60,6 +64,9 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     add(tr("Advanced"), m_advancedWidget);
 
     add(tr("Icon"), m_iconsWidget);
+
+    m_historyUi->setupUi(m_historyWidget);
+    add(tr("History"), m_historyWidget);
 
     m_entryAttachments = new EntryAttachments(this);
     m_attachmentsModel = new EntryAttachmentsModel(m_advancedWidget);
@@ -85,6 +92,13 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     connect(m_mainUi->passwordEdit, SIGNAL(textEdited(QString)), SLOT(setPasswordCheckColors()));
     connect(m_mainUi->passwordRepeatEdit, SIGNAL(textEdited(QString)), SLOT(setPasswordCheckColors()));
 
+    m_historyModel = new EntryHistoryModel(this);
+    m_historyUi->historyView->setModel(m_historyModel);
+    m_historyUi->historyView->setRootIsDecorated(false);
+
+    connect(m_historyUi->historyView, SIGNAL(activated(const QModelIndex&)),
+            SLOT(emitHistoryEntryActivated(const QModelIndex&)));
+
     connect(this, SIGNAL(accepted()), SLOT(saveEntry()));
     connect(this, SIGNAL(rejected()), SLOT(cancel()));
 }
@@ -96,20 +110,69 @@ EditEntryWidget::~EditEntryWidget()
 const QColor EditEntryWidget::CorrectSoFarColor = QColor(255, 205, 15);
 const QColor EditEntryWidget::ErrorColor = QColor(255, 125, 125);
 
-void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupName,
+
+void EditEntryWidget::emitHistoryEntryActivated(const QModelIndex& index)
+{
+    Q_ASSERT(!m_history);
+
+    Entry* entry = m_historyModel->entryFromIndex(index);
+    Q_EMIT historyEntryActivated(entry);
+}
+
+void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const QString& groupName,
                                 Database* database)
 {
     m_entry = entry;
     m_database = database;
     m_create = create;
+    m_history = history;
 
-    if (create) {
-        headlineLabel()->setText(groupName+" > "+tr("Add entry"));
+    if (history) {
+        headlineLabel()->setText("Entry history");
     }
     else {
-        headlineLabel()->setText(groupName+" > "+tr("Edit entry"));
+        if (create) {
+            headlineLabel()->setText(groupName+" > "+tr("Add entry"));
+        }
+        else {
+            headlineLabel()->setText(groupName+" > "+tr("Edit entry"));
+        }
     }
 
+    m_mainUi->titleEdit->setReadOnly(history);
+    m_mainUi->usernameEdit->setReadOnly(history);
+    m_mainUi->urlEdit->setReadOnly(history);
+    m_mainUi->passwordEdit->setReadOnly(history);
+    m_mainUi->passwordRepeatEdit->setReadOnly(history);
+    m_mainUi->expireCheck->setEnabled(!history);
+    m_mainUi->expireDatePicker->setReadOnly(history);
+    m_notesUi->notesEdit->setReadOnly(history);
+    m_advancedUi->addAttachmentButton->setEnabled(!history);
+    m_advancedUi->removeAttachmentButton->setEnabled(!history);
+    m_advancedUi->addAttributeButton->setEnabled(!history);
+    m_advancedUi->editAttributeButton->setEnabled(false);
+    m_advancedUi->removeAttributeButton->setEnabled(false);
+    m_advancedUi->attributesEdit->setReadOnly(history);
+    QAbstractItemView::EditTriggers editTriggers;
+    if (history) {
+        editTriggers = QAbstractItemView::NoEditTriggers;
+    }
+    else {
+        editTriggers = QAbstractItemView::DoubleClicked;
+    }
+    m_advancedUi->attributesView->setEditTriggers(editTriggers);
+    m_iconsWidget->setEnabled(!history);
+    m_historyWidget->setEnabled(!history);
+
+    setForms(entry);
+
+    setCurrentRow(0);
+
+    m_mainUi->titleEdit->setFocus();
+}
+
+void EditEntryWidget::setForms(const Entry* entry)
+{
     m_mainUi->titleEdit->setText(entry->title());
     m_mainUi->usernameEdit->setText(entry->username());
     m_mainUi->urlEdit->setText(entry->url());
@@ -122,10 +185,8 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupN
 
     m_notesUi->notesEdit->setPlainText(entry->notes());
 
-    m_entryAttributes->copyCustomKeysFrom(entry->attributes());
     *m_entryAttachments = *entry->attachments();
-
-    setCurrentRow(0);
+    m_entryAttributes->copyCustomKeysFrom(entry->attributes());
 
     if (m_attributesModel->rowCount() != 0) {
         m_advancedUi->attributesView->setCurrentIndex(m_attributesModel->index(0, 0));
@@ -138,13 +199,22 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupN
     IconStruct iconStruct;
     iconStruct.uuid = entry->iconUuid();
     iconStruct.number = entry->iconNumber();
-    m_iconsWidget->load(entry->uuid(), database, iconStruct);
-
-    m_mainUi->titleEdit->setFocus();
+    m_iconsWidget->load(entry->uuid(), m_database, iconStruct);
+    m_historyModel->setEntries(entry->historyItems());
 }
 
 void EditEntryWidget::saveEntry()
 {
+    if (m_history) {
+        m_entry = 0;
+        m_database = 0;
+        m_entryAttributes->clear();
+        m_entryAttachments->clear();
+        m_historyModel->clear();
+        Q_EMIT editFinished(false);
+        return;
+    }
+
     if (!passwordsEqual()) {
         QMessageBox::warning(this, tr("Error"), tr("Different passwords supplied."));
         return;
@@ -194,12 +264,23 @@ void EditEntryWidget::saveEntry()
     m_database = 0;
     m_entryAttributes->clear();
     m_entryAttachments->clear();
+    m_historyModel->clear();
 
     Q_EMIT editFinished(true);
 }
 
 void EditEntryWidget::cancel()
 {
+    if (m_history) {
+        m_entry = 0;
+        m_database = 0;
+        m_entryAttributes->clear();
+        m_entryAttachments->clear();
+        m_historyModel->clear();
+        Q_EMIT editFinished(false);
+        return;
+    }
+
     if (!m_entry->iconUuid().isNull() &&
             !m_database->metadata()->containsCustomIcon(m_entry->iconUuid())) {
         m_entry->setIcon(Entry::DefaultIconNumber);
@@ -209,6 +290,7 @@ void EditEntryWidget::cancel()
     m_database = 0;
     m_entryAttributes->clear();
     m_entryAttachments->clear();
+    m_historyModel->clear();
 
     Q_EMIT editFinished(false);
 }
@@ -245,6 +327,8 @@ void EditEntryWidget::setPasswordCheckColors()
 
 void EditEntryWidget::insertAttribute()
 {
+    Q_ASSERT(!m_history);
+
     QString name = tr("New attribute");
     int i = 1;
 
@@ -262,6 +346,8 @@ void EditEntryWidget::insertAttribute()
 
 void EditEntryWidget::editCurrentAttribute()
 {
+    Q_ASSERT(!m_history);
+
     QModelIndex index = m_advancedUi->attributesView->currentIndex();
 
     if (index.isValid()) {
@@ -271,6 +357,8 @@ void EditEntryWidget::editCurrentAttribute()
 
 void EditEntryWidget::removeCurrentAttribute()
 {
+    Q_ASSERT(!m_history);
+
     QModelIndex index = m_advancedUi->attributesView->currentIndex();
 
     if (index.isValid()) {
@@ -282,13 +370,7 @@ void EditEntryWidget::updateCurrentAttribute()
 {
     QModelIndex newIndex = m_advancedUi->attributesView->currentIndex();
 
-    if (m_currentAttribute != newIndex) {
-        if (m_currentAttribute.isValid()) {
-            QString key = m_attributesModel->keyByIndex(m_currentAttribute);
-            m_entryAttributes->set(key, m_advancedUi->attributesEdit->toPlainText(),
-                                   m_entryAttributes->isProtected(key));
-        }
-
+    if (m_history) {
         if (newIndex.isValid()) {
             QString key = m_attributesModel->keyByIndex(newIndex);
             m_advancedUi->attributesEdit->setPlainText(m_entryAttributes->value(key));
@@ -298,15 +380,36 @@ void EditEntryWidget::updateCurrentAttribute()
             m_advancedUi->attributesEdit->setPlainText("");
             m_advancedUi->attributesEdit->setEnabled(false);
         }
+    }
+    else {
+        if (m_currentAttribute != newIndex) {
+            if (m_currentAttribute.isValid()) {
+                QString key = m_attributesModel->keyByIndex(m_currentAttribute);
+                m_entryAttributes->set(key, m_advancedUi->attributesEdit->toPlainText(),
+                                       m_entryAttributes->isProtected(key));
+            }
 
-        m_advancedUi->editAttributeButton->setEnabled(newIndex.isValid());
-        m_advancedUi->removeAttributeButton->setEnabled(newIndex.isValid());
-        m_currentAttribute = newIndex;
+            if (newIndex.isValid()) {
+                QString key = m_attributesModel->keyByIndex(newIndex);
+                m_advancedUi->attributesEdit->setPlainText(m_entryAttributes->value(key));
+                m_advancedUi->attributesEdit->setEnabled(true);
+            }
+            else {
+                m_advancedUi->attributesEdit->setPlainText("");
+                m_advancedUi->attributesEdit->setEnabled(false);
+            }
+
+            m_advancedUi->editAttributeButton->setEnabled(newIndex.isValid());
+            m_advancedUi->removeAttributeButton->setEnabled(newIndex.isValid());
+            m_currentAttribute = newIndex;
+        }
     }
 }
 
 void EditEntryWidget::insertAttachment()
 {
+    Q_ASSERT(!m_history);
+
     // TODO: save last used dir
     QString filename = fileDialog()->getOpenFileName(this, tr("Select file"),
                 QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation));
@@ -362,6 +465,8 @@ void EditEntryWidget::saveCurrentAttachment()
 
 void EditEntryWidget::removeCurrentAttachment()
 {
+    Q_ASSERT(!m_history);
+
     QModelIndex index = m_advancedUi->attachmentsView->currentIndex();
     if (!index.isValid()) {
         return;
