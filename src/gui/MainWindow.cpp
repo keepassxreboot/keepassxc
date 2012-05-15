@@ -35,6 +35,12 @@ MainWindow::MainWindow()
     setWindowIcon(dataPath()->applicationIcon());
     m_ui->toolBar->toggleViewAction()->setText(tr("Show toolbar"));
 
+    setShortcut(m_ui->actionDatabaseOpen, QKeySequence::Open, Qt::CTRL + Qt::Key_O);
+    setShortcut(m_ui->actionDatabaseSave, QKeySequence::Save, Qt::CTRL + Qt::Key_S);
+    setShortcut(m_ui->actionDatabaseSaveAs, QKeySequence::SaveAs);
+    setShortcut(m_ui->actionDatabaseClose, QKeySequence::Close, Qt::CTRL + Qt::Key_W);
+    setShortcut(m_ui->actionQuit, QKeySequence::Quit, Qt::CTRL + Qt::Key_Q);
+
     connect(m_ui->tabWidget, SIGNAL(entrySelectionChanged(bool)),
             SLOT(setMenuActionState()));
     connect(m_ui->tabWidget, SIGNAL(currentWidgetModeChanged(DatabaseWidget::Mode)),
@@ -194,5 +200,15 @@ void MainWindow::closeEvent(QCloseEvent* event) {
     }
     else {
         event->accept();
+    }
+}
+
+void MainWindow::setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback)
+{
+    if (!QKeySequence::keyBindings(standard).isEmpty()) {
+        action->setShortcuts(standard);
+    }
+    else if (fallback != 0) {
+        action->setShortcut(QKeySequence(fallback));
     }
 }

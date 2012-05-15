@@ -44,6 +44,8 @@ private Q_SLOTS:
     void showAboutDialog();
 
 private:
+    static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);
+
     static const QString BaseWindowTitle;
 
     const QScopedPointer<Ui::MainWindow> m_ui;
