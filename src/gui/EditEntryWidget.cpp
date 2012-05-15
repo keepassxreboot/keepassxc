@@ -16,7 +16,7 @@
  */
 
 #include "EditEntryWidget.h"
-#include "ui_EditEntryWidget.h"
+#include "ui_EditWidget.h"
 #include "ui_EditEntryWidgetAdvanced.h"
 #include "ui_EditEntryWidgetMain.h"
 #include "ui_EditEntryWidgetNotes.h"
@@ -36,9 +36,8 @@
 #include "gui/FileDialog.h"
 
 EditEntryWidget::EditEntryWidget(QWidget* parent)
-    : DialogyWidget(parent)
+    : EditWidget(parent)
     , m_entry(0)
-    , m_ui(new Ui::EditEntryWidget())
     , m_mainUi(new Ui::EditEntryWidgetMain())
     , m_notesUi(new Ui::EditEntryWidgetNotes())
     , m_advancedUi(new Ui::EditEntryWidgetAdvanced())
@@ -48,29 +47,22 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_advancedWidget(new QWidget(this))
     , m_iconsWidget(new QWidget(this))
 {
-    m_ui->setupUi(this);
-
-    QFont headerLabelFont = m_ui->headerLabel->font();
+    QFont headerLabelFont = headlineLabel()->font();
     headerLabelFont.setBold(true);
     headerLabelFont.setPointSize(headerLabelFont.pointSize() + 2);
-    m_ui->headerLabel->setFont(headerLabelFont);
-
-    m_ui->categoryList->addItem(tr("Entry"));
-    m_ui->categoryList->addItem(tr("Description"));
-    m_ui->categoryList->addItem(tr("Advanced"));
-    m_ui->categoryList->addItem(tr("Icon"));
+    headlineLabel()->setFont(headerLabelFont);
 
     m_mainUi->setupUi(m_mainWidget);
-    m_ui->stackedWidget->addWidget(m_mainWidget);
+    add(tr("Entry"), m_mainWidget);
 
     m_notesUi->setupUi(m_notesWidget);
-    m_ui->stackedWidget->addWidget(m_notesWidget);
+    add(tr("Description"), m_notesWidget);
 
     m_advancedUi->setupUi(m_advancedWidget);
-    m_ui->stackedWidget->addWidget(m_advancedWidget);
+    add(tr("Advanced"), m_advancedWidget);
 
     m_iconsUi->setupUi(m_iconsWidget);
-    m_ui->stackedWidget->addWidget(m_iconsWidget);
+    add(tr("Icon"), m_iconsWidget);
 
     m_entryAttachments = new EntryAttachments(this);
     m_attachmentsModel = new EntryAttachmentsModel(m_advancedWidget);
@@ -90,10 +82,6 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     connect(m_advancedUi->attributesView->selectionModel(),
             SIGNAL(currentChanged(QModelIndex,QModelIndex)),
             SLOT(updateCurrentAttribute()));
-
-    Q_ASSERT(m_ui->categoryList->model()->rowCount() == m_ui->stackedWidget->count());
-
-    connect(m_ui->categoryList, SIGNAL(currentRowChanged(int)), m_ui->stackedWidget, SLOT(setCurrentIndex(int)));
 
     connect(m_mainUi->togglePasswordButton, SIGNAL(toggled(bool)), SLOT(togglePassword(bool)));
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
@@ -117,8 +105,8 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     connect(m_iconsUi->addButton, SIGNAL(clicked()), SLOT(addCustomIcon()));
     connect(m_iconsUi->deleteButton, SIGNAL(clicked()), SLOT(removeCustomIcon()));
 
-    connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(saveEntry()));
-    connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(cancel()));
+    connect(this, SIGNAL(accepted()), SLOT(saveEntry()));
+    connect(this, SIGNAL(rejected()), SLOT(cancel()));
 }
 
 EditEntryWidget::~EditEntryWidget()
@@ -136,10 +124,10 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupN
     m_create = create;
 
     if (create) {
-        m_ui->headerLabel->setText(groupName+" > "+tr("Add entry"));
+        headlineLabel()->setText(groupName+" > "+tr("Add entry"));
     }
     else {
-        m_ui->headerLabel->setText(groupName+" > "+tr("Edit entry"));
+        headlineLabel()->setText(groupName+" > "+tr("Edit entry"));
     }
 
     m_mainUi->titleEdit->setText(entry->title());
@@ -157,7 +145,7 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, const QString& groupN
     m_entryAttributes->copyCustomKeysFrom(entry->attributes());
     *m_entryAttachments = *entry->attachments();
 
-    m_ui->categoryList->setCurrentRow(0);
+    setCurrentRow(0);
 
     if (m_attributesModel->rowCount() != 0) {
         m_advancedUi->attributesView->setCurrentIndex(m_attributesModel->index(0, 0));

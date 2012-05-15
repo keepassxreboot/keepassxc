@@ -21,7 +21,7 @@
 #include <QtCore/QAbstractItemModel>
 #include <QtCore/QScopedPointer>
 
-#include "gui/DialogyWidget.h"
+#include "gui/EditWidget.h"
 
 class Database;
 class Entry;
@@ -35,14 +35,14 @@ class Metadata;
 class QStackedLayout;
 
 namespace Ui {
-    class EditEntryWidget;
     class EditEntryWidgetAdvanced;
     class EditEntryWidgetMain;
     class EditEntryWidgetNotes;
     class EditEntryWidgetIcons;
+    class EditWidget;
 }
 
-class EditEntryWidget : public DialogyWidget
+class EditEntryWidget : public EditWidget
 {
     Q_OBJECT
 
@@ -84,7 +84,6 @@ private:
     Database* m_database;
 
     bool m_create;
-    const QScopedPointer<Ui::EditEntryWidget> m_ui;
     const QScopedPointer<Ui::EditEntryWidgetMain> m_mainUi;
     const QScopedPointer<Ui::EditEntryWidgetNotes> m_notesUi;
     const QScopedPointer<Ui::EditEntryWidgetAdvanced> m_advancedUi;
