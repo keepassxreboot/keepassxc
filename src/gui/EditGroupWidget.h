@@ -47,7 +47,7 @@ private Q_SLOTS:
 
 private:
     const QScopedPointer<Ui::EditGroupWidgetMain> m_mainUi;
-    QWidget* m_editGroupWidgetMain;
+    QWidget* const m_editGroupWidgetMain;
     Group* m_group;
 
     Q_DISABLE_COPY(EditGroupWidget)
