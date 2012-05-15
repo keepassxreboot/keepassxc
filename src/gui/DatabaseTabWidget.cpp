@@ -334,6 +334,11 @@ void DatabaseTabWidget::createEntry()
     currentDatabaseWidget()->createEntry();
 }
 
+void DatabaseTabWidget::cloneEntry()
+{
+    currentDatabaseWidget()->cloneEntry();
+}
+
 void DatabaseTabWidget::editEntry()
 {
     currentDatabaseWidget()->switchToEntryEdit();

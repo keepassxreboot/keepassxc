@@ -156,6 +156,16 @@ void DatabaseWidget::createEntry()
     switchToEntryEdit(m_newEntry, true);
 }
 
+void DatabaseWidget::cloneEntry()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    Entry* entry = currentEntry->clone();
+    entry->setUuid(Uuid::random());
+    entry->setGroup(currentEntry->group());
+    m_entryView->setFocus();
+    m_entryView->setCurrentEntry(entry);
+}
+
 void DatabaseWidget::deleteEntry()
 {
     bool inRecylceBin = Tools::hasChild(m_db->metadata()->recycleBin(), m_entryView->currentEntry());

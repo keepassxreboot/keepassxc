@@ -65,6 +65,7 @@ public Q_SLOTS:
     void changeMasterKey();
     void changeDatabaseSettings();
     void createEntry();
+    void cloneEntry();
     void editEntry();
     void deleteEntry();
     void createGroup();

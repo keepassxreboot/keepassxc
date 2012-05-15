@@ -71,6 +71,8 @@ MainWindow::MainWindow()
 
     connect(m_ui->actionEntryNew, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(createEntry()));
+    connect(m_ui->actionEntryClone, SIGNAL(triggered()), m_ui->tabWidget,
+            SLOT(cloneEntry()));
     connect(m_ui->actionEntryEdit, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(editEntry()));
     connect(m_ui->actionEntryDelete, SIGNAL(triggered()), m_ui->tabWidget,
@@ -114,6 +116,13 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             else {
                 m_ui->actionEntryNew->setEnabled(true);
             }
+            if (dbWidget->entryView()->inSearch() ||
+                    !dbWidget->entryView()->currentIndex().isValid()) {
+                m_ui->actionEntryClone->setEnabled(false);
+            }
+            else {
+                m_ui->actionEntryClone->setEnabled(true);
+            }
 
             if (dbWidget->entryView()->currentIndex().isValid()) {
                m_ui->actionEntryEdit->setEnabled(true);
@@ -147,6 +156,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         case DatabaseWidget::EditMode:
             m_ui->actionEntryNew->setEnabled(false);
             m_ui->actionGroupNew->setEnabled(false);
+            m_ui->actionEntryClone->setEnabled(false);
             m_ui->actionEntryEdit->setEnabled(false);
             m_ui->actionGroupEdit->setEnabled(false);
             m_ui->actionEntryDelete->setEnabled(false);
@@ -164,6 +174,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
     else {
         m_ui->actionEntryNew->setEnabled(false);
         m_ui->actionGroupNew->setEnabled(false);
+        m_ui->actionEntryClone->setEnabled(false);
         m_ui->actionEntryEdit->setEnabled(false);
         m_ui->actionGroupEdit->setEnabled(false);
         m_ui->actionEntryDelete->setEnabled(false);

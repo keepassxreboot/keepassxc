@@ -36,7 +36,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -67,6 +67,7 @@
      <string>Entries</string>
     </property>
     <addaction name="actionEntryNew"/>
+    <addaction name="actionEntryClone"/>
     <addaction name="actionEntryEdit"/>
     <addaction name="actionEntryDelete"/>
    </widget>
@@ -214,6 +215,11 @@
   <action name="actionImportKeePass1">
    <property name="text">
     <string>Import KeePass 1 database</string>
+   </property>
+  </action>
+  <action name="actionEntryClone">
+   <property name="text">
+    <string>Clone entry</string>
    </property>
   </action>
  </widget>

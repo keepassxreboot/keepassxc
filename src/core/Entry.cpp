@@ -413,6 +413,19 @@ void Entry::truncateHistory() {
     }
 }
 
+Entry* Entry::clone() const
+{
+    Entry* entry = new Entry();
+    entry->setUpdateTimeinfo(false);
+    entry->m_uuid = m_uuid;
+    entry->m_data = m_data;
+    *entry->m_attributes = *m_attributes;
+    *entry->m_attachments = *m_attachments;
+    entry->setUpdateTimeinfo(true);
+
+    return entry;
+}
+
 void Entry::beginUpdate()
 {
     Q_ASSERT(!m_tmpHistoryItem);

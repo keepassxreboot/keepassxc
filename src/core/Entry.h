@@ -117,6 +117,7 @@ public:
     const QList<Entry*>& historyItems() const;
     void addHistoryItem(Entry* entry);
     void truncateHistory();
+    Entry* clone() const;
 
     /**
      * Call before and after set*() methods to create a history item

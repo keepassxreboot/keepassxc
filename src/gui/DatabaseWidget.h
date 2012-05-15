@@ -49,8 +49,10 @@ public:
     GroupView* groupView();
     EntryView* entryView();
     bool dbHasKey();
+    void cloneEntry();
     void deleteEntry();
     void deleteGroup();
+
     bool canDeleteCurrentGoup();
     int addWidget(QWidget* w);
     void setCurrentIndex(int index);
