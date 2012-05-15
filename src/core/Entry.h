@@ -89,6 +89,8 @@ public:
     EntryAttachments* attachments();
     const EntryAttachments* attachments() const;
 
+    static const int DefaultIconNumber;
+
     void setUuid(const Uuid& uuid);
     void setIcon(int iconNumber);
     void setIcon(const Uuid& uuid);

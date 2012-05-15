@@ -28,7 +28,7 @@ Entry::Entry()
     m_updateTimeinfo = true;
     m_tmpHistoryItem = 0;
 
-    m_data.iconNumber = 0;
+    m_data.iconNumber = DefaultIconNumber;
     m_data.autoTypeEnabled = true;
     m_data.autoTypeObfuscation = 0;
 
@@ -55,6 +55,8 @@ Entry::~Entry()
 
     qDeleteAll(m_history);
 }
+
+const int Entry::DefaultIconNumber = 0;
 
 template <class T> bool Entry::set(T& property, const T& value)
 {

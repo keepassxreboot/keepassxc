@@ -51,6 +51,8 @@ public:
     Group::TriState searchingEnabled() const;
     Entry* lastTopVisibleEntry() const;
 
+    static const int DefaultIconNumber;
+
     void setUuid(const Uuid& uuid);
     void setName(const QString& name);
     void setNotes(const QString& notes);

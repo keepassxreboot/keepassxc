@@ -23,7 +23,7 @@
 
 Group::Group()
 {
-    m_iconNumber = 48;
+    m_iconNumber = DefaultIconNumber;
     m_isExpanded = true;
     m_autoTypeEnabled = Inherit;
     m_searchingEnabled = Inherit;
@@ -54,6 +54,8 @@ Group::~Group()
         m_db->addDeletedObject(delGroup);
     }
 }
+
+const int Group::DefaultIconNumber = 48;
 
 template <class P, class V> bool Group::set(P& property, const V& value) {
     if (property != value) {
