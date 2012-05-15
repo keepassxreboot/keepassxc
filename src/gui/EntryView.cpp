@@ -36,6 +36,7 @@ EntryView::EntryView(QWidget* parent)
 
     setUniformRowHeights(true);
     setRootIsDecorated(false);
+    setAlternatingRowColors(true);
     setDragEnabled(true);
     setSortingEnabled(true);
 
