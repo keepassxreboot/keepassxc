@@ -18,6 +18,7 @@
 #ifndef KEEPASSX_DATABASEWIDGET_H
 #define KEEPASSX_DATABASEWIDGET_H
 
+#include <QtGui/QPushButton>
 #include <QtGui/QStackedWidget>
 
 class QLineEdit;
@@ -78,6 +79,7 @@ private Q_SLOTS:
     void updateSettings(bool accepted);
     void emitCurrentModeChanged();
     void clearLastGroup(Group* group);
+    void clearSearchEdit();
 
 private:
     void truncateHistories();
@@ -94,6 +96,7 @@ private:
     Entry* m_newEntry;
     Group* m_newParent;
     QLineEdit* m_searchEdit;
+    QPushButton* m_clearSearchButton;
     Group* m_lastGroup;
 };
 

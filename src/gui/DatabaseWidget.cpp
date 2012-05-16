@@ -54,22 +54,31 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     policy.setHorizontalStretch(30);
     m_groupView->setSizePolicy(policy);
 
-    QWidget* widget = new QWidget();
-    policy = widget->sizePolicy();
+    QWidget* rightHandSideWidget = new QWidget();
+    policy = rightHandSideWidget->sizePolicy();
     policy.setHorizontalStretch(70);
-    widget->setSizePolicy(policy);
-
-    splitter->addWidget(m_groupView);
+    rightHandSideWidget->setSizePolicy(policy);
 
     QVBoxLayout* vLayout = new QVBoxLayout();
     QHBoxLayout* hLayout = new QHBoxLayout();
+
     hLayout->addWidget(new QLabel("Find:"));
+
     m_searchEdit = new QLineEdit();
+    m_searchEdit->setObjectName("searchEdit");
     hLayout->addWidget(m_searchEdit);
+
+    m_clearSearchButton = new QPushButton("Clear");
+    m_clearSearchButton->setObjectName("clearSearchButton");
+    hLayout->addWidget(m_clearSearchButton);
+
     vLayout->addLayout(hLayout);
     vLayout->addWidget(m_entryView);
-    widget->setLayout(vLayout);
-    splitter->addWidget(widget);
+
+    rightHandSideWidget->setLayout(vLayout);
+
+    splitter->addWidget(m_groupView);
+    splitter->addWidget(rightHandSideWidget);
 
     layout->addWidget(splitter);
     m_mainWidget->setLayout(layout);
@@ -100,6 +109,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_databaseSettingsWidget, SIGNAL(editFinished(bool)), SLOT(updateSettings(bool)));
     connect(this, SIGNAL(currentChanged(int)), this, SLOT(emitCurrentModeChanged()));
     connect(m_searchEdit, SIGNAL(returnPressed()), this, SLOT(search()));
+    connect(m_clearSearchButton, SIGNAL(clicked()), this, SLOT(clearSearchEdit()));
 
     setCurrentIndex(0);
 }
@@ -373,4 +383,10 @@ void DatabaseWidget::clearLastGroup(Group* group)
     if (group) {
         m_lastGroup = 0;
     }
+}
+
+void DatabaseWidget::clearSearchEdit()
+{
+    m_searchEdit->clear();
+    m_searchEdit->setFocus();
 }
