@@ -61,7 +61,7 @@
   <customwidget>
    <class>CategoryListWidget</class>
    <extends>QListWidget</extends>
-   <header>gui/EditEntryWidget_p.h</header>
+   <header>gui/entry/EditEntryWidget_p.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

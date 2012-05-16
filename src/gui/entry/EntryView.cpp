@@ -19,7 +19,7 @@
 
 #include <QtGui/QSortFilterProxyModel>
 
-#include "gui/EntryModel.h"
+#include "gui/entry/EntryModel.h"
 
 EntryView::EntryView(QWidget* parent)
     : QTreeView(parent)

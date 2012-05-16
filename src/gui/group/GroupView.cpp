@@ -22,7 +22,7 @@
 
 #include "core/Database.h"
 #include "core/Group.h"
-#include "gui/GroupModel.h"
+#include "gui/group/GroupModel.h"
 
 GroupView::GroupView(Database* db, QWidget* parent)
     : QTreeView(parent)

@@ -30,9 +30,9 @@
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "gui/EditWidgetIcons.h"
-#include "gui/EntryAttachmentsModel.h"
-#include "gui/EntryAttributesModel.h"
 #include "gui/FileDialog.h"
+#include "gui/entry/EntryAttachmentsModel.h"
+#include "gui/entry/EntryAttributesModel.h"
 
 EditEntryWidget::EditEntryWidget(QWidget* parent)
     : EditWidget(parent)

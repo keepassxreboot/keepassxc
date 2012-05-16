@@ -137,7 +137,7 @@
   <customwidget>
    <class>AttributesListView</class>
    <extends>QListView</extends>
-   <header>gui/EditEntryWidget_p.h</header>
+   <header>gui/entry/EditEntryWidget_p.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

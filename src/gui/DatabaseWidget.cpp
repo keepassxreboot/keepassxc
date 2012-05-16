@@ -27,10 +27,10 @@
 #include "core/Tools.h"
 #include "gui/ChangeMasterKeyWidget.h"
 #include "gui/DatabaseSettingsWidget.h"
-#include "gui/EditEntryWidget.h"
-#include "gui/EditGroupWidget.h"
-#include "gui/EntryView.h"
-#include "gui/GroupView.h"
+#include "gui/entry/EditEntryWidget.h"
+#include "gui/entry/EntryView.h"
+#include "gui/group/EditGroupWidget.h"
+#include "gui/group/GroupView.h"
 
 DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     : QStackedWidget(parent)

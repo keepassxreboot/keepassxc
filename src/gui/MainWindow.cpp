@@ -25,7 +25,7 @@
 #include "core/Metadata.h"
 #include "gui/AboutDialog.h"
 #include "gui/DatabaseWidget.h"
-#include "gui/EntryView.h"
+#include "gui/entry/EntryView.h"
 
 MainWindow::MainWindow()
     : m_ui(new Ui::MainWindow())

@@ -25,7 +25,7 @@
 #include "core/Database.h"
 #include "core/Group.h"
 #include "crypto/Crypto.h"
-#include "gui/GroupModel.h"
+#include "gui/group/GroupModel.h"
 
 void TestGroupModel::initTestCase()
 {

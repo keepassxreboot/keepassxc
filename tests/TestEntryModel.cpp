@@ -26,10 +26,10 @@
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "crypto/Crypto.h"
-#include "gui/EntryModel.h"
-#include "gui/EntryAttachmentsModel.h"
-#include "gui/EntryAttributesModel.h"
 #include "gui/IconModels.h"
+#include "gui/entry/EntryModel.h"
+#include "gui/entry/EntryAttachmentsModel.h"
+#include "gui/entry/EntryAttributesModel.h"
 
 void TestEntryModel::initTestCase()
 {

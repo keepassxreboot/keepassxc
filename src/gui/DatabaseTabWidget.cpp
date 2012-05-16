@@ -27,10 +27,10 @@
 #include "gui/DatabaseOpenDialog.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/DragTabBar.h"
-#include "gui/EntryView.h"
 #include "gui/FileDialog.h"
-#include "gui/GroupView.h"
 #include "gui/KeePass1OpenDialog.h"
+#include "gui/entry/EntryView.h"
+#include "gui/group/GroupView.h"
 
 DatabaseManagerStruct::DatabaseManagerStruct()
     : file(0)

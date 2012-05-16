@@ -59,20 +59,20 @@ set(keepassx_SOURCES
     gui/DatabaseWidget.cpp
     gui/DialogyWidget.cpp
     gui/DragTabBar.cpp
-    gui/EditEntryWidget.cpp
-    gui/EditGroupWidget.cpp
     gui/EditWidget.cpp
     gui/EditWidgetIcons.cpp
-    gui/EntryAttachmentsModel.cpp
-    gui/EntryAttributesModel.cpp
-    gui/EntryModel.cpp
-    gui/EntryView.cpp
     gui/FileDialog.cpp
-    gui/GroupModel.cpp
-    gui/GroupView.cpp
     gui/IconModels.cpp
     gui/KeePass1OpenDialog.cpp
     gui/MainWindow.cpp
+    gui/entry/EditEntryWidget.cpp
+    gui/entry/EntryAttachmentsModel.cpp
+    gui/entry/EntryAttributesModel.cpp
+    gui/entry/EntryModel.cpp
+    gui/entry/EntryView.cpp
+    gui/group/EditGroupWidget.cpp
+    gui/group/GroupModel.cpp
+    gui/group/GroupView.cpp
     keys/CompositeKey.cpp
     keys/FileKey.cpp
     keys/Key.h
@@ -98,18 +98,18 @@ set(keepassx_MOC
     gui/DatabaseWidget.h
     gui/DialogyWidget.h
     gui/DragTabBar.h
-    gui/EditEntryWidget.h
-    gui/EditGroupWidget.h
     gui/EditWidget.h
     gui/EditWidgetIcons.h
-    gui/EntryAttachmentsModel.h
-    gui/EntryAttributesModel.h
-    gui/EntryModel.h
-    gui/EntryView.h
-    gui/GroupModel.h
-    gui/GroupView.h
     gui/IconModels.h
     gui/MainWindow.h
+    gui/entry/EditEntryWidget.h
+    gui/entry/EntryAttachmentsModel.h
+    gui/entry/EntryAttributesModel.h
+    gui/entry/EntryModel.h
+    gui/entry/EntryView.h
+    gui/group/EditGroupWidget.h
+    gui/group/GroupModel.h
+    gui/group/GroupView.h
     keys/CompositeKey_p.h
     streams/HashedBlockStream.h
     streams/LayeredStream.h
@@ -122,13 +122,13 @@ set(keepassx_FORMS
     gui/ChangeMasterKeyWidget.ui
     gui/DatabaseOpenDialog.ui
     gui/DatabaseSettingsWidget.ui
-    gui/EditEntryWidgetAdvanced.ui
-    gui/EditEntryWidgetMain.ui
-    gui/EditEntryWidgetNotes.ui
-    gui/EditGroupWidgetMain.ui
     gui/EditWidget.ui
     gui/EditWidgetIcons.ui
     gui/MainWindow.ui
+    gui/entry/EditEntryWidgetAdvanced.ui
+    gui/entry/EditEntryWidgetMain.ui
+    gui/entry/EditEntryWidgetNotes.ui
+    gui/group/EditGroupWidgetMain.ui
 )
 
 qt4_wrap_ui(keepassx_SOURCES ${keepassx_FORMS})

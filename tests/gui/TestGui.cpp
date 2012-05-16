@@ -31,10 +31,10 @@
 #include "core/Entry.h"
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
-#include "gui/EditEntryWidget.h"
-#include "gui/EntryView.h"
 #include "gui/FileDialog.h"
 #include "gui/MainWindow.h"
+#include "gui/entry/EditEntryWidget.h"
+#include "gui/entry/EntryView.h"
 
 void TestGui::initTestCase()
 {
