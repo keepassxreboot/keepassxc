@@ -58,6 +58,7 @@ set(keepassx_SOURCES
     gui/DatabaseTabWidget.cpp
     gui/DatabaseWidget.cpp
     gui/DialogyWidget.cpp
+    gui/DragTabBar.cpp
     gui/EditEntryWidget.cpp
     gui/EditGroupWidget.cpp
     gui/EditWidget.cpp
@@ -96,6 +97,7 @@ set(keepassx_MOC
     gui/DatabaseTabWidget.h
     gui/DatabaseWidget.h
     gui/DialogyWidget.h
+    gui/DragTabBar.h
     gui/EditEntryWidget.h
     gui/EditGroupWidget.h
     gui/EditWidget.h

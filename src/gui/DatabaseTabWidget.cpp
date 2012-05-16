@@ -26,6 +26,7 @@
 #include "core/Metadata.h"
 #include "gui/DatabaseOpenDialog.h"
 #include "gui/DatabaseWidget.h"
+#include "gui/DragTabBar.h"
 #include "gui/EntryView.h"
 #include "gui/FileDialog.h"
 #include "gui/GroupView.h"
@@ -43,6 +44,10 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     : QTabWidget(parent)
     , m_window(parent->window())
 {
+    DragTabBar* tabBar = new DragTabBar(this);
+    tabBar->setDrawBase(false);
+    setTabBar(tabBar);
+
     connect(this, SIGNAL(tabCloseRequested(int)), SLOT(closeDatabase(int)));
     connect(this, SIGNAL(currentChanged(int)), SLOT(emitEntrySelectionChanged()));
 }
