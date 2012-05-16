@@ -104,12 +104,14 @@ Entry* EntryView::entryFromIndex(const QModelIndex& index)
 
 void EntryView::switchToSearch()
 {
+    sortByColumn(0, Qt::AscendingOrder);
     showColumn(0);
     m_inSearch = true;
 }
 
 void EntryView::switchToView()
 {
+    sortByColumn(1, Qt::AscendingOrder);
     hideColumn(0);
     m_inSearch = false;
 }
