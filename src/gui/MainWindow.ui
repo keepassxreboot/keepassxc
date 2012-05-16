@@ -218,6 +218,9 @@
    </property>
   </action>
   <action name="actionEntryClone">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Clone entry</string>
    </property>
