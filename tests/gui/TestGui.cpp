@@ -150,6 +150,66 @@ void TestGui::testAddEntry()
     QCOMPARE(entry->historyItems().size(), 1);
 }
 
+void TestGui::testSearch()
+{
+    DatabaseTabWidget* tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
+    DatabaseWidget* dbWidget = tabWidget->currentDatabaseWidget();
+
+    EntryView* entryView = dbWidget->findChild<EntryView*>("entryView");
+    QLineEdit* searchEdit = dbWidget->findChild<QLineEdit*>("searchEdit");
+    QPushButton* clearSearch = dbWidget->findChild<QPushButton*>("clearSearchButton");
+
+    QTest::keyClicks(searchEdit, "ZZZ");
+    QTest::keyClick(searchEdit, Qt::Key_Return);
+    QTest::qWait(20);
+
+    QCOMPARE(entryView->model()->rowCount(), 0);
+
+    QTest::mouseClick(clearSearch, Qt::LeftButton);
+    QTest::keyClicks(searchEdit, "some");
+    QTest::keyClick(searchEdit, Qt::Key_Return);
+    QTest::qWait(20);
+
+    QCOMPARE(entryView->model()->rowCount(), 2);
+
+    QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
+
+    QModelIndex item = entryView->model()->index(0, 1);
+    QRect itemRect = entryView->visualRect(item);
+    QTest::mouseClick(entryView->viewport(), Qt::LeftButton, Qt::NoModifier, itemRect.center());
+    QAction* entryEditAction = m_mainWindow->findChild<QAction*>("actionEntryEdit");
+    QVERIFY(entryEditAction->isEnabled());
+    QWidget* entryEditWidget = toolBar->widgetForAction(entryEditAction);
+    QVERIFY(entryEditWidget->isVisible());
+    QVERIFY(entryEditWidget->isEnabled());
+    QTest::mouseClick(entryEditWidget, Qt::LeftButton);
+    QTest::qWait(20);
+
+    QCOMPARE(dbWidget->currentMode(), DatabaseWidget::EditMode);
+
+    EditEntryWidget* editEntryWidget = dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+    QDialogButtonBox* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTest::qWait(20);
+
+    QCOMPARE(dbWidget->currentMode(), DatabaseWidget::ViewMode);
+
+    QModelIndex item2 = entryView->model()->index(1, 0);
+    QRect itemRect2 = entryView->visualRect(item2);
+    QTest::mouseClick(entryView->viewport(), Qt::LeftButton, Qt::NoModifier, itemRect2.center());
+    QAction* entryDeleteAction = m_mainWindow->findChild<QAction*>("actionEntryDelete");
+
+    QWidget* entryDeleteWidget = toolBar->widgetForAction(entryDeleteAction);
+    QVERIFY(entryDeleteWidget->isVisible());
+    QVERIFY(entryDeleteWidget->isEnabled());
+
+    QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
+    QTest::qWait(20);
+
+    QCOMPARE(entryView->model()->rowCount(), 1);
+
+}
+
 void TestGui::cleanupTestCase()
 {
     delete m_mainWindow;

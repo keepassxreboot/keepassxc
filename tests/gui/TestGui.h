@@ -32,6 +32,7 @@ private Q_SLOTS:
     void testTabs();
     void testEditEntry();
     void testAddEntry();
+    void testSearch();
     void cleanupTestCase();
 
 private:
