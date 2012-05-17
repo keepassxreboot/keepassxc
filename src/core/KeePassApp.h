@@ -20,14 +20,14 @@
 
 class KeePassApp : public QApplication
 {
-  Q_OBJECT
-private:
-  MainWindow *mainWindow;
+    Q_OBJECT
 
 public:
-  KeePassApp(int &argc, char **argv);
-  ~KeePassApp();
+    KeePassApp(int& argc, char** argv);
+    ~KeePassApp();
 
-  void setMainWindow(MainWindow *mainWindow);
-  bool event(QEvent *event);
+    bool event(QEvent *event);
+
+Q_SIGNALS:
+    void openDatabase(const QString& filename);
 };

@@ -17,12 +17,10 @@
 
 #include "KeePassApp.h"
 
-#include <QtGui/QMessageBox>
 #include <QtGui/QFileOpenEvent>
 
-KeePassApp::KeePassApp(int &argc, char **argv) :
-  QApplication(argc, argv),
-  mainWindow(NULL)
+KeePassApp::KeePassApp(int& argc, char** argv)
+    : QApplication(argc, argv)
 {
 }
 
@@ -30,18 +28,13 @@ KeePassApp::~KeePassApp()
 {
 }
 
-void KeePassApp::setMainWindow(MainWindow *mainWindow)
-{
-  this->mainWindow = mainWindow;
-}
-
 bool KeePassApp::event(QEvent *event)
 {
-  // Handle Apple QFileOpenEvent from finder (double click on .kdbx file)
-  if (event->type() == QEvent::FileOpen && mainWindow) {
-    mainWindow->openDatabase(static_cast<QFileOpenEvent*>(event)->file(), QString(), QString());
-    return true;
-  }
+    // Handle Apple QFileOpenEvent from finder (double click on .kdbx file)
+    if (event->type() == QEvent::FileOpen) {
+        Q_EMIT openDatabase(static_cast<QFileOpenEvent*>(event)->file());
+        return true;
+    }
 
   return (QApplication::event(event));
 }
