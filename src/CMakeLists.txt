@@ -18,7 +18,6 @@ include_directories( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} )
 configure_file( config-keepassx.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx.h )
 
 set(keepassx_SOURCES
-    core/KeePassApp.cpp
     core/Config.cpp
     core/Database.cpp
     core/DatabaseIcons.cpp
@@ -53,6 +52,7 @@ set(keepassx_SOURCES
     format/KeePass2XmlReader.cpp
     format/KeePass2XmlWriter.cpp
     gui/AboutDialog.cpp
+    gui/Application.cpp
     gui/ChangeMasterKeyWidget.cpp
     gui/DatabaseOpenDialog.cpp
     gui/DatabaseSettingsWidget.cpp
@@ -87,7 +87,6 @@ set(keepassx_SOURCES
 )
 
 set(keepassx_MOC
-    core/KeePassApp.h
     core/Database.h
     core/Entry.h
     core/EntryAttachments.h
@@ -95,6 +94,7 @@ set(keepassx_MOC
     core/Group.h
     core/Metadata.h
     gui/AboutDialog.h
+    gui/Application.h
     gui/ChangeMasterKeyWidget.h
     gui/DatabaseOpenDialog.h
     gui/DatabaseSettingsWidget.h

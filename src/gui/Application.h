@@ -15,26 +15,24 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "KeePassApp.h"
+#ifndef KEEPASSX_APPLICATION_H
+#define KEEPASSX_APPLICATION_H
 
-#include <QtGui/QFileOpenEvent>
+#include <QtGui/QApplication>
+#include "gui/MainWindow.h"
 
-KeePassApp::KeePassApp(int& argc, char** argv)
-    : QApplication(argc, argv)
+class Application : public QApplication
 {
-}
+    Q_OBJECT
 
-KeePassApp::~KeePassApp()
-{
-}
+public:
+    Application(int& argc, char** argv);
+    ~Application();
 
-bool KeePassApp::event(QEvent *event)
-{
-    // Handle Apple QFileOpenEvent from finder (double click on .kdbx file)
-    if (event->type() == QEvent::FileOpen) {
-        Q_EMIT openDatabase(static_cast<QFileOpenEvent*>(event)->file());
-        return true;
-    }
+    bool event(QEvent *event);
 
-  return (QApplication::event(event));
-}
+Q_SIGNALS:
+    void openDatabase(const QString& filename);
+};
+
+#endif // KEEPASSX_APPLICATION_H

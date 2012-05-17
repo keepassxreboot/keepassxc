@@ -15,19 +15,26 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtGui/QApplication>
-#include "gui/MainWindow.h"
+#include "Application.h"
 
-class KeePassApp : public QApplication
+#include <QtGui/QFileOpenEvent>
+
+Application::Application(int& argc, char** argv)
+    : QApplication(argc, argv)
 {
-    Q_OBJECT
+}
 
-public:
-    KeePassApp(int& argc, char** argv);
-    ~KeePassApp();
+Application::~Application()
+{
+}
 
-    bool event(QEvent *event);
+bool Application::event(QEvent *event)
+{
+    // Handle Apple QFileOpenEvent from finder (double click on .kdbx file)
+    if (event->type() == QEvent::FileOpen) {
+        Q_EMIT openDatabase(static_cast<QFileOpenEvent*>(event)->file());
+        return true;
+    }
 
-Q_SIGNALS:
-    void openDatabase(const QString& filename);
-};
+  return (QApplication::event(event));
+}

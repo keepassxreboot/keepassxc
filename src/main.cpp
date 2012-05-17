@@ -20,14 +20,14 @@
 #include <QtGui/QTreeView>
 
 #include "crypto/Crypto.h"
+#include "gui/Application.h"
 #include "gui/MainWindow.h"
-#include "core/KeePassApp.h"
 #include "keys/CompositeKey.h"
 #include "keys/PasswordKey.h"
 
 int main(int argc, char** argv)
 {
-    KeePassApp app(argc, argv);
+    Application app(argc, argv);
     // don't set applicationName or organizationName as that changes
     // QDesktopServices::storageLocation()
 
