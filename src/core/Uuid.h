@@ -28,7 +28,9 @@ public:
     explicit Uuid(const QByteArray& data);
     static Uuid random();
     QString toBase64() const;
+    QString toHex() const;
     QByteArray toByteArray() const;
+
     bool isNull() const;
     Uuid& operator=(const Uuid& other);
     bool operator==(const Uuid& other) const;
