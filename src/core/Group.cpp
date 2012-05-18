@@ -248,6 +248,24 @@ void Group::setLastTopVisibleEntry(Entry* entry)
     set(m_lastTopVisibleEntry, entry);
 }
 
+void Group::setExpires(const bool& value)
+{
+    if (m_timeInfo.expires() != value) {
+        m_timeInfo.setExpires(value);
+        updateTimeinfo();
+        Q_EMIT modified();
+    }
+}
+
+void Group::setExpiryTime(const QDateTime& dateTime)
+{
+    if (m_timeInfo.expiryTime() != dateTime) {
+        m_timeInfo.setExpiryTime(dateTime);
+        updateTimeinfo();
+        Q_EMIT modified();
+    }
+}
+
 Group* Group::parentGroup()
 {
     return m_parent;

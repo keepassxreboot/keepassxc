@@ -65,6 +65,8 @@ public:
     void setAutoTypeEnabled(TriState enable);
     void setSearchingEnabled(TriState enable);
     void setLastTopVisibleEntry(Entry* entry);
+    void setExpires(const bool& value);
+    void setExpiryTime(const QDateTime& dateTime);
 
     void setUpdateTimeinfo(bool value);
 

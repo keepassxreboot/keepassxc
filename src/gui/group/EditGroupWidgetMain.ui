@@ -16,16 +16,6 @@
      <property name="fieldGrowthPolicy">
       <enum>QFormLayout::ExpandingFieldsGrow</enum>
      </property>
-     <item row="1" column="0">
-      <widget class="QLabel" name="labelNotes">
-       <property name="text">
-        <string>Notes</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="editName"/>
-     </item>
      <item row="0" column="0">
       <widget class="QLabel" name="labelName">
        <property name="text">
@@ -33,8 +23,35 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="editName"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="labelNotes">
+       <property name="text">
+        <string>Notes</string>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="1">
       <widget class="QPlainTextEdit" name="editNotes"/>
+     </item>
+     <item row="2" column="1">
+      <widget class="QDateTimeEdit" name="expireDatePicker">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="calendarPopup">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QCheckBox" name="expireCheck">
+       <property name="text">
+        <string>Expires</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

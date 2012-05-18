@@ -39,6 +39,8 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
     labelHeaderFont.setPointSize(labelHeaderFont.pointSize() + 2);
     headlineLabel()->setFont(labelHeaderFont);
 
+    connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
+
     connect(this, SIGNAL(accepted()), SLOT(save()));
     connect(this, SIGNAL(rejected()), SLOT(cancel()));
 }
@@ -61,12 +63,15 @@ void EditGroupWidget::loadGroup(Group* group, bool create, Database* database)
 
     m_mainUi->editName->setText(m_group->name());
     m_mainUi->editNotes->setPlainText(m_group->notes());
+    m_mainUi->expireCheck->setChecked(group->timeInfo().expires());
+    m_mainUi->expireDatePicker->setDateTime(group->timeInfo().expiryTime().toLocalTime());
 
-    setCurrentRow(0);
     IconStruct iconStruct;
     iconStruct.uuid = group->iconUuid();
     iconStruct.number = group->iconNumber();
     m_editGroupWidgetIcons->load(group->uuid(), database, iconStruct);
+
+    setCurrentRow(0);
 
     m_mainUi->editName->setFocus();
 }
@@ -75,6 +80,8 @@ void EditGroupWidget::save()
 {
     m_group->setName(m_mainUi->editName->text());
     m_group->setNotes(m_mainUi->editNotes->toPlainText());
+    m_group->setExpires(m_mainUi->expireCheck->isChecked());
+    m_group->setExpiryTime(m_mainUi->expireDatePicker->dateTime().toUTC());
 
     IconStruct iconStruct = m_editGroupWidgetIcons->save();
 
