@@ -44,6 +44,10 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
     labelHeaderFont.setPointSize(labelHeaderFont.pointSize() + 2);
     headlineLabel()->setFont(labelHeaderFont);
 
+    m_mainUi->searchComboBox->addItem("Inherit");
+    m_mainUi->searchComboBox->addItem("Enable");
+    m_mainUi->searchComboBox->addItem("Disable");
+
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
 
     connect(this, SIGNAL(accepted()), SLOT(save()));
@@ -78,6 +82,19 @@ void EditGroupWidget::loadGroup(Group* group, bool create, Database* database)
     m_advancedUi->accessedEdit->setText(
                 group->timeInfo().lastAccessTime().toLocalTime().toString(timeFormat));
     m_advancedUi->uuidEdit->setText(group->uuid().toHex());
+    switch (group->searchingEnabled()) {
+    case Group::Inherit:
+        m_mainUi->searchComboBox->setCurrentIndex(0);
+        break;
+    case Group::Enable:
+        m_mainUi->searchComboBox->setCurrentIndex(1);
+        break;
+    case Group::Disable:
+        m_mainUi->searchComboBox->setCurrentIndex(2);
+        break;
+    default:
+        Q_ASSERT(false);
+    }
 
     IconStruct iconStruct;
     iconStruct.uuid = group->iconUuid();
@@ -95,6 +112,19 @@ void EditGroupWidget::save()
     m_group->setNotes(m_mainUi->editNotes->toPlainText());
     m_group->setExpires(m_mainUi->expireCheck->isChecked());
     m_group->setExpiryTime(m_mainUi->expireDatePicker->dateTime().toUTC());
+    switch (m_mainUi->searchComboBox->currentIndex()) {
+    case 0:
+        m_group->setSearchingEnabled(Group::Inherit);
+        break;
+    case 1:
+        m_group->setSearchingEnabled(Group::Enable);
+        break;
+    case 2:
+        m_group->setSearchingEnabled(Group::Disable);
+        break;
+    default:
+        Q_ASSERT(false);
+    }
 
     IconStruct iconStruct = m_editGroupWidgetIcons->save();
 
