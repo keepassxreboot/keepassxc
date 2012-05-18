@@ -367,6 +367,21 @@ void Entry::addHistoryItem(Entry* entry)
     Q_EMIT modified();
 }
 
+void Entry::removeHistoryItems(QList<Entry*> historyEntries)
+{
+    bool emitModified = historyEntries.count() > 0;
+    Q_FOREACH (Entry* entry, historyEntries) {
+        Q_ASSERT(!entry->parent());
+        Q_ASSERT(entry->uuid() == uuid());
+        Q_ASSERT(m_history.removeAll(entry) > 0);
+        delete entry;
+    }
+
+    if (emitModified) {
+        Q_EMIT modified();
+    }
+}
+
 void Entry::truncateHistory() {
     const Database* db = database();
 

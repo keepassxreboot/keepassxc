@@ -37,9 +37,12 @@ public:
 
     void setEntries(const QList<Entry*>& entries);
     void clear();
+    QList<Entry*> deletedEntries();
+    void deleteIndex(QModelIndex index);
 
 private:
     QList<Entry*> m_historyEntries;
+    QList<Entry*> m_deletedHistoryEntries;
 };
 
 #endif // KEEPASSX_ENTRYHISTORYMODEL_H

@@ -98,6 +98,11 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
 
     connect(m_historyUi->historyView, SIGNAL(activated(const QModelIndex&)),
             SLOT(emitHistoryEntryActivated(const QModelIndex&)));
+    connect(m_historyUi->historyView->selectionModel(),
+            SIGNAL(currentChanged(QModelIndex ,QModelIndex)),
+            SLOT(updateHistoryButtons(QModelIndex, QModelIndex)));
+    connect(m_historyUi->showButton, SIGNAL(clicked()), SLOT(showHistoryEntry()));
+    connect(m_historyUi->deleteButton, SIGNAL(clicked()), SLOT(deleteHistoryEntry()));
 
     connect(this, SIGNAL(accepted()), SLOT(saveEntry()));
     connect(this, SIGNAL(rejected()), SLOT(cancel()));
@@ -117,6 +122,22 @@ void EditEntryWidget::emitHistoryEntryActivated(const QModelIndex& index)
 
     Entry* entry = m_historyModel->entryFromIndex(index);
     Q_EMIT historyEntryActivated(entry);
+}
+
+void EditEntryWidget::updateHistoryButtons(const QModelIndex& current, const QModelIndex& previous)
+{
+    Q_UNUSED(previous);
+
+    if (current.isValid()) {
+        m_historyUi->showButton->setEnabled(true);
+        m_historyUi->restoreButton->setEnabled(false); // TODO:
+        m_historyUi->deleteButton->setEnabled(true);
+    }
+    else {
+        m_historyUi->showButton->setEnabled(false);
+        m_historyUi->restoreButton->setEnabled(false);
+        m_historyUi->deleteButton->setEnabled(false);
+    }
 }
 
 void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const QString& groupName,
@@ -176,6 +197,11 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const Q
     m_iconsWidget->setEnabled(!history);
     m_historyWidget->setEnabled(!history);
 
+    m_historyUi->showButton->setEnabled(false);
+    m_historyUi->restoreButton->setEnabled(false);
+    m_historyUi->deleteButton->setEnabled(false);
+
+
     setForms(entry);
 
     setCurrentRow(0);
@@ -212,7 +238,9 @@ void EditEntryWidget::setForms(const Entry* entry)
     iconStruct.uuid = entry->iconUuid();
     iconStruct.number = entry->iconNumber();
     m_iconsWidget->load(entry->uuid(), m_database, iconStruct);
-    m_historyModel->setEntries(entry->historyItems());
+    if (!m_history) {
+        m_historyModel->setEntries(entry->historyItems());
+    }
 }
 
 void EditEntryWidget::saveEntry()
@@ -222,7 +250,6 @@ void EditEntryWidget::saveEntry()
         m_database = 0;
         m_entryAttributes->clear();
         m_entryAttachments->clear();
-        m_historyModel->clear();
         Q_EMIT editFinished(false);
         return;
     }
@@ -239,6 +266,10 @@ void EditEntryWidget::saveEntry()
     }
 
     m_currentAttribute = QPersistentModelIndex();
+
+    // must stand before beginUpdate()
+    // we don't want to create a new history item, if only the history has changed
+    m_entry->removeHistoryItems(m_historyModel->deletedEntries());
 
     if (!m_create) {
         m_entry->beginUpdate();
@@ -272,6 +303,7 @@ void EditEntryWidget::saveEntry()
         m_entry->endUpdate();
     }
 
+
     m_entry = 0;
     m_database = 0;
     m_entryAttributes->clear();
@@ -288,7 +320,6 @@ void EditEntryWidget::cancel()
         m_database = 0;
         m_entryAttributes->clear();
         m_entryAttachments->clear();
-        m_historyModel->clear();
         Q_EMIT editFinished(false);
         return;
     }
@@ -486,4 +517,20 @@ void EditEntryWidget::removeCurrentAttachment()
 
     QString key = m_attachmentsModel->keyByIndex(index);
     m_entryAttachments->remove(key);
+}
+
+void EditEntryWidget::showHistoryEntry()
+{
+    QModelIndex index = m_historyUi->historyView->currentIndex();
+    if (index.isValid()) {
+        emitHistoryEntryActivated(index);
+    }
+}
+
+void EditEntryWidget::deleteHistoryEntry()
+{
+    QModelIndex index = m_historyUi->historyView->currentIndex();
+    if (index.isValid()) {
+        m_historyModel->deleteIndex(index);
+    }
 }

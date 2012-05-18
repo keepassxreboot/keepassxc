@@ -52,14 +52,12 @@ QVariant EntryHistoryModel::data(const QModelIndex& index, int role) const
         return QVariant();
     }
 
-    int row = index.row();
-    int column = index.column();
-    Entry* entry = m_historyEntries.at(row);
+    Entry* entry = entryFromIndex(index);
     TimeInfo timeInfo = entry->timeInfo();
     QDateTime lastModificationLocalTime = timeInfo.lastModificationTime().toLocalTime();
 
     if (role == Qt::DisplayRole) {
-        switch (column) {
+        switch (index.column()) {
         case 0:
             return lastModificationLocalTime.toString(Qt::SystemLocaleShortDate);
         case 1:
@@ -97,6 +95,7 @@ void EntryHistoryModel::setEntries(const QList<Entry*>& entries)
     beginResetModel();
 
     m_historyEntries = entries;
+    m_deletedHistoryEntries.clear();
 
     endResetModel();
 }
@@ -106,6 +105,23 @@ void EntryHistoryModel::clear()
     beginResetModel();
 
     m_historyEntries.clear();
+    m_deletedHistoryEntries.clear();
 
     endResetModel();
+}
+
+QList<Entry*> EntryHistoryModel::deletedEntries()
+{
+    return m_deletedHistoryEntries;
+}
+
+void EntryHistoryModel::deleteIndex(QModelIndex index)
+{
+    if (index.isValid()) {
+        Entry* entry = entryFromIndex(index);
+        beginRemoveRows(QModelIndex(), m_historyEntries.indexOf(entry), m_historyEntries.indexOf(entry));
+        m_historyEntries.removeAll(entry);
+        m_deletedHistoryEntries << entry;
+        endRemoveRows();
+    }
 }
