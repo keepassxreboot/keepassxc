@@ -16,6 +16,7 @@
  */
 
 #include "EditGroupWidget.h"
+#include "ui_EditGroupWidgetAdvanced.h"
 #include "ui_EditGroupWidgetMain.h"
 #include "ui_EditWidget.h"
 
@@ -25,14 +26,18 @@
 EditGroupWidget::EditGroupWidget(QWidget* parent)
     : EditWidget(parent)
     , m_mainUi(new Ui::EditGroupWidgetMain())
+    , m_advancedUi(new Ui::EditGroupWidgetAdvanced())
     , m_editGroupWidgetMain(new QWidget())
     , m_editGroupWidgetIcons(new EditWidgetIcons())
+    , m_editGroupWidgetAdvanced(new QWidget())
     , m_group(0)
 {
     m_mainUi->setupUi(m_editGroupWidgetMain);
+    m_advancedUi->setupUi(m_editGroupWidgetAdvanced);
 
     add(tr("Group"), m_editGroupWidgetMain);
     add(tr("Icon"), m_editGroupWidgetIcons);
+    add(tr("Advanced"), m_editGroupWidgetAdvanced);
 
     QFont labelHeaderFont = headlineLabel()->font();
     labelHeaderFont.setBold(true);
@@ -65,6 +70,14 @@ void EditGroupWidget::loadGroup(Group* group, bool create, Database* database)
     m_mainUi->editNotes->setPlainText(m_group->notes());
     m_mainUi->expireCheck->setChecked(group->timeInfo().expires());
     m_mainUi->expireDatePicker->setDateTime(group->timeInfo().expiryTime().toLocalTime());
+    QString timeFormat("d MMM yyyy HH:mm:ss");
+    m_advancedUi->modifiedEdit->setText(
+                group->timeInfo().lastModificationTime().toLocalTime().toString(timeFormat));
+    m_advancedUi->createdEdit->setText(
+                group->timeInfo().creationTime().toLocalTime().toString(timeFormat));
+    m_advancedUi->accessedEdit->setText(
+                group->timeInfo().lastAccessTime().toLocalTime().toString(timeFormat));
+    m_advancedUi->uuidEdit->setText(group->uuid().toHex());
 
     IconStruct iconStruct;
     iconStruct.uuid = group->iconUuid();

@@ -131,6 +131,7 @@ set(keepassx_FORMS
     gui/entry/EditEntryWidgetHistory.ui
     gui/entry/EditEntryWidgetMain.ui
     gui/entry/EditEntryWidgetNotes.ui
+    gui/group/EditGroupWidgetAdvanced.ui
     gui/group/EditGroupWidgetMain.ui
 )
 

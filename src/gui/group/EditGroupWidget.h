@@ -26,6 +26,7 @@
 class EditWidgetIcons;
 
 namespace Ui {
+    class EditGroupWidgetAdvanced;
     class EditGroupWidgetMain;
     class EditWidget;
 }
@@ -49,8 +50,10 @@ private Q_SLOTS:
 
 private:
     const QScopedPointer<Ui::EditGroupWidgetMain> m_mainUi;
+    const QScopedPointer<Ui::EditGroupWidgetAdvanced> m_advancedUi;
     QWidget* const m_editGroupWidgetMain;
     EditWidgetIcons* const m_editGroupWidgetIcons;
+    QWidget* const m_editGroupWidgetAdvanced;
     Group* m_group;
     Database* m_database;
 
