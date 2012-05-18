@@ -72,6 +72,7 @@ private Q_SLOTS:
     void saveCurrentAttachment();
     void removeCurrentAttachment();
     void showHistoryEntry();
+    void restoreHistoryEntry();
     void deleteHistoryEntry();
     void deleteAllHistoryEntries();
     void emitHistoryEntryActivated(const QModelIndex &index);
@@ -79,7 +80,7 @@ private Q_SLOTS:
 
 private:
     bool passwordsEqual();
-    void setForms(const Entry* entry);
+    void setForms(const Entry* entry,  bool restore = false);
 
     Entry* m_entry;
     Database* m_database;

@@ -102,6 +102,7 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
             SIGNAL(currentChanged(QModelIndex ,QModelIndex)),
             SLOT(updateHistoryButtons(QModelIndex, QModelIndex)));
     connect(m_historyUi->showButton, SIGNAL(clicked()), SLOT(showHistoryEntry()));
+    connect(m_historyUi->restoreButton, SIGNAL(clicked()), SLOT(restoreHistoryEntry()));
     connect(m_historyUi->deleteButton, SIGNAL(clicked()), SLOT(deleteHistoryEntry()));
     connect(m_historyUi->deleteAllButton, SIGNAL(clicked()), SLOT(deleteAllHistoryEntries()));
 
@@ -131,7 +132,7 @@ void EditEntryWidget::updateHistoryButtons(const QModelIndex& current, const QMo
 
     if (current.isValid()) {
         m_historyUi->showButton->setEnabled(true);
-        m_historyUi->restoreButton->setEnabled(false); // TODO:
+        m_historyUi->restoreButton->setEnabled(true);
         m_historyUi->deleteButton->setEnabled(true);
     }
     else {
@@ -161,57 +162,48 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const Q
         }
     }
 
-    m_mainUi->titleEdit->setReadOnly(history);
-    m_mainUi->titleEdit->setFrame(!history);
-    m_mainUi->usernameEdit->setReadOnly(history);
-    m_mainUi->usernameEdit->setFrame(!history);
-    m_mainUi->urlEdit->setReadOnly(history);
-    m_mainUi->urlEdit->setFrame(!history);
-    m_mainUi->passwordEdit->setReadOnly(history);
-    m_mainUi->passwordEdit->setFrame(!history);
-    m_mainUi->passwordRepeatEdit->setReadOnly(history);
-    m_mainUi->passwordRepeatEdit->setFrame(!history);
-    m_mainUi->expireCheck->setEnabled(!history);
-    m_mainUi->expireDatePicker->setReadOnly(history);
-    m_mainUi->expireDatePicker->setFrame(!history);
-    m_notesUi->notesEdit->setReadOnly(history);
-    if (history) {
+    setForms(entry);
+}
+
+void EditEntryWidget::setForms(const Entry* entry, bool restore)
+{
+    m_mainUi->titleEdit->setReadOnly(m_history);
+    m_mainUi->titleEdit->setFrame(!m_history);
+    m_mainUi->usernameEdit->setReadOnly(m_history);
+    m_mainUi->usernameEdit->setFrame(!m_history);
+    m_mainUi->urlEdit->setReadOnly(m_history);
+    m_mainUi->urlEdit->setFrame(!m_history);
+    m_mainUi->passwordEdit->setReadOnly(m_history);
+    m_mainUi->passwordEdit->setFrame(!m_history);
+    m_mainUi->passwordRepeatEdit->setReadOnly(m_history);
+    m_mainUi->passwordRepeatEdit->setFrame(!m_history);
+    m_mainUi->expireCheck->setEnabled(!m_history);
+    m_mainUi->expireDatePicker->setReadOnly(m_history);
+    m_mainUi->expireDatePicker->setFrame(!m_history);
+    m_notesUi->notesEdit->setReadOnly(m_history);
+    if (m_history) {
         m_notesUi->notesEdit->setFrameShape(QFrame::NoFrame);
     }
     else {
         m_notesUi->notesEdit->setFrameShape(QFrame::StyledPanel);
     }
-    m_advancedUi->addAttachmentButton->setEnabled(!history);
-    m_advancedUi->removeAttachmentButton->setEnabled(!history);
-    m_advancedUi->addAttributeButton->setEnabled(!history);
+    m_advancedUi->addAttachmentButton->setEnabled(!m_history);
+    m_advancedUi->removeAttachmentButton->setEnabled(!m_history);
+    m_advancedUi->addAttributeButton->setEnabled(!m_history);
     m_advancedUi->editAttributeButton->setEnabled(false);
     m_advancedUi->removeAttributeButton->setEnabled(false);
-    m_advancedUi->attributesEdit->setReadOnly(history);
+    m_advancedUi->attributesEdit->setReadOnly(m_history);
     QAbstractItemView::EditTriggers editTriggers;
-    if (history) {
+    if (m_history) {
         editTriggers = QAbstractItemView::NoEditTriggers;
     }
     else {
         editTriggers = QAbstractItemView::DoubleClicked;
     }
     m_advancedUi->attributesView->setEditTriggers(editTriggers);
-    m_iconsWidget->setEnabled(!history);
-    m_historyWidget->setEnabled(!history);
+    m_iconsWidget->setEnabled(!m_history);
+    m_historyWidget->setEnabled(!m_history);
 
-    m_historyUi->showButton->setEnabled(false);
-    m_historyUi->restoreButton->setEnabled(false);
-    m_historyUi->deleteButton->setEnabled(false);
-    m_historyUi->deleteAllButton->setEnabled(false);
-
-    setForms(entry);
-
-    setCurrentRow(0);
-
-    m_mainUi->titleEdit->setFocus();
-}
-
-void EditEntryWidget::setForms(const Entry* entry)
-{
     m_mainUi->titleEdit->setText(entry->title());
     m_mainUi->usernameEdit->setText(entry->username());
     m_mainUi->urlEdit->setText(entry->url());
@@ -239,13 +231,22 @@ void EditEntryWidget::setForms(const Entry* entry)
     iconStruct.uuid = entry->iconUuid();
     iconStruct.number = entry->iconNumber();
     m_iconsWidget->load(entry->uuid(), m_database, iconStruct);
-    if (!m_history) {
-        m_historyModel->setEntries(entry->historyItems());
-        if (m_historyModel->rowCount() > 0) {
-            m_historyUi->deleteAllButton->setEnabled(true);
-        }
 
+    if (!m_history && !restore) {
+        m_historyModel->setEntries(entry->historyItems());
     }
+    if (m_historyModel->rowCount() > 0) {
+        m_historyUi->deleteAllButton->setEnabled(true);
+    }
+    else {
+        m_historyUi->deleteAllButton->setEnabled(false);
+    }
+
+    updateHistoryButtons(m_historyUi->historyView->currentIndex(), QModelIndex());
+
+    setCurrentRow(0);
+
+    m_mainUi->titleEdit->setFocus();
 }
 
 void EditEntryWidget::saveEntry()
@@ -529,6 +530,14 @@ void EditEntryWidget::showHistoryEntry()
     QModelIndex index = m_historyUi->historyView->currentIndex();
     if (index.isValid()) {
         emitHistoryEntryActivated(index);
+    }
+}
+
+void EditEntryWidget::restoreHistoryEntry()
+{
+    QModelIndex index = m_historyUi->historyView->currentIndex();
+    if (index.isValid()) {
+        setForms(m_historyModel->entryFromIndex(index), true);
     }
 }
 
