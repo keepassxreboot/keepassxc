@@ -39,6 +39,7 @@ public:
     void clear();
     QList<Entry*> deletedEntries();
     void deleteIndex(QModelIndex index);
+    void deleteAll();
 
 private:
     QList<Entry*> m_historyEntries;

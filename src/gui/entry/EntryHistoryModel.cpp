@@ -125,3 +125,16 @@ void EntryHistoryModel::deleteIndex(QModelIndex index)
         endRemoveRows();
     }
 }
+
+void EntryHistoryModel::deleteAll()
+{
+    Q_ASSERT(m_historyEntries.count() > 0);
+
+    beginRemoveRows(QModelIndex(), 0, m_historyEntries.size() - 1);
+
+    Q_FOREACH (Entry* entry, m_historyEntries) {
+        m_deletedHistoryEntries << entry;
+    }
+    m_historyEntries.clear();
+    endRemoveRows();
+}

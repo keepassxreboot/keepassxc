@@ -73,6 +73,7 @@ private Q_SLOTS:
     void removeCurrentAttachment();
     void showHistoryEntry();
     void deleteHistoryEntry();
+    void deleteAllHistoryEntries();
     void emitHistoryEntryActivated(const QModelIndex &index);
     void updateHistoryButtons(const QModelIndex& current, const QModelIndex& previous);
 

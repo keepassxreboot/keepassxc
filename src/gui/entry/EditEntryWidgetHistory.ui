@@ -49,6 +49,16 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPushButton" name="deleteAllButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Delete all</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
   </layout>

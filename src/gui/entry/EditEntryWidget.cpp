@@ -103,6 +103,7 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
             SLOT(updateHistoryButtons(QModelIndex, QModelIndex)));
     connect(m_historyUi->showButton, SIGNAL(clicked()), SLOT(showHistoryEntry()));
     connect(m_historyUi->deleteButton, SIGNAL(clicked()), SLOT(deleteHistoryEntry()));
+    connect(m_historyUi->deleteAllButton, SIGNAL(clicked()), SLOT(deleteAllHistoryEntries()));
 
     connect(this, SIGNAL(accepted()), SLOT(saveEntry()));
     connect(this, SIGNAL(rejected()), SLOT(cancel()));
@@ -200,7 +201,7 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const Q
     m_historyUi->showButton->setEnabled(false);
     m_historyUi->restoreButton->setEnabled(false);
     m_historyUi->deleteButton->setEnabled(false);
-
+    m_historyUi->deleteAllButton->setEnabled(false);
 
     setForms(entry);
 
@@ -240,6 +241,10 @@ void EditEntryWidget::setForms(const Entry* entry)
     m_iconsWidget->load(entry->uuid(), m_database, iconStruct);
     if (!m_history) {
         m_historyModel->setEntries(entry->historyItems());
+        if (m_historyModel->rowCount() > 0) {
+            m_historyUi->deleteAllButton->setEnabled(true);
+        }
+
     }
 }
 
@@ -532,5 +537,22 @@ void EditEntryWidget::deleteHistoryEntry()
     QModelIndex index = m_historyUi->historyView->currentIndex();
     if (index.isValid()) {
         m_historyModel->deleteIndex(index);
+        if (m_historyModel->rowCount() > 0) {
+            m_historyUi->deleteAllButton->setEnabled(true);
+        }
+        else {
+            m_historyUi->deleteAllButton->setEnabled(false);
+        }
+    }
+}
+
+void EditEntryWidget::deleteAllHistoryEntries()
+{
+    m_historyModel->deleteAll();
+    if (m_historyModel->rowCount() > 0) {
+        m_historyUi->deleteAllButton->setEnabled(true);
+    }
+    else {
+        m_historyUi->deleteAllButton->setEnabled(false);
     }
 }
