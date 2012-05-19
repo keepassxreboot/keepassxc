@@ -18,10 +18,7 @@
 #ifndef KEEPASSX_DATABASEWIDGET_H
 #define KEEPASSX_DATABASEWIDGET_H
 
-#include <QtGui/QPushButton>
 #include <QtGui/QStackedWidget>
-
-class QLineEdit;
 
 class ChangeMasterKeyWidget;
 class DatabaseSettingsWidget;
@@ -32,6 +29,10 @@ class Entry;
 class EntryView;
 class Group;
 class GroupView;
+
+namespace Ui {
+    class SearchWidget;
+}
 
 class DatabaseWidget : public QStackedWidget
 {
@@ -46,6 +47,7 @@ public:
     };
 
     explicit DatabaseWidget(Database* db, QWidget* parent = 0);
+    ~DatabaseWidget();
     GroupView* groupView();
     EntryView* entryView();
     bool dbHasKey();
@@ -69,7 +71,7 @@ public Q_SLOTS:
     void switchToGroupEdit();
     void switchToMasterKeyChange();
     void switchToDatabaseSettings();
-    void search();
+    void toggleSearch();
 
 private Q_SLOTS:
     void switchBackToEntryEdit();
@@ -82,11 +84,17 @@ private Q_SLOTS:
     void emitCurrentModeChanged();
     void clearLastGroup(Group* group);
     void clearSearchEdit();
+    void search();
+    void startSearchTimer();
+    void showSearch();
+    void closeSearch();
 
 private:
     void truncateHistories();
 
     Database* const m_db;
+    const QScopedPointer<Ui::SearchWidget> m_searchUi;
+    QWidget* const m_searchWidget;
     QWidget* m_mainWidget;
     EditEntryWidget* m_editEntryWidget;
     EditEntryWidget* m_historyEditEntryWidget;
@@ -98,9 +106,8 @@ private:
     Group* m_newGroup;
     Entry* m_newEntry;
     Group* m_newParent;
-    QLineEdit* m_searchEdit;
-    QPushButton* m_clearSearchButton;
     Group* m_lastGroup;
+    QTimer* m_searchTimer;
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H

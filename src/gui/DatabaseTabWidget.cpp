@@ -364,6 +364,11 @@ void DatabaseTabWidget::deleteGroup()
     currentDatabaseWidget()->deleteGroup();
 }
 
+void DatabaseTabWidget::toggleSearch()
+{
+    currentDatabaseWidget()->toggleSearch();
+}
+
 void DatabaseTabWidget::updateTabName(Database* db)
 {
     int index = databaseIndex(db);

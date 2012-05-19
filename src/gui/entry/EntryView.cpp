@@ -104,6 +104,7 @@ Entry* EntryView::entryFromIndex(const QModelIndex& index)
 
 void EntryView::switchToSearch()
 {
+    sortByColumn(1, Qt::AscendingOrder); // TODO: should probably be improved
     sortByColumn(0, Qt::AscendingOrder);
     showColumn(0);
     m_inSearch = true;

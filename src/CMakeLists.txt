@@ -127,6 +127,7 @@ set(keepassx_FORMS
     gui/EditWidget.ui
     gui/EditWidgetIcons.ui
     gui/MainWindow.ui
+    gui/SearchWidget.ui
     gui/entry/EditEntryWidgetAdvanced.ui
     gui/entry/EditEntryWidgetHistory.ui
     gui/entry/EditEntryWidgetMain.ui

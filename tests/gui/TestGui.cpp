@@ -155,24 +155,29 @@ void TestGui::testSearch()
     DatabaseTabWidget* tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
     DatabaseWidget* dbWidget = tabWidget->currentDatabaseWidget();
 
+    QAction* serachAction = m_mainWindow->findChild<QAction*>("actionSearch");
+    QVERIFY(serachAction->isEnabled());
+    QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
+    QWidget* serachActionWidget = toolBar->widgetForAction(serachAction);
+    QVERIFY(serachActionWidget->isVisible());
+    QVERIFY(serachActionWidget->isEnabled());
+    QTest::mouseClick(serachActionWidget, Qt::LeftButton);
+    QTest::qWait(20);
+
     EntryView* entryView = dbWidget->findChild<EntryView*>("entryView");
     QLineEdit* searchEdit = dbWidget->findChild<QLineEdit*>("searchEdit");
     QPushButton* clearSearch = dbWidget->findChild<QPushButton*>("clearSearchButton");
 
     QTest::keyClicks(searchEdit, "ZZZ");
-    QTest::keyClick(searchEdit, Qt::Key_Return);
-    QTest::qWait(20);
+    QTest::qWait(120);
 
     QCOMPARE(entryView->model()->rowCount(), 0);
 
     QTest::mouseClick(clearSearch, Qt::LeftButton);
     QTest::keyClicks(searchEdit, "some");
-    QTest::keyClick(searchEdit, Qt::Key_Return);
-    QTest::qWait(20);
+    QTest::qWait(120);
 
     QCOMPARE(entryView->model()->rowCount(), 2);
-
-    QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
 
     QModelIndex item = entryView->model()->index(0, 1);
     QRect itemRect = entryView->visualRect(item);

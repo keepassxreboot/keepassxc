@@ -100,6 +100,7 @@
    <addaction name="actionEntryNew"/>
    <addaction name="actionEntryEdit"/>
    <addaction name="actionEntryDelete"/>
+   <addaction name="actionSearch"/>
   </widget>
   <action name="actionQuit">
    <property name="text">
@@ -223,6 +224,17 @@
    </property>
    <property name="text">
     <string>Clone entry</string>
+   </property>
+  </action>
+  <action name="actionSearch">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Find</string>
    </property>
   </action>
  </widget>

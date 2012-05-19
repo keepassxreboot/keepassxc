@@ -40,6 +40,7 @@ MainWindow::MainWindow()
     setShortcut(m_ui->actionDatabaseSaveAs, QKeySequence::SaveAs);
     setShortcut(m_ui->actionDatabaseClose, QKeySequence::Close, Qt::CTRL + Qt::Key_W);
     setShortcut(m_ui->actionQuit, QKeySequence::Quit, Qt::CTRL + Qt::Key_Q);
+    setShortcut(m_ui->actionSearch, QKeySequence::Find, Qt::CTRL + Qt::Key_F);
 
     connect(m_ui->tabWidget, SIGNAL(entrySelectionChanged(bool)),
             SLOT(setMenuActionState()));
@@ -84,6 +85,9 @@ MainWindow::MainWindow()
             SLOT(editGroup()));
     connect(m_ui->actionGroupDelete, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(deleteGroup()));
+
+    connect(m_ui->actionSearch, SIGNAL(triggered()), m_ui->tabWidget,
+            SLOT(toggleSearch()));
 }
 
 MainWindow::~MainWindow()
@@ -148,6 +152,13 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
                     m_ui->actionGroupDelete->setEnabled(false);
                 }
             }
+            m_ui->actionSearch->setEnabled(true);
+            if (dbWidget->entryView()->inSearch()) {
+                m_ui->actionSearch->setChecked(true);
+            }
+            else {
+                m_ui->actionSearch->setChecked(false);
+            }
             m_ui->actionChangeMasterKey->setEnabled(true);
             m_ui->actionChangeDatabaseSettings->setEnabled(true);
             m_ui->actionDatabaseSave->setEnabled(true);
@@ -161,6 +172,8 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionGroupEdit->setEnabled(false);
             m_ui->actionEntryDelete->setEnabled(false);
             m_ui->actionGroupDelete->setEnabled(false);
+            m_ui->actionSearch->setEnabled(false);
+            m_ui->actionSearch->setChecked(false);
             m_ui->actionChangeMasterKey->setEnabled(false);
             m_ui->actionChangeDatabaseSettings->setEnabled(false);
             m_ui->actionDatabaseSave->setEnabled(false);
@@ -179,6 +192,8 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         m_ui->actionGroupEdit->setEnabled(false);
         m_ui->actionEntryDelete->setEnabled(false);
         m_ui->actionGroupDelete->setEnabled(false);
+        m_ui->actionSearch->setEnabled(false);
+        m_ui->actionSearch->setChecked(false);
         m_ui->actionChangeMasterKey->setEnabled(false);
         m_ui->actionChangeDatabaseSettings->setEnabled(false);
         m_ui->actionDatabaseSave->setEnabled(false);

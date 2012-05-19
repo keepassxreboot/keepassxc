@@ -71,6 +71,7 @@ public Q_SLOTS:
     void createGroup();
     void editGroup();
     void deleteGroup();
+    void toggleSearch();
 
 Q_SIGNALS:
     void entrySelectionChanged(bool singleEntrySelected);

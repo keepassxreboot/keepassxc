@@ -16,13 +16,17 @@
  */
 
 #include "DatabaseWidget.h"
+#include "ui_SearchWidget.h"
 
+#include <QtCore/QTimer>
+#include <QtGui/QAction>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QLabel>
 #include <QtGui/QSplitter>
 #include <QtGui/QLineEdit>
 #include <QtGui/QMessageBox>
 
+#include "core/DataPath.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "gui/ChangeMasterKeyWidget.h"
@@ -35,44 +39,47 @@
 DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     : QStackedWidget(parent)
     , m_db(db)
+    , m_searchUi(new Ui::SearchWidget())
+    , m_searchWidget(new QWidget())
     , m_newGroup(0)
     , m_newEntry(0)
     , m_newParent(0)
 {
+
+    m_searchUi->setupUi(m_searchWidget);
+
+    m_searchTimer = new QTimer(this);
+    m_searchTimer->setSingleShot(true);
+
     m_mainWidget = new QWidget(this);
     QLayout* layout = new QHBoxLayout(m_mainWidget);
     QSplitter* splitter = new QSplitter(m_mainWidget);
 
+    QWidget* rightHandSideWidget = new QWidget(splitter);
+    m_searchWidget->setParent(rightHandSideWidget);
+
     m_groupView = new GroupView(db, splitter);
     m_groupView->setObjectName("groupView");
-    m_entryView = new EntryView(splitter);
+
+    m_entryView = new EntryView(rightHandSideWidget);
     m_entryView->setObjectName("entryView");
 
     QSizePolicy policy;
-
     policy = m_groupView->sizePolicy();
     policy.setHorizontalStretch(30);
     m_groupView->setSizePolicy(policy);
-
-    QWidget* rightHandSideWidget = new QWidget();
     policy = rightHandSideWidget->sizePolicy();
     policy.setHorizontalStretch(70);
     rightHandSideWidget->setSizePolicy(policy);
 
-    QVBoxLayout* vLayout = new QVBoxLayout();
-    QHBoxLayout* hLayout = new QHBoxLayout();
+    QAction* closeAction = new QAction(m_searchWidget);
+    QIcon closeIcon = dataPath()->icon("action", "dialog-close");
+    closeAction->setIcon(closeIcon);
+    m_searchUi->closeSearchButton->setDefaultAction(closeAction);
+    m_searchWidget->hide();
 
-    hLayout->addWidget(new QLabel("Find:"));
-
-    m_searchEdit = new QLineEdit();
-    m_searchEdit->setObjectName("searchEdit");
-    hLayout->addWidget(m_searchEdit);
-
-    m_clearSearchButton = new QPushButton("Clear");
-    m_clearSearchButton->setObjectName("clearSearchButton");
-    hLayout->addWidget(m_clearSearchButton);
-
-    vLayout->addLayout(hLayout);
+    QVBoxLayout* vLayout = new QVBoxLayout(rightHandSideWidget);
+    vLayout->addWidget(m_searchWidget);
     vLayout->addWidget(m_entryView);
 
     rightHandSideWidget->setLayout(vLayout);
@@ -112,10 +119,16 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_changeMasterKeyWidget, SIGNAL(editFinished(bool)), SLOT(updateMasterKey(bool)));
     connect(m_databaseSettingsWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
     connect(this, SIGNAL(currentChanged(int)), this, SLOT(emitCurrentModeChanged()));
-    connect(m_searchEdit, SIGNAL(returnPressed()), this, SLOT(search()));
-    connect(m_clearSearchButton, SIGNAL(clicked()), this, SLOT(clearSearchEdit()));
+    connect(m_searchUi->searchEdit, SIGNAL(textChanged(QString)), this, SLOT(startSearchTimer()));
+    connect(m_searchTimer, SIGNAL(timeout()), this, SLOT(search()));
+    connect(closeAction, SIGNAL(triggered()), this, SLOT(closeSearch()));
+    connect(m_searchUi->clearSearchButton, SIGNAL(clicked()), this, SLOT(clearSearchEdit()));
 
     setCurrentIndex(0);
+}
+
+DatabaseWidget::~DatabaseWidget()
+{
 }
 
 DatabaseWidget::Mode DatabaseWidget::currentMode()
@@ -345,18 +358,58 @@ void DatabaseWidget::switchToDatabaseSettings()
     setCurrentIndex(4);
 }
 
+void DatabaseWidget::toggleSearch()
+{
+    if (m_entryView->inSearch()) {
+        closeSearch();
+    }
+    else {
+        showSearch();
+    }
+}
+
+void DatabaseWidget::closeSearch()
+{
+    Q_ASSERT(m_lastGroup);
+    m_groupView->setCurrentGroup(m_lastGroup);
+}
+
+void DatabaseWidget::showSearch()
+{
+    m_searchWidget->show();
+    m_searchUi->searchEdit->blockSignals(true);
+    m_searchUi->searchEdit->clear();
+    m_searchUi->searchEdit->blockSignals(false);
+    search();
+    m_searchUi->searchEdit->setFocus();
+}
+
+void DatabaseWidget::clearSearchEdit()
+{
+    m_searchUi->searchEdit->clear();
+    m_searchUi->searchEdit->setFocus();
+}
+
 void DatabaseWidget::search()
 {
     Group* searchGroup = m_db->rootGroup();
-    QList<Entry*> searchResult = searchGroup->search(m_searchEdit->text(), Qt::CaseInsensitive);
+    QList<Entry*> searchResult = searchGroup->search(m_searchUi->searchEdit->text(), Qt::CaseInsensitive);
 
     Group* group = m_groupView->currentGroup();
     if (group) {
         m_lastGroup = m_groupView->currentGroup();
+        m_groupView->setCurrentIndex(QModelIndex());
     }
 
-    m_groupView->setCurrentIndex(QModelIndex());
     m_entryView->search(searchResult);
+}
+
+void DatabaseWidget::startSearchTimer()
+{
+    if (!m_searchTimer->isActive()) {
+        m_searchTimer->stop();
+    }
+    m_searchTimer->start(100);
 }
 
 bool DatabaseWidget::dbHasKey()
@@ -383,11 +436,6 @@ void DatabaseWidget::clearLastGroup(Group* group)
 {
     if (group) {
         m_lastGroup = 0;
+        m_searchWidget->hide();
     }
-}
-
-void DatabaseWidget::clearSearchEdit()
-{
-    m_searchEdit->clear();
-    m_searchEdit->setFocus();
 }
