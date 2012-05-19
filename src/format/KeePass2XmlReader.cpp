@@ -219,10 +219,22 @@ void KeePass2XmlReader::parseMeta()
             m_meta->setLastTopVisibleGroup(getGroup(readUuid()));
         }
         else if (m_xml.name() == "HistoryMaxItems") {
-            m_meta->setHistoryMaxItems(readNumber());
+            int value = readNumber();
+            if (value >= -1) {
+                m_meta->setHistoryMaxItems(value);
+            }
+            else {
+                raiseError(18);
+            }
         }
         else if (m_xml.name() == "HistoryMaxSize") {
-            m_meta->setHistoryMaxSize(readNumber());
+            int value = readNumber();
+            if (value >= -1) {
+                m_meta->setHistoryMaxSize(value);
+            }
+            else {
+                raiseError(19);
+            }
         }
         else if (m_xml.name() == "Binaries") {
             parseBinaries();
