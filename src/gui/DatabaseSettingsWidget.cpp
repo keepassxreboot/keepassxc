@@ -18,21 +18,23 @@
 #include "DatabaseSettingsWidget.h"
 #include "ui_DatabaseSettingsWidget.h"
 
+#include "core/Database.h"
 #include "core/Metadata.h"
 #include "keys/CompositeKey.h"
 
 DatabaseSettingsWidget::DatabaseSettingsWidget(QWidget* parent)
     : DialogyWidget(parent)
     , m_ui(new Ui::DatabaseSettingsWidget())
+    , m_db(0)
 {
     m_ui->setupUi(this);
 
-    connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(changeSettings()));
+    connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(save()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
-    connect(m_ui->historyMaxItemsCheckBox, SIGNAL(stateChanged(int)),
-            this, SLOT(toggleHistoryMaxItemsSpinBox(int)));
-    connect(m_ui->historyMaxSizeCheckBox, SIGNAL(stateChanged(int)),
-            this, SLOT(toggleHistoryMaxSizeSpinBox(int)));
+    connect(m_ui->historyMaxItemsCheckBox, SIGNAL(toggled(bool)),
+            m_ui->historyMaxItemsSpinBox, SLOT(setEnabled(bool)));
+    connect(m_ui->historyMaxSizeCheckBox, SIGNAL(toggled(bool)),
+            m_ui->historyMaxSizeSpinBox, SLOT(setEnabled(bool)));
     connect(m_ui->transformBenchmarkButton, SIGNAL(clicked()), SLOT(transformRoundsBenchmark()));
 }
 
@@ -40,31 +42,27 @@ DatabaseSettingsWidget::~DatabaseSettingsWidget()
 {
 }
 
-void DatabaseSettingsWidget::setForms(const QString& dbName, const QString& dbDescription,
-                                      const QString& defaultUsername, bool recylceBinEnabled,
-                                      int transformRounds, int historyMaxItems,
-                                      int historyMaxSize)
+void DatabaseSettingsWidget::load(Database* db)
 {
-    m_ui->dbNameEdit->setText(dbName);
-    m_ui->dbDescriptionEdit->setText(dbDescription);
-    if (recylceBinEnabled) {
-        m_ui->recycleBinEnabledCheckBox->setCheckState(Qt::Checked);
-    }
-    else {
-        m_ui->recycleBinEnabledCheckBox->setCheckState(Qt::Unchecked);
-    }
-    m_ui->defaultUsernameEdit->setText(defaultUsername);
-    m_ui->transformRoundsSpinBox->setValue(transformRounds);
-    if (historyMaxItems > -1) {
-        m_ui->historyMaxItemsSpinBox->setValue(historyMaxItems);
+    m_db = db;
+
+    Metadata* meta = m_db->metadata();
+
+    m_ui->dbNameEdit->setText(meta->name());
+    m_ui->dbDescriptionEdit->setText(meta->description());
+    m_ui->recycleBinEnabledCheckBox->setChecked(meta->recycleBinEnabled());
+    m_ui->defaultUsernameEdit->setText(meta->defaultUserName());
+    m_ui->transformRoundsSpinBox->setValue(m_db->transformRounds());
+    if (meta->historyMaxItems() > -1) {
+        m_ui->historyMaxItemsSpinBox->setValue(meta->historyMaxItems());
         m_ui->historyMaxItemsCheckBox->setChecked(true);
     }
     else {
         m_ui->historyMaxItemsSpinBox->setValue(Metadata::DefaultHistoryMaxItems);
         m_ui->historyMaxItemsCheckBox->setChecked(false);
     }
-    if (historyMaxSize > -1) {
-        m_ui->historyMaxSizeSpinBox->setValue(historyMaxSize);
+    if (meta->historyMaxSize() > -1) {
+        m_ui->historyMaxSizeSpinBox->setValue(meta->historyMaxSize());
         m_ui->historyMaxSizeCheckBox->setChecked(true);
     }
     else {
@@ -75,66 +73,28 @@ void DatabaseSettingsWidget::setForms(const QString& dbName, const QString& dbDe
     m_ui->dbNameEdit->setFocus();
 }
 
-quint64 DatabaseSettingsWidget::transformRounds()
+void DatabaseSettingsWidget::save()
 {
-    return m_transformRounds;
-}
+    Metadata* meta = m_db->metadata();
 
-QString DatabaseSettingsWidget::dbName()
-{
-    return m_dbName;
-}
+    meta->setName(m_ui->dbNameEdit->text());
+    meta->setDescription(m_ui->dbDescriptionEdit->text());
+    meta->setDefaultUserName(m_ui->defaultUsernameEdit->text());
+    meta->setRecycleBinEnabled(m_ui->recycleBinEnabledCheckBox->isChecked());
+    m_db->setTransformRounds(m_ui->transformRoundsSpinBox->value());
 
-QString DatabaseSettingsWidget::dbDescription()
-{
-    return m_dbDescription;
-}
-
-QString DatabaseSettingsWidget::defaultUsername()
-{
-    return m_defaultUsername;
-}
-
-bool DatabaseSettingsWidget::recylceBinEnabled()
-{
-    return m_recylceBinEnabled;
-}
-
-int DatabaseSettingsWidget::historyMaxItems()
-{
-    return m_historyMaxItems;
-}
-
-int DatabaseSettingsWidget::historyMaxSize()
-{
-    return m_historyMaxSize;
-}
-
-void DatabaseSettingsWidget::changeSettings()
-{
-    m_dbName = m_ui->dbNameEdit->text();
-    m_dbDescription = m_ui->dbDescriptionEdit->text();
-    m_defaultUsername = m_ui->defaultUsernameEdit->text();
-    if (m_ui->recycleBinEnabledCheckBox->checkState() == Qt::Checked) {
-        m_recylceBinEnabled = true;
-    }
-    else {
-        m_recylceBinEnabled = false;
-    }
-    m_transformRounds = m_ui->transformRoundsSpinBox->value();
     if (m_ui->historyMaxItemsCheckBox->isChecked()) {
-        m_historyMaxItems = m_ui->historyMaxItemsSpinBox->value();
+        meta->setHistoryMaxItems(m_ui->historyMaxItemsSpinBox->value());
     }
     else {
-        m_historyMaxItems = -1;
+        meta->setHistoryMaxItems(-1);
     }
     if (m_ui->historyMaxSizeCheckBox->isChecked()) {
-        m_historyMaxSize = m_ui->historyMaxSizeSpinBox->value();
+        meta->setHistoryMaxSize(m_ui->historyMaxSizeSpinBox->value());
     }
     else {
-        m_historyMaxSize = -1;
+        meta->setHistoryMaxSize(-1);
     }
-
 
     Q_EMIT editFinished(true);
 }
@@ -142,26 +102,6 @@ void DatabaseSettingsWidget::changeSettings()
 void DatabaseSettingsWidget::reject()
 {
     Q_EMIT editFinished(false);
-}
-
-void DatabaseSettingsWidget::toggleHistoryMaxItemsSpinBox(int state)
-{
-    if (state == Qt::Checked) {
-        m_ui->historyMaxItemsSpinBox->setEnabled(true);
-    }
-    else {
-        m_ui->historyMaxItemsSpinBox->setEnabled(false);
-    }
-}
-
-void DatabaseSettingsWidget::toggleHistoryMaxSizeSpinBox(int state)
-{
-    if (state == Qt::Checked) {
-        m_ui->historyMaxSizeSpinBox->setEnabled(true);
-    }
-    else {
-        m_ui->historyMaxSizeSpinBox->setEnabled(false);
-    }
 }
 
 void DatabaseSettingsWidget::transformRoundsBenchmark()

@@ -110,7 +110,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_historyEditEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchBackToEntryEdit()));
     connect(m_editGroupWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
     connect(m_changeMasterKeyWidget, SIGNAL(editFinished(bool)), SLOT(updateMasterKey(bool)));
-    connect(m_databaseSettingsWidget, SIGNAL(editFinished(bool)), SLOT(updateSettings(bool)));
+    connect(m_databaseSettingsWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
     connect(this, SIGNAL(currentChanged(int)), this, SLOT(emitCurrentModeChanged()));
     connect(m_searchEdit, SIGNAL(returnPressed()), this, SLOT(search()));
     connect(m_clearSearchButton, SIGNAL(clicked()), this, SLOT(clearSearchEdit()));
@@ -323,25 +323,6 @@ void DatabaseWidget::updateMasterKey(bool accepted)
     setCurrentIndex(0);
 }
 
-void DatabaseWidget::updateSettings(bool accepted)
-{
-    if (accepted) {
-        m_db->updateKey(m_databaseSettingsWidget->transformRounds());
-        m_db->metadata()->setDescription(m_databaseSettingsWidget->dbDescription());
-        m_db->metadata()->setDefaultUserName(m_databaseSettingsWidget->defaultUsername());
-        m_db->metadata()->setRecycleBinEnabled(m_databaseSettingsWidget->recylceBinEnabled());
-        m_db->metadata()->setName(m_databaseSettingsWidget->dbName());
-        if (m_db->metadata()->historyMaxItems() != m_databaseSettingsWidget->historyMaxItems() ||
-                m_db->metadata()->historyMaxSize() != m_databaseSettingsWidget->historyMaxSize()) {
-            m_db->metadata()->setHistoryMaxItems(m_databaseSettingsWidget->historyMaxItems());
-            m_db->metadata()->setHistoryMaxSize(m_databaseSettingsWidget->historyMaxSize());
-            truncateHistories();
-        }
-    }
-
-    setCurrentIndex(0);
-}
-
 void DatabaseWidget::switchToEntryEdit()
 {
     switchToEntryEdit(m_entryView->currentEntry(), false);
@@ -360,13 +341,7 @@ void DatabaseWidget::switchToMasterKeyChange()
 
 void DatabaseWidget::switchToDatabaseSettings()
 {
-    m_databaseSettingsWidget->setForms(m_db->metadata()->name(),
-                                       m_db->metadata()->description(),
-                                       m_db->metadata()->defaultUserName(),
-                                       m_db->metadata()->recycleBinEnabled(),
-                                       m_db->transformRounds(),
-                                       m_db->metadata()->historyMaxItems(),
-                                       m_db->metadata()->historyMaxSize());
+    m_databaseSettingsWidget->load(m_db);
     setCurrentIndex(4);
 }
 

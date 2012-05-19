@@ -22,7 +22,7 @@
 
 #include "gui/DialogyWidget.h"
 
-class QAbstractButton;
+class Database;
 
 namespace Ui {
     class DatabaseSettingsWidget;
@@ -36,38 +36,19 @@ public:
     explicit DatabaseSettingsWidget(QWidget* parent = 0);
     ~DatabaseSettingsWidget();
 
-    void setForms(const QString& dbName, const QString& dbDescription,
-                  const QString& defaultUsername, bool recylceBinEnabled,
-                  int transformRounds, int historyMaxItems,
-                  int historyMaxSize);
-    quint64 transformRounds();
-    QString dbName();
-    QString dbDescription();
-    QString defaultUsername();
-    bool recylceBinEnabled();
-    int historyMaxItems();
-    int historyMaxSize();
+    void load(Database* db);
 
 Q_SIGNALS:
     void editFinished(bool accepted);
 
 private Q_SLOTS:
-    void changeSettings();
+    void save();
     void reject();
-    void toggleHistoryMaxItemsSpinBox(int state);
-    void toggleHistoryMaxSizeSpinBox(int state);
     void transformRoundsBenchmark();
 
 private:
     const QScopedPointer<Ui::DatabaseSettingsWidget> m_ui;
-
-    QString m_dbName;
-    QString m_dbDescription;
-    QString m_defaultUsername;
-    bool m_recylceBinEnabled;
-    quint64 m_transformRounds;
-    int m_historyMaxItems;
-    int m_historyMaxSize;
+    Database* m_db;
 
     Q_DISABLE_COPY(DatabaseSettingsWidget)
 };

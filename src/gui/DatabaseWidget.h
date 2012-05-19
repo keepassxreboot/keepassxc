@@ -79,7 +79,6 @@ private Q_SLOTS:
     void switchToEntryEdit(Entry* entry, bool create);
     void switchToGroupEdit(Group* entry, bool create);
     void updateMasterKey(bool accepted);
-    void updateSettings(bool accepted);
     void emitCurrentModeChanged();
     void clearLastGroup(Group* group);
     void clearSearchEdit();
