@@ -64,6 +64,7 @@ set(keepassx_SOURCES
     gui/FileDialog.cpp
     gui/IconModels.cpp
     gui/KeePass1OpenDialog.cpp
+    gui/LineEdit.cpp
     gui/MainWindow.cpp
     gui/entry/EditEntryWidget.cpp
     gui/entry/EntryAttachmentsModel.cpp
@@ -102,6 +103,7 @@ set(keepassx_MOC
     gui/EditWidget.h
     gui/EditWidgetIcons.h
     gui/IconModels.h
+    gui/LineEdit.h
     gui/MainWindow.h
     gui/entry/EditEntryWidget.h
     gui/entry/EntryAttachmentsModel.h
