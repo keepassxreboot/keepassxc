@@ -22,6 +22,8 @@
 
 class KeePass1OpenDialog : public DatabaseOpenDialog
 {
+    Q_OBJECT
+
 public:
     explicit KeePass1OpenDialog(QFile* file, const QString& filename, QWidget* parent = 0);
     ~KeePass1OpenDialog();

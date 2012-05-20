@@ -103,6 +103,7 @@ set(keepassx_MOC
     gui/EditWidget.h
     gui/EditWidgetIcons.h
     gui/IconModels.h
+    gui/KeePass1OpenDialog.h
     gui/LineEdit.h
     gui/MainWindow.h
     gui/entry/EditEntryWidget.h
