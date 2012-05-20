@@ -40,10 +40,10 @@ EntryView::EntryView(QWidget* parent)
     setDragEnabled(true);
     setSortingEnabled(true);
 
-    connect(this, SIGNAL(activated(const QModelIndex&)), SLOT(emitEntryActivated(const QModelIndex&)));
+    connect(this, SIGNAL(activated(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
     connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(entrySelectionChanged()));
-    connect(m_model, SIGNAL(switchedToSearch()), this, SLOT(switchToSearch()));
-    connect(m_model, SIGNAL(switchedToView()), this, SLOT(switchToView()));
+    connect(m_model, SIGNAL(switchedToSearch()), SLOT(switchToSearch()));
+    connect(m_model, SIGNAL(switchedToView()), SLOT(switchToView()));
 
     sortByColumn(0, Qt::AscendingOrder);
 }

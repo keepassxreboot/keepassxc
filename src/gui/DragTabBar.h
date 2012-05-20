@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_DRAGTABWIDGET_H
-#define KEEPASSX_DRAGTABWIDGET_H
+#ifndef KEEPASSX_DRAGTABBAR_H
+#define KEEPASSX_DRAGTABBAR_H
 
 #include <QtGui/QTabBar>
 
@@ -25,7 +25,7 @@ class DragTabBar : public QTabBar
     Q_OBJECT
 
 public:
-    DragTabBar(QWidget* parent = 0);
+    explicit DragTabBar(QWidget* parent = 0);
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);
@@ -42,4 +42,4 @@ private:
     int m_tabSwitchIndex;
 };
 
-#endif // KEEPASSX_DRAGTABWIDGET_H
+#endif // KEEPASSX_DRAGTABBAR_H

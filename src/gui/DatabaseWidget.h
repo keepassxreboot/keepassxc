@@ -77,7 +77,7 @@ public Q_SLOTS:
 private Q_SLOTS:
     void switchBackToEntryEdit();
     void switchToView(bool accepted);
-    void switchToHistoryView(Entry *entry);
+    void switchToHistoryView(Entry* entry);
     void switchToEntryEdit(Entry* entry);
     void switchToEntryEdit(Entry* entry, bool create);
     void switchToGroupEdit(Group* entry, bool create);

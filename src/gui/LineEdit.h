@@ -19,17 +19,16 @@ class LineEdit : public QLineEdit
     Q_OBJECT
 
 public:
-    LineEdit(QWidget* parent = 0);
+    explicit LineEdit(QWidget* parent = 0);
 
 protected:
-    void resizeEvent(QResizeEvent*);
+    void resizeEvent(QResizeEvent* event);
 
 private Q_SLOTS:
     void updateCloseButton(const QString& text);
 
 private:
-    QToolButton* clearButton;
+    QToolButton* m_clearButton;
 };
 
 #endif // KEEPASSX_LINEEDIT_H
-

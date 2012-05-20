@@ -213,7 +213,6 @@ void TestGui::testSearch()
     QTest::qWait(20);
 
     QCOMPARE(entryView->model()->rowCount(), 1);
-
 }
 
 void TestGui::cleanupTestCase()

@@ -45,7 +45,6 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     , m_newEntry(0)
     , m_newParent(0)
 {
-
     m_searchUi->setupUi(m_searchWidget);
 
     m_searchTimer = new QTimer(this);

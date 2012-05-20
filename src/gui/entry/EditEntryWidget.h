@@ -50,7 +50,7 @@ public:
     ~EditEntryWidget();
 
     void loadEntry(Entry* entry, bool create, bool history, const QString& groupName,
-                   Database *database);
+                   Database* database);
 
     static const QColor CorrectSoFarColor;
     static const QColor ErrorColor;
@@ -75,7 +75,7 @@ private Q_SLOTS:
     void restoreHistoryEntry();
     void deleteHistoryEntry();
     void deleteAllHistoryEntries();
-    void emitHistoryEntryActivated(const QModelIndex &index);
+    void emitHistoryEntryActivated(const QModelIndex& index);
     void updateHistoryButtons(const QModelIndex& current, const QModelIndex& previous);
 
 private:
