@@ -24,6 +24,7 @@
 #include <QtGui/QLineEdit>
 #include <QtGui/QPushButton>
 #include <QtGui/QToolBar>
+#include <QtGui/QToolButton>
 
 #include "config-keepassx-tests.h"
 #include "tests.h"
@@ -166,7 +167,7 @@ void TestGui::testSearch()
 
     EntryView* entryView = dbWidget->findChild<EntryView*>("entryView");
     QLineEdit* searchEdit = dbWidget->findChild<QLineEdit*>("searchEdit");
-    QPushButton* clearSearch = dbWidget->findChild<QPushButton*>("clearSearchButton");
+    QToolButton* clearSearch = dbWidget->findChild<QToolButton*>("clearButton");
 
     QTest::keyClicks(searchEdit, "ZZZ");
     QTest::qWait(120);

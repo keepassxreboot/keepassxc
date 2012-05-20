@@ -83,7 +83,6 @@ private Q_SLOTS:
     void updateMasterKey(bool accepted);
     void emitCurrentModeChanged();
     void clearLastGroup(Group* group);
-    void clearSearchEdit();
     void search();
     void startSearchTimer();
     void showSearch();

@@ -32,17 +32,17 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="searchEdit"/>
-   </item>
-   <item>
-    <widget class="QPushButton" name="clearSearchButton">
-     <property name="text">
-      <string>Clear</string>
-     </property>
-    </widget>
+    <widget class="LineEdit" name="searchEdit"/>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>LineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>gui/LineEdit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

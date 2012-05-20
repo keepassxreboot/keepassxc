@@ -122,7 +122,6 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_searchUi->searchEdit, SIGNAL(textChanged(QString)), this, SLOT(startSearchTimer()));
     connect(m_searchTimer, SIGNAL(timeout()), this, SLOT(search()));
     connect(closeAction, SIGNAL(triggered()), this, SLOT(closeSearch()));
-    connect(m_searchUi->clearSearchButton, SIGNAL(clicked()), this, SLOT(clearSearchEdit()));
 
     setCurrentIndex(0);
 }
@@ -381,12 +380,6 @@ void DatabaseWidget::showSearch()
     m_searchUi->searchEdit->clear();
     m_searchUi->searchEdit->blockSignals(false);
     search();
-    m_searchUi->searchEdit->setFocus();
-}
-
-void DatabaseWidget::clearSearchEdit()
-{
-    m_searchUi->searchEdit->clear();
     m_searchUi->searchEdit->setFocus();
 }
 
