@@ -18,6 +18,7 @@
 #include "KeePass2Writer.h"
 
 #include <QtCore/QFile>
+#include <QtCore/QIODevice>
 
 #include "core/Database.h"
 #include "core/Endian.h"

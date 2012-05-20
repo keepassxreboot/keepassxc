@@ -27,6 +27,7 @@
 #include <QtGui/QStackedLayout>
 #include <QtGui/QMessageBox>
 
+#include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"

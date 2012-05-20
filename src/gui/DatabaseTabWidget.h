@@ -19,7 +19,6 @@
 #define KEEPASSX_DATABASETABWIDGET_H
 
 #include <QtCore/QHash>
-#include <QtCore/QObject>
 #include <QtGui/QTabWidget>
 
 #include "format/KeePass2Writer.h"
@@ -28,7 +27,6 @@
 class DatabaseWidget;
 class DatabaseOpenDialog;
 class QFile;
-class QTabWidget;
 
 struct DatabaseManagerStruct
 {

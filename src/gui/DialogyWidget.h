@@ -18,8 +18,8 @@
 #ifndef KEEPASSX_DIALOGYWIDGET_H
 #define KEEPASSX_DIALOGYWIDGET_H
 
-#include <QtGui/QWidget>
 #include <QtGui/QDialogButtonBox>
+#include <QtGui/QWidget>
 
 class DialogyWidget : public QWidget
 {

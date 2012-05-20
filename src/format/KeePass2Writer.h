@@ -18,12 +18,11 @@
 #ifndef KEEPASSX_KEEPASS2WRITER_H
 #define KEEPASSX_KEEPASS2WRITER_H
 
-#include <QtCore/QIODevice>
-
 #include "format/KeePass2.h"
 #include "keys/CompositeKey.h"
 
 class Database;
+class QIODevice;
 
 class KeePass2Writer
 {

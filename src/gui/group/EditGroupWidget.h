@@ -20,8 +20,8 @@
 
 #include <QtCore/QScopedPointer>
 
-#include "gui/EditWidget.h"
 #include "core/Group.h"
+#include "gui/EditWidget.h"
 
 class EditWidgetIcons;
 

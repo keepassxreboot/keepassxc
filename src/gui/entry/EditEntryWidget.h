@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_EDITENTRYWIDGET_H
 #define KEEPASSX_EDITENTRYWIDGET_H
 
-#include <QtCore/QAbstractItemModel>
+#include <QtCore/QModelIndex>
 #include <QtCore/QScopedPointer>
 
 #include "gui/EditWidget.h"

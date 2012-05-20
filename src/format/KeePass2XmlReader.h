@@ -27,7 +27,6 @@
 
 #include "core/TimeInfo.h"
 #include "core/Uuid.h"
-#include "crypto/SymmetricCipher.h"
 
 class Database;
 class Entry;

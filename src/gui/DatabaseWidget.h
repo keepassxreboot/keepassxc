@@ -18,6 +18,7 @@
 #ifndef KEEPASSX_DATABASEWIDGET_H
 #define KEEPASSX_DATABASEWIDGET_H
 
+#include <QtCore/QScopedPointer>
 #include <QtGui/QStackedWidget>
 
 class ChangeMasterKeyWidget;

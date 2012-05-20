@@ -20,9 +20,9 @@
 
 #include <QtGui/QWidget>
 
-#include "core/Database.h"
-#include "core/Entry.h"
+#include "core/Uuid.h"
 
+class Database;
 class DefaultIconModel;
 class CustomIconModel;
 

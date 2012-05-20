@@ -19,7 +19,7 @@
 #define KEEPASSX_ENTRYATTACHMENTS_H
 
 #include <QtCore/QMap>
-#include <QtCore/QSet>
+#include <QtCore/QObject>
 
 class EntryAttachments : public QObject
 {

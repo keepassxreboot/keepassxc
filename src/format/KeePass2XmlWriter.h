@@ -29,7 +29,6 @@
 #include "core/TimeInfo.h"
 #include "core/Uuid.h"
 
-class Group;
 class KeePass2RandomStream;
 class Metadata;
 

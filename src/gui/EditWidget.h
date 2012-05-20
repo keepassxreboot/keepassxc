@@ -19,9 +19,10 @@
 #define KEEPASSX_EDITWIDGET_H
 
 #include <QtCore/QScopedPointer>
-#include <QtGui/QLabel>
 
 #include "gui/DialogyWidget.h"
+
+class QLabel;
 
 namespace Ui {
     class EditWidget;

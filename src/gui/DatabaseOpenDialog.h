@@ -21,8 +21,6 @@
 #include <QtCore/QScopedPointer>
 #include <QtGui/QDialog>
 
-#include "keys/CompositeKey.h"
-
 class Database;
 class QFile;
 
