@@ -25,6 +25,7 @@ option(WITH_LTO "Enable Link Time Optimization (LTO)" OFF)
 option(WITH_PIE "Build as Position-independent executable (PIE)" OFF)
 
 set( KEEPASSX_VERSION "2.0 alpha 1" )
+set( KEEPASSX_VERSION_NUM "1.9.80" )
 
 if("${CMAKE_C_COMPILER}" MATCHES "clang$" OR "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
   set(CMAKE_COMPILER_IS_CLANG 1)
@@ -108,6 +109,10 @@ if( APPLE OR MINGW )
 else( APPLE OR MINGW )
     set( PROGNAME keepassx )
 endif( APPLE OR MINGW )
+
+if(APPLE AND "${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr/local")
+  set(CMAKE_INSTALL_PREFIX "/Applications")
+endif()
 
 if(MINGW)
     set(BIN_INSTALL_DIR  "")

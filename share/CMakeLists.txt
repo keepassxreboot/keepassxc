@@ -22,5 +22,25 @@ if(UNIX AND NOT APPLE)
             FILES_MATCHING PATTERN "keepassx.png" PATTERN "keepassx.svgz")
 endif(UNIX AND NOT APPLE)
 
+if(APPLE)
+  install(FILES macosx/keepassx.icns DESTINATION ${DATA_INSTALL_DIR})
+endif()
+
 install(DIRECTORY icons/application/ DESTINATION ${DATA_INSTALL_DIR}/icons/application
         FILES_MATCHING PATTERN "*.png" PATTERN "*.svgz")
+
+add_custom_target(icons
+                  COMMAND png2icns macosx/keepassx.icns
+                    icons/application/16x16/apps/keepassx.png
+                    icons/application/32x32/apps/keepassx.png
+                    icons/application/48x48/apps/keepassx.png
+                    icons/application/128x128/apps/keepassx.png
+                  COMMAND icotool -c -o windows/keepassx.ico
+                    icons/application/16x16/apps/keepassx.png
+                    icons/application/24x24/apps/keepassx.png
+                    icons/application/32x32/apps/keepassx.png
+                    icons/application/48x48/apps/keepassx.png
+                    icons/application/64x64/apps/keepassx.png
+                    icons/application/128x128/apps/keepassx.png
+                  VERBATIM
+                  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})

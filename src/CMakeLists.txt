@@ -146,6 +146,30 @@ add_library( keepassx_core STATIC ${keepassx_SOURCES} )
 
 add_executable( ${PROGNAME} WIN32 MACOSX_BUNDLE main.cpp )
 target_link_libraries( ${PROGNAME} keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${GCRYPT_LIBRARIES} ${ZLIB_LIBRARIES} )
+
+if(APPLE)
+  configure_file(${CMAKE_SOURCE_DIR}/share/macosx/Info.plist.cmake ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)
+  set_target_properties(${PROGNAME} PROPERTIES
+                        MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)
+endif()
+
 install(TARGETS ${PROGNAME}
     BUNDLE DESTINATION . COMPONENT Runtime
     RUNTIME DESTINATION ${BIN_INSTALL_DIR} COMPONENT Runtime)
+
+if(APPLE AND NOT (${CMAKE_VERSION} VERSION_LESS 2.8.8))
+  if(QT_MAC_USE_COCOA AND EXISTS "${QT_LIBRARY_DIR}/Resources/qt_menu.nib")
+    install(DIRECTORY "${QT_LIBRARY_DIR}/Resources/qt_menu.nib"
+            DESTINATION "${DATA_INSTALL_DIR}")
+  endif()
+
+  set(CPACK_GENERATOR "DragNDrop")
+  set(CPACK_DMG_FORMAT "UDBZ")
+  set(CPACK_DMG_VOLUME_NAME "${PROGNAME}")
+  set(CPACK_SYSTEM_NAME "OSX")
+  set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSX_VERSION_NUM}")
+  include(CPacK)
+
+  include(DeployQt4)
+  install_qt4_executable(${PROGNAME}.app "qjpeg")
+endif()
