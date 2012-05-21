@@ -68,7 +68,7 @@ DataPath::DataPath()
     }
 #endif
 #ifdef Q_WS_MAC
-    else if (testSetDir(QCoreApplication::applicationDirPath() + "/../Resources/keepassx")) {
+    else if (testSetDir(QCoreApplication::applicationDirPath() + "/../Resources")) {
     }
 #endif
 #ifdef Q_WS_WIN
