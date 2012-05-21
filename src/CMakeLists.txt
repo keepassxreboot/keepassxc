@@ -13,9 +13,9 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-include_directories( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} )
+include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
-configure_file( config-keepassx.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx.h )
+configure_file(config-keepassx.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx.h)
 
 set(keepassx_SOURCES
     core/Config.cpp
@@ -144,10 +144,15 @@ set(keepassx_FORMS
 qt4_wrap_ui(keepassx_SOURCES ${keepassx_FORMS})
 qt4_wrap_cpp(keepassx_SOURCES ${keepassx_MOC})
 
-add_library( keepassx_core STATIC ${keepassx_SOURCES} )
+add_library(keepassx_core STATIC ${keepassx_SOURCES})
 
-add_executable( ${PROGNAME} WIN32 MACOSX_BUNDLE main.cpp )
-target_link_libraries( ${PROGNAME} keepassx_core ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${GCRYPT_LIBRARIES} ${ZLIB_LIBRARIES} )
+add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE main.cpp)
+target_link_libraries(${PROGNAME}
+                      keepassx_core
+                      ${QT_QTCORE_LIBRARY}
+                      ${QT_QTGUI_LIBRARY}
+                      ${GCRYPT_LIBRARIES}
+                      ${ZLIB_LIBRARIES})
 
 if(APPLE)
   configure_file(${CMAKE_SOURCE_DIR}/share/macosx/Info.plist.cmake ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)
@@ -156,8 +161,8 @@ if(APPLE)
 endif()
 
 install(TARGETS ${PROGNAME}
-    BUNDLE DESTINATION . COMPONENT Runtime
-    RUNTIME DESTINATION ${BIN_INSTALL_DIR} COMPONENT Runtime)
+        BUNDLE DESTINATION . COMPONENT Runtime
+        RUNTIME DESTINATION ${BIN_INSTALL_DIR} COMPONENT Runtime)
 
 if(APPLE AND NOT (${CMAKE_VERSION} VERSION_LESS 2.8.8))
   if(QT_MAC_USE_COCOA AND EXISTS "${QT_LIBRARY_DIR}/Resources/qt_menu.nib")

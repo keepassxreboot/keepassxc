@@ -13,79 +13,78 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-set( EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR} )
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_SOURCE_DIR}/src)
 
 add_definitions(-DQT_TEST_LIB)
 
-set( KEEPASSX_TEST_DATA_DIR ${CMAKE_CURRENT_SOURCE_DIR}/data )
-configure_file( config-keepassx-tests.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx-tests.h )
+set(KEEPASSX_TEST_DATA_DIR ${CMAKE_CURRENT_SOURCE_DIR}/data)
+configure_file(config-keepassx-tests.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx-tests.h)
 
-MACRO(PARSE_ARGUMENTS prefix arg_names option_names)
-  SET(DEFAULT_ARGS)
-  FOREACH(arg_name ${arg_names})
-    SET(${prefix}_${arg_name})
-  ENDFOREACH(arg_name)
-  FOREACH(option ${option_names})
-    SET(${prefix}_${option} FALSE)
-  ENDFOREACH(option)
+macro(parse_arguments prefix arg_names option_names)
+  set(DEFAULT_ARGS)
+  foreach(arg_name ${arg_names})
+    set(${prefix}_${arg_name})
+  endforeach(arg_name)
+  foreach(option ${option_names})
+    set(${prefix}_${option} FALSE)
+  endforeach(option)
 
-  SET(current_arg_name DEFAULT_ARGS)
-  SET(current_arg_list)
-  FOREACH(arg ${ARGN})
-    SET(larg_names ${arg_names})
-    LIST(FIND larg_names "${arg}" is_arg_name)
-    IF (is_arg_name GREATER -1)
-      SET(${prefix}_${current_arg_name} ${current_arg_list})
-      SET(current_arg_name ${arg})
-      SET(current_arg_list)
-    ELSE (is_arg_name GREATER -1)
-      SET(loption_names ${option_names})
-      LIST(FIND loption_names "${arg}" is_option)
-      IF (is_option GREATER -1)
-             SET(${prefix}_${arg} TRUE)
-      ELSE (is_option GREATER -1)
-             SET(current_arg_list ${current_arg_list} ${arg})
-      ENDIF (is_option GREATER -1)
-    ENDIF (is_arg_name GREATER -1)
-  ENDFOREACH(arg)
-  SET(${prefix}_${current_arg_name} ${current_arg_list})
-ENDMACRO(PARSE_ARGUMENTS)
+  set(current_arg_name DEFAULT_ARGS)
+  set(current_arg_list)
+  foreach(arg ${ARGN})
+    set(larg_names ${arg_names})
+    list(FIND larg_names "${arg}" is_arg_name)
+    if(is_arg_name GREATER -1)
+      set(${prefix}_${current_arg_name} ${current_arg_list})
+      set(current_arg_name ${arg})
+      set(current_arg_list)
+    else()
+      set(loption_names ${option_names})
+      list(FIND loption_names "${arg}" is_option)
+      if(is_option GREATER -1)
+        set(${prefix}_${arg} TRUE)
+      else(is_option GREATER -1)
+        set(current_arg_list ${current_arg_list} ${arg})
+      endif()
+    endif()
+  endforeach(arg)
+  set(${prefix}_${current_arg_name} ${current_arg_list})
+endmacro(parse_arguments)
 
-macro (ADD_UNIT_TEST)
-    parse_arguments( TEST "NAME;SOURCES;MOCS;LIBS" "" ${ARGN} )
-    set(_test_NAME ${TEST_NAME})
-    set(_srcList ${TEST_SOURCES})
-    qt4_wrap_cpp( _srcList ${TEST_MOCS} )
-    add_executable( ${_test_NAME} ${_srcList} )
-    target_link_libraries( ${_test_NAME} ${TEST_LIBS} )
+macro(add_unit_test)
+  parse_arguments(TEST "NAME;SOURCES;MOCS;LIBS" "" ${ARGN})
+  set(_test_NAME ${TEST_NAME})
+  set(_srcList ${TEST_SOURCES})
+  qt4_wrap_cpp(_srcList ${TEST_MOCS})
+  add_executable(${_test_NAME} ${_srcList})
+  target_link_libraries(${_test_NAME} ${TEST_LIBS})
 
-    if(NOT TEST_OUTPUT)
-        set(TEST_OUTPUT plaintext)
-    endif(NOT TEST_OUTPUT)
-    set(TEST_OUTPUT ${TEST_OUTPUT} CACHE STRING "The output to generate when running the QTest unit tests")
+  if(NOT TEST_OUTPUT)
+    set(TEST_OUTPUT plaintext)
+  endif(NOT TEST_OUTPUT)
+  set(TEST_OUTPUT ${TEST_OUTPUT} CACHE STRING "The output to generate when running the QTest unit tests")
 
-    get_target_property( loc ${_test_NAME} LOCATION )
+  get_target_property(loc ${_test_NAME} LOCATION)
 
-    if (KDE4_TEST_OUTPUT STREQUAL "xml")
-        add_test( ${_test_NAME} ${loc} -xml -o ${_test_NAME}.tml)
-    else (KDE4_TEST_OUTPUT STREQUAL "xml")
-        add_test( ${_test_NAME} ${loc} )
-    endif (KDE4_TEST_OUTPUT STREQUAL "xml")
+  if(KDE4_TEST_OUTPUT STREQUAL "xml")
+    add_test(${_test_NAME} ${loc} -xml -o ${_test_NAME}.tml)
+  else(KDE4_TEST_OUTPUT STREQUAL "xml")
+    add_test(${_test_NAME} ${loc})
+  endif(KDE4_TEST_OUTPUT STREQUAL "xml")
 
-    if (NOT MSVC_IDE)   #not needed for the ide
-        # if the tests are EXCLUDE_FROM_ALL, add a target "buildtests" to build all tests
-        if (NOT WITH_TESTS)
-           get_directory_property(_buildtestsAdded BUILDTESTS_ADDED)
-           if(NOT _buildtestsAdded)
-              add_custom_target(buildtests)
-              set_directory_properties(PROPERTIES BUILDTESTS_ADDED TRUE)
-           endif(NOT _buildtestsAdded)
-           add_dependencies(buildtests ${_test_NAME})
-        endif (NOT WITH_TESTS)
-    endif (NOT MSVC_IDE)
-
-endmacro (ADD_UNIT_TEST)
+  if(NOT MSVC_IDE)   #not needed for the ide
+    # if the tests are EXCLUDE_FROM_ALL, add a target "buildtests" to build all tests
+    if(NOT WITH_TESTS)
+      get_directory_property(_buildtestsAdded BUILDTESTS_ADDED)
+      if(NOT _buildtestsAdded)
+        add_custom_target(buildtests)
+        set_directory_properties(PROPERTIES BUILDTESTS_ADDED TRUE)
+      endif()
+      add_dependencies(buildtests ${_test_NAME})
+    endif()
+  endif()
+endmacro(add_unit_test)
 
 
 set(TEST_LIBRARIES
@@ -98,37 +97,51 @@ set(TEST_LIBRARIES
 )
 
 set(modeltest_SOURCRS modeltest.cpp)
-qt4_wrap_cpp( modeltest_SOURCRS modeltest.h )
-add_library( modeltest STATIC ${modeltest_SOURCRS} )
+qt4_wrap_cpp(modeltest_SOURCRS modeltest.h)
+add_library(modeltest STATIC ${modeltest_SOURCRS})
 
-add_unit_test(NAME testgroup SOURCES TestGroup.cpp MOCS TestGroup.h LIBS ${TEST_LIBRARIES} )
+add_unit_test(NAME testgroup SOURCES TestGroup.cpp MOCS TestGroup.h
+              LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testkeepass2xmlreader SOURCES TestKeePass2XmlReader.cpp MOCS TestKeePass2XmlReader.h LIBS ${TEST_LIBRARIES})
+add_unit_test(NAME testkeepass2xmlreader SOURCES TestKeePass2XmlReader.cpp MOCS TestKeePass2XmlReader.h
+              LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testkeys SOURCES TestKeys.cpp MOCS TestKeys.h LIBS ${TEST_LIBRARIES})
+add_unit_test(NAME testkeys SOURCES TestKeys.cpp MOCS TestKeys.h
+              LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testkeepass2reader SOURCES TestKeePass2Reader.cpp MOCS TestKeePass2Reader.h LIBS ${TEST_LIBRARIES})
+add_unit_test(NAME testkeepass2reader SOURCES TestKeePass2Reader.cpp MOCS TestKeePass2Reader.h
+              LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testkeepass2writer SOURCES TestKeePass2Writer.cpp MOCS TestKeePass2Writer.h LIBS ${TEST_LIBRARIES})
+add_unit_test(NAME testkeepass2writer SOURCES TestKeePass2Writer.cpp MOCS TestKeePass2Writer.h
+              LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testgroupmodel SOURCES TestGroupModel.cpp MOCS TestGroupModel.h LIBS ${TEST_LIBRARIES} modeltest)
+add_unit_test(NAME testgroupmodel SOURCES TestGroupModel.cpp MOCS TestGroupModel.h
+              LIBS ${TEST_LIBRARIES} modeltest)
 
-add_unit_test(NAME testentrymodel SOURCES TestEntryModel.cpp MOCS TestEntryModel.h LIBS ${TEST_LIBRARIES} modeltest)
+add_unit_test(NAME testentrymodel SOURCES TestEntryModel.cpp MOCS TestEntryModel.h
+              LIBS ${TEST_LIBRARIES} modeltest)
 
-add_unit_test(NAME testcryptohash SOURCES TestCryptoHash.cpp MOCS TestCryptoHash.h LIBS ${TEST_LIBRARIES})
+add_unit_test(NAME testcryptohash SOURCES TestCryptoHash.cpp MOCS TestCryptoHash.h
+              LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testsymmetriccipher SOURCES TestSymmetricCipher.cpp MOCS TestSymmetricCipher.h LIBS ${TEST_LIBRARIES})
+add_unit_test(NAME testsymmetriccipher SOURCES TestSymmetricCipher.cpp MOCS TestSymmetricCipher.h
+              LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testhashedblockstream SOURCES TestHashedBlockStream.cpp MOCS TestHashedBlockStream.h LIBS ${TEST_LIBRARIES})
+add_unit_test(NAME testhashedblockstream SOURCES TestHashedBlockStream.cpp MOCS TestHashedBlockStream.h
+              LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testkeepass2randomstream SOURCES TestKeePass2RandomStream.cpp MOCS TestKeePass2RandomStream.h LIBS ${TEST_LIBRARIES})
+add_unit_test(NAME testkeepass2randomstream SOURCES TestKeePass2RandomStream.cpp MOCS TestKeePass2RandomStream.h
+              LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testmodified SOURCES TestModified.cpp MOCS TestModified.h LIBS ${TEST_LIBRARIES})
+add_unit_test(NAME testmodified SOURCES TestModified.cpp MOCS TestModified.h
+              LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testdeletedobjects SOURCES TestDeletedObjects.cpp MOCS TestDeletedObjects.h LIBS ${TEST_LIBRARIES})
+add_unit_test(NAME testdeletedobjects SOURCES TestDeletedObjects.cpp MOCS TestDeletedObjects.h
+              LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testkeepass1reader SOURCES TestKeePass1Reader.cpp MOCS TestKeePass1Reader.h LIBS ${TEST_LIBRARIES})
+add_unit_test(NAME testkeepass1reader SOURCES TestKeePass1Reader.cpp MOCS TestKeePass1Reader.h
+              LIBS ${TEST_LIBRARIES})
 
 if(WITH_GUI_TESTS)
-    add_subdirectory(gui)
+  add_subdirectory(gui)
 endif(WITH_GUI_TESTS)
