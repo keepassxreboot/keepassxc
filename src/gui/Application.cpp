@@ -24,17 +24,13 @@ Application::Application(int& argc, char** argv)
 {
 }
 
-Application::~Application()
-{
-}
-
-bool Application::event(QEvent *event)
+bool Application::event(QEvent* event)
 {
     // Handle Apple QFileOpenEvent from finder (double click on .kdbx file)
     if (event->type() == QEvent::FileOpen) {
-        Q_EMIT openDatabase(static_cast<QFileOpenEvent*>(event)->file());
+        Q_EMIT openFile(static_cast<QFileOpenEvent*>(event)->file());
         return true;
     }
 
-  return (QApplication::event(event));
+    return QApplication::event(event);
 }

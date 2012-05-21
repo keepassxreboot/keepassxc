@@ -53,7 +53,7 @@ int main(int argc, char** argv)
     MainWindow mainWindow;
     mainWindow.show();
 
-    QObject::connect(&app, SIGNAL(openDatabase(QString)), &mainWindow, SLOT(openDatabase(QString)));
+    QObject::connect(&app, SIGNAL(openFile(QString)), &mainWindow, SLOT(openDatabase(QString)));
 
     if (!filename.isEmpty()) {
         mainWindow.openDatabase(filename, password, QString());

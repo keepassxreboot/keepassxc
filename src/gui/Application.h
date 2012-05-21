@@ -19,7 +19,6 @@
 #define KEEPASSX_APPLICATION_H
 
 #include <QtGui/QApplication>
-#include "gui/MainWindow.h"
 
 class Application : public QApplication
 {
@@ -27,12 +26,11 @@ class Application : public QApplication
 
 public:
     Application(int& argc, char** argv);
-    ~Application();
 
-    bool event(QEvent *event);
+    bool event(QEvent* event);
 
 Q_SIGNALS:
-    void openDatabase(const QString& filename);
+    void openFile(const QString& filename);
 };
 
 #endif // KEEPASSX_APPLICATION_H
