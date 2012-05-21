@@ -19,6 +19,10 @@ cmake_minimum_required(VERSION 2.6.4)
 
 set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake )
 
+include(CheckCCompilerFlag)
+include(CheckCXXCompilerFlag)
+include(CheckCXXSourceCompiles)
+
 option(WITH_TESTS "Enable building of unit tests" ON)
 option(WITH_GUI_TESTS "Enable building of GUI tests" OFF)
 option(WITH_LTO "Enable Link Time Optimization (LTO)" OFF)
@@ -56,11 +60,18 @@ add_definitions(-DQT_NO_KEYWORDS -DQT_NO_EXCEPTIONS -DQT_NO_STL -DQT_STRICT_ITER
 
 add_gcc_compiler_flags("-ansi -fno-common -fstack-protector -D_FORTIFY_SOURCE=2")
 add_gcc_compiler_flags("-Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long")
-add_gcc_compiler_flags("-Wformat=2 -Werror=format-security -Wmissing-format-attribute")
+add_gcc_compiler_flags("-Wformat=2 -Wmissing-format-attribute")
 
 add_gcc_compiler_cxxflags("-fno-exceptions -fno-rtti")
 add_gcc_compiler_cxxflags("-Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual")
-add_gcc_compiler_cflags("-Wchar-subscripts -Wwrite-strings -Werror=implicit-function-declaration")
+add_gcc_compiler_cflags("-Wchar-subscripts -Wwrite-strings")
+
+check_c_compiler_flag("-Werror=format-security -Werror=implicit-function-declaration" WERROR_C_AVAILABLE)
+check_cxx_compiler_flag("-Werror=format-security" WERROR_CXX_AVAILABLE)
+if(WERROR_C_AVAILABLE AND WERROR_CXX_AVAILABLE)
+  add_gcc_compiler_flags("-Werror=format-security")
+  add_gcc_compiler_cflags("-Werror=implicit-function-declaration")
+endif()
 
 if(CMAKE_COMPILER_IS_CLANGXX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mllvm -stack-protector-buffer-size=4")
@@ -80,8 +91,6 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
 endif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
 
 if(WITH_LTO)
-  include(CheckCXXCompilerFlag)
-
   if(CMAKE_COMPILER_IS_GNUCC and CMAKE_COMPILER_IS_GNUCXX)
     check_cxx_compiler_flag("-flto -fuse-linker-plugin" LTO_AVAILABLE)
 
@@ -143,7 +152,6 @@ find_package(Gcrypt REQUIRED)
 
 find_package(ZLIB REQUIRED)
 
-include(CheckCXXSourceCompiles)
 check_cxx_source_compiles("
     #include <zlib.h>
 
