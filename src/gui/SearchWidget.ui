@@ -10,9 +10,6 @@
     <height>53</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string/>
-  </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
     <widget class="QToolButton" name="closeSearchButton">
