@@ -37,6 +37,7 @@ Config::Config()
     QString homePath = QDir::homePath();
 
 #if defined(Q_WS_X11)
+    // we can't use QDesktopServices on X11 as it uses XDG_DATA_HOME instead of XDG_CONFIG_HOME
     QByteArray env = qgetenv("XDG_CONFIG_HOME");
     if (env.isEmpty()) {
         userPath = homePath;
@@ -52,12 +53,7 @@ Config::Config()
     }
 
     userPath += "/keepassx/";
-#elif defined(Q_WS_MAC)
-    // TODO: where to store the config on mac?
-    userPath = homePath;
-    userPath += "/.keepassx/";
-#elif defined(Q_WS_WIN)
-    // we can't use QDesktopServices on X11 as it uses XDG_DATA_HOME instead of XDG_CONFIG_HOME
+#else
     userPath = QDir::fromNativeSeparators(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
     userPath += "/keepassx/";
 #endif
