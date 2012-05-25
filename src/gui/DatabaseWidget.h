@@ -30,6 +30,7 @@ class Entry;
 class EntryView;
 class Group;
 class GroupView;
+class QMenu;
 
 namespace Ui {
     class SearchWidget;
@@ -52,10 +53,6 @@ public:
     GroupView* groupView();
     EntryView* entryView();
     bool dbHasKey();
-    void cloneEntry();
-    void deleteEntry();
-    void deleteGroup();
-
     bool canDeleteCurrentGoup();
     int addWidget(QWidget* w);
     void setCurrentIndex(int index);
@@ -67,7 +64,10 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     void createEntry();
+    void cloneEntry();
+    void deleteEntry();
     void createGroup();
+    void deleteGroup();
     void switchToEntryEdit();
     void switchToGroupEdit();
     void switchToMasterKeyChange();
@@ -88,6 +88,10 @@ private Q_SLOTS:
     void startSearchTimer();
     void showSearch();
     void closeSearch();
+    void updateGroupActions();
+    void updateEntryActions();
+    void showGroupContextMenu(const QPoint& pos);
+    void showEntryContextMenu(const QPoint& pos);
 
 private:
     void truncateHistories();
@@ -108,6 +112,17 @@ private:
     Group* m_newParent;
     Group* m_lastGroup;
     QTimer* m_searchTimer;
+
+    QMenu* m_menuGroup;
+    QAction* m_actionGroupNew;
+    QAction* m_actionGroupEdit;
+    QAction* m_actionGroupDelete;
+
+    QMenu* m_menuEntry;
+    QAction* m_actionEntryNew;
+    QAction* m_actionEntryClone;
+    QAction* m_actionEntryEditView;
+    QAction* m_actionEntryDelete;
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H

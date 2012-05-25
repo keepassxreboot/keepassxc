@@ -22,9 +22,10 @@
 #include <QtGui/QAction>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QLabel>
-#include <QtGui/QSplitter>
 #include <QtGui/QLineEdit>
+#include <QtGui/QMenu>
 #include <QtGui/QMessageBox>
+#include <QtGui/QSplitter>
 
 #include "core/DataPath.h"
 #include "core/Metadata.h"
@@ -44,6 +45,8 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     , m_newGroup(0)
     , m_newEntry(0)
     , m_newParent(0)
+    , m_menuGroup(new QMenu(this))
+    , m_menuEntry(new QMenu(this))
 {
     m_searchUi->setupUi(m_searchWidget);
 
@@ -59,9 +62,13 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
 
     m_groupView = new GroupView(db, splitter);
     m_groupView->setObjectName("groupView");
+    m_groupView->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(m_groupView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(showGroupContextMenu(QPoint)));
 
     m_entryView = new EntryView(rightHandSideWidget);
     m_entryView->setObjectName("entryView");
+    m_entryView->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(m_entryView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(showEntryContextMenu(QPoint)));
 
     QSizePolicy policy;
     policy = m_groupView->sizePolicy();
@@ -108,6 +115,19 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     addWidget(m_databaseSettingsWidget);
     addWidget(m_historyEditEntryWidget);
 
+    m_actionEntryNew = m_menuEntry->addAction(tr("Add new entry"), this, SLOT(createEntry()));
+    m_actionEntryClone = m_menuEntry->addAction(tr("Clone entry"), this, SLOT(cloneEntry()));
+    m_actionEntryClone->setEnabled(false);
+    m_actionEntryEditView = m_menuEntry->addAction(tr("View/Edit entry"), this, SLOT(switchToEntryEdit()));
+    m_actionEntryEditView->setEnabled(false);
+    m_actionEntryDelete = m_menuEntry->addAction(tr("Delete entry"), this, SLOT(deleteEntry()));
+    m_actionEntryDelete->setEnabled(false);
+
+    m_actionGroupNew = m_menuGroup->addAction(tr("Add new group"), this, SLOT(createGroup()));
+    m_actionGroupEdit = m_menuGroup->addAction(tr("Edit group"), this, SLOT(switchToGroupEdit()));
+    m_actionGroupDelete = m_menuGroup->addAction(tr("Delete group"), this, SLOT(deleteGroup()));
+    m_actionGroupDelete->setEnabled(false);
+
     connect(m_groupView, SIGNAL(groupChanged(Group*)), m_entryView, SLOT(setGroup(Group*)));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(clearLastGroup(Group*)));
     connect(m_entryView, SIGNAL(entryActivated(Entry*)), SLOT(switchToEntryEdit(Entry*)));
@@ -121,6 +141,8 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_searchUi->searchEdit, SIGNAL(textChanged(QString)), this, SLOT(startSearchTimer()));
     connect(m_searchTimer, SIGNAL(timeout()), this, SLOT(search()));
     connect(closeAction, SIGNAL(triggered()), this, SLOT(closeSearch()));
+    connect(m_entryView, SIGNAL(entrySelectionChanged()), SLOT(updateEntryActions()));
+    connect(m_groupView, SIGNAL(groupChanged(Group*)), SLOT(updateGroupActions()));
 
     setCurrentIndex(0);
 }
@@ -430,4 +452,30 @@ void DatabaseWidget::clearLastGroup(Group* group)
         m_lastGroup = 0;
         m_searchWidget->hide();
     }
+}
+
+void DatabaseWidget::updateGroupActions()
+{
+    m_actionGroupDelete->setEnabled(canDeleteCurrentGoup());
+}
+
+void DatabaseWidget::updateEntryActions()
+{
+    bool singleEntrySelected = m_entryView->isSingleEntrySelected();
+    bool inSearch = m_entryView->inSearch();
+
+    m_actionEntryNew->setEnabled(!inSearch);
+    m_actionEntryClone->setEnabled(singleEntrySelected && !inSearch);
+    m_actionEntryEditView->setEnabled(singleEntrySelected);
+    m_actionEntryDelete->setEnabled(singleEntrySelected);
+}
+
+void DatabaseWidget::showGroupContextMenu(const QPoint& pos)
+{
+    m_menuGroup->exec(m_groupView->viewport()->mapToGlobal(pos));
+}
+
+void DatabaseWidget::showEntryContextMenu(const QPoint& pos)
+{
+    m_menuEntry->exec(m_entryView->viewport()->mapToGlobal(pos));
 }
