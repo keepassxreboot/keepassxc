@@ -113,57 +113,25 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         }
 
         switch (mode) {
-        case DatabaseWidget::ViewMode:
-            if (dbWidget->entryView()->inSearch()) {
-                m_ui->actionEntryNew->setEnabled(false);
-            }
-            else {
-                m_ui->actionEntryNew->setEnabled(true);
-            }
-            if (dbWidget->entryView()->inSearch() ||
-                    !dbWidget->entryView()->isSingleEntrySelected()) {
-                m_ui->actionEntryClone->setEnabled(false);
-            }
-            else {
-                m_ui->actionEntryClone->setEnabled(true);
-            }
+        case DatabaseWidget::ViewMode: {
+            bool inSearch = dbWidget->entryView()->inSearch();
+            bool singleEntry = dbWidget->entryView()->isSingleEntrySelected();
 
-            if (dbWidget->entryView()->isSingleEntrySelected()) {
-               m_ui->actionEntryEdit->setEnabled(true);
-               m_ui->actionEntryDelete->setEnabled(true);
-            }
-            else {
-                m_ui->actionEntryEdit->setEnabled(false);
-                m_ui->actionEntryDelete->setEnabled(false);
-            }
-
-            if (dbWidget->entryView()->inSearch()) {
-                m_ui->actionGroupNew->setEnabled(false);
-                m_ui->actionGroupEdit->setEnabled(false);
-                m_ui->actionGroupDelete->setEnabled(false);
-            }
-            else {
-                m_ui->actionGroupNew->setEnabled(true);
-                m_ui->actionGroupEdit->setEnabled(true);
-                if (dbWidget->canDeleteCurrentGoup()) {
-                    m_ui->actionGroupDelete->setEnabled(true);
-                }
-                else {
-                    m_ui->actionGroupDelete->setEnabled(false);
-                }
-            }
+            m_ui->actionEntryNew->setEnabled(!inSearch);
+            m_ui->actionEntryClone->setEnabled(!inSearch && singleEntry);
+            m_ui->actionEntryEdit->setEnabled(singleEntry);
+            m_ui->actionEntryDelete->setEnabled(singleEntry);
+            m_ui->actionGroupNew->setEnabled(!inSearch);
+            m_ui->actionGroupEdit->setEnabled(!inSearch);
+            m_ui->actionGroupDelete->setEnabled(!inSearch && dbWidget->canDeleteCurrentGoup());
             m_ui->actionSearch->setEnabled(true);
-            if (dbWidget->entryView()->inSearch()) {
-                m_ui->actionSearch->setChecked(true);
-            }
-            else {
-                m_ui->actionSearch->setChecked(false);
-            }
+            m_ui->actionSearch->setChecked(inSearch);
             m_ui->actionChangeMasterKey->setEnabled(true);
             m_ui->actionChangeDatabaseSettings->setEnabled(true);
             m_ui->actionDatabaseSave->setEnabled(true);
             m_ui->actionDatabaseSaveAs->setEnabled(true);
             break;
+        }
         case DatabaseWidget::EditMode:
             m_ui->actionEntryNew->setEnabled(false);
             m_ui->actionGroupNew->setEnabled(false);
