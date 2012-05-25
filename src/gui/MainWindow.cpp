@@ -121,14 +121,14 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
                 m_ui->actionEntryNew->setEnabled(true);
             }
             if (dbWidget->entryView()->inSearch() ||
-                    !dbWidget->entryView()->currentIndex().isValid()) {
+                    !dbWidget->entryView()->isSingleEntrySelected()) {
                 m_ui->actionEntryClone->setEnabled(false);
             }
             else {
                 m_ui->actionEntryClone->setEnabled(true);
             }
 
-            if (dbWidget->entryView()->currentIndex().isValid()) {
+            if (dbWidget->entryView()->isSingleEntrySelected()) {
                m_ui->actionEntryEdit->setEnabled(true);
                m_ui->actionEntryDelete->setEnabled(true);
             }

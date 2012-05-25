@@ -39,6 +39,7 @@ EntryView::EntryView(QWidget* parent)
     setAlternatingRowColors(true);
     setDragEnabled(true);
     setSortingEnabled(true);
+    setSelectionMode(QAbstractItemView::ExtendedSelection);
 
     connect(this, SIGNAL(activated(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
     connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(entrySelectionChanged()));
@@ -78,8 +79,13 @@ void EntryView::setModel(QAbstractItemModel* model)
 
 Entry* EntryView::currentEntry()
 {
-    // TODO: use selection instead of current?
-    return m_model->entryFromIndex(m_sortModel->mapToSource(currentIndex()));
+    QModelIndexList list = selectionModel()->selectedRows();
+    if (list.size() == 1) {
+        return m_model->entryFromIndex(m_sortModel->mapToSource(list.first()));
+    }
+    else {
+        return 0;
+    }
 }
 
 bool EntryView::isSingleEntrySelected()

@@ -42,14 +42,14 @@ public:
 public Q_SLOTS:
     void setGroup(Group* group);
 
+Q_SIGNALS:
+    void entryActivated(Entry* entry);
+    void entrySelectionChanged();
+
 private Q_SLOTS:
     void emitEntryActivated(const QModelIndex& index);
     void switchToSearch();
     void switchToView();
-
-Q_SIGNALS:
-    void entryActivated(Entry* entry);
-    void entrySelectionChanged();
 
 private:
     EntryModel* const m_model;
