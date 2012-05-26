@@ -120,20 +120,18 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 
         switch (mode) {
         case DatabaseWidget::ViewMode: {
-            bool inSearch = dbWidget->entryView()->inSearch();
-            bool singleEntry = dbWidget->entryView()->isSingleEntrySelected();
-
-            m_ui->actionEntryNew->setEnabled(!inSearch);
-            m_ui->actionEntryClone->setEnabled(!inSearch && singleEntry);
-            m_ui->actionEntryEdit->setEnabled(singleEntry);
-            m_ui->actionEntryDelete->setEnabled(singleEntry);
-            m_ui->actionEntryCopyUsername->setEnabled(singleEntry);
-            m_ui->actionEntryCopyPassword->setEnabled(singleEntry);
-            m_ui->actionGroupNew->setEnabled(!inSearch);
-            m_ui->actionGroupEdit->setEnabled(!inSearch);
-            m_ui->actionGroupDelete->setEnabled(!inSearch && dbWidget->canDeleteCurrentGoup());
+            m_ui->actionEntryNew->setEnabled(dbWidget->actionEnabled(DatabaseWidget::EntryNew));
+            m_ui->actionEntryClone->setEnabled(dbWidget->actionEnabled(DatabaseWidget::EntryClone));
+            m_ui->actionEntryEdit->setEnabled(dbWidget->actionEnabled(DatabaseWidget::EntryEditView));
+            m_ui->actionEntryDelete->setEnabled(dbWidget->actionEnabled(DatabaseWidget::EntryDelete));
+            m_ui->actionEntryCopyUsername->setEnabled(dbWidget->actionEnabled(DatabaseWidget::EntryCopyUsername));
+            m_ui->actionEntryCopyPassword->setEnabled(dbWidget->actionEnabled(DatabaseWidget::EntryCopyPassword));
+            m_ui->actionGroupNew->setEnabled(dbWidget->actionEnabled(DatabaseWidget::GroupNew));
+            m_ui->actionGroupEdit->setEnabled(dbWidget->actionEnabled(DatabaseWidget::GroupEdit));
+            m_ui->actionGroupDelete->setEnabled(dbWidget->actionEnabled(DatabaseWidget::GroupDelete));
             m_ui->actionSearch->setEnabled(true);
-            m_ui->actionSearch->setChecked(inSearch);
+            // TODO: get checked state from db widget
+            m_ui->actionSearch->setChecked(dbWidget->entryView()->inSearch());
             m_ui->actionChangeMasterKey->setEnabled(true);
             m_ui->actionChangeDatabaseSettings->setEnabled(true);
             m_ui->actionDatabaseSave->setEnabled(true);

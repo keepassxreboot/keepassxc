@@ -47,6 +47,18 @@ public:
         ViewMode,
         EditMode
     };
+    enum Action
+    {
+        GroupNew,
+        GroupEdit,
+        GroupDelete,
+        EntryNew,
+        EntryClone,
+        EntryEditView,
+        EntryDelete,
+        EntryCopyUsername,
+        EntryCopyPassword
+    };
 
     explicit DatabaseWidget(Database* db, QWidget* parent = 0);
     ~DatabaseWidget();
@@ -57,6 +69,7 @@ public:
     int addWidget(QWidget* w);
     void setCurrentIndex(int index);
     DatabaseWidget::Mode currentMode();
+    bool actionEnabled(Action action);
 
 Q_SIGNALS:
     void closeRequest();

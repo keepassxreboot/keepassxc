@@ -177,6 +177,33 @@ DatabaseWidget::Mode DatabaseWidget::currentMode()
     }
 }
 
+bool DatabaseWidget::actionEnabled(Action action)
+{
+    switch (action) {
+    case GroupNew:
+        return m_actionGroupNew->isEnabled();
+    case GroupEdit:
+        return m_actionGroupEdit->isEnabled();
+    case GroupDelete:
+        return m_actionGroupDelete->isEnabled();
+    case EntryNew:
+        return m_actionEntryNew->isEnabled();
+    case EntryClone:
+        return m_actionEntryClone->isEnabled();
+    case EntryEditView:
+        return m_actionEntryEditView->isEnabled();
+    case EntryDelete:
+        return m_actionEntryDelete->isEnabled();
+    case EntryCopyUsername:
+        return m_actionEntryCopyUsername->isEnabled();
+    case EntryCopyPassword:
+        return m_actionEntryCopyPassword->isEnabled();
+    default:
+        Q_ASSERT(false);
+        return false;
+    }
+}
+
 void DatabaseWidget::emitCurrentModeChanged()
 {
     Q_EMIT currentModeChanged(currentMode());
