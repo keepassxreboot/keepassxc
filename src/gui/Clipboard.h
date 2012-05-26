@@ -30,13 +30,13 @@ public:
     ~Clipboard();
     void setText(const QString& text, int clearTimeout = 0);
 
-private:
-    Clipboard(QObject* parent = 0);
-
-    QTimer* m_timer;
-
 private Q_SLOTS:
     void clearClipboard();
+
+private:
+    explicit Clipboard(QObject* parent = 0);
+
+    QTimer* m_timer;
 
     friend Clipboard* clipboard();
 };
