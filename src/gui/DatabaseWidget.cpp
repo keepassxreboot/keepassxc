@@ -530,10 +530,10 @@ void DatabaseWidget::updateEntryActions()
 
 void DatabaseWidget::showGroupContextMenu(const QPoint& pos)
 {
-    m_menuGroup->exec(m_groupView->viewport()->mapToGlobal(pos));
+    m_menuGroup->popup(m_groupView->viewport()->mapToGlobal(pos));
 }
 
 void DatabaseWidget::showEntryContextMenu(const QPoint& pos)
 {
-    m_menuEntry->exec(m_entryView->viewport()->mapToGlobal(pos));
+    m_menuEntry->popup(m_entryView->viewport()->mapToGlobal(pos));
 }
