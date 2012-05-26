@@ -70,6 +70,8 @@
     <addaction name="actionEntryClone"/>
     <addaction name="actionEntryEdit"/>
     <addaction name="actionEntryDelete"/>
+    <addaction name="actionEntryCopyUsername"/>
+    <addaction name="actionEntryCopyPassword"/>
    </widget>
    <widget class="QMenu" name="menuGroups">
     <property name="title">
@@ -232,6 +234,22 @@
    </property>
    <property name="text">
     <string>Find</string>
+   </property>
+  </action>
+  <action name="actionEntryCopyUsername">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Copy username to clipboard</string>
+   </property>
+  </action>
+  <action name="actionEntryCopyPassword">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Copy password to clipboard</string>
    </property>
   </action>
  </widget>

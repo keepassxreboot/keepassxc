@@ -66,6 +66,8 @@ public Q_SLOTS:
     void createEntry();
     void cloneEntry();
     void deleteEntry();
+    void copyUsername();
+    void copyPassword();
     void createGroup();
     void deleteGroup();
     void switchToEntryEdit();
@@ -123,6 +125,8 @@ private:
     QAction* m_actionEntryClone;
     QAction* m_actionEntryEditView;
     QAction* m_actionEntryDelete;
+    QAction* m_actionEntryCopyUsername;
+    QAction* m_actionEntryCopyPassword;
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H

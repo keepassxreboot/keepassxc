@@ -54,6 +54,7 @@ set(keepassx_SOURCES
     gui/AboutDialog.cpp
     gui/Application.cpp
     gui/ChangeMasterKeyWidget.cpp
+    gui/Clipboard.cpp
     gui/DatabaseOpenDialog.cpp
     gui/DatabaseSettingsWidget.cpp
     gui/DatabaseTabWidget.cpp
@@ -96,6 +97,7 @@ set(keepassx_MOC
     gui/AboutDialog.h
     gui/Application.h
     gui/ChangeMasterKeyWidget.h
+    gui/Clipboard.h
     gui/DatabaseOpenDialog.h
     gui/DatabaseSettingsWidget.h
     gui/DatabaseTabWidget.h
@@ -153,6 +155,10 @@ target_link_libraries(${PROGNAME}
                       ${QT_QTGUI_LIBRARY}
                       ${GCRYPT_LIBRARIES}
                       ${ZLIB_LIBRARIES})
+
+if(UNIX AND NOT APPLE)
+  target_link_libraries(${PROGNAME} ${QT_QTDBUS_LIBRARY})
+endif()
 
 if(APPLE)
   configure_file(${CMAKE_SOURCE_DIR}/share/macosx/Info.plist.cmake ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)

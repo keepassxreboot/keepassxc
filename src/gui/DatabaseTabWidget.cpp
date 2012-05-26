@@ -349,6 +349,16 @@ void DatabaseTabWidget::deleteEntry()
     currentDatabaseWidget()->deleteEntry();
 }
 
+void DatabaseTabWidget::copyUsername()
+{
+    currentDatabaseWidget()->copyUsername();
+}
+
+void DatabaseTabWidget::copyPassword()
+{
+    currentDatabaseWidget()->copyPassword();
+}
+
 void DatabaseTabWidget::createGroup()
 {
     currentDatabaseWidget()->createGroup();

@@ -31,6 +31,7 @@
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "gui/ChangeMasterKeyWidget.h"
+#include "gui/Clipboard.h"
 #include "gui/DatabaseSettingsWidget.h"
 #include "gui/entry/EditEntryWidget.h"
 #include "gui/entry/EntryView.h"
@@ -122,6 +123,12 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_actionEntryEditView->setEnabled(false);
     m_actionEntryDelete = m_menuEntry->addAction(tr("Delete entry"), this, SLOT(deleteEntry()));
     m_actionEntryDelete->setEnabled(false);
+    m_actionEntryCopyUsername = m_menuEntry->addAction(tr("Copy username to clipboard"), this,
+                                                       SLOT(copyUsername()), Qt::CTRL + Qt::Key_B);
+    m_actionEntryCopyUsername->setEnabled(false);
+    m_actionEntryCopyPassword = m_menuEntry->addAction(tr("Copy password to clipboard"), this,
+                                                       SLOT(copyPassword()), Qt::CTRL + Qt::Key_C);
+    m_actionEntryCopyPassword->setEnabled(false);
 
     m_actionGroupNew = m_menuGroup->addAction(tr("Add new group"), this, SLOT(createGroup()));
     m_actionGroupEdit = m_menuGroup->addAction(tr("Edit group"), this, SLOT(switchToGroupEdit()));
@@ -236,6 +243,30 @@ void DatabaseWidget::deleteEntry()
     else {
         m_db->recycleEntry(currentEntry);
     }
+}
+
+void DatabaseWidget::copyUsername()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if (!currentEntry) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    // TODO: set clearTimeout
+    clipboard()->setText(currentEntry->username());
+}
+
+void DatabaseWidget::copyPassword()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if (!currentEntry) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    // TODO: set clearTimeout
+    clipboard()->setText(currentEntry->password());
 }
 
 void DatabaseWidget::createGroup()
@@ -493,6 +524,8 @@ void DatabaseWidget::updateEntryActions()
     m_actionEntryClone->setEnabled(singleEntrySelected && !inSearch);
     m_actionEntryEditView->setEnabled(singleEntrySelected);
     m_actionEntryDelete->setEnabled(singleEntrySelected);
+    m_actionEntryCopyUsername->setEnabled(singleEntrySelected);
+    m_actionEntryCopyPassword->setEnabled(singleEntrySelected);
 }
 
 void DatabaseWidget::showGroupContextMenu(const QPoint& pos)
