@@ -34,6 +34,8 @@ private:
 
     QScopedPointer<QSettings> m_settings;
 
+    Q_DISABLE_COPY(Config)
+
     friend Config* config();
 };
 

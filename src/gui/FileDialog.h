@@ -40,6 +40,8 @@ private:
     FileDialog();
     QString m_nextFileName;
 
+    Q_DISABLE_COPY(FileDialog)
+
     friend FileDialog* fileDialog();
 };
 

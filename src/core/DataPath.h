@@ -34,6 +34,8 @@ private:
 
     QString m_basePath;
 
+    Q_DISABLE_COPY(DataPath)
+
     friend DataPath* dataPath();
 };
 

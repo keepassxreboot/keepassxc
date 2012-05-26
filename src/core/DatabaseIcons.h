@@ -38,6 +38,8 @@ private:
     QVector<QImage> m_iconCache;
     QVector<QPixmapCache::Key> m_pixmapCacheKeys;
 
+    Q_DISABLE_COPY(DatabaseIcons)
+
     friend DatabaseIcons* databaseIcons();
 };
 
