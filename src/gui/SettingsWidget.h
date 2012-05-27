@@ -21,6 +21,7 @@
 #include "gui/EditWidget.h"
 
 namespace Ui {
+    class SettingsWidgetGeneral;
     class SettingsWidgetSecurity;
 }
 
@@ -42,7 +43,9 @@ private Q_SLOTS:
 
 private:
     QWidget* const m_secWidget;
+    QWidget* const m_generalWidget;
     const QScopedPointer<Ui::SettingsWidgetSecurity> m_secUi;
+    const QScopedPointer<Ui::SettingsWidgetGeneral> m_generalUi;
 };
 
 #endif // KEEPASSX_SETTINGSWIDGET_H

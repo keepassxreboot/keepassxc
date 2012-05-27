@@ -16,6 +16,7 @@
  */
 
 #include "SettingsWidget.h"
+#include "ui_SettingsWidgetGeneral.h"
 #include "ui_SettingsWidgetSecurity.h"
 
 #include "core/Config.h"
@@ -23,11 +24,15 @@
 SettingsWidget::SettingsWidget(QWidget* parent)
     : EditWidget(parent)
     , m_secWidget(new QWidget())
+    , m_generalWidget(new QWidget())
     , m_secUi(new Ui::SettingsWidgetSecurity())
+    , m_generalUi(new Ui::SettingsWidgetGeneral())
 {
     setHeadline(tr("Application Settings"));
 
     m_secUi->setupUi(m_secWidget);
+    m_generalUi->setupUi(m_generalWidget);
+    add(tr("General"), m_generalWidget);
     add(tr("Security"), m_secWidget);
 
     connect(this, SIGNAL(accepted()), SLOT(saveSettings()));
@@ -43,6 +48,7 @@ SettingsWidget::~SettingsWidget()
 
 void SettingsWidget::loadSettings()
 {
+    m_generalUi->rememberLastDatabasesCheckBox->setChecked(config()->get("RememberLastDatabases").toBool());
     m_secUi->clearClipboardCheckBox->setChecked(config()->get("security/clearclipboard").toBool());
     m_secUi->clearClipboardSpinBox->setValue(config()->get("security/clearclipboardtimeout").toInt());
 
@@ -51,6 +57,7 @@ void SettingsWidget::loadSettings()
 
 void SettingsWidget::saveSettings()
 {
+    config()->set("RememberLastDatabases", m_generalUi->rememberLastDatabasesCheckBox->isChecked());
     config()->set("security/clearclipboard", m_secUi->clearClipboardCheckBox->isChecked());
     config()->set("security/clearclipboardtimeout", m_secUi->clearClipboardSpinBox->value());
 
