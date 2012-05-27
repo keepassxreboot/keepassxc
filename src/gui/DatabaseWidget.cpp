@@ -292,7 +292,6 @@ void DatabaseWidget::copyUsername()
         return;
     }
 
-    // TODO: set clearTimeout
     clipboard()->setText(currentEntry->username());
 }
 
@@ -304,7 +303,6 @@ void DatabaseWidget::copyPassword()
         return;
     }
 
-    // TODO: set clearTimeout
     clipboard()->setText(currentEntry->password());
 }
 

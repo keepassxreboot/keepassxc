@@ -55,7 +55,7 @@ void Clipboard::setText(const QString& text)
     if (config()->get("security/clearclipboard").toBool()) {
         int timeout = config()->get("security/clearclipboardtimeout").toInt();
         if (timeout > 0) {
-            m_timer->start(timeout);
+            m_timer->start(timeout * 1000);
         }
     }
 }
