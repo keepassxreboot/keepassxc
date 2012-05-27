@@ -44,6 +44,13 @@ MainWindow::MainWindow()
     m_ui->actionEntryCopyUsername->setShortcut(Qt::CTRL + Qt::Key_B);
     m_ui->actionEntryCopyPassword->setShortcut(Qt::CTRL + Qt::Key_C);
 
+    m_ui->actionEntryNew->setIcon(dataPath()->icon("actions", "entry-new", false));
+    m_ui->actionEntryClone->setIcon(dataPath()->icon("actions", "entry-clone", false));
+    m_ui->actionEntryEdit->setIcon(dataPath()->icon("actions", "entry-edit", false));
+    m_ui->actionEntryDelete->setIcon(dataPath()->icon("actions", "entry-delete", false));
+
+    m_ui->actionSearch->setIcon(dataPath()->icon("actions", "system-search", true));
+
     connect(m_ui->tabWidget, SIGNAL(entrySelectionChanged(bool)),
             SLOT(setMenuActionState()));
     connect(m_ui->tabWidget, SIGNAL(currentWidgetModeChanged(DatabaseWidget::Mode)),
