@@ -18,14 +18,12 @@
 #include "SettingsWidget.h"
 #include "ui_SettingsWidgetSecurity.h"
 
-#include <QtGui/QLabel>
-
 SettingsWidget::SettingsWidget(QWidget* parent)
     : EditWidget(parent)
     , m_secWidget(new QWidget())
     , m_secUi(new Ui::SettingsWidgetSecurity())
 {
-    headlineLabel()->setText(tr("Application Settings"));
+    setHeadline(tr("Application Settings"));
 
     m_secUi->setupUi(m_secWidget);
     add(tr("Security"), m_secWidget);

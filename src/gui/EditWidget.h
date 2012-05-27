@@ -38,6 +38,7 @@ public:
 
     void add(const QString& labelText, QWidget* widget);
     void setCurrentRow(int index);
+    void setHeadline(const QString& text);
     QLabel* headlineLabel();
 
 Q_SIGNALS:

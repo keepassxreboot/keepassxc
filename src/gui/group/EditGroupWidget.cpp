@@ -59,10 +59,10 @@ void EditGroupWidget::loadGroup(Group* group, bool create, Database* database)
     m_database = database;
 
     if (create) {
-        headlineLabel()->setText(tr("Add group"));
+        setHeadline(tr("Add group"));
     }
     else {
-        headlineLabel()->setText(tr("Edit group"));
+        setHeadline(tr("Edit group"));
     }
 
     m_mainUi->editName->setText(m_group->name());

@@ -51,6 +51,11 @@ void EditWidget::setCurrentRow(int index)
     m_ui->categoryList->setCurrentRow(index);
 }
 
+void EditWidget::setHeadline(const QString& text)
+{
+    m_ui->headerLabel->setText(text);
+}
+
 QLabel* EditWidget::headlineLabel()
 {
     return m_ui->headerLabel;

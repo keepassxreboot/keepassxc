@@ -147,14 +147,14 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const Q
     m_history = history;
 
     if (history) {
-        headlineLabel()->setText("Entry history");
+        setHeadline("Entry history");
     }
     else {
         if (create) {
-            headlineLabel()->setText(groupName+" > "+tr("Add entry"));
+            setHeadline(groupName+" > "+tr("Add entry"));
         }
         else {
-            headlineLabel()->setText(groupName+" > "+tr("Edit entry"));
+            setHeadline(groupName+" > "+tr("Edit entry"));
         }
     }
 
