@@ -84,6 +84,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     closeAction->setIcon(closeIcon);
     m_searchUi->closeSearchButton->setDefaultAction(closeAction);
     m_searchWidget->hide();
+    m_searchUi->caseSensitiveCheckBox->setVisible(false);
 
     QVBoxLayout* vLayout = new QVBoxLayout(rightHandSideWidget);
     vLayout->setMargin(0);
