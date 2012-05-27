@@ -494,6 +494,9 @@ void DatabaseWidget::showSearch()
     m_searchUi->searchRootRadioButton->blockSignals(false);
 
     m_lastGroup = m_groupView->currentGroup();
+
+    Q_ASSERT(m_lastGroup);
+
     if (m_lastGroup == m_db->rootGroup()) {
         m_searchUi->searchCurrentRadioButton->hide();
         m_searchUi->searchRootRadioButton->hide();
@@ -515,6 +518,8 @@ void DatabaseWidget::showSearch()
 
 void DatabaseWidget::search()
 {
+    Q_ASSERT(m_lastGroup);
+
     Group* searchGroup;
     if (m_searchUi->searchCurrentRadioButton->isChecked()) {
         searchGroup = m_lastGroup;
