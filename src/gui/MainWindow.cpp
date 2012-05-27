@@ -64,6 +64,8 @@ MainWindow::MainWindow()
 
     m_ui->actionSettings->setIcon(dataPath()->icon("actions", "configure"));
 
+    m_ui->actionAbout->setIcon(dataPath()->icon("actions", "help-about"));
+
     m_ui->actionSearch->setIcon(dataPath()->icon("actions", "system-search"));
 
     connect(m_ui->tabWidget, SIGNAL(entrySelectionChanged(bool)),
