@@ -20,6 +20,7 @@ Source: http://www.keepassx.org/
 
 Copyright: 2010-2012, Felix Geyer <debfx@fobos.de>
            2011-2012, Florian Geyer <blueice@fobos.de>
+           2007, Trolltech ASA <info@trolltech.com>
 License: GPL-2 or GPL-3
 
 Files: share/icons/database/*.png
@@ -59,6 +60,8 @@ Files: share/icons/application/*/actions/application-exit.png,
        share/icons/application/*/actions/document-open.png,
        share/icons/application/*/actions/document-save.png,
        share/icons/application/*/actions/document-save-as.png,
+       share/icons/application/*/actions/edit-clear-locationbar-ltr.png,
+       share/icons/application/*/actions/edit-clear-locationbar-rtl.png,
        share/icons/application/*/actions/system-search.png,
        share/icons/application/*/status/dialog-error.png,
        share/icons/application/*/status/dialog-information.png,
