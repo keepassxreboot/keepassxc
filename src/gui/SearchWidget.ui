@@ -11,6 +11,9 @@
    </rect>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="margin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QToolButton" name="closeSearchButton">
      <property name="text">

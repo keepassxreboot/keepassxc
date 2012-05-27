@@ -86,6 +86,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_searchWidget->hide();
 
     QVBoxLayout* vLayout = new QVBoxLayout(rightHandSideWidget);
+    vLayout->setMargin(0);
     vLayout->addWidget(m_searchWidget);
     vLayout->addWidget(m_entryView);
 
