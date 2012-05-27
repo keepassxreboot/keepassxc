@@ -137,8 +137,11 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_actionEntryCopyPassword->setEnabled(false);
 
     m_actionGroupNew = m_menuGroup->addAction(tr("Add new group"), this, SLOT(createGroup()));
+    m_actionGroupNew->setIcon(dataPath()->icon("actions", "group-new", false));
     m_actionGroupEdit = m_menuGroup->addAction(tr("Edit group"), this, SLOT(switchToGroupEdit()));
+    m_actionGroupEdit->setIcon(dataPath()->icon("actions", "group-edit", false));
     m_actionGroupDelete = m_menuGroup->addAction(tr("Delete group"), this, SLOT(deleteGroup()));
+    m_actionGroupDelete->setIcon(dataPath()->icon("actions", "group-delete", false));
     m_actionGroupDelete->setEnabled(false);
 
     connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(clearLastGroup(Group*)));
