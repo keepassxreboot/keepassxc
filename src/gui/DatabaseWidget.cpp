@@ -148,6 +148,8 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(this, SIGNAL(currentChanged(int)), this, SLOT(emitCurrentModeChanged()));
     connect(m_searchUi->searchEdit, SIGNAL(textChanged(QString)), this, SLOT(startSearchTimer()));
     connect(m_searchUi->caseSensitiveCheckBox, SIGNAL(toggled(bool)), this, SLOT(startSearch()));
+    connect(m_searchUi->searchCurrentRadioButton, SIGNAL(toggled(bool)), this, SLOT(startSearch()));
+    connect(m_searchUi->searchRootRadioButton, SIGNAL(toggled(bool)), this, SLOT(startSearch()));
     connect(m_searchTimer, SIGNAL(timeout()), this, SLOT(search()));
     connect(closeAction, SIGNAL(triggered()), this, SLOT(closeSearch()));
     connect(m_entryView, SIGNAL(entrySelectionChanged()), SLOT(updateEntryActions()));
@@ -481,17 +483,50 @@ void DatabaseWidget::closeSearch()
 
 void DatabaseWidget::showSearch()
 {
-    m_searchWidget->show();
     m_searchUi->searchEdit->blockSignals(true);
     m_searchUi->searchEdit->clear();
     m_searchUi->searchEdit->blockSignals(false);
+
+    m_searchUi->searchCurrentRadioButton->blockSignals(true);
+    m_searchUi->searchRootRadioButton->blockSignals(true);
+    m_searchUi->searchCurrentRadioButton->setChecked(true);
+    m_searchUi->searchCurrentRadioButton->blockSignals(false);
+    m_searchUi->searchRootRadioButton->blockSignals(false);
+
+    m_lastGroup = m_groupView->currentGroup();
+    if (m_lastGroup == m_db->rootGroup()) {
+        m_searchUi->searchCurrentRadioButton->hide();
+        m_searchUi->searchRootRadioButton->hide();
+    }
+    else {
+        m_searchUi->searchCurrentRadioButton->show();
+        m_searchUi->searchRootRadioButton->show();
+        m_searchUi->searchCurrentRadioButton->setText(tr("Current group")
+                                                      .append(" (")
+                                                      .append(m_lastGroup->name())
+                                                      .append(")"));
+    }
+    m_groupView->setCurrentIndex(QModelIndex());
+
+    m_searchWidget->show();
     search();
     m_searchUi->searchEdit->setFocus();
 }
 
 void DatabaseWidget::search()
 {
-    Group* searchGroup = m_db->rootGroup();
+    Group* searchGroup;
+    if (m_searchUi->searchCurrentRadioButton->isChecked()) {
+        searchGroup = m_lastGroup;
+    }
+    else if (m_searchUi->searchRootRadioButton->isChecked()) {
+        searchGroup = m_db->rootGroup();
+    }
+    else {
+        Q_ASSERT(false);
+        return;
+    }
+
     Qt::CaseSensitivity sensitivity;
     if (m_searchUi->caseSensitiveCheckBox->isChecked()) {
         sensitivity = Qt::CaseSensitive;
@@ -501,11 +536,6 @@ void DatabaseWidget::search()
     }
     QList<Entry*> searchResult = searchGroup->search(m_searchUi->searchEdit->text(), sensitivity);
 
-    Group* group = m_groupView->currentGroup();
-    if (group) {
-        m_lastGroup = m_groupView->currentGroup();
-        m_groupView->setCurrentIndex(QModelIndex());
-    }
 
     m_entryView->search(searchResult);
 }

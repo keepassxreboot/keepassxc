@@ -36,11 +36,32 @@
     <widget class="LineEdit" name="searchEdit"/>
    </item>
    <item row="1" column="1">
-    <widget class="QCheckBox" name="caseSensitiveCheckBox">
-     <property name="text">
-      <string>Case sensitive</string>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout2">
+     <item>
+      <widget class="QCheckBox" name="caseSensitiveCheckBox">
+       <property name="text">
+        <string>Case sensitive</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="searchCurrentRadioButton">
+       <property name="text">
+        <string>Current group</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="searchRootRadioButton">
+       <property name="text">
+        <string>Root group</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
