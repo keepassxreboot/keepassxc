@@ -141,8 +141,9 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_actionGroupDelete = m_menuGroup->addAction(tr("Delete group"), this, SLOT(deleteGroup()));
     m_actionGroupDelete->setEnabled(false);
 
-    connect(m_groupView, SIGNAL(groupChanged(Group*)), m_entryView, SLOT(setGroup(Group*)));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(clearLastGroup(Group*)));
+    connect(m_groupView, SIGNAL(groupChanged(Group*)), SLOT(updateGroupActions(Group*)));
+    connect(m_groupView, SIGNAL(groupChanged(Group*)), m_entryView, SLOT(setGroup(Group*)));
     connect(m_entryView, SIGNAL(entryActivated(Entry*)), SLOT(switchToEntryEdit(Entry*)));
     connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
     connect(m_editEntryWidget, SIGNAL(historyEntryActivated(Entry*)), SLOT(switchToHistoryView(Entry*)));
@@ -158,7 +159,6 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_searchTimer, SIGNAL(timeout()), this, SLOT(search()));
     connect(closeAction, SIGNAL(triggered()), this, SLOT(closeSearch()));
     connect(m_entryView, SIGNAL(entrySelectionChanged()), SLOT(updateEntryActions()));
-    connect(m_groupView, SIGNAL(groupChanged(Group*)), SLOT(updateGroupActions()));
 
     setCurrentIndex(0);
 }
@@ -596,9 +596,12 @@ void DatabaseWidget::clearLastGroup(Group* group)
     }
 }
 
-void DatabaseWidget::updateGroupActions()
+void DatabaseWidget::updateGroupActions(Group* group)
 {
-    m_actionGroupDelete->setEnabled(canDeleteCurrentGoup());
+    bool inSearch = m_lastGroup;
+    m_actionGroupNew->setEnabled(group && !inSearch);
+    m_actionGroupEdit->setEnabled(group && !inSearch);
+    m_actionGroupDelete->setEnabled(group && !inSearch && canDeleteCurrentGoup());
 }
 
 void DatabaseWidget::updateEntryActions()

@@ -104,7 +104,7 @@ private Q_SLOTS:
     void startSearchTimer();
     void showSearch();
     void closeSearch();
-    void updateGroupActions();
+    void updateGroupActions(Group* group);
     void updateEntryActions();
     void showGroupContextMenu(const QPoint& pos);
     void showEntryContextMenu(const QPoint& pos);
