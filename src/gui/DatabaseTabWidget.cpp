@@ -21,6 +21,7 @@
 #include <QtGui/QTabWidget>
 #include <QtGui/QMessageBox>
 
+#include "core/Config.h"
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -39,6 +40,8 @@ DatabaseManagerStruct::DatabaseManagerStruct()
     , readOnly(false)
 {
 }
+
+const int DatabaseTabWidget::LastDatabasesCount = 5;
 
 DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     : QTabWidget(parent)
@@ -153,8 +156,11 @@ void DatabaseTabWidget::openDatabaseRead()
     m_curKeyDialog = 0;
 
     m_curDbStruct.dbWidget = new DatabaseWidget(db, this);
+    QString filename = m_curDbStruct.fileName;
     insertDatabase(db, m_curDbStruct);
     m_curDbStruct = DatabaseManagerStruct();
+
+    updateLastDatabases(filename);
 }
 
 void DatabaseTabWidget::openDatabaseCleanup()
@@ -247,6 +253,7 @@ void DatabaseTabWidget::saveDatabase(Database* db)
 
         dbStruct.modified = false;
         updateTabName(db);
+        updateLastDatabases(dbStruct.fileName);
     }
     else {
         saveDatabaseAs(db);
@@ -278,6 +285,7 @@ void DatabaseTabWidget::saveDatabaseAs(Database* db)
         dbStruct.modified = false;
         dbStruct.fileName = QFileInfo(fileName).absoluteFilePath();
         updateTabName(db);
+        updateLastDatabases(dbStruct.fileName);
     }
 }
 
@@ -495,5 +503,22 @@ void DatabaseTabWidget::modified()
     if (!dbStruct.modified) {
         dbStruct.modified = true;
         updateTabName(db);
+    }
+}
+
+void DatabaseTabWidget::updateLastDatabases(const QString& filename)
+{
+    if (!config()->get("RememberLastDatabases").toBool()) {
+        config()->set("LastDatabases", QVariant());
+    }
+    else {
+        QStringList lastDatabases = config()->get("LastDatabases", QVariant()).toStringList();
+        lastDatabases.prepend(filename);
+        lastDatabases.removeDuplicates();
+
+        while (lastDatabases.count() > LastDatabasesCount) {
+            lastDatabases.removeLast();
+        }
+        config()->set("LastDatabases", lastDatabases);
     }
 }

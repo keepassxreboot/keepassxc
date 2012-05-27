@@ -51,6 +51,8 @@ public:
                       const QString& keyFile = QString());
     DatabaseWidget* currentDatabaseWidget();
 
+    static const int LastDatabasesCount;
+
 public Q_SLOTS:
     void newDatabase();
     void openDatabase();
@@ -96,12 +98,15 @@ private:
     Database* indexDatabase(int index);
     Database* databaseFromDatabaseWidget(DatabaseWidget* dbWidget);
     void insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct);
+    void updateLastDatabases(const QString& filename);
 
     QWidget* const m_window;
     KeePass2Writer m_writer;
     QHash<Database*, DatabaseManagerStruct> m_dbList;
     DatabaseManagerStruct m_curDbStruct;
     DatabaseOpenDialog* m_curKeyDialog;
+
+
 };
 
 #endif // KEEPASSX_DATABASETABWIDGET_H
