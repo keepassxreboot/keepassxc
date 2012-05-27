@@ -147,6 +147,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_databaseSettingsWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
     connect(this, SIGNAL(currentChanged(int)), this, SLOT(emitCurrentModeChanged()));
     connect(m_searchUi->searchEdit, SIGNAL(textChanged(QString)), this, SLOT(startSearchTimer()));
+    connect(m_searchUi->caseSensitiveCheckBox, SIGNAL(toggled(bool)), this, SLOT(startSearch()));
     connect(m_searchTimer, SIGNAL(timeout()), this, SLOT(search()));
     connect(closeAction, SIGNAL(triggered()), this, SLOT(closeSearch()));
     connect(m_entryView, SIGNAL(entrySelectionChanged()), SLOT(updateEntryActions()));
@@ -491,7 +492,14 @@ void DatabaseWidget::showSearch()
 void DatabaseWidget::search()
 {
     Group* searchGroup = m_db->rootGroup();
-    QList<Entry*> searchResult = searchGroup->search(m_searchUi->searchEdit->text(), Qt::CaseInsensitive);
+    Qt::CaseSensitivity sensitivity;
+    if (m_searchUi->caseSensitiveCheckBox->isChecked()) {
+        sensitivity = Qt::CaseSensitive;
+    }
+    else {
+        sensitivity = Qt::CaseInsensitive;
+    }
+    QList<Entry*> searchResult = searchGroup->search(m_searchUi->searchEdit->text(), sensitivity);
 
     Group* group = m_groupView->currentGroup();
     if (group) {
@@ -508,6 +516,14 @@ void DatabaseWidget::startSearchTimer()
         m_searchTimer->stop();
     }
     m_searchTimer->start(100);
+}
+
+void DatabaseWidget::startSearch()
+{
+    if (!m_searchTimer->isActive()) {
+        m_searchTimer->stop();
+    }
+    search();
 }
 
 bool DatabaseWidget::dbHasKey()

@@ -6,33 +6,41 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>466</width>
-    <height>53</height>
+    <width>630</width>
+    <height>87</height>
    </rect>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
-   <property name="margin">
-    <number>0</number>
-   </property>
-   <item>
-    <widget class="QToolButton" name="closeSearchButton">
+  <layout class="QFormLayout" name="formLayout">
+   <item row="4" column="1">
+    <widget class="QCheckBox" name="caseSensitiveCheckBox">
      <property name="text">
-      <string/>
-     </property>
-     <property name="autoRaise">
-      <bool>true</bool>
+      <string>Case sensitive</string>
      </property>
     </widget>
    </item>
-   <item>
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Find:</string>
-     </property>
-    </widget>
-   </item>
-   <item>
+   <item row="2" column="1">
     <widget class="LineEdit" name="searchEdit"/>
+   </item>
+   <item row="2" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QToolButton" name="closeSearchButton">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Find:</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

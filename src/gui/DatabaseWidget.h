@@ -100,6 +100,7 @@ private Q_SLOTS:
     void emitCurrentModeChanged();
     void clearLastGroup(Group* group);
     void search();
+    void startSearch();
     void startSearchTimer();
     void showSearch();
     void closeSearch();
