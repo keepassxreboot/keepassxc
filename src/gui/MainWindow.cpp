@@ -44,12 +44,27 @@ MainWindow::MainWindow()
     m_ui->actionEntryCopyUsername->setShortcut(Qt::CTRL + Qt::Key_B);
     m_ui->actionEntryCopyPassword->setShortcut(Qt::CTRL + Qt::Key_C);
 
+    m_ui->actionDatabaseNew->setIcon(dataPath()->icon("actions", "document-new"));
+    m_ui->actionDatabaseOpen->setIcon(dataPath()->icon("actions", "document-open"));
+    m_ui->actionDatabaseSave->setIcon(dataPath()->icon("actions", "document-save"));
+    m_ui->actionDatabaseSaveAs->setIcon(dataPath()->icon("actions", "document-save-as"));
+    m_ui->actionDatabaseClose->setIcon(dataPath()->icon("actions", "document-close"));
+    m_ui->actionChangeDatabaseSettings->setIcon(dataPath()->icon("actions", "document-edit"));
+    m_ui->actionChangeMasterKey->setIcon(dataPath()->icon("actions", "database-change-key", false));
+    m_ui->actionQuit->setIcon(dataPath()->icon("actions", "application-exit"));
+
     m_ui->actionEntryNew->setIcon(dataPath()->icon("actions", "entry-new", false));
     m_ui->actionEntryClone->setIcon(dataPath()->icon("actions", "entry-clone", false));
     m_ui->actionEntryEdit->setIcon(dataPath()->icon("actions", "entry-edit", false));
     m_ui->actionEntryDelete->setIcon(dataPath()->icon("actions", "entry-delete", false));
 
-    m_ui->actionSearch->setIcon(dataPath()->icon("actions", "system-search", true));
+    m_ui->actionGroupNew->setIcon(dataPath()->icon("actions", "group-new", false));
+    m_ui->actionGroupEdit->setIcon(dataPath()->icon("actions", "group-edit", false));
+    m_ui->actionGroupDelete->setIcon(dataPath()->icon("actions", "group-delete", false));
+
+    m_ui->actionSettings->setIcon(dataPath()->icon("actions", "configure"));
+
+    m_ui->actionSearch->setIcon(dataPath()->icon("actions", "system-search"));
 
     connect(m_ui->tabWidget, SIGNAL(entrySelectionChanged(bool)),
             SLOT(setMenuActionState()));
