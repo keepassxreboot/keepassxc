@@ -33,8 +33,12 @@ public:
     ~SettingsWidget();
     void loadSettings();
 
+Q_SIGNALS:
+    void editFinished(bool accepted);
+
 private Q_SLOTS:
     void saveSettings();
+    void reject();
 
 private:
     QWidget* const m_secWidget;

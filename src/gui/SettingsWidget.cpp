@@ -31,6 +31,7 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     add(tr("Security"), m_secWidget);
 
     connect(this, SIGNAL(accepted()), SLOT(saveSettings()));
+    connect(this, SIGNAL(rejected()), SLOT(reject()));
 
     connect(m_secUi->clearClipboardCheckBox, SIGNAL(toggled(bool)),
             m_secUi->clearClipboardSpinBox, SLOT(setEnabled(bool)));
@@ -52,4 +53,11 @@ void SettingsWidget::saveSettings()
 {
     config()->set("security/clearclipboard", m_secUi->clearClipboardCheckBox->isChecked());
     config()->set("security/clearclipboardtimeout", m_secUi->clearClipboardSpinBox->value());
+
+    Q_EMIT editFinished(true);
+}
+
+void SettingsWidget::reject()
+{
+    Q_EMIT editFinished(false);
 }
