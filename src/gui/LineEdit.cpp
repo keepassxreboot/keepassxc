@@ -19,7 +19,7 @@ LineEdit::LineEdit(QWidget* parent)
 {
     m_clearButton = new QToolButton(this);
     m_clearButton->setObjectName("clearButton");
-    QIcon icon = dataPath()->icon("action", "edit-clear-locationbar-rtl");
+    QIcon icon = dataPath()->icon("actions", "edit-clear-locationbar-rtl");
     m_clearButton->setIcon(icon);
     m_clearButton->setCursor(Qt::ArrowCursor);
     m_clearButton->setStyleSheet("QToolButton { border: none; padding: 0px; }");

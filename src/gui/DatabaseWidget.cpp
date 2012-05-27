@@ -80,7 +80,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     rightHandSideWidget->setSizePolicy(policy);
 
     QAction* closeAction = new QAction(m_searchWidget);
-    QIcon closeIcon = dataPath()->icon("action", "dialog-close");
+    QIcon closeIcon = dataPath()->icon("actions", "dialog-close");
     closeAction->setIcon(closeIcon);
     m_searchUi->closeSearchButton->setDefaultAction(closeAction);
     m_searchWidget->hide();

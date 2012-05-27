@@ -42,7 +42,7 @@ Copyright: 2003-2004, David Vignoni <david@icon-king.com>
            2012, Felix Geyer <debfx@fobos.de>
 License: LGPL-2.1
 
-Files: share/icons/application/*/action/dialog-close.png, share/icons/application/*/action/dialog-ok.png,
+Files: share/icons/application/*/actions/dialog-close.png, share/icons/application/*/actions/dialog-ok.png,
        share/icons/application/*/status/dialog-error.png, share/icons/application/*/status/dialog-information.png,
        share/icons/application/*/status/dialog-warning.png, share/icons/application/*/actions/system-search.png
 Copyright: 2007, Nuno Pinheiro <nuno@oxygen-icons.org>
