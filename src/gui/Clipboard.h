@@ -28,7 +28,7 @@ class Clipboard : public QObject
 
 public:
     ~Clipboard();
-    void setText(const QString& text, int clearTimeout = 0);
+    void setText(const QString& text);
 
 private Q_SLOTS:
     void clearClipboard();

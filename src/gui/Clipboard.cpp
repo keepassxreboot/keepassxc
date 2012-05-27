@@ -26,6 +26,8 @@
     #include <QtDBus/QDBusMessage>
 #endif
 
+#include "core/Config.h"
+
 Clipboard::Clipboard(QObject* parent)
     : QObject(parent)
     , m_timer(new QTimer(this))
@@ -41,7 +43,7 @@ Clipboard::~Clipboard()
     }
 }
 
-void Clipboard::setText(const QString& text, int clearTimeout)
+void Clipboard::setText(const QString& text)
 {
     QClipboard* clipboard = QApplication::clipboard();
 
@@ -50,8 +52,11 @@ void Clipboard::setText(const QString& text, int clearTimeout)
         clipboard->setText(text, QClipboard::Selection);
     }
 
-    if (clearTimeout > 0) {
-        m_timer->start(clearTimeout);
+    if (config()->get("security/clearclipboard").toBool()) {
+        int timeout = config()->get("security/clearclipboardtimeout").toInt();
+        if (timeout > 0) {
+            m_timer->start(timeout);
+        }
     }
 }
 

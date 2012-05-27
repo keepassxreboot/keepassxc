@@ -18,6 +18,8 @@
 #include "SettingsWidget.h"
 #include "ui_SettingsWidgetSecurity.h"
 
+#include "core/Config.h"
+
 SettingsWidget::SettingsWidget(QWidget* parent)
     : EditWidget(parent)
     , m_secWidget(new QWidget())
@@ -40,9 +42,14 @@ SettingsWidget::~SettingsWidget()
 
 void SettingsWidget::loadSettings()
 {
+    m_secUi->clearClipboardCheckBox->setChecked(config()->get("security/clearclipboard").toBool());
+    m_secUi->clearClipboardSpinBox->setValue(config()->get("security/clearclipboardtimeout").toInt());
+
     setCurrentRow(0);
 }
 
 void SettingsWidget::saveSettings()
 {
+    config()->set("security/clearclipboard", m_secUi->clearClipboardCheckBox->isChecked());
+    config()->set("security/clearclipboardtimeout", m_secUi->clearClipboardSpinBox->value());
 }
