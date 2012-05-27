@@ -26,13 +26,15 @@ class QSettings;
 class Config
 {
 public:
-    QVariant get(const QString& key, const QVariant& defaultValue = QVariant());
+    QVariant get(const QString& key);
+    QVariant get(const QString& key, const QVariant& defaultValue);
     void set(const QString& key, const QVariant& value);
 
 private:
     Config();
 
     QScopedPointer<QSettings> m_settings;
+    QHash<QString, QVariant> m_defaults;
 
     Q_DISABLE_COPY(Config)
 

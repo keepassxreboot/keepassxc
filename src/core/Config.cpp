@@ -21,6 +21,11 @@
 #include <QtCore/QSettings>
 #include <QtGui/QDesktopServices>
 
+QVariant Config::get(const QString& key)
+{
+    return m_settings->value(key, m_defaults.value(key));
+}
+
 QVariant Config::get(const QString& key, const QVariant& defaultValue)
 {
     return m_settings->value(key, defaultValue);
@@ -61,6 +66,9 @@ Config::Config()
     userPath += "keepassx2.ini";
 
     m_settings.reset(new QSettings(userPath, QSettings::IniFormat));
+
+    m_defaults.insert("security/clearclipboard", true);
+    m_defaults.insert("security/clearclipboardtimeout", 10);
 }
 
 Config* config()
