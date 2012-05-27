@@ -503,10 +503,12 @@ void DatabaseWidget::showSearch()
     Q_ASSERT(m_lastGroup);
 
     if (m_lastGroup == m_db->rootGroup()) {
+        m_searchUi->optionsWidget->hide();
         m_searchUi->searchCurrentRadioButton->hide();
         m_searchUi->searchRootRadioButton->hide();
     }
     else {
+        m_searchUi->optionsWidget->show();
         m_searchUi->searchCurrentRadioButton->show();
         m_searchUi->searchRootRadioButton->show();
         m_searchUi->searchCurrentRadioButton->setText(tr("Current group")

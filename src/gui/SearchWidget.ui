@@ -10,7 +10,13 @@
     <height>87</height>
    </rect>
   </property>
-  <layout class="QFormLayout" name="formLayout">
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="margin">
+    <number>0</number>
+   </property>
+   <item row="0" column="1">
+    <widget class="LineEdit" name="searchEdit"/>
+   </item>
    <item row="0" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
@@ -32,36 +38,51 @@
      </item>
     </layout>
    </item>
-   <item row="0" column="1">
-    <widget class="LineEdit" name="searchEdit"/>
-   </item>
    <item row="1" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout2">
-     <item>
-      <widget class="QCheckBox" name="caseSensitiveCheckBox">
-       <property name="text">
-        <string>Case sensitive</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="searchCurrentRadioButton">
-       <property name="text">
-        <string>Current group</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="searchRootRadioButton">
-       <property name="text">
-        <string>Root group</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="QWidget" name="optionsWidget" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="margin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QCheckBox" name="caseSensitiveCheckBox">
+        <property name="text">
+         <string>Case sensitive</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="searchCurrentRadioButton">
+        <property name="text">
+         <string>Current group</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="searchRootRadioButton">
+        <property name="text">
+         <string>Root group</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>255</width>
+          <height>1</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
    </item>
   </layout>
  </widget>
