@@ -26,7 +26,7 @@ class DataPath
 public:
     QString path(const QString& name);
     QIcon applicationIcon();
-    QIcon icon(const QString& category, const QString& name);
+    QIcon icon(const QString& category, const QString& name, bool fromTheme = true);
 
 private:
     DataPath();

@@ -32,9 +32,13 @@ QIcon DataPath::applicationIcon()
     return icon("apps", "keepassx");
 }
 
-QIcon DataPath::icon(const QString& category, const QString& name)
+QIcon DataPath::icon(const QString& category, const QString& name, bool fromTheme)
 {
-    QIcon icon = QIcon::fromTheme(name);
+    QIcon icon;
+
+    if (fromTheme) {
+        icon = QIcon::fromTheme(name);
+    }
 
     if (icon.isNull()) {
         QStringList pngSizes;
