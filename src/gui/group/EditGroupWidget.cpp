@@ -39,11 +39,6 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
     add(tr("Icon"), m_editGroupWidgetIcons);
     add(tr("Advanced"), m_editGroupWidgetAdvanced);
 
-    QFont labelHeaderFont = headlineLabel()->font();
-    labelHeaderFont.setBold(true);
-    labelHeaderFont.setPointSize(labelHeaderFont.pointSize() + 2);
-    headlineLabel()->setFont(labelHeaderFont);
-
     m_mainUi->searchComboBox->addItem("Inherit");
     m_mainUi->searchComboBox->addItem("Enable");
     m_mainUi->searchComboBox->addItem("Disable");

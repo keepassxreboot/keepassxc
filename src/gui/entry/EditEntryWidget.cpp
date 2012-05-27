@@ -50,11 +50,6 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_iconsWidget(new EditWidgetIcons())
     , m_historyWidget(new QWidget())
 {
-    QFont headerLabelFont = headlineLabel()->font();
-    headerLabelFont.setBold(true);
-    headerLabelFont.setPointSize(headerLabelFont.pointSize() + 2);
-    headlineLabel()->setFont(headerLabelFont);
-
     m_mainUi->setupUi(m_mainWidget);
     add(tr("Entry"), m_mainWidget);
 
