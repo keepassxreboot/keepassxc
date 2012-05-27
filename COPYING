@@ -20,6 +20,7 @@ Source: http://www.keepassx.org/
 
 Copyright: 2010-2012, Felix Geyer <debfx@fobos.de>
            2011-2012, Florian Geyer <blueice@fobos.de>
+           2012, Tobias Tangemann
            2007, Trolltech ASA <info@trolltech.com>
 License: GPL-2 or GPL-3
 
@@ -76,7 +77,7 @@ License: LGPL-3+
 
 Files: src/crypto/salsa20/*
 Copyright: is in public domain
-License: -
+License: public-domain
 
 Files: src/streams/qtiocompressor.*,
        src/streams/QtIOCompressor,
