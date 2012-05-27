@@ -69,6 +69,7 @@ set(keepassx_SOURCES
     gui/LineEdit.cpp
     gui/MainWindow.cpp
     gui/SettingsWidget.cpp
+    gui/WelcomeWidget.cpp
     gui/entry/EditEntryWidget.cpp
     gui/entry/EntryAttachmentsModel.cpp
     gui/entry/EntryAttributesModel.cpp
@@ -112,6 +113,7 @@ set(keepassx_MOC
     gui/LineEdit.h
     gui/MainWindow.h
     gui/SettingsWidget.h
+    gui/WelcomeWidget.h
     gui/entry/EditEntryWidget.h
     gui/entry/EntryAttachmentsModel.h
     gui/entry/EntryAttributesModel.h
@@ -138,6 +140,7 @@ set(keepassx_FORMS
     gui/MainWindow.ui
     gui/SearchWidget.ui
     gui/SettingsWidgetSecurity.ui
+    gui/WelcomeWidget.ui
     gui/entry/EditEntryWidgetAdvanced.ui
     gui/entry/EditEntryWidgetHistory.ui
     gui/entry/EditEntryWidgetMain.ui

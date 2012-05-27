@@ -21,7 +21,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="pageDatabase">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -53,6 +53,13 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="pageWelcome">
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <widget class="WelcomeWidget" name="welcomeWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -63,7 +70,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -303,6 +310,12 @@
    <class>SettingsWidget</class>
    <extends>QWidget</extends>
    <header>gui/SettingsWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>WelcomeWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/WelcomeWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

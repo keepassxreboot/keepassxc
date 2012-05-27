@@ -80,8 +80,10 @@ MainWindow::MainWindow()
     connect(m_ui->settingsWidget, SIGNAL(accepted()), SLOT(switchToDatabases()));
     connect(m_ui->settingsWidget, SIGNAL(rejected()), SLOT(switchToDatabases()));
 
+    connect(m_ui->actionDatabaseNew, SIGNAL(triggered()), SLOT(switchToDatabases()));
     connect(m_ui->actionDatabaseNew, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(newDatabase()));
+    connect(m_ui->actionDatabaseOpen, SIGNAL(triggered()), SLOT(switchToDatabases()));
     connect(m_ui->actionDatabaseOpen, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(openDatabase()));
     connect(m_ui->actionDatabaseSave, SIGNAL(triggered()), m_ui->tabWidget,
@@ -94,6 +96,7 @@ MainWindow::MainWindow()
             SLOT(changeMasterKey()));
     connect(m_ui->actionChangeDatabaseSettings, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(changeDatabaseSettings()));
+    connect(m_ui->actionImportKeePass1, SIGNAL(triggered()), SLOT(switchToDatabases()));
     connect(m_ui->actionImportKeePass1, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(importKeePass1Database()));
     connect(m_ui->actionQuit, SIGNAL(triggered()), SLOT(close()));
@@ -140,6 +143,7 @@ const QString MainWindow::BaseWindowTitle = "KeePassX";
 void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 {
     bool inDatabaseTabWidget = (m_ui->stackedWidget->currentIndex() == 0);
+    bool inWelcomeWidget = (m_ui->stackedWidget->currentIndex() == 2);
 
     if (inDatabaseTabWidget && m_ui->tabWidget->currentIndex() != -1) {
         DatabaseWidget* dbWidget = m_ui->tabWidget->currentDatabaseWidget();
@@ -211,9 +215,9 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         m_ui->actionDatabaseClose->setEnabled(false);
     }
 
-    m_ui->actionDatabaseNew->setEnabled(inDatabaseTabWidget);
-    m_ui->actionDatabaseOpen->setEnabled(inDatabaseTabWidget);
-    m_ui->actionImportKeePass1->setEnabled(inDatabaseTabWidget);
+    m_ui->actionDatabaseNew->setEnabled(inDatabaseTabWidget || inWelcomeWidget);
+    m_ui->actionDatabaseOpen->setEnabled(inDatabaseTabWidget || inWelcomeWidget);
+    m_ui->actionImportKeePass1->setEnabled(inDatabaseTabWidget || inWelcomeWidget);
 }
 
 void MainWindow::updateWindowTitle()
