@@ -601,10 +601,9 @@ void DatabaseWidget::clearLastGroup(Group* group)
 
 void DatabaseWidget::updateGroupActions(Group* group)
 {
-    bool inSearch = m_lastGroup;
-    m_actionGroupNew->setEnabled(group && !inSearch);
-    m_actionGroupEdit->setEnabled(group && !inSearch);
-    m_actionGroupDelete->setEnabled(group && !inSearch && canDeleteCurrentGoup());
+    m_actionGroupNew->setEnabled(group);
+    m_actionGroupEdit->setEnabled(group);
+    m_actionGroupDelete->setEnabled(group && canDeleteCurrentGoup());
 }
 
 void DatabaseWidget::updateEntryActions()
