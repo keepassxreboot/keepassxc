@@ -52,6 +52,9 @@ MainWindow::MainWindow()
             SLOT(updateWindowTitle()));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)),
             SLOT(updateWindowTitle()));
+    connect(m_ui->stackedWidget, SIGNAL(currentChanged(int)), SLOT(setMenuActionState()));
+    connect(m_ui->settingsWidget, SIGNAL(accepted()), SLOT(switchToDatabases()));
+    connect(m_ui->settingsWidget, SIGNAL(rejected()), SLOT(switchToDatabases()));
 
     connect(m_ui->actionDatabaseNew, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(newDatabase()));
@@ -70,7 +73,6 @@ MainWindow::MainWindow()
     connect(m_ui->actionImportKeePass1, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(importKeePass1Database()));
     connect(m_ui->actionQuit, SIGNAL(triggered()), SLOT(close()));
-    connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
 
     connect(m_ui->actionEntryNew, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(createEntry()));
@@ -92,6 +94,10 @@ MainWindow::MainWindow()
     connect(m_ui->actionGroupDelete, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(deleteGroup()));
 
+    connect(m_ui->actionSettings, SIGNAL(triggered()), SLOT(switchToSettings()));
+
+    connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
+
     connect(m_ui->actionSearch, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(toggleSearch()));
 }
@@ -109,8 +115,9 @@ const QString MainWindow::BaseWindowTitle = "KeePassX";
 
 void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 {
-    if (m_ui->tabWidget->currentIndex() != -1) {
-        m_ui->actionDatabaseClose->setEnabled(true);
+    bool inDatabaseTabWidget = (m_ui->stackedWidget->currentIndex() == 0);
+
+    if (inDatabaseTabWidget && m_ui->tabWidget->currentIndex() != -1) {
         DatabaseWidget* dbWidget = m_ui->tabWidget->currentDatabaseWidget();
         Q_ASSERT(dbWidget);
 
@@ -179,6 +186,10 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 
         m_ui->actionDatabaseClose->setEnabled(false);
     }
+
+    m_ui->actionDatabaseNew->setEnabled(inDatabaseTabWidget);
+    m_ui->actionDatabaseOpen->setEnabled(inDatabaseTabWidget);
+    m_ui->actionImportKeePass1->setEnabled(inDatabaseTabWidget);
 }
 
 void MainWindow::updateWindowTitle()
@@ -196,6 +207,17 @@ void MainWindow::showAboutDialog()
 {
     AboutDialog* aboutDialog = new AboutDialog(this);
     aboutDialog->show();
+}
+
+void MainWindow::switchToDatabases()
+{
+    m_ui->stackedWidget->setCurrentIndex(0);
+}
+
+void MainWindow::switchToSettings()
+{
+    m_ui->settingsWidget->loadSettings();
+    m_ui->stackedWidget->setCurrentIndex(1);
 }
 
 void MainWindow::closeEvent(QCloseEvent* event) {

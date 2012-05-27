@@ -45,6 +45,8 @@ private Q_SLOTS:
     void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::None);
     void updateWindowTitle();
     void showAboutDialog();
+    void switchToDatabases();
+    void switchToSettings();
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);
