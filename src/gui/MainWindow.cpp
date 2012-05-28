@@ -251,6 +251,9 @@ void MainWindow::databaseTabChanged(int tabIndex)
     if (tabIndex != -1 && m_ui->stackedWidget->currentIndex() == 2) {
         switchToDatabases();
     }
+    else if (tabIndex == -1 && m_ui->stackedWidget->currentIndex() == 0) {
+        m_ui->stackedWidget->setCurrentIndex(2);
+    }
 }
 
 void MainWindow::closeEvent(QCloseEvent* event) {
