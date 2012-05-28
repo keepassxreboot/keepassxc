@@ -47,6 +47,7 @@ private Q_SLOTS:
     void showAboutDialog();
     void switchToDatabases();
     void switchToSettings();
+    void databaseTabChanged(int tabIndex);
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);

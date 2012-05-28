@@ -76,13 +76,13 @@ MainWindow::MainWindow()
             SLOT(updateWindowTitle()));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)),
             SLOT(updateWindowTitle()));
+    connect(m_ui->tabWidget, SIGNAL(currentChanged(int)),
+            SLOT(databaseTabChanged(int)));
     connect(m_ui->stackedWidget, SIGNAL(currentChanged(int)), SLOT(setMenuActionState()));
     connect(m_ui->settingsWidget, SIGNAL(editFinished(bool)), SLOT(switchToDatabases()));
 
-    connect(m_ui->actionDatabaseNew, SIGNAL(triggered()), SLOT(switchToDatabases()));
     connect(m_ui->actionDatabaseNew, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(newDatabase()));
-    connect(m_ui->actionDatabaseOpen, SIGNAL(triggered()), SLOT(switchToDatabases()));
     connect(m_ui->actionDatabaseOpen, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(openDatabase()));
     connect(m_ui->actionDatabaseSave, SIGNAL(triggered()), m_ui->tabWidget,
@@ -95,7 +95,6 @@ MainWindow::MainWindow()
             SLOT(changeMasterKey()));
     connect(m_ui->actionChangeDatabaseSettings, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(changeDatabaseSettings()));
-    connect(m_ui->actionImportKeePass1, SIGNAL(triggered()), SLOT(switchToDatabases()));
     connect(m_ui->actionImportKeePass1, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(importKeePass1Database()));
     connect(m_ui->actionQuit, SIGNAL(triggered()), SLOT(close()));
@@ -245,6 +244,13 @@ void MainWindow::switchToSettings()
 {
     m_ui->settingsWidget->loadSettings();
     m_ui->stackedWidget->setCurrentIndex(1);
+}
+
+void MainWindow::databaseTabChanged(int tabIndex)
+{
+    if (tabIndex != -1 && m_ui->stackedWidget->currentIndex() == 2) {
+        switchToDatabases();
+    }
 }
 
 void MainWindow::closeEvent(QCloseEvent* event) {
