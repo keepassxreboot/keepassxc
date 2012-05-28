@@ -20,7 +20,7 @@
 
 EditWidget::EditWidget(QWidget* parent)
     : DialogyWidget(parent)
-    ,  m_ui(new Ui::EditWidget())
+    , m_ui(new Ui::EditWidget())
 {
     m_ui->setupUi(this);
 

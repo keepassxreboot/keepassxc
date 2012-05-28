@@ -19,8 +19,8 @@
 
 #include "core/DatabaseIcons.h"
 
-DefaultIconModel::DefaultIconModel(QObject* parent) :
-    QAbstractListModel(parent)
+DefaultIconModel::DefaultIconModel(QObject* parent)
+    : QAbstractListModel(parent)
 {
 }
 
@@ -49,8 +49,8 @@ QVariant DefaultIconModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-CustomIconModel::CustomIconModel(QObject* parent) :
-    QAbstractListModel(parent)
+CustomIconModel::CustomIconModel(QObject* parent)
+    : QAbstractListModel(parent)
 {
 }
 

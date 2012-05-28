@@ -21,9 +21,6 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QToolButton" name="closeSearchButton">
-       <property name="text">
-        <string/>
-       </property>
        <property name="autoRaise">
         <bool>true</bool>
        </property>
