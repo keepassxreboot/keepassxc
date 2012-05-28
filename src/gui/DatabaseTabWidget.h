@@ -74,6 +74,7 @@ public Q_SLOTS:
     void editGroup();
     void deleteGroup();
     void toggleSearch();
+    bool readOnly(int index = -1);
 
 Q_SIGNALS:
     void entrySelectionChanged(bool singleEntrySelected);
@@ -96,6 +97,8 @@ private:
     bool closeDatabase(Database* db);
     int databaseIndex(Database* db);
     Database* indexDatabase(int index);
+    DatabaseManagerStruct indexDatabaseManagerStruct(int index);
+
     Database* databaseFromDatabaseWidget(DatabaseWidget* dbWidget);
     void insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct);
     void updateLastDatabases(const QString& filename);

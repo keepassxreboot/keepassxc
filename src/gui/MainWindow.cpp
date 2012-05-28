@@ -225,7 +225,11 @@ void MainWindow::updateWindowTitle()
         setWindowTitle(BaseWindowTitle);
     }
     else {
-        setWindowTitle(m_ui->tabWidget->tabText(index).append(" - ").append(BaseWindowTitle));
+        QString windowTitle = m_ui->tabWidget->tabText(index);
+        if (m_ui->tabWidget->readOnly(index)) {
+            windowTitle.append(" [").append(tr("read-only")).append("]");
+        }
+        setWindowTitle(windowTitle.append(" - ").append(BaseWindowTitle));
     }
 }
 

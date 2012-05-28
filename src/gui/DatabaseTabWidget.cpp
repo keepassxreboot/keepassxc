@@ -387,6 +387,15 @@ void DatabaseTabWidget::toggleSearch()
     currentDatabaseWidget()->toggleSearch();
 }
 
+bool DatabaseTabWidget::readOnly(int index)
+{
+    if (index == -1) {
+        index = currentIndex();
+    }
+
+    return indexDatabaseManagerStruct(index).readOnly;
+}
+
 void DatabaseTabWidget::updateTabName(Database* db)
 {
     int index = databaseIndex(db);
@@ -449,6 +458,21 @@ Database* DatabaseTabWidget::indexDatabase(int index)
     }
 
     return 0;
+}
+
+DatabaseManagerStruct DatabaseTabWidget::indexDatabaseManagerStruct(int index)
+{
+    QWidget* dbWidget = widget(index);
+
+    QHashIterator<Database*, DatabaseManagerStruct> i(m_dbList);
+    while (i.hasNext()) {
+        i.next();
+        if (i.value().dbWidget == dbWidget) {
+            return i.value();
+        }
+    }
+
+    return DatabaseManagerStruct();
 }
 
 Database* DatabaseTabWidget::databaseFromDatabaseWidget(DatabaseWidget* dbWidget)
