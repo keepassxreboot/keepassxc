@@ -68,6 +68,7 @@ Config::Config()
     m_settings.reset(new QSettings(userPath, QSettings::IniFormat));
 
     m_defaults.insert("RememberLastDatabases", true);
+    m_defaults.insert("ModifiedOnVisualChanges", true);
     m_defaults.insert("security/clearclipboard", true);
     m_defaults.insert("security/clearclipboardtimeout", 10);
 }

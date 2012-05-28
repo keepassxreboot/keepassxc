@@ -17,6 +17,7 @@
 
 #include "Group.h"
 
+#include "core/Config.h"
 #include "core/DatabaseIcons.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
@@ -225,7 +226,13 @@ void Group::setTimeInfo(const TimeInfo& timeInfo)
 
 void Group::setExpanded(bool expanded)
 {
-    set(m_isExpanded, expanded);
+    if (m_isExpanded != expanded) {
+        m_isExpanded = expanded;
+        updateTimeinfo();
+        if (config()->get("ModifiedOnVisualChanges").toBool()) {
+            Q_EMIT modified();
+        }
+    }
 }
 
 void Group::setDefaultAutoTypeSequence(const QString& sequence)

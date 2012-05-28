@@ -13,6 +13,16 @@
      </property>
     </widget>
    </item>
+   <item row="1" column="0">
+    <widget class="QCheckBox" name="modifiedOnVisualChangesCheckBox">
+     <property name="text">
+      <string>Mark as modified on minor visual changes</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources/>
