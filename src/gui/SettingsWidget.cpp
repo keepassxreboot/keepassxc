@@ -49,7 +49,7 @@ SettingsWidget::~SettingsWidget()
 void SettingsWidget::loadSettings()
 {
     m_generalUi->rememberLastDatabasesCheckBox->setChecked(config()->get("RememberLastDatabases").toBool());
-    m_generalUi->modifiedOnVisualChangesCheckBox->setChecked(config()->get("ModifiedOnVisualChanges").toBool());
+    m_generalUi->modifiedExpandedChangedCheckBox->setChecked(config()->get("ModifiedOnExpandedStateChanges").toBool());
     m_secUi->clearClipboardCheckBox->setChecked(config()->get("security/clearclipboard").toBool());
     m_secUi->clearClipboardSpinBox->setValue(config()->get("security/clearclipboardtimeout").toInt());
 
@@ -59,7 +59,7 @@ void SettingsWidget::loadSettings()
 void SettingsWidget::saveSettings()
 {
     config()->set("RememberLastDatabases", m_generalUi->rememberLastDatabasesCheckBox->isChecked());
-    config()->set("ModifiedOnVisualChanges", m_generalUi->modifiedOnVisualChangesCheckBox->isChecked());
+    config()->set("ModifiedOnExpandedStateChanges", m_generalUi->modifiedExpandedChangedCheckBox->isChecked());
     config()->set("security/clearclipboard", m_secUi->clearClipboardCheckBox->isChecked());
     config()->set("security/clearclipboardtimeout", m_secUi->clearClipboardSpinBox->value());
 

@@ -229,7 +229,7 @@ void Group::setExpanded(bool expanded)
     if (m_isExpanded != expanded) {
         m_isExpanded = expanded;
         updateTimeinfo();
-        if (config()->get("ModifiedOnVisualChanges").toBool()) {
+        if (config()->get("ModifiedOnExpandedStateChanges").toBool()) {
             Q_EMIT modified();
         }
     }

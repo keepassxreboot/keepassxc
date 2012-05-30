@@ -14,9 +14,9 @@
     </widget>
    </item>
    <item row="1" column="0">
-    <widget class="QCheckBox" name="modifiedOnVisualChangesCheckBox">
+    <widget class="QCheckBox" name="modifiedExpandedChangedCheckBox">
      <property name="text">
-      <string>Mark as modified on minor visual changes</string>
+      <string>Mark as modified on expanded state changes</string>
      </property>
      <property name="checked">
       <bool>true</bool>
