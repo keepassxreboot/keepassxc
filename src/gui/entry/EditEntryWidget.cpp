@@ -26,6 +26,7 @@
 #include <QtGui/QDesktopServices>
 #include <QtGui/QStackedLayout>
 #include <QtGui/QMessageBox>
+#include <QtGui/QSortFilterProxyModel>
 
 #include "core/Database.h"
 #include "core/Entry.h"
@@ -89,7 +90,15 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     connect(m_mainUi->passwordRepeatEdit, SIGNAL(textEdited(QString)), SLOT(setPasswordCheckColors()));
 
     m_historyModel = new EntryHistoryModel(this);
-    m_historyUi->historyView->setModel(m_historyModel);
+
+    QSortFilterProxyModel* sortModel = new QSortFilterProxyModel(this);
+    sortModel->setSourceModel(m_historyModel);
+    sortModel->setDynamicSortFilter(true);
+    sortModel->setSortLocaleAware(true);
+    sortModel->setSortCaseSensitivity(Qt::CaseInsensitive);
+    sortModel->setSortRole(Qt::UserRole);
+
+    m_historyUi->historyView->setModel(sortModel);
     m_historyUi->historyView->setRootIsDecorated(false);
 
     connect(m_historyUi->historyView, SIGNAL(activated(const QModelIndex&)),
@@ -230,6 +239,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
 
     if (!m_history && !restore) {
         m_historyModel->setEntries(entry->historyItems());
+        m_historyUi->historyView->sortByColumn(0, Qt::DescendingOrder);
     }
     if (m_historyModel->rowCount() > 0) {
         m_historyUi->deleteAllButton->setEnabled(true);

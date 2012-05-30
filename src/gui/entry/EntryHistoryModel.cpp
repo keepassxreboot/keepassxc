@@ -56,10 +56,15 @@ QVariant EntryHistoryModel::data(const QModelIndex& index, int role) const
     TimeInfo timeInfo = entry->timeInfo();
     QDateTime lastModificationLocalTime = timeInfo.lastModificationTime().toLocalTime();
 
-    if (role == Qt::DisplayRole) {
+    if (role == Qt::DisplayRole || role == Qt::UserRole) {
         switch (index.column()) {
         case 0:
-            return lastModificationLocalTime.toString(Qt::SystemLocaleShortDate);
+            if (role == Qt::DisplayRole) {
+                return lastModificationLocalTime.toString(Qt::SystemLocaleShortDate);
+            }
+            else {
+                return lastModificationLocalTime;
+            }
         case 1:
             return entry->title();
         case 2:
