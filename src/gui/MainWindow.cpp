@@ -241,7 +241,12 @@ void MainWindow::showAboutDialog()
 
 void MainWindow::switchToDatabases()
 {
-    m_ui->stackedWidget->setCurrentIndex(0);
+    if (m_ui->tabWidget->currentIndex() == -1) {
+        m_ui->stackedWidget->setCurrentIndex(2);
+    }
+    else {
+        m_ui->stackedWidget->setCurrentIndex(0);
+    }
 }
 
 void MainWindow::switchToSettings()
@@ -253,7 +258,7 @@ void MainWindow::switchToSettings()
 void MainWindow::databaseTabChanged(int tabIndex)
 {
     if (tabIndex != -1 && m_ui->stackedWidget->currentIndex() == 2) {
-        switchToDatabases();
+        m_ui->stackedWidget->setCurrentIndex(0);
     }
     else if (tabIndex == -1 && m_ui->stackedWidget->currentIndex() == 0) {
         m_ui->stackedWidget->setCurrentIndex(2);
