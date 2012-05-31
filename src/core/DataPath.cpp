@@ -22,6 +22,8 @@
 
 #include "config-keepassx.h"
 
+DataPath* DataPath::m_instance(0);
+
 QString DataPath::path(const QString& name)
 {
     return m_basePath + name;
@@ -99,13 +101,11 @@ bool DataPath::testSetDir(const QString& dir)
     }
 }
 
-DataPath* dataPath()
+DataPath* DataPath::instance()
 {
-    static DataPath* instance = 0;
-
-    if (!instance) {
-        instance = new DataPath();
+    if (!m_instance) {
+        m_instance = new DataPath();
     }
 
-    return instance;
+    return m_instance;
 }

@@ -30,17 +30,21 @@ public:
     ~Clipboard();
     void setText(const QString& text);
 
+    static Clipboard* instance();
+
 private Q_SLOTS:
     void clearClipboard();
 
 private:
     explicit Clipboard(QObject* parent = 0);
 
-    QTimer* m_timer;
+    static Clipboard* m_instance;
 
-    friend Clipboard* clipboard();
+    QTimer* m_timer;
 };
 
-Clipboard* clipboard();
+inline Clipboard* clipboard() {
+    return Clipboard::instance();
+}
 
 #endif // KEEPASSX_CLIPBOARD_H

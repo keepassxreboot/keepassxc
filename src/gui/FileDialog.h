@@ -36,15 +36,19 @@ public:
      */
     void setNextFileName(const QString& fileName);
 
+    static FileDialog* instance();
+
 private:
     FileDialog();
     QString m_nextFileName;
 
-    Q_DISABLE_COPY(FileDialog)
+    static FileDialog* m_instance;
 
-    friend FileDialog* fileDialog();
+    Q_DISABLE_COPY(FileDialog)
 };
 
-FileDialog* fileDialog();
+inline FileDialog* fileDialog() {
+    return FileDialog::instance();
+}
 
 #endif // KEEPASSX_FILEDIALOG_H

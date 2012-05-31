@@ -30,17 +30,21 @@ public:
     QVariant get(const QString& key, const QVariant& defaultValue);
     void set(const QString& key, const QVariant& value);
 
+    static Config* instance();
+
 private:
     Config();
+
+    static Config* m_instance;
 
     QScopedPointer<QSettings> m_settings;
     QHash<QString, QVariant> m_defaults;
 
     Q_DISABLE_COPY(Config)
-
-    friend Config* config();
 };
 
-Config* config();
+inline Config* config() {
+    return Config::instance();
+}
 
 #endif // KEEPASSX_CONFIG_H

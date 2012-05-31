@@ -28,17 +28,21 @@ public:
     QIcon applicationIcon();
     QIcon icon(const QString& category, const QString& name, bool fromTheme = true);
 
+    static DataPath* instance();
+
 private:
     DataPath();
     bool testSetDir(const QString& dir);
 
+    static DataPath* m_instance;
+
     QString m_basePath;
 
     Q_DISABLE_COPY(DataPath)
-
-    friend DataPath* dataPath();
 };
 
-DataPath* dataPath();
+inline DataPath* dataPath() {
+    return DataPath::instance();
+}
 
 #endif // KEEPASSX_DATAPATH_H

@@ -21,6 +21,8 @@
 #include <QtCore/QSettings>
 #include <QtGui/QDesktopServices>
 
+Config* Config::m_instance(0);
+
 QVariant Config::get(const QString& key)
 {
     return m_settings->value(key, m_defaults.value(key));
@@ -73,13 +75,11 @@ Config::Config()
     m_defaults.insert("security/clearclipboardtimeout", 10);
 }
 
-Config* config()
+Config* Config::instance()
 {
-    static Config* instance(0);
-
-    if (!instance) {
-        instance = new Config();
+    if (!m_instance) {
+        m_instance = new Config();
     }
 
-    return instance;
+    return m_instance;
 }

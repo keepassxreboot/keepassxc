@@ -31,18 +31,22 @@ public:
     int iconCount();
     int expiredIconIndex();
 
+    static DatabaseIcons* instance();
+
 private:
     DatabaseIcons();
+
+    static DatabaseIcons* m_instance;
 
     QVector<QString> m_indexToName;
     QVector<QImage> m_iconCache;
     QVector<QPixmapCache::Key> m_pixmapCacheKeys;
 
     Q_DISABLE_COPY(DatabaseIcons)
-
-    friend DatabaseIcons* databaseIcons();
 };
 
-DatabaseIcons* databaseIcons();
+inline DatabaseIcons* databaseIcons() {
+    return DatabaseIcons::instance();
+}
 
 #endif // KEEPASSX_DATABASEICONS_H

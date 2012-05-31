@@ -19,6 +19,8 @@
 
 #include "core/Config.h"
 
+FileDialog* FileDialog::m_instance(0);
+
 QString FileDialog::getOpenFileName(QWidget* parent, const QString& caption, QString dir,
                                     const QString& filter, QString* selectedFilter,
                                     QFileDialog::Options options)
@@ -78,13 +80,11 @@ FileDialog::FileDialog()
 {
 }
 
-FileDialog* fileDialog()
+FileDialog* FileDialog::instance()
 {
-    static FileDialog* instance(0);
-
-    if (!instance) {
-        instance = new FileDialog();
+    if (!m_instance) {
+        m_instance = new FileDialog();
     }
 
-    return instance;
+    return m_instance;
 }

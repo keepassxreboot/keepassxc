@@ -28,6 +28,8 @@
 
 #include "core/Config.h"
 
+Clipboard* Clipboard::m_instance(0);
+
 Clipboard::Clipboard(QObject* parent)
     : QObject(parent)
     , m_timer(new QTimer(this))
@@ -75,13 +77,11 @@ void Clipboard::clearClipboard()
 #endif
 }
 
-Clipboard* clipboard()
+Clipboard* Clipboard::instance()
 {
-    static Clipboard* instance(0);
-
-    if (!instance) {
-        instance = new Clipboard(qApp);
+    if (!m_instance) {
+        m_instance = new Clipboard(qApp);
     }
 
-    return instance;
+    return m_instance;
 }

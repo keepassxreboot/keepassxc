@@ -19,6 +19,8 @@
 
 #include "core/DataPath.h"
 
+DatabaseIcons* DatabaseIcons::m_instance(0);
+
 QImage DatabaseIcons::icon(int index)
 {
     if (index < 0 || index >= iconCount()) {
@@ -146,13 +148,11 @@ DatabaseIcons::DatabaseIcons()
     m_pixmapCacheKeys.resize(iconCount());
 }
 
-DatabaseIcons* databaseIcons()
+DatabaseIcons* DatabaseIcons::instance()
 {
-    static DatabaseIcons* instance(0);
-
-    if (!instance) {
-        instance = new DatabaseIcons();
+    if (!m_instance) {
+        m_instance = new DatabaseIcons();
     }
 
-    return instance;
+    return m_instance;
 }
