@@ -82,8 +82,9 @@ void DatabaseTabWidget::newDatabase()
 
 void DatabaseTabWidget::openDatabase()
 {
+    QString filter = QString("%1 (*.kdbx);;%2 (*)").arg(tr("KeePass 2 Database"), tr("All files"));
     QString fileName = fileDialog()->getOpenFileName(m_window, tr("Open database"), QString(),
-                                                     tr("KeePass 2 Database").append(" (*.kdbx)"));
+                                                     filter);
     if (!fileName.isEmpty()) {
         openDatabase(fileName);
     }
