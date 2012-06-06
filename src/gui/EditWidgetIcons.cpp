@@ -123,7 +123,7 @@ void EditWidgetIcons::load(Uuid currentUuid, Database* database, IconStruct icon
 void EditWidgetIcons::addCustomIcon()
 {
     if (m_database) {
-        QString filter = QString("%1 (%2);;%3 (*.*)").arg(tr("Images"),
+        QString filter = QString("%1 (%2);;%3 (*)").arg(tr("Images"),
                     Tools::imageReaderFilter(), tr("All files"));
 
         QString filename = QFileDialog::getOpenFileName(
