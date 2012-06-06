@@ -581,14 +581,6 @@ bool DatabaseWidget::canDeleteCurrentGoup()
     return !isRootGroup && !isRecycleBin;
 }
 
-void DatabaseWidget::truncateHistories()
-{
-    QList<Entry*> allEntries = m_db->rootGroup()->entriesRecursive(false);
-    Q_FOREACH (Entry* entry, allEntries) {
-        entry->truncateHistory();
-    }
-}
-
 void DatabaseWidget::clearLastGroup(Group* group)
 {
     if (group) {

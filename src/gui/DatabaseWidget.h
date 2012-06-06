@@ -110,8 +110,6 @@ private Q_SLOTS:
     void showEntryContextMenu(const QPoint& pos);
 
 private:
-    void truncateHistories();
-
     Database* const m_db;
     const QScopedPointer<Ui::SearchWidget> m_searchUi;
     QWidget* const m_searchWidget;

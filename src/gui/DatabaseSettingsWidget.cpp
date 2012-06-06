@@ -19,6 +19,7 @@
 #include "ui_DatabaseSettingsWidget.h"
 
 #include "core/Database.h"
+#include "core/Group.h"
 #include "core/Metadata.h"
 #include "keys/CompositeKey.h"
 
@@ -84,17 +85,34 @@ void DatabaseSettingsWidget::save()
     meta->setRecycleBinEnabled(m_ui->recycleBinEnabledCheckBox->isChecked());
     m_db->setTransformRounds(m_ui->transformRoundsSpinBox->value());
 
+    bool truncate = false;
+
+    int historyMaxItems;
     if (m_ui->historyMaxItemsCheckBox->isChecked()) {
-        meta->setHistoryMaxItems(m_ui->historyMaxItemsSpinBox->value());
+        historyMaxItems = m_ui->historyMaxItemsSpinBox->value();
     }
     else {
-        meta->setHistoryMaxItems(-1);
+        historyMaxItems = -1;
     }
+    if (historyMaxItems != meta->historyMaxItems()) {
+        meta->setHistoryMaxItems(historyMaxItems);
+        truncate = true;
+    }
+
+    int historyMaxSize;
     if (m_ui->historyMaxSizeCheckBox->isChecked()) {
-        meta->setHistoryMaxSize(m_ui->historyMaxSizeSpinBox->value() * 1048576);
+        historyMaxSize = m_ui->historyMaxSizeSpinBox->value() * 1048576;
     }
     else {
-        meta->setHistoryMaxSize(-1);
+        historyMaxSize = -1;
+    }
+    if (historyMaxSize != meta->historyMaxSize()) {
+        meta->setHistoryMaxSize(historyMaxSize);
+        truncate = true;
+    }
+
+    if (truncate) {
+        truncateHistories();
     }
 
     Q_EMIT editFinished(true);
@@ -110,4 +128,12 @@ void DatabaseSettingsWidget::transformRoundsBenchmark()
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
     m_ui->transformRoundsSpinBox->setValue(CompositeKey::transformKeyBenchmark(1000));
     QApplication::restoreOverrideCursor();
+}
+
+void DatabaseSettingsWidget::truncateHistories()
+{
+    QList<Entry*> allEntries = m_db->rootGroup()->entriesRecursive(false);
+    Q_FOREACH (Entry* entry, allEntries) {
+        entry->truncateHistory();
+    }
 }

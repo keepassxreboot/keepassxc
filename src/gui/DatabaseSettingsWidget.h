@@ -47,6 +47,8 @@ private Q_SLOTS:
     void transformRoundsBenchmark();
 
 private:
+    void truncateHistories();
+
     const QScopedPointer<Ui::DatabaseSettingsWidget> m_ui;
     Database* m_db;
 
