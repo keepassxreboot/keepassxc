@@ -22,6 +22,7 @@
 
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
+#include "gui/FileDialog.h"
 
 ChangeMasterKeyWidget::ChangeMasterKeyWidget(QWidget* parent)
     : DialogyWidget(parent)
@@ -32,6 +33,7 @@ ChangeMasterKeyWidget::ChangeMasterKeyWidget(QWidget* parent)
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(generateKey()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
     connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), SLOT(togglePassword(bool)));
+    connect(m_ui->createKeyFileButton, SIGNAL(clicked()), SLOT(createKeyFile()));
 }
 
 ChangeMasterKeyWidget::~ChangeMasterKeyWidget()
@@ -42,6 +44,29 @@ void ChangeMasterKeyWidget::togglePassword(bool checked)
 {
     m_ui->enterPasswordEdit->setEchoMode(checked ? QLineEdit::Password : QLineEdit::Normal);
     m_ui->repeatPasswordEdit->setEchoMode(checked ? QLineEdit::Password : QLineEdit::Normal);
+}
+
+void ChangeMasterKeyWidget::createKeyFile()
+{
+    QString fileName = fileDialog()->getSaveFileName(this, tr("CreateKeyFile..."), QString(),
+            tr("Key Files") + " (*.key);;" + tr("All files (*)"));
+
+    if (!fileName.isEmpty()) {
+        QString errorMsg;
+        bool created = FileKey::create(fileName, &errorMsg);
+        if(!created)
+        {
+            QMessageBox::warning(this, tr("Error"), tr("Unable to create Key File : ") + errorMsg);
+        }
+        else
+        {
+            if(m_ui->keyFileGroup->isEnabled())
+            {
+                m_ui->keyFileCombo->setEditText(fileName);
+            }
+            return;
+        }
+    }
 }
 
 void ChangeMasterKeyWidget::clearForms()
