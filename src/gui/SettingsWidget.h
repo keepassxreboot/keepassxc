@@ -40,6 +40,7 @@ Q_SIGNALS:
 private Q_SLOTS:
     void saveSettings();
     void reject();
+    void enableAutoSaveOnExit(bool checked);
 
 private:
     QWidget* const m_secWidget;

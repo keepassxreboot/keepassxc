@@ -31,10 +31,17 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
+   <item row="3" column="0">
     <widget class="QCheckBox" name="autoSaveAfterEveryChangeCheckBox">
      <property name="text">
       <string>Automatically save after every change</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QCheckBox" name="autoSaveOnExitCheckBox">
+     <property name="text">
+      <string>Automatically save on exit</string>
      </property>
     </widget>
    </item>

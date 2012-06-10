@@ -72,6 +72,7 @@ Config::Config()
     m_defaults.insert("RememberLastDatabases", true);
     m_defaults.insert("ModifiedOnExpandedStateChanges", true);
     m_defaults.insert("AutoSaveAfterEveryChange", false);
+    m_defaults.insert("AutoSaveOnExit", false);
     m_defaults.insert("security/clearclipboard", true);
     m_defaults.insert("security/clearclipboardtimeout", 10);
 }
