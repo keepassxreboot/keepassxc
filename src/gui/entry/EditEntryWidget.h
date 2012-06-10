@@ -31,6 +31,7 @@ class EntryAttachmentsModel;
 class EntryAttributes;
 class EntryAttributesModel;
 class EntryHistoryModel;
+class QSortFilterProxyModel;
 class QStackedLayout;
 
 namespace Ui {
@@ -76,6 +77,7 @@ private Q_SLOTS:
     void deleteHistoryEntry();
     void deleteAllHistoryEntries();
     void emitHistoryEntryActivated(const QModelIndex& index);
+    void histEntryActivated(const QModelIndex& index);
     void updateHistoryButtons(const QModelIndex& current, const QModelIndex& previous);
 
 private:
@@ -99,6 +101,7 @@ private:
     EntryAttachmentsModel* m_attachmentsModel;
     EntryAttributesModel* m_attributesModel;
     EntryHistoryModel* m_historyModel;
+    QSortFilterProxyModel* m_sortModel;
     EntryAttachments* m_entryAttachments;
     EntryAttributes* m_entryAttributes;
     QPersistentModelIndex m_currentAttribute;

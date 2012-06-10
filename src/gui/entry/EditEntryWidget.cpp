@@ -91,18 +91,18 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
 
     m_historyModel = new EntryHistoryModel(this);
 
-    QSortFilterProxyModel* sortModel = new QSortFilterProxyModel(this);
-    sortModel->setSourceModel(m_historyModel);
-    sortModel->setDynamicSortFilter(true);
-    sortModel->setSortLocaleAware(true);
-    sortModel->setSortCaseSensitivity(Qt::CaseInsensitive);
-    sortModel->setSortRole(Qt::UserRole);
+    m_sortModel = new QSortFilterProxyModel(this);
+    m_sortModel->setSourceModel(m_historyModel);
+    m_sortModel->setDynamicSortFilter(true);
+    m_sortModel->setSortLocaleAware(true);
+    m_sortModel->setSortCaseSensitivity(Qt::CaseInsensitive);
+    m_sortModel->setSortRole(Qt::UserRole);
 
-    m_historyUi->historyView->setModel(sortModel);
+    m_historyUi->historyView->setModel(m_sortModel);
     m_historyUi->historyView->setRootIsDecorated(false);
 
     connect(m_historyUi->historyView, SIGNAL(activated(const QModelIndex&)),
-            SLOT(emitHistoryEntryActivated(const QModelIndex&)));
+            SLOT(histEntryActivated(const QModelIndex&)));
     connect(m_historyUi->historyView->selectionModel(),
             SIGNAL(currentChanged(QModelIndex ,QModelIndex)),
             SLOT(updateHistoryButtons(QModelIndex, QModelIndex)));
@@ -122,13 +122,22 @@ EditEntryWidget::~EditEntryWidget()
 const QColor EditEntryWidget::CorrectSoFarColor = QColor(255, 205, 15);
 const QColor EditEntryWidget::ErrorColor = QColor(255, 125, 125);
 
-
 void EditEntryWidget::emitHistoryEntryActivated(const QModelIndex& index)
 {
     Q_ASSERT(!m_history);
 
     Entry* entry = m_historyModel->entryFromIndex(index);
     Q_EMIT historyEntryActivated(entry);
+}
+
+void EditEntryWidget::histEntryActivated(const QModelIndex& index)
+{
+    Q_ASSERT(!m_history);
+
+    QModelIndex indexMapped = m_sortModel->mapToSource(index);
+    if (indexMapped.isValid()) {
+        emitHistoryEntryActivated(indexMapped);
+    }
 }
 
 void EditEntryWidget::updateHistoryButtons(const QModelIndex& current, const QModelIndex& previous)
@@ -533,7 +542,7 @@ void EditEntryWidget::removeCurrentAttachment()
 
 void EditEntryWidget::showHistoryEntry()
 {
-    QModelIndex index = m_historyUi->historyView->currentIndex();
+    QModelIndex index = m_sortModel->mapToSource(m_historyUi->historyView->currentIndex());
     if (index.isValid()) {
         emitHistoryEntryActivated(index);
     }
@@ -541,7 +550,7 @@ void EditEntryWidget::showHistoryEntry()
 
 void EditEntryWidget::restoreHistoryEntry()
 {
-    QModelIndex index = m_historyUi->historyView->currentIndex();
+    QModelIndex index = m_sortModel->mapToSource(m_historyUi->historyView->currentIndex());
     if (index.isValid()) {
         setForms(m_historyModel->entryFromIndex(index), true);
     }
@@ -549,7 +558,7 @@ void EditEntryWidget::restoreHistoryEntry()
 
 void EditEntryWidget::deleteHistoryEntry()
 {
-    QModelIndex index = m_historyUi->historyView->currentIndex();
+    QModelIndex index = m_sortModel->mapToSource(m_historyUi->historyView->currentIndex());
     if (index.isValid()) {
         m_historyModel->deleteIndex(index);
         if (m_historyModel->rowCount() > 0) {
