@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>SettingsWidgetGeneral</class>
  <widget class="QWidget" name="SettingsWidgetGeneral">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>354</width>
+    <height>104</height>
+   </rect>
+  </property>
   <layout class="QFormLayout" name="formLayout">
    <item row="0" column="0">
     <widget class="QCheckBox" name="rememberLastDatabasesCheckBox">
@@ -20,6 +28,13 @@
      </property>
      <property name="checked">
       <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QCheckBox" name="autoSaveAfterEveryChangeCheckBox">
+     <property name="text">
+      <string>Automatically save after every change</string>
      </property>
     </widget>
    </item>
