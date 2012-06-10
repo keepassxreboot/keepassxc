@@ -523,9 +523,6 @@ void DatabaseTabWidget::modified()
 {
     Q_ASSERT(qobject_cast<Database*>(sender()));
 
-    if (config()->get("AutoSaveAfterEveryChange").toBool()) {
-        config()->set("LastDatabases", QVariant());
-    }
     Database* db = static_cast<Database*>(sender());
     DatabaseManagerStruct& dbStruct = m_dbList[db];
 
