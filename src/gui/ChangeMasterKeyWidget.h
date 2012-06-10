@@ -47,6 +47,7 @@ private Q_SLOTS:
     void reject();
     void togglePassword(bool checked);
     void createKeyFile();
+    void browseKeyFile();
 
 private:
     const QScopedPointer<Ui::ChangeMasterKeyWidget> m_ui;

@@ -34,6 +34,7 @@ ChangeMasterKeyWidget::ChangeMasterKeyWidget(QWidget* parent)
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
     connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), SLOT(togglePassword(bool)));
     connect(m_ui->createKeyFileButton, SIGNAL(clicked()), SLOT(createKeyFile()));
+    connect(m_ui->browseKeyFileButton, SIGNAL(clicked()), SLOT(browseKeyFile()));
 }
 
 ChangeMasterKeyWidget::~ChangeMasterKeyWidget()
@@ -65,6 +66,20 @@ void ChangeMasterKeyWidget::createKeyFile()
                 m_ui->keyFileCombo->setEditText(fileName);
             }
             return;
+        }
+    }
+}
+
+void ChangeMasterKeyWidget::browseKeyFile()
+{
+    QString fileName = fileDialog()->getOpenFileName(this, tr("Select a key file"), QString(),
+            tr("Key Files") + " (*.key);;" + tr("All files (*)"));
+
+    if(!fileName.isEmpty())
+    {
+        if(m_ui->keyFileGroup->isEnabled())
+        {
+            m_ui->keyFileCombo->setEditText(fileName);
         }
     }
 }
