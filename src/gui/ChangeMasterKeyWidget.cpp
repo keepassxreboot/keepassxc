@@ -49,38 +49,28 @@ void ChangeMasterKeyWidget::togglePassword(bool checked)
 
 void ChangeMasterKeyWidget::createKeyFile()
 {
-    QString fileName = fileDialog()->getSaveFileName(this, tr("CreateKeyFile..."), QString(),
-            tr("Key Files") + " (*.key);;" + tr("All files (*)"));
+    QString filters = QString("%1 (*.key);;%2 (*)").arg(tr("Key files"), tr("All files"));
+    QString fileName = fileDialog()->getSaveFileName(this, tr("Create Key File..."), QString(), filters);
 
     if (!fileName.isEmpty()) {
         QString errorMsg;
         bool created = FileKey::create(fileName, &errorMsg);
-        if(!created)
-        {
+        if (!created) {
             QMessageBox::warning(this, tr("Error"), tr("Unable to create Key File : ") + errorMsg);
         }
-        else
-        {
-            if(m_ui->keyFileGroup->isEnabled())
-            {
-                m_ui->keyFileCombo->setEditText(fileName);
-            }
-            return;
+        else {
+            m_ui->keyFileCombo->setEditText(fileName);
         }
     }
 }
 
 void ChangeMasterKeyWidget::browseKeyFile()
 {
-    QString fileName = fileDialog()->getOpenFileName(this, tr("Select a key file"), QString(),
-            tr("Key Files") + " (*.key);;" + tr("All files (*)"));
+    QString filters = QString("%1 (*.key);;%2 (*)").arg(tr("Key files"), tr("All files"));
+    QString fileName = fileDialog()->getOpenFileName(this, tr("Select a key file"), QString(), filters);
 
-    if(!fileName.isEmpty())
-    {
-        if(m_ui->keyFileGroup->isEnabled())
-        {
-            m_ui->keyFileCombo->setEditText(fileName);
-        }
+    if (!fileName.isEmpty()) {
+        m_ui->keyFileCombo->setEditText(fileName);
     }
 }
 
