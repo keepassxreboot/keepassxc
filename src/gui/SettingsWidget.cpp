@@ -80,10 +80,5 @@ void SettingsWidget::reject()
 
 void SettingsWidget::enableAutoSaveOnExit(bool checked)
 {
-    if(checked) {
-        m_generalUi->autoSaveOnExitCheckBox->setEnabled(false);
-    }
-    else {
-        m_generalUi->autoSaveOnExitCheckBox->setEnabled(true);
-    }
+    m_generalUi->autoSaveOnExitCheckBox->setEnabled(!checked);
 }
