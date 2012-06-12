@@ -210,12 +210,10 @@ bool DatabaseTabWidget::closeDatabase(Database* db)
         }
     }
     if (dbStruct.modified) {
-        if(config()->get("AutoSaveOnExit").toBool())
-        {
+        if (config()->get("AutoSaveOnExit").toBool()) {
             saveDatabase(db);
         }
-        else
-        {
+        else {
             QMessageBox::StandardButton result =
                 QMessageBox::question(
                 this, tr("Save changes?"),
