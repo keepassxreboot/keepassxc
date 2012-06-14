@@ -23,17 +23,23 @@
 
 class QSettings;
 
-class Config
+class Config : public QObject
 {
+    Q_OBJECT
+
 public:
+    ~Config();
     QVariant get(const QString& key);
     QVariant get(const QString& key, const QVariant& defaultValue);
     void set(const QString& key, const QVariant& value);
 
     static Config* instance();
+    static void createTempFileInstance();
 
 private:
-    Config();
+    Config(const QString& fileName, QObject* parent);
+    Config(QObject* parent);
+    void init(const QString& fileName);
 
     static Config* m_instance;
 

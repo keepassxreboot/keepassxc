@@ -90,6 +90,7 @@ set(keepassx_SOURCES
 )
 
 set(keepassx_MOC
+    core/Config.h
     core/Database.h
     core/Entry.h
     core/EntryAttachments.h

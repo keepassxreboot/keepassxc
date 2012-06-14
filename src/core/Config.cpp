@@ -19,6 +19,8 @@
 
 #include <QtCore/QDir>
 #include <QtCore/QSettings>
+#include <QtCore/QTemporaryFile>
+#include <QtGui/QApplication>
 #include <QtGui/QDesktopServices>
 
 Config* Config::m_instance(0);
@@ -38,7 +40,14 @@ void Config::set(const QString& key, const QVariant& value)
     m_settings->setValue(key, value);
 }
 
-Config::Config()
+Config::Config(const QString& fileName, QObject* parent)
+    : QObject(parent)
+{
+    init(fileName);
+}
+
+Config::Config(QObject* parent)
+    : QObject(parent)
 {
     QString userPath;
     QString homePath = QDir::homePath();
@@ -67,7 +76,17 @@ Config::Config()
 
     userPath += "keepassx2.ini";
 
-    m_settings.reset(new QSettings(userPath, QSettings::IniFormat));
+    init(userPath);
+}
+
+Config::~Config()
+{
+    ;
+}
+
+void Config::init(const QString& fileName)
+{
+    m_settings.reset(new QSettings(fileName, QSettings::IniFormat));
 
     m_defaults.insert("RememberLastDatabases", true);
     m_defaults.insert("ModifiedOnExpandedStateChanges", true);
@@ -80,8 +99,16 @@ Config::Config()
 Config* Config::instance()
 {
     if (!m_instance) {
-        m_instance = new Config();
+        m_instance = new Config(qApp);
     }
 
     return m_instance;
+}
+
+void Config::createTempFileInstance()
+{
+    Q_ASSERT(!m_instance);
+    QTemporaryFile* tmpFile = new QTemporaryFile(qApp);
+    tmpFile->open();
+    m_instance = new Config(tmpFile->fileName(), tmpFile);
 }

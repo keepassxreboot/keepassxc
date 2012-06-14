@@ -29,6 +29,7 @@
 #include "config-keepassx-tests.h"
 #include "tests.h"
 #include "crypto/Crypto.h"
+#include "core/Config.h"
 #include "core/Entry.h"
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
@@ -40,6 +41,7 @@
 void TestGui::initTestCase()
 {
     Crypto::init();
+    Config::createTempFileInstance();
     m_mainWindow = new MainWindow();
     m_mainWindow->show();
     QTest::qWaitForWindowShown(m_mainWindow);
