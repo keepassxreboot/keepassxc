@@ -74,6 +74,7 @@ void GroupView::expandedChanged(const QModelIndex& index)
 {
     Group* group = m_model->groupFromIndex(index);
     group->setExpanded(isExpanded(index));
+    Q_EMIT editFinished();
 }
 
 void GroupView::recInitExpanded(Group* group)

@@ -37,6 +37,7 @@ public:
 
 Q_SIGNALS:
     void groupChanged(Group* group);
+    void editFinished();
 
 private Q_SLOTS:
     void expandedChanged(const QModelIndex& index);

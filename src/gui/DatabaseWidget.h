@@ -74,6 +74,7 @@ public:
 Q_SIGNALS:
     void closeRequest();
     void currentModeChanged(DatabaseWidget::Mode mode);
+    void editFinished();
 
 public Q_SLOTS:
     void createEntry();
