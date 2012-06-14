@@ -29,6 +29,7 @@ GroupView::GroupView(Database* db, QWidget* parent)
     , m_model(new GroupModel(db, this))
 {
     QTreeView::setModel(m_model);
+    m_emitEditFinished = false;
     setHeaderHidden(true);
     setUniformRowHeights(true);
 
@@ -47,6 +48,7 @@ GroupView::GroupView(Database* db, QWidget* parent)
     setDragEnabled(true);
     viewport()->setAcceptDrops(true);
     setDropIndicatorShown(true);
+    m_emitEditFinished = true;
 }
 
 void GroupView::dragMoveEvent(QDragMoveEvent* event)
@@ -74,7 +76,7 @@ void GroupView::expandedChanged(const QModelIndex& index)
 {
     Group* group = m_model->groupFromIndex(index);
     group->setExpanded(isExpanded(index));
-    Q_EMIT editFinished();
+    emitEditFinished();
 }
 
 void GroupView::recInitExpanded(Group* group)
@@ -83,6 +85,13 @@ void GroupView::recInitExpanded(Group* group)
 
     Q_FOREACH (Group* child, group->children()) {
         recInitExpanded(child);
+    }
+}
+
+void GroupView::emitEditFinished()
+{
+    if (m_emitEditFinished) {
+        Q_EMIT editFinished();
     }
 }
 
@@ -110,10 +119,13 @@ void GroupView::emitGroupChanged()
 
 void GroupView::syncExpandedState(const QModelIndex& parent, int start, int end)
 {
+    m_emitEditFinished = false;
     for (int row = start; row <= end; row++) {
         Group* group = m_model->groupFromIndex(m_model->index(row, 0, parent));
         recInitExpanded(group);
     }
+    m_emitEditFinished = true;
+    emitEditFinished();
 }
 
 void GroupView::setCurrentGroup(Group* group)
