@@ -163,6 +163,7 @@ void KeePass2XmlWriter::writeBinaries()
 
         m_xml.writeAttribute("ID", QString::number(i.value()));
 
+        QByteArray data;
         if (m_db->compressionAlgo() == Database::CompressionGZip) {
             m_xml.writeAttribute("Compressed", "True");
 
@@ -178,12 +179,15 @@ void KeePass2XmlWriter::writeBinaries()
             compressor.close();
 
             buffer.seek(0);
-            m_xml.writeCharacters(QString::fromAscii(buffer.readAll().toBase64()));
+            data = buffer.readAll();
         }
         else {
-            m_xml.writeCharacters(QString::fromAscii(i.key().toBase64()));
+            data = i.key();
         }
 
+        if (!data.isEmpty()) {
+            m_xml.writeCharacters(QString::fromAscii(data.toBase64()));
+        }
         m_xml.writeEndElement();
     }
 
@@ -342,7 +346,9 @@ void KeePass2XmlWriter::writeEntry(const Entry* entry)
             value = entry->attributes()->value(key);
         }
 
-        m_xml.writeCharacters(value);
+        if (!value.isEmpty()) {
+            m_xml.writeCharacters(value);
+        }
         m_xml.writeEndElement();
 
         m_xml.writeEndElement();
@@ -408,7 +414,12 @@ void KeePass2XmlWriter::writeEntryHistory(const Entry* entry)
 
 void KeePass2XmlWriter::writeString(const QString& qualifiedName, const QString& string)
 {
-    m_xml.writeTextElement(qualifiedName, string);
+    if (string.isEmpty()) {
+        m_xml.writeEmptyElement(qualifiedName);
+    }
+    else {
+        m_xml.writeTextElement(qualifiedName, string);
+    }
 }
 
 void KeePass2XmlWriter::writeNumber(const QString& qualifiedName, int number)
