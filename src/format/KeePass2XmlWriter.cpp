@@ -440,8 +440,16 @@ void KeePass2XmlWriter::writeBool(const QString& qualifiedName, bool b)
 void KeePass2XmlWriter::writeDateTime(const QString& qualifiedName, const QDateTime& dateTime)
 {
     Q_ASSERT(dateTime.isValid());
+    Q_ASSERT(dateTime.timeSpec() == Qt::UTC);
 
-    writeString(qualifiedName, dateTime.toUTC().toString(Qt::ISODate).append('Z'));
+    QString dateTimeStr = dateTime.toString(Qt::ISODate);
+
+    // Qt < 4.8 doesn't append a 'Z' at the end
+    if (!dateTimeStr.isEmpty() && dateTimeStr[dateTimeStr.size() - 1] != 'Z') {
+        dateTimeStr.append('Z');
+    }
+
+    writeString(qualifiedName, dateTimeStr);
 }
 
 void KeePass2XmlWriter::writeUuid(const QString& qualifiedName, const Uuid& uuid)
