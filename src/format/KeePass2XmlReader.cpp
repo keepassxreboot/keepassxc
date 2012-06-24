@@ -635,7 +635,7 @@ void KeePass2XmlReader::parseEntryString(Entry* entry)
 
             if (isProtected && !value.isEmpty()) {
                 if (m_randomStream) {
-                    value = m_randomStream->process(QByteArray::fromBase64(value.toAscii()));
+                    value = QString::fromUtf8(m_randomStream->process(QByteArray::fromBase64(value.toAscii())));
                 }
                 else {
                     raiseError(9);

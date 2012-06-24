@@ -31,6 +31,7 @@ private Q_SLOTS:
     void testBasic();
     void testProtectedAttributes();
     void testAttachments();
+    void testNonAsciiPasswords();
     void cleanupTestCase();
 
 private:

@@ -43,6 +43,7 @@ void TestKeePass2Writer::initTestCase()
     group->setUuid(Uuid::random());
     group->setNotes("I'm a note!");
     Entry* entry = new Entry();
+    entry->setPassword(QString::fromUtf8("\xc3\xa4\xa3\xb6\xc3\xbc\xe9\x9b\xbb\xe7\xb4\x85"));
     entry->setUuid(Uuid::random());
     entry->attributes()->set("test", "protectedTest", true);
     QVERIFY(entry->attributes()->isProtected("test"));
@@ -91,6 +92,11 @@ void TestKeePass2Writer::testAttachments()
     QCOMPARE(entry->attachments()->keys().size(), 2);
     QCOMPARE(entry->attachments()->value("myattach.txt"), QByteArray("this is an attachment"));
     QCOMPARE(entry->attachments()->value("aaa.txt"), QByteArray("also an attachment"));
+}
+
+void TestKeePass2Writer::testNonAsciiPasswords()
+{
+    QCOMPARE(m_dbTest->rootGroup()->entries()[0]->password(), m_dbOrg->rootGroup()->entries()[0]->password());
 }
 
 void TestKeePass2Writer::cleanupTestCase()
