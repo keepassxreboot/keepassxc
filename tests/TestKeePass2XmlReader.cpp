@@ -295,7 +295,7 @@ void TestKeePass2XmlReader::testEntry2()
     QVERIFY(attrs.isEmpty());
 
     QCOMPARE(entry->attachments()->keys().size(), 1);
-    QCOMPARE(QString(entry->attachments()->value("myattach.txt")), QString("abcdefghijk"));
+    QCOMPARE(QString::fromAscii(entry->attachments()->value("myattach.txt")), QString("abcdefghijk"));
 
     QCOMPARE(entry->autoTypeEnabled(), true);
     QCOMPARE(entry->autoTypeObfuscation(), 1);

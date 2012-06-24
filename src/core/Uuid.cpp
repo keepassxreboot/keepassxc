@@ -41,12 +41,12 @@ Uuid Uuid::random() {
 
 QString Uuid::toBase64() const
 {
-    return m_data.toBase64();
+    return QString::fromAscii(m_data.toBase64());
 }
 
 QString Uuid::toHex() const
 {
-    return m_data.toHex();
+    return QString::fromAscii(m_data.toHex());
 }
 
 QByteArray Uuid::toByteArray() const
