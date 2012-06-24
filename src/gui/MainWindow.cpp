@@ -33,7 +33,9 @@ MainWindow::MainWindow()
     m_ui->setupUi(this);
 
     setWindowIcon(dataPath()->applicationIcon());
-    m_ui->toolBar->toggleViewAction()->setText(tr("Show toolbar"));
+    QAction* toggleViewAction = m_ui->toolBar->toggleViewAction();
+    toggleViewAction->setText(tr("Show toolbar"));
+    m_ui->menuView->addAction(toggleViewAction);
 
     setShortcut(m_ui->actionDatabaseOpen, QKeySequence::Open, Qt::CTRL + Qt::Key_O);
     setShortcut(m_ui->actionDatabaseSave, QKeySequence::Save, Qt::CTRL + Qt::Key_S);

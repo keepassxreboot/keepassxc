@@ -121,9 +121,15 @@
     </property>
     <addaction name="actionSettings"/>
    </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEntries"/>
    <addaction name="menuGroups"/>
+   <addaction name="menuView"/>
    <addaction name="menuExtras"/>
    <addaction name="menuHelp"/>
   </widget>
