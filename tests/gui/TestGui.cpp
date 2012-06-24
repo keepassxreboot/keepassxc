@@ -159,13 +159,13 @@ void TestGui::testSearch()
     DatabaseTabWidget* tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
     DatabaseWidget* dbWidget = tabWidget->currentDatabaseWidget();
 
-    QAction* serachAction = m_mainWindow->findChild<QAction*>("actionSearch");
-    QVERIFY(serachAction->isEnabled());
+    QAction* searchAction = m_mainWindow->findChild<QAction*>("actionSearch");
+    QVERIFY(searchAction->isEnabled());
     QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
-    QWidget* serachActionWidget = toolBar->widgetForAction(serachAction);
-    QVERIFY(serachActionWidget->isVisible());
-    QVERIFY(serachActionWidget->isEnabled());
-    QTest::mouseClick(serachActionWidget, Qt::LeftButton);
+    QWidget* searchActionWidget = toolBar->widgetForAction(searchAction);
+    QVERIFY(searchActionWidget->isVisible());
+    QVERIFY(searchActionWidget->isEnabled());
+    QTest::mouseClick(searchActionWidget, Qt::LeftButton);
     QTest::qWait(20);
 
     EntryView* entryView = dbWidget->findChild<EntryView*>("entryView");
