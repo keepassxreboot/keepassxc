@@ -38,7 +38,7 @@ public:
 
 private:
     Config(const QString& fileName, QObject* parent);
-    Config(QObject* parent);
+    explicit Config(QObject* parent);
     void init(const QString& fileName);
 
     static Config* m_instance;

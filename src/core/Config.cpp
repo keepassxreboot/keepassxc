@@ -81,7 +81,6 @@ Config::Config(QObject* parent)
 
 Config::~Config()
 {
-    ;
 }
 
 void Config::init(const QString& fileName)

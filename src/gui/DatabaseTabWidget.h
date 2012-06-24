@@ -109,8 +109,6 @@ private:
     QHash<Database*, DatabaseManagerStruct> m_dbList;
     DatabaseManagerStruct m_curDbStruct;
     DatabaseOpenDialog* m_curKeyDialog;
-
-
 };
 
 #endif // KEEPASSX_DATABASETABWIDGET_H
