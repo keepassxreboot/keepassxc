@@ -434,7 +434,7 @@ void Group::addEntry(Entry* entry)
     m_entries << entry;
     connect(entry, SIGNAL(dataChanged(Entry*)), SIGNAL(entryDataChanged(Entry*)));
     if (m_db) {
-        connect(entry, SIGNAL(modified()), m_db, SIGNAL(modified()));
+        connect(entry, SIGNAL(modified()), m_db, SIGNAL(modifiedImmediate()));
     }
 
     Q_EMIT modified();
@@ -474,7 +474,7 @@ void Group::recSetDatabase(Database* db)
             entry->disconnect(m_db);
         }
         if (db) {
-            connect(entry, SIGNAL(modified()), db, SIGNAL(modified()));
+            connect(entry, SIGNAL(modified()), db, SIGNAL(modifiedImmediate()));
         }
     }
 
@@ -486,7 +486,7 @@ void Group::recSetDatabase(Database* db)
         connect(this, SIGNAL(added()), db, SIGNAL(groupAdded()));
         connect(this, SIGNAL(aboutToMove(Group*,Group*,int)), db, SIGNAL(groupAboutToMove(Group*,Group*,int)));
         connect(this, SIGNAL(moved()), db, SIGNAL(groupMoved()));
-        connect(this, SIGNAL(modified()), db, SIGNAL(modified()));
+        connect(this, SIGNAL(modified()), db, SIGNAL(modifiedImmediate()));
     }
 
     m_db = db;

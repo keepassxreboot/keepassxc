@@ -134,6 +134,7 @@ void TestGui::testAddEntry()
 
     QCOMPARE(entry->title(), QString("test"));
     QCOMPARE(entry->historyItems().size(), 0);
+    QTest::qWait(200);
     QCOMPARE(tabWidget->tabText(tabWidget->currentIndex()), QString("NewDatabase.kdbx*"));
 
     QAction* entryEditAction = m_mainWindow->findChild<QAction*>("actionEntryEdit");

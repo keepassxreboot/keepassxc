@@ -503,7 +503,6 @@ void DatabaseTabWidget::insertDatabase(Database* db, const DatabaseManagerStruct
     updateTabName(db);
     int index = databaseIndex(db);
     setCurrentIndex(index);
-
     connect(db, SIGNAL(nameTextChanged()), SLOT(updateTabNameFromSender()));
     connect(dbStruct.dbWidget->entryView(), SIGNAL(entrySelectionChanged()),
             SLOT(emitEntrySelectionChanged()));
@@ -511,7 +510,7 @@ void DatabaseTabWidget::insertDatabase(Database* db, const DatabaseManagerStruct
     connect(db, SIGNAL(modified()), SLOT(modified()));
     connect(dbStruct.dbWidget, SIGNAL(currentModeChanged(DatabaseWidget::Mode)),
             SIGNAL(currentWidgetModeChanged(DatabaseWidget::Mode)));
-    connect(dbStruct.dbWidget, SIGNAL(editFinished()), SLOT(autoSave()));
+    db->setEmitModified(true);
 }
 
 DatabaseWidget* DatabaseTabWidget::currentDatabaseWidget()
@@ -532,22 +531,14 @@ void DatabaseTabWidget::modified()
     Database* db = static_cast<Database*>(sender());
     DatabaseManagerStruct& dbStruct = m_dbList[db];
 
+    if (config()->get("AutoSaveAfterEveryChange").toBool() && dbStruct.file) {
+        saveDatabase(db);
+        return;
+    }
+
     if (!dbStruct.modified) {
         dbStruct.modified = true;
         updateTabName(db);
-    }
-}
-
-void DatabaseTabWidget::autoSave()
-{
-    Q_ASSERT(qobject_cast<DatabaseWidget*>(sender()));
-
-    DatabaseWidget* dbWidget = static_cast<DatabaseWidget*>(sender());
-    Database* db = databaseFromDatabaseWidget(dbWidget);
-    DatabaseManagerStruct& dbStruct = m_dbList[db];
-
-    if (dbStruct.modified && config()->get("AutoSaveAfterEveryChange").toBool() && dbStruct.file) {
-        saveDatabase(db);
     }
 }
 

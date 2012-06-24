@@ -41,7 +41,7 @@ void TestModified::testSignals()
 
     Database* db = new Database();
     Group* root = db->rootGroup();
-    QSignalSpy spyModified(db, SIGNAL(modified()));
+    QSignalSpy spyModified(db, SIGNAL(modifiedImmediate()));
 
     db->setKey(compositeKey);
     QCOMPARE(spyModified.count(), ++spyCount);
@@ -63,7 +63,7 @@ void TestModified::testSignals()
 
     Database* db2 = new Database();
     Group* root2 = db2->rootGroup();
-    QSignalSpy spyModified2(db2, SIGNAL(modified()));
+    QSignalSpy spyModified2(db2, SIGNAL(modifiedImmediate()));
 
     g1->setParent(root2);
     QCOMPARE(spyModified.count(), ++spyCount);
@@ -116,7 +116,7 @@ void TestModified::testGroupSets()
     Group* g = new Group();
     g->setParent(root);
 
-    QSignalSpy spyModified(db, SIGNAL(modified()));
+    QSignalSpy spyModified(db, SIGNAL(modifiedImmediate()));
 
     root->setUuid(Uuid::random());
     QCOMPARE(spyModified.count(), ++spyCount);
@@ -183,7 +183,7 @@ void TestModified::testEntrySets()
     Entry* entry = new Entry();
     entry->setGroup(g);
 
-    QSignalSpy spyModified(db, SIGNAL(modified()));
+    QSignalSpy spyModified(db, SIGNAL(modifiedImmediate()));
 
     entry->setUuid(Uuid::random());
     QCOMPARE(spyModified.count(), ++spyCount);

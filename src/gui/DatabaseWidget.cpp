@@ -147,7 +147,6 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(clearLastGroup(Group*)));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), SLOT(updateGroupActions(Group*)));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), m_entryView, SLOT(setGroup(Group*)));
-    connect(m_groupView, SIGNAL(editFinished()), this, SIGNAL(editFinished()));
     connect(m_entryView, SIGNAL(entryActivated(Entry*)), SLOT(switchToEntryEdit(Entry*)));
     connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
     connect(m_editEntryWidget, SIGNAL(historyEntryActivated(Entry*)), SLOT(switchToHistoryView(Entry*)));
@@ -259,8 +258,6 @@ void DatabaseWidget::cloneEntry()
     entry->setGroup(currentEntry->group());
     m_entryView->setFocus();
     m_entryView->setCurrentEntry(entry);
-
-    Q_EMIT editFinished();
 }
 
 void DatabaseWidget::deleteEntry()
@@ -285,8 +282,6 @@ void DatabaseWidget::deleteEntry()
     else {
         m_db->recycleEntry(currentEntry);
     }
-
-    Q_EMIT editFinished();
 }
 
 void DatabaseWidget::copyUsername()
@@ -346,8 +341,6 @@ void DatabaseWidget::deleteGroup()
     else {
         m_db->recycleGroup(currentGroup);
     }
-
-    Q_EMIT editFinished();
 }
 
 int DatabaseWidget::addWidget(QWidget* w)
@@ -405,8 +398,6 @@ void DatabaseWidget::switchToView(bool accepted)
         m_newParent = 0;
     }
 
-    Q_EMIT editFinished();
-
     setCurrentIndex(0);
 }
 
@@ -454,8 +445,6 @@ void DatabaseWidget::updateMasterKey(bool accepted)
         Q_EMIT closeRequest();
         return;
     }
-
-    Q_EMIT editFinished();
 
     setCurrentIndex(0);
 }

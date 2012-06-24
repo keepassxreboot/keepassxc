@@ -27,6 +27,7 @@
 class Entry;
 class Group;
 class Metadata;
+class QTimer;
 
 struct DeletedObject
 {
@@ -89,6 +90,7 @@ public:
     bool hasKey();
     void recycleEntry(Entry* entry);
     void recycleGroup(Group* group);
+    void setEmitModified(bool value);
 
     /**
      * Returns a unique id that is only valid as long as the Database exists.
@@ -107,6 +109,10 @@ Q_SIGNALS:
     void groupMoved();
     void nameTextChanged();
     void modified();
+    void modifiedImmediate();
+
+private Q_SLOTS:
+    void startModifiedTimer();
 
 private:
     Entry* recFindEntry(const Uuid& uuid, Group* group);
@@ -117,6 +123,7 @@ private:
     Metadata* const m_metadata;
     Group* m_rootGroup;
     QList<DeletedObject> m_deletedObjects;
+    QTimer* m_timer;
 
     Uuid m_cipher;
     CompressionAlgorithm m_compressionAlgo;
@@ -126,6 +133,7 @@ private:
 
     CompositeKey m_key;
     bool m_hasKey;
+    bool m_emitModified;
 
     Uuid m_uuid;
     static QHash<Uuid, Database*> m_uuidMap;

@@ -18,6 +18,7 @@
 #include "Database.h"
 
 #include <QtCore/QFile>
+#include <QtCore/QTimer>
 #include <QtCore/QXmlStreamReader>
 
 #include "core/Group.h"
@@ -30,19 +31,24 @@ QHash<Uuid, Database*> Database::m_uuidMap;
 
 Database::Database()
     : m_metadata(new Metadata(this))
+    , m_timer(new QTimer(this))
     , m_cipher(KeePass2::CIPHER_AES)
     , m_compressionAlgo(CompressionGZip)
     , m_transformRounds(50000)
     , m_hasKey(false)
+    , m_emitModified(false)
     , m_uuid(Uuid::random())
 {
     setRootGroup(new Group());
     rootGroup()->setUuid(Uuid::random());
+    m_timer->setSingleShot(true);
 
     m_uuidMap.insert(m_uuid, this);
 
-    connect(m_metadata, SIGNAL(modified()), this, SIGNAL(modified()));
+    connect(m_metadata, SIGNAL(modified()), this, SIGNAL(modifiedImmediate()));
     connect(m_metadata, SIGNAL(nameTextChanged()), this, SIGNAL(nameTextChanged()));
+    connect(this, SIGNAL(modifiedImmediate()), this, SLOT(startModifiedTimer()));
+    connect(m_timer, SIGNAL(timeout()), SIGNAL(modified()));
 }
 
 Database::~Database()
@@ -195,7 +201,7 @@ void Database::setKey(const CompositeKey& key, const QByteArray& transformSeed, 
     if (updateChangedTime) {
         m_metadata->setMasterKeyChanged(Tools::currentDateTimeUtc());
     }
-    Q_EMIT modified();
+    Q_EMIT modifiedImmediate();
 }
 
 void Database::setKey(const CompositeKey& key)
@@ -209,7 +215,7 @@ void Database::updateKey(quint64 rounds)
         m_transformRounds = rounds;
         m_transformedMasterKey = m_key.transform(m_transformSeed, transformRounds());
         m_metadata->setMasterKeyChanged(Tools::currentDateTimeUtc());
-        Q_EMIT modified();
+        Q_EMIT modifiedImmediate();
     }
 }
 
@@ -253,7 +259,16 @@ void Database::recycleGroup(Group* group)
     }
     else {
         delete group;
+     }
+}
+
+void Database::setEmitModified(bool value)
+{
+    if (m_emitModified && !value) {
+        m_timer->stop();
     }
+
+    m_emitModified = value;
 }
 
 Uuid Database::uuid()
@@ -264,4 +279,16 @@ Uuid Database::uuid()
 Database* Database::databaseByUuid(const Uuid& uuid)
 {
     return m_uuidMap.value(uuid, 0);
+}
+
+void Database::startModifiedTimer()
+{
+    if (!m_emitModified) {
+        return;
+    }
+
+    if (m_timer->isActive()) {
+        m_timer->stop();
+    }
+    m_timer->start(150);
 }

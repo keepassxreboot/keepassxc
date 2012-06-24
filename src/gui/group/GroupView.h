@@ -37,7 +37,6 @@ public:
 
 Q_SIGNALS:
     void groupChanged(Group* group);
-    void editFinished();
 
 private Q_SLOTS:
     void expandedChanged(const QModelIndex& index);
@@ -50,10 +49,8 @@ protected:
 
 private:
     void recInitExpanded(Group* group);
-    void emitEditFinished();
 
     GroupModel* const m_model;
-    bool m_emitEditFinished;
 };
 
 #endif // KEEPASSX_GROUPVIEW_H
