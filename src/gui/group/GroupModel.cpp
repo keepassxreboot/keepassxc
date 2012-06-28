@@ -27,15 +27,30 @@
 
 GroupModel::GroupModel(Database* db, QObject* parent)
     : QAbstractItemModel(parent)
+    , m_db(0)
 {
-    m_root = db->rootGroup();
-    connect(db, SIGNAL(groupDataChanged(Group*)), SLOT(groupDataChanged(Group*)));
-    connect(db, SIGNAL(groupAboutToAdd(Group*,int)), SLOT(groupAboutToAdd(Group*,int)));
-    connect(db, SIGNAL(groupAdded()), SLOT(groupAdded()));
-    connect(db, SIGNAL(groupAboutToRemove(Group*)), SLOT(groupAboutToRemove(Group*)));
-    connect(db, SIGNAL(groupRemoved()), SLOT(groupRemoved()));
-    connect(db, SIGNAL(groupAboutToMove(Group*,Group*,int)), SLOT(groupAboutToMove(Group*,Group*,int)));
-    connect(db, SIGNAL(groupMoved()), SLOT(groupMoved()));
+    changeDatabase(db);
+}
+
+void GroupModel::changeDatabase(Database* newDb)
+{
+    beginResetModel();
+
+    if (m_db) {
+        m_db->disconnect(this);
+    }
+
+    m_db = newDb;
+
+    connect(m_db, SIGNAL(groupDataChanged(Group*)), SLOT(groupDataChanged(Group*)));
+    connect(m_db, SIGNAL(groupAboutToAdd(Group*,int)), SLOT(groupAboutToAdd(Group*,int)));
+    connect(m_db, SIGNAL(groupAdded()), SLOT(groupAdded()));
+    connect(m_db, SIGNAL(groupAboutToRemove(Group*)), SLOT(groupAboutToRemove(Group*)));
+    connect(m_db, SIGNAL(groupRemoved()), SLOT(groupRemoved()));
+    connect(m_db, SIGNAL(groupAboutToMove(Group*,Group*,int)), SLOT(groupAboutToMove(Group*,Group*,int)));
+    connect(m_db, SIGNAL(groupMoved()), SLOT(groupMoved()));
+
+    endResetModel();
 }
 
 int GroupModel::rowCount(const QModelIndex& parent) const
@@ -66,7 +81,7 @@ QModelIndex GroupModel::index(int row, int column, const QModelIndex& parent) co
     Group* group;
 
     if (!parent.isValid()) {
-        group = m_root;
+        group = m_db->rootGroup();
     }
     else {
         group = groupFromIndex(parent)->children().at(row);
@@ -269,7 +284,7 @@ QMimeData* GroupModel::mimeData(const QModelIndexList& indexes) const
         if (!indexes[i].isValid()) {
             continue;
         }
-        stream << m_root->database()->uuid() << groupFromIndex(indexes[i])->uuid();
+        stream << m_db->uuid() << groupFromIndex(indexes[i])->uuid();
     }
 
     data->setData(mimeTypes().first(), encoded);

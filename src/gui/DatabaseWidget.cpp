@@ -32,7 +32,9 @@
 #include "core/Tools.h"
 #include "gui/ChangeMasterKeyWidget.h"
 #include "gui/Clipboard.h"
+#include "gui/DatabaseOpenWidget.h"
 #include "gui/DatabaseSettingsWidget.h"
+#include "gui/KeePass1OpenWidget.h"
 #include "gui/entry/EditEntryWidget.h"
 #include "gui/entry/EntryView.h"
 #include "gui/group/EditGroupWidget.h"
@@ -69,6 +71,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_entryView = new EntryView(rightHandSideWidget);
     m_entryView->setObjectName("entryView");
     m_entryView->setContextMenuPolicy(Qt::CustomContextMenu);
+    m_entryView->setGroup(db->rootGroup());
     connect(m_entryView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(showEntryContextMenu(QPoint)));
 
     QSizePolicy policy;
@@ -111,12 +114,18 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     headlineLabelFont.setPointSize(headlineLabelFont.pointSize() + 2);
     m_changeMasterKeyWidget->headlineLabel()->setFont(headlineLabelFont);
     m_databaseSettingsWidget = new DatabaseSettingsWidget();
+    m_databaseOpenWidget = new DatabaseOpenWidget();
+    m_databaseOpenWidget->setObjectName("databaseOpenWidget");
+    m_keepass1OpenWidget = new KeePass1OpenWidget();
+    m_keepass1OpenWidget->setObjectName("keepass1OpenWidget");
     addWidget(m_mainWidget);
     addWidget(m_editEntryWidget);
     addWidget(m_editGroupWidget);
     addWidget(m_changeMasterKeyWidget);
     addWidget(m_databaseSettingsWidget);
     addWidget(m_historyEditEntryWidget);
+    addWidget(m_databaseOpenWidget);
+    addWidget(m_keepass1OpenWidget);
 
     m_actionEntryNew = m_menuEntry->addAction(tr("Add new entry"), this, SLOT(createEntry()));
     m_actionEntryNew->setIcon(dataPath()->icon("actions", "entry-new", false));
@@ -154,6 +163,8 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_editGroupWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
     connect(m_changeMasterKeyWidget, SIGNAL(editFinished(bool)), SLOT(updateMasterKey(bool)));
     connect(m_databaseSettingsWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
+    connect(m_databaseOpenWidget, SIGNAL(editFinished(bool)), SLOT(openDatabase(bool)));
+    connect(m_keepass1OpenWidget, SIGNAL(editFinished(bool)), SLOT(openDatabase(bool)));
     connect(this, SIGNAL(currentChanged(int)), this, SLOT(emitCurrentModeChanged()));
     connect(m_searchUi->searchEdit, SIGNAL(textChanged(QString)), this, SLOT(startSearchTimer()));
     connect(m_searchUi->caseSensitiveCheckBox, SIGNAL(toggled(bool)), this, SLOT(startSearch()));
@@ -182,6 +193,8 @@ DatabaseWidget::Mode DatabaseWidget::currentMode()
     case 3:  // change master key
     case 4:  // database settings
     case 5:  // entry history
+    case 6:  // open database
+    case 7:  // keepass 1 import
         return DatabaseWidget::EditMode;
     default:
         Q_ASSERT(false);
@@ -449,6 +462,31 @@ void DatabaseWidget::updateMasterKey(bool accepted)
     setCurrentIndex(0);
 }
 
+void DatabaseWidget::openDatabase(bool accepted)
+{
+    if (accepted) {
+        Database* oldDb = m_db;
+        m_db = static_cast<DatabaseOpenWidget*>(sender())->database();
+        m_groupView->changeDatabase(m_db);
+        Q_EMIT databaseChanged(m_db);
+        delete oldDb;
+        setCurrentIndex(0);
+
+        // We won't need those anymore and KeePass1OpenWidget closes
+        // the file in its dtor.
+        delete m_databaseOpenWidget;
+        m_databaseOpenWidget = 0;
+        delete m_keepass1OpenWidget;
+        m_keepass1OpenWidget = 0;
+    }
+    else {
+        if (m_databaseOpenWidget->database()) {
+            delete m_databaseOpenWidget->database();
+        }
+        Q_EMIT closeRequest();
+    }
+}
+
 void DatabaseWidget::switchToEntryEdit()
 {
     switchToEntryEdit(m_entryView->currentEntry(), false);
@@ -469,6 +507,25 @@ void DatabaseWidget::switchToDatabaseSettings()
 {
     m_databaseSettingsWidget->load(m_db);
     setCurrentIndex(4);
+}
+
+void DatabaseWidget::switchToOpenDatabase(QFile* file, const QString& fileName)
+{
+    m_databaseOpenWidget->load(file, fileName);
+    setCurrentIndex(6);
+}
+
+void DatabaseWidget::switchToOpenDatabase(QFile* file, const QString& fileName,
+                                          const QString& password, const QString& keyFile)
+{
+    switchToOpenDatabase(file, fileName);
+    m_databaseOpenWidget->enterKey(password, keyFile);
+}
+
+void DatabaseWidget::switchToImportKeepass1(QFile* file, const QString& fileName)
+{
+    m_keepass1OpenWidget->load(file, fileName);
+    setCurrentIndex(7);
 }
 
 void DatabaseWidget::toggleSearch()

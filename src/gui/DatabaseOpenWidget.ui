@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DatabaseOpenDialog</class>
- <widget class="QDialog" name="DatabaseOpenDialog">
+ <class>DatabaseOpenWidget</class>
+ <widget class="QWidget" name="DatabaseOpenWidget">
   <property name="geometry">
    <rect>
     <x>0</x>

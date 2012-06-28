@@ -22,6 +22,7 @@
 #include <QtGui/QStackedWidget>
 
 class ChangeMasterKeyWidget;
+class DatabaseOpenWidget;
 class DatabaseSettingsWidget;
 class Database;
 class EditEntryWidget;
@@ -30,6 +31,8 @@ class Entry;
 class EntryView;
 class Group;
 class GroupView;
+class KeePass1OpenWidget;
+class QFile;
 class QMenu;
 
 namespace Ui {
@@ -74,6 +77,7 @@ public:
 Q_SIGNALS:
     void closeRequest();
     void currentModeChanged(DatabaseWidget::Mode mode);
+    void databaseChanged(Database* newDb);
 
 public Q_SLOTS:
     void createEntry();
@@ -87,6 +91,9 @@ public Q_SLOTS:
     void switchToGroupEdit();
     void switchToMasterKeyChange();
     void switchToDatabaseSettings();
+    void switchToOpenDatabase(QFile* file, const QString& fileName);
+    void switchToOpenDatabase(QFile* file, const QString& fileName, const QString& password, const QString& keyFile);
+    void switchToImportKeepass1(QFile* file, const QString& fileName);
     void toggleSearch();
 
 private Q_SLOTS:
@@ -97,6 +104,7 @@ private Q_SLOTS:
     void switchToEntryEdit(Entry* entry, bool create);
     void switchToGroupEdit(Group* entry, bool create);
     void updateMasterKey(bool accepted);
+    void openDatabase(bool accepted);
     void emitCurrentModeChanged();
     void clearLastGroup(Group* group);
     void search();
@@ -110,7 +118,7 @@ private Q_SLOTS:
     void showEntryContextMenu(const QPoint& pos);
 
 private:
-    Database* const m_db;
+    Database* m_db;
     const QScopedPointer<Ui::SearchWidget> m_searchUi;
     QWidget* const m_searchWidget;
     QWidget* m_mainWidget;
@@ -119,6 +127,8 @@ private:
     EditGroupWidget* m_editGroupWidget;
     ChangeMasterKeyWidget* m_changeMasterKeyWidget;
     DatabaseSettingsWidget* m_databaseSettingsWidget;
+    DatabaseOpenWidget* m_databaseOpenWidget;
+    KeePass1OpenWidget* m_keepass1OpenWidget;
     GroupView* m_groupView;
     EntryView* m_entryView;
     Group* m_newGroup;

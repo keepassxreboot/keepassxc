@@ -55,7 +55,7 @@ set(keepassx_SOURCES
     gui/Application.cpp
     gui/ChangeMasterKeyWidget.cpp
     gui/Clipboard.cpp
-    gui/DatabaseOpenDialog.cpp
+    gui/DatabaseOpenWidget.cpp
     gui/DatabaseSettingsWidget.cpp
     gui/DatabaseTabWidget.cpp
     gui/DatabaseWidget.cpp
@@ -65,7 +65,7 @@ set(keepassx_SOURCES
     gui/EditWidgetIcons.cpp
     gui/FileDialog.cpp
     gui/IconModels.cpp
-    gui/KeePass1OpenDialog.cpp
+    gui/KeePass1OpenWidget.cpp
     gui/LineEdit.cpp
     gui/MainWindow.cpp
     gui/SettingsWidget.cpp
@@ -101,7 +101,7 @@ set(keepassx_MOC
     gui/Application.h
     gui/ChangeMasterKeyWidget.h
     gui/Clipboard.h
-    gui/DatabaseOpenDialog.h
+    gui/DatabaseOpenWidget.h
     gui/DatabaseSettingsWidget.h
     gui/DatabaseTabWidget.h
     gui/DatabaseWidget.h
@@ -110,7 +110,7 @@ set(keepassx_MOC
     gui/EditWidget.h
     gui/EditWidgetIcons.h
     gui/IconModels.h
-    gui/KeePass1OpenDialog.h
+    gui/KeePass1OpenWidget.h
     gui/LineEdit.h
     gui/MainWindow.h
     gui/SettingsWidget.h
@@ -134,7 +134,7 @@ set(keepassx_MOC
 set(keepassx_FORMS
     gui/AboutDialog.ui
     gui/ChangeMasterKeyWidget.ui
-    gui/DatabaseOpenDialog.ui
+    gui/DatabaseOpenWidget.ui
     gui/DatabaseSettingsWidget.ui
     gui/EditWidget.ui
     gui/EditWidgetIcons.ui

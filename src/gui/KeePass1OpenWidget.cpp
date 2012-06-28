@@ -15,29 +15,29 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "KeePass1OpenDialog.h"
+#include "KeePass1OpenWidget.h"
 
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
 #include <QtGui/QMessageBox>
 
-#include "ui_DatabaseOpenDialog.h"
+#include "ui_DatabaseOpenWidget.h"
 #include "core/Database.h"
 #include "core/Metadata.h"
 #include "format/KeePass1Reader.h"
 
-KeePass1OpenDialog::KeePass1OpenDialog(QFile* file, const QString& filename, QWidget* parent)
-    : DatabaseOpenDialog(file, filename, parent)
+KeePass1OpenWidget::KeePass1OpenWidget(QWidget* parent)
+    : DatabaseOpenWidget(parent)
 {
     setWindowTitle(tr("Import KeePass1 database"));
 }
 
-KeePass1OpenDialog::~KeePass1OpenDialog()
+KeePass1OpenWidget::~KeePass1OpenWidget()
 {
     delete m_file;
 }
 
-void KeePass1OpenDialog::openDatabase()
+void KeePass1OpenWidget::openDatabase()
 {
     KeePass1Reader reader;
 
@@ -53,11 +53,14 @@ void KeePass1OpenDialog::openDatabase()
     }
 
     m_file->reset();
+    if (m_db) {
+        delete m_db;
+    }
     m_db = reader.readDatabase(m_file, password, keyFileName);
 
     if (m_db) {
         m_db->metadata()->setName(QFileInfo(m_filename).completeBaseName());
-        accept();
+        Q_EMIT editFinished(true);
     }
     else {
         QMessageBox::warning(this, tr("Error"), tr("Unable to open the database.\n%1")

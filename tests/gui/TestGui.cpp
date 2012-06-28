@@ -52,16 +52,15 @@ void TestGui::testOpenDatabase()
     QAction* actionDatabaseOpen = m_mainWindow->findChild<QAction*>("actionDatabaseOpen");
     fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx"));
     actionDatabaseOpen->trigger();
-    QWidget* keyDialog = m_mainWindow->findChild<QWidget*>("DatabaseOpenDialog");
-    QVERIFY(keyDialog);
-    QTest::qWaitForWindowShown(keyDialog);
+    QTest::qWait(20);
 
-    QLineEdit* editPassword = keyDialog->findChild<QLineEdit*>("editPassword");
+    QWidget* databaseOpenWidget = m_mainWindow->findChild<QWidget*>("databaseOpenWidget");
+    QLineEdit* editPassword = databaseOpenWidget->findChild<QLineEdit*>("editPassword");
     QVERIFY(editPassword);
-    QTest::keyClicks(editPassword, "a");
 
-    QDialogButtonBox* buttonBox = keyDialog->findChild<QDialogButtonBox*>("buttonBox");
-    QTest::mouseClick(buttonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTest::keyClicks(editPassword, "a");
+    QTest::keyClick(editPassword, Qt::Key_Enter);
+
     QTest::qWait(20);
 }
 

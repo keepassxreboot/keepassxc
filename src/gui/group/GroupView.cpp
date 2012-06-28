@@ -27,26 +27,29 @@
 GroupView::GroupView(Database* db, QWidget* parent)
     : QTreeView(parent)
     , m_model(new GroupModel(db, this))
+    , m_updatingExpanded(false)
 {
     QTreeView::setModel(m_model);
     setHeaderHidden(true);
     setUniformRowHeights(true);
 
-    recInitExpanded(db->rootGroup());
     connect(this, SIGNAL(expanded(QModelIndex)), this, SLOT(expandedChanged(QModelIndex)));
     connect(this, SIGNAL(collapsed(QModelIndex)), this, SLOT(expandedChanged(QModelIndex)));
     connect(m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(syncExpandedState(QModelIndex,int,int)));
+    connect(m_model, SIGNAL(modelReset()), SLOT(modelReset()));
 
     connect(selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), SLOT(emitGroupChanged()));
 
-    setCurrentIndex(m_model->index(0, 0));
-    // invoke later so the EntryView is connected
-    QMetaObject::invokeMethod(this, "emitGroupChanged", Qt::QueuedConnection,
-                              Q_ARG(QModelIndex, m_model->index(0, 0)));
+    modelReset();
 
     setDragEnabled(true);
     viewport()->setAcceptDrops(true);
     setDropIndicatorShown(true);
+}
+
+void GroupView::changeDatabase(Database* newDb)
+{
+    m_model->changeDatabase(newDb);
 }
 
 void GroupView::dragMoveEvent(QDragMoveEvent* event)
@@ -72,13 +75,19 @@ Group* GroupView::currentGroup()
 
 void GroupView::expandedChanged(const QModelIndex& index)
 {
+    if (m_updatingExpanded) {
+        return;
+    }
+
     Group* group = m_model->groupFromIndex(index);
     group->setExpanded(isExpanded(index));
 }
 
 void GroupView::recInitExpanded(Group* group)
 {
+    m_updatingExpanded = true;
     expandGroup(group, group->isExpanded());
+    m_updatingExpanded = false;
 
     Q_FOREACH (Group* child, group->children()) {
         recInitExpanded(child);
@@ -118,4 +127,10 @@ void GroupView::syncExpandedState(const QModelIndex& parent, int start, int end)
 void GroupView::setCurrentGroup(Group* group)
 {
     setCurrentIndex(m_model->index(group));
+}
+
+void GroupView::modelReset()
+{
+    recInitExpanded(m_model->groupFromIndex(m_model->index(0, 0)));
+    setCurrentIndex(m_model->index(0, 0));
 }

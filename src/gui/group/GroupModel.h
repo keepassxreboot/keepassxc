@@ -29,6 +29,7 @@ class GroupModel : public QAbstractItemModel
 
 public:
     explicit GroupModel(Database* db, QObject* parent = 0);
+    void changeDatabase(Database* newDb);
     QModelIndex index(Group* group) const;
     Group* groupFromIndex(const QModelIndex& index) const;
 
@@ -58,7 +59,7 @@ private Q_SLOTS:
     void groupMoved();
 
 private:
-    Group* m_root;
+    Database* m_db;
 };
 
 #endif // KEEPASSX_GROUPMODEL_H

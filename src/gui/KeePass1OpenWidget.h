@@ -15,21 +15,21 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KEEPASS1OPENDIALOG_H
-#define KEEPASSX_KEEPASS1OPENDIALOG_H
+#ifndef KEEPASSX_KEEPASS1OPENWIDGET_H
+#define KEEPASSX_KEEPASS1OPENWIDGET_H
 
-#include "gui/DatabaseOpenDialog.h"
+#include "gui/DatabaseOpenWidget.h"
 
-class KeePass1OpenDialog : public DatabaseOpenDialog
+class KeePass1OpenWidget : public DatabaseOpenWidget
 {
     Q_OBJECT
 
 public:
-    explicit KeePass1OpenDialog(QFile* file, const QString& filename, QWidget* parent = 0);
-    ~KeePass1OpenDialog();
+    explicit KeePass1OpenWidget(QWidget* parent = 0);
+    ~KeePass1OpenWidget();
 
 protected:
     void openDatabase();
 };
 
-#endif // KEEPASSX_KEEPASS1OPENDIALOG_H
+#endif // KEEPASSX_KEEPASS1OPENWIDGET_H

@@ -25,11 +25,9 @@
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
-#include "gui/DatabaseOpenDialog.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/DragTabBar.h"
 #include "gui/FileDialog.h"
-#include "gui/KeePass1OpenDialog.h"
 #include "gui/entry/EntryView.h"
 #include "gui/group/GroupView.h"
 
@@ -93,6 +91,8 @@ void DatabaseTabWidget::openDatabase()
 void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
                                      const QString& keyFile)
 {
+    DatabaseManagerStruct dbStruct;
+
     QScopedPointer<QFile> file(new QFile(fileName));
     // TODO: error handling
     if (!file->open(QIODevice::ReadWrite)) {
@@ -102,26 +102,22 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
         }
         else {
             // can only open read-only
-            m_curDbStruct.readOnly = true;
+            dbStruct.readOnly = true;
         }
     }
 
-    m_curDbStruct.file = file.take();
-    m_curDbStruct.fileName = QFileInfo(fileName).absoluteFilePath();
+    Database* db = new Database();
+    dbStruct.dbWidget = new DatabaseWidget(db, this);
+    dbStruct.file = file.take();
+    dbStruct.fileName = QFileInfo(fileName).absoluteFilePath();
 
-    openDatabaseDialog(pw, keyFile);
-}
-
-void DatabaseTabWidget::openDatabaseDialog(const QString& pw, const QString& keyFile)
-{
-    m_curKeyDialog = new DatabaseOpenDialog(m_curDbStruct.file, m_curDbStruct.fileName, m_window);
-    connect(m_curKeyDialog, SIGNAL(accepted()), SLOT(openDatabaseRead()));
-    connect(m_curKeyDialog, SIGNAL(rejected()), SLOT(openDatabaseCleanup()));
-    m_curKeyDialog->setModal(true);
-    m_curKeyDialog->show();
+    insertDatabase(db, dbStruct);
 
     if (!pw.isNull() || !keyFile.isEmpty()) {
-        m_curKeyDialog->enterKey(pw, keyFile);
+        dbStruct.dbWidget->switchToOpenDatabase(dbStruct.file, dbStruct.fileName, pw, keyFile);
+    }
+    else {
+        dbStruct.dbWidget->switchToOpenDatabase(dbStruct.file, dbStruct.fileName);
     }
 }
 
@@ -140,39 +136,14 @@ void DatabaseTabWidget::importKeePass1Database()
         return;
     }
 
-    m_curDbStruct.modified = true;
+    Database* db = new Database();
+    DatabaseManagerStruct dbStruct;
+    dbStruct.dbWidget = new DatabaseWidget(db, this);
+    dbStruct.modified = true;
 
-    m_curKeyDialog = new KeePass1OpenDialog(file.take(), fileName, m_window);
-    connect(m_curKeyDialog, SIGNAL(accepted()), SLOT(openDatabaseRead()));
-    connect(m_curKeyDialog, SIGNAL(rejected()), SLOT(openDatabaseCleanup()));
-    m_curKeyDialog->setModal(true);
-    m_curKeyDialog->show();
-}
+    insertDatabase(db, dbStruct);
 
-void DatabaseTabWidget::openDatabaseRead()
-{
-    Database* db = m_curKeyDialog->database();
-
-    delete m_curKeyDialog;
-    m_curKeyDialog = 0;
-
-    m_curDbStruct.dbWidget = new DatabaseWidget(db, this);
-    QString filename = m_curDbStruct.fileName;
-    insertDatabase(db, m_curDbStruct);
-    m_curDbStruct = DatabaseManagerStruct();
-
-    updateLastDatabases(filename);
-}
-
-void DatabaseTabWidget::openDatabaseCleanup()
-{
-    delete m_curKeyDialog;
-    m_curKeyDialog = 0;
-
-    if (m_curDbStruct.file) {
-        delete m_curDbStruct.file;
-    }
-    m_curDbStruct = DatabaseManagerStruct();
+    dbStruct.dbWidget->switchToImportKeepass1(file.take(), fileName);
 }
 
 void DatabaseTabWidget::emitEntrySelectionChanged()
@@ -503,14 +474,13 @@ void DatabaseTabWidget::insertDatabase(Database* db, const DatabaseManagerStruct
     updateTabName(db);
     int index = databaseIndex(db);
     setCurrentIndex(index);
-    connect(db, SIGNAL(nameTextChanged()), SLOT(updateTabNameFromSender()));
+    connectDatabase(db);
     connect(dbStruct.dbWidget->entryView(), SIGNAL(entrySelectionChanged()),
             SLOT(emitEntrySelectionChanged()));
     connect(dbStruct.dbWidget, SIGNAL(closeRequest()), SLOT(closeDatabaseFromSender()));
-    connect(db, SIGNAL(modified()), SLOT(modified()));
     connect(dbStruct.dbWidget, SIGNAL(currentModeChanged(DatabaseWidget::Mode)),
             SIGNAL(currentWidgetModeChanged(DatabaseWidget::Mode)));
-    db->setEmitModified(true);
+    connect(dbStruct.dbWidget, SIGNAL(databaseChanged(Database*)), SLOT(changeDatabase(Database*)));
 }
 
 DatabaseWidget* DatabaseTabWidget::currentDatabaseWidget()
@@ -557,4 +527,30 @@ void DatabaseTabWidget::updateLastDatabases(const QString& filename)
         }
         config()->set("LastDatabases", lastDatabases);
     }
+}
+
+void DatabaseTabWidget::changeDatabase(Database* newDb)
+{
+    Q_ASSERT(sender());
+    Q_ASSERT(!m_dbList.contains(newDb));
+
+    DatabaseWidget* dbWidget = static_cast<DatabaseWidget*>(sender());
+    Database* oldDb = databaseFromDatabaseWidget(dbWidget);
+    DatabaseManagerStruct dbStruct = m_dbList[oldDb];
+    m_dbList.remove(oldDb);
+    m_dbList.insert(newDb, dbStruct);
+
+    updateTabName(newDb);
+    connectDatabase(newDb, oldDb);
+}
+
+void DatabaseTabWidget::connectDatabase(Database* newDb, Database* oldDb)
+{
+    if (oldDb) {
+        oldDb->disconnect(this);
+    }
+
+    connect(newDb, SIGNAL(nameTextChanged()), SLOT(updateTabNameFromSender()));
+    connect(newDb, SIGNAL(modified()), SLOT(modified()));
+    newDb->setEmitModified(true);
 }

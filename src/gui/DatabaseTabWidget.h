@@ -25,7 +25,7 @@
 #include "gui/DatabaseWidget.h"
 
 class DatabaseWidget;
-class DatabaseOpenDialog;
+class DatabaseOpenWidget;
 class QFile;
 
 struct DatabaseManagerStruct
@@ -84,12 +84,10 @@ Q_SIGNALS:
 private Q_SLOTS:
     void updateTabName(Database* db);
     void updateTabNameFromSender();
-    void openDatabaseDialog(const QString& pw = QString(), const QString& keyFile = QString());
-    void openDatabaseRead();
-    void openDatabaseCleanup();
     void emitEntrySelectionChanged();
     void modified();
     void toggleTabbar();
+    void changeDatabase(Database* newDb);
 
 private:
     void saveDatabase(Database* db);
@@ -98,16 +96,14 @@ private:
     int databaseIndex(Database* db);
     Database* indexDatabase(int index);
     DatabaseManagerStruct indexDatabaseManagerStruct(int index);
-
     Database* databaseFromDatabaseWidget(DatabaseWidget* dbWidget);
     void insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct);
     void updateLastDatabases(const QString& filename);
+    void connectDatabase(Database* newDb, Database* oldDb = 0);
 
     QWidget* const m_window;
     KeePass2Writer m_writer;
     QHash<Database*, DatabaseManagerStruct> m_dbList;
-    DatabaseManagerStruct m_curDbStruct;
-    DatabaseOpenDialog* m_curKeyDialog;
 };
 
 #endif // KEEPASSX_DATABASETABWIDGET_H

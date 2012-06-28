@@ -15,31 +15,37 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_DATABASEOPENDIALOG_H
-#define KEEPASSX_DATABASEOPENDIALOG_H
+#ifndef KEEPASSX_DATABASEOPENWIDGET_H
+#define KEEPASSX_DATABASEOPENWIDGET_H
 
 #include <QtCore/QScopedPointer>
-#include <QtGui/QDialog>
+
+#include "gui/DialogyWidget.h"
 
 class Database;
 class QFile;
 
 namespace Ui {
-    class DatabaseOpenDialog;
+    class DatabaseOpenWidget;
 }
 
-class DatabaseOpenDialog : public QDialog
+class DatabaseOpenWidget : public DialogyWidget
 {
     Q_OBJECT
 
 public:
-    DatabaseOpenDialog(QFile* file, const QString& filename, QWidget* parent = 0);
-    ~DatabaseOpenDialog();
-    Database* database();
+    DatabaseOpenWidget(QWidget* parent = 0);
+    ~DatabaseOpenWidget();
+    void load(QFile* file, const QString& filename);
     void enterKey(const QString& pw, const QString& keyFile);
+    Database* database();
+
+Q_SIGNALS:
+    void editFinished(bool accepted);
 
 protected Q_SLOTS:
     virtual void openDatabase();
+    void reject();
 
 private Q_SLOTS:
     void togglePassword(bool checked);
@@ -49,13 +55,13 @@ private Q_SLOTS:
     void browseKeyFile();
 
 protected:
-    const QScopedPointer<Ui::DatabaseOpenDialog> m_ui;
+    const QScopedPointer<Ui::DatabaseOpenWidget> m_ui;
     Database* m_db;
-    QFile* const m_file;
-    const QString m_filename;
+    QFile* m_file;
+    QString m_filename;
 
 private:
-    Q_DISABLE_COPY(DatabaseOpenDialog)
+    Q_DISABLE_COPY(DatabaseOpenWidget)
 };
 
-#endif // KEEPASSX_DATABASEOPENDIALOG_H
+#endif // KEEPASSX_DATABASEOPENWIDGET_H

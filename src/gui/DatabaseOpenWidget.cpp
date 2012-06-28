@@ -15,23 +15,23 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "DatabaseOpenDialog.h"
-#include "ui_DatabaseOpenDialog.h"
+#include "DatabaseOpenWidget.h"
+#include "ui_DatabaseOpenWidget.h"
 
 #include <QtGui/QMessageBox>
 
 #include "core/Config.h"
+#include "core/Database.h"
 #include "gui/FileDialog.h"
 #include "format/KeePass2Reader.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
-DatabaseOpenDialog::DatabaseOpenDialog(QFile* file, const QString& filename, QWidget* parent)
-    : QDialog(parent)
-    , m_ui(new Ui::DatabaseOpenDialog())
+DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
+    : DialogyWidget(parent)
+    , m_ui(new Ui::DatabaseOpenWidget())
     , m_db(0)
-    , m_file(file)
-    , m_filename(filename)
+    , m_file(0)
 {
     m_ui->setupUi(this);
 
@@ -49,6 +49,16 @@ DatabaseOpenDialog::DatabaseOpenDialog(QFile* file, const QString& filename, QWi
 
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(openDatabase()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
+}
+
+DatabaseOpenWidget::~DatabaseOpenWidget()
+{
+}
+
+void DatabaseOpenWidget::load(QFile* file, const QString& filename)
+{
+    m_file = file;
+    m_filename = filename;
 
     QHash<QString, QVariant> lastKeyFiles = config()->get("LastKeyFiles").toHash();
     if (lastKeyFiles.contains(m_filename)) {
@@ -59,16 +69,12 @@ DatabaseOpenDialog::DatabaseOpenDialog(QFile* file, const QString& filename, QWi
     m_ui->editPassword->setFocus();
 }
 
-DatabaseOpenDialog::~DatabaseOpenDialog()
-{
-}
-
-Database* DatabaseOpenDialog::database()
+Database* DatabaseOpenWidget::database()
 {
     return m_db;
 }
 
-void DatabaseOpenDialog::enterKey(const QString& pw, const QString& keyFile)
+void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)
 {
     if (!pw.isNull()) {
         m_ui->editPassword->setText(pw);
@@ -80,7 +86,7 @@ void DatabaseOpenDialog::enterKey(const QString& pw, const QString& keyFile)
     openDatabase();
 }
 
-void DatabaseOpenDialog::openDatabase()
+void DatabaseOpenWidget::openDatabase()
 {
     KeePass2Reader reader;
     CompositeKey masterKey;
@@ -109,10 +115,13 @@ void DatabaseOpenDialog::openDatabase()
     config()->set("LastKeyFiles", lastKeyFiles);
 
     m_file->reset();
+    if (m_db) {
+        delete m_db;
+    }
     m_db = reader.readDatabase(m_file, masterKey);
 
     if (m_db) {
-        accept();
+        Q_EMIT editFinished(true);
     }
     else {
         QMessageBox::warning(this, tr("Error"), tr("Unable to open the database.\n%1")
@@ -121,22 +130,27 @@ void DatabaseOpenDialog::openDatabase()
     }
 }
 
-void DatabaseOpenDialog::togglePassword(bool checked)
+void DatabaseOpenWidget::reject()
+{
+    Q_EMIT editFinished(false);
+}
+
+void DatabaseOpenWidget::togglePassword(bool checked)
 {
     m_ui->editPassword->setEchoMode(checked ? QLineEdit::Password : QLineEdit::Normal);
 }
 
-void DatabaseOpenDialog::activatePassword()
+void DatabaseOpenWidget::activatePassword()
 {
     m_ui->checkPassword->setChecked(true);
 }
 
-void DatabaseOpenDialog::activateKeyFile()
+void DatabaseOpenWidget::activateKeyFile()
 {
     m_ui->checkKeyFile->setChecked(true);
 }
 
-void DatabaseOpenDialog::setOkButtonEnabled()
+void DatabaseOpenWidget::setOkButtonEnabled()
 {
     bool enable = m_ui->checkPassword->isChecked()
             || (m_ui->checkKeyFile->isChecked() && !m_ui->comboKeyFile->currentText().isEmpty());
@@ -144,7 +158,7 @@ void DatabaseOpenDialog::setOkButtonEnabled()
     m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(enable);
 }
 
-void DatabaseOpenDialog::browseKeyFile()
+void DatabaseOpenWidget::browseKeyFile()
 {
     QString filters = QString("%1 (*);;%2 (*.key)").arg(tr("All files"), tr("Key files"));
     QString filename = fileDialog()->getOpenFileName(this, tr("Select key file"), QString(), filters);
