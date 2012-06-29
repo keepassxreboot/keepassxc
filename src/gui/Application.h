@@ -20,6 +20,8 @@
 
 #include <QtGui/QApplication>
 
+#include "core/Global.h"
+
 class Application : public QApplication
 {
     Q_OBJECT
@@ -27,7 +29,7 @@ class Application : public QApplication
 public:
     Application(int& argc, char** argv);
 
-    bool event(QEvent* event);
+    bool event(QEvent* event) Q_DECL_OVERRIDE;
 
 Q_SIGNALS:
     void openFile(const QString& filename);

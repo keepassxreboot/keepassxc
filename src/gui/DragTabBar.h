@@ -30,11 +30,11 @@ public:
     explicit DragTabBar(QWidget* parent = Q_NULLPTR);
 
 protected:
-    void dragEnterEvent(QDragEnterEvent* event);
-    void dragMoveEvent(QDragMoveEvent* event);
-    void dragLeaveEvent(QDragLeaveEvent* event);
-    void dropEvent(QDropEvent* event);
-    void tabLayoutChange();
+    void dragEnterEvent(QDragEnterEvent* event) Q_DECL_OVERRIDE;
+    void dragMoveEvent(QDragMoveEvent* event) Q_DECL_OVERRIDE;
+    void dragLeaveEvent(QDragLeaveEvent* event) Q_DECL_OVERRIDE;
+    void dropEvent(QDropEvent* event) Q_DECL_OVERRIDE;
+    void tabLayoutChange() Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
     void dragSwitchTab();

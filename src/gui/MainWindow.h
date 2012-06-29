@@ -39,7 +39,7 @@ public Q_SLOTS:
                       const QString& keyFile = QString());
 
 protected:
-     void closeEvent(QCloseEvent* event);
+     void closeEvent(QCloseEvent* event) Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
     void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::None);

@@ -31,7 +31,7 @@ public:
     explicit DialogyWidget(QWidget* parent = Q_NULLPTR);
 
 protected:
-    virtual void keyPressEvent(QKeyEvent* e);
+    virtual void keyPressEvent(QKeyEvent* e) Q_DECL_OVERRIDE;
 
 private:
     bool clickButton(QDialogButtonBox::StandardButton standardButton);

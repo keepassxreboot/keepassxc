@@ -33,7 +33,7 @@ class GroupView : public QTreeView
 public:
     explicit GroupView(Database* db, QWidget* parent = Q_NULLPTR);
     void changeDatabase(Database* newDb);
-    void setModel(QAbstractItemModel* model);
+    void setModel(QAbstractItemModel* model) Q_DECL_OVERRIDE;
     Group* currentGroup();
     void setCurrentGroup(Group* group);
     void expandGroup(Group* group, bool expand = true);

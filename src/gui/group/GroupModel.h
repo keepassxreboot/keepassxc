@@ -37,16 +37,16 @@ public:
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const;
     int columnCount(const QModelIndex& parent = QModelIndex()) const;
-    QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
-    QModelIndex parent(const QModelIndex& index) const;
-    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
-    Qt::DropActions supportedDropActions() const;
-    Qt::ItemFlags flags(const QModelIndex& modelIndex) const;
+    QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
+    QModelIndex parent(const QModelIndex& index) const Q_DECL_OVERRIDE;
+    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
+    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
+    Qt::DropActions supportedDropActions() const Q_DECL_OVERRIDE;
+    Qt::ItemFlags flags(const QModelIndex& modelIndex) const Q_DECL_OVERRIDE;
     bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column,
-                      const QModelIndex& parent);
-    QStringList mimeTypes() const;
-    QMimeData* mimeData(const QModelIndexList& indexes) const;
+                      const QModelIndex& parent) Q_DECL_OVERRIDE;
+    QStringList mimeTypes() const Q_DECL_OVERRIDE;
+    QMimeData* mimeData(const QModelIndexList& indexes) const Q_DECL_OVERRIDE;
 
 private:
     QModelIndex parent(Group* group) const;

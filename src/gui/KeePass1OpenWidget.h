@@ -29,7 +29,7 @@ public:
     ~KeePass1OpenWidget();
 
 protected:
-    void openDatabase();
+    void openDatabase() Q_DECL_OVERRIDE;
 };
 
 #endif // KEEPASSX_KEEPASS1OPENWIDGET_H

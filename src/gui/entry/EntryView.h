@@ -33,7 +33,7 @@ class EntryView : public QTreeView
 
 public:
     explicit EntryView(QWidget* parent = Q_NULLPTR);
-    void setModel(QAbstractItemModel* model);
+    void setModel(QAbstractItemModel* model) Q_DECL_OVERRIDE;
     Entry* currentEntry();
     bool isSingleEntrySelected();
     void setCurrentEntry(Entry* entry);
