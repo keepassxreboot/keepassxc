@@ -113,6 +113,8 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
 
     insertDatabase(db, dbStruct);
 
+    updateLastDatabases(dbStruct.fileName);
+
     if (!pw.isNull() || !keyFile.isEmpty()) {
         dbStruct.dbWidget->switchToOpenDatabase(dbStruct.file, dbStruct.fileName, pw, keyFile);
     }
@@ -230,7 +232,6 @@ void DatabaseTabWidget::saveDatabase(Database* db)
 
         dbStruct.modified = false;
         updateTabName(db);
-        updateLastDatabases(dbStruct.fileName);
     }
     else {
         saveDatabaseAs(db);
