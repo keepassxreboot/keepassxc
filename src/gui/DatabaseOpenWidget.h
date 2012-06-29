@@ -34,7 +34,7 @@ class DatabaseOpenWidget : public DialogyWidget
     Q_OBJECT
 
 public:
-    DatabaseOpenWidget(QWidget* parent = Q_NULLPTR);
+    explicit DatabaseOpenWidget(QWidget* parent = Q_NULLPTR);
     ~DatabaseOpenWidget();
     void load(QFile* file, const QString& filename);
     void enterKey(const QString& pw, const QString& keyFile);
