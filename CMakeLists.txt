@@ -27,6 +27,7 @@ option(WITH_TESTS "Enable building of unit tests" ON)
 option(WITH_GUI_TESTS "Enable building of GUI tests" OFF)
 option(WITH_LTO "Enable Link Time Optimization (LTO)" OFF)
 option(WITH_PIE "Build as Position-independent executable (PIE)" OFF)
+option(WITH_CXX11 "Build with the C++ 11 standard" OFF)
 
 set(KEEPASSX_VERSION "2.0 alpha 1")
 set(KEEPASSX_VERSION_NUM "1.9.80")
@@ -111,6 +112,10 @@ if(WITH_PIE)
   else()
     message(FATAL_ERROR "PIE is only supported with gcc and clang")
   endif()
+endif()
+
+if (WITH_CXX11)
+  add_gcc_compiler_cxxflags("-std=c++0x")
 endif()
 
 if(APPLE OR MINGW)
