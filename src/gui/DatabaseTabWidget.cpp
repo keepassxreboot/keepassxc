@@ -62,7 +62,8 @@ DatabaseTabWidget::~DatabaseTabWidget()
     }
 }
 
-void DatabaseTabWidget::toggleTabbar() {
+void DatabaseTabWidget::toggleTabbar()
+{
     if (count() > 1) {
         if (!tabBar()->isVisible()) {
             tabBar()->show();
@@ -228,7 +229,8 @@ void DatabaseTabWidget::deleteDatabase(Database* db)
     delete db;
 }
 
-bool DatabaseTabWidget::closeAllDatabases() {
+bool DatabaseTabWidget::closeAllDatabases()
+{
     while (!m_dbList.isEmpty()) {
         if (!closeDatabase()) {
             return false;

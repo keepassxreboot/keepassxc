@@ -267,7 +267,8 @@ void MainWindow::databaseTabChanged(int tabIndex)
     }
 }
 
-void MainWindow::closeEvent(QCloseEvent* event) {
+void MainWindow::closeEvent(QCloseEvent* event)
+{
     if (!m_ui->tabWidget->closeAllDatabases()) {
         event->ignore();
     }

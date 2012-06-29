@@ -35,7 +35,8 @@ Uuid::Uuid(const QByteArray& data)
     m_data = data;
 }
 
-Uuid Uuid::random() {
+Uuid Uuid::random()
+{
     return Uuid(Random::randomArray(Length));
 }
 

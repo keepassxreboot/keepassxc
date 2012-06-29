@@ -78,7 +78,8 @@ void Group::updateTimeinfo()
     }
 }
 
-void Group::setUpdateTimeinfo(bool value) {
+void Group::setUpdateTimeinfo(bool value)
+{
     m_updateTimeinfo = value;
 }
 

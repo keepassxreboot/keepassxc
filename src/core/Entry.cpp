@@ -344,7 +344,8 @@ void Entry::setExpiryTime(const QDateTime& dateTime)
     }
 }
 
-int Entry::getSize(QList<QByteArray>* foundAttachements) {
+int Entry::getSize(QList<QByteArray>* foundAttachements)
+{
     return attributes()->attributesSize() + attachments()->attachmentsSize(foundAttachements);
 }
 
@@ -382,7 +383,8 @@ void Entry::removeHistoryItems(QList<Entry*> historyEntries)
     }
 }
 
-void Entry::truncateHistory() {
+void Entry::truncateHistory()
+{
     const Database* db = database();
 
     if (!db) {

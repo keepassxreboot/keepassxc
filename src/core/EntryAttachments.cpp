@@ -87,7 +87,8 @@ void EntryAttachments::clear()
     Q_EMIT modified();
 }
 
-int EntryAttachments::attachmentsSize(QList<QByteArray>* foundAttachements) {
+int EntryAttachments::attachmentsSize(QList<QByteArray>* foundAttachements)
+{
     int size = 0;
 
     QMapIterator<QString, QByteArray> i(m_attachments);

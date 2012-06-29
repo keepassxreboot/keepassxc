@@ -89,7 +89,8 @@ QByteArray CompositeKey::transform(const QByteArray& seed, quint64 rounds) const
 }
 
 QByteArray CompositeKey::transformKeyRaw(const QByteArray& key, const QByteArray& seed,
-                                         quint64 rounds) {
+                                         quint64 rounds)
+{
     QByteArray iv(16, 0);
     SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Ecb,
                            SymmetricCipher::Encrypt, seed, iv);

@@ -79,7 +79,8 @@ template <class P, class V> bool Metadata::set(P& property, const V& value, QDat
     }
 }
 
-void Metadata::setUpdateDatetime(bool value) {
+void Metadata::setUpdateDatetime(bool value)
+{
     m_updateDatetime = value;
 }
 

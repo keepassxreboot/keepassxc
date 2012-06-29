@@ -223,7 +223,8 @@ void EntryAttributes::clear()
     Q_EMIT modified();
 }
 
-int EntryAttributes::attributesSize() {
+int EntryAttributes::attributesSize()
+{
     int size = 0;
 
     QMapIterator<QString, QString> i(m_attributes);
