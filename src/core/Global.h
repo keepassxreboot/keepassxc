@@ -50,6 +50,9 @@
 #      define COMPILER_CONSTEXPR
 #      define COMPILER_NULLPTR
 #    endif
+#    if (__GNUC__ * 100 + __GNUC_MINOR__) >= 407
+#      define COMPILER_EXPLICIT_OVERRIDES
+#    endif
 #  endif
 #endif
 
