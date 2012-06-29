@@ -33,6 +33,7 @@ private Q_SLOTS:
     void testEditEntry();
     void testAddEntry();
     void testSearch();
+    void testKeePass1Import();
     void cleanupTestCase();
 
 private:

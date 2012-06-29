@@ -217,6 +217,26 @@ void TestGui::testSearch()
     QCOMPARE(entryView->model()->rowCount(), 1);
 }
 
+void TestGui::testKeePass1Import()
+{
+    QAction* actionImportKeePass1 = m_mainWindow->findChild<QAction*>("actionImportKeePass1");
+    fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/basic.kdb"));
+    actionImportKeePass1->trigger();
+    QTest::qWait(20);
+
+    QWidget* keepass1OpenWidget = m_mainWindow->findChild<QWidget*>("keepass1OpenWidget");
+    QLineEdit* editPassword = keepass1OpenWidget->findChild<QLineEdit*>("editPassword");
+    QVERIFY(editPassword);
+
+    QTest::keyClicks(editPassword, "masterpw");
+    QTest::keyClick(editPassword, Qt::Key_Enter);
+    QTest::qWait(20);
+
+    QTabWidget* tabWidget = m_mainWindow->findChild<QTabWidget*>("tabWidget");
+    QCOMPARE(tabWidget->count(), 2);
+    QCOMPARE(tabWidget->tabText(tabWidget->currentIndex()), QString("basic [New database]*"));
+}
+
 void TestGui::cleanupTestCase()
 {
     delete m_mainWindow;
