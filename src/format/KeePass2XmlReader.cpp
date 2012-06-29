@@ -423,7 +423,7 @@ Group* KeePass2XmlReader::parseGroup()
                 raiseError(2);
             }
             else {
-                if (iconId >= databaseIcons()->iconCount()) {
+                if (iconId >= DatabaseIcons::IconCount) {
                     qWarning("KeePass2XmlReader::parseGroup: icon id \"%d\" not supported", iconId);
                 }
                 group->setIcon(iconId);

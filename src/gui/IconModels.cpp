@@ -27,7 +27,7 @@ DefaultIconModel::DefaultIconModel(QObject* parent)
 int DefaultIconModel::rowCount(const QModelIndex& parent) const
 {
     if (!parent.isValid()) {
-        return databaseIcons()->iconCount();
+        return DatabaseIcons::IconCount;
     }
     else {
         return 0;
@@ -40,7 +40,7 @@ QVariant DefaultIconModel::data(const QModelIndex& index, int role) const
         return QVariant();
     }
 
-    Q_ASSERT(index.row() < databaseIcons()->iconCount());
+    Q_ASSERT(index.row() < DatabaseIcons::IconCount);
 
     if (role == Qt::DecorationRole) {
         return databaseIcons()->iconPixmap(index.row());

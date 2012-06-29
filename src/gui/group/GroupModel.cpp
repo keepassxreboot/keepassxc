@@ -132,7 +132,7 @@ QVariant GroupModel::data(const QModelIndex& index, int role) const
     }
     else if (role == Qt::DecorationRole) {
         if (group->isExpired()) {
-            return databaseIcons()->iconPixmap(databaseIcons()->expiredIconIndex());
+            return databaseIcons()->iconPixmap(DatabaseIcons::ExpiredIconIndex);
         }
         else {
             return group->iconPixmap();

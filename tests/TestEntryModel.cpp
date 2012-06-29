@@ -193,7 +193,7 @@ void TestEntryModel::testDefaultIconModel()
     DefaultIconModel* model = new DefaultIconModel(this);
     ModelTest* modelTest = new ModelTest(model, this);
 
-    QCOMPARE(model->rowCount(), databaseIcons()->iconCount());
+    QCOMPARE(model->rowCount(), DatabaseIcons::IconCount);
 
     delete modelTest;
     delete model;

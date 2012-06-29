@@ -20,10 +20,12 @@
 #include "core/DataPath.h"
 
 DatabaseIcons* DatabaseIcons::m_instance(Q_NULLPTR);
+const int DatabaseIcons::IconCount(69);
+const int DatabaseIcons::ExpiredIconIndex(45);
 
 QImage DatabaseIcons::icon(int index)
 {
-    if (index < 0 || index >= iconCount()) {
+    if (index < 0 || index >= IconCount) {
         qWarning("DatabaseIcons::icon: invalid icon index %d", index);
         return QImage();
     }
@@ -42,7 +44,7 @@ QImage DatabaseIcons::icon(int index)
 
 QPixmap DatabaseIcons::iconPixmap(int index)
 {
-    if (index < 0 || index >= iconCount()) {
+    if (index < 0 || index >= IconCount) {
         qWarning("DatabaseIcons::iconPixmap: invalid icon index %d", index);
         return QPixmap();
     }
@@ -57,19 +59,9 @@ QPixmap DatabaseIcons::iconPixmap(int index)
     return pixmap;
 }
 
-int DatabaseIcons::iconCount()
-{
-    return 69;
-}
-
-int DatabaseIcons::expiredIconIndex()
-{
-    return 45;
-}
-
 DatabaseIcons::DatabaseIcons()
 {
-    m_indexToName.reserve(iconCount());
+    m_indexToName.reserve(IconCount);
     m_indexToName.append("C00_Password.png");
     m_indexToName.append("C01_Package_Network.png");
     m_indexToName.append("C02_MessageBox_Warning.png");
@@ -140,12 +132,12 @@ DatabaseIcons::DatabaseIcons()
     m_indexToName.append("C67_Certificate.png");
     m_indexToName.append("C68_BlackBerry.png");
 
-    Q_ASSERT(m_indexToName.size() == iconCount());
+    Q_ASSERT(m_indexToName.size() == IconCount);
 
-    m_iconCache.reserve(iconCount());
-    m_iconCache.resize(iconCount());
-    m_pixmapCacheKeys.reserve(iconCount());
-    m_pixmapCacheKeys.resize(iconCount());
+    m_iconCache.reserve(IconCount);
+    m_iconCache.resize(IconCount);
+    m_pixmapCacheKeys.reserve(IconCount);
+    m_pixmapCacheKeys.resize(IconCount);
 }
 
 DatabaseIcons* DatabaseIcons::instance()

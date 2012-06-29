@@ -30,10 +30,11 @@ class DatabaseIcons
 public:
     QImage icon(int index);
     QPixmap iconPixmap(int index);
-    int iconCount();
-    int expiredIconIndex();
 
     static DatabaseIcons* instance();
+
+    static const int IconCount;
+    static const int ExpiredIconIndex;
 
 private:
     DatabaseIcons();

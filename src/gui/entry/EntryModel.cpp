@@ -134,7 +134,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             break;
         case 1:
             if (entry->isExpired()) {
-                return databaseIcons()->iconPixmap(databaseIcons()->expiredIconIndex());
+                return databaseIcons()->iconPixmap(DatabaseIcons::ExpiredIconIndex);
             }
             else {
                 return entry->iconPixmap();
