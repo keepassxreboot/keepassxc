@@ -25,7 +25,7 @@
 #include <QtCore/QtGlobal>
 
 #ifdef Q_CC_CLANG
-#  if __cplusplus >= 201103L || __GXX_EXPERIMENTAL_CXX0X__
+#  if defined(__GXX_EXPERIMENTAL_CXX0X__) || __cplusplus >= 201103L
 #    if ((__clang_major__ * 100) + __clang_minor__) >= 209 /* since clang 2.9 */
 #      define COMPILER_DECLTYPE
 #    endif
