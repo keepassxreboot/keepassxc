@@ -20,6 +20,8 @@
 
 #include <QtCore/QAbstractListModel>
 
+#include "core/Global.h"
+
 class EntryAttachments;
 
 class EntryAttachmentsModel : public QAbstractListModel
@@ -27,7 +29,7 @@ class EntryAttachmentsModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-    explicit EntryAttachmentsModel(QObject* parent = 0);
+    explicit EntryAttachmentsModel(QObject* parent = Q_NULLPTR);
     void setEntryAttachments(EntryAttachments* entry);
     int rowCount(const QModelIndex& parent = QModelIndex()) const;
     int columnCount(const QModelIndex& parent = QModelIndex()) const;

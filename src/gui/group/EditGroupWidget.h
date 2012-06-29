@@ -36,7 +36,7 @@ class EditGroupWidget : public EditWidget
     Q_OBJECT
 
 public:
-    explicit EditGroupWidget(QWidget* parent = 0);
+    explicit EditGroupWidget(QWidget* parent = Q_NULLPTR);
     ~EditGroupWidget();
 
     void loadGroup(Group* group, bool create, Database* database);

@@ -20,6 +20,8 @@
 
 #include <QtCore/QAbstractTableModel>
 
+#include "core/Global.h"
+
 class Entry;
 class Group;
 
@@ -28,7 +30,7 @@ class EntryModel : public QAbstractTableModel
     Q_OBJECT
 
 public:
-    explicit EntryModel(QObject* parent = 0);
+    explicit EntryModel(QObject* parent = Q_NULLPTR);
     Entry* entryFromIndex(const QModelIndex& index) const;
     QModelIndex indexFromEntry(Entry* entry) const;
 

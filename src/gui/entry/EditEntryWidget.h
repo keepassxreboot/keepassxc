@@ -47,7 +47,7 @@ class EditEntryWidget : public EditWidget
     Q_OBJECT
 
 public:
-    explicit EditEntryWidget(QWidget* parent = 0);
+    explicit EditEntryWidget(QWidget* parent = Q_NULLPTR);
     ~EditEntryWidget();
 
     void loadEntry(Entry* entry, bool create, bool history, const QString& groupName,

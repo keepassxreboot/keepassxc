@@ -26,7 +26,7 @@
 Entry::Entry()
 {
     m_updateTimeinfo = true;
-    m_tmpHistoryItem = 0;
+    m_tmpHistoryItem = Q_NULLPTR;
 
     m_data.iconNumber = DefaultIconNumber;
     m_data.autoTypeEnabled = true;
@@ -467,7 +467,7 @@ void Entry::endUpdate()
         delete m_tmpHistoryItem;
     }
 
-    m_tmpHistoryItem = 0;
+    m_tmpHistoryItem = Q_NULLPTR;
 }
 
 void Entry::updateModifiedSinceBegin()

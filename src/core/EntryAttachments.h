@@ -21,12 +21,14 @@
 #include <QtCore/QMap>
 #include <QtCore/QObject>
 
+#include "core/Global.h"
+
 class EntryAttachments : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit EntryAttachments(QObject* parent = 0);
+    explicit EntryAttachments(QObject* parent = Q_NULLPTR);
     QList<QString> keys() const;
     QByteArray value(const QString& key) const;
     void set(const QString& key, const QByteArray& value);

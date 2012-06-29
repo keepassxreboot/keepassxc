@@ -20,6 +20,8 @@
 
 #include <QtGui/QWidget>
 
+#include "core/Global.h"
+
 namespace Ui {
     class WelcomeWidget;
 }
@@ -29,7 +31,7 @@ class WelcomeWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit WelcomeWidget(QWidget* parent = 0);
+    explicit WelcomeWidget(QWidget* parent = Q_NULLPTR);
     ~WelcomeWidget();
 
 private:

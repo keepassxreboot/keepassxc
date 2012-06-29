@@ -20,6 +20,7 @@
 
 #include <QtCore/QXmlStreamReader>
 
+#include "core/Global.h"
 #include "keys/Key.h"
 
 class QIODevice;
@@ -29,11 +30,11 @@ class FileKey : public Key
 public:
     FileKey();
     bool load(QIODevice* device);
-    bool load(const QString& fileName, QString* errorMsg = 0);
+    bool load(const QString& fileName, QString* errorMsg = Q_NULLPTR);
     QByteArray rawKey() const;
     FileKey* clone() const;
     static void create(QIODevice* device);
-    static bool create(const QString& fileName, QString* errorMsg = 0);
+    static bool create(const QString& fileName, QString* errorMsg = Q_NULLPTR);
 
 private:
     bool loadXml(QIODevice* device);

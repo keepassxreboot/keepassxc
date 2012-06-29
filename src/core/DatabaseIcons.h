@@ -23,6 +23,8 @@
 #include <QtGui/QPixmap>
 #include <QtGui/QPixmapCache>
 
+#include "core/Global.h"
+
 class DatabaseIcons
 {
 public:

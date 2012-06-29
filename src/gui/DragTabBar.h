@@ -20,12 +20,14 @@
 
 #include <QtGui/QTabBar>
 
+#include "core/Global.h"
+
 class DragTabBar : public QTabBar
 {
     Q_OBJECT
 
 public:
-    explicit DragTabBar(QWidget* parent = 0);
+    explicit DragTabBar(QWidget* parent = Q_NULLPTR);
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);

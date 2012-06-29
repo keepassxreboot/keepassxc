@@ -20,6 +20,8 @@
 
 #include <QtCore/QAbstractListModel>
 
+#include "core/Global.h"
+
 class EntryAttributes;
 
 class EntryAttributesModel : public QAbstractListModel
@@ -27,7 +29,7 @@ class EntryAttributesModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-    explicit EntryAttributesModel(QObject* parent = 0);
+    explicit EntryAttributesModel(QObject* parent = Q_NULLPTR);
     void setEntryAttributes(EntryAttributes* entryAttributes);
     int rowCount(const QModelIndex& parent = QModelIndex()) const;
     int columnCount(const QModelIndex& parent = QModelIndex()) const;

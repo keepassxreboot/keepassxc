@@ -20,6 +20,8 @@
 
 #include <QtGui/QTreeView>
 
+#include "core/Global.h"
+
 class Database;
 class Group;
 class GroupModel;
@@ -29,7 +31,7 @@ class GroupView : public QTreeView
     Q_OBJECT
 
 public:
-    explicit GroupView(Database* db, QWidget* parent = 0);
+    explicit GroupView(Database* db, QWidget* parent = Q_NULLPTR);
     void changeDatabase(Database* newDb);
     void setModel(QAbstractItemModel* model);
     Group* currentGroup();

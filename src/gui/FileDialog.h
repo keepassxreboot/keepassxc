@@ -20,15 +20,17 @@
 
 #include <QtGui/QFileDialog>
 
+#include "core/Global.h"
+
 class FileDialog
 {
 public:
-    QString getOpenFileName(QWidget* parent = 0, const QString& caption = QString(),
+    QString getOpenFileName(QWidget* parent = Q_NULLPTR, const QString& caption = QString(),
                             QString dir = QString(), const QString& filter = QString(),
-                            QString* selectedFilter = 0, QFileDialog::Options options = 0);
-    QString getSaveFileName(QWidget* parent = 0, const QString& caption = QString(),
+                            QString* selectedFilter = Q_NULLPTR, QFileDialog::Options options = Q_NULLPTR);
+    QString getSaveFileName(QWidget* parent = Q_NULLPTR, const QString& caption = QString(),
                             QString dir = QString(), const QString& filter = QString(),
-                            QString* selectedFilter = 0, QFileDialog::Options options = 0);
+                            QString* selectedFilter = Q_NULLPTR, QFileDialog::Options options = Q_NULLPTR);
 
     /**
      * Sets the result of the next get* method call.

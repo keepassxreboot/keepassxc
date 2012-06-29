@@ -25,7 +25,7 @@ class KeePass1OpenWidget : public DatabaseOpenWidget
     Q_OBJECT
 
 public:
-    explicit KeePass1OpenWidget(QWidget* parent = 0);
+    explicit KeePass1OpenWidget(QWidget* parent = Q_NULLPTR);
     ~KeePass1OpenWidget();
 
 protected:

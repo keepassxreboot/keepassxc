@@ -40,7 +40,7 @@
 
 EditEntryWidget::EditEntryWidget(QWidget* parent)
     : EditWidget(parent)
-    , m_entry(0)
+    , m_entry(Q_NULLPTR)
     , m_mainUi(new Ui::EditEntryWidgetMain())
     , m_notesUi(new Ui::EditEntryWidgetNotes())
     , m_advancedUi(new Ui::EditEntryWidgetAdvanced())
@@ -267,8 +267,8 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
 void EditEntryWidget::saveEntry()
 {
     if (m_history) {
-        m_entry = 0;
-        m_database = 0;
+        m_entry = Q_NULLPTR;
+        m_database = Q_NULLPTR;
         m_entryAttributes->clear();
         m_entryAttachments->clear();
         Q_EMIT editFinished(false);
@@ -325,8 +325,8 @@ void EditEntryWidget::saveEntry()
     }
 
 
-    m_entry = 0;
-    m_database = 0;
+    m_entry = Q_NULLPTR;
+    m_database = Q_NULLPTR;
     m_entryAttributes->clear();
     m_entryAttachments->clear();
     m_historyModel->clear();
@@ -337,8 +337,8 @@ void EditEntryWidget::saveEntry()
 void EditEntryWidget::cancel()
 {
     if (m_history) {
-        m_entry = 0;
-        m_database = 0;
+        m_entry = Q_NULLPTR;
+        m_database = Q_NULLPTR;
         m_entryAttributes->clear();
         m_entryAttachments->clear();
         Q_EMIT editFinished(false);

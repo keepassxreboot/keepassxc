@@ -30,7 +30,7 @@ class SettingsWidget : public EditWidget
     Q_OBJECT
 
 public:
-    explicit SettingsWidget(QWidget* parent = 0);
+    explicit SettingsWidget(QWidget* parent = Q_NULLPTR);
     ~SettingsWidget();
     void loadSettings();
 

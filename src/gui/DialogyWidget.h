@@ -21,12 +21,14 @@
 #include <QtGui/QDialogButtonBox>
 #include <QtGui/QWidget>
 
+#include "core/Global.h"
+
 class DialogyWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit DialogyWidget(QWidget* parent = 0);
+    explicit DialogyWidget(QWidget* parent = Q_NULLPTR);
 
 protected:
     virtual void keyPressEvent(QKeyEvent* e);

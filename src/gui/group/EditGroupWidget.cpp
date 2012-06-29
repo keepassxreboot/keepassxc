@@ -30,7 +30,7 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
     , m_editGroupWidgetMain(new QWidget())
     , m_editGroupWidgetIcons(new EditWidgetIcons())
     , m_editGroupWidgetAdvanced(new QWidget())
-    , m_group(0)
+    , m_group(Q_NULLPTR)
 {
     m_mainUi->setupUi(m_editGroupWidgetMain);
     m_advancedUi->setupUi(m_editGroupWidgetAdvanced);
@@ -133,8 +133,8 @@ void EditGroupWidget::save()
         m_group->setIcon(iconStruct.uuid);
     }
 
-    m_group = 0;
-    m_database = 0;
+    m_group = Q_NULLPTR;
+    m_database = Q_NULLPTR;
     Q_EMIT editFinished(true);
 }
 
@@ -145,7 +145,7 @@ void EditGroupWidget::cancel()
         m_group->setIcon(Entry::DefaultIconNumber);
     }
 
-    m_group = 0;
-    m_database = 0;
+    m_group = Q_NULLPTR;
+    m_database = Q_NULLPTR;
     Q_EMIT editFinished(false);
 }

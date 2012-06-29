@@ -21,6 +21,8 @@
 #include <QtCore/QScopedPointer>
 #include <QtCore/QVariant>
 
+#include "core/Global.h"
+
 class QSettings;
 
 class Config : public QObject

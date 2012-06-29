@@ -29,6 +29,7 @@
 
 #include "core/EntryAttachments.h"
 #include "core/EntryAttributes.h"
+#include "core/Global.h"
 #include "core/TimeInfo.h"
 #include "core/Uuid.h"
 

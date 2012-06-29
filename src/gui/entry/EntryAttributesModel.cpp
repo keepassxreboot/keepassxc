@@ -22,7 +22,7 @@
 
 EntryAttributesModel::EntryAttributesModel(QObject* parent)
     : QAbstractListModel(parent)
-    , m_entryAttributes(0)
+    , m_entryAttributes(Q_NULLPTR)
     , m_nextRenameDataChange(false)
 {
 }

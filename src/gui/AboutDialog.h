@@ -21,6 +21,8 @@
 #include <QtCore/QScopedPointer>
 #include <QtGui/QDialog>
 
+#include "core/Global.h"
+
 namespace Ui {
     class AboutDialog;
 }
@@ -30,7 +32,7 @@ class AboutDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit AboutDialog(QWidget* parent = 0);
+    explicit AboutDialog(QWidget* parent = Q_NULLPTR);
     ~AboutDialog();
 
 private:

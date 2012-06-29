@@ -85,7 +85,7 @@ IconStruct EditWidgetIcons::save()
         }
     }
 
-    m_database = 0;
+    m_database = Q_NULLPTR;
     m_currentUuid = Uuid();
     return iconStruct;
 }

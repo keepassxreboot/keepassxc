@@ -71,7 +71,7 @@ void SymmetricCipherGcrypt::init()
     Q_ASSERT(error == 0); // TODO: real error checking
 
     size_t blockSizeT;
-    error = gcry_cipher_algo_info(m_algo, GCRYCTL_GET_BLKLEN, 0, &blockSizeT);
+    error = gcry_cipher_algo_info(m_algo, GCRYCTL_GET_BLKLEN, Q_NULLPTR, &blockSizeT);
     Q_ASSERT(error == 0);
     m_blockSize = blockSizeT;
 }
@@ -118,10 +118,10 @@ void SymmetricCipherGcrypt::processInPlace(QByteArray& data)
     gcry_error_t error;
 
     if (m_direction == SymmetricCipher::Decrypt) {
-        error = gcry_cipher_decrypt(m_ctx, data.data(), data.size(), 0, 0);
+        error = gcry_cipher_decrypt(m_ctx, data.data(), data.size(), Q_NULLPTR, 0);
     }
     else {
-        error = gcry_cipher_encrypt(m_ctx, data.data(), data.size(), 0, 0);
+        error = gcry_cipher_encrypt(m_ctx, data.data(), data.size(), Q_NULLPTR, 0);
     }
 
     Q_ASSERT(error == 0);
@@ -135,13 +135,13 @@ void SymmetricCipherGcrypt::processInPlace(QByteArray& data, quint64 rounds)
 
     if (m_direction == SymmetricCipher::Decrypt) {
         for (quint64 i = 0; i != rounds; ++i) {
-            error = gcry_cipher_decrypt(m_ctx, data.data(), data.size(), 0, 0);
+            error = gcry_cipher_decrypt(m_ctx, data.data(), data.size(), Q_NULLPTR, 0);
             Q_ASSERT(error == 0);
         }
     }
     else {
         for (quint64 i = 0; i != rounds; ++i) {
-            error = gcry_cipher_encrypt(m_ctx, data.data(), data.size(), 0, 0);
+            error = gcry_cipher_encrypt(m_ctx, data.data(), data.size(), Q_NULLPTR, 0);
             Q_ASSERT(error == 0);
         }
     }

@@ -20,6 +20,8 @@
 
 #include <QtGui/QTreeView>
 
+#include "core/Global.h"
+
 class Entry;
 class EntryModel;
 class Group;
@@ -30,7 +32,7 @@ class EntryView : public QTreeView
     Q_OBJECT
 
 public:
-    explicit EntryView(QWidget* parent = 0);
+    explicit EntryView(QWidget* parent = Q_NULLPTR);
     void setModel(QAbstractItemModel* model);
     Entry* currentEntry();
     bool isSingleEntrySelected();

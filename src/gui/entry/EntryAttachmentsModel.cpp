@@ -22,7 +22,7 @@
 
 EntryAttachmentsModel::EntryAttachmentsModel(QObject* parent)
     : QAbstractListModel(parent)
-    , m_entryAttachments(0)
+    , m_entryAttachments(Q_NULLPTR)
 {
 }
 

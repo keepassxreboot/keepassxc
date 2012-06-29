@@ -21,6 +21,8 @@
 #include <QtCore/QString>
 #include <QtGui/QIcon>
 
+#include "core/Global.h"
+
 class DataPath
 {
 public:

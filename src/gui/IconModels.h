@@ -21,6 +21,7 @@
 #include <QtCore/QAbstractListModel>
 #include <QtGui/QImage>
 
+#include "core/Global.h"
 #include "core/Uuid.h"
 
 class DefaultIconModel : public QAbstractListModel
@@ -28,7 +29,7 @@ class DefaultIconModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-    explicit DefaultIconModel(QObject* parent = 0);
+    explicit DefaultIconModel(QObject* parent = Q_NULLPTR);
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const;
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
@@ -39,7 +40,7 @@ class CustomIconModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-    explicit CustomIconModel(QObject* parent = 0);
+    explicit CustomIconModel(QObject* parent = Q_NULLPTR);
 
     virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
     virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;

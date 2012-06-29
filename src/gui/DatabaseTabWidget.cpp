@@ -32,8 +32,8 @@
 #include "gui/group/GroupView.h"
 
 DatabaseManagerStruct::DatabaseManagerStruct()
-    : file(0)
-    , dbWidget(0)
+    : file(Q_NULLPTR)
+    , dbWidget(Q_NULLPTR)
     , modified(false)
     , readOnly(false)
 {

@@ -30,8 +30,8 @@
 DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     : DialogyWidget(parent)
     , m_ui(new Ui::DatabaseOpenWidget())
-    , m_db(0)
-    , m_file(0)
+    , m_db(Q_NULLPTR)
+    , m_file(Q_NULLPTR)
 {
     m_ui->setupUi(this);
 

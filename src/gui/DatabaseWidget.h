@@ -21,6 +21,8 @@
 #include <QtCore/QScopedPointer>
 #include <QtGui/QStackedWidget>
 
+#include "core/Global.h"
+
 class ChangeMasterKeyWidget;
 class DatabaseOpenWidget;
 class DatabaseSettingsWidget;
@@ -63,7 +65,7 @@ public:
         EntryCopyPassword
     };
 
-    explicit DatabaseWidget(Database* db, QWidget* parent = 0);
+    explicit DatabaseWidget(Database* db, QWidget* parent = Q_NULLPTR);
     ~DatabaseWidget();
     GroupView* groupView();
     EntryView* entryView();

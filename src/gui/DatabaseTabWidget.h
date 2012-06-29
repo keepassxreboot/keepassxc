@@ -99,7 +99,7 @@ private:
     Database* databaseFromDatabaseWidget(DatabaseWidget* dbWidget);
     void insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct);
     void updateLastDatabases(const QString& filename);
-    void connectDatabase(Database* newDb, Database* oldDb = 0);
+    void connectDatabase(Database* newDb, Database* oldDb = Q_NULLPTR);
 
     QWidget* const m_window;
     KeePass2Writer m_writer;

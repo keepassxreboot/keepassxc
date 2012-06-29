@@ -23,7 +23,7 @@
 #include <QtGui/QApplication>
 #include <QtGui/QDesktopServices>
 
-Config* Config::m_instance(0);
+Config* Config::m_instance(Q_NULLPTR);
 
 QVariant Config::get(const QString& key)
 {

@@ -20,6 +20,8 @@
 
 #include <QtCore/QObject>
 
+#include "core/Global.h"
+
 class QTimer;
 
 class Clipboard : public QObject
@@ -36,7 +38,7 @@ private Q_SLOTS:
     void clearClipboard();
 
 private:
-    explicit Clipboard(QObject* parent = 0);
+    explicit Clipboard(QObject* parent = Q_NULLPTR);
 
     static Clipboard* m_instance;
 

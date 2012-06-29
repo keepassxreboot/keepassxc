@@ -29,9 +29,9 @@
 #include "streams/QtIOCompressor"
 
 KeePass2XmlReader::KeePass2XmlReader()
-    : m_randomStream(0)
-    , m_db(0)
-    , m_meta(0)
+    : m_randomStream(Q_NULLPTR)
+    , m_db(Q_NULLPTR)
+    , m_meta(Q_NULLPTR)
 {
 }
 
@@ -400,7 +400,7 @@ Group* KeePass2XmlReader::parseGroup()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Group");
 
-    Group* group = 0;
+    Group* group = Q_NULLPTR;
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "UUID") {
             Uuid uuid = readUuid();

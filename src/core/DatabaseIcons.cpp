@@ -19,7 +19,7 @@
 
 #include "core/DataPath.h"
 
-DatabaseIcons* DatabaseIcons::m_instance(0);
+DatabaseIcons* DatabaseIcons::m_instance(Q_NULLPTR);
 
 QImage DatabaseIcons::icon(int index)
 {

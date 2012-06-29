@@ -45,9 +45,9 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     , m_db(db)
     , m_searchUi(new Ui::SearchWidget())
     , m_searchWidget(new QWidget())
-    , m_newGroup(0)
-    , m_newEntry(0)
-    , m_newParent(0)
+    , m_newGroup(Q_NULLPTR)
+    , m_newEntry(Q_NULLPTR)
+    , m_newParent(Q_NULLPTR)
     , m_menuGroup(new QMenu(this))
     , m_menuEntry(new QMenu(this))
 {
@@ -394,8 +394,8 @@ void DatabaseWidget::switchToView(bool accepted)
             delete m_newGroup;
         }
 
-        m_newGroup = 0;
-        m_newParent = 0;
+        m_newGroup = Q_NULLPTR;
+        m_newParent = Q_NULLPTR;
     }
     else if (m_newEntry) {
         if (accepted) {
@@ -407,8 +407,8 @@ void DatabaseWidget::switchToView(bool accepted)
             delete m_newEntry;
         }
 
-        m_newEntry = 0;
-        m_newParent = 0;
+        m_newEntry = Q_NULLPTR;
+        m_newParent = Q_NULLPTR;
     }
 
     setCurrentIndex(0);
@@ -475,9 +475,9 @@ void DatabaseWidget::openDatabase(bool accepted)
         // We won't need those anymore and KeePass1OpenWidget closes
         // the file in its dtor.
         delete m_databaseOpenWidget;
-        m_databaseOpenWidget = 0;
+        m_databaseOpenWidget = Q_NULLPTR;
         delete m_keepass1OpenWidget;
-        m_keepass1OpenWidget = 0;
+        m_keepass1OpenWidget = Q_NULLPTR;
     }
     else {
         if (m_databaseOpenWidget->database()) {
@@ -641,7 +641,7 @@ bool DatabaseWidget::canDeleteCurrentGoup()
 void DatabaseWidget::clearLastGroup(Group* group)
 {
     if (group) {
-        m_lastGroup = 0;
+        m_lastGroup = Q_NULLPTR;
         m_searchWidget->hide();
     }
 }

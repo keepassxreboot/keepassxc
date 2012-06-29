@@ -25,9 +25,9 @@
 #include "streams/QtIOCompressor"
 
 KeePass2XmlWriter::KeePass2XmlWriter()
-    : m_db(0)
-    , m_meta(0)
-    , m_randomStream(0)
+    : m_db(Q_NULLPTR)
+    , m_meta(Q_NULLPTR)
+    , m_randomStream(Q_NULLPTR)
 {
     m_xml.setAutoFormatting(true);
     m_xml.setAutoFormattingIndent(-1); // 1 tab

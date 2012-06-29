@@ -33,7 +33,7 @@ class DatabaseSettingsWidget : public DialogyWidget
     Q_OBJECT
 
 public:
-    explicit DatabaseSettingsWidget(QWidget* parent = 0);
+    explicit DatabaseSettingsWidget(QWidget* parent = Q_NULLPTR);
     ~DatabaseSettingsWidget();
 
     void load(Database* db);

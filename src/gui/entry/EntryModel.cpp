@@ -26,7 +26,7 @@
 
 EntryModel::EntryModel(QObject* parent)
     : QAbstractTableModel(parent)
-    , m_group(0)
+    , m_group(Q_NULLPTR)
 {
     setSupportedDragActions(Qt::MoveAction);
 }
@@ -69,7 +69,7 @@ void EntryModel::setEntries(const QList<Entry*>& entries)
 
     severConnections();
 
-    m_group = 0;
+    m_group = Q_NULLPTR;
     m_allGroups.clear();
     m_entries = entries;
 
@@ -257,11 +257,11 @@ void EntryModel::entryDataChanged(Entry* entry)
 void EntryModel::severConnections()
 {
     if (m_group) {
-        disconnect(m_group, 0, this, 0);
+        disconnect(m_group, Q_NULLPTR, this, Q_NULLPTR);
     }
 
     Q_FOREACH (const Group* group, m_allGroups) {
-        disconnect(group, 0, this, 0);
+        disconnect(group, Q_NULLPTR, this, Q_NULLPTR);
     }
 }
 

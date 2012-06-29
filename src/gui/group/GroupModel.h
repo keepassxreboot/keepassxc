@@ -20,6 +20,8 @@
 
 #include <QtCore/QAbstractItemModel>
 
+#include "core/Global.h"
+
 class Database;
 class Group;
 
@@ -28,7 +30,7 @@ class GroupModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    explicit GroupModel(Database* db, QObject* parent = 0);
+    explicit GroupModel(Database* db, QObject* parent = Q_NULLPTR);
     void changeDatabase(Database* newDb);
     QModelIndex index(Group* group) const;
     Group* groupFromIndex(const QModelIndex& index) const;

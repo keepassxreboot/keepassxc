@@ -20,6 +20,8 @@
 
 #include <QtCore/QAbstractTableModel>
 
+#include "core/Global.h"
+
 class Entry;
 
 class EntryHistoryModel : public QAbstractTableModel
@@ -27,7 +29,7 @@ class EntryHistoryModel : public QAbstractTableModel
     Q_OBJECT
 
 public:
-    explicit EntryHistoryModel(QObject* parent = 0);
+    explicit EntryHistoryModel(QObject* parent = Q_NULLPTR);
 
     Entry* entryFromIndex(const QModelIndex& index) const;
     int columnCount(const QModelIndex& parent = QModelIndex()) const;

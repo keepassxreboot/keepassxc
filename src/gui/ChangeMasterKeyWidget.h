@@ -33,7 +33,7 @@ class ChangeMasterKeyWidget : public DialogyWidget
     Q_OBJECT
 
 public:
-    explicit ChangeMasterKeyWidget(QWidget* parent = 0);
+    explicit ChangeMasterKeyWidget(QWidget* parent = Q_NULLPTR);
     ~ChangeMasterKeyWidget();
     void clearForms();
     CompositeKey newMasterKey();

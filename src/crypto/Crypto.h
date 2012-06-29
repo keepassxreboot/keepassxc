@@ -18,6 +18,8 @@
 #ifndef KEEPASSX_CRYPTO_H
 #define KEEPASSX_CRYPTO_H
 
+#include "core/Global.h"
+
 class Crypto
 {
 public:
