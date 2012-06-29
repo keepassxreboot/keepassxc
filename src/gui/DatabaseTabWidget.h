@@ -47,6 +47,7 @@ class DatabaseTabWidget : public QTabWidget
 
 public:
     explicit DatabaseTabWidget(QWidget* parent);
+    ~DatabaseTabWidget();
     void openDatabase(const QString& fileName, const QString& pw = QString(),
                       const QString& keyFile = QString());
     DatabaseWidget* currentDatabaseWidget();
@@ -93,6 +94,7 @@ private:
     void saveDatabase(Database* db);
     void saveDatabaseAs(Database* db);
     bool closeDatabase(Database* db);
+    void deleteDatabase(Database* db);
     int databaseIndex(Database* db);
     Database* indexDatabase(int index);
     DatabaseManagerStruct indexDatabaseManagerStruct(int index);

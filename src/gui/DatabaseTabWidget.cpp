@@ -53,6 +53,15 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     connect(this, SIGNAL(currentChanged(int)), SLOT(emitEntrySelectionChanged()));
 }
 
+DatabaseTabWidget::~DatabaseTabWidget()
+{
+    QHashIterator<Database*, DatabaseManagerStruct> i(m_dbList);
+    while (i.hasNext()) {
+        i.next();
+        deleteDatabase(i.key());
+    }
+}
+
 void DatabaseTabWidget::toggleTabbar() {
     if (count() > 1) {
         if (!tabBar()->isVisible()) {
@@ -201,13 +210,22 @@ bool DatabaseTabWidget::closeDatabase(Database* db)
         }
     }
 
+    deleteDatabase(db);
+
+    return true;
+}
+
+void DatabaseTabWidget::deleteDatabase(Database* db)
+{
+    const DatabaseManagerStruct dbStruct = m_dbList.value(db);
+    int index = databaseIndex(db);
+
     removeTab(index);
     toggleTabbar();
     m_dbList.remove(db);
     delete dbStruct.file;
     delete dbStruct.dbWidget;
     delete db;
-    return true;
 }
 
 bool DatabaseTabWidget::closeAllDatabases() {
