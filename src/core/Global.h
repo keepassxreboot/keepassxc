@@ -25,13 +25,21 @@
 #include <QtCore/QtGlobal>
 
 #ifdef Q_CC_CLANG
-#  if defined(__GXX_EXPERIMENTAL_CXX0X__) || __cplusplus >= 201103L
-#    if ((__clang_major__ * 100) + __clang_minor__) >= 209 /* since clang 2.9 */
+#  if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)
+    /* Detect C++ features using __has_feature(), see http://clang.llvm.org/docs/LanguageExtensions.html#cxx11 */
+#    if __has_feature(cxx_strong_enums)
+#      define COMPILER_CLASS_ENUM
+#    endif
+#    if __has_feature(cxx_constexpr)
+#      define COMPILER_CONSTEXPR
+#    endif
+#    if __has_feature(cxx_decltype) /* && __has_feature(cxx_decltype_incomplete_return_types) */
 #      define COMPILER_DECLTYPE
 #    endif
-#    if ((__clang_major__ * 100) + __clang_minor__) >= 300 /* since clang 3.0 */
-#      define COMPILER_CLASS_ENUM
+#    if __has_feature(cxx_override_control)
 #      define COMPILER_EXPLICIT_OVERRIDES
+#    endif
+#    if __has_feature(cxx_nullptr)
 #      define COMPILER_NULLPTR
 #    endif
 #  endif
