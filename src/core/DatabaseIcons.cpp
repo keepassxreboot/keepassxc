@@ -22,6 +22,77 @@
 DatabaseIcons* DatabaseIcons::m_instance(Q_NULLPTR);
 const int DatabaseIcons::IconCount(69);
 const int DatabaseIcons::ExpiredIconIndex(45);
+const char* const DatabaseIcons::m_indexToName[] = {
+    "C00_Password.png",
+    "C01_Package_Network.png",
+    "C02_MessageBox_Warning.png",
+    "C03_Server.png",
+    "C04_Klipper.png",
+    "C05_Edu_Languages.png",
+    "C06_KCMDF.png",
+    "C07_Kate.png",
+    "C08_Socket.png",
+    "C09_Identity.png",
+    "C10_Kontact.png",
+    "C11_Camera.png",
+    "C12_IRKickFlash.png",
+    "C13_KGPG_Key3.png",
+    "C14_Laptop_Power.png",
+    "C15_Scanner.png",
+    "C16_Mozilla_Firebird.png",
+    "C17_CDROM_Unmount.png",
+    "C18_Display.png",
+    "C19_Mail_Generic.png",
+    "C20_Misc.png",
+    "C21_KOrganizer.png",
+    "C22_ASCII.png",
+    "C23_Icons.png",
+    "C24_Connect_Established.png",
+    "C25_Folder_Mail.png",
+    "C26_FileSave.png",
+    "C27_NFS_Unmount.png",
+    "C28_QuickTime.png",
+    "C29_KGPG_Term.png",
+    "C30_Konsole.png",
+    "C31_FilePrint.png",
+    "C32_FSView.png",
+    "C33_Run.png",
+    "C34_Configure.png",
+    "C35_KRFB.png",
+    "C36_Ark.png",
+    "C37_KPercentage.png",
+    "C38_Samba_Unmount.png",
+    "C39_History.png",
+    "C40_Mail_Find.png",
+    "C41_VectorGfx.png",
+    "C42_KCMMemory.png",
+    "C43_EditTrash.png",
+    "C44_KNotes.png",
+    "C45_Cancel.png",
+    "C46_Help.png",
+    "C47_KPackage.png",
+    "C48_Folder.png",
+    "C49_Folder_Blue_Open.png",
+    "C50_Folder_Tar.png",
+    "C51_Decrypted.png",
+    "C52_Encrypted.png",
+    "C53_Apply.png",
+    "C54_Signature.png",
+    "C55_Thumbnail.png",
+    "C56_KAddressBook.png",
+    "C57_View_Text.png",
+    "C58_KGPG.png",
+    "C59_Package_Development.png",
+    "C60_KFM_Home.png",
+    "C61_Services.png",
+    "C62_Tux.png",
+    "C63_Feather.png",
+    "C64_Apple.png",
+    "C65_Apple.png",
+    "C66_Money.png",
+    "C67_Certificate.png",
+    "C68_BlackBerry.png"
+};
 
 QImage DatabaseIcons::icon(int index)
 {
@@ -34,7 +105,7 @@ QImage DatabaseIcons::icon(int index)
         return m_iconCache[index];
     }
     else {
-        QString iconPath = QString("icons/database/").append(m_indexToName.at(index));
+        QString iconPath = QString("icons/database/").append(m_indexToName[index]);
         QImage icon(dataPath()->path(iconPath));
 
         m_iconCache[index] = icon;
@@ -61,78 +132,7 @@ QPixmap DatabaseIcons::iconPixmap(int index)
 
 DatabaseIcons::DatabaseIcons()
 {
-    m_indexToName.reserve(IconCount);
-    m_indexToName.append("C00_Password.png");
-    m_indexToName.append("C01_Package_Network.png");
-    m_indexToName.append("C02_MessageBox_Warning.png");
-    m_indexToName.append("C03_Server.png");
-    m_indexToName.append("C04_Klipper.png");
-    m_indexToName.append("C05_Edu_Languages.png");
-    m_indexToName.append("C06_KCMDF.png");
-    m_indexToName.append("C07_Kate.png");
-    m_indexToName.append("C08_Socket.png");
-    m_indexToName.append("C09_Identity.png");
-    m_indexToName.append("C10_Kontact.png");
-    m_indexToName.append("C11_Camera.png");
-    m_indexToName.append("C12_IRKickFlash.png");
-    m_indexToName.append("C13_KGPG_Key3.png");
-    m_indexToName.append("C14_Laptop_Power.png");
-    m_indexToName.append("C15_Scanner.png");
-    m_indexToName.append("C16_Mozilla_Firebird.png");
-    m_indexToName.append("C17_CDROM_Unmount.png");
-    m_indexToName.append("C18_Display.png");
-    m_indexToName.append("C19_Mail_Generic.png");
-    m_indexToName.append("C20_Misc.png");
-    m_indexToName.append("C21_KOrganizer.png");
-    m_indexToName.append("C22_ASCII.png");
-    m_indexToName.append("C23_Icons.png");
-    m_indexToName.append("C24_Connect_Established.png");
-    m_indexToName.append("C25_Folder_Mail.png");
-    m_indexToName.append("C26_FileSave.png");
-    m_indexToName.append("C27_NFS_Unmount.png");
-    m_indexToName.append("C28_QuickTime.png");
-    m_indexToName.append("C29_KGPG_Term.png");
-    m_indexToName.append("C30_Konsole.png");
-    m_indexToName.append("C31_FilePrint.png");
-    m_indexToName.append("C32_FSView.png");
-    m_indexToName.append("C33_Run.png");
-    m_indexToName.append("C34_Configure.png");
-    m_indexToName.append("C35_KRFB.png");
-    m_indexToName.append("C36_Ark.png");
-    m_indexToName.append("C37_KPercentage.png");
-    m_indexToName.append("C38_Samba_Unmount.png");
-    m_indexToName.append("C39_History.png");
-    m_indexToName.append("C40_Mail_Find.png");
-    m_indexToName.append("C41_VectorGfx.png");
-    m_indexToName.append("C42_KCMMemory.png");
-    m_indexToName.append("C43_EditTrash.png");
-    m_indexToName.append("C44_KNotes.png");
-    m_indexToName.append("C45_Cancel.png");
-    m_indexToName.append("C46_Help.png");
-    m_indexToName.append("C47_KPackage.png");
-    m_indexToName.append("C48_Folder.png");
-    m_indexToName.append("C49_Folder_Blue_Open.png");
-    m_indexToName.append("C50_Folder_Tar.png");
-    m_indexToName.append("C51_Decrypted.png");
-    m_indexToName.append("C52_Encrypted.png");
-    m_indexToName.append("C53_Apply.png");
-    m_indexToName.append("C54_Signature.png");
-    m_indexToName.append("C55_Thumbnail.png");
-    m_indexToName.append("C56_KAddressBook.png");
-    m_indexToName.append("C57_View_Text.png");
-    m_indexToName.append("C58_KGPG.png");
-    m_indexToName.append("C59_Package_Development.png");
-    m_indexToName.append("C60_KFM_Home.png");
-    m_indexToName.append("C61_Services.png");
-    m_indexToName.append("C62_Tux.png");
-    m_indexToName.append("C63_Feather.png");
-    m_indexToName.append("C64_Apple.png");
-    m_indexToName.append("C65_Apple.png");
-    m_indexToName.append("C66_Money.png");
-    m_indexToName.append("C67_Certificate.png");
-    m_indexToName.append("C68_BlackBerry.png");
-
-    Q_ASSERT(m_indexToName.size() == IconCount);
+    Q_STATIC_ASSERT(sizeof(DatabaseIcons::m_indexToName) == DatabaseIcons::IconCount * sizeof(char*));
 
     m_iconCache.reserve(IconCount);
     m_iconCache.resize(IconCount);

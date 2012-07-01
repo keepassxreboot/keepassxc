@@ -41,7 +41,7 @@ private:
 
     static DatabaseIcons* m_instance;
 
-    QVector<QString> m_indexToName;
+    static const char* const m_indexToName[];
     QVector<QImage> m_iconCache;
     QVector<QPixmapCache::Key> m_pixmapCacheKeys;
 
