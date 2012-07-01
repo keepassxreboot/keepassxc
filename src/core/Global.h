@@ -42,6 +42,9 @@
 #    if __has_feature(cxx_nullptr)
 #      define COMPILER_NULLPTR
 #    endif
+#    if __has_feature(cxx_static_assert)
+#      define COMPILER_STATIC_ASSERT
+#    endif
 #  endif
 #endif // Q_CC_CLANG
 
@@ -50,6 +53,7 @@
 #    if (__GNUC__ * 100 + __GNUC_MINOR__) >= 403
        /* C++11 features supported in GCC 4.3: */
 #      define COMPILER_DECLTYPE
+#      define COMPILER_STATIC_ASSERT
 #    endif
 #    if (__GNUC__ * 100 + __GNUC_MINOR__) >= 404
 #      define COMPILER_CLASS_ENUM
@@ -98,5 +102,22 @@
 #    define Q_DECL_FINAL_CLASS
 #  endif
 #endif
+
+#if !defined(Q_STATIC_ASSERT) && !defined(Q_STATIC_ASSERT_X)
+#ifdef COMPILER_STATIC_ASSERT
+#define Q_STATIC_ASSERT(Condition) static_assert(bool(Condition), #Condition)
+#define Q_STATIC_ASSERT_X(Condition, Message) static_assert(bool(Condition), Message)
+#else
+// Intentionally undefined
+template <bool Test> class QStaticAssertFailure;
+template <> class QStaticAssertFailure<true> {};
+
+#define Q_STATIC_ASSERT_PRIVATE_JOIN(A, B) Q_STATIC_ASSERT_PRIVATE_JOIN_IMPL(A, B)
+#define Q_STATIC_ASSERT_PRIVATE_JOIN_IMPL(A, B) A ## B
+#define Q_STATIC_ASSERT(Condition) \
+    enum {Q_STATIC_ASSERT_PRIVATE_JOIN(q_static_assert_result, __LINE__) = sizeof(QStaticAssertFailure<!!(Condition)>)}
+#define Q_STATIC_ASSERT_X(Condition, Message) Q_STATIC_ASSERT(Condition)
+#endif // COMPILER_STATIC_ASSERT
+#endif // !defined(Q_STATIC_ASSERT) && !defined(Q_STATIC_ASSERT_X)
 
 #endif // KEEPASSX_GLOBAL_H
