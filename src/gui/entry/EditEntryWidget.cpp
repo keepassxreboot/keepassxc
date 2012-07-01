@@ -182,25 +182,13 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const Q
 void EditEntryWidget::setForms(const Entry* entry, bool restore)
 {
     m_mainUi->titleEdit->setReadOnly(m_history);
-    m_mainUi->titleEdit->setFrame(!m_history);
     m_mainUi->usernameEdit->setReadOnly(m_history);
-    m_mainUi->usernameEdit->setFrame(!m_history);
     m_mainUi->urlEdit->setReadOnly(m_history);
-    m_mainUi->urlEdit->setFrame(!m_history);
     m_mainUi->passwordEdit->setReadOnly(m_history);
-    m_mainUi->passwordEdit->setFrame(!m_history);
     m_mainUi->passwordRepeatEdit->setReadOnly(m_history);
-    m_mainUi->passwordRepeatEdit->setFrame(!m_history);
     m_mainUi->expireCheck->setEnabled(!m_history);
     m_mainUi->expireDatePicker->setReadOnly(m_history);
-    m_mainUi->expireDatePicker->setFrame(!m_history);
     m_notesUi->notesEdit->setReadOnly(m_history);
-    if (m_history) {
-        m_notesUi->notesEdit->setFrameShape(QFrame::NoFrame);
-    }
-    else {
-        m_notesUi->notesEdit->setFrameShape(QFrame::StyledPanel);
-    }
     m_advancedUi->addAttachmentButton->setEnabled(!m_history);
     m_advancedUi->removeAttachmentButton->setEnabled(!m_history);
     m_advancedUi->addAttributeButton->setEnabled(!m_history);
