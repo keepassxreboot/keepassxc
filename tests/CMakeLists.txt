@@ -120,10 +120,10 @@ add_unit_test(NAME testkeepass2writer SOURCES TestKeePass2Writer.cpp MOCS TestKe
               LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testgroupmodel SOURCES TestGroupModel.cpp MOCS TestGroupModel.h
-              LIBS ${TEST_LIBRARIES} modeltest)
+              LIBS modeltest ${TEST_LIBRARIES})
 
 add_unit_test(NAME testentrymodel SOURCES TestEntryModel.cpp MOCS TestEntryModel.h
-              LIBS ${TEST_LIBRARIES} modeltest)
+              LIBS modeltest ${TEST_LIBRARIES})
 
 add_unit_test(NAME testcryptohash SOURCES TestCryptoHash.cpp MOCS TestCryptoHash.h
               LIBS ${TEST_LIBRARIES})
