@@ -23,6 +23,8 @@
 #include "core/Metadata.h"
 #include "core/Tools.h"
 
+const int Entry::DefaultIconNumber = 0;
+
 Entry::Entry()
 {
     m_updateTimeinfo = true;
@@ -55,8 +57,6 @@ Entry::~Entry()
 
     qDeleteAll(m_history);
 }
-
-const int Entry::DefaultIconNumber = 0;
 
 template <class T> bool Entry::set(T& property, const T& value)
 {

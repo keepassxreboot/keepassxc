@@ -21,6 +21,9 @@
 #include "core/Group.h"
 #include "core/Tools.h"
 
+const int Metadata::DefaultHistoryMaxItems = 10;
+const int Metadata::DefaultHistoryMaxSize = 6 * 1024 * 1024;
+
 Metadata::Metadata(QObject* parent)
     : QObject(parent)
 {
@@ -49,9 +52,6 @@ Metadata::Metadata(QObject* parent)
 
     m_updateDatetime = true;
 }
-
-const int Metadata::DefaultHistoryMaxItems = 10;
-const int Metadata::DefaultHistoryMaxSize = 6291456;
 
 template <class P, class V> bool Metadata::set(P& property, const V& value)
 {
