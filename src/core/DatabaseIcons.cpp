@@ -132,7 +132,7 @@ QPixmap DatabaseIcons::iconPixmap(int index)
 
 DatabaseIcons::DatabaseIcons()
 {
-    Q_STATIC_ASSERT(sizeof(DatabaseIcons::m_indexToName) == DatabaseIcons::IconCount * sizeof(char*));
+    Q_STATIC_ASSERT(sizeof(m_indexToName) == IconCount * sizeof(m_indexToName[0]));
 
     m_iconCache.reserve(IconCount);
     m_iconCache.resize(IconCount);
