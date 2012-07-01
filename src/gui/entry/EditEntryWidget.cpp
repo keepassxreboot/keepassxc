@@ -177,6 +177,9 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const Q
     }
 
     setForms(entry);
+
+    setCurrentRow(0);
+    setRowHidden(4, m_history);
 }
 
 void EditEntryWidget::setForms(const Entry* entry, bool restore)
@@ -246,8 +249,6 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     }
 
     updateHistoryButtons(m_historyUi->historyView->currentIndex(), QModelIndex());
-
-    setCurrentRow(0);
 
     m_mainUi->titleEdit->setFocus();
 }

@@ -37,6 +37,7 @@ public:
     ~EditWidget();
 
     void add(const QString& labelText, QWidget* widget);
+    void setRowHidden(int row, bool hide);
     void setCurrentRow(int index);
     void setHeadline(const QString& text);
     QLabel* headlineLabel();

@@ -46,6 +46,11 @@ void EditWidget::add(const QString& labelText, QWidget* widget)
     m_ui->stackedWidget->addWidget(widget);
 }
 
+void EditWidget::setRowHidden(int row, bool hide)
+{
+    m_ui->categoryList->item(row)->setHidden(hide);
+}
+
 void EditWidget::setCurrentRow(int index)
 {
     m_ui->categoryList->setCurrentRow(index);
