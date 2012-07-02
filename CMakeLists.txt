@@ -29,8 +29,8 @@ option(WITH_LTO "Enable Link Time Optimization (LTO)" OFF)
 option(WITH_PIE "Build as Position-independent executable (PIE)" OFF)
 option(WITH_CXX11 "Build with the C++ 11 standard" OFF)
 
-set(KEEPASSX_VERSION "2.0 alpha 1")
-set(KEEPASSX_VERSION_NUM "1.9.80")
+set(KEEPASSX_VERSION "2.0 alpha 2")
+set(KEEPASSX_VERSION_NUM "1.9.81")
 
 if("${CMAKE_C_COMPILER}" MATCHES "clang$" OR "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
   set(CMAKE_COMPILER_IS_CLANG 1)
