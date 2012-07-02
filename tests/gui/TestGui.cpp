@@ -172,13 +172,13 @@ void TestGui::testSearch()
     QToolButton* clearSearch = dbWidget->findChild<QToolButton*>("clearButton");
 
     QTest::keyClicks(searchEdit, "ZZZ");
-    QTest::qWait(120);
+    QTest::qWait(200);
 
     QCOMPARE(entryView->model()->rowCount(), 0);
 
     QTest::mouseClick(clearSearch, Qt::LeftButton);
     QTest::keyClicks(searchEdit, "some");
-    QTest::qWait(120);
+    QTest::qWait(200);
 
     QCOMPARE(entryView->model()->rowCount(), 2);
 
