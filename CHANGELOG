@@ -1,0 +1,17 @@
+2.0 Alpha 2 (2012-07-02)
+=========================
+
+- Import kdb (KeePass 1) files [#2]
+- Display history items [#23]
+- Implement history item limits [#16]
+- Group and entry icons can be set [#22]
+- Add keyboard shortcuts
+- Search in databases [#24]
+- Sortable entry view
+- Support building Mac OS X bundles
+
+
+2.0 Alpha 1 (2012-05-07)
+=========================
+
+- First release.
