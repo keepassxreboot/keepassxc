@@ -59,7 +59,7 @@ endmacro(add_gcc_compiler_flags)
 
 add_definitions(-DQT_NO_KEYWORDS -DQT_NO_EXCEPTIONS -DQT_NO_STL -DQT_STRICT_ITERATORS -DQT_NO_CAST_TO_ASCII)
 
-add_gcc_compiler_flags("-ansi -fno-common -fstack-protector -D_FORTIFY_SOURCE=2")
+add_gcc_compiler_flags("-fno-common -fstack-protector -D_FORTIFY_SOURCE=2")
 add_gcc_compiler_flags("-Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long")
 add_gcc_compiler_flags("-Wformat=2 -Wmissing-format-attribute")
 
@@ -116,6 +116,9 @@ endif()
 
 if (WITH_CXX11)
   add_gcc_compiler_cxxflags("-std=c++0x")
+  add_gcc_compiler_cflags("-ansi")
+else()
+  add_gcc_compiler_flags("-ansi")
 endif()
 
 if(APPLE OR MINGW)
