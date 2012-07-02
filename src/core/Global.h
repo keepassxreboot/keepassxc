@@ -26,7 +26,6 @@
 
 #ifdef Q_CC_CLANG
 #  if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)
-    /* Detect C++ features using __has_feature(), see http://clang.llvm.org/docs/LanguageExtensions.html#cxx11 */
 #    if __has_feature(cxx_strong_enums)
 #      define COMPILER_CLASS_ENUM
 #    endif
@@ -51,7 +50,6 @@
 #if defined(Q_CC_GNU) && !defined(Q_CC_INTEL) && !defined(Q_CC_CLANG)
 #  if defined(__GXX_EXPERIMENTAL_CXX0X__) || __cplusplus >= 201103L
 #    if (__GNUC__ * 100 + __GNUC_MINOR__) >= 403
-       /* C++11 features supported in GCC 4.3: */
 #      define COMPILER_DECLTYPE
 #      define COMPILER_STATIC_ASSERT
 #    endif
@@ -105,8 +103,8 @@
 
 #if !defined(Q_STATIC_ASSERT) && !defined(Q_STATIC_ASSERT_X)
 #ifdef COMPILER_STATIC_ASSERT
-#define Q_STATIC_ASSERT(Condition) static_assert(bool(Condition), #Condition)
-#define Q_STATIC_ASSERT_X(Condition, Message) static_assert(bool(Condition), Message)
+#define Q_STATIC_ASSERT(Condition) static_assert(static_cast<bool>(Condition), #Condition)
+#define Q_STATIC_ASSERT_X(Condition, Message) static_assert(static_cast<bool>(Condition), Message)
 #else
 // Intentionally undefined
 template <bool Test> class QStaticAssertFailure;
