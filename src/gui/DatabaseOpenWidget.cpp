@@ -35,6 +35,11 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
 {
     m_ui->setupUi(this);
 
+    QFont font = m_ui->labelHeadline->font();
+    font.setBold(true);
+    font.setPointSize(font.pointSize() + 2);
+    m_ui->labelHeadline->setFont(font);
+
     m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
 
     connect(m_ui->buttonTogglePassword, SIGNAL(toggled(bool)), SLOT(togglePassword(bool)));
@@ -59,6 +64,8 @@ void DatabaseOpenWidget::load(QFile* file, const QString& filename)
 {
     m_file = file;
     m_filename = filename;
+
+    m_ui->labelFilename->setText(filename);
 
     QHash<QString, QVariant> lastKeyFiles = config()->get("LastKeyFiles").toHash();
     if (lastKeyFiles.contains(m_filename)) {
