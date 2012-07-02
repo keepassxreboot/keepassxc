@@ -92,7 +92,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
 endif()
 
 if(WITH_LTO)
-  if(CMAKE_COMPILER_IS_GNUCC and CMAKE_COMPILER_IS_GNUCXX)
+  if(CMAKE_COMPILER_IS_GNUCC AND CMAKE_COMPILER_IS_GNUCXX)
     check_cxx_compiler_flag("-flto -fuse-linker-plugin" LTO_AVAILABLE)
 
     if(LTO_AVAILABLE)
@@ -102,7 +102,7 @@ if(WITH_LTO)
     endif(LTO_AVAILABLE)
   else()
     message(FATAL_ERROR "LTO is only supported with gcc")
-  endif(CMAKE_COMPILER_IS_GNUCC and CMAKE_COMPILER_IS_GNUCXX)
+  endif()
 endif()
 
 if(WITH_PIE)
