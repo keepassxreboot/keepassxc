@@ -108,6 +108,8 @@ void Config::createTempFileInstance()
 {
     Q_ASSERT(!m_instance);
     QTemporaryFile* tmpFile = new QTemporaryFile(qApp);
-    tmpFile->open();
+    bool openResult = tmpFile->open();
+    Q_ASSERT(openResult);
+    Q_UNUSED(openResult);
     m_instance = new Config(tmpFile->fileName(), tmpFile);
 }

@@ -176,6 +176,7 @@ void KeePass2XmlWriter::writeBinaries()
 
             qint64 bytesWritten = compressor.write(i.key());
             Q_ASSERT(bytesWritten == i.key().size());
+            Q_UNUSED(bytesWritten);
             compressor.close();
 
             buffer.seek(0);
