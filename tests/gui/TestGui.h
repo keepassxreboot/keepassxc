@@ -19,7 +19,9 @@
 #define KEEPASSX_TESTGUI_H
 
 #include <QtCore/QObject>
+#include <QtCore/QTemporaryFile>
 
+class DatabaseTabWidget;
 class MainWindow;
 
 class TestGui : public QObject
@@ -33,11 +35,15 @@ private Q_SLOTS:
     void testEditEntry();
     void testAddEntry();
     void testSearch();
+    void testSaveAs();
+    void testSave();
     void testKeePass1Import();
     void cleanupTestCase();
 
 private:
     MainWindow* m_mainWindow;
+    DatabaseTabWidget* m_tabWidget;
+    QTemporaryFile tmpFile;
 };
 
 #endif // KEEPASSX_TESTGUI_H

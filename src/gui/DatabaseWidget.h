@@ -69,6 +69,7 @@ public:
     ~DatabaseWidget();
     GroupView* groupView();
     EntryView* entryView();
+    Database* database();
     bool dbHasKey();
     bool canDeleteCurrentGoup();
     int addWidget(QWidget* w);

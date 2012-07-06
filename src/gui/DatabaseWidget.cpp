@@ -244,6 +244,11 @@ EntryView* DatabaseWidget::entryView()
     return m_entryView;
 }
 
+Database* DatabaseWidget::database()
+{
+    return m_db;
+}
+
 void DatabaseWidget::createEntry()
 {
     if (!m_groupView->currentGroup()) {

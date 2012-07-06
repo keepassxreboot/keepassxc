@@ -28,21 +28,26 @@
 
 #include "config-keepassx-tests.h"
 #include "tests.h"
-#include "crypto/Crypto.h"
 #include "core/Config.h"
+#include "core/Database.h"
 #include "core/Entry.h"
+#include "core/Metadata.h"
+#include "crypto/Crypto.h"
+#include "format/KeePass2Reader.h"
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/FileDialog.h"
 #include "gui/MainWindow.h"
 #include "gui/entry/EditEntryWidget.h"
 #include "gui/entry/EntryView.h"
+#include "keys/PasswordKey.h"
 
 void TestGui::initTestCase()
 {
     Crypto::init();
     Config::createTempFileInstance();
     m_mainWindow = new MainWindow();
+    m_tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
     m_mainWindow->show();
     QTest::qWaitForWindowShown(m_mainWindow);
 }
@@ -66,15 +71,13 @@ void TestGui::testOpenDatabase()
 
 void TestGui::testTabs()
 {
-    QTabWidget* tabWidget = m_mainWindow->findChild<QTabWidget*>("tabWidget");
-    QCOMPARE(tabWidget->count(), 1);
-    QCOMPARE(tabWidget->tabText(tabWidget->currentIndex()), QString("NewDatabase.kdbx"));
+    QCOMPARE(m_tabWidget->count(), 1);
+    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("NewDatabase.kdbx"));
 }
 
 void TestGui::testEditEntry()
 {
-    DatabaseTabWidget* tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
-    DatabaseWidget* dbWidget = tabWidget->currentDatabaseWidget();
+    DatabaseWidget* dbWidget = m_tabWidget->currentDatabaseWidget();
     EntryView* entryView = dbWidget->findChild<EntryView*>("entryView");
     QModelIndex item = entryView->model()->index(0, 1);
     QRect itemRect = entryView->visualRect(item);
@@ -97,13 +100,12 @@ void TestGui::testEditEntry()
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
     QTest::qWait(20);
     // make sure the database isn't marked as modified
-    QCOMPARE(tabWidget->tabText(tabWidget->currentIndex()), QString("NewDatabase.kdbx"));
+    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("NewDatabase.kdbx"));
 }
 
 void TestGui::testAddEntry()
 {
-    DatabaseTabWidget* tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
-    DatabaseWidget* dbWidget = tabWidget->currentDatabaseWidget();
+    DatabaseWidget* dbWidget = m_tabWidget->currentDatabaseWidget();
 
     EntryView* entryView = dbWidget->findChild<EntryView*>("entryView");
     QAction* entryNewAction = m_mainWindow->findChild<QAction*>("actionEntryNew");
@@ -134,7 +136,7 @@ void TestGui::testAddEntry()
     QCOMPARE(entry->title(), QString("test"));
     QCOMPARE(entry->historyItems().size(), 0);
     QTest::qWait(200);
-    QCOMPARE(tabWidget->tabText(tabWidget->currentIndex()), QString("NewDatabase.kdbx*"));
+    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("NewDatabase.kdbx*"));
 
     QAction* entryEditAction = m_mainWindow->findChild<QAction*>("actionEntryEdit");
     QVERIFY(entryEditAction->isEnabled());
@@ -155,8 +157,7 @@ void TestGui::testAddEntry()
 
 void TestGui::testSearch()
 {
-    DatabaseTabWidget* tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
-    DatabaseWidget* dbWidget = tabWidget->currentDatabaseWidget();
+    DatabaseWidget* dbWidget = m_tabWidget->currentDatabaseWidget();
 
     QAction* searchAction = m_mainWindow->findChild<QAction*>("actionSearch");
     QVERIFY(searchAction->isEnabled());
@@ -217,6 +218,56 @@ void TestGui::testSearch()
     QCOMPARE(entryView->model()->rowCount(), 1);
 }
 
+void TestGui::testSaveAs()
+{
+    QFileInfo fileInfo(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx"));
+    QDateTime lastModified = fileInfo.lastModified();
+
+    Database* db = m_tabWidget->currentDatabaseWidget()->database();
+    db->metadata()->setName("SaveAs");
+
+    // open temporary file so it creates a filename
+    QVERIFY(tmpFile.open());
+    tmpFile.close();
+    fileDialog()->setNextFileName(tmpFile.fileName());
+
+    QAction* actionDatabaseSaveAs = m_mainWindow->findChild<QAction*>("actionDatabaseSaveAs");
+    actionDatabaseSaveAs->trigger();
+
+    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("SaveAs"));
+
+    CompositeKey key;
+    key.addKey(PasswordKey("a"));
+    KeePass2Reader reader;
+    QScopedPointer<Database> dbSaved(reader.readDatabase(tmpFile.fileName(), key));
+    QVERIFY(dbSaved);
+    QVERIFY(!reader.hasError());
+    QCOMPARE(dbSaved->metadata()->name(), db->metadata()->name());
+
+    fileInfo.refresh();
+    QCOMPARE(fileInfo.lastModified(), lastModified);
+}
+
+void TestGui::testSave()
+{
+    Database* db = m_tabWidget->currentDatabaseWidget()->database();
+    db->metadata()->setName("Save");
+    QTest::qWait(200);
+    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("Save*"));
+
+    QAction* actionDatabaseSave = m_mainWindow->findChild<QAction*>("actionDatabaseSave");
+    actionDatabaseSave->trigger();
+    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("Save"));
+
+    CompositeKey key;
+    key.addKey(PasswordKey("a"));
+    KeePass2Reader reader;
+    QScopedPointer<Database> dbSaved(reader.readDatabase(tmpFile.fileName(), key));
+    QVERIFY(dbSaved);
+    QVERIFY(!reader.hasError());
+    QCOMPARE(dbSaved->metadata()->name(), db->metadata()->name());
+}
+
 void TestGui::testKeePass1Import()
 {
     QAction* actionImportKeePass1 = m_mainWindow->findChild<QAction*>("actionImportKeePass1");
@@ -232,9 +283,8 @@ void TestGui::testKeePass1Import()
     QTest::keyClick(editPassword, Qt::Key_Enter);
     QTest::qWait(20);
 
-    QTabWidget* tabWidget = m_mainWindow->findChild<QTabWidget*>("tabWidget");
-    QCOMPARE(tabWidget->count(), 2);
-    QCOMPARE(tabWidget->tabText(tabWidget->currentIndex()), QString("basic [New database]*"));
+    QCOMPARE(m_tabWidget->count(), 2);
+    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("basic [New database]*"));
 }
 
 void TestGui::cleanupTestCase()
