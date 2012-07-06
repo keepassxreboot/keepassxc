@@ -26,7 +26,6 @@ class KeePass1OpenWidget : public DatabaseOpenWidget
 
 public:
     explicit KeePass1OpenWidget(QWidget* parent = Q_NULLPTR);
-    ~KeePass1OpenWidget();
 
 protected:
     void openDatabase() Q_DECL_OVERRIDE;

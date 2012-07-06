@@ -32,11 +32,6 @@ KeePass1OpenWidget::KeePass1OpenWidget(QWidget* parent)
     setWindowTitle(tr("Import KeePass1 database"));
 }
 
-KeePass1OpenWidget::~KeePass1OpenWidget()
-{
-    delete m_file;
-}
-
 void KeePass1OpenWidget::openDatabase()
 {
     KeePass1Reader reader;
@@ -52,11 +47,15 @@ void KeePass1OpenWidget::openDatabase()
         keyFileName = m_ui->comboKeyFile->currentText();
     }
 
-    m_file->reset();
+    QFile file(m_filename);
+    if (!file.open(QIODevice::ReadOnly)) {
+        // TODO: error message
+        return;
+    }
     if (m_db) {
         delete m_db;
     }
-    m_db = reader.readDatabase(m_file, password, keyFileName);
+    m_db = reader.readDatabase(&file, password, keyFileName);
 
     if (m_db) {
         m_db->metadata()->setName(QFileInfo(m_filename).completeBaseName());

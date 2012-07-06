@@ -509,22 +509,22 @@ void DatabaseWidget::switchToDatabaseSettings()
     setCurrentIndex(4);
 }
 
-void DatabaseWidget::switchToOpenDatabase(QFile* file, const QString& fileName)
+void DatabaseWidget::switchToOpenDatabase(const QString& fileName)
 {
-    m_databaseOpenWidget->load(file, fileName);
+    m_databaseOpenWidget->load(fileName);
     setCurrentIndex(6);
 }
 
-void DatabaseWidget::switchToOpenDatabase(QFile* file, const QString& fileName,
-                                          const QString& password, const QString& keyFile)
+void DatabaseWidget::switchToOpenDatabase(const QString& fileName, const QString& password,
+                                          const QString& keyFile)
 {
-    switchToOpenDatabase(file, fileName);
+    switchToOpenDatabase(fileName);
     m_databaseOpenWidget->enterKey(password, keyFile);
 }
 
-void DatabaseWidget::switchToImportKeepass1(QFile* file, const QString& fileName)
+void DatabaseWidget::switchToImportKeepass1(const QString& fileName)
 {
-    m_keepass1OpenWidget->load(file, fileName);
+    m_keepass1OpenWidget->load(fileName);
     setCurrentIndex(7);
 }
 

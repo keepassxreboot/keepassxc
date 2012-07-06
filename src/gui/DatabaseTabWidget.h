@@ -32,9 +32,9 @@ struct DatabaseManagerStruct
 {
     DatabaseManagerStruct();
 
-    QFile* file;
     DatabaseWidget* dbWidget;
     QString fileName;
+    bool saveToFilename;
     bool modified;
     bool readOnly;
 };

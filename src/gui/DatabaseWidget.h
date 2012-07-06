@@ -93,9 +93,9 @@ public Q_SLOTS:
     void switchToGroupEdit();
     void switchToMasterKeyChange();
     void switchToDatabaseSettings();
-    void switchToOpenDatabase(QFile* file, const QString& fileName);
-    void switchToOpenDatabase(QFile* file, const QString& fileName, const QString& password, const QString& keyFile);
-    void switchToImportKeepass1(QFile* file, const QString& fileName);
+    void switchToOpenDatabase(const QString& fileName);
+    void switchToOpenDatabase(const QString& fileName, const QString& password, const QString& keyFile);
+    void switchToImportKeepass1(const QString& fileName);
     void toggleSearch();
 
 private Q_SLOTS:

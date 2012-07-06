@@ -31,7 +31,6 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     : DialogyWidget(parent)
     , m_ui(new Ui::DatabaseOpenWidget())
     , m_db(Q_NULLPTR)
-    , m_file(Q_NULLPTR)
 {
     m_ui->setupUi(this);
 
@@ -60,9 +59,8 @@ DatabaseOpenWidget::~DatabaseOpenWidget()
 {
 }
 
-void DatabaseOpenWidget::load(QFile* file, const QString& filename)
+void DatabaseOpenWidget::load(const QString& filename)
 {
-    m_file = file;
     m_filename = filename;
 
     m_ui->labelFilename->setText(filename);
@@ -121,11 +119,15 @@ void DatabaseOpenWidget::openDatabase()
 
     config()->set("LastKeyFiles", lastKeyFiles);
 
-    m_file->reset();
+    QFile file(m_filename);
+    if (!file.open(QIODevice::ReadOnly)) {
+        // TODO: error message
+        return;
+    }
     if (m_db) {
         delete m_db;
     }
-    m_db = reader.readDatabase(m_file, masterKey);
+    m_db = reader.readDatabase(&file, masterKey);
 
     if (m_db) {
         Q_EMIT editFinished(true);

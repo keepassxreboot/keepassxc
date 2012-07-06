@@ -25,6 +25,7 @@
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/qsavefile.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/DragTabBar.h"
 #include "gui/FileDialog.h"
@@ -32,8 +33,8 @@
 #include "gui/group/GroupView.h"
 
 DatabaseManagerStruct::DatabaseManagerStruct()
-    : file(Q_NULLPTR)
-    , dbWidget(Q_NULLPTR)
+    : dbWidget(Q_NULLPTR)
+    , saveToFilename(false)
     , modified(false)
     , readOnly(false)
 {
@@ -103,11 +104,13 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
 {
     DatabaseManagerStruct dbStruct;
 
-    QScopedPointer<QFile> file(new QFile(fileName));
+    // test if we can read/write or read the file
+    QFile file(fileName);
     // TODO: error handling
-    if (!file->open(QIODevice::ReadWrite)) {
-        if (!file->open(QIODevice::ReadOnly)) {
+    if (!file.open(QIODevice::ReadWrite)) {
+        if (!file.open(QIODevice::ReadOnly)) {
             // can't open
+            // TODO: error message
             return;
         }
         else {
@@ -115,21 +118,22 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
             dbStruct.readOnly = true;
         }
     }
+    file.close();
 
     Database* db = new Database();
     dbStruct.dbWidget = new DatabaseWidget(db, this);
-    dbStruct.file = file.take();
     dbStruct.fileName = QFileInfo(fileName).absoluteFilePath();
+    dbStruct.saveToFilename = !dbStruct.readOnly;
 
     insertDatabase(db, dbStruct);
 
     updateLastDatabases(dbStruct.fileName);
 
     if (!pw.isNull() || !keyFile.isEmpty()) {
-        dbStruct.dbWidget->switchToOpenDatabase(dbStruct.file, dbStruct.fileName, pw, keyFile);
+        dbStruct.dbWidget->switchToOpenDatabase(dbStruct.fileName, pw, keyFile);
     }
     else {
-        dbStruct.dbWidget->switchToOpenDatabase(dbStruct.file, dbStruct.fileName);
+        dbStruct.dbWidget->switchToOpenDatabase(dbStruct.fileName);
     }
 }
 
@@ -142,12 +146,6 @@ void DatabaseTabWidget::importKeePass1Database()
         return;
     }
 
-    QScopedPointer<QFile> file(new QFile(fileName));
-    // TODO: error handling
-    if (!file->open(QIODevice::ReadOnly)) {
-        return;
-    }
-
     Database* db = new Database();
     DatabaseManagerStruct dbStruct;
     dbStruct.dbWidget = new DatabaseWidget(db, this);
@@ -155,7 +153,7 @@ void DatabaseTabWidget::importKeePass1Database()
 
     insertDatabase(db, dbStruct);
 
-    dbStruct.dbWidget->switchToImportKeepass1(file.take(), fileName);
+    dbStruct.dbWidget->switchToImportKeepass1(fileName);
 }
 
 void DatabaseTabWidget::emitEntrySelectionChanged()
@@ -224,7 +222,6 @@ void DatabaseTabWidget::deleteDatabase(Database* db)
     removeTab(index);
     toggleTabbar();
     m_dbList.remove(db);
-    delete dbStruct.file;
     delete dbStruct.dbWidget;
     delete db;
 }
@@ -243,15 +240,23 @@ void DatabaseTabWidget::saveDatabase(Database* db)
 {
     DatabaseManagerStruct& dbStruct = m_dbList[db];
 
-    // TODO: ensure that the data is actually written to disk
-    if (dbStruct.file) {
-        dbStruct.file->reset();
-        m_writer.writeDatabase(dbStruct.file, db);
-        dbStruct.file->resize(dbStruct.file->pos());
-        dbStruct.file->flush();
+    if (dbStruct.saveToFilename) {
+        bool result = false;
 
-        dbStruct.modified = false;
-        updateTabName(db);
+        QSaveFile saveFile(dbStruct.fileName);
+        if (saveFile.open(QIODevice::WriteOnly)) {
+            m_writer.writeDatabase(&saveFile, db);
+            result = saveFile.commit();
+        }
+
+        if (result) {
+            dbStruct.modified = false;
+            updateTabName(db);
+        }
+        else {
+            QMessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
+                                  + saveFile.errorString());
+        }
     }
     else {
         saveDatabaseAs(db);
@@ -262,28 +267,31 @@ void DatabaseTabWidget::saveDatabaseAs(Database* db)
 {
     DatabaseManagerStruct& dbStruct = m_dbList[db];
     QString oldFileName;
-    if (dbStruct.file) {
+    if (dbStruct.saveToFilename) {
         oldFileName = dbStruct.fileName;
     }
     QString fileName = fileDialog()->getSaveFileName(m_window, tr("Save database as"),
                                                      oldFileName, tr("KeePass 2 Database").append(" (*.kdbx)"));
     if (!fileName.isEmpty()) {
-        QFile* oldFile = dbStruct.file;
-        QScopedPointer<QFile> file(new QFile(fileName));
-        // TODO: error handling
-        if (!file->open(QIODevice::ReadWrite)) {
-            return;
-        }
-        dbStruct.file = file.take();
-        // TODO: ensure that the data is actually written to disk
-        m_writer.writeDatabase(dbStruct.file, db);
-        dbStruct.file->flush();
-        delete oldFile;
+        bool result = false;
 
-        dbStruct.modified = false;
-        dbStruct.fileName = QFileInfo(fileName).absoluteFilePath();
-        updateTabName(db);
-        updateLastDatabases(dbStruct.fileName);
+        QSaveFile saveFile(fileName);
+        if (saveFile.open(QIODevice::WriteOnly)) {
+            m_writer.writeDatabase(&saveFile, db);
+            result = saveFile.commit();
+        }
+
+        if (result) {
+            dbStruct.modified = false;
+            dbStruct.fileName = QFileInfo(fileName).absoluteFilePath();
+            dbStruct.saveToFilename = true;
+            updateTabName(db);
+            updateLastDatabases(dbStruct.fileName);
+        }
+        else {
+            QMessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
+                                  + saveFile.errorString());
+        }
     }
 }
 
@@ -403,8 +411,8 @@ void DatabaseTabWidget::updateTabName(Database* db)
 
     QString tabName;
 
-    if (dbStruct.file) {
-        QFileInfo fileInfo(*dbStruct.file);
+    if (dbStruct.saveToFilename) {
+        QFileInfo fileInfo(dbStruct.fileName);
 
         if (db->metadata()->name().isEmpty()) {
             tabName = fileInfo.fileName();
@@ -522,7 +530,7 @@ void DatabaseTabWidget::modified()
     Database* db = static_cast<Database*>(sender());
     DatabaseManagerStruct& dbStruct = m_dbList[db];
 
-    if (config()->get("AutoSaveAfterEveryChange").toBool() && dbStruct.file) {
+    if (config()->get("AutoSaveAfterEveryChange").toBool() && dbStruct.saveToFilename) {
         saveDatabase(db);
         return;
     }

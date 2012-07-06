@@ -36,7 +36,7 @@ class DatabaseOpenWidget : public DialogyWidget
 public:
     explicit DatabaseOpenWidget(QWidget* parent = Q_NULLPTR);
     ~DatabaseOpenWidget();
-    void load(QFile* file, const QString& filename);
+    void load(const QString& filename);
     void enterKey(const QString& pw, const QString& keyFile);
     Database* database();
 
@@ -57,7 +57,6 @@ private Q_SLOTS:
 protected:
     const QScopedPointer<Ui::DatabaseOpenWidget> m_ui;
     Database* m_db;
-    QFile* m_file;
     QString m_filename;
 
 private:
