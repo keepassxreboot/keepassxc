@@ -28,6 +28,7 @@ set(keepassx_SOURCES
     core/EntryAttributes.cpp
     core/Group.cpp
     core/Metadata.cpp
+    core/qsavefile.cpp
     core/TimeInfo.cpp
     core/Tools.cpp
     core/Uuid.cpp
@@ -97,6 +98,7 @@ set(keepassx_MOC
     core/EntryAttributes.h
     core/Group.h
     core/Metadata.h
+    core/qsavefile.h
     gui/AboutDialog.h
     gui/Application.h
     gui/ChangeMasterKeyWidget.h
