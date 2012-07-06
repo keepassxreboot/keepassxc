@@ -51,6 +51,7 @@ private:
 void TestQSaveFile::transactionalWrite()
 {
     const QString dir = tmpDir();
+    QVERIFY(!dir.isEmpty());
     const QString targetFile = dir + QString::fromLatin1("/outfile");
     DirCleanup dirCleanup(dir, "outfile");
     QFile::remove(targetFile);
@@ -87,6 +88,7 @@ void TestQSaveFile::transactionalWrite()
 void TestQSaveFile::autoFlush()
 {
     const QString dir = tmpDir();
+    QVERIFY(!dir.isEmpty());
     const QString targetFile = dir + QString::fromLatin1("/outfile");
     DirCleanup dirCleanup(dir, "outfile");
     QFile::remove(targetFile);
@@ -124,6 +126,7 @@ void TestQSaveFile::transactionalWriteNoPermissions()
 void TestQSaveFile::transactionalWriteCanceled()
 {
     const QString dir = tmpDir();
+    QVERIFY(!dir.isEmpty());
     const QString targetFile = dir + QString::fromLatin1("/outfile");
     DirCleanup dirCleanup(dir, "outfile");
     QFile::remove(targetFile);
@@ -148,6 +151,7 @@ void TestQSaveFile::transactionalWriteCanceled()
 void TestQSaveFile::transactionalWriteErrorRenaming()
 {
     const QString dir = tmpDir();
+    QVERIFY(!dir.isEmpty());
     const QString targetFile = dir + QString::fromLatin1("/outfile");
     DirCleanup dirCleanup(dir, "outfile");
     QSaveFile file(targetFile);
