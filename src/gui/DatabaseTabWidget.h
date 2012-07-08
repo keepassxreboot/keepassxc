@@ -33,6 +33,8 @@ struct DatabaseManagerStruct
     DatabaseManagerStruct();
 
     DatabaseWidget* dbWidget;
+    QString filePath;
+    QString canonicalFilePath;
     QString fileName;
     bool saveToFilename;
     bool modified;

@@ -102,6 +102,18 @@ void DatabaseTabWidget::openDatabase()
 void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
                                      const QString& keyFile)
 {
+    QFileInfo fileInfo(fileName);
+    QString canonicalFilePath = fileInfo.canonicalFilePath();
+
+    QHashIterator<Database*, DatabaseManagerStruct> i(m_dbList);
+    while (i.hasNext()) {
+        i.next();
+        if (i.value().canonicalFilePath == canonicalFilePath) {
+            setCurrentIndex(databaseIndex(i.key()));
+            return;
+        }
+    }
+
     DatabaseManagerStruct dbStruct;
 
     // test if we can read/write or read the file
@@ -122,18 +134,21 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
 
     Database* db = new Database();
     dbStruct.dbWidget = new DatabaseWidget(db, this);
-    dbStruct.fileName = QFileInfo(fileName).absoluteFilePath();
     dbStruct.saveToFilename = !dbStruct.readOnly;
+
+    dbStruct.filePath = fileInfo.absoluteFilePath();
+    dbStruct.canonicalFilePath = canonicalFilePath;
+    dbStruct.fileName = fileInfo.fileName();
 
     insertDatabase(db, dbStruct);
 
-    updateLastDatabases(dbStruct.fileName);
+    updateLastDatabases(dbStruct.filePath);
 
     if (!pw.isNull() || !keyFile.isEmpty()) {
-        dbStruct.dbWidget->switchToOpenDatabase(dbStruct.fileName, pw, keyFile);
+        dbStruct.dbWidget->switchToOpenDatabase(dbStruct.filePath, pw, keyFile);
     }
     else {
-        dbStruct.dbWidget->switchToOpenDatabase(dbStruct.fileName);
+        dbStruct.dbWidget->switchToOpenDatabase(dbStruct.filePath);
     }
 }
 
@@ -243,7 +258,7 @@ void DatabaseTabWidget::saveDatabase(Database* db)
     if (dbStruct.saveToFilename) {
         bool result = false;
 
-        QSaveFile saveFile(dbStruct.fileName);
+        QSaveFile saveFile(dbStruct.filePath);
         if (saveFile.open(QIODevice::WriteOnly)) {
             m_writer.writeDatabase(&saveFile, db);
             result = saveFile.commit();
@@ -268,7 +283,7 @@ void DatabaseTabWidget::saveDatabaseAs(Database* db)
     DatabaseManagerStruct& dbStruct = m_dbList[db];
     QString oldFileName;
     if (dbStruct.saveToFilename) {
-        oldFileName = dbStruct.fileName;
+        oldFileName = dbStruct.filePath;
     }
     QString fileName = fileDialog()->getSaveFileName(m_window, tr("Save database as"),
                                                      oldFileName, tr("KeePass 2 Database").append(" (*.kdbx)"));
@@ -283,10 +298,13 @@ void DatabaseTabWidget::saveDatabaseAs(Database* db)
 
         if (result) {
             dbStruct.modified = false;
-            dbStruct.fileName = QFileInfo(fileName).absoluteFilePath();
             dbStruct.saveToFilename = true;
+            QFileInfo fileInfo(fileName);
+            dbStruct.filePath = fileInfo.absoluteFilePath();
+            dbStruct.canonicalFilePath = fileInfo.canonicalFilePath();
+            dbStruct.fileName = fileInfo.fileName();
             updateTabName(db);
-            updateLastDatabases(dbStruct.fileName);
+            updateLastDatabases(dbStruct.filePath);
         }
         else {
             QMessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
@@ -412,16 +430,14 @@ void DatabaseTabWidget::updateTabName(Database* db)
     QString tabName;
 
     if (dbStruct.saveToFilename) {
-        QFileInfo fileInfo(dbStruct.fileName);
-
         if (db->metadata()->name().isEmpty()) {
-            tabName = fileInfo.fileName();
+            tabName = dbStruct.fileName;
         }
         else {
             tabName = db->metadata()->name();
         }
 
-        setTabToolTip(index, dbStruct.fileName);
+        setTabToolTip(index, dbStruct.filePath);
     }
     else {
         if (db->metadata()->name().isEmpty()) {
