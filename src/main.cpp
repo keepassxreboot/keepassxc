@@ -16,14 +16,10 @@
  */
 
 #include <QtCore/QFile>
-#include <QtGui/QApplication>
-#include <QtGui/QTreeView>
 
 #include "crypto/Crypto.h"
 #include "gui/Application.h"
 #include "gui/MainWindow.h"
-#include "keys/CompositeKey.h"
-#include "keys/PasswordKey.h"
 
 int main(int argc, char** argv)
 {
