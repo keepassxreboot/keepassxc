@@ -694,7 +694,7 @@ bool KeePass1Reader::parseGroupTreeState(const QByteArray& data)
     quint32 num = Endian::bytesToUInt32(data.mid(pos, 4), KeePass1::BYTEORDER);
     pos += 4;
 
-    if ((data.size() - 4) != (num * 5)) {
+    if (static_cast<quint32>(data.size() - 4) != (num * 5)) {
         return false;
     }
 
@@ -739,7 +739,7 @@ bool KeePass1Reader::parseCustomIcons4(const QByteArray& data)
         quint32 iconSize = Endian::bytesToUInt32(data.mid(pos, 4), KeePass1::BYTEORDER);
         pos += 4;
 
-        if (data.size() < (pos + iconSize)) {
+        if (static_cast<quint32>(data.size()) < (pos + iconSize)) {
             return false;
         }
         QImage icon = QImage::fromData(data.mid(pos, iconSize));
@@ -754,7 +754,7 @@ bool KeePass1Reader::parseCustomIcons4(const QByteArray& data)
         m_db->metadata()->addCustomIcon(uuid, icon);
     }
 
-    if (data.size() < (pos + numEntries * 20)) {
+    if (static_cast<quint32>(data.size()) < (pos + numEntries * 20)) {
         return false;
     }
 
@@ -770,7 +770,7 @@ bool KeePass1Reader::parseCustomIcons4(const QByteArray& data)
         }
     }
 
-    if (data.size() < (pos + numGroups * 8)) {
+    if (static_cast<quint32>(data.size()) < (pos + numGroups * 8)) {
         return false;
     }
 

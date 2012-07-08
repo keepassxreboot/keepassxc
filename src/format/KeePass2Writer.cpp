@@ -121,10 +121,13 @@ bool KeePass2Writer::writeData(const QByteArray& data)
 
 bool KeePass2Writer::writeHeaderField(KeePass2::HeaderFieldID fieldId, const QByteArray& data)
 {
+    Q_ASSERT(data.size() <= 65535);
+
     QByteArray fieldIdArr;
     fieldIdArr[0] = fieldId;
     CHECK_RETURN_FALSE(writeData(fieldIdArr));
-    CHECK_RETURN_FALSE(writeData(Endian::int16ToBytes(data.size(), KeePass2::BYTEORDER)));
+    CHECK_RETURN_FALSE(writeData(Endian::int16ToBytes(static_cast<quint16>(data.size()),
+                                                      KeePass2::BYTEORDER)));
     CHECK_RETURN_FALSE(writeData(data));
 
     return true;
