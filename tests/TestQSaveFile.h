@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TESTQSAVEFILE_H
-#define TESTQSAVEFILE_H
+#ifndef KEEPASSX_TESTQSAVEFILE_H
+#define KEEPASSX_TESTQSAVEFILE_H
 
 #include <QtCore/QObject>
 
@@ -36,4 +36,4 @@ private:
     QString tmpDir();
 };
 
-#endif // TESTQSAVEFILE_H
+#endif // KEEPASSX_TESTQSAVEFILE_H
