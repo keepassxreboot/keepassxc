@@ -62,7 +62,8 @@ public:
         EntryEditView,
         EntryDelete,
         EntryCopyUsername,
-        EntryCopyPassword
+        EntryCopyPassword,
+        EntryAutoType
     };
 
     explicit DatabaseWidget(Database* db, QWidget* parent = Q_NULLPTR);
@@ -88,6 +89,7 @@ public Q_SLOTS:
     void deleteEntry();
     void copyUsername();
     void copyPassword();
+    void performAutoType();
     void createGroup();
     void deleteGroup();
     void switchToEntryEdit();
@@ -152,6 +154,7 @@ private:
     QAction* m_actionEntryDelete;
     QAction* m_actionEntryCopyUsername;
     QAction* m_actionEntryCopyPassword;
+    QAction* m_actionEntryAutoType;
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H

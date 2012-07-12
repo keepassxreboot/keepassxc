@@ -73,6 +73,7 @@ public Q_SLOTS:
     void deleteEntry();
     void copyUsername();
     void copyPassword();
+    void performAutoType();
     void createGroup();
     void editGroup();
     void deleteGroup();

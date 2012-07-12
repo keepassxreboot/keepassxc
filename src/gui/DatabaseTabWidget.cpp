@@ -391,6 +391,11 @@ void DatabaseTabWidget::copyPassword()
     currentDatabaseWidget()->copyPassword();
 }
 
+void DatabaseTabWidget::performAutoType()
+{
+    currentDatabaseWidget()->performAutoType();
+}
+
 void DatabaseTabWidget::createGroup()
 {
     currentDatabaseWidget()->createGroup();

@@ -45,6 +45,7 @@ MainWindow::MainWindow()
     setShortcut(m_ui->actionSearch, QKeySequence::Find, Qt::CTRL + Qt::Key_F);
     m_ui->actionEntryCopyUsername->setShortcut(Qt::CTRL + Qt::Key_B);
     m_ui->actionEntryCopyPassword->setShortcut(Qt::CTRL + Qt::Key_C);
+    setShortcut(m_ui->actionEntryAutoType, QKeySequence::Paste, Qt::CTRL + Qt::Key_V);
 
     m_ui->actionDatabaseNew->setIcon(dataPath()->icon("actions", "document-new"));
     m_ui->actionDatabaseOpen->setIcon(dataPath()->icon("actions", "document-open"));
@@ -113,6 +114,8 @@ MainWindow::MainWindow()
             SLOT(copyUsername()));
     connect(m_ui->actionEntryCopyPassword, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(copyPassword()));
+    connect(m_ui->actionEntryAutoType, SIGNAL(triggered()), m_ui->tabWidget,
+            SLOT(performAutoType()));
 
     connect(m_ui->actionGroupNew, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(createGroup()));
@@ -161,6 +164,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryDelete->setEnabled(dbWidget->actionEnabled(DatabaseWidget::EntryDelete));
             m_ui->actionEntryCopyUsername->setEnabled(dbWidget->actionEnabled(DatabaseWidget::EntryCopyUsername));
             m_ui->actionEntryCopyPassword->setEnabled(dbWidget->actionEnabled(DatabaseWidget::EntryCopyPassword));
+            m_ui->actionEntryAutoType->setEnabled(dbWidget->actionEnabled(DatabaseWidget::EntryAutoType));
             m_ui->actionGroupNew->setEnabled(dbWidget->actionEnabled(DatabaseWidget::GroupNew));
             m_ui->actionGroupEdit->setEnabled(dbWidget->actionEnabled(DatabaseWidget::GroupEdit));
             m_ui->actionGroupDelete->setEnabled(dbWidget->actionEnabled(DatabaseWidget::GroupDelete));
@@ -180,6 +184,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryDelete->setEnabled(false);
             m_ui->actionEntryCopyUsername->setEnabled(false);
             m_ui->actionEntryCopyPassword->setEnabled(false);
+            m_ui->actionEntryAutoType->setEnabled(false);
             m_ui->actionGroupNew->setEnabled(false);
             m_ui->actionGroupEdit->setEnabled(false);
             m_ui->actionGroupDelete->setEnabled(false);
@@ -202,6 +207,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         m_ui->actionEntryDelete->setEnabled(false);
         m_ui->actionEntryCopyUsername->setEnabled(false);
         m_ui->actionEntryCopyPassword->setEnabled(false);
+        m_ui->actionEntryAutoType->setEnabled(false);
         m_ui->actionGroupNew->setEnabled(false);
         m_ui->actionGroupEdit->setEnabled(false);
         m_ui->actionGroupDelete->setEnabled(false);

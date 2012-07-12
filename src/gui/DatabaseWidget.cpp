@@ -27,6 +27,7 @@
 #include <QtGui/QMessageBox>
 #include <QtGui/QSplitter>
 
+#include "autotype/AutoType.h"
 #include "core/DataPath.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
@@ -144,6 +145,15 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_actionEntryCopyPassword = m_menuEntry->addAction(tr("Copy password to clipboard"), this,
                                                        SLOT(copyPassword()), Qt::CTRL + Qt::Key_C);
     m_actionEntryCopyPassword->setEnabled(false);
+    m_actionEntryAutoType = m_menuEntry->addAction(tr("Perform Auto-Type"), this,
+                                                   SLOT(performAutoType()));
+    if (!QKeySequence::keyBindings(QKeySequence::Paste).isEmpty()) {
+        m_actionEntryAutoType->setShortcuts(QKeySequence::Paste);
+    }
+    else {
+        m_actionEntryAutoType->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_V));
+    }
+    m_actionEntryAutoType->setEnabled(false);
 
     m_actionGroupNew = m_menuGroup->addAction(tr("Add new group"), this, SLOT(createGroup()));
     m_actionGroupNew->setIcon(dataPath()->icon("actions", "group-new", false));
@@ -223,6 +233,8 @@ bool DatabaseWidget::actionEnabled(Action action)
         return m_actionEntryCopyUsername->isEnabled();
     case EntryCopyPassword:
         return m_actionEntryCopyPassword->isEnabled();
+    case EntryAutoType:
+        return m_actionEntryAutoType->isEnabled();
     default:
         Q_ASSERT(false);
         return false;
@@ -322,6 +334,17 @@ void DatabaseWidget::copyPassword()
     }
 
     clipboard()->setText(currentEntry->password());
+}
+
+void DatabaseWidget::performAutoType()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if (!currentEntry) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    autoType()->performAutoType(currentEntry, window());
 }
 
 void DatabaseWidget::createGroup()
@@ -669,6 +692,7 @@ void DatabaseWidget::updateEntryActions()
     m_actionEntryDelete->setEnabled(singleEntrySelected);
     m_actionEntryCopyUsername->setEnabled(singleEntrySelected);
     m_actionEntryCopyPassword->setEnabled(singleEntrySelected);
+    m_actionEntryAutoType->setEnabled(singleEntrySelected);
 }
 
 void DatabaseWidget::showGroupContextMenu(const QPoint& pos)
