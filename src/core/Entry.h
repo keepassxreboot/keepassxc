@@ -80,6 +80,7 @@ public:
     int autoTypeObfuscation() const;
     QString defaultAutoTypeSequence() const;
     const QList<AutoTypeAssociation>& autoTypeAssociations() const;
+    QString autoTypeSequence(const QString& windowTitle = QString()) const;
     QString title() const;
     QString url() const;
     QString username() const;
@@ -120,6 +121,7 @@ public:
     void removeHistoryItems(QList<Entry*> historyEntries);
     void truncateHistory();
     Entry* clone() const;
+    QString resolvePlaceholders(const QString& str) const;
 
     /**
      * Call before and after set*() methods to create a history item
@@ -150,6 +152,7 @@ private Q_SLOTS:
 private:
     const Database* database() const;
     template <class T> inline bool set(T& property, const T& value);
+    static bool windowMatches(const QString& windowTitle, const QString& windowPattern);
 
     Uuid m_uuid;
     EntryData m_data;

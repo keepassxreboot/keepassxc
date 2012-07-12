@@ -1,5 +1,4 @@
 /*
- *  Copyright (C) 2012 Tobias Tangemann
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -16,27 +15,34 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_APPLICATION_H
-#define KEEPASSX_APPLICATION_H
+#ifndef KEEPASSX_SHORTCUTWIDGET_H
+#define KEEPASSX_SHORTCUTWIDGET_H
 
-#include <QtGui/QApplication>
+#include <QtGui/QLineEdit>
 
 #include "core/Global.h"
 
-class Application : public QApplication
+class ShortcutWidget : public QLineEdit
 {
     Q_OBJECT
 
 public:
-    Application(int& argc, char** argv);
+    explicit ShortcutWidget(QWidget* parent = Q_NULLPTR);
+    Qt::Key key() const;
+    Qt::KeyboardModifiers modifiers() const;
+    void setShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers);
 
-    bool event(QEvent* event) Q_DECL_OVERRIDE;
-#ifdef Q_WS_X11
-    bool x11EventFilter(XEvent* event) Q_DECL_OVERRIDE;
-#endif
+protected:
+    void keyPressEvent(QKeyEvent* event) Q_DECL_OVERRIDE;
+    void keyReleaseEvent(QKeyEvent* event) Q_DECL_OVERRIDE;
 
-Q_SIGNALS:
-    void openFile(const QString& filename);
+private:
+    void keyEvent(QKeyEvent* event);
+    void displayShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers);
+
+    Qt::Key m_key;
+    Qt::KeyboardModifiers m_modifiers;
+    bool m_locked;
 };
 
-#endif // KEEPASSX_APPLICATION_H
+#endif // KEEPASSX_SHORTCUTWIDGET_H

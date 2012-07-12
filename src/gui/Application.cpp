@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2012 Tobias Tangemann
+ *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,6 +20,8 @@
 
 #include <QtGui/QFileOpenEvent>
 
+#include "autotype/AutoType.h"
+
 Application::Application(int& argc, char** argv)
     : QApplication(argc, argv)
 {
@@ -34,3 +37,19 @@ bool Application::event(QEvent* event)
 
     return QApplication::event(event);
 }
+
+#ifdef Q_WS_X11
+bool Application::x11EventFilter(XEvent* event)
+{
+    int retCode = autoType()->callEventFilter(event);
+
+    if (retCode == 0) {
+        return false;
+    }
+    else if (retCode == 1) {
+        return true;
+    }
+
+    return QApplication::x11EventFilter(event);
+}
+#endif

@@ -18,6 +18,9 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 configure_file(config-keepassx.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx.h)
 
 set(keepassx_SOURCES
+    autotype/AutoType.cpp
+    autotype/AutoTypeAction.cpp
+    autotype/ShortcutWidget.cpp
     core/Config.cpp
     core/Database.cpp
     core/DatabaseIcons.cpp
@@ -92,6 +95,8 @@ set(keepassx_SOURCES
 )
 
 set(keepassx_MOC
+    autotype/AutoType.h
+    autotype/ShortcutWidget.h
     core/Config.h
     core/Database.h
     core/Entry.h
@@ -180,6 +185,8 @@ endif()
 install(TARGETS ${PROGNAME}
         BUNDLE DESTINATION . COMPONENT Runtime
         RUNTIME DESTINATION ${BIN_INSTALL_DIR} COMPONENT Runtime)
+
+add_subdirectory(autotype)
 
 if(APPLE AND NOT (${CMAKE_VERSION} VERSION_LESS 2.8.8))
   if(QT_MAC_USE_COCOA AND EXISTS "${QT_LIBRARY_DIR}/Resources/qt_menu.nib")

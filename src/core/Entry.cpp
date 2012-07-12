@@ -171,6 +171,60 @@ const QList<AutoTypeAssociation>& Entry::autoTypeAssociations() const
     return m_data.autoTypeAssociations;
 }
 
+QString Entry::autoTypeSequence(const QString& windowTitle) const
+{
+    if (!m_data.autoTypeEnabled) {
+        return QString();
+    }
+
+    bool enableSet = false;
+    QString sequence;
+    if (!windowTitle.isEmpty()) {
+        Q_FOREACH (const AutoTypeAssociation& autoTypeAssoc, m_data.autoTypeAssociations) {
+            if (windowMatches(windowTitle, autoTypeAssoc.window)) {
+                sequence = autoTypeAssoc.sequence;
+                break;
+            }
+        }
+    }
+
+    if (sequence.isEmpty()) {
+        sequence = m_data.defaultAutoTypeSequence;
+    }
+
+    Group* group = m_group;
+    do {
+        if (!enableSet) {
+            if (group->autoTypeEnabled() == Group::Disable) {
+                return QString();
+            }
+            else if (group->autoTypeEnabled() == Group::Enable) {
+                enableSet = true;
+            }
+        }
+
+        if (sequence.isEmpty()) {
+            sequence = group->defaultAutoTypeSequence();
+        }
+
+        group = group->parentGroup();
+    } while (group && (!enableSet || sequence.isEmpty()));
+
+    if (sequence.isEmpty() && (!username().isEmpty() || !password().isEmpty())) {
+        if (username().isEmpty()) {
+            sequence = "{PASSWORD}{ENTER}";
+        }
+        else if (password().isEmpty()) {
+            sequence = "{USERNAME}{ENTER}";
+        }
+        else {
+            sequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
+        }
+    }
+
+    return sequence;
+}
+
 QString Entry::title() const
 {
     return m_attributes->value("Title");
@@ -535,4 +589,36 @@ bool Entry::match(const QString& searchTerm, Qt::CaseSensitivity caseSensitivity
             username().contains(searchTerm, caseSensitivity) ||
             url().contains(searchTerm, caseSensitivity) ||
             notes().contains(searchTerm, caseSensitivity);
+}
+
+bool Entry::windowMatches(const QString& windowTitle, const QString& windowPattern)
+{
+    QRegExp regExp;
+    regExp.setCaseSensitivity(Qt::CaseInsensitive);
+
+    if (windowPattern.startsWith("//") && windowPattern.endsWith("//") && windowPattern.size() >= 4) {
+        regExp.setPatternSyntax(QRegExp::RegExp2);
+        regExp.setPattern(windowPattern.mid(2, windowPattern.size() - 4));
+    }
+    else {
+        regExp.setPatternSyntax(QRegExp::Wildcard);
+        regExp.setPattern(windowPattern);
+    }
+
+    return regExp.exactMatch(windowTitle);
+}
+
+QString Entry::resolvePlaceholders(const QString& str) const
+{
+    QString result = str;
+
+    result.replace("{TITLE}", title(), Qt::CaseInsensitive);
+    result.replace("{USERNAME}", username(), Qt::CaseInsensitive);
+    result.replace("{URL}", url(), Qt::CaseInsensitive);
+    result.replace("{PASSWORD}", password(), Qt::CaseInsensitive);
+    result.replace("{NOTES}", notes(), Qt::CaseInsensitive);
+
+    // TODO: lots of other placeholders missing
+
+    return result;
 }
