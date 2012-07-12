@@ -17,10 +17,20 @@
 
 #include "Tools.h"
 
+#include <QtCore/QCoreApplication>
+#include <QtCore/QElapsedTimer>
 #include <QtCore/QIODevice>
 #include <QtCore/QLocale>
 #include <QtCore/QStringList>
 #include <QtGui/QImageReader>
+
+#ifdef Q_OS_WIN
+#include <windows.h> // for Sleep()
+#endif
+
+#ifdef Q_OS_UNIX
+#include <time.h> // for nanosleep()
+#endif
 
 namespace Tools {
 
@@ -94,7 +104,7 @@ bool readAllFromDevice(QIODevice* device, QByteArray& data)
 
 QDateTime currentDateTimeUtc()
 {
-#if QT_VERSION >= 0x040700
+#if QT_VERSION >= QT_VERSION_CHECK(4, 7, 0)
      return QDateTime::currentDateTimeUtc();
 #else
      return QDateTime::currentDateTime().toUTC();
@@ -128,6 +138,47 @@ bool isHex(const QByteArray& ba)
     }
 
     return true;
+}
+
+void sleep(int ms)
+{
+    Q_ASSERT(ms >= 0);
+
+    if (ms == 0) {
+        return;
+    }
+
+#ifdef Q_OS_WIN
+    Sleep(uint(ms));
+#else
+    timespec ts;
+    ts.tv_sec = ms / 1000;
+    ts.tv_nsec = (ms % 1000) * 1000 * 1000;
+    nanosleep(&ts, Q_NULLPTR);
+#endif
+}
+
+void wait(int ms)
+{
+    Q_ASSERT(ms > 0);
+
+    QElapsedTimer timer;
+    timer.start();
+
+    if (ms <= 50) {
+        QCoreApplication::processEvents(QEventLoop::AllEvents, ms);
+        sleep(qMax(ms - static_cast<int>(timer.elapsed()), 0));
+    }
+    else {
+        int timeLeft;
+        do {
+            timeLeft = ms - timer.elapsed();
+            if (timeLeft > 0) {
+                QCoreApplication::processEvents(QEventLoop::AllEvents, timeLeft);
+                sleep(10);
+            }
+        } while (timer.elapsed() < ms);
+    }
 }
 
 } // namespace Tools

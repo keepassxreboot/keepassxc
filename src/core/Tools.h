@@ -22,6 +22,8 @@
 #include <QtCore/QString>
 #include <QtCore/QDateTime>
 
+#include "core/Global.h"
+
 class QIODevice;
 
 namespace Tools {
@@ -33,6 +35,8 @@ bool readAllFromDevice(QIODevice* device, QByteArray& data);
 QDateTime currentDateTimeUtc();
 QString imageReaderFilter();
 bool isHex(const QByteArray& ba);
+void sleep(int ms);
+void wait(int ms);
 
 } // namespace Tools
 
