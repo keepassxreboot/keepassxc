@@ -27,6 +27,7 @@ set(keepassx_SOURCES
     core/EntryAttachments.cpp
     core/EntryAttributes.cpp
     core/Group.cpp
+    core/ListDeleter.h
     core/Metadata.cpp
     core/qsavefile.cpp
     core/TimeInfo.cpp
