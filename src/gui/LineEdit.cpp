@@ -46,7 +46,7 @@ LineEdit::LineEdit(QWidget* parent)
     m_clearButton->setStyleSheet("QToolButton { border: none; padding: 0px; }");
     m_clearButton->hide();
     connect(m_clearButton, SIGNAL(clicked()), this, SLOT(clear()));
-    connect(this, SIGNAL(textChanged(const QString&)), this, SLOT(updateCloseButton(const QString&)));
+    connect(this, SIGNAL(textChanged(QString)), this, SLOT(updateCloseButton(QString)));
     int frameWidth = style()->pixelMetric(QStyle::PM_DefaultFrameWidth);
     setStyleSheet(QString("QLineEdit { padding-right: %1px; } ")
                   .arg(m_clearButton->sizeHint().width() + frameWidth + 1));

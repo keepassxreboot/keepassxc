@@ -58,7 +58,7 @@ void TestEntryModel::test()
 
     QCOMPARE(model->rowCount(), 2);
 
-    QSignalSpy spyDataChanged(model, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)));
+    QSignalSpy spyDataChanged(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)));
     entry1->setTitle("changed");
     QCOMPARE(spyDataChanged.count(), 1);
 
@@ -68,10 +68,10 @@ void TestEntryModel::test()
     QCOMPARE(model->data(index1).toString(), entry1->title());
     QCOMPARE(model->data(index2).toString(), entry2->title());
 
-    QSignalSpy spyAboutToAdd(model, SIGNAL(rowsAboutToBeInserted(const QModelIndex&,int,int)));
-    QSignalSpy spyAdded(model, SIGNAL(rowsInserted(const QModelIndex&,int,int)));
-    QSignalSpy spyAboutToRemove(model, SIGNAL(rowsAboutToBeRemoved(const QModelIndex&,int,int)));
-    QSignalSpy spyRemoved(model, SIGNAL(rowsRemoved(const QModelIndex&,int,int)));
+    QSignalSpy spyAboutToAdd(model, SIGNAL(rowsAboutToBeInserted(QModelIndex,int,int)));
+    QSignalSpy spyAdded(model, SIGNAL(rowsInserted(QModelIndex,int,int)));
+    QSignalSpy spyAboutToRemove(model, SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)));
+    QSignalSpy spyRemoved(model, SIGNAL(rowsRemoved(QModelIndex,int,int)));
 
     Entry* entry3 = new Entry();
     entry3->setGroup(group1);

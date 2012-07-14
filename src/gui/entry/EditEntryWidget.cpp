@@ -101,11 +101,11 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     m_historyUi->historyView->setModel(m_sortModel);
     m_historyUi->historyView->setRootIsDecorated(false);
 
-    connect(m_historyUi->historyView, SIGNAL(activated(const QModelIndex&)),
-            SLOT(histEntryActivated(const QModelIndex&)));
+    connect(m_historyUi->historyView, SIGNAL(activated(QModelIndex)),
+            SLOT(histEntryActivated(QModelIndex)));
     connect(m_historyUi->historyView->selectionModel(),
-            SIGNAL(currentChanged(QModelIndex ,QModelIndex)),
-            SLOT(updateHistoryButtons(QModelIndex, QModelIndex)));
+            SIGNAL(currentChanged(QModelIndex,QModelIndex)),
+            SLOT(updateHistoryButtons(QModelIndex,QModelIndex)));
     connect(m_historyUi->showButton, SIGNAL(clicked()), SLOT(showHistoryEntry()));
     connect(m_historyUi->restoreButton, SIGNAL(clicked()), SLOT(restoreHistoryEntry()));
     connect(m_historyUi->deleteButton, SIGNAL(clicked()), SLOT(deleteHistoryEntry()));
