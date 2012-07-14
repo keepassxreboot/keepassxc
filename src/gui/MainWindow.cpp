@@ -20,6 +20,8 @@
 
 #include <QtGui/QCloseEvent>
 
+#include "autotype/AutoType.h"
+#include "core/Config.h"
 #include "core/Database.h"
 #include "core/DataPath.h"
 #include "core/Metadata.h"
@@ -36,6 +38,13 @@ MainWindow::MainWindow()
     QAction* toggleViewAction = m_ui->toolBar->toggleViewAction();
     toggleViewAction->setText(tr("Show toolbar"));
     m_ui->menuView->addAction(toggleViewAction);
+
+    Qt::Key globalAutoTypeKey = static_cast<Qt::Key>(config()->get("GlobalAutoTypeKey").toInt());
+    Qt::KeyboardModifiers globalAutoTypeModifiers = static_cast<Qt::KeyboardModifiers>(
+                config()->get("GlobalAutoTypeModifiers").toInt());
+    if (globalAutoTypeKey > 0 && globalAutoTypeModifiers > 0) {
+        autoType()->registerGlobalShortcut(globalAutoTypeKey, globalAutoTypeModifiers);
+    }
 
     setShortcut(m_ui->actionDatabaseOpen, QKeySequence::Open, Qt::CTRL + Qt::Key_O);
     setShortcut(m_ui->actionDatabaseSave, QKeySequence::Save, Qt::CTRL + Qt::Key_S);

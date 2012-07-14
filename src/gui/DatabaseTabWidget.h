@@ -79,6 +79,7 @@ public Q_SLOTS:
     void deleteGroup();
     void toggleSearch();
     bool readOnly(int index = -1);
+    void performGlobalAutoType();
 
 Q_SIGNALS:
     void entrySelectionChanged(bool singleEntrySelected);

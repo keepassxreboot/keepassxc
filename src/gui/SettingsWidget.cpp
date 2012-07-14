@@ -19,6 +19,7 @@
 #include "ui_SettingsWidgetGeneral.h"
 #include "ui_SettingsWidgetSecurity.h"
 
+#include "autotype/AutoType.h"
 #include "core/Config.h"
 
 SettingsWidget::SettingsWidget(QWidget* parent)
@@ -55,6 +56,13 @@ void SettingsWidget::loadSettings()
     m_generalUi->modifiedExpandedChangedCheckBox->setChecked(config()->get("ModifiedOnExpandedStateChanges").toBool());
     m_generalUi->autoSaveAfterEveryChangeCheckBox->setChecked(config()->get("AutoSaveAfterEveryChange").toBool());
     m_generalUi->autoSaveOnExitCheckBox->setChecked(config()->get("AutoSaveOnExit").toBool());
+
+    m_globalAutoTypeKey = static_cast<Qt::Key>(config()->get("GlobalAutoTypeKey").toInt());
+    m_globalAutoTypeModifiers = static_cast<Qt::KeyboardModifiers>(config()->get("GlobalAutoTypeModifiers").toInt());
+    if (m_globalAutoTypeKey > 0 && m_globalAutoTypeModifiers > 0) {
+        m_generalUi->autoTypeShortcutWidget->setShortcut(m_globalAutoTypeKey, m_globalAutoTypeModifiers);
+    }
+
     m_secUi->clearClipboardCheckBox->setChecked(config()->get("security/clearclipboard").toBool());
     m_secUi->clearClipboardSpinBox->setValue(config()->get("security/clearclipboardtimeout").toInt());
 
@@ -67,6 +75,8 @@ void SettingsWidget::saveSettings()
     config()->set("ModifiedOnExpandedStateChanges", m_generalUi->modifiedExpandedChangedCheckBox->isChecked());
     config()->set("AutoSaveAfterEveryChange", m_generalUi->autoSaveAfterEveryChangeCheckBox->isChecked());
     config()->set("AutoSaveOnExit", m_generalUi->autoSaveOnExitCheckBox->isChecked());
+    config()->set("GlobalAutoTypeKey", m_generalUi->autoTypeShortcutWidget->key());
+    config()->set("GlobalAutoTypeModifiers", static_cast<int>(m_generalUi->autoTypeShortcutWidget->modifiers()));
     config()->set("security/clearclipboard", m_secUi->clearClipboardCheckBox->isChecked());
     config()->set("security/clearclipboardtimeout", m_secUi->clearClipboardSpinBox->value());
 
@@ -75,6 +85,11 @@ void SettingsWidget::saveSettings()
 
 void SettingsWidget::reject()
 {
+    // register the old key again as it might have changed
+    if (m_globalAutoTypeKey > 0 && m_globalAutoTypeModifiers > 0) {
+        autoType()->registerGlobalShortcut(m_globalAutoTypeKey, m_globalAutoTypeModifiers);
+    }
+
     Q_EMIT editFinished(false);
 }
 

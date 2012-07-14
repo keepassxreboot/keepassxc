@@ -21,6 +21,7 @@
 #include <QtGui/QTabWidget>
 #include <QtGui/QMessageBox>
 
+#include "autotype/AutoType.h"
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/Group.h"
@@ -52,6 +53,7 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
 
     connect(this, SIGNAL(tabCloseRequested(int)), SLOT(closeDatabase(int)));
     connect(this, SIGNAL(currentChanged(int)), SLOT(emitEntrySelectionChanged()));
+    connect(autoType(), SIGNAL(globalShortcutTriggered()), SLOT(performGlobalAutoType()));
 }
 
 DatabaseTabWidget::~DatabaseTabWidget()
@@ -603,4 +605,9 @@ void DatabaseTabWidget::connectDatabase(Database* newDb, Database* oldDb)
     connect(newDb, SIGNAL(nameTextChanged()), SLOT(updateTabNameFromSender()));
     connect(newDb, SIGNAL(modified()), SLOT(modified()));
     newDb->setEmitModified(true);
+}
+
+void DatabaseTabWidget::performGlobalAutoType()
+{
+    autoType()->performGlobalAutoType(m_dbList.keys());
 }

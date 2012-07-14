@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>354</width>
-    <height>104</height>
+    <width>456</width>
+    <height>146</height>
    </rect>
   </property>
   <layout class="QFormLayout" name="formLayout">
@@ -45,8 +45,25 @@
      </property>
     </widget>
    </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Global Auto-Type shortcut</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="ShortcutWidget" name="autoTypeShortcutWidget"/>
+   </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ShortcutWidget</class>
+   <extends>QLineEdit</extends>
+   <header>autotype/ShortcutWidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
