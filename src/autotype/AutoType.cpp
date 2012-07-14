@@ -125,7 +125,7 @@ void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow, const QS
     m_inAutoType = false;
 }
 
-void AutoType::performGlobalAutoType(const QList<Database*> dbList)
+void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
 {
     if (m_inAutoType || !m_plugin) {
         return;

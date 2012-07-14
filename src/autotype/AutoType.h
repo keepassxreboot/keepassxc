@@ -38,7 +38,6 @@ public:
     QStringList windowTitles();
     void performAutoType(const Entry* entry, QWidget* hideWindow = Q_NULLPTR,
                          const QString& customSequence = QString());
-    void performGlobalAutoType(const QList<Database*> dbList);
     bool registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers);
     void unregisterGlobalShortcut();
     int callEventFilter(void* event);
@@ -48,6 +47,9 @@ public:
     }
 
     static AutoType* instance();
+
+public Q_SLOTS:
+    void performGlobalAutoType(const QList<Database*>& dbList);
 
 Q_SIGNALS:
     void globalShortcutTriggered();
