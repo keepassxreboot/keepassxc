@@ -56,6 +56,14 @@ void ShortcutWidget::setShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers)
     }
 }
 
+void ShortcutWidget::resetShortcut()
+{
+    m_key = static_cast<Qt::Key>(0);
+    m_modifiers = 0;
+    m_locked = false;
+    autoType()->unregisterGlobalShortcut();
+}
+
 void ShortcutWidget::keyPressEvent(QKeyEvent* event)
 {
     keyEvent(event);
@@ -106,15 +114,14 @@ void ShortcutWidget::keyEvent(QKeyEvent* event)
             setShortcut(key, modifiers);
         }
         else {
-            m_locked = false;
+            resetShortcut();
             setStyleSheet("");
             displayShortcut(key, modifiers);
         }
     }
     else {
         if (m_locked) {
-            m_locked = false;
-            m_key = static_cast<Qt::Key>(0);
+            resetShortcut();
             setStyleSheet("");
         }
 

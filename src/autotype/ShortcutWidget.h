@@ -39,6 +39,7 @@ protected:
 private:
     void keyEvent(QKeyEvent* event);
     void displayShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers);
+    void resetShortcut();
 
     Qt::Key m_key;
     Qt::KeyboardModifiers m_modifiers;
