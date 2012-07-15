@@ -186,9 +186,12 @@ QString Entry::autoTypeSequence(const QString& windowTitle) const
                 break;
             }
         }
-    }
 
-    if (sequence.isEmpty()) {
+        if (sequence.isEmpty()) {
+            return QString();
+        }
+    }
+    else {
         sequence = m_data.defaultAutoTypeSequence;
     }
 
