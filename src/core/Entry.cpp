@@ -186,14 +186,16 @@ QString Entry::autoTypeSequence(const QString& windowTitle) const
     bool enableSet = false;
     QString sequence;
     if (!windowTitle.isEmpty()) {
+        bool match = false;
         Q_FOREACH (const AutoTypeAssociations::Association& assoc, m_autoTypeAssociations->getAll()) {
             if (windowMatches(windowTitle, assoc.window)) {
                 sequence = assoc.sequence;
+                match = true;
                 break;
             }
         }
 
-        if (sequence.isEmpty()) {
+        if (!match) {
             return QString();
         }
     }
