@@ -27,6 +27,7 @@
 #include "core/Group.h"
 #include "crypto/Crypto.h"
 #include "gui/IconModels.h"
+#include "gui/entry/AutoTypeAssociationsModel.h"
 #include "gui/entry/EntryModel.h"
 #include "gui/entry/EntryAttachmentsModel.h"
 #include "gui/entry/EntryAttributesModel.h"
@@ -225,6 +226,42 @@ void TestEntryModel::testCustomIconModel()
 
     delete modelTest;
     delete model;
+}
+
+void TestEntryModel::testAutoTypeAssociationsModel()
+{
+    AutoTypeAssociationsModel* model = new AutoTypeAssociationsModel(this);
+    ModelTest* modelTest = new ModelTest(model, this);
+
+    QCOMPARE(model->rowCount(), 0);
+
+    AutoTypeAssociations* assocications = new AutoTypeAssociations(this);
+    model->setAutoTypeAssociations(assocications);
+
+    QCOMPARE(model->rowCount(), 0);
+
+    AutoTypeAssociations::Association assoc;
+    assoc.window = "1";
+    assoc.sequence = "2";
+    assocications->add(assoc);
+
+    QCOMPARE(model->rowCount(), 1);
+    QCOMPARE(model->data(model->index(0, 0)).toString(), QString("1"));
+    QCOMPARE(model->data(model->index(0, 1)).toString(), QString("2"));
+
+    assoc.window = "3";
+    assoc.sequence = "4";
+    assocications->update(0, assoc);
+    QCOMPARE(model->data(model->index(0, 0)).toString(), QString("3"));
+    QCOMPARE(model->data(model->index(0, 1)).toString(), QString("4"));
+
+    assocications->add(assoc);
+    assocications->remove(0);
+    QCOMPARE(model->rowCount(), 1);
+
+    delete modelTest;
+    delete model;
+    delete assocications;
 }
 
 KEEPASSX_QTEST_CORE_MAIN(TestEntryModel)

@@ -31,6 +31,7 @@ private Q_SLOTS:
     void testAttributesModel();
     void testDefaultIconModel();
     void testCustomIconModel();
+    void testAutoTypeAssociationsModel();
 };
 
 #endif // KEEPASSX_TESTENTRYMODEL_H

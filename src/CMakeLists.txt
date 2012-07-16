@@ -76,6 +76,7 @@ set(keepassx_SOURCES
     gui/MainWindow.cpp
     gui/SettingsWidget.cpp
     gui/WelcomeWidget.cpp
+    gui/entry/AutoTypeAssociationsModel.cpp
     gui/entry/EditEntryWidget.cpp
     gui/entry/EntryAttachmentsModel.cpp
     gui/entry/EntryAttributesModel.cpp
@@ -125,6 +126,7 @@ set(keepassx_MOC
     gui/MainWindow.h
     gui/SettingsWidget.h
     gui/WelcomeWidget.h
+    gui/entry/AutoTypeAssociationsModel.h
     gui/entry/EditEntryWidget.h
     gui/entry/EntryAttachmentsModel.h
     gui/entry/EntryAttributesModel.h
