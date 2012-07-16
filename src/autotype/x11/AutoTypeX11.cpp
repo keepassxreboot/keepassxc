@@ -155,7 +155,7 @@ int AutoTypePlatformX11::platformEventFilter(void* event)
     if (xevent->type == KeyPress && m_currentGlobalKey && xevent->xkey.keycode == m_currentGlobalKeycode
             && (xevent->xkey.state & m_modifierMask) == m_currentGlobalNativeModifiers
             && !QApplication::focusWidget()) {
-        QMetaObject::invokeMethod(this, "globalShortcutTriggered", Qt::QueuedConnection);
+        Q_EMIT globalShortcutTriggered();
         return 1;
     }
     if (xevent->type == MappingNotify) {
