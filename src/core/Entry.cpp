@@ -26,6 +26,9 @@
 const int Entry::DefaultIconNumber = 0;
 
 Entry::Entry()
+    : m_attributes(new EntryAttributes(this))
+    , m_attachments(new EntryAttachments(this))
+    , m_autoTypeAssociations(new AutoTypeAssociations(this))
 {
     m_updateTimeinfo = true;
     m_tmpHistoryItem = Q_NULLPTR;
@@ -34,14 +37,12 @@ Entry::Entry()
     m_data.autoTypeEnabled = true;
     m_data.autoTypeObfuscation = 0;
 
-    m_attributes = new EntryAttributes(this);
     connect(m_attributes, SIGNAL(modified()), this, SIGNAL(modified()));
     connect(m_attributes, SIGNAL(defaultKeyModified()), SLOT(emitDataChanged()));
-
-    m_attachments = new EntryAttachments(this);
     connect(m_attachments, SIGNAL(modified()), this, SIGNAL(modified()));
-    connect(this, SIGNAL(modified()), this, SLOT(updateTimeinfo()));
+    connect(m_autoTypeAssociations, SIGNAL(modified()), SIGNAL(modified()));
 
+    connect(this, SIGNAL(modified()), SLOT(updateTimeinfo()));
     connect(this, SIGNAL(modified()), SLOT(updateModifiedSinceBegin()));
 }
 
@@ -166,9 +167,14 @@ QString Entry::defaultAutoTypeSequence() const
     return m_data.defaultAutoTypeSequence;
 }
 
-const QList<AutoTypeAssociation>& Entry::autoTypeAssociations() const
+AutoTypeAssociations* Entry::autoTypeAssociations()
 {
-    return m_data.autoTypeAssociations;
+    return m_autoTypeAssociations;
+}
+
+const AutoTypeAssociations* Entry::autoTypeAssociations() const
+{
+    return m_autoTypeAssociations;
 }
 
 QString Entry::autoTypeSequence(const QString& windowTitle) const
@@ -180,9 +186,9 @@ QString Entry::autoTypeSequence(const QString& windowTitle) const
     bool enableSet = false;
     QString sequence;
     if (!windowTitle.isEmpty()) {
-        Q_FOREACH (const AutoTypeAssociation& autoTypeAssoc, m_data.autoTypeAssociations) {
-            if (windowMatches(windowTitle, autoTypeAssoc.window)) {
-                sequence = autoTypeAssoc.sequence;
+        Q_FOREACH (const AutoTypeAssociations::Association& assoc, m_autoTypeAssociations->getAll()) {
+            if (windowMatches(windowTitle, assoc.window)) {
+                sequence = assoc.sequence;
                 break;
             }
         }
@@ -354,12 +360,6 @@ void Entry::setDefaultAutoTypeSequence(const QString& sequence)
     set(m_data.defaultAutoTypeSequence, sequence);
 }
 
-void Entry::addAutoTypeAssociation(const AutoTypeAssociation& assoc)
-{
-    m_data.autoTypeAssociations << assoc;
-    Q_EMIT modified();
-}
-
 void Entry::setTitle(const QString& title)
 {
     m_attributes->set("Title", title, m_attributes->isProtected("Title"));
@@ -495,6 +495,7 @@ Entry* Entry::clone() const
     entry->m_data = m_data;
     *entry->m_attributes = *m_attributes;
     *entry->m_attachments = *m_attachments;
+    entry->m_autoTypeAssociations->copyDataFrom(this->m_autoTypeAssociations);
     entry->setUpdateTimeinfo(true);
 
     return entry;

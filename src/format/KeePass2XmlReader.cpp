@@ -712,14 +712,14 @@ void KeePass2XmlReader::parseAutoTypeAssoc(Entry* entry)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Association");
 
-    AutoTypeAssociation assoc;
+    AutoTypeAssociations::Association assoc;
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Window") {
             assoc.window = readString();
         }
         else if (m_xml.name() == "KeystrokeSequence") {
             assoc.sequence = readString();
-            entry->addAutoTypeAssociation(assoc);
+            entry->autoTypeAssociations()->add(assoc);
         }
         else {
             skipCurrentElement();

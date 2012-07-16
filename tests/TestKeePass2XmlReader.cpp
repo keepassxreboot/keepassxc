@@ -255,8 +255,8 @@ void TestKeePass2XmlReader::testEntry1()
     QCOMPARE(entry->autoTypeEnabled(), false);
     QCOMPARE(entry->autoTypeObfuscation(), 0);
     QCOMPARE(entry->defaultAutoTypeSequence(), QString(""));
-    QCOMPARE(entry->autoTypeAssociations().size(), 1);
-    const AutoTypeAssociation assoc1 = entry->autoTypeAssociations().at(0);
+    QCOMPARE(entry->autoTypeAssociations()->size(), 1);
+    const AutoTypeAssociations::Association assoc1 = entry->autoTypeAssociations()->get(0);
     QCOMPARE(assoc1.window, QString("Target Window"));
     QCOMPARE(assoc1.sequence, QString(""));
 }
@@ -300,11 +300,11 @@ void TestKeePass2XmlReader::testEntry2()
     QCOMPARE(entry->autoTypeEnabled(), true);
     QCOMPARE(entry->autoTypeObfuscation(), 1);
     QCOMPARE(entry->defaultAutoTypeSequence(), QString("{USERNAME}{TAB}{PASSWORD}{ENTER}"));
-    QCOMPARE(entry->autoTypeAssociations().size(), 2);
-    const AutoTypeAssociation assoc1 = entry->autoTypeAssociations().at(0);
+    QCOMPARE(entry->autoTypeAssociations()->size(), 2);
+    const AutoTypeAssociations::Association assoc1 = entry->autoTypeAssociations()->get(0);
     QCOMPARE(assoc1.window, QString("Target Window"));
     QCOMPARE(assoc1.sequence, QString("{Title}{UserName}"));
-    const AutoTypeAssociation assoc2 = entry->autoTypeAssociations().at(1);
+    const AutoTypeAssociations::Association assoc2 = entry->autoTypeAssociations()->get(1);
     QCOMPARE(assoc2.window, QString("Target Window 2"));
     QCOMPARE(assoc2.sequence, QString("{Title}{UserName} test"));
 }

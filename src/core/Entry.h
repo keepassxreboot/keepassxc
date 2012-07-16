@@ -27,6 +27,7 @@
 #include <QtGui/QPixmap>
 #include <QtGui/QPixmapCache>
 
+#include "core/AutoTypeAssociations.h"
 #include "core/EntryAttachments.h"
 #include "core/EntryAttributes.h"
 #include "core/Global.h"
@@ -35,14 +36,6 @@
 
 class Database;
 class Group;
-
-struct AutoTypeAssociation
-{
-    QString window;
-    QString sequence;
-};
-
-Q_DECLARE_TYPEINFO(AutoTypeAssociation, Q_MOVABLE_TYPE);
 
 struct EntryData
 {
@@ -55,7 +48,6 @@ struct EntryData
     bool autoTypeEnabled;
     int autoTypeObfuscation;
     QString defaultAutoTypeSequence;
-    QList<AutoTypeAssociation> autoTypeAssociations;
     TimeInfo timeInfo;
 };
 
@@ -79,7 +71,8 @@ public:
     bool autoTypeEnabled() const;
     int autoTypeObfuscation() const;
     QString defaultAutoTypeSequence() const;
-    const QList<AutoTypeAssociation>& autoTypeAssociations() const;
+    AutoTypeAssociations* autoTypeAssociations();
+    const AutoTypeAssociations* autoTypeAssociations() const;
     QString autoTypeSequence(const QString& windowTitle = QString()) const;
     QString title() const;
     QString url() const;
@@ -105,7 +98,6 @@ public:
     void setAutoTypeEnabled(bool enable);
     void setAutoTypeObfuscation(int obfuscation);
     void setDefaultAutoTypeSequence(const QString& sequence);
-    void addAutoTypeAssociation(const AutoTypeAssociation& assoc);
     void setTitle(const QString& title);
     void setUrl(const QString& url);
     void setUsername(const QString& username);
@@ -156,8 +148,9 @@ private:
 
     Uuid m_uuid;
     EntryData m_data;
-    EntryAttributes* m_attributes;
-    EntryAttachments* m_attachments;
+    EntryAttributes* const m_attributes;
+    EntryAttachments* const m_attachments;
+    AutoTypeAssociations* const m_autoTypeAssociations;
 
     QList<Entry*> m_history;
     Entry* m_tmpHistoryItem;

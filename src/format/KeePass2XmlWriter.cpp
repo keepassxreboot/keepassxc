@@ -384,14 +384,14 @@ void KeePass2XmlWriter::writeAutoType(const Entry* entry)
     writeNumber("DataTransferObfuscation", entry->autoTypeObfuscation());
     writeString("DefaultSequence", entry->defaultAutoTypeSequence());
 
-    Q_FOREACH (const AutoTypeAssociation& assoc, entry->autoTypeAssociations()) {
+    Q_FOREACH (const AutoTypeAssociations::Association& assoc, entry->autoTypeAssociations()->getAll()) {
         writeAutoTypeAssoc(assoc);
     }
 
     m_xml.writeEndElement();
 }
 
-void KeePass2XmlWriter::writeAutoTypeAssoc(const AutoTypeAssociation& assoc)
+void KeePass2XmlWriter::writeAutoTypeAssoc(const AutoTypeAssociations::Association& assoc)
 {
     m_xml.writeStartElement("Association");
 

@@ -21,6 +21,7 @@ set(keepassx_SOURCES
     autotype/AutoType.cpp
     autotype/AutoTypeAction.cpp
     autotype/ShortcutWidget.cpp
+    core/AutoTypeAssociations.cpp
     core/Config.cpp
     core/Database.cpp
     core/DatabaseIcons.cpp
@@ -97,6 +98,7 @@ set(keepassx_SOURCES
 set(keepassx_MOC
     autotype/AutoType.h
     autotype/ShortcutWidget.h
+    core/AutoTypeAssociations.h
     core/Config.h
     core/Database.h
     core/Entry.h
