@@ -40,7 +40,7 @@ AutoType::AutoType(QObject* parent)
     m_pluginLoader->setLoadHints(QLibrary::ResolveAllSymbolsHint);
 
     // TODO: scan in proper paths
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     m_pluginLoader->setFileName(QCoreApplication::applicationDirPath() + "/autotype/x11/libkeepassx-autotype-x11.so");
 #endif
 

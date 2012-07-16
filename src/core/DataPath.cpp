@@ -69,11 +69,11 @@ DataPath::DataPath()
     else if (testSetDir(QString(KEEPASSX_SOURCE_DIR) + "/share")) {
     }
 #endif
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     else if (testSetDir(QCoreApplication::applicationDirPath() + "/../share/keepassx")) {
     }
 #endif
-#ifdef Q_OS_MACOS
+#ifdef Q_OS_MAC
     else if (testSetDir(QCoreApplication::applicationDirPath() + "/../Resources")) {
     }
 #endif

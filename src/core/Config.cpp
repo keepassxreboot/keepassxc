@@ -52,7 +52,7 @@ Config::Config(QObject* parent)
     QString userPath;
     QString homePath = QDir::homePath();
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     // we can't use QDesktopServices on X11 as it uses XDG_DATA_HOME instead of XDG_CONFIG_HOME
     QByteArray env = qgetenv("XDG_CONFIG_HOME");
     if (env.isEmpty()) {
