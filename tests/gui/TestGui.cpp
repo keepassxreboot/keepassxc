@@ -98,7 +98,7 @@ void TestGui::testEditEntry()
     QDialogButtonBox* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
     QVERIFY(editEntryWidgetButtonBox);
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
-    QTest::qWait(20);
+    QTest::qWait(200); // wait for modified timer
     // make sure the database isn't marked as modified
     QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("NewDatabase.kdbx"));
 }
@@ -135,7 +135,7 @@ void TestGui::testAddEntry()
 
     QCOMPARE(entry->title(), QString("test"));
     QCOMPARE(entry->historyItems().size(), 0);
-    QTest::qWait(200);
+    QTest::qWait(200); // wait for modified timer
     QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("NewDatabase.kdbx*"));
 
     QAction* entryEditAction = m_mainWindow->findChild<QAction*>("actionEntryEdit");
@@ -252,7 +252,7 @@ void TestGui::testSave()
 {
     Database* db = m_tabWidget->currentDatabaseWidget()->database();
     db->metadata()->setName("Save");
-    QTest::qWait(200);
+    QTest::qWait(200); // wait for modified timer
     QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("Save*"));
 
     QAction* actionDatabaseSave = m_mainWindow->findChild<QAction*>("actionDatabaseSave");
