@@ -369,10 +369,11 @@ void AutoTypePlatformX11::updateKeymap() {
 
     m_modifierMask = ControlMask | ShiftMask | m_altMask | m_metaMask;
 
-    if (m_currentGlobalKey && m_currentGlobalModifiers) {
+    // TODO: figure out why this breaks after the first global auto-type
+    /*if (m_currentGlobalKey && m_currentGlobalModifiers) {
         unregisterGlobalShortcut(m_currentGlobalKey, m_currentGlobalModifiers);
         registerGlobalShortcut(m_currentGlobalKey, m_currentGlobalModifiers);
-    }
+    }*/
 }
 
 void AutoTypePlatformX11::startCatchXErrors()
