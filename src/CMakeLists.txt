@@ -156,6 +156,7 @@ set(keepassx_FORMS
     gui/SettingsWidgetSecurity.ui
     gui/WelcomeWidget.ui
     gui/entry/EditEntryWidgetAdvanced.ui
+    gui/entry/EditEntryWidgetAutoType.ui
     gui/entry/EditEntryWidgetHistory.ui
     gui/entry/EditEntryWidgetMain.ui
     gui/entry/EditEntryWidgetNotes.ui

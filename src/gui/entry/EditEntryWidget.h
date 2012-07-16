@@ -23,6 +23,8 @@
 
 #include "gui/EditWidget.h"
 
+class AutoTypeAssociations;
+class AutoTypeAssociationsModel;
 class Database;
 class EditWidgetIcons;
 class Entry;
@@ -31,11 +33,13 @@ class EntryAttachmentsModel;
 class EntryAttributes;
 class EntryAttributesModel;
 class EntryHistoryModel;
+class QButtonGroup;
 class QSortFilterProxyModel;
 class QStackedLayout;
 
 namespace Ui {
     class EditEntryWidgetAdvanced;
+    class EditEntryWidgetAutoType;
     class EditEntryWidgetMain;
     class EditEntryWidgetHistory;
     class EditEntryWidgetNotes;
@@ -72,6 +76,13 @@ private Q_SLOTS:
     void insertAttachment();
     void saveCurrentAttachment();
     void removeCurrentAttachment();
+    void autoTypeEnableToggled(bool checked);
+    void insertAutoTypeAssoc();
+    void removeAutoTypeAssoc();
+    void updateAssocRemoveButton();
+    void loadCurrentAssoc(const QModelIndex& current);
+    void clearCurrentAssoc();
+    void applyCurrentAssoc();
     void showHistoryEntry();
     void restoreHistoryEntry();
     void deleteHistoryEntry();
@@ -92,11 +103,13 @@ private:
     const QScopedPointer<Ui::EditEntryWidgetMain> m_mainUi;
     const QScopedPointer<Ui::EditEntryWidgetNotes> m_notesUi;
     const QScopedPointer<Ui::EditEntryWidgetAdvanced> m_advancedUi;
+    const QScopedPointer<Ui::EditEntryWidgetAutoType> m_autoTypeUi;
     const QScopedPointer<Ui::EditEntryWidgetHistory> m_historyUi;
     QWidget* const m_mainWidget;
     QWidget* const m_notesWidget;
     QWidget* const m_advancedWidget;
     EditWidgetIcons* const m_iconsWidget;
+    QWidget* const m_autoTypeWidget;
     QWidget* const m_historyWidget;
     EntryAttachmentsModel* m_attachmentsModel;
     EntryAttributesModel* m_attributesModel;
@@ -105,6 +118,10 @@ private:
     EntryAttachments* m_entryAttachments;
     EntryAttributes* m_entryAttributes;
     QPersistentModelIndex m_currentAttribute;
+    AutoTypeAssociations* const m_autoTypeAssoc;
+    AutoTypeAssociationsModel* const m_autoTypeAssocModel;
+    QButtonGroup* const m_autoTypeDefaultSequenceGroup;
+    QButtonGroup* const m_autoTypeWindowSequenceGroup;
 
     Q_DISABLE_COPY(EditEntryWidget)
 };

@@ -17,6 +17,7 @@
 
 #include "EditEntryWidget.h"
 #include "ui_EditEntryWidgetAdvanced.h"
+#include "ui_EditEntryWidgetAutoType.h"
 #include "ui_EditEntryWidgetHistory.h"
 #include "ui_EditEntryWidgetMain.h"
 #include "ui_EditEntryWidgetNotes.h"
@@ -28,12 +29,14 @@
 #include <QtGui/QMessageBox>
 #include <QtGui/QSortFilterProxyModel>
 
+#include "autotype/AutoType.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "gui/EditWidgetIcons.h"
 #include "gui/FileDialog.h"
+#include "gui/entry/AutoTypeAssociationsModel.h"
 #include "gui/entry/EntryAttachmentsModel.h"
 #include "gui/entry/EntryAttributesModel.h"
 #include "gui/entry/EntryHistoryModel.h"
@@ -44,12 +47,18 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_mainUi(new Ui::EditEntryWidgetMain())
     , m_notesUi(new Ui::EditEntryWidgetNotes())
     , m_advancedUi(new Ui::EditEntryWidgetAdvanced())
+    , m_autoTypeUi(new Ui::EditEntryWidgetAutoType())
     , m_historyUi(new Ui::EditEntryWidgetHistory())
     , m_mainWidget(new QWidget())
     , m_notesWidget(new QWidget())
     , m_advancedWidget(new QWidget())
     , m_iconsWidget(new EditWidgetIcons())
+    , m_autoTypeWidget(new QWidget())
     , m_historyWidget(new QWidget())
+    , m_autoTypeAssoc(new AutoTypeAssociations(this))
+    , m_autoTypeAssocModel(new AutoTypeAssociationsModel(this))
+    , m_autoTypeDefaultSequenceGroup(new QButtonGroup(this))
+    , m_autoTypeWindowSequenceGroup(new QButtonGroup(this))
 {
     m_mainUi->setupUi(m_mainWidget);
     add(tr("Entry"), m_mainWidget);
@@ -61,6 +70,11 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     add(tr("Advanced"), m_advancedWidget);
 
     add(tr("Icon"), m_iconsWidget);
+
+    m_autoTypeUi->setupUi(m_autoTypeWidget);
+    add(tr("Auto-Type"), m_autoTypeWidget);
+
+    // when adding a new row, update setRowHidden() call
 
     m_historyUi->setupUi(m_historyWidget);
     add(tr("History"), m_historyWidget);
@@ -88,6 +102,33 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
     connect(m_mainUi->passwordEdit, SIGNAL(textEdited(QString)), SLOT(setPasswordCheckColors()));
     connect(m_mainUi->passwordRepeatEdit, SIGNAL(textEdited(QString)), SLOT(setPasswordCheckColors()));
+
+    m_autoTypeDefaultSequenceGroup->addButton(m_autoTypeUi->inheritSequenceButton);
+    m_autoTypeDefaultSequenceGroup->addButton(m_autoTypeUi->customSequenceButton);
+    m_autoTypeWindowSequenceGroup->addButton(m_autoTypeUi->defaultWindowSequenceButton);
+    m_autoTypeWindowSequenceGroup->addButton(m_autoTypeUi->customWindowSequenceButton);
+    m_autoTypeAssocModel->setAutoTypeAssociations(m_autoTypeAssoc);
+    m_autoTypeUi->assocView->setModel(m_autoTypeAssocModel);
+    m_autoTypeUi->assocView->setColumnHidden(1, true);
+    connect(m_autoTypeUi->enableButton, SIGNAL(toggled(bool)), SLOT(autoTypeEnableToggled(bool)));
+    connect(m_autoTypeUi->customSequenceButton, SIGNAL(toggled(bool)),
+            m_autoTypeUi->sequenceEdit, SLOT(setEnabled(bool)));
+    connect(m_autoTypeUi->customWindowSequenceButton, SIGNAL(toggled(bool)),
+            m_autoTypeUi->windowSequenceEdit, SLOT(setEnabled(bool)));
+    connect(m_autoTypeUi->assocAddButton, SIGNAL(clicked()), SLOT(insertAutoTypeAssoc()));
+    connect(m_autoTypeUi->assocRemoveButton, SIGNAL(clicked()), SLOT(removeAutoTypeAssoc()));
+    connect(m_autoTypeUi->assocView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
+            SLOT(updateAssocRemoveButton()));
+    connect(m_autoTypeAssocModel, SIGNAL(modelReset()), SLOT(updateAssocRemoveButton()));
+    connect(m_autoTypeUi->assocView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
+            SLOT(loadCurrentAssoc(QModelIndex)));
+    connect(m_autoTypeAssocModel, SIGNAL(modelReset()), SLOT(clearCurrentAssoc()));
+    connect(m_autoTypeUi->windowTitleCombo, SIGNAL(editTextChanged(QString)),
+            SLOT(applyCurrentAssoc()));
+    connect(m_autoTypeUi->defaultWindowSequenceButton, SIGNAL(toggled(bool)),
+            SLOT(applyCurrentAssoc()));
+    connect(m_autoTypeUi->windowSequenceEdit, SIGNAL(textChanged(QString)),
+            SLOT(applyCurrentAssoc()));
 
     m_historyModel = new EntryHistoryModel(this);
 
@@ -179,7 +220,7 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const Q
     setForms(entry);
 
     setCurrentRow(0);
-    setRowHidden(4, m_history);
+    setRowHidden(5, m_history);
 }
 
 void EditEntryWidget::setForms(const Entry* entry, bool restore)
@@ -207,6 +248,16 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     }
     m_advancedUi->attributesView->setEditTriggers(editTriggers);
     m_iconsWidget->setEnabled(!m_history);
+    m_autoTypeUi->enableButton->setEnabled(!m_history);
+    m_autoTypeUi->inheritSequenceButton->setEnabled(!m_history);
+    m_autoTypeUi->customSequenceButton->setEnabled(!m_history);
+    m_autoTypeUi->sequenceEdit->setReadOnly(!m_history);
+    m_autoTypeUi->assocAddButton->setEnabled(!m_history);
+    m_autoTypeUi->assocRemoveButton->setEnabled(false);
+    m_autoTypeUi->windowTitleCombo->lineEdit()->setReadOnly(m_history);
+    m_autoTypeUi->defaultWindowSequenceButton->setEnabled(!m_history);
+    m_autoTypeUi->customWindowSequenceButton->setEnabled(!m_history);
+    m_autoTypeUi->windowSequenceEdit->setReadOnly(m_history);
     m_historyWidget->setEnabled(!m_history);
 
     m_mainUi->titleEdit->setText(entry->title());
@@ -236,6 +287,23 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     iconStruct.uuid = entry->iconUuid();
     iconStruct.number = entry->iconNumber();
     m_iconsWidget->load(entry->uuid(), m_database, iconStruct);
+
+    m_autoTypeUi->windowTitleCombo->clear();
+    if (!m_history) {
+        m_autoTypeUi->windowTitleCombo->insertItems(0, autoType()->windowTitles());
+    }
+    m_autoTypeAssoc->copyDataFrom(entry->autoTypeAssociations());
+    m_autoTypeUi->enableButton->setChecked(entry->autoTypeEnabled());
+    if (entry->defaultAutoTypeSequence().isEmpty()) {
+        m_autoTypeUi->inheritSequenceButton->setChecked(true);
+    }
+    else {
+        m_autoTypeUi->customSequenceButton->setChecked(true);
+        m_autoTypeUi->sequenceEdit->setText(entry->defaultAutoTypeSequence());
+    }
+    if (m_autoTypeAssoc->size() != 0) {
+        m_autoTypeUi->assocView->setCurrentIndex(m_autoTypeAssocModel->index(0, 0));
+    }
 
     if (!m_history && !restore) {
         m_historyModel->setEntries(entry->historyItems());
@@ -309,6 +377,9 @@ void EditEntryWidget::saveEntry()
         m_entry->setIcon(iconStruct.uuid);
     }
 
+    m_autoTypeAssoc->removeEmpty();
+    m_entry->autoTypeAssociations()->copyDataFrom(m_autoTypeAssoc);
+
     if (!m_create) {
         m_entry->endUpdate();
     }
@@ -318,6 +389,7 @@ void EditEntryWidget::saveEntry()
     m_database = Q_NULLPTR;
     m_entryAttributes->clear();
     m_entryAttachments->clear();
+    m_autoTypeAssoc->clear();
     m_historyModel->clear();
 
     Q_EMIT editFinished(true);
@@ -343,6 +415,7 @@ void EditEntryWidget::cancel()
     m_database = 0;
     m_entryAttributes->clear();
     m_entryAttachments->clear();
+    m_autoTypeAssoc->clear();
     m_historyModel->clear();
 
     Q_EMIT editFinished(false);
@@ -527,6 +600,81 @@ void EditEntryWidget::removeCurrentAttachment()
 
     QString key = m_attachmentsModel->keyByIndex(index);
     m_entryAttachments->remove(key);
+}
+
+void EditEntryWidget::autoTypeEnableToggled(bool checked)
+{
+    m_autoTypeUi->inheritSequenceButton->setEnabled(checked);
+    m_autoTypeUi->customSequenceButton->setEnabled(checked);
+    m_autoTypeUi->sequenceEdit->setEnabled(checked && m_autoTypeUi->customSequenceButton->isChecked());
+    m_autoTypeUi->windowTitleLabel->setEnabled(checked);
+    m_autoTypeUi->windowTitleCombo->setEnabled(checked);
+    m_autoTypeUi->defaultWindowSequenceButton->setEnabled(checked);
+    m_autoTypeUi->customWindowSequenceButton->setEnabled(checked);
+    m_autoTypeUi->windowSequenceEdit->setEnabled(checked && m_autoTypeUi->customWindowSequenceButton->isChecked());
+}
+
+void EditEntryWidget::insertAutoTypeAssoc()
+{
+    AutoTypeAssociations::Association assoc;
+    m_autoTypeAssoc->add(assoc);
+    m_autoTypeUi->assocView->setCurrentIndex(m_autoTypeAssocModel->index(m_autoTypeAssoc->size() - 1, 0));
+}
+
+void EditEntryWidget::removeAutoTypeAssoc()
+{
+    QModelIndex currentIndex = m_autoTypeUi->assocView->currentIndex();
+
+    if (currentIndex.isValid()) {
+        m_autoTypeAssoc->remove(currentIndex.row());
+    }
+}
+
+void EditEntryWidget::updateAssocRemoveButton()
+{
+    m_autoTypeUi->assocRemoveButton->setEnabled(!m_history && m_autoTypeUi->assocView->currentIndex().isValid());
+}
+
+void EditEntryWidget::loadCurrentAssoc(const QModelIndex& current)
+{
+    if (current.isValid()) {
+        AutoTypeAssociations::Association assoc = m_autoTypeAssoc->get(current.row());
+        m_autoTypeUi->windowTitleCombo->setEditText(assoc.window);
+        if (assoc.sequence.isEmpty()) {
+            m_autoTypeUi->defaultWindowSequenceButton->setChecked(true);
+        }
+        else {
+            m_autoTypeUi->customWindowSequenceButton->setChecked(true);
+        }
+        m_autoTypeUi->windowSequenceEdit->setText(assoc.sequence);
+    }
+    else {
+        clearCurrentAssoc();
+    }
+}
+
+void EditEntryWidget::clearCurrentAssoc()
+{
+    m_autoTypeUi->windowTitleCombo->setEditText("");
+    m_autoTypeUi->defaultWindowSequenceButton->setChecked(true);
+    m_autoTypeUi->windowSequenceEdit->setText("");
+}
+
+void EditEntryWidget::applyCurrentAssoc()
+{
+    QModelIndex index = m_autoTypeUi->assocView->currentIndex();
+
+    if (!index.isValid() || m_autoTypeAssoc->size() == 0 || m_history) {
+        return;
+    }
+
+    AutoTypeAssociations::Association assoc;
+    assoc.window = m_autoTypeUi->windowTitleCombo->currentText();
+    if (m_autoTypeUi->customWindowSequenceButton->isChecked()) {
+        assoc.sequence = m_autoTypeUi->windowSequenceEdit->text();
+    }
+
+    m_autoTypeAssoc->update(index.row(), assoc);
 }
 
 void EditEntryWidget::showHistoryEntry()
