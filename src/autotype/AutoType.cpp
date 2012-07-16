@@ -155,7 +155,7 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
     }
     else if (entryList.size() == 1) {
         m_inAutoType = false;
-        performAutoType(entryList.first().first, 0, entryList.first().second);
+        performAutoType(entryList.first().first, Q_NULLPTR, entryList.first().second);
     }
     else {
         // TODO: implement

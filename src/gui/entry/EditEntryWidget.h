@@ -93,7 +93,7 @@ private Q_SLOTS:
 
 private:
     bool passwordsEqual();
-    void setForms(const Entry* entry,  bool restore = false);
+    void setForms(const Entry* entry, bool restore = false);
 
     Entry* m_entry;
     Database* m_database;
@@ -111,12 +111,12 @@ private:
     EditWidgetIcons* const m_iconsWidget;
     QWidget* const m_autoTypeWidget;
     QWidget* const m_historyWidget;
-    EntryAttachmentsModel* m_attachmentsModel;
-    EntryAttributesModel* m_attributesModel;
-    EntryHistoryModel* m_historyModel;
-    QSortFilterProxyModel* m_sortModel;
-    EntryAttachments* m_entryAttachments;
-    EntryAttributes* m_entryAttributes;
+    EntryAttachments* const m_entryAttachments;
+    EntryAttachmentsModel* const m_attachmentsModel;
+    EntryAttributes* const m_entryAttributes;
+    EntryAttributesModel* const m_attributesModel;
+    EntryHistoryModel* const m_historyModel;
+    QSortFilterProxyModel* const m_sortModel;
     QPersistentModelIndex m_currentAttribute;
     AutoTypeAssociations* const m_autoTypeAssoc;
     AutoTypeAssociationsModel* const m_autoTypeAssocModel;

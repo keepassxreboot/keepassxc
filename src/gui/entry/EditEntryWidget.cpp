@@ -55,6 +55,12 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_iconsWidget(new EditWidgetIcons())
     , m_autoTypeWidget(new QWidget())
     , m_historyWidget(new QWidget())
+    , m_entryAttachments(new EntryAttachments(this))
+    , m_attachmentsModel(new EntryAttachmentsModel(m_advancedWidget))
+    , m_entryAttributes(new EntryAttributes(this))
+    , m_attributesModel(new EntryAttributesModel(m_advancedWidget))
+    , m_historyModel(new EntryHistoryModel(this))
+    , m_sortModel(new QSortFilterProxyModel(this))
     , m_autoTypeAssoc(new AutoTypeAssociations(this))
     , m_autoTypeAssocModel(new AutoTypeAssociationsModel(this))
     , m_autoTypeDefaultSequenceGroup(new QButtonGroup(this))
@@ -79,16 +85,12 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     m_historyUi->setupUi(m_historyWidget);
     add(tr("History"), m_historyWidget);
 
-    m_entryAttachments = new EntryAttachments(this);
-    m_attachmentsModel = new EntryAttachmentsModel(m_advancedWidget);
     m_attachmentsModel->setEntryAttachments(m_entryAttachments);
     m_advancedUi->attachmentsView->setModel(m_attachmentsModel);
     connect(m_advancedUi->saveAttachmentButton, SIGNAL(clicked()), SLOT(saveCurrentAttachment()));
     connect(m_advancedUi->addAttachmentButton, SIGNAL(clicked()), SLOT(insertAttachment()));
     connect(m_advancedUi->removeAttachmentButton, SIGNAL(clicked()), SLOT(removeCurrentAttachment()));
 
-    m_entryAttributes = new EntryAttributes(this);
-    m_attributesModel = new EntryAttributesModel(m_advancedWidget);
     m_attributesModel->setEntryAttributes(m_entryAttributes);
     m_advancedUi->attributesView->setModel(m_attributesModel);
     connect(m_advancedUi->addAttributeButton, SIGNAL(clicked()), SLOT(insertAttribute()));
@@ -130,9 +132,6 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     connect(m_autoTypeUi->windowSequenceEdit, SIGNAL(textChanged(QString)),
             SLOT(applyCurrentAssoc()));
 
-    m_historyModel = new EntryHistoryModel(this);
-
-    m_sortModel = new QSortFilterProxyModel(this);
     m_sortModel->setSourceModel(m_historyModel);
     m_sortModel->setDynamicSortFilter(true);
     m_sortModel->setSortLocaleAware(true);
