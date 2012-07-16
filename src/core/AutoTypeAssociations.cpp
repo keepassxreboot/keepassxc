@@ -64,6 +64,17 @@ void AutoTypeAssociations::remove(int index)
     Q_EMIT modified();
 }
 
+void AutoTypeAssociations::removeEmpty()
+{
+    QMutableListIterator<AutoTypeAssociations::Association> i(m_associations);
+    while (i.hasNext()) {
+        const Association& assoc = i.next();
+        if (assoc.window.isEmpty() && assoc.sequence.isEmpty()) {
+            i.remove();
+        }
+    }
+}
+
 void AutoTypeAssociations::update(int index, const AutoTypeAssociations::Association& association)
 {
     Q_ASSERT(index >= 0 && index < m_associations.size());

@@ -40,6 +40,7 @@ public:
     void copyDataFrom(const AutoTypeAssociations* other);
     void add(const AutoTypeAssociations::Association& association);
     void remove(int index);
+    void removeEmpty();
     void update(int index, const AutoTypeAssociations::Association& association);
     AutoTypeAssociations::Association get(int index) const;
     QList<AutoTypeAssociations::Association> getAll() const;
