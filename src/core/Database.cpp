@@ -189,7 +189,15 @@ void Database::setCompressionAlgo(Database::CompressionAlgorithm algo)
 
 void Database::setTransformRounds(quint64 rounds)
 {
-    m_transformRounds = rounds;
+    if (m_transformRounds != rounds) {
+        m_transformRounds = rounds;
+
+        if (m_hasKey) {
+            m_transformedMasterKey = m_key.transform(m_transformSeed, m_transformRounds);
+            m_metadata->setMasterKeyChanged(Tools::currentDateTimeUtc());
+            Q_EMIT modifiedImmediate();
+        }
+    }
 }
 
 void Database::setKey(const CompositeKey& key, const QByteArray& transformSeed, bool updateChangedTime)
@@ -207,16 +215,6 @@ void Database::setKey(const CompositeKey& key, const QByteArray& transformSeed, 
 void Database::setKey(const CompositeKey& key)
 {
     setKey(key, Random::randomArray(32));
-}
-
-void Database::updateKey(quint64 rounds)
-{
-    if (m_transformRounds != rounds) {
-        m_transformRounds = rounds;
-        m_transformedMasterKey = m_key.transform(m_transformSeed, transformRounds());
-        m_metadata->setMasterKeyChanged(Tools::currentDateTimeUtc());
-        Q_EMIT modifiedImmediate();
-    }
 }
 
 bool Database::hasKey()
