@@ -32,6 +32,7 @@
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/Entry.h"
+#include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
 #include "format/KeePass2Reader.h"
@@ -41,6 +42,8 @@
 #include "gui/MainWindow.h"
 #include "gui/entry/EditEntryWidget.h"
 #include "gui/entry/EntryView.h"
+#include "gui/group/GroupModel.h"
+#include "gui/group/GroupView.h"
 #include "keys/PasswordKey.h"
 
 void TestGui::initTestCase()
@@ -55,9 +58,8 @@ void TestGui::initTestCase()
 
 void TestGui::testOpenDatabase()
 {
-    QAction* actionDatabaseOpen = m_mainWindow->findChild<QAction*>("actionDatabaseOpen");
     fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx"));
-    actionDatabaseOpen->trigger();
+    triggerAction("actionDatabaseOpen");
     QTest::qWait(20);
 
     QWidget* databaseOpenWidget = m_mainWindow->findChild<QWidget*>("databaseOpenWidget");
@@ -81,7 +83,7 @@ void TestGui::testTabs()
 
 void TestGui::testEditEntry()
 {
-    EntryView* entryView = m_dbWidget->findChild<EntryView*>("entryView");
+    EntryView* entryView = m_dbWidget->entryView();
     QModelIndex item = entryView->model()->index(0, 1);
     QRect itemRect = entryView->visualRect(item);
     QTest::mouseClick(entryView->viewport(), Qt::LeftButton, Qt::NoModifier, itemRect.center());
@@ -212,9 +214,56 @@ void TestGui::testSearch()
     QVERIFY(entryDeleteWidget->isEnabled());
 
     QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
+    QWidget* closeSearchButton = m_dbWidget->findChild<QToolButton*>("closeSearchButton");
+    QTest::mouseClick(closeSearchButton, Qt::LeftButton);
     QTest::qWait(20);
 
     QCOMPARE(entryView->model()->rowCount(), 1);
+}
+
+void TestGui::testDragAndDropEntry()
+{
+    EntryView* entryView = m_dbWidget->entryView();
+    GroupView* groupView = m_dbWidget->groupView();
+    QAbstractItemModel* groupModel = groupView->model();
+
+    QModelIndex sourceIndex = entryView->model()->index(0, 1);
+    QModelIndex targetIndex = groupModel->index(0, 0, groupModel->index(0, 0));
+    QVERIFY(sourceIndex.isValid());
+    QVERIFY(targetIndex.isValid());
+
+    QMimeData mimeData;
+    QByteArray encoded;
+    QDataStream stream(&encoded, QIODevice::WriteOnly);
+    Entry* entry = entryView->entryFromIndex(sourceIndex);
+    stream << entry->group()->database()->uuid() << entry->uuid();
+    mimeData.setData("application/x-keepassx-entry", encoded);
+
+    QVERIFY(groupModel->dropMimeData(&mimeData, Qt::MoveAction, -1, 0, targetIndex));
+    QCOMPARE(entry->group()->name(), QString("General"));
+}
+
+void TestGui::testDragAndDropGroup()
+{
+    QAbstractItemModel* groupModel = m_dbWidget->groupView()->model();
+    QModelIndex rootIndex = groupModel->index(0, 0);
+
+    dragAndDropGroup(groupModel->index(0, 0, rootIndex),
+                     groupModel->index(1, 0, rootIndex),
+                     -1, true, "Windows", 0);
+
+    // dropping parent on child is supposed to fail
+    dragAndDropGroup(groupModel->index(0, 0, rootIndex),
+                     groupModel->index(0, 0, groupModel->index(0, 0, rootIndex)),
+                     -1, false, "NewDatabase", 0);
+
+    dragAndDropGroup(groupModel->index(1, 0, rootIndex),
+                     rootIndex,
+                     0, true, "NewDatabase", 0);
+
+    dragAndDropGroup(groupModel->index(0, 0, rootIndex),
+                     rootIndex,
+                     -1, true, "NewDatabase", 5);
 }
 
 void TestGui::testSaveAs()
@@ -229,12 +278,11 @@ void TestGui::testSaveAs()
     m_tmpFile.close();
     fileDialog()->setNextFileName(m_tmpFile.fileName());
 
-    QAction* actionDatabaseSaveAs = m_mainWindow->findChild<QAction*>("actionDatabaseSaveAs");
-    actionDatabaseSaveAs->trigger();
+    triggerAction("actionDatabaseSaveAs");
 
     QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("SaveAs"));
 
-    QVERIFY(checkDatabase());
+    checkDatabase();
 
     fileInfo.refresh();
     QCOMPARE(fileInfo.lastModified(), lastModified);
@@ -246,17 +294,15 @@ void TestGui::testSave()
     QTest::qWait(200); // wait for modified timer
     QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("Save*"));
 
-    QAction* actionDatabaseSave = m_mainWindow->findChild<QAction*>("actionDatabaseSave");
-    actionDatabaseSave->trigger();
+    triggerAction("actionDatabaseSave");
     QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("Save"));
 
-    QVERIFY(checkDatabase());
+    checkDatabase();
 }
 
 void TestGui::testDatabaseSettings()
 {
-    QAction* actionChangeDatabaseSettings = m_mainWindow->findChild<QAction*>("actionChangeDatabaseSettings");
-    actionChangeDatabaseSettings->trigger();
+    triggerAction("actionChangeDatabaseSettings");
     QWidget* dbSettingsWidget = m_dbWidget->findChild<QWidget*>("databaseSettingsWidget");
     QSpinBox* transformRoundsSpinBox = dbSettingsWidget->findChild<QSpinBox*>("transformRoundsSpinBox");
     transformRoundsSpinBox->setValue(100);
@@ -265,18 +311,16 @@ void TestGui::testDatabaseSettings()
     QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("Save*"));
     QCOMPARE(m_db->transformRounds(), Q_UINT64_C(100));
 
-    QAction* actionDatabaseSave = m_mainWindow->findChild<QAction*>("actionDatabaseSave");
-    actionDatabaseSave->trigger();
+    triggerAction("actionDatabaseSave");
     QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("Save"));
 
-    QVERIFY(checkDatabase());
+    checkDatabase();
 }
 
 void TestGui::testKeePass1Import()
 {
-    QAction* actionImportKeePass1 = m_mainWindow->findChild<QAction*>("actionImportKeePass1");
     fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/basic.kdb"));
-    actionImportKeePass1->trigger();
+    triggerAction("actionImportKeePass1");
     QTest::qWait(20);
 
     QWidget* keepass1OpenWidget = m_mainWindow->findChild<QWidget*>("keepass1OpenWidget");
@@ -296,19 +340,43 @@ void TestGui::cleanupTestCase()
     delete m_mainWindow;
 }
 
-bool TestGui::checkDatabase()
+void TestGui::checkDatabase()
 {
     CompositeKey key;
     key.addKey(PasswordKey("a"));
     KeePass2Reader reader;
     QScopedPointer<Database> dbSaved(reader.readDatabase(m_tmpFile.fileName(), key));
-    if (!dbSaved || reader.hasError()) {
-        return false;
-    }
-    if (dbSaved->metadata()->name() != m_db->metadata()->name()) {
-        return false;
-    }
-    return true;
+    QVERIFY(dbSaved);
+    QVERIFY(!reader.hasError());
+    QCOMPARE(dbSaved->metadata()->name(), m_db->metadata()->name());
+}
+
+void TestGui::triggerAction(const QString& name)
+{
+    QAction* action = m_mainWindow->findChild<QAction*>(name);
+    QVERIFY(action);
+    QVERIFY(action->isEnabled());
+    action->trigger();
+}
+
+void TestGui::dragAndDropGroup(const QModelIndex& sourceIndex, const QModelIndex& targetIndex, int row,
+                               bool expectedResult, const QString& expectedParentName, int expectedPos)
+{
+    QVERIFY(sourceIndex.isValid());
+    QVERIFY(targetIndex.isValid());
+
+    GroupModel* groupModel = qobject_cast<GroupModel*>(m_dbWidget->groupView()->model());
+
+    QMimeData mimeData;
+    QByteArray encoded;
+    QDataStream stream(&encoded, QIODevice::WriteOnly);
+    Group* group = groupModel->groupFromIndex(sourceIndex);
+    stream << group->database()->uuid() << group->uuid();
+    mimeData.setData("application/x-keepassx-group", encoded);
+
+    QCOMPARE(groupModel->dropMimeData(&mimeData, Qt::MoveAction, row, 0, targetIndex), expectedResult);
+    QCOMPARE(group->parentGroup()->name(), expectedParentName);
+    QCOMPARE(group->parentGroup()->children().indexOf(group), expectedPos);
 }
 
 KEEPASSX_QTEST_GUI_MAIN(TestGui)
