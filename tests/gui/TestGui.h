@@ -39,6 +39,7 @@ private Q_SLOTS:
     void testSearch();
     void testSaveAs();
     void testSave();
+    void testDatabaseSettings();
     void testKeePass1Import();
     void cleanupTestCase();
 

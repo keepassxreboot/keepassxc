@@ -23,6 +23,7 @@
 #include <QtGui/QDialogButtonBox>
 #include <QtGui/QLineEdit>
 #include <QtGui/QPushButton>
+#include <QtGui/QSpinBox>
 #include <QtGui/QToolBar>
 #include <QtGui/QToolButton>
 
@@ -244,6 +245,25 @@ void TestGui::testSave()
     m_db->metadata()->setName("Save");
     QTest::qWait(200); // wait for modified timer
     QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("Save*"));
+
+    QAction* actionDatabaseSave = m_mainWindow->findChild<QAction*>("actionDatabaseSave");
+    actionDatabaseSave->trigger();
+    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("Save"));
+
+    QVERIFY(checkDatabase());
+}
+
+void TestGui::testDatabaseSettings()
+{
+    QAction* actionChangeDatabaseSettings = m_mainWindow->findChild<QAction*>("actionChangeDatabaseSettings");
+    actionChangeDatabaseSettings->trigger();
+    QWidget* dbSettingsWidget = m_dbWidget->findChild<QWidget*>("databaseSettingsWidget");
+    QSpinBox* transformRoundsSpinBox = dbSettingsWidget->findChild<QSpinBox*>("transformRoundsSpinBox");
+    transformRoundsSpinBox->setValue(100);
+    QTest::keyClick(transformRoundsSpinBox, Qt::Key_Enter);
+    QTest::qWait(200); // wait for modified timer
+    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("Save*"));
+    QCOMPARE(m_db->transformRounds(), Q_UINT64_C(100));
 
     QAction* actionDatabaseSave = m_mainWindow->findChild<QAction*>("actionDatabaseSave");
     actionDatabaseSave->trigger();

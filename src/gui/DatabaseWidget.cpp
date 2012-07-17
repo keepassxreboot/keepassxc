@@ -115,6 +115,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     headlineLabelFont.setPointSize(headlineLabelFont.pointSize() + 2);
     m_changeMasterKeyWidget->headlineLabel()->setFont(headlineLabelFont);
     m_databaseSettingsWidget = new DatabaseSettingsWidget();
+    m_databaseSettingsWidget->setObjectName("databaseSettingsWidget");
     m_databaseOpenWidget = new DatabaseOpenWidget();
     m_databaseOpenWidget->setObjectName("databaseOpenWidget");
     m_keepass1OpenWidget = new KeePass1OpenWidget();
