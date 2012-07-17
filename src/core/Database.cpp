@@ -193,9 +193,7 @@ void Database::setTransformRounds(quint64 rounds)
         m_transformRounds = rounds;
 
         if (m_hasKey) {
-            m_transformedMasterKey = m_key.transform(m_transformSeed, m_transformRounds);
-            m_metadata->setMasterKeyChanged(Tools::currentDateTimeUtc());
-            Q_EMIT modifiedImmediate();
+            setKey(m_key);
         }
     }
 }
