@@ -51,6 +51,11 @@ CompositeKey* CompositeKey::clone() const
 
 CompositeKey& CompositeKey::operator=(const CompositeKey& key)
 {
+    // handle self assignment as that would break when calling clear()
+    if (this == &key) {
+        return *this;
+    }
+
     clear();
 
     Q_FOREACH (const Key* subKey, key.m_keys) {

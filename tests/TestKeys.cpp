@@ -70,6 +70,10 @@ void TestKeys::testComposite()
     *compositeKey4 = *compositeKey3;
     QCOMPARE(compositeKey3->rawKey(), compositeKey4->rawKey());
 
+    // test self-assignment
+    *compositeKey3 = *compositeKey3;
+    QCOMPARE(compositeKey3->rawKey(), compositeKey4->rawKey());
+
     delete compositeKey3;
     delete compositeKey4;
 }
