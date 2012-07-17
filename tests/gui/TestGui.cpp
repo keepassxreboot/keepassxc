@@ -73,12 +73,14 @@ void TestGui::testTabs()
 {
     QCOMPARE(m_tabWidget->count(), 1);
     QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("NewDatabase.kdbx"));
+
+    m_dbWidget = m_tabWidget->currentDatabaseWidget();
+    m_db = m_dbWidget->database();
 }
 
 void TestGui::testEditEntry()
 {
-    DatabaseWidget* dbWidget = m_tabWidget->currentDatabaseWidget();
-    EntryView* entryView = dbWidget->findChild<EntryView*>("entryView");
+    EntryView* entryView = m_dbWidget->findChild<EntryView*>("entryView");
     QModelIndex item = entryView->model()->index(0, 1);
     QRect itemRect = entryView->visualRect(item);
     QTest::mouseClick(entryView->viewport(), Qt::LeftButton, Qt::NoModifier, itemRect.center());
@@ -93,8 +95,8 @@ void TestGui::testEditEntry()
     QTest::mouseClick(entryEditWidget, Qt::LeftButton);
     QTest::qWait(20);
 
-    EditEntryWidget* editEntryWidget = dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
-    QVERIFY(dbWidget->currentWidget() == editEntryWidget);
+    EditEntryWidget* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+    QVERIFY(m_dbWidget->currentWidget() == editEntryWidget);
     QDialogButtonBox* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
     QVERIFY(editEntryWidgetButtonBox);
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
@@ -105,9 +107,7 @@ void TestGui::testEditEntry()
 
 void TestGui::testAddEntry()
 {
-    DatabaseWidget* dbWidget = m_tabWidget->currentDatabaseWidget();
-
-    EntryView* entryView = dbWidget->findChild<EntryView*>("entryView");
+    EntryView* entryView = m_dbWidget->findChild<EntryView*>("entryView");
     QAction* entryNewAction = m_mainWindow->findChild<QAction*>("actionEntryNew");
     QVERIFY(entryNewAction->isEnabled());
     QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
@@ -118,9 +118,9 @@ void TestGui::testAddEntry()
     QTest::mouseClick(entryNewWidget, Qt::LeftButton);
     QTest::qWait(20);
 
-    QCOMPARE(dbWidget->currentMode(), DatabaseWidget::EditMode);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
 
-    EditEntryWidget* editEntryWidget = dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+    EditEntryWidget* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
     QLineEdit* titleEdit = editEntryWidget->findChild<QLineEdit*>("titleEdit");
     QTest::keyClicks(titleEdit, "test");
     QTest::qWait(20);
@@ -129,7 +129,7 @@ void TestGui::testAddEntry()
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
     QTest::qWait(20);
 
-    QCOMPARE(dbWidget->currentMode(), DatabaseWidget::ViewMode);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::ViewMode);
     QModelIndex item = entryView->model()->index(1, 1);
     Entry* entry = entryView->entryFromIndex(item);
 
@@ -146,7 +146,7 @@ void TestGui::testAddEntry()
     QTest::mouseClick(entryEditWidget, Qt::LeftButton);
     QTest::qWait(20);
 
-    QCOMPARE(dbWidget->currentMode(), DatabaseWidget::EditMode);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
     QTest::keyClicks(titleEdit, "something");
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
     QTest::qWait(20);
@@ -157,8 +157,6 @@ void TestGui::testAddEntry()
 
 void TestGui::testSearch()
 {
-    DatabaseWidget* dbWidget = m_tabWidget->currentDatabaseWidget();
-
     QAction* searchAction = m_mainWindow->findChild<QAction*>("actionSearch");
     QVERIFY(searchAction->isEnabled());
     QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
@@ -168,9 +166,9 @@ void TestGui::testSearch()
     QTest::mouseClick(searchActionWidget, Qt::LeftButton);
     QTest::qWait(20);
 
-    EntryView* entryView = dbWidget->findChild<EntryView*>("entryView");
-    QLineEdit* searchEdit = dbWidget->findChild<QLineEdit*>("searchEdit");
-    QToolButton* clearSearch = dbWidget->findChild<QToolButton*>("clearButton");
+    EntryView* entryView = m_dbWidget->findChild<EntryView*>("entryView");
+    QLineEdit* searchEdit = m_dbWidget->findChild<QLineEdit*>("searchEdit");
+    QToolButton* clearSearch = m_dbWidget->findChild<QToolButton*>("clearButton");
 
     QTest::keyClicks(searchEdit, "ZZZ");
     QTest::qWait(200);
@@ -194,14 +192,14 @@ void TestGui::testSearch()
     QTest::mouseClick(entryEditWidget, Qt::LeftButton);
     QTest::qWait(20);
 
-    QCOMPARE(dbWidget->currentMode(), DatabaseWidget::EditMode);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
 
-    EditEntryWidget* editEntryWidget = dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+    EditEntryWidget* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
     QDialogButtonBox* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
     QTest::qWait(20);
 
-    QCOMPARE(dbWidget->currentMode(), DatabaseWidget::ViewMode);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::ViewMode);
 
     QModelIndex item2 = entryView->model()->index(1, 0);
     QRect itemRect2 = entryView->visualRect(item2);
@@ -223,26 +221,19 @@ void TestGui::testSaveAs()
     QFileInfo fileInfo(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx"));
     QDateTime lastModified = fileInfo.lastModified();
 
-    Database* db = m_tabWidget->currentDatabaseWidget()->database();
-    db->metadata()->setName("SaveAs");
+    m_db->metadata()->setName("SaveAs");
 
     // open temporary file so it creates a filename
-    QVERIFY(tmpFile.open());
-    tmpFile.close();
-    fileDialog()->setNextFileName(tmpFile.fileName());
+    QVERIFY(m_tmpFile.open());
+    m_tmpFile.close();
+    fileDialog()->setNextFileName(m_tmpFile.fileName());
 
     QAction* actionDatabaseSaveAs = m_mainWindow->findChild<QAction*>("actionDatabaseSaveAs");
     actionDatabaseSaveAs->trigger();
 
     QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("SaveAs"));
 
-    CompositeKey key;
-    key.addKey(PasswordKey("a"));
-    KeePass2Reader reader;
-    QScopedPointer<Database> dbSaved(reader.readDatabase(tmpFile.fileName(), key));
-    QVERIFY(dbSaved);
-    QVERIFY(!reader.hasError());
-    QCOMPARE(dbSaved->metadata()->name(), db->metadata()->name());
+    QVERIFY(checkDatabase());
 
     fileInfo.refresh();
     QCOMPARE(fileInfo.lastModified(), lastModified);
@@ -250,8 +241,7 @@ void TestGui::testSaveAs()
 
 void TestGui::testSave()
 {
-    Database* db = m_tabWidget->currentDatabaseWidget()->database();
-    db->metadata()->setName("Save");
+    m_db->metadata()->setName("Save");
     QTest::qWait(200); // wait for modified timer
     QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("Save*"));
 
@@ -259,13 +249,7 @@ void TestGui::testSave()
     actionDatabaseSave->trigger();
     QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("Save"));
 
-    CompositeKey key;
-    key.addKey(PasswordKey("a"));
-    KeePass2Reader reader;
-    QScopedPointer<Database> dbSaved(reader.readDatabase(tmpFile.fileName(), key));
-    QVERIFY(dbSaved);
-    QVERIFY(!reader.hasError());
-    QCOMPARE(dbSaved->metadata()->name(), db->metadata()->name());
+    QVERIFY(checkDatabase());
 }
 
 void TestGui::testKeePass1Import()
@@ -290,6 +274,21 @@ void TestGui::testKeePass1Import()
 void TestGui::cleanupTestCase()
 {
     delete m_mainWindow;
+}
+
+bool TestGui::checkDatabase()
+{
+    CompositeKey key;
+    key.addKey(PasswordKey("a"));
+    KeePass2Reader reader;
+    QScopedPointer<Database> dbSaved(reader.readDatabase(m_tmpFile.fileName(), key));
+    if (!dbSaved || reader.hasError()) {
+        return false;
+    }
+    if (dbSaved->metadata()->name() != m_db->metadata()->name()) {
+        return false;
+    }
+    return true;
 }
 
 KEEPASSX_QTEST_GUI_MAIN(TestGui)

@@ -21,7 +21,9 @@
 #include <QtCore/QObject>
 #include <QtCore/QTemporaryFile>
 
+class Database;
 class DatabaseTabWidget;
+class DatabaseWidget;
 class MainWindow;
 
 class TestGui : public QObject
@@ -41,9 +43,13 @@ private Q_SLOTS:
     void cleanupTestCase();
 
 private:
+    bool checkDatabase();
+
     MainWindow* m_mainWindow;
     DatabaseTabWidget* m_tabWidget;
-    QTemporaryFile tmpFile;
+    DatabaseWidget* m_dbWidget;
+    QTemporaryFile m_tmpFile;
+    Database* m_db;
 };
 
 #endif // KEEPASSX_TESTGUI_H
