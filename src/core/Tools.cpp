@@ -181,4 +181,17 @@ void wait(int ms)
     }
 }
 
+QString platform()
+{
+#if defined(Q_WS_X11)
+    return "x11";
+#elif defined(Q_WS_MAC)
+    return "mac";
+#elif defined(Q_WS_WIN)
+    return "win";
+#else
+    return QString();
+#endif
+}
+
 } // namespace Tools

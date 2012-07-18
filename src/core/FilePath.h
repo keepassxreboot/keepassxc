@@ -27,6 +27,7 @@ class FilePath
 {
 public:
     QString dataPath(const QString& name);
+    QString pluginPath(const QString& name);
     QIcon applicationIcon();
     QIcon icon(const QString& category, const QString& name, bool fromTheme = true);
 

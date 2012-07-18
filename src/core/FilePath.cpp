@@ -19,6 +19,7 @@
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
+#include <QtCore/QLibrary>
 
 #include "config-keepassx.h"
 
@@ -27,6 +28,34 @@ FilePath* FilePath::m_instance(Q_NULLPTR);
 QString FilePath::dataPath(const QString& name)
 {
     return m_basePath + name;
+}
+
+QString FilePath::pluginPath(const QString& name)
+{
+    QStringList pluginPaths;
+    QDir buildDir(QCoreApplication::applicationDirPath() + "/autotype");
+    Q_FOREACH (const QString& dir, buildDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot)) {
+        pluginPaths << QCoreApplication::applicationDirPath() + "/autotype/" + dir;
+    }
+    pluginPaths << QCoreApplication::applicationDirPath();
+    pluginPaths << QCoreApplication::applicationDirPath() + "/../lib/keepassx";
+
+    QStringList dirFilter;
+    dirFilter << QString("*%1*").arg(name);
+
+    Q_FOREACH (const QString& path, pluginPaths) {
+        QStringList fileCandidates = QDir(path).entryList(dirFilter, QDir::Files);
+
+        Q_FOREACH (const QString& file, fileCandidates) {
+            QString filePath = path + "/" + file;
+
+            if (QLibrary::isLibrary(filePath)) {
+                return filePath;
+            }
+        }
+    }
+
+    return QString();
 }
 
 QIcon FilePath::applicationIcon()

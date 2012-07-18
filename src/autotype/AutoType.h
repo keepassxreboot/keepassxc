@@ -57,6 +57,7 @@ Q_SIGNALS:
 private:
     explicit AutoType(QObject* parent = Q_NULLPTR);
     ~AutoType();
+    void loadPlugin(const QString& pluginPath);
     bool parseActions(const QString& sequence, const Entry* entry, QList<AutoTypeAction*>& actions);
     QList<AutoTypeAction*> createActionFromTemplate(const QString& tmpl, const Entry* entry);
 

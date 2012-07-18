@@ -23,6 +23,7 @@
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "core/Database.h"
 #include "core/Entry.h"
+#include "core/FilePath.h"
 #include "core/Group.h"
 #include "core/ListDeleter.h"
 #include "core/Tools.h"
@@ -39,10 +40,21 @@ AutoType::AutoType(QObject* parent)
     // prevent crash when the plugin has unresolved symbols
     m_pluginLoader->setLoadHints(QLibrary::ResolveAllSymbolsHint);
 
-    // TODO: scan in proper paths
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    m_pluginLoader->setFileName(QCoreApplication::applicationDirPath() + "/autotype/x11/libkeepassx-autotype-x11.so");
-#endif
+    QString pluginPath = filePath()->pluginPath("keepassx-autotype-" + Tools::platform());
+
+    if (!pluginPath.isEmpty()) {
+        loadPlugin(pluginPath);
+    }
+}
+
+AutoType::~AutoType()
+{
+    delete m_executor;
+}
+
+void AutoType::loadPlugin(const QString& pluginPath)
+{
+    m_pluginLoader->setFileName(pluginPath);
 
     QObject* pluginInstance = m_pluginLoader->instance();
     if (pluginInstance) {
@@ -56,11 +68,6 @@ AutoType::AutoType(QObject* parent)
     if (!m_plugin) {
         qWarning("Unable to load auto-type plugin:\n%s", qPrintable(m_pluginLoader->errorString()));
     }
-}
-
-AutoType::~AutoType()
-{
-    delete m_executor;
 }
 
 AutoType* AutoType::instance()
