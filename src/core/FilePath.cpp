@@ -70,27 +70,36 @@ QIcon FilePath::applicationIcon()
 
 QIcon FilePath::icon(const QString& category, const QString& name, bool fromTheme)
 {
-    QIcon icon;
+    QString combinedName = category + "/" + name;
+
+    QIcon icon = m_iconCache.value(combinedName);
+
+    if (!icon.isNull()) {
+        return icon;
+    }
 
     if (fromTheme) {
         icon = QIcon::fromTheme(name);
     }
 
     if (icon.isNull()) {
-        QStringList pngSizes;
-        pngSizes << "16" << "22" << "24" << "32" << "48" << "64" << "128";
+        QList<int> pngSizes;
+        pngSizes << 16 << 22 << 24 << 32 << 48 << 64 << 128;
         QString filename;
-        Q_FOREACH (const QString& size, pngSizes) {
-            filename = QString("%1/icons/application/%2x%2/%3/%4.png").arg(m_dataPath, size, category, name);
+        Q_FOREACH (int size, pngSizes) {
+            filename = QString("%1/icons/application/%2x%2/%3.png").arg(m_dataPath, QString::number(size),
+                                                                        combinedName);
             if (QFile::exists(filename)) {
-                icon.addFile(filename);
+                icon.addFile(filename, QSize(size, size));
             }
         }
-        filename = QString("%1/icons/application/scalable/%3/%4.svgz").arg(m_dataPath, category, name);
+        filename = QString("%1/icons/application/scalable/%3.svgz").arg(m_dataPath, combinedName);
         if (QFile::exists(filename)) {
             icon.addFile(filename);
         }
     }
+
+    m_iconCache.insert(combinedName, icon);
 
     return icon;
 }

@@ -18,6 +18,7 @@
 #ifndef KEEPASSX_FILEPATH_H
 #define KEEPASSX_FILEPATH_H
 
+#include <QtCore/QHash>
 #include <QtCore/QString>
 #include <QtGui/QIcon>
 
@@ -40,6 +41,7 @@ private:
     static FilePath* m_instance;
 
     QString m_dataPath;
+    QHash<QString, QIcon> m_iconCache;
 
     Q_DISABLE_COPY(FilePath)
 };
