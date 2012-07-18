@@ -19,7 +19,7 @@
 #include "ui_AboutDialog.h"
 
 #include "config-keepassx.h"
-#include "core/DataPath.h"
+#include "core/FilePath.h"
 
 AboutDialog::AboutDialog(QWidget* parent)
     : QDialog(parent)
@@ -33,7 +33,7 @@ AboutDialog::AboutDialog(QWidget* parent)
     nameLabelFont.setPointSize(nameLabelFont.pointSize() + 4);
     m_ui->nameLabel->setFont(nameLabelFont);
 
-    m_ui->iconLabel->setPixmap(dataPath()->applicationIcon().pixmap(48));
+    m_ui->iconLabel->setPixmap(filePath()->applicationIcon().pixmap(48));
 
     setAttribute(Qt::WA_DeleteOnClose);
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(close()));

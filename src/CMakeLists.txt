@@ -25,11 +25,11 @@ set(keepassx_SOURCES
     core/Config.cpp
     core/Database.cpp
     core/DatabaseIcons.cpp
-    core/DataPath.cpp
     core/Endian.cpp
     core/Entry.cpp
     core/EntryAttachments.cpp
     core/EntryAttributes.cpp
+    core/FilePath.cpp
     core/Group.cpp
     core/ListDeleter.h
     core/Metadata.cpp

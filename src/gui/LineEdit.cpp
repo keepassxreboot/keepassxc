@@ -22,7 +22,7 @@
 #include <QtGui/QStyle>
 #include <QtGui/QToolButton>
 
-#include "core/DataPath.h"
+#include "core/FilePath.h"
 
 LineEdit::LineEdit(QWidget* parent)
     : QLineEdit(parent)
@@ -37,7 +37,7 @@ LineEdit::LineEdit(QWidget* parent)
     if (icon.isNull()) {
         icon = QIcon::fromTheme("edit-clear");
         if (icon.isNull()) {
-            icon = dataPath()->icon("actions", iconNameDirected, false);
+            icon = filePath()->icon("actions", iconNameDirected, false);
         }
     }
 

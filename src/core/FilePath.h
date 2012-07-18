@@ -15,36 +15,36 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_DATAPATH_H
-#define KEEPASSX_DATAPATH_H
+#ifndef KEEPASSX_FILEPATH_H
+#define KEEPASSX_FILEPATH_H
 
 #include <QtCore/QString>
 #include <QtGui/QIcon>
 
 #include "core/Global.h"
 
-class DataPath
+class FilePath
 {
 public:
-    QString path(const QString& name);
+    QString dataPath(const QString& name);
     QIcon applicationIcon();
     QIcon icon(const QString& category, const QString& name, bool fromTheme = true);
 
-    static DataPath* instance();
+    static FilePath* instance();
 
 private:
-    DataPath();
+    FilePath();
     bool testSetDir(const QString& dir);
 
-    static DataPath* m_instance;
+    static FilePath* m_instance;
 
     QString m_basePath;
 
-    Q_DISABLE_COPY(DataPath)
+    Q_DISABLE_COPY(FilePath)
 };
 
-inline DataPath* dataPath() {
-    return DataPath::instance();
+inline FilePath* filePath() {
+    return FilePath::instance();
 }
 
-#endif // KEEPASSX_DATAPATH_H
+#endif // KEEPASSX_FILEPATH_H

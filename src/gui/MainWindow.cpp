@@ -23,7 +23,7 @@
 #include "autotype/AutoType.h"
 #include "core/Config.h"
 #include "core/Database.h"
-#include "core/DataPath.h"
+#include "core/FilePath.h"
 #include "core/Metadata.h"
 #include "gui/AboutDialog.h"
 #include "gui/DatabaseWidget.h"
@@ -34,7 +34,7 @@ MainWindow::MainWindow()
 {
     m_ui->setupUi(this);
 
-    setWindowIcon(dataPath()->applicationIcon());
+    setWindowIcon(filePath()->applicationIcon());
     QAction* toggleViewAction = m_ui->toolBar->toggleViewAction();
     toggleViewAction->setText(tr("Show toolbar"));
     m_ui->menuView->addAction(toggleViewAction);
@@ -56,29 +56,29 @@ MainWindow::MainWindow()
     m_ui->actionEntryCopyPassword->setShortcut(Qt::CTRL + Qt::Key_C);
     setShortcut(m_ui->actionEntryAutoType, QKeySequence::Paste, Qt::CTRL + Qt::Key_V);
 
-    m_ui->actionDatabaseNew->setIcon(dataPath()->icon("actions", "document-new"));
-    m_ui->actionDatabaseOpen->setIcon(dataPath()->icon("actions", "document-open"));
-    m_ui->actionDatabaseSave->setIcon(dataPath()->icon("actions", "document-save"));
-    m_ui->actionDatabaseSaveAs->setIcon(dataPath()->icon("actions", "document-save-as"));
-    m_ui->actionDatabaseClose->setIcon(dataPath()->icon("actions", "document-close"));
-    m_ui->actionChangeDatabaseSettings->setIcon(dataPath()->icon("actions", "document-edit"));
-    m_ui->actionChangeMasterKey->setIcon(dataPath()->icon("actions", "database-change-key", false));
-    m_ui->actionQuit->setIcon(dataPath()->icon("actions", "application-exit"));
+    m_ui->actionDatabaseNew->setIcon(filePath()->icon("actions", "document-new"));
+    m_ui->actionDatabaseOpen->setIcon(filePath()->icon("actions", "document-open"));
+    m_ui->actionDatabaseSave->setIcon(filePath()->icon("actions", "document-save"));
+    m_ui->actionDatabaseSaveAs->setIcon(filePath()->icon("actions", "document-save-as"));
+    m_ui->actionDatabaseClose->setIcon(filePath()->icon("actions", "document-close"));
+    m_ui->actionChangeDatabaseSettings->setIcon(filePath()->icon("actions", "document-edit"));
+    m_ui->actionChangeMasterKey->setIcon(filePath()->icon("actions", "database-change-key", false));
+    m_ui->actionQuit->setIcon(filePath()->icon("actions", "application-exit"));
 
-    m_ui->actionEntryNew->setIcon(dataPath()->icon("actions", "entry-new", false));
-    m_ui->actionEntryClone->setIcon(dataPath()->icon("actions", "entry-clone", false));
-    m_ui->actionEntryEdit->setIcon(dataPath()->icon("actions", "entry-edit", false));
-    m_ui->actionEntryDelete->setIcon(dataPath()->icon("actions", "entry-delete", false));
+    m_ui->actionEntryNew->setIcon(filePath()->icon("actions", "entry-new", false));
+    m_ui->actionEntryClone->setIcon(filePath()->icon("actions", "entry-clone", false));
+    m_ui->actionEntryEdit->setIcon(filePath()->icon("actions", "entry-edit", false));
+    m_ui->actionEntryDelete->setIcon(filePath()->icon("actions", "entry-delete", false));
 
-    m_ui->actionGroupNew->setIcon(dataPath()->icon("actions", "group-new", false));
-    m_ui->actionGroupEdit->setIcon(dataPath()->icon("actions", "group-edit", false));
-    m_ui->actionGroupDelete->setIcon(dataPath()->icon("actions", "group-delete", false));
+    m_ui->actionGroupNew->setIcon(filePath()->icon("actions", "group-new", false));
+    m_ui->actionGroupEdit->setIcon(filePath()->icon("actions", "group-edit", false));
+    m_ui->actionGroupDelete->setIcon(filePath()->icon("actions", "group-delete", false));
 
-    m_ui->actionSettings->setIcon(dataPath()->icon("actions", "configure"));
+    m_ui->actionSettings->setIcon(filePath()->icon("actions", "configure"));
 
-    m_ui->actionAbout->setIcon(dataPath()->icon("actions", "help-about"));
+    m_ui->actionAbout->setIcon(filePath()->icon("actions", "help-about"));
 
-    m_ui->actionSearch->setIcon(dataPath()->icon("actions", "system-search"));
+    m_ui->actionSearch->setIcon(filePath()->icon("actions", "system-search"));
 
     connect(m_ui->tabWidget, SIGNAL(entrySelectionChanged(bool)),
             SLOT(setMenuActionState()));

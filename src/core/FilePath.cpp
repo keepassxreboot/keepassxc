@@ -15,26 +15,26 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "DataPath.h"
+#include "FilePath.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
 
 #include "config-keepassx.h"
 
-DataPath* DataPath::m_instance(Q_NULLPTR);
+FilePath* FilePath::m_instance(Q_NULLPTR);
 
-QString DataPath::path(const QString& name)
+QString FilePath::dataPath(const QString& name)
 {
     return m_basePath + name;
 }
 
-QIcon DataPath::applicationIcon()
+QIcon FilePath::applicationIcon()
 {
     return icon("apps", "keepassx");
 }
 
-QIcon DataPath::icon(const QString& category, const QString& name, bool fromTheme)
+QIcon FilePath::icon(const QString& category, const QString& name, bool fromTheme)
 {
     QIcon icon;
 
@@ -61,7 +61,7 @@ QIcon DataPath::icon(const QString& category, const QString& name, bool fromThem
     return icon;
 }
 
-DataPath::DataPath()
+FilePath::FilePath()
 {
     if (false) {
     }
@@ -90,7 +90,7 @@ DataPath::DataPath()
     }
 }
 
-bool DataPath::testSetDir(const QString& dir)
+bool FilePath::testSetDir(const QString& dir)
 {
     if (QFile::exists(dir + "/icons/database/C00_Password.png")) {
         m_basePath = dir;
@@ -101,10 +101,10 @@ bool DataPath::testSetDir(const QString& dir)
     }
 }
 
-DataPath* DataPath::instance()
+FilePath* FilePath::instance()
 {
     if (!m_instance) {
-        m_instance = new DataPath();
+        m_instance = new FilePath();
     }
 
     return m_instance;

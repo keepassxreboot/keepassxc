@@ -28,7 +28,7 @@
 #include <QtGui/QSplitter>
 
 #include "autotype/AutoType.h"
-#include "core/DataPath.h"
+#include "core/FilePath.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "gui/ChangeMasterKeyWidget.h"
@@ -84,7 +84,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     rightHandSideWidget->setSizePolicy(policy);
 
     QAction* closeAction = new QAction(m_searchWidget);
-    QIcon closeIcon = dataPath()->icon("actions", "dialog-close");
+    QIcon closeIcon = filePath()->icon("actions", "dialog-close");
     closeAction->setIcon(closeIcon);
     m_searchUi->closeSearchButton->setDefaultAction(closeAction);
     m_searchWidget->hide();
@@ -130,15 +130,15 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     addWidget(m_keepass1OpenWidget);
 
     m_actionEntryNew = m_menuEntry->addAction(tr("Add new entry"), this, SLOT(createEntry()));
-    m_actionEntryNew->setIcon(dataPath()->icon("actions", "entry-new", false));
+    m_actionEntryNew->setIcon(filePath()->icon("actions", "entry-new", false));
     m_actionEntryClone = m_menuEntry->addAction(tr("Clone entry"), this, SLOT(cloneEntry()));
-    m_actionEntryClone->setIcon(dataPath()->icon("actions", "entry-clone", false));
+    m_actionEntryClone->setIcon(filePath()->icon("actions", "entry-clone", false));
     m_actionEntryClone->setEnabled(false);
     m_actionEntryEditView = m_menuEntry->addAction(tr("View/Edit entry"), this, SLOT(switchToEntryEdit()));
-    m_actionEntryEditView->setIcon(dataPath()->icon("actions", "entry-edit", false));
+    m_actionEntryEditView->setIcon(filePath()->icon("actions", "entry-edit", false));
     m_actionEntryEditView->setEnabled(false);
     m_actionEntryDelete = m_menuEntry->addAction(tr("Delete entry"), this, SLOT(deleteEntry()));
-    m_actionEntryDelete->setIcon(dataPath()->icon("actions", "entry-delete", false));
+    m_actionEntryDelete->setIcon(filePath()->icon("actions", "entry-delete", false));
     m_actionEntryDelete->setEnabled(false);
     m_actionEntryCopyUsername = m_menuEntry->addAction(tr("Copy username to clipboard"), this,
                                                        SLOT(copyUsername()), Qt::CTRL + Qt::Key_B);
@@ -157,11 +157,11 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_actionEntryAutoType->setEnabled(false);
 
     m_actionGroupNew = m_menuGroup->addAction(tr("Add new group"), this, SLOT(createGroup()));
-    m_actionGroupNew->setIcon(dataPath()->icon("actions", "group-new", false));
+    m_actionGroupNew->setIcon(filePath()->icon("actions", "group-new", false));
     m_actionGroupEdit = m_menuGroup->addAction(tr("Edit group"), this, SLOT(switchToGroupEdit()));
-    m_actionGroupEdit->setIcon(dataPath()->icon("actions", "group-edit", false));
+    m_actionGroupEdit->setIcon(filePath()->icon("actions", "group-edit", false));
     m_actionGroupDelete = m_menuGroup->addAction(tr("Delete group"), this, SLOT(deleteGroup()));
-    m_actionGroupDelete->setIcon(dataPath()->icon("actions", "group-delete", false));
+    m_actionGroupDelete->setIcon(filePath()->icon("actions", "group-delete", false));
     m_actionGroupDelete->setEnabled(false);
 
     connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(clearLastGroup(Group*)));
