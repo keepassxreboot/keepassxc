@@ -27,7 +27,12 @@ FilePath* FilePath::m_instance(Q_NULLPTR);
 
 QString FilePath::dataPath(const QString& name)
 {
-    return m_basePath + name;
+    if (name.isEmpty() || name.startsWith('/')) {
+        return m_dataPath + name;
+    }
+    else {
+        return m_dataPath + "/" + name;
+    }
 }
 
 QString FilePath::pluginPath(const QString& name)
@@ -76,12 +81,12 @@ QIcon FilePath::icon(const QString& category, const QString& name, bool fromThem
         pngSizes << "16" << "22" << "24" << "32" << "48" << "64" << "128";
         QString filename;
         Q_FOREACH (const QString& size, pngSizes) {
-            filename = QString("%1/icons/application/%2x%2/%3/%4.png").arg(m_basePath, size, category, name);
+            filename = QString("%1/icons/application/%2x%2/%3/%4.png").arg(m_dataPath, size, category, name);
             if (QFile::exists(filename)) {
                 icon.addFile(filename);
             }
         }
-        filename = QString("%1/icons/application/scalable/%3/%4.svgz").arg(m_basePath, category, name);
+        filename = QString("%1/icons/application/scalable/%3/%4.svgz").arg(m_dataPath, category, name);
         if (QFile::exists(filename)) {
             icon.addFile(filename);
         }
@@ -111,18 +116,18 @@ FilePath::FilePath()
     }
 #endif
 
-    if (m_basePath.isEmpty()) {
-        qWarning("DataPath::DataPath: can't find data dir");
+    if (m_dataPath.isEmpty()) {
+        qWarning("FilePath::DataPath: can't find data dir");
     }
     else {
-        m_basePath = QDir::cleanPath(m_basePath) + "/";
+        m_dataPath = QDir::cleanPath(m_dataPath);
     }
 }
 
 bool FilePath::testSetDir(const QString& dir)
 {
     if (QFile::exists(dir + "/icons/database/C00_Password.png")) {
-        m_basePath = dir;
+        m_dataPath = dir;
         return true;
     }
     else {

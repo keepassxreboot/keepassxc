@@ -39,7 +39,7 @@ private:
 
     static FilePath* m_instance;
 
-    QString m_basePath;
+    QString m_dataPath;
 
     Q_DISABLE_COPY(FilePath)
 };
