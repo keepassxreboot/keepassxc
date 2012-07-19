@@ -37,6 +37,8 @@ Group::~Group()
 {
     cleanupParent();
     this->blockSignals(true);
+    // Destroy entries and children manually so DeletedObjects can be added
+    // to database.
     if (m_db && m_parent) {
         QList<Entry*> entries = m_entries;
         Q_FOREACH (Entry* entry, entries) {
@@ -118,7 +120,7 @@ QPixmap Group::iconPixmap() const
         if (!QPixmapCache::find(m_pixmapCacheKey, &pixmap)) {
             // TODO: check if m_db is 0
             pixmap = QPixmap::fromImage(m_db->metadata()->customIcon(m_customIcon));
-            *const_cast<QPixmapCache::Key*>(&m_pixmapCacheKey) = QPixmapCache::insert(pixmap);
+            const_cast<Group*>(this)->m_pixmapCacheKey = QPixmapCache::insert(pixmap);
         }
 
         return pixmap;
