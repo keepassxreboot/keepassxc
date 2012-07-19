@@ -27,6 +27,11 @@ QList<QString> EntryAttachments::keys() const
     return m_attachments.keys();
 }
 
+QList<QByteArray> EntryAttachments::values() const
+{
+    return m_attachments.values();
+}
+
 QByteArray EntryAttachments::value(const QString& key) const
 {
     return m_attachments.value(key);
@@ -85,21 +90,6 @@ void EntryAttachments::clear()
 
     Q_EMIT reset();
     Q_EMIT modified();
-}
-
-int EntryAttachments::attachmentsSize(QList<QByteArray>* foundAttachements)
-{
-    int size = 0;
-
-    QMapIterator<QString, QByteArray> i(m_attachments);
-    while (i.hasNext()) {
-        i.next();
-        if (!foundAttachements->contains(i.value())) {
-            foundAttachements->append(i.value());
-            size += i.value().size();
-        }
-    }
-    return size;
 }
 
 bool EntryAttachments::operator==(const EntryAttachments& other) const

@@ -402,11 +402,6 @@ void Entry::setExpiryTime(const QDateTime& dateTime)
     }
 }
 
-int Entry::getSize(QList<QByteArray>* foundAttachements)
-{
-    return attributes()->attributesSize() + attachments()->attachmentsSize(foundAttachements);
-}
-
 QList<Entry*> Entry::historyItems()
 {
     return m_history;
@@ -467,21 +462,26 @@ void Entry::truncateHistory()
     int histMaxSize = db->metadata()->historyMaxSize();
     if (histMaxSize > -1) {
         int size = 0;
-        QList<QByteArray> foundAttachements;
-        attachments()->attachmentsSize(&foundAttachements);
+        QSet<QByteArray> foundAttachements = attachments()->values().toSet();
 
         QMutableListIterator<Entry*> i(m_history);
         i.toBack();
         while (i.hasPrevious()) {
-            Entry* entry = i.previous();
+            Entry* historyItem = i.previous();
 
             // don't calculate size if it's already above the maximum
             if (size <= histMaxSize) {
-                size += entry->getSize(&foundAttachements);
+                size += historyItem->attributes()->attributesSize();
+
+                QSet<QByteArray> newAttachments = historyItem->attachments()->values().toSet() - foundAttachements;
+                Q_FOREACH (const QByteArray& attachment, newAttachments) {
+                    size += attachment.size();
+                }
+                foundAttachements += newAttachments;
             }
 
             if (size > histMaxSize) {
-                delete entry;
+                delete historyItem;
                 i.remove();
             }
         }

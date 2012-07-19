@@ -105,7 +105,6 @@ public:
     void setNotes(const QString& notes);
     void setExpires(const bool& value);
     void setExpiryTime(const QDateTime& dateTime);
-    int getSize(QList<QByteArray>* foundAttachements);
 
     QList<Entry*> historyItems();
     const QList<Entry*>& historyItems() const;

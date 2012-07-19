@@ -30,11 +30,11 @@ class EntryAttachments : public QObject
 public:
     explicit EntryAttachments(QObject* parent = Q_NULLPTR);
     QList<QString> keys() const;
+    QList<QByteArray> values() const;
     QByteArray value(const QString& key) const;
     void set(const QString& key, const QByteArray& value);
     void remove(const QString& key);
     void clear();
-    int attachmentsSize(QList<QByteArray>* foundAttachements);
     bool operator==(const EntryAttachments& other) const;
     bool operator!=(const EntryAttachments& other) const;
     EntryAttachments& operator=(const EntryAttachments& other);
