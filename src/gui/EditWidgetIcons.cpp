@@ -34,14 +34,13 @@ IconStruct::IconStruct()
 
 EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     : QWidget(parent)
-    ,  m_ui(new Ui::EditWidgetIcons())
+    , m_ui(new Ui::EditWidgetIcons())
+    , m_defaultIconModel(new DefaultIconModel(this))
+    , m_customIconModel(new CustomIconModel(this))
 {
     m_ui->setupUi(this);
 
-    m_defaultIconModel = new DefaultIconModel(this);
     m_ui->defaultIconsView->setModel(m_defaultIconModel);
-
-    m_customIconModel = new CustomIconModel(this);
     m_ui->customIconsView->setModel(m_customIconModel);
 
     connect(m_ui->defaultIconsView, SIGNAL(clicked(QModelIndex)),

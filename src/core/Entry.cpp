@@ -29,10 +29,9 @@ Entry::Entry()
     : m_attributes(new EntryAttributes(this))
     , m_attachments(new EntryAttachments(this))
     , m_autoTypeAssociations(new AutoTypeAssociations(this))
+    , m_tmpHistoryItem(Q_NULLPTR)
+    , m_updateTimeinfo(true)
 {
-    m_updateTimeinfo = true;
-    m_tmpHistoryItem = Q_NULLPTR;
-
     m_data.iconNumber = DefaultIconNumber;
     m_data.autoTypeEnabled = true;
     m_data.autoTypeObfuscation = 0;

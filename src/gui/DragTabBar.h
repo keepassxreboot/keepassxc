@@ -40,7 +40,7 @@ private Q_SLOTS:
     void dragSwitchTab();
 
 private:
-    QTimer* m_tabSwitchTimer;
+    QTimer* const m_tabSwitchTimer;
     int m_tabSwitchIndex;
 };
 

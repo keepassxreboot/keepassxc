@@ -26,15 +26,21 @@ const int Metadata::DefaultHistoryMaxSize = 6 * 1024 * 1024;
 
 Metadata::Metadata(QObject* parent)
     : QObject(parent)
+    , m_generator("KeePassX")
+    , m_maintenanceHistoryDays(365)
+    , m_protectTitle(false)
+    , m_protectUsername(false)
+    , m_protectPassword(true)
+    , m_protectUrl(false)
+    , m_protectNotes(false)
+    // , m_autoEnableVisualHiding(false)
+    , m_recycleBinEnabled(true)
+    , m_masterKeyChangeRec(-1)
+    , m_masterKeyChangeForce(-1)
+    , m_historyMaxItems(DefaultHistoryMaxItems)
+    , m_historyMaxSize(DefaultHistoryMaxSize)
+    , m_updateDatetime(true)
 {
-    m_generator = "KeePassX";
-    m_maintenanceHistoryDays = 365;
-    m_recycleBinEnabled = true;
-    m_masterKeyChangeRec = -1;
-    m_masterKeyChangeForce = -1;
-    m_historyMaxItems = DefaultHistoryMaxItems;
-    m_historyMaxSize = DefaultHistoryMaxSize;
-
     QDateTime now = Tools::currentDateTimeUtc();
     m_nameChanged = now;
     m_descriptionChanged = now;
@@ -42,15 +48,6 @@ Metadata::Metadata(QObject* parent)
     m_recycleBinChanged = now;
     m_entryTemplatesGroupChanged = now;
     m_masterKeyChanged = now;
-
-    m_protectTitle = false;
-    m_protectUsername = false;
-    m_protectPassword = true;
-    m_protectUrl = false;
-    m_protectNotes = false;
-    // m_autoEnableVisualHiding = false;
-
-    m_updateDatetime = true;
 }
 
 template <class P, class V> bool Metadata::set(P& property, const V& value)

@@ -62,8 +62,8 @@ private:
     const QScopedPointer<Ui::EditWidgetIcons> m_ui;
     Database* m_database;
     Uuid m_currentUuid;
-    DefaultIconModel* m_defaultIconModel;
-    CustomIconModel* m_customIconModel;
+    DefaultIconModel* const m_defaultIconModel;
+    CustomIconModel* const m_customIconModel;
 
     Q_DISABLE_COPY(EditWidgetIcons)
 };

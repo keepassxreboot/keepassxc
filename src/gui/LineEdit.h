@@ -40,7 +40,7 @@ private Q_SLOTS:
     void updateCloseButton(const QString& text);
 
 private:
-    QToolButton* m_clearButton;
+    QToolButton* const m_clearButton;
 };
 
 #endif // KEEPASSX_LINEEDIT_H

@@ -26,8 +26,8 @@
 
 LineEdit::LineEdit(QWidget* parent)
     : QLineEdit(parent)
+    , m_clearButton(new QToolButton(this))
 {
-    m_clearButton = new QToolButton(this);
     m_clearButton->setObjectName("clearButton");
 
     QIcon icon;

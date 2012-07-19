@@ -25,13 +25,12 @@
 const int Group::DefaultIconNumber = 48;
 
 Group::Group()
+    : m_iconNumber(DefaultIconNumber)
+    , m_isExpanded(true)
+    , m_autoTypeEnabled(Inherit)
+    , m_searchingEnabled(Inherit)
+    , m_updateTimeinfo(true)
 {
-    m_iconNumber = DefaultIconNumber;
-    m_isExpanded = true;
-    m_autoTypeEnabled = Inherit;
-    m_searchingEnabled = Inherit;
-
-    m_updateTimeinfo = true;
 }
 
 Group::~Group()
