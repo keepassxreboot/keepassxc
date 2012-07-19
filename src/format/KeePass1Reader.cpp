@@ -567,7 +567,7 @@ Entry* KeePass1Reader::readEntry(QIODevice* cipherStream)
             entry->setPassword(QString::fromUtf8(fieldData.constData()));
             break;
         case 0x0008:
-            entry->setNotes(QString::fromUtf8(fieldData.constData()));
+            parseNotes(QString::fromUtf8(fieldData.constData()), entry.data());
             break;
         case 0x0009:
         {
@@ -634,6 +634,68 @@ Entry* KeePass1Reader::readEntry(QIODevice* cipherStream)
     entry->setTimeInfo(timeInfo);
 
     return entry.take();
+}
+
+void KeePass1Reader::parseNotes(const QString& rawNotes, Entry* entry)
+{
+    QRegExp sequenceRegexp("Auto-Type(?:-(\\d+))?: (.+)", Qt::CaseInsensitive, QRegExp::RegExp2);
+    QRegExp windowRegexp("Auto-Type-Window(?:-(\\d+))?: (.+)", Qt::CaseInsensitive, QRegExp::RegExp2);
+    QHash<int, QString> sequences;
+    QMap<int, QStringList> windows;
+
+    QStringList notes;
+
+    bool lastLineAutoType = false;
+    Q_FOREACH (QString line, rawNotes.split("\n")) {
+        line.remove("\r");
+
+        if (sequenceRegexp.exactMatch(line)) {
+            if (sequenceRegexp.cap(1).isEmpty()) {
+                entry->setDefaultAutoTypeSequence(sequenceRegexp.cap(2));
+            }
+            else {
+                sequences[sequenceRegexp.cap(1).toInt()] = sequenceRegexp.cap(2);
+            }
+
+            lastLineAutoType = true;
+        }
+        else if (windowRegexp.exactMatch(line)) {
+            int nr;
+            if (windowRegexp.cap(1).isEmpty()) {
+                nr = -1; // special number that matches no other sequence
+            }
+            else {
+                nr = windowRegexp.cap(1).toInt();
+            }
+
+            windows[nr].append(windowRegexp.cap(2));
+
+            lastLineAutoType = true;
+        }
+        else  {
+            // don't add empty lines following a removed auto-type line
+            if (!lastLineAutoType || !line.isEmpty()) {
+                notes.append(line);
+            }
+            lastLineAutoType = false;
+        }
+    }
+
+    entry->setNotes(notes.join("\n"));
+
+    QMapIterator<int, QStringList> i(windows);
+    while (i.hasNext()) {
+        i.next();
+
+        QString sequence = sequences.value(i.key());
+
+        Q_FOREACH (const QString& window, i.value()) {
+            AutoTypeAssociations::Association assoc;
+            assoc.window = window;
+            assoc.sequence = sequence;
+            entry->autoTypeAssociations()->add(assoc);
+        }
+    }
 }
 
 bool KeePass1Reader::constructGroupTree(const QList<Group*> groups)

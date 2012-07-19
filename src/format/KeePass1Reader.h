@@ -57,6 +57,7 @@ private:
     bool verifyKey(SymmetricCipherStream* cipherStream);
     Group* readGroup(QIODevice* cipherStream);
     Entry* readEntry(QIODevice* cipherStream);
+    void parseNotes(const QString& rawNotes, Entry* entry);
     bool constructGroupTree(const QList<Group*> groups);
     void parseMetaStream(const Entry* entry);
     bool parseGroupTreeState(const QByteArray& data);

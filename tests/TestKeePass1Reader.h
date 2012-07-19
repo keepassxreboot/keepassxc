@@ -33,6 +33,7 @@ private Q_SLOTS:
     void testMasterKey();
     void testCustomIcons();
     void testGroupExpanded();
+    void testAutoType();
     void testFileKey();
     void testFileKey_data();
     void testCompositeKey();
