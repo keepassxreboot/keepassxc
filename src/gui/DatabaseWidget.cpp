@@ -87,6 +87,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     QIcon closeIcon = filePath()->icon("actions", "dialog-close");
     closeAction->setIcon(closeIcon);
     m_searchUi->closeSearchButton->setDefaultAction(closeAction);
+    m_searchUi->closeSearchButton->setShortcut(Qt::Key_Escape);
     m_searchWidget->hide();
     m_searchUi->caseSensitiveCheckBox->setVisible(false);
 
