@@ -49,7 +49,7 @@
 
 #include <QtCore/QIODevice>
 
-#if defined(Q_WS_WIN)
+#if defined(Q_OS_WIN)
 #  if !defined(QT_QTIOCOMPRESSOR_EXPORT) && !defined(QT_QTIOCOMPRESSOR_IMPORT)
 #    define QT_QTIOCOMPRESSOR_EXPORT
 #  elif defined(QT_QTIOCOMPRESSOR_IMPORT)
