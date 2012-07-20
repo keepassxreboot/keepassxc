@@ -76,10 +76,9 @@ private Q_SLOTS:
     void insertAttachment();
     void saveCurrentAttachment();
     void removeCurrentAttachment();
-    void autoTypeEnableToggled(bool checked);
+    void updateAutoTypeEnabled();
     void insertAutoTypeAssoc();
     void removeAutoTypeAssoc();
-    void updateAssocRemoveButton();
     void loadCurrentAssoc(const QModelIndex& current);
     void clearCurrentAssoc();
     void applyCurrentAssoc();
