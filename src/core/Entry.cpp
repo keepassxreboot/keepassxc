@@ -494,8 +494,8 @@ Entry* Entry::clone() const
     entry->setUpdateTimeinfo(false);
     entry->m_uuid = m_uuid;
     entry->m_data = m_data;
-    *entry->m_attributes = *m_attributes;
-    *entry->m_attachments = *m_attachments;
+    entry->m_attributes->copyDataFrom(m_attributes);
+    entry->m_attachments->copyDataFrom(m_attachments);
     entry->m_autoTypeAssociations->copyDataFrom(this->m_autoTypeAssociations);
     entry->setUpdateTimeinfo(true);
 
@@ -510,8 +510,8 @@ void Entry::beginUpdate()
     m_tmpHistoryItem->setUpdateTimeinfo(false);
     m_tmpHistoryItem->m_uuid = m_uuid;
     m_tmpHistoryItem->m_data = m_data;
-    *m_tmpHistoryItem->m_attributes = *m_attributes;
-    *m_tmpHistoryItem->m_attachments = *m_attachments;
+    m_tmpHistoryItem->m_attributes->copyDataFrom(m_attributes);
+    m_tmpHistoryItem->m_attachments->copyDataFrom(m_attachments);
 
     m_modifiedSinceBegin = false;
 }

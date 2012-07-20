@@ -181,19 +181,17 @@ bool EntryAttributes::areCustomKeysDifferent(const EntryAttributes* other)
     return false;
 }
 
-EntryAttributes& EntryAttributes::operator=(const EntryAttributes& other)
+void EntryAttributes::copyDataFrom(const EntryAttributes* other)
 {
-    if (*this != other) {
+    if (*this != *other) {
         Q_EMIT aboutToBeReset();
 
-        m_attributes = other.m_attributes;
-        m_protectedAttributes = other.m_protectedAttributes;
+        m_attributes = other->m_attributes;
+        m_protectedAttributes = other->m_protectedAttributes;
 
         Q_EMIT reset();
         Q_EMIT modified();
     }
-
-    return *this;
 }
 
 bool EntryAttributes::operator==(const EntryAttributes& other) const

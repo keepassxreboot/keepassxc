@@ -35,9 +35,9 @@ public:
     void set(const QString& key, const QByteArray& value);
     void remove(const QString& key);
     void clear();
+    void copyDataFrom(const EntryAttachments* other);
     bool operator==(const EntryAttachments& other) const;
     bool operator!=(const EntryAttachments& other) const;
-    EntryAttachments& operator=(const EntryAttachments& other);
 
 Q_SIGNALS:
     void modified();

@@ -263,7 +263,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
 
     m_notesUi->notesEdit->setPlainText(entry->notes());
 
-    *m_entryAttachments = *entry->attachments();
+    m_entryAttachments->copyDataFrom(entry->attachments());
     m_entryAttributes->copyCustomKeysFrom(entry->attributes());
 
     if (m_attributesModel->rowCount() != 0) {
@@ -355,7 +355,7 @@ void EditEntryWidget::saveEntry()
     m_entry->setNotes(m_notesUi->notesEdit->toPlainText());
 
     m_entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
-    *m_entry->attachments() = *m_entryAttachments;
+    m_entry->attachments()->copyDataFrom(m_entryAttachments);
 
     IconStruct iconStruct = m_iconsWidget->save();
 

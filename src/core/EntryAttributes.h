@@ -41,7 +41,7 @@ public:
     bool areCustomKeysDifferent(const EntryAttributes* other);
     void clear();
     int attributesSize();
-    EntryAttributes& operator=(const EntryAttributes& other);
+    void copyDataFrom(const EntryAttributes* other);
     bool operator==(const EntryAttributes& other) const;
     bool operator!=(const EntryAttributes& other) const;
 

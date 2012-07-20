@@ -92,6 +92,18 @@ void EntryAttachments::clear()
     Q_EMIT modified();
 }
 
+void EntryAttachments::copyDataFrom(const EntryAttachments* other)
+{
+    if (*this != *other) {
+        Q_EMIT aboutToBeReset();
+
+        m_attachments = other->m_attachments;
+
+        Q_EMIT reset();
+        Q_EMIT modified();
+    }
+}
+
 bool EntryAttachments::operator==(const EntryAttachments& other) const
 {
     return m_attachments == other.m_attachments;
@@ -100,18 +112,4 @@ bool EntryAttachments::operator==(const EntryAttachments& other) const
 bool EntryAttachments::operator!=(const EntryAttachments& other) const
 {
     return m_attachments != other.m_attachments;
-}
-
-EntryAttachments& EntryAttachments::operator=(const EntryAttachments& other)
-{
-    if (*this != other) {
-        Q_EMIT aboutToBeReset();
-
-        m_attachments = other.m_attachments;
-
-        Q_EMIT reset();
-        Q_EMIT modified();
-    }
-
-    return *this;
 }
