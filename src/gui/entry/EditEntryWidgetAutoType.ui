@@ -76,7 +76,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,2">
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
@@ -150,11 +150,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="windowTitleCombo">
-         <property name="editable">
-          <bool>true</bool>
-         </property>
-        </widget>
+        <widget class="WindowSelectComboBox" name="windowTitleCombo"/>
        </item>
        <item>
         <spacer name="verticalSpacer_3">
@@ -232,6 +228,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>WindowSelectComboBox</class>
+   <extends>QComboBox</extends>
+   <header>autotype/WindowSelectComboBox.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -21,6 +21,7 @@ set(keepassx_SOURCES
     autotype/AutoType.cpp
     autotype/AutoTypeAction.cpp
     autotype/ShortcutWidget.cpp
+    autotype/WindowSelectComboBox.cpp
     core/AutoTypeAssociations.cpp
     core/Config.cpp
     core/Database.cpp
@@ -99,6 +100,7 @@ set(keepassx_SOURCES
 set(keepassx_MOC
     autotype/AutoType.h
     autotype/ShortcutWidget.h
+    autotype/WindowSelectComboBox.h
     core/AutoTypeAssociations.h
     core/Config.h
     core/Database.h

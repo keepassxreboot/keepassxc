@@ -29,7 +29,6 @@
 #include <QtGui/QMessageBox>
 #include <QtGui/QSortFilterProxyModel>
 
-#include "autotype/AutoType.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Metadata.h"
@@ -280,10 +279,6 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     iconStruct.number = entry->iconNumber();
     m_iconsWidget->load(entry->uuid(), m_database, iconStruct);
 
-    m_autoTypeUi->windowTitleCombo->clear();
-    if (!m_history) {
-        m_autoTypeUi->windowTitleCombo->insertItems(0, autoType()->windowTitles());
-    }
     m_autoTypeUi->windowTitleCombo->lineEdit()->clear();
     m_autoTypeAssoc->copyDataFrom(entry->autoTypeAssociations());
     m_autoTypeUi->enableButton->setChecked(entry->autoTypeEnabled());
@@ -296,6 +291,9 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     }
     if (m_autoTypeAssoc->size() != 0) {
         m_autoTypeUi->assocView->setCurrentIndex(m_autoTypeAssocModel->index(0, 0));
+    }
+    if (!m_history) {
+        m_autoTypeUi->windowTitleCombo->refreshWindowList();
     }
     updateAutoTypeEnabled();
 
