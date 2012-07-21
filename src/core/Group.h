@@ -37,6 +37,9 @@ public:
 
     Group();
     ~Group();
+
+    static Group* createRecycleBin();
+
     Uuid uuid() const;
     QString name() const;
     QString notes() const;
@@ -53,6 +56,7 @@ public:
     bool isExpired() const;
 
     static const int DefaultIconNumber;
+    static const int RecycleBinIconNumber;
 
     void setUuid(const Uuid& uuid);
     void setName(const QString& name);

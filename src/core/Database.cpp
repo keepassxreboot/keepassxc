@@ -222,12 +222,7 @@ bool Database::hasKey()
 
 void Database::createRecycleBin()
 {
-    Group* recycleBin = new Group();
-    recycleBin->setUuid(Uuid::random());
-    recycleBin->setName(tr("Recycle Bin"));
-    recycleBin->setIcon(43);
-    recycleBin->setSearchingEnabled(Group::Disable);
-    recycleBin->setAutoTypeEnabled(Group::Disable);
+    Group* recycleBin = Group::createRecycleBin();
     recycleBin->setParent(rootGroup());
     m_metadata->setRecycleBin(recycleBin);
 }

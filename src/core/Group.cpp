@@ -23,6 +23,7 @@
 #include "core/Tools.h"
 
 const int Group::DefaultIconNumber = 48;
+const int Group::RecycleBinIconNumber = 43;
 
 Group::Group()
     : m_iconNumber(DefaultIconNumber)
@@ -57,6 +58,17 @@ Group::~Group()
         delGroup.uuid = m_uuid;
         m_db->addDeletedObject(delGroup);
     }
+}
+
+Group* Group::createRecycleBin()
+{
+    Group* recycleBin = new Group();
+    recycleBin->setUuid(Uuid::random());
+    recycleBin->setName(tr("Recycle Bin"));
+    recycleBin->setIcon(RecycleBinIconNumber);
+    recycleBin->setSearchingEnabled(Group::Disable);
+    recycleBin->setAutoTypeEnabled(Group::Disable);
+    return recycleBin;
 }
 
 template <class P, class V> bool Group::set(P& property, const V& value) {
