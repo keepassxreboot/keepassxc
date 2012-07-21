@@ -464,7 +464,7 @@ void DatabaseWidget::switchToEntryEdit(Entry* entry, bool create)
 {
     Group* group = m_groupView->currentGroup();
     if (!group) {
-        Q_ASSERT(m_entryView->inSearch());
+        Q_ASSERT(m_entryView->inEntryListMode());
         group = m_lastGroup;
     }
     Q_ASSERT(group);
@@ -560,7 +560,7 @@ void DatabaseWidget::switchToImportKeepass1(const QString& fileName)
 
 void DatabaseWidget::toggleSearch()
 {
-    if (m_entryView->inSearch()) {
+    if (m_entryView->inEntryListMode()) {
         closeSearch();
     }
     else {
@@ -637,7 +637,7 @@ void DatabaseWidget::search()
     QList<Entry*> searchResult = searchGroup->search(m_searchUi->searchEdit->text(), sensitivity);
 
 
-    m_entryView->search(searchResult);
+    m_entryView->setEntryList(searchResult);
 }
 
 void DatabaseWidget::startSearchTimer()
@@ -686,7 +686,7 @@ void DatabaseWidget::updateGroupActions(Group* group)
 void DatabaseWidget::updateEntryActions()
 {
     bool singleEntrySelected = m_entryView->isSingleEntrySelected();
-    bool inSearch = m_entryView->inSearch();
+    bool inSearch = m_entryView->inEntryListMode();
 
     m_actionEntryNew->setEnabled(!inSearch);
     m_actionEntryClone->setEnabled(singleEntrySelected && !inSearch);

@@ -43,11 +43,11 @@ public:
     QStringList mimeTypes() const Q_DECL_OVERRIDE;
     QMimeData* mimeData(const QModelIndexList& indexes) const Q_DECL_OVERRIDE;
 
-    void setEntries(const QList<Entry*>& entries);
+    void setEntryList(const QList<Entry*>& entries);
 
 Q_SIGNALS:
-    void switchedToSearch();
-    void switchedToView();
+    void switchedToEntryListMode();
+    void switchedToGroupMode();
 
 public Q_SLOTS:
     void setGroup(Group* group);

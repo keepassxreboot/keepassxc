@@ -179,7 +179,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionGroupDelete->setEnabled(dbWidget->actionEnabled(DatabaseWidget::GroupDelete));
             m_ui->actionSearch->setEnabled(true);
             // TODO: get checked state from db widget
-            m_ui->actionSearch->setChecked(dbWidget->entryView()->inSearch());
+            m_ui->actionSearch->setChecked(dbWidget->entryView()->inEntryListMode());
             m_ui->actionChangeMasterKey->setEnabled(true);
             m_ui->actionChangeDatabaseSettings->setEnabled(true);
             m_ui->actionDatabaseSave->setEnabled(true);

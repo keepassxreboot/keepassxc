@@ -62,10 +62,10 @@ void EntryModel::setGroup(Group* group)
     makeConnections(group);
 
     endResetModel();
-    Q_EMIT switchedToView();
+    Q_EMIT switchedToGroupMode();
 }
 
-void EntryModel::setEntries(const QList<Entry*>& entries)
+void EntryModel::setEntryList(const QList<Entry*>& entries)
 {
     beginResetModel();
 
@@ -85,7 +85,7 @@ void EntryModel::setEntries(const QList<Entry*>& entries)
     }
 
     endResetModel();
-    Q_EMIT switchedToSearch();
+    Q_EMIT switchedToEntryListMode();
 }
 
 int EntryModel::rowCount(const QModelIndex& parent) const

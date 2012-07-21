@@ -25,7 +25,7 @@ EntryView::EntryView(QWidget* parent)
     : QTreeView(parent)
     , m_model(new EntryModel(this))
     , m_sortModel(new QSortFilterProxyModel(this))
-    , m_inSearch(false)
+    , m_inEntryListMode(false)
 {
     m_sortModel->setSourceModel(m_model);
     m_sortModel->setDynamicSortFilter(true);
@@ -43,8 +43,8 @@ EntryView::EntryView(QWidget* parent)
 
     connect(this, SIGNAL(activated(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
     connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(entrySelectionChanged()));
-    connect(m_model, SIGNAL(switchedToSearch()), SLOT(switchToSearch()));
-    connect(m_model, SIGNAL(switchedToView()), SLOT(switchToView()));
+    connect(m_model, SIGNAL(switchedToEntryListMode()), SLOT(switchToEntryListMode()));
+    connect(m_model, SIGNAL(switchedToGroupMode()), SLOT(switchToGroupMode()));
 
     sortByColumn(0, Qt::AscendingOrder);
 }
@@ -55,15 +55,15 @@ void EntryView::setGroup(Group* group)
     Q_EMIT entrySelectionChanged();
 }
 
-void EntryView::search(const QList<Entry*>& entries)
+void EntryView::setEntryList(const QList<Entry*>& entries)
 {
-    m_model->setEntries(entries);
+    m_model->setEntryList(entries);
     Q_EMIT entrySelectionChanged();
 }
 
-bool EntryView::inSearch()
+bool EntryView::inEntryListMode()
 {
-    return m_inSearch;
+    return m_inEntryListMode;
 }
 
 void EntryView::emitEntryActivated(const QModelIndex& index)
@@ -108,17 +108,17 @@ Entry* EntryView::entryFromIndex(const QModelIndex& index)
     }
 }
 
-void EntryView::switchToSearch()
+void EntryView::switchToEntryListMode()
 {
     sortByColumn(1, Qt::AscendingOrder); // TODO: should probably be improved
     sortByColumn(0, Qt::AscendingOrder);
     showColumn(0);
-    m_inSearch = true;
+    m_inEntryListMode = true;
 }
 
-void EntryView::switchToView()
+void EntryView::switchToGroupMode()
 {
     sortByColumn(1, Qt::AscendingOrder);
     hideColumn(0);
-    m_inSearch = false;
+    m_inEntryListMode = false;
 }

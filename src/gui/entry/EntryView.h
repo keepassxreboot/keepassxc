@@ -38,8 +38,8 @@ public:
     bool isSingleEntrySelected();
     void setCurrentEntry(Entry* entry);
     Entry* entryFromIndex(const QModelIndex& index);
-    void search(const QList<Entry*>& entries);
-    bool inSearch();
+    void setEntryList(const QList<Entry*>& entries);
+    bool inEntryListMode();
 
 public Q_SLOTS:
     void setGroup(Group* group);
@@ -50,13 +50,13 @@ Q_SIGNALS:
 
 private Q_SLOTS:
     void emitEntryActivated(const QModelIndex& index);
-    void switchToSearch();
-    void switchToView();
+    void switchToEntryListMode();
+    void switchToGroupMode();
 
 private:
     EntryModel* const m_model;
     QSortFilterProxyModel* const m_sortModel;
-    bool m_inSearch;
+    bool m_inEntryListMode;
 };
 
 #endif // KEEPASSX_ENTRYVIEW_H
