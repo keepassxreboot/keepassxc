@@ -104,9 +104,9 @@ Q_SIGNALS:
     void moved();
 
     void entryAboutToAdd(Entry* entry);
-    void entryAdded();
+    void entryAdded(Entry* entry);
     void entryAboutToRemove(Entry* entry);
-    void entryRemoved();
+    void entryRemoved(Entry* entry);
 
     void entryDataChanged(Entry* entry);
 

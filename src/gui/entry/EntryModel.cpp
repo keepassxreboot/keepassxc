@@ -55,7 +55,9 @@ void EntryModel::setGroup(Group* group)
     severConnections();
 
     m_group = group;
+    m_allGroups.clear();
     m_entries = group->entries();
+    m_orgEntries.clear();
 
     makeConnections(group);
 
@@ -72,6 +74,7 @@ void EntryModel::setEntries(const QList<Entry*>& entries)
     m_group = Q_NULLPTR;
     m_allGroups.clear();
     m_entries = entries;
+    m_orgEntries = entries;
 
     if (entries.count() > 0) {
         m_allGroups = entries.at(0)->group()->database()->rootGroup()->groupsRecursive(true);
@@ -215,7 +218,9 @@ QMimeData* EntryModel::mimeData(const QModelIndexList& indexes) const
 
 void EntryModel::entryAboutToAdd(Entry* entry)
 {
-    Q_UNUSED(entry);
+    if (!m_group && !m_orgEntries.contains(entry)) {
+        return;
+    }
 
     beginInsertRows(QModelIndex(), m_entries.size(), m_entries.size());
     if (!m_group) {
@@ -223,8 +228,12 @@ void EntryModel::entryAboutToAdd(Entry* entry)
     }
 }
 
-void EntryModel::entryAdded()
+void EntryModel::entryAdded(Entry* entry)
 {
+    if (!m_group && !m_orgEntries.contains(entry)) {
+        return;
+    }
+
     if (m_group) {
         m_entries = m_group->entries();
     }
@@ -268,8 +277,8 @@ void EntryModel::severConnections()
 void EntryModel::makeConnections(const Group* group)
 {
     connect(group, SIGNAL(entryAboutToAdd(Entry*)), SLOT(entryAboutToAdd(Entry*)));
-    connect(group, SIGNAL(entryAdded()), SLOT(entryAdded()));
+    connect(group, SIGNAL(entryAdded(Entry*)), SLOT(entryAdded(Entry*)));
     connect(group, SIGNAL(entryAboutToRemove(Entry*)), SLOT(entryAboutToRemove(Entry*)));
-    connect(group, SIGNAL(entryRemoved()), SLOT(entryRemoved()));
+    connect(group, SIGNAL(entryRemoved(Entry*)), SLOT(entryRemoved()));
     connect(group, SIGNAL(entryDataChanged(Entry*)), SLOT(entryDataChanged(Entry*)));
 }

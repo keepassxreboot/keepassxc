@@ -271,7 +271,7 @@ void TestGroup::testDeleteSignals()
     Entry* entry = new Entry();
     entry->setGroup(group);
     QSignalSpy spyEntryAboutToRemove(group, SIGNAL(entryAboutToRemove(Entry*)));
-    QSignalSpy spyEntryRemoved(group, SIGNAL(entryRemoved()));
+    QSignalSpy spyEntryRemoved(group, SIGNAL(entryRemoved(Entry*)));
 
     delete entry;
     QVERIFY(group->entries().isEmpty());
@@ -286,7 +286,7 @@ void TestGroup::testDeleteSignals()
     Entry* entry2 = new Entry();
     entry2->setGroup(group2);
     QSignalSpy spyEntryAboutToRemove2(group2, SIGNAL(entryAboutToRemove(Entry*)));
-    QSignalSpy spyEntryRemoved2(group2, SIGNAL(entryRemoved()));
+    QSignalSpy spyEntryRemoved2(group2, SIGNAL(entryRemoved(Entry*)));
 
     delete group2;
     QCOMPARE(spyEntryAboutToRemove2.count(), 0);

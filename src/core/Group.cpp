@@ -452,7 +452,7 @@ void Group::addEntry(Entry* entry)
     }
 
     Q_EMIT modified();
-    Q_EMIT entryAdded();
+    Q_EMIT entryAdded(entry);
 }
 
 void Group::removeEntry(Entry* entry)
@@ -467,7 +467,7 @@ void Group::removeEntry(Entry* entry)
     }
     m_entries.removeAll(entry);
     Q_EMIT modified();
-    Q_EMIT entryRemoved();
+    Q_EMIT entryRemoved(entry);
 }
 
 void Group::recSetDatabase(Database* db)
