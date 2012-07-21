@@ -199,6 +199,8 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
         }
     }
 
+    db->rootGroup()->setName(tr("Root"));
+
     Q_ASSERT(m_tmpParent->children().isEmpty());
 
     Q_FOREACH (Entry* entry, m_tmpParent->entries()) {
