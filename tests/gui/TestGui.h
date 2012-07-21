@@ -38,6 +38,7 @@ private Q_SLOTS:
     void testEditEntry();
     void testAddEntry();
     void testSearch();
+    void testCloneEntry();
     void testDragAndDropEntry();
     void testDragAndDropGroup();
     void testSaveAs();

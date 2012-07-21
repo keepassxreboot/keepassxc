@@ -221,6 +221,26 @@ void TestGui::testSearch()
     QCOMPARE(entryView->model()->rowCount(), 1);
 }
 
+void TestGui::testCloneEntry()
+{
+    EntryView* entryView = m_dbWidget->entryView();
+
+    QCOMPARE(entryView->model()->rowCount(), 1);
+
+    QModelIndex item = entryView->model()->index(0, 1);
+    Entry* entryOrg = entryView->entryFromIndex(item);
+    QRect itemRect = entryView->visualRect(item);
+    QTest::mouseClick(entryView->viewport(), Qt::LeftButton, Qt::NoModifier, itemRect.center());
+    QTest::qWait(20);
+
+    triggerAction("actionEntryClone");
+
+    QCOMPARE(entryView->model()->rowCount(), 2);
+    Entry* entryClone = entryView->entryFromIndex(entryView->model()->index(1, 1));
+    QVERIFY(entryOrg->uuid() != entryClone->uuid());
+    QCOMPARE(entryClone->title(), entryOrg->title());
+}
+
 void TestGui::testDragAndDropEntry()
 {
     EntryView* entryView = m_dbWidget->entryView();
