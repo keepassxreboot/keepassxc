@@ -21,6 +21,7 @@
 #include <QtGui/QApplication>
 
 #include "autotype/AutoTypePlatformPlugin.h"
+#include "autotype/AutoTypeSelectDialog.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/FilePath.h"
@@ -88,7 +89,7 @@ QStringList AutoType::windowTitles()
     return m_plugin->windowTitles();
 }
 
-void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow, const QString& customSequence)
+void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow, const QString& customSequence, WId window)
 {
     if (m_inAutoType || !m_plugin) {
         return;
@@ -117,10 +118,12 @@ void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow, const QS
 
     Tools::wait(500);
 
-    WId activeWindow = m_plugin->activeWindow();
+    if (!window) {
+        window = m_plugin->activeWindow();
+    }
 
     Q_FOREACH (AutoTypeAction* action, actions) {
-        if (m_plugin->activeWindow() != activeWindow) {
+        if (m_plugin->activeWindow() != window) {
             qWarning("Active window changed, interrupting auto-type.");
             break;
         }
@@ -146,13 +149,15 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
 
     m_inAutoType = true;
 
-    QList<QPair<Entry*, QString> > entryList;
+    QList<Entry*> entryList;
+    QHash<Entry*, QString> sequenceHash;
 
     Q_FOREACH (Database* db, dbList) {
         Q_FOREACH (Entry* entry, db->rootGroup()->entriesRecursive()) {
             QString sequence = entry->autoTypeSequence(windowTitle);
             if (!sequence.isEmpty()) {
-                entryList << QPair<Entry*, QString>(entry, sequence);
+                entryList << entry;
+                sequenceHash.insert(entry, sequence);
             }
         }
     }
@@ -162,12 +167,32 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
     }
     else if (entryList.size() == 1) {
         m_inAutoType = false;
-        performAutoType(entryList.first().first, Q_NULLPTR, entryList.first().second);
+        performAutoType(entryList.first(), Q_NULLPTR, sequenceHash[entryList.first()]);
     }
     else {
-        // TODO: implement
-        m_inAutoType = false;
+        m_windowFromGlobal = m_plugin->activeWindow();
+        AutoTypeSelectDialog* selectDialog = new AutoTypeSelectDialog();
+        connect(selectDialog, SIGNAL(entryActivated(Entry*,QString)),
+                SLOT(performAutoTypeFromGlobal(Entry*,QString)));
+        connect(selectDialog, SIGNAL(rejected()), SLOT(resetInAutoType()));
+        selectDialog->setEntries(entryList, sequenceHash);
+        selectDialog->show();
     }
+}
+
+void AutoType::performAutoTypeFromGlobal(Entry* entry, const QString& sequence)
+{
+    Q_ASSERT(m_inAutoType);
+
+    m_inAutoType = false;
+    performAutoType(entry, Q_NULLPTR, sequence, m_windowFromGlobal);
+}
+
+void AutoType::resetInAutoType()
+{
+    Q_ASSERT(m_inAutoType);
+
+    m_inAutoType = false;
 }
 
 bool AutoType::registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers)

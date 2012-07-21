@@ -20,6 +20,8 @@ configure_file(config-keepassx.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepas
 set(keepassx_SOURCES
     autotype/AutoType.cpp
     autotype/AutoTypeAction.cpp
+    autotype/AutoTypeSelectDialog.cpp
+    autotype/AutoTypeSelectView.cpp
     autotype/ShortcutWidget.cpp
     autotype/WindowSelectComboBox.cpp
     core/AutoTypeAssociations.cpp
@@ -99,6 +101,8 @@ set(keepassx_SOURCES
 
 set(keepassx_MOC
     autotype/AutoType.h
+    autotype/AutoTypeSelectDialog.h
+    autotype/AutoTypeSelectView.h
     autotype/ShortcutWidget.h
     autotype/WindowSelectComboBox.h
     core/AutoTypeAssociations.h

@@ -20,6 +20,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QStringList>
+#include <QtGui/QWidget>
 
 #include "core/Global.h"
 
@@ -37,7 +38,7 @@ class AutoType : public QObject
 public:
     QStringList windowTitles();
     void performAutoType(const Entry* entry, QWidget* hideWindow = Q_NULLPTR,
-                         const QString& customSequence = QString());
+                         const QString& customSequence = QString(), WId window = 0);
     bool registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers);
     void unregisterGlobalShortcut();
     int callEventFilter(void* event);
@@ -54,6 +55,10 @@ public Q_SLOTS:
 Q_SIGNALS:
     void globalShortcutTriggered();
 
+private Q_SLOTS:
+    void performAutoTypeFromGlobal(Entry* entry, const QString& sequence);
+    void resetInAutoType();
+
 private:
     explicit AutoType(QObject* parent = Q_NULLPTR);
     ~AutoType();
@@ -67,6 +72,7 @@ private:
     QPluginLoader* m_pluginLoader;
     AutoTypePlatformInterface* m_plugin;
     AutoTypeExecutor* m_executor;
+    WId m_windowFromGlobal;
     static AutoType* m_instance;
 
     Q_DISABLE_COPY(AutoType)
