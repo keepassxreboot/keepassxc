@@ -76,8 +76,14 @@ void EntryModel::setEntryList(const QList<Entry*>& entries)
     m_entries = entries;
     m_orgEntries = entries;
 
-    if (entries.count() > 0) {
-        m_allGroups = entries.at(0)->group()->database()->rootGroup()->groupsRecursive(true);
+    QSet<Database*> databases;
+
+    Q_FOREACH (Entry* entry, m_entries) {
+        databases.insert(entry->group()->database());
+    }
+
+    Q_FOREACH (Database* db, databases) {
+        m_allGroups.append(db->rootGroup()->groupsRecursive(true));
     }
 
     Q_FOREACH (const Group* group, m_allGroups) {
