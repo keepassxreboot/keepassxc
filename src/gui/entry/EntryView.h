@@ -25,7 +25,7 @@
 class Entry;
 class EntryModel;
 class Group;
-class QSortFilterProxyModel;
+class SortFilterHideProxyModel;
 
 class EntryView : public QTreeView
 {
@@ -55,7 +55,7 @@ private Q_SLOTS:
 
 private:
     EntryModel* const m_model;
-    QSortFilterProxyModel* const m_sortModel;
+    SortFilterHideProxyModel* const m_sortModel;
     bool m_inEntryListMode;
 };
 

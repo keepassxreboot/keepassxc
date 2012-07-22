@@ -17,14 +17,13 @@
 
 #include "EntryView.h"
 
-#include <QtGui/QSortFilterProxyModel>
-
+#include "gui/SortFilterHideProxyModel.h"
 #include "gui/entry/EntryModel.h"
 
 EntryView::EntryView(QWidget* parent)
     : QTreeView(parent)
     , m_model(new EntryModel(this))
-    , m_sortModel(new QSortFilterProxyModel(this))
+    , m_sortModel(new SortFilterHideProxyModel(this))
     , m_inEntryListMode(false)
 {
     m_sortModel->setSourceModel(m_model);
@@ -45,8 +44,6 @@ EntryView::EntryView(QWidget* parent)
     connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(entrySelectionChanged()));
     connect(m_model, SIGNAL(switchedToEntryListMode()), SLOT(switchToEntryListMode()));
     connect(m_model, SIGNAL(switchedToGroupMode()), SLOT(switchToGroupMode()));
-
-    sortByColumn(0, Qt::AscendingOrder);
 }
 
 void EntryView::setGroup(Group* group)
@@ -110,15 +107,15 @@ Entry* EntryView::entryFromIndex(const QModelIndex& index)
 
 void EntryView::switchToEntryListMode()
 {
+    m_sortModel->hideColumn(0, false);
     sortByColumn(1, Qt::AscendingOrder); // TODO: should probably be improved
     sortByColumn(0, Qt::AscendingOrder);
-    showColumn(0);
     m_inEntryListMode = true;
 }
 
 void EntryView::switchToGroupMode()
 {
-    sortByColumn(1, Qt::AscendingOrder);
-    hideColumn(0);
+    m_sortModel->hideColumn(0, true);
+    sortByColumn(0, Qt::AscendingOrder);
     m_inEntryListMode = false;
 }

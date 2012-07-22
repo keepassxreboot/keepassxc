@@ -79,6 +79,7 @@ set(keepassx_SOURCES
     gui/LineEdit.cpp
     gui/MainWindow.cpp
     gui/SettingsWidget.cpp
+    gui/SortFilterHideProxyModel.cpp
     gui/WelcomeWidget.cpp
     gui/entry/AutoTypeAssociationsModel.cpp
     gui/entry/EditEntryWidget.cpp
@@ -133,6 +134,7 @@ set(keepassx_MOC
     gui/LineEdit.h
     gui/MainWindow.h
     gui/SettingsWidget.h
+    gui/SortFilterHideProxyModel.h
     gui/WelcomeWidget.h
     gui/entry/AutoTypeAssociationsModel.h
     gui/entry/EditEntryWidget.h

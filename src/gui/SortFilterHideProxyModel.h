@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,24 +15,27 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTENTRYMODEL_H
-#define KEEPASSX_TESTENTRYMODEL_H
+#ifndef KEEPASSX_SORTFILTERHIDEPROXYMODEL_H
+#define KEEPASSX_SORTFILTERHIDEPROXYMODEL_H
 
-#include <QtCore/QObject>
+#include <QtCore/QBitArray>
+#include <QtGui/QSortFilterProxyModel>
 
-class TestEntryModel : public QObject
+#include "core/Global.h"
+
+class SortFilterHideProxyModel : public QSortFilterProxyModel
 {
     Q_OBJECT
 
-private Q_SLOTS:
-    void initTestCase();
-    void test();
-    void testAttachmentsModel();
-    void testAttributesModel();
-    void testDefaultIconModel();
-    void testCustomIconModel();
-    void testAutoTypeAssociationsModel();
-    void testProxyModel();
+public:
+    explicit SortFilterHideProxyModel(QObject* parent = Q_NULLPTR);
+    void hideColumn(int column, bool hide);
+
+protected:
+    bool filterAcceptsColumn(int sourceColumn, const QModelIndex& sourceParent) const Q_DECL_OVERRIDE;
+
+private:
+    QBitArray m_hiddenColumns;
 };
 
-#endif // KEEPASSX_TESTENTRYMODEL_H
+#endif // KEEPASSX_SORTFILTERHIDEPROXYMODEL_H

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,24 +15,24 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTENTRYMODEL_H
-#define KEEPASSX_TESTENTRYMODEL_H
+#include "SortFilterHideProxyModel.h"
 
-#include <QtCore/QObject>
-
-class TestEntryModel : public QObject
+SortFilterHideProxyModel::SortFilterHideProxyModel(QObject* parent)
+    : QSortFilterProxyModel(parent)
 {
-    Q_OBJECT
+}
 
-private Q_SLOTS:
-    void initTestCase();
-    void test();
-    void testAttachmentsModel();
-    void testAttributesModel();
-    void testDefaultIconModel();
-    void testCustomIconModel();
-    void testAutoTypeAssociationsModel();
-    void testProxyModel();
-};
+void SortFilterHideProxyModel::hideColumn(int column, bool hide)
+{
+    m_hiddenColumns.resize(column + 1);
+    m_hiddenColumns[column] = hide;
 
-#endif // KEEPASSX_TESTENTRYMODEL_H
+    invalidateFilter();
+}
+
+bool SortFilterHideProxyModel::filterAcceptsColumn(int sourceColumn, const QModelIndex& sourceParent) const
+{
+    Q_UNUSED(sourceParent);
+
+    return sourceColumn >= m_hiddenColumns.size() || !m_hiddenColumns.at(sourceColumn);
+}

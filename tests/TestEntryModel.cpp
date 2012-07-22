@@ -27,6 +27,7 @@
 #include "core/Group.h"
 #include "crypto/Crypto.h"
 #include "gui/IconModels.h"
+#include "gui/SortFilterHideProxyModel.h"
 #include "gui/entry/AutoTypeAssociationsModel.h"
 #include "gui/entry/EntryModel.h"
 #include "gui/entry/EntryAttachmentsModel.h"
@@ -262,6 +263,52 @@ void TestEntryModel::testAutoTypeAssociationsModel()
     delete modelTest;
     delete model;
     delete assocications;
+}
+
+void TestEntryModel::testProxyModel()
+{
+    EntryModel* modelSource = new EntryModel(this);
+    SortFilterHideProxyModel* modelProxy = new SortFilterHideProxyModel(this);
+    modelProxy->setSourceModel(modelSource);
+
+    ModelTest* modelTest = new ModelTest(modelProxy, this);
+
+    Database* db = new Database();
+    Entry* entry = new Entry();
+    entry->setTitle("Test Title");
+    entry->setGroup(db->rootGroup());
+
+    modelSource->setGroup(db->rootGroup());
+
+    QSignalSpy spyColumnRemove(modelProxy, SIGNAL(columnsAboutToBeRemoved(QModelIndex,int,int)));
+    modelProxy->hideColumn(0, true);
+    QCOMPARE(modelProxy->columnCount(), 3);
+    QVERIFY(spyColumnRemove.size() >= 1);
+
+    int oldSpyColumnRemoveSize = spyColumnRemove.size();
+    modelProxy->hideColumn(0, true);
+    QCOMPARE(spyColumnRemove.size(), oldSpyColumnRemoveSize);
+
+    modelProxy->hideColumn(100, true);
+    QCOMPARE(spyColumnRemove.size(), oldSpyColumnRemoveSize);
+
+    QList<Entry*> entryList;
+    entryList << entry;
+    modelSource->setEntryList(entryList);
+
+    QSignalSpy spyColumnInsert(modelProxy, SIGNAL(columnsAboutToBeInserted(QModelIndex,int,int)));
+    modelProxy->hideColumn(0, false);
+    QCOMPARE(modelProxy->columnCount(), 4);
+    QVERIFY(spyColumnInsert.size() >= 1);
+
+    int oldSpyColumnInsertSize = spyColumnInsert.size();
+    modelProxy->hideColumn(0, false);
+    QCOMPARE(spyColumnInsert.size(), oldSpyColumnInsertSize);
+
+    delete modelTest;
+    delete modelProxy;
+    delete modelSource;
+    delete db;
 }
 
 KEEPASSX_QTEST_CORE_MAIN(TestEntryModel)

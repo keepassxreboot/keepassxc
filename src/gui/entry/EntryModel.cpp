@@ -41,7 +41,7 @@ QModelIndex EntryModel::indexFromEntry(Entry* entry) const
 {
     int row = m_entries.indexOf(entry);
     Q_ASSERT(row != -1);
-    return index(row, 0);
+    return index(row, 1);
 }
 
 void EntryModel::setGroup(Group* group)
@@ -83,6 +83,7 @@ void EntryModel::setEntryList(const QList<Entry*>& entries)
     }
 
     Q_FOREACH (Database* db, databases) {
+        Q_ASSERT(db);
         m_allGroups.append(db->rootGroup()->groupsRecursive(true));
     }
 
