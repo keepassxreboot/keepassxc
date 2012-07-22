@@ -149,6 +149,9 @@ add_unit_test(NAME testkeepass1reader SOURCES TestKeePass1Reader.cpp MOCS TestKe
 add_unit_test(NAME testqsavefile SOURCES TestQSaveFile.cpp MOCS TestQSaveFile.h
               LIBS ${TEST_LIBRARIES})
 
+add_unit_test(NAME testwildcardmatcher SOURCES TestWildcardMatcher.cpp MOCS TestWildcardMatcher.h
+              LIBS ${TEST_LIBRARIES})
+
 if(WITH_GUI_TESTS)
   add_subdirectory(gui)
 endif(WITH_GUI_TESTS)

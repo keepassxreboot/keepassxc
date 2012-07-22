@@ -23,6 +23,7 @@ set(keepassx_SOURCES
     autotype/AutoTypeSelectDialog.cpp
     autotype/AutoTypeSelectView.cpp
     autotype/ShortcutWidget.cpp
+    autotype/WildcardMatcher.cpp
     autotype/WindowSelectComboBox.cpp
     core/AutoTypeAssociations.cpp
     core/Config.cpp
@@ -104,6 +105,7 @@ set(keepassx_MOC
     autotype/AutoTypeSelectDialog.h
     autotype/AutoTypeSelectView.h
     autotype/ShortcutWidget.h
+    autotype/WildcardMatcher.h
     autotype/WindowSelectComboBox.h
     core/AutoTypeAssociations.h
     core/Config.h
