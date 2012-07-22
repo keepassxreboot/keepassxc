@@ -109,6 +109,13 @@ void TestWildcardMatcher::testMatchFollowingWildcards()
     verifyMatch(pattern);
 }
 
+void TestWildcardMatcher::testCaseSensitivity()
+{
+    initMatcher(DefaultText.toUpper());
+    QString pattern("some t**t");
+    verifyMatch(pattern);
+}
+
 void TestWildcardMatcher::initMatcher(QString text)
 {
     m_matcher = new WildcardMatcher(text);

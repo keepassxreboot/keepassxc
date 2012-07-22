@@ -34,6 +34,8 @@ public:
     bool match(QString pattern);
 
 private:
+    static const Qt::CaseSensitivity Sensitivity;
+
     QString m_text;
     QString m_pattern;
     bool patternEqualsText();

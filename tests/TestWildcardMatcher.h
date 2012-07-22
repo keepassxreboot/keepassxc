@@ -39,6 +39,7 @@ private Q_SLOTS:
     void testNoMatchWithMultipleWildcards();
     void testMatchJustWildcard();
     void testMatchFollowingWildcards();
+    void testCaseSensitivity();
 
 private:
     static const QString DefaultText;

@@ -20,6 +20,7 @@
 #include <QtCore/QStringList>
 
 const QString WildcardMatcher::Wildcard = "*";
+const Qt::CaseSensitivity WildcardMatcher::Sensitivity = Qt::CaseInsensitive;
 
 WildcardMatcher::WildcardMatcher(QString text, QObject* parent) :
     QObject(parent)
@@ -46,7 +47,7 @@ bool WildcardMatcher::patternContainsWildcard()
 
 bool WildcardMatcher::patternEqualsText()
 {
-    return m_text.compare(m_pattern) == 0;
+    return m_text.compare(m_pattern, Sensitivity) == 0;
 }
 
 bool WildcardMatcher::matchWithWildcards()
@@ -63,7 +64,8 @@ bool WildcardMatcher::matchWithWildcards()
 
 bool WildcardMatcher::startOrEndDoesNotMatch(QStringList parts)
 {
-    return !m_text.startsWith(parts.first()) || !m_text.endsWith(parts.last());
+    return !m_text.startsWith(parts.first(), Sensitivity) ||
+           !m_text.endsWith(parts.last(), Sensitivity);
 }
 
 bool WildcardMatcher::partsMatch(QStringList parts)
@@ -82,7 +84,7 @@ bool WildcardMatcher::partsMatch(QStringList parts)
 
 int WildcardMatcher::getMatchIndex(QString part, int startIndex)
 {
-    return m_text.indexOf(part, startIndex);
+    return m_text.indexOf(part, startIndex, Sensitivity);
 }
 
 bool WildcardMatcher::noMatchFound(int index)
