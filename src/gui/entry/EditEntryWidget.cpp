@@ -246,7 +246,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     }
     m_advancedUi->attributesView->setEditTriggers(editTriggers);
     m_iconsWidget->setEnabled(!m_history);
-    m_autoTypeUi->sequenceEdit->setReadOnly(!m_history);
+    m_autoTypeUi->sequenceEdit->setReadOnly(m_history);
     m_autoTypeUi->windowTitleCombo->lineEdit()->setReadOnly(m_history);
     m_autoTypeUi->windowSequenceEdit->setReadOnly(m_history);
     m_historyWidget->setEnabled(!m_history);
