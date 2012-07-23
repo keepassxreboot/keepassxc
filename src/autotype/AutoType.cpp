@@ -22,6 +22,7 @@
 
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/AutoTypeSelectDialog.h"
+#include "autotype/WildcardMatcher.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/FilePath.h"
@@ -503,17 +504,13 @@ QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitl
 
 bool AutoType::windowMatches(const QString& windowTitle, const QString& windowPattern)
 {
-    QRegExp regExp;
-    regExp.setCaseSensitivity(Qt::CaseInsensitive);
+
 
     if (windowPattern.startsWith("//") && windowPattern.endsWith("//") && windowPattern.size() >= 4) {
-        regExp.setPatternSyntax(QRegExp::RegExp2);
-        regExp.setPattern(windowPattern.mid(2, windowPattern.size() - 4));
+        QRegExp regExp(windowPattern.mid(2, windowPattern.size() - 4), Qt::CaseInsensitive, QRegExp::RegExp2);
+        return regExp.exactMatch(windowTitle);
     }
     else {
-        regExp.setPatternSyntax(QRegExp::Wildcard);
-        regExp.setPattern(windowPattern);
+        return WildcardMatcher(windowTitle).match(windowPattern);
     }
-
-    return regExp.exactMatch(windowTitle);
 }
