@@ -45,7 +45,6 @@ const int DatabaseTabWidget::LastDatabasesCount = 5;
 
 DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     : QTabWidget(parent)
-    , m_window(parent->window())
 {
     DragTabBar* tabBar = new DragTabBar(this);
     tabBar->setDrawBase(false);
@@ -94,7 +93,7 @@ void DatabaseTabWidget::newDatabase()
 void DatabaseTabWidget::openDatabase()
 {
     QString filter = QString("%1 (*.kdbx);;%2 (*)").arg(tr("KeePass 2 Database"), tr("All files"));
-    QString fileName = fileDialog()->getOpenFileName(m_window, tr("Open database"), QString(),
+    QString fileName = fileDialog()->getOpenFileName(this, tr("Open database"), QString(),
                                                      filter);
     if (!fileName.isEmpty()) {
         openDatabase(fileName);
@@ -287,7 +286,7 @@ void DatabaseTabWidget::saveDatabaseAs(Database* db)
     if (dbStruct.saveToFilename) {
         oldFileName = dbStruct.filePath;
     }
-    QString fileName = fileDialog()->getSaveFileName(m_window, tr("Save database as"),
+    QString fileName = fileDialog()->getSaveFileName(this, tr("Save database as"),
                                                      oldFileName, tr("KeePass 2 Database").append(" (*.kdbx)"));
     if (!fileName.isEmpty()) {
         bool result = false;

@@ -38,6 +38,11 @@ QString FileDialog::getOpenFileName(QWidget* parent, const QString& caption, QSt
         QString result = QFileDialog::getOpenFileName(parent, caption, dir, filter,
                                                       selectedFilter, options);
 
+        // on Mac OS X the focus is lost after closing the native dialog
+        if (parent) {
+            parent->activateWindow();
+        }
+
         if (!result.isEmpty()) {
             config()->set("LastDir", QFileInfo(result).absolutePath());
         }
@@ -62,6 +67,11 @@ QString FileDialog::getSaveFileName(QWidget* parent, const QString& caption, QSt
 
         QString result = QFileDialog::getSaveFileName(parent, caption, dir, filter,
                                                       selectedFilter, options);
+
+        // on Mac OS X the focus is lost after closing the native dialog
+        if (parent) {
+            parent->activateWindow();
+        }
 
         if (!result.isEmpty()) {
             config()->set("LastDir", QFileInfo(result).absolutePath());

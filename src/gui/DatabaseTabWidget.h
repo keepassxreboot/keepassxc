@@ -48,7 +48,7 @@ class DatabaseTabWidget : public QTabWidget
     Q_OBJECT
 
 public:
-    explicit DatabaseTabWidget(QWidget* parent);
+    explicit DatabaseTabWidget(QWidget* parent = Q_NULLPTR);
     ~DatabaseTabWidget();
     void openDatabase(const QString& fileName, const QString& pw = QString(),
                       const QString& keyFile = QString());
@@ -107,7 +107,6 @@ private:
     void updateLastDatabases(const QString& filename);
     void connectDatabase(Database* newDb, Database* oldDb = Q_NULLPTR);
 
-    QWidget* const m_window;
     KeePass2Writer m_writer;
     QHash<Database*, DatabaseManagerStruct> m_dbList;
 };
