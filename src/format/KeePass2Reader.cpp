@@ -50,20 +50,20 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
     quint32 signature1 = Endian::readUInt32(m_device, KeePass2::BYTEORDER, &ok);
     if (!ok || signature1 != KeePass2::SIGNATURE_1) {
         raiseError(tr("Not a KeePass database."));
-        return 0;
+        return Q_NULLPTR;
     }
 
     quint32 signature2 = Endian::readUInt32(m_device, KeePass2::BYTEORDER, &ok);
     if (!ok || signature2 != KeePass2::SIGNATURE_2) {
         raiseError(tr("Not a KeePass database."));
-        return 0;
+        return Q_NULLPTR;
     }
 
     quint32 version = Endian::readUInt32(m_device, KeePass2::BYTEORDER, &ok) & KeePass2::FILE_VERSION_CRITICAL_MASK;
     quint32 maxVersion = KeePass2::FILE_VERSION & KeePass2::FILE_VERSION_CRITICAL_MASK;
     if (!ok || (version < KeePass2::FILE_VERSION_MIN) || (version > maxVersion)) {
         raiseError(tr("Unsupported KeePass database version."));
-        return 0;
+        return Q_NULLPTR;
     }
 
     while (readHeaderField() && !hasError()) {
@@ -86,7 +86,7 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
 
     if (realStart != m_streamStartBytes) {
         raiseError(tr("Wrong key or database file is corrupt."));
-        return 0;
+        return Q_NULLPTR;
     }
 
     HashedBlockStream hashedStream(&cipherStream);
@@ -121,7 +121,7 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
 
     if (xmlReader.hasError()) {
         raiseError(xmlReader.errorString());
-        return 0;
+        return Q_NULLPTR;
     }
 
     return db.take();
@@ -132,14 +132,14 @@ Database* KeePass2Reader::readDatabase(const QString& filename, const CompositeK
     QFile file(filename);
     if (!file.open(QFile::ReadOnly)) {
         raiseError(file.errorString());
-        return 0;
+        return Q_NULLPTR;
     }
 
     QScopedPointer<Database> db(readDatabase(&file, key));
 
     if (file.error() != QFile::NoError) {
         raiseError(file.errorString());
-        return 0;
+        return Q_NULLPTR;
     }
 
     return db.take();

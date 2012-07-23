@@ -486,7 +486,7 @@ Database* DatabaseTabWidget::indexDatabase(int index)
         }
     }
 
-    return 0;
+    return Q_NULLPTR;
 }
 
 DatabaseManagerStruct DatabaseTabWidget::indexDatabaseManagerStruct(int index)
@@ -514,7 +514,7 @@ Database* DatabaseTabWidget::databaseFromDatabaseWidget(DatabaseWidget* dbWidget
         }
     }
 
-    return 0;
+    return Q_NULLPTR;
 }
 
 void DatabaseTabWidget::insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct)
@@ -542,7 +542,7 @@ DatabaseWidget* DatabaseTabWidget::currentDatabaseWidget()
         return m_dbList[db].dbWidget;
     }
     else {
-        return 0;
+        return Q_NULLPTR;
     }
 }
 

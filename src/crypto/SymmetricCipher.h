@@ -21,6 +21,7 @@
 #include <QtCore/QByteArray>
 #include <QtCore/QScopedPointer>
 
+#include "core/Global.h"
 #include "crypto/SymmetricCipherBackend.h"
 
 class SymmetricCipher

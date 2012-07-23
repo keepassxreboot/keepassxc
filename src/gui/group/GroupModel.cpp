@@ -273,7 +273,7 @@ QStringList GroupModel::mimeTypes() const
 QMimeData* GroupModel::mimeData(const QModelIndexList& indexes) const
 {
     if (indexes.isEmpty()) {
-        return 0;
+        return Q_NULLPTR;
     }
 
     QMimeData* data = new QMimeData();

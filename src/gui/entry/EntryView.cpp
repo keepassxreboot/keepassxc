@@ -81,7 +81,7 @@ Entry* EntryView::currentEntry()
         return m_model->entryFromIndex(m_sortModel->mapToSource(list.first()));
     }
     else {
-        return 0;
+        return Q_NULLPTR;
     }
 }
 
@@ -101,7 +101,7 @@ Entry* EntryView::entryFromIndex(const QModelIndex& index)
         return m_model->entryFromIndex(m_sortModel->mapToSource(index));
     }
     else {
-        return 0;
+        return Q_NULLPTR;
     }
 }
 

@@ -104,7 +104,7 @@ Entry* Database::recFindEntry(const Uuid& uuid, Group* group)
         }
     }
 
-    return 0;
+    return Q_NULLPTR;
 }
 
 Group* Database::resolveGroup(const Uuid& uuid)
@@ -125,7 +125,7 @@ Group* Database::recFindGroup(const Uuid& uuid, Group* group)
         }
     }
 
-    return 0;
+    return Q_NULLPTR;
 }
 
 QList<DeletedObject> Database::deletedObjects()

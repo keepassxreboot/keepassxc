@@ -204,7 +204,7 @@ QStringList EntryModel::mimeTypes() const
 QMimeData* EntryModel::mimeData(const QModelIndexList& indexes) const
 {
     if (indexes.isEmpty()) {
-        return 0;
+        return Q_NULLPTR;
     }
 
     QMimeData* data = new QMimeData();

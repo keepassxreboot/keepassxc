@@ -589,7 +589,7 @@ const Database* Entry::database() const
         return m_group->database();
     }
     else {
-        return 0;
+        return Q_NULLPTR;
     }
 }
 

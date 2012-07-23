@@ -895,7 +895,7 @@ QByteArray KeePass2XmlReader::readCompressedBinary()
 Group* KeePass2XmlReader::getGroup(const Uuid& uuid)
 {
     if (uuid.isNull()) {
-        return 0;
+        return Q_NULLPTR;
     }
 
     if (m_groups.contains(uuid)) {
@@ -914,7 +914,7 @@ Group* KeePass2XmlReader::getGroup(const Uuid& uuid)
 Entry* KeePass2XmlReader::getEntry(const Uuid& uuid)
 {
     if (uuid.isNull()) {
-        return 0;
+        return Q_NULLPTR;
     }
 
     if (m_entries.contains(uuid)) {
