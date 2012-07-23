@@ -188,7 +188,12 @@ QString Entry::autoTypeSequence(const QString& windowTitle) const
         bool match = false;
         Q_FOREACH (const AutoTypeAssociations::Association& assoc, m_autoTypeAssociations->getAll()) {
             if (windowMatches(windowTitle, assoc.window)) {
-                sequence = assoc.sequence;
+                if (!assoc.sequence.isEmpty()) {
+                    sequence = assoc.sequence;
+                }
+                else {
+                    sequence = m_data.defaultAutoTypeSequence;
+                }
                 match = true;
                 break;
             }
