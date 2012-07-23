@@ -77,6 +77,8 @@ private:
     Window m_rootWindow;
     Atom m_atomWmState;
     Atom m_atomWmName;
+    Atom m_atomNetWmName;
+    Atom m_atomString;
     Atom m_atomUtf8String;
     QSet<QString> m_classBlacklist;
     Qt::Key m_currentGlobalKey;

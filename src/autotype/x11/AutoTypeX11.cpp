@@ -28,7 +28,9 @@ AutoTypePlatformX11::AutoTypePlatformX11()
     m_rootWindow = QX11Info::appRootWindow();
 
     m_atomWmState = XInternAtom(m_dpy, "WM_STATE", true);
-    m_atomWmName = XInternAtom(m_dpy, "_NET_WM_NAME", true);
+    m_atomWmName = XInternAtom(m_dpy, "WM_NAME", true);
+    m_atomNetWmName = XInternAtom(m_dpy, "_NET_WM_NAME", true);
+    m_atomString = XInternAtom(m_dpy, "STRING", true);
     m_atomUtf8String = XInternAtom(m_dpy, "UTF8_STRING", true);
 
     m_classBlacklist << "desktop_window" << "gnome-panel"; // Gnome
@@ -180,32 +182,56 @@ QString AutoTypePlatformX11::windowTitle(Window window, bool useBlacklist)
     unsigned long after;
     unsigned char* data = Q_NULLPTR;
 
-    int retVal = XGetWindowProperty(m_dpy, window, m_atomWmName, 0, 1000, false, m_atomUtf8String,
+    int retVal = XGetWindowProperty(m_dpy, window, m_atomNetWmName, 0, 1000, false, m_atomUtf8String,
                                     &type, &format, &nitems, &after, &data);
 
-    if (retVal != 0) {
-        if (data) {
-            XFree(data);
+    if (retVal != 0 && data) {
+        title = QString::fromUtf8(reinterpret_cast<char*>(data));
+    }
+    else {
+        XTextProperty textProp;
+        retVal = XGetTextProperty(m_dpy, window, &textProp, m_atomWmName);
+        if (retVal != 0 && textProp.value) {
+            char** textList = Q_NULLPTR;
+            int count;
+
+            if (textProp.encoding == m_atomUtf8String) {
+                title = QString::fromUtf8(reinterpret_cast<char*>(textProp.value));
+            }
+            else if (XmbTextPropertyToTextList(m_dpy, &textProp, &textList, &count) == 0 && textList && count > 0) {
+                title = QString::fromLocal8Bit(textList[0]);
+            }
+            else if (textProp.encoding == m_atomString) {
+                title = QString::fromLocal8Bit(reinterpret_cast<char*>(textProp.value));
+            }
+
+            if (textList) {
+                XFreeStringList(textList);
+            }
+        }
+
+        if (textProp.value) {
+            XFree(textProp.value);
         }
     }
-    else if (data) {
-        title = QString::fromUtf8(reinterpret_cast<char*>(data));
+
+    if (data) {
         XFree(data);
+    }
 
-        if (useBlacklist) {
-            if (window == m_rootWindow) {
-                return QString();
-            }
+    if (useBlacklist && !title.isEmpty()) {
+        if (window == m_rootWindow) {
+            return QString();
+        }
 
-            QString className = windowClassName(window);
-            if (m_classBlacklist.contains(className)) {
-                return QString();
-            }
+        QString className = windowClassName(window);
+        if (m_classBlacklist.contains(className)) {
+            return QString();
+        }
 
-            QList<Window> keepassxWindows = widgetsToX11Windows(QApplication::topLevelWidgets());
-            if (keepassxWindows.contains(window)) {
-                return QString();
-            }
+        QList<Window> keepassxWindows = widgetsToX11Windows(QApplication::topLevelWidgets());
+        if (keepassxWindows.contains(window)) {
+            return QString();
         }
     }
 
