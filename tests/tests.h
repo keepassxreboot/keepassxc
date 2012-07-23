@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2012 Nokia Corporation and/or its subsidiary(-ies).
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,5 +31,42 @@ int main(int argc, char* argv[]) \
 
 // just for the sake of a consistent naming scheme
 #define KEEPASSX_QTEST_GUI_MAIN QTEST_MAIN
+
+
+// backport QTRY_VERIFY and QTRY_COMPARE from Qt 5
+
+#ifndef QTRY_VERIFY
+#define KEEPASSX_VERIFY_WITH_TIMEOUT(__expr, __timeout) \
+do { \
+    const int __step = 50; \
+    const int __timeoutValue = __timeout; \
+    if (!(__expr)) { \
+        QTest::qWait(0); \
+    } \
+    for (int __i = 0; __i < __timeoutValue && !(__expr); __i+=__step) { \
+        QTest::qWait(__step); \
+    } \
+    QVERIFY(__expr); \
+} while (0)
+
+#define QTRY_VERIFY(__expr) KEEPASSX_VERIFY_WITH_TIMEOUT(__expr, 5000)
+#endif // QTRY_VERIFY
+
+#ifndef QTRY_COMPARE
+#define KEEPASSX_COMPARE_WITH_TIMEOUT(__expr, __expected, __timeout) \
+do { \
+    const int __step = 50; \
+    const int __timeoutValue = __timeout; \
+    if ((__expr) != (__expected)) { \
+        QTest::qWait(0); \
+    } \
+    for (int __i = 0; __i < __timeoutValue && ((__expr) != (__expected)); __i+=__step) { \
+        QTest::qWait(__step); \
+    } \
+    QCOMPARE(__expr, __expected); \
+} while (0)
+
+#define QTRY_COMPARE(__expr, __expected) KEEPASSX_COMPARE_WITH_TIMEOUT(__expr, __expected, 5000)
+#endif // QTRY_COMPARE
 
 #endif // KEEPASSX_TESTS_H
