@@ -262,9 +262,11 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         m_ui->actionDatabaseClose->setEnabled(false);
     }
 
-    m_ui->actionDatabaseNew->setEnabled(inDatabaseTabWidget || inWelcomeWidget);
-    m_ui->actionDatabaseOpen->setEnabled(inDatabaseTabWidget || inWelcomeWidget);
-    m_ui->actionImportKeePass1->setEnabled(inDatabaseTabWidget || inWelcomeWidget);
+    bool inDatabaseTabWidgetOrWelcomeWidget = inDatabaseTabWidget || inWelcomeWidget;
+    m_ui->actionDatabaseNew->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
+    m_ui->actionDatabaseOpen->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
+    m_ui->menuRecentDatabases->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
+    m_ui->actionImportKeePass1->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
 }
 
 void MainWindow::updateWindowTitle()
