@@ -20,7 +20,7 @@
 
 bool AutoTypePlatformX11::m_catchXErrors = false;
 bool AutoTypePlatformX11::m_xErrorOccured = false;
-int (*AutoTypePlatformX11::m_oldXErrorHandler) (Display*, XErrorEvent*) = Q_NULLPTR;
+int (*AutoTypePlatformX11::m_oldXErrorHandler)(Display*, XErrorEvent*) = Q_NULLPTR;
 
 AutoTypePlatformX11::AutoTypePlatformX11()
 {
@@ -357,7 +357,8 @@ KeySym AutoTypePlatformX11::keyToKeySym(Qt::Key key)
     }
 }
 
-void AutoTypePlatformX11::updateKeymap() {
+void AutoTypePlatformX11::updateKeymap()
+{
     ReadKeymap();
 
     if (!m_altgrMask) {
@@ -553,7 +554,7 @@ void AutoTypePlatformX11::ReadKeymap()
  * If input focus is specified explicitly, select the window
  * before send event to the window.
  */
-void AutoTypePlatformX11::SendEvent(XKeyEvent *event)
+void AutoTypePlatformX11::SendEvent(XKeyEvent* event)
 {
     XSync(event->display, FALSE);
     int (*oldHandler) (Display*, XErrorEvent*) = XSetErrorHandler(MyErrorHandler);
@@ -743,7 +744,7 @@ void AutoTypePlatformX11::SendKeyPressedEvent(KeySym keysym, unsigned int shift)
     }
 }
 
-int AutoTypePlatformX11::MyErrorHandler(Display *my_dpy, XErrorEvent *event)
+int AutoTypePlatformX11::MyErrorHandler(Display* my_dpy, XErrorEvent* event)
 {
     char msg[200];
 

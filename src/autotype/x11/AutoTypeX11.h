@@ -70,8 +70,8 @@ private:
     int AddKeysym(KeySym keysym, bool top);
     void AddModifier(KeySym keysym);
     void ReadKeymap();
-    void SendEvent(XKeyEvent *event);
-    static int MyErrorHandler(Display *my_dpy, XErrorEvent *event);
+    void SendEvent(XKeyEvent* event);
+    static int MyErrorHandler(Display* my_dpy, XErrorEvent* event);
 
     Display* m_dpy;
     Window m_rootWindow;
@@ -86,7 +86,7 @@ private:
     int m_modifierMask;
     static bool m_catchXErrors;
     static bool m_xErrorOccured;
-    static int (*m_oldXErrorHandler) (Display*, XErrorEvent*);
+    static int (*m_oldXErrorHandler)(Display*, XErrorEvent*);
 
     KeySym* m_keysymTable;
     int m_minKeycode;
