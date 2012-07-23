@@ -159,4 +159,4 @@ void TestDeletedObjects::testDatabaseChange()
     delete db2;
 }
 
-KEEPASSX_QTEST_CORE_MAIN(TestDeletedObjects)
+QTEST_GUILESS_MAIN(TestDeletedObjects)

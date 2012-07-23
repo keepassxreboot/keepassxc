@@ -399,4 +399,4 @@ void TestGroup::testSearch()
     delete groupRoot;
 }
 
-KEEPASSX_QTEST_CORE_MAIN(TestGroup)
+QTEST_GUILESS_MAIN(TestGroup)

@@ -380,4 +380,4 @@ void TestGui::dragAndDropGroup(const QModelIndex& sourceIndex, const QModelIndex
     QCOMPARE(group->parentGroup()->children().indexOf(group), expectedPos);
 }
 
-KEEPASSX_QTEST_GUI_MAIN(TestGui)
+QTEST_MAIN(TestGui)

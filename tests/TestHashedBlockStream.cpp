@@ -70,4 +70,4 @@ void TestHashedBlockStream::testWriteRead()
     buffer.buffer().clear();
 }
 
-KEEPASSX_QTEST_CORE_MAIN(TestHashedBlockStream)
+QTEST_GUILESS_MAIN(TestHashedBlockStream)

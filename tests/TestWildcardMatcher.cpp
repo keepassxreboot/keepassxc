@@ -83,4 +83,4 @@ void TestWildcardMatcher::verifyNoMatch(QString pattern)
     QVERIFY(!matchResult);
 }
 
-KEEPASSX_QTEST_CORE_MAIN(TestWildcardMatcher)
+QTEST_GUILESS_MAIN(TestWildcardMatcher)

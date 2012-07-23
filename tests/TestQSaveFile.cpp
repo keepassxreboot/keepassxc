@@ -195,4 +195,4 @@ QString TestQSaveFile::tmpDir()
     return dirName;
 }
 
-KEEPASSX_QTEST_CORE_MAIN(TestQSaveFile)
+QTEST_GUILESS_MAIN(TestQSaveFile)

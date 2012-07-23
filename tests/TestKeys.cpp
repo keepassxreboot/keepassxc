@@ -165,4 +165,4 @@ void TestKeys::testFileKeyError()
     errorMsg = "";
 }
 
-KEEPASSX_QTEST_CORE_MAIN(TestKeys)
+QTEST_GUILESS_MAIN(TestKeys)

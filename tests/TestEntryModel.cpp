@@ -311,4 +311,4 @@ void TestEntryModel::testProxyModel()
     delete db;
 }
 
-KEEPASSX_QTEST_CORE_MAIN(TestEntryModel)
+QTEST_GUILESS_MAIN(TestEntryModel)

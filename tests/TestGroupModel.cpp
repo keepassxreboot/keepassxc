@@ -150,4 +150,4 @@ void TestGroupModel::test()
     delete model;
 }
 
-KEEPASSX_QTEST_CORE_MAIN(TestGroupModel)
+QTEST_GUILESS_MAIN(TestGroupModel)

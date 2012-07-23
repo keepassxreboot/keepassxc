@@ -21,19 +21,18 @@
 
 #include <QtTest/QTest>
 
-#define KEEPASSX_QTEST_CORE_MAIN(TestObject) \
+// backport QTEST_GUILESS_MAIN, QTRY_VERIFY and QTRY_COMPARE from Qt 5
+
+#ifndef QTEST_GUILESS_MAIN
+#define QTEST_GUILESS_MAIN(TestObject) \
 int main(int argc, char* argv[]) \
 { \
     QCoreApplication app(argc, argv); \
     TestObject tc; \
     return QTest::qExec(&tc, argc, argv); \
 }
+#endif // QTEST_GUILESS_MAIN
 
-// just for the sake of a consistent naming scheme
-#define KEEPASSX_QTEST_GUI_MAIN QTEST_MAIN
-
-
-// backport QTRY_VERIFY and QTRY_COMPARE from Qt 5
 
 #ifndef QTRY_VERIFY
 #define KEEPASSX_VERIFY_WITH_TIMEOUT(__expr, __timeout) \
@@ -51,6 +50,7 @@ do { \
 
 #define QTRY_VERIFY(__expr) KEEPASSX_VERIFY_WITH_TIMEOUT(__expr, 5000)
 #endif // QTRY_VERIFY
+
 
 #ifndef QTRY_COMPARE
 #define KEEPASSX_COMPARE_WITH_TIMEOUT(__expr, __expected, __timeout) \

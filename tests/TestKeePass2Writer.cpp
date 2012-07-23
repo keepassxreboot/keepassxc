@@ -105,4 +105,4 @@ void TestKeePass2Writer::cleanupTestCase()
     delete m_dbTest;
 }
 
-KEEPASSX_QTEST_CORE_MAIN(TestKeePass2Writer)
+QTEST_GUILESS_MAIN(TestKeePass2Writer)

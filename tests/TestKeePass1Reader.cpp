@@ -293,4 +293,4 @@ void TestKeePass1Reader::reopenDatabase(Database* db, const QString& password, c
     delete newDb;
 }
 
-KEEPASSX_QTEST_CORE_MAIN(TestKeePass1Reader)
+QTEST_GUILESS_MAIN(TestKeePass1Reader)

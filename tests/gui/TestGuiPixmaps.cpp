@@ -147,4 +147,4 @@ void TestGuiPixmaps::compareImages(const QPixmap& pixmap, const QImage& image)
              image.convertToFormat(QImage::Format_ARGB32_Premultiplied));
 }
 
-KEEPASSX_QTEST_GUI_MAIN(TestGuiPixmaps)
+QTEST_MAIN(TestGuiPixmaps)

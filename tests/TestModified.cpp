@@ -467,4 +467,4 @@ void TestModified::testHistoryItem()
     delete db;
 }
 
-KEEPASSX_QTEST_CORE_MAIN(TestModified)
+QTEST_GUILESS_MAIN(TestModified)

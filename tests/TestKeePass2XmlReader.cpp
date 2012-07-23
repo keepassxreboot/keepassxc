@@ -356,4 +356,4 @@ void TestKeePass2XmlReader::cleanupTestCase()
     delete m_db;
 }
 
-KEEPASSX_QTEST_CORE_MAIN(TestKeePass2XmlReader)
+QTEST_GUILESS_MAIN(TestKeePass2XmlReader)

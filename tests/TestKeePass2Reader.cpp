@@ -121,4 +121,4 @@ void TestKeePass2Reader::testFormat200()
     delete db;
 }
 
-KEEPASSX_QTEST_CORE_MAIN(TestKeePass2Reader)
+QTEST_GUILESS_MAIN(TestKeePass2Reader)

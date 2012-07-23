@@ -78,4 +78,4 @@ void TestKeePass2RandomStream::test()
     QCOMPARE(randomStreamData, cipherData);
 }
 
-KEEPASSX_QTEST_CORE_MAIN(TestKeePass2RandomStream)
+QTEST_GUILESS_MAIN(TestKeePass2RandomStream)

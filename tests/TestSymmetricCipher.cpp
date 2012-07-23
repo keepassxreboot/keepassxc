@@ -193,4 +193,4 @@ void TestSymmetricCipher::testPadding()
     QCOMPARE(decrypted, plainText);
 }
 
-KEEPASSX_QTEST_CORE_MAIN(TestSymmetricCipher)
+QTEST_GUILESS_MAIN(TestSymmetricCipher)
