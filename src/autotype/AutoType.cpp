@@ -98,7 +98,7 @@ void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow, const QS
 
     QString sequence;
     if (customSequence.isEmpty()) {
-        sequence = entry->resolvePlaceholders(entry->autoTypeSequence());
+        sequence = entry->resolvePlaceholders(autoTypeSequence(entry));
     }
     else {
         sequence = customSequence;
@@ -154,7 +154,7 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
 
     Q_FOREACH (Database* db, dbList) {
         Q_FOREACH (Entry* entry, db->rootGroup()->entriesRecursive()) {
-            QString sequence = entry->autoTypeSequence(windowTitle);
+            QString sequence = autoTypeSequence(entry, windowTitle);
             if (!sequence.isEmpty()) {
                 entryList << entry;
                 sequenceHash.insert(entry, sequence);
@@ -435,4 +435,85 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
     }
 
     return list;
+}
+
+QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitle)
+{
+    if (!entry->autoTypeEnabled()) {
+        return QString();
+    }
+
+    bool enableSet = false;
+    QString sequence;
+    if (!windowTitle.isEmpty()) {
+        bool match = false;
+        Q_FOREACH (const AutoTypeAssociations::Association& assoc, entry->autoTypeAssociations()->getAll()) {
+            if (windowMatches(windowTitle, assoc.window)) {
+                if (!assoc.sequence.isEmpty()) {
+                    sequence = assoc.sequence;
+                }
+                else {
+                    sequence = entry->defaultAutoTypeSequence();
+                }
+                match = true;
+                break;
+            }
+        }
+
+        if (!match) {
+            return QString();
+        }
+    }
+    else {
+        sequence = entry->defaultAutoTypeSequence();
+    }
+
+    const Group* group = entry->group();
+    do {
+        if (!enableSet) {
+            if (group->autoTypeEnabled() == Group::Disable) {
+                return QString();
+            }
+            else if (group->autoTypeEnabled() == Group::Enable) {
+                enableSet = true;
+            }
+        }
+
+        if (sequence.isEmpty()) {
+            sequence = group->defaultAutoTypeSequence();
+        }
+
+        group = group->parentGroup();
+    } while (group && (!enableSet || sequence.isEmpty()));
+
+    if (sequence.isEmpty() && (!entry->username().isEmpty() || !entry->password().isEmpty())) {
+        if (entry->username().isEmpty()) {
+            sequence = "{PASSWORD}{ENTER}";
+        }
+        else if (entry->password().isEmpty()) {
+            sequence = "{USERNAME}{ENTER}";
+        }
+        else {
+            sequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
+        }
+    }
+
+    return sequence;
+}
+
+bool AutoType::windowMatches(const QString& windowTitle, const QString& windowPattern)
+{
+    QRegExp regExp;
+    regExp.setCaseSensitivity(Qt::CaseInsensitive);
+
+    if (windowPattern.startsWith("//") && windowPattern.endsWith("//") && windowPattern.size() >= 4) {
+        regExp.setPatternSyntax(QRegExp::RegExp2);
+        regExp.setPattern(windowPattern.mid(2, windowPattern.size() - 4));
+    }
+    else {
+        regExp.setPatternSyntax(QRegExp::Wildcard);
+        regExp.setPattern(windowPattern);
+    }
+
+    return regExp.exactMatch(windowTitle);
 }

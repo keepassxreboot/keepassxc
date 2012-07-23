@@ -65,6 +65,8 @@ private:
     void loadPlugin(const QString& pluginPath);
     bool parseActions(const QString& sequence, const Entry* entry, QList<AutoTypeAction*>& actions);
     QList<AutoTypeAction*> createActionFromTemplate(const QString& tmpl, const Entry* entry);
+    QString autoTypeSequence(const Entry* entry, const QString& windowTitle = QString());
+    bool windowMatches(const QString& windowTitle, const QString& windowPattern);
 
     bool m_inAutoType;
     Qt::Key m_currentGlobalKey;

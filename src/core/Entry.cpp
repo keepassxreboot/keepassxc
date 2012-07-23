@@ -176,70 +176,6 @@ const AutoTypeAssociations* Entry::autoTypeAssociations() const
     return m_autoTypeAssociations;
 }
 
-QString Entry::autoTypeSequence(const QString& windowTitle) const
-{
-    if (!m_data.autoTypeEnabled) {
-        return QString();
-    }
-
-    bool enableSet = false;
-    QString sequence;
-    if (!windowTitle.isEmpty()) {
-        bool match = false;
-        Q_FOREACH (const AutoTypeAssociations::Association& assoc, m_autoTypeAssociations->getAll()) {
-            if (windowMatches(windowTitle, assoc.window)) {
-                if (!assoc.sequence.isEmpty()) {
-                    sequence = assoc.sequence;
-                }
-                else {
-                    sequence = m_data.defaultAutoTypeSequence;
-                }
-                match = true;
-                break;
-            }
-        }
-
-        if (!match) {
-            return QString();
-        }
-    }
-    else {
-        sequence = m_data.defaultAutoTypeSequence;
-    }
-
-    Group* group = m_group;
-    do {
-        if (!enableSet) {
-            if (group->autoTypeEnabled() == Group::Disable) {
-                return QString();
-            }
-            else if (group->autoTypeEnabled() == Group::Enable) {
-                enableSet = true;
-            }
-        }
-
-        if (sequence.isEmpty()) {
-            sequence = group->defaultAutoTypeSequence();
-        }
-
-        group = group->parentGroup();
-    } while (group && (!enableSet || sequence.isEmpty()));
-
-    if (sequence.isEmpty() && (!username().isEmpty() || !password().isEmpty())) {
-        if (username().isEmpty()) {
-            sequence = "{PASSWORD}{ENTER}";
-        }
-        else if (password().isEmpty()) {
-            sequence = "{USERNAME}{ENTER}";
-        }
-        else {
-            sequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
-        }
-    }
-
-    return sequence;
-}
-
 QString Entry::title() const
 {
     return m_attributes->value("Title");
@@ -546,6 +482,11 @@ Group* Entry::group()
     return m_group;
 }
 
+const Group* Entry::group() const
+{
+    return m_group;
+}
+
 void Entry::setGroup(Group* group)
 {
     Q_ASSERT(group);
@@ -599,23 +540,6 @@ bool Entry::match(const QString& searchTerm, Qt::CaseSensitivity caseSensitivity
             username().contains(searchTerm, caseSensitivity) ||
             url().contains(searchTerm, caseSensitivity) ||
             notes().contains(searchTerm, caseSensitivity);
-}
-
-bool Entry::windowMatches(const QString& windowTitle, const QString& windowPattern)
-{
-    QRegExp regExp;
-    regExp.setCaseSensitivity(Qt::CaseInsensitive);
-
-    if (windowPattern.startsWith("//") && windowPattern.endsWith("//") && windowPattern.size() >= 4) {
-        regExp.setPatternSyntax(QRegExp::RegExp2);
-        regExp.setPattern(windowPattern.mid(2, windowPattern.size() - 4));
-    }
-    else {
-        regExp.setPatternSyntax(QRegExp::Wildcard);
-        regExp.setPattern(windowPattern);
-    }
-
-    return regExp.exactMatch(windowTitle);
 }
 
 QString Entry::resolvePlaceholders(const QString& str) const

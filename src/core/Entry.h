@@ -73,7 +73,6 @@ public:
     QString defaultAutoTypeSequence() const;
     AutoTypeAssociations* autoTypeAssociations();
     const AutoTypeAssociations* autoTypeAssociations() const;
-    QString autoTypeSequence(const QString& windowTitle = QString()) const;
     QString title() const;
     QString url() const;
     QString username() const;
@@ -122,6 +121,7 @@ public:
     void endUpdate();
 
     Group* group();
+    const Group* group() const;
     void setGroup(Group* group);
 
     void setUpdateTimeinfo(bool value);
@@ -143,7 +143,6 @@ private Q_SLOTS:
 private:
     const Database* database() const;
     template <class T> inline bool set(T& property, const T& value);
-    static bool windowMatches(const QString& windowTitle, const QString& windowPattern);
 
     Uuid m_uuid;
     EntryData m_data;
