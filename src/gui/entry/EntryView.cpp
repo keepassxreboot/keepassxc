@@ -92,7 +92,8 @@ bool EntryView::isSingleEntrySelected()
 
 void EntryView::setCurrentEntry(Entry* entry)
 {
-    setCurrentIndex(m_sortModel->mapFromSource(m_model->indexFromEntry(entry)));
+    selectionModel()->setCurrentIndex(m_sortModel->mapFromSource(m_model->indexFromEntry(entry)),
+                                      QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
 }
 
 Entry* EntryView::entryFromIndex(const QModelIndex& index)
