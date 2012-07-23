@@ -106,7 +106,6 @@ set(keepassx_MOC
     autotype/AutoTypeSelectDialog.h
     autotype/AutoTypeSelectView.h
     autotype/ShortcutWidget.h
-    autotype/WildcardMatcher.h
     autotype/WindowSelectComboBox.h
     core/AutoTypeAssociations.h
     core/Config.h

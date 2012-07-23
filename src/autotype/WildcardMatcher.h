@@ -18,34 +18,29 @@
 #ifndef KEEPASSX_WILDCARDMATCHER_H
 #define KEEPASSX_WILDCARDMATCHER_H
 
-#include <QtCore/QObject>
+#include <QtCore/QStringList>
 
-#include "core/Global.h"
-
-class WildcardMatcher : public QObject
+class WildcardMatcher
 {
-    Q_OBJECT
-
 public:
-    explicit WildcardMatcher(QString text, QObject* parent = Q_NULLPTR);
+    explicit WildcardMatcher(const QString& text);
+    bool match(const QString& pattern);
 
-    static const QString Wildcard;
-
-    bool match(QString pattern);
+    static const QChar Wildcard;
 
 private:
-    static const Qt::CaseSensitivity Sensitivity;
-
-    QString m_text;
-    QString m_pattern;
     bool patternEqualsText();
     bool patternContainsWildcard();
     bool matchWithWildcards();
-    bool startOrEndDoesNotMatch(QStringList parts);
-    bool partsMatch(QStringList parts);
-    int getMatchIndex(QString part, int startIndex);
+    bool startOrEndDoesNotMatch(const QStringList& parts);
+    bool partsMatch(const QStringList& parts);
+    int getMatchIndex(const QString& part, int startIndex);
     bool noMatchFound(int index);
     int calculateNewIndex(int matchIndex, int partLength);
+
+    static const Qt::CaseSensitivity Sensitivity;
+    const QString m_text;
+    QString m_pattern;
 };
 
 #endif // KEEPASSX_WILDCARDMATCHER_H

@@ -19,16 +19,15 @@
 
 #include <QtCore/QStringList>
 
-const QString WildcardMatcher::Wildcard = "*";
+const QChar WildcardMatcher::Wildcard = '*';
 const Qt::CaseSensitivity WildcardMatcher::Sensitivity = Qt::CaseInsensitive;
 
-WildcardMatcher::WildcardMatcher(QString text, QObject* parent) :
-    QObject(parent)
+WildcardMatcher::WildcardMatcher(const QString& text)
+    : m_text(text)
 {
-    m_text = text;
 }
 
-bool WildcardMatcher::match(QString pattern)
+bool WildcardMatcher::match(const QString& pattern)
 {
     m_pattern = pattern;
 
@@ -62,16 +61,16 @@ bool WildcardMatcher::matchWithWildcards()
     return partsMatch(parts);
 }
 
-bool WildcardMatcher::startOrEndDoesNotMatch(QStringList parts)
+bool WildcardMatcher::startOrEndDoesNotMatch(const QStringList& parts)
 {
     return !m_text.startsWith(parts.first(), Sensitivity) ||
            !m_text.endsWith(parts.last(), Sensitivity);
 }
 
-bool WildcardMatcher::partsMatch(QStringList parts)
+bool WildcardMatcher::partsMatch(const QStringList& parts)
 {
     int index = 0;
-    Q_FOREACH (QString part, parts) {
+    Q_FOREACH (const QString& part, parts) {
         int matchIndex = getMatchIndex(part, index);
         if (noMatchFound(matchIndex)) {
             return false;
@@ -82,14 +81,14 @@ bool WildcardMatcher::partsMatch(QStringList parts)
     return true;
 }
 
-int WildcardMatcher::getMatchIndex(QString part, int startIndex)
+int WildcardMatcher::getMatchIndex(const QString& part, int startIndex)
 {
     return m_text.indexOf(part, startIndex, Sensitivity);
 }
 
 bool WildcardMatcher::noMatchFound(int index)
 {
-    return index < 0;
+    return index == -1;
 }
 
 int WildcardMatcher::calculateNewIndex(int matchIndex, int partLength)
