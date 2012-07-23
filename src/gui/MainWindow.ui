@@ -77,8 +77,14 @@
     <property name="title">
      <string>Database</string>
     </property>
+    <widget class="QMenu" name="menuRecentDatabases">
+     <property name="title">
+      <string>Recent databases</string>
+     </property>
+    </widget>
     <addaction name="actionDatabaseNew"/>
     <addaction name="actionDatabaseOpen"/>
+    <addaction name="menuRecentDatabases"/>
     <addaction name="actionDatabaseSave"/>
     <addaction name="actionDatabaseSaveAs"/>
     <addaction name="actionDatabaseClose"/>

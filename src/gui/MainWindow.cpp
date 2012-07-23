@@ -39,6 +39,12 @@ MainWindow::MainWindow()
     toggleViewAction->setText(tr("Show toolbar"));
     m_ui->menuView->addAction(toggleViewAction);
 
+    m_clearHistoryAction = new QAction("Clear history", m_ui->menuFile);
+    m_lastDatabasesActions = new QActionGroup(m_ui->menuRecentDatabases);
+    connect(m_clearHistoryAction, SIGNAL(triggered()), this, SLOT(clearLastDatabases()));
+    connect(m_lastDatabasesActions, SIGNAL(triggered(QAction*)), this, SLOT(openRecentDatabase(QAction*)));
+    connect(m_ui->menuRecentDatabases, SIGNAL(aboutToShow()), this, SLOT(updateLastDatabasesMenu()));
+
     Qt::Key globalAutoTypeKey = static_cast<Qt::Key>(config()->get("GlobalAutoTypeKey").toInt());
     Qt::KeyboardModifiers globalAutoTypeModifiers = static_cast<Qt::KeyboardModifiers>(
                 config()->get("GlobalAutoTypeModifiers").toInt());
@@ -143,6 +149,28 @@ MainWindow::MainWindow()
 
 MainWindow::~MainWindow()
 {
+}
+
+void MainWindow::updateLastDatabasesMenu() {
+    m_ui->menuRecentDatabases->clear();
+
+    QStringList lastDatabases = config()->get("LastDatabases", QVariant()).toStringList();
+    Q_FOREACH (const QString& database, lastDatabases) {
+        QAction* action = m_ui->menuRecentDatabases->addAction(database);
+        m_lastDatabasesActions->addAction(action);
+    }
+    m_ui->menuRecentDatabases->addSeparator();
+    m_ui->menuRecentDatabases->addAction(m_clearHistoryAction);
+}
+
+void MainWindow::openRecentDatabase(QAction* action)
+{
+    openDatabase(action->text());
+}
+
+void MainWindow::clearLastDatabases()
+{
+    config()->set("LastDatabases", QVariant());
 }
 
 void MainWindow::openDatabase(const QString& fileName, const QString& pw, const QString& keyFile)

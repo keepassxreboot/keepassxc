@@ -18,6 +18,7 @@
 #ifndef KEEPASSX_MAINWINDOW_H
 #define KEEPASSX_MAINWINDOW_H
 
+#include <QtGui/QActionGroup>
 #include <QtGui/QMainWindow>
 
 #include "gui/DatabaseWidget.h"
@@ -48,6 +49,9 @@ private Q_SLOTS:
     void switchToDatabases();
     void switchToSettings();
     void databaseTabChanged(int tabIndex);
+    void openRecentDatabase(QAction* action);
+    void clearLastDatabases();
+    void updateLastDatabasesMenu();
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);
@@ -55,6 +59,8 @@ private:
     static const QString BaseWindowTitle;
 
     const QScopedPointer<Ui::MainWindow> m_ui;
+    QAction* m_clearHistoryAction;
+    QActionGroup* m_lastDatabasesActions;
 
     Q_DISABLE_COPY(MainWindow)
 };
