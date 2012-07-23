@@ -130,15 +130,19 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     addWidget(m_databaseOpenWidget);
     addWidget(m_keepass1OpenWidget);
 
-    m_actionEntryNew = m_menuEntry->addAction(tr("Add new entry"), this, SLOT(createEntry()));
+    m_actionEntryNew = m_menuEntry->addAction(tr("Add new entry"), this,
+                                              SLOT(createEntry()), Qt::CTRL + Qt::Key_N);
     m_actionEntryNew->setIcon(filePath()->icon("actions", "entry-new", false));
-    m_actionEntryClone = m_menuEntry->addAction(tr("Clone entry"), this, SLOT(cloneEntry()));
+    m_actionEntryClone = m_menuEntry->addAction(tr("Clone entry"), this,
+                                                SLOT(cloneEntry()), Qt::CTRL + Qt::Key_K);
     m_actionEntryClone->setIcon(filePath()->icon("actions", "entry-clone", false));
     m_actionEntryClone->setEnabled(false);
-    m_actionEntryEditView = m_menuEntry->addAction(tr("View/Edit entry"), this, SLOT(switchToEntryEdit()));
+    m_actionEntryEditView = m_menuEntry->addAction(tr("View/Edit entry"), this,
+                                                   SLOT(switchToEntryEdit()), Qt::CTRL + Qt::Key_E);
     m_actionEntryEditView->setIcon(filePath()->icon("actions", "entry-edit", false));
     m_actionEntryEditView->setEnabled(false);
-    m_actionEntryDelete = m_menuEntry->addAction(tr("Delete entry"), this, SLOT(deleteEntry()));
+    m_actionEntryDelete = m_menuEntry->addAction(tr("Delete entry"), this,
+                                                 SLOT(deleteEntry()), Qt::CTRL + Qt::Key_D);
     m_actionEntryDelete->setIcon(filePath()->icon("actions", "entry-delete", false));
     m_actionEntryDelete->setEnabled(false);
     m_actionEntryCopyUsername = m_menuEntry->addAction(tr("Copy username to clipboard"), this,
