@@ -25,100 +25,50 @@
 const QString TestWildcardMatcher::DefaultText = QString("some text");
 const QString TestWildcardMatcher::AlternativeText = QString("some other text");
 
-void TestWildcardMatcher::testMatchWithoutWildcard()
+void TestWildcardMatcher::testMatcher_data()
 {
-    initMatcher(DefaultText);
-    QString pattern = DefaultText;
-    verifyMatch(pattern);
+    QTest::addColumn<QString>("text");
+    QTest::addColumn<QString>("pattern");
+    QTest::addColumn<bool>("match");
+
+    QTest::newRow("MatchWithoutWildcard") << DefaultText << DefaultText << true;
+    QTest::newRow("NoMatchWithoutWildcard") << DefaultText << QString("no match text") << false;
+    QTest::newRow("MatchWithOneWildcardInTheMiddle") << AlternativeText << QString("some*text") << true;
+    QTest::newRow("NoMatchWithOneWildcardInTheMiddle") << AlternativeText << QString("differen*text") << false;
+    QTest::newRow("MatchWithOneWildcardAtBegin") << DefaultText << QString("*text") << true;
+    QTest::newRow("NoMatchWithOneWildcardAtBegin") << DefaultText << QString("*text something else") << false;
+    QTest::newRow("NatchWithOneWildcardAtEnd") << DefaultText << QString("some*") << true;
+    QTest::newRow("NoMatchWithOneWildcardAtEnd") << DefaultText << QString("some other*") << false;
+    QTest::newRow("MatchWithMultipleWildcards") << AlternativeText << QString("some*th*text") << true;
+    QTest::newRow("NoMatchWithMultipleWildcards") << AlternativeText << QString("some*abc*text") << false;
+    QTest::newRow("MatchJustWildcard") << DefaultText << QString("*") << true;
+    QTest::newRow("MatchFollowingWildcards") << DefaultText << QString("some t**t") << true;
+    QTest::newRow("CaseSensitivity") << DefaultText.toUpper() << QString("some t**t") << true;
 }
 
-void TestWildcardMatcher::testNoMatchWithoutWildcard()
+void TestWildcardMatcher::testMatcher()
 {
-    initMatcher(DefaultText);
-    QString pattern = QString("no match text");
-    verifyNoMatch(pattern);
-}
+    QFETCH(QString, text);
+    QFETCH(QString, pattern);
+    QFETCH(bool, match);
 
-void TestWildcardMatcher::testMatchWithOneWildcardInTheMiddle()
-{
-    initMatcher(AlternativeText);
-    QString pattern("some*text");
-    verifyMatch(pattern);
-}
-
-void TestWildcardMatcher::testNoMatchWithOneWildcardInTheMiddle()
-{
-    initMatcher(AlternativeText);
-    QString pattern("differen*text");
-    verifyNoMatch(pattern);
-}
-
-void TestWildcardMatcher::testMatchWithOneWildcardAtBegin()
-{
-    initMatcher(DefaultText);
-    QString pattern("*text");
-    verifyMatch(pattern);
-}
-
-void TestWildcardMatcher::testNoMatchWithOneWildcardAtBegin()
-{
-    initMatcher(DefaultText);
-    QString pattern("*text something else");
-    verifyNoMatch(pattern);
-}
-
-void TestWildcardMatcher::testMatchWithOneWildcardAtEnd()
-{
-    initMatcher(DefaultText);
-    QString pattern("some*");
-    verifyMatch(pattern);
-}
-
-void TestWildcardMatcher::testNoMatchWithOneWildcardAtEnd()
-{
-    initMatcher(DefaultText);
-    QString pattern("some other*");
-    verifyNoMatch(pattern);
-}
-
-void TestWildcardMatcher::testMatchWithMultipleWildcards()
-{
-    initMatcher(AlternativeText);
-    QString pattern("some*th*text");
-    verifyMatch(pattern);
-}
-
-void TestWildcardMatcher::testNoMatchWithMultipleWildcards()
-{
-    initMatcher(AlternativeText);
-    QString pattern("some*abc*text");
-    verifyNoMatch(pattern);
-}
-
-void TestWildcardMatcher::testMatchJustWildcard()
-{
-    initMatcher(AlternativeText);
-    QString pattern("*");
-    verifyMatch(pattern);
-}
-
-void TestWildcardMatcher::testMatchFollowingWildcards()
-{
-    initMatcher(DefaultText);
-    QString pattern("some t**t");
-    verifyMatch(pattern);
-}
-
-void TestWildcardMatcher::testCaseSensitivity()
-{
-    initMatcher(DefaultText.toUpper());
-    QString pattern("some t**t");
-    verifyMatch(pattern);
+    initMatcher(text);
+    verifyMatchResult(pattern, match);
 }
 
 void TestWildcardMatcher::initMatcher(QString text)
 {
     m_matcher = new WildcardMatcher(text);
+}
+
+void TestWildcardMatcher::verifyMatchResult(QString pattern, bool expected)
+{
+    if (expected) {
+        verifyMatch(pattern);
+    }
+    else {
+        verifyNoMatch(pattern);
+    }
 }
 
 void TestWildcardMatcher::verifyMatch(QString pattern)

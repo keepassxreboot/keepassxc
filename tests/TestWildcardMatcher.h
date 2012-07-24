@@ -27,25 +27,15 @@ class TestWildcardMatcher : public QObject
     Q_OBJECT
 
 private Q_SLOTS:
-    void testMatchWithoutWildcard();
-    void testNoMatchWithoutWildcard();
-    void testMatchWithOneWildcardInTheMiddle();
-    void testNoMatchWithOneWildcardInTheMiddle();
-    void testNoMatchWithOneWildcardAtBegin();
-    void testMatchWithOneWildcardAtBegin();
-    void testNoMatchWithOneWildcardAtEnd();
-    void testMatchWithOneWildcardAtEnd();
-    void testMatchWithMultipleWildcards();
-    void testNoMatchWithMultipleWildcards();
-    void testMatchJustWildcard();
-    void testMatchFollowingWildcards();
-    void testCaseSensitivity();
+    void testMatcher();
+    void testMatcher_data();
 
 private:
     static const QString DefaultText;
     static const QString AlternativeText;
 
     void initMatcher(QString text);
+    void verifyMatchResult(QString pattern, bool expected);
     void verifyMatch(QString pattern);
     void verifyNoMatch(QString pattern);
 
