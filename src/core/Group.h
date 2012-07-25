@@ -141,7 +141,7 @@ private:
     QList<Entry*> m_entries;
 
     QPointer<Group> m_parent;
-    QPixmapCache::Key m_pixmapCacheKey;
+    mutable QPixmapCache::Key m_pixmapCacheKey;
 
     bool m_updateTimeinfo;
 

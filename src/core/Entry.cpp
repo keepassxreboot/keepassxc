@@ -109,7 +109,7 @@ QPixmap Entry::iconPixmap() const
         if (!QPixmapCache::find(m_pixmapCacheKey, &pixmap)) {
             // TODO: check if database() is 0
             pixmap = QPixmap::fromImage(database()->metadata()->customIcon(m_data.customIcon));
-            const_cast<Entry*>(this)->m_pixmapCacheKey = QPixmapCache::insert(pixmap);
+            m_pixmapCacheKey = QPixmapCache::insert(pixmap);
         }
 
         return pixmap;

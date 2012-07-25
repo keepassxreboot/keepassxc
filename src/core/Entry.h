@@ -154,7 +154,7 @@ private:
     Entry* m_tmpHistoryItem;
     bool m_modifiedSinceBegin;
     QPointer<Group> m_group;
-    QPixmapCache::Key m_pixmapCacheKey;
+    mutable QPixmapCache::Key m_pixmapCacheKey;
     bool m_updateTimeinfo;
 };
 
