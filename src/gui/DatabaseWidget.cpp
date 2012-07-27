@@ -504,7 +504,9 @@ void DatabaseWidget::switchToGroupEdit(Group* group, bool create)
 void DatabaseWidget::updateMasterKey(bool accepted)
 {
     if (accepted) {
+        QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
         m_db->setKey(m_changeMasterKeyWidget->newMasterKey());
+        QApplication::restoreOverrideCursor();
     }
     else if (!m_db->hasKey()) {
         Q_EMIT closeRequest();

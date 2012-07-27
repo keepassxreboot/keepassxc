@@ -127,7 +127,9 @@ void DatabaseOpenWidget::openDatabase()
     if (m_db) {
         delete m_db;
     }
+    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
     m_db = reader.readDatabase(&file, masterKey);
+    QApplication::restoreOverrideCursor();
 
     if (m_db) {
         Q_EMIT editFinished(true);

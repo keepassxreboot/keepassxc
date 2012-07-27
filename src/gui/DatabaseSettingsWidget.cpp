@@ -83,7 +83,11 @@ void DatabaseSettingsWidget::save()
     meta->setDescription(m_ui->dbDescriptionEdit->text());
     meta->setDefaultUserName(m_ui->defaultUsernameEdit->text());
     meta->setRecycleBinEnabled(m_ui->recycleBinEnabledCheckBox->isChecked());
-    m_db->setTransformRounds(m_ui->transformRoundsSpinBox->value());
+    if (static_cast<quint64>(m_ui->transformRoundsSpinBox->value()) != m_db->transformRounds()) {
+        QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+        m_db->setTransformRounds(m_ui->transformRoundsSpinBox->value());
+        QApplication::restoreOverrideCursor();
+    }
 
     bool truncate = false;
 
