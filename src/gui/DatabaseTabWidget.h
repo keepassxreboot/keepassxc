@@ -74,6 +74,7 @@ public Q_SLOTS:
     void copyUsername();
     void copyPassword();
     void performAutoType();
+    void openUrl();
     void createGroup();
     void editGroup();
     void deleteGroup();

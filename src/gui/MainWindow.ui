@@ -70,7 +70,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -113,6 +113,7 @@
     <addaction name="actionEntryCopyUsername"/>
     <addaction name="actionEntryCopyPassword"/>
     <addaction name="actionEntryAutoType"/>
+    <addaction name="actionEntryOpenUrl"/>
    </widget>
    <widget class="QMenu" name="menuGroups">
     <property name="title">
@@ -317,6 +318,14 @@
    </property>
    <property name="text">
     <string>Perform Auto-Type</string>
+   </property>
+  </action>
+  <action name="actionEntryOpenUrl">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Open URL</string>
    </property>
   </action>
  </widget>

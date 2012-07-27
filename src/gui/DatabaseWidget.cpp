@@ -20,6 +20,7 @@
 
 #include <QtCore/QTimer>
 #include <QtGui/QAction>
+#include <QtGui/QDesktopServices>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
@@ -160,6 +161,8 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
         m_actionEntryAutoType->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_V));
     }
     m_actionEntryAutoType->setEnabled(false);
+    m_actionEntryOpenUrl = m_menuEntry->addAction(tr("Open URL"), this, SLOT(openUrl()), Qt::CTRL + Qt::Key_U);
+    m_actionEntryOpenUrl->setEnabled(false);
 
     m_actionGroupNew = m_menuGroup->addAction(tr("Add new group"), this, SLOT(createGroup()));
     m_actionGroupNew->setIcon(filePath()->icon("actions", "group-new", false));
@@ -241,6 +244,8 @@ bool DatabaseWidget::actionEnabled(Action action)
         return m_actionEntryCopyPassword->isEnabled();
     case EntryAutoType:
         return m_actionEntryAutoType->isEnabled();
+    case EntryOpenUrl:
+        return m_actionEntryOpenUrl->isEnabled();
     default:
         Q_ASSERT(false);
         return false;
@@ -351,6 +356,19 @@ void DatabaseWidget::performAutoType()
     }
 
     autoType()->performAutoType(currentEntry, window());
+}
+
+void DatabaseWidget::openUrl()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if (!currentEntry) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    if (!currentEntry->url().isEmpty()) {
+        QDesktopServices::openUrl(currentEntry->url());
+    }
 }
 
 void DatabaseWidget::createGroup()
@@ -699,6 +717,7 @@ void DatabaseWidget::updateEntryActions()
     m_actionEntryCopyUsername->setEnabled(singleEntrySelected);
     m_actionEntryCopyPassword->setEnabled(singleEntrySelected);
     m_actionEntryAutoType->setEnabled(singleEntrySelected);
+    m_actionEntryOpenUrl->setEnabled(singleEntrySelected);
 }
 
 void DatabaseWidget::showGroupContextMenu(const QPoint& pos)

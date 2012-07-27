@@ -397,6 +397,11 @@ void DatabaseTabWidget::performAutoType()
     currentDatabaseWidget()->performAutoType();
 }
 
+void DatabaseTabWidget::openUrl()
+{
+    currentDatabaseWidget()->openUrl();
+}
+
 void DatabaseTabWidget::createGroup()
 {
     currentDatabaseWidget()->createGroup();
