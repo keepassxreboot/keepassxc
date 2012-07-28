@@ -105,6 +105,11 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
 {
     QFileInfo fileInfo(fileName);
     QString canonicalFilePath = fileInfo.canonicalFilePath();
+    if (canonicalFilePath.isEmpty()) {
+        QMessageBox::warning(this, tr("Warning"), tr("File not found!"));
+        return;
+    }
+
 
     QHashIterator<Database*, DatabaseManagerStruct> i(m_dbList);
     while (i.hasNext()) {
