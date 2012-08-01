@@ -504,8 +504,6 @@ QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitl
 
 bool AutoType::windowMatches(const QString& windowTitle, const QString& windowPattern)
 {
-
-
     if (windowPattern.startsWith("//") && windowPattern.endsWith("//") && windowPattern.size() >= 4) {
         QRegExp regExp(windowPattern.mid(2, windowPattern.size() - 4), Qt::CaseInsensitive, QRegExp::RegExp2);
         return regExp.exactMatch(windowTitle);

@@ -41,6 +41,7 @@ DatabaseManagerStruct::DatabaseManagerStruct()
 {
 }
 
+
 const int DatabaseTabWidget::LastDatabasesCount = 5;
 
 DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)

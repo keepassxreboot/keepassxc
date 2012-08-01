@@ -30,6 +30,8 @@
 #include "gui/entry/EntryView.h"
 #include "gui/group/GroupView.h"
 
+const QString MainWindow::BaseWindowTitle = "KeePassX";
+
 MainWindow::MainWindow()
     : m_ui(new Ui::MainWindow())
 {
@@ -168,7 +170,8 @@ MainWindow::~MainWindow()
 {
 }
 
-void MainWindow::updateLastDatabasesMenu() {
+void MainWindow::updateLastDatabasesMenu()
+{
     m_ui->menuRecentDatabases->clear();
 
     QStringList lastDatabases = config()->get("LastDatabases", QVariant()).toStringList();
@@ -194,8 +197,6 @@ void MainWindow::openDatabase(const QString& fileName, const QString& pw, const 
 {
     m_ui->tabWidget->openDatabase(fileName, pw, keyFile);
 }
-
-const QString MainWindow::BaseWindowTitle = "KeePassX";
 
 void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 {
