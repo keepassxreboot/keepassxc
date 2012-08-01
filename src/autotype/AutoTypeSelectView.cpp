@@ -25,6 +25,7 @@ AutoTypeSelectView::AutoTypeSelectView(QWidget* parent)
     hideColumn(3);
     setMouseTracking(true);
     setAllColumnsShowFocus(true);
+    setDragEnabled(false);
 }
 
 void AutoTypeSelectView::setEntryList(const QList<Entry*>& entries)
