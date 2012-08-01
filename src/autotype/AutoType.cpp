@@ -178,6 +178,8 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
         connect(selectDialog, SIGNAL(rejected()), SLOT(resetInAutoType()));
         selectDialog->setEntries(entryList, sequenceHash);
         selectDialog->show();
+        // necessary when the main window is minimized
+        selectDialog->activateWindow();
     }
 }
 
