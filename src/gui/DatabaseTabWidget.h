@@ -67,30 +67,15 @@ public Q_SLOTS:
     bool closeAllDatabases();
     void changeMasterKey();
     void changeDatabaseSettings();
-    void createEntry();
-    void cloneEntry();
-    void editEntry();
-    void deleteEntry();
-    void copyUsername();
-    void copyPassword();
-    void performAutoType();
-    void openUrl();
-    void createGroup();
-    void editGroup();
-    void deleteGroup();
-    void toggleSearch();
     bool readOnly(int index = -1);
     void performGlobalAutoType();
 
 Q_SIGNALS:
-    void entrySelectionChanged(bool singleEntrySelected);
-    void currentWidgetModeChanged(DatabaseWidget::Mode);
     void tabNameChanged();
 
 private Q_SLOTS:
     void updateTabName(Database* db);
     void updateTabNameFromSender();
-    void emitEntrySelectionChanged();
     void modified();
     void toggleTabbar();
     void changeDatabase(Database* newDb);

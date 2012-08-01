@@ -52,20 +52,6 @@ public:
         ViewMode,
         EditMode
     };
-    enum Action
-    {
-        GroupNew,
-        GroupEdit,
-        GroupDelete,
-        EntryNew,
-        EntryClone,
-        EntryEditView,
-        EntryDelete,
-        EntryCopyUsername,
-        EntryCopyPassword,
-        EntryAutoType,
-        EntryOpenUrl
-    };
 
     explicit DatabaseWidget(Database* db, QWidget* parent = Q_NULLPTR);
     ~DatabaseWidget();
@@ -74,15 +60,19 @@ public:
     Database* database();
     bool dbHasKey();
     bool canDeleteCurrentGoup();
+    bool isInSearchMode();
     int addWidget(QWidget* w);
     void setCurrentIndex(int index);
     DatabaseWidget::Mode currentMode();
-    bool actionEnabled(Action action);
 
 Q_SIGNALS:
     void closeRequest();
     void currentModeChanged(DatabaseWidget::Mode mode);
+    void groupChanged();
+    void entrySelectionChanged();
     void databaseChanged(Database* newDb);
+    void groupContextMenuRequested(const QPoint& globalPos);
+    void entryContextMenuRequested(const QPoint& globalPos);
 
 public Q_SLOTS:
     void createEntry();
@@ -102,6 +92,8 @@ public Q_SLOTS:
     void switchToOpenDatabase(const QString& fileName, const QString& password, const QString& keyFile);
     void switchToImportKeepass1(const QString& fileName);
     void toggleSearch();
+    void emitGroupContextMenuRequested(const QPoint& pos);
+    void emitEntryContextMenuRequested(const QPoint& pos);
 
 private Q_SLOTS:
     void switchBackToEntryEdit();
@@ -119,10 +111,6 @@ private Q_SLOTS:
     void startSearchTimer();
     void showSearch();
     void closeSearch();
-    void updateGroupActions(Group* group);
-    void updateEntryActions();
-    void showGroupContextMenu(const QPoint& pos);
-    void showEntryContextMenu(const QPoint& pos);
 
 private:
     Database* m_db;
@@ -143,21 +131,6 @@ private:
     Group* m_newParent;
     Group* m_lastGroup;
     QTimer* m_searchTimer;
-
-    QMenu* m_menuGroup;
-    QAction* m_actionGroupNew;
-    QAction* m_actionGroupEdit;
-    QAction* m_actionGroupDelete;
-
-    QMenu* m_menuEntry;
-    QAction* m_actionEntryNew;
-    QAction* m_actionEntryClone;
-    QAction* m_actionEntryEditView;
-    QAction* m_actionEntryDelete;
-    QAction* m_actionEntryCopyUsername;
-    QAction* m_actionEntryCopyPassword;
-    QAction* m_actionEntryAutoType;
-    QAction* m_actionEntryOpenUrl;
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H

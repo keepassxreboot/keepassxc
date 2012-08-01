@@ -24,7 +24,6 @@
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
-#include <QtGui/QMenu>
 #include <QtGui/QMessageBox>
 #include <QtGui/QSplitter>
 
@@ -50,8 +49,6 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     , m_newGroup(Q_NULLPTR)
     , m_newEntry(Q_NULLPTR)
     , m_newParent(Q_NULLPTR)
-    , m_menuGroup(new QMenu(this))
-    , m_menuEntry(new QMenu(this))
 {
     m_searchUi->setupUi(m_searchWidget);
 
@@ -68,13 +65,15 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_groupView = new GroupView(db, splitter);
     m_groupView->setObjectName("groupView");
     m_groupView->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(m_groupView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(showGroupContextMenu(QPoint)));
+    connect(m_groupView, SIGNAL(customContextMenuRequested(QPoint)),
+            SLOT(emitGroupContextMenuRequested(QPoint)));
 
     m_entryView = new EntryView(rightHandSideWidget);
     m_entryView->setObjectName("entryView");
     m_entryView->setContextMenuPolicy(Qt::CustomContextMenu);
     m_entryView->setGroup(db->rootGroup());
-    connect(m_entryView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(showEntryContextMenu(QPoint)));
+    connect(m_entryView, SIGNAL(customContextMenuRequested(QPoint)),
+            SLOT(emitEntryContextMenuRequested(QPoint)));
 
     QSizePolicy policy;
     policy = m_groupView->sizePolicy();
@@ -131,51 +130,11 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     addWidget(m_databaseOpenWidget);
     addWidget(m_keepass1OpenWidget);
 
-    m_actionEntryNew = m_menuEntry->addAction(tr("Add new entry"), this,
-                                              SLOT(createEntry()), Qt::CTRL + Qt::Key_N);
-    m_actionEntryNew->setIcon(filePath()->icon("actions", "entry-new", false));
-    m_actionEntryClone = m_menuEntry->addAction(tr("Clone entry"), this,
-                                                SLOT(cloneEntry()), Qt::CTRL + Qt::Key_K);
-    m_actionEntryClone->setIcon(filePath()->icon("actions", "entry-clone", false));
-    m_actionEntryClone->setEnabled(false);
-    m_actionEntryEditView = m_menuEntry->addAction(tr("View/Edit entry"), this,
-                                                   SLOT(switchToEntryEdit()), Qt::CTRL + Qt::Key_E);
-    m_actionEntryEditView->setIcon(filePath()->icon("actions", "entry-edit", false));
-    m_actionEntryEditView->setEnabled(false);
-    m_actionEntryDelete = m_menuEntry->addAction(tr("Delete entry"), this,
-                                                 SLOT(deleteEntry()), Qt::CTRL + Qt::Key_D);
-    m_actionEntryDelete->setIcon(filePath()->icon("actions", "entry-delete", false));
-    m_actionEntryDelete->setEnabled(false);
-    m_actionEntryCopyUsername = m_menuEntry->addAction(tr("Copy username to clipboard"), this,
-                                                       SLOT(copyUsername()), Qt::CTRL + Qt::Key_B);
-    m_actionEntryCopyUsername->setEnabled(false);
-    m_actionEntryCopyPassword = m_menuEntry->addAction(tr("Copy password to clipboard"), this,
-                                                       SLOT(copyPassword()), Qt::CTRL + Qt::Key_C);
-    m_actionEntryCopyPassword->setEnabled(false);
-    m_actionEntryAutoType = m_menuEntry->addAction(tr("Perform Auto-Type"), this,
-                                                   SLOT(performAutoType()));
-    if (!QKeySequence::keyBindings(QKeySequence::Paste).isEmpty()) {
-        m_actionEntryAutoType->setShortcuts(QKeySequence::Paste);
-    }
-    else {
-        m_actionEntryAutoType->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_V));
-    }
-    m_actionEntryAutoType->setEnabled(false);
-    m_actionEntryOpenUrl = m_menuEntry->addAction(tr("Open URL"), this, SLOT(openUrl()), Qt::CTRL + Qt::Key_U);
-    m_actionEntryOpenUrl->setEnabled(false);
-
-    m_actionGroupNew = m_menuGroup->addAction(tr("Add new group"), this, SLOT(createGroup()));
-    m_actionGroupNew->setIcon(filePath()->icon("actions", "group-new", false));
-    m_actionGroupEdit = m_menuGroup->addAction(tr("Edit group"), this, SLOT(switchToGroupEdit()));
-    m_actionGroupEdit->setIcon(filePath()->icon("actions", "group-edit", false));
-    m_actionGroupDelete = m_menuGroup->addAction(tr("Delete group"), this, SLOT(deleteGroup()));
-    m_actionGroupDelete->setIcon(filePath()->icon("actions", "group-delete", false));
-    m_actionGroupDelete->setEnabled(false);
-
     connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(clearLastGroup(Group*)));
-    connect(m_groupView, SIGNAL(groupChanged(Group*)), SLOT(updateGroupActions(Group*)));
+    connect(m_groupView, SIGNAL(groupChanged(Group*)), SIGNAL(groupChanged()));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), m_entryView, SLOT(setGroup(Group*)));
     connect(m_entryView, SIGNAL(entryActivated(Entry*)), SLOT(switchToEntryEdit(Entry*)));
+    connect(m_entryView, SIGNAL(entrySelectionChanged()), SIGNAL(entrySelectionChanged()));
     connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
     connect(m_editEntryWidget, SIGNAL(historyEntryActivated(Entry*)), SLOT(switchToHistoryView(Entry*)));
     connect(m_historyEditEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchBackToEntryEdit()));
@@ -191,7 +150,6 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_searchUi->searchRootRadioButton, SIGNAL(toggled(bool)), this, SLOT(startSearch()));
     connect(m_searchTimer, SIGNAL(timeout()), this, SLOT(search()));
     connect(closeAction, SIGNAL(triggered()), this, SLOT(closeSearch()));
-    connect(m_entryView, SIGNAL(entrySelectionChanged()), SLOT(updateEntryActions()));
 
     setCurrentIndex(0);
 }
@@ -218,37 +176,6 @@ DatabaseWidget::Mode DatabaseWidget::currentMode()
     default:
         Q_ASSERT(false);
         return DatabaseWidget::None;
-    }
-}
-
-bool DatabaseWidget::actionEnabled(Action action)
-{
-    switch (action) {
-    case GroupNew:
-        return m_actionGroupNew->isEnabled();
-    case GroupEdit:
-        return m_actionGroupEdit->isEnabled();
-    case GroupDelete:
-        return m_actionGroupDelete->isEnabled();
-    case EntryNew:
-        return m_actionEntryNew->isEnabled();
-    case EntryClone:
-        return m_actionEntryClone->isEnabled();
-    case EntryEditView:
-        return m_actionEntryEditView->isEnabled();
-    case EntryDelete:
-        return m_actionEntryDelete->isEnabled();
-    case EntryCopyUsername:
-        return m_actionEntryCopyUsername->isEnabled();
-    case EntryCopyPassword:
-        return m_actionEntryCopyPassword->isEnabled();
-    case EntryAutoType:
-        return m_actionEntryAutoType->isEnabled();
-    case EntryOpenUrl:
-        return m_actionEntryOpenUrl->isEnabled();
-    default:
-        Q_ASSERT(false);
-        return false;
     }
 }
 
@@ -680,6 +607,16 @@ void DatabaseWidget::startSearch()
     search();
 }
 
+void DatabaseWidget::emitGroupContextMenuRequested(const QPoint& pos)
+{
+    Q_EMIT groupContextMenuRequested(m_groupView->viewport()->mapToGlobal(pos));
+}
+
+void DatabaseWidget::emitEntryContextMenuRequested(const QPoint& pos)
+{
+    Q_EMIT entryContextMenuRequested(m_entryView->viewport()->mapToGlobal(pos));
+}
+
 bool DatabaseWidget::dbHasKey()
 {
     return m_db->hasKey();
@@ -692,42 +629,15 @@ bool DatabaseWidget::canDeleteCurrentGoup()
     return !isRootGroup && !isRecycleBin;
 }
 
+bool DatabaseWidget::isInSearchMode()
+{
+    return m_entryView->inEntryListMode();
+}
+
 void DatabaseWidget::clearLastGroup(Group* group)
 {
     if (group) {
         m_lastGroup = Q_NULLPTR;
         m_searchWidget->hide();
     }
-}
-
-void DatabaseWidget::updateGroupActions(Group* group)
-{
-    m_actionGroupNew->setEnabled(group);
-    m_actionGroupEdit->setEnabled(group);
-    m_actionGroupDelete->setEnabled(group && canDeleteCurrentGoup());
-}
-
-void DatabaseWidget::updateEntryActions()
-{
-    bool singleEntrySelected = m_entryView->isSingleEntrySelected();
-    bool inSearch = m_entryView->inEntryListMode();
-
-    m_actionEntryNew->setEnabled(!inSearch);
-    m_actionEntryClone->setEnabled(singleEntrySelected && !inSearch);
-    m_actionEntryEditView->setEnabled(singleEntrySelected);
-    m_actionEntryDelete->setEnabled(singleEntrySelected);
-    m_actionEntryCopyUsername->setEnabled(singleEntrySelected);
-    m_actionEntryCopyPassword->setEnabled(singleEntrySelected);
-    m_actionEntryAutoType->setEnabled(singleEntrySelected);
-    m_actionEntryOpenUrl->setEnabled(singleEntrySelected);
-}
-
-void DatabaseWidget::showGroupContextMenu(const QPoint& pos)
-{
-    m_menuGroup->popup(m_groupView->viewport()->mapToGlobal(pos));
-}
-
-void DatabaseWidget::showEntryContextMenu(const QPoint& pos)
-{
-    m_menuEntry->popup(m_entryView->viewport()->mapToGlobal(pos));
 }

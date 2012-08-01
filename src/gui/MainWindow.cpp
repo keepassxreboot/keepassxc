@@ -28,6 +28,7 @@
 #include "gui/AboutDialog.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/entry/EntryView.h"
+#include "gui/group/GroupView.h"
 
 MainWindow::MainWindow()
     : m_ui(new Ui::MainWindow())
@@ -91,16 +92,25 @@ MainWindow::MainWindow()
 
     m_ui->actionSearch->setIcon(filePath()->icon("actions", "system-search"));
 
-    connect(m_ui->tabWidget, SIGNAL(entrySelectionChanged(bool)),
-            SLOT(setMenuActionState()));
-    connect(m_ui->tabWidget, SIGNAL(currentWidgetModeChanged(DatabaseWidget::Mode)),
-            SLOT(setMenuActionState(DatabaseWidget::Mode)));
+    m_actionMultiplexer.connect(SIGNAL(currentModeChanged(DatabaseWidget::Mode)),
+                                this, SLOT(setMenuActionState(DatabaseWidget::Mode)));
+    m_actionMultiplexer.connect(SIGNAL(groupChanged()),
+                                this, SLOT(setMenuActionState()));
+    m_actionMultiplexer.connect(SIGNAL(entrySelectionChanged()),
+                                this, SLOT(setMenuActionState()));
+    m_actionMultiplexer.connect(SIGNAL(groupContextMenuRequested(QPoint)),
+                                this, SLOT(showGroupContextMenu(QPoint)));
+    m_actionMultiplexer.connect(SIGNAL(entryContextMenuRequested(QPoint)),
+                                this, SLOT(showEntryContextMenu(QPoint)));
+
     connect(m_ui->tabWidget, SIGNAL(tabNameChanged()),
             SLOT(updateWindowTitle()));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)),
             SLOT(updateWindowTitle()));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)),
             SLOT(databaseTabChanged(int)));
+    connect(m_ui->tabWidget, SIGNAL(currentChanged(int)),
+            SLOT(setMenuActionState()));
     connect(m_ui->stackedWidget, SIGNAL(currentChanged(int)), SLOT(setMenuActionState()));
     connect(m_ui->settingsWidget, SIGNAL(editFinished(bool)), SLOT(switchToDatabases()));
 
@@ -122,36 +132,36 @@ MainWindow::MainWindow()
             SLOT(importKeePass1Database()));
     connect(m_ui->actionQuit, SIGNAL(triggered()), SLOT(close()));
 
-    connect(m_ui->actionEntryNew, SIGNAL(triggered()), m_ui->tabWidget,
+    m_actionMultiplexer.connect(m_ui->actionEntryNew, SIGNAL(triggered()),
             SLOT(createEntry()));
-    connect(m_ui->actionEntryClone, SIGNAL(triggered()), m_ui->tabWidget,
+    m_actionMultiplexer.connect(m_ui->actionEntryClone, SIGNAL(triggered()),
             SLOT(cloneEntry()));
-    connect(m_ui->actionEntryEdit, SIGNAL(triggered()), m_ui->tabWidget,
-            SLOT(editEntry()));
-    connect(m_ui->actionEntryDelete, SIGNAL(triggered()), m_ui->tabWidget,
+    m_actionMultiplexer.connect(m_ui->actionEntryEdit, SIGNAL(triggered()),
+            SLOT(switchToEntryEdit()));
+    m_actionMultiplexer.connect(m_ui->actionEntryDelete, SIGNAL(triggered()),
             SLOT(deleteEntry()));
-    connect(m_ui->actionEntryCopyUsername, SIGNAL(triggered()), m_ui->tabWidget,
+    m_actionMultiplexer.connect(m_ui->actionEntryCopyUsername, SIGNAL(triggered()),
             SLOT(copyUsername()));
-    connect(m_ui->actionEntryCopyPassword, SIGNAL(triggered()), m_ui->tabWidget,
+    m_actionMultiplexer.connect(m_ui->actionEntryCopyPassword, SIGNAL(triggered()),
             SLOT(copyPassword()));
-    connect(m_ui->actionEntryAutoType, SIGNAL(triggered()), m_ui->tabWidget,
+    m_actionMultiplexer.connect(m_ui->actionEntryAutoType, SIGNAL(triggered()),
             SLOT(performAutoType()));
-    connect(m_ui->actionEntryOpenUrl, SIGNAL(triggered()), m_ui->tabWidget,
+    m_actionMultiplexer.connect(m_ui->actionEntryOpenUrl, SIGNAL(triggered()),
             SLOT(openUrl()));
 
-    connect(m_ui->actionGroupNew, SIGNAL(triggered()), m_ui->tabWidget,
+    m_actionMultiplexer.connect(m_ui->actionGroupNew, SIGNAL(triggered()),
             SLOT(createGroup()));
-    connect(m_ui->actionGroupEdit, SIGNAL(triggered()), m_ui->tabWidget,
-            SLOT(editGroup()));
-    connect(m_ui->actionGroupDelete, SIGNAL(triggered()), m_ui->tabWidget,
+    m_actionMultiplexer.connect(m_ui->actionGroupEdit, SIGNAL(triggered()),
+            SLOT(switchToGroupEdit()));
+    m_actionMultiplexer.connect(m_ui->actionGroupDelete, SIGNAL(triggered()),
             SLOT(deleteGroup()));
 
     connect(m_ui->actionSettings, SIGNAL(triggered()), SLOT(switchToSettings()));
 
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
 
-    connect(m_ui->actionSearch, SIGNAL(triggered()), m_ui->tabWidget,
-            SLOT(toggleSearch()));
+    m_actionMultiplexer.connect(m_ui->actionSearch, SIGNAL(triggered()),
+                                SLOT(toggleSearch()));
 }
 
 MainWindow::~MainWindow()
@@ -202,20 +212,24 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 
         switch (mode) {
         case DatabaseWidget::ViewMode: {
-            m_ui->actionEntryNew->setEnabled(dbWidget->actionEnabled(DatabaseWidget::EntryNew));
-            m_ui->actionEntryClone->setEnabled(dbWidget->actionEnabled(DatabaseWidget::EntryClone));
-            m_ui->actionEntryEdit->setEnabled(dbWidget->actionEnabled(DatabaseWidget::EntryEditView));
-            m_ui->actionEntryDelete->setEnabled(dbWidget->actionEnabled(DatabaseWidget::EntryDelete));
-            m_ui->actionEntryCopyUsername->setEnabled(dbWidget->actionEnabled(DatabaseWidget::EntryCopyUsername));
-            m_ui->actionEntryCopyPassword->setEnabled(dbWidget->actionEnabled(DatabaseWidget::EntryCopyPassword));
-            m_ui->actionEntryAutoType->setEnabled(dbWidget->actionEnabled(DatabaseWidget::EntryAutoType));
-            m_ui->actionEntryOpenUrl->setEnabled(dbWidget->actionEnabled(DatabaseWidget::EntryOpenUrl));
-            m_ui->actionGroupNew->setEnabled(dbWidget->actionEnabled(DatabaseWidget::GroupNew));
-            m_ui->actionGroupEdit->setEnabled(dbWidget->actionEnabled(DatabaseWidget::GroupEdit));
-            m_ui->actionGroupDelete->setEnabled(dbWidget->actionEnabled(DatabaseWidget::GroupDelete));
+            bool inSearch = dbWidget->isInSearchMode();
+            bool singleEntrySelected = dbWidget->entryView()->isSingleEntrySelected();
+            bool groupSelected = dbWidget->groupView()->currentGroup();
+
+            m_ui->actionEntryNew->setEnabled(!inSearch);
+            m_ui->actionEntryClone->setEnabled(singleEntrySelected && !inSearch);
+            m_ui->actionEntryEdit->setEnabled(singleEntrySelected);
+            m_ui->actionEntryDelete->setEnabled(singleEntrySelected);
+            m_ui->actionEntryCopyUsername->setEnabled(singleEntrySelected);
+            m_ui->actionEntryCopyPassword->setEnabled(singleEntrySelected);
+            m_ui->actionEntryAutoType->setEnabled(singleEntrySelected);
+            m_ui->actionEntryOpenUrl->setEnabled(singleEntrySelected);
+            m_ui->actionGroupNew->setEnabled(groupSelected);
+            m_ui->actionGroupEdit->setEnabled(groupSelected);
+            m_ui->actionGroupDelete->setEnabled(groupSelected && dbWidget->canDeleteCurrentGoup());
             m_ui->actionSearch->setEnabled(true);
             // TODO: get checked state from db widget
-            m_ui->actionSearch->setChecked(dbWidget->entryView()->inEntryListMode());
+            m_ui->actionSearch->setChecked(inSearch);
             m_ui->actionChangeMasterKey->setEnabled(true);
             m_ui->actionChangeDatabaseSettings->setEnabled(true);
             m_ui->actionDatabaseSave->setEnabled(true);
@@ -223,17 +237,14 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             break;
         }
         case DatabaseWidget::EditMode:
-            m_ui->actionEntryNew->setEnabled(false);
-            m_ui->actionEntryClone->setEnabled(false);
-            m_ui->actionEntryEdit->setEnabled(false);
-            m_ui->actionEntryDelete->setEnabled(false);
-            m_ui->actionEntryCopyUsername->setEnabled(false);
-            m_ui->actionEntryCopyPassword->setEnabled(false);
-            m_ui->actionEntryAutoType->setEnabled(false);
-            m_ui->actionEntryOpenUrl->setEnabled(false);
-            m_ui->actionGroupNew->setEnabled(false);
-            m_ui->actionGroupEdit->setEnabled(false);
-            m_ui->actionGroupDelete->setEnabled(false);
+            Q_FOREACH (QAction* action, m_ui->menuEntries->actions()) {
+                action->setEnabled(false);
+            }
+
+            Q_FOREACH (QAction* action, m_ui->menuGroups->actions()) {
+                action->setEnabled(false);
+            }
+
             m_ui->actionSearch->setEnabled(false);
             m_ui->actionSearch->setChecked(false);
             m_ui->actionChangeMasterKey->setEnabled(false);
@@ -247,17 +258,14 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         m_ui->actionDatabaseClose->setEnabled(true);
     }
     else {
-        m_ui->actionEntryNew->setEnabled(false);
-        m_ui->actionEntryClone->setEnabled(false);
-        m_ui->actionEntryEdit->setEnabled(false);
-        m_ui->actionEntryDelete->setEnabled(false);
-        m_ui->actionEntryCopyUsername->setEnabled(false);
-        m_ui->actionEntryCopyPassword->setEnabled(false);
-        m_ui->actionEntryAutoType->setEnabled(false);
-        m_ui->actionEntryOpenUrl->setEnabled(false);
-        m_ui->actionGroupNew->setEnabled(false);
-        m_ui->actionGroupEdit->setEnabled(false);
-        m_ui->actionGroupDelete->setEnabled(false);
+        Q_FOREACH (QAction* action, m_ui->menuEntries->actions()) {
+            action->setEnabled(false);
+        }
+
+        Q_FOREACH (QAction* action, m_ui->menuGroups->actions()) {
+            action->setEnabled(false);
+        }
+
         m_ui->actionSearch->setEnabled(false);
         m_ui->actionSearch->setChecked(false);
         m_ui->actionChangeMasterKey->setEnabled(false);
@@ -320,6 +328,8 @@ void MainWindow::databaseTabChanged(int tabIndex)
     else if (tabIndex == -1 && m_ui->stackedWidget->currentIndex() == 0) {
         m_ui->stackedWidget->setCurrentIndex(2);
     }
+
+    m_actionMultiplexer.setCurrentObject(m_ui->tabWidget->currentDatabaseWidget());
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)
@@ -330,6 +340,16 @@ void MainWindow::closeEvent(QCloseEvent* event)
     else {
         event->accept();
     }
+}
+
+void MainWindow::showEntryContextMenu(const QPoint& globalPos)
+{
+    m_ui->menuEntries->popup(globalPos);
+}
+
+void MainWindow::showGroupContextMenu(const QPoint& globalPos)
+{
+    m_ui->menuGroups->popup(globalPos);
 }
 
 void MainWindow::setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback)

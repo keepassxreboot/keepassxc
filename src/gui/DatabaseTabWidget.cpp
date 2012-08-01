@@ -51,7 +51,6 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     setTabBar(tabBar);
 
     connect(this, SIGNAL(tabCloseRequested(int)), SLOT(closeDatabase(int)));
-    connect(this, SIGNAL(currentChanged(int)), SLOT(emitEntrySelectionChanged()));
     connect(autoType(), SIGNAL(globalShortcutTriggered()), SLOT(performGlobalAutoType()));
 }
 
@@ -175,18 +174,6 @@ void DatabaseTabWidget::importKeePass1Database()
     insertDatabase(db, dbStruct);
 
     dbStruct.dbWidget->switchToImportKeepass1(fileName);
-}
-
-void DatabaseTabWidget::emitEntrySelectionChanged()
-{
-    DatabaseWidget* dbWidget = currentDatabaseWidget();
-
-    bool isSingleEntrySelected = false;
-    if (dbWidget) {
-        isSingleEntrySelected = dbWidget->entryView()->isSingleEntrySelected();
-    }
-
-    Q_EMIT entrySelectionChanged(isSingleEntrySelected);
 }
 
 bool DatabaseTabWidget::closeDatabase(Database* db)
@@ -367,66 +354,6 @@ void DatabaseTabWidget::changeDatabaseSettings()
     currentDatabaseWidget()->switchToDatabaseSettings();
 }
 
-void DatabaseTabWidget::createEntry()
-{
-    currentDatabaseWidget()->createEntry();
-}
-
-void DatabaseTabWidget::cloneEntry()
-{
-    currentDatabaseWidget()->cloneEntry();
-}
-
-void DatabaseTabWidget::editEntry()
-{
-    currentDatabaseWidget()->switchToEntryEdit();
-}
-
-void DatabaseTabWidget::deleteEntry()
-{
-    currentDatabaseWidget()->deleteEntry();
-}
-
-void DatabaseTabWidget::copyUsername()
-{
-    currentDatabaseWidget()->copyUsername();
-}
-
-void DatabaseTabWidget::copyPassword()
-{
-    currentDatabaseWidget()->copyPassword();
-}
-
-void DatabaseTabWidget::performAutoType()
-{
-    currentDatabaseWidget()->performAutoType();
-}
-
-void DatabaseTabWidget::openUrl()
-{
-    currentDatabaseWidget()->openUrl();
-}
-
-void DatabaseTabWidget::createGroup()
-{
-    currentDatabaseWidget()->createGroup();
-}
-
-void DatabaseTabWidget::editGroup()
-{
-    currentDatabaseWidget()->switchToGroupEdit();
-}
-
-void DatabaseTabWidget::deleteGroup()
-{
-    currentDatabaseWidget()->deleteGroup();
-}
-
-void DatabaseTabWidget::toggleSearch()
-{
-    currentDatabaseWidget()->toggleSearch();
-}
-
 bool DatabaseTabWidget::readOnly(int index)
 {
     if (index == -1) {
@@ -536,11 +463,7 @@ void DatabaseTabWidget::insertDatabase(Database* db, const DatabaseManagerStruct
     int index = databaseIndex(db);
     setCurrentIndex(index);
     connectDatabase(db);
-    connect(dbStruct.dbWidget->entryView(), SIGNAL(entrySelectionChanged()),
-            SLOT(emitEntrySelectionChanged()));
     connect(dbStruct.dbWidget, SIGNAL(closeRequest()), SLOT(closeDatabaseFromSender()));
-    connect(dbStruct.dbWidget, SIGNAL(currentModeChanged(DatabaseWidget::Mode)),
-            SIGNAL(currentWidgetModeChanged(DatabaseWidget::Mode)));
     connect(dbStruct.dbWidget, SIGNAL(databaseChanged(Database*)), SLOT(changeDatabase(Database*)));
 }
 

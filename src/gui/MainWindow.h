@@ -21,6 +21,7 @@
 #include <QtGui/QActionGroup>
 #include <QtGui/QMainWindow>
 
+#include "core/SignalMultiplexer.h"
 #include "gui/DatabaseWidget.h"
 
 namespace Ui {
@@ -52,6 +53,8 @@ private Q_SLOTS:
     void openRecentDatabase(QAction* action);
     void clearLastDatabases();
     void updateLastDatabasesMenu();
+    void showEntryContextMenu(const QPoint& globalPos);
+    void showGroupContextMenu(const QPoint& globalPos);
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);
@@ -59,6 +62,7 @@ private:
     static const QString BaseWindowTitle;
 
     const QScopedPointer<Ui::MainWindow> m_ui;
+    SignalMultiplexer m_actionMultiplexer;
     QAction* m_clearHistoryAction;
     QActionGroup* m_lastDatabasesActions;
 

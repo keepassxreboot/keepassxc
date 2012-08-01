@@ -38,6 +38,7 @@ set(keepassx_SOURCES
     core/ListDeleter.h
     core/Metadata.cpp
     core/qsavefile.cpp
+    core/SignalMultiplexer.cpp
     core/TimeInfo.cpp
     core/Tools.cpp
     core/Uuid.cpp
