@@ -58,7 +58,7 @@ Entry::~Entry()
     qDeleteAll(m_history);
 }
 
-template <class T> bool Entry::set(T& property, const T& value)
+template <class T> inline bool Entry::set(T& property, const T& value)
 {
     if (property != value) {
         property = value;

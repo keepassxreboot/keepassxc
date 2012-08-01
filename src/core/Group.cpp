@@ -71,7 +71,7 @@ Group* Group::createRecycleBin()
     return recycleBin;
 }
 
-template <class P, class V> bool Group::set(P& property, const V& value) {
+template <class P, class V> inline bool Group::set(P& property, const V& value) {
     if (property != value) {
         property = value;
         updateTimeinfo();

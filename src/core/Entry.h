@@ -142,7 +142,7 @@ private Q_SLOTS:
 
 private:
     const Database* database() const;
-    template <class T> inline bool set(T& property, const T& value);
+    template <class T> bool set(T& property, const T& value);
 
     Uuid m_uuid;
     EntryData m_data;

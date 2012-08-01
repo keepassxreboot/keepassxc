@@ -113,7 +113,7 @@ Q_SIGNALS:
     void modified();
 
 private:
-    template <class P, class V> inline bool set(P& property, const V& value);
+    template <class P, class V> bool set(P& property, const V& value);
 
     void addEntry(Entry* entry);
     void removeEntry(Entry* entry);
