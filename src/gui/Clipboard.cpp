@@ -36,13 +36,7 @@ Clipboard::Clipboard(QObject* parent)
 {
     m_timer->setSingleShot(true);
     connect(m_timer, SIGNAL(timeout()), SLOT(clearClipboard()));
-}
-
-Clipboard::~Clipboard()
-{
-    if (m_timer->isActive()) {
-        clearClipboard();
-    }
+    connect(qApp, SIGNAL(aboutToQuit()), SLOT(cleanup()));
 }
 
 void Clipboard::setText(const QString& text)
@@ -66,6 +60,11 @@ void Clipboard::clearClipboard()
 {
     QClipboard* clipboard = QApplication::clipboard();
 
+    if (!clipboard) {
+        qWarning("Unable to access the clipboard.");
+        return;
+    }
+
     clipboard->clear(QClipboard::Clipboard);
     if (clipboard->supportsSelection()) {
         clipboard->clear(QClipboard::Selection);
@@ -75,6 +74,14 @@ void Clipboard::clearClipboard()
     QDBusMessage message = QDBusMessage::createMethodCall("org.kde.klipper", "/klipper", "", "clearClipboardHistory");
     QDBusConnection::sessionBus().send(message);
 #endif
+}
+
+void Clipboard::cleanup()
+{
+    if (m_timer->isActive()) {
+        m_timer->stop();
+        clearClipboard();
+    }
 }
 
 Clipboard* Clipboard::instance()

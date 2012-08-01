@@ -29,13 +29,13 @@ class Clipboard : public QObject
     Q_OBJECT
 
 public:
-    ~Clipboard();
     void setText(const QString& text);
 
     static Clipboard* instance();
 
 private Q_SLOTS:
     void clearClipboard();
+    void cleanup();
 
 private:
     explicit Clipboard(QObject* parent = Q_NULLPTR);
