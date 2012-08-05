@@ -18,11 +18,16 @@
 #include "Tools.h"
 
 #include <QtCore/QCoreApplication>
-#include <QtCore/QElapsedTimer>
 #include <QtCore/QIODevice>
 #include <QtCore/QLocale>
 #include <QtCore/QStringList>
 #include <QtGui/QImageReader>
+
+#if QT_VERSION >= QT_VERSION_CHECK(4, 7, 0)
+#include <QtCore/QElapsedTimer>
+#else
+#include <QtCore/QTime>
+#endif
 
 #ifdef Q_OS_WIN
 #include <windows.h> // for Sleep()
@@ -162,7 +167,11 @@ void wait(int ms)
 {
     Q_ASSERT(ms > 0);
 
+#if QT_VERSION >= QT_VERSION_CHECK(4, 7, 0)
     QElapsedTimer timer;
+#else
+    QTime timer;
+#endif
     timer.start();
 
     if (ms <= 50) {
