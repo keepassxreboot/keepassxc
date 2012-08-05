@@ -29,10 +29,12 @@ class AutoTypeSelectView : public EntryView
 
 public:
     explicit AutoTypeSelectView(QWidget* parent = Q_NULLPTR);
-    void setEntryList(const QList<Entry*>& entries) Q_DECL_OVERRIDE;
 
 protected:
     void mouseMoveEvent(QMouseEvent* event) Q_DECL_OVERRIDE;
+
+private Q_SLOTS:
+    void selectFirstEntry();
 };
 
 #endif // KEEPASSX_AUTOTYPESELECTVIEW_H

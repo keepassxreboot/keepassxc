@@ -26,13 +26,8 @@ AutoTypeSelectView::AutoTypeSelectView(QWidget* parent)
     setMouseTracking(true);
     setAllColumnsShowFocus(true);
     setDragEnabled(false);
-}
 
-void AutoTypeSelectView::setEntryList(const QList<Entry*>& entries)
-{
-    EntryView::setEntryList(entries);
-
-    setCurrentIndex(model()->index(0, 0));
+    connect(model(), SIGNAL(modelReset()), SLOT(selectFirstEntry()));
 }
 
 void AutoTypeSelectView::mouseMoveEvent(QMouseEvent* event)
@@ -48,4 +43,13 @@ void AutoTypeSelectView::mouseMoveEvent(QMouseEvent* event)
     }
 
     EntryView::mouseMoveEvent(event);
+}
+
+void AutoTypeSelectView::selectFirstEntry()
+{
+    QModelIndex index = model()->index(0, 0);
+
+    if (index.isValid()) {
+        setCurrentIndex(index);
+    }
 }
