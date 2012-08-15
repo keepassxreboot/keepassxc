@@ -39,6 +39,7 @@ set(keepassx_SOURCES
     core/Metadata.cpp
     core/qsavefile.cpp
     core/SignalMultiplexer.cpp
+    core/TimeDelta.cpp
     core/TimeInfo.cpp
     core/Tools.cpp
     core/Uuid.cpp

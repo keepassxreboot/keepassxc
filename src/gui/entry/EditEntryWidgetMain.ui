@@ -89,20 +89,31 @@
      </property>
     </widget>
    </item>
+   <item row="5" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QDateTimeEdit" name="expireDatePicker">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="calendarPopup">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="expirePresets">
+       <property name="text">
+        <string>Presets</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
    <item row="5" column="0">
     <widget class="QCheckBox" name="expireCheck">
      <property name="text">
       <string>Expires</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1">
-    <widget class="QDateTimeEdit" name="expireDatePicker">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="calendarPopup">
-      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -117,6 +128,7 @@
   <tabstop>togglePasswordButton</tabstop>
   <tabstop>expireCheck</tabstop>
   <tabstop>expireDatePicker</tabstop>
+  <tabstop>expirePresets</tabstop>
  </tabstops>
  <resources/>
  <connections/>

@@ -26,12 +26,14 @@
 
 #include <QtGui/QDesktopServices>
 #include <QtGui/QStackedLayout>
+#include <QtGui/QMenu>
 #include <QtGui/QMessageBox>
 #include <QtGui/QSortFilterProxyModel>
 
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Metadata.h"
+#include "core/TimeDelta.h"
 #include "core/Tools.h"
 #include "gui/EditWidgetIcons.h"
 #include "gui/FileDialog.h"
@@ -150,6 +152,9 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     connect(m_historyUi->deleteButton, SIGNAL(clicked()), SLOT(deleteHistoryEntry()));
     connect(m_historyUi->deleteAllButton, SIGNAL(clicked()), SLOT(deleteAllHistoryEntries()));
 
+    m_mainUi->expirePresets->setMenu(createPresetsMenu());
+    connect(m_mainUi->expirePresets->menu(), SIGNAL(triggered(QAction*)), this, SLOT(useExpiryPreset(QAction*)));
+
     connect(this, SIGNAL(accepted()), SLOT(saveEntry()));
     connect(this, SIGNAL(rejected()), SLOT(cancel()));
 }
@@ -193,6 +198,15 @@ void EditEntryWidget::updateHistoryButtons(const QModelIndex& current, const QMo
         m_historyUi->restoreButton->setEnabled(false);
         m_historyUi->deleteButton->setEnabled(false);
     }
+}
+
+void EditEntryWidget::useExpiryPreset(QAction* action)
+{
+    m_mainUi->expireCheck->setChecked(true);
+    TimeDelta delta = action->data().value<TimeDelta>();
+    QDateTime now = Tools::currentDateTimeUtc().toLocalTime();
+    QDateTime expiryDateTime = now + delta;
+    m_mainUi->expireDatePicker->setDateTime(expiryDateTime);
 }
 
 void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const QString& groupName,
@@ -259,6 +273,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     setPasswordCheckColors();
     m_mainUi->expireCheck->setChecked(entry->timeInfo().expires());
     m_mainUi->expireDatePicker->setDateTime(entry->timeInfo().expiryTime().toLocalTime());
+    m_mainUi->expirePresets->setEnabled(!m_history);
     m_mainUi->togglePasswordButton->setChecked(true);
 
     m_notesUi->notesEdit->setPlainText(entry->notes());
@@ -721,4 +736,21 @@ void EditEntryWidget::deleteAllHistoryEntries()
     else {
         m_historyUi->deleteAllButton->setEnabled(false);
     }
+}
+
+QMenu* EditEntryWidget::createPresetsMenu()
+{
+    QMenu* expirePresetsMenu = new QMenu();
+    expirePresetsMenu->addAction(tr("Tomorrow"))->setData(QVariant::fromValue(TimeDelta::fromDays(1)));
+    expirePresetsMenu->addSeparator();
+    expirePresetsMenu->addAction(tr("1 week"))->setData(QVariant::fromValue(TimeDelta::fromDays(7)));
+    expirePresetsMenu->addAction(tr("2 weeks"))->setData(QVariant::fromValue(TimeDelta::fromDays(14)));
+    expirePresetsMenu->addAction(tr("3 weeks"))->setData(QVariant::fromValue(TimeDelta::fromDays(21)));
+    expirePresetsMenu->addSeparator();
+    expirePresetsMenu->addAction(tr("1 month"))->setData(QVariant::fromValue(TimeDelta::fromMonths(1)));
+    expirePresetsMenu->addAction(tr("3 months"))->setData(QVariant::fromValue(TimeDelta::fromMonths(3)));
+    expirePresetsMenu->addAction(tr("6 months"))->setData(QVariant::fromValue(TimeDelta::fromMonths(6)));
+    expirePresetsMenu->addSeparator();
+    expirePresetsMenu->addAction(tr("1 year"))->setData(QVariant::fromValue(TimeDelta::fromYears(1)));
+    return expirePresetsMenu;
 }

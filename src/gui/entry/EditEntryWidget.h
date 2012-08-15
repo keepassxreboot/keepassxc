@@ -34,6 +34,7 @@ class EntryAttributes;
 class EntryAttributesModel;
 class EntryHistoryModel;
 class QButtonGroup;
+class QMenu;
 class QSortFilterProxyModel;
 class QStackedLayout;
 
@@ -60,6 +61,7 @@ public:
     static const QColor CorrectSoFarColor;
     static const QColor ErrorColor;
 
+    void createPresetsMenu(QMenu* expirePresetsMenu);
 Q_SIGNALS:
     void editFinished(bool accepted);
     void historyEntryActivated(Entry* entry);
@@ -89,10 +91,12 @@ private Q_SLOTS:
     void emitHistoryEntryActivated(const QModelIndex& index);
     void histEntryActivated(const QModelIndex& index);
     void updateHistoryButtons(const QModelIndex& current, const QModelIndex& previous);
+    void useExpiryPreset(QAction* action);
 
 private:
     bool passwordsEqual();
     void setForms(const Entry* entry, bool restore = false);
+    QMenu *createPresetsMenu();
 
     Entry* m_entry;
     Database* m_database;
@@ -121,6 +125,7 @@ private:
     AutoTypeAssociationsModel* const m_autoTypeAssocModel;
     QButtonGroup* const m_autoTypeDefaultSequenceGroup;
     QButtonGroup* const m_autoTypeWindowSequenceGroup;
+    QMenu* m_expirePresetsMenu;
 
     Q_DISABLE_COPY(EditEntryWidget)
 };
