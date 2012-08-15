@@ -55,6 +55,7 @@ private Q_SLOTS:
     void updateLastDatabasesMenu();
     void showEntryContextMenu(const QPoint& globalPos);
     void showGroupContextMenu(const QPoint& globalPos);
+    void saveToolbarState(bool value);
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);

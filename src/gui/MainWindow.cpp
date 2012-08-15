@@ -41,6 +41,9 @@ MainWindow::MainWindow()
     QAction* toggleViewAction = m_ui->toolBar->toggleViewAction();
     toggleViewAction->setText(tr("Show toolbar"));
     m_ui->menuView->addAction(toggleViewAction);
+    bool showToolbar = config()->get("ShowToolbar").toBool();
+    m_ui->toolBar->setVisible(showToolbar);
+    connect(m_ui->toolBar, SIGNAL(visibilityChanged(bool)), this, SLOT(saveToolbarState(bool)));
 
     m_clearHistoryAction = new QAction("Clear history", m_ui->menuFile);
     m_lastDatabasesActions = new QActionGroup(m_ui->menuRecentDatabases);
@@ -351,6 +354,11 @@ void MainWindow::showEntryContextMenu(const QPoint& globalPos)
 void MainWindow::showGroupContextMenu(const QPoint& globalPos)
 {
     m_ui->menuGroups->popup(globalPos);
+}
+
+void MainWindow::saveToolbarState(bool value)
+{
+    config()->set("ShowToolbar", value);
 }
 
 void MainWindow::setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback)
