@@ -19,6 +19,7 @@
 #include "ui_MainWindow.h"
 
 #include <QtGui/QCloseEvent>
+#include <QtGui/QShortcut>
 
 #include "autotype/AutoType.h"
 #include "core/Config.h"
@@ -72,6 +73,10 @@ MainWindow::MainWindow()
     m_ui->actionEntryCopyPassword->setShortcut(Qt::CTRL + Qt::Key_C);
     setShortcut(m_ui->actionEntryAutoType, QKeySequence::Paste, Qt::CTRL + Qt::Key_V);
     m_ui->actionEntryOpenUrl->setShortcut(Qt::CTRL + Qt::Key_U);
+
+#ifdef Q_OS_MAC
+    new QShortcut(Qt::CTRL + Qt::Key_M, this, SLOT(showMinimized()));
+#endif
 
     m_ui->actionDatabaseNew->setIcon(filePath()->icon("actions", "document-new"));
     m_ui->actionDatabaseOpen->setIcon(filePath()->icon("actions", "document-open"));
