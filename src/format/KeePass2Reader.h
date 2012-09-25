@@ -54,6 +54,7 @@ private:
     void setInnerRandomStreamID(const QByteArray& data);
 
     QIODevice* m_device;
+    QIODevice* m_headerStream;
     bool m_error;
     QString m_errorStr;
     bool m_headerEnd;

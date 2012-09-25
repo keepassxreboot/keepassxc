@@ -29,6 +29,7 @@
 #include "format/KeePass2XmlReader.h"
 #include "streams/HashedBlockStream.h"
 #include "streams/QtIOCompressor"
+#include "streams/StoreDataStream.h"
 #include "streams/SymmetricCipherStream.h"
 
 KeePass2Reader::KeePass2Reader()
@@ -45,21 +46,26 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
     m_errorStr = QString();
     m_headerEnd = false;
 
+    StoreDataStream headerStream(m_device);
+    headerStream.open(QIODevice::ReadOnly);
+    m_headerStream = &headerStream;
+
     bool ok;
 
-    quint32 signature1 = Endian::readUInt32(m_device, KeePass2::BYTEORDER, &ok);
+    quint32 signature1 = Endian::readUInt32(m_headerStream, KeePass2::BYTEORDER, &ok);
     if (!ok || signature1 != KeePass2::SIGNATURE_1) {
         raiseError(tr("Not a KeePass database."));
         return Q_NULLPTR;
     }
 
-    quint32 signature2 = Endian::readUInt32(m_device, KeePass2::BYTEORDER, &ok);
+    quint32 signature2 = Endian::readUInt32(m_headerStream, KeePass2::BYTEORDER, &ok);
     if (!ok || signature2 != KeePass2::SIGNATURE_2) {
         raiseError(tr("Not a KeePass database."));
         return Q_NULLPTR;
     }
 
-    quint32 version = Endian::readUInt32(m_device, KeePass2::BYTEORDER, &ok) & KeePass2::FILE_VERSION_CRITICAL_MASK;
+    quint32 version = Endian::readUInt32(m_headerStream, KeePass2::BYTEORDER, &ok)
+            & KeePass2::FILE_VERSION_CRITICAL_MASK;
     quint32 maxVersion = KeePass2::FILE_VERSION & KeePass2::FILE_VERSION_CRITICAL_MASK;
     if (!ok || (version < KeePass2::FILE_VERSION_MIN) || (version > maxVersion)) {
         raiseError(tr("Unsupported KeePass database version."));
@@ -68,6 +74,8 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
 
     while (readHeaderField() && !hasError()) {
     }
+
+    headerStream.close();
 
     // TODO: check if all header fields have been parsed
 
@@ -78,7 +86,7 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
     hash.addData(m_db->transformedMasterKey());
     QByteArray finalKey = hash.result();
 
-    SymmetricCipherStream cipherStream(device, SymmetricCipher::Aes256, SymmetricCipher::Cbc,
+    SymmetricCipherStream cipherStream(m_device, SymmetricCipher::Aes256, SymmetricCipher::Cbc,
                                        SymmetricCipher::Decrypt, finalKey, m_encryptionIV);
     cipherStream.open(QIODevice::ReadOnly);
 
@@ -122,6 +130,16 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
     if (xmlReader.hasError()) {
         raiseError(xmlReader.errorString());
         return Q_NULLPTR;
+    }
+
+    Q_ASSERT(version < 0x00030001 || !xmlReader.headerHash().isEmpty());
+
+    if (!xmlReader.headerHash().isEmpty()) {
+        QByteArray headerHash = CryptoHash::hash(headerStream.storedData(), CryptoHash::Sha256);
+        if (headerHash != xmlReader.headerHash()) {
+            raiseError("");
+            return Q_NULLPTR;
+        }
     }
 
     return db.take();
@@ -173,7 +191,7 @@ void KeePass2Reader::raiseError(const QString& str)
 
 bool KeePass2Reader::readHeaderField()
 {
-    QByteArray fieldIDArray = m_device->read(1);
+    QByteArray fieldIDArray = m_headerStream->read(1);
     if (fieldIDArray.size() != 1) {
         raiseError("");
         return false;
@@ -181,7 +199,7 @@ bool KeePass2Reader::readHeaderField()
     quint8 fieldID = fieldIDArray.at(0);
 
     bool ok;
-    quint16 fieldLen = Endian::readUInt16(m_device, KeePass2::BYTEORDER, &ok);
+    quint16 fieldLen = Endian::readUInt16(m_headerStream, KeePass2::BYTEORDER, &ok);
     if (!ok) {
         raiseError("");
         return false;
@@ -189,7 +207,7 @@ bool KeePass2Reader::readHeaderField()
 
     QByteArray fieldData;
     if (fieldLen != 0) {
-        fieldData = m_device->read(fieldLen);
+        fieldData = m_headerStream->read(fieldLen);
         if (fieldData.size() != fieldLen) {
             raiseError("");
             return false;

@@ -17,6 +17,7 @@
 
 #include "KeePass2Writer.h"
 
+#include <QtCore/QBuffer>
 #include <QtCore/QFile>
 #include <QtCore/QIODevice>
 
@@ -44,8 +45,6 @@ void KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
     m_error = false;
     m_errorStr = QString();
 
-    m_device = device;
-
     QByteArray masterSeed = Random::randomArray(32);
     QByteArray encryptionIV = Random::randomArray(16);
     QByteArray protectedStreamKey = Random::randomArray(32);
@@ -58,6 +57,9 @@ void KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
     hash.addData(db->transformedMasterKey());
     QByteArray finalKey = hash.result();
 
+    QBuffer header;
+    header.open(QIODevice::WriteOnly);
+    m_device = &header;
 
     CHECK_RETURN(writeData(Endian::int32ToBytes(KeePass2::SIGNATURE_1, KeePass2::BYTEORDER)));
     CHECK_RETURN(writeData(Endian::int32ToBytes(KeePass2::SIGNATURE_2, KeePass2::BYTEORDER)));
@@ -79,6 +81,11 @@ void KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
                                   Endian::int32ToBytes(KeePass2::Salsa20,
                                                        KeePass2::BYTEORDER)));
     CHECK_RETURN(writeHeaderField(KeePass2::EndOfHeader, endOfHeader));
+
+    header.close();
+    m_device = device;
+    QByteArray headerHash = CryptoHash::hash(header.data(), CryptoHash::Sha256);
+    CHECK_RETURN(writeData(header.data()));
 
     SymmetricCipherStream cipherStream(device, SymmetricCipher::Aes256, SymmetricCipher::Cbc,
                                        SymmetricCipher::Encrypt, finalKey, encryptionIV);
@@ -104,7 +111,7 @@ void KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
     KeePass2RandomStream randomStream(protectedStreamKey);
 
     KeePass2XmlWriter xmlWriter;
-    xmlWriter.writeDatabase(m_device, db, &randomStream);
+    xmlWriter.writeDatabase(m_device, db, &randomStream, headerHash);
 }
 
 bool KeePass2Writer::writeData(const QByteArray& data)

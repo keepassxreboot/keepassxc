@@ -46,6 +46,7 @@ public:
     Database* readDatabase(const QString& filename);
     bool hasError();
     QString errorString();
+    QByteArray headerHash();
 
 private:
     void parseKeePassFile();
@@ -91,6 +92,7 @@ private:
     QHash<Uuid, Entry*> m_entries;
     QHash<QString, QByteArray> m_binaryPool;
     QHash<QString, QPair<Entry*, QString> > m_binaryMap;
+    QByteArray m_headerHash;
 };
 
 #endif // KEEPASSX_KEEPASS2XMLREADER_H

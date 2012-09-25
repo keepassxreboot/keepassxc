@@ -43,6 +43,7 @@ void TestKeePass2Reader::testNonAscii()
     QVERIFY(db);
     QVERIFY(!reader.hasError());
     QCOMPARE(db->metadata()->name(), QString("NonAsciiTest"));
+    QCOMPARE(db->compressionAlgo(), Database::CompressionNone);
 
     delete db;
 }
@@ -57,6 +58,7 @@ void TestKeePass2Reader::testCompressed()
     QVERIFY(db);
     QVERIFY(!reader.hasError());
     QCOMPARE(db->metadata()->name(), QString("Compressed"));
+    QCOMPARE(db->compressionAlgo(), Database::CompressionGZip);
 
     delete db;
 }
@@ -83,6 +85,22 @@ void TestKeePass2Reader::testProtectedStrings()
     QVERIFY(db->metadata()->protectPassword());
     QVERIFY(entry->attributes()->isProtected("TestProtected"));
     QVERIFY(!entry->attributes()->isProtected("TestUnprotected"));
+
+    delete db;
+}
+
+void TestKeePass2Reader::testBrokenHeaderHash()
+{
+    // The protected stream key has been modified in the header.
+    // Make sure the database won't open.
+
+    QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/BrokenHeaderHash.kdbx");
+    CompositeKey key;
+    key.addKey(PasswordKey(""));
+    KeePass2Reader reader;
+    Database* db = reader.readDatabase(filename, key);
+    QVERIFY(!db);
+    QVERIFY(reader.hasError());
 
     delete db;
 }
@@ -117,6 +135,22 @@ void TestKeePass2Reader::testFormat200()
     QCOMPARE(entry->historyItems().at(0)->attachments()->keys().size(), 0);
     QCOMPARE(entry->historyItems().at(1)->attachments()->keys().size(), 1);
     QCOMPARE(entry->historyItems().at(1)->attachments()->value("myattach.txt"), QByteArray("abcdefghijk"));
+
+    delete db;
+}
+
+void TestKeePass2Reader::testFormat300()
+{
+    QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/Format300.kdbx");
+    CompositeKey key;
+    key.addKey(PasswordKey("a"));
+    KeePass2Reader reader;
+    Database* db = reader.readDatabase(filename, key);
+    QVERIFY(db);
+    QVERIFY(!reader.hasError());
+
+    QCOMPARE(db->rootGroup()->name(), QString("Format300"));
+    QCOMPARE(db->metadata()->name(), QString("Test Database Format 0x00030000"));
 
     delete db;
 }

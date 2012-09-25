@@ -45,6 +45,7 @@ void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Ra
     m_meta->setUpdateDatetime(false);
 
     m_randomStream = randomStream;
+    m_headerHash.clear();
 
     m_tmpParent = new Group();
 
@@ -133,6 +134,11 @@ QString KeePass2XmlReader::errorString()
             .arg(m_xml.columnNumber());
 }
 
+QByteArray KeePass2XmlReader::headerHash()
+{
+    return m_headerHash;
+}
+
 void KeePass2XmlReader::parseKeePassFile()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "KeePassFile");
@@ -157,6 +163,9 @@ void KeePass2XmlReader::parseMeta()
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Generator") {
             m_meta->setGenerator(readString());
+        }
+        else if (m_xml.name() == "HeaderHash") {
+            m_headerHash = readBinary();
         }
         else if (m_xml.name() == "DatabaseName") {
             m_meta->setName(readString());

@@ -34,11 +34,13 @@ KeePass2XmlWriter::KeePass2XmlWriter()
     m_xml.setCodec("UTF-8");
 }
 
-void KeePass2XmlWriter::writeDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream)
+void KeePass2XmlWriter::writeDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream,
+                                      const QByteArray& headerHash)
 {
     m_db = db;
     m_meta = db->metadata();
     m_randomStream = randomStream;
+    m_headerHash = headerHash;
 
     generateIdMap();
 
@@ -56,11 +58,11 @@ void KeePass2XmlWriter::writeDatabase(QIODevice* device, Database* db, KeePass2R
     m_xml.writeEndDocument();
 }
 
-void KeePass2XmlWriter::writeDatabase(const QString& filename, Database* db, KeePass2RandomStream* randomStream)
+void KeePass2XmlWriter::writeDatabase(const QString& filename, Database* db)
 {
     QFile file(filename);
     file.open(QIODevice::WriteOnly|QIODevice::Truncate);
-    writeDatabase(&file, db, randomStream);
+    writeDatabase(&file, db);
 }
 
 void KeePass2XmlWriter::generateIdMap()
@@ -83,6 +85,9 @@ void KeePass2XmlWriter::writeMetadata()
     m_xml.writeStartElement("Meta");
 
     writeString("Generator", m_meta->generator());
+    if (!m_headerHash.isEmpty()) {
+        writeBinary("HeaderHash", m_headerHash);
+    }
     writeString("DatabaseName", m_meta->name());
     writeDateTime("DatabaseNameChanged", m_meta->nameChanged());
     writeString("DatabaseDescription", m_meta->description());

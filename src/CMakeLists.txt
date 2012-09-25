@@ -100,6 +100,7 @@ set(keepassx_SOURCES
     streams/HashedBlockStream.cpp
     streams/LayeredStream.cpp
     streams/qtiocompressor.cpp
+    streams/StoreDataStream.cpp
     streams/SymmetricCipherStream.cpp
 )
 
@@ -151,6 +152,7 @@ set(keepassx_MOC
     streams/HashedBlockStream.h
     streams/LayeredStream.h
     streams/qtiocompressor.h
+    streams/StoreDataStream.h
     streams/SymmetricCipherStream.h
 )
 
