@@ -26,6 +26,7 @@ AutoTypeSelectView::AutoTypeSelectView(QWidget* parent)
     setMouseTracking(true);
     setAllColumnsShowFocus(true);
     setDragEnabled(false);
+    setSelectionMode(QAbstractItemView::SingleSelection);
 
     connect(model(), SIGNAL(modelReset()), SLOT(selectFirstEntry()));
 }
