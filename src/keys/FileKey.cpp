@@ -39,6 +39,8 @@ bool FileKey::load(QIODevice* device)
         return false;
     }
 
+    // try different key file formats
+
     if (!device->reset()) {
         return false;
     }
