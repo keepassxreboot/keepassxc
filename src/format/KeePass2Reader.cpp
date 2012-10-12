@@ -45,6 +45,12 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
     m_error = false;
     m_errorStr = QString();
     m_headerEnd = false;
+    m_xmlData.clear();
+    m_masterSeed.clear();
+    m_transformSeed.clear();
+    m_encryptionIV.clear();
+    m_streamStartBytes.clear();
+    m_protectedStreamKey.clear();
 
     StoreDataStream headerStream(m_device);
     headerStream.open(QIODevice::ReadOnly);
@@ -77,7 +83,13 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
 
     headerStream.close();
 
-    // TODO: check if all header fields have been parsed
+    // check if all required headers were present
+    if (m_masterSeed.isEmpty() || m_transformSeed.isEmpty() || m_encryptionIV.isEmpty()
+            || m_streamStartBytes.isEmpty() || m_protectedStreamKey.isEmpty()
+            || m_db->cipher().isNull()) {
+        raiseError("");
+        return Q_NULLPTR;
+    }
 
     m_db->setKey(key, m_transformSeed, false);
 
