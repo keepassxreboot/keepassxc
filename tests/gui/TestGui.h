@@ -45,6 +45,7 @@ private Q_SLOTS:
     void testSave();
     void testDatabaseSettings();
     void testKeePass1Import();
+    void testDatabaseLocking();
     void cleanupTestCase();
 
 private:

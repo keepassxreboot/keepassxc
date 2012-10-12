@@ -297,6 +297,7 @@ void DatabaseTabWidget::saveDatabaseAs(Database* db)
             dbStruct.filePath = fileInfo.absoluteFilePath();
             dbStruct.canonicalFilePath = fileInfo.canonicalFilePath();
             dbStruct.fileName = fileInfo.fileName();
+            dbStruct.dbWidget->updateFilename(dbStruct.filePath);
             updateTabName(db);
             updateLastDatabases(dbStruct.filePath);
         }
@@ -391,18 +392,33 @@ void DatabaseTabWidget::updateTabName(Database* db)
             tabName = QString("%1 [%2]").arg(db->metadata()->name(), tr("New database"));
         }
     }
+
+    if (dbStruct.dbWidget->currentMode() == DatabaseWidget::LockedMode) {
+        tabName.append(QString(" [%1]").arg(tr("locked")));
+    }
+
     if (dbStruct.modified) {
         tabName.append("*");
     }
+
     setTabText(index, tabName);
     Q_EMIT tabNameChanged();
 }
 
-void DatabaseTabWidget::updateTabNameFromSender()
+void DatabaseTabWidget::updateTabNameFromDbSender()
 {
     Q_ASSERT(qobject_cast<Database*>(sender()));
 
     updateTabName(static_cast<Database*>(sender()));
+}
+
+void DatabaseTabWidget::updateTabNameFromDbWidgetSender()
+{
+    Q_ASSERT(qobject_cast<DatabaseWidget*>(sender()));
+    Q_ASSERT(databaseFromDatabaseWidget(qobject_cast<DatabaseWidget*>(sender())));
+
+    DatabaseWidget* dbWidget = static_cast<DatabaseWidget*>(sender());
+    updateTabName(databaseFromDatabaseWidget(dbWidget));
 }
 
 int DatabaseTabWidget::databaseIndex(Database* db)
@@ -466,6 +482,7 @@ void DatabaseTabWidget::insertDatabase(Database* db, const DatabaseManagerStruct
     connectDatabase(db);
     connect(dbStruct.dbWidget, SIGNAL(closeRequest()), SLOT(closeDatabaseFromSender()));
     connect(dbStruct.dbWidget, SIGNAL(databaseChanged(Database*)), SLOT(changeDatabase(Database*)));
+    connect(dbStruct.dbWidget, SIGNAL(unlockedDatabase()), SLOT(updateTabNameFromDbWidgetSender()));
 }
 
 DatabaseWidget* DatabaseTabWidget::currentDatabaseWidget()
@@ -476,6 +493,37 @@ DatabaseWidget* DatabaseTabWidget::currentDatabaseWidget()
     }
     else {
         return Q_NULLPTR;
+    }
+}
+
+bool DatabaseTabWidget::hasLockableDatabases()
+{
+    QHashIterator<Database*, DatabaseManagerStruct> i(m_dbList);
+    while (i.hasNext()) {
+        i.next();
+        DatabaseWidget::Mode mode = i.value().dbWidget->currentMode();
+
+        if ((mode == DatabaseWidget::ViewMode || mode == DatabaseWidget::EditMode)
+                && i.value().dbWidget->dbHasKey()) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void DatabaseTabWidget::lockDatabases()
+{
+    QHashIterator<Database*, DatabaseManagerStruct> i(m_dbList);
+    while (i.hasNext()) {
+        i.next();
+        DatabaseWidget::Mode mode = i.value().dbWidget->currentMode();
+
+        if ((mode == DatabaseWidget::ViewMode || mode == DatabaseWidget::EditMode)
+                && i.value().dbWidget->dbHasKey()) {
+            i.value().dbWidget->lock();
+            updateTabName(i.key());
+        }
     }
 }
 
@@ -535,7 +583,7 @@ void DatabaseTabWidget::connectDatabase(Database* newDb, Database* oldDb)
         oldDb->disconnect(this);
     }
 
-    connect(newDb, SIGNAL(nameTextChanged()), SLOT(updateTabNameFromSender()));
+    connect(newDb, SIGNAL(nameTextChanged()), SLOT(updateTabNameFromDbSender()));
     connect(newDb, SIGNAL(modified()), SLOT(modified()));
     newDb->setEmitModified(true);
 }

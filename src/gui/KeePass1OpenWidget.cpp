@@ -29,7 +29,7 @@
 KeePass1OpenWidget::KeePass1OpenWidget(QWidget* parent)
     : DatabaseOpenWidget(parent)
 {
-    setWindowTitle(tr("Import KeePass1 database"));
+    m_ui->labelHeadline->setText(tr("Import KeePass1 database"));
 }
 
 void KeePass1OpenWidget::openDatabase()

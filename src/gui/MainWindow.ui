@@ -94,6 +94,7 @@
     <addaction name="separator"/>
     <addaction name="actionImportKeePass1"/>
     <addaction name="separator"/>
+    <addaction name="actionLockDatabases"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -326,6 +327,14 @@
    </property>
    <property name="text">
     <string>Open URL</string>
+   </property>
+  </action>
+  <action name="actionLockDatabases">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Lock databases</string>
    </property>
   </action>
  </widget>

@@ -63,6 +63,7 @@ MainWindow::MainWindow()
     setShortcut(m_ui->actionDatabaseSave, QKeySequence::Save, Qt::CTRL + Qt::Key_S);
     setShortcut(m_ui->actionDatabaseSaveAs, QKeySequence::SaveAs);
     setShortcut(m_ui->actionDatabaseClose, QKeySequence::Close, Qt::CTRL + Qt::Key_W);
+    m_ui->actionLockDatabases->setShortcut(Qt::CTRL + Qt::Key_L);
     setShortcut(m_ui->actionQuit, QKeySequence::Quit, Qt::CTRL + Qt::Key_Q);
     setShortcut(m_ui->actionSearch, QKeySequence::Find, Qt::CTRL + Qt::Key_F);
     m_ui->actionEntryNew->setShortcut(Qt::CTRL + Qt::Key_N);
@@ -85,6 +86,7 @@ MainWindow::MainWindow()
     m_ui->actionDatabaseClose->setIcon(filePath()->icon("actions", "document-close"));
     m_ui->actionChangeDatabaseSettings->setIcon(filePath()->icon("actions", "document-edit"));
     m_ui->actionChangeMasterKey->setIcon(filePath()->icon("actions", "database-change-key", false));
+    m_ui->actionLockDatabases->setIcon(filePath()->icon("actions", "document-encrypt", false));
     m_ui->actionQuit->setIcon(filePath()->icon("actions", "application-exit"));
 
     m_ui->actionEntryNew->setIcon(filePath()->icon("actions", "entry-new", false));
@@ -140,6 +142,8 @@ MainWindow::MainWindow()
             SLOT(changeDatabaseSettings()));
     connect(m_ui->actionImportKeePass1, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(importKeePass1Database()));
+    connect(m_ui->actionLockDatabases, SIGNAL(triggered()), m_ui->tabWidget,
+            SLOT(lockDatabases()));
     connect(m_ui->actionQuit, SIGNAL(triggered()), SLOT(close()));
 
     m_actionMultiplexer.connect(m_ui->actionEntryNew, SIGNAL(triggered()),
@@ -246,6 +250,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             break;
         }
         case DatabaseWidget::EditMode:
+        case DatabaseWidget::LockedMode:
             Q_FOREACH (QAction* action, m_ui->menuEntries->actions()) {
                 action->setEnabled(false);
             }
@@ -290,6 +295,8 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
     m_ui->actionDatabaseOpen->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
     m_ui->menuRecentDatabases->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
     m_ui->actionImportKeePass1->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
+
+    m_ui->actionLockDatabases->setEnabled(m_ui->tabWidget->hasLockableDatabases());
 }
 
 void MainWindow::updateWindowTitle()

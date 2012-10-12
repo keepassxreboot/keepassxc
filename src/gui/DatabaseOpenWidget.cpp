@@ -94,30 +94,10 @@ void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)
 void DatabaseOpenWidget::openDatabase()
 {
     KeePass2Reader reader;
-    CompositeKey masterKey;
-
-    if (m_ui->checkPassword->isChecked()) {
-        masterKey.addKey(PasswordKey(m_ui->editPassword->text()));
+    CompositeKey masterKey = databaseKey();
+    if (masterKey.isEmpty()) {
+        return;
     }
-
-    QHash<QString, QVariant> lastKeyFiles = config()->get("LastKeyFiles").toHash();
-
-    if (m_ui->checkKeyFile->isChecked()) {
-        FileKey key;
-        QString keyFilename = m_ui->comboKeyFile->currentText();
-        QString errorMsg;
-        if (!key.load(keyFilename, &errorMsg)) {
-            QMessageBox::warning(this, tr("Error"), tr("Can't open key file:\n%1").arg(errorMsg));
-            return;
-        }
-        masterKey.addKey(key);
-        lastKeyFiles[m_filename] = keyFilename;
-    }
-    else {
-        lastKeyFiles.remove(m_filename);
-    }
-
-    config()->set("LastKeyFiles", lastKeyFiles);
 
     QFile file(m_filename);
     if (!file.open(QIODevice::ReadOnly)) {
@@ -139,6 +119,36 @@ void DatabaseOpenWidget::openDatabase()
                              .arg(reader.errorString()));
         m_ui->editPassword->clear();
     }
+}
+
+CompositeKey DatabaseOpenWidget::databaseKey()
+{
+    CompositeKey masterKey;
+
+    if (m_ui->checkPassword->isChecked()) {
+        masterKey.addKey(PasswordKey(m_ui->editPassword->text()));
+    }
+
+    QHash<QString, QVariant> lastKeyFiles = config()->get("LastKeyFiles").toHash();
+
+    if (m_ui->checkKeyFile->isChecked()) {
+        FileKey key;
+        QString keyFilename = m_ui->comboKeyFile->currentText();
+        QString errorMsg;
+        if (!key.load(keyFilename, &errorMsg)) {
+            QMessageBox::warning(this, tr("Error"), tr("Can't open key file:\n%1").arg(errorMsg));
+            return CompositeKey();
+        }
+        masterKey.addKey(key);
+        lastKeyFiles[m_filename] = keyFilename;
+    }
+    else {
+        lastKeyFiles.remove(m_filename);
+    }
+
+    config()->set("LastKeyFiles", lastKeyFiles);
+
+    return masterKey;
 }
 
 void DatabaseOpenWidget::reject()

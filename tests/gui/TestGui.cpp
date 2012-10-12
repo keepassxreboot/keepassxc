@@ -336,6 +336,24 @@ void TestGui::testKeePass1Import()
     QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("basic [New database]*"));
 }
 
+void TestGui::testDatabaseLocking()
+{
+    triggerAction("actionLockDatabases");
+
+    QCOMPARE(m_tabWidget->tabText(0), QString("Save [locked]"));
+    QCOMPARE(m_tabWidget->tabText(1), QString("basic [New database] [locked]*"));
+
+    QWidget* dbWidget = m_tabWidget->currentDatabaseWidget();
+    QWidget* unlockDatabaseWidget = dbWidget->findChild<QWidget*>("unlockDatabaseWidget");
+    QWidget* editPassword = unlockDatabaseWidget->findChild<QLineEdit*>("editPassword");
+    QVERIFY(editPassword);
+
+    QTest::keyClicks(editPassword, "masterpw");
+    QTest::keyClick(editPassword, Qt::Key_Enter);
+
+    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("basic [New database]*"));
+}
+
 void TestGui::cleanupTestCase()
 {
     delete m_mainWindow;

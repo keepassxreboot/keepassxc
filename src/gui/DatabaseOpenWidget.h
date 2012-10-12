@@ -21,6 +21,7 @@
 #include <QtCore/QScopedPointer>
 
 #include "gui/DialogyWidget.h"
+#include "keys/CompositeKey.h"
 
 class Database;
 class QFile;
@@ -42,6 +43,9 @@ public:
 
 Q_SIGNALS:
     void editFinished(bool accepted);
+
+protected:
+    CompositeKey databaseKey();
 
 protected Q_SLOTS:
     virtual void openDatabase();

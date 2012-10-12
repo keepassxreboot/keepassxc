@@ -53,6 +53,7 @@ public:
     void openDatabase(const QString& fileName, const QString& pw = QString(),
                       const QString& keyFile = QString());
     DatabaseWidget* currentDatabaseWidget();
+    bool hasLockableDatabases();
 
     static const int LastDatabasesCount;
 
@@ -69,13 +70,15 @@ public Q_SLOTS:
     void changeDatabaseSettings();
     bool readOnly(int index = -1);
     void performGlobalAutoType();
+    void lockDatabases();
 
 Q_SIGNALS:
     void tabNameChanged();
 
 private Q_SLOTS:
     void updateTabName(Database* db);
-    void updateTabNameFromSender();
+    void updateTabNameFromDbSender();
+    void updateTabNameFromDbWidgetSender();
     void modified();
     void toggleTabbar();
     void changeDatabase(Database* newDb);

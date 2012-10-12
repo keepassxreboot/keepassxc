@@ -36,6 +36,7 @@
 #include "gui/DatabaseOpenWidget.h"
 #include "gui/DatabaseSettingsWidget.h"
 #include "gui/KeePass1OpenWidget.h"
+#include "gui/UnlockDatabaseWidget.h"
 #include "gui/entry/EditEntryWidget.h"
 #include "gui/entry/EntryView.h"
 #include "gui/group/EditGroupWidget.h"
@@ -121,6 +122,8 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_databaseOpenWidget->setObjectName("databaseOpenWidget");
     m_keepass1OpenWidget = new KeePass1OpenWidget();
     m_keepass1OpenWidget->setObjectName("keepass1OpenWidget");
+    m_unlockDatabaseWidget = new UnlockDatabaseWidget();
+    m_unlockDatabaseWidget->setObjectName("unlockDatabaseWidget");
     addWidget(m_mainWidget);
     addWidget(m_editEntryWidget);
     addWidget(m_editGroupWidget);
@@ -129,6 +132,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     addWidget(m_historyEditEntryWidget);
     addWidget(m_databaseOpenWidget);
     addWidget(m_keepass1OpenWidget);
+    addWidget(m_unlockDatabaseWidget);
 
     connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(clearLastGroup(Group*)));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), SIGNAL(groupChanged()));
@@ -143,6 +147,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_databaseSettingsWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
     connect(m_databaseOpenWidget, SIGNAL(editFinished(bool)), SLOT(openDatabase(bool)));
     connect(m_keepass1OpenWidget, SIGNAL(editFinished(bool)), SLOT(openDatabase(bool)));
+    connect(m_unlockDatabaseWidget, SIGNAL(editFinished(bool)), SLOT(unlockDatabase(bool)));
     connect(this, SIGNAL(currentChanged(int)), this, SLOT(emitCurrentModeChanged()));
     connect(m_searchUi->searchEdit, SIGNAL(textChanged(QString)), this, SLOT(startSearchTimer()));
     connect(m_searchUi->caseSensitiveCheckBox, SIGNAL(toggled(bool)), this, SLOT(startSearch()));
@@ -151,7 +156,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_searchTimer, SIGNAL(timeout()), this, SLOT(search()));
     connect(closeAction, SIGNAL(triggered()), this, SLOT(closeSearch()));
 
-    setCurrentIndex(0);
+    setCurrentWidget(m_mainWidget);
 }
 
 DatabaseWidget::~DatabaseWidget()
@@ -160,22 +165,17 @@ DatabaseWidget::~DatabaseWidget()
 
 DatabaseWidget::Mode DatabaseWidget::currentMode()
 {
-    switch (currentIndex()) {
-    case -1:
+    if (currentWidget() == Q_NULLPTR) {
         return DatabaseWidget::None;
-    case 0:
+    }
+    else if (currentWidget() == m_mainWidget) {
         return DatabaseWidget::ViewMode;
-    case 1:  // entry edit
-    case 2:  // group edit
-    case 3:  // change master key
-    case 4:  // database settings
-    case 5:  // entry history
-    case 6:  // open database
-    case 7:  // keepass 1 import
+    }
+    else if (currentWidget() == m_unlockDatabaseWidget) {
+        return DatabaseWidget::LockedMode;
+    }
+    else {
         return DatabaseWidget::EditMode;
-    default:
-        Q_ASSERT(false);
-        return DatabaseWidget::None;
     }
 }
 
@@ -348,11 +348,19 @@ int DatabaseWidget::addWidget(QWidget* w)
 
 void DatabaseWidget::setCurrentIndex(int index)
 {
+    // use setCurrentWidget() instead
+    // index is not reliable
+    Q_UNUSED(index);
+    Q_ASSERT(false);
+}
+
+void DatabaseWidget::setCurrentWidget(QWidget* widget)
+{
     if (currentWidget()) {
         currentWidget()->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     }
 
-    QStackedWidget::setCurrentIndex(index);
+    QStackedWidget::setCurrentWidget(widget);
 
     if (currentWidget()) {
         currentWidget()->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
@@ -390,18 +398,18 @@ void DatabaseWidget::switchToView(bool accepted)
         m_newParent = Q_NULLPTR;
     }
 
-    setCurrentIndex(0);
+    setCurrentWidget(m_mainWidget);
 }
 
 void DatabaseWidget::switchToHistoryView(Entry* entry)
 {
     m_historyEditEntryWidget->loadEntry(entry, false, true, "", m_db);
-    setCurrentIndex(5);
+    setCurrentWidget(m_historyEditEntryWidget);
 }
 
 void DatabaseWidget::switchBackToEntryEdit()
 {
-    setCurrentIndex(1);
+    setCurrentWidget(m_editEntryWidget);
 }
 
 void DatabaseWidget::switchToEntryEdit(Entry* entry)
@@ -419,13 +427,13 @@ void DatabaseWidget::switchToEntryEdit(Entry* entry, bool create)
     Q_ASSERT(group);
 
     m_editEntryWidget->loadEntry(entry, create, false, group->name(), m_db);
-    setCurrentIndex(1);
+    setCurrentWidget(m_editEntryWidget);
 }
 
 void DatabaseWidget::switchToGroupEdit(Group* group, bool create)
 {
     m_editGroupWidget->loadGroup(group, create, m_db);
-    setCurrentIndex(2);
+    setCurrentWidget(m_editGroupWidget);
 }
 
 void DatabaseWidget::updateMasterKey(bool accepted)
@@ -440,7 +448,7 @@ void DatabaseWidget::updateMasterKey(bool accepted)
         return;
     }
 
-    setCurrentIndex(0);
+    setCurrentWidget(m_mainWidget);
 }
 
 void DatabaseWidget::openDatabase(bool accepted)
@@ -451,7 +459,7 @@ void DatabaseWidget::openDatabase(bool accepted)
         m_groupView->changeDatabase(m_db);
         Q_EMIT databaseChanged(m_db);
         delete oldDb;
-        setCurrentIndex(0);
+        setCurrentWidget(m_mainWidget);
 
         // We won't need those anymore and KeePass1OpenWidget closes
         // the file in its dtor.
@@ -468,6 +476,15 @@ void DatabaseWidget::openDatabase(bool accepted)
     }
 }
 
+void DatabaseWidget::unlockDatabase(bool accepted)
+{
+    // cancel button is disabled
+    Q_ASSERT(accepted);
+
+    setCurrentWidget(widgetBeforeLock);
+    Q_EMIT unlockedDatabase();
+}
+
 void DatabaseWidget::switchToEntryEdit()
 {
     switchToEntryEdit(m_entryView->currentEntry(), false);
@@ -481,32 +498,35 @@ void DatabaseWidget::switchToGroupEdit()
 void DatabaseWidget::switchToMasterKeyChange()
 {
     m_changeMasterKeyWidget->clearForms();
-    setCurrentIndex(3);
+    setCurrentWidget(m_changeMasterKeyWidget);
 }
 
 void DatabaseWidget::switchToDatabaseSettings()
 {
     m_databaseSettingsWidget->load(m_db);
-    setCurrentIndex(4);
+    setCurrentWidget(m_databaseSettingsWidget);
 }
 
 void DatabaseWidget::switchToOpenDatabase(const QString& fileName)
 {
+    updateFilename(fileName);
     m_databaseOpenWidget->load(fileName);
-    setCurrentIndex(6);
+    setCurrentWidget(m_databaseOpenWidget);
 }
 
 void DatabaseWidget::switchToOpenDatabase(const QString& fileName, const QString& password,
                                           const QString& keyFile)
 {
+    updateFilename(fileName);
     switchToOpenDatabase(fileName);
     m_databaseOpenWidget->enterKey(password, keyFile);
 }
 
 void DatabaseWidget::switchToImportKeepass1(const QString& fileName)
 {
+    updateFilename(fileName);
     m_keepass1OpenWidget->load(fileName);
-    setCurrentIndex(7);
+    setCurrentWidget(m_keepass1OpenWidget);
 }
 
 void DatabaseWidget::toggleSearch()
@@ -640,4 +660,18 @@ void DatabaseWidget::clearLastGroup(Group* group)
         m_lastGroup = Q_NULLPTR;
         m_searchWidget->hide();
     }
+}
+
+void DatabaseWidget::lock()
+{
+    Q_ASSERT(currentMode() != DatabaseWidget::LockedMode);
+
+    widgetBeforeLock = currentWidget();
+    m_unlockDatabaseWidget->load(m_filename, m_db);
+    setCurrentWidget(m_unlockDatabaseWidget);
+}
+
+void DatabaseWidget::updateFilename(const QString& fileName)
+{
+    m_filename = fileName;
 }

@@ -36,6 +36,7 @@ class GroupView;
 class KeePass1OpenWidget;
 class QFile;
 class QMenu;
+class UnlockDatabaseWidget;
 
 namespace Ui {
     class SearchWidget;
@@ -50,7 +51,8 @@ public:
     {
         None,
         ViewMode,
-        EditMode
+        EditMode,
+        LockedMode
     };
 
     explicit DatabaseWidget(Database* db, QWidget* parent = Q_NULLPTR);
@@ -63,7 +65,10 @@ public:
     bool isInSearchMode();
     int addWidget(QWidget* w);
     void setCurrentIndex(int index);
+    void setCurrentWidget(QWidget* widget);
     DatabaseWidget::Mode currentMode();
+    void lock();
+    void updateFilename(const QString& filename);
 
 Q_SIGNALS:
     void closeRequest();
@@ -73,6 +78,7 @@ Q_SIGNALS:
     void databaseChanged(Database* newDb);
     void groupContextMenuRequested(const QPoint& globalPos);
     void entryContextMenuRequested(const QPoint& globalPos);
+    void unlockedDatabase();
 
 public Q_SLOTS:
     void createEntry();
@@ -104,6 +110,7 @@ private Q_SLOTS:
     void switchToGroupEdit(Group* entry, bool create);
     void updateMasterKey(bool accepted);
     void openDatabase(bool accepted);
+    void unlockDatabase(bool accepted);
     void emitCurrentModeChanged();
     void clearLastGroup(Group* group);
     void search();
@@ -124,6 +131,7 @@ private:
     DatabaseSettingsWidget* m_databaseSettingsWidget;
     DatabaseOpenWidget* m_databaseOpenWidget;
     KeePass1OpenWidget* m_keepass1OpenWidget;
+    UnlockDatabaseWidget* m_unlockDatabaseWidget;
     GroupView* m_groupView;
     EntryView* m_entryView;
     Group* m_newGroup;
@@ -131,6 +139,8 @@ private:
     Group* m_newParent;
     Group* m_lastGroup;
     QTimer* m_searchTimer;
+    QWidget* widgetBeforeLock;
+    QString m_filename;
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H
