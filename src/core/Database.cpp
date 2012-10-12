@@ -215,9 +215,16 @@ void Database::setKey(const CompositeKey& key)
     setKey(key, Random::randomArray(32));
 }
 
-bool Database::hasKey()
+bool Database::hasKey() const
 {
     return m_hasKey;
+}
+
+bool Database::verifyKey(const CompositeKey& key) const
+{
+    Q_ASSERT(hasKey());
+
+    return (m_key.rawKey() == key.rawKey());
 }
 
 void Database::createRecycleBin()

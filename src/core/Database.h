@@ -86,7 +86,8 @@ public:
      * Sets the database key and generates a random transform seed.
      */
     void setKey(const CompositeKey& key);
-    bool hasKey();
+    bool hasKey() const;
+    bool verifyKey(const CompositeKey& key) const;
     void recycleEntry(Entry* entry);
     void recycleGroup(Group* group);
     void setEmitModified(bool value);
