@@ -44,6 +44,11 @@ void CompositeKey::clear()
     m_keys.clear();
 }
 
+bool CompositeKey::isEmpty() const
+{
+    return m_keys.isEmpty();
+}
+
 CompositeKey* CompositeKey::clone() const
 {
     return new CompositeKey(*this);

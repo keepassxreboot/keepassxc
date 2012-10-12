@@ -29,6 +29,7 @@ public:
     CompositeKey(const CompositeKey& key);
     ~CompositeKey();
     void clear();
+    bool isEmpty() const;
     CompositeKey* clone() const;
     CompositeKey& operator=(const CompositeKey& key);
 
