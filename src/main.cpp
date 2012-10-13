@@ -17,12 +17,17 @@
 
 #include <QtCore/QFile>
 
+#include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "gui/Application.h"
 #include "gui/MainWindow.h"
 
 int main(int argc, char** argv)
 {
+#ifdef QT_NO_DEBUG
+    Tools::disableCoreDumps();
+#endif
+
     Application app(argc, argv);
     // don't set applicationName or organizationName as that changes
     // QDesktopServices::storageLocation()

@@ -7,4 +7,8 @@
 
 #define KEEPASSX_SOURCE_DIR "${CMAKE_SOURCE_DIR}"
 
+#cmakedefine HAVE_PR_SET_DUMPABLE 1
+#cmakedefine HAVE_RLIMIT_CORE 1
+#cmakedefine HAVE_PT_DENY_ATTACH 1
+
 #endif // KEEPASSX_CONFIG_H

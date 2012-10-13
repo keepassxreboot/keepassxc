@@ -38,6 +38,7 @@ bool isHex(const QByteArray& ba);
 void sleep(int ms);
 void wait(int ms);
 QString platform();
+void disableCoreDumps();
 
 } // namespace Tools
 

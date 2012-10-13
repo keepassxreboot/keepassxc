@@ -37,6 +37,16 @@
 #include <time.h> // for nanosleep()
 #endif
 
+#if defined(HAVE_PR_SET_DUMPABLE)
+#include <sys/prctl.h>
+#elif defined(HAVE_RLIMIT_CORE)
+#include <sys/resource.h>
+#endif
+
+#ifdef HAVE_PT_DENY_ATTACH
+#include <sys/ptrace.h>
+#endif
+
 namespace Tools {
 
 QString humanReadableFileSize(qint64 bytes)
@@ -201,6 +211,31 @@ QString platform()
 #else
     return QString();
 #endif
+}
+
+void disableCoreDumps()
+{
+    bool success = false;
+
+    // prefer PR_SET_DUMPABLE since that also prevents ptrace
+#if defined(HAVE_PR_SET_DUMPABLE)
+    success = (prctl(PR_SET_DUMPABLE, 0) == 0);
+#elif defined(HAVE_RLIMIT_CORE)
+    struct rlimit limit;
+    limit.rlim_cur = 0;
+    limit.rlim_max = 0;
+    success = (setrlimit(RLIMIT_CORE, &limit) == 0);
+#endif
+
+    // Mac OS X
+#ifdef HAVE_PT_DENY_ATTACH
+    // make sure setrlimit() and ptrace() succeeded
+    success = success && (ptrace(PT_DENY_ATTACH, 0, 0, 0) == 0);
+#endif
+
+    if (!success) {
+        qWarning("Unable to disable core dumps.");
+    }
 }
 
 } // namespace Tools

@@ -183,6 +183,27 @@ if(NOT ZLIB_SUPPORTS_GZIP)
   message(FATAL_ERROR "zlib 1.2.x or higher is required to use the gzip format")
 endif()
 
+if(UNIX)
+  check_cxx_source_compiles("#include <sys/prctl.h>
+    int main() { prctl(PR_SET_DUMPABLE, 0); return 0; }"
+    HAVE_PR_SET_DUMPABLE)
+
+  check_cxx_source_compiles("#include <sys/resource.h>
+    int main() {
+      struct rlimit limit;
+      limit.rlim_cur = 0;
+      limit.rlim_max = 0;
+      setrlimit(RLIMIT_CORE, &limit);
+      return 0;
+    }" HAVE_RLIMIT_CORE)
+
+  if(APPLE)
+    check_cxx_source_compiles("#include <sys/ptrace.h>
+      int main() { ptrace(PT_DENY_ATTACH, 0, 0, 0); return 0; }"
+      HAVE_PT_DENY_ATTACH)
+  endif()
+endif()
+
 include_directories(SYSTEM ${QT_INCLUDE_DIR} ${GCRYPT_INCLUDE_DIR} ${ZLIB_INCLUDE_DIR})
 
 add_subdirectory(src)
