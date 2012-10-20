@@ -39,12 +39,8 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
     add(tr("Icon"), m_editGroupWidgetIcons);
     add(tr("Advanced"), m_editGroupWidgetAdvanced);
 
-    m_mainUi->searchComboBox->addItem("Inherit");
-    m_mainUi->searchComboBox->addItem("Enable");
-    m_mainUi->searchComboBox->addItem("Disable");
-    m_mainUi->autotypeComboBox->addItem("Inherit");
-    m_mainUi->autotypeComboBox->addItem("Enable");
-    m_mainUi->autotypeComboBox->addItem("Disable");
+    addTriStateItems(m_mainUi->searchComboBox);
+    addTriStateItems(m_mainUi->autotypeComboBox);
 
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
 
@@ -80,32 +76,8 @@ void EditGroupWidget::loadGroup(Group* group, bool create, Database* database)
     m_advancedUi->accessedEdit->setText(
                 group->timeInfo().lastAccessTime().toLocalTime().toString(timeFormat));
     m_advancedUi->uuidEdit->setText(group->uuid().toHex());
-    switch (group->searchingEnabled()) {
-    case Group::Inherit:
-        m_mainUi->searchComboBox->setCurrentIndex(0);
-        break;
-    case Group::Enable:
-        m_mainUi->searchComboBox->setCurrentIndex(1);
-        break;
-    case Group::Disable:
-        m_mainUi->searchComboBox->setCurrentIndex(2);
-        break;
-    default:
-        Q_ASSERT(false);
-    }
-    switch (group->autoTypeEnabled()) {
-    case Group::Inherit:
-        m_mainUi->autotypeComboBox->setCurrentIndex(0);
-        break;
-    case Group::Enable:
-        m_mainUi->autotypeComboBox->setCurrentIndex(1);
-        break;
-    case Group::Disable:
-        m_mainUi->autotypeComboBox->setCurrentIndex(2);
-        break;
-    default:
-        Q_ASSERT(false);
-    }
+    m_mainUi->searchComboBox->setCurrentIndex(indexFromTriState(group->searchingEnabled()));
+    m_mainUi->autotypeComboBox->setCurrentIndex(indexFromTriState(group->autoTypeEnabled()));
 
     IconStruct iconStruct;
     iconStruct.uuid = group->iconUuid();
@@ -123,32 +95,9 @@ void EditGroupWidget::save()
     m_group->setNotes(m_mainUi->editNotes->toPlainText());
     m_group->setExpires(m_mainUi->expireCheck->isChecked());
     m_group->setExpiryTime(m_mainUi->expireDatePicker->dateTime().toUTC());
-    switch (m_mainUi->searchComboBox->currentIndex()) {
-    case 0:
-        m_group->setSearchingEnabled(Group::Inherit);
-        break;
-    case 1:
-        m_group->setSearchingEnabled(Group::Enable);
-        break;
-    case 2:
-        m_group->setSearchingEnabled(Group::Disable);
-        break;
-    default:
-        Q_ASSERT(false);
-    }
-    switch (m_mainUi->autotypeComboBox->currentIndex()) {
-    case 0:
-        m_group->setAutoTypeEnabled(Group::Inherit);
-        break;
-    case 1:
-        m_group->setAutoTypeEnabled(Group::Enable);
-        break;
-    case 2:
-        m_group->setAutoTypeEnabled(Group::Disable);
-        break;
-    default:
-        Q_ASSERT(false);
-    }
+
+    m_group->setSearchingEnabled(triStateFromIndex(m_mainUi->searchComboBox->currentIndex()));
+    m_group->setAutoTypeEnabled(triStateFromIndex(m_mainUi->autotypeComboBox->currentIndex()));
 
     IconStruct iconStruct = m_editGroupWidgetIcons->save();
 
@@ -177,4 +126,41 @@ void EditGroupWidget::cancel()
     m_group = Q_NULLPTR;
     m_database = Q_NULLPTR;
     Q_EMIT editFinished(false);
+}
+
+void EditGroupWidget::addTriStateItems(QComboBox* comboBox)
+{
+    comboBox->addItem("Inherit");
+    comboBox->addItem("Enable");
+    comboBox->addItem("Disable");
+}
+
+int EditGroupWidget::indexFromTriState(Group::TriState triState)
+{
+    switch (triState) {
+    case Group::Inherit:
+        return 0;
+    case Group::Enable:
+        return 1;
+    case Group::Disable:
+        return 2;
+    default:
+        Q_ASSERT(false);
+        return 0;
+    }
+}
+
+Group::TriState EditGroupWidget::triStateFromIndex(int index)
+{
+    switch (index) {
+    case 0:
+        return Group::Inherit;
+    case 1:
+        return Group::Enable;
+    case 2:
+        return Group::Disable;
+    default:
+        Q_ASSERT(false);
+        return Group::Inherit;
+    }
 }

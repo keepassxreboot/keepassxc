@@ -19,6 +19,7 @@
 #define KEEPASSX_EDITGROUPWIDGET_H
 
 #include <QtCore/QScopedPointer>
+#include <QtGui/QComboBox>
 
 #include "core/Group.h"
 #include "gui/EditWidget.h"
@@ -49,6 +50,10 @@ private Q_SLOTS:
     void cancel();
 
 private:
+    void addTriStateItems(QComboBox* comboBox);
+    int indexFromTriState(Group::TriState triState);
+    Group::TriState triStateFromIndex(int index);
+
     const QScopedPointer<Ui::EditGroupWidgetMain> m_mainUi;
     const QScopedPointer<Ui::EditGroupWidgetAdvanced> m_advancedUi;
     QWidget* const m_editGroupWidgetMain;
