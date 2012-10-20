@@ -553,7 +553,7 @@ void DatabaseWidget::showSearch()
 
     m_searchUi->searchCurrentRadioButton->blockSignals(true);
     m_searchUi->searchRootRadioButton->blockSignals(true);
-    m_searchUi->searchCurrentRadioButton->setChecked(true);
+    m_searchUi->searchRootRadioButton->setChecked(true);
     m_searchUi->searchCurrentRadioButton->blockSignals(false);
     m_searchUi->searchRootRadioButton->blockSignals(false);
 
