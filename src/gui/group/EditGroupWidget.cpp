@@ -42,6 +42,9 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
     m_mainUi->searchComboBox->addItem("Inherit");
     m_mainUi->searchComboBox->addItem("Enable");
     m_mainUi->searchComboBox->addItem("Disable");
+    m_mainUi->autotypeComboBox->addItem("Inherit");
+    m_mainUi->autotypeComboBox->addItem("Enable");
+    m_mainUi->autotypeComboBox->addItem("Disable");
 
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
 
@@ -90,6 +93,19 @@ void EditGroupWidget::loadGroup(Group* group, bool create, Database* database)
     default:
         Q_ASSERT(false);
     }
+    switch (group->autoTypeEnabled()) {
+    case Group::Inherit:
+        m_mainUi->autotypeComboBox->setCurrentIndex(0);
+        break;
+    case Group::Enable:
+        m_mainUi->autotypeComboBox->setCurrentIndex(1);
+        break;
+    case Group::Disable:
+        m_mainUi->autotypeComboBox->setCurrentIndex(2);
+        break;
+    default:
+        Q_ASSERT(false);
+    }
 
     IconStruct iconStruct;
     iconStruct.uuid = group->iconUuid();
@@ -116,6 +132,19 @@ void EditGroupWidget::save()
         break;
     case 2:
         m_group->setSearchingEnabled(Group::Disable);
+        break;
+    default:
+        Q_ASSERT(false);
+    }
+    switch (m_mainUi->autotypeComboBox->currentIndex()) {
+    case 0:
+        m_group->setAutoTypeEnabled(Group::Inherit);
+        break;
+    case 1:
+        m_group->setAutoTypeEnabled(Group::Enable);
+        break;
+    case 2:
+        m_group->setAutoTypeEnabled(Group::Disable);
         break;
     default:
         Q_ASSERT(false);
