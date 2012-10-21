@@ -37,6 +37,8 @@
 #include <time.h> // for nanosleep()
 #endif
 
+#include "config-keepassx.h"
+
 #if defined(HAVE_PR_SET_DUMPABLE)
 #include <sys/prctl.h>
 #elif defined(HAVE_RLIMIT_CORE)
