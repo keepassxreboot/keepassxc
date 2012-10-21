@@ -223,19 +223,21 @@ bool GroupModel::dropMimeData(const QMimeData* data, Qt::DropAction action,
     // decode and insert
     QByteArray encoded = data->data(isGroup ? types.at(0) : types.at(1));
     QDataStream stream(&encoded, QIODevice::ReadOnly);
-    Uuid dbUuid;
-    Uuid itemUuid;
-    stream >> dbUuid >> itemUuid;
 
-    Database* db = Database::databaseByUuid(dbUuid);
-    if (!db) {
-        return false;
-    }
 
     Group* parentGroup = groupFromIndex(parent);
 
     if (isGroup) {
-        Group* dragGroup = db->resolveGroup(itemUuid);
+        Uuid dbUuid;
+        Uuid groupUuid;
+        stream >> dbUuid >> groupUuid;
+
+        Database* db = Database::databaseByUuid(dbUuid);
+        if (!db) {
+            return false;
+        }
+
+        Group* dragGroup = db->resolveGroup(groupUuid);
         if (!dragGroup || !Tools::hasChild(db, dragGroup) || dragGroup == db->rootGroup()) {
             return false;
         }
@@ -251,12 +253,27 @@ bool GroupModel::dropMimeData(const QMimeData* data, Qt::DropAction action,
         dragGroup->setParent(parentGroup, row);
     }
     else {
-        Entry* dragEntry = db->resolveEntry(itemUuid);
-        if (!dragEntry || !Tools::hasChild(db, dragEntry) || row != -1) {
+        if (row != -1) {
             return false;
         }
 
-        dragEntry->setGroup(parentGroup);
+        while (!stream.atEnd()) {
+            Uuid dbUuid;
+            Uuid entryUuid;
+            stream >> dbUuid >> entryUuid;
+
+            Database* db = Database::databaseByUuid(dbUuid);
+            if (!db) {
+                continue;
+            }
+
+            Entry* dragEntry = db->resolveEntry(entryUuid);
+            if (!dragEntry || !Tools::hasChild(db, dragEntry)) {
+                continue;
+            }
+
+            dragEntry->setGroup(parentGroup);
+        }
     }
 
     return true;
