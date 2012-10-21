@@ -141,6 +141,7 @@ private Q_SLOTS:
     void updateModifiedSinceBegin();
 
 private:
+    bool wordMatch(const QString& word, Qt::CaseSensitivity caseSensitivity);
     const Database* database() const;
     template <class T> bool set(T& property, const T& value);
 

@@ -32,6 +32,7 @@ private Q_SLOTS:
     void testDeleteSignals();
     void testCopyCustomIcon();
     void testSearch();
+    void testAndConcatenationInSearch();
 };
 
 #endif // KEEPASSX_TESTGROUP_H

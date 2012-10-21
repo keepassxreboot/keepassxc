@@ -399,4 +399,35 @@ void TestGroup::testSearch()
     delete groupRoot;
 }
 
+void TestGroup::testAndConcatenationInSearch()
+{
+    Group* group = new Group();
+    Entry* entry = new Entry();
+    entry->setNotes("abc def ghi");
+    entry->setTitle("jkl");
+    entry->setGroup(group);
+
+    QList<Entry*> searchResult;
+
+    searchResult = group->search("", Qt::CaseInsensitive);
+    QCOMPARE(searchResult.count(), 1);
+
+    searchResult = group->search("def", Qt::CaseInsensitive);
+    QCOMPARE(searchResult.count(), 1);
+
+    searchResult = group->search("  abc    ghi  ", Qt::CaseInsensitive);
+    QCOMPARE(searchResult.count(), 1);
+
+    searchResult = group->search("ghi ef", Qt::CaseInsensitive);
+    QCOMPARE(searchResult.count(), 1);
+
+    searchResult = group->search("abc ef xyz", Qt::CaseInsensitive);
+    QCOMPARE(searchResult.count(), 0);
+
+    searchResult = group->search("abc kl", Qt::CaseInsensitive);
+    QCOMPARE(searchResult.count(), 1);
+
+    delete group;
+}
+
 QTEST_GUILESS_MAIN(TestGroup)
