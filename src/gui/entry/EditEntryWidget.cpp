@@ -209,7 +209,18 @@ void EditEntryWidget::useExpiryPreset(QAction* action)
     m_mainUi->expireDatePicker->setDateTime(expiryDateTime);
 }
 
-void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const QString& groupName,
+QString EditEntryWidget::entryTitle() const
+{
+    if (m_entry) {
+        return m_entry->title();
+    }
+    else {
+        return QString();
+    }
+
+}
+
+void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const QString& parentName,
                                 Database* database)
 {
     m_entry = entry;
@@ -218,14 +229,21 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const Q
     m_history = history;
 
     if (history) {
-        setHeadline("Entry history");
+        setHeadline(QString("%1 > %2")
+                    .arg(parentName)
+                    .arg(tr("Entry history")));
     }
     else {
         if (create) {
-            setHeadline(groupName+" > "+tr("Add entry"));
+            setHeadline(QString("%1 > %2")
+                        .arg(parentName)
+                        .arg(tr("Add entry")));
         }
         else {
-            setHeadline(groupName+" > "+tr("Edit entry"));
+            setHeadline(QString("%1 > %2 > %3")
+                        .arg(parentName)
+                        .arg(entry->title())
+                        .arg(tr("Edit entry")));
         }
     }
 

@@ -403,7 +403,7 @@ void DatabaseWidget::switchToView(bool accepted)
 
 void DatabaseWidget::switchToHistoryView(Entry* entry)
 {
-    m_historyEditEntryWidget->loadEntry(entry, false, true, "", m_db);
+    m_historyEditEntryWidget->loadEntry(entry, false, true, m_editEntryWidget->entryTitle(), m_db);
     setCurrentWidget(m_historyEditEntryWidget);
 }
 
