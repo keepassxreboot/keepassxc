@@ -294,16 +294,19 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     iconStruct.number = entry->iconNumber();
     m_iconsWidget->load(entry->uuid(), m_database, iconStruct);
 
-    m_autoTypeUi->windowTitleCombo->lineEdit()->clear();
-    m_autoTypeAssoc->copyDataFrom(entry->autoTypeAssociations());
     m_autoTypeUi->enableButton->setChecked(entry->autoTypeEnabled());
     if (entry->defaultAutoTypeSequence().isEmpty()) {
         m_autoTypeUi->inheritSequenceButton->setChecked(true);
+        m_autoTypeUi->sequenceEdit->setText("");
     }
     else {
         m_autoTypeUi->customSequenceButton->setChecked(true);
         m_autoTypeUi->sequenceEdit->setText(entry->defaultAutoTypeSequence());
     }
+    m_autoTypeUi->windowTitleCombo->lineEdit()->clear();
+    m_autoTypeUi->defaultWindowSequenceButton->setChecked(true);
+    m_autoTypeUi->windowSequenceEdit->setText("");
+    m_autoTypeAssoc->copyDataFrom(entry->autoTypeAssociations());
     if (m_autoTypeAssoc->size() != 0) {
         m_autoTypeUi->assocView->setCurrentIndex(m_autoTypeAssocModel->index(0, 0));
     }
@@ -382,6 +385,14 @@ void EditEntryWidget::saveEntry()
     }
     else {
         m_entry->setIcon(iconStruct.uuid);
+    }
+
+    m_entry->setAutoTypeEnabled(m_autoTypeUi->enableButton->isChecked());
+    if (m_autoTypeUi->inheritSequenceButton->isChecked()) {
+        m_entry->setDefaultAutoTypeSequence(QString());
+    }
+    else {
+        m_entry->setDefaultAutoTypeSequence(m_autoTypeUi->sequenceEdit->text());
     }
 
     m_autoTypeAssoc->removeEmpty();
