@@ -130,9 +130,9 @@ void EditGroupWidget::cancel()
 
 void EditGroupWidget::addTriStateItems(QComboBox* comboBox)
 {
-    comboBox->addItem("Inherit");
-    comboBox->addItem("Enable");
-    comboBox->addItem("Disable");
+    comboBox->addItem(tr("Inherit"));
+    comboBox->addItem(tr("Enable"));
+    comboBox->addItem(tr("Disable"));
 }
 
 int EditGroupWidget::indexFromTriState(Group::TriState triState)
