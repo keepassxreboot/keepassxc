@@ -15,6 +15,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef KEEPASSX_UNLOCKDATABASEWIDGET_H
+#define KEEPASSX_UNLOCKDATABASEWIDGET_H
+
 #include "gui/DatabaseOpenWidget.h"
 
 class UnlockDatabaseWidget : public DatabaseOpenWidget
@@ -31,3 +34,5 @@ protected:
 private Q_SLOTS:
     void clearForms();
 };
+
+#endif // KEEPASSX_UNLOCKDATABASEWIDGET_H

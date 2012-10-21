@@ -96,7 +96,7 @@ private Q_SLOTS:
 private:
     bool passwordsEqual();
     void setForms(const Entry* entry, bool restore = false);
-    QMenu *createPresetsMenu();
+    QMenu* createPresetsMenu();
 
     Entry* m_entry;
     Database* m_database;
