@@ -17,6 +17,7 @@
 
 #include "TestGui.h"
 
+#include <QtCore/QTemporaryFile>
 #include <QtTest/QTest>
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
@@ -276,10 +277,12 @@ void TestGui::testSaveAs()
 
     m_db->metadata()->setName("SaveAs");
 
+    QTemporaryFile* tmpFile = new QTemporaryFile();
     // open temporary file so it creates a filename
-    QVERIFY(m_tmpFile.open());
-    m_tmpFile.close();
-    fileDialog()->setNextFileName(m_tmpFile.fileName());
+    QVERIFY(tmpFile->open());
+    m_tmpFileName = tmpFile->fileName();
+    delete tmpFile;
+    fileDialog()->setNextFileName(m_tmpFileName);
 
     triggerAction("actionDatabaseSaveAs");
 
@@ -357,6 +360,7 @@ void TestGui::testDatabaseLocking()
 void TestGui::cleanupTestCase()
 {
     delete m_mainWindow;
+    QFile::remove(m_tmpFileName);
 }
 
 void TestGui::checkDatabase()
@@ -364,7 +368,7 @@ void TestGui::checkDatabase()
     CompositeKey key;
     key.addKey(PasswordKey("a"));
     KeePass2Reader reader;
-    QScopedPointer<Database> dbSaved(reader.readDatabase(m_tmpFile.fileName(), key));
+    QScopedPointer<Database> dbSaved(reader.readDatabase(m_tmpFileName, key));
     QVERIFY(dbSaved);
     QVERIFY(!reader.hasError());
     QCOMPARE(dbSaved->metadata()->name(), m_db->metadata()->name());
