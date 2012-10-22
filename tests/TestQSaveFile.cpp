@@ -152,6 +152,7 @@ void TestQSaveFile::transactionalWriteCanceled()
 
 void TestQSaveFile::transactionalWriteErrorRenaming()
 {
+#ifndef Q_OS_WIN
     const QString dir = tmpDir();
     QVERIFY(!dir.isEmpty());
     const QString targetFile = dir + QString::fromLatin1("/outfile");
@@ -178,6 +179,7 @@ void TestQSaveFile::transactionalWriteErrorRenaming()
 #else
     QVERIFY(file.setPermissions(QFile::ReadOwner | QFile::WriteOwner));
 #endif
+#endif // !Q_OS_WIN
 }
 
 QString TestQSaveFile::tmpDir()
