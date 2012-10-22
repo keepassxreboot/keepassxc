@@ -288,30 +288,33 @@ bool QSaveFile::commit()
         d->tempFile = 0;
         return false;
     }
-    // atomically replace old file with new file
-    // Can't use QFile::rename for that, must use the file engine directly
-    // But that's not available in Qt5, nor is QTemporaryFileEngine
-    // (used by the Qt5-QFileDevice-based QSaveFile).
-    // So we have to do it by hand (non portable) for now.
     d->tempFile->close();
-#if 1
+#ifdef Q_OS_WIN
+    // On Windows QAbstractFileEngine::rename() fails if the the target exists,
+    // so we have to rename the target.
+    // Ideally the winapi ReplaceFile() method should be used.
+    QString bakname = d->fileName + "~";
+    QFile::remove(bakname);
+    QFile::rename(d->fileName, bakname);
+#endif
     QAbstractFileEngine* fileEngine = d->tempFile->fileEngine();
     Q_ASSERT(fileEngine);
     if (!fileEngine->rename(d->fileName)) {
         d->error = fileEngine->error();
         setErrorString(fileEngine->errorString());
-#else
-    if (::rename(QFile::encodeName(d->tempFile->fileName()).constData(), QFile::encodeName(d->fileName).constData()) != 0) {
-        d->error = QFile::RenameError;
-        setErrorString(QString::fromLocal8Bit(strerror(errno)));
-#endif
         d->tempFile->remove();
         delete d->tempFile;
         d->tempFile = 0;
+#ifdef Q_OS_WIN
+        QFile::rename(bakname, d->fileName);
+#endif
         return false;
     }
     delete d->tempFile;
     d->tempFile = 0;
+#ifdef Q_OS_WIN
+    QFile::remove(bakname);
+#endif
     return true;
 }
 
