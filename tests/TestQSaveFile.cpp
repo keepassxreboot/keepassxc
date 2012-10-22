@@ -102,6 +102,7 @@ void TestQSaveFile::autoFlush()
     QFile reader(targetFile);
     QVERIFY(reader.open(QIODevice::ReadOnly));
     QCOMPARE(QString::fromLatin1(reader.readAll().constData()), QString::fromLatin1("Auto-flush."));
+    reader.close();
 
     QVERIFY(QFile::remove(targetFile));
 }
