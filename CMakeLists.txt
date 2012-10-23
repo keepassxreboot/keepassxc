@@ -123,6 +123,12 @@ else()
   add_gcc_compiler_flags("-ansi")
 endif()
 
+if(MINGW)
+  set(CMAKE_RC_COMPILER_INIT windres)
+  enable_language(RC)
+  set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> <FLAGS> -O coff <DEFINES> -i <SOURCE> -o <OBJECT>")
+endif()
+
 if(APPLE OR MINGW)
   set(PROGNAME KeePassX)
 else()

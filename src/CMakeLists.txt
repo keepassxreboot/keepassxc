@@ -105,6 +105,10 @@ set(keepassx_SOURCES
     streams/SymmetricCipherStream.cpp
 )
 
+set(keepassx_SOURCES_MAINEXE
+    main.cpp
+)
+
 set(keepassx_MOC
     autotype/AutoType.h
     autotype/AutoTypeSelectDialog.h
@@ -179,12 +183,18 @@ set(keepassx_FORMS
     gui/group/EditGroupWidgetMain.ui
 )
 
+if(MINGW)
+  set(keepassx_SOURCES_MAINEXE
+      ${keepassx_SOURCES_MAINEXE}
+      ${CMAKE_SOURCE_DIR}/share/windows/icon.rc)
+endif()
+
 qt4_wrap_ui(keepassx_SOURCES ${keepassx_FORMS})
 qt4_wrap_cpp(keepassx_SOURCES ${keepassx_MOC})
 
 add_library(keepassx_core STATIC ${keepassx_SOURCES})
 
-add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE main.cpp)
+add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE ${keepassx_SOURCES_MAINEXE})
 target_link_libraries(${PROGNAME}
                       keepassx_core
                       ${QT_QTCORE_LIBRARY}
