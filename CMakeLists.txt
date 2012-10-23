@@ -194,7 +194,8 @@ if(UNIX)
     }" HAVE_RLIMIT_CORE)
 
   if(APPLE)
-    check_cxx_source_compiles("#include <sys/ptrace.h>
+    check_cxx_source_compiles("#include <sys/types.h>
+      #include <sys/ptrace.h>
       int main() { ptrace(PT_DENY_ATTACH, 0, 0, 0); return 0; }"
       HAVE_PT_DENY_ATTACH)
   endif()

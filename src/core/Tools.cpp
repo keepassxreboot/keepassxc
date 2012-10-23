@@ -46,6 +46,7 @@
 #endif
 
 #ifdef HAVE_PT_DENY_ATTACH
+#include <sys/types.h>
 #include <sys/ptrace.h>
 #endif
 
