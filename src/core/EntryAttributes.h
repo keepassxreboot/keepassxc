@@ -32,6 +32,7 @@ class EntryAttributes : public QObject
 public:
     explicit EntryAttributes(QObject* parent = Q_NULLPTR);
     QList<QString> keys() const;
+    QList<QString> customKeys();
     QString value(const QString& key) const;
     bool isProtected(const QString& key) const;
     void set(const QString& key, const QString& value, bool protect = false);

@@ -53,6 +53,7 @@ private Q_SLOTS:
     void openRecentDatabase(QAction* action);
     void clearLastDatabases();
     void updateLastDatabasesMenu();
+    void updateCopyAttributesMenu();
     void showEntryContextMenu(const QPoint& globalPos);
     void showGroupContextMenu(const QPoint& globalPos);
     void saveToolbarState(bool value);
@@ -66,6 +67,7 @@ private:
     SignalMultiplexer m_actionMultiplexer;
     QAction* m_clearHistoryAction;
     QActionGroup* m_lastDatabasesActions;
+    QActionGroup* m_copyAdditionalAttributeActions;
 
     Q_DISABLE_COPY(MainWindow)
 };

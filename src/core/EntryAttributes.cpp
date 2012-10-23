@@ -17,8 +17,8 @@
 
 #include "EntryAttributes.h"
 
-const QStringList EntryAttributes::DefaultAttributes(QStringList() << "Title" << "URL"
-                                                     << "UserName" << "Password" << "Notes");
+const QStringList EntryAttributes::DefaultAttributes(QStringList() << "Title" << "UserName"
+                                                      << "Password" << "URL" << "Notes");
 
 EntryAttributes::EntryAttributes(QObject* parent)
     : QObject(parent)
@@ -29,6 +29,17 @@ EntryAttributes::EntryAttributes(QObject* parent)
 QList<QString> EntryAttributes::keys() const
 {
     return m_attributes.keys();
+}
+
+QList<QString> EntryAttributes::customKeys()
+{
+    QList<QString> customKeys;
+    Q_FOREACH (const QString& key, keys()) {
+        if (!isDefaultAttribute(key)) {
+            customKeys.append(key);
+        }
+    }
+    return customKeys;
 }
 
 QString EntryAttributes::value(const QString& key) const

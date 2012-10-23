@@ -24,6 +24,7 @@
 #include "autotype/AutoType.h"
 #include "core/Config.h"
 #include "core/Database.h"
+#include "core/Entry.h"
 #include "core/FilePath.h"
 #include "core/Metadata.h"
 #include "gui/AboutDialog.h"
@@ -51,6 +52,12 @@ MainWindow::MainWindow()
     connect(m_clearHistoryAction, SIGNAL(triggered()), this, SLOT(clearLastDatabases()));
     connect(m_lastDatabasesActions, SIGNAL(triggered(QAction*)), this, SLOT(openRecentDatabase(QAction*)));
     connect(m_ui->menuRecentDatabases, SIGNAL(aboutToShow()), this, SLOT(updateLastDatabasesMenu()));
+
+    m_copyAdditionalAttributeActions = new QActionGroup(m_ui->menuEntryCopyAttribute);
+    m_actionMultiplexer.connect(m_copyAdditionalAttributeActions, SIGNAL(triggered(QAction*)),
+                                SLOT(copyAttribute(QAction*)));
+    connect(m_ui->menuEntryCopyAttribute, SIGNAL(aboutToShow()),
+            this, SLOT(updateCopyAttributesMenu()));
 
     Qt::Key globalAutoTypeKey = static_cast<Qt::Key>(config()->get("GlobalAutoTypeKey").toInt());
     Qt::KeyboardModifiers globalAutoTypeModifiers = static_cast<Qt::KeyboardModifiers>(
@@ -195,6 +202,29 @@ void MainWindow::updateLastDatabasesMenu()
     m_ui->menuRecentDatabases->addAction(m_clearHistoryAction);
 }
 
+void MainWindow::updateCopyAttributesMenu()
+{
+    m_ui->menuEntryCopyAttribute->clear();
+
+    DatabaseWidget* dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+    Q_ASSERT(dbWidget);
+    Q_ASSERT(dbWidget->entryView()->isSingleEntrySelected());
+
+    Entry* entry = dbWidget->entryView()->currentEntry();
+
+    Q_FOREACH (const QString& key, EntryAttributes::DefaultAttributes) {
+        QAction* action = m_ui->menuEntryCopyAttribute->addAction(key);
+        m_copyAdditionalAttributeActions->addAction(action);
+    }
+
+    m_ui->menuEntryCopyAttribute->addSeparator();
+
+    Q_FOREACH (const QString& key, entry->attributes()->customKeys()) {
+        QAction* action = m_ui->menuEntryCopyAttribute->addAction(key);
+        m_copyAdditionalAttributeActions->addAction(action);
+    }
+}
+
 void MainWindow::openRecentDatabase(QAction* action)
 {
     openDatabase(action->text());
@@ -235,6 +265,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryDelete->setEnabled(singleEntrySelected);
             m_ui->actionEntryCopyUsername->setEnabled(singleEntrySelected);
             m_ui->actionEntryCopyPassword->setEnabled(singleEntrySelected);
+            m_ui->menuEntryCopyAttribute->setEnabled(singleEntrySelected);
             m_ui->actionEntryAutoType->setEnabled(singleEntrySelected);
             m_ui->actionEntryOpenUrl->setEnabled(singleEntrySelected);
             m_ui->actionGroupNew->setEnabled(groupSelected);
@@ -258,6 +289,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             Q_FOREACH (QAction* action, m_ui->menuGroups->actions()) {
                 action->setEnabled(false);
             }
+            m_ui->menuEntryCopyAttribute->setEnabled(false);
 
             m_ui->actionSearch->setEnabled(false);
             m_ui->actionSearch->setChecked(false);
@@ -279,6 +311,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         Q_FOREACH (QAction* action, m_ui->menuGroups->actions()) {
             action->setEnabled(false);
         }
+        m_ui->menuEntryCopyAttribute->setEnabled(false);
 
         m_ui->actionSearch->setEnabled(false);
         m_ui->actionSearch->setChecked(false);

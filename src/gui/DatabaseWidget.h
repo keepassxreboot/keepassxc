@@ -86,6 +86,7 @@ public Q_SLOTS:
     void deleteEntry();
     void copyUsername();
     void copyPassword();
+    void copyAttribute(QAction* action);
     void performAutoType();
     void openUrl();
     void createGroup();

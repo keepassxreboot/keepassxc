@@ -274,6 +274,17 @@ void DatabaseWidget::copyPassword()
     clipboard()->setText(currentEntry->password());
 }
 
+void DatabaseWidget::copyAttribute(QAction* action)
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if (!currentEntry) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    clipboard()->setText(currentEntry->attributes()->value(action->text()));
+}
+
 void DatabaseWidget::performAutoType()
 {
     Entry* currentEntry = m_entryView->currentEntry();
