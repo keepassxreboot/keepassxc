@@ -47,7 +47,7 @@ int main(int argc, char** argv)
             filename = args[i];
         }
         else {
-            qWarning("Unkown argument \"%s\"", qPrintable(args[i]));
+            qWarning("Unknown argument \"%s\"", qPrintable(args[i]));
         }
     }
 
