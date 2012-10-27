@@ -218,7 +218,7 @@ install(TARGETS ${PROGNAME}
 
 add_subdirectory(autotype)
 
-if(APPLE AND NOT (${CMAKE_VERSION} VERSION_LESS 2.8.9))
+if(APPLE AND NOT (${CMAKE_VERSION} VERSION_LESS 2.8.8))
   if(QT_MAC_USE_COCOA AND EXISTS "${QT_LIBRARY_DIR}/Resources/qt_menu.nib")
     install(DIRECTORY "${QT_LIBRARY_DIR}/Resources/qt_menu.nib"
             DESTINATION "${DATA_INSTALL_DIR}")
@@ -236,7 +236,7 @@ if(APPLE AND NOT (${CMAKE_VERSION} VERSION_LESS 2.8.9))
   install_qt4_executable(${PROGNAME}.app "qjpeg;qgif;qico;qtaccessiblewidgets")
 endif()
 
-if(MINGW AND NOT (${CMAKE_VERSION} VERSION_LESS 2.8.9))
+if(MINGW AND NOT (${CMAKE_VERSION} VERSION_LESS 2.8.8))
   set(CPACK_GENERATOR "ZIP")
   set(CPACK_STRIP_FILES ON)
   set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSX_VERSION_NUM}")
