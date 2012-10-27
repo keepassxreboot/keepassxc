@@ -1,3 +1,13 @@
+2.0 Alpha 2 (2012-10-27)
+=========================
+
+- Auto-Type on Linux / X11
+- Database locking
+- Fix database corruption when changing key tranformation rounds [#34]
+- Verify header data of kdbx files
+- Add menu entry to open URLs in the browser
+- Add menu entry to copy an entry attribute to clipboard
+
 2.0 Alpha 2 (2012-07-02)
 =========================
 
