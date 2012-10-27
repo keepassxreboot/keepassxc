@@ -192,9 +192,11 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
         else {
             quint32 groupId = m_entryGroupIds.value(entry);
             if (!m_groupIds.contains(groupId)) {
-                return Q_NULLPTR;
+                qWarning("Orphaned entry found, assigning to root group.");
+                entry->setGroup(m_db->rootGroup());
+            } else {
+                entry->setGroup(m_groupIds.value(groupId));
             }
-            entry->setGroup(m_groupIds.value(groupId));
             entry->setUuid(Uuid::random());
         }
     }
