@@ -85,13 +85,13 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
     bool ok;
 
     quint32 signature1 = Endian::readUInt32(m_device, KeePass1::BYTEORDER, &ok);
-    if (!ok || signature1 != 0x9AA2D903) {
+    if (!ok || signature1 != KeePass1::SIGNATURE_1) {
         raiseError(tr("Not a KeePass database."));
         return Q_NULLPTR;
     }
 
     quint32 signature2 = Endian::readUInt32(m_device, KeePass1::BYTEORDER, &ok);
-    if (!ok || signature2 != 0xB54BFB65) {
+    if (!ok || signature2 != KeePass1::SIGNATURE_2) {
         raiseError(tr("Not a KeePass database."));
         return Q_NULLPTR;
     }
@@ -705,7 +705,7 @@ void KeePass1Reader::parseNotes(const QString& rawNotes, Entry* entry)
     }
 }
 
-bool KeePass1Reader::constructGroupTree(const QList<Group*> groups)
+bool KeePass1Reader::constructGroupTree(const QList<Group*>& groups)
 {
     for (int i = 0; i < groups.size(); i++) {
         quint32 level = m_groupLevels.value(groups[i]);
@@ -726,7 +726,7 @@ bool KeePass1Reader::constructGroupTree(const QList<Group*> groups)
             }
         }
 
-        if (groups[i]->parent() == m_tmpParent) {
+        if (groups[i]->parentGroup() == m_tmpParent) {
             return false;
         }
     }
