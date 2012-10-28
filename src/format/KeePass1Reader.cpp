@@ -211,11 +211,7 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
     }
 
     Q_ASSERT(m_tmpParent->children().isEmpty());
-
-    Q_FOREACH (Entry* entry, m_tmpParent->entries()) {
-        qWarning("Orphaned entry found, assigning to root group.");
-        entry->setGroup(m_db->rootGroup());
-    }
+    Q_ASSERT(m_tmpParent->entries().isEmpty());
 
     Q_FOREACH (Group* group, groups) {
         group->setUpdateTimeinfo(true);
