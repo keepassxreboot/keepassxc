@@ -32,7 +32,7 @@
 
 AutoType* AutoType::m_instance = Q_NULLPTR;
 
-AutoType::AutoType(QObject* parent)
+AutoType::AutoType(QObject* parent, bool test)
     : QObject(parent)
     , m_inAutoType(false)
     , m_pluginLoader(new QPluginLoader(this))
@@ -42,7 +42,15 @@ AutoType::AutoType(QObject* parent)
     // prevent crash when the plugin has unresolved symbols
     m_pluginLoader->setLoadHints(QLibrary::ResolveAllSymbolsHint);
 
-    QString pluginPath = filePath()->pluginPath("keepassx-autotype-" + Tools::platform());
+    QString pluginName = "keepassx-autotype-";
+    if (!test) {
+        pluginName += Tools::platform();
+    }
+    else {
+        pluginName += "test";
+    }
+
+    QString pluginPath = filePath()->pluginPath(pluginName);
 
     if (!pluginPath.isEmpty()) {
         loadPlugin(pluginPath);
@@ -79,6 +87,13 @@ AutoType* AutoType::instance()
     }
 
     return m_instance;
+}
+
+void AutoType::createTestInstance()
+{
+    Q_ASSERT(!m_instance);
+
+    m_instance = new AutoType(qApp, true);
 }
 
 QStringList AutoType::windowTitles()

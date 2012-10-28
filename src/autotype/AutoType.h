@@ -48,6 +48,7 @@ public:
     }
 
     static AutoType* instance();
+    static void createTestInstance();
 
 public Q_SLOTS:
     void performGlobalAutoType(const QList<Database*>& dbList);
@@ -60,7 +61,7 @@ private Q_SLOTS:
     void resetInAutoType();
 
 private:
-    explicit AutoType(QObject* parent = Q_NULLPTR);
+    explicit AutoType(QObject* parent = Q_NULLPTR, bool test = false);
     ~AutoType();
     void loadPlugin(const QString& pluginPath);
     bool parseActions(const QString& sequence, const Entry* entry, QList<AutoTypeAction*>& actions);

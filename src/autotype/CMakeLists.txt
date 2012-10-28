@@ -5,3 +5,7 @@ if(Q_WS_X11)
     add_subdirectory(x11)
   endif()
 endif()
+
+if(WITH_TESTS)
+  add_subdirectory(test)
+endif()

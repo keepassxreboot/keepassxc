@@ -38,10 +38,15 @@ QString FilePath::dataPath(const QString& name)
 QString FilePath::pluginPath(const QString& name)
 {
     QStringList pluginPaths;
+
     QDir buildDir(QCoreApplication::applicationDirPath() + "/autotype");
     Q_FOREACH (const QString& dir, buildDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot)) {
         pluginPaths << QCoreApplication::applicationDirPath() + "/autotype/" + dir;
     }
+
+    // for TestAutoType
+    pluginPaths << QCoreApplication::applicationDirPath() + "/../src/autotype/test";
+
     pluginPaths << QCoreApplication::applicationDirPath();
     pluginPaths << QCoreApplication::applicationDirPath() + "/../lib/keepassx";
 
