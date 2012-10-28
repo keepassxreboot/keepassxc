@@ -17,6 +17,11 @@
 
 #include "AutoTypeTest.h"
 
+QString AutoTypePlatformTest::keyToString(Qt::Key key)
+{
+    return QString("[Key0x%1]").arg(key, 0, 16);
+}
+
 QStringList AutoTypePlatformTest::windowTitles()
 {
     return QStringList();
@@ -68,9 +73,9 @@ QString AutoTypePlatformTest::actionChars()
     return m_actionChars;
 }
 
-QList<AutoTypeAction*> AutoTypePlatformTest::actionList()
+int AutoTypePlatformTest::actionCount()
 {
-    return m_actionList;
+    return m_actionList.size();
 }
 
 void AutoTypePlatformTest::clearActions()
@@ -90,6 +95,7 @@ void AutoTypePlatformTest::addActionChar(AutoTypeChar* action)
 void AutoTypePlatformTest::addActionKey(AutoTypeKey* action)
 {
     m_actionList.append(action->clone());
+    m_actionChars.append(keyToString(action->key));
 }
 
 

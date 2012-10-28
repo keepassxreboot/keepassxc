@@ -22,6 +22,8 @@
 
 #include "tests.h"
 #include "core/FilePath.h"
+#include "core/Entry.h"
+#include "core/Group.h"
 #include "crypto/Crypto.h"
 #include "autotype/AutoType.h"
 #include "autotype/AutoTypePlatformPlugin.h"
@@ -42,6 +44,19 @@ void TestAutoType::initTestCase()
 
     m_test = qobject_cast<AutoTypeTestInterface*>(loader.instance());
     QVERIFY(m_test);
+
+    m_autoType = AutoType::instance();
+}
+
+void TestAutoType::init()
+{
+    m_test->clearActions();
+
+    m_group = new Group();
+    m_entry = new Entry();
+    m_entry->setGroup(m_group);
+    m_entry->setUsername("myuser");
+    m_entry->setPassword("mypass");
 }
 
 void TestAutoType::testInternal()
@@ -50,6 +65,28 @@ void TestAutoType::testInternal()
 
     m_test->setActiveWindowTitle("Test");
     QCOMPARE(m_platform->activeWindowTitle(), QString("Test"));
+}
+
+void TestAutoType::testAutoTypeWithoutSequence()
+{
+    m_autoType->performAutoType(m_entry, Q_NULLPTR);
+
+    QCOMPARE(m_test->actionCount(), 14);
+    QCOMPARE(m_test->actionChars(),
+             QString("myuser%1mypass%2")
+             .arg(m_test->keyToString(Qt::Key_Tab))
+             .arg(m_test->keyToString(Qt::Key_Enter)));
+}
+
+void TestAutoType::testAutoTypeWithSequence()
+{
+    m_autoType->performAutoType(m_entry, Q_NULLPTR, "{Username}abc{PaSsWoRd}");
+
+    QCOMPARE(m_test->actionCount(), 15);
+    QCOMPARE(m_test->actionChars(),
+             QString("%1abc%2")
+             .arg(m_entry->username())
+             .arg(m_entry->password()));
 }
 
 QTEST_GUILESS_MAIN(TestAutoType)

@@ -33,6 +33,8 @@ class AutoTypePlatformTest : public QObject,
     Q_INTERFACES(AutoTypePlatformInterface AutoTypeTestInterface)
 
 public:
+    QString keyToString(Qt::Key key);
+
     QStringList windowTitles();
     WId activeWindow();
     QString activeWindowTitle();
@@ -44,7 +46,7 @@ public:
     void setActiveWindowTitle(const QString& title);
 
     QString actionChars();
-    QList<AutoTypeAction*> actionList();
+    int actionCount();
     void clearActions();
 
     void addActionChar(AutoTypeChar* action);

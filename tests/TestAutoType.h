@@ -20,8 +20,11 @@
 
 #include <QtCore/QObject>
 
+class AutoType;
 class AutoTypePlatformInterface;
 class AutoTypeTestInterface;
+class Entry;
+class Group;
 
 class TestAutoType : public QObject
 {
@@ -29,11 +32,17 @@ class TestAutoType : public QObject
 
 private Q_SLOTS:
     void initTestCase();
+    void init();
     void testInternal();
+    void testAutoTypeWithoutSequence();
+    void testAutoTypeWithSequence();
 
 private:
     AutoTypePlatformInterface* m_platform;
     AutoTypeTestInterface* m_test;
+    AutoType* m_autoType;
+    Group* m_group;
+    Entry* m_entry;
 };
 
 #endif // KEEPASSX_TESTAUTOTYPE_H

@@ -27,8 +27,10 @@ public:
     virtual void setActiveWindowTitle(const QString& title) = 0;
 
     virtual QString actionChars() = 0;
-    virtual QList<AutoTypeAction*> actionList() = 0;
+    virtual int actionCount() = 0;
     virtual void clearActions() = 0;
+
+    virtual QString keyToString(Qt::Key key) = 0;
 };
 
 Q_DECLARE_INTERFACE(AutoTypeTestInterface, "org.keepassx.AutoTypeTestInterface/1")
