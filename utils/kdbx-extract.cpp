@@ -65,13 +65,20 @@ int main(int argc, char **argv)
     reader.setSaveXml(true);
     reader.readDatabase(&dbFile, key);
 
+    QByteArray xmlData = reader.xmlData();
+
     if (reader.hasError()) {
-        qCritical("Error while reading the database:\n%s", qPrintable(reader.errorString()));
-        return 1;
+        if (xmlData.isEmpty()) {
+            qCritical("Error while reading the database:\n%s", qPrintable(reader.errorString()));
+            return 1;
+        }
+        else {
+            qWarning("Error while parsing the database:\n%s\n", qPrintable(reader.errorString()));
+        }
     }
 
     QTextStream out(stdout);
-    out << reader.xmlData().constData() << "\n";
+    out << xmlData.constData() << "\n";
 
     return 0;
 }
