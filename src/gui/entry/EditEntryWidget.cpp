@@ -21,9 +21,6 @@
 #include "ui_EditEntryWidgetHistory.h"
 #include "ui_EditEntryWidgetMain.h"
 #include "ui_EditEntryWidgetNotes.h"
-#include "ui_EditWidgetProperties.h"
-#include "ui_EditWidget.h"
-#include "ui_EditWidgetIcons.h"
 
 #include <QtGui/QDesktopServices>
 #include <QtGui/QStackedLayout>

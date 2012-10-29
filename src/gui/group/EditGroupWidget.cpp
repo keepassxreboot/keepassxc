@@ -17,7 +17,6 @@
 
 #include "EditGroupWidget.h"
 #include "ui_EditGroupWidgetMain.h"
-#include "ui_EditWidget.h"
 
 #include "core/Metadata.h"
 #include "gui/EditWidgetIcons.h"
