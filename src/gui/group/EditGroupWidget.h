@@ -27,8 +27,8 @@
 class EditWidgetIcons;
 
 namespace Ui {
-    class EditGroupWidgetAdvanced;
     class EditGroupWidgetMain;
+    class EditWidgetProperties;
     class EditWidget;
 }
 
@@ -55,10 +55,10 @@ private:
     Group::TriState triStateFromIndex(int index);
 
     const QScopedPointer<Ui::EditGroupWidgetMain> m_mainUi;
-    const QScopedPointer<Ui::EditGroupWidgetAdvanced> m_propertiesUi;
+    const QScopedPointer<Ui::EditWidgetProperties> m_propertiesUi;
     QWidget* const m_editGroupWidgetMain;
     EditWidgetIcons* const m_editGroupWidgetIcons;
-    QWidget* const m_editGroupWidgetProperties;
+    QWidget* const m_editWidgetProperties;
     Group* m_group;
     Database* m_database;
 

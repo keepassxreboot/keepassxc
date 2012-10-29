@@ -169,6 +169,7 @@ set(keepassx_FORMS
     gui/DatabaseSettingsWidget.ui
     gui/EditWidget.ui
     gui/EditWidgetIcons.ui
+    gui/EditWidgetProperties.ui
     gui/MainWindow.ui
     gui/SearchWidget.ui
     gui/SettingsWidgetGeneral.ui
@@ -180,7 +181,6 @@ set(keepassx_FORMS
     gui/entry/EditEntryWidgetMain.ui
     gui/entry/EditEntryWidgetNotes.ui
     gui/group/EditGroupWidgetMain.ui
-    gui/group/EditGroupWidgetProperties.ui
 )
 
 if(MINGW)

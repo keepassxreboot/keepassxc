@@ -17,7 +17,7 @@
 
 #include "EditGroupWidget.h"
 #include "ui_EditGroupWidgetMain.h"
-#include "ui_EditGroupWidgetProperties.h"
+#include "ui_EditWidgetProperties.h"
 #include "ui_EditWidget.h"
 
 #include "core/Metadata.h"
@@ -26,18 +26,18 @@
 EditGroupWidget::EditGroupWidget(QWidget* parent)
     : EditWidget(parent)
     , m_mainUi(new Ui::EditGroupWidgetMain())
-    , m_propertiesUi(new Ui::EditGroupWidgetAdvanced())
+    , m_propertiesUi(new Ui::EditWidgetProperties())
     , m_editGroupWidgetMain(new QWidget())
     , m_editGroupWidgetIcons(new EditWidgetIcons())
-    , m_editGroupWidgetProperties(new QWidget())
+    , m_editWidgetProperties(new QWidget())
     , m_group(Q_NULLPTR)
 {
     m_mainUi->setupUi(m_editGroupWidgetMain);
-    m_propertiesUi->setupUi(m_editGroupWidgetProperties);
+    m_propertiesUi->setupUi(m_editWidgetProperties);
 
     add(tr("Group"), m_editGroupWidgetMain);
     add(tr("Icon"), m_editGroupWidgetIcons);
-    add(tr("Properties"), m_editGroupWidgetProperties);
+    add(tr("Properties"), m_editWidgetProperties);
 
     addTriStateItems(m_mainUi->searchComboBox);
     addTriStateItems(m_mainUi->autotypeComboBox);
