@@ -17,23 +17,21 @@
 
 #include "EditGroupWidget.h"
 #include "ui_EditGroupWidgetMain.h"
-#include "ui_EditWidgetProperties.h"
 #include "ui_EditWidget.h"
 
 #include "core/Metadata.h"
 #include "gui/EditWidgetIcons.h"
+#include "gui/EditWidgetProperties.h"
 
 EditGroupWidget::EditGroupWidget(QWidget* parent)
     : EditWidget(parent)
     , m_mainUi(new Ui::EditGroupWidgetMain())
-    , m_propertiesUi(new Ui::EditWidgetProperties())
     , m_editGroupWidgetMain(new QWidget())
     , m_editGroupWidgetIcons(new EditWidgetIcons())
-    , m_editWidgetProperties(new QWidget())
+    , m_editWidgetProperties(new EditWidgetProperties())
     , m_group(Q_NULLPTR)
 {
     m_mainUi->setupUi(m_editGroupWidgetMain);
-    m_propertiesUi->setupUi(m_editWidgetProperties);
 
     add(tr("Group"), m_editGroupWidgetMain);
     add(tr("Icon"), m_editGroupWidgetIcons);
@@ -68,14 +66,6 @@ void EditGroupWidget::loadGroup(Group* group, bool create, Database* database)
     m_mainUi->editNotes->setPlainText(m_group->notes());
     m_mainUi->expireCheck->setChecked(group->timeInfo().expires());
     m_mainUi->expireDatePicker->setDateTime(group->timeInfo().expiryTime().toLocalTime());
-    QString timeFormat("d MMM yyyy HH:mm:ss");
-    m_propertiesUi->modifiedEdit->setText(
-                group->timeInfo().lastModificationTime().toLocalTime().toString(timeFormat));
-    m_propertiesUi->createdEdit->setText(
-                group->timeInfo().creationTime().toLocalTime().toString(timeFormat));
-    m_propertiesUi->accessedEdit->setText(
-                group->timeInfo().lastAccessTime().toLocalTime().toString(timeFormat));
-    m_propertiesUi->uuidEdit->setText(group->uuid().toHex());
     m_mainUi->searchComboBox->setCurrentIndex(indexFromTriState(group->searchingEnabled()));
     m_mainUi->autotypeComboBox->setCurrentIndex(indexFromTriState(group->autoTypeEnabled()));
 
@@ -83,6 +73,8 @@ void EditGroupWidget::loadGroup(Group* group, bool create, Database* database)
     iconStruct.uuid = group->iconUuid();
     iconStruct.number = group->iconNumber();
     m_editGroupWidgetIcons->load(group->uuid(), database, iconStruct);
+
+    m_editWidgetProperties->setFields(group->timeInfo(), group->uuid());
 
     setCurrentRow(0);
 

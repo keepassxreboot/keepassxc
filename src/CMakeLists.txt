@@ -75,6 +75,7 @@ set(keepassx_SOURCES
     gui/DragTabBar.cpp
     gui/EditWidget.cpp
     gui/EditWidgetIcons.cpp
+    gui/EditWidgetProperties.cpp
     gui/FileDialog.cpp
     gui/IconModels.cpp
     gui/KeePass1OpenWidget.cpp
@@ -136,6 +137,7 @@ set(keepassx_MOC
     gui/DragTabBar.h
     gui/EditWidget.h
     gui/EditWidgetIcons.h
+    gui/EditWidgetProperties.h
     gui/IconModels.h
     gui/KeePass1OpenWidget.h
     gui/LineEdit.h

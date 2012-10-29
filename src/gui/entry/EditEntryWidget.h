@@ -27,6 +27,7 @@ class AutoTypeAssociations;
 class AutoTypeAssociationsModel;
 class Database;
 class EditWidgetIcons;
+class EditWidgetProperties;
 class Entry;
 class EntryAttachments;
 class EntryAttachmentsModel;
@@ -44,7 +45,6 @@ namespace Ui {
     class EditEntryWidgetMain;
     class EditEntryWidgetHistory;
     class EditEntryWidgetNotes;
-    class EditWidgetProperties;
     class EditWidget;
 }
 
@@ -110,14 +110,13 @@ private:
     const QScopedPointer<Ui::EditEntryWidgetAdvanced> m_advancedUi;
     const QScopedPointer<Ui::EditEntryWidgetAutoType> m_autoTypeUi;
     const QScopedPointer<Ui::EditEntryWidgetHistory> m_historyUi;
-    const QScopedPointer<Ui::EditWidgetProperties> m_propertiesUi;
     QWidget* const m_mainWidget;
     QWidget* const m_notesWidget;
     QWidget* const m_advancedWidget;
     EditWidgetIcons* const m_iconsWidget;
     QWidget* const m_autoTypeWidget;
+    EditWidgetProperties* const m_editWidgetProperties;
     QWidget* const m_historyWidget;
-    QWidget* const m_editWidgetProperties;
     EntryAttachments* const m_entryAttachments;
     EntryAttachmentsModel* const m_attachmentsModel;
     EntryAttributes* const m_entryAttributes;

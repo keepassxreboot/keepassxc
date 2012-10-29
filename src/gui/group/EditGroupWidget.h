@@ -25,10 +25,10 @@
 #include "gui/EditWidget.h"
 
 class EditWidgetIcons;
+class EditWidgetProperties;
 
 namespace Ui {
     class EditGroupWidgetMain;
-    class EditWidgetProperties;
     class EditWidget;
 }
 
@@ -55,10 +55,9 @@ private:
     Group::TriState triStateFromIndex(int index);
 
     const QScopedPointer<Ui::EditGroupWidgetMain> m_mainUi;
-    const QScopedPointer<Ui::EditWidgetProperties> m_propertiesUi;
     QWidget* const m_editGroupWidgetMain;
     EditWidgetIcons* const m_editGroupWidgetIcons;
-    QWidget* const m_editWidgetProperties;
+    EditWidgetProperties* const m_editWidgetProperties;
     Group* m_group;
     Database* m_database;
 

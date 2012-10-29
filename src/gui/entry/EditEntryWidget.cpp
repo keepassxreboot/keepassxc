@@ -37,6 +37,7 @@
 #include "core/TimeDelta.h"
 #include "core/Tools.h"
 #include "gui/EditWidgetIcons.h"
+#include "gui/EditWidgetProperties.h"
 #include "gui/FileDialog.h"
 #include "gui/entry/AutoTypeAssociationsModel.h"
 #include "gui/entry/EntryAttachmentsModel.h"
@@ -51,14 +52,13 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_advancedUi(new Ui::EditEntryWidgetAdvanced())
     , m_autoTypeUi(new Ui::EditEntryWidgetAutoType())
     , m_historyUi(new Ui::EditEntryWidgetHistory())
-    , m_propertiesUi(new Ui::EditWidgetProperties())
     , m_mainWidget(new QWidget())
     , m_notesWidget(new QWidget())
     , m_advancedWidget(new QWidget())
     , m_iconsWidget(new EditWidgetIcons())
     , m_autoTypeWidget(new QWidget())
+    , m_editWidgetProperties(new EditWidgetProperties())
     , m_historyWidget(new QWidget())
-    , m_editWidgetProperties(new QWidget())
     , m_entryAttachments(new EntryAttachments(this))
     , m_attachmentsModel(new EntryAttachmentsModel(m_advancedWidget))
     , m_entryAttributes(new EntryAttributes(this))
@@ -84,7 +84,6 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     m_autoTypeUi->setupUi(m_autoTypeWidget);
     add(tr("Auto-Type"), m_autoTypeWidget);
 
-    m_propertiesUi->setupUi(m_editWidgetProperties);
     add(tr("Properties"), m_editWidgetProperties);
 
     // when adding a new row, update setRowHidden() call
@@ -339,6 +338,8 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     }
     updateAutoTypeEnabled();
 
+    m_editWidgetProperties->setFields(entry->timeInfo(), entry->uuid());
+
     if (!m_history && !restore) {
         m_historyModel->setEntries(entry->historyItems());
         m_historyUi->historyView->sortByColumn(0, Qt::DescendingOrder);
@@ -351,15 +352,6 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     }
 
     updateHistoryButtons(m_historyUi->historyView->currentIndex(), QModelIndex());
-
-    QString timeFormat("d MMM yyyy HH:mm:ss");
-    m_propertiesUi->modifiedEdit->setText(
-                entry->timeInfo().lastModificationTime().toLocalTime().toString(timeFormat));
-    m_propertiesUi->createdEdit->setText(
-                entry->timeInfo().creationTime().toLocalTime().toString(timeFormat));
-    m_propertiesUi->accessedEdit->setText(
-                entry->timeInfo().lastAccessTime().toLocalTime().toString(timeFormat));
-    m_propertiesUi->uuidEdit->setText(entry->uuid().toHex());
 
     m_mainUi->titleEdit->setFocus();
 }
