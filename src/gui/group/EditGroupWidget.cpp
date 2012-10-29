@@ -16,8 +16,8 @@
  */
 
 #include "EditGroupWidget.h"
-#include "ui_EditGroupWidgetAdvanced.h"
 #include "ui_EditGroupWidgetMain.h"
+#include "ui_EditGroupWidgetProperties.h"
 #include "ui_EditWidget.h"
 
 #include "core/Metadata.h"
@@ -26,18 +26,18 @@
 EditGroupWidget::EditGroupWidget(QWidget* parent)
     : EditWidget(parent)
     , m_mainUi(new Ui::EditGroupWidgetMain())
-    , m_advancedUi(new Ui::EditGroupWidgetAdvanced())
+    , m_propertiesUi(new Ui::EditGroupWidgetAdvanced())
     , m_editGroupWidgetMain(new QWidget())
     , m_editGroupWidgetIcons(new EditWidgetIcons())
-    , m_editGroupWidgetAdvanced(new QWidget())
+    , m_editGroupWidgetProperties(new QWidget())
     , m_group(Q_NULLPTR)
 {
     m_mainUi->setupUi(m_editGroupWidgetMain);
-    m_advancedUi->setupUi(m_editGroupWidgetAdvanced);
+    m_propertiesUi->setupUi(m_editGroupWidgetProperties);
 
     add(tr("Group"), m_editGroupWidgetMain);
     add(tr("Icon"), m_editGroupWidgetIcons);
-    add(tr("Advanced"), m_editGroupWidgetAdvanced);
+    add(tr("Properties"), m_editGroupWidgetProperties);
 
     addTriStateItems(m_mainUi->searchComboBox);
     addTriStateItems(m_mainUi->autotypeComboBox);
@@ -69,13 +69,13 @@ void EditGroupWidget::loadGroup(Group* group, bool create, Database* database)
     m_mainUi->expireCheck->setChecked(group->timeInfo().expires());
     m_mainUi->expireDatePicker->setDateTime(group->timeInfo().expiryTime().toLocalTime());
     QString timeFormat("d MMM yyyy HH:mm:ss");
-    m_advancedUi->modifiedEdit->setText(
+    m_propertiesUi->modifiedEdit->setText(
                 group->timeInfo().lastModificationTime().toLocalTime().toString(timeFormat));
-    m_advancedUi->createdEdit->setText(
+    m_propertiesUi->createdEdit->setText(
                 group->timeInfo().creationTime().toLocalTime().toString(timeFormat));
-    m_advancedUi->accessedEdit->setText(
+    m_propertiesUi->accessedEdit->setText(
                 group->timeInfo().lastAccessTime().toLocalTime().toString(timeFormat));
-    m_advancedUi->uuidEdit->setText(group->uuid().toHex());
+    m_propertiesUi->uuidEdit->setText(group->uuid().toHex());
     m_mainUi->searchComboBox->setCurrentIndex(indexFromTriState(group->searchingEnabled()));
     m_mainUi->autotypeComboBox->setCurrentIndex(indexFromTriState(group->autoTypeEnabled()));
 

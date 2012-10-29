@@ -55,10 +55,10 @@ private:
     Group::TriState triStateFromIndex(int index);
 
     const QScopedPointer<Ui::EditGroupWidgetMain> m_mainUi;
-    const QScopedPointer<Ui::EditGroupWidgetAdvanced> m_advancedUi;
+    const QScopedPointer<Ui::EditGroupWidgetAdvanced> m_propertiesUi;
     QWidget* const m_editGroupWidgetMain;
     EditWidgetIcons* const m_editGroupWidgetIcons;
-    QWidget* const m_editGroupWidgetAdvanced;
+    QWidget* const m_editGroupWidgetProperties;
     Group* m_group;
     Database* m_database;
 
