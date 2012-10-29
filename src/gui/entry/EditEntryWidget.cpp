@@ -73,7 +73,6 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     setupIcon();
     setupAutoType();
     setupProperties();
-    // when adding a new row, update setRowHidden() call
     setupHistory();
 
     connect(this, SIGNAL(accepted()), SLOT(saveEntry()));
@@ -280,7 +279,7 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const Q
     setForms(entry);
 
     setCurrentRow(0);
-    setRowHidden(6, m_history);
+    setRowHidden(m_historyWidget, m_history);
 }
 
 void EditEntryWidget::setForms(const Entry* entry, bool restore)
