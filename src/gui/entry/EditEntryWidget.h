@@ -96,6 +96,14 @@ private Q_SLOTS:
     void useExpiryPreset(QAction* action);
 
 private:
+    void setupMain();
+    void setupNotes();
+    void setupAdvanced();
+    void setupIcon();
+    void setupAutoType();
+    void setupProperties();
+    void setupHistory();
+
     bool passwordsEqual();
     void setForms(const Entry* entry, bool restore = false);
     QMenu* createPresetsMenu();

@@ -67,26 +67,50 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_autoTypeDefaultSequenceGroup(new QButtonGroup(this))
     , m_autoTypeWindowSequenceGroup(new QButtonGroup(this))
 {
+    setupMain();
+    setupNotes();
+    setupAdvanced();
+    setupIcon();
+    setupAutoType();
+    setupProperties();
+    // when adding a new row, update setRowHidden() call
+    setupHistory();
+
+    connect(this, SIGNAL(accepted()), SLOT(saveEntry()));
+    connect(this, SIGNAL(rejected()), SLOT(cancel()));
+}
+
+EditEntryWidget::~EditEntryWidget()
+{
+}
+
+const QColor EditEntryWidget::CorrectSoFarColor = QColor(255, 205, 15);
+const QColor EditEntryWidget::ErrorColor = QColor(255, 125, 125);
+
+void EditEntryWidget::setupMain()
+{
     m_mainUi->setupUi(m_mainWidget);
     add(tr("Entry"), m_mainWidget);
 
+    connect(m_mainUi->togglePasswordButton, SIGNAL(toggled(bool)), SLOT(togglePassword(bool)));
+    connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
+    connect(m_mainUi->passwordEdit, SIGNAL(textEdited(QString)), SLOT(setPasswordCheckColors()));
+    connect(m_mainUi->passwordRepeatEdit, SIGNAL(textEdited(QString)), SLOT(setPasswordCheckColors()));
+
+    m_mainUi->expirePresets->setMenu(createPresetsMenu());
+    connect(m_mainUi->expirePresets->menu(), SIGNAL(triggered(QAction*)), this, SLOT(useExpiryPreset(QAction*)));
+}
+
+void EditEntryWidget::setupNotes()
+{
     m_notesUi->setupUi(m_notesWidget);
     add(tr("Description"), m_notesWidget);
+}
 
+void EditEntryWidget::setupAdvanced()
+{
     m_advancedUi->setupUi(m_advancedWidget);
     add(tr("Advanced"), m_advancedWidget);
-
-    add(tr("Icon"), m_iconsWidget);
-
-    m_autoTypeUi->setupUi(m_autoTypeWidget);
-    add(tr("Auto-Type"), m_autoTypeWidget);
-
-    add(tr("Properties"), m_editWidgetProperties);
-
-    // when adding a new row, update setRowHidden() call
-
-    m_historyUi->setupUi(m_historyWidget);
-    add(tr("History"), m_historyWidget);
 
     m_attachmentsModel->setEntryAttachments(m_entryAttachments);
     m_advancedUi->attachmentsView->setModel(m_attachmentsModel);
@@ -102,11 +126,17 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     connect(m_advancedUi->attributesView->selectionModel(),
             SIGNAL(currentChanged(QModelIndex,QModelIndex)),
             SLOT(updateCurrentAttribute()));
+}
 
-    connect(m_mainUi->togglePasswordButton, SIGNAL(toggled(bool)), SLOT(togglePassword(bool)));
-    connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
-    connect(m_mainUi->passwordEdit, SIGNAL(textEdited(QString)), SLOT(setPasswordCheckColors()));
-    connect(m_mainUi->passwordRepeatEdit, SIGNAL(textEdited(QString)), SLOT(setPasswordCheckColors()));
+void EditEntryWidget::setupIcon()
+{
+    add(tr("Icon"), m_iconsWidget);
+}
+
+void EditEntryWidget::setupAutoType()
+{
+    m_autoTypeUi->setupUi(m_autoTypeWidget);
+    add(tr("Auto-Type"), m_autoTypeWidget);
 
     m_autoTypeDefaultSequenceGroup->addButton(m_autoTypeUi->inheritSequenceButton);
     m_autoTypeDefaultSequenceGroup->addButton(m_autoTypeUi->customSequenceButton);
@@ -134,6 +164,17 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
             SLOT(applyCurrentAssoc()));
     connect(m_autoTypeUi->windowSequenceEdit, SIGNAL(textChanged(QString)),
             SLOT(applyCurrentAssoc()));
+}
+
+void EditEntryWidget::setupProperties()
+{
+    add(tr("Properties"), m_editWidgetProperties);
+}
+
+void EditEntryWidget::setupHistory()
+{
+    m_historyUi->setupUi(m_historyWidget);
+    add(tr("History"), m_historyWidget);
 
     m_sortModel->setSourceModel(m_historyModel);
     m_sortModel->setDynamicSortFilter(true);
@@ -153,20 +194,7 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     connect(m_historyUi->restoreButton, SIGNAL(clicked()), SLOT(restoreHistoryEntry()));
     connect(m_historyUi->deleteButton, SIGNAL(clicked()), SLOT(deleteHistoryEntry()));
     connect(m_historyUi->deleteAllButton, SIGNAL(clicked()), SLOT(deleteAllHistoryEntries()));
-
-    m_mainUi->expirePresets->setMenu(createPresetsMenu());
-    connect(m_mainUi->expirePresets->menu(), SIGNAL(triggered(QAction*)), this, SLOT(useExpiryPreset(QAction*)));
-
-    connect(this, SIGNAL(accepted()), SLOT(saveEntry()));
-    connect(this, SIGNAL(rejected()), SLOT(cancel()));
 }
-
-EditEntryWidget::~EditEntryWidget()
-{
-}
-
-const QColor EditEntryWidget::CorrectSoFarColor = QColor(255, 205, 15);
-const QColor EditEntryWidget::ErrorColor = QColor(255, 125, 125);
 
 void EditEntryWidget::emitHistoryEntryActivated(const QModelIndex& index)
 {
