@@ -22,6 +22,7 @@
 #include <QtCore/QStringList>
 #include <QtCore/QTextStream>
 
+#include "core/Database.h"
 #include "crypto/Crypto.h"
 #include "format/KeePass2Reader.h"
 #include "keys/CompositeKey.h"
@@ -63,7 +64,8 @@ int main(int argc, char **argv)
 
     KeePass2Reader reader;
     reader.setSaveXml(true);
-    reader.readDatabase(&dbFile, key);
+    Database* db = reader.readDatabase(&dbFile, key);
+    delete db;
 
     QByteArray xmlData = reader.xmlData();
 
