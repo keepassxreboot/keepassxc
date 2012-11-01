@@ -131,6 +131,7 @@ MainWindow::MainWindow()
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)),
             SLOT(setMenuActionState()));
     connect(m_ui->stackedWidget, SIGNAL(currentChanged(int)), SLOT(setMenuActionState()));
+    connect(m_ui->stackedWidget, SIGNAL(currentChanged(int)), SLOT(updateWindowTitle()));
     connect(m_ui->settingsWidget, SIGNAL(editFinished(bool)), SLOT(switchToDatabases()));
 
     connect(m_ui->actionDatabaseNew, SIGNAL(triggered()), m_ui->tabWidget,
@@ -334,17 +335,26 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 
 void MainWindow::updateWindowTitle()
 {
-    int index = m_ui->tabWidget->currentIndex();
-    if (index == -1) {
-        setWindowTitle(BaseWindowTitle);
-    }
-    else {
-        QString windowTitle = m_ui->tabWidget->tabText(index);
-        if (m_ui->tabWidget->readOnly(index)) {
-            windowTitle.append(" [").append(tr("read-only")).append("]");
+    QString windowTitle;
+    int stackedWidgetIndex = m_ui->stackedWidget->currentIndex();
+    if (stackedWidgetIndex == 0) {
+        int tabWidgetIndex = m_ui->tabWidget->currentIndex();
+        if (tabWidgetIndex == -1) {
+            windowTitle = BaseWindowTitle;
+        } else {
+            windowTitle = m_ui->tabWidget->tabText(tabWidgetIndex);
+            if (m_ui->tabWidget->readOnly(tabWidgetIndex)) {
+                windowTitle.append(" [").append(tr("read-only")).append("]");
+            }
+            windowTitle.append(" - ").append(BaseWindowTitle);
         }
-        setWindowTitle(windowTitle.append(" - ").append(BaseWindowTitle));
+    } else if (stackedWidgetIndex == 1) {
+        windowTitle = QString("%1 - %2").arg(tr("Settings")).arg(BaseWindowTitle);
+    } else {
+        windowTitle = BaseWindowTitle;
     }
+
+    setWindowTitle(windowTitle);
 }
 
 void MainWindow::showAboutDialog()
