@@ -335,23 +335,23 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 
 void MainWindow::updateWindowTitle()
 {
-    QString windowTitle;
+    QString customWindowTitlePart;
     int stackedWidgetIndex = m_ui->stackedWidget->currentIndex();
-    if (stackedWidgetIndex == 0) {
-        int tabWidgetIndex = m_ui->tabWidget->currentIndex();
-        if (tabWidgetIndex == -1) {
-            windowTitle = BaseWindowTitle;
-        } else {
-            windowTitle = m_ui->tabWidget->tabText(tabWidgetIndex);
-            if (m_ui->tabWidget->readOnly(tabWidgetIndex)) {
-                windowTitle.append(" [").append(tr("read-only")).append("]");
-            }
-            windowTitle.append(" - ").append(BaseWindowTitle);
+    int tabWidgetIndex = m_ui->tabWidget->currentIndex();
+    if (stackedWidgetIndex == 0 && tabWidgetIndex != -1) {
+        customWindowTitlePart = m_ui->tabWidget->tabText(tabWidgetIndex);
+        if (m_ui->tabWidget->readOnly(tabWidgetIndex)) {
+            customWindowTitlePart.append(" [%1]").arg(tr("read-only"));
         }
     } else if (stackedWidgetIndex == 1) {
-        windowTitle = QString("%1 - %2").arg(tr("Settings")).arg(BaseWindowTitle);
-    } else {
+        customWindowTitlePart = tr("Settings");
+    }
+
+    QString windowTitle;
+    if (customWindowTitlePart.isEmpty()) {
         windowTitle = BaseWindowTitle;
+    } else {
+        windowTitle = QString("%1 - %2").arg(customWindowTitlePart).arg(BaseWindowTitle);
     }
 
     setWindowTitle(windowTitle);
