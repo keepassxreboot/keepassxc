@@ -35,6 +35,7 @@
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "format/KeePass2Reader.h"
 #include "gui/DatabaseTabWidget.h"
@@ -54,7 +55,7 @@ void TestGui::initTestCase()
     m_mainWindow = new MainWindow();
     m_tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
     m_mainWindow->show();
-    QTest::qWaitForWindowShown(m_mainWindow);
+    Tools::wait(50);
 }
 
 void TestGui::testOpenDatabase()
