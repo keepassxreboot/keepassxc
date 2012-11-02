@@ -114,7 +114,7 @@ void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow, const QS
 
     QString sequence;
     if (customSequence.isEmpty()) {
-        sequence = entry->resolvePlaceholders(autoTypeSequence(entry));
+        sequence = autoTypeSequence(entry);
     }
     else {
         sequence = customSequence;
