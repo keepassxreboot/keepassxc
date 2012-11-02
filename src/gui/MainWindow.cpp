@@ -341,7 +341,7 @@ void MainWindow::updateWindowTitle()
     if (stackedWidgetIndex == 0 && tabWidgetIndex != -1) {
         customWindowTitlePart = m_ui->tabWidget->tabText(tabWidgetIndex);
         if (m_ui->tabWidget->readOnly(tabWidgetIndex)) {
-            customWindowTitlePart.append(" [%1]").arg(tr("read-only"));
+            customWindowTitlePart.append(QString(" [%1]").arg(tr("read-only")));
         }
     } else if (stackedWidgetIndex == 1) {
         customWindowTitlePart = tr("Settings");
@@ -351,7 +351,7 @@ void MainWindow::updateWindowTitle()
     if (customWindowTitlePart.isEmpty()) {
         windowTitle = BaseWindowTitle;
     } else {
-        windowTitle = QString("%1 - %2").arg(customWindowTitlePart).arg(BaseWindowTitle);
+        windowTitle = QString("%1 - %2").arg(customWindowTitlePart, BaseWindowTitle);
     }
 
     setWindowTitle(windowTitle);
