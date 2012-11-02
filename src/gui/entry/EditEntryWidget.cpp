@@ -258,21 +258,14 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const Q
     m_history = history;
 
     if (history) {
-        setHeadline(QString("%1 > %2")
-                    .arg(parentName)
-                    .arg(tr("Entry history")));
+        setHeadline(QString("%1 > %2").arg(parentName, tr("Entry history")));
     }
     else {
         if (create) {
-            setHeadline(QString("%1 > %2")
-                        .arg(parentName)
-                        .arg(tr("Add entry")));
+            setHeadline(QString("%1 > %2").arg(parentName, tr("Add entry")));
         }
         else {
-            setHeadline(QString("%1 > %2 > %3")
-                        .arg(parentName)
-                        .arg(entry->title())
-                        .arg(tr("Edit entry")));
+            setHeadline(QString("%1 > %2 > %3").arg(parentName, entry->title(), tr("Edit entry")));
         }
     }
 
