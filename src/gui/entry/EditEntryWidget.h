@@ -136,7 +136,6 @@ private:
     AutoTypeAssociationsModel* const m_autoTypeAssocModel;
     QButtonGroup* const m_autoTypeDefaultSequenceGroup;
     QButtonGroup* const m_autoTypeWindowSequenceGroup;
-    QMenu* m_expirePresetsMenu;
 
     Q_DISABLE_COPY(EditEntryWidget)
 };

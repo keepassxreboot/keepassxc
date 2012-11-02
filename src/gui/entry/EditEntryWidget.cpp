@@ -793,7 +793,7 @@ void EditEntryWidget::deleteAllHistoryEntries()
 
 QMenu* EditEntryWidget::createPresetsMenu()
 {
-    QMenu* expirePresetsMenu = new QMenu();
+    QMenu* expirePresetsMenu = new QMenu(this);
     expirePresetsMenu->addAction(tr("Tomorrow"))->setData(QVariant::fromValue(TimeDelta::fromDays(1)));
     expirePresetsMenu->addSeparator();
     expirePresetsMenu->addAction(tr("1 week"))->setData(QVariant::fromValue(TimeDelta::fromDays(7)));
