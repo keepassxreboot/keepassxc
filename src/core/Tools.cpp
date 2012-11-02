@@ -178,7 +178,11 @@ void sleep(int ms)
 
 void wait(int ms)
 {
-    Q_ASSERT(ms > 0);
+    Q_ASSERT(ms >= 0);
+
+    if (ms == 0) {
+        return;
+    }
 
 #if QT_VERSION >= QT_VERSION_CHECK(4, 7, 0)
     QElapsedTimer timer;

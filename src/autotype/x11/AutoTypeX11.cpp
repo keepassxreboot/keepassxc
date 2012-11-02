@@ -798,4 +798,9 @@ void AutoTypeExecturorX11::execKey(AutoTypeKey* action)
     m_platform->SendKeyPressedEvent(m_platform->keyToKeySym(action->key));
 }
 
+int AutoTypePlatformX11::initialTimeout()
+{
+    return 500;
+}
+
 Q_EXPORT_PLUGIN2(keepassx-autotype-x11, AutoTypePlatformX11)

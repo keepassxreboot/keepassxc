@@ -69,7 +69,6 @@ private:
     QString autoTypeSequence(const Entry* entry, const QString& windowTitle = QString());
     bool windowMatches(const QString& windowTitle, const QString& windowPattern);
 
-    bool m_test;
     bool m_inAutoType;
     Qt::Key m_currentGlobalKey;
     Qt::KeyboardModifiers m_currentGlobalModifiers;

@@ -32,6 +32,7 @@ public:
     virtual bool registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers) = 0;
     virtual void unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers) = 0;
     virtual int platformEventFilter(void* event) = 0;
+    virtual int initialTimeout() = 0;
 
     virtual AutoTypeExecutor* createExecutor() = 0;
 

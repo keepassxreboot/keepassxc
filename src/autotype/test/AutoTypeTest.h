@@ -41,6 +41,7 @@ public:
     bool registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers);
     void unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers);
     int platformEventFilter(void* event);
+    int initialTimeout();
     AutoTypeExecutor* createExecutor();
 
     void setActiveWindowTitle(const QString& title);

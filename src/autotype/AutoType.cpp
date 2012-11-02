@@ -34,7 +34,6 @@ AutoType* AutoType::m_instance = Q_NULLPTR;
 
 AutoType::AutoType(QObject* parent, bool test)
     : QObject(parent)
-    , m_test(test)
     , m_inAutoType(false)
     , m_pluginLoader(new QPluginLoader(this))
     , m_plugin(Q_NULLPTR)
@@ -133,9 +132,7 @@ void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow, const QS
         hideWindow->showMinimized();
     }
 
-    if (!m_test) {
-        Tools::wait(500);
-    }
+    Tools::wait(m_plugin->initialTimeout());
 
     if (!window) {
         window = m_plugin->activeWindow();
