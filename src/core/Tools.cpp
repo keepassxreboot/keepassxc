@@ -189,6 +189,7 @@ void wait(int ms)
 
     if (ms <= 50) {
         QCoreApplication::processEvents(QEventLoop::AllEvents, ms);
+        QCoreApplication::sendPostedEvents(0, QEvent::DeferredDelete);
         sleep(qMax(ms - static_cast<int>(timer.elapsed()), 0));
     }
     else {
@@ -197,6 +198,7 @@ void wait(int ms)
             timeLeft = ms - timer.elapsed();
             if (timeLeft > 0) {
                 QCoreApplication::processEvents(QEventLoop::AllEvents, timeLeft);
+                QCoreApplication::sendPostedEvents(0, QEvent::DeferredDelete);
                 sleep(10);
             }
         } while (timer.elapsed() < ms);
