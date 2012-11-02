@@ -52,11 +52,18 @@ void TestAutoType::init()
 {
     m_test->clearActions();
 
+    m_db = new Database();
     m_group = new Group();
+    m_db->setRootGroup(m_group);
     m_entry = new Entry();
     m_entry->setGroup(m_group);
     m_entry->setUsername("myuser");
     m_entry->setPassword("mypass");
+}
+
+void TestAutoType::cleanup()
+{
+    delete m_db;
 }
 
 void TestAutoType::testInternal()
@@ -85,6 +92,34 @@ void TestAutoType::testAutoTypeWithSequence()
     QCOMPARE(m_test->actionCount(), 15);
     QCOMPARE(m_test->actionChars(),
              QString("%1abc%2")
+             .arg(m_entry->username())
+             .arg(m_entry->password()));
+}
+
+void TestAutoType::testGlobalAutoTypeWithNoMatch()
+{
+    QList<Database*> dbList;
+    dbList.append(m_db);
+
+    m_autoType->performGlobalAutoType(dbList);
+
+    QCOMPARE(m_test->actionChars(), QString());
+}
+
+void TestAutoType::testGlobalAutoTypeWithOneMatch()
+{
+    QList<Database*> dbList;
+    dbList.append(m_db);
+    AutoTypeAssociations::Association association;
+    association.window = "custom window";
+    association.sequence = "{username}association{password}";
+    m_entry->autoTypeAssociations()->add(association);
+
+    m_test->setActiveWindowTitle("custom window");
+    m_autoType->performGlobalAutoType(dbList);
+
+    QCOMPARE(m_test->actionChars(),
+             QString("%1association%2")
              .arg(m_entry->username())
              .arg(m_entry->password()));
 }

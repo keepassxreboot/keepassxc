@@ -23,6 +23,7 @@
 class AutoType;
 class AutoTypePlatformInterface;
 class AutoTypeTestInterface;
+class Database;
 class Entry;
 class Group;
 
@@ -33,14 +34,19 @@ class TestAutoType : public QObject
 private Q_SLOTS:
     void initTestCase();
     void init();
+    void cleanup();
+
     void testInternal();
     void testAutoTypeWithoutSequence();
     void testAutoTypeWithSequence();
+    void testGlobalAutoTypeWithNoMatch();
+    void testGlobalAutoTypeWithOneMatch();
 
 private:
     AutoTypePlatformInterface* m_platform;
     AutoTypeTestInterface* m_test;
     AutoType* m_autoType;
+    Database* m_db;
     Group* m_group;
     Entry* m_entry;
 };
