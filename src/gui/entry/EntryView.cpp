@@ -117,6 +117,7 @@ void EntryView::switchToEntryListMode()
 void EntryView::switchToGroupMode()
 {
     m_sortModel->hideColumn(0, true);
+    sortByColumn(-1, Qt::AscendingOrder);
     sortByColumn(0, Qt::AscendingOrder);
     m_inEntryListMode = false;
 }
