@@ -440,6 +440,12 @@ Entry* Entry::clone() const
     entry->m_autoTypeAssociations->copyDataFrom(this->m_autoTypeAssociations);
     entry->setUpdateTimeinfo(true);
 
+    QDateTime now = Tools::currentDateTimeUtc();
+    entry->m_data.timeInfo.setCreationTime(now);
+    entry->m_data.timeInfo.setLastModificationTime(now);
+    entry->m_data.timeInfo.setLastAccessTime(now);
+    entry->m_data.timeInfo.setLocationChanged(now);
+
     return entry;
 }
 
