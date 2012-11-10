@@ -205,12 +205,15 @@ void MainWindow::updateLastDatabasesMenu()
 
 void MainWindow::updateCopyAttributesMenu()
 {
-    m_ui->menuEntryCopyAttribute->clear();
-
     DatabaseWidget* dbWidget = m_ui->tabWidget->currentDatabaseWidget();
-    Q_ASSERT(dbWidget);
-    Q_ASSERT(dbWidget->entryView()->isSingleEntrySelected());
+    if (!dbWidget) {
+        return;
+    }
+    if (!dbWidget->entryView()->isSingleEntrySelected()) {
+        return;
+    }
 
+    m_ui->menuEntryCopyAttribute->clear();
     Entry* entry = dbWidget->entryView()->currentEntry();
 
     Q_FOREACH (const QString& key, EntryAttributes::DefaultAttributes) {
