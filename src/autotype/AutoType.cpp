@@ -35,6 +35,8 @@ AutoType* AutoType::m_instance = Q_NULLPTR;
 AutoType::AutoType(QObject* parent, bool test)
     : QObject(parent)
     , m_inAutoType(false)
+    , m_currentGlobalKey(static_cast<Qt::Key>(0))
+    , m_currentGlobalModifiers(0)
     , m_pluginLoader(new QPluginLoader(this))
     , m_plugin(Q_NULLPTR)
     , m_executor(Q_NULLPTR)
