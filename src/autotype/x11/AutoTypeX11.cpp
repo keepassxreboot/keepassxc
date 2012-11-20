@@ -154,10 +154,14 @@ int AutoTypePlatformX11::platformEventFilter(void* event)
 {
     XEvent* xevent = static_cast<XEvent*>(event);
 
-    if (xevent->type == KeyPress && m_currentGlobalKey && xevent->xkey.keycode == m_currentGlobalKeycode
+    if ((xevent->type == KeyPress || xevent->type == KeyRelease)
+            && m_currentGlobalKey
+            && xevent->xkey.keycode == m_currentGlobalKeycode
             && (xevent->xkey.state & m_modifierMask) == m_currentGlobalNativeModifiers
             && !QApplication::focusWidget()) {
-        Q_EMIT globalShortcutTriggered();
+        if (xevent->type == KeyPress) {
+            Q_EMIT globalShortcutTriggered();
+        }
         return 1;
     }
     if (xevent->type == MappingNotify) {
