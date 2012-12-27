@@ -430,14 +430,9 @@ void DatabaseWidget::switchToEntryEdit(Entry* entry)
 
 void DatabaseWidget::switchToEntryEdit(Entry* entry, bool create)
 {
-    Group* group = m_groupView->currentGroup();
-    if (!group) {
-        Q_ASSERT(m_entryView->inEntryListMode());
-        group = m_lastGroup;
-    }
-    Q_ASSERT(group);
+    Q_ASSERT(entry->group());
 
-    m_editEntryWidget->loadEntry(entry, create, false, group->name(), m_db);
+    m_editEntryWidget->loadEntry(entry, create, false, entry->group()->name(), m_db);
     setCurrentWidget(m_editEntryWidget);
 }
 
