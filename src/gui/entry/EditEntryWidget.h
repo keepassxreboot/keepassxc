@@ -44,7 +44,6 @@ namespace Ui {
     class EditEntryWidgetAutoType;
     class EditEntryWidgetMain;
     class EditEntryWidgetHistory;
-    class EditEntryWidgetNotes;
     class EditWidget;
 }
 
@@ -97,7 +96,6 @@ private Q_SLOTS:
 
 private:
     void setupMain();
-    void setupNotes();
     void setupAdvanced();
     void setupIcon();
     void setupAutoType();
@@ -114,12 +112,10 @@ private:
     bool m_create;
     bool m_history;
     const QScopedPointer<Ui::EditEntryWidgetMain> m_mainUi;
-    const QScopedPointer<Ui::EditEntryWidgetNotes> m_notesUi;
     const QScopedPointer<Ui::EditEntryWidgetAdvanced> m_advancedUi;
     const QScopedPointer<Ui::EditEntryWidgetAutoType> m_autoTypeUi;
     const QScopedPointer<Ui::EditEntryWidgetHistory> m_historyUi;
     QWidget* const m_mainWidget;
-    QWidget* const m_notesWidget;
     QWidget* const m_advancedWidget;
     EditWidgetIcons* const m_iconsWidget;
     QWidget* const m_autoTypeWidget;

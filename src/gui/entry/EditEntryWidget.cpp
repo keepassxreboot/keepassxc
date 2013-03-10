@@ -45,12 +45,10 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     : EditWidget(parent)
     , m_entry(Q_NULLPTR)
     , m_mainUi(new Ui::EditEntryWidgetMain())
-    , m_notesUi(new Ui::EditEntryWidgetNotes())
     , m_advancedUi(new Ui::EditEntryWidgetAdvanced())
     , m_autoTypeUi(new Ui::EditEntryWidgetAutoType())
     , m_historyUi(new Ui::EditEntryWidgetHistory())
     , m_mainWidget(new QWidget())
-    , m_notesWidget(new QWidget())
     , m_advancedWidget(new QWidget())
     , m_iconsWidget(new EditWidgetIcons())
     , m_autoTypeWidget(new QWidget())
@@ -68,7 +66,6 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_autoTypeWindowSequenceGroup(new QButtonGroup(this))
 {
     setupMain();
-    setupNotes();
     setupAdvanced();
     setupIcon();
     setupAutoType();
@@ -98,12 +95,6 @@ void EditEntryWidget::setupMain()
 
     m_mainUi->expirePresets->setMenu(createPresetsMenu());
     connect(m_mainUi->expirePresets->menu(), SIGNAL(triggered(QAction*)), this, SLOT(useExpiryPreset(QAction*)));
-}
-
-void EditEntryWidget::setupNotes()
-{
-    m_notesUi->setupUi(m_notesWidget);
-    add(tr("Description"), m_notesWidget);
 }
 
 void EditEntryWidget::setupAdvanced()
@@ -284,7 +275,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_mainUi->passwordRepeatEdit->setReadOnly(m_history);
     m_mainUi->expireCheck->setEnabled(!m_history);
     m_mainUi->expireDatePicker->setReadOnly(m_history);
-    m_notesUi->notesEdit->setReadOnly(m_history);
+    m_mainUi->notesEdit->setReadOnly(m_history);
     m_advancedUi->addAttachmentButton->setEnabled(!m_history);
     m_advancedUi->removeAttachmentButton->setEnabled(!m_history);
     m_advancedUi->addAttributeButton->setEnabled(!m_history);
@@ -316,7 +307,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_mainUi->expirePresets->setEnabled(!m_history);
     m_mainUi->togglePasswordButton->setChecked(true);
 
-    m_notesUi->notesEdit->setPlainText(entry->notes());
+    m_mainUi->notesEdit->setPlainText(entry->notes());
 
     m_entryAttachments->copyDataFrom(entry->attachments());
     m_entryAttributes->copyCustomKeysFrom(entry->attributes());
@@ -412,7 +403,7 @@ void EditEntryWidget::saveEntry()
     m_entry->setExpires(m_mainUi->expireCheck->isChecked());
     m_entry->setExpiryTime(m_mainUi->expireDatePicker->dateTime().toUTC());
 
-    m_entry->setNotes(m_notesUi->notesEdit->toPlainText());
+    m_entry->setNotes(m_mainUi->notesEdit->toPlainText());
 
     m_entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
     m_entry->attachments()->copyDataFrom(m_entryAttachments);
