@@ -75,28 +75,45 @@
      </item>
     </layout>
    </item>
-   <item row="4" column="0">
+   <item row="5" column="0">
     <widget class="QLabel" name="passwordRepeatLabel">
      <property name="text">
       <string>Repeat:</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="1">
-    <widget class="QLineEdit" name="passwordRepeatEdit">
-     <property name="echoMode">
-      <enum>QLineEdit::Password</enum>
-     </property>
-    </widget>
+   <item row="5" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QLineEdit" name="passwordRepeatEdit">
+       <property name="echoMode">
+        <enum>QLineEdit::Password</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="tooglePasswordGeneratorButton">
+       <property name="text">
+        <string>Gen.</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
-   <item row="5" column="0">
+   <item row="6" column="1">
+    <widget class="PasswordGeneratorWidget" name="passwordGenerator" native="true"/>
+   </item>
+   <item row="7" column="0">
     <widget class="QCheckBox" name="expireCheck">
      <property name="text">
       <string>Expires</string>
      </property>
     </widget>
    </item>
-   <item row="5" column="1">
+   <item row="7" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <widget class="QDateTimeEdit" name="expireDatePicker">
@@ -117,14 +134,14 @@
      </item>
     </layout>
    </item>
-   <item row="6" column="0">
+   <item row="8" column="0">
     <widget class="QLabel" name="notesLabel">
      <property name="text">
       <string>Notes:</string>
      </property>
     </widget>
    </item>
-   <item row="6" column="1">
+   <item row="8" column="1">
     <widget class="QPlainTextEdit" name="notesEdit">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -136,6 +153,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PasswordGeneratorWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/PasswordGeneratorWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>titleEdit</tabstop>
   <tabstop>usernameEdit</tabstop>
@@ -143,9 +168,11 @@
   <tabstop>passwordEdit</tabstop>
   <tabstop>passwordRepeatEdit</tabstop>
   <tabstop>togglePasswordButton</tabstop>
+  <tabstop>tooglePasswordGeneratorButton</tabstop>
   <tabstop>expireCheck</tabstop>
   <tabstop>expireDatePicker</tabstop>
   <tabstop>expirePresets</tabstop>
+  <tabstop>notesEdit</tabstop>
  </tabstops>
  <resources/>
  <connections/>

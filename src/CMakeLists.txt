@@ -81,6 +81,7 @@ set(keepassx_SOURCES
     gui/KeePass1OpenWidget.cpp
     gui/LineEdit.cpp
     gui/MainWindow.cpp
+    gui/PasswordGeneratorWidget.cpp
     gui/SettingsWidget.cpp
     gui/SortFilterHideProxyModel.cpp
     gui/UnlockDatabaseWidget.cpp
@@ -142,6 +143,7 @@ set(keepassx_MOC
     gui/KeePass1OpenWidget.h
     gui/LineEdit.h
     gui/MainWindow.h
+    gui/PasswordGeneratorWidget.h
     gui/SettingsWidget.h
     gui/SortFilterHideProxyModel.h
     gui/UnlockDatabaseWidget.h
@@ -173,6 +175,7 @@ set(keepassx_FORMS
     gui/EditWidgetIcons.ui
     gui/EditWidgetProperties.ui
     gui/MainWindow.ui
+    gui/PasswordGeneratorWidget.ui
     gui/SearchWidget.ui
     gui/SettingsWidgetGeneral.ui
     gui/SettingsWidgetSecurity.ui

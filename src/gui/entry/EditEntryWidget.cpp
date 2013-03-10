@@ -89,12 +89,15 @@ void EditEntryWidget::setupMain()
     add(tr("Entry"), m_mainWidget);
 
     connect(m_mainUi->togglePasswordButton, SIGNAL(toggled(bool)), SLOT(togglePassword(bool)));
+    connect(m_mainUi->tooglePasswordGeneratorButton, SIGNAL(toggled(bool)), SLOT(togglePasswordGeneratorButton(bool)));
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
     connect(m_mainUi->passwordEdit, SIGNAL(textEdited(QString)), SLOT(setPasswordCheckColors()));
     connect(m_mainUi->passwordRepeatEdit, SIGNAL(textEdited(QString)), SLOT(setPasswordCheckColors()));
 
     m_mainUi->expirePresets->setMenu(createPresetsMenu());
     connect(m_mainUi->expirePresets->menu(), SIGNAL(triggered(QAction*)), this, SLOT(useExpiryPreset(QAction*)));
+
+    m_mainUi->passwordGenerator->hide();
 }
 
 void EditEntryWidget::setupAdvanced()
@@ -276,6 +279,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_mainUi->expireCheck->setEnabled(!m_history);
     m_mainUi->expireDatePicker->setReadOnly(m_history);
     m_mainUi->notesEdit->setReadOnly(m_history);
+    m_mainUi->tooglePasswordGeneratorButton->setChecked(false);
     m_advancedUi->addAttachmentButton->setEnabled(!m_history);
     m_advancedUi->removeAttachmentButton->setEnabled(!m_history);
     m_advancedUi->addAttributeButton->setEnabled(!m_history);
@@ -476,6 +480,11 @@ void EditEntryWidget::togglePassword(bool checked)
 {
     m_mainUi->passwordEdit->setEchoMode(checked ? QLineEdit::Password : QLineEdit::Normal);
     m_mainUi->passwordRepeatEdit->setEchoMode(checked ? QLineEdit::Password : QLineEdit::Normal);
+}
+
+void EditEntryWidget::togglePasswordGeneratorButton(bool checked)
+{
+    m_mainUi->passwordGenerator->setVisible(checked);
 }
 
 bool EditEntryWidget::passwordsEqual()

@@ -63,6 +63,7 @@ public:
 
     void createPresetsMenu(QMenu* expirePresetsMenu);
     QString entryTitle() const;
+
 Q_SIGNALS:
     void editFinished(bool accepted);
     void historyEntryActivated(Entry* entry);
@@ -71,6 +72,7 @@ private Q_SLOTS:
     void saveEntry();
     void cancel();
     void togglePassword(bool checked);
+    void togglePasswordGeneratorButton(bool checked);
     void setPasswordCheckColors();
     void insertAttribute();
     void editCurrentAttribute();
