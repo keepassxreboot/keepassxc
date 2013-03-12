@@ -20,7 +20,6 @@
 #include "ui_EditEntryWidgetAutoType.h"
 #include "ui_EditEntryWidgetHistory.h"
 #include "ui_EditEntryWidgetMain.h"
-#include "ui_EditEntryWidgetNotes.h"
 
 #include <QtGui/QDesktopServices>
 #include <QtGui/QStackedLayout>
