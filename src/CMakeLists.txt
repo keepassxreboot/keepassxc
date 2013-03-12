@@ -37,6 +37,7 @@ set(keepassx_SOURCES
     core/Group.cpp
     core/ListDeleter.h
     core/Metadata.cpp
+    core/PasswordGenerator.cpp
     core/qsavefile.cpp
     core/SignalMultiplexer.cpp
     core/TimeDelta.cpp
