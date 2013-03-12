@@ -74,6 +74,7 @@ private Q_SLOTS:
     void togglePassword(bool checked);
     void togglePasswordGeneratorButton(bool checked);
     void setPasswordCheckColors();
+    void setGeneratedPassword(const QString& password);
     void insertAttribute();
     void editCurrentAttribute();
     void removeCurrentAttribute();

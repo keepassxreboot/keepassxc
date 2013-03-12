@@ -21,6 +21,7 @@
 #include <QtGui/QWidget>
 
 #include "core/Global.h"
+#include "core/PasswordGenerator.h"
 
 namespace Ui {
     class PasswordGeneratorWidget;
@@ -33,8 +34,21 @@ class PasswordGeneratorWidget : public QWidget
 public:
     explicit PasswordGeneratorWidget(QWidget* parent = Q_NULLPTR);
     ~PasswordGeneratorWidget();
+    void reset();
+
+Q_SIGNALS:
+    void newPassword(const QString& password);
+
+private Q_SLOTS:
+    void updateApplyEnabled(const QString& password);
+    void togglePassword(bool checked);
+    void generatePassword();
+    void emitNewPassword();
 
 private:
+    PasswordGenerator::CharClasses charClasses();
+    PasswordGenerator::GeneratorFlags generatorFlags();
+
     const QScopedPointer<Ui::PasswordGeneratorWidget> m_ui;
 
 };
