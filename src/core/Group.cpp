@@ -40,19 +40,19 @@ Group::~Group()
     this->blockSignals(true);
     // Destroy entries and children manually so DeletedObjects can be added
     // to database.
+    QList<Entry*> entries = m_entries;
+    Q_FOREACH (Entry* entry, entries) {
+        entry->blockSignals(true);
+        delete entry;
+    }
+
+    QList<Group*> children = m_children;
+    Q_FOREACH (Group* group, children) {
+        group->blockSignals(true);
+        delete group;
+    }
+
     if (m_db && m_parent) {
-        QList<Entry*> entries = m_entries;
-        Q_FOREACH (Entry* entry, entries) {
-            entry->blockSignals(true);
-            delete entry;
-        }
-
-        QList<Group*> children = m_children;
-        Q_FOREACH (Group* group, children) {
-            group->blockSignals(true);
-            delete group;
-        }
-
         DeletedObject delGroup;
         delGroup.deletionTime = Tools::currentDateTimeUtc();
         delGroup.uuid = m_uuid;
