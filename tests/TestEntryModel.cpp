@@ -311,4 +311,35 @@ void TestEntryModel::testProxyModel()
     delete db;
 }
 
+void TestEntryModel::testDatabaseDelete()
+{
+    EntryModel* model = new EntryModel(this);
+    ModelTest* modelTest = new ModelTest(model, this);
+
+    Database* db1 = new Database();
+    Group* group1 = new Group();
+    group1->setParent(db1->rootGroup());
+
+    Entry* entry1 = new Entry();
+    entry1->setGroup(group1);
+
+    Database* db2 = new Database();
+    Entry* entry2 = new Entry();
+    entry2->setGroup(db2->rootGroup());
+
+    model->setEntryList(QList<Entry*>() << entry1 << entry2);
+
+    QCOMPARE(model->rowCount(), 2);
+
+    delete db1;
+    QCOMPARE(model->rowCount(), 1);
+
+    delete entry2;
+    QCOMPARE(model->rowCount(), 0);
+
+    delete db2;
+    delete modelTest;
+    delete model;
+}
+
 QTEST_GUILESS_MAIN(TestEntryModel)

@@ -33,6 +33,7 @@ private Q_SLOTS:
     void testCustomIconModel();
     void testAutoTypeAssociationsModel();
     void testProxyModel();
+    void testDatabaseDelete();
 };
 
 #endif // KEEPASSX_TESTENTRYMODEL_H
