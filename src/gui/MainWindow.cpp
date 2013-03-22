@@ -100,6 +100,7 @@ MainWindow::MainWindow()
     m_ui->actionEntryClone->setIcon(filePath()->icon("actions", "entry-clone", false));
     m_ui->actionEntryEdit->setIcon(filePath()->icon("actions", "entry-edit", false));
     m_ui->actionEntryDelete->setIcon(filePath()->icon("actions", "entry-delete", false));
+    m_ui->actionEntryAutoType->setIcon(filePath()->icon("actions", "auto-type", false));
 
     m_ui->actionGroupNew->setIcon(filePath()->icon("actions", "group-new", false));
     m_ui->actionGroupEdit->setIcon(filePath()->icon("actions", "group-edit", false));

@@ -38,7 +38,8 @@ Copyright: 2006, Otto Salminen
            2011, Felix Geyer <debfx@fobos.de>
 License: GPL-2
 
-Files: share/icons/application/*/actions/database-change-key.png,
+Files: share/icons/application/*/actions/auto-type.png,
+       share/icons/application/*/actions/database-change-key.png,
        share/icons/application/*/actions/entry-clone.png,
        share/icons/application/*/actions/entry-edit.png,
        share/icons/application/*/actions/entry-new.png,
