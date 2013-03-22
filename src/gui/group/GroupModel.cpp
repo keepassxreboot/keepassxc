@@ -319,7 +319,9 @@ void GroupModel::groupAboutToRemove(Group* group)
     Q_ASSERT(group->parentGroup());
 
     QModelIndex parentIndex = parent(group);
+    Q_ASSERT(parentIndex.isValid());
     int pos = group->parentGroup()->children().indexOf(group);
+    Q_ASSERT(pos != -1);
 
     beginRemoveRows(parentIndex, pos, pos);
 }
