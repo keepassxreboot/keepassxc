@@ -36,19 +36,15 @@ Group::Group()
 
 Group::~Group()
 {
-    cleanupParent();
-    this->blockSignals(true);
     // Destroy entries and children manually so DeletedObjects can be added
     // to database.
     QList<Entry*> entries = m_entries;
     Q_FOREACH (Entry* entry, entries) {
-        entry->blockSignals(true);
         delete entry;
     }
 
     QList<Group*> children = m_children;
     Q_FOREACH (Group* group, children) {
-        group->blockSignals(true);
         delete group;
     }
 
@@ -58,6 +54,8 @@ Group::~Group()
         delGroup.uuid = m_uuid;
         m_db->addDeletedObject(delGroup);
     }
+
+    cleanupParent();
 }
 
 Group* Group::createRecycleBin()

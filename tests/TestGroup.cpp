@@ -262,8 +262,8 @@ void TestGroup::testDeleteSignals()
 
     delete groupChild;
     QVERIFY(groupRoot->children().isEmpty());
-    QCOMPARE(spyAboutToRemove.count(), 1);
-    QCOMPARE(spyRemoved.count(), 1);
+    QCOMPARE(spyAboutToRemove.count(), 2);
+    QCOMPARE(spyRemoved.count(), 2);
     delete db;
 
 
@@ -289,8 +289,8 @@ void TestGroup::testDeleteSignals()
     QSignalSpy spyEntryRemoved2(group2, SIGNAL(entryRemoved(Entry*)));
 
     delete group2;
-    QCOMPARE(spyEntryAboutToRemove2.count(), 0);
-    QCOMPARE(spyEntryRemoved2.count(), 0);
+    QCOMPARE(spyEntryAboutToRemove2.count(), 1);
+    QCOMPARE(spyEntryRemoved2.count(), 1);
     delete db2;
 }
 

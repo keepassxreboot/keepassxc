@@ -135,8 +135,8 @@ void TestGroupModel::test()
     delete group12;
     QCOMPARE(spyAboutToAdd.count(), 1);
     QCOMPARE(spyAdded.count(), 1);
-    QCOMPARE(spyAboutToRemove.count(), 1);
-    QCOMPARE(spyRemoved.count(), 1);
+    QCOMPARE(spyAboutToRemove.count(), 2);
+    QCOMPARE(spyRemoved.count(), 2);
     QCOMPARE(spyAboutToMove.count(), 3);
     QCOMPARE(spyMoved.count(), 3);
     QVERIFY(!index12.isValid());
