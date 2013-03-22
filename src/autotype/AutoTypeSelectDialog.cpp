@@ -51,6 +51,7 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
 
     connect(m_view, SIGNAL(activated(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
     connect(m_view, SIGNAL(clicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
+    connect(m_view->model(), SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(entryRemoved()));
     layout->addWidget(m_view);
 
     QDialogButtonBox* buttonBox = new QDialogButtonBox(QDialogButtonBox::Cancel, Qt::Horizontal, this);
@@ -75,4 +76,11 @@ void AutoTypeSelectDialog::emitEntryActivated(const QModelIndex& index)
     Entry* entry = m_view->entryFromIndex(index);
     accept();
     Q_EMIT entryActivated(entry, m_sequences[entry]);
+}
+
+void AutoTypeSelectDialog::entryRemoved()
+{
+    if (m_view->model()->rowCount() == 0) {
+        reject();
+    }
 }
