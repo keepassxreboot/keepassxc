@@ -88,7 +88,7 @@ const char* const DatabaseIcons::m_indexToName[] = {
     "C62_Tux.png",
     "C63_Feather.png",
     "C64_Apple.png",
-    "C65_Apple.png",
+    "C65_W.png",
     "C66_Money.png",
     "C67_Certificate.png",
     "C68_BlackBerry.png"
