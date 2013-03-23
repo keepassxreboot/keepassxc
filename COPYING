@@ -104,6 +104,7 @@ Files: share/icons/application/*/actions/auto-type.png
        share/icons/database/C61_Services.png
 Copyright: 2003-2004, David Vignoni <david@icon-king.com>
 License: LGPL-2.1
+Comment: from Nuvola icon theme
 
 Files: share/icons/application/*/actions/entry-delete.png
        share/icons/application/*/actions/group-delete.png
@@ -112,6 +113,7 @@ Files: share/icons/application/*/actions/entry-delete.png
 Copyright: 2003-2004, David Vignoni <david@icon-king.com>
            2012, Felix Geyer <debfx@fobos.de>
 License: LGPL-2.1
+Comment: based on Nuvola icon theme
 
 Files: share/icons/application/*/actions/application-exit.png
        share/icons/application/*/actions/configure.png
@@ -136,6 +138,7 @@ Copyright: 2007, Nuno Pinheiro <nuno@oxygen-icons.org>
            2007, Kenneth Wimer <kwwii@bootsplash.org>
            2007, Riccardo Iaconelli <riccardo@oxygen-icons.org>
 License: LGPL-3+
+Comment: from Oxygen icon theme
 
 Files: share/icons/database/C62_Tux.png
        share/icons/database/C63_Feather.png
@@ -159,7 +162,7 @@ Copyright: none
 License: public-domain
 
 Files: src/crypto/salsa20/*
-Copyright: is in public domain
+Copyright: none
 License: public-domain
 
 Files: src/streams/qtiocompressor.*
