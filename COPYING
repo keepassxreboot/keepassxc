@@ -31,18 +31,18 @@ Files: share/icons/database/*.png
 Copyright: 2003-2004, David Vignoni <david@icon-king.com>
 License: LGPL-2.1
 
-Files: share/icons/application/*/apps/keepassx.png,
+Files: share/icons/application/*/apps/keepassx.png
        share/icons/application/scalable/apps/keepassx.svgz
 Copyright: 2006, Otto Salminen
            2009, Miguelito Vieira
            2011, Felix Geyer <debfx@fobos.de>
 License: GPL-2
 
-Files: share/icons/application/*/actions/auto-type.png,
-       share/icons/application/*/actions/database-change-key.png,
-       share/icons/application/*/actions/entry-clone.png,
-       share/icons/application/*/actions/entry-edit.png,
-       share/icons/application/*/actions/entry-new.png,
+Files: share/icons/application/*/actions/auto-type.png
+       share/icons/application/*/actions/database-change-key.png
+       share/icons/application/*/actions/entry-clone.png
+       share/icons/application/*/actions/entry-edit.png
+       share/icons/application/*/actions/entry-new.png
        share/icons/application/*/actions/password-generate.png
        share/icons/database/C00_Password.png
        share/icons/database/C01_Package_Network.png
@@ -109,29 +109,29 @@ Files: share/icons/application/*/actions/auto-type.png,
 Copyright: 2003-2004, David Vignoni <david@icon-king.com>
 License: LGPL-2.1
 
-Files: share/icons/application/*/actions/entry-delete.png,
-       share/icons/application/*/actions/group-delete.png,
-       share/icons/application/*/actions/group-edit.png,
+Files: share/icons/application/*/actions/entry-delete.png
+       share/icons/application/*/actions/group-delete.png
+       share/icons/application/*/actions/group-edit.png
        share/icons/application/*/actions/group-new.png
 Copyright: 2003-2004, David Vignoni <david@icon-king.com>
            2012, Felix Geyer <debfx@fobos.de>
 License: LGPL-2.1
 
-Files: share/icons/application/*/actions/application-exit.png,
-       share/icons/application/*/actions/configure.png,
-       share/icons/application/*/actions/dialog-close.png,
-       share/icons/application/*/actions/dialog-ok.png,
-       share/icons/application/*/actions/document-close.png,
-       share/icons/application/*/actions/document-edit.png,
-       share/icons/application/*/actions/document-new.png,
-       share/icons/application/*/actions/document-open.png,
-       share/icons/application/*/actions/document-save.png,
-       share/icons/application/*/actions/document-save-as.png,
-       share/icons/application/*/actions/edit-clear-locationbar-ltr.png,
-       share/icons/application/*/actions/edit-clear-locationbar-rtl.png,
-       share/icons/application/*/actions/system-search.png,
-       share/icons/application/*/status/dialog-error.png,
-       share/icons/application/*/status/dialog-information.png,
+Files: share/icons/application/*/actions/application-exit.png
+       share/icons/application/*/actions/configure.png
+       share/icons/application/*/actions/dialog-close.png
+       share/icons/application/*/actions/dialog-ok.png
+       share/icons/application/*/actions/document-close.png
+       share/icons/application/*/actions/document-edit.png
+       share/icons/application/*/actions/document-new.png
+       share/icons/application/*/actions/document-open.png
+       share/icons/application/*/actions/document-save.png
+       share/icons/application/*/actions/document-save-as.png
+       share/icons/application/*/actions/edit-clear-locationbar-ltr.png
+       share/icons/application/*/actions/edit-clear-locationbar-rtl.png
+       share/icons/application/*/actions/system-search.png
+       share/icons/application/*/status/dialog-error.png
+       share/icons/application/*/status/dialog-information.png
        share/icons/application/*/status/dialog-warning.png
 Copyright: 2007, Nuno Pinheiro <nuno@oxygen-icons.org>
            2007, David Vignoni <david@icon-king.com>
@@ -166,8 +166,8 @@ Files: src/crypto/salsa20/*
 Copyright: is in public domain
 License: public-domain
 
-Files: src/streams/qtiocompressor.*,
-       src/streams/QtIOCompressor,
+Files: src/streams/qtiocompressor.*
+       src/streams/QtIOCompressor
        tests/modeltest.*
 Copyright: 2009-2012, Nokia Corporation and/or its subsidiary(-ies)
 License: LGPL-2.1 or GPL-3
