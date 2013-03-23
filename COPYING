@@ -27,10 +27,6 @@ Copyright: 2010-2012, Felix Geyer <debfx@fobos.de>
            2000-2008, Tom Sato <VEF00200@nifty.ne.jp>
 License: GPL-2 or GPL-3
 
-Files: share/icons/database/*.png
-Copyright: 2003-2004, David Vignoni <david@icon-king.com>
-License: LGPL-2.1
-
 Files: share/icons/application/*/apps/keepassx.png
        share/icons/application/scalable/apps/keepassx.svgz
 Copyright: 2006, Otto Salminen
