@@ -25,7 +25,7 @@
 void TestEntry::testHistoryItemDeletion()
 {
     Entry* entry = new Entry();
-    Entry* historyEntry = new Entry();
+    QPointer<Entry> historyEntry = new Entry();
 
     entry->addHistoryItem(historyEntry);
     QCOMPARE(entry->historyItems().size(), 1);
@@ -34,6 +34,9 @@ void TestEntry::testHistoryItemDeletion()
     historyEntriesToRemove.append(historyEntry);
     entry->removeHistoryItems(historyEntriesToRemove);
     QCOMPARE(entry->historyItems().size(), 0);
+    QVERIFY(historyEntry.isNull());
+
+    delete entry;
 }
 
 QTEST_GUILESS_MAIN(TestEntry)
