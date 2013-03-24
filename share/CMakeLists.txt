@@ -35,6 +35,7 @@ add_custom_target(icons
                     icons/application/32x32/apps/keepassx.png
                     icons/application/48x48/apps/keepassx.png
                     icons/application/128x128/apps/keepassx.png
+                    icons/application/256x256/apps/keepassx.png
                   COMMAND icotool -c -o windows/keepassx.ico
                     icons/application/16x16/apps/keepassx.png
                     icons/application/24x24/apps/keepassx.png
@@ -42,5 +43,6 @@ add_custom_target(icons
                     icons/application/48x48/apps/keepassx.png
                     icons/application/64x64/apps/keepassx.png
                     icons/application/128x128/apps/keepassx.png
+                    icons/application/256x256/apps/keepassx.png
                   VERBATIM
                   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})

@@ -31,7 +31,8 @@ Files: share/icons/application/*/apps/keepassx.png
        share/icons/application/scalable/apps/keepassx.svgz
 Copyright: 2006, Otto Salminen
            2009, Miguelito Vieira
-           2011, Felix Geyer <debfx@fobos.de>
+           2011-2013, Felix Geyer <debfx@fobos.de>
+           2012, Tobias Tangemann <tobiastangemann@gmail.com>
 License: GPL-2
 
 Files: share/icons/application/*/actions/auto-type.png
