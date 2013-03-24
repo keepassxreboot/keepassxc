@@ -74,6 +74,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void tabNameChanged();
+    void databaseWithFileClosed(QString filePath);
 
 private Q_SLOTS:
     void updateTabName(Database* db);

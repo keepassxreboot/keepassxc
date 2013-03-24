@@ -397,11 +397,17 @@ void MainWindow::databaseTabChanged(int tabIndex)
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
+    openDatabases.clear();
+    connect(m_ui->tabWidget, SIGNAL(databaseWithFileClosed(QString)), this, SLOT(rememberOpenDatabases(QString)));
     if (!m_ui->tabWidget->closeAllDatabases()) {
         event->ignore();
     }
     else {
         event->accept();
+    }
+    disconnect(m_ui->tabWidget, SIGNAL(databaseWithFileClosed(QString)), this, SLOT(rememberOpenDatabases(QString)));
+    if (config()->get("OpenPreviousDatabasesOnStartup").toBool()) {
+        config()->set("OpenDatabasesOnExit", openDatabases);
     }
 }
 
@@ -428,4 +434,9 @@ void MainWindow::setShortcut(QAction* action, QKeySequence::StandardKey standard
     else if (fallback != 0) {
         action->setShortcut(QKeySequence(fallback));
     }
+}
+
+void MainWindow::rememberOpenDatabases(QString filePath)
+{
+    openDatabases.append(filePath);
 }

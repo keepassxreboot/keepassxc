@@ -88,6 +88,7 @@ void Config::init(const QString& fileName)
     m_settings.reset(new QSettings(fileName, QSettings::IniFormat));
 
     m_defaults.insert("RememberLastDatabases", true);
+    m_defaults.insert("OpenPreviousDatabasesOnStartup", true);
     m_defaults.insert("ModifiedOnExpandedStateChanges", true);
     m_defaults.insert("AutoSaveAfterEveryChange", false);
     m_defaults.insert("AutoSaveOnExit", false);

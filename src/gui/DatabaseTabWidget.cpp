@@ -226,6 +226,9 @@ bool DatabaseTabWidget::closeDatabase(Database* db)
 void DatabaseTabWidget::deleteDatabase(Database* db)
 {
     const DatabaseManagerStruct dbStruct = m_dbList.value(db);
+    bool emitDatabaseWithFileClosed = dbStruct.saveToFilename;
+    QString filePath = dbStruct.filePath;
+
     int index = databaseIndex(db);
 
     removeTab(index);
@@ -233,6 +236,10 @@ void DatabaseTabWidget::deleteDatabase(Database* db)
     m_dbList.remove(db);
     delete dbStruct.dbWidget;
     delete db;
+
+    if (emitDatabaseWithFileClosed) {
+        Q_EMIT databaseWithFileClosed(filePath);
+    }
 }
 
 bool DatabaseTabWidget::closeAllDatabases()

@@ -57,6 +57,7 @@ private Q_SLOTS:
     void showEntryContextMenu(const QPoint& globalPos);
     void showGroupContextMenu(const QPoint& globalPos);
     void saveToolbarState(bool value);
+    void rememberOpenDatabases(QString filePath);
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);
@@ -68,6 +69,7 @@ private:
     QAction* m_clearHistoryAction;
     QActionGroup* m_lastDatabasesActions;
     QActionGroup* m_copyAdditionalAttributeActions;
+    QStringList openDatabases;
 
     Q_DISABLE_COPY(MainWindow)
 };
