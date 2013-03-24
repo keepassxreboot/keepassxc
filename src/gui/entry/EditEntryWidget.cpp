@@ -241,7 +241,6 @@ QString EditEntryWidget::entryTitle() const
     else {
         return QString();
     }
-
 }
 
 void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const QString& parentName,

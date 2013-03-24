@@ -50,7 +50,6 @@ private:
     PasswordGenerator::GeneratorFlags generatorFlags();
 
     const QScopedPointer<Ui::PasswordGeneratorWidget> m_ui;
-
 };
 
 #endif // KEEPASSX_PASSWORDGENERATORWIDGET_H
