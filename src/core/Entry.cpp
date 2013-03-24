@@ -370,6 +370,7 @@ void Entry::removeHistoryItems(QList<Entry*> historyEntries)
         Q_ASSERT(entry->uuid() == uuid());
         int numberOfRemovedEntries = m_history.removeAll(entry);
         Q_ASSERT(numberOfRemovedEntries  > 0);
+        Q_UNUSED(numberOfRemovedEntries);
         delete entry;
     }
 
