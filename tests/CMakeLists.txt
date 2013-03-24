@@ -155,6 +155,9 @@ add_unit_test(NAME testwildcardmatcher SOURCES TestWildcardMatcher.cpp MOCS Test
 add_unit_test(NAME testautotype SOURCES TestAutoType.cpp MOCS TestAutoType.h
               LIBS ${TEST_LIBRARIES})
 
+add_unit_test(NAME testentry SOURCES TestEntry.cpp MOCS TestEntry.h
+              LIBS ${TEST_LIBRARIES})
+
 if(WITH_GUI_TESTS)
   add_subdirectory(gui)
 endif(WITH_GUI_TESTS)
