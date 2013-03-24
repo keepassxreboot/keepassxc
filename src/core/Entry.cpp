@@ -368,7 +368,8 @@ void Entry::removeHistoryItems(QList<Entry*> historyEntries)
     Q_FOREACH (Entry* entry, historyEntries) {
         Q_ASSERT(!entry->parent());
         Q_ASSERT(entry->uuid() == uuid());
-        Q_ASSERT(m_history.removeAll(entry) > 0);
+        int numberOfRemovedEntries = m_history.removeAll(entry);
+        Q_ASSERT(numberOfRemovedEntries  > 0);
         delete entry;
     }
 
