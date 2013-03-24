@@ -491,6 +491,7 @@ void DatabaseWidget::unlockDatabase(bool accepted)
 {
     // cancel button is disabled
     Q_ASSERT(accepted);
+    Q_UNUSED(accepted);
 
     setCurrentWidget(widgetBeforeLock);
     Q_EMIT unlockedDatabase();
