@@ -362,21 +362,22 @@ void Entry::addHistoryItem(Entry* entry)
     Q_EMIT modified();
 }
 
-void Entry::removeHistoryItems(QList<Entry*> historyEntries)
+void Entry::removeHistoryItems(const QList<Entry*>& historyEntries)
 {
-    bool emitModified = historyEntries.count() > 0;
+    if (historyEntries.isEmpty()) {
+        return;
+    }
+
     Q_FOREACH (Entry* entry, historyEntries) {
         Q_ASSERT(!entry->parent());
         Q_ASSERT(entry->uuid() == uuid());
-        int numberOfRemovedEntries = m_history.removeAll(entry);
-        Q_ASSERT(numberOfRemovedEntries  > 0);
-        Q_UNUSED(numberOfRemovedEntries);
+        Q_ASSERT(m_history.contains(entry));
+
+        m_history.removeOne(entry);
         delete entry;
     }
 
-    if (emitModified) {
-        Q_EMIT modified();
-    }
+    Q_EMIT modified();
 }
 
 void Entry::truncateHistory()

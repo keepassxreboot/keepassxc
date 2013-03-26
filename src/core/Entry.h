@@ -108,7 +108,7 @@ public:
     QList<Entry*> historyItems();
     const QList<Entry*>& historyItems() const;
     void addHistoryItem(Entry* entry);
-    void removeHistoryItems(QList<Entry*> historyEntries);
+    void removeHistoryItems(const QList<Entry*>& historyEntries);
     void truncateHistory();
     Entry* clone() const;
     QString resolvePlaceholders(const QString& str) const;

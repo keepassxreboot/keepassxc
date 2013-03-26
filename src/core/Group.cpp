@@ -267,7 +267,7 @@ void Group::setLastTopVisibleEntry(Entry* entry)
     set(m_lastTopVisibleEntry, entry);
 }
 
-void Group::setExpires(const bool& value)
+void Group::setExpires(bool value)
 {
     if (m_timeInfo.expires() != value) {
         m_timeInfo.setExpires(value);
