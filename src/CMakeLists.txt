@@ -198,6 +198,7 @@ qt4_wrap_ui(keepassx_SOURCES ${keepassx_FORMS})
 qt4_wrap_cpp(keepassx_SOURCES ${keepassx_MOC})
 
 add_library(keepassx_core STATIC ${keepassx_SOURCES})
+set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
 
 add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE ${keepassx_SOURCES_MAINEXE})
 target_link_libraries(${PROGNAME}
@@ -210,6 +211,8 @@ target_link_libraries(${PROGNAME}
 if(UNIX AND NOT APPLE)
   target_link_libraries(${PROGNAME} ${QT_QTDBUS_LIBRARY})
 endif()
+
+set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
 
 if(APPLE)
   configure_file(${CMAKE_SOURCE_DIR}/share/macosx/Info.plist.cmake ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)

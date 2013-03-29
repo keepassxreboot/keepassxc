@@ -21,9 +21,11 @@
 #include <QtCore/QChar>
 #include <QtCore/Qt>
 
+#include "core/Global.h"
+
 class AutoTypeExecutor;
 
-class AutoTypeAction
+class KEEPASSX_EXPORT AutoTypeAction
 {
 public:
     virtual ~AutoTypeAction() {}
@@ -31,7 +33,7 @@ public:
     virtual void accept(AutoTypeExecutor* executor) = 0;
 };
 
-class AutoTypeChar : public AutoTypeAction
+class KEEPASSX_EXPORT AutoTypeChar : public AutoTypeAction
 {
 public:
     explicit AutoTypeChar(const QChar& character);
@@ -41,7 +43,7 @@ public:
     const QChar character;
 };
 
-class AutoTypeKey : public AutoTypeAction
+class KEEPASSX_EXPORT AutoTypeKey : public AutoTypeAction
 {
 public:
     explicit AutoTypeKey(Qt::Key key);
@@ -51,7 +53,7 @@ public:
     const Qt::Key key;
 };
 
-class AutoTypeDelay : public AutoTypeAction
+class KEEPASSX_EXPORT AutoTypeDelay : public AutoTypeAction
 {
 public:
     explicit AutoTypeDelay(int delayMs);
@@ -61,7 +63,7 @@ public:
     const int delayMs;
 };
 
-class AutoTypeClearField : public AutoTypeAction
+class KEEPASSX_EXPORT AutoTypeClearField : public AutoTypeAction
 {
 public:
     explicit AutoTypeClearField();
@@ -69,7 +71,7 @@ public:
     void accept(AutoTypeExecutor* executor);
 };
 
-class AutoTypeExecutor
+class KEEPASSX_EXPORT AutoTypeExecutor
 {
 public:
     virtual ~AutoTypeExecutor() {}

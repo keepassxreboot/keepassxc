@@ -118,4 +118,14 @@ template <> class QStaticAssertFailure<true> {};
 #endif // COMPILER_STATIC_ASSERT
 #endif // !defined(Q_STATIC_ASSERT) && !defined(Q_STATIC_ASSERT_X)
 
+#if defined(Q_OS_WIN)
+#  if defined(KEEPASSX_BUILDING_CORE)
+#    define KEEPASSX_EXPORT Q_DECL_EXPORT
+#  else
+#    define KEEPASSX_EXPORT Q_DECL_IMPORT
+#  endif
+#else
+#  define KEEPASSX_EXPORT
+#endif
+
 #endif // KEEPASSX_GLOBAL_H

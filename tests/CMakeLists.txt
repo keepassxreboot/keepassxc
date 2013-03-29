@@ -154,6 +154,7 @@ add_unit_test(NAME testwildcardmatcher SOURCES TestWildcardMatcher.cpp MOCS Test
 
 add_unit_test(NAME testautotype SOURCES TestAutoType.cpp MOCS TestAutoType.h
               LIBS ${TEST_LIBRARIES})
+set_target_properties(testautotype PROPERTIES ENABLE_EXPORTS ON)
 
 add_unit_test(NAME testentry SOURCES TestEntry.cpp MOCS TestEntry.h
               LIBS ${TEST_LIBRARIES})
