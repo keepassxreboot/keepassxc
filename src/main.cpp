@@ -17,6 +17,8 @@
 
 #include <QtCore/QFile>
 
+#include "core/ArgumentParser.h"
+#include "core/Config.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "gui/Application.h"
@@ -34,21 +36,11 @@ int main(int argc, char** argv)
 
     Crypto::init();
 
-    QString filename;
-    QString password;
-
     const QStringList args = app.arguments();
-    for (int i = 1; i < args.size(); i++) {
-        if (args[i] == "--password" && args.size() > (i + 1)) {
-            password = args[i + 1];
-            i++;
-        }
-        else if (!args[i].startsWith("-") && QFile::exists(args[i])) {
-            filename = args[i];
-        }
-        else {
-            qWarning("Unknown argument \"%s\"", qPrintable(args[i]));
-        }
+    QHash<QString, QString> argumentMap = ArgumentParser::parseArguments(args);
+
+    if (!argumentMap.value("config").isEmpty()) {
+        Config::createConfigFromFile(argumentMap.value("config"));
     }
 
     MainWindow mainWindow;
@@ -56,8 +48,9 @@ int main(int argc, char** argv)
 
     QObject::connect(&app, SIGNAL(openFile(QString)), &mainWindow, SLOT(openDatabase(QString)));
 
-    if (!filename.isEmpty()) {
-        mainWindow.openDatabase(filename, password, QString());
+    QString filename(argumentMap.value("filename"));
+    if (!filename.isEmpty() && QFile::exists(filename)) {
+        mainWindow.openDatabase(filename, argumentMap.value("password"), QString());
     }
 
     return app.exec();

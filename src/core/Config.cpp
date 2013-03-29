@@ -105,6 +105,12 @@ Config* Config::instance()
     return m_instance;
 }
 
+void Config::createConfigFromFile(QString file)
+{
+    Q_ASSERT(!m_instance);
+    m_instance = new Config(file, qApp);
+}
+
 void Config::createTempFileInstance()
 {
     Q_ASSERT(!m_instance);

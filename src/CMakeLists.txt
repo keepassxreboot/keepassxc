@@ -27,6 +27,7 @@ set(keepassx_SOURCES
     autotype/WildcardMatcher.cpp
     autotype/WindowSelectComboBox.cpp
     autotype/test/AutoTypeTestInterface.h
+    core/ArgumentParser.cpp
     core/AutoTypeAssociations.cpp
     core/Config.cpp
     core/Database.cpp

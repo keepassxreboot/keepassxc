@@ -36,6 +36,7 @@ public:
     void set(const QString& key, const QVariant& value);
 
     static Config* instance();
+    static void createConfigFromFile(QString file);
     static void createTempFileInstance();
 
 private:

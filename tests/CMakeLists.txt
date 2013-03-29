@@ -159,6 +159,9 @@ set_target_properties(testautotype PROPERTIES ENABLE_EXPORTS ON)
 add_unit_test(NAME testentry SOURCES TestEntry.cpp MOCS TestEntry.h
               LIBS ${TEST_LIBRARIES})
 
+add_unit_test(NAME testargumentparser SOURCES TestArgumentParser.cpp MOCS TestArgumentParser.h
+              LIBS ${TEST_LIBRARIES})
+
 if(WITH_GUI_TESTS)
   add_subdirectory(gui)
 endif(WITH_GUI_TESTS)
