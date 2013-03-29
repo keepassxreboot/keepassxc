@@ -1,3 +1,12 @@
+2.0 Alpha 4 (2013-03-29)
+=========================
+
+- Add random password generator [#52]
+- Merge the 'Description' tab into the 'Entry' tab [#59]
+- Fix crash when deleting history items [#56]
+- Fix crash on Mac OS X Mountain Lion during startup [#50]
+- Improved KeePassX application icon [#58]
+
 2.0 Alpha 3 (2012-10-27)
 =========================
 
