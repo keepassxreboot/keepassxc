@@ -125,7 +125,7 @@ template <> class QStaticAssertFailure<true> {};
 #    define KEEPASSX_EXPORT Q_DECL_IMPORT
 #  endif
 #else
-#  define KEEPASSX_EXPORT
+#  define KEEPASSX_EXPORT Q_DECL_EXPORT
 #endif
 
 #endif // KEEPASSX_GLOBAL_H
