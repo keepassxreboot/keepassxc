@@ -20,11 +20,13 @@ configure_file(config-keepassx.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepas
 set(keepassx_SOURCES
     autotype/AutoType.cpp
     autotype/AutoTypeAction.cpp
+    autotype/AutoTypePlatformPlugin.h
     autotype/AutoTypeSelectDialog.cpp
     autotype/AutoTypeSelectView.cpp
     autotype/ShortcutWidget.cpp
     autotype/WildcardMatcher.cpp
     autotype/WindowSelectComboBox.cpp
+    autotype/test/AutoTypeTestInterface.h
     core/AutoTypeAssociations.cpp
     core/Config.cpp
     core/Database.cpp
@@ -34,6 +36,7 @@ set(keepassx_SOURCES
     core/EntryAttachments.cpp
     core/EntryAttributes.cpp
     core/FilePath.cpp
+    core/Global.h
     core/Group.cpp
     core/ListDeleter.h
     core/Metadata.cpp
