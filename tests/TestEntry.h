@@ -28,7 +28,6 @@ class TestEntry : public QObject
 
 private Q_SLOTS:
     void testHistoryItemDeletion();
-
 };
 
 #endif // KEEPASSX_TESTENTRY_H
