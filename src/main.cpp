@@ -43,6 +43,11 @@ int main(int argc, char** argv)
         Config::createConfigFromFile(argumentMap.value("config"));
     }
 
+#ifdef Q_OS_MAC
+    // Don't show menu icons on OSX
+    QApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
+#endif
+
     MainWindow mainWindow;
     mainWindow.show();
 
