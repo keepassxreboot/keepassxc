@@ -430,4 +430,54 @@ void TestGroup::testAndConcatenationInSearch()
     delete group;
 }
 
+void TestGroup::testClone()
+{
+    Database* db = new Database();
+
+    Group* originalGroup = new Group();
+    originalGroup->setParent(db->rootGroup());
+    originalGroup->setName("Group");
+    originalGroup->setIcon(42);
+
+    Entry* originalGroupEntry = new Entry();
+    originalGroupEntry->setGroup(originalGroup);
+    originalGroupEntry->setTitle("GroupEntry");
+    originalGroupEntry->setIcon(43);
+
+    Group* subGroup = new Group();
+    subGroup->setParent(originalGroup);
+    subGroup->setName("SubGroup");
+
+    Entry* subGroupEntry = new Entry();
+    subGroupEntry->setGroup(subGroup);
+    subGroupEntry->setTitle("SubGroupEntry");
+
+    Group* clonedGroup = originalGroup->clone();
+    QVERIFY(!clonedGroup->parentGroup());
+    QVERIFY(!clonedGroup->database());
+    QVERIFY(clonedGroup->uuid() != originalGroup->uuid());
+    QCOMPARE(clonedGroup->name(), QString("Group"));
+    QCOMPARE(clonedGroup->iconNumber(), 42);
+    QCOMPARE(clonedGroup->children().size(), 1);
+    QCOMPARE(clonedGroup->entries().size(), 1);
+
+    Entry* clonedGroupEntry = clonedGroup->entries().at(0);
+    QVERIFY(clonedGroupEntry->uuid() != originalGroupEntry->uuid());
+    QCOMPARE(clonedGroupEntry->title(), QString("GroupEntry"));
+    QCOMPARE(clonedGroupEntry->iconNumber(), 43);
+
+    Group* clonedSubGroup = clonedGroup->children().at(0);
+    QVERIFY(clonedSubGroup->uuid() != subGroup->uuid());
+    QCOMPARE(clonedSubGroup->name(), QString("SubGroup"));
+    QCOMPARE(clonedSubGroup->children().size(), 0);
+    QCOMPARE(clonedSubGroup->entries().size(), 1);
+
+    Entry* clonedSubGroupEntry = clonedSubGroup->entries().at(0);
+    QVERIFY(clonedSubGroupEntry->uuid() != subGroupEntry->uuid());
+    QCOMPARE(clonedSubGroupEntry->title(), QString("SubGroupEntry"));
+
+    delete clonedGroup;
+    delete db;
+}
+
 QTEST_GUILESS_MAIN(TestGroup)

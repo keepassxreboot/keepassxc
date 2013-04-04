@@ -26,12 +26,12 @@ const int Group::DefaultIconNumber = 48;
 const int Group::RecycleBinIconNumber = 43;
 
 Group::Group()
-    : m_iconNumber(DefaultIconNumber)
-    , m_isExpanded(true)
-    , m_autoTypeEnabled(Inherit)
-    , m_searchingEnabled(Inherit)
-    , m_updateTimeinfo(true)
+    : m_updateTimeinfo(true)
 {
+    m_data.iconNumber = DefaultIconNumber;
+    m_data.isExpanded = true;
+    m_data.autoTypeEnabled = Inherit;
+    m_data.searchingEnabled = Inherit;
 }
 
 Group::~Group()
@@ -84,8 +84,8 @@ template <class P, class V> inline bool Group::set(P& property, const V& value) 
 void Group::updateTimeinfo()
 {
     if (m_updateTimeinfo) {
-        m_timeInfo.setLastModificationTime(Tools::currentDateTimeUtc());
-        m_timeInfo.setLastAccessTime(Tools::currentDateTimeUtc());
+        m_data.timeInfo.setLastModificationTime(Tools::currentDateTimeUtc());
+        m_data.timeInfo.setLastAccessTime(Tools::currentDateTimeUtc());
     }
 }
 
@@ -101,35 +101,35 @@ Uuid Group::uuid() const
 
 QString Group::name() const
 {
-    return m_name;
+    return m_data.name;
 }
 
 QString Group::notes() const
 {
-    return m_notes;
+    return m_data.notes;
 }
 
 QImage Group::icon() const
 {
-    if (m_customIcon.isNull()) {
-        return databaseIcons()->icon(m_iconNumber);
+    if (m_data.customIcon.isNull()) {
+        return databaseIcons()->icon(m_data.iconNumber);
     }
     else {
         // TODO: check if m_db is 0
-        return m_db->metadata()->customIcon(m_customIcon);
+        return m_db->metadata()->customIcon(m_data.customIcon);
     }
 }
 
 QPixmap Group::iconPixmap() const
 {
-    if (m_customIcon.isNull()) {
-        return databaseIcons()->iconPixmap(m_iconNumber);
+    if (m_data.customIcon.isNull()) {
+        return databaseIcons()->iconPixmap(m_data.iconNumber);
     }
     else {
         QPixmap pixmap;
         if (!QPixmapCache::find(m_pixmapCacheKey, &pixmap)) {
             // TODO: check if m_db is 0
-            pixmap = QPixmap::fromImage(m_db->metadata()->customIcon(m_customIcon));
+            pixmap = QPixmap::fromImage(m_db->metadata()->customIcon(m_data.customIcon));
             m_pixmapCacheKey = QPixmapCache::insert(pixmap);
         }
 
@@ -139,37 +139,37 @@ QPixmap Group::iconPixmap() const
 
 int Group::iconNumber() const
 {
-    return m_iconNumber;
+    return m_data.iconNumber;
 }
 
 Uuid Group::iconUuid() const
 {
-    return m_customIcon;
+    return m_data.customIcon;
 }
 
 TimeInfo Group::timeInfo() const
 {
-    return m_timeInfo;
+    return m_data.timeInfo;
 }
 
 bool Group::isExpanded() const
 {
-    return m_isExpanded;
+    return m_data.isExpanded;
 }
 
 QString Group::defaultAutoTypeSequence() const
 {
-    return m_defaultAutoTypeSequence;
+    return m_data.defaultAutoTypeSequence;
 }
 
 Group::TriState Group::autoTypeEnabled() const
 {
-    return m_autoTypeEnabled;
+    return m_data.autoTypeEnabled;
 }
 
 Group::TriState Group::searchingEnabled() const
 {
-    return m_searchingEnabled;
+    return m_data.searchingEnabled;
 }
 
 Entry* Group::lastTopVisibleEntry() const
@@ -179,7 +179,7 @@ Entry* Group::lastTopVisibleEntry() const
 
 bool Group::isExpired() const
 {
-    return m_timeInfo.expires() && m_timeInfo.expiryTime() < Tools::currentDateTimeUtc();
+    return m_data.timeInfo.expires() && m_data.timeInfo.expiryTime() < Tools::currentDateTimeUtc();
 }
 
 void Group::setUuid(const Uuid& uuid)
@@ -189,23 +189,23 @@ void Group::setUuid(const Uuid& uuid)
 
 void Group::setName(const QString& name)
 {
-    if (set(m_name, name)) {
+    if (set(m_data.name, name)) {
         Q_EMIT dataChanged(this);
     }
 }
 
 void Group::setNotes(const QString& notes)
 {
-    set(m_notes, notes);
+    set(m_data.notes, notes);
 }
 
 void Group::setIcon(int iconNumber)
 {
     Q_ASSERT(iconNumber >= 0);
 
-    if (m_iconNumber != iconNumber || !m_customIcon.isNull()) {
-        m_iconNumber = iconNumber;
-        m_customIcon = Uuid();
+    if (m_data.iconNumber != iconNumber || !m_data.customIcon.isNull()) {
+        m_data.iconNumber = iconNumber;
+        m_data.customIcon = Uuid();
 
         m_pixmapCacheKey = QPixmapCache::Key();
 
@@ -219,9 +219,9 @@ void Group::setIcon(const Uuid& uuid)
 {
     Q_ASSERT(!uuid.isNull());
 
-    if (m_customIcon != uuid) {
-        m_customIcon = uuid;
-        m_iconNumber = 0;
+    if (m_data.customIcon != uuid) {
+        m_data.customIcon = uuid;
+        m_data.iconNumber = 0;
 
         m_pixmapCacheKey = QPixmapCache::Key();
 
@@ -233,13 +233,13 @@ void Group::setIcon(const Uuid& uuid)
 
 void Group::setTimeInfo(const TimeInfo& timeInfo)
 {
-    m_timeInfo = timeInfo;
+    m_data.timeInfo = timeInfo;
 }
 
 void Group::setExpanded(bool expanded)
 {
-    if (m_isExpanded != expanded) {
-        m_isExpanded = expanded;
+    if (m_data.isExpanded != expanded) {
+        m_data.isExpanded = expanded;
         updateTimeinfo();
         if (config()->get("ModifiedOnExpandedStateChanges").toBool()) {
             Q_EMIT modified();
@@ -249,17 +249,17 @@ void Group::setExpanded(bool expanded)
 
 void Group::setDefaultAutoTypeSequence(const QString& sequence)
 {
-    set(m_defaultAutoTypeSequence, sequence);
+    set(m_data.defaultAutoTypeSequence, sequence);
 }
 
 void Group::setAutoTypeEnabled(TriState enable)
 {
-    set(m_autoTypeEnabled, enable);
+    set(m_data.autoTypeEnabled, enable);
 }
 
 void Group::setSearchingEnabled(TriState enable)
 {
-    set(m_searchingEnabled, enable);
+    set(m_data.searchingEnabled, enable);
 }
 
 void Group::setLastTopVisibleEntry(Entry* entry)
@@ -269,8 +269,8 @@ void Group::setLastTopVisibleEntry(Entry* entry)
 
 void Group::setExpires(bool value)
 {
-    if (m_timeInfo.expires() != value) {
-        m_timeInfo.setExpires(value);
+    if (m_data.timeInfo.expires() != value) {
+        m_data.timeInfo.setExpires(value);
         updateTimeinfo();
         Q_EMIT modified();
     }
@@ -278,8 +278,8 @@ void Group::setExpires(bool value)
 
 void Group::setExpiryTime(const QDateTime& dateTime)
 {
-    if (m_timeInfo.expiryTime() != dateTime) {
-        m_timeInfo.setExpiryTime(dateTime);
+    if (m_data.timeInfo.expiryTime() != dateTime) {
+        m_data.timeInfo.setExpiryTime(dateTime);
         updateTimeinfo();
         Q_EMIT modified();
     }
@@ -347,7 +347,7 @@ void Group::setParent(Group* parent, int index)
     }
 
     if (m_updateTimeinfo) {
-        m_timeInfo.setLocationChanged(Tools::currentDateTimeUtc());
+        m_data.timeInfo.setLocationChanged(Tools::currentDateTimeUtc());
     }
 
     Q_EMIT modified();
@@ -434,6 +434,39 @@ QList<const Group*> Group::groupsRecursive(bool includeSelf) const
     }
 
     return groupList;
+}
+
+Group* Group::clone() const
+{
+    // TODO: what to do about custom icons?
+    // they won't be available when changing the database later
+
+    Group* clonedGroup = new Group();
+
+    clonedGroup->setUpdateTimeinfo(false);
+
+    clonedGroup->setUuid(Uuid::random());
+    clonedGroup->m_data = m_data;
+
+    Q_FOREACH (Entry* entry, entries()) {
+        Entry* clonedEntry = entry->clone();
+        clonedEntry->setGroup(clonedGroup);
+    }
+
+    Q_FOREACH (Group* groupChild, children()) {
+        Group* clonedGroupChild = groupChild->clone();
+        clonedGroupChild->setParent(clonedGroup);
+    }
+
+    clonedGroup->setUpdateTimeinfo(true);
+
+    QDateTime now = Tools::currentDateTimeUtc();
+    clonedGroup->m_data.timeInfo.setCreationTime(now);
+    clonedGroup->m_data.timeInfo.setLastModificationTime(now);
+    clonedGroup->m_data.timeInfo.setLastAccessTime(now);
+    clonedGroup->m_data.timeInfo.setLocationChanged(now);
+
+    return clonedGroup;
 }
 
 void Group::addEntry(Entry* entry)
@@ -551,7 +584,7 @@ QList<Entry*> Group::search(const QString& searchTerm, Qt::CaseSensitivity caseS
 
 bool Group::includeInSearch(bool resolveInherit)
 {
-    switch (m_searchingEnabled) {
+    switch (m_data.searchingEnabled) {
     case Inherit:
         if (!m_parent) {
             return true;

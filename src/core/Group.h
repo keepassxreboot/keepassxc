@@ -35,6 +35,19 @@ class Group : public QObject
 public:
     enum TriState { Inherit, Enable, Disable };
 
+    struct GroupData
+    {
+        QString name;
+        QString notes;
+        int iconNumber;
+        Uuid customIcon;
+        TimeInfo timeInfo;
+        bool isExpanded;
+        QString defaultAutoTypeSequence;
+        Group::TriState autoTypeEnabled;
+        Group::TriState searchingEnabled;
+    };
+
     Group();
     ~Group();
 
@@ -86,6 +99,7 @@ public:
     const QList<Entry*>& entries() const;
     QList<Entry*> entriesRecursive(bool includeHistoryItems = false) const;
     QList<const Group*> groupsRecursive(bool includeSelf) const;
+    Group* clone() const;
 
     QList<Entry*> search(const QString& searchTerm, Qt::CaseSensitivity caseSensitivity,
                          bool resolveInherit = true);
@@ -127,15 +141,7 @@ private:
 
     QPointer<Database> m_db;
     Uuid m_uuid;
-    QString m_name;
-    QString m_notes;
-    int m_iconNumber;
-    Uuid m_customIcon;
-    TimeInfo m_timeInfo;
-    bool m_isExpanded;
-    QString m_defaultAutoTypeSequence;
-    TriState m_autoTypeEnabled;
-    TriState m_searchingEnabled;
+    GroupData m_data;
     QPointer<Entry> m_lastTopVisibleEntry;
     QList<Group*> m_children;
     QList<Entry*> m_entries;
