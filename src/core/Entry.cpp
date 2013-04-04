@@ -436,7 +436,7 @@ Entry* Entry::clone() const
 {
     Entry* entry = new Entry();
     entry->setUpdateTimeinfo(false);
-    entry->m_uuid = m_uuid;
+    entry->m_uuid = Uuid::random();
     entry->m_data = m_data;
     entry->m_attributes->copyDataFrom(m_attributes);
     entry->m_attachments->copyDataFrom(m_attachments);
