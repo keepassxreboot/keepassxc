@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=KeePassX
+GenericName=Cross Platform Password Manager
+GenericName[de]=Passwortverwaltung
+GenericName[es]=Gestor de contraseñas multiplataforma
+GenericName[fr]=Gestionnaire de mot de passe
+Exec=keepassx %f
+Icon=keepassx
+Terminal=false
+Type=Application
+Categories=Qt;Utility;
+MimeType=application/x-keepass2;
