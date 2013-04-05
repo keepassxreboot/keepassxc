@@ -61,7 +61,8 @@ add_definitions(-DQT_NO_KEYWORDS -DQT_NO_EXCEPTIONS -DQT_NO_STL -DQT_STRICT_ITER
 add_gcc_compiler_flags("-fno-common -fstack-protector -D_FORTIFY_SOURCE=2")
 add_gcc_compiler_flags("-Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long")
 add_gcc_compiler_flags("-Wformat=2 -Wmissing-format-attribute")
-add_gcc_compiler_flags("-fvisibility=hidden -fvisibility-inlines-hidden")
+add_gcc_compiler_flags("-fvisibility=hidden")
+add_gcc_compiler_cxxflags("-fvisibility-inlines-hidden")
 
 add_gcc_compiler_cxxflags("-fno-exceptions -fno-rtti")
 add_gcc_compiler_cxxflags("-Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual")
