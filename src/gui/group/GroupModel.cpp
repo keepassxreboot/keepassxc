@@ -23,6 +23,7 @@
 #include "core/Database.h"
 #include "core/DatabaseIcons.h"
 #include "core/Group.h"
+#include "core/Metadata.h"
 #include "core/Tools.h"
 
 GroupModel::GroupModel(Database* db, QObject* parent)
@@ -262,6 +263,14 @@ bool GroupModel::dropMimeData(const QMimeData* data, Qt::DropAction action,
             group = dragGroup->clone();
         }
 
+        Database* sourceDb = dragGroup->database();
+        Database* targetDb = parentGroup->database();
+
+        if (sourceDb != targetDb) {
+            QSet<Uuid> customIcons = group->customIconsRecursive();
+            targetDb->metadata()->copyCustomIcons(customIcons, sourceDb->metadata());
+        }
+
         group->setParent(parentGroup, row);
     }
     else {
@@ -290,6 +299,16 @@ bool GroupModel::dropMimeData(const QMimeData* data, Qt::DropAction action,
             }
             else {
                 entry = dragEntry->clone();
+            }
+
+            Database* sourceDb = dragEntry->group()->database();
+            Database* targetDb = parentGroup->database();
+            Uuid customIcon = entry->iconUuid();
+
+            if (sourceDb != targetDb && !customIcon.isNull()
+                    && !targetDb->metadata()->containsCustomIcon(customIcon)) {
+                targetDb->metadata()->addCustomIcon(customIcon,
+                                                    sourceDb->metadata()->customIcon(customIcon));
             }
 
             entry->setGroup(parentGroup);

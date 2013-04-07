@@ -91,6 +91,7 @@ public:
     // void setAutoEnableVisualHiding(bool value);
     void addCustomIcon(const Uuid& uuid, const QImage& icon);
     void removeCustomIcon(const Uuid& uuid);
+    void copyCustomIcons(const QSet<Uuid>& iconList, const Metadata* otherMetadata);
     void setRecycleBinEnabled(bool value);
     void setRecycleBin(Group* group);
     void setRecycleBinChanged(const QDateTime& value);

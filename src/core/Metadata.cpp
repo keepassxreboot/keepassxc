@@ -348,6 +348,17 @@ void Metadata::removeCustomIcon(const Uuid& uuid)
     Q_EMIT modified();
 }
 
+void Metadata::copyCustomIcons(const QSet<Uuid>& iconList, const Metadata* otherMetadata)
+{
+    Q_FOREACH (const Uuid& uuid, iconList) {
+        Q_ASSERT(otherMetadata->containsCustomIcon(uuid));
+
+        if (!containsCustomIcon(uuid)) {
+            addCustomIcon(uuid, otherMetadata->customIcon(uuid));
+        }
+    }
+}
+
 void Metadata::setRecycleBinEnabled(bool value)
 {
     set(m_recycleBinEnabled, value);

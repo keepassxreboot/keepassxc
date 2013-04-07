@@ -436,6 +436,27 @@ QList<const Group*> Group::groupsRecursive(bool includeSelf) const
     return groupList;
 }
 
+QSet<Uuid> Group::customIconsRecursive() const
+{
+    QSet<Uuid> result;
+
+    if (!iconUuid().isNull()) {
+        result.insert(iconUuid());
+    }
+
+    Q_FOREACH (Entry* entry, entriesRecursive(true)) {
+        if (!entry->iconUuid().isNull()) {
+            result.insert(entry->iconUuid());
+        }
+    }
+
+    Q_FOREACH (Group* group, m_children) {
+        result.unite(group->customIconsRecursive());
+    }
+
+    return result;
+}
+
 Group* Group::clone() const
 {
     // TODO: what to do about custom icons?
