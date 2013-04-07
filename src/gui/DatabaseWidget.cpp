@@ -138,6 +138,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_groupView, SIGNAL(groupChanged(Group*)), SIGNAL(groupChanged()));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), m_entryView, SLOT(setGroup(Group*)));
     connect(m_entryView, SIGNAL(entryActivated(Entry*)), SLOT(switchToEntryEdit(Entry*)));
+    connect(m_entryView, SIGNAL(openUrl(Entry*)), SLOT(openUrlForEntry(Entry*)));
     connect(m_entryView, SIGNAL(entrySelectionChanged()), SIGNAL(entrySelectionChanged()));
     connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
     connect(m_editEntryWidget, SIGNAL(historyEntryActivated(Entry*)), SLOT(switchToHistoryView(Entry*)));
@@ -303,8 +304,13 @@ void DatabaseWidget::openUrl()
         return;
     }
 
-    if (!currentEntry->url().isEmpty()) {
-        QDesktopServices::openUrl(currentEntry->url());
+    openUrlForEntry(currentEntry);
+}
+
+void DatabaseWidget::openUrlForEntry(Entry* entry)
+{
+    if (!entry->url().isEmpty()) {
+        QDesktopServices::openUrl(entry->url());
     }
 }
 

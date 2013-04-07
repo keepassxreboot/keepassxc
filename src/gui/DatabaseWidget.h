@@ -89,6 +89,7 @@ public Q_SLOTS:
     void copyAttribute(QAction* action);
     void performAutoType();
     void openUrl();
+    void openUrlForEntry(Entry* entry);
     void createGroup();
     void deleteGroup();
     void switchToEntryEdit();

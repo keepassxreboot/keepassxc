@@ -46,10 +46,11 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void entryActivated(Entry* entry);
+    void openUrl(Entry* entry);
     void entrySelectionChanged();
 
 private Q_SLOTS:
-    void emitEntryActivated(const QModelIndex& index);
+    void emitEntryActivationSignal(const QModelIndex& index);
     void switchToEntryListMode();
     void switchToGroupMode();
 
