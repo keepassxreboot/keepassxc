@@ -203,6 +203,10 @@ bool GroupModel::dropMimeData(const QMimeData* data, Qt::DropAction action,
 {
     Q_UNUSED(column);
 
+    if (action == Qt::IgnoreAction) {
+        return true;
+    }
+
     if (!data || (action != Qt::MoveAction && action != Qt::CopyAction) || !parent.isValid()) {
         return false;
     }
