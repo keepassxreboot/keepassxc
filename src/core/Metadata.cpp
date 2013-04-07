@@ -353,7 +353,7 @@ void Metadata::copyCustomIcons(const QSet<Uuid>& iconList, const Metadata* other
     Q_FOREACH (const Uuid& uuid, iconList) {
         Q_ASSERT(otherMetadata->containsCustomIcon(uuid));
 
-        if (!containsCustomIcon(uuid)) {
+        if (!containsCustomIcon(uuid) && otherMetadata->containsCustomIcon(uuid)) {
             addCustomIcon(uuid, otherMetadata->customIcon(uuid));
         }
     }
