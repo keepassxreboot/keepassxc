@@ -480,4 +480,57 @@ void TestGroup::testClone()
     delete db;
 }
 
+void TestGroup::testCopyCustomIcons()
+{
+    Database* dbSource = new Database();
+    Database* dbTarget = new Database();
+
+    QImage iconImage1(1, 1, QImage::Format_RGB32);
+    iconImage1.setPixel(0, 0, qRgb(1, 2, 3));
+
+    QImage iconImage2(1, 1, QImage::Format_RGB32);
+    iconImage2.setPixel(0, 0, qRgb(4, 5, 6));
+
+    Group* group1 = new Group();
+    group1->setParent(dbSource->rootGroup());
+    Uuid group1Icon = Uuid::random();
+    dbSource->metadata()->addCustomIcon(group1Icon, iconImage1);
+    group1->setIcon(group1Icon);
+
+    Group* group2 = new Group();
+    group2->setParent(group1);
+    Uuid group2Icon = Uuid::random();
+    dbSource->metadata()->addCustomIcon(group2Icon, iconImage1);
+    group2->setIcon(group2Icon);
+
+    Entry* entry1 = new Entry();
+    entry1->setGroup(group2);
+    Uuid entry1IconOld = Uuid::random();
+    dbSource->metadata()->addCustomIcon(entry1IconOld, iconImage1);
+    entry1->setIcon(entry1IconOld);
+
+    // add history item
+    entry1->beginUpdate();
+    Uuid entry1IconNew = Uuid::random();
+    dbSource->metadata()->addCustomIcon(entry1IconNew, iconImage1);
+    entry1->setIcon(entry1IconNew);
+    entry1->endUpdate();
+
+    // test that we don't overwrite icons
+    dbTarget->metadata()->addCustomIcon(group2Icon, iconImage2);
+
+    dbTarget->metadata()->copyCustomIcons(group1->customIconsRecursive(), dbSource->metadata());
+
+    Metadata* metaTarget = dbTarget->metadata();
+
+    QCOMPARE(metaTarget->customIcons().size(), 4);
+    QVERIFY(metaTarget->containsCustomIcon(group1Icon));
+    QVERIFY(metaTarget->containsCustomIcon(group2Icon));
+    QVERIFY(metaTarget->containsCustomIcon(entry1IconOld));
+    QVERIFY(metaTarget->containsCustomIcon(entry1IconNew));
+
+    QCOMPARE(metaTarget->customIcon(group1Icon).pixel(0, 0), qRgb(1, 2, 3));
+    QCOMPARE(metaTarget->customIcon(group2Icon).pixel(0, 0), qRgb(4, 5, 6));
+}
+
 QTEST_GUILESS_MAIN(TestGroup)
