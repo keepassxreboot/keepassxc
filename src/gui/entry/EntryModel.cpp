@@ -227,8 +227,14 @@ QMimeData* EntryModel::mimeData(const QModelIndexList& indexes) const
         }
     }
 
-    data->setData(mimeTypes().first(), encoded);
-    return data;
+    if (seenEntries.isEmpty()) {
+        delete data;
+        return Q_NULLPTR;
+    }
+    else {
+        data->setData(mimeTypes().first(), encoded);
+        return data;
+    }
 }
 
 void EntryModel::entryAboutToAdd(Entry* entry)

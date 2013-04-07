@@ -313,8 +313,14 @@ QMimeData* GroupModel::mimeData(const QModelIndexList& indexes) const
         }
     }
 
-    data->setData(mimeTypes().first(), encoded);
-    return data;
+    if (seenGroups.isEmpty()) {
+        delete data;
+        return Q_NULLPTR;
+    }
+    else {
+        data->setData(mimeTypes().first(), encoded);
+        return data;
+    }
 }
 
 void GroupModel::groupDataChanged(Group* group)
