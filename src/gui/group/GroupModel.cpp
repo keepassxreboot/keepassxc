@@ -297,11 +297,20 @@ QMimeData* GroupModel::mimeData(const QModelIndexList& indexes) const
     QByteArray encoded;
     QDataStream stream(&encoded, QIODevice::WriteOnly);
 
+    QSet<Group*> seenGroups;
+
     for (int i = 0; i < indexes.size(); i++) {
         if (!indexes[i].isValid()) {
             continue;
         }
-        stream << m_db->uuid() << groupFromIndex(indexes[i])->uuid();
+
+        Group* group = groupFromIndex(indexes[i]);
+        if (!seenGroups.contains(group)) {
+            // make sure we don't add groups multiple times when we get indexes
+            // with the same row but different columns
+            stream << m_db->uuid() << group->uuid();
+            seenGroups.insert(group);
+        }
     }
 
     data->setData(mimeTypes().first(), encoded);

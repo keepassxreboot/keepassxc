@@ -211,12 +211,20 @@ QMimeData* EntryModel::mimeData(const QModelIndexList& indexes) const
     QByteArray encoded;
     QDataStream stream(&encoded, QIODevice::WriteOnly);
 
+    QSet<Entry*> seenEntries;
+
     for (int i = 0; i < indexes.size(); i++) {
         if (!indexes[i].isValid()) {
             continue;
         }
+
         Entry* entry = entryFromIndex(indexes[i]);
-        stream << entry->group()->database()->uuid() << entry->uuid();
+        if (!seenEntries.contains(entry)) {
+            // make sure we don't add entries multiple times when we get indexes
+            // with the same row but different columns
+            stream << entry->group()->database()->uuid() << entry->uuid();
+            seenEntries.insert(entry);
+        }
     }
 
     data->setData(mimeTypes().first(), encoded);
