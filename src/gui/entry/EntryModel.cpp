@@ -213,12 +213,12 @@ QMimeData* EntryModel::mimeData(const QModelIndexList& indexes) const
 
     QSet<Entry*> seenEntries;
 
-    for (int i = 0; i < indexes.size(); i++) {
-        if (!indexes[i].isValid()) {
+    Q_FOREACH (const QModelIndex& index, indexes) {
+        if (!index.isValid()) {
             continue;
         }
 
-        Entry* entry = entryFromIndex(indexes[i]);
+        Entry* entry = entryFromIndex(index);
         if (!seenEntries.contains(entry)) {
             // make sure we don't add entries multiple times when we get indexes
             // with the same row but different columns

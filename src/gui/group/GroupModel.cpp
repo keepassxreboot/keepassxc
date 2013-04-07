@@ -299,12 +299,12 @@ QMimeData* GroupModel::mimeData(const QModelIndexList& indexes) const
 
     QSet<Group*> seenGroups;
 
-    for (int i = 0; i < indexes.size(); i++) {
-        if (!indexes[i].isValid()) {
+    Q_FOREACH (const QModelIndex& index, indexes) {
+        if (!index.isValid()) {
             continue;
         }
 
-        Group* group = groupFromIndex(indexes[i]);
+        Group* group = groupFromIndex(index);
         if (!seenGroups.contains(group)) {
             // make sure we don't add groups multiple times when we get indexes
             // with the same row but different columns
