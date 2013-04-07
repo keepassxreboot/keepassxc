@@ -70,7 +70,7 @@ void EntryView::emitEntryActivationSignal(const QModelIndex& index)
 {
     Entry* entry = entryFromIndex(index);
 
-    if (m_sortModel->mapToSource(index).column() == 3) {
+    if (m_sortModel->mapToSource(index).column() == EntryModel::Url) {
         Q_EMIT openUrl(entry);
     }
     else {

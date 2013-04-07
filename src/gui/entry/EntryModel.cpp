@@ -122,27 +122,27 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
 
     if (role == Qt::DisplayRole) {
         switch (index.column()) {
-        case 0:
+        case ParentGroup:
             if (entry->group()) {
                 return entry->group()->name();
             }
             break;
-        case 1:
+        case Title:
             return entry->title();
-        case 2:
+        case Username:
             return entry->username();
-        case 3:
+        case Url:
             return entry->url();
         }
     }
     else if (role == Qt::DecorationRole) {
         switch (index.column()) {
-        case 0:
+        case ParentGroup:
             if (entry->group()) {
                 return entry->group()->iconPixmap();
             }
             break;
-        case 1:
+        case Title:
             if (entry->isExpired()) {
                 return databaseIcons()->iconPixmap(DatabaseIcons::ExpiredIconIndex);
             }
@@ -165,13 +165,13 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
 {
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
         switch (section) {
-        case 0:
+        case ParentGroup:
             return tr("Group");
-        case 1:
+        case Title:
             return tr("Title");
-        case 2:
+        case Username:
             return tr("Username");
-        case 3:
+        case Url:
             return tr("URL");
         }
     }

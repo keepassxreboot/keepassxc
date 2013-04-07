@@ -30,6 +30,14 @@ class EntryModel : public QAbstractTableModel
     Q_OBJECT
 
 public:
+    enum ModelColumn
+    {
+        ParentGroup = 0,
+        Title = 1,
+        Username = 2,
+        Url = 3
+    };
+
     explicit EntryModel(QObject* parent = Q_NULLPTR);
     Entry* entryFromIndex(const QModelIndex& index) const;
     QModelIndex indexFromEntry(Entry* entry) const;
