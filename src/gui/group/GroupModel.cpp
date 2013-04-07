@@ -182,7 +182,7 @@ Group* GroupModel::groupFromIndex(const QModelIndex& index) const
 
 Qt::DropActions GroupModel::supportedDropActions() const
 {
-    return Qt::MoveAction;
+    return Qt::MoveAction | Qt::CopyAction;
 }
 
 Qt::ItemFlags GroupModel::flags(const QModelIndex& modelIndex) const
@@ -203,7 +203,7 @@ bool GroupModel::dropMimeData(const QMimeData* data, Qt::DropAction action,
 {
     Q_UNUSED(column);
 
-    if (!data || (action != Qt::MoveAction) || !parent.isValid()) {
+    if (!data || (action != Qt::MoveAction && action != Qt::CopyAction) || !parent.isValid()) {
         return false;
     }
 
@@ -250,7 +250,15 @@ bool GroupModel::dropMimeData(const QMimeData* data, Qt::DropAction action,
             row--;
         }
 
-        dragGroup->setParent(parentGroup, row);
+        Group* group;
+        if (action == Qt::MoveAction) {
+            group = dragGroup;
+        }
+        else {
+            group = dragGroup->clone();
+        }
+
+        group->setParent(parentGroup, row);
     }
     else {
         if (row != -1) {
@@ -272,7 +280,15 @@ bool GroupModel::dropMimeData(const QMimeData* data, Qt::DropAction action,
                 continue;
             }
 
-            dragEntry->setGroup(parentGroup);
+            Entry* entry;
+            if (action == Qt::MoveAction) {
+                entry = dragEntry;
+            }
+            else {
+                entry = dragEntry->clone();
+            }
+
+            entry->setGroup(parentGroup);
         }
     }
 

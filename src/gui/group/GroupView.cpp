@@ -45,6 +45,7 @@ GroupView::GroupView(Database* db, QWidget* parent)
     setDragEnabled(true);
     viewport()->setAcceptDrops(true);
     setDropIndicatorShown(true);
+    setDefaultDropAction(Qt::MoveAction);
 }
 
 void GroupView::changeDatabase(Database* newDb)
@@ -54,6 +55,13 @@ void GroupView::changeDatabase(Database* newDb)
 
 void GroupView::dragMoveEvent(QDragMoveEvent* event)
 {
+    if (event->keyboardModifiers() & Qt::ControlModifier) {
+        event->setDropAction(Qt::CopyAction);
+    }
+    else {
+        event->setDropAction(Qt::MoveAction);
+    }
+
     QTreeView::dragMoveEvent(event);
 
     // entries may only be dropped on groups

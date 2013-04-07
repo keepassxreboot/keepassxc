@@ -28,7 +28,7 @@ EntryModel::EntryModel(QObject* parent)
     : QAbstractTableModel(parent)
     , m_group(Q_NULLPTR)
 {
-    setSupportedDragActions(Qt::MoveAction);
+    setSupportedDragActions(Qt::MoveAction | Qt::CopyAction);
 }
 
 Entry* EntryModel::entryFromIndex(const QModelIndex& index) const

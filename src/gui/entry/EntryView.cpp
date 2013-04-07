@@ -40,6 +40,9 @@ EntryView::EntryView(QWidget* parent)
     setSortingEnabled(true);
     setSelectionMode(QAbstractItemView::ExtendedSelection);
 
+    // QAbstractItemView::startDrag() uses this property as the default drag action
+    setDefaultDropAction(Qt::MoveAction);
+
     connect(this, SIGNAL(activated(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
     connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(entrySelectionChanged()));
     connect(m_model, SIGNAL(switchedToEntryListMode()), SLOT(switchToEntryListMode()));
