@@ -553,7 +553,7 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Entry");
 
-    Entry* entry = 0;
+    Entry* entry = Q_NULLPTR;
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "UUID") {
             Uuid uuid = readUuid();
