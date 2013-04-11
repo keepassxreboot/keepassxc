@@ -37,6 +37,7 @@ public:
     bool operator!=(const Uuid& other) const;
     static const int Length;
     static Uuid fromBase64(const QString& str);
+    static Uuid fromHex(const QString& str);
 
 private:
     QByteArray m_data;

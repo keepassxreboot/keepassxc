@@ -20,13 +20,16 @@
 #include "crypto/SymmetricCipherGcrypt.h"
 #include "crypto/SymmetricCipherSalsa20.h"
 
+SymmetricCipher::SymmetricCipher()
+    : m_backend(0)
+{
+}
+
 SymmetricCipher::SymmetricCipher(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
                                  SymmetricCipher::Direction direction, const QByteArray& key, const QByteArray& iv)
-    : m_backend(createBackend(algo, mode, direction))
+    : m_backend(0)
 {
-    m_backend->init();
-    m_backend->setKey(key);
-    m_backend->setIv(iv);
+    init(algo, mode, direction, key, iv);
 }
 
 SymmetricCipher::~SymmetricCipher()
@@ -50,12 +53,31 @@ SymmetricCipherBackend* SymmetricCipher::createBackend(SymmetricCipher::Algorith
     }
 }
 
+void SymmetricCipher::init(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
+                           SymmetricCipher::Direction direction, const QByteArray& key, const QByteArray& iv)
+{
+    Q_ASSERT(!m_backend);
+    m_backend.reset(createBackend(algo, mode, direction));
+    m_backend->init();
+    m_backend->setKey(key);
+    if (!iv.isNull())
+        m_backend->setIv(iv);
+}
+
 void SymmetricCipher::reset()
 {
+    Q_ASSERT(m_backend);
     m_backend->reset();
+}
+
+void SymmetricCipher::setIv(const QByteArray &iv)
+{
+    Q_ASSERT(m_backend);
+    m_backend->setIv(iv);
 }
 
 int SymmetricCipher::blockSize() const
 {
+    Q_ASSERT(m_backend);
     return m_backend->blockSize();
 }

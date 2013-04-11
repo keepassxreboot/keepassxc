@@ -1,0 +1,89 @@
+Qjson version xxxx, Date
+ 
+The following files are licensed under LGPL V2.1:
+------------------------------------------------
+src/json_parser.yy
+src/json_scanner.cpp
+src/json_scanner.h
+src/parser.cpp
+src/parser.h
+src/parser_p.h
+src/parserrunnable.cpp
+src/parserrunnable.h
+src/qjson_debug.h
+src/qjson_export.h
+src/qobjecthelper.cpp
+src/serializer.cpp
+src/qobjecthelper.h
+src/serializer.h
+src/serializerrunnable.cpp
+src/serializerrunnable.h
+tests/cmdline_tester/cmdline_tester.cpp
+tests/cmdline_tester/cmdlineparser.cpp
+tests/cmdline_tester/cmdlineparser.h
+tests/parser/testparser.cpp
+tests/qobjecthelper/person.h
+tests/qobjecthelper/testqobjecthelper.cpp
+tests/serializer/testserializer.cpp
+
+ 
+The following files are licensed under GPL V2  with Bison Exception:
+--------------------------------------------------------------------
+/src/json_parser.cc
+/src/stack.hh
+/src/location.hh
+/src/position.hh
+/src/json_parser.hh
+ 
+ 
+Copyrights:
+----------
+Copyright (C) 2002, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
+Copyright (C) 2009 Flavio Castelli <flavio@castelli.name> 2009 Frank Osterfeld <osterfeld@kde.org>
+Copyright (C) 2008 Flavio Castelli <flavio.castelli@gmail.com>
+Copyright (C) 2009 Till Adam <adam@kde.org>
+Copyright (C) 2009 Michael Leupold <lemma@confuego.org>
+Copyright (C) 2009 Flavio Castelli <flavio@castelli.name>
+Copyright (C) 2009 Frank Osterfeld <osterfeld@kde.org>
+Copyright (C) 2009 Pino Toscano <pino@kde.org>
+Copyright (C) 2010 Flavio Castelli <flavio@castelli.name>
+ 
+ 
+GNU LESSER GENERAL PUBLIC LICENSE Version 2.1, February 1999:
+-------------------------------------------------------------
+
+Checkout COPYING.lib
+ 
+ 
+GPL V2 with Bison Exception:
+----------------------------
+Copyright (C) 2002, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2, or (at your option)
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor,
+Boston, MA 02110-1301, USA.
+
+As a special exception, you may create a larger work that contains
+part or all of the Bison parser skeleton and distribute that work
+under terms of your choice, so long as that work isn't itself a
+parser generator using the skeleton or a modified version thereof
+as a parser skeleton.  Alternatively, if you modify or redistribute
+the parser skeleton itself, you may (at your option) remove this
+special exception, which will cause the skeleton and the resulting
+Bison output files to be licensed under the GNU General Public
+License without this special exception.
+
+This special exception was added by the Free Software Foundation in
+version 2.2 of Bison.
+

@@ -101,6 +101,9 @@ set(keepassx_SOURCES
     gui/group/EditGroupWidget.cpp
     gui/group/GroupModel.cpp
     gui/group/GroupView.cpp
+    http/Protocol.cpp
+    http/Server.cpp
+    http/Service.cpp
     keys/CompositeKey.cpp
     keys/FileKey.cpp
     keys/Key.h
@@ -163,6 +166,9 @@ set(keepassx_MOC
     gui/group/EditGroupWidget.h
     gui/group/GroupModel.h
     gui/group/GroupView.h
+    http/Protocol.h
+    http/Server.h
+    http/Service.h
     keys/CompositeKey_p.h
     streams/HashedBlockStream.h
     streams/LayeredStream.h
@@ -204,11 +210,17 @@ qt4_wrap_cpp(keepassx_SOURCES ${keepassx_MOC})
 add_library(keepassx_core STATIC ${keepassx_SOURCES})
 set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
 
+add_subdirectory(http/qhttpserver)
+add_subdirectory(http/qjson)
+
 add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE ${keepassx_SOURCES_MAINEXE})
 target_link_libraries(${PROGNAME}
                       keepassx_core
+                      qjson
+                      qhttpserver
                       ${QT_QTCORE_LIBRARY}
                       ${QT_QTGUI_LIBRARY}
+                      ${QT_QTNETWORK_LIBRARY}
                       ${GCRYPT_LIBRARIES}
                       ${ZLIB_LIBRARIES})
 
