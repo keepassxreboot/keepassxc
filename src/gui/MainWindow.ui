@@ -70,7 +70,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>20</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -143,6 +143,15 @@
     <property name="title">
      <string>View</string>
     </property>
+    <widget class="QMenu" name="menuToolbarIconSize">
+     <property name="title">
+      <string>Toolbar &amp;Icon Size</string>
+     </property>
+     <addaction name="actionToolbarIconSize16"/>
+     <addaction name="actionToolbarIconSize22"/>
+     <addaction name="actionToolbarIconSize28"/>
+    </widget>
+    <addaction name="menuToolbarIconSize"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEntries"/>
@@ -344,6 +353,30 @@
    </property>
    <property name="text">
     <string>Lock databases</string>
+   </property>
+  </action>
+  <action name="actionToolbarIconSize16">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;16x16</string>
+   </property>
+  </action>
+  <action name="actionToolbarIconSize22">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;22x22</string>
+   </property>
+  </action>
+  <action name="actionToolbarIconSize28">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>2&amp;8x28</string>
    </property>
   </action>
  </widget>

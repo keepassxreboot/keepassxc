@@ -43,9 +43,14 @@ MainWindow::MainWindow()
     QAction* toggleViewAction = m_ui->toolBar->toggleViewAction();
     toggleViewAction->setText(tr("Show toolbar"));
     m_ui->menuView->addAction(toggleViewAction);
+    int toolbarIconSize = config()->get("ToolbarIconSize", 20).toInt();
+    setToolbarIconSize(toolbarIconSize);
     bool showToolbar = config()->get("ShowToolbar").toBool();
     m_ui->toolBar->setVisible(showToolbar);
     connect(m_ui->toolBar, SIGNAL(visibilityChanged(bool)), this, SLOT(saveToolbarState(bool)));
+    connect(m_ui->actionToolbarIconSize16, SIGNAL(triggered()), this, SLOT(setToolbarIconSize16()));
+    connect(m_ui->actionToolbarIconSize22, SIGNAL(triggered()), this, SLOT(setToolbarIconSize22()));
+    connect(m_ui->actionToolbarIconSize28, SIGNAL(triggered()), this, SLOT(setToolbarIconSize28()));
 
     m_clearHistoryAction = new QAction("Clear history", m_ui->menuFile);
     m_lastDatabasesActions = new QActionGroup(m_ui->menuRecentDatabases);
@@ -418,6 +423,30 @@ void MainWindow::showGroupContextMenu(const QPoint& globalPos)
 void MainWindow::saveToolbarState(bool value)
 {
     config()->set("ShowToolbar", value);
+}
+
+void MainWindow::setToolbarIconSize(int size)
+{
+    config()->set("ToolbarIconSize", size);
+    m_ui->toolBar->setIconSize(QSize(size, size));
+    m_ui->actionToolbarIconSize16->setChecked(size == 16);
+    m_ui->actionToolbarIconSize22->setChecked(size == 22);
+    m_ui->actionToolbarIconSize28->setChecked(size == 28);
+}
+
+void MainWindow::setToolbarIconSize16()
+{
+    setToolbarIconSize(16);
+}
+
+void MainWindow::setToolbarIconSize22()
+{
+    setToolbarIconSize(22);
+}
+
+void MainWindow::setToolbarIconSize28()
+{
+    setToolbarIconSize(28);
 }
 
 void MainWindow::setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback)
