@@ -39,8 +39,10 @@ public:
     virtual QString generatePassword();
 
 private:
+    enum Access { Denied, Unknown, Allowed};
     Entry* getConfigEntry(bool create = false);
     bool matchUrlScheme(const QString &url);
+    Access checkAccess(const Entry *entry, const QString & host, const QString & submitHost, const QString & realm);
     bool removeFirstDomain(QString &hostname);
     Group *findCreateAddEntryGroup();
     QList<Entry *> searchEntries(const QString &text);

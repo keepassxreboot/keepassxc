@@ -101,6 +101,8 @@ set(keepassx_SOURCES
     gui/group/EditGroupWidget.cpp
     gui/group/GroupModel.cpp
     gui/group/GroupView.cpp
+    http/AccessControlDialog.cpp
+    http/EntryConfig.cpp
     http/Protocol.cpp
     http/Server.cpp
     http/Service.cpp
@@ -166,6 +168,8 @@ set(keepassx_MOC
     gui/group/EditGroupWidget.h
     gui/group/GroupModel.h
     gui/group/GroupView.h
+    http/AccessControlDialog.h
+    http/EntryConfig.h
     http/Protocol.h
     http/Server.h
     http/Service.h
@@ -196,6 +200,7 @@ set(keepassx_FORMS
     gui/entry/EditEntryWidgetHistory.ui
     gui/entry/EditEntryWidgetMain.ui
     gui/group/EditGroupWidgetMain.ui
+    http/AccessControlDialog.ui
 )
 
 if(MINGW)

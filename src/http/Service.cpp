@@ -11,17 +11,22 @@
  ***************************************************************************
  */
 
+#include <QtGui/QInputDialog>
+#include <QtGui/QMessageBox>
+#include <QtCore/QDebug>
+
 #include "Service.h"
 #include "Protocol.h"
+#include "EntryConfig.h"
+#include "AccessControlDialog.h"
+
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/Uuid.h"
 #include "core/PasswordGenerator.h"
-#include <QtGui/QInputDialog>
-#include <QtGui/QMessageBox>
-#include <QtCore/QDebug>
+
 
 Service::Service(DatabaseTabWidget *parent) :
     KeepassHttpProtocol::Server(parent),
@@ -121,8 +126,8 @@ QString Service::storeKey(const QString &key)
             //Indicate who wants to associate, and request user to enter the 'name' of association key
             id = QInputDialog::getText(0, tr("KeyPassX/Http: New key association request"),
                                        tr("You have received an association request for the above key. If you would like to "
-                                          "allow it access to your KeePassX database give it a unique name to identify and a"
-                                          "ccept it."),
+                                          "allow it access to your KeePassX database give it a unique name to identify and"
+                                          "accept it."),
                                        QLineEdit::Normal, QString(), &ok);
             if (!ok || id.isEmpty())
                 return QString();
@@ -182,31 +187,83 @@ QList<Entry*> Service::searchEntries(const QString &text)
     return entries;
 }
 
+Service::Access Service::checkAccess(const Entry *entry, const QString & host, const QString & submitHost, const QString & realm)
+{
+    EntryConfig config;
+    if (!config.load(entry))
+        return Unknown;  //not configured
+    if ((config.isAllowed(host)) && (submitHost.isEmpty() || config.isAllowed(submitHost)))
+        return Allowed;  //allowed
+    if ((config.isDenied(host)) || (!submitHost.isEmpty() && config.isDenied(submitHost)))
+        return Denied;   //denied
+    if (!realm.isEmpty() && config.realm() != realm)
+        return Denied;
+    return Unknown;      //not configured for this host
+}
+
 QList<KeepassHttpProtocol::Entry> Service::findMatchingEntries(const QString &id, const QString &url, const QString &submitUrl, const QString &realm)
 {
     QList<KeepassHttpProtocol::Entry> result;
+    QList<Entry*> pwEntriesToConfirm;
+
+    bool autoAccept = false;        //TODO: setting!
+    const QString host = QUrl(url).host();
+    const QString submitHost = QUrl(submitUrl).host();
     const QList<Entry*> pwEntries = searchEntries(url);
-    Q_FOREACH (Entry * entry, pwEntries) {       
-        //Filter accepted/denied entries
-        //        if (c.Allow.Contains(formHost) && (submitHost == null || c.Allow.Contains(submitHost)))
-        //            return true;
-        //        if (c.Deny.Contains(formHost) || (submitHost != null && c.Deny.Contains(submitHost)))
-        //            return false;
-        //        if (realm != null && c.Realm != realm)
-        //            return false;
 
-        //If we are unsure for some entries:
-        //- balloon to grant accessc if possible
-        //- if clicked, show confirmation dialog --> accept/reject (w/ list of items?)
-        //          The website XXX wants to access your credentials
-        //          MORE (---> if clicked, shows the list of returned entries)
-        //          [x] Ask me again                            [Allow] [Deny]
-        //      If accepted, store that entry can be accessed without confirmation
-        //- else, show only items which do not require validation
+    //Check entries for authorization
+    Q_FOREACH (Entry * entry, pwEntries) {
+        switch(checkAccess(entry, host, submitHost, realm)) {
+        case Denied:
+            continue;
 
-        //TODO: sort [--> need a flag], or do this in Server class [--> need an extra 'sort order' key in Entry, and we always compute it]
-        result << KeepassHttpProtocol::Entry(entry->title(), entry->username(), entry->password(), entry->uuid().toHex());
+        case Unknown:
+            if (!autoAccept) {
+                pwEntriesToConfirm.append(entry);
+                break;
+            }
+            //fall through
+        case Allowed:
+            result << KeepassHttpProtocol::Entry(entry->title(), entry->username(), entry->password(), entry->uuid().toHex());
+            break;
+        }
     }
+
+    //If unsure, ask user for confirmation
+    if (!pwEntriesToConfirm.isEmpty()) {
+        //TODO: balloon to grant access + timeout
+
+        AccessControlDialog dlg;
+        dlg.setUrl(url);
+        dlg.setItems(pwEntriesToConfirm);
+        //dlg.setRemember();        //TODO: setting!
+
+        int res = dlg.exec();
+        if (dlg.remember()) {
+            Q_FOREACH (Entry * entry, pwEntries) {
+                EntryConfig config;
+                config.load(entry);
+                if (res == QDialog::Accepted) {
+                    config.allow(host);
+                    if (!submitHost.isEmpty() && host != submitHost)
+                        config.allow(submitHost);
+                } else if (res == QDialog::Rejected) {
+                    config.deny(host);
+                    if (!submitHost.isEmpty() && host != submitHost)
+                        config.deny(submitHost);
+                }
+                if (!realm.isEmpty())
+                    config.setRealm(realm);
+                config.save(entry);
+            }
+        }
+        if (res == QDialog::Accepted) {
+            Q_FOREACH (Entry * entry, pwEntries)
+                result << KeepassHttpProtocol::Entry(entry->title(), entry->username(), entry->password(), entry->uuid().toHex());
+        }
+    }
+
+    //TODO: sort [--> need a flag], or do this in Server class [--> need an extra 'sort order' key in Entry, and we always compute it]
     return result;
 }
 
@@ -259,6 +316,16 @@ void Service::addEntry(const QString &id, const QString &login, const QString &p
         entry->setUsername(login);
         entry->setPassword(password);
         entry->setGroup(group);
+
+        const QString host = QUrl(url).host();
+        const QString submitHost = QUrl(submitUrl).host();
+        EntryConfig config;
+        config.allow(host);
+        if (!submitHost.isEmpty())
+            config.allow(submitHost);
+        if (!realm.isEmpty())
+            config.setRealm(realm);
+        config.save(entry);
     }
 }
 
