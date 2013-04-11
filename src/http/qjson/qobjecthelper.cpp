@@ -41,8 +41,8 @@ QObjectHelper::~QObjectHelper()
   delete d;
 }
 
-QVariantMap QObjectHelper::qobject2qvariant( const QObject* object,
-                              const QStringList& ignoredProperties)
+QVariantMap QObjectHelper::qobject2qvariant(const QObject* object, Flags flags,
+                                            const QStringList& ignoredProperties)
 {
   QVariantMap result;
   const QMetaObject *metaobject = object->metaObject();
@@ -55,10 +55,19 @@ QVariantMap QObjectHelper::qobject2qvariant( const QObject* object,
       continue;
 
     QVariant value = object->property(name);
+    if (value.isNull() && !flags.testFlag(Flag_StoreNullVariants))
+        continue;
+    if (!value.isValid() && !flags.testFlag(Flag_StoreInvalidVariants))
+        continue;
     result[QLatin1String(name)] = value;
  }
   return result;
 }
+
+QVariantMap QObjectHelper::qobject2qvariant(const QObject *object, const QStringList &ignoredProperties)
+ {
+    return qobject2qvariant(object, Flag_All, ignoredProperties);
+ }
 
 void QObjectHelper::qvariant2qobject(const QVariantMap& variant, QObject* object)
 {

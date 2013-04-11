@@ -105,25 +105,6 @@ static QString encrypt(const QString & data, SymmetricCipher & cipher)
     return encode64(encrypt2(data.toUtf8(), cipher));
 }
 
-static QVariant qobject2qvariant(const QObject * object, const QStringList ignoredProperties = QStringList(QString(QLatin1String("objectName"))))
-{
-    QVariantMap result;
-    const QMetaObject *metaobject = object->metaObject();
-    int count = metaobject->propertyCount();
-    for (int i=0; i<count; ++i) {
-        QMetaProperty metaproperty = metaobject->property(i);
-        const char *name = metaproperty.name();
-
-        if (ignoredProperties.contains(QLatin1String(name)) || (!metaproperty.isReadable()))
-            continue;
-
-        QVariant value = object->property(name);
-        if (!value.isNull() /*&& value.isValid()*/)   //Do not add NULL or invalid fields
-            result[QLatin1String(name)] = value;
-    }
-    return result;
-}
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Request
@@ -315,7 +296,7 @@ void Response::setVerifier(QString key)
 
 QString Response::toJson()
 {
-    QVariant result = qobject2qvariant(this);
+    QVariant result = QJson::QObjectHelper::qobject2qvariant(this, QJson::QObjectHelper::Flag_None);
 
     QJson::Serializer s;
     s.setIndentMode(QJson::IndentCompact);
@@ -360,7 +341,7 @@ QVariant Response::getEntries() const
     QList<QVariant> res;
     res.reserve(m_entries.size());
     Q_FOREACH(const Entry &entry, m_entries)
-        res.append(qobject2qvariant(&entry));
+        res.append(QJson::QObjectHelper::qobject2qvariant(&entry, QJson::QObjectHelper::Flag_None));
     return res;
 }
 
@@ -426,8 +407,6 @@ void Response::setError(const QString &error)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// ResponseEntry
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-Q_DECLARE_METATYPE(Entry)
 
 Entry::Entry()
 {}
