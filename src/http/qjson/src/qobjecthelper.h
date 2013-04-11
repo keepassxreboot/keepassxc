@@ -120,14 +120,24 @@ namespace QJson {
       QObjectHelper();
       ~QObjectHelper();
 
+    enum Flag {
+        Flag_None,
+        Flag_StoreNullVariants,
+        Flag_StoreInvalidVariants,
+        Flag_All = Flag_StoreNullVariants | Flag_StoreInvalidVariants
+    };
+    Q_DECLARE_FLAGS(Flags, Flag)
+
     /**
     * This method converts a QObject instance into a QVariantMap.
     *
     * @param object The QObject instance to be converted.
     * @param ignoredProperties Properties that won't be converted.
     */
-    static QVariantMap qobject2qvariant( const QObject* object,
-                                  const QStringList& ignoredProperties = QStringList(QString(QLatin1String("objectName"))));
+    static QVariantMap qobject2qvariant(const QObject* object, Flags flags = Flag_All,
+                                        const QStringList& ignoredProperties = QStringList(QString(QLatin1String("objectName"))));
+    static QVariantMap qobject2qvariant(const QObject* object,
+                                        const QStringList& ignoredProperties);
 
     /**
     * This method converts a QVariantMap instance into a QObject
