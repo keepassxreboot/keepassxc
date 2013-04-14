@@ -111,6 +111,7 @@ public:
     void removeHistoryItems(const QList<Entry*>& historyEntries);
     void truncateHistory();
     Entry* clone() const;
+    void copyDataFrom(const Entry* other);
     QString resolvePlaceholders(const QString& str) const;
 
     /**

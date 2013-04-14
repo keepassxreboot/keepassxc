@@ -452,6 +452,16 @@ Entry* Entry::clone() const
     return entry;
 }
 
+void Entry::copyDataFrom(const Entry* other)
+{
+    setUpdateTimeinfo(false);
+    m_data = other->m_data;
+    m_attributes->copyDataFrom(other->m_attributes);
+    m_attachments->copyDataFrom(other->m_attachments);
+    m_autoTypeAssociations->copyDataFrom(other->m_autoTypeAssociations);
+    setUpdateTimeinfo(true);
+}
+
 void Entry::beginUpdate()
 {
     Q_ASSERT(!m_tmpHistoryItem);

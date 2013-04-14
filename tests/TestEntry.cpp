@@ -38,5 +38,40 @@ void TestEntry::testHistoryItemDeletion()
 
     delete entry;
 }
+void TestEntry::testCopyDataFrom()
+{
+    Entry* entry = new Entry();
+
+    entry->setTitle("testtitle");
+    entry->attributes()->set("attr1", "abc");
+    entry->attributes()->set("attr2", "def");
+
+    entry->attachments()->set("test", "123");
+    entry->attachments()->set("test2", "456");
+
+    AutoTypeAssociations::Association assoc;
+    assoc.window = "1";
+    assoc.sequence = "2";
+    entry->autoTypeAssociations()->add(assoc);
+    assoc.window = "3";
+    assoc.sequence = "4";
+    entry->autoTypeAssociations()->add(assoc);
+
+    Entry* entry2 = new Entry();
+    entry2->copyDataFrom(entry);
+    delete entry;
+
+    QCOMPARE(entry2->title(), QString("testtitle"));
+    QCOMPARE(entry2->attributes()->value("attr1"), QString("abc"));
+    QCOMPARE(entry2->attributes()->value("attr2"), QString("def"));
+
+    QCOMPARE(entry2->attachments()->keys().size(), 2);
+    QCOMPARE(entry2->attachments()->value("test"), QByteArray("123"));
+    QCOMPARE(entry2->attachments()->value("test2"), QByteArray("456"));
+
+    QCOMPARE(entry2->autoTypeAssociations()->size(), 2);
+    QCOMPARE(entry2->autoTypeAssociations()->get(0).window, QString("1"));
+    QCOMPARE(entry2->autoTypeAssociations()->get(1).window, QString("3"));
+}
 
 QTEST_GUILESS_MAIN(TestEntry)
