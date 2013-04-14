@@ -490,6 +490,12 @@ Group* Group::clone() const
     return clonedGroup;
 }
 
+void Group::copyDataFrom(const Group* other)
+{
+    m_data = other->m_data;
+    m_lastTopVisibleEntry = other->m_lastTopVisibleEntry;
+}
+
 void Group::addEntry(Entry* entry)
 {
     Q_ASSERT(entry);

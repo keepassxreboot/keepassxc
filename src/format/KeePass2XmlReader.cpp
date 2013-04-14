@@ -411,7 +411,10 @@ Group* KeePass2XmlReader::parseGroup()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Group");
 
-    Group* group = Q_NULLPTR;
+    Group* group = new Group();
+    group->setUpdateTimeinfo(false);
+    QList<Group*> children;
+    QList<Entry*> entries;
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "UUID") {
             Uuid uuid = readUuid();
@@ -419,7 +422,7 @@ Group* KeePass2XmlReader::parseGroup()
                 raiseError(1);
             }
             else {
-                group = getGroup(uuid);
+                group->setUuid(uuid);
             }
         }
         else if (m_xml.name() == "Name") {
@@ -493,18 +496,32 @@ Group* KeePass2XmlReader::parseGroup()
         else if (m_xml.name() == "Group") {
             Group* newGroup = parseGroup();
             if (newGroup) {
-                newGroup->setParent(group);
+                children.append(newGroup);
             }
         }
         else if (m_xml.name() == "Entry") {
             Entry* newEntry = parseEntry(false);
             if (newEntry) {
-                newEntry->setGroup(group);
+                entries.append(newEntry);
             }
         }
         else {
             skipCurrentElement();
         }
+    }
+
+    Group* tmpGroup = group;
+    group = getGroup(tmpGroup->uuid());
+    group->copyDataFrom(tmpGroup);
+    group->setUpdateTimeinfo(false);
+    delete tmpGroup;
+
+    Q_FOREACH (Group* child, children) {
+        child->setParent(group);
+    }
+
+    Q_FOREACH (Entry* entry, entries) {
+        entry->setGroup(group);
     }
 
     return group;

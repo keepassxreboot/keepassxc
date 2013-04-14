@@ -101,6 +101,7 @@ public:
     QList<const Group*> groupsRecursive(bool includeSelf) const;
     QSet<Uuid> customIconsRecursive() const;
     Group* clone() const;
+    void copyDataFrom(const Group* other);
 
     QList<Entry*> search(const QString& searchTerm, Qt::CaseSensitivity caseSensitivity,
                          bool resolveInherit = true);
