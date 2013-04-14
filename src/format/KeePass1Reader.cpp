@@ -387,9 +387,12 @@ Group* KeePass1Reader::readGroup(QIODevice* cipherStream)
     group->setParent(m_tmpParent);
 
     TimeInfo timeInfo;
-    // TODO: make sure these are initalized
+
     quint32 groupId;
     quint32 groupLevel;
+    bool groupIdSet = false;
+    bool groupLevelSet = false;
+
     bool ok;
     bool reachedEnd = false;
 
@@ -419,6 +422,7 @@ Group* KeePass1Reader::readGroup(QIODevice* cipherStream)
                 return Q_NULLPTR;
             }
             groupId = Endian::bytesToUInt32(fieldData, KeePass1::BYTEORDER);
+            groupIdSet = true;
             break;
         case 0x0002:
             group->setName(QString::fromUtf8(fieldData.constData()));
@@ -483,6 +487,7 @@ Group* KeePass1Reader::readGroup(QIODevice* cipherStream)
                 return Q_NULLPTR;
             }
             groupLevel = Endian::bytesToUInt16(fieldData, KeePass1::BYTEORDER);
+            groupLevelSet = true;
             break;
         }
         case 0x0009:
@@ -496,6 +501,10 @@ Group* KeePass1Reader::readGroup(QIODevice* cipherStream)
             return Q_NULLPTR;
         }
     } while (!reachedEnd);
+
+    if (!groupIdSet || !groupLevelSet) {
+        return Q_NULLPTR;
+    }
 
     group->setUuid(Uuid::random());
     group->setTimeInfo(timeInfo);
