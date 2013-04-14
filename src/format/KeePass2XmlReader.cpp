@@ -307,18 +307,26 @@ void KeePass2XmlReader::parseIcon()
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Icon");
 
     Uuid uuid;
+    QImage icon;
+    bool uuidSet = false;
+    bool iconSet = false;
+
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "UUID") {
             uuid = readUuid();
+            uuidSet = true;
         }
         else if (m_xml.name() == "Data") {
-            QImage icon;
             icon.loadFromData(readBinary());
-            m_meta->addCustomIcon(uuid, icon);
+            iconSet = true;
         }
         else {
             skipCurrentElement();
         }
+    }
+
+    if (uuidSet && iconSet) {
+        m_meta->addCustomIcon(uuid, icon);
     }
 }
 
@@ -372,16 +380,26 @@ void KeePass2XmlReader::parseCustomDataItem()
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Item");
 
     QString key;
+    QString value;
+    bool keySet = false;
+    bool valueSet = false;
+
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Key") {
             key = readString();
+            keySet = true;
         }
         else if (m_xml.name() == "Value") {
-            m_meta->addCustomField(key, readString());
+            value = readString();
+            valueSet = true;
         }
         else {
             skipCurrentElement();
         }
+    }
+
+    if (keySet && valueSet) {
+        m_meta->addCustomField(key, value);
     }
 }
 
@@ -671,13 +689,19 @@ void KeePass2XmlReader::parseEntryString(Entry* entry)
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "String");
 
     QString key;
+    QString value;
+    bool protect;
+    bool keySet = false;
+    bool valueSet = false;
+
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Key") {
             key = readString();
+            keySet = true;
         }
         else if (m_xml.name() == "Value") {
             QXmlStreamAttributes attr = m_xml.attributes();
-            QString value = readString();
+            value = readString();
 
             bool isProtected = attr.value("Protected") == "True";
             bool protectInMemory = attr.value("ProtectInMemory") == "True";
@@ -691,11 +715,16 @@ void KeePass2XmlReader::parseEntryString(Entry* entry)
                 }
             }
 
-            entry->attributes()->set(key, value, isProtected || protectInMemory);
+            protect = isProtected || protectInMemory;
+            valueSet = true;
         }
         else {
             skipCurrentElement();
         }
+    }
+
+    if (keySet && valueSet) {
+        entry->attributes()->set(key, value, protect);
     }
 }
 
@@ -706,9 +735,14 @@ QPair<QString, QString> KeePass2XmlReader::parseEntryBinary(Entry* entry)
     QPair<QString, QString> poolRef;
 
     QString key;
+    QByteArray value;
+    bool keySet = false;
+    bool valueSet = false;
+
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Key") {
             key = readString();
+            keySet = true;
         }
         else if (m_xml.name() == "Value") {
             QXmlStreamAttributes attr = m_xml.attributes();
@@ -719,7 +753,7 @@ QPair<QString, QString> KeePass2XmlReader::parseEntryBinary(Entry* entry)
             }
             else {
                 // format compatbility
-                QByteArray value = readBinary();
+                value = readBinary();
                 bool isProtected = attr.hasAttribute("Protected")
                         && (attr.value("Protected") == "True");
 
@@ -727,12 +761,16 @@ QPair<QString, QString> KeePass2XmlReader::parseEntryBinary(Entry* entry)
                     m_randomStream->processInPlace(value);
                 }
 
-                entry->attachments()->set(key, value);
+                valueSet = true;
             }
         }
         else {
             skipCurrentElement();
         }
+    }
+
+    if (keySet && valueSet) {
+        entry->attachments()->set(key, value);
     }
 
     return poolRef;
@@ -766,17 +804,25 @@ void KeePass2XmlReader::parseAutoTypeAssoc(Entry* entry)
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Association");
 
     AutoTypeAssociations::Association assoc;
+    bool windowSet = false;
+    bool sequenceSet = false;
+
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Window") {
             assoc.window = readString();
+            windowSet = true;
         }
         else if (m_xml.name() == "KeystrokeSequence") {
             assoc.sequence = readString();
-            entry->autoTypeAssociations()->add(assoc);
+            sequenceSet = true;
         }
         else {
             skipCurrentElement();
         }
+    }
+
+    if (windowSet && sequenceSet) {
+        entry->autoTypeAssociations()->add(assoc);
     }
 }
 
