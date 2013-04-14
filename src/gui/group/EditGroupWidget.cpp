@@ -29,6 +29,7 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
     , m_editGroupWidgetIcons(new EditWidgetIcons())
     , m_editWidgetProperties(new EditWidgetProperties())
     , m_group(Q_NULLPTR)
+    , m_database(Q_NULLPTR)
 {
     m_mainUi->setupUi(m_editGroupWidgetMain);
 
