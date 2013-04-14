@@ -18,7 +18,6 @@
 #include "EntryView.h"
 
 #include "gui/SortFilterHideProxyModel.h"
-#include "gui/entry/EntryModel.h"
 
 EntryView::EntryView(QWidget* parent)
     : QTreeView(parent)
@@ -43,7 +42,7 @@ EntryView::EntryView(QWidget* parent)
     // QAbstractItemView::startDrag() uses this property as the default drag action
     setDefaultDropAction(Qt::MoveAction);
 
-    connect(this, SIGNAL(activated(QModelIndex)), SLOT(emitEntryActivationSignal(QModelIndex)));
+    connect(this, SIGNAL(activated(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
     connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(entrySelectionChanged()));
     connect(m_model, SIGNAL(switchedToEntryListMode()), SLOT(switchToEntryListMode()));
     connect(m_model, SIGNAL(switchedToGroupMode()), SLOT(switchToGroupMode()));
@@ -66,16 +65,11 @@ bool EntryView::inEntryListMode()
     return m_inEntryListMode;
 }
 
-void EntryView::emitEntryActivationSignal(const QModelIndex& index)
+void EntryView::emitEntryActivated(const QModelIndex& index)
 {
     Entry* entry = entryFromIndex(index);
 
-    if (m_sortModel->mapToSource(index).column() == EntryModel::Url) {
-        Q_EMIT openUrl(entry);
-    }
-    else {
-        Q_EMIT entryActivated(entry);
-    }
+    Q_EMIT entryActivated(entry, static_cast<EntryModel::ModelColumn>(m_sortModel->mapToSource(index).column()));
 }
 
 void EntryView::setModel(QAbstractItemModel* model)
