@@ -28,6 +28,8 @@
 #include "format/KeePass2RandomStream.h"
 #include "streams/QtIOCompressor"
 
+typedef QPair<QString, QString> StringPair;
+
 KeePass2XmlReader::KeePass2XmlReader()
     : m_randomStream(Q_NULLPTR)
     , m_db(Q_NULLPTR)
@@ -553,7 +555,11 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Entry");
 
-    Entry* entry = Q_NULLPTR;
+    Entry* entry = new Entry();
+    entry->setUpdateTimeinfo(false);
+    QList<Entry*> historyItems;
+    QList<StringPair> binaryRefs;
+
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "UUID") {
             Uuid uuid = readUuid();
@@ -561,14 +567,7 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
                 raiseError(6);
             }
             else {
-                if (history) {
-                    entry = new Entry();
-                    entry->setUpdateTimeinfo(false);
-                    entry->setUuid(uuid);
-                }
-                else {
-                    entry = getEntry(uuid);
-                }
+                entry->setUuid(uuid);
             }
         }
         else if (m_xml.name() == "IconID") {
@@ -605,7 +604,10 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
             parseEntryString(entry);
         }
         else if (m_xml.name() == "Binary") {
-            parseEntryBinary(entry);
+            QPair<QString, QString> ref = parseEntryBinary(entry);
+            if (!ref.first.isNull() && !ref.second.isNull()) {
+                binaryRefs.append(ref);
+            }
         }
         else if (m_xml.name() == "AutoType") {
             parseAutoType(entry);
@@ -615,12 +617,33 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
                 raiseError(8);
             }
             else {
-                parseEntryHistory(entry);
+                historyItems = parseEntryHistory();
             }
         }
         else {
             skipCurrentElement();
         }
+    }
+
+    if (history) {
+        entry->setUpdateTimeinfo(false);
+    }
+    else {
+        Entry* tmpEntry = entry;
+
+        entry = getEntry(tmpEntry->uuid());
+        entry->copyDataFrom(tmpEntry);
+        entry->setUpdateTimeinfo(false);
+
+        delete tmpEntry;
+    }
+
+    Q_FOREACH (Entry* historyItem, historyItems) {
+        entry->addHistoryItem(historyItem);
+    }
+
+    Q_FOREACH (const StringPair& ref, binaryRefs) {
+        m_binaryMap.insertMulti(ref.first, qMakePair(entry, ref.second));
     }
 
     return entry;
@@ -659,9 +682,11 @@ void KeePass2XmlReader::parseEntryString(Entry* entry)
     }
 }
 
-void KeePass2XmlReader::parseEntryBinary(Entry* entry)
+QPair<QString, QString> KeePass2XmlReader::parseEntryBinary(Entry* entry)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Binary");
+
+    QPair<QString, QString> poolRef;
 
     QString key;
     while (!m_xml.error() && m_xml.readNextStartElement()) {
@@ -672,7 +697,7 @@ void KeePass2XmlReader::parseEntryBinary(Entry* entry)
             QXmlStreamAttributes attr = m_xml.attributes();
 
             if (attr.hasAttribute("Ref")) {
-                m_binaryMap.insertMulti(attr.value("Ref").toString(), qMakePair(entry, key));
+                poolRef = qMakePair(attr.value("Ref").toString(), key);
                 m_xml.skipCurrentElement();
             }
             else {
@@ -692,6 +717,8 @@ void KeePass2XmlReader::parseEntryBinary(Entry* entry)
             skipCurrentElement();
         }
     }
+
+    return poolRef;
 }
 
 void KeePass2XmlReader::parseAutoType(Entry* entry)
@@ -736,19 +763,22 @@ void KeePass2XmlReader::parseAutoTypeAssoc(Entry* entry)
     }
 }
 
-void KeePass2XmlReader::parseEntryHistory(Entry* entry)
+QList<Entry*> KeePass2XmlReader::parseEntryHistory()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "History");
 
+    QList<Entry*> historyItems;
+
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Entry") {
-            Entry* historyItem = parseEntry(true);
-            entry->addHistoryItem(historyItem);
+            historyItems.append(parseEntry(true));
         }
         else {
             skipCurrentElement();
         }
     }
+
+    return historyItems;
 }
 
 TimeInfo KeePass2XmlReader::parseTimes()

@@ -63,10 +63,10 @@ private:
     void parseDeletedObject();
     Entry* parseEntry(bool history);
     void parseEntryString(Entry* entry);
-    void parseEntryBinary(Entry* entry);
+    QPair<QString, QString> parseEntryBinary(Entry* entry);
     void parseAutoType(Entry* entry);
     void parseAutoTypeAssoc(Entry* entry);
-    void parseEntryHistory(Entry* entry);
+    QList<Entry*> parseEntryHistory();
     TimeInfo parseTimes();
 
     QString readString();
