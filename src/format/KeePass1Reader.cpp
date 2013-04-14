@@ -355,6 +355,9 @@ SymmetricCipherStream* KeePass1Reader::testKeys(const QString& password, const Q
 
 QByteArray KeePass1Reader::key(const QByteArray& password, const QByteArray& keyfileData)
 {
+    Q_ASSERT(!m_masterSeed.isEmpty());
+    Q_ASSERT(!m_transformSeed.isEmpty());
+
     KeePass1Key key;
     key.setPassword(password);
     key.setKeyfileData(keyfileData);
