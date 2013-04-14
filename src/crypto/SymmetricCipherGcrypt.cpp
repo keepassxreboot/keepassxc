@@ -24,6 +24,7 @@ SymmetricCipherGcrypt::SymmetricCipherGcrypt(SymmetricCipher::Algorithm algo, Sy
     : m_algo(gcryptAlgo(algo))
     , m_mode(gcryptMode(mode))
     , m_direction(direction)
+    , m_blockSize(-1)
 {
     Q_ASSERT(Crypto::initalized());
 }
