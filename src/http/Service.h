@@ -45,6 +45,7 @@ private:
     Access checkAccess(const Entry *entry, const QString & host, const QString & submitHost, const QString & realm);
     bool removeFirstDomain(QString &hostname);
     Group *findCreateAddEntryGroup();
+    KeepassHttpProtocol::Entry prepareEntry(const Entry *entry);
     QList<Entry *> searchEntries(const QString &text);
 
     DatabaseTabWidget * const m_dbTabWidget;

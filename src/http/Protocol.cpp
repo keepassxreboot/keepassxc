@@ -33,7 +33,8 @@ static const char * const STR_SET_LOGIN = "set-login";
 static const char * const STR_ASSOCIATE = "associate";
 static const char * const STR_TEST_ASSOCIATE = "test-associate";
 static const char * const STR_GENERATE_PASSWORD = "generate-password";
-static const char * const STR_VERSION = "1.5.0.0";
+static const char * const STR_VERSION = "1.6.0.0";
+
 }/*namespace KeepassHttpProtocol*/
 
 using namespace KeepassHttpProtocol;
@@ -340,7 +341,7 @@ QVariant Response::getEntries() const
 
     QList<QVariant> res;
     res.reserve(m_entries.size());
-    Q_FOREACH(const Entry &entry, m_entries)
+    Q_FOREACH (const Entry &entry, m_entries)
         res.append(QJson::QObjectHelper::qobject2qvariant(&entry, QJson::QObjectHelper::Flag_None));
     return res;
 }
@@ -353,11 +354,15 @@ void Response::setEntries(const QList<Entry> &entries)
 
     QList<Entry> encryptedEntries;
     encryptedEntries.reserve(m_count);
-    Q_FOREACH(const Entry &entry, entries) {
-        encryptedEntries << Entry(encrypt(entry.name(), m_cipher),
-                                  encrypt(entry.login(), m_cipher),
-                                  entry.password().isNull() ? QString() : encrypt(entry.password(), m_cipher),
-                                  encrypt(entry.uuid(), m_cipher));
+    Q_FOREACH (const Entry &entry, entries) {
+        Entry encryptedEntry(encrypt(entry.name(), m_cipher),
+                             encrypt(entry.login(), m_cipher),
+                             entry.password().isNull() ? QString() : encrypt(entry.password(), m_cipher),
+                             encrypt(entry.uuid(), m_cipher));
+        Q_FOREACH (const StringField & field, entry.stringFields())
+            encryptedEntry.addStringField(encrypt(field.key(), m_cipher),
+                                          encrypt(field.value(), m_cipher));
+        encryptedEntries << encryptedEntry;
     }
     m_entries = encryptedEntries;
 }
@@ -405,7 +410,7 @@ void Response::setError(const QString &error)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// ResponseEntry
+/// Entry
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Entry::Entry()
@@ -423,7 +428,8 @@ Entry::Entry(const Entry & other):
     m_login(other.m_login),
     m_password(other.m_password),
     m_uuid(other.m_uuid),
-    m_name(other.m_name)
+    m_name(other.m_name),
+    m_stringFields(other.m_stringFields)
 {}
 
 Entry & Entry::operator=(const Entry & other)
@@ -432,6 +438,7 @@ Entry & Entry::operator=(const Entry & other)
     m_password = other.m_password;
     m_uuid = other.m_uuid;
     m_name = other.m_name;
+    m_stringFields = other.m_stringFields;
     return *this;
 }
 
@@ -453,4 +460,59 @@ QString Entry::uuid() const
 QString Entry::password() const
 {
     return m_password;
+}
+
+QList<StringField> Entry::stringFields() const
+{
+    return m_stringFields;
+}
+
+void Entry::addStringField(const QString &key, const QString &value)
+{
+    m_stringFields.append(StringField(key, value));
+}
+
+QVariant Entry::getStringFields() const
+{
+    if (m_stringFields.isEmpty())
+        return QVariant();
+
+    QList<QVariant> res;
+    res.reserve(m_stringFields.size());
+    Q_FOREACH (const StringField &stringfield, m_stringFields)
+        res.append(QJson::QObjectHelper::qobject2qvariant(&stringfield, QJson::QObjectHelper::Flag_None));
+    return res;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// StringField
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+StringField::StringField()
+{}
+
+StringField::StringField(const QString &key, const QString &value):
+    m_key(key), m_value(value)
+{}
+
+StringField::StringField(const StringField &other):
+    m_key(other.m_key), m_value(other.m_value)
+{}
+
+StringField &StringField::operator =(const StringField &other)
+{
+    m_key = m_key;
+    m_value = m_value;
+    return *this;
+}
+
+QString StringField::key() const
+{
+    return m_key;
+}
+
+QString StringField::value() const
+{
+    return m_value;
 }

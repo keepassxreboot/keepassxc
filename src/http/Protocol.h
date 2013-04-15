@@ -99,13 +99,34 @@ private:
     mutable SymmetricCipher m_cipher;
 };
 
+class StringField : public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(QString Key   READ key  )
+    Q_PROPERTY(QString Value READ value)
+
+public:
+    StringField();
+    StringField(const QString& key, const QString& value);
+    StringField(const StringField & other);
+    StringField &operator =(const StringField &other);
+
+    QString key() const;
+    QString value() const;
+
+private:
+    QString m_key;
+    QString m_value;
+};
+
 class Entry : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString Login    READ login   )
-    Q_PROPERTY(QString Password READ password)
-    Q_PROPERTY(QString Uuid     READ uuid    )
-    Q_PROPERTY(QString Name     READ name    )
+    Q_PROPERTY(QString Login         READ login          )
+    Q_PROPERTY(QString Password      READ password       )
+    Q_PROPERTY(QString Uuid          READ uuid           )
+    Q_PROPERTY(QString Name          READ name           )
+    Q_PROPERTY(QVariant StringFields READ getStringFields)
 
 public:
     Entry();
@@ -117,12 +138,17 @@ public:
     QString password() const;
     QString uuid() const;
     QString name() const;
+    QList<StringField> stringFields() const;
+    void addStringField(const QString& key, const QString& value);
 
 private:
+    QVariant getStringFields() const;
+
     QString m_login;
     QString m_password;
     QString m_uuid;
     QString m_name;
+    QList<StringField> m_stringFields;
 };
 
 class Response : public QObject

@@ -34,11 +34,11 @@ Service::Service(DatabaseTabWidget *parent) :
 {
 }
 
-static const char KEEPASSHTTP_UUID_DATA[] = {
+static const unsigned char KEEPASSHTTP_UUID_DATA[] = {
     0x34, 0x69, 0x7a, 0x40, 0x8a, 0x5b, 0x41, 0xc0,
     0x9f, 0x36, 0x89, 0x7d, 0x62, 0x3e, 0xcb, 0x31
 };
-static const Uuid KEEPASSHTTP_UUID = Uuid(QByteArray::fromRawData(KEEPASSHTTP_UUID_DATA, sizeof(KEEPASSHTTP_UUID_DATA)));
+static const Uuid KEEPASSHTTP_UUID = Uuid(QByteArray::fromRawData(reinterpret_cast<const char *>(KEEPASSHTTP_UUID_DATA), sizeof(KEEPASSHTTP_UUID_DATA)));
 static const char KEEPASSHTTP_NAME[] = "KeePassHttp Settings";
 static const char ASSOCIATE_KEY_PREFIX[] = "AES Key: ";
 static const char KEEPASSHTTP_GROUP_NAME[] = "KeePassHttp Passwords";   //Group where new KeePassHttp password are stored
@@ -201,6 +201,20 @@ Service::Access Service::checkAccess(const Entry *entry, const QString & host, c
     return Unknown;      //not configured for this host
 }
 
+KeepassHttpProtocol::Entry Service::prepareEntry(const Entry* entry)
+{
+    bool returnStringFields = true; //TODO: setting!
+    KeepassHttpProtocol::Entry res(entry->title(), entry->username(), entry->password(), entry->uuid().toHex());
+    if (returnStringFields)
+    {
+        const EntryAttributes * attr = entry->attributes();
+        Q_FOREACH (const QString& key, attr->keys())
+            if (key.startsWith(QLatin1String("KPH: ")))
+                res.addStringField(key, attr->value(key));
+    }
+    return res;
+}
+
 QList<KeepassHttpProtocol::Entry> Service::findMatchingEntries(const QString &id, const QString &url, const QString &submitUrl, const QString &realm)
 {
     QList<KeepassHttpProtocol::Entry> result;
@@ -224,7 +238,7 @@ QList<KeepassHttpProtocol::Entry> Service::findMatchingEntries(const QString &id
             }
             //fall through
         case Allowed:
-            result << KeepassHttpProtocol::Entry(entry->title(), entry->username(), entry->password(), entry->uuid().toHex());
+            result << prepareEntry(entry);
             break;
         }
     }
@@ -259,7 +273,7 @@ QList<KeepassHttpProtocol::Entry> Service::findMatchingEntries(const QString &id
         }
         if (res == QDialog::Accepted) {
             Q_FOREACH (Entry * entry, pwEntries)
-                result << KeepassHttpProtocol::Entry(entry->title(), entry->username(), entry->password(), entry->uuid().toHex());
+                result << prepareEntry(entry);
         }
     }
 
