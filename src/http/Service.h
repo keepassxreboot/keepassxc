@@ -23,19 +23,19 @@ class Service : public KeepassHttpProtocol::Server
     Q_OBJECT
 
 public:
-    explicit Service(DatabaseTabWidget *parent = 0);
+    explicit Service(DatabaseTabWidget* parent = 0);
 
     virtual bool isDatabaseOpened() const;
     virtual bool openDatabase();
     virtual QString getDatabaseRootUuid();
     virtual QString getDatabaseRecycleBinUuid();
-    virtual QString getKey(const QString &id);
-    virtual QString storeKey(const QString &key);
-    virtual QList<KeepassHttpProtocol::Entry> findMatchingEntries(const QString &id, const QString &url, const QString & submitUrl, const QString & realm);
-    virtual int countMatchingEntries(const QString &id, const QString &url, const QString & submitUrl, const QString & realm);
-    virtual QList<KeepassHttpProtocol::Entry> searchAllEntries(const QString &id);
-    virtual void addEntry(const QString &id, const QString &login, const QString &password, const QString &url, const QString &submitUrl, const QString &realm);
-    virtual void updateEntry(const QString &id, const QString &uuid, const QString &login, const QString &password, const QString &url);
+    virtual QString getKey(const QString& id);
+    virtual QString storeKey(const QString& key);
+    virtual QList<KeepassHttpProtocol::Entry> findMatchingEntries(const QString& id, const QString& url, const QString&  submitUrl, const QString&  realm);
+    virtual int countMatchingEntries(const QString& id, const QString& url, const QString&  submitUrl, const QString&  realm);
+    virtual QList<KeepassHttpProtocol::Entry> searchAllEntries(const QString& id);
+    virtual void addEntry(const QString& id, const QString& login, const QString& password, const QString& url, const QString& submitUrl, const QString& realm);
+    virtual void updateEntry(const QString& id, const QString& uuid, const QString& login, const QString& password, const QString& url);
     virtual QString generatePassword();
 
 public Q_SLOTS:
@@ -45,12 +45,12 @@ public Q_SLOTS:
 private:
     enum Access { Denied, Unknown, Allowed};
     Entry* getConfigEntry(bool create = false);
-    bool matchUrlScheme(const QString &url);
-    Access checkAccess(const Entry *entry, const QString & host, const QString & submitHost, const QString & realm);
-    bool removeFirstDomain(QString &hostname);
+    bool matchUrlScheme(const QString& url);
+    Access checkAccess(const Entry* entry, const QString&  host, const QString&  submitHost, const QString&  realm);
+    bool removeFirstDomain(QString& hostname);
     Group *findCreateAddEntryGroup();
-    KeepassHttpProtocol::Entry prepareEntry(const Entry *entry);
-    QList<Entry *> searchEntries(const QString &text);
+    KeepassHttpProtocol::Entry prepareEntry(const Entry* entry);
+    QList<Entry*> searchEntries(const QString& text);
 
     DatabaseTabWidget * const m_dbTabWidget;
 };

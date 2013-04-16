@@ -29,7 +29,7 @@
 #include "core/PasswordGenerator.h"
 
 
-Service::Service(DatabaseTabWidget *parent) :
+Service::Service(DatabaseTabWidget* parent) :
     KeepassHttpProtocol::Server(parent),
     m_dbTabWidget(parent)
 {
@@ -69,7 +69,7 @@ Entry* Service::getConfigEntry(bool create)
 
 bool Service::isDatabaseOpened() const
 {
-    if (DatabaseWidget * dbWidget = m_dbTabWidget->currentDatabaseWidget())
+    if (DatabaseWidget* dbWidget = m_dbTabWidget->currentDatabaseWidget())
         switch(dbWidget->currentMode()) {
         case DatabaseWidget::None:
         case DatabaseWidget::LockedMode:
@@ -95,18 +95,18 @@ bool Service::openDatabase()
 
 QString Service::getDatabaseRootUuid()
 {
-    if (DatabaseWidget * dbWidget = m_dbTabWidget->currentDatabaseWidget())
-        if (Database * db = dbWidget->database())
-            if (Group * rootGroup = db->rootGroup())
+    if (DatabaseWidget* dbWidget = m_dbTabWidget->currentDatabaseWidget())
+        if (Database* db = dbWidget->database())
+            if (Group* rootGroup = db->rootGroup())
                 return rootGroup->uuid().toHex();
     return QString();
 }
 
 QString Service::getDatabaseRecycleBinUuid()
 {
-    if (DatabaseWidget * dbWidget = m_dbTabWidget->currentDatabaseWidget())
-        if (Database * db = dbWidget->database())
-            if (Group * recycleBin = db->metadata()->recycleBin())
+    if (DatabaseWidget* dbWidget = m_dbTabWidget->currentDatabaseWidget())
+        if (Database* db = dbWidget->database())
+            if (Group* recycleBin = db->metadata()->recycleBin())
                 return recycleBin->uuid().toHex();
     return QString();
 }
@@ -137,7 +137,7 @@ QString Service::storeKey(const QString &key)
         } while(config->attributes()->contains(QLatin1String(ASSOCIATE_KEY_PREFIX) + id) &&
                 QMessageBox::warning(0, tr("KeyPassX/Http: Overwrite existing key?"),
                                      tr("A shared encryption-key with the name \"%1\" already exists.\nDo you want to overwrite it?").arg(id),
-                                     QMessageBox::Yes|QMessageBox::No) == QMessageBox::No);
+                                     QMessageBox::Yes | QMessageBox::No) == QMessageBox::No);
 
         config->attributes()->set(QLatin1String(ASSOCIATE_KEY_PREFIX) + id, key, true);
     }
@@ -217,7 +217,7 @@ KeepassHttpProtocol::Entry Service::prepareEntry(const Entry* entry)
     return res;
 }
 
-QList<KeepassHttpProtocol::Entry> Service::findMatchingEntries(const QString &id, const QString &url, const QString &submitUrl, const QString &realm)
+QList<KeepassHttpProtocol::Entry> Service::findMatchingEntries(const QString& /*id*/, const QString& url, const QString& submitUrl, const QString& realm)
 {
     QList<KeepassHttpProtocol::Entry> result;
     QList<Entry*> pwEntriesToConfirm;
