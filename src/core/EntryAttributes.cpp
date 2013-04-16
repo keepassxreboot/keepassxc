@@ -47,6 +47,11 @@ QString EntryAttributes::value(const QString& key) const
     return m_attributes.value(key);
 }
 
+bool EntryAttributes::contains(const QString &key) const
+{
+    return m_attributes.contains(key);
+}
+
 bool EntryAttributes::isProtected(const QString& key) const
 {
     return m_protectedAttributes.contains(key);

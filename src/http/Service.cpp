@@ -13,6 +13,7 @@
 
 #include <QtGui/QInputDialog>
 #include <QtGui/QMessageBox>
+#include <QtGui/QProgressDialog>
 #include <QtCore/QDebug>
 
 #include "Service.h"
@@ -131,11 +132,12 @@ QString Service::storeKey(const QString &key)
                                        QLineEdit::Normal, QString(), &ok);
             if (!ok || id.isEmpty())
                 return QString();
+
             //Warn if association key already exists
-        } while(!config->attributes()->value(QLatin1String(ASSOCIATE_KEY_PREFIX) + id).isEmpty() &&
-                QMessageBox(QMessageBox::Warning, tr("KeyPassX/Http: Overwrite existing key?"),
-                            tr("A shared encryption-key with the name \"%1\" already exists.\nDo you want to overwrite it?").arg(id),
-                            QMessageBox::Yes|QMessageBox::No).exec() == QMessageBox::No);
+        } while(config->attributes()->contains(QLatin1String(ASSOCIATE_KEY_PREFIX) + id) &&
+                QMessageBox::warning(0, tr("KeyPassX/Http: Overwrite existing key?"),
+                                     tr("A shared encryption-key with the name \"%1\" already exists.\nDo you want to overwrite it?").arg(id),
+                                     QMessageBox::Yes|QMessageBox::No) == QMessageBox::No);
 
         config->attributes()->set(QLatin1String(ASSOCIATE_KEY_PREFIX) + id, key, true);
     }
@@ -352,9 +354,9 @@ void Service::updateEntry(const QString &id, const QString &uuid, const QString 
                 if (u != login || entry->password() != password) {
                     bool autoAllow = false;                 //TODO: setting to request confirmation/auto-allow
                     if (   autoAllow
-                        || QMessageBox(QMessageBox::Warning, tr("KeyPassX/Http: Update Entry"),
-                                       tr("Do you want to update the information in {0} - {1}?").arg(QUrl(url).host()).arg(u),
-                                       QMessageBox::Yes|QMessageBox::No).exec() == QMessageBox::Yes ) {
+                        || QMessageBox::warning(0, tr("KeyPassX/Http: Update Entry"),
+                                                tr("Do you want to update the information in %1 - %2?").arg(QUrl(url).host()).arg(u),
+                                                QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes ) {
                         entry->beginUpdate();
                         entry->setUsername(login);
                         entry->setPassword(password);
@@ -371,4 +373,79 @@ QString Service::generatePassword()
     return pwGenerator->generatePassword(20,
                                          PasswordGenerator::LowerLetters | PasswordGenerator::UpperLetters | PasswordGenerator::Numbers,
                                          PasswordGenerator::ExcludeLookAlike | PasswordGenerator::CharFromEveryGroup);
+}
+
+void Service::removeSharedEncryptionKeys()
+{
+    if (!isDatabaseOpened()) {
+        QMessageBox::critical(0, tr("KeyPassX/Http: Database locked!"),
+                              tr("The active database is locked!\n"
+                                 "Please unlock the selected database or choose another one which is unlocked."),
+                              QMessageBox::Ok);
+    } else if (Entry* entry = getConfigEntry()) {
+        QStringList keysToRemove;
+        Q_FOREACH (const QString& key, entry->attributes()->keys())
+            if (key.startsWith(ASSOCIATE_KEY_PREFIX))
+                keysToRemove << key;
+
+        if(keysToRemove.count()) {
+            entry->beginUpdate();
+            Q_FOREACH (const QString& key, keysToRemove)
+                entry->attributes()->remove(key);
+            entry->endUpdate();
+
+            const int count = keysToRemove.count();
+            QMessageBox::information(0, tr("KeyPassX/Http: Removed keys from database"),
+                                     tr("Successfully removed %1 encryption-%2 from KeePassX/Http Settings.").arg(count).arg(count ? "keys" : "key"),
+                                     QMessageBox::Ok);
+        } else {
+            QMessageBox::information(0, tr("KeyPassX/Http: No keys found"),
+                                     tr("No shared encryption-keys found in KeePassHttp Settings."),
+                                     QMessageBox::Ok);
+        }
+    } else {
+        QMessageBox::information(0, tr("KeyPassX/Http: Settings not available!"),
+                                 tr("The active database does not contain an entry of KeePassHttp Settings."),
+                                 QMessageBox::Ok);
+    }
+}
+
+void Service::removeStoredPermissions()
+{
+    if (!isDatabaseOpened()) {
+        QMessageBox::critical(0, tr("KeyPassX/Http: Database locked!"),
+                              tr("The active database is locked!\n"
+                                 "Please unlock the selected database or choose another one which is unlocked."),
+                              QMessageBox::Ok);
+    } else {
+        Database * db = m_dbTabWidget->currentDatabaseWidget()->database();
+        QList<Entry*> entries = db->rootGroup()->entriesRecursive();
+
+        QProgressDialog progress(tr("Removing stored permissions..."), tr("Abort"), 0, entries.count());
+        progress.setWindowModality(Qt::WindowModal);
+
+        uint counter = 0;
+        Q_FOREACH (Entry* entry, entries) {
+            if (progress.wasCanceled())
+                return;
+            if (entry->attributes()->contains(KEEPASSHTTP_NAME)) {
+                entry->beginUpdate();
+                entry->attributes()->remove(KEEPASSHTTP_NAME);
+                entry->endUpdate();
+                counter ++;
+            }
+            progress.setValue(progress.value() + 1);
+        }
+        progress.reset();
+
+        if (counter > 0) {
+            QMessageBox::information(0, tr("KeyPassX/Http: Removed permissions"),
+                                     tr("Successfully removed permissions from %1 %2.").arg(counter).arg(counter ? "entries" : "entry"),
+                                     QMessageBox::Ok);
+        } else {
+            QMessageBox::information(0, tr("KeyPassX/Http: No entry with permissions found!"),
+                                     tr("The active database does not contain an entry with permissions."),
+                                     QMessageBox::Ok);
+        }
+    }
 }
