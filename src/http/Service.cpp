@@ -43,6 +43,7 @@ static const Uuid KEEPASSHTTP_UUID = Uuid(QByteArray::fromRawData(reinterpret_ca
 static const char KEEPASSHTTP_NAME[] = "KeePassHttp Settings";
 static const char ASSOCIATE_KEY_PREFIX[] = "AES Key: ";
 static const char KEEPASSHTTP_GROUP_NAME[] = "KeePassHttp Passwords";   //Group where new KeePassHttp password are stored
+static int        KEEPASSHTTP_DEFAULT_ICON = 1;
 //private const int DEFAULT_NOTIFICATION_TIME = 5000;
 
 Entry* Service::getConfigEntry(bool create)
@@ -314,7 +315,7 @@ Group * Service::findCreateAddEntryGroup()
                 group = new Group();
                 group->setUuid(Uuid::random());
                 group->setName(groupName);
-                group->setIcon(Group::DefaultIconNumber);   //TODO: WorldIconNumber
+                group->setIcon(KEEPASSHTTP_DEFAULT_ICON);
                 group->setParent(rootGroup);
                 return group;
             }
@@ -328,7 +329,7 @@ void Service::addEntry(const QString &id, const QString &login, const QString &p
         entry->setUuid(Uuid::random());
         entry->setTitle(QUrl(url).host());
         entry->setUrl(url);
-        entry->setIcon(Entry::DefaultIconNumber);           //TODO: WorldIconNumber
+        entry->setIcon(KEEPASSHTTP_DEFAULT_ICON);
         entry->setUsername(login);
         entry->setPassword(password);
         entry->setGroup(group);
