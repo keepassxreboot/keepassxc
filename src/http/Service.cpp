@@ -257,7 +257,7 @@ QList<KeepassHttpProtocol::Entry> Service::findMatchingEntries(const QString& /*
 
         int res = dlg.exec();
         if (dlg.remember()) {
-            Q_FOREACH (Entry * entry, pwEntries) {
+            Q_FOREACH (Entry * entry, pwEntriesToConfirm) {
                 EntryConfig config;
                 config.load(entry);
                 if (res == QDialog::Accepted) {
@@ -275,7 +275,7 @@ QList<KeepassHttpProtocol::Entry> Service::findMatchingEntries(const QString& /*
             }
         }
         if (res == QDialog::Accepted) {
-            Q_FOREACH (Entry * entry, pwEntries)
+            Q_FOREACH (Entry * entry, pwEntriesToConfirm)
                 result << prepareEntry(entry);
         }
     }
