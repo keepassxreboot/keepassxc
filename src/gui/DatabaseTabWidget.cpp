@@ -32,7 +32,6 @@
 #include "gui/FileDialog.h"
 #include "gui/entry/EntryView.h"
 #include "gui/group/GroupView.h"
-#include "http/Service.h"
 
 DatabaseManagerStruct::DatabaseManagerStruct()
     : dbWidget(Q_NULLPTR)
@@ -54,8 +53,6 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
 
     connect(this, SIGNAL(tabCloseRequested(int)), SLOT(closeDatabase(int)));
     connect(autoType(), SIGNAL(globalShortcutTriggered()), SLOT(performGlobalAutoType()));
-
-    (new Service(this))->start();
 }
 
 DatabaseTabWidget::~DatabaseTabWidget()

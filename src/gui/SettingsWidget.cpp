@@ -22,6 +22,27 @@
 #include "autotype/AutoType.h"
 #include "core/Config.h"
 
+class SettingsWidget::ExtraPage
+{
+public:
+    ExtraPage(ISettingsPage* page, QWidget* widget): settingsPage(page), widget(widget)
+    {}
+
+    void loadSettings() const
+    {
+        settingsPage->loadSettings(widget);
+    }
+
+    void saveSettings() const
+    {
+        settingsPage->saveSettings(widget);
+    }
+
+private:
+    QSharedPointer<ISettingsPage> settingsPage;
+    QWidget*                      widget;
+};
+
 SettingsWidget::SettingsWidget(QWidget* parent)
     : EditWidget(parent)
     , m_secWidget(new QWidget())
@@ -50,6 +71,14 @@ SettingsWidget::~SettingsWidget()
 {
 }
 
+void SettingsWidget::addSettingsPage(ISettingsPage *page)
+{
+    QWidget * widget = page->createWidget();
+    widget->setParent(this);
+    m_extraPages.append(ExtraPage(page, widget));
+    add(page->name(), widget);
+}
+
 void SettingsWidget::loadSettings()
 {
     m_generalUi->rememberLastDatabasesCheckBox->setChecked(config()->get("RememberLastDatabases").toBool());
@@ -66,6 +95,9 @@ void SettingsWidget::loadSettings()
     m_secUi->clearClipboardCheckBox->setChecked(config()->get("security/clearclipboard").toBool());
     m_secUi->clearClipboardSpinBox->setValue(config()->get("security/clearclipboardtimeout").toInt());
 
+    Q_FOREACH (const ExtraPage& page, m_extraPages)
+        page.loadSettings();
+
     setCurrentRow(0);
 }
 
@@ -79,6 +111,9 @@ void SettingsWidget::saveSettings()
     config()->set("GlobalAutoTypeModifiers", static_cast<int>(m_generalUi->autoTypeShortcutWidget->modifiers()));
     config()->set("security/clearclipboard", m_secUi->clearClipboardCheckBox->isChecked());
     config()->set("security/clearclipboardtimeout", m_secUi->clearClipboardSpinBox->value());
+
+    Q_FOREACH (const ExtraPage& page, m_extraPages)
+        page.saveSettings();
 
     Q_EMIT editFinished(true);
 }
