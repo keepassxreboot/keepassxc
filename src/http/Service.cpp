@@ -218,30 +218,82 @@ KeepassHttpProtocol::Entry Service::prepareEntry(const Entry* entry)
     return res;
 }
 
+int Service::sortPriority(const Entry* entry, const QString& host, const QString& submitUrl, const QString& baseSubmitUrl) const
+{
+    QUrl url(entry->url());
+    if (url.scheme().isEmpty())
+        url.setScheme("http");
+    const QString entryURL = url.toString(QUrl::StripTrailingSlash);
+    const QString baseEntryURL = url.toString(QUrl::StripTrailingSlash | QUrl::RemovePath | QUrl::RemoveQuery | QUrl::RemoveFragment);
+
+    if (submitUrl == entryURL)
+        return 100;
+    if (submitUrl.startsWith(entryURL) && entryURL != host && baseSubmitUrl != entryURL)
+        return 90;
+    if (submitUrl.startsWith(baseEntryURL) && entryURL != host && baseSubmitUrl != baseEntryURL)
+        return 80;
+    if (entryURL == host)
+        return 70;
+    if (entryURL == baseSubmitUrl)
+        return 60;
+    if (entryURL.startsWith(submitUrl))
+        return 50;
+    if (entryURL.startsWith(baseSubmitUrl) && baseSubmitUrl != host)
+        return 40;
+    if (submitUrl.startsWith(entryURL))
+        return 30;
+    if (submitUrl.startsWith(baseEntryURL))
+        return 20;
+    if (entryURL.startsWith(host))
+        return 10;
+    if (host.startsWith(entryURL))
+        return 5;
+    return 0;
+}
+
+class Service::SortEntries
+{
+public:
+    SortEntries(const QHash<const Entry*, int>& priorities, const QString & field):
+        m_priorities(priorities), m_field(field)
+    {}
+
+    bool operator()(const Entry* left, const Entry* right) const
+    {
+        int res = m_priorities.value(left) - m_priorities.value(right);
+        if (res == 0)
+            return QString::localeAwareCompare(left->attributes()->value(m_field), right->attributes()->value(m_field)) < 0;
+        return res < 0;
+    }
+
+private:
+    const QHash<const Entry*, int>& m_priorities;
+    const QString m_field;
+};
+
 QList<KeepassHttpProtocol::Entry> Service::findMatchingEntries(const QString& /*id*/, const QString& url, const QString& submitUrl, const QString& realm)
 {
-    QList<KeepassHttpProtocol::Entry> result;
-    QList<Entry*> pwEntriesToConfirm;
-
-    bool autoAccept = false;        //TODO: setting!
+    const bool autoAccept = false;        //TODO: setting!
     const QString host = QUrl(url).host();
     const QString submitHost = QUrl(submitUrl).host();
-    const QList<Entry*> pwEntries = searchEntries(url);
 
     //Check entries for authorization
-    Q_FOREACH (Entry * entry, pwEntries) {
+    QList<Entry*> pwEntriesToConfirm;
+    QList<Entry*> pwEntries;
+    Q_FOREACH (Entry * entry, searchEntries(url)) {
         switch(checkAccess(entry, host, submitHost, realm)) {
         case Denied:
             continue;
 
         case Unknown:
-            if (!autoAccept) {
+            if (autoAccept)
+                pwEntries.append(entry);
+            else
                 pwEntriesToConfirm.append(entry);
-                break;
-            }
-            //fall through
+            break;
+
         case Allowed:
-            result << prepareEntry(entry);
+            pwEntries.append(entry);
             break;
         }
     }
@@ -274,13 +326,35 @@ QList<KeepassHttpProtocol::Entry> Service::findMatchingEntries(const QString& /*
                 config.save(entry);
             }
         }
-        if (res == QDialog::Accepted) {
-            Q_FOREACH (Entry * entry, pwEntriesToConfirm)
-                result << prepareEntry(entry);
-        }
+        if (res == QDialog::Accepted)
+            pwEntries.append(pwEntriesToConfirm);
     }
 
-    //TODO: sort [--> need a flag], or do this in Server class [--> need an extra 'sort order' key in Entry, and we always compute it]
+    //Sort results
+    const bool sortSelection = true;
+    if (sortSelection) {
+        QUrl url(submitUrl);
+        if (url.scheme().isEmpty())
+            url.setScheme("http");
+        const QString submitUrl = url.toString(QUrl::StripTrailingSlash);
+        const QString baseSubmitURL = url.toString(QUrl::StripTrailingSlash | QUrl::RemovePath | QUrl::RemoveQuery | QUrl::RemoveFragment);
+
+        //Cache priorities
+        QHash<const Entry *, int> priorities;
+        priorities.reserve(pwEntries.size());
+        Q_FOREACH (const Entry * entry, pwEntries)
+            priorities.insert(entry, sortPriority(entry, host, submitUrl, baseSubmitURL));
+
+        //Sort by priorities
+        const bool sortByTitle = true;  //TODO: setting
+        qSort(pwEntries.begin(), pwEntries.end(), SortEntries(priorities, sortByTitle ? "Title" : "UserName"));
+    }
+
+    //Fill the list
+    QList<KeepassHttpProtocol::Entry> result;
+    result.reserve(result.size());
+    Q_FOREACH (Entry * entry, pwEntries)
+        result << prepareEntry(entry);
     return result;
 }
 

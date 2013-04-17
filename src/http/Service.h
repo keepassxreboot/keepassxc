@@ -49,6 +49,8 @@ private:
     Access checkAccess(const Entry* entry, const QString&  host, const QString&  submitHost, const QString&  realm);
     bool removeFirstDomain(QString& hostname);
     Group *findCreateAddEntryGroup();
+    class SortEntries;
+    int sortPriority(const Entry *entry, const QString &host, const QString &submitUrl, const QString &baseSubmitUrl) const;
     KeepassHttpProtocol::Entry prepareEntry(const Entry* entry);
     QList<Entry*> searchEntries(const QString& text);
 
