@@ -20,6 +20,7 @@
 #include "Protocol.h"
 #include "EntryConfig.h"
 #include "AccessControlDialog.h"
+#include "HttpSettings.h"
 
 #include "core/Database.h"
 #include "core/Entry.h"
@@ -27,13 +28,6 @@
 #include "core/Metadata.h"
 #include "core/Uuid.h"
 #include "core/PasswordGenerator.h"
-
-
-Service::Service(DatabaseTabWidget* parent) :
-    KeepassHttpProtocol::Server(parent),
-    m_dbTabWidget(parent)
-{
-}
 
 static const unsigned char KEEPASSHTTP_UUID_DATA[] = {
     0x34, 0x69, 0x7a, 0x40, 0x8a, 0x5b, 0x41, 0xc0,
@@ -45,6 +39,14 @@ static const char ASSOCIATE_KEY_PREFIX[] = "AES Key: ";
 static const char KEEPASSHTTP_GROUP_NAME[] = "KeePassHttp Passwords";   //Group where new KeePassHttp password are stored
 static int        KEEPASSHTTP_DEFAULT_ICON = 1;
 //private const int DEFAULT_NOTIFICATION_TIME = 5000;
+
+Service::Service(DatabaseTabWidget* parent) :
+    KeepassHttpProtocol::Server(parent),
+    m_dbTabWidget(parent)
+{
+    if (HttpSettings::isEnabled())
+        start();
+}
 
 Entry* Service::getConfigEntry(bool create)
 {
@@ -85,11 +87,13 @@ bool Service::isDatabaseOpened() const
 
 bool Service::openDatabase()
 {
+    if (!HttpSettings::unlockDatabase())
+        return false;
     if (DatabaseWidget * dbWidget = m_dbTabWidget->currentDatabaseWidget())
         if (dbWidget->currentMode() == DatabaseWidget::LockedMode) {
             //- show notification
-            //- open window
-            //- wait a few seconds for user to unlock...
+            //- open & focus main window
+            //- wait a few seconds for user to unlock (unlockedDatabase)
         }
     return false;
 }
@@ -206,10 +210,8 @@ Service::Access Service::checkAccess(const Entry *entry, const QString & host, c
 
 KeepassHttpProtocol::Entry Service::prepareEntry(const Entry* entry)
 {
-    bool returnStringFields = true; //TODO: setting!
     KeepassHttpProtocol::Entry res(entry->title(), entry->username(), entry->password(), entry->uuid().toHex());
-    if (returnStringFields)
-    {
+    if (HttpSettings::supportKphFields()) {
         const EntryAttributes * attr = entry->attributes();
         Q_FOREACH (const QString& key, attr->keys())
             if (key.startsWith(QLatin1String("KPH: ")))
@@ -273,7 +275,7 @@ private:
 
 QList<KeepassHttpProtocol::Entry> Service::findMatchingEntries(const QString& /*id*/, const QString& url, const QString& submitUrl, const QString& realm)
 {
-    const bool autoAccept = false;        //TODO: setting!
+    const bool alwaysAllowAccess = HttpSettings::alwaysAllowAccess();
     const QString host = QUrl(url).host();
     const QString submitHost = QUrl(submitUrl).host();
 
@@ -286,7 +288,7 @@ QList<KeepassHttpProtocol::Entry> Service::findMatchingEntries(const QString& /*
             continue;
 
         case Unknown:
-            if (autoAccept)
+            if (alwaysAllowAccess)
                 pwEntries.append(entry);
             else
                 pwEntriesToConfirm.append(entry);
@@ -346,8 +348,7 @@ QList<KeepassHttpProtocol::Entry> Service::findMatchingEntries(const QString& /*
             priorities.insert(entry, sortPriority(entry, host, submitUrl, baseSubmitURL));
 
         //Sort by priorities
-        const bool sortByTitle = true;  //TODO: setting
-        qSort(pwEntries.begin(), pwEntries.end(), SortEntries(priorities, sortByTitle ? "Title" : "UserName"));
+        qSort(pwEntries.begin(), pwEntries.end(), SortEntries(priorities, HttpSettings::sortByTitle() ? "Title" : "UserName"));
     }
 
     //Fill the list
@@ -427,8 +428,7 @@ void Service::updateEntry(const QString &id, const QString &uuid, const QString 
             if (Entry * entry = db->resolveEntry(Uuid::fromHex(uuid))) {
                 QString u = entry->username();
                 if (u != login || entry->password() != password) {
-                    bool autoAllow = false;                 //TODO: setting to request confirmation/auto-allow
-                    if (   autoAllow
+                    if (   HttpSettings::alwaysAllowUpdate()
                         || QMessageBox::warning(0, tr("KeyPassX/Http: Update Entry"),
                                                 tr("Do you want to update the information in %1 - %2?").arg(QUrl(url).host()).arg(u),
                                                 QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes ) {
@@ -444,10 +444,9 @@ void Service::updateEntry(const QString &id, const QString &uuid, const QString 
 QString Service::generatePassword()
 {
     PasswordGenerator * pwGenerator = passwordGenerator();
-    //TODO: password generator settings
-    return pwGenerator->generatePassword(20,
-                                         PasswordGenerator::LowerLetters | PasswordGenerator::UpperLetters | PasswordGenerator::Numbers,
-                                         PasswordGenerator::ExcludeLookAlike | PasswordGenerator::CharFromEveryGroup);
+    return pwGenerator->generatePassword(HttpSettings::passwordLength(),
+                                         HttpSettings::passwordCharClasses(),
+                                         HttpSettings::passwordGeneratorFlags());
 }
 
 void Service::removeSharedEncryptionKeys()
