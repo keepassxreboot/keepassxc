@@ -21,7 +21,7 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item row="2" column="0">
     <widget class="QCheckBox" name="modifiedExpandedChangedCheckBox">
      <property name="text">
       <string>Mark as modified on expanded state changes</string>
@@ -31,29 +31,36 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
+   <item row="4" column="0">
     <widget class="QCheckBox" name="autoSaveAfterEveryChangeCheckBox">
      <property name="text">
       <string>Automatically save after every change</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
+   <item row="3" column="0">
     <widget class="QCheckBox" name="autoSaveOnExitCheckBox">
      <property name="text">
       <string>Automatically save on exit</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="0">
+   <item row="5" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
       <string>Global Auto-Type shortcut</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="1">
+   <item row="5" column="1">
     <widget class="ShortcutWidget" name="autoTypeShortcutWidget"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="QCheckBox" name="openPreviousDatabasesOnStartupCheckBox">
+     <property name="text">
+      <string>Open previous databases on startup</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

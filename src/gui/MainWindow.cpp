@@ -398,15 +398,21 @@ void MainWindow::databaseTabChanged(int tabIndex)
 void MainWindow::closeEvent(QCloseEvent* event)
 {
     openDatabases.clear();
-    connect(m_ui->tabWidget, SIGNAL(databaseWithFileClosed(QString)), this, SLOT(rememberOpenDatabases(QString)));
+    bool openPreviousDatabasesOnStartup = config()->get("OpenPreviousDatabasesOnStartup").toBool();
+
+    if (openPreviousDatabasesOnStartup) {
+        connect(m_ui->tabWidget, SIGNAL(databaseWithFileClosed(QString)), this, SLOT(rememberOpenDatabases(QString)));
+    }
+
     if (!m_ui->tabWidget->closeAllDatabases()) {
         event->ignore();
     }
     else {
         event->accept();
     }
-    disconnect(m_ui->tabWidget, SIGNAL(databaseWithFileClosed(QString)), this, SLOT(rememberOpenDatabases(QString)));
-    if (config()->get("OpenPreviousDatabasesOnStartup").toBool()) {
+
+    if (openPreviousDatabasesOnStartup) {
+        disconnect(m_ui->tabWidget, SIGNAL(databaseWithFileClosed(QString)), this, SLOT(rememberOpenDatabases(QString)));
         config()->set("OpenDatabasesOnExit", openDatabases);
     }
 }
