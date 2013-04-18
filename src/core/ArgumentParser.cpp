@@ -17,7 +17,7 @@
 
 #include "ArgumentParser.h"
 
-QStringList ArgumentParser::argumentKeys = QStringList() << "password" << "config" << "filename";
+const QStringList ArgumentParser::argumentKeys = QStringList() << "password" << "config" << "filename";
 
 QHash<QString, QString> ArgumentParser::parseArguments(const QStringList& args)
 {
