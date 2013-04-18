@@ -28,7 +28,9 @@ class ArgumentParser
 
 public:
     static QHash<QString, QString> parseArguments(const QStringList& args);
-
+private:
+    static QStringList argumentKeys;
+    static void parseOption(int& i, QHash<QString, QString>& argumentMap, const QStringList& args);
 };
 
 #endif // KEEPASSX_ARGUMENT_PARSER_H

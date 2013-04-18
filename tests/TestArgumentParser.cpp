@@ -31,6 +31,13 @@ void TestArgumentParser::testNoArguments()
     QVERIFY(argumentMap.isEmpty());
 }
 
+void TestArgumentParser::testMissingOptionValue()
+{
+    parse(QStringList() << "--foo");
+
+    QVERIFY(argumentMap.isEmpty());
+}
+
 void TestArgumentParser::testUnknownArgument()
 {
     parse(QStringList() << "--foo" << "bar");

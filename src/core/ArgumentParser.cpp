@@ -17,27 +17,15 @@
 
 #include "ArgumentParser.h"
 
+QStringList ArgumentParser::argumentKeys = QStringList() << "password" << "config" << "filename";
+
 QHash<QString, QString> ArgumentParser::parseArguments(const QStringList& args)
 {
-    QStringList argumentKeys = QStringList() << "password" << "config" << "filename";
-
     QHash<QString, QString> argumentMap;
 
-    // TODO: needs refactoring, too much nesting
     for (int i = 1; i < args.size(); i++) {
         if (args[i].startsWith("--")) {
-            if (args.size() > (i + 1)) {
-                QString argument(args[i].mid(2));
-                if (argumentKeys.contains(argument)) {
-                    argumentMap.insert(argument, args[i + 1]);
-                }
-                else {
-                    qWarning("Unknown option \"%s\" with value \"%s\"", qPrintable(args[i]), qPrintable(args[i+1]));
-                }
-                i++;
-            } else {
-                qWarning("No value given for option \"%s\"", qPrintable(args[i]));
-            }
+            parseOption(i, argumentMap, args);
         }
         else if (!args[i].startsWith("-")) {
             argumentMap.insert("filename", args[i]);
@@ -48,4 +36,21 @@ QHash<QString, QString> ArgumentParser::parseArguments(const QStringList& args)
     }
 
     return argumentMap;
+}
+
+void ArgumentParser::parseOption(int& i, QHash<QString, QString>& argumentMap, const QStringList& args)
+{
+    if (args.size() < (i + 2)) {
+        qWarning("No value given for option \"%s\"", qPrintable(args[i]));
+        return;
+    }
+
+    QString argument(args[i].mid(2));
+    if (argumentKeys.contains(argument)) {
+        argumentMap.insert(argument, args[i + 1]);
+    }
+    else {
+        qWarning("Unknown option \"%s\" with value \"%s\"", qPrintable(args[i]), qPrintable(args[i+1]));
+    }
+    i++;
 }

@@ -27,6 +27,7 @@ class TestArgumentParser : public QObject
 
 private Q_SLOTS:
     void testNoArguments();
+    void testMissingOptionValue();
     void testUnknownArgument();
     void testFilename();
     void testMultipleArguments();
