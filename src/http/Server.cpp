@@ -61,7 +61,10 @@ void Server::start()
 {
     if (m_started)
         return;
-    m_started = m_httpServer->listen(QHostAddress::LocalHost, 19455);
+
+    static const int PORT = 19455;
+    m_started = m_httpServer->listen(QHostAddress::LocalHost, PORT)
+             || m_httpServer->listen(QHostAddress::LocalHostIPv6, PORT);
 }
 
 void Server::stop()
