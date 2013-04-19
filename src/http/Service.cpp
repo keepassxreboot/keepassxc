@@ -353,7 +353,7 @@ QList<KeepassHttpProtocol::Entry> Service::findMatchingEntries(const QString& /*
 
     //Fill the list
     QList<KeepassHttpProtocol::Entry> result;
-    result.reserve(result.size());
+    result.reserve(pwEntries.count());
     Q_FOREACH (Entry * entry, pwEntries)
         result << prepareEntry(entry);
     return result;
