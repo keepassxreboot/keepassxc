@@ -213,6 +213,7 @@ target_link_libraries(${PROGNAME}
                       keepassx_core
                       ${QT_QTCORE_LIBRARY}
                       ${QT_QTGUI_LIBRARY}
+                      ${QT_QTNETWORK_LIBRARY}
                       ${GCRYPT_LIBRARIES}
                       ${ZLIB_LIBRARIES})
 
