@@ -328,6 +328,9 @@ void KeePass2XmlReader::parseIcon()
     if (uuidSet && iconSet) {
         m_meta->addCustomIcon(uuid, icon);
     }
+    else {
+        raiseError(20);
+    }
 }
 
 void KeePass2XmlReader::parseBinaries()
@@ -400,6 +403,9 @@ void KeePass2XmlReader::parseCustomDataItem()
 
     if (keySet && valueSet) {
         m_meta->addCustomField(key, value);
+    }
+    else {
+        raiseError(21);
     }
 }
 
@@ -528,11 +534,16 @@ Group* KeePass2XmlReader::parseGroup()
         }
     }
 
-    Group* tmpGroup = group;
-    group = getGroup(tmpGroup->uuid());
-    group->copyDataFrom(tmpGroup);
-    group->setUpdateTimeinfo(false);
-    delete tmpGroup;
+    if (!group->uuid().isNull()) {
+        Group* tmpGroup = group;
+        group = getGroup(tmpGroup->uuid());
+        group->copyDataFrom(tmpGroup);
+        group->setUpdateTimeinfo(false);
+        delete tmpGroup;
+    }
+    else {
+        raiseError(22);
+    }
 
     Q_FOREACH (Group* child, children) {
         child->setParent(group);
@@ -583,7 +594,12 @@ void KeePass2XmlReader::parseDeletedObject()
         }
     }
 
-    m_db->addDeletedObject(delObj);
+    if (!delObj.uuid.isNull() && !delObj.deletionTime.isNull()) {
+        m_db->addDeletedObject(delObj);
+    }
+    else {
+        raiseError(23);
+    }
 }
 
 Entry* KeePass2XmlReader::parseEntry(bool history)
@@ -660,7 +676,10 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
         }
     }
 
-    if (history) {
+    if (entry->uuid().isNull()) {
+        raiseError(24);
+    }
+    else if (history) {
         entry->setUpdateTimeinfo(false);
     }
     else {
@@ -726,6 +745,9 @@ void KeePass2XmlReader::parseEntryString(Entry* entry)
     if (keySet && valueSet) {
         entry->attributes()->set(key, value, protect);
     }
+    else {
+        raiseError(25);
+    }
 }
 
 QPair<QString, QString> KeePass2XmlReader::parseEntryBinary(Entry* entry)
@@ -760,9 +782,9 @@ QPair<QString, QString> KeePass2XmlReader::parseEntryBinary(Entry* entry)
                 if (isProtected && !value.isEmpty()) {
                     m_randomStream->processInPlace(value);
                 }
-
-                valueSet = true;
             }
+
+            valueSet = true;
         }
         else {
             skipCurrentElement();
@@ -771,6 +793,9 @@ QPair<QString, QString> KeePass2XmlReader::parseEntryBinary(Entry* entry)
 
     if (keySet && valueSet) {
         entry->attachments()->set(key, value);
+    }
+    else {
+        raiseError(26);
     }
 
     return poolRef;
@@ -823,6 +848,9 @@ void KeePass2XmlReader::parseAutoTypeAssoc(Entry* entry)
 
     if (windowSet && sequenceSet) {
         entry->autoTypeAssociations()->add(assoc);
+    }
+    else {
+        raiseError(27);
     }
 }
 
