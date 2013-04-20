@@ -151,21 +151,30 @@ bool KeePass2XmlReader::parseKeePassFile()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "KeePassFile");
 
-    bool rootParsed = false;
+    bool rootElementFound = false;
+    bool rootParsedSuccesfully = false;
 
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Meta") {
             parseMeta();
         }
         else if (m_xml.name() == "Root") {
-            rootParsed = parseRoot();
+            rootParsedSuccesfully = parseRoot();
+
+            if (rootElementFound) {
+                rootParsedSuccesfully = false;
+                raiseError(29);
+            }
+            else {
+                rootElementFound = true;
+            }
         }
         else {
             skipCurrentElement();
         }
     }
 
-    return rootParsed;
+    return rootParsedSuccesfully;
 }
 
 void KeePass2XmlReader::parseMeta()
@@ -423,7 +432,8 @@ bool KeePass2XmlReader::parseRoot()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Root");
 
-    bool groupParsed = false;
+    bool groupElementFound = false;
+    bool groupParsedSuccesfully = false;
 
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Group") {
@@ -432,7 +442,15 @@ bool KeePass2XmlReader::parseRoot()
                 Group* oldRoot = m_db->rootGroup();
                 m_db->setRootGroup(rootGroup);
                 delete oldRoot;
-                groupParsed = true;
+                groupParsedSuccesfully = true;
+            }
+
+            if (groupElementFound) {
+                groupParsedSuccesfully = false;
+                raiseError(30);
+            }
+            else {
+                groupElementFound = true;
             }
         }
         else if (m_xml.name() == "DeletedObjects") {
@@ -443,7 +461,7 @@ bool KeePass2XmlReader::parseRoot()
         }
     }
 
-    return groupParsed;
+    return groupParsedSuccesfully;
 }
 
 Group* KeePass2XmlReader::parseGroup()

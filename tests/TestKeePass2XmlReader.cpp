@@ -370,6 +370,8 @@ void TestKeePass2XmlReader::testBroken_data()
     QTest::newRow("BrokenNoGroupUuid") << "BrokenNoGroupUuid";
     QTest::newRow("BrokenNoEntryUuid") << "BrokenNoEntryUuid";
     QTest::newRow("BrokenNoRootGroup") << "BrokenNoRootGroup";
+    QTest::newRow("BrokenTwoRoots") << "BrokenTwoRoots";
+    QTest::newRow("BrokenTwoRootGroups") << "BrokenTwoRootGroups";
 }
 
 void TestKeePass2XmlReader::cleanupTestCase()
