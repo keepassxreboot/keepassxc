@@ -49,7 +49,7 @@ public:
     QByteArray headerHash();
 
 private:
-    void parseKeePassFile();
+    bool parseKeePassFile();
     void parseMeta();
     void parseMemoryProtection();
     void parseCustomIcons();
@@ -57,7 +57,7 @@ private:
     void parseBinaries();
     void parseCustomData();
     void parseCustomDataItem();
-    void parseRoot();
+    bool parseRoot();
     Group* parseGroup();
     void parseDeletedObjects();
     void parseDeletedObject();

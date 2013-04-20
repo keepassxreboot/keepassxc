@@ -51,10 +51,16 @@ void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Ra
 
     m_tmpParent = new Group();
 
+    bool rootGroupParsed = false;
+
     if (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "KeePassFile") {
-            parseKeePassFile();
+            rootGroupParsed = parseKeePassFile();
         }
+    }
+
+    if (!m_xml.error() && !rootGroupParsed) {
+        raiseError(28);
     }
 
     if (!m_xml.error()) {
@@ -141,21 +147,25 @@ QByteArray KeePass2XmlReader::headerHash()
     return m_headerHash;
 }
 
-void KeePass2XmlReader::parseKeePassFile()
+bool KeePass2XmlReader::parseKeePassFile()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "KeePassFile");
+
+    bool rootParsed = false;
 
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Meta") {
             parseMeta();
         }
         else if (m_xml.name() == "Root") {
-            parseRoot();
+            rootParsed = parseRoot();
         }
         else {
             skipCurrentElement();
         }
     }
+
+    return rootParsed;
 }
 
 void KeePass2XmlReader::parseMeta()
@@ -409,9 +419,11 @@ void KeePass2XmlReader::parseCustomDataItem()
     }
 }
 
-void KeePass2XmlReader::parseRoot()
+bool KeePass2XmlReader::parseRoot()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Root");
+
+    bool groupParsed = false;
 
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Group") {
@@ -420,6 +432,7 @@ void KeePass2XmlReader::parseRoot()
                 Group* oldRoot = m_db->rootGroup();
                 m_db->setRootGroup(rootGroup);
                 delete oldRoot;
+                groupParsed = true;
             }
         }
         else if (m_xml.name() == "DeletedObjects") {
@@ -429,6 +442,8 @@ void KeePass2XmlReader::parseRoot()
             skipCurrentElement();
         }
     }
+
+    return groupParsed;
 }
 
 Group* KeePass2XmlReader::parseGroup()
