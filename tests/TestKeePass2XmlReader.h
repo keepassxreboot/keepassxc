@@ -39,6 +39,8 @@ private Q_SLOTS:
     void testEntry2();
     void testEntryHistory();
     void testDeletedObjects();
+    void testBroken();
+    void testBroken_data();
     void cleanupTestCase();
 
 private:

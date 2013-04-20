@@ -17,6 +17,7 @@
 
 #include "TestKeePass2XmlReader.h"
 
+#include <QtCore/QFile>
 #include <QtTest/QTest>
 
 #include "tests.h"
@@ -349,6 +350,26 @@ void TestKeePass2XmlReader::testDeletedObjects()
     QCOMPARE(delObj.deletionTime, genDT(2010, 8, 25, 16, 14, 14));
 
     QVERIFY(objList.isEmpty());
+}
+
+void TestKeePass2XmlReader::testBroken()
+{
+    QFETCH(QString, baseName);
+
+    KeePass2XmlReader reader;
+    QString xmlFile = QString("%1/%2.xml").arg(KEEPASSX_TEST_DATA_DIR, baseName);
+    QVERIFY(QFile::exists(xmlFile));
+    QScopedPointer<Database> db(reader.readDatabase(xmlFile));
+    QVERIFY(reader.hasError());
+}
+
+void TestKeePass2XmlReader::testBroken_data()
+{
+    QTest::addColumn<QString>("baseName");
+
+    QTest::newRow("BrokenNoGroupUuid") << "BrokenNoGroupUuid";
+    QTest::newRow("BrokenNoEntryUuid") << "BrokenNoEntryUuid";
+    QTest::newRow("BrokenNoRootGroup") << "BrokenNoRootGroup";
 }
 
 void TestKeePass2XmlReader::cleanupTestCase()
