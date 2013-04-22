@@ -65,6 +65,7 @@ public Q_SLOTS:
     void saveDatabaseAs(int index = -1);
     bool closeDatabase(int index = -1);
     void closeDatabaseFromSender();
+    void reopenLastDatabases();
     bool closeAllDatabases();
     void changeMasterKey();
     void changeDatabaseSettings();
@@ -93,7 +94,7 @@ private:
     DatabaseManagerStruct indexDatabaseManagerStruct(int index);
     Database* databaseFromDatabaseWidget(DatabaseWidget* dbWidget);
     void insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct);
-    void updateLastDatabases(const QString& filename);
+    void updateRecentDatabases(const QString& filename);
     void connectDatabase(Database* newDb, Database* oldDb = Q_NULLPTR);
 
     KeePass2Writer m_writer;

@@ -66,16 +66,7 @@ DatabaseTabWidget::~DatabaseTabWidget()
 
 void DatabaseTabWidget::toggleTabbar()
 {
-    if (count() > 1) {
-        if (!tabBar()->isVisible()) {
-            tabBar()->show();
-        }
-    }
-    else {
-        if (tabBar()->isVisible()) {
-            tabBar()->hide();
-        }
-    }
+    tabBar()->setVisible(count() > 1);
 }
 
 void DatabaseTabWidget::newDatabase()
@@ -148,7 +139,7 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
 
     insertDatabase(db, dbStruct);
 
-    updateLastDatabases(dbStruct.filePath);
+    updateRecentDatabases(dbStruct.filePath);
 
     if (!pw.isNull() || !keyFile.isEmpty()) {
         dbStruct.dbWidget->switchToOpenDatabase(dbStruct.filePath, pw, keyFile);
@@ -235,8 +226,25 @@ void DatabaseTabWidget::deleteDatabase(Database* db)
     delete db;
 }
 
+void DatabaseTabWidget::reopenLastDatabases()
+{
+    if (config()->get("AutoReopenLastDatabases", false).toBool()) {
+        int index = count();
+        Q_FOREACH (const QString & database, config()->get("LastOpenDatabases", QVariant()).toStringList())
+            openDatabase(database);
+        setCurrentIndex(index);
+    }
+}
+
 bool DatabaseTabWidget::closeAllDatabases()
 {
+    QStringList reloadDatabases;
+    if (config()->get("AutoReopenLastDatabases", false).toBool()) {
+        for (int i = 0; i < count(); i ++)
+            reloadDatabases << indexDatabaseManagerStruct(i).filePath;
+    }
+    config()->set("LastOpenDatabases", reloadDatabases);
+
     while (!m_dbList.isEmpty()) {
         if (!closeDatabase()) {
             return false;
@@ -299,7 +307,7 @@ void DatabaseTabWidget::saveDatabaseAs(Database* db)
             dbStruct.fileName = fileInfo.fileName();
             dbStruct.dbWidget->updateFilename(dbStruct.filePath);
             updateTabName(db);
-            updateLastDatabases(dbStruct.filePath);
+            updateRecentDatabases(dbStruct.filePath);
         }
         else {
             QMessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
@@ -545,7 +553,7 @@ void DatabaseTabWidget::modified()
     }
 }
 
-void DatabaseTabWidget::updateLastDatabases(const QString& filename)
+void DatabaseTabWidget::updateRecentDatabases(const QString& filename)
 {
     if (!config()->get("RememberLastDatabases").toBool()) {
         config()->set("LastDatabases", QVariant());

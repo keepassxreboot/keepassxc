@@ -227,6 +227,8 @@ MainWindow::MainWindow()
 
     m_actionMultiplexer.connect(m_ui->actionSearch, SIGNAL(triggered()),
                                 SLOT(toggleSearch()));
+
+    m_ui->tabWidget->reopenLastDatabases();
 }
 
 MainWindow::~MainWindow()
