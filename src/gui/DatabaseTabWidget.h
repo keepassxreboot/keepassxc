@@ -20,6 +20,8 @@
 
 #include <QHash>
 #include <QTabWidget>
+#include <QDateTime>
+#include <QSet>
 
 #include "format/KeePass2Writer.h"
 #include "gui/DatabaseWidget.h"
@@ -29,6 +31,7 @@ class DatabaseWidgetStateSync;
 class DatabaseOpenWidget;
 class QFile;
 class QLockFile;
+class QFileSystemWatcher;
 
 struct DatabaseManagerStruct
 {
@@ -42,6 +45,7 @@ struct DatabaseManagerStruct
     bool saveToFilename;
     bool modified;
     bool readOnly;
+    QDateTime lastModified;
 };
 
 Q_DECLARE_TYPEINFO(DatabaseManagerStruct, Q_MOVABLE_TYPE);
@@ -54,11 +58,18 @@ public:
     explicit DatabaseTabWidget(QWidget* parent = nullptr);
     ~DatabaseTabWidget();
     void openDatabase(const QString& fileName, const QString& pw = QString(),
-                      const QString& keyFile = QString());
+                      const QString& keyFile = QString(), const CompositeKey& key = CompositeKey(),
+                      int index = -1);
     DatabaseWidget* currentDatabaseWidget();
     bool hasLockableDatabases() const;
 
     static const int LastDatabasesCount;
+
+    enum ReloadBehavior {
+        AlwaysAsk,
+        ReloadUnmodified,
+        IgnoreAll
+    };
 
 public Q_SLOTS:
     void newDatabase();
@@ -67,6 +78,8 @@ public Q_SLOTS:
     bool saveDatabase(int index = -1);
     bool saveDatabaseAs(int index = -1);
     void exportToCsv();
+    void fileChanged(const QString& fileName);
+    void checkReloadDatabases();
     bool closeDatabase(int index = -1);
     void closeDatabaseFromSender();
     bool closeAllDatabases();
@@ -99,13 +112,19 @@ private:
     Database* indexDatabase(int index);
     DatabaseManagerStruct indexDatabaseManagerStruct(int index);
     Database* databaseFromDatabaseWidget(DatabaseWidget* dbWidget);
-    void insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct);
+    void insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct, int index = -1);
     void updateLastDatabases(const QString& filename);
     void connectDatabase(Database* newDb, Database* oldDb = nullptr);
 
-    KeePass2Writer m_writer;
     QHash<Database*, DatabaseManagerStruct> m_dbList;
     DatabaseWidgetStateSync* m_dbWidgetSateSync;
+    void expectFileChange(const DatabaseManagerStruct& dbStruct);
+    void unexpectFileChange(DatabaseManagerStruct& dbStruct);
+
+    KeePass2Writer m_writer;
+    QSet<QString> m_changedFiles;
+    QSet<QString> m_expectedFileChanges;
+    QFileSystemWatcher* m_fileWatcher;
 };
 
 #endif // KEEPASSX_DATABASETABWIDGET_H

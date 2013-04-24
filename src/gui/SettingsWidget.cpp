@@ -76,6 +76,7 @@ void SettingsWidget::loadSettings()
     m_generalUi->minimizeOnCopyCheckBox->setChecked(config()->get("MinimizeOnCopy").toBool());
     m_generalUi->useGroupIconOnEntryCreationCheckBox->setChecked(config()->get("UseGroupIconOnEntryCreation").toBool());
     m_generalUi->autoTypeEntryTitleMatchCheckBox->setChecked(config()->get("AutoTypeEntryTitleMatch").toBool());
+    m_generalUi->reloadBehavior->setCurrentIndex(config()->get("ReloadBehavior").toInt());
 
     m_generalUi->languageComboBox->clear();
     QList<QPair<QString, QString> > languages = Translator::availableLanguages();
@@ -136,6 +137,7 @@ void SettingsWidget::saveSettings()
         config()->set("GlobalAutoTypeModifiers",
                       static_cast<int>(m_generalUi->autoTypeShortcutWidget->modifiers()));
     }
+    config()->set("ReloadBehavior", m_generalUi->reloadBehavior->currentIndex());
     config()->set("security/clearclipboard", m_secUi->clearClipboardCheckBox->isChecked());
     config()->set("security/clearclipboardtimeout", m_secUi->clearClipboardSpinBox->value());
 

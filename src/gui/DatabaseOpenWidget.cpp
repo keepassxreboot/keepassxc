@@ -92,11 +92,26 @@ void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)
     openDatabase();
 }
 
+void DatabaseOpenWidget::enterKey(const CompositeKey& masterKey)
+{
+    if (masterKey.isEmpty()) {
+        return;
+    }
+    openDatabase(masterKey);
+}
+
 void DatabaseOpenWidget::openDatabase()
 {
-    KeePass2Reader reader;
     CompositeKey masterKey = databaseKey();
+    if (masterKey.isEmpty()) {
+        return;
+    }
+    openDatabase(masterKey);
+}
 
+void DatabaseOpenWidget::openDatabase(const CompositeKey& masterKey)
+{
+    KeePass2Reader reader;
     QFile file(m_filename);
     if (!file.open(QIODevice::ReadOnly)) {
         MessageBox::warning(this, tr("Error"), tr("Unable to open the database.").append("\n")
