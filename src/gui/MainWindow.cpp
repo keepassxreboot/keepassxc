@@ -284,6 +284,15 @@ void MainWindow::clearLastDatabases()
     config()->set("LastDatabases", QVariant());
 }
 
+void MainWindow::changeEvent(QEvent *e)
+{
+    QMainWindow::changeEvent(e);
+    if (e->type() == QEvent::ActivationChange) {
+        if (isActiveWindow())
+            m_ui->tabWidget->checkReloadDatabases();
+    }
+}
+
 void MainWindow::openDatabase(const QString& fileName, const QString& pw, const QString& keyFile)
 {
     m_ui->tabWidget->openDatabase(fileName, pw, keyFile);

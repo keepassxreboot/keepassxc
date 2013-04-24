@@ -533,6 +533,13 @@ void DatabaseWidget::switchToOpenDatabase(const QString& fileName, const QString
     m_databaseOpenWidget->enterKey(password, keyFile);
 }
 
+void DatabaseWidget::switchToOpenDatabase(const QString &fileName, const CompositeKey& masterKey)
+{
+    updateFilename(fileName);
+    switchToOpenDatabase(fileName);
+    m_databaseOpenWidget->enterKey(masterKey);
+}
+
 void DatabaseWidget::switchToImportKeepass1(const QString& fileName)
 {
     updateFilename(fileName);
@@ -556,10 +563,10 @@ void DatabaseWidget::closeSearch()
     m_groupView->setCurrentGroup(m_lastGroup);
 }
 
-void DatabaseWidget::showSearch()
+void DatabaseWidget::showSearch(const QString & searchString)
 {
     m_searchUi->searchEdit->blockSignals(true);
-    m_searchUi->searchEdit->clear();
+    m_searchUi->searchEdit->setText(searchString);
     m_searchUi->searchEdit->blockSignals(false);
 
     m_searchUi->searchCurrentRadioButton->blockSignals(true);
@@ -663,6 +670,11 @@ bool DatabaseWidget::canDeleteCurrentGoup()
 bool DatabaseWidget::isInSearchMode()
 {
     return m_entryView->inEntryListMode();
+}
+
+QString DatabaseWidget::searchText()
+{
+    return m_entryView->inEntryListMode() ? m_searchUi->searchEdit->text() : QString();
 }
 
 void DatabaseWidget::clearLastGroup(Group* group)
