@@ -59,7 +59,7 @@ int main(int argc, char** argv)
     }
 
     if (config()->get("OpenPreviousDatabasesOnStartup").toBool()) {
-        QStringList filenames = config()->get("OpenDatabasesOnExit").toStringList();
+        QStringList filenames = config()->get("LastOpenedDatabases").toStringList();
         Q_FOREACH (const QString& filename, filenames) {
             if (!filename.isEmpty() && QFile::exists(filename)) {
                 mainWindow.openDatabase(filename, QString(), QString());

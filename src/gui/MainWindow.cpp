@@ -413,7 +413,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
     if (openPreviousDatabasesOnStartup) {
         disconnect(m_ui->tabWidget, SIGNAL(databaseWithFileClosed(QString)), this, SLOT(rememberOpenDatabases(QString)));
-        config()->set("OpenDatabasesOnExit", openDatabases);
+        config()->set("LastOpenedDatabases", openDatabases);
     }
 }
 
