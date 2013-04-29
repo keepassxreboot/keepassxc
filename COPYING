@@ -27,6 +27,11 @@ Copyright: 2010-2012, Felix Geyer <debfx@fobos.de>
            2000-2008, Tom Sato <VEF00200@nifty.ne.jp>
 License: GPL-2 or GPL-3
 
+Files: cmake/GNUInstallDirs.cmake
+Copyright: 2011 Nikita Krupen'ko <krnekit@gmail.com>
+           2011 Kitware, Inc.
+License: BSD-3-clause
+
 Files: share/icons/application/*/apps/keepassx.png
        share/icons/application/scalable/apps/keepassx.svgz
 Copyright: 2006, Otto Salminen

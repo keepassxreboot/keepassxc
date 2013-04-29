@@ -48,7 +48,15 @@ QString FilePath::pluginPath(const QString& name)
     pluginPaths << QCoreApplication::applicationDirPath() + "/../src/autotype/test";
 
     pluginPaths << QCoreApplication::applicationDirPath();
-    pluginPaths << QCoreApplication::applicationDirPath() + "/../lib/keepassx";
+
+    QString systemPluginDir = KEEPASSX_PLUGIN_DIR;
+    if (systemPluginDir != ".") {
+        if (!QDir(systemPluginDir).isAbsolute()) {
+            systemPluginDir = QCoreApplication::applicationDirPath() + "/../" + systemPluginDir;
+            systemPluginDir = QDir(systemPluginDir).canonicalPath();
+        }
+        pluginPaths << systemPluginDir;
+    }
 
     QStringList dirFilter;
     dirFilter << QString("*%1*").arg(name);
