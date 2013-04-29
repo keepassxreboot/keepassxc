@@ -63,14 +63,19 @@ public:
     Database* database();
     bool dbHasKey();
     bool canDeleteCurrentGoup();
-    bool isInSearchMode();
-    QString searchText();
+    bool isInSearchMode() const;
+    QString searchText() const;
+    bool caseSensitiveSearch() const;
+    bool isAllGroupsSearch() const;
+    bool canChooseSearchScope() const;
+    Group* currentGroup() const;
     int addWidget(QWidget* w);
     void setCurrentIndex(int index);
     void setCurrentWidget(QWidget* widget);
     DatabaseWidget::Mode currentMode();
     void lock();
     void updateFilename(const QString& filename);
+    void search(const QString & searchString, bool caseSensitive, bool allGroups);
 
 Q_SIGNALS:
     void closeRequest();
@@ -102,12 +107,15 @@ public Q_SLOTS:
     void switchToOpenDatabase(const QString &fileName, const CompositeKey &masterKey);
     void switchToImportKeepass1(const QString& fileName);
     void switchToView(bool accepted);
-    void toggleSearch();
-    void showSearch(const QString & searchString = QString());
+    void search(const QString & searchString);
+    void setCaseSensitiveSearch(bool caseSensitive);
+    void setAllGroupsSearch(bool allGroups);
     void emitGroupContextMenuRequested(const QPoint& pos);
     void emitEntryContextMenuRequested(const QPoint& pos);
 
 private Q_SLOTS:
+    void onLinkActivated(const QString& link);
+    void showSearch(const QString & searchString = QString());
     void switchBackToEntryEdit();
     void switchToHistoryView(Entry* entry);
     void switchToEntryEdit(Entry* entry);
@@ -145,6 +153,9 @@ private:
     QTimer* m_searchTimer;
     QWidget* widgetBeforeLock;
     QString m_filename;
+    QString m_searchText;
+    bool m_searchAllGroups;
+    Qt::CaseSensitivity m_searchSensitivity;
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H

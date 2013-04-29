@@ -7,17 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>630</width>
-    <height>87</height>
+    <height>34</height>
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="margin">
     <number>0</number>
    </property>
-   <item row="0" column="1">
-    <widget class="LineEdit" name="searchEdit"/>
-   </item>
-   <item row="0" column="0">
+   <item row="0" column="0" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QToolButton" name="closeSearchButton">
@@ -27,72 +24,12 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Find:</string>
-       </property>
-      </widget>
+      <widget class="QLabel" name="searchResults"/>
      </item>
     </layout>
    </item>
-   <item row="1" column="1">
-    <widget class="QWidget" name="optionsWidget" native="true">
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <property name="margin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QCheckBox" name="caseSensitiveCheckBox">
-        <property name="text">
-         <string>Case sensitive</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="searchCurrentRadioButton">
-        <property name="text">
-         <string>Current group</string>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="searchRootRadioButton">
-        <property name="text">
-         <string>Root group</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>255</width>
-          <height>1</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
-    </widget>
-   </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>LineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>gui/LineEdit.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

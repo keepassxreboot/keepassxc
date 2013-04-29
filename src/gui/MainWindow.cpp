@@ -37,6 +37,7 @@
 #include "http/HttpSettings.h"
 #include "http/OptionDialog.h"
 #include "gui/SettingsWidget.h"
+#include "gui/qocoa/qsearchfield.h"
 
 class HttpPlugin: public ISettingsPage {
 public:
@@ -114,7 +115,11 @@ MainWindow::MainWindow()
     setShortcut(m_ui->actionDatabaseClose, QKeySequence::Close, Qt::CTRL + Qt::Key_W);
     m_ui->actionLockDatabases->setShortcut(Qt::CTRL + Qt::Key_L);
     setShortcut(m_ui->actionQuit, QKeySequence::Quit, Qt::CTRL + Qt::Key_Q);
-    setShortcut(m_ui->actionSearch, QKeySequence::Find, Qt::CTRL + Qt::Key_F);
+    //TODO: do not register shortcut on Q_OS_MAC, if this is done automatically??
+    const QKeySequence seq = !QKeySequence::keyBindings(QKeySequence::Find).isEmpty()
+                             ? QKeySequence::Find
+                             : QKeySequence(Qt::CTRL + Qt::Key_F);
+    connect(new QShortcut(seq, this), SIGNAL(activated()), m_ui->searchField, SLOT(setFocus()));
     m_ui->actionEntryNew->setShortcut(Qt::CTRL + Qt::Key_N);
     m_ui->actionEntryEdit->setShortcut(Qt::CTRL + Qt::Key_E);
     m_ui->actionEntryDelete->setShortcut(Qt::CTRL + Qt::Key_D);
@@ -151,8 +156,6 @@ MainWindow::MainWindow()
     m_ui->actionSettings->setIcon(filePath()->icon("actions", "configure"));
 
     m_ui->actionAbout->setIcon(filePath()->icon("actions", "help-about"));
-
-    m_ui->actionSearch->setIcon(filePath()->icon("actions", "system-search"));
 
     m_actionMultiplexer.connect(SIGNAL(currentModeChanged(DatabaseWidget::Mode)),
                                 this, SLOT(setMenuActionState(DatabaseWidget::Mode)));
@@ -225,8 +228,24 @@ MainWindow::MainWindow()
 
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
 
-    m_actionMultiplexer.connect(m_ui->actionSearch, SIGNAL(triggered()),
-                                SLOT(toggleSearch()));
+    m_ui->searchField->setPlaceholderText(tr("Type to search"));
+    m_ui->searchField->setEnabled(false);
+    m_ui->toolBar->addWidget(m_ui->searchPanel);
+    m_actionMultiplexer.connect(m_ui->searchField, SIGNAL(textChanged(QString)),
+                                SLOT(search(QString)));
+    QMenu* searchMenu = new QMenu(this);
+    searchMenu->addAction(m_ui->actionFindCaseSensitive);
+    searchMenu->addSeparator();
+    searchMenu->addAction(m_ui->actionFindCurrentGroup);
+    searchMenu->addAction(m_ui->actionFindRootGroup);
+    m_ui->searchField->setMenu(searchMenu);
+    QActionGroup* group = new QActionGroup(this);
+    group->addAction(m_ui->actionFindCurrentGroup);
+    group->addAction(m_ui->actionFindRootGroup);
+    m_actionMultiplexer.connect(m_ui->actionFindCaseSensitive, SIGNAL(toggled(bool)),
+                                SLOT(setCaseSensitiveSearch(bool)));
+    m_actionMultiplexer.connect(m_ui->actionFindRootGroup, SIGNAL(toggled(bool)),
+                                SLOT(setAllGroupsSearch(bool)));
 
     m_ui->tabWidget->reopenLastDatabases();
 }
@@ -298,6 +317,26 @@ void MainWindow::openDatabase(const QString& fileName, const QString& pw, const 
     m_ui->tabWidget->openDatabase(fileName, pw, keyFile);
 }
 
+void MainWindow::updateSearchField(DatabaseWidget* dbWidget)
+{
+    bool enabled = dbWidget != NULL;
+
+    m_ui->actionFindCaseSensitive->setChecked(enabled && dbWidget->caseSensitiveSearch());
+
+    m_ui->actionFindCurrentGroup->setEnabled(enabled && dbWidget->canChooseSearchScope());
+    m_ui->actionFindRootGroup->setEnabled(enabled && dbWidget->canChooseSearchScope());
+    if (enabled && dbWidget->isAllGroupsSearch())
+        m_ui->actionFindRootGroup->setChecked(true);
+    else
+        m_ui->actionFindCurrentGroup->setChecked(true);
+
+    m_ui->searchField->setEnabled(enabled);
+    if (enabled && dbWidget->isInSearchMode())
+        m_ui->searchField->setText(dbWidget->searchText());
+    else
+        m_ui->searchField->clear();
+}
+
 void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 {
     bool inDatabaseTabWidget = (m_ui->stackedWidget->currentIndex() == 0);
@@ -329,9 +368,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionGroupNew->setEnabled(groupSelected);
             m_ui->actionGroupEdit->setEnabled(groupSelected);
             m_ui->actionGroupDelete->setEnabled(groupSelected && dbWidget->canDeleteCurrentGoup());
-            m_ui->actionSearch->setEnabled(true);
-            // TODO: get checked state from db widget
-            m_ui->actionSearch->setChecked(inSearch);
+            updateSearchField(dbWidget);
             m_ui->actionChangeMasterKey->setEnabled(true);
             m_ui->actionChangeDatabaseSettings->setEnabled(true);
             m_ui->actionDatabaseSave->setEnabled(true);
@@ -349,8 +386,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             }
             m_ui->menuEntryCopyAttribute->setEnabled(false);
 
-            m_ui->actionSearch->setEnabled(false);
-            m_ui->actionSearch->setChecked(false);
+            updateSearchField();
             m_ui->actionChangeMasterKey->setEnabled(false);
             m_ui->actionChangeDatabaseSettings->setEnabled(false);
             m_ui->actionDatabaseSave->setEnabled(false);
@@ -371,8 +407,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         }
         m_ui->menuEntryCopyAttribute->setEnabled(false);
 
-        m_ui->actionSearch->setEnabled(false);
-        m_ui->actionSearch->setChecked(false);
+        updateSearchField();
         m_ui->actionChangeMasterKey->setEnabled(false);
         m_ui->actionChangeDatabaseSettings->setEnabled(false);
         m_ui->actionDatabaseSave->setEnabled(false);
