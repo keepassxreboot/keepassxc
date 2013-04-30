@@ -90,6 +90,7 @@ void SettingsWidget::loadSettings()
     m_generalUi->modifiedExpandedChangedCheckBox->setChecked(config()->get("ModifiedOnExpandedStateChanges").toBool());
     m_generalUi->autoSaveAfterEveryChangeCheckBox->setChecked(config()->get("AutoSaveAfterEveryChange").toBool());
     m_generalUi->autoSaveOnExitCheckBox->setChecked(config()->get("AutoSaveOnExit").toBool());
+    m_generalUi->reloadBehavior->setCurrentIndex(config()->get("ReloadBehavior").toInt());
 
     m_globalAutoTypeKey = static_cast<Qt::Key>(config()->get("GlobalAutoTypeKey").toInt());
     m_globalAutoTypeModifiers = static_cast<Qt::KeyboardModifiers>(config()->get("GlobalAutoTypeModifiers").toInt());
@@ -114,6 +115,7 @@ void SettingsWidget::saveSettings()
     config()->set("ModifiedOnExpandedStateChanges", m_generalUi->modifiedExpandedChangedCheckBox->isChecked());
     config()->set("AutoSaveAfterEveryChange", m_generalUi->autoSaveAfterEveryChangeCheckBox->isChecked());
     config()->set("AutoSaveOnExit", m_generalUi->autoSaveOnExitCheckBox->isChecked());
+    config()->set("ReloadBehavior", m_generalUi->reloadBehavior->currentIndex());
     config()->set("GlobalAutoTypeKey", m_generalUi->autoTypeShortcutWidget->key());
     config()->set("GlobalAutoTypeModifiers", static_cast<int>(m_generalUi->autoTypeShortcutWidget->modifiers()));
     config()->set("security/clearclipboard", m_secUi->clearClipboardCheckBox->isChecked());

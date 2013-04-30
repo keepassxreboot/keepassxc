@@ -55,7 +55,8 @@ public:
     explicit DatabaseTabWidget(QWidget* parent = Q_NULLPTR);
     ~DatabaseTabWidget();
     void openDatabase(const QString& fileName, const QString& pw = QString(),
-                      const QString& keyFile = QString(), const CompositeKey& key = CompositeKey());
+                      const QString& keyFile = QString(), const CompositeKey& key = CompositeKey(),
+                      int index = -1);
     DatabaseWidget* currentDatabaseWidget();
     bool hasLockableDatabases();
 
@@ -105,7 +106,7 @@ private:
     Database* indexDatabase(int index);
     DatabaseManagerStruct indexDatabaseManagerStruct(int index);
     Database* databaseFromDatabaseWidget(DatabaseWidget* dbWidget);
-    void insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct);
+    void insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct, int index = -1);
     void updateRecentDatabases(const QString& filename);
     void connectDatabase(Database* newDb, Database* oldDb = Q_NULLPTR);
     void expectFileChange(const DatabaseManagerStruct& dbStruct);
@@ -116,7 +117,6 @@ private:
     QSet<QString> m_changedFiles;
     QSet<QString> m_expectedFileChanges;
     QFileSystemWatcher* m_fileWatcher;
-    ReloadBehavior m_reloadBehavior;
 };
 
 #endif // KEEPASSX_DATABASETABWIDGET_H

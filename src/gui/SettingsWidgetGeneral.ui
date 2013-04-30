@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>456</width>
-    <height>172</height>
+    <width>481</width>
+    <height>202</height>
    </rect>
   </property>
   <layout class="QFormLayout" name="formLayout">
@@ -45,14 +45,14 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="0">
+   <item row="6" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
       <string>Global Auto-Type shortcut</string>
      </property>
     </widget>
    </item>
-   <item row="5" column="1">
+   <item row="6" column="1">
     <widget class="ShortcutWidget" name="autoTypeShortcutWidget"/>
    </item>
    <item row="1" column="0">
@@ -60,6 +60,32 @@
      <property name="text">
       <string>Automatically reopen last databases</string>
      </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>When database files are externally modified</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QComboBox" name="reloadBehavior">
+     <item>
+      <property name="text">
+       <string>Always ask</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Reload unmodified databases</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Ignore modifications</string>
+      </property>
+     </item>
     </widget>
    </item>
   </layout>

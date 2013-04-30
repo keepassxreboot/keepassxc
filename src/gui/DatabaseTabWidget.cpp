@@ -49,8 +49,7 @@ const int DatabaseTabWidget::LastDatabasesCount = 5;
 
 DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     : QTabWidget(parent),
-      m_fileWatcher(new QFileSystemWatcher(this)),
-      m_reloadBehavior(ReloadUnmodified)    //TODO: setting
+      m_fileWatcher(new QFileSystemWatcher(this))
 {
     DragTabBar* tabBar = new DragTabBar(this);
     tabBar->setDrawBase(false);
@@ -98,7 +97,7 @@ void DatabaseTabWidget::openDatabase()
 }
 
 void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
-                                     const QString& keyFile, const CompositeKey& key)
+                                     const QString& keyFile, const CompositeKey& key, int index)
 {
     QFileInfo fileInfo(fileName);
     QString canonicalFilePath = fileInfo.canonicalFilePath();
@@ -144,7 +143,7 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
     dbStruct.fileName = fileInfo.fileName();
     dbStruct.lastModified = fileInfo.lastModified();
 
-    insertDatabase(db, dbStruct);
+    insertDatabase(db, dbStruct, index);
     m_fileWatcher->addPath(dbStruct.filePath);
 
     updateRecentDatabases(dbStruct.filePath);
@@ -228,14 +227,14 @@ void DatabaseTabWidget::checkReloadDatabases()
         if (mode == DatabaseWidget::None || mode == DatabaseWidget::LockedMode || !db->hasKey())
             continue;
 
-        if (   (m_reloadBehavior == AlwaysAsk)
-            || (m_reloadBehavior == ReloadUnmodified && mode == DatabaseWidget::EditMode)
-            || (m_reloadBehavior == ReloadUnmodified && dbStruct.modified)) {
-            //TODO: display banner instead, to let user now file has changed and choose to Reload, Overwrite, and SaveAs
-            //      --> less obstrubsive (esp. if multiple DB are open), cleaner UI
-            if (QMessageBox::warning(this, fi.exists() ? tr("Database file changed") : tr("Database file removed"),
-                                     tr("Do you want to discard your changes and reload?"),
-                                     QMessageBox::Yes|QMessageBox::No) == QMessageBox::No)
+        ReloadBehavior reloadBehavior = ReloadBehavior(config()->get("ReloadBehavior").toInt());
+        if (   (reloadBehavior == AlwaysAsk)
+            || (reloadBehavior == ReloadUnmodified && mode == DatabaseWidget::EditMode)
+            || (reloadBehavior == ReloadUnmodified && dbStruct.modified)) {
+            int res = QMessageBox::warning(this, fi.exists() ? tr("Database file changed") : tr("Database file removed"),
+                                           tr("Do you want to discard your changes and reload?"),
+                                           QMessageBox::Yes|QMessageBox::No);
+            if (res == QMessageBox::No)
                 continue;
         }
 
@@ -257,12 +256,13 @@ void DatabaseTabWidget::checkReloadDatabases()
 
             //Reload updated db
             CompositeKey key = db->key();
+            int tabPos = databaseIndex(db);
             closeDatabase(db);
-            openDatabase(filePath, QString(), QString(), key);
+            openDatabase(filePath, QString(), QString(), key, tabPos);
 
             //Restore current group/entry
             dbStruct = indexDatabaseManagerStruct(count() - 1);
-            if (dbStruct.dbWidget) {
+            if (dbStruct.dbWidget && dbStruct.dbWidget->currentMode() == DatabaseWidget::ViewMode) {
                 Database * db = dbStruct.dbWidget->database();
                 if (!currentGroup.isNull())
                     if (Group* group = db->resolveGroup(currentGroup))
@@ -273,8 +273,6 @@ void DatabaseTabWidget::checkReloadDatabases()
                     if (Entry* entry = db->resolveEntry(currentEntry))
                         dbStruct.dbWidget->entryView()->setCurrentEntry(entry);
             }
-
-            //TODO: keep tab order...
         } else {
             //Ignore/cancel all edits
             dbStruct.dbWidget->switchToView(false);
@@ -604,14 +602,13 @@ Database* DatabaseTabWidget::databaseFromDatabaseWidget(DatabaseWidget* dbWidget
     return Q_NULLPTR;
 }
 
-void DatabaseTabWidget::insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct)
+void DatabaseTabWidget::insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct, int index)
 {
     m_dbList.insert(db, dbStruct);
 
-    addTab(dbStruct.dbWidget, "");
+    index = insertTab(index, dbStruct.dbWidget, "");
     toggleTabbar();
     updateTabName(db);
-    int index = databaseIndex(db);
     setCurrentIndex(index);
     connectDatabase(db);
     connect(dbStruct.dbWidget, SIGNAL(closeRequest()), SLOT(closeDatabaseFromSender()));
