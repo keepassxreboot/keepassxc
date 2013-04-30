@@ -159,13 +159,12 @@ bool KeePass2XmlReader::parseKeePassFile()
             parseMeta();
         }
         else if (m_xml.name() == "Root") {
-            rootParsedSuccesfully = parseRoot();
-
             if (rootElementFound) {
                 rootParsedSuccesfully = false;
                 raiseError(29);
             }
             else {
+                rootParsedSuccesfully = parseRoot();
                 rootElementFound = true;
             }
         }
@@ -437,6 +436,12 @@ bool KeePass2XmlReader::parseRoot()
 
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Group") {
+            if (groupElementFound) {
+                groupParsedSuccesfully = false;
+                raiseError(30);
+                continue;
+            }
+
             Group* rootGroup = parseGroup();
             if (rootGroup) {
                 Group* oldRoot = m_db->rootGroup();
@@ -445,13 +450,7 @@ bool KeePass2XmlReader::parseRoot()
                 groupParsedSuccesfully = true;
             }
 
-            if (groupElementFound) {
-                groupParsedSuccesfully = false;
-                raiseError(30);
-            }
-            else {
-                groupElementFound = true;
-            }
+            groupElementFound = true;
         }
         else if (m_xml.name() == "DeletedObjects") {
             parseDeletedObjects();
