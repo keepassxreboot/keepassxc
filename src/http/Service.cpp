@@ -89,12 +89,23 @@ bool Service::openDatabase()
 {
     if (!HttpSettings::unlockDatabase())
         return false;
-    if (DatabaseWidget * dbWidget = m_dbTabWidget->currentDatabaseWidget())
-        if (dbWidget->currentMode() == DatabaseWidget::LockedMode) {
-            //- show notification
-            //- open & focus main window
-            //- wait a few seconds for user to unlock (unlockedDatabase)
+    if (DatabaseWidget * dbWidget = m_dbTabWidget->currentDatabaseWidget()) {
+        switch(dbWidget->currentMode()) {
+        case DatabaseWidget::None:
+        case DatabaseWidget::LockedMode:
+            break;
+
+        case DatabaseWidget::ViewMode:
+        case DatabaseWidget::EditMode:
+            return true;
         }
+    }
+    //if (HttpSettings::showNotification()
+    //    && !ShowNotification(QString("%0: %1 is requesting access, click to allow or deny")
+    //                                 .arg(id).arg(submitHost.isEmpty() ? host : submithost));
+    //    return false;
+    m_dbTabWidget->activateWindow();
+    //Wait a bit for DB to be open... (w/ asynchronous reply?)
     return false;
 }
 
@@ -127,6 +138,9 @@ QString Service::storeKey(const QString &key)
 {
     QString id;
     if (Entry* config = getConfigEntry(true)) {
+
+        //ShowNotification("New key association requested")
+
         do {
             bool ok;
             //Indicate who wants to associate, and request user to enter the 'name' of association key
@@ -301,8 +315,13 @@ QList<KeepassHttpProtocol::Entry> Service::findMatchingEntries(const QString& /*
     }
 
     //If unsure, ask user for confirmation
+    //if (!pwEntriesToConfirm.isEmpty()
+    //    && HttpSettings::showNotification()
+    //    && !ShowNotification(QString("%0: %1 is requesting access, click to allow or deny")
+    //                                 .arg(id).arg(submitHost.isEmpty() ? host : submithost));
+    //    pwEntriesToConfirm.clear(); //timeout --> do not request confirmation
+
     if (!pwEntriesToConfirm.isEmpty()) {
-        //TODO: balloon to grant access + timeout
 
         AccessControlDialog dlg;
         dlg.setUrl(url);
@@ -350,6 +369,14 @@ QList<KeepassHttpProtocol::Entry> Service::findMatchingEntries(const QString& /*
         //Sort by priorities
         qSort(pwEntries.begin(), pwEntries.end(), SortEntries(priorities, HttpSettings::sortByTitle() ? "Title" : "UserName"));
     }
+
+    //if (pwEntries.count() > 0)
+    //{
+    //    var names = (from e in resp.Entries select e.Name).Distinct<string>();
+    //    var n = String.Join("\n    ", names.ToArray<string>());
+    //    if (HttpSettings::receiveCredentialNotification())
+    //        ShowNotification(QString("%0: %1 is receiving credentials for:\n%2").arg(Id).arg(host).arg(n)));
+    //}
 
     //Fill the list
     QList<KeepassHttpProtocol::Entry> result;
@@ -429,6 +456,7 @@ void Service::updateEntry(const QString &id, const QString &uuid, const QString 
             if (Entry * entry = db->resolveEntry(Uuid::fromHex(uuid))) {
                 QString u = entry->username();
                 if (u != login || entry->password() != password) {
+                    //ShowNotification(QString("%0: You have an entry change prompt waiting, click to activate").arg(requestId));
                     if (   HttpSettings::alwaysAllowUpdate()
                         || QMessageBox::warning(0, tr("KeyPassX/Http: Update Entry"),
                                                 tr("Do you want to update the information in %1 - %2?").arg(QUrl(url).host()).arg(u),
