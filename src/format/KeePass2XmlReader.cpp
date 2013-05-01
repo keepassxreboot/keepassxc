@@ -741,7 +741,7 @@ void KeePass2XmlReader::parseEntryString(Entry* entry)
 
     QString key;
     QString value;
-    bool protect;
+    bool protect = false;
     bool keySet = false;
     bool valueSet = false;
 

@@ -391,8 +391,8 @@ Group* KeePass1Reader::readGroup(QIODevice* cipherStream)
 
     TimeInfo timeInfo;
 
-    quint32 groupId;
-    quint32 groupLevel;
+    quint32 groupId = 0;
+    quint32 groupLevel = 0;
     bool groupIdSet = false;
     bool groupLevelSet = false;
 
