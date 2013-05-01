@@ -167,7 +167,7 @@ bool Service::removeFirstDomain(QString & hostname)
     return !hostname.isEmpty();
 }
 
-QList<Entry*> Service::searchEntries(const QString &text)
+QList<Entry*> Service::searchEntries(const QString& text)
 {
     QList<Entry*> entries;
 
@@ -175,19 +175,19 @@ QList<Entry*> Service::searchEntries(const QString &text)
 
     //Search entries matching the hostname
     QString hostname = QUrl(text).host();
-    if (DatabaseWidget * dbWidget = m_dbTabWidget->currentDatabaseWidget())
-        if (Database * db = dbWidget->database())
-            if (Group * rootGroup = db->rootGroup())
+    if (DatabaseWidget* dbWidget = m_dbTabWidget->currentDatabaseWidget())
+        if (Database* db = dbWidget->database())
+            if (Group* rootGroup = db->rootGroup())
                 do {
-                    Q_FOREACH (Entry * entry, rootGroup->search(hostname, Qt::CaseInsensitive)) {
+                    Q_FOREACH (Entry* entry, rootGroup->search(hostname, Qt::CaseInsensitive)) {
                         QString title = entry->title();
                         QString url = entry->url();
 
                         //Filter to match hostname in Title and Url fields
-                        if (   hostname.contains(title)
-                            || hostname.contains(url)
-                            || (matchUrlScheme(title) && hostname.contains(QUrl(title).host()))
-                            || (matchUrlScheme(url) && hostname.contains(QUrl(url).host())) )
+                        if (   (!title.isEmpty() && hostname.contains(title))
+                            || (!url.isEmpty() && hostname.contains(url))
+                            || (matchUrlScheme(title) && hostname.endsWith(QUrl(title).host()))
+                            || (matchUrlScheme(url) && hostname.endsWith(QUrl(url).host())) )
                             entries.append(entry);
                     }
                 } while(entries.isEmpty() && removeFirstDomain(hostname));
