@@ -181,30 +181,47 @@ bool Service::removeFirstDomain(QString & hostname)
     return !hostname.isEmpty();
 }
 
-QList<Entry*> Service::searchEntries(const QString& text)
+QList<Entry*> Service::searchEntries(Database* db, const QString& hostname)
 {
     QList<Entry*> entries;
+    if (Group* rootGroup = db->rootGroup())
+        Q_FOREACH (Entry* entry, rootGroup->search(hostname, Qt::CaseInsensitive)) {
+            QString title = entry->title();
+            QString url = entry->url();
 
-    //TODO: setting to search all databases [e.g. as long as the 'current' db is authentified
+            //Filter to match hostname in Title and Url fields
+            if (   (!title.isEmpty() && hostname.contains(title))
+                || (!url.isEmpty() && hostname.contains(url))
+                || (matchUrlScheme(title) && hostname.endsWith(QUrl(title).host()))
+                || (matchUrlScheme(url) && hostname.endsWith(QUrl(url).host())) )
+                entries.append(entry);
+        }
+    return entries;
+}
+
+QList<Entry*> Service::searchEntries(const QString& text)
+{
+    //Get the list of databases to search
+    QList<Database*> databases;
+    if (HttpSettings::searchInAllDatabases()) {
+        for (int i = 0; i < m_dbTabWidget->count(); i++)
+            if (DatabaseWidget* dbWidget = qobject_cast<DatabaseWidget*>(m_dbTabWidget->widget(i)))
+                if (Database* db = dbWidget->database())
+                    databases << db;
+    }
+    else if (DatabaseWidget* dbWidget = m_dbTabWidget->currentDatabaseWidget()) {
+        if (Database* db = dbWidget->database())
+            databases << db;
+    }
 
     //Search entries matching the hostname
     QString hostname = QUrl(text).host();
-    if (DatabaseWidget* dbWidget = m_dbTabWidget->currentDatabaseWidget())
-        if (Database* db = dbWidget->database())
-            if (Group* rootGroup = db->rootGroup())
-                do {
-                    Q_FOREACH (Entry* entry, rootGroup->search(hostname, Qt::CaseInsensitive)) {
-                        QString title = entry->title();
-                        QString url = entry->url();
+    QList<Entry*> entries;
+    do {
+        Q_FOREACH (Database* db, databases)
+            entries << searchEntries(db, hostname);
+    } while(entries.isEmpty() && removeFirstDomain(hostname));
 
-                        //Filter to match hostname in Title and Url fields
-                        if (   (!title.isEmpty() && hostname.contains(title))
-                            || (!url.isEmpty() && hostname.contains(url))
-                            || (matchUrlScheme(title) && hostname.endsWith(QUrl(title).host()))
-                            || (matchUrlScheme(url) && hostname.endsWith(QUrl(url).host())) )
-                            entries.append(entry);
-                    }
-                } while(entries.isEmpty() && removeFirstDomain(hostname));
     return entries;
 }
 

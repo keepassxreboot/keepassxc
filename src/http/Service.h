@@ -52,6 +52,7 @@ private:
     class SortEntries;
     int sortPriority(const Entry *entry, const QString &host, const QString &submitUrl, const QString &baseSubmitUrl) const;
     KeepassHttpProtocol::Entry prepareEntry(const Entry* entry);
+    QList<Entry*> searchEntries(Database* db, const QString& hostname);
     QList<Entry*> searchEntries(const QString& text);
 
     DatabaseTabWidget * const m_dbTabWidget;
