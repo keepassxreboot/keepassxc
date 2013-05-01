@@ -238,6 +238,9 @@ target_link_libraries(${PROGNAME}
 if(UNIX AND NOT APPLE)
   target_link_libraries(${PROGNAME} ${QT_QTDBUS_LIBRARY})
 endif()
+if(APPLE)
+    set_target_properties(${PROGNAME} PROPERTIES LINK_FLAGS "-framework Foundation -framework AppKit")
+endif()
 
 set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
 

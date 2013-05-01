@@ -21,9 +21,9 @@ THE SOFTWARE.
 */
 
 #include <Foundation/NSString.h>
-#include <QString>
-#include <QVBoxLayout>
-#include <QMacCocoaViewContainer>
+#include <QtCore/QString>
+#include <QtGui/QVBoxLayout>
+#include <QtGui/QMacCocoaViewContainer>
 
 static inline NSString* fromQString(const QString &string)
 {

@@ -28,8 +28,8 @@ THE SOFTWARE.
 #import "Foundation/NSNotification.h"
 #import "AppKit/NSSearchField.h"
 
-#include <QApplication>
-#include <QClipboard>
+#include <QtGui/QApplication>
+#include <QtGui/QClipboard>
 
 #define KEYCODE_A 0
 #define KEYCODE_X 7
@@ -45,19 +45,19 @@ public:
     void textDidChange(const QString &text)
     {
         if (qSearchField)
-            emit qSearchField->textChanged(text);
+            Q_EMIT qSearchField->textChanged(text);
     }
 
     void textDidEndEditing()
     {
         if (qSearchField)
-            emit qSearchField->editingFinished();
+            Q_EMIT qSearchField->editingFinished();
     }
 
     void returnPressed()
     {
         if (qSearchField)
-            emit qSearchField->returnPressed();
+            Q_EMIT qSearchField->returnPressed();
     }
 
     QPointer<QSearchField> qSearchField;
@@ -193,7 +193,7 @@ void QSearchField::clear()
         return;
 
     [pimpl->nsSearchField setStringValue:@""];
-    emit textChanged(QString());
+    Q_EMIT textChanged(QString());
 }
 
 void QSearchField::selectAll()
@@ -246,9 +246,9 @@ void QSearchField::changeEvent(QEvent* event)
             return;
 
         const bool enabled = isEnabled();
-		[pimpl->nsSearchField setEnabled: enabled]
+		[pimpl->nsSearchField setEnabled: enabled];
     }
-	QWidget::changeEvent(event);
+    QWidget::changeEvent(event);
 }
 
 void QSearchField::resizeEvent(QResizeEvent *resizeEvent)

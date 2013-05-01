@@ -45,6 +45,6 @@ endif()
 
 add_library (Qocoa STATIC ${SOURCES} ${MOC_SOURCES} ${HEADERS} ${RESOURCES_SOURCES})
 
-if(APPLE)
-    set_target_properties(Qocoa PROPERTIES LINK_FLAGS "-framework Foundation -framework AppKit")
-endif()
+#if(APPLE)
+#    set_target_properties(Qocoa PROPERTIES LINK_FLAGS "-framework Foundation -framework AppKit")
+#endif()

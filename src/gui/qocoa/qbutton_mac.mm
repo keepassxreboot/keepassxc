@@ -137,7 +137,7 @@ public:
 
     void clicked()
     {
-        emit qButton->clicked(qButton->isChecked());
+        Q_EMIT qButton->clicked(qButton->isChecked());
     }
 
     ~QButtonPrivate() {
