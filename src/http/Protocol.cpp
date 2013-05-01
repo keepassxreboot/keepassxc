@@ -33,7 +33,7 @@ static const char * const STR_SET_LOGIN = "set-login";
 static const char * const STR_ASSOCIATE = "associate";
 static const char * const STR_TEST_ASSOCIATE = "test-associate";
 static const char * const STR_GENERATE_PASSWORD = "generate-password";
-static const char * const STR_VERSION = "1.6.0.0";
+static const char * const STR_VERSION = "1.7.0.0";
 
 }/*namespace KeepassHttpProtocol*/
 
@@ -497,13 +497,13 @@ StringField::StringField(const QString &key, const QString &value):
 {}
 
 StringField::StringField(const StringField &other):
-    m_key(other.m_key), m_value(other.m_value)
+    QObject(NULL), m_key(other.m_key), m_value(other.m_value)
 {}
 
 StringField &StringField::operator =(const StringField &other)
 {
-    m_key = m_key;
-    m_value = m_value;
+    m_key = other.m_key;
+    m_value = other.m_value;
     return *this;
 }
 
