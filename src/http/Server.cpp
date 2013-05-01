@@ -179,7 +179,6 @@ void Server::getAllLogins(const Request &r, Response *protocolResp)
     if (!r.CheckVerifier(key))
         return;
 
-//    parms.SearchString = @"^[A-Za-z0-9:/-]+\.[A-Za-z0-9:/-]+$"; // match anything looking like a domain or url
     protocolResp->setSuccess();
     protocolResp->setId(r.id());
     protocolResp->setVerifier(key);

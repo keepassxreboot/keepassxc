@@ -371,7 +371,8 @@ QList<KeepassHttpProtocol::Entry> Service::searchAllEntries(const QString &id)
         if (Database * db = dbWidget->database())
             if (Group * rootGroup = db->rootGroup())
                 Q_FOREACH (Entry * entry, rootGroup->entriesRecursive())
-                    result << KeepassHttpProtocol::Entry(entry->title(), entry->username(), QString(), entry->uuid().toHex());
+                    if (!entry->url().isEmpty() || QUrl(entry->title()).isValid())
+                        result << KeepassHttpProtocol::Entry(entry->title(), entry->username(), QString(), entry->uuid().toHex());
     return result;
 }
 
