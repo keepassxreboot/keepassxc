@@ -18,6 +18,8 @@
 #include "PasswordGeneratorWidget.h"
 #include "ui_PasswordGeneratorWidget.h"
 
+#include "core/Config.h"
+
 PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::PasswordGeneratorWidget())
@@ -28,26 +30,44 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), SLOT(togglePassword(bool)));
     connect(m_ui->buttonGenerate, SIGNAL(clicked()), SLOT(generatePassword()));
     connect(m_ui->buttonApply, SIGNAL(clicked()), SLOT(emitNewPassword()));
+    connect(m_ui->buttonApply, SIGNAL(clicked()), SLOT(saveSettings()));
 
     reset();
+    loadSettings();
 }
 
 PasswordGeneratorWidget::~PasswordGeneratorWidget()
 {
 }
 
+void PasswordGeneratorWidget::loadSettings()
+{
+    m_ui->checkBoxLower->setChecked(config()->get("generator/LowerCase", true).toBool());
+    m_ui->checkBoxUpper->setChecked(config()->get("generator/UpperCase", true).toBool());
+    m_ui->checkBoxNumbers->setChecked(config()->get("generator/Numbers", true).toBool());
+    m_ui->checkBoxSpecialChars->setChecked(config()->get("generator/SpecialChars", false).toBool());
+
+    m_ui->checkBoxExcludeAlike->setChecked(config()->get("generator/ExcludeAlike", true).toBool());
+    m_ui->checkBoxEnsureEvery->setChecked(config()->get("generator/EnsureEvery", true).toBool());
+
+    m_ui->spinBoxLength->setValue(config()->get("generator/Length", 16).toInt());
+}
+
+void PasswordGeneratorWidget::saveSettings()
+{
+    config()->set("generator/LowerCase", m_ui->checkBoxLower->isChecked());
+    config()->set("generator/UpperCase", m_ui->checkBoxUpper->isChecked());
+    config()->set("generator/Numbers", m_ui->checkBoxNumbers->isChecked());
+    config()->set("generator/SpecialChars", m_ui->checkBoxSpecialChars->isChecked());
+
+    config()->set("generator/ExcludeAlike", m_ui->checkBoxExcludeAlike->isChecked());
+    config()->set("generator/EnsureEvery", m_ui->checkBoxEnsureEvery->isChecked());
+
+    config()->set("generator/Length", m_ui->spinBoxLength->value());
+}
+
 void PasswordGeneratorWidget::reset()
 {
-    m_ui->checkBoxLower->setChecked(true);
-    m_ui->checkBoxUpper->setChecked(true);
-    m_ui->checkBoxNumbers->setChecked(true);
-    m_ui->checkBoxSpecialChars->setChecked(false);
-
-    m_ui->checkBoxExcludeAlike->setChecked(true);
-    m_ui->checkBoxEnsureEvery->setChecked(true);
-
-    m_ui->spinBoxLength->setValue(16);
-
     m_ui->editNewPassword->setText("");
     m_ui->togglePasswordButton->setChecked(true);
 }

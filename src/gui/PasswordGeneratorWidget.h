@@ -34,6 +34,7 @@ class PasswordGeneratorWidget : public QWidget
 public:
     explicit PasswordGeneratorWidget(QWidget* parent = Q_NULLPTR);
     ~PasswordGeneratorWidget();
+    void loadSettings();
     void reset();
 
 Q_SIGNALS:
@@ -44,6 +45,7 @@ private Q_SLOTS:
     void togglePassword(bool checked);
     void generatePassword();
     void emitNewPassword();
+    void saveSettings();
 
 private:
     PasswordGenerator::CharClasses charClasses();
