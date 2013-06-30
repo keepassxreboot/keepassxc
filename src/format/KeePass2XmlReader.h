@@ -80,7 +80,7 @@ private:
 
     Group* getGroup(const Uuid& uuid);
     Entry* getEntry(const Uuid& uuid);
-    void raiseError(int internalNumber);
+    void raiseError(const QString& errorMessage);
     void skipCurrentElement();
 
     QXmlStreamReader m_xml;
@@ -93,6 +93,8 @@ private:
     QHash<QString, QByteArray> m_binaryPool;
     QHash<QString, QPair<Entry*, QString> > m_binaryMap;
     QByteArray m_headerHash;
+    bool m_error;
+    QString m_errorStr;
 };
 
 #endif // KEEPASSX_KEEPASS2XMLREADER_H

@@ -61,7 +61,7 @@ void TestKeePass2Writer::initTestCase()
 
     KeePass2Writer writer;
     writer.writeDatabase(&buffer, m_dbOrg);
-    QVERIFY(!writer.error());
+    QVERIFY(!writer.hasError());
     buffer.seek(0);
     KeePass2Reader reader;
     m_dbTest = reader.readDatabase(&buffer, key);

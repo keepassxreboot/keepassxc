@@ -129,18 +129,21 @@ bool HashedBlockStream::readHashedBlock()
     quint32 index = Endian::readUInt32(m_baseDevice, ByteOrder, &ok);
     if (!ok || index != m_blockIndex) {
         m_error = true;
+        setErrorString("Invalid block index.");
         return false;
     }
 
     QByteArray hash = m_baseDevice->read(32);
     if (hash.size() != 32) {
         m_error = true;
+        setErrorString("Invalid hash size.");
         return false;
     }
 
     m_blockSize = Endian::readInt32(m_baseDevice, ByteOrder, &ok);
     if (!ok || m_blockSize < 0) {
         m_error = true;
+        setErrorString("Invalid block size.");
         return false;
     }
 
@@ -157,6 +160,7 @@ bool HashedBlockStream::readHashedBlock()
     m_buffer = m_baseDevice->read(m_blockSize);
     if (m_buffer.size() != m_blockSize) {
         m_error = true;
+        setErrorString("Block too short.");
         return false;
     }
 

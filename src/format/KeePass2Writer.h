@@ -30,12 +30,13 @@ public:
     KeePass2Writer();
     void writeDatabase(QIODevice* device, Database* db);
     void writeDatabase(const QString& filename, Database* db);
-    bool error();
+    bool hasError();
     QString errorString();
 
 private:
     bool writeData(const QByteArray& data);
     bool writeHeaderField(KeePass2::HeaderFieldID fieldId, const QByteArray& data);
+    void raiseError(const QString& errorMessage);
 
     QIODevice* m_device;
     bool m_error;

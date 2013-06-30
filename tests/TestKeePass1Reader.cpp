@@ -273,7 +273,7 @@ void TestKeePass1Reader::reopenDatabase(Database* db, const QString& password, c
 
     KeePass2Writer writer;
     writer.writeDatabase(&buffer, db);
-    QVERIFY(!writer.error());
+    QVERIFY(!writer.hasError());
     QVERIFY(buffer.seek(0));
 
     CompositeKey key;

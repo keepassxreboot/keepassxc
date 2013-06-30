@@ -62,7 +62,7 @@ private:
     void parseMetaStream(const Entry* entry);
     bool parseGroupTreeState(const QByteArray& data);
     bool parseCustomIcons4(const QByteArray& data);
-    void raiseError(const QString& str);
+    void raiseError(const QString& errorMessage);
     static QByteArray readKeyfile(QIODevice* device);
     static QDateTime dateFromPackedStruct(const QByteArray& data);
     static bool isMetaStream(const Entry* entry);

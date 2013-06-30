@@ -43,7 +43,7 @@ KeePass2Writer::KeePass2Writer()
 void KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
 {
     m_error = false;
-    m_errorStr = QString();
+    m_errorStr.clear();
 
     QByteArray masterSeed = Random::randomArray(32);
     QByteArray encryptionIV = Random::randomArray(16);
@@ -117,8 +117,7 @@ void KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
 bool KeePass2Writer::writeData(const QByteArray& data)
 {
     if (m_device->write(data) != data.size()) {
-        m_error = true;
-        m_errorStr = m_device->errorString();
+        raiseError(m_device->errorString());
         return false;
     }
     else {
@@ -143,11 +142,14 @@ bool KeePass2Writer::writeHeaderField(KeePass2::HeaderFieldID fieldId, const QBy
 void KeePass2Writer::writeDatabase(const QString& filename, Database* db)
 {
     QFile file(filename);
-    file.open(QIODevice::WriteOnly|QIODevice::Truncate);
+    if (!file.open(QIODevice::WriteOnly|QIODevice::Truncate)) {
+        raiseError(file.errorString());
+        return;
+    }
     writeDatabase(&file, db);
 }
 
-bool KeePass2Writer::error()
+bool KeePass2Writer::hasError()
 {
     return m_error;
 }
@@ -155,4 +157,10 @@ bool KeePass2Writer::error()
 QString KeePass2Writer::errorString()
 {
     return m_errorStr;
+}
+
+void KeePass2Writer::raiseError(const QString& errorMessage)
+{
+    m_error = true;
+    m_errorStr = errorMessage;
 }

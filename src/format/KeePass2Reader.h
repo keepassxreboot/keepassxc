@@ -39,7 +39,7 @@ public:
     QByteArray xmlData();
 
 private:
-    void raiseError(const QString& str);
+    void raiseError(const QString& errorMessage);
 
     bool readHeaderField();
 

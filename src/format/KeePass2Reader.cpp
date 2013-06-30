@@ -33,8 +33,9 @@
 #include "streams/SymmetricCipherStream.h"
 
 KeePass2Reader::KeePass2Reader()
+    : m_error(false)
+    , m_saveXml(false)
 {
-    m_saveXml = false;
 }
 
 Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& key)
@@ -43,7 +44,7 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
     m_db = db.data();
     m_device = device;
     m_error = false;
-    m_errorStr = QString();
+    m_errorStr.clear();
     m_headerEnd = false;
     m_xmlData.clear();
     m_masterSeed.clear();
@@ -83,11 +84,15 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
 
     headerStream.close();
 
+    if (hasError()) {
+        return Q_NULLPTR;
+    }
+
     // check if all required headers were present
     if (m_masterSeed.isEmpty() || m_transformSeed.isEmpty() || m_encryptionIV.isEmpty()
             || m_streamStartBytes.isEmpty() || m_protectedStreamKey.isEmpty()
             || m_db->cipher().isNull()) {
-        raiseError("");
+        raiseError("missing database headers");
         return Q_NULLPTR;
     }
 
@@ -149,7 +154,7 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
     if (!xmlReader.headerHash().isEmpty()) {
         QByteArray headerHash = CryptoHash::hash(headerStream.storedData(), CryptoHash::Sha256);
         if (headerHash != xmlReader.headerHash()) {
-            raiseError("");
+            raiseError("Head doesn't match hash");
             return Q_NULLPTR;
         }
     }
@@ -195,17 +200,17 @@ QByteArray KeePass2Reader::xmlData()
     return m_xmlData;
 }
 
-void KeePass2Reader::raiseError(const QString& str)
+void KeePass2Reader::raiseError(const QString& errorMessage)
 {
     m_error = true;
-    m_errorStr = str;
+    m_errorStr = errorMessage;
 }
 
 bool KeePass2Reader::readHeaderField()
 {
     QByteArray fieldIDArray = m_headerStream->read(1);
     if (fieldIDArray.size() != 1) {
-        raiseError("");
+        raiseError("Invalid header id size");
         return false;
     }
     quint8 fieldID = fieldIDArray.at(0);
@@ -213,7 +218,7 @@ bool KeePass2Reader::readHeaderField()
     bool ok;
     quint16 fieldLen = Endian::readUInt16(m_headerStream, KeePass2::BYTEORDER, &ok);
     if (!ok) {
-        raiseError("");
+        raiseError("Invalid header field length");
         return false;
     }
 
@@ -221,7 +226,7 @@ bool KeePass2Reader::readHeaderField()
     if (fieldLen != 0) {
         fieldData = m_headerStream->read(fieldLen);
         if (fieldData.size() != fieldLen) {
-            raiseError("");
+            raiseError("Invalid header data length");
             return false;
         }
     }
@@ -278,13 +283,13 @@ bool KeePass2Reader::readHeaderField()
 void KeePass2Reader::setCipher(const QByteArray& data)
 {
     if (data.size() != Uuid::Length) {
-        raiseError("");
+        raiseError("Invalid cipher uuid length");
     }
     else {
         Uuid uuid(data);
 
         if (uuid != KeePass2::CIPHER_AES) {
-            raiseError("");
+            raiseError("Unsupported cipher");
         }
         else {
             m_db->setCipher(uuid);
@@ -295,13 +300,13 @@ void KeePass2Reader::setCipher(const QByteArray& data)
 void KeePass2Reader::setCompressionFlags(const QByteArray& data)
 {
     if (data.size() != 4) {
-        raiseError("");
+        raiseError("Invalid compression flags length");
     }
     else {
         quint32 id = Endian::bytesToUInt32(data, KeePass2::BYTEORDER);
 
         if (id > Database::CompressionAlgorithmMax) {
-            raiseError("");
+            raiseError("Unsupported compression algorithm");
         }
         else {
             m_db->setCompressionAlgo(static_cast<Database::CompressionAlgorithm>(id));
@@ -312,7 +317,7 @@ void KeePass2Reader::setCompressionFlags(const QByteArray& data)
 void KeePass2Reader::setMasterSeed(const QByteArray& data)
 {
     if (data.size() != 32) {
-        raiseError("");
+        raiseError("Invalid master seed size");
     }
     else {
         m_masterSeed = data;
@@ -322,7 +327,7 @@ void KeePass2Reader::setMasterSeed(const QByteArray& data)
 void KeePass2Reader::setTransformSeed(const QByteArray& data)
 {
     if (data.size() != 32) {
-        raiseError("");
+        raiseError("Invalid transform seed size");
     }
     else {
         m_transformSeed = data;
@@ -332,7 +337,7 @@ void KeePass2Reader::setTransformSeed(const QByteArray& data)
 void KeePass2Reader::setTansformRounds(const QByteArray& data)
 {
     if (data.size() != 8) {
-        raiseError("");
+        raiseError("Invalid transform rounds size");
     }
     else {
         m_db->setTransformRounds(Endian::bytesToUInt64(data, KeePass2::BYTEORDER));
@@ -342,7 +347,7 @@ void KeePass2Reader::setTansformRounds(const QByteArray& data)
 void KeePass2Reader::setEncryptionIV(const QByteArray& data)
 {
     if (data.size() != 16) {
-        raiseError("");
+        raiseError("Invalid encryption iv size");
     }
     else {
         m_encryptionIV = data;
@@ -352,7 +357,7 @@ void KeePass2Reader::setEncryptionIV(const QByteArray& data)
 void KeePass2Reader::setProtectedStreamKey(const QByteArray& data)
 {
     if (data.size() != 32) {
-        raiseError("");
+        raiseError("Invalid stream key size");
     }
     else {
         m_protectedStreamKey = data;
@@ -362,7 +367,7 @@ void KeePass2Reader::setProtectedStreamKey(const QByteArray& data)
 void KeePass2Reader::setStreamStartBytes(const QByteArray& data)
 {
     if (data.size() != 32) {
-        raiseError("");
+        raiseError("Invalid start bytes size");
     }
     else {
         m_streamStartBytes = data;
@@ -372,13 +377,13 @@ void KeePass2Reader::setStreamStartBytes(const QByteArray& data)
 void KeePass2Reader::setInnerRandomStreamID(const QByteArray& data)
 {
     if (data.size() != 4) {
-        raiseError("");
+        raiseError("Invalid random stream id size");
     }
     else {
         quint32 id = Endian::bytesToUInt32(data, KeePass2::BYTEORDER);
 
         if (id != KeePass2::Salsa20) {
-            raiseError("");
+            raiseError("Unsupported random stream algorithm");
         }
     }
 }
