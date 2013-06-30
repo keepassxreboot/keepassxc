@@ -203,9 +203,18 @@ endif()
 
 include_directories(SYSTEM ${QT_INCLUDE_DIR} ${GCRYPT_INCLUDE_DIR} ${ZLIB_INCLUDE_DIR})
 
+if(NOT (${CMAKE_VERSION} VERSION_LESS 2.8.3))
+  set(PRINT_SUMMARY ON)
+  include(FeatureSummary)
+endif()
+
 add_subdirectory(src)
 add_subdirectory(share)
 add_subdirectory(utils)
 if(WITH_TESTS)
   add_subdirectory(tests)
 endif(WITH_TESTS)
+
+if(PRINT_SUMMARY)
+  feature_summary(WHAT ALL)
+endif()
