@@ -115,8 +115,14 @@ QImage Group::icon() const
         return databaseIcons()->icon(m_data.iconNumber);
     }
     else {
-        // TODO: check if m_db is 0
-        return m_db->metadata()->customIcon(m_data.customIcon);
+        Q_ASSERT(m_db);
+
+        if (m_db) {
+            return m_db->metadata()->customIcon(m_data.customIcon);
+        }
+        else {
+            return QImage();
+        }
     }
 }
 
@@ -126,9 +132,10 @@ QPixmap Group::iconPixmap() const
         return databaseIcons()->iconPixmap(m_data.iconNumber);
     }
     else {
+        Q_ASSERT(m_db);
+
         QPixmap pixmap;
-        if (!QPixmapCache::find(m_pixmapCacheKey, &pixmap)) {
-            // TODO: check if m_db is 0
+        if (m_db && !QPixmapCache::find(m_pixmapCacheKey, &pixmap)) {
             pixmap = QPixmap::fromImage(m_db->metadata()->customIcon(m_data.customIcon));
             m_pixmapCacheKey = QPixmapCache::insert(pixmap);
         }
