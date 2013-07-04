@@ -466,9 +466,6 @@ QSet<Uuid> Group::customIconsRecursive() const
 
 Group* Group::clone() const
 {
-    // TODO: what to do about custom icons?
-    // they won't be available when changing the database later
-
     Group* clonedGroup = new Group();
 
     clonedGroup->setUpdateTimeinfo(false);

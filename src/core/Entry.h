@@ -110,6 +110,12 @@ public:
     void addHistoryItem(Entry* entry);
     void removeHistoryItems(const QList<Entry*>& historyEntries);
     void truncateHistory();
+    /**
+     * Creates a duplicate of this entry except that returned entry isn't part
+     * of any group and all TimeInfo attributes are set to the current time.
+     * Note that you need to copy the custom icons manually when inserting the
+     * new entry into another database.
+     */
     Entry* clone() const;
     void copyDataFrom(const Entry* other);
     QString resolvePlaceholders(const QString& str) const;
