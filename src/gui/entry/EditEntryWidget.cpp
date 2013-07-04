@@ -26,6 +26,7 @@
 #include <QMenu>
 #include <QSortFilterProxyModel>
 
+#include "core/Config.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Metadata.h"
@@ -605,9 +606,11 @@ void EditEntryWidget::insertAttachment()
 {
     Q_ASSERT(!m_history);
 
-    // TODO: save last used dir
-    QString filename = fileDialog()->getOpenFileName(this, tr("Select file"),
-                QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation));
+    QString defaultDir = config()->get("LastAttachmentDir").toString();
+    if (defaultDir.isEmpty() || !QDir(defaultDir).exists()) {
+        defaultDir = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+    }
+    QString filename = fileDialog()->getOpenFileName(this, tr("Select file"), defaultDir);
     if (filename.isEmpty() || !QFile::exists(filename)) {
         return;
     }
@@ -637,8 +640,11 @@ void EditEntryWidget::saveCurrentAttachment()
     }
 
     QString filename = m_attachmentsModel->keyByIndex(index);
-    // TODO: save last used dir
-    QDir dir(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation));
+    QString defaultDirName = config()->get("LastAttachmentDir").toString();
+    if (defaultDirName.isEmpty() || !QDir(defaultDirName).exists()) {
+        defaultDirName = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+    }
+    QDir dir(defaultDirName);
     QString savePath = fileDialog()->getSaveFileName(this, tr("Save attachment"),
                                                        dir.filePath(filename));
     if (!savePath.isEmpty()) {
