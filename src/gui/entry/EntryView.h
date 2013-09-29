@@ -50,6 +50,9 @@ Q_SIGNALS:
     void entryActivated(Entry* entry, EntryModel::ModelColumn column);
     void entrySelectionChanged();
 
+protected:
+    void keyPressEvent(QKeyEvent* event) Q_DECL_OVERRIDE;
+
 private Q_SLOTS:
     void emitEntryActivated(const QModelIndex& index);
     void switchToEntryListMode();
