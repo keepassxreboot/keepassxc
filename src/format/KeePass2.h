@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_KEEPASS2_H
 #define KEEPASSX_KEEPASS2_H
 
-#include <QtCore/QtGlobal>
+#include <QtGlobal>
 
 #include "core/Uuid.h"
 

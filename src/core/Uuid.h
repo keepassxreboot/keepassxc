@@ -18,8 +18,8 @@
 #ifndef KEEPASSX_UUID_H
 #define KEEPASSX_UUID_H
 
-#include <QtCore/QByteArray>
-#include <QtCore/QString>
+#include <QByteArray>
+#include <QString>
 
 class Uuid
 {

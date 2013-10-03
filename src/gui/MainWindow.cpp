@@ -18,8 +18,8 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
-#include <QtGui/QCloseEvent>
-#include <QtGui/QShortcut>
+#include <QCloseEvent>
+#include <QShortcut>
 
 #include "autotype/AutoType.h"
 #include "core/Config.h"

@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_TESTENTRYMODEL_H
 #define KEEPASSX_TESTENTRYMODEL_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 class TestEntryModel : public QObject
 {

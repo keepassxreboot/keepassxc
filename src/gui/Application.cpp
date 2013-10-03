@@ -18,7 +18,7 @@
 
 #include "Application.h"
 
-#include <QtGui/QFileOpenEvent>
+#include <QFileOpenEvent>
 
 #include "autotype/AutoType.h"
 

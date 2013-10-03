@@ -18,8 +18,8 @@
 #ifndef KEEPASSX_SYMMETRICCIPHERSTREAM_H
 #define KEEPASSX_SYMMETRICCIPHERSTREAM_H
 
-#include <QtCore/QByteArray>
-#include <QtCore/QScopedPointer>
+#include <QByteArray>
+#include <QScopedPointer>
 
 #include "crypto/SymmetricCipher.h"
 #include "streams/LayeredStream.h"

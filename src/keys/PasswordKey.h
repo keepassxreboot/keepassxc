@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_PASSWORDKEY_H
 #define KEEPASSX_PASSWORDKEY_H
 
-#include <QtCore/QString>
+#include <QString>
 
 #include "keys/Key.h"
 

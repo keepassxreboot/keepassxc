@@ -17,8 +17,8 @@
 
 #include "AutoType.h"
 
-#include <QtCore/QPluginLoader>
-#include <QtGui/QApplication>
+#include <QApplication>
+#include <QPluginLoader>
 
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/AutoTypeSelectDialog.h"

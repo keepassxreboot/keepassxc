@@ -18,8 +18,8 @@
 #ifndef KEEPASSX_ENDIAN_H
 #define KEEPASSX_ENDIAN_H
 
-#include <QtCore/QByteArray>
-#include <QtCore/QSysInfo>
+#include <QByteArray>
+#include <QSysInfo>
 
 class QIODevice;
 

@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_KEY_H
 #define KEEPASSX_KEY_H
 
-#include <QtCore/QByteArray>
+#include <QByteArray>
 
 class Key
 {

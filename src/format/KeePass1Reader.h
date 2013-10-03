@@ -18,9 +18,9 @@
 #ifndef KEEPASSX_KEEPASS1READER_H
 #define KEEPASSX_KEEPASS1READER_H
 
-#include <QtCore/QCoreApplication>
-#include <QtCore/QDateTime>
-#include <QtCore/QHash>
+#include <QCoreApplication>
+#include <QDateTime>
+#include <QHash>
 
 class Database;
 class Entry;

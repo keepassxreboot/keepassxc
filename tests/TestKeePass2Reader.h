@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_TESTKEEPASS2READER_H
 #define KEEPASSX_TESTKEEPASS2READER_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 class TestKeePass2Reader : public QObject
 {

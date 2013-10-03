@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_AUTOTYPETEST_H
 #define KEEPASSX_AUTOTYPETEST_H
 
-#include <QtCore/QtPlugin>
+#include <QtPlugin>
 
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/AutoTypeAction.h"

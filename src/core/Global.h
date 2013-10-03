@@ -22,7 +22,7 @@
 
 // mostly copied from qcompilerdetection.h which is part of Qt 5
 
-#include <QtCore/QtGlobal>
+#include <QtGlobal>
 
 #ifdef Q_CC_CLANG
 #  if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)

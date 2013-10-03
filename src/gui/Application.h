@@ -19,7 +19,7 @@
 #ifndef KEEPASSX_APPLICATION_H
 #define KEEPASSX_APPLICATION_H
 
-#include <QtGui/QApplication>
+#include <QApplication>
 
 #include "core/Global.h"
 

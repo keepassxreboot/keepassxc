@@ -17,7 +17,7 @@
 
 #include "TestArgumentParser.h"
 
-#include <QtTest/QTest>
+#include <QTest>
 
 #include "tests.h"
 #include "core/ArgumentParser.h"

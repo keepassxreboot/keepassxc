@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_HASHEDBLOCKSTREAM_H
 #define KEEPASSX_HASHEDBLOCKSTREAM_H
 
-#include <QtCore/QSysInfo>
+#include <QSysInfo>
 
 #include "streams/LayeredStream.h"
 

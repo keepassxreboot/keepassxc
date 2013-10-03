@@ -17,7 +17,7 @@
 
 #include "WildcardMatcher.h"
 
-#include <QtCore/QStringList>
+#include <QStringList>
 
 const QChar WildcardMatcher::Wildcard = '*';
 const Qt::CaseSensitivity WildcardMatcher::Sensitivity = Qt::CaseInsensitive;

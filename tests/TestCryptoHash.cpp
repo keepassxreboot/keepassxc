@@ -17,7 +17,7 @@
 
 #include "TestCryptoHash.h"
 
-#include <QtTest/QTest>
+#include <QTest>
 
 #include "tests.h"
 #include "crypto/Crypto.h"

@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_TESTGROUP_H
 #define KEEPASSX_TESTGROUP_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 class TestGroup : public QObject
 {

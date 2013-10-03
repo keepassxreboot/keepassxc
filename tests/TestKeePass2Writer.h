@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_TESTKEEPASS2WRITER_H
 #define KEEPASSX_TESTKEEPASS2WRITER_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 class Database;
 

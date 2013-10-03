@@ -17,7 +17,7 @@
 
 #include "ShortcutWidget.h"
 
-#include <QtGui/QKeyEvent>
+#include <QKeyEvent>
 
 #include "autotype/AutoType.h"
 

@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_ENTRYATTACHMENTSMODEL_H
 #define KEEPASSX_ENTRYATTACHMENTSMODEL_H
 
-#include <QtCore/QAbstractListModel>
+#include <QAbstractListModel>
 
 #include "core/Global.h"
 

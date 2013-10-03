@@ -18,7 +18,7 @@
 #include "ChangeMasterKeyWidget.h"
 #include "ui_ChangeMasterKeyWidget.h"
 
-#include <QtGui/QMessageBox>
+#include <QMessageBox>
 
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"

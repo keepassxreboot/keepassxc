@@ -17,7 +17,7 @@
 
 #include "TimeDelta.h"
 
-#include <QtCore/QDateTime>
+#include <QDateTime>
 
 QDateTime operator+(const QDateTime& dateTime, const TimeDelta& delta) {
     return dateTime.addDays(delta.getDays())

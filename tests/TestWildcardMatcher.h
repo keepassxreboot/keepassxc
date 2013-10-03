@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_TESTWILDCARDMATCHER_H
 #define KEEPASSX_TESTWILDCARDMATCHER_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 class WildcardMatcher;
 

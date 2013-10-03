@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_WILDCARDMATCHER_H
 #define KEEPASSX_WILDCARDMATCHER_H
 
-#include <QtCore/QStringList>
+#include <QStringList>
 
 class WildcardMatcher
 {

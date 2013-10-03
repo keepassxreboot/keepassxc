@@ -42,9 +42,9 @@
 #include "qsavefile.h"
 #include "qsavefile_p.h"
 
-#include <QtCore/QAbstractFileEngine>
-#include <QtCore/QFileInfo>
-#include <QtCore/QTemporaryFile>
+#include <QAbstractFileEngine>
+#include <QFileInfo>
+#include <QTemporaryFile>
 
 QSaveFilePrivate::QSaveFilePrivate()
     : tempFile(0), error(QFile::NoError)

@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_EDITWIDGET_H
 #define KEEPASSX_EDITWIDGET_H
 
-#include <QtCore/QScopedPointer>
+#include <QScopedPointer>
 
 #include "gui/DialogyWidget.h"
 

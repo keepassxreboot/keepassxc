@@ -19,8 +19,8 @@
 
 #include "LineEdit.h"
 
-#include <QtGui/QStyle>
-#include <QtGui/QToolButton>
+#include <QStyle>
+#include <QToolButton>
 
 #include "core/FilePath.h"
 

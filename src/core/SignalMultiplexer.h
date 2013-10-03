@@ -18,8 +18,8 @@
 #ifndef KEEPASSX_SIGNALMULTIPLEXER_H
 #define KEEPASSX_SIGNALMULTIPLEXER_H
 
-#include <QtCore/QObject>
-#include <QtCore/QPointer>
+#include <QObject>
+#include <QPointer>
 
 #include "core/Global.h"
 

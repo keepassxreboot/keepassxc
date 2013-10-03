@@ -17,9 +17,9 @@
 
 #include "TestGroup.h"
 
-#include <QtCore/QPointer>
-#include <QtTest/QSignalSpy>
-#include <QtTest/QTest>
+#include <QPointer>
+#include <QSignalSpy>
+#include <QTest>
 
 #include "tests.h"
 #include "core/Database.h"

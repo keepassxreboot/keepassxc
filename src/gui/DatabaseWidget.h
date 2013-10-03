@@ -18,8 +18,8 @@
 #ifndef KEEPASSX_DATABASEWIDGET_H
 #define KEEPASSX_DATABASEWIDGET_H
 
-#include <QtCore/QScopedPointer>
-#include <QtGui/QStackedWidget>
+#include <QScopedPointer>
+#include <QStackedWidget>
 
 #include "core/Global.h"
 

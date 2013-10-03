@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_WINDOWSELECTCOMBOBOX_H
 #define KEEPASSX_WINDOWSELECTCOMBOBOX_H
 
-#include <QtGui/QComboBox>
+#include <QComboBox>
 
 #include "core/Global.h"
 

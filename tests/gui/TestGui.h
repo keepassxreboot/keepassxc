@@ -18,8 +18,8 @@
 #ifndef KEEPASSX_TESTGUI_H
 #define KEEPASSX_TESTGUI_H
 
-#include <QtCore/QAbstractItemModel>
-#include <QtCore/QObject>
+#include <QAbstractItemModel>
+#include <QObject>
 
 class Database;
 class DatabaseTabWidget;

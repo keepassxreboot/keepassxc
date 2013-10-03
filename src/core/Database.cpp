@@ -17,9 +17,9 @@
 
 #include "Database.h"
 
-#include <QtCore/QFile>
-#include <QtCore/QTimer>
-#include <QtCore/QXmlStreamReader>
+#include <QFile>
+#include <QTimer>
+#include <QXmlStreamReader>
 
 #include "core/Group.h"
 #include "core/Metadata.h"

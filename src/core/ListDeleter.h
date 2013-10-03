@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_LISTDELETER_H
 #define KEEPASSX_LISTDELETER_H
 
-#include <QtCore/QList>
+#include <QList>
 
 template <typename T>
 class ListDeleter

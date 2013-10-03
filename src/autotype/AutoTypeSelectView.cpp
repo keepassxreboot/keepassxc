@@ -17,7 +17,7 @@
 
 #include "AutoTypeSelectView.h"
 
-#include <QtGui/QMouseEvent>
+#include <QMouseEvent>
 
 AutoTypeSelectView::AutoTypeSelectView(QWidget* parent)
     : EntryView(parent)

@@ -17,16 +17,16 @@
 
 #include "TestGui.h"
 
-#include <QtCore/QTemporaryFile>
-#include <QtTest/QTest>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QDialogButtonBox>
-#include <QtGui/QLineEdit>
-#include <QtGui/QPushButton>
-#include <QtGui/QSpinBox>
-#include <QtGui/QToolBar>
-#include <QtGui/QToolButton>
+#include <QAction>
+#include <QApplication>
+#include <QDialogButtonBox>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QSpinBox>
+#include <QTemporaryFile>
+#include <QTest>
+#include <QToolBar>
+#include <QToolButton>
 
 #include "config-keepassx-tests.h"
 #include "tests.h"

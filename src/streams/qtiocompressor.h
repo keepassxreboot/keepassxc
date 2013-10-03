@@ -47,7 +47,7 @@
 #ifndef QTIOCOMPRESSOR_H
 #define QTIOCOMPRESSOR_H
 
-#include <QtCore/QIODevice>
+#include <QIODevice>
 
 class QtIOCompressorPrivate;
 class QtIOCompressor : public QIODevice

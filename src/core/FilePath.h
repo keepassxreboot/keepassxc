@@ -18,9 +18,9 @@
 #ifndef KEEPASSX_FILEPATH_H
 #define KEEPASSX_FILEPATH_H
 
-#include <QtCore/QHash>
-#include <QtCore/QString>
-#include <QtGui/QIcon>
+#include <QHash>
+#include <QIcon>
+#include <QString>
 
 #include "core/Global.h"
 

@@ -18,8 +18,8 @@
 #ifndef KEEPASSX_DATABASE_H
 #define KEEPASSX_DATABASE_H
 
-#include <QtCore/QDateTime>
-#include <QtCore/QHash>
+#include <QDateTime>
+#include <QHash>
 
 #include "core/Uuid.h"
 #include "keys/CompositeKey.h"

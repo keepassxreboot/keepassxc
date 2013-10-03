@@ -18,9 +18,9 @@
 #ifndef KEEPASSX_PASSWORDGENERATOR_H
 #define KEEPASSX_PASSWORDGENERATOR_H
 
-#include <QtCore/QFlags>
-#include <QtCore/QString>
-#include <QtCore/QVector>
+#include <QFlags>
+#include <QString>
+#include <QVector>
 
 #include "core/Global.h"
 

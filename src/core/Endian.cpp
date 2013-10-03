@@ -17,8 +17,8 @@
 
 #include "Endian.h"
 
-#include <QtCore/QtEndian>
-#include <QtCore/QIODevice>
+#include <QtEndian>
+#include <QIODevice>
 
 namespace Endian {
 

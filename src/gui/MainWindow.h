@@ -18,8 +18,8 @@
 #ifndef KEEPASSX_MAINWINDOW_H
 #define KEEPASSX_MAINWINDOW_H
 
-#include <QtGui/QActionGroup>
-#include <QtGui/QMainWindow>
+#include <QActionGroup>
+#include <QMainWindow>
 
 #include "core/SignalMultiplexer.h"
 #include "gui/DatabaseWidget.h"

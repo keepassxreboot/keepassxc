@@ -18,8 +18,8 @@
 #ifndef KEEPASSX_ABOUTDIALOG_H
 #define KEEPASSX_ABOUTDIALOG_H
 
-#include <QtCore/QScopedPointer>
-#include <QtGui/QDialog>
+#include <QDialog>
+#include <QScopedPointer>
 
 #include "core/Global.h"
 

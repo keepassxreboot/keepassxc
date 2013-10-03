@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_SHORTCUTWIDGET_H
 #define KEEPASSX_SHORTCUTWIDGET_H
 
-#include <QtGui/QLineEdit>
+#include <QLineEdit>
 
 #include "core/Global.h"
 

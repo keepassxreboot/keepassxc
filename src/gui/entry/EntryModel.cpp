@@ -17,8 +17,8 @@
 
 #include "EntryModel.h"
 
-#include <QtCore/QMimeData>
-#include <QtGui/QFont>
+#include <QFont>
+#include <QMimeData>
 
 #include "core/DatabaseIcons.h"
 #include "core/Entry.h"

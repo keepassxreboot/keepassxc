@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_KEEPASS2READER_H
 #define KEEPASSX_KEEPASS2READER_H
 
-#include <QtCore/QCoreApplication>
+#include <QCoreApplication>
 
 #include "keys/CompositeKey.h"
 

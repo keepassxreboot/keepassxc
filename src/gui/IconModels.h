@@ -18,8 +18,8 @@
 #ifndef KEEPASSX_ICONMODELS_H
 #define KEEPASSX_ICONMODELS_H
 
-#include <QtCore/QAbstractListModel>
-#include <QtGui/QImage>
+#include <QAbstractListModel>
+#include <QImage>
 
 #include "core/Global.h"
 #include "core/Uuid.h"

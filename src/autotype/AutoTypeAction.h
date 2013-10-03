@@ -18,8 +18,8 @@
 #ifndef KEEPASSX_AUTOTYPEACTION_H
 #define KEEPASSX_AUTOTYPEACTION_H
 
-#include <QtCore/QChar>
-#include <QtCore/Qt>
+#include <QChar>
+#include <Qt>
 
 #include "core/Global.h"
 

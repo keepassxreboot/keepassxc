@@ -17,9 +17,9 @@
 
 #include "FilePath.h"
 
-#include <QtCore/QCoreApplication>
-#include <QtCore/QDir>
-#include <QtCore/QLibrary>
+#include <QCoreApplication>
+#include <QDir>
+#include <QLibrary>
 
 #include "config-keepassx.h"
 

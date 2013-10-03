@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_TESTKEYS_H
 #define KEEPASSX_TESTKEYS_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 class TestKeys : public QObject
 {

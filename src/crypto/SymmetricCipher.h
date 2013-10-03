@@ -18,8 +18,8 @@
 #ifndef KEEPASSX_SYMMETRICCIPHER_H
 #define KEEPASSX_SYMMETRICCIPHER_H
 
-#include <QtCore/QByteArray>
-#include <QtCore/QScopedPointer>
+#include <QByteArray>
+#include <QScopedPointer>
 
 #include "core/Global.h"
 #include "crypto/SymmetricCipherBackend.h"

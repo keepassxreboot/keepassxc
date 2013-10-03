@@ -17,8 +17,8 @@
 
 #include "TestSymmetricCipher.h"
 
-#include <QtCore/QBuffer>
-#include <QtTest/QTest>
+#include <QBuffer>
+#include <QTest>
 
 #include "tests.h"
 #include "crypto/Crypto.h"

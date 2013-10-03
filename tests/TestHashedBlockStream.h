@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_TESTHASHEDBLOCKSTREAM_H
 #define KEEPASSX_TESTHASHEDBLOCKSTREAM_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 class TestHashedBlockStream : public QObject
 {

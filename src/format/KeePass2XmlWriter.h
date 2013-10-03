@@ -18,10 +18,10 @@
 #ifndef KEEPASSX_KEEPASS2XMLWRITER_H
 #define KEEPASSX_KEEPASS2XMLWRITER_H
 
-#include <QtCore/QDateTime>
-#include <QtCore/QXmlStreamWriter>
-#include <QtGui/QColor>
-#include <QtGui/QImage>
+#include <QColor>
+#include <QDateTime>
+#include <QImage>
+#include <QXmlStreamWriter>
 
 #include "core/Database.h"
 #include "core/Entry.h"

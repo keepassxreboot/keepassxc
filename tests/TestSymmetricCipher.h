@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_TESTSYMMETRICCIPHER_H
 #define KEEPASSX_TESTSYMMETRICCIPHER_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 class TestSymmetricCipher : public QObject
 {

@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_COMPOSITEKEY_H
 #define KEEPASSX_COMPOSITEKEY_H
 
-#include <QtCore/QList>
+#include <QList>
 
 #include "keys/Key.h"
 

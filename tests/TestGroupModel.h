@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_TESTGROUPMODEL_H
 #define KEEPASSX_TESTGROUPMODEL_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 class TestGroupModel : public QObject
 {

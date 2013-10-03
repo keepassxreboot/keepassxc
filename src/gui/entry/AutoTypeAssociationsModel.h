@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_AUTOTYPEASSOCIATIONSMODEL_H
 #define KEEPASSX_AUTOTYPEASSOCIATIONSMODEL_H
 
-#include <QtCore/QAbstractListModel>
+#include <QAbstractListModel>
 
 #include "core/AutoTypeAssociations.h"
 

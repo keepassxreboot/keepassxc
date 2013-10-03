@@ -18,7 +18,7 @@
 
 #include "TestQSaveFile.h"
 
-#include <QtTest/QtTest>
+#include <QtTest>
 
 #include <unistd.h>
 

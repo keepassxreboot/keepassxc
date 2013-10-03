@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_TESTENTRY_H
 #define KEEPASSX_TESTENTRY_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 class Entry;
 

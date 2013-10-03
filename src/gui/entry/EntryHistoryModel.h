@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_ENTRYHISTORYMODEL_H
 #define KEEPASSX_ENTRYHISTORYMODEL_H
 
-#include <QtCore/QAbstractTableModel>
+#include <QAbstractTableModel>
 
 #include "core/Global.h"
 

@@ -20,7 +20,7 @@
 #ifndef KEEPASSX_LINEEDIT_H
 #define KEEPASSX_LINEEDIT_H
 
-#include <QtGui/QLineEdit>
+#include <QLineEdit>
 
 #include "core/Global.h"
 

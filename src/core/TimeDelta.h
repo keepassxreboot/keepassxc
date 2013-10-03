@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_TIMEDELTA_H
 #define KEEPASSX_TIMEDELTA_H
 
-#include <QtCore/QMetaType>
+#include <QMetaType>
 
 class QDateTime;
 class TimeDelta;

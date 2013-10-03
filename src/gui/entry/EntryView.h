@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_ENTRYVIEW_H
 #define KEEPASSX_ENTRYVIEW_H
 
-#include <QtGui/QTreeView>
+#include <QTreeView>
 
 #include "core/Global.h"
 

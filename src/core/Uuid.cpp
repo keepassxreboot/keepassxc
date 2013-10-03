@@ -17,7 +17,7 @@
 
 #include "Uuid.h"
 
-#include <QtCore/QHash>
+#include <QHash>
 
 #include "crypto/Random.h"
 

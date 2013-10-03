@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_LAYEREDSTREAM_H
 #define KEEPASSX_LAYEREDSTREAM_H
 
-#include <QtCore/QIODevice>
+#include <QIODevice>
 
 #include "core/Global.h"
 

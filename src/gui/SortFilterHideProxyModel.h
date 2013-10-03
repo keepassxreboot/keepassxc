@@ -18,8 +18,8 @@
 #ifndef KEEPASSX_SORTFILTERHIDEPROXYMODEL_H
 #define KEEPASSX_SORTFILTERHIDEPROXYMODEL_H
 
-#include <QtCore/QBitArray>
-#include <QtGui/QSortFilterProxyModel>
+#include <QBitArray>
+#include <QSortFilterProxyModel>
 
 #include "core/Global.h"
 

@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_COMPOSITEKEY_P_H
 #define KEEPASSX_COMPOSITEKEY_P_H
 
-#include <QtCore/QThread>
+#include <QThread>
 
 class TransformKeyBenchmarkThread : public QThread
 {

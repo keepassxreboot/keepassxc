@@ -17,7 +17,7 @@
 
 #include "Crypto.h"
 
-#include <QtCore/QMutex>
+#include <QMutex>
 
 #include <gcrypt.h>
 

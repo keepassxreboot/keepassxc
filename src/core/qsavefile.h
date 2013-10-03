@@ -42,8 +42,8 @@
 #ifndef QSAVEFILE_H
 #define QSAVEFILE_H
 
-#include <QtCore/QFile>
-#include <QtCore/QString>
+#include <QFile>
+#include <QString>
 
 #ifdef open
 #error qsavefile.h must be included before any header file that defines open

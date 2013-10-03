@@ -20,8 +20,8 @@
 
 #include "core/Global.h"
 
-#include <QtCore/QHash>
-#include <QtCore/QStringList>
+#include <QHash>
+#include <QStringList>
 
 class ArgumentParser
 {

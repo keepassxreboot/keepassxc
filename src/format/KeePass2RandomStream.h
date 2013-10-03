@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_KEEPASS2RANDOMSTREAM_H
 #define KEEPASSX_KEEPASS2RANDOMSTREAM_H
 
-#include <QtCore/QByteArray>
+#include <QByteArray>
 
 #include "crypto/SymmetricCipher.h"
 

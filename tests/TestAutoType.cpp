@@ -17,8 +17,8 @@
 
 #include "TestAutoType.h"
 
-#include <QtCore/QPluginLoader>
-#include <QtTest/QTest>
+#include <QPluginLoader>
+#include <QTest>
 
 #include "tests.h"
 #include "core/FilePath.h"

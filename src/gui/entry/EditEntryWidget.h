@@ -18,8 +18,8 @@
 #ifndef KEEPASSX_EDITENTRYWIDGET_H
 #define KEEPASSX_EDITENTRYWIDGET_H
 
-#include <QtCore/QModelIndex>
-#include <QtCore/QScopedPointer>
+#include <QModelIndex>
+#include <QScopedPointer>
 
 #include "gui/EditWidget.h"
 

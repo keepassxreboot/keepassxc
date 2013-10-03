@@ -18,8 +18,8 @@
 #ifndef KEEPASSX_TESTKEEPASS1READER_H
 #define KEEPASSX_TESTKEEPASS1READER_H
 
-#include <QtCore/QDateTime>
-#include <QtCore/QObject>
+#include <QDateTime>
+#include <QObject>
 
 class Database;
 

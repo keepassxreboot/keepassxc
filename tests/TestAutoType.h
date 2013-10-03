@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_TESTAUTOTYPE_H
 #define KEEPASSX_TESTAUTOTYPE_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 class AutoType;
 class AutoTypePlatformInterface;

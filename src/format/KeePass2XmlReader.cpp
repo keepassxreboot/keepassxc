@@ -17,8 +17,8 @@
 
 #include "KeePass2XmlReader.h"
 
-#include <QtCore/QBuffer>
-#include <QtCore/QFile>
+#include <QBuffer>
+#include <QFile>
 
 #include "core/Database.h"
 #include "core/DatabaseIcons.h"

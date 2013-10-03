@@ -17,9 +17,9 @@
 
 #include "KeePass1Reader.h"
 
-#include <QtCore/QFile>
-#include <QtCore/QTextCodec>
-#include <QtGui/QImage>
+#include <QFile>
+#include <QImage>
+#include <QTextCodec>
 
 #include "core/Database.h"
 #include "core/Endian.h"

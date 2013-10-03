@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_AUTOTYPEASSOCIATIONS_H
 #define KEEPASSX_AUTOTYPEASSOCIATIONS_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 #include "core/Global.h"
 

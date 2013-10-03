@@ -17,8 +17,8 @@
 
 #include "FileKey.h"
 
-#include <QtCore/QFile>
-#include <QtCore/QXmlStreamReader>
+#include <QFile>
+#include <QXmlStreamReader>
 
 #include "core/Tools.h"
 #include "crypto/CryptoHash.h"

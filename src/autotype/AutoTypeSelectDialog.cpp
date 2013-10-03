@@ -17,11 +17,11 @@
 
 #include "AutoTypeSelectDialog.h"
 
-#include <QtGui/QApplication>
-#include <QtGui/QDesktopWidget>
-#include <QtGui/QDialogButtonBox>
-#include <QtGui/QLabel>
-#include <QtGui/QVBoxLayout>
+#include <QApplication>
+#include <QDesktopWidget>
+#include <QDialogButtonBox>
+#include <QLabel>
+#include <QVBoxLayout>
 
 #include "autotype/AutoTypeSelectView.h"
 #include "core/FilePath.h"

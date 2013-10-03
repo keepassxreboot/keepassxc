@@ -17,7 +17,7 @@
 
 #include "WindowSelectComboBox.h"
 
-#include <QtGui/QLineEdit>
+#include <QLineEdit>
 
 #include "autotype/AutoType.h"
 

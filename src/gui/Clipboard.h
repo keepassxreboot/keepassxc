@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_CLIPBOARD_H
 #define KEEPASSX_CLIPBOARD_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 #include "core/Global.h"
 

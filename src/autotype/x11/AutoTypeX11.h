@@ -19,11 +19,11 @@
 #ifndef KEEPASSX_AUTOTYPEX11_H
 #define KEEPASSX_AUTOTYPEX11_H
 
-#include <QtCore/QSet>
-#include <QtCore/QtPlugin>
-#include <QtGui/QApplication>
-#include <QtGui/QWidget>
-#include <QtGui/QX11Info>
+#include <QApplication>
+#include <QSet>
+#include <QtPlugin>
+#include <QWidget>
+#include <QX11Info>
 
 #include <X11/Xutil.h>
 #include <X11/extensions/XTest.h>

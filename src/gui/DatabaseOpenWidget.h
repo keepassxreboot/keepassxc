@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_DATABASEOPENWIDGET_H
 #define KEEPASSX_DATABASEOPENWIDGET_H
 
-#include <QtCore/QScopedPointer>
+#include <QScopedPointer>
 
 #include "gui/DialogyWidget.h"
 #include "keys/CompositeKey.h"

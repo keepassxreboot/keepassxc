@@ -17,7 +17,7 @@
 
 #include "TestGuiPixmaps.h"
 
-#include <QtTest/QTest>
+#include <QTest>
 
 #include "tests.h"
 #include "core/Database.h"

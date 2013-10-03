@@ -17,8 +17,8 @@
 
 #include "KeePass2XmlWriter.h"
 
-#include <QtCore/QBuffer>
-#include <QtCore/QFile>
+#include <QBuffer>
+#include <QFile>
 
 #include "core/Metadata.h"
 #include "format/KeePass2RandomStream.h"

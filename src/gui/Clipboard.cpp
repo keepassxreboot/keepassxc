@@ -17,13 +17,13 @@
 
 #include "Clipboard.h"
 
-#include <QtCore/QTimer>
-#include <QtGui/QApplication>
-#include <QtGui/QClipboard>
+#include <QApplication>
+#include <QClipboard>
+#include <QTimer>
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-#include <QtDBus/QDBusConnection>
-#include <QtDBus/QDBusMessage>
+#include <QDBusConnection>
+#include <QDBusMessage>
 #endif
 
 #include "core/Config.h"

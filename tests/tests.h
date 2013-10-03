@@ -19,7 +19,7 @@
 #ifndef KEEPASSX_TESTS_H
 #define KEEPASSX_TESTS_H
 
-#include <QtTest/QTest>
+#include <QTest>
 
 // backport QTEST_GUILESS_MAIN, QTRY_VERIFY and QTRY_COMPARE from Qt 5
 

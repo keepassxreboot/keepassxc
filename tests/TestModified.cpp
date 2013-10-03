@@ -17,8 +17,8 @@
 
 #include "TestModified.h"
 
-#include <QtTest/QSignalSpy>
-#include <QtTest/QTest>
+#include <QSignalSpy>
+#include <QTest>
 
 #include "tests.h"
 #include "core/Database.h"

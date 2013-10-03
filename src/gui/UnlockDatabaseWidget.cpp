@@ -17,7 +17,7 @@
 
 #include "UnlockDatabaseWidget.h"
 
-#include <QtGui/QMessageBox>
+#include <QMessageBox>
 
 #include "ui_DatabaseOpenWidget.h"
 #include "core/Database.h"

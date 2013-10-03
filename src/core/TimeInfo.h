@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_TIMEINFO_H
 #define KEEPASSX_TIMEINFO_H
 
-#include <QtCore/QDateTime>
+#include <QDateTime>
 
 class TimeInfo
 {

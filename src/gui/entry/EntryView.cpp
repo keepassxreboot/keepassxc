@@ -17,7 +17,7 @@
 
 #include "EntryView.h"
 
-#include <QtGui/QKeyEvent>
+#include <QKeyEvent>
 
 #include "gui/SortFilterHideProxyModel.h"
 

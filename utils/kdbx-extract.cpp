@@ -17,10 +17,10 @@
 
 #include <stdio.h>
 
-#include <QtCore/QCoreApplication>
-#include <QtCore/QFile>
-#include <QtCore/QStringList>
-#include <QtCore/QTextStream>
+#include <QCoreApplication>
+#include <QFile>
+#include <QStringList>
+#include <QTextStream>
 
 #include "core/Database.h"
 #include "crypto/Crypto.h"

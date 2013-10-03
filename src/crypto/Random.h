@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_RANDOM_H
 #define KEEPASSX_RANDOM_H
 
-#include <QtCore/QByteArray>
+#include <QByteArray>
 
 class Random
 {

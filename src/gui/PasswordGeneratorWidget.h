@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_PASSWORDGENERATORWIDGET_H
 #define KEEPASSX_PASSWORDGENERATORWIDGET_H
 
-#include <QtGui/QWidget>
+#include <QWidget>
 
 #include "core/Global.h"
 #include "core/PasswordGenerator.h"

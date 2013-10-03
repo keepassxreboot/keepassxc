@@ -17,9 +17,9 @@
 
 #include "KeePass2Reader.h"
 
-#include <QtCore/QBuffer>
-#include <QtCore/QFile>
-#include <QtCore/QIODevice>
+#include <QBuffer>
+#include <QFile>
+#include <QIODevice>
 
 #include "core/Database.h"
 #include "core/Endian.h"

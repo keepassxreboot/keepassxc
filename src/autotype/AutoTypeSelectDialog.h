@@ -18,9 +18,9 @@
 #ifndef KEEPASSX_AUTOTYPESELECTDIALOG_H
 #define KEEPASSX_AUTOTYPESELECTDIALOG_H
 
-#include <QtCore/QAbstractItemModel>
-#include <QtCore/QHash>
-#include <QtGui/QDialog>
+#include <QAbstractItemModel>
+#include <QDialog>
+#include <QHash>
 
 #include "core/Global.h"
 

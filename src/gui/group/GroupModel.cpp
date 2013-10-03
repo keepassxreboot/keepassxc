@@ -17,8 +17,8 @@
 
 #include "GroupModel.h"
 
-#include <QtCore/QMimeData>
-#include <QtGui/QFont>
+#include <QFont>
+#include <QMimeData>
 
 #include "core/Database.h"
 #include "core/DatabaseIcons.h"

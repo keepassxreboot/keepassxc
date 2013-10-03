@@ -17,16 +17,16 @@
 
 #include "Tools.h"
 
-#include <QtCore/QCoreApplication>
-#include <QtCore/QIODevice>
-#include <QtCore/QLocale>
-#include <QtCore/QStringList>
-#include <QtGui/QImageReader>
+#include <QCoreApplication>
+#include <QImageReader>
+#include <QIODevice>
+#include <QLocale>
+#include <QStringList>
 
 #if QT_VERSION >= QT_VERSION_CHECK(4, 7, 0)
-#include <QtCore/QElapsedTimer>
+#include <QElapsedTimer>
 #else
-#include <QtCore/QTime>
+#include <QTime>
 #endif
 
 #ifdef Q_OS_WIN

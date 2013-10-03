@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_TESTKEEPASS2RANDOMSTREAM_H
 #define KEEPASSX_TESTKEEPASS2RANDOMSTREAM_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 class TestKeePass2RandomStream : public QObject
 {

@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_TESTMODIFIED_H
 #define KEEPASSX_TESTMODIFIED_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 class TestModified : public QObject
 {

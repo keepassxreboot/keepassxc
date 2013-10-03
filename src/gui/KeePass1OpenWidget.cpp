@@ -17,9 +17,9 @@
 
 #include "KeePass1OpenWidget.h"
 
-#include <QtCore/QFile>
-#include <QtCore/QFileInfo>
-#include <QtGui/QMessageBox>
+#include <QFile>
+#include <QFileInfo>
+#include <QMessageBox>
 
 #include "ui_DatabaseOpenWidget.h"
 #include "core/Database.h"

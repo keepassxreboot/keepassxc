@@ -18,8 +18,8 @@
 #ifndef KEEPASSX_ENTRYATTACHMENTS_H
 #define KEEPASSX_ENTRYATTACHMENTS_H
 
-#include <QtCore/QMap>
-#include <QtCore/QObject>
+#include <QMap>
+#include <QObject>
 
 #include "core/Global.h"
 

@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_CRYPTOHASH_H
 #define KEEPASSX_CRYPTOHASH_H
 
-#include <QtCore/QByteArray>
+#include <QByteArray>
 
 class CryptoHashPrivate;
 

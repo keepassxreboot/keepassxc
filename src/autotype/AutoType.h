@@ -18,9 +18,9 @@
 #ifndef KEEPASSX_AUTOTYPE_H
 #define KEEPASSX_AUTOTYPE_H
 
-#include <QtCore/QObject>
-#include <QtCore/QStringList>
-#include <QtGui/QWidget>
+#include <QObject>
+#include <QStringList>
+#include <QWidget>
 
 #include "core/Global.h"
 

@@ -18,8 +18,8 @@
 #ifndef KEEPASSX_DATABASETABWIDGET_H
 #define KEEPASSX_DATABASETABWIDGET_H
 
-#include <QtCore/QHash>
-#include <QtGui/QTabWidget>
+#include <QHash>
+#include <QTabWidget>
 
 #include "format/KeePass2Writer.h"
 #include "gui/DatabaseWidget.h"

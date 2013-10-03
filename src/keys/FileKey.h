@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_FILEKEY_H
 #define KEEPASSX_FILEKEY_H
 
-#include <QtCore/QXmlStreamReader>
+#include <QXmlStreamReader>
 
 #include "core/Global.h"
 #include "keys/Key.h"

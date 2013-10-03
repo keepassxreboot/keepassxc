@@ -18,8 +18,8 @@
 #ifndef KEEPASSX_CONFIG_H
 #define KEEPASSX_CONFIG_H
 
-#include <QtCore/QScopedPointer>
-#include <QtCore/QVariant>
+#include <QScopedPointer>
+#include <QVariant>
 
 #include "core/Global.h"
 

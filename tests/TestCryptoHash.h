@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_TESTCRYPTOHASH_H
 #define KEEPASSX_TESTCRYPTOHASH_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 class TestCryptoHash : public QObject
 {

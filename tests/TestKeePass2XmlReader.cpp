@@ -17,8 +17,8 @@
 
 #include "TestKeePass2XmlReader.h"
 
-#include <QtCore/QFile>
-#include <QtTest/QTest>
+#include <QFile>
+#include <QTest>
 
 #include "tests.h"
 #include "core/Database.h"

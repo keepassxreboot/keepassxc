@@ -18,10 +18,10 @@
 #ifndef KEEPASSX_GROUP_H
 #define KEEPASSX_GROUP_H
 
-#include <QtCore/QPointer>
-#include <QtGui/QImage>
-#include <QtGui/QPixmap>
-#include <QtGui/QPixmapCache>
+#include <QImage>
+#include <QPixmap>
+#include <QPixmapCache>
+#include <QPointer>
 
 #include "core/Database.h"
 #include "core/Entry.h"

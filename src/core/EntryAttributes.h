@@ -18,10 +18,10 @@
 #ifndef KEEPASSX_ENTRYATTRIBUTES_H
 #define KEEPASSX_ENTRYATTRIBUTES_H
 
-#include <QtCore/QMap>
-#include <QtCore/QSet>
-#include <QtCore/QObject>
-#include <QtCore/QStringList>
+#include <QMap>
+#include <QObject>
+#include <QSet>
+#include <QStringList>
 
 #include "core/Global.h"
 

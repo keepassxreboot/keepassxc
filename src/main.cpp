@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtCore/QFile>
+#include <QFile>
 
 #include "core/ArgumentParser.h"
 #include "core/Config.h"

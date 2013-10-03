@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_GROUPMODEL_H
 #define KEEPASSX_GROUPMODEL_H
 
-#include <QtCore/QAbstractItemModel>
+#include <QAbstractItemModel>
 
 #include "core/Global.h"
 

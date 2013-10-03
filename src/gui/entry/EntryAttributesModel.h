@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_ENTRYATTRIBUTESMODEL_H
 #define KEEPASSX_ENTRYATTRIBUTESMODEL_H
 
-#include <QtCore/QAbstractListModel>
+#include <QAbstractListModel>
 
 #include "core/Global.h"
 

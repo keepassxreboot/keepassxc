@@ -17,9 +17,9 @@
 
 #include "DatabaseTabWidget.h"
 
-#include <QtCore/QFileInfo>
-#include <QtGui/QTabWidget>
-#include <QtGui/QMessageBox>
+#include <QFileInfo>
+#include <QMessageBox>
+#include <QTabWidget>
 
 #include "autotype/AutoType.h"
 #include "core/Config.h"

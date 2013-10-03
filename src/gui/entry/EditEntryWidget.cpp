@@ -21,11 +21,11 @@
 #include "ui_EditEntryWidgetHistory.h"
 #include "ui_EditEntryWidgetMain.h"
 
-#include <QtGui/QDesktopServices>
-#include <QtGui/QStackedLayout>
-#include <QtGui/QMenu>
-#include <QtGui/QMessageBox>
-#include <QtGui/QSortFilterProxyModel>
+#include <QDesktopServices>
+#include <QStackedLayout>
+#include <QMenu>
+#include <QMessageBox>
+#include <QSortFilterProxyModel>
 
 #include "core/Database.h"
 #include "core/Entry.h"

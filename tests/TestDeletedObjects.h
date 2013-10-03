@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_TESTDELETEDOBJECTS_H
 #define KEEPASSX_TESTDELETEDOBJECTS_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 class Database;
 

@@ -18,12 +18,12 @@
 #ifndef KEEPASSX_KEEPASS2XMLREADER_H
 #define KEEPASSX_KEEPASS2XMLREADER_H
 
-#include <QtCore/QCoreApplication>
-#include <QtCore/QDateTime>
-#include <QtCore/QHash>
-#include <QtCore/QPair>
-#include <QtCore/QXmlStreamReader>
-#include <QtGui/QColor>
+#include <QColor>
+#include <QCoreApplication>
+#include <QDateTime>
+#include <QHash>
+#include <QPair>
+#include <QXmlStreamReader>
 
 #include "core/Global.h"
 #include "core/TimeInfo.h"

@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_WELCOMEWIDGET_H
 #define KEEPASSX_WELCOMEWIDGET_H
 
-#include <QtGui/QWidget>
+#include <QWidget>
 
 #include "core/Global.h"
 

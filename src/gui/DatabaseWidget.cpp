@@ -18,14 +18,14 @@
 #include "DatabaseWidget.h"
 #include "ui_SearchWidget.h"
 
-#include <QtCore/QTimer>
-#include <QtGui/QAction>
-#include <QtGui/QDesktopServices>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
-#include <QtGui/QMessageBox>
-#include <QtGui/QSplitter>
+#include <QAction>
+#include <QDesktopServices>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QLineEdit>
+#include <QMessageBox>
+#include <QSplitter>
+#include <QTimer>
 
 #include "autotype/AutoType.h"
 #include "core/FilePath.h"

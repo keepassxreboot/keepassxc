@@ -19,7 +19,7 @@
 #ifndef KEEPASSX_TESTQSAVEFILE_H
 #define KEEPASSX_TESTQSAVEFILE_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 class TestQSaveFile : public QObject
 {

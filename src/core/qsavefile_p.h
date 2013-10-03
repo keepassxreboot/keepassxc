@@ -53,7 +53,7 @@
 // We mean it.
 //
 
-#include <QtCore/QTemporaryFile>
+#include <QTemporaryFile>
 
 class QSaveFilePrivate
 {

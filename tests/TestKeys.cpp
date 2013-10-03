@@ -17,8 +17,8 @@
 
 #include "TestKeys.h"
 
-#include <QtCore/QBuffer>
-#include <QtTest/QTest>
+#include <QBuffer>
+#include <QTest>
 
 #include "config-keepassx-tests.h"
 #include "tests.h"
