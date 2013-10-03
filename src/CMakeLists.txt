@@ -43,6 +43,7 @@ set(keepassx_SOURCES
     core/Metadata.cpp
     core/PasswordGenerator.cpp
     core/qsavefile.cpp
+    core/qsavefile_p.h
     core/SignalMultiplexer.cpp
     core/TimeDelta.cpp
     core/TimeInfo.cpp
@@ -93,6 +94,7 @@ set(keepassx_SOURCES
     gui/WelcomeWidget.cpp
     gui/entry/AutoTypeAssociationsModel.cpp
     gui/entry/EditEntryWidget.cpp
+    gui/entry/EditEntryWidget_p.h
     gui/entry/EntryAttachmentsModel.cpp
     gui/entry/EntryAttributesModel.cpp
     gui/entry/EntryHistoryModel.cpp
@@ -102,6 +104,7 @@ set(keepassx_SOURCES
     gui/group/GroupModel.cpp
     gui/group/GroupView.cpp
     keys/CompositeKey.cpp
+    keys/CompositeKey_p.h
     keys/FileKey.cpp
     keys/Key.h
     keys/PasswordKey.cpp
