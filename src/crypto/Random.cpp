@@ -21,6 +21,10 @@
 
 #include "crypto/Crypto.h"
 
+#ifndef QUINT32_MAX
+#define QUINT32_MAX 4294967295U
+#endif
+
 void Random::randomize(QByteArray& ba)
 {
     randomize(ba.data(), ba.size());
@@ -38,8 +42,18 @@ QByteArray Random::randomArray(int len)
 
 quint32 Random::randomUInt(quint32 limit)
 {
+    Q_ASSERT(limit != 0);
+    Q_ASSERT(limit <= QUINT32_MAX);
+
     quint32 rand;
-    randomize(&rand, 4);
+    const quint32 ceil = QUINT32_MAX - (QUINT32_MAX % limit) - 1;
+
+    // To avoid modulo bias:
+    // Make sure rand is below the largest number where rand%limit==0
+    do {
+        randomize(&rand, 4);
+    } while (rand > ceil);
+
     return (rand % limit);
 }
 
