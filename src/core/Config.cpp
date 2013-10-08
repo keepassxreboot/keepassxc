@@ -17,7 +17,7 @@
 
 #include "Config.h"
 
-#include <QApplication>
+#include <QCoreApplication>
 #include <QDesktopServices>
 #include <QDir>
 #include <QSettings>
