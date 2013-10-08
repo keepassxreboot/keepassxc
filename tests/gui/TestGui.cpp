@@ -213,10 +213,12 @@ void TestGui::testSearch()
     QWidget* entryDeleteWidget = toolBar->widgetForAction(entryDeleteAction);
     QVERIFY(entryDeleteWidget->isVisible());
     QVERIFY(entryDeleteWidget->isEnabled());
+    QVERIFY(!m_db->metadata()->recycleBin());
 
     QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
 
     QCOMPARE(entryView->model()->rowCount(), 3);
+    QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 1);
 
     QModelIndex item3 = entryView->model()->index(1, 0);
     QRect itemRect3 = entryView->visualRect(item3);
@@ -229,10 +231,12 @@ void TestGui::testSearch()
     MessageBox::setNextAnswer(QMessageBox::No);
     QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
     QCOMPARE(entryView->model()->rowCount(), 3);
+    QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 1);
 
     MessageBox::setNextAnswer(QMessageBox::Yes);
     QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
     QCOMPARE(entryView->model()->rowCount(), 1);
+    QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 3);
 
     QWidget* closeSearchButton = m_dbWidget->findChild<QToolButton*>("closeSearchButton");
     QTest::mouseClick(closeSearchButton, Qt::LeftButton);
