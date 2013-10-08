@@ -42,6 +42,7 @@
 #include "gui/DatabaseWidget.h"
 #include "gui/FileDialog.h"
 #include "gui/MainWindow.h"
+#include "gui/MessageBox.h"
 #include "gui/entry/EditEntryWidget.h"
 #include "gui/entry/EntryView.h"
 #include "gui/group/GroupModel.h"
@@ -148,6 +149,19 @@ void TestGui::testAddEntry()
 
     QCOMPARE(entry->title(), QString("testsomething"));
     QCOMPARE(entry->historyItems().size(), 1);
+
+
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QTest::keyClicks(titleEdit, "something 2");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+
+
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QTest::keyClicks(titleEdit, "something 3");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+
+
+    QTRY_COMPARE(entryView->model()->rowCount(), 4);
 }
 
 void TestGui::testSearch()
@@ -171,7 +185,7 @@ void TestGui::testSearch()
     QTest::mouseClick(clearSearch, Qt::LeftButton);
     QTest::keyClicks(searchEdit, "some");
 
-    QTRY_COMPARE(entryView->model()->rowCount(), 2);
+    QTRY_COMPARE(entryView->model()->rowCount(), 4);
 
     QModelIndex item = entryView->model()->index(0, 1);
     QRect itemRect = entryView->visualRect(item);
@@ -201,6 +215,25 @@ void TestGui::testSearch()
     QVERIFY(entryDeleteWidget->isEnabled());
 
     QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
+
+    QCOMPARE(entryView->model()->rowCount(), 3);
+
+    QModelIndex item3 = entryView->model()->index(1, 0);
+    QRect itemRect3 = entryView->visualRect(item3);
+    QTest::mouseClick(entryView->viewport(), Qt::LeftButton, Qt::NoModifier, itemRect3.center());
+    QModelIndex item4 = entryView->model()->index(2, 0);
+    QRect itemRect4 = entryView->visualRect(item4);
+    QTest::mouseClick(entryView->viewport(), Qt::LeftButton, Qt::ControlModifier, itemRect4.center());
+    QCOMPARE(entryView->selectionModel()->selectedRows().size(), 2);
+
+    MessageBox::setNextAnswer(QMessageBox::No);
+    QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
+    QCOMPARE(entryView->model()->rowCount(), 3);
+
+    MessageBox::setNextAnswer(QMessageBox::Yes);
+    QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
+    QCOMPARE(entryView->model()->rowCount(), 1);
+
     QWidget* closeSearchButton = m_dbWidget->findChild<QToolButton*>("closeSearchButton");
     QTest::mouseClick(closeSearchButton, Qt::LeftButton);
 
