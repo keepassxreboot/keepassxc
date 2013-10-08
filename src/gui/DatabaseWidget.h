@@ -85,7 +85,7 @@ Q_SIGNALS:
 public Q_SLOTS:
     void createEntry();
     void cloneEntry();
-    void deleteEntry();
+    void deleteEntries();
     void copyUsername();
     void copyPassword();
     void copyAttribute(QAction* action);

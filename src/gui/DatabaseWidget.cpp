@@ -228,27 +228,61 @@ void DatabaseWidget::cloneEntry()
     m_entryView->setCurrentEntry(entry);
 }
 
-void DatabaseWidget::deleteEntry()
+void DatabaseWidget::deleteEntries()
 {
-    Entry* currentEntry = m_entryView->currentEntry();
-    if (!currentEntry) {
+    const QModelIndexList selected = m_entryView->selectionModel()->selectedRows();
+
+    if (selected.isEmpty()) {
         Q_ASSERT(false);
         return;
     }
 
-    bool inRecylceBin = Tools::hasChild(m_db->metadata()->recycleBin(), currentEntry);
+    // get all entry pointers as the indexes change when removing multiple entries
+    QList<Entry*> selectedEntries;
+    Q_FOREACH (const QModelIndex& index, selected) {
+        selectedEntries.append(m_entryView->entryFromIndex(index));
+    }
+
+    bool inRecylceBin = Tools::hasChild(m_db->metadata()->recycleBin(), selectedEntries.first());
     if (inRecylceBin || !m_db->metadata()->recycleBinEnabled()) {
-        QMessageBox::StandardButton result = QMessageBox::question(
-            this, tr("Delete entry?"),
-            tr("Do you really want to delete the entry \"%1\" for good?")
-            .arg(currentEntry->title()),
-            QMessageBox::Yes | QMessageBox::No);
+        QMessageBox::StandardButton result;
+
+        if (selected.size() == 1) {
+            result = QMessageBox::question(
+                this, tr("Delete entry?"),
+                tr("Do you really want to delete the entry \"%1\" for good?")
+                .arg(selectedEntries.first()->title()),
+                QMessageBox::Yes | QMessageBox::No);
+        }
+        else {
+            result = QMessageBox::question(
+                this, tr("Delete entries?"),
+                tr("Do you really want to delete %1 entries for good?")
+                .arg(selected.size()),
+                QMessageBox::Yes | QMessageBox::No);
+        }
+
         if (result == QMessageBox::Yes) {
-            delete currentEntry;
+            Q_FOREACH (Entry* entry, selectedEntries) {
+                delete entry;
+            }
         }
     }
     else {
-        m_db->recycleEntry(currentEntry);
+        if (selected.size() > 1) {
+            QMessageBox::StandardButton result = QMessageBox::question(
+                this, tr("Move entries to recycle bin?"),
+                tr("Do you really want to move %1 entries to the recycle bin?")
+                .arg(selected.size()),
+                QMessageBox::Yes | QMessageBox::No);
+            if (result == QMessageBox::No) {
+                return;
+            }
+        }
+
+        Q_FOREACH (Entry* entry, selectedEntries) {
+            m_db->recycleEntry(entry);
+        }
     }
 }
 

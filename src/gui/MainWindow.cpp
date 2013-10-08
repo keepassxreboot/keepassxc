@@ -162,7 +162,7 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(m_ui->actionEntryEdit, SIGNAL(triggered()),
             SLOT(switchToEntryEdit()));
     m_actionMultiplexer.connect(m_ui->actionEntryDelete, SIGNAL(triggered()),
-            SLOT(deleteEntry()));
+            SLOT(deleteEntries()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyUsername, SIGNAL(triggered()),
             SLOT(copyUsername()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyPassword, SIGNAL(triggered()),
@@ -262,12 +262,13 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         case DatabaseWidget::ViewMode: {
             bool inSearch = dbWidget->isInSearchMode();
             bool singleEntrySelected = dbWidget->entryView()->isSingleEntrySelected();
+            bool entriesSelected = !dbWidget->entryView()->selectionModel()->selectedRows().isEmpty();
             bool groupSelected = dbWidget->groupView()->currentGroup();
 
             m_ui->actionEntryNew->setEnabled(!inSearch);
             m_ui->actionEntryClone->setEnabled(singleEntrySelected && !inSearch);
             m_ui->actionEntryEdit->setEnabled(singleEntrySelected);
-            m_ui->actionEntryDelete->setEnabled(singleEntrySelected);
+            m_ui->actionEntryDelete->setEnabled(entriesSelected);
             m_ui->actionEntryCopyUsername->setEnabled(singleEntrySelected);
             m_ui->actionEntryCopyPassword->setEnabled(singleEntrySelected);
             m_ui->menuEntryCopyAttribute->setEnabled(singleEntrySelected);
