@@ -17,10 +17,9 @@
 
 #include "UnlockDatabaseWidget.h"
 
-#include <QMessageBox>
-
 #include "ui_DatabaseOpenWidget.h"
 #include "core/Database.h"
+#include "gui/MessageBox.h"
 
 UnlockDatabaseWidget::UnlockDatabaseWidget(QWidget* parent)
     : DatabaseOpenWidget(parent)
@@ -50,7 +49,7 @@ void UnlockDatabaseWidget::openDatabase()
         Q_EMIT editFinished(true);
     }
     else {
-        QMessageBox::warning(this, tr("Error"), tr("Wrong key."));
+        MessageBox::warning(this, tr("Error"), tr("Wrong key."));
         m_ui->editPassword->clear();
     }
 }

@@ -18,11 +18,10 @@
 #include "ChangeMasterKeyWidget.h"
 #include "ui_ChangeMasterKeyWidget.h"
 
-#include <QMessageBox>
-
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 #include "gui/FileDialog.h"
+#include "gui/MessageBox.h"
 
 ChangeMasterKeyWidget::ChangeMasterKeyWidget(QWidget* parent)
     : DialogyWidget(parent)
@@ -56,7 +55,7 @@ void ChangeMasterKeyWidget::createKeyFile()
         QString errorMsg;
         bool created = FileKey::create(fileName, &errorMsg);
         if (!created) {
-            QMessageBox::warning(this, tr("Error"), tr("Unable to create Key File : ") + errorMsg);
+            MessageBox::warning(this, tr("Error"), tr("Unable to create Key File : ") + errorMsg);
         }
         else {
             m_ui->keyFileCombo->setEditText(fileName);
@@ -105,16 +104,16 @@ void ChangeMasterKeyWidget::generateKey()
     if (m_ui->passwordGroup->isChecked()) {
         if (m_ui->enterPasswordEdit->text() == m_ui->repeatPasswordEdit->text()) {
             if (m_ui->enterPasswordEdit->text().isEmpty()) {
-                if (QMessageBox::question(this, tr("Question"),
-                                          tr("Do you really want to use an empty string as password?"),
-                                          QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes) {
+                if (MessageBox::question(this, tr("Question"),
+                                         tr("Do you really want to use an empty string as password?"),
+                                         QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes) {
                     return;
                 }
             }
             m_key.addKey(PasswordKey(m_ui->enterPasswordEdit->text()));
         }
         else {
-            QMessageBox::warning(this, tr("Error"), tr("Different passwords supplied."));
+            MessageBox::warning(this, tr("Error"), tr("Different passwords supplied."));
             m_ui->enterPasswordEdit->setText("");
             m_ui->repeatPasswordEdit->setText("");
             return;

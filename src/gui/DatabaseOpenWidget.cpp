@@ -18,11 +18,10 @@
 #include "DatabaseOpenWidget.h"
 #include "ui_DatabaseOpenWidget.h"
 
-#include <QMessageBox>
-
 #include "core/Config.h"
 #include "core/Database.h"
 #include "gui/FileDialog.h"
+#include "gui/MessageBox.h"
 #include "format/KeePass2Reader.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
@@ -115,8 +114,8 @@ void DatabaseOpenWidget::openDatabase()
         Q_EMIT editFinished(true);
     }
     else {
-        QMessageBox::warning(this, tr("Error"), tr("Unable to open the database.\n%1")
-                             .arg(reader.errorString()));
+        MessageBox::warning(this, tr("Error"), tr("Unable to open the database.\n%1")
+                            .arg(reader.errorString()));
         m_ui->editPassword->clear();
     }
 }
@@ -136,7 +135,7 @@ CompositeKey DatabaseOpenWidget::databaseKey()
         QString keyFilename = m_ui->comboKeyFile->currentText();
         QString errorMsg;
         if (!key.load(keyFilename, &errorMsg)) {
-            QMessageBox::warning(this, tr("Error"), tr("Can't open key file:\n%1").arg(errorMsg));
+            MessageBox::warning(this, tr("Error"), tr("Can't open key file:\n%1").arg(errorMsg));
             return CompositeKey();
         }
         masterKey.addKey(key);

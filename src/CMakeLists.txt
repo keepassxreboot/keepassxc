@@ -87,6 +87,7 @@ set(keepassx_SOURCES
     gui/KeePass1OpenWidget.cpp
     gui/LineEdit.cpp
     gui/MainWindow.cpp
+    gui/MessageBox.cpp
     gui/PasswordGeneratorWidget.cpp
     gui/SettingsWidget.cpp
     gui/SortFilterHideProxyModel.cpp

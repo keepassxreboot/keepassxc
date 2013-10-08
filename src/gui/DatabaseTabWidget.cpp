@@ -18,7 +18,6 @@
 #include "DatabaseTabWidget.h"
 
 #include <QFileInfo>
-#include <QMessageBox>
 #include <QTabWidget>
 
 #include "autotype/AutoType.h"
@@ -30,6 +29,7 @@
 #include "gui/DatabaseWidget.h"
 #include "gui/DragTabBar.h"
 #include "gui/FileDialog.h"
+#include "gui/MessageBox.h"
 #include "gui/entry/EntryView.h"
 #include "gui/group/GroupView.h"
 
@@ -106,7 +106,7 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
     QFileInfo fileInfo(fileName);
     QString canonicalFilePath = fileInfo.canonicalFilePath();
     if (canonicalFilePath.isEmpty()) {
-        QMessageBox::warning(this, tr("Warning"), tr("File not found!"));
+        MessageBox::warning(this, tr("Warning"), tr("File not found!"));
         return;
     }
 
@@ -191,7 +191,7 @@ bool DatabaseTabWidget::closeDatabase(Database* db)
     }
     if (dbStruct.dbWidget->currentMode() == DatabaseWidget::EditMode && db->hasKey()) {
         QMessageBox::StandardButton result =
-            QMessageBox::question(
+            MessageBox::question(
             this, tr("Close?"),
             tr("\"%1\" is in edit mode.\nClose anyway?").arg(dbName),
             QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
@@ -205,7 +205,7 @@ bool DatabaseTabWidget::closeDatabase(Database* db)
         }
         else {
             QMessageBox::StandardButton result =
-                QMessageBox::question(
+                MessageBox::question(
                 this, tr("Save changes?"),
                 tr("\"%1\" was modified.\nSave changes?").arg(dbName),
                 QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Yes);
@@ -270,8 +270,8 @@ void DatabaseTabWidget::saveDatabase(Database* db)
             updateTabName(db);
         }
         else {
-            QMessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
-                                  + saveFile.errorString());
+            MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
+                                 + saveFile.errorString());
         }
     }
     else {
@@ -309,8 +309,8 @@ void DatabaseTabWidget::saveDatabaseAs(Database* db)
             updateLastDatabases(dbStruct.filePath);
         }
         else {
-            QMessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
-                                  + saveFile.errorString());
+            MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
+                                 + saveFile.errorString());
         }
     }
 }

@@ -19,12 +19,12 @@
 #include "ui_EditWidgetIcons.h"
 
 #include <QFileDialog>
-#include <QMessageBox>
 
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "gui/IconModels.h"
+#include "gui/MessageBox.h"
 
 IconStruct::IconStruct()
     : uuid(Uuid())
@@ -192,9 +192,9 @@ void EditWidgetIcons::removeCustomIcon()
                 }
             }
             else {
-                QMessageBox::information(this, tr("Can't delete icon!"),
-                                         tr("Can't delete icon. Still used by %1 items.")
-                                         .arg(iconUsedCount));
+                MessageBox::information(this, tr("Can't delete icon!"),
+                                        tr("Can't delete icon. Still used by %1 items.")
+                                        .arg(iconUsedCount));
             }
         }
     }

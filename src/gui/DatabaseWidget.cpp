@@ -23,7 +23,6 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
-#include <QMessageBox>
 #include <QSplitter>
 #include <QTimer>
 
@@ -36,6 +35,7 @@
 #include "gui/DatabaseOpenWidget.h"
 #include "gui/DatabaseSettingsWidget.h"
 #include "gui/KeePass1OpenWidget.h"
+#include "gui/MessageBox.h"
 #include "gui/UnlockDatabaseWidget.h"
 #include "gui/entry/EditEntryWidget.h"
 #include "gui/entry/EntryView.h"
@@ -248,14 +248,14 @@ void DatabaseWidget::deleteEntries()
         QMessageBox::StandardButton result;
 
         if (selected.size() == 1) {
-            result = QMessageBox::question(
+            result = MessageBox::question(
                 this, tr("Delete entry?"),
                 tr("Do you really want to delete the entry \"%1\" for good?")
                 .arg(selectedEntries.first()->title()),
                 QMessageBox::Yes | QMessageBox::No);
         }
         else {
-            result = QMessageBox::question(
+            result = MessageBox::question(
                 this, tr("Delete entries?"),
                 tr("Do you really want to delete %1 entries for good?")
                 .arg(selected.size()),
@@ -270,7 +270,7 @@ void DatabaseWidget::deleteEntries()
     }
     else {
         if (selected.size() > 1) {
-            QMessageBox::StandardButton result = QMessageBox::question(
+            QMessageBox::StandardButton result = MessageBox::question(
                 this, tr("Move entries to recycle bin?"),
                 tr("Do you really want to move %1 entries to the recycle bin?")
                 .arg(selected.size()),
@@ -371,7 +371,7 @@ void DatabaseWidget::deleteGroup()
 
     bool inRecylceBin = Tools::hasChild(m_db->metadata()->recycleBin(), currentGroup);
     if (inRecylceBin || !m_db->metadata()->recycleBinEnabled()) {
-        QMessageBox::StandardButton result = QMessageBox::question(
+        QMessageBox::StandardButton result = MessageBox::question(
             this, tr("Delete group?"),
             tr("Do you really want to delete the group \"%1\" for good?")
             .arg(currentGroup->name()),

@@ -24,7 +24,6 @@
 #include <QDesktopServices>
 #include <QStackedLayout>
 #include <QMenu>
-#include <QMessageBox>
 #include <QSortFilterProxyModel>
 
 #include "core/Database.h"
@@ -35,6 +34,7 @@
 #include "gui/EditWidgetIcons.h"
 #include "gui/EditWidgetProperties.h"
 #include "gui/FileDialog.h"
+#include "gui/MessageBox.h"
 #include "gui/entry/AutoTypeAssociationsModel.h"
 #include "gui/entry/EntryAttachmentsModel.h"
 #include "gui/entry/EntryAttributesModel.h"
@@ -381,7 +381,7 @@ void EditEntryWidget::saveEntry()
     }
 
     if (!passwordsEqual()) {
-        QMessageBox::warning(this, tr("Error"), tr("Different passwords supplied."));
+        MessageBox::warning(this, tr("Error"), tr("Different passwords supplied."));
         return;
     }
 
@@ -614,14 +614,14 @@ void EditEntryWidget::insertAttachment()
 
     QFile file(filename);
     if (!file.open(QIODevice::ReadOnly)) {
-        QMessageBox::warning(this, tr("Error"),
+        MessageBox::warning(this, tr("Error"),
                 tr("Unable to open file:\n").append(file.errorString()));
         return;
     }
 
     QByteArray data;
     if (!Tools::readAllFromDevice(&file, data)) {
-        QMessageBox::warning(this, tr("Error"),
+        MessageBox::warning(this, tr("Error"),
                 tr("Unable to open file:\n").append(file.errorString()));
         return;
     }
@@ -646,12 +646,12 @@ void EditEntryWidget::saveCurrentAttachment()
 
         QFile file(savePath);
         if (!file.open(QIODevice::WriteOnly)) {
-            QMessageBox::warning(this, tr("Error"),
+            MessageBox::warning(this, tr("Error"),
                     tr("Unable to save the attachment:\n").append(file.errorString()));
             return;
         }
         if (file.write(attachmentData) != attachmentData.size()) {
-            QMessageBox::warning(this, tr("Error"),
+            MessageBox::warning(this, tr("Error"),
                     tr("Unable to save the attachment:\n").append(file.errorString()));
             return;
         }

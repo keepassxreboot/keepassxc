@@ -19,12 +19,12 @@
 
 #include <QFile>
 #include <QFileInfo>
-#include <QMessageBox>
 
 #include "ui_DatabaseOpenWidget.h"
 #include "core/Database.h"
 #include "core/Metadata.h"
 #include "format/KeePass1Reader.h"
+#include "gui/MessageBox.h"
 
 KeePass1OpenWidget::KeePass1OpenWidget(QWidget* parent)
     : DatabaseOpenWidget(parent)
@@ -64,8 +64,8 @@ void KeePass1OpenWidget::openDatabase()
         Q_EMIT editFinished(true);
     }
     else {
-        QMessageBox::warning(this, tr("Error"), tr("Unable to open the database.\n%1")
-                             .arg(reader.errorString()));
+        MessageBox::warning(this, tr("Error"), tr("Unable to open the database.\n%1")
+                            .arg(reader.errorString()));
         m_ui->editPassword->clear();
     }
 }
