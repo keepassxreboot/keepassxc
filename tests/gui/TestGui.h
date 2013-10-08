@@ -24,6 +24,7 @@
 class Database;
 class DatabaseTabWidget;
 class DatabaseWidget;
+class QAbstractItemView;
 class MainWindow;
 
 class TestGui : public QObject
@@ -37,6 +38,7 @@ private Q_SLOTS:
     void testEditEntry();
     void testAddEntry();
     void testSearch();
+    void testDeleteEntry();
     void testCloneEntry();
     void testDragAndDropEntry();
     void testDragAndDropGroup();
@@ -52,6 +54,8 @@ private:
     void triggerAction(const QString& name);
     void dragAndDropGroup(const QModelIndex& sourceIndex, const QModelIndex& targetIndex, int row,
                           bool expectedResult, const QString& expectedParentName, int expectedPos);
+    void clickIndex(const QModelIndex& index, QAbstractItemView* view, Qt::MouseButton button,
+                    Qt::KeyboardModifiers stateKey = 0);
 
     MainWindow* m_mainWindow;
     DatabaseTabWidget* m_tabWidget;

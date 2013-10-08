@@ -244,6 +244,43 @@ void TestGui::testSearch()
     QCOMPARE(entryView->model()->rowCount(), 1);
 }
 
+void TestGui::testDeleteEntry()
+{
+    GroupView* groupView = m_dbWidget->groupView();
+    EntryView* entryView = m_dbWidget->entryView();
+    QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
+    QAction* entryDeleteAction = m_mainWindow->findChild<QAction*>("actionEntryDelete");
+    QWidget* entryDeleteWidget = toolBar->widgetForAction(entryDeleteAction);
+    QCOMPARE(groupView->currentGroup(), m_db->rootGroup());
+
+    QModelIndex rootGroupIndex = groupView->model()->index(0, 0);
+    clickIndex(groupView->model()->index(groupView->model()->rowCount(rootGroupIndex) - 1, 0, rootGroupIndex),
+               groupView, Qt::LeftButton);
+    QCOMPARE(groupView->currentGroup()->name(), m_db->metadata()->recycleBin()->name());
+
+    clickIndex(entryView->model()->index(0, 0), entryView, Qt::LeftButton);
+    MessageBox::setNextAnswer(QMessageBox::No);
+    QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
+    QCOMPARE(entryView->model()->rowCount(), 3);
+    QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 3);
+
+    MessageBox::setNextAnswer(QMessageBox::Yes);
+    QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
+    QCOMPARE(entryView->model()->rowCount(), 2);
+    QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 2);
+
+    clickIndex(entryView->model()->index(0, 0), entryView, Qt::LeftButton);
+    clickIndex(entryView->model()->index(1, 0), entryView, Qt::LeftButton, Qt::ControlModifier);
+    MessageBox::setNextAnswer(QMessageBox::Yes);
+    QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
+    QCOMPARE(entryView->model()->rowCount(), 0);
+    QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 0);
+
+    clickIndex(groupView->model()->index(0, 0),
+               groupView, Qt::LeftButton);
+    QCOMPARE(groupView->currentGroup(), m_db->rootGroup());
+}
+
 void TestGui::testCloneEntry()
 {
     EntryView* entryView = m_dbWidget->entryView();
@@ -438,6 +475,12 @@ void TestGui::dragAndDropGroup(const QModelIndex& sourceIndex, const QModelIndex
     QCOMPARE(groupModel->dropMimeData(&mimeData, Qt::MoveAction, row, 0, targetIndex), expectedResult);
     QCOMPARE(group->parentGroup()->name(), expectedParentName);
     QCOMPARE(group->parentGroup()->children().indexOf(group), expectedPos);
+}
+
+void TestGui::clickIndex(const QModelIndex& index, QAbstractItemView* view, Qt::MouseButton button,
+                         Qt::KeyboardModifiers stateKey)
+{
+    QTest::mouseClick(view->viewport(), button, stateKey, view->visualRect(index).center());
 }
 
 QTEST_MAIN(TestGui)
