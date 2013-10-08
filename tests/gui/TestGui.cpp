@@ -187,9 +187,7 @@ void TestGui::testSearch()
 
     QTRY_COMPARE(entryView->model()->rowCount(), 4);
 
-    QModelIndex item = entryView->model()->index(0, 1);
-    QRect itemRect = entryView->visualRect(item);
-    QTest::mouseClick(entryView->viewport(), Qt::LeftButton, Qt::NoModifier, itemRect.center());
+    clickIndex(entryView->model()->index(0, 1), entryView, Qt::LeftButton);
     QAction* entryEditAction = m_mainWindow->findChild<QAction*>("actionEntryEdit");
     QVERIFY(entryEditAction->isEnabled());
     QWidget* entryEditWidget = toolBar->widgetForAction(entryEditAction);
@@ -205,9 +203,7 @@ void TestGui::testSearch()
 
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::ViewMode);
 
-    QModelIndex item2 = entryView->model()->index(1, 0);
-    QRect itemRect2 = entryView->visualRect(item2);
-    QTest::mouseClick(entryView->viewport(), Qt::LeftButton, Qt::NoModifier, itemRect2.center());
+    clickIndex(entryView->model()->index(1, 0), entryView, Qt::LeftButton);
     QAction* entryDeleteAction = m_mainWindow->findChild<QAction*>("actionEntryDelete");
 
     QWidget* entryDeleteWidget = toolBar->widgetForAction(entryDeleteAction);
@@ -220,12 +216,8 @@ void TestGui::testSearch()
     QCOMPARE(entryView->model()->rowCount(), 3);
     QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 1);
 
-    QModelIndex item3 = entryView->model()->index(1, 0);
-    QRect itemRect3 = entryView->visualRect(item3);
-    QTest::mouseClick(entryView->viewport(), Qt::LeftButton, Qt::NoModifier, itemRect3.center());
-    QModelIndex item4 = entryView->model()->index(2, 0);
-    QRect itemRect4 = entryView->visualRect(item4);
-    QTest::mouseClick(entryView->viewport(), Qt::LeftButton, Qt::ControlModifier, itemRect4.center());
+    clickIndex(entryView->model()->index(1, 0), entryView, Qt::LeftButton);
+    clickIndex(entryView->model()->index(2, 0), entryView, Qt::LeftButton, Qt::ControlModifier);
     QCOMPARE(entryView->selectionModel()->selectedRows().size(), 2);
 
     MessageBox::setNextAnswer(QMessageBox::No);
@@ -289,8 +281,7 @@ void TestGui::testCloneEntry()
 
     QModelIndex item = entryView->model()->index(0, 1);
     Entry* entryOrg = entryView->entryFromIndex(item);
-    QRect itemRect = entryView->visualRect(item);
-    QTest::mouseClick(entryView->viewport(), Qt::LeftButton, Qt::NoModifier, itemRect.center());
+    clickIndex(item, entryView, Qt::LeftButton);
 
     triggerAction("actionEntryClone");
 
