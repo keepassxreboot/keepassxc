@@ -19,26 +19,45 @@
 #define KEEPASSX_RANDOM_H
 
 #include <QByteArray>
+#include <QScopedPointer>
+
+class RandomBackend
+{
+public:
+    virtual void randomize(void* data, int len) = 0;
+    virtual ~RandomBackend() {}
+};
 
 class Random
 {
 public:
-    static void randomize(QByteArray& ba);
-    static QByteArray randomArray(int len);
+    void randomize(QByteArray& ba);
+    QByteArray randomArray(int len);
 
     /**
      * Generate a random quint32 in the range [0, @p limit)
      */
-    static quint32 randomUInt(quint32 limit);
+    quint32 randomUInt(quint32 limit);
 
     /**
      * Generate a random quint32 in the range [@p min, @p max)
      */
-    static quint32 randomUIntRange(quint32 min, quint32 max);
+    quint32 randomUIntRange(quint32 min, quint32 max);
+
+    static Random* instance();
+    static void createWithBackend(RandomBackend* backend);
 
 private:
-    static void randomize(void* data, int len);
-    Random();
+    Random(RandomBackend* backend);
+
+    QScopedPointer<RandomBackend> m_backend;
+    static Random* m_instance;
+
+    Q_DISABLE_COPY(Random)
 };
+
+inline Random* randomGen() {
+    return Random::instance();
+}
 
 #endif // KEEPASSX_RANDOM_H

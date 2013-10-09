@@ -37,7 +37,7 @@ Uuid::Uuid(const QByteArray& data)
 
 Uuid Uuid::random()
 {
-    return Uuid(Random::randomArray(Length));
+    return Uuid(randomGen()->randomArray(Length));
 }
 
 QString Uuid::toBase64() const

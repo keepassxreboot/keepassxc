@@ -121,7 +121,7 @@ void FileKey::create(QIODevice* device)
 
     xmlWriter.writeStartElement("Key");
 
-    QByteArray data = Random::randomArray(32);
+    QByteArray data = randomGen()->randomArray(32);
     xmlWriter.writeTextElement("Data", QString::fromAscii(data.toBase64()));
 
     xmlWriter.writeEndElement();

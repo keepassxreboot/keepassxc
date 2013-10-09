@@ -25,9 +25,17 @@
 #define QUINT32_MAX 4294967295U
 #endif
 
+class RandomBackendGcrypt : public RandomBackend
+{
+public:
+    void randomize(void* data, int len) Q_DECL_OVERRIDE;
+};
+
+Random* Random::m_instance(Q_NULLPTR);
+
 void Random::randomize(QByteArray& ba)
 {
-    randomize(ba.data(), ba.size());
+    m_backend->randomize(ba.data(), ba.size());
 }
 
 QByteArray Random::randomArray(int len)
@@ -51,7 +59,7 @@ quint32 Random::randomUInt(quint32 limit)
     // To avoid modulo bias:
     // Make sure rand is below the largest number where rand%limit==0
     do {
-        randomize(&rand, 4);
+        m_backend->randomize(&rand, 4);
     } while (rand > ceil);
 
     return (rand % limit);
@@ -62,13 +70,32 @@ quint32 Random::randomUIntRange(quint32 min, quint32 max)
     return min + randomUInt(max - min);
 }
 
-void Random::randomize(void* data, int len)
+Random* Random::instance()
+{
+    if (!m_instance) {
+        m_instance = new Random(new RandomBackendGcrypt());
+    }
+
+    return m_instance;
+}
+
+void Random::createWithBackend(RandomBackend* backend)
+{
+    Q_ASSERT(backend);
+    Q_ASSERT(!m_instance);
+
+    m_instance = new Random(backend);
+}
+
+Random::Random(RandomBackend* backend)
+    : m_backend(backend)
+{
+}
+
+
+void RandomBackendGcrypt::randomize(void* data, int len)
 {
     Q_ASSERT(Crypto::initalized());
 
     gcry_randomize(data, len, GCRY_STRONG_RANDOM);
-}
-
-Random::Random()
-{
 }
