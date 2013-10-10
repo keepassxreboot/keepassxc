@@ -53,11 +53,10 @@ EntryView::EntryView(QWidget* parent)
 void EntryView::keyPressEvent(QKeyEvent* event)
 {
     if ((event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) && currentIndex().isValid()) {
-        Q_EMIT emitEntryActivated(currentIndex());
+        emitEntryActivated(currentIndex());
     }
-    else {
-        QTreeView::keyPressEvent(event);
-    }
+
+    QTreeView::keyPressEvent(event);
 }
 
 void EntryView::setGroup(Group* group)
