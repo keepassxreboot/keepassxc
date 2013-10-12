@@ -45,10 +45,10 @@ void KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
     m_error = false;
     m_errorStr.clear();
 
-    QByteArray masterSeed = Random::randomArray(32);
-    QByteArray encryptionIV = Random::randomArray(16);
-    QByteArray protectedStreamKey = Random::randomArray(32);
-    QByteArray startBytes = Random::randomArray(32);
+    QByteArray masterSeed = randomGen()->randomArray(32);
+    QByteArray encryptionIV = randomGen()->randomArray(16);
+    QByteArray protectedStreamKey = randomGen()->randomArray(32);
+    QByteArray startBytes = randomGen()->randomArray(32);
     QByteArray endOfHeader = "\r\n\r\n";
 
     CryptoHash hash(CryptoHash::Sha256);

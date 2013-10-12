@@ -212,7 +212,7 @@ void Database::setKey(const CompositeKey& key, const QByteArray& transformSeed, 
 
 void Database::setKey(const CompositeKey& key)
 {
-    setKey(key, Random::randomArray(32));
+    setKey(key, randomGen()->randomArray(32));
 }
 
 bool Database::hasKey() const

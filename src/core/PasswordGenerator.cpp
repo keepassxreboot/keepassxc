@@ -40,20 +40,20 @@ QString PasswordGenerator::generatePassword(int length,
 
     if (flags & CharFromEveryGroup) {
         for (int i = 0; i < groups.size(); i++) {
-            int pos = Random::randomUInt(groups[i].size());
+            int pos = randomGen()->randomUInt(groups[i].size());
 
             password.append(groups[i][pos]);
         }
 
         for (int i = groups.size(); i < length; i++) {
-            int pos = Random::randomUInt(passwordChars.size());
+            int pos = randomGen()->randomUInt(passwordChars.size());
 
             password.append(passwordChars[pos]);
         }
 
         // shuffle chars
         for (int i = (password.size() - 1); i >= 1; i--) {
-            int j = Random::randomUInt(i + 1);
+            int j = randomGen()->randomUInt(i + 1);
 
             QChar tmp = password[i];
             password[i] = password[j];
@@ -62,7 +62,7 @@ QString PasswordGenerator::generatePassword(int length,
     }
     else {
         for (int i = 0; i < length; i++) {
-            int pos = Random::randomUInt(passwordChars.size());
+            int pos = randomGen()->randomUInt(passwordChars.size());
 
             password.append(passwordChars[pos]);
         }
