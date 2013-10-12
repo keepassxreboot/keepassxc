@@ -21,10 +21,6 @@
 
 #include "crypto/Crypto.h"
 
-#ifndef QUINT32_MAX
-#define QUINT32_MAX 4294967295U
-#endif
-
 class RandomBackendGcrypt : public RandomBackend
 {
 public:

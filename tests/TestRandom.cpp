@@ -46,18 +46,18 @@ void TestRandom::testUInt()
     QCOMPARE(randomGen()->randomUInt(1), 0U);
 
     nextBytes.clear();
-    nextBytes.append(Endian::int32ToBytes(4294967295U, QSysInfo::ByteOrder));
-    nextBytes.append(Endian::int32ToBytes(4294897295U, QSysInfo::ByteOrder));
+    nextBytes.append(Endian::int32ToBytes(QUINT32_MAX, QSysInfo::ByteOrder));
+    nextBytes.append(Endian::int32ToBytes(QUINT32_MAX - 70000U, QSysInfo::ByteOrder));
     m_backend->setNextBytes(nextBytes);
-    QCOMPARE(randomGen()->randomUInt(100000U), 97295U);
+    QCOMPARE(randomGen()->randomUInt(100000U), (QUINT32_MAX - 70000U) % 100000U);
 
     nextBytes.clear();
     for (int i = 0; i < 10000; i++) {
-        nextBytes.append(Endian::int32ToBytes(2147483648U + i, QSysInfo::ByteOrder));
+        nextBytes.append(Endian::int32ToBytes((QUINT32_MAX / 2U) + 1U + i, QSysInfo::ByteOrder));
     }
-    nextBytes.append(Endian::int32ToBytes(2147483647U, QSysInfo::ByteOrder));
+    nextBytes.append(Endian::int32ToBytes(QUINT32_MAX / 2U, QSysInfo::ByteOrder));
     m_backend->setNextBytes(nextBytes);
-    QCOMPARE(randomGen()->randomUInt(2147483648U), 2147483647U);
+    QCOMPARE(randomGen()->randomUInt((QUINT32_MAX / 2U) + 1U), QUINT32_MAX / 2U);
 }
 
 void TestRandom::testUIntRange()

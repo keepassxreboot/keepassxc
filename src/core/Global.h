@@ -128,4 +128,8 @@ template <> class QStaticAssertFailure<true> {};
 #  define KEEPASSX_EXPORT Q_DECL_EXPORT
 #endif
 
+#ifndef QUINT32_MAX
+#define QUINT32_MAX 4294967295U
+#endif
+
 #endif // KEEPASSX_GLOBAL_H
