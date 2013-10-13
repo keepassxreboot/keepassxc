@@ -55,7 +55,8 @@ void TestArgumentParser::testFilename()
 
 void TestArgumentParser::testMultipleArguments()
 {
-    parse(QStringList() << "--config" << "myconfig.ini" << "--filename" << "myfilename" << "--password" << "mypassword");
+    parse(QStringList() << "--config" << "myconfig.ini" << "--filename" << "myfilename"
+          << "--password" << "mypassword");
 
     QCOMPARE(argumentMap.size(), 3);
     QCOMPARE(argumentMap.value("config"), QString("myconfig.ini"));

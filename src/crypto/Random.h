@@ -48,7 +48,7 @@ public:
     static void createWithBackend(RandomBackend* backend);
 
 private:
-    Random(RandomBackend* backend);
+    explicit Random(RandomBackend* backend);
 
     QScopedPointer<RandomBackend> m_backend;
     static Random* m_instance;

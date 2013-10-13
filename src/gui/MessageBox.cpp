@@ -83,4 +83,3 @@ void MessageBox::setNextAnswer(QMessageBox::StandardButton button)
 {
     m_nextAnswer = button;
 }
-

@@ -53,7 +53,8 @@ SettingsWidget::~SettingsWidget()
 void SettingsWidget::loadSettings()
 {
     m_generalUi->rememberLastDatabasesCheckBox->setChecked(config()->get("RememberLastDatabases").toBool());
-    m_generalUi->openPreviousDatabasesOnStartupCheckBox->setChecked(config()->get("OpenPreviousDatabasesOnStartup").toBool());
+    m_generalUi->openPreviousDatabasesOnStartupCheckBox->setChecked(
+        config()->get("OpenPreviousDatabasesOnStartup").toBool());
     m_generalUi->modifiedExpandedChangedCheckBox->setChecked(config()->get("ModifiedOnExpandedStateChanges").toBool());
     m_generalUi->autoSaveAfterEveryChangeCheckBox->setChecked(config()->get("AutoSaveAfterEveryChange").toBool());
     m_generalUi->autoSaveOnExitCheckBox->setChecked(config()->get("AutoSaveOnExit").toBool());

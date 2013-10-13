@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TEST_ARGUMENT_PARSER_H
-#define KEEPASSX_TEST_ARGUMENT_PARSER_H
+#ifndef KEEPASSX_TESTARGUMENTPARSER_H
+#define KEEPASSX_TESTARGUMENTPARSER_H
 
 #include <QHash>
 #include <QObject>
@@ -37,7 +37,6 @@ private:
     void parse(const QStringList& arguments);
 
     QHash<QString, QString> argumentMap;
-
 };
 
-#endif // KEEPASSX_TEST_ARGUMENT_PARSER_H
+#endif // KEEPASSX_TESTARGUMENTPARSER_H

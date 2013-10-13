@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_ARGUMENT_PARSER_H
-#define KEEPASSX_ARGUMENT_PARSER_H
+#ifndef KEEPASSX_ARGUMENTPARSER_H
+#define KEEPASSX_ARGUMENTPARSER_H
 
 #include "core/Global.h"
 
@@ -25,7 +25,6 @@
 
 class ArgumentParser
 {
-
 public:
     static QHash<QString, QString> parseArguments(const QStringList& args);
 
@@ -35,4 +34,4 @@ private:
     static const QStringList ArgumentKeys;
 };
 
-#endif // KEEPASSX_ARGUMENT_PARSER_H
+#endif // KEEPASSX_ARGUMENTPARSER_H

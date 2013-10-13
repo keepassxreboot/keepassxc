@@ -402,7 +402,8 @@ void MainWindow::closeEvent(QCloseEvent* event)
     bool openPreviousDatabasesOnStartup = config()->get("OpenPreviousDatabasesOnStartup").toBool();
 
     if (openPreviousDatabasesOnStartup) {
-        connect(m_ui->tabWidget, SIGNAL(databaseWithFileClosed(QString)), this, SLOT(rememberOpenDatabases(QString)));
+        connect(m_ui->tabWidget, SIGNAL(databaseWithFileClosed(QString)),
+                this, SLOT(rememberOpenDatabases(QString)));
     }
 
     if (!m_ui->tabWidget->closeAllDatabases()) {
@@ -413,7 +414,8 @@ void MainWindow::closeEvent(QCloseEvent* event)
     }
 
     if (openPreviousDatabasesOnStartup) {
-        disconnect(m_ui->tabWidget, SIGNAL(databaseWithFileClosed(QString)), this, SLOT(rememberOpenDatabases(QString)));
+        disconnect(m_ui->tabWidget, SIGNAL(databaseWithFileClosed(QString)),
+                   this, SLOT(rememberOpenDatabases(QString)));
         config()->set("LastOpenedDatabases", m_openDatabases);
     }
 }
