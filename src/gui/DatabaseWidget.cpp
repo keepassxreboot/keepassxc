@@ -27,6 +27,7 @@
 #include <QTimer>
 
 #include "autotype/AutoType.h"
+#include "core/Config.h"
 #include "core/FilePath.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
@@ -295,6 +296,10 @@ void DatabaseWidget::copyUsername()
     }
 
     clipboard()->setText(currentEntry->username());
+
+    if (config()->get("MinimizeOnCopy").toBool()) {
+        window()->showMinimized();
+    }
 }
 
 void DatabaseWidget::copyPassword()
@@ -306,6 +311,10 @@ void DatabaseWidget::copyPassword()
     }
 
     clipboard()->setText(currentEntry->password());
+
+    if (config()->get("MinimizeOnCopy").toBool()) {
+        window()->showMinimized();
+    }
 }
 
 void DatabaseWidget::copyAttribute(QAction* action)
@@ -317,6 +326,10 @@ void DatabaseWidget::copyAttribute(QAction* action)
     }
 
     clipboard()->setText(currentEntry->attributes()->value(action->text()));
+
+    if (config()->get("MinimizeOnCopy").toBool()) {
+        window()->showMinimized();
+    }
 }
 
 void DatabaseWidget::performAutoType()
