@@ -140,6 +140,17 @@
    <header>gui/entry/EditEntryWidget_p.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>attributesView</tabstop>
+  <tabstop>attributesEdit</tabstop>
+  <tabstop>addAttributeButton</tabstop>
+  <tabstop>editAttributeButton</tabstop>
+  <tabstop>removeAttributeButton</tabstop>
+  <tabstop>attachmentsView</tabstop>
+  <tabstop>addAttachmentButton</tabstop>
+  <tabstop>removeAttachmentButton</tabstop>
+  <tabstop>saveAttachmentButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

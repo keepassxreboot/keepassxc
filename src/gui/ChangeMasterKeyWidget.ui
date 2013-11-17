@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>438</width>
-    <height>242</height>
+    <height>249</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -154,8 +154,8 @@
  <tabstops>
   <tabstop>passwordGroup</tabstop>
   <tabstop>enterPasswordEdit</tabstop>
-  <tabstop>repeatPasswordEdit</tabstop>
   <tabstop>togglePasswordButton</tabstop>
+  <tabstop>repeatPasswordEdit</tabstop>
   <tabstop>keyFileGroup</tabstop>
   <tabstop>keyFileCombo</tabstop>
   <tabstop>browseKeyFileButton</tabstop>

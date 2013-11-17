@@ -78,6 +78,15 @@
    <header>autotype/ShortcutWidget.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>rememberLastDatabasesCheckBox</tabstop>
+  <tabstop>openPreviousDatabasesOnStartupCheckBox</tabstop>
+  <tabstop>modifiedExpandedChangedCheckBox</tabstop>
+  <tabstop>autoSaveOnExitCheckBox</tabstop>
+  <tabstop>autoSaveAfterEveryChangeCheckBox</tabstop>
+  <tabstop>minimizeOnCopyCheckBox</tabstop>
+  <tabstop>autoTypeShortcutWidget</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

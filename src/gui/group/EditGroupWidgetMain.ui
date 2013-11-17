@@ -77,6 +77,14 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>editName</tabstop>
+  <tabstop>editNotes</tabstop>
+  <tabstop>expireCheck</tabstop>
+  <tabstop>expireDatePicker</tabstop>
+  <tabstop>searchComboBox</tabstop>
+  <tabstop>autotypeComboBox</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -235,6 +235,19 @@
    <header>autotype/WindowSelectComboBox.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>enableButton</tabstop>
+  <tabstop>inheritSequenceButton</tabstop>
+  <tabstop>customSequenceButton</tabstop>
+  <tabstop>sequenceEdit</tabstop>
+  <tabstop>assocView</tabstop>
+  <tabstop>windowTitleCombo</tabstop>
+  <tabstop>defaultWindowSequenceButton</tabstop>
+  <tabstop>customWindowSequenceButton</tabstop>
+  <tabstop>windowSequenceEdit</tabstop>
+  <tabstop>assocAddButton</tabstop>
+  <tabstop>assocRemoveButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
