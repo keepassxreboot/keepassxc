@@ -98,6 +98,8 @@ private:
     int m_altMask;
     int m_metaMask;
     int m_altgrMask;
+    /* index of the XGetKeyboardMapping for the AltGr key */
+    int inx_altgr;
     KeySym m_altgrKeysym;
 };
 
