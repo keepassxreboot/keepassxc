@@ -632,37 +632,39 @@ void AutoTypePlatformX11::SendKeyPressedEvent(KeySym keysym, unsigned int shift)
             XkbTranslateKeyCode(kbd, keycode, 0, &mods_rtrn, &ks);
             if (ks == keysym) {
                 shift &= ~m_altgrMask;
+                shift &= ~ShiftMask;
                 found = TRUE;
-            } else {
+                break;
+            } 
 
-                XkbTranslateKeyCode(kbd, keycode, ShiftMask, &mods_rtrn, &ks);
-                if (ks == keysym) {
-                     shift &= ~m_altgrMask;
-                     shift |= ShiftMask;
-                     found = TRUE;
-                } else {
+            XkbTranslateKeyCode(kbd, keycode, ShiftMask, &mods_rtrn, &ks);
+            if (ks == keysym) {
+                 shift &= ~m_altgrMask;
+                 shift |= ShiftMask;
+                 found = TRUE;
+                 break;
+            } 
 
-                    XkbTranslateKeyCode(kbd, keycode, Mod5Mask, &mods_rtrn, &ks);
-                    if (ks == keysym) {
-                         shift &= ~ShiftMask;
-                         shift |= m_altgrMask;
-                         found = TRUE;
-                    } else {
-             
-                        XkbTranslateKeyCode(kbd, keycode, Mod5Mask, &mods_rtrn, &ks);
-                        if (ks == keysym) {
-                             shift |= ShiftMask | m_altgrMask;
-                             found = TRUE;
-                        } 
-                    }
-                }
-            }
+            XkbTranslateKeyCode(kbd, keycode, Mod5Mask, &mods_rtrn, &ks);
+            if (ks == keysym) {
+                 shift &= ~ShiftMask;
+                 shift |= m_altgrMask;
+                 found = TRUE;
+                 break;
+            } 
+         
+            XkbTranslateKeyCode(kbd, keycode, Mod5Mask, &mods_rtrn, &ks);
+            if (ks == keysym) {
+                 shift |= ShiftMask | m_altgrMask;
+                 found = TRUE;
+                 break;
+            } 
             if (found) break;
 
             if (0xF000 <= keysym) {
-                    /* for special keys such as function keys,
-                    first try to add it in the non-shifted position of the keymap */
-                    if (AddKeysym(keysym, TRUE) == NoSymbol) AddKeysym(keysym, FALSE);
+                 /* for special keys such as function keys,
+                 first try to add it in the non-shifted position of the keymap */
+                 if (AddKeysym(keysym, TRUE) == NoSymbol) AddKeysym(keysym, FALSE);
             } else {
                     AddKeysym(keysym, FALSE);
             }
