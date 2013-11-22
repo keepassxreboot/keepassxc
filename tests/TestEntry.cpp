@@ -21,6 +21,12 @@
 
 #include "tests.h"
 #include "core/Entry.h"
+#include "crypto/Crypto.h"
+
+void TestEntry::initTestCase()
+{
+    Crypto::init();
+}
 
 void TestEntry::testHistoryItemDeletion()
 {
@@ -72,6 +78,48 @@ void TestEntry::testCopyDataFrom()
     QCOMPARE(entry2->autoTypeAssociations()->size(), 2);
     QCOMPARE(entry2->autoTypeAssociations()->get(0).window, QString("1"));
     QCOMPARE(entry2->autoTypeAssociations()->get(1).window, QString("3"));
+}
+
+void TestEntry::testClone()
+{
+    Entry* entryOrg = new Entry();
+    entryOrg->setUuid(Uuid::random());
+    entryOrg->setTitle("Original Title");
+    entryOrg->beginUpdate();
+    entryOrg->setTitle("New Title");
+    entryOrg->endUpdate();
+    TimeInfo entryOrgTime = entryOrg->timeInfo();
+    QDateTime dateTime;
+    dateTime.setTimeSpec(Qt::UTC);
+    dateTime.setMSecsSinceEpoch(60);
+    entryOrgTime.setCreationTime(dateTime);
+    entryOrg->setTimeInfo(entryOrgTime);
+
+    Entry* entryCloneNone = entryOrg->clone(Entry::CloneNoFlags);
+    QCOMPARE(entryCloneNone->uuid(), entryOrg->uuid());
+    QCOMPARE(entryCloneNone->title(), QString("New Title"));
+    QCOMPARE(entryCloneNone->historyItems().size(), 0);
+    QCOMPARE(entryCloneNone->timeInfo().creationTime(), entryOrg->timeInfo().creationTime());
+
+    Entry* entryCloneNewUuid = entryOrg->clone(Entry::CloneNewUuid);
+    QVERIFY(entryCloneNewUuid->uuid() != entryOrg->uuid());
+    QVERIFY(!entryCloneNewUuid->uuid().isNull());
+    QCOMPARE(entryCloneNewUuid->title(), QString("New Title"));
+    QCOMPARE(entryCloneNewUuid->historyItems().size(), 0);
+    QCOMPARE(entryCloneNewUuid->timeInfo().creationTime(), entryOrg->timeInfo().creationTime());
+
+    Entry* entryCloneResetTime = entryOrg->clone(Entry::CloneResetTimeInfo);
+    QCOMPARE(entryCloneNone->uuid(), entryOrg->uuid());
+    QCOMPARE(entryCloneResetTime->title(), QString("New Title"));
+    QCOMPARE(entryCloneResetTime->historyItems().size(), 0);
+    QVERIFY(entryCloneResetTime->timeInfo().creationTime() != entryOrg->timeInfo().creationTime());
+
+    Entry* entryCloneHistory = entryOrg->clone(Entry::CloneIncludeHistory);
+    QCOMPARE(entryCloneNone->uuid(), entryOrg->uuid());
+    QCOMPARE(entryCloneHistory->title(), QString("New Title"));
+    QCOMPARE(entryCloneHistory->historyItems().size(), 1);
+    QCOMPARE(entryCloneHistory->historyItems().first()->title(), QString("Original Title"));
+    QCOMPARE(entryCloneHistory->timeInfo().creationTime(), entryOrg->timeInfo().creationTime());
 }
 
 QTEST_GUILESS_MAIN(TestEntry)

@@ -441,8 +441,11 @@ void TestGroup::testClone()
 
     Entry* originalGroupEntry = new Entry();
     originalGroupEntry->setGroup(originalGroup);
-    originalGroupEntry->setTitle("GroupEntry");
+    originalGroupEntry->setTitle("GroupEntryOld");
     originalGroupEntry->setIcon(43);
+    originalGroupEntry->beginUpdate();
+    originalGroupEntry->setTitle("GroupEntry");
+    originalGroupEntry->endUpdate();
 
     Group* subGroup = new Group();
     subGroup->setParent(originalGroup);
@@ -465,6 +468,7 @@ void TestGroup::testClone()
     QVERIFY(clonedGroupEntry->uuid() != originalGroupEntry->uuid());
     QCOMPARE(clonedGroupEntry->title(), QString("GroupEntry"));
     QCOMPARE(clonedGroupEntry->iconNumber(), 43);
+    QCOMPARE(clonedGroupEntry->historyItems().size(), 0);
 
     Group* clonedSubGroup = clonedGroup->children().at(0);
     QVERIFY(clonedSubGroup->uuid() != subGroup->uuid());

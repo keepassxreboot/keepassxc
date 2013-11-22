@@ -27,8 +27,10 @@ class TestEntry : public QObject
     Q_OBJECT
 
 private Q_SLOTS:
+    void initTestCase();
     void testHistoryItemDeletion();
     void testCopyDataFrom();
+    void testClone();
 };
 
 #endif // KEEPASSX_TESTENTRY_H

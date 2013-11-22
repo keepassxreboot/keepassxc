@@ -439,22 +439,40 @@ void Entry::truncateHistory()
     }
 }
 
-Entry* Entry::clone() const
+Entry* Entry::clone(CloneFlags flags) const
 {
     Entry* entry = new Entry();
     entry->setUpdateTimeinfo(false);
-    entry->m_uuid = Uuid::random();
+    if (flags & CloneNewUuid) {
+        entry->m_uuid = Uuid::random();
+    }
+    else {
+        entry->m_uuid = m_uuid;
+    }
     entry->m_data = m_data;
     entry->m_attributes->copyDataFrom(m_attributes);
     entry->m_attachments->copyDataFrom(m_attachments);
     entry->m_autoTypeAssociations->copyDataFrom(this->m_autoTypeAssociations);
+    if (flags & CloneIncludeHistory) {
+        Q_FOREACH (Entry* historyItem, m_history) {
+            Entry* historyItemClone = historyItem->clone(flags & ~CloneIncludeHistory & ~CloneNewUuid);
+            historyItemClone->setUpdateTimeinfo(false);
+            historyItemClone->setUuid(entry->uuid());
+            historyItemClone->setUpdateTimeinfo(true);
+            entry->addHistoryItem(historyItemClone);
+        }
+    }
     entry->setUpdateTimeinfo(true);
 
-    QDateTime now = Tools::currentDateTimeUtc();
-    entry->m_data.timeInfo.setCreationTime(now);
-    entry->m_data.timeInfo.setLastModificationTime(now);
-    entry->m_data.timeInfo.setLastAccessTime(now);
-    entry->m_data.timeInfo.setLocationChanged(now);
+    if (flags & CloneResetTimeInfo) {
+        QDateTime now = Tools::currentDateTimeUtc();
+        entry->m_data.timeInfo.setCreationTime(now);
+        entry->m_data.timeInfo.setLastModificationTime(now);
+        entry->m_data.timeInfo.setLastAccessTime(now);
+        entry->m_data.timeInfo.setLocationChanged(now);
+    }
+
+
 
     return entry;
 }

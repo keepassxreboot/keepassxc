@@ -224,7 +224,7 @@ void DatabaseWidget::cloneEntry()
         return;
     }
 
-    Entry* entry = currentEntry->clone();
+    Entry* entry = currentEntry->clone(Entry::CloneNewUuid | Entry::CloneResetTimeInfo);
     entry->setGroup(currentEntry->group());
     m_entryView->setFocus();
     m_entryView->setCurrentEntry(entry);

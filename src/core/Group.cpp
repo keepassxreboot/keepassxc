@@ -474,7 +474,7 @@ Group* Group::clone() const
     clonedGroup->m_data = m_data;
 
     Q_FOREACH (Entry* entry, entries()) {
-        Entry* clonedEntry = entry->clone();
+        Entry* clonedEntry = entry->clone(Entry::CloneNewUuid | Entry::CloneResetTimeInfo);
         clonedEntry->setGroup(clonedGroup);
     }
 
