@@ -107,7 +107,7 @@ public:
      * Note that you need to copy the custom icons manually when inserting the
      * new group into another database.
      */
-    Group* clone() const;
+    Group* clone(Entry::CloneFlags entryFlags = Entry::CloneNewUuid | Entry::CloneResetTimeInfo) const;
     void copyDataFrom(const Group* other);
 
     QList<Entry*> search(const QString& searchTerm, Qt::CaseSensitivity caseSensitivity,

@@ -464,7 +464,7 @@ QSet<Uuid> Group::customIconsRecursive() const
     return result;
 }
 
-Group* Group::clone() const
+Group* Group::clone(Entry::CloneFlags entryFlags) const
 {
     Group* clonedGroup = new Group();
 
@@ -474,7 +474,7 @@ Group* Group::clone() const
     clonedGroup->m_data = m_data;
 
     Q_FOREACH (Entry* entry, entries()) {
-        Entry* clonedEntry = entry->clone(Entry::CloneNewUuid | Entry::CloneResetTimeInfo);
+        Entry* clonedEntry = entry->clone(entryFlags);
         clonedEntry->setGroup(clonedGroup);
     }
 
