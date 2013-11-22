@@ -26,12 +26,15 @@
 #include <QX11Info>
 
 #include <X11/Xutil.h>
-#include <X11/XKBlib.h>
 #include <X11/extensions/XTest.h>
+#include <X11/XKBlib.h>
+#include <unistd.h>
 
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/AutoTypeAction.h"
 #include "core/Global.h"
+
+#define N_MOD_INDICES (Mod5MapIndex + 1)
 
 class AutoTypePlatformX11 : public QObject, public AutoTypePlatformInterface
 {
@@ -40,6 +43,7 @@ class AutoTypePlatformX11 : public QObject, public AutoTypePlatformInterface
 
 public:
     AutoTypePlatformX11();
+    ~AutoTypePlatformX11();
     QStringList windowTitles();
     WId activeWindow();
     QString activeWindowTitle();
@@ -52,7 +56,7 @@ public:
     KeySym charToKeySym(const QChar& ch);
     KeySym keyToKeySym(Qt::Key key);
 
-    void SendKeyPressedEvent(KeySym keysym, unsigned int shift = 0);
+    void SendKeyPressedEvent(KeySym keysym);
 
 Q_SIGNALS:
     void globalShortcutTriggered();
@@ -69,10 +73,10 @@ private:
     static int x11ErrorHandler(Display* display, XErrorEvent* error);
 
     void updateKeymap();
-    int AddKeysym(KeySym keysym, bool top);
+    int AddKeysym(KeySym keysym);
     void AddModifier(KeySym keysym);
     void ReadKeymap();
-    void SendEvent(XKeyEvent* event);
+    void SendEvent(XKeyEvent* event, int event_type);
     static int MyErrorHandler(Display* my_dpy, XErrorEvent* event);
 
     Display* m_dpy;
@@ -96,12 +100,11 @@ private:
     int m_minKeycode;
     int m_maxKeycode;
     int m_keysymPerKeycode;
-    int m_altMask;
-    int m_metaMask;
-    int m_altgrMask;
-    /* index of the XGetKeyboardMapping for the AltGr key */
-    int inx_altgr;
-    KeySym m_altgrKeysym;
+
+    /* dedicated 'special character' keycode */
+    int m_specialCharacterKeycode;
+    int m_modifier_mask[N_MOD_INDICES];
+    KeyCode m_modifier_keycode[N_MOD_INDICES];
 };
 
 class AutoTypeExecturorX11 : public AutoTypeExecutor
