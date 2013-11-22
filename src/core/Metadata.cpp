@@ -26,25 +26,26 @@ const int Metadata::DefaultHistoryMaxSize = 6 * 1024 * 1024;
 
 Metadata::Metadata(QObject* parent)
     : QObject(parent)
-    , m_generator("KeePassX")
-    , m_maintenanceHistoryDays(365)
-    , m_protectTitle(false)
-    , m_protectUsername(false)
-    , m_protectPassword(true)
-    , m_protectUrl(false)
-    , m_protectNotes(false)
-    // , m_autoEnableVisualHiding(false)
-    , m_recycleBinEnabled(true)
-    , m_masterKeyChangeRec(-1)
-    , m_masterKeyChangeForce(-1)
-    , m_historyMaxItems(DefaultHistoryMaxItems)
-    , m_historyMaxSize(DefaultHistoryMaxSize)
     , m_updateDatetime(true)
 {
+    m_data.generator = "KeePassX";
+    m_data.maintenanceHistoryDays = 365;
+    m_data.masterKeyChangeRec = -1;
+    m_data.masterKeyChangeForce = -1;
+    m_data.historyMaxItems = DefaultHistoryMaxItems;
+    m_data.historyMaxSize = DefaultHistoryMaxSize;
+    m_data.recycleBinEnabled = true;
+    m_data.protectTitle = false;
+    m_data.protectUsername = false;
+    m_data.protectPassword = true;
+    m_data.protectUrl = false;
+    m_data.protectNotes = false;
+    // m_data.autoEnableVisualHiding = false;
+
     QDateTime now = Tools::currentDateTimeUtc();
-    m_nameChanged = now;
-    m_descriptionChanged = now;
-    m_defaultUserNameChanged = now;
+    m_data.nameChanged = now;
+    m_data.descriptionChanged = now;
+    m_data.defaultUserNameChanged = now;
     m_recycleBinChanged = now;
     m_entryTemplatesGroupChanged = now;
     m_masterKeyChanged = now;
@@ -81,74 +82,79 @@ void Metadata::setUpdateDatetime(bool value)
     m_updateDatetime = value;
 }
 
+void Metadata::copyAttributesFrom(const Metadata* other)
+{
+    m_data = other->m_data;
+}
+
 QString Metadata::generator() const
 {
-    return m_generator;
+    return m_data.generator;
 }
 
 QString Metadata::name() const
 {
-    return m_name;
+    return m_data.name;
 }
 
 QDateTime Metadata::nameChanged() const
 {
-    return m_nameChanged;
+    return m_data.nameChanged;
 }
 
 QString Metadata::description() const
 {
-    return m_description;
+    return m_data.description;
 }
 
 QDateTime Metadata::descriptionChanged() const
 {
-    return m_descriptionChanged;
+    return m_data.descriptionChanged;
 }
 
 QString Metadata::defaultUserName() const
 {
-    return m_defaultUserName;
+    return m_data.defaultUserName;
 }
 
 QDateTime Metadata::defaultUserNameChanged() const
 {
-    return m_defaultUserNameChanged;
+    return m_data.defaultUserNameChanged;
 }
 
 int Metadata::maintenanceHistoryDays() const
 {
-    return m_maintenanceHistoryDays;
+    return m_data.maintenanceHistoryDays;
 }
 
 QColor Metadata::color() const
 {
-    return m_color;
+    return m_data.color;
 }
 
 bool Metadata::protectTitle() const
 {
-    return m_protectTitle;
+    return m_data.protectTitle;
 }
 
 bool Metadata::protectUsername() const
 {
-    return m_protectUsername;
+    return m_data.protectUsername;
 }
 
 bool Metadata::protectPassword() const
 {
-    return m_protectPassword;
+    return m_data.protectPassword;
 }
 
 bool Metadata::protectUrl() const
 {
-    return m_protectUrl;
+    return m_data.protectUrl;
 }
 
 bool Metadata::protectNotes() const
 {
-    return m_protectNotes;
+    return m_data.protectNotes;
 }
 
 /*bool Metadata::autoEnableVisualHiding() const
@@ -178,7 +184,7 @@ QList<Uuid> Metadata::customIconsOrder() const
 
 bool Metadata::recycleBinEnabled() const
 {
-    return m_recycleBinEnabled;
+    return m_data.recycleBinEnabled;
 }
 
 Group* Metadata::recycleBin()
@@ -223,22 +229,22 @@ QDateTime Metadata::masterKeyChanged() const
 
 int Metadata::masterKeyChangeRec() const
 {
-    return m_masterKeyChangeRec;
+    return m_data.masterKeyChangeRec;
 }
 
 int Metadata::masterKeyChangeForce() const
 {
-    return m_masterKeyChangeForce;
+    return m_data.masterKeyChangeForce;
 }
 
 int Metadata::historyMaxItems() const
 {
-    return m_historyMaxItems;
+    return m_data.historyMaxItems;
 }
 
 int Metadata::historyMaxSize() const
 {
-    return m_historyMaxSize;
+    return m_data.historyMaxSize;
 }
 
 QHash<QString, QString> Metadata::customFields() const
@@ -248,12 +254,12 @@ QHash<QString, QString> Metadata::customFields() const
 
 void Metadata::setGenerator(const QString& value)
 {
-    set(m_generator, value);
+    set(m_data.generator, value);
 }
 
 void Metadata::setName(const QString& value)
 {
-    if (set(m_name, value, m_nameChanged)) {
+    if (set(m_data.name, value, m_data.nameChanged)) {
         Q_EMIT nameTextChanged();
     }
 }
@@ -261,64 +267,64 @@ void Metadata::setName(const QString& value)
 void Metadata::setNameChanged(const QDateTime& value)
 {
     Q_ASSERT(value.timeSpec() == Qt::UTC);
-    m_nameChanged = value;
+    m_data.nameChanged = value;
 }
 
 void Metadata::setDescription(const QString& value)
 {
-    set(m_description, value, m_descriptionChanged);
+    set(m_data.description, value, m_data.descriptionChanged);
 }
 
 void Metadata::setDescriptionChanged(const QDateTime& value)
 {
     Q_ASSERT(value.timeSpec() == Qt::UTC);
-    m_descriptionChanged = value;
+    m_data.descriptionChanged = value;
 }
 
 void Metadata::setDefaultUserName(const QString& value)
 {
-    set(m_defaultUserName, value, m_defaultUserNameChanged);
+    set(m_data.defaultUserName, value, m_data.defaultUserNameChanged);
 }
 
 void Metadata::setDefaultUserNameChanged(const QDateTime& value)
 {
     Q_ASSERT(value.timeSpec() == Qt::UTC);
-    m_defaultUserNameChanged = value;
+    m_data.defaultUserNameChanged = value;
 }
 
 void Metadata::setMaintenanceHistoryDays(int value)
 {
-    set(m_maintenanceHistoryDays, value);
+    set(m_data.maintenanceHistoryDays, value);
 }
 
 void Metadata::setColor(const QColor& value)
 {
-    set(m_color, value);
+    set(m_data.color, value);
 }
 
 void Metadata::setProtectTitle(bool value)
 {
-    set(m_protectTitle, value);
+    set(m_data.protectTitle, value);
 }
 
 void Metadata::setProtectUsername(bool value)
 {
-    set(m_protectUsername, value);
+    set(m_data.protectUsername, value);
 }
 
 void Metadata::setProtectPassword(bool value)
 {
-    set(m_protectPassword, value);
+    set(m_data.protectPassword, value);
 }
 
 void Metadata::setProtectUrl(bool value)
 {
-    set(m_protectUrl, value);
+    set(m_data.protectUrl, value);
 }
 
 void Metadata::setProtectNotes(bool value)
 {
-    set(m_protectNotes, value);
+    set(m_data.protectNotes, value);
 }
 
 /*void Metadata::setAutoEnableVisualHiding(bool value)
@@ -361,7 +367,7 @@ void Metadata::copyCustomIcons(const QSet<Uuid>& iconList, const Metadata* other
 
 void Metadata::setRecycleBinEnabled(bool value)
 {
-    set(m_recycleBinEnabled, value);
+    set(m_data.recycleBinEnabled, value);
 }
 
 void Metadata::setRecycleBin(Group* group)
@@ -404,22 +410,22 @@ void Metadata::setMasterKeyChanged(const QDateTime& value)
 
 void Metadata::setMasterKeyChangeRec(int value)
 {
-    set(m_masterKeyChangeRec, value);
+    set(m_data.masterKeyChangeRec, value);
 }
 
 void Metadata::setMasterKeyChangeForce(int value)
 {
-    set(m_masterKeyChangeForce, value);
+    set(m_data.masterKeyChangeForce, value);
 }
 
 void Metadata::setHistoryMaxItems(int value)
 {
-    set(m_historyMaxItems, value);
+    set(m_data.historyMaxItems, value);
 }
 
 void Metadata::setHistoryMaxSize(int value)
 {
-    set(m_historyMaxSize, value);
+    set(m_data.historyMaxSize, value);
 }
 
 void Metadata::addCustomField(const QString& key, const QString& value)

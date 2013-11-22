@@ -32,13 +32,14 @@ QHash<Uuid, Database*> Database::m_uuidMap;
 Database::Database()
     : m_metadata(new Metadata(this))
     , m_timer(new QTimer(this))
-    , m_cipher(KeePass2::CIPHER_AES)
-    , m_compressionAlgo(CompressionGZip)
-    , m_transformRounds(50000)
-    , m_hasKey(false)
     , m_emitModified(false)
     , m_uuid(Uuid::random())
 {
+    m_data.cipher = KeePass2::CIPHER_AES;
+    m_data.compressionAlgo = CompressionGZip;
+    m_data.transformRounds = 50000;
+    m_data.hasKey = false;
+
     setRootGroup(new Group());
     rootGroup()->setUuid(Uuid::random());
     m_timer->setSingleShot(true);
@@ -150,60 +151,60 @@ void Database::addDeletedObject(const Uuid& uuid)
 
 Uuid Database::cipher() const
 {
-    return m_cipher;
+    return m_data.cipher;
 }
 
 Database::CompressionAlgorithm Database::compressionAlgo() const
 {
-    return m_compressionAlgo;
+    return m_data.compressionAlgo;
 }
 
 QByteArray Database::transformSeed() const
 {
-    return m_transformSeed;
+    return m_data.transformSeed;
 }
 
 quint64 Database::transformRounds() const
 {
-    return m_transformRounds;
+    return m_data.transformRounds;
 }
 
 QByteArray Database::transformedMasterKey() const
 {
-    return m_transformedMasterKey;
+    return m_data.transformedMasterKey;
 }
 
 void Database::setCipher(const Uuid& cipher)
 {
     Q_ASSERT(!cipher.isNull());
 
-    m_cipher = cipher;
+    m_data.cipher = cipher;
 }
 
 void Database::setCompressionAlgo(Database::CompressionAlgorithm algo)
 {
     Q_ASSERT(static_cast<quint32>(algo) <= CompressionAlgorithmMax);
 
-    m_compressionAlgo = algo;
+    m_data.compressionAlgo = algo;
 }
 
 void Database::setTransformRounds(quint64 rounds)
 {
-    if (m_transformRounds != rounds) {
-        m_transformRounds = rounds;
+    if (m_data.transformRounds != rounds) {
+        m_data.transformRounds = rounds;
 
-        if (m_hasKey) {
-            setKey(m_key);
+        if (m_data.hasKey) {
+            setKey(m_data.key);
         }
     }
 }
 
 void Database::setKey(const CompositeKey& key, const QByteArray& transformSeed, bool updateChangedTime)
 {
-    m_key = key;
-    m_transformSeed = transformSeed;
-    m_transformedMasterKey = key.transform(transformSeed, transformRounds());
-    m_hasKey = true;
+    m_data.key = key;
+    m_data.transformSeed = transformSeed;
+    m_data.transformedMasterKey = key.transform(transformSeed, transformRounds());
+    m_data.hasKey = true;
     if (updateChangedTime) {
         m_metadata->setMasterKeyChanged(Tools::currentDateTimeUtc());
     }
@@ -217,14 +218,14 @@ void Database::setKey(const CompositeKey& key)
 
 bool Database::hasKey() const
 {
-    return m_hasKey;
+    return m_data.hasKey;
 }
 
 bool Database::verifyKey(const CompositeKey& key) const
 {
     Q_ASSERT(hasKey());
 
-    return (m_key.rawKey() == key.rawKey());
+    return (m_data.key.rawKey() == key.rawKey());
 }
 
 void Database::createRecycleBin()
@@ -267,6 +268,12 @@ void Database::setEmitModified(bool value)
     }
 
     m_emitModified = value;
+}
+
+void Database::copyAttributesFrom(const Database* other)
+{
+    m_data = other->m_data;
+    m_metadata->copyAttributesFrom(other->m_metadata);
 }
 
 Uuid Database::uuid()
