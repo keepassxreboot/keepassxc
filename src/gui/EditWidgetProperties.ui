@@ -84,6 +84,12 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>createdEdit</tabstop>
+  <tabstop>modifiedEdit</tabstop>
+  <tabstop>accessedEdit</tabstop>
+  <tabstop>uuidEdit</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

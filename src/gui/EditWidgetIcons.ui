@@ -95,6 +95,14 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>defaultIconsRadio</tabstop>
+  <tabstop>defaultIconsView</tabstop>
+  <tabstop>customIconsRadio</tabstop>
+  <tabstop>customIconsView</tabstop>
+  <tabstop>addButton</tabstop>
+  <tabstop>deleteButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

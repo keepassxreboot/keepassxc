@@ -188,8 +188,14 @@
  <tabstops>
   <tabstop>dbNameEdit</tabstop>
   <tabstop>dbDescriptionEdit</tabstop>
+  <tabstop>transformRoundsSpinBox</tabstop>
+  <tabstop>transformBenchmarkButton</tabstop>
   <tabstop>defaultUsernameEdit</tabstop>
   <tabstop>recycleBinEnabledCheckBox</tabstop>
+  <tabstop>historyMaxItemsCheckBox</tabstop>
+  <tabstop>historyMaxItemsSpinBox</tabstop>
+  <tabstop>historyMaxSizeCheckBox</tabstop>
+  <tabstop>historyMaxSizeSpinBox</tabstop>
   <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources/>

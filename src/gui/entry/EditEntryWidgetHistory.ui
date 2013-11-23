@@ -64,6 +64,13 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>historyView</tabstop>
+  <tabstop>showButton</tabstop>
+  <tabstop>restoreButton</tabstop>
+  <tabstop>deleteButton</tabstop>
+  <tabstop>deleteAllButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

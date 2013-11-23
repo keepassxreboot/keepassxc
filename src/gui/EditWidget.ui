@@ -64,6 +64,10 @@
    <header>gui/entry/EditEntryWidget_p.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>categoryList</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

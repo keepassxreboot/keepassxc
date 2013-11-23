@@ -36,6 +36,10 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>clearClipboardCheckBox</tabstop>
+  <tabstop>clearClipboardSpinBox</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

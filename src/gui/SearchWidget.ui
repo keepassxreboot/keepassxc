@@ -93,6 +93,13 @@
    <header>gui/LineEdit.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>closeSearchButton</tabstop>
+  <tabstop>searchEdit</tabstop>
+  <tabstop>caseSensitiveCheckBox</tabstop>
+  <tabstop>searchCurrentRadioButton</tabstop>
+  <tabstop>searchRootRadioButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
