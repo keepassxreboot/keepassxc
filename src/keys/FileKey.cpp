@@ -122,7 +122,7 @@ void FileKey::create(QIODevice* device)
     xmlWriter.writeStartElement("Key");
 
     QByteArray data = randomGen()->randomArray(32);
-    xmlWriter.writeTextElement("Data", QString::fromAscii(data.toBase64()));
+    xmlWriter.writeTextElement("Data", QString::fromLatin1(data.toBase64()));
 
     xmlWriter.writeEndElement();
 
@@ -211,7 +211,7 @@ QByteArray FileKey::loadXmlKey(QXmlStreamReader& xmlReader)
     while (!xmlReader.error() && xmlReader.readNextStartElement()) {
         if (xmlReader.name() == "Data") {
             // TODO: do we need to enforce a specific data.size()?
-            data = QByteArray::fromBase64(xmlReader.readElementText().toAscii());
+            data = QByteArray::fromBase64(xmlReader.readElementText().toLatin1());
         }
     }
 

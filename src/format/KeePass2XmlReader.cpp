@@ -779,7 +779,7 @@ void KeePass2XmlReader::parseEntryString(Entry* entry)
 
             if (isProtected && !value.isEmpty()) {
                 if (m_randomStream) {
-                    value = QString::fromUtf8(m_randomStream->process(QByteArray::fromBase64(value.toAscii())));
+                    value = QString::fromUtf8(m_randomStream->process(QByteArray::fromBase64(value.toLatin1())));
                 }
                 else {
                     raiseError("Unable to decrypt entry string");
@@ -1053,7 +1053,7 @@ Uuid KeePass2XmlReader::readUuid()
 
 QByteArray KeePass2XmlReader::readBinary()
 {
-    return QByteArray::fromBase64(readString().toAscii());
+    return QByteArray::fromBase64(readString().toLatin1());
 }
 
 QByteArray KeePass2XmlReader::readCompressedBinary()

@@ -141,7 +141,7 @@ QString imageReaderFilter()
             }
         }
 
-        formatsStringList.append("*." + QString::fromAscii(format).toLower());
+        formatsStringList.append("*." + QString::fromLatin1(format).toLower());
     }
 
     return formatsStringList.join(" ");

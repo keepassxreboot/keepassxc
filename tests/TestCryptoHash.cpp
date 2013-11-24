@@ -37,13 +37,13 @@ void TestCryptoHash::test()
     QCOMPARE(cryptoHash1.result(),
              QByteArray::fromHex("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"));
 
-    QByteArray source2 = QString("KeePassX").toAscii();
+    QByteArray source2 = QString("KeePassX").toLatin1();
     QByteArray result2 = CryptoHash::hash(source2, CryptoHash::Sha256);
     QCOMPARE(result2, QByteArray::fromHex("0b56e5f65263e747af4a833bd7dd7ad26a64d7a4de7c68e52364893dca0766b4"));
 
     CryptoHash cryptoHash3(CryptoHash::Sha256);
-    cryptoHash3.addData(QString("KeePa").toAscii());
-    cryptoHash3.addData(QString("ssX").toAscii());
+    cryptoHash3.addData(QString("KeePa").toLatin1());
+    cryptoHash3.addData(QString("ssX").toLatin1());
     QCOMPARE(cryptoHash3.result(),
              QByteArray::fromHex("0b56e5f65263e747af4a833bd7dd7ad26a64d7a4de7c68e52364893dca0766b4"));
 }
