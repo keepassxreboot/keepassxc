@@ -214,10 +214,19 @@ void MainWindow::updateCopyAttributesMenu()
         return;
     }
 
-    m_ui->menuEntryCopyAttribute->clear();
+    Q_FOREACH (QAction* action, m_ui->menuEntryCopyAttribute->actions()) {
+        if (action != m_ui->actionEntryCopyPassword && action != m_ui->actionEntryCopyUsername) {
+            m_ui->menuEntryCopyAttribute->removeAction(action);
+        }
+    }
+
     Entry* entry = dbWidget->entryView()->currentEntry();
 
-    Q_FOREACH (const QString& key, EntryAttributes::DefaultAttributes) {
+    QStringList defaultAttributesWithoutPasswordAndUsername = EntryAttributes::DefaultAttributes;
+    defaultAttributesWithoutPasswordAndUsername.removeOne(EntryAttributes::PasswordKey);
+    defaultAttributesWithoutPasswordAndUsername.removeOne(EntryAttributes::UserNameKey);
+
+    Q_FOREACH (const QString& key, defaultAttributesWithoutPasswordAndUsername) {
         QAction* action = m_ui->menuEntryCopyAttribute->addAction(key);
         m_copyAdditionalAttributeActions->addAction(action);
     }
