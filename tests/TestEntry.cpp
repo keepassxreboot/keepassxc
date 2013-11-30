@@ -91,7 +91,7 @@ void TestEntry::testClone()
     TimeInfo entryOrgTime = entryOrg->timeInfo();
     QDateTime dateTime;
     dateTime.setTimeSpec(Qt::UTC);
-    dateTime.setMSecsSinceEpoch(60);
+    dateTime.setTime_t(60);
     entryOrgTime.setCreationTime(dateTime);
     entryOrg->setTimeInfo(entryOrgTime);
 
