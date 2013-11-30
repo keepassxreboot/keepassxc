@@ -16,15 +16,13 @@ Installing:
 ===========
 make install [DESTDIR=X]
 
+Create a bundle on Mac:
+make package
+
 Run tests:
 ==========
 make test [CTEST_OUTPUT_ON_FAILURE=1] [ARGS+=-jX] [ARGS+="-E testgui"]
 
-Building on Mac OS X:
-=====================
-Install macports and cmake
-Open /opt/local/etc/macports/macports.conf and set the architecture(s) you want to build for.
-Run: sudo port install qt4-mac libgcrypt zlib
-     If you want to build a universal binary append " +universal" to the above command.
-Pass -DCMAKE_OSX_ARCHITECTURES="<ARCH1>;<ARCH2>" to cmake
-Run: make package
+OS specific instructions:
+=========================
+https://www.keepassx.org/dev/projects/keepassx/wiki/Install_instructions
