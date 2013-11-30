@@ -217,6 +217,7 @@ void MainWindow::updateCopyAttributesMenu()
     Q_FOREACH (QAction* action, m_ui->menuEntryCopyAttribute->actions()) {
         if (action != m_ui->actionEntryCopyPassword && action != m_ui->actionEntryCopyUsername) {
             m_ui->menuEntryCopyAttribute->removeAction(action);
+            delete action;
         }
     }
 
