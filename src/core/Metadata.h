@@ -37,6 +37,31 @@ class Metadata : public QObject
 public:
     explicit Metadata(QObject* parent = Q_NULLPTR);
 
+    struct MetadataData
+    {
+        QString generator;
+        QString name;
+        QDateTime nameChanged;
+        QString description;
+        QDateTime descriptionChanged;
+        QString defaultUserName;
+        QDateTime defaultUserNameChanged;
+        int maintenanceHistoryDays;
+        QColor color;
+        bool recycleBinEnabled;
+        int historyMaxItems;
+        int historyMaxSize;
+        int masterKeyChangeRec;
+        int masterKeyChangeForce;
+
+        bool protectTitle;
+        bool protectUsername;
+        bool protectPassword;
+        bool protectUrl;
+        bool protectNotes;
+        // bool autoEnableVisualHiding;
+    };
+
     QString generator() const;
     QString name() const;
     QDateTime nameChanged() const;
@@ -107,6 +132,14 @@ public:
     void addCustomField(const QString& key, const QString& value);
     void removeCustomField(const QString& key);
     void setUpdateDatetime(bool value);
+    /*
+     * Copy all attributes from other except:
+     * - Group pointers/uuids
+     * - Master key changed date
+     * - Custom icons
+     * - Custom fields
+     */
+    void copyAttributesFrom(const Metadata* other);
 
 Q_SIGNALS:
     void nameTextChanged();
@@ -116,27 +149,11 @@ private:
     template <class P, class V> bool set(P& property, const V& value);
     template <class P, class V> bool set(P& property, const V& value, QDateTime& dateTime);
 
-    QString m_generator;
-    QString m_name;
-    QDateTime m_nameChanged;
-    QString m_description;
-    QDateTime m_descriptionChanged;
-    QString m_defaultUserName;
-    QDateTime m_defaultUserNameChanged;
-    int m_maintenanceHistoryDays;
-    QColor m_color;
-
-    bool m_protectTitle;
-    bool m_protectUsername;
-    bool m_protectPassword;
-    bool m_protectUrl;
-    bool m_protectNotes;
-    // bool m_autoEnableVisualHiding;
+    MetadataData m_data;
 
     QHash<Uuid, QImage> m_customIcons;
     QList<Uuid> m_customIconsOrder;
 
-    bool m_recycleBinEnabled;
     QPointer<Group> m_recycleBin;
     QDateTime m_recycleBinChanged;
     QPointer<Group> m_entryTemplatesGroup;
@@ -145,10 +162,6 @@ private:
     QPointer<Group> m_lastTopVisibleGroup;
 
     QDateTime m_masterKeyChanged;
-    int m_masterKeyChangeRec;
-    int m_masterKeyChangeForce;
-    int m_historyMaxItems;
-    int m_historyMaxSize;
 
     QHash<QString, QString> m_customFields;
 

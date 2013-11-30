@@ -115,8 +115,14 @@ QImage Group::icon() const
         return databaseIcons()->icon(m_data.iconNumber);
     }
     else {
-        // TODO: check if m_db is 0
-        return m_db->metadata()->customIcon(m_data.customIcon);
+        Q_ASSERT(m_db);
+
+        if (m_db) {
+            return m_db->metadata()->customIcon(m_data.customIcon);
+        }
+        else {
+            return QImage();
+        }
     }
 }
 
@@ -126,9 +132,10 @@ QPixmap Group::iconPixmap() const
         return databaseIcons()->iconPixmap(m_data.iconNumber);
     }
     else {
+        Q_ASSERT(m_db);
+
         QPixmap pixmap;
-        if (!QPixmapCache::find(m_pixmapCacheKey, &pixmap)) {
-            // TODO: check if m_db is 0
+        if (m_db && !QPixmapCache::find(m_pixmapCacheKey, &pixmap)) {
             pixmap = QPixmap::fromImage(m_db->metadata()->customIcon(m_data.customIcon));
             m_pixmapCacheKey = QPixmapCache::insert(pixmap);
         }
@@ -457,11 +464,8 @@ QSet<Uuid> Group::customIconsRecursive() const
     return result;
 }
 
-Group* Group::clone() const
+Group* Group::clone(Entry::CloneFlags entryFlags) const
 {
-    // TODO: what to do about custom icons?
-    // they won't be available when changing the database later
-
     Group* clonedGroup = new Group();
 
     clonedGroup->setUpdateTimeinfo(false);
@@ -470,7 +474,7 @@ Group* Group::clone() const
     clonedGroup->m_data = m_data;
 
     Q_FOREACH (Entry* entry, entries()) {
-        Entry* clonedEntry = entry->clone();
+        Entry* clonedEntry = entry->clone(entryFlags);
         clonedEntry->setGroup(clonedGroup);
     }
 
@@ -494,6 +498,22 @@ void Group::copyDataFrom(const Group* other)
 {
     m_data = other->m_data;
     m_lastTopVisibleEntry = other->m_lastTopVisibleEntry;
+}
+
+Database* Group::exportToDb()
+{
+    Q_ASSERT(database());
+
+    Database* db = new Database();
+    Group* clonedGroup = clone(Entry::CloneNewUuid | Entry::CloneIncludeHistory);
+    clonedGroup->setParent(db->rootGroup());
+
+    QSet<Uuid> customIcons = customIconsRecursive();
+    db->metadata()->copyCustomIcons(customIcons, database()->metadata());
+
+    db->copyAttributesFrom(database());
+
+    return db;
 }
 
 void Group::addEntry(Entry* entry)

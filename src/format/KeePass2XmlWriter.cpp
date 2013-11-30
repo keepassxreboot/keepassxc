@@ -192,7 +192,7 @@ void KeePass2XmlWriter::writeBinaries()
         }
 
         if (!data.isEmpty()) {
-            m_xml.writeCharacters(QString::fromAscii(data.toBase64()));
+            m_xml.writeCharacters(QString::fromLatin1(data.toBase64()));
         }
         m_xml.writeEndElement();
     }
@@ -341,7 +341,7 @@ void KeePass2XmlWriter::writeEntry(const Entry* entry)
             if (m_randomStream) {
                 m_xml.writeAttribute("Protected", "True");
                 QByteArray rawData = m_randomStream->process(entry->attributes()->value(key).toUtf8());
-                value = QString::fromAscii(rawData.toBase64());
+                value = QString::fromLatin1(rawData.toBase64());
             }
             else {
                 m_xml.writeAttribute("ProtectInMemory", "True");
@@ -485,7 +485,7 @@ void KeePass2XmlWriter::writeUuid(const QString& qualifiedName, const Entry* ent
 
 void KeePass2XmlWriter::writeBinary(const QString& qualifiedName, const QByteArray& ba)
 {
-    writeString(qualifiedName, QString::fromAscii(ba.toBase64()));
+    writeString(qualifiedName, QString::fromLatin1(ba.toBase64()));
 }
 
 void KeePass2XmlWriter::writeColor(const QString& qualifiedName, const QColor& color)

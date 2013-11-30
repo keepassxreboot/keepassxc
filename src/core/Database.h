@@ -49,6 +49,17 @@ public:
     };
     static const quint32 CompressionAlgorithmMax = CompressionGZip;
 
+    struct DatabaseData
+    {
+        Uuid cipher;
+        CompressionAlgorithm compressionAlgo;
+        QByteArray transformSeed;
+        quint64 transformRounds;
+        QByteArray transformedMasterKey;
+        CompositeKey key;
+        bool hasKey;
+    };
+
     Database();
     ~Database();
     Group* rootGroup();
@@ -91,6 +102,7 @@ public:
     void recycleEntry(Entry* entry);
     void recycleGroup(Group* group);
     void setEmitModified(bool value);
+    void copyAttributesFrom(const Database* other);
 
     /**
      * Returns a unique id that is only valid as long as the Database exists.
@@ -124,15 +136,7 @@ private:
     Group* m_rootGroup;
     QList<DeletedObject> m_deletedObjects;
     QTimer* m_timer;
-
-    Uuid m_cipher;
-    CompressionAlgorithm m_compressionAlgo;
-    QByteArray m_transformSeed;
-    quint64 m_transformRounds;
-    QByteArray m_transformedMasterKey;
-
-    CompositeKey m_key;
-    bool m_hasKey;
+    DatabaseData m_data;
     bool m_emitModified;
 
     Uuid m_uuid;

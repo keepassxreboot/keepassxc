@@ -33,7 +33,7 @@ namespace QTest {
     char* toString(const Uuid& uuid)
     {
         QByteArray ba = "Uuid(";
-        ba += uuid.toBase64().toAscii().constData();
+        ba += uuid.toBase64().toLatin1().constData();
         ba += ")";
         return qstrdup(ba.constData());
     }
@@ -296,7 +296,7 @@ void TestKeePass2XmlReader::testEntry2()
     QVERIFY(attrs.isEmpty());
 
     QCOMPARE(entry->attachments()->keys().size(), 1);
-    QCOMPARE(QString::fromAscii(entry->attachments()->value("myattach.txt")), QString("abcdefghijk"));
+    QCOMPARE(QString::fromLatin1(entry->attachments()->value("myattach.txt")), QString("abcdefghijk"));
 
     QCOMPARE(entry->autoTypeEnabled(), true);
     QCOMPARE(entry->autoTypeObfuscation(), 1);

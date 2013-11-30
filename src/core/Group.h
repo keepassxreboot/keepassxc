@@ -100,8 +100,16 @@ public:
     QList<Entry*> entriesRecursive(bool includeHistoryItems = false) const;
     QList<const Group*> groupsRecursive(bool includeSelf) const;
     QSet<Uuid> customIconsRecursive() const;
-    Group* clone() const;
+    /**
+     * Creates a duplicate of this group including all child entries and groups.
+     * The exceptions are that the returned group doesn't have a parent group
+     * and all TimeInfo attributes are set to the current time.
+     * Note that you need to copy the custom icons manually when inserting the
+     * new group into another database.
+     */
+    Group* clone(Entry::CloneFlags entryFlags = Entry::CloneNewUuid | Entry::CloneResetTimeInfo) const;
     void copyDataFrom(const Group* other);
+    Database* exportToDb();
 
     QList<Entry*> search(const QString& searchTerm, Qt::CaseSensitivity caseSensitivity,
                          bool resolveInherit = true);

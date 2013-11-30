@@ -441,8 +441,11 @@ void TestGroup::testClone()
 
     Entry* originalGroupEntry = new Entry();
     originalGroupEntry->setGroup(originalGroup);
-    originalGroupEntry->setTitle("GroupEntry");
+    originalGroupEntry->setTitle("GroupEntryOld");
     originalGroupEntry->setIcon(43);
+    originalGroupEntry->beginUpdate();
+    originalGroupEntry->setTitle("GroupEntry");
+    originalGroupEntry->endUpdate();
 
     Group* subGroup = new Group();
     subGroup->setParent(originalGroup);
@@ -465,6 +468,7 @@ void TestGroup::testClone()
     QVERIFY(clonedGroupEntry->uuid() != originalGroupEntry->uuid());
     QCOMPARE(clonedGroupEntry->title(), QString("GroupEntry"));
     QCOMPARE(clonedGroupEntry->iconNumber(), 43);
+    QCOMPARE(clonedGroupEntry->historyItems().size(), 0);
 
     Group* clonedSubGroup = clonedGroup->children().at(0);
     QVERIFY(clonedSubGroup->uuid() != subGroup->uuid());
@@ -531,6 +535,50 @@ void TestGroup::testCopyCustomIcons()
 
     QCOMPARE(metaTarget->customIcon(group1Icon).pixel(0, 0), qRgb(1, 2, 3));
     QCOMPARE(metaTarget->customIcon(group2Icon).pixel(0, 0), qRgb(4, 5, 6));
+}
+
+void TestGroup::testExportToDb()
+{
+    QImage iconImage(1, 1, QImage::Format_RGB32);
+    iconImage.setPixel(0, 0, qRgb(1, 2, 3));
+    Uuid iconUuid = Uuid::random();
+
+    QImage iconUnusedImage(1, 1, QImage::Format_RGB32);
+    iconUnusedImage.setPixel(0, 0, qRgb(1, 2, 3));
+    Uuid iconUnusedUuid = Uuid::random();
+
+    Database* dbOrg = new Database();
+    Group* groupOrg = new Group();
+    groupOrg->setParent(dbOrg->rootGroup());
+    groupOrg->setName("GTEST");
+    Entry* entryOrg = new Entry();
+    entryOrg->setGroup(groupOrg);
+    entryOrg->setTitle("ETEST");
+    dbOrg->metadata()->addCustomIcon(iconUuid, iconImage);
+    dbOrg->metadata()->addCustomIcon(iconUnusedUuid, iconUnusedImage);
+    entryOrg->setIcon(iconUuid);
+    entryOrg->beginUpdate();
+    entryOrg->setIcon(Entry::DefaultIconNumber);
+    entryOrg->endUpdate();
+
+    Database* dbExp = groupOrg->exportToDb();
+    QCOMPARE(dbExp->rootGroup()->children().size(), 1);
+    Group* groupExp = dbExp->rootGroup()->children().first();
+    QVERIFY(groupExp != groupOrg);
+    QCOMPARE(groupExp->name(), groupOrg->name());
+    QCOMPARE(groupExp->entries().size(), 1);
+
+    Entry* entryExp = groupExp->entries().first();
+    QCOMPARE(entryExp->title(), entryOrg->title());
+    QCOMPARE(dbExp->metadata()->customIcons().size(), 1);
+    QVERIFY(dbExp->metadata()->containsCustomIcon(iconUuid));
+    QCOMPARE(entryExp->iconNumber(), entryOrg->iconNumber());
+
+    QCOMPARE(entryExp->historyItems().size(), 1);
+    QCOMPARE(entryExp->historyItems().first()->iconUuid(), iconUuid);
+
+    delete dbOrg;
+    delete dbExp;
 }
 
 QTEST_GUILESS_MAIN(TestGroup)

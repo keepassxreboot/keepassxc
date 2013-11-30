@@ -110,7 +110,22 @@ public:
     void addHistoryItem(Entry* entry);
     void removeHistoryItems(const QList<Entry*>& historyEntries);
     void truncateHistory();
-    Entry* clone() const;
+
+    enum CloneFlag {
+        CloneNoFlags        = 0,
+        CloneNewUuid        = 1, // generate a random uuid for the clone
+        CloneResetTimeInfo  = 2, // set all TimeInfo attributes to the current time
+        CloneIncludeHistory = 4  // clone the history items
+    };
+    Q_DECLARE_FLAGS(CloneFlags, CloneFlag)
+
+    /**
+     * Creates a duplicate of this entry except that the returned entry isn't
+     * part of any group.
+     * Note that you need to copy the custom icons manually when inserting the
+     * new entry into another database.
+     */
+    Entry* clone(CloneFlags flags) const;
     void copyDataFrom(const Entry* other);
     QString resolvePlaceholders(const QString& str) const;
 
@@ -159,5 +174,7 @@ private:
     mutable QPixmapCache::Key m_pixmapCacheKey;
     bool m_updateTimeinfo;
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Entry::CloneFlags)
 
 #endif // KEEPASSX_ENTRY_H
