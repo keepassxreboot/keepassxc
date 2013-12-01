@@ -128,6 +128,8 @@ private Q_SLOTS:
     void closeSearch();
 
 private:
+    void setClipboardTextAndMinimize(const QString& text);
+
     Database* m_db;
     const QScopedPointer<Ui::SearchWidget> m_searchUi;
     QWidget* const m_searchWidget;

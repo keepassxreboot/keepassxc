@@ -296,11 +296,7 @@ void DatabaseWidget::copyTitle()
         return;
     }
 
-    clipboard()->setText(currentEntry->title());
-
-    if (config()->get("MinimizeOnCopy").toBool()) {
-        window()->showMinimized();
-    }
+    setClipboardTextAndMinimize(currentEntry->title());
 }
 
 void DatabaseWidget::copyUsername()
@@ -311,11 +307,7 @@ void DatabaseWidget::copyUsername()
         return;
     }
 
-    clipboard()->setText(currentEntry->username());
-
-    if (config()->get("MinimizeOnCopy").toBool()) {
-        window()->showMinimized();
-    }
+    setClipboardTextAndMinimize(currentEntry->username());
 }
 
 void DatabaseWidget::copyPassword()
@@ -326,11 +318,7 @@ void DatabaseWidget::copyPassword()
         return;
     }
 
-    clipboard()->setText(currentEntry->password());
-
-    if (config()->get("MinimizeOnCopy").toBool()) {
-        window()->showMinimized();
-    }
+    setClipboardTextAndMinimize(currentEntry->password());
 }
 
 void DatabaseWidget::copyURL()
@@ -341,11 +329,7 @@ void DatabaseWidget::copyURL()
         return;
     }
 
-    clipboard()->setText(currentEntry->url());
-
-    if (config()->get("MinimizeOnCopy").toBool()) {
-        window()->showMinimized();
-    }
+    setClipboardTextAndMinimize(currentEntry->url());
 }
 
 void DatabaseWidget::copyNotes()
@@ -356,11 +340,7 @@ void DatabaseWidget::copyNotes()
         return;
     }
 
-    clipboard()->setText(currentEntry->notes());
-
-    if (config()->get("MinimizeOnCopy").toBool()) {
-        window()->showMinimized();
-    }
+    setClipboardTextAndMinimize(currentEntry->notes());
 }
 
 void DatabaseWidget::copyAttribute(QAction* action)
@@ -371,8 +351,12 @@ void DatabaseWidget::copyAttribute(QAction* action)
         return;
     }
 
-    clipboard()->setText(currentEntry->attributes()->value(action->text()));
+    setClipboardTextAndMinimize(currentEntry->attributes()->value(action->text()));
+}
 
+void DatabaseWidget::setClipboardTextAndMinimize(const QString& text)
+{
+    clipboard()->setText(text);
     if (config()->get("MinimizeOnCopy").toBool()) {
         window()->showMinimized();
     }
