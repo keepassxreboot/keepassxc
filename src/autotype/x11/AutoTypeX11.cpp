@@ -494,6 +494,10 @@ int AutoTypePlatformX11::x11ErrorHandler(Display* display, XErrorEvent* error)
  */
 int AutoTypePlatformX11::AddKeysym(KeySym keysym)
 {
+    if (m_specialCharacterKeycode == 0) {
+        return 0;
+    }
+
     int inx = (m_specialCharacterKeycode - m_minKeycode) * m_keysymPerKeycode;
     m_keysymTable[inx] = keysym;
     XChangeKeyboardMapping(m_dpy, m_specialCharacterKeycode, m_keysymPerKeycode, &m_keysymTable[inx], 1);
@@ -614,11 +618,16 @@ void AutoTypePlatformX11::SendKeyPressedEvent(KeySym keysym)
     saved_mask = mask;
     XGetInputFocus(m_dpy, &cur_focus, &revert_to);
 
+    /* determine keycode and mask for the given keysym */
+    keycode = GetKeycode(keysym, &mask);
+    if (keycode < 8 || keycode > 255) {
+        qWarning("Unable to get valid keycode for key: keysym=0x%lX", static_cast<long>(keysym));
+        return;
+    }
+
     /* release all modifiers */
     SendModifier(&event, mask, KeyRelease);
 
-    /* determine keycode and mask for the given keysym */
-    keycode = GetKeycode(keysym, &mask);
     SendModifier(&event, mask, KeyPress);
 
     /* press and release key */
