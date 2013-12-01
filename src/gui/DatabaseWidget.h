@@ -86,8 +86,11 @@ public Q_SLOTS:
     void createEntry();
     void cloneEntry();
     void deleteEntries();
+    void copyTitle();
     void copyUsername();
     void copyPassword();
+    void copyURL();
+    void copyNotes();
     void copyAttribute(QAction* action);
     void performAutoType();
     void openUrl();

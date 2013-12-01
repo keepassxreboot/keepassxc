@@ -163,10 +163,17 @@ MainWindow::MainWindow()
             SLOT(switchToEntryEdit()));
     m_actionMultiplexer.connect(m_ui->actionEntryDelete, SIGNAL(triggered()),
             SLOT(deleteEntries()));
+
+    m_actionMultiplexer.connect(m_ui->actionEntryCopyTitle, SIGNAL(triggered()),
+            SLOT(copyTitle()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyUsername, SIGNAL(triggered()),
             SLOT(copyUsername()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyPassword, SIGNAL(triggered()),
             SLOT(copyPassword()));
+    m_actionMultiplexer.connect(m_ui->actionEntryCopyURL, SIGNAL(triggered()),
+            SLOT(copyURL()));
+    m_actionMultiplexer.connect(m_ui->actionEntryCopyNotes, SIGNAL(triggered()),
+            SLOT(copyNotes()));
     m_actionMultiplexer.connect(m_ui->actionEntryAutoType, SIGNAL(triggered()),
             SLOT(performAutoType()));
     m_actionMultiplexer.connect(m_ui->actionEntryOpenUrl, SIGNAL(triggered()),
@@ -214,23 +221,19 @@ void MainWindow::updateCopyAttributesMenu()
         return;
     }
 
-    Q_FOREACH (QAction* action, m_ui->menuEntryCopyAttribute->actions()) {
-        if (action != m_ui->actionEntryCopyPassword && action != m_ui->actionEntryCopyUsername) {
-            m_ui->menuEntryCopyAttribute->removeAction(action);
-            delete action;
-        }
+    QList<QAction*> actionsToRemove = m_ui->menuEntryCopyAttribute->actions();
+    actionsToRemove.removeOne(m_ui->actionEntryCopyTitle);
+    actionsToRemove.removeOne(m_ui->actionEntryCopyUsername);
+    actionsToRemove.removeOne(m_ui->actionEntryCopyPassword);
+    actionsToRemove.removeOne(m_ui->actionEntryCopyURL);
+    actionsToRemove.removeOne(m_ui->actionEntryCopyNotes);
+
+    Q_FOREACH (QAction* action, actionsToRemove) {
+        m_ui->menuEntryCopyAttribute->removeAction(action);
+        delete action;
     }
 
     Entry* entry = dbWidget->entryView()->currentEntry();
-
-    QStringList defaultAttributesWithoutPasswordAndUsername = EntryAttributes::DefaultAttributes;
-    defaultAttributesWithoutPasswordAndUsername.removeOne(EntryAttributes::PasswordKey);
-    defaultAttributesWithoutPasswordAndUsername.removeOne(EntryAttributes::UserNameKey);
-
-    Q_FOREACH (const QString& key, defaultAttributesWithoutPasswordAndUsername) {
-        QAction* action = m_ui->menuEntryCopyAttribute->addAction(key);
-        m_copyAdditionalAttributeActions->addAction(action);
-    }
 
     m_ui->menuEntryCopyAttribute->addSeparator();
 
@@ -279,8 +282,11 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryClone->setEnabled(singleEntrySelected && !inSearch);
             m_ui->actionEntryEdit->setEnabled(singleEntrySelected);
             m_ui->actionEntryDelete->setEnabled(entriesSelected);
+            m_ui->actionEntryCopyTitle->setEnabled(singleEntrySelected);
             m_ui->actionEntryCopyUsername->setEnabled(singleEntrySelected);
             m_ui->actionEntryCopyPassword->setEnabled(singleEntrySelected);
+            m_ui->actionEntryCopyURL->setEnabled(singleEntrySelected);
+            m_ui->actionEntryCopyNotes->setEnabled(singleEntrySelected);
             m_ui->menuEntryCopyAttribute->setEnabled(singleEntrySelected);
             m_ui->actionEntryAutoType->setEnabled(singleEntrySelected);
             m_ui->actionEntryOpenUrl->setEnabled(singleEntrySelected);

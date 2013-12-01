@@ -185,27 +185,27 @@ const AutoTypeAssociations* Entry::autoTypeAssociations() const
 
 QString Entry::title() const
 {
-    return m_attributes->value("Title");
+    return m_attributes->value(EntryAttributes::TitleKey);
 }
 
 QString Entry::url() const
 {
-    return m_attributes->value("URL");
+    return m_attributes->value(EntryAttributes::URLNameKey);
 }
 
 QString Entry::username() const
 {
-    return m_attributes->value("UserName");
+    return m_attributes->value(EntryAttributes::UserNameKey);
 }
 
 QString Entry::password() const
 {
-    return m_attributes->value("Password");
+    return m_attributes->value(EntryAttributes::PasswordKey);
 }
 
 QString Entry::notes() const
 {
-    return m_attributes->value("Notes");
+    return m_attributes->value(EntryAttributes::NotesKey);
 }
 
 bool Entry::isExpired() const
@@ -311,27 +311,27 @@ void Entry::setDefaultAutoTypeSequence(const QString& sequence)
 
 void Entry::setTitle(const QString& title)
 {
-    m_attributes->set("Title", title, m_attributes->isProtected("Title"));
+    m_attributes->set(EntryAttributes::TitleKey, title, m_attributes->isProtected(EntryAttributes::TitleKey));
 }
 
 void Entry::setUrl(const QString& url)
 {
-    m_attributes->set("URL", url, m_attributes->isProtected("URL"));
+    m_attributes->set(EntryAttributes::URLNameKey, url, m_attributes->isProtected(EntryAttributes::URLNameKey));
 }
 
 void Entry::setUsername(const QString& username)
 {
-    m_attributes->set("UserName", username, m_attributes->isProtected("UserName"));
+    m_attributes->set(EntryAttributes::UserNameKey, username, m_attributes->isProtected(EntryAttributes::UserNameKey));
 }
 
 void Entry::setPassword(const QString& password)
 {
-    m_attributes->set("Password", password, m_attributes->isProtected("Password"));
+    m_attributes->set(EntryAttributes::PasswordKey, password, m_attributes->isProtected(EntryAttributes::PasswordKey));
 }
 
 void Entry::setNotes(const QString& notes)
 {
-    m_attributes->set("Notes", notes, m_attributes->isProtected("Notes"));
+    m_attributes->set(EntryAttributes::NotesKey, notes, m_attributes->isProtected(EntryAttributes::NotesKey));
 }
 
 void Entry::setExpires(const bool& value)

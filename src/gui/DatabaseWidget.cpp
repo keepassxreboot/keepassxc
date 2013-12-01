@@ -288,6 +288,21 @@ void DatabaseWidget::deleteEntries()
     }
 }
 
+void DatabaseWidget::copyTitle()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if (!currentEntry) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    clipboard()->setText(currentEntry->title());
+
+    if (config()->get("MinimizeOnCopy").toBool()) {
+        window()->showMinimized();
+    }
+}
+
 void DatabaseWidget::copyUsername()
 {
     Entry* currentEntry = m_entryView->currentEntry();
@@ -312,6 +327,36 @@ void DatabaseWidget::copyPassword()
     }
 
     clipboard()->setText(currentEntry->password());
+
+    if (config()->get("MinimizeOnCopy").toBool()) {
+        window()->showMinimized();
+    }
+}
+
+void DatabaseWidget::copyURL()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if (!currentEntry) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    clipboard()->setText(currentEntry->url());
+
+    if (config()->get("MinimizeOnCopy").toBool()) {
+        window()->showMinimized();
+    }
+}
+
+void DatabaseWidget::copyNotes()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if (!currentEntry) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    clipboard()->setText(currentEntry->notes());
 
     if (config()->get("MinimizeOnCopy").toBool()) {
         window()->showMinimized();
