@@ -229,7 +229,6 @@ void MainWindow::updateCopyAttributesMenu()
     actionsToRemove.removeOne(m_ui->actionEntryCopyNotes);
 
     Q_FOREACH (QAction* action, actionsToRemove) {
-        m_ui->menuEntryCopyAttribute->removeAction(action);
         delete action;
     }
 
