@@ -221,20 +221,12 @@ void MainWindow::updateCopyAttributesMenu()
         return;
     }
 
-    QList<QAction*> actionsToRemove = m_ui->menuEntryCopyAttribute->actions();
-    actionsToRemove.removeOne(m_ui->actionEntryCopyTitle);
-    actionsToRemove.removeOne(m_ui->actionEntryCopyUsername);
-    actionsToRemove.removeOne(m_ui->actionEntryCopyPassword);
-    actionsToRemove.removeOne(m_ui->actionEntryCopyURL);
-    actionsToRemove.removeOne(m_ui->actionEntryCopyNotes);
-
-    Q_FOREACH (QAction* action, actionsToRemove) {
-        delete action;
+    QList<QAction*> actions = m_ui->menuEntryCopyAttribute->actions();
+    for (int i = EntryAttributes::DefaultAttributes.size() + 1; i < actions.size(); i++) {
+        delete actions[i];
     }
 
     Entry* entry = dbWidget->entryView()->currentEntry();
-
-    m_ui->menuEntryCopyAttribute->addSeparator();
 
     Q_FOREACH (const QString& key, entry->attributes()->customKeys()) {
         QAction* action = m_ui->menuEntryCopyAttribute->addAction(key);

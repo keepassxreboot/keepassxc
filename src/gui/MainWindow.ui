@@ -119,6 +119,7 @@
      <addaction name="actionEntryCopyPassword"/>
      <addaction name="actionEntryCopyURL"/>
      <addaction name="actionEntryCopyNotes"/>
+     <addaction name="separator"/>
     </widget>
     <addaction name="actionEntryNew"/>
     <addaction name="actionEntryClone"/>
