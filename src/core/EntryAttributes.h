@@ -46,6 +46,11 @@ public:
     bool operator==(const EntryAttributes& other) const;
     bool operator!=(const EntryAttributes& other) const;
 
+    static const QString TitleKey;
+    static const QString UserNameKey;
+    static const QString PasswordKey;
+    static const QString URLNameKey;
+    static const QString NotesKey;
     static const QStringList DefaultAttributes;
     static bool isDefaultAttribute(const QString& key);
 

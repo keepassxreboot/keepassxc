@@ -114,13 +114,17 @@
      <property name="title">
       <string>Copy attribute to clipboard</string>
      </property>
+     <addaction name="actionEntryCopyTitle"/>
+     <addaction name="actionEntryCopyUsername"/>
+     <addaction name="actionEntryCopyPassword"/>
+     <addaction name="actionEntryCopyURL"/>
+     <addaction name="actionEntryCopyNotes"/>
+     <addaction name="separator"/>
     </widget>
     <addaction name="actionEntryNew"/>
     <addaction name="actionEntryClone"/>
     <addaction name="actionEntryEdit"/>
     <addaction name="actionEntryDelete"/>
-    <addaction name="actionEntryCopyUsername"/>
-    <addaction name="actionEntryCopyPassword"/>
     <addaction name="menuEntryCopyAttribute"/>
     <addaction name="actionEntryAutoType"/>
     <addaction name="actionEntryOpenUrl"/>
@@ -306,7 +310,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Copy username to clipboard</string>
+    <string>Username</string>
    </property>
   </action>
   <action name="actionEntryCopyPassword">
@@ -314,7 +318,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Copy password to clipboard</string>
+    <string>Password</string>
    </property>
   </action>
   <action name="actionSettings">
@@ -344,6 +348,30 @@
    </property>
    <property name="text">
     <string>Lock databases</string>
+   </property>
+  </action>
+  <action name="actionEntryCopyTitle">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Title</string>
+   </property>
+  </action>
+  <action name="actionEntryCopyURL">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>URL</string>
+   </property>
+  </action>
+  <action name="actionEntryCopyNotes">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Notes</string>
    </property>
   </action>
  </widget>

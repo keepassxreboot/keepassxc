@@ -288,6 +288,17 @@ void DatabaseWidget::deleteEntries()
     }
 }
 
+void DatabaseWidget::copyTitle()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if (!currentEntry) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    setClipboardTextAndMinimize(currentEntry->title());
+}
+
 void DatabaseWidget::copyUsername()
 {
     Entry* currentEntry = m_entryView->currentEntry();
@@ -296,11 +307,7 @@ void DatabaseWidget::copyUsername()
         return;
     }
 
-    clipboard()->setText(currentEntry->username());
-
-    if (config()->get("MinimizeOnCopy").toBool()) {
-        window()->showMinimized();
-    }
+    setClipboardTextAndMinimize(currentEntry->username());
 }
 
 void DatabaseWidget::copyPassword()
@@ -311,11 +318,29 @@ void DatabaseWidget::copyPassword()
         return;
     }
 
-    clipboard()->setText(currentEntry->password());
+    setClipboardTextAndMinimize(currentEntry->password());
+}
 
-    if (config()->get("MinimizeOnCopy").toBool()) {
-        window()->showMinimized();
+void DatabaseWidget::copyURL()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if (!currentEntry) {
+        Q_ASSERT(false);
+        return;
     }
+
+    setClipboardTextAndMinimize(currentEntry->url());
+}
+
+void DatabaseWidget::copyNotes()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if (!currentEntry) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    setClipboardTextAndMinimize(currentEntry->notes());
 }
 
 void DatabaseWidget::copyAttribute(QAction* action)
@@ -326,8 +351,12 @@ void DatabaseWidget::copyAttribute(QAction* action)
         return;
     }
 
-    clipboard()->setText(currentEntry->attributes()->value(action->text()));
+    setClipboardTextAndMinimize(currentEntry->attributes()->value(action->text()));
+}
 
+void DatabaseWidget::setClipboardTextAndMinimize(const QString& text)
+{
+    clipboard()->setText(text);
     if (config()->get("MinimizeOnCopy").toBool()) {
         window()->showMinimized();
     }

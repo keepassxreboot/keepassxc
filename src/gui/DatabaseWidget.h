@@ -86,8 +86,11 @@ public Q_SLOTS:
     void createEntry();
     void cloneEntry();
     void deleteEntries();
+    void copyTitle();
     void copyUsername();
     void copyPassword();
+    void copyURL();
+    void copyNotes();
     void copyAttribute(QAction* action);
     void performAutoType();
     void openUrl();
@@ -125,6 +128,8 @@ private Q_SLOTS:
     void closeSearch();
 
 private:
+    void setClipboardTextAndMinimize(const QString& text);
+
     Database* m_db;
     const QScopedPointer<Ui::SearchWidget> m_searchUi;
     QWidget* const m_searchWidget;
