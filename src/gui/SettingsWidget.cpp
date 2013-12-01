@@ -36,6 +36,9 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     add(tr("General"), m_generalWidget);
     add(tr("Security"), m_secWidget);
 
+    m_generalUi->autoTypeShortcutWidget->setVisible(autoType()->isAvailable());
+    m_generalUi->autoTypeShortcutLabel->setVisible(autoType()->isAvailable());
+
     connect(this, SIGNAL(accepted()), SLOT(saveSettings()));
     connect(this, SIGNAL(rejected()), SLOT(reject()));
 
@@ -60,10 +63,12 @@ void SettingsWidget::loadSettings()
     m_generalUi->autoSaveOnExitCheckBox->setChecked(config()->get("AutoSaveOnExit").toBool());
     m_generalUi->minimizeOnCopyCheckBox->setChecked(config()->get("MinimizeOnCopy").toBool());
 
-    m_globalAutoTypeKey = static_cast<Qt::Key>(config()->get("GlobalAutoTypeKey").toInt());
-    m_globalAutoTypeModifiers = static_cast<Qt::KeyboardModifiers>(config()->get("GlobalAutoTypeModifiers").toInt());
-    if (m_globalAutoTypeKey > 0 && m_globalAutoTypeModifiers > 0) {
-        m_generalUi->autoTypeShortcutWidget->setShortcut(m_globalAutoTypeKey, m_globalAutoTypeModifiers);
+    if (autoType()->isAvailable()) {
+        m_globalAutoTypeKey = static_cast<Qt::Key>(config()->get("GlobalAutoTypeKey").toInt());
+        m_globalAutoTypeModifiers = static_cast<Qt::KeyboardModifiers>(config()->get("GlobalAutoTypeModifiers").toInt());
+        if (m_globalAutoTypeKey > 0 && m_globalAutoTypeModifiers > 0) {
+            m_generalUi->autoTypeShortcutWidget->setShortcut(m_globalAutoTypeKey, m_globalAutoTypeModifiers);
+        }
     }
 
     m_secUi->clearClipboardCheckBox->setChecked(config()->get("security/clearclipboard").toBool());
@@ -80,8 +85,10 @@ void SettingsWidget::saveSettings()
     config()->set("AutoSaveAfterEveryChange", m_generalUi->autoSaveAfterEveryChangeCheckBox->isChecked());
     config()->set("AutoSaveOnExit", m_generalUi->autoSaveOnExitCheckBox->isChecked());
     config()->set("MinimizeOnCopy", m_generalUi->minimizeOnCopyCheckBox->isChecked());
-    config()->set("GlobalAutoTypeKey", m_generalUi->autoTypeShortcutWidget->key());
-    config()->set("GlobalAutoTypeModifiers", static_cast<int>(m_generalUi->autoTypeShortcutWidget->modifiers()));
+    if (autoType()->isAvailable()) {
+        config()->set("GlobalAutoTypeKey", m_generalUi->autoTypeShortcutWidget->key());
+        config()->set("GlobalAutoTypeModifiers", static_cast<int>(m_generalUi->autoTypeShortcutWidget->modifiers()));
+    }
     config()->set("security/clearclipboard", m_secUi->clearClipboardCheckBox->isChecked());
     config()->set("security/clearclipboardtimeout", m_secUi->clearClipboardSpinBox->value());
 
