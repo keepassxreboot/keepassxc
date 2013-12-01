@@ -42,7 +42,7 @@ class AutoTypePlatformX11 : public QObject, public AutoTypePlatformInterface
 
 public:
     AutoTypePlatformX11();
-    ~AutoTypePlatformX11();
+    void unload() Q_DECL_OVERRIDE;
     QStringList windowTitles();
     WId activeWindow();
     QString activeWindowTitle();
@@ -109,6 +109,7 @@ private:
     /* dedicated 'special character' keycode */
     int m_specialCharacterKeycode;
     KeyCode m_modifier_keycode[N_MOD_INDICES];
+    bool m_loaded;
 };
 
 class AutoTypeExecturorX11 : public AutoTypeExecutor

@@ -57,11 +57,16 @@ AutoType::AutoType(QObject* parent, bool test)
     if (!pluginPath.isEmpty()) {
         loadPlugin(pluginPath);
     }
+
+    connect(qApp, SIGNAL(aboutToQuit()), SLOT(unloadPlugin()));
 }
 
 AutoType::~AutoType()
 {
-    delete m_executor;
+    if (m_executor) {
+        delete m_executor;
+        m_executor = Q_NULLPTR;
+    }
 }
 
 void AutoType::loadPlugin(const QString& pluginPath)
@@ -213,6 +218,19 @@ void AutoType::resetInAutoType()
     Q_ASSERT(m_inAutoType);
 
     m_inAutoType = false;
+}
+
+void AutoType::unloadPlugin()
+{
+    if (m_executor) {
+        delete m_executor;
+        m_executor = Q_NULLPTR;
+    }
+
+    if (m_plugin) {
+        m_plugin->unload();
+        m_plugin = Q_NULLPTR;
+    }
 }
 
 bool AutoType::registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers)

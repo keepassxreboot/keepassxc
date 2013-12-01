@@ -49,16 +49,26 @@ AutoTypePlatformX11::AutoTypePlatformX11()
     m_specialCharacterKeycode = 0;
     m_modifierMask = ControlMask | ShiftMask | Mod1Mask | Mod4Mask;
 
+    m_loaded = true;
+
     updateKeymap();
 }
 
-/*
- * Restore the KeyboardMapping to its original state.
- */
-AutoTypePlatformX11::~AutoTypePlatformX11() {
+void AutoTypePlatformX11::unload()
+{
+    // Restore the KeyboardMapping to its original state.
     AddKeysym(NoSymbol);
-}
 
+    if (m_keysymTable) {
+        XFree(m_keysymTable);
+    }
+
+    if (m_xkb) {
+        XkbFreeKeyboard(m_xkb, XkbAllComponentsMask, True);
+    }
+
+    m_loaded = false;
+}
 
 QStringList AutoTypePlatformX11::windowTitles()
 {
@@ -168,13 +178,14 @@ int AutoTypePlatformX11::platformEventFilter(void* event)
             && m_currentGlobalKey
             && xevent->xkey.keycode == m_currentGlobalKeycode
             && (xevent->xkey.state & m_modifierMask) == m_currentGlobalNativeModifiers
-            && !QApplication::focusWidget()) {
+            && !QApplication::focusWidget()
+            && m_loaded) {
         if (xevent->type == KeyPress) {
             Q_EMIT globalShortcutTriggered();
         }
         return 1;
     }
-    if (xevent->type == MappingNotify) {
+    if (xevent->type == MappingNotify && m_loaded) {
         XRefreshKeyboardMapping(reinterpret_cast<XMappingEvent*>(xevent));
         updateKeymap();
     }

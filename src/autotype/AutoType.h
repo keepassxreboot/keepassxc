@@ -59,6 +59,7 @@ Q_SIGNALS:
 private Q_SLOTS:
     void performAutoTypeFromGlobal(Entry* entry, const QString& sequence);
     void resetInAutoType();
+    void unloadPlugin();
 
 private:
     explicit AutoType(QObject* parent = Q_NULLPTR, bool test = false);
