@@ -190,7 +190,7 @@ QString Entry::title() const
 
 QString Entry::url() const
 {
-    return m_attributes->value(EntryAttributes::URLNameKey);
+    return m_attributes->value(EntryAttributes::URLKey);
 }
 
 QString Entry::username() const
@@ -316,7 +316,7 @@ void Entry::setTitle(const QString& title)
 
 void Entry::setUrl(const QString& url)
 {
-    m_attributes->set(EntryAttributes::URLNameKey, url, m_attributes->isProtected(EntryAttributes::URLNameKey));
+    m_attributes->set(EntryAttributes::URLKey, url, m_attributes->isProtected(EntryAttributes::URLKey));
 }
 
 void Entry::setUsername(const QString& username)

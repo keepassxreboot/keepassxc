@@ -49,7 +49,7 @@ public:
     static const QString TitleKey;
     static const QString UserNameKey;
     static const QString PasswordKey;
-    static const QString URLNameKey;
+    static const QString URLKey;
     static const QString NotesKey;
     static const QStringList DefaultAttributes;
     static bool isDefaultAttribute(const QString& key);

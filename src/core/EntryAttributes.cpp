@@ -20,10 +20,10 @@
 const QString EntryAttributes::TitleKey = "Title";
 const QString EntryAttributes::UserNameKey = "UserName";
 const QString EntryAttributes::PasswordKey = "Password";
-const QString EntryAttributes::URLNameKey = "URL";
+const QString EntryAttributes::URLKey = "URL";
 const QString EntryAttributes::NotesKey = "Notes";
 const QStringList EntryAttributes::DefaultAttributes(QStringList() << TitleKey << UserNameKey
-                                                     << PasswordKey << URLNameKey << NotesKey);
+                                                     << PasswordKey << URLKey << NotesKey);
 
 EntryAttributes::EntryAttributes(QObject* parent)
     : QObject(parent)
