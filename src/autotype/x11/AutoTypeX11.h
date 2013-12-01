@@ -75,8 +75,10 @@ private:
     void updateKeymap();
     int AddKeysym(KeySym keysym);
     void AddModifier(KeySym keysym);
-    void ReadKeymap();
     void SendEvent(XKeyEvent* event, int event_type);
+    void SendModifier(XKeyEvent *event, unsigned int mask, int event_type);
+    int GetKeycode(KeySym keysym, unsigned int *mask);
+
     static int MyErrorHandler(Display* my_dpy, XErrorEvent* event);
 
     Display* m_dpy;
@@ -96,14 +98,17 @@ private:
     static bool m_xErrorOccured;
     static int (*m_oldXErrorHandler)(Display*, XErrorEvent*);
 
+    static const int m_unicodeToKeysymLen;
+    static const uint m_unicodeToKeysymKeys[];
+    static const uint m_unicodeToKeysymValues[];
+
+    XkbDescPtr m_xkb;
     KeySym* m_keysymTable;
     int m_minKeycode;
     int m_maxKeycode;
     int m_keysymPerKeycode;
-
     /* dedicated 'special character' keycode */
     int m_specialCharacterKeycode;
-    int m_modifier_mask[N_MOD_INDICES];
     KeyCode m_modifier_keycode[N_MOD_INDICES];
 };
 

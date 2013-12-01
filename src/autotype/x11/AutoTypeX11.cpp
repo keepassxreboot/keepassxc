@@ -17,6 +17,7 @@
  */
 
 #include "AutoTypeX11.h"
+#include "KeySymMap.h"
 
 bool AutoTypePlatformX11::m_catchXErrors = false;
 bool AutoTypePlatformX11::m_xErrorOccured = false;
@@ -42,6 +43,7 @@ AutoTypePlatformX11::AutoTypePlatformX11()
     m_currentGlobalModifiers = 0;
 
     m_keysymTable = Q_NULLPTR;
+    m_xkb = Q_NULLPTR;
     m_specialCharacterKeycode = 0;
     m_modifierMask = ControlMask | ShiftMask | Mod1Mask | Mod4Mask;
 
@@ -333,12 +335,21 @@ KeySym AutoTypePlatformX11::charToKeySym(const QChar& ch)
             || (unicode >= 0x00a0 && unicode <= 0x00ff)) {
         return unicode;
     }
-    else if (unicode >= 0x0100) {
+
+    /* mapping table generated from keysymdef.h */
+    const uint* match = qBinaryFind(m_unicodeToKeysymKeys,
+                                    m_unicodeToKeysymKeys + m_unicodeToKeysymLen,
+                                    unicode);
+    int index = match - m_unicodeToKeysymKeys;
+    if (index != m_unicodeToKeysymLen) {
+        return m_unicodeToKeysymValues[index];
+    }
+
+    if (unicode >= 0x0100) {
         return unicode | 0x01000000;
     }
-    else {
-        return NoSymbol;
-    }
+
+    return NoSymbol;
 }
 
 KeySym AutoTypePlatformX11::keyToKeySym(Qt::Key key)
@@ -405,12 +416,17 @@ void AutoTypePlatformX11::updateKeymap()
     int mod_index, mod_key;
     XModifierKeymap *modifiers;
 
+    /* read keyboard map */
+    if (m_xkb != NULL) XkbFreeKeyboard(m_xkb, XkbAllComponentsMask, True);
+    m_xkb = XkbGetKeyboard (m_dpy, XkbCompatMapMask | XkbGeometryMask, XkbUseCoreKbd);
+
     XDisplayKeycodes(m_dpy, &m_minKeycode, &m_maxKeycode);
     if (m_keysymTable != NULL) XFree(m_keysymTable);
     m_keysymTable = XGetKeyboardMapping(m_dpy,
             m_minKeycode, m_maxKeycode - m_minKeycode + 1,
             &m_keysymPerKeycode);
 
+    /* determine the keycode to use for remapped keys */
     if (m_specialCharacterKeycode == 0) {
         for (keycode = m_minKeycode; keycode <= m_maxKeycode; keycode++) {
             inx = (keycode - m_minKeycode) * m_keysymPerKeycode;
@@ -421,8 +437,9 @@ void AutoTypePlatformX11::updateKeymap()
         }
     }
 
+    /* determine the keycode to use for modifiers */
     modifiers = XGetModifierMapping(m_dpy);
-    for (mod_index = 0; mod_index < 8; mod_index ++) {
+    for (mod_index = ShiftMapIndex; mod_index <= Mod5MapIndex; mod_index ++) {
         m_modifier_keycode[mod_index] = 0;
         for (mod_key = 0; mod_key < modifiers->max_keypermod; mod_key++) {
             keycode = modifiers->modifiermap[mod_index * modifiers->max_keypermod + mod_key];
@@ -496,11 +513,62 @@ void AutoTypePlatformX11::SendEvent(XKeyEvent* event, int event_type)
     int (*oldHandler) (Display*, XErrorEvent*) = XSetErrorHandler(MyErrorHandler);
 
     event->type = event_type;
-    XTestFakeKeyEvent(event->display, event->keycode, event->type == KeyPress  , 0);
+    XTestFakeKeyEvent(event->display, event->keycode, event->type == KeyPress, 0);
     XFlush(event->display);
 
     XSetErrorHandler(oldHandler);
 }
+
+/*
+ * Send a modifier press/release event for all modifiers
+ * which are set in the mask variable.
+ */
+void AutoTypePlatformX11::SendModifier(XKeyEvent *event, unsigned int mask, int event_type) 
+{
+    int mod_index;
+    for (mod_index = ShiftMapIndex; mod_index <= Mod5MapIndex; mod_index ++) {
+        if (mask & (1 << mod_index)) {
+            event->keycode = m_modifier_keycode[mod_index];
+            SendEvent(event, event_type);
+            if (event_type == KeyPress) 
+                event->state |= (1 << mod_index);
+            else
+                event->state &= (1 << mod_index);
+        }
+    }
+}
+
+/*
+ * Determines the keycode and modifier mask for the given
+ * keysym.
+ */
+int AutoTypePlatformX11::GetKeycode(KeySym keysym, unsigned int *mask) 
+{
+    int shift, mod;
+    unsigned int mods_rtrn;
+    KeySym keysym_rtrn;
+    int keycode;
+
+    keycode = XKeysymToKeycode(m_dpy, keysym);
+
+    /* determine whether there is a combination of the modifiers
+       (Mod1-Mod5) with or without shift which returns keysym */
+    for (shift = 0; shift < 2; shift ++) {
+        for (mod = ControlMapIndex; mod <= Mod5MapIndex; mod ++) {
+            *mask = (mod == ControlMapIndex) ? shift : shift | (1 << mod);
+            XkbTranslateKeyCode(m_xkb, keycode, *mask, &mods_rtrn, &keysym_rtrn);
+            if (keysym_rtrn == keysym) {
+                return keycode;
+            }
+        }
+    }
+
+    /* no modifier matches => resort to remapping */
+    *mask = 0;
+    return AddKeysym(keysym);
+}
+
+
 
 /*
  * Send sequence of KeyPressed/KeyReleased events to the focused
@@ -513,7 +581,6 @@ void AutoTypePlatformX11::SendKeyPressedEvent(KeySym keysym)
     int revert_to;
     XKeyEvent event;
     int keycode;
-    int mod_index;
 
     if (keysym == NoSymbol) {
         qWarning("No such key: keysym=0x%lX", static_cast<long>(keysym));
@@ -534,46 +601,29 @@ void AutoTypePlatformX11::SendKeyPressedEvent(KeySym keysym)
     Window root, child;
     int root_x, root_y, x, y;
     unsigned int mask;
+    unsigned int saved_mask;
 
     XQueryPointer(m_dpy, event.root, &root, &child, &root_x, &root_y, &x, &y, &mask);
+    saved_mask = mask;
     XGetInputFocus(m_dpy, &cur_focus, &revert_to);
-   
-    /* Release all set modifiers */
-    event.state = 0;
-    for (mod_index = 0; mod_index < 8; mod_index ++) {
-        if (mask & m_modifier_mask[mod_index]) {
-            event.keycode = m_modifier_keycode[mod_index];
-            SendEvent(&event, KeyRelease);
-        }
-    }
- 
-    /* Determine the keycode to press */
-    keycode = XKeysymToKeycode(m_dpy, keysym);
 
-    /* Case 1: Pressing Shift is required  */
-    if (XkbKeycodeToKeysym(m_dpy, keycode, 0, 1) == keysym) {
-        event.keycode = XKeysymToKeycode(m_dpy, XK_Shift_L);
-        SendEvent(&event, KeyPress);
-        event.state |= ShiftMask;
-    } else {
-        /* Case 2: Obtaining a mapping is required */
-        if (XkbKeycodeToKeysym(m_dpy, keycode, 0, 0) != keysym) {
-            keycode = AddKeysym(keysym);
-        }
-        /* Default Case: No shift or Mapping required */
-    }
+    /* release all modifiers */
+    SendModifier(&event, mask, KeyRelease);
 
-    /* Press and release key */
+    /* determine keycode and mask for the given keysym */
+    keycode = GetKeycode(keysym, &mask);
+    SendModifier(&event, mask, KeyPress);
+
+    /* press and release key */
     event.keycode = keycode;
     SendEvent(&event, KeyPress);
     SendEvent(&event, KeyRelease);
 
-    /* Release Shift, if it has been pressed */
-    if (event.state & ShiftMask) {
-        event.keycode = XKeysymToKeycode(m_dpy, XK_Shift_L);
-        SendEvent(&event, KeyRelease);
-        event.state &= ShiftMask;
-    }
+    /* release the modifiers */
+    SendModifier(&event, mask, KeyRelease);
+
+    /* restore the old keyboard mask */
+    SendModifier(&event, saved_mask, KeyPress);
 }
 
 int AutoTypePlatformX11::MyErrorHandler(Display* my_dpy, XErrorEvent* event)
