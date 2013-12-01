@@ -19,6 +19,8 @@
 #include "AutoTypeX11.h"
 #include "KeySymMap.h"
 
+#include <time.h>
+
 bool AutoTypePlatformX11::m_catchXErrors = false;
 bool AutoTypePlatformX11::m_xErrorOccured = false;
 int (*AutoTypePlatformX11::m_oldXErrorHandler)(Display*, XErrorEvent*) = Q_NULLPTR;
@@ -496,9 +498,14 @@ int AutoTypePlatformX11::AddKeysym(KeySym keysym)
     m_keysymTable[inx] = keysym;
     XChangeKeyboardMapping(m_dpy, m_specialCharacterKeycode, m_keysymPerKeycode, &m_keysymTable[inx], 1);
     XFlush(m_dpy);
+
     /* Xlib needs some time until the mapping is distributed to 
        all clients */
-    usleep(10000);
+    timespec ts;
+    ts.tv_sec = 0;
+    ts.tv_nsec = 10 * 1000 * 1000;
+    nanosleep(&ts, Q_NULLPTR);
+
     return m_specialCharacterKeycode;
 }
 
