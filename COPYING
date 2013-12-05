@@ -127,6 +127,7 @@ Files: share/icons/application/*/actions/application-exit.png
        share/icons/application/*/actions/dialog-ok.png
        share/icons/application/*/actions/document-close.png
        share/icons/application/*/actions/document-edit.png
+       share/icons/application/*/actions/document-encrypt.png
        share/icons/application/*/actions/document-new.png
        share/icons/application/*/actions/document-open.png
        share/icons/application/*/actions/document-save.png
