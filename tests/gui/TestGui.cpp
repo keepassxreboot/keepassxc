@@ -170,7 +170,6 @@ void TestGui::testSearch()
     QVERIFY(searchAction->isEnabled());
     QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
     QWidget* searchActionWidget = toolBar->widgetForAction(searchAction);
-    QVERIFY(searchActionWidget->isVisible());
     QVERIFY(searchActionWidget->isEnabled());
     QTest::mouseClick(searchActionWidget, Qt::LeftButton);
 
