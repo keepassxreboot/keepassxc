@@ -108,7 +108,7 @@ private:
     int m_keysymPerKeycode;
     /* dedicated keycode for remapped keys */
     unsigned int m_remapKeycode;
-    KeySym m_currentRemapKeycode;
+    KeySym m_currentRemapKeysym;
     KeyCode m_modifier_keycode[N_MOD_INDICES];
     bool m_loaded;
 };
