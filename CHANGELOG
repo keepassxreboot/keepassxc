@@ -1,3 +1,16 @@
+2.0 Alpha 5 (2013-12-20)
+=========================
+
+- Support copying entries and groups using drag'n'drop [#74]
+- Open last used databases on startup [#36]
+- Made the kdbx file parser more robust
+- Only edit entries on doubleclick (not single) or with enter key
+- Allow removing multiple entries
+- Added option to minimize window when copying data to clipboard
+- Save password generator settings
+- Fixed auto-type producing wrong chars in some keyboard configurations [#116]
+- Added some more actions to the toolbar
+
 2.0 Alpha 4 (2013-03-29)
 =========================
 
