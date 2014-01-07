@@ -26,6 +26,7 @@
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/FilePath.h"
+#include "core/InactivityTimer.h"
 #include "core/Metadata.h"
 #include "gui/AboutDialog.h"
 #include "gui/DatabaseWidget.h"
@@ -65,6 +66,11 @@ MainWindow::MainWindow()
     if (globalAutoTypeKey > 0 && globalAutoTypeModifiers > 0) {
         autoType()->registerGlobalShortcut(globalAutoTypeKey, globalAutoTypeModifiers);
     }
+
+    m_inactivityTimer = new InactivityTimer(this);
+    connect(m_inactivityTimer, SIGNAL(inactivityDetected()),
+            m_ui->tabWidget, SLOT(lockDatabases()));
+    applySettingsChanges();
 
     setShortcut(m_ui->actionDatabaseOpen, QKeySequence::Open, Qt::CTRL + Qt::Key_O);
     setShortcut(m_ui->actionDatabaseSave, QKeySequence::Save, Qt::CTRL + Qt::Key_S);
@@ -134,6 +140,7 @@ MainWindow::MainWindow()
     connect(m_ui->stackedWidget, SIGNAL(currentChanged(int)), SLOT(setMenuActionState()));
     connect(m_ui->stackedWidget, SIGNAL(currentChanged(int)), SLOT(updateWindowTitle()));
     connect(m_ui->settingsWidget, SIGNAL(editFinished(bool)), SLOT(switchToDatabases()));
+    connect(m_ui->settingsWidget, SIGNAL(accepted()), SLOT(applySettingsChanges()));
 
     connect(m_ui->actionDatabaseNew, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(newDatabase()));
@@ -455,4 +462,20 @@ void MainWindow::setShortcut(QAction* action, QKeySequence::StandardKey standard
 void MainWindow::rememberOpenDatabases(const QString& filePath)
 {
     m_openDatabases.append(filePath);
+}
+
+void MainWindow::applySettingsChanges()
+{
+    int timeout = config()->get("security/lockdatabaseidlesec").toInt() * 1000;
+    if (timeout <= 0) {
+        timeout = 60;
+    }
+
+    m_inactivityTimer->setInactivityTimeout(timeout);
+    if (config()->get("security/lockdatabaseidle").toBool()) {
+        m_inactivityTimer->activate();
+    }
+    else {
+        m_inactivityTimer->deactivate();
+    }
 }

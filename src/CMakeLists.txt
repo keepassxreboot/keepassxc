@@ -39,6 +39,7 @@ set(keepassx_SOURCES
     core/FilePath.cpp
     core/Global.h
     core/Group.cpp
+    core/InactivityTimer.cpp
     core/ListDeleter.h
     core/Metadata.cpp
     core/PasswordGenerator.cpp
@@ -133,6 +134,7 @@ set(keepassx_MOC
     core/EntryAttachments.h
     core/EntryAttributes.h
     core/Group.h
+    core/InactivityTimer.h
     core/Metadata.h
     core/qsavefile.h
     gui/AboutDialog.h
