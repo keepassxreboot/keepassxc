@@ -134,6 +134,7 @@ Files: share/icons/application/*/actions/application-exit.png
        share/icons/application/*/actions/document-save-as.png
        share/icons/application/*/actions/edit-clear-locationbar-ltr.png
        share/icons/application/*/actions/edit-clear-locationbar-rtl.png
+       share/icons/application/*/actions/password-show-*.png
        share/icons/application/*/actions/system-search.png
        share/icons/application/*/status/dialog-error.png
        share/icons/application/*/status/dialog-information.png

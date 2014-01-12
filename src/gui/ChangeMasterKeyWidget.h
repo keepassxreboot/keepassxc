@@ -45,7 +45,6 @@ Q_SIGNALS:
 private Q_SLOTS:
     void generateKey();
     void reject();
-    void togglePassword(bool checked);
     void createKeyFile();
     void browseKeyFile();
 

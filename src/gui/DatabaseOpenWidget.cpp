@@ -20,6 +20,7 @@
 
 #include "core/Config.h"
 #include "core/Database.h"
+#include "core/FilePath.h"
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
 #include "format/KeePass2Reader.h"
@@ -40,7 +41,9 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
 
     m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
 
-    connect(m_ui->buttonTogglePassword, SIGNAL(toggled(bool)), SLOT(togglePassword(bool)));
+    m_ui->buttonTogglePassword->setIcon(filePath()->onOffIcon("actions", "password-show"));
+    connect(m_ui->buttonTogglePassword, SIGNAL(toggled(bool)),
+            m_ui->editPassword, SLOT(setShowPassword(bool)));
     connect(m_ui->buttonBrowseFile, SIGNAL(clicked()), SLOT(browseKeyFile()));
 
     connect(m_ui->editPassword, SIGNAL(textChanged(QString)), SLOT(activatePassword()));
@@ -153,11 +156,6 @@ CompositeKey DatabaseOpenWidget::databaseKey()
 void DatabaseOpenWidget::reject()
 {
     Q_EMIT editFinished(false);
-}
-
-void DatabaseOpenWidget::togglePassword(bool checked)
-{
-    m_ui->editPassword->setEchoMode(checked ? QLineEdit::Password : QLineEdit::Normal);
 }
 
 void DatabaseOpenWidget::activatePassword()

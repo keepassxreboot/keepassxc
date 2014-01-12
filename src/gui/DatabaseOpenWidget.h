@@ -52,7 +52,6 @@ protected Q_SLOTS:
     void reject();
 
 private Q_SLOTS:
-    void togglePassword(bool checked);
     void activatePassword();
     void activateKeyFile();
     void setOkButtonEnabled();

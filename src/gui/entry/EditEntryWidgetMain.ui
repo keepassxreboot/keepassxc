@@ -44,7 +44,7 @@
    <item row="3" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QLineEdit" name="passwordEdit">
+      <widget class="PasswordEdit" name="passwordEdit">
        <property name="echoMode">
         <enum>QLineEdit::Password</enum>
        </property>
@@ -52,13 +52,7 @@
      </item>
      <item>
       <widget class="QToolButton" name="togglePasswordButton">
-       <property name="text">
-        <string>...</string>
-       </property>
        <property name="checkable">
-        <bool>true</bool>
-       </property>
-       <property name="checked">
         <bool>true</bool>
        </property>
       </widget>
@@ -75,7 +69,7 @@
    <item row="5" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout_4">
      <item>
-      <widget class="QLineEdit" name="passwordRepeatEdit">
+      <widget class="PasswordEdit" name="passwordRepeatEdit">
        <property name="echoMode">
         <enum>QLineEdit::Password</enum>
        </property>
@@ -159,6 +153,11 @@
    <extends>QWidget</extends>
    <header>gui/PasswordGeneratorWidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PasswordEdit</class>
+   <extends>QLineEdit</extends>
+   <header>gui/PasswordEdit.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

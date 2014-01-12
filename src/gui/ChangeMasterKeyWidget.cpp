@@ -18,6 +18,7 @@
 #include "ChangeMasterKeyWidget.h"
 #include "ui_ChangeMasterKeyWidget.h"
 
+#include "core/FilePath.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 #include "gui/FileDialog.h"
@@ -31,19 +32,15 @@ ChangeMasterKeyWidget::ChangeMasterKeyWidget(QWidget* parent)
 
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(generateKey()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
-    connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), SLOT(togglePassword(bool)));
+    m_ui->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
+    connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), m_ui->enterPasswordEdit, SLOT(setShowPassword(bool)));
+    m_ui->repeatPasswordEdit->enableVerifyMode(m_ui->enterPasswordEdit);
     connect(m_ui->createKeyFileButton, SIGNAL(clicked()), SLOT(createKeyFile()));
     connect(m_ui->browseKeyFileButton, SIGNAL(clicked()), SLOT(browseKeyFile()));
 }
 
 ChangeMasterKeyWidget::~ChangeMasterKeyWidget()
 {
-}
-
-void ChangeMasterKeyWidget::togglePassword(bool checked)
-{
-    m_ui->enterPasswordEdit->setEchoMode(checked ? QLineEdit::Password : QLineEdit::Normal);
-    m_ui->repeatPasswordEdit->setEchoMode(checked ? QLineEdit::Password : QLineEdit::Normal);
 }
 
 void ChangeMasterKeyWidget::createKeyFile()
@@ -77,7 +74,7 @@ void ChangeMasterKeyWidget::clearForms()
 {
     m_key.clear();
 
-    m_ui->passwordGroup->setChecked(true);
+    m_ui->passwordGroup->setChecked(false);
     m_ui->enterPasswordEdit->setText("");
     m_ui->repeatPasswordEdit->setText("");
     m_ui->keyFileGroup->setChecked(false);

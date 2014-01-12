@@ -29,6 +29,7 @@
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/Entry.h"
+#include "core/FilePath.h"
 #include "core/Metadata.h"
 #include "core/TimeDelta.h"
 #include "core/Tools.h"
@@ -80,19 +81,16 @@ EditEntryWidget::~EditEntryWidget()
 {
 }
 
-const QColor EditEntryWidget::CorrectSoFarColor = QColor(255, 205, 15);
-const QColor EditEntryWidget::ErrorColor = QColor(255, 125, 125);
-
 void EditEntryWidget::setupMain()
 {
     m_mainUi->setupUi(m_mainWidget);
     add(tr("Entry"), m_mainWidget);
 
-    connect(m_mainUi->togglePasswordButton, SIGNAL(toggled(bool)), SLOT(togglePassword(bool)));
+    m_mainUi->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
+    connect(m_mainUi->togglePasswordButton, SIGNAL(toggled(bool)), m_mainUi->passwordEdit, SLOT(setShowPassword(bool)));
     connect(m_mainUi->tooglePasswordGeneratorButton, SIGNAL(toggled(bool)), SLOT(togglePasswordGeneratorButton(bool)));
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
-    connect(m_mainUi->passwordEdit, SIGNAL(textEdited(QString)), SLOT(setPasswordCheckColors()));
-    connect(m_mainUi->passwordRepeatEdit, SIGNAL(textEdited(QString)), SLOT(setPasswordCheckColors()));
+    m_mainUi->passwordRepeatEdit->enableVerifyMode(m_mainUi->passwordEdit);
     connect(m_mainUi->passwordGenerator, SIGNAL(newPassword(QString)), SLOT(setGeneratedPassword(QString)));
 
     m_mainUi->expirePresets->setMenu(createPresetsMenu());
@@ -307,11 +305,10 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_mainUi->urlEdit->setText(entry->url());
     m_mainUi->passwordEdit->setText(entry->password());
     m_mainUi->passwordRepeatEdit->setText(entry->password());
-    setPasswordCheckColors();
     m_mainUi->expireCheck->setChecked(entry->timeInfo().expires());
     m_mainUi->expireDatePicker->setDateTime(entry->timeInfo().expiryTime().toLocalTime());
     m_mainUi->expirePresets->setEnabled(!m_history);
-    m_mainUi->togglePasswordButton->setChecked(true);
+    m_mainUi->togglePasswordButton->setChecked(false);
 
     m_mainUi->notesEdit->setPlainText(entry->notes());
 
@@ -478,12 +475,6 @@ void EditEntryWidget::cancel()
     Q_EMIT editFinished(false);
 }
 
-void EditEntryWidget::togglePassword(bool checked)
-{
-    m_mainUi->passwordEdit->setEchoMode(checked ? QLineEdit::Password : QLineEdit::Normal);
-    m_mainUi->passwordRepeatEdit->setEchoMode(checked ? QLineEdit::Password : QLineEdit::Normal);
-}
-
 void EditEntryWidget::togglePasswordGeneratorButton(bool checked)
 {
     m_mainUi->passwordGenerator->setVisible(checked);
@@ -492,25 +483,6 @@ void EditEntryWidget::togglePasswordGeneratorButton(bool checked)
 bool EditEntryWidget::passwordsEqual()
 {
     return m_mainUi->passwordEdit->text() == m_mainUi->passwordRepeatEdit->text();
-}
-
-void EditEntryWidget::setPasswordCheckColors()
-{
-    if (passwordsEqual()) {
-        m_mainUi->passwordRepeatEdit->setStyleSheet("");
-    }
-    else {
-        QString stylesheet = "QLineEdit { background: %1; }";
-
-        if (m_mainUi->passwordEdit->text().startsWith(m_mainUi->passwordRepeatEdit->text())) {
-            stylesheet = stylesheet.arg(CorrectSoFarColor.name());
-        }
-        else {
-            stylesheet = stylesheet.arg(ErrorColor.name());
-        }
-
-        m_mainUi->passwordRepeatEdit->setStyleSheet(stylesheet);
-    }
 }
 
 void EditEntryWidget::setGeneratedPassword(const QString& password)

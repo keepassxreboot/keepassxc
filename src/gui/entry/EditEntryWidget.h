@@ -58,9 +58,6 @@ public:
     void loadEntry(Entry* entry, bool create, bool history, const QString& parentName,
                    Database* database);
 
-    static const QColor CorrectSoFarColor;
-    static const QColor ErrorColor;
-
     void createPresetsMenu(QMenu* expirePresetsMenu);
     QString entryTitle() const;
 
@@ -71,9 +68,7 @@ Q_SIGNALS:
 private Q_SLOTS:
     void saveEntry();
     void cancel();
-    void togglePassword(bool checked);
     void togglePasswordGeneratorButton(bool checked);
-    void setPasswordCheckColors();
     void setGeneratedPassword(const QString& password);
     void insertAttribute();
     void editCurrentAttribute();
