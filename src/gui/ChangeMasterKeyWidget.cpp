@@ -74,11 +74,11 @@ void ChangeMasterKeyWidget::clearForms()
 {
     m_key.clear();
 
-    m_ui->passwordGroup->setChecked(false);
+    m_ui->passwordGroup->setChecked(true);
     m_ui->enterPasswordEdit->setText("");
     m_ui->repeatPasswordEdit->setText("");
     m_ui->keyFileGroup->setChecked(false);
-    m_ui->togglePasswordButton->setChecked(true);
+    m_ui->togglePasswordButton->setChecked(false);
     // TODO: clear m_ui->keyFileCombo
 
     m_ui->enterPasswordEdit->setFocus();
