@@ -23,6 +23,7 @@
 
 bool Crypto::m_initalized(false);
 
+#if !defined(GCRYPT_VERSION_NUMBER) || (GCRYPT_VERSION_NUMBER < 0x010600)
 static int gcry_qt_mutex_init(void** p_sys)
 {
     *p_sys = new QMutex();
@@ -57,6 +58,7 @@ static const struct gcry_thread_cbs gcry_threads_qt =
     gcry_qt_mutex_unlock,
     0, 0, 0, 0, 0, 0, 0, 0
 };
+#endif
 
 Crypto::Crypto()
 {
@@ -69,7 +71,10 @@ void Crypto::init()
         return;
     }
 
+    // libgcrypt >= 1.6 doesn't allow custom thread callbacks anymore.
+#if !defined(GCRYPT_VERSION_NUMBER) || (GCRYPT_VERSION_NUMBER < 0x010600)
     gcry_control(GCRYCTL_SET_THREAD_CBS, &gcry_threads_qt);
+#endif
     gcry_check_version(0);
     gcry_control(GCRYCTL_INITIALIZATION_FINISHED, 0);
 
