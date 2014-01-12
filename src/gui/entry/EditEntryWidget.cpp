@@ -308,7 +308,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_mainUi->expireCheck->setChecked(entry->timeInfo().expires());
     m_mainUi->expireDatePicker->setDateTime(entry->timeInfo().expiryTime().toLocalTime());
     m_mainUi->expirePresets->setEnabled(!m_history);
-    m_mainUi->togglePasswordButton->setChecked(false);
+    m_mainUi->togglePasswordButton->setChecked(config()->get("security/passwordscleartext").toBool());
 
     m_mainUi->notesEdit->setPlainText(entry->notes());
 

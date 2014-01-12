@@ -79,6 +79,8 @@ void SettingsWidget::loadSettings()
     m_secUi->lockDatabaseIdleCheckBox->setChecked(config()->get("security/lockdatabaseidle").toBool());
     m_secUi->lockDatabaseIdleSpinBox->setValue(config()->get("security/lockdatabaseidlesec").toInt());
 
+    m_secUi->passwordCleartextCheckBox->setChecked(config()->get("security/passwordscleartext").toBool());
+
     setCurrentRow(0);
 }
 
@@ -99,6 +101,8 @@ void SettingsWidget::saveSettings()
 
     config()->set("security/lockdatabaseidle", m_secUi->lockDatabaseIdleCheckBox->isChecked());
     config()->set("security/lockdatabaseidlesec", m_secUi->lockDatabaseIdleSpinBox->value());
+
+    config()->set("security/passwordscleartext", m_secUi->passwordCleartextCheckBox->isChecked());
 
     Q_EMIT editFinished(true);
 }
