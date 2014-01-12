@@ -45,28 +45,27 @@ public:
     };
     Q_DECLARE_FLAGS(GeneratorFlags, GeneratorFlag)
 
-    QString generatePassword(int length, const PasswordGenerator::CharClasses& classes,
-                             const PasswordGenerator::GeneratorFlags& flags);
-    bool isValidCombination(int length, const PasswordGenerator::CharClasses& classes,
-                            const PasswordGenerator::GeneratorFlags& flags);
-
-    static PasswordGenerator* instance();
-
-private:
+public:
     PasswordGenerator();
 
-    QVector<PasswordGroup> passwordGroups(const PasswordGenerator::CharClasses& classes,
-                                          const PasswordGenerator::GeneratorFlags& flags);
-    int numCharClasses(const PasswordGenerator::CharClasses& classes);
+    void setLength(int length);
+    void setCharClasses(const CharClasses& classes);
+    void setFlags(const GeneratorFlags& flags);
 
-    static PasswordGenerator* m_instance;
+    bool isValid() const;
+
+    QString generatePassword() const;
+private:
+
+    QVector<PasswordGroup> passwordGroups() const;
+    int numCharClasses() const;
+
+    int m_length;
+    CharClasses m_classes;
+    GeneratorFlags m_flags;
 
     Q_DISABLE_COPY(PasswordGenerator)
 };
-
-inline PasswordGenerator* passwordGenerator() {
-    return PasswordGenerator::instance();
-}
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(PasswordGenerator::CharClasses)
 

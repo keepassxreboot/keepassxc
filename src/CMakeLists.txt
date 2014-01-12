@@ -85,6 +85,7 @@ set(keepassx_SOURCES
     gui/MessageBox.cpp
     gui/PasswordEdit.cpp
     gui/PasswordGeneratorWidget.cpp
+    gui/PasswordComboBox.cpp
     gui/SettingsWidget.cpp
     gui/SortFilterHideProxyModel.cpp
     gui/UnlockDatabaseWidget.cpp
@@ -163,6 +164,7 @@ set(keepassx_MOC
     gui/MainWindow.h
     gui/PasswordEdit.h
     gui/PasswordGeneratorWidget.h
+    gui/PasswordComboBox.h
     gui/SettingsWidget.h
     gui/SortFilterHideProxyModel.h
     gui/UnlockDatabaseWidget.h

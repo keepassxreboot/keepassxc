@@ -19,15 +19,33 @@
 
 #include "crypto/Random.h"
 
-PasswordGenerator* PasswordGenerator::m_instance = Q_NULLPTR;
-
-QString PasswordGenerator::generatePassword(int length,
-                                            const PasswordGenerator::CharClasses& classes,
-                                            const PasswordGenerator::GeneratorFlags& flags)
+PasswordGenerator::PasswordGenerator()
+    : m_length(0)
+    , m_classes(0)
+    , m_flags(0)
 {
-    Q_ASSERT(isValidCombination(length, classes, flags));
+}
 
-    QVector<PasswordGroup> groups = passwordGroups(classes, flags);
+void PasswordGenerator::setLength(int length)
+{
+    m_length = length;
+}
+
+void PasswordGenerator::setCharClasses(const CharClasses& classes)
+{
+    m_classes = classes;
+}
+
+void PasswordGenerator::setFlags(const GeneratorFlags& flags)
+{
+    m_flags = flags;
+}
+
+QString PasswordGenerator::generatePassword() const
+{
+    Q_ASSERT(isValid());
+
+    QVector<PasswordGroup> groups = passwordGroups();
 
     QVector<QChar> passwordChars;
     Q_FOREACH (const PasswordGroup& group, groups) {
@@ -38,14 +56,14 @@ QString PasswordGenerator::generatePassword(int length,
 
     QString password;
 
-    if (flags & CharFromEveryGroup) {
+    if (m_flags & CharFromEveryGroup) {
         for (int i = 0; i < groups.size(); i++) {
             int pos = randomGen()->randomUInt(groups[i].size());
 
             password.append(groups[i][pos]);
         }
 
-        for (int i = groups.size(); i < length; i++) {
+        for (int i = groups.size(); i < m_length; i++) {
             int pos = randomGen()->randomUInt(passwordChars.size());
 
             password.append(passwordChars[pos]);
@@ -61,7 +79,7 @@ QString PasswordGenerator::generatePassword(int length,
         }
     }
     else {
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < m_length; i++) {
             int pos = randomGen()->randomUInt(passwordChars.size());
 
             password.append(passwordChars[pos]);
@@ -71,34 +89,31 @@ QString PasswordGenerator::generatePassword(int length,
     return password;
 }
 
-bool PasswordGenerator::isValidCombination(int length,
-                                           const PasswordGenerator::CharClasses& classes,
-                                           const PasswordGenerator::GeneratorFlags& flags)
+bool PasswordGenerator::isValid() const
 {
-    if (classes == 0) {
+    if (m_classes == 0) {
         return false;
     }
-    else if (length == 0) {
+    else if (m_length == 0) {
         return false;
     }
 
-    if ((flags & CharFromEveryGroup) && (length < numCharClasses(classes))) {
+    if ((m_flags & CharFromEveryGroup) && (m_length < numCharClasses())) {
         return false;
     }
 
     return true;
 }
 
-QVector<PasswordGroup> PasswordGenerator::passwordGroups(const PasswordGenerator::CharClasses& classes,
-                                                         const PasswordGenerator::GeneratorFlags& flags)
+QVector<PasswordGroup> PasswordGenerator::passwordGroups() const
 {
     QVector<PasswordGroup> passwordGroups;
 
-    if (classes & LowerLetters) {
+    if (m_classes & LowerLetters) {
         PasswordGroup group;
 
         for (int i = 97; i < (97 + 26); i++) {
-            if ((flags & ExcludeLookAlike) && (i == 108)) { // "l"
+            if ((m_flags & ExcludeLookAlike) && (i == 108)) { // "l"
                 continue;
             }
 
@@ -107,11 +122,11 @@ QVector<PasswordGroup> PasswordGenerator::passwordGroups(const PasswordGenerator
 
         passwordGroups.append(group);
     }
-    if (classes & UpperLetters) {
+    if (m_classes & UpperLetters) {
         PasswordGroup group;
 
         for (int i = 65; i < (65 + 26); i++) {
-            if ((flags & ExcludeLookAlike) && (i == 73 || i == 79)) { // "I" and "O"
+            if ((m_flags & ExcludeLookAlike) && (i == 73 || i == 79)) { // "I" and "O"
                 continue;
             }
 
@@ -120,11 +135,11 @@ QVector<PasswordGroup> PasswordGenerator::passwordGroups(const PasswordGenerator
 
         passwordGroups.append(group);
     }
-    if (classes & Numbers) {
+    if (m_classes & Numbers) {
         PasswordGroup group;
 
         for (int i = 48; i < (48 + 10); i++) {
-            if ((flags & ExcludeLookAlike) && (i == 48 || i == 49)) { // "0" and "1"
+            if ((m_flags & ExcludeLookAlike) && (i == 48 || i == 49)) { // "0" and "1"
                 continue;
             }
 
@@ -133,7 +148,7 @@ QVector<PasswordGroup> PasswordGenerator::passwordGroups(const PasswordGenerator
 
         passwordGroups.append(group);
     }
-    if (classes & SpecialCharacters) {
+    if (m_classes & SpecialCharacters) {
         PasswordGroup group;
 
         for (int i = 33; i <= 47; i++) {
@@ -149,7 +164,7 @@ QVector<PasswordGroup> PasswordGenerator::passwordGroups(const PasswordGenerator
         }
 
         for (int i = 123; i <= 126; i++) {
-            if ((flags & ExcludeLookAlike) && (i == 124)) { // "|"
+            if ((m_flags & ExcludeLookAlike) && (i == 124)) { // "|"
                 continue;
             }
 
@@ -162,35 +177,23 @@ QVector<PasswordGroup> PasswordGenerator::passwordGroups(const PasswordGenerator
     return passwordGroups;
 }
 
-int PasswordGenerator::numCharClasses(const PasswordGenerator::CharClasses& classes)
+int PasswordGenerator::numCharClasses() const
 {
     int numClasses = 0;
 
-    if (classes & LowerLetters) {
+    if (m_classes & LowerLetters) {
         numClasses++;
     }
-    if (classes & UpperLetters) {
+    if (m_classes & UpperLetters) {
         numClasses++;
     }
-    if (classes & Numbers) {
+    if (m_classes & Numbers) {
         numClasses++;
     }
-    if (classes & SpecialCharacters) {
+    if (m_classes & SpecialCharacters) {
         numClasses++;
     }
 
     return numClasses;
 }
 
-PasswordGenerator* PasswordGenerator::instance()
-{
-    if (!m_instance) {
-        m_instance = new PasswordGenerator();
-    }
-
-    return m_instance;
-}
-
-PasswordGenerator::PasswordGenerator()
-{
-}
