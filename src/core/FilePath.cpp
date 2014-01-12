@@ -117,6 +117,51 @@ QIcon FilePath::icon(const QString& category, const QString& name, bool fromThem
     return icon;
 }
 
+QIcon FilePath::onOffIcon(const QString& category, const QString& name)
+{
+    QString combinedName = category + "/" + name;
+    QString cacheName = "onoff/" + combinedName;
+
+    QIcon icon = m_iconCache.value(cacheName);
+
+    if (!icon.isNull()) {
+        return icon;
+    }
+
+    for (int i = 0; i < 2; i++) {
+        QIcon::State state;
+        QString stateName;
+
+        if (i == 0) {
+            state = QIcon::Off;
+            stateName = "off";
+        }
+        else {
+            state = QIcon::On;
+            stateName = "on";
+        }
+
+        QList<int> pngSizes;
+        pngSizes << 16 << 22 << 24 << 32 << 48 << 64 << 128;
+        QString filename;
+        Q_FOREACH (int size, pngSizes) {
+            filename = QString("%1/icons/application/%2x%2/%3-%4.png").arg(m_dataPath, QString::number(size),
+                                                                           combinedName, stateName);
+            if (QFile::exists(filename)) {
+                icon.addFile(filename, QSize(size, size), QIcon::Normal, state);
+            }
+        }
+        filename = QString("%1/icons/application/scalable/%3-%4.svgz").arg(m_dataPath, combinedName, stateName);
+        if (QFile::exists(filename)) {
+            icon.addFile(filename, QSize(), QIcon::Normal, state);
+        }
+    }
+
+    m_iconCache.insert(cacheName, icon);
+
+    return icon;
+}
+
 FilePath::FilePath()
 {
     if (false) {

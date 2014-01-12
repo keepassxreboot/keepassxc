@@ -31,6 +31,7 @@ public:
     QString pluginPath(const QString& name);
     QIcon applicationIcon();
     QIcon icon(const QString& category, const QString& name, bool fromTheme = true);
+    QIcon onOffIcon(const QString& category, const QString& name);
 
     static FilePath* instance();
 
