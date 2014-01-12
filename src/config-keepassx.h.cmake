@@ -13,4 +13,6 @@
 #cmakedefine HAVE_RLIMIT_CORE 1
 #cmakedefine HAVE_PT_DENY_ATTACH 1
 
+#cmakedefine GCRYPT_HAS_SALSA20
+
 #endif // KEEPASSX_CONFIG_H

@@ -167,6 +167,10 @@ find_package(Qt4 4.6.0 REQUIRED ${QT_REQUIRED_MODULES})
 include(${QT_USE_FILE})
 
 find_package(Gcrypt REQUIRED)
+if(NOT (${GCRYPT_VERSION_STRING} VERSION_LESS "1.6.0"))
+  message(STATUS "Gcrypt ${GCRYPT_VERSION_STRING} supports the SALSA20 cipher")
+  set(GCRYPT_HAS_SALSA20 1)
+endif()
 
 find_package(ZLIB REQUIRED)
 

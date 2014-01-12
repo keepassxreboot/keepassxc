@@ -53,15 +53,9 @@ set(keepassx_SOURCES
     crypto/Crypto.cpp
     crypto/CryptoHash.cpp
     crypto/Random.cpp
-    crypto/salsa20/ecrypt-config.h
-    crypto/salsa20/ecrypt-machine.h
-    crypto/salsa20/ecrypt-portable.h
-    crypto/salsa20/ecrypt-sync.h
-    crypto/salsa20/salsa20.c
     crypto/SymmetricCipher.cpp
     crypto/SymmetricCipherBackend.h
     crypto/SymmetricCipherGcrypt.cpp
-    crypto/SymmetricCipherSalsa20.cpp
     format/KeePass1.h
     format/KeePass1Reader.cpp
     format/KeePass2.h
@@ -116,6 +110,18 @@ set(keepassx_SOURCES
     streams/StoreDataStream.cpp
     streams/SymmetricCipherStream.cpp
 )
+
+if(NOT GCRYPT_HAS_SALSA20)
+  set(keepassx_SOURCES
+      ${keepassx_SOURCES}
+      crypto/salsa20/ecrypt-config.h
+      crypto/salsa20/ecrypt-machine.h
+      crypto/salsa20/ecrypt-portable.h
+      crypto/salsa20/ecrypt-sync.h
+      crypto/salsa20/salsa20.c
+      crypto/SymmetricCipherSalsa20.cpp
+  )
+endif()
 
 set(keepassx_SOURCES_MAINEXE
     main.cpp
