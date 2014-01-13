@@ -45,7 +45,6 @@ Q_SIGNALS:
 
 private Q_SLOTS:
     void updateApplyEnabled(const QString& password);
-    void togglePassword(bool checked);
 
     void emitNewPassword();
     void saveSettings();

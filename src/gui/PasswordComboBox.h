@@ -33,10 +33,12 @@ public:
     explicit PasswordComboBox(QWidget* parent = Q_NULLPTR);
     ~PasswordComboBox();
 
-    void setEcho(bool echo);
     void setGenerator(PasswordGenerator* generator);
     void setNumberAlternatives(int alternatives);
     void showPopup();
+
+public Q_SLOTS:
+    void setEcho(bool echo);
 
 private:
     PasswordGenerator* m_generator;

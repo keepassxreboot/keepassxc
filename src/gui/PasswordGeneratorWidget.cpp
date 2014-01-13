@@ -35,7 +35,7 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     m_ui->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
 
     connect(m_ui->editNewPassword->lineEdit(), SIGNAL(textChanged(QString)), SLOT(updateApplyEnabled(QString)));
-    connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), SLOT(togglePassword(bool)));
+    connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), m_ui->editNewPassword, SLOT(setEcho(bool)));
     connect(m_ui->buttonApply, SIGNAL(clicked()), SLOT(emitNewPassword()));
     connect(m_ui->buttonApply, SIGNAL(clicked()), SLOT(saveSettings()));
 
@@ -91,11 +91,6 @@ void PasswordGeneratorWidget::reset()
 void PasswordGeneratorWidget::updateApplyEnabled(const QString& password)
 {
     m_ui->buttonApply->setEnabled(!password.isEmpty());
-}
-
-void PasswordGeneratorWidget::togglePassword(bool checked)
-{
-    m_ui->editNewPassword->setEcho(checked);
 }
 
 void PasswordGeneratorWidget::emitNewPassword()
