@@ -44,10 +44,14 @@ void PasswordComboBox::setEcho(bool echo)
     if (echo) {
         // add fake item to show visual indication that a popup is available
         addItem("");
+
+        setStyleSheet("QComboBox { font-family: monospace; }");
     }
     else {
         // clear items so the combobox indicates that no popup menu is available
         clear();
+
+        setStyleSheet("QComboBox { font-family: initial; }");
     }
 
     setEditText(current);
