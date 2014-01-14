@@ -172,6 +172,9 @@
    <addaction name="actionEntryEdit"/>
    <addaction name="actionEntryDelete"/>
    <addaction name="separator"/>
+   <addaction name="actionEntryCopyUsername"/>
+   <addaction name="actionEntryCopyPassword"/>
+   <addaction name="separator"/>
    <addaction name="actionLockDatabases"/>
    <addaction name="actionSearch"/>
   </widget>
@@ -317,6 +320,9 @@
    <property name="text">
     <string>Username</string>
    </property>
+   <property name="toolTip">
+    <string>Copy username to clipboard</string>
+   </property>
   </action>
   <action name="actionEntryCopyPassword">
    <property name="enabled">
@@ -324,6 +330,9 @@
    </property>
    <property name="text">
     <string>Password</string>
+   </property>
+   <property name="toolTip">
+    <string>Copy password to clipboard</string>
    </property>
   </action>
   <action name="actionSettings">
