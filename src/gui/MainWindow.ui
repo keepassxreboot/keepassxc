@@ -70,7 +70,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -165,7 +165,6 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionDatabaseNew"/>
    <addaction name="actionDatabaseOpen"/>
    <addaction name="actionDatabaseSave"/>
    <addaction name="separator"/>
