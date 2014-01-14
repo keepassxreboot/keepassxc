@@ -55,8 +55,8 @@ public:
     bool isValid() const;
 
     QString generatePassword() const;
-private:
 
+private:
     QVector<PasswordGroup> passwordGroups() const;
     int numCharClasses() const;
 

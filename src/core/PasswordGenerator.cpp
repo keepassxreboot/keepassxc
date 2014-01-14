@@ -196,4 +196,3 @@ int PasswordGenerator::numCharClasses() const
 
     return numClasses;
 }
-
