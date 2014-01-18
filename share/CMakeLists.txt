@@ -20,7 +20,10 @@ install(FILES ${DATABASE_ICONS} DESTINATION ${DATA_INSTALL_DIR}/icons/database)
 if(UNIX AND NOT APPLE)
     install(DIRECTORY icons/application/ DESTINATION share/icons/hicolor
             FILES_MATCHING PATTERN "keepassx.png" PATTERN "keepassx.svgz")
+    install(DIRECTORY icons/application/ DESTINATION share/icons/hicolor
+            FILES_MATCHING PATTERN "application-x-keepassx.png" PATTERN "application-x-keepassx.svgz")
     install(FILES linux/keepassx.desktop DESTINATION share/applications)
+    install(FILES linux/keepassx.xml DESTINATION share/mime/packages)
 endif(UNIX AND NOT APPLE)
 
 if(APPLE)
