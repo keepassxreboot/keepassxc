@@ -17,6 +17,7 @@
 
 #include <QFile>
 
+#include "config-keepassx.h"
 #include "core/Config.h"
 #include "core/qcommandlineparser.h"
 #include "core/Tools.h"
@@ -31,8 +32,10 @@ int main(int argc, char** argv)
 #endif
 
     Application app(argc, argv);
-    // don't set applicationName or organizationName as that changes
-    // QDesktopServices::storageLocation()
+    Application::setApplicationName("keepassx");
+    Application::setApplicationVersion(KEEPASSX_VERSION);
+    // don't set organizationName as that changes the return value of
+    // QDesktopServices::storageLocation(QDesktopServices::DataLocation)
 
     Crypto::init();
 
@@ -51,6 +54,7 @@ int main(int argc, char** argv)
                                      "keyfile");
 
     parser.addHelpOption();
+    parser.addVersionOption();
     parser.addOption(configOption);
     parser.addOption(passwordOption);
     parser.addOption(keyfileOption);
