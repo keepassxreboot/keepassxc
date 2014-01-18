@@ -17,8 +17,8 @@
 
 #include <QFile>
 
-#include "core/ArgumentParser.h"
 #include "core/Config.h"
+#include "core/qcommandlineparser.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "gui/Application.h"
@@ -36,11 +36,30 @@ int main(int argc, char** argv)
 
     Crypto::init();
 
-    const QStringList args = app.arguments();
-    QHash<QString, QString> argumentMap = ArgumentParser::parseArguments(args);
+    QCommandLineParser parser;
+    parser.setApplicationDescription(QCoreApplication::translate("main", "KeePassX - cross-platform password manager"));
+    parser.addPositionalArgument("filename", QCoreApplication::translate("main", "filename of the password database to open (*.kdbx)"));
 
-    if (!argumentMap.value("config").isEmpty()) {
-        Config::createConfigFromFile(argumentMap.value("config"));
+    QCommandLineOption configOption("config",
+                                    QCoreApplication::translate("main", "path to a custom config file"),
+                                    "config");
+    QCommandLineOption passwordOption("password",
+                                      QCoreApplication::translate("main", "password of the database (DANGEROUS!)"),
+                                      "password");
+    QCommandLineOption keyfileOption("keyfile",
+                                     QCoreApplication::translate("main", "key file of the database"),
+                                     "keyfile");
+
+    parser.addHelpOption();
+    parser.addOption(configOption);
+    parser.addOption(passwordOption);
+    parser.addOption(keyfileOption);
+
+    parser.process(app);
+    const QStringList args = parser.positionalArguments();
+
+    if (parser.isSet(configOption)) {
+        Config::createConfigFromFile(parser.value(configOption));
     }
 
 #ifdef Q_OS_MAC
@@ -53,9 +72,11 @@ int main(int argc, char** argv)
 
     QObject::connect(&app, SIGNAL(openFile(QString)), &mainWindow, SLOT(openDatabase(QString)));
 
-    QString filename(argumentMap.value("filename"));
-    if (!filename.isEmpty() && QFile::exists(filename)) {
-        mainWindow.openDatabase(filename, argumentMap.value("password"), QString());
+    if (!args.isEmpty()) {
+        QString filename = args[0];
+        if (!filename.isEmpty() && QFile::exists(filename)) {
+            mainWindow.openDatabase(filename, parser.value(passwordOption), parser.value(keyfileOption));
+        }
     }
 
     if (config()->get("OpenPreviousDatabasesOnStartup").toBool()) {

@@ -159,7 +159,7 @@ set_target_properties(testautotype PROPERTIES ENABLE_EXPORTS ON)
 add_unit_test(NAME testentry SOURCES TestEntry.cpp MOCS TestEntry.h
               LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testargumentparser SOURCES TestArgumentParser.cpp MOCS TestArgumentParser.h
+add_unit_test(NAME testqcommandlineparser SOURCES TestQCommandLineParser.cpp MOCS TestQCommandLineParser.h
               LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testrandom SOURCES TestRandom.cpp MOCS TestRandom.h

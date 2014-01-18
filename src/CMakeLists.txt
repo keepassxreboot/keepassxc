@@ -27,7 +27,6 @@ set(keepassx_SOURCES
     autotype/WildcardMatcher.cpp
     autotype/WindowSelectComboBox.cpp
     autotype/test/AutoTypeTestInterface.h
-    core/ArgumentParser.cpp
     core/AutoTypeAssociations.cpp
     core/Config.cpp
     core/Database.cpp
@@ -50,6 +49,8 @@ set(keepassx_SOURCES
     core/TimeInfo.cpp
     core/Tools.cpp
     core/Uuid.cpp
+    core/qcommandlineoption.cpp
+    core/qcommandlineparser.cpp
     crypto/Crypto.cpp
     crypto/CryptoHash.cpp
     crypto/Random.cpp
