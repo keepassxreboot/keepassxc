@@ -143,15 +143,18 @@ void SymmetricCipherGcrypt::processInPlace(QByteArray& data, quint64 rounds)
 
     gcry_error_t error;
 
+    char* rawData = data.data();
+    int size = data.size();
+
     if (m_direction == SymmetricCipher::Decrypt) {
         for (quint64 i = 0; i != rounds; ++i) {
-            error = gcry_cipher_decrypt(m_ctx, data.data(), data.size(), Q_NULLPTR, 0);
+            error = gcry_cipher_decrypt(m_ctx, rawData, size, Q_NULLPTR, 0);
             Q_ASSERT(error == 0);
         }
     }
     else {
         for (quint64 i = 0; i != rounds; ++i) {
-            error = gcry_cipher_encrypt(m_ctx, data.data(), data.size(), Q_NULLPTR, 0);
+            error = gcry_cipher_encrypt(m_ctx, rawData, size, Q_NULLPTR, 0);
             Q_ASSERT(error == 0);
         }
     }
