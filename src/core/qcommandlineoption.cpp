@@ -183,7 +183,6 @@ QStringList QCommandLineOption::names() const
 void QCommandLineOptionPrivate::setNames(const QStringList &nameList)
 {
     QStringList newNames;
-    newNames.reserve(nameList.size());
     if (nameList.isEmpty())
         qWarning("QCommandLineOption: Options must have at least one name");
     Q_FOREACH (const QString &name, nameList) {
@@ -202,7 +201,7 @@ void QCommandLineOptionPrivate::setNames(const QStringList &nameList)
         }
     }
     // commit
-    names.swap(newNames);
+    names = newNames;
 }
 
 /*!
@@ -276,11 +275,10 @@ void QCommandLineOption::setDefaultValue(const QString &defaultValue)
 {
     QStringList newDefaultValues;
     if (!defaultValue.isEmpty()) {
-        newDefaultValues.reserve(1);
         newDefaultValues << defaultValue;
     }
     // commit:
-    d->defaultValues.swap(newDefaultValues);
+    d->defaultValues = newDefaultValues;
 }
 
 /*!
