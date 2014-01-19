@@ -46,7 +46,8 @@ AutoTypePlatformX11::AutoTypePlatformX11()
 
     m_keysymTable = Q_NULLPTR;
     m_xkb = Q_NULLPTR;
-    m_specialCharacterKeycode = 0;
+    m_remapKeycode = 0;
+    m_currentRemapKeysym = NoSymbol;
     m_modifierMask = ControlMask | ShiftMask | Mod1Mask | Mod4Mask;
 
     m_loaded = true;
@@ -440,11 +441,12 @@ void AutoTypePlatformX11::updateKeymap()
             &m_keysymPerKeycode);
 
     /* determine the keycode to use for remapped keys */
-    if (m_specialCharacterKeycode == 0) {
+    inx = (m_remapKeycode - m_minKeycode) * m_keysymPerKeycode;
+    if (m_remapKeycode == 0 || m_keysymTable[inx] != m_currentRemapKeysym) {
         for (keycode = m_minKeycode; keycode <= m_maxKeycode; keycode++) {
             inx = (keycode - m_minKeycode) * m_keysymPerKeycode;
             if (m_keysymTable[inx] == NoSymbol) {
-               m_specialCharacterKeycode = keycode;
+               m_remapKeycode = keycode;
                break;
             }
         }
@@ -505,13 +507,14 @@ int AutoTypePlatformX11::x11ErrorHandler(Display* display, XErrorEvent* error)
  */
 int AutoTypePlatformX11::AddKeysym(KeySym keysym)
 {
-    if (m_specialCharacterKeycode == 0) {
+    if (m_remapKeycode == 0) {
         return 0;
     }
 
-    int inx = (m_specialCharacterKeycode - m_minKeycode) * m_keysymPerKeycode;
+    int inx = (m_remapKeycode- m_minKeycode) * m_keysymPerKeycode;
     m_keysymTable[inx] = keysym;
-    XChangeKeyboardMapping(m_dpy, m_specialCharacterKeycode, m_keysymPerKeycode, &m_keysymTable[inx], 1);
+    m_currentRemapKeysym = keysym;
+    XChangeKeyboardMapping(m_dpy, m_remapKeycode, m_keysymPerKeycode, &m_keysymTable[inx], 1);
     XFlush(m_dpy);
 
     /* Xlib needs some time until the mapping is distributed to 
@@ -521,7 +524,7 @@ int AutoTypePlatformX11::AddKeysym(KeySym keysym)
     ts.tv_nsec = 10 * 1000 * 1000;
     nanosleep(&ts, Q_NULLPTR);
 
-    return m_specialCharacterKeycode;
+    return m_remapKeycode;
 }
 
 /*

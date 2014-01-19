@@ -106,8 +106,9 @@ private:
     int m_minKeycode;
     int m_maxKeycode;
     int m_keysymPerKeycode;
-    /* dedicated 'special character' keycode */
-    int m_specialCharacterKeycode;
+    /* dedicated keycode for remapped keys */
+    unsigned int m_remapKeycode;
+    KeySym m_currentRemapKeysym;
     KeyCode m_modifier_keycode[N_MOD_INDICES];
     bool m_loaded;
 };
