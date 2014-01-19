@@ -527,8 +527,10 @@ int AutoTypePlatformX11::AddKeysym(KeySym keysym)
     int inx = (m_remapKeycode- m_minKeycode) * m_keysymPerKeycode;
     m_keysymTable[inx] = keysym;
     m_currentRemapKeysym = keysym;
+
     XChangeKeyboardMapping(m_dpy, m_remapKeycode, m_keysymPerKeycode, &m_keysymTable[inx], 1);
     XFlush(m_dpy);
+    updateKeymap();
 
     /* Xlib needs some time until the mapping is distributed to 
        all clients */
@@ -580,30 +582,43 @@ void AutoTypePlatformX11::SendModifier(XKeyEvent *event, unsigned int mask, int 
  * Determines the keycode and modifier mask for the given
  * keysym.
  */
-int AutoTypePlatformX11::GetKeycode(KeySym keysym, unsigned int *mask) 
+int AutoTypePlatformX11::GetKeycode(KeySym keysym, unsigned int *mask)
+{
+    int keycode = XKeysymToKeycode(m_dpy, keysym);
+
+    if (keycode && keysymModifiers(keysym, keycode, mask)) {
+        return keycode;
+    }
+
+    /* no modifier matches => resort to remapping */
+    keycode = AddKeysym(keysym);
+    if (keycode && keysymModifiers(keysym, keycode, mask)) {
+        return keycode;
+    }
+
+    *mask = 0;
+    return 0;
+}
+
+bool AutoTypePlatformX11::keysymModifiers(KeySym keysym, int keycode, unsigned int *mask)
 {
     int shift, mod;
     unsigned int mods_rtrn;
-    KeySym keysym_rtrn;
-    int keycode;
-
-    keycode = XKeysymToKeycode(m_dpy, keysym);
 
     /* determine whether there is a combination of the modifiers
        (Mod1-Mod5) with or without shift which returns keysym */
     for (shift = 0; shift < 2; shift ++) {
         for (mod = ControlMapIndex; mod <= Mod5MapIndex; mod ++) {
+            KeySym keysym_rtrn;
             *mask = (mod == ControlMapIndex) ? shift : shift | (1 << mod);
             XkbTranslateKeyCode(m_xkb, keycode, *mask, &mods_rtrn, &keysym_rtrn);
             if (keysym_rtrn == keysym) {
-                return keycode;
+                return true;
             }
         }
     }
 
-    /* no modifier matches => resort to remapping */
-    *mask = 0;
-    return AddKeysym(keysym);
+    return false;
 }
 
 

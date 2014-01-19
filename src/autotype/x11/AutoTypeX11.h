@@ -78,6 +78,7 @@ private:
     void SendEvent(XKeyEvent* event, int event_type);
     void SendModifier(XKeyEvent *event, unsigned int mask, int event_type);
     int GetKeycode(KeySym keysym, unsigned int *mask);
+    bool keysymModifiers(KeySym keysym, int keycode, unsigned int *mask);
 
     static int MyErrorHandler(Display* my_dpy, XErrorEvent* event);
 
