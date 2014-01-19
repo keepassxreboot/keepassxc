@@ -612,6 +612,8 @@ void AutoTypePlatformX11::SendKeyPressedEvent(KeySym keysym)
         return;
     }
 
+    XGetInputFocus(m_dpy, &cur_focus, &revert_to);
+
     event.display = m_dpy;
     event.window = cur_focus;
     event.root = m_rootWindow;
@@ -630,7 +632,6 @@ void AutoTypePlatformX11::SendKeyPressedEvent(KeySym keysym)
 
     XQueryPointer(m_dpy, event.root, &root, &child, &root_x, &root_y, &x, &y, &mask);
     saved_mask = mask;
-    XGetInputFocus(m_dpy, &cur_focus, &revert_to);
 
     /* determine keycode and mask for the given keysym */
     keycode = GetKeycode(keysym, &mask);
