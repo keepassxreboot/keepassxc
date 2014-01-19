@@ -72,6 +72,7 @@ private:
     static int x11ErrorHandler(Display* display, XErrorEvent* error);
 
     void updateKeymap();
+    bool isRemapKeycodeValid();
     int AddKeysym(KeySym keysym);
     void AddModifier(KeySym keysym);
     void SendEvent(XKeyEvent* event, int event_type);

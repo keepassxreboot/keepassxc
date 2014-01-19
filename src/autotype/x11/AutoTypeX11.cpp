@@ -442,11 +442,12 @@ void AutoTypePlatformX11::updateKeymap()
 
     /* determine the keycode to use for remapped keys */
     inx = (m_remapKeycode - m_minKeycode) * m_keysymPerKeycode;
-    if (m_remapKeycode == 0 || m_keysymTable[inx] != m_currentRemapKeysym) {
+    if (m_remapKeycode == 0 || !isRemapKeycodeValid()) {
         for (keycode = m_minKeycode; keycode <= m_maxKeycode; keycode++) {
             inx = (keycode - m_minKeycode) * m_keysymPerKeycode;
             if (m_keysymTable[inx] == NoSymbol) {
                m_remapKeycode = keycode;
+               m_currentRemapKeysym = NoSymbol;
                break;
             }
         }
@@ -465,6 +466,18 @@ void AutoTypePlatformX11::updateKeymap()
         }
     }
     XFreeModifiermap(modifiers);
+}
+
+bool AutoTypePlatformX11::isRemapKeycodeValid()
+{
+    int baseKeycode = (m_remapKeycode - m_minKeycode) * m_keysymPerKeycode;
+    for (int i = 0; i < m_keysymPerKeycode; i++) {
+        if (m_keysymTable[baseKeycode + i] == m_currentRemapKeysym) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 void AutoTypePlatformX11::startCatchXErrors()
