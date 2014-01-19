@@ -31,6 +31,7 @@ private Q_SLOTS:
     void testFileKey_data();
     void testCreateFileKey();
     void testFileKeyError();
+    void benchmarkTransformKey();
 };
 
 #endif // KEEPASSX_TESTKEYS_H

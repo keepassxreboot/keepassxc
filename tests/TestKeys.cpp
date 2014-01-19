@@ -165,4 +165,24 @@ void TestKeys::testFileKeyError()
     errorMsg = "";
 }
 
+void TestKeys::benchmarkTransformKey()
+{
+    QByteArray env = qgetenv("BENCHMARK");
+
+    if (env.isEmpty() || env == "0" || env == "no") {
+        QSKIP("Benchmark skipped. Set env variable BENCHMARK=1 to enable.", SkipAll);
+    }
+
+    PasswordKey pwKey;
+    pwKey.setPassword("password");
+    CompositeKey compositeKey;
+    compositeKey.addKey(pwKey);
+
+    QByteArray seed(32, '\x4B');
+
+    QBENCHMARK {
+        compositeKey.transform(seed, 1e6);
+    }
+}
+
 QTEST_GUILESS_MAIN(TestKeys)
