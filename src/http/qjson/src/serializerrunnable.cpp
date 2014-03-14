@@ -58,5 +58,5 @@ void SerializerRunnable::run()
   Serializer serializer;
   bool ok;
   const QByteArray serialized = serializer.serialize( d->json, &ok);
-  emit parsingFinished( serialized, ok, serializer.errorMessage() );
+  Q_EMIT parsingFinished( serialized, ok, serializer.errorMessage() );
 }

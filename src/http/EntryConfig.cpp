@@ -14,9 +14,9 @@
 #include "EntryConfig.h"
 #include "core/Entry.h"
 #include "core/EntryAttributes.h"
-#include "qjson/parser.h"
-#include "qjson/qobjecthelper.h"
-#include "qjson/serializer.h"
+#include "qjson/src/parser.h"
+#include "qjson/src/qobjecthelper.h"
+#include "qjson/src/serializer.h"
 
 static const char KEEPASSHTTP_NAME[] = "KeePassHttp Settings";  //TODO: duplicated string (also in Service.cpp)
 

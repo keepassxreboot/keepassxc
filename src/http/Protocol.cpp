@@ -17,9 +17,9 @@
 #include <QtCore/QStringList>
 #include <QtCore/QVariant>
 
-#include "qjson/parser.h"
-#include "qjson/qobjecthelper.h"
-#include "qjson/serializer.h"
+#include "qjson/src/parser.h"
+#include "qjson/src/qobjecthelper.h"
+#include "qjson/src/serializer.h"
 
 #include "crypto/Random.h"
 #include "crypto/SymmetricCipher.h"

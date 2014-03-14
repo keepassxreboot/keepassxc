@@ -23,7 +23,7 @@ set (qjson_HEADERS parser.h parserrunnable.h qobjecthelper.h serializer.h serial
 # Required to use the intree copy of FlexLexer.h
 INCLUDE_DIRECTORIES(.)
 
-add_library (qjson SHARED ${qjson_SRCS} ${qjson_MOC_SRCS} ${qjson_HEADERS})
+add_library (qjson STATIC ${qjson_SRCS} ${qjson_MOC_SRCS} ${qjson_HEADERS})
 IF (Qt5Core_FOUND)
   target_link_libraries( qjson ${Qt5Core_LIBRARIES})
 ELSE()
@@ -41,6 +41,8 @@ set_target_properties(qjson PROPERTIES
                       PUBLIC_HEADER "${qjson_HEADERS}"
                       FRAMEWORK ${OSX_FRAMEWORK}
                       )
+
+add_gcc_compiler_cxxflags("-fexceptions")
 
 INSTALL(TARGETS qjson EXPORT qjson-export
    LIBRARY DESTINATION ${LIB_INSTALL_DIR}
