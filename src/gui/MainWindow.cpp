@@ -417,11 +417,24 @@ void MainWindow::databaseTabChanged(int tabIndex)
 void MainWindow::closeEvent(QCloseEvent* event)
 {
     saveWindowInformation();
-    saveLastDatabases(event);
+    bool accept = saveLastDatabases();
+
+    if (accept) {
+        event->accept();
+    }
+    else {
+        event->ignore();
+    }
 }
 
-void MainWindow::saveLastDatabases(QCloseEvent* event)
+void MainWindow::saveWindowInformation()
 {
+    config()->set("Window/Geometry", saveGeometry());
+}
+
+bool MainWindow::saveLastDatabases()
+{
+    bool accept;
     m_openDatabases.clear();
     bool openPreviousDatabasesOnStartup = config()->get("OpenPreviousDatabasesOnStartup").toBool();
 
@@ -431,10 +444,10 @@ void MainWindow::saveLastDatabases(QCloseEvent* event)
     }
 
     if (!m_ui->tabWidget->closeAllDatabases()) {
-        event->ignore();
+        accept = false;
     }
     else {
-        event->accept();
+        accept = true;
     }
 
     if (openPreviousDatabasesOnStartup) {
@@ -442,11 +455,8 @@ void MainWindow::saveLastDatabases(QCloseEvent* event)
                    this, SLOT(rememberOpenDatabases(QString)));
         config()->set("LastOpenedDatabases", m_openDatabases);
     }
-}
 
-void MainWindow::saveWindowInformation()
-{
-    config()->set("Window/Geometry", saveGeometry());
+    return accept;
 }
 
 void MainWindow::showEntryContextMenu(const QPoint& globalPos)

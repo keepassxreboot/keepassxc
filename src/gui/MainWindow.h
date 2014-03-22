@@ -68,7 +68,7 @@ private:
     static const QString BaseWindowTitle;
 
     void saveWindowInformation();
-    void saveLastDatabases(QCloseEvent* event);
+    bool saveLastDatabases();
 
     const QScopedPointer<Ui::MainWindow> m_ui;
     SignalMultiplexer m_actionMultiplexer;
