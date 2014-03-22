@@ -394,6 +394,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         }
         case DatabaseWidget::EditMode:
         case DatabaseWidget::LockedMode:
+        case DatabaseWidget::OpenMode:
             Q_FOREACH (QAction* action, m_ui->menuEntries->actions()) {
                 action->setEnabled(false);
             }

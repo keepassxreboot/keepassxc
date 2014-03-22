@@ -229,7 +229,8 @@ void DatabaseTabWidget::checkReloadDatabases()
 
         ReloadBehavior reloadBehavior = ReloadBehavior(config()->get("ReloadBehavior").toInt());
         if (   (reloadBehavior == AlwaysAsk)
-            || (reloadBehavior == ReloadUnmodified && mode == DatabaseWidget::EditMode)
+            || (reloadBehavior == ReloadUnmodified && (mode == DatabaseWidget::EditMode
+                || mode == DatabaseWidget::OpenMode))
             || (reloadBehavior == ReloadUnmodified && dbStruct.modified)) {
             int res = QMessageBox::warning(this, fi.exists() ? tr("Database file changed") : tr("Database file removed"),
                                            tr("Do you want to discard your changes and reload?"),
@@ -296,7 +297,8 @@ bool DatabaseTabWidget::closeDatabase(Database* db)
     if (dbName.right(1) == "*") {
         dbName.chop(1);
     }
-    if (dbStruct.dbWidget->currentMode() == DatabaseWidget::EditMode && db->hasKey()) {
+    if ((dbStruct.dbWidget->currentMode() == DatabaseWidget::EditMode ||
+         dbStruct.dbWidget->currentMode() == DatabaseWidget::OpenMode) && db->hasKey()) {
         QMessageBox::StandardButton result =
             MessageBox::question(
             this, tr("Close?"),
@@ -631,7 +633,9 @@ bool DatabaseTabWidget::hasLockableDatabases()
         i.next();
         DatabaseWidget::Mode mode = i.value().dbWidget->currentMode();
 
-        if ((mode == DatabaseWidget::ViewMode || mode == DatabaseWidget::EditMode)
+        if ((mode == DatabaseWidget::ViewMode ||
+             mode == DatabaseWidget::EditMode ||
+             mode == DatabaseWidget::OpenMode)
                 && i.value().dbWidget->dbHasKey()) {
             return true;
         }
@@ -647,7 +651,9 @@ void DatabaseTabWidget::lockDatabases()
         i.next();
         DatabaseWidget::Mode mode = i.value().dbWidget->currentMode();
 
-        if ((mode == DatabaseWidget::ViewMode || mode == DatabaseWidget::EditMode)
+        if ((mode == DatabaseWidget::ViewMode ||
+             mode == DatabaseWidget::EditMode ||
+             mode == DatabaseWidget::OpenMode)
                 && i.value().dbWidget->dbHasKey()) {
             i.value().dbWidget->lock();
             updateTabName(i.key());
