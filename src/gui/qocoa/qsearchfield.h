@@ -21,19 +21,19 @@ public:
     void setFocus(Qt::FocusReason);
     void setMenu(QMenu *menu);
 
-public slots:
+public Q_SLOTS:
     void setText(const QString &text);
     void setPlaceholderText(const QString &text);
     void clear();
     void selectAll();
     void setFocus();
 
-signals:
+Q_SIGNALS:
     void textChanged(const QString &text);
     void editingFinished();
     void returnPressed();
 
-private slots:
+private Q_SLOTS:
     void popupMenu();
 
 protected:

@@ -30,7 +30,7 @@ public:
 
     explicit QButton(QWidget *parent, BezelStyle bezelStyle = Rounded);
 
-public slots:
+public Q_SLOTS:
     void setText(const QString &text);
     void setImage(const QPixmap &image);
     void setChecked(bool checked);
@@ -39,7 +39,7 @@ public:
     void setCheckable(bool checkable);
     bool isChecked();
 
-signals:
+Q_SIGNALS:
     void clicked(bool checked = false);
 
 private:

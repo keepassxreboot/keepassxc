@@ -19,7 +19,7 @@ public:
 
     explicit QProgressIndicatorSpinning(QWidget *parent,
                                         Thickness thickness = Default);
-public slots:
+public Q_SLOTS:
     void animate(bool animate = true);
 private:
     friend class QProgressIndicatorSpinningPrivate;
