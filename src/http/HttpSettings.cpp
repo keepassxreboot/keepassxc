@@ -14,6 +14,8 @@
 #include "HttpSettings.h"
 #include "core/Config.h"
 
+PasswordGenerator HttpSettings::m_generator;
+
 bool HttpSettings::isEnabled()
 {
     return config()->get("Http/Enabled", true).toBool();
@@ -126,72 +128,73 @@ void HttpSettings::setSupportKphFields(bool supportKphFields)
 
 bool HttpSettings::passwordUseNumbers()
 {
-    return config()->get("Http/PasswordUseNumbers", true).toBool();
+    return config()->get("Http/generator/Numbers", true).toBool();
 }
 
 void HttpSettings::setPasswordUseNumbers(bool useNumbers)
 {
-    config()->set("Http/PasswordUseNumbers", useNumbers);
+    config()->set("Http/generator/Numbers", useNumbers);
 }
 
 bool HttpSettings::passwordUseLowercase()
 {
-    return config()->get("Http/PasswordUseLowercase", true).toBool();
+    return config()->get("Http/generator/LowerCase", true).toBool();
 }
 
 void HttpSettings::setPasswordUseLowercase(bool useLowercase)
 {
-    config()->set("Http/PasswordUseLowercase", useLowercase);
+    config()->set("Http/generator/LowerCase", useLowercase);
 }
 
 bool HttpSettings::passwordUseUppercase()
 {
-    return config()->get("Http/PasswordUseUppercase", true).toBool();
+    return config()->get("Http/generator/UpperCase", true).toBool();
 }
 
 void HttpSettings::setPasswordUseUppercase(bool useUppercase)
 {
-    config()->set("Http/PasswordUseUppercase", useUppercase);
+    config()->set("Http/generator/UpperCase", useUppercase);
 }
 
 bool HttpSettings::passwordUseSpecial()
 {
-    return config()->get("Http/PasswordUseSpecial", false).toBool();
+    return config()->get("Http/generator/SpecialChars", false).toBool();
 }
 
 void HttpSettings::setPasswordUseSpecial(bool useSpecial)
 {
-    config()->set("Http/PasswordUseSpecial", useSpecial);
+    config()->set("Http/generator/SpecialChars", useSpecial);
 }
 
 bool HttpSettings::passwordEveryGroup()
 {
-    return config()->get("Http/PasswordEveryGroup", true).toBool();
+    return config()->get("Http/generator/EnsureEvery", true).toBool();
 }
 
 void HttpSettings::setPasswordEveryGroup(bool everyGroup)
 {
-    config()->get("Http/PasswordEveryGroup", everyGroup);
+    config()->get("Http/generator/EnsureEvery", everyGroup);
 }
 
 bool HttpSettings::passwordExcludeAlike()
 {
-    return config()->get("Http/PasswordExcludeAlike", true).toBool();
+    return config()->get("Http/generator/ExcludeAlike", true).toBool();
 }
 
 void HttpSettings::setPasswordExcludeAlike(bool excludeAlike)
 {
-    config()->set("Http/PasswordExcludeAlike", excludeAlike);
+    config()->set("Http/generator/ExcludeAlike", excludeAlike);
 }
 
 int HttpSettings::passwordLength()
 {
-    return config()->get("Http/PasswordLength", 20).toInt();
+    return config()->get("Http/generator/Length", 20).toInt();
 }
 
 void HttpSettings::setPasswordLength(int length)
 {
-    config()->set("Http/PasswordLength", length);
+    config()->set("Http/generator/Length", length);
+    m_generator.setLength(length);
 }
 
 PasswordGenerator::CharClasses HttpSettings::passwordCharClasses()
@@ -216,4 +219,13 @@ PasswordGenerator::GeneratorFlags HttpSettings::passwordGeneratorFlags()
     if (passwordEveryGroup())
         flags |= PasswordGenerator::CharFromEveryGroup;
     return flags;
+}
+
+QString HttpSettings::generatePassword()
+{
+    m_generator.setLength(passwordLength());
+    m_generator.setCharClasses(passwordCharClasses());
+    m_generator.setFlags(passwordGeneratorFlags());
+
+    return m_generator.generatePassword();
 }

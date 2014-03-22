@@ -494,7 +494,7 @@ void Service::updateEntry(const QString &, const QString &uuid, const QString &l
 
 QString Service::generatePassword()
 {
-    return QString("nonrandompassword");
+    return HttpSettings::generatePassword();
 }
 
 void Service::removeSharedEncryptionKeys()

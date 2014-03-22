@@ -43,6 +43,7 @@ void OptionDialog::loadSettings()
     else
         ui->sortByTitle->setChecked(true);
 
+/*
     ui->checkBoxLower->setChecked(settings.passwordUseLowercase());
     ui->checkBoxNumbers->setChecked(settings.passwordUseNumbers());
     ui->checkBoxUpper->setChecked(settings.passwordUseUppercase());
@@ -50,6 +51,7 @@ void OptionDialog::loadSettings()
     ui->checkBoxEnsureEvery->setChecked(settings.passwordEveryGroup());
     ui->checkBoxExcludeAlike->setChecked(settings.passwordExcludeAlike());
     ui->spinBoxLength->setValue(settings.passwordLength());
+*/
 
     ui->alwaysAllowAccess->setChecked(settings.alwaysAllowAccess());
     ui->alwaysAllowUpdate->setChecked(settings.alwaysAllowUpdate());
@@ -67,6 +69,7 @@ void OptionDialog::saveSettings()
     settings.setMatchUrlScheme(ui->matchUrlScheme->isChecked());
     settings.setSortByUsername(ui->sortByUsername->isChecked());
 
+/*
     settings.setPasswordUseLowercase(ui->checkBoxLower->isChecked());
     settings.setPasswordUseNumbers(ui->checkBoxNumbers->isChecked());
     settings.setPasswordUseUppercase(ui->checkBoxUpper->isChecked());
@@ -74,6 +77,7 @@ void OptionDialog::saveSettings()
     settings.setPasswordEveryGroup(ui->checkBoxEnsureEvery->isChecked());
     settings.setPasswordExcludeAlike(ui->checkBoxExcludeAlike->isChecked());
     settings.setPasswordLength(ui->spinBoxLength->value());
+*/
 
     settings.setAlwaysAllowAccess(ui->alwaysAllowAccess->isChecked());
     settings.setAlwaysAllowUpdate(ui->alwaysAllowUpdate->isChecked());

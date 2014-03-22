@@ -114,88 +114,7 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <layout class="QGridLayout" name="gridLayout_2">
-           <item row="0" column="0">
-            <widget class="QCheckBox" name="checkBoxLower">
-             <property name="text">
-              <string>Lower letters</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QCheckBox" name="checkBoxNumbers">
-             <property name="text">
-              <string>Numbers</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QCheckBox" name="checkBoxUpper">
-             <property name="text">
-              <string>Upper letters</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QCheckBox" name="checkBoxSpecialChars">
-             <property name="text">
-              <string>Special characters</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBoxEnsureEvery">
-         <property name="text">
-          <string>Ensure that the password contains characters from every group</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBoxExcludeAlike">
-         <property name="text">
-          <string>Exclude look-alike characters</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <item>
-          <widget class="QLabel" name="labelLength">
-           <property name="text">
-            <string>Length:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QSpinBox" name="spinBoxLength">
-           <property name="minimum">
-            <number>1</number>
-           </property>
-           <property name="maximum">
-            <number>999</number>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
+        <widget class="HttpPasswordGeneratorWidget" name="passwordGenerator" native="true"/>
        </item>
        <item>
         <spacer name="verticalSpacer_3">
@@ -300,6 +219,19 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>HttpPasswordGeneratorWidget</class>
+   <extends>QWidget</extends>
+   <header>http/HttpPasswordGeneratorWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PasswordEdit</class>
+   <extends>QLineEdit</extends>
+   <header>gui/PasswordEdit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

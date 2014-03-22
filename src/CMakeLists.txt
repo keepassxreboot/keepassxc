@@ -104,6 +104,7 @@ set(keepassx_SOURCES
     gui/group/GroupView.cpp
     http/AccessControlDialog.cpp
     http/EntryConfig.cpp
+    http/HttpPasswordGeneratorWidget.cpp
     http/HttpSettings.cpp
     http/OptionDialog.cpp
     http/Protocol.cpp
@@ -189,6 +190,7 @@ set(keepassx_MOC
     gui/group/GroupView.h
     http/AccessControlDialog.h
     http/EntryConfig.h
+    http/HttpPasswordGeneratorWidget.h
     http/OptionDialog.h
     http/Protocol.h
     http/Server.h
@@ -221,6 +223,7 @@ set(keepassx_FORMS
     gui/entry/EditEntryWidgetMain.ui
     gui/group/EditGroupWidgetMain.ui
     http/AccessControlDialog.ui
+    http/HttpPasswordGeneratorWidget.ui
     http/OptionDialog.ui
 )
 
