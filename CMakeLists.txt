@@ -172,6 +172,8 @@ if(NOT (${GCRYPT_VERSION_STRING} VERSION_LESS "1.6.0"))
   set(GCRYPT_HAS_SALSA20 1)
 endif()
 
+find_package(LibMicroHTTPD REQUIRED)
+
 find_package(ZLIB REQUIRED)
 
 check_cxx_source_compiles("

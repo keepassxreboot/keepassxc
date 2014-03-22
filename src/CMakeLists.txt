@@ -237,7 +237,6 @@ add_library(keepassx_core STATIC ${keepassx_SOURCES})
 set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
 
 add_subdirectory(gui/qocoa)
-add_subdirectory(http/qhttpserver)
 add_subdirectory(http/qjson)
 
 add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE ${keepassx_SOURCES_MAINEXE})
@@ -245,7 +244,7 @@ target_link_libraries(${PROGNAME}
                       keepassx_core
                       Qocoa
                       qjson
-                      qhttpserver
+                      ${MHD_LIBRARIES}
                       ${QT_QTCORE_LIBRARY}
                       ${QT_QTGUI_LIBRARY}
                       ${QT_QTNETWORK_LIBRARY}

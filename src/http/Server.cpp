@@ -12,37 +12,17 @@
  */
 
 #include "Server.h"
-#include "qhttpserver/qhttpserver.h"
-#include "qhttpserver/qhttprequest.h"
-#include "qhttpserver/qhttpresponse.h"
+#include <microhttpd.h>
 #include "Protocol.h"
 #include "crypto/Crypto.h"
 #include <QtCore/QHash>
 #include <QtCore/QCryptographicHash>
 #include <QtGui/QMessageBox>
+#include <QEventLoop>
 
 using namespace KeepassHttpProtocol;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// Request
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-RequestHandler::RequestHandler(QHttpRequest *request, QHttpResponse *response): m_request(request), m_response(response)
-{
-    m_request->storeBody();
-    connect(m_request, SIGNAL(end()), this, SLOT(onEnd()));
-    connect(m_response, SIGNAL(done()), this, SLOT(deleteLater()));
-}
-
-RequestHandler::~RequestHandler()
-{
-    delete m_request;
-}
-
-void RequestHandler::onEnd()
-{
-    Q_EMIT requestComplete(m_request, m_response);
-}
+using namespace KeepassHttpProtocol;
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -51,71 +31,14 @@ void RequestHandler::onEnd()
 
 Server::Server(QObject *parent) :
     QObject(parent),
-    m_httpServer(new QHttpServer(this)),
     m_started(false)
 {
-    connect(m_httpServer, SIGNAL(newRequest(QHttpRequest*,QHttpResponse*)), this, SLOT(handleRequest(QHttpRequest*,QHttpResponse*)));
+    connect(this, SIGNAL(emitRequest(const QByteArray, QByteArray*)),
+            this, SLOT(handleRequest(const QByteArray, QByteArray*)));
+    connect(this, SIGNAL(emitOpenDatabase(bool*)),
+            this, SLOT(handleOpenDatabase(bool*)));
 }
 
-void Server::start()
-{
-    if (m_started)
-        return;
-
-    static const int PORT = 19455;
-    m_started = m_httpServer->listen(QHostAddress::LocalHost, PORT)
-             || m_httpServer->listen(QHostAddress::LocalHostIPv6, PORT);
-}
-
-void Server::stop()
-{
-    if (!m_started)
-        return;
-    m_httpServer->close();
-    m_started = false;
-}
-
-void Server::handleRequest(QHttpRequest *request, QHttpResponse *response)
-{
-    RequestHandler * h = new RequestHandler(request, response);
-    connect(h, SIGNAL(requestComplete(QHttpRequest*,QHttpResponse*)), this, SLOT(handleRequestComplete(QHttpRequest*,QHttpResponse*)));
-}
-
-void Server::handleRequestComplete(QHttpRequest *request, QHttpResponse *response)
-{
-    Request r;
-    if (!isDatabaseOpened() && !openDatabase()) {
-        response->writeHead(QHttpResponse::STATUS_SERVICE_UNAVAILABLE);
-        response->end();
-    } else if (request->header("content-type").compare("application/json", Qt::CaseInsensitive) == 0 &&
-               r.fromJson(request->body())) {
-
-        QByteArray hash = QCryptographicHash::hash((getDatabaseRootUuid() + getDatabaseRecycleBinUuid()).toUtf8(),
-                                                   QCryptographicHash::Sha1).toHex();
-
-        Response protocolResp(r, QString::fromAscii(hash));
-        switch(r.requestType()) {
-        case INVALID:           break;
-        case TEST_ASSOCIATE:    testAssociate(r, &protocolResp); break;
-        case ASSOCIATE:         associate(r, &protocolResp); break;
-        case GET_LOGINS:        getLogins(r, &protocolResp); break;
-        case GET_LOGINS_COUNT:  getLoginsCount(r, &protocolResp); break;
-        case GET_ALL_LOGINS:    getAllLogins(r, &protocolResp); break;
-        case SET_LOGIN:         setLogin(r, &protocolResp); break;
-        case GENERATE_PASSWORD: generatePassword(r, &protocolResp); break;
-        }
-
-        QByteArray s = protocolResp.toJson().toUtf8();
-        response->setHeader("Content-Type", "application/json");
-        response->setHeader("Content-Length", QString::number(s.size()));
-        response->writeHead(QHttpResponse::STATUS_OK);
-        response->write(s);
-        response->end();
-    } else {
-        response->writeHead(QHttpResponse::STATUS_BAD_REQUEST);
-        response->end();
-    }
-}
 
 void Server::testAssociate(const Request& r, Response * protocolResp)
 {
@@ -202,6 +125,39 @@ void Server::setLogin(const Request &r, Response *protocolResp)
     protocolResp->setVerifier(key);
 }
 
+
+int Server::send_response(struct MHD_Connection *connection, const char *page)
+{
+    int ret;
+    struct MHD_Response *response;
+
+    response = MHD_create_response_from_buffer(
+            strlen(page), static_cast<void*>(const_cast<char*>(page)),
+            MHD_RESPMEM_PERSISTENT);
+    if (!response) return MHD_NO;
+
+    MHD_add_response_header (response, "Content-Type", "application/json");
+    ret = MHD_queue_response (connection, MHD_HTTP_OK, response);
+    MHD_destroy_response (response);
+
+    return ret;
+}
+
+
+int Server::send_unavailable(struct MHD_Connection *connection)
+{
+    int ret;
+    struct MHD_Response *response;
+
+    response = MHD_create_response_from_buffer(0, NULL, MHD_RESPMEM_PERSISTENT);
+    if (!response) return MHD_NO;
+
+    ret = MHD_queue_response (connection, MHD_HTTP_SERVICE_UNAVAILABLE, response);
+    MHD_destroy_response (response);
+
+    return ret;
+}
+
 void Server::generatePassword(const Request &r, Response *protocolResp)
 {
     QString key = getKey(r.id());
@@ -216,4 +172,154 @@ void Server::generatePassword(const Request &r, Response *protocolResp)
     protocolResp->setEntries(QList<Entry>() << Entry("generate-password", "generate-password", password, "generate-password"));
 
     memset(password.data(), 0, password.length());
+}
+
+
+int Server::request_handler_wrapper(void *me, struct MHD_Connection *connection,
+        const char *url, const char *method, const char *version,
+        const char *upload_data, size_t *upload_data_size, void **con_cls)
+{
+    Server *myself = static_cast<Server*>(me);
+
+    if (myself)
+        return myself->request_handler(connection, url, method, version,
+                                       upload_data, upload_data_size, con_cls);
+    else
+        return MHD_NO;
+}
+
+
+void Server::handleRequest(const QByteArray in, QByteArray *out)
+{
+    *out = QByteArray();
+
+    Request r;
+    if (!r.fromJson(in))
+        return;
+
+    QByteArray hash = QCryptographicHash::hash(
+        (getDatabaseRootUuid() + getDatabaseRecycleBinUuid()).toUtf8(),
+         QCryptographicHash::Sha1).toHex();
+
+    Response protocolResp(r, QString::fromAscii(hash));
+    switch(r.requestType()) {
+    case INVALID: break;
+    case TEST_ASSOCIATE:    testAssociate(r, &protocolResp); break;
+    case ASSOCIATE:         associate(r, &protocolResp); break;
+    case GENERATE_PASSWORD: generatePassword(r, &protocolResp); break;
+    case GET_LOGINS:        getLogins(r, &protocolResp); break;
+    case GET_LOGINS_COUNT:  getLoginsCount(r, &protocolResp); break;
+    case GET_ALL_LOGINS:    getAllLogins(r, &protocolResp); break;
+    case SET_LOGIN:         setLogin(r, &protocolResp); break;
+    }
+
+    *out = protocolResp.toJson().toUtf8();
+    Q_EMIT donewrk();
+}
+
+
+void Server::handleOpenDatabase(bool *success)
+{
+    *success = openDatabase();
+    Q_EMIT donewrk();
+}
+
+
+int Server::request_handler(struct MHD_Connection *connection,
+        const char *, const char *method, const char *,
+        const char *upload_data, size_t *upload_data_size, void **con_cls)
+{
+    struct Server::connection_info_struct *con_info =
+        static_cast<struct Server::connection_info_struct*>(*con_cls);
+
+    if (!isDatabaseOpened()) {
+        bool success;
+        QEventLoop loop1;
+        loop1.connect(this, SIGNAL(donewrk()), SLOT(quit()));
+        Q_EMIT emitOpenDatabase(&success);
+        loop1.exec();
+
+        if (!success)
+            return send_unavailable(connection);
+    }
+
+    if (con_info == NULL) {
+        *con_cls = calloc(1, sizeof(*con_info));
+        return MHD_YES;
+    }
+
+    if (strcmp (method, MHD_HTTP_METHOD_POST) != 0)
+        return MHD_NO;
+
+    if (*upload_data_size == 0) {
+        if (con_info && con_info->response)
+            return send_response(connection, con_info->response);
+        else
+            return MHD_NO;
+    }
+
+    QString type = MHD_lookup_connection_value(connection,
+                                               MHD_HEADER_KIND, "Content-Type");
+    if (!type.contains("application/json", Qt::CaseInsensitive))
+        return MHD_NO;
+
+    // Now process the POST request
+
+    QByteArray post = QByteArray(upload_data, *upload_data_size);
+
+    QByteArray s;
+    QEventLoop loop;
+    loop.connect(this, SIGNAL(donewrk()), SLOT(quit()));
+    Q_EMIT emitRequest(post, &s);
+    loop.exec();
+
+    if (s.size() == 0)
+        return MHD_NO;
+
+    con_info->response = static_cast<char*>(calloc(1, s.size()+1));
+    memcpy(con_info->response, s.data(), s.size());
+
+    *upload_data_size = 0;
+
+    return MHD_YES;
+}
+
+
+void Server::request_completed(void *, struct MHD_Connection *,
+        void **con_cls, enum MHD_RequestTerminationCode)
+{
+    struct Server::connection_info_struct *con_info =
+        static_cast<struct Server::connection_info_struct*>(*con_cls);
+
+    if (con_info == NULL)
+        return;
+
+    if (con_info->response) free(con_info->response);
+    free(con_info);
+    *con_cls = NULL;
+}
+
+
+void Server::start(void)
+{
+    if (m_started) return;
+
+    static const int PORT = 19455;
+
+    daemon = MHD_start_daemon(MHD_USE_SELECT_INTERNALLY, PORT, NULL, NULL,
+                              &this->request_handler_wrapper, this,
+                              MHD_OPTION_NOTIFY_COMPLETED,
+                              this->request_completed, NULL,
+                              MHD_OPTION_END);
+    m_started = true;
+}
+
+
+void Server::stop(void)
+{
+    if (!m_started)
+        return;
+
+    MHD_stop_daemon(daemon);
+    m_started = false;
 }

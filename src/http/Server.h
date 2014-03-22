@@ -16,34 +16,14 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QList>
+#include <microhttpd.h>
 
-class QHttpServer;
-class QHttpRequest;
-class QHttpResponse;
 
 namespace KeepassHttpProtocol {
 
 class Request;
 class Response;
 class Entry;
-
-class RequestHandler: public QObject {
-    Q_OBJECT
-
-public:
-    RequestHandler(QHttpRequest *request, QHttpResponse *response);
-    ~RequestHandler();
-
-private Q_SLOTS:
-    void onEnd();
-
-Q_SIGNALS:
-    void requestComplete(QHttpRequest *request, QHttpResponse *response);
-
-private:
-    QHttpRequest * m_request;
-    QHttpResponse *m_response;
-};
 
 class Server : public QObject
 {
@@ -70,8 +50,13 @@ public Q_SLOTS:
     void stop();
 
 private Q_SLOTS:
-    void handleRequest(QHttpRequest * request, QHttpResponse* response);
-    void handleRequestComplete(QHttpRequest * request, QHttpResponse* response);
+    void handleRequest(const QByteArray in, QByteArray *out);
+    void handleOpenDatabase(bool *success);
+
+Q_SIGNALS:
+    void emitRequest(const QByteArray in, QByteArray *out);
+    void emitOpenDatabase(bool *success);
+    void donewrk();
 
 private:
     void testAssociate(const KeepassHttpProtocol::Request &r, KeepassHttpProtocol::Response *protocolResp);
@@ -82,8 +67,25 @@ private:
     void setLogin(const KeepassHttpProtocol::Request &r, KeepassHttpProtocol::Response *protocolResp);
     void generatePassword(const KeepassHttpProtocol::Request &r, KeepassHttpProtocol::Response *protocolResp);
 
-    QHttpServer * const m_httpServer;
+    static int request_handler_wrapper(void *me,
+        struct MHD_Connection *connection,
+        const char *url, const char *method, const char *version,
+        const char *upload_data, size_t *upload_data_size, void **con_cls);
+    static void request_completed(void *, struct MHD_Connection *,
+        void **con_cls, enum MHD_RequestTerminationCode);
+
+    int request_handler(struct MHD_Connection *connection,
+        const char *, const char *method, const char *,
+        const char *upload_data, size_t *upload_data_size, void **con_cls);
+    int send_response(struct MHD_Connection *connection, const char *page);
+    int send_unavailable(struct MHD_Connection *connection);
+
     bool m_started;
+    struct MHD_Daemon *daemon;
+
+    struct connection_info_struct {
+        char *response;
+    };
 };
 
 }   /*namespace KeepassHttpProtocol*/
