@@ -85,7 +85,7 @@ bool EntryConfig::load(const Entry *entry)
 
     bool isOk = false;
     QVariant v = QJson::Parser().parse(s.toUtf8(), &isOk);
-    if (!isOk || !v.type() == QVariant::Map)
+    if (!isOk || v.type() != QVariant::Map)
         return false;
 
     QJson::QObjectHelper::qvariant2qobject(v.toMap(), this);
