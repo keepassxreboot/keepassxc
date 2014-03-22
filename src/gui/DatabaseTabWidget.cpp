@@ -182,6 +182,14 @@ void DatabaseTabWidget::fileChanged(const QString &fileName)
 {
     const bool wasEmpty = m_changedFiles.isEmpty();
     m_changedFiles.insert(fileName);
+    bool found = false;
+    Q_FOREACH (QString f, m_fileWatcher->files()) {
+        if (f == fileName) {
+            found = true;
+            break;
+        }
+    }
+    if (!found) m_fileWatcher->addPath(fileName);
     if (wasEmpty && !m_changedFiles.isEmpty())
         QTimer::singleShot(200, this, SLOT(checkReloadDatabases()));
 }
