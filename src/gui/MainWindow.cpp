@@ -40,6 +40,8 @@ MainWindow::MainWindow()
 {
     m_ui->setupUi(this);
 
+    restoreGeometry(config()->get("Window/Geometry").toByteArray());
+
     setWindowIcon(filePath()->applicationIcon());
     QAction* toggleViewAction = m_ui->toolBar->toggleViewAction();
     toggleViewAction->setText(tr("Show toolbar"));
@@ -414,6 +416,12 @@ void MainWindow::databaseTabChanged(int tabIndex)
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
+    saveWindowInformation();
+    saveLastDatabases(event);
+}
+
+void MainWindow::saveLastDatabases(QCloseEvent* event)
+{
     m_openDatabases.clear();
     bool openPreviousDatabasesOnStartup = config()->get("OpenPreviousDatabasesOnStartup").toBool();
 
@@ -434,6 +442,11 @@ void MainWindow::closeEvent(QCloseEvent* event)
                    this, SLOT(rememberOpenDatabases(QString)));
         config()->set("LastOpenedDatabases", m_openDatabases);
     }
+}
+
+void MainWindow::saveWindowInformation()
+{
+    config()->set("Window/Geometry", saveGeometry());
 }
 
 void MainWindow::showEntryContextMenu(const QPoint& globalPos)
