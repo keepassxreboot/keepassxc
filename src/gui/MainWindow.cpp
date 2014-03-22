@@ -128,6 +128,7 @@ MainWindow::MainWindow()
                              ? QKeySequence::Find
                              : QKeySequence(Qt::CTRL + Qt::Key_F);
     connect(new QShortcut(seq, this), SIGNAL(activated()), m_ui->searchField, SLOT(setFocus()));
+    m_ui->searchField->setContentsMargins(5,0,5,0);
     m_ui->actionEntryNew->setShortcut(Qt::CTRL + Qt::Key_N);
     m_ui->actionEntryEdit->setShortcut(Qt::CTRL + Qt::Key_E);
     m_ui->actionEntryDelete->setShortcut(Qt::CTRL + Qt::Key_D);
@@ -248,7 +249,8 @@ MainWindow::MainWindow()
 
     m_ui->searchField->setPlaceholderText(tr("Type to search"));
     m_ui->searchField->setEnabled(false);
-    m_ui->toolBar->addWidget(m_ui->searchPanel);
+    m_ui->toolBar->addWidget(m_ui->mySpacer);
+    m_ui->toolBar->addWidget(m_ui->searchField);
     m_actionMultiplexer.connect(m_ui->searchField, SIGNAL(textChanged(QString)),
                                 SLOT(search(QString)));
     QMenu* searchMenu = new QMenu(this);

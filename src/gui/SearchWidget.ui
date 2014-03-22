@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>630</width>
-    <height>34</height>
+    <height>16</height>
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -32,10 +32,6 @@
  </widget>
  <tabstops>
   <tabstop>closeSearchButton</tabstop>
-  <tabstop>searchEdit</tabstop>
-  <tabstop>caseSensitiveCheckBox</tabstop>
-  <tabstop>searchCurrentRadioButton</tabstop>
-  <tabstop>searchRootRadioButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>
