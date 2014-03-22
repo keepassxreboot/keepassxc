@@ -103,26 +103,26 @@ public:
         if (keyCode == KEYCODE_A)
         {
             [self performSelector:@selector(selectText:)];
-            return YES;
+            return NO;
         }
         else if (keyCode == KEYCODE_C)
         {
             QClipboard* clipboard = QApplication::clipboard();
             clipboard->setText(toQString([self stringValue]));
-            return YES;
+            return NO;
         }
         else if (keyCode == KEYCODE_V)
         {
             QClipboard* clipboard = QApplication::clipboard();
             [self setStringValue:fromQString(clipboard->text())];
-            return YES;
+            return NO;
         }
         else if (keyCode == KEYCODE_X)
         {
             QClipboard* clipboard = QApplication::clipboard();
             clipboard->setText(toQString([self stringValue]));
             [self setStringValue:@""];
-            return YES;
+            return NO;
         }
     }
 
