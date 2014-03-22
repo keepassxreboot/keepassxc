@@ -25,6 +25,15 @@ namespace Ui {
     class SettingsWidgetSecurity;
 }
 
+class ISettingsPage {
+public:
+    virtual ~ISettingsPage() {}
+    virtual QString name() = 0;
+    virtual QWidget * createWidget() = 0;
+    virtual void loadSettings(QWidget * widget) = 0;
+    virtual void saveSettings(QWidget * widget) = 0;
+};
+
 class SettingsWidget : public EditWidget
 {
     Q_OBJECT
@@ -32,6 +41,7 @@ class SettingsWidget : public EditWidget
 public:
     explicit SettingsWidget(QWidget* parent = Q_NULLPTR);
     ~SettingsWidget();
+    void addSettingsPage(ISettingsPage * page);
     void loadSettings();
 
 Q_SIGNALS:
@@ -49,6 +59,8 @@ private:
     const QScopedPointer<Ui::SettingsWidgetGeneral> m_generalUi;
     Qt::Key m_globalAutoTypeKey;
     Qt::KeyboardModifiers m_globalAutoTypeModifiers;
+    class ExtraPage;
+    QList<ExtraPage> m_extraPages;
 };
 
 #endif // KEEPASSX_SETTINGSWIDGET_H

@@ -47,31 +47,42 @@ public:
         Encrypt
     };
 
+    SymmetricCipher();
     SymmetricCipher(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
-                    SymmetricCipher::Direction direction, const QByteArray& key, const QByteArray& iv);
+                    SymmetricCipher::Direction direction, const QByteArray& key, const QByteArray& iv = QByteArray());
     ~SymmetricCipher();
 
+    void init(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode, SymmetricCipher::Direction direction,
+              const QByteArray &key, const QByteArray &iv = QByteArray());
+    bool isValid() const {
+        return m_backend != 0;
+    }
+
     inline QByteArray process(const QByteArray& data) {
+        Q_ASSERT(m_backend);
         return m_backend->process(data);
     }
 
     inline void processInPlace(QByteArray& data) {
+        Q_ASSERT(m_backend);
         m_backend->processInPlace(data);
     }
 
     inline void processInPlace(QByteArray& data, quint64 rounds) {
         Q_ASSERT(rounds > 0);
+        Q_ASSERT(m_backend);
         m_backend->processInPlace(data, rounds);
     }
 
     void reset();
+    void setIv(const QByteArray& iv);
     int blockSize() const;
 
 private:
     static SymmetricCipherBackend* createBackend(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
                                                  SymmetricCipher::Direction direction);
 
-    const QScopedPointer<SymmetricCipherBackend> m_backend;
+    QScopedPointer<SymmetricCipherBackend> m_backend;
 
     Q_DISABLE_COPY(SymmetricCipher)
 };

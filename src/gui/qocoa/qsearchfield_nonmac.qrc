@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/Qocoa">
+        <file>qsearchfield_nonmac_clear.png</file>
+        <file>qsearchfield_nonmac_magnifier_menu.png</file>
+        <file>qsearchfield_nonmac_magnifier.png</file>
+    </qresource>
+</RCC>

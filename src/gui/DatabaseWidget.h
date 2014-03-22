@@ -39,6 +39,7 @@ class KeePass1OpenWidget;
 class QFile;
 class QMenu;
 class UnlockDatabaseWidget;
+class CompositeKey;
 
 namespace Ui {
     class SearchWidget;
@@ -64,13 +65,19 @@ public:
     Database* database();
     bool dbHasKey();
     bool canDeleteCurrentGoup();
-    bool isInSearchMode();
+    bool isInSearchMode() const;
+    QString searchText() const;
+    bool caseSensitiveSearch() const;
+    bool isAllGroupsSearch() const;
+    bool canChooseSearchScope() const;
+    Group* currentGroup() const;
     int addWidget(QWidget* w);
     void setCurrentIndex(int index);
     void setCurrentWidget(QWidget* widget);
     DatabaseWidget::Mode currentMode();
     void lock();
     void updateFilename(const QString& filename);
+    void search(const QString & searchString, bool caseSensitive, bool allGroups);
 
 Q_SIGNALS:
     void closeRequest();
@@ -103,15 +110,20 @@ public Q_SLOTS:
     void switchToDatabaseSettings();
     void switchToOpenDatabase(const QString& fileName);
     void switchToOpenDatabase(const QString& fileName, const QString& password, const QString& keyFile);
+    void switchToOpenDatabase(const QString &fileName, const CompositeKey &masterKey);
     void switchToImportKeepass1(const QString& fileName);
-    void toggleSearch();
+    void switchToView(bool accepted);
+    void search(const QString & searchString);
+    void setCaseSensitiveSearch(bool caseSensitive);
+    void setAllGroupsSearch(bool allGroups);
     void emitGroupContextMenuRequested(const QPoint& pos);
     void emitEntryContextMenuRequested(const QPoint& pos);
 
 private Q_SLOTS:
     void entryActivationSignalReceived(Entry* entry, EntryModel::ModelColumn column);
+    void onLinkActivated(const QString& link);
+    void showSearch(const QString & searchString = QString());
     void switchBackToEntryEdit();
-    void switchToView(bool accepted);
     void switchToHistoryView(Entry* entry);
     void switchToEntryEdit(Entry* entry);
     void switchToEntryEdit(Entry* entry, bool create);
@@ -124,7 +136,6 @@ private Q_SLOTS:
     void search();
     void startSearch();
     void startSearchTimer();
-    void showSearch();
     void closeSearch();
 
 private:
@@ -151,6 +162,9 @@ private:
     QTimer* m_searchTimer;
     QWidget* widgetBeforeLock;
     QString m_filename;
+    QString m_searchText;
+    bool m_searchAllGroups;
+    Qt::CaseSensitivity m_searchSensitivity;
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H
