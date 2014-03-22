@@ -403,12 +403,12 @@ QList<KeepassHttpProtocol::Entry> Service::findMatchingEntries(const QString& /*
     return result;
 }
 
-int Service::countMatchingEntries(const QString &id, const QString &url, const QString &submitUrl, const QString &realm)
+int Service::countMatchingEntries(const QString &, const QString &url, const QString &, const QString &)
 {
     return searchEntries(url).count();
 }
 
-QList<KeepassHttpProtocol::Entry> Service::searchAllEntries(const QString &id)
+QList<KeepassHttpProtocol::Entry> Service::searchAllEntries(const QString &)
 {
     QList<KeepassHttpProtocol::Entry> result;
     if (DatabaseWidget * dbWidget = m_dbTabWidget->currentDatabaseWidget())
@@ -442,7 +442,7 @@ Group * Service::findCreateAddEntryGroup()
     return NULL;
 }
 
-void Service::addEntry(const QString &id, const QString &login, const QString &password, const QString &url, const QString &submitUrl, const QString &realm)
+void Service::addEntry(const QString &, const QString &login, const QString &password, const QString &url, const QString &submitUrl, const QString &realm)
 {
     if (Group * group = findCreateAddEntryGroup()) {
         Entry * entry = new Entry();
@@ -466,7 +466,7 @@ void Service::addEntry(const QString &id, const QString &login, const QString &p
     }
 }
 
-void Service::updateEntry(const QString &id, const QString &uuid, const QString &login, const QString &password, const QString &url)
+void Service::updateEntry(const QString &, const QString &uuid, const QString &login, const QString &password, const QString &url)
 {
     if (DatabaseWidget * dbWidget = m_dbTabWidget->currentDatabaseWidget())
         if (Database * db = dbWidget->database())

@@ -87,7 +87,7 @@ void AutoTypeExecutor::execDelay(AutoTypeDelay* action)
     Tools::wait(action->delayMs);
 }
 
-void AutoTypeExecutor::execClearField(AutoTypeClearField* action)
+void AutoTypeExecutor::execClearField(AutoTypeClearField*)
 {
     // TODO: implement
 }
