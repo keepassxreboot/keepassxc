@@ -146,11 +146,14 @@ QString Service::storeKey(const QString &key)
         do {
             bool ok;
             //Indicate who wants to associate, and request user to enter the 'name' of association key
-            id = QInputDialog::getText(0, tr("KeyPassX/Http: New key association request"),
-                                       tr("You have received an association request for the above key. If you would like to "
-                                          "allow it access to your KeePassX database give it a unique name to identify and"
-                                          "accept it."),
-                                       QLineEdit::Normal, QString(), &ok);
+            id = QInputDialog::getText(0,
+                    tr("KeyPassX/Http: New key association request"),
+                    tr("You have received an association "
+                       "request for the above key.\n"
+                       "If you would like to allow it access "
+                       "to your KeePassX database\n"
+                       "give it a unique name to identify and accept it."),
+                    QLineEdit::Normal, QString(), &ok);
             if (!ok || id.isEmpty())
                 return QString();
 
