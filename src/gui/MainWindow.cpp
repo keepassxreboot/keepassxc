@@ -40,7 +40,7 @@ MainWindow::MainWindow()
 {
     m_ui->setupUi(this);
 
-    restoreGeometry(config()->get("Window/Geometry").toByteArray());
+    restoreGeometry(config()->get("window/Geometry").toByteArray());
 
     setWindowIcon(filePath()->applicationIcon());
     QAction* toggleViewAction = m_ui->toolBar->toggleViewAction();
@@ -429,7 +429,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
 void MainWindow::saveWindowInformation()
 {
-    config()->set("Window/Geometry", saveGeometry());
+    config()->set("window/Geometry", saveGeometry());
 }
 
 bool MainWindow::saveLastDatabases()
