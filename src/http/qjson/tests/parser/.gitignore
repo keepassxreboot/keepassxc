@@ -1,0 +1,4 @@
+Makefile
+*.o
+*.moc
+parser
