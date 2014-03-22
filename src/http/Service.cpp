@@ -489,10 +489,7 @@ void Service::updateEntry(const QString &id, const QString &uuid, const QString 
 
 QString Service::generatePassword()
 {
-    PasswordGenerator * pwGenerator = passwordGenerator();
-    return pwGenerator->generatePassword(HttpSettings::passwordLength(),
-                                         HttpSettings::passwordCharClasses(),
-                                         HttpSettings::passwordGeneratorFlags());
+    return QString("nonrandompassword");
 }
 
 void Service::removeSharedEncryptionKeys()
