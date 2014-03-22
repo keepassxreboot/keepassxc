@@ -1,0 +1,103 @@
+Mon Jan 28 23:01:40 CET 2013  Flavio Castelli <flavio@castelli.name>
+
+	* Fix compilation on BlackBerry 10.
+
+Tue Nov 27 11:04:12 CET 2012  Flavio Castelli <flavio@castelli.name>
+
+	* Relase 0.8.1:
+		- ensure API and ABI compatibility with 0.7.1
+
+Thu Nov 22 21:20:11 CET 2012  Flavio Castelli <flavio@castelli.name>
+
+	* Fix unsafe pointer usage in Serializer::serialize()
+
+----------------------------------------------------------------------
+Wed Nov 21 22:01:51 CET 2012  Flavio Castelli <flavio@castelli.name>
+
+	* Version 0.8.0 released
+
+Tue Nov 20 11:19:49 CET 2012  Flavio Castelli <flavio@castelli.name>
+
+	* Serializer: handle QVariantHash
+
+Tue Oct 30 15:50:10 CET 2012  Flavio Castelli <flavio@castelli.name>
+
+	* Improve error handling inside of Serializer 
+	* Serializer: handle quint16.
+
+Tue Jan 31 10:15:06 CET 2012  Flavio Castelli <flavio@castelli.name>
+
+	* Make possible to build qjson as an OS X framework.
+
+Fri Nov 04 16:50:56 CET 2011  Flavio Castelli <flavio@castelli.name>
+
+	* Make possible to set double precision during serialization.
+
+Wed Aug 24 17:58:56 CEST 2011  Flavio Castelli <flavio@castelli.name>
+
+	* Buildsystem adjustments, fix issues mentioned here:
+		- http://lists.kde.org/?l=kde-buildsystem&m=130947194605100&w=3
+		- http://lists.kde.org/?l=kde-buildsystem&m=128835747626464&w=3
+		The biggest difference now is that FindQJSON.cmake is not provided
+		anymore. Instead, QJSONConfig.cmake and QJSONConfigVersion.cmake are
+		installed and can be used in find_package(QJSON) calls. Applications
+		using QJson can write their own FindQJSON.cmake files if they need to.
+
+Fri Apr 23:04:29 CEST 2011  Flavio Castelli <flavio@castelli.name>
+
+	* Fixed QVariant de-serialization. QVariant properties were ignored
+	  during QVariant -> QObject conversion.
+
+Sun Dec 18:59:28 CET 2010  Flavio Castelli <flavio@castelli.name>
+
+	* It's now possible to indent the output produced by the Serializer.
+
+Mon Sep 06 18:53:02 CEST 2010  Flavio Castelli  <flavio@castelli.name>
+
+	* 50% performance improvement when parsing numbers.
+
+Sun Jul 04 15:41:08 CEST 2010  Flavio Castelli  <flavio@castelli.name>
+
+	* fix make install when not installing as root
+	* provide "make uninstall"
+
+Tue Jun 15 13:16:57 CEST 2010  Flavio Castelli  <flavio@castelli.name>
+
+	* Allow top level values
+
+----------------------------------------------------------------------
+Sat Mar 13 23:57:00 CEST 2009 - flavio@castelli.name
+
+  * Merged the symbian branch into master,
+
+----------------------------------------------------------------------
+Sun Oct 11 19:18:00 CEST 2009 - flavio@castelli.name
+
+ * Updated to 0.6.3: fixed a bug affecting ulonglong numbers serialization.
+
+-------------------------------------------------------------------
+Wed Sep 15 19:21:00 CEST 2009 - flavio@castelli.name
+
+ * Updated to 0.6.2: fixed a bug affecting ulonglong numbers parsing.
+
+-------------------------------------------------------------------
+Wed Sep 09 09:55:00 CEST 2009 - flavio@castelli.name
+
+ * Updated to 0.6.1: relevant bugs fixed.
+ * Moved the SerializerRunnable class inside QJson namespace.
+ * Fixed a bug in cmdline_tester.
+
+-------------------------------------------------------------------
+Mon Jul 20 15:24:32 CEST 2009 - prusnak@suse.cz
+
+ * Updated to 0.6.0 (KDE SVN rev 999750).
+
+-------------------------------------------------------------------
+Mon Apr 07 00:00:00 UTC 2009 - flavio@castelli.name
+
+ * Released 0.5.1 - added unicode support.
+
+-------------------------------------------------------------------
+Mon Apr 03 00:00:00 UTC 2009 - flavio@castelli.name
+
+ * First release.
