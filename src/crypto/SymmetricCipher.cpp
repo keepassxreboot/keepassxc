@@ -25,7 +25,6 @@ SymmetricCipher::SymmetricCipher(SymmetricCipher::Algorithm algo, SymmetricCiphe
                                  SymmetricCipher::Direction direction, const QByteArray& key, const QByteArray& iv)
     : m_backend(createBackend(algo, mode, direction))
 {
-    m_backend->init();
     m_backend->setKey(key);
     m_backend->setIv(iv);
 }

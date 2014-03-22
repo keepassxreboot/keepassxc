@@ -28,6 +28,16 @@ SymmetricCipherGcrypt::SymmetricCipherGcrypt(SymmetricCipher::Algorithm algo, Sy
     , m_blockSize(-1)
 {
     Q_ASSERT(Crypto::initalized());
+
+    gcry_error_t error;
+
+    error = gcry_cipher_open(&m_ctx, m_algo, m_mode, 0);
+    Q_ASSERT(error == 0); // TODO: real error checking
+
+    size_t blockSizeT;
+    error = gcry_cipher_algo_info(m_algo, GCRYCTL_GET_BLKLEN, Q_NULLPTR, &blockSizeT);
+    Q_ASSERT(error == 0);
+    m_blockSize = blockSizeT;
 }
 
 SymmetricCipherGcrypt::~SymmetricCipherGcrypt()
@@ -71,19 +81,6 @@ int SymmetricCipherGcrypt::gcryptMode(SymmetricCipher::Mode mode)
         Q_ASSERT(false);
         return -1;
     }
-}
-
-void SymmetricCipherGcrypt::init()
-{
-    gcry_error_t error;
-
-    error = gcry_cipher_open(&m_ctx, m_algo, m_mode, 0);
-    Q_ASSERT(error == 0); // TODO: real error checking
-
-    size_t blockSizeT;
-    error = gcry_cipher_algo_info(m_algo, GCRYCTL_GET_BLKLEN, Q_NULLPTR, &blockSizeT);
-    Q_ASSERT(error == 0);
-    m_blockSize = blockSizeT;
 }
 
 void SymmetricCipherGcrypt::setKey(const QByteArray& key)

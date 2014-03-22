@@ -30,6 +30,7 @@ Entry::Entry()
     , m_attachments(new EntryAttachments(this))
     , m_autoTypeAssociations(new AutoTypeAssociations(this))
     , m_tmpHistoryItem(Q_NULLPTR)
+    , m_modifiedSinceBegin(false)
     , m_updateTimeinfo(true)
 {
     m_data.iconNumber = DefaultIconNumber;

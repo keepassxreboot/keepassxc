@@ -591,12 +591,24 @@ void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::Mod
 
 void DatabaseWidget::switchToEntryEdit()
 {
-    switchToEntryEdit(m_entryView->currentEntry(), false);
+    Entry* entry = m_entryView->currentEntry();
+    Q_ASSERT(entry);
+    if (!entry) {
+        return;
+    }
+
+    switchToEntryEdit(entry, false);
 }
 
 void DatabaseWidget::switchToGroupEdit()
 {
-    switchToGroupEdit(m_groupView->currentGroup(), false);
+    Group* group = m_groupView->currentGroup();
+    Q_ASSERT(group);
+    if (!group) {
+        return;
+    }
+
+    switchToGroupEdit(group, false);
 }
 
 void DatabaseWidget::switchToMasterKeyChange()

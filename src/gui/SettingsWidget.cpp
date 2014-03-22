@@ -28,6 +28,8 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     , m_generalWidget(new QWidget())
     , m_secUi(new Ui::SettingsWidgetSecurity())
     , m_generalUi(new Ui::SettingsWidgetGeneral())
+    , m_globalAutoTypeKey(static_cast<Qt::Key>(0))
+    , m_globalAutoTypeModifiers(Qt::NoModifier)
 {
     setHeadline(tr("Application Settings"));
 

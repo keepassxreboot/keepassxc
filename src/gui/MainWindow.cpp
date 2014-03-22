@@ -226,7 +226,9 @@ void MainWindow::updateCopyAttributesMenu()
     if (!dbWidget) {
         return;
     }
-    if (!dbWidget->entryView()->isSingleEntrySelected()) {
+
+    Entry* entry = dbWidget->entryView()->currentEntry();
+    if (!entry || !dbWidget->entryView()->isSingleEntrySelected()) {
         return;
     }
 
@@ -234,8 +236,6 @@ void MainWindow::updateCopyAttributesMenu()
     for (int i = EntryAttributes::DefaultAttributes.size() + 1; i < actions.size(); i++) {
         delete actions[i];
     }
-
-    Entry* entry = dbWidget->entryView()->currentEntry();
 
     Q_FOREACH (const QString& key, entry->attributes()->customKeys()) {
         QAction* action = m_ui->menuEntryCopyAttribute->addAction(key);

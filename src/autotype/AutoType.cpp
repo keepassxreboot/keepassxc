@@ -40,6 +40,7 @@ AutoType::AutoType(QObject* parent, bool test)
     , m_pluginLoader(new QPluginLoader(this))
     , m_plugin(Q_NULLPTR)
     , m_executor(Q_NULLPTR)
+    , m_windowFromGlobal(0)
 {
     // prevent crash when the plugin has unresolved symbols
     m_pluginLoader->setLoadHints(QLibrary::ResolveAllSymbolsHint);

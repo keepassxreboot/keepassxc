@@ -33,10 +33,6 @@ SymmetricCipherSalsa20::~SymmetricCipherSalsa20()
 {
 }
 
-void SymmetricCipherSalsa20::init()
-{
-}
-
 void SymmetricCipherSalsa20::setKey(const QByteArray& key)
 {
     Q_ASSERT((key.size() == 16) || (key.size() == 32));

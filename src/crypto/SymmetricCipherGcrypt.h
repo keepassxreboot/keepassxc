@@ -29,7 +29,6 @@ public:
     SymmetricCipherGcrypt(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
                           SymmetricCipher::Direction direction);
     ~SymmetricCipherGcrypt();
-    void init();
     void setKey(const QByteArray& key);
     void setIv(const QByteArray& iv);
 
