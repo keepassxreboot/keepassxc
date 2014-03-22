@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/Qocoa">
-        <file>qprogressindicatorspinning_nonmac.gif</file>
-    </qresource>
-</RCC>
