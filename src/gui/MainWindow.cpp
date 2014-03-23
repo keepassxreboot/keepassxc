@@ -135,6 +135,7 @@ MainWindow::MainWindow()
     m_ui->actionEntryClone->setShortcut(Qt::CTRL + Qt::Key_K);
     m_ui->actionEntryCopyUsername->setShortcut(Qt::CTRL + Qt::Key_B);
     m_ui->actionEntryCopyPassword->setShortcut(Qt::CTRL + Qt::Key_C);
+    m_ui->actionEntryCopyURL->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_U);
     setShortcut(m_ui->actionEntryAutoType, QKeySequence::Paste, Qt::CTRL + Qt::Key_V);
     m_ui->actionEntryOpenUrl->setShortcut(Qt::CTRL + Qt::Key_U);
 
