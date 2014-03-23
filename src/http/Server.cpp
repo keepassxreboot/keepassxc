@@ -14,6 +14,7 @@
 #include "Server.h"
 #include <microhttpd.h>
 #include "Protocol.h"
+#include "HttpSettings.h"
 #include "crypto/Crypto.h"
 #include <QtCore/QHash>
 #include <QtCore/QCryptographicHash>
@@ -165,11 +166,12 @@ void Server::generatePassword(const Request &r, Response *protocolResp)
         return;
 
     QString password = generatePassword();
+    QString bits = QString::number(HttpSettings::getbits());
 
     protocolResp->setSuccess();
     protocolResp->setId(r.id());
     protocolResp->setVerifier(key);
-    protocolResp->setEntries(QList<Entry>() << Entry("generate-password", "generate-password", password, "generate-password"));
+    protocolResp->setEntries(QList<Entry>() << Entry("generate-password", bits, password, "generate-password"));
 
     memset(password.data(), 0, password.length());
 }

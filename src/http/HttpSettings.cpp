@@ -229,3 +229,8 @@ QString HttpSettings::generatePassword()
 
     return m_generator.generatePassword();
 }
+
+int HttpSettings::getbits()
+{
+    return m_generator.getbits();
+}
