@@ -1,4 +1,6 @@
 /*
+ *  Copyright (C) 2009-2010 Jeff Gibbons
+ *  Copyright (C) 2005-2008 by Tarek Saidi <tarek.saidi@arcor.de>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -20,7 +22,7 @@
 
 static pid_t keepassxPID2;
 
-#define UNICODE_BUFFER_SIZE 1
+#define UNICODE_BUFFER_SIZE 20
 static UniChar      unicodeBuffer[UNICODE_BUFFER_SIZE];
 static UniCharCount unicodePtr = 0;
 // reusable events

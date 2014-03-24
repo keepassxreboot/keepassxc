@@ -1,4 +1,6 @@
 /*
+ *  Copyright (C) 2009-2010 Jeff Gibbons
+ *  Copyright (C) 2005-2008 Tarek Saidi <tarek.saidi@arcor.de>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
