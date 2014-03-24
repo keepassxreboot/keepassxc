@@ -416,10 +416,11 @@ void MainWindow::databaseTabChanged(int tabIndex)
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    saveWindowInformation();
     bool accept = saveLastDatabases();
 
     if (accept) {
+        saveWindowInformation();
+
         event->accept();
     }
     else {
