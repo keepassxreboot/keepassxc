@@ -30,6 +30,7 @@
 #include "core/Group.h"
 #include "core/ListDeleter.h"
 #include "core/Tools.h"
+#include "gui/MessageBox.h"
 
 AutoType* AutoType::m_instance = Q_NULLPTR;
 
@@ -189,6 +190,8 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
 
     if (entryList.isEmpty()) {
         m_inAutoType = false;
+        MessageBox::information(Q_NULLPTR, tr("Auto-Type - KeePassX"),
+                                tr("Couldn't find an entry that matches the window title."));
     }
     else if ((entryList.size() == 1) && !config()->get("security/autotypeask").toBool()) {
         m_inAutoType = false;

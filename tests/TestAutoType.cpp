@@ -28,6 +28,7 @@
 #include "autotype/AutoType.h"
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/test/AutoTypeTestInterface.h"
+#include "gui/MessageBox.h"
 
 void TestAutoType::initTestCase()
 {
@@ -101,6 +102,7 @@ void TestAutoType::testGlobalAutoTypeWithNoMatch()
     QList<Database*> dbList;
     dbList.append(m_db);
 
+    MessageBox::setNextAnswer(QMessageBox::Ok);
     m_autoType->performGlobalAutoType(dbList);
 
     QCOMPARE(m_test->actionChars(), QString());
