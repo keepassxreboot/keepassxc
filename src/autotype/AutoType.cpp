@@ -23,6 +23,7 @@
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/AutoTypeSelectDialog.h"
 #include "autotype/WildcardMatcher.h"
+#include "core/Config.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/FilePath.h"
@@ -189,7 +190,7 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
     if (entryList.isEmpty()) {
         m_inAutoType = false;
     }
-    else if (entryList.size() == 1) {
+    else if ((entryList.size() == 1) && !config()->get("security/autotypeask").toBool()) {
         m_inAutoType = false;
         performAutoType(entryList.first(), Q_NULLPTR, sequenceHash[entryList.first()]);
     }

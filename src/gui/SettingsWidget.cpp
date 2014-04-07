@@ -83,6 +83,8 @@ void SettingsWidget::loadSettings()
 
     m_secUi->passwordCleartextCheckBox->setChecked(config()->get("security/passwordscleartext").toBool());
 
+    m_secUi->autoTypeAskCheckBox->setChecked(config()->get("security/autotypeask").toBool());
+
     setCurrentRow(0);
 }
 
@@ -109,6 +111,8 @@ void SettingsWidget::saveSettings()
     config()->set("security/lockdatabaseidlesec", m_secUi->lockDatabaseIdleSpinBox->value());
 
     config()->set("security/passwordscleartext", m_secUi->passwordCleartextCheckBox->isChecked());
+
+    config()->set("security/autotypeask", m_secUi->autoTypeAskCheckBox->isChecked());
 
     Q_EMIT editFinished(true);
 }
