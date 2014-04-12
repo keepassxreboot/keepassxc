@@ -597,5 +597,17 @@ void DatabaseTabWidget::connectDatabase(Database* newDb, Database* oldDb)
 
 void DatabaseTabWidget::performGlobalAutoType()
 {
-    autoType()->performGlobalAutoType(m_dbList.keys());
+    QList<Database*> unlockedDatabases;
+
+    QHashIterator<Database*, DatabaseManagerStruct> i(m_dbList);
+    while (i.hasNext()) {
+        i.next();
+        DatabaseWidget::Mode mode = i.value().dbWidget->currentMode();
+
+        if (mode != DatabaseWidget::LockedMode) {
+            unlockedDatabases.append(i.key());
+        }
+    }
+
+    autoType()->performGlobalAutoType(unlockedDatabases);
 }
