@@ -1,3 +1,16 @@
+2.0 Alpha 6 (2014-04-06)
+=========================
+
+- Add option to lock databases after user inactivity [#62]
+- Add compatibility with libgcrypt 1.6 [#129]
+- Display passwords in monospace font [#51]
+- Use an icon for the button that shows/masks passwords [#38]
+- Add an option to show passwords by default [#93]
+- Improve password generator design [#122]
+- On Linux link .kdbx files with KeePassX
+- Remember window size [#154]
+- Disallow global auto-typing when the database is locked
+
 2.0 Alpha 5 (2013-12-20)
 =========================
 
@@ -41,7 +54,6 @@
 - Search in databases [#24]
 - Sortable entry view
 - Support building Mac OS X bundles
-
 
 2.0 Alpha 1 (2012-05-07)
 =========================
