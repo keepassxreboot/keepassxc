@@ -129,6 +129,7 @@ private Q_SLOTS:
 
 private:
     void setClipboardTextAndMinimize(const QString& text);
+    void setIconFromParent();
 
     Database* m_db;
     const QScopedPointer<Ui::SearchWidget> m_searchUi;

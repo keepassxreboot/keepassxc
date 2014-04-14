@@ -214,10 +214,22 @@ void DatabaseWidget::createEntry()
     m_newEntry->setUuid(Uuid::random());
     m_newEntry->setUsername(m_db->metadata()->defaultUserName());
     m_newParent = m_groupView->currentGroup();
-    if (m_newParent->iconNumber() != Group::DefaultIconNumber) {
+    setIconFromParent();
+    switchToEntryEdit(m_newEntry, true);
+}
+
+void DatabaseWidget::setIconFromParent()
+{
+    if (m_newParent->iconNumber() == Group::DefaultIconNumber && m_newParent->iconUuid().isNull()) {
+        return;
+    }
+
+    if (m_newParent->iconUuid().isNull()) {
         m_newEntry->setIcon(m_newParent->iconNumber());
     }
-    switchToEntryEdit(m_newEntry, true);
+    else {
+        m_newEntry->setIcon(m_newParent->iconUuid());
+    }
 }
 
 void DatabaseWidget::cloneEntry()
