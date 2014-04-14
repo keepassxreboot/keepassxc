@@ -94,6 +94,7 @@ void Config::init(const QString& fileName)
     m_defaults.insert("AutoSaveOnExit", false);
     m_defaults.insert("ShowToolbar", true);
     m_defaults.insert("MinimizeOnCopy", false);
+    m_defaults.insert("UseGroupIconOnEntryCreation", false);
     m_defaults.insert("security/clearclipboard", true);
     m_defaults.insert("security/clearclipboardtimeout", 10);
     m_defaults.insert("security/lockdatabaseidle", false);

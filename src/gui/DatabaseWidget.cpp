@@ -220,6 +220,10 @@ void DatabaseWidget::createEntry()
 
 void DatabaseWidget::setIconFromParent()
 {
+    if (!config()->get("UseGroupIconOnEntryCreation").toBool()) {
+        return;
+    }
+
     if (m_newParent->iconNumber() == Group::DefaultIconNumber && m_newParent->iconUuid().isNull()) {
         return;
     }
