@@ -22,6 +22,27 @@
 #include "autotype/AutoType.h"
 #include "core/Config.h"
 
+class SettingsWidget::ExtraPage
+{
+public:
+    ExtraPage(ISettingsPage* page, QWidget* widget): settingsPage(page), widget(widget)
+    {}
+
+    void loadSettings() const
+    {
+        settingsPage->loadSettings(widget);
+    }
+
+    void saveSettings() const
+    {
+        settingsPage->saveSettings(widget);
+    }
+
+private:
+    QSharedPointer<ISettingsPage> settingsPage;
+    QWidget*                      widget;
+};
+
 SettingsWidget::SettingsWidget(QWidget* parent)
     : EditWidget(parent)
     , m_secWidget(new QWidget())
@@ -57,6 +78,14 @@ SettingsWidget::~SettingsWidget()
 {
 }
 
+void SettingsWidget::addSettingsPage(ISettingsPage *page)
+{
+    QWidget * widget = page->createWidget();
+    widget->setParent(this);
+    m_extraPages.append(ExtraPage(page, widget));
+    add(page->name(), widget);
+}
+
 void SettingsWidget::loadSettings()
 {
     m_generalUi->rememberLastDatabasesCheckBox->setChecked(config()->get("RememberLastDatabases").toBool());
@@ -67,6 +96,7 @@ void SettingsWidget::loadSettings()
     m_generalUi->autoSaveOnExitCheckBox->setChecked(config()->get("AutoSaveOnExit").toBool());
     m_generalUi->minimizeOnCopyCheckBox->setChecked(config()->get("MinimizeOnCopy").toBool());
     m_generalUi->useGroupIconOnEntryCreationCheckBox->setChecked(config()->get("UseGroupIconOnEntryCreation").toBool());
+    m_generalUi->reloadBehavior->setCurrentIndex(config()->get("ReloadBehavior").toInt());
 
     if (autoType()->isAvailable()) {
         m_globalAutoTypeKey = static_cast<Qt::Key>(config()->get("GlobalAutoTypeKey").toInt());
@@ -85,7 +115,8 @@ void SettingsWidget::loadSettings()
     m_secUi->passwordCleartextCheckBox->setChecked(config()->get("security/passwordscleartext").toBool());
 
     m_secUi->autoTypeAskCheckBox->setChecked(config()->get("security/autotypeask").toBool());
-
+    Q_FOREACH (const ExtraPage& page, m_extraPages)
+        page.loadSettings();
     setCurrentRow(0);
 }
 
@@ -102,6 +133,7 @@ void SettingsWidget::saveSettings()
     config()->set("MinimizeOnCopy", m_generalUi->minimizeOnCopyCheckBox->isChecked());
     config()->set("UseGroupIconOnEntryCreation",
                   m_generalUi->useGroupIconOnEntryCreationCheckBox->isChecked());
+    config()->set("ReloadBehavior", m_generalUi->reloadBehavior->currentIndex());
     if (autoType()->isAvailable()) {
         config()->set("GlobalAutoTypeKey", m_generalUi->autoTypeShortcutWidget->key());
         config()->set("GlobalAutoTypeModifiers",
@@ -116,6 +148,8 @@ void SettingsWidget::saveSettings()
     config()->set("security/passwordscleartext", m_secUi->passwordCleartextCheckBox->isChecked());
 
     config()->set("security/autotypeask", m_secUi->autoTypeAskCheckBox->isChecked());
+    Q_FOREACH (const ExtraPage& page, m_extraPages)
+        page.saveSettings();
 
     Q_EMIT editFinished(true);
 }

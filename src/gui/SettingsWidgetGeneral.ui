@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>456</width>
+    <width>481</width>
     <height>185</height>
    </rect>
   </property>
@@ -14,7 +14,7 @@
    <item row="0" column="0">
     <widget class="QCheckBox" name="rememberLastDatabasesCheckBox">
      <property name="text">
-      <string>Remember last databases</string>
+      <string>Remember recent databases</string>
      </property>
      <property name="checked">
       <bool>true</bool>
@@ -60,6 +60,32 @@
      <property name="text">
       <string>Open previous databases on startup</string>
      </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>When database files are externally modified</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1">
+    <widget class="QComboBox" name="reloadBehavior">
+     <item>
+      <property name="text">
+       <string>Always ask</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Reload unmodified databases</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Ignore modifications</string>
+      </property>
+     </item>
     </widget>
    </item>
    <item row="5" column="0">

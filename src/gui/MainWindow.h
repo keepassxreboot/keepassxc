@@ -43,7 +43,8 @@ public Q_SLOTS:
                       const QString& keyFile = QString());
 
 protected:
-     void closeEvent(QCloseEvent* event) Q_DECL_OVERRIDE;
+    void changeEvent(QEvent *e);
+    void closeEvent(QCloseEvent* event) Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
     void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::None);
@@ -61,8 +62,13 @@ private Q_SLOTS:
     void saveToolbarState(bool value);
     void rememberOpenDatabases(const QString& filePath);
     void applySettingsChanges();
+    void setToolbarIconSize(int size);
+    void setToolbarIconSize16();
+    void setToolbarIconSize22();
+    void setToolbarIconSize28();
 
 private:
+    void updateSearchField(DatabaseWidget* dbWidget = NULL);
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);
 
     static const QString BaseWindowTitle;

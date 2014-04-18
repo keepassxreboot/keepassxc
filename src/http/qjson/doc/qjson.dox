@@ -1,0 +1,87 @@
+/**
+\mainpage
+\section _intro Introduction
+
+<a HREF="http://www.json.org/">JSON (JavaScript Object Notation)</a>
+ is a lightweight data-interchange format. 
+It can represents integer, real number, string, an ordered sequence of value, and
+a collection of name/value pairs.
+
+QJson is a qt-based library that maps JSON data to QVariant objects.
+
+JSON arrays will be mapped to QVariantList instances, while JSON's objects will
+be mapped to QVariantMap.
+
+\section _usage Usage
+Converting JSON's data to QVariant instance is really simple:
+\code
+// create a JSonDriver instance
+QJson::Parser parser;
+
+bool ok;
+
+// json is a QString containing the data to convert
+QVariant result = parser.parse (json, &ok);
+\endcode
+
+Suppose you're going to convert this JSON data:
+\verbatim
+{
+    "encoding" : "UTF-8",
+    "plug-ins" : [
+        "python",
+        "c++",
+        "ruby"
+        ],
+    "indent" : { "length" : 3, "use_space" : true }
+}
+\endverbatim
+
+The following code would convert the JSON data and parse it:
+\code
+QJson::Parser parser;
+bool ok;
+
+QVariantMap result = parser.parse (json, &ok).toMap();
+if (!ok) {
+  qFatal("An error occured during parsing");
+  exit (1);
+}
+
+qDebug() << "encoding:" << result["encoding"].toString();
+qDebug() << "plugins:";
+
+foreach (QVariant plugin, result["plug-ins"].toList()) {
+  qDebug() << "\t-" << plugin.toString();
+}
+
+QVariantMap nestedMap = result["indent"].toMap();
+qDebug() << "length:" << nestedMap["length"].toInt();
+qDebug() << "use_space:" << nestedMap["use_space"].toBool();
+\endcode
+The output would be:
+\verbatim
+encoding: "UTF-8"
+plugins:
+  - "python"
+  - "c++"
+  - "ruby"
+length: 3
+use_space: true
+\endverbatim
+
+The QJson::QObjectHelper class permits to serialize QObject instances into JSON. QJson::QObjectHelper also allows to 
+initialize a QObject using the values stored inside of a JSON object. 
+
+\section _build Build instructions
+QJson build system is based on cmake. Download QJson sources, extract them, move inside the sources directory and then:
+\code
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+\endcode
+
+\author Flavio Castelli <flavio@castelli.name>
+*/
