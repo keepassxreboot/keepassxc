@@ -1,0 +1,3 @@
+moc_*
+*.o
+Makefile

@@ -89,6 +89,12 @@ Uuid Uuid::fromBase64(const QString& str)
     return Uuid(data);
 }
 
+Uuid Uuid::fromHex(const QString& str)
+{
+    QByteArray data = QByteArray::fromHex(str.toAscii());
+    return Uuid(data);
+}
+
 uint qHash(const Uuid& key)
 {
     return qHash(key.toByteArray());
