@@ -66,6 +66,7 @@ public:
     Group::TriState autoTypeEnabled() const;
     Group::TriState searchingEnabled() const;
     bool resolveSearchingEnabled() const;
+    bool resolveAutoTypeEnabled() const;
     Entry* lastTopVisibleEntry() const;
     bool isExpired() const;
 

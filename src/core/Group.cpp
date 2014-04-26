@@ -658,3 +658,23 @@ bool Group::resolveSearchingEnabled() const
         return false;
     }
 }
+
+bool Group::resolveAutoTypeEnabled() const
+{
+    switch (m_data.autoTypeEnabled) {
+    case Inherit:
+        if (!m_parent) {
+            return true;
+        }
+        else {
+            return m_parent->resolveAutoTypeEnabled();
+        }
+    case Enable:
+        return true;
+    case Disable:
+        return false;
+    default:
+        Q_ASSERT(false);
+        return false;
+    }
+}
