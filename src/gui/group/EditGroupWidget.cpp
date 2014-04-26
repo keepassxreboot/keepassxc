@@ -37,9 +37,6 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
     add(tr("Icon"), m_editGroupWidgetIcons);
     add(tr("Properties"), m_editWidgetProperties);
 
-    addTriStateItems(m_mainUi->searchComboBox);
-    addTriStateItems(m_mainUi->autotypeComboBox);
-
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
 
     connect(this, SIGNAL(accepted()), SLOT(save()));
@@ -60,6 +57,15 @@ void EditGroupWidget::loadGroup(Group* group, bool create, Database* database)
     }
     else {
         setHeadline(tr("Edit group"));
+    }
+
+    if (m_group->parentGroup()) {
+        addTriStateItems(m_mainUi->searchComboBox, m_group->parentGroup()->resolveSearchingEnabled());
+        addTriStateItems(m_mainUi->autotypeComboBox, m_group->parentGroup()->resolveAutoTypeEnabled());
+    }
+    else {
+        addTriStateItems(m_mainUi->searchComboBox, true);
+        addTriStateItems(m_mainUi->autotypeComboBox, true);
     }
 
     m_mainUi->editName->setText(m_group->name());
@@ -120,9 +126,18 @@ void EditGroupWidget::cancel()
     Q_EMIT editFinished(false);
 }
 
-void EditGroupWidget::addTriStateItems(QComboBox* comboBox)
+void EditGroupWidget::addTriStateItems(QComboBox* comboBox, bool inheritDefault)
 {
-    comboBox->addItem(tr("Inherit"));
+    QString inheritDefaultString;
+    if (inheritDefault) {
+        inheritDefaultString = tr("Enable");
+    }
+    else {
+        inheritDefaultString = tr("Disable");
+    }
+
+    comboBox->clear();
+    comboBox->addItem(tr("Inherit from parent group (%1)").arg(inheritDefaultString));
     comboBox->addItem(tr("Enable"));
     comboBox->addItem(tr("Disable"));
 }

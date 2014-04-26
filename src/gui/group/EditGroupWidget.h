@@ -50,7 +50,7 @@ private Q_SLOTS:
     void cancel();
 
 private:
-    void addTriStateItems(QComboBox* comboBox);
+    void addTriStateItems(QComboBox* comboBox, bool inheritValue);
     int indexFromTriState(Group::TriState triState);
     Group::TriState triStateFromIndex(int index);
 
