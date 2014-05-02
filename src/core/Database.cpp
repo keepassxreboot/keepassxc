@@ -37,7 +37,7 @@ Database::Database()
 {
     m_data.cipher = KeePass2::CIPHER_AES;
     m_data.compressionAlgo = CompressionGZip;
-    m_data.transformRounds = 50000;
+    m_data.transformRounds = 100000;
     m_data.hasKey = false;
 
     setRootGroup(new Group());

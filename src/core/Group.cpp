@@ -616,7 +616,17 @@ QList<Entry*> Group::search(const QString& searchTerm, Qt::CaseSensitivity caseS
                             bool resolveInherit)
 {
     QList<Entry*> searchResult;
-    if (includeInSearch(resolveInherit)) {
+    bool search;
+    if (resolveInherit) {
+        search = resolveSearchingEnabled();
+    }
+    else if (searchingEnabled() == Disable) {
+        search = false;
+    }
+    else {
+        search = true;
+    }
+    if (search) {
         Q_FOREACH (Entry* entry, m_entries) {
             if (entry->match(searchTerm, caseSensitivity)) {
                 searchResult.append(entry);
@@ -629,7 +639,7 @@ QList<Entry*> Group::search(const QString& searchTerm, Qt::CaseSensitivity caseS
     return searchResult;
 }
 
-bool Group::includeInSearch(bool resolveInherit)
+bool Group::resolveSearchingEnabled() const
 {
     switch (m_data.searchingEnabled) {
     case Inherit:
@@ -637,12 +647,27 @@ bool Group::includeInSearch(bool resolveInherit)
             return true;
         }
         else {
-            if (resolveInherit) {
-                return m_parent->includeInSearch(true);
-            }
-            else {
-                return true;
-            }
+            return m_parent->resolveSearchingEnabled();
+        }
+    case Enable:
+        return true;
+    case Disable:
+        return false;
+    default:
+        Q_ASSERT(false);
+        return false;
+    }
+}
+
+bool Group::resolveAutoTypeEnabled() const
+{
+    switch (m_data.autoTypeEnabled) {
+    case Inherit:
+        if (!m_parent) {
+            return true;
+        }
+        else {
+            return m_parent->resolveAutoTypeEnabled();
         }
     case Enable:
         return true;

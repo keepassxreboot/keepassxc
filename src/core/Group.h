@@ -65,6 +65,8 @@ public:
     QString defaultAutoTypeSequence() const;
     Group::TriState autoTypeEnabled() const;
     Group::TriState searchingEnabled() const;
+    bool resolveSearchingEnabled() const;
+    bool resolveAutoTypeEnabled() const;
     Entry* lastTopVisibleEntry() const;
     bool isExpired() const;
 
@@ -147,7 +149,6 @@ private:
     void cleanupParent();
     void recCreateDelObjects();
     void updateTimeinfo();
-    bool includeInSearch(bool resolveInherit);
 
     QPointer<Database> m_db;
     Uuid m_uuid;
