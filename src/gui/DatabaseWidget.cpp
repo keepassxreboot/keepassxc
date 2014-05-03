@@ -22,9 +22,11 @@
 #include <QDesktopServices>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QFile>
 #include <QLineEdit>
 #include <QSplitter>
 #include <QTimer>
+#include <QtDebug>
 
 #include "autotype/AutoType.h"
 #include "core/Config.h"
@@ -32,6 +34,7 @@
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
+#include "format/KeePass2Reader.h"
 #include "gui/ChangeMasterKeyWidget.h"
 #include "gui/Clipboard.h"
 #include "gui/DatabaseOpenWidget.h"
@@ -159,6 +162,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_searchUi->searchEdit, SIGNAL(returnPressed()), m_entryView, SLOT(setFocus()));
     connect(m_searchTimer, SIGNAL(timeout()), this, SLOT(search()));
     connect(closeAction, SIGNAL(triggered()), this, SLOT(closeSearch()));
+    connect( &m_file_watcher, SIGNAL( fileChanged() ), this, SLOT( databaseModifedExternally() ) );
 
     setCurrentWidget(m_mainWidget);
 }
@@ -580,8 +584,10 @@ void DatabaseWidget::openDatabase(bool accepted)
         m_databaseOpenWidget = Q_NULLPTR;
         delete m_keepass1OpenWidget;
         m_keepass1OpenWidget = Q_NULLPTR;
+        m_file_watcher.watchFile( m_filename );
     }
     else {
+        m_file_watcher.stopWatching();
         if (m_databaseOpenWidget->database()) {
             delete m_databaseOpenWidget->database();
         }
@@ -810,4 +816,26 @@ void DatabaseWidget::lock()
 void DatabaseWidget::updateFilename(const QString& fileName)
 {
     m_filename = fileName;
+}
+
+void DatabaseWidget::databaseModifedExternally()
+{
+    if ( database() == Q_NULLPTR )
+        return;
+
+    KeePass2Reader reader;
+    QFile file(m_filename);
+    if (!file.open(QIODevice::ReadOnly)) {
+        // TODO: error message
+        return;
+    }
+    Database* db = reader.readDatabase(&file, database()->key() );
+    if ( db )
+    {
+        Database* oldDb = m_db;
+        m_db = db;
+        m_groupView->changeDatabase(m_db);
+        Q_EMIT databaseChanged(m_db);
+        delete oldDb;
+    }
 }
