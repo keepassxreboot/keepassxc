@@ -105,11 +105,6 @@ int EntryView::numberOfSelectedEntries()
     return selectionModel()->selectedRows().size();
 }
 
-bool EntryView::isSingleEntrySelected()
-{
-    return (numberOfSelectedEntries() == 1);
-}
-
 void EntryView::setCurrentEntry(Entry* entry)
 {
     selectionModel()->setCurrentIndex(m_sortModel->mapFromSource(m_model->indexFromEntry(entry)),
