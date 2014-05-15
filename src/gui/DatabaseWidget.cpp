@@ -167,7 +167,7 @@ DatabaseWidget::~DatabaseWidget()
 {
 }
 
-DatabaseWidget::Mode DatabaseWidget::currentMode()
+DatabaseWidget::Mode DatabaseWidget::currentMode() const
 {
     if (currentWidget() == Q_NULLPTR) {
         return DatabaseWidget::None;
@@ -182,6 +182,19 @@ DatabaseWidget::Mode DatabaseWidget::currentMode()
         return DatabaseWidget::EditMode;
     }
 }
+
+bool DatabaseWidget::isInEditMode() const
+{
+    if (currentMode() == DatabaseWidget::LockedMode) {
+        return m_widgetBeforeLock != Q_NULLPTR
+                && m_widgetBeforeLock != m_mainWidget
+                && m_widgetBeforeLock != m_unlockDatabaseWidget;
+    }
+    else {
+        return currentMode() == DatabaseWidget::EditMode;
+    }
+}
+
 
 void DatabaseWidget::emitCurrentModeChanged()
 {

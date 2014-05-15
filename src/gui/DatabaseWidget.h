@@ -68,12 +68,13 @@ public:
     int addWidget(QWidget* w);
     void setCurrentIndex(int index);
     void setCurrentWidget(QWidget* widget);
-    DatabaseWidget::Mode currentMode();
+    DatabaseWidget::Mode currentMode() const;
     void lock();
     void updateFilename(const QString& filename);
     int numberOfSelectedEntries();
     QStringList customEntryAttributes();
     bool isGroupSelected();
+    bool isInEditMode() const;
 
 Q_SIGNALS:
     void closeRequest();
