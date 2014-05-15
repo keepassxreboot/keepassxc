@@ -595,7 +595,7 @@ void DatabaseWidget::unlockDatabase(bool accepted)
     Q_ASSERT(accepted);
     Q_UNUSED(accepted);
 
-    setCurrentWidget(widgetBeforeLock);
+    setCurrentWidget(m_widgetBeforeLock);
     Q_EMIT unlockedDatabase();
 }
 
@@ -802,7 +802,7 @@ void DatabaseWidget::lock()
 {
     Q_ASSERT(currentMode() != DatabaseWidget::LockedMode);
 
-    widgetBeforeLock = currentWidget();
+    m_widgetBeforeLock = currentWidget();
     m_unlockDatabaseWidget->load(m_filename, m_db);
     setCurrentWidget(m_unlockDatabaseWidget);
 }

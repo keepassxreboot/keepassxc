@@ -153,7 +153,7 @@ private:
     Group* m_newParent;
     Group* m_lastGroup;
     QTimer* m_searchTimer;
-    QWidget* widgetBeforeLock;
+    QWidget* m_widgetBeforeLock;
     QString m_filename;
 };
 
