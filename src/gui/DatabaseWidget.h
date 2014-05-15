@@ -71,6 +71,9 @@ public:
     DatabaseWidget::Mode currentMode();
     void lock();
     void updateFilename(const QString& filename);
+    int numberOfSelectedEntries();
+    QStringList customEntryAttributes();
+    bool isGroupSelected();
 
 Q_SIGNALS:
     void closeRequest();

@@ -42,6 +42,7 @@ public:
     Entry* entryFromIndex(const QModelIndex& index);
     void setEntryList(const QList<Entry*>& entries);
     bool inEntryListMode();
+    int numberOfSelectedEntries();
 
 public Q_SLOTS:
     void setGroup(Group* group);

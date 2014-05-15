@@ -100,9 +100,14 @@ Entry* EntryView::currentEntry()
     }
 }
 
+int EntryView::numberOfSelectedEntries()
+{
+    return selectionModel()->selectedRows().size();
+}
+
 bool EntryView::isSingleEntrySelected()
 {
-    return (selectionModel()->selectedRows().size() == 1);
+    return (numberOfSelectedEntries() == 1);
 }
 
 void EntryView::setCurrentEntry(Entry* entry)

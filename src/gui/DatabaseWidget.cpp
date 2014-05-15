@@ -811,3 +811,23 @@ void DatabaseWidget::updateFilename(const QString& fileName)
 {
     m_filename = fileName;
 }
+
+int DatabaseWidget::numberOfSelectedEntries()
+{
+    return m_entryView->numberOfSelectedEntries();
+}
+
+QStringList DatabaseWidget::customEntryAttributes()
+{
+    Entry* entry = m_entryView->currentEntry();
+    if (!entry) {
+        return QStringList();
+    }
+
+    return entry->attributes()->customKeys();
+}
+
+bool DatabaseWidget::isGroupSelected()
+{
+    return m_groupView->currentGroup() != Q_NULLPTR;
+}
