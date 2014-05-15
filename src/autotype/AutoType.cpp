@@ -503,6 +503,12 @@ QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitl
             }
         }
 
+        if (!match && config()->get("AutoTypeEntryTitleMatch").toBool() && !entry->title().isEmpty()
+                && windowTitle.contains(entry->title(), Qt::CaseInsensitive)) {
+            sequence = entry->defaultAutoTypeSequence();
+            match = true;
+        }
+
         if (!match) {
             return QString();
         }

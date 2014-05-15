@@ -67,6 +67,7 @@ void SettingsWidget::loadSettings()
     m_generalUi->autoSaveOnExitCheckBox->setChecked(config()->get("AutoSaveOnExit").toBool());
     m_generalUi->minimizeOnCopyCheckBox->setChecked(config()->get("MinimizeOnCopy").toBool());
     m_generalUi->useGroupIconOnEntryCreationCheckBox->setChecked(config()->get("UseGroupIconOnEntryCreation").toBool());
+    m_generalUi->autoTypeEntryTitleMatchCheckBox->setChecked(config()->get("AutoTypeEntryTitleMatch").toBool());
 
     if (autoType()->isAvailable()) {
         m_globalAutoTypeKey = static_cast<Qt::Key>(config()->get("GlobalAutoTypeKey").toInt());
@@ -102,6 +103,8 @@ void SettingsWidget::saveSettings()
     config()->set("MinimizeOnCopy", m_generalUi->minimizeOnCopyCheckBox->isChecked());
     config()->set("UseGroupIconOnEntryCreation",
                   m_generalUi->useGroupIconOnEntryCreationCheckBox->isChecked());
+    config()->set("AutoTypeEntryTitleMatch",
+                  m_generalUi->autoTypeEntryTitleMatchCheckBox->isChecked());
     if (autoType()->isAvailable()) {
         config()->set("GlobalAutoTypeKey", m_generalUi->autoTypeShortcutWidget->key());
         config()->set("GlobalAutoTypeModifiers",
