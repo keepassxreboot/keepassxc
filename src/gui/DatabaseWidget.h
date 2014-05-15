@@ -62,18 +62,18 @@ public:
     GroupView* groupView();
     EntryView* entryView();
     Database* database();
-    bool dbHasKey();
-    bool canDeleteCurrentGoup();
-    bool isInSearchMode();
+    bool dbHasKey() const;
+    bool canDeleteCurrentGoup() const;
+    bool isInSearchMode() const;
     int addWidget(QWidget* w);
     void setCurrentIndex(int index);
     void setCurrentWidget(QWidget* widget);
     DatabaseWidget::Mode currentMode() const;
     void lock();
     void updateFilename(const QString& filename);
-    int numberOfSelectedEntries();
-    QStringList customEntryAttributes();
-    bool isGroupSelected();
+    int numberOfSelectedEntries() const;
+    QStringList customEntryAttributes() const;
+    bool isGroupSelected()const ;
     bool isInEditMode() const;
 
 Q_SIGNALS:

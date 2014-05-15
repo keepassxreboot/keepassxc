@@ -503,7 +503,7 @@ DatabaseWidget* DatabaseTabWidget::currentDatabaseWidget()
     }
 }
 
-bool DatabaseTabWidget::hasLockableDatabases()
+bool DatabaseTabWidget::hasLockableDatabases() const
 {
     QHashIterator<Database*, DatabaseManagerStruct> i(m_dbList);
     while (i.hasNext()) {

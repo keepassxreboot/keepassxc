@@ -786,19 +786,19 @@ void DatabaseWidget::emitEntryContextMenuRequested(const QPoint& pos)
     Q_EMIT entryContextMenuRequested(m_entryView->viewport()->mapToGlobal(pos));
 }
 
-bool DatabaseWidget::dbHasKey()
+bool DatabaseWidget::dbHasKey() const
 {
     return m_db->hasKey();
 }
 
-bool DatabaseWidget::canDeleteCurrentGoup()
+bool DatabaseWidget::canDeleteCurrentGoup() const
 {
     bool isRootGroup = m_db->rootGroup() == m_groupView->currentGroup();
     bool isRecycleBin = m_db->metadata()->recycleBin() == m_groupView->currentGroup();
     return !isRootGroup && !isRecycleBin;
 }
 
-bool DatabaseWidget::isInSearchMode()
+bool DatabaseWidget::isInSearchMode() const
 {
     return m_entryView->inEntryListMode();
 }
@@ -825,12 +825,12 @@ void DatabaseWidget::updateFilename(const QString& fileName)
     m_filename = fileName;
 }
 
-int DatabaseWidget::numberOfSelectedEntries()
+int DatabaseWidget::numberOfSelectedEntries() const
 {
     return m_entryView->numberOfSelectedEntries();
 }
 
-QStringList DatabaseWidget::customEntryAttributes()
+QStringList DatabaseWidget::customEntryAttributes() const
 {
     Entry* entry = m_entryView->currentEntry();
     if (!entry) {
@@ -840,7 +840,7 @@ QStringList DatabaseWidget::customEntryAttributes()
     return entry->attributes()->customKeys();
 }
 
-bool DatabaseWidget::isGroupSelected()
+bool DatabaseWidget::isGroupSelected() const
 {
     return m_groupView->currentGroup() != Q_NULLPTR;
 }

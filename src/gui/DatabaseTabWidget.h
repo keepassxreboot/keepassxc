@@ -53,7 +53,7 @@ public:
     void openDatabase(const QString& fileName, const QString& pw = QString(),
                       const QString& keyFile = QString());
     DatabaseWidget* currentDatabaseWidget();
-    bool hasLockableDatabases();
+    bool hasLockableDatabases() const;
 
     static const int LastDatabasesCount;
 
