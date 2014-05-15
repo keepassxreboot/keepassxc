@@ -440,7 +440,7 @@ void DatabaseWidget::createGroup()
 void DatabaseWidget::deleteGroup()
 {
     Group* currentGroup = m_groupView->currentGroup();
-    if (!currentGroup || !canDeleteCurrentGoup()) {
+    if (!currentGroup || !canDeleteCurrentGroup()) {
         Q_ASSERT(false);
         return;
     }
@@ -791,7 +791,7 @@ bool DatabaseWidget::dbHasKey() const
     return m_db->hasKey();
 }
 
-bool DatabaseWidget::canDeleteCurrentGoup() const
+bool DatabaseWidget::canDeleteCurrentGroup() const
 {
     bool isRootGroup = m_db->rootGroup() == m_groupView->currentGroup();
     bool isRecycleBin = m_db->metadata()->recycleBin() == m_groupView->currentGroup();

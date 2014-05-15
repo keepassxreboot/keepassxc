@@ -63,7 +63,7 @@ public:
     EntryView* entryView();
     Database* database();
     bool dbHasKey() const;
-    bool canDeleteCurrentGoup() const;
+    bool canDeleteCurrentGroup() const;
     bool isInSearchMode() const;
     int addWidget(QWidget* w);
     void setCurrentIndex(int index);
