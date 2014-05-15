@@ -21,7 +21,8 @@
 
 #include <QObject>
 
-class Group;
+#include "core/EntrySearcher.h"
+#include "core/Group.h"
 
 class TestEntrySearcher : public QObject
 {
@@ -34,7 +35,9 @@ private Q_SLOTS:
     void testAndConcatenationInSearch();
     void testSearch();
 private:
-    Group* groupRoot;
+    Group* m_groupRoot;
+    EntrySearcher m_entrySearcher;
+    QList<Entry*> m_searchResult;
 };
 
 #endif // KEEPASSX_TESTENTRYSEARCHER_H
