@@ -21,15 +21,20 @@
 
 #include <QObject>
 
+class Group;
+
 class TestEntrySearcher : public QObject
 {
     Q_OBJECT
 
 private Q_SLOTS:
     void initTestCase();
+    void cleanupTestCase();
 
     void testAndConcatenationInSearch();
     void testSearch();
+private:
+    Group* groupRoot;
 };
 
 #endif // KEEPASSX_TESTENTRYSEARCHER_H

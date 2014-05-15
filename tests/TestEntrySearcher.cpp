@@ -27,12 +27,16 @@ QTEST_GUILESS_MAIN(TestEntrySearcher)
 
 void TestEntrySearcher::initTestCase()
 {
+    groupRoot = new Group();
+}
 
+void TestEntrySearcher::cleanupTestCase()
+{
+    delete groupRoot;
 }
 
 void TestEntrySearcher::testSearch()
 {
-    Group* groupRoot = new Group();
     Group* group1 = new Group();
     Group* group2 = new Group();
     Group* group3 = new Group();
@@ -104,38 +108,33 @@ void TestEntrySearcher::testSearch()
 
     searchResult = entrySearcher.search("search term", group1, Qt::CaseInsensitive);
     QCOMPARE(searchResult.count(), 0);
-
-    delete groupRoot;
 }
 
 void TestEntrySearcher::testAndConcatenationInSearch()
 {
-    Group* group = new Group();
     Entry* entry = new Entry();
     entry->setNotes("abc def ghi");
     entry->setTitle("jkl");
-    entry->setGroup(group);
+    entry->setGroup(groupRoot);
 
     EntrySearcher entrySearcher;
     QList<Entry*> searchResult;
 
-    searchResult = entrySearcher.search("", group, Qt::CaseInsensitive);
+    searchResult = entrySearcher.search("", groupRoot, Qt::CaseInsensitive);
     QCOMPARE(searchResult.count(), 1);
 
-    searchResult = entrySearcher.search("def", group, Qt::CaseInsensitive);
+    searchResult = entrySearcher.search("def", groupRoot, Qt::CaseInsensitive);
     QCOMPARE(searchResult.count(), 1);
 
-    searchResult = entrySearcher.search("  abc    ghi  ", group, Qt::CaseInsensitive);
+    searchResult = entrySearcher.search("  abc    ghi  ", groupRoot, Qt::CaseInsensitive);
     QCOMPARE(searchResult.count(), 1);
 
-    searchResult = entrySearcher.search("ghi ef", group, Qt::CaseInsensitive);
+    searchResult = entrySearcher.search("ghi ef", groupRoot, Qt::CaseInsensitive);
     QCOMPARE(searchResult.count(), 1);
 
-    searchResult = entrySearcher.search("abc ef xyz", group, Qt::CaseInsensitive);
+    searchResult = entrySearcher.search("abc ef xyz", groupRoot, Qt::CaseInsensitive);
     QCOMPARE(searchResult.count(), 0);
 
-    searchResult = entrySearcher.search("abc kl", group, Qt::CaseInsensitive);
+    searchResult = entrySearcher.search("abc kl", groupRoot, Qt::CaseInsensitive);
     QCOMPARE(searchResult.count(), 1);
-
-    delete group;
 }
