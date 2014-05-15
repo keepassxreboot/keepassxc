@@ -28,14 +28,12 @@ QList<Entry*> EntrySearcher::search(const QString &searchTerm, const Group* grou
     return searchEntries(searchTerm, group, caseSensitivity);
 }
 
-QList<Entry*> EntrySearcher::searchEntries(const QString &searchTerm, const Group* group, Qt::CaseSensitivity caseSensitivity)
+QList<Entry*> EntrySearcher::searchEntries(const QString& searchTerm, const Group* group, Qt::CaseSensitivity caseSensitivity)
 {
     QList<Entry*> searchResult;
 
     Q_FOREACH (Entry* entry, group->entries()) {
-        if (entry->match(searchTerm, caseSensitivity)) {
-            searchResult.append(entry);
-        }
+        searchResult.append(matchEntry(searchTerm, entry, caseSensitivity));
     }
     Q_FOREACH (Group* childGroup, group->children()) {
         if (childGroup->searchingEnabled() != Group::Disable) {
@@ -44,4 +42,24 @@ QList<Entry*> EntrySearcher::searchEntries(const QString &searchTerm, const Grou
     }
 
     return searchResult;
+}
+
+QList<Entry*> EntrySearcher::matchEntry(const QString& searchTerm, Entry* entry, Qt::CaseSensitivity caseSensitivity)
+{
+    QStringList wordList = searchTerm.split(QRegExp("\\s"), QString::SkipEmptyParts);
+    Q_FOREACH (const QString& word, wordList) {
+        if (!wordMatch(word, entry, caseSensitivity)) {
+            return QList<Entry*>();
+        }
+    }
+
+    return QList<Entry*>() << entry;
+}
+
+bool EntrySearcher::wordMatch(const QString& word, Entry* entry, Qt::CaseSensitivity caseSensitivity)
+{
+    return entry->title().contains(word, caseSensitivity) ||
+            entry->username().contains(word, caseSensitivity) ||
+            entry->url().contains(word, caseSensitivity) ||
+            entry->notes().contains(word, caseSensitivity);
 }
