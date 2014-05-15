@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2014 Florian Geyer <blueice@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,25 +15,21 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTGROUP_H
-#define KEEPASSX_TESTGROUP_H
+
+#ifndef KEEPASSX_TESTENTRYSEARCHER_H
+#define KEEPASSX_TESTENTRYSEARCHER_H
 
 #include <QObject>
 
-class TestGroup : public QObject
+class TestEntrySearcher : public QObject
 {
     Q_OBJECT
 
 private Q_SLOTS:
     void initTestCase();
-    void testParenting();
-    void testSignals();
-    void testEntries();
-    void testDeleteSignals();
-    void testCopyCustomIcon();
-    void testClone();
-    void testCopyCustomIcons();
-    void testExportToDb();
+
+    void testAndConcatenationInSearch();
+    void testSearch();
 };
 
-#endif // KEEPASSX_TESTGROUP_H
+#endif // KEEPASSX_TESTENTRYSEARCHER_H

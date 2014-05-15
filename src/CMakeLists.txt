@@ -35,6 +35,7 @@ set(keepassx_SOURCES
     core/Entry.cpp
     core/EntryAttachments.cpp
     core/EntryAttributes.cpp
+    core/EntrySearcher.cpp
     core/FilePath.cpp
     core/Global.h
     core/Group.cpp

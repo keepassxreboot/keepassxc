@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2014 Florian Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,25 +15,21 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTGROUP_H
-#define KEEPASSX_TESTGROUP_H
+#ifndef KEEPASSX_ENTRYSEARCHER_H
+#define KEEPASSX_ENTRYSEARCHER_H
 
-#include <QObject>
+#include <QString>
 
-class TestGroup : public QObject
+
+class Group;
+class Entry;
+
+class EntrySearcher
 {
-    Q_OBJECT
-
-private Q_SLOTS:
-    void initTestCase();
-    void testParenting();
-    void testSignals();
-    void testEntries();
-    void testDeleteSignals();
-    void testCopyCustomIcon();
-    void testClone();
-    void testCopyCustomIcons();
-    void testExportToDb();
+public:
+    QList<Entry*> search(const QString& searchTerm, const Group* group, Qt::CaseSensitivity caseSensitivity);
+private:
+    QList<Entry*> searchEntries(const QString &searchTerm, const Group *group, Qt::CaseSensitivity caseSensitivity);
 };
 
-#endif // KEEPASSX_TESTGROUP_H
+#endif // KEEPASSX_ENTRYSEARCHER_H

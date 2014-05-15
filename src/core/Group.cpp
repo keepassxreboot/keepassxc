@@ -612,33 +612,6 @@ void Group::recCreateDelObjects()
     }
 }
 
-QList<Entry*> Group::search(const QString& searchTerm, Qt::CaseSensitivity caseSensitivity,
-                            bool resolveInherit)
-{
-    QList<Entry*> searchResult;
-    bool search;
-    if (resolveInherit) {
-        search = resolveSearchingEnabled();
-    }
-    else if (searchingEnabled() == Disable) {
-        search = false;
-    }
-    else {
-        search = true;
-    }
-    if (search) {
-        Q_FOREACH (Entry* entry, m_entries) {
-            if (entry->match(searchTerm, caseSensitivity)) {
-                searchResult.append(entry);
-            }
-        }
-        Q_FOREACH (Group* group, m_children) {
-            searchResult.append(group->search(searchTerm, caseSensitivity, false));
-        }
-    }
-    return searchResult;
-}
-
 bool Group::resolveSearchingEnabled() const
 {
     switch (m_data.searchingEnabled) {

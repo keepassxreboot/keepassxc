@@ -28,6 +28,7 @@
 
 #include "autotype/AutoType.h"
 #include "core/Config.h"
+#include "core/EntrySearcher.h"
 #include "core/FilePath.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -754,8 +755,8 @@ void DatabaseWidget::search()
     else {
         sensitivity = Qt::CaseInsensitive;
     }
-    QList<Entry*> searchResult = searchGroup->search(m_searchUi->searchEdit->text(), sensitivity);
 
+    QList<Entry*> searchResult = EntrySearcher().search(m_searchUi->searchEdit->text(), searchGroup, sensitivity);
 
     m_entryView->setEntryList(searchResult);
 }
