@@ -111,7 +111,6 @@ public:
      */
     Group* clone(Entry::CloneFlags entryFlags = Entry::CloneNewUuid | Entry::CloneResetTimeInfo) const;
     void copyDataFrom(const Group* other);
-    Database* exportToDb();
 
 Q_SIGNALS:
     void dataChanged(Group* group);

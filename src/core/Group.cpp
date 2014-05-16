@@ -500,22 +500,6 @@ void Group::copyDataFrom(const Group* other)
     m_lastTopVisibleEntry = other->m_lastTopVisibleEntry;
 }
 
-Database* Group::exportToDb()
-{
-    Q_ASSERT(database());
-
-    Database* db = new Database();
-    Group* clonedGroup = clone(Entry::CloneNewUuid | Entry::CloneIncludeHistory);
-    clonedGroup->setParent(db->rootGroup());
-
-    QSet<Uuid> customIcons = customIconsRecursive();
-    db->metadata()->copyCustomIcons(customIcons, database()->metadata());
-
-    db->copyAttributesFrom(database());
-
-    return db;
-}
-
 void Group::addEntry(Entry* entry)
 {
     Q_ASSERT(entry);

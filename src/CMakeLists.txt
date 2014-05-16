@@ -48,6 +48,7 @@ set(keepassx_SOURCES
     core/SignalMultiplexer.cpp
     core/TimeDelta.cpp
     core/TimeInfo.cpp
+    core/ToDbExporter.cpp
     core/Tools.cpp
     core/Uuid.cpp
     core/qcommandlineoption.cpp
