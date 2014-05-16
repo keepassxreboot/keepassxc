@@ -701,6 +701,7 @@ void DatabaseWidget::closeSearch()
 {
     Q_ASSERT(m_lastGroup);
     m_groupView->setCurrentGroup(m_lastGroup);
+    m_searchTimer->stop();
 }
 
 void DatabaseWidget::showSearch()
