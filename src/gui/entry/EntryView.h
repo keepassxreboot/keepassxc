@@ -42,6 +42,7 @@ public:
     void setEntryList(const QList<Entry*>& entries);
     bool inEntryListMode();
     int numberOfSelectedEntries();
+    void setFirstEntryActive();
 
 public Q_SLOTS:
     void setGroup(Group* group);

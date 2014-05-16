@@ -62,13 +62,24 @@ void EntryView::keyPressEvent(QKeyEvent* event)
 void EntryView::setGroup(Group* group)
 {
     m_model->setGroup(group);
-    Q_EMIT entrySelectionChanged();
+    setFirstEntryActive();
 }
 
 void EntryView::setEntryList(const QList<Entry*>& entries)
 {
     m_model->setEntryList(entries);
-    Q_EMIT entrySelectionChanged();
+    setFirstEntryActive();
+}
+
+void EntryView::setFirstEntryActive()
+{
+    if(m_model->rowCount() > 0) {
+        QModelIndex index = m_sortModel->mapToSource(m_sortModel->index(0, 0));
+        setCurrentEntry(m_model->entryFromIndex(index));
+    }
+    else {
+        Q_EMIT entrySelectionChanged();
+    }
 }
 
 bool EntryView::inEntryListMode()
