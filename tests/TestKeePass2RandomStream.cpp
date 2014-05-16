@@ -26,6 +26,8 @@
 #include "format/KeePass2.h"
 #include "format/KeePass2RandomStream.h"
 
+QTEST_GUILESS_MAIN(TestKeePass2RandomStream)
+
 void TestKeePass2RandomStream::initTestCase()
 {
     Crypto::init();
@@ -77,5 +79,3 @@ void TestKeePass2RandomStream::test()
     QCOMPARE(cipherData, cipherDataEncrypt);
     QCOMPARE(randomStreamData, cipherData);
 }
-
-QTEST_GUILESS_MAIN(TestKeePass2RandomStream)

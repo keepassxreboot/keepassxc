@@ -31,6 +31,8 @@
 #include "autotype/test/AutoTypeTestInterface.h"
 #include "gui/MessageBox.h"
 
+QTEST_GUILESS_MAIN(TestAutoType)
+
 void TestAutoType::initTestCase()
 {
     Crypto::init();
@@ -154,5 +156,3 @@ void TestAutoType::testGlobalAutoTypeTitleMatchDisabled()
     QCOMPARE(m_test->actionChars(), QString());
 
 }
-
-QTEST_GUILESS_MAIN(TestAutoType)

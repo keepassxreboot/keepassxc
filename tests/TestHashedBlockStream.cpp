@@ -24,6 +24,8 @@
 #include "crypto/Crypto.h"
 #include "streams/HashedBlockStream.h"
 
+QTEST_GUILESS_MAIN(TestHashedBlockStream)
+
 void TestHashedBlockStream::initTestCase()
 {
     Crypto::init();
@@ -69,5 +71,3 @@ void TestHashedBlockStream::testWriteRead()
     buffer.reset();
     buffer.buffer().clear();
 }
-
-QTEST_GUILESS_MAIN(TestHashedBlockStream)

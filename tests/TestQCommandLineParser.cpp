@@ -46,6 +46,8 @@
 #include "tests.h"
 #include "core/qcommandlineparser.h"
 
+QTEST_GUILESS_MAIN(TestQCommandLineParser)
+
 Q_DECLARE_METATYPE(char**)
 
 static char *empty_argv[] = { 0 };
@@ -412,5 +414,3 @@ void TestQCommandLineParser::testSingleDashWordOptionModes()
         QCOMPARE(parser.value(parser.optionNames().at(i)), expectedOptionValues.at(i));
     QCOMPARE(parser.unknownOptionNames(), QStringList());
 }
-
-QTEST_GUILESS_MAIN(TestQCommandLineParser)

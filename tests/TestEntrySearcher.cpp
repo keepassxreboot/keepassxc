@@ -21,7 +21,6 @@
 
 #include "tests.h"
 
-
 QTEST_GUILESS_MAIN(TestEntrySearcher)
 
 void TestEntrySearcher::initTestCase()

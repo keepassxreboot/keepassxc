@@ -27,6 +27,8 @@
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 
+QTEST_GUILESS_MAIN(TestModified)
+
 void TestModified::initTestCase()
 {
     Crypto::init();
@@ -466,5 +468,3 @@ void TestModified::testHistoryItem()
 
     delete db;
 }
-
-QTEST_GUILESS_MAIN(TestModified)

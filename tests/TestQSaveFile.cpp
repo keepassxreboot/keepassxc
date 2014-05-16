@@ -29,6 +29,8 @@
 #include "tests.h"
 #include "core/qsavefile.h"
 
+QTEST_GUILESS_MAIN(TestQSaveFile)
+
 class DirCleanup
 {
 public:
@@ -197,5 +199,3 @@ QString TestQSaveFile::tmpDir()
 
     return dirName;
 }
-
-QTEST_GUILESS_MAIN(TestQSaveFile)

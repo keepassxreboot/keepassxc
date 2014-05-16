@@ -22,6 +22,8 @@
 #include "tests.h"
 #include "autotype/WildcardMatcher.h"
 
+QTEST_GUILESS_MAIN(TestWildcardMatcher)
+
 const QString TestWildcardMatcher::DefaultText = QString("some text");
 const QString TestWildcardMatcher::AlternativeText = QString("some other text");
 
@@ -82,5 +84,3 @@ void TestWildcardMatcher::verifyNoMatch(QString pattern)
     bool matchResult = m_matcher->match(pattern);
     QVERIFY(!matchResult);
 }
-
-QTEST_GUILESS_MAIN(TestWildcardMatcher)
