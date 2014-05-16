@@ -34,6 +34,8 @@ private Q_SLOTS:
 
     void testAndConcatenationInSearch();
     void testSearch();
+    void testAllAttributesAreSearched();
+
 private:
     Group* m_groupRoot;
     EntrySearcher m_entrySearcher;

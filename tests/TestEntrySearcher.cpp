@@ -92,7 +92,6 @@ void TestEntrySearcher::testSearch()
     e3b->setGroup(group3);
 
     m_searchResult = m_entrySearcher.search("search term", m_groupRoot, Qt::CaseInsensitive);
-
     QCOMPARE(m_searchResult.count(), 3);
 
     m_searchResult = m_entrySearcher.search("search term", group211, Qt::CaseInsensitive);
@@ -128,5 +127,19 @@ void TestEntrySearcher::testAndConcatenationInSearch()
     QCOMPARE(m_searchResult.count(), 0);
 
     m_searchResult = m_entrySearcher.search("abc kl", m_groupRoot, Qt::CaseInsensitive);
+    QCOMPARE(m_searchResult.count(), 1);
+}
+
+void TestEntrySearcher::testAllAttributesAreSearched()
+{
+    Entry* entry = new Entry();
+    entry->setGroup(m_groupRoot);
+
+    entry->setTitle("testTitle");
+    entry->setUsername("testUsername");
+    entry->setUrl("testUrl");
+    entry->setNotes("testNote");
+
+    m_searchResult = m_entrySearcher.search("testTitle testUsername testUrl testNote", m_groupRoot, Qt::CaseInsensitive);
     QCOMPARE(m_searchResult.count(), 1);
 }
