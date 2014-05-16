@@ -102,6 +102,10 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
 
     rightHandSideWidget->setLayout(vLayout);
 
+    setTabOrder(m_searchUi->searchRootRadioButton, m_entryView);
+    setTabOrder(m_entryView, m_groupView);
+    setTabOrder(m_groupView, m_searchWidget);
+
     splitter->addWidget(m_groupView);
     splitter->addWidget(rightHandSideWidget);
 
