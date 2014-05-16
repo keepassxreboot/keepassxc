@@ -19,13 +19,15 @@
 #ifndef KEEPASSX_TODBEXPORTER_H
 #define KEEPASSX_TODBEXPORTER_H
 
+#include "core/Exporter.h"
+
 class Database;
 class Group;
 
-class ToDbExporter
+class ToDbExporter : Exporter
 {
 public:
-    Database* exportToDb(Group* group);
+    Database* exportGroup(Group* group);
 };
 
 #endif // KEEPASSX_TODBEXPORTER_H

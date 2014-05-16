@@ -21,7 +21,7 @@
 #include "core/Group.h"
 #include "core/Metadata.h"
 
-Database* ToDbExporter::exportToDb(Group* group)
+Database* ToDbExporter::exportGroup(Group* group)
 {
     Database* oldDb = group->database();
     Q_ASSERT(oldDb);

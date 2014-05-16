@@ -57,7 +57,7 @@ void TestExporter::testToDbExporter()
     entryOrg->setIcon(Entry::DefaultIconNumber);
     entryOrg->endUpdate();
 
-    Database* dbExp = ToDbExporter().exportToDb(groupOrg);
+    Database* dbExp = ToDbExporter().exportGroup(groupOrg);
 
     QCOMPARE(dbExp->rootGroup()->children().size(), 1);
     Group* groupExp = dbExp->rootGroup()->children().first();
