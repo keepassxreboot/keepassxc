@@ -31,14 +31,22 @@ public:
 
 public Q_SLOTS:
     void setActive(DatabaseWidget* dbWidget);
+    void restoreListView();
+    void restoreSearchView();
 
 private Q_SLOTS:
     void updateSplitterSizes();
+    void updateColumnSizes();
 
 private:
+    static QList<int> variantToIntList(const QVariant& variant);
+    static QVariant intListToVariant(const QList<int>& list);
+
     DatabaseWidget* m_activeDbWidget;
 
     QList<int> m_splitterSizes;
+    QList<int> m_columnSizesList;
+    QList<int> m_columnSizesSearch;
 };
 
 #endif // KEEPASSX_HEADERVIEWSYNC_H

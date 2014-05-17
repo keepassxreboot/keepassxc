@@ -138,6 +138,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     addWidget(m_unlockDatabaseWidget);
 
     connect(m_splitter, SIGNAL(splitterMoved(int,int)), SIGNAL(splitterSizesChanged()));
+    connect(m_entryView->header(), SIGNAL(sectionResized(int,int,int)), SIGNAL(entryColumnSizesChanged()));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(clearLastGroup(Group*)));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), SIGNAL(groupChanged()));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), m_entryView, SLOT(setGroup(Group*)));
@@ -205,6 +206,29 @@ QList<int> DatabaseWidget::splitterSizes() const
 void DatabaseWidget::setSplitterSizes(const QList<int>& sizes)
 {
     m_splitter->setSizes(sizes);
+}
+
+QList<int> DatabaseWidget::entryHeaderViewSizes() const
+{
+    QList<int> sizes;
+
+    for (int i = 0; i < m_entryView->header()->count(); i++) {
+        sizes.append(m_entryView->header()->sectionSize(i));
+    }
+
+    return sizes;
+}
+
+void DatabaseWidget::setEntryViewHeaderSizes(const QList<int>& sizes)
+{
+    if (sizes.size() != m_entryView->header()->count()) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    for (int i = 0; i < sizes.size(); i++) {
+        m_entryView->header()->resizeSection(i, sizes[i]);
+    }
 }
 
 void DatabaseWidget::emitCurrentModeChanged()
@@ -702,6 +726,8 @@ void DatabaseWidget::closeSearch()
     Q_ASSERT(m_lastGroup);
     m_groupView->setCurrentGroup(m_lastGroup);
     m_searchTimer->stop();
+
+    Q_EMIT listModeActivated();
 }
 
 void DatabaseWidget::showSearch()
@@ -739,6 +765,8 @@ void DatabaseWidget::showSearch()
     m_searchWidget->show();
     search();
     m_searchUi->searchEdit->setFocus();
+
+    Q_EMIT searchModeActivated();
 }
 
 void DatabaseWidget::search()

@@ -76,6 +76,8 @@ public:
     bool isInEditMode() const;
     QList<int> splitterSizes() const;
     void setSplitterSizes(const QList<int>& sizes);
+    QList<int> entryHeaderViewSizes() const;
+    void setEntryViewHeaderSizes(const QList<int>& sizes);
 
 Q_SIGNALS:
     void closeRequest();
@@ -89,6 +91,7 @@ Q_SIGNALS:
     void listModeActivated();
     void searchModeActivated();
     void splitterSizesChanged();
+    void entryColumnSizesChanged();
 
 public Q_SLOTS:
     void createEntry();
