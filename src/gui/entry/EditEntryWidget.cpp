@@ -590,14 +590,14 @@ void EditEntryWidget::insertAttachment()
     QFile file(filename);
     if (!file.open(QIODevice::ReadOnly)) {
         MessageBox::warning(this, tr("Error"),
-                tr("Unable to open file:\n").append(file.errorString()));
+                tr("Unable to open file").append(":\n").append(file.errorString()));
         return;
     }
 
     QByteArray data;
     if (!Tools::readAllFromDevice(&file, data)) {
         MessageBox::warning(this, tr("Error"),
-                tr("Unable to open file:\n").append(file.errorString()));
+                tr("Unable to open file").append(":\n").append(file.errorString()));
         return;
     }
 
