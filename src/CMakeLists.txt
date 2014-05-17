@@ -50,6 +50,7 @@ set(keepassx_SOURCES
     core/TimeInfo.cpp
     core/ToDbExporter.cpp
     core/Tools.cpp
+    core/Translator.cpp
     core/Uuid.cpp
     core/qcommandlineoption.cpp
     core/qcommandlineparser.cpp
