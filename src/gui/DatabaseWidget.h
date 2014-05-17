@@ -72,7 +72,7 @@ public:
     void updateFilename(const QString& filename);
     int numberOfSelectedEntries() const;
     QStringList customEntryAttributes() const;
-    bool isGroupSelected()const ;
+    bool isGroupSelected() const;
     bool isInEditMode() const;
     QList<int> splitterSizes() const;
     void setSplitterSizes(const QList<int>& sizes);
