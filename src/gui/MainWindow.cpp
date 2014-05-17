@@ -38,7 +38,7 @@ MainWindow::MainWindow()
 
     m_countDefaultAttributes = m_ui->menuEntryCopyAttribute->actions().size();
 
-    restoreGeometry(config()->get("window/Geometry").toByteArray());
+    restoreGeometry(config()->get("GUI/MainWindowGeometry").toByteArray());
 
     setWindowIcon(filePath()->applicationIcon());
     QAction* toggleViewAction = m_ui->toolBar->toggleViewAction();
@@ -437,7 +437,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
 void MainWindow::saveWindowInformation()
 {
-    config()->set("window/Geometry", saveGeometry());
+    config()->set("GUI/MainWindowGeometry", saveGeometry());
 }
 
 bool MainWindow::saveLastDatabases()
