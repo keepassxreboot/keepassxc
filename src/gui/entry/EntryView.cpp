@@ -17,6 +17,7 @@
 
 #include "EntryView.h"
 
+#include <QHeaderView>
 #include <QKeyEvent>
 
 #include "gui/SortFilterHideProxyModel.h"
@@ -40,6 +41,7 @@ EntryView::EntryView(QWidget* parent)
     setDragEnabled(true);
     setSortingEnabled(true);
     setSelectionMode(QAbstractItemView::ExtendedSelection);
+    header()->setDefaultSectionSize(150);
 
     // QAbstractItemView::startDrag() uses this property as the default drag action
     setDefaultDropAction(Qt::MoveAction);
