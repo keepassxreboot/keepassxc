@@ -62,6 +62,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_mainWidget = new QWidget(this);
     QLayout* layout = new QHBoxLayout(m_mainWidget);
     m_splitter = new QSplitter(m_mainWidget);
+    m_splitter->setChildrenCollapsible(false);
 
     QWidget* rightHandSideWidget = new QWidget(m_splitter);
     m_searchWidget->setParent(rightHandSideWidget);
