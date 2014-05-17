@@ -332,8 +332,7 @@ void DatabaseWidget::deleteEntries()
         if (selected.size() > 1) {
             QMessageBox::StandardButton result = MessageBox::question(
                 this, tr("Move entries to recycle bin?"),
-                tr("Do you really want to move %1 entries to the recycle bin?")
-                .arg(selected.size()),
+                tr("Do you really want to move %n entry(s) to the recycle bin?", 0, selected.size()),
                 QMessageBox::Yes | QMessageBox::No);
             if (result == QMessageBox::No) {
                 return;
