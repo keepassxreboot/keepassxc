@@ -216,16 +216,6 @@ void DatabaseWidget::emitCurrentModeChanged()
     Q_EMIT currentModeChanged(currentMode());
 }
 
-GroupView* DatabaseWidget::groupView()
-{
-    return m_groupView;
-}
-
-EntryView* DatabaseWidget::entryView()
-{
-    return m_entryView;
-}
-
 Database* DatabaseWidget::database()
 {
     return m_db;

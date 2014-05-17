@@ -60,8 +60,6 @@ public:
 
     explicit DatabaseWidget(Database* db, QWidget* parent = Q_NULLPTR);
     ~DatabaseWidget();
-    GroupView* groupView();
-    EntryView* entryView();
     Database* database();
     bool dbHasKey() const;
     bool canDeleteCurrentGroup() const;
