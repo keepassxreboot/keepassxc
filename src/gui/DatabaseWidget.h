@@ -113,8 +113,6 @@ public Q_SLOTS:
     void switchToOpenDatabase(const QString& fileName, const QString& password, const QString& keyFile);
     void switchToImportKeepass1(const QString& fileName);
     void toggleSearch();
-    void emitGroupContextMenuRequested(const QPoint& pos);
-    void emitEntryContextMenuRequested(const QPoint& pos);
 
 private Q_SLOTS:
     void entryActivationSignalReceived(Entry* entry, EntryModel::ModelColumn column);
@@ -124,6 +122,8 @@ private Q_SLOTS:
     void switchToEntryEdit(Entry* entry);
     void switchToEntryEdit(Entry* entry, bool create);
     void switchToGroupEdit(Group* entry, bool create);
+    void emitGroupContextMenuRequested(const QPoint& pos);
+    void emitEntryContextMenuRequested(const QPoint& pos);
     void updateMasterKey(bool accepted);
     void openDatabase(bool accepted);
     void unlockDatabase(bool accepted);
