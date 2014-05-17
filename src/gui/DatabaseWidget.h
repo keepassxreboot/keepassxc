@@ -38,6 +38,7 @@ class GroupView;
 class KeePass1OpenWidget;
 class QFile;
 class QMenu;
+class QSplitter;
 class UnlockDatabaseWidget;
 
 namespace Ui {
@@ -75,6 +76,8 @@ public:
     QStringList customEntryAttributes() const;
     bool isGroupSelected()const ;
     bool isInEditMode() const;
+    QList<int> splitterSizes() const;
+    void setSplitterSizes(const QList<int>& sizes);
 
 Q_SIGNALS:
     void closeRequest();
@@ -85,6 +88,9 @@ Q_SIGNALS:
     void groupContextMenuRequested(const QPoint& globalPos);
     void entryContextMenuRequested(const QPoint& globalPos);
     void unlockedDatabase();
+    void listModeActivated();
+    void searchModeActivated();
+    void splitterSizesChanged();
 
 public Q_SLOTS:
     void createEntry();
@@ -147,6 +153,7 @@ private:
     DatabaseOpenWidget* m_databaseOpenWidget;
     KeePass1OpenWidget* m_keepass1OpenWidget;
     UnlockDatabaseWidget* m_unlockDatabaseWidget;
+    QSplitter* m_splitter;
     GroupView* m_groupView;
     EntryView* m_entryView;
     Group* m_newGroup;

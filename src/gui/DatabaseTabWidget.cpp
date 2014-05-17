@@ -27,6 +27,7 @@
 #include "core/Metadata.h"
 #include "core/qsavefile.h"
 #include "gui/DatabaseWidget.h"
+#include "gui/DatabaseWidgetStateSync.h"
 #include "gui/DragTabBar.h"
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
@@ -46,12 +47,15 @@ const int DatabaseTabWidget::LastDatabasesCount = 5;
 
 DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     : QTabWidget(parent)
+    , m_dbWidgetSateSync(new DatabaseWidgetStateSync(this))
 {
     DragTabBar* tabBar = new DragTabBar(this);
     tabBar->setDrawBase(false);
     setTabBar(tabBar);
 
     connect(this, SIGNAL(tabCloseRequested(int)), SLOT(closeDatabase(int)));
+    connect(this, SIGNAL(currentChanged(int)), SLOT(emitActivateDatabaseChanged()));
+    connect(this, SIGNAL(activateDatabaseChanged(DatabaseWidget*)), m_dbWidgetSateSync, SLOT(setActive(DatabaseWidget*)));
     connect(autoType(), SIGNAL(globalShortcutTriggered()), SLOT(performGlobalAutoType()));
 }
 
@@ -582,6 +586,11 @@ void DatabaseTabWidget::changeDatabase(Database* newDb)
 
     updateTabName(newDb);
     connectDatabase(newDb, oldDb);
+}
+
+void DatabaseTabWidget::emitActivateDatabaseChanged()
+{
+    Q_EMIT activateDatabaseChanged(currentDatabaseWidget());
 }
 
 void DatabaseTabWidget::connectDatabase(Database* newDb, Database* oldDb)

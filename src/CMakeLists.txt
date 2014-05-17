@@ -75,6 +75,7 @@ set(keepassx_SOURCES
     gui/DatabaseSettingsWidget.cpp
     gui/DatabaseTabWidget.cpp
     gui/DatabaseWidget.cpp
+    gui/DatabaseWidgetStateSync.cpp
     gui/DialogyWidget.cpp
     gui/DragTabBar.cpp
     gui/EditWidget.cpp
@@ -156,6 +157,7 @@ set(keepassx_MOC
     gui/DatabaseSettingsWidget.h
     gui/DatabaseTabWidget.h
     gui/DatabaseWidget.h
+    gui/DatabaseWidgetStateSync.h
     gui/DialogyWidget.h
     gui/DragTabBar.h
     gui/EditWidget.h

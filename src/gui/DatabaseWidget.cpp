@@ -61,12 +61,12 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
 
     m_mainWidget = new QWidget(this);
     QLayout* layout = new QHBoxLayout(m_mainWidget);
-    QSplitter* splitter = new QSplitter(m_mainWidget);
+    m_splitter = new QSplitter(m_mainWidget);
 
-    QWidget* rightHandSideWidget = new QWidget(splitter);
+    QWidget* rightHandSideWidget = new QWidget(m_splitter);
     m_searchWidget->setParent(rightHandSideWidget);
 
-    m_groupView = new GroupView(db, splitter);
+    m_groupView = new GroupView(db, m_splitter);
     m_groupView->setObjectName("groupView");
     m_groupView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(m_groupView, SIGNAL(customContextMenuRequested(QPoint)),
@@ -106,10 +106,10 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     setTabOrder(m_entryView, m_groupView);
     setTabOrder(m_groupView, m_searchWidget);
 
-    splitter->addWidget(m_groupView);
-    splitter->addWidget(rightHandSideWidget);
+    m_splitter->addWidget(m_groupView);
+    m_splitter->addWidget(rightHandSideWidget);
 
-    layout->addWidget(splitter);
+    layout->addWidget(m_splitter);
     m_mainWidget->setLayout(layout);
 
     m_editEntryWidget = new EditEntryWidget();
@@ -141,6 +141,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     addWidget(m_keepass1OpenWidget);
     addWidget(m_unlockDatabaseWidget);
 
+    connect(m_splitter, SIGNAL(splitterMoved(int,int)), SIGNAL(splitterSizesChanged()));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(clearLastGroup(Group*)));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), SIGNAL(groupChanged()));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), m_entryView, SLOT(setGroup(Group*)));
@@ -200,6 +201,15 @@ bool DatabaseWidget::isInEditMode() const
     }
 }
 
+QList<int> DatabaseWidget::splitterSizes() const
+{
+    return m_splitter->sizes();
+}
+
+void DatabaseWidget::setSplitterSizes(const QList<int>& sizes)
+{
+    m_splitter->setSizes(sizes);
+}
 
 void DatabaseWidget::emitCurrentModeChanged()
 {
