@@ -79,14 +79,6 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_entryView, SIGNAL(customContextMenuRequested(QPoint)),
             SLOT(emitEntryContextMenuRequested(QPoint)));
 
-    QSizePolicy policy;
-    policy = m_groupView->sizePolicy();
-    policy.setHorizontalStretch(30);
-    m_groupView->setSizePolicy(policy);
-    policy = rightHandSideWidget->sizePolicy();
-    policy.setHorizontalStretch(70);
-    rightHandSideWidget->setSizePolicy(policy);
-
     QAction* closeAction = new QAction(m_searchWidget);
     QIcon closeIcon = filePath()->icon("actions", "dialog-close");
     closeAction->setIcon(closeIcon);
@@ -108,6 +100,9 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
 
     m_splitter->addWidget(m_groupView);
     m_splitter->addWidget(rightHandSideWidget);
+
+    m_splitter->setStretchFactor(0, 30);
+    m_splitter->setStretchFactor(1, 70);
 
     layout->addWidget(m_splitter);
     m_mainWidget->setLayout(layout);
