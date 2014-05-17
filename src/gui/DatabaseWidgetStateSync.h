@@ -35,6 +35,7 @@ public Q_SLOTS:
     void restoreSearchView();
 
 private Q_SLOTS:
+    void blockUpdates();
     void updateSplitterSizes();
     void updateColumnSizes();
 
@@ -44,6 +45,7 @@ private:
 
     DatabaseWidget* m_activeDbWidget;
 
+    bool m_blockUpdates;
     QList<int> m_splitterSizes;
     QList<int> m_columnSizesList;
     QList<int> m_columnSizesSearch;

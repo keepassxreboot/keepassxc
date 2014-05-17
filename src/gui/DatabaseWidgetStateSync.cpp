@@ -23,6 +23,7 @@
 DatabaseWidgetStateSync::DatabaseWidgetStateSync(QObject* parent)
     : QObject(parent)
     , m_activeDbWidget(Q_NULLPTR)
+    , m_blockUpdates(false)
 {
     m_splitterSizes = variantToIntList(config()->get("GUI/SplitterState"));
     m_columnSizesList = variantToIntList(config()->get("GUI/EntryListColumnSizes"));
@@ -45,6 +46,8 @@ void DatabaseWidgetStateSync::setActive(DatabaseWidget* dbWidget)
     m_activeDbWidget = dbWidget;
 
     if (m_activeDbWidget) {
+        m_blockUpdates = true;
+
         if (!m_splitterSizes.isEmpty()) {
             m_activeDbWidget->setSplitterSizes(m_splitterSizes);
         }
@@ -56,6 +59,8 @@ void DatabaseWidgetStateSync::setActive(DatabaseWidget* dbWidget)
             restoreSearchView();
         }
 
+        m_blockUpdates = false;
+
         connect(m_activeDbWidget, SIGNAL(splitterSizesChanged()),
                 SLOT(updateSplitterSizes()));
         connect(m_activeDbWidget, SIGNAL(entryColumnSizesChanged()),
@@ -64,6 +69,10 @@ void DatabaseWidgetStateSync::setActive(DatabaseWidget* dbWidget)
                 SLOT(restoreListView()));
         connect(m_activeDbWidget, SIGNAL(searchModeActivated()),
                 SLOT(restoreSearchView()));
+        connect(m_activeDbWidget, SIGNAL(listModeAboutToActivate()),
+                SLOT(blockUpdates()));
+        connect(m_activeDbWidget, SIGNAL(searchModeAboutToActivate()),
+                SLOT(blockUpdates()));
     }
 }
 
@@ -72,6 +81,8 @@ void DatabaseWidgetStateSync::restoreListView()
     if (!m_columnSizesList.isEmpty()) {
         m_activeDbWidget->setEntryViewHeaderSizes(m_columnSizesList);
     }
+
+    m_blockUpdates = false;
 }
 
 void DatabaseWidgetStateSync::restoreSearchView()
@@ -79,15 +90,30 @@ void DatabaseWidgetStateSync::restoreSearchView()
     if (!m_columnSizesSearch.isEmpty()) {
         m_activeDbWidget->setEntryViewHeaderSizes(m_columnSizesSearch);
     }
+
+    m_blockUpdates = false;
+}
+
+void DatabaseWidgetStateSync::blockUpdates()
+{
+    m_blockUpdates = true;
 }
 
 void DatabaseWidgetStateSync::updateSplitterSizes()
 {
+    if (m_blockUpdates) {
+        return;
+    }
+
     m_splitterSizes = m_activeDbWidget->splitterSizes();
 }
 
 void DatabaseWidgetStateSync::updateColumnSizes()
 {
+    if (m_blockUpdates) {
+        return;
+    }
+
     if (m_activeDbWidget->isGroupSelected()) {
         m_columnSizesList = m_activeDbWidget->entryHeaderViewSizes();
     }

@@ -88,7 +88,9 @@ Q_SIGNALS:
     void groupContextMenuRequested(const QPoint& globalPos);
     void entryContextMenuRequested(const QPoint& globalPos);
     void unlockedDatabase();
+    void listModeAboutToActivate();
     void listModeActivated();
+    void searchModeAboutToActivate();
     void searchModeActivated();
     void splitterSizesChanged();
     void entryColumnSizesChanged();

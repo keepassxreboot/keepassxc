@@ -724,6 +724,9 @@ void DatabaseWidget::toggleSearch()
 void DatabaseWidget::closeSearch()
 {
     Q_ASSERT(m_lastGroup);
+
+    Q_EMIT listModeAboutToActivate();
+
     m_groupView->setCurrentGroup(m_lastGroup);
     m_searchTimer->stop();
 
@@ -732,6 +735,8 @@ void DatabaseWidget::closeSearch()
 
 void DatabaseWidget::showSearch()
 {
+    Q_EMIT searchModeAboutToActivate();
+
     m_searchUi->searchEdit->blockSignals(true);
     m_searchUi->searchEdit->clear();
     m_searchUi->searchEdit->blockSignals(false);
