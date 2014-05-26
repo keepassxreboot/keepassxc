@@ -111,6 +111,7 @@ set(keepassx_SOURCES
     gui/group/GroupView.cpp
     keys/CompositeKey.cpp
     keys/CompositeKey_p.h
+    keys/drivers/YubiKey.h
     keys/FileKey.cpp
     keys/Key.h
     keys/PasswordKey.cpp
@@ -190,6 +191,12 @@ if(MINGW)
       ${CMAKE_SOURCE_DIR}/share/windows/icon.rc)
 endif()
 
+if(YUBIKEY_FOUND)
+  set(keepassx_SOURCES ${keepassx_SOURCES} keys/drivers/YubiKey.cpp)
+else()
+  set(keepassx_SOURCES ${keepassx_SOURCES} keys/drivers/YubiKeyStub.cpp)
+endif()
+
 qt5_wrap_ui(keepassx_SOURCES ${keepassx_FORMS})
 
 add_library(zxcvbn STATIC zxcvbn/zxcvbn.cpp)
@@ -219,6 +226,10 @@ target_link_libraries(${PROGNAME}
                       Qt5::Network
                       ${GCRYPT_LIBRARIES}
                       ${ZLIB_LIBRARIES})
+
+if(YUBIKEY_FOUND)
+  target_link_libraries(keepassx_core ${YUBIKEY_LIBRARIES})
+endif()
 
 set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
 

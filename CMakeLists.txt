@@ -191,6 +191,14 @@ if(NOT ZLIB_SUPPORTS_GZIP)
   message(FATAL_ERROR "zlib 1.2.x or higher is required to use the gzip format")
 endif()
 
+# Optional
+find_package(YubiKey)
+
+if(YUBIKEY_FOUND)
+  include_directories(SYSTEM ${YUBIKEY_INCLUDE_DIRS})
+endif()
+
+
 if(UNIX)
   check_cxx_source_compiles("#include <sys/prctl.h>
     int main() { prctl(PR_SET_DUMPABLE, 0); return 0; }"
