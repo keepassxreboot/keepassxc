@@ -99,6 +99,10 @@ set(testsupport_SOURCES modeltest.cpp FailDevice.cpp)
 add_library(testsupport STATIC ${testsupport_SOURCES})
 target_link_libraries(testsupport ${MHD_LIBRARIES} Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Test)
 
+if(YUBIKEY_FOUND)
+  set(TEST_LIBRARIES ${TEST_LIBRARIES} ${YUBIKEY_LIBRARIES})
+endif()
+
 add_unit_test(NAME testgroup SOURCES TestGroup.cpp
               LIBS ${TEST_LIBRARIES})
 
@@ -163,6 +167,10 @@ add_unit_test(NAME testexporter SOURCES TestExporter.cpp
               LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testcsvexporter SOURCES TestCsvExporter.cpp
+              LIBS ${TEST_LIBRARIES})
+
+add_unit_test(NAME testykchallengeresponsekey
+              SOURCES TestYkChallengeResponseKey.cpp TestYkChallengeResponseKey.h
               LIBS ${TEST_LIBRARIES})
 
 if(WITH_GUI_TESTS)
