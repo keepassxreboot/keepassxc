@@ -15,14 +15,18 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QtConcurrentRun>
+
 #include "ChangeMasterKeyWidget.h"
 #include "ui_ChangeMasterKeyWidget.h"
 
 #include "core/FilePath.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
+#include "keys/YkChallengeResponseKey.h"
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
+#include "crypto/Random.h"
 
 ChangeMasterKeyWidget::ChangeMasterKeyWidget(QWidget* parent)
     : DialogyWidget(parent)
@@ -81,6 +85,15 @@ void ChangeMasterKeyWidget::clearForms()
     m_ui->togglePasswordButton->setChecked(false);
     // TODO: clear m_ui->keyFileCombo
 
+    m_ui->challengeResponseGroup->setChecked(false);
+    m_ui->challengeResponseCombo->clear();
+
+    /* YubiKey init is slow */
+    connect(YubiKey::instance(), SIGNAL(detected(int,bool)),
+                                 SLOT(ykDetected(int,bool)),
+                                 Qt::QueuedConnection);
+    QtConcurrent::run(YubiKey::instance(), &YubiKey::detect);
+
     m_ui->enterPasswordEdit->setFocus();
 }
 
@@ -128,6 +141,14 @@ void ChangeMasterKeyWidget::generateKey()
         m_key.addKey(fileKey);
     }
 
+    if (m_ui->challengeResponseGroup->isChecked()) {
+        int i = m_ui->challengeResponseCombo->currentIndex();
+        i = m_ui->challengeResponseCombo->itemData(i).toInt();
+        YkChallengeResponseKey key(i);
+
+        m_key.addChallengeResponseKey(key);
+    }
+
     Q_EMIT editFinished(true);
 }
 
@@ -135,4 +156,12 @@ void ChangeMasterKeyWidget::generateKey()
 void ChangeMasterKeyWidget::reject()
 {
     Q_EMIT editFinished(false);
+}
+
+
+void ChangeMasterKeyWidget::ykDetected(int slot, bool blocking)
+{
+    YkChallengeResponseKey yk(slot, blocking);
+    m_ui->challengeResponseCombo->addItem(yk.getName(), QVariant(slot));
+    m_ui->challengeResponseGroup->setEnabled(true);
 }

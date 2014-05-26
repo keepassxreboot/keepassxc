@@ -55,7 +55,10 @@ protected Q_SLOTS:
 private Q_SLOTS:
     void activatePassword();
     void activateKeyFile();
+    void activateChallengeResponse();
+    void setOkButtonEnabled();
     void browseKeyFile();
+    void ykDetected(int slot, bool blocking);
 
 protected:
     const QScopedPointer<Ui::DatabaseOpenWidget> m_ui;

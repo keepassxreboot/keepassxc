@@ -111,6 +111,23 @@
        </item>
       </layout>
      </item>
+     <item row="2" column="0">
+      <widget class="QCheckBox" name="checkChallengeResponse">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Challenge Response:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QComboBox" name="comboChallengeResponse">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
