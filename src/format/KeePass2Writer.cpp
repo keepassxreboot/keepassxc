@@ -53,6 +53,7 @@ void KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
 
     CryptoHash hash(CryptoHash::Sha256);
     hash.addData(masterSeed);
+    hash.addData(db->challengeMasterSeed(masterSeed));
     Q_ASSERT(!db->transformedMasterKey().isEmpty());
     hash.addData(db->transformedMasterKey());
     QByteArray finalKey = hash.result();

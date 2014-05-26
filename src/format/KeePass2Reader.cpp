@@ -115,6 +115,7 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
 
     CryptoHash hash(CryptoHash::Sha256);
     hash.addData(m_masterSeed);
+    hash.addData(m_db->challengeMasterSeed(m_masterSeed));
     hash.addData(m_db->transformedMasterKey());
     QByteArray finalKey = hash.result();
 
