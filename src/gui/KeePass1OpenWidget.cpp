@@ -64,8 +64,8 @@ void KeePass1OpenWidget::openDatabase()
         Q_EMIT editFinished(true);
     }
     else {
-        MessageBox::warning(this, tr("Error"), tr("Unable to open the database.\n%1")
-                            .arg(reader.errorString()));
+        MessageBox::warning(this, tr("Error"), tr("Unable to open the database.").append("\n")
+                            .append(reader.errorString()));
         m_ui->editPassword->clear();
     }
 }

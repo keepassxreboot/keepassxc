@@ -39,6 +39,7 @@ class GroupView;
 class KeePass1OpenWidget;
 class QFile;
 class QMenu;
+class QSplitter;
 class UnlockDatabaseWidget;
 
 namespace Ui {
@@ -60,18 +61,24 @@ public:
 
     explicit DatabaseWidget(Database* db, QWidget* parent = Q_NULLPTR);
     ~DatabaseWidget();
-    GroupView* groupView();
-    EntryView* entryView();
     Database* database();
-    bool dbHasKey();
-    bool canDeleteCurrentGoup();
-    bool isInSearchMode();
+    bool dbHasKey() const;
+    bool canDeleteCurrentGroup() const;
+    bool isInSearchMode() const;
     int addWidget(QWidget* w);
     void setCurrentIndex(int index);
     void setCurrentWidget(QWidget* widget);
-    DatabaseWidget::Mode currentMode();
+    DatabaseWidget::Mode currentMode() const;
     void lock();
     void updateFilename(const QString& filename);
+    int numberOfSelectedEntries() const;
+    QStringList customEntryAttributes() const;
+    bool isGroupSelected() const;
+    bool isInEditMode() const;
+    QList<int> splitterSizes() const;
+    void setSplitterSizes(const QList<int>& sizes);
+    QList<int> entryHeaderViewSizes() const;
+    void setEntryViewHeaderSizes(const QList<int>& sizes);
 
 Q_SIGNALS:
     void closeRequest();
@@ -82,6 +89,12 @@ Q_SIGNALS:
     void groupContextMenuRequested(const QPoint& globalPos);
     void entryContextMenuRequested(const QPoint& globalPos);
     void unlockedDatabase();
+    void listModeAboutToActivate();
+    void listModeActivated();
+    void searchModeAboutToActivate();
+    void searchModeActivated();
+    void splitterSizesChanged();
+    void entryColumnSizesChanged();
 
 public Q_SLOTS:
     void createEntry();
@@ -106,8 +119,6 @@ public Q_SLOTS:
     void switchToOpenDatabase(const QString& fileName, const QString& password, const QString& keyFile);
     void switchToImportKeepass1(const QString& fileName);
     void toggleSearch();
-    void emitGroupContextMenuRequested(const QPoint& pos);
-    void emitEntryContextMenuRequested(const QPoint& pos);
 
 private Q_SLOTS:
     void entryActivationSignalReceived(Entry* entry, EntryModel::ModelColumn column);
@@ -117,6 +128,8 @@ private Q_SLOTS:
     void switchToEntryEdit(Entry* entry);
     void switchToEntryEdit(Entry* entry, bool create);
     void switchToGroupEdit(Group* entry, bool create);
+    void emitGroupContextMenuRequested(const QPoint& pos);
+    void emitEntryContextMenuRequested(const QPoint& pos);
     void updateMasterKey(bool accepted);
     void openDatabase(bool accepted);
     void databaseModifedExternally();
@@ -145,6 +158,7 @@ private:
     DatabaseOpenWidget* m_databaseOpenWidget;
     KeePass1OpenWidget* m_keepass1OpenWidget;
     UnlockDatabaseWidget* m_unlockDatabaseWidget;
+    QSplitter* m_splitter;
     GroupView* m_groupView;
     EntryView* m_entryView;
     Group* m_newGroup;
@@ -152,7 +166,7 @@ private:
     Group* m_newParent;
     Group* m_lastGroup;
     QTimer* m_searchTimer;
-    QWidget* widgetBeforeLock;
+    QWidget* m_widgetBeforeLock;
     QString m_filename;
     FileSystemWatcher m_file_watcher;
 };

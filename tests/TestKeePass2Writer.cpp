@@ -29,6 +29,8 @@
 #include "format/KeePass2Writer.h"
 #include "keys/PasswordKey.h"
 
+QTEST_GUILESS_MAIN(TestKeePass2Writer)
+
 void TestKeePass2Writer::initTestCase()
 {
     Crypto::init();
@@ -104,5 +106,3 @@ void TestKeePass2Writer::cleanupTestCase()
     delete m_dbOrg;
     delete m_dbTest;
 }
-
-QTEST_GUILESS_MAIN(TestKeePass2Writer)

@@ -28,6 +28,8 @@
 #include "format/KeePass2XmlReader.h"
 #include "config-keepassx-tests.h"
 
+QTEST_GUILESS_MAIN(TestKeePass2XmlReader)
+
 namespace QTest {
     template<>
     char* toString(const Uuid& uuid)
@@ -378,5 +380,3 @@ void TestKeePass2XmlReader::cleanupTestCase()
 {
     delete m_db;
 }
-
-QTEST_GUILESS_MAIN(TestKeePass2XmlReader)

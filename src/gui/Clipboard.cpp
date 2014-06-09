@@ -51,6 +51,7 @@ void Clipboard::setText(const QString& text)
     if (config()->get("security/clearclipboard").toBool()) {
         int timeout = config()->get("security/clearclipboardtimeout").toInt();
         if (timeout > 0) {
+            m_lastCopied = text;
             m_timer->start(timeout * 1000);
         }
     }
@@ -65,8 +66,12 @@ void Clipboard::clearClipboard()
         return;
     }
 
-    clipboard->clear(QClipboard::Clipboard);
-    if (clipboard->supportsSelection()) {
+    if (clipboard->text(QClipboard::Clipboard) == m_lastCopied) {
+        clipboard->clear(QClipboard::Clipboard);
+    }
+
+    if (clipboard->supportsSelection()
+            && (clipboard->text(QClipboard::Selection) == m_lastCopied)) {
         clipboard->clear(QClipboard::Selection);
     }
 
@@ -74,6 +79,8 @@ void Clipboard::clearClipboard()
     QDBusMessage message = QDBusMessage::createMethodCall("org.kde.klipper", "/klipper", "", "clearClipboardHistory");
     QDBusConnection::sessionBus().send(message);
 #endif
+
+    m_lastCopied.clear();
 }
 
 void Clipboard::cleanup()

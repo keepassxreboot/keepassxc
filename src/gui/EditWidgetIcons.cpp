@@ -194,8 +194,7 @@ void EditWidgetIcons::removeCustomIcon()
             }
             else {
                 MessageBox::information(this, tr("Can't delete icon!"),
-                                        tr("Can't delete icon. Still used by %1 items.")
-                                        .arg(iconUsedCount));
+                                        tr("Can't delete icon. Still used by %n item(s).", 0, iconUsedCount));
             }
         }
     }

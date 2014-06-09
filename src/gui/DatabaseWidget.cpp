@@ -30,6 +30,7 @@
 
 #include "autotype/AutoType.h"
 #include "core/Config.h"
+#include "core/EntrySearcher.h"
 #include "core/FilePath.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -63,12 +64,13 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
 
     m_mainWidget = new QWidget(this);
     QLayout* layout = new QHBoxLayout(m_mainWidget);
-    QSplitter* splitter = new QSplitter(m_mainWidget);
+    m_splitter = new QSplitter(m_mainWidget);
+    m_splitter->setChildrenCollapsible(false);
 
-    QWidget* rightHandSideWidget = new QWidget(splitter);
+    QWidget* rightHandSideWidget = new QWidget(m_splitter);
     m_searchWidget->setParent(rightHandSideWidget);
 
-    m_groupView = new GroupView(db, splitter);
+    m_groupView = new GroupView(db, m_splitter);
     m_groupView->setObjectName("groupView");
     m_groupView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(m_groupView, SIGNAL(customContextMenuRequested(QPoint)),
@@ -80,14 +82,6 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_entryView->setGroup(db->rootGroup());
     connect(m_entryView, SIGNAL(customContextMenuRequested(QPoint)),
             SLOT(emitEntryContextMenuRequested(QPoint)));
-
-    QSizePolicy policy;
-    policy = m_groupView->sizePolicy();
-    policy.setHorizontalStretch(30);
-    m_groupView->setSizePolicy(policy);
-    policy = rightHandSideWidget->sizePolicy();
-    policy.setHorizontalStretch(70);
-    rightHandSideWidget->setSizePolicy(policy);
 
     QAction* closeAction = new QAction(m_searchWidget);
     QIcon closeIcon = filePath()->icon("actions", "dialog-close");
@@ -104,10 +98,17 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
 
     rightHandSideWidget->setLayout(vLayout);
 
-    splitter->addWidget(m_groupView);
-    splitter->addWidget(rightHandSideWidget);
+    setTabOrder(m_searchUi->searchRootRadioButton, m_entryView);
+    setTabOrder(m_entryView, m_groupView);
+    setTabOrder(m_groupView, m_searchWidget);
 
-    layout->addWidget(splitter);
+    m_splitter->addWidget(m_groupView);
+    m_splitter->addWidget(rightHandSideWidget);
+
+    m_splitter->setStretchFactor(0, 30);
+    m_splitter->setStretchFactor(1, 70);
+
+    layout->addWidget(m_splitter);
     m_mainWidget->setLayout(layout);
 
     m_editEntryWidget = new EditEntryWidget();
@@ -139,6 +140,8 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     addWidget(m_keepass1OpenWidget);
     addWidget(m_unlockDatabaseWidget);
 
+    connect(m_splitter, SIGNAL(splitterMoved(int,int)), SIGNAL(splitterSizesChanged()));
+    connect(m_entryView->header(), SIGNAL(sectionResized(int,int,int)), SIGNAL(entryColumnSizesChanged()));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(clearLastGroup(Group*)));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), SIGNAL(groupChanged()));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), m_entryView, SLOT(setGroup(Group*)));
@@ -171,7 +174,7 @@ DatabaseWidget::~DatabaseWidget()
 {
 }
 
-DatabaseWidget::Mode DatabaseWidget::currentMode()
+DatabaseWidget::Mode DatabaseWidget::currentMode() const
 {
     if (currentWidget() == Q_NULLPTR) {
         return DatabaseWidget::None;
@@ -187,19 +190,54 @@ DatabaseWidget::Mode DatabaseWidget::currentMode()
     }
 }
 
+bool DatabaseWidget::isInEditMode() const
+{
+    if (currentMode() == DatabaseWidget::LockedMode) {
+        return m_widgetBeforeLock != Q_NULLPTR
+                && m_widgetBeforeLock != m_mainWidget
+                && m_widgetBeforeLock != m_unlockDatabaseWidget;
+    }
+    else {
+        return currentMode() == DatabaseWidget::EditMode;
+    }
+}
+
+QList<int> DatabaseWidget::splitterSizes() const
+{
+    return m_splitter->sizes();
+}
+
+void DatabaseWidget::setSplitterSizes(const QList<int>& sizes)
+{
+    m_splitter->setSizes(sizes);
+}
+
+QList<int> DatabaseWidget::entryHeaderViewSizes() const
+{
+    QList<int> sizes;
+
+    for (int i = 0; i < m_entryView->header()->count(); i++) {
+        sizes.append(m_entryView->header()->sectionSize(i));
+    }
+
+    return sizes;
+}
+
+void DatabaseWidget::setEntryViewHeaderSizes(const QList<int>& sizes)
+{
+    if (sizes.size() != m_entryView->header()->count()) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    for (int i = 0; i < sizes.size(); i++) {
+        m_entryView->header()->resizeSection(i, sizes[i]);
+    }
+}
+
 void DatabaseWidget::emitCurrentModeChanged()
 {
     Q_EMIT currentModeChanged(currentMode());
-}
-
-GroupView* DatabaseWidget::groupView()
-{
-    return m_groupView;
-}
-
-EntryView* DatabaseWidget::entryView()
-{
-    return m_entryView;
 }
 
 Database* DatabaseWidget::database()
@@ -298,8 +336,7 @@ void DatabaseWidget::deleteEntries()
         if (selected.size() > 1) {
             QMessageBox::StandardButton result = MessageBox::question(
                 this, tr("Move entries to recycle bin?"),
-                tr("Do you really want to move %1 entries to the recycle bin?")
-                .arg(selected.size()),
+                tr("Do you really want to move %n entry(s) to the recycle bin?", 0, selected.size()),
                 QMessageBox::Yes | QMessageBox::No);
             if (result == QMessageBox::No) {
                 return;
@@ -431,7 +468,7 @@ void DatabaseWidget::createGroup()
 void DatabaseWidget::deleteGroup()
 {
     Group* currentGroup = m_groupView->currentGroup();
-    if (!currentGroup || !canDeleteCurrentGoup()) {
+    if (!currentGroup || !canDeleteCurrentGroup()) {
         Q_ASSERT(false);
         return;
     }
@@ -601,7 +638,7 @@ void DatabaseWidget::unlockDatabase(bool accepted)
     Q_ASSERT(accepted);
     Q_UNUSED(accepted);
 
-    setCurrentWidget(widgetBeforeLock);
+    setCurrentWidget(m_widgetBeforeLock);
     Q_EMIT unlockedDatabase();
 }
 
@@ -673,8 +710,16 @@ void DatabaseWidget::switchToImportKeepass1(const QString& fileName)
 
 void DatabaseWidget::toggleSearch()
 {
-    if (m_entryView->inEntryListMode()) {
-        closeSearch();
+    if (isInSearchMode()) {
+        if (m_searchUi->searchEdit->hasFocus()) {
+            closeSearch();
+        }
+        else {
+            m_searchUi->searchEdit->selectAll();
+            m_searchUi->searchEdit->setFocus();
+            // make sure the search action is checked again
+            emitCurrentModeChanged();
+        }
     }
     else {
         showSearch();
@@ -684,11 +729,19 @@ void DatabaseWidget::toggleSearch()
 void DatabaseWidget::closeSearch()
 {
     Q_ASSERT(m_lastGroup);
+
+    Q_EMIT listModeAboutToActivate();
+
     m_groupView->setCurrentGroup(m_lastGroup);
+    m_searchTimer->stop();
+
+    Q_EMIT listModeActivated();
 }
 
 void DatabaseWidget::showSearch()
 {
+    Q_EMIT searchModeAboutToActivate();
+
     m_searchUi->searchEdit->blockSignals(true);
     m_searchUi->searchEdit->clear();
     m_searchUi->searchEdit->blockSignals(false);
@@ -722,6 +775,8 @@ void DatabaseWidget::showSearch()
     m_searchWidget->show();
     search();
     m_searchUi->searchEdit->setFocus();
+
+    Q_EMIT searchModeActivated();
 }
 
 void DatabaseWidget::search()
@@ -747,8 +802,8 @@ void DatabaseWidget::search()
     else {
         sensitivity = Qt::CaseInsensitive;
     }
-    QList<Entry*> searchResult = searchGroup->search(m_searchUi->searchEdit->text(), sensitivity);
 
+    QList<Entry*> searchResult = EntrySearcher().search(m_searchUi->searchEdit->text(), searchGroup, sensitivity);
 
     m_entryView->setEntryList(searchResult);
 }
@@ -779,19 +834,19 @@ void DatabaseWidget::emitEntryContextMenuRequested(const QPoint& pos)
     Q_EMIT entryContextMenuRequested(m_entryView->viewport()->mapToGlobal(pos));
 }
 
-bool DatabaseWidget::dbHasKey()
+bool DatabaseWidget::dbHasKey() const
 {
     return m_db->hasKey();
 }
 
-bool DatabaseWidget::canDeleteCurrentGoup()
+bool DatabaseWidget::canDeleteCurrentGroup() const
 {
     bool isRootGroup = m_db->rootGroup() == m_groupView->currentGroup();
     bool isRecycleBin = m_db->metadata()->recycleBin() == m_groupView->currentGroup();
     return !isRootGroup && !isRecycleBin;
 }
 
-bool DatabaseWidget::isInSearchMode()
+bool DatabaseWidget::isInSearchMode() const
 {
     return m_entryView->inEntryListMode();
 }
@@ -808,7 +863,7 @@ void DatabaseWidget::lock()
 {
     Q_ASSERT(currentMode() != DatabaseWidget::LockedMode);
 
-    widgetBeforeLock = currentWidget();
+    m_widgetBeforeLock = currentWidget();
     m_unlockDatabaseWidget->load(m_filename, m_db);
     setCurrentWidget(m_unlockDatabaseWidget);
 }
@@ -838,4 +893,24 @@ void DatabaseWidget::databaseModifedExternally()
         Q_EMIT databaseChanged(m_db);
         delete oldDb;
     }
+}
+
+int DatabaseWidget::numberOfSelectedEntries() const
+{
+    return m_entryView->numberOfSelectedEntries();
+}
+
+QStringList DatabaseWidget::customEntryAttributes() const
+{
+    Entry* entry = m_entryView->currentEntry();
+    if (!entry) {
+        return QStringList();
+    }
+
+    return entry->attributes()->customKeys();
+}
+
+bool DatabaseWidget::isGroupSelected() const
+{
+    return m_groupView->currentGroup() != Q_NULLPTR;
 }

@@ -83,7 +83,7 @@ void TestGui::testTabs()
 
 void TestGui::testEditEntry()
 {
-    EntryView* entryView = m_dbWidget->entryView();
+    EntryView* entryView = m_dbWidget->findChild<EntryView*>("entryView");
     QModelIndex item = entryView->model()->index(0, 1);
     QRect itemRect = entryView->visualRect(item);
     QTest::mouseClick(entryView->viewport(), Qt::LeftButton, Qt::NoModifier, itemRect.center());
@@ -237,8 +237,8 @@ void TestGui::testSearch()
 
 void TestGui::testDeleteEntry()
 {
-    GroupView* groupView = m_dbWidget->groupView();
-    EntryView* entryView = m_dbWidget->entryView();
+    GroupView* groupView = m_dbWidget->findChild<GroupView*>("groupView");
+    EntryView* entryView = m_dbWidget->findChild<EntryView*>("entryView");
     QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
     QAction* entryDeleteAction = m_mainWindow->findChild<QAction*>("actionEntryDelete");
     QWidget* entryDeleteWidget = toolBar->widgetForAction(entryDeleteAction);
@@ -274,7 +274,7 @@ void TestGui::testDeleteEntry()
 
 void TestGui::testCloneEntry()
 {
-    EntryView* entryView = m_dbWidget->entryView();
+    EntryView* entryView = m_dbWidget->findChild<EntryView*>("entryView");
 
     QCOMPARE(entryView->model()->rowCount(), 1);
 
@@ -292,8 +292,8 @@ void TestGui::testCloneEntry()
 
 void TestGui::testDragAndDropEntry()
 {
-    EntryView* entryView = m_dbWidget->entryView();
-    GroupView* groupView = m_dbWidget->groupView();
+    EntryView* entryView = m_dbWidget->findChild<EntryView*>("entryView");
+    GroupView* groupView = m_dbWidget->findChild<GroupView*>("groupView");
     QAbstractItemModel* groupModel = groupView->model();
 
     QModelIndex sourceIndex = entryView->model()->index(0, 1);
@@ -314,7 +314,7 @@ void TestGui::testDragAndDropEntry()
 
 void TestGui::testDragAndDropGroup()
 {
-    QAbstractItemModel* groupModel = m_dbWidget->groupView()->model();
+    QAbstractItemModel* groupModel = m_dbWidget->findChild<GroupView*>("groupView")->model();
     QModelIndex rootIndex = groupModel->index(0, 0);
 
     dragAndDropGroup(groupModel->index(0, 0, rootIndex),
@@ -453,7 +453,7 @@ void TestGui::dragAndDropGroup(const QModelIndex& sourceIndex, const QModelIndex
     QVERIFY(sourceIndex.isValid());
     QVERIFY(targetIndex.isValid());
 
-    GroupModel* groupModel = qobject_cast<GroupModel*>(m_dbWidget->groupView()->model());
+    GroupModel* groupModel = qobject_cast<GroupModel*>(m_dbWidget->findChild<GroupView*>("groupView")->model());
 
     QMimeData mimeData;
     QByteArray encoded;

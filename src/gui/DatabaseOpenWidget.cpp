@@ -117,8 +117,8 @@ void DatabaseOpenWidget::openDatabase()
         Q_EMIT editFinished(true);
     }
     else {
-        MessageBox::warning(this, tr("Error"), tr("Unable to open the database.\n%1")
-                            .arg(reader.errorString()));
+        MessageBox::warning(this, tr("Error"), tr("Unable to open the database.").append("\n")
+                            .append(reader.errorString()));
         m_ui->editPassword->clear();
     }
 }
@@ -138,7 +138,7 @@ CompositeKey DatabaseOpenWidget::databaseKey()
         QString keyFilename = m_ui->comboKeyFile->currentText();
         QString errorMsg;
         if (!key.load(keyFilename, &errorMsg)) {
-            MessageBox::warning(this, tr("Error"), tr("Can't open key file:\n%1").arg(errorMsg));
+            MessageBox::warning(this, tr("Error"), tr("Can't open key file").append(":\n").append(errorMsg));
             return CompositeKey();
         }
         masterKey.addKey(key);

@@ -26,6 +26,8 @@
 #include "format/KeePass2XmlReader.h"
 #include "config-keepassx-tests.h"
 
+QTEST_GUILESS_MAIN(TestDeletedObjects)
+
 void TestDeletedObjects::initTestCase()
 {
     Crypto::init();
@@ -158,5 +160,3 @@ void TestDeletedObjects::testDatabaseChange()
     delete db;
     delete db2;
 }
-
-QTEST_GUILESS_MAIN(TestDeletedObjects)

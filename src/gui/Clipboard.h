@@ -43,6 +43,7 @@ private:
     static Clipboard* m_instance;
 
     QTimer* m_timer;
+    QString m_lastCopied;
 };
 
 inline Clipboard* clipboard() {

@@ -190,8 +190,10 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
 
     if (entryList.isEmpty()) {
         m_inAutoType = false;
-        MessageBox::information(Q_NULLPTR, tr("Auto-Type - KeePassX"),
-                                tr("Couldn't find an entry that matches the window title."));
+        QString message = tr("Couldn't find an entry that matches the window title:");
+        message.append("\n\n");
+        message.append(windowTitle);
+        MessageBox::information(Q_NULLPTR, tr("Auto-Type - KeePassX"), message);
     }
     else if ((entryList.size() == 1) && !config()->get("security/autotypeask").toBool()) {
         m_inAutoType = false;
@@ -501,6 +503,12 @@ QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitl
                 match = true;
                 break;
             }
+        }
+
+        if (!match && config()->get("AutoTypeEntryTitleMatch").toBool() && !entry->title().isEmpty()
+                && windowTitle.contains(entry->title(), Qt::CaseInsensitive)) {
+            sequence = entry->defaultAutoTypeSequence();
+            match = true;
         }
 
         if (!match) {

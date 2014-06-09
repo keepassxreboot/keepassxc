@@ -41,14 +41,18 @@ private Q_SLOTS:
     void testAutoTypeWithSequence();
     void testGlobalAutoTypeWithNoMatch();
     void testGlobalAutoTypeWithOneMatch();
+    void testGlobalAutoTypeTitleMatch();
+    void testGlobalAutoTypeTitleMatchDisabled();
 
 private:
     AutoTypePlatformInterface* m_platform;
     AutoTypeTestInterface* m_test;
     AutoType* m_autoType;
     Database* m_db;
+    QList<Database*> m_dbList;
     Group* m_group;
-    Entry* m_entry;
+    Entry* m_entry1;
+    Entry* m_entry2;
 };
 
 #endif // KEEPASSX_TESTAUTOTYPE_H

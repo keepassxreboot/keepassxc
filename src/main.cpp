@@ -21,6 +21,7 @@
 #include "core/Config.h"
 #include "core/qcommandlineparser.h"
 #include "core/Tools.h"
+#include "core/Translator.h"
 #include "crypto/Crypto.h"
 #include "gui/Application.h"
 #include "gui/MainWindow.h"
@@ -65,6 +66,8 @@ int main(int argc, char** argv)
     if (parser.isSet(configOption)) {
         Config::createConfigFromFile(parser.value(configOption));
     }
+
+    Translator::installTranslator();
 
 #ifdef Q_OS_MAC
     // Don't show menu icons on OSX

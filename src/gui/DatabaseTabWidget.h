@@ -25,6 +25,7 @@
 #include "gui/DatabaseWidget.h"
 
 class DatabaseWidget;
+class DatabaseWidgetStateSync;
 class DatabaseOpenWidget;
 class QFile;
 
@@ -53,7 +54,7 @@ public:
     void openDatabase(const QString& fileName, const QString& pw = QString(),
                       const QString& keyFile = QString());
     DatabaseWidget* currentDatabaseWidget();
-    bool hasLockableDatabases();
+    bool hasLockableDatabases() const;
 
     static const int LastDatabasesCount;
 
@@ -75,6 +76,7 @@ public Q_SLOTS:
 Q_SIGNALS:
     void tabNameChanged();
     void databaseWithFileClosed(QString filePath);
+    void activateDatabaseChanged(DatabaseWidget* dbWidget);
 
 private Q_SLOTS:
     void updateTabName(Database* db);
@@ -83,6 +85,7 @@ private Q_SLOTS:
     void modified();
     void toggleTabbar();
     void changeDatabase(Database* newDb);
+    void emitActivateDatabaseChanged();
 
 private:
     void saveDatabase(Database* db);
@@ -99,6 +102,7 @@ private:
 
     KeePass2Writer m_writer;
     QHash<Database*, DatabaseManagerStruct> m_dbList;
+    DatabaseWidgetStateSync* m_dbWidgetSateSync;
 };
 
 #endif // KEEPASSX_DATABASETABWIDGET_H

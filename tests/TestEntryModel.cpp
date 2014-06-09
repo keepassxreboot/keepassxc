@@ -33,6 +33,8 @@
 #include "gui/entry/EntryAttachmentsModel.h"
 #include "gui/entry/EntryAttributesModel.h"
 
+QTEST_GUILESS_MAIN(TestEntryModel)
+
 void TestEntryModel::initTestCase()
 {
     qRegisterMetaType<QModelIndex>("QModelIndex");
@@ -341,5 +343,3 @@ void TestEntryModel::testDatabaseDelete()
     delete modelTest;
     delete model;
 }
-
-QTEST_GUILESS_MAIN(TestEntryModel)

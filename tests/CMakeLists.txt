@@ -13,7 +13,6 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_SOURCE_DIR}/src)
 
 add_definitions(-DQT_TEST_LIB)
@@ -163,6 +162,12 @@ add_unit_test(NAME testqcommandlineparser SOURCES TestQCommandLineParser.cpp MOC
               LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testrandom SOURCES TestRandom.cpp MOCS TestRandom.h
+              LIBS ${TEST_LIBRARIES})
+
+add_unit_test(NAME testentrysearcher SOURCES TestEntrySearcher.cpp MOCS TestEntrySearcher.h
+              LIBS ${TEST_LIBRARIES})
+
+add_unit_test(NAME testexporter SOURCES TestExporter.cpp MOCS TestExporter.h
               LIBS ${TEST_LIBRARIES})
 
 if(WITH_GUI_TESTS)

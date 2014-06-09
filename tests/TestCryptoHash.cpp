@@ -23,6 +23,8 @@
 #include "crypto/Crypto.h"
 #include "crypto/CryptoHash.h"
 
+QTEST_GUILESS_MAIN(TestCryptoHash)
+
 void TestCryptoHash::initTestCase()
 {
     Crypto::init();
@@ -47,5 +49,3 @@ void TestCryptoHash::test()
     QCOMPARE(cryptoHash3.result(),
              QByteArray::fromHex("0b56e5f65263e747af4a833bd7dd7ad26a64d7a4de7c68e52364893dca0766b4"));
 }
-
-QTEST_GUILESS_MAIN(TestCryptoHash)

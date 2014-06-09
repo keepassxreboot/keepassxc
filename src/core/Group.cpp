@@ -500,22 +500,6 @@ void Group::copyDataFrom(const Group* other)
     m_lastTopVisibleEntry = other->m_lastTopVisibleEntry;
 }
 
-Database* Group::exportToDb()
-{
-    Q_ASSERT(database());
-
-    Database* db = new Database();
-    Group* clonedGroup = clone(Entry::CloneNewUuid | Entry::CloneIncludeHistory);
-    clonedGroup->setParent(db->rootGroup());
-
-    QSet<Uuid> customIcons = customIconsRecursive();
-    db->metadata()->copyCustomIcons(customIcons, database()->metadata());
-
-    db->copyAttributesFrom(database());
-
-    return db;
-}
-
 void Group::addEntry(Entry* entry)
 {
     Q_ASSERT(entry);
@@ -610,33 +594,6 @@ void Group::recCreateDelObjects()
         }
         m_db->addDeletedObject(m_uuid);
     }
-}
-
-QList<Entry*> Group::search(const QString& searchTerm, Qt::CaseSensitivity caseSensitivity,
-                            bool resolveInherit)
-{
-    QList<Entry*> searchResult;
-    bool search;
-    if (resolveInherit) {
-        search = resolveSearchingEnabled();
-    }
-    else if (searchingEnabled() == Disable) {
-        search = false;
-    }
-    else {
-        search = true;
-    }
-    if (search) {
-        Q_FOREACH (Entry* entry, m_entries) {
-            if (entry->match(searchTerm, caseSensitivity)) {
-                searchResult.append(entry);
-            }
-        }
-        Q_FOREACH (Group* group, m_children) {
-            searchResult.append(group->search(searchTerm, caseSensitivity, false));
-        }
-    }
-    return searchResult;
 }
 
 bool Group::resolveSearchingEnabled() const

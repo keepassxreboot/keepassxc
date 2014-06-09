@@ -31,11 +31,8 @@ private Q_SLOTS:
     void testEntries();
     void testDeleteSignals();
     void testCopyCustomIcon();
-    void testSearch();
-    void testAndConcatenationInSearch();
     void testClone();
     void testCopyCustomIcons();
-    void testExportToDb();
 };
 
 #endif // KEEPASSX_TESTGROUP_H
