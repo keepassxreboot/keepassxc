@@ -621,7 +621,8 @@ void DatabaseWidget::openDatabase(bool accepted)
         m_databaseOpenWidget = Q_NULLPTR;
         delete m_keepass1OpenWidget;
         m_keepass1OpenWidget = Q_NULLPTR;
-        m_file_watcher.watchFile( m_filename );
+        if (config()->get("AutoReloadOnChange").toBool() ) 
+            m_file_watcher.watchFile( m_filename );
     }
     else {
         m_file_watcher.stopWatching();
@@ -876,6 +877,9 @@ void DatabaseWidget::updateFilename(const QString& fileName)
 void DatabaseWidget::databaseModifedExternally()
 {
     if ( database() == Q_NULLPTR )
+        return;
+
+    if ( ! config()->get("AutoReloadOnChange").toBool() ) 
         return;
 
     KeePass2Reader reader;

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>456</width>
-    <height>288</height>
+    <width>541</width>
+    <height>311</height>
    </rect>
   </property>
   <layout class="QFormLayout" name="formLayout">
@@ -55,46 +55,53 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="0">
+   <item row="6" column="0">
     <widget class="QCheckBox" name="minimizeOnCopyCheckBox">
      <property name="text">
       <string>Minimize when copying to clipboard</string>
      </property>
     </widget>
    </item>
-   <item row="6" column="0">
+   <item row="7" column="0">
     <widget class="QCheckBox" name="useGroupIconOnEntryCreationCheckBox">
      <property name="text">
       <string>Use group icon on entry creation</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="0">
+   <item row="8" column="0">
     <widget class="QLabel" name="autoTypeShortcutLabel">
      <property name="text">
       <string>Global Auto-Type shortcut</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="1">
+   <item row="8" column="1">
     <widget class="ShortcutWidget" name="autoTypeShortcutWidget"/>
    </item>
-   <item row="8" column="0">
+   <item row="9" column="0">
     <widget class="QCheckBox" name="autoTypeEntryTitleMatchCheckBox">
      <property name="text">
       <string>Use entry title to match windows for global auto-type</string>
      </property>
     </widget>
    </item>
-   <item row="9" column="0">
+   <item row="10" column="0">
     <widget class="QLabel" name="languageLabel">
      <property name="text">
       <string>Language</string>
      </property>
     </widget>
    </item>
-   <item row="9" column="1">
+   <item row="10" column="1">
     <widget class="QComboBox" name="languageComboBox"/>
+   </item>
+   <item row="5" column="0">
+    <widget class="QCheckBox" name="autoReloadOnChangeCheckBox">
+     <property name="text">
+      <string>Automatically reload when the database is expernally modified</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
