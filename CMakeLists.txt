@@ -32,7 +32,7 @@ include(CheckCXXSourceCompiles)
 option(WITH_TESTS "Enable building of unit tests" ON)
 option(WITH_GUI_TESTS "Enable building of GUI tests" OFF)
 option(WITH_LTO "Enable Link Time Optimization (LTO)" OFF)
-option(WITH_CXX11 "Build with the C++ 11 standard" OFF)
+option(WITH_CXX11 "Build with the C++ 11 standard" ON)
 
 set(KEEPASSX_VERSION "2.0 alpha 6")
 set(KEEPASSX_VERSION_NUM "1.9.85")
