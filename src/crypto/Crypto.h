@@ -18,18 +18,25 @@
 #ifndef KEEPASSX_CRYPTO_H
 #define KEEPASSX_CRYPTO_H
 
+#include <QString>
+
 #include "core/Global.h"
 
 class Crypto
 {
 public:
-    static void init();
+    static bool init();
     static bool initalized();
-    static bool selfTest();
+    static bool backendSelfTest();
+    static QString errorString();
 
 private:
     Crypto();
+    static bool checkAlgorithms();
+    static bool selfTest();
+
     static bool m_initalized;
+    static QString m_errorStr;
 };
 
 #endif // KEEPASSX_CRYPTO_H

@@ -31,7 +31,7 @@ QTEST_GUILESS_MAIN(TestModified)
 
 void TestModified::initTestCase()
 {
-    Crypto::init();
+    QVERIFY(Crypto::init());
 }
 
 void TestModified::testSignals()

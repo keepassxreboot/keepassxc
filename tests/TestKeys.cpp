@@ -35,7 +35,7 @@ QTEST_GUILESS_MAIN(TestKeys)
 
 void TestKeys::initTestCase()
 {
-    Crypto::init();
+    QVERIFY(Crypto::init());
 }
 
 void TestKeys::testComposite()

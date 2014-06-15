@@ -37,7 +37,7 @@ QTEST_GUILESS_MAIN(TestKeePass1Reader)
 
 void TestKeePass1Reader::initTestCase()
 {
-    Crypto::init();
+    QVERIFY(Crypto::init());
 
     QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/basic.kdb");
 

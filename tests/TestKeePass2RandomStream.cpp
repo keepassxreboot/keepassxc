@@ -30,7 +30,7 @@ QTEST_GUILESS_MAIN(TestKeePass2RandomStream)
 
 void TestKeePass2RandomStream::initTestCase()
 {
-    Crypto::init();
+    QVERIFY(Crypto::init());
 }
 
 void TestKeePass2RandomStream::test()

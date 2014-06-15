@@ -27,7 +27,7 @@ QTEST_GUILESS_MAIN(TestEntry)
 
 void TestEntry::initTestCase()
 {
-    Crypto::init();
+    QVERIFY(Crypto::init());
 }
 
 void TestEntry::testHistoryItemDeletion()

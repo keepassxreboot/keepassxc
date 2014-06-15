@@ -30,7 +30,7 @@ QTEST_GUILESS_MAIN(TestExporter)
 
 void TestExporter::initTestCase()
 {
-    Crypto::init();
+    QVERIFY(Crypto::init());
 }
 
 void TestExporter::testToDbExporter()

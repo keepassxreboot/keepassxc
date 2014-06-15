@@ -35,7 +35,7 @@ QTEST_GUILESS_MAIN(TestAutoType)
 
 void TestAutoType::initTestCase()
 {
-    Crypto::init();
+    QVERIFY(Crypto::init());
     Config::createTempFileInstance();
     AutoType::createTestInstance();
     config()->set("AutoTypeEntryTitleMatch", false);

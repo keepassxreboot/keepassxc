@@ -51,7 +51,7 @@
 
 void TestGui::initTestCase()
 {
-    Crypto::init();
+    QVERIFY(Crypto::init());
     Config::createTempFileInstance();
     m_mainWindow = new MainWindow();
     m_tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");

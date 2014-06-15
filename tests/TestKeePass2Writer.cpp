@@ -33,7 +33,7 @@ QTEST_GUILESS_MAIN(TestKeePass2Writer)
 
 void TestKeePass2Writer::initTestCase()
 {
-    Crypto::init();
+    QVERIFY(Crypto::init());
 
     CompositeKey key;
     key.addKey(PasswordKey("test"));

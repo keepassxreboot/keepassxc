@@ -27,13 +27,13 @@ QTEST_GUILESS_MAIN(TestCryptoHash)
 
 void TestCryptoHash::initTestCase()
 {
-    Crypto::init();
+    QVERIFY(Crypto::init());
 }
 
 void TestCryptoHash::test()
 {
     // TODO: move somewhere else
-    QVERIFY(Crypto::selfTest());
+    QVERIFY(Crypto::backendSelfTest());
 
     CryptoHash cryptoHash1(CryptoHash::Sha256);
     QCOMPARE(cryptoHash1.result(),

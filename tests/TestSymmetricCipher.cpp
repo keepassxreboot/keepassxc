@@ -29,7 +29,7 @@ QTEST_GUILESS_MAIN(TestSymmetricCipher)
 
 void TestSymmetricCipher::initTestCase()
 {
-    Crypto::init();
+    QVERIFY(Crypto::init());
 }
 
 void TestSymmetricCipher::testAes256CbcEncryption()

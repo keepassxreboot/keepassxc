@@ -28,7 +28,7 @@ QTEST_GUILESS_MAIN(TestHashedBlockStream)
 
 void TestHashedBlockStream::initTestCase()
 {
-    Crypto::init();
+    QVERIFY(Crypto::init());
 }
 
 void TestHashedBlockStream::testWriteRead()

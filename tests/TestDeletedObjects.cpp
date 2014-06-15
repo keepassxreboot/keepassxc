@@ -30,7 +30,7 @@ QTEST_GUILESS_MAIN(TestDeletedObjects)
 
 void TestDeletedObjects::initTestCase()
 {
-    Crypto::init();
+    QVERIFY(Crypto::init());
 }
 
 void TestDeletedObjects::createAndDelete(Database* db, int delObjectsSize)

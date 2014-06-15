@@ -38,7 +38,7 @@ QTEST_GUILESS_MAIN(TestEntryModel)
 void TestEntryModel::initTestCase()
 {
     qRegisterMetaType<QModelIndex>("QModelIndex");
-    Crypto::init();
+    QVERIFY(Crypto::init());
 }
 
 void TestEntryModel::test()

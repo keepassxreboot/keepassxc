@@ -32,7 +32,7 @@ QTEST_GUILESS_MAIN(TestKeePass2Reader)
 
 void TestKeePass2Reader::initTestCase()
 {
-    Crypto::init();
+    QVERIFY(Crypto::init());
 }
 
 void TestKeePass2Reader::testNonAscii()
