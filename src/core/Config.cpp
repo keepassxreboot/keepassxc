@@ -71,7 +71,8 @@ Config::Config(QObject* parent)
     userPath += "/keepassx/";
 #else
     userPath = QDir::fromNativeSeparators(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
-    // storageLocation() appends the application name ("/keepassx/") to the end
+    // storageLocation() appends the application name ("/keepassx") to the end
+    userPath += "/";
 #endif
 
     userPath += "keepassx2.ini";
