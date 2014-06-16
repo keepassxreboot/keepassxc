@@ -227,7 +227,7 @@ void MainWindow::updateCopyAttributesMenu()
         return;
     }
 
-    if (!dbWidget->numberOfSelectedEntries() == 1) {
+    if (dbWidget->numberOfSelectedEntries() != 1) {
         return;
     }
 
