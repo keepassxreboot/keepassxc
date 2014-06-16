@@ -2,7 +2,7 @@ Building:
 =========
 mkdir build
 cd build
-cmake .. [CMAKE PARAMETERS]
+cmake [CMAKE PARAMETERS] ..
 make [-jX]
 
 Common cmake parameters:
