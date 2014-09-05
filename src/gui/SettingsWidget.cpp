@@ -70,6 +70,7 @@ void SettingsWidget::loadSettings()
     m_generalUi->useGroupIconOnEntryCreationCheckBox->setChecked(config()->get("UseGroupIconOnEntryCreation").toBool());
     m_generalUi->autoTypeEntryTitleMatchCheckBox->setChecked(config()->get("AutoTypeEntryTitleMatch").toBool());
 
+    m_generalUi->languageComboBox->clear();
     QList<QPair<QString, QString> > languages = Translator::availableLanguages();
     for (int i = 0; i < languages.size(); i++) {
         m_generalUi->languageComboBox->addItem(languages[i].second, languages[i].first);
