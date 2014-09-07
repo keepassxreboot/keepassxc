@@ -26,6 +26,8 @@
 #include "keys/YkChallengeResponseKey.h"
 #include "keys/drivers/YubiKey.h"
 
+#include <QDebug>
+
 YkChallengeResponseKey::YkChallengeResponseKey(int slot,
                                                bool blocking)
     : m_slot(slot),
@@ -47,8 +49,28 @@ YkChallengeResponseKey* YkChallengeResponseKey::clone() const
 /** Assumes yubikey()->init() was called */
 bool YkChallengeResponseKey::challenge(const QByteArray& chal)
 {
+    return challenge(chal, 1);
+}
+
+bool YkChallengeResponseKey::challenge(const QByteArray& chal, int retries)
+{
     if (YubiKey::instance()->challenge(m_slot, true, chal, m_key) != YubiKey::ERROR) {
         return true;
+    }
+
+    /* If challenge failed, retry to detect YubiKeys int the event the YubiKey
+     *  was un-plugged and re-plugged */
+    while (retries > 0) {
+        qDebug() << "Attempt" << retries << "to re-detect YubiKey(s)";
+        retries--;
+
+        if (YubiKey::instance()->init() != true) {
+            continue;
+        }
+
+        if (YubiKey::instance()->challenge(m_slot, true, chal, m_key) != YubiKey::ERROR) {
+            return true;
+        }
     }
 
     return false;

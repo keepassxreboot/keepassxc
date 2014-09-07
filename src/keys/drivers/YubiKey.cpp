@@ -182,6 +182,11 @@ YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock,
     int yk_cmd = (slot == 1) ? SLOT_CHAL_HMAC1 : SLOT_CHAL_HMAC2;
     QByteArray paddedChal = chal;
 
+    /* Ensure that YubiKey::init() succeeded */
+    if (m_yk == NULL) {
+        return ERROR;
+    }
+
     /* yk_challenge_response() insists on 64 byte response buffer */
     resp.resize(64);
 

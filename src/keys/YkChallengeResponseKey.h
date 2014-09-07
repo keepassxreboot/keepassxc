@@ -31,7 +31,8 @@ public:
 
     QByteArray rawKey() const;
     YkChallengeResponseKey* clone() const;
-    bool challenge(const QByteArray& challenge);
+    bool challenge(const QByteArray& chal);
+    bool challenge(const QByteArray& chal, int retries);
     QString getName() const;
     bool isBlocking() const;
 
