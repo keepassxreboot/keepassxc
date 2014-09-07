@@ -59,6 +59,7 @@ public:
         QByteArray transformedMasterKey;
         CompositeKey key;
         bool hasKey;
+        QByteArray masterSeed;
         QByteArray challengeResponseKey;
     };
 
