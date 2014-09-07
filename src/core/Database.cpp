@@ -176,9 +176,14 @@ QByteArray Database::transformedMasterKey() const
     return m_data.transformedMasterKey;
 }
 
-bool Database::challengeMasterSeed(const QByteArray& masterSeed, QByteArray& result) const
+QByteArray Database::challengeResponseKey() const
 {
-    return m_data.key.challenge(masterSeed, result);
+    return m_data.challengeResponseKey;
+}
+
+bool Database::challengeMasterSeed(const QByteArray& masterSeed)
+{
+    return m_data.key.challenge(masterSeed, m_data.challengeResponseKey);
 }
 
 void Database::setCipher(const Uuid& cipher)
