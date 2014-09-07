@@ -104,8 +104,8 @@ bool YubiKey::deinit()
     }
 
     if (m_ykds) {
-      ykds_free(m_ykds);
-      m_ykds_void = NULL;
+        ykds_free(m_ykds);
+        m_ykds_void = NULL;
     }
 
     return true;
@@ -215,7 +215,7 @@ YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock,
                                     paddedChal.size(), c,
                                     resp.size(), r);
 
-    if(!ret) {
+    if (!ret) {
         if (yk_errno == YK_EWOULDBLOCK) {
             return WOULDBLOCK;
         } else if (yk_errno == YK_ETIMEOUT) {
