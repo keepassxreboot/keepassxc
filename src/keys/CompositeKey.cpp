@@ -146,23 +146,27 @@ QByteArray CompositeKey::transformKeyRaw(const QByteArray& key, const QByteArray
     return result;
 }
 
-QByteArray CompositeKey::challenge(const QByteArray& seed) const
+bool CompositeKey::challenge(const QByteArray& seed, QByteArray& result) const
 {
     /* If no challenge response was requested, return nothing to
      * maintain backwards compatability with regular databases.
      */
     if (m_challengeResponseKeys.length() == 0) {
-        return QByteArray();
+        return true;
     }
 
     CryptoHash cryptoHash(CryptoHash::Sha256);
 
     Q_FOREACH (ChallengeResponseKey* key, m_challengeResponseKeys) {
-        key->challenge(seed);
+        /* If the device isn't present or fails, return an error */
+        if (key->challenge(seed) == false) {
+            return false;
+        }
         cryptoHash.addData(key->rawKey());
     }
 
-    return cryptoHash.result();
+    result = cryptoHash.result();
+    return true;
 }
 
 void CompositeKey::addKey(const Key& key)

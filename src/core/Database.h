@@ -89,7 +89,7 @@ public:
     quint64 transformRounds() const;
     QByteArray transformedMasterKey() const;
     const CompositeKey & key() const;
-    QByteArray challengeMasterSeed(const QByteArray& masterSeed) const;
+    bool challengeMasterSeed(const QByteArray& masterSeed, QByteArray& result) const;
 
     void setCipher(const Uuid& cipher);
     void setCompressionAlgo(Database::CompressionAlgorithm algo);

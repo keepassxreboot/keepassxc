@@ -37,7 +37,7 @@ public:
     QByteArray rawKey() const;
     QByteArray transform(const QByteArray& seed, quint64 rounds,
                          bool* ok, QString* errorString) const;
-    QByteArray challenge(const QByteArray& seed) const;
+    bool challenge(const QByteArray& seed, QByteArray &result) const;
 
     void addKey(const Key& key);
     void addChallengeResponseKey(const ChallengeResponseKey& key);
