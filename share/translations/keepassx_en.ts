@@ -19,7 +19,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Couldn&apos;t find an entry that matches the window title.</source>
+        <source>Couldn&apos;t find an entry that matches the window title:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -752,6 +752,17 @@ Save changes?</source>
     </message>
 </context>
 <context>
+    <name>Main</name>
+    <message>
+        <source>Fatal error while testing the cryptographic functions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassX - Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Database</source>
@@ -907,6 +918,10 @@ Save changes?</source>
     </message>
     <message>
         <source>read-only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle window</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1115,6 +1130,18 @@ Save changes?</source>
     </message>
     <message>
         <source>Use entry title to match windows for global auto-type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show a system tray icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide window to system tray when minimized</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
