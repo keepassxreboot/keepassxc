@@ -56,7 +56,12 @@ void PasswordEdit::updateStylesheet()
     QString stylesheet("QLineEdit { ");
 
     if (echoMode() == QLineEdit::Normal) {
+#ifdef Q_OS_MAC
+        // Qt on Mac OS doesn't seem to know the generic monospace family (tested with 4.8.6)
+        stylesheet.append("font-family: monospace,Menlo,Monaco; ");
+#else
         stylesheet.append("font-family: monospace; ");
+#endif
     }
 
     if (m_basePasswordEdit && !passwordsEqual()) {
