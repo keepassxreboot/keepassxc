@@ -212,7 +212,7 @@ QString AutoTypePlatformX11::windowTitle(Window window, bool useBlacklist)
     int retVal = XGetWindowProperty(m_dpy, window, m_atomNetWmName, 0, 1000, false, m_atomUtf8String,
                                     &type, &format, &nitems, &after, &data);
 
-    if (retVal != 0 && data) {
+    if (retVal == 0 && data) {
         title = QString::fromUtf8(reinterpret_cast<char*>(data));
     }
     else {
