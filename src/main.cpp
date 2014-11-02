@@ -39,6 +39,8 @@ int main(int argc, char** argv)
     // don't set organizationName as that changes the return value of
     // QDesktopServices::storageLocation(QDesktopServices::DataLocation)
 
+    QApplication::setQuitOnLastWindowClosed(false);
+
     if (!Crypto::init()) {
         QString error = QCoreApplication::translate("Main",
                                                     "Fatal error while testing the cryptographic functions.");

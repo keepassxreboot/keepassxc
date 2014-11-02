@@ -47,6 +47,8 @@ SettingsWidget::SettingsWidget(QWidget* parent)
 
     connect(m_generalUi->autoSaveAfterEveryChangeCheckBox, SIGNAL(toggled(bool)),
             this, SLOT(enableAutoSaveOnExit(bool)));
+    connect(m_generalUi->systrayShowCheckBox, SIGNAL(toggled(bool)),
+            m_generalUi->systrayMinimizeToTrayCheckBox, SLOT(setEnabled(bool)));
 
     connect(m_secUi->clearClipboardCheckBox, SIGNAL(toggled(bool)),
             m_secUi->clearClipboardSpinBox, SLOT(setEnabled(bool)));
@@ -79,6 +81,9 @@ void SettingsWidget::loadSettings()
     if (defaultIndex > 0) {
         m_generalUi->languageComboBox->setCurrentIndex(defaultIndex);
     }
+
+    m_generalUi->systrayShowCheckBox->setChecked(config()->get("GUI/ShowTrayIcon").toBool());
+    m_generalUi->systrayMinimizeToTrayCheckBox->setChecked(config()->get("GUI/MinimizeToTray").toBool());
 
     if (autoType()->isAvailable()) {
         m_globalAutoTypeKey = static_cast<Qt::Key>(config()->get("GlobalAutoTypeKey").toInt());
@@ -118,6 +123,10 @@ void SettingsWidget::saveSettings()
                   m_generalUi->autoTypeEntryTitleMatchCheckBox->isChecked());
     int currentLangIndex = m_generalUi->languageComboBox->currentIndex();
     config()->set("GUI/Language", m_generalUi->languageComboBox->itemData(currentLangIndex).toString());
+
+    config()->set("GUI/ShowTrayIcon", m_generalUi->systrayShowCheckBox->isChecked());
+    config()->set("GUI/MinimizeToTray", m_generalUi->systrayMinimizeToTrayCheckBox->isChecked());
+
     if (autoType()->isAvailable()) {
         config()->set("GlobalAutoTypeKey", m_generalUi->autoTypeShortcutWidget->key());
         config()->set("GlobalAutoTypeModifiers",

@@ -104,6 +104,8 @@ void Config::init(const QString& fileName)
     m_defaults.insert("security/passwordscleartext", false);
     m_defaults.insert("security/autotypeask", true);
     m_defaults.insert("GUI/Language", "system");
+    m_defaults.insert("GUI/ShowTrayIcon", false);
+    m_defaults.insert("GUI/MinimizeToTray", false);
 }
 
 Config* Config::instance()

@@ -33,6 +33,7 @@ const QString MainWindow::BaseWindowTitle = "KeePassX";
 
 MainWindow::MainWindow()
     : m_ui(new Ui::MainWindow())
+    , m_trayIcon(Q_NULLPTR)
 {
     m_ui->setupUi(this);
 
@@ -201,6 +202,8 @@ MainWindow::MainWindow()
 
     m_actionMultiplexer.connect(m_ui->actionSearch, SIGNAL(triggered()),
                                 SLOT(toggleSearch()));
+
+    updateTrayIcon();
 }
 
 MainWindow::~MainWindow()
@@ -429,9 +432,23 @@ void MainWindow::closeEvent(QCloseEvent* event)
         saveWindowInformation();
 
         event->accept();
+        QApplication::quit();
     }
     else {
         event->ignore();
+    }
+}
+
+void MainWindow::changeEvent(QEvent *event)
+{
+    if ((event->type() == QEvent::WindowStateChange) && isMinimized()
+            && isTrayIconEnabled() && config()->get("GUI/MinimizeToTray").toBool())
+    {
+        event->ignore();
+        hide();
+    }
+    else {
+        QMainWindow::changeEvent(event);
     }
 }
 
@@ -465,6 +482,35 @@ bool MainWindow::saveLastDatabases()
     }
 
     return accept;
+}
+
+void MainWindow::updateTrayIcon()
+{
+    if (isTrayIconEnabled()) {
+        if (!m_trayIcon) {
+            m_trayIcon = new QSystemTrayIcon(filePath()->applicationIcon(), this);
+
+            QMenu* menu = new QMenu(this);
+
+            QAction* actionToggle = new QAction(tr("Toggle window"), menu);
+            menu->addAction(actionToggle);
+
+            menu->addAction(m_ui->actionQuit);
+
+            connect(m_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+                    SLOT(trayIconTriggered(QSystemTrayIcon::ActivationReason)));
+            connect(actionToggle, SIGNAL(triggered()), SLOT(toggleWindow()));
+
+            m_trayIcon->setContextMenu(menu);
+            m_trayIcon->show();
+        }
+    }
+    else {
+        if (m_trayIcon) {
+            delete m_trayIcon;
+            m_trayIcon = Q_NULLPTR;
+        }
+    }
 }
 
 void MainWindow::showEntryContextMenu(const QPoint& globalPos)
@@ -511,4 +557,31 @@ void MainWindow::applySettingsChanges()
     else {
         m_inactivityTimer->deactivate();
     }
+
+    updateTrayIcon();
+}
+
+void MainWindow::trayIconTriggered(QSystemTrayIcon::ActivationReason reason)
+{
+    if (reason == QSystemTrayIcon::Trigger) {
+        toggleWindow();
+    }
+}
+
+void MainWindow::toggleWindow()
+{
+    if (QApplication::activeWindow() == this) {
+        hide();
+    }
+    else {
+        show();
+        raise();
+        activateWindow();
+    }
+}
+
+bool MainWindow::isTrayIconEnabled() const
+{
+    return config()->get("GUI/ShowTrayIcon").toBool()
+            && QSystemTrayIcon::isSystemTrayAvailable();
 }
