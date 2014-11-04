@@ -12,7 +12,7 @@ install:
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install cmake qt libgcrypt; fi
 before_script: mkdir build && pushd build
 script:
-  - cmake -DWITH_GUI_TESTS=ON ..
+  - cmake -DCMAKE_BUILD_TYPE=Debug -DWITH_GUI_TESTS=ON ..
   - make
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then make test ARGS+="-E testgui"; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then xvfb-run -a --server-args="-screen 0 800x600x24" make test ARGS+="-R testgui"; fi
