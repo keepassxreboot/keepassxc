@@ -117,6 +117,7 @@ public Q_SLOTS:
     void switchToOpenDatabase(const QString& fileName);
     void switchToOpenDatabase(const QString& fileName, const QString& password, const QString& keyFile);
     void switchToImportKeepass1(const QString& fileName);
+    void openSearch();
     void toggleSearch();
 
 private Q_SLOTS:

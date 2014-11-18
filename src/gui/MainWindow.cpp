@@ -119,7 +119,7 @@ MainWindow::MainWindow()
 
     m_ui->actionAbout->setIcon(filePath()->icon("actions", "help-about"));
 
-    m_ui->actionSearch->setIcon(filePath()->icon("actions", "system-search"));
+    m_ui->actionToggleSearch->setIcon(filePath()->icon("actions", "system-search"));
 
     m_actionMultiplexer.connect(SIGNAL(currentModeChanged(DatabaseWidget::Mode)),
                                 this, SLOT(setMenuActionState(DatabaseWidget::Mode)));
@@ -200,8 +200,10 @@ MainWindow::MainWindow()
 
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
 
-    m_actionMultiplexer.connect(m_ui->actionSearch, SIGNAL(triggered()),
+    m_actionMultiplexer.connect(m_ui->actionToggleSearch, SIGNAL(triggered()),
                                 SLOT(toggleSearch()));
+    m_actionMultiplexer.connect(m_ui->actionSearch, SIGNAL(triggered()),
+                                SLOT(openSearch()));
 
     updateTrayIcon();
 }
@@ -295,9 +297,10 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionGroupNew->setEnabled(groupSelected);
             m_ui->actionGroupEdit->setEnabled(groupSelected);
             m_ui->actionGroupDelete->setEnabled(groupSelected && dbWidget->canDeleteCurrentGroup());
-            m_ui->actionSearch->setEnabled(true);
             // TODO: get checked state from db widget
-            m_ui->actionSearch->setChecked(inSearch);
+            m_ui->actionSearch->setEnabled(true);
+            m_ui->actionToggleSearch->setEnabled(true);
+            m_ui->actionToggleSearch->setChecked(inSearch);
             m_ui->actionChangeMasterKey->setEnabled(true);
             m_ui->actionChangeDatabaseSettings->setEnabled(true);
             m_ui->actionDatabaseSave->setEnabled(true);
@@ -321,7 +324,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->menuEntryCopyAttribute->setEnabled(false);
 
             m_ui->actionSearch->setEnabled(false);
-            m_ui->actionSearch->setChecked(false);
+            m_ui->actionToggleSearch->setEnabled(false);
             m_ui->actionChangeMasterKey->setEnabled(false);
             m_ui->actionChangeDatabaseSettings->setEnabled(false);
             m_ui->actionDatabaseSave->setEnabled(false);
@@ -348,7 +351,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         m_ui->menuEntryCopyAttribute->setEnabled(false);
 
         m_ui->actionSearch->setEnabled(false);
-        m_ui->actionSearch->setChecked(false);
+        m_ui->actionToggleSearch->setEnabled(false);
         m_ui->actionChangeMasterKey->setEnabled(false);
         m_ui->actionChangeDatabaseSettings->setEnabled(false);
         m_ui->actionDatabaseSave->setEnabled(false);

@@ -166,24 +166,39 @@ void TestGui::testAddEntry()
 
 void TestGui::testSearch()
 {
-    QAction* searchAction = m_mainWindow->findChild<QAction*>("actionSearch");
-    QVERIFY(searchAction->isEnabled());
+    QAction* toggleSearchAction = m_mainWindow->findChild<QAction*>("actionToggleSearch");
+    QVERIFY(toggleSearchAction->isEnabled());
     QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
-    QWidget* searchActionWidget = toolBar->widgetForAction(searchAction);
-    QVERIFY(searchActionWidget->isEnabled());
-    QTest::mouseClick(searchActionWidget, Qt::LeftButton);
-
+    QWidget* toggleSearchActionWidget = toolBar->widgetForAction(toggleSearchAction);
     EntryView* entryView = m_dbWidget->findChild<EntryView*>("entryView");
     QLineEdit* searchEdit = m_dbWidget->findChild<QLineEdit*>("searchEdit");
     QToolButton* clearSearch = m_dbWidget->findChild<QToolButton*>("clearButton");
 
+    QVERIFY(!searchEdit->hasFocus());
+
+    // Toggle
+    QTest::mouseClick(toggleSearchActionWidget, Qt::LeftButton);
+    QTRY_VERIFY(searchEdit->hasFocus());
+    // Search for "ZZZ"
     QTest::keyClicks(searchEdit, "ZZZ");
-
     QTRY_COMPARE(entryView->model()->rowCount(), 0);
-
+    // Escape
+    QTest::keyClick(m_mainWindow, Qt::Key_Escape);
+    QTRY_VERIFY(!searchEdit->hasFocus());
+    // Toggle again
+    QTest::mouseClick(toggleSearchActionWidget, Qt::LeftButton);
+    QTRY_VERIFY(searchEdit->hasFocus());
+    // Input and clear
+    QTest::keyClicks(searchEdit, "ZZZ");
+    QTRY_COMPARE(searchEdit->text(), QString("ZZZ"));
     QTest::mouseClick(clearSearch, Qt::LeftButton);
+    QTRY_COMPARE(searchEdit->text(), QString(""));
+    // Ctrl+F should select the current text
+    QTest::keyClicks(searchEdit, "ZZZ");
+    QTest::keyClick(m_mainWindow, Qt::Key_F, Qt::ControlModifier);
+    QTRY_VERIFY(searchEdit->hasFocus());
+    // Search for "some"
     QTest::keyClicks(searchEdit, "some");
-
     QTRY_COMPARE(entryView->model()->rowCount(), 4);
 
     clickIndex(entryView->model()->index(0, 1), entryView, Qt::LeftButton);

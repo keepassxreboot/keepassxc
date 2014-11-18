@@ -702,6 +702,22 @@ void DatabaseWidget::switchToImportKeepass1(const QString& fileName)
     setCurrentWidget(m_keepass1OpenWidget);
 }
 
+void DatabaseWidget::openSearch()
+{
+    if (isInSearchMode()) {
+        m_searchUi->searchEdit->selectAll();
+
+        if (!m_searchUi->searchEdit->hasFocus()) {
+            m_searchUi->searchEdit->setFocus();
+            // make sure the search action is checked again
+            emitCurrentModeChanged();
+        }
+    }
+    else {
+        showSearch();
+    }
+}
+
 void DatabaseWidget::toggleSearch()
 {
     if (isInSearchMode()) {
