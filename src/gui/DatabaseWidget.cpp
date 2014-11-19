@@ -718,24 +718,6 @@ void DatabaseWidget::openSearch()
     }
 }
 
-void DatabaseWidget::toggleSearch()
-{
-    if (isInSearchMode()) {
-        if (m_searchUi->searchEdit->hasFocus()) {
-            closeSearch();
-        }
-        else {
-            m_searchUi->searchEdit->selectAll();
-            m_searchUi->searchEdit->setFocus();
-            // make sure the search action is checked again
-            emitCurrentModeChanged();
-        }
-    }
-    else {
-        showSearch();
-    }
-}
-
 void DatabaseWidget::closeSearch()
 {
     Q_ASSERT(m_lastGroup);

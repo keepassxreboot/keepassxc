@@ -166,18 +166,18 @@ void TestGui::testAddEntry()
 
 void TestGui::testSearch()
 {
-    QAction* toggleSearchAction = m_mainWindow->findChild<QAction*>("actionToggleSearch");
-    QVERIFY(toggleSearchAction->isEnabled());
+    QAction* searchAction = m_mainWindow->findChild<QAction*>("actionSearch");
+    QVERIFY(searchAction->isEnabled());
     QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
-    QWidget* toggleSearchActionWidget = toolBar->widgetForAction(toggleSearchAction);
+    QWidget* searchActionWidget = toolBar->widgetForAction(searchAction);
     EntryView* entryView = m_dbWidget->findChild<EntryView*>("entryView");
     QLineEdit* searchEdit = m_dbWidget->findChild<QLineEdit*>("searchEdit");
     QToolButton* clearSearch = m_dbWidget->findChild<QToolButton*>("clearButton");
 
     QVERIFY(!searchEdit->hasFocus());
 
-    // Toggle
-    QTest::mouseClick(toggleSearchActionWidget, Qt::LeftButton);
+    // Enter search
+    QTest::mouseClick(searchActionWidget, Qt::LeftButton);
     QTRY_VERIFY(searchEdit->hasFocus());
     // Search for "ZZZ"
     QTest::keyClicks(searchEdit, "ZZZ");
@@ -185,17 +185,17 @@ void TestGui::testSearch()
     // Escape
     QTest::keyClick(m_mainWindow, Qt::Key_Escape);
     QTRY_VERIFY(!searchEdit->hasFocus());
-    // Toggle again
-    QTest::mouseClick(toggleSearchActionWidget, Qt::LeftButton);
+    // Enter search again
+    QTest::mouseClick(searchActionWidget, Qt::LeftButton);
     QTRY_VERIFY(searchEdit->hasFocus());
     // Input and clear
     QTest::keyClicks(searchEdit, "ZZZ");
     QTRY_COMPARE(searchEdit->text(), QString("ZZZ"));
     QTest::mouseClick(clearSearch, Qt::LeftButton);
     QTRY_COMPARE(searchEdit->text(), QString(""));
-    // Ctrl+F should select the current text
+    // Triggering search should select the existing text
     QTest::keyClicks(searchEdit, "ZZZ");
-    QTest::keyClick(m_mainWindow, Qt::Key_F, Qt::ControlModifier);
+    QTest::mouseClick(searchActionWidget, Qt::LeftButton);
     QTRY_VERIFY(searchEdit->hasFocus());
     // Search for "some"
     QTest::keyClicks(searchEdit, "some");

@@ -177,7 +177,7 @@
    <addaction name="actionEntryCopyPassword"/>
    <addaction name="separator"/>
    <addaction name="actionLockDatabases"/>
-   <addaction name="actionToggleSearch"/>
+   <addaction name="actionSearch"/>
   </widget>
   <action name="actionQuit">
    <property name="text">
@@ -304,14 +304,6 @@
    </property>
   </action>
   <action name="actionSearch">
-   <property name="text">
-    <string>Find</string>
-   </property>
-  </action>
-  <action name="actionToggleSearch">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
    <property name="enabled">
     <bool>false</bool>
    </property>
