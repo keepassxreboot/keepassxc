@@ -201,7 +201,7 @@ MainWindow::MainWindow()
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
 
     m_actionMultiplexer.connect(m_ui->actionSearch, SIGNAL(triggered()),
-                                SLOT(toggleSearch()));
+                                SLOT(openSearch()));
 
     updateTrayIcon();
 }
@@ -295,9 +295,8 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionGroupNew->setEnabled(groupSelected);
             m_ui->actionGroupEdit->setEnabled(groupSelected);
             m_ui->actionGroupDelete->setEnabled(groupSelected && dbWidget->canDeleteCurrentGroup());
-            m_ui->actionSearch->setEnabled(true);
             // TODO: get checked state from db widget
-            m_ui->actionSearch->setChecked(inSearch);
+            m_ui->actionSearch->setEnabled(true);
             m_ui->actionChangeMasterKey->setEnabled(true);
             m_ui->actionChangeDatabaseSettings->setEnabled(true);
             m_ui->actionDatabaseSave->setEnabled(true);
@@ -321,7 +320,6 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->menuEntryCopyAttribute->setEnabled(false);
 
             m_ui->actionSearch->setEnabled(false);
-            m_ui->actionSearch->setChecked(false);
             m_ui->actionChangeMasterKey->setEnabled(false);
             m_ui->actionChangeDatabaseSettings->setEnabled(false);
             m_ui->actionDatabaseSave->setEnabled(false);
@@ -348,7 +346,6 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         m_ui->menuEntryCopyAttribute->setEnabled(false);
 
         m_ui->actionSearch->setEnabled(false);
-        m_ui->actionSearch->setChecked(false);
         m_ui->actionChangeMasterKey->setEnabled(false);
         m_ui->actionChangeDatabaseSettings->setEnabled(false);
         m_ui->actionDatabaseSave->setEnabled(false);
