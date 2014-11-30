@@ -121,3 +121,8 @@ Our software isn't always perfect, but we strive to always improve our work. You
 Along with our desire to hear your feedback and suggestions, we're also interested in accepting direct assistance in the form of code.
 
 Issue merge requests against our [GitHub repository](https://github.com/keepassx/keepassx).
+
+### Translations
+
+Translations are managed on [Transifex](https://www.transifex.com/projects/p/keepassx/) which offers a web interface.
+Please join an existing language team or request a new one if there is none.
