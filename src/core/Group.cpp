@@ -248,9 +248,7 @@ void Group::setExpanded(bool expanded)
     if (m_data.isExpanded != expanded) {
         m_data.isExpanded = expanded;
         updateTimeinfo();
-        if (config()->get("ModifiedOnExpandedStateChanges").toBool()) {
-            Q_EMIT modified();
-        }
+        Q_EMIT modified();
     }
 }
 

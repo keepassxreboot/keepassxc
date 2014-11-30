@@ -65,7 +65,6 @@ void SettingsWidget::loadSettings()
     m_generalUi->rememberLastDatabasesCheckBox->setChecked(config()->get("RememberLastDatabases").toBool());
     m_generalUi->openPreviousDatabasesOnStartupCheckBox->setChecked(
         config()->get("OpenPreviousDatabasesOnStartup").toBool());
-    m_generalUi->modifiedExpandedChangedCheckBox->setChecked(config()->get("ModifiedOnExpandedStateChanges").toBool());
     m_generalUi->autoSaveAfterEveryChangeCheckBox->setChecked(config()->get("AutoSaveAfterEveryChange").toBool());
     m_generalUi->autoSaveOnExitCheckBox->setChecked(config()->get("AutoSaveOnExit").toBool());
     m_generalUi->minimizeOnCopyCheckBox->setChecked(config()->get("MinimizeOnCopy").toBool());
@@ -111,8 +110,6 @@ void SettingsWidget::saveSettings()
     config()->set("RememberLastDatabases", m_generalUi->rememberLastDatabasesCheckBox->isChecked());
     config()->set("OpenPreviousDatabasesOnStartup",
                   m_generalUi->openPreviousDatabasesOnStartupCheckBox->isChecked());
-    config()->set("ModifiedOnExpandedStateChanges",
-                  m_generalUi->modifiedExpandedChangedCheckBox->isChecked());
     config()->set("AutoSaveAfterEveryChange",
                   m_generalUi->autoSaveAfterEveryChangeCheckBox->isChecked());
     config()->set("AutoSaveOnExit", m_generalUi->autoSaveOnExitCheckBox->isChecked());
