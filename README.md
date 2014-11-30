@@ -26,7 +26,6 @@ If you wish to build KeePassX from source, rather than rely on the pre-compiled 
 To install KeePassX from the Debian repository:
 
 ```bash
-sudo apt-get update
 sudo apt-get install keepassx
 ```
 
@@ -38,9 +37,9 @@ Install KeePassX from the Red Hat (or CentOS) repository:
 sudo yum install keepassx
 ```
 
-### Windows
+### Windows / Mac OS X
 
-Download the Windows installer from the KeePassX [download](https://www.keepassx.org/downloads) page.
+Download the installer from the KeePassX [download](https://www.keepassx.org/downloads) page.
 Once downloaded, double click on the file to execute the installer.
 
 ### From Source
@@ -76,9 +75,9 @@ More detailed instructions available in the INSTALL file.
 
 ## Contribute
 
-Coordination of work between developers is handled through the [KeePassX development](https://www.keepassx.org/dev) site.
+Coordination of work between developers is handled through the [KeePassX development](https://www.keepassx.org/dev/) site.
 Requests for enhancements, or reports of bugs encountered, can also be reported through the KeePassX development site.
-However, members of the open-source community are encouraged to submit pull requests directly through GitLab.
+However, members of the open-source community are encouraged to submit pull requests directly through GitHub.
 
 ### Clone Repository
 
@@ -99,11 +98,11 @@ git pull
 ### Feature Requests
 
 We're always looking for suggestions to improve our application. If you have a suggestion for improving an existing feature,
-or would like to suggest a completely new feature for KeePassX, please file a ticket on the [KeePassX development](https://www.keepassx.org/dev) site.
+or would like to suggest a completely new feature for KeePassX, please file a ticket on the [KeePassX development](https://www.keepassx.org/dev/) site.
 
 ### Bug Reports
 
-Our software isn't always perfect, but we strive to always improve our work. You may file bug reports on the [KeePassX development](https://www.keepassx.org/dev) site.
+Our software isn't always perfect, but we strive to always improve our work. You may file bug reports on the [KeePassX development](https://www.keepassx.org/dev/) site.
 
 ### Pull Requests
 
