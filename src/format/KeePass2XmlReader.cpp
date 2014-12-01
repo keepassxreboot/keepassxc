@@ -35,7 +35,13 @@ KeePass2XmlReader::KeePass2XmlReader()
     , m_db(Q_NULLPTR)
     , m_meta(Q_NULLPTR)
     , m_error(false)
+    , m_strictMode(false)
 {
+}
+
+void KeePass2XmlReader::setStrictMode(bool strictMode)
+{
+    m_strictMode = strictMode;
 }
 
 void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream)
@@ -493,7 +499,12 @@ Group* KeePass2XmlReader::parseGroup()
         if (m_xml.name() == "UUID") {
             Uuid uuid = readUuid();
             if (uuid.isNull()) {
-                raiseError("Null group uuid");
+                if (m_strictMode) {
+                    raiseError("Null group uuid");
+                }
+                else {
+                    group->setUuid(Uuid::random());
+                }
             }
             else {
                 group->setUuid(uuid);
@@ -508,7 +519,9 @@ Group* KeePass2XmlReader::parseGroup()
         else if (m_xml.name() == "IconID") {
             int iconId = readNumber();
             if (iconId < 0) {
-                raiseError("Invalid group icon number");
+                if (m_strictMode) {
+                    raiseError("Invalid group icon number");
+                }
             }
             else {
                 if (iconId >= DatabaseIcons::IconCount) {
@@ -584,6 +597,10 @@ Group* KeePass2XmlReader::parseGroup()
         }
     }
 
+    if (group->uuid().isNull() && !m_strictMode) {
+        group->setUuid(Uuid::random());
+    }
+
     if (!group->uuid().isNull()) {
         Group* tmpGroup = group;
         group = getGroup(tmpGroup->uuid());
@@ -630,7 +647,9 @@ void KeePass2XmlReader::parseDeletedObject()
         if (m_xml.name() == "UUID") {
             Uuid uuid = readUuid();
             if (uuid.isNull()) {
-                raiseError("Null DeleteObject uuid");
+                if (m_strictMode) {
+                    raiseError("Null DeleteObject uuid");
+                }
             }
             else {
                 delObj.uuid = uuid;
@@ -647,7 +666,7 @@ void KeePass2XmlReader::parseDeletedObject()
     if (!delObj.uuid.isNull() && !delObj.deletionTime.isNull()) {
         m_db->addDeletedObject(delObj);
     }
-    else {
+    else if (m_strictMode) {
         raiseError("Missing DeletedObject uuid or time");
     }
 }
@@ -665,7 +684,12 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
         if (m_xml.name() == "UUID") {
             Uuid uuid = readUuid();
             if (uuid.isNull()) {
-                raiseError("Null entry uuid");
+                if (m_strictMode) {
+                    raiseError("Null entry uuid");
+                }
+                else {
+                    entry->setUuid(Uuid::random());
+                }
             }
             else {
                 entry->setUuid(uuid);
@@ -674,7 +698,9 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
         else if (m_xml.name() == "IconID") {
             int iconId = readNumber();
             if (iconId < 0) {
-                raiseError("Invalud entry icon number");
+                if (m_strictMode) {
+                    raiseError("Invalud entry icon number");
+                }
             }
             else {
                 entry->setIcon(iconId);
@@ -724,6 +750,10 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
         else {
             skipCurrentElement();
         }
+    }
+
+    if (entry->uuid().isNull() && !m_strictMode) {
+        entry->setUuid(Uuid::random());
     }
 
     if (!entry->uuid().isNull()) {
@@ -986,7 +1016,12 @@ QDateTime KeePass2XmlReader::readDateTime()
     QDateTime dt = QDateTime::fromString(str, Qt::ISODate);
 
     if (!dt.isValid()) {
-        raiseError("Invalid date time value");
+        if (m_strictMode) {
+            raiseError("Invalid date time value");
+        }
+        else {
+            dt = Tools::currentDateTimeUtc();
+        }
     }
 
     return dt;
@@ -1001,7 +1036,9 @@ QColor KeePass2XmlReader::readColor()
     }
 
     if (colorStr.length() != 7 || colorStr[0] != '#') {
-        raiseError("Invalid color value");
+        if (m_strictMode) {
+            raiseError("Invalid color value");
+        }
         return QColor();
     }
 
@@ -1011,7 +1048,9 @@ QColor KeePass2XmlReader::readColor()
         bool ok;
         int rgbPart = rgbPartStr.toInt(&ok, 16);
         if (!ok || rgbPart > 255) {
-            raiseError("Invalid color rgb part");
+            if (m_strictMode) {
+                raiseError("Invalid color rgb part");
+            }
             return QColor();
         }
 
@@ -1043,7 +1082,9 @@ Uuid KeePass2XmlReader::readUuid()
 {
     QByteArray uuidBin = readBinary();
     if (uuidBin.length() != Uuid::Length) {
-        raiseError("Invalid uuid value");
+        if (m_strictMode) {
+            raiseError("Invalid uuid value");
+        }
         return Uuid();
     }
     else {
