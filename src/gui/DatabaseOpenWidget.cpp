@@ -87,7 +87,7 @@ void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)
         m_ui->editPassword->setText(pw);
     }
     if (!keyFile.isEmpty()) {
-        m_ui->checkKeyFile->setText(keyFile);
+        m_ui->comboKeyFile->setEditText(keyFile);
     }
 
     openDatabase();
