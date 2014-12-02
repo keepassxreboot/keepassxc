@@ -11,7 +11,7 @@ Furthermore the entries are sorted in groups, which are customizable as well. Th
 KeePassX offers a little utility for secure password generation. The password generator is very customizable, fast and easy to use.
 Especially someone who generates passwords frequently will appreciate this feature.
 
-The complete database is always encrypted either with AES (aka Rijndael) encryption algorithm using a 256 bit key.
+The complete database is always encrypted with the AES (aka Rijndael) encryption algorithm using a 256 bit key.
 Therefore the saved information can be considered as quite safe. KeePassX uses a database format that is compatible with [KeePass Password Safe](http://keepass.info/).
 This makes the use of that application even more favorable.
 
