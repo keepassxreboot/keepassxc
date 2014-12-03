@@ -108,6 +108,8 @@ void EditEntryWidget::setupAdvanced()
 
     m_attachmentsModel->setEntryAttachments(m_entryAttachments);
     m_advancedUi->attachmentsView->setModel(m_attachmentsModel);
+    connect(m_advancedUi->attachmentsView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)),
+            SLOT(updateAttachmentButtonsEnabled(QModelIndex)));
     connect(m_advancedUi->attachmentsView, SIGNAL(doubleClicked(QModelIndex)), SLOT(openAttachment(QModelIndex)));
     connect(m_advancedUi->saveAttachmentButton, SIGNAL(clicked()), SLOT(saveCurrentAttachment()));
     connect(m_advancedUi->openAttachmentButton, SIGNAL(clicked()), SLOT(openCurrentAttachment()));
@@ -235,6 +237,15 @@ void EditEntryWidget::useExpiryPreset(QAction* action)
     m_mainUi->expireDatePicker->setDateTime(expiryDateTime);
 }
 
+void EditEntryWidget::updateAttachmentButtonsEnabled(const QModelIndex& current)
+{
+    bool enable = current.isValid();
+
+    m_advancedUi->saveAttachmentButton->setEnabled(enable);
+    m_advancedUi->openAttachmentButton->setEnabled(enable);
+    m_advancedUi->removeAttachmentButton->setEnabled(enable && !m_history);
+}
+
 QString EditEntryWidget::entryTitle() const
 {
     if (m_entry) {
@@ -284,7 +295,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_mainUi->tooglePasswordGeneratorButton->setChecked(false);
     m_mainUi->passwordGenerator->reset();
     m_advancedUi->addAttachmentButton->setEnabled(!m_history);
-    m_advancedUi->removeAttachmentButton->setEnabled(!m_history);
+    updateAttachmentButtonsEnabled(m_advancedUi->attachmentsView->currentIndex());
     m_advancedUi->addAttributeButton->setEnabled(!m_history);
     m_advancedUi->editAttributeButton->setEnabled(false);
     m_advancedUi->removeAttributeButton->setEnabled(false);

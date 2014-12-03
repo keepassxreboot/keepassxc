@@ -93,6 +93,7 @@ private Q_SLOTS:
     void histEntryActivated(const QModelIndex& index);
     void updateHistoryButtons(const QModelIndex& current, const QModelIndex& previous);
     void useExpiryPreset(QAction* action);
+    void updateAttachmentButtonsEnabled(const QModelIndex& current);
 
 private:
     void setupMain();

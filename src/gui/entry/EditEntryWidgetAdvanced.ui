@@ -101,6 +101,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="removeAttachmentButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="text">
            <string>Remove</string>
           </property>
@@ -108,6 +111,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="openAttachmentButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="text">
            <string>Open</string>
           </property>
@@ -115,6 +121,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="saveAttachmentButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="text">
            <string>Save</string>
           </property>
