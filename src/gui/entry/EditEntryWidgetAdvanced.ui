@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>299</height>
+    <height>315</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -103,6 +103,13 @@
          <widget class="QPushButton" name="removeAttachmentButton">
           <property name="text">
            <string>Remove</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="openAttachmentButton">
+          <property name="text">
+           <string>Open</string>
           </property>
          </widget>
         </item>

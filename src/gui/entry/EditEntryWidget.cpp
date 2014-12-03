@@ -25,6 +25,7 @@
 #include <QStackedLayout>
 #include <QMenu>
 #include <QSortFilterProxyModel>
+#include <QTemporaryFile>
 
 #include "core/Config.h"
 #include "core/Database.h"
@@ -107,7 +108,9 @@ void EditEntryWidget::setupAdvanced()
 
     m_attachmentsModel->setEntryAttachments(m_entryAttachments);
     m_advancedUi->attachmentsView->setModel(m_attachmentsModel);
+    connect(m_advancedUi->attachmentsView, SIGNAL(doubleClicked(QModelIndex)), SLOT(openAttachment(QModelIndex)));
     connect(m_advancedUi->saveAttachmentButton, SIGNAL(clicked()), SLOT(saveCurrentAttachment()));
+    connect(m_advancedUi->openAttachmentButton, SIGNAL(clicked()), SLOT(openCurrentAttachment()));
     connect(m_advancedUi->addAttachmentButton, SIGNAL(clicked()), SLOT(insertAttachment()));
     connect(m_advancedUi->removeAttachmentButton, SIGNAL(clicked()), SLOT(removeCurrentAttachment()));
 
@@ -634,6 +637,42 @@ void EditEntryWidget::saveCurrentAttachment()
             return;
         }
     }
+}
+
+void EditEntryWidget::openAttachment(const QModelIndex& index)
+{
+    if (!index.isValid()) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    QString filename = m_attachmentsModel->keyByIndex(index);
+    QByteArray attachmentData = m_entryAttachments->value(filename);
+
+    // tmp file will be removed once the database (or the application) has been closed
+    QString tmpFileTemplate = QDir::temp().absoluteFilePath(filename);
+    QTemporaryFile* file = new QTemporaryFile(tmpFileTemplate, this);
+
+    if (!file->open()) {
+        MessageBox::warning(this, tr("Error"),
+                tr("Unable to save the attachment:\n").append(file->errorString()));
+        return;
+    }
+
+    if (file->write(attachmentData) != attachmentData.size()) {
+        MessageBox::warning(this, tr("Error"),
+                tr("Unable to save the attachment:\n").append(file->errorString()));
+        return;
+    }
+
+    QDesktopServices::openUrl(QUrl::fromLocalFile(file->fileName()));
+}
+
+void EditEntryWidget::openCurrentAttachment()
+{
+    QModelIndex index = m_advancedUi->attachmentsView->currentIndex();
+
+    openAttachment(index);
 }
 
 void EditEntryWidget::removeCurrentAttachment()
