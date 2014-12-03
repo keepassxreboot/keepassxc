@@ -30,6 +30,7 @@ class EntryAttachments : public QObject
 public:
     explicit EntryAttachments(QObject* parent = Q_NULLPTR);
     QList<QString> keys() const;
+    bool hasKey(const QString& key) const;
     QList<QByteArray> values() const;
     QByteArray value(const QString& key) const;
     void set(const QString& key, const QByteArray& value);
