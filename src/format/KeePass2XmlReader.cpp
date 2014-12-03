@@ -825,7 +825,13 @@ void KeePass2XmlReader::parseEntryString(Entry* entry)
     }
 
     if (keySet && valueSet) {
-        entry->attributes()->set(key, value, protect);
+        // the default attributes are always there so additionally check if it's empty
+        if (entry->attributes()->hasKey(key) && !entry->attributes()->value(key).isEmpty()) {
+            raiseError("Duplicate custom attribute found");
+        }
+        else {
+            entry->attributes()->set(key, value, protect);
+        }
     }
     else {
         raiseError("Entry string key or value missing");
@@ -874,7 +880,12 @@ QPair<QString, QString> KeePass2XmlReader::parseEntryBinary(Entry* entry)
     }
 
     if (keySet && valueSet) {
-        entry->attachments()->set(key, value);
+        if (entry->attachments()->hasKey(key)) {
+            raiseError("Duplicate attachment found");
+        }
+        else {
+            entry->attachments()->set(key, value);
+        }
     }
     else {
         raiseError("Entry binary key or value missing");
