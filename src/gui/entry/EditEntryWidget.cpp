@@ -661,7 +661,7 @@ void EditEntryWidget::openAttachment(const QModelIndex& index)
     QByteArray attachmentData = m_entryAttachments->value(filename);
 
     // tmp file will be removed once the database (or the application) has been closed
-    QString tmpFileTemplate = QDir::temp().absoluteFilePath(filename);
+    QString tmpFileTemplate = QDir::temp().absoluteFilePath(QString("XXXXXX.").append(filename));
     QTemporaryFile* file = new QTemporaryFile(tmpFileTemplate, this);
 
     if (!file->open()) {
