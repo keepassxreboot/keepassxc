@@ -256,7 +256,7 @@ bool DatabaseTabWidget::closeAllDatabases()
     return true;
 }
 
-void DatabaseTabWidget::saveDatabase(Database* db)
+bool DatabaseTabWidget::saveDatabase(Database* db)
 {
     DatabaseManagerStruct& dbStruct = m_dbList[db];
 
@@ -272,18 +272,20 @@ void DatabaseTabWidget::saveDatabase(Database* db)
         if (result) {
             dbStruct.modified = false;
             updateTabName(db);
+            return true;
         }
         else {
             MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
                                  + saveFile.errorString());
+            return false;
         }
     }
     else {
-        saveDatabaseAs(db);
+        return saveDatabaseAs(db);
     }
 }
 
-void DatabaseTabWidget::saveDatabaseAs(Database* db)
+bool DatabaseTabWidget::saveDatabaseAs(Database* db)
 {
     DatabaseManagerStruct& dbStruct = m_dbList[db];
     QString oldFileName;
@@ -311,11 +313,16 @@ void DatabaseTabWidget::saveDatabaseAs(Database* db)
             dbStruct.dbWidget->updateFilename(dbStruct.filePath);
             updateTabName(db);
             updateLastDatabases(dbStruct.filePath);
+            return true;
         }
         else {
             MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
                                  + saveFile.errorString());
+            return false;
         }
+    }
+    else {
+        return false;
     }
 }
 
@@ -340,21 +347,22 @@ void DatabaseTabWidget::closeDatabaseFromSender()
     closeDatabase(db);
 }
 
-void DatabaseTabWidget::saveDatabase(int index)
+bool DatabaseTabWidget::saveDatabase(int index)
 {
     if (index == -1) {
         index = currentIndex();
     }
 
-    saveDatabase(indexDatabase(index));
+    return saveDatabase(indexDatabase(index));
 }
 
-void DatabaseTabWidget::saveDatabaseAs(int index)
+bool DatabaseTabWidget::saveDatabaseAs(int index)
 {
     if (index == -1) {
         index = currentIndex();
     }
-    saveDatabaseAs(indexDatabase(index));
+
+    return saveDatabaseAs(indexDatabase(index));
 }
 
 void DatabaseTabWidget::changeMasterKey()
@@ -525,16 +533,69 @@ bool DatabaseTabWidget::hasLockableDatabases() const
 
 void DatabaseTabWidget::lockDatabases()
 {
-    QHashIterator<Database*, DatabaseManagerStruct> i(m_dbList);
-    while (i.hasNext()) {
-        i.next();
-        DatabaseWidget::Mode mode = i.value().dbWidget->currentMode();
+    for (int i = 0; i < count(); i++) {
+        DatabaseWidget* dbWidget = static_cast<DatabaseWidget*>(widget(i));
+        Database* db = databaseFromDatabaseWidget(dbWidget);
 
-        if ((mode == DatabaseWidget::ViewMode || mode == DatabaseWidget::EditMode)
-                && i.value().dbWidget->dbHasKey()) {
-            i.value().dbWidget->lock();
-            updateTabName(i.key());
+        DatabaseWidget::Mode mode = dbWidget->currentMode();
+
+        if ((mode != DatabaseWidget::ViewMode && mode != DatabaseWidget::EditMode)
+                || !dbWidget->dbHasKey()) {
+            continue;
         }
+
+        // show the correct tab widget before we are asking questions about it
+        setCurrentWidget(dbWidget);
+
+        if (mode == DatabaseWidget::EditMode) {
+            QMessageBox::StandardButton result =
+                MessageBox::question(
+                    this, tr("Lock database"),
+                    tr("Can't lock the database as you are currently editing it.\nPlease press cancel to finish your changes or discard them."),
+                    QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Cancel);
+            if (result == QMessageBox::Cancel) {
+                continue;
+            }
+        }
+
+
+        if (m_dbList[db].modified && !m_dbList[db].saveToFilename) {
+            QMessageBox::StandardButton result =
+                MessageBox::question(
+                    this, tr("Lock database"),
+                    tr("This database has never been saved.\nYou can save the dabatase or stop locking it."),
+                    QMessageBox::Save | QMessageBox::Cancel, QMessageBox::Cancel);
+            if (result == QMessageBox::Save) {
+                if (!saveDatabase(db)) {
+                    continue;
+                }
+            }
+            else if (result == QMessageBox::Cancel) {
+                continue;
+            }
+        }
+        else if (m_dbList[db].modified) {
+            QMessageBox::StandardButton result =
+                MessageBox::question(
+                    this, tr("Lock database"),
+                    tr("This database has been modified.\nDo you want to save the database before locking it?\nOtherwise your changes are lost."),
+                    QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Cancel);
+            if (result == QMessageBox::Save) {
+                if (!saveDatabase(db)) {
+                    continue;
+                }
+            }
+            else if (result == QMessageBox::Discard) {
+                m_dbList[db].modified = false;
+            }
+            else if (result == QMessageBox::Cancel) {
+                continue;
+            }
+        }
+
+        dbWidget->lock();
+        // database has changed so we can't use the db variable anymore
+        updateTabName(dbWidget->database());
     }
 }
 

@@ -25,33 +25,6 @@ UnlockDatabaseWidget::UnlockDatabaseWidget(QWidget* parent)
     : DatabaseOpenWidget(parent)
 {
     m_ui->labelHeadline->setText(tr("Unlock database"));
-
-    m_ui->buttonBox->removeButton(m_ui->buttonBox->button(QDialogButtonBox::Cancel));
-    connect(this, SIGNAL(editFinished(bool)), SLOT(clearForms()));
-}
-
-void UnlockDatabaseWidget::load(const QString& filename, Database* db)
-{
-    Q_ASSERT(db);
-
-    DatabaseOpenWidget::load(filename);
-    m_db = db;
-}
-
-void UnlockDatabaseWidget::openDatabase()
-{
-    CompositeKey masterKey = databaseKey();
-    if (masterKey.isEmpty()) {
-        return;
-    }
-
-    if (m_db->verifyKey(masterKey)) {
-        Q_EMIT editFinished(true);
-    }
-    else {
-        MessageBox::warning(this, tr("Error"), tr("Wrong key."));
-        m_ui->editPassword->clear();
-    }
 }
 
 void UnlockDatabaseWidget::clearForms()
@@ -60,4 +33,5 @@ void UnlockDatabaseWidget::clearForms()
     m_ui->comboKeyFile->clear();
     m_ui->checkPassword->setChecked(false);
     m_ui->checkKeyFile->setChecked(false);
+    m_db = Q_NULLPTR;
 }
