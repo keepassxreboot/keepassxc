@@ -434,6 +434,20 @@ QList<const Group*> Group::groupsRecursive(bool includeSelf) const
         groupList.append(this);
     }
 
+    Q_FOREACH (const Group* group, m_children) {
+        groupList.append(group->groupsRecursive(true));
+    }
+
+    return groupList;
+}
+
+QList<Group*> Group::groupsRecursive(bool includeSelf)
+{
+    QList<Group*> groupList;
+    if (includeSelf) {
+        groupList.append(this);
+    }
+
     Q_FOREACH (Group* group, m_children) {
         groupList.append(group->groupsRecursive(true));
     }
