@@ -10,10 +10,13 @@
     <height>250</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0,0,1,0,0,3">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0,0,1,0,0,3">
    <property name="spacing">
     <number>8</number>
    </property>
+   <item>
+    <widget class="MessageWidget" name="messageWidget" native="true"/>
+   </item>
    <item>
     <spacer name="verticalSpacer_2">
      <property name="orientation">
@@ -143,6 +146,12 @@
    <class>PasswordEdit</class>
    <extends>QLineEdit</extends>
    <header>gui/PasswordEdit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>MessageWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/MessageWidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <tabstops>
