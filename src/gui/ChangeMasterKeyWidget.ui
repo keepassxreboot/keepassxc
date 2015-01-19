@@ -7,10 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>438</width>
-    <height>256</height>
+    <height>342</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="MessageWidget" name="messageWidget" native="true"/>
+   </item>
    <item>
     <widget class="QLabel" name="headlineLabel"/>
    </item>
@@ -150,6 +153,12 @@
    <class>PasswordEdit</class>
    <extends>QLineEdit</extends>
    <header>gui/PasswordEdit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>MessageWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/MessageWidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <tabstops>

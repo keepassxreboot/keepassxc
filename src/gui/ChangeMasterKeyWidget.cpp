@@ -30,6 +30,8 @@ ChangeMasterKeyWidget::ChangeMasterKeyWidget(QWidget* parent)
 {
     m_ui->setupUi(this);
 
+    m_ui->messageWidget->setHidden(true);
+
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(generateKey()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
     m_ui->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
@@ -52,7 +54,7 @@ void ChangeMasterKeyWidget::createKeyFile()
         QString errorMsg;
         bool created = FileKey::create(fileName, &errorMsg);
         if (!created) {
-            MessageBox::warning(this, tr("Error"), tr("Unable to create Key File : ") + errorMsg);
+            m_ui->messageWidget->showMessageError(tr("Unable to create Key File : ").append(errorMsg));
         }
         else {
             m_ui->keyFileCombo->setEditText(fileName);
@@ -110,7 +112,7 @@ void ChangeMasterKeyWidget::generateKey()
             m_key.addKey(PasswordKey(m_ui->enterPasswordEdit->text()));
         }
         else {
-            MessageBox::warning(this, tr("Error"), tr("Different passwords supplied."));
+            m_ui->messageWidget->showMessageError(tr("Different passwords supplied."));
             m_ui->enterPasswordEdit->setText("");
             m_ui->repeatPasswordEdit->setText("");
             return;
