@@ -12,6 +12,9 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
+    <widget class="MessageWidget" name="messageWidget" native="true"/>
+   </item>
+   <item>
     <widget class="QLabel" name="headerLabel">
      <property name="text">
       <string/>
@@ -58,6 +61,12 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>MessageWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/MessageWidget.h</header>
+   <container>1</container>
+  </customwidget>
   <customwidget>
    <class>CategoryListWidget</class>
    <extends>QListWidget</extends>

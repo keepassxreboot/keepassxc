@@ -33,6 +33,11 @@ void MessageWidget::showMessageWarning(const QString& text)
     showMessage(text, MessageType::Warning);
 }
 
+void MessageWidget::showMessageInformation(const QString& text)
+{
+    showMessage(text, MessageType::Information);
+}
+
 void MessageWidget::showMessagePositive(const QString& text)
 {
     showMessage(text, MessageType::Positive);
