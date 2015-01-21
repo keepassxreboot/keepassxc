@@ -71,6 +71,10 @@ private Q_SLOTS:
     void toggleWindow();
     void lockDatabasesAfterInactivity();
     void repairDatabase();
+    void displayGlobalMessage(const QString& text, MessageWidget::MessageType type);
+    void displayTabMessage(const QString& text, MessageWidget::MessageType type);
+    void hideGlobalMessage();
+    void hideTabMessage();
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);

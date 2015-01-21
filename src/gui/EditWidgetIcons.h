@@ -26,6 +26,7 @@
 
 #include "core/Global.h"
 #include "core/Uuid.h"
+#include "gui/MessageWidget.h"
 
 class Database;
 class DefaultIconModel;
@@ -57,6 +58,10 @@ public:
 
 public Q_SLOTS:
     void setUrl(const QString &url);
+
+Q_SIGNALS:
+    void messageEditEntry(QString, MessageWidget::MessageType);
+    void messageEditEntryDismiss();
 
 private Q_SLOTS:
     void downloadFavicon();

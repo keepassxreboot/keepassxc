@@ -26,6 +26,7 @@
 #include "core/Uuid.h"
 
 #include "gui/entry/EntryModel.h"
+#include "gui/MessageWidget.h"
 
 class ChangeMasterKeyWidget;
 class DatabaseOpenWidget;
@@ -43,8 +44,13 @@ class QMenu;
 class QSplitter;
 class QLabel;
 class UnlockDatabaseWidget;
+class MessageWidget;
 class UnlockDatabaseDialog;
 class QFileSystemWatcher;
+
+namespace Ui {
+    class SearchWidget;
+}
 
 class DatabaseWidget : public QStackedWidget
 {
@@ -145,6 +151,8 @@ public Q_SLOTS:
     void search(const QString& searchtext);
     void setSearchCaseSensitive(bool state);
     void endSearch();
+    void showMessage(const QString& text, MessageWidget::MessageType type);
+    void hideMessage();
 
 private Q_SLOTS:
     void entryActivationSignalReceived(Entry* entry, EntryModel::ModelColumn column);
@@ -192,6 +200,7 @@ private:
     QString m_filename;
     Uuid m_groupBeforeLock;
     Uuid m_entryBeforeLock;
+    MessageWidget* m_messageWidget;
 
     // Search state
     QString m_lastSearchText;

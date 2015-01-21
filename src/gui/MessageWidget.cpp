@@ -23,32 +23,14 @@ MessageWidget::MessageWidget(QWidget* parent)
 
 }
 
-void MessageWidget::showMessageError(const QString& text)
-{
-    showMessage(text, MessageType::Error);
-}
-
-void MessageWidget::showMessageWarning(const QString& text)
-{
-    showMessage(text, MessageType::Warning);
-}
-
-void MessageWidget::showMessageInformation(const QString& text)
-{
-    showMessage(text, MessageType::Information);
-}
-
-void MessageWidget::showMessagePositive(const QString& text)
-{
-    showMessage(text, MessageType::Positive);
-}
-
-void MessageWidget::showMessage(const QString& text, MessageType type)
+void MessageWidget::showMessage(const QString& text, MessageWidget::MessageType type)
 {
     setMessageType(type);
     setText(text);
     animatedShow();
 }
 
-
-
+void MessageWidget::hideMessage()
+{
+    animatedHide();
+}

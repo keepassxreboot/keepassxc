@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -14,6 +17,9 @@
    <string notr="true">KeePassXC</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <property name="leftMargin">
      <number>0</number>
@@ -28,7 +34,23 @@
      <number>0</number>
     </property>
     <item>
+     <widget class="MessageWidget" name="globalMessageWidget" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QStackedWidget" name="stackedWidget">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="currentIndex">
        <number>2</number>
       </property>
@@ -104,7 +126,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>26</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -452,6 +474,12 @@
   </action>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>MessageWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/MessageWidget.h</header>
+   <container>1</container>
+  </customwidget>
   <customwidget>
    <class>DatabaseTabWidget</class>
    <extends>QTabWidget</extends>

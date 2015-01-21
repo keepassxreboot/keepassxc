@@ -7,15 +7,15 @@
 
 class MessageWidget : public KMessageWidget
 {
+    Q_OBJECT
+
 public:
     explicit MessageWidget(QWidget* parent = 0);
-    void showMessageError(const QString& text);
-    void showMessageWarning(const QString& text);
-    void showMessageInformation(const QString& text);
-    void showMessagePositive(const QString& text);
 
-private:
-    void showMessage(const QString& text, MessageType type);
+public Q_SLOTS:
+    void showMessage(const QString& text, MessageWidget::MessageType type);
+    void hideMessage();
+
 };
 
 #endif // MESSAGEWIDGET_H

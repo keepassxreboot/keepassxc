@@ -21,6 +21,7 @@
 #include <QScopedPointer>
 
 #include "gui/DialogyWidget.h"
+#include "gui/MessageWidget.h"
 
 class QLabel;
 
@@ -48,10 +49,8 @@ Q_SIGNALS:
     void accepted();
     void rejected();
 
-protected:
-    void showMessageError(const QString& text);
-    void showMessageWarning(const QString& text);
-    void showMessageInformation(const QString& text);
+protected Q_SLOTS:
+    void showMessage(const QString& text, MessageWidget::MessageType type);
     void hideMessage();
 
 private:

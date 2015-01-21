@@ -108,8 +108,8 @@ void DatabaseOpenWidget::openDatabase()
 
     QFile file(m_filename);
     if (!file.open(QIODevice::ReadOnly)) {
-        m_ui->messageWidget->showMessageError(
-            tr("Unable to open the database.").append("\n").append(file.errorString()));
+        m_ui->messageWidget->showMessage(
+            tr("Unable to open the database.").append("\n").append(file.errorString()), MessageWidget::Error);
         return;
     }
     if (m_db) {
@@ -126,8 +126,8 @@ void DatabaseOpenWidget::openDatabase()
         Q_EMIT editFinished(true);
     }
     else {
-        m_ui->messageWidget->showMessageError(tr("Unable to open the database.")
-                                              .append("\n").append(reader.errorString()));
+        m_ui->messageWidget->showMessage(tr("Unable to open the database.")
+                                         .append("\n").append(reader.errorString()), MessageWidget::Error);
         m_ui->editPassword->clear();
     }
 }
@@ -147,7 +147,8 @@ CompositeKey DatabaseOpenWidget::databaseKey()
         QString keyFilename = m_ui->comboKeyFile->currentText();
         QString errorMsg;
         if (!key.load(keyFilename, &errorMsg)) {
-            m_ui->messageWidget->showMessageError(tr("Can't open key file").append(":\n").append(errorMsg));
+            m_ui->messageWidget->showMessage(tr("Can't open key file").append(":\n")
+                                             .append(errorMsg), MessageWidget::Error);
             return CompositeKey();
         }
         masterKey.addKey(key);
