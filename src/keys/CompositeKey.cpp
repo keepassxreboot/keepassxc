@@ -43,7 +43,9 @@ CompositeKey::~CompositeKey()
 void CompositeKey::clear()
 {
     qDeleteAll(m_keys);
+    qDeleteAll(m_challengeResponseKeys);
     m_keys.clear();
+    m_challengeResponseKeys.clear();
 }
 
 bool CompositeKey::isEmpty() const
@@ -152,6 +154,7 @@ bool CompositeKey::challenge(const QByteArray& seed, QByteArray& result) const
      * maintain backwards compatability with regular databases.
      */
     if (m_challengeResponseKeys.length() == 0) {
+        result.clear();
         return true;
     }
 
