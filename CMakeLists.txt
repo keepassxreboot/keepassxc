@@ -174,6 +174,8 @@ endif()
 
 find_package(LibMicroHTTPD REQUIRED)
 
+find_package(QJSON REQUIRED)
+
 find_package(ZLIB REQUIRED)
 
 check_cxx_source_compiles("

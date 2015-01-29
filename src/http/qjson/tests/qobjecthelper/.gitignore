@@ -1,5 +1,0 @@
-Makefile
-*.o
-*.moc
-moc_*
-qobjecthelper

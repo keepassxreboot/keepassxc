@@ -17,9 +17,9 @@
 #include <QtCore/QStringList>
 #include <QtCore/QVariant>
 
-#include "qjson/src/parser.h"
-#include "qjson/src/qobjecthelper.h"
-#include "qjson/src/serializer.h"
+#include "qjson/parser.h"
+#include "qjson/qobjecthelper.h"
+#include "qjson/serializer.h"
 
 #include "crypto/Random.h"
 #include "crypto/SymmetricCipher.h"
@@ -304,7 +304,7 @@ void Response::setVerifier(QString key)
 
 QString Response::toJson()
 {
-    QVariant result = QJson::QObjectHelper::qobject2qvariant(this, QJson::QObjectHelper::Flag_None);
+    QVariant result = QJson::QObjectHelper::qobject2qvariant(this);
 
     QJson::Serializer s;
     s.setIndentMode(QJson::IndentCompact);
@@ -349,7 +349,7 @@ QVariant Response::getEntries() const
     QList<QVariant> res;
     res.reserve(m_entries.size());
     Q_FOREACH (const Entry &entry, m_entries)
-        res.append(QJson::QObjectHelper::qobject2qvariant(&entry, QJson::QObjectHelper::Flag_None));
+	res.append(QJson::QObjectHelper::qobject2qvariant(&entry));
     return res;
 }
 
@@ -487,7 +487,7 @@ QVariant Entry::getStringFields() const
     QList<QVariant> res;
     res.reserve(m_stringFields.size());
     Q_FOREACH (const StringField &stringfield, m_stringFields)
-        res.append(QJson::QObjectHelper::qobject2qvariant(&stringfield, QJson::QObjectHelper::Flag_None));
+	res.append(QJson::QObjectHelper::qobject2qvariant(&stringfield));
     return res;
 }
 

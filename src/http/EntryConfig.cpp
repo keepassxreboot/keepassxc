@@ -14,9 +14,9 @@
 #include "EntryConfig.h"
 #include "core/Entry.h"
 #include "core/EntryAttributes.h"
-#include "qjson/src/parser.h"
-#include "qjson/src/qobjecthelper.h"
-#include "qjson/src/serializer.h"
+#include "qjson/parser.h"
+#include "qjson/qobjecthelper.h"
+#include "qjson/serializer.h"
 
 static const char KEEPASSHTTP_NAME[] = "KeePassHttp Settings";  //TODO: duplicated string (also in Service.cpp)
 
@@ -94,7 +94,8 @@ bool EntryConfig::load(const Entry *entry)
 
 void EntryConfig::save(Entry *entry)
 {
-    QVariant v = QJson::QObjectHelper::qobject2qvariant(this, QJson::QObjectHelper::Flag_None);
+    //QVariant v = QJson::QObjectHelper::qobject2qvariant(this, QJson::QObjectHelper::Flag_None);
+    QVariant v = QJson::QObjectHelper::qobject2qvariant(this);
     QByteArray json = QJson::Serializer().serialize(v);
     entry->attributes()->set(KEEPASSHTTP_NAME, json);
 }

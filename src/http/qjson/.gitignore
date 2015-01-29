@@ -1,7 +1,0 @@
-lib
-Makefile
-doc/html
-
-# -- kdevelop
-.kdev4
-*.kdev4
