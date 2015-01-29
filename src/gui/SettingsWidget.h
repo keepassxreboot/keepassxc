@@ -19,6 +19,7 @@
 #define KEEPASSX_SETTINGSWIDGET_H
 
 #include "gui/EditWidget.h"
+#include "http/OptionDialog.h"
 
 namespace Ui {
     class SettingsWidgetGeneral;
@@ -55,6 +56,7 @@ private Q_SLOTS:
 private:
     QWidget* const m_secWidget;
     QWidget* const m_generalWidget;
+    OptionDialog* const m_optionDialogUi;
     const QScopedPointer<Ui::SettingsWidgetSecurity> m_secUi;
     const QScopedPointer<Ui::SettingsWidgetGeneral> m_generalUi;
     Qt::Key m_globalAutoTypeKey;

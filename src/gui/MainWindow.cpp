@@ -29,6 +29,9 @@
 #include "gui/AboutDialog.h"
 #include "gui/DatabaseWidget.h"
 
+#include "http/Service.h"
+#include "http/HttpSettings.h"
+
 const QString MainWindow::BaseWindowTitle = "KeePassX";
 
 MainWindow::MainWindow()
@@ -204,6 +207,11 @@ MainWindow::MainWindow()
                                 SLOT(openSearch()));
 
     updateTrayIcon();
+    
+    // Keepasshttp service
+    Service *m_service = new Service(m_ui->tabWidget);
+    if (HttpSettings::isEnabled())
+        m_service->start();
 }
 
 MainWindow::~MainWindow()
@@ -305,6 +313,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         }
         case DatabaseWidget::EditMode:
         case DatabaseWidget::LockedMode:
+        case DatabaseWidget::OpenMode:
             Q_FOREACH (QAction* action, m_ui->menuEntries->actions()) {
                 action->setEnabled(false);
             }

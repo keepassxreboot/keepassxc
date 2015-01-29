@@ -23,12 +23,15 @@
 #include "core/Config.h"
 #include "core/Translator.h"
 
+#include "http/OptionDialog.h"
+
 SettingsWidget::SettingsWidget(QWidget* parent)
     : EditWidget(parent)
     , m_secWidget(new QWidget())
     , m_generalWidget(new QWidget())
     , m_secUi(new Ui::SettingsWidgetSecurity())
     , m_generalUi(new Ui::SettingsWidgetGeneral())
+    , m_optionDialogUi(new OptionDialog())
     , m_globalAutoTypeKey(static_cast<Qt::Key>(0))
     , m_globalAutoTypeModifiers(Qt::NoModifier)
 {
@@ -38,6 +41,9 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     m_generalUi->setupUi(m_generalWidget);
     add(tr("General"), m_generalWidget);
     add(tr("Security"), m_secWidget);
+    add(tr("HTTP"), m_optionDialogUi);
+    //QObject::connect(m_optionDialogUi, SIGNAL(removeSharedEncryptionKeys()), m_service, SLOT(removeSharedEncryptionKeys()));
+    //QObject::connect(m_optionDialogUi, SIGNAL(removeStoredPermissions()), m_service, SLOT(removeStoredPermissions()));
 
     m_generalUi->autoTypeShortcutWidget->setVisible(autoType()->isAvailable());
     m_generalUi->autoTypeShortcutLabel->setVisible(autoType()->isAvailable());
@@ -62,6 +68,7 @@ SettingsWidget::~SettingsWidget()
 
 void SettingsWidget::loadSettings()
 {
+    m_optionDialogUi->loadSettings();
     m_generalUi->rememberLastDatabasesCheckBox->setChecked(config()->get("RememberLastDatabases").toBool());
     m_generalUi->openPreviousDatabasesOnStartupCheckBox->setChecked(
         config()->get("OpenPreviousDatabasesOnStartup").toBool());
@@ -107,6 +114,7 @@ void SettingsWidget::loadSettings()
 
 void SettingsWidget::saveSettings()
 {
+    m_optionDialogUi->saveSettings();
     config()->set("RememberLastDatabases", m_generalUi->rememberLastDatabasesCheckBox->isChecked());
     config()->set("OpenPreviousDatabasesOnStartup",
                   m_generalUi->openPreviousDatabasesOnStartupCheckBox->isChecked());
