@@ -21,9 +21,11 @@
 #include "core/Config.h"
 #include "core/qcommandlineparser.h"
 #include "core/Tools.h"
+#include "core/Translator.h"
 #include "crypto/Crypto.h"
 #include "gui/Application.h"
 #include "gui/MainWindow.h"
+#include "gui/MessageBox.h"
 
 int main(int argc, char** argv)
 {
@@ -37,7 +39,16 @@ int main(int argc, char** argv)
     // don't set organizationName as that changes the return value of
     // QDesktopServices::storageLocation(QDesktopServices::DataLocation)
 
-    Crypto::init();
+    QApplication::setQuitOnLastWindowClosed(false);
+
+    if (!Crypto::init()) {
+        QString error = QCoreApplication::translate("Main",
+                                                    "Fatal error while testing the cryptographic functions.");
+        error.append("\n");
+        error.append(Crypto::errorString());
+        MessageBox::critical(Q_NULLPTR, QCoreApplication::translate("Main", "KeePassX - Error"), error);
+        return 1;
+    }
 
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::translate("main", "KeePassX - cross-platform password manager"));
@@ -65,6 +76,8 @@ int main(int argc, char** argv)
     if (parser.isSet(configOption)) {
         Config::createConfigFromFile(parser.value(configOption));
     }
+
+    Translator::installTranslator();
 
 #ifdef Q_OS_MAC
     // Don't show menu icons on OSX

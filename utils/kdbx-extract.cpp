@@ -38,7 +38,9 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    Crypto::init();
+    if (!Crypto::init()) {
+        qFatal("Fatal error while testing the cryptographic functions:\n%s", qPrintable(Crypto::errorString()));
+    }
 
     CompositeKey key;
     if (QFile::exists(app.arguments().at(1))) {

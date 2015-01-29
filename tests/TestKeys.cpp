@@ -31,9 +31,11 @@
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
+QTEST_GUILESS_MAIN(TestKeys)
+
 void TestKeys::initTestCase()
 {
-    Crypto::init();
+    QVERIFY(Crypto::init());
 }
 
 void TestKeys::testComposite()
@@ -184,5 +186,3 @@ void TestKeys::benchmarkTransformKey()
         compositeKey.transform(seed, 1e6);
     }
 }
-
-QTEST_GUILESS_MAIN(TestKeys)

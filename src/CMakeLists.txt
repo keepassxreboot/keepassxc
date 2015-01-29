@@ -35,6 +35,7 @@ set(keepassx_SOURCES
     core/Entry.cpp
     core/EntryAttachments.cpp
     core/EntryAttributes.cpp
+    core/EntrySearcher.cpp
     core/FilePath.cpp
     core/Global.h
     core/Group.cpp
@@ -47,7 +48,9 @@ set(keepassx_SOURCES
     core/SignalMultiplexer.cpp
     core/TimeDelta.cpp
     core/TimeInfo.cpp
+    core/ToDbExporter.cpp
     core/Tools.cpp
+    core/Translator.cpp
     core/Uuid.cpp
     core/qcommandlineoption.cpp
     core/qcommandlineparser.cpp
@@ -73,6 +76,7 @@ set(keepassx_SOURCES
     gui/DatabaseSettingsWidget.cpp
     gui/DatabaseTabWidget.cpp
     gui/DatabaseWidget.cpp
+    gui/DatabaseWidgetStateSync.cpp
     gui/DialogyWidget.cpp
     gui/DragTabBar.cpp
     gui/EditWidget.cpp
@@ -162,6 +166,7 @@ set(keepassx_MOC
     gui/DatabaseSettingsWidget.h
     gui/DatabaseTabWidget.h
     gui/DatabaseWidget.h
+    gui/DatabaseWidgetStateSync.h
     gui/DialogyWidget.h
     gui/DragTabBar.h
     gui/EditWidget.h

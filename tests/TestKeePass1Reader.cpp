@@ -33,9 +33,11 @@
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
+QTEST_GUILESS_MAIN(TestKeePass1Reader)
+
 void TestKeePass1Reader::initTestCase()
 {
-    Crypto::init();
+    QVERIFY(Crypto::init());
 
     QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/basic.kdb");
 
@@ -292,5 +294,3 @@ void TestKeePass1Reader::reopenDatabase(Database* db, const QString& password, c
     QVERIFY(!reader.hasError());
     delete newDb;
 }
-
-QTEST_GUILESS_MAIN(TestKeePass1Reader)

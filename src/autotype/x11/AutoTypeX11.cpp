@@ -209,23 +209,26 @@ QString AutoTypePlatformX11::windowTitle(Window window, bool useBlacklist)
     unsigned long after;
     unsigned char* data = Q_NULLPTR;
 
+    // the window manager spec says we should read _NET_WM_NAME first, then fall back to WM_NAME
+
     int retVal = XGetWindowProperty(m_dpy, window, m_atomNetWmName, 0, 1000, false, m_atomUtf8String,
                                     &type, &format, &nitems, &after, &data);
 
-    if (retVal != 0 && data) {
+    if ((retVal == 0) && data) {
         title = QString::fromUtf8(reinterpret_cast<char*>(data));
     }
     else {
         XTextProperty textProp;
         retVal = XGetTextProperty(m_dpy, window, &textProp, m_atomWmName);
-        if (retVal != 0 && textProp.value) {
+        if ((retVal != 0) && textProp.value) {
             char** textList = Q_NULLPTR;
             int count;
 
             if (textProp.encoding == m_atomUtf8String) {
                 title = QString::fromUtf8(reinterpret_cast<char*>(textProp.value));
             }
-            else if (XmbTextPropertyToTextList(m_dpy, &textProp, &textList, &count) == 0 && textList && count > 0) {
+            else if ((XmbTextPropertyToTextList(m_dpy, &textProp, &textList, &count) == 0)
+                     && textList && (count > 0)) {
                 title = QString::fromLocal8Bit(textList[0]);
             }
             else if (textProp.encoding == m_atomString) {

@@ -1,0 +1,8 @@
+[main]
+host = https://www.transifex.com
+
+[keepassx.keepassx_ents]
+source_file = share/translations/keepassx_en.ts
+file_filter = share/translations/keepassx_<lang>.ts
+source_lang = en
+type = QT

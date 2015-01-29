@@ -23,9 +23,11 @@
 #include "core/Entry.h"
 #include "crypto/Crypto.h"
 
+QTEST_GUILESS_MAIN(TestEntry)
+
 void TestEntry::initTestCase()
 {
-    Crypto::init();
+    QVERIFY(Crypto::init());
 }
 
 void TestEntry::testHistoryItemDeletion()
@@ -121,5 +123,3 @@ void TestEntry::testClone()
     QCOMPARE(entryCloneHistory->historyItems().first()->title(), QString("Original Title"));
     QCOMPARE(entryCloneHistory->timeInfo().creationTime(), entryOrg->timeInfo().creationTime());
 }
-
-QTEST_GUILESS_MAIN(TestEntry)

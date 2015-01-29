@@ -17,6 +17,7 @@
 
 #include "EntryView.h"
 
+#include <QHeaderView>
 #include <QKeyEvent>
 
 #include "gui/SortFilterHideProxyModel.h"
@@ -40,6 +41,7 @@ EntryView::EntryView(QWidget* parent)
     setDragEnabled(true);
     setSortingEnabled(true);
     setSelectionMode(QAbstractItemView::ExtendedSelection);
+    header()->setDefaultSectionSize(150);
 
     // QAbstractItemView::startDrag() uses this property as the default drag action
     setDefaultDropAction(Qt::MoveAction);
@@ -62,13 +64,24 @@ void EntryView::keyPressEvent(QKeyEvent* event)
 void EntryView::setGroup(Group* group)
 {
     m_model->setGroup(group);
-    Q_EMIT entrySelectionChanged();
+    setFirstEntryActive();
 }
 
 void EntryView::setEntryList(const QList<Entry*>& entries)
 {
     m_model->setEntryList(entries);
-    Q_EMIT entrySelectionChanged();
+    setFirstEntryActive();
+}
+
+void EntryView::setFirstEntryActive()
+{
+    if(m_model->rowCount() > 0) {
+        QModelIndex index = m_sortModel->mapToSource(m_sortModel->index(0, 0));
+        setCurrentEntry(m_model->entryFromIndex(index));
+    }
+    else {
+        Q_EMIT entrySelectionChanged();
+    }
 }
 
 bool EntryView::inEntryListMode()
@@ -100,9 +113,9 @@ Entry* EntryView::currentEntry()
     }
 }
 
-bool EntryView::isSingleEntrySelected()
+int EntryView::numberOfSelectedEntries()
 {
-    return (selectionModel()->selectedRows().size() == 1);
+    return selectionModel()->selectedRows().size();
 }
 
 void EntryView::setCurrentEntry(Entry* entry)

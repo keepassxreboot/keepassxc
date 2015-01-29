@@ -25,6 +25,7 @@
 #include <QStackedLayout>
 #include <QMenu>
 #include <QSortFilterProxyModel>
+#include <QTemporaryFile>
 
 #include "core/Config.h"
 #include "core/Database.h"
@@ -107,7 +108,11 @@ void EditEntryWidget::setupAdvanced()
 
     m_attachmentsModel->setEntryAttachments(m_entryAttachments);
     m_advancedUi->attachmentsView->setModel(m_attachmentsModel);
+    connect(m_advancedUi->attachmentsView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)),
+            SLOT(updateAttachmentButtonsEnabled(QModelIndex)));
+    connect(m_advancedUi->attachmentsView, SIGNAL(doubleClicked(QModelIndex)), SLOT(openAttachment(QModelIndex)));
     connect(m_advancedUi->saveAttachmentButton, SIGNAL(clicked()), SLOT(saveCurrentAttachment()));
+    connect(m_advancedUi->openAttachmentButton, SIGNAL(clicked()), SLOT(openCurrentAttachment()));
     connect(m_advancedUi->addAttachmentButton, SIGNAL(clicked()), SLOT(insertAttachment()));
     connect(m_advancedUi->removeAttachmentButton, SIGNAL(clicked()), SLOT(removeCurrentAttachment()));
 
@@ -232,6 +237,15 @@ void EditEntryWidget::useExpiryPreset(QAction* action)
     m_mainUi->expireDatePicker->setDateTime(expiryDateTime);
 }
 
+void EditEntryWidget::updateAttachmentButtonsEnabled(const QModelIndex& current)
+{
+    bool enable = current.isValid();
+
+    m_advancedUi->saveAttachmentButton->setEnabled(enable);
+    m_advancedUi->openAttachmentButton->setEnabled(enable);
+    m_advancedUi->removeAttachmentButton->setEnabled(enable && !m_history);
+}
+
 QString EditEntryWidget::entryTitle() const
 {
     if (m_entry) {
@@ -281,7 +295,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_mainUi->tooglePasswordGeneratorButton->setChecked(false);
     m_mainUi->passwordGenerator->reset();
     m_advancedUi->addAttachmentButton->setEnabled(!m_history);
-    m_advancedUi->removeAttachmentButton->setEnabled(!m_history);
+    updateAttachmentButtonsEnabled(m_advancedUi->attachmentsView->currentIndex());
     m_advancedUi->addAttributeButton->setEnabled(!m_history);
     m_advancedUi->editAttributeButton->setEnabled(false);
     m_advancedUi->removeAttributeButton->setEnabled(false);
@@ -591,14 +605,14 @@ void EditEntryWidget::insertAttachment()
     QFile file(filename);
     if (!file.open(QIODevice::ReadOnly)) {
         MessageBox::warning(this, tr("Error"),
-                tr("Unable to open file:\n").append(file.errorString()));
+                tr("Unable to open file").append(":\n").append(file.errorString()));
         return;
     }
 
     QByteArray data;
     if (!Tools::readAllFromDevice(&file, data)) {
         MessageBox::warning(this, tr("Error"),
-                tr("Unable to open file:\n").append(file.errorString()));
+                tr("Unable to open file").append(":\n").append(file.errorString()));
         return;
     }
 
@@ -635,6 +649,42 @@ void EditEntryWidget::saveCurrentAttachment()
             return;
         }
     }
+}
+
+void EditEntryWidget::openAttachment(const QModelIndex& index)
+{
+    if (!index.isValid()) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    QString filename = m_attachmentsModel->keyByIndex(index);
+    QByteArray attachmentData = m_entryAttachments->value(filename);
+
+    // tmp file will be removed once the database (or the application) has been closed
+    QString tmpFileTemplate = QDir::temp().absoluteFilePath(QString("XXXXXX.").append(filename));
+    QTemporaryFile* file = new QTemporaryFile(tmpFileTemplate, this);
+
+    if (!file->open()) {
+        MessageBox::warning(this, tr("Error"),
+                tr("Unable to save the attachment:\n").append(file->errorString()));
+        return;
+    }
+
+    if (file->write(attachmentData) != attachmentData.size()) {
+        MessageBox::warning(this, tr("Error"),
+                tr("Unable to save the attachment:\n").append(file->errorString()));
+        return;
+    }
+
+    QDesktopServices::openUrl(QUrl::fromLocalFile(file->fileName()));
+}
+
+void EditEntryWidget::openCurrentAttachment()
+{
+    QModelIndex index = m_advancedUi->attachmentsView->currentIndex();
+
+    openAttachment(index);
 }
 
 void EditEntryWidget::removeCurrentAttachment()
@@ -784,13 +834,13 @@ QMenu* EditEntryWidget::createPresetsMenu()
     QMenu* expirePresetsMenu = new QMenu(this);
     expirePresetsMenu->addAction(tr("Tomorrow"))->setData(QVariant::fromValue(TimeDelta::fromDays(1)));
     expirePresetsMenu->addSeparator();
-    expirePresetsMenu->addAction(tr("1 week"))->setData(QVariant::fromValue(TimeDelta::fromDays(7)));
-    expirePresetsMenu->addAction(tr("2 weeks"))->setData(QVariant::fromValue(TimeDelta::fromDays(14)));
-    expirePresetsMenu->addAction(tr("3 weeks"))->setData(QVariant::fromValue(TimeDelta::fromDays(21)));
+    expirePresetsMenu->addAction(tr("%n week(s)", 0, 1))->setData(QVariant::fromValue(TimeDelta::fromDays(7)));
+    expirePresetsMenu->addAction(tr("%n week(s)", 0, 2))->setData(QVariant::fromValue(TimeDelta::fromDays(14)));
+    expirePresetsMenu->addAction(tr("%n week(s)", 0, 3))->setData(QVariant::fromValue(TimeDelta::fromDays(21)));
     expirePresetsMenu->addSeparator();
-    expirePresetsMenu->addAction(tr("1 month"))->setData(QVariant::fromValue(TimeDelta::fromMonths(1)));
-    expirePresetsMenu->addAction(tr("3 months"))->setData(QVariant::fromValue(TimeDelta::fromMonths(3)));
-    expirePresetsMenu->addAction(tr("6 months"))->setData(QVariant::fromValue(TimeDelta::fromMonths(6)));
+    expirePresetsMenu->addAction(tr("%n month(s)", 0, 1))->setData(QVariant::fromValue(TimeDelta::fromMonths(1)));
+    expirePresetsMenu->addAction(tr("%n month(s)", 0, 3))->setData(QVariant::fromValue(TimeDelta::fromMonths(3)));
+    expirePresetsMenu->addAction(tr("%n month(s)", 0, 6))->setData(QVariant::fromValue(TimeDelta::fromMonths(6)));
     expirePresetsMenu->addSeparator();
     expirePresetsMenu->addAction(tr("1 year"))->setData(QVariant::fromValue(TimeDelta::fromYears(1)));
     return expirePresetsMenu;

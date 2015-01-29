@@ -29,7 +29,7 @@
 
 void TestGuiPixmaps::initTestCase()
 {
-    Crypto::init();
+    QVERIFY(Crypto::init());
 }
 
 void TestGuiPixmaps::testDatabaseIcons()

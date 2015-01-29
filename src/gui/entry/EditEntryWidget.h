@@ -76,6 +76,8 @@ private Q_SLOTS:
     void updateCurrentAttribute();
     void insertAttachment();
     void saveCurrentAttachment();
+    void openAttachment(const QModelIndex& index);
+    void openCurrentAttachment();
     void removeCurrentAttachment();
     void updateAutoTypeEnabled();
     void insertAutoTypeAssoc();
@@ -91,6 +93,7 @@ private Q_SLOTS:
     void histEntryActivated(const QModelIndex& index);
     void updateHistoryButtons(const QModelIndex& current, const QModelIndex& previous);
     void useExpiryPreset(QAction* action);
+    void updateAttachmentButtonsEnabled(const QModelIndex& current);
 
 private:
     void setupMain();

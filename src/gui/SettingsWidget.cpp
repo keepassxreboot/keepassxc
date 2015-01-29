@@ -21,27 +21,7 @@
 
 #include "autotype/AutoType.h"
 #include "core/Config.h"
-
-class SettingsWidget::ExtraPage
-{
-public:
-    ExtraPage(ISettingsPage* page, QWidget* widget): settingsPage(page), widget(widget)
-    {}
-
-    void loadSettings() const
-    {
-        settingsPage->loadSettings(widget);
-    }
-
-    void saveSettings() const
-    {
-        settingsPage->saveSettings(widget);
-    }
-
-private:
-    QSharedPointer<ISettingsPage> settingsPage;
-    QWidget*                      widget;
-};
+#include "core/Translator.h"
 
 SettingsWidget::SettingsWidget(QWidget* parent)
     : EditWidget(parent)
@@ -67,6 +47,8 @@ SettingsWidget::SettingsWidget(QWidget* parent)
 
     connect(m_generalUi->autoSaveAfterEveryChangeCheckBox, SIGNAL(toggled(bool)),
             this, SLOT(enableAutoSaveOnExit(bool)));
+    connect(m_generalUi->systrayShowCheckBox, SIGNAL(toggled(bool)),
+            m_generalUi->systrayMinimizeToTrayCheckBox, SLOT(setEnabled(bool)));
 
     connect(m_secUi->clearClipboardCheckBox, SIGNAL(toggled(bool)),
             m_secUi->clearClipboardSpinBox, SLOT(setEnabled(bool)));
@@ -78,25 +60,29 @@ SettingsWidget::~SettingsWidget()
 {
 }
 
-void SettingsWidget::addSettingsPage(ISettingsPage *page)
-{
-    QWidget * widget = page->createWidget();
-    widget->setParent(this);
-    m_extraPages.append(ExtraPage(page, widget));
-    add(page->name(), widget);
-}
-
 void SettingsWidget::loadSettings()
 {
     m_generalUi->rememberLastDatabasesCheckBox->setChecked(config()->get("RememberLastDatabases").toBool());
     m_generalUi->openPreviousDatabasesOnStartupCheckBox->setChecked(
         config()->get("OpenPreviousDatabasesOnStartup").toBool());
-    m_generalUi->modifiedExpandedChangedCheckBox->setChecked(config()->get("ModifiedOnExpandedStateChanges").toBool());
     m_generalUi->autoSaveAfterEveryChangeCheckBox->setChecked(config()->get("AutoSaveAfterEveryChange").toBool());
     m_generalUi->autoSaveOnExitCheckBox->setChecked(config()->get("AutoSaveOnExit").toBool());
     m_generalUi->minimizeOnCopyCheckBox->setChecked(config()->get("MinimizeOnCopy").toBool());
     m_generalUi->useGroupIconOnEntryCreationCheckBox->setChecked(config()->get("UseGroupIconOnEntryCreation").toBool());
-    m_generalUi->reloadBehavior->setCurrentIndex(config()->get("ReloadBehavior").toInt());
+    m_generalUi->autoTypeEntryTitleMatchCheckBox->setChecked(config()->get("AutoTypeEntryTitleMatch").toBool());
+
+    m_generalUi->languageComboBox->clear();
+    QList<QPair<QString, QString> > languages = Translator::availableLanguages();
+    for (int i = 0; i < languages.size(); i++) {
+        m_generalUi->languageComboBox->addItem(languages[i].second, languages[i].first);
+    }
+    int defaultIndex = m_generalUi->languageComboBox->findData(config()->get("GUI/Language"));
+    if (defaultIndex > 0) {
+        m_generalUi->languageComboBox->setCurrentIndex(defaultIndex);
+    }
+
+    m_generalUi->systrayShowCheckBox->setChecked(config()->get("GUI/ShowTrayIcon").toBool());
+    m_generalUi->systrayMinimizeToTrayCheckBox->setChecked(config()->get("GUI/MinimizeToTray").toBool());
 
     if (autoType()->isAvailable()) {
         m_globalAutoTypeKey = static_cast<Qt::Key>(config()->get("GlobalAutoTypeKey").toInt());
@@ -115,8 +101,7 @@ void SettingsWidget::loadSettings()
     m_secUi->passwordCleartextCheckBox->setChecked(config()->get("security/passwordscleartext").toBool());
 
     m_secUi->autoTypeAskCheckBox->setChecked(config()->get("security/autotypeask").toBool());
-    Q_FOREACH (const ExtraPage& page, m_extraPages)
-        page.loadSettings();
+
     setCurrentRow(0);
 }
 
@@ -125,15 +110,20 @@ void SettingsWidget::saveSettings()
     config()->set("RememberLastDatabases", m_generalUi->rememberLastDatabasesCheckBox->isChecked());
     config()->set("OpenPreviousDatabasesOnStartup",
                   m_generalUi->openPreviousDatabasesOnStartupCheckBox->isChecked());
-    config()->set("ModifiedOnExpandedStateChanges",
-                  m_generalUi->modifiedExpandedChangedCheckBox->isChecked());
     config()->set("AutoSaveAfterEveryChange",
                   m_generalUi->autoSaveAfterEveryChangeCheckBox->isChecked());
     config()->set("AutoSaveOnExit", m_generalUi->autoSaveOnExitCheckBox->isChecked());
     config()->set("MinimizeOnCopy", m_generalUi->minimizeOnCopyCheckBox->isChecked());
     config()->set("UseGroupIconOnEntryCreation",
                   m_generalUi->useGroupIconOnEntryCreationCheckBox->isChecked());
-    config()->set("ReloadBehavior", m_generalUi->reloadBehavior->currentIndex());
+    config()->set("AutoTypeEntryTitleMatch",
+                  m_generalUi->autoTypeEntryTitleMatchCheckBox->isChecked());
+    int currentLangIndex = m_generalUi->languageComboBox->currentIndex();
+    config()->set("GUI/Language", m_generalUi->languageComboBox->itemData(currentLangIndex).toString());
+
+    config()->set("GUI/ShowTrayIcon", m_generalUi->systrayShowCheckBox->isChecked());
+    config()->set("GUI/MinimizeToTray", m_generalUi->systrayMinimizeToTrayCheckBox->isChecked());
+
     if (autoType()->isAvailable()) {
         config()->set("GlobalAutoTypeKey", m_generalUi->autoTypeShortcutWidget->key());
         config()->set("GlobalAutoTypeModifiers",
@@ -148,8 +138,6 @@ void SettingsWidget::saveSettings()
     config()->set("security/passwordscleartext", m_secUi->passwordCleartextCheckBox->isChecked());
 
     config()->set("security/autotypeask", m_secUi->autoTypeAskCheckBox->isChecked());
-    Q_FOREACH (const ExtraPage& page, m_extraPages)
-        page.saveSettings();
 
     Q_EMIT editFinished(true);
 }

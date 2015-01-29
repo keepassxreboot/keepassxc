@@ -38,8 +38,8 @@ class GroupView;
 class KeePass1OpenWidget;
 class QFile;
 class QMenu;
+class QSplitter;
 class UnlockDatabaseWidget;
-class CompositeKey;
 
 namespace Ui {
     class SearchWidget;
@@ -61,24 +61,24 @@ public:
 
     explicit DatabaseWidget(Database* db, QWidget* parent = Q_NULLPTR);
     ~DatabaseWidget();
-    GroupView* groupView();
-    EntryView* entryView();
     Database* database();
-    bool dbHasKey();
-    bool canDeleteCurrentGoup();
+    bool dbHasKey() const;
+    bool canDeleteCurrentGroup() const;
     bool isInSearchMode() const;
-    QString searchText() const;
-    bool caseSensitiveSearch() const;
-    bool isAllGroupsSearch() const;
-    bool canChooseSearchScope() const;
-    Group* currentGroup() const;
     int addWidget(QWidget* w);
     void setCurrentIndex(int index);
     void setCurrentWidget(QWidget* widget);
-    DatabaseWidget::Mode currentMode();
+    DatabaseWidget::Mode currentMode() const;
     void lock();
     void updateFilename(const QString& filename);
-    void search(const QString & searchString, bool caseSensitive, bool allGroups);
+    int numberOfSelectedEntries() const;
+    QStringList customEntryAttributes() const;
+    bool isGroupSelected() const;
+    bool isInEditMode() const;
+    QList<int> splitterSizes() const;
+    void setSplitterSizes(const QList<int>& sizes);
+    QList<int> entryHeaderViewSizes() const;
+    void setEntryViewHeaderSizes(const QList<int>& sizes);
 
 Q_SIGNALS:
     void closeRequest();
@@ -89,6 +89,12 @@ Q_SIGNALS:
     void groupContextMenuRequested(const QPoint& globalPos);
     void entryContextMenuRequested(const QPoint& globalPos);
     void unlockedDatabase();
+    void listModeAboutToActivate();
+    void listModeActivated();
+    void searchModeAboutToActivate();
+    void searchModeActivated();
+    void splitterSizesChanged();
+    void entryColumnSizesChanged();
 
 public Q_SLOTS:
     void createEntry();
@@ -111,24 +117,19 @@ public Q_SLOTS:
     void switchToDatabaseSettings();
     void switchToOpenDatabase(const QString& fileName);
     void switchToOpenDatabase(const QString& fileName, const QString& password, const QString& keyFile);
-    void switchToOpenDatabase(const QString &fileName, const CompositeKey &masterKey);
     void switchToImportKeepass1(const QString& fileName);
-    void switchToView(bool accepted);
-    void search(const QString & searchString);
-    void setCaseSensitiveSearch(bool caseSensitive);
-    void setAllGroupsSearch(bool allGroups);
-    void emitGroupContextMenuRequested(const QPoint& pos);
-    void emitEntryContextMenuRequested(const QPoint& pos);
+    void openSearch();
 
 private Q_SLOTS:
     void entryActivationSignalReceived(Entry* entry, EntryModel::ModelColumn column);
-    void onLinkActivated(const QString& link);
-    void showSearch(const QString & searchString = QString());
     void switchBackToEntryEdit();
+    void switchToView(bool accepted);
     void switchToHistoryView(Entry* entry);
     void switchToEntryEdit(Entry* entry);
     void switchToEntryEdit(Entry* entry, bool create);
     void switchToGroupEdit(Group* entry, bool create);
+    void emitGroupContextMenuRequested(const QPoint& pos);
+    void emitEntryContextMenuRequested(const QPoint& pos);
     void updateMasterKey(bool accepted);
     void openDatabase(bool accepted);
     void unlockDatabase(bool accepted);
@@ -137,6 +138,7 @@ private Q_SLOTS:
     void search();
     void startSearch();
     void startSearchTimer();
+    void showSearch();
     void closeSearch();
 
 private:
@@ -155,6 +157,7 @@ private:
     DatabaseOpenWidget* m_databaseOpenWidget;
     KeePass1OpenWidget* m_keepass1OpenWidget;
     UnlockDatabaseWidget* m_unlockDatabaseWidget;
+    QSplitter* m_splitter;
     GroupView* m_groupView;
     EntryView* m_entryView;
     Group* m_newGroup;
@@ -162,11 +165,8 @@ private:
     Group* m_newParent;
     Group* m_lastGroup;
     QTimer* m_searchTimer;
-    QWidget* widgetBeforeLock;
+    QWidget* m_widgetBeforeLock;
     QString m_filename;
-    QString m_searchText;
-    bool m_searchAllGroups;
-    Qt::CaseSensitivity m_searchSensitivity;
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H

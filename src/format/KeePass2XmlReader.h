@@ -47,6 +47,7 @@ public:
     bool hasError();
     QString errorString();
     QByteArray headerHash();
+    void setStrictMode(bool strictMode);
 
 private:
     bool parseKeePassFile();
@@ -95,6 +96,7 @@ private:
     QByteArray m_headerHash;
     bool m_error;
     QString m_errorStr;
+    bool m_strictMode;
 };
 
 #endif // KEEPASSX_KEEPASS2XMLREADER_H

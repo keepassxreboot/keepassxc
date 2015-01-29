@@ -6,54 +6,23 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>481</width>
-    <height>185</height>
+    <width>456</width>
+    <height>313</height>
    </rect>
   </property>
   <layout class="QFormLayout" name="formLayout">
+   <property name="fieldGrowthPolicy">
+    <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+   </property>
    <item row="0" column="0">
     <widget class="QCheckBox" name="rememberLastDatabasesCheckBox">
      <property name="text">
-      <string>Remember recent databases</string>
+      <string>Remember last databases</string>
      </property>
      <property name="checked">
       <bool>true</bool>
      </property>
     </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QCheckBox" name="modifiedExpandedChangedCheckBox">
-     <property name="text">
-      <string>Mark as modified on expanded state changes</string>
-     </property>
-     <property name="checked">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0">
-    <widget class="QCheckBox" name="autoSaveAfterEveryChangeCheckBox">
-     <property name="text">
-      <string>Automatically save after every change</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QCheckBox" name="autoSaveOnExitCheckBox">
-     <property name="text">
-      <string>Automatically save on exit</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0">
-    <widget class="QLabel" name="autoTypeShortcutLabel">
-     <property name="text">
-      <string>Global Auto-Type shortcut</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="1">
-    <widget class="ShortcutWidget" name="autoTypeShortcutWidget"/>
    </item>
    <item row="1" column="0">
     <widget class="QCheckBox" name="openPreviousDatabasesOnStartupCheckBox">
@@ -62,43 +31,75 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="0">
-    <widget class="QLabel" name="label_2">
+   <item row="2" column="0">
+    <widget class="QCheckBox" name="autoSaveOnExitCheckBox">
      <property name="text">
-      <string>When database files are externally modified</string>
+      <string>Automatically save on exit</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="1">
-    <widget class="QComboBox" name="reloadBehavior">
-     <item>
-      <property name="text">
-       <string>Always ask</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Reload unmodified databases</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Ignore modifications</string>
-      </property>
-     </item>
+   <item row="3" column="0">
+    <widget class="QCheckBox" name="autoSaveAfterEveryChangeCheckBox">
+     <property name="text">
+      <string>Automatically save after every change</string>
+     </property>
     </widget>
    </item>
-   <item row="5" column="0">
+   <item row="4" column="0">
     <widget class="QCheckBox" name="minimizeOnCopyCheckBox">
      <property name="text">
       <string>Minimize when copying to clipboard</string>
      </property>
     </widget>
    </item>
-   <item row="6" column="0">
+   <item row="5" column="0">
     <widget class="QCheckBox" name="useGroupIconOnEntryCreationCheckBox">
      <property name="text">
       <string>Use group icon on entry creation</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="autoTypeShortcutLabel">
+     <property name="text">
+      <string>Global Auto-Type shortcut</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="ShortcutWidget" name="autoTypeShortcutWidget"/>
+   </item>
+   <item row="7" column="0">
+    <widget class="QCheckBox" name="autoTypeEntryTitleMatchCheckBox">
+     <property name="text">
+      <string>Use entry title to match windows for global auto-type</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0">
+    <widget class="QLabel" name="languageLabel">
+     <property name="text">
+      <string>Language</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="1">
+    <widget class="QComboBox" name="languageComboBox"/>
+   </item>
+   <item row="9" column="0">
+    <widget class="QCheckBox" name="systrayShowCheckBox">
+     <property name="text">
+      <string>Show a system tray icon</string>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="0">
+    <widget class="QCheckBox" name="systrayMinimizeToTrayCheckBox">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string>Hide window to system tray when minimized</string>
      </property>
     </widget>
    </item>
@@ -114,7 +115,6 @@
  <tabstops>
   <tabstop>rememberLastDatabasesCheckBox</tabstop>
   <tabstop>openPreviousDatabasesOnStartupCheckBox</tabstop>
-  <tabstop>modifiedExpandedChangedCheckBox</tabstop>
   <tabstop>autoSaveOnExitCheckBox</tabstop>
   <tabstop>autoSaveAfterEveryChangeCheckBox</tabstop>
   <tabstop>minimizeOnCopyCheckBox</tabstop>

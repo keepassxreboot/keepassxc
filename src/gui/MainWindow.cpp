@@ -20,79 +20,34 @@
 
 #include <QCloseEvent>
 #include <QShortcut>
-#include <QtGui/QLineEdit>
 
 #include "autotype/AutoType.h"
 #include "core/Config.h"
-#include "core/Database.h"
-#include "core/Entry.h"
 #include "core/FilePath.h"
 #include "core/InactivityTimer.h"
 #include "core/Metadata.h"
 #include "gui/AboutDialog.h"
 #include "gui/DatabaseWidget.h"
-#include "gui/entry/EntryView.h"
-#include "gui/group/GroupView.h"
-
-#include "http/Service.h"
-#include "http/HttpSettings.h"
-#include "http/OptionDialog.h"
-#include "gui/SettingsWidget.h"
-#include "gui/qocoa/qsearchfield.h"
-
-class HttpPlugin: public ISettingsPage {
-public:
-    HttpPlugin(DatabaseTabWidget * tabWidget) {
-        m_service = new Service(tabWidget);
-    }
-    virtual ~HttpPlugin() {
-        //delete m_service;
-    }
-    virtual QString name() {
-        return QObject::tr("Http");
-    }
-    virtual QWidget * createWidget() {
-        OptionDialog * dlg = new OptionDialog();
-        QObject::connect(dlg, SIGNAL(removeSharedEncryptionKeys()), m_service, SLOT(removeSharedEncryptionKeys()));
-        QObject::connect(dlg, SIGNAL(removeStoredPermissions()), m_service, SLOT(removeStoredPermissions()));
-        return dlg;
-    }
-    virtual void loadSettings(QWidget * widget) {
-        qobject_cast<OptionDialog*>(widget)->loadSettings();
-    }
-    virtual void saveSettings(QWidget * widget) {
-        qobject_cast<OptionDialog*>(widget)->saveSettings();
-        if (HttpSettings::isEnabled())
-            m_service->start();
-        else
-            m_service->stop();
-    }
-private:
-    Service *m_service;
-};
 
 const QString MainWindow::BaseWindowTitle = "KeePassX";
 
 MainWindow::MainWindow()
     : m_ui(new Ui::MainWindow())
+    , m_trayIcon(Q_NULLPTR)
 {
     m_ui->setupUi(this);
 
-    restoreGeometry(config()->get("window/Geometry").toByteArray());
-    m_ui->settingsWidget->addSettingsPage(new HttpPlugin(m_ui->tabWidget));
+    m_countDefaultAttributes = m_ui->menuEntryCopyAttribute->actions().size();
+
+    restoreGeometry(config()->get("GUI/MainWindowGeometry").toByteArray());
 
     setWindowIcon(filePath()->applicationIcon());
     QAction* toggleViewAction = m_ui->toolBar->toggleViewAction();
     toggleViewAction->setText(tr("Show toolbar"));
     m_ui->menuView->addAction(toggleViewAction);
-    int toolbarIconSize = config()->get("ToolbarIconSize", 20).toInt();
-    setToolbarIconSize(toolbarIconSize);
     bool showToolbar = config()->get("ShowToolbar").toBool();
     m_ui->toolBar->setVisible(showToolbar);
     connect(m_ui->toolBar, SIGNAL(visibilityChanged(bool)), this, SLOT(saveToolbarState(bool)));
-    connect(m_ui->actionToolbarIconSize16, SIGNAL(triggered()), this, SLOT(setToolbarIconSize16()));
-    connect(m_ui->actionToolbarIconSize22, SIGNAL(triggered()), this, SLOT(setToolbarIconSize22()));
-    connect(m_ui->actionToolbarIconSize28, SIGNAL(triggered()), this, SLOT(setToolbarIconSize28()));
 
     m_clearHistoryAction = new QAction("Clear history", m_ui->menuFile);
     m_lastDatabasesActions = new QActionGroup(m_ui->menuRecentDatabases);
@@ -124,19 +79,13 @@ MainWindow::MainWindow()
     setShortcut(m_ui->actionDatabaseClose, QKeySequence::Close, Qt::CTRL + Qt::Key_W);
     m_ui->actionLockDatabases->setShortcut(Qt::CTRL + Qt::Key_L);
     setShortcut(m_ui->actionQuit, QKeySequence::Quit, Qt::CTRL + Qt::Key_Q);
-    //TODO: do not register shortcut on Q_OS_MAC, if this is done automatically??
-    const QKeySequence seq = !QKeySequence::keyBindings(QKeySequence::Find).isEmpty()
-                             ? QKeySequence::Find
-                             : QKeySequence(Qt::CTRL + Qt::Key_F);
-    connect(new QShortcut(seq, this), SIGNAL(activated()), m_ui->searchField, SLOT(setFocus()));
-    m_ui->searchField->setContentsMargins(5,0,5,0);
+    setShortcut(m_ui->actionSearch, QKeySequence::Find, Qt::CTRL + Qt::Key_F);
     m_ui->actionEntryNew->setShortcut(Qt::CTRL + Qt::Key_N);
     m_ui->actionEntryEdit->setShortcut(Qt::CTRL + Qt::Key_E);
     m_ui->actionEntryDelete->setShortcut(Qt::CTRL + Qt::Key_D);
     m_ui->actionEntryClone->setShortcut(Qt::CTRL + Qt::Key_K);
     m_ui->actionEntryCopyUsername->setShortcut(Qt::CTRL + Qt::Key_B);
     m_ui->actionEntryCopyPassword->setShortcut(Qt::CTRL + Qt::Key_C);
-    m_ui->actionEntryCopyURL->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_U);
     setShortcut(m_ui->actionEntryAutoType, QKeySequence::Paste, Qt::CTRL + Qt::Key_V);
     m_ui->actionEntryOpenUrl->setShortcut(Qt::CTRL + Qt::Key_U);
 
@@ -169,6 +118,8 @@ MainWindow::MainWindow()
     m_ui->actionSettings->setIcon(filePath()->icon("actions", "configure"));
 
     m_ui->actionAbout->setIcon(filePath()->icon("actions", "help-about"));
+
+    m_ui->actionSearch->setIcon(filePath()->icon("actions", "system-search"));
 
     m_actionMultiplexer.connect(SIGNAL(currentModeChanged(DatabaseWidget::Mode)),
                                 this, SLOT(setMenuActionState(DatabaseWidget::Mode)));
@@ -249,25 +200,10 @@ MainWindow::MainWindow()
 
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
 
-    m_ui->searchField->setPlaceholderText(tr("Type to search"));
-    m_ui->searchField->setEnabled(false);
-    m_ui->toolBar->addWidget(m_ui->mySpacer);
-    m_ui->toolBar->addWidget(m_ui->searchField);
-    m_actionMultiplexer.connect(m_ui->searchField, SIGNAL(textChanged(QString)),
-                                SLOT(search(QString)));
-    QMenu* searchMenu = new QMenu(this);
-    searchMenu->addAction(m_ui->actionFindCaseSensitive);
-    searchMenu->addSeparator();
-    searchMenu->addAction(m_ui->actionFindCurrentGroup);
-    searchMenu->addAction(m_ui->actionFindRootGroup);
-    m_ui->searchField->setMenu(searchMenu);
-    QActionGroup* group = new QActionGroup(this);
-    group->addAction(m_ui->actionFindCurrentGroup);
-    group->addAction(m_ui->actionFindRootGroup);
-    m_actionMultiplexer.connect(m_ui->actionFindCaseSensitive, SIGNAL(toggled(bool)),
-                                SLOT(setCaseSensitiveSearch(bool)));
-    m_actionMultiplexer.connect(m_ui->actionFindRootGroup, SIGNAL(toggled(bool)),
-                                SLOT(setAllGroupsSearch(bool)));
+    m_actionMultiplexer.connect(m_ui->actionSearch, SIGNAL(triggered()),
+                                SLOT(openSearch()));
+
+    updateTrayIcon();
 }
 
 MainWindow::~MainWindow()
@@ -294,17 +230,16 @@ void MainWindow::updateCopyAttributesMenu()
         return;
     }
 
-    Entry* entry = dbWidget->entryView()->currentEntry();
-    if (!entry || !dbWidget->entryView()->isSingleEntrySelected()) {
+    if (dbWidget->numberOfSelectedEntries() != 1) {
         return;
     }
 
     QList<QAction*> actions = m_ui->menuEntryCopyAttribute->actions();
-    for (int i = EntryAttributes::DefaultAttributes.size() + 1; i < actions.size(); i++) {
+    for (int i = m_countDefaultAttributes; i < actions.size(); i++) {
         delete actions[i];
     }
 
-    Q_FOREACH (const QString& key, entry->attributes()->customKeys()) {
+    Q_FOREACH (const QString& key, dbWidget->customEntryAttributes()) {
         QAction* action = m_ui->menuEntryCopyAttribute->addAction(key);
         m_copyAdditionalAttributeActions->addAction(action);
     }
@@ -320,38 +255,9 @@ void MainWindow::clearLastDatabases()
     config()->set("LastDatabases", QVariant());
 }
 
-void MainWindow::changeEvent(QEvent *e)
-{
-    QMainWindow::changeEvent(e);
-    if (e->type() == QEvent::ActivationChange) {
-        if (isActiveWindow())
-            m_ui->tabWidget->checkReloadDatabases();
-    }
-}
-
 void MainWindow::openDatabase(const QString& fileName, const QString& pw, const QString& keyFile)
 {
     m_ui->tabWidget->openDatabase(fileName, pw, keyFile);
-}
-
-void MainWindow::updateSearchField(DatabaseWidget* dbWidget)
-{
-    bool enabled = dbWidget != NULL;
-
-    m_ui->actionFindCaseSensitive->setChecked(enabled && dbWidget->caseSensitiveSearch());
-
-    m_ui->actionFindCurrentGroup->setEnabled(enabled && dbWidget->canChooseSearchScope());
-    m_ui->actionFindRootGroup->setEnabled(enabled && dbWidget->canChooseSearchScope());
-    if (enabled && dbWidget->isAllGroupsSearch())
-        m_ui->actionFindRootGroup->setChecked(true);
-    else
-        m_ui->actionFindCurrentGroup->setChecked(true);
-
-    m_ui->searchField->setEnabled(enabled);
-    if (enabled && dbWidget->isInSearchMode())
-        m_ui->searchField->setText(dbWidget->searchText());
-    else
-        m_ui->searchField->clear();
 }
 
 void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
@@ -370,9 +276,9 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         switch (mode) {
         case DatabaseWidget::ViewMode: {
             bool inSearch = dbWidget->isInSearchMode();
-            bool singleEntrySelected = dbWidget->entryView()->isSingleEntrySelected();
-            bool entriesSelected = !dbWidget->entryView()->selectionModel()->selectedRows().isEmpty();
-            bool groupSelected = dbWidget->groupView()->currentGroup();
+            bool singleEntrySelected = dbWidget->numberOfSelectedEntries() == 1;
+            bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0;
+            bool groupSelected = dbWidget->isGroupSelected();
 
             m_ui->actionEntryNew->setEnabled(!inSearch);
             m_ui->actionEntryClone->setEnabled(singleEntrySelected && !inSearch);
@@ -388,8 +294,9 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryOpenUrl->setEnabled(singleEntrySelected);
             m_ui->actionGroupNew->setEnabled(groupSelected);
             m_ui->actionGroupEdit->setEnabled(groupSelected);
-            m_ui->actionGroupDelete->setEnabled(groupSelected && dbWidget->canDeleteCurrentGoup());
-            updateSearchField(dbWidget);
+            m_ui->actionGroupDelete->setEnabled(groupSelected && dbWidget->canDeleteCurrentGroup());
+            // TODO: get checked state from db widget
+            m_ui->actionSearch->setEnabled(true);
             m_ui->actionChangeMasterKey->setEnabled(true);
             m_ui->actionChangeDatabaseSettings->setEnabled(true);
             m_ui->actionDatabaseSave->setEnabled(true);
@@ -398,7 +305,6 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         }
         case DatabaseWidget::EditMode:
         case DatabaseWidget::LockedMode:
-        case DatabaseWidget::OpenMode:
             Q_FOREACH (QAction* action, m_ui->menuEntries->actions()) {
                 action->setEnabled(false);
             }
@@ -406,9 +312,14 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             Q_FOREACH (QAction* action, m_ui->menuGroups->actions()) {
                 action->setEnabled(false);
             }
+            m_ui->actionEntryCopyTitle->setEnabled(false);
+            m_ui->actionEntryCopyUsername->setEnabled(false);
+            m_ui->actionEntryCopyPassword->setEnabled(false);
+            m_ui->actionEntryCopyURL->setEnabled(false);
+            m_ui->actionEntryCopyNotes->setEnabled(false);
             m_ui->menuEntryCopyAttribute->setEnabled(false);
 
-            updateSearchField();
+            m_ui->actionSearch->setEnabled(false);
             m_ui->actionChangeMasterKey->setEnabled(false);
             m_ui->actionChangeDatabaseSettings->setEnabled(false);
             m_ui->actionDatabaseSave->setEnabled(false);
@@ -427,9 +338,14 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         Q_FOREACH (QAction* action, m_ui->menuGroups->actions()) {
             action->setEnabled(false);
         }
+        m_ui->actionEntryCopyTitle->setEnabled(false);
+        m_ui->actionEntryCopyUsername->setEnabled(false);
+        m_ui->actionEntryCopyPassword->setEnabled(false);
+        m_ui->actionEntryCopyURL->setEnabled(false);
+        m_ui->actionEntryCopyNotes->setEnabled(false);
         m_ui->menuEntryCopyAttribute->setEnabled(false);
 
-        updateSearchField();
+        m_ui->actionSearch->setEnabled(false);
         m_ui->actionChangeMasterKey->setEnabled(false);
         m_ui->actionChangeDatabaseSettings->setEnabled(false);
         m_ui->actionDatabaseSave->setEnabled(false);
@@ -513,15 +429,29 @@ void MainWindow::closeEvent(QCloseEvent* event)
         saveWindowInformation();
 
         event->accept();
+        QApplication::quit();
     }
     else {
         event->ignore();
     }
 }
 
+void MainWindow::changeEvent(QEvent *event)
+{
+    if ((event->type() == QEvent::WindowStateChange) && isMinimized()
+            && isTrayIconEnabled() && config()->get("GUI/MinimizeToTray").toBool())
+    {
+        event->ignore();
+        hide();
+    }
+    else {
+        QMainWindow::changeEvent(event);
+    }
+}
+
 void MainWindow::saveWindowInformation()
 {
-    config()->set("window/Geometry", saveGeometry());
+    config()->set("GUI/MainWindowGeometry", saveGeometry());
 }
 
 bool MainWindow::saveLastDatabases()
@@ -551,6 +481,35 @@ bool MainWindow::saveLastDatabases()
     return accept;
 }
 
+void MainWindow::updateTrayIcon()
+{
+    if (isTrayIconEnabled()) {
+        if (!m_trayIcon) {
+            m_trayIcon = new QSystemTrayIcon(filePath()->applicationIcon(), this);
+
+            QMenu* menu = new QMenu(this);
+
+            QAction* actionToggle = new QAction(tr("Toggle window"), menu);
+            menu->addAction(actionToggle);
+
+            menu->addAction(m_ui->actionQuit);
+
+            connect(m_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+                    SLOT(trayIconTriggered(QSystemTrayIcon::ActivationReason)));
+            connect(actionToggle, SIGNAL(triggered()), SLOT(toggleWindow()));
+
+            m_trayIcon->setContextMenu(menu);
+            m_trayIcon->show();
+        }
+    }
+    else {
+        if (m_trayIcon) {
+            delete m_trayIcon;
+            m_trayIcon = Q_NULLPTR;
+        }
+    }
+}
+
 void MainWindow::showEntryContextMenu(const QPoint& globalPos)
 {
     m_ui->menuEntries->popup(globalPos);
@@ -564,30 +523,6 @@ void MainWindow::showGroupContextMenu(const QPoint& globalPos)
 void MainWindow::saveToolbarState(bool value)
 {
     config()->set("ShowToolbar", value);
-}
-
-void MainWindow::setToolbarIconSize(int size)
-{
-    config()->set("ToolbarIconSize", size);
-    m_ui->toolBar->setIconSize(QSize(size, size));
-    m_ui->actionToolbarIconSize16->setChecked(size == 16);
-    m_ui->actionToolbarIconSize22->setChecked(size == 22);
-    m_ui->actionToolbarIconSize28->setChecked(size == 28);
-}
-
-void MainWindow::setToolbarIconSize16()
-{
-    setToolbarIconSize(16);
-}
-
-void MainWindow::setToolbarIconSize22()
-{
-    setToolbarIconSize(22);
-}
-
-void MainWindow::setToolbarIconSize28()
-{
-    setToolbarIconSize(28);
 }
 
 void MainWindow::setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback)
@@ -619,4 +554,31 @@ void MainWindow::applySettingsChanges()
     else {
         m_inactivityTimer->deactivate();
     }
+
+    updateTrayIcon();
+}
+
+void MainWindow::trayIconTriggered(QSystemTrayIcon::ActivationReason reason)
+{
+    if (reason == QSystemTrayIcon::Trigger) {
+        toggleWindow();
+    }
+}
+
+void MainWindow::toggleWindow()
+{
+    if (QApplication::activeWindow() == this) {
+        hide();
+    }
+    else {
+        show();
+        raise();
+        activateWindow();
+    }
+}
+
+bool MainWindow::isTrayIconEnabled() const
+{
+    return config()->get("GUI/ShowTrayIcon").toBool()
+            && QSystemTrayIcon::isSystemTrayAvailable();
 }

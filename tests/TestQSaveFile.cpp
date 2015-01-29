@@ -29,6 +29,8 @@
 #include "tests.h"
 #include "core/qsavefile.h"
 
+QTEST_GUILESS_MAIN(TestQSaveFile)
+
 class DirCleanup
 {
 public:
@@ -154,6 +156,9 @@ void TestQSaveFile::transactionalWriteCanceled()
 void TestQSaveFile::transactionalWriteErrorRenaming()
 {
 #ifndef Q_OS_WIN
+    if (::geteuid() == 0) {
+        QSKIP("not valid running this test as root", SkipAll);
+    }
     const QString dir = tmpDir();
     QVERIFY(!dir.isEmpty());
     const QString targetFile = dir + QString::fromLatin1("/outfile");
@@ -197,5 +202,3 @@ QString TestQSaveFile::tmpDir()
 
     return dirName;
 }
-
-QTEST_GUILESS_MAIN(TestQSaveFile)

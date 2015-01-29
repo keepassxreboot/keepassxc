@@ -27,10 +27,12 @@
 #include "crypto/Crypto.h"
 #include "gui/group/GroupModel.h"
 
+QTEST_GUILESS_MAIN(TestGroupModel)
+
 void TestGroupModel::initTestCase()
 {
     qRegisterMetaType<QModelIndex>("QModelIndex");
-    Crypto::init();
+    QVERIFY(Crypto::init());
 }
 
 void TestGroupModel::test()
@@ -149,5 +151,3 @@ void TestGroupModel::test()
     delete modelTest;
     delete model;
 }
-
-QTEST_GUILESS_MAIN(TestGroupModel)

@@ -32,6 +32,7 @@ class EntryAttributes : public QObject
 public:
     explicit EntryAttributes(QObject* parent = Q_NULLPTR);
     QList<QString> keys() const;
+    bool hasKey(const QString& key) const;
     QList<QString> customKeys();
     QString value(const QString& key) const;
     bool contains(const QString& key) const;

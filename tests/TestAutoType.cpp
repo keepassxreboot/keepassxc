@@ -21,6 +21,7 @@
 #include <QTest>
 
 #include "tests.h"
+#include "core/Config.h"
 #include "core/FilePath.h"
 #include "core/Entry.h"
 #include "core/Group.h"
@@ -30,11 +31,15 @@
 #include "autotype/test/AutoTypeTestInterface.h"
 #include "gui/MessageBox.h"
 
+QTEST_GUILESS_MAIN(TestAutoType)
+
 void TestAutoType::initTestCase()
 {
-    Crypto::init();
-
+    QVERIFY(Crypto::init());
+    Config::createTempFileInstance();
     AutoType::createTestInstance();
+    config()->set("AutoTypeEntryTitleMatch", false);
+    config()->set("security/autotypeask", false);
 
     QPluginLoader loader(filePath()->pluginPath("keepassx-autotype-test"));
     loader.setLoadHints(QLibrary::ResolveAllSymbolsHint);
@@ -54,12 +59,24 @@ void TestAutoType::init()
     m_test->clearActions();
 
     m_db = new Database();
+    m_dbList.clear();
+    m_dbList.append(m_db);
     m_group = new Group();
     m_db->setRootGroup(m_group);
-    m_entry = new Entry();
-    m_entry->setGroup(m_group);
-    m_entry->setUsername("myuser");
-    m_entry->setPassword("mypass");
+
+    m_entry1 = new Entry();
+    m_entry1->setGroup(m_group);
+    m_entry1->setUsername("myuser");
+    m_entry1->setPassword("mypass");
+    AutoTypeAssociations::Association association;
+    association.window = "custom window";
+    association.sequence = "{username}association{password}";
+    m_entry1->autoTypeAssociations()->add(association);
+
+    m_entry2 = new Entry();
+    m_entry2->setGroup(m_group);
+    m_entry2->setPassword("myuser");
+    m_entry2->setTitle("entry title");
 }
 
 void TestAutoType::cleanup()
@@ -77,7 +94,7 @@ void TestAutoType::testInternal()
 
 void TestAutoType::testAutoTypeWithoutSequence()
 {
-    m_autoType->performAutoType(m_entry, Q_NULLPTR);
+    m_autoType->performAutoType(m_entry1, Q_NULLPTR);
 
     QCOMPARE(m_test->actionCount(), 14);
     QCOMPARE(m_test->actionChars(),
@@ -88,42 +105,54 @@ void TestAutoType::testAutoTypeWithoutSequence()
 
 void TestAutoType::testAutoTypeWithSequence()
 {
-    m_autoType->performAutoType(m_entry, Q_NULLPTR, "{Username}abc{PaSsWoRd}");
+    m_autoType->performAutoType(m_entry1, Q_NULLPTR, "{Username}abc{PaSsWoRd}");
 
     QCOMPARE(m_test->actionCount(), 15);
     QCOMPARE(m_test->actionChars(),
              QString("%1abc%2")
-             .arg(m_entry->username())
-             .arg(m_entry->password()));
+             .arg(m_entry1->username())
+             .arg(m_entry1->password()));
 }
 
 void TestAutoType::testGlobalAutoTypeWithNoMatch()
 {
-    QList<Database*> dbList;
-    dbList.append(m_db);
-
+    m_test->setActiveWindowTitle("nomatch");
     MessageBox::setNextAnswer(QMessageBox::Ok);
-    m_autoType->performGlobalAutoType(dbList);
+    m_autoType->performGlobalAutoType(m_dbList);
 
     QCOMPARE(m_test->actionChars(), QString());
 }
 
 void TestAutoType::testGlobalAutoTypeWithOneMatch()
 {
-    QList<Database*> dbList;
-    dbList.append(m_db);
-    AutoTypeAssociations::Association association;
-    association.window = "custom window";
-    association.sequence = "{username}association{password}";
-    m_entry->autoTypeAssociations()->add(association);
-
     m_test->setActiveWindowTitle("custom window");
-    m_autoType->performGlobalAutoType(dbList);
+    m_autoType->performGlobalAutoType(m_dbList);
 
     QCOMPARE(m_test->actionChars(),
              QString("%1association%2")
-             .arg(m_entry->username())
-             .arg(m_entry->password()));
+             .arg(m_entry1->username())
+             .arg(m_entry1->password()));
 }
 
-QTEST_GUILESS_MAIN(TestAutoType)
+void TestAutoType::testGlobalAutoTypeTitleMatch()
+{
+    config()->set("AutoTypeEntryTitleMatch", true);
+
+    m_test->setActiveWindowTitle("An Entry Title!");
+    m_autoType->performGlobalAutoType(m_dbList);
+
+    QCOMPARE(m_test->actionChars(),
+             QString("%1%2").arg(m_entry2->password(), m_test->keyToString(Qt::Key_Enter)));
+}
+
+void TestAutoType::testGlobalAutoTypeTitleMatchDisabled()
+{
+    config()->set("AutoTypeEntryTitleMatch", false);
+
+    m_test->setActiveWindowTitle("An Entry Title!");
+    MessageBox::setNextAnswer(QMessageBox::Ok);
+    m_autoType->performGlobalAutoType(m_dbList);
+
+    QCOMPARE(m_test->actionChars(), QString());
+
+}

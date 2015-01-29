@@ -25,6 +25,7 @@
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
+#include "core/EntrySearcher.h"
 #include "core/Metadata.h"
 #include "core/Uuid.h"
 #include "core/PasswordGenerator.h"
@@ -190,7 +191,7 @@ QList<Entry*> Service::searchEntries(Database* db, const QString& hostname)
 {
     QList<Entry*> entries;
     if (Group* rootGroup = db->rootGroup())
-        Q_FOREACH (Entry* entry, rootGroup->search(hostname, Qt::CaseInsensitive)) {
+        Q_FOREACH (Entry* entry, EntrySearcher().search(hostname, rootGroup, Qt::CaseInsensitive)) {
             QString title = entry->title();
             QString url = entry->url();
 

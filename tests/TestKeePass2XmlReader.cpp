@@ -28,6 +28,8 @@
 #include "format/KeePass2XmlReader.h"
 #include "config-keepassx-tests.h"
 
+QTEST_GUILESS_MAIN(TestKeePass2XmlReader)
+
 namespace QTest {
     template<>
     char* toString(const Uuid& uuid)
@@ -66,9 +68,10 @@ QDateTime TestKeePass2XmlReader::genDT(int year, int month, int day, int hour, i
 
 void TestKeePass2XmlReader::initTestCase()
 {
-    Crypto::init();
+    QVERIFY(Crypto::init());
 
     KeePass2XmlReader reader;
+    reader.setStrictMode(true);
     QString xmlFile = QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.xml");
     m_db = reader.readDatabase(xmlFile);
     QVERIFY(m_db);
@@ -355,28 +358,44 @@ void TestKeePass2XmlReader::testDeletedObjects()
 void TestKeePass2XmlReader::testBroken()
 {
     QFETCH(QString, baseName);
+    QFETCH(bool, strictMode);
+    QFETCH(bool, expectError);
 
     KeePass2XmlReader reader;
+    reader.setStrictMode(strictMode);
     QString xmlFile = QString("%1/%2.xml").arg(KEEPASSX_TEST_DATA_DIR, baseName);
     QVERIFY(QFile::exists(xmlFile));
     QScopedPointer<Database> db(reader.readDatabase(xmlFile));
-    QVERIFY(reader.hasError());
+    if (reader.hasError()) {
+        qWarning("Reader error: %s", qPrintable(reader.errorString()));
+    }
+    QCOMPARE(reader.hasError(), expectError);
 }
 
 void TestKeePass2XmlReader::testBroken_data()
 {
     QTest::addColumn<QString>("baseName");
+    QTest::addColumn<bool>("strictMode");
+    QTest::addColumn<bool>("expectError");
 
-    QTest::newRow("BrokenNoGroupUuid") << "BrokenNoGroupUuid";
-    QTest::newRow("BrokenNoEntryUuid") << "BrokenNoEntryUuid";
-    QTest::newRow("BrokenNoRootGroup") << "BrokenNoRootGroup";
-    QTest::newRow("BrokenTwoRoots") << "BrokenTwoRoots";
-    QTest::newRow("BrokenTwoRootGroups") << "BrokenTwoRootGroups";
+    //                                                    testfile                 strict?  error?
+    QTest::newRow("BrokenNoGroupUuid     (strict)")    << "BrokenNoGroupUuid"    << true  << true;
+    QTest::newRow("BrokenNoGroupUuid (not strict)")    << "BrokenNoGroupUuid"    << false << false;
+    QTest::newRow("BrokenNoEntryUuid     (strict)")    << "BrokenNoEntryUuid"    << true  << true;
+    QTest::newRow("BrokenNoEntryUuid (not strict)")    << "BrokenNoEntryUuid"    << false << false;
+    QTest::newRow("BrokenNoRootGroup     (strict)")    << "BrokenNoRootGroup"    << true  << true;
+    QTest::newRow("BrokenNoRootGroup (not strict)")    << "BrokenNoRootGroup"    << false << true;
+    QTest::newRow("BrokenTwoRoots     (strict)")       << "BrokenTwoRoots"       << true  << true;
+    QTest::newRow("BrokenTwoRoots (not strict)")       << "BrokenTwoRoots"       << false << true;
+    QTest::newRow("BrokenTwoRootGroups     (strict)")  << "BrokenTwoRootGroups"  << true  << true;
+    QTest::newRow("BrokenTwoRootGroups (not strict)")  << "BrokenTwoRootGroups"  << false << true;
+    QTest::newRow("BrokenGroupReference     (strict)") << "BrokenGroupReference" << true  << false;
+    QTest::newRow("BrokenGroupReference (not strict)") << "BrokenGroupReference" << false << false;
+    QTest::newRow("BrokenDeletedObjects     (strict)") << "BrokenDeletedObjects" << true  << true;
+    QTest::newRow("BrokenDeletedObjects (not strict)") << "BrokenDeletedObjects" << false << false;
 }
 
 void TestKeePass2XmlReader::cleanupTestCase()
 {
     delete m_db;
 }
-
-QTEST_GUILESS_MAIN(TestKeePass2XmlReader)

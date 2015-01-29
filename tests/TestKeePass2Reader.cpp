@@ -28,9 +28,11 @@
 #include "format/KeePass2Reader.h"
 #include "keys/PasswordKey.h"
 
+QTEST_GUILESS_MAIN(TestKeePass2Reader)
+
 void TestKeePass2Reader::initTestCase()
 {
-    Crypto::init();
+    QVERIFY(Crypto::init());
 }
 
 void TestKeePass2Reader::testNonAscii()
@@ -154,5 +156,3 @@ void TestKeePass2Reader::testFormat300()
 
     delete db;
 }
-
-QTEST_GUILESS_MAIN(TestKeePass2Reader)

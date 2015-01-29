@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<KeePassFile>
+	<Root>
+		<Group>
+			<UUID>lmU+9n0aeESKZvcEze+bRg==</UUID>
+			<Name>Test</Name>
+			<Entry>
+				<UUID>AaUYVdXsI02h4T1RiAlgtg==</UUID>
+				<String>
+					<Key>Title</Key>
+					<Value>Sample Entry 1</Value>
+				</String>
+			</Entry>
+		</Group>
+		<DeletedObjects>
+			<DeletedObject>
+				<UUID/>
+				<DeletionTime>2010-08-25T16:14:12Z</DeletionTime>
+			</DeletedObject>
+			<DeletedObject/>
+			<DeletedObject>
+				<UUID>5K/bzWCSmkCv5OZxYl4N/w==</UUID>
+				<DeletionTime/>
+			</DeletedObject>
+		</DeletedObjects>
+	</Root>
+</KeePassFile>

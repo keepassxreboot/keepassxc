@@ -141,7 +141,6 @@ public:
     void setGroup(Group* group);
 
     void setUpdateTimeinfo(bool value);
-    bool match(const QString& searchTerm, Qt::CaseSensitivity caseSensitivity);
 
 Q_SIGNALS:
     /**
@@ -157,7 +156,6 @@ private Q_SLOTS:
     void updateModifiedSinceBegin();
 
 private:
-    bool wordMatch(const QString& word, Qt::CaseSensitivity caseSensitivity);
     const Database* database() const;
     template <class T> bool set(T& property, const T& value);
 

@@ -22,6 +22,8 @@
 
 #include <QTest>
 
+QTEST_GUILESS_MAIN(TestRandom)
+
 void TestRandom::initTestCase()
 {
     m_backend = new RandomBackendTest();
@@ -93,5 +95,3 @@ void RandomBackendTest::setNextBytes(const QByteArray& nextBytes)
     m_nextBytes = nextBytes;
     m_bytesIndex = 0;
 }
-
-QTEST_GUILESS_MAIN(TestRandom)

@@ -25,9 +25,11 @@
 #include "crypto/SymmetricCipher.h"
 #include "streams/SymmetricCipherStream.h"
 
+QTEST_GUILESS_MAIN(TestSymmetricCipher)
+
 void TestSymmetricCipher::initTestCase()
 {
-    Crypto::init();
+    QVERIFY(Crypto::init());
 }
 
 void TestSymmetricCipher::testAes256CbcEncryption()
@@ -192,5 +194,3 @@ void TestSymmetricCipher::testPadding()
     QByteArray decrypted = streamDec.readAll();
     QCOMPARE(decrypted, plainText);
 }
-
-QTEST_GUILESS_MAIN(TestSymmetricCipher)

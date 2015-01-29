@@ -20,6 +20,7 @@
 
 #include <QActionGroup>
 #include <QMainWindow>
+#include <QSystemTrayIcon>
 
 #include "core/SignalMultiplexer.h"
 #include "gui/DatabaseWidget.h"
@@ -43,8 +44,8 @@ public Q_SLOTS:
                       const QString& keyFile = QString());
 
 protected:
-    void changeEvent(QEvent *e);
-    void closeEvent(QCloseEvent* event) Q_DECL_OVERRIDE;
+     void closeEvent(QCloseEvent* event) Q_DECL_OVERRIDE;
+     void changeEvent(QEvent* event) Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
     void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::None);
@@ -62,19 +63,18 @@ private Q_SLOTS:
     void saveToolbarState(bool value);
     void rememberOpenDatabases(const QString& filePath);
     void applySettingsChanges();
-    void setToolbarIconSize(int size);
-    void setToolbarIconSize16();
-    void setToolbarIconSize22();
-    void setToolbarIconSize28();
+    void trayIconTriggered(QSystemTrayIcon::ActivationReason reason);
+    void toggleWindow();
 
 private:
-    void updateSearchField(DatabaseWidget* dbWidget = NULL);
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);
 
     static const QString BaseWindowTitle;
 
     void saveWindowInformation();
     bool saveLastDatabases();
+    void updateTrayIcon();
+    bool isTrayIconEnabled() const;
 
     const QScopedPointer<Ui::MainWindow> m_ui;
     SignalMultiplexer m_actionMultiplexer;
@@ -83,6 +83,8 @@ private:
     QActionGroup* m_copyAdditionalAttributeActions;
     QStringList m_openDatabases;
     InactivityTimer* m_inactivityTimer;
+    int m_countDefaultAttributes;
+    QSystemTrayIcon* m_trayIcon;
 
     Q_DISABLE_COPY(MainWindow)
 };

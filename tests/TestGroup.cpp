@@ -27,11 +27,13 @@
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
 
+QTEST_GUILESS_MAIN(TestGroup)
+
 void TestGroup::initTestCase()
 {
     qRegisterMetaType<Entry*>("Entry*");
     qRegisterMetaType<Group*>("Group*");
-    Crypto::init();
+    QVERIFY(Crypto::init());
 }
 
 void TestGroup::testParenting()
@@ -334,102 +336,6 @@ void TestGroup::testCopyCustomIcon()
     delete dbTarget;
 }
 
-void TestGroup::testSearch()
-{
-    Group* groupRoot = new Group();
-    Group* group1 = new Group();
-    Group* group2 = new Group();
-    Group* group3 = new Group();
-
-    group1->setParent(groupRoot);
-    group2->setParent(groupRoot);
-    group3->setParent(groupRoot);
-
-    Group* group11 = new Group();
-
-    group11->setParent(group1);
-
-    Group* group21 = new Group();
-    Group* group211 = new Group();
-    Group* group2111 = new Group();
-
-    group21->setParent(group2);
-    group211->setParent(group21);
-    group2111->setParent(group211);
-
-    group1->setSearchingEnabled(Group::Disable);
-    group11->setSearchingEnabled(Group::Enable);
-
-    Entry* eRoot = new Entry();
-    eRoot->setNotes("test search term test");
-    eRoot->setGroup(groupRoot);
-
-    Entry* eRoot2 = new Entry();
-    eRoot2->setNotes("test term test");
-    eRoot2->setGroup(groupRoot);
-
-    Entry* e1 = new Entry();
-    e1->setNotes("test search term test");
-    e1->setGroup(group1);
-
-    Entry* e2111 = new Entry();
-    e2111->setNotes("test search term test");
-    e2111->setGroup(group2111);
-
-    Entry* e2111b = new Entry();
-    e2111b->setNotes("test search test");
-    e2111b->setGroup(group2111);
-
-    Entry* e3 = new Entry();
-    e3->setNotes("test search term test");
-    e3->setGroup(group3);
-
-    Entry* e3b = new Entry();
-    e3b->setNotes("test search test");
-    e3b->setGroup(group3);
-
-    QList<Entry*> searchResult;
-
-    searchResult = groupRoot->search("search term", Qt::CaseInsensitive);
-    QCOMPARE(searchResult.count(), 3);
-
-    searchResult = group211->search("search term", Qt::CaseInsensitive);
-    QCOMPARE(searchResult.count(), 1);
-
-    delete groupRoot;
-}
-
-void TestGroup::testAndConcatenationInSearch()
-{
-    Group* group = new Group();
-    Entry* entry = new Entry();
-    entry->setNotes("abc def ghi");
-    entry->setTitle("jkl");
-    entry->setGroup(group);
-
-    QList<Entry*> searchResult;
-
-    searchResult = group->search("", Qt::CaseInsensitive);
-    QCOMPARE(searchResult.count(), 1);
-
-    searchResult = group->search("def", Qt::CaseInsensitive);
-    QCOMPARE(searchResult.count(), 1);
-
-    searchResult = group->search("  abc    ghi  ", Qt::CaseInsensitive);
-    QCOMPARE(searchResult.count(), 1);
-
-    searchResult = group->search("ghi ef", Qt::CaseInsensitive);
-    QCOMPARE(searchResult.count(), 1);
-
-    searchResult = group->search("abc ef xyz", Qt::CaseInsensitive);
-    QCOMPARE(searchResult.count(), 0);
-
-    searchResult = group->search("abc kl", Qt::CaseInsensitive);
-    QCOMPARE(searchResult.count(), 1);
-
-    delete group;
-}
-
 void TestGroup::testClone()
 {
     Database* db = new Database();
@@ -536,49 +442,3 @@ void TestGroup::testCopyCustomIcons()
     QCOMPARE(metaTarget->customIcon(group1Icon).pixel(0, 0), qRgb(1, 2, 3));
     QCOMPARE(metaTarget->customIcon(group2Icon).pixel(0, 0), qRgb(4, 5, 6));
 }
-
-void TestGroup::testExportToDb()
-{
-    QImage iconImage(1, 1, QImage::Format_RGB32);
-    iconImage.setPixel(0, 0, qRgb(1, 2, 3));
-    Uuid iconUuid = Uuid::random();
-
-    QImage iconUnusedImage(1, 1, QImage::Format_RGB32);
-    iconUnusedImage.setPixel(0, 0, qRgb(1, 2, 3));
-    Uuid iconUnusedUuid = Uuid::random();
-
-    Database* dbOrg = new Database();
-    Group* groupOrg = new Group();
-    groupOrg->setParent(dbOrg->rootGroup());
-    groupOrg->setName("GTEST");
-    Entry* entryOrg = new Entry();
-    entryOrg->setGroup(groupOrg);
-    entryOrg->setTitle("ETEST");
-    dbOrg->metadata()->addCustomIcon(iconUuid, iconImage);
-    dbOrg->metadata()->addCustomIcon(iconUnusedUuid, iconUnusedImage);
-    entryOrg->setIcon(iconUuid);
-    entryOrg->beginUpdate();
-    entryOrg->setIcon(Entry::DefaultIconNumber);
-    entryOrg->endUpdate();
-
-    Database* dbExp = groupOrg->exportToDb();
-    QCOMPARE(dbExp->rootGroup()->children().size(), 1);
-    Group* groupExp = dbExp->rootGroup()->children().first();
-    QVERIFY(groupExp != groupOrg);
-    QCOMPARE(groupExp->name(), groupOrg->name());
-    QCOMPARE(groupExp->entries().size(), 1);
-
-    Entry* entryExp = groupExp->entries().first();
-    QCOMPARE(entryExp->title(), entryOrg->title());
-    QCOMPARE(dbExp->metadata()->customIcons().size(), 1);
-    QVERIFY(dbExp->metadata()->containsCustomIcon(iconUuid));
-    QCOMPARE(entryExp->iconNumber(), entryOrg->iconNumber());
-
-    QCOMPARE(entryExp->historyItems().size(), 1);
-    QCOMPARE(entryExp->historyItems().first()->iconUuid(), iconUuid);
-
-    delete dbOrg;
-    delete dbExp;
-}
-
-QTEST_GUILESS_MAIN(TestGroup)

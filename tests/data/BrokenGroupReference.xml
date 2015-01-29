@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<KeePassFile>
+	<Meta>
+		<RecycleBinEnabled>True</RecycleBinEnabled>
+		<RecycleBinUUID>6w7wZdhAp0qVlXjkemuCYw==</RecycleBinUUID>
+	</Meta>
+	<Root>
+		<Group>
+			<UUID>lmU+9n0aeESKZvcEze+bRg==</UUID>
+			<Name>Test</Name>
+			<Entry>
+				<UUID>AaUYVdXsI02h4T1RiAlgtg==</UUID>
+				<String>
+					<Key>Title</Key>
+					<Value>Sample Entry 1</Value>
+				</String>
+			</Entry>
+		</Group>
+	</Root>
+</KeePassFile>
