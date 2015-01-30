@@ -514,9 +514,7 @@ bool DatabaseTabWidget::hasLockableDatabases() const
         i.next();
         DatabaseWidget::Mode mode = i.value().dbWidget->currentMode();
 
-        if ((mode == DatabaseWidget::ViewMode ||
-             mode == DatabaseWidget::EditMode ||
-             mode == DatabaseWidget::OpenMode)
+        if ((mode == DatabaseWidget::ViewMode || mode == DatabaseWidget::EditMode)
                 && i.value().dbWidget->dbHasKey()) {
             return true;
         }
@@ -532,9 +530,7 @@ void DatabaseTabWidget::lockDatabases()
         i.next();
         DatabaseWidget::Mode mode = i.value().dbWidget->currentMode();
 
-        if ((mode == DatabaseWidget::ViewMode ||
-             mode == DatabaseWidget::EditMode ||
-             mode == DatabaseWidget::OpenMode)
+        if ((mode == DatabaseWidget::ViewMode || mode == DatabaseWidget::EditMode)
                 && i.value().dbWidget->dbHasKey()) {
             i.value().dbWidget->lock();
             updateTabName(i.key());

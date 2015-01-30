@@ -181,9 +181,6 @@ DatabaseWidget::Mode DatabaseWidget::currentMode() const
     else if (currentWidget() == m_unlockDatabaseWidget) {
         return DatabaseWidget::LockedMode;
     }
-    else if (currentWidget() == m_databaseOpenWidget) {
-        return DatabaseWidget::OpenMode;
-    }
     else {
         return DatabaseWidget::EditMode;
     }

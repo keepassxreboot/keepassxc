@@ -9,10 +9,6 @@ if(Q_WS_X11)
   endif()
 endif()
 
-if(Q_WS_MAC)
-  add_subdirectory(mac)
-endif()
-
 if(WITH_TESTS)
   add_subdirectory(test)
 endif()

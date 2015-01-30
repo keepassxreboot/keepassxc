@@ -38,7 +38,6 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     , m_database(Q_NULLPTR)
     , m_defaultIconModel(new DefaultIconModel(this))
     , m_customIconModel(new CustomIconModel(this))
-    , m_networkAccessMngr(new QNetworkAccessManager(this))
 {
     m_ui->setupUi(this);
 
@@ -55,11 +54,6 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
             this, SLOT(updateWidgetsCustomIcons(bool)));
     connect(m_ui->addButton, SIGNAL(clicked()), SLOT(addCustomIcon()));
     connect(m_ui->deleteButton, SIGNAL(clicked()), SLOT(removeCustomIcon()));
-    connect(m_ui->faviconButton, SIGNAL(clicked()), SLOT(downloadFavicon()));
-    connect(m_networkAccessMngr, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(onRequestFinished(QNetworkReply*)) );
-
-    m_ui->faviconButton->setVisible(false);
 }
 
 EditWidgetIcons::~EditWidgetIcons()

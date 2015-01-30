@@ -61,7 +61,6 @@ private:
     Qt::KeyboardModifiers m_globalAutoTypeModifiers;
     class ExtraPage;
     QList<ExtraPage> m_extraPages;
-    
 };
 
 #endif // KEEPASSX_SETTINGSWIDGET_H

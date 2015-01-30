@@ -55,7 +55,6 @@ public:
         None,
         ViewMode,
         EditMode,
-        OpenMode,
         LockedMode
     };
 

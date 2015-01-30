@@ -244,12 +244,9 @@ qt4_wrap_cpp(keepassx_SOURCES ${keepassx_MOC})
 add_library(keepassx_core STATIC ${keepassx_SOURCES})
 set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
 
-add_subdirectory(gui/qocoa)
-
 add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE ${keepassx_SOURCES_MAINEXE})
 target_link_libraries(${PROGNAME}
                       keepassx_core
-                      Qocoa
                       qjson
                       ${MHD_LIBRARIES}
                       ${QT_QTCORE_LIBRARY}
@@ -260,9 +257,6 @@ target_link_libraries(${PROGNAME}
 
 if(UNIX AND NOT APPLE)
   target_link_libraries(${PROGNAME} ${QT_QTDBUS_LIBRARY})
-endif()
-if(APPLE)
-    set_target_properties(${PROGNAME} PROPERTIES LINK_FLAGS "-framework Foundation -framework AppKit")
 endif()
 
 set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
