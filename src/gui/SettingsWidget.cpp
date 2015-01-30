@@ -25,13 +25,35 @@
 
 #include "http/OptionDialog.h"
 
+#include "http/HttpSettings.h"
+
+class SettingsWidget::ExtraPage
+{
+    public:
+        ExtraPage(ISettingsPage* page, QWidget* widget): settingsPage(page), widget(widget)
+        {}
+
+        void loadSettings() const
+        {
+            settingsPage->loadSettings(widget);
+        }
+
+        void saveSettings() const
+        {
+            settingsPage->saveSettings(widget);
+        }
+
+    private:
+        QSharedPointer<ISettingsPage> settingsPage;
+        QWidget* widget;
+};
+
 SettingsWidget::SettingsWidget(QWidget* parent)
     : EditWidget(parent)
     , m_secWidget(new QWidget())
     , m_generalWidget(new QWidget())
     , m_secUi(new Ui::SettingsWidgetSecurity())
     , m_generalUi(new Ui::SettingsWidgetGeneral())
-    , m_optionDialogUi(new OptionDialog())
     , m_globalAutoTypeKey(static_cast<Qt::Key>(0))
     , m_globalAutoTypeModifiers(Qt::NoModifier)
 {
@@ -41,9 +63,6 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     m_generalUi->setupUi(m_generalWidget);
     add(tr("General"), m_generalWidget);
     add(tr("Security"), m_secWidget);
-    add(tr("HTTP"), m_optionDialogUi);
-    //QObject::connect(m_optionDialogUi, SIGNAL(removeSharedEncryptionKeys()), m_service, SLOT(removeSharedEncryptionKeys()));
-    //QObject::connect(m_optionDialogUi, SIGNAL(removeStoredPermissions()), m_service, SLOT(removeStoredPermissions()));
 
     m_generalUi->autoTypeShortcutWidget->setVisible(autoType()->isAvailable());
     m_generalUi->autoTypeShortcutLabel->setVisible(autoType()->isAvailable());
@@ -66,9 +85,16 @@ SettingsWidget::~SettingsWidget()
 {
 }
 
+void SettingsWidget::addSettingsPage(ISettingsPage *page)
+{
+    QWidget * widget = page->createWidget();
+    widget->setParent(this);
+    m_extraPages.append(ExtraPage(page, widget));
+    add(page->name(), widget);
+}
+
 void SettingsWidget::loadSettings()
 {
-    m_optionDialogUi->loadSettings();
     m_generalUi->rememberLastDatabasesCheckBox->setChecked(config()->get("RememberLastDatabases").toBool());
     m_generalUi->openPreviousDatabasesOnStartupCheckBox->setChecked(
         config()->get("OpenPreviousDatabasesOnStartup").toBool());
@@ -109,12 +135,14 @@ void SettingsWidget::loadSettings()
 
     m_secUi->autoTypeAskCheckBox->setChecked(config()->get("security/autotypeask").toBool());
 
+    Q_FOREACH (const ExtraPage& page, m_extraPages)
+        page.loadSettings();
+
     setCurrentRow(0);
 }
 
 void SettingsWidget::saveSettings()
 {
-    m_optionDialogUi->saveSettings();
     config()->set("RememberLastDatabases", m_generalUi->rememberLastDatabasesCheckBox->isChecked());
     config()->set("OpenPreviousDatabasesOnStartup",
                   m_generalUi->openPreviousDatabasesOnStartupCheckBox->isChecked());
@@ -146,6 +174,9 @@ void SettingsWidget::saveSettings()
     config()->set("security/passwordscleartext", m_secUi->passwordCleartextCheckBox->isChecked());
 
     config()->set("security/autotypeask", m_secUi->autoTypeAskCheckBox->isChecked());
+
+    Q_FOREACH (const ExtraPage& page, m_extraPages)
+        page.saveSettings();
 
     Q_EMIT editFinished(true);
 }
