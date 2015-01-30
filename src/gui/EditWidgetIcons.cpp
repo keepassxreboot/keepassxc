@@ -90,14 +90,13 @@ IconStruct EditWidgetIcons::save()
     return iconStruct;
 }
 
-void EditWidgetIcons::load(Uuid currentUuid, Database* database, IconStruct iconStruct, const QString &url)
+void EditWidgetIcons::load(Uuid currentUuid, Database* database, IconStruct iconStruct)
 {
     Q_ASSERT(database);
     Q_ASSERT(!currentUuid.isNull());
 
     m_database = database;
     m_currentUuid = currentUuid;
-    setUrl(url);
 
     m_customIconModel->setIcons(database->metadata()->customIcons(),
                                 database->metadata()->customIconsOrder());
@@ -119,76 +118,6 @@ void EditWidgetIcons::load(Uuid currentUuid, Database* database, IconStruct icon
             m_ui->defaultIconsRadio->setChecked(true);
         }
     }
-}
-
-void EditWidgetIcons::setUrl(const QString &url)
-{
-    m_url = url;
-    m_ui->faviconButton->setVisible(!url.isEmpty());
-    abortFaviconDownload();
-}
-
-static QStringList getHost(QUrl url, const QString& path)
-{
-    QStringList hosts;
-
-    QString host = url.host();
-    for(;;) {
-        QString s = host;
-        if (url.port() >= 0)
-            s += ":" + QString::number(url.port());
-        hosts << s + path;
-
-        const int first_dot = host.indexOf( '.' );
-        const int last_dot = host.lastIndexOf( '.' );
-        if( ( first_dot != -1 ) && ( last_dot != -1 ) && ( first_dot != last_dot ) )
-            host.remove( 0, first_dot + 1 );
-        else
-            break;
-    }
-    return hosts;
-}
-
-void EditWidgetIcons::downloadFavicon()
-{
-    const QStringList pathes = getHost(QUrl(m_url), "/favicon.");
-    const QStringList prefixes = QStringList() << "http://" << "https://";
-    const QStringList suffixes = QStringList() << "ico" << "png" << "gif" << "jpg";
-
-    Q_FOREACH (QString path, pathes)
-        Q_FOREACH (QString prefix, prefixes)
-            Q_FOREACH (QString suffix, suffixes)
-                m_networkOperations << m_networkAccessMngr->get(QNetworkRequest(prefix + path + suffix));
-    //TODO: progress indication
-}
-
-void EditWidgetIcons::abortFaviconDownload()
-{
-    Q_FOREACH (QNetworkReply *r, m_networkOperations)
-        r->abort();
-}
-
-void EditWidgetIcons::onRequestFinished(QNetworkReply *reply)
-{
-    if (m_networkOperations.contains(reply)) {
-        m_networkOperations.remove(reply);
-
-        QImage image;
-        if (!reply->error() && image.loadFromData(reply->readAll()) && !image.isNull()) {
-            //Abort all other requests
-            abortFaviconDownload();
-
-            //Set the image
-            Uuid uuid = Uuid::random();
-            m_database->metadata()->addCustomIcon(uuid, image.scaled(16, 16));
-            m_customIconModel->setIcons(m_database->metadata()->customIcons(),
-                                        m_database->metadata()->customIconsOrder());
-            QModelIndex index = m_customIconModel->indexFromUuid(uuid);
-            m_ui->customIconsView->setCurrentIndex(index);
-            m_ui->customIconsRadio->setChecked(true);
-        }
-    }
-    reply->deleteLater();
 }
 
 void EditWidgetIcons::addCustomIcon()

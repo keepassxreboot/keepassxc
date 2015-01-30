@@ -77,7 +77,6 @@ bool Service::isDatabaseOpened() const
         switch(dbWidget->currentMode()) {
         case DatabaseWidget::None:
         case DatabaseWidget::LockedMode:
-        case DatabaseWidget::OpenMode:
             break;
 
         case DatabaseWidget::ViewMode:
@@ -95,7 +94,6 @@ bool Service::openDatabase()
         switch(dbWidget->currentMode()) {
         case DatabaseWidget::None:
         case DatabaseWidget::LockedMode:
-        case DatabaseWidget::OpenMode:
             break;
 
         case DatabaseWidget::ViewMode:
