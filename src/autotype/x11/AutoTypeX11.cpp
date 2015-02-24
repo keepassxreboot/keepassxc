@@ -39,6 +39,7 @@ AutoTypePlatformX11::AutoTypePlatformX11()
     m_classBlacklist << "desktop_window" << "gnome-panel"; // Gnome
     m_classBlacklist << "kdesktop" << "kicker"; // KDE 3
     m_classBlacklist << "Plasma"; // KDE 4
+    m_classBlacklist << "plasmashell"; // KDE 5
     m_classBlacklist << "xfdesktop" << "xfce4-panel"; // Xfce 4
 
     m_currentGlobalKey = static_cast<Qt::Key>(0);
