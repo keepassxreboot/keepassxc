@@ -540,7 +540,7 @@ int AutoTypePlatformX11::AddKeysym(KeySym keysym)
        all clients */
     timespec ts;
     ts.tv_sec = 0;
-    ts.tv_nsec = 10 * 1000 * 1000;
+    ts.tv_nsec = 30 * 1000 * 1000;
     nanosleep(&ts, Q_NULLPTR);
 
     return m_remapKeycode;
