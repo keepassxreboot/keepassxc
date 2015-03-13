@@ -477,7 +477,15 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
     QString resolved = entry->resolvePlaceholders(placeholder);
     if (placeholder != resolved) {
         Q_FOREACH (const QChar& ch, resolved) {
-            list.append(new AutoTypeChar(ch));
+            if (ch == '\n') {
+                list.append(new AutoTypeKey(Qt::Key_Enter));
+            }
+            else if (ch == '\t') {
+                list.append(new AutoTypeKey(Qt::Key_Tab));
+            }
+            else {
+                list.append(new AutoTypeChar(ch));
+            }
         }
     }
 
