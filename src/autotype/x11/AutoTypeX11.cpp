@@ -59,7 +59,9 @@ AutoTypePlatformX11::AutoTypePlatformX11()
 void AutoTypePlatformX11::unload()
 {
     // Restore the KeyboardMapping to its original state.
-    AddKeysym(NoSymbol);
+    if (m_currentRemapKeysym != NoSymbol) {
+        AddKeysym(NoSymbol);
+    }
 
     if (m_keysymTable) {
         XFree(m_keysymTable);
