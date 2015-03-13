@@ -484,6 +484,14 @@ void AutoTypePlatformX11::updateKeymap()
         }
     }
     XFreeModifiermap(modifiers);
+
+    /* Xlib needs some time until the mapping is distributed to
+       all clients */
+    // TODO: we should probably only sleep while in the middle of typing something
+    timespec ts;
+    ts.tv_sec = 0;
+    ts.tv_nsec = 30 * 1000 * 1000;
+    nanosleep(&ts, Q_NULLPTR);
 }
 
 bool AutoTypePlatformX11::isRemapKeycodeValid()
@@ -549,13 +557,6 @@ int AutoTypePlatformX11::AddKeysym(KeySym keysym)
     XChangeKeyboardMapping(m_dpy, m_remapKeycode, m_keysymPerKeycode, &m_keysymTable[inx], 1);
     XFlush(m_dpy);
     updateKeymap();
-
-    /* Xlib needs some time until the mapping is distributed to 
-       all clients */
-    timespec ts;
-    ts.tv_sec = 0;
-    ts.tv_nsec = 30 * 1000 * 1000;
-    nanosleep(&ts, Q_NULLPTR);
 
     return m_remapKeycode;
 }
