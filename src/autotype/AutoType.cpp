@@ -148,6 +148,8 @@ void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow, const QS
         window = m_plugin->activeWindow();
     }
 
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 10);
+
     Q_FOREACH (AutoTypeAction* action, actions) {
         if (m_plugin->activeWindow() != window) {
             qWarning("Active window changed, interrupting auto-type.");
