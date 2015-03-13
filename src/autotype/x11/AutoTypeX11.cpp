@@ -673,23 +673,56 @@ void AutoTypePlatformX11::SendKeyPressedEvent(KeySym keysym)
 
     Window root, child;
     int root_x, root_y, x, y;
-    unsigned int mask;
-    unsigned int saved_mask;
+    unsigned int wanted_mask = 0;
+    unsigned int original_mask;
 
-    XQueryPointer(m_dpy, event.root, &root, &child, &root_x, &root_y, &x, &y, &mask);
-    saved_mask = mask;
+    XQueryPointer(m_dpy, event.root, &root, &child, &root_x, &root_y, &x, &y, &original_mask);
 
     /* determine keycode and mask for the given keysym */
-    keycode = GetKeycode(keysym, &mask);
+    keycode = GetKeycode(keysym, &wanted_mask);
     if (keycode < 8 || keycode > 255) {
         qWarning("Unable to get valid keycode for key: keysym=0x%lX", static_cast<long>(keysym));
         return;
     }
 
-    /* release all modifiers */
-    SendModifier(&event, mask, KeyRelease);
+    event.state = original_mask;
 
-    SendModifier(&event, mask, KeyPress);
+    // modifiers that need to be pressed but aren't
+    unsigned int press_mask = wanted_mask & ~original_mask;
+
+    // modifiers that are pressed but maybe shouldn't
+    unsigned int release_check_mask = original_mask & ~wanted_mask;
+
+    // modifiers we need to release before sending the keycode
+    unsigned int release_mask = 0;
+
+    // check every release_check_mask individually if it affects the keysym we would generate
+    // if it doesn't we probably don't need to release it
+    for (int mod_index = ShiftMapIndex; mod_index <= Mod5MapIndex; mod_index ++) {
+        if (release_check_mask & (1 << mod_index)) {
+            unsigned int mods_rtrn;
+            KeySym keysym_rtrn;
+            XkbTranslateKeyCode(m_xkb, keycode, wanted_mask | (1 << mod_index), &mods_rtrn, &keysym_rtrn);
+
+            if (keysym_rtrn != keysym) {
+                release_mask |= (1 << mod_index);
+            }
+        }
+    }
+
+    // finally check if the combination of pressed modifiers that we chose to ignore affects the keysym
+    unsigned int mods_rtrn;
+    KeySym keysym_rtrn;
+    XkbTranslateKeyCode(m_xkb, keycode, wanted_mask | (release_check_mask & ~release_mask), &mods_rtrn, &keysym_rtrn);
+    if (keysym_rtrn != keysym) {
+        // oh well, release all the modifiers we don't want
+        release_mask = release_check_mask;
+    }
+
+    /* release all modifiers */
+    SendModifier(&event, release_mask, KeyRelease);
+
+    SendModifier(&event, press_mask, KeyPress);
 
     /* press and release key */
     event.keycode = keycode;
@@ -697,10 +730,10 @@ void AutoTypePlatformX11::SendKeyPressedEvent(KeySym keysym)
     SendEvent(&event, KeyRelease);
 
     /* release the modifiers */
-    SendModifier(&event, mask, KeyRelease);
+    SendModifier(&event, press_mask, KeyRelease);
 
     /* restore the old keyboard mask */
-    SendModifier(&event, saved_mask, KeyPress);
+    SendModifier(&event, release_mask, KeyPress);
 }
 
 int AutoTypePlatformX11::MyErrorHandler(Display* my_dpy, XErrorEvent* event)
