@@ -67,10 +67,12 @@ void DatabaseOpenWidget::load(const QString& filename)
 
     m_ui->labelFilename->setText(filename);
 
-    QHash<QString, QVariant> lastKeyFiles = config()->get("LastKeyFiles").toHash();
-    if (lastKeyFiles.contains(m_filename)) {
-        m_ui->checkKeyFile->setChecked(true);
-        m_ui->comboKeyFile->addItem(lastKeyFiles[m_filename].toString());
+    if(config()->get("RememberLastKeyFiles").toBool()) {
+        QHash<QString, QVariant> lastKeyFiles = config()->get("LastKeyFiles").toHash();
+        if (lastKeyFiles.contains(m_filename)) {
+            m_ui->checkKeyFile->setChecked(true);
+            m_ui->comboKeyFile->addItem(lastKeyFiles[m_filename].toString());
+        }
     }
 
     m_ui->editPassword->setFocus();
@@ -148,7 +150,9 @@ CompositeKey DatabaseOpenWidget::databaseKey()
         lastKeyFiles.remove(m_filename);
     }
 
-    config()->set("LastKeyFiles", lastKeyFiles);
+    if(config()->get("RememberLastKeyFiles").toBool()) {
+        config()->set("LastKeyFiles", lastKeyFiles);
+    }
 
     return masterKey;
 }
