@@ -115,6 +115,7 @@ public:
     void setProtectNotes(bool value);
     // void setAutoEnableVisualHiding(bool value);
     void addCustomIcon(const Uuid& uuid, const QImage& icon);
+    void addCustomIconScaled(const Uuid& uuid, const QImage& icon);
     void removeCustomIcon(const Uuid& uuid);
     void copyCustomIcons(const QSet<Uuid>& iconList, const Metadata* otherMetadata);
     void setRecycleBinEnabled(bool value);
