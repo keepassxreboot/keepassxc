@@ -26,12 +26,6 @@ class UnlockDatabaseWidget : public DatabaseOpenWidget
 
 public:
     explicit UnlockDatabaseWidget(QWidget* parent = Q_NULLPTR);
-    void load(const QString& filename, Database* db);
-
-protected:
-    void openDatabase() Q_DECL_OVERRIDE;
-
-private Q_SLOTS:
     void clearForms();
 };
 

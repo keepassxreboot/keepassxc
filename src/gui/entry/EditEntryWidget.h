@@ -60,6 +60,7 @@ public:
 
     void createPresetsMenu(QMenu* expirePresetsMenu);
     QString entryTitle() const;
+    void clear();
 
 Q_SIGNALS:
     void editFinished(bool accepted);

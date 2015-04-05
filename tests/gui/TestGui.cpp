@@ -421,10 +421,12 @@ void TestGui::testKeePass1Import()
 
 void TestGui::testDatabaseLocking()
 {
+    MessageBox::setNextAnswer(QMessageBox::Cancel);
+
     triggerAction("actionLockDatabases");
 
     QCOMPARE(m_tabWidget->tabText(0), QString("Save [locked]"));
-    QCOMPARE(m_tabWidget->tabText(1), QString("basic [New database] [locked]*"));
+    QCOMPARE(m_tabWidget->tabText(1), QString("basic [New database]*"));
 
     QWidget* dbWidget = m_tabWidget->currentDatabaseWidget();
     QWidget* unlockDatabaseWidget = dbWidget->findChild<QWidget*>("unlockDatabaseWidget");
