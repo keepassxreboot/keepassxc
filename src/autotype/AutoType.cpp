@@ -148,6 +148,8 @@ void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow, const QS
         window = m_plugin->activeWindow();
     }
 
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 10);
+
     Q_FOREACH (AutoTypeAction* action, actions) {
         if (m_plugin->activeWindow() != window) {
             qWarning("Active window changed, interrupting auto-type.");
@@ -475,7 +477,15 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
     QString resolved = entry->resolvePlaceholders(placeholder);
     if (placeholder != resolved) {
         Q_FOREACH (const QChar& ch, resolved) {
-            list.append(new AutoTypeChar(ch));
+            if (ch == '\n') {
+                list.append(new AutoTypeKey(Qt::Key_Enter));
+            }
+            else if (ch == '\t') {
+                list.append(new AutoTypeKey(Qt::Key_Tab));
+            }
+            else {
+                list.append(new AutoTypeChar(ch));
+            }
         }
     }
 
