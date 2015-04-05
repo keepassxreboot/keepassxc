@@ -15,7 +15,16 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
-    <property name="margin">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
      <number>0</number>
     </property>
     <item>
@@ -25,7 +34,16 @@
       </property>
       <widget class="QWidget" name="pageDatabase">
        <layout class="QVBoxLayout" name="verticalLayout_2">
-        <property name="margin">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
          <number>0</number>
         </property>
         <item>
@@ -45,7 +63,16 @@
       </widget>
       <widget class="QWidget" name="pageSettings">
        <layout class="QVBoxLayout" name="verticalLayout_3">
-        <property name="margin">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
          <number>0</number>
         </property>
         <item>
@@ -94,7 +121,6 @@
     <addaction name="separator"/>
     <addaction name="actionImportKeePass1"/>
     <addaction name="separator"/>
-    <addaction name="actionLockDatabases"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -138,10 +164,11 @@
     <addaction name="actionGroupEdit"/>
     <addaction name="actionGroupDelete"/>
    </widget>
-   <widget class="QMenu" name="menuExtras">
+   <widget class="QMenu" name="menuTools">
     <property name="title">
-     <string>Extras</string>
+     <string>Tools</string>
     </property>
+    <addaction name="actionLockDatabases"/>
     <addaction name="actionSettings"/>
    </widget>
    <widget class="QMenu" name="menuView">
@@ -153,7 +180,7 @@
    <addaction name="menuEntries"/>
    <addaction name="menuGroups"/>
    <addaction name="menuView"/>
-   <addaction name="menuExtras"/>
+   <addaction name="menuTools"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
