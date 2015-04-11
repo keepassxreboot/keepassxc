@@ -41,6 +41,7 @@ public:
     ~EditGroupWidget();
 
     void loadGroup(Group* group, bool create, Database* database);
+    void clear();
 
 Q_SIGNALS:
     void editFinished(bool accepted);

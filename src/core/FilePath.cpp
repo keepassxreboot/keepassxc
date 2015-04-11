@@ -173,6 +173,8 @@ FilePath::FilePath()
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     else if (testSetDir(QCoreApplication::applicationDirPath() + "/../share/keepassx")) {
     }
+    else if (testSetDir(KEEPASSX_DATA_DIR)) {
+    }
 #endif
 #ifdef Q_OS_MAC
     else if (testSetDir(QCoreApplication::applicationDirPath() + "/../Resources")) {

@@ -188,14 +188,7 @@ DatabaseWidget::Mode DatabaseWidget::currentMode() const
 
 bool DatabaseWidget::isInEditMode() const
 {
-    if (currentMode() == DatabaseWidget::LockedMode) {
-        return m_widgetBeforeLock != Q_NULLPTR
-                && m_widgetBeforeLock != m_mainWidget
-                && m_widgetBeforeLock != m_unlockDatabaseWidget;
-    }
-    else {
-        return currentMode() == DatabaseWidget::EditMode;
-    }
+    return currentMode() == DatabaseWidget::EditMode;
 }
 
 QList<int> DatabaseWidget::splitterSizes() const
@@ -229,6 +222,13 @@ void DatabaseWidget::setEntryViewHeaderSizes(const QList<int>& sizes)
     for (int i = 0; i < sizes.size(); i++) {
         m_entryView->header()->resizeSection(i, sizes[i]);
     }
+}
+
+void DatabaseWidget::clearAllWidgets()
+{
+    m_editEntryWidget->clear();
+    m_historyEditEntryWidget->clear();
+    m_editGroupWidget->clear();
 }
 
 void DatabaseWidget::emitCurrentModeChanged()
@@ -272,6 +272,15 @@ void DatabaseWidget::setIconFromParent()
     else {
         m_newEntry->setIcon(m_newParent->iconUuid());
     }
+}
+
+void DatabaseWidget::replaceDatabase(Database* db)
+{
+    Database* oldDb = m_db;
+    m_db = db;
+    m_groupView->changeDatabase(m_db);
+    Q_EMIT databaseChanged(m_db);
+    delete oldDb;
 }
 
 void DatabaseWidget::cloneEntry()
@@ -604,11 +613,7 @@ void DatabaseWidget::updateMasterKey(bool accepted)
 void DatabaseWidget::openDatabase(bool accepted)
 {
     if (accepted) {
-        Database* oldDb = m_db;
-        m_db = static_cast<DatabaseOpenWidget*>(sender())->database();
-        m_groupView->changeDatabase(m_db);
-        Q_EMIT databaseChanged(m_db);
-        delete oldDb;
+        replaceDatabase(static_cast<DatabaseOpenWidget*>(sender())->database());
         setCurrentWidget(m_mainWidget);
 
         // We won't need those anymore and KeePass1OpenWidget closes
@@ -628,11 +633,24 @@ void DatabaseWidget::openDatabase(bool accepted)
 
 void DatabaseWidget::unlockDatabase(bool accepted)
 {
-    // cancel button is disabled
-    Q_ASSERT(accepted);
-    Q_UNUSED(accepted);
+    if (!accepted) {
+        Q_EMIT closeRequest();
+        return;
+    }
 
-    setCurrentWidget(m_widgetBeforeLock);
+    replaceDatabase(static_cast<DatabaseOpenWidget*>(sender())->database());
+
+    QList<Group*> groups = m_db->rootGroup()->groupsRecursive(true);
+    Q_FOREACH (Group* group, groups) {
+        if (group->uuid() == m_groupBeforeLock) {
+            m_groupView->setCurrentGroup(group);
+            break;
+        }
+    }
+
+    m_groupBeforeLock = Uuid();
+    setCurrentWidget(m_mainWidget);
+    m_unlockDatabaseWidget->clearForms();
     Q_EMIT unlockedDatabase();
 }
 
@@ -855,9 +873,13 @@ void DatabaseWidget::lock()
 {
     Q_ASSERT(currentMode() != DatabaseWidget::LockedMode);
 
-    m_widgetBeforeLock = currentWidget();
-    m_unlockDatabaseWidget->load(m_filename, m_db);
+    m_groupBeforeLock = m_groupView->currentGroup()->uuid();
+    clearAllWidgets();
+    m_unlockDatabaseWidget->load(m_filename);
     setCurrentWidget(m_unlockDatabaseWidget);
+    Database* newDb = new Database();
+    newDb->metadata()->setName(m_db->metadata()->name());
+    replaceDatabase(newDb);
 }
 
 void DatabaseWidget::updateFilename(const QString& fileName)

@@ -347,9 +347,9 @@ void Metadata::addCustomIconScaled(const Uuid& uuid, const QImage& icon)
 {
     QImage iconScaled;
 
-    // scale down to 64x64 if icon is larger
-    if (icon.width() > 64 || icon.height() > 64) {
-        iconScaled = icon.scaled(QSize(64, 64), Qt::KeepAspectRatio,
+    // scale down to 128x128 if icon is larger
+    if (icon.width() > 128 || icon.height() > 128) {
+        iconScaled = icon.scaled(QSize(128, 128), Qt::KeepAspectRatio,
                                  Qt::SmoothTransformation);
     }
     else {

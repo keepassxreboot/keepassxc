@@ -101,6 +101,7 @@ public:
     const QList<Entry*>& entries() const;
     QList<Entry*> entriesRecursive(bool includeHistoryItems = false) const;
     QList<const Group*> groupsRecursive(bool includeSelf) const;
+    QList<Group*> groupsRecursive(bool includeSelf);
     QSet<Uuid> customIconsRecursive() const;
     /**
      * Creates a duplicate of this group including all child entries and groups.

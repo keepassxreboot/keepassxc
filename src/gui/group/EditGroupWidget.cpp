@@ -109,8 +109,7 @@ void EditGroupWidget::save()
         m_group->setIcon(iconStruct.uuid);
     }
 
-    m_group = Q_NULLPTR;
-    m_database = Q_NULLPTR;
+    clear();
     Q_EMIT editFinished(true);
 }
 
@@ -121,9 +120,14 @@ void EditGroupWidget::cancel()
         m_group->setIcon(Entry::DefaultIconNumber);
     }
 
+    clear();
+    Q_EMIT editFinished(false);
+}
+
+void EditGroupWidget::clear()
+{
     m_group = Q_NULLPTR;
     m_database = Q_NULLPTR;
-    Q_EMIT editFinished(false);
 }
 
 void EditGroupWidget::addTriStateItems(QComboBox* comboBox, bool inheritDefault)
