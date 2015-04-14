@@ -68,6 +68,8 @@ MainWindow::MainWindow()
         autoType()->registerGlobalShortcut(globalAutoTypeKey, globalAutoTypeModifiers);
     }
 
+    m_ui->actionEntryAutoType->setVisible(autoType()->isAvailable());
+
     m_inactivityTimer = new InactivityTimer(this);
     connect(m_inactivityTimer, SIGNAL(inactivityDetected()),
             m_ui->tabWidget, SLOT(lockDatabases()));
