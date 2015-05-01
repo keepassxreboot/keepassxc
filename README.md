@@ -57,6 +57,7 @@ The following libraries are required:
 * Qt 4 (>= 4.6)
 * libgcrypt
 * zlib
+* libxtst (optional for auto-type on X11)
 
 On Debian you can install them with:
 
