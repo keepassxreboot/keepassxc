@@ -463,6 +463,7 @@ void EditEntryWidget::cancel()
     if (m_history) {
         clear();
         Q_EMIT editFinished(false);
+        return;
     }
 
     if (!m_entry->iconUuid().isNull() &&
