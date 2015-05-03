@@ -41,6 +41,8 @@ public:
     void setCurrentRow(int index);
     void setHeadline(const QString& text);
     QLabel* headlineLabel();
+    void setReadOnly(bool readOnly);
+    bool readOnly() const;
 
 Q_SIGNALS:
     void accepted();
@@ -48,6 +50,7 @@ Q_SIGNALS:
 
 private:
     const QScopedPointer<Ui::EditWidget> m_ui;
+    bool m_readOnly;
 
     Q_DISABLE_COPY(EditWidget)
 };

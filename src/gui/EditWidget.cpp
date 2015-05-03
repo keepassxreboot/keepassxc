@@ -23,6 +23,7 @@ EditWidget::EditWidget(QWidget* parent)
     , m_ui(new Ui::EditWidget())
 {
     m_ui->setupUi(this);
+    setReadOnly(false);
 
     QFont headerLabelFont = m_ui->headerLabel->font();
     headerLabelFont.setBold(true);
@@ -67,4 +68,21 @@ void EditWidget::setHeadline(const QString& text)
 QLabel* EditWidget::headlineLabel()
 {
     return m_ui->headerLabel;
+}
+
+void EditWidget::setReadOnly(bool readOnly)
+{
+    m_readOnly = readOnly;
+
+    if (readOnly) {
+        m_ui->buttonBox->setStandardButtons(QDialogButtonBox::Close);
+    }
+    else {
+        m_ui->buttonBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    }
+}
+
+bool EditWidget::readOnly() const
+{
+    return m_readOnly;
 }

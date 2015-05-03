@@ -277,6 +277,7 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const Q
     }
 
     setForms(entry);
+    setReadOnly(m_history);
 
     setCurrentRow(0);
     setRowHidden(m_historyWidget, m_history);
