@@ -147,7 +147,7 @@ void QtIOCompressorPrivate::flushZlib(int flushMode)
 
 /*!
     \internal
-    Writes outputSize bytes from buffer to the inderlying device.
+    Writes outputSize bytes from buffer to the underlying device.
 */
 bool QtIOCompressorPrivate::writeBytes(ZlibByte *buffer, ZlibSize outputSize)
 {
@@ -192,7 +192,7 @@ void QtIOCompressorPrivate::setZlibError(const QString &errorMessage, int zlibEr
     A QtIOCompressor object is constructed with a pointer to an
     underlying QIODevice.  Data written to the QtIOCompressor object
     will be compressed before it is written to the underlying
-    QIODevice. Similary, if you read from the QtIOCompressor object,
+    QIODevice. Similarly, if you read from the QtIOCompressor object,
     the data will be read from the underlying device and then
     decompressed.
 
@@ -251,14 +251,14 @@ void QtIOCompressorPrivate::setZlibError(const QString &errorMessage, int zlibEr
 
     \a bufferSize specifies the size of the internal buffer used when reading from and writing to the
     underlying device. The default value is 65KB. Using a larger value allows for faster compression and
-    deompression at the expense of memory usage.
+    decompression at the expense of memory usage.
 */
 QtIOCompressor::QtIOCompressor(QIODevice *device, int compressionLevel, int bufferSize)
 :d_ptr(new QtIOCompressorPrivate(this, device, compressionLevel, bufferSize))
 {}
 
 /*!
-    Destroys the QtIOCompressor, closing it if neccesary.
+    Destroys the QtIOCompressor, closing it if necessary.
 */
 QtIOCompressor::~QtIOCompressor()
 {
@@ -313,12 +313,12 @@ bool QtIOCompressor::isSequential() const
 
 /*!
     Opens the QtIOCompressor in \a mode. Only ReadOnly and WriteOnly is supported.
-    This functon will return false if you try to open in other modes.
+    This function will return false if you try to open in other modes.
 
     If the underlying device is not opened, this function will open it in a suitable mode. If this happens
     the device will also be closed when close() is called.
 
-    If the underlying device is already opened, its openmode must be compatable with \a mode.
+    If the underlying device is already opened, its openmode must be compatible with \a mode.
 
     Returns true on success, false on error.
 
@@ -513,7 +513,7 @@ qint64 QtIOCompressor::readData(char *data, qint64 maxSize)
     if (d->state == QtIOCompressorPrivate::Error)
         return -1;
 
-    // We are ging to try to fill the data buffer
+    // We are going to try to fill the data buffer
     d->zlibStream.next_out = reinterpret_cast<ZlibByte *>(data);
     d->zlibStream.avail_out = maxSize;
 
@@ -550,7 +550,7 @@ qint64 QtIOCompressor::readData(char *data, qint64 maxSize)
                 d->state = QtIOCompressorPrivate::Error;
                 d->setZlibError(QT_TRANSLATE_NOOP("QtIOCompressor", "Internal zlib error when decompressing: "), status);
                 return -1;
-            case Z_BUF_ERROR: // No more input and zlib can not privide more output - Not an error, we can try to read again when we have more input.
+            case Z_BUF_ERROR: // No more input and zlib can not provide more output - Not an error, we can try to read again when we have more input.
                 return 0;
         }
     // Loop util data buffer is full or we reach the end of the input stream.
