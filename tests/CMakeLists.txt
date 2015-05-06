@@ -64,12 +64,10 @@ macro(add_unit_test)
   endif(NOT TEST_OUTPUT)
   set(TEST_OUTPUT ${TEST_OUTPUT} CACHE STRING "The output to generate when running the QTest unit tests")
 
-  get_target_property(loc ${_test_NAME} LOCATION)
-
   if(KDE4_TEST_OUTPUT STREQUAL "xml")
-    add_test(${_test_NAME} ${loc} -xml -o ${_test_NAME}.tml)
+    add_test(${_test_NAME} ${_test_NAME} -xml -o ${_test_NAME}.tml)
   else(KDE4_TEST_OUTPUT STREQUAL "xml")
-    add_test(${_test_NAME} ${loc})
+    add_test(${_test_NAME} ${_test_NAME})
   endif(KDE4_TEST_OUTPUT STREQUAL "xml")
 
   if(NOT MSVC_IDE)   #not needed for the ide
