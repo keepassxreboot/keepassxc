@@ -563,7 +563,7 @@ void DatabaseTabWidget::lockDatabases()
             QMessageBox::StandardButton result =
                 MessageBox::question(
                     this, tr("Lock database"),
-                    tr("This database has never been saved.\nYou can save the dabatase or stop locking it."),
+                    tr("This database has never been saved.\nYou can save the database or stop locking it."),
                     QMessageBox::Save | QMessageBox::Cancel, QMessageBox::Cancel);
             if (result == QMessageBox::Save) {
                 if (!saveDatabase(db)) {

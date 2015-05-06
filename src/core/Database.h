@@ -69,7 +69,7 @@ public:
      * Sets group as the root group and takes ownership of it.
      * Warning: Be careful when calling this method as it doesn't
      *          emit any notifications so e.g. models aren't updated.
-     *          The caller is responsible for cleaning up the pervious
+     *          The caller is responsible for cleaning up the previous
                 root group.
      */
     void setRootGroup(Group* group);
