@@ -36,7 +36,8 @@ private:
     static bool selfTest();
     static void raiseError(const QString& str);
     static bool testSha256();
-    static bool testAes256();
+    static bool testAes256Cbc();
+    static bool testAes256Ecb();
     static bool testTwofish();
     static bool testSalsa20();
 

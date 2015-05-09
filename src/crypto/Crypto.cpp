@@ -143,7 +143,7 @@ bool Crypto::checkAlgorithms()
 
 bool Crypto::selfTest()
 {
-    return testSha256() && testAes256() && testTwofish() && testSalsa20();
+    return testSha256() && testAes256Cbc() && testAes256Ecb() && testTwofish() && testSalsa20();
 }
 
 void Crypto::raiseError(const QString& str)
@@ -165,7 +165,7 @@ bool Crypto::testSha256()
     return true;
 }
 
-bool Crypto::testAes256()
+bool Crypto::testAes256Cbc()
 {
     QByteArray key = QByteArray::fromHex("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4");
     QByteArray iv = QByteArray::fromHex("000102030405060708090a0b0c0d0e0f");
@@ -186,7 +186,7 @@ bool Crypto::testAes256()
         return false;
     }
     if (encryptedText != cipherText) {
-        raiseError("AES-256 encryption mismatch.");
+        raiseError("AES-256 CBC encryption mismatch.");
         return false;
     }
 
@@ -201,7 +201,50 @@ bool Crypto::testAes256()
         return false;
     }
     if (decryptedText != plainText) {
-        raiseError("AES-256 decryption mismatch.");
+        raiseError("AES-256 CBC decryption mismatch.");
+        return false;
+    }
+
+    return true;
+}
+
+bool Crypto::testAes256Ecb()
+{
+    QByteArray key = QByteArray::fromHex("000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F");
+    QByteArray iv = QByteArray::fromHex("00000000000000000000000000000000");
+    QByteArray plainText = QByteArray::fromHex("00112233445566778899AABBCCDDEEFF");
+    plainText.append(QByteArray::fromHex("00112233445566778899AABBCCDDEEFF"));
+    QByteArray cipherText = QByteArray::fromHex("8EA2B7CA516745BFEAFC49904B496089");
+    cipherText.append(QByteArray::fromHex("8EA2B7CA516745BFEAFC49904B496089"));
+    bool ok;
+
+    SymmetricCipher aes256Encrypt(SymmetricCipher::Aes256, SymmetricCipher::Ecb, SymmetricCipher::Encrypt);
+    if (!aes256Encrypt.init(key, iv)) {
+        raiseError(aes256Encrypt.errorString());
+        return false;
+    }
+    QByteArray encryptedText = aes256Encrypt.process(plainText, &ok);
+    if (!ok) {
+        raiseError(aes256Encrypt.errorString());
+        return false;
+    }
+    if (encryptedText != cipherText) {
+        raiseError("AES-256 ECB encryption mismatch.");
+        return false;
+    }
+
+    SymmetricCipher aes256Descrypt(SymmetricCipher::Aes256, SymmetricCipher::Ecb, SymmetricCipher::Decrypt);
+    if (!aes256Descrypt.init(key, iv)) {
+        raiseError(aes256Descrypt.errorString());
+        return false;
+    }
+    QByteArray decryptedText = aes256Descrypt.process(cipherText, &ok);
+    if (!ok) {
+        raiseError(aes256Descrypt.errorString());
+        return false;
+    }
+    if (decryptedText != plainText) {
+        raiseError("AES-256 ECB decryption mismatch.");
         return false;
     }
 
