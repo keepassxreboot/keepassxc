@@ -34,11 +34,6 @@ bool LayeredStream::isSequential() const
     return true;
 }
 
-QString LayeredStream::errorString() const
-{
-    return m_baseDevice->errorString();
-}
-
 bool LayeredStream::open(QIODevice::OpenMode mode)
 {
     if (isOpen()) {

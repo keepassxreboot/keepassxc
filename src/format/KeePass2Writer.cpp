@@ -88,13 +88,20 @@ void KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
     CHECK_RETURN(writeData(header.data()));
 
     SymmetricCipherStream cipherStream(device, SymmetricCipher::Aes256, SymmetricCipher::Cbc,
-                                       SymmetricCipher::Encrypt, finalKey, encryptionIV);
-    cipherStream.open(QIODevice::WriteOnly);
+                                       SymmetricCipher::Encrypt);
+    cipherStream.init(finalKey, encryptionIV);
+    if (!cipherStream.open(QIODevice::WriteOnly)) {
+        raiseError(cipherStream.errorString());
+        return;
+    }
     m_device = &cipherStream;
     CHECK_RETURN(writeData(startBytes));
 
     HashedBlockStream hashedStream(&cipherStream);
-    hashedStream.open(QIODevice::WriteOnly);
+    if (!hashedStream.open(QIODevice::WriteOnly)) {
+        raiseError(hashedStream.errorString());
+        return;
+    }
 
     QScopedPointer<QtIOCompressor> ioCompressor;
 
@@ -104,14 +111,25 @@ void KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
     else {
         ioCompressor.reset(new QtIOCompressor(&hashedStream));
         ioCompressor->setStreamFormat(QtIOCompressor::GzipFormat);
-        ioCompressor->open(QIODevice::WriteOnly);
+        if (!ioCompressor->open(QIODevice::WriteOnly)) {
+            raiseError(ioCompressor->errorString());
+            return;
+        }
         m_device = ioCompressor.data();
     }
 
-    KeePass2RandomStream randomStream(protectedStreamKey);
+    KeePass2RandomStream randomStream;
+    if (!randomStream.init(protectedStreamKey)) {
+        raiseError(randomStream.errorString());
+        return;
+    }
 
     KeePass2XmlWriter xmlWriter;
     xmlWriter.writeDatabase(m_device, db, &randomStream, headerHash);
+
+    if (xmlWriter.hasError()) {
+        raiseError(xmlWriter.errorString());
+    }
 }
 
 bool KeePass2Writer::writeData(const QByteArray& data)

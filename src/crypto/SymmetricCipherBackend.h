@@ -24,15 +24,18 @@ class SymmetricCipherBackend
 {
 public:
     virtual ~SymmetricCipherBackend() {}
-    virtual void setKey(const QByteArray& key) = 0;
-    virtual void setIv(const QByteArray& iv) = 0;
+    virtual bool init() = 0;
+    virtual bool setKey(const QByteArray& key) = 0;
+    virtual bool setIv(const QByteArray& iv) = 0;
 
-    virtual QByteArray process(const QByteArray& data) = 0;
-    virtual void processInPlace(QByteArray& data) = 0;
-    virtual void processInPlace(QByteArray& data, quint64 rounds) = 0;
+    virtual QByteArray process(const QByteArray& data, bool* ok) = 0;
+    virtual bool processInPlace(QByteArray& data) = 0;
+    virtual bool processInPlace(QByteArray& data, quint64 rounds) = 0;
 
-    virtual void reset() = 0;
+    virtual bool reset() = 0;
     virtual int blockSize() const = 0;
+
+    virtual QString errorString() const = 0;
 };
 
 #endif // KEEPASSX_SYMMETRICCIPHERBACKEND_H

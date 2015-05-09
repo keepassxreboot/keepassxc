@@ -599,8 +599,13 @@ void DatabaseWidget::updateMasterKey(bool accepted)
 {
     if (accepted) {
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-        m_db->setKey(m_changeMasterKeyWidget->newMasterKey());
+        bool result = m_db->setKey(m_changeMasterKeyWidget->newMasterKey());
         QApplication::restoreOverrideCursor();
+
+        if (!result) {
+            MessageBox::critical(this, tr("Error"), tr("Unable to calculate master key"));
+            return;
+        }
     }
     else if (!m_db->hasKey()) {
         Q_EMIT closeRequest();

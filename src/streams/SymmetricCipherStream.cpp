@@ -18,10 +18,9 @@
 #include "SymmetricCipherStream.h"
 
 SymmetricCipherStream::SymmetricCipherStream(QIODevice* baseDevice, SymmetricCipher::Algorithm algo,
-                                             SymmetricCipher::Mode mode, SymmetricCipher::Direction direction,
-                                             const QByteArray& key, const QByteArray& iv)
+                                             SymmetricCipher::Mode mode, SymmetricCipher::Direction direction)
     : LayeredStream(baseDevice)
-    , m_cipher(new SymmetricCipher(algo, mode, direction, key, iv))
+    , m_cipher(new SymmetricCipher(algo, mode, direction))
     , m_bufferPos(0)
     , m_bufferFilling(false)
     , m_error(false)
@@ -31,6 +30,25 @@ SymmetricCipherStream::SymmetricCipherStream(QIODevice* baseDevice, SymmetricCip
 SymmetricCipherStream::~SymmetricCipherStream()
 {
     close();
+}
+
+bool SymmetricCipherStream::init(const QByteArray& key, const QByteArray& iv)
+{
+    m_isInitalized = m_cipher->init(key, iv);
+    if (!m_isInitalized) {
+        setErrorString(m_cipher->errorString());
+    }
+
+    return m_isInitalized;
+}
+
+bool SymmetricCipherStream::open(QIODevice::OpenMode mode)
+{
+    if (!m_isInitalized) {
+        return false;
+    }
+
+    return LayeredStream::open(mode);
 }
 
 bool SymmetricCipherStream::reset()
@@ -108,7 +126,11 @@ bool SymmetricCipherStream::readBlock()
         return false;
     }
     else {
-        m_cipher->processInPlace(m_buffer);
+        if (!m_cipher->processInPlace(m_buffer)) {
+            m_error = true;
+            setErrorString(m_cipher->errorString());
+            return false;
+        }
         m_bufferPos = 0;
         m_bufferFilling = false;
 
@@ -187,7 +209,11 @@ bool SymmetricCipherStream::writeBlock(bool lastBlock)
         return true;
     }
 
-    m_cipher->processInPlace(m_buffer);
+    if (!m_cipher->processInPlace(m_buffer)) {
+        m_error = true;
+        setErrorString(m_cipher->errorString());
+        return false;
+    }
 
     if (m_baseDevice->write(m_buffer) != m_buffer.size()) {
         m_error = true;

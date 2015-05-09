@@ -809,7 +809,16 @@ void KeePass2XmlReader::parseEntryString(Entry* entry)
 
             if (isProtected && !value.isEmpty()) {
                 if (m_randomStream) {
-                    value = QString::fromUtf8(m_randomStream->process(QByteArray::fromBase64(value.toLatin1())));
+                    QByteArray ciphertext = QByteArray::fromBase64(value.toLatin1());
+                    bool ok;
+                    QByteArray plaintext = m_randomStream->process(ciphertext, &ok);
+                    if (!ok) {
+                        value.clear();
+                        raiseError(m_randomStream->errorString());
+                    }
+                    else {
+                        value = QString::fromUtf8(plaintext);
+                    }
                 }
                 else {
                     raiseError("Unable to decrypt entry string");

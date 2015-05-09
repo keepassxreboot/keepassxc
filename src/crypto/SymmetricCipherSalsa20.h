@@ -28,17 +28,18 @@ public:
     SymmetricCipherSalsa20(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
                            SymmetricCipher::Direction direction);
     ~SymmetricCipherSalsa20();
+    bool init();
     void setAlgorithm(SymmetricCipher::Algorithm algo);
     void setMode(SymmetricCipher::Mode mode);
     void setDirection(SymmetricCipher::Direction direction);
-    void setKey(const QByteArray& key);
-    void setIv(const QByteArray& iv);
+    bool setKey(const QByteArray& key);
+    bool setIv(const QByteArray& iv);
 
-    QByteArray process(const QByteArray& data);
-    void processInPlace(QByteArray& data);
-    void processInPlace(QByteArray& data, quint64 rounds);
+    QByteArray process(const QByteArray& data, bool* ok);
+    bool processInPlace(QByteArray& data);
+    bool processInPlace(QByteArray& data, quint64 rounds);
 
-    void reset();
+    bool reset();
     int blockSize() const;
 
 private:

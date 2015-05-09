@@ -39,8 +39,8 @@ void TestKeePass2RandomStream::test()
     const int Size = 128;
 
 
-    SymmetricCipher cipher(SymmetricCipher::Salsa20, SymmetricCipher::Stream, SymmetricCipher::Encrypt,
-                           CryptoHash::hash(key, CryptoHash::Sha256), KeePass2::INNER_STREAM_SALSA20_IV);
+    SymmetricCipher cipher(SymmetricCipher::Salsa20, SymmetricCipher::Stream, SymmetricCipher::Encrypt);
+    QVERIFY(cipher.init(CryptoHash::hash(key, CryptoHash::Sha256), KeePass2::INNER_STREAM_SALSA20_IV));
 
     const QByteArray data(QByteArray::fromHex("601ec313775789a5b7a7f504bbf3d228f443e3ca4d62b59aca84e990cacaf5c5"
                                               "2b0930daa23de94ce87017ba2d84988ddfc9c58db67aada613c2dd08457941a6"
@@ -59,20 +59,27 @@ void TestKeePass2RandomStream::test()
     }
 
 
-    KeePass2RandomStream randomStream(key);
+    KeePass2RandomStream randomStream;
+    bool ok;
+    QVERIFY(randomStream.init(key));
     QByteArray randomStreamData;
-    randomStreamData.append(randomStream.process(data.mid(0, 7)));
-    randomStreamData.append(randomStream.process(data.mid(7, 1)));
+    randomStreamData.append(randomStream.process(data.mid(0, 7), &ok));
+    QVERIFY(ok);
+    randomStreamData.append(randomStream.process(data.mid(7, 1), &ok));
+    QVERIFY(ok);
     QByteArray tmpData = data.mid(8, 12);
     randomStream.processInPlace(tmpData);
     randomStreamData.append(tmpData);
-    randomStreamData.append(randomStream.process(data.mid(20, 44)));
-    randomStreamData.append(randomStream.process(data.mid(64, 64)));
+    randomStreamData.append(randomStream.process(data.mid(20, 44), &ok));
+    QVERIFY(ok);
+    randomStreamData.append(randomStream.process(data.mid(64, 64), &ok));
+    QVERIFY(ok);
 
 
-    SymmetricCipher cipherEncrypt(SymmetricCipher::Salsa20, SymmetricCipher::Stream, SymmetricCipher::Encrypt,
-                                  CryptoHash::hash(key, CryptoHash::Sha256), KeePass2::INNER_STREAM_SALSA20_IV);
-    QByteArray cipherDataEncrypt = cipherEncrypt.process(data);
+    SymmetricCipher cipherEncrypt(SymmetricCipher::Salsa20, SymmetricCipher::Stream, SymmetricCipher::Encrypt);
+    QVERIFY(cipherEncrypt.init(CryptoHash::hash(key, CryptoHash::Sha256), KeePass2::INNER_STREAM_SALSA20_IV));
+    QByteArray cipherDataEncrypt = cipherEncrypt.process(data, &ok);
+    QVERIFY(ok);
 
 
     QCOMPARE(randomStreamData.size(), Size);

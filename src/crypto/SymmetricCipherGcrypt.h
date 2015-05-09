@@ -29,19 +29,24 @@ public:
     SymmetricCipherGcrypt(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
                           SymmetricCipher::Direction direction);
     ~SymmetricCipherGcrypt();
-    void setKey(const QByteArray& key);
-    void setIv(const QByteArray& iv);
 
-    QByteArray process(const QByteArray& data);
-    void processInPlace(QByteArray& data);
-    void processInPlace(QByteArray& data, quint64 rounds);
+    bool init();
+    bool setKey(const QByteArray& key);
+    bool setIv(const QByteArray& iv);
 
-    void reset();
+    QByteArray process(const QByteArray& data, bool* ok);
+    bool processInPlace(QByteArray& data);
+    bool processInPlace(QByteArray& data, quint64 rounds);
+
+    bool reset();
     int blockSize() const;
+
+    QString errorString() const;
 
 private:
     static int gcryptAlgo(SymmetricCipher::Algorithm algo);
     static int gcryptMode(SymmetricCipher::Mode mode);
+    void setErrorString(gcry_error_t err);
 
     gcry_cipher_hd_t m_ctx;
     const int m_algo;
@@ -50,6 +55,7 @@ private:
     QByteArray m_key;
     QByteArray m_iv;
     int m_blockSize;
+    QString m_errorString;
 };
 
 #endif // KEEPASSX_SYMMETRICCIPHERGCRYPT_H

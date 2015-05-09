@@ -41,6 +41,10 @@ QByteArray StoreDataStream::storedData() const
 qint64 StoreDataStream::readData(char* data, qint64 maxSize)
 {
     qint64 bytesRead = LayeredStream::readData(data, maxSize);
+    if (bytesRead == -1) {
+        setErrorString(m_baseDevice->errorString());
+        return -1;
+    }
 
     m_storedData.append(data, bytesRead);
 

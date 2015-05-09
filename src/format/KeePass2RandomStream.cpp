@@ -20,14 +20,19 @@
 #include "crypto/CryptoHash.h"
 #include "format/KeePass2.h"
 
-KeePass2RandomStream::KeePass2RandomStream(const QByteArray& key)
-    : m_cipher(SymmetricCipher::Salsa20, SymmetricCipher::Stream, SymmetricCipher::Encrypt,
-          CryptoHash::hash(key, CryptoHash::Sha256), KeePass2::INNER_STREAM_SALSA20_IV)
+KeePass2RandomStream::KeePass2RandomStream()
+    : m_cipher(SymmetricCipher::Salsa20, SymmetricCipher::Stream, SymmetricCipher::Encrypt)
     , m_offset(0)
 {
 }
 
-QByteArray KeePass2RandomStream::randomBytes(int size)
+bool KeePass2RandomStream::init(const QByteArray& key)
+{
+    return m_cipher.init(CryptoHash::hash(key, CryptoHash::Sha256),
+                         KeePass2::INNER_STREAM_SALSA20_IV);
+}
+
+QByteArray KeePass2RandomStream::randomBytes(int size, bool* ok)
 {
     QByteArray result;
 
@@ -35,7 +40,10 @@ QByteArray KeePass2RandomStream::randomBytes(int size)
 
     while (bytesRemaining > 0) {
         if (m_buffer.size() == m_offset) {
-            loadBlock();
+            if (!loadBlock()) {
+                *ok = false;
+                return QByteArray();
+            }
         }
 
         int bytesToCopy = qMin(bytesRemaining, m_buffer.size() - m_offset);
@@ -44,12 +52,20 @@ QByteArray KeePass2RandomStream::randomBytes(int size)
         bytesRemaining -= bytesToCopy;
     }
 
+    *ok = true;
     return result;
 }
 
-QByteArray KeePass2RandomStream::process(const QByteArray& data)
+QByteArray KeePass2RandomStream::process(const QByteArray& data, bool* ok)
 {
-    QByteArray randomData = randomBytes(data.size());
+    bool randomBytesOk;
+
+    QByteArray randomData = randomBytes(data.size(), &randomBytesOk);
+    if (!randomBytesOk) {
+        *ok = false;
+        return QByteArray();
+    }
+
     QByteArray result;
     result.resize(data.size());
 
@@ -57,23 +73,39 @@ QByteArray KeePass2RandomStream::process(const QByteArray& data)
         result[i] = data[i] ^ randomData[i];
     }
 
+    *ok = true;
     return result;
 }
 
-void KeePass2RandomStream::processInPlace(QByteArray& data)
+bool KeePass2RandomStream::processInPlace(QByteArray& data)
 {
-    QByteArray randomData = randomBytes(data.size());
+    bool ok;
+    QByteArray randomData = randomBytes(data.size(), &ok);
+    if (!ok) {
+        return false;
+    }
 
     for (int i = 0; i < data.size(); i++) {
         data[i] = data[i] ^ randomData[i];
     }
+
+    return true;
 }
 
-void KeePass2RandomStream::loadBlock()
+QString KeePass2RandomStream::errorString() const
+{
+    return m_cipher.errorString();
+}
+
+bool KeePass2RandomStream::loadBlock()
 {
     Q_ASSERT(m_offset == m_buffer.size());
 
     m_buffer.fill('\0', m_cipher.blockSize());
-    m_cipher.processInPlace(m_buffer);
+    if (!m_cipher.processInPlace(m_buffer)) {
+        return false;
+    }
     m_offset = 0;
+
+    return true;
 }

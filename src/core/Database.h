@@ -90,13 +90,14 @@ public:
 
     void setCipher(const Uuid& cipher);
     void setCompressionAlgo(Database::CompressionAlgorithm algo);
-    void setTransformRounds(quint64 rounds);
-    void setKey(const CompositeKey& key, const QByteArray& transformSeed, bool updateChangedTime = true);
+    bool setTransformRounds(quint64 rounds);
+    bool setKey(const CompositeKey& key, const QByteArray& transformSeed,
+                bool updateChangedTime = true);
 
     /**
      * Sets the database key and generates a random transform seed.
      */
-    void setKey(const CompositeKey& key);
+    bool setKey(const CompositeKey& key);
     bool hasKey() const;
     bool verifyKey(const CompositeKey& key) const;
     void recycleEntry(Entry* entry);
