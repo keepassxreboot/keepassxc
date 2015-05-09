@@ -36,15 +36,15 @@ void TestHashedBlockStream::testWriteRead()
     QByteArray data = QByteArray::fromHex("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4");
 
     QBuffer buffer;
-    buffer.open(QIODevice::ReadWrite);
+    QVERIFY(buffer.open(QIODevice::ReadWrite));
 
     HashedBlockStream writer(&buffer, 16);
-    writer.open(QIODevice::WriteOnly);
+    QVERIFY(writer.open(QIODevice::WriteOnly));
 
     HashedBlockStream reader(&buffer);
-    reader.open(QIODevice::ReadOnly);
+    QVERIFY(reader.open(QIODevice::ReadOnly));
 
-    writer.write(data.left(16));
+    QCOMPARE(writer.write(data.left(16)), qint64(16));
     QVERIFY(writer.reset());
     buffer.reset();
     QCOMPARE(reader.read(17), data.left(16));
@@ -52,7 +52,7 @@ void TestHashedBlockStream::testWriteRead()
     buffer.reset();
     buffer.buffer().clear();
 
-    writer.write(data.left(10));
+    QCOMPARE(writer.write(data.left(10)), qint64(10));
     QVERIFY(writer.reset());
     buffer.reset();
     QCOMPARE(reader.read(5), data.left(5));
@@ -62,7 +62,7 @@ void TestHashedBlockStream::testWriteRead()
     buffer.reset();
     buffer.buffer().clear();
 
-    writer.write(data.left(20));
+    QCOMPARE(writer.write(data.left(20)), qint64(20));
     QVERIFY(writer.reset());
     buffer.reset();
     QCOMPARE(reader.read(20), data.left(20));

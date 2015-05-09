@@ -57,12 +57,12 @@ void TestSymmetricCipher::testAes256CbcEncryption()
                                  SymmetricCipher::Encrypt);
     QVERIFY(stream.init(key, iv));
     buffer.open(QIODevice::WriteOnly);
-    stream.open(QIODevice::WriteOnly);
+    QVERIFY(stream.open(QIODevice::WriteOnly));
     QVERIFY(stream.reset());
 
     buffer.reset();
     buffer.buffer().clear();
-    stream.write(plainText.left(16));
+    QCOMPARE(stream.write(plainText.left(16)), qint64(16));
     QCOMPARE(buffer.data(), cipherText.left(16));
     QVERIFY(stream.reset());
     // make sure padding is written
@@ -70,13 +70,13 @@ void TestSymmetricCipher::testAes256CbcEncryption()
 
     buffer.reset();
     buffer.buffer().clear();
-    stream.write(plainText.left(10));
+    QCOMPARE(stream.write(plainText.left(10)), qint64(10));
     QVERIFY(buffer.data().isEmpty());
 
     QVERIFY(stream.reset());
     buffer.reset();
     buffer.buffer().clear();
-    stream.write(plainText.left(10));
+    QCOMPARE(stream.write(plainText.left(10)), qint64(10));
     stream.close();
     QCOMPARE(buffer.data().size(), 16);
 }
@@ -106,20 +106,20 @@ void TestSymmetricCipher::testAes256CbcDecryption()
                                  SymmetricCipher::Decrypt);
     QVERIFY(stream.init(key, iv));
     buffer.open(QIODevice::ReadOnly);
-    stream.open(QIODevice::ReadOnly);
+    QVERIFY(stream.open(QIODevice::ReadOnly));
 
     QCOMPARE(stream.read(10),
              plainText.left(10));
     buffer.reset();
-    stream.reset();
+    QVERIFY(stream.reset());
     QCOMPARE(stream.read(20),
              plainText.left(20));
     buffer.reset();
-    stream.reset();
+    QVERIFY(stream.reset());
     QCOMPARE(stream.read(16),
              plainText.left(16));
     buffer.reset();
-    stream.reset();
+    QVERIFY(stream.reset());
     QCOMPARE(stream.read(100),
              plainText);
 }

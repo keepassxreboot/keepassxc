@@ -147,6 +147,7 @@ bool SymmetricCipherStream::readBlock()
             else if (padLength > m_cipher->blockSize()) {
                 // invalid padding
                 m_error = true;
+                setErrorString("Invalid padding.");
                 return false;
             }
             else {
@@ -217,7 +218,7 @@ bool SymmetricCipherStream::writeBlock(bool lastBlock)
 
     if (m_baseDevice->write(m_buffer) != m_buffer.size()) {
         m_error = true;
-        // TODO: copy error string
+        setErrorString(m_cipher->errorString());
         return false;
     }
     else {
