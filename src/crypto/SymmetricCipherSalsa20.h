@@ -42,6 +42,8 @@ public:
     bool reset();
     int blockSize() const;
 
+    QString errorString() const;
+
 private:
     ECRYPT_ctx m_ctx;
     QByteArray m_key;

@@ -33,23 +33,32 @@ SymmetricCipherSalsa20::~SymmetricCipherSalsa20()
 {
 }
 
-void SymmetricCipherSalsa20::setKey(const QByteArray& key)
+bool SymmetricCipherSalsa20::init()
+{
+    return true;
+}
+
+bool SymmetricCipherSalsa20::setKey(const QByteArray& key)
 {
     Q_ASSERT((key.size() == 16) || (key.size() == 32));
 
     m_key = key;
     ECRYPT_keysetup(&m_ctx, reinterpret_cast<const u8*>(m_key.constData()), m_key.size()*8, 64);
+
+    return true;
 }
 
-void SymmetricCipherSalsa20::setIv(const QByteArray& iv)
+bool SymmetricCipherSalsa20::setIv(const QByteArray& iv)
 {
     Q_ASSERT(iv.size() == 8);
 
     m_iv = iv;
     ECRYPT_ivsetup(&m_ctx, reinterpret_cast<const u8*>(m_iv.constData()));
+
+    return true;
 }
 
-QByteArray SymmetricCipherSalsa20::process(const QByteArray& data)
+QByteArray SymmetricCipherSalsa20::process(const QByteArray& data, bool* ok)
 {
     Q_ASSERT((data.size() < blockSize()) || ((data.size() % blockSize()) == 0));
 
@@ -59,18 +68,21 @@ QByteArray SymmetricCipherSalsa20::process(const QByteArray& data)
     ECRYPT_encrypt_bytes(&m_ctx, reinterpret_cast<const u8*>(data.constData()),
                          reinterpret_cast<u8*>(result.data()), data.size());
 
+    *ok = true;
     return result;
 }
 
-void SymmetricCipherSalsa20::processInPlace(QByteArray& data)
+bool SymmetricCipherSalsa20::processInPlace(QByteArray& data)
 {
     Q_ASSERT((data.size() < blockSize()) || ((data.size() % blockSize()) == 0));
 
     ECRYPT_encrypt_bytes(&m_ctx, reinterpret_cast<const u8*>(data.constData()),
                          reinterpret_cast<u8*>(data.data()), data.size());
+
+    return true;
 }
 
-void SymmetricCipherSalsa20::processInPlace(QByteArray& data, quint64 rounds)
+bool SymmetricCipherSalsa20::processInPlace(QByteArray& data, quint64 rounds)
 {
     Q_ASSERT((data.size() < blockSize()) || ((data.size() % blockSize()) == 0));
 
@@ -78,14 +90,23 @@ void SymmetricCipherSalsa20::processInPlace(QByteArray& data, quint64 rounds)
         ECRYPT_encrypt_bytes(&m_ctx, reinterpret_cast<const u8*>(data.constData()),
                              reinterpret_cast<u8*>(data.data()), data.size());
     }
+
+    return true;
 }
 
-void SymmetricCipherSalsa20::reset()
+bool SymmetricCipherSalsa20::reset()
 {
     ECRYPT_ivsetup(&m_ctx, reinterpret_cast<const u8*>(m_iv.constData()));
+
+    return true;
 }
 
 int SymmetricCipherSalsa20::blockSize() const
 {
     return 64;
+}
+
+QString SymmetricCipherSalsa20::errorString() const
+{
+    return QString();
 }
