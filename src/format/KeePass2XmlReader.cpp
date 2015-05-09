@@ -877,7 +877,9 @@ QPair<QString, QString> KeePass2XmlReader::parseEntryBinary(Entry* entry)
                         && (attr.value("Protected") == "True");
 
                 if (isProtected && !value.isEmpty()) {
-                    m_randomStream->processInPlace(value);
+                    if (!m_randomStream->processInPlace(value)) {
+                        raiseError(m_randomStream->errorString());
+                    }
                 }
             }
 

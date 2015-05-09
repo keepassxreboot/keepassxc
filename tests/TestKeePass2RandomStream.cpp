@@ -49,7 +49,7 @@ void TestKeePass2RandomStream::test()
 
     QByteArray cipherPad;
     cipherPad.fill('\0', Size);
-    cipher.processInPlace(cipherPad);
+    QVERIFY(cipher.processInPlace(cipherPad));
 
     QByteArray cipherData;
     cipherData.resize(Size);
@@ -68,7 +68,7 @@ void TestKeePass2RandomStream::test()
     randomStreamData.append(randomStream.process(data.mid(7, 1), &ok));
     QVERIFY(ok);
     QByteArray tmpData = data.mid(8, 12);
-    randomStream.processInPlace(tmpData);
+    QVERIFY(randomStream.processInPlace(tmpData));
     randomStreamData.append(tmpData);
     randomStreamData.append(randomStream.process(data.mid(20, 44), &ok));
     QVERIFY(ok);
