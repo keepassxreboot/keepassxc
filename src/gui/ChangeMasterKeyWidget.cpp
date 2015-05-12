@@ -96,7 +96,7 @@ QLabel* ChangeMasterKeyWidget::headlineLabel()
 
 void ChangeMasterKeyWidget::generateKey()
 {
-    m_key.clear();
+    bool cleared = false;
 
     if (m_ui->passwordGroup->isChecked()) {
         if (m_ui->enterPasswordEdit->text() == m_ui->repeatPasswordEdit->text()) {
@@ -107,6 +107,8 @@ void ChangeMasterKeyWidget::generateKey()
                     return;
                 }
             }
+            m_key.clear();
+            cleared = true;
             m_key.addKey(PasswordKey(m_ui->enterPasswordEdit->text()));
         }
         else {
@@ -120,8 +122,12 @@ void ChangeMasterKeyWidget::generateKey()
         FileKey fileKey;
         QString errorMsg;
         if (!fileKey.load(m_ui->keyFileCombo->currentText(), &errorMsg)) {
-            // TODO: error handling
+            MessageBox::critical(this, tr("Failed to set key file"),
+                                 tr("Failed to set %1 as the Key file:\n%2")
+                                 .arg(m_ui->keyFileCombo->currentText(), errorMsg));
+            return;
         }
+        if (!cleared) m_key.clear();
         m_key.addKey(fileKey);
     }
 
