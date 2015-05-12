@@ -9,50 +9,13 @@
 
 /* Guess the endianness of the target architecture. */
 
-/* 
- * The LITTLE endian machines:
- */
-#if defined(__ultrix)           /* Older MIPS */
-#define ECRYPT_LITTLE_ENDIAN
-#elif defined(__alpha)          /* Alpha */
-#define ECRYPT_LITTLE_ENDIAN
-#elif defined(i386)             /* x86 (gcc) */
-#define ECRYPT_LITTLE_ENDIAN
-#elif defined(__i386)           /* x86 (gcc) */
-#define ECRYPT_LITTLE_ENDIAN
-#elif defined(__x86_64)         /* x86_64 (gcc) */
-#define ECRYPT_LITTLE_ENDIAN
-#elif defined(_M_IX86)          /* x86 (MSC, Borland) */
-#define ECRYPT_LITTLE_ENDIAN
-#elif defined(_MSC_VER)         /* x86 (surely MSC) */
-#define ECRYPT_LITTLE_ENDIAN
-#elif defined(__INTEL_COMPILER) /* x86 (surely Intel compiler icl.exe) */
-#define ECRYPT_LITTLE_ENDIAN
+#include <QtGlobal>
 
-/* 
- * The BIG endian machines: 
- */
-#elif defined(__sparc)          /* Newer Sparc's */
+#if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
+#define ECRYPT_LITTLE_ENDIAN
+#elif Q_BYTE_ORDER == Q_BIG_ENDIAN
 #define ECRYPT_BIG_ENDIAN
-#elif defined(__powerpc__)      /* PowerPC */
-#define ECRYPT_BIG_ENDIAN
-#elif defined(__ppc__)          /* PowerPC */
-#define ECRYPT_BIG_ENDIAN
-#elif defined(__hppa)           /* HP-PA */
-#define ECRYPT_BIG_ENDIAN
-
-/* 
- * Finally machines with UNKNOWN endianness:
- */
-#elif defined (_AIX)            /* RS6000 */
-#define ECRYPT_UNKNOWN
-#elif defined(__aux)            /* 68K */
-#define ECRYPT_UNKNOWN
-#elif defined(__dgux)           /* 88K (but P6 in latest boxes) */
-#define ECRYPT_UNKNOWN
-#elif defined(__sgi)            /* Newer MIPS */
-#define ECRYPT_UNKNOWN
-#else	                        /* Any other processor */
+#else
 #define ECRYPT_UNKNOWN
 #endif
 

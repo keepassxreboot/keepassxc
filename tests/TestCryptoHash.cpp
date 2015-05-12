@@ -32,9 +32,6 @@ void TestCryptoHash::initTestCase()
 
 void TestCryptoHash::test()
 {
-    // TODO: move somewhere else
-    QVERIFY(Crypto::backendSelfTest());
-
     CryptoHash cryptoHash1(CryptoHash::Sha256);
     QCOMPARE(cryptoHash1.result(),
              QByteArray::fromHex("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"));

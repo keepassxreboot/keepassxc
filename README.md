@@ -23,6 +23,13 @@ The following libraries are required:
 * zlib
 * libmicrohttpd
 * QJSON
+* libxtst (optional for auto-type on X11)
+
+On Debian you can install them with:
+
+```bash
+sudo apt-get install build-essential cmake libqt4-dev libgcrypt11-dev zlib1g-dev
+```
 
 #### Build Steps
 

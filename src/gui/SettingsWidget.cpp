@@ -96,6 +96,7 @@ void SettingsWidget::addSettingsPage(ISettingsPage *page)
 void SettingsWidget::loadSettings()
 {
     m_generalUi->rememberLastDatabasesCheckBox->setChecked(config()->get("RememberLastDatabases").toBool());
+    m_generalUi->rememberLastKeyFilesCheckBox->setChecked(config()->get("RememberLastKeyFiles").toBool());
     m_generalUi->openPreviousDatabasesOnStartupCheckBox->setChecked(
         config()->get("OpenPreviousDatabasesOnStartup").toBool());
     m_generalUi->autoSaveAfterEveryChangeCheckBox->setChecked(config()->get("AutoSaveAfterEveryChange").toBool());
@@ -144,6 +145,7 @@ void SettingsWidget::loadSettings()
 void SettingsWidget::saveSettings()
 {
     config()->set("RememberLastDatabases", m_generalUi->rememberLastDatabasesCheckBox->isChecked());
+    config()->set("RememberLastKeyFiles", m_generalUi->rememberLastKeyFilesCheckBox->isChecked());
     config()->set("OpenPreviousDatabasesOnStartup",
                   m_generalUi->openPreviousDatabasesOnStartupCheckBox->isChecked());
     config()->set("AutoSaveAfterEveryChange",

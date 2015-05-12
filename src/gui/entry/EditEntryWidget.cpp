@@ -277,6 +277,7 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const Q
     }
 
     setForms(entry);
+    setReadOnly(m_history);
 
     setCurrentRow(0);
     setRowHidden(m_historyWidget, m_history);
@@ -384,10 +385,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
 void EditEntryWidget::saveEntry()
 {
     if (m_history) {
-        m_entry = Q_NULLPTR;
-        m_database = Q_NULLPTR;
-        m_entryAttributes->clear();
-        m_entryAttachments->clear();
+        clear();
         Q_EMIT editFinished(false);
         return;
     }
@@ -463,6 +461,7 @@ void EditEntryWidget::cancel()
     if (m_history) {
         clear();
         Q_EMIT editFinished(false);
+        return;
     }
 
     if (!m_entry->iconUuid().isNull() &&

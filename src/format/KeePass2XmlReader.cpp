@@ -699,7 +699,7 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
             int iconId = readNumber();
             if (iconId < 0) {
                 if (m_strictMode) {
-                    raiseError("Invalud entry icon number");
+                    raiseError("Invalid entry icon number");
                 }
             }
             else {
@@ -862,7 +862,7 @@ QPair<QString, QString> KeePass2XmlReader::parseEntryBinary(Entry* entry)
                 m_xml.skipCurrentElement();
             }
             else {
-                // format compatbility
+                // format compatibility
                 value = readBinary();
                 bool isProtected = attr.hasAttribute("Protected")
                         && (attr.value("Protected") == "True");

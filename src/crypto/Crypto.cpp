@@ -173,6 +173,24 @@ bool Crypto::selfTest()
         return false;
     }
 
+    // Twofish
+    cipherText = QByteArray::fromHex("e0227c3cc80f3cb1b2ed847cc6f57d3c");
+    cipherText.append(QByteArray::fromHex("657b1e7960b30fb7c8d62e72ae37c3a0"));
+
+    SymmetricCipher twofishEncrypt(SymmetricCipher::Twofish, SymmetricCipher::Cbc, SymmetricCipher::Encrypt, key, iv);
+    if (twofishEncrypt.process(plainText) != cipherText) {
+        m_errorStr = "Twofish encryption mismatch.";
+        qWarning("Crypto::selfTest: %s", qPrintable(m_errorStr));
+        return false;
+    }
+
+    SymmetricCipher twofishDecrypt(SymmetricCipher::Twofish, SymmetricCipher::Cbc, SymmetricCipher::Decrypt, key, iv);
+    if (twofishDecrypt.process(cipherText) != plainText) {
+        m_errorStr = "Twofish decryption mismatch.";
+        qWarning("Crypto::selfTest: %s", qPrintable(m_errorStr));
+        return false;
+    }
+
     QByteArray salsa20Key = QByteArray::fromHex("F3F4F5F6F7F8F9FAFBFCFDFEFF000102030405060708090A0B0C0D0E0F101112");
     QByteArray salsa20iv = QByteArray::fromHex("0000000000000000");
     QByteArray salsa20Plain = QByteArray::fromHex("00000000000000000000000000000000");

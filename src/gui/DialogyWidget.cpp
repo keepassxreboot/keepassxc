@@ -46,7 +46,9 @@ void DialogyWidget::keyPressEvent(QKeyEvent* e)
                 break;
             case Qt::Key_Escape:
                 if (!clickButton(QDialogButtonBox::Cancel)) {
-                    e->ignore();
+                    if (!clickButton(QDialogButtonBox::Close)) {
+                        e->ignore();
+                    }
                 }
                 break;
             default:
