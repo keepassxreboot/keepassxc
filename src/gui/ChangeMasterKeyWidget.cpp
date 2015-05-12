@@ -96,7 +96,7 @@ QLabel* ChangeMasterKeyWidget::headlineLabel()
 
 void ChangeMasterKeyWidget::generateKey()
 {
-    bool cleared = false;
+    m_key.clear();
 
     if (m_ui->passwordGroup->isChecked()) {
         if (m_ui->enterPasswordEdit->text() == m_ui->repeatPasswordEdit->text()) {
@@ -107,8 +107,6 @@ void ChangeMasterKeyWidget::generateKey()
                     return;
                 }
             }
-            m_key.clear();
-            cleared = true;
             m_key.addKey(PasswordKey(m_ui->enterPasswordEdit->text()));
         }
         else {
@@ -127,7 +125,6 @@ void ChangeMasterKeyWidget::generateKey()
                                  .arg(m_ui->keyFileCombo->currentText(), errorMsg));
             return;
         }
-        if (!cleared) m_key.clear();
         m_key.addKey(fileKey);
     }
 
