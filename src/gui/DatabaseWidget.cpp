@@ -907,7 +907,7 @@ bool DatabaseWidget::isGroupSelected() const
     return m_groupView->currentGroup() != Q_NULLPTR;
 }
 
-bool DatabaseWidget::hasTitle()
+bool DatabaseWidget::currentEntryHasTitle()
 {
     Entry* currentEntry = m_entryView->currentEntry();
     if (!currentEntry) {
@@ -917,7 +917,7 @@ bool DatabaseWidget::hasTitle()
     return !currentEntry->title().isEmpty();
 }
 
-bool DatabaseWidget::hasUsername()
+bool DatabaseWidget::currentEntryHasUsername()
 {
     Entry* currentEntry = m_entryView->currentEntry();
     if (!currentEntry) {
@@ -927,7 +927,7 @@ bool DatabaseWidget::hasUsername()
     return !currentEntry->username().isEmpty();
 }
 
-bool DatabaseWidget::hasPassword()
+bool DatabaseWidget::currentEntryHasPassword()
 {
     Entry* currentEntry = m_entryView->currentEntry();
     if (!currentEntry) {
@@ -937,7 +937,7 @@ bool DatabaseWidget::hasPassword()
     return !currentEntry->password().isEmpty();
 }
 
-bool DatabaseWidget::hasUrl()
+bool DatabaseWidget::currentEntryHasUrl()
 {
     Entry* currentEntry = m_entryView->currentEntry();
     if (!currentEntry) {
@@ -947,7 +947,7 @@ bool DatabaseWidget::hasUrl()
     return !currentEntry->url().isEmpty();
 }
 
-bool DatabaseWidget::hasNotes()
+bool DatabaseWidget::currentEntryHasNotes()
 {
     Entry* currentEntry = m_entryView->currentEntry();
     if (!currentEntry) {
