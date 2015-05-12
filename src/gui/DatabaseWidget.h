@@ -80,6 +80,11 @@ public:
     QList<int> entryHeaderViewSizes() const;
     void setEntryViewHeaderSizes(const QList<int>& sizes);
     void clearAllWidgets();
+    bool hasTitle();
+    bool hasUsername();
+    bool hasPassword();
+    bool hasUrl();
+    bool hasNotes();
 
 Q_SIGNALS:
     void closeRequest();

@@ -906,3 +906,53 @@ bool DatabaseWidget::isGroupSelected() const
 {
     return m_groupView->currentGroup() != Q_NULLPTR;
 }
+
+bool DatabaseWidget::hasTitle()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if (!currentEntry) {
+        Q_ASSERT(false);
+        return false;
+    }
+    return !currentEntry->title().isEmpty();
+}
+
+bool DatabaseWidget::hasUsername()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if (!currentEntry) {
+        Q_ASSERT(false);
+        return false;
+    }
+    return !currentEntry->username().isEmpty();
+}
+
+bool DatabaseWidget::hasPassword()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if (!currentEntry) {
+        Q_ASSERT(false);
+        return false;
+    }
+    return !currentEntry->password().isEmpty();
+}
+
+bool DatabaseWidget::hasUrl()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if (!currentEntry) {
+        Q_ASSERT(false);
+        return false;
+    }
+    return !currentEntry->url().isEmpty();
+}
+
+bool DatabaseWidget::hasNotes()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if (!currentEntry) {
+        Q_ASSERT(false);
+        return false;
+    }
+    return !currentEntry->notes().isEmpty();
+}
