@@ -1,179 +1,179 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="de" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="id" version="2.0">
 <context>
     <name>AboutDialog</name>
     <message>
         <source>About KeePassX</source>
-        <translation>Über KeePassX</translation>
+        <translation>Tentang KeePassX</translation>
     </message>
     <message>
         <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassX ist unter der GNU General Public License (GPL) version 2 (version 3) veröffentlicht.</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>AutoType</name>
     <message>
         <source>Auto-Type - KeePassX</source>
-        <translation>Auto-Type - KeePassX</translation>
+        <translation>Ketik-Otomatis - KeePassX</translation>
     </message>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation>Konnte keinen Eintrag finden, welcher mit dem Fenstertitel übereinstimmt:</translation>
+        <translation>Tidak dapat menemukan entri yang cocok dengan judul jendela</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeAssociationsModel</name>
     <message>
         <source>Window</source>
-        <translation>Fenster</translation>
+        <translation>Jendela</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Reihenfolge</translation>
+        <translation>Urutan</translation>
     </message>
     <message>
         <source>Default sequence</source>
-        <translation>Standardreihenfolge</translation>
+        <translation>Urutan baku</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassX</source>
-        <translation>Auto-Type - KeePassX</translation>
+        <translation>Ketik-Otomatis - KeePassX</translation>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>Wählen Sie einen Eintrag für Auto-Type:</translation>
+        <translation>Pilih entri untuk Ketik-Otomatis:</translation>
     </message>
 </context>
 <context>
     <name>ChangeMasterKeyWidget</name>
     <message>
         <source>Password</source>
-        <translation>Passwort</translation>
+        <translation>Kata Sandi</translation>
     </message>
     <message>
         <source>Enter password:</source>
-        <translation>Passwort eingeben:</translation>
+        <translation>Masukan kata sandi:</translation>
     </message>
     <message>
         <source>Repeat password:</source>
-        <translation>Passwort wiederholen:</translation>
+        <translation>Ulangi kata sandi:</translation>
     </message>
     <message>
         <source>Key file</source>
-        <translation>Schlüsseldatei</translation>
+        <translation>Berkas kunci</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Durchsuchen</translation>
+        <translation>Telusuri</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Erstellen</translation>
+        <translation>Buat</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Schlüsseldateien</translation>
+        <translation>Berkas Kunci</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Alle Dateien</translation>
+        <translation>Semua berkas</translation>
     </message>
     <message>
         <source>Create Key File...</source>
-        <translation>Erzeuge eine Schlüsseldatei...</translation>
+        <translation>Buat Berkas Kunci...</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Fehler</translation>
+        <translation>Galat</translation>
     </message>
     <message>
         <source>Unable to create Key File : </source>
-        <translation>Erzeugen der Schlüsseldatei nicht möglich:</translation>
+        <translation>Tidak dapat membuat Berkas Kunci :</translation>
     </message>
     <message>
         <source>Select a key file</source>
-        <translation>Schlüsseldatei auswählen</translation>
+        <translation>Pilih sebuah berkas kunci</translation>
     </message>
     <message>
         <source>Question</source>
-        <translation>Frage</translation>
+        <translation>Pertanyaan</translation>
     </message>
     <message>
         <source>Do you really want to use an empty string as password?</source>
-        <translation>Wollen Sie wirklich eine leere Zeichenkette als Passwort verwenden?</translation>
+        <translation>Apakah anda ingin menggunakan string kosong sebagai kata sandi?</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Unterschiedliche Passwörter eingegeben.</translation>
+        <translation>Kata sandi yang berbeda diberikan.</translation>
     </message>
 </context>
 <context>
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Enter master key</source>
-        <translation>Hauptschlüssel eingeben</translation>
+        <translation>Masukan kunci utama</translation>
     </message>
     <message>
         <source>Key File:</source>
-        <translation>Schlüsseldatei:</translation>
+        <translation>Berkas Kunci:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Passwort:</translation>
+        <translation>Kata sandi:</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Durchsuchen</translation>
+        <translation>Telusuri</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Fehler</translation>
+        <translation>Galat</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Öffnen der Datenbank nicht möglich.</translation>
+        <translation>Tidak dapat membuka basis data</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>Schlüsseldatei kann nicht geöffnet werden</translation>
+        <translation>Tidak dapat membuka berkas kunci</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Alle Dateien</translation>
+        <translation>Semua berkas</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Schlüsseldateien</translation>
+        <translation>Berkas kunci</translation>
     </message>
     <message>
         <source>Select key file</source>
-        <translation>Schlüsseldatei auswählen</translation>
+        <translation>Pilih berkas kunci</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidget</name>
     <message>
         <source>Database name:</source>
-        <translation>Datenbankname:</translation>
+        <translation>Nama basis data:</translation>
     </message>
     <message>
         <source>Database description:</source>
-        <translation>Datenbankbeschreibung:</translation>
+        <translation>Deskripsi basis data:</translation>
     </message>
     <message>
         <source>Transform rounds:</source>
-        <translation>Verschlüsselungsdurchläufe:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Default username:</source>
-        <translation>Standardbenutzername:</translation>
+        <translation>Nama pengguna baku:</translation>
     </message>
     <message>
         <source>Use recycle bin:</source>
-        <translation>Verwende Papierkorb:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source> MiB</source>
@@ -181,263 +181,264 @@
     </message>
     <message>
         <source>Benchmark</source>
-        <translation>Benchmark</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Max. history items:</source>
-        <translation>Max. Einträge im Verlauf:</translation>
+        <translation>Maks. item riwayat:</translation>
     </message>
     <message>
         <source>Max. history size:</source>
-        <translation>Max. Verlaufsgröße:</translation>
+        <translation>Maks. ukuran riwayat:</translation>
     </message>
 </context>
 <context>
     <name>DatabaseTabWidget</name>
     <message>
         <source>Root</source>
-        <translation>Root</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>KeePass 2 Datenbank</translation>
+        <translation>Basis data KeePass 2</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Alle Dateien</translation>
+        <translation>Semua berkas</translation>
     </message>
     <message>
         <source>Open database</source>
-        <translation>Datenbank öffnen</translation>
+        <translation>Buka basis data</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation>Warnung</translation>
+        <translation>Peringatan</translation>
     </message>
     <message>
         <source>File not found!</source>
-        <translation>Datei nicht gefunden!</translation>
+        <translation>Berkas tidak ditemukan!</translation>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
-        <translation>KeePass 1 Datenbank öffnen</translation>
+        <translation>Buka basis data KeePass 1</translation>
     </message>
     <message>
         <source>KeePass 1 database</source>
-        <translation>KeePass 1 Datenbank</translation>
+        <translation>Basis data KeePass 1</translation>
     </message>
     <message>
         <source>All files (*)</source>
-        <translation>Alle Dateien (*)</translation>
+        <translation>Semua berkas (*)</translation>
     </message>
     <message>
         <source>Close?</source>
-        <translation>Schließen?</translation>
+        <translation>Tutup?</translation>
     </message>
     <message>
         <source>&quot;%1&quot; is in edit mode.
 Close anyway?</source>
-        <translation>&quot;%1&quot; wird bearbeitet.
-Trotzdem schließen?</translation>
+        <translation>&quot;%1&quot; dalam berada mode sunting.
+Tetap tutup?</translation>
     </message>
     <message>
         <source>Save changes?</source>
-        <translation>Änderungen speichern?</translation>
+        <translation>Simpan perubahan?</translation>
     </message>
     <message>
         <source>&quot;%1&quot; was modified.
 Save changes?</source>
-        <translation>&quot;%1&quot; wurde geändert.
-Änderungen speichern?</translation>
+        <translation>&quot;%1&quot; telah dimodifikasi.
+Simpan perubahan?</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Fehler</translation>
+        <translation>Galat</translation>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation>Schreiben der Datenbank fehlgeschlagen.</translation>
+        <translation>Menulis basis data gagal.</translation>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Datenbank speichern unter</translation>
+        <translation>Simpan basis data sebagai</translation>
     </message>
     <message>
         <source>New database</source>
-        <translation>Neue Datenbank</translation>
+        <translation>Basis data baru</translation>
     </message>
     <message>
         <source>locked</source>
-        <translation>gesperrt</translation>
+        <translation>terkunci</translation>
     </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
     <message>
         <source>Change master key</source>
-        <translation>Hauptschlüssel ändern</translation>
+        <translation>Ubah kunci utama</translation>
     </message>
     <message>
         <source>Delete entry?</source>
-        <translation>Eintrag löschen?</translation>
+        <translation>Hapus entri?</translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>Wollen Sie den Eintrag &quot;%1&quot; wirklich löschen?</translation>
+        <translation>Apakah anda ingin menghapus entri &quot;%1&quot; untuk selamanya?</translation>
     </message>
     <message>
         <source>Delete entries?</source>
-        <translation>Einträge löschen?</translation>
+        <translation>Hapus entri?</translation>
     </message>
     <message>
         <source>Do you really want to delete %1 entries for good?</source>
-        <translation>Wollen Sie die Einträge &quot;%1&quot; wirklich löschen?</translation>
+        <translation>Apakah anda ingin menghapus entri %1 untuk selamanya?</translation>
     </message>
     <message>
         <source>Move entries to recycle bin?</source>
-        <translation>Einträge in den Papierkorb verschieben?</translation>
+        <translation type="unfinished"/>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Wollen Sie wirklich %n Eintrag in den Papierkorb verschieben?</numerusform><numerusform>Wollen Sie wirklich %n Einträge in den Papierkorb verschieben?</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Delete group?</source>
-        <translation>Gruppe löschen?</translation>
+        <translation>Hapus grup?</translation>
     </message>
     <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>Wollen Sie die Gruppe &quot;%1&quot; wirklich löschen?</translation>
+        <translation>Apakah anda ingin menghapus grup &quot;%1&quot; untuk selamanya?</translation>
     </message>
     <message>
         <source>Current group</source>
-        <translation>Aktuelle Gruppe</translation>
+        <translation>Grup saat ini</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
     <message>
         <source>Entry</source>
-        <translation>Eintrag</translation>
+        <translation>Entri</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Fortgeschritten</translation>
+        <translation>Tingkat Lanjut</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Symbol</translation>
+        <translation>Ikon</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-Type</translation>
+        <translation>Ketik-Otomatis</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Eigenschaften</translation>
+        <translation>Properti</translation>
     </message>
     <message>
         <source>History</source>
-        <translation>Verlauf</translation>
+        <translation>Riwayat</translation>
     </message>
     <message>
         <source>Entry history</source>
-        <translation>Eintragsverlauf</translation>
+        <translation>Entri riwayat</translation>
     </message>
     <message>
         <source>Add entry</source>
-        <translation>Eintrag hinzufügen</translation>
+        <translation>Tambah entri</translation>
     </message>
     <message>
         <source>Edit entry</source>
-        <translation>Eintrag bearbeiten</translation>
+        <translation>Sunting entri</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Fehler</translation>
+        <translation>Galat</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Unterschiedliche Passwörter eingegeben.</translation>
+        <translation>Kata sandi yang berbeda diberikan.</translation>
     </message>
     <message>
         <source>New attribute</source>
-        <translation>Neue Eigenschaft</translation>
+        <translation>Atribut baru</translation>
     </message>
     <message>
         <source>Select file</source>
-        <translation>Datei wählen</translation>
+        <translation>Pilih berkas</translation>
     </message>
     <message>
         <source>Unable to open file</source>
-        <translation>Öffnen der Datei nicht möglich</translation>
+        <translation>Tidak dapat membuka berkas</translation>
     </message>
     <message>
         <source>Save attachment</source>
-        <translation>Anhang speichern</translation>
+        <translation>Simpan lampiran</translation>
     </message>
     <message>
         <source>Unable to save the attachment:
 </source>
-        <translation>Speichern des Anhangs nicht möglich:</translation>
+        <translation>Tidak dapat menyimpan lampiran:
+</translation>
     </message>
     <message>
         <source>Tomorrow</source>
-        <translation>Morgen</translation>
+        <translation>Besok</translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n Woche</numerusform><numerusform>%n Wochen</numerusform></translation>
+        <translation><numerusform>%n minggu(s)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n Monat</numerusform><numerusform>%n Monaten</numerusform></translation>
+        <translation><numerusform>%n bulan(s)</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
-        <translation>1 Jahr</translation>
+        <translation>1 tahun</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
     <message>
         <source>Additional attributes</source>
-        <translation>Zusätzliche Eigenschaften</translation>
+        <translation>Atribut tambahan</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>Hinzufügen</translation>
+        <translation>Tambah</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Bearbeiten</translation>
+        <translation>Sunting</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Entfernen</translation>
+        <translation>Hapus</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Anhänge</translation>
+        <translation>Lampiran</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Speichern</translation>
+        <translation>Simpan</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation>Auto-Type für diesen Eintrag aktivieren</translation>
+        <translation>Aktifkan Ketik-Otomatis untuk entri ini</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the group</source>
-        <translation>Standard-Auto-Type-Sequenz von der Gruppe erben</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Use custom Auto-Type sequence:</source>
-        <translation>Benutzerdefinierte Auto-Type-Sequenz benutzen:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>+</source>
@@ -449,53 +450,53 @@ Save changes?</source>
     </message>
     <message>
         <source>Window title:</source>
-        <translation>Fenstertitel:</translation>
+        <translation>Judul jendela:</translation>
     </message>
     <message>
         <source>Use default sequence</source>
-        <translation>Standardsequenz benutzen</translation>
+        <translation>Gunakan urutan baku</translation>
     </message>
     <message>
         <source>Set custom sequence:</source>
-        <translation>Benutzerdefinierte Sequenz verwenden:</translation>
+        <translation>Tetapkan urutan kustom:</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
     <message>
         <source>Show</source>
-        <translation>Anzeigen</translation>
+        <translation>Tampilkan</translation>
     </message>
     <message>
         <source>Restore</source>
-        <translation>Wiederherstellen</translation>
+        <translation>Kembalikan</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Löschen</translation>
+        <translation>Hapus</translation>
     </message>
     <message>
         <source>Delete all</source>
-        <translation>Alle löschen</translation>
+        <translation>Hapus semua</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetMain</name>
     <message>
         <source>Title:</source>
-        <translation>Titel:</translation>
+        <translation>Judul:</translation>
     </message>
     <message>
         <source>Username:</source>
-        <translation>Benutzername:</translation>
+        <translation>Nama pengguna:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Passwort:</translation>
+        <translation>Kata sandi:</translation>
     </message>
     <message>
         <source>Repeat:</source>
-        <translation>Wiederholen:</translation>
+        <translation>Ulangi:</translation>
     </message>
     <message>
         <source>Gen.</source>
@@ -507,127 +508,127 @@ Save changes?</source>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Erlischt</translation>
+        <translation>Kadaluarsa</translation>
     </message>
     <message>
         <source>Presets</source>
-        <translation>Vorgaben</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Notes:</source>
-        <translation>Notizen:</translation>
+        <translation>Catatan:</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidget</name>
     <message>
         <source>Group</source>
-        <translation>Gruppe</translation>
+        <translation>Grup</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Symbol</translation>
+        <translation>Ikon</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Eigenschaften</translation>
+        <translation>Properti</translation>
     </message>
     <message>
         <source>Add group</source>
-        <translation>Gruppe hinzufügen</translation>
+        <translation>Tambah grup</translation>
     </message>
     <message>
         <source>Edit group</source>
-        <translation>Gruppe bearbeiten</translation>
+        <translation>Sunting grup</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation>Aktivieren</translation>
+        <translation>Aktifkan</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Deaktivieren</translation>
+        <translation>Nonaktifkan</translation>
     </message>
     <message>
         <source>Inherit from parent group (%1)</source>
-        <translation>Von der übergeordneten Gruppe (%1) erben</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
     <message>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation>Nama</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Notizen</translation>
+        <translation>Catatan</translation>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Erlischt</translation>
+        <translation>Kadaluarsa</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Suche</translation>
+        <translation>Cari</translation>
     </message>
     <message>
         <source>Auto-type</source>
-        <translation>Auto-type</translation>
+        <translation>Ketik-otomatis</translation>
     </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
     <message>
         <source>Use default icon</source>
-        <translation>Standardsymbol verwenden</translation>
+        <translation>Gunakan ikon baku</translation>
     </message>
     <message>
         <source>Use custom icon</source>
-        <translation>Benutzerdefiniertes Symbol verwenden</translation>
+        <translation>Gunakan ikon kustom</translation>
     </message>
     <message>
         <source>Add custom icon</source>
-        <translation>Benutzerdefiniertes Symbol hinzufügen</translation>
+        <translation>Tambah ikon kustom</translation>
     </message>
     <message>
         <source>Delete custom icon</source>
-        <translation>Benutzerdefiniertes Symbol löschen</translation>
+        <translation>Hapus ikon kustom</translation>
     </message>
     <message>
         <source>Images</source>
-        <translation>Bilder</translation>
+        <translation>Gambar</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Alle Dateien</translation>
+        <translation>Semua berkas</translation>
     </message>
     <message>
         <source>Select Image</source>
-        <translation>Bild auswählen</translation>
+        <translation>Pilih gambar</translation>
     </message>
     <message>
         <source>Can&apos;t delete icon!</source>
-        <translation>Symbol kann nicht gelöscht werden!</translation>
+        <translation>Tidak dapat menghapus ikon!</translation>
     </message>
     <message numerus="yes">
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
-        <translation><numerusform>Symbol kann nicht gelöscht werden. Es wird von %n Eintrag verwendet.</numerusform><numerusform>Symbol kann nicht gelöscht werden. Es wird von %n Einträgen verwendet.</numerusform></translation>
+        <translation><numerusform>Can&apos;t delete icon. Still used by %n item(s).</numerusform></translation>
     </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
     <message>
         <source>Created:</source>
-        <translation>Erstellt:</translation>
+        <translation>Dibuat:</translation>
     </message>
     <message>
         <source>Modified:</source>
-        <translation>Bearbeitet:</translation>
+        <translation>Dimodifikasi:</translation>
     </message>
     <message>
         <source>Accessed:</source>
-        <translation>Zugegriffen:</translation>
+        <translation>Diakses:</translation>
     </message>
     <message>
         <source>Uuid:</source>
@@ -638,22 +639,22 @@ Save changes?</source>
     <name>EntryAttributesModel</name>
     <message>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation>Nama</translation>
     </message>
 </context>
 <context>
     <name>EntryHistoryModel</name>
     <message>
         <source>Last modified</source>
-        <translation>Zuletzt geändert</translation>
+        <translation>Terakhir dimodifikasi</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Titel</translation>
+        <translation>Judul</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Benutzername</translation>
+        <translation>Nama pengguna</translation>
     </message>
     <message>
         <source>URL</source>
@@ -664,15 +665,15 @@ Save changes?</source>
     <name>EntryModel</name>
     <message>
         <source>Group</source>
-        <translation>Gruppe</translation>
+        <translation>Grup</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Titel</translation>
+        <translation>Judul</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Benutzername</translation>
+        <translation>Nama pengguna</translation>
     </message>
     <message>
         <source>URL</source>
@@ -683,214 +684,214 @@ Save changes?</source>
     <name>Group</name>
     <message>
         <source>Recycle Bin</source>
-        <translation>Papierkorb</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>KeePass1OpenWidget</name>
     <message>
         <source>Import KeePass1 database</source>
-        <translation>KeePass 1 Datenbank importieren</translation>
+        <translation>Impor basis data KeePass1</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Fehler</translation>
+        <translation>Galat</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Öffnen der Datenbank nicht möglich.</translation>
+        <translation>Tidak dapat membuka basis data</translation>
     </message>
 </context>
 <context>
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
-        <translation>Lesen der Schlüsseldatei nicht möglich.</translation>
+        <translation>Tidak dapat membaca berkas kunci.</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Keine KeePass-Datenbank.</translation>
+        <translation>Bukan basis data KeePass</translation>
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
-        <translation>Nicht unterstützter Verschlüsselungsalgorithmus.</translation>
+        <translation>Algoritma enkripsi tidak didukung</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>Nicht unterstützte KeePass-Datenbankversion.</translation>
+        <translation>Versi Basis data KeePass tidak didukung</translation>
     </message>
     <message>
         <source>Root</source>
-        <translation>Root</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>KeePass2Reader</name>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Keine KeePass-Datenbank.</translation>
+        <translation>Bukan basis data KeePass</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>Nicht unterstützte KeePass-Datenbankversion.</translation>
+        <translation>Versi basis data KeePass tidak didukung</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
-        <translation>Falscher Schlüssel oder die Datei ist beschädigt.</translation>
+        <translation>Kunci salah atau berkas basis data korup.</translation>
     </message>
 </context>
 <context>
     <name>Main</name>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
-        <translation>Fataler Fehler beim Testen der kryptografischen Funktionen.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>KeePassX - Error</source>
-        <translation>KeePassX - Fehler</translation>
+        <translation>KeePassX - Galat</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>Database</source>
-        <translation>Datenbank</translation>
+        <translation>Basis data</translation>
     </message>
     <message>
         <source>Recent databases</source>
-        <translation>Aktuelle Datenbanken</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Help</source>
-        <translation>Hilfe</translation>
+        <translation>Bantuan</translation>
     </message>
     <message>
         <source>Entries</source>
-        <translation>Einträge</translation>
+        <translation>Entri</translation>
     </message>
     <message>
         <source>Copy attribute to clipboard</source>
-        <translation>Eingenschaft in die Zwischenablage kopieren</translation>
+        <translation>Salin atribut ke papan klip</translation>
     </message>
     <message>
         <source>Groups</source>
-        <translation>Gruppen</translation>
+        <translation>Grup</translation>
     </message>
     <message>
         <source>Extras</source>
-        <translation>Extras</translation>
+        <translation>Ekstra</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Ansicht</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Quit</source>
-        <translation>Beenden</translation>
+        <translation>Keluar</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>Über</translation>
+        <translation>Tentang</translation>
     </message>
     <message>
         <source>Open database</source>
-        <translation>Datenbank öffnen</translation>
+        <translation>Buka basis data</translation>
     </message>
     <message>
         <source>Save database</source>
-        <translation>Datenbank speichern</translation>
+        <translation>Simpan basis data</translation>
     </message>
     <message>
         <source>Close database</source>
-        <translation>Datenbank schließen</translation>
+        <translation>Tutup basis data</translation>
     </message>
     <message>
         <source>New database</source>
-        <translation>Neue Datenbank</translation>
+        <translation>Basis data baru</translation>
     </message>
     <message>
         <source>Add new entry</source>
-        <translation>Neuen Eintrag hinzufügen</translation>
+        <translation>Tambah entri baru</translation>
     </message>
     <message>
         <source>View/Edit entry</source>
-        <translation>Eintrag anzeigen/bearbeiten</translation>
+        <translation>Tampil/Sunting entri</translation>
     </message>
     <message>
         <source>Delete entry</source>
-        <translation>Eintrag löschen</translation>
+        <translation>Hapus entri</translation>
     </message>
     <message>
         <source>Add new group</source>
-        <translation>Neue Gruppe hinzufügen</translation>
+        <translation>Tambah grup baru</translation>
     </message>
     <message>
         <source>Edit group</source>
-        <translation>Gruppe bearbeiten</translation>
+        <translation>Sunting grup</translation>
     </message>
     <message>
         <source>Delete group</source>
-        <translation>Gruppe löschen</translation>
+        <translation>Hapus grup</translation>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Datenbank speichern als</translation>
+        <translation>Simpan basis data sebagai</translation>
     </message>
     <message>
         <source>Change master key</source>
-        <translation>Hauptschlüssel ändern</translation>
+        <translation>Ubah kunci utama</translation>
     </message>
     <message>
         <source>Database settings</source>
-        <translation>Datenbankeinstellungen</translation>
+        <translation>Pengaturan basis data</translation>
     </message>
     <message>
         <source>Import KeePass 1 database</source>
-        <translation>KeePass 1 Datenbank importieren</translation>
+        <translation>Impor basis data KeePass 1</translation>
     </message>
     <message>
         <source>Clone entry</source>
-        <translation>Eintrag klonen</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Find</source>
-        <translation>Suchen</translation>
+        <translation>Temukan</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Benutzername</translation>
+        <translation>Nama pengguna</translation>
     </message>
     <message>
         <source>Copy username to clipboard</source>
-        <translation>Benutzername in die Zwischenablage kopieren</translation>
+        <translation>Salin nama pengguna ke papan klip</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Passwort</translation>
+        <translation>Kata sandi</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
-        <translation>Passwort in die Zwischenablage kopieren</translation>
+        <translation>Salin kata sandi ke papan klip</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Einstellungen</translation>
+        <translation>Pengaturan</translation>
     </message>
     <message>
         <source>Perform Auto-Type</source>
-        <translation>Auto-Type ausführen</translation>
+        <translation>Melakukan Ketik-Otomatis</translation>
     </message>
     <message>
         <source>Open URL</source>
-        <translation>URL öffnen</translation>
+        <translation>Buka URL</translation>
     </message>
     <message>
         <source>Lock databases</source>
-        <translation>Datenbank sperren</translation>
+        <translation>Kunci basis data</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Titel</translation>
+        <translation>Judul</translation>
     </message>
     <message>
         <source>URL</source>
@@ -898,307 +899,307 @@ Save changes?</source>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Notizen</translation>
+        <translation>Catatan</translation>
     </message>
     <message>
         <source>Show toolbar</source>
-        <translation>Symbolleiste anzeigen</translation>
+        <translation>Tampilkan bilah alat</translation>
     </message>
     <message>
         <source>read-only</source>
-        <translation>Nur Lesezugriff</translation>
+        <translation>hanya-baca</translation>
     </message>
     <message>
         <source>Toggle window</source>
-        <translation>Fenster zeigen/verstecken</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>PasswordGeneratorWidget</name>
     <message>
         <source>Password:</source>
-        <translation>Passwort:</translation>
+        <translation>Kata sandi:</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Länge:</translation>
+        <translation>Panjang:</translation>
     </message>
     <message>
         <source>Character Types</source>
-        <translation>Zeichenarten</translation>
+        <translation>Tipe karakter</translation>
     </message>
     <message>
         <source>Upper Case Letters</source>
-        <translation>Großbuchstaben</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Lower Case Letters</source>
-        <translation>Kleinbuchstaben</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Numbers</source>
-        <translation>Zahlen</translation>
+        <translation>Angka</translation>
     </message>
     <message>
         <source>Special Characters</source>
-        <translation>Sonderzeichen</translation>
+        <translation>Karakter Spesial</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
-        <translation>Gleich aussehende Zeichen ausschließen</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Ensure that the password contains characters from every group</source>
-        <translation>Sicher stellen, dass das Passwort Zeichen aller Gruppen enthält</translation>
+        <translation>Pastikan kata sandi berisi karakter dari setiap grup</translation>
     </message>
     <message>
         <source>Accept</source>
-        <translation>Akzeptieren</translation>
+        <translation>Terima</translation>
     </message>
 </context>
 <context>
     <name>QCommandLineParser</name>
     <message>
         <source>Displays version information.</source>
-        <translation>Versionsinformationen anzeigen.</translation>
+        <translation>Tampilkan informasi versi</translation>
     </message>
     <message>
         <source>Displays this help.</source>
-        <translation>Zeigt diese Hilfe an.</translation>
+        <translation>Tampilkan bantuan ini</translation>
     </message>
     <message>
         <source>Unknown option &apos;%1&apos;.</source>
-        <translation>Unbekannte Option &apos;%1&apos;.</translation>
+        <translation>Opsi tidak diketahui &apos;%1&apos;.</translation>
     </message>
     <message>
         <source>Unknown options: %1.</source>
-        <translation>Unbekannte Optionen: &apos;%1&apos;.</translation>
+        <translation>Opsi tidak diketahui: %1.</translation>
     </message>
     <message>
         <source>Missing value after &apos;%1&apos;.</source>
-        <translation>Fehlender Wert nach &apos;%1&apos;.</translation>
+        <translation>Nilai hilang setelah &apos;%1&apos;.</translation>
     </message>
     <message>
         <source>Unexpected value after &apos;%1&apos;.</source>
-        <translation>Unerwarteter Wert nach &apos;%1&apos;.</translation>
+        <translation>Nilai tidak terduga setelah &apos;%1&apos;.</translation>
     </message>
     <message>
         <source>[options]</source>
-        <translation>[Optionen]</translation>
+        <translation>[opsi]</translation>
     </message>
     <message>
         <source>Usage: %1</source>
-        <translation>Verwendung: %1</translation>
+        <translation>Penggunaan: %1</translation>
     </message>
     <message>
         <source>Options:</source>
-        <translation>Optionen:</translation>
+        <translation>Opsi:</translation>
     </message>
     <message>
         <source>Arguments:</source>
-        <translation>Argumente:</translation>
+        <translation>Argumen</translation>
     </message>
 </context>
 <context>
     <name>QSaveFile</name>
     <message>
         <source>Existing file %1 is not writable</source>
-        <translation>Bestehende Datei(en) %1 ist nicht schreibbar</translation>
+        <translation>Berkas yang ada %1 tidak dapat ditulis</translation>
     </message>
     <message>
         <source>Writing canceled by application</source>
-        <translation>Schreiben von der Applikation abgebrochen</translation>
+        <translation>Menulis dibatalkan oleh aplikasi</translation>
     </message>
     <message>
         <source>Partial write. Partition full?</source>
-        <translation>Unvollständiger Schreibvorgang. Partition voll?</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
-        <translation>Interner Fehler in zlib beim komprimieren:</translation>
+        <translation>Galat zlib internal ketika mengkompress: </translation>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>Fehler beim Schreiben auf das zugrunde liegende Gerät: </translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>Fehler beim Öffnen des zugrunde liegenden Gerätes: </translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation>Fehler beim Lesen von Daten auf dem zugrunde liegenden Gerät: </translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation>Interner Fehler in zlib beim dekomprimieren:</translation>
+        <translation>Galat zlib internal ketika dekompress</translation>
     </message>
 </context>
 <context>
     <name>QtIOCompressor::open</name>
     <message>
         <source>The gzip format not supported in this version of zlib.</source>
-        <translation>Das gzip-Format wird von dieser zlib Version nicht unterstützt.</translation>
+        <translation>Format gzip tidak didukung pada versi zlib ini.</translation>
     </message>
     <message>
         <source>Internal zlib error: </source>
-        <translation>Interner Fehler in zlib:</translation>
+        <translation>Galat zlib internal:</translation>
     </message>
 </context>
 <context>
     <name>SearchWidget</name>
     <message>
         <source>Find:</source>
-        <translation>Suchen nach:</translation>
+        <translation>Temukan:</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation>Groß-/Kleinschreibung unterscheiden</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Current group</source>
-        <translation>Aktuelle Gruppe</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Root group</source>
-        <translation>Root-Gruppe</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>SettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>Anwendungseinstellungen</translation>
+        <translation>Pengaturan Aplikasi</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Allgemein</translation>
+        <translation>Umum</translation>
     </message>
     <message>
         <source>Security</source>
-        <translation>Sicherheit</translation>
+        <translation>Keamanan</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidgetGeneral</name>
     <message>
         <source>Remember last databases</source>
-        <translation>Letzte Datenbank merken</translation>
+        <translation>Ingat basis data terakhir</translation>
     </message>
     <message>
         <source>Open previous databases on startup</source>
-        <translation>Letzte Datenbank beim Starten öffnen</translation>
+        <translation>Buka basis data sebelumnya saat mulai</translation>
     </message>
     <message>
         <source>Mark as modified on expanded state changes</source>
-        <translation>Als erweiterte Zustandsänderungen makieren</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Automatically save on exit</source>
-        <translation>Automatisch speichern beim Schließen</translation>
+        <translation>Otomatis simpan ketika keluar</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation>Automatisch nach jeder Änderung speichern</translation>
+        <translation>Otomatis simpan setelah setiap perubahan</translation>
     </message>
     <message>
         <source>Minimize when copying to clipboard</source>
-        <translation>Minimieren beim Kopieren in die Zwischenablage</translation>
+        <translation>Kecilkan ketika menyalin ke papan klip</translation>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
-        <translation>Gruppensymbol für das Erstellen neuer Einträge verwenden</translation>
+        <translation>Gunakan ikon grup pada pembuatan entri</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut</source>
-        <translation>Globale Tastenkombination für Auto-Type</translation>
+        <translation>Jalan pintas global Ketik-Otomatis</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global auto-type</source>
-        <translation>Verwende den Eintragstitel für entsprechende Fenster für den globale Auto-Typ</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Language</source>
-        <translation>Sprache</translation>
+        <translation>Bahasa</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>Taskleistensymbol anzeigen</translation>
+        <translation>Tampilkan sebuah ikon baki sistem</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation>Fenster verstecken wenn minimiert</translation>
+        <translation>Sembunyikan jendela ke baki sistem ketika dikecilkan</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>
     <message>
         <source>Clear clipboard after</source>
-        <translation>Zwischenablage leeren nach</translation>
+        <translation>Bersihkan papan klip setelaj</translation>
     </message>
     <message>
         <source> sec</source>
-        <translation> sek</translation>
+        <translation>det</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
-        <translation>Datenbank sperren nach einer Inaktivität von</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Show passwords in cleartext by default</source>
-        <translation>Passwort standartmäßig in Klartext anzeigen</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Always ask before performing auto-type</source>
-        <translation>Immer vor einem Auto-type fragen</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>UnlockDatabaseWidget</name>
     <message>
         <source>Unlock database</source>
-        <translation>Datenbank entsperren</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Error</source>
-        <translation>Fehler</translation>
+        <translation>Galat</translation>
     </message>
     <message>
         <source>Wrong key.</source>
-        <translation>Falscher Schlüssel.</translation>
+        <translation>Kunci salah.</translation>
     </message>
 </context>
 <context>
     <name>WelcomeWidget</name>
     <message>
         <source>Welcome!</source>
-        <translation>Willkommen!</translation>
+        <translation>Selamat Datang.</translation>
     </message>
 </context>
 <context>
     <name>main</name>
     <message>
         <source>KeePassX - cross-platform password manager</source>
-        <translation>KeePassX - plattformübergreifender Passwortmanager</translation>
+        <translation>KeePassX - manajer kata sandi cross-platform</translation>
     </message>
     <message>
         <source>filename of the password database to open (*.kdbx)</source>
-        <translation>Dateiname für die zu öffnende Passwortdatenbank (*.kdbx)</translation>
+        <translation>nama berkasi dari basis data kata sandi untuk dibuka (*.kdbx)</translation>
     </message>
     <message>
         <source>path to a custom config file</source>
-        <translation>Pfad zu einer benutzerdefinierten Konfigurationsdatei</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>password of the database (DANGEROUS!)</source>
-        <translation>Passwort der Datenbank (GEFÄHRLICH!)</translation>
+        <translation>kata sandi dari basis data (BERBAHAYA!)</translation>
     </message>
     <message>
         <source>key file of the database</source>
-        <translation>Schlüsseldatei der Datenbank</translation>
+        <translation>berkas kunci dari basis data</translation>
     </message>
 </context>
 </TS>

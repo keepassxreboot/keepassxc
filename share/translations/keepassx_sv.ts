@@ -17,8 +17,8 @@
         <translation>Auto-skriv - KeePassX</translation>
     </message>
     <message>
-        <source>Couldn&apos;t find an entry that matches the window title.</source>
-        <translation>Kunde inte hitta en post som matchar fönstertiteln.</translation>
+        <source>Couldn&apos;t find an entry that matches the window title:</source>
+        <translation>Kunde inte hitta en post som matchar fönstertiteln:</translation>
     </message>
 </context>
 <context>
@@ -741,6 +741,17 @@ Spara ändringarna?</translation>
     </message>
 </context>
 <context>
+    <name>Main</name>
+    <message>
+        <source>Fatal error while testing the cryptographic functions.</source>
+        <translation>Allvarligt fel vid testning av kryptografiska funktioner.</translation>
+    </message>
+    <message>
+        <source>KeePassX - Error</source>
+        <translation>KeePassX - Fel</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Database</source>
@@ -897,6 +908,10 @@ Spara ändringarna?</translation>
     <message>
         <source>read-only</source>
         <translation>läs bara</translation>
+    </message>
+    <message>
+        <source>Toggle window</source>
+        <translation>Visa/dölj fönster</translation>
     </message>
 </context>
 <context>
@@ -1105,6 +1120,18 @@ Spara ändringarna?</translation>
     <message>
         <source>Use entry title to match windows for global auto-type</source>
         <translation>Använda postens titel till matchning med fönster för globalt auto-skriv</translation>
+    </message>
+    <message>
+        <source>Language</source>
+        <translation>Språk</translation>
+    </message>
+    <message>
+        <source>Show a system tray icon</source>
+        <translation>Visa statusfält ikon</translation>
+    </message>
+    <message>
+        <source>Hide window to system tray when minimized</source>
+        <translation>Vid minimering, minimera fönstret till systemfältet</translation>
     </message>
 </context>
 <context>

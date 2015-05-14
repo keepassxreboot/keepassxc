@@ -1,183 +1,183 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="de" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="da" version="2.0">
 <context>
     <name>AboutDialog</name>
     <message>
         <source>About KeePassX</source>
-        <translation>Über KeePassX</translation>
+        <translation>Om KeePassX</translation>
     </message>
     <message>
         <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassX ist unter der GNU General Public License (GPL) version 2 (version 3) veröffentlicht.</translation>
+        <translation>KeePassX distribueres under betingelserne i GNU General Public License (GPL) version 2 eller (efter eget valg) version 3.</translation>
     </message>
 </context>
 <context>
     <name>AutoType</name>
     <message>
         <source>Auto-Type - KeePassX</source>
-        <translation>Auto-Type - KeePassX</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation>Konnte keinen Eintrag finden, welcher mit dem Fenstertitel übereinstimmt:</translation>
+        <translation>Kunne ikke finde en post, der matcher vinduets titel:</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeAssociationsModel</name>
     <message>
         <source>Window</source>
-        <translation>Fenster</translation>
+        <translation>Vindue</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Reihenfolge</translation>
+        <translation>Sekvens</translation>
     </message>
     <message>
         <source>Default sequence</source>
-        <translation>Standardreihenfolge</translation>
+        <translation>Standardsekvens</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassX</source>
-        <translation>Auto-Type - KeePassX</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>Wählen Sie einen Eintrag für Auto-Type:</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>ChangeMasterKeyWidget</name>
     <message>
         <source>Password</source>
-        <translation>Passwort</translation>
+        <translation>Adgangskode</translation>
     </message>
     <message>
         <source>Enter password:</source>
-        <translation>Passwort eingeben:</translation>
+        <translation>Indtast adgangskode</translation>
     </message>
     <message>
         <source>Repeat password:</source>
-        <translation>Passwort wiederholen:</translation>
+        <translation>Gentag adgangskode</translation>
     </message>
     <message>
         <source>Key file</source>
-        <translation>Schlüsseldatei</translation>
+        <translation>Nøglefil</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Durchsuchen</translation>
+        <translation>Gennemse</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Erstellen</translation>
+        <translation>Opret</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Schlüsseldateien</translation>
+        <translation>Nøglefiler</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Alle Dateien</translation>
+        <translation>Alle filer</translation>
     </message>
     <message>
         <source>Create Key File...</source>
-        <translation>Erzeuge eine Schlüsseldatei...</translation>
+        <translation>Opret Nøglefil...</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Fehler</translation>
+        <translation>Fejl</translation>
     </message>
     <message>
         <source>Unable to create Key File : </source>
-        <translation>Erzeugen der Schlüsseldatei nicht möglich:</translation>
+        <translation>Kan ikke oprette Nøglefil :</translation>
     </message>
     <message>
         <source>Select a key file</source>
-        <translation>Schlüsseldatei auswählen</translation>
+        <translation>Vælg en nøglefil</translation>
     </message>
     <message>
         <source>Question</source>
-        <translation>Frage</translation>
+        <translation>Spørgsmål</translation>
     </message>
     <message>
         <source>Do you really want to use an empty string as password?</source>
-        <translation>Wollen Sie wirklich eine leere Zeichenkette als Passwort verwenden?</translation>
+        <translation>Vil du virkelig bruge en tom streng som adgangskode?</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Unterschiedliche Passwörter eingegeben.</translation>
+        <translation>Andre adgangskoder leveret.</translation>
     </message>
 </context>
 <context>
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Enter master key</source>
-        <translation>Hauptschlüssel eingeben</translation>
+        <translation>Indtast primærnøgle</translation>
     </message>
     <message>
         <source>Key File:</source>
-        <translation>Schlüsseldatei:</translation>
+        <translation>Nøglefil:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Passwort:</translation>
+        <translation>Adgangskode:</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Durchsuchen</translation>
+        <translation>Gennemse</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Fehler</translation>
+        <translation>Fejl</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Öffnen der Datenbank nicht möglich.</translation>
+        <translation>Kan ikke åbne databasen.</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>Schlüsseldatei kann nicht geöffnet werden</translation>
+        <translation>Kan ikke åbne nøglefil</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Alle Dateien</translation>
+        <translation>Alle filer</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Schlüsseldateien</translation>
+        <translation>Nøglefiler</translation>
     </message>
     <message>
         <source>Select key file</source>
-        <translation>Schlüsseldatei auswählen</translation>
+        <translation>Vælg nøglefil</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidget</name>
     <message>
         <source>Database name:</source>
-        <translation>Datenbankname:</translation>
+        <translation>Databasenavn:</translation>
     </message>
     <message>
         <source>Database description:</source>
-        <translation>Datenbankbeschreibung:</translation>
+        <translation>Beskrivelse af database:</translation>
     </message>
     <message>
         <source>Transform rounds:</source>
-        <translation>Verschlüsselungsdurchläufe:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Default username:</source>
-        <translation>Standardbenutzername:</translation>
+        <translation>Standard brugernavn:</translation>
     </message>
     <message>
         <source>Use recycle bin:</source>
-        <translation>Verwende Papierkorb:</translation>
+        <translation>Brug skraldespand:</translation>
     </message>
     <message>
         <source> MiB</source>
-        <translation> MiB</translation>
+        <translation>MB</translation>
     </message>
     <message>
         <source>Benchmark</source>
@@ -185,259 +185,257 @@
     </message>
     <message>
         <source>Max. history items:</source>
-        <translation>Max. Einträge im Verlauf:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Max. history size:</source>
-        <translation>Max. Verlaufsgröße:</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>DatabaseTabWidget</name>
     <message>
         <source>Root</source>
-        <translation>Root</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>KeePass 2 Datenbank</translation>
+        <translation>KeePass 2 Database</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Alle Dateien</translation>
+        <translation>Alle filer</translation>
     </message>
     <message>
         <source>Open database</source>
-        <translation>Datenbank öffnen</translation>
+        <translation>Åben database</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation>Warnung</translation>
+        <translation>Advarsel</translation>
     </message>
     <message>
         <source>File not found!</source>
-        <translation>Datei nicht gefunden!</translation>
+        <translation>Filen blev ikke fundet!</translation>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
-        <translation>KeePass 1 Datenbank öffnen</translation>
+        <translation>Åben KeePass 1 database</translation>
     </message>
     <message>
         <source>KeePass 1 database</source>
-        <translation>KeePass 1 Datenbank</translation>
+        <translation>KeePass 1 database</translation>
     </message>
     <message>
         <source>All files (*)</source>
-        <translation>Alle Dateien (*)</translation>
+        <translation>Alle filer (*)</translation>
     </message>
     <message>
         <source>Close?</source>
-        <translation>Schließen?</translation>
+        <translation>Luk?</translation>
     </message>
     <message>
         <source>&quot;%1&quot; is in edit mode.
 Close anyway?</source>
-        <translation>&quot;%1&quot; wird bearbeitet.
-Trotzdem schließen?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Save changes?</source>
-        <translation>Änderungen speichern?</translation>
+        <translation>Gem ændringer?</translation>
     </message>
     <message>
         <source>&quot;%1&quot; was modified.
 Save changes?</source>
-        <translation>&quot;%1&quot; wurde geändert.
-Änderungen speichern?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Error</source>
-        <translation>Fehler</translation>
+        <translation>Fejl</translation>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation>Schreiben der Datenbank fehlgeschlagen.</translation>
+        <translation>Kan ikke skrive til databasen.</translation>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Datenbank speichern unter</translation>
+        <translation>Gem database som</translation>
     </message>
     <message>
         <source>New database</source>
-        <translation>Neue Datenbank</translation>
+        <translation>Ny database</translation>
     </message>
     <message>
         <source>locked</source>
-        <translation>gesperrt</translation>
+        <translation>låst</translation>
     </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
     <message>
         <source>Change master key</source>
-        <translation>Hauptschlüssel ändern</translation>
+        <translation>Skift primærnøgle</translation>
     </message>
     <message>
         <source>Delete entry?</source>
-        <translation>Eintrag löschen?</translation>
+        <translation>Slet post?</translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>Wollen Sie den Eintrag &quot;%1&quot; wirklich löschen?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Delete entries?</source>
-        <translation>Einträge löschen?</translation>
+        <translation>Slet poster?</translation>
     </message>
     <message>
         <source>Do you really want to delete %1 entries for good?</source>
-        <translation>Wollen Sie die Einträge &quot;%1&quot; wirklich löschen?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Move entries to recycle bin?</source>
-        <translation>Einträge in den Papierkorb verschieben?</translation>
+        <translation>Flyt poster til skraldespanden?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Wollen Sie wirklich %n Eintrag in den Papierkorb verschieben?</numerusform><numerusform>Wollen Sie wirklich %n Einträge in den Papierkorb verschieben?</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Delete group?</source>
-        <translation>Gruppe löschen?</translation>
+        <translation>Slet gruppe?</translation>
     </message>
     <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>Wollen Sie die Gruppe &quot;%1&quot; wirklich löschen?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Current group</source>
-        <translation>Aktuelle Gruppe</translation>
+        <translation>Nuværende gruppe</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
     <message>
         <source>Entry</source>
-        <translation>Eintrag</translation>
+        <translation>Post</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Fortgeschritten</translation>
+        <translation>Avanceret</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Symbol</translation>
+        <translation>Ikon</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-Type</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Eigenschaften</translation>
+        <translation>Egenskaber</translation>
     </message>
     <message>
         <source>History</source>
-        <translation>Verlauf</translation>
+        <translation>Historik</translation>
     </message>
     <message>
         <source>Entry history</source>
-        <translation>Eintragsverlauf</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Add entry</source>
-        <translation>Eintrag hinzufügen</translation>
+        <translation>Tilføj post</translation>
     </message>
     <message>
         <source>Edit entry</source>
-        <translation>Eintrag bearbeiten</translation>
+        <translation>Rediger post</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Fehler</translation>
+        <translation>Fejl</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Unterschiedliche Passwörter eingegeben.</translation>
+        <translation>Andre adgangskoder leveret.</translation>
     </message>
     <message>
         <source>New attribute</source>
-        <translation>Neue Eigenschaft</translation>
+        <translation>Ny attribut</translation>
     </message>
     <message>
         <source>Select file</source>
-        <translation>Datei wählen</translation>
+        <translation>Vælg fil</translation>
     </message>
     <message>
         <source>Unable to open file</source>
-        <translation>Öffnen der Datei nicht möglich</translation>
+        <translation>Filen kan ikke åbnes</translation>
     </message>
     <message>
         <source>Save attachment</source>
-        <translation>Anhang speichern</translation>
+        <translation>Gem vedhæftning</translation>
     </message>
     <message>
         <source>Unable to save the attachment:
 </source>
-        <translation>Speichern des Anhangs nicht möglich:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Tomorrow</source>
-        <translation>Morgen</translation>
+        <translation>I morgen</translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n Woche</numerusform><numerusform>%n Wochen</numerusform></translation>
+        <translation><numerusform>%n uge</numerusform><numerusform>%n uger</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n Monat</numerusform><numerusform>%n Monaten</numerusform></translation>
+        <translation><numerusform>%n måned</numerusform><numerusform>%n måneder</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
-        <translation>1 Jahr</translation>
+        <translation>Et år</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
     <message>
         <source>Additional attributes</source>
-        <translation>Zusätzliche Eigenschaften</translation>
+        <translation>Yderligere attributter</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>Hinzufügen</translation>
+        <translation>Tilføj</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Bearbeiten</translation>
+        <translation>Rediger</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Entfernen</translation>
+        <translation>Fjern</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Anhänge</translation>
+        <translation>Vedhæftninger</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Speichern</translation>
+        <translation>Gem</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation>Auto-Type für diesen Eintrag aktivieren</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the group</source>
-        <translation>Standard-Auto-Type-Sequenz von der Gruppe erben</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Use custom Auto-Type sequence:</source>
-        <translation>Benutzerdefinierte Auto-Type-Sequenz benutzen:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>+</source>
@@ -449,34 +447,34 @@ Save changes?</source>
     </message>
     <message>
         <source>Window title:</source>
-        <translation>Fenstertitel:</translation>
+        <translation>Vinduestitel:</translation>
     </message>
     <message>
         <source>Use default sequence</source>
-        <translation>Standardsequenz benutzen</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Set custom sequence:</source>
-        <translation>Benutzerdefinierte Sequenz verwenden:</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
     <message>
         <source>Show</source>
-        <translation>Anzeigen</translation>
+        <translation>Vis</translation>
     </message>
     <message>
         <source>Restore</source>
-        <translation>Wiederherstellen</translation>
+        <translation>Gendan</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Löschen</translation>
+        <translation>Slet</translation>
     </message>
     <message>
         <source>Delete all</source>
-        <translation>Alle löschen</translation>
+        <translation>Slet alle</translation>
     </message>
 </context>
 <context>
@@ -487,19 +485,19 @@ Save changes?</source>
     </message>
     <message>
         <source>Username:</source>
-        <translation>Benutzername:</translation>
+        <translation>Brugernavn:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Passwort:</translation>
+        <translation>Adgangskode:</translation>
     </message>
     <message>
         <source>Repeat:</source>
-        <translation>Wiederholen:</translation>
+        <translation>Gentag:</translation>
     </message>
     <message>
         <source>Gen.</source>
-        <translation>Gen.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>URL:</source>
@@ -507,15 +505,15 @@ Save changes?</source>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Erlischt</translation>
+        <translation>Udløber</translation>
     </message>
     <message>
         <source>Presets</source>
-        <translation>Vorgaben</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Notes:</source>
-        <translation>Notizen:</translation>
+        <translation>Noter:</translation>
     </message>
 </context>
 <context>
@@ -526,108 +524,108 @@ Save changes?</source>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Symbol</translation>
+        <translation>Ikon</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Eigenschaften</translation>
+        <translation>Egenskaber</translation>
     </message>
     <message>
         <source>Add group</source>
-        <translation>Gruppe hinzufügen</translation>
+        <translation>Tilføj gruppe</translation>
     </message>
     <message>
         <source>Edit group</source>
-        <translation>Gruppe bearbeiten</translation>
+        <translation>Rediger gruppe</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation>Aktivieren</translation>
+        <translation>Aktiver</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Deaktivieren</translation>
+        <translation>Deaktivér</translation>
     </message>
     <message>
         <source>Inherit from parent group (%1)</source>
-        <translation>Von der übergeordneten Gruppe (%1) erben</translation>
+        <translation>Arv fra forældregruppe (%1)</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
     <message>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation>Navn</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Notizen</translation>
+        <translation>Noter</translation>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Erlischt</translation>
+        <translation>Udløber</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Suche</translation>
+        <translation>Søg</translation>
     </message>
     <message>
         <source>Auto-type</source>
-        <translation>Auto-type</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
     <message>
         <source>Use default icon</source>
-        <translation>Standardsymbol verwenden</translation>
+        <translation>Brug standardikon</translation>
     </message>
     <message>
         <source>Use custom icon</source>
-        <translation>Benutzerdefiniertes Symbol verwenden</translation>
+        <translation>Brug brugerbestemt ikon</translation>
     </message>
     <message>
         <source>Add custom icon</source>
-        <translation>Benutzerdefiniertes Symbol hinzufügen</translation>
+        <translation>Tilføj brugerbestemt ikon</translation>
     </message>
     <message>
         <source>Delete custom icon</source>
-        <translation>Benutzerdefiniertes Symbol löschen</translation>
+        <translation>Slet brugerbestemt ikon</translation>
     </message>
     <message>
         <source>Images</source>
-        <translation>Bilder</translation>
+        <translation>Billeder</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Alle Dateien</translation>
+        <translation>Alle filer</translation>
     </message>
     <message>
         <source>Select Image</source>
-        <translation>Bild auswählen</translation>
+        <translation>Vælg Billede</translation>
     </message>
     <message>
         <source>Can&apos;t delete icon!</source>
-        <translation>Symbol kann nicht gelöscht werden!</translation>
+        <translation>Kan ikke slette ikon!</translation>
     </message>
     <message numerus="yes">
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
-        <translation><numerusform>Symbol kann nicht gelöscht werden. Es wird von %n Eintrag verwendet.</numerusform><numerusform>Symbol kann nicht gelöscht werden. Es wird von %n Einträgen verwendet.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
     <message>
         <source>Created:</source>
-        <translation>Erstellt:</translation>
+        <translation>Oprettet:</translation>
     </message>
     <message>
         <source>Modified:</source>
-        <translation>Bearbeitet:</translation>
+        <translation>Ændret:</translation>
     </message>
     <message>
         <source>Accessed:</source>
-        <translation>Zugegriffen:</translation>
+        <translation>Tilgået:</translation>
     </message>
     <message>
         <source>Uuid:</source>
@@ -638,14 +636,14 @@ Save changes?</source>
     <name>EntryAttributesModel</name>
     <message>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation>Navn</translation>
     </message>
 </context>
 <context>
     <name>EntryHistoryModel</name>
     <message>
         <source>Last modified</source>
-        <translation>Zuletzt geändert</translation>
+        <translation>Sidst ændret</translation>
     </message>
     <message>
         <source>Title</source>
@@ -653,7 +651,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Username</source>
-        <translation>Benutzername</translation>
+        <translation>Brugernavn</translation>
     </message>
     <message>
         <source>URL</source>
@@ -672,7 +670,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Username</source>
-        <translation>Benutzername</translation>
+        <translation>Brugernavn</translation>
     </message>
     <message>
         <source>URL</source>
@@ -683,210 +681,210 @@ Save changes?</source>
     <name>Group</name>
     <message>
         <source>Recycle Bin</source>
-        <translation>Papierkorb</translation>
+        <translation>Skraldespand</translation>
     </message>
 </context>
 <context>
     <name>KeePass1OpenWidget</name>
     <message>
         <source>Import KeePass1 database</source>
-        <translation>KeePass 1 Datenbank importieren</translation>
+        <translation>Importér KeePass1 database</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Fehler</translation>
+        <translation>Fejl</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Öffnen der Datenbank nicht möglich.</translation>
+        <translation>Kan ikke åbne databasen.</translation>
     </message>
 </context>
 <context>
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
-        <translation>Lesen der Schlüsseldatei nicht möglich.</translation>
+        <translation>Kan ikke indlæse nøglefil.</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Keine KeePass-Datenbank.</translation>
+        <translation>Ikke en KeePass database.</translation>
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
-        <translation>Nicht unterstützter Verschlüsselungsalgorithmus.</translation>
+        <translation>Ikke understøttet krypteringsalgoritme</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>Nicht unterstützte KeePass-Datenbankversion.</translation>
+        <translation>Ikke understøttet KeePass database version</translation>
     </message>
     <message>
         <source>Root</source>
-        <translation>Root</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>KeePass2Reader</name>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Keine KeePass-Datenbank.</translation>
+        <translation>Det er ikke en KeePass database.</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>Nicht unterstützte KeePass-Datenbankversion.</translation>
+        <translation>KeePass database version ikke understøttet.</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
-        <translation>Falscher Schlüssel oder die Datei ist beschädigt.</translation>
+        <translation>Forkert nøgle eller databasefil er korrupt.</translation>
     </message>
 </context>
 <context>
     <name>Main</name>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
-        <translation>Fataler Fehler beim Testen der kryptografischen Funktionen.</translation>
+        <translation>Fatal fejl ved test af kryptografiske funktioner.</translation>
     </message>
     <message>
         <source>KeePassX - Error</source>
-        <translation>KeePassX - Fehler</translation>
+        <translation>KeePassX - Fejl</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>Database</source>
-        <translation>Datenbank</translation>
+        <translation>Database</translation>
     </message>
     <message>
         <source>Recent databases</source>
-        <translation>Aktuelle Datenbanken</translation>
+        <translation>Seneste databaser</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation>Hilfe</translation>
+        <translation>Hjælp</translation>
     </message>
     <message>
         <source>Entries</source>
-        <translation>Einträge</translation>
+        <translation>Poster</translation>
     </message>
     <message>
         <source>Copy attribute to clipboard</source>
-        <translation>Eingenschaft in die Zwischenablage kopieren</translation>
+        <translation>Kopiér attribut til udklipsholder</translation>
     </message>
     <message>
         <source>Groups</source>
-        <translation>Gruppen</translation>
+        <translation>Grupper</translation>
     </message>
     <message>
         <source>Extras</source>
-        <translation>Extras</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>View</source>
-        <translation>Ansicht</translation>
+        <translation>Vis</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation>Beenden</translation>
+        <translation>Afslut</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>Über</translation>
+        <translation>Om</translation>
     </message>
     <message>
         <source>Open database</source>
-        <translation>Datenbank öffnen</translation>
+        <translation>Åben database</translation>
     </message>
     <message>
         <source>Save database</source>
-        <translation>Datenbank speichern</translation>
+        <translation>Gem database</translation>
     </message>
     <message>
         <source>Close database</source>
-        <translation>Datenbank schließen</translation>
+        <translation>Luk databasen</translation>
     </message>
     <message>
         <source>New database</source>
-        <translation>Neue Datenbank</translation>
+        <translation>Ny database</translation>
     </message>
     <message>
         <source>Add new entry</source>
-        <translation>Neuen Eintrag hinzufügen</translation>
+        <translation>Tilføj ny post</translation>
     </message>
     <message>
         <source>View/Edit entry</source>
-        <translation>Eintrag anzeigen/bearbeiten</translation>
+        <translation>Vis/Rediger post</translation>
     </message>
     <message>
         <source>Delete entry</source>
-        <translation>Eintrag löschen</translation>
+        <translation>Slet post</translation>
     </message>
     <message>
         <source>Add new group</source>
-        <translation>Neue Gruppe hinzufügen</translation>
+        <translation>Tilføj ny gruppe</translation>
     </message>
     <message>
         <source>Edit group</source>
-        <translation>Gruppe bearbeiten</translation>
+        <translation>Rediger gruppe</translation>
     </message>
     <message>
         <source>Delete group</source>
-        <translation>Gruppe löschen</translation>
+        <translation>Slet gruppe</translation>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Datenbank speichern als</translation>
+        <translation>Gem database som</translation>
     </message>
     <message>
         <source>Change master key</source>
-        <translation>Hauptschlüssel ändern</translation>
+        <translation>Skift primærnøgle</translation>
     </message>
     <message>
         <source>Database settings</source>
-        <translation>Datenbankeinstellungen</translation>
+        <translation>Databaseindstillinger</translation>
     </message>
     <message>
         <source>Import KeePass 1 database</source>
-        <translation>KeePass 1 Datenbank importieren</translation>
+        <translation>Importér KeePass 1 database</translation>
     </message>
     <message>
         <source>Clone entry</source>
-        <translation>Eintrag klonen</translation>
+        <translation>Klon post</translation>
     </message>
     <message>
         <source>Find</source>
-        <translation>Suchen</translation>
+        <translation>Find</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Benutzername</translation>
+        <translation>Brugernavn</translation>
     </message>
     <message>
         <source>Copy username to clipboard</source>
-        <translation>Benutzername in die Zwischenablage kopieren</translation>
+        <translation>Kopiér brugernavn til udklipsholder</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Passwort</translation>
+        <translation>Adgangskode</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
-        <translation>Passwort in die Zwischenablage kopieren</translation>
+        <translation>Kopiér adgangskode til udklipsholder</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Einstellungen</translation>
+        <translation>Indstillinger</translation>
     </message>
     <message>
         <source>Perform Auto-Type</source>
-        <translation>Auto-Type ausführen</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Open URL</source>
-        <translation>URL öffnen</translation>
+        <translation>Åben URL</translation>
     </message>
     <message>
         <source>Lock databases</source>
-        <translation>Datenbank sperren</translation>
+        <translation>Lås databaser</translation>
     </message>
     <message>
         <source>Title</source>
@@ -898,307 +896,307 @@ Save changes?</source>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Notizen</translation>
+        <translation>Noter</translation>
     </message>
     <message>
         <source>Show toolbar</source>
-        <translation>Symbolleiste anzeigen</translation>
+        <translation>Vis værktøjslinie</translation>
     </message>
     <message>
         <source>read-only</source>
-        <translation>Nur Lesezugriff</translation>
+        <translation>skrivebeskyttet</translation>
     </message>
     <message>
         <source>Toggle window</source>
-        <translation>Fenster zeigen/verstecken</translation>
+        <translation>Skift vindue</translation>
     </message>
 </context>
 <context>
     <name>PasswordGeneratorWidget</name>
     <message>
         <source>Password:</source>
-        <translation>Passwort:</translation>
+        <translation>Adgangskode:</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Länge:</translation>
+        <translation>Længde:</translation>
     </message>
     <message>
         <source>Character Types</source>
-        <translation>Zeichenarten</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Upper Case Letters</source>
-        <translation>Großbuchstaben</translation>
+        <translation>Store Bogstaver</translation>
     </message>
     <message>
         <source>Lower Case Letters</source>
-        <translation>Kleinbuchstaben</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Numbers</source>
-        <translation>Zahlen</translation>
+        <translation>Numre</translation>
     </message>
     <message>
         <source>Special Characters</source>
-        <translation>Sonderzeichen</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
-        <translation>Gleich aussehende Zeichen ausschließen</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Ensure that the password contains characters from every group</source>
-        <translation>Sicher stellen, dass das Passwort Zeichen aller Gruppen enthält</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Accept</source>
-        <translation>Akzeptieren</translation>
+        <translation>Acceptér</translation>
     </message>
 </context>
 <context>
     <name>QCommandLineParser</name>
     <message>
         <source>Displays version information.</source>
-        <translation>Versionsinformationen anzeigen.</translation>
+        <translation>Vis versionsinformation</translation>
     </message>
     <message>
         <source>Displays this help.</source>
-        <translation>Zeigt diese Hilfe an.</translation>
+        <translation>Vis denne hjælp.</translation>
     </message>
     <message>
         <source>Unknown option &apos;%1&apos;.</source>
-        <translation>Unbekannte Option &apos;%1&apos;.</translation>
+        <translation>Ukendt valgmulighed &apos;%1&apos;.</translation>
     </message>
     <message>
         <source>Unknown options: %1.</source>
-        <translation>Unbekannte Optionen: &apos;%1&apos;.</translation>
+        <translation>Ukendt valgmuligheder &apos;%1&apos;.</translation>
     </message>
     <message>
         <source>Missing value after &apos;%1&apos;.</source>
-        <translation>Fehlender Wert nach &apos;%1&apos;.</translation>
+        <translation>Manglende værdi efter &apos;%1&apos;.</translation>
     </message>
     <message>
         <source>Unexpected value after &apos;%1&apos;.</source>
-        <translation>Unerwarteter Wert nach &apos;%1&apos;.</translation>
+        <translation>Uventet værdi efter &apos;%1&apos;.</translation>
     </message>
     <message>
         <source>[options]</source>
-        <translation>[Optionen]</translation>
+        <translation>[Valgmuligheder]</translation>
     </message>
     <message>
         <source>Usage: %1</source>
-        <translation>Verwendung: %1</translation>
+        <translation>Brug: %1</translation>
     </message>
     <message>
         <source>Options:</source>
-        <translation>Optionen:</translation>
+        <translation>Muligheder:</translation>
     </message>
     <message>
         <source>Arguments:</source>
-        <translation>Argumente:</translation>
+        <translation>Argumenter:</translation>
     </message>
 </context>
 <context>
     <name>QSaveFile</name>
     <message>
         <source>Existing file %1 is not writable</source>
-        <translation>Bestehende Datei(en) %1 ist nicht schreibbar</translation>
+        <translation>Eksisterende fil %1 er ikke skrivbar</translation>
     </message>
     <message>
         <source>Writing canceled by application</source>
-        <translation>Schreiben von der Applikation abgebrochen</translation>
+        <translation>Skrivning afbrudt af programmet</translation>
     </message>
     <message>
         <source>Partial write. Partition full?</source>
-        <translation>Unvollständiger Schreibvorgang. Partition voll?</translation>
+        <translation>Delvis gemt. Diskafsnit fyldt op?</translation>
     </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
-        <translation>Interner Fehler in zlib beim komprimieren:</translation>
+        <translation>Intern zlib-fejl ved komprimering:</translation>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>Fehler beim Schreiben auf das zugrunde liegende Gerät: </translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>Fehler beim Öffnen des zugrunde liegenden Gerätes: </translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation>Fehler beim Lesen von Daten auf dem zugrunde liegenden Gerät: </translation>
+        <translation>Fejl ved læsning af data fra underliggende enhed:</translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation>Interner Fehler in zlib beim dekomprimieren:</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>QtIOCompressor::open</name>
     <message>
         <source>The gzip format not supported in this version of zlib.</source>
-        <translation>Das gzip-Format wird von dieser zlib Version nicht unterstützt.</translation>
+        <translation>Gzip-format understøttes ikke i denne version af zlib.</translation>
     </message>
     <message>
         <source>Internal zlib error: </source>
-        <translation>Interner Fehler in zlib:</translation>
+        <translation>Intern zlib fejl:</translation>
     </message>
 </context>
 <context>
     <name>SearchWidget</name>
     <message>
         <source>Find:</source>
-        <translation>Suchen nach:</translation>
+        <translation>Find:</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation>Groß-/Kleinschreibung unterscheiden</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Current group</source>
-        <translation>Aktuelle Gruppe</translation>
+        <translation>Nuværende gruppe</translation>
     </message>
     <message>
         <source>Root group</source>
-        <translation>Root-Gruppe</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>SettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>Anwendungseinstellungen</translation>
+        <translation>Programindstillinger</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Allgemein</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Security</source>
-        <translation>Sicherheit</translation>
+        <translation>Sikkerhed</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidgetGeneral</name>
     <message>
         <source>Remember last databases</source>
-        <translation>Letzte Datenbank merken</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Open previous databases on startup</source>
-        <translation>Letzte Datenbank beim Starten öffnen</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Mark as modified on expanded state changes</source>
-        <translation>Als erweiterte Zustandsänderungen makieren</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Automatically save on exit</source>
-        <translation>Automatisch speichern beim Schließen</translation>
+        <translation>Gem automatisk ved afslutning</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation>Automatisch nach jeder Änderung speichern</translation>
+        <translation>Gem automatisk ved ændringer</translation>
     </message>
     <message>
         <source>Minimize when copying to clipboard</source>
-        <translation>Minimieren beim Kopieren in die Zwischenablage</translation>
+        <translation>Minimér ved kopiering til udklipsholder</translation>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
-        <translation>Gruppensymbol für das Erstellen neuer Einträge verwenden</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Global Auto-Type shortcut</source>
-        <translation>Globale Tastenkombination für Auto-Type</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Use entry title to match windows for global auto-type</source>
-        <translation>Verwende den Eintragstitel für entsprechende Fenster für den globale Auto-Typ</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Language</source>
-        <translation>Sprache</translation>
+        <translation>Sprog</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>Taskleistensymbol anzeigen</translation>
+        <translation>Vis et ikon i systembakken</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation>Fenster verstecken wenn minimiert</translation>
+        <translation>Skjul vindue i systembakken når det er minimeret</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>
     <message>
         <source>Clear clipboard after</source>
-        <translation>Zwischenablage leeren nach</translation>
+        <translation>Ryd udklipsholder efter</translation>
     </message>
     <message>
         <source> sec</source>
-        <translation> sek</translation>
+        <translation>sek</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
-        <translation>Datenbank sperren nach einer Inaktivität von</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Show passwords in cleartext by default</source>
-        <translation>Passwort standartmäßig in Klartext anzeigen</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Always ask before performing auto-type</source>
-        <translation>Immer vor einem Auto-type fragen</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>UnlockDatabaseWidget</name>
     <message>
         <source>Unlock database</source>
-        <translation>Datenbank entsperren</translation>
+        <translation>Lås database op</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Fehler</translation>
+        <translation>Fejl</translation>
     </message>
     <message>
         <source>Wrong key.</source>
-        <translation>Falscher Schlüssel.</translation>
+        <translation>Forkert nøgle.</translation>
     </message>
 </context>
 <context>
     <name>WelcomeWidget</name>
     <message>
         <source>Welcome!</source>
-        <translation>Willkommen!</translation>
+        <translation>Velkommen!</translation>
     </message>
 </context>
 <context>
     <name>main</name>
     <message>
         <source>KeePassX - cross-platform password manager</source>
-        <translation>KeePassX - plattformübergreifender Passwortmanager</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>filename of the password database to open (*.kdbx)</source>
-        <translation>Dateiname für die zu öffnende Passwortdatenbank (*.kdbx)</translation>
+        <translation>filnavn på databasen der skal åbnes (* .kdbx)</translation>
     </message>
     <message>
         <source>path to a custom config file</source>
-        <translation>Pfad zu einer benutzerdefinierten Konfigurationsdatei</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>password of the database (DANGEROUS!)</source>
-        <translation>Passwort der Datenbank (GEFÄHRLICH!)</translation>
+        <translation>adgangskode til databasen (FAARLIGT!)</translation>
     </message>
     <message>
         <source>key file of the database</source>
-        <translation>Schlüsseldatei der Datenbank</translation>
+        <translation>databasens nøglefil</translation>
     </message>
 </context>
 </TS>

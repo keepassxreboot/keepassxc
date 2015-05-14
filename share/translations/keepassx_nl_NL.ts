@@ -17,8 +17,8 @@
         <translation>Auto-typen - KeePassX</translation>
     </message>
     <message>
-        <source>Couldn&apos;t find an entry that matches the window title.</source>
-        <translation>Kon geen element vinden dat overeenkomt met de venstertitel.</translation>
+        <source>Couldn&apos;t find an entry that matches the window title:</source>
+        <translation>Kon geen element vinden dat overeenkomt met de venstertitel:</translation>
     </message>
 </context>
 <context>
@@ -741,6 +741,17 @@ Opslaan?</translation>
     </message>
 </context>
 <context>
+    <name>Main</name>
+    <message>
+        <source>Fatal error while testing the cryptographic functions.</source>
+        <translation>Fatale fout bij het testen van de cryptografische functies.</translation>
+    </message>
+    <message>
+        <source>KeePassX - Error</source>
+        <translation>KeePassX - Fout</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Database</source>
@@ -897,6 +908,10 @@ Opslaan?</translation>
     <message>
         <source>read-only</source>
         <translation>alleen-lezen</translation>
+    </message>
+    <message>
+        <source>Toggle window</source>
+        <translation>Wissel venster</translation>
     </message>
 </context>
 <context>
@@ -1105,6 +1120,18 @@ Opslaan?</translation>
     <message>
         <source>Use entry title to match windows for global auto-type</source>
         <translation>Gebruik naam van element als vensternaam voor auto-typen</translation>
+    </message>
+    <message>
+        <source>Language</source>
+        <translation>Taal</translation>
+    </message>
+    <message>
+        <source>Show a system tray icon</source>
+        <translation>Toon een icoon in de systray</translation>
+    </message>
+    <message>
+        <source>Hide window to system tray when minimized</source>
+        <translation>Bij minimaliseren enkel icoon in systray tonen</translation>
     </message>
 </context>
 <context>

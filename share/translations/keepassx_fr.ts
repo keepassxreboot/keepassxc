@@ -1,13 +1,13 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="de" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="fr" version="2.0">
 <context>
     <name>AboutDialog</name>
     <message>
         <source>About KeePassX</source>
-        <translation>Über KeePassX</translation>
+        <translation>À propos de KeePassX</translation>
     </message>
     <message>
         <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassX ist unter der GNU General Public License (GPL) version 2 (version 3) veröffentlicht.</translation>
+        <translation>KeePassX est distribué selon les conditions de la GNU General Public License (GPL) version 2 ou (à votre choix) version 3.</translation>
     </message>
 </context>
 <context>
@@ -18,22 +18,22 @@
     </message>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation>Konnte keinen Eintrag finden, welcher mit dem Fenstertitel übereinstimmt:</translation>
+        <translation>Impossible de trouver une entrée qui corresponde au titre de la fenêtre :</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeAssociationsModel</name>
     <message>
         <source>Window</source>
-        <translation>Fenster</translation>
+        <translation>Fenêtre </translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Reihenfolge</translation>
+        <translation>Séquence</translation>
     </message>
     <message>
         <source>Default sequence</source>
-        <translation>Standardreihenfolge</translation>
+        <translation>Séquence par défaut</translation>
     </message>
 </context>
 <context>
@@ -44,289 +44,289 @@
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>Wählen Sie einen Eintrag für Auto-Type:</translation>
+        <translation>Choisissez un champ pour Auto-Type :</translation>
     </message>
 </context>
 <context>
     <name>ChangeMasterKeyWidget</name>
     <message>
         <source>Password</source>
-        <translation>Passwort</translation>
+        <translation>Mot de passe</translation>
     </message>
     <message>
         <source>Enter password:</source>
-        <translation>Passwort eingeben:</translation>
+        <translation>Entrez un mot de passe :</translation>
     </message>
     <message>
         <source>Repeat password:</source>
-        <translation>Passwort wiederholen:</translation>
+        <translation>Confirmez le mot de passe :</translation>
     </message>
     <message>
         <source>Key file</source>
-        <translation>Schlüsseldatei</translation>
+        <translation>Fichier de clé</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Durchsuchen</translation>
+        <translation>Naviguer</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Erstellen</translation>
+        <translation>Créer</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Schlüsseldateien</translation>
+        <translation>Fichiers de clé</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Alle Dateien</translation>
+        <translation>Tous les fichiers</translation>
     </message>
     <message>
         <source>Create Key File...</source>
-        <translation>Erzeuge eine Schlüsseldatei...</translation>
+        <translation>Créer un fichier de clé...</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Fehler</translation>
+        <translation>Erreur</translation>
     </message>
     <message>
         <source>Unable to create Key File : </source>
-        <translation>Erzeugen der Schlüsseldatei nicht möglich:</translation>
+        <translation>Incapable de créer un fichier de clé :</translation>
     </message>
     <message>
         <source>Select a key file</source>
-        <translation>Schlüsseldatei auswählen</translation>
+        <translation>Choisir un fichier de clé</translation>
     </message>
     <message>
         <source>Question</source>
-        <translation>Frage</translation>
+        <translation>Question</translation>
     </message>
     <message>
         <source>Do you really want to use an empty string as password?</source>
-        <translation>Wollen Sie wirklich eine leere Zeichenkette als Passwort verwenden?</translation>
+        <translation>Voulez-vous vraiment utiliser une chaîne vide comme mot de passe ?</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Unterschiedliche Passwörter eingegeben.</translation>
+        <translation>Les mots de passe ne sont pas identiques.</translation>
     </message>
 </context>
 <context>
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Enter master key</source>
-        <translation>Hauptschlüssel eingeben</translation>
+        <translation>Entrez la clé maîtresse</translation>
     </message>
     <message>
         <source>Key File:</source>
-        <translation>Schlüsseldatei:</translation>
+        <translation>Fichier de clé :</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Passwort:</translation>
+        <translation>Mot de passe :</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Durchsuchen</translation>
+        <translation>Naviguer</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Fehler</translation>
+        <translation>Erreur</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Öffnen der Datenbank nicht möglich.</translation>
+        <translation>Impossible d&apos;ouvrir la base de données.</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>Schlüsseldatei kann nicht geöffnet werden</translation>
+        <translation>Impossible d&apos;ouvrir le fichier de clé</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Alle Dateien</translation>
+        <translation>Tous les fichiers</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Schlüsseldateien</translation>
+        <translation>Fichiers de clé</translation>
     </message>
     <message>
         <source>Select key file</source>
-        <translation>Schlüsseldatei auswählen</translation>
+        <translation>Choisissez un fichier de clé</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidget</name>
     <message>
         <source>Database name:</source>
-        <translation>Datenbankname:</translation>
+        <translation>Nom de la base de données :</translation>
     </message>
     <message>
         <source>Database description:</source>
-        <translation>Datenbankbeschreibung:</translation>
+        <translation>Description de la base de données :</translation>
     </message>
     <message>
         <source>Transform rounds:</source>
-        <translation>Verschlüsselungsdurchläufe:</translation>
+        <translation>Passes de transformation :</translation>
     </message>
     <message>
         <source>Default username:</source>
-        <translation>Standardbenutzername:</translation>
+        <translation>Nom d&apos;utilisateur par défaut :</translation>
     </message>
     <message>
         <source>Use recycle bin:</source>
-        <translation>Verwende Papierkorb:</translation>
+        <translation>Utiliser la corbeille :</translation>
     </message>
     <message>
         <source> MiB</source>
-        <translation> MiB</translation>
+        <translation>MiB</translation>
     </message>
     <message>
         <source>Benchmark</source>
-        <translation>Benchmark</translation>
+        <translation>Base de référence</translation>
     </message>
     <message>
         <source>Max. history items:</source>
-        <translation>Max. Einträge im Verlauf:</translation>
+        <translation>Nombre max. d&apos;éléments dans l&apos;historique :</translation>
     </message>
     <message>
         <source>Max. history size:</source>
-        <translation>Max. Verlaufsgröße:</translation>
+        <translation>Taille max. de l&apos;historique :</translation>
     </message>
 </context>
 <context>
     <name>DatabaseTabWidget</name>
     <message>
         <source>Root</source>
-        <translation>Root</translation>
+        <translation>Racine</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>KeePass 2 Datenbank</translation>
+        <translation>Base de données Keepass 2</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Alle Dateien</translation>
+        <translation>Tous les fichiers</translation>
     </message>
     <message>
         <source>Open database</source>
-        <translation>Datenbank öffnen</translation>
+        <translation>Ovrire la base de données</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation>Warnung</translation>
+        <translation>Attention</translation>
     </message>
     <message>
         <source>File not found!</source>
-        <translation>Datei nicht gefunden!</translation>
+        <translation>Fichier introuvable!</translation>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
-        <translation>KeePass 1 Datenbank öffnen</translation>
+        <translation>Ouvrir une base de données KeePass 1</translation>
     </message>
     <message>
         <source>KeePass 1 database</source>
-        <translation>KeePass 1 Datenbank</translation>
+        <translation>Base de données Keepass 1</translation>
     </message>
     <message>
         <source>All files (*)</source>
-        <translation>Alle Dateien (*)</translation>
+        <translation>Tous les fichiers (*)</translation>
     </message>
     <message>
         <source>Close?</source>
-        <translation>Schließen?</translation>
+        <translation>Fermer?</translation>
     </message>
     <message>
         <source>&quot;%1&quot; is in edit mode.
 Close anyway?</source>
-        <translation>&quot;%1&quot; wird bearbeitet.
-Trotzdem schließen?</translation>
+        <translation>&quot;%1&quot; est en cours de modification.
+Fermer quand même ?</translation>
     </message>
     <message>
         <source>Save changes?</source>
-        <translation>Änderungen speichern?</translation>
+        <translation>Enregistrer les modifications ?</translation>
     </message>
     <message>
         <source>&quot;%1&quot; was modified.
 Save changes?</source>
-        <translation>&quot;%1&quot; wurde geändert.
-Änderungen speichern?</translation>
+        <translation>&quot;%1&quot; a été modifié.
+Enregistrer les modifications ?</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Fehler</translation>
+        <translation>Erreur</translation>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation>Schreiben der Datenbank fehlgeschlagen.</translation>
+        <translation>Une erreur s&apos;est produite lors de l&apos;écriture de la base de données. </translation>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Datenbank speichern unter</translation>
+        <translation>Enregistrer comme nouvelle base de données</translation>
     </message>
     <message>
         <source>New database</source>
-        <translation>Neue Datenbank</translation>
+        <translation>Nouvelle base de données</translation>
     </message>
     <message>
         <source>locked</source>
-        <translation>gesperrt</translation>
+        <translation>verrouillée</translation>
     </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
     <message>
         <source>Change master key</source>
-        <translation>Hauptschlüssel ändern</translation>
+        <translation>Changer la clé maîtresse</translation>
     </message>
     <message>
         <source>Delete entry?</source>
-        <translation>Eintrag löschen?</translation>
+        <translation>Supprimer l&apos;entrée ?</translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>Wollen Sie den Eintrag &quot;%1&quot; wirklich löschen?</translation>
+        <translation>Voulez-vous supprimer l&apos;entrée &quot;%1&quot; définitivement ?</translation>
     </message>
     <message>
         <source>Delete entries?</source>
-        <translation>Einträge löschen?</translation>
+        <translation>Supprimer les entrées ?</translation>
     </message>
     <message>
         <source>Do you really want to delete %1 entries for good?</source>
-        <translation>Wollen Sie die Einträge &quot;%1&quot; wirklich löschen?</translation>
+        <translation>Voulez-vous supprimer &quot;%1&quot; entrées définitivement ?</translation>
     </message>
     <message>
         <source>Move entries to recycle bin?</source>
-        <translation>Einträge in den Papierkorb verschieben?</translation>
+        <translation>Déplacer les entrées vers la corbeille ?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Wollen Sie wirklich %n Eintrag in den Papierkorb verschieben?</numerusform><numerusform>Wollen Sie wirklich %n Einträge in den Papierkorb verschieben?</numerusform></translation>
+        <translation><numerusform>Voulez-vous déplacer %n entrée(s) vers la corbeille ?</numerusform><numerusform>Voulez-vous déplacer %n entrée(s) vers la corbeille ?</numerusform></translation>
     </message>
     <message>
         <source>Delete group?</source>
-        <translation>Gruppe löschen?</translation>
+        <translation>Supprimer le groupe ?</translation>
     </message>
     <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>Wollen Sie die Gruppe &quot;%1&quot; wirklich löschen?</translation>
+        <translation>Voulez-vous supprimer le groupe &quot;%1&quot; définitivement ?</translation>
     </message>
     <message>
         <source>Current group</source>
-        <translation>Aktuelle Gruppe</translation>
+        <translation>Group actif</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
     <message>
         <source>Entry</source>
-        <translation>Eintrag</translation>
+        <translation>Entrée</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Fortgeschritten</translation>
+        <translation>Avancées</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Symbol</translation>
+        <translation>Icône</translation>
     </message>
     <message>
         <source>Auto-Type</source>
@@ -334,110 +334,111 @@ Save changes?</source>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Eigenschaften</translation>
+        <translation>Propriétés </translation>
     </message>
     <message>
         <source>History</source>
-        <translation>Verlauf</translation>
+        <translation>Historique</translation>
     </message>
     <message>
         <source>Entry history</source>
-        <translation>Eintragsverlauf</translation>
+        <translation>Historique de l&apos;entrée</translation>
     </message>
     <message>
         <source>Add entry</source>
-        <translation>Eintrag hinzufügen</translation>
+        <translation>Ajouter une entrée</translation>
     </message>
     <message>
         <source>Edit entry</source>
-        <translation>Eintrag bearbeiten</translation>
+        <translation>Modifier l&apos;entrée</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Fehler</translation>
+        <translation>Erreur</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Unterschiedliche Passwörter eingegeben.</translation>
+        <translation>Les mots de passe ne sont pas identiques.</translation>
     </message>
     <message>
         <source>New attribute</source>
-        <translation>Neue Eigenschaft</translation>
+        <translation>Nouvel attribut</translation>
     </message>
     <message>
         <source>Select file</source>
-        <translation>Datei wählen</translation>
+        <translation>Choisissez un fichier</translation>
     </message>
     <message>
         <source>Unable to open file</source>
-        <translation>Öffnen der Datei nicht möglich</translation>
+        <translation>Impossible d&apos;ouvrir le fichier</translation>
     </message>
     <message>
         <source>Save attachment</source>
-        <translation>Anhang speichern</translation>
+        <translation>Enregistrer le fichier attaché</translation>
     </message>
     <message>
         <source>Unable to save the attachment:
 </source>
-        <translation>Speichern des Anhangs nicht möglich:</translation>
+        <translation>Impossible de enregistrer le fichier attaché:
+</translation>
     </message>
     <message>
         <source>Tomorrow</source>
-        <translation>Morgen</translation>
+        <translation>Demain</translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n Woche</numerusform><numerusform>%n Wochen</numerusform></translation>
+        <translation><numerusform>%n semaine(s)</numerusform><numerusform>%n semaine(s)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n Monat</numerusform><numerusform>%n Monaten</numerusform></translation>
+        <translation><numerusform>%n mois</numerusform><numerusform>%n mois</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
-        <translation>1 Jahr</translation>
+        <translation>Une année</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
     <message>
         <source>Additional attributes</source>
-        <translation>Zusätzliche Eigenschaften</translation>
+        <translation>Attributs additionnel </translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>Hinzufügen</translation>
+        <translation>Ajouter</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Bearbeiten</translation>
+        <translation>Modifier</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Entfernen</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Anhänge</translation>
+        <translation>Affichage</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Speichern</translation>
+        <translation>Enregistrer le fichier </translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation>Auto-Type für diesen Eintrag aktivieren</translation>
+        <translation>Activer l&apos;Auto-Type pour cette entrée</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the group</source>
-        <translation>Standard-Auto-Type-Sequenz von der Gruppe erben</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Use custom Auto-Type sequence:</source>
-        <translation>Benutzerdefinierte Auto-Type-Sequenz benutzen:</translation>
+        <translation>Utiliser une séquence d&apos;Auto-Type personnalisée :</translation>
     </message>
     <message>
         <source>+</source>
@@ -449,53 +450,53 @@ Save changes?</source>
     </message>
     <message>
         <source>Window title:</source>
-        <translation>Fenstertitel:</translation>
+        <translation>Titre de la fenêtre:</translation>
     </message>
     <message>
         <source>Use default sequence</source>
-        <translation>Standardsequenz benutzen</translation>
+        <translation>Utiliser la séquence par défaut</translation>
     </message>
     <message>
         <source>Set custom sequence:</source>
-        <translation>Benutzerdefinierte Sequenz verwenden:</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
     <message>
         <source>Show</source>
-        <translation>Anzeigen</translation>
+        <translation>Exposer</translation>
     </message>
     <message>
         <source>Restore</source>
-        <translation>Wiederherstellen</translation>
+        <translation>Rétablir</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Löschen</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Delete all</source>
-        <translation>Alle löschen</translation>
+        <translation>Supprimer tout</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetMain</name>
     <message>
         <source>Title:</source>
-        <translation>Titel:</translation>
+        <translation>Titre:</translation>
     </message>
     <message>
         <source>Username:</source>
-        <translation>Benutzername:</translation>
+        <translation>Non d&apos;utilisateur:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Passwort:</translation>
+        <translation>Mot de passe:</translation>
     </message>
     <message>
         <source>Repeat:</source>
-        <translation>Wiederholen:</translation>
+        <translation>Confirme: </translation>
     </message>
     <message>
         <source>Gen.</source>
@@ -507,69 +508,69 @@ Save changes?</source>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Erlischt</translation>
+        <translation>Expiration</translation>
     </message>
     <message>
         <source>Presets</source>
-        <translation>Vorgaben</translation>
+        <translation>Valeurs par défaut</translation>
     </message>
     <message>
         <source>Notes:</source>
-        <translation>Notizen:</translation>
+        <translation>Notes:</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidget</name>
     <message>
         <source>Group</source>
-        <translation>Gruppe</translation>
+        <translation>Groupe</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Symbol</translation>
+        <translation>Icône</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Eigenschaften</translation>
+        <translation>Propriétés </translation>
     </message>
     <message>
         <source>Add group</source>
-        <translation>Gruppe hinzufügen</translation>
+        <translation>Ajouter un groupe. </translation>
     </message>
     <message>
         <source>Edit group</source>
-        <translation>Gruppe bearbeiten</translation>
+        <translation>Modifie le groupe</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation>Aktivieren</translation>
+        <translation>Activer</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Deaktivieren</translation>
+        <translation>Désactiver</translation>
     </message>
     <message>
         <source>Inherit from parent group (%1)</source>
-        <translation>Von der übergeordneten Gruppe (%1) erben</translation>
+        <translation>Hériter du groupe parent (%1)</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
     <message>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Notizen</translation>
+        <translation>Notes</translation>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Erlischt</translation>
+        <translation>Expires</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Suche</translation>
+        <translation>Chercher</translation>
     </message>
     <message>
         <source>Auto-type</source>
@@ -580,54 +581,54 @@ Save changes?</source>
     <name>EditWidgetIcons</name>
     <message>
         <source>Use default icon</source>
-        <translation>Standardsymbol verwenden</translation>
+        <translation>Utiliser l&apos;icône par défaut</translation>
     </message>
     <message>
         <source>Use custom icon</source>
-        <translation>Benutzerdefiniertes Symbol verwenden</translation>
+        <translation>Utiliser une icône personnalisée</translation>
     </message>
     <message>
         <source>Add custom icon</source>
-        <translation>Benutzerdefiniertes Symbol hinzufügen</translation>
+        <translation>Ajouter une icône personnalisée</translation>
     </message>
     <message>
         <source>Delete custom icon</source>
-        <translation>Benutzerdefiniertes Symbol löschen</translation>
+        <translation>Supprimer une icône personnalisée</translation>
     </message>
     <message>
         <source>Images</source>
-        <translation>Bilder</translation>
+        <translation>Images</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Alle Dateien</translation>
+        <translation>Tous les dossiers</translation>
     </message>
     <message>
         <source>Select Image</source>
-        <translation>Bild auswählen</translation>
+        <translation>Choisis un image. </translation>
     </message>
     <message>
         <source>Can&apos;t delete icon!</source>
-        <translation>Symbol kann nicht gelöscht werden!</translation>
+        <translation>Impossible de supprimer l&apos;icône !</translation>
     </message>
     <message numerus="yes">
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
-        <translation><numerusform>Symbol kann nicht gelöscht werden. Es wird von %n Eintrag verwendet.</numerusform><numerusform>Symbol kann nicht gelöscht werden. Es wird von %n Einträgen verwendet.</numerusform></translation>
+        <translation><numerusform>Impossible de supprimer l&apos;icône. Toujours utilisée par %n objet(s).</numerusform><numerusform>Impossible de supprimer l&apos;icône. Toujours utilisée par %n objet(s).</numerusform></translation>
     </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
     <message>
         <source>Created:</source>
-        <translation>Erstellt:</translation>
+        <translation>Créé le :</translation>
     </message>
     <message>
         <source>Modified:</source>
-        <translation>Bearbeitet:</translation>
+        <translation>Modifié le :</translation>
     </message>
     <message>
         <source>Accessed:</source>
-        <translation>Zugegriffen:</translation>
+        <translation>Accédé le :</translation>
     </message>
     <message>
         <source>Uuid:</source>
@@ -638,22 +639,22 @@ Save changes?</source>
     <name>EntryAttributesModel</name>
     <message>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation>Nom</translation>
     </message>
 </context>
 <context>
     <name>EntryHistoryModel</name>
     <message>
         <source>Last modified</source>
-        <translation>Zuletzt geändert</translation>
+        <translation>Dernière modification</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Titel</translation>
+        <translation>Titre</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Benutzername</translation>
+        <translation>Nom d&apos;utilisateur</translation>
     </message>
     <message>
         <source>URL</source>
@@ -664,15 +665,15 @@ Save changes?</source>
     <name>EntryModel</name>
     <message>
         <source>Group</source>
-        <translation>Gruppe</translation>
+        <translation>Groupe</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Titel</translation>
+        <translation>Titre</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Benutzername</translation>
+        <translation>Non d&apos;utilisateur</translation>
     </message>
     <message>
         <source>URL</source>
@@ -683,98 +684,98 @@ Save changes?</source>
     <name>Group</name>
     <message>
         <source>Recycle Bin</source>
-        <translation>Papierkorb</translation>
+        <translation>Bac de Recyclage</translation>
     </message>
 </context>
 <context>
     <name>KeePass1OpenWidget</name>
     <message>
         <source>Import KeePass1 database</source>
-        <translation>KeePass 1 Datenbank importieren</translation>
+        <translation>Importe un KeePass1 bas de données</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Fehler</translation>
+        <translation>Erreur</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Öffnen der Datenbank nicht möglich.</translation>
+        <translation>Impossible d&apos;ouvrir la bas de données.</translation>
     </message>
 </context>
 <context>
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
-        <translation>Lesen der Schlüsseldatei nicht möglich.</translation>
+        <translation>Impossible de lire le fichier de clé.</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Keine KeePass-Datenbank.</translation>
+        <translation>Ce n&apos;est pas une base de donnée KeePass.</translation>
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
-        <translation>Nicht unterstützter Verschlüsselungsalgorithmus.</translation>
+        <translation>Algorithme de chiffrement non supporté.</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>Nicht unterstützte KeePass-Datenbankversion.</translation>
+        <translation>Version de base de donnée KeePass non supportée.</translation>
     </message>
     <message>
         <source>Root</source>
-        <translation>Root</translation>
+        <translation>Racine</translation>
     </message>
 </context>
 <context>
     <name>KeePass2Reader</name>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Keine KeePass-Datenbank.</translation>
+        <translation>Ce n&apos;est pas une base de donnée KeePass.</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>Nicht unterstützte KeePass-Datenbankversion.</translation>
+        <translation>Version de base de donnée KeePass non supportée.</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
-        <translation>Falscher Schlüssel oder die Datei ist beschädigt.</translation>
+        <translation>Mauvaise clé ou fichier de base de donnée corrompu.</translation>
     </message>
 </context>
 <context>
     <name>Main</name>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
-        <translation>Fataler Fehler beim Testen der kryptografischen Funktionen.</translation>
+        <translation>Erreur fatale lors des tests des fonctions cryptographiques.</translation>
     </message>
     <message>
         <source>KeePassX - Error</source>
-        <translation>KeePassX - Fehler</translation>
+        <translation>KeePassX - Erreur</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>Database</source>
-        <translation>Datenbank</translation>
+        <translation>Base de données</translation>
     </message>
     <message>
         <source>Recent databases</source>
-        <translation>Aktuelle Datenbanken</translation>
+        <translation>Bases de données récentes</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation>Hilfe</translation>
+        <translation>Aide</translation>
     </message>
     <message>
         <source>Entries</source>
-        <translation>Einträge</translation>
+        <translation>Entrées</translation>
     </message>
     <message>
         <source>Copy attribute to clipboard</source>
-        <translation>Eingenschaft in die Zwischenablage kopieren</translation>
+        <translation>Copier l&apos;attribut dans le presse-papiers</translation>
     </message>
     <message>
         <source>Groups</source>
-        <translation>Gruppen</translation>
+        <translation>Groupes</translation>
     </message>
     <message>
         <source>Extras</source>
@@ -782,115 +783,115 @@ Save changes?</source>
     </message>
     <message>
         <source>View</source>
-        <translation>Ansicht</translation>
+        <translation>Vue</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation>Beenden</translation>
+        <translation>Quitter</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>Über</translation>
+        <translation>À propos</translation>
     </message>
     <message>
         <source>Open database</source>
-        <translation>Datenbank öffnen</translation>
+        <translation>Ouvrir une base de donnée</translation>
     </message>
     <message>
         <source>Save database</source>
-        <translation>Datenbank speichern</translation>
+        <translation>Enregistrer la base de donnée</translation>
     </message>
     <message>
         <source>Close database</source>
-        <translation>Datenbank schließen</translation>
+        <translation>Fermer la base de donnée</translation>
     </message>
     <message>
         <source>New database</source>
-        <translation>Neue Datenbank</translation>
+        <translation>Nouvelle base de donnée</translation>
     </message>
     <message>
         <source>Add new entry</source>
-        <translation>Neuen Eintrag hinzufügen</translation>
+        <translation>Ajouter une entrée</translation>
     </message>
     <message>
         <source>View/Edit entry</source>
-        <translation>Eintrag anzeigen/bearbeiten</translation>
+        <translation>Voir/Modifier l&apos;entrée</translation>
     </message>
     <message>
         <source>Delete entry</source>
-        <translation>Eintrag löschen</translation>
+        <translation>Supprimer l&apos;entrée</translation>
     </message>
     <message>
         <source>Add new group</source>
-        <translation>Neue Gruppe hinzufügen</translation>
+        <translation>Ajouter un groupe</translation>
     </message>
     <message>
         <source>Edit group</source>
-        <translation>Gruppe bearbeiten</translation>
+        <translation>Modifier le groupe</translation>
     </message>
     <message>
         <source>Delete group</source>
-        <translation>Gruppe löschen</translation>
+        <translation>Supprimer le groupe</translation>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Datenbank speichern als</translation>
+        <translation>Enregistrer la base de donnée sous</translation>
     </message>
     <message>
         <source>Change master key</source>
-        <translation>Hauptschlüssel ändern</translation>
+        <translation>Modifier la clé maître</translation>
     </message>
     <message>
         <source>Database settings</source>
-        <translation>Datenbankeinstellungen</translation>
+        <translation>Paramètre de la base de donnée</translation>
     </message>
     <message>
         <source>Import KeePass 1 database</source>
-        <translation>KeePass 1 Datenbank importieren</translation>
+        <translation>Importer une base de donnée KeePass 1</translation>
     </message>
     <message>
         <source>Clone entry</source>
-        <translation>Eintrag klonen</translation>
+        <translation>Dupliquer l&apos;entrée</translation>
     </message>
     <message>
         <source>Find</source>
-        <translation>Suchen</translation>
+        <translation>Chercher</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Benutzername</translation>
+        <translation>Nom d&apos;utilisateur</translation>
     </message>
     <message>
         <source>Copy username to clipboard</source>
-        <translation>Benutzername in die Zwischenablage kopieren</translation>
+        <translation>Copier le nom d&apos;utilisateur dans le presse-papiers</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Passwort</translation>
+        <translation>Mot de passe</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
-        <translation>Passwort in die Zwischenablage kopieren</translation>
+        <translation>Copier le mot de passe dans le presse-papiers</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Einstellungen</translation>
+        <translation>Paramètres</translation>
     </message>
     <message>
         <source>Perform Auto-Type</source>
-        <translation>Auto-Type ausführen</translation>
+        <translation>Effectuer un Auto-Type</translation>
     </message>
     <message>
         <source>Open URL</source>
-        <translation>URL öffnen</translation>
+        <translation>Ouvrir l&apos;URL</translation>
     </message>
     <message>
         <source>Lock databases</source>
-        <translation>Datenbank sperren</translation>
+        <translation>Verrouiller les bases de données</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Titel</translation>
+        <translation>Titre</translation>
     </message>
     <message>
         <source>URL</source>
@@ -898,307 +899,307 @@ Save changes?</source>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Notizen</translation>
+        <translation>Notes</translation>
     </message>
     <message>
         <source>Show toolbar</source>
-        <translation>Symbolleiste anzeigen</translation>
+        <translation>Afficher la barre d&apos;outils</translation>
     </message>
     <message>
         <source>read-only</source>
-        <translation>Nur Lesezugriff</translation>
+        <translation>Lecture seulement</translation>
     </message>
     <message>
         <source>Toggle window</source>
-        <translation>Fenster zeigen/verstecken</translation>
+        <translation>Basculer de fenêtre</translation>
     </message>
 </context>
 <context>
     <name>PasswordGeneratorWidget</name>
     <message>
         <source>Password:</source>
-        <translation>Passwort:</translation>
+        <translation>Mot de passe:</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Länge:</translation>
+        <translation>Longueur :</translation>
     </message>
     <message>
         <source>Character Types</source>
-        <translation>Zeichenarten</translation>
+        <translation>Types de caractère</translation>
     </message>
     <message>
         <source>Upper Case Letters</source>
-        <translation>Großbuchstaben</translation>
+        <translation>Lettres majuscules</translation>
     </message>
     <message>
         <source>Lower Case Letters</source>
-        <translation>Kleinbuchstaben</translation>
+        <translation>Lettres minuscules</translation>
     </message>
     <message>
         <source>Numbers</source>
-        <translation>Zahlen</translation>
+        <translation>Nombres</translation>
     </message>
     <message>
         <source>Special Characters</source>
-        <translation>Sonderzeichen</translation>
+        <translation>Caractères spéciaux</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
-        <translation>Gleich aussehende Zeichen ausschließen</translation>
+        <translation>Exclure les caractères se ressemblant</translation>
     </message>
     <message>
         <source>Ensure that the password contains characters from every group</source>
-        <translation>Sicher stellen, dass das Passwort Zeichen aller Gruppen enthält</translation>
+        <translation>S&apos;assurer que le mot de passe possède un caractère de chaque groupe</translation>
     </message>
     <message>
         <source>Accept</source>
-        <translation>Akzeptieren</translation>
+        <translation>Accepter</translation>
     </message>
 </context>
 <context>
     <name>QCommandLineParser</name>
     <message>
         <source>Displays version information.</source>
-        <translation>Versionsinformationen anzeigen.</translation>
+        <translation>Afficher les informations de version</translation>
     </message>
     <message>
         <source>Displays this help.</source>
-        <translation>Zeigt diese Hilfe an.</translation>
+        <translation>Afficher cette aide.</translation>
     </message>
     <message>
         <source>Unknown option &apos;%1&apos;.</source>
-        <translation>Unbekannte Option &apos;%1&apos;.</translation>
+        <translation>Option inconnue &apos;%1&apos;.</translation>
     </message>
     <message>
         <source>Unknown options: %1.</source>
-        <translation>Unbekannte Optionen: &apos;%1&apos;.</translation>
+        <translation>Options inconnues : %1.</translation>
     </message>
     <message>
         <source>Missing value after &apos;%1&apos;.</source>
-        <translation>Fehlender Wert nach &apos;%1&apos;.</translation>
+        <translation>Valeur manquante après &apos;%1&apos;.</translation>
     </message>
     <message>
         <source>Unexpected value after &apos;%1&apos;.</source>
-        <translation>Unerwarteter Wert nach &apos;%1&apos;.</translation>
+        <translation>Valeur inattendue après &apos;%1&apos;.</translation>
     </message>
     <message>
         <source>[options]</source>
-        <translation>[Optionen]</translation>
+        <translation>[options]</translation>
     </message>
     <message>
         <source>Usage: %1</source>
-        <translation>Verwendung: %1</translation>
+        <translation>Utilisation : %1</translation>
     </message>
     <message>
         <source>Options:</source>
-        <translation>Optionen:</translation>
+        <translation>Options :</translation>
     </message>
     <message>
         <source>Arguments:</source>
-        <translation>Argumente:</translation>
+        <translation>Arguments :</translation>
     </message>
 </context>
 <context>
     <name>QSaveFile</name>
     <message>
         <source>Existing file %1 is not writable</source>
-        <translation>Bestehende Datei(en) %1 ist nicht schreibbar</translation>
+        <translation>Le fichier existant %1 n&apos;est pas accessible en écriture</translation>
     </message>
     <message>
         <source>Writing canceled by application</source>
-        <translation>Schreiben von der Applikation abgebrochen</translation>
+        <translation>Écriture annulée par l&apos;application</translation>
     </message>
     <message>
         <source>Partial write. Partition full?</source>
-        <translation>Unvollständiger Schreibvorgang. Partition voll?</translation>
+        <translation>Écriture partielle. Partition pleine ?</translation>
     </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
-        <translation>Interner Fehler in zlib beim komprimieren:</translation>
+        <translation>Erreur interne zlib lors de la compression :</translation>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>Fehler beim Schreiben auf das zugrunde liegende Gerät: </translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>Fehler beim Öffnen des zugrunde liegenden Gerätes: </translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation>Fehler beim Lesen von Daten auf dem zugrunde liegenden Gerät: </translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation>Interner Fehler in zlib beim dekomprimieren:</translation>
+        <translation>Erreur interne zlib lors de la décompression :</translation>
     </message>
 </context>
 <context>
     <name>QtIOCompressor::open</name>
     <message>
         <source>The gzip format not supported in this version of zlib.</source>
-        <translation>Das gzip-Format wird von dieser zlib Version nicht unterstützt.</translation>
+        <translation>Le format gzip n&apos;est pas supporté dans cette version de zlib.</translation>
     </message>
     <message>
         <source>Internal zlib error: </source>
-        <translation>Interner Fehler in zlib:</translation>
+        <translation>Erreur interne zlib :</translation>
     </message>
 </context>
 <context>
     <name>SearchWidget</name>
     <message>
         <source>Find:</source>
-        <translation>Suchen nach:</translation>
+        <translation>Chercher :</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation>Groß-/Kleinschreibung unterscheiden</translation>
+        <translation>Sensible à la casse</translation>
     </message>
     <message>
         <source>Current group</source>
-        <translation>Aktuelle Gruppe</translation>
+        <translation>Groupe actif</translation>
     </message>
     <message>
         <source>Root group</source>
-        <translation>Root-Gruppe</translation>
+        <translation>Groupe racine</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>Anwendungseinstellungen</translation>
+        <translation>Paramètre de l&apos;application</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Allgemein</translation>
+        <translation>Général</translation>
     </message>
     <message>
         <source>Security</source>
-        <translation>Sicherheit</translation>
+        <translation>Sécurité</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidgetGeneral</name>
     <message>
         <source>Remember last databases</source>
-        <translation>Letzte Datenbank merken</translation>
+        <translation>Se souvenir des dernières bases de données</translation>
     </message>
     <message>
         <source>Open previous databases on startup</source>
-        <translation>Letzte Datenbank beim Starten öffnen</translation>
+        <translation>Ouvrir les base de données précédentes au démarrage</translation>
     </message>
     <message>
         <source>Mark as modified on expanded state changes</source>
-        <translation>Als erweiterte Zustandsänderungen makieren</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Automatically save on exit</source>
-        <translation>Automatisch speichern beim Schließen</translation>
+        <translation>Sauvegarde automatiquement à la sortie</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation>Automatisch nach jeder Änderung speichern</translation>
+        <translation>Sauvegarde automatiquement après chaque modification</translation>
     </message>
     <message>
         <source>Minimize when copying to clipboard</source>
-        <translation>Minimieren beim Kopieren in die Zwischenablage</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
-        <translation>Gruppensymbol für das Erstellen neuer Einträge verwenden</translation>
+        <translation>Utiliser l&apos;icône de groupe à la création d&apos;une entrée</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut</source>
-        <translation>Globale Tastenkombination für Auto-Type</translation>
+        <translation>Raccourci d&apos;Auto-Type global</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global auto-type</source>
-        <translation>Verwende den Eintragstitel für entsprechende Fenster für den globale Auto-Typ</translation>
+        <translation>Utiliser la correspondance entre le titre de l&apos;entrée et de la fenêtre pour l&apos;Auto-Type global</translation>
     </message>
     <message>
         <source>Language</source>
-        <translation>Sprache</translation>
+        <translation>Langue</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>Taskleistensymbol anzeigen</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation>Fenster verstecken wenn minimiert</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>
     <message>
         <source>Clear clipboard after</source>
-        <translation>Zwischenablage leeren nach</translation>
+        <translation>Vider le presse-papiers après</translation>
     </message>
     <message>
         <source> sec</source>
-        <translation> sek</translation>
+        <translation>s</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
-        <translation>Datenbank sperren nach einer Inaktivität von</translation>
+        <translation>Verrouiller les bases de donnée après une inactivité de</translation>
     </message>
     <message>
         <source>Show passwords in cleartext by default</source>
-        <translation>Passwort standartmäßig in Klartext anzeigen</translation>
+        <translation>Afficher les mots de passe en clair par défaut</translation>
     </message>
     <message>
         <source>Always ask before performing auto-type</source>
-        <translation>Immer vor einem Auto-type fragen</translation>
+        <translation>Toujours demander avant d&apos;effectuer un auto-type</translation>
     </message>
 </context>
 <context>
     <name>UnlockDatabaseWidget</name>
     <message>
         <source>Unlock database</source>
-        <translation>Datenbank entsperren</translation>
+        <translation>Déverrouiller la base de donnée</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Fehler</translation>
+        <translation>Erreur</translation>
     </message>
     <message>
         <source>Wrong key.</source>
-        <translation>Falscher Schlüssel.</translation>
+        <translation>Mauvaise clé.</translation>
     </message>
 </context>
 <context>
     <name>WelcomeWidget</name>
     <message>
         <source>Welcome!</source>
-        <translation>Willkommen!</translation>
+        <translation>Bienvenue !</translation>
     </message>
 </context>
 <context>
     <name>main</name>
     <message>
         <source>KeePassX - cross-platform password manager</source>
-        <translation>KeePassX - plattformübergreifender Passwortmanager</translation>
+        <translation>KeePassX - Gestionnaire de mot de passe multi-plateforme</translation>
     </message>
     <message>
         <source>filename of the password database to open (*.kdbx)</source>
-        <translation>Dateiname für die zu öffnende Passwortdatenbank (*.kdbx)</translation>
+        <translation>Nom de fichier de la base de donnée de mot de pass à ouvrir (*.kdbx)</translation>
     </message>
     <message>
         <source>path to a custom config file</source>
-        <translation>Pfad zu einer benutzerdefinierten Konfigurationsdatei</translation>
+        <translation>Chemin vers un fichier de configuration personnalisé</translation>
     </message>
     <message>
         <source>password of the database (DANGEROUS!)</source>
-        <translation>Passwort der Datenbank (GEFÄHRLICH!)</translation>
+        <translation>Mot de passe de la base de donnée (DANGEREUX !)</translation>
     </message>
     <message>
         <source>key file of the database</source>
-        <translation>Schlüsseldatei der Datenbank</translation>
+        <translation>Fichier de clé de la base de donnée</translation>
     </message>
 </context>
 </TS>
