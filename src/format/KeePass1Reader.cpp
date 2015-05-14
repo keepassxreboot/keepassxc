@@ -49,7 +49,12 @@ private:
 
 
 KeePass1Reader::KeePass1Reader()
-    : m_error(false)
+    : m_db(Q_NULLPTR)
+    , m_tmpParent(Q_NULLPTR)
+    , m_device(Q_NULLPTR)
+    , m_encryptionFlags(0)
+    , m_transformRounds(0)
+    , m_error(false)
 {
 }
 

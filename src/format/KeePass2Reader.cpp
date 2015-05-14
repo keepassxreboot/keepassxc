@@ -33,8 +33,12 @@
 #include "streams/SymmetricCipherStream.h"
 
 KeePass2Reader::KeePass2Reader()
-    : m_error(false)
+    : m_device(Q_NULLPTR)
+    , m_headerStream(Q_NULLPTR)
+    , m_error(false)
+    , m_headerEnd(false)
     , m_saveXml(false)
+    , m_db(Q_NULLPTR)
 {
 }
 

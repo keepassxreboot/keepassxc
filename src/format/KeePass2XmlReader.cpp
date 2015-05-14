@@ -34,6 +34,7 @@ KeePass2XmlReader::KeePass2XmlReader()
     : m_randomStream(Q_NULLPTR)
     , m_db(Q_NULLPTR)
     , m_meta(Q_NULLPTR)
+    , m_tmpParent(Q_NULLPTR)
     , m_error(false)
     , m_strictMode(false)
 {
