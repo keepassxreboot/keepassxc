@@ -38,6 +38,8 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
     add(tr("Properties"), m_editWidgetProperties);
 
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
+    connect(m_mainUi->autoTypeSequenceCustomRadio, SIGNAL(toggled(bool)),
+            m_mainUi->autoTypeSequenceCustomEdit, SLOT(setEnabled(bool)));
 
     connect(this, SIGNAL(accepted()), SLOT(save()));
     connect(this, SIGNAL(rejected()), SLOT(cancel()));
@@ -74,6 +76,13 @@ void EditGroupWidget::loadGroup(Group* group, bool create, Database* database)
     m_mainUi->expireDatePicker->setDateTime(group->timeInfo().expiryTime().toLocalTime());
     m_mainUi->searchComboBox->setCurrentIndex(indexFromTriState(group->searchingEnabled()));
     m_mainUi->autotypeComboBox->setCurrentIndex(indexFromTriState(group->autoTypeEnabled()));
+    if (group->defaultAutoTypeSequence().isEmpty()) {
+        m_mainUi->autoTypeSequenceInherit->setChecked(true);
+    }
+    else {
+        m_mainUi->autoTypeSequenceCustomRadio->setChecked(true);
+    }
+    m_mainUi->autoTypeSequenceCustomEdit->setText(group->defaultAutoTypeSequence());
 
     IconStruct iconStruct;
     iconStruct.uuid = group->iconUuid();
@@ -96,6 +105,13 @@ void EditGroupWidget::save()
 
     m_group->setSearchingEnabled(triStateFromIndex(m_mainUi->searchComboBox->currentIndex()));
     m_group->setAutoTypeEnabled(triStateFromIndex(m_mainUi->autotypeComboBox->currentIndex()));
+
+    if (m_mainUi->autoTypeSequenceInherit->isChecked()) {
+        m_group->setDefaultAutoTypeSequence(QString());
+    }
+    else {
+        m_group->setDefaultAutoTypeSequence(m_mainUi->autoTypeSequenceCustomEdit->text());
+    }
 
     IconStruct iconStruct = m_editGroupWidgetIcons->save();
 
