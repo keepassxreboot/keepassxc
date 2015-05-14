@@ -14,6 +14,6 @@ before_script: mkdir build && pushd build
 script:
   - cmake -DCMAKE_BUILD_TYPE=Debug -DWITH_GUI_TESTS=ON ..
   - make
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then make test ARGS+="-E testgui"; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then xvfb-run -a --server-args="-screen 0 800x600x24" make test ARGS+="-R testgui"; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then make test ARGS+="-E testgui --output-on-failure"; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then xvfb-run -a --server-args="-screen 0 800x600x24" make test ARGS+="-R testgui --output-on-failure"; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then make test; fi
