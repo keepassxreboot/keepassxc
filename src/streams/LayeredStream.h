@@ -31,7 +31,6 @@ public:
     virtual ~LayeredStream();
 
     bool isSequential() const Q_DECL_OVERRIDE;
-    virtual QString errorString() const;
     bool open(QIODevice::OpenMode mode) Q_DECL_OVERRIDE;
 
 protected:

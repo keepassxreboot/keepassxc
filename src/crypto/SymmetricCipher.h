@@ -20,6 +20,7 @@
 
 #include <QByteArray>
 #include <QScopedPointer>
+#include <QString>
 
 #include "core/Global.h"
 #include "crypto/SymmetricCipherBackend.h"
@@ -48,30 +49,35 @@ public:
     };
 
     SymmetricCipher(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
-                    SymmetricCipher::Direction direction, const QByteArray& key, const QByteArray& iv);
+                    SymmetricCipher::Direction direction);
     ~SymmetricCipher();
 
-    inline QByteArray process(const QByteArray& data) {
-        return m_backend->process(data);
+    bool init(const QByteArray& key, const QByteArray& iv);
+    bool isInitalized() const;
+
+    inline QByteArray process(const QByteArray& data, bool* ok) {
+        return m_backend->process(data, ok);
     }
 
-    inline void processInPlace(QByteArray& data) {
-        m_backend->processInPlace(data);
+    inline bool processInPlace(QByteArray& data) Q_REQUIRED_RESULT {
+        return m_backend->processInPlace(data);
     }
 
-    inline void processInPlace(QByteArray& data, quint64 rounds) {
+    inline bool processInPlace(QByteArray& data, quint64 rounds) Q_REQUIRED_RESULT {
         Q_ASSERT(rounds > 0);
-        m_backend->processInPlace(data, rounds);
+        return m_backend->processInPlace(data, rounds);
     }
 
-    void reset();
+    bool reset();
     int blockSize() const;
+    QString errorString() const;
 
 private:
     static SymmetricCipherBackend* createBackend(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
                                                  SymmetricCipher::Direction direction);
 
     const QScopedPointer<SymmetricCipherBackend> m_backend;
+    bool m_initialized;
 
     Q_DISABLE_COPY(SymmetricCipher)
 };

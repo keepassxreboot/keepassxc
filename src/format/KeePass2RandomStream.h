@@ -25,13 +25,15 @@
 class KeePass2RandomStream
 {
 public:
-    explicit KeePass2RandomStream(const QByteArray& key);
-    QByteArray randomBytes(int size);
-    QByteArray process(const QByteArray& data);
-    void processInPlace(QByteArray& data);
+    KeePass2RandomStream();
+    bool init(const QByteArray& key);
+    QByteArray randomBytes(int size, bool* ok);
+    QByteArray process(const QByteArray& data, bool* ok);
+    bool processInPlace(QByteArray& data) Q_REQUIRED_RESULT;
+    QString errorString() const;
 
 private:
-    void loadBlock();
+    bool loadBlock();
 
     SymmetricCipher m_cipher;
     QByteArray m_buffer;

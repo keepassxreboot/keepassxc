@@ -49,13 +49,20 @@ QString FilePath::pluginPath(const QString& name)
 
     pluginPaths << QCoreApplication::applicationDirPath();
 
-    QString systemPluginDir = KEEPASSX_PLUGIN_DIR;
-    if (systemPluginDir != ".") {
-        if (!QDir(systemPluginDir).isAbsolute()) {
-            systemPluginDir = QCoreApplication::applicationDirPath() + "/../" + systemPluginDir;
-            systemPluginDir = QDir(systemPluginDir).canonicalPath();
+    QString configuredPluginDir = KEEPASSX_PLUGIN_DIR;
+    if (configuredPluginDir != ".") {
+        if (QDir(configuredPluginDir).isAbsolute()) {
+            pluginPaths << configuredPluginDir;
         }
-        pluginPaths << systemPluginDir;
+        else {
+            QString relativePluginDir = QString("%1/../%2")
+                    .arg(QCoreApplication::applicationDirPath(), configuredPluginDir);
+            pluginPaths << QDir(relativePluginDir).canonicalPath();
+
+            QString absolutePluginDir = QString("%1/%2")
+                    .arg(KEEPASSX_PREFIX_DIR, configuredPluginDir);
+            pluginPaths << QDir(absolutePluginDir).canonicalPath();
+        }
     }
 
     QStringList dirFilter;
@@ -164,6 +171,9 @@ QIcon FilePath::onOffIcon(const QString& category, const QString& name)
 
 FilePath::FilePath()
 {
+    const QString appDirPath = QCoreApplication::applicationDirPath();
+    bool isDataDirAbsolute = QDir::isAbsolutePath(KEEPASSX_DATA_DIR);
+
     if (false) {
     }
 #ifdef QT_DEBUG
@@ -171,17 +181,19 @@ FilePath::FilePath()
     }
 #endif
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    else if (testSetDir(QCoreApplication::applicationDirPath() + "/../share/keepassx")) {
+    else if (isDataDirAbsolute && testSetDir(KEEPASSX_DATA_DIR)) {
     }
-    else if (testSetDir(KEEPASSX_DATA_DIR)) {
+    else if (!isDataDirAbsolute && testSetDir(QString("%1/../%2").arg(appDirPath, KEEPASSX_DATA_DIR))) {
+    }
+    else if (!isDataDirAbsolute && testSetDir(QString("%1/%2").arg(KEEPASSX_PREFIX_DIR, KEEPASSX_DATA_DIR))) {
     }
 #endif
 #ifdef Q_OS_MAC
-    else if (testSetDir(QCoreApplication::applicationDirPath() + "/../Resources")) {
+    else if (testSetDir(appDirPath + "/../Resources")) {
     }
 #endif
 #ifdef Q_OS_WIN
-    else if (testSetDir(QCoreApplication::applicationDirPath() + "/share")) {
+    else if (testSetDir(appDirPath + "/share")) {
     }
 #endif
 

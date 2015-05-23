@@ -599,8 +599,13 @@ void DatabaseWidget::updateMasterKey(bool accepted)
 {
     if (accepted) {
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-        m_db->setKey(m_changeMasterKeyWidget->newMasterKey());
+        bool result = m_db->setKey(m_changeMasterKeyWidget->newMasterKey());
         QApplication::restoreOverrideCursor();
+
+        if (!result) {
+            MessageBox::critical(this, tr("Error"), tr("Unable to calculate master key"));
+            return;
+        }
     }
     else if (!m_db->hasKey()) {
         Q_EMIT closeRequest();
@@ -905,4 +910,54 @@ QStringList DatabaseWidget::customEntryAttributes() const
 bool DatabaseWidget::isGroupSelected() const
 {
     return m_groupView->currentGroup() != Q_NULLPTR;
+}
+
+bool DatabaseWidget::currentEntryHasTitle()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if (!currentEntry) {
+        Q_ASSERT(false);
+        return false;
+    }
+    return !currentEntry->title().isEmpty();
+}
+
+bool DatabaseWidget::currentEntryHasUsername()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if (!currentEntry) {
+        Q_ASSERT(false);
+        return false;
+    }
+    return !currentEntry->username().isEmpty();
+}
+
+bool DatabaseWidget::currentEntryHasPassword()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if (!currentEntry) {
+        Q_ASSERT(false);
+        return false;
+    }
+    return !currentEntry->password().isEmpty();
+}
+
+bool DatabaseWidget::currentEntryHasUrl()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if (!currentEntry) {
+        Q_ASSERT(false);
+        return false;
+    }
+    return !currentEntry->url().isEmpty();
+}
+
+bool DatabaseWidget::currentEntryHasNotes()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if (!currentEntry) {
+        Q_ASSERT(false);
+        return false;
+    }
+    return !currentEntry->notes().isEmpty();
 }

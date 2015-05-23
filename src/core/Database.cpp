@@ -188,32 +188,51 @@ void Database::setCompressionAlgo(Database::CompressionAlgorithm algo)
     m_data.compressionAlgo = algo;
 }
 
-void Database::setTransformRounds(quint64 rounds)
+bool Database::setTransformRounds(quint64 rounds)
 {
     if (m_data.transformRounds != rounds) {
+        quint64 oldRounds = m_data.transformRounds;
+
         m_data.transformRounds = rounds;
 
         if (m_data.hasKey) {
-            setKey(m_data.key);
+            if (!setKey(m_data.key)) {
+                m_data.transformRounds = oldRounds;
+                return false;
+            }
         }
     }
+
+    return true;
 }
 
-void Database::setKey(const CompositeKey& key, const QByteArray& transformSeed, bool updateChangedTime)
+bool Database::setKey(const CompositeKey& key, const QByteArray& transformSeed,
+                      bool updateChangedTime)
 {
+    bool ok;
+    QString errorString;
+
+    QByteArray transformedMasterKey =
+            key.transform(transformSeed, transformRounds(), &ok, &errorString);
+    if (!ok) {
+        return false;
+    }
+
     m_data.key = key;
     m_data.transformSeed = transformSeed;
-    m_data.transformedMasterKey = key.transform(transformSeed, transformRounds());
+    m_data.transformedMasterKey = transformedMasterKey;
     m_data.hasKey = true;
     if (updateChangedTime) {
         m_metadata->setMasterKeyChanged(Tools::currentDateTimeUtc());
     }
     Q_EMIT modifiedImmediate();
+
+    return true;
 }
 
-void Database::setKey(const CompositeKey& key)
+bool Database::setKey(const CompositeKey& key)
 {
-    setKey(key, randomGen()->randomArray(32));
+    return setKey(key, randomGen()->randomArray(32));
 }
 
 bool Database::hasKey() const

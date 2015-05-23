@@ -120,7 +120,10 @@ void ChangeMasterKeyWidget::generateKey()
         FileKey fileKey;
         QString errorMsg;
         if (!fileKey.load(m_ui->keyFileCombo->currentText(), &errorMsg)) {
-            // TODO: error handling
+            MessageBox::critical(this, tr("Failed to set key file"),
+                                 tr("Failed to set %1 as the Key file:\n%2")
+                                 .arg(m_ui->keyFileCombo->currentText(), errorMsg));
+            return;
         }
         m_key.addKey(fileKey);
     }

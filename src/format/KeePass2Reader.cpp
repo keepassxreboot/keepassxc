@@ -33,8 +33,12 @@
 #include "streams/SymmetricCipherStream.h"
 
 KeePass2Reader::KeePass2Reader()
-    : m_error(false)
+    : m_device(Q_NULLPTR)
+    , m_headerStream(Q_NULLPTR)
+    , m_error(false)
+    , m_headerEnd(false)
     , m_saveXml(false)
+    , m_db(Q_NULLPTR)
 {
 }
 
@@ -96,16 +100,26 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
         return Q_NULLPTR;
     }
 
-    m_db->setKey(key, m_transformSeed, false);
+    if (!m_db->setKey(key, m_transformSeed, false)) {
+        raiseError(tr("Unable to calculate master key"));
+        return Q_NULLPTR;
+    }
 
     CryptoHash hash(CryptoHash::Sha256);
     hash.addData(m_masterSeed);
     hash.addData(m_db->transformedMasterKey());
     QByteArray finalKey = hash.result();
 
-    SymmetricCipherStream cipherStream(m_device, SymmetricCipher::Aes256, SymmetricCipher::Cbc,
-                                       SymmetricCipher::Decrypt, finalKey, m_encryptionIV);
-    cipherStream.open(QIODevice::ReadOnly);
+    SymmetricCipherStream cipherStream(m_device, SymmetricCipher::Aes256,
+                                       SymmetricCipher::Cbc, SymmetricCipher::Decrypt);
+    if (!cipherStream.init(finalKey, m_encryptionIV)) {
+        raiseError(cipherStream.errorString());
+        return Q_NULLPTR;
+    }
+    if (!cipherStream.open(QIODevice::ReadOnly)) {
+        raiseError(cipherStream.errorString());
+        return Q_NULLPTR;
+    }
 
     QByteArray realStart = cipherStream.read(32);
 
@@ -115,7 +129,10 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
     }
 
     HashedBlockStream hashedStream(&cipherStream);
-    hashedStream.open(QIODevice::ReadOnly);
+    if (!hashedStream.open(QIODevice::ReadOnly)) {
+        raiseError(hashedStream.errorString());
+        return Q_NULLPTR;
+    }
 
     QIODevice* xmlDevice;
     QScopedPointer<QtIOCompressor> ioCompressor;
@@ -126,11 +143,18 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
     else {
         ioCompressor.reset(new QtIOCompressor(&hashedStream));
         ioCompressor->setStreamFormat(QtIOCompressor::GzipFormat);
-        ioCompressor->open(QIODevice::ReadOnly);
+        if (!ioCompressor->open(QIODevice::ReadOnly)) {
+            raiseError(ioCompressor->errorString());
+            return Q_NULLPTR;
+        }
         xmlDevice = ioCompressor.data();
     }
 
-    KeePass2RandomStream randomStream(m_protectedStreamKey);
+    KeePass2RandomStream randomStream;
+    if (!randomStream.init(m_protectedStreamKey)) {
+        raiseError(randomStream.errorString());
+        return Q_NULLPTR;
+    }
 
     QScopedPointer<QBuffer> buffer;
 
@@ -340,7 +364,9 @@ void KeePass2Reader::setTansformRounds(const QByteArray& data)
         raiseError("Invalid transform rounds size");
     }
     else {
-        m_db->setTransformRounds(Endian::bytesToUInt64(data, KeePass2::BYTEORDER));
+        if (!m_db->setTransformRounds(Endian::bytesToUInt64(data, KeePass2::BYTEORDER))) {
+            raiseError(tr("Unable to calculate master key"));
+        }
     }
 }
 

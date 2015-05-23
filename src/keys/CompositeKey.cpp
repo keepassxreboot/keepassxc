@@ -81,34 +81,62 @@ QByteArray CompositeKey::rawKey() const
     return cryptoHash.result();
 }
 
-QByteArray CompositeKey::transform(const QByteArray& seed, quint64 rounds) const
+QByteArray CompositeKey::transform(const QByteArray& seed, quint64 rounds,
+                                   bool* ok, QString* errorString) const
 {
     Q_ASSERT(seed.size() == 32);
     Q_ASSERT(rounds > 0);
 
+    bool okLeft;
+    QString errorStringLeft;
+    bool okRight;
+    QString errorStringRight;
+
     QByteArray key = rawKey();
 
-    QFuture<QByteArray> future = QtConcurrent::run(transformKeyRaw, key.left(16), seed, rounds);
-    QByteArray result2 = transformKeyRaw(key.right(16), seed, rounds);
+    QFuture<QByteArray> future = QtConcurrent::run(transformKeyRaw, key.left(16), seed, rounds, &okLeft, &errorStringLeft);
+    QByteArray result2 = transformKeyRaw(key.right(16), seed, rounds, &okRight, &errorStringRight);
 
     QByteArray transformed;
     transformed.append(future.result());
     transformed.append(result2);
 
+    *ok = (okLeft && okRight);
+
+    if (!okLeft) {
+        *errorString = errorStringLeft;
+        return QByteArray();
+    }
+
+    if (!okRight) {
+        *errorString = errorStringRight;
+        return QByteArray();
+    }
+
     return CryptoHash::hash(transformed, CryptoHash::Sha256);
 }
 
 QByteArray CompositeKey::transformKeyRaw(const QByteArray& key, const QByteArray& seed,
-                                         quint64 rounds)
+                                         quint64 rounds, bool* ok, QString* errorString)
 {
     QByteArray iv(16, 0);
     SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Ecb,
-                           SymmetricCipher::Encrypt, seed, iv);
+                           SymmetricCipher::Encrypt);
+    if (!cipher.init(seed, iv)) {
+        *ok = false;
+        *errorString = cipher.errorString();
+        return QByteArray();
+    }
 
     QByteArray result = key;
 
-    cipher.processInPlace(result, rounds);
+    if (!cipher.processInPlace(result, rounds)) {
+        *ok = false;
+        *errorString = cipher.errorString();
+        return QByteArray();
+    }
 
+    *ok = true;
     return result;
 }
 
@@ -151,13 +179,17 @@ void TransformKeyBenchmarkThread::run()
     QByteArray iv(16, 0);
 
     SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Ecb,
-                           SymmetricCipher::Encrypt, seed, iv);
+                           SymmetricCipher::Encrypt);
+    cipher.init(seed, iv);
 
     QTime t;
     t.start();
 
     do {
-        cipher.processInPlace(key, 100);
+        if (!cipher.processInPlace(key, 100)) {
+            m_rounds = -1;
+            return;
+        }
         m_rounds += 100;
     } while (t.elapsed() < m_msec);
 }

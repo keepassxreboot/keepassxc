@@ -28,6 +28,7 @@ KeePass2XmlWriter::KeePass2XmlWriter()
     : m_db(Q_NULLPTR)
     , m_meta(Q_NULLPTR)
     , m_randomStream(Q_NULLPTR)
+    , m_error(false)
 {
     m_xml.setAutoFormatting(true);
     m_xml.setAutoFormattingIndent(-1); // 1 tab
@@ -63,6 +64,16 @@ void KeePass2XmlWriter::writeDatabase(const QString& filename, Database* db)
     QFile file(filename);
     file.open(QIODevice::WriteOnly|QIODevice::Truncate);
     writeDatabase(&file, db);
+}
+
+bool KeePass2XmlWriter::hasError()
+{
+    return m_error;
+}
+
+QString KeePass2XmlWriter::errorString()
+{
+    return m_errorStr;
 }
 
 void KeePass2XmlWriter::generateIdMap()
@@ -340,7 +351,11 @@ void KeePass2XmlWriter::writeEntry(const Entry* entry)
         if (protect) {
             if (m_randomStream) {
                 m_xml.writeAttribute("Protected", "True");
-                QByteArray rawData = m_randomStream->process(entry->attributes()->value(key).toUtf8());
+                bool ok;
+                QByteArray rawData = m_randomStream->process(entry->attributes()->value(key).toUtf8(), &ok);
+                if (!ok) {
+                    raiseError(m_randomStream->errorString());
+                }
                 value = QString::fromLatin1(rawData.toBase64());
             }
             else {
@@ -526,4 +541,10 @@ QString KeePass2XmlWriter::colorPartToString(int value)
     }
 
     return str;
+}
+
+void KeePass2XmlWriter::raiseError(const QString& errorMessage)
+{
+    m_error = true;
+    m_errorStr = errorMessage;
 }

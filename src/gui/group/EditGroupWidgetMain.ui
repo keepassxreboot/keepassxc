@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>676</width>
-    <height>334</height>
+    <height>356</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -36,6 +36,13 @@
      <item row="1" column="1">
       <widget class="QPlainTextEdit" name="editNotes"/>
      </item>
+     <item row="2" column="0">
+      <widget class="QCheckBox" name="expireCheck">
+       <property name="text">
+        <string>Expires</string>
+       </property>
+      </widget>
+     </item>
      <item row="2" column="1">
       <widget class="QDateTimeEdit" name="expireDatePicker">
        <property name="enabled">
@@ -43,13 +50,6 @@
        </property>
        <property name="calendarPopup">
         <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QCheckBox" name="expireCheck">
-       <property name="text">
-        <string>Expires</string>
        </property>
       </widget>
      </item>
@@ -72,6 +72,47 @@
      </item>
      <item row="4" column="1">
       <widget class="QComboBox" name="autotypeComboBox"/>
+     </item>
+     <item row="5" column="1">
+      <widget class="QRadioButton" name="autoTypeSequenceInherit">
+       <property name="text">
+        <string>Use default auto-type sequence of parent group</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <widget class="QRadioButton" name="autoTypeSequenceCustomRadio">
+       <property name="text">
+        <string>Set default auto-type sequence</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>1</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="autoTypeSequenceCustomEdit">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>

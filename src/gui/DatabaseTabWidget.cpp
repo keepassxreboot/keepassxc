@@ -36,6 +36,7 @@
 
 DatabaseManagerStruct::DatabaseManagerStruct()
     : dbWidget(Q_NULLPTR)
+    , lockFile(Q_NULLPTR)
     , saveToFilename(false)
     , modified(false)
     , readOnly(false)
@@ -142,8 +143,35 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
     }
     file.close();
 
+    QLockFile* lockFile = new QLockFile(QString("%1/.%2.lock").arg(fileInfo.canonicalPath(), fileInfo.fileName()));
+    lockFile->setStaleLockTime(0);
+
+    if (!dbStruct.readOnly && !lockFile->tryLock()) {
+        // for now silently ignore if we can't create a lock file
+        // due to lack of permissions
+        if (lockFile->error() != QLockFile::PermissionError) {
+            QMessageBox::StandardButton result = MessageBox::question(this, tr("Open database"),
+                tr("The database you are trying to open is locked by another instance of KeePassX.\n"
+                   "Do you want to open it anyway? Alternatively the database is opened read-only."),
+                QMessageBox::Yes | QMessageBox::No);
+
+            if (result == QMessageBox::No) {
+                dbStruct.readOnly = true;
+                delete lockFile;
+                lockFile = Q_NULLPTR;
+            }
+            else {
+                // take over the lock file if possible
+                if (lockFile->removeStaleLockFile()) {
+                    lockFile->tryLock();
+                }
+            }
+        }
+    }
+
     Database* db = new Database();
     dbStruct.dbWidget = new DatabaseWidget(db, this);
+    dbStruct.lockFile = lockFile;
     dbStruct.saveToFilename = !dbStruct.readOnly;
 
     dbStruct.filePath = fileInfo.absoluteFilePath();
@@ -238,6 +266,7 @@ void DatabaseTabWidget::deleteDatabase(Database* db)
     removeTab(index);
     toggleTabbar();
     m_dbList.remove(db);
+    delete dbStruct.lockFile;
     delete dbStruct.dbWidget;
     delete db;
 
@@ -311,6 +340,11 @@ bool DatabaseTabWidget::saveDatabaseAs(Database* db)
             dbStruct.canonicalFilePath = fileInfo.canonicalFilePath();
             dbStruct.fileName = fileInfo.fileName();
             dbStruct.dbWidget->updateFilename(dbStruct.filePath);
+            QString lockFileName = QString("%1/.%2.lock")
+                    .arg(fileInfo.canonicalPath(), fileInfo.fileName());
+            dbStruct.lockFile = new QLockFile(lockFileName);
+            dbStruct.lockFile->setStaleLockTime(0);
+            dbStruct.lockFile->tryLock();
             updateTabName(db);
             updateLastDatabases(dbStruct.filePath);
             return true;

@@ -49,7 +49,12 @@ private:
 
 
 KeePass1Reader::KeePass1Reader()
-    : m_error(false)
+    : m_db(Q_NULLPTR)
+    , m_tmpParent(Q_NULLPTR)
+    , m_device(Q_NULLPTR)
+    , m_encryptionFlags(0)
+    , m_transformRounds(0)
+    , m_error(false)
 {
 }
 
@@ -154,14 +159,16 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
         raiseError("Invalid number of transform rounds");
         return Q_NULLPTR;
     }
-    m_db->setTransformRounds(m_transformRounds);
+    if (!m_db->setTransformRounds(m_transformRounds)) {
+        raiseError(tr("Unable to calculate master key"));
+        return Q_NULLPTR;
+    }
 
     qint64 contentPos = m_device->pos();
 
     QScopedPointer<SymmetricCipherStream> cipherStream(testKeys(password, keyfileData, contentPos));
 
     if (!cipherStream) {
-        raiseError("Unable to create cipher stream");
         return Q_NULLPTR;
     }
 
@@ -234,7 +241,10 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
         key.addKey(newFileKey);
     }
 
-    db->setKey(key);
+    if (!db->setKey(key)) {
+        raiseError(tr("Unable to calculate master key"));
+        return Q_NULLPTR;
+    }
 
     return db.take();
 }
@@ -326,16 +336,26 @@ SymmetricCipherStream* KeePass1Reader::testKeys(const QString& password, const Q
         }
 
         QByteArray finalKey = key(passwordData, keyfileData);
+        if (finalKey.isEmpty()) {
+            return Q_NULLPTR;
+        }
         if (m_encryptionFlags & KeePass1::Rijndael) {
             cipherStream.reset(new SymmetricCipherStream(m_device, SymmetricCipher::Aes256,
-                    SymmetricCipher::Cbc, SymmetricCipher::Decrypt, finalKey, m_encryptionIV));
+                    SymmetricCipher::Cbc, SymmetricCipher::Decrypt));
         }
         else {
             cipherStream.reset(new SymmetricCipherStream(m_device, SymmetricCipher::Twofish,
-                    SymmetricCipher::Cbc, SymmetricCipher::Decrypt, finalKey, m_encryptionIV));
+                    SymmetricCipher::Cbc, SymmetricCipher::Decrypt));
         }
 
-        cipherStream->open(QIODevice::ReadOnly);
+        if (!cipherStream->init(finalKey, m_encryptionIV)) {
+            raiseError(cipherStream->errorString());
+            return Q_NULLPTR;
+        }
+        if (!cipherStream->open(QIODevice::ReadOnly)) {
+            raiseError(cipherStream->errorString());
+            return Q_NULLPTR;
+        }
 
         bool success = verifyKey(cipherStream.data());
 
@@ -372,9 +392,18 @@ QByteArray KeePass1Reader::key(const QByteArray& password, const QByteArray& key
     key.setPassword(password);
     key.setKeyfileData(keyfileData);
 
+    bool ok;
+    QString errorString;
+    QByteArray transformedKey = key.transform(m_transformSeed, m_transformRounds, &ok, &errorString);
+
+    if (!ok) {
+        raiseError(errorString);
+        return QByteArray();
+    }
+
     CryptoHash hash(CryptoHash::Sha256);
     hash.addData(m_masterSeed);
-    hash.addData(key.transform(m_transformSeed, m_transformRounds));
+    hash.addData(transformedKey);
     return hash.result();
 }
 

@@ -34,6 +34,12 @@ private:
     Crypto();
     static bool checkAlgorithms();
     static bool selfTest();
+    static void raiseError(const QString& str);
+    static bool testSha256();
+    static bool testAes256Cbc();
+    static bool testAes256Ecb();
+    static bool testTwofish();
+    static bool testSalsa20();
 
     static bool m_initalized;
     static QString m_errorStr;

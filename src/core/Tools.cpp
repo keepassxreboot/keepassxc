@@ -39,10 +39,12 @@
 
 #include "config-keepassx.h"
 
+#if defined(HAVE_RLIMIT_CORE)
+#include <sys/resource.h>
+#endif
+
 #if defined(HAVE_PR_SET_DUMPABLE)
 #include <sys/prctl.h>
-#elif defined(HAVE_RLIMIT_CORE)
-#include <sys/resource.h>
 #endif
 
 #ifdef HAVE_PT_DENY_ATTACH
@@ -222,21 +224,23 @@ QString platform()
 
 void disableCoreDumps()
 {
-    bool success = false;
+    // default to true
+    // there is no point in printing a warning if this is not implemented on the platform
+    bool success = true;
 
-    // prefer PR_SET_DUMPABLE since that also prevents ptrace
-#if defined(HAVE_PR_SET_DUMPABLE)
-    success = (prctl(PR_SET_DUMPABLE, 0) == 0);
-#elif defined(HAVE_RLIMIT_CORE)
+#if defined(HAVE_RLIMIT_CORE)
     struct rlimit limit;
     limit.rlim_cur = 0;
     limit.rlim_max = 0;
-    success = (setrlimit(RLIMIT_CORE, &limit) == 0);
+    success = success && (setrlimit(RLIMIT_CORE, &limit) == 0);
+#endif
+
+#if defined(HAVE_PR_SET_DUMPABLE)
+    success = success && (prctl(PR_SET_DUMPABLE, 0) == 0);
 #endif
 
     // Mac OS X
 #ifdef HAVE_PT_DENY_ATTACH
-    // make sure setrlimit() and ptrace() succeeded
     success = success && (ptrace(PT_DENY_ATTACH, 0, 0, 0) == 0);
 #endif
 

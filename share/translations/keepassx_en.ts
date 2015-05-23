@@ -111,6 +111,15 @@
         <source>Different passwords supplied.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Failed to set key file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to set %1 as the Key file:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseOpenWidget</name>
@@ -270,6 +279,31 @@ Save changes?</source>
         <source>locked</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>The database you are trying to open is locked by another instance of KeePassX.
+Do you want to open it anyway? Alternatively the database is opened read-only.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lock database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t lock the database as you are currently editing it.
+Please press cancel to finish your changes or discard them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This database has never been saved.
+You can save the database or stop locking it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This database has been modified.
+Do you want to save the database before locking it?
+Otherwise your changes are lost.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
@@ -314,6 +348,14 @@ Save changes?</source>
     </message>
     <message>
         <source>Current group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -431,6 +473,10 @@ Save changes?</source>
     </message>
     <message>
         <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -584,6 +630,14 @@ Save changes?</source>
         <source>Auto-type</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Use default auto-type sequence of parent group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set default auto-type sequence</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
@@ -735,6 +789,10 @@ Save changes?</source>
         <source>Root</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KeePass2Reader</name>
@@ -748,6 +806,10 @@ Save changes?</source>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -786,10 +848,6 @@ Save changes?</source>
     </message>
     <message>
         <source>Groups</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Extras</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -922,6 +980,10 @@ Save changes?</source>
     </message>
     <message>
         <source>Toggle window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tools</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1105,10 +1167,6 @@ Save changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Mark as modified on expanded state changes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Automatically save on exit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1144,6 +1202,10 @@ Save changes?</source>
         <source>Hide window to system tray when minimized</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Remember last key files</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>
@@ -1172,14 +1234,6 @@ Save changes?</source>
     <name>UnlockDatabaseWidget</name>
     <message>
         <source>Unlock database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Wrong key.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

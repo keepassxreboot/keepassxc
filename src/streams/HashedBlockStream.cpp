@@ -150,6 +150,7 @@ bool HashedBlockStream::readHashedBlock()
     if (m_blockSize == 0) {
         if (hash.count('\0') != 32) {
             m_error = true;
+            setErrorString("Invalid hash of final block.");
             return false;
         }
 
@@ -166,6 +167,7 @@ bool HashedBlockStream::readHashedBlock()
 
     if (hash != CryptoHash::hash(m_buffer, CryptoHash::Sha256)) {
         m_error = true;
+        setErrorString("Mismatch between hash and data.");
         return false;
     }
 
@@ -213,6 +215,7 @@ bool HashedBlockStream::writeHashedBlock()
 {
     if (!Endian::writeInt32(m_blockIndex, m_baseDevice, ByteOrder)) {
         m_error = true;
+        setErrorString(m_baseDevice->errorString());
         return false;
     }
     m_blockIndex++;
@@ -227,17 +230,20 @@ bool HashedBlockStream::writeHashedBlock()
 
     if (m_baseDevice->write(hash) != hash.size()) {
         m_error = true;
+        setErrorString(m_baseDevice->errorString());
         return false;
     }
 
     if (!Endian::writeInt32(m_buffer.size(), m_baseDevice, ByteOrder)) {
         m_error = true;
+        setErrorString(m_baseDevice->errorString());
         return false;
     }
 
     if (!m_buffer.isEmpty()) {
         if (m_baseDevice->write(m_buffer) != m_buffer.size()) {
             m_error = true;
+            setErrorString(m_baseDevice->errorString());
             return false;
         }
 
