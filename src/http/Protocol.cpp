@@ -77,7 +77,8 @@ static QByteArray decrypt2(const QByteArray & data, SymmetricCipherGcrypt & ciph
 
     //Decrypt
     cipher.reset();
-    QByteArray buffer = cipher.process(data);
+    bool ok;
+    QByteArray buffer = cipher.process(data, &ok);
 
     //Remove PKCS#7 padding
     buffer.chop(buffer.at(buffer.length()-1));
