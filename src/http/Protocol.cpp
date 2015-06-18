@@ -117,6 +117,7 @@ Request::Request():
     m_requestType(INVALID),
     m_cipher(SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Decrypt)
 {             
+  m_cipher.init();
 }
 
 QString Request::nonce() const
@@ -286,6 +287,7 @@ Response::Response(const Request &request, QString hash):
     m_hash(hash),
     m_cipher(SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Encrypt)
 {
+  m_cipher.init();
 }
 
 void Response::setVerifier(QString key)
