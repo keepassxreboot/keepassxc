@@ -162,7 +162,7 @@ void Request::setKey(const QString &key)
 
 QString Request::submitUrl() const
 {
-    Q_ASSERT(m_cipher.isValid());
+    //Q_ASSERT(m_cipher.isValid());
     return decrypt(m_submitUrl, m_cipher);
 }
 
@@ -173,7 +173,7 @@ void Request::setSubmitUrl(const QString &submitUrl)
 
 QString Request::url() const
 {
-    Q_ASSERT(m_cipher.isValid());
+    //Q_ASSERT(m_cipher.isValid());
     return decrypt(m_url, m_cipher);
 }
 
@@ -184,7 +184,7 @@ void Request::setUrl(const QString &url)
 
 QString Request::realm() const
 {
-    Q_ASSERT(m_cipher.isValid());
+    //Q_ASSERT(m_cipher.isValid());
     return decrypt(m_realm, m_cipher);
 }
 
@@ -195,7 +195,7 @@ void Request::setRealm(const QString &realm)
 
 QString Request::login() const
 {
-    Q_ASSERT(m_cipher.isValid());
+    //Q_ASSERT(m_cipher.isValid());
     return decrypt(m_login, m_cipher);
 }
 
@@ -206,7 +206,7 @@ void Request::setLogin(const QString &login)
 
 QString Request::uuid() const
 {
-    Q_ASSERT(m_cipher.isValid());
+    //Q_ASSERT(m_cipher.isValid());
     return decrypt(m_uuid, m_cipher);
 }
 
@@ -217,7 +217,7 @@ void Request::setUuid(const QString &uuid)
 
 QString Request::password() const
 {
-    Q_ASSERT(m_cipher.isValid());
+    //Q_ASSERT(m_cipher.isValid());
     return decrypt(m_password, m_cipher);
 }
 
@@ -253,7 +253,7 @@ void Request::setRequestType(const QString &requestType)
 
 bool Request::CheckVerifier(const QString &key) const
 {
-    Q_ASSERT(!m_cipher.isValid());
+    //Q_ASSERT(!m_cipher.isValid());
 
     m_cipher.setKey(decode64(key));
     m_cipher.setIv(decode64(m_nonce));
@@ -292,7 +292,7 @@ Response::Response(const Request &request, QString hash):
 
 void Response::setVerifier(QString key)
 {
-    Q_ASSERT(!m_cipher.isValid());
+    //Q_ASSERT(!m_cipher.isValid());
 
      m_cipher.setKey(decode64(key));
 
@@ -358,7 +358,7 @@ QVariant Response::getEntries() const
 
 void Response::setEntries(const QList<Entry> &entries)
 {
-    Q_ASSERT(m_cipher.isValid());
+    //Q_ASSERT(m_cipher.isValid());
 
     m_count = entries.count();
 
