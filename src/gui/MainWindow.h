@@ -65,6 +65,7 @@ private Q_SLOTS:
     void applySettingsChanges();
     void trayIconTriggered(QSystemTrayIcon::ActivationReason reason);
     void toggleWindow();
+    void appExit();
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);
@@ -87,6 +88,8 @@ private:
     QSystemTrayIcon* m_trayIcon;
 
     Q_DISABLE_COPY(MainWindow)
+
+    bool appExitCalled;
 };
 
 #endif // KEEPASSX_MAINWINDOW_H

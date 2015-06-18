@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>456</width>
-    <height>313</height>
+    <height>346</height>
    </rect>
   </property>
   <layout class="QFormLayout" name="formLayout">
@@ -110,6 +110,16 @@
      </property>
      <property name="text">
       <string>Hide window to system tray when minimized</string>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="0">
+    <widget class="QCheckBox" name="systrayMinimizeOnCloseCheckBox">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string>Hide window to system tray instead of App Exit</string>
      </property>
     </widget>
    </item>
