@@ -34,7 +34,7 @@ static const char * const STR_SET_LOGIN = "set-login";
 static const char * const STR_ASSOCIATE = "associate";
 static const char * const STR_TEST_ASSOCIATE = "test-associate";
 static const char * const STR_GENERATE_PASSWORD = "generate-password";
-static const char * const STR_VERSION = "1.8.3.0";
+static const char * const STR_VERSION = "1.8.4.0";
 
 }/*namespace KeepassHttpProtocol*/
 
@@ -113,10 +113,10 @@ static QString encrypt(const QString & data, SymmetricCipherGcrypt & cipher)
 /// Request
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Request::Request(): 
+Request::Request():
     m_requestType(INVALID),
     m_cipher(SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Decrypt)
-{             
+{
   m_cipher.init();
 }
 
@@ -253,7 +253,7 @@ void Request::setRequestType(const QString &requestType)
 
 bool Request::CheckVerifier(const QString &key) const
 {
-    Q_ASSERT(!m_cipher.isValid()); 
+    Q_ASSERT(!m_cipher.isValid());
 
     m_cipher.setKey(decode64(key));
     m_cipher.setIv(decode64(m_nonce));
@@ -279,8 +279,8 @@ bool Request::fromJson(QString text)
 /// Response
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Response::Response(const Request &request, QString hash):    
-    m_requestType(request.requestTypeStr()),    
+Response::Response(const Request &request, QString hash):
+    m_requestType(request.requestTypeStr()),
     m_success(false),
     m_count(-1),
     m_version(STR_VERSION),
@@ -292,7 +292,7 @@ Response::Response(const Request &request, QString hash):
 
 void Response::setVerifier(QString key)
 {
-    Q_ASSERT(!m_cipher.isValid());    
+    Q_ASSERT(!m_cipher.isValid());
 
      m_cipher.setKey(decode64(key));
 
@@ -352,7 +352,7 @@ QVariant Response::getEntries() const
     QList<QVariant> res;
     res.reserve(m_entries.size());
     Q_FOREACH (const Entry &entry, m_entries)
-	res.append(QJson::QObjectHelper::qobject2qvariant(&entry));
+  res.append(QJson::QObjectHelper::qobject2qvariant(&entry));
     return res;
 }
 
@@ -490,7 +490,7 @@ QVariant Entry::getStringFields() const
     QList<QVariant> res;
     res.reserve(m_stringFields.size());
     Q_FOREACH (const StringField &stringfield, m_stringFields)
-	res.append(QJson::QObjectHelper::qobject2qvariant(&stringfield));
+  res.append(QJson::QObjectHelper::qobject2qvariant(&stringfield));
     return res;
 }
 
