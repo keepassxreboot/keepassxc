@@ -206,13 +206,13 @@ void Server::handleRequest(const QByteArray in, QByteArray *out)
     Response protocolResp(r, QString::fromAscii(hash));
     switch(r.requestType()) {
     case INVALID: break;
-    case TEST_ASSOCIATE:    testAssociate(r, &protocolResp); break;
-    case ASSOCIATE:         associate(r, &protocolResp); break;
-    case GENERATE_PASSWORD: generatePassword(r, &protocolResp); break;
     case GET_LOGINS:        getLogins(r, &protocolResp); break;
     case GET_LOGINS_COUNT:  getLoginsCount(r, &protocolResp); break;
     case GET_ALL_LOGINS:    getAllLogins(r, &protocolResp); break;
     case SET_LOGIN:         setLogin(r, &protocolResp); break;
+    case ASSOCIATE:         associate(r, &protocolResp); break;
+    case TEST_ASSOCIATE:    testAssociate(r, &protocolResp); break;
+    case GENERATE_PASSWORD: generatePassword(r, &protocolResp); break;
     }
 
     *out = protocolResp.toJson().toUtf8();
