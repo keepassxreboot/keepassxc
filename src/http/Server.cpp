@@ -75,14 +75,19 @@ void Server::getLogins(const Request &r, Response *protocolResp)
     if (!r.CheckVerifier(key))
         return;
 
-    protocolResp->setSuccess();
     protocolResp->setId(r.id());
     protocolResp->setVerifier(key);
     QList<Entry> entries = findMatchingEntries(r.id(), r.url(), r.submitUrl(), r.realm());  //TODO: filtering, request confirmation [in db adaptation layer?]
-    if (r.sortSelection()) {
-        //TODO: sorting (in db adaptation layer? here?)
+    if (entries.count() == 0) {
+      protocolResp->setError("url not found!");
     }
-    protocolResp->setEntries(entries);
+    else {
+      if (r.sortSelection()) {
+          //TODO: sorting (in db adaptation layer? here?)
+      }
+      protocolResp->setSuccess();
+      protocolResp->setEntries(entries);
+    }
 }
 
 void Server::getLoginsCount(const Request &r, Response *protocolResp)
