@@ -216,6 +216,24 @@ void Server::handleRequest(const QByteArray in, QByteArray *out)
     }
 
     *out = protocolResp.toJson().toUtf8();
+
+    // THIS IS A FAKE HACK!!!
+    // the real "error" is a misbehavior in the QJSON qobject2qvariant method
+    // 1. getLogins returns an empty QList<Entry> into protocolResp->m_entries
+    // in toJson() function the following happend:
+    // 2. QJson::QObjectHelper::qobject2qvariant marks m_entries as invalid !!!
+    // 3. QJson::Serializer write out Entries as null instead of empty list
+    //(4. ChromeIPass tries to access Entries.length and fails with null pointer exception)
+    // the fake workaround replaces the (wrong) "Entries":null with "Entries:[] to give
+    // chromeIPass (and passIFox) en empty list
+    QString tmp_out = QString(*out);
+    int tmp_pos1 = tmp_out.indexOf("\"Count\":0,");
+    int tmp_pos2 = tmp_out.indexOf("\"Entries\":null,");
+    if (tmp_pos1 != -1 && tmp_pos2 != -1) {
+        tmp_out.replace(tmp_pos2, 15, "\"Entries\":[],");
+    }
+    *out = tmp_out.toUtf8();
+
     Q_EMIT donewrk();
 }
 
