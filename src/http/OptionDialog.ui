@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>463</width>
+    <width>531</width>
     <height>354</height>
    </rect>
   </property>
@@ -28,7 +28,7 @@ This is required for accessing keypass database from ChromeIPass or PassIfox</st
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -201,6 +201,33 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
         </widget>
        </item>
        <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>HTTP Port:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="httpPort">
+           <property name="inputMask">
+            <string notr="true">d0000</string>
+           </property>
+           <property name="placeholderText">
+            <string>Default port: 19455</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -225,11 +252,6 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
    <extends>QWidget</extends>
    <header>http/HttpPasswordGeneratorWidget.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>PasswordEdit</class>
-   <extends>QLineEdit</extends>
-   <header>gui/PasswordEdit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

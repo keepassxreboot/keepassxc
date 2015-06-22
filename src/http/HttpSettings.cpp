@@ -126,6 +126,18 @@ void HttpSettings::setSupportKphFields(bool supportKphFields)
     config()->set("Http/SupportKphFields", supportKphFields);
 }
 
+int  HttpSettings::httpPort()
+{
+    static const int PORT = 19455;
+
+    return config()->get("Http/Port", PORT).toInt();
+}
+
+void HttpSettings::setHttpPort(int port)
+{
+    config()->set("Http/Port", port);
+}
+
 bool HttpSettings::passwordUseNumbers()
 {
     return config()->get("Http/generator/Numbers", true).toBool();

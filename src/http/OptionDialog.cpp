@@ -42,6 +42,7 @@ void OptionDialog::loadSettings()
         ui->sortByUsername->setChecked(true);
     else
         ui->sortByTitle->setChecked(true);
+    ui->httpPort->setText(QString::number(settings.httpPort()));
 
 /*
     ui->checkBoxLower->setChecked(settings.passwordUseLowercase());
@@ -68,6 +69,7 @@ void OptionDialog::saveSettings()
     settings.setUnlockDatabase(ui->unlockDatabase->isChecked());
     settings.setMatchUrlScheme(ui->matchUrlScheme->isChecked());
     settings.setSortByUsername(ui->sortByUsername->isChecked());
+    settings.setHttpPort(ui->httpPort->text().toInt());
 
 /*
     settings.setPasswordUseLowercase(ui->checkBoxLower->isChecked());

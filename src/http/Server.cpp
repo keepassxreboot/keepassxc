@@ -322,9 +322,9 @@ void Server::start(void)
 {
     if (m_started) return;
 
-    static const int PORT = 19455;
+    int port = HttpSettings::httpPort();
 
-    daemon = MHD_start_daemon(MHD_USE_SELECT_INTERNALLY, PORT, NULL, NULL,
+    daemon = MHD_start_daemon(MHD_USE_SELECT_INTERNALLY, port, NULL, NULL,
                               &this->request_handler_wrapper, this,
                               MHD_OPTION_NOTIFY_COMPLETED,
                               this->request_completed, NULL,

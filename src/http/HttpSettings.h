@@ -42,6 +42,8 @@ public:
     static void setSearchInAllDatabases(bool searchInAllDatabases);
     static bool supportKphFields();
     static void setSupportKphFields(bool supportKphFields);
+    static int  httpPort();
+    static void setHttpPort(int port);
 
     static bool passwordUseNumbers();
     static void setPasswordUseNumbers(bool useNumbers);
