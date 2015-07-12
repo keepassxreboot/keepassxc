@@ -141,12 +141,12 @@
       <string>Copy attribute to clipboard</string>
      </property>
      <addaction name="actionEntryCopyTitle"/>
-     <addaction name="actionEntryCopyUsername"/>
-     <addaction name="actionEntryCopyPassword"/>
      <addaction name="actionEntryCopyURL"/>
      <addaction name="actionEntryCopyNotes"/>
      <addaction name="separator"/>
     </widget>
+    <addaction name="actionEntryCopyUsername"/>
+    <addaction name="actionEntryCopyPassword"/>
     <addaction name="actionEntryNew"/>
     <addaction name="actionEntryClone"/>
     <addaction name="actionEntryEdit"/>
@@ -343,7 +343,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Username</string>
+    <string>Copy username</string>
    </property>
    <property name="toolTip">
     <string>Copy username to clipboard</string>
@@ -354,7 +354,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Password</string>
+    <string>Copy password</string>
    </property>
    <property name="toolTip">
     <string>Copy password to clipboard</string>
