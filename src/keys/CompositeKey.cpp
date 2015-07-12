@@ -186,10 +186,10 @@ void TransformKeyBenchmarkThread::run()
     t.start();
 
     do {
-        if (!cipher.processInPlace(key, 100)) {
+        if (!cipher.processInPlace(key, 10000)) {
             m_rounds = -1;
             return;
         }
-        m_rounds += 100;
+        m_rounds += 10000;
     } while (t.elapsed() < m_msec);
 }
