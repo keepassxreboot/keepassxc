@@ -18,6 +18,7 @@
 #ifndef KEEPASSX_INACTIVITYTIMER_H
 #define KEEPASSX_INACTIVITYTIMER_H
 
+#include <QMutex>
 #include <QObject>
 
 #include "core/Global.h"
@@ -46,6 +47,7 @@ private Q_SLOTS:
 private:
     QTimer* m_timer;
     bool m_active;
+    QMutex m_emitMutx;
 };
 
 #endif // KEEPASSX_INACTIVITYTIMER_H

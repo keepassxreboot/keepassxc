@@ -67,7 +67,14 @@ bool InactivityTimer::eventFilter(QObject* watched, QEvent* event)
 
 void InactivityTimer::timeout()
 {
+    // make sure we don't emit the signal a second time while it's still processed
+    if (!m_emitMutx.tryLock()) {
+        return;
+    }
+
     if (m_active && !m_timer->isActive()) {
         Q_EMIT inactivityDetected();
     }
+
+    m_emitMutx.unlock();
 }
