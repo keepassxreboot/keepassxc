@@ -25,6 +25,7 @@
 #include <QLineEdit>
 #include <QSplitter>
 #include <QTimer>
+#include <QProcess>
 
 #include "autotype/AutoType.h"
 #include "core/Config.h"
@@ -452,9 +453,18 @@ void DatabaseWidget::openUrl()
 
 void DatabaseWidget::openUrlForEntry(Entry* entry)
 {
-    if (!entry->url().isEmpty()) {
-        QDesktopServices::openUrl(entry->url());
+    QString urlString = entry->resolvePlaceholders(entry->url());
+    if (urlString.isEmpty()) {
+        return;
     }
+
+    if (urlString.startsWith("cmd://") && (urlString.length() > 6)) {
+        QProcess::startDetached(urlString.mid(6));
+    }
+    else {
+        QDesktopServices::openUrl(urlString);
+    }
+
 }
 
 void DatabaseWidget::createGroup()
