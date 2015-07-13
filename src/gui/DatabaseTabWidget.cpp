@@ -225,9 +225,9 @@ bool DatabaseTabWidget::closeDatabase(Database* db)
         QMessageBox::StandardButton result =
             MessageBox::question(
             this, tr("Close?"),
-            tr("\"%1\" is in edit mode.\nClose anyway?").arg(dbName),
-            QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
-        if (result == QMessageBox::No) {
+            tr("\"%1\" is in edit mode.\nDiscard changes and close anyway?").arg(dbName),
+            QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Cancel);
+        if (result == QMessageBox::Cancel) {
             return false;
         }
     }
@@ -240,7 +240,7 @@ bool DatabaseTabWidget::closeDatabase(Database* db)
                 MessageBox::question(
                 this, tr("Save changes?"),
                 tr("\"%1\" was modified.\nSave changes?").arg(dbName),
-                QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Yes);
+                QMessageBox::Yes | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Yes);
             if (result == QMessageBox::Yes) {
                 saveDatabase(db);
             }
