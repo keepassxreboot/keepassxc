@@ -41,6 +41,7 @@ private Q_SLOTS:
     void testDeletedObjects();
     void testBroken();
     void testBroken_data();
+    void testEmptyUuids();
     void cleanupTestCase();
 
 private:

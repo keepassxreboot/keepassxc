@@ -395,6 +395,19 @@ void TestKeePass2XmlReader::testBroken_data()
     QTest::newRow("BrokenDeletedObjects (not strict)") << "BrokenDeletedObjects" << false << false;
 }
 
+void TestKeePass2XmlReader::testEmptyUuids()
+{
+    KeePass2XmlReader reader;
+    reader.setStrictMode(true);
+    QString xmlFile = QString("%1/%2.xml").arg(KEEPASSX_TEST_DATA_DIR, "EmptyUuids");
+    QVERIFY(QFile::exists(xmlFile));
+    QScopedPointer<Database> db(reader.readDatabase(xmlFile));
+    if (reader.hasError()) {
+        qWarning("Reader error: %s", qPrintable(reader.errorString()));
+    }
+    QVERIFY(!reader.hasError());
+}
+
 void TestKeePass2XmlReader::cleanupTestCase()
 {
     delete m_db;
