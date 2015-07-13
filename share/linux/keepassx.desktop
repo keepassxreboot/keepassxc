@@ -4,6 +4,7 @@ GenericName=Cross Platform Password Manager
 GenericName[de]=Passwortverwaltung
 GenericName[es]=Gestor de contraseñas multiplataforma
 GenericName[fr]=Gestionnaire de mot de passe
+GenericName[ru]=Кроссплатформенный менеджер паролей
 Exec=keepassx %f
 Icon=keepassx
 Terminal=false
