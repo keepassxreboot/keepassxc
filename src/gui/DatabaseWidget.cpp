@@ -458,8 +458,10 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
         return;
     }
 
-    if (urlString.startsWith("cmd://") && (urlString.length() > 6)) {
-        QProcess::startDetached(urlString.mid(6));
+    if (urlString.startsWith("cmd://")) {
+        if (urlString.length() > 6) {
+            QProcess::startDetached(urlString.mid(6));
+        }
     }
     else {
         QDesktopServices::openUrl(urlString);
