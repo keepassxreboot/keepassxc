@@ -72,7 +72,7 @@ MainWindow::MainWindow()
 
     m_inactivityTimer = new InactivityTimer(this);
     connect(m_inactivityTimer, SIGNAL(inactivityDetected()),
-            m_ui->tabWidget, SLOT(lockDatabases()));
+            this, SLOT(lockDatabasesAfterInactivity()));
     applySettingsChanges();
 
     setShortcut(m_ui->actionDatabaseOpen, QKeySequence::Open, Qt::CTRL + Qt::Key_O);
@@ -577,6 +577,16 @@ void MainWindow::toggleWindow()
         raise();
         activateWindow();
     }
+}
+
+void MainWindow::lockDatabasesAfterInactivity()
+{
+    // ignore event if a modal dialog is open (such as a message box or file dialog)
+    if (QApplication::activeModalWidget()) {
+        return;
+    }
+
+    m_ui->tabWidget->lockDatabases();
 }
 
 bool MainWindow::isTrayIconEnabled() const
