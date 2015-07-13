@@ -453,14 +453,16 @@ void DatabaseWidget::openUrl()
 
 void DatabaseWidget::openUrlForEntry(Entry* entry)
 {
-    QString UrlString = entry->resolvePlaceholders(entry->url());
-    if (UrlString.isEmpty())
+    QString urlString = entry->resolvePlaceholders(entry->url());
+    if (urlString.isEmpty()) {
         return;
+    }
 
-    if (UrlString.startsWith("cmd://") && UrlString.length()>6){
-            QProcess::startDetached(UrlString.mid(6));
-    } else {
-        QDesktopServices::openUrl(UrlString);
+    if (urlString.startsWith("cmd://") && (urlString.length() > 6)) {
+        QProcess::startDetached(urlString.mid(6));
+    }
+    else {
+        QDesktopServices::openUrl(urlString);
     }
 
 }
