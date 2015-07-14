@@ -120,6 +120,7 @@
     <addaction name="actionChangeDatabaseSettings"/>
     <addaction name="separator"/>
     <addaction name="actionImportKeePass1"/>
+    <addaction name="actionExportCsv"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -411,6 +412,14 @@
    </property>
    <property name="text">
     <string>Notes</string>
+   </property>
+  </action>
+  <action name="actionExportCsv">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Export to CSV file</string>
    </property>
   </action>
  </widget>

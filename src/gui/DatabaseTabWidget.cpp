@@ -26,6 +26,7 @@
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/qsavefile.h"
+#include "format/CsvExporter.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/DatabaseWidgetStateSync.h"
 #include "gui/DragTabBar.h"
@@ -397,6 +398,27 @@ bool DatabaseTabWidget::saveDatabaseAs(int index)
     }
 
     return saveDatabaseAs(indexDatabase(index));
+}
+
+void DatabaseTabWidget::exportToCsv()
+{
+    Database* db = indexDatabase(currentIndex());
+    if (!db) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    QString fileName = fileDialog()->getSaveFileName(this, tr("Export database to CSV file"),
+                                                     QString(), tr("CSV file").append(" (*.csv)"));
+    if (fileName.isEmpty()) {
+        return;
+    }
+
+    CsvExporter csvExporter;
+    if (!csvExporter.exportDatabase(fileName, db)) {
+        MessageBox::critical(this, tr("Error"), tr("Writing the CSV file failed.") + "\n\n"
+                             + csvExporter.errorString());
+    }
 }
 
 void DatabaseTabWidget::changeMasterKey()
