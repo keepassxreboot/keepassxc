@@ -90,6 +90,7 @@ MainWindow::MainWindow()
     m_ui->actionEntryCopyPassword->setShortcut(Qt::CTRL + Qt::Key_C);
     setShortcut(m_ui->actionEntryAutoType, QKeySequence::Paste, Qt::CTRL + Qt::Key_V);
     m_ui->actionEntryOpenUrl->setShortcut(Qt::CTRL + Qt::Key_U);
+    m_ui->actionEntryCopyURL->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_U);
 
 #ifdef Q_OS_MAC
     new QShortcut(Qt::CTRL + Qt::Key_M, this, SLOT(showMinimized()));
