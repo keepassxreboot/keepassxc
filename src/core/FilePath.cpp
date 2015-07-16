@@ -173,6 +173,7 @@ FilePath::FilePath()
 {
     const QString appDirPath = QCoreApplication::applicationDirPath();
     bool isDataDirAbsolute = QDir::isAbsolutePath(KEEPASSX_DATA_DIR);
+    Q_UNUSED(isDataDirAbsolute);
 
     if (false) {
     }
