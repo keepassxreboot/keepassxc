@@ -164,8 +164,8 @@
   <tabstop>titleEdit</tabstop>
   <tabstop>usernameEdit</tabstop>
   <tabstop>passwordEdit</tabstop>
-  <tabstop>togglePasswordButton</tabstop>
   <tabstop>passwordRepeatEdit</tabstop>
+  <tabstop>togglePasswordButton</tabstop>
   <tabstop>tooglePasswordGeneratorButton</tabstop>
   <tabstop>urlEdit</tabstop>
   <tabstop>expireCheck</tabstop>
