@@ -1,10 +1,10 @@
 [Desktop Entry]
 Name=KeePassX
-GenericName=Cross Platform Password Manager
+GenericName=Password Manager
 GenericName[de]=Passwortverwaltung
-GenericName[es]=Gestor de contraseñas multiplataforma
+GenericName[es]=Gestor de contraseñas
 GenericName[fr]=Gestionnaire de mot de passe
-GenericName[ru]=Кроссплатформенный менеджер паролей
+GenericName[ru]=менеджер паролей
 Exec=keepassx %f
 Icon=keepassx
 Terminal=false
