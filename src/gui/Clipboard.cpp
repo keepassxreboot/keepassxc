@@ -21,11 +21,6 @@
 #include <QClipboard>
 #include <QTimer>
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-#include <QDBusConnection>
-#include <QDBusMessage>
-#endif
-
 #include "core/Config.h"
 
 Clipboard* Clipboard::m_instance(Q_NULLPTR);
@@ -74,11 +69,6 @@ void Clipboard::clearClipboard()
             && (clipboard->text(QClipboard::Selection) == m_lastCopied)) {
         clipboard->clear(QClipboard::Selection);
     }
-
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    QDBusMessage message = QDBusMessage::createMethodCall("org.kde.klipper", "/klipper", "", "clearClipboardHistory");
-    QDBusConnection::sessionBus().send(message);
-#endif
 
     m_lastCopied.clear();
 }

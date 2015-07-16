@@ -248,10 +248,6 @@ target_link_libraries(${PROGNAME}
                       ${GCRYPT_LIBRARIES}
                       ${ZLIB_LIBRARIES})
 
-if(UNIX AND NOT APPLE)
-  target_link_libraries(${PROGNAME} ${QT_QTDBUS_LIBRARY})
-endif()
-
 set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
 
 if(APPLE)

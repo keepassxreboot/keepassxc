@@ -93,10 +93,6 @@ set(TEST_LIBRARIES
     ${ZLIB_LIBRARIES}
 )
 
-if(UNIX AND NOT APPLE)
-  set(TEST_LIBRARIES ${TEST_LIBRARIES} ${QT_QTDBUS_LIBRARY})
-endif()
-
 set(modeltest_SOURCRS modeltest.cpp)
 qt4_wrap_cpp(modeltest_SOURCRS modeltest.h)
 add_library(modeltest STATIC ${modeltest_SOURCRS})
