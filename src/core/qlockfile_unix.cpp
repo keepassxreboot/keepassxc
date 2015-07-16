@@ -176,7 +176,7 @@ bool QLockFilePrivate::isApparentlyStale() const
         if (::kill(pid, 0) == -1 && errno == ESRCH)
             return true; // PID doesn't exist anymore
     }
-    const qint64 age = QFileInfo(fileName).lastModified().msecsTo(QDateTime::currentDateTime());
+    const qint64 age = QFileInfo(fileName).lastModified().secsTo(QDateTime::currentDateTime()) * 1000;
     return staleLockTime > 0 && age > staleLockTime;
 }
 
