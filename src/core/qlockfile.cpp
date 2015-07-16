@@ -33,8 +33,11 @@
 
 #include "qlockfile.h"
 #include "qlockfile_p.h"
-
-#include <QElapsedTimer>
+#if QT_VERSION >= QT_VERSION_CHECK(4, 7, 0)
+#    include <QElapsedTimer>
+#else
+#    include <QTime>
+#endif
 #include <QDateTime>
 
 QT_BEGIN_NAMESPACE
@@ -199,7 +202,11 @@ bool QLockFile::lock()
 bool QLockFile::tryLock(int timeout)
 {
     Q_D(QLockFile);
+#if QT_VERSION >= QT_VERSION_CHECK(4, 7, 0)
     QElapsedTimer timer;
+#else
+    QTime timer;
+#endif
     if (timeout > 0)
         timer.start();
     int sleepTime = 100;
@@ -224,7 +231,7 @@ bool QLockFile::tryLock(int timeout)
             }
             break;
         }
-        if (timeout == 0 || (timeout > 0 && timer.hasExpired(timeout)))
+        if (timeout == 0 || (timeout > 0 && (timer.elapsed() > timeout)))
             return false;
         QLockFileThread::msleep(sleepTime);
         if (sleepTime < 5 * 1000)
