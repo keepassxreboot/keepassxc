@@ -1,189 +1,189 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="it" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.0">
 <context>
     <name>AboutDialog</name>
     <message>
         <source>About KeePassX</source>
-        <translation>A proposito di KeePassX</translation>
+        <translation>关于 KeePassX</translation>
     </message>
     <message>
         <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassX è distribuito sotto i termini della licenza 
-GNU General Public License (GPL) versione 2 o, a tua scelta, della versione 3.</translation>
+        <translation>KeePassX 使用的是第 2 版 GNU 通用公共授权协议(GPL)(你可以根据需要选用第 3 版).</translation>
     </message>
 </context>
 <context>
     <name>AutoType</name>
     <message>
         <source>Auto-Type - KeePassX</source>
-        <translation>Auto-Type - KeePassX</translation>
+        <translation>KeePassX - 自动输入</translation>
     </message>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation type="unfinished"/>
+        <translation>无法找到符合窗口标题的项目</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeAssociationsModel</name>
     <message>
         <source>Window</source>
-        <translation>Finestra</translation>
+        <translation>窗口</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Sequenza</translation>
+        <translation>顺序</translation>
     </message>
     <message>
         <source>Default sequence</source>
-        <translation>Sequenza predefinita</translation>
+        <translation>默认顺序</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassX</source>
-        <translation>Auto-Type - KeePassX</translation>
+        <translation>KeePassX - 自动输入</translation>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>Selezionare una voce per Auto-Type:</translation>
+        <translation>选择自动输入的项目</translation>
     </message>
 </context>
 <context>
     <name>ChangeMasterKeyWidget</name>
     <message>
         <source>Password</source>
-        <translation>Password</translation>
+        <translation>密码</translation>
     </message>
     <message>
         <source>Enter password:</source>
-        <translation>Inserire password:</translation>
+        <translation>输入密码：</translation>
     </message>
     <message>
         <source>Repeat password:</source>
-        <translation>Ripetere password:</translation>
+        <translation>重复密码：</translation>
     </message>
     <message>
         <source>Key file</source>
-        <translation>File chiave</translation>
+        <translation>秘钥文件</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Sfogliare</translation>
+        <translation>浏览</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Creare</translation>
+        <translation>创建</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>File chiave</translation>
+        <translation>秘钥文件</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Tutti i file</translation>
+        <translation>所有文件</translation>
     </message>
     <message>
         <source>Create Key File...</source>
-        <translation>Creare file chiave...</translation>
+        <translation>创建秘钥文件...</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Errore</translation>
+        <translation>错误</translation>
     </message>
     <message>
         <source>Unable to create Key File : </source>
-        <translation>Impossibile creare file chiave:</translation>
+        <translation>无法创建秘钥文件：</translation>
     </message>
     <message>
         <source>Select a key file</source>
-        <translation>Selezionare file chiave</translation>
+        <translation>选择一个秘钥文件</translation>
     </message>
     <message>
         <source>Question</source>
-        <translation>Domanda</translation>
+        <translation>问题</translation>
     </message>
     <message>
         <source>Do you really want to use an empty string as password?</source>
-        <translation>Vuoi veramente usare una stringa vuota come password?</translation>
+        <translation>你确定要使用空密码？</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Sono state fornite password differenti.</translation>
+        <translation>你输入了不同的密码</translation>
     </message>
     <message>
         <source>Failed to set key file</source>
-        <translation type="unfinished"/>
+        <translation>设置秘钥文件失败</translation>
     </message>
     <message>
         <source>Failed to set %1 as the Key file:
 %2</source>
-        <translation type="unfinished"/>
+        <translation>无法设置 %1 为秘钥文件:
+%2</translation>
     </message>
 </context>
 <context>
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Enter master key</source>
-        <translation>Inserire password</translation>
+        <translation>输入主密码</translation>
     </message>
     <message>
         <source>Key File:</source>
-        <translation>File Chiave:</translation>
+        <translation>秘钥文件：</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Password:</translation>
+        <translation>密码：</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Sfogliare</translation>
+        <translation>浏览</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Errore</translation>
+        <translation>错误</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Impossibile aprire il database.</translation>
+        <translation>无法打开数据库</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>Impossibile aprire il file chiave</translation>
+        <translation>无法打开秘钥文件</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Tutti i file</translation>
+        <translation>所有文件</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>File chiave</translation>
+        <translation>秘钥文件</translation>
     </message>
     <message>
         <source>Select key file</source>
-        <translation>Selezionare file chiave</translation>
+        <translation>选择秘钥文件</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidget</name>
     <message>
         <source>Database name:</source>
-        <translation>Nome database:</translation>
+        <translation>数据库名称：</translation>
     </message>
     <message>
         <source>Database description:</source>
-        <translation>Descrizione database:</translation>
+        <translation>数据库介绍：</translation>
     </message>
     <message>
         <source>Transform rounds:</source>
-        <translation>Round di trasformazione:</translation>
+        <translation>加密转换次数：</translation>
     </message>
     <message>
         <source>Default username:</source>
-        <translation>Nome utente predefinito:</translation>
+        <translation>默认用户名：</translation>
     </message>
     <message>
         <source>Use recycle bin:</source>
-        <translation>Utilizzare cestino:</translation>
+        <translation>使用垃圾桶：</translation>
     </message>
     <message>
         <source> MiB</source>
@@ -191,301 +191,306 @@ GNU General Public License (GPL) versione 2 o, a tua scelta, della versione 3.</
     </message>
     <message>
         <source>Benchmark</source>
-        <translation>Benchmark</translation>
+        <translation>基准测试</translation>
     </message>
     <message>
         <source>Max. history items:</source>
-        <translation>Max. oggetti nella cronologia:</translation>
+        <translation>最大历史记录数：</translation>
     </message>
     <message>
         <source>Max. history size:</source>
-        <translation>Max. grandezza della cronologia:</translation>
+        <translation>最大历史记录大小：</translation>
     </message>
 </context>
 <context>
     <name>DatabaseTabWidget</name>
     <message>
         <source>Root</source>
-        <translation>Root</translation>
+        <translation>根</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>Database KeePass 2</translation>
+        <translation>KeePass 2 数据库</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Tutti i file</translation>
+        <translation>所有文件</translation>
     </message>
     <message>
         <source>Open database</source>
-        <translation>Aprire database</translation>
+        <translation>打开数据库</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation>Avviso</translation>
+        <translation>警告</translation>
     </message>
     <message>
         <source>File not found!</source>
-        <translation>File non trovato!</translation>
+        <translation>找不到文件！</translation>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
-        <translation>Aprire database KeePass 1</translation>
+        <translation>打开 KeePass 1 数据库</translation>
     </message>
     <message>
         <source>KeePass 1 database</source>
-        <translation>Database KeePass 1</translation>
+        <translation>KeePass 1 数据库</translation>
     </message>
     <message>
         <source>All files (*)</source>
-        <translation>Tutti i file (*)</translation>
+        <translation>所有文件 (*)</translation>
     </message>
     <message>
         <source>Close?</source>
-        <translation>Chiudere?</translation>
+        <translation>关闭？</translation>
     </message>
     <message>
         <source>&quot;%1&quot; is in edit mode.
 Close anyway?</source>
-        <translation>&quot;%1&quot; è in modalità modifica.
-Chiudere comunque?</translation>
+        <translation>正在编辑 &quot;%1&quot; 。
+仍要关闭吗？</translation>
     </message>
     <message>
         <source>Save changes?</source>
-        <translation>Salvare modifiche?</translation>
+        <translation>保存修改？</translation>
     </message>
     <message>
         <source>&quot;%1&quot; was modified.
 Save changes?</source>
-        <translation>&quot;%1&quot; è stata modificata.
-Salvare le modifiche?</translation>
+        <translation>&quot;%1&quot; 已被修改。
+要保存吗？</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Errore</translation>
+        <translation>错误</translation>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation>Scrittura del database fallita.</translation>
+        <translation>数据库写入失败</translation>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Salvare database come</translation>
+        <translation>另存数据库为</translation>
     </message>
     <message>
         <source>New database</source>
-        <translation>Nuovo database</translation>
+        <translation>新建数据库</translation>
     </message>
     <message>
         <source>locked</source>
-        <translation>bloccato</translation>
+        <translation>已锁</translation>
     </message>
     <message>
         <source>The database you are trying to open is locked by another instance of KeePassX.
 Do you want to open it anyway? Alternatively the database is opened read-only.</source>
-        <translation type="unfinished"/>
+        <translation>你要打开的数据库已被另一个KeePassX锁住。
+你确定要以只读方式的打开吗？</translation>
     </message>
     <message>
         <source>Lock database</source>
-        <translation type="unfinished"/>
+        <translation>锁住数据库</translation>
     </message>
     <message>
         <source>Can't lock the database as you are currently editing it.
 Please press cancel to finish your changes or discard them.</source>
-        <translation type="unfinished"/>
+        <translation>不能锁住正在编辑的数据库。
+选择取消继续编辑, 确定忽略编辑。</translation>
     </message>
     <message>
         <source>This database has never been saved.
 You can save the database or stop locking it.</source>
-        <translation type="unfinished"/>
+        <translation>数据库未保存。
+你可以保存数据库或者中止锁住它。</translation>
     </message>
     <message>
         <source>This database has been modified.
 Do you want to save the database before locking it?
 Otherwise your changes are lost.</source>
-        <translation type="unfinished"/>
+        <translation>数据库已经更改。
+你想在锁住它以前保存修改吗？
+否则修改将会丢失。</translation>
     </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
     <message>
         <source>Change master key</source>
-        <translation>Cambiare password principale</translation>
+        <translation>更改主密码</translation>
     </message>
     <message>
         <source>Delete entry?</source>
-        <translation>Eliminare voce?</translation>
+        <translation>删除项目？</translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>Vuoi veramente eliminare la voce &quot;%1&quot;?</translation>
+        <translation>你确定永远删除 &quot;%1&quot; 项目吗？</translation>
     </message>
     <message>
         <source>Delete entries?</source>
-        <translation>Eliminare voci?</translation>
+        <translation>删除项目？</translation>
     </message>
     <message>
         <source>Do you really want to delete %1 entries for good?</source>
-        <translation>Vuoi veramente eliminare %1 voci?</translation>
+        <translation>你确定永远删除 &quot;%1&quot; 项目吗？</translation>
     </message>
     <message>
         <source>Move entries to recycle bin?</source>
-        <translation>Muovere le voci nel cestino?</translation>
+        <translation>移动项目到垃圾桶？</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Vuoi veramente spostare %n voce(i) nel cestino?</numerusform><numerusform>Vuoi veramente spostare %n voce(i) nel cestino?</numerusform></translation>
+        <translation><numerusform>你确定要将 %n 个项目移到垃圾桶？</numerusform></translation>
     </message>
     <message>
         <source>Delete group?</source>
-        <translation>Eliminare gruppo?</translation>
+        <translation>删除群组？</translation>
     </message>
     <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>Vuoi veramente eliminare il gruppo &quot;%1&quot;?</translation>
+        <translation>你确定永远删除 &quot;%1&quot; 群组吗？</translation>
     </message>
     <message>
         <source>Current group</source>
-        <translation>Gruppo corrente</translation>
+        <translation>当前群组</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>错误</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation type="unfinished"/>
+        <translation>无法计算主密码</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
     <message>
         <source>Entry</source>
-        <translation>Voce</translation>
+        <translation>项目</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Avanzate</translation>
+        <translation>高级</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Icona</translation>
+        <translation>图标</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-Type</translation>
+        <translation>自动输入</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Proprietà</translation>
+        <translation>属性</translation>
     </message>
     <message>
         <source>History</source>
-        <translation>Cronologia</translation>
+        <translation>历史记录</translation>
     </message>
     <message>
         <source>Entry history</source>
-        <translation>Cronologia voce</translation>
+        <translation>项目历史</translation>
     </message>
     <message>
         <source>Add entry</source>
-        <translation>Aggiungere voce</translation>
+        <translation>添加项目</translation>
     </message>
     <message>
         <source>Edit entry</source>
-        <translation>Modificare voce</translation>
+        <translation>编辑项目</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Errore</translation>
+        <translation>错误</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Sono state immesse password differenti.</translation>
+        <translation>你输入了不同的密码</translation>
     </message>
     <message>
         <source>New attribute</source>
-        <translation>Nuovo attributo</translation>
+        <translation>新建属性</translation>
     </message>
     <message>
         <source>Select file</source>
-        <translation>Selezionare file</translation>
+        <translation>选择文件</translation>
     </message>
     <message>
         <source>Unable to open file</source>
-        <translation>Impossibile aprire il file</translation>
+        <translation>无法打开文件</translation>
     </message>
     <message>
         <source>Save attachment</source>
-        <translation>Salvare l&apos;allegato</translation>
+        <translation>保存附件</translation>
     </message>
     <message>
         <source>Unable to save the attachment:
 </source>
-        <translation>Impossibile salvare l&apos;allegato
+        <translation>无法保存附件：
 </translation>
     </message>
     <message>
         <source>Tomorrow</source>
-        <translation>Domani</translation>
+        <translation>明天</translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n settimana(e)</numerusform><numerusform>%n settimana(e)</numerusform></translation>
+        <translation><numerusform>%n 周</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n mese(i)</numerusform><numerusform>%n mese(i)</numerusform></translation>
+        <translation><numerusform>%n 个月</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
-        <translation>1 anno</translation>
+        <translation>1 年</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
     <message>
         <source>Additional attributes</source>
-        <translation>Attributi addizionali</translation>
+        <translation>附加属性</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>Aggiungere</translation>
+        <translation>添加</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Modificare</translation>
+        <translation>编辑</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Rimuovere</translation>
+        <translation>移除</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Allegati</translation>
+        <translation>附件</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Salvare</translation>
+        <translation>保存</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>打开</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation>Abilitare Auto-Type per questa voce</translation>
+        <translation>打开此项目的自动输入</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the group</source>
-        <translation>Ereditare la sequenza predefinita di Auto-Type dal gruppo</translation>
+        <translation>从父群组继承默认的自动输入顺序</translation>
     </message>
     <message>
         <source>Use custom Auto-Type sequence:</source>
-        <translation>Usare sequenza personalizzata di Auto-Type:</translation>
+        <translation>使用自定义自动输入顺序</translation>
     </message>
     <message>
         <source>+</source>
@@ -497,764 +502,764 @@ Otherwise your changes are lost.</source>
     </message>
     <message>
         <source>Window title:</source>
-        <translation>Titolo finestra:</translation>
+        <translation>窗口标题：</translation>
     </message>
     <message>
         <source>Use default sequence</source>
-        <translation>Usare sequenza predefinita</translation>
+        <translation>使用默认顺序</translation>
     </message>
     <message>
         <source>Set custom sequence:</source>
-        <translation>Impostare sequenza personalizzata:</translation>
+        <translation>设置自定义顺序</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
     <message>
         <source>Show</source>
-        <translation>Mostrare</translation>
+        <translation>显示</translation>
     </message>
     <message>
         <source>Restore</source>
-        <translation>Ripristinare</translation>
+        <translation>还原</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Eliminare</translation>
+        <translation>删除</translation>
     </message>
     <message>
         <source>Delete all</source>
-        <translation>Eliminare tutti</translation>
+        <translation>全部删除</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetMain</name>
     <message>
         <source>Title:</source>
-        <translation>Titolo:</translation>
+        <translation>标题：</translation>
     </message>
     <message>
         <source>Username:</source>
-        <translation>Nome utente:</translation>
+        <translation>用户名：</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Password:</translation>
+        <translation>密码：</translation>
     </message>
     <message>
         <source>Repeat:</source>
-        <translation>Ripetere:</translation>
+        <translation>重复：</translation>
     </message>
     <message>
         <source>Gen.</source>
-        <translation>Gen.</translation>
+        <translation>生成.</translation>
     </message>
     <message>
         <source>URL:</source>
-        <translation>URL:</translation>
+        <translation>网址：</translation>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Scade:</translation>
+        <translation>过期</translation>
     </message>
     <message>
         <source>Presets</source>
-        <translation>Programmare</translation>
+        <translation>预设</translation>
     </message>
     <message>
         <source>Notes:</source>
-        <translation>Note:</translation>
+        <translation>备注：</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidget</name>
     <message>
         <source>Group</source>
-        <translation>Gruppo</translation>
+        <translation>群组</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Icona</translation>
+        <translation>图标</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Proprietà</translation>
+        <translation>属性</translation>
     </message>
     <message>
         <source>Add group</source>
-        <translation>Aggiungere gruppo</translation>
+        <translation>添加群组</translation>
     </message>
     <message>
         <source>Edit group</source>
-        <translation>Modificare gruppo</translation>
+        <translation>编辑群组</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation>Abilitare</translation>
+        <translation>启用</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Disabilitare</translation>
+        <translation>禁用</translation>
     </message>
     <message>
         <source>Inherit from parent group (%1)</source>
-        <translation>Ereditare dal gruppo genitore (%1)</translation>
+        <translation>继承自父群组(%1)</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
     <message>
         <source>Name</source>
-        <translation>Nome</translation>
+        <translation>名称</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Note</translation>
+        <translation>备注</translation>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Scade</translation>
+        <translation>过期</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Cercare</translation>
+        <translation>搜索</translation>
     </message>
     <message>
         <source>Auto-type</source>
-        <translation>Auto-Type</translation>
+        <translation>自动输入</translation>
     </message>
     <message>
         <source>Use default auto-type sequence of parent group</source>
-        <translation type="unfinished"/>
+        <translation>使用父群组默认顺序</translation>
     </message>
     <message>
         <source>Set default auto-type sequence</source>
-        <translation type="unfinished"/>
+        <translation>设置默认自动输入顺序</translation>
     </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
     <message>
         <source>Use default icon</source>
-        <translation>Usare icona predefinita</translation>
+        <translation>使用默认图标</translation>
     </message>
     <message>
         <source>Use custom icon</source>
-        <translation>Usare icona personalizzata</translation>
+        <translation>使用自定义图标</translation>
     </message>
     <message>
         <source>Add custom icon</source>
-        <translation>Aggiungere icona personalizzata</translation>
+        <translation>添加自定义图标</translation>
     </message>
     <message>
         <source>Delete custom icon</source>
-        <translation>Rimuovere icona personalizzata</translation>
+        <translation>删除自定义图标</translation>
     </message>
     <message>
         <source>Images</source>
-        <translation>Immagini</translation>
+        <translation>图片</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Tutti i file</translation>
+        <translation>所有文件</translation>
     </message>
     <message>
         <source>Select Image</source>
-        <translation>Selezionare Immagine</translation>
+        <translation>选择图片</translation>
     </message>
     <message>
         <source>Can&apos;t delete icon!</source>
-        <translation>Impossibile eliminare icona!</translation>
+        <translation>不能删除图标！</translation>
     </message>
     <message numerus="yes">
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
-        <translation><numerusform>Impossibile eliminare l&apos;icona in quanto è in uso da %n voce(i).</numerusform><numerusform>Impossibile eliminare l&apos;icona in quanto è in uso da %n voce(i).</numerusform></translation>
+        <translation><numerusform>不能删除图标。仍在被 %n 个项目使用</numerusform></translation>
     </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
     <message>
         <source>Created:</source>
-        <translation>Creato:</translation>
+        <translation>已创建：</translation>
     </message>
     <message>
         <source>Modified:</source>
-        <translation>Modificato:</translation>
+        <translation>已修改：</translation>
     </message>
     <message>
         <source>Accessed:</source>
-        <translation>Accesso:</translation>
+        <translation>已存取：</translation>
     </message>
     <message>
         <source>Uuid:</source>
-        <translation>Uuid:</translation>
+        <translation>Uuid(通用唯一识别码):</translation>
     </message>
 </context>
 <context>
     <name>EntryAttributesModel</name>
     <message>
         <source>Name</source>
-        <translation>Nome</translation>
+        <translation>名称</translation>
     </message>
 </context>
 <context>
     <name>EntryHistoryModel</name>
     <message>
         <source>Last modified</source>
-        <translation>Ultima modifica</translation>
+        <translation>最后修改</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Titolo</translation>
+        <translation>标题</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Nome utente</translation>
+        <translation>用户名</translation>
     </message>
     <message>
         <source>URL</source>
-        <translation>URL</translation>
+        <translation>网址</translation>
     </message>
 </context>
 <context>
     <name>EntryModel</name>
     <message>
         <source>Group</source>
-        <translation>Gruppo</translation>
+        <translation>群组</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Titolo</translation>
+        <translation>标题</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Nome Utente</translation>
+        <translation>用户名</translation>
     </message>
     <message>
         <source>URL</source>
-        <translation>URL</translation>
+        <translation>网址</translation>
     </message>
 </context>
 <context>
     <name>Group</name>
     <message>
         <source>Recycle Bin</source>
-        <translation>Cestino (Gruppo)</translation>
+        <translation>垃圾桶</translation>
     </message>
 </context>
 <context>
     <name>KeePass1OpenWidget</name>
     <message>
         <source>Import KeePass1 database</source>
-        <translation>Importare database KeePass1</translation>
+        <translation>导入KeePass 1 数据库</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Errore</translation>
+        <translation>错误</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Impossibile aprire il database.</translation>
+        <translation>无法打开数据库。</translation>
     </message>
 </context>
 <context>
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
-        <translation>Impossibile leggere il file chiave.</translation>
+        <translation>无法读取秘钥文件。</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Non è un database KeePass.</translation>
+        <translation>不是KeePass 数据库。</translation>
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
-        <translation>Algoritmo di cifratura non supportato.</translation>
+        <translation>不支持的加密算法。</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>Versione database non supportata</translation>
+        <translation>不支持的KeePass 数据库版本。</translation>
     </message>
     <message>
         <source>Root</source>
-        <translation>Root (KeePass1Reader)</translation>
+        <translation>根</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation type="unfinished"/>
+        <translation>无法计算主密码</translation>
     </message>
 </context>
 <context>
     <name>KeePass2Reader</name>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Non è un database KeePass.</translation>
+        <translation>不是KeePass 的数据库。</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>Versione database non supportata</translation>
+        <translation>不支持的KeePass 数据库版本。</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
-        <translation>Password errata o database corrotto.</translation>
+        <translation>秘钥错误或数据库损坏。</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation type="unfinished"/>
+        <translation>无法计算主密码</translation>
     </message>
 </context>
 <context>
     <name>Main</name>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
-        <translation type="unfinished"/>
+        <translation>在测试加密函数时发生重大错误。</translation>
     </message>
     <message>
         <source>KeePassX - Error</source>
-        <translation type="unfinished"/>
+        <translation>KeePassX - 错误</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>Database</source>
-        <translation>Database</translation>
+        <translation>数据库</translation>
     </message>
     <message>
         <source>Recent databases</source>
-        <translation>Database recenti</translation>
+        <translation>最近的数据库</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation>Aiuto</translation>
+        <translation>帮助</translation>
     </message>
     <message>
         <source>Entries</source>
-        <translation>Voci</translation>
+        <translation>项目</translation>
     </message>
     <message>
         <source>Copy attribute to clipboard</source>
-        <translation>Copiare attributi negli appunti</translation>
+        <translation>将属性复制到剪贴板</translation>
     </message>
     <message>
         <source>Groups</source>
-        <translation>Gruppi</translation>
+        <translation>群组</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Visualizzare</translation>
+        <translation>显示</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation>Uscire</translation>
+        <translation>退出</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>A Proposito</translation>
+        <translation>关于</translation>
     </message>
     <message>
         <source>Open database</source>
-        <translation>Aprire database</translation>
+        <translation>打开数据库</translation>
     </message>
     <message>
         <source>Save database</source>
-        <translation>Salvare database</translation>
+        <translation>保存数据库</translation>
     </message>
     <message>
         <source>Close database</source>
-        <translation>Chiudere database</translation>
+        <translation>关闭数据库</translation>
     </message>
     <message>
         <source>New database</source>
-        <translation>Nuovo database</translation>
+        <translation>新建数据库</translation>
     </message>
     <message>
         <source>Add new entry</source>
-        <translation>Aggiungere nuova voce</translation>
+        <translation>新增项目</translation>
     </message>
     <message>
         <source>View/Edit entry</source>
-        <translation>Visualizzare/Modificare voce</translation>
+        <translation>浏览/编辑项目</translation>
     </message>
     <message>
         <source>Delete entry</source>
-        <translation>Eliminare voce</translation>
+        <translation>删除项目</translation>
     </message>
     <message>
         <source>Add new group</source>
-        <translation>Aggiungere nuovo gruppo</translation>
+        <translation>新增群组</translation>
     </message>
     <message>
         <source>Edit group</source>
-        <translation>Modificare gruppo</translation>
+        <translation>编辑群组</translation>
     </message>
     <message>
         <source>Delete group</source>
-        <translation>Eliminare gruppo</translation>
+        <translation>删除群组</translation>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Salvare database come</translation>
+        <translation>另存数据库为</translation>
     </message>
     <message>
         <source>Change master key</source>
-        <translation>Cambiare password principale</translation>
+        <translation>更改主密码</translation>
     </message>
     <message>
         <source>Database settings</source>
-        <translation>Impostazioni database</translation>
+        <translation>数据库设置</translation>
     </message>
     <message>
         <source>Import KeePass 1 database</source>
-        <translation>Importare database KeePass 1</translation>
+        <translation>导入KeePass 1 数据库</translation>
     </message>
     <message>
         <source>Clone entry</source>
-        <translation>Clona voce</translation>
+        <translation>复制项目</translation>
     </message>
     <message>
         <source>Find</source>
-        <translation>Trovare</translation>
+        <translation>查找</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Nome Utente</translation>
+        <translation>用户名</translation>
     </message>
     <message>
         <source>Copy username to clipboard</source>
-        <translation>Copiare nome utente negli appunti</translation>
+        <translation>将用户名复制到剪贴板</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Password</translation>
+        <translation>密码</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
-        <translation>Copiare password negli appunti</translation>
+        <translation>将密码复制到剪贴板</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Impostazioni</translation>
+        <translation>设置</translation>
     </message>
     <message>
         <source>Perform Auto-Type</source>
-        <translation>Eseguire Auto-Type</translation>
+        <translation>执行自动输入</translation>
     </message>
     <message>
         <source>Open URL</source>
-        <translation>Aprire URL</translation>
+        <translation>打开网址</translation>
     </message>
     <message>
         <source>Lock databases</source>
-        <translation>Bloccare database</translation>
+        <translation>锁住数据库</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Titolo</translation>
+        <translation>标题</translation>
     </message>
     <message>
         <source>URL</source>
-        <translation>URL</translation>
+        <translation>网址</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Note</translation>
+        <translation>备注</translation>
     </message>
     <message>
         <source>Show toolbar</source>
-        <translation>Mostrare barra degli strumenti</translation>
+        <translation>显示工具栏</translation>
     </message>
     <message>
         <source>read-only</source>
-        <translation>sola lettura</translation>
+        <translation>只读</translation>
     </message>
     <message>
         <source>Toggle window</source>
-        <translation type="unfinished"/>
+        <translation>切换窗口</translation>
     </message>
     <message>
         <source>Tools</source>
-        <translation type="unfinished"/>
+        <translation>工具</translation>
     </message>
 </context>
 <context>
     <name>PasswordGeneratorWidget</name>
     <message>
         <source>Password:</source>
-        <translation>Password:</translation>
+        <translation>密码：</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Lunghezza:</translation>
+        <translation>长度：</translation>
     </message>
     <message>
         <source>Character Types</source>
-        <translation>Tipi di carattere</translation>
+        <translation>字符类型</translation>
     </message>
     <message>
         <source>Upper Case Letters</source>
-        <translation>Lettere maiuscole</translation>
+        <translation>大写英文字母</translation>
     </message>
     <message>
         <source>Lower Case Letters</source>
-        <translation>Lettere minuscole</translation>
+        <translation>小写英文字母</translation>
     </message>
     <message>
         <source>Numbers</source>
-        <translation>Numeri</translation>
+        <translation>数字</translation>
     </message>
     <message>
         <source>Special Characters</source>
-        <translation>Caratteri speciali</translation>
+        <translation>特殊字符</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
-        <translation>Escludere caratteri simili</translation>
+        <translation>去除相似的字符</translation>
     </message>
     <message>
         <source>Ensure that the password contains characters from every group</source>
-        <translation>Assicurare che la password contenga caratteri di ogni gruppo</translation>
+        <translation>确保密码包含每种的字符</translation>
     </message>
     <message>
         <source>Accept</source>
-        <translation>Accettare</translation>
+        <translation>接受</translation>
     </message>
 </context>
 <context>
     <name>QCommandLineParser</name>
     <message>
         <source>Displays version information.</source>
-        <translation>Mostrare informazioni sulla versione.</translation>
+        <translation>显示版本信息</translation>
     </message>
     <message>
         <source>Displays this help.</source>
-        <translation>Mostrare questo aiuto.</translation>
+        <translation>显示帮助信息</translation>
     </message>
     <message>
         <source>Unknown option &apos;%1&apos;.</source>
-        <translation>Opzione sconosciuta &apos;%1&apos;.</translation>
+        <translation>未知选项 &apos;%1&apos;。</translation>
     </message>
     <message>
         <source>Unknown options: %1.</source>
-        <translation>Opzioni sconosciute &apos;%1&apos;.</translation>
+        <translation>未知选项： %1。</translation>
     </message>
     <message>
         <source>Missing value after &apos;%1&apos;.</source>
-        <translation>Manca valore dopo &apos;%1&apos;.</translation>
+        <translation>在 &apos;%1&apos; 后缺少值。</translation>
     </message>
     <message>
         <source>Unexpected value after &apos;%1&apos;.</source>
-        <translation>Valore inaspettato dopo &apos;%1&apos;.</translation>
+        <translation>&apos;%1&apos; 后有无法识别的值。</translation>
     </message>
     <message>
         <source>[options]</source>
-        <translation>[opzioni]</translation>
+        <translation>[选项]</translation>
     </message>
     <message>
         <source>Usage: %1</source>
-        <translation>Uso: %1</translation>
+        <translation>已用：%1</translation>
     </message>
     <message>
         <source>Options:</source>
-        <translation>Opzioni:</translation>
+        <translation>选项：</translation>
     </message>
     <message>
         <source>Arguments:</source>
-        <translation>Argomenti:</translation>
+        <translation>参数：</translation>
     </message>
 </context>
 <context>
     <name>QSaveFile</name>
     <message>
         <source>Existing file %1 is not writable</source>
-        <translation>Il file esistente %1 non è scrivibile</translation>
+        <translation>当前文件%1 不可写</translation>
     </message>
     <message>
         <source>Writing canceled by application</source>
-        <translation>Scrittura cancellata dall&apos;applicazione</translation>
+        <translation>应用程序取消写入</translation>
     </message>
     <message>
         <source>Partial write. Partition full?</source>
-        <translation>Scrittura parziale. Partizione piena?</translation>
+        <translation>写入不完整。磁盘满了吗？</translation>
     </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
-        <translation>Errore interno di zlib durante la compressione:</translation>
+        <translation>压缩函数库 zlib 出错：</translation>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>Errore durante la scrittura nel dispositivo:</translation>
+        <translation>下层设备写入出错：</translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>Errore durante l&apos;apertura dal dispositivo:</translation>
+        <translation>打开下层设备出错：</translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation>Errore durante la lettura dal dispositivo:</translation>
+        <translation>读取下层设备出错：</translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation>Errore interno di zlib durante la decompressione:</translation>
+        <translation>内部函数库 zlib 解压错误：</translation>
     </message>
 </context>
 <context>
     <name>QtIOCompressor::open</name>
     <message>
         <source>The gzip format not supported in this version of zlib.</source>
-        <translation>Formato gzip non supportato da questa versione di zlib.</translation>
+        <translation>当前版本的压缩函数库 zlib 不支援gzip。</translation>
     </message>
     <message>
         <source>Internal zlib error: </source>
-        <translation>Errore interno di zlib:</translation>
+        <translation>内部函数库 zlib 发生错误：</translation>
     </message>
 </context>
 <context>
     <name>SearchWidget</name>
     <message>
         <source>Find:</source>
-        <translation>Trovare:</translation>
+        <translation>查找：</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation>Case sensitive</translation>
+        <translation>区分大小写</translation>
     </message>
     <message>
         <source>Current group</source>
-        <translation>Gruppo corrente</translation>
+        <translation>当前群组</translation>
     </message>
     <message>
         <source>Root group</source>
-        <translation>Gruppo radice</translation>
+        <translation>根群组</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>Impostazioni applicazione</translation>
+        <translation>应用程序设置</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Generale</translation>
+        <translation>常规</translation>
     </message>
     <message>
         <source>Security</source>
-        <translation>Sicurezza</translation>
+        <translation>安全</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidgetGeneral</name>
     <message>
         <source>Remember last databases</source>
-        <translation>Ricordare ultimo database</translation>
+        <translation>记住最近的数据库</translation>
     </message>
     <message>
         <source>Open previous databases on startup</source>
-        <translation>Aprire precedente database all&apos;avvio</translation>
+        <translation>在启动时打开最近的数据库</translation>
     </message>
     <message>
         <source>Automatically save on exit</source>
-        <translation>Salvare automaticamente all&apos;uscita</translation>
+        <translation>离开后自动保存</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation>Salvare automaticamente dopo ogni modifica</translation>
+        <translation>修改后自动保存</translation>
     </message>
     <message>
         <source>Minimize when copying to clipboard</source>
-        <translation>Minimizzare quando si copia negli appunti</translation>
+        <translation>复制到剪贴板后最小化</translation>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
-        <translation>Usare l&apos;icona del gruppo alla creazione di una voce</translation>
+        <translation>新增项目时使用群组图标</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut</source>
-        <translation>Scorciatoia Auto-Type globale</translation>
+        <translation>自动输入全局快捷键</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global auto-type</source>
-        <translation>Utilizzare il titolo della voce per abbinare la finestra per auto-type globale</translation>
+        <translation>使用项目标题来查找自动输入的目标窗口</translation>
     </message>
     <message>
         <source>Language</source>
-        <translation type="unfinished"/>
+        <translation>语言</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation type="unfinished"/>
+        <translation>显示任务栏图标</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation type="unfinished"/>
+        <translation>将窗口最小化至任务栏</translation>
     </message>
     <message>
         <source>Remember last key files</source>
-        <translation type="unfinished"/>
+        <translation>记住最近的秘钥文件</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>
     <message>
         <source>Clear clipboard after</source>
-        <translation>Pulire appunti dopo</translation>
+        <translation>在多久后清除剪贴板</translation>
     </message>
     <message>
         <source> sec</source>
-        <translation>sec</translation>
+        <translation>秒</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
-        <translation>Bloccare database dopo un&apos;inattività di</translation>
+        <translation>在多久没有动作之后锁住数据库</translation>
     </message>
     <message>
         <source>Show passwords in cleartext by default</source>
-        <translation>Mostrare la password in chiaro in maniera predefinita</translation>
+        <translation>默认以明码显示密码</translation>
     </message>
     <message>
         <source>Always ask before performing auto-type</source>
-        <translation>Chiedere sempre prima di eseguire auto-type</translation>
+        <translation>在执行自动输入前询问</translation>
     </message>
 </context>
 <context>
     <name>UnlockDatabaseWidget</name>
     <message>
         <source>Unlock database</source>
-        <translation>Sbloccare database</translation>
+        <translation>解锁数据库</translation>
     </message>
 </context>
 <context>
     <name>WelcomeWidget</name>
     <message>
         <source>Welcome!</source>
-        <translation>Benvenuto/a!</translation>
+        <translation>欢迎！</translation>
     </message>
 </context>
 <context>
     <name>main</name>
     <message>
         <source>KeePassX - cross-platform password manager</source>
-        <translation>KeePassX - gestore di password cross-platform</translation>
+        <translation>KeePassX - 跨平台密码管理软件</translation>
     </message>
     <message>
         <source>filename of the password database to open (*.kdbx)</source>
-        <translation>nome del file del database da aprire (*.kdbx)</translation>
+        <translation>打开密码数据库文件名(*.kdbx)</translation>
     </message>
     <message>
         <source>path to a custom config file</source>
-        <translation>percorso ad un file di configurazione personalizzato</translation>
+        <translation>自定义配置文件路径</translation>
     </message>
     <message>
         <source>password of the database (DANGEROUS!)</source>
-        <translation>password del database (PERICOLOSO!)</translation>
+        <translation>数据库密码(危险!)</translation>
     </message>
     <message>
         <source>key file of the database</source>
-        <translation>file chiave del database</translation>
+        <translation>数据库秘钥文件</translation>
     </message>
 </context>
 </TS>
