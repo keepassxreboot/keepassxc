@@ -19,6 +19,7 @@
 #include "ui_AboutDialog.h"
 
 #include "config-keepassx.h"
+#include "version.h"
 #include "core/FilePath.h"
 
 AboutDialog::AboutDialog(QWidget* parent)
@@ -34,6 +35,19 @@ AboutDialog::AboutDialog(QWidget* parent)
     m_ui->nameLabel->setFont(nameLabelFont);
 
     m_ui->iconLabel->setPixmap(filePath()->applicationIcon().pixmap(48));
+
+    QString commitHash;
+    if (!QString(GIT_HEAD).isEmpty()) {
+        commitHash = GIT_HEAD;
+    }
+    else if (!QString(DIST_HASH).contains("Format")) {
+        commitHash = DIST_HASH;
+    }
+
+    if (!commitHash.isEmpty()) {
+        QString labelGit = commitHash;
+        m_ui->label_git->setText(tr("Revision").append(": ").append(labelGit));
+    }
 
     setAttribute(Qt::WA_DeleteOnClose);
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(close()));
