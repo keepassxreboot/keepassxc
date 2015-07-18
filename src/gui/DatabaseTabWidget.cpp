@@ -52,8 +52,8 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     , m_dbWidgetSateSync(new DatabaseWidgetStateSync(this))
 {
     DragTabBar* tabBar = new DragTabBar(this);
-    tabBar->setDrawBase(false);
     setTabBar(tabBar);
+    setDocumentMode(true);
 
     connect(this, SIGNAL(tabCloseRequested(int)), SLOT(closeDatabase(int)));
     connect(this, SIGNAL(currentChanged(int)), SLOT(emitActivateDatabaseChanged()));
