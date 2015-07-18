@@ -183,3 +183,7 @@ Files: src/streams/qtiocompressor.*
        tests/modeltest.*
 Copyright: 2009-2012, Nokia Corporation and/or its subsidiary(-ies)
 License: LGPL-2.1 or GPL-3
+
+Files: cmake/GetGitRevisionDescription.cmake*
+Copyright: 2009-2010, Iowa State University
+License: Boost-1.0
