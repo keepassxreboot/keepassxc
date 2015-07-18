@@ -1,3 +1,17 @@
+2.0 Beta 1 (2015-07-18)
+=========================
+
+- Remember entry column sizes [#159]
+- Add translations
+- Support opening attachments directly
+- Support cmd:// URLs [#244]
+- Protect opened databases with a file lock [#18]
+- Export to csv files [#57]
+- Add optional tray icon [#153]
+- Allow setting the default auto-type sequence for groups [#175]
+- Make the kdbx parser more lenient
+- Remove --password command line option [#285]
+
 2.0 Alpha 6 (2014-04-12)
 =========================
 
