@@ -453,7 +453,7 @@ void DatabaseTabWidget::updateTabName(Database* db)
 
     QString tabName;
 
-    if (dbStruct.saveToFilename) {
+    if (dbStruct.saveToFilename || dbStruct.readOnly) {
         if (db->metadata()->name().isEmpty()) {
             tabName = dbStruct.fileName;
         }
