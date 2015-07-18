@@ -329,15 +329,16 @@ bool DatabaseTabWidget::saveDatabaseAs(Database* db)
     QString fileName = fileDialog()->getSaveFileName(this, tr("Save database as"),
                                                      oldFileName, tr("KeePass 2 Database").append(" (*.kdbx)"));
     if (!fileName.isEmpty()) {
-        QSaveFile saveFile(fileName);
-        if (!saveFile.open(QIODevice::WriteOnly)) {
-            MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
-                                 + saveFile.errorString());
-            return false;
-        }
-
         QFileInfo fileInfo(fileName);
-        QString lockFileName = QString("%1/.%2.lock").arg(fileInfo.canonicalPath(), fileInfo.fileName());
+        QString lockFilePath;
+        if (fileInfo.exists()) {
+            // returns empty string when file doesn't exist
+            lockFilePath = fileInfo.canonicalPath();
+        }
+        else {
+            lockFilePath = fileInfo.absolutePath();
+        }
+        QString lockFileName = QString("%1/.%2.lock").arg(lockFilePath, fileInfo.fileName());
         QScopedPointer<QLockFile> lockFile(new QLockFile(lockFileName));
         lockFile->setStaleLockTime(0);
         if (!lockFile->tryLock()) {
@@ -359,6 +360,13 @@ bool DatabaseTabWidget::saveDatabaseAs(Database* db)
                     }
                 }
             }
+        }
+
+        QSaveFile saveFile(fileName);
+        if (!saveFile.open(QIODevice::WriteOnly)) {
+            MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
+                                 + saveFile.errorString());
+            return false;
         }
 
         m_writer.writeDatabase(&saveFile, db);
