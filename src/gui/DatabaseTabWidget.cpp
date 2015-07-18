@@ -234,7 +234,9 @@ bool DatabaseTabWidget::closeDatabase(Database* db)
     }
     if (dbStruct.modified) {
         if (config()->get("AutoSaveOnExit").toBool()) {
-            saveDatabase(db);
+            if (!saveDatabase(db)) {
+                return false;
+            }
         }
         else {
             QMessageBox::StandardButton result =
@@ -243,7 +245,9 @@ bool DatabaseTabWidget::closeDatabase(Database* db)
                 tr("\"%1\" was modified.\nSave changes?").arg(dbName),
                 QMessageBox::Yes | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Yes);
             if (result == QMessageBox::Yes) {
-                saveDatabase(db);
+                if (!saveDatabase(db)) {
+                        return false;
+                }
             }
             else if (result == QMessageBox::Cancel) {
                 return false;
