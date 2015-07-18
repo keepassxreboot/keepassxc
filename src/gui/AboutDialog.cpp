@@ -45,8 +45,8 @@ AboutDialog::AboutDialog(QWidget* parent)
     }
 
     if (!commitHash.isEmpty()) {
-        QString labelGit = commitHash;
-        m_ui->label_git->setText(tr("Revision").append(": ").append(labelGit));
+        QString labelText = tr("Revision").append(": ").append(commitHash);
+        m_ui->label_git->setText(labelText);
     }
 
     setAttribute(Qt::WA_DeleteOnClose);
