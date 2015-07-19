@@ -512,6 +512,7 @@ void MainWindow::updateTrayIcon()
     }
     else {
         if (m_trayIcon) {
+            m_trayIcon->hide();
             delete m_trayIcon;
             m_trayIcon = Q_NULLPTR;
         }
