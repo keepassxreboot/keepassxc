@@ -20,6 +20,7 @@
 
 #include <QAbstractItemModel>
 #include <QObject>
+#include <QTemporaryFile>
 
 class Database;
 class DatabaseTabWidget;
@@ -60,6 +61,8 @@ private:
     MainWindow* m_mainWindow;
     DatabaseTabWidget* m_tabWidget;
     DatabaseWidget* m_dbWidget;
+    QTemporaryFile m_orgDbFile;
+    QString m_orgDbFileName;
     QString m_tmpFileName;
     Database* m_db;
 };

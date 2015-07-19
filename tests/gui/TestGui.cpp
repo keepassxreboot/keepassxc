@@ -57,11 +57,21 @@ void TestGui::initTestCase()
     m_tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
     m_mainWindow->show();
     Tools::wait(50);
+
+    QByteArray tmpData;
+    QFile sourceDbFile(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx"));
+    QVERIFY(sourceDbFile.open(QIODevice::ReadOnly));
+    QVERIFY(Tools::readAllFromDevice(&sourceDbFile, tmpData));
+
+    QVERIFY(m_orgDbFile.open());
+    m_orgDbFileName = QFileInfo(m_orgDbFile.fileName()).fileName();
+    QCOMPARE(m_orgDbFile.write(tmpData), static_cast<qint64>((tmpData.size())));
+    m_orgDbFile.close();
 }
 
 void TestGui::testOpenDatabase()
 {
-    fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx"));
+    fileDialog()->setNextFileName(m_orgDbFile.fileName());
     triggerAction("actionDatabaseOpen");
 
     QWidget* databaseOpenWidget = m_mainWindow->findChild<QWidget*>("databaseOpenWidget");
@@ -75,7 +85,7 @@ void TestGui::testOpenDatabase()
 void TestGui::testTabs()
 {
     QCOMPARE(m_tabWidget->count(), 1);
-    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("NewDatabase.kdbx"));
+    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), m_orgDbFileName);
 
     m_dbWidget = m_tabWidget->currentDatabaseWidget();
     m_db = m_dbWidget->database();
@@ -103,7 +113,7 @@ void TestGui::testEditEntry()
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
     // make sure the database isn't marked as modified
     // wait for modified timer
-    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("NewDatabase.kdbx"));
+    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), m_orgDbFileName);
 }
 
 void TestGui::testAddEntry()
@@ -134,7 +144,7 @@ void TestGui::testAddEntry()
     QCOMPARE(entry->title(), QString("test"));
     QCOMPARE(entry->historyItems().size(), 0);
     // wait for modified timer
-    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("NewDatabase.kdbx*"));
+    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("%1*").arg(m_orgDbFileName));
 
     QAction* entryEditAction = m_mainWindow->findChild<QAction*>("actionEntryEdit");
     QVERIFY(entryEditAction->isEnabled());
@@ -352,7 +362,7 @@ void TestGui::testDragAndDropGroup()
 
 void TestGui::testSaveAs()
 {
-    QFileInfo fileInfo(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx"));
+    QFileInfo fileInfo(m_orgDbFile.fileName());
     QDateTime lastModified = fileInfo.lastModified();
 
     m_db->metadata()->setName("SaveAs");
