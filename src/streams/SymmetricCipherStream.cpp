@@ -219,7 +219,7 @@ bool SymmetricCipherStream::writeBlock(bool lastBlock)
 
     if (m_baseDevice->write(m_buffer) != m_buffer.size()) {
         m_error = true;
-        setErrorString(m_cipher->errorString());
+        setErrorString(m_baseDevice->errorString());
         return false;
     }
     else {
