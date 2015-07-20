@@ -889,8 +889,17 @@ void DatabaseWidget::clearLastGroup(Group* group)
 void DatabaseWidget::lock()
 {
     Q_ASSERT(currentMode() != DatabaseWidget::LockedMode);
+    if (isInSearchMode()) {
+        closeSearch();
+    }
 
-    m_groupBeforeLock = m_groupView->currentGroup()->uuid();
+    if (m_groupView->currentGroup()) {
+        m_groupBeforeLock = m_groupView->currentGroup()->uuid();
+    }
+    else {
+        m_groupBeforeLock = m_db->rootGroup()->uuid();
+    }
+
     clearAllWidgets();
     m_unlockDatabaseWidget->load(m_filename);
     setCurrentWidget(m_unlockDatabaseWidget);
