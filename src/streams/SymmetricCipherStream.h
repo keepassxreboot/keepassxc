@@ -42,6 +42,7 @@ protected:
     qint64 writeData(const char* data, qint64 maxSize) Q_DECL_OVERRIDE;
 
 private:
+    void resetInternalState();
     bool readBlock();
     bool writeBlock(bool lastBlock);
 
@@ -51,6 +52,7 @@ private:
     bool m_bufferFilling;
     bool m_error;
     bool m_isInitalized;
+    bool m_dataWritten;
 };
 
 #endif // KEEPASSX_SYMMETRICCIPHERSTREAM_H

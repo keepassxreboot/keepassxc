@@ -25,6 +25,7 @@ SymmetricCipherStream::SymmetricCipherStream(QIODevice* baseDevice, SymmetricCip
     , m_bufferFilling(false)
     , m_error(false)
     , m_isInitalized(false)
+    , m_dataWritten(false)
 {
 }
 
@@ -43,6 +44,16 @@ bool SymmetricCipherStream::init(const QByteArray& key, const QByteArray& iv)
     return m_isInitalized;
 }
 
+void SymmetricCipherStream::resetInternalState()
+{
+    m_buffer.clear();
+    m_bufferPos = 0;
+    m_bufferFilling = false;
+    m_error = false;
+    m_dataWritten = false;
+    m_cipher->reset();
+}
+
 bool SymmetricCipherStream::open(QIODevice::OpenMode mode)
 {
     if (!m_isInitalized) {
@@ -54,26 +65,24 @@ bool SymmetricCipherStream::open(QIODevice::OpenMode mode)
 
 bool SymmetricCipherStream::reset()
 {
-    if (isWritable()) {
+    if (isWritable() && m_dataWritten) {
         if (!writeBlock(true)) {
             return false;
         }
     }
 
-    m_buffer.clear();
-    m_bufferPos = 0;
-    m_bufferFilling = false;
-    m_error = false;
-    m_cipher->reset();
+    resetInternalState();
 
     return true;
 }
 
 void SymmetricCipherStream::close()
 {
-    if (isWritable()) {
+    if (isWritable() && m_dataWritten) {
         writeBlock(true);
     }
+
+    resetInternalState();
 
     LayeredStream::close();
 }
@@ -186,6 +195,7 @@ qint64 SymmetricCipherStream::writeData(const char* data, qint64 maxSize)
         return -1;
     }
 
+    m_dataWritten = true;
     qint64 bytesRemaining = maxSize;
     qint64 offset = 0;
 
@@ -214,15 +224,14 @@ qint64 SymmetricCipherStream::writeData(const char* data, qint64 maxSize)
 
 bool SymmetricCipherStream::writeBlock(bool lastBlock)
 {
+    Q_ASSERT(lastBlock || (m_buffer.size() == m_cipher->blockSize()));
+
     if (lastBlock) {
         // PKCS7 padding
         int padLen = m_cipher->blockSize() - m_buffer.size();
         for (int i = 0; i < padLen; i++) {
             m_buffer.append(static_cast<char>(padLen));
         }
-    }
-    else if (m_buffer.isEmpty()) {
-        return true;
     }
 
     if (!m_cipher->processInPlace(m_buffer)) {
