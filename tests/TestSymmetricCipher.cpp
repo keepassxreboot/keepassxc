@@ -207,3 +207,22 @@ void TestSymmetricCipher::testPadding()
     QByteArray decrypted = streamDec.readAll();
     QCOMPARE(decrypted, plainText);
 }
+
+void TestSymmetricCipher::testStreamReset()
+{
+    QByteArray key = QByteArray::fromHex("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4");
+    QByteArray iv = QByteArray::fromHex("000102030405060708090a0b0c0d0e0f");
+
+    QBuffer buffer;
+    QVERIFY(buffer.open(QIODevice::WriteOnly));
+    SymmetricCipherStream writer(&buffer, SymmetricCipher::Aes256, SymmetricCipher::Cbc,
+                                 SymmetricCipher::Encrypt);
+    QVERIFY(writer.init(key, iv));
+    QVERIFY(writer.open(QIODevice::WriteOnly));
+    QCOMPARE(writer.write(QByteArray(4, 'Z')), qint64(4));
+    // test if reset() and close() write only one block
+    QVERIFY(writer.reset());
+    QVERIFY(writer.reset());
+    writer.close();
+    QCOMPARE(buffer.buffer().size(), 16);
+}

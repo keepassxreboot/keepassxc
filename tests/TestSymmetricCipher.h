@@ -30,6 +30,7 @@ private Q_SLOTS:
     void testAes256CbcDecryption();
     void testSalsa20();
     void testPadding();
+    void testStreamReset();
 };
 
 #endif // KEEPASSX_TESTSYMMETRICCIPHER_H

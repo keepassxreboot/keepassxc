@@ -73,6 +73,21 @@ void TestHashedBlockStream::testWriteRead()
     buffer.buffer().clear();
 }
 
+void TestHashedBlockStream::testReset()
+{
+    QBuffer buffer;
+    QVERIFY(buffer.open(QIODevice::WriteOnly));
+
+    HashedBlockStream writer(&buffer, 16);
+    QVERIFY(writer.open(QIODevice::WriteOnly));
+    QCOMPARE(writer.write(QByteArray(8, 'Z')), qint64(8));
+    // test if reset() and close() write only one final block
+    QVERIFY(writer.reset());
+    QVERIFY(writer.reset());
+    writer.close();
+    QCOMPARE(buffer.buffer().size(), 8 + (32 + 4 + 4) * 2);
+}
+
 void TestHashedBlockStream::testWriteFailure()
 {
     FailDevice failDevice(1500);
