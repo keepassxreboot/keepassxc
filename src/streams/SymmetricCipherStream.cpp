@@ -115,11 +115,25 @@ qint64 SymmetricCipherStream::readData(char* data, qint64 maxSize)
 
 bool SymmetricCipherStream::readBlock()
 {
+    QByteArray newData;
+
     if (m_bufferFilling) {
-        m_buffer.append(m_baseDevice->read(m_cipher->blockSize() - m_buffer.size()));
+        newData.resize(m_cipher->blockSize() - m_buffer.size());
     }
     else {
-        m_buffer = m_baseDevice->read(m_cipher->blockSize());
+        m_buffer.clear();
+        newData.resize(m_cipher->blockSize());
+    }
+
+    int readResult = m_baseDevice->read(newData.data(), newData.size());
+
+    if (readResult == -1) {
+        m_error = true;
+        setErrorString(m_baseDevice->errorString());
+        return false;
+    }
+    else {
+        m_buffer.append(newData.left(readResult));
     }
 
     if (m_buffer.size() != m_cipher->blockSize()) {
