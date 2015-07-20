@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2015 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,19 +15,29 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTHASHEDBLOCKSTREAM_H
-#define KEEPASSX_TESTHASHEDBLOCKSTREAM_H
+#ifndef KEEPASSX_FAILDEVICE_H
+#define KEEPASSX_FAILDEVICE_H
 
-#include <QObject>
+#include <QBuffer>
 
-class TestHashedBlockStream : public QObject
+#include "core/Global.h"
+
+class FailDevice : public QBuffer
 {
     Q_OBJECT
 
-private Q_SLOTS:
-    void initTestCase();
-    void testWriteRead();
-    void testWriteFailure();
+public:
+    explicit FailDevice(int failAfter, QObject* parent = Q_NULLPTR);
+    bool open(QIODevice::OpenMode openMode) Q_DECL_OVERRIDE;
+
+protected:
+    qint64 readData(char* data, qint64 len) Q_DECL_OVERRIDE;
+    qint64 writeData(const char* data, qint64 len) Q_DECL_OVERRIDE;
+
+private:
+    int m_failAfter;
+    int m_readCount;
+    int m_writeCount;
 };
 
-#endif // KEEPASSX_TESTHASHEDBLOCKSTREAM_H
+#endif // KEEPASSX_FAILDEVICE_H

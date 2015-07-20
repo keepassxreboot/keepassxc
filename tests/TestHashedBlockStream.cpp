@@ -21,6 +21,7 @@
 #include <QTest>
 
 #include "tests.h"
+#include "FailDevice.h"
 #include "crypto/Crypto.h"
 #include "streams/HashedBlockStream.h"
 
@@ -70,4 +71,20 @@ void TestHashedBlockStream::testWriteRead()
     QVERIFY(reader.reset());
     buffer.reset();
     buffer.buffer().clear();
+}
+
+void TestHashedBlockStream::testWriteFailure()
+{
+    FailDevice failDevice(1500);
+    QVERIFY(failDevice.open(QIODevice::WriteOnly));
+
+    QByteArray input(2000, 'Z');
+
+    HashedBlockStream writer(&failDevice, 500);
+    QVERIFY(writer.open(QIODevice::WriteOnly));
+
+    QCOMPARE(writer.write(input.left(900)), qint64(900));
+    writer.write(input.left(900));
+    QVERIFY(!writer.reset());
+    QCOMPARE(writer.errorString(), QString("FAILDEVICE"));
 }
