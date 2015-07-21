@@ -1,6 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2013 David Faure <faure+bluesystems@kde.org>
+** Copyright (C) 2015 The Qt Company Ltd.
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtCore module of the Qt Toolkit.
@@ -42,9 +43,16 @@
 #include <sys/file.h>  // flock
 #include <sys/types.h> // kill
 #include <signal.h>    // kill
-#include <unistd.h>
+#include <unistd.h>    // gethostname
 
 #include <errno.h>
+
+#if defined(Q_OS_MAC)
+#   include <libproc.h>
+#elif defined(Q_OS_LINUX)
+#   include <unistd.h>
+#   include <cstdio>
+#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -77,13 +85,13 @@ static inline qint64 qt_safe_write(int fd, const void *data, qint64 len)
     return ret;
 }
 
-static QString localHostName() // from QHostInfo::localHostName()
+static QByteArray localHostName() // from QHostInfo::localHostName(), modified to return a QByteArray
 {
-    char hostName[512];
-    if (gethostname(hostName, sizeof(hostName)) == -1)
-        return QString();
-    hostName[sizeof(hostName) - 1] = '\0';
-    return QString::fromLocal8Bit(hostName);
+    QByteArray hostName(512, Qt::Uninitialized);
+    if (gethostname(hostName.data(), hostName.size()) == -1)
+        return QByteArray();
+    hostName.truncate(strlen(hostName.data()));
+    return hostName;
 }
 
 // ### merge into qt_safe_write?
@@ -122,8 +130,8 @@ QLockFile::LockError QLockFilePrivate::tryLock_sys()
     // (otherwise we'd have to check every write call)
     // Use operator% from the fast builder to avoid multiple memory allocations.
     QByteArray fileData = QByteArray::number(QCoreApplication::applicationPid()) + '\n'
-                          + qAppName().toUtf8() + '\n'
-                          + localHostName().toUtf8() + '\n';
+                          + QCoreApplication::applicationName().toUtf8() + '\n'
+                          + localHostName() + '\n';
 
     const QByteArray lockFileName = QFile::encodeName(fileName);
     const int fd = qt_safe_open(lockFileName.constData(), O_WRONLY | O_CREAT | O_EXCL, 0644);
@@ -170,14 +178,46 @@ bool QLockFilePrivate::isApparentlyStale() const
 {
     qint64 pid;
     QString hostname, appname;
-    if (!getLockInfo(&pid, &hostname, &appname))
-        return false;
-    if (hostname.isEmpty() || hostname == localHostName()) {
-        if (::kill(pid, 0) == -1 && errno == ESRCH)
-            return true; // PID doesn't exist anymore
+    if (getLockInfo(&pid, &hostname, &appname)) {
+        if (hostname.isEmpty() || hostname == QString::fromLocal8Bit(localHostName())) {
+            if (::kill(pid, 0) == -1 && errno == ESRCH)
+                return true; // PID doesn't exist anymore
+            const QString processName = processNameByPid(pid);
+            if (!processName.isEmpty()) {
+                QFileInfo fi(appname);
+                if (fi.isSymLink())
+                    fi.setFile(fi.symLinkTarget());
+                if (processName.toLower() != fi.fileName().toLower())
+                    return true; // PID got reused by a different application.
+            }
+        }
     }
     const qint64 age = QFileInfo(fileName).lastModified().secsTo(QDateTime::currentDateTime()) * 1000;
     return staleLockTime > 0 && age > staleLockTime;
+}
+
+QString QLockFilePrivate::processNameByPid(qint64 pid)
+{
+#if defined(Q_OS_MAC)
+    char name[1024];
+    proc_name(pid, name, sizeof(name) / sizeof(char));
+    return QFile::decodeName(name);
+#elif defined(Q_OS_LINUX)
+    if (!QFile::exists(QString("/proc/version")))
+        return QString();
+    char exePath[64];
+    char buf[PATH_MAX + 1];
+    sprintf(exePath, "/proc/%lld/exe", pid);
+    size_t len = static_cast<size_t>(readlink(exePath, buf, sizeof(buf)));
+    if (len >= sizeof(buf)) {
+        // The pid is gone. Return some invalid process name to fail the test.
+        return QString("/ERROR/");
+    }
+    buf[len] = 0;
+    return QFileInfo(QFile::decodeName(buf)).fileName();
+#else
+    return QString();
+#endif
 }
 
 void QLockFile::unlock()
@@ -191,7 +231,6 @@ void QLockFile::unlock()
         qWarning() << "Could not remove our own lock file" << d->fileName << "maybe permissions changed meanwhile?";
         // This is bad because other users of this lock file will now have to wait for the stale-lock-timeout...
     }
-    QFile::remove(d->fileName);
     d->lockError = QLockFile::NoError;
     d->isLocked = false;
 }

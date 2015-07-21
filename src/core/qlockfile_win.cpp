@@ -1,6 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2013 David Faure <faure+bluesystems@kde.org>
+** Copyright (C) 2015 The Qt Company Ltd.
 ** Contact: http://www.qt.io/licensing/
 **
 ** This file is part of the QtCore module of the Qt Toolkit.
@@ -134,25 +135,73 @@ bool QLockFilePrivate::isApparentlyStale() const
 {
     qint64 pid;
     QString hostname, appname;
-    if (!getLockInfo(&pid, &hostname, &appname))
-        return false;
 
     // On WinRT there seems to be no way of obtaining information about other
     // processes due to sandboxing
 #ifndef Q_OS_WINRT
-    if (hostname == QString::fromLocal8Bit(localHostName())) {
-        HANDLE procHandle = ::OpenProcess(PROCESS_QUERY_INFORMATION, FALSE, pid);
-        if (!procHandle)
-            return true;
-        // We got a handle but check if process is still alive
-        DWORD dwR = ::WaitForSingleObject(procHandle, 0);
-        ::CloseHandle(procHandle);
-        if (dwR == WAIT_TIMEOUT)
-            return true;
+    if (getLockInfo(&pid, &hostname, &appname)) {
+        if (hostname.isEmpty() || hostname == QString::fromLocal8Bit(localHostName())) {
+            HANDLE procHandle = ::OpenProcess(PROCESS_QUERY_INFORMATION, FALSE, pid);
+            if (!procHandle)
+                return true;
+            // We got a handle but check if process is still alive
+            DWORD dwR = ::WaitForSingleObject(procHandle, 0);
+            ::CloseHandle(procHandle);
+            if (dwR == WAIT_TIMEOUT)
+                return true;
+            const QString processName = processNameByPid(pid);
+            if (!processName.isEmpty() && processName != appname)
+                return true; // PID got reused by a different application.
+        }
     }
-#endif // !Q_OS_WINRT
+#else // !Q_OS_WINRT
+    Q_UNUSED(pid);
+    Q_UNUSED(hostname);
+    Q_UNUSED(appname);
+#endif // Q_OS_WINRT
     const qint64 age = QFileInfo(fileName).lastModified().msecsTo(QDateTime::currentDateTime());
     return staleLockTime > 0 && age > staleLockTime;
+}
+
+QString QLockFilePrivate::processNameByPid(qint64 pid)
+{
+#if !defined(Q_OS_WINRT) && !defined(Q_OS_WINCE)
+    typedef DWORD (WINAPI *GetModuleFileNameExFunc)(HANDLE, HMODULE, LPTSTR, DWORD);
+
+    HMODULE hPsapi = LoadLibraryA("psapi");
+    if (!hPsapi)
+        return QString();
+
+    GetModuleFileNameExFunc qGetModuleFileNameEx
+            = (GetModuleFileNameExFunc)GetProcAddress(hPsapi, "GetModuleFileNameExW");
+    if (!qGetModuleFileNameEx) {
+        FreeLibrary(hPsapi);
+        return QString();
+    }
+
+    HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, DWORD(pid));
+    if (!hProcess) {
+        FreeLibrary(hPsapi);
+        return QString();
+    }
+    wchar_t buf[MAX_PATH];
+    const DWORD length = qGetModuleFileNameEx(hProcess, NULL, buf, sizeof(buf) / sizeof(wchar_t));
+    CloseHandle(hProcess);
+    FreeLibrary(hPsapi);
+    if (!length)
+        return QString();
+    QString name = QString::fromWCharArray(buf, length);
+    int i = name.lastIndexOf(QLatin1Char('\\'));
+    if (i >= 0)
+        name.remove(0, i + 1);
+    i = name.lastIndexOf(QLatin1Char('.'));
+    if (i >= 0)
+        name.truncate(i);
+    return name;
+#else
+    Q_UNUSED(pid);
+    return QString();
+#endif
 }
 
 void QLockFile::unlock()
