@@ -169,7 +169,13 @@ bool QLockFilePrivate::removeStaleLock()
     const int fd = qt_safe_open(lockFileName.constData(), O_WRONLY, 0644);
     if (fd < 0) // gone already?
         return false;
+#ifdef Q_OS_MAC
+    // ugly workaround: ignore setNativeLocks() result on Mac since it's broken there
+    setNativeLocks(fd);
+    bool success = (::unlink(lockFileName) == 0);
+#else
     bool success = setNativeLocks(fd) && (::unlink(lockFileName) == 0);
+#endif
     close(fd);
     return success;
 }
