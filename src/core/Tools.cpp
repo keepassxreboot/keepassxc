@@ -17,7 +17,7 @@
 
 #include "Tools.h"
 
-#include <QApplication>
+#include <QCoreApplication>
 #include <QImageReader>
 #include <QIODevice>
 #include <QLocale>
@@ -189,26 +189,6 @@ void wait(int ms)
                 sleep(10);
             }
         } while (!timer.hasExpired(ms));
-    }
-}
-
-QString platform()
-{
-    // TODO: move callers to QApplication::platformName()
-
-    QString platform = QApplication::platformName();
-
-    if (platform == "xcb") {
-        return "x11";
-    }
-    else if (platform == "cocoa") {
-        return "mac";
-    }
-    else if (platform == "windows") {
-        return "win";
-    }
-    else {
-        return platform;
     }
 }
 

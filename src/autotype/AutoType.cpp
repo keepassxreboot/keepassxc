@@ -49,7 +49,7 @@ AutoType::AutoType(QObject* parent, bool test)
 
     QString pluginName = "keepassx-autotype-";
     if (!test) {
-        pluginName += Tools::platform();
+        pluginName += QApplication::platformName();
     }
     else {
         pluginName += "test";

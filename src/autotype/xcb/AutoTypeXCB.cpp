@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "AutoTypeX11.h"
+#include "AutoTypeXCB.h"
 #include "KeySymMap.h"
 
 #include <time.h>

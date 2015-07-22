@@ -6,7 +6,7 @@ if(UNIX AND NOT APPLE)
   add_feature_info(Qt5X11Extras Qt5X11Extras_FOUND "The Qt5X11Extras library is required for auto-type")
 
   if(X11_FOUND AND X11_XTest_FOUND AND Qt5X11Extras_FOUND)
-    add_subdirectory(x11)
+    add_subdirectory(xcb)
   endif()
 endif()
 
