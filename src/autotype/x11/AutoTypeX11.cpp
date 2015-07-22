@@ -568,7 +568,7 @@ int AutoTypePlatformX11::AddKeysym(KeySym keysym)
  */
 void AutoTypePlatformX11::SendEvent(XKeyEvent* event, int event_type)
 {
-    XSync(event->display, FALSE);
+    XSync(event->display, False);
     int (*oldHandler) (Display*, XErrorEvent*) = XSetErrorHandler(MyErrorHandler);
 
     event->type = event_type;
@@ -670,7 +670,7 @@ void AutoTypePlatformX11::SendKeyPressedEvent(KeySym keysym)
     event.y = 1;
     event.x_root = 1;
     event.y_root = 1;
-    event.same_screen = TRUE;
+    event.same_screen = True;
 
     Window root, child;
     int root_x, root_y, x, y;
