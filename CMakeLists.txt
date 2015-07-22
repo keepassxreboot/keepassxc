@@ -172,11 +172,7 @@ set(CMAKE_AUTOMOC ON)
 # Make sure we don't enable asserts there.
 set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_NONE QT_NO_DEBUG)
 
-find_package(Gcrypt REQUIRED)
-if(NOT (${GCRYPT_VERSION_STRING} VERSION_LESS "1.6.0"))
-  message(STATUS "Gcrypt ${GCRYPT_VERSION_STRING} supports the SALSA20 cipher")
-  set(GCRYPT_HAS_SALSA20 1)
-endif()
+find_package(Gcrypt 1.6.0 REQUIRED)
 
 find_package(ZLIB REQUIRED)
 

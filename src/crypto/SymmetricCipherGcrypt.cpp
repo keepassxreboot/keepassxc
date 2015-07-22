@@ -44,10 +44,8 @@ int SymmetricCipherGcrypt::gcryptAlgo(SymmetricCipher::Algorithm algo)
     case SymmetricCipher::Twofish:
         return GCRY_CIPHER_TWOFISH;
 
-#ifdef GCRYPT_HAS_SALSA20
     case SymmetricCipher::Salsa20:
         return GCRY_CIPHER_SALSA20;
-#endif
 
     default:
         Q_ASSERT(false);

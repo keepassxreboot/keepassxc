@@ -126,18 +126,6 @@ set(keepassx_SOURCES
     streams/SymmetricCipherStream.cpp
 )
 
-if(NOT GCRYPT_HAS_SALSA20)
-  set(keepassx_SOURCES
-      ${keepassx_SOURCES}
-      crypto/salsa20/ecrypt-config.h
-      crypto/salsa20/ecrypt-machine.h
-      crypto/salsa20/ecrypt-portable.h
-      crypto/salsa20/ecrypt-sync.h
-      crypto/salsa20/salsa20.c
-      crypto/SymmetricCipherSalsa20.cpp
-  )
-endif()
-
 set(keepassx_SOURCES_MAINEXE
     main.cpp
 )
