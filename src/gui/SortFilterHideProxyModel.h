@@ -29,6 +29,7 @@ class SortFilterHideProxyModel : public QSortFilterProxyModel
 
 public:
     explicit SortFilterHideProxyModel(QObject* parent = Q_NULLPTR);
+    Qt::DropActions supportedDragActions() const Q_DECL_OVERRIDE;
     void hideColumn(int column, bool hide);
 
 protected:

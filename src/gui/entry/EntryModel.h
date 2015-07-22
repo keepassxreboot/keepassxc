@@ -47,6 +47,7 @@ public:
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
     Qt::DropActions supportedDropActions() const Q_DECL_OVERRIDE;
+    Qt::DropActions supportedDragActions() const Q_DECL_OVERRIDE;
     Qt::ItemFlags flags(const QModelIndex& modelIndex) const Q_DECL_OVERRIDE;
     QStringList mimeTypes() const Q_DECL_OVERRIDE;
     QMimeData* mimeData(const QModelIndexList& indexes) const Q_DECL_OVERRIDE;
