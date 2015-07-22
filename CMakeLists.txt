@@ -21,7 +21,7 @@ endif()
 
 project(KeePassX)
 
-cmake_minimum_required(VERSION 2.6.4)
+cmake_minimum_required(VERSION 2.8.12)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
@@ -62,7 +62,7 @@ macro(add_gcc_compiler_flags FLAGS)
   add_gcc_compiler_cflags("${FLAGS}")
 endmacro(add_gcc_compiler_flags)
 
-add_definitions(-DQT_NO_KEYWORDS -DQT_NO_EXCEPTIONS -DQT_NO_STL -DQT_STRICT_ITERATORS -DQT_NO_CAST_TO_ASCII)
+add_definitions(-DQT_NO_KEYWORDS -DQT_NO_EXCEPTIONS -DQT_STRICT_ITERATORS -DQT_NO_CAST_TO_ASCII)
 
 add_gcc_compiler_flags("-fno-common -fstack-protector --param=ssp-buffer-size=4")
 add_gcc_compiler_flags("-Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long")
@@ -161,10 +161,12 @@ if(WITH_TESTS)
   enable_testing()
 endif(WITH_TESTS)
 
-set(QT_REQUIRED_MODULES QtCore QtGui QtTest)
+find_package(Qt5Core          REQUIRED)
+find_package(Qt5Widgets       REQUIRED)
+find_package(Qt5Test          REQUIRED)
+find_package(Qt5LinguistTools REQUIRED)
+set(CMAKE_AUTOMOC ON)
 
-find_package(Qt4 4.6.0 REQUIRED ${QT_REQUIRED_MODULES})
-include(${QT_USE_FILE})
 # Debian sets the the build type to None for package builds.
 # Make sure we don't enable asserts there.
 set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_NONE QT_NO_DEBUG)
@@ -214,10 +216,7 @@ endif()
 
 include_directories(SYSTEM ${GCRYPT_INCLUDE_DIR} ${ZLIB_INCLUDE_DIR})
 
-if(NOT (${CMAKE_VERSION} VERSION_LESS 2.8.3))
-  set(PRINT_SUMMARY ON)
-  include(FeatureSummary)
-endif()
+include(FeatureSummary)
 
 add_subdirectory(src)
 add_subdirectory(share)

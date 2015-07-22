@@ -52,10 +52,9 @@ macro(parse_arguments prefix arg_names option_names)
 endmacro(parse_arguments)
 
 macro(add_unit_test)
-  parse_arguments(TEST "NAME;SOURCES;MOCS;LIBS" "" ${ARGN})
+  parse_arguments(TEST "NAME;SOURCES;LIBS" "" ${ARGN})
   set(_test_NAME ${TEST_NAME})
   set(_srcList ${TEST_SOURCES})
-  qt4_wrap_cpp(_srcList ${TEST_MOCS})
   add_executable(${_test_NAME} ${_srcList})
   target_link_libraries(${_test_NAME} ${TEST_LIBS})
 
@@ -86,85 +85,85 @@ endmacro(add_unit_test)
 
 set(TEST_LIBRARIES
     keepassx_core
-    ${QT_QTCORE_LIBRARY}
-    ${QT_QTGUI_LIBRARY}
-    ${QT_QTTEST_LIBRARY}
+    Qt5::Core
+    Qt5::Widgets
+    Qt5::Test
     ${GCRYPT_LIBRARIES}
     ${ZLIB_LIBRARIES}
 )
 
 set(testsupport_SOURCES modeltest.cpp FailDevice.cpp)
-qt4_wrap_cpp(testsupport_SOURCES modeltest.h FailDevice.h)
 add_library(testsupport STATIC ${testsupport_SOURCES})
+target_link_libraries(testsupport Qt5::Core Qt5::Widgets Qt5::Test)
 
-add_unit_test(NAME testgroup SOURCES TestGroup.cpp MOCS TestGroup.h
+add_unit_test(NAME testgroup SOURCES TestGroup.cpp
               LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testkeepass2xmlreader SOURCES TestKeePass2XmlReader.cpp MOCS TestKeePass2XmlReader.h
+add_unit_test(NAME testkeepass2xmlreader SOURCES TestKeePass2XmlReader.cpp
               LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testkeys SOURCES TestKeys.cpp MOCS TestKeys.h
+add_unit_test(NAME testkeys SOURCES TestKeys.cpp
               LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testkeepass2reader SOURCES TestKeePass2Reader.cpp MOCS TestKeePass2Reader.h
+add_unit_test(NAME testkeepass2reader SOURCES TestKeePass2Reader.cpp
               LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testkeepass2writer SOURCES TestKeePass2Writer.cpp MOCS TestKeePass2Writer.h
+add_unit_test(NAME testkeepass2writer SOURCES TestKeePass2Writer.cpp
               LIBS testsupport ${TEST_LIBRARIES})
 
-add_unit_test(NAME testgroupmodel SOURCES TestGroupModel.cpp MOCS TestGroupModel.h
+add_unit_test(NAME testgroupmodel SOURCES TestGroupModel.cpp
               LIBS testsupport ${TEST_LIBRARIES})
 
-add_unit_test(NAME testentrymodel SOURCES TestEntryModel.cpp MOCS TestEntryModel.h
+add_unit_test(NAME testentrymodel SOURCES TestEntryModel.cpp
               LIBS testsupport ${TEST_LIBRARIES})
 
-add_unit_test(NAME testcryptohash SOURCES TestCryptoHash.cpp MOCS TestCryptoHash.h
+add_unit_test(NAME testcryptohash SOURCES TestCryptoHash.cpp
               LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testsymmetriccipher SOURCES TestSymmetricCipher.cpp MOCS TestSymmetricCipher.h
+add_unit_test(NAME testsymmetriccipher SOURCES TestSymmetricCipher.cpp
               LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testhashedblockstream SOURCES TestHashedBlockStream.cpp MOCS TestHashedBlockStream.h
+add_unit_test(NAME testhashedblockstream SOURCES TestHashedBlockStream.cpp
               LIBS testsupport ${TEST_LIBRARIES})
 
-add_unit_test(NAME testkeepass2randomstream SOURCES TestKeePass2RandomStream.cpp MOCS TestKeePass2RandomStream.h
+add_unit_test(NAME testkeepass2randomstream SOURCES TestKeePass2RandomStream.cpp
               LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testmodified SOURCES TestModified.cpp MOCS TestModified.h
+add_unit_test(NAME testmodified SOURCES TestModified.cpp
               LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testdeletedobjects SOURCES TestDeletedObjects.cpp MOCS TestDeletedObjects.h
+add_unit_test(NAME testdeletedobjects SOURCES TestDeletedObjects.cpp
               LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testkeepass1reader SOURCES TestKeePass1Reader.cpp MOCS TestKeePass1Reader.h
+add_unit_test(NAME testkeepass1reader SOURCES TestKeePass1Reader.cpp
               LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testqsavefile SOURCES TestQSaveFile.cpp MOCS TestQSaveFile.h
+add_unit_test(NAME testqsavefile SOURCES TestQSaveFile.cpp
               LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testwildcardmatcher SOURCES TestWildcardMatcher.cpp MOCS TestWildcardMatcher.h
+add_unit_test(NAME testwildcardmatcher SOURCES TestWildcardMatcher.cpp
               LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testautotype SOURCES TestAutoType.cpp MOCS TestAutoType.h
+add_unit_test(NAME testautotype SOURCES TestAutoType.cpp
               LIBS ${TEST_LIBRARIES})
 set_target_properties(testautotype PROPERTIES ENABLE_EXPORTS ON)
 
-add_unit_test(NAME testentry SOURCES TestEntry.cpp MOCS TestEntry.h
+add_unit_test(NAME testentry SOURCES TestEntry.cpp
               LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testqcommandlineparser SOURCES TestQCommandLineParser.cpp MOCS TestQCommandLineParser.h
+add_unit_test(NAME testqcommandlineparser SOURCES TestQCommandLineParser.cpp
               LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testrandom SOURCES TestRandom.cpp MOCS TestRandom.h
+add_unit_test(NAME testrandom SOURCES TestRandom.cpp
               LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testentrysearcher SOURCES TestEntrySearcher.cpp MOCS TestEntrySearcher.h
+add_unit_test(NAME testentrysearcher SOURCES TestEntrySearcher.cpp
               LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testexporter SOURCES TestExporter.cpp MOCS TestExporter.h
+add_unit_test(NAME testexporter SOURCES TestExporter.cpp
               LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testcsvexporter SOURCES TestCsvExporter.cpp MOCS TestCsvExporter.h
+add_unit_test(NAME testcsvexporter SOURCES TestCsvExporter.cpp
               LIBS ${TEST_LIBRARIES})
 
 if(WITH_GUI_TESTS)

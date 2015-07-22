@@ -159,65 +159,6 @@ set(keepassx_SOURCES_MAINEXE
     main.cpp
 )
 
-set(keepassx_MOC
-    autotype/AutoType.h
-    autotype/AutoTypeSelectDialog.h
-    autotype/AutoTypeSelectView.h
-    autotype/ShortcutWidget.h
-    autotype/WindowSelectComboBox.h
-    core/AutoTypeAssociations.h
-    core/Config.h
-    core/Database.h
-    core/Entry.h
-    core/EntryAttachments.h
-    core/EntryAttributes.h
-    core/Group.h
-    core/InactivityTimer.h
-    core/Metadata.h
-    core/qsavefile.h
-    gui/AboutDialog.h
-    gui/Application.h
-    gui/ChangeMasterKeyWidget.h
-    gui/Clipboard.h
-    gui/DatabaseOpenWidget.h
-    gui/DatabaseSettingsWidget.h
-    gui/DatabaseTabWidget.h
-    gui/DatabaseWidget.h
-    gui/DatabaseWidgetStateSync.h
-    gui/DialogyWidget.h
-    gui/DragTabBar.h
-    gui/EditWidget.h
-    gui/EditWidgetIcons.h
-    gui/EditWidgetProperties.h
-    gui/IconModels.h
-    gui/KeePass1OpenWidget.h
-    gui/LineEdit.h
-    gui/MainWindow.h
-    gui/PasswordEdit.h
-    gui/PasswordGeneratorWidget.h
-    gui/PasswordComboBox.h
-    gui/SettingsWidget.h
-    gui/SortFilterHideProxyModel.h
-    gui/UnlockDatabaseWidget.h
-    gui/WelcomeWidget.h
-    gui/entry/AutoTypeAssociationsModel.h
-    gui/entry/EditEntryWidget.h
-    gui/entry/EntryAttachmentsModel.h
-    gui/entry/EntryAttributesModel.h
-    gui/entry/EntryHistoryModel.h
-    gui/entry/EntryModel.h
-    gui/entry/EntryView.h
-    gui/group/EditGroupWidget.h
-    gui/group/GroupModel.h
-    gui/group/GroupView.h
-    keys/CompositeKey_p.h
-    streams/HashedBlockStream.h
-    streams/LayeredStream.h
-    streams/qtiocompressor.h
-    streams/StoreDataStream.h
-    streams/SymmetricCipherStream.h
-)
-
 set(keepassx_FORMS
     gui/AboutDialog.ui
     gui/ChangeMasterKeyWidget.ui
@@ -245,17 +186,17 @@ if(MINGW)
       ${CMAKE_SOURCE_DIR}/share/windows/icon.rc)
 endif()
 
-qt4_wrap_ui(keepassx_SOURCES ${keepassx_FORMS})
-qt4_wrap_cpp(keepassx_SOURCES ${keepassx_MOC})
+qt5_wrap_ui(keepassx_SOURCES ${keepassx_FORMS})
 
 add_library(keepassx_core STATIC ${keepassx_SOURCES})
 set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
+target_link_libraries(keepassx_core Qt5::Core Qt5::Widgets)
 
 add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE ${keepassx_SOURCES_MAINEXE})
 target_link_libraries(${PROGNAME}
                       keepassx_core
-                      ${QT_QTCORE_LIBRARY}
-                      ${QT_QTGUI_LIBRARY}
+                      Qt5::Core
+                      Qt5::Widgets
                       ${GCRYPT_LIBRARIES}
                       ${ZLIB_LIBRARIES})
 
@@ -273,7 +214,7 @@ install(TARGETS ${PROGNAME}
 
 add_subdirectory(autotype)
 
-if(APPLE AND NOT (${CMAKE_VERSION} VERSION_LESS 2.8.8))
+if(APPLE)
   if(QT_MAC_USE_COCOA AND EXISTS "${QT_LIBRARY_DIR}/Resources/qt_menu.nib")
     install(DIRECTORY "${QT_LIBRARY_DIR}/Resources/qt_menu.nib"
             DESTINATION "${DATA_INSTALL_DIR}")
@@ -291,7 +232,7 @@ if(APPLE AND NOT (${CMAKE_VERSION} VERSION_LESS 2.8.8))
   install_qt4_executable(${PROGNAME}.app "qjpeg;qgif;qico;qtaccessiblewidgets")
 endif()
 
-if(MINGW AND NOT (${CMAKE_VERSION} VERSION_LESS 2.8.8))
+if(MINGW )
   set(CPACK_GENERATOR "ZIP")
   set(CPACK_STRIP_FILES ON)
   set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSX_VERSION_NUM}")
