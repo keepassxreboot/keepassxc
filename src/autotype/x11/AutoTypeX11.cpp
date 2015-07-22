@@ -160,7 +160,7 @@ uint AutoTypePlatformX11::qtToNativeModifiers(Qt::KeyboardModifiers modifiers)
 
 void AutoTypePlatformX11::unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers)
 {
-    KeyCode keycode = XKeysymToKeycode(m_dpy, keyToKeySym(key));
+    KeyCode keycode = XKeysymToKeycode(m_dpy, charToKeySym(key));
     uint nativeModifiers = qtToNativeModifiers(modifiers);
 
     XUngrabKey(m_dpy, keycode, nativeModifiers, m_rootWindow);
