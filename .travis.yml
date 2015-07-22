@@ -7,7 +7,7 @@ compiler:
 language: cpp
 install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -qq update; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -qq install cmake qtbase5-dev libqt5x11extras5-dev qttools5-dev libgcrypt11-dev zlib1g-dev libxtst-dev; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -qq install cmake qtbase5-dev libqt5x11extras5-dev qttools5-dev qttools5-dev-tools libgcrypt11-dev zlib1g-dev libxtst-dev; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew update; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install cmake qt5 libgcrypt; fi
 before_script: mkdir build && pushd build

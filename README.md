@@ -62,7 +62,7 @@ The following libraries are required:
 On Debian you can install them with:
 
 ```bash
-sudo apt-get install build-essential cmake qtbase5-dev libqt5x11extras5-dev qttools5-dev libgcrypt11-dev zlib1g-dev
+sudo apt-get install build-essential cmake qtbase5-dev libqt5x11extras5-dev qttools5-dev qttools5-dev-tools libgcrypt11-dev zlib1g-dev
 ```
 
 #### Build Steps
