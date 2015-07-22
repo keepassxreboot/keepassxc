@@ -117,5 +117,3 @@ void AutoTypeExecturorTest::execKey(AutoTypeKey* action)
 {
     m_platform->addActionKey(action);
 }
-
-Q_EXPORT_PLUGIN2(keepassx-autotype-test, AutoTypePlatformTest)

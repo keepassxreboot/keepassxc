@@ -30,6 +30,7 @@ class AutoTypePlatformTest : public QObject,
                              public AutoTypeTestInterface
 {
     Q_OBJECT
+    Q_PLUGIN_METADATA(IID "org.keepassx.AutoTypePlatformInterface")
     Q_INTERFACES(AutoTypePlatformInterface AutoTypeTestInterface)
 
 public:

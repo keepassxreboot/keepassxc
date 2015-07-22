@@ -769,5 +769,3 @@ int AutoTypePlatformX11::initialTimeout()
 {
     return 500;
 }
-
-Q_EXPORT_PLUGIN2(keepassx-autotype-x11, AutoTypePlatformX11)
