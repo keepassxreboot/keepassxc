@@ -162,6 +162,7 @@ if(WITH_TESTS)
 endif(WITH_TESTS)
 
 find_package(Qt5Core          REQUIRED)
+find_package(Qt5Concurrent    REQUIRED)
 find_package(Qt5Widgets       REQUIRED)
 find_package(Qt5Test          REQUIRED)
 find_package(Qt5LinguistTools REQUIRED)

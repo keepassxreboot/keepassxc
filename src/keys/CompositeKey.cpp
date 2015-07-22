@@ -18,7 +18,7 @@
 #include "CompositeKey.h"
 #include "CompositeKey_p.h"
 
-#include <QtConcurrentRun>
+#include <QtConcurrent>
 #include <QTime>
 
 #include "crypto/CryptoHash.h"
