@@ -49,20 +49,20 @@ Once downloaded, double click on the file to execute the installer.
 The following tools must exist within your PATH:
 
 * make
-* cmake (>= 2.6.4)
+* cmake (>= 2.8.12)
 * g++ or clang++
 
 The following libraries are required:
 
-* Qt 4 (>= 4.6)
+* Qt 5 (>= 5.2): qtbase and qttools5
 * libgcrypt
 * zlib
-* libxtst (optional for auto-type on X11)
+* libxtst, qtx11extras (optional for auto-type on X11)
 
 On Debian you can install them with:
 
 ```bash
-sudo apt-get install build-essential cmake libqt4-dev libgcrypt11-dev zlib1g-dev
+sudo apt-get install build-essential cmake qtbase5-dev libqt5x11extras5-dev qttools5-dev libgcrypt11-dev zlib1g-dev
 ```
 
 #### Build Steps

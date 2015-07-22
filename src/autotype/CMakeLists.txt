@@ -1,6 +1,6 @@
 if(UNIX AND NOT APPLE)
   find_package(X11)
-  find_package(Qt5X11Extras)
+  find_package(Qt5X11Extras 5.2)
   add_feature_info(libXi X11_Xi_FOUND "The X11 Xi Protocol library is required for auto-type")
   add_feature_info(libXtest X11_XTest_FOUND "The X11 XTEST Protocol library is required for auto-type")
   add_feature_info(Qt5X11Extras Qt5X11Extras_FOUND "The Qt5X11Extras library is required for auto-type")

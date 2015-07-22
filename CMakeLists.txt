@@ -161,11 +161,11 @@ if(WITH_TESTS)
   enable_testing()
 endif(WITH_TESTS)
 
-find_package(Qt5Core          REQUIRED)
-find_package(Qt5Concurrent    REQUIRED)
-find_package(Qt5Widgets       REQUIRED)
-find_package(Qt5Test          REQUIRED)
-find_package(Qt5LinguistTools REQUIRED)
+find_package(Qt5Core          5.2 REQUIRED)
+find_package(Qt5Concurrent    5.2 REQUIRED)
+find_package(Qt5Widgets       5.2 REQUIRED)
+find_package(Qt5Test          5.2 REQUIRED)
+find_package(Qt5LinguistTools 5.2 REQUIRED)
 set(CMAKE_AUTOMOC ON)
 
 # Debian sets the the build type to None for package builds.
