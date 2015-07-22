@@ -23,7 +23,6 @@
 
 #include "core/Group.h"
 #include "core/Metadata.h"
-#include "core/Tools.h"
 #include "crypto/Random.h"
 #include "format/KeePass2.h"
 
@@ -143,7 +142,7 @@ void Database::addDeletedObject(const DeletedObject& delObj)
 void Database::addDeletedObject(const Uuid& uuid)
 {
     DeletedObject delObj;
-    delObj.deletionTime = Tools::currentDateTimeUtc();
+    delObj.deletionTime = QDateTime::currentDateTimeUtc();
     delObj.uuid = uuid;
 
     addDeletedObject(delObj);
@@ -223,7 +222,7 @@ bool Database::setKey(const CompositeKey& key, const QByteArray& transformSeed,
     m_data.transformedMasterKey = transformedMasterKey;
     m_data.hasKey = true;
     if (updateChangedTime) {
-        m_metadata->setMasterKeyChanged(Tools::currentDateTimeUtc());
+        m_metadata->setMasterKeyChanged(QDateTime::currentDateTimeUtc());
     }
     Q_EMIT modifiedImmediate();
 

@@ -1043,7 +1043,7 @@ QDateTime KeePass2XmlReader::readDateTime()
             raiseError("Invalid date time value");
         }
         else {
-            dt = Tools::currentDateTimeUtc();
+            dt = QDateTime::currentDateTimeUtc();
         }
     }
 

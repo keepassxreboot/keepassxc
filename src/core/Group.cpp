@@ -20,7 +20,6 @@
 #include "core/Config.h"
 #include "core/DatabaseIcons.h"
 #include "core/Metadata.h"
-#include "core/Tools.h"
 
 const int Group::DefaultIconNumber = 48;
 const int Group::RecycleBinIconNumber = 43;
@@ -50,7 +49,7 @@ Group::~Group()
 
     if (m_db && m_parent) {
         DeletedObject delGroup;
-        delGroup.deletionTime = Tools::currentDateTimeUtc();
+        delGroup.deletionTime = QDateTime::currentDateTimeUtc();
         delGroup.uuid = m_uuid;
         m_db->addDeletedObject(delGroup);
     }
@@ -84,8 +83,8 @@ template <class P, class V> inline bool Group::set(P& property, const V& value) 
 void Group::updateTimeinfo()
 {
     if (m_updateTimeinfo) {
-        m_data.timeInfo.setLastModificationTime(Tools::currentDateTimeUtc());
-        m_data.timeInfo.setLastAccessTime(Tools::currentDateTimeUtc());
+        m_data.timeInfo.setLastModificationTime(QDateTime::currentDateTimeUtc());
+        m_data.timeInfo.setLastAccessTime(QDateTime::currentDateTimeUtc());
     }
 }
 
@@ -186,7 +185,7 @@ Entry* Group::lastTopVisibleEntry() const
 
 bool Group::isExpired() const
 {
-    return m_data.timeInfo.expires() && m_data.timeInfo.expiryTime() < Tools::currentDateTimeUtc();
+    return m_data.timeInfo.expires() && m_data.timeInfo.expiryTime() < QDateTime::currentDateTimeUtc();
 }
 
 void Group::setUuid(const Uuid& uuid)
@@ -352,7 +351,7 @@ void Group::setParent(Group* parent, int index)
     }
 
     if (m_updateTimeinfo) {
-        m_data.timeInfo.setLocationChanged(Tools::currentDateTimeUtc());
+        m_data.timeInfo.setLocationChanged(QDateTime::currentDateTimeUtc());
     }
 
     Q_EMIT modified();
@@ -497,7 +496,7 @@ Group* Group::clone(Entry::CloneFlags entryFlags) const
 
     clonedGroup->setUpdateTimeinfo(true);
 
-    QDateTime now = Tools::currentDateTimeUtc();
+    QDateTime now = QDateTime::currentDateTimeUtc();
     clonedGroup->m_data.timeInfo.setCreationTime(now);
     clonedGroup->m_data.timeInfo.setLastModificationTime(now);
     clonedGroup->m_data.timeInfo.setLastAccessTime(now);

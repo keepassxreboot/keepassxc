@@ -122,15 +122,6 @@ bool readAllFromDevice(QIODevice* device, QByteArray& data)
     }
 }
 
-QDateTime currentDateTimeUtc()
-{
-#if QT_VERSION >= QT_VERSION_CHECK(4, 7, 0)
-     return QDateTime::currentDateTimeUtc();
-#else
-     return QDateTime::currentDateTime().toUTC();
-#endif
-}
-
 QString imageReaderFilter()
 {
     QList<QByteArray> formats = QImageReader::supportedImageFormats();

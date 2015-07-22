@@ -32,7 +32,6 @@ QString humanReadableFileSize(qint64 bytes);
 bool hasChild(const QObject* parent, const QObject* child);
 bool readFromDevice(QIODevice* device, QByteArray& data, int size = 16384);
 bool readAllFromDevice(QIODevice* device, QByteArray& data);
-QDateTime currentDateTimeUtc();
 QString imageReaderFilter();
 bool isHex(const QByteArray& ba);
 void sleep(int ms);

@@ -233,7 +233,7 @@ void EditEntryWidget::useExpiryPreset(QAction* action)
 {
     m_mainUi->expireCheck->setChecked(true);
     TimeDelta delta = action->data().value<TimeDelta>();
-    QDateTime now = Tools::currentDateTimeUtc().toLocalTime();
+    QDateTime now = QDateTime::currentDateTime();
     QDateTime expiryDateTime = now + delta;
     m_mainUi->expireDatePicker->setDateTime(expiryDateTime);
 }

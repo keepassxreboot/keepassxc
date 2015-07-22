@@ -42,7 +42,7 @@ Metadata::Metadata(QObject* parent)
     m_data.protectNotes = false;
     // m_data.autoEnableVisualHiding = false;
 
-    QDateTime now = Tools::currentDateTimeUtc();
+    QDateTime now = QDateTime::currentDateTimeUtc();
     m_data.nameChanged = now;
     m_data.descriptionChanged = now;
     m_data.defaultUserNameChanged = now;
@@ -67,7 +67,7 @@ template <class P, class V> bool Metadata::set(P& property, const V& value, QDat
     if (property != value) {
         property = value;
         if (m_updateDatetime) {
-            dateTime = Tools::currentDateTimeUtc();
+            dateTime = QDateTime::currentDateTimeUtc();
         }
         Q_EMIT modified();
         return true;
