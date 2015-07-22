@@ -61,8 +61,6 @@ set(keepassx_SOURCES
     core/Tools.cpp
     core/Translator.cpp
     core/Uuid.cpp
-    core/qcommandlineoption.cpp
-    core/qcommandlineparser.cpp
     crypto/Crypto.cpp
     crypto/CryptoHash.cpp
     crypto/Random.cpp

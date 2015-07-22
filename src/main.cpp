@@ -15,11 +15,11 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QCommandLineParser>
 #include <QFile>
 
 #include "config-keepassx.h"
 #include "core/Config.h"
-#include "core/qcommandlineparser.h"
 #include "core/Tools.h"
 #include "core/Translator.h"
 #include "crypto/Crypto.h"
