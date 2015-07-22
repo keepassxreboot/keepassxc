@@ -21,7 +21,6 @@
 #include <QHash>
 #include <QTabWidget>
 
-#include "core/qlockfile.h"
 #include "format/KeePass2Writer.h"
 #include "gui/DatabaseWidget.h"
 
@@ -29,6 +28,7 @@ class DatabaseWidget;
 class DatabaseWidgetStateSync;
 class DatabaseOpenWidget;
 class QFile;
+class QLockFile;
 
 struct DatabaseManagerStruct
 {

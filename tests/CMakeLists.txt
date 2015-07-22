@@ -138,9 +138,6 @@ add_unit_test(NAME testdeletedobjects SOURCES TestDeletedObjects.cpp
 add_unit_test(NAME testkeepass1reader SOURCES TestKeePass1Reader.cpp
               LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testqsavefile SOURCES TestQSaveFile.cpp
-              LIBS ${TEST_LIBRARIES})
-
 add_unit_test(NAME testwildcardmatcher SOURCES TestWildcardMatcher.cpp
               LIBS ${TEST_LIBRARIES})
 

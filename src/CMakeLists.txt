@@ -54,9 +54,6 @@ set(keepassx_SOURCES
     core/ListDeleter.h
     core/Metadata.cpp
     core/PasswordGenerator.cpp
-    core/qlockfile.cpp
-    core/qsavefile.cpp
-    core/qsavefile_p.h
     core/SignalMultiplexer.cpp
     core/TimeDelta.cpp
     core/TimeInfo.cpp
@@ -140,18 +137,6 @@ if(NOT GCRYPT_HAS_SALSA20)
       crypto/salsa20/ecrypt-sync.h
       crypto/salsa20/salsa20.c
       crypto/SymmetricCipherSalsa20.cpp
-  )
-endif()
-
-if(UNIX)
-  set(keepassx_SOURCES
-      ${keepassx_SOURCES}
-      core/qlockfile_unix.cpp
-  )
-elseif(MINGW)
-  set(keepassx_SOURCES
-      ${keepassx_SOURCES}
-      core/qlockfile_win.cpp
   )
 endif()
 

@@ -18,6 +18,8 @@
 #include "DatabaseTabWidget.h"
 
 #include <QFileInfo>
+#include <QLockFile>
+#include <QSaveFile>
 #include <QTabWidget>
 
 #include "autotype/AutoType.h"
@@ -25,7 +27,6 @@
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
-#include "core/qsavefile.h"
 #include "format/CsvExporter.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/DatabaseWidgetStateSync.h"
