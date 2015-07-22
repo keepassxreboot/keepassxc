@@ -17,7 +17,7 @@
 
 #include "Tools.h"
 
-#include <QCoreApplication>
+#include <QApplication>
 #include <QImageReader>
 #include <QIODevice>
 #include <QLocale>
@@ -211,15 +211,22 @@ void wait(int ms)
 
 QString platform()
 {
-#if defined(Q_WS_X11)
-    return "x11";
-#elif defined(Q_WS_MAC)
-    return "mac";
-#elif defined(Q_WS_WIN)
-    return "win";
-#else
-    return QString();
-#endif
+    // TODO: move callers to QApplication::platformName()
+
+    QString platform = QApplication::platformName();
+
+    if (platform == "xcb") {
+        return "x11";
+    }
+    else if (platform == "cocoa") {
+        return "mac";
+    }
+    else if (platform == "windows") {
+        return "win";
+    }
+    else {
+        return platform;
+    }
 }
 
 void disableCoreDumps()
