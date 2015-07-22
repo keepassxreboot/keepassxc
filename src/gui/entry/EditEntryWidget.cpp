@@ -23,6 +23,7 @@
 
 #include <QDesktopServices>
 #include <QStackedLayout>
+#include <QStandardPaths>
 #include <QMenu>
 #include <QSortFilterProxyModel>
 #include <QTemporaryFile>
@@ -589,7 +590,7 @@ void EditEntryWidget::insertAttachment()
 
     QString defaultDir = config()->get("LastAttachmentDir").toString();
     if (defaultDir.isEmpty() || !QDir(defaultDir).exists()) {
-        defaultDir = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+        defaultDir = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).value(0);
     }
     QString filename = fileDialog()->getOpenFileName(this, tr("Select file"), defaultDir);
     if (filename.isEmpty() || !QFile::exists(filename)) {
@@ -623,7 +624,7 @@ void EditEntryWidget::saveCurrentAttachment()
     QString filename = m_attachmentsModel->keyByIndex(index);
     QString defaultDirName = config()->get("LastAttachmentDir").toString();
     if (defaultDirName.isEmpty() || !QDir(defaultDirName).exists()) {
-        defaultDirName = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+        defaultDirName = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     }
     QDir dir(defaultDirName);
     QString savePath = fileDialog()->getSaveFileName(this, tr("Save attachment"),
