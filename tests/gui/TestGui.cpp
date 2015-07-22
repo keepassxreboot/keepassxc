@@ -436,8 +436,8 @@ void TestGui::testDatabaseLocking()
 
     triggerAction("actionLockDatabases");
 
-    QCOMPARE(m_tabWidget->tabText(0), QString("Save [locked]"));
-    QCOMPARE(m_tabWidget->tabText(1), QString("basic [New database]*"));
+    QCOMPARE(m_tabWidget->tabText(0), QString("&Save [locked]"));
+    QCOMPARE(m_tabWidget->tabText(1), QString("&basic [New database]*"));
 
     QWidget* dbWidget = m_tabWidget->currentDatabaseWidget();
     QWidget* unlockDatabaseWidget = dbWidget->findChild<QWidget*>("unlockDatabaseWidget");
@@ -447,7 +447,7 @@ void TestGui::testDatabaseLocking()
     QTest::keyClicks(editPassword, "masterpw");
     QTest::keyClick(editPassword, Qt::Key_Enter);
 
-    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("basic [New database]*"));
+    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("&basic [New database]*"));
 }
 
 void TestGui::cleanupTestCase()
