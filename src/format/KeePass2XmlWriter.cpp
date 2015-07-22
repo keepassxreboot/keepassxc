@@ -58,11 +58,9 @@ void KeePass2XmlWriter::writeDatabase(QIODevice* device, Database* db, KeePass2R
 
     m_xml.writeEndDocument();
 
-#if QT_VERSION >= QT_VERSION_CHECK(4, 8, 0)
     if (m_xml.hasError()) {
         raiseError(device->errorString());
     }
-#endif
 }
 
 void KeePass2XmlWriter::writeDatabase(const QString& filename, Database* db)
