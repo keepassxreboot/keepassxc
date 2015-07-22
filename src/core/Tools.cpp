@@ -23,11 +23,7 @@
 #include <QLocale>
 #include <QStringList>
 
-#if QT_VERSION >= QT_VERSION_CHECK(4, 7, 0)
 #include <QElapsedTimer>
-#else
-#include <QTime>
-#endif
 
 #ifdef Q_OS_WIN
 #include <windows.h> // for Sleep()
@@ -177,11 +173,7 @@ void wait(int ms)
         return;
     }
 
-#if QT_VERSION >= QT_VERSION_CHECK(4, 7, 0)
     QElapsedTimer timer;
-#else
-    QTime timer;
-#endif
     timer.start();
 
     if (ms <= 50) {
@@ -196,7 +188,7 @@ void wait(int ms)
                 QCoreApplication::processEvents(QEventLoop::AllEvents, timeLeft);
                 sleep(10);
             }
-        } while (timer.elapsed() < ms);
+        } while (!timer.hasExpired(ms));
     }
 }
 
