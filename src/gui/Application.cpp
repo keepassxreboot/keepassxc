@@ -18,13 +18,37 @@
 
 #include "Application.h"
 
+#include <QAbstractNativeEventFilter>
 #include <QFileOpenEvent>
 
 #include "autotype/AutoType.h"
 
+#if defined(Q_OS_UNIX) && !defined(Q_OS_OSX)
+class XcbEventFilter : public QAbstractNativeEventFilter
+{
+public:
+    virtual bool nativeEventFilter(const QByteArray& eventType, void* message, long* result) Q_DECL_OVERRIDE
+    {
+        Q_UNUSED(result)
+
+        if (eventType == QByteArrayLiteral("xcb_generic_event_t")) {
+            int retCode = autoType()->callEventFilter(message);
+            if (retCode == 1) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+};
+#endif
+
 Application::Application(int& argc, char** argv)
     : QApplication(argc, argv)
 {
+#if defined(Q_OS_UNIX) && !defined(Q_OS_OSX)
+    installNativeEventFilter(new XcbEventFilter());
+#endif
 }
 
 bool Application::event(QEvent* event)
@@ -37,19 +61,3 @@ bool Application::event(QEvent* event)
 
     return QApplication::event(event);
 }
-
-#ifdef Q_WS_X11
-bool Application::x11EventFilter(XEvent* event)
-{
-    int retCode = autoType()->callEventFilter(event);
-
-    if (retCode == 0) {
-        return false;
-    }
-    else if (retCode == 1) {
-        return true;
-    }
-
-    return QApplication::x11EventFilter(event);
-}
-#endif
