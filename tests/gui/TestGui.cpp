@@ -21,6 +21,7 @@
 #include <QApplication>
 #include <QDialogButtonBox>
 #include <QLineEdit>
+#include <QMimeData>
 #include <QPushButton>
 #include <QSpinBox>
 #include <QTemporaryFile>

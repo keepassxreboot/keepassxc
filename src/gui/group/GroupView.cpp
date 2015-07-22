@@ -19,6 +19,7 @@
 
 #include <QDragMoveEvent>
 #include <QMetaObject>
+#include <QMimeData>
 
 #include "core/Database.h"
 #include "core/Group.h"
