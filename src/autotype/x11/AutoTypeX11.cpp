@@ -20,6 +20,7 @@
 #include "KeySymMap.h"
 
 #include <time.h>
+#include <xcb/xcb.h>
 
 bool AutoTypePlatformX11::m_catchXErrors = false;
 bool AutoTypePlatformX11::m_xErrorOccured = false;
@@ -176,22 +177,42 @@ void AutoTypePlatformX11::unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModi
 
 int AutoTypePlatformX11::platformEventFilter(void* event)
 {
-    XEvent* xevent = static_cast<XEvent*>(event);
+    xcb_generic_event_t* genericEvent = static_cast<xcb_generic_event_t*>(event);
+    quint8 type = genericEvent->response_type & 0x7f;
 
-    if ((xevent->type == KeyPress || xevent->type == KeyRelease)
-            && m_currentGlobalKey
-            && xevent->xkey.keycode == m_currentGlobalKeycode
-            && (xevent->xkey.state & m_modifierMask) == m_currentGlobalNativeModifiers
-            && !QApplication::focusWidget()
-            && m_loaded) {
-        if (xevent->type == KeyPress) {
-            Q_EMIT globalShortcutTriggered();
+    if (type == XCB_KEY_PRESS || type == XCB_KEY_RELEASE) {
+        xcb_key_press_event_t* keyPressEvent = static_cast<xcb_key_press_event_t*>(event);
+        if (keyPressEvent->detail == m_currentGlobalKeycode
+                && (keyPressEvent->state & m_modifierMask) == m_currentGlobalNativeModifiers
+                && !QApplication::focusWidget()
+                && m_loaded) {
+            if (type == XCB_KEY_PRESS) {
+                Q_EMIT globalShortcutTriggered();
+            }
+
+            return 1;
         }
-        return 1;
     }
-    if (xevent->type == MappingNotify && m_loaded) {
-        XRefreshKeyboardMapping(reinterpret_cast<XMappingEvent*>(xevent));
-        updateKeymap();
+    else if (type == XCB_MAPPING_NOTIFY) {
+        xcb_mapping_notify_event_t* mappingNotifyEvent = static_cast<xcb_mapping_notify_event_t*>(event);
+        if (mappingNotifyEvent->request == XCB_MAPPING_KEYBOARD
+                || mappingNotifyEvent->request == XCB_MAPPING_MODIFIER)
+        {
+            XMappingEvent xMappingEvent;
+            memset(&xMappingEvent, 0, sizeof(xMappingEvent));
+            xMappingEvent.type = MappingNotify;
+            xMappingEvent.display = m_dpy;
+            if (mappingNotifyEvent->request == XCB_MAPPING_KEYBOARD) {
+                xMappingEvent.request = MappingKeyboard;
+            }
+            else {
+                xMappingEvent.request = MappingModifier;
+            }
+            xMappingEvent.first_keycode = mappingNotifyEvent->first_keycode;
+            xMappingEvent.count = mappingNotifyEvent->count;
+            XRefreshKeyboardMapping(&xMappingEvent);
+            updateKeymap();
+        }
     }
 
     return -1;
