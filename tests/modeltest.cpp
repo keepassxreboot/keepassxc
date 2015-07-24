@@ -82,6 +82,10 @@ ModelTest::ModelTest ( QAbstractItemModel *_model, QObject *parent ) : QObject (
             this, SLOT(rowsInserted(QModelIndex,int,int)) );
     connect(model, SIGNAL(rowsRemoved(QModelIndex,int,int)),
             this, SLOT(rowsRemoved(QModelIndex,int,int)) );
+    connect(model, SIGNAL (rowsAboutToBeMoved(QModelIndex,int,int,QModelIndex,int)),
+            this, SLOT (rowsAboutToBeMoved(QModelIndex,int,int,QModelIndex,int)) );
+    connect(model, SIGNAL (rowsMoved(QModelIndex,int,int,QModelIndex,int)),
+            this, SLOT (rowsMoved(QModelIndex,int,int,QModelIndex,int)) );
     connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
             this, SLOT(dataChanged(QModelIndex,QModelIndex)) );
     connect(model, SIGNAL(headerDataChanged(Qt::Orientation,int,int)),
