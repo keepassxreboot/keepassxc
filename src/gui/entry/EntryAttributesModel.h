@@ -20,8 +20,6 @@
 
 #include <QAbstractListModel>
 
-#include "core/Global.h"
-
 class EntryAttributes;
 
 class EntryAttributesModel : public QAbstractListModel
@@ -29,14 +27,14 @@ class EntryAttributesModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-    explicit EntryAttributesModel(QObject* parent = Q_NULLPTR);
+    explicit EntryAttributesModel(QObject* parent = nullptr);
     void setEntryAttributes(EntryAttributes* entryAttributes);
-    int rowCount(const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
-    int columnCount(const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
-    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
-    bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole) Q_DECL_OVERRIDE;
-    Qt::ItemFlags flags(const QModelIndex& index) const Q_DECL_OVERRIDE;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+    int columnCount(const QModelIndex& parent = QModelIndex()) const override;
+    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+    bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole) override;
+    Qt::ItemFlags flags(const QModelIndex& index) const override;
     QModelIndex indexByKey(const QString& key) const;
     QString keyByIndex(const QModelIndex& index) const;
 

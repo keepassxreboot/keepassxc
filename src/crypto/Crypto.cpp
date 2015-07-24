@@ -74,18 +74,18 @@ bool Crypto::backendSelfTest()
 
 bool Crypto::checkAlgorithms()
 {
-    if (gcry_cipher_algo_info(GCRY_CIPHER_AES256, GCRYCTL_TEST_ALGO, Q_NULLPTR, Q_NULLPTR) != 0) {
+    if (gcry_cipher_algo_info(GCRY_CIPHER_AES256, GCRYCTL_TEST_ALGO, nullptr, nullptr) != 0) {
         m_errorStr = "GCRY_CIPHER_AES256 not found.";
         qWarning("Crypto::checkAlgorithms: %s", qPrintable(m_errorStr));
         return false;
     }
-    if (gcry_cipher_algo_info(GCRY_CIPHER_TWOFISH, GCRYCTL_TEST_ALGO, Q_NULLPTR, Q_NULLPTR) != 0) {
+    if (gcry_cipher_algo_info(GCRY_CIPHER_TWOFISH, GCRYCTL_TEST_ALGO, nullptr, nullptr) != 0) {
         m_errorStr = "GCRY_CIPHER_TWOFISH not found.";
         qWarning("Crypto::checkAlgorithms: %s", qPrintable(m_errorStr));
         return false;
     }
 #ifdef GCRYPT_HAS_SALSA20
-    if (gcry_cipher_algo_info(GCRY_CIPHER_SALSA20, GCRYCTL_TEST_ALGO, Q_NULLPTR, Q_NULLPTR) != 0) {
+    if (gcry_cipher_algo_info(GCRY_CIPHER_SALSA20, GCRYCTL_TEST_ALGO, nullptr, nullptr) != 0) {
         m_errorStr = "GCRY_CIPHER_SALSA20 not found.";
         qWarning("Crypto::checkAlgorithms: %s", qPrintable(m_errorStr));
         return false;

@@ -20,8 +20,6 @@
 
 #include <QIODevice>
 
-#include "core/Global.h"
-
 class LayeredStream : public QIODevice
 {
     Q_OBJECT
@@ -30,12 +28,12 @@ public:
     explicit LayeredStream(QIODevice* baseDevice);
     virtual ~LayeredStream();
 
-    bool isSequential() const Q_DECL_OVERRIDE;
-    bool open(QIODevice::OpenMode mode) Q_DECL_OVERRIDE;
+    bool isSequential() const override;
+    bool open(QIODevice::OpenMode mode) override;
 
 protected:
-    qint64 readData(char* data, qint64 maxSize) Q_DECL_OVERRIDE;
-    qint64 writeData(const char* data, qint64 maxSize) Q_DECL_OVERRIDE;
+    qint64 readData(char* data, qint64 maxSize) override;
+    qint64 writeData(const char* data, qint64 maxSize) override;
 
     QIODevice* const m_baseDevice;
 

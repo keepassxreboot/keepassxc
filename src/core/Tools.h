@@ -22,8 +22,6 @@
 #include <QObject>
 #include <QString>
 
-#include "core/Global.h"
-
 class QIODevice;
 
 namespace Tools {

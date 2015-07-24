@@ -23,7 +23,7 @@
 
 #include "core/Config.h"
 
-Clipboard* Clipboard::m_instance(Q_NULLPTR);
+Clipboard* Clipboard::m_instance(nullptr);
 
 Clipboard::Clipboard(QObject* parent)
     : QObject(parent)

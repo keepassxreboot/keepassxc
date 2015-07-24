@@ -20,19 +20,17 @@
 
 #include <QBuffer>
 
-#include "core/Global.h"
-
 class FailDevice : public QBuffer
 {
     Q_OBJECT
 
 public:
-    explicit FailDevice(int failAfter, QObject* parent = Q_NULLPTR);
-    bool open(QIODevice::OpenMode openMode) Q_DECL_OVERRIDE;
+    explicit FailDevice(int failAfter, QObject* parent = nullptr);
+    bool open(QIODevice::OpenMode openMode) override;
 
 protected:
-    qint64 readData(char* data, qint64 len) Q_DECL_OVERRIDE;
-    qint64 writeData(const char* data, qint64 len) Q_DECL_OVERRIDE;
+    qint64 readData(char* data, qint64 len) override;
+    qint64 writeData(const char* data, qint64 len) override;
 
 private:
     int m_failAfter;

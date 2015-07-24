@@ -65,7 +65,7 @@ SymmetricCipherBackend* SymmetricCipher::createBackend(SymmetricCipher::Algorith
 
     default:
         Q_ASSERT(false);
-        return Q_NULLPTR;
+        return nullptr;
     }
 }
 

@@ -98,12 +98,12 @@ void TestKeePass2XmlReader::testMetadata()
     QCOMPARE(m_db->metadata()->protectUrl(), true);
     QCOMPARE(m_db->metadata()->protectNotes(), false);
     QCOMPARE(m_db->metadata()->recycleBinEnabled(), true);
-    QVERIFY(m_db->metadata()->recycleBin() != Q_NULLPTR);
+    QVERIFY(m_db->metadata()->recycleBin() != nullptr);
     QCOMPARE(m_db->metadata()->recycleBin()->name(), QString("Recycle Bin"));
     QCOMPARE(m_db->metadata()->recycleBinChanged(), genDT(2010, 8, 25, 16, 12, 57));
-    QVERIFY(m_db->metadata()->entryTemplatesGroup() == Q_NULLPTR);
+    QVERIFY(m_db->metadata()->entryTemplatesGroup() == nullptr);
     QCOMPARE(m_db->metadata()->entryTemplatesGroupChanged(), genDT(2010, 8, 8, 17, 24, 19));
-    QVERIFY(m_db->metadata()->lastSelectedGroup() != Q_NULLPTR);
+    QVERIFY(m_db->metadata()->lastSelectedGroup() != nullptr);
     QCOMPARE(m_db->metadata()->lastSelectedGroup()->name(), QString("NewDatabase"));
     QVERIFY(m_db->metadata()->lastTopVisibleGroup() == m_db->metadata()->lastSelectedGroup());
     QCOMPARE(m_db->metadata()->historyMaxItems(), -1);

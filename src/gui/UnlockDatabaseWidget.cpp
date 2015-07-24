@@ -33,5 +33,5 @@ void UnlockDatabaseWidget::clearForms()
     m_ui->comboKeyFile->clear();
     m_ui->checkPassword->setChecked(false);
     m_ui->checkKeyFile->setChecked(false);
-    m_db = Q_NULLPTR;
+    m_db = nullptr;
 }

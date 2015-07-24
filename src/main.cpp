@@ -46,7 +46,7 @@ int main(int argc, char** argv)
                                                     "Fatal error while testing the cryptographic functions.");
         error.append("\n");
         error.append(Crypto::errorString());
-        MessageBox::critical(Q_NULLPTR, QCoreApplication::translate("Main", "KeePassX - Error"), error);
+        MessageBox::critical(nullptr, QCoreApplication::translate("Main", "KeePassX - Error"), error);
         return 1;
     }
 

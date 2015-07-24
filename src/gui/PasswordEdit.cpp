@@ -17,14 +17,12 @@
 
 #include "PasswordEdit.h"
 
-#include "core/Global.h"
-
 const QColor PasswordEdit::CorrectSoFarColor = QColor(255, 205, 15);
 const QColor PasswordEdit::ErrorColor = QColor(255, 125, 125);
 
 PasswordEdit::PasswordEdit(QWidget* parent)
     : QLineEdit(parent)
-    , m_basePasswordEdit(Q_NULLPTR)
+    , m_basePasswordEdit(nullptr)
 {
 }
 

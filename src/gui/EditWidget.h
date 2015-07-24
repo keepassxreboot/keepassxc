@@ -33,7 +33,7 @@ class EditWidget : public DialogyWidget
     Q_OBJECT
 
 public:
-    explicit EditWidget(QWidget* parent = Q_NULLPTR);
+    explicit EditWidget(QWidget* parent = nullptr);
     ~EditWidget();
 
     void add(const QString& labelText, QWidget* widget);

@@ -20,7 +20,6 @@
 
 #include <QWidget>
 
-#include "core/Global.h"
 #include "core/Uuid.h"
 
 class Database;
@@ -44,7 +43,7 @@ class EditWidgetIcons : public QWidget
     Q_OBJECT
 
 public:
-    explicit EditWidgetIcons(QWidget* parent = Q_NULLPTR);
+    explicit EditWidgetIcons(QWidget* parent = nullptr);
     ~EditWidgetIcons();
 
     IconStruct save();

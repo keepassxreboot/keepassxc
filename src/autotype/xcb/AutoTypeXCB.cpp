@@ -24,7 +24,7 @@
 
 bool AutoTypePlatformX11::m_catchXErrors = false;
 bool AutoTypePlatformX11::m_xErrorOccured = false;
-int (*AutoTypePlatformX11::m_oldXErrorHandler)(Display*, XErrorEvent*) = Q_NULLPTR;
+int (*AutoTypePlatformX11::m_oldXErrorHandler)(Display*, XErrorEvent*) = nullptr;
 
 AutoTypePlatformX11::AutoTypePlatformX11()
 {
@@ -46,8 +46,8 @@ AutoTypePlatformX11::AutoTypePlatformX11()
     m_currentGlobalKey = static_cast<Qt::Key>(0);
     m_currentGlobalModifiers = 0;
 
-    m_keysymTable = Q_NULLPTR;
-    m_xkb = Q_NULLPTR;
+    m_keysymTable = nullptr;
+    m_xkb = nullptr;
     m_remapKeycode = 0;
     m_currentRemapKeysym = NoSymbol;
     m_modifierMask = ControlMask | ShiftMask | Mod1Mask | Mod4Mask;
@@ -94,7 +94,7 @@ WId AutoTypePlatformX11::activeWindow()
 
         Window root;
         Window parent;
-        Window* children = Q_NULLPTR;
+        Window* children = nullptr;
         unsigned int numChildren;
         tree = XQueryTree(m_dpy, window, &root, &parent, &children, &numChildren);
         window = parent;
@@ -231,7 +231,7 @@ QString AutoTypePlatformX11::windowTitle(Window window, bool useBlacklist)
     int format;
     unsigned long nitems;
     unsigned long after;
-    unsigned char* data = Q_NULLPTR;
+    unsigned char* data = nullptr;
 
     // the window manager spec says we should read _NET_WM_NAME first, then fall back to WM_NAME
 
@@ -245,7 +245,7 @@ QString AutoTypePlatformX11::windowTitle(Window window, bool useBlacklist)
         XTextProperty textProp;
         retVal = XGetTextProperty(m_dpy, window, &textProp, m_atomWmName);
         if ((retVal != 0) && textProp.value) {
-            char** textList = Q_NULLPTR;
+            char** textList = nullptr;
             int count;
 
             if (textProp.encoding == m_atomUtf8String) {
@@ -297,8 +297,8 @@ QString AutoTypePlatformX11::windowClassName(Window window)
     QString className;
 
     XClassHint wmClass;
-    wmClass.res_name = Q_NULLPTR;
-    wmClass.res_class = Q_NULLPTR;
+    wmClass.res_name = nullptr;
+    wmClass.res_class = nullptr;
 
     if (XGetClassHint(m_dpy, window, &wmClass) && wmClass.res_name) {
         className = QString::fromLocal8Bit(wmClass.res_name);
@@ -337,7 +337,7 @@ QStringList AutoTypePlatformX11::windowTitlesRecursive(Window window)
 
     Window root;
     Window parent;
-    Window* children = Q_NULLPTR;
+    Window* children = nullptr;
     unsigned int numChildren;
     if (XQueryTree(m_dpy, window, &root, &parent, &children, &numChildren) && children) {
         for (uint i = 0; i < numChildren; i++) {
@@ -357,7 +357,7 @@ bool AutoTypePlatformX11::isTopLevelWindow(Window window)
     int format;
     unsigned long nitems;
     unsigned long after;
-    unsigned char* data = Q_NULLPTR;
+    unsigned char* data = nullptr;
     int retVal = XGetWindowProperty(m_dpy, window, m_atomWmState, 0, 0, false, AnyPropertyType, &type, &format,
                                     &nitems, &after, &data);
     if (data) {
@@ -512,7 +512,7 @@ void AutoTypePlatformX11::updateKeymap()
     timespec ts;
     ts.tv_sec = 0;
     ts.tv_nsec = 30 * 1000 * 1000;
-    nanosleep(&ts, Q_NULLPTR);
+    nanosleep(&ts, nullptr);
 }
 
 bool AutoTypePlatformX11::isRemapKeycodeValid()

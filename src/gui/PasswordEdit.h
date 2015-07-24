@@ -20,8 +20,6 @@
 
 #include <QLineEdit>
 
-#include "core/Global.h"
-
 class PasswordEdit : public QLineEdit
 {
     Q_OBJECT
@@ -30,7 +28,7 @@ public:
     static const QColor CorrectSoFarColor;
     static const QColor ErrorColor;
 
-    explicit PasswordEdit(QWidget* parent = Q_NULLPTR);
+    explicit PasswordEdit(QWidget* parent = nullptr);
     void enableVerifyMode(PasswordEdit* baseEdit);
 
 public Q_SLOTS:

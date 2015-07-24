@@ -23,7 +23,7 @@
 #include <QStandardPaths>
 #include <QTemporaryFile>
 
-Config* Config::m_instance(Q_NULLPTR);
+Config* Config::m_instance(nullptr);
 
 QVariant Config::get(const QString& key)
 {

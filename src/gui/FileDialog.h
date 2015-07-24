@@ -20,17 +20,15 @@
 
 #include <QFileDialog>
 
-#include "core/Global.h"
-
 class FileDialog
 {
 public:
-    QString getOpenFileName(QWidget* parent = Q_NULLPTR, const QString& caption = QString(),
+    QString getOpenFileName(QWidget* parent = nullptr, const QString& caption = QString(),
                             QString dir = QString(), const QString& filter = QString(),
-                            QString* selectedFilter = Q_NULLPTR, QFileDialog::Options options = 0);
-    QString getSaveFileName(QWidget* parent = Q_NULLPTR, const QString& caption = QString(),
+                            QString* selectedFilter = nullptr, QFileDialog::Options options = 0);
+    QString getSaveFileName(QWidget* parent = nullptr, const QString& caption = QString(),
                             QString dir = QString(), const QString& filter = QString(),
-                            QString* selectedFilter = Q_NULLPTR, QFileDialog::Options options = 0,
+                            QString* selectedFilter = nullptr, QFileDialog::Options options = 0,
                             const QString& defaultExtension = QString());
 
     /**

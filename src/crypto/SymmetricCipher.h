@@ -22,7 +22,6 @@
 #include <QScopedPointer>
 #include <QString>
 
-#include "core/Global.h"
 #include "crypto/SymmetricCipherBackend.h"
 
 class SymmetricCipher

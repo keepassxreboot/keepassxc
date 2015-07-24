@@ -21,8 +21,6 @@
 #include <QObject>
 #include <QPointer>
 
-#include "core/Global.h"
-
 class SignalMultiplexer
 {
 public:

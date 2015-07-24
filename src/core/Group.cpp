@@ -371,7 +371,7 @@ void Group::setParent(Database* db)
 
     cleanupParent();
 
-    m_parent = Q_NULLPTR;
+    m_parent = nullptr;
     recSetDatabase(db);
 
     QObject::setParent(db);

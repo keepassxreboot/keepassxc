@@ -20,8 +20,6 @@
 
 #include <QObject>
 
-#include "core/Global.h"
-
 class AutoTypeAssociations : public QObject
 {
     Q_OBJECT
@@ -36,7 +34,7 @@ public:
         bool operator!=(const AutoTypeAssociations::Association& other) const;
     };
 
-    explicit AutoTypeAssociations(QObject* parent = Q_NULLPTR);
+    explicit AutoTypeAssociations(QObject* parent = nullptr);
     void copyDataFrom(const AutoTypeAssociations* other);
     void add(const AutoTypeAssociations::Association& association);
     void remove(int index);

@@ -75,7 +75,7 @@ void GroupView::dragMoveEvent(QDragMoveEvent* event)
 Group* GroupView::currentGroup()
 {
     if (currentIndex() == QModelIndex()) {
-        return Q_NULLPTR;
+        return nullptr;
     }
     else {
         return m_model->groupFromIndex(currentIndex());

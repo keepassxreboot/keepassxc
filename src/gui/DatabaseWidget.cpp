@@ -51,9 +51,9 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     , m_db(db)
     , m_searchUi(new Ui::SearchWidget())
     , m_searchWidget(new QWidget())
-    , m_newGroup(Q_NULLPTR)
-    , m_newEntry(Q_NULLPTR)
-    , m_newParent(Q_NULLPTR)
+    , m_newGroup(nullptr)
+    , m_newEntry(nullptr)
+    , m_newParent(nullptr)
 {
     m_searchUi->setupUi(m_searchWidget);
 
@@ -173,7 +173,7 @@ DatabaseWidget::~DatabaseWidget()
 
 DatabaseWidget::Mode DatabaseWidget::currentMode() const
 {
-    if (currentWidget() == Q_NULLPTR) {
+    if (currentWidget() == nullptr) {
         return DatabaseWidget::None;
     }
     else if (currentWidget() == m_mainWidget) {
@@ -552,8 +552,8 @@ void DatabaseWidget::switchToView(bool accepted)
             delete m_newGroup;
         }
 
-        m_newGroup = Q_NULLPTR;
-        m_newParent = Q_NULLPTR;
+        m_newGroup = nullptr;
+        m_newParent = nullptr;
     }
     else if (m_newEntry) {
         if (accepted) {
@@ -565,8 +565,8 @@ void DatabaseWidget::switchToView(bool accepted)
             delete m_newEntry;
         }
 
-        m_newEntry = Q_NULLPTR;
-        m_newParent = Q_NULLPTR;
+        m_newEntry = nullptr;
+        m_newParent = nullptr;
     }
 
     setCurrentWidget(m_mainWidget);
@@ -636,9 +636,9 @@ void DatabaseWidget::openDatabase(bool accepted)
         // We won't need those anymore and KeePass1OpenWidget closes
         // the file in its dtor.
         delete m_databaseOpenWidget;
-        m_databaseOpenWidget = Q_NULLPTR;
+        m_databaseOpenWidget = nullptr;
         delete m_keepass1OpenWidget;
-        m_keepass1OpenWidget = Q_NULLPTR;
+        m_keepass1OpenWidget = nullptr;
     }
     else {
         if (m_databaseOpenWidget->database()) {
@@ -881,7 +881,7 @@ bool DatabaseWidget::isInSearchMode() const
 void DatabaseWidget::clearLastGroup(Group* group)
 {
     if (group) {
-        m_lastGroup = Q_NULLPTR;
+        m_lastGroup = nullptr;
         m_searchWidget->hide();
     }
 }
@@ -930,7 +930,7 @@ QStringList DatabaseWidget::customEntryAttributes() const
 
 bool DatabaseWidget::isGroupSelected() const
 {
-    return m_groupView->currentGroup() != Q_NULLPTR;
+    return m_groupView->currentGroup() != nullptr;
 }
 
 bool DatabaseWidget::currentEntryHasTitle()

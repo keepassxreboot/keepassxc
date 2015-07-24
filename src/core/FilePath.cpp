@@ -23,7 +23,7 @@
 
 #include "config-keepassx.h"
 
-FilePath* FilePath::m_instance(Q_NULLPTR);
+FilePath* FilePath::m_instance(nullptr);
 
 QString FilePath::dataPath(const QString& name)
 {

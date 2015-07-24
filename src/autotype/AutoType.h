@@ -22,8 +22,6 @@
 #include <QStringList>
 #include <QWidget>
 
-#include "core/Global.h"
-
 class AutoTypeAction;
 class AutoTypeExecutor;
 class AutoTypePlatformInterface;
@@ -37,7 +35,7 @@ class AutoType : public QObject
 
 public:
     QStringList windowTitles();
-    void performAutoType(const Entry* entry, QWidget* hideWindow = Q_NULLPTR,
+    void performAutoType(const Entry* entry, QWidget* hideWindow = nullptr,
                          const QString& customSequence = QString(), WId window = 0);
     bool registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers);
     void unregisterGlobalShortcut();
@@ -62,7 +60,7 @@ private Q_SLOTS:
     void unloadPlugin();
 
 private:
-    explicit AutoType(QObject* parent = Q_NULLPTR, bool test = false);
+    explicit AutoType(QObject* parent = nullptr, bool test = false);
     ~AutoType();
     void loadPlugin(const QString& pluginPath);
     bool parseActions(const QString& sequence, const Entry* entry, QList<AutoTypeAction*>& actions);

@@ -35,8 +35,8 @@ public:
     void close();
 
 protected:
-    qint64 readData(char* data, qint64 maxSize) Q_DECL_OVERRIDE;
-    qint64 writeData(const char* data, qint64 maxSize) Q_DECL_OVERRIDE;
+    qint64 readData(char* data, qint64 maxSize) override;
+    qint64 writeData(const char* data, qint64 maxSize) override;
 
 private:
     void init();

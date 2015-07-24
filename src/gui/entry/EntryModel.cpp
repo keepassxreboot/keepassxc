@@ -27,7 +27,7 @@
 
 EntryModel::EntryModel(QObject* parent)
     : QAbstractTableModel(parent)
-    , m_group(Q_NULLPTR)
+    , m_group(nullptr)
 {
 }
 
@@ -71,7 +71,7 @@ void EntryModel::setEntryList(const QList<Entry*>& entries)
 
     severConnections();
 
-    m_group = Q_NULLPTR;
+    m_group = nullptr;
     m_allGroups.clear();
     m_entries = entries;
     m_orgEntries = entries;
@@ -215,7 +215,7 @@ QStringList EntryModel::mimeTypes() const
 QMimeData* EntryModel::mimeData(const QModelIndexList& indexes) const
 {
     if (indexes.isEmpty()) {
-        return Q_NULLPTR;
+        return nullptr;
     }
 
     QMimeData* data = new QMimeData();
@@ -240,7 +240,7 @@ QMimeData* EntryModel::mimeData(const QModelIndexList& indexes) const
 
     if (seenEntries.isEmpty()) {
         delete data;
-        return Q_NULLPTR;
+        return nullptr;
     }
     else {
         data->setData(mimeTypes().first(), encoded);
@@ -298,11 +298,11 @@ void EntryModel::entryDataChanged(Entry* entry)
 void EntryModel::severConnections()
 {
     if (m_group) {
-        disconnect(m_group, Q_NULLPTR, this, Q_NULLPTR);
+        disconnect(m_group, nullptr, this, nullptr);
     }
 
     Q_FOREACH (const Group* group, m_allGroups) {
-        disconnect(group, Q_NULLPTR, this, Q_NULLPTR);
+        disconnect(group, nullptr, this, nullptr);
     }
 }
 

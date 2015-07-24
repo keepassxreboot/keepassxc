@@ -25,7 +25,7 @@ class UnlockDatabaseWidget : public DatabaseOpenWidget
     Q_OBJECT
 
 public:
-    explicit UnlockDatabaseWidget(QWidget* parent = Q_NULLPTR);
+    explicit UnlockDatabaseWidget(QWidget* parent = nullptr);
     void clearForms();
 };
 

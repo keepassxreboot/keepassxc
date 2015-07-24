@@ -26,7 +26,7 @@ class DatabaseWidgetStateSync : public QObject
     Q_OBJECT
 
 public:
-    explicit DatabaseWidgetStateSync(QObject* parent = Q_NULLPTR);
+    explicit DatabaseWidgetStateSync(QObject* parent = nullptr);
     ~DatabaseWidgetStateSync();
 
 public Q_SLOTS:

@@ -20,19 +20,17 @@
 
 #include <QComboBox>
 
-#include "core/Global.h"
-
 class WindowSelectComboBox : public QComboBox
 {
     Q_OBJECT
 
 public:
-    explicit WindowSelectComboBox(QWidget* parent = Q_NULLPTR);
+    explicit WindowSelectComboBox(QWidget* parent = nullptr);
     void refreshWindowList();
 
-    void showPopup() Q_DECL_OVERRIDE;
-    QSize sizeHint() const Q_DECL_OVERRIDE;
-    QSize minimumSizeHint() const Q_DECL_OVERRIDE;
+    void showPopup() override;
+    QSize sizeHint() const override;
+    QSize minimumSizeHint() const override;
 };
 
 #endif // KEEPASSX_WINDOWSELECTCOMBOBOX_H

@@ -31,7 +31,6 @@
 
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/AutoTypeAction.h"
-#include "core/Global.h"
 
 #define N_MOD_INDICES (Mod5MapIndex + 1)
 
@@ -43,7 +42,7 @@ class AutoTypePlatformX11 : public QObject, public AutoTypePlatformInterface
 
 public:
     AutoTypePlatformX11();
-    void unload() Q_DECL_OVERRIDE;
+    void unload() override;
     QStringList windowTitles();
     WId activeWindow();
     QString activeWindowTitle();

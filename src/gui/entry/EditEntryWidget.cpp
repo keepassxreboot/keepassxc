@@ -46,7 +46,7 @@
 
 EditEntryWidget::EditEntryWidget(QWidget* parent)
     : EditWidget(parent)
-    , m_entry(Q_NULLPTR)
+    , m_entry(nullptr)
     , m_mainUi(new Ui::EditEntryWidgetMain())
     , m_advancedUi(new Ui::EditEntryWidgetAdvanced())
     , m_autoTypeUi(new Ui::EditEntryWidgetAutoType())
@@ -477,8 +477,8 @@ void EditEntryWidget::cancel()
 
 void EditEntryWidget::clear()
 {
-    m_entry = Q_NULLPTR;
-    m_database = Q_NULLPTR;
+    m_entry = nullptr;
+    m_database = nullptr;
     m_entryAttributes->clear();
     m_entryAttachments->clear();
     m_autoTypeAssoc->clear();

@@ -19,7 +19,7 @@
 
 #include "core/Config.h"
 
-FileDialog* FileDialog::m_instance(Q_NULLPTR);
+FileDialog* FileDialog::m_instance(nullptr);
 
 QString FileDialog::getOpenFileName(QWidget* parent, const QString& caption, QString dir,
                                     const QString& filter, QString* selectedFilter,

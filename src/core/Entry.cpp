@@ -28,7 +28,7 @@ Entry::Entry()
     : m_attributes(new EntryAttributes(this))
     , m_attachments(new EntryAttachments(this))
     , m_autoTypeAssociations(new AutoTypeAssociations(this))
-    , m_tmpHistoryItem(Q_NULLPTR)
+    , m_tmpHistoryItem(nullptr)
     , m_modifiedSinceBegin(false)
     , m_updateTimeinfo(true)
 {
@@ -513,7 +513,7 @@ void Entry::endUpdate()
         delete m_tmpHistoryItem;
     }
 
-    m_tmpHistoryItem = Q_NULLPTR;
+    m_tmpHistoryItem = nullptr;
 }
 
 void Entry::updateModifiedSinceBegin()
@@ -574,7 +574,7 @@ const Database* Entry::database() const
         return m_group->database();
     }
     else {
-        return Q_NULLPTR;
+        return nullptr;
     }
 }
 

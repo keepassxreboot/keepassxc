@@ -161,7 +161,7 @@ void sleep(int ms)
     timespec ts;
     ts.tv_sec = ms / 1000;
     ts.tv_nsec = (ms % 1000) * 1000 * 1000;
-    nanosleep(&ts, Q_NULLPTR);
+    nanosleep(&ts, nullptr);
 #endif
 }
 

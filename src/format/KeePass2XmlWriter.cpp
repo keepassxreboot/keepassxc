@@ -25,9 +25,9 @@
 #include "streams/QtIOCompressor"
 
 KeePass2XmlWriter::KeePass2XmlWriter()
-    : m_db(Q_NULLPTR)
-    , m_meta(Q_NULLPTR)
-    , m_randomStream(Q_NULLPTR)
+    : m_db(nullptr)
+    , m_meta(nullptr)
+    , m_randomStream(nullptr)
     , m_error(false)
 {
     m_xml.setAutoFormatting(true);

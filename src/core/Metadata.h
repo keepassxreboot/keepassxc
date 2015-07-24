@@ -24,7 +24,6 @@
 #include <QImage>
 #include <QPointer>
 
-#include "core/Global.h"
 #include "core/Uuid.h"
 
 class Database;
@@ -35,7 +34,7 @@ class Metadata : public QObject
     Q_OBJECT
 
 public:
-    explicit Metadata(QObject* parent = Q_NULLPTR);
+    explicit Metadata(QObject* parent = nullptr);
 
     struct MetadataData
     {

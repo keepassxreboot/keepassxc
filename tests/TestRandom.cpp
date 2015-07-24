@@ -19,6 +19,7 @@
 
 #include "tests.h"
 #include "core/Endian.h"
+#include "core/Global.h"
 
 #include <QTest>
 

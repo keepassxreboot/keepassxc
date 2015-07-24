@@ -22,8 +22,6 @@
 #include <QString>
 #include <QVector>
 
-#include "core/Global.h"
-
 typedef QVector<QChar> PasswordGroup;
 
 class PasswordGenerator

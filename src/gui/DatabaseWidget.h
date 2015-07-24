@@ -21,7 +21,6 @@
 #include <QScopedPointer>
 #include <QStackedWidget>
 
-#include "core/Global.h"
 #include "core/Uuid.h"
 
 #include "gui/entry/EntryModel.h"
@@ -59,7 +58,7 @@ public:
         LockedMode
     };
 
-    explicit DatabaseWidget(Database* db, QWidget* parent = Q_NULLPTR);
+    explicit DatabaseWidget(Database* db, QWidget* parent = nullptr);
     ~DatabaseWidget();
     Database* database();
     bool dbHasKey() const;

@@ -20,7 +20,6 @@
 
 #include <QWidget>
 
-#include "core/Global.h"
 #include "core/TimeInfo.h"
 #include "core/Uuid.h"
 
@@ -33,7 +32,7 @@ class EditWidgetProperties : public QWidget
     Q_OBJECT
 
 public:
-    explicit EditWidgetProperties(QWidget* parent = Q_NULLPTR);
+    explicit EditWidgetProperties(QWidget* parent = nullptr);
     ~EditWidgetProperties();
 
     void setFields(TimeInfo timeInfo, Uuid uuid);

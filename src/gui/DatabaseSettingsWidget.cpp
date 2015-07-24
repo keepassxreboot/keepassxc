@@ -26,7 +26,7 @@
 DatabaseSettingsWidget::DatabaseSettingsWidget(QWidget* parent)
     : DialogyWidget(parent)
     , m_ui(new Ui::DatabaseSettingsWidget())
-    , m_db(Q_NULLPTR)
+    , m_db(nullptr)
 {
     m_ui->setupUi(this);
 

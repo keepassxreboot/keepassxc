@@ -24,7 +24,7 @@
 
 PasswordComboBox::PasswordComboBox(QWidget* parent)
     : QComboBox(parent)
-    , m_generator(Q_NULLPTR)
+    , m_generator(nullptr)
     , m_alternatives(10)
 {
     setEditable(true);
