@@ -53,7 +53,7 @@ QString FileDialog::getOpenFileName(QWidget* parent, const QString& caption, QSt
 
 QString FileDialog::getSaveFileName(QWidget* parent, const QString& caption, QString dir,
                                     const QString& filter, QString* selectedFilter,
-                                    QFileDialog::Options options)
+                                    QFileDialog::Options options, const QString& defaultExtension)
 {
     if (!m_nextFileName.isEmpty()) {
         QString result = m_nextFileName;
@@ -67,6 +67,10 @@ QString FileDialog::getSaveFileName(QWidget* parent, const QString& caption, QSt
 
         QString result = QFileDialog::getSaveFileName(parent, caption, dir, filter,
                                                       selectedFilter, options);
+
+        if (!defaultExtension.isEmpty() && !result.isEmpty() && !result.contains('.')) {
+            result.append(".").append(defaultExtension);
+        }
 
         // on Mac OS X the focus is lost after closing the native dialog
         if (parent) {

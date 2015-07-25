@@ -30,7 +30,8 @@ public:
                             QString* selectedFilter = Q_NULLPTR, QFileDialog::Options options = 0);
     QString getSaveFileName(QWidget* parent = Q_NULLPTR, const QString& caption = QString(),
                             QString dir = QString(), const QString& filter = QString(),
-                            QString* selectedFilter = Q_NULLPTR, QFileDialog::Options options = 0);
+                            QString* selectedFilter = Q_NULLPTR, QFileDialog::Options options = 0,
+                            const QString& defaultExtension = QString());
 
     /**
      * Sets the result of the next get* method call.
