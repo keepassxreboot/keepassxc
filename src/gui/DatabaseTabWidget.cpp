@@ -326,6 +326,9 @@ bool DatabaseTabWidget::saveDatabaseAs(Database* db)
     if (dbStruct.saveToFilename) {
         oldFileName = dbStruct.filePath;
     }
+    else {
+        oldFileName = tr("New database").append(".kdbx");
+    }
     QString fileName = fileDialog()->getSaveFileName(this, tr("Save database as"),
                                                      oldFileName, tr("KeePass 2 Database").append(" (*.kdbx)"));
     if (!fileName.isEmpty()) {
