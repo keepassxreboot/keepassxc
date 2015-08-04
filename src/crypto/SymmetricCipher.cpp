@@ -83,3 +83,23 @@ QString SymmetricCipher::errorString() const
 {
     return m_backend->errorString();
 }
+
+SymmetricCipher::Algorithm SymmetricCipher::cipherToAlgorithm(Uuid cipher)
+{
+    if (cipher == KeePass2::CIPHER_AES) {
+        return SymmetricCipher::Aes256;
+    }
+    else {
+        return SymmetricCipher::Twofish;
+    }
+}
+
+Uuid SymmetricCipher::algorithmToCipher(SymmetricCipher::Algorithm algo)
+{
+    switch (algo) {
+    case SymmetricCipher::Aes256:
+        return KeePass2::CIPHER_AES;
+    default:
+        return KeePass2::CIPHER_TWOFISH;
+    }
+}
