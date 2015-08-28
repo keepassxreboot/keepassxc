@@ -222,6 +222,7 @@ void MainWindow::updateLastDatabasesMenu()
     QStringList lastDatabases = config()->get("LastDatabases", QVariant()).toStringList();
     Q_FOREACH (const QString& database, lastDatabases) {
         QAction* action = m_ui->menuRecentDatabases->addAction(database);
+        action->setData(database);
         m_lastDatabasesActions->addAction(action);
     }
     m_ui->menuRecentDatabases->addSeparator();
@@ -252,7 +253,7 @@ void MainWindow::updateCopyAttributesMenu()
 
 void MainWindow::openRecentDatabase(QAction* action)
 {
-    openDatabase(action->text());
+    openDatabase(action->data().toString());
 }
 
 void MainWindow::clearLastDatabases()
