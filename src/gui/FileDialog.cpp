@@ -65,11 +65,22 @@ QString FileDialog::getSaveFileName(QWidget* parent, const QString& caption, QSt
             dir = config()->get("LastDir").toString();
         }
 
-        QString result = QFileDialog::getSaveFileName(parent, caption, dir, filter,
-                                                      selectedFilter, options);
+        QFileDialog dialog(parent, caption, dir, filter);
+        dialog.setAcceptMode(QFileDialog::AcceptSave);
+        dialog.setFileMode(QFileDialog::AnyFile);
+        if (selectedFilter) {
+            dialog.selectNameFilter(*selectedFilter);
+        }
+        dialog.setOptions(options);
+        dialog.setDefaultSuffix(defaultExtension);
 
-        if (!defaultExtension.isEmpty() && !result.isEmpty() && !result.contains('.')) {
-            result.append(".").append(defaultExtension);
+        QString result;
+        QStringList results;
+        if (dialog.exec()) {
+            results = dialog.selectedFiles();
+            if (!results.isEmpty()) {
+                result = results[0];
+            }
         }
 
         // on Mac OS X the focus is lost after closing the native dialog
