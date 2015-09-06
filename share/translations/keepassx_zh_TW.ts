@@ -109,6 +109,16 @@
         <source>Different passwords supplied.</source>
         <translation>提供了不同的密碼</translation>
     </message>
+    <message>
+        <source>Failed to set key file</source>
+        <translation>無法設定金鑰檔案</translation>
+    </message>
+    <message>
+        <source>Failed to set %1 as the Key file:
+%2</source>
+        <translation>無法設定 %1 成為金鑰檔案：
+%2</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseOpenWidget</name>
@@ -235,11 +245,6 @@
         <translation>關閉？</translation>
     </message>
     <message>
-        <source>&quot;%1&quot; is in edit mode.
-Close anyway?</source>
-        <translation>&quot;%1&quot; 正在編輯中。仍然要關閉嗎？</translation>
-    </message>
-    <message>
         <source>Save changes?</source>
         <translation>儲存修改？</translation>
     </message>
@@ -267,6 +272,53 @@ Save changes?</source>
     <message>
         <source>locked</source>
         <translation>已鎖住</translation>
+    </message>
+    <message>
+        <source>The database you are trying to open is locked by another instance of KeePassX.
+Do you want to open it anyway? Alternatively the database is opened read-only.</source>
+        <translation>你嘗試要打開的資料庫已經被另一個正在執行的 KeePassX 鎖定
+你要打開它嗎？或者，打開唯讀的資料庫</translation>
+    </message>
+    <message>
+        <source>Lock database</source>
+        <translation>鎖定資料庫</translation>
+    </message>
+    <message>
+        <source>Can't lock the database as you are currently editing it.
+Please press cancel to finish your changes or discard them.</source>
+        <translation>無法鎖定資料庫，因為目前你正在編輯它
+請按下取消完成修改或放棄</translation>
+    </message>
+    <message>
+        <source>This database has never been saved.
+You can save the database or stop locking it.</source>
+        <translation>這個資料庫尚未被儲存
+你能儲存資料庫或不再鎖定它</translation>
+    </message>
+    <message>
+        <source>This database has been modified.
+Do you want to save the database before locking it?
+Otherwise your changes are lost.</source>
+        <translation>這個資料庫已經被修改
+想要在鎖定之前，儲存資料庫嗎？
+否則，這次修改將會遺失</translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; is in edit mode.
+Discard changes and close anyway?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export database to CSV file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>CSV file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Writing the CSV file failed.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -310,6 +362,14 @@ Save changes?</source>
     <message>
         <source>Current group</source>
         <translation>目前的群組</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>錯誤</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>無法計算主金鑰</translation>
     </message>
 </context>
 <context>
@@ -422,6 +482,10 @@ Save changes?</source>
     <message>
         <source>Save</source>
         <translation>儲存</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>打開</translation>
     </message>
 </context>
 <context>
@@ -574,6 +638,14 @@ Save changes?</source>
         <source>Auto-type</source>
         <translation>自動輸入</translation>
     </message>
+    <message>
+        <source>Use default auto-type sequence of parent group</source>
+        <translation>使用預設的父群組自動輸入序列</translation>
+    </message>
+    <message>
+        <source>Set default auto-type sequence</source>
+        <translation>設定預設自動輸入序列</translation>
+    </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
@@ -722,6 +794,10 @@ Save changes?</source>
         <source>Root</source>
         <translation>根</translation>
     </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>無法計算主金鑰</translation>
+    </message>
 </context>
 <context>
     <name>KeePass2Reader</name>
@@ -736,6 +812,10 @@ Save changes?</source>
     <message>
         <source>Wrong key or database file is corrupt.</source>
         <translation>無法的金鑰或資料庫損壞</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>無法計算主金鑰</translation>
     </message>
 </context>
 <context>
@@ -774,10 +854,6 @@ Save changes?</source>
     <message>
         <source>Groups</source>
         <translation>群組</translation>
-    </message>
-    <message>
-        <source>Extras</source>
-        <translation>其它</translation>
     </message>
     <message>
         <source>View</source>
@@ -856,16 +932,8 @@ Save changes?</source>
         <translation>尋找</translation>
     </message>
     <message>
-        <source>Username</source>
-        <translation>使用者名稱</translation>
-    </message>
-    <message>
         <source>Copy username to clipboard</source>
         <translation>將使用者名稱複製到剪貼簿</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>密碼</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
@@ -910,6 +978,22 @@ Save changes?</source>
     <message>
         <source>Toggle window</source>
         <translation>切換視窗</translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation>工具</translation>
+    </message>
+    <message>
+        <source>Copy username</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to CSV file</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1092,10 +1176,6 @@ Save changes?</source>
         <translation>在啟動時開啟最近的資料庫</translation>
     </message>
     <message>
-        <source>Mark as modified on expanded state changes</source>
-        <translation>擴展狀態發生變化時，標記為已修改</translation>
-    </message>
-    <message>
         <source>Automatically save on exit</source>
         <translation>離開時，自動儲存</translation>
     </message>
@@ -1131,6 +1211,10 @@ Save changes?</source>
         <source>Hide window to system tray when minimized</source>
         <translation>將視窗最小化至工作列 </translation>
     </message>
+    <message>
+        <source>Remember last key files</source>
+        <translation>記住最近的金鑰檔案</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>
@@ -1160,14 +1244,6 @@ Save changes?</source>
     <message>
         <source>Unlock database</source>
         <translation>解鎖資料庫</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>錯誤</translation>
-    </message>
-    <message>
-        <source>Wrong key.</source>
-        <translation>錯誤的金鑰</translation>
     </message>
 </context>
 <context>

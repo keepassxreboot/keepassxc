@@ -75,7 +75,7 @@
     </message>
     <message>
         <source>Key files</source>
-        <translation>Archivos de llaves</translation>
+        <translation>Archivos llave</translation>
     </message>
     <message>
         <source>All files</source>
@@ -109,6 +109,16 @@
         <source>Different passwords supplied.</source>
         <translation>Las contraseñas ingresadas son distintas.</translation>
     </message>
+    <message>
+        <source>Failed to set key file</source>
+        <translation>No se pudo establecer el archivo llave</translation>
+    </message>
+    <message>
+        <source>Failed to set %1 as the Key file:
+%2</source>
+        <translation>No se pudo establecer %1 como el Archivo llave:
+%2</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseOpenWidget</name>
@@ -118,7 +128,7 @@
     </message>
     <message>
         <source>Key File:</source>
-        <translation>Archivo clave:</translation>
+        <translation>Archivo llave:</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -196,7 +206,7 @@
     <name>DatabaseTabWidget</name>
     <message>
         <source>Root</source>
-        <translation type="unfinished"/>
+        <translation>Raíz</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
@@ -235,12 +245,6 @@
         <translation>¿Cerrar?</translation>
     </message>
     <message>
-        <source>&quot;%1&quot; is in edit mode.
-Close anyway?</source>
-        <translation>&quot;%1&quot; está en modo de edición.
-¿Cerrar de todas formas?</translation>
-    </message>
-    <message>
         <source>Save changes?</source>
         <translation>¿Guardar cambios?</translation>
     </message>
@@ -270,12 +274,60 @@ Save changes?</source>
         <source>locked</source>
         <translation>bloqueado</translation>
     </message>
+    <message>
+        <source>The database you are trying to open is locked by another instance of KeePassX.
+Do you want to open it anyway? Alternatively the database is opened read-only.</source>
+        <translation>La base de datos que está intentando abrir está bloqueada por otra instancia de KeePassX.
+¿Quiere abrirla de todos modos? Alternativamente, la base de datos se abre como sólo lectura.</translation>
+    </message>
+    <message>
+        <source>Lock database</source>
+        <translation>Bloquear base de datos</translation>
+    </message>
+    <message>
+        <source>Can't lock the database as you are currently editing it.
+Please press cancel to finish your changes or discard them.</source>
+        <translation>No se puede bloquear la base de datos porque actualmente está editándola.
+Por favor, pulse cancelar para terminar sus cambios o descartarlos.</translation>
+    </message>
+    <message>
+        <source>This database has never been saved.
+You can save the database or stop locking it.</source>
+        <translation>Esta base de datos nunca ha sido guardada.
+Puede guardar la base de datos o dejar de bloquearla.</translation>
+    </message>
+    <message>
+        <source>This database has been modified.
+Do you want to save the database before locking it?
+Otherwise your changes are lost.</source>
+        <translation>Esta base de datos ha sido modificada.
+¿Desea guardar la base de datos antes de bloquearla?
+De lo contrario se perderán los cambios.</translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; is in edit mode.
+Discard changes and close anyway?</source>
+        <translation>&quot;% 1&quot; está en el modo de edición.
+¿Descartar cambios y cerrar de todos modos?</translation>
+    </message>
+    <message>
+        <source>Export database to CSV file</source>
+        <translation>Exportar base de datos a un archivo CSV</translation>
+    </message>
+    <message>
+        <source>CSV file</source>
+        <translation>Archivo CSV</translation>
+    </message>
+    <message>
+        <source>Writing the CSV file failed.</source>
+        <translation>La escritura del archivo CSV falló.</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
     <message>
         <source>Change master key</source>
-        <translation>Cambiar la llave maestra</translation>
+        <translation>Cambiar la clave maestra</translation>
     </message>
     <message>
         <source>Delete entry?</source>
@@ -312,6 +364,14 @@ Save changes?</source>
     <message>
         <source>Current group</source>
         <translation>Grupo actual</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Error</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>No se puede calcular la llave maestra</translation>
     </message>
 </context>
 <context>
@@ -424,6 +484,10 @@ Save changes?</source>
     <message>
         <source>Save</source>
         <translation>Guardar</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Abrir</translation>
     </message>
 </context>
 <context>
@@ -576,6 +640,14 @@ Save changes?</source>
         <source>Auto-type</source>
         <translation>Auto-escritura</translation>
     </message>
+    <message>
+        <source>Use default auto-type sequence of parent group</source>
+        <translation>Usar escritura automática por defecto del grupo padre</translation>
+    </message>
+    <message>
+        <source>Set default auto-type sequence</source>
+        <translation>Establecer escritura automática por defecto</translation>
+    </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
@@ -722,7 +794,11 @@ Save changes?</source>
     </message>
     <message>
         <source>Root</source>
-        <translation type="unfinished"/>
+        <translation>Raíz</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>No se puede calcular la clave maestra</translation>
     </message>
 </context>
 <context>
@@ -738,6 +814,10 @@ Save changes?</source>
     <message>
         <source>Wrong key or database file is corrupt.</source>
         <translation>La contraseña es incorrecta o el archivo está dañado</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>No se puede calcular la clave maestra</translation>
     </message>
 </context>
 <context>
@@ -776,10 +856,6 @@ Save changes?</source>
     <message>
         <source>Groups</source>
         <translation>Grupos</translation>
-    </message>
-    <message>
-        <source>Extras</source>
-        <translation>Extras</translation>
     </message>
     <message>
         <source>View</source>
@@ -839,7 +915,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Change master key</source>
-        <translation>Cambiar la llave maestra</translation>
+        <translation>Cambiar la clave maestra</translation>
     </message>
     <message>
         <source>Database settings</source>
@@ -858,16 +934,8 @@ Save changes?</source>
         <translation>Buscar</translation>
     </message>
     <message>
-        <source>Username</source>
-        <translation>Usuario</translation>
-    </message>
-    <message>
         <source>Copy username to clipboard</source>
         <translation>Copiar nombre de usuario al portapapeles</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Contraseña</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
@@ -912,6 +980,22 @@ Save changes?</source>
     <message>
         <source>Toggle window</source>
         <translation>Cambiar a ventana</translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation>Herramientas</translation>
+    </message>
+    <message>
+        <source>Copy username</source>
+        <translation>Copiar nombre de usuario</translation>
+    </message>
+    <message>
+        <source>Copy password</source>
+        <translation>Copiar contraseña</translation>
+    </message>
+    <message>
+        <source>Export to CSV file</source>
+        <translation>Exportar a un archivo CSV</translation>
     </message>
 </context>
 <context>
@@ -1065,7 +1149,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Root group</source>
-        <translation type="unfinished"/>
+        <translation>Grupo raíz</translation>
     </message>
 </context>
 <context>
@@ -1092,10 +1176,6 @@ Save changes?</source>
     <message>
         <source>Open previous databases on startup</source>
         <translation>Abrir base de datos anterior al inicio</translation>
-    </message>
-    <message>
-        <source>Mark as modified on expanded state changes</source>
-        <translation>Marcar como modificado en los cambios de estado ampliados</translation>
     </message>
     <message>
         <source>Automatically save on exit</source>
@@ -1133,6 +1213,10 @@ Save changes?</source>
         <source>Hide window to system tray when minimized</source>
         <translation>Ocultar la ventana a la bandeja del sistema cuando se minimiza</translation>
     </message>
+    <message>
+        <source>Remember last key files</source>
+        <translation>Recordar últimos archivos clave</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>
@@ -1162,14 +1246,6 @@ Save changes?</source>
     <message>
         <source>Unlock database</source>
         <translation>Desbloquear base de datos</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Error</translation>
-    </message>
-    <message>
-        <source>Wrong key.</source>
-        <translation>Clave incorrecta.</translation>
     </message>
 </context>
 <context>

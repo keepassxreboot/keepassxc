@@ -3,7 +3,7 @@
     <name>AboutDialog</name>
     <message>
         <source>About KeePassX</source>
-        <translation>O aplikaci KeePassX</translation>
+        <translation>O KeePassX</translation>
     </message>
     <message>
         <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
@@ -44,7 +44,7 @@
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>Vyberte položku pro samočinné vyplňování:</translation>
+        <translation>Vyberte položku, kterou se bude samočinně vyplňovat:</translation>
     </message>
 </context>
 <context>
@@ -103,11 +103,21 @@
     </message>
     <message>
         <source>Do you really want to use an empty string as password?</source>
-        <translation>Opravdu chcete heslo ponechat nevyplněné?</translation>
+        <translation>Opravdu chcete ponechat bez hesla, tedy nechráněné?</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Zadání hesla nejsou shodná.</translation>
+        <translation>Nepodařilo se vám zadat heslo tak, aby jeho znění bylo stejné v obou políčkách.</translation>
+    </message>
+    <message>
+        <source>Failed to set key file</source>
+        <translation>Nezdařilo se nastavit soubor s klíčem</translation>
+    </message>
+    <message>
+        <source>Failed to set %1 as the Key file:
+%2</source>
+        <translation>Nezdařilo se nastavit %1 jako soubor s klíčem:
+%2</translation>
     </message>
 </context>
 <context>
@@ -138,7 +148,7 @@
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>Soubor s klíčem nelze otevřít.</translation>
+        <translation>Soubor s klíčem se nedaří otevřít</translation>
     </message>
     <message>
         <source>All files</source>
@@ -165,7 +175,7 @@
     </message>
     <message>
         <source>Transform rounds:</source>
-        <translation>Počet průchodů:</translation>
+        <translation>Počet průchodů algoritmu:</translation>
     </message>
     <message>
         <source>Default username:</source>
@@ -173,7 +183,7 @@
     </message>
     <message>
         <source>Use recycle bin:</source>
-        <translation>Použít Koš:</translation>
+        <translation>Mazat do Koše:</translation>
     </message>
     <message>
         <source> MiB</source>
@@ -185,11 +195,11 @@
     </message>
     <message>
         <source>Max. history items:</source>
-        <translation>Nejvyšší umožněný položek historie:</translation>
+        <translation>Nejvyšší umožněný počet položek historie:</translation>
     </message>
     <message>
         <source>Max. history size:</source>
-        <translation>Nejvyšší umožněná velikost historie:</translation>
+        <translation>Nejvyšší umožněný objem dat historie záznamů:</translation>
     </message>
 </context>
 <context>
@@ -235,12 +245,6 @@
         <translation>Zavřít?</translation>
     </message>
     <message>
-        <source>&quot;%1&quot; is in edit mode.
-Close anyway?</source>
-        <translation>%1 je upravováno.
-Přesto zavřít?</translation>
-    </message>
-    <message>
         <source>Save changes?</source>
         <translation>Uložit změny?</translation>
     </message>
@@ -270,6 +274,57 @@ Uložit změny?</translation>
         <source>locked</source>
         <translation>zamčeno</translation>
     </message>
+    <message>
+        <source>The database you are trying to open is locked by another instance of KeePassX.
+Do you want to open it anyway? Alternatively the database is opened read-only.</source>
+        <translation>Pro databázi, kterou se pokoušíte otevřít, existuje zámek úprav (stejnojmenný 
+.lock soubor). To znamená, že je nejspíš již otevřená v jiném okně KeePassX 
+(v případě sdíleného úložiště, třeba i na jiném počítači). Pokud tomu tak není, 
+je zámek nejspíš pozůstatkem předchozího neočekávaného ukončení aplikace 
+a je možné ho smazat. V každém případě, dotčenou databázi je možné otevřít
+ i tak, ale pouze pro čtení. Chcete?</translation>
+    </message>
+    <message>
+        <source>Lock database</source>
+        <translation>Uzamknout databázi</translation>
+    </message>
+    <message>
+        <source>Can't lock the database as you are currently editing it.
+Please press cancel to finish your changes or discard them.</source>
+        <translation>Nelze uzamknout databázi, protože ji v tuto chvíli upravujete.
+Pokud chcete změny dokončit, klikněte na Zrušit. V opačném případě změny zahodíte.</translation>
+    </message>
+    <message>
+        <source>This database has never been saved.
+You can save the database or stop locking it.</source>
+        <translation>Tato databáze doposud ještě nebyla uložena.
+Buď ji můžete uložit, nebo neuzamknout.</translation>
+    </message>
+    <message>
+        <source>This database has been modified.
+Do you want to save the database before locking it?
+Otherwise your changes are lost.</source>
+        <translation>Tato databáze byla upravena.
+Chcete ji před uzamčením uložit?
+Pokud ne, změny budou ztraceny.</translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; is in edit mode.
+Discard changes and close anyway?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export database to CSV file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>CSV file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Writing the CSV file failed.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
@@ -283,7 +338,7 @@ Uložit změny?</translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>Opravdu chcete smazat položku %1?</translation>
+        <translation>Opravdu chcete nenávratně smazat položku %1?</translation>
     </message>
     <message>
         <source>Delete entries?</source>
@@ -291,7 +346,7 @@ Uložit změny?</translation>
     </message>
     <message>
         <source>Do you really want to delete %1 entries for good?</source>
-        <translation>Opravdu chcete smazat %1 položek?</translation>
+        <translation>Opravdu chcete nenávratně smazat %1 položek?</translation>
     </message>
     <message>
         <source>Move entries to recycle bin?</source>
@@ -299,7 +354,7 @@ Uložit změny?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Opravdu chcete přesunout %n položku do Koše?</numerusform><numerusform>Opravdu chcete přesunout %n položky do Koše?</numerusform><numerusform>Opravdu chcete přesunout %n položek do Koše?</numerusform></translation>
     </message>
     <message>
         <source>Delete group?</source>
@@ -307,11 +362,19 @@ Uložit změny?</translation>
     </message>
     <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>Opravdu chcete smazat skupinu %1?</translation>
+        <translation>Opravdu chcete nenávratně smazat skupinu %1?</translation>
     </message>
     <message>
         <source>Current group</source>
         <translation>Stávající skupina</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Chyba</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Nebylo možné vypočítat hlavní klíč</translation>
     </message>
 </context>
 <context>
@@ -388,11 +451,11 @@ Uložit změny?</translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n týden</numerusform><numerusform>%n týdny</numerusform><numerusform>%n týdnů</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n měsíc</numerusform><numerusform>%n měsíce</numerusform><numerusform>%n měsíců</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -425,12 +488,16 @@ Uložit změny?</translation>
         <source>Save</source>
         <translation>Uložit</translation>
     </message>
+    <message>
+        <source>Open</source>
+        <translation>Otevřít</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation>Zapnout samočinné vyplňování u této položky</translation>
+        <translation>Zapnout samočinné vyplňování této položky</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the group</source>
@@ -500,7 +567,7 @@ Uložit změny?</translation>
     </message>
     <message>
         <source>Gen.</source>
-        <translation>Obec.</translation>
+        <translation>Tvoř</translation>
     </message>
     <message>
         <source>URL:</source>
@@ -576,6 +643,14 @@ Uložit změny?</translation>
         <source>Auto-type</source>
         <translation>Samočinné vyplňování</translation>
     </message>
+    <message>
+        <source>Use default auto-type sequence of parent group</source>
+        <translation>Použít výchozí posloupnost samočinného vyplňování z nadřazené skupiny</translation>
+    </message>
+    <message>
+        <source>Set default auto-type sequence</source>
+        <translation>Nastavit výchozí posloupnost samočinného vyplňování</translation>
+    </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
@@ -613,26 +688,26 @@ Uložit změny?</translation>
     </message>
     <message numerus="yes">
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Ikonu není možné smazat. Je používána %n položkou.</numerusform><numerusform>Ikonu není možné smazat. Je používána %n položkami.</numerusform><numerusform>Ikonu není možné smazat. Je používána %n položek</numerusform></translation>
     </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
     <message>
         <source>Created:</source>
-        <translation>Vytvořeno:</translation>
+        <translation>Okamžik vytvoření:</translation>
     </message>
     <message>
         <source>Modified:</source>
-        <translation>Čas poslední změny:</translation>
+        <translation>Okamžik poslední úpravy:</translation>
     </message>
     <message>
         <source>Accessed:</source>
-        <translation>Čas posledního přístupu:</translation>
+        <translation>Okamžik posledního přístupu:</translation>
     </message>
     <message>
         <source>Uuid:</source>
-        <translation>Uuid identifikátor:</translation>
+        <translation>Jedinečný identifikátor uživatele:</translation>
     </message>
 </context>
 <context>
@@ -646,7 +721,7 @@ Uložit změny?</translation>
     <name>EntryHistoryModel</name>
     <message>
         <source>Last modified</source>
-        <translation>Čas poslední změny</translation>
+        <translation>Okamžik poslední změny</translation>
     </message>
     <message>
         <source>Title</source>
@@ -724,6 +799,10 @@ Uložit změny?</translation>
         <source>Root</source>
         <translation>Kořen</translation>
     </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Nelze spočítat hlavní klíč</translation>
+    </message>
 </context>
 <context>
     <name>KeePass2Reader</name>
@@ -739,12 +818,16 @@ Uložit změny?</translation>
         <source>Wrong key or database file is corrupt.</source>
         <translation>Chybný klíč nebo je databáze poškozená.</translation>
     </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Nelze spočítat hlavní klíč</translation>
+    </message>
 </context>
 <context>
     <name>Main</name>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
-        <translation>Při testování šifrovacích funkcí došlo k fatální chybě.</translation>
+        <translation>Při ověřování šifrovacích funkcí byl zjištěn fatální nedostatek.</translation>
     </message>
     <message>
         <source>KeePassX - Error</source>
@@ -776,10 +859,6 @@ Uložit změny?</translation>
     <message>
         <source>Groups</source>
         <translation>Skupiny</translation>
-    </message>
-    <message>
-        <source>Extras</source>
-        <translation>Doplňující</translation>
     </message>
     <message>
         <source>View</source>
@@ -858,16 +937,8 @@ Uložit změny?</translation>
         <translation>Najít</translation>
     </message>
     <message>
-        <source>Username</source>
-        <translation>Uživatelské jméno</translation>
-    </message>
-    <message>
         <source>Copy username to clipboard</source>
         <translation>Zkopírovat uživatelské jméno do schránky</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Heslo</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
@@ -913,6 +984,22 @@ Uložit změny?</translation>
         <source>Toggle window</source>
         <translation>Přepnout okno</translation>
     </message>
+    <message>
+        <source>Tools</source>
+        <translation>Nástroje</translation>
+    </message>
+    <message>
+        <source>Copy username</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to CSV file</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>PasswordGeneratorWidget</name>
@@ -942,15 +1029,15 @@ Uložit změny?</translation>
     </message>
     <message>
         <source>Special Characters</source>
-        <translation>Speciální znaky</translation>
+        <translation>Zvláštní znaky</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
-        <translation>Vynechat podobně vypadající znaky</translation>
+        <translation>Vynechat podobně vypadající znaky (předejití záměně)</translation>
     </message>
     <message>
         <source>Ensure that the password contains characters from every group</source>
-        <translation>Zajistit, aby heslo obsahovalo znaky ze všech zvolených skupin</translation>
+        <translation>Zajistit, aby heslo obsahovalo znaky ze všech zvolených skupin znaků</translation>
     </message>
     <message>
         <source>Accept</source>
@@ -1004,7 +1091,7 @@ Uložit změny?</translation>
     <name>QSaveFile</name>
     <message>
         <source>Existing file %1 is not writable</source>
-        <translation>Existující soubor %1 není zapisovatelný</translation>
+        <translation>Do stávajícího souboru %1 nelze zapisovat</translation>
     </message>
     <message>
         <source>Writing canceled by application</source>
@@ -1012,7 +1099,7 @@ Uložit změny?</translation>
     </message>
     <message>
         <source>Partial write. Partition full?</source>
-        <translation>Zápis nebylo možné dokončit zcela. Nedostatek volného místa?</translation>
+        <translation>Zápis nebylo možné zcela dokončit. Nedostatek volného místa?</translation>
     </message>
 </context>
 <context>
@@ -1023,15 +1110,15 @@ Uložit změny?</translation>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>Chyba při zápisu na zařízení:</translation>
+        <translation>Při zápisu na zařízení, na kterém se nachází, došlo k chybě:</translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>Chyba při otevírání zařízení:</translation>
+        <translation>Při otevírání zařízení, na kterém se nachází, došlo k chybě:</translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation>Chyba při čtení dat ze zařízení:</translation>
+        <translation>Při čtení dat ze zařízení, na kterém se nachází, došlo k chybě:</translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
@@ -1042,7 +1129,7 @@ Uložit změny?</translation>
     <name>QtIOCompressor::open</name>
     <message>
         <source>The gzip format not supported in this version of zlib.</source>
-        <translation>Formát tohoto gzip archivu není podporován touto verzí knihovny zlib.</translation>
+        <translation>Použitý formát gzip komprese není podporován verzí knihovny zlib, která je právě používána na tomto systému.</translation>
     </message>
     <message>
         <source>Internal zlib error: </source>
@@ -1087,19 +1174,15 @@ Uložit změny?</translation>
     <name>SettingsWidgetGeneral</name>
     <message>
         <source>Remember last databases</source>
-        <translation>Pamatovat si nedávno otevírané databáze</translation>
+        <translation>Pamatovat si nedávno otevřené databáze</translation>
     </message>
     <message>
         <source>Open previous databases on startup</source>
-        <translation>Při startu otevřít minule otevřenou databázi</translation>
-    </message>
-    <message>
-        <source>Mark as modified on expanded state changes</source>
-        <translation>Při změnách rozšířeného stavu označit jako změněné</translation>
+        <translation>Při spuštění aplikace otevřít minule otevřené databáze</translation>
     </message>
     <message>
         <source>Automatically save on exit</source>
-        <translation>Při ukončování samočinně uložit</translation>
+        <translation>Před ukončením aplikace provést samočinné uložení případných změn v otevřených databázích</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
@@ -1107,7 +1190,7 @@ Uložit změny?</translation>
     </message>
     <message>
         <source>Minimize when copying to clipboard</source>
-        <translation>Po zkopírování do schránky samočinně zminimalizovat aplikaci</translation>
+        <translation>Po zkopírování atributu do schránky samočinně minimalizovat okno KeePassX (do popředí se tak dostane okno, do kterého se zkopírovaný atribut bude vkládat)</translation>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
@@ -1115,7 +1198,7 @@ Uložit změny?</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut</source>
-        <translation>Všeobecná klávesová zkratka pro samočinné vyplňování</translation>
+        <translation>Klávesová zkratka pro všeobecné samočinné vyplňování</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global auto-type</source>
@@ -1127,11 +1210,15 @@ Uložit změny?</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>Zobrazit ikonu v oznamovací oblasti</translation>
+        <translation>Zobrazit ikonu v oznamovací oblasti hlavního panelu prostředí</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation>Minimalizovat do oznamovací oblasti</translation>
+        <translation>Minimalizovat okno aplikace do oznamovací oblasti hlavního panelu prostředí</translation>
+    </message>
+    <message>
+        <source>Remember last key files</source>
+        <translation>Pamatovat si nedávno otevřené soubory s klíči</translation>
     </message>
 </context>
 <context>
@@ -1142,7 +1229,7 @@ Uložit změny?</translation>
     </message>
     <message>
         <source> sec</source>
-        <translation>sek</translation>
+        <translation>sek.</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
@@ -1150,7 +1237,7 @@ Uložit změny?</translation>
     </message>
     <message>
         <source>Show passwords in cleartext by default</source>
-        <translation>Vždy zobrazovat hesla</translation>
+        <translation>Hesla vždy viditelná (nezakrývat hvězdičkami)</translation>
     </message>
     <message>
         <source>Always ask before performing auto-type</source>
@@ -1162,14 +1249,6 @@ Uložit změny?</translation>
     <message>
         <source>Unlock database</source>
         <translation>Odemknout databázi</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Chyba</translation>
-    </message>
-    <message>
-        <source>Wrong key.</source>
-        <translation>Chybný klíč.</translation>
     </message>
 </context>
 <context>
@@ -1183,11 +1262,11 @@ Uložit změny?</translation>
     <name>main</name>
     <message>
         <source>KeePassX - cross-platform password manager</source>
-        <translation>KeePassX – multiplatformní správce hesel</translation>
+        <translation>KeePassX – správce hesel, fungující napříč rozličnými operačními systémy</translation>
     </message>
     <message>
         <source>filename of the password database to open (*.kdbx)</source>
-        <translation>Soubor s databází hesel (*.kdbx), který otevřít</translation>
+        <translation>který soubor s databází hesel (*.kdbx) otevřít</translation>
     </message>
     <message>
         <source>path to a custom config file</source>
@@ -1195,7 +1274,7 @@ Uložit změny?</translation>
     </message>
     <message>
         <source>password of the database (DANGEROUS!)</source>
-        <translation>heslo databáze (NEBEZPEČNÉ!)</translation>
+        <translation>heslo k databázi (NEBEZPEČNÉ!)</translation>
     </message>
     <message>
         <source>key file of the database</source>

@@ -245,12 +245,6 @@
         <translation>Fechar ?</translation>
     </message>
     <message>
-        <source>&quot;%1&quot; is in edit mode.
-Close anyway?</source>
-        <translation>&quot;%1&quot; em modo de edição.
-Fechar na mesma ?</translation>
-    </message>
-    <message>
         <source>Save changes?</source>
         <translation>Guardar alterações ?</translation>
     </message>
@@ -309,6 +303,24 @@ Otherwise your changes are lost.</source>
         <translation>Esta base de dados foi modificada.
 Pretende guardar a base de dados antes de a trancar ?
 Caso contrário as alterações serão perdidas.</translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; is in edit mode.
+Discard changes and close anyway?</source>
+        <translation>%1 está em modo de edição.
+Fechar e Ignorar alterações  ?</translation>
+    </message>
+    <message>
+        <source>Export database to CSV file</source>
+        <translation>Exportar base de dados para ficheiro CSV</translation>
+    </message>
+    <message>
+        <source>CSV file</source>
+        <translation>Ficheiro CSV</translation>
+    </message>
+    <message>
+        <source>Writing the CSV file failed.</source>
+        <translation>Falha na escrita do ficheiro CSV</translation>
     </message>
 </context>
 <context>
@@ -921,16 +933,8 @@ Caso contrário as alterações serão perdidas.</translation>
         <translation>Encontrar</translation>
     </message>
     <message>
-        <source>Username</source>
-        <translation>Nome de utilizador</translation>
-    </message>
-    <message>
         <source>Copy username to clipboard</source>
         <translation>Copiar nome de utilizador para inserção</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Senha</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
@@ -979,6 +983,18 @@ Caso contrário as alterações serão perdidas.</translation>
     <message>
         <source>Tools</source>
         <translation>Ferramentas</translation>
+    </message>
+    <message>
+        <source>Copy username</source>
+        <translation>Copiar nome de utilizador</translation>
+    </message>
+    <message>
+        <source>Copy password</source>
+        <translation>Copiar senha</translation>
+    </message>
+    <message>
+        <source>Export to CSV file</source>
+        <translation>Exportar para ficheiro CSV</translation>
     </message>
 </context>
 <context>

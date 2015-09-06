@@ -245,12 +245,6 @@
         <translation>关闭？</translation>
     </message>
     <message>
-        <source>&quot;%1&quot; is in edit mode.
-Close anyway?</source>
-        <translation>正在编辑 &quot;%1&quot; 。
-仍要关闭吗？</translation>
-    </message>
-    <message>
         <source>Save changes?</source>
         <translation>保存修改？</translation>
     </message>
@@ -309,6 +303,23 @@ Otherwise your changes are lost.</source>
         <translation>数据库已经更改。
 你想在锁住它以前保存修改吗？
 否则修改将会丢失。</translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; is in edit mode.
+Discard changes and close anyway?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export database to CSV file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>CSV file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Writing the CSV file failed.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -922,16 +933,8 @@ Otherwise your changes are lost.</source>
         <translation>查找</translation>
     </message>
     <message>
-        <source>Username</source>
-        <translation>用户名</translation>
-    </message>
-    <message>
         <source>Copy username to clipboard</source>
         <translation>将用户名复制到剪贴板</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>密码</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
@@ -980,6 +983,18 @@ Otherwise your changes are lost.</source>
     <message>
         <source>Tools</source>
         <translation>工具</translation>
+    </message>
+    <message>
+        <source>Copy username</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to CSV file</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

@@ -244,12 +244,6 @@
         <translation>閉じますか?</translation>
     </message>
     <message>
-        <source>&quot;%1&quot; is in edit mode.
-Close anyway?</source>
-        <translation>&quot;%1&quot; は編集されています。
-無視して閉じますか?</translation>
-    </message>
-    <message>
         <source>Save changes?</source>
         <translation>変更を保存しますか?</translation>
     </message>
@@ -303,6 +297,23 @@ You can save the database or stop locking it.</source>
         <source>This database has been modified.
 Do you want to save the database before locking it?
 Otherwise your changes are lost.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&quot;%1&quot; is in edit mode.
+Discard changes and close anyway?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export database to CSV file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>CSV file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Writing the CSV file failed.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -917,16 +928,8 @@ Otherwise your changes are lost.</source>
         <translation>検索</translation>
     </message>
     <message>
-        <source>Username</source>
-        <translation>ユーザー名</translation>
-    </message>
-    <message>
         <source>Copy username to clipboard</source>
         <translation>ユーザー名をコピー</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>パスワード</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
@@ -975,6 +978,18 @@ Otherwise your changes are lost.</source>
     <message>
         <source>Tools</source>
         <translation>ツール</translation>
+    </message>
+    <message>
+        <source>Copy username</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to CSV file</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

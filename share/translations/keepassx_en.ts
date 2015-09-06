@@ -11,6 +11,10 @@
         <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Revision</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -314,6 +318,11 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Writing the CSV file failed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The database you are trying to save as is locked by another instance of KeePassX.
+Do you want to save it anyway?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1272,10 +1281,6 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>path to a custom config file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>password of the database (DANGEROUS!)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -109,6 +109,15 @@
         <source>Different passwords supplied.</source>
         <translation>Olika lösenord angivna</translation>
     </message>
+    <message>
+        <source>Failed to set key file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to set %1 as the Key file:
+%2</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseOpenWidget</name>
@@ -235,12 +244,6 @@
         <translation>Stäng?</translation>
     </message>
     <message>
-        <source>&quot;%1&quot; is in edit mode.
-Close anyway?</source>
-        <translation>&quot;%1&quot; är i redigerar-läge.
-Stäng ändå?</translation>
-    </message>
-    <message>
         <source>Save changes?</source>
         <translation>Spara ändringar?</translation>
     </message>
@@ -269,6 +272,48 @@ Spara ändringarna?</translation>
     <message>
         <source>locked</source>
         <translation>låst</translation>
+    </message>
+    <message>
+        <source>The database you are trying to open is locked by another instance of KeePassX.
+Do you want to open it anyway? Alternatively the database is opened read-only.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Lock database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Can't lock the database as you are currently editing it.
+Please press cancel to finish your changes or discard them.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>This database has never been saved.
+You can save the database or stop locking it.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>This database has been modified.
+Do you want to save the database before locking it?
+Otherwise your changes are lost.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&quot;%1&quot; is in edit mode.
+Discard changes and close anyway?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export database to CSV file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>CSV file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Writing the CSV file failed.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -312,6 +357,14 @@ Spara ändringarna?</translation>
     <message>
         <source>Current group</source>
         <translation>Nuvarande grupp</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -424,6 +477,10 @@ Spara ändringarna?</translation>
     <message>
         <source>Save</source>
         <translation>Spara</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -576,6 +633,14 @@ Spara ändringarna?</translation>
         <source>Auto-type</source>
         <translation>Auto-skriv</translation>
     </message>
+    <message>
+        <source>Use default auto-type sequence of parent group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set default auto-type sequence</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
@@ -724,6 +789,10 @@ Spara ändringarna?</translation>
         <source>Root</source>
         <translation>Root</translation>
     </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>KeePass2Reader</name>
@@ -738,6 +807,10 @@ Spara ändringarna?</translation>
     <message>
         <source>Wrong key or database file is corrupt.</source>
         <translation>Fel lösenord eller korrupt databas-fil</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -776,10 +849,6 @@ Spara ändringarna?</translation>
     <message>
         <source>Groups</source>
         <translation>Grupper</translation>
-    </message>
-    <message>
-        <source>Extras</source>
-        <translation>Extra</translation>
     </message>
     <message>
         <source>View</source>
@@ -858,16 +927,8 @@ Spara ändringarna?</translation>
         <translation>Sök</translation>
     </message>
     <message>
-        <source>Username</source>
-        <translation>Användarnamn</translation>
-    </message>
-    <message>
         <source>Copy username to clipboard</source>
         <translation>Kopiera användarnamn</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Lösenord</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
@@ -912,6 +973,22 @@ Spara ändringarna?</translation>
     <message>
         <source>Toggle window</source>
         <translation>Visa/dölj fönster</translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy username</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to CSV file</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1094,10 +1171,6 @@ Spara ändringarna?</translation>
         <translation>Öppna senaste databasen är programmet startar</translation>
     </message>
     <message>
-        <source>Mark as modified on expanded state changes</source>
-        <translation>Markera som ändrad när utökat läge ändras</translation>
-    </message>
-    <message>
         <source>Automatically save on exit</source>
         <translation>Spara automatiskt är applikationen anslutas</translation>
     </message>
@@ -1133,6 +1206,10 @@ Spara ändringarna?</translation>
         <source>Hide window to system tray when minimized</source>
         <translation>Vid minimering, minimera fönstret till systemfältet</translation>
     </message>
+    <message>
+        <source>Remember last key files</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>
@@ -1162,14 +1239,6 @@ Spara ändringarna?</translation>
     <message>
         <source>Unlock database</source>
         <translation>Lås upp databas</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Fel</translation>
-    </message>
-    <message>
-        <source>Wrong key.</source>
-        <translation>Fel lösenord</translation>
     </message>
 </context>
 <context>

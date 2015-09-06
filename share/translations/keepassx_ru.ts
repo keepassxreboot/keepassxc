@@ -44,7 +44,7 @@
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>Выберете запись для автоввода:</translation>
+        <translation>Выберите запись для автоввода:</translation>
     </message>
 </context>
 <context>
@@ -103,11 +103,21 @@
     </message>
     <message>
         <source>Do you really want to use an empty string as password?</source>
-        <translation>Вы действительно хотите использовать пустую строку как пароль?</translation>
+        <translation>Вы действительно хотите использовать в качестве пароля пустую строку?</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
         <translation>Пароли не совпадают.</translation>
+    </message>
+    <message>
+        <source>Failed to set key file</source>
+        <translation>Не удалось установить файл-ключ</translation>
+    </message>
+    <message>
+        <source>Failed to set %1 as the Key file:
+%2</source>
+        <translation>Не удалось установить %1 как файл-ключ:
+%2</translation>
     </message>
 </context>
 <context>
@@ -150,7 +160,7 @@
     </message>
     <message>
         <source>Select key file</source>
-        <translation>Выберете файл-ключ</translation>
+        <translation>Выберите файл-ключ</translation>
     </message>
 </context>
 <context>
@@ -169,7 +179,7 @@
     </message>
     <message>
         <source>Default username:</source>
-        <translation>Имя пользователя по-умолчанию:</translation>
+        <translation>Имя пользователя по умолчанию:</translation>
     </message>
     <message>
         <source>Use recycle bin:</source>
@@ -235,12 +245,6 @@
         <translation>Закрыть?</translation>
     </message>
     <message>
-        <source>&quot;%1&quot; is in edit mode.
-Close anyway?</source>
-        <translation>«%1» в режиме редактирования.
-Всё равно закрыть?</translation>
-    </message>
-    <message>
         <source>Save changes?</source>
         <translation>Сохранить изменения?</translation>
     </message>
@@ -268,14 +272,56 @@ Save changes?</source>
     </message>
     <message>
         <source>locked</source>
-        <translation>заблокированно</translation>
+        <translation>заблокировано</translation>
+    </message>
+    <message>
+        <source>The database you are trying to open is locked by another instance of KeePassX.
+Do you want to open it anyway? Alternatively the database is opened read-only.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Lock database</source>
+        <translation>Заблокировать хранилище</translation>
+    </message>
+    <message>
+        <source>Can't lock the database as you are currently editing it.
+Please press cancel to finish your changes or discard them.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>This database has never been saved.
+You can save the database or stop locking it.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>This database has been modified.
+Do you want to save the database before locking it?
+Otherwise your changes are lost.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&quot;%1&quot; is in edit mode.
+Discard changes and close anyway?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export database to CSV file</source>
+        <translation>Экспортировать хранилище в файл CSV</translation>
+    </message>
+    <message>
+        <source>CSV file</source>
+        <translation>Файл CSV</translation>
+    </message>
+    <message>
+        <source>Writing the CSV file failed.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
     <message>
         <source>Change master key</source>
-        <translation>Сменить мастер-пароль</translation>
+        <translation>Изменить мастер-пароль</translation>
     </message>
     <message>
         <source>Delete entry?</source>
@@ -313,6 +359,14 @@ Save changes?</source>
         <source>Current group</source>
         <translation>Текущая группа</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation>Ошибка</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Невозможно вычислить мастер-пароль</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
@@ -326,7 +380,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Иконка</translation>
+        <translation>Значок</translation>
     </message>
     <message>
         <source>Auto-Type</source>
@@ -424,6 +478,10 @@ Save changes?</source>
     <message>
         <source>Save</source>
         <translation>Сохранить</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Открыть</translation>
     </message>
 </context>
 <context>
@@ -527,7 +585,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Иконка</translation>
+        <translation>Значок</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -574,26 +632,34 @@ Save changes?</source>
     </message>
     <message>
         <source>Auto-type</source>
-        <translation>автоввод</translation>
+        <translation>Автоввод</translation>
+    </message>
+    <message>
+        <source>Use default auto-type sequence of parent group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set default auto-type sequence</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
     <message>
         <source>Use default icon</source>
-        <translation>Использовать стандартную иконку</translation>
+        <translation>Использовать стандартный значок</translation>
     </message>
     <message>
         <source>Use custom icon</source>
-        <translation>Использовать свою иконку</translation>
+        <translation>Использовать свой значок</translation>
     </message>
     <message>
         <source>Add custom icon</source>
-        <translation>Добавить свою иконку</translation>
+        <translation>Добавить свой значок</translation>
     </message>
     <message>
         <source>Delete custom icon</source>
-        <translation>Удалить свою иконку</translation>
+        <translation>Удалить свой значок</translation>
     </message>
     <message>
         <source>Images</source>
@@ -609,11 +675,11 @@ Save changes?</source>
     </message>
     <message>
         <source>Can&apos;t delete icon!</source>
-        <translation>Не могу удалить иконку!</translation>
+        <translation>Не могу удалить значок!</translation>
     </message>
     <message numerus="yes">
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
-        <translation><numerusform>Не могу удалить иконку, %n запись всё ещё использует её.</numerusform><numerusform>Не могу удалить иконку, %n записи всё ещё использует её.</numerusform><numerusform>Не могу удалить иконку, %n записей всё ещё использует её.</numerusform><numerusform>Не могу удалить иконку, %n записей всё ещё использует её.</numerusform></translation>
+        <translation><numerusform>Не могу удалить иконку, %n запись всё ещё использует её.</numerusform><numerusform>Не могу удалить иконку, %n записи всё ещё использует её.</numerusform><numerusform>Не могу удалить иконку, %n записей всё ещё использует её.</numerusform><numerusform>Не могу удалить значок, %n записей всё ещё использует его.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -724,6 +790,10 @@ Save changes?</source>
         <source>Root</source>
         <translation>Корень</translation>
     </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Невозможно вычислить мастер-пароль</translation>
+    </message>
 </context>
 <context>
     <name>KeePass2Reader</name>
@@ -738,6 +808,10 @@ Save changes?</source>
     <message>
         <source>Wrong key or database file is corrupt.</source>
         <translation>Неверный ключ или файл хранилища повреждён.</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Невозможно вычислить мастер-пароль</translation>
     </message>
 </context>
 <context>
@@ -776,10 +850,6 @@ Save changes?</source>
     <message>
         <source>Groups</source>
         <translation>Группы</translation>
-    </message>
-    <message>
-        <source>Extras</source>
-        <translation>Дополнительно</translation>
     </message>
     <message>
         <source>View</source>
@@ -858,16 +928,8 @@ Save changes?</source>
         <translation>Найти</translation>
     </message>
     <message>
-        <source>Username</source>
-        <translation>Имя пользователя</translation>
-    </message>
-    <message>
         <source>Copy username to clipboard</source>
         <translation>Скопировать имя пользователя в буфер обмена</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Пароль</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
@@ -913,6 +975,22 @@ Save changes?</source>
         <source>Toggle window</source>
         <translation>Переключить окно</translation>
     </message>
+    <message>
+        <source>Tools</source>
+        <translation>Инструменты</translation>
+    </message>
+    <message>
+        <source>Copy username</source>
+        <translation>Скопировать имя пользователя</translation>
+    </message>
+    <message>
+        <source>Copy password</source>
+        <translation>Скопировать пароль</translation>
+    </message>
+    <message>
+        <source>Export to CSV file</source>
+        <translation>Экспортировать в файл CSV</translation>
+    </message>
 </context>
 <context>
     <name>PasswordGeneratorWidget</name>
@@ -950,7 +1028,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Ensure that the password contains characters from every group</source>
-        <translation>Пожалуйста, пусть пароль будет содержать символы всех видов</translation>
+        <translation>Убедитесь, что пароль содержит символы всех видов</translation>
     </message>
     <message>
         <source>Accept</source>
@@ -1023,19 +1101,19 @@ Save changes?</source>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>Ошибка записи на нижлежащее устройство:</translation>
+        <translation>Ошибка записи на низлежащее устройство:</translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>Ошибка открытия нижлежащего устройства:</translation>
+        <translation>Ошибка открытия низлежащего устройства:</translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation>Ошибка чтения с нижлежащего устройства:</translation>
+        <translation>Ошибка чтения с низлежащего устройства:</translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation>Внутренняя ошибка zlib при расжатии:</translation>
+        <translation>Внутренняя ошибка zlib при распаковке:</translation>
     </message>
 </context>
 <context>
@@ -1094,10 +1172,6 @@ Save changes?</source>
         <translation>Открывать предыдущее хранилище при запуске</translation>
     </message>
     <message>
-        <source>Mark as modified on expanded state changes</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Automatically save on exit</source>
         <translation>Автоматически сохранять при выходе</translation>
     </message>
@@ -1133,12 +1207,16 @@ Save changes?</source>
         <source>Hide window to system tray when minimized</source>
         <translation>При сворачивании прятать окно в область системных уведомлений</translation>
     </message>
+    <message>
+        <source>Remember last key files</source>
+        <translation>Запоминать последние файл-ключи</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>
     <message>
         <source>Clear clipboard after</source>
-        <translation>Потом почтистить буфер обмена</translation>
+        <translation>Очищать буфер обмена через</translation>
     </message>
     <message>
         <source> sec</source>
@@ -1150,7 +1228,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Show passwords in cleartext by default</source>
-        <translation>Показывать пароль в открытую по-умолчанию</translation>
+        <translation>По умолчанию показывать пароль в открытую</translation>
     </message>
     <message>
         <source>Always ask before performing auto-type</source>
@@ -1162,14 +1240,6 @@ Save changes?</source>
     <message>
         <source>Unlock database</source>
         <translation>Разблокировать хранилище</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Ошибка</translation>
-    </message>
-    <message>
-        <source>Wrong key.</source>
-        <translation>Неверный ключ.</translation>
     </message>
 </context>
 <context>

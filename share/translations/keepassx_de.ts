@@ -7,7 +7,7 @@
     </message>
     <message>
         <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassX ist unter der GNU General Public License (GPL) version 2 (version 3) veröffentlicht.</translation>
+        <translation>KeePassX steht unter der GNU General Public License (GPL) version 2 (version 3).</translation>
     </message>
 </context>
 <context>
@@ -108,6 +108,15 @@
     <message>
         <source>Different passwords supplied.</source>
         <translation>Unterschiedliche Passwörter eingegeben.</translation>
+    </message>
+    <message>
+        <source>Failed to set key file</source>
+        <translation>Festlegen der Schlüsseldatei nicht möglich.</translation>
+    </message>
+    <message>
+        <source>Failed to set %1 as the Key file:
+%2</source>
+        <translation>Festlegen von %1 als Schlüsseldatei nicht möglich: %2</translation>
     </message>
 </context>
 <context>
@@ -235,12 +244,6 @@
         <translation>Schließen?</translation>
     </message>
     <message>
-        <source>&quot;%1&quot; is in edit mode.
-Close anyway?</source>
-        <translation>&quot;%1&quot; wird bearbeitet.
-Trotzdem schließen?</translation>
-    </message>
-    <message>
         <source>Save changes?</source>
         <translation>Änderungen speichern?</translation>
     </message>
@@ -269,6 +272,53 @@ Save changes?</source>
     <message>
         <source>locked</source>
         <translation>gesperrt</translation>
+    </message>
+    <message>
+        <source>The database you are trying to open is locked by another instance of KeePassX.
+Do you want to open it anyway? Alternatively the database is opened read-only.</source>
+        <translation>Die Datenbank, die geöffnet werden soll, ist aktuell von einer anderen Instanz von KeePassX blockiert. Soll sie dennoch geöffnet werden? Andererseits wird die Datenbank schreibgeschützt geöffnet.</translation>
+    </message>
+    <message>
+        <source>Lock database</source>
+        <translation>Datenbank sperren</translation>
+    </message>
+    <message>
+        <source>Can't lock the database as you are currently editing it.
+Please press cancel to finish your changes or discard them.</source>
+        <translation>Datenbank kann nicht gesperrt werden, da sie gerade bearbeitet wird.
+Wählen sie &quot;cancel&quot;, um die Änderungen zu speichern oder sie zurückzunehmen.</translation>
+    </message>
+    <message>
+        <source>This database has never been saved.
+You can save the database or stop locking it.</source>
+        <translation>Diese Datenbank wurde noch nicht gespeichert.
+Sie können sie speichern oder Sperre freigeben.</translation>
+    </message>
+    <message>
+        <source>This database has been modified.
+Do you want to save the database before locking it?
+Otherwise your changes are lost.</source>
+        <translation>Dieses Datenbank wurde geändert.
+Soll sie gespeichert werden bevor sie gesperrt wirt?
+Anderenfalls gehen Ihre Änderungen verloren.</translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; is in edit mode.
+Discard changes and close anyway?</source>
+        <translation>&quot;%1&quot; wird bearbeitet.
+Änderungen verwerfen und trotzdem schließen?</translation>
+    </message>
+    <message>
+        <source>Export database to CSV file</source>
+        <translation>Datenbank als CSV Datei exportieren.</translation>
+    </message>
+    <message>
+        <source>CSV file</source>
+        <translation>CSV Datei</translation>
+    </message>
+    <message>
+        <source>Writing the CSV file failed.</source>
+        <translation>Die CSV Datei konnte nicht gespeichert werden.</translation>
     </message>
 </context>
 <context>
@@ -312,6 +362,14 @@ Save changes?</source>
     <message>
         <source>Current group</source>
         <translation>Aktuelle Gruppe</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fehler</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Berechnung des &quot;master keys&quot; gescheitert</translation>
     </message>
 </context>
 <context>
@@ -423,6 +481,10 @@ Save changes?</source>
     <message>
         <source>Save</source>
         <translation>Speichern</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Offen</translation>
     </message>
 </context>
 <context>
@@ -575,6 +637,14 @@ Save changes?</source>
         <source>Auto-type</source>
         <translation>Auto-type</translation>
     </message>
+    <message>
+        <source>Use default auto-type sequence of parent group</source>
+        <translation>Auto-Type-Sequenz der übergeordneten Gruppe anwenden.</translation>
+    </message>
+    <message>
+        <source>Set default auto-type sequence</source>
+        <translation>Standard Auto-Type-Sequenz setzen</translation>
+    </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
@@ -723,6 +793,10 @@ Save changes?</source>
         <source>Root</source>
         <translation>Root</translation>
     </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Berechnung des &quot;master keys&quot; gescheitert</translation>
+    </message>
 </context>
 <context>
     <name>KeePass2Reader</name>
@@ -737,6 +811,10 @@ Save changes?</source>
     <message>
         <source>Wrong key or database file is corrupt.</source>
         <translation>Falscher Schlüssel oder die Datei ist beschädigt.</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Berechnung des &quot;master keys&quot; gescheitert</translation>
     </message>
 </context>
 <context>
@@ -775,10 +853,6 @@ Save changes?</source>
     <message>
         <source>Groups</source>
         <translation>Gruppen</translation>
-    </message>
-    <message>
-        <source>Extras</source>
-        <translation>Extras</translation>
     </message>
     <message>
         <source>View</source>
@@ -857,16 +931,8 @@ Save changes?</source>
         <translation>Suchen</translation>
     </message>
     <message>
-        <source>Username</source>
-        <translation>Benutzername</translation>
-    </message>
-    <message>
         <source>Copy username to clipboard</source>
         <translation>Benutzername in die Zwischenablage kopieren</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Passwort</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
@@ -911,6 +977,22 @@ Save changes?</source>
     <message>
         <source>Toggle window</source>
         <translation>Fenster zeigen/verstecken</translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation>Tools</translation>
+    </message>
+    <message>
+        <source>Copy username</source>
+        <translation>Benutzername kopieren</translation>
+    </message>
+    <message>
+        <source>Copy password</source>
+        <translation>Passwort kopieren</translation>
+    </message>
+    <message>
+        <source>Export to CSV file</source>
+        <translation>Als CSV Datei exportieren</translation>
     </message>
 </context>
 <context>
@@ -1093,10 +1175,6 @@ Save changes?</source>
         <translation>Letzte Datenbank beim Starten öffnen</translation>
     </message>
     <message>
-        <source>Mark as modified on expanded state changes</source>
-        <translation>Als erweiterte Zustandsänderungen makieren</translation>
-    </message>
-    <message>
         <source>Automatically save on exit</source>
         <translation>Automatisch speichern beim Schließen</translation>
     </message>
@@ -1132,6 +1210,10 @@ Save changes?</source>
         <source>Hide window to system tray when minimized</source>
         <translation>Fenster verstecken wenn minimiert</translation>
     </message>
+    <message>
+        <source>Remember last key files</source>
+        <translation>Letzte Schlüsseldateien merken</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>
@@ -1161,14 +1243,6 @@ Save changes?</source>
     <message>
         <source>Unlock database</source>
         <translation>Datenbank entsperren</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Fehler</translation>
-    </message>
-    <message>
-        <source>Wrong key.</source>
-        <translation>Falscher Schlüssel.</translation>
     </message>
 </context>
 <context>

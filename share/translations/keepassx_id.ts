@@ -109,6 +109,15 @@
         <source>Different passwords supplied.</source>
         <translation>Kata sandi yang berbeda diberikan.</translation>
     </message>
+    <message>
+        <source>Failed to set key file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to set %1 as the Key file:
+%2</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseOpenWidget</name>
@@ -235,12 +244,6 @@
         <translation>Tutup?</translation>
     </message>
     <message>
-        <source>&quot;%1&quot; is in edit mode.
-Close anyway?</source>
-        <translation>&quot;%1&quot; dalam berada mode sunting.
-Tetap tutup?</translation>
-    </message>
-    <message>
         <source>Save changes?</source>
         <translation>Simpan perubahan?</translation>
     </message>
@@ -269,6 +272,48 @@ Simpan perubahan?</translation>
     <message>
         <source>locked</source>
         <translation>terkunci</translation>
+    </message>
+    <message>
+        <source>The database you are trying to open is locked by another instance of KeePassX.
+Do you want to open it anyway? Alternatively the database is opened read-only.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Lock database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Can't lock the database as you are currently editing it.
+Please press cancel to finish your changes or discard them.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>This database has never been saved.
+You can save the database or stop locking it.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>This database has been modified.
+Do you want to save the database before locking it?
+Otherwise your changes are lost.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&quot;%1&quot; is in edit mode.
+Discard changes and close anyway?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export database to CSV file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>CSV file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Writing the CSV file failed.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -312,6 +357,14 @@ Simpan perubahan?</translation>
     <message>
         <source>Current group</source>
         <translation>Grup saat ini</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -424,6 +477,10 @@ Simpan perubahan?</translation>
     <message>
         <source>Save</source>
         <translation>Simpan</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -576,6 +633,14 @@ Simpan perubahan?</translation>
         <source>Auto-type</source>
         <translation>Ketik-otomatis</translation>
     </message>
+    <message>
+        <source>Use default auto-type sequence of parent group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set default auto-type sequence</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
@@ -724,6 +789,10 @@ Simpan perubahan?</translation>
         <source>Root</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>KeePass2Reader</name>
@@ -738,6 +807,10 @@ Simpan perubahan?</translation>
     <message>
         <source>Wrong key or database file is corrupt.</source>
         <translation>Kunci salah atau berkas basis data korup.</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -776,10 +849,6 @@ Simpan perubahan?</translation>
     <message>
         <source>Groups</source>
         <translation>Grup</translation>
-    </message>
-    <message>
-        <source>Extras</source>
-        <translation>Ekstra</translation>
     </message>
     <message>
         <source>View</source>
@@ -858,16 +927,8 @@ Simpan perubahan?</translation>
         <translation>Temukan</translation>
     </message>
     <message>
-        <source>Username</source>
-        <translation>Nama pengguna</translation>
-    </message>
-    <message>
         <source>Copy username to clipboard</source>
         <translation>Salin nama pengguna ke papan klip</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Kata sandi</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
@@ -911,6 +972,22 @@ Simpan perubahan?</translation>
     </message>
     <message>
         <source>Toggle window</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy username</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to CSV file</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1094,10 +1171,6 @@ Simpan perubahan?</translation>
         <translation>Buka basis data sebelumnya saat mulai</translation>
     </message>
     <message>
-        <source>Mark as modified on expanded state changes</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Automatically save on exit</source>
         <translation>Otomatis simpan ketika keluar</translation>
     </message>
@@ -1133,6 +1206,10 @@ Simpan perubahan?</translation>
         <source>Hide window to system tray when minimized</source>
         <translation>Sembunyikan jendela ke baki sistem ketika dikecilkan</translation>
     </message>
+    <message>
+        <source>Remember last key files</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>
@@ -1162,14 +1239,6 @@ Simpan perubahan?</translation>
     <message>
         <source>Unlock database</source>
         <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Galat</translation>
-    </message>
-    <message>
-        <source>Wrong key.</source>
-        <translation>Kunci salah.</translation>
     </message>
 </context>
 <context>

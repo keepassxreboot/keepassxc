@@ -109,6 +109,16 @@
         <source>Different passwords supplied.</source>
         <translation>Verschillende wachtwoorden opgegeven.</translation>
     </message>
+    <message>
+        <source>Failed to set key file</source>
+        <translation>Niet gelukt het sleutelbestand in te stellen</translation>
+    </message>
+    <message>
+        <source>Failed to set %1 as the Key file:
+%2</source>
+        <translation>Niet gelukt %1 als sleutelbestand in te stellen:
+%2</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseOpenWidget</name>
@@ -235,12 +245,6 @@
         <translation>Sluiten?</translation>
     </message>
     <message>
-        <source>&quot;%1&quot; is in edit mode.
-Close anyway?</source>
-        <translation>&quot;%1&quot; is in bewerkmodus.
-Toch sluiten?</translation>
-    </message>
-    <message>
         <source>Save changes?</source>
         <translation>Wijzigingen opslaan?</translation>
     </message>
@@ -269,6 +273,54 @@ Opslaan?</translation>
     <message>
         <source>locked</source>
         <translation>vergrendeld</translation>
+    </message>
+    <message>
+        <source>The database you are trying to open is locked by another instance of KeePassX.
+Do you want to open it anyway? Alternatively the database is opened read-only.</source>
+        <translation>De database die u probeert te openen is vergrendeld door een andere instantie van KeePassX.
+Wilt u toch doorgaan met openen? U kunt de database ook alleen-lezen openen.</translation>
+    </message>
+    <message>
+        <source>Lock database</source>
+        <translation>Database vergrendelen</translation>
+    </message>
+    <message>
+        <source>Can't lock the database as you are currently editing it.
+Please press cancel to finish your changes or discard them.</source>
+        <translation>Kan de database niet vergrendelen omdat u deze momenteel aan het bewerken bent.
+Druk op annuleren om uw wijzigingen aan te passen of gooi de wijzigingen weg.</translation>
+    </message>
+    <message>
+        <source>This database has never been saved.
+You can save the database or stop locking it.</source>
+        <translation>Deze database is nog niet opgeslagen.
+U kunt de database opslaan of het vergrendelen annuleren.</translation>
+    </message>
+    <message>
+        <source>This database has been modified.
+Do you want to save the database before locking it?
+Otherwise your changes are lost.</source>
+        <translation>Deze database is gewijzigd.
+Wilt u de database opslaan voordat u deze vergrendelt?
+Zo nee, dan gaan de wijzigingen verloren.</translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; is in edit mode.
+Discard changes and close anyway?</source>
+        <translation>&quot;%1&quot; is gewijzigd.
+Wijzigingen ongedaan maken en doorgaan met sluiten?</translation>
+    </message>
+    <message>
+        <source>Export database to CSV file</source>
+        <translation>Database exporteren naar CSV-bestand</translation>
+    </message>
+    <message>
+        <source>CSV file</source>
+        <translation>CSV-bestand</translation>
+    </message>
+    <message>
+        <source>Writing the CSV file failed.</source>
+        <translation>Schrijven van het CSV-bestand mislukt.</translation>
     </message>
 </context>
 <context>
@@ -312,6 +364,14 @@ Opslaan?</translation>
     <message>
         <source>Current group</source>
         <translation>Huidige groep</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fout</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Niet mogelijk om hoofdsleutel te berekenen</translation>
     </message>
 </context>
 <context>
@@ -424,6 +484,10 @@ Opslaan?</translation>
     <message>
         <source>Save</source>
         <translation>Opslaan</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Open</translation>
     </message>
 </context>
 <context>
@@ -576,6 +640,14 @@ Opslaan?</translation>
         <source>Auto-type</source>
         <translation>Auto-typen</translation>
     </message>
+    <message>
+        <source>Use default auto-type sequence of parent group</source>
+        <translation>Gebruik standaard auto-typevolgorde van bovenliggende groep</translation>
+    </message>
+    <message>
+        <source>Set default auto-type sequence</source>
+        <translation>Stel standaard auto-typevolgorde in</translation>
+    </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
@@ -724,6 +796,10 @@ Opslaan?</translation>
         <source>Root</source>
         <translation>Alles</translation>
     </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Niet mogelijk om hoofdsleutel te berekenen</translation>
+    </message>
 </context>
 <context>
     <name>KeePass2Reader</name>
@@ -738,6 +814,10 @@ Opslaan?</translation>
     <message>
         <source>Wrong key or database file is corrupt.</source>
         <translation>Verkeerde sleutel of corrupte database.</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Niet mogelijk om hoofdsleutel te berekenen</translation>
     </message>
 </context>
 <context>
@@ -776,10 +856,6 @@ Opslaan?</translation>
     <message>
         <source>Groups</source>
         <translation>Groepen</translation>
-    </message>
-    <message>
-        <source>Extras</source>
-        <translation>Extra&apos;s</translation>
     </message>
     <message>
         <source>View</source>
@@ -858,16 +934,8 @@ Opslaan?</translation>
         <translation>Vind</translation>
     </message>
     <message>
-        <source>Username</source>
-        <translation>Gebruikersnaam</translation>
-    </message>
-    <message>
         <source>Copy username to clipboard</source>
         <translation>Kopieer gebruikersnaam naar klembord</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Wachtwoord</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
@@ -912,6 +980,22 @@ Opslaan?</translation>
     <message>
         <source>Toggle window</source>
         <translation>Wissel venster</translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation>Hulpmiddelen</translation>
+    </message>
+    <message>
+        <source>Copy username</source>
+        <translation>Gebruikersnaam kopieren</translation>
+    </message>
+    <message>
+        <source>Copy password</source>
+        <translation>Wachtwoord kopiëren</translation>
+    </message>
+    <message>
+        <source>Export to CSV file</source>
+        <translation>Naar CSV-bestand exporteren</translation>
     </message>
 </context>
 <context>
@@ -1094,10 +1178,6 @@ Opslaan?</translation>
         <translation>Open vorige databases bij starten</translation>
     </message>
     <message>
-        <source>Mark as modified on expanded state changes</source>
-        <translation>Markeer database als gewijzigd bij wijzigen van de status</translation>
-    </message>
-    <message>
         <source>Automatically save on exit</source>
         <translation>Automatisch opslaan bij afsluiten</translation>
     </message>
@@ -1133,6 +1213,10 @@ Opslaan?</translation>
         <source>Hide window to system tray when minimized</source>
         <translation>Bij minimaliseren enkel icoon in systray tonen</translation>
     </message>
+    <message>
+        <source>Remember last key files</source>
+        <translation>Onthoud laatste sleutelbestanden</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>
@@ -1162,14 +1246,6 @@ Opslaan?</translation>
     <message>
         <source>Unlock database</source>
         <translation>Database ontgrendelen</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Fout</translation>
-    </message>
-    <message>
-        <source>Wrong key.</source>
-        <translation>Verkeerd wachtwoord</translation>
     </message>
 </context>
 <context>
