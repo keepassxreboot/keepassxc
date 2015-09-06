@@ -65,6 +65,12 @@ QString FileDialog::getSaveFileName(QWidget* parent, const QString& caption, QSt
             dir = config()->get("LastDir").toString();
         }
 
+        QString result;
+#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
+        // the native dialogs on these platforms already append the file extension
+        result = QFileDialog::getSaveFileName(parent, caption, dir, filter,
+                                              selectedFilter, options);
+#else
         QFileDialog dialog(parent, caption, dir, filter);
         dialog.setAcceptMode(QFileDialog::AcceptSave);
         dialog.setFileMode(QFileDialog::AnyFile);
@@ -74,7 +80,6 @@ QString FileDialog::getSaveFileName(QWidget* parent, const QString& caption, QSt
         dialog.setOptions(options);
         dialog.setDefaultSuffix(defaultExtension);
 
-        QString result;
         QStringList results;
         if (dialog.exec()) {
             results = dialog.selectedFiles();
@@ -82,6 +87,7 @@ QString FileDialog::getSaveFileName(QWidget* parent, const QString& caption, QSt
                 result = results[0];
             }
         }
+#endif
 
         // on Mac OS X the focus is lost after closing the native dialog
         if (parent) {
