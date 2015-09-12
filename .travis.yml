@@ -11,7 +11,9 @@ install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -qq update; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -qq install cmake qt54base qt54x11extras qt54tools libgcrypt11-dev zlib1g-dev libxtst-dev; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew update; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install cmake qt5 libgcrypt; fi
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew ls | grep -wq cmake || brew install cmake; fi
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew ls | grep -wq qt5 || brew install qt5; fi
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew ls | grep -wq libgcrypt || brew install libgcrypt; fi
 before_script:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then source /opt/qt54/bin/qt54-env.sh; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then wget http://www.cmake.org/files/v3.3/cmake-3.3.1-Linux-x86_64.tar.gz -O cmake.tar.gz; fi
