@@ -57,6 +57,7 @@ void TestGui::initTestCase()
     m_mainWindow = new MainWindow();
     m_tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
     m_mainWindow->show();
+    m_mainWindow->activateWindow();
     Tools::wait(50);
 
     QByteArray tmpData;
