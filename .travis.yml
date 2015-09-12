@@ -15,6 +15,7 @@ install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ] && [ "$CXX" == "g++" ]; then sudo apt-get -qq install g++-4.7; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ] && [ "$CXX" == "g++" ]; then export CXX="g++-4.7"; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -qq install cmake qt54base qt54x11extras qt54tools libgpg-error-dev zlib1g-dev libxtst-dev; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -qq purge libgcrypt11-dev || true; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then wget http://archive.ubuntu.com/ubuntu/pool/main/libg/libgcrypt20/libgcrypt20_1.6.1-2ubuntu1_amd64.deb; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then wget http://archive.ubuntu.com/ubuntu/pool/main/libg/libgcrypt20/libgcrypt20-dev_1.6.1-2ubuntu1_amd64.deb; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo dpkg -i libgcrypt20_1.6.1-2ubuntu1_amd64.deb libgcrypt20-dev_1.6.1-2ubuntu1_amd64.deb; fi
