@@ -24,9 +24,10 @@ before_script:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then wget http://www.cmake.org/files/v3.3/cmake-3.3.1-Linux-x86_64.tar.gz -O cmake.tar.gz; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then tar -xzf cmake.tar.gz -C $HOME; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then export PATH=$HOME/cmake-3.3.1-Linux-x86_64/bin:$PATH; fi
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then CMAKE_ARGS="-DCMAKE_PREFIX_PATH=/usr/local/opt/qt5"; fi
   - mkdir build && pushd build
 script:
-  - cmake -DCMAKE_BUILD_TYPE=Debug -DWITH_GUI_TESTS=ON ..
+  - cmake -DCMAKE_BUILD_TYPE=Debug -DWITH_GUI_TESTS=ON $CMAKE_ARGS ..
   - make
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then make test ARGS+="-E testgui --output-on-failure"; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then xvfb-run -a --server-args="-screen 0 800x600x24" make test ARGS+="-R testgui --output-on-failure"; fi
