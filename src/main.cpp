@@ -37,7 +37,7 @@ int main(int argc, char** argv)
     Application::setApplicationName("keepassx");
     Application::setApplicationVersion(KEEPASSX_VERSION);
     // don't set organizationName as that changes the return value of
-    // QStandardPaths::writableLocation(QDesktopServices::AppDataLocation)
+    // QStandardPaths::writableLocation(QDesktopServices::DataLocation)
 
     QApplication::setQuitOnLastWindowClosed(false);
 

@@ -70,7 +70,7 @@ Config::Config(QObject* parent)
 
     userPath += "/keepassx/";
 #else
-    userPath = QDir::fromNativeSeparators(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
+    userPath = QDir::fromNativeSeparators(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
     // storageLocation() appends the application name ("/keepassx") to the end
     userPath += "/";
 #endif
