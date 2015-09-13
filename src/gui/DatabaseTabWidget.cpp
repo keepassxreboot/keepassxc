@@ -27,6 +27,7 @@
 #include "core/Metadata.h"
 #include "core/qsavefile.h"
 #include "format/CsvExporter.h"
+#include "gui/Clipboard.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/DatabaseWidgetStateSync.h"
 #include "gui/DragTabBar.h"
@@ -632,6 +633,8 @@ bool DatabaseTabWidget::hasLockableDatabases() const
 
 void DatabaseTabWidget::lockDatabases()
 {
+    clipboard()->clearCopiedText();
+
     for (int i = 0; i < count(); i++) {
         DatabaseWidget* dbWidget = static_cast<DatabaseWidget*>(widget(i));
         Database* db = databaseFromDatabaseWidget(dbWidget);

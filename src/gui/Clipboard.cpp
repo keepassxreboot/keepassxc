@@ -31,7 +31,7 @@ Clipboard::Clipboard(QObject* parent)
 {
     m_timer->setSingleShot(true);
     connect(m_timer, SIGNAL(timeout()), SLOT(clearClipboard()));
-    connect(qApp, SIGNAL(aboutToQuit()), SLOT(cleanup()));
+    connect(qApp, SIGNAL(aboutToQuit()), SLOT(clearCopiedText()));
 }
 
 void Clipboard::setText(const QString& text)
@@ -49,6 +49,14 @@ void Clipboard::setText(const QString& text)
             m_lastCopied = text;
             m_timer->start(timeout * 1000);
         }
+    }
+}
+
+void Clipboard::clearCopiedText()
+{
+    if (m_timer->isActive()) {
+        m_timer->stop();
+        clearClipboard();
     }
 }
 
@@ -71,14 +79,6 @@ void Clipboard::clearClipboard()
     }
 
     m_lastCopied.clear();
-}
-
-void Clipboard::cleanup()
-{
-    if (m_timer->isActive()) {
-        m_timer->stop();
-        clearClipboard();
-    }
 }
 
 Clipboard* Clipboard::instance()
