@@ -50,12 +50,12 @@ The following tools must exist within your PATH:
 
 * make
 * cmake (>= 2.8.12)
-* g++ or clang++
+* g++ (>= 4.7) or clang++ (>= 3.0)
 
 The following libraries are required:
 
 * Qt 5 (>= 5.2): qtbase and qttools5
-* libgcrypt
+* libgcrypt (>= 1.6)
 * zlib
 * libxtst, qtx11extras (optional for auto-type on X11)
 
