@@ -33,6 +33,7 @@ public:
     virtual void unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers) = 0;
     virtual int platformEventFilter(void* event) = 0;
     virtual int initialTimeout() = 0;
+    virtual bool raiseWindow(WId window) = 0;
     virtual void unload() {}
 
     virtual AutoTypeExecutor* createExecutor() = 0;
