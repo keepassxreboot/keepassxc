@@ -31,9 +31,11 @@ public:
 
     static Clipboard* instance();
 
+public Q_SLOTS:
+    void clearCopiedText();
+
 private Q_SLOTS:
     void clearClipboard();
-    void cleanup();
 
 private:
     explicit Clipboard(QObject* parent = nullptr);

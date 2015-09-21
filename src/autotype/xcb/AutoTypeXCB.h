@@ -50,6 +50,7 @@ public:
     void unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers);
     int platformEventFilter(void* event);
     int initialTimeout();
+    bool raiseWindow(WId window);
     AutoTypeExecutor* createExecutor();
 
     KeySym charToKeySym(const QChar& ch);
@@ -89,6 +90,7 @@ private:
     Atom m_atomNetWmName;
     Atom m_atomString;
     Atom m_atomUtf8String;
+    Atom m_atomNetActiveWindow;
     QSet<QString> m_classBlacklist;
     Qt::Key m_currentGlobalKey;
     Qt::KeyboardModifiers m_currentGlobalModifiers;

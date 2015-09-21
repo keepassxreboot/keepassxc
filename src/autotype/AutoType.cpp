@@ -218,6 +218,8 @@ void AutoType::performAutoTypeFromGlobal(Entry* entry, const QString& sequence)
 {
     Q_ASSERT(m_inAutoType);
 
+    m_plugin->raiseWindow(m_windowFromGlobal);
+
     m_inAutoType = false;
     performAutoType(entry, nullptr, sequence, m_windowFromGlobal);
 }
