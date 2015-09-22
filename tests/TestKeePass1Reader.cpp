@@ -21,7 +21,6 @@
 #include <QTest>
 
 #include "config-keepassx-tests.h"
-#include "tests.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"

@@ -21,8 +21,6 @@
 #include <QBuffer>
 #include <QTest>
 
-#include "tests.h"
-
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"

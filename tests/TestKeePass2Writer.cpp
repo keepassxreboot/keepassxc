@@ -20,7 +20,6 @@
 #include <QBuffer>
 #include <QTest>
 
-#include "tests.h"
 #include "FailDevice.h"
 #include "core/Database.h"
 #include "core/Group.h"

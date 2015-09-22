@@ -20,7 +20,6 @@
 #include <QBuffer>
 #include <QTest>
 
-#include "tests.h"
 #include "crypto/Crypto.h"
 #include "crypto/SymmetricCipher.h"
 #include "streams/SymmetricCipherStream.h"

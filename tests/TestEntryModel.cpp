@@ -21,7 +21,6 @@
 #include <QTest>
 
 #include "modeltest.h"
-#include "tests.h"
 #include "core/DatabaseIcons.h"
 #include "core/Entry.h"
 #include "core/Group.h"

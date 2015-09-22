@@ -19,7 +19,6 @@
 
 #include <QTest>
 
-#include "tests.h"
 #include "crypto/Crypto.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/SymmetricCipher.h"

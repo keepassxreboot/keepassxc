@@ -20,7 +20,6 @@
 #include <QPluginLoader>
 #include <QTest>
 
-#include "tests.h"
 #include "core/Config.h"
 #include "core/FilePath.h"
 #include "core/Entry.h"

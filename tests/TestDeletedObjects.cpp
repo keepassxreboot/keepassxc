@@ -19,7 +19,6 @@
 
 #include <QTest>
 
-#include "tests.h"
 #include "core/Database.h"
 #include "core/Group.h"
 #include "crypto/Crypto.h"

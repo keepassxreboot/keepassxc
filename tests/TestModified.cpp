@@ -20,7 +20,6 @@
 #include <QSignalSpy>
 #include <QTest>
 
-#include "tests.h"
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
