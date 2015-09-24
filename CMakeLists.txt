@@ -31,7 +31,6 @@ include(CheckCXXSourceCompiles)
 
 option(WITH_TESTS "Enable building of unit tests" ON)
 option(WITH_GUI_TESTS "Enable building of GUI tests" OFF)
-option(WITH_LTO "Enable Link Time Optimization (LTO)" OFF)
 option(WITH_CXX11 "Build with the C++ 11 standard" ON)
 
 set(KEEPASSX_VERSION "2.0 beta 2")
@@ -99,20 +98,6 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-z,relro")
   set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--no-add-needed -Wl,--as-needed")
   set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,-z,relro")
-endif()
-
-if(WITH_LTO)
-  if(CMAKE_COMPILER_IS_GNUCC AND CMAKE_COMPILER_IS_GNUCXX)
-    check_cxx_compiler_flag("-flto -fuse-linker-plugin" LTO_AVAILABLE)
-
-    if(LTO_AVAILABLE)
-      add_gcc_compiler_flags("-flto -fuse-linker-plugin")
-    else()
-      message(FATAL_ERROR "This version of gcc doesn't support LTO")
-    endif(LTO_AVAILABLE)
-  else()
-    message(FATAL_ERROR "LTO is only supported with gcc")
-  endif()
 endif()
 
 if (WITH_CXX11)
