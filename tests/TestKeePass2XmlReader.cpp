@@ -315,7 +315,7 @@ void TestKeePass2XmlReader::testEntry2()
 
 void TestKeePass2XmlReader::testEntryHistory()
 {
-    const Entry* entryMain = m_db->rootGroup()->entries().first();
+    const Entry* entryMain = m_db->rootGroup()->entries().at(0);
     QCOMPARE(entryMain->historyItems().size(), 2);
 
     {
