@@ -31,8 +31,8 @@ public:
     HashedBlockStream(QIODevice* baseDevice, qint32 blockSize);
     ~HashedBlockStream();
 
-    bool reset();
-    void close();
+    bool reset() Q_DECL_OVERRIDE;
+    void close() Q_DECL_OVERRIDE;
 
 protected:
     qint64 readData(char* data, qint64 maxSize) Q_DECL_OVERRIDE;
