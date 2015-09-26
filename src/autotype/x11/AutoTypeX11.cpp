@@ -561,6 +561,8 @@ XkbDescPtr AutoTypePlatformX11::getKeyboard()
         }
     }
 
+    XFreeDeviceList(devices);
+
     return XkbGetKeyboard(m_dpy, XkbCompatMapMask | XkbGeometryMask, keyboard_id);
 }
 
