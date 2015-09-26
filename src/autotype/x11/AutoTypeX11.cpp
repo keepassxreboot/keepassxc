@@ -547,10 +547,12 @@ int AutoTypePlatformX11::x11ErrorHandler(Display* display, XErrorEvent* error)
 
 XkbDescPtr AutoTypePlatformX11::getKeyboard()
 {
-    XDeviceInfo* devices;
     int num_devices;
     XID keyboard_id = XkbUseCoreKbd;
-    devices = XListInputDevices(m_dpy, &num_devices);
+    XDeviceInfo* devices = XListInputDevices(m_dpy, &num_devices);
+    if (!devices) {
+        return Q_NULLPTR;
+    }
 
     for (int i = 0; i < num_devices; i++) {
         if (QString(devices[i].name) == "Virtual core XTEST keyboard") {
