@@ -33,23 +33,23 @@ class AutoTypePlatformTest : public QObject,
     Q_INTERFACES(AutoTypePlatformInterface AutoTypeTestInterface)
 
 public:
-    QString keyToString(Qt::Key key);
+    QString keyToString(Qt::Key key) Q_DECL_OVERRIDE;
 
-    QStringList windowTitles();
-    WId activeWindow();
-    QString activeWindowTitle();
-    bool registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers);
-    void unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers);
-    int platformEventFilter(void* event);
-    int initialTimeout();
-    bool raiseWindow(WId window);
-    AutoTypeExecutor* createExecutor();
+    QStringList windowTitles() Q_DECL_OVERRIDE;
+    WId activeWindow() Q_DECL_OVERRIDE;
+    QString activeWindowTitle() Q_DECL_OVERRIDE;
+    bool registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers) Q_DECL_OVERRIDE;
+    void unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers) Q_DECL_OVERRIDE;
+    int platformEventFilter(void* event) Q_DECL_OVERRIDE;
+    int initialTimeout() Q_DECL_OVERRIDE;
+    bool raiseWindow(WId window) Q_DECL_OVERRIDE;
+    AutoTypeExecutor* createExecutor() Q_DECL_OVERRIDE;
 
-    void setActiveWindowTitle(const QString& title);
+    void setActiveWindowTitle(const QString& title) Q_DECL_OVERRIDE;
 
-    QString actionChars();
-    int actionCount();
-    void clearActions();
+    QString actionChars() Q_DECL_OVERRIDE;
+    int actionCount() Q_DECL_OVERRIDE;
+    void clearActions() Q_DECL_OVERRIDE;
 
     void addActionChar(AutoTypeChar* action);
     void addActionKey(AutoTypeKey* action);
@@ -68,8 +68,8 @@ class AutoTypeExecturorTest : public AutoTypeExecutor
 public:
     explicit AutoTypeExecturorTest(AutoTypePlatformTest* platform);
 
-    void execChar(AutoTypeChar* action);
-    void execKey(AutoTypeKey* action);
+    void execChar(AutoTypeChar* action) Q_DECL_OVERRIDE;
+    void execKey(AutoTypeKey* action) Q_DECL_OVERRIDE;
 
 private:
     AutoTypePlatformTest* const m_platform;

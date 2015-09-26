@@ -5,7 +5,7 @@ if(UNIX AND NOT APPLE)
   add_feature_info(libXtest X11_XTest_FOUND "The X11 XTEST Protocol library is required for auto-type")
   add_feature_info(Qt5X11Extras Qt5X11Extras_FOUND "The Qt5X11Extras library is required for auto-type")
 
-  if(X11_FOUND AND X11_XTest_FOUND AND Qt5X11Extras_FOUND)
+  if(X11_FOUND AND X11_Xi_FOUND AND X11_XTest_FOUND AND Qt5X11Extras_FOUND)
     add_subdirectory(xcb)
   endif()
 endif()

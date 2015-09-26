@@ -243,7 +243,7 @@ QMimeData* EntryModel::mimeData(const QModelIndexList& indexes) const
         return nullptr;
     }
     else {
-        data->setData(mimeTypes().first(), encoded);
+        data->setData(mimeTypes().at(0), encoded);
         return data;
     }
 }

@@ -33,8 +33,8 @@ public:
     QModelIndex index(Group* group) const;
     Group* groupFromIndex(const QModelIndex& index) const;
 
-    int rowCount(const QModelIndex& parent = QModelIndex()) const;
-    int columnCount(const QModelIndex& parent = QModelIndex()) const;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+    int columnCount(const QModelIndex& parent = QModelIndex()) const override;
     QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
     QModelIndex parent(const QModelIndex& index) const override;
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
