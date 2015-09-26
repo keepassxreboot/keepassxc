@@ -7,6 +7,7 @@ compiler:
 language: cpp
 before_install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo add-apt-repository -y ppa:beineri/opt-qt542; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo add-apt-repository -y ppa:keepassx/dependencies; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ] && [ "$CXX" == "g++" ]; then sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test; fi
 install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -qq update; fi
@@ -14,20 +15,14 @@ install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ] && [ "$CC" == "gcc" ]; then export CC="gcc-4.7"; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ] && [ "$CXX" == "g++" ]; then sudo apt-get -qq install g++-4.7; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ] && [ "$CXX" == "g++" ]; then export CXX="g++-4.7"; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -qq install cmake qt54base qt54x11extras qt54tools libgpg-error-dev zlib1g-dev libxtst-dev; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -qq purge libgcrypt11-dev || true; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then wget http://archive.ubuntu.com/ubuntu/pool/main/libg/libgcrypt20/libgcrypt20_1.6.1-2ubuntu1_amd64.deb; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then wget http://archive.ubuntu.com/ubuntu/pool/main/libg/libgcrypt20/libgcrypt20-dev_1.6.1-2ubuntu1_amd64.deb; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo dpkg -i libgcrypt20_1.6.1-2ubuntu1_amd64.deb libgcrypt20-dev_1.6.1-2ubuntu1_amd64.deb; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -qq install cmake qt54base qt54x11extras qt54tools libgcrypt20-dev zlib1g-dev libxtst-dev; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew update; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew ls | grep -wq cmake || brew install cmake; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew ls | grep -wq qt5 || brew install qt5; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew ls | grep -wq libgcrypt || brew install libgcrypt; fi
 before_script:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then source /opt/qt54/bin/qt54-env.sh; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then wget http://www.cmake.org/files/v3.3/cmake-3.3.1-Linux-x86_64.tar.gz -O cmake.tar.gz; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then tar -xzf cmake.tar.gz -C $HOME; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then export PATH=$HOME/cmake-3.3.1-Linux-x86_64/bin:$PATH; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then CMAKE_ARGS="-DCMAKE_PREFIX_PATH=/usr/local/opt/qt5"; fi
   - mkdir build && pushd build
 script:
