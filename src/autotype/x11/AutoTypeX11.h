@@ -42,6 +42,7 @@ class AutoTypePlatformX11 : public QObject, public AutoTypePlatformInterface
 
 public:
     AutoTypePlatformX11();
+    bool isAvailable() Q_DECL_OVERRIDE;
     void unload() Q_DECL_OVERRIDE;
     QStringList windowTitles() Q_DECL_OVERRIDE;
     WId activeWindow() Q_DECL_OVERRIDE;
@@ -72,6 +73,7 @@ private:
     void stopCatchXErrors();
     static int x11ErrorHandler(Display* display, XErrorEvent* error);
 
+    XkbDescPtr getKeyboard();
     void updateKeymap();
     bool isRemapKeycodeValid();
     int AddKeysym(KeySym keysym);

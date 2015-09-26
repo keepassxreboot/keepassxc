@@ -79,9 +79,16 @@ void AutoType::loadPlugin(const QString& pluginPath)
     QObject* pluginInstance = m_pluginLoader->instance();
     if (pluginInstance) {
         m_plugin = qobject_cast<AutoTypePlatformInterface*>(pluginInstance);
+        m_executor = Q_NULLPTR;
+
         if (m_plugin) {
-            m_executor = m_plugin->createExecutor();
-            connect(pluginInstance, SIGNAL(globalShortcutTriggered()), SIGNAL(globalShortcutTriggered()));
+            if (m_plugin->isAvailable()) {
+                m_executor = m_plugin->createExecutor();
+                connect(pluginInstance, SIGNAL(globalShortcutTriggered()), SIGNAL(globalShortcutTriggered()));
+            }
+            else {
+                unloadPlugin();
+            }
         }
     }
 

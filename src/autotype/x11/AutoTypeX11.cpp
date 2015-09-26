@@ -57,6 +57,25 @@ AutoTypePlatformX11::AutoTypePlatformX11()
     updateKeymap();
 }
 
+bool AutoTypePlatformX11::isAvailable()
+{
+    int ignore;
+
+    if (!XQueryExtension(m_dpy, "XInputExtension", &ignore, &ignore, &ignore)) {
+        return false;
+    }
+
+    if (!XQueryExtension(m_dpy, "XTEST", &ignore, &ignore, &ignore)) {
+        return false;
+    }
+
+    if (!m_xkb && !getKeyboard()) {
+        return false;
+    }
+
+    return true;
+}
+
 void AutoTypePlatformX11::unload()
 {
     // Restore the KeyboardMapping to its original state.
@@ -437,21 +456,10 @@ void AutoTypePlatformX11::updateKeymap()
     int mod_index, mod_key;
     XModifierKeymap *modifiers;
 
-    if (m_xkb != NULL) XkbFreeKeyboard(m_xkb, XkbAllComponentsMask, True);
-
-    XDeviceInfo* devices;
-    int num_devices;
-    XID keyboard_id = XkbUseCoreKbd;
-    devices = XListInputDevices(m_dpy, &num_devices);
-
-    for (int i = 0; i < num_devices; i++) {
-        if (QString(devices[i].name) == "Virtual core XTEST keyboard") {
-            keyboard_id = devices[i].id;
-            break;
-        }
+    if (m_xkb) {
+        XkbFreeKeyboard(m_xkb, XkbAllComponentsMask, True);
     }
-
-    m_xkb = XkbGetKeyboard(m_dpy, XkbCompatMapMask | XkbGeometryMask, keyboard_id);
+    m_xkb = getKeyboard();
 
     XDisplayKeycodes(m_dpy, &m_minKeycode, &m_maxKeycode);
     if (m_keysymTable != NULL) XFree(m_keysymTable);
@@ -535,6 +543,23 @@ int AutoTypePlatformX11::x11ErrorHandler(Display* display, XErrorEvent* error)
     }
 
     return 1;
+}
+
+XkbDescPtr AutoTypePlatformX11::getKeyboard()
+{
+    XDeviceInfo* devices;
+    int num_devices;
+    XID keyboard_id = XkbUseCoreKbd;
+    devices = XListInputDevices(m_dpy, &num_devices);
+
+    for (int i = 0; i < num_devices; i++) {
+        if (QString(devices[i].name) == "Virtual core XTEST keyboard") {
+            keyboard_id = devices[i].id;
+            break;
+        }
+    }
+
+    return XkbGetKeyboard(m_dpy, XkbCompatMapMask | XkbGeometryMask, keyboard_id);
 }
 
 // --------------------------------------------------------------------------
