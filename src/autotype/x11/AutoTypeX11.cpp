@@ -69,8 +69,14 @@ bool AutoTypePlatformX11::isAvailable()
         return false;
     }
 
-    if (!m_xkb && !getKeyboard()) {
-        return false;
+    if (!m_xkb) {
+        XkbDescPtr kbd = getKeyboard();
+
+        if (!kbd) {
+            return false;
+        }
+
+        XkbFreeKeyboard(kbd, XkbAllComponentsMask, True);
     }
 
     return true;
