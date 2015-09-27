@@ -20,6 +20,7 @@
 
 #include <QCloseEvent>
 #include <QShortcut>
+#include <QTimer>
 
 #include "autotype/AutoType.h"
 #include "core/Config.h"
@@ -448,7 +449,7 @@ void MainWindow::changeEvent(QEvent *event)
             && isTrayIconEnabled() && config()->get("GUI/MinimizeToTray").toBool())
     {
         event->ignore();
-        hide();
+        QTimer::singleShot(0, this, SLOT(hide()));
     }
     else {
         QMainWindow::changeEvent(event);
@@ -578,6 +579,7 @@ void MainWindow::toggleWindow()
         hide();
     }
     else {
+        setWindowState(windowState() & ~Qt::WindowMinimized);
         show();
         raise();
         activateWindow();
