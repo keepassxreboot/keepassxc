@@ -51,6 +51,7 @@ private Q_SLOTS:
     void saveSettings();
     void reject();
     void enableAutoSaveOnExit(bool checked);
+    void enableSystrayMinimizeToTray(bool checked);
 
 private:
     QWidget* const m_secWidget;

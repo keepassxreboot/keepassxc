@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>456</width>
-    <height>346</height>
+    <width>684</width>
+    <height>394</height>
    </rect>
   </property>
   <layout class="QFormLayout" name="formLayout">
@@ -104,24 +104,73 @@
     </widget>
    </item>
    <item row="11" column="0">
-    <widget class="QCheckBox" name="systrayMinimizeToTrayCheckBox">
-     <property name="enabled">
-      <bool>false</bool>
+    <layout class="QHBoxLayout" name="systrayLayout">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMaximumSize</enum>
      </property>
-     <property name="text">
-      <string>Hide window to system tray when minimized</string>
-     </property>
-    </widget>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="systrayMinimizeToTrayCheckBox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Hide window to system tray when minimized</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item row="12" column="0">
-    <widget class="QCheckBox" name="systrayMinimizeOnCloseCheckBox">
-     <property name="enabled">
-      <bool>false</bool>
+    <layout class="QHBoxLayout" name="systray2Layout">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMaximumSize</enum>
      </property>
-     <property name="text">
-      <string>Hide window to system tray instead of App Exit</string>
-     </property>
-    </widget>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="systrayMinimizeOnCloseCheckBox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Hide window to system tray instead of App Exit</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

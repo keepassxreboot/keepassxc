@@ -73,7 +73,7 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     connect(m_generalUi->autoSaveAfterEveryChangeCheckBox, SIGNAL(toggled(bool)),
             this, SLOT(enableAutoSaveOnExit(bool)));
     connect(m_generalUi->systrayShowCheckBox, SIGNAL(toggled(bool)),
-            m_generalUi->systrayMinimizeToTrayCheckBox, SLOT(setEnabled(bool)));
+            this, SLOT(enableSystrayMinimizeToTray(bool)));
     connect(m_generalUi->systrayMinimizeToTrayCheckBox, SIGNAL(toggled(bool)),
             m_generalUi->systrayMinimizeOnCloseCheckBox, SLOT(setEnabled(bool)));
 
@@ -200,4 +200,11 @@ void SettingsWidget::reject()
 void SettingsWidget::enableAutoSaveOnExit(bool checked)
 {
     m_generalUi->autoSaveOnExitCheckBox->setEnabled(!checked);
+}
+
+void SettingsWidget::enableSystrayMinimizeToTray(bool checked)
+{
+    m_generalUi->systrayMinimizeToTrayCheckBox->setEnabled(checked);
+    bool checked2 = m_generalUi->systrayMinimizeToTrayCheckBox->checkState();
+    m_generalUi->systrayMinimizeOnCloseCheckBox->setEnabled(checked && checked2);
 }
