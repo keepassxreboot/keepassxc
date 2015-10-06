@@ -1206,6 +1206,10 @@ Otherwise your changes are lost.</source>
         <source>Remember last key files</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Hide window to system tray instead of App Exit</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>

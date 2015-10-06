@@ -1132,6 +1132,10 @@ Save changes?</source>
         <source>Hide window to system tray when minimized</source>
         <translation>Fenster verstecken wenn minimiert</translation>
     </message>
+    <message>
+        <source>Hide window to system tray instead of App Exit</source>
+        <translation>Fenster zu Taskleistensymbol minimieren statt Programm beenden</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>
