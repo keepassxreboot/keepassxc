@@ -75,7 +75,9 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     connect(m_generalUi->systrayShowCheckBox, SIGNAL(toggled(bool)),
             this, SLOT(enableSystrayMinimizeToTray(bool)));
     connect(m_generalUi->systrayMinimizeToTrayCheckBox, SIGNAL(toggled(bool)),
-            m_generalUi->systrayMinimizeOnCloseCheckBox, SLOT(setEnabled(bool)));
+            this, SLOT(enableSystrayMinimizeToTray2(bool)));
+    connect(m_generalUi->systrayMinimizeOnCloseCheckBox, SIGNAL(toggled(bool)),
+            m_generalUi->systrayMinimizeOnStartup, SLOT(setEnabled(bool)));
 
     connect(m_secUi->clearClipboardCheckBox, SIGNAL(toggled(bool)),
             m_secUi->clearClipboardSpinBox, SLOT(setEnabled(bool)));
@@ -120,6 +122,7 @@ void SettingsWidget::loadSettings()
     m_generalUi->systrayShowCheckBox->setChecked(config()->get("GUI/ShowTrayIcon").toBool());
     m_generalUi->systrayMinimizeToTrayCheckBox->setChecked(config()->get("GUI/MinimizeToTray").toBool());
     m_generalUi->systrayMinimizeOnCloseCheckBox->setChecked(config()->get("GUI/MinimizeOnClose").toBool());
+    m_generalUi->systrayMinimizeOnStartup->setChecked(config()->get("GUI/MinimizeOnStartup").toBool());
 
     if (autoType()->isAvailable()) {
         m_globalAutoTypeKey = static_cast<Qt::Key>(config()->get("GlobalAutoTypeKey").toInt());
@@ -165,6 +168,7 @@ void SettingsWidget::saveSettings()
     config()->set("GUI/ShowTrayIcon", m_generalUi->systrayShowCheckBox->isChecked());
     config()->set("GUI/MinimizeToTray", m_generalUi->systrayMinimizeToTrayCheckBox->isChecked());
     config()->set("GUI/MinimizeOnClose", m_generalUi->systrayMinimizeOnCloseCheckBox->isChecked());
+    config()->set("GUI/MinimizeOnStartup", m_generalUi->systrayMinimizeOnStartup->isChecked());
 
     if (autoType()->isAvailable()) {
         config()->set("GlobalAutoTypeKey", m_generalUi->autoTypeShortcutWidget->key());
@@ -207,4 +211,13 @@ void SettingsWidget::enableSystrayMinimizeToTray(bool checked)
     m_generalUi->systrayMinimizeToTrayCheckBox->setEnabled(checked);
     bool checked2 = m_generalUi->systrayMinimizeToTrayCheckBox->checkState();
     m_generalUi->systrayMinimizeOnCloseCheckBox->setEnabled(checked && checked2);
+    bool checked3 = m_generalUi->systrayMinimizeOnCloseCheckBox->checkState();
+    m_generalUi->systrayMinimizeOnStartup->setEnabled(checked && checked2 && checked3);
+}
+
+void SettingsWidget::enableSystrayMinimizeToTray2(bool checked)
+{
+    m_generalUi->systrayMinimizeOnCloseCheckBox->setEnabled(checked);
+    bool checked2 = m_generalUi->systrayMinimizeOnCloseCheckBox->checkState();
+    m_generalUi->systrayMinimizeOnStartup->setEnabled(checked && checked2);
 }
