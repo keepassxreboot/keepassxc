@@ -38,6 +38,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow();
     ~MainWindow();
+    void configuredMinimizeWindow();
 
 public Q_SLOTS:
     void openDatabase(const QString& fileName, const QString& pw = QString(),
