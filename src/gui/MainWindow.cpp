@@ -470,7 +470,7 @@ void MainWindow::databaseTabChanged(int tabIndex)
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    bool minimizeOnClose = config()->get("GUI/ShowTrayIcon").toBool() &&
+    bool minimizeOnClose = isTrayIconEnabled() &&
                            config()->get("GUI/MinimizeToTray").toBool() &&
                            config()->get("GUI/MinimizeOnClose").toBool();
     if (minimizeOnClose && !appExitCalled)
