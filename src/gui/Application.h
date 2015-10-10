@@ -29,6 +29,7 @@ class Application : public QApplication
 
 public:
     Application(int& argc, char** argv);
+    void setMainWindow(QWidget* mainWindow);
 
     bool event(QEvent* event) Q_DECL_OVERRIDE;
 #ifdef Q_WS_X11
@@ -37,6 +38,9 @@ public:
 
 Q_SIGNALS:
     void openFile(const QString& filename);
+
+private:
+    QWidget* m_mainWindow;
 };
 
 #endif // KEEPASSX_APPLICATION_H

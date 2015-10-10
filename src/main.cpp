@@ -82,6 +82,7 @@ int main(int argc, char** argv)
 
     MainWindow mainWindow;
     mainWindow.show();
+    app.setMainWindow(&mainWindow);
 
     QObject::connect(&app, SIGNAL(openFile(QString)), &mainWindow, SLOT(openDatabase(QString)));
 

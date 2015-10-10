@@ -24,7 +24,13 @@
 
 Application::Application(int& argc, char** argv)
     : QApplication(argc, argv)
+    , m_mainWindow(Q_NULLPTR)
 {
+}
+
+void Application::setMainWindow(QWidget* mainWindow)
+{
+    m_mainWindow = mainWindow;
 }
 
 bool Application::event(QEvent* event)
@@ -34,6 +40,16 @@ bool Application::event(QEvent* event)
         Q_EMIT openFile(static_cast<QFileOpenEvent*>(event)->file());
         return true;
     }
+#ifdef Q_OS_MAC
+    // restore main window when clicking on the docker icon
+    else if ((event->type() == QEvent::ApplicationActivate) && m_mainWindow) {
+        m_mainWindow->ensurePolished();
+        m_mainWindow->setWindowState(m_mainWindow->windowState() & ~Qt::WindowMinimized);
+        m_mainWindow->show();
+        m_mainWindow->raise();
+        m_mainWindow->activateWindow();
+    }
+#endif
 
     return QApplication::event(event);
 }
