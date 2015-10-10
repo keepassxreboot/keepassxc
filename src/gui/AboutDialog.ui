@@ -87,6 +87,13 @@
     </widget>
    </item>
    <item>
+    <widget class="QLabel" name="label_libs">
+     <property name="text">
+      <string>Using:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="standardButtons">
       <set>QDialogButtonBox::Close</set>
