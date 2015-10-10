@@ -43,6 +43,7 @@ private Q_SLOTS:
     void testGlobalAutoTypeWithOneMatch();
     void testGlobalAutoTypeTitleMatch();
     void testGlobalAutoTypeTitleMatchDisabled();
+    void testGlobalAutoTypeRegExp();
 
 private:
     AutoTypePlatformInterface* m_platform;
@@ -53,6 +54,7 @@ private:
     Group* m_group;
     Entry* m_entry1;
     Entry* m_entry2;
+    Entry* m_entry3;
 };
 
 #endif // KEEPASSX_TESTAUTOTYPE_H
