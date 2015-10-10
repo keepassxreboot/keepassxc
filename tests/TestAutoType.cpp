@@ -38,7 +38,6 @@ void TestAutoType::initTestCase()
     QVERIFY(Crypto::init());
     Config::createTempFileInstance();
     AutoType::createTestInstance();
-    config()->set("AutoTypeEntryTitleMatch", false);
     config()->set("security/autotypeask", false);
 
     QPluginLoader loader(filePath()->pluginPath("keepassx-autotype-test"));
@@ -56,6 +55,7 @@ void TestAutoType::initTestCase()
 
 void TestAutoType::init()
 {
+    config()->set("AutoTypeEntryTitleMatch", false);
     m_test->clearActions();
 
     m_db = new Database();
@@ -147,8 +147,6 @@ void TestAutoType::testGlobalAutoTypeTitleMatch()
 
 void TestAutoType::testGlobalAutoTypeTitleMatchDisabled()
 {
-    config()->set("AutoTypeEntryTitleMatch", false);
-
     m_test->setActiveWindowTitle("An Entry Title!");
     MessageBox::setNextAnswer(QMessageBox::Ok);
     m_autoType->performGlobalAutoType(m_dbList);
