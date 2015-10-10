@@ -208,7 +208,7 @@ int AutoTypePlatformX11::platformEventFilter(void* event)
             && m_currentGlobalKey
             && xevent->xkey.keycode == m_currentGlobalKeycode
             && (xevent->xkey.state & m_modifierMask) == m_currentGlobalNativeModifiers
-            && !QApplication::focusWidget()
+            && (!QApplication::activeWindow() || QApplication::activeWindow()->isMinimized())
             && m_loaded) {
         if (xevent->type == KeyPress) {
             Q_EMIT globalShortcutTriggered();

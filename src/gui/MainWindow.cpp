@@ -575,10 +575,11 @@ void MainWindow::trayIconTriggered(QSystemTrayIcon::ActivationReason reason)
 
 void MainWindow::toggleWindow()
 {
-    if (QApplication::activeWindow() == this) {
+    if ((QApplication::activeWindow() == this) && isVisible() && !isMinimized()) {
         hide();
     }
     else {
+        ensurePolished();
         setWindowState(windowState() & ~Qt::WindowMinimized);
         show();
         raise();
