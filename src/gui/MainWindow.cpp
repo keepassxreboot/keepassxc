@@ -599,6 +599,11 @@ void MainWindow::lockDatabasesAfterInactivity()
 
 bool MainWindow::isTrayIconEnabled() const
 {
+#ifdef Q_OS_MAC
+    // systray not useful on OS X
+    return false;
+#else
     return config()->get("GUI/ShowTrayIcon").toBool()
             && QSystemTrayIcon::isSystemTrayAvailable();
+#endif
 }

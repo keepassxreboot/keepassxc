@@ -41,6 +41,11 @@ SettingsWidget::SettingsWidget(QWidget* parent)
 
     m_generalUi->autoTypeShortcutWidget->setVisible(autoType()->isAvailable());
     m_generalUi->autoTypeShortcutLabel->setVisible(autoType()->isAvailable());
+#ifdef Q_OS_MAC
+    // systray not useful on OS X
+    m_generalUi->systrayShowCheckBox->setVisible(false);
+    m_generalUi->systrayMinimizeToTrayCheckBox->setVisible(false);
+#endif
 
     connect(this, SIGNAL(accepted()), SLOT(saveSettings()));
     connect(this, SIGNAL(rejected()), SLOT(reject()));
