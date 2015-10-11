@@ -79,7 +79,7 @@ void AutoType::loadPlugin(const QString& pluginPath)
     QObject* pluginInstance = m_pluginLoader->instance();
     if (pluginInstance) {
         m_plugin = qobject_cast<AutoTypePlatformInterface*>(pluginInstance);
-        m_executor = Q_NULLPTR;
+        m_executor = nullptr;
 
         if (m_plugin) {
             if (m_plugin->isAvailable()) {

@@ -76,7 +76,7 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
                       "You can import it by clicking on Database > 'Import KeePass 1 database'.\n"
                       "This is a one-way migration. You won't be able to open the imported "
                       "database with the old KeePassX 0.4 version."));
-        return Q_NULLPTR;
+        return nullptr;
     }
     else if (!ok || signature2 != KeePass2::SIGNATURE_2) {
         raiseError(tr("Not a KeePass database."));

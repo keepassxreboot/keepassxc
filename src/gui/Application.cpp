@@ -45,7 +45,7 @@ public:
 
 Application::Application(int& argc, char** argv)
     : QApplication(argc, argv)
-    , m_mainWindow(Q_NULLPTR)
+    , m_mainWindow(nullptr)
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_OSX)
     installNativeEventFilter(new XcbEventFilter());

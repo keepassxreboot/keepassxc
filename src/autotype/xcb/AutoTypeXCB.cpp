@@ -578,7 +578,7 @@ XkbDescPtr AutoTypePlatformX11::getKeyboard()
     XID keyboard_id = XkbUseCoreKbd;
     XDeviceInfo* devices = XListInputDevices(m_dpy, &num_devices);
     if (!devices) {
-        return Q_NULLPTR;
+        return nullptr;
     }
 
     for (int i = 0; i < num_devices; i++) {

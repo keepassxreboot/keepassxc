@@ -333,7 +333,7 @@ bool DatabaseTabWidget::saveDatabaseAs(Database* db)
     }
     QString fileName = fileDialog()->getSaveFileName(this, tr("Save database as"),
                                                      oldFileName, tr("KeePass 2 Database").append(" (*.kdbx)"),
-                                                     Q_NULLPTR, 0, "kdbx");
+                                                     nullptr, 0, "kdbx");
     if (!fileName.isEmpty()) {
         QFileInfo fileInfo(fileName);
         QString lockFilePath;
@@ -454,7 +454,7 @@ void DatabaseTabWidget::exportToCsv()
 
     QString fileName = fileDialog()->getSaveFileName(this, tr("Export database to CSV file"),
                                                      QString(), tr("CSV file").append(" (*.csv)"),
-                                                     Q_NULLPTR, 0, "csv");
+                                                     nullptr, 0, "csv");
     if (fileName.isEmpty()) {
         return;
     }

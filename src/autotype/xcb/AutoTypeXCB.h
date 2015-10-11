@@ -124,8 +124,8 @@ class AutoTypeExecturorX11 : public AutoTypeExecutor
 public:
     explicit AutoTypeExecturorX11(AutoTypePlatformX11* platform);
 
-    void execChar(AutoTypeChar* action) Q_DECL_OVERRIDE;
-    void execKey(AutoTypeKey* action) Q_DECL_OVERRIDE;
+    void execChar(AutoTypeChar* action) override;
+    void execKey(AutoTypeKey* action) override;
 
 private:
     AutoTypePlatformX11* const m_platform;

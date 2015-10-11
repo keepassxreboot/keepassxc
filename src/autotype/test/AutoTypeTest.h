@@ -33,24 +33,24 @@ class AutoTypePlatformTest : public QObject,
     Q_INTERFACES(AutoTypePlatformInterface AutoTypeTestInterface)
 
 public:
-    QString keyToString(Qt::Key key) Q_DECL_OVERRIDE;
+    QString keyToString(Qt::Key key) override;
 
-    bool isAvailable() Q_DECL_OVERRIDE;
-    QStringList windowTitles() Q_DECL_OVERRIDE;
-    WId activeWindow() Q_DECL_OVERRIDE;
-    QString activeWindowTitle() Q_DECL_OVERRIDE;
-    bool registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers) Q_DECL_OVERRIDE;
-    void unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers) Q_DECL_OVERRIDE;
-    int platformEventFilter(void* event) Q_DECL_OVERRIDE;
-    int initialTimeout() Q_DECL_OVERRIDE;
-    bool raiseWindow(WId window) Q_DECL_OVERRIDE;
-    AutoTypeExecutor* createExecutor() Q_DECL_OVERRIDE;
+    bool isAvailable() override;
+    QStringList windowTitles() override;
+    WId activeWindow() override;
+    QString activeWindowTitle() override;
+    bool registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers) override;
+    void unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers) override;
+    int platformEventFilter(void* event) override;
+    int initialTimeout() override;
+    bool raiseWindow(WId window) override;
+    AutoTypeExecutor* createExecutor() override;
 
-    void setActiveWindowTitle(const QString& title) Q_DECL_OVERRIDE;
+    void setActiveWindowTitle(const QString& title) override;
 
-    QString actionChars() Q_DECL_OVERRIDE;
-    int actionCount() Q_DECL_OVERRIDE;
-    void clearActions() Q_DECL_OVERRIDE;
+    QString actionChars() override;
+    int actionCount() override;
+    void clearActions() override;
 
     void addActionChar(AutoTypeChar* action);
     void addActionKey(AutoTypeKey* action);
@@ -69,8 +69,8 @@ class AutoTypeExecturorTest : public AutoTypeExecutor
 public:
     explicit AutoTypeExecturorTest(AutoTypePlatformTest* platform);
 
-    void execChar(AutoTypeChar* action) Q_DECL_OVERRIDE;
-    void execKey(AutoTypeKey* action) Q_DECL_OVERRIDE;
+    void execChar(AutoTypeChar* action) override;
+    void execKey(AutoTypeKey* action) override;
 
 private:
     AutoTypePlatformTest* const m_platform;
