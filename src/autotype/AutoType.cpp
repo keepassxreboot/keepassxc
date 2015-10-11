@@ -79,9 +79,16 @@ void AutoType::loadPlugin(const QString& pluginPath)
     QObject* pluginInstance = m_pluginLoader->instance();
     if (pluginInstance) {
         m_plugin = qobject_cast<AutoTypePlatformInterface*>(pluginInstance);
+        m_executor = Q_NULLPTR;
+
         if (m_plugin) {
-            m_executor = m_plugin->createExecutor();
-            connect(pluginInstance, SIGNAL(globalShortcutTriggered()), SIGNAL(globalShortcutTriggered()));
+            if (m_plugin->isAvailable()) {
+                m_executor = m_plugin->createExecutor();
+                connect(pluginInstance, SIGNAL(globalShortcutTriggered()), SIGNAL(globalShortcutTriggered()));
+            }
+            else {
+                unloadPlugin();
+            }
         }
     }
 
@@ -568,7 +575,7 @@ bool AutoType::windowMatches(const QString& windowTitle, const QString& windowPa
 {
     if (windowPattern.startsWith("//") && windowPattern.endsWith("//") && windowPattern.size() >= 4) {
         QRegExp regExp(windowPattern.mid(2, windowPattern.size() - 4), Qt::CaseInsensitive, QRegExp::RegExp2);
-        return regExp.exactMatch(windowTitle);
+        return (regExp.indexIn(windowTitle) != -1);
     }
     else {
         return WildcardMatcher(windowTitle).match(windowPattern);

@@ -21,6 +21,7 @@
 #include "config-keepassx.h"
 #include "version.h"
 #include "core/FilePath.h"
+#include "crypto/Crypto.h"
 
 AboutDialog::AboutDialog(QWidget* parent)
     : QDialog(parent)
@@ -48,6 +49,12 @@ AboutDialog::AboutDialog(QWidget* parent)
         QString labelText = tr("Revision").append(": ").append(commitHash);
         m_ui->label_git->setText(labelText);
     }
+
+    QString libs = QString("%1\n- Qt %2\n- %3")
+            .arg(m_ui->label_libs->text())
+            .arg(QString::fromLocal8Bit(qVersion()))
+            .arg(Crypto::backendVersion());
+    m_ui->label_libs->setText(libs);
 
     setAttribute(Qt::WA_DeleteOnClose);
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(close()));

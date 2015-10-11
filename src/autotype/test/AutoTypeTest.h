@@ -35,6 +35,7 @@ class AutoTypePlatformTest : public QObject,
 public:
     QString keyToString(Qt::Key key) Q_DECL_OVERRIDE;
 
+    bool isAvailable() Q_DECL_OVERRIDE;
     QStringList windowTitles() Q_DECL_OVERRIDE;
     WId activeWindow() Q_DECL_OVERRIDE;
     QString activeWindowTitle() Q_DECL_OVERRIDE;

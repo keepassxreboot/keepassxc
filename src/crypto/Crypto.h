@@ -27,6 +27,7 @@ public:
     static bool initalized();
     static bool backendSelfTest();
     static QString errorString();
+    static QString backendVersion();
 
 private:
     Crypto();
@@ -41,6 +42,7 @@ private:
 
     static bool m_initalized;
     static QString m_errorStr;
+    static QString m_backendVersion;
 };
 
 #endif // KEEPASSX_CRYPTO_H

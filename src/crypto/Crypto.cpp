@@ -27,6 +27,7 @@
 
 bool Crypto::m_initalized(false);
 QString Crypto::m_errorStr;
+QString Crypto::m_backendVersion;
 
 Crypto::Crypto()
 {
@@ -39,7 +40,7 @@ bool Crypto::init()
         return true;
     }
 
-    gcry_check_version(0);
+    m_backendVersion = QString::fromLocal8Bit(gcry_check_version(0));
     gcry_control(GCRYCTL_INITIALIZATION_FINISHED, 0);
 
     if (!checkAlgorithms()) {
@@ -65,6 +66,11 @@ bool Crypto::initalized()
 QString Crypto::errorString()
 {
     return m_errorStr;
+}
+
+QString Crypto::backendVersion()
+{
+    return QString("libgcrypt ").append(m_backendVersion);
 }
 
 bool Crypto::backendSelfTest()

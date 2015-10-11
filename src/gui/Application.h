@@ -27,11 +27,15 @@ class Application : public QApplication
 
 public:
     Application(int& argc, char** argv);
+    void setMainWindow(QWidget* mainWindow);
 
     bool event(QEvent* event) override;
 
 Q_SIGNALS:
     void openFile(const QString& filename);
+
+private:
+    QWidget* m_mainWindow;
 };
 
 #endif // KEEPASSX_APPLICATION_H

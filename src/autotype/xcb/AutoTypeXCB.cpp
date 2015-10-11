@@ -58,6 +58,31 @@ AutoTypePlatformX11::AutoTypePlatformX11()
     updateKeymap();
 }
 
+bool AutoTypePlatformX11::isAvailable()
+{
+    int ignore;
+
+    if (!XQueryExtension(m_dpy, "XInputExtension", &ignore, &ignore, &ignore)) {
+        return false;
+    }
+
+    if (!XQueryExtension(m_dpy, "XTEST", &ignore, &ignore, &ignore)) {
+        return false;
+    }
+
+    if (!m_xkb) {
+        XkbDescPtr kbd = getKeyboard();
+
+        if (!kbd) {
+            return false;
+        }
+
+        XkbFreeKeyboard(kbd, XkbAllComponentsMask, True);
+    }
+
+    return true;
+}
+
 void AutoTypePlatformX11::unload()
 {
     // Restore the KeyboardMapping to its original state.
@@ -185,7 +210,7 @@ int AutoTypePlatformX11::platformEventFilter(void* event)
         xcb_key_press_event_t* keyPressEvent = static_cast<xcb_key_press_event_t*>(event);
         if (keyPressEvent->detail == m_currentGlobalKeycode
                 && (keyPressEvent->state & m_modifierMask) == m_currentGlobalNativeModifiers
-                && !QApplication::focusWidget()
+                && (!QApplication::activeWindow() || QApplication::activeWindow()->isMinimized())
                 && m_loaded) {
             if (type == XCB_KEY_PRESS) {
                 Q_EMIT globalShortcutTriggered();
@@ -458,21 +483,10 @@ void AutoTypePlatformX11::updateKeymap()
     int mod_index, mod_key;
     XModifierKeymap *modifiers;
 
-    if (m_xkb != NULL) XkbFreeKeyboard(m_xkb, XkbAllComponentsMask, True);
-
-    XDeviceInfo* devices;
-    int num_devices;
-    XID keyboard_id = XkbUseCoreKbd;
-    devices = XListInputDevices(m_dpy, &num_devices);
-
-    for (int i = 0; i < num_devices; i++) {
-        if (QString(devices[i].name) == "Virtual core XTEST keyboard") {
-            keyboard_id = devices[i].id;
-            break;
-        }
+    if (m_xkb) {
+        XkbFreeKeyboard(m_xkb, XkbAllComponentsMask, True);
     }
-
-    m_xkb = XkbGetKeyboard(m_dpy, XkbCompatMapMask | XkbGeometryMask, keyboard_id);
+    m_xkb = getKeyboard();
 
     XDisplayKeycodes(m_dpy, &m_minKeycode, &m_maxKeycode);
     if (m_keysymTable != NULL) XFree(m_keysymTable);
@@ -556,6 +570,27 @@ int AutoTypePlatformX11::x11ErrorHandler(Display* display, XErrorEvent* error)
     }
 
     return 1;
+}
+
+XkbDescPtr AutoTypePlatformX11::getKeyboard()
+{
+    int num_devices;
+    XID keyboard_id = XkbUseCoreKbd;
+    XDeviceInfo* devices = XListInputDevices(m_dpy, &num_devices);
+    if (!devices) {
+        return Q_NULLPTR;
+    }
+
+    for (int i = 0; i < num_devices; i++) {
+        if (QString(devices[i].name) == "Virtual core XTEST keyboard") {
+            keyboard_id = devices[i].id;
+            break;
+        }
+    }
+
+    XFreeDeviceList(devices);
+
+    return XkbGetKeyboard(m_dpy, XkbCompatMapMask | XkbGeometryMask, keyboard_id);
 }
 
 // --------------------------------------------------------------------------
