@@ -18,9 +18,13 @@
 #ifndef KEEPASSX_TOOLS_H
 #define KEEPASSX_TOOLS_H
 
+#include "core/Global.h"
+
 #include <QDateTime>
 #include <QObject>
 #include <QString>
+
+#include <algorithm>
 
 class QIODevice;
 
@@ -35,6 +39,19 @@ bool isHex(const QByteArray& ba);
 void sleep(int ms);
 void wait(int ms);
 void disableCoreDumps();
+
+template <typename RandomAccessIterator, typename T>
+KEEPASSX_EXPORT RandomAccessIterator binaryFind(RandomAccessIterator begin, RandomAccessIterator end, const T& value)
+{
+    RandomAccessIterator it = std::lower_bound(begin, end, value);
+
+    if ((it == end) || (value < *it)) {
+        return end;
+    }
+    else {
+        return it;
+    }
+}
 
 } // namespace Tools
 

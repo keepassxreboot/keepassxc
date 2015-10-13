@@ -18,6 +18,7 @@
 
 #include "AutoTypeXCB.h"
 #include "KeySymMap.h"
+#include "core/Tools.h"
 
 #include <time.h>
 #include <xcb/xcb.h>
@@ -404,9 +405,9 @@ KeySym AutoTypePlatformX11::charToKeySym(const QChar& ch)
     }
 
     /* mapping table generated from keysymdef.h */
-    const uint* match = qBinaryFind(m_unicodeToKeysymKeys,
-                                    m_unicodeToKeysymKeys + m_unicodeToKeysymLen,
-                                    unicode);
+    const uint* match = Tools::binaryFind(m_unicodeToKeysymKeys,
+                                          m_unicodeToKeysymKeys + m_unicodeToKeysymLen,
+                                          unicode);
     int index = match - m_unicodeToKeysymKeys;
     if (index != m_unicodeToKeysymLen) {
         return m_unicodeToKeysymValues[index];
