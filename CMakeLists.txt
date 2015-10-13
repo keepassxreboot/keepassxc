@@ -31,6 +31,7 @@ include(CheckCXXSourceCompiles)
 
 option(WITH_TESTS "Enable building of unit tests" ON)
 option(WITH_GUI_TESTS "Enable building of GUI tests" OFF)
+option(WITH_DEV_BUILD "Use only for development. Disables/warns about deprecated methods." OFF)
 
 set(KEEPASSX_VERSION "2.0 beta 2")
 set(KEEPASSX_VERSION_NUM "1.9.92")
@@ -106,6 +107,10 @@ if(APPLE)
 endif()
 
 add_gcc_compiler_cflags("-ansi")
+
+if(WITH_DEV_BUILD)
+  add_definitions(-DQT_DEPRECATED_WARNINGS -DGCRYPT_NO_DEPRECATED)
+endif()
 
 if(MINGW)
   set(CMAKE_RC_COMPILER_INIT windres)
