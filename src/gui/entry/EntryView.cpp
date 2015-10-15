@@ -74,7 +74,7 @@ void EntryView::setEntryList(const QList<Entry*>& entries)
 
 void EntryView::setFirstEntryActive()
 {
-    if(m_model->rowCount() > 0) {
+    if (m_model->rowCount() > 0) {
         QModelIndex index = m_sortModel->mapToSource(m_sortModel->index(0, 0));
         setCurrentEntry(m_model->entryFromIndex(index));
     }

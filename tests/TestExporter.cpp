@@ -76,6 +76,3 @@ void TestExporter::testToDbExporter()
     delete dbOrg;
     delete dbExp;
 }
-
-
-

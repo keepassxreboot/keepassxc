@@ -28,10 +28,11 @@ class EntrySearcher
 {
 public:
     QList<Entry*> search(const QString& searchTerm, const Group* group, Qt::CaseSensitivity caseSensitivity);
+
 private:
     QList<Entry*> searchEntries(const QString& searchTerm, const Group* group, Qt::CaseSensitivity caseSensitivity);
     QList<Entry*> matchEntry(const QString& searchTerm, Entry* entry, Qt::CaseSensitivity caseSensitivity);
-    bool wordMatch(const QString &word, Entry *entry, Qt::CaseSensitivity caseSensitivity);
+    bool wordMatch(const QString& word, Entry* entry, Qt::CaseSensitivity caseSensitivity);
 };
 
 #endif // KEEPASSX_ENTRYSEARCHER_H

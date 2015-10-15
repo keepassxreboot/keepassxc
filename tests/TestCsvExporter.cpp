@@ -51,7 +51,7 @@ void TestCsvExporter::cleanUp()
 void TestCsvExporter::testExport()
 {
     Group* groupRoot = m_db->rootGroup();
-    Group* group= new Group();
+    Group* group = new Group();
     group->setName("Test Group Name");
     group->setParent(groupRoot);
     Entry* entry = new Entry();
@@ -83,10 +83,10 @@ void TestCsvExporter::testEmptyDatabase()
 void TestCsvExporter::testNestedGroups()
 {
     Group* groupRoot = m_db->rootGroup();
-    Group* group= new Group();
+    Group* group = new Group();
     group->setName("Test Group Name");
     group->setParent(groupRoot);
-    Group* childGroup= new Group();
+    Group* childGroup = new Group();
     childGroup->setName("Test Sub Group Name");
     childGroup->setParent(group);
     Entry* entry = new Entry();

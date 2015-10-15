@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_HEADERVIEWSYNC_H
-#define KEEPASSX_HEADERVIEWSYNC_H
+#ifndef KEEPASSX_DATABASEWIDGETSTATESYNC_H
+#define KEEPASSX_DATABASEWIDGETSTATESYNC_H
 
 #include "gui/DatabaseWidget.h"
 
@@ -51,4 +51,4 @@ private:
     QList<int> m_columnSizesSearch;
 };
 
-#endif // KEEPASSX_HEADERVIEWSYNC_H
+#endif // KEEPASSX_DATABASEWIDGETSTATESYNC_H

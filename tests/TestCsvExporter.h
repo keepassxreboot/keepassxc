@@ -42,7 +42,6 @@ private Q_SLOTS:
 private:
     Database* m_db;
     CsvExporter* m_csvExporter;
-
 };
 
 #endif // KEEPASSX_TESTCSVEXPORTER_H

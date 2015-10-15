@@ -444,7 +444,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
     }
 }
 
-void MainWindow::changeEvent(QEvent *event)
+void MainWindow::changeEvent(QEvent* event)
 {
     if ((event->type() == QEvent::WindowStateChange) && isMinimized()
             && isTrayIconEnabled() && config()->get("GUI/MinimizeToTray").toBool())

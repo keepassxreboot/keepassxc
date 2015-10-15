@@ -94,7 +94,8 @@ QByteArray CompositeKey::transform(const QByteArray& seed, quint64 rounds,
 
     QByteArray key = rawKey();
 
-    QFuture<QByteArray> future = QtConcurrent::run(transformKeyRaw, key.left(16), seed, rounds, &okLeft, &errorStringLeft);
+    QFuture<QByteArray> future = QtConcurrent::run(transformKeyRaw, key.left(16), seed, rounds,
+                                                   &okLeft, &errorStringLeft);
     QByteArray result2 = transformKeyRaw(key.right(16), seed, rounds, &okRight, &errorStringRight);
 
     QByteArray transformed;
