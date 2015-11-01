@@ -43,7 +43,7 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     resize(size);
 
     // move dialog to the center of the screen
-    QPoint screenCenter = QApplication::desktop()->screenGeometry(QCursor::pos()).center();
+    QPoint screenCenter = QApplication::desktop()->availableGeometry(QCursor::pos()).center();
     move(screenCenter.x() - (size.width() / 2), screenCenter.y() - (size.height() / 2));
 
     QVBoxLayout* layout = new QVBoxLayout(this);
