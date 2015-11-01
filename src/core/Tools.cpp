@@ -160,6 +160,16 @@ bool isHex(const QByteArray& ba)
     return true;
 }
 
+bool isBase64(const QByteArray& ba)
+{
+    QRegExp regexp("^(?:[a-z0-9+/]{4})*(?:[a-z0-9+/]{3}=|[a-z0-9+/]{2}==)?$",
+                   Qt::CaseInsensitive, QRegExp::RegExp2);
+
+    QString base64 = QString::fromLatin1(ba.constData(), ba.size());
+
+    return regexp.exactMatch(base64);
+}
+
 void sleep(int ms)
 {
     Q_ASSERT(ms >= 0);
