@@ -33,6 +33,8 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     , m_entryActivatedEmitted(false)
 {
     setAttribute(Qt::WA_DeleteOnClose);
+    // Places the window on the active (virtual) desktop instead of where the main window is.
+    setAttribute(Qt::WA_X11BypassTransientForHint);
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
     setWindowTitle(tr("Auto-Type - KeePassX"));
     setWindowIcon(filePath()->applicationIcon());
