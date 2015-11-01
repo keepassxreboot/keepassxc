@@ -185,7 +185,7 @@ void TestGui::testSearch()
     QLineEdit* searchEdit = m_dbWidget->findChild<QLineEdit*>("searchEdit");
     QToolButton* clearSearch = m_dbWidget->findChild<QToolButton*>("clearButton");
 
-    QVERIFY(!searchEdit->hasFocus());
+    QVERIFY(!searchEdit->isVisible());
 
     // Enter search
     QTest::mouseClick(searchActionWidget, Qt::LeftButton);
