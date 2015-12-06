@@ -103,7 +103,7 @@ Q_SIGNALS:
     void entryColumnSizesChanged();
 
 protected:
-    bool eventFilter(QObject* object, QEvent* event);
+    bool eventFilter(QObject* object, QEvent* event) Q_DECL_OVERRIDE;
 
 public Q_SLOTS:
     void createEntry();

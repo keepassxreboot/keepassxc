@@ -990,6 +990,7 @@ bool DatabaseWidget::eventFilter(QObject* object, QEvent* event)
     if (object == m_searchUi->searchEdit) {
         if (event->type() == QEvent::KeyPress) {
             QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
+
             if (keyEvent->matches(QKeySequence::Copy)) {
                 // If Control+C is pressed in the search edit when no
                 // text is selected, copy the password of the current
@@ -1003,8 +1004,8 @@ bool DatabaseWidget::eventFilter(QObject* object, QEvent* event)
             else if (keyEvent->matches(QKeySequence::MoveToNextLine)) {
                 // If Down is pressed at EOL in the search edit, move
                 // the focus to the entry view.
-                if (!m_searchUi->searchEdit->hasSelectedText() &&
-                    m_searchUi->searchEdit->cursorPosition() == m_searchUi->searchEdit->text().length()) {
+                if (!m_searchUi->searchEdit->hasSelectedText()
+                        && m_searchUi->searchEdit->cursorPosition() == m_searchUi->searchEdit->text().size()) {
                     m_entryView->setFocus();
                     return true;
                 }
