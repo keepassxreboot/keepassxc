@@ -30,7 +30,7 @@
 #endif
 
 #ifdef Q_OS_WIN
-#include <windows.h> // for Sleep()
+#include <windows.h> // for Sleep(), SetDllDirectoryA() and SetSearchPathMode()
 #endif
 
 #ifdef Q_OS_UNIX
@@ -257,6 +257,15 @@ void disableCoreDumps()
     if (!success) {
         qWarning("Unable to disable core dumps.");
     }
+}
+
+void setupSearchPaths()
+{
+#ifdef Q_OS_WIN
+    // Make sure Windows doesn't load DLLs from the current working directory
+    SetDllDirectoryA("");
+    SetSearchPathMode(BASE_SEARCH_PATH_ENABLE_SAFE_SEARCHMODE);
+#endif
 }
 
 } // namespace Tools
