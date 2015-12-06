@@ -1,3 +1,15 @@
+2.0 (2015-12-06)
+=========================
+
+- Improve UI of the search edit.
+- Clear clipboard when locking databases. [#342]
+- Enable Ctrl+M shortcut to minimize the window on all platforms. [#329]
+- Show a better message when trying to open an old database format. [#338]
+- Fix global auto-type behavior with some window managers.
+- Show global auto-type window on the active desktop. [#359]
+- Disable systray on OS X. [#326]
+- Restore main window when clicking on the OS X docker icon. [#326]
+
 2.0 Beta 2 (2015-09-06)
 =========================
 
