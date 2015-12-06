@@ -9,16 +9,20 @@
         <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
         <translation>KeePassX je šířeno za podmínek licence GNU General Public License (GPL) verze 2 a (případně) 3.</translation>
     </message>
+    <message>
+        <source>Revision</source>
+        <translation>Revize</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
     <message>
         <source>Auto-Type - KeePassX</source>
-        <translation>Samočinné vyplňování – KeePassX</translation>
+        <translation>Automatické vyplňování – KeePassX</translation>
     </message>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation>Nelze nalézt položku, která by se shodovala s titulkem okna:</translation>
+        <translation>Nedaří se nalézt položku, která by se shodovala s titulkem okna:</translation>
     </message>
 </context>
 <context>
@@ -40,11 +44,11 @@
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassX</source>
-        <translation>Samočinné vyplňování – KeePassX</translation>
+        <translation>Automatické vyplňování – KeePassX</translation>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>Vyberte položku, kterou se bude samočinně vyplňovat:</translation>
+        <translation>Vyberte položku, kterou se bude automaticky vyplňovat:</translation>
     </message>
 </context>
 <context>
@@ -91,7 +95,7 @@
     </message>
     <message>
         <source>Unable to create Key File : </source>
-        <translation>Nelze vytvořit soubor s klíčem :</translation>
+        <translation>Nedaří se vytvořit soubor s klíčem :</translation>
     </message>
     <message>
         <source>Select a key file</source>
@@ -107,7 +111,7 @@
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Nepodařilo se vám zadat heslo tak, aby jeho znění bylo stejné v obou políčkách.</translation>
+        <translation>Nepodařilo se vám zadat heslo do obou kolonek stejně.</translation>
     </message>
     <message>
         <source>Failed to set key file</source>
@@ -144,7 +148,7 @@
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Databázi nebylo možné otevřít.</translation>
+        <translation>Databázi se nepodařilo otevřít.</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
@@ -183,7 +187,7 @@
     </message>
     <message>
         <source>Use recycle bin:</source>
-        <translation>Mazat do Koše:</translation>
+        <translation>Namísto mazání přesouvat do Koše:</translation>
     </message>
     <message>
         <source> MiB</source>
@@ -210,7 +214,7 @@
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>Databáze aplikace KeePass 2</translation>
+        <translation>Databáze aplikace KeePass verze 2</translation>
     </message>
     <message>
         <source>All files</source>
@@ -230,11 +234,11 @@
     </message>
     <message>
         <source>Open KeePass 1 database</source>
-        <translation>Otevřít databázi aplikace KeePass 1</translation>
+        <translation>Otevřít databázi aplikace KeePass verze 1</translation>
     </message>
     <message>
         <source>KeePass 1 database</source>
-        <translation>Databáze aplikace KeePass 1</translation>
+        <translation>Databáze aplikace KeePass verze 1</translation>
     </message>
     <message>
         <source>All files (*)</source>
@@ -298,7 +302,7 @@ Pokud chcete změny dokončit, klikněte na Zrušit. V opačném případě změ
         <source>This database has never been saved.
 You can save the database or stop locking it.</source>
         <translation>Tato databáze doposud ještě nebyla uložena.
-Buď ji můžete uložit, nebo neuzamknout.</translation>
+Buď ji můžete uložit, nebo neuzamykat.</translation>
     </message>
     <message>
         <source>This database has been modified.
@@ -306,24 +310,31 @@ Do you want to save the database before locking it?
 Otherwise your changes are lost.</source>
         <translation>Tato databáze byla upravena.
 Chcete ji před uzamčením uložit?
-Pokud ne, změny budou ztraceny.</translation>
+Pokud ne, provedené změny budou ztraceny.</translation>
     </message>
     <message>
         <source>&quot;%1&quot; is in edit mode.
 Discard changes and close anyway?</source>
-        <translation type="unfinished"/>
+        <translation>%1 je právě upravováno.
+Přesto zavřít a zahodit změny?</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
-        <translation type="unfinished"/>
+        <translation>Exportovat databázi do CSV souboru</translation>
     </message>
     <message>
         <source>CSV file</source>
-        <translation type="unfinished"/>
+        <translation>CSV soubor</translation>
     </message>
     <message>
         <source>Writing the CSV file failed.</source>
-        <translation type="unfinished"/>
+        <translation>Zápis do CSV souboru se nezdařil.</translation>
+    </message>
+    <message>
+        <source>The database you are trying to save as is locked by another instance of KeePassX.
+Do you want to save it anyway?</source>
+        <translation>Databáze, kterou se pokoušíte uložit, je uzamčena jinou instancí KeePassX.
+Přesto uložit?</translation>
     </message>
 </context>
 <context>
@@ -374,7 +385,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Nebylo možné vypočítat hlavní klíč</translation>
+        <translation>Nepodařilo se spočítat hlavní klíč</translation>
     </message>
 </context>
 <context>
@@ -393,7 +404,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Samočinné vyplňování</translation>
+        <translation>Automatické vyplňování</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -433,7 +444,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Unable to open file</source>
-        <translation>Soubor nelze otevřít</translation>
+        <translation>Soubor se nedaří otevřít</translation>
     </message>
     <message>
         <source>Save attachment</source>
@@ -442,7 +453,7 @@ Discard changes and close anyway?</source>
     <message>
         <source>Unable to save the attachment:
 </source>
-        <translation>Přílohu nelze uložit:
+        <translation>Přílohu se nedaří uložit:
 </translation>
     </message>
     <message>
@@ -497,15 +508,15 @@ Discard changes and close anyway?</source>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation>Zapnout samočinné vyplňování této položky</translation>
+        <translation>Zapnout automatické vyplňování této položky</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the group</source>
-        <translation>Převzít výchozí posloupnost samočinného vyplňování ze skupiny</translation>
+        <translation>Převzít výchozí posloupnost automatického vyplňování od skupiny</translation>
     </message>
     <message>
         <source>Use custom Auto-Type sequence:</source>
-        <translation>Použít vlastní posloupnost samočinného vyplňování:</translation>
+        <translation>Použít vlastní posloupnost automatického vyplňování:</translation>
     </message>
     <message>
         <source>+</source>
@@ -618,7 +629,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Inherit from parent group (%1)</source>
-        <translation>Převzít z nadřazené skupiny (%1)</translation>
+        <translation>Převzít od nadřazené skupiny (%1)</translation>
     </message>
 </context>
 <context>
@@ -641,15 +652,15 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Auto-type</source>
-        <translation>Samočinné vyplňování</translation>
+        <translation>Automatické vyplňování</translation>
     </message>
     <message>
         <source>Use default auto-type sequence of parent group</source>
-        <translation>Použít výchozí posloupnost samočinného vyplňování z nadřazené skupiny</translation>
+        <translation>Použít výchozí posloupnost automatického vyplňování z nadřazené skupiny</translation>
     </message>
     <message>
         <source>Set default auto-type sequence</source>
-        <translation>Nastavit výchozí posloupnost samočinného vyplňování</translation>
+        <translation>Nastavit výchozí posloupnost automatického vyplňování</translation>
     </message>
 </context>
 <context>
@@ -660,15 +671,15 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Use custom icon</source>
-        <translation>Použít vlastní ikonu</translation>
+        <translation>Použít svou vlastní ikonu</translation>
     </message>
     <message>
         <source>Add custom icon</source>
-        <translation>Přidat vlastní ikonu</translation>
+        <translation>Přidat svou vlastní ikonu</translation>
     </message>
     <message>
         <source>Delete custom icon</source>
-        <translation>Smazat vlastní ikonu</translation>
+        <translation>Smazat svou vlastní ikonu</translation>
     </message>
     <message>
         <source>Images</source>
@@ -688,7 +699,7 @@ Discard changes and close anyway?</source>
     </message>
     <message numerus="yes">
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
-        <translation><numerusform>Ikonu není možné smazat. Je používána %n položkou.</numerusform><numerusform>Ikonu není možné smazat. Je používána %n položkami.</numerusform><numerusform>Ikonu není možné smazat. Je používána %n položek</numerusform></translation>
+        <translation><numerusform>Ikonu není možné smazat. Je používána %n položkou.</numerusform><numerusform>Ikonu není možné smazat. Je používána %n položkami.</numerusform><numerusform>Ikonu není možné smazat. Používá ji %n položek</numerusform></translation>
     </message>
 </context>
 <context>
@@ -699,15 +710,15 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Modified:</source>
-        <translation>Okamžik poslední úpravy:</translation>
+        <translation>Okamžik minulé úpravy:</translation>
     </message>
     <message>
         <source>Accessed:</source>
-        <translation>Okamžik posledního přístupu:</translation>
+        <translation>Okamžik minulého přístupu:</translation>
     </message>
     <message>
         <source>Uuid:</source>
-        <translation>Jedinečný identifikátor uživatele:</translation>
+        <translation>Univerzálně jedinečný identifikátor:</translation>
     </message>
 </context>
 <context>
@@ -721,7 +732,7 @@ Discard changes and close anyway?</source>
     <name>EntryHistoryModel</name>
     <message>
         <source>Last modified</source>
-        <translation>Okamžik poslední změny</translation>
+        <translation>Okamžik minulé změny</translation>
     </message>
     <message>
         <source>Title</source>
@@ -766,7 +777,7 @@ Discard changes and close anyway?</source>
     <name>KeePass1OpenWidget</name>
     <message>
         <source>Import KeePass1 database</source>
-        <translation>Importovat databázi aplikace KeePass 1</translation>
+        <translation>Importovat databázi aplikace KeePass verze 1</translation>
     </message>
     <message>
         <source>Error</source>
@@ -801,7 +812,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Nelze spočítat hlavní klíč</translation>
+        <translation>Nedaří se spočítat hlavní klíč</translation>
     </message>
 </context>
 <context>
@@ -820,7 +831,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Nelze spočítat hlavní klíč</translation>
+        <translation>Nedaří se spočítat hlavní klíč</translation>
     </message>
 </context>
 <context>
@@ -926,7 +937,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Import KeePass 1 database</source>
-        <translation>Importovat databázi aplikace KeePass 1</translation>
+        <translation>Importovat databázi aplikace KeePass verze 1</translation>
     </message>
     <message>
         <source>Clone entry</source>
@@ -950,7 +961,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Perform Auto-Type</source>
-        <translation>Provést samočinné vyplnění</translation>
+        <translation>Provést automatické vyplnění</translation>
     </message>
     <message>
         <source>Open URL</source>
@@ -990,15 +1001,15 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Copy username</source>
-        <translation type="unfinished"/>
+        <translation>Zkopírovat uživatelské jméno</translation>
     </message>
     <message>
         <source>Copy password</source>
-        <translation type="unfinished"/>
+        <translation>Zkopírovat heslo</translation>
     </message>
     <message>
         <source>Export to CSV file</source>
-        <translation type="unfinished"/>
+        <translation>Exportovat do CSV souboru</translation>
     </message>
 </context>
 <context>
@@ -1056,11 +1067,11 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Unknown option &apos;%1&apos;.</source>
-        <translation>Neznámá volba %1.</translation>
+        <translation>Neznámá předvolba %1.</translation>
     </message>
     <message>
         <source>Unknown options: %1.</source>
-        <translation>Neznámé volby: %1.</translation>
+        <translation>Neznámé předvolby: %1.</translation>
     </message>
     <message>
         <source>Missing value after &apos;%1&apos;.</source>
@@ -1072,7 +1083,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>[options]</source>
-        <translation>[volby]</translation>
+        <translation>[předvolby]</translation>
     </message>
     <message>
         <source>Usage: %1</source>
@@ -1080,7 +1091,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Options:</source>
-        <translation>Volby:</translation>
+        <translation>Předvolby:</translation>
     </message>
     <message>
         <source>Arguments:</source>
@@ -1110,15 +1121,15 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>Při zápisu na zařízení, na kterém se nachází, došlo k chybě:</translation>
+        <translation>Došlo k chybě při zápisu na zařízení, na kterém se nachází:</translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>Při otevírání zařízení, na kterém se nachází, došlo k chybě:</translation>
+        <translation>Došlo k chybě při otevírání zařízení, na kterém se nachází:</translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation>Při čtení dat ze zařízení, na kterém se nachází, došlo k chybě:</translation>
+        <translation>Došlo k chybě při čtení dat ze zařízení, na kterém se nachází:</translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
@@ -1182,27 +1193,27 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Automatically save on exit</source>
-        <translation>Před ukončením aplikace provést samočinné uložení případných změn v otevřených databázích</translation>
+        <translation>Před ukončením aplikace automaticky uložit případné změny</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation>Po každé změně okamžitě samočinně uložit</translation>
+        <translation>Po každé změně hned automaticky uložit</translation>
     </message>
     <message>
         <source>Minimize when copying to clipboard</source>
-        <translation>Po zkopírování atributu do schránky samočinně minimalizovat okno KeePassX (do popředí se tak dostane okno, do kterého se zkopírovaný atribut bude vkládat)</translation>
+        <translation>Po zkopírování údaje do schránky automaticky minimalizovat okno KeePassX (do popředí se tak dostane okno, do kterého se zkopírovaný údaj bude vkládat)</translation>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
-        <translation>Při vytváření položky použít ikonu skupiny</translation>
+        <translation>Pro vytvářenou položku použít ikonu skupiny, do které spadá</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut</source>
-        <translation>Klávesová zkratka pro všeobecné samočinné vyplňování</translation>
+        <translation>Klávesová zkratka pro všeobecné automatické vyplňování</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global auto-type</source>
-        <translation>Použít titulek položky pro porovnání s okny pro všeobecné samočinné vyplňování</translation>
+        <translation>Všeobecné automatické vyplňování provádět na základě shody titulku položky s titulkem okna.</translation>
     </message>
     <message>
         <source>Language</source>
@@ -1210,11 +1221,11 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>Zobrazit ikonu v oznamovací oblasti hlavního panelu prostředí</translation>
+        <translation>Zobrazit ikonu v oznamovací oblasti systémového panelu</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation>Minimalizovat okno aplikace do oznamovací oblasti hlavního panelu prostředí</translation>
+        <translation>Minimalizovat okno aplikace do oznamovací oblasti systémového panelu</translation>
     </message>
     <message>
         <source>Remember last key files</source>
@@ -1225,7 +1236,7 @@ Discard changes and close anyway?</source>
     <name>SettingsWidgetSecurity</name>
     <message>
         <source>Clear clipboard after</source>
-        <translation>Vyčistit schránku po uplynutí</translation>
+        <translation>Vymazat obsah schránky po uplynutí</translation>
     </message>
     <message>
         <source> sec</source>
@@ -1241,7 +1252,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Always ask before performing auto-type</source>
-        <translation>Před provedením samočinného vyplnění se vždy dotázat</translation>
+        <translation>Před provedením automatického vyplnění se vždy dotázat</translation>
     </message>
 </context>
 <context>
@@ -1271,10 +1282,6 @@ Discard changes and close anyway?</source>
     <message>
         <source>path to a custom config file</source>
         <translation>umístění souboru s vlastními nastaveními</translation>
-    </message>
-    <message>
-        <source>password of the database (DANGEROUS!)</source>
-        <translation>heslo k databázi (NEBEZPEČNÉ!)</translation>
     </message>
     <message>
         <source>key file of the database</source>

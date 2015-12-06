@@ -9,12 +9,16 @@
         <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
         <translation>KeePassX distribueres under betingelserne i GNU General Public License (GPL) version 2 eller (efter eget valg) version 3.</translation>
     </message>
+    <message>
+        <source>Revision</source>
+        <translation>Revision</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
     <message>
         <source>Auto-Type - KeePassX</source>
-        <translation type="unfinished"/>
+        <translation>Auto-indsæt - KeePassX</translation>
     </message>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
@@ -40,26 +44,26 @@
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassX</source>
-        <translation type="unfinished"/>
+        <translation>Auto-indsæt - KeePassX</translation>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation type="unfinished"/>
+        <translation>Vælg post til Auto-Indsæt:</translation>
     </message>
 </context>
 <context>
     <name>ChangeMasterKeyWidget</name>
     <message>
         <source>Password</source>
-        <translation>Adgangskode</translation>
+        <translation>Kodeord</translation>
     </message>
     <message>
         <source>Enter password:</source>
-        <translation>Indtast adgangskode</translation>
+        <translation>Indtast kodeord</translation>
     </message>
     <message>
         <source>Repeat password:</source>
-        <translation>Gentag adgangskode</translation>
+        <translation>Gentag kodeord</translation>
     </message>
     <message>
         <source>Key file</source>
@@ -103,11 +107,11 @@
     </message>
     <message>
         <source>Do you really want to use an empty string as password?</source>
-        <translation>Vil du virkelig bruge en tom streng som adgangskode?</translation>
+        <translation>Vil du virkelig bruge en tom streng som kodeord?</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Andre adgangskoder leveret.</translation>
+        <translation>Andre kodeord leveret.</translation>
     </message>
     <message>
         <source>Failed to set key file</source>
@@ -132,7 +136,7 @@
     </message>
     <message>
         <source>Password:</source>
-        <translation>Adgangskode:</translation>
+        <translation>Kodeord:</translation>
     </message>
     <message>
         <source>Browse</source>
@@ -175,7 +179,7 @@
     </message>
     <message>
         <source>Transform rounds:</source>
-        <translation type="unfinished"/>
+        <translation>Transformationsrunder:</translation>
     </message>
     <message>
         <source>Default username:</source>
@@ -195,7 +199,7 @@
     </message>
     <message>
         <source>Max. history items:</source>
-        <translation type="unfinished"/>
+        <translation>Maks. posthistorik:</translation>
     </message>
     <message>
         <source>Max. history size:</source>
@@ -307,7 +311,8 @@ Ellers mister du dine ændringer.</translation>
     <message>
         <source>&quot;%1&quot; is in edit mode.
 Discard changes and close anyway?</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; er i redigeringstilstand.
+Kassér ændringer og luk alligevel?</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
@@ -320,6 +325,12 @@ Discard changes and close anyway?</source>
     <message>
         <source>Writing the CSV file failed.</source>
         <translation>Kan ikke skrive til CSV-fil.</translation>
+    </message>
+    <message>
+        <source>The database you are trying to save as is locked by another instance of KeePassX.
+Do you want to save it anyway?</source>
+        <translation>Databasen som du prøver at gemme er låst af en anden instans af KeePassX.
+Vil du alligevel gemme?</translation>
     </message>
 </context>
 <context>
@@ -389,7 +400,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>Auto-Indsæt</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -401,7 +412,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Entry history</source>
-        <translation type="unfinished"/>
+        <translation>Indtastningshistorik</translation>
     </message>
     <message>
         <source>Add entry</source>
@@ -417,7 +428,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Andre adgangskoder leveret.</translation>
+        <translation>Andre kodeord leveret.</translation>
     </message>
     <message>
         <source>New attribute</source>
@@ -492,15 +503,15 @@ Discard changes and close anyway?</source>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation type="unfinished"/>
+        <translation>Aktivér Auto-Indsæt for denne post</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the group</source>
-        <translation type="unfinished"/>
+        <translation>Nedarv standard Auto-Indsæt sekvens fra gruppe</translation>
     </message>
     <message>
         <source>Use custom Auto-Type sequence:</source>
-        <translation type="unfinished"/>
+        <translation>Brug brugerdefineret Auto-indsæt sekvens:</translation>
     </message>
     <message>
         <source>+</source>
@@ -554,7 +565,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Adgangskode:</translation>
+        <translation>Kodeord:</translation>
     </message>
     <message>
         <source>Repeat:</source>
@@ -562,7 +573,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Gen.</source>
-        <translation type="unfinished"/>
+        <translation>Generer</translation>
     </message>
     <message>
         <source>URL:</source>
@@ -636,15 +647,15 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Auto-type</source>
-        <translation type="unfinished"/>
+        <translation>Auto-indsæt</translation>
     </message>
     <message>
         <source>Use default auto-type sequence of parent group</source>
-        <translation type="unfinished"/>
+        <translation>Brug standard Auto-Indsæt sekvens fra forældregruppe</translation>
     </message>
     <message>
         <source>Set default auto-type sequence</source>
-        <translation type="unfinished"/>
+        <translation>Definér standard auto-indsæt sekvens</translation>
     </message>
 </context>
 <context>
@@ -803,7 +814,7 @@ Discard changes and close anyway?</source>
     <name>KeePass2Reader</name>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Det er ikke en KeePass database.</translation>
+        <translation>Dette er ikke en KeePass database.</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
@@ -937,7 +948,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Copy password to clipboard</source>
-        <translation>Kopiér adgangskode til udklipsholder</translation>
+        <translation>Kopiér kodeord til udklipsholder</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -945,7 +956,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Perform Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>Udfør Auto-indsæt</translation>
     </message>
     <message>
         <source>Open URL</source>
@@ -985,11 +996,11 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Copy username</source>
-        <translation>Kopiér adgangskode</translation>
+        <translation>Kopiér brugernavn</translation>
     </message>
     <message>
         <source>Copy password</source>
-        <translation>Kopiér adgangskode</translation>
+        <translation>Kopiér kodeord</translation>
     </message>
     <message>
         <source>Export to CSV file</source>
@@ -1000,7 +1011,7 @@ Discard changes and close anyway?</source>
     <name>PasswordGeneratorWidget</name>
     <message>
         <source>Password:</source>
-        <translation>Adgangskode:</translation>
+        <translation>Kodeord:</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -1008,7 +1019,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Character Types</source>
-        <translation type="unfinished"/>
+        <translation>Tegntyper</translation>
     </message>
     <message>
         <source>Upper Case Letters</source>
@@ -1032,7 +1043,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Ensure that the password contains characters from every group</source>
-        <translation>Vær sikker på at din adgangskode indeholder tegn fra alle grupper</translation>
+        <translation>Vær sikker på at dit kodeord indeholder tegn fra alle grupper</translation>
     </message>
     <message>
         <source>Accept</source>
@@ -1193,11 +1204,11 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Global Auto-Type shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Global Auto-Indsæt genvej</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global auto-type</source>
-        <translation type="unfinished"/>
+        <translation>Brug titel på post til at matche global aito-indsæt</translation>
     </message>
     <message>
         <source>Language</source>
@@ -1232,11 +1243,11 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Show passwords in cleartext by default</source>
-        <translation>Vis adgangskoder i klartekst som standard</translation>
+        <translation>Vis kodeord i klartekst som standard</translation>
     </message>
     <message>
         <source>Always ask before performing auto-type</source>
-        <translation type="unfinished"/>
+        <translation>Spørg altid før auto-indsæt</translation>
     </message>
 </context>
 <context>
@@ -1257,7 +1268,7 @@ Discard changes and close anyway?</source>
     <name>main</name>
     <message>
         <source>KeePassX - cross-platform password manager</source>
-        <translation type="unfinished"/>
+        <translation>KeePassX - cross-platform password manager</translation>
     </message>
     <message>
         <source>filename of the password database to open (*.kdbx)</source>
@@ -1266,10 +1277,6 @@ Discard changes and close anyway?</source>
     <message>
         <source>path to a custom config file</source>
         <translation>sti til brugerdefineret indstillingsfil</translation>
-    </message>
-    <message>
-        <source>password of the database (DANGEROUS!)</source>
-        <translation>adgangskode til databasen (FAARLIGT!)</translation>
     </message>
     <message>
         <source>key file of the database</source>
