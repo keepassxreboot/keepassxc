@@ -1,1302 +1,1286 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="en_US">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.0">
 <context>
     <name>AboutDialog</name>
     <message>
         <source>About KeePassX</source>
-        <translation type="unfinished"></translation>
+        <translation>Про KeePassX</translation>
     </message>
     <message>
         <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation type="unfinished"></translation>
+        <translation>KeePassX розповсюджується на умовах Загальної публічної ліцензії GNU (GPL) версії 2 або (на ваш вибір) версії 3.</translation>
     </message>
     <message>
         <source>Revision</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Using:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ревізія</translation>
     </message>
 </context>
 <context>
     <name>AutoType</name>
     <message>
         <source>Auto-Type - KeePassX</source>
-        <translation type="unfinished"></translation>
+        <translation>Автозаповнення — KeePassX</translation>
     </message>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation type="unfinished"></translation>
+        <translation>Не знайдено запис, що відповідає заголовку вікна:</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeAssociationsModel</name>
     <message>
         <source>Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Вікно</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation type="unfinished"></translation>
+        <translation>Послідовність</translation>
     </message>
     <message>
         <source>Default sequence</source>
-        <translation type="unfinished"></translation>
+        <translation>Типова послідовність</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassX</source>
-        <translation type="unfinished"></translation>
+        <translation>Автозаповнення — KeePassX</translation>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Оберіть запис для автозаповнення:</translation>
     </message>
 </context>
 <context>
     <name>ChangeMasterKeyWidget</name>
     <message>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Пароль</translation>
     </message>
     <message>
         <source>Enter password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Введіть пароль:</translation>
     </message>
     <message>
         <source>Repeat password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Повторіть пароль:</translation>
     </message>
     <message>
         <source>Key file</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл-ключ</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation>Огляд</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Створити</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation type="unfinished"></translation>
+        <translation>Файли-ключі</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation type="unfinished"></translation>
+        <translation>Всі файли</translation>
     </message>
     <message>
         <source>Create Key File...</source>
-        <translation type="unfinished"></translation>
+        <translation>Створити файл-ключ...</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <source>Unable to create Key File : </source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо створити файл-ключ:</translation>
     </message>
     <message>
         <source>Select a key file</source>
-        <translation type="unfinished"></translation>
+        <translation>Обрати файл-ключ</translation>
     </message>
     <message>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation>Питання</translation>
     </message>
     <message>
         <source>Do you really want to use an empty string as password?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви дійсно хочете використати порожній рядок в якості пароля?</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation type="unfinished"></translation>
+        <translation>Паролі не співпадають.</translation>
     </message>
     <message>
         <source>Failed to set key file</source>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалося встановити файл-ключ</translation>
     </message>
     <message>
         <source>Failed to set %1 as the Key file:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалося встановити %1 в якості файл-ключа:
+%2</translation>
     </message>
 </context>
 <context>
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Enter master key</source>
-        <translation type="unfinished"></translation>
+        <translation>Введіть майстер-пароль</translation>
     </message>
     <message>
         <source>Key File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл-ключ:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Пароль:</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation>Огляд</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо відкрити сховище.</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation type="unfinished"></translation>
+        <translation>Не вдається відкрити файл-ключ</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation type="unfinished"></translation>
+        <translation>Всі файли</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation type="unfinished"></translation>
+        <translation>Файли-ключі</translation>
     </message>
     <message>
         <source>Select key file</source>
-        <translation type="unfinished"></translation>
+        <translation>Оберіть файл-ключ</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidget</name>
     <message>
         <source>Database name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Назва сховища:</translation>
     </message>
     <message>
         <source>Database description:</source>
-        <translation type="unfinished"></translation>
+        <translation>Опис сховища:</translation>
     </message>
     <message>
         <source>Transform rounds:</source>
-        <translation type="unfinished"></translation>
+        <translation>Раундів перетворень:</translation>
     </message>
     <message>
         <source>Default username:</source>
-        <translation type="unfinished"></translation>
+        <translation>Типове ім’я користувача:</translation>
     </message>
     <message>
         <source>Use recycle bin:</source>
-        <translation type="unfinished"></translation>
+        <translation>Використати смітник:</translation>
     </message>
     <message>
         <source> MiB</source>
-        <translation type="unfinished"></translation>
+        <translation> MiB</translation>
     </message>
     <message>
         <source>Benchmark</source>
-        <translation type="unfinished"></translation>
+        <translation>Перевірка</translation>
     </message>
     <message>
         <source>Max. history items:</source>
-        <translation type="unfinished"></translation>
+        <translation>Максимум записів історії:</translation>
     </message>
     <message>
         <source>Max. history size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Максимальний розмір історії:</translation>
     </message>
 </context>
 <context>
     <name>DatabaseTabWidget</name>
     <message>
         <source>Root</source>
-        <translation type="unfinished"></translation>
+        <translation>Корінь</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Сховище KeePass 2</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation type="unfinished"></translation>
+        <translation>Всі файли</translation>
     </message>
     <message>
         <source>Open database</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити сховище</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Увага</translation>
     </message>
     <message>
         <source>File not found!</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл не знайдено!</translation>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити сховище KeePass 1</translation>
     </message>
     <message>
         <source>KeePass 1 database</source>
-        <translation type="unfinished"></translation>
+        <translation>Сховище KeePass 1</translation>
     </message>
     <message>
         <source>All files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Всі файли (*)</translation>
     </message>
     <message>
         <source>Close?</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрити?</translation>
     </message>
     <message>
         <source>Save changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти зміни?</translation>
     </message>
     <message>
         <source>&quot;%1&quot; was modified.
 Save changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; змінено.
+Зберегти зміни?</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Записати сховище не вдалося.</translation>
     </message>
     <message>
         <source>Save database as</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти сховище як</translation>
     </message>
     <message>
         <source>New database</source>
-        <translation type="unfinished"></translation>
+        <translation>Нове сховище</translation>
     </message>
     <message>
         <source>locked</source>
-        <translation type="unfinished"></translation>
+        <translation>заблоковано</translation>
     </message>
     <message>
         <source>The database you are trying to open is locked by another instance of KeePassX.
 Do you want to open it anyway? Alternatively the database is opened read-only.</source>
-        <translation type="unfinished"></translation>
+        <translation>Сховище, яке ви хочете відкрити, заблоковано іншою запущеною копією KeePassX. Все одно відкрити? Сховище буде відкрито тільки для читання.</translation>
     </message>
     <message>
         <source>Lock database</source>
-        <translation type="unfinished"></translation>
+        <translation>Заблокувати сховище</translation>
     </message>
     <message>
-        <source>Can&apos;t lock the database as you are currently editing it.
+        <source>Can't lock the database as you are currently editing it.
 Please press cancel to finish your changes or discard them.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не можливо заблокувати базу даних, яку ви в даний час редагуєте.
+Натисніть Скасувати, щоб завершити зміни або скасувати їх.</translation>
     </message>
     <message>
         <source>This database has never been saved.
 You can save the database or stop locking it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Це сховище не було збережено.
+Ви можете зберегти сховище або зупинити його блокування.</translation>
     </message>
     <message>
         <source>This database has been modified.
 Do you want to save the database before locking it?
 Otherwise your changes are lost.</source>
-        <translation type="unfinished"></translation>
+        <translation>В сховище було внесено зміни.
+Ви хочете зберегти його перед блокуванням?
+Інакше внесені зміни буде втрачено.</translation>
     </message>
     <message>
         <source>&quot;%1&quot; is in edit mode.
 Discard changes and close anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>«%1» в режимі редагування.
+Відхилити зміни і все одно закрити?</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
-        <translation type="unfinished"></translation>
+        <translation>Експортувати сховище в файл CSV</translation>
     </message>
     <message>
         <source>CSV file</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл CSV</translation>
     </message>
     <message>
         <source>Writing the CSV file failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалось записати CSV файл.</translation>
     </message>
     <message>
         <source>The database you are trying to save as is locked by another instance of KeePassX.
 Do you want to save it anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>Це сховище заблоковано іншою запущеною копією KeePassX.
+Ви впевнені, що хочете зберегти його?</translation>
     </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
     <message>
         <source>Change master key</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити майстер-пароль</translation>
     </message>
     <message>
         <source>Delete entry?</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити запис?</translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви дійсно хочете видалити запис «%1»?</translation>
     </message>
     <message>
         <source>Delete entries?</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити записи?</translation>
     </message>
     <message>
         <source>Do you really want to delete %1 entries for good?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви дійсно хочете назавжди видалити записи - %1 ?</translation>
     </message>
     <message>
         <source>Move entries to recycle bin?</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемістити записи до смітника?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+        <translation><numerusform>Ви дійсно хочете перемістити %n запис в смітник?</numerusform><numerusform>Ви дійсно хочете перемістити %n записи в смітник?</numerusform><numerusform>Ви дійсно хочете перемістити %n записів в смітник?</numerusform></translation>
     </message>
     <message>
         <source>Delete group?</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити групу?</translation>
     </message>
     <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви дійсно хочете назавжди видалити групу «%1»?</translation>
     </message>
     <message>
         <source>Current group</source>
-        <translation type="unfinished"></translation>
+        <translation>Поточна група</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо вирахувати майстер-пароль</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
     <message>
         <source>Entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Запис</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Розширені</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Значок</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Автозаповнення</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметри</translation>
     </message>
     <message>
         <source>History</source>
-        <translation type="unfinished"></translation>
+        <translation>Історія</translation>
     </message>
     <message>
         <source>Entry history</source>
-        <translation type="unfinished"></translation>
+        <translation>Історія запису</translation>
     </message>
     <message>
         <source>Add entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати запис</translation>
     </message>
     <message>
         <source>Edit entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити запис</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation type="unfinished"></translation>
+        <translation>Паролі не співпадають.</translation>
     </message>
     <message>
         <source>New attribute</source>
-        <translation type="unfinished"></translation>
+        <translation>Новий атрибут</translation>
     </message>
     <message>
         <source>Select file</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати файл</translation>
     </message>
     <message>
         <source>Unable to open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо відкрити файл</translation>
     </message>
     <message>
         <source>Save attachment</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти вкладення</translation>
     </message>
     <message>
         <source>Unable to save the attachment:
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо зберегти вкладення:
+</translation>
     </message>
     <message>
         <source>Tomorrow</source>
-        <translation type="unfinished"></translation>
+        <translation>Завтра</translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+        <translation><numerusform>%n тиждень</numerusform><numerusform>%n тижні</numerusform><numerusform>%n тижнів</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+        <translation><numerusform>%n місяць</numerusform><numerusform>%n місяці</numerusform><numerusform>%n місяців</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
-        <translation type="unfinished"></translation>
+        <translation>1 рік</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
     <message>
         <source>Additional attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Додаткові атрибути</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкладення</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Увімкнути автозаповнення для цього запису</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the group</source>
-        <translation type="unfinished"></translation>
+        <translation>Успадкувати типову послідовність автозаповнення від групи</translation>
     </message>
     <message>
         <source>Use custom Auto-Type sequence:</source>
-        <translation type="unfinished"></translation>
+        <translation>Використовувати свою послідовність автозаповнення:</translation>
     </message>
     <message>
         <source>+</source>
-        <translation type="unfinished"></translation>
+        <translation>+</translation>
     </message>
     <message>
         <source>-</source>
-        <translation type="unfinished"></translation>
+        <translation>-</translation>
     </message>
     <message>
         <source>Window title:</source>
-        <translation type="unfinished"></translation>
+        <translation>Заголовок вікна:</translation>
     </message>
     <message>
         <source>Use default sequence</source>
-        <translation type="unfinished"></translation>
+        <translation>Використовувати типову послідовність</translation>
     </message>
     <message>
         <source>Set custom sequence:</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановити свою послідовність:</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
     <message>
         <source>Show</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати</translation>
     </message>
     <message>
         <source>Restore</source>
-        <translation type="unfinished"></translation>
+        <translation>Відновити</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити</translation>
     </message>
     <message>
         <source>Delete all</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити все</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetMain</name>
     <message>
         <source>Title:</source>
-        <translation type="unfinished"></translation>
+        <translation>Заголовок:</translation>
     </message>
     <message>
         <source>Username:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ім’я користувача:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Пароль:</translation>
     </message>
     <message>
         <source>Repeat:</source>
-        <translation type="unfinished"></translation>
+        <translation>Пароль ще раз:</translation>
     </message>
     <message>
         <source>Gen.</source>
-        <translation type="unfinished"></translation>
+        <translation>Генер.</translation>
     </message>
     <message>
         <source>URL:</source>
-        <translation type="unfinished"></translation>
+        <translation>URL:</translation>
     </message>
     <message>
         <source>Expires</source>
-        <translation type="unfinished"></translation>
+        <translation>Закінчується</translation>
     </message>
     <message>
         <source>Presets</source>
-        <translation type="unfinished"></translation>
+        <translation>Заготовки</translation>
     </message>
     <message>
         <source>Notes:</source>
-        <translation type="unfinished"></translation>
+        <translation>Примітки:</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidget</name>
     <message>
         <source>Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Група</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Значок</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Властивості</translation>
     </message>
     <message>
         <source>Add group</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати групу</translation>
     </message>
     <message>
         <source>Edit group</source>
-        <translation type="unfinished"></translation>
+        <translation>Редагувати групу</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation type="unfinished"></translation>
+        <translation>Увімкнено</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation type="unfinished"></translation>
+        <translation>Вимкнено</translation>
     </message>
     <message>
         <source>Inherit from parent group (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Успадкувати від батьківської групи (%1)</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Ім’я</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation type="unfinished"></translation>
+        <translation>Примітки</translation>
     </message>
     <message>
         <source>Expires</source>
-        <translation type="unfinished"></translation>
+        <translation>Закінчується</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук</translation>
     </message>
     <message>
         <source>Auto-type</source>
-        <translation type="unfinished"></translation>
+        <translation>Автозаповнення</translation>
     </message>
     <message>
         <source>Use default auto-type sequence of parent group</source>
-        <translation type="unfinished"></translation>
+        <translation>Використовувати типову послідовність автозаповнення батьківської групи</translation>
     </message>
     <message>
         <source>Set default auto-type sequence</source>
-        <translation type="unfinished"></translation>
+        <translation>Типова послідовність автозаповнення</translation>
     </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
     <message>
         <source>Use default icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Використовувати типовий значок</translation>
     </message>
     <message>
         <source>Use custom icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Використовувати свій значок</translation>
     </message>
     <message>
         <source>Add custom icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати свій значок</translation>
     </message>
     <message>
         <source>Delete custom icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити свій значок</translation>
     </message>
     <message>
         <source>Images</source>
-        <translation type="unfinished"></translation>
+        <translation>Зображення</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation type="unfinished"></translation>
+        <translation>Всі файли</translation>
     </message>
     <message>
         <source>Select Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибір зображення</translation>
     </message>
     <message>
         <source>Can&apos;t delete icon!</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо видалити значок!</translation>
     </message>
     <message numerus="yes">
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+        <translation><numerusform>Ви дійсно хочете перемістити %n запис в смітник?</numerusform><numerusform>Ви дійсно хочете перемістити %n записи в смітник?</numerusform><numerusform>Ви дійсно хочете перемістити %n записів в смітник?</numerusform></translation>
     </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
     <message>
         <source>Created:</source>
-        <translation type="unfinished"></translation>
+        <translation>Створено:</translation>
     </message>
     <message>
         <source>Modified:</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінено:</translation>
     </message>
     <message>
         <source>Accessed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Доступ:</translation>
     </message>
     <message>
         <source>Uuid:</source>
-        <translation type="unfinished"></translation>
+        <translation>Uuid:</translation>
     </message>
 </context>
 <context>
     <name>EntryAttributesModel</name>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Ім’я</translation>
     </message>
 </context>
 <context>
     <name>EntryHistoryModel</name>
     <message>
         <source>Last modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Остання зміна</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Заголовок</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Ім’я користувача</translation>
     </message>
     <message>
         <source>URL</source>
-        <translation type="unfinished"></translation>
+        <translation>URL</translation>
     </message>
 </context>
 <context>
     <name>EntryModel</name>
     <message>
         <source>Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Група</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Заголовок</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Ім’я користувача</translation>
     </message>
     <message>
         <source>URL</source>
-        <translation type="unfinished"></translation>
+        <translation>URL</translation>
     </message>
 </context>
 <context>
     <name>Group</name>
     <message>
         <source>Recycle Bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Смітник</translation>
     </message>
 </context>
 <context>
     <name>KeePass1OpenWidget</name>
     <message>
         <source>Import KeePass1 database</source>
-        <translation type="unfinished"></translation>
+        <translation>Імпортувати сховище KeePass 1</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо відкрити сховище.</translation>
     </message>
 </context>
 <context>
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо прочитати файл-ключ.</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Це не сховище KeePass.</translation>
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
-        <translation type="unfinished"></translation>
+        <translation>Алгоритм шифрування не підтримується.</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation type="unfinished"></translation>
+        <translation>Версія сховища KeePass не підтримується.</translation>
     </message>
     <message>
         <source>Root</source>
-        <translation type="unfinished"></translation>
+        <translation>Корінь</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо вирахувати майстер-пароль</translation>
     </message>
 </context>
 <context>
     <name>KeePass2Reader</name>
     <message>
         <source>Not a KeePass database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не сховище KeePass.</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation type="unfinished"></translation>
+        <translation>Версія сховища KeePass не підтримується.</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неправильний ключ або файл сховища пошкоджено.</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The selected file is an old KeePass 1 database (.kdb).
-
-You can import it by clicking on Database &gt; &apos;Import KeePass 1 database&apos;.
-This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо вирахувати майстер-пароль</translation>
     </message>
 </context>
 <context>
     <name>Main</name>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Невиправна помилка в процесі тестування криптографічних функцій.</translation>
     </message>
     <message>
         <source>KeePassX - Error</source>
-        <translation type="unfinished"></translation>
+        <translation>KeePassX — Помилка</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Сховище</translation>
     </message>
     <message>
         <source>Recent databases</source>
-        <translation type="unfinished"></translation>
+        <translation>Недавні сховища</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Довідка</translation>
     </message>
     <message>
         <source>Entries</source>
-        <translation type="unfinished"></translation>
+        <translation>Записи</translation>
     </message>
     <message>
         <source>Copy attribute to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Копіювати атрибут в буфер обміну</translation>
     </message>
     <message>
         <source>Groups</source>
-        <translation type="unfinished"></translation>
+        <translation>Групи</translation>
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Вигляд</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Вихід</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Про програму</translation>
     </message>
     <message>
         <source>Open database</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити сховище</translation>
     </message>
     <message>
         <source>Save database</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти сховище</translation>
     </message>
     <message>
         <source>Close database</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрити сховище</translation>
     </message>
     <message>
         <source>New database</source>
-        <translation type="unfinished"></translation>
+        <translation>Нове сховище</translation>
     </message>
     <message>
         <source>Add new entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати новий запис</translation>
     </message>
     <message>
         <source>View/Edit entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Проглянути/змінити запис</translation>
     </message>
     <message>
         <source>Delete entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити запис</translation>
     </message>
     <message>
         <source>Add new group</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати нову групу</translation>
     </message>
     <message>
         <source>Edit group</source>
-        <translation type="unfinished"></translation>
+        <translation>Редагувати групу</translation>
     </message>
     <message>
         <source>Delete group</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити групу</translation>
     </message>
     <message>
         <source>Save database as</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти сховище як</translation>
     </message>
     <message>
         <source>Change master key</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити майстер-пароль</translation>
     </message>
     <message>
         <source>Database settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметри сховища</translation>
     </message>
     <message>
         <source>Import KeePass 1 database</source>
-        <translation type="unfinished"></translation>
+        <translation>Імпортувати сховище KeePass 1</translation>
     </message>
     <message>
         <source>Clone entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Клонувати запис</translation>
     </message>
     <message>
         <source>Find</source>
-        <translation type="unfinished"></translation>
+        <translation>Знайти</translation>
     </message>
     <message>
         <source>Copy username to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Копіювати ім’я користувача в буфер обміну</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Копіювати пароль в буфер обміну</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування</translation>
     </message>
     <message>
         <source>Perform Auto-Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Здійснити автозаповнення</translation>
     </message>
     <message>
         <source>Open URL</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити URL</translation>
     </message>
     <message>
         <source>Lock databases</source>
-        <translation type="unfinished"></translation>
+        <translation>Заблокувати сховище</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Заголовок</translation>
     </message>
     <message>
         <source>URL</source>
-        <translation type="unfinished"></translation>
+        <translation>URL</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation type="unfinished"></translation>
+        <translation>Примітки</translation>
     </message>
     <message>
         <source>Show toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати панель инструментів</translation>
     </message>
     <message>
         <source>read-only</source>
-        <translation type="unfinished"></translation>
+        <translation>тільки для читання</translation>
     </message>
     <message>
         <source>Toggle window</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемкнути вікно</translation>
     </message>
     <message>
         <source>Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Інструменти</translation>
     </message>
     <message>
         <source>Copy username</source>
-        <translation type="unfinished"></translation>
+        <translation>Копіювати ім’я користувача</translation>
     </message>
     <message>
         <source>Copy password</source>
-        <translation type="unfinished"></translation>
+        <translation>Копіювати пароль</translation>
     </message>
     <message>
         <source>Export to CSV file</source>
-        <translation type="unfinished"></translation>
+        <translation>Експортувати в файл CSV</translation>
     </message>
 </context>
 <context>
     <name>PasswordGeneratorWidget</name>
     <message>
         <source>Password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Пароль:</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Довжина:</translation>
     </message>
     <message>
         <source>Character Types</source>
-        <translation type="unfinished"></translation>
+        <translation>Види символів</translation>
     </message>
     <message>
         <source>Upper Case Letters</source>
-        <translation type="unfinished"></translation>
+        <translation>Великі літери</translation>
     </message>
     <message>
         <source>Lower Case Letters</source>
-        <translation type="unfinished"></translation>
+        <translation>Малі літери</translation>
     </message>
     <message>
         <source>Numbers</source>
-        <translation type="unfinished"></translation>
+        <translation>Цифри</translation>
     </message>
     <message>
         <source>Special Characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Спеціальні символи</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Виключити неоднозначні символи</translation>
     </message>
     <message>
         <source>Ensure that the password contains characters from every group</source>
-        <translation type="unfinished"></translation>
+        <translation>Переконатися, що пароль містить символи всіх видів</translation>
     </message>
     <message>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>Прийняти</translation>
     </message>
 </context>
 <context>
     <name>QCommandLineParser</name>
     <message>
         <source>Displays version information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Показує інформацію про версію.</translation>
     </message>
     <message>
         <source>Displays this help.</source>
-        <translation type="unfinished"></translation>
+        <translation>Показує цю довідку.</translation>
     </message>
     <message>
         <source>Unknown option &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Невідома опція «%1».</translation>
     </message>
     <message>
         <source>Unknown options: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Невідомі опції %1.</translation>
     </message>
     <message>
         <source>Missing value after &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Пропущено значення після «%1».</translation>
     </message>
     <message>
         <source>Unexpected value after &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Непередбачене значення після «%1».</translation>
     </message>
     <message>
         <source>[options]</source>
-        <translation type="unfinished"></translation>
+        <translation>[опції]</translation>
     </message>
     <message>
         <source>Usage: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Використання: %1</translation>
     </message>
     <message>
         <source>Options:</source>
-        <translation type="unfinished"></translation>
+        <translation>Опції:</translation>
     </message>
     <message>
         <source>Arguments:</source>
-        <translation type="unfinished"></translation>
+        <translation>Аргументи:</translation>
     </message>
 </context>
 <context>
     <name>QSaveFile</name>
     <message>
         <source>Existing file %1 is not writable</source>
-        <translation type="unfinished"></translation>
+        <translation>Існуючий файл %1 непридатний для запису</translation>
     </message>
     <message>
         <source>Writing canceled by application</source>
-        <translation type="unfinished"></translation>
+        <translation>Запис відмінено застосунком</translation>
     </message>
     <message>
         <source>Partial write. Partition full?</source>
-        <translation type="unfinished"></translation>
+        <translation>Частковий запис. Разділ переповнений?</translation>
     </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
-        <translation type="unfinished"></translation>
+        <translation>Внутрішня помилка zlib при стисненні:</translation>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка запису на основний пристрій:</translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка відкриття основного пристрою:</translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка читання з основного пристрою:</translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation type="unfinished"></translation>
+        <translation>Внутрішня помилка zlib при розпакуванні:</translation>
     </message>
 </context>
 <context>
     <name>QtIOCompressor::open</name>
     <message>
         <source>The gzip format not supported in this version of zlib.</source>
-        <translation type="unfinished"></translation>
+        <translation>Формат gzip не підтримується в цій версії zlib.</translation>
     </message>
     <message>
         <source>Internal zlib error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Внутрішня помилка zlib:</translation>
     </message>
 </context>
 <context>
     <name>SearchWidget</name>
     <message>
         <source>Find:</source>
-        <translation type="unfinished"></translation>
+        <translation>Знайти:</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>Враховується регістр</translation>
     </message>
     <message>
         <source>Current group</source>
-        <translation type="unfinished"></translation>
+        <translation>Поточна група</translation>
     </message>
     <message>
         <source>Root group</source>
-        <translation type="unfinished"></translation>
+        <translation>Коренева група</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметри застосунку</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Загальні</translation>
     </message>
     <message>
         <source>Security</source>
-        <translation type="unfinished"></translation>
+        <translation>Безпека</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidgetGeneral</name>
     <message>
         <source>Remember last databases</source>
-        <translation type="unfinished"></translation>
+        <translation>Пам’ятати останнє сховище</translation>
     </message>
     <message>
         <source>Open previous databases on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкривати останнє сховище під час запуску</translation>
     </message>
     <message>
         <source>Automatically save on exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматично зберігати при виході</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматично зберігати після кожної зміни</translation>
     </message>
     <message>
         <source>Minimize when copying to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Згортати при копіюванні до буфера обміну</translation>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Використовувати для нових записів значок групи</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Глобальні сполучення клавіш для автозаповнення</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global auto-type</source>
-        <translation type="unfinished"></translation>
+        <translation>Використовувати заголовок запису для вибору вікон для глобального автозаповнення</translation>
     </message>
     <message>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Мова</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Показувати значок в треї</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation type="unfinished"></translation>
+        <translation>При згортанні ховати вікно в область системних повідомлень</translation>
     </message>
     <message>
         <source>Remember last key files</source>
-        <translation type="unfinished"></translation>
+        <translation>Пам’ятати останні файл-ключі</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>
     <message>
         <source>Clear clipboard after</source>
-        <translation type="unfinished"></translation>
+        <translation>Очищати буфер обміну через</translation>
     </message>
     <message>
         <source> sec</source>
-        <translation type="unfinished"></translation>
+        <translation>сек</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
-        <translation type="unfinished"></translation>
+        <translation>Заблокувати сховище, неактивне протягом</translation>
     </message>
     <message>
         <source>Show passwords in cleartext by default</source>
-        <translation type="unfinished"></translation>
+        <translation>Типово показувати пароль у відкритому вигляді</translation>
     </message>
     <message>
         <source>Always ask before performing auto-type</source>
-        <translation type="unfinished"></translation>
+        <translation>Завжди запитувати перед автозаповненням</translation>
     </message>
 </context>
 <context>
     <name>UnlockDatabaseWidget</name>
     <message>
         <source>Unlock database</source>
-        <translation type="unfinished"></translation>
+        <translation>Розблокувати сховище</translation>
     </message>
 </context>
 <context>
     <name>WelcomeWidget</name>
     <message>
         <source>Welcome!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ласкаво просимо!</translation>
     </message>
 </context>
 <context>
     <name>main</name>
     <message>
         <source>KeePassX - cross-platform password manager</source>
-        <translation type="unfinished"></translation>
+        <translation>KeePassX — кросплатформний менеджер паролів</translation>
     </message>
     <message>
         <source>filename of the password database to open (*.kdbx)</source>
-        <translation type="unfinished"></translation>
+        <translation>назва файла сховища паролів, що відкривається (*.kdbx)</translation>
     </message>
     <message>
         <source>path to a custom config file</source>
-        <translation type="unfinished"></translation>
+        <translation>шлях до власного файла налаштувань</translation>
     </message>
     <message>
         <source>key file of the database</source>
-        <translation type="unfinished"></translation>
+        <translation>файл-ключ сховища</translation>
     </message>
 </context>
 </TS>

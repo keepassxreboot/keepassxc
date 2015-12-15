@@ -26,7 +26,7 @@
 #include <QElapsedTimer>
 
 #ifdef Q_OS_WIN
-#include <windows.h> // for Sleep()
+#include <windows.h> // for Sleep(), SetDllDirectoryA() and SetSearchPathMode()
 #endif
 
 #ifdef Q_OS_UNIX
@@ -147,6 +147,16 @@ bool isHex(const QByteArray& ba)
     return true;
 }
 
+bool isBase64(const QByteArray& ba)
+{
+    QRegExp regexp("^(?:[a-z0-9+/]{4})*(?:[a-z0-9+/]{3}=|[a-z0-9+/]{2}==)?$",
+                   Qt::CaseInsensitive, QRegExp::RegExp2);
+
+    QString base64 = QString::fromLatin1(ba.constData(), ba.size());
+
+    return regexp.exactMatch(base64);
+}
+
 void sleep(int ms)
 {
     Q_ASSERT(ms >= 0);
@@ -217,6 +227,15 @@ void disableCoreDumps()
     if (!success) {
         qWarning("Unable to disable core dumps.");
     }
+}
+
+void setupSearchPaths()
+{
+#ifdef Q_OS_WIN
+    // Make sure Windows doesn't load DLLs from the current working directory
+    SetDllDirectoryA("");
+    SetSearchPathMode(BASE_SEARCH_PATH_ENABLE_SAFE_SEARCHMODE);
+#endif
 }
 
 } // namespace Tools

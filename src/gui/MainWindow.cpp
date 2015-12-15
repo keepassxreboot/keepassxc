@@ -447,7 +447,8 @@ void MainWindow::closeEvent(QCloseEvent* event)
 void MainWindow::changeEvent(QEvent* event)
 {
     if ((event->type() == QEvent::WindowStateChange) && isMinimized()
-            && isTrayIconEnabled() && config()->get("GUI/MinimizeToTray").toBool())
+            && isTrayIconEnabled() && m_trayIcon && m_trayIcon->isVisible()
+            && config()->get("GUI/MinimizeToTray").toBool())
     {
         event->ignore();
         QTimer::singleShot(0, this, SLOT(hide()));

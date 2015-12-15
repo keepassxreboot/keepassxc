@@ -101,6 +101,9 @@ Q_SIGNALS:
     void splitterSizesChanged();
     void entryColumnSizesChanged();
 
+protected:
+    bool eventFilter(QObject* object, QEvent* event) Q_DECL_OVERRIDE;
+
 public Q_SLOTS:
     void createEntry();
     void cloneEntry();

@@ -9,6 +9,10 @@
         <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
         <translation>KeePassX steht unter der GNU General Public License (GPL) version 2 (version 3).</translation>
     </message>
+    <message>
+        <source>Revision</source>
+        <translation>Überarbeitung</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -319,6 +323,12 @@ Discard changes and close anyway?</source>
     <message>
         <source>Writing the CSV file failed.</source>
         <translation>Die CSV Datei konnte nicht gespeichert werden.</translation>
+    </message>
+    <message>
+        <source>The database you are trying to save as is locked by another instance of KeePassX.
+Do you want to save it anyway?</source>
+        <translation>Die Datenbank, die gespeichert werden soll, ist von einer anderen Instanz von KeePassX blockiert. 
+Soll sie dennoch gespeichert werden? </translation>
     </message>
 </context>
 <context>
@@ -1231,7 +1241,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Show passwords in cleartext by default</source>
-        <translation>Passwort standartmäßig in Klartext anzeigen</translation>
+        <translation>Passwörter standardmäßig in Klartext anzeigen</translation>
     </message>
     <message>
         <source>Always ask before performing auto-type</source>
@@ -1265,10 +1275,6 @@ Discard changes and close anyway?</source>
     <message>
         <source>path to a custom config file</source>
         <translation>Pfad zu einer benutzerdefinierten Konfigurationsdatei</translation>
-    </message>
-    <message>
-        <source>password of the database (DANGEROUS!)</source>
-        <translation>Passwort der Datenbank (GEFÄHRLICH!)</translation>
     </message>
     <message>
         <source>key file of the database</source>

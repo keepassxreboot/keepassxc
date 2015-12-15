@@ -9,6 +9,10 @@
         <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
         <translation>KeePassX распространяется на условиях Стандартной общественной лицензии GNU (GPL) версии 2 или (на ваше усмотрение) версии 3.</translation>
     </message>
+    <message>
+        <source>Revision</source>
+        <translation>Ревизия</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -277,7 +281,7 @@ Save changes?</source>
     <message>
         <source>The database you are trying to open is locked by another instance of KeePassX.
 Do you want to open it anyway? Alternatively the database is opened read-only.</source>
-        <translation type="unfinished"/>
+        <translation>Хранилище, которое Вы хотите открыть, заблокировано другой запущенной копией KeePassX. Всё равно открыть? В качестве альтернативы хранилище будет открыто в режиме для чтения.</translation>
     </message>
     <message>
         <source>Lock database</source>
@@ -297,12 +301,15 @@ You can save the database or stop locking it.</source>
         <source>This database has been modified.
 Do you want to save the database before locking it?
 Otherwise your changes are lost.</source>
-        <translation type="unfinished"/>
+        <translation>Хранилище было изменено.
+Вы хотите сохранить его перед тем, как заблокировать?
+В противном случае все изменения будут потеряны.</translation>
     </message>
     <message>
         <source>&quot;%1&quot; is in edit mode.
 Discard changes and close anyway?</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; в режиме редактирования.
+Отменить изменения и всё равно закрыть?</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
@@ -314,7 +321,13 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Writing the CSV file failed.</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось записать CSV файл.</translation>
+    </message>
+    <message>
+        <source>The database you are trying to save as is locked by another instance of KeePassX.
+Do you want to save it anyway?</source>
+        <translation>Данное хранилище заблокировано другой запущенной копией KeePassX.
+Вы уверены, что хотите продолжить сохранение?</translation>
     </message>
 </context>
 <context>
@@ -1262,10 +1275,6 @@ Discard changes and close anyway?</source>
     <message>
         <source>path to a custom config file</source>
         <translation>путь к своему файлу настроек</translation>
-    </message>
-    <message>
-        <source>password of the database (DANGEROUS!)</source>
-        <translation>пароль от хранилища (ОПАСНО!)</translation>
     </message>
     <message>
         <source>key file of the database</source>

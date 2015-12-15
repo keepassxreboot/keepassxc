@@ -32,6 +32,7 @@ int main(int argc, char** argv)
 #ifdef QT_NO_DEBUG
     Tools::disableCoreDumps();
 #endif
+    Tools::setupSearchPaths();
 
     Application app(argc, argv);
     Application::setApplicationName("keepassx");

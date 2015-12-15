@@ -9,6 +9,10 @@
         <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
         <translation>KeePassX wordt verspreid onder de bepalingen van de GNU General Public License (GPL) versie 2 of (als u wenst) versie 3.</translation>
     </message>
+    <message>
+        <source>Revision</source>
+        <translation>Revisie</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -321,6 +325,12 @@ Wijzigingen ongedaan maken en doorgaan met sluiten?</translation>
     <message>
         <source>Writing the CSV file failed.</source>
         <translation>Schrijven van het CSV-bestand mislukt.</translation>
+    </message>
+    <message>
+        <source>The database you are trying to save as is locked by another instance of KeePassX.
+Do you want to save it anyway?</source>
+        <translation>De database die u op probeert te slaan is vergrendeld door een andere instantie van KeePassX.
+Wilt u toch doorgaan met opslaan?</translation>
     </message>
 </context>
 <context>
@@ -1268,10 +1278,6 @@ Wijzigingen ongedaan maken en doorgaan met sluiten?</translation>
     <message>
         <source>path to a custom config file</source>
         <translation>pad naar een configuratiebestand</translation>
-    </message>
-    <message>
-        <source>password of the database (DANGEROUS!)</source>
-        <translation>wachtwoord van de database (GEVAARLIJK!)</translation>
     </message>
     <message>
         <source>key file of the database</source>

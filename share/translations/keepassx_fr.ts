@@ -9,6 +9,10 @@
         <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
         <translation>KeePassX est distribué selon les conditions de la GNU General Public License (GPL) version 2 ou (à votre choix) version 3.</translation>
     </message>
+    <message>
+        <source>Revision</source>
+        <translation>Version</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -25,7 +29,7 @@
     <name>AutoTypeAssociationsModel</name>
     <message>
         <source>Window</source>
-        <translation>Fenêtre </translation>
+        <translation>Fenêtre</translation>
     </message>
     <message>
         <source>Sequence</source>
@@ -187,7 +191,7 @@
     </message>
     <message>
         <source> MiB</source>
-        <translation>MiB</translation>
+        <translation> MiB</translation>
     </message>
     <message>
         <source>Benchmark</source>
@@ -226,7 +230,7 @@
     </message>
     <message>
         <source>File not found!</source>
-        <translation>Fichier introuvable!</translation>
+        <translation>Fichier introuvable !</translation>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
@@ -260,7 +264,7 @@ Enregistrer les modifications ?</translation>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation>Une erreur s&apos;est produite lors de l&apos;écriture de la base de données. </translation>
+        <translation>Une erreur s&apos;est produite lors de l&apos;écriture de la base de données.</translation>
     </message>
     <message>
         <source>Save database as</source>
@@ -321,6 +325,12 @@ Ignorer les changements et fermer ?</translation>
     <message>
         <source>Writing the CSV file failed.</source>
         <translation>Échec de l&apos;écriture du fichier CSV.</translation>
+    </message>
+    <message>
+        <source>The database you are trying to save as is locked by another instance of KeePassX.
+Do you want to save it anyway?</source>
+        <translation>La base de données que vous essayez de sauvegarder a été verrouillée par une autre instance de KeePassX.
+Voulez-vous quand même la sauvegarder ?</translation>
     </message>
 </context>
 <context>
@@ -394,7 +404,7 @@ Ignorer les changements et fermer ?</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Propriétés </translation>
+        <translation>Propriétés</translation>
     </message>
     <message>
         <source>History</source>
@@ -463,7 +473,7 @@ Ignorer les changements et fermer ?</translation>
     <name>EditEntryWidgetAdvanced</name>
     <message>
         <source>Additional attributes</source>
-        <translation>Attributs supplémentaires </translation>
+        <translation>Attributs supplémentaires</translation>
     </message>
     <message>
         <source>Add</source>
@@ -483,7 +493,7 @@ Ignorer les changements et fermer ?</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Enregistrer le fichier </translation>
+        <translation>Enregistrer le fichier</translation>
     </message>
     <message>
         <source>Open</source>
@@ -595,11 +605,11 @@ Ignorer les changements et fermer ?</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Propriétés </translation>
+        <translation>Propriétés</translation>
     </message>
     <message>
         <source>Add group</source>
-        <translation>Ajouter un groupe. </translation>
+        <translation>Ajouter un groupe</translation>
     </message>
     <message>
         <source>Edit group</source>
@@ -1199,7 +1209,7 @@ Ignorer les changements et fermer ?</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global auto-type</source>
-        <translation>Utiliser la correspondance entre le titre de l&apos;entrée et de la fenêtre pour le remplissage  automatique global</translation>
+        <translation>Utiliser la correspondance entre le titre de l&apos;entrée et de la fenêtre pour le remplissage automatique global</translation>
     </message>
     <message>
         <source>Language</source>
@@ -1226,7 +1236,7 @@ Ignorer les changements et fermer ?</translation>
     </message>
     <message>
         <source> sec</source>
-        <translation>s</translation>
+        <translation> s</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
@@ -1268,10 +1278,6 @@ Ignorer les changements et fermer ?</translation>
     <message>
         <source>path to a custom config file</source>
         <translation>Chemin vers un fichier de configuration personnalisé</translation>
-    </message>
-    <message>
-        <source>password of the database (DANGEROUS!)</source>
-        <translation>Mot de passe de la base de donnée (DANGEREUX !)</translation>
     </message>
     <message>
         <source>key file of the database</source>
