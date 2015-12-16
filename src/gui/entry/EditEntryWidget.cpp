@@ -671,6 +671,14 @@ void EditEntryWidget::openAttachment(const QModelIndex& index)
         return;
     }
 
+    if (!file->flush()) {
+        MessageBox::warning(this, tr("Error"),
+                tr("Unable to save the attachment:\n").append(file->errorString()));
+        return;
+    }
+
+    file->close();
+
     QDesktopServices::openUrl(QUrl::fromLocalFile(file->fileName()));
 }
 
