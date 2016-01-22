@@ -294,6 +294,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_mainUi->expireDatePicker->setReadOnly(m_history);
     m_mainUi->notesEdit->setReadOnly(m_history);
     m_mainUi->tooglePasswordGeneratorButton->setChecked(false);
+    m_mainUi->tooglePasswordGeneratorButton->setDisabled(m_history);
     m_mainUi->passwordGenerator->reset();
     m_advancedUi->addAttachmentButton->setEnabled(!m_history);
     updateAttachmentButtonsEnabled(m_advancedUi->attachmentsView->currentIndex());
