@@ -123,6 +123,19 @@ QPixmap Entry::iconPixmap() const
     }
 }
 
+QPixmap Entry::iconScaledPixmap() const
+{
+    if (m_data.customIcon.isNull()) {
+        // built-in icons are 16x16 so don't need to be scaled
+        return databaseIcons()->iconPixmap(m_data.iconNumber);
+    }
+    else {
+        Q_ASSERT(database());
+
+        return database()->metadata()->customIconScaledPixmap(m_data.customIcon);
+    }
+}
+
 int Entry::iconNumber() const
 {
     return m_data.iconNumber;

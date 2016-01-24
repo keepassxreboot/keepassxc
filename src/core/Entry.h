@@ -60,6 +60,7 @@ public:
     Uuid uuid() const;
     QImage icon() const;
     QPixmap iconPixmap() const;
+    QPixmap iconScaledPixmap() const;
     int iconNumber() const;
     Uuid iconUuid() const;
     QColor foregroundColor() const;
