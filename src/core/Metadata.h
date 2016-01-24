@@ -22,6 +22,8 @@
 #include <QDateTime>
 #include <QHash>
 #include <QImage>
+#include <QPixmap>
+#include <QPixmapCache>
 #include <QPointer>
 
 #include "core/Global.h"
@@ -78,6 +80,7 @@ public:
     bool protectNotes() const;
     // bool autoEnableVisualHiding() const;
     QImage customIcon(const Uuid& uuid) const;
+    QPixmap customIconPixmap(const Uuid& uuid) const;
     bool containsCustomIcon(const Uuid& uuid) const;
     QHash<Uuid, QImage> customIcons() const;
     QList<Uuid> customIconsOrder() const;
@@ -153,6 +156,7 @@ private:
     MetadataData m_data;
 
     QHash<Uuid, QImage> m_customIcons;
+    mutable QHash<Uuid, QPixmapCache::Key> m_customIconCacheKeys;
     QList<Uuid> m_customIconsOrder;
 
     QPointer<Group> m_recycleBin;

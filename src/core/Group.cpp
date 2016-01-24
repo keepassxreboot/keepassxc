@@ -134,13 +134,12 @@ QPixmap Group::iconPixmap() const
     else {
         Q_ASSERT(m_db);
 
-        QPixmap pixmap;
-        if (m_db && !QPixmapCache::find(m_pixmapCacheKey, &pixmap)) {
-            pixmap = QPixmap::fromImage(m_db->metadata()->customIcon(m_data.customIcon));
-            m_pixmapCacheKey = QPixmapCache::insert(pixmap);
+        if (m_db) {
+            return m_db->metadata()->customIconPixmap(m_data.customIcon);
         }
-
-        return pixmap;
+        else {
+            return QPixmap();
+        }
     }
 }
 
@@ -214,8 +213,6 @@ void Group::setIcon(int iconNumber)
         m_data.iconNumber = iconNumber;
         m_data.customIcon = Uuid();
 
-        m_pixmapCacheKey = QPixmapCache::Key();
-
         updateTimeinfo();
         Q_EMIT modified();
         Q_EMIT dataChanged(this);
@@ -229,8 +226,6 @@ void Group::setIcon(const Uuid& uuid)
     if (m_data.customIcon != uuid) {
         m_data.customIcon = uuid;
         m_data.iconNumber = 0;
-
-        m_pixmapCacheKey = QPixmapCache::Key();
 
         updateTimeinfo();
         Q_EMIT modified();
