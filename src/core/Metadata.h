@@ -81,6 +81,7 @@ public:
     // bool autoEnableVisualHiding() const;
     QImage customIcon(const Uuid& uuid) const;
     QPixmap customIconPixmap(const Uuid& uuid) const;
+    QPixmap customIconScaledPixmap(const Uuid& uuid) const;
     bool containsCustomIcon(const Uuid& uuid) const;
     QHash<Uuid, QImage> customIcons() const;
     QList<Uuid> customIconsOrder() const;
@@ -157,6 +158,7 @@ private:
 
     QHash<Uuid, QImage> m_customIcons;
     mutable QHash<Uuid, QPixmapCache::Key> m_customIconCacheKeys;
+    mutable QHash<Uuid, QPixmapCache::Key> m_customIconScaledCacheKeys;
     QList<Uuid> m_customIconsOrder;
 
     QPointer<Group> m_recycleBin;
