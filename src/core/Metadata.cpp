@@ -214,6 +214,17 @@ QHash<Uuid, QImage> Metadata::customIcons() const
     return m_customIcons;
 }
 
+QHash<Uuid, QPixmap> Metadata::customIconsScaledPixmaps() const
+{
+    QHash<Uuid, QPixmap> result;
+
+    Q_FOREACH (const Uuid& uuid, m_customIconsOrder) {
+        result.insert(uuid, customIconScaledPixmap(uuid));
+    }
+
+    return result;
+}
+
 QList<Uuid> Metadata::customIconsOrder() const
 {
     return m_customIconsOrder;

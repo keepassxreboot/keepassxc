@@ -98,7 +98,7 @@ void EditWidgetIcons::load(Uuid currentUuid, Database* database, IconStruct icon
     m_database = database;
     m_currentUuid = currentUuid;
 
-    m_customIconModel->setIcons(database->metadata()->customIcons(),
+    m_customIconModel->setIcons(database->metadata()->customIconsScaledPixmaps(),
                                 database->metadata()->customIconsOrder());
 
     Uuid iconUuid = iconStruct.uuid;
@@ -133,7 +133,7 @@ void EditWidgetIcons::addCustomIcon()
             if (!image.isNull()) {
                 Uuid uuid = Uuid::random();
                 m_database->metadata()->addCustomIconScaled(uuid, image);
-                m_customIconModel->setIcons(m_database->metadata()->customIcons(),
+                m_customIconModel->setIcons(m_database->metadata()->customIconsScaledPixmaps(),
                                             m_database->metadata()->customIconsOrder());
                 QModelIndex index = m_customIconModel->indexFromUuid(uuid);
                 m_ui->customIconsView->setCurrentIndex(index);
@@ -183,7 +183,7 @@ void EditWidgetIcons::removeCustomIcon()
                 }
 
                 m_database->metadata()->removeCustomIcon(iconUuid);
-                m_customIconModel->setIcons(m_database->metadata()->customIcons(),
+                m_customIconModel->setIcons(m_database->metadata()->customIconsScaledPixmaps(),
                                             m_database->metadata()->customIconsOrder());
                 if (m_customIconModel->rowCount() > 0) {
                     m_ui->customIconsView->setCurrentIndex(m_customIconModel->index(0, 0));

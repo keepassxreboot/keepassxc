@@ -86,6 +86,7 @@ public:
     QHash<Uuid, QImage> customIcons() const;
     QList<Uuid> customIconsOrder() const;
     bool recycleBinEnabled() const;
+    QHash<Uuid, QPixmap> customIconsScaledPixmaps() const;
     Group* recycleBin();
     const Group* recycleBin() const;
     QDateTime recycleBinChanged() const;
