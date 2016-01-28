@@ -121,6 +121,7 @@
     <addaction name="separator"/>
     <addaction name="actionImportKeePass1"/>
     <addaction name="actionExportCsv"/>
+    <addaction name="actionRepairDatabase"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -420,6 +421,11 @@
    </property>
    <property name="text">
     <string>Export to CSV file</string>
+   </property>
+  </action>
+  <action name="actionRepairDatabase">
+   <property name="text">
+    <string>Repair database</string>
    </property>
   </action>
  </widget>

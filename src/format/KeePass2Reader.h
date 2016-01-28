@@ -31,12 +31,13 @@ class KeePass2Reader
 
 public:
     KeePass2Reader();
-    Database* readDatabase(QIODevice* device, const CompositeKey& key);
+    Database* readDatabase(QIODevice* device, const CompositeKey& key, bool keepDatabase = false);
     Database* readDatabase(const QString& filename, const CompositeKey& key);
     bool hasError();
     QString errorString();
     void setSaveXml(bool save);
     QByteArray xmlData();
+    QByteArray streamKey();
 
 private:
     void raiseError(const QString& errorMessage);

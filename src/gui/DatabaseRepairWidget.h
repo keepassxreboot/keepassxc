@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2016 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,30 +15,27 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTKEEPASS2WRITER_H
-#define KEEPASSX_TESTKEEPASS2WRITER_H
+#ifndef KEEPASSX_DATABASEREPAIRWIDGET_H
+#define KEEPASSX_DATABASEREPAIRWIDGET_H
 
-#include <QObject>
+#include "gui/DatabaseOpenWidget.h"
 
-class Database;
-
-class TestKeePass2Writer : public QObject
+class DatabaseRepairWidget : public DatabaseOpenWidget
 {
     Q_OBJECT
 
-private Q_SLOTS:
-    void initTestCase();
-    void testBasic();
-    void testProtectedAttributes();
-    void testAttachments();
-    void testNonAsciiPasswords();
-    void testDeviceFailure();
-    void testRepair();
-    void cleanupTestCase();
+public:
+    explicit DatabaseRepairWidget(QWidget* parent = Q_NULLPTR);
 
-private:
-    Database* m_dbOrg;
-    Database* m_dbTest;
+Q_SIGNALS:
+    void success();
+    void error();
+
+protected:
+    void openDatabase() Q_DECL_OVERRIDE;
+
+private Q_SLOTS:
+    void processEditFinished(bool result);
 };
 
-#endif // KEEPASSX_TESTKEEPASS2WRITER_H
+#endif // KEEPASSX_DATABASEREPAIRWIDGET_H
