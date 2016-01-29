@@ -25,13 +25,13 @@
 #include "format/KeePass2XmlReader.h"
 
 KeePass2Repair::KeePass2Repair()
-    : m_db(Q_NULLPTR)
+    : m_db(nullptr)
 {
 }
 
 KeePass2Repair::RepairResult KeePass2Repair::repairDatabase(QIODevice* device, const CompositeKey& key)
 {
-    m_db = Q_NULLPTR;
+    m_db = nullptr;
     m_errorStr.clear();
 
     KeePass2Reader reader;

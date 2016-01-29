@@ -623,7 +623,7 @@ void MainWindow::repairDatabase()
     if (dialog->exec() == QDialog::Accepted && dbRepairWidget->database()) {
         QString saveFileName = fileDialog()->getSaveFileName(this, tr("Save repaired database"), QString(),
                                                              tr("KeePass 2 Database").append(" (*.kdbx)"),
-                                                             Q_NULLPTR, 0, "kdbx");
+                                                             nullptr, 0, "kdbx");
 
         if (!saveFileName.isEmpty()) {
             KeePass2Writer writer;
