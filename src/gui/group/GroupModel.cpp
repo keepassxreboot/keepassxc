@@ -136,7 +136,7 @@ QVariant GroupModel::data(const QModelIndex& index, int role) const
             return databaseIcons()->iconPixmap(DatabaseIcons::ExpiredIconIndex);
         }
         else {
-            return group->iconPixmap();
+            return group->iconScaledPixmap();
         }
     }
     else if (role == Qt::FontRole) {

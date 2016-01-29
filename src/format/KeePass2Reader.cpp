@@ -43,7 +43,7 @@ KeePass2Reader::KeePass2Reader()
 {
 }
 
-Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& key)
+Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& key, bool keepDatabase)
 {
     QScopedPointer<Database> db(new Database());
     m_db = db.data();
@@ -178,7 +178,12 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
 
     if (xmlReader.hasError()) {
         raiseError(xmlReader.errorString());
-        return nullptr;
+        if (keepDatabase) {
+            return db.take();
+        }
+        else {
+            return nullptr;
+        }
     }
 
     Q_ASSERT(version < 0x00030001 || !xmlReader.headerHash().isEmpty());
@@ -230,6 +235,11 @@ void KeePass2Reader::setSaveXml(bool save)
 QByteArray KeePass2Reader::xmlData()
 {
     return m_xmlData;
+}
+
+QByteArray KeePass2Reader::streamKey()
+{
+    return m_protectedStreamKey;
 }
 
 void KeePass2Reader::raiseError(const QString& errorMessage)

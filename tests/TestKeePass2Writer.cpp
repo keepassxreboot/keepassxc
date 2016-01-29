@@ -20,12 +20,14 @@
 #include <QBuffer>
 #include <QTest>
 
+#include "config-keepassx-tests.h"
 #include "FailDevice.h"
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
 #include "format/KeePass2Reader.h"
+#include "format/KeePass2Repair.h"
 #include "format/KeePass2Writer.h"
 #include "format/KeePass2XmlWriter.h"
 #include "keys/PasswordKey.h"
@@ -124,6 +126,34 @@ void TestKeePass2Writer::testDeviceFailure()
     QCOMPARE(writer.errorString(), QString("FAILDEVICE"));
 
     delete db;
+}
+
+void TestKeePass2Writer::testRepair()
+{
+    QString brokenDbFilename = QString(KEEPASSX_TEST_DATA_DIR).append("/bug392.kdbx");
+    // master password = test
+    // entry username: testuser\x10
+    // entry password: testpw
+    CompositeKey key;
+    key.addKey(PasswordKey("test"));
+
+    // test that we can't open the broken database
+    KeePass2Reader reader;
+    Database* dbBroken = reader.readDatabase(brokenDbFilename, key);
+    QVERIFY(!dbBroken);
+    QVERIFY(reader.hasError());
+
+    // test if we can repair the database
+    KeePass2Repair repair;
+    QFile file(brokenDbFilename);
+    file.open(QIODevice::ReadOnly);
+    QCOMPARE(repair.repairDatabase(&file, key), KeePass2Repair::RepairSuccess);
+    Database* dbRepaired = repair.database();
+    QVERIFY(dbRepaired);
+
+    QCOMPARE(dbRepaired->rootGroup()->entries().size(), 1);
+    QCOMPARE(dbRepaired->rootGroup()->entries().at(0)->username(), QString("testuser"));
+    QCOMPARE(dbRepaired->rootGroup()->entries().at(0)->password(), QString("testpw"));
 }
 
 void TestKeePass2Writer::cleanupTestCase()

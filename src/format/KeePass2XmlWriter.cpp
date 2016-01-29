@@ -372,7 +372,7 @@ void KeePass2XmlWriter::writeEntry(const Entry* entry)
         }
 
         if (!value.isEmpty()) {
-            m_xml.writeCharacters(value);
+            m_xml.writeCharacters(stripInvalidXml10Chars(value));
         }
         m_xml.writeEndElement();
 
@@ -443,7 +443,7 @@ void KeePass2XmlWriter::writeString(const QString& qualifiedName, const QString&
         m_xml.writeEmptyElement(qualifiedName);
     }
     else {
-        m_xml.writeTextElement(qualifiedName, string);
+        m_xml.writeTextElement(qualifiedName, stripInvalidXml10Chars(string));
     }
 }
 
@@ -542,6 +542,23 @@ QString KeePass2XmlWriter::colorPartToString(int value)
     QString str = QString::number(value, 16).toUpper();
     if (str.length() == 1) {
         str.prepend("0");
+    }
+
+    return str;
+}
+
+QString KeePass2XmlWriter::stripInvalidXml10Chars(QString str)
+{
+    for (int i = str.size() - 1; i >= 0; i--) {
+        const ushort uc = str.at(i).unicode();
+
+        if ((uc < 0x20 && uc != 0x09 && uc != 0x0A && uc != 0x0D)
+                || (uc > 0xD7FF && uc < 0xE000)
+                || (uc > 0xFFFD))
+        {
+            qWarning("Stripping invalid XML 1.0 codepoint %x", uc);
+            str.remove(i, 1);
+        }
     }
 
     return str;

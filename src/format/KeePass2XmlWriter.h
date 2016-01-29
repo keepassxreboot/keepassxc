@@ -73,6 +73,7 @@ private:
     void writeColor(const QString& qualifiedName, const QColor& color);
     void writeTriState(const QString& qualifiedName, Group::TriState triState);
     QString colorPartToString(int value);
+    QString stripInvalidXml10Chars(QString str);
 
     void raiseError(const QString& errorMessage);
 

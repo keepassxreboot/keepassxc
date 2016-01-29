@@ -145,7 +145,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         switch (index.column()) {
         case ParentGroup:
             if (entry->group()) {
-                return entry->group()->iconPixmap();
+                return entry->group()->iconScaledPixmap();
             }
             break;
         case Title:
@@ -153,7 +153,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
                 return databaseIcons()->iconPixmap(DatabaseIcons::ExpiredIconIndex);
             }
             else {
-                return entry->iconPixmap();
+                return entry->iconScaledPixmap();
             }
         }
     }

@@ -19,7 +19,7 @@
 #define KEEPASSX_ICONMODELS_H
 
 #include <QAbstractListModel>
-#include <QImage>
+#include <QPixmap>
 
 #include "core/Uuid.h"
 
@@ -43,12 +43,12 @@ public:
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
-    void setIcons(const QHash<Uuid, QImage>& icons, const QList<Uuid>& iconsOrder);
+    void setIcons(const QHash<Uuid, QPixmap>& icons, const QList<Uuid>& iconsOrder);
     Uuid uuidFromIndex(const QModelIndex& index) const;
     QModelIndex indexFromUuid(const Uuid& uuid) const;
 
 private:
-    QHash<Uuid, QImage> m_icons;
+    QHash<Uuid, QPixmap> m_icons;
     QList<Uuid> m_iconsOrder;
 };
 

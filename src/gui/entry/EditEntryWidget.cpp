@@ -295,6 +295,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_mainUi->expireDatePicker->setReadOnly(m_history);
     m_mainUi->notesEdit->setReadOnly(m_history);
     m_mainUi->tooglePasswordGeneratorButton->setChecked(false);
+    m_mainUi->tooglePasswordGeneratorButton->setDisabled(m_history);
     m_mainUi->passwordGenerator->reset();
     m_advancedUi->addAttachmentButton->setEnabled(!m_history);
     updateAttachmentButtonsEnabled(m_advancedUi->attachmentsView->currentIndex());
@@ -671,6 +672,14 @@ void EditEntryWidget::openAttachment(const QModelIndex& index)
                 tr("Unable to save the attachment:\n").append(file->errorString()));
         return;
     }
+
+    if (!file->flush()) {
+        MessageBox::warning(this, tr("Error"),
+                tr("Unable to save the attachment:\n").append(file->errorString()));
+        return;
+    }
+
+    file->close();
 
     QDesktopServices::openUrl(QUrl::fromLocalFile(file->fileName()));
 }

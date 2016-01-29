@@ -54,7 +54,7 @@ CustomIconModel::CustomIconModel(QObject* parent)
 {
 }
 
-void CustomIconModel::setIcons(const QHash<Uuid, QImage>& icons, const QList<Uuid>& iconsOrder)
+void CustomIconModel::setIcons(const QHash<Uuid, QPixmap>& icons, const QList<Uuid>& iconsOrder)
 {
     beginResetModel();
 

@@ -73,6 +73,7 @@ set(keepassx_SOURCES
     format/KeePass2.h
     format/KeePass2RandomStream.cpp
     format/KeePass2Reader.cpp
+    format/KeePass2Repair.cpp
     format/KeePass2Writer.cpp
     format/KeePass2XmlReader.cpp
     format/KeePass2XmlWriter.cpp
@@ -81,6 +82,7 @@ set(keepassx_SOURCES
     gui/ChangeMasterKeyWidget.cpp
     gui/Clipboard.cpp
     gui/DatabaseOpenWidget.cpp
+    gui/DatabaseRepairWidget.cpp
     gui/DatabaseSettingsWidget.cpp
     gui/DatabaseTabWidget.cpp
     gui/DatabaseWidget.cpp

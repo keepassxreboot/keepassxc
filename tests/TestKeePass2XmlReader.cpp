@@ -17,6 +17,7 @@
 
 #include "TestKeePass2XmlReader.h"
 
+#include <QBuffer>
 #include <QFile>
 #include <QTest>
 
@@ -25,6 +26,7 @@
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
 #include "format/KeePass2XmlReader.h"
+#include "format/KeePass2XmlWriter.h"
 #include "config-keepassx-tests.h"
 
 QTEST_GUILESS_MAIN(TestKeePass2XmlReader)
@@ -405,6 +407,35 @@ void TestKeePass2XmlReader::testEmptyUuids()
         qWarning("Reader error: %s", qPrintable(reader.errorString()));
     }
     QVERIFY(!reader.hasError());
+}
+
+void TestKeePass2XmlReader::testInvalidXmlChars()
+{
+    QScopedPointer<Database> dbWrite(new Database());
+
+    Entry* entry = new Entry();
+    entry->setUuid(Uuid::random());
+    entry->setNotes(QString("a %1 b %2 c %3").arg(QChar(0x02)).arg(QChar(0xD800)).arg(QChar(0xFFFE)));
+    entry->setGroup(dbWrite->rootGroup());
+
+    QBuffer buffer;
+    buffer.open(QIODevice::ReadWrite);
+    KeePass2XmlWriter writer;
+    writer.writeDatabase(&buffer, dbWrite.data());
+    QVERIFY(!writer.hasError());
+    buffer.seek(0);
+
+    KeePass2XmlReader reader;
+    reader.setStrictMode(true);
+    QScopedPointer<Database> dbRead(reader.readDatabase(&buffer));
+    if (reader.hasError()) {
+        qWarning("Database read error: %s", qPrintable(reader.errorString()));
+    }
+    QVERIFY(!reader.hasError());
+    QVERIFY(!dbRead.isNull());
+    QCOMPARE(dbRead->rootGroup()->entries().size(), 1);
+    // check that the invalid codepoints have been stripped
+    QCOMPARE(dbRead->rootGroup()->entries().first()->notes(), QString("a  b  c "));
 }
 
 void TestKeePass2XmlReader::cleanupTestCase()

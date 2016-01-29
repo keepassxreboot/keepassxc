@@ -27,8 +27,12 @@
 #include "core/FilePath.h"
 #include "core/InactivityTimer.h"
 #include "core/Metadata.h"
+#include "format/KeePass2Writer.h"
 #include "gui/AboutDialog.h"
 #include "gui/DatabaseWidget.h"
+#include "gui/DatabaseRepairWidget.h"
+#include "gui/FileDialog.h"
+#include "gui/MessageBox.h"
 
 const QString MainWindow::BaseWindowTitle = "KeePassX";
 
@@ -163,6 +167,8 @@ MainWindow::MainWindow()
             SLOT(changeDatabaseSettings()));
     connect(m_ui->actionImportKeePass1, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(importKeePass1Database()));
+    connect(m_ui->actionRepairDatabase, SIGNAL(triggered()), this,
+            SLOT(repairDatabase()));
     connect(m_ui->actionExportCsv, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(exportToCsv()));
     connect(m_ui->actionLockDatabases, SIGNAL(triggered()), m_ui->tabWidget,
@@ -367,6 +373,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
     m_ui->actionDatabaseOpen->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
     m_ui->menuRecentDatabases->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
     m_ui->actionImportKeePass1->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
+    m_ui->actionRepairDatabase->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
 
     m_ui->actionLockDatabases->setEnabled(m_ui->tabWidget->hasLockableDatabases());
 }
@@ -597,6 +604,36 @@ void MainWindow::lockDatabasesAfterInactivity()
     }
 
     m_ui->tabWidget->lockDatabases();
+}
+
+void MainWindow::repairDatabase()
+{
+    QString filter = QString("%1 (*.kdbx);;%2 (*)").arg(tr("KeePass 2 Database"), tr("All files"));
+    QString fileName = fileDialog()->getOpenFileName(this, tr("Open database"), QString(),
+                                                     filter);
+    if (fileName.isEmpty()) {
+        return;
+    }
+
+    QScopedPointer<QDialog> dialog(new QDialog(this));
+    DatabaseRepairWidget* dbRepairWidget = new DatabaseRepairWidget(dialog.data());
+    connect(dbRepairWidget, SIGNAL(success()), dialog.data(), SLOT(accept()));
+    connect(dbRepairWidget, SIGNAL(error()), dialog.data(), SLOT(reject()));
+    dbRepairWidget->load(fileName);
+    if (dialog->exec() == QDialog::Accepted && dbRepairWidget->database()) {
+        QString saveFileName = fileDialog()->getSaveFileName(this, tr("Save repaired database"), QString(),
+                                                             tr("KeePass 2 Database").append(" (*.kdbx)"),
+                                                             Q_NULLPTR, 0, "kdbx");
+
+        if (!saveFileName.isEmpty()) {
+            KeePass2Writer writer;
+            writer.writeDatabase(saveFileName, dbRepairWidget->database());
+            if (writer.hasError()) {
+                MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
+                                     + writer.errorString());
+            }
+        }
+    }
 }
 
 bool MainWindow::isTrayIconEnabled() const

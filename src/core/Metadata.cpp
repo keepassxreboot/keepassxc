@@ -167,6 +167,43 @@ QImage Metadata::customIcon(const Uuid& uuid) const
     return m_customIcons.value(uuid);
 }
 
+QPixmap Metadata::customIconPixmap(const Uuid& uuid) const
+{
+    QPixmap pixmap;
+
+    if (!m_customIcons.contains(uuid)) {
+        return pixmap;
+    }
+
+    QPixmapCache::Key& cacheKey = m_customIconCacheKeys[uuid];
+
+    if (!QPixmapCache::find(cacheKey, &pixmap)) {
+        pixmap = QPixmap::fromImage(m_customIcons.value(uuid));
+        cacheKey = QPixmapCache::insert(pixmap);
+    }
+
+    return pixmap;
+}
+
+QPixmap Metadata::customIconScaledPixmap(const Uuid& uuid) const
+{
+    QPixmap pixmap;
+
+    if (!m_customIcons.contains(uuid)) {
+        return pixmap;
+    }
+
+    QPixmapCache::Key& cacheKey = m_customIconScaledCacheKeys[uuid];
+
+    if (!QPixmapCache::find(cacheKey, &pixmap)) {
+        QImage image = m_customIcons.value(uuid).scaled(16, 16, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        pixmap = QPixmap::fromImage(image);
+        cacheKey = QPixmapCache::insert(pixmap);
+    }
+
+    return pixmap;
+}
+
 bool Metadata::containsCustomIcon(const Uuid& uuid) const
 {
     return m_customIcons.contains(uuid);
@@ -175,6 +212,17 @@ bool Metadata::containsCustomIcon(const Uuid& uuid) const
 QHash<Uuid, QImage> Metadata::customIcons() const
 {
     return m_customIcons;
+}
+
+QHash<Uuid, QPixmap> Metadata::customIconsScaledPixmaps() const
+{
+    QHash<Uuid, QPixmap> result;
+
+    Q_FOREACH (const Uuid& uuid, m_customIconsOrder) {
+        result.insert(uuid, customIconScaledPixmap(uuid));
+    }
+
+    return result;
 }
 
 QList<Uuid> Metadata::customIconsOrder() const
@@ -338,6 +386,9 @@ void Metadata::addCustomIcon(const Uuid& uuid, const QImage& icon)
     Q_ASSERT(!m_customIcons.contains(uuid));
 
     m_customIcons.insert(uuid, icon);
+    // reset cache in case there is also an icon with that uuid
+    m_customIconCacheKeys[uuid] = QPixmapCache::Key();
+    m_customIconScaledCacheKeys[uuid] = QPixmapCache::Key();
     m_customIconsOrder.append(uuid);
     Q_ASSERT(m_customIcons.count() == m_customIconsOrder.count());
     Q_EMIT modified();
@@ -365,6 +416,10 @@ void Metadata::removeCustomIcon(const Uuid& uuid)
     Q_ASSERT(m_customIcons.contains(uuid));
 
     m_customIcons.remove(uuid);
+    QPixmapCache::remove(m_customIconCacheKeys.value(uuid));
+    m_customIconCacheKeys.remove(uuid);
+    QPixmapCache::remove(m_customIconScaledCacheKeys.value(uuid));
+    m_customIconScaledCacheKeys.remove(uuid);
     m_customIconsOrder.removeAll(uuid);
     Q_ASSERT(m_customIcons.count() == m_customIconsOrder.count());
     Q_EMIT modified();

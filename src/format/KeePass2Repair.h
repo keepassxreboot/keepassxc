@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2016 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,30 +15,36 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTKEEPASS2WRITER_H
-#define KEEPASSX_TESTKEEPASS2WRITER_H
+#ifndef KEEPASSX_KEEPASS2REPAIR_H
+#define KEEPASSX_KEEPASS2REPAIR_H
 
-#include <QObject>
+#include <QCoreApplication>
+#include <QIODevice>
 
-class Database;
+#include "core/Database.h"
+#include "keys/CompositeKey.h"
 
-class TestKeePass2Writer : public QObject
+class KeePass2Repair
 {
-    Q_OBJECT
+    Q_DECLARE_TR_FUNCTIONS(KeePass2Repair)
 
-private Q_SLOTS:
-    void initTestCase();
-    void testBasic();
-    void testProtectedAttributes();
-    void testAttachments();
-    void testNonAsciiPasswords();
-    void testDeviceFailure();
-    void testRepair();
-    void cleanupTestCase();
+public:
+    enum RepairResult
+    {
+        NothingTodo,
+        UnableToOpen,
+        RepairSuccess,
+        RepairFailed
+    };
+
+    KeePass2Repair();
+    RepairResult repairDatabase(QIODevice* device, const CompositeKey& key);
+    Database* database() const;
+    QString errorString() const;
 
 private:
-    Database* m_dbOrg;
-    Database* m_dbTest;
+    Database* m_db;
+    QString m_errorStr;
 };
 
-#endif // KEEPASSX_TESTKEEPASS2WRITER_H
+#endif // KEEPASSX_KEEPASS2REPAIR_H

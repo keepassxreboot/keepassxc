@@ -113,13 +113,25 @@ QPixmap Entry::iconPixmap() const
     else {
         Q_ASSERT(database());
 
-        QPixmap pixmap;
-        if (database() && !QPixmapCache::find(m_pixmapCacheKey, &pixmap)) {
-            pixmap = QPixmap::fromImage(database()->metadata()->customIcon(m_data.customIcon));
-            m_pixmapCacheKey = QPixmapCache::insert(pixmap);
+        if (database()) {
+            return database()->metadata()->customIconPixmap(m_data.customIcon);
         }
+        else {
+            return QPixmap();
+        }
+    }
+}
 
-        return pixmap;
+QPixmap Entry::iconScaledPixmap() const
+{
+    if (m_data.customIcon.isNull()) {
+        // built-in icons are 16x16 so don't need to be scaled
+        return databaseIcons()->iconPixmap(m_data.iconNumber);
+    }
+    else {
+        Q_ASSERT(database());
+
+        return database()->metadata()->customIconScaledPixmap(m_data.customIcon);
     }
 }
 
@@ -247,8 +259,6 @@ void Entry::setIcon(int iconNumber)
         m_data.iconNumber = iconNumber;
         m_data.customIcon = Uuid();
 
-        m_pixmapCacheKey = QPixmapCache::Key();
-
         Q_EMIT modified();
         emitDataChanged();
     }
@@ -261,8 +271,6 @@ void Entry::setIcon(const Uuid& uuid)
     if (m_data.customIcon != uuid) {
         m_data.customIcon = uuid;
         m_data.iconNumber = 0;
-
-        m_pixmapCacheKey = QPixmapCache::Key();
 
         Q_EMIT modified();
         emitDataChanged();
