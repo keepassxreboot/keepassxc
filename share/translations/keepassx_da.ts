@@ -13,6 +13,10 @@
         <source>Revision</source>
         <translation>Revision</translation>
     </message>
+    <message>
+        <source>Using:</source>
+        <translation>Bruger:</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -827,6 +831,16 @@ Vil du alligevel gemme?</translation>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Kan ikke beregne hovednøgle</translation>
+    </message>
+    <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <translation>Den valgte fil er en gammel KeePass 1 databasefil (.kdb).
+
+Du kan importere den ved at klikke på Database &gt; &apos;Importér KeePass 1 database&apos;.
+Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den importerede database med den gamle KeePassX 0.4 version.</translation>
     </message>
 </context>
 <context>

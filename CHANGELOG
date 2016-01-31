@@ -8,6 +8,7 @@
 - Display custom icons scaled. [#322]
 - Allow opening databases that have no password and keyfile. [#391]
 - Fix crash when importing .kdb files with invalid icon ids. [#425]
+- Update translations.
 
 2.0 (2015-12-06)
 =========================

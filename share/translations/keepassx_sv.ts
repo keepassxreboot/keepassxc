@@ -13,6 +13,10 @@
         <source>Revision</source>
         <translation>Revision</translation>
     </message>
+    <message>
+        <source>Using:</source>
+        <translation>Använder:</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -291,7 +295,7 @@ Vill du öppna den ändå? Databasen kommer då att öppnas skrivskyddad.</trans
     <message>
         <source>Can't lock the database as you are currently editing it.
 Please press cancel to finish your changes or discard them.</source>
-        <translation>Kan inte låsa databasen eftersom du håller på  att redigera den.
+        <translation>Kan inte låsa databasen eftersom du håller på att redigera den.
 Tryck avbryt för att ansluta dina ändringar alternativt kasta dem.</translation>
     </message>
     <message>
@@ -829,6 +833,13 @@ Vill du spara endå?</translation>
         <source>Unable to calculate master key</source>
         <translation>Kunde inte räkna nu master-nyckeln</translation>
     </message>
+    <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Main</name>
@@ -849,7 +860,7 @@ Vill du spara endå?</translation>
     </message>
     <message>
         <source>Recent databases</source>
-        <translation>Senast använda databser</translation>
+        <translation>Senast använda databaser</translation>
     </message>
     <message>
         <source>Help</source>
@@ -1185,11 +1196,11 @@ Vill du spara endå?</translation>
     </message>
     <message>
         <source>Open previous databases on startup</source>
-        <translation>Öppna senaste databasen är programmet startar</translation>
+        <translation>Öppna senaste databasen när programmet startar</translation>
     </message>
     <message>
         <source>Automatically save on exit</source>
-        <translation>Spara automatiskt är applikationen anslutas</translation>
+        <translation>Spara automatiskt när applikationen anslutas</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
