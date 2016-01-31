@@ -54,7 +54,6 @@ protected Q_SLOTS:
 private Q_SLOTS:
     void activatePassword();
     void activateKeyFile();
-    void setOkButtonEnabled();
     void browseKeyFile();
 
 protected:
