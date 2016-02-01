@@ -153,7 +153,7 @@ void TestKeePass2Writer::testRepair()
     QVERIFY(dbRepaired);
 
     QCOMPARE(dbRepaired->rootGroup()->entries().size(), 1);
-    QCOMPARE(dbRepaired->rootGroup()->entries().at(0)->username(), QString("testuser").append(0x20AC));
+    QCOMPARE(dbRepaired->rootGroup()->entries().at(0)->username(), QString("testuser").append(QChar(0x20AC)));
     QCOMPARE(dbRepaired->rootGroup()->entries().at(0)->password(), QString("testpw"));
 }
 
