@@ -66,7 +66,7 @@ KeePass2Repair::RepairResult KeePass2Repair::repairDatabase(QIODevice* device, c
 
     // try to fix broken databases because of bug #392
     for (int i = (xmlData.size() - 1); i >= 0; i--) {
-        char ch = xmlData.at(i);
+        quint8 ch = static_cast<quint8>(xmlData.at(i));
         if (ch < 0x20 && ch != 0x09 && ch != 0x0A && ch != 0x0D) {
             xmlData.remove(i, 1);
             repairAction = true;

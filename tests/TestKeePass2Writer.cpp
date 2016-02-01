@@ -133,7 +133,7 @@ void TestKeePass2Writer::testRepair()
 {
     QString brokenDbFilename = QString(KEEPASSX_TEST_DATA_DIR).append("/bug392.kdbx");
     // master password = test
-    // entry username: testuser\x10
+    // entry username: testuser\x10\x20AC
     // entry password: testpw
     CompositeKey key;
     key.addKey(PasswordKey("test"));
@@ -153,7 +153,7 @@ void TestKeePass2Writer::testRepair()
     QVERIFY(dbRepaired);
 
     QCOMPARE(dbRepaired->rootGroup()->entries().size(), 1);
-    QCOMPARE(dbRepaired->rootGroup()->entries().at(0)->username(), QString("testuser"));
+    QCOMPARE(dbRepaired->rootGroup()->entries().at(0)->username(), QString("testuser").append(0x20AC));
     QCOMPARE(dbRepaired->rootGroup()->entries().at(0)->password(), QString("testpw"));
 }
 
