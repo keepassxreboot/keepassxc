@@ -1,3 +1,10 @@
+2.0.2 (2016-02-02)
+=========================
+
+- Fix regression in database writer that caused it to strip certain special
+  chracters (characters from Unicode plane > 0).
+- Fix bug in repair function that caused it to strip non-ASCII characters.
+
 2.0.1 (2016-01-31)
 =========================
 
