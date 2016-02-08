@@ -67,6 +67,18 @@ QDateTime TestKeePass2XmlReader::genDT(int year, int month, int day, int hour, i
     return QDateTime(date, time, Qt::UTC);
 }
 
+QByteArray TestKeePass2XmlReader::strToBytes(const QString& str)
+{
+    QByteArray result;
+
+    for (int i = 0; i < str.size(); i++) {
+        result.append(str.at(i).unicode() >> 8);
+        result.append(str.at(i).unicode() & 0xFF);
+    }
+
+    return result;
+}
+
 void TestKeePass2XmlReader::initTestCase()
 {
     QVERIFY(Crypto::init());
@@ -413,10 +425,35 @@ void TestKeePass2XmlReader::testInvalidXmlChars()
 {
     QScopedPointer<Database> dbWrite(new Database());
 
+    QString strPlainInvalid = QString().append(QChar(0x02)).append(QChar(0x19))
+            .append(QChar(0xFFFE)).append(QChar(0xFFFF));
+    QString strPlainValid = QString().append(QChar(0x09)).append(QChar(0x0A))
+            .append(QChar(0x20)).append(QChar(0xD7FF))
+            .append(QChar(0xE000)).append(QChar(0xFFFD));
+    // U+10437 in UTF-16: D801 DC37
+    //                    high low  surrogate
+    QString strSingleHighSurrogate1 = QString().append(QChar(0xD801));
+    QString strSingleHighSurrogate2 = QString().append(QChar(0x31)).append(QChar(0xD801)).append(QChar(0x32));
+    QString strHighHighSurrogate = QString().append(QChar(0xD801)).append(QChar(0xD801));
+    QString strSingleLowSurrogate1 = QString().append(QChar(0xDC37));
+    QString strSingleLowSurrogate2 = QString().append(QChar((0x31))).append(QChar(0xDC37)).append(QChar(0x32));
+    QString strLowLowSurrogate = QString().append(QChar(0xDC37)).append(QChar(0xDC37));
+    QString strSurrogateValid1 = QString().append(QChar(0xD801)).append(QChar(0xDC37));
+    QString strSurrogateValid2 = QString().append(QChar(0x31)).append(QChar(0xD801)).append(QChar(0xDC37)).append(QChar(0x32));
+
     Entry* entry = new Entry();
     entry->setUuid(Uuid::random());
-    entry->setNotes(QString("a %1 b %2 c %3").arg(QChar(0x02)).arg(QChar(0xD800)).arg(QChar(0xFFFE)));
     entry->setGroup(dbWrite->rootGroup());
+    entry->attributes()->set("PlainInvalid", strPlainInvalid);
+    entry->attributes()->set("PlainValid", strPlainValid);
+    entry->attributes()->set("SingleHighSurrogate1", strSingleHighSurrogate1);
+    entry->attributes()->set("SingleHighSurrogate2", strSingleHighSurrogate2);
+    entry->attributes()->set("HighHighSurrogate", strHighHighSurrogate);
+    entry->attributes()->set("SingleLowSurrogate1", strSingleLowSurrogate1);
+    entry->attributes()->set("SingleLowSurrogate2", strSingleLowSurrogate2);
+    entry->attributes()->set("LowLowSurrogate", strLowLowSurrogate);
+    entry->attributes()->set("SurrogateValid1", strSurrogateValid1);
+    entry->attributes()->set("SurrogateValid2", strSurrogateValid2);
 
     QBuffer buffer;
     buffer.open(QIODevice::ReadWrite);
@@ -434,8 +471,19 @@ void TestKeePass2XmlReader::testInvalidXmlChars()
     QVERIFY(!reader.hasError());
     QVERIFY(!dbRead.isNull());
     QCOMPARE(dbRead->rootGroup()->entries().size(), 1);
-    // check that the invalid codepoints have been stripped
-    QCOMPARE(dbRead->rootGroup()->entries().first()->notes(), QString("a  b  c "));
+    Entry* entryRead = dbRead->rootGroup()->entries().at(0);
+    EntryAttributes* attrRead = entryRead->attributes();
+
+    QCOMPARE(strToBytes(attrRead->value("PlainInvalid")), QByteArray());
+    QCOMPARE(strToBytes(attrRead->value("PlainValid")), strToBytes(strPlainValid));
+    QCOMPARE(strToBytes(attrRead->value("SingleHighSurrogate1")), QByteArray());
+    QCOMPARE(strToBytes(attrRead->value("SingleHighSurrogate2")), strToBytes(QString("12")));
+    QCOMPARE(strToBytes(attrRead->value("HighHighSurrogate")), QByteArray());
+    QCOMPARE(strToBytes(attrRead->value("SingleLowSurrogate1")), QByteArray());
+    QCOMPARE(strToBytes(attrRead->value("SingleLowSurrogate2")), strToBytes(QString("12")));
+    QCOMPARE(strToBytes(attrRead->value("LowLowSurrogate")), QByteArray());
+    QCOMPARE(strToBytes(attrRead->value("SurrogateValid1")), strToBytes(strSurrogateValid1));
+    QCOMPARE(strToBytes(attrRead->value("SurrogateValid2")), strToBytes(strSurrogateValid2));
 }
 
 void TestKeePass2XmlReader::cleanupTestCase()

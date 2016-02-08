@@ -13,6 +13,10 @@
         <source>Revision</source>
         <translation>Revisi</translation>
     </message>
+    <message>
+        <source>Using:</source>
+        <translation>Menggunakan:</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -79,7 +83,7 @@
     </message>
     <message>
         <source>Key files</source>
-        <translation>Berkas Kunci</translation>
+        <translation>Berkas kunci</translation>
     </message>
     <message>
         <source>All files</source>
@@ -99,7 +103,7 @@
     </message>
     <message>
         <source>Select a key file</source>
-        <translation>Pilih sebuah berkas kunci</translation>
+        <translation>Pilih berkas kunci</translation>
     </message>
     <message>
         <source>Question</source>
@@ -111,7 +115,7 @@
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Sandi yang berbeda diberikan.</translation>
+        <translation>Sandi berbeda.</translation>
     </message>
     <message>
         <source>Failed to set key file</source>
@@ -428,7 +432,7 @@ Apakah Anda tetap ingin menyimpannya?</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Kata sandi yang berbeda diberikan.</translation>
+        <translation>Sandi berbeda.</translation>
     </message>
     <message>
         <source>New attribute</source>
@@ -586,7 +590,7 @@ Apakah Anda tetap ingin menyimpannya?</translation>
     </message>
     <message>
         <source>Presets</source>
-        <translation type="unfinished"/>
+        <translation>Prasetel</translation>
     </message>
     <message>
         <source>Notes:</source>
@@ -828,6 +832,16 @@ Apakah Anda tetap ingin menyimpannya?</translation>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Tidak bisa mengkalkulasi kunci utama</translation>
+    </message>
+    <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <translation>Berkas yang dipilih adalah basis data KeePass 1 yang lama (.kdb).
+
+Anda bisa mengimpornya dengan mengklik Basis Data &gt; &apos;Impor basis data KeePass 1&apos;.
+Ini adalah migrasi satu arah. Anda tidak akan bisa lagi membuka basis data yang diimpor dengan versi lama KeePassX 0.4.</translation>
     </message>
 </context>
 <context>

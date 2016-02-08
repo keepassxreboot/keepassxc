@@ -1,3 +1,22 @@
+2.0.2 (2016-02-02)
+=========================
+
+- Fix regression in database writer that caused it to strip certain special
+  characters (characters from Unicode plane > 0).
+- Fix bug in repair function that caused it to strip non-ASCII characters.
+
+2.0.1 (2016-01-31)
+=========================
+
+- Flush temporary file before opening attachment. [#390]
+- Disable password generator when showing entry in history mode. [#422]
+- Strip invalid XML chars when writing databases. [#392]
+- Add repair function to fix databases with invalid XML chars. [#392]
+- Display custom icons scaled. [#322]
+- Allow opening databases that have no password and keyfile. [#391]
+- Fix crash when importing .kdb files with invalid icon ids. [#425]
+- Update translations.
+
 2.0 (2015-12-06)
 =========================
 

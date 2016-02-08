@@ -901,10 +901,10 @@ bool KeePass1Reader::parseCustomIcons4(const QByteArray& data)
         QByteArray entryUuid = data.mid(pos, 16);
         pos += 16;
 
-        int iconId = Endian::bytesToUInt32(data.mid(pos, 4), KeePass1::BYTEORDER);
+        quint32 iconId = Endian::bytesToUInt32(data.mid(pos, 4), KeePass1::BYTEORDER);
         pos += 4;
 
-        if (m_entryUuids.contains(entryUuid) && (iconId < iconUuids.size())) {
+        if (m_entryUuids.contains(entryUuid) && (iconId < static_cast<quint32>(iconUuids.size()))) {
             m_entryUuids[entryUuid]->setIcon(iconUuids[iconId]);
         }
     }
@@ -917,10 +917,10 @@ bool KeePass1Reader::parseCustomIcons4(const QByteArray& data)
         quint32 groupId = Endian::bytesToUInt32(data.mid(pos, 4), KeePass1::BYTEORDER);
         pos += 4;
 
-        int iconId = Endian::bytesToUInt32(data.mid(pos, 4), KeePass1::BYTEORDER);
+        quint32 iconId = Endian::bytesToUInt32(data.mid(pos, 4), KeePass1::BYTEORDER);
         pos += 4;
 
-        if (m_groupIds.contains(groupId) && (iconId < iconUuids.size())) {
+        if (m_groupIds.contains(groupId) && (iconId < static_cast<quint32>(iconUuids.size()))) {
             m_groupIds[groupId]->setIcon(iconUuids[iconId]);
         }
     }

@@ -523,6 +523,7 @@ Group* KeePass2XmlReader::parseGroup()
                 if (m_strictMode) {
                     raiseError("Invalid group icon number");
                 }
+                iconId = 0;
             }
             else {
                 if (iconId >= DatabaseIcons::IconCount) {
@@ -702,6 +703,7 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
                 if (m_strictMode) {
                     raiseError("Invalid entry icon number");
                 }
+                iconId = 0;
             }
             else {
                 entry->setIcon(iconId);

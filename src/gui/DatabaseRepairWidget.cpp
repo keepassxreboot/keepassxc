@@ -51,6 +51,7 @@ void DatabaseRepairWidget::openDatabase()
         if (!key.load(keyFilename, &errorMsg)) {
             MessageBox::warning(this, tr("Error"), tr("Can't open key file").append(":\n").append(errorMsg));
             Q_EMIT editFinished(false);
+            return;
         }
         masterKey.addKey(key);
     }

@@ -550,11 +550,19 @@ QString KeePass2XmlWriter::colorPartToString(int value)
 QString KeePass2XmlWriter::stripInvalidXml10Chars(QString str)
 {
     for (int i = str.size() - 1; i >= 0; i--) {
-        const ushort uc = str.at(i).unicode();
+        const QChar ch = str.at(i);
+        const ushort uc = ch.unicode();
 
-        if ((uc < 0x20 && uc != 0x09 && uc != 0x0A && uc != 0x0D)
-                || (uc > 0xD7FF && uc < 0xE000)
-                || (uc > 0xFFFD))
+        if (ch.isLowSurrogate() && i != 0 && str.at(i - 1).isHighSurrogate()) {
+            // keep valid surrogate pair
+            i--;
+        }
+        else if ((uc < 0x20 && uc != 0x09 && uc != 0x0A && uc != 0x0D)  // control chracters
+                 || (uc >= 0x7F && uc <= 0x84)  // control chracters, valid but discouraged by XML
+                 || (uc >= 0x86 && uc <= 0x9F)  // control chracters, valid but discouraged by XML
+                 || (uc > 0xFFFD)               // noncharacter
+                 || ch.isLowSurrogate()         // single low surrogate
+                 || ch.isHighSurrogate())       // single high surrogate
         {
             qWarning("Stripping invalid XML 1.0 codepoint %x", uc);
             str.remove(i, 1);

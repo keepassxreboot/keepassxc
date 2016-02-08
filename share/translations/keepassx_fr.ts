@@ -13,6 +13,10 @@
         <source>Revision</source>
         <translation>Version</translation>
     </message>
+    <message>
+        <source>Using:</source>
+        <translation>Utilise :</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -79,7 +83,7 @@
     </message>
     <message>
         <source>Key files</source>
-        <translation>Fichiers de clé</translation>
+        <translation>Fichiers-clés</translation>
     </message>
     <message>
         <source>All files</source>
@@ -120,7 +124,7 @@
     <message>
         <source>Failed to set %1 as the Key file:
 %2</source>
-        <translation>Impossible de définir %1 comme fichier-clé:
+        <translation>Impossible de définir %1 comme fichier-clé :
 %2</translation>
     </message>
 </context>
@@ -286,7 +290,7 @@ Voulez-vous quand même l&apos;ouvrir ? Dans ce cas, elle sera ouverte en lectur
     </message>
     <message>
         <source>Lock database</source>
-        <translation>Verrouiiler la base de données</translation>
+        <translation>Verrouiller la base de données</translation>
     </message>
     <message>
         <source>Can't lock the database as you are currently editing it.
@@ -449,7 +453,7 @@ Voulez-vous quand même la sauvegarder ?</translation>
     <message>
         <source>Unable to save the attachment:
 </source>
-        <translation>Impossible d&apos;enregistrer le fichier attaché:
+        <translation>Impossible d&apos;enregistrer le fichier attaché :
 </translation>
     </message>
     <message>
@@ -532,7 +536,7 @@ Voulez-vous quand même la sauvegarder ?</translation>
     </message>
     <message>
         <source>Set custom sequence:</source>
-        <translation>Définir une séquence personnalisé :</translation>
+        <translation>Définir une séquence personnalisée :</translation>
     </message>
 </context>
 <context>
@@ -562,7 +566,7 @@ Voulez-vous quand même la sauvegarder ?</translation>
     </message>
     <message>
         <source>Username:</source>
-        <translation>Non d&apos;utilisateur :</translation>
+        <translation>Nom d&apos;utilisateur :</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -755,7 +759,7 @@ Voulez-vous quand même la sauvegarder ?</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Non d&apos;utilisateur</translation>
+        <translation>Nom d&apos;utilisateur</translation>
     </message>
     <message>
         <source>URL</source>
@@ -792,7 +796,7 @@ Voulez-vous quand même la sauvegarder ?</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Ce n&apos;est pas une base de donnée KeePass.</translation>
+        <translation>Ce n&apos;est pas une base de données KeePass.</translation>
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
@@ -800,7 +804,7 @@ Voulez-vous quand même la sauvegarder ?</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>Version de base de donnée KeePass non supportée.</translation>
+        <translation>Version de base de données KeePass non supportée.</translation>
     </message>
     <message>
         <source>Root</source>
@@ -815,19 +819,29 @@ Voulez-vous quand même la sauvegarder ?</translation>
     <name>KeePass2Reader</name>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Ce n&apos;est pas une base de donnée KeePass.</translation>
+        <translation>Ce n&apos;est pas une base de données KeePass.</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>Version de base de donnée KeePass non supportée.</translation>
+        <translation>Version de base de données KeePass non supportée.</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
-        <translation>Mauvaise clé ou fichier de base de donnée corrompu.</translation>
+        <translation>Mauvaise clé ou fichier de base de données corrompu.</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Impossible de calculer la clé maître</translation>
+    </message>
+    <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <translation>Le fichier sélectionné est une ancienne base de données pour KeePass 1 (.kdb).
+
+Vous pouvez l&apos;importer en cliquant sur &quot;Base de données&quot; &gt; &quot;Importer une base de données KeePass 1&quot;.
+Ceci est une migration à sens unique. Vous ne serez plus en mesure d&apos;ouvrir la base de données importée avec l&apos;ancienne version KeePassX version 0.4.</translation>
     </message>
 </context>
 <context>
@@ -861,7 +875,7 @@ Voulez-vous quand même la sauvegarder ?</translation>
     </message>
     <message>
         <source>Copy attribute to clipboard</source>
-        <translation>Copier l&apos;attribut dans le presse-papiers</translation>
+        <translation>Copier l&apos;attribut dans le presse-papier</translation>
     </message>
     <message>
         <source>Groups</source>
@@ -881,19 +895,19 @@ Voulez-vous quand même la sauvegarder ?</translation>
     </message>
     <message>
         <source>Open database</source>
-        <translation>Ouvrir une base de donnée</translation>
+        <translation>Ouvrir une base de données</translation>
     </message>
     <message>
         <source>Save database</source>
-        <translation>Enregistrer la base de donnée</translation>
+        <translation>Enregistrer la base de données</translation>
     </message>
     <message>
         <source>Close database</source>
-        <translation>Fermer la base de donnée</translation>
+        <translation>Fermer la base de données</translation>
     </message>
     <message>
         <source>New database</source>
-        <translation>Nouvelle base de donnée</translation>
+        <translation>Nouvelle base de données</translation>
     </message>
     <message>
         <source>Add new entry</source>
@@ -921,7 +935,7 @@ Voulez-vous quand même la sauvegarder ?</translation>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Enregistrer la base de donnée sous</translation>
+        <translation>Enregistrer la base de données sous</translation>
     </message>
     <message>
         <source>Change master key</source>
@@ -929,11 +943,11 @@ Voulez-vous quand même la sauvegarder ?</translation>
     </message>
     <message>
         <source>Database settings</source>
-        <translation>Paramètre de la base de donnée</translation>
+        <translation>Paramètres de la base de données</translation>
     </message>
     <message>
         <source>Import KeePass 1 database</source>
-        <translation>Importer une base de donnée KeePass 1</translation>
+        <translation>Importer une base de données KeePass 1</translation>
     </message>
     <message>
         <source>Clone entry</source>
@@ -945,11 +959,11 @@ Voulez-vous quand même la sauvegarder ?</translation>
     </message>
     <message>
         <source>Copy username to clipboard</source>
-        <translation>Copier le nom d&apos;utilisateur dans le presse-papiers</translation>
+        <translation>Copier le nom d&apos;utilisateur dans le presse-papier</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
-        <translation>Copier le mot de passe dans le presse-papiers</translation>
+        <translation>Copier le mot de passe dans le presse-papier</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -1020,7 +1034,7 @@ Voulez-vous quand même la sauvegarder ?</translation>
     </message>
     <message>
         <source>Character Types</source>
-        <translation>Types de caractère</translation>
+        <translation>Types de caractères</translation>
     </message>
     <message>
         <source>Upper Case Letters</source>
@@ -1055,7 +1069,7 @@ Voulez-vous quand même la sauvegarder ?</translation>
     <name>QCommandLineParser</name>
     <message>
         <source>Displays version information.</source>
-        <translation>Afficher les informations de version</translation>
+        <translation>Afficher les informations de version.</translation>
     </message>
     <message>
         <source>Displays this help.</source>
@@ -1166,7 +1180,7 @@ Voulez-vous quand même la sauvegarder ?</translation>
     <name>SettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>Paramètre de l&apos;application</translation>
+        <translation>Paramètres de l&apos;application</translation>
     </message>
     <message>
         <source>General</source>
@@ -1185,19 +1199,19 @@ Voulez-vous quand même la sauvegarder ?</translation>
     </message>
     <message>
         <source>Open previous databases on startup</source>
-        <translation>Ouvrir les base de données précédentes au démarrage</translation>
+        <translation>Ouvrir les bases de données précédentes au démarrage</translation>
     </message>
     <message>
         <source>Automatically save on exit</source>
-        <translation>Sauvegarde automatiquement à la sortie</translation>
+        <translation>Sauvegarder automatiquement à la sortie</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation>Sauvegarde automatiquement après chaque modification</translation>
+        <translation>Sauvegarder automatiquement après chaque modification</translation>
     </message>
     <message>
         <source>Minimize when copying to clipboard</source>
-        <translation>Réduire lors de la copie dans le presse-papiers</translation>
+        <translation>Réduire lors de la copie dans le presse-papier</translation>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
@@ -1232,7 +1246,7 @@ Voulez-vous quand même la sauvegarder ?</translation>
     <name>SettingsWidgetSecurity</name>
     <message>
         <source>Clear clipboard after</source>
-        <translation>Vider le presse-papiers après</translation>
+        <translation>Vider le presse-papier après</translation>
     </message>
     <message>
         <source> sec</source>
@@ -1240,7 +1254,7 @@ Voulez-vous quand même la sauvegarder ?</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
-        <translation>Verrouiller les bases de donnée après une inactivité de</translation>
+        <translation>Verrouiller les bases de données après une inactivité de</translation>
     </message>
     <message>
         <source>Show passwords in cleartext by default</source>
@@ -1255,7 +1269,7 @@ Voulez-vous quand même la sauvegarder ?</translation>
     <name>UnlockDatabaseWidget</name>
     <message>
         <source>Unlock database</source>
-        <translation>Déverrouiller la base de donnée</translation>
+        <translation>Déverrouiller la base de données</translation>
     </message>
 </context>
 <context>
@@ -1273,7 +1287,7 @@ Voulez-vous quand même la sauvegarder ?</translation>
     </message>
     <message>
         <source>filename of the password database to open (*.kdbx)</source>
-        <translation>Nom de fichier de la base de donnée de mot de pass à ouvrir (*.kdbx)</translation>
+        <translation>Nom de fichier de la base de données de mot de passe à ouvrir (*.kdbx)</translation>
     </message>
     <message>
         <source>path to a custom config file</source>
