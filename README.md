@@ -23,7 +23,7 @@ The following libraries are required:
 * zlib
 * libmicrohttpd
 * libxtst (optional for auto-type on X11)
-* libxtst, qtx11extras (optional for auto-type on X11)
+* libxi, libxtst, qtx11extras (optional for auto-type on X11)
 
 On Debian you can install them with:
 
