@@ -57,12 +57,12 @@ The following libraries are required:
 * Qt 4 (>= 4.6)
 * libgcrypt
 * zlib
-* libxtst (optional for auto-type on X11)
+* libxi, libxtst (optional for auto-type on X11)
 
 On Debian you can install them with:
 
 ```bash
-sudo apt-get install build-essential cmake libqt4-dev libgcrypt11-dev zlib1g-dev
+sudo apt-get install build-essential cmake libqt4-dev libgcrypt11-dev zlib1g-dev libxi-dev libxtst-dev
 ```
 
 #### Build Steps
