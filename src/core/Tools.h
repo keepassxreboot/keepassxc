@@ -43,7 +43,7 @@ void disableCoreDumps();
 void setupSearchPaths();
 
 template <typename RandomAccessIterator, typename T>
-KEEPASSX_EXPORT RandomAccessIterator binaryFind(RandomAccessIterator begin, RandomAccessIterator end, const T& value)
+RandomAccessIterator binaryFind(RandomAccessIterator begin, RandomAccessIterator end, const T& value)
 {
     RandomAccessIterator it = std::lower_bound(begin, end, value);
 
