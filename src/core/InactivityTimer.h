@@ -18,9 +18,8 @@
 #ifndef KEEPASSX_INACTIVITYTIMER_H
 #define KEEPASSX_INACTIVITYTIMER_H
 
+#include <QMutex>
 #include <QObject>
-
-#include "core/Global.h"
 
 class QTimer;
 
@@ -29,7 +28,7 @@ class InactivityTimer : public QObject
     Q_OBJECT
 
 public:
-    explicit InactivityTimer(QObject* parent = Q_NULLPTR);
+    explicit InactivityTimer(QObject* parent = nullptr);
     void setInactivityTimeout(int inactivityTimeout);
     void activate();
     void deactivate();
@@ -46,6 +45,7 @@ private Q_SLOTS:
 private:
     QTimer* m_timer;
     bool m_active;
+    QMutex m_emitMutx;
 };
 
 #endif // KEEPASSX_INACTIVITYTIMER_H

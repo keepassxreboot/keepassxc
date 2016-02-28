@@ -31,7 +31,7 @@
 DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     : DialogyWidget(parent)
     , m_ui(new Ui::DatabaseOpenWidget())
-    , m_db(Q_NULLPTR)
+    , m_db(nullptr)
 {
     m_ui->setupUi(this);
 
@@ -49,10 +49,6 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
 
     connect(m_ui->editPassword, SIGNAL(textChanged(QString)), SLOT(activatePassword()));
     connect(m_ui->comboKeyFile, SIGNAL(editTextChanged(QString)), SLOT(activateKeyFile()));
-
-    connect(m_ui->checkPassword, SIGNAL(toggled(bool)), SLOT(setOkButtonEnabled()));
-    connect(m_ui->checkKeyFile, SIGNAL(toggled(bool)), SLOT(setOkButtonEnabled()));
-    connect(m_ui->comboKeyFile, SIGNAL(editTextChanged(QString)), SLOT(setOkButtonEnabled()));
 
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(openDatabase()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
@@ -76,6 +72,7 @@ void DatabaseOpenWidget::load(const QString& filename)
         }
     }
 
+    m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
     m_ui->editPassword->setFocus();
 }
 
@@ -100,9 +97,6 @@ void DatabaseOpenWidget::openDatabase()
 {
     KeePass2Reader reader;
     CompositeKey masterKey = databaseKey();
-    if (masterKey.isEmpty()) {
-        return;
-    }
 
     QFile file(m_filename);
     if (!file.open(QIODevice::ReadOnly)) {
@@ -177,14 +171,6 @@ void DatabaseOpenWidget::activatePassword()
 void DatabaseOpenWidget::activateKeyFile()
 {
     m_ui->checkKeyFile->setChecked(true);
-}
-
-void DatabaseOpenWidget::setOkButtonEnabled()
-{
-    bool enable = m_ui->checkPassword->isChecked()
-            || (m_ui->checkKeyFile->isChecked() && !m_ui->comboKeyFile->currentText().isEmpty());
-
-    m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(enable);
 }
 
 void DatabaseOpenWidget::browseKeyFile()

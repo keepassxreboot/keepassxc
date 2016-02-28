@@ -13,6 +13,6 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-add_unit_test(NAME testgui SOURCES TestGui.cpp MOCS TestGui.h LIBS ${TEST_LIBRARIES})
+add_unit_test(NAME testgui SOURCES TestGui.cpp LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testguipixmaps SOURCES TestGuiPixmaps.cpp MOCS TestGuiPixmaps.h LIBS ${TEST_LIBRARIES})
+add_unit_test(NAME testguipixmaps SOURCES TestGuiPixmaps.cpp LIBS ${TEST_LIBRARIES})

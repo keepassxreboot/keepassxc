@@ -19,7 +19,6 @@
 
 #include <QTest>
 
-#include "tests.h"
 #include "autotype/WildcardMatcher.h"
 
 QTEST_GUILESS_MAIN(TestWildcardMatcher)

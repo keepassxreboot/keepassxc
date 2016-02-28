@@ -21,7 +21,6 @@
 #include <QHash>
 #include <QTabWidget>
 
-#include "core/qlockfile.h"
 #include "format/KeePass2Writer.h"
 #include "gui/DatabaseWidget.h"
 
@@ -29,6 +28,7 @@ class DatabaseWidget;
 class DatabaseWidgetStateSync;
 class DatabaseOpenWidget;
 class QFile;
+class QLockFile;
 
 struct DatabaseManagerStruct
 {
@@ -51,7 +51,7 @@ class DatabaseTabWidget : public QTabWidget
     Q_OBJECT
 
 public:
-    explicit DatabaseTabWidget(QWidget* parent = Q_NULLPTR);
+    explicit DatabaseTabWidget(QWidget* parent = nullptr);
     ~DatabaseTabWidget();
     void openDatabase(const QString& fileName, const QString& pw = QString(),
                       const QString& keyFile = QString());
@@ -66,6 +66,7 @@ public Q_SLOTS:
     void importKeePass1Database();
     bool saveDatabase(int index = -1);
     bool saveDatabaseAs(int index = -1);
+    void exportToCsv();
     bool closeDatabase(int index = -1);
     void closeDatabaseFromSender();
     bool closeAllDatabases();
@@ -100,7 +101,7 @@ private:
     Database* databaseFromDatabaseWidget(DatabaseWidget* dbWidget);
     void insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct);
     void updateLastDatabases(const QString& filename);
-    void connectDatabase(Database* newDb, Database* oldDb = Q_NULLPTR);
+    void connectDatabase(Database* newDb, Database* oldDb = nullptr);
 
     KeePass2Writer m_writer;
     QHash<Database*, DatabaseManagerStruct> m_dbList;

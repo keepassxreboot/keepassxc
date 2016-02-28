@@ -21,14 +21,9 @@
 #include <QClipboard>
 #include <QTimer>
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-#include <QDBusConnection>
-#include <QDBusMessage>
-#endif
-
 #include "core/Config.h"
 
-Clipboard* Clipboard::m_instance(Q_NULLPTR);
+Clipboard* Clipboard::m_instance(nullptr);
 
 Clipboard::Clipboard(QObject* parent)
     : QObject(parent)
@@ -36,7 +31,7 @@ Clipboard::Clipboard(QObject* parent)
 {
     m_timer->setSingleShot(true);
     connect(m_timer, SIGNAL(timeout()), SLOT(clearClipboard()));
-    connect(qApp, SIGNAL(aboutToQuit()), SLOT(cleanup()));
+    connect(qApp, SIGNAL(aboutToQuit()), SLOT(clearCopiedText()));
 }
 
 void Clipboard::setText(const QString& text)
@@ -54,6 +49,14 @@ void Clipboard::setText(const QString& text)
             m_lastCopied = text;
             m_timer->start(timeout * 1000);
         }
+    }
+}
+
+void Clipboard::clearCopiedText()
+{
+    if (m_timer->isActive()) {
+        m_timer->stop();
+        clearClipboard();
     }
 }
 
@@ -75,20 +78,7 @@ void Clipboard::clearClipboard()
         clipboard->clear(QClipboard::Selection);
     }
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    QDBusMessage message = QDBusMessage::createMethodCall("org.kde.klipper", "/klipper", "", "clearClipboardHistory");
-    QDBusConnection::sessionBus().send(message);
-#endif
-
     m_lastCopied.clear();
-}
-
-void Clipboard::cleanup()
-{
-    if (m_timer->isActive()) {
-        m_timer->stop();
-        clearClipboard();
-    }
 }
 
 Clipboard* Clipboard::instance()

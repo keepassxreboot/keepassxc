@@ -22,8 +22,6 @@
 #include <QDialog>
 #include <QHash>
 
-#include "core/Global.h"
-
 class AutoTypeSelectView;
 class Entry;
 
@@ -32,7 +30,7 @@ class AutoTypeSelectDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit AutoTypeSelectDialog(QWidget* parent = Q_NULLPTR);
+    explicit AutoTypeSelectDialog(QWidget* parent = nullptr);
     void setEntries(const QList<Entry*>& entries, const QHash<Entry*, QString>& sequences);
 
 Q_SIGNALS:

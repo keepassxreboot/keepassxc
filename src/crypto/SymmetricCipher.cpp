@@ -19,7 +19,6 @@
 
 #include "config-keepassx.h"
 #include "crypto/SymmetricCipherGcrypt.h"
-#include "crypto/SymmetricCipherSalsa20.h"
 
 SymmetricCipher::SymmetricCipher(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
                                  SymmetricCipher::Direction direction)
@@ -61,19 +60,12 @@ SymmetricCipherBackend* SymmetricCipher::createBackend(SymmetricCipher::Algorith
     switch (algo) {
     case SymmetricCipher::Aes256:
     case SymmetricCipher::Twofish:
-#if defined(GCRYPT_HAS_SALSA20)
     case SymmetricCipher::Salsa20:
-#endif
         return new SymmetricCipherGcrypt(algo, mode, direction);
-
-#if !defined(GCRYPT_HAS_SALSA20)
-    case SymmetricCipher::Salsa20:
-        return new SymmetricCipherSalsa20(algo, mode, direction);
-#endif
 
     default:
         Q_ASSERT(false);
-        return Q_NULLPTR;
+        return nullptr;
     }
 }
 

@@ -1,6 +1,5 @@
 /*
- *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2012 Nokia Corporation and/or its subsidiary(-ies)
+ *  Copyright (C) 2015 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,24 +15,27 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTQSAVEFILE_H
-#define KEEPASSX_TESTQSAVEFILE_H
+#ifndef KEEPASSX_FAILDEVICE_H
+#define KEEPASSX_FAILDEVICE_H
 
-#include <QObject>
+#include <QBuffer>
 
-class TestQSaveFile : public QObject
+class FailDevice : public QBuffer
 {
     Q_OBJECT
 
-private Q_SLOTS:
-    void transactionalWrite();
-    void autoFlush();
-    void transactionalWriteNoPermissions();
-    void transactionalWriteCanceled();
-    void transactionalWriteErrorRenaming();
+public:
+    explicit FailDevice(int failAfter, QObject* parent = nullptr);
+    bool open(QIODevice::OpenMode openMode) override;
+
+protected:
+    qint64 readData(char* data, qint64 len) override;
+    qint64 writeData(const char* data, qint64 len) override;
 
 private:
-    QString tmpDir();
+    int m_failAfter;
+    int m_readCount;
+    int m_writeCount;
 };
 
-#endif // KEEPASSX_TESTQSAVEFILE_H
+#endif // KEEPASSX_FAILDEVICE_H

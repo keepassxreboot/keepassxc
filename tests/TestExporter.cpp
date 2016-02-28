@@ -20,7 +20,6 @@
 
 #include <QTest>
 
-#include "tests.h"
 #include "core/ToDbExporter.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -60,23 +59,20 @@ void TestExporter::testToDbExporter()
     Database* dbExp = ToDbExporter().exportGroup(groupOrg);
 
     QCOMPARE(dbExp->rootGroup()->children().size(), 1);
-    Group* groupExp = dbExp->rootGroup()->children().first();
+    Group* groupExp = dbExp->rootGroup()->children().at(0);
     QVERIFY(groupExp != groupOrg);
     QCOMPARE(groupExp->name(), groupOrg->name());
     QCOMPARE(groupExp->entries().size(), 1);
 
-    Entry* entryExp = groupExp->entries().first();
+    Entry* entryExp = groupExp->entries().at(0);
     QCOMPARE(entryExp->title(), entryOrg->title());
     QCOMPARE(dbExp->metadata()->customIcons().size(), 1);
     QVERIFY(dbExp->metadata()->containsCustomIcon(iconUuid));
     QCOMPARE(entryExp->iconNumber(), entryOrg->iconNumber());
 
     QCOMPARE(entryExp->historyItems().size(), 1);
-    QCOMPARE(entryExp->historyItems().first()->iconUuid(), iconUuid);
+    QCOMPARE(entryExp->historyItems().at(0)->iconUuid(), iconUuid);
 
     delete dbOrg;
     delete dbExp;
 }
-
-
-

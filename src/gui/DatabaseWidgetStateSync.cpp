@@ -22,7 +22,7 @@
 
 DatabaseWidgetStateSync::DatabaseWidgetStateSync(QObject* parent)
     : QObject(parent)
-    , m_activeDbWidget(Q_NULLPTR)
+    , m_activeDbWidget(nullptr)
     , m_blockUpdates(false)
 {
     m_splitterSizes = variantToIntList(config()->get("GUI/SplitterState"));

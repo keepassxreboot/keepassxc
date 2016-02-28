@@ -9,6 +9,14 @@
         <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
         <translation>Keepassx distribueras enligt villkoren i GNU General Public License (GPL) version 2 eller (om du vill) version 3.</translation>
     </message>
+    <message>
+        <source>Revision</source>
+        <translation>Revision</translation>
+    </message>
+    <message>
+        <source>Using:</source>
+        <translation>Använder:</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -108,6 +116,16 @@
     <message>
         <source>Different passwords supplied.</source>
         <translation>Olika lösenord angivna</translation>
+    </message>
+    <message>
+        <source>Failed to set key file</source>
+        <translation>Kunde inte sätta nyckel-fil</translation>
+    </message>
+    <message>
+        <source>Failed to set %1 as the Key file:
+%2</source>
+        <translation>Kunde inte sätta %1 som nyckel-fil:
+%2</translation>
     </message>
 </context>
 <context>
@@ -235,12 +253,6 @@
         <translation>Stäng?</translation>
     </message>
     <message>
-        <source>&quot;%1&quot; is in edit mode.
-Close anyway?</source>
-        <translation>&quot;%1&quot; är i redigerar-läge.
-Stäng ändå?</translation>
-    </message>
-    <message>
         <source>Save changes?</source>
         <translation>Spara ändringar?</translation>
     </message>
@@ -269,6 +281,60 @@ Spara ändringarna?</translation>
     <message>
         <source>locked</source>
         <translation>låst</translation>
+    </message>
+    <message>
+        <source>The database you are trying to open is locked by another instance of KeePassX.
+Do you want to open it anyway? Alternatively the database is opened read-only.</source>
+        <translation>Databasen som du försöker öppna är låst av en annan instans av KeePassX.
+Vill du öppna den ändå? Databasen kommer då att öppnas skrivskyddad.</translation>
+    </message>
+    <message>
+        <source>Lock database</source>
+        <translation>Lås databasen</translation>
+    </message>
+    <message>
+        <source>Can't lock the database as you are currently editing it.
+Please press cancel to finish your changes or discard them.</source>
+        <translation>Kan inte låsa databasen eftersom du håller på att redigera den.
+Tryck avbryt för att ansluta dina ändringar alternativt kasta dem.</translation>
+    </message>
+    <message>
+        <source>This database has never been saved.
+You can save the database or stop locking it.</source>
+        <translation>Databasen has aldrig sparats.
+Spara databasen eller sluta lås den.</translation>
+    </message>
+    <message>
+        <source>This database has been modified.
+Do you want to save the database before locking it?
+Otherwise your changes are lost.</source>
+        <translation>Databasen har ändrats.
+Vill du spara databasen innen du låser den?
+I annat fall försvinner ändringarna.</translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; is in edit mode.
+Discard changes and close anyway?</source>
+        <translation>&quot;%1&quot; är i redigeringsläge.
+Kasta ändringarna och stäng endå?</translation>
+    </message>
+    <message>
+        <source>Export database to CSV file</source>
+        <translation>Exportera databasen till en CSV-fil</translation>
+    </message>
+    <message>
+        <source>CSV file</source>
+        <translation>CSV-fil</translation>
+    </message>
+    <message>
+        <source>Writing the CSV file failed.</source>
+        <translation>Kunde inte skriva till CSV-filen</translation>
+    </message>
+    <message>
+        <source>The database you are trying to save as is locked by another instance of KeePassX.
+Do you want to save it anyway?</source>
+        <translation>Databasen du försöker spara som är låst av en annan instans av KeePassX.
+Vill du spara endå?</translation>
     </message>
 </context>
 <context>
@@ -312,6 +378,14 @@ Spara ändringarna?</translation>
     <message>
         <source>Current group</source>
         <translation>Nuvarande grupp</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fel</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Kunde inte räkna nu master-nyckeln</translation>
     </message>
 </context>
 <context>
@@ -424,6 +498,10 @@ Spara ändringarna?</translation>
     <message>
         <source>Save</source>
         <translation>Spara</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Öppna</translation>
     </message>
 </context>
 <context>
@@ -576,6 +654,14 @@ Spara ändringarna?</translation>
         <source>Auto-type</source>
         <translation>Auto-skriv</translation>
     </message>
+    <message>
+        <source>Use default auto-type sequence of parent group</source>
+        <translation>Använd standard auto-skriv sekvensen från föräldergruppen</translation>
+    </message>
+    <message>
+        <source>Set default auto-type sequence</source>
+        <translation>Ange standard auto-skriv sekvens</translation>
+    </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
@@ -724,6 +810,10 @@ Spara ändringarna?</translation>
         <source>Root</source>
         <translation>Root</translation>
     </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Kunde inte räkna nu master-nyckeln</translation>
+    </message>
 </context>
 <context>
     <name>KeePass2Reader</name>
@@ -738,6 +828,17 @@ Spara ändringarna?</translation>
     <message>
         <source>Wrong key or database file is corrupt.</source>
         <translation>Fel lösenord eller korrupt databas-fil</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Kunde inte räkna nu master-nyckeln</translation>
+    </message>
+    <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -759,7 +860,7 @@ Spara ändringarna?</translation>
     </message>
     <message>
         <source>Recent databases</source>
-        <translation>Senast använda databser</translation>
+        <translation>Senast använda databaser</translation>
     </message>
     <message>
         <source>Help</source>
@@ -776,10 +877,6 @@ Spara ändringarna?</translation>
     <message>
         <source>Groups</source>
         <translation>Grupper</translation>
-    </message>
-    <message>
-        <source>Extras</source>
-        <translation>Extra</translation>
     </message>
     <message>
         <source>View</source>
@@ -858,16 +955,8 @@ Spara ändringarna?</translation>
         <translation>Sök</translation>
     </message>
     <message>
-        <source>Username</source>
-        <translation>Användarnamn</translation>
-    </message>
-    <message>
         <source>Copy username to clipboard</source>
         <translation>Kopiera användarnamn</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Lösenord</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
@@ -912,6 +1001,22 @@ Spara ändringarna?</translation>
     <message>
         <source>Toggle window</source>
         <translation>Visa/dölj fönster</translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation>Verktyg</translation>
+    </message>
+    <message>
+        <source>Copy username</source>
+        <translation>Kopiera användarnamn</translation>
+    </message>
+    <message>
+        <source>Copy password</source>
+        <translation>Kopiera lösenord</translation>
+    </message>
+    <message>
+        <source>Export to CSV file</source>
+        <translation>Exportera till CSV-fil</translation>
     </message>
 </context>
 <context>
@@ -1091,15 +1196,11 @@ Spara ändringarna?</translation>
     </message>
     <message>
         <source>Open previous databases on startup</source>
-        <translation>Öppna senaste databasen är programmet startar</translation>
-    </message>
-    <message>
-        <source>Mark as modified on expanded state changes</source>
-        <translation>Markera som ändrad när utökat läge ändras</translation>
+        <translation>Öppna senaste databasen när programmet startar</translation>
     </message>
     <message>
         <source>Automatically save on exit</source>
-        <translation>Spara automatiskt är applikationen anslutas</translation>
+        <translation>Spara automatiskt när applikationen anslutas</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
@@ -1133,6 +1234,10 @@ Spara ändringarna?</translation>
         <source>Hide window to system tray when minimized</source>
         <translation>Vid minimering, minimera fönstret till systemfältet</translation>
     </message>
+    <message>
+        <source>Remember last key files</source>
+        <translation>Komihåg senaste nyckel-filen</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>
@@ -1163,14 +1268,6 @@ Spara ändringarna?</translation>
         <source>Unlock database</source>
         <translation>Lås upp databas</translation>
     </message>
-    <message>
-        <source>Error</source>
-        <translation>Fel</translation>
-    </message>
-    <message>
-        <source>Wrong key.</source>
-        <translation>Fel lösenord</translation>
-    </message>
 </context>
 <context>
     <name>WelcomeWidget</name>
@@ -1192,10 +1289,6 @@ Spara ändringarna?</translation>
     <message>
         <source>path to a custom config file</source>
         <translation>Sökväg till egen konfigurations-fil</translation>
-    </message>
-    <message>
-        <source>password of the database (DANGEROUS!)</source>
-        <translation>lösenord för databasen (FARLIGT!)</translation>
     </message>
     <message>
         <source>key file of the database</source>

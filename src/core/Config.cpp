@@ -18,12 +18,12 @@
 #include "Config.h"
 
 #include <QCoreApplication>
-#include <QDesktopServices>
 #include <QDir>
 #include <QSettings>
+#include <QStandardPaths>
 #include <QTemporaryFile>
 
-Config* Config::m_instance(Q_NULLPTR);
+Config* Config::m_instance(nullptr);
 
 QVariant Config::get(const QString& key)
 {
@@ -53,7 +53,7 @@ Config::Config(QObject* parent)
     QString homePath = QDir::homePath();
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    // we can't use QDesktopServices on X11 as it uses XDG_DATA_HOME instead of XDG_CONFIG_HOME
+    // we can't use QStandardPaths on X11 as it uses XDG_DATA_HOME instead of XDG_CONFIG_HOME
     QByteArray env = qgetenv("XDG_CONFIG_HOME");
     if (env.isEmpty()) {
         userPath = homePath;
@@ -70,7 +70,7 @@ Config::Config(QObject* parent)
 
     userPath += "/keepassx/";
 #else
-    userPath = QDir::fromNativeSeparators(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
+    userPath = QDir::fromNativeSeparators(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
     // storageLocation() appends the application name ("/keepassx") to the end
     userPath += "/";
 #endif

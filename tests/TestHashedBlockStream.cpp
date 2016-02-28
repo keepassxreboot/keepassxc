@@ -20,7 +20,7 @@
 #include <QBuffer>
 #include <QTest>
 
-#include "tests.h"
+#include "FailDevice.h"
 #include "crypto/Crypto.h"
 #include "streams/HashedBlockStream.h"
 
@@ -70,4 +70,35 @@ void TestHashedBlockStream::testWriteRead()
     QVERIFY(reader.reset());
     buffer.reset();
     buffer.buffer().clear();
+}
+
+void TestHashedBlockStream::testReset()
+{
+    QBuffer buffer;
+    QVERIFY(buffer.open(QIODevice::WriteOnly));
+
+    HashedBlockStream writer(&buffer, 16);
+    QVERIFY(writer.open(QIODevice::WriteOnly));
+    QCOMPARE(writer.write(QByteArray(8, 'Z')), qint64(8));
+    // test if reset() and close() write only one final block
+    QVERIFY(writer.reset());
+    QVERIFY(writer.reset());
+    writer.close();
+    QCOMPARE(buffer.buffer().size(), 8 + (32 + 4 + 4) * 2);
+}
+
+void TestHashedBlockStream::testWriteFailure()
+{
+    FailDevice failDevice(1500);
+    QVERIFY(failDevice.open(QIODevice::WriteOnly));
+
+    QByteArray input(2000, 'Z');
+
+    HashedBlockStream writer(&failDevice, 500);
+    QVERIFY(writer.open(QIODevice::WriteOnly));
+
+    QCOMPARE(writer.write(input.left(900)), qint64(900));
+    writer.write(input.left(900));
+    QVERIFY(!writer.reset());
+    QCOMPARE(writer.errorString(), QString("FAILDEVICE"));
 }

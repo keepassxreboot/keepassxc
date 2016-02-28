@@ -21,6 +21,7 @@
 #include <QApplication>
 #include <QDialogButtonBox>
 #include <QLineEdit>
+#include <QMimeData>
 #include <QPushButton>
 #include <QSpinBox>
 #include <QTemporaryFile>
@@ -29,7 +30,6 @@
 #include <QToolButton>
 
 #include "config-keepassx-tests.h"
-#include "tests.h"
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/Entry.h"
@@ -56,12 +56,23 @@ void TestGui::initTestCase()
     m_mainWindow = new MainWindow();
     m_tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
     m_mainWindow->show();
+    m_mainWindow->activateWindow();
     Tools::wait(50);
+
+    QByteArray tmpData;
+    QFile sourceDbFile(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx"));
+    QVERIFY(sourceDbFile.open(QIODevice::ReadOnly));
+    QVERIFY(Tools::readAllFromDevice(&sourceDbFile, tmpData));
+
+    QVERIFY(m_orgDbFile.open());
+    m_orgDbFileName = QFileInfo(m_orgDbFile.fileName()).fileName();
+    QCOMPARE(m_orgDbFile.write(tmpData), static_cast<qint64>((tmpData.size())));
+    m_orgDbFile.close();
 }
 
 void TestGui::testOpenDatabase()
 {
-    fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx"));
+    fileDialog()->setNextFileName(m_orgDbFile.fileName());
     triggerAction("actionDatabaseOpen");
 
     QWidget* databaseOpenWidget = m_mainWindow->findChild<QWidget*>("databaseOpenWidget");
@@ -75,7 +86,7 @@ void TestGui::testOpenDatabase()
 void TestGui::testTabs()
 {
     QCOMPARE(m_tabWidget->count(), 1);
-    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("NewDatabase.kdbx"));
+    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), m_orgDbFileName);
 
     m_dbWidget = m_tabWidget->currentDatabaseWidget();
     m_db = m_dbWidget->database();
@@ -103,7 +114,7 @@ void TestGui::testEditEntry()
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
     // make sure the database isn't marked as modified
     // wait for modified timer
-    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("NewDatabase.kdbx"));
+    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), m_orgDbFileName);
 }
 
 void TestGui::testAddEntry()
@@ -134,7 +145,7 @@ void TestGui::testAddEntry()
     QCOMPARE(entry->title(), QString("test"));
     QCOMPARE(entry->historyItems().size(), 0);
     // wait for modified timer
-    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("NewDatabase.kdbx*"));
+    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("%1*").arg(m_orgDbFileName));
 
     QAction* entryEditAction = m_mainWindow->findChild<QAction*>("actionEntryEdit");
     QVERIFY(entryEditAction->isEnabled());
@@ -174,7 +185,7 @@ void TestGui::testSearch()
     QLineEdit* searchEdit = m_dbWidget->findChild<QLineEdit*>("searchEdit");
     QToolButton* clearSearch = m_dbWidget->findChild<QToolButton*>("clearButton");
 
-    QVERIFY(!searchEdit->hasFocus());
+    QVERIFY(!searchEdit->isVisible());
 
     // Enter search
     QTest::mouseClick(searchActionWidget, Qt::LeftButton);
@@ -200,6 +211,10 @@ void TestGui::testSearch()
     // Search for "some"
     QTest::keyClicks(searchEdit, "some");
     QTRY_COMPARE(entryView->model()->rowCount(), 4);
+    // Press Down to focus on the entry view
+    QVERIFY(!entryView->hasFocus());
+    QTest::keyClick(searchEdit, Qt::Key_Down);
+    QVERIFY(entryView->hasFocus());
 
     clickIndex(entryView->model()->index(0, 1), entryView, Qt::LeftButton);
     QAction* entryEditAction = m_mainWindow->findChild<QAction*>("actionEntryEdit");
@@ -352,7 +367,7 @@ void TestGui::testDragAndDropGroup()
 
 void TestGui::testSaveAs()
 {
-    QFileInfo fileInfo(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx"));
+    QFileInfo fileInfo(m_orgDbFile.fileName());
     QDateTime lastModified = fileInfo.lastModified();
 
     m_db->metadata()->setName("SaveAs");
@@ -425,8 +440,8 @@ void TestGui::testDatabaseLocking()
 
     triggerAction("actionLockDatabases");
 
-    QCOMPARE(m_tabWidget->tabText(0), QString("Save [locked]"));
-    QCOMPARE(m_tabWidget->tabText(1), QString("basic [New database]*"));
+    QCOMPARE(m_tabWidget->tabText(0).remove('&'), QString("Save [locked]"));
+    QCOMPARE(m_tabWidget->tabText(1).remove('&'), QString("basic [New database]*"));
 
     QWidget* dbWidget = m_tabWidget->currentDatabaseWidget();
     QWidget* unlockDatabaseWidget = dbWidget->findChild<QWidget*>("unlockDatabaseWidget");
@@ -436,7 +451,7 @@ void TestGui::testDatabaseLocking()
     QTest::keyClicks(editPassword, "masterpw");
     QTest::keyClick(editPassword, Qt::Key_Enter);
 
-    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("basic [New database]*"));
+    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()).remove('&'), QString("basic [New database]*"));
 }
 
 void TestGui::cleanupTestCase()

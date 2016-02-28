@@ -127,6 +127,20 @@ void KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
     KeePass2XmlWriter xmlWriter;
     xmlWriter.writeDatabase(m_device, db, &randomStream, headerHash);
 
+    // Explicitly close/reset streams so they are flushed and we can detect
+    // errors. QIODevice::close() resets errorString() etc.
+    if (ioCompressor) {
+        ioCompressor->close();
+    }
+    if (!hashedStream.reset()) {
+        raiseError(hashedStream.errorString());
+        return;
+    }
+    if (!cipherStream.reset()) {
+        raiseError(cipherStream.errorString());
+        return;
+    }
+
     if (xmlWriter.hasError()) {
         raiseError(xmlWriter.errorString());
     }

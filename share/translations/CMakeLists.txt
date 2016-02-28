@@ -17,9 +17,9 @@ file(GLOB TRANSLATION_FILES *.ts)
 get_filename_component(TRANSLATION_EN_ABS keepassx_en.ts ABSOLUTE)
 list(REMOVE_ITEM TRANSLATION_FILES keepassx_en.ts)
 list(REMOVE_ITEM TRANSLATION_FILES ${TRANSLATION_EN_ABS})
-message(STATUS ${TRANSLATION_FILES})
+message(STATUS "${TRANSLATION_FILES}")
 
-qt4_add_translation(QM_FILES ${TRANSLATION_FILES})
+qt5_add_translation(QM_FILES ${TRANSLATION_FILES})
 
 install(FILES ${QM_FILES} DESTINATION ${DATA_INSTALL_DIR}/translations)
 add_custom_target(translations DEPENDS ${QM_FILES})

@@ -20,8 +20,6 @@
 
 #include <QTreeView>
 
-#include "core/Global.h"
-
 #include "gui/entry/EntryModel.h"
 
 class Entry;
@@ -34,8 +32,8 @@ class EntryView : public QTreeView
     Q_OBJECT
 
 public:
-    explicit EntryView(QWidget* parent = Q_NULLPTR);
-    void setModel(QAbstractItemModel* model) Q_DECL_OVERRIDE;
+    explicit EntryView(QWidget* parent = nullptr);
+    void setModel(QAbstractItemModel* model) override;
     Entry* currentEntry();
     void setCurrentEntry(Entry* entry);
     Entry* entryFromIndex(const QModelIndex& index);
@@ -52,7 +50,7 @@ Q_SIGNALS:
     void entrySelectionChanged();
 
 protected:
-    void keyPressEvent(QKeyEvent* event) Q_DECL_OVERRIDE;
+    void keyPressEvent(QKeyEvent* event) override;
 
 private Q_SLOTS:
     void emitEntryActivated(const QModelIndex& index);

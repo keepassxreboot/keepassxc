@@ -21,7 +21,6 @@
 #include <QTest>
 
 #include "config-keepassx-tests.h"
-#include "tests.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
@@ -71,7 +70,7 @@ void TestKeePass1Reader::testBasic()
     QVERIFY(entry11->timeInfo().expires());
     QCOMPARE(entry11->timeInfo().expiryTime(), genDT(2012, 5, 9, 10, 32));
     QCOMPARE(entry11->attachments()->keys().size(), 1);
-    QCOMPARE(entry11->attachments()->keys().first(), QString("attachment.txt"));
+    QCOMPARE(entry11->attachments()->keys().at(0), QString("attachment.txt"));
     QCOMPARE(entry11->attachments()->value("attachment.txt"), QByteArray("hello world\n"));
 
     Entry* entry12 = group1->entries().at(1);
@@ -118,7 +117,7 @@ void TestKeePass1Reader::testCustomIcons()
 {
     QCOMPARE(m_db->metadata()->customIcons().size(), 1);
 
-    Entry* entry = m_db->rootGroup()->children().at(1)->entries().first();
+    Entry* entry = m_db->rootGroup()->children().at(1)->entries().at(0);
 
     QCOMPARE(entry->icon().width(), 16);
     QCOMPARE(entry->icon().height(), 16);

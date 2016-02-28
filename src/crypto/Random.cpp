@@ -19,15 +19,16 @@
 
 #include <gcrypt.h>
 
+#include "core/Global.h"
 #include "crypto/Crypto.h"
 
 class RandomBackendGcrypt : public RandomBackend
 {
 public:
-    void randomize(void* data, int len) Q_DECL_OVERRIDE;
+    void randomize(void* data, int len) override;
 };
 
-Random* Random::m_instance(Q_NULLPTR);
+Random* Random::m_instance(nullptr);
 
 void Random::randomize(QByteArray& ba)
 {

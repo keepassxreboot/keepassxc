@@ -58,6 +58,7 @@ public:
     QString notes() const;
     QImage icon() const;
     QPixmap iconPixmap() const;
+    QPixmap iconScaledPixmap() const;
     int iconNumber() const;
     Uuid iconUuid() const;
     TimeInfo timeInfo() const;
@@ -155,7 +156,6 @@ private:
     QList<Entry*> m_entries;
 
     QPointer<Group> m_parent;
-    mutable QPixmapCache::Key m_pixmapCacheKey;
 
     bool m_updateTimeinfo;
 

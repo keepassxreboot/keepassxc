@@ -20,6 +20,7 @@
 
 #include <QDateTime>
 #include <QHash>
+#include <QObject>
 
 #include "core/Uuid.h"
 #include "keys/CompositeKey.h"

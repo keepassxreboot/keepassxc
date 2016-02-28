@@ -25,7 +25,6 @@
 #include <QPair>
 #include <QXmlStreamReader>
 
-#include "core/Global.h"
 #include "core/TimeInfo.h"
 #include "core/Uuid.h"
 
@@ -42,7 +41,7 @@ class KeePass2XmlReader
 public:
     KeePass2XmlReader();
     Database* readDatabase(QIODevice* device);
-    void readDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream = Q_NULLPTR);
+    void readDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream = nullptr);
     Database* readDatabase(const QString& filename);
     bool hasError();
     QString errorString();

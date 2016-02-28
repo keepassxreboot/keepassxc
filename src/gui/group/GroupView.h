@@ -20,8 +20,6 @@
 
 #include <QTreeView>
 
-#include "core/Global.h"
-
 class Database;
 class Group;
 class GroupModel;
@@ -31,9 +29,9 @@ class GroupView : public QTreeView
     Q_OBJECT
 
 public:
-    explicit GroupView(Database* db, QWidget* parent = Q_NULLPTR);
+    explicit GroupView(Database* db, QWidget* parent = nullptr);
     void changeDatabase(Database* newDb);
-    void setModel(QAbstractItemModel* model) Q_DECL_OVERRIDE;
+    void setModel(QAbstractItemModel* model) override;
     Group* currentGroup();
     void setCurrentGroup(Group* group);
     void expandGroup(Group* group, bool expand = true);
@@ -49,7 +47,7 @@ private Q_SLOTS:
     void modelReset();
 
 protected:
-    void dragMoveEvent(QDragMoveEvent* event);
+    void dragMoveEvent(QDragMoveEvent* event) override;
 
 private:
     void recInitExpanded(Group* group);

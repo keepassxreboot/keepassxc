@@ -21,18 +21,17 @@
 #include <QBitArray>
 #include <QSortFilterProxyModel>
 
-#include "core/Global.h"
-
 class SortFilterHideProxyModel : public QSortFilterProxyModel
 {
     Q_OBJECT
 
 public:
-    explicit SortFilterHideProxyModel(QObject* parent = Q_NULLPTR);
+    explicit SortFilterHideProxyModel(QObject* parent = nullptr);
+    Qt::DropActions supportedDragActions() const override;
     void hideColumn(int column, bool hide);
 
 protected:
-    bool filterAcceptsColumn(int sourceColumn, const QModelIndex& sourceParent) const Q_DECL_OVERRIDE;
+    bool filterAcceptsColumn(int sourceColumn, const QModelIndex& sourceParent) const override;
 
 private:
     QBitArray m_hiddenColumns;

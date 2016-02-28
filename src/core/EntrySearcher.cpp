@@ -19,7 +19,8 @@
 
 #include "core/Group.h"
 
-QList<Entry*> EntrySearcher::search(const QString &searchTerm, const Group* group, Qt::CaseSensitivity caseSensitivity)
+QList<Entry*> EntrySearcher::search(const QString& searchTerm, const Group* group,
+                                    Qt::CaseSensitivity caseSensitivity)
 {
     if (!group->resolveSearchingEnabled()) {
         return QList<Entry*>();
@@ -28,7 +29,8 @@ QList<Entry*> EntrySearcher::search(const QString &searchTerm, const Group* grou
     return searchEntries(searchTerm, group, caseSensitivity);
 }
 
-QList<Entry*> EntrySearcher::searchEntries(const QString& searchTerm, const Group* group, Qt::CaseSensitivity caseSensitivity)
+QList<Entry*> EntrySearcher::searchEntries(const QString& searchTerm, const Group* group,
+                                           Qt::CaseSensitivity caseSensitivity)
 {
     QList<Entry*> searchResult;
 
@@ -44,7 +46,8 @@ QList<Entry*> EntrySearcher::searchEntries(const QString& searchTerm, const Grou
     return searchResult;
 }
 
-QList<Entry*> EntrySearcher::matchEntry(const QString& searchTerm, Entry* entry, Qt::CaseSensitivity caseSensitivity)
+QList<Entry*> EntrySearcher::matchEntry(const QString& searchTerm, Entry* entry,
+                                        Qt::CaseSensitivity caseSensitivity)
 {
     QStringList wordList = searchTerm.split(QRegExp("\\s"), QString::SkipEmptyParts);
     Q_FOREACH (const QString& word, wordList) {

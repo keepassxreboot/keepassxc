@@ -20,8 +20,6 @@
 
 #include <QAbstractTableModel>
 
-#include "core/Global.h"
-
 class Entry;
 class Group;
 
@@ -38,18 +36,19 @@ public:
         Url = 3
     };
 
-    explicit EntryModel(QObject* parent = Q_NULLPTR);
+    explicit EntryModel(QObject* parent = nullptr);
     Entry* entryFromIndex(const QModelIndex& index) const;
     QModelIndex indexFromEntry(Entry* entry) const;
 
-    int rowCount(const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
-    int columnCount(const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
-    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
-    Qt::DropActions supportedDropActions() const Q_DECL_OVERRIDE;
-    Qt::ItemFlags flags(const QModelIndex& modelIndex) const Q_DECL_OVERRIDE;
-    QStringList mimeTypes() const Q_DECL_OVERRIDE;
-    QMimeData* mimeData(const QModelIndexList& indexes) const Q_DECL_OVERRIDE;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+    int columnCount(const QModelIndex& parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+    Qt::DropActions supportedDropActions() const override;
+    Qt::DropActions supportedDragActions() const override;
+    Qt::ItemFlags flags(const QModelIndex& modelIndex) const override;
+    QStringList mimeTypes() const override;
+    QMimeData* mimeData(const QModelIndexList& indexes) const override;
 
     void setEntryList(const QList<Entry*>& entries);
 

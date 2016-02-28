@@ -19,7 +19,7 @@
 
 #include "core/FilePath.h"
 
-DatabaseIcons* DatabaseIcons::m_instance(Q_NULLPTR);
+DatabaseIcons* DatabaseIcons::m_instance(nullptr);
 const int DatabaseIcons::IconCount(69);
 const int DatabaseIcons::ExpiredIconIndex(45);
 const char* const DatabaseIcons::m_indexToName[] = {

@@ -32,7 +32,7 @@
 #include "core/Tools.h"
 #include "gui/MessageBox.h"
 
-AutoType* AutoType::m_instance = Q_NULLPTR;
+AutoType* AutoType::m_instance = nullptr;
 
 AutoType::AutoType(QObject* parent, bool test)
     : QObject(parent)
@@ -40,8 +40,8 @@ AutoType::AutoType(QObject* parent, bool test)
     , m_currentGlobalKey(static_cast<Qt::Key>(0))
     , m_currentGlobalModifiers(0)
     , m_pluginLoader(new QPluginLoader(this))
-    , m_plugin(Q_NULLPTR)
-    , m_executor(Q_NULLPTR)
+    , m_plugin(nullptr)
+    , m_executor(nullptr)
     , m_windowFromGlobal(0)
 {
     // prevent crash when the plugin has unresolved symbols
@@ -49,7 +49,7 @@ AutoType::AutoType(QObject* parent, bool test)
 
     QString pluginName = "keepassx-autotype-";
     if (!test) {
-        pluginName += Tools::platform();
+        pluginName += QApplication::platformName();
     }
     else {
         pluginName += "test";
@@ -68,7 +68,7 @@ AutoType::~AutoType()
 {
     if (m_executor) {
         delete m_executor;
-        m_executor = Q_NULLPTR;
+        m_executor = nullptr;
     }
 }
 
@@ -79,9 +79,16 @@ void AutoType::loadPlugin(const QString& pluginPath)
     QObject* pluginInstance = m_pluginLoader->instance();
     if (pluginInstance) {
         m_plugin = qobject_cast<AutoTypePlatformInterface*>(pluginInstance);
+        m_executor = nullptr;
+
         if (m_plugin) {
-            m_executor = m_plugin->createExecutor();
-            connect(pluginInstance, SIGNAL(globalShortcutTriggered()), SIGNAL(globalShortcutTriggered()));
+            if (m_plugin->isAvailable()) {
+                m_executor = m_plugin->createExecutor();
+                connect(pluginInstance, SIGNAL(globalShortcutTriggered()), SIGNAL(globalShortcutTriggered()));
+            }
+            else {
+                unloadPlugin();
+            }
         }
     }
 
@@ -195,11 +202,11 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
         QString message = tr("Couldn't find an entry that matches the window title:");
         message.append("\n\n");
         message.append(windowTitle);
-        MessageBox::information(Q_NULLPTR, tr("Auto-Type - KeePassX"), message);
+        MessageBox::information(nullptr, tr("Auto-Type - KeePassX"), message);
     }
     else if ((entryList.size() == 1) && !config()->get("security/autotypeask").toBool()) {
         m_inAutoType = false;
-        performAutoType(entryList.first(), Q_NULLPTR, sequenceHash[entryList.first()]);
+        performAutoType(entryList.first(), nullptr, sequenceHash[entryList.first()]);
     }
     else {
         m_windowFromGlobal = m_plugin->activeWindow();
@@ -218,8 +225,10 @@ void AutoType::performAutoTypeFromGlobal(Entry* entry, const QString& sequence)
 {
     Q_ASSERT(m_inAutoType);
 
+    m_plugin->raiseWindow(m_windowFromGlobal);
+
     m_inAutoType = false;
-    performAutoType(entry, Q_NULLPTR, sequence, m_windowFromGlobal);
+    performAutoType(entry, nullptr, sequence, m_windowFromGlobal);
 }
 
 void AutoType::resetInAutoType()
@@ -233,12 +242,12 @@ void AutoType::unloadPlugin()
 {
     if (m_executor) {
         delete m_executor;
-        m_executor = Q_NULLPTR;
+        m_executor = nullptr;
     }
 
     if (m_plugin) {
         m_plugin->unload();
-        m_plugin = Q_NULLPTR;
+        m_plugin = nullptr;
     }
 }
 
@@ -566,7 +575,7 @@ bool AutoType::windowMatches(const QString& windowTitle, const QString& windowPa
 {
     if (windowPattern.startsWith("//") && windowPattern.endsWith("//") && windowPattern.size() >= 4) {
         QRegExp regExp(windowPattern.mid(2, windowPattern.size() - 4), Qt::CaseInsensitive, QRegExp::RegExp2);
-        return regExp.exactMatch(windowTitle);
+        return (regExp.indexIn(windowTitle) != -1);
     }
     else {
         return WildcardMatcher(windowTitle).match(windowPattern);

@@ -20,8 +20,6 @@
 
 #include <QAbstractItemModel>
 
-#include "core/Global.h"
-
 class Database;
 class Group;
 
@@ -30,23 +28,23 @@ class GroupModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    explicit GroupModel(Database* db, QObject* parent = Q_NULLPTR);
+    explicit GroupModel(Database* db, QObject* parent = nullptr);
     void changeDatabase(Database* newDb);
     QModelIndex index(Group* group) const;
     Group* groupFromIndex(const QModelIndex& index) const;
 
-    int rowCount(const QModelIndex& parent = QModelIndex()) const;
-    int columnCount(const QModelIndex& parent = QModelIndex()) const;
-    QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
-    QModelIndex parent(const QModelIndex& index) const Q_DECL_OVERRIDE;
-    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
-    Qt::DropActions supportedDropActions() const Q_DECL_OVERRIDE;
-    Qt::ItemFlags flags(const QModelIndex& modelIndex) const Q_DECL_OVERRIDE;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+    int columnCount(const QModelIndex& parent = QModelIndex()) const override;
+    QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
+    QModelIndex parent(const QModelIndex& index) const override;
+    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+    Qt::DropActions supportedDropActions() const override;
+    Qt::ItemFlags flags(const QModelIndex& modelIndex) const override;
     bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column,
-                      const QModelIndex& parent) Q_DECL_OVERRIDE;
-    QStringList mimeTypes() const Q_DECL_OVERRIDE;
-    QMimeData* mimeData(const QModelIndexList& indexes) const Q_DECL_OVERRIDE;
+                      const QModelIndex& parent) override;
+    QStringList mimeTypes() const override;
+    QMimeData* mimeData(const QModelIndexList& indexes) const override;
 
 private:
     QModelIndex parent(Group* group) const;

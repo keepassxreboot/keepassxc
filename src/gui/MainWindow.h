@@ -45,8 +45,8 @@ public Q_SLOTS:
                       const QString& keyFile = QString());
 
 protected:
-     void closeEvent(QCloseEvent* event) Q_DECL_OVERRIDE;
-     void changeEvent(QEvent* event) Q_DECL_OVERRIDE;
+     void closeEvent(QCloseEvent* event) override;
+     void changeEvent(QEvent* event) override;
 
 private Q_SLOTS:
     void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::None);
@@ -67,6 +67,8 @@ private Q_SLOTS:
     void trayIconTriggered(QSystemTrayIcon::ActivationReason reason);
     void toggleWindow();
     void appExit();
+    void lockDatabasesAfterInactivity();
+    void repairDatabase();
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);

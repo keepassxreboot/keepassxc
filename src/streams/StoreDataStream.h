@@ -26,11 +26,11 @@ class StoreDataStream : public LayeredStream
 
 public:
     explicit StoreDataStream(QIODevice* baseDevice);
-    bool open(QIODevice::OpenMode mode) Q_DECL_OVERRIDE;
+    bool open(QIODevice::OpenMode mode) override;
     QByteArray storedData() const;
 
 protected:
-    qint64 readData(char* data, qint64 maxSize) Q_DECL_OVERRIDE;
+    qint64 readData(char* data, qint64 maxSize) override;
 
 private:
     QByteArray m_storedData;

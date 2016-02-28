@@ -18,11 +18,13 @@
 #ifndef KEEPASSX_TOOLS_H
 #define KEEPASSX_TOOLS_H
 
+#include "core/Global.h"
+
 #include <QDateTime>
 #include <QObject>
 #include <QString>
 
-#include "core/Global.h"
+#include <algorithm>
 
 class QIODevice;
 
@@ -32,13 +34,26 @@ QString humanReadableFileSize(qint64 bytes);
 bool hasChild(const QObject* parent, const QObject* child);
 bool readFromDevice(QIODevice* device, QByteArray& data, int size = 16384);
 bool readAllFromDevice(QIODevice* device, QByteArray& data);
-QDateTime currentDateTimeUtc();
 QString imageReaderFilter();
 bool isHex(const QByteArray& ba);
+bool isBase64(const QByteArray& ba);
 void sleep(int ms);
 void wait(int ms);
-QString platform();
 void disableCoreDumps();
+void setupSearchPaths();
+
+template <typename RandomAccessIterator, typename T>
+RandomAccessIterator binaryFind(RandomAccessIterator begin, RandomAccessIterator end, const T& value)
+{
+    RandomAccessIterator it = std::lower_bound(begin, end, value);
+
+    if ((it == end) || (value < *it)) {
+        return end;
+    }
+    else {
+        return it;
+    }
+}
 
 } // namespace Tools
 

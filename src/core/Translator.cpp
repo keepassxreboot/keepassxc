@@ -67,8 +67,15 @@ QList<QPair<QString, QString> > Translator::availableLanguages()
                     langcode = "en";
                 }
 
-                languages.append(QPair<QString, QString>(langcode,
-                                                         QLocale::languageToString(QLocale(langcode).language())));
+                QLocale locale(langcode);
+                QString languageStr = QLocale::languageToString(locale.language());
+                QString countryStr;
+                if (langcode.contains("_")) {
+                    countryStr = QString(" (%1)").arg(QLocale::countryToString(locale.country()));
+                }
+
+                QPair<QString, QString> language(langcode, languageStr + countryStr);
+                languages.append(language);
             }
         }
     }

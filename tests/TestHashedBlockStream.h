@@ -27,6 +27,8 @@ class TestHashedBlockStream : public QObject
 private Q_SLOTS:
     void initTestCase();
     void testWriteRead();
+    void testReset();
+    void testWriteFailure();
 };
 
 #endif // KEEPASSX_TESTHASHEDBLOCKSTREAM_H

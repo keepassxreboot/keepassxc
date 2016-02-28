@@ -28,8 +28,8 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
     , m_editGroupWidgetMain(new QWidget())
     , m_editGroupWidgetIcons(new EditWidgetIcons())
     , m_editWidgetProperties(new EditWidgetProperties())
-    , m_group(Q_NULLPTR)
-    , m_database(Q_NULLPTR)
+    , m_group(nullptr)
+    , m_database(nullptr)
 {
     m_mainUi->setupUi(m_editGroupWidgetMain);
 
@@ -142,8 +142,8 @@ void EditGroupWidget::cancel()
 
 void EditGroupWidget::clear()
 {
-    m_group = Q_NULLPTR;
-    m_database = Q_NULLPTR;
+    m_group = nullptr;
+    m_database = nullptr;
 }
 
 void EditGroupWidget::addTriStateItems(QComboBox* comboBox, bool inheritDefault)

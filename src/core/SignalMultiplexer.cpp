@@ -24,7 +24,7 @@ SignalMultiplexer::SignalMultiplexer()
 SignalMultiplexer::~SignalMultiplexer()
 {
     // disconnect all connections
-    setCurrentObject(Q_NULLPTR);
+    setCurrentObject(nullptr);
 }
 
 QObject* SignalMultiplexer::currentObject() const

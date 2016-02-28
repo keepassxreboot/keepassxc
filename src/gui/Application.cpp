@@ -18,13 +18,43 @@
 
 #include "Application.h"
 
+#include <QAbstractNativeEventFilter>
 #include <QFileOpenEvent>
 
 #include "autotype/AutoType.h"
 
+#if defined(Q_OS_UNIX) && !defined(Q_OS_OSX)
+class XcbEventFilter : public QAbstractNativeEventFilter
+{
+public:
+    bool nativeEventFilter(const QByteArray& eventType, void* message, long* result) override
+    {
+        Q_UNUSED(result)
+
+        if (eventType == QByteArrayLiteral("xcb_generic_event_t")) {
+            int retCode = autoType()->callEventFilter(message);
+            if (retCode == 1) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+};
+#endif
+
 Application::Application(int& argc, char** argv)
     : QApplication(argc, argv)
+    , m_mainWindow(nullptr)
 {
+#if defined(Q_OS_UNIX) && !defined(Q_OS_OSX)
+    installNativeEventFilter(new XcbEventFilter());
+#endif
+}
+
+void Application::setMainWindow(QWidget* mainWindow)
+{
+    m_mainWindow = mainWindow;
 }
 
 bool Application::event(QEvent* event)
@@ -34,22 +64,16 @@ bool Application::event(QEvent* event)
         Q_EMIT openFile(static_cast<QFileOpenEvent*>(event)->file());
         return true;
     }
+#ifdef Q_OS_MAC
+    // restore main window when clicking on the docker icon
+    else if ((event->type() == QEvent::ApplicationActivate) && m_mainWindow) {
+        m_mainWindow->ensurePolished();
+        m_mainWindow->setWindowState(m_mainWindow->windowState() & ~Qt::WindowMinimized);
+        m_mainWindow->show();
+        m_mainWindow->raise();
+        m_mainWindow->activateWindow();
+    }
+#endif
 
     return QApplication::event(event);
 }
-
-#ifdef Q_WS_X11
-bool Application::x11EventFilter(XEvent* event)
-{
-    int retCode = autoType()->callEventFilter(event);
-
-    if (retCode == 0) {
-        return false;
-    }
-    else if (retCode == 1) {
-        return true;
-    }
-
-    return QApplication::x11EventFilter(event);
-}
-#endif

@@ -21,7 +21,6 @@
 #include "core/DatabaseIcons.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
-#include "core/Tools.h"
 
 const int Entry::DefaultIconNumber = 0;
 
@@ -29,7 +28,7 @@ Entry::Entry()
     : m_attributes(new EntryAttributes(this))
     , m_attachments(new EntryAttachments(this))
     , m_autoTypeAssociations(new AutoTypeAssociations(this))
-    , m_tmpHistoryItem(Q_NULLPTR)
+    , m_tmpHistoryItem(nullptr)
     , m_modifiedSinceBegin(false)
     , m_updateTimeinfo(true)
 {
@@ -74,8 +73,8 @@ template <class T> inline bool Entry::set(T& property, const T& value)
 void Entry::updateTimeinfo()
 {
     if (m_updateTimeinfo) {
-        m_data.timeInfo.setLastModificationTime(Tools::currentDateTimeUtc());
-        m_data.timeInfo.setLastAccessTime(Tools::currentDateTimeUtc());
+        m_data.timeInfo.setLastModificationTime(QDateTime::currentDateTimeUtc());
+        m_data.timeInfo.setLastAccessTime(QDateTime::currentDateTimeUtc());
     }
 }
 
@@ -114,13 +113,25 @@ QPixmap Entry::iconPixmap() const
     else {
         Q_ASSERT(database());
 
-        QPixmap pixmap;
-        if (database() && !QPixmapCache::find(m_pixmapCacheKey, &pixmap)) {
-            pixmap = QPixmap::fromImage(database()->metadata()->customIcon(m_data.customIcon));
-            m_pixmapCacheKey = QPixmapCache::insert(pixmap);
+        if (database()) {
+            return database()->metadata()->customIconPixmap(m_data.customIcon);
         }
+        else {
+            return QPixmap();
+        }
+    }
+}
 
-        return pixmap;
+QPixmap Entry::iconScaledPixmap() const
+{
+    if (m_data.customIcon.isNull()) {
+        // built-in icons are 16x16 so don't need to be scaled
+        return databaseIcons()->iconPixmap(m_data.iconNumber);
+    }
+    else {
+        Q_ASSERT(database());
+
+        return database()->metadata()->customIconScaledPixmap(m_data.customIcon);
     }
 }
 
@@ -211,7 +222,7 @@ QString Entry::notes() const
 
 bool Entry::isExpired() const
 {
-    return m_data.timeInfo.expires() && m_data.timeInfo.expiryTime() < Tools::currentDateTimeUtc();
+    return m_data.timeInfo.expires() && m_data.timeInfo.expiryTime() < QDateTime::currentDateTimeUtc();
 }
 
 EntryAttributes* Entry::attributes()
@@ -248,8 +259,6 @@ void Entry::setIcon(int iconNumber)
         m_data.iconNumber = iconNumber;
         m_data.customIcon = Uuid();
 
-        m_pixmapCacheKey = QPixmapCache::Key();
-
         Q_EMIT modified();
         emitDataChanged();
     }
@@ -262,8 +271,6 @@ void Entry::setIcon(const Uuid& uuid)
     if (m_data.customIcon != uuid) {
         m_data.customIcon = uuid;
         m_data.iconNumber = 0;
-
-        m_pixmapCacheKey = QPixmapCache::Key();
 
         Q_EMIT modified();
         emitDataChanged();
@@ -466,7 +473,7 @@ Entry* Entry::clone(CloneFlags flags) const
     entry->setUpdateTimeinfo(true);
 
     if (flags & CloneResetTimeInfo) {
-        QDateTime now = Tools::currentDateTimeUtc();
+        QDateTime now = QDateTime::currentDateTimeUtc();
         entry->m_data.timeInfo.setCreationTime(now);
         entry->m_data.timeInfo.setLastModificationTime(now);
         entry->m_data.timeInfo.setLastAccessTime(now);
@@ -514,7 +521,7 @@ void Entry::endUpdate()
         delete m_tmpHistoryItem;
     }
 
-    m_tmpHistoryItem = Q_NULLPTR;
+    m_tmpHistoryItem = nullptr;
 }
 
 void Entry::updateModifiedSinceBegin()
@@ -560,7 +567,7 @@ void Entry::setGroup(Group* group)
     QObject::setParent(group);
 
     if (m_updateTimeinfo) {
-        m_data.timeInfo.setLocationChanged(Tools::currentDateTimeUtc());
+        m_data.timeInfo.setLocationChanged(QDateTime::currentDateTimeUtc());
     }
 }
 
@@ -575,7 +582,7 @@ const Database* Entry::database() const
         return m_group->database();
     }
     else {
-        return Q_NULLPTR;
+        return nullptr;
     }
 }
 

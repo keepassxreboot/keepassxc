@@ -19,7 +19,6 @@
 
 #include <QTest>
 
-#include "tests.h"
 #include "core/Entry.h"
 #include "crypto/Crypto.h"
 
@@ -120,6 +119,6 @@ void TestEntry::testClone()
     QCOMPARE(entryCloneNone->uuid(), entryOrg->uuid());
     QCOMPARE(entryCloneHistory->title(), QString("New Title"));
     QCOMPARE(entryCloneHistory->historyItems().size(), 1);
-    QCOMPARE(entryCloneHistory->historyItems().first()->title(), QString("Original Title"));
+    QCOMPARE(entryCloneHistory->historyItems().at(0)->title(), QString("Original Title"));
     QCOMPARE(entryCloneHistory->timeInfo().creationTime(), entryOrg->timeInfo().creationTime());
 }

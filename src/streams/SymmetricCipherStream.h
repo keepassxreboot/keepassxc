@@ -33,15 +33,16 @@ public:
                           SymmetricCipher::Mode mode, SymmetricCipher::Direction direction);
     ~SymmetricCipherStream();
     bool init(const QByteArray& key, const QByteArray& iv);
-    bool open(QIODevice::OpenMode mode) Q_DECL_OVERRIDE;
-    bool reset() Q_DECL_OVERRIDE;
-    void close() Q_DECL_OVERRIDE;
+    bool open(QIODevice::OpenMode mode) override;
+    bool reset() override;
+    void close() override;
 
 protected:
-    qint64 readData(char* data, qint64 maxSize) Q_DECL_OVERRIDE;
-    qint64 writeData(const char* data, qint64 maxSize) Q_DECL_OVERRIDE;
+    qint64 readData(char* data, qint64 maxSize) override;
+    qint64 writeData(const char* data, qint64 maxSize) override;
 
 private:
+    void resetInternalState();
     bool readBlock();
     bool writeBlock(bool lastBlock);
 
@@ -51,6 +52,7 @@ private:
     bool m_bufferFilling;
     bool m_error;
     bool m_isInitalized;
+    bool m_dataWritten;
 };
 
 #endif // KEEPASSX_SYMMETRICCIPHERSTREAM_H

@@ -29,12 +29,12 @@ class AutoTypeAssociationsModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-    explicit AutoTypeAssociationsModel(QObject* parent = Q_NULLPTR);
+    explicit AutoTypeAssociationsModel(QObject* parent = nullptr);
     void setAutoTypeAssociations(AutoTypeAssociations* autoTypeAssociations);
-    int rowCount(const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
-    int columnCount(const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
-    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+    int columnCount(const QModelIndex& parent = QModelIndex()) const override;
+    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
 public Q_SLOTS:
     void associationChange(int i);

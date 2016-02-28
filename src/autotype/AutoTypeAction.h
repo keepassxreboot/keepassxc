@@ -66,7 +66,7 @@ public:
 class KEEPASSX_EXPORT AutoTypeClearField : public AutoTypeAction
 {
 public:
-    explicit AutoTypeClearField();
+    AutoTypeClearField();
     AutoTypeAction* clone();
     void accept(AutoTypeExecutor* executor);
 };

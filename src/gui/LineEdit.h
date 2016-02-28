@@ -22,8 +22,6 @@
 
 #include <QLineEdit>
 
-#include "core/Global.h"
-
 class QToolButton;
 
 class LineEdit : public QLineEdit
@@ -31,10 +29,10 @@ class LineEdit : public QLineEdit
     Q_OBJECT
 
 public:
-    explicit LineEdit(QWidget* parent = Q_NULLPTR);
+    explicit LineEdit(QWidget* parent = nullptr);
 
 protected:
-    void resizeEvent(QResizeEvent* event) Q_DECL_OVERRIDE;
+    void resizeEvent(QResizeEvent* event) override;
 
 private Q_SLOTS:
     void updateCloseButton(const QString& text);

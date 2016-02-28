@@ -19,7 +19,7 @@
 
 #include "core/Config.h"
 
-FileDialog* FileDialog::m_instance(Q_NULLPTR);
+FileDialog* FileDialog::m_instance(nullptr);
 
 QString FileDialog::getOpenFileName(QWidget* parent, const QString& caption, QString dir,
                                     const QString& filter, QString* selectedFilter,
@@ -53,7 +53,7 @@ QString FileDialog::getOpenFileName(QWidget* parent, const QString& caption, QSt
 
 QString FileDialog::getSaveFileName(QWidget* parent, const QString& caption, QString dir,
                                     const QString& filter, QString* selectedFilter,
-                                    QFileDialog::Options options)
+                                    QFileDialog::Options options, const QString& defaultExtension)
 {
     if (!m_nextFileName.isEmpty()) {
         QString result = m_nextFileName;
@@ -65,8 +65,30 @@ QString FileDialog::getSaveFileName(QWidget* parent, const QString& caption, QSt
             dir = config()->get("LastDir").toString();
         }
 
-        QString result = QFileDialog::getSaveFileName(parent, caption, dir, filter,
-                                                      selectedFilter, options);
+        QString result;
+#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
+        Q_UNUSED(defaultExtension);
+        // the native dialogs on these platforms already append the file extension
+        result = QFileDialog::getSaveFileName(parent, caption, dir, filter,
+                                              selectedFilter, options);
+#else
+        QFileDialog dialog(parent, caption, dir, filter);
+        dialog.setAcceptMode(QFileDialog::AcceptSave);
+        dialog.setFileMode(QFileDialog::AnyFile);
+        if (selectedFilter) {
+            dialog.selectNameFilter(*selectedFilter);
+        }
+        dialog.setOptions(options);
+        dialog.setDefaultSuffix(defaultExtension);
+
+        QStringList results;
+        if (dialog.exec()) {
+            results = dialog.selectedFiles();
+            if (!results.isEmpty()) {
+                result = results[0];
+            }
+        }
+#endif
 
         // on Mac OS X the focus is lost after closing the native dialog
         if (parent) {

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<KeePassFile>
+	<Meta>
+		<Generator>KeePass</Generator>
+		<DatabaseName>ANAME</DatabaseName>
+		<DatabaseNameChanged>2010-08-08T17:24:53Z</DatabaseNameChanged>
+		<DatabaseDescription>ADESC</DatabaseDescription>
+		<DatabaseDescriptionChanged>2010-08-08T17:27:12Z</DatabaseDescriptionChanged>
+		<DefaultUserName>DEFUSERNAME</DefaultUserName>
+		<DefaultUserNameChanged>2010-08-08T17:27:45Z</DefaultUserNameChanged>
+		<MaintenanceHistoryDays>127</MaintenanceHistoryDays>
+		<Color>#FFEF00</Color>
+		<MasterKeyChanged>2012-04-05T17:09:34Z</MasterKeyChanged>
+		<MasterKeyChangeRec>101</MasterKeyChangeRec>
+		<MasterKeyChangeForce>-1</MasterKeyChangeForce>
+		<MemoryProtection/>
+		<CustomIcons/>
+		<RecycleBinEnabled>True</RecycleBinEnabled>
+		<RecycleBinUUID/>
+		<RecycleBinChanged>2010-08-25T16:12:57Z</RecycleBinChanged>
+		<EntryTemplatesGroup/>
+		<EntryTemplatesGroupChanged>2010-08-08T17:24:19Z</EntryTemplatesGroupChanged>
+		<LastSelectedGroup/>
+		<LastTopVisibleGroup/>
+		<HistoryMaxItems>-1</HistoryMaxItems>
+		<HistoryMaxSize>5242880</HistoryMaxSize>
+		<Binaries/>
+		<CustomData/>
+	</Meta>
+	<Root>
+		<Group>
+			<UUID>lmU+9n0aeESKZvcEze+bRg==</UUID>
+			<Name>NewDatabase</Name>
+			<Notes />
+			<IconID>49</IconID>
+			<Times/>
+			<IsExpanded>True</IsExpanded>
+			<DefaultAutoTypeSequence />
+			<EnableAutoType>null</EnableAutoType>
+			<EnableSearching>null</EnableSearching>
+			<LastTopVisibleEntry/>
+		</Group>
+	</Root>
+</KeePassFile>

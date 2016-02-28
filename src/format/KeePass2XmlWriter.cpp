@@ -25,9 +25,9 @@
 #include "streams/QtIOCompressor"
 
 KeePass2XmlWriter::KeePass2XmlWriter()
-    : m_db(Q_NULLPTR)
-    , m_meta(Q_NULLPTR)
-    , m_randomStream(Q_NULLPTR)
+    : m_db(nullptr)
+    , m_meta(nullptr)
+    , m_randomStream(nullptr)
     , m_error(false)
 {
     m_xml.setAutoFormatting(true);
@@ -57,6 +57,10 @@ void KeePass2XmlWriter::writeDatabase(QIODevice* device, Database* db, KeePass2R
     m_xml.writeEndElement();
 
     m_xml.writeEndDocument();
+
+    if (m_xml.hasError()) {
+        raiseError(device->errorString());
+    }
 }
 
 void KeePass2XmlWriter::writeDatabase(const QString& filename, Database* db)
@@ -368,7 +372,7 @@ void KeePass2XmlWriter::writeEntry(const Entry* entry)
         }
 
         if (!value.isEmpty()) {
-            m_xml.writeCharacters(value);
+            m_xml.writeCharacters(stripInvalidXml10Chars(value));
         }
         m_xml.writeEndElement();
 
@@ -439,7 +443,7 @@ void KeePass2XmlWriter::writeString(const QString& qualifiedName, const QString&
         m_xml.writeEmptyElement(qualifiedName);
     }
     else {
-        m_xml.writeTextElement(qualifiedName, string);
+        m_xml.writeTextElement(qualifiedName, stripInvalidXml10Chars(string));
     }
 }
 
@@ -538,6 +542,31 @@ QString KeePass2XmlWriter::colorPartToString(int value)
     QString str = QString::number(value, 16).toUpper();
     if (str.length() == 1) {
         str.prepend("0");
+    }
+
+    return str;
+}
+
+QString KeePass2XmlWriter::stripInvalidXml10Chars(QString str)
+{
+    for (int i = str.size() - 1; i >= 0; i--) {
+        const QChar ch = str.at(i);
+        const ushort uc = ch.unicode();
+
+        if (ch.isLowSurrogate() && i != 0 && str.at(i - 1).isHighSurrogate()) {
+            // keep valid surrogate pair
+            i--;
+        }
+        else if ((uc < 0x20 && uc != 0x09 && uc != 0x0A && uc != 0x0D)  // control chracters
+                 || (uc >= 0x7F && uc <= 0x84)  // control chracters, valid but discouraged by XML
+                 || (uc >= 0x86 && uc <= 0x9F)  // control chracters, valid but discouraged by XML
+                 || (uc > 0xFFFD)               // noncharacter
+                 || ch.isLowSurrogate()         // single low surrogate
+                 || ch.isHighSurrogate())       // single high surrogate
+        {
+            qWarning("Stripping invalid XML 1.0 codepoint %x", uc);
+            str.remove(i, 1);
+        }
     }
 
     return str;

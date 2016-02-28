@@ -20,9 +20,11 @@
 #include "core/Entry.h"
 #include "core/Tools.h"
 
+#include <algorithm>
+
 EntryAttachmentsModel::EntryAttachmentsModel(QObject* parent)
     : QAbstractListModel(parent)
-    , m_entryAttachments(Q_NULLPTR)
+    , m_entryAttachments(nullptr)
 {
 }
 
@@ -102,7 +104,7 @@ void EntryAttachmentsModel::attachmentAboutToAdd(const QString& key)
 {
     QList<QString> rows = m_entryAttachments->keys();
     rows.append(key);
-    qSort(rows);
+    std::sort(rows.begin(), rows.end());
     int row = rows.indexOf(key);
     beginInsertRows(QModelIndex(), row, row);
 }

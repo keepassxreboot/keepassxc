@@ -54,7 +54,9 @@ void HashedBlockStream::init()
 
 bool HashedBlockStream::reset()
 {
-    if (isWritable()) {
+    // Write final block(s) only if device is writable and we haven't
+    // already written a final block.
+    if (isWritable() && (!m_buffer.isEmpty() || m_blockIndex != 0)) {
         if (!m_buffer.isEmpty()) {
             if (!writeHashedBlock()) {
                 return false;
@@ -74,7 +76,9 @@ bool HashedBlockStream::reset()
 
 void HashedBlockStream::close()
 {
-    if (isWritable()) {
+    // Write final block(s) only if device is writable and we haven't
+    // already written a final block.
+    if (isWritable() && (!m_buffer.isEmpty() || m_blockIndex != 0)) {
         if (!m_buffer.isEmpty()) {
             writeHashedBlock();
         }

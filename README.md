@@ -13,22 +13,23 @@ My intention is to keep this repository as up-to-date with the main keePassX rep
 The following tools must exist within your PATH:
 
 * make
-* cmake (>= 2.6.4)
-* g++ or clang++
+* cmake (>= 2.8.12)
+* g++ (>= 4.7) or clang++ (>= 3.0)
 
 The following libraries are required:
 
-* Qt 4 (>= 4.6)
-* libgcrypt
+* Qt 5 (>= 5.2): qtbase and qttools5
+* libgcrypt (>= 1.6)
 * zlib
 * libmicrohttpd
 * QJSON
 * libxtst (optional for auto-type on X11)
+* libxtst, qtx11extras (optional for auto-type on X11)
 
 On Debian you can install them with:
 
 ```bash
-sudo apt-get install build-essential cmake libqt4-dev libgcrypt11-dev zlib1g-dev
+sudo apt-get install build-essential cmake qtbase5-dev libqt5x11extras5-dev qttools5-dev qttools5-dev-tools libgcrypt20-dev zlib1g-dev
 ```
 
 #### Build Steps
@@ -51,3 +52,45 @@ sudo make install
 ```
 
 More detailed instructions available in the INSTALL file.
+
+## Contribute
+
+Coordination of work between developers is handled through the [KeePassX development](https://www.keepassx.org/dev/) site.
+Requests for enhancements, or reports of bugs encountered, can also be reported through the KeePassX development site.
+However, members of the open-source community are encouraged to submit pull requests directly through GitHub.
+
+### Clone Repository
+
+Clone the repository to a suitable location where you can extend and build this project.
+
+```bash
+git clone https://github.com/keepassx/keepassx.git
+```
+
+**Note:** This will clone the entire contents of the repository at the HEAD revision.
+
+To update the project from within the project's folder you can run the following command:
+
+```bash
+git pull
+```
+
+### Feature Requests
+
+We're always looking for suggestions to improve our application. If you have a suggestion for improving an existing feature,
+or would like to suggest a completely new feature for KeePassX, please file a ticket on the [KeePassX development](https://www.keepassx.org/dev/) site.
+
+### Bug Reports
+
+Our software isn't always perfect, but we strive to always improve our work. You may file bug reports on the [KeePassX development](https://www.keepassx.org/dev/) site.
+
+### Pull Requests
+
+Along with our desire to hear your feedback and suggestions, we're also interested in accepting direct assistance in the form of code.
+
+Issue merge requests against our [GitHub repository](https://github.com/keepassx/keepassx).
+
+### Translations
+
+Translations are managed on [Transifex](https://www.transifex.com/projects/p/keepassx/) which offers a web interface.
+Please join an existing language team or request a new one if there is none.

@@ -18,8 +18,8 @@
 #include "CompositeKey.h"
 #include "CompositeKey_p.h"
 
-#include <QtConcurrentRun>
-#include <QTime>
+#include <QtConcurrent>
+#include <QElapsedTimer>
 
 #include "crypto/CryptoHash.h"
 #include "crypto/SymmetricCipher.h"
@@ -94,7 +94,8 @@ QByteArray CompositeKey::transform(const QByteArray& seed, quint64 rounds,
 
     QByteArray key = rawKey();
 
-    QFuture<QByteArray> future = QtConcurrent::run(transformKeyRaw, key.left(16), seed, rounds, &okLeft, &errorStringLeft);
+    QFuture<QByteArray> future = QtConcurrent::run(transformKeyRaw, key.left(16), seed, rounds,
+                                                   &okLeft, &errorStringLeft);
     QByteArray result2 = transformKeyRaw(key.right(16), seed, rounds, &okRight, &errorStringRight);
 
     QByteArray transformed;
@@ -182,14 +183,14 @@ void TransformKeyBenchmarkThread::run()
                            SymmetricCipher::Encrypt);
     cipher.init(seed, iv);
 
-    QTime t;
+    QElapsedTimer t;
     t.start();
 
     do {
-        if (!cipher.processInPlace(key, 100)) {
+        if (!cipher.processInPlace(key, 10000)) {
             m_rounds = -1;
             return;
         }
-        m_rounds += 100;
-    } while (t.elapsed() < m_msec);
+        m_rounds += 10000;
+    } while (!t.hasExpired(m_msec));
 }

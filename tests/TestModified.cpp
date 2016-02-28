@@ -20,7 +20,6 @@
 #include <QSignalSpy>
 #include <QTest>
 
-#include "tests.h"
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -237,7 +236,7 @@ void TestModified::testEntrySets()
     entry->setExpires(entry->timeInfo().expires());
     QCOMPARE(spyModified.count(), spyCount);
 
-    entry->setExpiryTime(Tools::currentDateTimeUtc().addYears(1));
+    entry->setExpiryTime(QDateTime::currentDateTimeUtc().addYears(1));
     QCOMPARE(spyModified.count(), ++spyCount);
     entry->setExpiryTime(entry->timeInfo().expiryTime());
     QCOMPARE(spyModified.count(), spyCount);

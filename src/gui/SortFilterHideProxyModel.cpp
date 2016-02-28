@@ -22,6 +22,11 @@ SortFilterHideProxyModel::SortFilterHideProxyModel(QObject* parent)
 {
 }
 
+Qt::DropActions SortFilterHideProxyModel::supportedDragActions() const
+{
+    return sourceModel()->supportedDragActions();
+}
+
 void SortFilterHideProxyModel::hideColumn(int column, bool hide)
 {
     m_hiddenColumns.resize(column + 1);

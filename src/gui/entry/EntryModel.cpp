@@ -27,9 +27,8 @@
 
 EntryModel::EntryModel(QObject* parent)
     : QAbstractTableModel(parent)
-    , m_group(Q_NULLPTR)
+    , m_group(nullptr)
 {
-    setSupportedDragActions(Qt::MoveAction | Qt::CopyAction);
 }
 
 Entry* EntryModel::entryFromIndex(const QModelIndex& index) const
@@ -72,7 +71,7 @@ void EntryModel::setEntryList(const QList<Entry*>& entries)
 
     severConnections();
 
-    m_group = Q_NULLPTR;
+    m_group = nullptr;
     m_allGroups.clear();
     m_entries = entries;
     m_orgEntries = entries;
@@ -146,7 +145,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         switch (index.column()) {
         case ParentGroup:
             if (entry->group()) {
-                return entry->group()->iconPixmap();
+                return entry->group()->iconScaledPixmap();
             }
             break;
         case Title:
@@ -154,7 +153,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
                 return databaseIcons()->iconPixmap(DatabaseIcons::ExpiredIconIndex);
             }
             else {
-                return entry->iconPixmap();
+                return entry->iconScaledPixmap();
             }
         }
     }
@@ -191,6 +190,11 @@ Qt::DropActions EntryModel::supportedDropActions() const
     return 0;
 }
 
+Qt::DropActions EntryModel::supportedDragActions() const
+{
+    return (Qt::MoveAction | Qt::CopyAction);
+}
+
 Qt::ItemFlags EntryModel::flags(const QModelIndex& modelIndex) const
 {
     if (!modelIndex.isValid()) {
@@ -211,7 +215,7 @@ QStringList EntryModel::mimeTypes() const
 QMimeData* EntryModel::mimeData(const QModelIndexList& indexes) const
 {
     if (indexes.isEmpty()) {
-        return Q_NULLPTR;
+        return nullptr;
     }
 
     QMimeData* data = new QMimeData();
@@ -236,10 +240,10 @@ QMimeData* EntryModel::mimeData(const QModelIndexList& indexes) const
 
     if (seenEntries.isEmpty()) {
         delete data;
-        return Q_NULLPTR;
+        return nullptr;
     }
     else {
-        data->setData(mimeTypes().first(), encoded);
+        data->setData(mimeTypes().at(0), encoded);
         return data;
     }
 }
@@ -294,11 +298,11 @@ void EntryModel::entryDataChanged(Entry* entry)
 void EntryModel::severConnections()
 {
     if (m_group) {
-        disconnect(m_group, Q_NULLPTR, this, Q_NULLPTR);
+        disconnect(m_group, nullptr, this, nullptr);
     }
 
     Q_FOREACH (const Group* group, m_allGroups) {
-        disconnect(group, Q_NULLPTR, this, Q_NULLPTR);
+        disconnect(group, nullptr, this, nullptr);
     }
 }
 

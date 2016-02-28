@@ -17,6 +17,17 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
 configure_file(config-keepassx.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx.h)
 
+include(GetGitRevisionDescription)
+get_git_head_revision(GIT_REFSPEC GIT_HEAD)
+git_describe(GIT_DESCRIBE --long)
+
+if (NOT GIT_HEAD OR NOT GIT_DESCRIBE)
+    set(GIT_HEAD "")
+    set(GIT_DESCRIBE "")
+endif()
+
+configure_file(version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/version.h @ONLY)
+
 set(keepassx_SOURCES
     autotype/AutoType.cpp
     autotype/AutoTypeAction.cpp
@@ -43,9 +54,6 @@ set(keepassx_SOURCES
     core/ListDeleter.h
     core/Metadata.cpp
     core/PasswordGenerator.cpp
-    core/qlockfile.cpp
-    core/qsavefile.cpp
-    core/qsavefile_p.h
     core/SignalMultiplexer.cpp
     core/TimeDelta.cpp
     core/TimeInfo.cpp
@@ -53,19 +61,19 @@ set(keepassx_SOURCES
     core/Tools.cpp
     core/Translator.cpp
     core/Uuid.cpp
-    core/qcommandlineoption.cpp
-    core/qcommandlineparser.cpp
     crypto/Crypto.cpp
     crypto/CryptoHash.cpp
     crypto/Random.cpp
     crypto/SymmetricCipher.cpp
     crypto/SymmetricCipherBackend.h
     crypto/SymmetricCipherGcrypt.cpp
+    format/CsvExporter.cpp
     format/KeePass1.h
     format/KeePass1Reader.cpp
     format/KeePass2.h
     format/KeePass2RandomStream.cpp
     format/KeePass2Reader.cpp
+    format/KeePass2Repair.cpp
     format/KeePass2Writer.cpp
     format/KeePass2XmlReader.cpp
     format/KeePass2XmlWriter.cpp
@@ -74,6 +82,7 @@ set(keepassx_SOURCES
     gui/ChangeMasterKeyWidget.cpp
     gui/Clipboard.cpp
     gui/DatabaseOpenWidget.cpp
+    gui/DatabaseRepairWidget.cpp
     gui/DatabaseSettingsWidget.cpp
     gui/DatabaseTabWidget.cpp
     gui/DatabaseWidget.cpp
@@ -127,85 +136,11 @@ set(keepassx_SOURCES
     streams/SymmetricCipherStream.cpp
 )
 
-if(NOT GCRYPT_HAS_SALSA20)
-  set(keepassx_SOURCES
-      ${keepassx_SOURCES}
-      crypto/salsa20/ecrypt-config.h
-      crypto/salsa20/ecrypt-machine.h
-      crypto/salsa20/ecrypt-portable.h
-      crypto/salsa20/ecrypt-sync.h
-      crypto/salsa20/salsa20.c
-      crypto/SymmetricCipherSalsa20.cpp
-  )
-endif()
-
-if(UNIX)
-  set(keepassx_SOURCES
-      ${keepassx_SOURCES}
-      core/qlockfile_unix.cpp
-  )
-elseif(MINGW)
-  set(keepassx_SOURCES
-      ${keepassx_SOURCES}
-      core/qlockfile_win.cpp
-  )
-endif()
-
 set(keepassx_SOURCES_MAINEXE
     main.cpp
 )
 
 set(keepassx_MOC
-    autotype/AutoType.h
-    autotype/AutoTypeSelectDialog.h
-    autotype/AutoTypeSelectView.h
-    autotype/ShortcutWidget.h
-    autotype/WindowSelectComboBox.h
-    core/AutoTypeAssociations.h
-    core/Config.h
-    core/Database.h
-    core/Entry.h
-    core/EntryAttachments.h
-    core/EntryAttributes.h
-    core/Group.h
-    core/InactivityTimer.h
-    core/Metadata.h
-    core/qsavefile.h
-    gui/AboutDialog.h
-    gui/Application.h
-    gui/ChangeMasterKeyWidget.h
-    gui/Clipboard.h
-    gui/DatabaseOpenWidget.h
-    gui/DatabaseSettingsWidget.h
-    gui/DatabaseTabWidget.h
-    gui/DatabaseWidget.h
-    gui/DatabaseWidgetStateSync.h
-    gui/DialogyWidget.h
-    gui/DragTabBar.h
-    gui/EditWidget.h
-    gui/EditWidgetIcons.h
-    gui/EditWidgetProperties.h
-    gui/IconModels.h
-    gui/KeePass1OpenWidget.h
-    gui/LineEdit.h
-    gui/MainWindow.h
-    gui/PasswordEdit.h
-    gui/PasswordGeneratorWidget.h
-    gui/PasswordComboBox.h
-    gui/SettingsWidget.h
-    gui/SortFilterHideProxyModel.h
-    gui/UnlockDatabaseWidget.h
-    gui/WelcomeWidget.h
-    gui/entry/AutoTypeAssociationsModel.h
-    gui/entry/EditEntryWidget.h
-    gui/entry/EntryAttachmentsModel.h
-    gui/entry/EntryAttributesModel.h
-    gui/entry/EntryHistoryModel.h
-    gui/entry/EntryModel.h
-    gui/entry/EntryView.h
-    gui/group/EditGroupWidget.h
-    gui/group/GroupModel.h
-    gui/group/GroupView.h
     http/AccessControlDialog.h
     http/EntryConfig.h
     http/HttpPasswordGeneratorWidget.h
@@ -213,12 +148,6 @@ set(keepassx_MOC
     http/Protocol.h
     http/Server.h
     http/Service.h
-    keys/CompositeKey_p.h
-    streams/HashedBlockStream.h
-    streams/LayeredStream.h
-    streams/qtiocompressor.h
-    streams/StoreDataStream.h
-    streams/SymmetricCipherStream.h
 )
 
 set(keepassx_FORMS
@@ -251,26 +180,20 @@ if(MINGW)
       ${CMAKE_SOURCE_DIR}/share/windows/icon.rc)
 endif()
 
-qt4_wrap_ui(keepassx_SOURCES ${keepassx_FORMS})
-qt4_wrap_cpp(keepassx_SOURCES ${keepassx_MOC})
+qt5_wrap_ui(keepassx_SOURCES ${keepassx_FORMS})
 
 add_library(keepassx_core STATIC ${keepassx_SOURCES})
 set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
+target_link_libraries(keepassx_core Qt5::Core Qt5::Concurrent Qt5::Widgets)
 
 add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE ${keepassx_SOURCES_MAINEXE})
 target_link_libraries(${PROGNAME}
                       keepassx_core
-                      qjson
-                      ${MHD_LIBRARIES}
-                      ${QT_QTCORE_LIBRARY}
-                      ${QT_QTGUI_LIBRARY}
-                      ${QT_QTNETWORK_LIBRARY}
+                      Qt5::Core
+                      Qt5::Concurrent
+                      Qt5::Widgets
                       ${GCRYPT_LIBRARIES}
                       ${ZLIB_LIBRARIES})
-
-if(UNIX AND NOT APPLE)
-  target_link_libraries(${PROGNAME} ${QT_QTDBUS_LIBRARY})
-endif()
 
 set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
 
@@ -286,7 +209,7 @@ install(TARGETS ${PROGNAME}
 
 add_subdirectory(autotype)
 
-if(APPLE AND NOT (${CMAKE_VERSION} VERSION_LESS 2.8.8))
+if(APPLE)
   if(QT_MAC_USE_COCOA AND EXISTS "${QT_LIBRARY_DIR}/Resources/qt_menu.nib")
     install(DIRECTORY "${QT_LIBRARY_DIR}/Resources/qt_menu.nib"
             DESTINATION "${DATA_INSTALL_DIR}")
@@ -304,7 +227,7 @@ if(APPLE AND NOT (${CMAKE_VERSION} VERSION_LESS 2.8.8))
   install_qt4_executable(${PROGNAME}.app "qjpeg;qgif;qico;qtaccessiblewidgets")
 endif()
 
-if(MINGW AND NOT (${CMAKE_VERSION} VERSION_LESS 2.8.8))
+if(MINGW )
   set(CPACK_GENERATOR "ZIP")
   set(CPACK_STRIP_FILES ON)
   set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSX_VERSION_NUM}")

@@ -20,7 +20,6 @@
 #include <QTest>
 
 #include "config-keepassx-tests.h"
-#include "tests.h"
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"

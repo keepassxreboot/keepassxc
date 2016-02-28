@@ -28,7 +28,7 @@
 
 GroupModel::GroupModel(Database* db, QObject* parent)
     : QAbstractItemModel(parent)
-    , m_db(Q_NULLPTR)
+    , m_db(nullptr)
 {
     changeDatabase(db);
 }
@@ -136,7 +136,7 @@ QVariant GroupModel::data(const QModelIndex& index, int role) const
             return databaseIcons()->iconPixmap(DatabaseIcons::ExpiredIconIndex);
         }
         else {
-            return group->iconPixmap();
+            return group->iconScaledPixmap();
         }
     }
     else if (role == Qt::FontRole) {
@@ -329,7 +329,7 @@ QStringList GroupModel::mimeTypes() const
 QMimeData* GroupModel::mimeData(const QModelIndexList& indexes) const
 {
     if (indexes.isEmpty()) {
-        return Q_NULLPTR;
+        return nullptr;
     }
 
     QMimeData* data = new QMimeData();
@@ -354,10 +354,10 @@ QMimeData* GroupModel::mimeData(const QModelIndexList& indexes) const
 
     if (seenGroups.isEmpty()) {
         delete data;
-        return Q_NULLPTR;
+        return nullptr;
     }
     else {
-        data->setData(mimeTypes().first(), encoded);
+        data->setData(mimeTypes().at(0), encoded);
         return data;
     }
 }

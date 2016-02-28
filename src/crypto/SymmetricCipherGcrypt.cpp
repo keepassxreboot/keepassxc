@@ -22,7 +22,7 @@
 
 SymmetricCipherGcrypt::SymmetricCipherGcrypt(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
                                              SymmetricCipher::Direction direction)
-    : m_ctx(Q_NULLPTR)
+    : m_ctx(nullptr)
     , m_algo(gcryptAlgo(algo))
     , m_mode(gcryptMode(mode))
     , m_direction(direction)
@@ -44,10 +44,8 @@ int SymmetricCipherGcrypt::gcryptAlgo(SymmetricCipher::Algorithm algo)
     case SymmetricCipher::Twofish:
         return GCRY_CIPHER_TWOFISH;
 
-#ifdef GCRYPT_HAS_SALSA20
     case SymmetricCipher::Salsa20:
         return GCRY_CIPHER_SALSA20;
-#endif
 
     default:
         Q_ASSERT(false);
@@ -95,7 +93,7 @@ bool SymmetricCipherGcrypt::init()
     }
 
     size_t blockSizeT;
-    error = gcry_cipher_algo_info(m_algo, GCRYCTL_GET_BLKLEN, Q_NULLPTR, &blockSizeT);
+    error = gcry_cipher_algo_info(m_algo, GCRYCTL_GET_BLKLEN, nullptr, &blockSizeT);
     if (error != 0) {
         setErrorString(error);
         return false;
@@ -163,10 +161,10 @@ bool SymmetricCipherGcrypt::processInPlace(QByteArray& data)
     gcry_error_t error;
 
     if (m_direction == SymmetricCipher::Decrypt) {
-        error = gcry_cipher_decrypt(m_ctx, data.data(), data.size(), Q_NULLPTR, 0);
+        error = gcry_cipher_decrypt(m_ctx, data.data(), data.size(), nullptr, 0);
     }
     else {
-        error = gcry_cipher_encrypt(m_ctx, data.data(), data.size(), Q_NULLPTR, 0);
+        error = gcry_cipher_encrypt(m_ctx, data.data(), data.size(), nullptr, 0);
     }
 
     if (error != 0) {
@@ -188,7 +186,7 @@ bool SymmetricCipherGcrypt::processInPlace(QByteArray& data, quint64 rounds)
 
     if (m_direction == SymmetricCipher::Decrypt) {
         for (quint64 i = 0; i != rounds; ++i) {
-            error = gcry_cipher_decrypt(m_ctx, rawData, size, Q_NULLPTR, 0);
+            error = gcry_cipher_decrypt(m_ctx, rawData, size, nullptr, 0);
 
             if (error != 0) {
                 setErrorString(error);
@@ -198,7 +196,7 @@ bool SymmetricCipherGcrypt::processInPlace(QByteArray& data, quint64 rounds)
     }
     else {
         for (quint64 i = 0; i != rounds; ++i) {
-            error = gcry_cipher_encrypt(m_ctx, rawData, size, Q_NULLPTR, 0);
+            error = gcry_cipher_encrypt(m_ctx, rawData, size, nullptr, 0);
 
             if (error != 0) {
                 setErrorString(error);

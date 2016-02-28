@@ -24,7 +24,7 @@
 
 PasswordComboBox::PasswordComboBox(QWidget* parent)
     : QComboBox(parent)
-    , m_generator(Q_NULLPTR)
+    , m_generator(nullptr)
     , m_alternatives(10)
 {
     setEditable(true);
@@ -51,7 +51,6 @@ void PasswordComboBox::setEcho(bool echo)
 #else
         setStyleSheet("QComboBox { font-family: monospace,Courier; }");
 #endif
-
     }
     else {
         // clear items so the combobox indicates that no popup menu is available

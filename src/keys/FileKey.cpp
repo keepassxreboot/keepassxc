@@ -211,7 +211,10 @@ QByteArray FileKey::loadXmlKey(QXmlStreamReader& xmlReader)
     while (!xmlReader.error() && xmlReader.readNextStartElement()) {
         if (xmlReader.name() == "Data") {
             // TODO: do we need to enforce a specific data.size()?
-            data = QByteArray::fromBase64(xmlReader.readElementText().toLatin1());
+            QByteArray rawData = xmlReader.readElementText().toLatin1();
+            if (Tools::isBase64(rawData)) {
+                data = QByteArray::fromBase64(rawData);
+            }
         }
     }
 

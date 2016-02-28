@@ -18,7 +18,8 @@ include_directories(../src)
 add_executable(kdbx-extract kdbx-extract.cpp)
 target_link_libraries(kdbx-extract
                       keepassx_core
-                      ${QT_QTCORE_LIBRARY}
-                      ${QT_QTGUI_LIBRARY}
+                      Qt5::Core
+                      Qt5::Concurrent
+                      Qt5::Widgets
                       ${GCRYPT_LIBRARIES}
                       ${ZLIB_LIBRARIES})

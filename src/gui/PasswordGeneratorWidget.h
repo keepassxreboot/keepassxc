@@ -21,7 +21,6 @@
 #include <QWidget>
 #include <QComboBox>
 
-#include "core/Global.h"
 #include "core/PasswordGenerator.h"
 
 namespace Ui {
@@ -35,7 +34,7 @@ class PasswordGeneratorWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit PasswordGeneratorWidget(QWidget* parent = Q_NULLPTR);
+    explicit PasswordGeneratorWidget(QWidget* parent = nullptr);
     ~PasswordGeneratorWidget();
     void loadSettings();
     void reset();

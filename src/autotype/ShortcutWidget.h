@@ -20,21 +20,19 @@
 
 #include <QLineEdit>
 
-#include "core/Global.h"
-
 class ShortcutWidget : public QLineEdit
 {
     Q_OBJECT
 
 public:
-    explicit ShortcutWidget(QWidget* parent = Q_NULLPTR);
+    explicit ShortcutWidget(QWidget* parent = nullptr);
     Qt::Key key() const;
     Qt::KeyboardModifiers modifiers() const;
     void setShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers);
 
 protected:
-    void keyPressEvent(QKeyEvent* event) Q_DECL_OVERRIDE;
-    void keyReleaseEvent(QKeyEvent* event) Q_DECL_OVERRIDE;
+    void keyPressEvent(QKeyEvent* event) override;
+    void keyReleaseEvent(QKeyEvent* event) override;
 
 private:
     void keyEvent(QKeyEvent* event);

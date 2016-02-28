@@ -1,50 +1,40 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Nokia Corporation and/or its subsidiary(-ies).
-** Contact: http://www.qt-project.org/
+** Copyright (C) 2015 The Qt Company Ltd.
+** Contact: http://www.qt.io/licensing/
 **
 ** This file is part of the test suite of the Qt Toolkit.
 **
-** $QT_BEGIN_LICENSE:LGPL$
+** $QT_BEGIN_LICENSE:LGPL21$
+** Commercial License Usage
+** Licensees holding valid commercial Qt licenses may use this file in
+** accordance with the commercial license agreement provided with the
+** Software or, alternatively, in accordance with the terms contained in
+** a written agreement between you and The Qt Company. For licensing terms
+** and conditions see http://www.qt.io/terms-conditions. For further
+** information use the contact form at http://www.qt.io/contact-us.
+**
 ** GNU Lesser General Public License Usage
-** This file may be used under the terms of the GNU Lesser General Public
-** License version 2.1 as published by the Free Software Foundation and
-** appearing in the file LICENSE.LGPL included in the packaging of this
-** file. Please review the following information to ensure the GNU Lesser
-** General Public License version 2.1 requirements will be met:
+** Alternatively, this file may be used under the terms of the GNU Lesser
+** General Public License version 2.1 or version 3 as published by the Free
+** Software Foundation and appearing in the file LICENSE.LGPLv21 and
+** LICENSE.LGPLv3 included in the packaging of this file. Please review the
+** following information to ensure the GNU Lesser General Public License
+** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
 ** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
-** In addition, as a special exception, Nokia gives you certain additional
-** rights. These rights are described in the Nokia Qt LGPL Exception
+** As a special exception, The Qt Company gives you certain additional
+** rights. These rights are described in The Qt Company LGPL Exception
 ** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU General
-** Public License version 3.0 as published by the Free Software Foundation
-** and appearing in the file LICENSE.GPL included in the packaging of this
-** file. Please review the following information to ensure the GNU General
-** Public License version 3.0 requirements will be met:
-** http://www.gnu.org/copyleft/gpl.html.
-**
-** Other Usage
-** Alternatively, this file may be used in accordance with the terms and
-** conditions contained in a signed written agreement between you and Nokia.
-**
-**
-**
-**
 **
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
 
-
 #include "modeltest.h"
 
-#include <QDebug>
-#include <QTest>
-
-Q_DECLARE_METATYPE ( QModelIndex )
+#include <QtCore>
+#include <QtTest>
 
 /*!
     Connect to all of the models signals.  Whenever anything happens recheck everything.
@@ -54,50 +44,52 @@ ModelTest::ModelTest ( QAbstractItemModel *_model, QObject *parent ) : QObject (
     if (!model)
         qFatal("%s: model must not be null", Q_FUNC_INFO);
 
-    connect ( model, SIGNAL ( columnsAboutToBeInserted ( const QModelIndex &, int, int ) ),
-              this, SLOT ( runAllTests() ) );
-    connect ( model, SIGNAL ( columnsAboutToBeRemoved ( const QModelIndex &, int, int ) ),
-              this, SLOT ( runAllTests() ) );
-    connect ( model, SIGNAL ( columnsInserted ( const QModelIndex &, int, int ) ),
-              this, SLOT ( runAllTests() ) );
-    connect ( model, SIGNAL ( columnsRemoved ( const QModelIndex &, int, int ) ),
-              this, SLOT ( runAllTests() ) );
-    connect ( model, SIGNAL ( dataChanged ( const QModelIndex &, const QModelIndex & ) ),
-              this, SLOT ( runAllTests() ) );
-    connect ( model, SIGNAL ( headerDataChanged ( Qt::Orientation, int, int ) ),
-              this, SLOT ( runAllTests() ) );
-    connect ( model, SIGNAL ( layoutAboutToBeChanged () ), this, SLOT ( runAllTests() ) );
-    connect ( model, SIGNAL ( layoutChanged () ), this, SLOT ( runAllTests() ) );
-    connect ( model, SIGNAL ( modelReset () ), this, SLOT ( runAllTests() ) );
-    connect ( model, SIGNAL ( rowsAboutToBeInserted ( const QModelIndex &, int, int ) ),
-              this, SLOT ( runAllTests() ) );
-    connect ( model, SIGNAL ( rowsAboutToBeRemoved ( const QModelIndex &, int, int ) ),
-              this, SLOT ( runAllTests() ) );
-    connect ( model, SIGNAL ( rowsInserted ( const QModelIndex &, int, int ) ),
-              this, SLOT ( runAllTests() ) );
-    connect ( model, SIGNAL ( rowsRemoved ( const QModelIndex &, int, int ) ),
-              this, SLOT ( runAllTests() ) );
+    connect(model, SIGNAL(columnsAboutToBeInserted(QModelIndex,int,int)),
+            this, SLOT(runAllTests()) );
+    connect(model, SIGNAL(columnsAboutToBeRemoved(QModelIndex,int,int)),
+            this, SLOT(runAllTests()) );
+    connect(model, SIGNAL(columnsInserted(QModelIndex,int,int)),
+            this, SLOT(runAllTests()) );
+    connect(model, SIGNAL(columnsRemoved(QModelIndex,int,int)),
+            this, SLOT(runAllTests()) );
+    connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
+            this, SLOT(runAllTests()) );
+    connect(model, SIGNAL(headerDataChanged(Qt::Orientation,int,int)),
+            this, SLOT(runAllTests()) );
+    connect(model, SIGNAL(layoutAboutToBeChanged()), this, SLOT(runAllTests()) );
+    connect(model, SIGNAL(layoutChanged()), this, SLOT(runAllTests()) );
+    connect(model, SIGNAL(modelReset()), this, SLOT(runAllTests()) );
+    connect(model, SIGNAL(rowsAboutToBeInserted(QModelIndex,int,int)),
+            this, SLOT(runAllTests()) );
+    connect(model, SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)),
+            this, SLOT(runAllTests()) );
+    connect(model, SIGNAL(rowsInserted(QModelIndex,int,int)),
+            this, SLOT(runAllTests()) );
+    connect(model, SIGNAL(rowsRemoved(QModelIndex,int,int)),
+            this, SLOT(runAllTests()) );
 
-    // Special checks for inserting/removing
-    connect ( model, SIGNAL ( layoutAboutToBeChanged() ),
-              this, SLOT ( layoutAboutToBeChanged() ) );
-    connect ( model, SIGNAL ( layoutChanged() ),
-              this, SLOT ( layoutChanged() ) );
+    // Special checks for changes
+    connect(model, SIGNAL(layoutAboutToBeChanged()),
+            this, SLOT(layoutAboutToBeChanged()) );
+    connect(model, SIGNAL(layoutChanged()),
+            this, SLOT(layoutChanged()) );
 
-    connect ( model, SIGNAL ( rowsAboutToBeInserted ( const QModelIndex &, int, int ) ),
-              this, SLOT ( rowsAboutToBeInserted ( const QModelIndex &, int, int ) ) );
-    connect ( model, SIGNAL ( rowsAboutToBeRemoved ( const QModelIndex &, int, int ) ),
-              this, SLOT ( rowsAboutToBeRemoved ( const QModelIndex &, int, int ) ) );
-    connect ( model, SIGNAL ( rowsInserted ( const QModelIndex &, int, int ) ),
-              this, SLOT ( rowsInserted ( const QModelIndex &, int, int ) ) );
-    connect ( model, SIGNAL ( rowsRemoved ( const QModelIndex &, int, int ) ),
-              this, SLOT ( rowsRemoved ( const QModelIndex &, int, int ) ) );
-
-    connect ( model, SIGNAL (rowsAboutToBeMoved(QModelIndex,int,int,QModelIndex,int)),
-              this, SLOT (rowsAboutToBeMoved(QModelIndex,int,int,QModelIndex,int)) );
-    connect ( model, SIGNAL (rowsMoved(QModelIndex,int,int,QModelIndex,int)),
-              this, SLOT (rowsMoved(QModelIndex,int,int,QModelIndex,int)) );
-
+    connect(model, SIGNAL(rowsAboutToBeInserted(QModelIndex,int,int)),
+            this, SLOT(rowsAboutToBeInserted(QModelIndex,int,int)) );
+    connect(model, SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)),
+            this, SLOT(rowsAboutToBeRemoved(QModelIndex,int,int)) );
+    connect(model, SIGNAL(rowsInserted(QModelIndex,int,int)),
+            this, SLOT(rowsInserted(QModelIndex,int,int)) );
+    connect(model, SIGNAL(rowsRemoved(QModelIndex,int,int)),
+            this, SLOT(rowsRemoved(QModelIndex,int,int)) );
+    connect(model, SIGNAL (rowsAboutToBeMoved(QModelIndex,int,int,QModelIndex,int)),
+            this, SLOT (rowsAboutToBeMoved(QModelIndex,int,int,QModelIndex,int)) );
+    connect(model, SIGNAL (rowsMoved(QModelIndex,int,int,QModelIndex,int)),
+            this, SLOT (rowsMoved(QModelIndex,int,int,QModelIndex,int)) );
+    connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
+            this, SLOT(dataChanged(QModelIndex,QModelIndex)) );
+    connect(model, SIGNAL(headerDataChanged(Qt::Orientation,int,int)),
+            this, SLOT(headerDataChanged(Qt::Orientation,int,int)) );
 
     runAllTests();
 }
@@ -257,7 +249,7 @@ void ModelTest::index()
 void ModelTest::parent()
 {
 //     qDebug() << "p";
-    // Make sure the model wont crash and will return an invalid QModelIndex
+    // Make sure the model won't crash and will return an invalid QModelIndex
     // when asked for the parent of an invalid index.
     QVERIFY( model->parent ( QModelIndex() ) == QModelIndex() );
 
@@ -339,6 +331,8 @@ void ModelTest::checkChildren ( const QModelIndex &parent, int currentDepth )
     //qDebug() << "parent:" << model->data(parent).toString() << "rows:" << rows
     //         << "columns:" << columns << "parent column:" << parent.column();
 
+    const QModelIndex topLeftChild = model->index( 0, 0, parent );
+
     QVERIFY( !model->hasIndex ( rows + 1, 0, parent ) );
     for ( int r = 0; r < rows; ++r ) {
         if ( model->canFetchMore ( parent ) ) {
@@ -361,6 +355,15 @@ void ModelTest::checkChildren ( const QModelIndex &parent, int currentDepth )
             QModelIndex a = model->index ( r, c, parent );
             QModelIndex b = model->index ( r, c, parent );
             QVERIFY( a == b );
+
+            {
+                const QModelIndex sibling = model->sibling( r, c, topLeftChild );
+                QVERIFY( index == sibling );
+            }
+            {
+                const QModelIndex sibling = topLeftChild.sibling( r, c );
+                QVERIFY( index == sibling );
+            }
 
             // Some basic checking on the index that is returned
             QVERIFY( index.model() == model );
@@ -474,9 +477,9 @@ void ModelTest::data()
 
     \sa rowsInserted()
  */
-void ModelTest::rowsAboutToBeInserted ( const QModelIndex &parent, int start, int end )
+void ModelTest::rowsAboutToBeInserted ( const QModelIndex &parent, int start, int /* end */)
 {
-    Q_UNUSED(end);
+//     Q_UNUSED(end);
 //    qDebug() << "rowsAboutToBeInserted" << "start=" << start << "end=" << end << "parent=" << model->data ( parent ).toString()
 //    << "current count of parent=" << model->rowCount ( parent ); // << "display of last=" << model->data( model->index(start-1, 0, parent) );
 //     qDebug() << model->index(start-1, 0, parent) << model->data( model->index(start-1, 0, parent) );
@@ -565,6 +568,30 @@ void ModelTest::rowsRemoved ( const QModelIndex & parent, int start, int end )
     QVERIFY( c.next == model->data ( model->index ( start, 0, c.parent ) ) );
 }
 
+void ModelTest::dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight)
+{
+    QVERIFY(topLeft.isValid());
+    QVERIFY(bottomRight.isValid());
+    QModelIndex commonParent = bottomRight.parent();
+    QVERIFY(topLeft.parent() == commonParent);
+    QVERIFY(topLeft.row() <= bottomRight.row());
+    QVERIFY(topLeft.column() <= bottomRight.column());
+    int rowCount = model->rowCount(commonParent);
+    int columnCount = model->columnCount(commonParent);
+    QVERIFY(bottomRight.row() < rowCount);
+    QVERIFY(bottomRight.column() < columnCount);
+}
+
+void ModelTest::headerDataChanged(Qt::Orientation orientation, int start, int end)
+{
+    QVERIFY(start >= 0);
+    QVERIFY(end >= 0);
+    QVERIFY(start <= end);
+    int itemCount = orientation == Qt::Vertical ? model->rowCount() : model->columnCount();
+    QVERIFY(start < itemCount);
+    QVERIFY(end < itemCount);
+}
+
 void ModelTest::rowsAboutToBeMoved( const QModelIndex &srcParent, int start, int end, const QModelIndex &destParent, int destinationRow )
 {
     Changing cs;
@@ -589,8 +616,8 @@ void ModelTest::rowsMoved( const QModelIndex &srcParent, int start, int end, con
         QVERIFY ( cd.oldSize == model->rowCount ( destParent ) );
 
         // TODO: Find out what I can assert here about last and next.
-        // QVERIFY ( cd.last == model->data ( model->index ( destinationRow - 1, 0, cd.parent ) ) );
-        // QVERIFY ( cd.next == model->data ( model->index ( destinationRow + (end - start + 1), 0, cd.parent ) ) );
+        // Q_ASSERT ( cd.last == model->data ( model->index ( destinationRow - 1, 0, cd.parent ) ) );
+        // Q_ASSERT ( cd.next == model->data ( model->index ( destinationRow + (end - start + 1), 0, cd.parent ) ) );
     }
     else {
         QVERIFY ( cd.oldSize + ( end - start + 1 ) == model->rowCount ( destParent ) );
@@ -602,12 +629,12 @@ void ModelTest::rowsMoved( const QModelIndex &srcParent, int start, int end, con
     Changing cs = remove.pop();
     QVERIFY ( cs.parent == srcParent );
     if (srcParent == destParent) {
-      QVERIFY ( cs.oldSize == model->rowCount ( srcParent ) );
+        QVERIFY ( cs.oldSize == model->rowCount ( srcParent ) );
     }
     else {
-      QVERIFY ( cs.oldSize - ( end - start + 1 ) == model->rowCount ( srcParent ) );
+        QVERIFY ( cs.oldSize - ( end - start + 1 ) == model->rowCount ( srcParent ) );
 
-      QVERIFY ( cs.last == model->data ( model->index ( start - 1, 0, srcParent ) ) );
-      QVERIFY ( cs.next == model->data ( model->index ( start, 0, srcParent ) ) );
+        QVERIFY ( cs.last == model->data ( model->index ( start - 1, 0, srcParent ) ) );
+        QVERIFY ( cs.next == model->data ( model->index ( start, 0, srcParent ) ) );
     }
 }

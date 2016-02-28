@@ -23,8 +23,6 @@
 #include <QPixmapCache>
 #include <QVector>
 
-#include "core/Global.h"
-
 class DatabaseIcons
 {
 public:

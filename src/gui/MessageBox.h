@@ -20,8 +20,6 @@
 
 #include <QMessageBox>
 
-#include "core/Global.h"
-
 class MessageBox
 {
 public:

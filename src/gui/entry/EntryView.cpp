@@ -32,7 +32,6 @@ EntryView::EntryView(QWidget* parent)
     m_sortModel->setDynamicSortFilter(true);
     m_sortModel->setSortLocaleAware(true);
     m_sortModel->setSortCaseSensitivity(Qt::CaseInsensitive);
-    m_sortModel->setSupportedDragActions(m_model->supportedDragActions());
     QTreeView::setModel(m_sortModel);
 
     setUniformRowHeights(true);
@@ -75,7 +74,7 @@ void EntryView::setEntryList(const QList<Entry*>& entries)
 
 void EntryView::setFirstEntryActive()
 {
-    if(m_model->rowCount() > 0) {
+    if (m_model->rowCount() > 0) {
         QModelIndex index = m_sortModel->mapToSource(m_sortModel->index(0, 0));
         setCurrentEntry(m_model->entryFromIndex(index));
     }
@@ -109,7 +108,7 @@ Entry* EntryView::currentEntry()
         return m_model->entryFromIndex(m_sortModel->mapToSource(list.first()));
     }
     else {
-        return Q_NULLPTR;
+        return nullptr;
     }
 }
 
@@ -130,7 +129,7 @@ Entry* EntryView::entryFromIndex(const QModelIndex& index)
         return m_model->entryFromIndex(m_sortModel->mapToSource(index));
     }
     else {
-        return Q_NULLPTR;
+        return nullptr;
     }
 }
 

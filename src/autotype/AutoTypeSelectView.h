@@ -18,7 +18,6 @@
 #ifndef KEEPASSX_AUTOTYPESELECTVIEW_H
 #define KEEPASSX_AUTOTYPESELECTVIEW_H
 
-#include "core/Global.h"
 #include "gui/entry/EntryView.h"
 
 class Entry;
@@ -28,10 +27,10 @@ class AutoTypeSelectView : public EntryView
     Q_OBJECT
 
 public:
-    explicit AutoTypeSelectView(QWidget* parent = Q_NULLPTR);
+    explicit AutoTypeSelectView(QWidget* parent = nullptr);
 
 protected:
-    void mouseMoveEvent(QMouseEvent* event) Q_DECL_OVERRIDE;
+    void mouseMoveEvent(QMouseEvent* event) override;
 
 private Q_SLOTS:
     void selectFirstEntry();

@@ -20,9 +20,11 @@
 #include "core/Entry.h"
 #include "core/Tools.h"
 
+#include <algorithm>
+
 EntryAttributesModel::EntryAttributesModel(QObject* parent)
     : QAbstractListModel(parent)
-    , m_entryAttributes(Q_NULLPTR)
+    , m_entryAttributes(nullptr)
     , m_nextRenameDataChange(false)
 {
 }
@@ -152,7 +154,7 @@ void EntryAttributesModel::attributeAboutToAdd(const QString& key)
 {
     QList<QString> rows = m_attributes;
     rows.append(key);
-    qSort(rows);
+    std::sort(rows.begin(), rows.end());
     int row = rows.indexOf(key);
     beginInsertRows(QModelIndex(), row, row);
 }
@@ -182,7 +184,7 @@ void EntryAttributesModel::attributeAboutToRename(const QString& oldKey, const Q
     QList<QString> rows = m_attributes;
     rows.removeOne(oldKey);
     rows.append(newKey);
-    qSort(rows);
+    std::sort(rows.begin(), rows.end());
     int newRow = rows.indexOf(newKey);
     if (newRow > oldRow) {
         newRow++;

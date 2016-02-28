@@ -139,10 +139,10 @@ Files: share/icons/application/*/actions/application-exit.png
        share/icons/application/*/actions/password-copy.png
        share/icons/application/*/actions/password-show-*.png
        share/icons/application/*/actions/system-search.png
+       share/icons/application/*/actions/username-copy.png
        share/icons/application/*/status/dialog-error.png
        share/icons/application/*/status/dialog-information.png
        share/icons/application/*/status/dialog-warning.png
-       share/icons/application/*/status/username-copy.png
        share/icons/svg/*.svgz
 Copyright: 2007, Nuno Pinheiro <nuno@oxygen-icons.org>
            2007, David Vignoni <david@icon-king.com>
@@ -183,3 +183,7 @@ Files: src/streams/qtiocompressor.*
        tests/modeltest.*
 Copyright: 2009-2012, Nokia Corporation and/or its subsidiary(-ies)
 License: LGPL-2.1 or GPL-3
+
+Files: cmake/GetGitRevisionDescription.cmake*
+Copyright: 2009-2010, Iowa State University
+License: Boost-1.0

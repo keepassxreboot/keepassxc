@@ -31,10 +31,10 @@
 typedef QPair<QString, QString> StringPair;
 
 KeePass2XmlReader::KeePass2XmlReader()
-    : m_randomStream(Q_NULLPTR)
-    , m_db(Q_NULLPTR)
-    , m_meta(Q_NULLPTR)
-    , m_tmpParent(Q_NULLPTR)
+    : m_randomStream(nullptr)
+    , m_db(nullptr)
+    , m_meta(nullptr)
+    , m_tmpParent(nullptr)
     , m_error(false)
     , m_strictMode(false)
 {
@@ -357,7 +357,7 @@ void KeePass2XmlReader::parseIcon()
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "UUID") {
             uuid = readUuid();
-            uuidSet = true;
+            uuidSet = !uuid.isNull();
         }
         else if (m_xml.name() == "Data") {
             icon.loadFromData(readBinary());
@@ -523,6 +523,7 @@ Group* KeePass2XmlReader::parseGroup()
                 if (m_strictMode) {
                     raiseError("Invalid group icon number");
                 }
+                iconId = 0;
             }
             else {
                 if (iconId >= DatabaseIcons::IconCount) {
@@ -702,6 +703,7 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
                 if (m_strictMode) {
                     raiseError("Invalid entry icon number");
                 }
+                iconId = 0;
             }
             else {
                 entry->setIcon(iconId);
@@ -1043,7 +1045,7 @@ QDateTime KeePass2XmlReader::readDateTime()
             raiseError("Invalid date time value");
         }
         else {
-            dt = Tools::currentDateTimeUtc();
+            dt = QDateTime::currentDateTimeUtc();
         }
     }
 
@@ -1104,7 +1106,10 @@ int KeePass2XmlReader::readNumber()
 Uuid KeePass2XmlReader::readUuid()
 {
     QByteArray uuidBin = readBinary();
-    if (uuidBin.length() != Uuid::Length) {
+    if (uuidBin.isEmpty()) {
+        return Uuid();
+    }
+    else if (uuidBin.length() != Uuid::Length) {
         if (m_strictMode) {
             raiseError("Invalid uuid value");
         }
@@ -1141,7 +1146,7 @@ QByteArray KeePass2XmlReader::readCompressedBinary()
 Group* KeePass2XmlReader::getGroup(const Uuid& uuid)
 {
     if (uuid.isNull()) {
-        return Q_NULLPTR;
+        return nullptr;
     }
 
     if (m_groups.contains(uuid)) {
@@ -1160,7 +1165,7 @@ Group* KeePass2XmlReader::getGroup(const Uuid& uuid)
 Entry* KeePass2XmlReader::getEntry(const Uuid& uuid)
 {
     if (uuid.isNull()) {
-        return Q_NULLPTR;
+        return nullptr;
     }
 
     if (m_entries.contains(uuid)) {

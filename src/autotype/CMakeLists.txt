@@ -1,11 +1,12 @@
-if(Q_WS_X11)
+if(UNIX AND NOT APPLE)
   find_package(X11)
-  if(PRINT_SUMMARY)
-    add_feature_info(libXtest X11_XTest_FOUND "The X11 XTEST Protocol library is required for auto-type")
-  endif()
+  find_package(Qt5X11Extras 5.2)
+  add_feature_info(libXi X11_Xi_FOUND "The X11 Xi Protocol library is required for auto-type")
+  add_feature_info(libXtest X11_XTest_FOUND "The X11 XTEST Protocol library is required for auto-type")
+  add_feature_info(Qt5X11Extras Qt5X11Extras_FOUND "The Qt5X11Extras library is required for auto-type")
 
-  if(X11_FOUND AND X11_XTest_FOUND)
-    add_subdirectory(x11)
+  if(X11_FOUND AND X11_Xi_FOUND AND X11_XTest_FOUND AND Qt5X11Extras_FOUND)
+    add_subdirectory(xcb)
   endif()
 endif()
 

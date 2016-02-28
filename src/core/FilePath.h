@@ -22,8 +22,6 @@
 #include <QIcon>
 #include <QString>
 
-#include "core/Global.h"
-
 class FilePath
 {
 public:

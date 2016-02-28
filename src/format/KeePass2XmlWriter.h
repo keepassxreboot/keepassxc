@@ -36,7 +36,7 @@ class KeePass2XmlWriter
 {
 public:
     KeePass2XmlWriter();
-    void writeDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream = Q_NULLPTR,
+    void writeDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream = nullptr,
                        const QByteArray& headerHash = QByteArray());
     void writeDatabase(const QString& filename, Database* db);
     bool hasError();
@@ -73,6 +73,7 @@ private:
     void writeColor(const QString& qualifiedName, const QColor& color);
     void writeTriState(const QString& qualifiedName, Group::TriState triState);
     QString colorPartToString(int value);
+    QString stripInvalidXml10Chars(QString str);
 
     void raiseError(const QString& errorMessage);
 

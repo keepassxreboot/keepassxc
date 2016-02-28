@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AUTOTYPEX11_H
-#define KEEPASSX_AUTOTYPEX11_H
+#ifndef KEEPASSX_AUTOTYPEXCB_H
+#define KEEPASSX_AUTOTYPEXCB_H
 
 #include <QApplication>
 #include <QSet>
@@ -31,26 +31,28 @@
 
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/AutoTypeAction.h"
-#include "core/Global.h"
 
 #define N_MOD_INDICES (Mod5MapIndex + 1)
 
 class AutoTypePlatformX11 : public QObject, public AutoTypePlatformInterface
 {
     Q_OBJECT
+    Q_PLUGIN_METADATA(IID "org.keepassx.AutoTypePlatformX11")
     Q_INTERFACES(AutoTypePlatformInterface)
 
 public:
     AutoTypePlatformX11();
-    void unload() Q_DECL_OVERRIDE;
-    QStringList windowTitles();
-    WId activeWindow();
-    QString activeWindowTitle();
-    bool registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers);
-    void unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers);
-    int platformEventFilter(void* event);
-    int initialTimeout();
-    AutoTypeExecutor* createExecutor();
+    bool isAvailable() override;
+    void unload() override;
+    QStringList windowTitles() override;
+    WId activeWindow() override;
+    QString activeWindowTitle() override;
+    bool registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers) override;
+    void unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers) override;
+    int platformEventFilter(void* event) override;
+    int initialTimeout() override;
+    bool raiseWindow(WId window) override;
+    AutoTypeExecutor* createExecutor() override;
 
     KeySym charToKeySym(const QChar& ch);
     KeySym keyToKeySym(Qt::Key key);
@@ -71,6 +73,7 @@ private:
     void stopCatchXErrors();
     static int x11ErrorHandler(Display* display, XErrorEvent* error);
 
+    XkbDescPtr getKeyboard();
     void updateKeymap();
     bool isRemapKeycodeValid();
     int AddKeysym(KeySym keysym);
@@ -89,6 +92,7 @@ private:
     Atom m_atomNetWmName;
     Atom m_atomString;
     Atom m_atomUtf8String;
+    Atom m_atomNetActiveWindow;
     QSet<QString> m_classBlacklist;
     Qt::Key m_currentGlobalKey;
     Qt::KeyboardModifiers m_currentGlobalModifiers;
@@ -120,11 +124,11 @@ class AutoTypeExecturorX11 : public AutoTypeExecutor
 public:
     explicit AutoTypeExecturorX11(AutoTypePlatformX11* platform);
 
-    void execChar(AutoTypeChar* action);
-    void execKey(AutoTypeKey* action);
+    void execChar(AutoTypeChar* action) override;
+    void execKey(AutoTypeKey* action) override;
 
 private:
     AutoTypePlatformX11* const m_platform;
 };
 
-#endif // KEEPASSX_AUTOTYPEX11_H
+#endif // KEEPASSX_AUTOTYPEXCB_H

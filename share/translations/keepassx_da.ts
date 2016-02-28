@@ -9,12 +9,20 @@
         <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
         <translation>KeePassX distribueres under betingelserne i GNU General Public License (GPL) version 2 eller (efter eget valg) version 3.</translation>
     </message>
+    <message>
+        <source>Revision</source>
+        <translation>Revision</translation>
+    </message>
+    <message>
+        <source>Using:</source>
+        <translation>Bruger:</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
     <message>
         <source>Auto-Type - KeePassX</source>
-        <translation type="unfinished"/>
+        <translation>Auto-indsæt - KeePassX</translation>
     </message>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
@@ -40,26 +48,26 @@
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassX</source>
-        <translation type="unfinished"/>
+        <translation>Auto-indsæt - KeePassX</translation>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation type="unfinished"/>
+        <translation>Vælg post til Auto-Indsæt:</translation>
     </message>
 </context>
 <context>
     <name>ChangeMasterKeyWidget</name>
     <message>
         <source>Password</source>
-        <translation>Adgangskode</translation>
+        <translation>Kodeord</translation>
     </message>
     <message>
         <source>Enter password:</source>
-        <translation>Indtast adgangskode</translation>
+        <translation>Indtast kodeord</translation>
     </message>
     <message>
         <source>Repeat password:</source>
-        <translation>Gentag adgangskode</translation>
+        <translation>Gentag kodeord</translation>
     </message>
     <message>
         <source>Key file</source>
@@ -103,18 +111,28 @@
     </message>
     <message>
         <source>Do you really want to use an empty string as password?</source>
-        <translation>Vil du virkelig bruge en tom streng som adgangskode?</translation>
+        <translation>Vil du virkelig bruge en tom streng som kodeord?</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Andre adgangskoder leveret.</translation>
+        <translation>Andre kodeord leveret.</translation>
+    </message>
+    <message>
+        <source>Failed to set key file</source>
+        <translation>Kan ikke sætte nøglefil</translation>
+    </message>
+    <message>
+        <source>Failed to set %1 as the Key file:
+%2</source>
+        <translation>Kunne ikke sætte %1 som Nøglefil:
+%2</translation>
     </message>
 </context>
 <context>
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Enter master key</source>
-        <translation>Indtast primærnøgle</translation>
+        <translation>Indtast hovednøgle</translation>
     </message>
     <message>
         <source>Key File:</source>
@@ -122,7 +140,7 @@
     </message>
     <message>
         <source>Password:</source>
-        <translation>Adgangskode:</translation>
+        <translation>Kodeord:</translation>
     </message>
     <message>
         <source>Browse</source>
@@ -165,7 +183,7 @@
     </message>
     <message>
         <source>Transform rounds:</source>
-        <translation type="unfinished"/>
+        <translation>Transformationsrunder:</translation>
     </message>
     <message>
         <source>Default username:</source>
@@ -185,18 +203,18 @@
     </message>
     <message>
         <source>Max. history items:</source>
-        <translation type="unfinished"/>
+        <translation>Maks. posthistorik:</translation>
     </message>
     <message>
         <source>Max. history size:</source>
-        <translation type="unfinished"/>
+        <translation>Maks. historikstørrelse:</translation>
     </message>
 </context>
 <context>
     <name>DatabaseTabWidget</name>
     <message>
         <source>Root</source>
-        <translation type="unfinished"/>
+        <translation>Rod</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
@@ -235,18 +253,14 @@
         <translation>Luk?</translation>
     </message>
     <message>
-        <source>&quot;%1&quot; is in edit mode.
-Close anyway?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Save changes?</source>
         <translation>Gem ændringer?</translation>
     </message>
     <message>
         <source>&quot;%1&quot; was modified.
 Save changes?</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; blev ændret.
+Gem disse ændringer?</translation>
     </message>
     <message>
         <source>Error</source>
@@ -268,12 +282,66 @@ Save changes?</source>
         <source>locked</source>
         <translation>låst</translation>
     </message>
+    <message>
+        <source>The database you are trying to open is locked by another instance of KeePassX.
+Do you want to open it anyway? Alternatively the database is opened read-only.</source>
+        <translation>Den database, du prøver at åbne er låst af en anden forekomst af KeePassX.
+Vil du åbne den alligevel? Alternativt åbnes databasen skrivebeskyttet.</translation>
+    </message>
+    <message>
+        <source>Lock database</source>
+        <translation>Lås database</translation>
+    </message>
+    <message>
+        <source>Can't lock the database as you are currently editing it.
+Please press cancel to finish your changes or discard them.</source>
+        <translation>Kan ikke låse databasen, mens du redigerer i den.
+Tryk på Afbryd for at afslutte dine ændringer eller kassere dem.</translation>
+    </message>
+    <message>
+        <source>This database has never been saved.
+You can save the database or stop locking it.</source>
+        <translation>Denne database er aldrig blevet gemt.
+Du kan gemme databasen eller stop låsning.</translation>
+    </message>
+    <message>
+        <source>This database has been modified.
+Do you want to save the database before locking it?
+Otherwise your changes are lost.</source>
+        <translation>Denne database er blevet ændret.
+Vil du gemme databasen før låsning?
+Ellers mister du dine ændringer.</translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; is in edit mode.
+Discard changes and close anyway?</source>
+        <translation>&quot;%1&quot; er i redigeringstilstand.
+Kassér ændringer og luk alligevel?</translation>
+    </message>
+    <message>
+        <source>Export database to CSV file</source>
+        <translation>Eksportér databasen til CSV-fil</translation>
+    </message>
+    <message>
+        <source>CSV file</source>
+        <translation>CSV-fil</translation>
+    </message>
+    <message>
+        <source>Writing the CSV file failed.</source>
+        <translation>Kan ikke skrive til CSV-fil.</translation>
+    </message>
+    <message>
+        <source>The database you are trying to save as is locked by another instance of KeePassX.
+Do you want to save it anyway?</source>
+        <translation>Databasen som du prøver at gemme er låst af en anden instans af KeePassX.
+Vil du alligevel gemme?</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
     <message>
         <source>Change master key</source>
-        <translation>Skift primærnøgle</translation>
+        <translation>Skift hovednøgle</translation>
     </message>
     <message>
         <source>Delete entry?</source>
@@ -281,7 +349,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation type="unfinished"/>
+        <translation>Vil du virkelig slette posten &quot;%1&quot; permanent?</translation>
     </message>
     <message>
         <source>Delete entries?</source>
@@ -289,7 +357,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Do you really want to delete %1 entries for good?</source>
-        <translation type="unfinished"/>
+        <translation>Vil du virkelig slette %1 poster permanent?</translation>
     </message>
     <message>
         <source>Move entries to recycle bin?</source>
@@ -297,7 +365,7 @@ Save changes?</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Ønsker du virkelig at flytte %n post over i  papirkurven?</numerusform><numerusform>Ønsker du virkelig at flytte %n poster over i  papirkurven?</numerusform></translation>
     </message>
     <message>
         <source>Delete group?</source>
@@ -305,11 +373,19 @@ Save changes?</source>
     </message>
     <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation type="unfinished"/>
+        <translation>Ønsker du at slette gruppen &quot;%1&quot; permanent?</translation>
     </message>
     <message>
         <source>Current group</source>
         <translation>Nuværende gruppe</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fejl</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Kan ikke  beregne hovednøgle</translation>
     </message>
 </context>
 <context>
@@ -328,7 +404,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>Auto-Indsæt</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -340,7 +416,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Entry history</source>
-        <translation type="unfinished"/>
+        <translation>Indtastningshistorik</translation>
     </message>
     <message>
         <source>Add entry</source>
@@ -356,7 +432,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Andre adgangskoder leveret.</translation>
+        <translation>Andre kodeord leveret.</translation>
     </message>
     <message>
         <source>New attribute</source>
@@ -377,7 +453,7 @@ Save changes?</source>
     <message>
         <source>Unable to save the attachment:
 </source>
-        <translation type="unfinished"/>
+        <translation>Kan ikke gemme vedhæftningen:</translation>
     </message>
     <message>
         <source>Tomorrow</source>
@@ -422,20 +498,24 @@ Save changes?</source>
         <source>Save</source>
         <translation>Gem</translation>
     </message>
+    <message>
+        <source>Open</source>
+        <translation>Åben</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation type="unfinished"/>
+        <translation>Aktivér Auto-Indsæt for denne post</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the group</source>
-        <translation type="unfinished"/>
+        <translation>Nedarv standard Auto-Indsæt sekvens fra gruppe</translation>
     </message>
     <message>
         <source>Use custom Auto-Type sequence:</source>
-        <translation type="unfinished"/>
+        <translation>Brug brugerdefineret Auto-indsæt sekvens:</translation>
     </message>
     <message>
         <source>+</source>
@@ -451,11 +531,11 @@ Save changes?</source>
     </message>
     <message>
         <source>Use default sequence</source>
-        <translation type="unfinished"/>
+        <translation>Brug standardsekvens</translation>
     </message>
     <message>
         <source>Set custom sequence:</source>
-        <translation type="unfinished"/>
+        <translation>Definér brugervalgt sekvens:</translation>
     </message>
 </context>
 <context>
@@ -489,7 +569,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Adgangskode:</translation>
+        <translation>Kodeord:</translation>
     </message>
     <message>
         <source>Repeat:</source>
@@ -497,7 +577,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Gen.</source>
-        <translation type="unfinished"/>
+        <translation>Generer</translation>
     </message>
     <message>
         <source>URL:</source>
@@ -509,7 +589,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Presets</source>
-        <translation type="unfinished"/>
+        <translation>Predefinerede</translation>
     </message>
     <message>
         <source>Notes:</source>
@@ -571,7 +651,15 @@ Save changes?</source>
     </message>
     <message>
         <source>Auto-type</source>
-        <translation type="unfinished"/>
+        <translation>Auto-indsæt</translation>
+    </message>
+    <message>
+        <source>Use default auto-type sequence of parent group</source>
+        <translation>Brug standard Auto-Indsæt sekvens fra forældregruppe</translation>
+    </message>
+    <message>
+        <source>Set default auto-type sequence</source>
+        <translation>Definér standard auto-indsæt sekvens</translation>
     </message>
 </context>
 <context>
@@ -610,7 +698,7 @@ Save changes?</source>
     </message>
     <message numerus="yes">
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Kan ikke slette ikonet. Det anvendes stadig af %n element.</numerusform><numerusform>Kan ikke slette ikonet. Det anvendes stadig af %n elementer.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -719,14 +807,18 @@ Save changes?</source>
     </message>
     <message>
         <source>Root</source>
-        <translation type="unfinished"/>
+        <translation>Rod</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Kan ikke beregne hovednøgle</translation>
     </message>
 </context>
 <context>
     <name>KeePass2Reader</name>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Det er ikke en KeePass database.</translation>
+        <translation>Dette er ikke en KeePass database.</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
@@ -735,6 +827,20 @@ Save changes?</source>
     <message>
         <source>Wrong key or database file is corrupt.</source>
         <translation>Forkert nøgle eller databasefil er korrupt.</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Kan ikke beregne hovednøgle</translation>
+    </message>
+    <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <translation>Den valgte fil er en gammel KeePass 1 databasefil (.kdb).
+
+Du kan importere den ved at klikke på Database &gt; &apos;Importér KeePass 1 database&apos;.
+Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den importerede database med den gamle KeePassX 0.4 version.</translation>
     </message>
 </context>
 <context>
@@ -773,10 +879,6 @@ Save changes?</source>
     <message>
         <source>Groups</source>
         <translation>Grupper</translation>
-    </message>
-    <message>
-        <source>Extras</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <source>View</source>
@@ -836,7 +938,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Change master key</source>
-        <translation>Skift primærnøgle</translation>
+        <translation>Skift hovednøgle</translation>
     </message>
     <message>
         <source>Database settings</source>
@@ -855,20 +957,12 @@ Save changes?</source>
         <translation>Find</translation>
     </message>
     <message>
-        <source>Username</source>
-        <translation>Brugernavn</translation>
-    </message>
-    <message>
         <source>Copy username to clipboard</source>
         <translation>Kopiér brugernavn til udklipsholder</translation>
     </message>
     <message>
-        <source>Password</source>
-        <translation>Adgangskode</translation>
-    </message>
-    <message>
         <source>Copy password to clipboard</source>
-        <translation>Kopiér adgangskode til udklipsholder</translation>
+        <translation>Kopiér kodeord til udklipsholder</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -876,7 +970,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Perform Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>Udfør Auto-indsæt</translation>
     </message>
     <message>
         <source>Open URL</source>
@@ -910,12 +1004,28 @@ Save changes?</source>
         <source>Toggle window</source>
         <translation>Skift vindue</translation>
     </message>
+    <message>
+        <source>Tools</source>
+        <translation>Værktøj</translation>
+    </message>
+    <message>
+        <source>Copy username</source>
+        <translation>Kopiér brugernavn</translation>
+    </message>
+    <message>
+        <source>Copy password</source>
+        <translation>Kopiér kodeord</translation>
+    </message>
+    <message>
+        <source>Export to CSV file</source>
+        <translation>Eksportér til CSV-fil</translation>
+    </message>
 </context>
 <context>
     <name>PasswordGeneratorWidget</name>
     <message>
         <source>Password:</source>
-        <translation>Adgangskode:</translation>
+        <translation>Kodeord:</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -923,7 +1033,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Character Types</source>
-        <translation type="unfinished"/>
+        <translation>Tegntyper</translation>
     </message>
     <message>
         <source>Upper Case Letters</source>
@@ -931,7 +1041,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Lower Case Letters</source>
-        <translation type="unfinished"/>
+        <translation>Små Bogstaver</translation>
     </message>
     <message>
         <source>Numbers</source>
@@ -939,15 +1049,15 @@ Save changes?</source>
     </message>
     <message>
         <source>Special Characters</source>
-        <translation type="unfinished"/>
+        <translation>Specialtegn</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
-        <translation type="unfinished"/>
+        <translation>Udeluk lool-alike tegn</translation>
     </message>
     <message>
         <source>Ensure that the password contains characters from every group</source>
-        <translation type="unfinished"/>
+        <translation>Vær sikker på at dit kodeord indeholder tegn fra alle grupper</translation>
     </message>
     <message>
         <source>Accept</source>
@@ -1020,11 +1130,11 @@ Save changes?</source>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation type="unfinished"/>
+        <translation>Fejl ved skrivning til enhed:</translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation type="unfinished"/>
+        <translation>Fejl ved åbning fra enhed:</translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
@@ -1032,7 +1142,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation type="unfinished"/>
+        <translation>Intern zlib-fejl ved dekomprimering:</translation>
     </message>
 </context>
 <context>
@@ -1054,7 +1164,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation type="unfinished"/>
+        <translation>Versalfølsom</translation>
     </message>
     <message>
         <source>Current group</source>
@@ -1062,7 +1172,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Root group</source>
-        <translation type="unfinished"/>
+        <translation>Rodgruppe</translation>
     </message>
 </context>
 <context>
@@ -1073,7 +1183,7 @@ Save changes?</source>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"/>
+        <translation>Generelt</translation>
     </message>
     <message>
         <source>Security</source>
@@ -1084,15 +1194,11 @@ Save changes?</source>
     <name>SettingsWidgetGeneral</name>
     <message>
         <source>Remember last databases</source>
-        <translation type="unfinished"/>
+        <translation>Husk seneste databaser</translation>
     </message>
     <message>
         <source>Open previous databases on startup</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Mark as modified on expanded state changes</source>
-        <translation type="unfinished"/>
+        <translation>Åben foregående databaser ved opstart</translation>
     </message>
     <message>
         <source>Automatically save on exit</source>
@@ -1108,15 +1214,15 @@ Save changes?</source>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
-        <translation type="unfinished"/>
+        <translation>Brug gruppeikon ved oprettelse af post</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Global Auto-Indsæt genvej</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global auto-type</source>
-        <translation type="unfinished"/>
+        <translation>Brug titel på post til at matche global aito-indsæt</translation>
     </message>
     <message>
         <source>Language</source>
@@ -1129,6 +1235,10 @@ Save changes?</source>
     <message>
         <source>Hide window to system tray when minimized</source>
         <translation>Skjul vindue i systembakken når det er minimeret</translation>
+    </message>
+    <message>
+        <source>Remember last key files</source>
+        <translation>Husk de sidste nøglefiler</translation>
     </message>
 </context>
 <context>
@@ -1143,15 +1253,15 @@ Save changes?</source>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
-        <translation type="unfinished"/>
+        <translation>Lås databaserne efter inaktivitet i</translation>
     </message>
     <message>
         <source>Show passwords in cleartext by default</source>
-        <translation type="unfinished"/>
+        <translation>Vis kodeord i klartekst som standard</translation>
     </message>
     <message>
         <source>Always ask before performing auto-type</source>
-        <translation type="unfinished"/>
+        <translation>Spørg altid før auto-indsæt</translation>
     </message>
 </context>
 <context>
@@ -1159,14 +1269,6 @@ Save changes?</source>
     <message>
         <source>Unlock database</source>
         <translation>Lås database op</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Fejl</translation>
-    </message>
-    <message>
-        <source>Wrong key.</source>
-        <translation>Forkert nøgle.</translation>
     </message>
 </context>
 <context>
@@ -1180,7 +1282,7 @@ Save changes?</source>
     <name>main</name>
     <message>
         <source>KeePassX - cross-platform password manager</source>
-        <translation type="unfinished"/>
+        <translation>KeePassX - cross-platform password manager</translation>
     </message>
     <message>
         <source>filename of the password database to open (*.kdbx)</source>
@@ -1188,11 +1290,7 @@ Save changes?</source>
     </message>
     <message>
         <source>path to a custom config file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>password of the database (DANGEROUS!)</source>
-        <translation>adgangskode til databasen (FAARLIGT!)</translation>
+        <translation>sti til brugerdefineret indstillingsfil</translation>
     </message>
     <message>
         <source>key file of the database</source>

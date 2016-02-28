@@ -20,7 +20,6 @@
 #include "core/Config.h"
 #include "core/DatabaseIcons.h"
 #include "core/Metadata.h"
-#include "core/Tools.h"
 
 const int Group::DefaultIconNumber = 48;
 const int Group::RecycleBinIconNumber = 43;
@@ -50,7 +49,7 @@ Group::~Group()
 
     if (m_db && m_parent) {
         DeletedObject delGroup;
-        delGroup.deletionTime = Tools::currentDateTimeUtc();
+        delGroup.deletionTime = QDateTime::currentDateTimeUtc();
         delGroup.uuid = m_uuid;
         m_db->addDeletedObject(delGroup);
     }
@@ -84,8 +83,8 @@ template <class P, class V> inline bool Group::set(P& property, const V& value) 
 void Group::updateTimeinfo()
 {
     if (m_updateTimeinfo) {
-        m_data.timeInfo.setLastModificationTime(Tools::currentDateTimeUtc());
-        m_data.timeInfo.setLastAccessTime(Tools::currentDateTimeUtc());
+        m_data.timeInfo.setLastModificationTime(QDateTime::currentDateTimeUtc());
+        m_data.timeInfo.setLastAccessTime(QDateTime::currentDateTimeUtc());
     }
 }
 
@@ -134,13 +133,30 @@ QPixmap Group::iconPixmap() const
     else {
         Q_ASSERT(m_db);
 
-        QPixmap pixmap;
-        if (m_db && !QPixmapCache::find(m_pixmapCacheKey, &pixmap)) {
-            pixmap = QPixmap::fromImage(m_db->metadata()->customIcon(m_data.customIcon));
-            m_pixmapCacheKey = QPixmapCache::insert(pixmap);
+        if (m_db) {
+            return m_db->metadata()->customIconPixmap(m_data.customIcon);
         }
+        else {
+            return QPixmap();
+        }
+    }
+}
 
-        return pixmap;
+QPixmap Group::iconScaledPixmap() const
+{
+    if (m_data.customIcon.isNull()) {
+        // built-in icons are 16x16 so don't need to be scaled
+        return databaseIcons()->iconPixmap(m_data.iconNumber);
+    }
+    else {
+        Q_ASSERT(m_db);
+
+        if (m_db) {
+            return m_db->metadata()->customIconScaledPixmap(m_data.customIcon);
+        }
+        else {
+            return QPixmap();
+        }
     }
 }
 
@@ -186,7 +202,7 @@ Entry* Group::lastTopVisibleEntry() const
 
 bool Group::isExpired() const
 {
-    return m_data.timeInfo.expires() && m_data.timeInfo.expiryTime() < Tools::currentDateTimeUtc();
+    return m_data.timeInfo.expires() && m_data.timeInfo.expiryTime() < QDateTime::currentDateTimeUtc();
 }
 
 void Group::setUuid(const Uuid& uuid)
@@ -214,8 +230,6 @@ void Group::setIcon(int iconNumber)
         m_data.iconNumber = iconNumber;
         m_data.customIcon = Uuid();
 
-        m_pixmapCacheKey = QPixmapCache::Key();
-
         updateTimeinfo();
         Q_EMIT modified();
         Q_EMIT dataChanged(this);
@@ -229,8 +243,6 @@ void Group::setIcon(const Uuid& uuid)
     if (m_data.customIcon != uuid) {
         m_data.customIcon = uuid;
         m_data.iconNumber = 0;
-
-        m_pixmapCacheKey = QPixmapCache::Key();
 
         updateTimeinfo();
         Q_EMIT modified();
@@ -352,7 +364,7 @@ void Group::setParent(Group* parent, int index)
     }
 
     if (m_updateTimeinfo) {
-        m_data.timeInfo.setLocationChanged(Tools::currentDateTimeUtc());
+        m_data.timeInfo.setLocationChanged(QDateTime::currentDateTimeUtc());
     }
 
     Q_EMIT modified();
@@ -372,7 +384,7 @@ void Group::setParent(Database* db)
 
     cleanupParent();
 
-    m_parent = Q_NULLPTR;
+    m_parent = nullptr;
     recSetDatabase(db);
 
     QObject::setParent(db);
@@ -497,7 +509,7 @@ Group* Group::clone(Entry::CloneFlags entryFlags) const
 
     clonedGroup->setUpdateTimeinfo(true);
 
-    QDateTime now = Tools::currentDateTimeUtc();
+    QDateTime now = QDateTime::currentDateTimeUtc();
     clonedGroup->m_data.timeInfo.setCreationTime(now);
     clonedGroup->m_data.timeInfo.setLastModificationTime(now);
     clonedGroup->m_data.timeInfo.setLastAccessTime(now);

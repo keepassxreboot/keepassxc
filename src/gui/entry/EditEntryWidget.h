@@ -52,7 +52,7 @@ class EditEntryWidget : public EditWidget
     Q_OBJECT
 
 public:
-    explicit EditEntryWidget(QWidget* parent = Q_NULLPTR);
+    explicit EditEntryWidget(QWidget* parent = nullptr);
     ~EditEntryWidget();
 
     void loadEntry(Entry* entry, bool create, bool history, const QString& parentName,

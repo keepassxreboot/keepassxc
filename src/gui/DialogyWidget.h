@@ -21,17 +21,15 @@
 #include <QDialogButtonBox>
 #include <QWidget>
 
-#include "core/Global.h"
-
 class DialogyWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit DialogyWidget(QWidget* parent = Q_NULLPTR);
+    explicit DialogyWidget(QWidget* parent = nullptr);
 
 protected:
-    virtual void keyPressEvent(QKeyEvent* e) Q_DECL_OVERRIDE;
+    void keyPressEvent(QKeyEvent* e) override;
 
 private:
     bool clickButton(QDialogButtonBox::StandardButton standardButton);
