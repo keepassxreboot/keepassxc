@@ -15,27 +15,24 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_PASSWORDGENERATORWIDGET_H
-#define KEEPASSX_PASSWORDGENERATORWIDGET_H
+#ifndef KEEPASSX_HTTPPASSWORDGENERATORWIDGET_H
+#define KEEPASSX_HTTPPASSWORDGENERATORWIDGET_H
 
 #include <QWidget>
-#include <QComboBox>
+#include <QScopedPointer>
 
-#include "core/Global.h"
 #include "core/PasswordGenerator.h"
 
 namespace Ui {
     class HttpPasswordGeneratorWidget;
 }
 
-class PasswordGenerator;
-
 class HttpPasswordGeneratorWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit HttpPasswordGeneratorWidget(QWidget* parent = Q_NULLPTR);
+    explicit HttpPasswordGeneratorWidget(QWidget* parent = nullptr);
     ~HttpPasswordGeneratorWidget();
     void loadSettings();
     void reset();

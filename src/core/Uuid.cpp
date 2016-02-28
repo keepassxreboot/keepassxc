@@ -91,7 +91,7 @@ Uuid Uuid::fromBase64(const QString& str)
 
 Uuid Uuid::fromHex(const QString& str)
 {
-    QByteArray data = QByteArray::fromHex(str.toAscii());
+    QByteArray data = QByteArray::fromHex(str.toLatin1());
     return Uuid(data);
 }
 

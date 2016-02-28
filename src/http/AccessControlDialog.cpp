@@ -17,7 +17,7 @@
 
 AccessControlDialog::AccessControlDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::AccessControlDialog)
+    ui(new Ui::AccessControlDialog())
 {
     ui->setupUi(this);
     connect(ui->allowButton, SIGNAL(clicked()), this, SLOT(accept()));
@@ -26,7 +26,6 @@ AccessControlDialog::AccessControlDialog(QWidget *parent) :
 
 AccessControlDialog::~AccessControlDialog()
 {
-    delete ui;
 }
 
 void AccessControlDialog::setUrl(const QString &url)

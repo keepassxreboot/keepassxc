@@ -14,7 +14,7 @@
 #ifndef SERVICE_H
 #define SERVICE_H
 
-#include <QtCore/QObject>
+#include <QObject>
 #include "gui/DatabaseTabWidget.h"
 #include "Server.h"
 

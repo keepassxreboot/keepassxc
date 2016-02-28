@@ -14,7 +14,8 @@
 #ifndef ACCESSCONTROLDIALOG_H
 #define ACCESSCONTROLDIALOG_H
 
-#include <QtGui/QDialog>
+#include <QDialog>
+#include <QScopedPointer>
 
 class Entry;
 
@@ -27,7 +28,7 @@ class AccessControlDialog : public QDialog
     Q_OBJECT
     
 public:
-    explicit AccessControlDialog(QWidget *parent = 0);
+    explicit AccessControlDialog(QWidget *parent = nullptr);
     ~AccessControlDialog();
 
     void setUrl(const QString & url);
@@ -36,7 +37,7 @@ public:
     void setRemember(bool r);
     
 private:
-    Ui::AccessControlDialog *ui;
+    QScopedPointer<Ui::AccessControlDialog> ui;
 };
 
 #endif // ACCESSCONTROLDIALOG_H

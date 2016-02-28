@@ -12,14 +12,7 @@
  */
 
 #include "Protocol.h"
-
-#include <QtCore/QMetaProperty>
-#include <QtCore/QStringList>
-#include <QtCore/QVariant>
-
-#include "qjson/parser.h"
-#include "qjson/qobjecthelper.h"
-#include "qjson/serializer.h"
+#include <QtCore>
 
 #include "crypto/Random.h"
 #include "crypto/SymmetricCipher.h"
@@ -39,6 +32,24 @@ static const char * const STR_VERSION = "1.8.4.0";
 }/*namespace KeepassHttpProtocol*/
 
 using namespace KeepassHttpProtocol;
+
+QVariantMap qobject2qvariant( const QObject* object, const QStringList& ignoredProperties )
+{
+    QVariantMap result;
+    const QMetaObject *metaobject = object->metaObject();
+    int count = metaobject->propertyCount();
+    for (int i=0; i<count; ++i) {
+        QMetaProperty metaproperty = metaobject->property(i);
+        const char *name = metaproperty.name();
+ 
+        if (ignoredProperties.contains(QLatin1String(name)) || (!metaproperty.isReadable()))
+            continue;
+ 
+        QVariant value = object->property(name);
+        result[QLatin1String(name)] = value;
+    }
+    return result;
+}
 
 static QHash<QString, RequestType> createStringHash()
 {
@@ -61,12 +72,12 @@ static RequestType parseRequest(const QString &str)
 
 static QByteArray decode64(QString s)
 {
-    return QByteArray::fromBase64(s.toAscii());
+    return QByteArray::fromBase64(s.toLatin1());
 }
 
 static QString encode64(QByteArray b)
 {
-    return QString::fromAscii(b.toBase64());
+    return QString::fromLatin1(b.toBase64());
 }
 
 static QByteArray decrypt2(const QByteArray & data, SymmetricCipherGcrypt & cipher)
@@ -263,13 +274,15 @@ bool Request::CheckVerifier(const QString &key) const
 
 bool Request::fromJson(QString text)
 {
-    bool isok = false;
-    QVariant v = QJson::Parser().parse(text.toUtf8(), &isok);
-    if (!isok)
+    QJsonDocument doc = QJsonDocument::fromJson(text.toUtf8());
+    if (doc.isNull())
         return false;
 
     m_requestType.clear();
-    QJson::QObjectHelper::qvariant2qobject(v.toMap(), this);
+    QVariantMap map = doc.object().toVariantMap();
+    for(QVariantMap::iterator iter = map.begin(); iter != map.end(); ++iter) {
+        setProperty(iter.key().toLatin1(), iter.value());
+    }
 
     return requestType() != INVALID;
 }
@@ -307,11 +320,17 @@ void Response::setVerifier(QString key)
 
 QString Response::toJson()
 {
-    QVariant result = QJson::QObjectHelper::qobject2qvariant(this);
+    QJsonObject json;
+    
+    int count = metaObject()->propertyCount();
+    for (int i=0; i<count; ++i) {
+        QMetaProperty metaproperty = metaObject()->property(i);
+        const char *name = metaproperty.name();
+        json.insert(QString(name), QJsonValue::fromVariant(this->property(name)));
+    }
 
-    QJson::Serializer s;
-    s.setIndentMode(QJson::IndentCompact);
-    return s.serialize(result);
+    QJsonDocument doc(json);
+    return doc.toJson(QJsonDocument::Compact);
 }
 
 KeepassHttpProtocol::RequestType Response::requestType() const
@@ -352,7 +371,7 @@ QVariant Response::getEntries() const
     QList<QVariant> res;
     res.reserve(m_entries.size());
     Q_FOREACH (const Entry &entry, m_entries)
-  res.append(QJson::QObjectHelper::qobject2qvariant(&entry));
+        res.append(qobject2qvariant(&entry));
     return res;
 }
 
@@ -490,7 +509,7 @@ QVariant Entry::getStringFields() const
     QList<QVariant> res;
     res.reserve(m_stringFields.size());
     Q_FOREACH (const StringField &stringfield, m_stringFields)
-  res.append(QJson::QObjectHelper::qobject2qvariant(&stringfield));
+        res.append(qobject2qvariant(&stringfield));
     return res;
 }
 

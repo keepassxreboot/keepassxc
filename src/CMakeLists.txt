@@ -140,16 +140,6 @@ set(keepassx_SOURCES_MAINEXE
     main.cpp
 )
 
-set(keepassx_MOC
-    http/AccessControlDialog.h
-    http/EntryConfig.h
-    http/HttpPasswordGeneratorWidget.h
-    http/OptionDialog.h
-    http/Protocol.h
-    http/Server.h
-    http/Service.h
-)
-
 set(keepassx_FORMS
     gui/AboutDialog.ui
     gui/ChangeMasterKeyWidget.ui
@@ -189,6 +179,7 @@ target_link_libraries(keepassx_core Qt5::Core Qt5::Concurrent Qt5::Widgets)
 add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE ${keepassx_SOURCES_MAINEXE})
 target_link_libraries(${PROGNAME}
                       keepassx_core
+                      ${MHD_LIBRARIES}
                       Qt5::Core
                       Qt5::Concurrent
                       Qt5::Widgets

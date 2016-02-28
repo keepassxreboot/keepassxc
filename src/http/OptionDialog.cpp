@@ -17,7 +17,7 @@
 
 OptionDialog::OptionDialog(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::OptionDialog)
+    ui(new Ui::OptionDialog())
 {
     ui->setupUi(this);
     connect(ui->removeSharedEncryptionKeys, SIGNAL(clicked()), this, SIGNAL(removeSharedEncryptionKeys()));
@@ -26,7 +26,6 @@ OptionDialog::OptionDialog(QWidget *parent) :
 
 OptionDialog::~OptionDialog()
 {
-    delete ui;
 }
 
 void OptionDialog::loadSettings()

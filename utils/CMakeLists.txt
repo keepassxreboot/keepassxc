@@ -18,6 +18,7 @@ include_directories(../src)
 add_executable(kdbx-extract kdbx-extract.cpp)
 target_link_libraries(kdbx-extract
                       keepassx_core
+                      ${MHD_LIBRARIES}
                       Qt5::Core
                       Qt5::Concurrent
                       Qt5::Widgets

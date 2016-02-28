@@ -201,7 +201,7 @@ void Server::handleRequest(const QByteArray in, QByteArray *out)
         (getDatabaseRootUuid() + getDatabaseRecycleBinUuid()).toUtf8(),
          QCryptographicHash::Sha1).toHex();
 
-    Response protocolResp(r, QString::fromAscii(hash));
+    Response protocolResp(r, QString::fromLatin1(hash));
     switch(r.requestType()) {
     case INVALID: break;
     case GET_LOGINS:        getLogins(r, &protocolResp); break;

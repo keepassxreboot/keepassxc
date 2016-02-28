@@ -12,11 +12,10 @@
  */
 
 #include "EntryConfig.h"
+#include <QtCore>
 #include "core/Entry.h"
 #include "core/EntryAttributes.h"
-#include "qjson/parser.h"
-#include "qjson/qobjecthelper.h"
-#include "qjson/serializer.h"
+#include "http/Protocol.h"
 
 static const char KEEPASSHTTP_NAME[] = "KeePassHttp Settings";  //TODO: duplicated string (also in Service.cpp)
 
@@ -83,19 +82,21 @@ bool EntryConfig::load(const Entry *entry)
     if (s.isEmpty())
         return false;
 
-    bool isOk = false;
-    QVariant v = QJson::Parser().parse(s.toUtf8(), &isOk);
-    if (!isOk || v.type() != QVariant::Map)
+    QJsonDocument doc = QJsonDocument::fromJson(s.toUtf8());
+    if (doc.isNull())
         return false;
 
-    QJson::QObjectHelper::qvariant2qobject(v.toMap(), this);
+    QVariantMap map = doc.object().toVariantMap();
+    for(QVariantMap::iterator iter = map.begin(); iter != map.end(); ++iter) {
+        setProperty(iter.key().toLatin1(), iter.value());
+    }
     return true;
 }
 
 void EntryConfig::save(Entry *entry)
 {
-    //QVariant v = QJson::QObjectHelper::qobject2qvariant(this, QJson::QObjectHelper::Flag_None);
-    QVariant v = QJson::QObjectHelper::qobject2qvariant(this);
-    QByteArray json = QJson::Serializer().serialize(v);
+    QVariantMap v = qobject2qvariant(this);
+    QJsonObject o = QJsonObject::fromVariantMap(v);
+    QByteArray json = QJsonDocument(o).toJson(QJsonDocument::Compact);
     entry->attributes()->set(KEEPASSHTTP_NAME, json);
 }

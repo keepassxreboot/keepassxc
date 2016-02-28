@@ -14,7 +14,8 @@
 #ifndef OPTIONDIALOG_H
 #define OPTIONDIALOG_H
 
-#include <QtGui/QWidget>
+#include <QWidget>
+#include <QScopedPointer>
 
 namespace Ui {
 class OptionDialog;
@@ -25,7 +26,7 @@ class OptionDialog : public QWidget
     Q_OBJECT
 
 public:
-    explicit OptionDialog(QWidget *parent = 0);
+    explicit OptionDialog(QWidget *parent = nullptr);
     ~OptionDialog();
 
 public Q_SLOTS:
@@ -37,7 +38,7 @@ Q_SIGNALS:
     void removeStoredPermissions();
 
 private:
-    Ui::OptionDialog *ui;
+    QScopedPointer<Ui::OptionDialog> ui;
 };
 
 #endif // OPTIONDIALOG_H

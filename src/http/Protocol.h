@@ -14,11 +14,10 @@
 #ifndef RESPONSE_H
 #define RESPONSE_H
 
-#include <QtCore/QObject>
-#include <QtCore/QCryptographicHash>
-#include <QtCore/QMetaType>
-#include <QtCore/QVariant>
+#include <QtCore>
 #include "crypto/SymmetricCipherGcrypt.h"
+
+QVariantMap qobject2qvariant( const QObject* object, const QStringList& ignoredProperties = QStringList(QString(QLatin1String("objectName"))) );
 
 namespace KeepassHttpProtocol {
 
