@@ -1,4 +1,4 @@
-# KeePassX + keepasshttp
+# KeePassX v2.0.2 + keepasshttp
 
 ## About
 
@@ -6,7 +6,9 @@ Fork of [KeePassX](https://www.keepassx.org/) with keepasshttp support for use w
 
 KeePassHttp implementation has been forked from jdachtera's repository, which in turn was based on code from code with Francois Ferrand's [keepassx-http](https://gitorious.org/keepassx/keepassx-http/source/master:) repository. 
 
-My intention is to keep this repository as up-to-date with the main keePassX repo as possible and, time allowing, clean-up the keepasshttp implementation enough for it to be merged with upstream. I have started removing any additions to the code that were not strictly related to implemeting the keepasshttp protocol in KeePassX.
+This is a rebuild from [denk-mal's keepasshttp](https://github.com/denk-mal/keepassx.git) that brings it forward to Qt5 and KeePassX v2.0.2.
+
+*NOTE: I have not been able to get the tests to build properly yet.*
 
 #### Build Dependencies
 
@@ -22,7 +24,6 @@ The following libraries are required:
 * libgcrypt (>= 1.6)
 * zlib
 * libmicrohttpd
-* QJSON
 * libxtst (optional for auto-type on X11)
 * libxtst, qtx11extras (optional for auto-type on X11)
 
@@ -39,7 +40,7 @@ To compile from source:
 ```bash
 mkdir build
 cd build
-cmake ..
+cmake -DWITH_TESTS=OFF ..
 make [-jX]
 ```
 
