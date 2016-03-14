@@ -18,7 +18,7 @@
 #include "crypto/Crypto.h"
 #include <QtCore/QHash>
 #include <QtCore/QCryptographicHash>
-#include <QtGui/QMessageBox>
+#include <QtWidgets/QMessageBox>
 #include <QEventLoop>
 
 using namespace KeepassHttpProtocol;
