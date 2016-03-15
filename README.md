@@ -8,8 +8,6 @@ KeePassHttp implementation has been forked from jdachtera's repository, which in
 
 This is a rebuild from [denk-mal's keepasshttp](https://github.com/denk-mal/keepassx.git) that brings it forward to Qt5 and KeePassX v2.0.2.
 
-*NOTE: I have not been able to get the tests to build properly yet.*
-
 #### Build Dependencies
 
 The following tools must exist within your PATH:
