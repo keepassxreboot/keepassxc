@@ -20,6 +20,9 @@
 #include <QtCore/QCryptographicHash>
 #include <QtWidgets/QMessageBox>
 #include <QEventLoop>
+#include <QtNetwork/QHostInfo>
+#include <QtNetwork/QHostAddress>
+#include <netinet/in.h>
 
 using namespace KeepassHttpProtocol;
 
@@ -324,11 +327,49 @@ void Server::start(void)
 
     int port = HttpSettings::httpPort();
 
-    daemon = MHD_start_daemon(MHD_USE_SELECT_INTERNALLY, port, NULL, NULL,
-                              &this->request_handler_wrapper, this,
-                              MHD_OPTION_NOTIFY_COMPLETED,
-                              this->request_completed, NULL,
-                              MHD_OPTION_END);
+    struct sockaddr_in as;
+    struct sockaddr_in *ss = &as;
+    bool nohost = true;
+
+    QHostInfo info = QHostInfo::fromName(HttpSettings::httpHost());
+    if (!info.addresses().isEmpty()) {
+        QHostAddress address = info.addresses().first();
+
+        if (address.protocol() == QAbstractSocket::IPv4Protocol) {
+            struct sockaddr_in* addr = ss;
+            memset(addr, 0, sizeof(struct sockaddr_in));
+            addr->sin_family = AF_INET;
+            addr->sin_port = htons(HttpSettings::httpPort());
+            addr->sin_addr.s_addr = htonl(address.toIPv4Address());
+            nohost = false;
+#ifdef MHD_USE_IPv6
+        } else {
+            struct sockaddr_in6* addr = (sockaddr_in6*)ss;
+            memset(addr, 0, sizeof(struct sockaddr_in6));
+            addr->sin6_family = AF_INET6;
+            addr->sin6_port = htons(HttpSettings::httpPort());
+            memcpy(&addr->sin6_addr, address.toIPv6Address().c, 16);
+            nohost = false;
+#endif
+        }
+
+        daemon = MHD_start_daemon(MHD_USE_SELECT_INTERNALLY, port, NULL, NULL,
+                                 &this->request_handler_wrapper, this,
+                                 MHD_OPTION_NOTIFY_COMPLETED,
+                                 this->request_completed, NULL,
+                                 MHD_OPTION_SOCK_ADDR,
+                                 ss,
+                                 MHD_OPTION_END);
+    }
+
+    if (nohost) {
+        daemon = MHD_start_daemon(MHD_USE_SELECT_INTERNALLY, port, NULL, NULL,
+                                 &this->request_handler_wrapper, this,
+                                 MHD_OPTION_NOTIFY_COMPLETED,
+                                 this->request_completed, NULL,
+                                 MHD_OPTION_END);
+    }
+
     m_started = true;
 }
 

@@ -174,7 +174,7 @@ qt5_wrap_ui(keepassx_SOURCES ${keepassx_FORMS})
 
 add_library(keepassx_core STATIC ${keepassx_SOURCES})
 set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
-target_link_libraries(keepassx_core Qt5::Core Qt5::Concurrent Qt5::Widgets)
+target_link_libraries(keepassx_core Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Network)
 
 add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE ${keepassx_SOURCES_MAINEXE})
 target_link_libraries(${PROGNAME}
@@ -183,6 +183,7 @@ target_link_libraries(${PROGNAME}
                       Qt5::Core
                       Qt5::Concurrent
                       Qt5::Widgets
+                      Qt5::Network
                       ${GCRYPT_LIBRARIES}
                       ${ZLIB_LIBRARIES})
 
