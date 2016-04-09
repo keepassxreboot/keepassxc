@@ -380,6 +380,10 @@ SymmetricCipherStream* KeePass1Reader::testKeys(const QString& password, const Q
         }
     }
 
+    if (!cipherStream) {
+        raiseError(tr("Wrong key or database file is corrupt."));
+    }
+
     return cipherStream.take();
 }
 
