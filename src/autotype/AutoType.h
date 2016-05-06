@@ -69,6 +69,7 @@ private:
     bool windowMatches(const QString& windowTitle, const QString& windowPattern);
 
     bool m_inAutoType;
+    int m_autoTypeDelay;
     Qt::Key m_currentGlobalKey;
     Qt::KeyboardModifiers m_currentGlobalModifiers;
     QPluginLoader* m_pluginLoader;

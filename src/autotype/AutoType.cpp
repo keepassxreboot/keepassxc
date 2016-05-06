@@ -37,6 +37,7 @@ AutoType* AutoType::m_instance = nullptr;
 AutoType::AutoType(QObject* parent, bool test)
     : QObject(parent)
     , m_inAutoType(false)
+    , m_autoTypeDelay(0)
     , m_currentGlobalKey(static_cast<Qt::Key>(0))
     , m_currentGlobalModifiers(0)
     , m_pluginLoader(new QPluginLoader(this))
@@ -303,6 +304,8 @@ bool AutoType::parseActions(const QString& sequence, const Entry* entry, QList<A
 {
     QString tmpl;
     bool inTmpl = false;
+    m_autoTypeDelay = 0;
+
 
     for (const QChar& ch : sequence) {
         // TODO: implement support for {{}, {}} and {DELAY=X}
@@ -332,7 +335,17 @@ bool AutoType::parseActions(const QString& sequence, const Entry* entry, QList<A
             actions.append(new AutoTypeChar(ch));
         }
     }
-
+    if (m_autoTypeDelay > 0) {
+        QList<AutoTypeAction*>::iterator i;
+        i = actions.begin();
+        while (i != actions.end()) {
+            ++i;
+            if (i != actions.end()) {
+                i = actions.insert(i, new AutoTypeDelay(m_autoTypeDelay));
+                ++i;
+            }
+        }
+    }
     return true;
 }
 
@@ -341,6 +354,16 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
     QString tmplName = tmpl.toLower();
     int num = -1;
     QList<AutoTypeAction*> list;
+
+    QRegExp delayRegEx("delay=(\\d+)", Qt::CaseSensitive, QRegExp::RegExp2);
+    if (delayRegEx.exactMatch(tmplName)) {
+        num = delayRegEx.cap(1).toInt();
+
+        if (num > 0 && num < 10000) {
+            m_autoTypeDelay = num;
+        }
+        return list;
+    }
 
     QRegExp repeatRegEx("(.+) (\\d+)", Qt::CaseSensitive, QRegExp::RegExp2);
     if (repeatRegEx.exactMatch(tmplName)) {
