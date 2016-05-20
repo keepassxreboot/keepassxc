@@ -60,7 +60,8 @@ void DatabaseRepairWidget::openDatabase()
 
     QFile file(m_filename);
     if (!file.open(QIODevice::ReadOnly)) {
-        // TODO: error message
+        MessageBox::warning(this, tr("Error"), tr("Unable to open the database.").append("\n")
+                            .append(file.errorString()));
         Q_EMIT editFinished(false);
         return;
     }

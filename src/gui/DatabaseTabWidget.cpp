@@ -132,11 +132,10 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
 
     // test if we can read/write or read the file
     QFile file(fileName);
-    // TODO: error handling
     if (!file.open(QIODevice::ReadWrite)) {
         if (!file.open(QIODevice::ReadOnly)) {
-            // can't open
-            // TODO: error message
+            MessageBox::warning(this, tr("Error"), tr("Unable to open the database.").append("\n")
+                                .append(file.errorString()));
             return;
         }
         else {
