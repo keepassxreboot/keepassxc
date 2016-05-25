@@ -36,6 +36,9 @@ public:
 Q_SIGNALS:
     void entryActivated(Entry* entry, const QString& sequence);
 
+public Q_SLOTS:
+    void done(int r) override;
+
 private Q_SLOTS:
     void emitEntryActivated(const QModelIndex& index);
     void entryRemoved();
