@@ -195,6 +195,7 @@ target_link_libraries(keepassx_core
                       ${YUBIKEY_LIBRARIES}
                       zxcvbn
                       Qt5::Core
+                      Qt5::Network
                       Qt5::Concurrent
                       Qt5::Widgets
                       ${GCRYPT_LIBRARIES}
