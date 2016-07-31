@@ -409,53 +409,58 @@ void EditEntryWidget::saveEntry()
     // we don't want to create a new history item, if only the history has changed
     m_entry->removeHistoryItems(m_historyModel->deletedEntries());
 
+    m_autoTypeAssoc->removeEmpty();
+
     if (!m_create) {
         m_entry->beginUpdate();
     }
 
-    m_entry->setTitle(m_mainUi->titleEdit->text());
-    m_entry->setUsername(m_mainUi->usernameEdit->text());
-    m_entry->setUrl(m_mainUi->urlEdit->text());
-    m_entry->setPassword(m_mainUi->passwordEdit->text());
-    m_entry->setExpires(m_mainUi->expireCheck->isChecked());
-    m_entry->setExpiryTime(m_mainUi->expireDatePicker->dateTime().toUTC());
-
-    m_entry->setNotes(m_mainUi->notesEdit->toPlainText());
-
-    m_entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
-    m_entry->attachments()->copyDataFrom(m_entryAttachments);
-
-    IconStruct iconStruct = m_iconsWidget->state();
-
-    if (iconStruct.number < 0) {
-        m_entry->setIcon(Entry::DefaultIconNumber);
-    }
-    else if (iconStruct.uuid.isNull()) {
-        m_entry->setIcon(iconStruct.number);
-    }
-    else {
-        m_entry->setIcon(iconStruct.uuid);
-    }
-
-    m_entry->setAutoTypeEnabled(m_autoTypeUi->enableButton->isChecked());
-    if (m_autoTypeUi->inheritSequenceButton->isChecked()) {
-        m_entry->setDefaultAutoTypeSequence(QString());
-    }
-    else {
-        m_entry->setDefaultAutoTypeSequence(m_autoTypeUi->sequenceEdit->text());
-    }
-
-    m_autoTypeAssoc->removeEmpty();
-    m_entry->autoTypeAssociations()->copyDataFrom(m_autoTypeAssoc);
+    updateEntryData(m_entry);
 
     if (!m_create) {
         m_entry->endUpdate();
     }
 
-
     clear();
 
     Q_EMIT editFinished(true);
+}
+
+void EditEntryWidget::updateEntryData(Entry* entry) const
+{
+    entry->setTitle(m_mainUi->titleEdit->text());
+    entry->setUsername(m_mainUi->usernameEdit->text());
+    entry->setUrl(m_mainUi->urlEdit->text());
+    entry->setPassword(m_mainUi->passwordEdit->text());
+    entry->setExpires(m_mainUi->expireCheck->isChecked());
+    entry->setExpiryTime(m_mainUi->expireDatePicker->dateTime().toUTC());
+
+    entry->setNotes(m_mainUi->notesEdit->toPlainText());
+
+    entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
+    entry->attachments()->copyDataFrom(m_entryAttachments);
+
+    IconStruct iconStruct = m_iconsWidget->state();
+
+    if (iconStruct.number < 0) {
+        entry->setIcon(Entry::DefaultIconNumber);
+    }
+    else if (iconStruct.uuid.isNull()) {
+        entry->setIcon(iconStruct.number);
+    }
+    else {
+        entry->setIcon(iconStruct.uuid);
+    }
+
+    entry->setAutoTypeEnabled(m_autoTypeUi->enableButton->isChecked());
+    if (m_autoTypeUi->inheritSequenceButton->isChecked()) {
+        entry->setDefaultAutoTypeSequence(QString());
+    }
+    else {
+        entry->setDefaultAutoTypeSequence(m_autoTypeUi->sequenceEdit->text());
+    }
+
+    entry->autoTypeAssociations()->copyDataFrom(m_autoTypeAssoc);
 }
 
 void EditEntryWidget::cancel()
