@@ -74,6 +74,7 @@ public:
     QStringList customEntryAttributes() const;
     bool isGroupSelected() const;
     bool isInEditMode() const;
+    bool isEditWidgetModified() const;
     QList<int> splitterSizes() const;
     void setSplitterSizes(const QList<int>& sizes);
     QList<int> entryHeaderViewSizes() const;
