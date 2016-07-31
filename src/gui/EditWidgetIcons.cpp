@@ -131,6 +131,8 @@ void EditWidgetIcons::addCustomIcon()
                     this, tr("Select Image"), "", filter);
         if (!filename.isEmpty()) {
             QImageReader imageReader(filename);
+            // detect from content, otherwise reading fails if file extension is wrong
+            imageReader.setDecideFormatFromContent(true);
             QImage image = imageReader.read();
             if (!image.isNull()) {
                 Uuid uuid = Uuid::random();
