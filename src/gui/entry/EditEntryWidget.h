@@ -107,6 +107,7 @@ private:
     bool passwordsEqual();
     void setForms(const Entry* entry, bool restore = false);
     QMenu* createPresetsMenu();
+    void updateEntryData(Entry* entry) const;
 
     Entry* m_entry;
     Database* m_database;
