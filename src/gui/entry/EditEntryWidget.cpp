@@ -425,7 +425,7 @@ void EditEntryWidget::saveEntry()
     m_entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
     m_entry->attachments()->copyDataFrom(m_entryAttachments);
 
-    IconStruct iconStruct = m_iconsWidget->save();
+    IconStruct iconStruct = m_iconsWidget->state();
 
     if (iconStruct.number < 0) {
         m_entry->setIcon(Entry::DefaultIconNumber);
@@ -484,6 +484,7 @@ void EditEntryWidget::clear()
     m_entryAttachments->clear();
     m_autoTypeAssoc->clear();
     m_historyModel->clear();
+    m_iconsWidget->reset();
 }
 
 void EditEntryWidget::togglePasswordGeneratorButton(bool checked)

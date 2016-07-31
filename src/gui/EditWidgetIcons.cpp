@@ -61,11 +61,8 @@ EditWidgetIcons::~EditWidgetIcons()
 {
 }
 
-IconStruct EditWidgetIcons::save()
+IconStruct EditWidgetIcons::state() const
 {
-    Q_ASSERT(m_database);
-    Q_ASSERT(!m_currentUuid.isNull());
-
     IconStruct iconStruct;
     if (m_ui->defaultIconsRadio->isChecked()) {
         QModelIndex index = m_ui->defaultIconsView->currentIndex();
@@ -86,9 +83,13 @@ IconStruct EditWidgetIcons::save()
         }
     }
 
+    return iconStruct;
+}
+
+void EditWidgetIcons::reset()
+{
     m_database = nullptr;
     m_currentUuid = Uuid();
-    return iconStruct;
 }
 
 void EditWidgetIcons::load(Uuid currentUuid, Database* database, IconStruct iconStruct)
