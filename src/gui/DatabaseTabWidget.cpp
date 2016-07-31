@@ -309,6 +309,11 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
                 return false;
             }
         }
+        else {
+            MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
+                                 + saveFile.errorString());
+            return false;
+        }
 
         dbStruct.modified = false;
         updateTabName(db);
