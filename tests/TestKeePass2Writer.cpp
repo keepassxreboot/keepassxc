@@ -18,6 +18,7 @@
 #include "TestKeePass2Writer.h"
 
 #include <QBuffer>
+#include <QFile>
 #include <QTest>
 
 #include "config-keepassx-tests.h"
