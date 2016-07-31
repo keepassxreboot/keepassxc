@@ -497,6 +497,22 @@ void EditEntryWidget::clear()
     m_iconsWidget->reset();
 }
 
+bool EditEntryWidget::hasBeenModified() const
+{
+    // entry has been modified if a history item is to be deleted
+    if (!m_historyModel->deletedEntries().isEmpty()) {
+        return true;
+    }
+
+    // check if updating the entry would modify it
+    QScopedPointer<Entry> entry(new Entry());
+    entry->copyDataFrom(m_entry);
+
+    entry->beginUpdate();
+    updateEntryData(entry.data());
+    return entry->endUpdate();
+}
+
 void EditEntryWidget::togglePasswordGeneratorButton(bool checked)
 {
     m_mainUi->passwordGenerator->setVisible(checked);

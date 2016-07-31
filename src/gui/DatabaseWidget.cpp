@@ -194,6 +194,18 @@ bool DatabaseWidget::isInEditMode() const
     return currentMode() == DatabaseWidget::EditMode;
 }
 
+bool DatabaseWidget::isEditWidgetModified() const
+{
+    if (currentWidget() == m_editEntryWidget) {
+        return m_editEntryWidget->hasBeenModified();
+    }
+    else {
+        // other edit widget don't have a hasBeenModified() method yet
+        // assume that they already have been modified
+        return true;
+    }
+}
+
 QList<int> DatabaseWidget::splitterSizes() const
 {
     return m_splitter->sizes();

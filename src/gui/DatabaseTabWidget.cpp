@@ -223,7 +223,7 @@ bool DatabaseTabWidget::closeDatabase(Database* db)
     if (dbName.right(1) == "*") {
         dbName.chop(1);
     }
-    if (dbStruct.dbWidget->isInEditMode() && db->hasKey()) {
+    if (dbStruct.dbWidget->isInEditMode() && db->hasKey() && dbStruct.dbWidget->isEditWidgetModified()) {
         QMessageBox::StandardButton result =
             MessageBox::question(
             this, tr("Close?"),
@@ -654,7 +654,7 @@ void DatabaseTabWidget::lockDatabases()
         // show the correct tab widget before we are asking questions about it
         setCurrentWidget(dbWidget);
 
-        if (mode == DatabaseWidget::EditMode) {
+        if (mode == DatabaseWidget::EditMode && dbWidget->isEditWidgetModified()) {
             QMessageBox::StandardButton result =
                 MessageBox::question(
                     this, tr("Lock database"),
