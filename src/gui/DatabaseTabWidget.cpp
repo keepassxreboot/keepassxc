@@ -295,7 +295,7 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
     DatabaseManagerStruct& dbStruct = m_dbList[db];
 
     if (dbStruct.saveToFilename) {
-        QSaveFile saveFile(dbStruct.filePath);
+        QSaveFile saveFile(dbStruct.canonicalFilePath);
         if (saveFile.open(QIODevice::WriteOnly)) {
             m_writer.writeDatabase(&saveFile, db);
             if (m_writer.hasError()) {
