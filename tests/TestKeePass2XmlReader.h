@@ -43,6 +43,7 @@ private Q_SLOTS:
     void testBroken_data();
     void testEmptyUuids();
     void testInvalidXmlChars();
+    void testRepairUuidHistoryItem();
     void cleanupTestCase();
 
 private:
