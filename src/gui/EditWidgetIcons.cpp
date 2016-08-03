@@ -19,6 +19,7 @@
 #include "ui_EditWidgetIcons.h"
 
 #include <QFileDialog>
+#include <QImageReader>
 
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -129,7 +130,10 @@ void EditWidgetIcons::addCustomIcon()
         QString filename = QFileDialog::getOpenFileName(
                     this, tr("Select Image"), "", filter);
         if (!filename.isEmpty()) {
-            QImage image(filename);
+            QImageReader imageReader(filename);
+            // detect from content, otherwise reading fails if file extension is wrong
+            imageReader.setDecideFormatFromContent(true);
+            QImage image = imageReader.read();
             if (!image.isNull()) {
                 Uuid uuid = Uuid::random();
                 m_database->metadata()->addCustomIconScaled(uuid, image);
@@ -139,7 +143,8 @@ void EditWidgetIcons::addCustomIcon()
                 m_ui->customIconsView->setCurrentIndex(index);
             }
             else {
-                // TODO: show error
+                MessageBox::critical(this, tr("Error"),
+                                     tr("Can't read icon:").append("\n").append(imageReader.errorString()));
             }
         }
     }

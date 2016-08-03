@@ -385,13 +385,21 @@ bool AutoTypePlatformX11::isTopLevelWindow(Window window)
     unsigned long nitems;
     unsigned long after;
     unsigned char* data = nullptr;
-    int retVal = XGetWindowProperty(m_dpy, window, m_atomWmState, 0, 0, False, AnyPropertyType, &type, &format,
+    int retVal = XGetWindowProperty(m_dpy, window, m_atomWmState, 0, 2, False, m_atomWmState, &type, &format,
                                     &nitems, &after, &data);
-    if (data) {
+
+    bool result = false;
+
+    if (retVal == 0 && data) {
+        if (type == m_atomWmState && format == 32 && nitems > 0) {
+            qint32 state = static_cast<qint32>(*data);
+            result = (state != WithdrawnState);
+        }
+
         XFree(data);
     }
 
-    return (retVal == 0) && type;
+    return result;
 }
 
 KeySym AutoTypePlatformX11::charToKeySym(const QChar& ch)

@@ -371,7 +371,6 @@ const QList<Entry*>& Entry::historyItems() const
 void Entry::addHistoryItem(Entry* entry)
 {
     Q_ASSERT(!entry->parent());
-    Q_ASSERT(entry->uuid() == uuid());
 
     m_history.append(entry);
     Q_EMIT modified();

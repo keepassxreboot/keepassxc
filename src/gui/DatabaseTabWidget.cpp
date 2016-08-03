@@ -132,11 +132,10 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
 
     // test if we can read/write or read the file
     QFile file(fileName);
-    // TODO: error handling
     if (!file.open(QIODevice::ReadWrite)) {
         if (!file.open(QIODevice::ReadOnly)) {
-            // can't open
-            // TODO: error message
+            MessageBox::warning(this, tr("Error"), tr("Unable to open the database.").append("\n")
+                                .append(file.errorString()));
             return;
         }
         else {
@@ -297,7 +296,7 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
     DatabaseManagerStruct& dbStruct = m_dbList[db];
 
     if (dbStruct.saveToFilename) {
-        QSaveFile saveFile(dbStruct.filePath);
+        QSaveFile saveFile(dbStruct.canonicalFilePath);
         if (saveFile.open(QIODevice::WriteOnly)) {
             m_writer.writeDatabase(&saveFile, db);
             if (m_writer.hasError()) {
@@ -310,6 +309,11 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
                                      + saveFile.errorString());
                 return false;
             }
+        }
+        else {
+            MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
+                                 + saveFile.errorString());
+            return false;
         }
 
         dbStruct.modified = false;
