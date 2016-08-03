@@ -192,7 +192,7 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
         QByteArray headerHash = CryptoHash::hash(headerStream.storedData(), CryptoHash::Sha256);
         if (headerHash != xmlReader.headerHash()) {
             raiseError("Header doesn't match hash");
-            return nullptr;
+            return Q_NULLPTR;
         }
     }
 

@@ -406,6 +406,8 @@ void TestKeePass2XmlReader::testBroken_data()
     QTest::newRow("BrokenGroupReference (not strict)") << "BrokenGroupReference" << false << false;
     QTest::newRow("BrokenDeletedObjects     (strict)") << "BrokenDeletedObjects" << true  << true;
     QTest::newRow("BrokenDeletedObjects (not strict)") << "BrokenDeletedObjects" << false << false;
+    QTest::newRow("BrokenDifferentEntryHistoryUuid (strict)") << "BrokenDifferentEntryHistoryUuid" << true << true;
+    QTest::newRow("BrokenDifferentEntryHistoryUuid (not strict)") << "BrokenDifferentEntryHistoryUuid" << false << false;
 }
 
 void TestKeePass2XmlReader::testEmptyUuids()
@@ -484,6 +486,32 @@ void TestKeePass2XmlReader::testInvalidXmlChars()
     QCOMPARE(strToBytes(attrRead->value("LowLowSurrogate")), QByteArray());
     QCOMPARE(strToBytes(attrRead->value("SurrogateValid1")), strToBytes(strSurrogateValid1));
     QCOMPARE(strToBytes(attrRead->value("SurrogateValid2")), strToBytes(strSurrogateValid2));
+}
+
+void TestKeePass2XmlReader::testRepairUuidHistoryItem()
+{
+    KeePass2XmlReader reader;
+    QString xmlFile = QString("%1/%2.xml").arg(KEEPASSX_TEST_DATA_DIR, "BrokenDifferentEntryHistoryUuid");
+    QVERIFY(QFile::exists(xmlFile));
+    QScopedPointer<Database> db(reader.readDatabase(xmlFile));
+    if (reader.hasError()) {
+        qWarning("Database read error: %s", qPrintable(reader.errorString()));
+    }
+    QVERIFY(!reader.hasError());
+
+
+
+    QList<Entry*> entries = db.data()->rootGroup()->entries();
+    QCOMPARE(entries.size(), 1);
+    Entry* entry = entries.at(0);
+
+    QList<Entry*> historyItems = entry->historyItems();
+    QCOMPARE(historyItems.size(), 1);
+    Entry* historyItem = historyItems.at(0);
+
+    QVERIFY(!entry->uuid().isNull());
+    QVERIFY(!historyItem->uuid().isNull());
+    QCOMPARE(historyItem->uuid(), entry->uuid());
 }
 
 void TestKeePass2XmlReader::cleanupTestCase()

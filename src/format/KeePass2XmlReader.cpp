@@ -778,6 +778,13 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
     }
 
     Q_FOREACH (Entry* historyItem, historyItems) {
+        if (historyItem->uuid() != entry->uuid()) {
+            if (m_strictMode) {
+                raiseError("History element with different uuid");
+            } else {
+                historyItem->setUuid(entry->uuid());
+            }
+        }
         entry->addHistoryItem(historyItem);
     }
 

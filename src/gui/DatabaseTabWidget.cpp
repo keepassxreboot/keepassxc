@@ -296,7 +296,7 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
     DatabaseManagerStruct& dbStruct = m_dbList[db];
 
     if (dbStruct.saveToFilename) {
-        QSaveFile saveFile(dbStruct.filePath);
+        QSaveFile saveFile(dbStruct.canonicalFilePath);
         if (saveFile.open(QIODevice::WriteOnly)) {
             m_writer.writeDatabase(&saveFile, db);
             if (m_writer.hasError()) {
@@ -309,6 +309,11 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
                                      + saveFile.errorString());
                 return false;
             }
+        }
+        else {
+            MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
+                                 + saveFile.errorString());
+            return false;
         }
 
         dbStruct.modified = false;
