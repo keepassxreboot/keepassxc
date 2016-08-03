@@ -873,8 +873,7 @@ bool DatabaseWidget::dbHasKey() const
 bool DatabaseWidget::canDeleteCurrentGroup() const
 {
     bool isRootGroup = m_db->rootGroup() == m_groupView->currentGroup();
-    bool isRecycleBin = m_db->metadata()->recycleBin() == m_groupView->currentGroup();
-    return !isRootGroup && !isRecycleBin;
+    return !isRootGroup;
 }
 
 bool DatabaseWidget::isInSearchMode() const
