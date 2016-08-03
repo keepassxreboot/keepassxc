@@ -493,7 +493,9 @@ void DatabaseWidget::deleteGroup()
     }
 
     bool inRecylceBin = Tools::hasChild(m_db->metadata()->recycleBin(), currentGroup);
-    if (inRecylceBin || !m_db->metadata()->recycleBinEnabled()) {
+    bool isRecycleBin = (currentGroup == m_db->metadata()->recycleBin());
+    bool isRecycleBinSubgroup = Tools::hasChild(currentGroup, m_db->metadata()->recycleBin());
+    if (inRecylceBin || isRecycleBin || isRecycleBinSubgroup || !m_db->metadata()->recycleBinEnabled()) {
         QMessageBox::StandardButton result = MessageBox::question(
             this, tr("Delete group?"),
             tr("Do you really want to delete the group \"%1\" for good?")
