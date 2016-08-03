@@ -116,7 +116,7 @@ bool Translator::installTranslator(const QString& language, const QString& path)
 bool Translator::installQtTranslator(const QString& language)
 {
     QTranslator* qtTranslator = new QTranslator(qApp);
-    if (qtTranslator->load(QString("%1/qt_%2").arg(QLibraryInfo::location(QLibraryInfo::TranslationsPath), language))) {
+    if (qtTranslator->load(QString("%1/qtbase_%2").arg(QLibraryInfo::location(QLibraryInfo::TranslationsPath), language))) {
         QCoreApplication::installTranslator(qtTranslator);
         return true;
     }
