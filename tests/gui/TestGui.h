@@ -35,6 +35,7 @@ class TestGui : public QObject
 private Q_SLOTS:
     void initTestCase();
     void testOpenDatabase();
+    void testMergeDatabase();
     void testTabs();
     void testEditEntry();
     void testAddEntry();

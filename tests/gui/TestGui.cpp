@@ -28,6 +28,7 @@
 #include <QTest>
 #include <QToolBar>
 #include <QToolButton>
+#include <QSignalSpy>
 
 #include "config-keepassx-tests.h"
 #include "core/Config.h"
@@ -81,6 +82,62 @@ void TestGui::testOpenDatabase()
 
     QTest::keyClicks(editPassword, "a");
     QTest::keyClick(editPassword, Qt::Key_Enter);
+}
+
+void TestGui::testMergeDatabase()
+{
+    // Close widget so it doesn't interfere with the test.
+    // The fact it doesn't work otherwise might be a bug...
+    MessageBox::setNextAnswer(QMessageBox::Close);
+    m_tabWidget->currentDatabaseWidget()->closeRequest();
+
+    // open database to merge into
+    fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx"));
+    triggerAction("actionDatabaseOpen");
+
+    QWidget* databaseOpenWidget = m_mainWindow->findChild<QWidget*>("databaseOpenWidget");
+    QLineEdit* editPassword = databaseOpenWidget->findChild<QLineEdit*>("editPassword");
+    QVERIFY(editPassword->isVisible());
+
+    QTest::keyClicks(editPassword, "a");
+    QTest::keyClick(editPassword, Qt::Key_Enter);
+
+    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("NewDatabase.kdbx"));
+
+    // this triggers a warning. Perhaps similar to https://bugreports.qt.io/browse/QTBUG-49623 ?
+    QSignalSpy dbMergeSpy(m_tabWidget->currentWidget(), SIGNAL(databaseMerged(Database*)));
+
+    // set file to merge from
+    fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx"));
+    triggerAction("actionDatabaseMerge");
+
+    QWidget* databaseOpenMergeWidget = m_mainWindow->findChild<QWidget*>("databaseOpenMergeWidget");
+    QLineEdit* editPasswordMerge = databaseOpenMergeWidget->findChild<QLineEdit*>("editPassword");
+    QVERIFY(editPasswordMerge->isVisible());
+
+    m_tabWidget->currentDatabaseWidget()->setCurrentWidget(databaseOpenMergeWidget);
+
+    QTest::keyClicks(editPasswordMerge, "a");
+    QTest::keyClick(editPasswordMerge, Qt::Key_Enter);
+
+    QTRY_COMPARE(dbMergeSpy.count(), 1);
+    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("NewDatabase.kdbx*"));
+
+    m_db = m_tabWidget->currentDatabaseWidget()->database();
+
+    // there are seven child groups of the root group
+    QCOMPARE(m_db->rootGroup()->children().size(), 7);
+    // the merged group should contain an entry
+    QCOMPARE(m_db->rootGroup()->children().at(6)->entries().size(), 1);
+    // the General group contains one entry merged from the other db
+    QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 1);
+
+    // close widget so it doesn't interfere with other tests
+    MessageBox::setNextAnswer(QMessageBox::Close);
+    m_tabWidget->currentDatabaseWidget()->closeRequest();
+
+    // reopen original file because other tests depend on it
+    TestGui::testOpenDatabase();
 }
 
 void TestGui::testTabs()

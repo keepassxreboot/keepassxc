@@ -192,6 +192,21 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
     }
 }
 
+void DatabaseTabWidget::mergeDatabase()
+{
+    QString filter = QString("%1 (*.kdbx);;%2 (*)").arg(tr("KeePass 2 Database"), tr("All files"));
+    const QString fileName = fileDialog()->getOpenFileName(this, tr("Merge database"), QString(),
+                                                       filter);
+    if (!fileName.isEmpty()) {
+        mergeDatabase(fileName);
+    }
+}
+
+void DatabaseTabWidget::mergeDatabase(const QString& fileName)
+{
+    currentDatabaseWidget()->switchToOpenMergeDatabase(fileName);
+}
+
 void DatabaseTabWidget::importKeePass1Database()
 {
     QString fileName = fileDialog()->getOpenFileName(this, tr("Open KeePass 1 database"), QString(),

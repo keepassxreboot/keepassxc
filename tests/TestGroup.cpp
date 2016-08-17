@@ -446,3 +446,39 @@ void TestGroup::testCopyCustomIcons()
     QCOMPARE(metaTarget->customIcon(group1Icon).pixel(0, 0), qRgb(1, 2, 3));
     QCOMPARE(metaTarget->customIcon(group2Icon).pixel(0, 0), qRgb(4, 5, 6));
 }
+
+void TestGroup::testMerge()
+{
+    Database* dbSource = new Database();
+    Database* dbDest = new Database();
+
+    Group* group1 = new Group();
+    group1->setName("group 1");
+    Group* group2 = new Group();
+    group2->setName("group 2");
+
+    Entry* entry1 = new Entry();
+    Entry* entry2 = new Entry();
+
+    entry1->setGroup(group1);
+    entry1->setUuid(Uuid::random());
+    entry2->setGroup(group1);
+    entry2->setUuid(Uuid::random());
+
+    group2->merge(group1);
+
+    QCOMPARE(group1->entries().size(), 2);
+    QCOMPARE(group2->entries().size(), 2);
+
+    // now make groups part of database
+    group1->setParent(dbSource->rootGroup());
+    group2->setParent(dbSource->rootGroup());
+
+    dbDest->merge(dbSource);
+
+    QCOMPARE(dbDest->rootGroup()->children().size(), 2);
+    QCOMPARE(dbDest->rootGroup()->children().at(0)->entries().size(), 2);
+
+    delete dbDest;
+    delete dbSource;
+}

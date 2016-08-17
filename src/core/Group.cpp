@@ -440,6 +440,18 @@ QList<Entry*> Group::entriesRecursive(bool includeHistoryItems) const
     return entryList;
 }
 
+Entry* Group::findEntry(const Uuid& uuid)
+{
+    Q_ASSERT(uuid);
+    Q_FOREACH (Entry* entry, m_entries) {
+        if (entry->uuid() == uuid) {
+            return entry;
+        }
+    }
+
+    return nullptr;
+}
+
 QList<const Group*> Group::groupsRecursive(bool includeSelf) const
 {
     QList<const Group*> groupList;
@@ -488,6 +500,40 @@ QSet<Uuid> Group::customIconsRecursive() const
     }
 
     return result;
+}
+
+void Group::merge(const Group* other)
+{
+    // merge entries
+    Q_FOREACH (Entry* entry, other->entries()) {
+        // entries are searched by uuid
+        if (!findEntry(entry->uuid())) {
+            entry->clone(Entry::CloneNoFlags)->setGroup(this);
+        }
+    }
+
+    // merge groups (recursively)
+    Q_FOREACH (Group* group, other->children()) {
+        // groups are searched by name instead of uuid
+        if (this->findChildByName(group->name())) {
+            this->findChildByName(group->name())->merge(group);
+        } else {
+            group->setParent(this);
+        }
+    }
+
+    Q_EMIT modified();
+}
+
+Group* Group::findChildByName(const QString& name)
+{
+    Q_FOREACH (Group* group, m_children) {
+        if (group->name() == name) {
+            return group;
+        }
+    }
+
+    return nullptr;
 }
 
 Group* Group::clone(Entry::CloneFlags entryFlags) const

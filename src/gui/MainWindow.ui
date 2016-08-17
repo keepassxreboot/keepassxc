@@ -119,6 +119,7 @@
     <addaction name="actionChangeMasterKey"/>
     <addaction name="actionChangeDatabaseSettings"/>
     <addaction name="separator"/>
+    <addaction name="actionDatabaseMerge"/>
     <addaction name="actionImportKeePass1"/>
     <addaction name="actionExportCsv"/>
     <addaction name="actionRepairDatabase"/>
@@ -243,6 +244,11 @@
    <property name="text">
     <string>New database</string>
    </property>
+  </action>
+  <action name="actionDatabaseMerge">
+    <property name="text">
+      <string>Merge from KeePassX database</string>
+    </property>
   </action>
   <action name="actionEntryNew">
    <property name="enabled">

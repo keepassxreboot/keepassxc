@@ -92,6 +92,7 @@ Q_SIGNALS:
     void groupChanged();
     void entrySelectionChanged();
     void databaseChanged(Database* newDb);
+    void databaseMerged(Database* mergedDb);
     void groupContextMenuRequested(const QPoint& globalPos);
     void entryContextMenuRequested(const QPoint& globalPos);
     void unlockedDatabase();
@@ -126,6 +127,8 @@ public Q_SLOTS:
     void switchToDatabaseSettings();
     void switchToOpenDatabase(const QString& fileName);
     void switchToOpenDatabase(const QString& fileName, const QString& password, const QString& keyFile);
+    void switchToOpenMergeDatabase(const QString& fileName);
+    void switchToOpenMergeDatabase(const QString& fileName, const QString& password, const QString& keyFile);
     void switchToImportKeepass1(const QString& fileName);
     void openSearch();
 
@@ -141,6 +144,7 @@ private Q_SLOTS:
     void emitEntryContextMenuRequested(const QPoint& pos);
     void updateMasterKey(bool accepted);
     void openDatabase(bool accepted);
+    void mergeDatabase(bool accepted);
     void unlockDatabase(bool accepted);
     void emitCurrentModeChanged();
     void clearLastGroup(Group* group);
@@ -165,6 +169,7 @@ private:
     ChangeMasterKeyWidget* m_changeMasterKeyWidget;
     DatabaseSettingsWidget* m_databaseSettingsWidget;
     DatabaseOpenWidget* m_databaseOpenWidget;
+    DatabaseOpenWidget* m_databaseOpenMergeWidget;
     KeePass1OpenWidget* m_keepass1OpenWidget;
     UnlockDatabaseWidget* m_unlockDatabaseWidget;
     QSplitter* m_splitter;
