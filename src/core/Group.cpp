@@ -442,7 +442,7 @@ QList<Entry*> Group::entriesRecursive(bool includeHistoryItems) const
 
 Entry* Group::findEntry(const Uuid& uuid)
 {
-    Q_ASSERT(uuid);
+    Q_ASSERT(!uuid->isNull());
     Q_FOREACH (Entry* entry, m_entries) {
         if (entry->uuid() == uuid) {
             return entry;
