@@ -19,6 +19,7 @@
 #define KEEPASSX_TESTGROUP_H
 
 #include <QObject>
+#include "core/Database.h"
 
 class TestGroup : public QObject
 {
@@ -34,6 +35,12 @@ private Q_SLOTS:
     void testClone();
     void testCopyCustomIcons();
     void testMerge();
+    void testMergeConflict();
+    void testMergeDatabase();
+    void testMergeConflictKeepBoth();
+
+private:
+    Database* createMergeTestDatabase();
 };
 
 #endif // KEEPASSX_TESTGROUP_H

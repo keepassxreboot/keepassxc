@@ -34,6 +34,7 @@ class Group : public QObject
 
 public:
     enum TriState { Inherit, Enable, Disable };
+    enum MergeMode { ModeInherit, KeepBoth, KeepNewer, KeepExisting };
 
     struct GroupData
     {
@@ -46,6 +47,7 @@ public:
         QString defaultAutoTypeSequence;
         Group::TriState autoTypeEnabled;
         Group::TriState searchingEnabled;
+        Group::MergeMode mergeMode;
     };
 
     Group();
@@ -66,6 +68,7 @@ public:
     QString defaultAutoTypeSequence() const;
     Group::TriState autoTypeEnabled() const;
     Group::TriState searchingEnabled() const;
+    Group::MergeMode mergeMode() const;
     bool resolveSearchingEnabled() const;
     bool resolveAutoTypeEnabled() const;
     Entry* lastTopVisibleEntry() const;
@@ -89,6 +92,7 @@ public:
     void setLastTopVisibleEntry(Entry* entry);
     void setExpires(bool value);
     void setExpiryTime(const QDateTime& dateTime);
+    void setMergeMode(MergeMode newMode);
 
     void setUpdateTimeinfo(bool value);
 
@@ -145,6 +149,8 @@ private:
     void addEntry(Entry* entry);
     void removeEntry(Entry* entry);
     void setParent(Database* db);
+    void markOlderEntry(Entry* entry);
+    void resolveConflict(Entry* existingEntry, Entry* otherEntry);
 
     void recSetDatabase(Database* db);
     void cleanupParent();
