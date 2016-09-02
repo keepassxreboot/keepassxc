@@ -390,6 +390,9 @@ bool DatabaseTabWidget::saveDatabaseAs(Database* db)
             return false;
         }
 
+        // refresh fileinfo since the file didn't exist before
+        fileInfo.refresh();
+
         dbStruct.modified = false;
         dbStruct.saveToFilename = true;
         dbStruct.readOnly = false;
