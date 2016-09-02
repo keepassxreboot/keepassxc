@@ -88,6 +88,14 @@ void PasswordGeneratorWidget::reset()
     updateGenerator();
 }
 
+void PasswordGeneratorWidget::regeneratePassword()
+{
+    if (m_generator->isValid()) {
+        QString password = m_generator->generatePassword();
+        m_ui->editNewPassword->setEditText(password);
+    }
+}
+
 void PasswordGeneratorWidget::updateApplyEnabled(const QString& password)
 {
     m_ui->buttonApply->setEnabled(!password.isEmpty());
@@ -199,8 +207,5 @@ void PasswordGeneratorWidget::updateGenerator()
     m_generator->setCharClasses(classes);
     m_generator->setFlags(flags);
 
-    if (m_generator->isValid()) {
-        QString password = m_generator->generatePassword();
-        m_ui->editNewPassword->setEditText(password);
-    }
+    regeneratePassword();
 }
