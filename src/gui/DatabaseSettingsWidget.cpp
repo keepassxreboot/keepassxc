@@ -139,8 +139,8 @@ void DatabaseSettingsWidget::transformRoundsBenchmark()
 
 void DatabaseSettingsWidget::truncateHistories()
 {
-    QList<Entry*> allEntries = m_db->rootGroup()->entriesRecursive(false);
-    Q_FOREACH (Entry* entry, allEntries) {
+    const QList<Entry*> allEntries = m_db->rootGroup()->entriesRecursive(false);
+    for (Entry* entry : allEntries) {
         entry->truncateHistory();
     }
 }

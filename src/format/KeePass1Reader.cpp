@@ -195,7 +195,7 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
         return nullptr;
     }
 
-    Q_FOREACH (Entry* entry, entries) {
+    for (Entry* entry : asConst(entries)) {
         if (isMetaStream(entry)) {
             parseMetaStream(entry);
 
@@ -215,7 +215,8 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
 
     db->rootGroup()->setName(tr("Root"));
 
-    Q_FOREACH (Group* group, db->rootGroup()->children()) {
+    const QList<Group*> children = db->rootGroup()->children();
+    for (Group* group : children) {
         if (group->name() == "Backup") {
             group->setSearchingEnabled(Group::Disable);
             group->setAutoTypeEnabled(Group::Disable);
@@ -225,11 +226,12 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
     Q_ASSERT(m_tmpParent->children().isEmpty());
     Q_ASSERT(m_tmpParent->entries().isEmpty());
 
-    Q_FOREACH (Group* group, groups) {
+    for (Group* group : asConst(groups)) {
         group->setUpdateTimeinfo(true);
     }
 
-    Q_FOREACH (Entry* entry, m_db->rootGroup()->entriesRecursive()) {
+    const QList<Entry*> dbEntries = m_db->rootGroup()->entriesRecursive();
+    for (Entry* entry : dbEntries) {
         entry->setUpdateTimeinfo(true);
     }
 
@@ -298,15 +300,14 @@ QString KeePass1Reader::errorString()
 SymmetricCipherStream* KeePass1Reader::testKeys(const QString& password, const QByteArray& keyfileData,
                                                 qint64 contentPos)
 {
-    QList<PasswordEncoding> encodings;
-    encodings << Windows1252 << Latin1 << UTF8;
+    const QList<PasswordEncoding> encodings = { Windows1252, Latin1, UTF8 };
 
     QScopedPointer<SymmetricCipherStream> cipherStream;
     QByteArray passwordData;
     QTextCodec* codec = QTextCodec::codecForName("Windows-1252");
     QByteArray passwordDataCorrect = codec->fromUnicode(password);
 
-    Q_FOREACH (PasswordEncoding encoding, encodings) {
+    for (PasswordEncoding encoding : encodings) {
         if (encoding == Windows1252) {
             passwordData = passwordDataCorrect;
         }
@@ -727,7 +728,8 @@ void KeePass1Reader::parseNotes(const QString& rawNotes, Entry* entry)
     QStringList notes;
 
     bool lastLineAutoType = false;
-    Q_FOREACH (QString line, rawNotes.split("\n")) {
+    const QStringList rawNotesLines = rawNotes.split("\n");
+    for (QString line : rawNotesLines) {
         line.remove("\r");
 
         if (sequenceRegexp.exactMatch(line)) {
@@ -769,8 +771,9 @@ void KeePass1Reader::parseNotes(const QString& rawNotes, Entry* entry)
         i.next();
 
         QString sequence = sequences.value(i.key());
+        const QStringList windowList = i.value();
 
-        Q_FOREACH (const QString& window, i.value()) {
+        for (const QString& window : windowList) {
             AutoTypeAssociations::Association assoc;
             assoc.window = window;
             assoc.sequence = sequence;

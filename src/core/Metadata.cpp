@@ -218,7 +218,7 @@ QHash<Uuid, QPixmap> Metadata::customIconsScaledPixmaps() const
 {
     QHash<Uuid, QPixmap> result;
 
-    Q_FOREACH (const Uuid& uuid, m_customIconsOrder) {
+    for (const Uuid& uuid : m_customIconsOrder) {
         result.insert(uuid, customIconScaledPixmap(uuid));
     }
 
@@ -427,7 +427,7 @@ void Metadata::removeCustomIcon(const Uuid& uuid)
 
 void Metadata::copyCustomIcons(const QSet<Uuid>& iconList, const Metadata* otherMetadata)
 {
-    Q_FOREACH (const Uuid& uuid, iconList) {
+    for (const Uuid& uuid : iconList) {
         Q_ASSERT(otherMetadata->containsCustomIcon(uuid));
 
         if (!containsCustomIcon(uuid) && otherMetadata->containsCustomIcon(uuid)) {

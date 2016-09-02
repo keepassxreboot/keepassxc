@@ -34,10 +34,13 @@ QList<Entry*> EntrySearcher::searchEntries(const QString& searchTerm, const Grou
 {
     QList<Entry*> searchResult;
 
-    Q_FOREACH (Entry* entry, group->entries()) {
-        searchResult.append(matchEntry(searchTerm, entry, caseSensitivity));
+    const QList<Entry*> entryList = group->entries();
+    for (Entry* entry : entryList) {
+       searchResult.append(matchEntry(searchTerm, entry, caseSensitivity));
     }
-    Q_FOREACH (Group* childGroup, group->children()) {
+
+    const QList<Group*> children = group->children();
+    for (Group* childGroup : children) {
         if (childGroup->searchingEnabled() != Group::Disable) {
             searchResult.append(searchEntries(searchTerm, childGroup, caseSensitivity));
         }
@@ -49,8 +52,8 @@ QList<Entry*> EntrySearcher::searchEntries(const QString& searchTerm, const Grou
 QList<Entry*> EntrySearcher::matchEntry(const QString& searchTerm, Entry* entry,
                                         Qt::CaseSensitivity caseSensitivity)
 {
-    QStringList wordList = searchTerm.split(QRegExp("\\s"), QString::SkipEmptyParts);
-    Q_FOREACH (const QString& word, wordList) {
+    const QStringList wordList = searchTerm.split(QRegExp("\\s"), QString::SkipEmptyParts);
+    for (const QString& word : wordList) {
         if (!wordMatch(word, entry, caseSensitivity)) {
             return QList<Entry*>();
         }

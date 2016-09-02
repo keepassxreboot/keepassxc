@@ -98,7 +98,8 @@ void GroupView::recInitExpanded(Group* group)
     expandGroup(group, group->isExpanded());
     m_updatingExpanded = false;
 
-    Q_FOREACH (Group* child, group->children()) {
+    const QList<Group*> children = group->children();
+    for (Group* child : children) {
         recInitExpanded(child);
     }
 }

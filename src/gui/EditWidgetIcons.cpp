@@ -159,10 +159,10 @@ void EditWidgetIcons::removeCustomIcon()
             Uuid iconUuid = m_customIconModel->uuidFromIndex(index);
             int iconUsedCount = 0;
 
-            QList<Entry*> allEntries = m_database->rootGroup()->entriesRecursive(true);
+            const QList<Entry*> allEntries = m_database->rootGroup()->entriesRecursive(true);
             QList<Entry*> historyEntriesWithSameIcon;
 
-            Q_FOREACH (Entry* entry, allEntries) {
+            for (Entry* entry : allEntries) {
                 bool isHistoryEntry = !entry->group();
                 if (iconUuid == entry->iconUuid()) {
                     if (isHistoryEntry) {
@@ -174,15 +174,15 @@ void EditWidgetIcons::removeCustomIcon()
                 }
             }
 
-            QList<Group*> allGroups = m_database->rootGroup()->groupsRecursive(true);
-            Q_FOREACH (const Group* group, allGroups) {
+            const QList<Group*> allGroups = m_database->rootGroup()->groupsRecursive(true);
+            for (const Group* group : allGroups) {
                 if (iconUuid == group->iconUuid() && m_currentUuid != group->uuid()) {
                     iconUsedCount++;
                 }
             }
 
             if (iconUsedCount == 0) {
-                Q_FOREACH (Entry* entry, historyEntriesWithSameIcon) {
+                for (Entry* entry : asConst(historyEntriesWithSameIcon)) {
                     entry->setUpdateTimeinfo(false);
                     entry->setIcon(0);
                     entry->setUpdateTimeinfo(true);

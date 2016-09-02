@@ -44,7 +44,8 @@ bool EntryAttributes::hasKey(const QString& key) const
 QList<QString> EntryAttributes::customKeys()
 {
     QList<QString> customKeys;
-    Q_FOREACH (const QString& key, keys()) {
+    const QList<QString> keyList = keys();
+    for (const QString& key : keyList) {
         if (!isDefaultAttribute(key)) {
             customKeys.append(key);
         }
@@ -162,14 +163,16 @@ void EntryAttributes::copyCustomKeysFrom(const EntryAttributes* other)
     Q_EMIT aboutToBeReset();
 
     // remove all non-default keys
-    Q_FOREACH (const QString& key, keys()) {
+    const QList<QString> keyList = keys();
+    for (const QString& key : keyList) {
         if (!isDefaultAttribute(key)) {
             m_attributes.remove(key);
             m_protectedAttributes.remove(key);
         }
     }
 
-    Q_FOREACH (const QString& key, other->keys()) {
+    const QList<QString> otherKeyList = other->keys();
+    for (const QString& key : otherKeyList) {
         if (!isDefaultAttribute(key)) {
             m_attributes.insert(key, other->value(key));
             if (other->isProtected(key)) {
@@ -189,7 +192,8 @@ bool EntryAttributes::areCustomKeysDifferent(const EntryAttributes* other)
         return true;
     }
 
-    Q_FOREACH (const QString& key, keys()) {
+    const QList<QString> keyList = keys();
+    for (const QString& key : keyList) {
         if (isDefaultAttribute(key)) {
             continue;
         }
@@ -234,7 +238,7 @@ void EntryAttributes::clear()
     m_attributes.clear();
     m_protectedAttributes.clear();
 
-    Q_FOREACH (const QString& key, DefaultAttributes) {
+    for (const QString& key : DefaultAttributes) {
         m_attributes.insert(key, "");
     }
 

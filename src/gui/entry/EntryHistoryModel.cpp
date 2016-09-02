@@ -18,6 +18,7 @@
 #include "EntryHistoryModel.h"
 
 #include "core/Entry.h"
+#include "core/Global.h"
 
 EntryHistoryModel::EntryHistoryModel(QObject* parent)
     : QAbstractTableModel(parent)
@@ -136,7 +137,7 @@ void EntryHistoryModel::deleteAll()
 
     beginRemoveRows(QModelIndex(), 0, m_historyEntries.size() - 1);
 
-    Q_FOREACH (Entry* entry, m_historyEntries) {
+    for (Entry* entry : asConst(m_historyEntries)) {
         m_deletedHistoryEntries << entry;
     }
     m_historyEntries.clear();

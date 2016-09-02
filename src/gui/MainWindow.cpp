@@ -224,8 +224,8 @@ void MainWindow::updateLastDatabasesMenu()
 {
     m_ui->menuRecentDatabases->clear();
 
-    QStringList lastDatabases = config()->get("LastDatabases", QVariant()).toStringList();
-    Q_FOREACH (const QString& database, lastDatabases) {
+    const QStringList lastDatabases = config()->get("LastDatabases", QVariant()).toStringList();
+    for (const QString& database : lastDatabases) {
         QAction* action = m_ui->menuRecentDatabases->addAction(database);
         action->setData(database);
         m_lastDatabasesActions->addAction(action);
@@ -250,7 +250,8 @@ void MainWindow::updateCopyAttributesMenu()
         delete actions[i];
     }
 
-    Q_FOREACH (const QString& key, dbWidget->customEntryAttributes()) {
+    const QStringList customEntryAttributes = dbWidget->customEntryAttributes();
+    for (const QString& key : customEntryAttributes) {
         QAction* action = m_ui->menuEntryCopyAttribute->addAction(key);
         m_copyAdditionalAttributeActions->addAction(action);
     }
@@ -316,12 +317,14 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             break;
         }
         case DatabaseWidget::EditMode:
-        case DatabaseWidget::LockedMode:
-            Q_FOREACH (QAction* action, m_ui->menuEntries->actions()) {
+        case DatabaseWidget::LockedMode: {
+            const QList<QAction*> entryActions = m_ui->menuEntries->actions();
+            for (QAction* action : entryActions) {
                 action->setEnabled(false);
             }
 
-            Q_FOREACH (QAction* action, m_ui->menuGroups->actions()) {
+            const QList<QAction*> groupActions = m_ui->menuGroups->actions();
+            for (QAction* action : groupActions) {
                 action->setEnabled(false);
             }
             m_ui->actionEntryCopyTitle->setEnabled(false);
@@ -338,17 +341,20 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionDatabaseSaveAs->setEnabled(false);
             m_ui->actionExportCsv->setEnabled(false);
             break;
+        }
         default:
             Q_ASSERT(false);
         }
         m_ui->actionDatabaseClose->setEnabled(true);
     }
     else {
-        Q_FOREACH (QAction* action, m_ui->menuEntries->actions()) {
+        const QList<QAction*> entryActions = m_ui->menuEntries->actions();
+        for (QAction* action : entryActions) {
             action->setEnabled(false);
         }
 
-        Q_FOREACH (QAction* action, m_ui->menuGroups->actions()) {
+        const QList<QAction*> groupActions = m_ui->menuGroups->actions();
+        for (QAction* action : groupActions) {
             action->setEnabled(false);
         }
         m_ui->actionEntryCopyTitle->setEnabled(false);
