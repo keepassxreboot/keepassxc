@@ -22,6 +22,7 @@
 
 #include "core/DatabaseIcons.h"
 #include "core/Entry.h"
+#include "core/Global.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 
@@ -78,13 +79,14 @@ void EntryModel::setEntryList(const QList<Entry*>& entries)
 
     QSet<Database*> databases;
 
-    Q_FOREACH (Entry* entry, m_entries) {
+    for (Entry* entry : asConst(m_entries)) {
         databases.insert(entry->group()->database());
     }
 
-    Q_FOREACH (Database* db, databases) {
+    for (Database* db : asConst(databases)) {
         Q_ASSERT(db);
-        Q_FOREACH (const Group* group, db->rootGroup()->groupsRecursive(true)) {
+        const QList<Group*> groupList = db->rootGroup()->groupsRecursive(true);
+        for (const Group* group : groupList) {
             m_allGroups.append(group);
         }
 
@@ -93,7 +95,7 @@ void EntryModel::setEntryList(const QList<Entry*>& entries)
         }
     }
 
-    Q_FOREACH (const Group* group, m_allGroups) {
+    for (const Group* group : asConst(m_allGroups)) {
         makeConnections(group);
     }
 
@@ -224,7 +226,7 @@ QMimeData* EntryModel::mimeData(const QModelIndexList& indexes) const
 
     QSet<Entry*> seenEntries;
 
-    Q_FOREACH (const QModelIndex& index, indexes) {
+    for (const QModelIndex& index : indexes) {
         if (!index.isValid()) {
             continue;
         }
@@ -301,7 +303,7 @@ void EntryModel::severConnections()
         disconnect(m_group, nullptr, this, nullptr);
     }
 
-    Q_FOREACH (const Group* group, m_allGroups) {
+    for (const Group* group : asConst(m_allGroups)) {
         disconnect(group, nullptr, this, nullptr);
     }
 }

@@ -91,13 +91,15 @@ Entry* Database::resolveEntry(const Uuid& uuid)
 
 Entry* Database::recFindEntry(const Uuid& uuid, Group* group)
 {
-    Q_FOREACH (Entry* entry, group->entries()) {
+    const QList<Entry*> entryList = group->entries();
+    for (Entry* entry : entryList) {
         if (entry->uuid() == uuid) {
             return entry;
         }
     }
 
-    Q_FOREACH (Group* child, group->children()) {
+    const QList<Group*> children = group->children();
+    for (Group* child : children) {
         Entry* result = recFindEntry(uuid, child);
         if (result) {
             return result;
@@ -118,7 +120,8 @@ Group* Database::recFindGroup(const Uuid& uuid, Group* group)
         return group;
     }
 
-    Q_FOREACH (Group* child, group->children()) {
+    const QList<Group*> children = group->children();
+    for (Group* child : children) {
         Group* result = recFindGroup(uuid, child);
         if (result) {
             return result;

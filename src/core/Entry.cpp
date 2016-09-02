@@ -382,7 +382,7 @@ void Entry::removeHistoryItems(const QList<Entry*>& historyEntries)
         return;
     }
 
-    Q_FOREACH (Entry* entry, historyEntries) {
+    for (Entry* entry : historyEntries) {
         Q_ASSERT(!entry->parent());
         Q_ASSERT(entry->uuid() == uuid());
         Q_ASSERT(m_history.contains(entry));
@@ -431,8 +431,8 @@ void Entry::truncateHistory()
             if (size <= histMaxSize) {
                 size += historyItem->attributes()->attributesSize();
 
-                QSet<QByteArray> newAttachments = historyItem->attachments()->values().toSet() - foundAttachements;
-                Q_FOREACH (const QByteArray& attachment, newAttachments) {
+                const QSet<QByteArray> newAttachments = historyItem->attachments()->values().toSet() - foundAttachements;
+                for (const QByteArray& attachment : newAttachments) {
                     size += attachment.size();
                 }
                 foundAttachements += newAttachments;
@@ -461,7 +461,7 @@ Entry* Entry::clone(CloneFlags flags) const
     entry->m_attachments->copyDataFrom(m_attachments);
     entry->m_autoTypeAssociations->copyDataFrom(this->m_autoTypeAssociations);
     if (flags & CloneIncludeHistory) {
-        Q_FOREACH (Entry* historyItem, m_history) {
+        for (Entry* historyItem : m_history) {
             Entry* historyItemClone = historyItem->clone(flags & ~CloneIncludeHistory & ~CloneNewUuid);
             historyItemClone->setUpdateTimeinfo(false);
             historyItemClone->setUuid(entry->uuid());

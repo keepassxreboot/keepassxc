@@ -344,7 +344,7 @@ QList<Window> AutoTypePlatformX11::widgetsToX11Windows(const QWidgetList& widget
 {
     QList<Window> windows;
 
-    Q_FOREACH (const QWidget* widget, widgetList) {
+    for (const QWidget* widget : widgetList) {
         windows.append(widget->effectiveWinId());
     }
 

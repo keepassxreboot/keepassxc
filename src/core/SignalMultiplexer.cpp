@@ -17,6 +17,8 @@
 
 #include "SignalMultiplexer.h"
 
+#include "core/Global.h"
+
 SignalMultiplexer::SignalMultiplexer()
 {
 }
@@ -45,7 +47,7 @@ void SignalMultiplexer::setCurrentObject(QObject* object)
     }
 
     if (m_currentObject) {
-        Q_FOREACH (const Connection& con, m_connections) {
+        for (const Connection& con : asConst(m_connections)) {
             disconnect(con);
         }
     }
@@ -53,7 +55,7 @@ void SignalMultiplexer::setCurrentObject(QObject* object)
     m_currentObject = object;
 
     if (object) {
-        Q_FOREACH (const Connection& con, m_connections) {
+        for (const Connection& con : asConst(m_connections)) {
             connect(con);
         }
     }

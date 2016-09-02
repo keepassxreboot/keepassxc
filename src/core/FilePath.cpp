@@ -22,6 +22,7 @@
 #include <QLibrary>
 
 #include "config-keepassx.h"
+#include "core/Global.h"
 
 FilePath* FilePath::m_instance(nullptr);
 
@@ -40,7 +41,8 @@ QString FilePath::pluginPath(const QString& name)
     QStringList pluginPaths;
 
     QDir buildDir(QCoreApplication::applicationDirPath() + "/autotype");
-    Q_FOREACH (const QString& dir, buildDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot)) {
+    const QStringList buildDirEntryList = buildDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+    for (const QString& dir : buildDirEntryList) {
         pluginPaths << QCoreApplication::applicationDirPath() + "/autotype/" + dir;
     }
 
@@ -68,10 +70,10 @@ QString FilePath::pluginPath(const QString& name)
     QStringList dirFilter;
     dirFilter << QString("*%1*").arg(name);
 
-    Q_FOREACH (const QString& path, pluginPaths) {
-        QStringList fileCandidates = QDir(path).entryList(dirFilter, QDir::Files);
+    for (const QString& path : asConst(pluginPaths)) {
+        const QStringList fileCandidates = QDir(path).entryList(dirFilter, QDir::Files);
 
-        Q_FOREACH (const QString& file, fileCandidates) {
+        for (const QString& file : fileCandidates) {
             QString filePath = path + "/" + file;
 
             if (QLibrary::isLibrary(filePath)) {
@@ -103,10 +105,9 @@ QIcon FilePath::icon(const QString& category, const QString& name, bool fromThem
     }
 
     if (icon.isNull()) {
-        QList<int> pngSizes;
-        pngSizes << 16 << 22 << 24 << 32 << 48 << 64 << 128;
+        const QList<int> pngSizes = { 16, 22, 24, 32, 48, 64, 128 };
         QString filename;
-        Q_FOREACH (int size, pngSizes) {
+        for (int size : pngSizes) {
             filename = QString("%1/icons/application/%2x%2/%3.png").arg(m_dataPath, QString::number(size),
                                                                         combinedName);
             if (QFile::exists(filename)) {
@@ -148,10 +149,9 @@ QIcon FilePath::onOffIcon(const QString& category, const QString& name)
             stateName = "on";
         }
 
-        QList<int> pngSizes;
-        pngSizes << 16 << 22 << 24 << 32 << 48 << 64 << 128;
+        const QList<int> pngSizes = { 16, 22, 24, 32, 48, 64, 128 };
         QString filename;
-        Q_FOREACH (int size, pngSizes) {
+        for (int size : pngSizes) {
             filename = QString("%1/icons/application/%2x%2/%3-%4.png").arg(m_dataPath, QString::number(size),
                                                                            combinedName, stateName);
             if (QFile::exists(filename)) {

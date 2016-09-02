@@ -124,10 +124,10 @@ void DatabaseWidgetStateSync::updateColumnSizes()
 
 QList<int> DatabaseWidgetStateSync::variantToIntList(const QVariant& variant)
 {
-    QVariantList list = variant.toList();
+    const QVariantList list = variant.toList();
     QList<int> result;
 
-    Q_FOREACH (const QVariant& var, list) {
+    for (const QVariant& var : list) {
         bool ok;
         int size = var.toInt(&ok);
         if (ok) {
@@ -146,7 +146,7 @@ QVariant DatabaseWidgetStateSync::intListToVariant(const QList<int>& list)
 {
     QVariantList result;
 
-    Q_FOREACH (int value, list) {
+    for (int value : list) {
         result.append(value);
     }
 

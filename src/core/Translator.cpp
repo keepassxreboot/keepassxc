@@ -49,18 +49,20 @@ void Translator::installTranslator()
 
 QList<QPair<QString, QString> > Translator::availableLanguages()
 {
-    QStringList paths;
+    const QStringList paths = {
 #ifdef QT_DEBUG
-    paths.append(QString("%1/share/translations").arg(KEEPASSX_BINARY_DIR));
+        QString("%1/share/translations").arg(KEEPASSX_BINARY_DIR),
 #endif
-    paths.append(filePath()->dataPath("translations"));
+        filePath()->dataPath("translations")
+    };
 
     QList<QPair<QString, QString> > languages;
     languages.append(QPair<QString, QString>("system", "System default"));
 
     QRegExp regExp("keepassx_([a-zA-Z_]+)\\.qm", Qt::CaseInsensitive, QRegExp::RegExp2);
-    Q_FOREACH (const QString& path, paths) {
-        Q_FOREACH (const QString& filename, QDir(path).entryList()) {
+    for (const QString& path : paths) {
+        const QStringList fileList = QDir(path).entryList();
+        for (const QString& filename : fileList) {
             if (regExp.exactMatch(filename)) {
                 QString langcode = regExp.cap(1);
                 if (langcode == "en_plurals") {
@@ -85,13 +87,14 @@ QList<QPair<QString, QString> > Translator::availableLanguages()
 
 bool Translator::installTranslator(const QString& language)
 {
-    QStringList paths;
+    const QStringList paths = {
 #ifdef QT_DEBUG
-    paths.append(QString("%1/share/translations").arg(KEEPASSX_BINARY_DIR));
+        QString("%1/share/translations").arg(KEEPASSX_BINARY_DIR),
 #endif
-    paths.append(filePath()->dataPath("translations"));
+        filePath()->dataPath("translations")
+    };
 
-    Q_FOREACH (const QString& path, paths) {
+    for (const QString& path : paths) {
         if (installTranslator(language, path)) {
             return true;
         }
