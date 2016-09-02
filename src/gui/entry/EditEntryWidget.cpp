@@ -515,6 +515,7 @@ bool EditEntryWidget::hasBeenModified() const
 
 void EditEntryWidget::togglePasswordGeneratorButton(bool checked)
 {
+    m_mainUi->passwordGenerator->regeneratePassword();
     m_mainUi->passwordGenerator->setVisible(checked);
 }
 

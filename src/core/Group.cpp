@@ -503,7 +503,7 @@ Group* Group::clone(Entry::CloneFlags entryFlags) const
     }
 
     Q_FOREACH (Group* groupChild, children()) {
-        Group* clonedGroupChild = groupChild->clone();
+        Group* clonedGroupChild = groupChild->clone(entryFlags);
         clonedGroupChild->setParent(clonedGroup);
     }
 
