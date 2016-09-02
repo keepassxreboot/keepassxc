@@ -341,14 +341,24 @@ void DatabaseWidget::deleteEntries()
         }
     }
     else {
-        if (selected.size() > 1) {
-            QMessageBox::StandardButton result = MessageBox::question(
+        QMessageBox::StandardButton result;
+
+        if (selected.size() == 1) {
+            result = MessageBox::question(
+                this, tr("Move entry to recycle bin?"),
+                tr("Do you really want to move entry \"%1\" to the recycle bin?")
+                .arg(selectedEntries.first()->title()),
+                QMessageBox::Yes | QMessageBox::No);
+        }
+        else {
+            result = MessageBox::question(
                 this, tr("Move entries to recycle bin?"),
                 tr("Do you really want to move %n entry(s) to the recycle bin?", 0, selected.size()),
                 QMessageBox::Yes | QMessageBox::No);
-            if (result == QMessageBox::No) {
-                return;
-            }
+        }
+
+        if (result == QMessageBox::No) {
+            return;
         }
 
         Q_FOREACH (Entry* entry, selectedEntries) {
