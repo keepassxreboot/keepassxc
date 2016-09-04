@@ -11,7 +11,11 @@
     </message>
     <message>
         <source>Revision</source>
-        <translation type="unfinished"/>
+        <translation>Revisão</translation>
+    </message>
+    <message>
+        <source>Using:</source>
+        <translation>Usando:</translation>
     </message>
 </context>
 <context>
@@ -22,7 +26,7 @@
     </message>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation>Não foi possível encontrar uma entrada que corresponda ao título da janela:</translation>
+        <translation>Não foi possível localizar uma entrada que corresponda ao título da janela:</translation>
     </message>
 </context>
 <context>
@@ -95,7 +99,7 @@
     </message>
     <message>
         <source>Unable to create Key File : </source>
-        <translation>Não foi possível criar o Arquivo-Chave :</translation>
+        <translation>Não foi possível criar o Arquivo-Chave : </translation>
     </message>
     <message>
         <source>Select a key file</source>
@@ -168,14 +172,51 @@
     </message>
 </context>
 <context>
+    <name>DatabaseRepairWidget</name>
+    <message>
+        <source>Repair database</source>
+        <translation>Reparar banco de dados</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Erro</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open key file</source>
+        <translation>Não foi possível abrir arquivo-chave</translation>
+    </message>
+    <message>
+        <source>Database opened fine. Nothing to do.</source>
+        <translation>Banco de dados aberto com sucesso. Nada para fazer.</translation>
+    </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation>Não foi possível abrir o banco de dados.</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation>Sucesso</translation>
+    </message>
+    <message>
+        <source>The database has been successfully repaired
+You can now save it.</source>
+        <translation>O banco de dados foi reparado com sucesso
+Você pode salvá-lo agora.</translation>
+    </message>
+    <message>
+        <source>Unable to repair the database.</source>
+        <translation>Não foi possível reparar o banco de dados.</translation>
+    </message>
+</context>
+<context>
     <name>DatabaseSettingsWidget</name>
     <message>
         <source>Database name:</source>
-        <translation>Nome do Banco de Dados:</translation>
+        <translation>Nome do banco de dados:</translation>
     </message>
     <message>
         <source>Database description:</source>
-        <translation>Descrição do Banco de Dados:</translation>
+        <translation>Descrição do banco de dados:</translation>
     </message>
     <message>
         <source>Transform rounds:</source>
@@ -191,7 +232,7 @@
     </message>
     <message>
         <source> MiB</source>
-        <translation>MB</translation>
+        <translation> MB</translation>
     </message>
     <message>
         <source>Benchmark</source>
@@ -199,18 +240,18 @@
     </message>
     <message>
         <source>Max. history items:</source>
-        <translation>Máx. Itens no histórico:</translation>
+        <translation>Máx. itens no histórico:</translation>
     </message>
     <message>
         <source>Max. history size:</source>
-        <translation>Tamanho Máx. do histórico:</translation>
+        <translation>Tamanho máx. do histórico:</translation>
     </message>
 </context>
 <context>
     <name>DatabaseTabWidget</name>
     <message>
         <source>Root</source>
-        <translation>Raíz</translation>
+        <translation>Raiz</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
@@ -230,7 +271,7 @@
     </message>
     <message>
         <source>File not found!</source>
-        <translation>Arquivo não encontrado!</translation>
+        <translation>Arquivo não localizado!</translation>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
@@ -238,7 +279,7 @@
     </message>
     <message>
         <source>KeePass 1 database</source>
-        <translation>banco de dados KeePass 1</translation>
+        <translation>Banco de dados KeePass 1</translation>
     </message>
     <message>
         <source>All files (*)</source>
@@ -276,13 +317,13 @@ Salvar alterações?</translation>
     </message>
     <message>
         <source>locked</source>
-        <translation>Trancado</translation>
+        <translation>trancado</translation>
     </message>
     <message>
         <source>The database you are trying to open is locked by another instance of KeePassX.
 Do you want to open it anyway? Alternatively the database is opened read-only.</source>
         <translation>O banco de dados que você está tentando abrir está bloqueado por outra instância do KeePassX.
-Você quer abri-lo de qualquer forma? Alternativamente o banco de dados é aberto como somente leitura.</translation>
+Você quer abri-lo de qualquer forma? Alternativamente, o banco de dados é aberto como somente leitura.</translation>
     </message>
     <message>
         <source>Lock database</source>
@@ -292,23 +333,27 @@ Você quer abri-lo de qualquer forma? Alternativamente o banco de dados é abert
         <source>Can't lock the database as you are currently editing it.
 Please press cancel to finish your changes or discard them.</source>
         <translation>Não é possível trancar o banco de dados uma vez que você o está editando.
-Por favor aperte cancelar para finalizar suas alterações ou descartá-las.</translation>
+Por favor, aperte cancelar para finalizar suas alterações ou descartá-las.</translation>
     </message>
     <message>
         <source>This database has never been saved.
 You can save the database or stop locking it.</source>
-        <translation type="unfinished"/>
+        <translation>Esse banco de dados nunca foi salvo.
+Você pode salvar o banco de dados ou parar de trancá-lo.</translation>
     </message>
     <message>
         <source>This database has been modified.
 Do you want to save the database before locking it?
 Otherwise your changes are lost.</source>
-        <translation type="unfinished"/>
+        <translation>Esse banco de dados foi modificado.
+Você deseja salvar o banco de dados antes de travá-lo?
+Do contrário, suas alterações serão perdidas.</translation>
     </message>
     <message>
         <source>&quot;%1&quot; is in edit mode.
 Discard changes and close anyway?</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; está em modo de edição.
+Descartar alterações e fechar mesmo assim?</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
@@ -325,7 +370,8 @@ Discard changes and close anyway?</source>
     <message>
         <source>The database you are trying to save as is locked by another instance of KeePassX.
 Do you want to save it anyway?</source>
-        <translation type="unfinished"/>
+        <translation>O banco de dados que você está tentando salvar como está travado por uma outra instância de KeePassX.
+Você deseja salvá-lo mesmo assim?</translation>
     </message>
 </context>
 <context>
@@ -356,7 +402,7 @@ Do you want to save it anyway?</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Você realmente deseja mover %n entrada para a lixeira?</numerusform><numerusform>Você realmente deseja mover %n entradas para a lixeira?</numerusform></translation>
     </message>
     <message>
         <source>Delete group?</source>
@@ -565,7 +611,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Repeat:</source>
-        <translation>Repetir</translation>
+        <translation>Repetir:</translation>
     </message>
     <message>
         <source>Gen.</source>
@@ -577,7 +623,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Expira em:</translation>
+        <translation>Expira em</translation>
     </message>
     <message>
         <source>Presets</source>
@@ -647,18 +693,18 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Use default auto-type sequence of parent group</source>
-        <translation type="unfinished"/>
+        <translation>Usar sequência de auto-digitação padrão do grupo pai</translation>
     </message>
     <message>
         <source>Set default auto-type sequence</source>
-        <translation type="unfinished"/>
+        <translation>Definir sequência auto-digitação padrão</translation>
     </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
     <message>
         <source>Use default icon</source>
-        <translation>Usar Ícone padrão</translation>
+        <translation>Usar ícone padrão</translation>
     </message>
     <message>
         <source>Use custom icon</source>
@@ -690,7 +736,7 @@ Do you want to save it anyway?</source>
     </message>
     <message numerus="yes">
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
-        <translation><numerusform>Não é possível apagar o ícone. Ainda usado por %n item.</numerusform><numerusform>Não é possível apagar o ícone. Ainda usado por %n item(s).</numerusform></translation>
+        <translation><numerusform>Não é possível apagar o ícone. Ainda usado por %n item.</numerusform><numerusform>Não é possível apagar o ícone. Ainda usado por %n itens.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -818,18 +864,28 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Chave errada ou arquivo de banco de dados está corrompido.</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation type="unfinished"/>
+        <translation>Não foi possível calcular a chave mestre</translation>
+    </message>
+    <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <translation>O arquivo selecionado é um banco de dados antigo do KeePass 1 (.kdb).
+
+Você pode importá-lo clicando em Banco de Dados &gt; &apos;Importar banco de dados KeePass 1&apos;.
+Esta é uma migração de uma via. Você não poderá abrir o banco de dados importado com a versão antiga do KeePassX 0.4.</translation>
     </message>
 </context>
 <context>
     <name>Main</name>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
-        <translation type="unfinished"/>
+        <translation>Erro fatal enquanto testava as funções criptográficas.</translation>
     </message>
     <message>
         <source>KeePassX - Error</source>
@@ -936,7 +992,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Find</source>
-        <translation>Encontrar</translation>
+        <translation>Localizar</translation>
     </message>
     <message>
         <source>Copy username to clipboard</source>
@@ -1001,6 +1057,30 @@ Do you want to save it anyway?</source>
     <message>
         <source>Export to CSV file</source>
         <translation>Exportar para arquivo CSV</translation>
+    </message>
+    <message>
+        <source>Repair database</source>
+        <translation>Reparar banco de dados</translation>
+    </message>
+    <message>
+        <source>KeePass 2 Database</source>
+        <translation>Banco de dados Keepass 2</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>Todos arquivos</translation>
+    </message>
+    <message>
+        <source>Save repaired database</source>
+        <translation>Salvar banco de dados reparado</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Erro</translation>
+    </message>
+    <message>
+        <source>Writing the database failed.</source>
+        <translation>Escrita do banco de dados falhou.</translation>
     </message>
 </context>
 <context>
@@ -1108,45 +1188,45 @@ Do you want to save it anyway?</source>
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
-        <translation>Erro interno do zlib ao compactar:</translation>
+        <translation>Erro interno do zlib ao compactar: </translation>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>Erro ao gravar no dispositivo subjacente:</translation>
+        <translation>Erro ao gravar no dispositivo subjacente: </translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>Erro ao abrir dispositivo subjacente:</translation>
+        <translation>Erro ao abrir dispositivo subjacente: </translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation type="unfinished"/>
+        <translation>Erro ao ler dados do dispositivo subjacente: </translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation type="unfinished"/>
+        <translation>Erro interno do zlib ao descompactar: </translation>
     </message>
 </context>
 <context>
     <name>QtIOCompressor::open</name>
     <message>
         <source>The gzip format not supported in this version of zlib.</source>
-        <translation type="unfinished"/>
+        <translation>Sem suporte ao formato gzip nesta versão do zlib.</translation>
     </message>
     <message>
         <source>Internal zlib error: </source>
-        <translation>Erro interno do zlib:</translation>
+        <translation>Erro interno do zlib: </translation>
     </message>
 </context>
 <context>
     <name>SearchWidget</name>
     <message>
         <source>Find:</source>
-        <translation>Encontrar:</translation>
+        <translation>Localizar:</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation>diferenciar maiúsculas e minúsculas</translation>
+        <translation>Diferenciar maiúsculas e minúsculas</translation>
     </message>
     <message>
         <source>Current group</source>
@@ -1154,7 +1234,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Root group</source>
-        <translation>Grupo Raíz</translation>
+        <translation>Grupo Raiz</translation>
     </message>
 </context>
 <context>
@@ -1196,15 +1276,15 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
-        <translation type="unfinished"/>
+        <translation>Usar ícone de grupo na criação da entrada</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Atalho para Auto-Digitação Global</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global auto-type</source>
-        <translation type="unfinished"/>
+        <translation>Usar título da entrada para comparar janelas para auto-digitação global</translation>
     </message>
     <message>
         <source>Language</source>
@@ -1216,34 +1296,34 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation type="unfinished"/>
+        <translation>Ocultar janela na bandeja de sistema quando minimizada</translation>
     </message>
     <message>
         <source>Remember last key files</source>
-        <translation type="unfinished"/>
+        <translation>Lembrar dos últimos arquivos-chave</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>
     <message>
         <source>Clear clipboard after</source>
-        <translation type="unfinished"/>
+        <translation>Limpar área de transferência após</translation>
     </message>
     <message>
         <source> sec</source>
-        <translation type="unfinished"/>
+        <translation> seg</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
-        <translation type="unfinished"/>
+        <translation>Travar bancos de dados após inatividade de</translation>
     </message>
     <message>
         <source>Show passwords in cleartext by default</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar senhas em texto claro por padrão</translation>
     </message>
     <message>
         <source>Always ask before performing auto-type</source>
-        <translation type="unfinished"/>
+        <translation>Sempre perguntar antes de realizar auto-digitação</translation>
     </message>
 </context>
 <context>
@@ -1257,26 +1337,26 @@ Do you want to save it anyway?</source>
     <name>WelcomeWidget</name>
     <message>
         <source>Welcome!</source>
-        <translation>Bemvindo!</translation>
+        <translation>Bem-vindo!</translation>
     </message>
 </context>
 <context>
     <name>main</name>
     <message>
         <source>KeePassX - cross-platform password manager</source>
-        <translation>KeePassX - gerenciador de senhas Multiplataforma</translation>
+        <translation>KeePassX - gerenciador de senhas multiplataforma</translation>
     </message>
     <message>
         <source>filename of the password database to open (*.kdbx)</source>
-        <translation type="unfinished"/>
+        <translation>nome de arquivo do banco de dados de senhas a ser aberto (*.kdbx)</translation>
     </message>
     <message>
         <source>path to a custom config file</source>
-        <translation type="unfinished"/>
+        <translation>caminho para um arquivo de configuração personalizado</translation>
     </message>
     <message>
         <source>key file of the database</source>
-        <translation type="unfinished"/>
+        <translation>arquivo-chave do banco de dados</translation>
     </message>
 </context>
 </TS>

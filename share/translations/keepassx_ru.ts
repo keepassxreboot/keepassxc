@@ -13,6 +13,10 @@
         <source>Revision</source>
         <translation>Ревизия</translation>
     </message>
+    <message>
+        <source>Using:</source>
+        <translation>С помощью:</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -168,6 +172,43 @@
     </message>
 </context>
 <context>
+    <name>DatabaseRepairWidget</name>
+    <message>
+        <source>Repair database</source>
+        <translation>Восстановление хранилища</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Ошибка</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open key file</source>
+        <translation>Не могу открыть файл-ключ</translation>
+    </message>
+    <message>
+        <source>Database opened fine. Nothing to do.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation>Невозможно открыть хранилище.</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation>Успешно</translation>
+    </message>
+    <message>
+        <source>The database has been successfully repaired
+You can now save it.</source>
+        <translation>Хранилище было восстановлено.
+Теперь Вы можете сохранить его.</translation>
+    </message>
+    <message>
+        <source>Unable to repair the database.</source>
+        <translation>Невозможно восстановить хранилище.</translation>
+    </message>
+</context>
+<context>
     <name>DatabaseSettingsWidget</name>
     <message>
         <source>Database name:</source>
@@ -290,12 +331,14 @@ Do you want to open it anyway? Alternatively the database is opened read-only.</
     <message>
         <source>Can't lock the database as you are currently editing it.
 Please press cancel to finish your changes or discard them.</source>
-        <translation type="unfinished"/>
+        <translation>Невозможно заблокировать базу данных, так как вы в настоящее время редактируете её.
+Пожалуйста нажмите Отмена, чтобы завершить свои изменения или отклонить их.</translation>
     </message>
     <message>
         <source>This database has never been saved.
 You can save the database or stop locking it.</source>
-        <translation type="unfinished"/>
+        <translation>Эта база данных никогда не была сохранена.
+Вы можете сохранить базу данных или остановить её заблокированной.</translation>
     </message>
     <message>
         <source>This database has been modified.
@@ -571,7 +614,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Gen.</source>
-        <translation type="unfinished"/>
+        <translation>Генеральный.</translation>
     </message>
     <message>
         <source>URL:</source>
@@ -649,11 +692,11 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Use default auto-type sequence of parent group</source>
-        <translation type="unfinished"/>
+        <translation>Используйте стандартный автоввод из последовательности родительской группы</translation>
     </message>
     <message>
         <source>Set default auto-type sequence</source>
-        <translation type="unfinished"/>
+        <translation>Последовательность автоввода указать по умолчанию</translation>
     </message>
 </context>
 <context>
@@ -825,6 +868,16 @@ Do you want to save it anyway?</source>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Невозможно вычислить мастер-пароль</translation>
+    </message>
+    <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <translation>Выбранный файл от старой KeePass 1 базы данных (.kdb).
+
+Вы можете импортировать его, нажав на База Данных &gt; &apos;Импорт KeePass 1 базы данных&apos;.
+Это одностороннее перемещение. Вы не сможете открыть импортированный базу данных на старой версии KeePassX 0,4.</translation>
     </message>
 </context>
 <context>
@@ -1003,6 +1056,30 @@ Do you want to save it anyway?</source>
     <message>
         <source>Export to CSV file</source>
         <translation>Экспортировать в файл CSV</translation>
+    </message>
+    <message>
+        <source>Repair database</source>
+        <translation>Восстановление хранилища</translation>
+    </message>
+    <message>
+        <source>KeePass 2 Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>Все файлы</translation>
+    </message>
+    <message>
+        <source>Save repaired database</source>
+        <translation>Сохранить восстановленное хранилище</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Ошибка</translation>
+    </message>
+    <message>
+        <source>Writing the database failed.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

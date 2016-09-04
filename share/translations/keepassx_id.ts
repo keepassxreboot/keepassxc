@@ -172,6 +172,43 @@
     </message>
 </context>
 <context>
+    <name>DatabaseRepairWidget</name>
+    <message>
+        <source>Repair database</source>
+        <translation>Perbaiki basis data</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Galat</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open key file</source>
+        <translation>Tidak bisa membuka berkas kunci</translation>
+    </message>
+    <message>
+        <source>Database opened fine. Nothing to do.</source>
+        <translation>Basis data terbuka dengan baik. Tidak perlu melakukan apa-apa.</translation>
+    </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation>Tidak bisa membuka basis data.</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation>Sukses</translation>
+    </message>
+    <message>
+        <source>The database has been successfully repaired
+You can now save it.</source>
+        <translation>Basis data berhasil diperbaiki
+Anda bisa menyimpannya sekarang.</translation>
+    </message>
+    <message>
+        <source>Unable to repair the database.</source>
+        <translation>Tidak bisa memperbaiki basis data.</translation>
+    </message>
+</context>
+<context>
     <name>DatabaseSettingsWidget</name>
     <message>
         <source>Database name:</source>
@@ -1021,6 +1058,30 @@ Ini adalah migrasi satu arah. Anda tidak akan bisa lagi membuka basis data yang 
         <source>Export to CSV file</source>
         <translation>Ekspor ke berkas CSV</translation>
     </message>
+    <message>
+        <source>Repair database</source>
+        <translation>Perbaiki basis data</translation>
+    </message>
+    <message>
+        <source>KeePass 2 Database</source>
+        <translation>Basis Data KeePass 2</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>Semua Berkas</translation>
+    </message>
+    <message>
+        <source>Save repaired database</source>
+        <translation>Simpan basis data yang sudah diperbaiki</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Galat</translation>
+    </message>
+    <message>
+        <source>Writing the database failed.</source>
+        <translation>Gagal menyimpan basis data.</translation>
+    </message>
 </context>
 <context>
     <name>PasswordGeneratorWidget</name>
@@ -1131,15 +1192,15 @@ Ini adalah migrasi satu arah. Anda tidak akan bisa lagi membuka basis data yang 
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation type="unfinished"/>
+        <translation>Terjadi kesalahan saat menyimpan ke perangkat:</translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation type="unfinished"/>
+        <translation>Terjadi kesalahan saat membuka perangkat:</translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation type="unfinished"/>
+        <translation>Terjadi kesalahan saat membaca data dari perangkat:</translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>

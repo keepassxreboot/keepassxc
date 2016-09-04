@@ -9,6 +9,14 @@
         <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
         <translation>KeePassX es distribuido bajo los términos de la versión 2 de la Licencia Pública GNU (GPL) o por la versión 3 (si así lo prefiere).</translation>
     </message>
+    <message>
+        <source>Revision</source>
+        <translation>Revisión</translation>
+    </message>
+    <message>
+        <source>Using:</source>
+        <translation>Usando:</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -161,6 +169,43 @@
     <message>
         <source>Select key file</source>
         <translation>Seleccionar archivo llave</translation>
+    </message>
+</context>
+<context>
+    <name>DatabaseRepairWidget</name>
+    <message>
+        <source>Repair database</source>
+        <translation>Reparar base de datos</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Error</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open key file</source>
+        <translation>No se puede abrir el archivo llave</translation>
+    </message>
+    <message>
+        <source>Database opened fine. Nothing to do.</source>
+        <translation>Base de datos abierta correctamente. Nada que hacer.</translation>
+    </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation>No se pudo abrir la base de datos.</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation>Éxito</translation>
+    </message>
+    <message>
+        <source>The database has been successfully repaired
+You can now save it.</source>
+        <translation>La base de datos ha sido reparada correctamente
+Ahora puede guardarla.</translation>
+    </message>
+    <message>
+        <source>Unable to repair the database.</source>
+        <translation>No se pudo reparar la base de datos.</translation>
     </message>
 </context>
 <context>
@@ -321,6 +366,12 @@ Discard changes and close anyway?</source>
     <message>
         <source>Writing the CSV file failed.</source>
         <translation>La escritura del archivo CSV falló.</translation>
+    </message>
+    <message>
+        <source>The database you are trying to save as is locked by another instance of KeePassX.
+Do you want to save it anyway?</source>
+        <translation>La base de datos que está tratando de guardar está bloqueda por otra instancia de KeePassX.
+̉¿Desea guardarla de cualquier manera?</translation>
     </message>
 </context>
 <context>
@@ -819,6 +870,16 @@ Discard changes and close anyway?</source>
         <source>Unable to calculate master key</source>
         <translation>No se puede calcular la clave maestra</translation>
     </message>
+    <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <translation>El archivo seleccionado es una vieja base de datos de KeePass 1 (.kdb).
+
+Puede importarla haciendo click en &apos;Base de datos&apos; &gt; &apos;Importar base de datos de Keepass 1&apos;.
+Esta migración es en un único sentido. No podrá abrir la base importada con la vieja versión 0.4 de KeePassX.  </translation>
+    </message>
 </context>
 <context>
     <name>Main</name>
@@ -996,6 +1057,30 @@ Discard changes and close anyway?</source>
     <message>
         <source>Export to CSV file</source>
         <translation>Exportar a un archivo CSV</translation>
+    </message>
+    <message>
+        <source>Repair database</source>
+        <translation>Reparar la base de datos</translation>
+    </message>
+    <message>
+        <source>KeePass 2 Database</source>
+        <translation>Base de datos de KeePass 2</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>Todos los archivos</translation>
+    </message>
+    <message>
+        <source>Save repaired database</source>
+        <translation>Guardar base de datos reparada</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Error</translation>
+    </message>
+    <message>
+        <source>Writing the database failed.</source>
+        <translation>Fallo al escribir la base de datos.</translation>
     </message>
 </context>
 <context>
@@ -1268,10 +1353,6 @@ Discard changes and close anyway?</source>
     <message>
         <source>path to a custom config file</source>
         <translation>ruta a un archivo de configuración personalizado</translation>
-    </message>
-    <message>
-        <source>password of the database (DANGEROUS!)</source>
-        <translation>contraseña de la base de datos (¡PELIGROSO!)</translation>
     </message>
     <message>
         <source>key file of the database</source>

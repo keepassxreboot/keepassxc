@@ -9,6 +9,14 @@
         <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
         <translation>KeePassX é distribuído sob os termos GNU de licença pública geral (GPL) versão 2 ou  (á sua escolha) versão 3.</translation>
     </message>
+    <message>
+        <source>Revision</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Using:</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -161,6 +169,42 @@
     <message>
         <source>Select key file</source>
         <translation>Seleccionar o ficheiro chave</translation>
+    </message>
+</context>
+<context>
+    <name>DatabaseRepairWidget</name>
+    <message>
+        <source>Repair database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Can&apos;t open key file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database opened fine. Nothing to do.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The database has been successfully repaired
+You can now save it.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to repair the database.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -321,6 +365,11 @@ Fechar e Ignorar alterações  ?</translation>
     <message>
         <source>Writing the CSV file failed.</source>
         <translation>Falha na escrita do ficheiro CSV</translation>
+    </message>
+    <message>
+        <source>The database you are trying to save as is locked by another instance of KeePassX.
+Do you want to save it anyway?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -818,6 +867,13 @@ Fechar e Ignorar alterações  ?</translation>
         <source>Unable to calculate master key</source>
         <translation>Impossível calcular chave mestra:</translation>
     </message>
+    <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Main</name>
@@ -995,6 +1051,30 @@ Fechar e Ignorar alterações  ?</translation>
     <message>
         <source>Export to CSV file</source>
         <translation>Exportar para ficheiro CSV</translation>
+    </message>
+    <message>
+        <source>Repair database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePass 2 Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save repaired database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Writing the database failed.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1267,10 +1347,6 @@ Fechar e Ignorar alterações  ?</translation>
     <message>
         <source>path to a custom config file</source>
         <translation>caminho para um ficheiro de configuração personalizado</translation>
-    </message>
-    <message>
-        <source>password of the database (DANGEROUS!)</source>
-        <translation>senha da base de dados (PERIGOSO !)</translation>
     </message>
     <message>
         <source>key file of the database</source>

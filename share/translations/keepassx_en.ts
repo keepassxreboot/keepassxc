@@ -365,6 +365,10 @@ Discard changes and close anyway?</source>
 Do you want to save it anyway?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
@@ -417,6 +421,14 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Unable to calculate master key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move entry to recycle bin?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -741,6 +753,14 @@ Do you want to save it anyway?</source>
             <numerusform></numerusform>
         </translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t read icon:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
@@ -852,6 +872,10 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Unable to calculate master key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wrong key or database file is corrupt.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
