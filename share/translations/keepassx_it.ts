@@ -172,6 +172,43 @@
     </message>
 </context>
 <context>
+    <name>DatabaseRepairWidget</name>
+    <message>
+        <source>Repair database</source>
+        <translation>Ripara database</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Errore</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open key file</source>
+        <translation>Impossibile aprire il file chiave</translation>
+    </message>
+    <message>
+        <source>Database opened fine. Nothing to do.</source>
+        <translation>Database aperto correttamente. Nessuna operazione da eseguire.</translation>
+    </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation>Impossibile aprire il database</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation>Successo</translation>
+    </message>
+    <message>
+        <source>The database has been successfully repaired
+You can now save it.</source>
+        <translation>Il database è stato riparato con successo
+Adesso puoi salvarlo.</translation>
+    </message>
+    <message>
+        <source>Unable to repair the database.</source>
+        <translation>Impossibile riparare il database</translation>
+    </message>
+</context>
+<context>
     <name>DatabaseSettingsWidget</name>
     <message>
         <source>Database name:</source>
@@ -1020,6 +1057,30 @@ Questa è una migrazione in una sola direzione. Non potrai aprire il database im
     <message>
         <source>Export to CSV file</source>
         <translation>Esporta in un file CSV</translation>
+    </message>
+    <message>
+        <source>Repair database</source>
+        <translation>Ripara database</translation>
+    </message>
+    <message>
+        <source>KeePass 2 Database</source>
+        <translation>Database KeePass 2</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>Tutti i file</translation>
+    </message>
+    <message>
+        <source>Save repaired database</source>
+        <translation>Salva il database riparato</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Errore</translation>
+    </message>
+    <message>
+        <source>Writing the database failed.</source>
+        <translation>Scrittura del database non riuscita.</translation>
     </message>
 </context>
 <context>

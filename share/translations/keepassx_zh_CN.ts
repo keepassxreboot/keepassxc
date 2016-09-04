@@ -9,6 +9,14 @@
         <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
         <translation>KeePassX 使用的是第 2 版 GNU 通用公共授权协议(GPL)(你可以根据需要选用第 3 版).</translation>
     </message>
+    <message>
+        <source>Revision</source>
+        <translation>修改</translation>
+    </message>
+    <message>
+        <source>Using:</source>
+        <translation>使用:</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -164,6 +172,43 @@
     </message>
 </context>
 <context>
+    <name>DatabaseRepairWidget</name>
+    <message>
+        <source>Repair database</source>
+        <translation>修复数据库</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open key file</source>
+        <translation>无法打开密钥文件</translation>
+    </message>
+    <message>
+        <source>Database opened fine. Nothing to do.</source>
+        <translation>数据库打开正常。没什么可做的。</translation>
+    </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation>无法打开数据库</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation>成功</translation>
+    </message>
+    <message>
+        <source>The database has been successfully repaired
+You can now save it.</source>
+        <translation>数据库已经修复成功
+现在可以保存数据库</translation>
+    </message>
+    <message>
+        <source>Unable to repair the database.</source>
+        <translation>无法修复数据库</translation>
+    </message>
+</context>
+<context>
     <name>DatabaseSettingsWidget</name>
     <message>
         <source>Database name:</source>
@@ -307,19 +352,26 @@ Otherwise your changes are lost.</source>
     <message>
         <source>&quot;%1&quot; is in edit mode.
 Discard changes and close anyway?</source>
-        <translation type="unfinished"/>
+        <translation>正在编辑 &quot;%1&quot; 。
+仍然要放弃修改并且关闭吗？</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
-        <translation type="unfinished"/>
+        <translation>把数据库导出为CSV格式文件</translation>
     </message>
     <message>
         <source>CSV file</source>
-        <translation type="unfinished"/>
+        <translation>CSV格式文件</translation>
     </message>
     <message>
         <source>Writing the CSV file failed.</source>
-        <translation type="unfinished"/>
+        <translation>写入CSV格式文件失败</translation>
+    </message>
+    <message>
+        <source>The database you are trying to save as is locked by another instance of KeePassX.
+Do you want to save it anyway?</source>
+        <translation>你要保存的数据库已被另一个KeePassX锁住。
+你仍然要保存吗？</translation>
     </message>
 </context>
 <context>
@@ -762,7 +814,7 @@ Discard changes and close anyway?</source>
     <name>KeePass1OpenWidget</name>
     <message>
         <source>Import KeePass1 database</source>
-        <translation>导入KeePass 1 数据库</translation>
+        <translation>导入 KeePass 1 数据库</translation>
     </message>
     <message>
         <source>Error</source>
@@ -817,6 +869,15 @@ Discard changes and close anyway?</source>
     <message>
         <source>Unable to calculate master key</source>
         <translation>无法计算主密码</translation>
+    </message>
+    <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <translation>当前选择的文件是旧版本 KeePass 1 数据库（.kdb）。
+你可以通过点击 数据库 &gt; &apos;导入KeePass 1 数据库’ 来导入。
+这是不可逆的修改。导入后的数据库将无法由旧版的KeePassX 0.4版本打开。</translation>
     </message>
 </context>
 <context>
@@ -986,15 +1047,39 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Copy username</source>
-        <translation type="unfinished"/>
+        <translation>复制用户名</translation>
     </message>
     <message>
         <source>Copy password</source>
-        <translation type="unfinished"/>
+        <translation>复制密码</translation>
     </message>
     <message>
         <source>Export to CSV file</source>
-        <translation type="unfinished"/>
+        <translation>导出为CSV格式文件</translation>
+    </message>
+    <message>
+        <source>Repair database</source>
+        <translation>修复数据库</translation>
+    </message>
+    <message>
+        <source>KeePass 2 Database</source>
+        <translation>KeePass 2 数据库</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>所有文件</translation>
+    </message>
+    <message>
+        <source>Save repaired database</source>
+        <translation>保存修复后的数据库</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <source>Writing the database failed.</source>
+        <translation>数据库写入失败</translation>
     </message>
 </context>
 <context>
@@ -1267,10 +1352,6 @@ Discard changes and close anyway?</source>
     <message>
         <source>path to a custom config file</source>
         <translation>自定义配置文件路径</translation>
-    </message>
-    <message>
-        <source>password of the database (DANGEROUS!)</source>
-        <translation>数据库密码(危险!)</translation>
     </message>
     <message>
         <source>key file of the database</source>

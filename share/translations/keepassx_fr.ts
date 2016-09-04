@@ -172,6 +172,43 @@
     </message>
 </context>
 <context>
+    <name>DatabaseRepairWidget</name>
+    <message>
+        <source>Repair database</source>
+        <translation>Réparer la base de données</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Erreur</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open key file</source>
+        <translation>Impossible d&apos;ouvrir le fichier-clé</translation>
+    </message>
+    <message>
+        <source>Database opened fine. Nothing to do.</source>
+        <translation>La base de données s&apos;est bien ouverte. Aucune action à effectuer.</translation>
+    </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation>Impossible d&apos;ouvrir la base de données.</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation>Succès</translation>
+    </message>
+    <message>
+        <source>The database has been successfully repaired
+You can now save it.</source>
+        <translation>La base de données a correctement été réparée.
+Vous pouvez maintenant la sauvegarder.</translation>
+    </message>
+    <message>
+        <source>Unable to repair the database.</source>
+        <translation>Impossible de réparer la base de données.</translation>
+    </message>
+</context>
+<context>
     <name>DatabaseSettingsWidget</name>
     <message>
         <source>Database name:</source>
@@ -1020,6 +1057,30 @@ Ceci est une migration à sens unique. Vous ne serez plus en mesure d&apos;ouvri
     <message>
         <source>Export to CSV file</source>
         <translation>Exporter au format CSV</translation>
+    </message>
+    <message>
+        <source>Repair database</source>
+        <translation>Réparer la base de données</translation>
+    </message>
+    <message>
+        <source>KeePass 2 Database</source>
+        <translation>Base de données KeePass 2</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>Tous les fichiers</translation>
+    </message>
+    <message>
+        <source>Save repaired database</source>
+        <translation>Sauvegarder la base de données réparée</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Erreur</translation>
+    </message>
+    <message>
+        <source>Writing the database failed.</source>
+        <translation>Une erreur s&apos;est produite lors de l&apos;écriture de la base de données.</translation>
     </message>
 </context>
 <context>

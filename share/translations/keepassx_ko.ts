@@ -13,6 +13,10 @@
         <source>Revision</source>
         <translation>리비전</translation>
     </message>
+    <message>
+        <source>Using:</source>
+        <translation>사용:</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -164,6 +168,43 @@
     <message>
         <source>Select key file</source>
         <translation>키 파일 선택</translation>
+    </message>
+</context>
+<context>
+    <name>DatabaseRepairWidget</name>
+    <message>
+        <source>Repair database</source>
+        <translation>데이터베이스 복구</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>오류</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open key file</source>
+        <translation>키 파일을 열 수 없음</translation>
+    </message>
+    <message>
+        <source>Database opened fine. Nothing to do.</source>
+        <translation>데이터베이스를 열었습니다. 할 일이 없습니다.</translation>
+    </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation>데이터베이스를 열 수 없습니다.</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation>성공</translation>
+    </message>
+    <message>
+        <source>The database has been successfully repaired
+You can now save it.</source>
+        <translation>데이터베이스를 복구했습니다
+이제 저장할 수 있습니다.</translation>
+    </message>
+    <message>
+        <source>Unable to repair the database.</source>
+        <translation>데이터베이스를 복구할 수 없습니다.</translation>
     </message>
 </context>
 <context>
@@ -826,6 +867,16 @@ Do you want to save it anyway?</source>
         <source>Unable to calculate master key</source>
         <translation>마스터 키를 계산할 수 없습니다</translation>
     </message>
+    <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <translation>선택한 파일은 KeePass 1 데이터베이스(.kdb)입니다.
+
+데이터베이스 &gt; &apos;KeePass 1 데이터베이스 가져오기&apos; 항목을 선택해서 변환해야 합니다.
+변환은 한 방향으로만 이루어지며, 가져온 데이터베이스는 KeePassX 0.4 버전으로 더 이상 열 수 없습니다.</translation>
+    </message>
 </context>
 <context>
     <name>Main</name>
@@ -1003,6 +1054,30 @@ Do you want to save it anyway?</source>
     <message>
         <source>Export to CSV file</source>
         <translation>CSV 파일로 내보내기</translation>
+    </message>
+    <message>
+        <source>Repair database</source>
+        <translation>데이터베이스 복구</translation>
+    </message>
+    <message>
+        <source>KeePass 2 Database</source>
+        <translation>KeePass 2 데이터베이스</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>모든 파일</translation>
+    </message>
+    <message>
+        <source>Save repaired database</source>
+        <translation>복구한 데이터베이스 저장</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>오류</translation>
+    </message>
+    <message>
+        <source>Writing the database failed.</source>
+        <translation>데이터베이스에 쓸 수 없습니다.</translation>
     </message>
 </context>
 <context>

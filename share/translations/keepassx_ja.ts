@@ -9,6 +9,14 @@
         <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
         <translation>KeePassXはGNU General Public License (GPL) version 2 または version 3 (どちらかを選択)の条件で配布されます。</translation>
     </message>
+    <message>
+        <source>Revision</source>
+        <translation>リビジョン</translation>
+    </message>
+    <message>
+        <source>Using:</source>
+        <translation>利用中:</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -18,7 +26,7 @@
     </message>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation type="unfinished"/>
+        <translation>ウィンドウタイトルに一致するエントリーが見つかりませんでした:</translation>
     </message>
 </context>
 <context>
@@ -29,11 +37,11 @@
     </message>
     <message>
         <source>Sequence</source>
-        <translation type="unfinished"/>
+        <translation>シーケンス</translation>
     </message>
     <message>
         <source>Default sequence</source>
-        <translation type="unfinished"/>
+        <translation>デフォルトのシーケンス</translation>
     </message>
 </context>
 <context>
@@ -44,7 +52,7 @@
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation type="unfinished"/>
+        <translation>自動入力するエントリーを選択してください:</translation>
     </message>
 </context>
 <context>
@@ -107,16 +115,17 @@
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation type="unfinished"/>
+        <translation>異なるパスワードが入力されました。</translation>
     </message>
     <message>
         <source>Failed to set key file</source>
-        <translation type="unfinished"/>
+        <translation>キーファイルのセットに失敗しました</translation>
     </message>
     <message>
         <source>Failed to set %1 as the Key file:
 %2</source>
-        <translation type="unfinished"/>
+        <translation>%1 をキーファイルとしてセットできませんでした:
+%2</translation>
     </message>
 </context>
 <context>
@@ -147,7 +156,7 @@
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>キーファイルを開けませんでした。</translation>
+        <translation>キーファイルを開けませんでした</translation>
     </message>
     <message>
         <source>All files</source>
@@ -160,6 +169,43 @@
     <message>
         <source>Select key file</source>
         <translation>キーファイルを選択</translation>
+    </message>
+</context>
+<context>
+    <name>DatabaseRepairWidget</name>
+    <message>
+        <source>Repair database</source>
+        <translation>データベースを修復する</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>エラー</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open key file</source>
+        <translation>キーファイルを開けませんでした</translation>
+    </message>
+    <message>
+        <source>Database opened fine. Nothing to do.</source>
+        <translation>データベースは正常に開かれています。行うべきことはありません。</translation>
+    </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation>データベースを開けませんでした。</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation>成功</translation>
+    </message>
+    <message>
+        <source>The database has been successfully repaired
+You can now save it.</source>
+        <translation>データベースは正常に修復されました
+データベースの保存を行ってください。</translation>
+    </message>
+    <message>
+        <source>Unable to repair the database.</source>
+        <translation>データベースを修復できませんでした。</translation>
     </message>
 </context>
 <context>
@@ -205,7 +251,7 @@
     <name>DatabaseTabWidget</name>
     <message>
         <source>Root</source>
-        <translation type="unfinished"/>
+        <translation>ルート</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
@@ -286,35 +332,46 @@ Do you want to open it anyway? Alternatively the database is opened read-only.</
     <message>
         <source>Can't lock the database as you are currently editing it.
 Please press cancel to finish your changes or discard them.</source>
-        <translation type="unfinished"/>
+        <translation>現在編集中のため、データベースをロックすることができませんでした。
+キャンセルボタンを押し、変更を完了させるか破棄してください。</translation>
     </message>
     <message>
         <source>This database has never been saved.
 You can save the database or stop locking it.</source>
-        <translation type="unfinished"/>
+        <translation>このデータベースは一度も保存されていません。
+データベースを保存してロックを解除してください。</translation>
     </message>
     <message>
         <source>This database has been modified.
 Do you want to save the database before locking it?
 Otherwise your changes are lost.</source>
-        <translation type="unfinished"/>
+        <translation>このデータベースは変更されました。
+ロックを行う前にデータベースを保存しますか？
+保存しない場合には変更点は失われます。</translation>
     </message>
     <message>
         <source>&quot;%1&quot; is in edit mode.
 Discard changes and close anyway?</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; は現在編集モードです。
+変更を破棄して閉じてしまってもよろしいですか？</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
-        <translation type="unfinished"/>
+        <translation>データベースをCSVファイルにエクスポートする</translation>
     </message>
     <message>
         <source>CSV file</source>
-        <translation type="unfinished"/>
+        <translation>CSVファイル</translation>
     </message>
     <message>
         <source>Writing the CSV file failed.</source>
-        <translation type="unfinished"/>
+        <translation>CSVファイルの書き込みに失敗しました。</translation>
+    </message>
+    <message>
+        <source>The database you are trying to save as is locked by another instance of KeePassX.
+Do you want to save it anyway?</source>
+        <translation>保存しようとしたデータベースは別のKeePassXプログラムからロックされています。
+とにかく保存しますか？</translation>
     </message>
 </context>
 <context>
@@ -329,7 +386,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation type="unfinished"/>
+        <translation>本当にエントリー &quot;%1&quot; を永遠に消去しますか？</translation>
     </message>
     <message>
         <source>Delete entries?</source>
@@ -337,7 +394,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Do you really want to delete %1 entries for good?</source>
-        <translation type="unfinished"/>
+        <translation>本当に %1 個のエントリーを永遠に消去しますか？</translation>
     </message>
     <message>
         <source>Move entries to recycle bin?</source>
@@ -412,7 +469,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation type="unfinished"/>
+        <translation>異なるパスワードが入力されました。</translation>
     </message>
     <message>
         <source>New attribute</source>
@@ -442,11 +499,11 @@ Discard changes and close anyway?</source>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%s週間()</numerusform></translation>
+        <translation><numerusform>%n週間</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%nヶ月()</numerusform></translation>
+        <translation><numerusform>%nヶ月</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -496,7 +553,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Use custom Auto-Type sequence:</source>
-        <translation>カスタムの自動入力手順を使う</translation>
+        <translation>カスタムの自動入力手順を使う:</translation>
     </message>
     <message>
         <source>+</source>
@@ -546,7 +603,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Username:</source>
-        <translation>ユーザ名</translation>
+        <translation>ユーザ名:</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -679,7 +736,7 @@ Discard changes and close anyway?</source>
     </message>
     <message numerus="yes">
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
-        <translation><numerusform>%s個のアイテム()から使われているので、アイコンを削除できません。</numerusform></translation>
+        <translation><numerusform>%n個のアイテムから使われているので、アイコンを削除できません。</numerusform></translation>
     </message>
 </context>
 <context>
@@ -705,7 +762,7 @@ Discard changes and close anyway?</source>
     <name>EntryAttributesModel</name>
     <message>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>名前</translation>
     </message>
 </context>
 <context>
@@ -812,6 +869,16 @@ Discard changes and close anyway?</source>
     <message>
         <source>Unable to calculate master key</source>
         <translation>マスターキーを計算できません</translation>
+    </message>
+    <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <translation>選択されたファイルは古い KeePass 1 のデータベース (.kdb) です。
+
+データベース &gt; &apos;KeePass 1 データベースをインポート&apos; をクリックすることでインポートできます。
+これは一方向の移行操作であり、インポートされたデータベースは古い KeePassX 0.4 のバージョンでは開くことはできません。</translation>
     </message>
 </context>
 <context>
@@ -973,7 +1040,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Toggle window</source>
-        <translation type="unfinished"/>
+        <translation>ウィンドウ切替</translation>
     </message>
     <message>
         <source>Tools</source>
@@ -981,15 +1048,39 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Copy username</source>
-        <translation type="unfinished"/>
+        <translation>ユーザ名をコピー</translation>
     </message>
     <message>
         <source>Copy password</source>
-        <translation type="unfinished"/>
+        <translation>パスワードをコピー</translation>
     </message>
     <message>
         <source>Export to CSV file</source>
-        <translation type="unfinished"/>
+        <translation>CSVファイルへエクスポート</translation>
+    </message>
+    <message>
+        <source>Repair database</source>
+        <translation>データベースを修復する</translation>
+    </message>
+    <message>
+        <source>KeePass 2 Database</source>
+        <translation>KeePass 2 データベース</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>全てのファイル</translation>
+    </message>
+    <message>
+        <source>Save repaired database</source>
+        <translation>修復されたデータベースを保存する</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>エラー</translation>
+    </message>
+    <message>
+        <source>Writing the database failed.</source>
+        <translation>データベースの書き込みに失敗しました。</translation>
     </message>
 </context>
 <context>
@@ -1039,11 +1130,11 @@ Discard changes and close anyway?</source>
     <name>QCommandLineParser</name>
     <message>
         <source>Displays version information.</source>
-        <translation>バージョン情報を表示する</translation>
+        <translation>バージョン情報を表示する。</translation>
     </message>
     <message>
         <source>Displays this help.</source>
-        <translation>このヘルプを表示する</translation>
+        <translation>このヘルプを表示する。</translation>
     </message>
     <message>
         <source>Unknown option &apos;%1&apos;.</source>
@@ -1082,7 +1173,7 @@ Discard changes and close anyway?</source>
     <name>QSaveFile</name>
     <message>
         <source>Existing file %1 is not writable</source>
-        <translation>存在するファイル %1 は書き込みできません。</translation>
+        <translation>存在するファイル %1 は書き込みできません</translation>
     </message>
     <message>
         <source>Writing canceled by application</source>
@@ -1090,14 +1181,14 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Partial write. Partition full?</source>
-        <translation type="unfinished"/>
+        <translation>一部しか書き込めませんでした。パーティションがいっぱいかも？</translation>
     </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
-        <translation>圧縮時に内部zlibエラーが発生しました</translation>
+        <translation>圧縮時に内部zlibエラーが発生しました: </translation>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
@@ -1113,7 +1204,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation>解凍時に内部zlibエラーが発生しました</translation>
+        <translation>解凍時に内部zlibエラーが発生しました: </translation>
     </message>
 </context>
 <context>
@@ -1193,7 +1284,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Use entry title to match windows for global auto-type</source>
-        <translation type="unfinished"/>
+        <translation>グローバル自動入力の際に、エントリーのタイトルとウィンドウのマッチングを行う</translation>
     </message>
     <message>
         <source>Language</source>
@@ -1205,7 +1296,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation type="unfinished"/>
+        <translation>最小化された際にシステムトレイへ格納する</translation>
     </message>
     <message>
         <source>Remember last key files</source>
@@ -1261,11 +1352,7 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>path to a custom config file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>password of the database (DANGEROUS!)</source>
-        <translation>データベースのパスワード (危険!)</translation>
+        <translation>カスタム設定ファイルへのパス</translation>
     </message>
     <message>
         <source>key file of the database</source>
