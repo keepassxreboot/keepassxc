@@ -75,13 +75,26 @@
        </property>
       </widget>
      </item>
-     <item>
+    <item>
       <widget class="QToolButton" name="togglePasswordGeneratorButton">
+       <property name="text">
+        <string>Gen Password</string>
+       </property>
        <property name="checkable">
         <bool>true</bool>
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QToolButton" name="togglePassphraseGeneratorButton">
+       <property name="text">
+        <string>Gen Passphrase</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
+    </item>
     </layout>
    </item>
    <item row="7" column="0">
@@ -142,9 +155,18 @@
    <item row="6" column="1">
     <widget class="PasswordGeneratorWidget" name="passwordGenerator" native="true"/>
    </item>
+   <item row="6" column="1">
+    <widget class="PassphraseGeneratorWidget" name="passphraseGenerator" native="true"/>
+   </item>
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>PassphraseGeneratorWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/PassphraseGeneratorWidget.h</header>
+   <container>1</container>
+  </customwidget>
   <customwidget>
    <class>PasswordGeneratorWidget</class>
    <extends>QWidget</extends>

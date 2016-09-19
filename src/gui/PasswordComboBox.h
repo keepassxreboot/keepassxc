@@ -22,6 +22,7 @@
 #include <QComboBox>
 
 class PasswordGenerator;
+class PassphraseGenerator;
 
 class PasswordComboBox : public QComboBox
 {
@@ -32,6 +33,7 @@ public:
     ~PasswordComboBox();
 
     void setGenerator(PasswordGenerator* generator);
+    void setGenerator(PassphraseGenerator* generator);
     void setNumberAlternatives(int alternatives);
     void showPopup();
 
@@ -39,7 +41,8 @@ public Q_SLOTS:
     void setEcho(bool echo);
 
 private:
-    PasswordGenerator* m_generator;
+    PasswordGenerator* m_password_generator;
+    PassphraseGenerator* m_passphrase_generator;
     int m_alternatives;
 };
 

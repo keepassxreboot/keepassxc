@@ -20,11 +20,13 @@
 
 #include <QLineEdit>
 
+#include "core/PassphraseGenerator.h"
 #include "core/PasswordGenerator.h"
 
 PasswordComboBox::PasswordComboBox(QWidget* parent)
     : QComboBox(parent)
-    , m_generator(nullptr)
+    , m_password_generator(nullptr)
+    , m_passphrase_generator(nullptr)
     , m_alternatives(10)
 {
     setEditable(true);
@@ -64,7 +66,14 @@ void PasswordComboBox::setEcho(bool echo)
 
 void PasswordComboBox::setGenerator(PasswordGenerator* generator)
 {
-    m_generator = generator;
+    m_password_generator = generator;
+    m_passphrase_generator = nullptr;
+}
+
+void PasswordComboBox::setGenerator(PassphraseGenerator* generator)
+{
+  m_password_generator = nullptr;
+  m_passphrase_generator = generator;
 }
 
 void PasswordComboBox::setNumberAlternatives(int alternatives)
@@ -85,12 +94,16 @@ void PasswordComboBox::showPopup()
     clear();
     addItem(current);
 
-    if (m_generator && m_generator->isValid()) {
+    if (m_password_generator && m_password_generator->isValid()) {
         for (int alternative = 0; alternative < m_alternatives; alternative++) {
-            QString password = m_generator->generatePassword();
-
+            QString password = m_password_generator->generatePassword();
             addItem(password);
         }
+    } else if (m_passphrase_generator && m_passphrase_generator->isValid()) {
+      for (int alternative = 0; alternative < m_alternatives; alternative++) {
+          QString passphrase = m_passphrase_generator->generatePassphrase();
+          addItem(passphrase);
+      }
     }
 
     QComboBox::showPopup();
