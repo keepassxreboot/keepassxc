@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>490</width>
-    <height>128</height>
+    <width>434</width>
+    <height>250</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -134,4 +134,5 @@
  </tabstops>
  <resources/>
  <connections/>
+ <buttongroups/>
 </ui>

@@ -75,7 +75,7 @@
        </property>
       </widget>
      </item>
-    <item>
+     <item>
       <widget class="QToolButton" name="togglePasswordGeneratorButton">
        <property name="text">
         <string>Gen Password</string>
@@ -94,27 +94,27 @@
         <bool>true</bool>
        </property>
       </widget>
-    </item>
+     </item>
     </layout>
    </item>
-   <item row="7" column="0">
+   <item row="8" column="0">
     <widget class="QLabel" name="urlLabel">
      <property name="text">
       <string>URL:</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="1">
+   <item row="8" column="1">
     <widget class="QLineEdit" name="urlEdit"/>
    </item>
-   <item row="8" column="0">
+   <item row="10" column="0">
     <widget class="QCheckBox" name="expireCheck">
      <property name="text">
       <string>Expires</string>
      </property>
     </widget>
    </item>
-   <item row="8" column="1">
+   <item row="10" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <widget class="QDateTimeEdit" name="expireDatePicker">
@@ -155,7 +155,7 @@
    <item row="6" column="1">
     <widget class="PasswordGeneratorWidget" name="passwordGenerator" native="true"/>
    </item>
-   <item row="6" column="1">
+   <item row="7" column="1">
     <widget class="PassphraseGeneratorWidget" name="passphraseGenerator" native="true"/>
    </item>
   </layout>
