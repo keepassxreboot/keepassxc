@@ -15,6 +15,8 @@
 
 add_subdirectory(translations)
 
+install(FILES wordlists/eff_large.wordlist DESTINATION ${DATA_INSTALL_DIR}/wordlists)
+
 file(GLOB DATABASE_ICONS icons/database/*.png)
 
 install(FILES ${DATABASE_ICONS} DESTINATION ${DATA_INSTALL_DIR}/icons/database)
