@@ -524,14 +524,22 @@ void EditEntryWidget::togglePassphraseGeneratorButton(bool checked)
 {
     m_mainUi->passphraseGenerator->regeneratePassphrase();
     m_mainUi->passphraseGenerator->setVisible(checked);
-    m_mainUi->passwordGenerator->setVisible(false);
+
+    if(checked) {
+        m_mainUi->passwordGenerator->setVisible(false);
+        m_mainUi->togglePasswordGeneratorButton->setChecked(false);
+    }
 }
 
 void EditEntryWidget::togglePasswordGeneratorButton(bool checked)
 {
     m_mainUi->passwordGenerator->regeneratePassword();
     m_mainUi->passwordGenerator->setVisible(checked);
-    m_mainUi->passphraseGenerator->setVisible(false);
+
+    if(checked) {
+        m_mainUi->passphraseGenerator->setVisible(false);
+        m_mainUi->togglePassphraseGeneratorButton->setChecked(false);
+    }
 }
 
 bool EditEntryWidget::passwordsEqual()
