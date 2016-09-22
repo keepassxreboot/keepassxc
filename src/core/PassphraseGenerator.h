@@ -34,6 +34,7 @@ public:
 
 private:
     int m_length;
+    QVector<QString> m_wordlist;
 
     Q_DISABLE_COPY(PassphraseGenerator)
 };

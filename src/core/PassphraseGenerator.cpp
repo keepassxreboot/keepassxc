@@ -17,11 +17,27 @@
 
 #include "PassphraseGenerator.h"
 
+#include <QFile>
+#include <QTextStream>
+
 #include "crypto/Random.h"
+#include "core/FilePath.h"
 
 PassphraseGenerator::PassphraseGenerator()
     : m_length(0)
 {
+    const QString path = filePath()->dataPath("wordlists/eff_large.wordlist");
+
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning("Couldn't load passphrase wordlist.");
+        return;
+    }
+
+    QTextStream in(&file);
+    while (!in.atEnd()) {
+        m_wordlist.append(in.readLine());
+    }
 }
 
 void PassphraseGenerator::setLength(int length)
@@ -33,10 +49,16 @@ QString PassphraseGenerator::generatePassphrase() const
 {
     Q_ASSERT(isValid());
 
+    // In case there was an error loading the wordlist
+    if(m_wordlist.length() == 0) {
+        QString empty;
+        return empty;
+    }
+
     QString passphrase;
     for (int i = 0; i < m_length; i ++) {
-      //int word = randomGen()->randomUInt(7776);
-      passphrase.append("foobar");
+      int word_index = randomGen()->randomUInt(m_wordlist.length());
+      passphrase.append(m_wordlist.at(word_index));
 
       if(i < m_length - 1) {
         passphrase.append(" ");
