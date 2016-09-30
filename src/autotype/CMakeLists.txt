@@ -8,7 +8,7 @@ if(UNIX AND NOT APPLE)
   endif()
 
   if(X11_FOUND AND X11_Xi_FOUND AND X11_XTest_FOUND AND Qt5X11Extras_FOUND)
-    add_subdirectory(x11)
+    add_subdirectory(xcb)
   endif()
 endif()
 
