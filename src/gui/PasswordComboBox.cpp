@@ -49,7 +49,7 @@ void PasswordComboBox::setEcho(bool echo)
         // Qt on Mac OS doesn't seem to know the generic monospace family (tested with 4.8.6)
         setStyleSheet("QComboBox { font-family: monospace,Menlo,Monaco; }");
 #else
-        setStyleSheet("QComboBox { font-family: monospace,Courier; }");
+        setStyleSheet("QComboBox { font-family: monospace,Courier New; }");
 #endif
     }
     else {

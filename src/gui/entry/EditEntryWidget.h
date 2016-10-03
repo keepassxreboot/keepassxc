@@ -61,6 +61,7 @@ public:
     void createPresetsMenu(QMenu* expirePresetsMenu);
     QString entryTitle() const;
     void clear();
+    bool hasBeenModified() const;
 
 Q_SIGNALS:
     void editFinished(bool accepted);
@@ -107,6 +108,7 @@ private:
     bool passwordsEqual();
     void setForms(const Entry* entry, bool restore = false);
     QMenu* createPresetsMenu();
+    void updateEntryData(Entry* entry) const;
 
     Entry* m_entry;
     Database* m_database;

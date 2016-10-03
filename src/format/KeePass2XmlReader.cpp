@@ -86,17 +86,17 @@ void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Ra
         }
     }
 
-    QSet<QString> poolKeys = m_binaryPool.keys().toSet();
-    QSet<QString> entryKeys = m_binaryMap.keys().toSet();
-    QSet<QString> unmappedKeys = entryKeys - poolKeys;
-    QSet<QString> unusedKeys = poolKeys - entryKeys;
+    const QSet<QString> poolKeys = m_binaryPool.keys().toSet();
+    const QSet<QString> entryKeys = m_binaryMap.keys().toSet();
+    const QSet<QString> unmappedKeys = entryKeys - poolKeys;
+    const QSet<QString> unusedKeys = poolKeys - entryKeys;
 
     if (!unmappedKeys.isEmpty()) {
         raiseError("Unmapped keys left.");
     }
 
     if (!m_xml.error()) {
-        Q_FOREACH (const QString& key, unusedKeys) {
+        for (const QString& key : unusedKeys) {
             qWarning("KeePass2XmlReader::readDatabase: found unused key \"%s\"", qPrintable(key));
         }
     }
@@ -118,7 +118,8 @@ void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Ra
     for (iEntry = m_entries.constBegin(); iEntry != m_entries.constEnd(); ++iEntry) {
         iEntry.value()->setUpdateTimeinfo(true);
 
-        Q_FOREACH (Entry* histEntry, iEntry.value()->historyItems()) {
+        const QList<Entry*> historyItems = iEntry.value()->historyItems();
+        for (Entry* histEntry : historyItems) {
             histEntry->setUpdateTimeinfo(true);
         }
     }
@@ -614,11 +615,11 @@ Group* KeePass2XmlReader::parseGroup()
         raiseError("No group uuid found");
     }
 
-    Q_FOREACH (Group* child, children) {
+    for (Group* child : asConst(children)) {
         child->setParent(group);
     }
 
-    Q_FOREACH (Entry* entry, entries) {
+    for (Entry* entry : asConst(entries)) {
         entry->setGroup(group);
     }
 
@@ -777,11 +778,18 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
         raiseError("No entry uuid found");
     }
 
-    Q_FOREACH (Entry* historyItem, historyItems) {
+    for (Entry* historyItem : asConst(historyItems)) {
+        if (historyItem->uuid() != entry->uuid()) {
+            if (m_strictMode) {
+                raiseError("History element with different uuid");
+            } else {
+                historyItem->setUuid(entry->uuid());
+            }
+        }
         entry->addHistoryItem(historyItem);
     }
 
-    Q_FOREACH (const StringPair& ref, binaryRefs) {
+    for (const StringPair& ref : asConst(binaryRefs)) {
         m_binaryMap.insertMulti(ref.first, qMakePair(entry, ref.second));
     }
 

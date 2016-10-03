@@ -338,7 +338,7 @@ QMimeData* GroupModel::mimeData(const QModelIndexList& indexes) const
 
     QSet<Group*> seenGroups;
 
-    Q_FOREACH (const QModelIndex& index, indexes) {
+    for (const QModelIndex& index : indexes) {
         if (!index.isValid()) {
             continue;
         }

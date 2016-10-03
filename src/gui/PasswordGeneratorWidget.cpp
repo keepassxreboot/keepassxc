@@ -88,6 +88,14 @@ void PasswordGeneratorWidget::reset()
     updateGenerator();
 }
 
+void PasswordGeneratorWidget::regeneratePassword()
+{
+    if (m_generator->isValid()) {
+        QString password = m_generator->generatePassword();
+        m_ui->editNewPassword->setEditText(password);
+    }
+}
+
 void PasswordGeneratorWidget::updateApplyEnabled(const QString& password)
 {
     m_ui->buttonApply->setEnabled(!password.isEmpty());
@@ -111,6 +119,10 @@ void PasswordGeneratorWidget::sliderMoved()
 
 void PasswordGeneratorWidget::spinBoxChanged()
 {
+    if (m_updatingSpinBox) {
+        return;
+    }
+
     // Interlock so that we don't update twice - this causes issues as the spinbox can go higher than slider
     m_updatingSpinBox = true;
 
@@ -161,12 +173,39 @@ PasswordGenerator::GeneratorFlags PasswordGeneratorWidget::generatorFlags()
 
 void PasswordGeneratorWidget::updateGenerator()
 {
-    m_generator->setLength(m_ui->spinBoxLength->value());
-    m_generator->setCharClasses(charClasses());
-    m_generator->setFlags(generatorFlags());
+    PasswordGenerator::CharClasses classes = charClasses();
+    PasswordGenerator::GeneratorFlags flags = generatorFlags();
 
-    if (m_generator->isValid()) {
-        QString password = m_generator->generatePassword();
-        m_ui->editNewPassword->setEditText(password);
+    int minLength = 0;
+    if (flags.testFlag(PasswordGenerator::CharFromEveryGroup)) {
+        if (classes.testFlag(PasswordGenerator::LowerLetters)) {
+            minLength++;
+        }
+        if (classes.testFlag(PasswordGenerator::UpperLetters)) {
+            minLength++;
+        }
+        if (classes.testFlag(PasswordGenerator::Numbers)) {
+            minLength++;
+        }
+        if (classes.testFlag(PasswordGenerator::SpecialCharacters)) {
+            minLength++;
+        }
     }
+    minLength = qMax(minLength, 1);
+
+    if (m_ui->spinBoxLength->value() < minLength) {
+        m_updatingSpinBox = true;
+        m_ui->spinBoxLength->setValue(minLength);
+        m_ui->sliderLength->setValue(minLength);
+        m_updatingSpinBox = false;
+    }
+
+    m_ui->spinBoxLength->setMinimum(minLength);
+    m_ui->sliderLength->setMinimum(minLength);
+
+    m_generator->setLength(m_ui->spinBoxLength->value());
+    m_generator->setCharClasses(classes);
+    m_generator->setFlags(flags);
+
+    regeneratePassword();
 }

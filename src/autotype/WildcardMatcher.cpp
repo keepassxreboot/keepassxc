@@ -70,7 +70,7 @@ bool WildcardMatcher::startOrEndDoesNotMatch(const QStringList& parts)
 bool WildcardMatcher::partsMatch(const QStringList& parts)
 {
     int index = 0;
-    Q_FOREACH (const QString& part, parts) {
+    for (const QString& part : parts) {
         int matchIndex = getMatchIndex(part, index);
         if (noMatchFound(matchIndex)) {
             return false;

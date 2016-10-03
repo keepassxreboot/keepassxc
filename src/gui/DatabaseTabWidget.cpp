@@ -223,7 +223,7 @@ bool DatabaseTabWidget::closeDatabase(Database* db)
     if (dbName.right(1) == "*") {
         dbName.chop(1);
     }
-    if (dbStruct.dbWidget->isInEditMode() && db->hasKey()) {
+    if (dbStruct.dbWidget->isInEditMode() && db->hasKey() && dbStruct.dbWidget->isEditWidgetModified()) {
         QMessageBox::StandardButton result =
             MessageBox::question(
             this, tr("Close?"),
@@ -296,7 +296,7 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
     DatabaseManagerStruct& dbStruct = m_dbList[db];
 
     if (dbStruct.saveToFilename) {
-        QSaveFile saveFile(dbStruct.filePath);
+        QSaveFile saveFile(dbStruct.canonicalFilePath);
         if (saveFile.open(QIODevice::WriteOnly)) {
             m_writer.writeDatabase(&saveFile, db);
             if (m_writer.hasError()) {
@@ -309,6 +309,11 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
                                      + saveFile.errorString());
                 return false;
             }
+        }
+        else {
+            MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
+                                 + saveFile.errorString());
+            return false;
         }
 
         dbStruct.modified = false;
@@ -385,6 +390,9 @@ bool DatabaseTabWidget::saveDatabaseAs(Database* db)
                                  + saveFile.errorString());
             return false;
         }
+
+        // refresh fileinfo since the file didn't exist before
+        fileInfo.refresh();
 
         dbStruct.modified = false;
         dbStruct.saveToFilename = true;
@@ -649,7 +657,7 @@ void DatabaseTabWidget::lockDatabases()
         // show the correct tab widget before we are asking questions about it
         setCurrentWidget(dbWidget);
 
-        if (mode == DatabaseWidget::EditMode) {
+        if (mode == DatabaseWidget::EditMode && dbWidget->isEditWidgetModified()) {
             QMessageBox::StandardButton result =
                 MessageBox::question(
                     this, tr("Lock database"),

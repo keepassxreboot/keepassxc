@@ -71,7 +71,9 @@ bool hasChild(const QObject* parent, const QObject* child)
     if (!parent || !child) {
         return false;
     }
-    Q_FOREACH (QObject* c, parent->children()) {
+
+    const QObjectList children = parent->children();
+    for (QObject* c : children) {
         if (child == c || hasChild(c, child)) {
             return true;
         }
@@ -120,10 +122,10 @@ bool readAllFromDevice(QIODevice* device, QByteArray& data)
 
 QString imageReaderFilter()
 {
-    QList<QByteArray> formats = QImageReader::supportedImageFormats();
+    const QList<QByteArray> formats = QImageReader::supportedImageFormats();
     QStringList formatsStringList;
 
-    Q_FOREACH (const QByteArray& format, formats) {
+    for (const QByteArray& format : formats) {
         for (int i = 0; i < format.size(); i++) {
             if (!QChar(format.at(i)).isLetterOrNumber()) {
                 continue;
@@ -138,7 +140,7 @@ QString imageReaderFilter()
 
 bool isHex(const QByteArray& ba)
 {
-    Q_FOREACH (char c, ba) {
+    for (char c : ba) {
         if ( !( (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F') ) ) {
             return false;
         }

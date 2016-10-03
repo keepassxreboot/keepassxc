@@ -45,11 +45,11 @@ QString PasswordGenerator::generatePassword() const
 {
     Q_ASSERT(isValid());
 
-    QVector<PasswordGroup> groups = passwordGroups();
+    const QVector<PasswordGroup> groups = passwordGroups();
 
     QVector<QChar> passwordChars;
-    Q_FOREACH (const PasswordGroup& group, groups) {
-        Q_FOREACH (QChar ch, group) {
+    for (const PasswordGroup& group : groups) {
+        for (QChar ch : group) {
             passwordChars.append(ch);
         }
     }

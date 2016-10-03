@@ -38,6 +38,7 @@ public:
     ~PasswordGeneratorWidget();
     void loadSettings();
     void reset();
+    void regeneratePassword();
 
 Q_SIGNALS:
     void newPassword(const QString& password);

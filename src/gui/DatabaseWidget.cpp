@@ -194,6 +194,18 @@ bool DatabaseWidget::isInEditMode() const
     return currentMode() == DatabaseWidget::EditMode;
 }
 
+bool DatabaseWidget::isEditWidgetModified() const
+{
+    if (currentWidget() == m_editEntryWidget) {
+        return m_editEntryWidget->hasBeenModified();
+    }
+    else {
+        // other edit widget don't have a hasBeenModified() method yet
+        // assume that they already have been modified
+        return true;
+    }
+}
+
 QList<int> DatabaseWidget::splitterSizes() const
 {
     return m_splitter->sizes();
@@ -311,7 +323,7 @@ void DatabaseWidget::deleteEntries()
 
     // get all entry pointers as the indexes change when removing multiple entries
     QList<Entry*> selectedEntries;
-    Q_FOREACH (const QModelIndex& index, selected) {
+    for (const QModelIndex& index : selected) {
         selectedEntries.append(m_entryView->entryFromIndex(index));
     }
 
@@ -335,23 +347,33 @@ void DatabaseWidget::deleteEntries()
         }
 
         if (result == QMessageBox::Yes) {
-            Q_FOREACH (Entry* entry, selectedEntries) {
+            for (Entry* entry : asConst(selectedEntries)) {
                 delete entry;
             }
         }
     }
     else {
-        if (selected.size() > 1) {
-            QMessageBox::StandardButton result = MessageBox::question(
+        QMessageBox::StandardButton result;
+
+        if (selected.size() == 1) {
+            result = MessageBox::question(
+                this, tr("Move entry to recycle bin?"),
+                tr("Do you really want to move entry \"%1\" to the recycle bin?")
+                .arg(selectedEntries.first()->title()),
+                QMessageBox::Yes | QMessageBox::No);
+        }
+        else {
+            result = MessageBox::question(
                 this, tr("Move entries to recycle bin?"),
                 tr("Do you really want to move %n entry(s) to the recycle bin?", 0, selected.size()),
                 QMessageBox::Yes | QMessageBox::No);
-            if (result == QMessageBox::No) {
-                return;
-            }
         }
 
-        Q_FOREACH (Entry* entry, selectedEntries) {
+        if (result == QMessageBox::No) {
+            return;
+        }
+
+        for (Entry* entry : asConst(selectedEntries)) {
             m_db->recycleEntry(entry);
         }
     }
@@ -493,7 +515,9 @@ void DatabaseWidget::deleteGroup()
     }
 
     bool inRecylceBin = Tools::hasChild(m_db->metadata()->recycleBin(), currentGroup);
-    if (inRecylceBin || !m_db->metadata()->recycleBinEnabled()) {
+    bool isRecycleBin = (currentGroup == m_db->metadata()->recycleBin());
+    bool isRecycleBinSubgroup = Tools::hasChild(currentGroup, m_db->metadata()->recycleBin());
+    if (inRecylceBin || isRecycleBin || isRecycleBinSubgroup || !m_db->metadata()->recycleBinEnabled()) {
         QMessageBox::StandardButton result = MessageBox::question(
             this, tr("Delete group?"),
             tr("Do you really want to delete the group \"%1\" for good?")
@@ -659,8 +683,8 @@ void DatabaseWidget::unlockDatabase(bool accepted)
 
     replaceDatabase(static_cast<DatabaseOpenWidget*>(sender())->database());
 
-    QList<Group*> groups = m_db->rootGroup()->groupsRecursive(true);
-    Q_FOREACH (Group* group, groups) {
+    const QList<Group*> groups = m_db->rootGroup()->groupsRecursive(true);
+    for (Group* group : groups) {
         if (group->uuid() == m_groupBeforeLock) {
             m_groupView->setCurrentGroup(group);
             break;
@@ -871,8 +895,7 @@ bool DatabaseWidget::dbHasKey() const
 bool DatabaseWidget::canDeleteCurrentGroup() const
 {
     bool isRootGroup = m_db->rootGroup() == m_groupView->currentGroup();
-    bool isRecycleBin = m_db->metadata()->recycleBin() == m_groupView->currentGroup();
-    return !isRootGroup && !isRecycleBin;
+    return !isRootGroup;
 }
 
 bool DatabaseWidget::isInSearchMode() const

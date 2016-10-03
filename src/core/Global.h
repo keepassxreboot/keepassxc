@@ -36,4 +36,13 @@
 #define QUINT32_MAX 4294967295U
 #endif
 
+template <typename T> struct AddConst { typedef const T Type; };
+
+// this adds const to non-const objects (like std::as_const)
+template <typename T>
+constexpr typename AddConst<T>::Type& asConst(T &t) noexcept { return t; }
+// prevent rvalue arguments:
+template <typename T>
+void asConst(const T&&) = delete;
+
 #endif // KEEPASSX_GLOBAL_H

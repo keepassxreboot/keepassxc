@@ -232,7 +232,8 @@ void EntryAttributesModel::updateAttributes()
 {
     m_attributes.clear();
 
-    Q_FOREACH (const QString& key, m_entryAttributes->keys()) {
+    const QList<QString> attributesKeyList = m_entryAttributes->keys();
+    for (const QString& key : attributesKeyList) {
         if (!EntryAttributes::isDefaultAttribute(key)) {
             m_attributes.append(key);
         }

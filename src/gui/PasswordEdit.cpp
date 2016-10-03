@@ -58,7 +58,7 @@ void PasswordEdit::updateStylesheet()
         // Qt on Mac OS doesn't seem to know the generic monospace family (tested with 4.8.6)
         stylesheet.append("font-family: monospace,Menlo,Monaco; ");
 #else
-        stylesheet.append("font-family: monospace; ");
+        stylesheet.append("font-family: monospace,Courier New; ");
 #endif
     }
 
