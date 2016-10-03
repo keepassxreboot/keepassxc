@@ -13,6 +13,10 @@
         <source>Revision</source>
         <translation>Rewizja</translation>
     </message>
+    <message>
+        <source>Using:</source>
+        <translation>Używanie:</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -22,7 +26,7 @@
     </message>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation type="unfinished"/>
+        <translation>Nie mogę znaleźć wpisu, który by pasował do tytułu okna: </translation>
     </message>
 </context>
 <context>
@@ -95,7 +99,7 @@
     </message>
     <message>
         <source>Unable to create Key File : </source>
-        <translation>Nie można utworzyć pliku klucza</translation>
+        <translation>Nie można utworzyć pliku klucza :</translation>
     </message>
     <message>
         <source>Select a key file</source>
@@ -111,16 +115,17 @@
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation type="unfinished"/>
+        <translation>Podano różne hasła.</translation>
     </message>
     <message>
         <source>Failed to set key file</source>
-        <translation type="unfinished"/>
+        <translation>Błąd w ustawianiu pliku z kluczem</translation>
     </message>
     <message>
         <source>Failed to set %1 as the Key file:
 %2</source>
-        <translation type="unfinished"/>
+        <translation>Błąd w ustawieniu %1 jako plik klucza:
+%2</translation>
     </message>
 </context>
 <context>
@@ -167,6 +172,43 @@
     </message>
 </context>
 <context>
+    <name>DatabaseRepairWidget</name>
+    <message>
+        <source>Repair database</source>
+        <translation>Napraw bazę</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Błąd</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open key file</source>
+        <translation>Nie mogę otworzyć pliku z kluczem</translation>
+    </message>
+    <message>
+        <source>Database opened fine. Nothing to do.</source>
+        <translation>Pomyślnie otworzono bazę. Nic do zrobienia.</translation>
+    </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation>Nie można otworzyć bazy kluczy.</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation>Sukces</translation>
+    </message>
+    <message>
+        <source>The database has been successfully repaired
+You can now save it.</source>
+        <translation>Baza została naprawiona
+Możesz teraz ją już zapisać.</translation>
+    </message>
+    <message>
+        <source>Unable to repair the database.</source>
+        <translation>Nie mogę naprawić bazę.</translation>
+    </message>
+</context>
+<context>
     <name>DatabaseSettingsWidget</name>
     <message>
         <source>Database name:</source>
@@ -174,7 +216,7 @@
     </message>
     <message>
         <source>Database description:</source>
-        <translation>Opis bazy danych</translation>
+        <translation>Opis bazy danych:</translation>
     </message>
     <message>
         <source>Transform rounds:</source>
@@ -198,11 +240,11 @@
     </message>
     <message>
         <source>Max. history items:</source>
-        <translation type="unfinished"/>
+        <translation>Max. ilość wpisów w historii:</translation>
     </message>
     <message>
         <source>Max. history size:</source>
-        <translation type="unfinished"/>
+        <translation>Max. rozmiar historii:</translation>
     </message>
 </context>
 <context>
@@ -237,24 +279,25 @@
     </message>
     <message>
         <source>KeePass 1 database</source>
-        <translation>Baza danych KeePass1</translation>
+        <translation>Baza danych KeePass 1</translation>
     </message>
     <message>
         <source>All files (*)</source>
-        <translation>Wszystkie pliki(*)</translation>
+        <translation>Wszystkie pliki (*)</translation>
     </message>
     <message>
         <source>Close?</source>
-        <translation>Zamknąć ?</translation>
+        <translation>Zamknąć?</translation>
     </message>
     <message>
         <source>Save changes?</source>
-        <translation>Zapisać zmiany ?</translation>
+        <translation>Zapisać zmiany?</translation>
     </message>
     <message>
         <source>&quot;%1&quot; was modified.
 Save changes?</source>
-        <translation>&quot;%1&quot; został zmieniony. Zapisać zmiany ?</translation>
+        <translation>&quot;%1&quot; został zmieniony.
+Zapisać zmiany?</translation>
     </message>
     <message>
         <source>Error</source>
@@ -274,12 +317,13 @@ Save changes?</source>
     </message>
     <message>
         <source>locked</source>
-        <translation>plik CSV</translation>
+        <translation>zablokowana</translation>
     </message>
     <message>
         <source>The database you are trying to open is locked by another instance of KeePassX.
 Do you want to open it anyway? Alternatively the database is opened read-only.</source>
-        <translation type="unfinished"/>
+        <translation>Baza, którą próbujesz otworzyć, jest zablokowana przez inną instancję KeePassX.
+Czy chcesz ją otworzyć pomimo tego? Inaczej baza będzie otwarta tylko do odczytu.</translation>
     </message>
     <message>
         <source>Lock database</source>
@@ -288,23 +332,28 @@ Do you want to open it anyway? Alternatively the database is opened read-only.</
     <message>
         <source>Can't lock the database as you are currently editing it.
 Please press cancel to finish your changes or discard them.</source>
-        <translation type="unfinished"/>
+        <translation>Nie można zablokować bazy, którą edytujesz.
+Naciśnij anuluj, aby zakończyć zmiany albo porzucić je.</translation>
     </message>
     <message>
         <source>This database has never been saved.
 You can save the database or stop locking it.</source>
-        <translation type="unfinished"/>
+        <translation>Baza nie została nigdy zapisana.
+Możesz ją zapisać albo przestać blokować.</translation>
     </message>
     <message>
         <source>This database has been modified.
 Do you want to save the database before locking it?
 Otherwise your changes are lost.</source>
-        <translation type="unfinished"/>
+        <translation>Baza została zmodyfikowana.
+Czy chcesz zapisać przed zablokowaniem jej?
+W przeciwnym wypadku zmiany zostaną porzucone.</translation>
     </message>
     <message>
         <source>&quot;%1&quot; is in edit mode.
 Discard changes and close anyway?</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; jest w trybie edytowania.
+Odrzucić zmiany i zamknąć?</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
@@ -321,7 +370,8 @@ Discard changes and close anyway?</source>
     <message>
         <source>The database you are trying to save as is locked by another instance of KeePassX.
 Do you want to save it anyway?</source>
-        <translation type="unfinished"/>
+        <translation>Baza, którą próbujesz zapisać jest zablokowana przez inną instancję KeePassX.
+Czy chcesz zapisać mimo to?</translation>
     </message>
 </context>
 <context>
@@ -352,7 +402,7 @@ Do you want to save it anyway?</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Czy na pewno chcesz przenieść %n wpis do kosza?</numerusform><numerusform>Czy na pewno chcesz przenieść %n wpisów do kosza?</numerusform><numerusform>Czy na pewno chcesz przenieść %n wpisów do kosza?</numerusform></translation>
     </message>
     <message>
         <source>Delete group?</source>
@@ -407,7 +457,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Add entry</source>
-        <translation>Nowy wpis</translation>
+        <translation>Dodaj wpis</translation>
     </message>
     <message>
         <source>Edit entry</source>
@@ -419,7 +469,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation type="unfinished"/>
+        <translation>Podano różne hasła.</translation>
     </message>
     <message>
         <source>New attribute</source>
@@ -565,7 +615,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Gen.</source>
-        <translation type="unfinished"/>
+        <translation>Gen.</translation>
     </message>
     <message>
         <source>URL:</source>
@@ -577,7 +627,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Presets</source>
-        <translation type="unfinished"/>
+        <translation>Prezentuje</translation>
     </message>
     <message>
         <source>Notes:</source>
@@ -686,7 +736,7 @@ Do you want to save it anyway?</source>
     </message>
     <message numerus="yes">
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Nie mogę usunąć ikony. Nadal używana przez %n wpis.</numerusform><numerusform>Nie mogę usunąć ikony. Nadal używana przez %n wpisów.</numerusform><numerusform>Nie mogę usunąć ikony. Nadal używana przez %n wpisów.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -819,6 +869,16 @@ Do you want to save it anyway?</source>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Nie mogę wyliczyć głównego klucza</translation>
+    </message>
+    <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <translation>Wybrany plik jest bazą starego KeePassX 1 (.kdb).
+
+Możesz zaimportować ją przez wybranie Baza &gt; &apos;Importuj bazę danych KeePass 1&apos;.
+Nie będzie można skonwertować nowej bazy do starego programu KeePassX 0.4.</translation>
     </message>
 </context>
 <context>
@@ -980,7 +1040,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Toggle window</source>
-        <translation type="unfinished"/>
+        <translation>Pokaż/ukryj okno</translation>
     </message>
     <message>
         <source>Tools</source>
@@ -998,6 +1058,30 @@ Do you want to save it anyway?</source>
         <source>Export to CSV file</source>
         <translation>Eksport do pliku CSV</translation>
     </message>
+    <message>
+        <source>Repair database</source>
+        <translation>Napraw bazę</translation>
+    </message>
+    <message>
+        <source>KeePass 2 Database</source>
+        <translation>Baza KeePass 2</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>Wszystkie pliki</translation>
+    </message>
+    <message>
+        <source>Save repaired database</source>
+        <translation>Zapisz naprawioną bazę</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Błąd</translation>
+    </message>
+    <message>
+        <source>Writing the database failed.</source>
+        <translation>Błąd przy zapisie bazy.</translation>
+    </message>
 </context>
 <context>
     <name>PasswordGeneratorWidget</name>
@@ -1011,7 +1095,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Character Types</source>
-        <translation type="unfinished"/>
+        <translation>Typy znaków</translation>
     </message>
     <message>
         <source>Upper Case Letters</source>
@@ -1035,7 +1119,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Ensure that the password contains characters from every group</source>
-        <translation type="unfinished"/>
+        <translation>Zapewnij, że hasło będzie zawierało znaki ze wszystkich grup</translation>
     </message>
     <message>
         <source>Accept</source>
@@ -1074,7 +1158,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Usage: %1</source>
-        <translation type="unfinished"/>
+        <translation>Używanie: %1</translation>
     </message>
     <message>
         <source>Options:</source>
@@ -1089,7 +1173,7 @@ Do you want to save it anyway?</source>
     <name>QSaveFile</name>
     <message>
         <source>Existing file %1 is not writable</source>
-        <translation type="unfinished"/>
+        <translation>Istniejący plik %1 jest nie do zapisu</translation>
     </message>
     <message>
         <source>Writing canceled by application</source>
@@ -1097,7 +1181,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Partial write. Partition full?</source>
-        <translation type="unfinished"/>
+        <translation>Częściowy zapis. Pełny dysk?</translation>
     </message>
 </context>
 <context>
@@ -1108,15 +1192,15 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation type="unfinished"/>
+        <translation>Błąd w zapisie na urządzenie:</translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation type="unfinished"/>
+        <translation>Błąd w otwieraniu z urządzenia:</translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation type="unfinished"/>
+        <translation>Błąd w odczycie danych z urządzenia:</translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
@@ -1150,7 +1234,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Root group</source>
-        <translation type="unfinished"/>
+        <translation>Główna grupa</translation>
     </message>
 </context>
 <context>
@@ -1200,7 +1284,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Use entry title to match windows for global auto-type</source>
-        <translation type="unfinished"/>
+        <translation>Wykorzystaj tytuł wpisu do dopasowania dla globalnego auto-wpisywania</translation>
     </message>
     <message>
         <source>Language</source>
@@ -1227,7 +1311,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source> sec</source>
-        <translation type="unfinished"/>
+        <translation>s</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
@@ -1260,15 +1344,15 @@ Do you want to save it anyway?</source>
     <name>main</name>
     <message>
         <source>KeePassX - cross-platform password manager</source>
-        <translation type="unfinished"/>
+        <translation>KeePassX - wieloplatformowy menadżer haseł</translation>
     </message>
     <message>
         <source>filename of the password database to open (*.kdbx)</source>
-        <translation type="unfinished"/>
+        <translation>nazwa pliku z bazą haseł do otwarcia (*.kdbx)</translation>
     </message>
     <message>
         <source>path to a custom config file</source>
-        <translation type="unfinished"/>
+        <translation>ścieżka do pliku z ustawieniami</translation>
     </message>
     <message>
         <source>key file of the database</source>

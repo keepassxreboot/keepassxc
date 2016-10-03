@@ -13,12 +13,16 @@
         <source>Revision</source>
         <translation>Poversijis</translation>
     </message>
+    <message>
+        <source>Using:</source>
+        <translation>Naudojama:</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
     <message>
         <source>Auto-Type - KeePassX</source>
-        <translation>Automatinis Rinkimas - KeePassX</translation>
+        <translation>Automatinis rinkimas - KeePassX</translation>
     </message>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
@@ -44,11 +48,11 @@
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassX</source>
-        <translation>Automatinis Rinkimas - KeePassX</translation>
+        <translation>Automatinis rinkimas - KeePassX</translation>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>Pasirinkite įrašą Automatiniam Rinkimui:</translation>
+        <translation>Pasirinkite įrašą automatiniam rinkimui:</translation>
     </message>
 </context>
 <context>
@@ -59,7 +63,7 @@
     </message>
     <message>
         <source>Enter password:</source>
-        <translation>Įveskite slaptažodį:</translation>
+        <translation>Įrašykite slaptažodį:</translation>
     </message>
     <message>
         <source>Repeat password:</source>
@@ -87,7 +91,7 @@
     </message>
     <message>
         <source>Create Key File...</source>
-        <translation>Sukurti Rakto Failą...</translation>
+        <translation>Sukurti rakto failą...</translation>
     </message>
     <message>
         <source>Error</source>
@@ -95,7 +99,7 @@
     </message>
     <message>
         <source>Unable to create Key File : </source>
-        <translation>Nepavyko sukurti Rakto Failo : </translation>
+        <translation>Nepavyko sukurti rakto failo : </translation>
     </message>
     <message>
         <source>Select a key file</source>
@@ -120,7 +124,7 @@
     <message>
         <source>Failed to set %1 as the Key file:
 %2</source>
-        <translation>Nepavyko nustatyti %1 kaip Rakto failą:
+        <translation>Nepavyko nustatyti %1 kaip rakto failą:
 %2</translation>
     </message>
 </context>
@@ -132,7 +136,7 @@
     </message>
     <message>
         <source>Key File:</source>
-        <translation>Rakto Failas:</translation>
+        <translation>Rakto failas:</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -165,6 +169,43 @@
     <message>
         <source>Select key file</source>
         <translation>Pasirinkite rakto failą</translation>
+    </message>
+</context>
+<context>
+    <name>DatabaseRepairWidget</name>
+    <message>
+        <source>Repair database</source>
+        <translation>Taisyti duomenų bazę</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Klaida</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open key file</source>
+        <translation>Nepavyksta atverti rakto failo</translation>
+    </message>
+    <message>
+        <source>Database opened fine. Nothing to do.</source>
+        <translation>Duomenų bazė atsivėrė tvarkingai. Nėra ką atlikti.</translation>
+    </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation>Nepavyko atverti duomenų bazės.</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation>Pavyko</translation>
+    </message>
+    <message>
+        <source>The database has been successfully repaired
+You can now save it.</source>
+        <translation>Duomenų bazė buvo sėkmingai pataisyta
+Dabar galite ją įrašyti.</translation>
+    </message>
+    <message>
+        <source>Unable to repair the database.</source>
+        <translation>Duomenų bazės pataisyti nepavyko.</translation>
     </message>
 </context>
 <context>
@@ -214,7 +255,7 @@
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>KeePass 2 Duomenų Bazė</translation>
+        <translation>KeePass 2 duomenų bazė</translation>
     </message>
     <message>
         <source>All files</source>
@@ -400,7 +441,7 @@ Ar vis tiek norite ją įrašyti?</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Automatinis Rinkimas</translation>
+        <translation>Automatinis rinkimas</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -504,15 +545,15 @@ Ar vis tiek norite ją įrašyti?</translation>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation>Įjungti šiam įrašui Automatinį Rinkimą</translation>
+        <translation>Įjungti šiam įrašui automatinį rinkimą</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the group</source>
-        <translation>Paveldėti numatytąją Automatinio Rinkimo seką iš grupės</translation>
+        <translation>Paveldėti numatytąją automatinio rinkimo seką iš grupės</translation>
     </message>
     <message>
         <source>Use custom Auto-Type sequence:</source>
-        <translation>Naudoti tinkintą Automatinio Rinkimo seka:</translation>
+        <translation>Naudoti tinkintą automatinio rinkimo seka:</translation>
     </message>
     <message>
         <source>+</source>
@@ -687,7 +728,7 @@ Ar vis tiek norite ją įrašyti?</translation>
     </message>
     <message>
         <source>Select Image</source>
-        <translation>Pasirinkite Paveikslą</translation>
+        <translation>Pasirinkite paveikslą</translation>
     </message>
     <message>
         <source>Can&apos;t delete icon!</source>
@@ -829,6 +870,16 @@ Ar vis tiek norite ją įrašyti?</translation>
         <source>Unable to calculate master key</source>
         <translation>Nepavyko apskaičiuoti pagrindinio rakto</translation>
     </message>
+    <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <translation>Pasirinktas failas yra sena KeePass 1 duomenų bazė (.kdb).
+
+Jūs galite ją importuoti, nuspausdami Duomenų bazė &gt; &quot;Importuoti KeePass 1 duomenų bazę&quot;.
+Tai yra vienakryptis perkėlimas. Jūs negalėsite atverti importuotos duomenų bazės, naudodami senąją KeePassX 0.4 versija.</translation>
+    </message>
 </context>
 <context>
     <name>Main</name>
@@ -957,7 +1008,7 @@ Ar vis tiek norite ją įrašyti?</translation>
     </message>
     <message>
         <source>Perform Auto-Type</source>
-        <translation>Atlikti Automatinį Rinkimą</translation>
+        <translation>Atlikti automatinį rinkimą</translation>
     </message>
     <message>
         <source>Open URL</source>
@@ -1007,6 +1058,30 @@ Ar vis tiek norite ją įrašyti?</translation>
         <source>Export to CSV file</source>
         <translation>Eksportuoti į CSV failą</translation>
     </message>
+    <message>
+        <source>Repair database</source>
+        <translation>Taisyti duomenų bazę</translation>
+    </message>
+    <message>
+        <source>KeePass 2 Database</source>
+        <translation>KeePass 2 duomenų bazė</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>Visi failai</translation>
+    </message>
+    <message>
+        <source>Save repaired database</source>
+        <translation>Įrašyti pataisytą duomenų bazę</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Klaida</translation>
+    </message>
+    <message>
+        <source>Writing the database failed.</source>
+        <translation>Duomenų bazės rašymas nepavyko.</translation>
+    </message>
 </context>
 <context>
     <name>PasswordGeneratorWidget</name>
@@ -1020,15 +1095,15 @@ Ar vis tiek norite ją įrašyti?</translation>
     </message>
     <message>
         <source>Character Types</source>
-        <translation>Simbolių Tipai</translation>
+        <translation>Simbolių tipai</translation>
     </message>
     <message>
         <source>Upper Case Letters</source>
-        <translation>Viršutinio Registro Raidės</translation>
+        <translation>Viršutinio registro raidės</translation>
     </message>
     <message>
         <source>Lower Case Letters</source>
-        <translation>Apatinio Registro Raidės</translation>
+        <translation>Apatinio registro raidės</translation>
     </message>
     <message>
         <source>Numbers</source>
@@ -1036,7 +1111,7 @@ Ar vis tiek norite ją įrašyti?</translation>
     </message>
     <message>
         <source>Special Characters</source>
-        <translation>Specialūs Simboliai</translation>
+        <translation>Specialūs simboliai</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
@@ -1166,7 +1241,7 @@ Ar vis tiek norite ją įrašyti?</translation>
     <name>SettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>Programos Nustatymai</translation>
+        <translation>Programos nustatymai</translation>
     </message>
     <message>
         <source>General</source>
@@ -1205,7 +1280,7 @@ Ar vis tiek norite ją įrašyti?</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut</source>
-        <translation>Visuotinis Automatinio Rinkimo spartusis klavišas</translation>
+        <translation>Visuotinis automatinio rinkimo spartusis klavišas</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global auto-type</source>

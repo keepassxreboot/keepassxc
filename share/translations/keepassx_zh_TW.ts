@@ -13,6 +13,10 @@
         <source>Revision</source>
         <translation>修改紀錄</translation>
     </message>
+    <message>
+        <source>Using:</source>
+        <translation>使用：</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -165,6 +169,43 @@
     <message>
         <source>Select key file</source>
         <translation>選擇金鑰檔案</translation>
+    </message>
+</context>
+<context>
+    <name>DatabaseRepairWidget</name>
+    <message>
+        <source>Repair database</source>
+        <translation>修復資料庫</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>錯誤</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open key file</source>
+        <translation>無法打開金鑰檔案</translation>
+    </message>
+    <message>
+        <source>Database opened fine. Nothing to do.</source>
+        <translation>資料庫正常打開。沒什麼事。</translation>
+    </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation>無法打開這個資料庫</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation>成功</translation>
+    </message>
+    <message>
+        <source>The database has been successfully repaired
+You can now save it.</source>
+        <translation>這個資料庫已經成功修復
+現在你可以儲存它。</translation>
+    </message>
+    <message>
+        <source>Unable to repair the database.</source>
+        <translation>無法開啟這個資料庫</translation>
     </message>
 </context>
 <context>
@@ -828,6 +869,17 @@ Do you want to save it anyway?</source>
         <source>Unable to calculate master key</source>
         <translation>無法計算主金鑰</translation>
     </message>
+    <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <translation>被選擇的檔案是舊的 KeePass 1 資料庫 (.kdb) 。
+
+
+你可以點選 資料庫 &gt; 「匯入 KeePass 1 資料庫」。
+這是單向遷移。你無法用舊的 KeePassX 0.4 的版本打開被匯入的資料庫。</translation>
+    </message>
 </context>
 <context>
     <name>Main</name>
@@ -1005,6 +1057,30 @@ Do you want to save it anyway?</source>
     <message>
         <source>Export to CSV file</source>
         <translation>輸出成 CSV 檔案</translation>
+    </message>
+    <message>
+        <source>Repair database</source>
+        <translation>修復資料庫</translation>
+    </message>
+    <message>
+        <source>KeePass 2 Database</source>
+        <translation>KeePass 2 資料庫</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>所有的檔案</translation>
+    </message>
+    <message>
+        <source>Save repaired database</source>
+        <translation>儲存已修復的資料庫</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>錯誤</translation>
+    </message>
+    <message>
+        <source>Writing the database failed.</source>
+        <translation>寫入資料庫失敗</translation>
     </message>
 </context>
 <context>

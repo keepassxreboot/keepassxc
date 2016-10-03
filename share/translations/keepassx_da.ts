@@ -172,6 +172,43 @@
     </message>
 </context>
 <context>
+    <name>DatabaseRepairWidget</name>
+    <message>
+        <source>Repair database</source>
+        <translation>Reparer database</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fejl</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open key file</source>
+        <translation>Kan ikke åbne nøglefil</translation>
+    </message>
+    <message>
+        <source>Database opened fine. Nothing to do.</source>
+        <translation>Databasen åbnede fint. Intet at gøre.</translation>
+    </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation>Kan ikke åbne databasen.</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation>Succes</translation>
+    </message>
+    <message>
+        <source>The database has been successfully repaired
+You can now save it.</source>
+        <translation>Databasen er blevet succesfuldt repareret
+Du kan gemme den nu.</translation>
+    </message>
+    <message>
+        <source>Unable to repair the database.</source>
+        <translation>Kan ikke reparere databasen.</translation>
+    </message>
+</context>
+<context>
     <name>DatabaseSettingsWidget</name>
     <message>
         <source>Database name:</source>
@@ -1019,6 +1056,30 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     <message>
         <source>Export to CSV file</source>
         <translation>Eksportér til CSV-fil</translation>
+    </message>
+    <message>
+        <source>Repair database</source>
+        <translation>Reparer database</translation>
+    </message>
+    <message>
+        <source>KeePass 2 Database</source>
+        <translation>KeePass 2 Database</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>Alle filer</translation>
+    </message>
+    <message>
+        <source>Save repaired database</source>
+        <translation>Gem repareret database</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fejl</translation>
+    </message>
+    <message>
+        <source>Writing the database failed.</source>
+        <translation>Skrivning til database fejler.</translation>
     </message>
 </context>
 <context>

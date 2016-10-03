@@ -13,6 +13,10 @@
         <source>Revision</source>
         <translation>Überarbeitung</translation>
     </message>
+    <message>
+        <source>Using:</source>
+        <translation>In Benutzung:</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -164,6 +168,43 @@
     <message>
         <source>Select key file</source>
         <translation>Schlüsseldatei auswählen</translation>
+    </message>
+</context>
+<context>
+    <name>DatabaseRepairWidget</name>
+    <message>
+        <source>Repair database</source>
+        <translation>Datenbank reparieren</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fehler</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open key file</source>
+        <translation>Schlüsseldatei kann nicht geöffnet werden</translation>
+    </message>
+    <message>
+        <source>Database opened fine. Nothing to do.</source>
+        <translation>Datenbank wurde ordnungsgemäß geöffnet. Es gibt nichts zu tun.</translation>
+    </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation>Öffnen der Datenbank nicht möglich.</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation>Erfolg</translation>
+    </message>
+    <message>
+        <source>The database has been successfully repaired
+You can now save it.</source>
+        <translation>Datenbank erfolgreich repariert
+sie kann nun gespeichert werden.</translation>
+    </message>
+    <message>
+        <source>Unable to repair the database.</source>
+        <translation>Reparieren der Datenbank nicht möglich.</translation>
     </message>
 </context>
 <context>
@@ -826,6 +867,16 @@ Soll sie dennoch gespeichert werden? </translation>
         <source>Unable to calculate master key</source>
         <translation>Berechnung des &quot;master keys&quot; gescheitert</translation>
     </message>
+    <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <translation>Die ausgewählte Datei ist eine alte KeePass 1 Datenbank (.kdb).
+
+Zum Importieren gehen Sie auf Datenbank &gt; &apos;KeePass 1 Datenbank importieren&apos;.
+Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann später nicht mehr mit der alten KeePassX Version 0.4 geöffnet werden.</translation>
+    </message>
 </context>
 <context>
     <name>Main</name>
@@ -1003,6 +1054,30 @@ Soll sie dennoch gespeichert werden? </translation>
     <message>
         <source>Export to CSV file</source>
         <translation>Als CSV Datei exportieren</translation>
+    </message>
+    <message>
+        <source>Repair database</source>
+        <translation>Datenbank reparieren</translation>
+    </message>
+    <message>
+        <source>KeePass 2 Database</source>
+        <translation>KeePass 2 Datenbank</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>Alle Dateien</translation>
+    </message>
+    <message>
+        <source>Save repaired database</source>
+        <translation>Reparierte Datenbank speichern</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fehler</translation>
+    </message>
+    <message>
+        <source>Writing the database failed.</source>
+        <translation>Schreiben der Datenbank fehlgeschlagen.</translation>
     </message>
 </context>
 <context>

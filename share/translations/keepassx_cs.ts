@@ -13,6 +13,10 @@
         <source>Revision</source>
         <translation>Revize</translation>
     </message>
+    <message>
+        <source>Using:</source>
+        <translation>S použitím:</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -95,7 +99,7 @@
     </message>
     <message>
         <source>Unable to create Key File : </source>
-        <translation>Nedaří se vytvořit soubor s klíčem :</translation>
+        <translation>Nedaří se vytvořit soubor s klíčem:</translation>
     </message>
     <message>
         <source>Select a key file</source>
@@ -103,7 +107,7 @@
     </message>
     <message>
         <source>Question</source>
-        <translation>Otázka</translation>
+        <translation>Dotaz</translation>
     </message>
     <message>
         <source>Do you really want to use an empty string as password?</source>
@@ -148,7 +152,7 @@
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Databázi se nepodařilo otevřít.</translation>
+        <translation>Databázi se nedaří otevřít.</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
@@ -168,6 +172,43 @@
     </message>
 </context>
 <context>
+    <name>DatabaseRepairWidget</name>
+    <message>
+        <source>Repair database</source>
+        <translation>Opravit databázi</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Chyba</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open key file</source>
+        <translation>Nedaří se otevřít soubor s klíčem</translation>
+    </message>
+    <message>
+        <source>Database opened fine. Nothing to do.</source>
+        <translation>Databáze je v pořádku otevřená. Není třeba žádného zásahu.</translation>
+    </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation>Nedaří se otevřít databázi.</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation>Úspěch</translation>
+    </message>
+    <message>
+        <source>The database has been successfully repaired
+You can now save it.</source>
+        <translation>Databáze je úspěšně opravená
+Nyní jí můžete uložit.</translation>
+    </message>
+    <message>
+        <source>Unable to repair the database.</source>
+        <translation>Databázi se nedaří opravit.</translation>
+    </message>
+</context>
+<context>
     <name>DatabaseSettingsWidget</name>
     <message>
         <source>Database name:</source>
@@ -179,7 +220,7 @@
     </message>
     <message>
         <source>Transform rounds:</source>
-        <translation>Počet průchodů algoritmu:</translation>
+        <translation>Počet průchodů šifrovacího algoritmu:</translation>
     </message>
     <message>
         <source>Default username:</source>
@@ -191,7 +232,7 @@
     </message>
     <message>
         <source> MiB</source>
-        <translation type="unfinished"/>
+        <translation> MiB</translation>
     </message>
     <message>
         <source>Benchmark</source>
@@ -199,11 +240,11 @@
     </message>
     <message>
         <source>Max. history items:</source>
-        <translation>Nejvyšší umožněný počet položek historie:</translation>
+        <translation>Omezit počet uchovávaných předchozích verzí položky na:</translation>
     </message>
     <message>
         <source>Max. history size:</source>
-        <translation>Nejvyšší umožněný objem dat historie záznamů:</translation>
+        <translation>Omezit datový objem předchozích verzí položek na:</translation>
     </message>
 </context>
 <context>
@@ -214,7 +255,7 @@
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>Databáze aplikace KeePass verze 2</translation>
+        <translation>Databáze ve formátu KeePass verze 2</translation>
     </message>
     <message>
         <source>All files</source>
@@ -234,11 +275,11 @@
     </message>
     <message>
         <source>Open KeePass 1 database</source>
-        <translation>Otevřít databázi aplikace KeePass verze 1</translation>
+        <translation>Otevřít databázi ve formátu KeePass verze 1</translation>
     </message>
     <message>
         <source>KeePass 1 database</source>
-        <translation>Databáze aplikace KeePass verze 1</translation>
+        <translation>Databáze ve formátu KeePass verze 1</translation>
     </message>
     <message>
         <source>All files (*)</source>
@@ -255,7 +296,7 @@
     <message>
         <source>&quot;%1&quot; was modified.
 Save changes?</source>
-        <translation>%1 bylo změněno.
+        <translation>„%1“ bylo změněno.
 Uložit změny?</translation>
     </message>
     <message>
@@ -282,7 +323,7 @@ Uložit změny?</translation>
         <source>The database you are trying to open is locked by another instance of KeePassX.
 Do you want to open it anyway? Alternatively the database is opened read-only.</source>
         <translation>Pro databázi, kterou se pokoušíte otevřít, existuje zámek úprav (stejnojmenný 
-.lock soubor). To znamená, že je nejspíš již otevřená v jiném okně KeePassX 
+.lock soubor). To znamená, že je nejspíš už otevřená v jiném okně KeePassX 
 (v případě sdíleného úložiště, třeba i na jiném počítači). Pokud tomu tak není, 
 je zámek nejspíš pozůstatkem předchozího neočekávaného ukončení aplikace 
 a je možné ho smazat. V každém případě, dotčenou databázi je možné otevřít
@@ -302,7 +343,7 @@ Pokud chcete změny dokončit, klikněte na Zrušit. V opačném případě změ
         <source>This database has never been saved.
 You can save the database or stop locking it.</source>
         <translation>Tato databáze doposud ještě nebyla uložena.
-Buď ji můžete uložit, nebo neuzamykat.</translation>
+Buď ji můžete uložit, nebo neuzamknout.</translation>
     </message>
     <message>
         <source>This database has been modified.
@@ -315,7 +356,7 @@ Pokud ne, provedené změny budou ztraceny.</translation>
     <message>
         <source>&quot;%1&quot; is in edit mode.
 Discard changes and close anyway?</source>
-        <translation>%1 je právě upravováno.
+        <translation>„%1“ je právě upravováno.
 Přesto zavřít a zahodit změny?</translation>
     </message>
     <message>
@@ -349,7 +390,7 @@ Přesto uložit?</translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>Opravdu chcete nenávratně smazat položku %1?</translation>
+        <translation>Opravdu chcete nenávratně smazat položku „%1“?</translation>
     </message>
     <message>
         <source>Delete entries?</source>
@@ -373,7 +414,7 @@ Přesto uložit?</translation>
     </message>
     <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>Opravdu chcete nenávratně smazat skupinu %1?</translation>
+        <translation>Opravdu chcete nenávratně smazat skupinu „%1“?</translation>
     </message>
     <message>
         <source>Current group</source>
@@ -385,7 +426,7 @@ Přesto uložit?</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Nepodařilo se spočítat hlavní klíč</translation>
+        <translation>Nedaří se spočítat hlavní klíč</translation>
     </message>
 </context>
 <context>
@@ -520,11 +561,11 @@ Přesto uložit?</translation>
     </message>
     <message>
         <source>+</source>
-        <translation type="unfinished"/>
+        <translation>+</translation>
     </message>
     <message>
         <source>-</source>
-        <translation type="unfinished"/>
+        <translation>-</translation>
     </message>
     <message>
         <source>Window title:</source>
@@ -574,7 +615,7 @@ Přesto uložit?</translation>
     </message>
     <message>
         <source>Repeat:</source>
-        <translation>Zopakovat:</translation>
+        <translation>Zopakování hesla:</translation>
     </message>
     <message>
         <source>Gen.</source>
@@ -590,7 +631,7 @@ Přesto uložit?</translation>
     </message>
     <message>
         <source>Presets</source>
-        <translation>Přednastavené</translation>
+        <translation>Předpřipravené</translation>
     </message>
     <message>
         <source>Notes:</source>
@@ -699,7 +740,7 @@ Přesto uložit?</translation>
     </message>
     <message numerus="yes">
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
-        <translation><numerusform>Ikonu není možné smazat. Je používána %n položkou.</numerusform><numerusform>Ikonu není možné smazat. Je používána %n položkami.</numerusform><numerusform>Ikonu není možné smazat. Používá ji %n položek</numerusform></translation>
+        <translation><numerusform>Ikonu není možné smazat. Je používána %n položkou.</numerusform><numerusform>Ikonu není možné smazat. Je používána %n položkami.</numerusform><numerusform>Ikonu není možné smazat. Ještě jí používá %n položek.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -777,7 +818,7 @@ Přesto uložit?</translation>
     <name>KeePass1OpenWidget</name>
     <message>
         <source>Import KeePass1 database</source>
-        <translation>Importovat databázi aplikace KeePass verze 1</translation>
+        <translation>Importovat databázi ve formátu KeePass verze 1</translation>
     </message>
     <message>
         <source>Error</source>
@@ -785,14 +826,14 @@ Přesto uložit?</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Databázi nelze otevřít.</translation>
+        <translation>Databázi se nedaří otevřít.</translation>
     </message>
 </context>
 <context>
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
-        <translation>Soubor s klíčem nebylo možné načíst.</translation>
+        <translation>Nedaří se načíst soubor s klíčem.</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
@@ -832,6 +873,16 @@ Přesto uložit?</translation>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Nedaří se spočítat hlavní klíč</translation>
+    </message>
+    <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <translation>Zvolený soubor je databáze ve starém formátu KeePass 1 (.kdb).
+
+Můžete ho importovat pomocí Databáze → Importovat databázi KeePass 1.
+Jedná se o jednosměrný převod. Databázi, vzniklou z importu, nepůjde otevřít ve staré verzi KeePassX 0.4.</translation>
     </message>
 </context>
 <context>
@@ -877,7 +928,7 @@ Přesto uložit?</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation>Ukončit</translation>
+        <translation>Ukončit aplikaci</translation>
     </message>
     <message>
         <source>About</source>
@@ -993,7 +1044,7 @@ Přesto uložit?</translation>
     </message>
     <message>
         <source>Toggle window</source>
-        <translation>Přepnout okno</translation>
+        <translation>Zobrazit/skrýt okno</translation>
     </message>
     <message>
         <source>Tools</source>
@@ -1010,6 +1061,30 @@ Přesto uložit?</translation>
     <message>
         <source>Export to CSV file</source>
         <translation>Exportovat do CSV souboru</translation>
+    </message>
+    <message>
+        <source>Repair database</source>
+        <translation>Opravit databázi</translation>
+    </message>
+    <message>
+        <source>KeePass 2 Database</source>
+        <translation>Databáze ve formátu KeePass 2</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>Všechny soubory</translation>
+    </message>
+    <message>
+        <source>Save repaired database</source>
+        <translation>Uložit opravenou databázi</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Chyba</translation>
+    </message>
+    <message>
+        <source>Writing the database failed.</source>
+        <translation>Zápis do databáze se nezdařil.</translation>
     </message>
 </context>
 <context>
@@ -1036,7 +1111,7 @@ Přesto uložit?</translation>
     </message>
     <message>
         <source>Numbers</source>
-        <translation>Čísla</translation>
+        <translation>Číslice</translation>
     </message>
     <message>
         <source>Special Characters</source>
@@ -1155,7 +1230,7 @@ Přesto uložit?</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation>Rozlišovat velikost písmen</translation>
+        <translation>Rozlišovat malá/velká písmena</translation>
     </message>
     <message>
         <source>Current group</source>
@@ -1221,7 +1296,7 @@ Přesto uložit?</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>Zobrazit ikonu v oznamovací oblasti systémového panelu</translation>
+        <translation>Zobrazovat ikonu v oznamovací oblasti systémového panelu</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>

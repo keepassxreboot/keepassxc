@@ -172,6 +172,43 @@
     </message>
 </context>
 <context>
+    <name>DatabaseRepairWidget</name>
+    <message>
+        <source>Repair database</source>
+        <translation>Laga databasen</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fel</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open key file</source>
+        <translation>Kan inte öppna nyckelfilen</translation>
+    </message>
+    <message>
+        <source>Database opened fine. Nothing to do.</source>
+        <translation>Databas öppnades fint. Inget att göra.</translation>
+    </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation>Misslyckades att öppna databasen.</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation>Succé</translation>
+    </message>
+    <message>
+        <source>The database has been successfully repaired
+You can now save it.</source>
+        <translation>Databasens reparation har varit lyckad.
+Du kan nu spara den.</translation>
+    </message>
+    <message>
+        <source>Unable to repair the database.</source>
+        <translation>Misslyckades med att laga databasen.</translation>
+    </message>
+</context>
+<context>
     <name>DatabaseSettingsWidget</name>
     <message>
         <source>Database name:</source>
@@ -838,7 +875,10 @@ Vill du spara endå?</translation>
 
 You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
 This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
-        <translation type="unfinished"/>
+        <translation>Den valda filen är en gammal KeePass 1 databas (.kdb)
+
+Du kan importera den genom att klicka på Databas &gt; Importera KeePass 1 databas.
+Detta är en envägsmigration. Du kan inte spara en databas som KeePass1 databas. Det som används i KeePassX 0.4.</translation>
     </message>
 </context>
 <context>
@@ -1017,6 +1057,30 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <message>
         <source>Export to CSV file</source>
         <translation>Exportera till CSV-fil</translation>
+    </message>
+    <message>
+        <source>Repair database</source>
+        <translation>Laga databasen</translation>
+    </message>
+    <message>
+        <source>KeePass 2 Database</source>
+        <translation>KeePass 2 databas</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>Alla filer</translation>
+    </message>
+    <message>
+        <source>Save repaired database</source>
+        <translation>Spara lagad databas</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fel</translation>
+    </message>
+    <message>
+        <source>Writing the database failed.</source>
+        <translation>Misslyckades med att skriva till databasen.</translation>
     </message>
 </context>
 <context>
