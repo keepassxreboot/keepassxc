@@ -342,22 +342,14 @@ void Server::start(void)
             addr->sin_port = htons(HttpSettings::httpPort());
             addr->sin_addr.s_addr = htonl(address.toIPv4Address());
             nohost = false;
-            //qWarning("HTTPPlugin: IPv4 host configured");
         } else {
-            if (MHD_YES == MHD_is_feature_supported(MHD_FEATURE_IPv6)) {
-                struct sockaddr_in6 *addr = static_cast<struct sockaddr_in6*>(calloc(1, sizeof(struct sockaddr_in6)));
-                addrx = static_cast<void*>(addr);
-                addr->sin6_family = AF_INET6;
-                addr->sin6_port = htons(HttpSettings::httpPort());
-                memcpy(&addr->sin6_addr, address.toIPv6Address().c, 16);
-                nohost = false;
-                flags |= MHD_USE_IPv6;
-            /*
-                qWarning("HTTPPlugin: IPv6 host configured and IPv6 enabled");
-            } else {
-                qWarning("HTTPPlugin: IPv6 host configured but IPv6 support disabled!");
-            */
-            }
+            struct sockaddr_in6 *addr = static_cast<struct sockaddr_in6*>(calloc(1, sizeof(struct sockaddr_in6)));
+            addrx = static_cast<void*>(addr);
+            addr->sin6_family = AF_INET6;
+            addr->sin6_port = htons(HttpSettings::httpPort());
+            memcpy(&addr->sin6_addr, address.toIPv6Address().c, 16);
+            nohost = false;
+            flags |= MHD_USE_IPv6;
         }
 
         if (nohost) {
