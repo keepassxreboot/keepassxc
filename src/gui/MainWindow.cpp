@@ -531,6 +531,11 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
 void MainWindow::changeEvent(QEvent* event)
 {
+    if (event->type() == QEvent::ActivationChange) {
+        if (isActiveWindow())
+            m_ui->tabWidget->checkReloadDatabases();
+    }
+    
     if ((event->type() == QEvent::WindowStateChange) && isMinimized()
             && isTrayIconEnabled() && m_trayIcon && m_trayIcon->isVisible()
             && config()->get("GUI/MinimizeToTray").toBool())
