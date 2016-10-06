@@ -77,7 +77,7 @@ private:
     DefaultIconModel* const m_defaultIconModel;
     CustomIconModel* const m_customIconModel;
     QNetworkAccessManager* const m_networkAccessMngr;
-    QSet<QNetworkReply *> m_networkOperations;
+    QNetworkReply* m_networkOperation;
 
     Q_DISABLE_COPY(EditWidgetIcons)
 };
