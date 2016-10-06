@@ -1,2 +1,2 @@
 CMakeLists.txt.*
-build/
+build*/
