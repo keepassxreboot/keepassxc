@@ -19,7 +19,12 @@
 #define KEEPASSX_EDITWIDGETICONS_H
 
 #include <QWidget>
+#include <QSet>
 
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkReply>
+
+#include "core/Global.h"
 #include "core/Uuid.h"
 
 class Database;
@@ -46,11 +51,17 @@ public:
     explicit EditWidgetIcons(QWidget* parent = nullptr);
     ~EditWidgetIcons();
 
-    IconStruct state() const;
+    IconStruct state();
     void reset();
-    void load(Uuid currentUuid, Database* database, IconStruct iconStruct);
+    void load(Uuid currentUuid, Database* database, IconStruct iconStruct, const QString &url = QString());
+
+public Q_SLOTS:
+    void setUrl(const QString &url);
 
 private Q_SLOTS:
+    void downloadFavicon();
+    void abortFaviconDownload();
+    void onRequestFinished(QNetworkReply *reply);
     void addCustomIcon();
     void removeCustomIcon();
     void updateWidgetsDefaultIcons(bool checked);
@@ -62,8 +73,11 @@ private:
     const QScopedPointer<Ui::EditWidgetIcons> m_ui;
     Database* m_database;
     Uuid m_currentUuid;
+    QString m_url;
     DefaultIconModel* const m_defaultIconModel;
     CustomIconModel* const m_customIconModel;
+    QNetworkAccessManager* const m_networkAccessMngr;
+    QNetworkReply* m_networkOperation;
 
     Q_DISABLE_COPY(EditWidgetIcons)
 };
