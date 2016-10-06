@@ -249,6 +249,11 @@ bool Database::verifyKey(const CompositeKey& key) const
     return (m_data.key.rawKey() == key.rawKey());
 }
 
+CompositeKey Database::key() const
+{
+    return m_data.key;
+}
+
 void Database::createRecycleBin()
 {
     Group* recycleBin = Group::createRecycleBin();
