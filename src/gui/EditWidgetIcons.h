@@ -59,8 +59,8 @@ public Q_SLOTS:
     void setUrl(const QString &url);
 
 private Q_SLOTS:
-    void downloadFavicon();
-    void abortFaviconDownload();
+    void downloadFavicon(QUrl url = QUrl());
+    void abortFaviconDownload(bool clearRedirect = true);
     void onRequestFinished(QNetworkReply *reply);
     void addCustomIcon();
     void removeCustomIcon();
@@ -74,6 +74,9 @@ private:
     Database* m_database;
     Uuid m_currentUuid;
     QString m_url;
+    QUrl redirectUrl;
+    bool fallbackToGoogle = true;
+    unsigned short redirectCount = 0;
     DefaultIconModel* const m_defaultIconModel;
     CustomIconModel* const m_customIconModel;
     QNetworkAccessManager* const m_networkAccessMngr;

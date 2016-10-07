@@ -141,30 +141,42 @@ void EditWidgetIcons::setUrl(const QString &url)
     abortFaviconDownload();
 }
 
-void EditWidgetIcons::downloadFavicon()
+void EditWidgetIcons::downloadFavicon(QUrl url)
 {
     if (m_networkOperation == nullptr) {
-        QUrl url(m_url);
-        QString path = "http://www.google.com/s2/favicons?domain=" + url.host();
-
-        m_networkOperation = m_networkAccessMngr->get(QNetworkRequest(path));
+    
+        if (url.isEmpty()) {
+            url = QUrl(m_url);
+            url.setPath("/favicon.ico");
+        }
+        
+        m_networkOperation = m_networkAccessMngr->get(QNetworkRequest(url));
         m_ui->faviconButton->setDisabled(true);
     }
 }
 
-void EditWidgetIcons::abortFaviconDownload()
+void EditWidgetIcons::abortFaviconDownload(bool clearRedirect)
 {
     if (m_networkOperation != nullptr) {
         m_networkOperation->abort();
         m_networkOperation->deleteLater();
         m_networkOperation = nullptr;
     }
+    
+    if (clearRedirect) {
+        if (!redirectUrl.isEmpty()) {
+            redirectUrl.clear();
+        }
+        redirectCount = 0;
+    }
+    
+    fallbackToGoogle = true;
     m_ui->faviconButton->setDisabled(false);
 }
 
 void EditWidgetIcons::onRequestFinished(QNetworkReply *reply)
 {
-    if (!reply->error()) {
+    if (!reply->error()) {    
         QImage image;
         image.loadFromData(reply->readAll());
 
@@ -177,10 +189,42 @@ void EditWidgetIcons::onRequestFinished(QNetworkReply *reply)
             QModelIndex index = m_customIconModel->indexFromUuid(uuid);
             m_ui->customIconsView->setCurrentIndex(index);
             m_ui->customIconsRadio->setChecked(true);
+            
+            abortFaviconDownload();
+        }
+        else {
+            // Check if server has sent a redirect
+            QUrl possibleRedirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
+            if (!possibleRedirectUrl.isEmpty() && possibleRedirectUrl != redirectUrl && redirectCount < 3) {
+                abortFaviconDownload(false);
+                redirectUrl = possibleRedirectUrl;
+                ++redirectCount;
+                downloadFavicon(redirectUrl);
+            }
+            else { // Webpage is trying to redirect back to itself or the maximum number of redirects has been reached, fallback to Google
+                if (fallbackToGoogle) {
+                    abortFaviconDownload();
+                    fallbackToGoogle = false;
+                    downloadFavicon(QUrl("http://www.google.com/s2/favicons?domain=" + reply->url().host()));
+                }
+                else {
+                    abortFaviconDownload();
+                    MessageBox::warning(this, tr("Error"), tr("Unable to fetch favicon."));
+                }
+            }
         }
     }
-
-    abortFaviconDownload();
+    else { // Request Error e.g. 404, fallback to Google
+        if (fallbackToGoogle) {
+            abortFaviconDownload();
+            fallbackToGoogle = false;
+            downloadFavicon(QUrl("http://www.google.com/s2/favicons?domain=" + reply->url().host()));
+        }
+        else {
+            abortFaviconDownload();
+            MessageBox::warning(this, tr("Error"), tr("Unable to fetch favicon."));
+        }
+    }
 }
 
 void EditWidgetIcons::addCustomIcon()
