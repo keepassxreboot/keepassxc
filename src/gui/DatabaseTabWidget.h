@@ -80,6 +80,8 @@ Q_SIGNALS:
     void tabNameChanged();
     void databaseWithFileClosed(QString filePath);
     void activateDatabaseChanged(DatabaseWidget* dbWidget);
+    void databaseLocked(DatabaseWidget* dbWidget);
+    void databaseUnlocked(DatabaseWidget* dbWidget);
 
 private Q_SLOTS:
     void updateTabName(Database* db);
@@ -89,6 +91,7 @@ private Q_SLOTS:
     void toggleTabbar();
     void changeDatabase(Database* newDb);
     void emitActivateDatabaseChanged();
+    void emitDatabaseUnlockedFromDbWidgetSender();
 
 private:
     bool saveDatabase(Database* db);
