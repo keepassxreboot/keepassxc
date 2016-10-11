@@ -74,9 +74,9 @@ private:
     Database* m_database;
     Uuid m_currentUuid;
     QString m_url;
-    QUrl redirectUrl;
-    bool fallbackToGoogle = true;
-    unsigned short redirectCount = 0;
+    QUrl m_redirectUrl;
+    bool m_fallbackToGoogle = true;
+    unsigned short m_redirectCount = 0;
     DefaultIconModel* const m_defaultIconModel;
     CustomIconModel* const m_customIconModel;
     QNetworkAccessManager* const m_networkAccessMngr;

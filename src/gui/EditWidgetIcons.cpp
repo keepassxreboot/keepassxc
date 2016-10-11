@@ -164,13 +164,13 @@ void EditWidgetIcons::abortFaviconDownload(bool clearRedirect)
     }
     
     if (clearRedirect) {
-        if (!redirectUrl.isEmpty()) {
-            redirectUrl.clear();
+        if (!m_redirectUrl.isEmpty()) {
+            m_redirectUrl.clear();
         }
-        redirectCount = 0;
+        m_redirectCount = 0;
     }
     
-    fallbackToGoogle = true;
+    m_fallbackToGoogle = true;
     m_ui->faviconButton->setDisabled(false);
 }
 
@@ -195,16 +195,16 @@ void EditWidgetIcons::onRequestFinished(QNetworkReply *reply)
         else {
             // Check if server has sent a redirect
             QUrl possibleRedirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
-            if (!possibleRedirectUrl.isEmpty() && possibleRedirectUrl != redirectUrl && redirectCount < 3) {
+            if (!possibleRedirectUrl.isEmpty() && possibleRedirectUrl != m_redirectUrl && m_redirectCount < 3) {
                 abortFaviconDownload(false);
-                redirectUrl = possibleRedirectUrl;
-                ++redirectCount;
-                downloadFavicon(redirectUrl);
+                m_redirectUrl = possibleRedirectUrl;
+                ++m_redirectCount;
+                downloadFavicon(m_redirectUrl);
             }
             else { // Webpage is trying to redirect back to itself or the maximum number of redirects has been reached, fallback to Google
-                if (fallbackToGoogle) {
+                if (m_fallbackToGoogle) {
                     abortFaviconDownload();
-                    fallbackToGoogle = false;
+                    m_fallbackToGoogle = false;
                     downloadFavicon(QUrl("http://www.google.com/s2/favicons?domain=" + reply->url().host()));
                 }
                 else {
@@ -215,9 +215,9 @@ void EditWidgetIcons::onRequestFinished(QNetworkReply *reply)
         }
     }
     else { // Request Error e.g. 404, fallback to Google
-        if (fallbackToGoogle) {
+        if (m_fallbackToGoogle) {
             abortFaviconDownload();
-            fallbackToGoogle = false;
+            m_fallbackToGoogle = false;
             downloadFavicon(QUrl("http://www.google.com/s2/favicons?domain=" + reply->url().host()));
         }
         else {
