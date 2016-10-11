@@ -59,7 +59,9 @@ public Q_SLOTS:
     void setUrl(const QString &url);
 
 private Q_SLOTS:
-    void downloadFavicon(QUrl url = QUrl());
+    void downloadFavicon();
+    void fetchFavicon(QUrl url = QUrl());
+    void fetchFaviconFromGoogle(QString domain);
     void abortFaviconDownload(bool clearRedirect = true);
     void onRequestFinished(QNetworkReply *reply);
     void addCustomIcon();
