@@ -31,13 +31,13 @@ The following libraries are required:
 On Debian/Ubuntu you can install them with:
 
 ```bash
-sudo apt-get install build-essential cmake libmicrohttpd-dev libxi-dev qtbase5-dev libqt5x11extras5-dev qttools5-dev qttools5-dev-tools libgcrypt20-dev zlib1g-dev
+sudo apt-get install build-essential cmake libmicrohttpd-dev libxi-dev libxtst-dev qtbase5-dev libqt5x11extras5-dev qttools5-dev qttools5-dev-tools libgcrypt20-dev zlib1g-dev
 ```
 
 On Fedora/RHEL/CentOS you can install them with:
 
 ```bash
-sudo dnf install make automake gcc gcc-c++ cmake libmicrohttpd-devel libXi-devel qt5-qtbase-devel qt5-qtx11extras qt5-qttools libgcrypt-devel zlib-devel
+sudo dnf install make automake gcc gcc-c++ cmake libmicrohttpd-devel libXi-devel libXtst-devel qt5-qtbase-devel qt5-qtx11extras qt5-qttools libgcrypt-devel zlib-devel
 ```
 
 #### Build Steps
@@ -61,18 +61,12 @@ sudo make install
 
 More detailed instructions available in the INSTALL file.
 
-## Contribute
-
-Coordination of work between developers is handled through the [KeePassX development](https://www.keepassx.org/dev/) site.
-Requests for enhancements, or reports of bugs encountered, can also be reported through the KeePassX development site.
-However, members of the open-source community are encouraged to submit pull requests directly through GitHub.
-
 ### Clone Repository
 
 Clone the repository to a suitable location where you can extend and build this project.
 
 ```bash
-git clone https://github.com/keepassx/keepassx.git
+git clone https://github.com/keepassxreboot/keepassx.git
 ```
 
 **Note:** This will clone the entire contents of the repository at the HEAD revision.
@@ -100,5 +94,5 @@ All pull requests must comply with the CONTRIBUTION requirements.
 
 ### Translations
 
-Translations are managed on [Transifex](https://www.transifex.com/projects/p/keepassx/) which offers a web interface.
+Translations are managed on [Transifex](https://www.transifex.com/keepassx-reboot/keepassx-reboot/) which offers a web interface.
 Please join an existing language team or request a new one if there is none.
