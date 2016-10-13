@@ -371,6 +371,10 @@ Zavrži spremembe in zapri?</translation>
 Do you want to save it anyway?</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
@@ -421,6 +425,14 @@ Do you want to save it anyway?</source>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Izračun glavnega ključa ni uspel</translation>
+    </message>
+    <message>
+        <source>Move entry to recycle bin?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -735,6 +747,14 @@ Do you want to save it anyway?</source>
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
         <translation><numerusform>Ikone ni mogoče izbrisati. Uporablja jo še %n vnos.</numerusform><numerusform>Ikone ni mogoče izbrisati. Uporabljata jo še %n vnosa.</numerusform><numerusform>Ikone ni mogoče izbrisati. Uporabljajo jo še %n vnosi.</numerusform><numerusform>Ikone ni mogoče izbrisati. Uporablja jo še %n vnosov.</numerusform></translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Can&apos;t read icon:</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
@@ -847,6 +867,10 @@ Do you want to save it anyway?</source>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Izračun glavnega ključa ni uspel</translation>
+    </message>
+    <message>
+        <source>Wrong key or database file is corrupt.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1295,6 +1319,14 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <message>
         <source>Remember last key files</source>
         <translation>Zapomni si zadnje datoteke s ključi</translation>
+    </message>
+    <message>
+        <source>Hide window to system tray instead of App Exit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide window to system tray on App start</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

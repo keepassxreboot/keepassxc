@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="en_US">
+<TS version="2.1" language="en_US">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -17,6 +17,30 @@
     </message>
     <message>
         <source>Using:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AccessControlDialog</name>
+    <message>
+        <source>KeyPassX/Http: Confirm Access</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remember this decision</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deny</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 has requested access to passwords for the following item(s).
+Please select whether you want to allow access.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -412,10 +436,6 @@ Do you want to save it anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Current group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -746,19 +766,24 @@ Do you want to save it anyway?</source>
         <source>Can&apos;t delete icon!</source>
         <translation type="unfinished"></translation>
     </message>
-    <message numerus="yes">
-        <source>Can&apos;t delete icon. Still used by %n item(s).</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
     <message>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Can&apos;t read icon:</source>
+        <source>Download favicon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to fetch favicon.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t read icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t delete icon. Still used by %1 items.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -830,6 +855,61 @@ Do you want to save it anyway?</source>
     <name>Group</name>
     <message>
         <source>Recycle Bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>HttpPasswordGeneratorWidget</name>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Character Types</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Upper Case Letters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A-Z</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lower Case Letters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>a-z</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Numbers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>0-9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Special Characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>/*_&amp; ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exclude look-alike characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ensure that the password contains characters from every group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Accept</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1108,6 +1188,108 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
 </context>
 <context>
+    <name>OptionDialog</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Support KeypassHttp protocol
+This is required for accessing keypass database from ChromeIPass or PassIfox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sh&amp;ow a notification when credentials are requested</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Return only best matching entries for an URL instead
+of all entries for the whole domain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Re&amp;quest for unlocking the database if it is locked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Match URL schemes
+Only entries with the same scheme (http://, https://, ftp://, ...) are returned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort matching entries by &amp;username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort matching entries by &amp;title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>R&amp;emove all shared encryption-keys from active database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Re&amp;move all stored permissions from entries in active database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password generator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate the following only, if you know what you are doing!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Always allow &amp;access to entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Always allow &amp;updating entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Searc&amp;h in all opened databases for matching entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only the selected database has to be connected with a client!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Return also advanced string fields which start with &quot;KPH: &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatic creates or updates are not supported for string fields!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HTTP Host:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default host: localhost</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HTTP Port:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default port: 19455</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PasswordGeneratorWidget</name>
     <message>
         <source>Password:</source>
@@ -1151,60 +1333,9 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
 </context>
 <context>
-    <name>QCommandLineParser</name>
+    <name>QObject</name>
     <message>
-        <source>Displays version information.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Displays this help.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unknown option &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unknown options: %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Missing value after &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unexpected value after &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>[options]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Usage: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Options:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Arguments:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QSaveFile</name>
-    <message>
-        <source>Existing file %1 is not writable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Writing canceled by application</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Partial write. Partition full?</source>
+        <source>Http</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1248,16 +1379,91 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <source>Find:</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>Service</name>
     <message>
-        <source>Case sensitive</source>
+        <source>KeyPassX/Http: New key association request</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Current group</source>
+        <source>You have received an association request for the above key.
+If you would like to allow it access to your KeePassX database
+give it a unique name to identify and accept it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Root group</source>
+        <source>KeyPassX/Http: Overwrite existing key?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A shared encryption-key with the name &quot;%1&quot; already exists.
+Do you want to overwrite it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeyPassX/Http: Update Entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to update the information in %1 - %2?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeyPassX/Http: Database locked!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The active database is locked!
+Please unlock the selected database or choose another one which is unlocked.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeyPassX/Http: Removed keys from database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successfully removed %1 encryption-%2 from KeePassX/Http Settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeyPassX/Http: No keys found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No shared encryption-keys found in KeePassHttp Settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeyPassX/Http: Settings not available!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The active database does not contain an entry of KeePassHttp Settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Removing stored permissions...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Abort</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeyPassX/Http: Removed permissions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successfully removed permissions from %1 %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeyPassX/Http: No entry with permissions found!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The active database does not contain an entry with permissions.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1379,15 +1585,15 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>filename of the password database to open (*.kdbx)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>path to a custom config file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>key file of the database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>filename(s) of the password database(s) to open (*.kdbx)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

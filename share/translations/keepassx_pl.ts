@@ -373,6 +373,10 @@ Do you want to save it anyway?</source>
         <translation>Baza, którą próbujesz zapisać jest zablokowana przez inną instancję KeePassX.
 Czy chcesz zapisać mimo to?</translation>
     </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
@@ -423,6 +427,14 @@ Czy chcesz zapisać mimo to?</translation>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Nie mogę wyliczyć głównego klucza</translation>
+    </message>
+    <message>
+        <source>Move entry to recycle bin?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -738,6 +750,14 @@ Czy chcesz zapisać mimo to?</translation>
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
         <translation><numerusform>Nie mogę usunąć ikony. Nadal używana przez %n wpis.</numerusform><numerusform>Nie mogę usunąć ikony. Nadal używana przez %n wpisów.</numerusform><numerusform>Nie mogę usunąć ikony. Nadal używana przez %n wpisów.</numerusform></translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Can&apos;t read icon:</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
@@ -850,6 +870,10 @@ Czy chcesz zapisać mimo to?</translation>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Nie mogę wyliczyć głównego klucza</translation>
+    </message>
+    <message>
+        <source>Wrong key or database file is corrupt.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1301,6 +1325,14 @@ Nie będzie można skonwertować nowej bazy do starego programu KeePassX 0.4.</t
     <message>
         <source>Remember last key files</source>
         <translation>Zapamiętaj ostatni plik klucza</translation>
+    </message>
+    <message>
+        <source>Hide window to system tray instead of App Exit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide window to system tray on App start</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
