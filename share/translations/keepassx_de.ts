@@ -371,6 +371,10 @@ Do you want to save it anyway?</source>
         <translation>Die Datenbank, die gespeichert werden soll, ist von einer anderen Instanz von KeePassX blockiert. 
 Soll sie dennoch gespeichert werden? </translation>
     </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
@@ -421,6 +425,14 @@ Soll sie dennoch gespeichert werden? </translation>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Berechnung des &quot;master keys&quot; gescheitert</translation>
+    </message>
+    <message>
+        <source>Move entry to recycle bin?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -735,6 +747,14 @@ Soll sie dennoch gespeichert werden? </translation>
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
         <translation><numerusform>Symbol kann nicht gelöscht werden. Es wird von %n Eintrag verwendet.</numerusform><numerusform>Symbol kann nicht gelöscht werden. Es wird von %n Einträgen verwendet.</numerusform></translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Can&apos;t read icon:</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
@@ -847,6 +867,10 @@ Soll sie dennoch gespeichert werden? </translation>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Berechnung des &quot;master keys&quot; gescheitert</translation>
+    </message>
+    <message>
+        <source>Wrong key or database file is corrupt.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1296,16 +1320,16 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
         <translation>Fenster verstecken wenn minimiert</translation>
     </message>
     <message>
+        <source>Remember last key files</source>
+        <translation>Letzte Schlüsseldateien merken</translation>
+    </message>
+    <message>
         <source>Hide window to system tray instead of App Exit</source>
         <translation>Fenster zu Taskleistensymbol minimieren statt Programm beenden</translation>
     </message>
     <message>
         <source>Hide window to system tray on App start</source>
         <translation>Fenster zu Taskleistensymbol minimieren wenn Programm started</translation>
-    </message>
-    <message>
-        <source>Remember last key files</source>
-        <translation>Letzte Schlüsseldateien merken</translation>
     </message>
 </context>
 <context>

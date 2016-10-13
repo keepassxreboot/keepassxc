@@ -373,6 +373,10 @@ Do you want to save it anyway?</source>
         <translation>Basis data yang Anda coba buka terkunci oleh KeePassX lain yang sedang berjalan.
 Apakah Anda tetap ingin menyimpannya?</translation>
     </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
@@ -423,6 +427,14 @@ Apakah Anda tetap ingin menyimpannya?</translation>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Tidak bisa mengkalkulasi kunci utama</translation>
+    </message>
+    <message>
+        <source>Move entry to recycle bin?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -738,6 +750,14 @@ Apakah Anda tetap ingin menyimpannya?</translation>
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
         <translation><numerusform>Tidak bisa menghapus ikon. Masih digunakan oleh %n item.</numerusform></translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Can&apos;t read icon:</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
@@ -850,6 +870,10 @@ Apakah Anda tetap ingin menyimpannya?</translation>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Tidak bisa mengkalkulasi kunci utama</translation>
+    </message>
+    <message>
+        <source>Wrong key or database file is corrupt.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1301,6 +1325,14 @@ Ini adalah migrasi satu arah. Anda tidak akan bisa lagi membuka basis data yang 
     <message>
         <source>Remember last key files</source>
         <translation>Ingat berkas kunci terakhir</translation>
+    </message>
+    <message>
+        <source>Hide window to system tray instead of App Exit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide window to system tray on App start</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

@@ -373,6 +373,10 @@ Do you want to save it anyway?</source>
         <translation>Il database che stai tentando di salvare è bloccato da un&apos;altra istanza di KeePassX.
 Vuoi salvare comunque?</translation>
     </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
@@ -423,6 +427,14 @@ Vuoi salvare comunque?</translation>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Impossibile calcolare la chiave principale</translation>
+    </message>
+    <message>
+        <source>Move entry to recycle bin?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -738,6 +750,14 @@ Vuoi salvare comunque?</translation>
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
         <translation><numerusform>Impossibile eliminare l&apos;icona in quanto è in uso da %n voce.</numerusform><numerusform>Impossibile eliminare l&apos;icona in quanto è in uso da %n voci.</numerusform></translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Can&apos;t read icon:</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
@@ -850,6 +870,10 @@ Vuoi salvare comunque?</translation>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Impossibile calcolare la chiave principale</translation>
+    </message>
+    <message>
+        <source>Wrong key or database file is corrupt.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1301,6 +1325,14 @@ Questa è una migrazione in una sola direzione. Non potrai aprire il database im
     <message>
         <source>Remember last key files</source>
         <translation>Ricorda gli ultimi file di chiavi</translation>
+    </message>
+    <message>
+        <source>Hide window to system tray instead of App Exit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide window to system tray on App start</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

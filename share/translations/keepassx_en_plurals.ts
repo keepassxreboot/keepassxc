@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="en_US">
+<TS version="2.1" language="en_US">
 <context>
     <name>DatabaseWidget</name>
     <message numerus="yes">
@@ -32,7 +32,7 @@
     <name>EditWidgetIcons</name>
     <message numerus="yes">
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
-        <translation>
+        <translation type="vanished">
             <numerusform>Can&apos;t delete icon. Still used by %n item.</numerusform>
             <numerusform>Can&apos;t delete icon. Still used by %n items.</numerusform>
         </translation>

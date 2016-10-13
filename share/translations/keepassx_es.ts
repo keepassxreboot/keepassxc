@@ -373,6 +373,10 @@ Do you want to save it anyway?</source>
         <translation>La base de datos que está tratando de guardar está bloqueda por otra instancia de KeePassX.
 ̉¿Desea guardarla de cualquier manera?</translation>
     </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
@@ -423,6 +427,14 @@ Do you want to save it anyway?</source>
     <message>
         <source>Unable to calculate master key</source>
         <translation>No se puede calcular la llave maestra</translation>
+    </message>
+    <message>
+        <source>Move entry to recycle bin?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -738,6 +750,14 @@ Do you want to save it anyway?</source>
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
         <translation><numerusform>No se puede eliminar el icono. Utilizado aún en %n elemento</numerusform><numerusform>No se puede eliminar el icono. Utilizado aún en %n elementos</numerusform></translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Can&apos;t read icon:</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
@@ -850,6 +870,10 @@ Do you want to save it anyway?</source>
     <message>
         <source>Unable to calculate master key</source>
         <translation>No se puede calcular la clave maestra</translation>
+    </message>
+    <message>
+        <source>Wrong key or database file is corrupt.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1301,6 +1325,14 @@ Esta migración es en un único sentido. No podrá abrir la base importada con l
     <message>
         <source>Remember last key files</source>
         <translation>Recordar últimos archivos clave</translation>
+    </message>
+    <message>
+        <source>Hide window to system tray instead of App Exit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide window to system tray on App start</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

@@ -377,6 +377,10 @@ Do you want to save it anyway?</source>
         <translation>Databáze, kterou se pokoušíte uložit, je uzamčena jinou instancí KeePassX.
 Přesto uložit?</translation>
     </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
@@ -427,6 +431,14 @@ Přesto uložit?</translation>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Nedaří se spočítat hlavní klíč</translation>
+    </message>
+    <message>
+        <source>Move entry to recycle bin?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -742,6 +754,14 @@ Přesto uložit?</translation>
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
         <translation><numerusform>Ikonu není možné smazat. Je používána %n položkou.</numerusform><numerusform>Ikonu není možné smazat. Je používána %n položkami.</numerusform><numerusform>Ikonu není možné smazat. Ještě jí používá %n položek.</numerusform></translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Can&apos;t read icon:</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
@@ -854,6 +874,10 @@ Přesto uložit?</translation>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Nedaří se spočítat hlavní klíč</translation>
+    </message>
+    <message>
+        <source>Wrong key or database file is corrupt.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1305,6 +1329,14 @@ Jedná se o jednosměrný převod. Databázi, vzniklou z importu, nepůjde otev�
     <message>
         <source>Remember last key files</source>
         <translation>Pamatovat si nedávno otevřené soubory s klíči</translation>
+    </message>
+    <message>
+        <source>Hide window to system tray instead of App Exit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide window to system tray on App start</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

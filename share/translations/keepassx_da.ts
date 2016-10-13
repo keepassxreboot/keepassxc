@@ -373,6 +373,10 @@ Do you want to save it anyway?</source>
         <translation>Databasen som du prøver at gemme er låst af en anden instans af KeePassX.
 Vil du alligevel gemme?</translation>
     </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
@@ -423,6 +427,14 @@ Vil du alligevel gemme?</translation>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Kan ikke  beregne hovednøgle</translation>
+    </message>
+    <message>
+        <source>Move entry to recycle bin?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -737,6 +749,14 @@ Vil du alligevel gemme?</translation>
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
         <translation><numerusform>Kan ikke slette ikonet. Det anvendes stadig af %n element.</numerusform><numerusform>Kan ikke slette ikonet. Det anvendes stadig af %n elementer.</numerusform></translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Can&apos;t read icon:</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
@@ -849,6 +869,10 @@ Vil du alligevel gemme?</translation>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Kan ikke beregne hovednøgle</translation>
+    </message>
+    <message>
+        <source>Wrong key or database file is corrupt.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1300,6 +1324,14 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     <message>
         <source>Remember last key files</source>
         <translation>Husk de sidste nøglefiler</translation>
+    </message>
+    <message>
+        <source>Hide window to system tray instead of App Exit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide window to system tray on App start</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
