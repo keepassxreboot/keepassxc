@@ -41,10 +41,6 @@ class QMenu;
 class QSplitter;
 class UnlockDatabaseWidget;
 
-namespace Ui {
-    class SearchWidget;
-}
-
 class DatabaseWidget : public QStackedWidget
 {
     Q_OBJECT
@@ -102,9 +98,6 @@ Q_SIGNALS:
     void splitterSizesChanged();
     void entryColumnSizesChanged();
 
-protected:
-    bool eventFilter(QObject* object, QEvent* event) override;
-
 public Q_SLOTS:
     void createEntry();
     void cloneEntry();
@@ -127,7 +120,6 @@ public Q_SLOTS:
     void switchToOpenDatabase(const QString& fileName);
     void switchToOpenDatabase(const QString& fileName, const QString& password, const QString& keyFile);
     void switchToImportKeepass1(const QString& fileName);
-    void openSearch();
 
 private Q_SLOTS:
     void entryActivationSignalReceived(Entry* entry, EntryModel::ModelColumn column);
@@ -144,11 +136,8 @@ private Q_SLOTS:
     void unlockDatabase(bool accepted);
     void emitCurrentModeChanged();
     void clearLastGroup(Group* group);
-    void search();
-    void startSearch();
-    void startSearchTimer();
-    void showSearch();
-    void closeSearch();
+    void search(const QString& searchtext);
+    void endSearch();
 
 private:
     void setClipboardTextAndMinimize(const QString& text);
@@ -156,8 +145,6 @@ private:
     void replaceDatabase(Database* db);
 
     Database* m_db;
-    const QScopedPointer<Ui::SearchWidget> m_searchUi;
-    QWidget* const m_searchWidget;
     QWidget* m_mainWidget;
     EditEntryWidget* m_editEntryWidget;
     EditEntryWidget* m_historyEditEntryWidget;
@@ -174,7 +161,6 @@ private:
     Entry* m_newEntry;
     Group* m_newParent;
     Group* m_lastGroup;
-    QTimer* m_searchTimer;
     QString m_filename;
     Uuid m_groupBeforeLock;
 };
