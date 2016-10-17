@@ -83,7 +83,7 @@ git pull
 ### Feature Requests
 
 We're always looking for suggestions to improve our application. If you have a suggestion for improving an existing feature,
-or would like to suggest a completely new feature for KeePassX Reboot, please use the Issues section.
+or would like to suggest a completely new feature for KeePassX Reboot, please use the Issues section or our [Google Groups](https://groups.google.com/forum/#!forum/keepassx-reboot) forum.
 
 ### Bug Reports
 
@@ -94,6 +94,10 @@ Our software isn't always perfect, but we strive to always improve our work. You
 Along with our desire to hear your feedback and suggestions, we're also interested in accepting direct assistance in the form of code.
 
 All pull requests must comply with the CONTRIBUTION requirements.
+
+### Discuss with the Team
+
+You can talk to the KeePassX Reboot Team about Bugs, new feature, Issue and PullRequests at our [Google Groups](https://groups.google.com/forum/#!forum/keepassx-reboot) forum
 
 ### Translations
 

@@ -43,15 +43,15 @@ We will accept contributions of good code that we can use from anyone.
 If we reject your contribution, it means only that we do not consider it suitable for our project in the form it was submitted. It is not personal. If you ask civilly, we will be happy to discuss it with you and help you understand why it was rejected, and if possible improve it so we can accept it. If we are not able to reach an agreement, then you are free to fork our project, as with any Open Source project, and add your contribution to your fork.
 
 #### Revision History
-0.1, 2011–11–18: Initial draft.
-0.2, 2011–11–18: Added “If Your Contribution Is Rejected” section.
-0.3, 2011–11–19: Added “irrevocably” to “we can use” and changed “it” to “your contribution” in the “if rejected” section. Thanks to Patrick Maupin.
+ * 0.1, 2011–11–18: Initial draft.
+ * 0.2, 2011–11–18: Added “If Your Contribution Is Rejected” section.
+ * 0.3, 2011–11–19: Added “irrevocably” to “we can use” and changed “it” to “your contribution” in the “if rejected” section. Thanks to Patrick Maupin.
 
 
 ## How Can I Contribute?
 ### Feature Requests
 
-We're always looking for suggestions to improve our application. If you have a suggestion for improving an existing feature, or would like to suggest a completely new feature for KeePassX Reboot, please use the Issues section.
+We're always looking for suggestions to improve our application. If you have a suggestion for improving an existing feature, or would like to suggest a completely new feature for KeePassX Reboot, please use the Issues section or our [Google Groups](https://groups.google.com/forum/#!forum/keepassx-reboot) forum.
 
 ### Bug Reports
 
@@ -59,9 +59,13 @@ Our software isn't always perfect, but we strive to always improve our work. You
 
 Before submitting a Bug Report, check that the problem has already been reported.
 
+### Discuss with the Team
+
+You can talk to the KeePassX Reboot Team about Bugs, new feature, Issue and PullRequests at our [Google Groups](https://groups.google.com/forum/#!forum/keepassx-reboot) forum
+
 ### Your First Code Contribution
 
-Unsure where to begin contributing to Atom? You can start by looking through these `beginner` and `help-wanted` issues:
+Unsure where to begin contributing to KeePassX Reboot? You can start by looking through these `beginner` and `help-wanted` issues:
 
 * [Beginner issues][beginner] - issues which should only require a few lines of code, and a test or two.
 * [Help wanted issues][help-wanted] - issues which should be a bit more involved than `beginner` issues.
