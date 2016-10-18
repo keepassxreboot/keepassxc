@@ -76,7 +76,7 @@ Both issue lists are sorted by total number of comments. While not perfect, numb
 
 Along with our desire to hear your feedback and suggestions, we're also interested in accepting direct assistance in the form of code.
 
-All pull requests must comply with the CONTRIBUTION requirements.
+All pull requests must comply with the above requirements.
 
 ### Translations
 
@@ -104,11 +104,11 @@ Please join an existing language team or request a new one if there is none.
     * :lock: `:lock:` when dealing with security
 
 
-### C Styleguide
+### Coding Styleguide
 
-...
+This project follows the [Qt Coding Style](https://wiki.qt.io/Qt_Coding_Style). All submissions are expected to follow this style.
 
-
+Addendum- Class member variables must start with ```m_```
 
 
 [beginner]:https://github.com/keepassxreboot/keepassx/issues?q=is%3Aopen+is%3Aissue+label%3Abeginner+label%3A%22help+wanted%22+sort%3Acomments-desc

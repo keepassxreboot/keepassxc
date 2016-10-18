@@ -7,7 +7,7 @@
 Fork of [KeePassX](https://www.keepassx.org/) that [aims to incorporate stalled Pull Requests, features, and bug fixes that are not being incorporated into the main KeePassX baseline](https://github.com/keepassxreboot/keepassx/issues/43).
 
 
-#### Additional Reboot Feature
+#### Additional Reboot Features
  - keepasshttp support for use with [PassIFox](https://addons.mozilla.org/en-us/firefox/addon/passifox/) for Mozilla Firefox and [chromeIPass](https://chrome.google.com/webstore/detail/chromeipass/ompiailgknfdndiefoaoiligalphfdae) for Google Chrome.
 
 KeePassHttp implementation has been forked from jdachtera's repository, which in turn was based on code from code with Francois Ferrand's [keepassx-http](https://gitorious.org/keepassx/keepassx-http/source/master) repository.
@@ -80,26 +80,10 @@ To update the project from within the project's folder you can run the following
 git pull
 ```
 
-### Feature Requests
+### Contributing
 
 We're always looking for suggestions to improve our application. If you have a suggestion for improving an existing feature,
 or would like to suggest a completely new feature for KeePassX Reboot, please use the Issues section or our [Google Groups](https://groups.google.com/forum/#!forum/keepassx-reboot) forum.
 
-### Bug Reports
+Please review the [CONTRIBUTING](.github/CONTRIBUTING.md) document for further information.
 
-Our software isn't always perfect, but we strive to always improve our work. You may file bug reports in the Issues section.
-
-### Pull Requests
-
-Along with our desire to hear your feedback and suggestions, we're also interested in accepting direct assistance in the form of code.
-
-All pull requests must comply with the CONTRIBUTION requirements.
-
-### Discuss with the Team
-
-You can talk to the KeePassX Reboot Team about Bugs, new feature, Issue and PullRequests at our [Google Groups](https://groups.google.com/forum/#!forum/keepassx-reboot) forum
-
-### Translations
-
-Translations are managed on [Transifex](https://www.transifex.com/keepassx-reboot/keepassx-reboot/) which offers a web interface.
-Please join an existing language team or request a new one if there is none.
