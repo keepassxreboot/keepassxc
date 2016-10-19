@@ -56,14 +56,14 @@
     </widget>
    </item>
    <item row="5" column="0">
-    <widget class="QLabel" name="label_2">
+    <widget class="QLabel" name="reloadBehaviorLabel">
      <property name="text">
       <string>When database files are externally modified</string>
      </property>
     </widget>
    </item>
    <item row="5" column="1">
-    <widget class="QComboBox" name="reloadBehavior">
+    <widget class="QComboBox" name="reloadBehaviorComboBox">
      <item>
       <property name="text">
        <string>Always ask</string>
@@ -243,7 +243,7 @@
   <tabstop>openPreviousDatabasesOnStartupCheckBox</tabstop>
   <tabstop>autoSaveOnExitCheckBox</tabstop>
   <tabstop>autoSaveAfterEveryChangeCheckBox</tabstop>
-  <tabstop>reloadBehavior</tabstop>
+  <tabstop>reloadBehaviorComboBox</tabstop>
   <tabstop>minimizeOnCopyCheckBox</tabstop>
   <tabstop>autoTypeShortcutWidget</tabstop>
  </tabstops>

@@ -462,7 +462,7 @@ QList<Entry*> Group::entriesRecursive(bool includeHistoryItems) const
 Entry* Group::findEntry(const Uuid& uuid)
 {
     Q_ASSERT(!uuid.isNull());
-    Q_FOREACH (Entry* entry, m_entries) {
+    for (Entry* entry : asConst(m_entries)) {
         if (entry->uuid() == uuid) {
             return entry;
         }
@@ -524,7 +524,8 @@ QSet<Uuid> Group::customIconsRecursive() const
 void Group::merge(const Group* other)
 {
     // merge entries
-    Q_FOREACH (Entry* entry, other->entries()) {
+    const QList<Entry*> dbEntries = other->entries();
+    for (Entry* entry : dbEntries) {
         // entries are searched by uuid
         if (!findEntry(entry->uuid())) {
             entry->clone(Entry::CloneNoFlags)->setGroup(this);
@@ -534,7 +535,8 @@ void Group::merge(const Group* other)
     }
 
     // merge groups (recursively)
-    Q_FOREACH (Group* group, other->children()) {
+    const QList<Group*> dbChildren = other->children();
+    for (Group* group : dbChildren) {
         // groups are searched by name instead of uuid
         if (this->findChildByName(group->name())) {
             this->findChildByName(group->name())->merge(group);
@@ -548,7 +550,7 @@ void Group::merge(const Group* other)
 
 Group* Group::findChildByName(const QString& name)
 {
-    Q_FOREACH (Group* group, m_children) {
+    for (Group* group : asConst(m_children)) {
         if (group->name() == name) {
             return group;
         }

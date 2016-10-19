@@ -27,6 +27,7 @@
 
 #include "autotype/AutoType.h"
 #include "core/Config.h"
+#include "core/Global.h"
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -271,7 +272,7 @@ void DatabaseTabWidget::checkReloadDatabases()
     if (changedFiles.isEmpty())
         return;
 
-    Q_FOREACH (DatabaseManagerStruct dbStruct, m_dbList) {
+    for (DatabaseManagerStruct dbStruct: asConst(m_dbList)) {
         QString filePath = dbStruct.filePath;
         Database * db = dbStruct.dbWidget->database();
 
