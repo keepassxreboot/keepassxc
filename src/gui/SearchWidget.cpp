@@ -73,7 +73,8 @@ void SearchWidget::connectSignals(SignalMultiplexer& mx)
 
 void SearchWidget::hideEvent(QHideEvent *event)
 {
-    m_ui->searchEdit->clear();
+    // TODO: might be better to disable the edit widget instead of clearing it
+    //m_ui->searchEdit->clear();
     QWidget::hideEvent(event);
 }
 
