@@ -54,6 +54,7 @@ private Q_SLOTS:
     void showAboutDialog();
     void switchToDatabases();
     void switchToSettings();
+    void databaseStatusChanged(DatabaseWidget *dbWidget);
     void databaseTabChanged(int tabIndex);
     void openRecentDatabase(QAction* action);
     void clearLastDatabases();

@@ -90,6 +90,16 @@ QIcon FilePath::applicationIcon()
     return icon("apps", "keepassx");
 }
 
+QIcon FilePath::trayIconLocked()
+{
+    return icon("apps", "keepassx-locked");
+}
+
+QIcon FilePath::trayIconUnlocked()
+{
+    return applicationIcon();
+}
+
 QIcon FilePath::icon(const QString& category, const QString& name, bool fromTheme)
 {
     QString combinedName = category + "/" + name;

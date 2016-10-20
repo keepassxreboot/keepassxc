@@ -658,6 +658,7 @@ void DatabaseWidget::openDatabase(bool accepted)
     if (accepted) {
         replaceDatabase(static_cast<DatabaseOpenWidget*>(sender())->database());
         setCurrentWidget(m_mainWidget);
+        Q_EMIT unlockedDatabase();
 
         // We won't need those anymore and KeePass1OpenWidget closes
         // the file in its dtor.
