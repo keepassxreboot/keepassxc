@@ -204,7 +204,7 @@ void TestGui::testSearch()
     QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
 
     QWidget* searchActionWidget = toolBar->findChild<QWidget*>("SearchWidget");
-    QVERIFY(searchActionWidget->isVisible());
+    QTRY_VERIFY(searchActionWidget->isVisible());
 
     EntryView* entryView = m_dbWidget->findChild<EntryView*>("entryView");
     QVERIFY(entryView->isVisible());
