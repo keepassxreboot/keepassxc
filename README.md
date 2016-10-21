@@ -83,7 +83,7 @@ git pull
 ### Contributing
 
 We're always looking for suggestions to improve our application. If you have a suggestion for improving an existing feature,
-or would like to suggest a completely new feature for KeePassX Reboot, please use the Issues section or our [Google Groups](https://groups.google.com/forum/#!forum/keepassx-reboot) forum.
+or would like to suggest a completely new feature for KeePassX Reboot, please use the [Issues](https://github.com/keepassxreboot/keepassx/issues) section or our [Google Groups](https://groups.google.com/forum/#!forum/keepassx-reboot) forum.
 
 Please review the [CONTRIBUTING](.github/CONTRIBUTING.md) document for further information.
 
