@@ -22,7 +22,12 @@
 #include <QEventLoop>
 #include <QtNetwork/QHostInfo>
 #include <QtNetwork/QHostAddress>
+
+#ifdef Q_OS_WIN
+#include <winsock2.h>
+#else
 #include <netinet/in.h>
+#endif
 
 using namespace KeepassHttpProtocol;
 
