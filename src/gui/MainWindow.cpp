@@ -717,8 +717,8 @@ void MainWindow::repairDatabase()
             KeePass2Writer writer;
             writer.writeDatabase(saveFileName, dbRepairWidget->database());
             if (writer.hasError()) {
-                MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
-                                     + writer.errorString());
+                QMessageBox::critical(this, tr("Error"),
+                    tr("Writing the database failed.").append("\n\n").append(writer.errorString()));
             }
         }
     }
