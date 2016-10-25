@@ -516,6 +516,11 @@ void MainWindow::closeEvent(QCloseEvent* event)
     {
         event->ignore();
         hide();
+
+        if (config()->get("security/lockdatabaseminimize").toBool()) {
+            m_ui->tabWidget->lockDatabases();
+        }
+
         return;
     }
 
@@ -534,12 +539,17 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
 void MainWindow::changeEvent(QEvent* event)
 {
-    if ((event->type() == QEvent::WindowStateChange) && isMinimized()
-            && isTrayIconEnabled() && m_trayIcon && m_trayIcon->isVisible()
-            && config()->get("GUI/MinimizeToTray").toBool())
-    {
-        event->ignore();
-        QTimer::singleShot(0, this, SLOT(hide()));
+    if ((event->type() == QEvent::WindowStateChange) && isMinimized()) {
+        if (isTrayIconEnabled() && m_trayIcon && m_trayIcon->isVisible()
+                && config()->get("GUI/MinimizeToTray").toBool())
+        {
+            event->ignore();
+            QTimer::singleShot(0, this, SLOT(hide()));
+        }
+
+        if (config()->get("security/lockdatabaseminimize").toBool()) {
+            m_ui->tabWidget->lockDatabases();
+        }
     }
     else {
         QMainWindow::changeEvent(event);
@@ -674,6 +684,10 @@ void MainWindow::toggleWindow()
 {
     if ((QApplication::activeWindow() == this) && isVisible() && !isMinimized()) {
         hide();
+
+        if (config()->get("security/lockdatabaseminimize").toBool()) {
+            m_ui->tabWidget->lockDatabases();
+        }
     }
     else {
         ensurePolished();
