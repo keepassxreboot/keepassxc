@@ -376,7 +376,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionDatabaseSaveAs->setEnabled(true);
             m_ui->actionExportCsv->setEnabled(true);
 
-            m_searchWidgetAction->setVisible(true);
+            m_searchWidgetAction->setEnabled(true);
             break;
         }
         case DatabaseWidget::EditMode:
@@ -403,7 +403,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionDatabaseSaveAs->setEnabled(false);
             m_ui->actionExportCsv->setEnabled(false);
 
-            m_searchWidgetAction->setVisible(false);
+            m_searchWidgetAction->setEnabled(false);
             break;
         }
         default:
@@ -435,7 +435,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         m_ui->actionDatabaseClose->setEnabled(false);
         m_ui->actionExportCsv->setEnabled(false);
 
-        m_searchWidgetAction->setVisible(false);
+        m_searchWidgetAction->setEnabled(false);
     }
 
     bool inDatabaseTabWidgetOrWelcomeWidget = inDatabaseTabWidget || inWelcomeWidget;

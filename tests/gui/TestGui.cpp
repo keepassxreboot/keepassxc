@@ -204,13 +204,11 @@ void TestGui::testSearch()
     QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
 
     QWidget* searchActionWidget = toolBar->findChild<QWidget*>("SearchWidget");
-    QTRY_VERIFY(searchActionWidget->isVisible());
+    QVERIFY(searchActionWidget->isEnabled());
+    QLineEdit* searchEdit = searchActionWidget->findChild<QLineEdit*>("searchEdit");
 
     EntryView* entryView = m_dbWidget->findChild<EntryView*>("entryView");
     QVERIFY(entryView->isVisible());
-
-    QLineEdit* searchEdit = searchActionWidget->findChild<QLineEdit*>("searchEdit");
-    QVERIFY(searchEdit->isVisible());
 
     // Enter search
     QTest::mouseClick(searchEdit, Qt::LeftButton);
