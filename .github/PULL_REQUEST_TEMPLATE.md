@@ -15,17 +15,21 @@
 ## Screenshots (if appropriate):
 
 ## Types of changes
-<!--- What types of changes does your code introduce? Put an `x` in all the boxes that apply: -->
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to change)
+<!--- What types of changes does your code introduce? If it apply to your pull request, -->
+<!--- replace all the `:negative_squared_cross_mark:` with `:white_check_mark:` -->
+<!--- Everybody loves emoji -->
+- :negative_squared_cross_mark: Bug fix (non-breaking change which fixes an issue)
+- :negative_squared_cross_mark: New feature (non-breaking change which adds functionality)
+- :negative_squared_cross_mark: Breaking change (fix or feature that would cause existing functionality to change)
 
 ## Checklist:
-<!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
+<!--- Go over all the following points, if it apply to your pull request, -->
+<!--- replace all the `:negative_squared_cross_mark:` with `:white_check_mark:`. -->
 <!--- If you're unsure about any of these, don't hesitate to ask. We're here to help! -->
-- [ ] My code follows the code style of this project.
-- [ ] My change requires a change to the documentation.
-- [ ] I have updated the documentation accordingly.
-- [ ] I have read the **CONTRIBUTING** document.
-- [ ] I have added tests to cover my changes.
-- [ ] All new and existing tests passed.
+<!--- Pull Requests that fail the [REQUIRED] field will likely be sent back for corrections or rejected  -->
+- :negative_squared_cross_mark: I have read the **CONTRIBUTING** document. [REQUIRED]
+- :negative_squared_cross_mark: My code follows the code style of this project. [REQUIRED]
+- :negative_squared_cross_mark: All new and existing tests passed. [REQUIRED]
+- :negative_squared_cross_mark: My change requires a change to the documentation.
+- :negative_squared_cross_mark: I have updated the documentation accordingly.
+- :negative_squared_cross_mark: I have added tests to cover my changes.

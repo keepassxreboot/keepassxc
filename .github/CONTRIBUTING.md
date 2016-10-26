@@ -108,7 +108,59 @@ Please join an existing language team or request a new one if there is none.
 
 This project follows the [Qt Coding Style](https://wiki.qt.io/Qt_Coding_Style). All submissions are expected to follow this style.
 
-Addendum- Class member variables must start with ```m_```
+In particular Code must follow the following specific rules:
+
+#### Naming Convention
+`lowerCamelCase`
+
+For names made of only one word, the fist letter is lowercase.  
+For names made of multiple concatenated words, the first letter is lowercase and each subsequent concatenated word is capitalized.
+
+#### Indention
+For C++ files (.cpp .h): 4 spaces  
+For Qt-UI files (.ui): 2 spaces
+
+#### Pointers
+```c
+int* count;
+```
+
+#### Braces
+```c
+if (condition) {
+    doSomething();
+}
+
+void ExampleClass::exampleFunction()
+{
+    doSomething();
+}
+```
+
+#### Switch statement
+```c
+switch (a) {
+case 1:
+    doSomething();
+    break;
+
+default:
+    doSomethingElse();
+    break;
+}
+```
+
+#### Member variables
+Use prefix: `m_*`
+
+Example: `m_variable`
+
+#### GUI Widget names
+Widget names must be related to the desired program behaviour.  
+Preferably end the name with the Widget Classname
+
+Example: `<widget class="QCheckBox" name="rememberCheckBox">`
+
 
 
 [beginner]:https://github.com/keepassxreboot/keepassx/issues?q=is%3Aopen+is%3Aissue+label%3Abeginner+label%3A%22help+wanted%22+sort%3Acomments-desc
