@@ -26,10 +26,10 @@
 <!--- Go over all the following points, if it apply to your pull request, -->
 <!--- replace all the `:negative_squared_cross_mark:` with `:white_check_mark:`. -->
 <!--- If you're unsure about any of these, don't hesitate to ask. We're here to help! -->
-<!--- Pull Requests that fail the [REQUIRED] field will be "automatically" rejected  -->
+<!--- Pull Requests that fail the [REQUIRED] field will likely be sent back for corrections or rejected  -->
+- :negative_squared_cross_mark: I have read the **CONTRIBUTING** document. [REQUIRED]
 - :negative_squared_cross_mark: My code follows the code style of this project. [REQUIRED]
+- :negative_squared_cross_mark: All new and existing tests passed. [REQUIRED]
 - :negative_squared_cross_mark: My change requires a change to the documentation.
 - :negative_squared_cross_mark: I have updated the documentation accordingly.
-- :negative_squared_cross_mark: I have read the **CONTRIBUTING** document. [REQUIRED]
 - :negative_squared_cross_mark: I have added tests to cover my changes.
-- :negative_squared_cross_mark: All new and existing tests passed. [REQUIRED]
