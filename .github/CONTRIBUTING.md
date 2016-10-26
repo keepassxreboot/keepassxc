@@ -156,10 +156,10 @@ Use prefix: `m_*`
 Example: `m_variable`
 
 #### GUI Widget names
-Widget names must have sense based on the Program behaviour.  
-Preferibile if also ends (or starts) with the Widget-Class
+Widget names must be related to the desired program behaviour.  
+Preferably end the name with the Widget Classname
 
-Example: `<widget class="QCheckBox" name="rememberCheckBox">` or `<widget class="QCheckBox" name="checkBoxRemember">`
+Example: `<widget class="QCheckBox" name="rememberCheckBox">`
 
 
 
