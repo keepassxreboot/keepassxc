@@ -15,54 +15,24 @@ KeePassHttp implementation has been forked from jdachtera's repository, which in
 This is a rebuild from [denk-mal's keepasshttp](https://github.com/denk-mal/keepassx.git) that brings it forward to Qt5 and KeePassX v2.x.
 
 
-#### Build Dependencies
+### Installation
 
-The following tools must exist within your PATH:
+Right now KeePassXR does not have a precompiled executable or an installation package.<br/>
+So you must install it from its source code.
 
-* make
-* cmake (>= 2.8.12)
-* g++ (>= 4.7) or clang++ (>= 3.0)
+**More detailed instructions are available in the INSTALL file or at the [Wiki page](https://github.com/keepassxreboot/keepassx/wiki/Install-Instruction-from-Source).**
 
-The following libraries are required:
+First you must download the KeePassXR source code as ZIP file or with Git.
 
-* Qt 5 (>= 5.2): qtbase and qttools5
-* libgcrypt (>= 1.6)
-* zlib
-* libmicrohttpd
-* libxi, libxtst, qtx11extras (optional for auto-type on X11)
-
-On Debian/Ubuntu you can install them with:
-
-```bash
-sudo apt-get install build-essential cmake libmicrohttpd-dev libxi-dev libxtst-dev qtbase5-dev libqt5x11extras5-dev qttools5-dev qttools5-dev-tools libgcrypt20-dev zlib1g-dev
+Generally you can build and install KeePassXR with the following commands from a Terminal in the KeePassXR folder
 ```
-
-On Fedora/RHEL/CentOS you can install them with:
-
-```bash
-sudo dnf install make automake gcc gcc-c++ cmake libmicrohttpd-devel libXi-devel libXtst-devel qt5-qtbase-devel qt5-qtx11extras qt5-qttools libgcrypt-devel zlib-devel
-```
-
-#### Build Steps
-
-To compile from source:
-
-```bash
 mkdir build
 cd build
-cmake -DWITH_TESTS=OFF ..
-make [-jX]
-```
-
-You will have the compiled KeePassX binary inside the `./build/src/` directory.
-
-To install this binary execute the following:
-
-```bash
+cmake -DWITH_TESTS=OFF
+make
 sudo make install
 ```
 
-More detailed instructions available in the INSTALL file.
 
 ### Clone Repository
 
@@ -80,10 +50,10 @@ To update the project from within the project's folder you can run the following
 git pull
 ```
 
+
 ### Contributing
 
 We're always looking for suggestions to improve our application. If you have a suggestion for improving an existing feature,
 or would like to suggest a completely new feature for KeePassX Reboot, please use the [Issues](https://github.com/keepassxreboot/keepassx/issues) section or our [Google Groups](https://groups.google.com/forum/#!forum/keepassx-reboot) forum.
 
 Please review the [CONTRIBUTING](.github/CONTRIBUTING.md) document for further information.
-
