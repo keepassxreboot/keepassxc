@@ -116,6 +116,7 @@ if(MINGW)
   set(CMAKE_RC_COMPILER_INIT windres)
   enable_language(RC)
   set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> <FLAGS> -O coff <DEFINES> -i <SOURCE> -o <OBJECT>")
+  link_libraries(ws2_32 wsock32)
 endif()
 
 if(APPLE OR MINGW)
@@ -201,7 +202,7 @@ if(UNIX)
   endif()
 endif()
 
-include_directories(SYSTEM ${GCRYPT_INCLUDE_DIR} ${ZLIB_INCLUDE_DIR})
+include_directories(SYSTEM ${GCRYPT_INCLUDE_DIR} ${MHD_INCLUDE_DIR} ${ZLIB_INCLUDE_DIR})
 
 include(FeatureSummary)
 

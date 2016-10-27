@@ -373,6 +373,10 @@ Do you want to save it anyway?</source>
         <translation>Duomenų bazė, kurią bandote įrašyti yra užrakinta kito KeePassX programos egzemplioriaus.
 Ar vis tiek norite ją įrašyti?</translation>
     </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
@@ -423,6 +427,14 @@ Ar vis tiek norite ją įrašyti?</translation>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Nepavyko apskaičiuoti pagrindinio rakto</translation>
+    </message>
+    <message>
+        <source>Move entry to recycle bin?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -738,6 +750,14 @@ Ar vis tiek norite ją įrašyti?</translation>
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
         <translation><numerusform>Nepavyksta ištrinti piktogramos. Vis dar naudojama %n elemento.</numerusform><numerusform>Nepavyksta ištrinti piktogramos. Vis dar naudojama %n elementų.</numerusform><numerusform>Nepavyksta ištrinti piktogramos. Vis dar naudojama %n elementų.</numerusform></translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Can&apos;t read icon:</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
@@ -850,6 +870,10 @@ Ar vis tiek norite ją įrašyti?</translation>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Nepavyko apskaičiuoti pagrindinio rakto</translation>
+    </message>
+    <message>
+        <source>Wrong key or database file is corrupt.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1301,6 +1325,14 @@ Tai yra vienakryptis perkėlimas. Jūs negalėsite atverti importuotos duomenų 
     <message>
         <source>Remember last key files</source>
         <translation>Prisiminti paskutinius rakto failus</translation>
+    </message>
+    <message>
+        <source>Hide window to system tray instead of App Exit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide window to system tray on App start</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

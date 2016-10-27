@@ -4,13 +4,16 @@
 
 ## About
 
-Fork of [KeePassX](https://www.keepassx.org/) with keepasshttp support for use with [PassIFox](https://addons.mozilla.org/en-us/firefox/addon/passifox/) for Mozilla Firefox and [chromeIPass](https://chrome.google.com/webstore/detail/chromeipass/ompiailgknfdndiefoaoiligalphfdae) for Google Chrome.
+Fork of [KeePassX](https://www.keepassx.org/) that [aims to incorporate stalled Pull Requests, features, and bug fixes that are not being incorporated into the main KeePassX baseline](https://github.com/keepassxreboot/keepassx/issues/43).
 
-KeePassHttp implementation has been forked from jdachtera's repository, which in turn was based on code from code with Francois Ferrand's [keepassx-http](https://gitorious.org/keepassx/keepassx-http/source/master) repository. 
+
+#### Additional Reboot Features
+ - keepasshttp support for use with [PassIFox](https://addons.mozilla.org/en-us/firefox/addon/passifox/) for Mozilla Firefox and [chromeIPass](https://chrome.google.com/webstore/detail/chromeipass/ompiailgknfdndiefoaoiligalphfdae) for Google Chrome.
+
+KeePassHttp implementation has been forked from jdachtera's repository, which in turn was based on code from code with Francois Ferrand's [keepassx-http](https://gitorious.org/keepassx/keepassx-http/source/master) repository.
 
 This is a rebuild from [denk-mal's keepasshttp](https://github.com/denk-mal/keepassx.git) that brings it forward to Qt5 and KeePassX v2.x.
 
-This reboot also aims to incorporate stalled Pull Requests, features, and bug fixes that are not being incorporated into the main KeePassX baseline.
 
 #### Build Dependencies
 
@@ -31,13 +34,13 @@ The following libraries are required:
 On Debian/Ubuntu you can install them with:
 
 ```bash
-sudo apt-get install build-essential cmake libmicrohttpd-dev libxi-dev qtbase5-dev libqt5x11extras5-dev qttools5-dev qttools5-dev-tools libgcrypt20-dev zlib1g-dev
+sudo apt-get install build-essential cmake libmicrohttpd-dev libxi-dev libxtst-dev qtbase5-dev libqt5x11extras5-dev qttools5-dev qttools5-dev-tools libgcrypt20-dev zlib1g-dev
 ```
 
 On Fedora/RHEL/CentOS you can install them with:
 
 ```bash
-sudo dnf install make automake gcc gcc-c++ cmake libmicrohttpd-devel libXi-devel qt5-qtbase-devel qt5-qtx11extras qt5-qttools libgcrypt-devel zlib-devel
+sudo dnf install make automake gcc gcc-c++ cmake libmicrohttpd-devel libXi-devel libXtst-devel qt5-qtbase-devel qt5-qtx11extras qt5-qttools libgcrypt-devel zlib-devel
 ```
 
 #### Build Steps
@@ -61,18 +64,12 @@ sudo make install
 
 More detailed instructions available in the INSTALL file.
 
-## Contribute
-
-Coordination of work between developers is handled through the [KeePassX development](https://www.keepassx.org/dev/) site.
-Requests for enhancements, or reports of bugs encountered, can also be reported through the KeePassX development site.
-However, members of the open-source community are encouraged to submit pull requests directly through GitHub.
-
 ### Clone Repository
 
 Clone the repository to a suitable location where you can extend and build this project.
 
 ```bash
-git clone https://github.com/keepassx/keepassx.git
+git clone https://github.com/keepassxreboot/keepassx.git
 ```
 
 **Note:** This will clone the entire contents of the repository at the HEAD revision.
@@ -83,22 +80,10 @@ To update the project from within the project's folder you can run the following
 git pull
 ```
 
-### Feature Requests
+### Contributing
 
 We're always looking for suggestions to improve our application. If you have a suggestion for improving an existing feature,
-or would like to suggest a completely new feature for KeePassX Reboot, please use the Issues section.
+or would like to suggest a completely new feature for KeePassX Reboot, please use the [Issues](https://github.com/keepassxreboot/keepassx/issues) section or our [Google Groups](https://groups.google.com/forum/#!forum/keepassx-reboot) forum.
 
-### Bug Reports
+Please review the [CONTRIBUTING](.github/CONTRIBUTING.md) document for further information.
 
-Our software isn't always perfect, but we strive to always improve our work. You may file bug reports in the Issues section.
-
-### Pull Requests
-
-Along with our desire to hear your feedback and suggestions, we're also interested in accepting direct assistance in the form of code.
-
-All pull requests must comply with the CONTRIBUTION requirements.
-
-### Translations
-
-Translations are managed on [Transifex](https://www.transifex.com/projects/p/keepassx/) which offers a web interface.
-Please join an existing language team or request a new one if there is none.

@@ -185,6 +185,10 @@ MainWindow::MainWindow()
             SLOT(databaseTabChanged(int)));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)),
             SLOT(setMenuActionState()));
+    connect(m_ui->tabWidget, SIGNAL(databaseLocked(DatabaseWidget*)),
+            SLOT(databaseStatusChanged(DatabaseWidget*)));
+    connect(m_ui->tabWidget, SIGNAL(databaseUnlocked(DatabaseWidget*)),
+            SLOT(databaseStatusChanged(DatabaseWidget*)));
     connect(m_ui->stackedWidget, SIGNAL(currentChanged(int)), SLOT(setMenuActionState()));
     connect(m_ui->stackedWidget, SIGNAL(currentChanged(int)), SLOT(updateWindowTitle()));
     connect(m_ui->settingsWidget, SIGNAL(editFinished(bool)), SLOT(switchToDatabases()));
@@ -492,6 +496,11 @@ void MainWindow::switchToSettings()
     m_ui->stackedWidget->setCurrentIndex(1);
 }
 
+void MainWindow::databaseStatusChanged(DatabaseWidget *)
+{
+    updateTrayIcon();
+}
+
 void MainWindow::databaseTabChanged(int tabIndex)
 {
     if (tabIndex != -1 && m_ui->stackedWidget->currentIndex() == 2) {
@@ -584,7 +593,7 @@ void MainWindow::updateTrayIcon()
 {
     if (isTrayIconEnabled()) {
         if (!m_trayIcon) {
-            m_trayIcon = new QSystemTrayIcon(filePath()->applicationIcon(), this);
+            m_trayIcon = new QSystemTrayIcon(this);
 
             QMenu* menu = new QMenu(this);
 
@@ -598,7 +607,14 @@ void MainWindow::updateTrayIcon()
             connect(actionToggle, SIGNAL(triggered()), SLOT(toggleWindow()));
 
             m_trayIcon->setContextMenu(menu);
+            m_trayIcon->setIcon(filePath()->applicationIcon());
             m_trayIcon->show();
+        }
+        if (m_ui->tabWidget->hasLockableDatabases()) {
+            m_trayIcon->setIcon(filePath()->trayIconUnlocked());
+        }
+        else {
+            m_trayIcon->setIcon(filePath()->trayIconLocked());
         }
     }
     else {
@@ -712,8 +728,8 @@ void MainWindow::repairDatabase()
             KeePass2Writer writer;
             writer.writeDatabase(saveFileName, dbRepairWidget->database());
             if (writer.hasError()) {
-                MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
-                                     + writer.errorString());
+                QMessageBox::critical(this, tr("Error"),
+                    tr("Writing the database failed.").append("\n\n").append(writer.errorString()));
             }
         }
     }

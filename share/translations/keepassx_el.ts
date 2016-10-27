@@ -7,11 +7,15 @@
     </message>
     <message>
         <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassX διανέμεται υπό τον όρο από το GNU γενικής δημόσιας άδειας (GPL) έκδοση 2 ή (κατ &apos; επιλογή σας) έκδοση 3.</translation>
     </message>
     <message>
         <source>Revision</source>
         <translation>Αναθεώρηση</translation>
+    </message>
+    <message>
+        <source>Using:</source>
+        <translation>Χρήση:</translation>
     </message>
 </context>
 <context>
@@ -127,7 +131,7 @@
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Enter master key</source>
-        <translation type="unfinished"/>
+        <translation>Εισαγάγετε το πρωτεύον κλειδί</translation>
     </message>
     <message>
         <source>Key File:</source>
@@ -167,6 +171,42 @@
     </message>
 </context>
 <context>
+    <name>DatabaseRepairWidget</name>
+    <message>
+        <source>Repair database</source>
+        <translation>Επισκευή βάσης δεδομένων</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Σφάλμα</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open key file</source>
+        <translation>Δεν είναι δυνατό να ανοίξει αρχείο κλειδιού</translation>
+    </message>
+    <message>
+        <source>Database opened fine. Nothing to do.</source>
+        <translation>Μια χαρά το άνοιγμα βάσης δεδομένων. Τίποτα να κάνει.</translation>
+    </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation>Δεν είναι δυνατό να ανοίξει τη βάση δεδομένων.</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation>Επιτυχία</translation>
+    </message>
+    <message>
+        <source>The database has been successfully repaired
+You can now save it.</source>
+        <translation>Η βάση δεδομένων έχει επιδιορθωθεί με επιτυχία μπορείτε να το αποθηκεύσετε τώρα.</translation>
+    </message>
+    <message>
+        <source>Unable to repair the database.</source>
+        <translation>Δεν είναι δυνατή η επιδιόρθωση της βάσης δεδομένων.</translation>
+    </message>
+</context>
+<context>
     <name>DatabaseSettingsWidget</name>
     <message>
         <source>Database name:</source>
@@ -194,7 +234,7 @@
     </message>
     <message>
         <source>Benchmark</source>
-        <translation type="unfinished"/>
+        <translation>Σημείο αναφοράς</translation>
     </message>
     <message>
         <source>Max. history items:</source>
@@ -209,7 +249,7 @@
     <name>DatabaseTabWidget</name>
     <message>
         <source>Root</source>
-        <translation type="unfinished"/>
+        <translation>Ρίζα</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
@@ -263,7 +303,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation type="unfinished"/>
+        <translation>Εγγραφή της βάσης δεδομένων απέτυχε.</translation>
     </message>
     <message>
         <source>Save database as</source>
@@ -331,12 +371,16 @@ Do you want to save it anyway?</source>
         <translation>Η βάση δεδομένων που πρασπαθείται να αποθηκεύσετε είναι κλειδωμένη από μία άλλη διεργασία KeePassX.
 Θέλετε να την αποθηκεύσετε ούτως η άλλως;</translation>
     </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation>Δεν είναι δυνατό να ανοίξει τη βάση δεδομένων.</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
     <message>
         <source>Change master key</source>
-        <translation type="unfinished"/>
+        <translation>Αλλαγή πρωτεύοντος κλειδιού</translation>
     </message>
     <message>
         <source>Delete entry?</source>
@@ -380,7 +424,15 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation type="unfinished"/>
+        <translation>Σε θέση να υπολογίσει το κύριο κλειδί</translation>
+    </message>
+    <message>
+        <source>Move entry to recycle bin?</source>
+        <translation>Κίνηση εισόδου στον κάδο ανακύκλωσης;</translation>
+    </message>
+    <message>
+        <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
+        <translation>Θέλετε πραγματικά να κινηθεί εισόδου &quot;%1&quot; στον κάδο ανακύκλωσης;</translation>
     </message>
 </context>
 <context>
@@ -624,7 +676,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Inherit from parent group (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Κληρονομούν από γονική ομάδα (%1)</translation>
     </message>
 </context>
 <context>
@@ -696,6 +748,14 @@ Do you want to save it anyway?</source>
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation>Σφάλμα</translation>
+    </message>
+    <message>
+        <source>Can&apos;t read icon:</source>
+        <translation>Δεν μπορεί να διαβάσει το εικονίδιο:</translation>
+    </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
@@ -713,7 +773,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Uuid:</source>
-        <translation type="unfinished"/>
+        <translation>UUID:</translation>
     </message>
 </context>
 <context>
@@ -803,11 +863,15 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Root</source>
-        <translation type="unfinished"/>
+        <translation>Ρίζα</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation type="unfinished"/>
+        <translation>Σε θέση να υπολογίσει το κύριο κλειδί</translation>
+    </message>
+    <message>
+        <source>Wrong key or database file is corrupt.</source>
+        <translation>Λάθος κλειδί ή βάση δεδομένων αρχείο είναι κατεστραμμένο.</translation>
     </message>
 </context>
 <context>
@@ -826,6 +890,13 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Unable to calculate master key</source>
+        <translation>Σε θέση να υπολογίσει το κύριο κλειδί</translation>
+    </message>
+    <message>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -833,7 +904,7 @@ Do you want to save it anyway?</source>
     <name>Main</name>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
-        <translation type="unfinished"/>
+        <translation>Ανεπανόρθωτο σφάλμα κατά τον έλεγχο των κρυπτογραφικών λειτουργιών.</translation>
     </message>
     <message>
         <source>KeePassX - Error</source>
@@ -924,7 +995,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Change master key</source>
-        <translation type="unfinished"/>
+        <translation>Αλλαγή πρωτεύοντος κλειδιού</translation>
     </message>
     <message>
         <source>Database settings</source>
@@ -1006,6 +1077,30 @@ Do you want to save it anyway?</source>
         <source>Export to CSV file</source>
         <translation>Εξαγωγή σε αρχείο CSV</translation>
     </message>
+    <message>
+        <source>Repair database</source>
+        <translation>Επισκευή βάσης δεδομένων</translation>
+    </message>
+    <message>
+        <source>KeePass 2 Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>Όλα τα αρχεία</translation>
+    </message>
+    <message>
+        <source>Save repaired database</source>
+        <translation>Αποθήκευση επιδιορθωμένη βάση δεδομένων</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Σφάλμα</translation>
+    </message>
+    <message>
+        <source>Writing the database failed.</source>
+        <translation>Εγγραφή της βάσης δεδομένων απέτυχε.</translation>
+    </message>
 </context>
 <context>
     <name>PasswordGeneratorWidget</name>
@@ -1062,19 +1157,19 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Unknown option &apos;%1&apos;.</source>
-        <translation type="unfinished"/>
+        <translation>Άγνωστη επιλογή &apos;%1&apos;.</translation>
     </message>
     <message>
         <source>Unknown options: %1.</source>
-        <translation type="unfinished"/>
+        <translation>Άγνωστο επιλογές: %1.</translation>
     </message>
     <message>
         <source>Missing value after &apos;%1&apos;.</source>
-        <translation type="unfinished"/>
+        <translation>Τιμή που λείπει μετά από &apos;%1&apos;.</translation>
     </message>
     <message>
         <source>Unexpected value after &apos;%1&apos;.</source>
-        <translation type="unfinished"/>
+        <translation>Μη αναμενόμενη τιμή μετά από &apos;%1&apos;.</translation>
     </message>
     <message>
         <source>[options]</source>
@@ -1097,11 +1192,11 @@ Do you want to save it anyway?</source>
     <name>QSaveFile</name>
     <message>
         <source>Existing file %1 is not writable</source>
-        <translation type="unfinished"/>
+        <translation>Υπάρχον αρχείο %1 δεν είναι εγγράψιμο</translation>
     </message>
     <message>
         <source>Writing canceled by application</source>
-        <translation type="unfinished"/>
+        <translation>Γράψιμο ακυρώθηκε από την εφαρμογή</translation>
     </message>
     <message>
         <source>Partial write. Partition full?</source>
@@ -1116,15 +1211,15 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation type="unfinished"/>
+        <translation>Σφάλμα κατά την εγγραφή για την υποκείμενη συσκευή: </translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation type="unfinished"/>
+        <translation>Σφάλμα άνοιγμα υποκείμενη συσκευή: </translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation type="unfinished"/>
+        <translation>Σφάλμα κατά την ανάγνωση δεδομένων από υποκείμενη συσκευή: </translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
@@ -1150,7 +1245,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation type="unfinished"/>
+        <translation>Διάκριση πεζών-κεφαλαίων</translation>
     </message>
     <message>
         <source>Current group</source>
@@ -1158,7 +1253,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Root group</source>
-        <translation type="unfinished"/>
+        <translation>Ομάδα ρίζα</translation>
     </message>
 </context>
 <context>
@@ -1169,7 +1264,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"/>
+        <translation>Γενικά</translation>
     </message>
     <message>
         <source>Security</source>
@@ -1180,7 +1275,7 @@ Do you want to save it anyway?</source>
     <name>SettingsWidgetGeneral</name>
     <message>
         <source>Remember last databases</source>
-        <translation type="unfinished"/>
+        <translation>Θυμηθείτε την τελευταία βάσεις δεδομένων</translation>
     </message>
     <message>
         <source>Open previous databases on startup</source>
@@ -1208,7 +1303,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Use entry title to match windows for global auto-type</source>
-        <translation type="unfinished"/>
+        <translation>Χρησιμοποιήστε εγγραφή τίτλου ώστε να ταιριάζει με windows για παγκόσμια αυτόματος-τύπο</translation>
     </message>
     <message>
         <source>Language</source>
@@ -1216,7 +1311,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation type="unfinished"/>
+        <translation>Δείχνουν ένα εικονίδιο του δίσκου συστήματος</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
@@ -1224,6 +1319,14 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Remember last key files</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide window to system tray instead of App Exit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide window to system tray on App start</source>
         <translation type="unfinished"/>
     </message>
 </context>

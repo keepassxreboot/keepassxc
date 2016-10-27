@@ -373,6 +373,10 @@ Do you want to save it anyway?</source>
         <translation>La base de données que vous essayez de sauvegarder a été verrouillée par une autre instance de KeePassX.
 Voulez-vous quand même la sauvegarder ?</translation>
     </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
@@ -423,6 +427,14 @@ Voulez-vous quand même la sauvegarder ?</translation>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Impossible de calculer la clé maître</translation>
+    </message>
+    <message>
+        <source>Move entry to recycle bin?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -738,6 +750,14 @@ Voulez-vous quand même la sauvegarder ?</translation>
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
         <translation><numerusform>Impossible de supprimer l&apos;icône. Toujours utilisée par %n objet(s).</numerusform><numerusform>Impossible de supprimer l&apos;icône. Toujours utilisée par %n objet(s).</numerusform></translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Can&apos;t read icon:</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
@@ -850,6 +870,10 @@ Voulez-vous quand même la sauvegarder ?</translation>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Impossible de calculer la clé maître</translation>
+    </message>
+    <message>
+        <source>Wrong key or database file is corrupt.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1301,6 +1325,14 @@ Ceci est une migration à sens unique. Vous ne serez plus en mesure d&apos;ouvri
     <message>
         <source>Remember last key files</source>
         <translation>Se rappeler les derniers fichiers-clés ouverts</translation>
+    </message>
+    <message>
+        <source>Hide window to system tray instead of App Exit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide window to system tray on App start</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

@@ -750,6 +750,7 @@ void DatabaseTabWidget::insertDatabase(Database* db, const DatabaseManagerStruct
     connect(dbStruct.dbWidget, SIGNAL(closeRequest()), SLOT(closeDatabaseFromSender()));
     connect(dbStruct.dbWidget, SIGNAL(databaseChanged(Database*)), SLOT(changeDatabase(Database*)));
     connect(dbStruct.dbWidget, SIGNAL(unlockedDatabase()), SLOT(updateTabNameFromDbWidgetSender()));
+    connect(dbStruct.dbWidget, SIGNAL(unlockedDatabase()), SLOT(emitDatabaseUnlockedFromDbWidgetSender()));
 }
 
 DatabaseWidget* DatabaseTabWidget::currentDatabaseWidget()
@@ -846,6 +847,8 @@ void DatabaseTabWidget::lockDatabases()
         dbWidget->lock();
         // database has changed so we can't use the db variable anymore
         updateTabName(dbWidget->database());
+
+        Q_EMIT databaseLocked(dbWidget);
     }
 }
 
@@ -902,6 +905,11 @@ void DatabaseTabWidget::changeDatabase(Database* newDb)
 void DatabaseTabWidget::emitActivateDatabaseChanged()
 {
     Q_EMIT activateDatabaseChanged(currentDatabaseWidget());
+}
+
+void DatabaseTabWidget::emitDatabaseUnlockedFromDbWidgetSender()
+{
+    Q_EMIT databaseUnlocked(static_cast<DatabaseWidget*>(sender()));
 }
 
 void DatabaseTabWidget::connectDatabase(Database* newDb, Database* oldDb)
