@@ -23,10 +23,6 @@
 #include "core/Config.h"
 #include "core/Translator.h"
 
-#include "http/OptionDialog.h"
-
-#include "http/HttpSettings.h"
-
 class SettingsWidget::ExtraPage
 {
     public:
