@@ -79,6 +79,8 @@ void TestEntry::testCopyDataFrom()
     QCOMPARE(entry2->autoTypeAssociations()->size(), 2);
     QCOMPARE(entry2->autoTypeAssociations()->get(0).window, QString("1"));
     QCOMPARE(entry2->autoTypeAssociations()->get(1).window, QString("3"));
+
+    delete entry2;
 }
 
 void TestEntry::testClone()
@@ -101,6 +103,7 @@ void TestEntry::testClone()
     QCOMPARE(entryCloneNone->title(), QString("New Title"));
     QCOMPARE(entryCloneNone->historyItems().size(), 0);
     QCOMPARE(entryCloneNone->timeInfo().creationTime(), entryOrg->timeInfo().creationTime());
+    delete entryCloneNone;
 
     Entry* entryCloneNewUuid = entryOrg->clone(Entry::CloneNewUuid);
     QVERIFY(entryCloneNewUuid->uuid() != entryOrg->uuid());
@@ -108,17 +111,22 @@ void TestEntry::testClone()
     QCOMPARE(entryCloneNewUuid->title(), QString("New Title"));
     QCOMPARE(entryCloneNewUuid->historyItems().size(), 0);
     QCOMPARE(entryCloneNewUuid->timeInfo().creationTime(), entryOrg->timeInfo().creationTime());
+    delete entryCloneNewUuid;
 
     Entry* entryCloneResetTime = entryOrg->clone(Entry::CloneResetTimeInfo);
-    QCOMPARE(entryCloneNone->uuid(), entryOrg->uuid());
+    QCOMPARE(entryCloneResetTime->uuid(), entryOrg->uuid());
     QCOMPARE(entryCloneResetTime->title(), QString("New Title"));
     QCOMPARE(entryCloneResetTime->historyItems().size(), 0);
     QVERIFY(entryCloneResetTime->timeInfo().creationTime() != entryOrg->timeInfo().creationTime());
+    delete entryCloneResetTime;
 
     Entry* entryCloneHistory = entryOrg->clone(Entry::CloneIncludeHistory);
-    QCOMPARE(entryCloneNone->uuid(), entryOrg->uuid());
+    QCOMPARE(entryCloneHistory->uuid(), entryOrg->uuid());
     QCOMPARE(entryCloneHistory->title(), QString("New Title"));
     QCOMPARE(entryCloneHistory->historyItems().size(), 1);
     QCOMPARE(entryCloneHistory->historyItems().at(0)->title(), QString("Original Title"));
     QCOMPARE(entryCloneHistory->timeInfo().creationTime(), entryOrg->timeInfo().creationTime());
+    delete entryCloneHistory;
+
+    delete entryOrg;
 }
