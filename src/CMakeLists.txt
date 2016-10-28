@@ -219,11 +219,15 @@ if(APPLE)
   install_qt4_executable(${PROGNAME}.app "qjpeg;qgif;qico;qtaccessiblewidgets")
 endif()
 
-if(MINGW )
+if(MINGW)
   set(CPACK_GENERATOR "ZIP")
   set(CPACK_STRIP_FILES ON)
   set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSX_VERSION_NUM}")
   include(CPack)
+
+  install(CODE "
+  set(gp_tool \"objdump\")
+  " COMPONENT Runtime)
 
   include(DeployQt4)
   install_qt4_executable(${PROGNAME}.exe "qjpeg;qgif;qico;qtaccessiblewidgets")
