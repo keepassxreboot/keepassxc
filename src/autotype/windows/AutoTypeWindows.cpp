@@ -17,6 +17,8 @@
 
 #include "AutoTypeWindows.h"
 
+#include <VersionHelpers.h>
+
 #define HOTKEY_ID 1
 #define MAX_WINDOW_TITLE_LENGTH 1024
 
@@ -24,19 +26,10 @@
 
 //
 // Test if os version is Windows 7 or later
-// see: https://msdn.microsoft.com/en-us/library/windows/desktop/ms724451%28v=vs.85%29.aspx
 //
 bool AutoTypePlatformWin::isAvailable()
 {
-    OSVERSIONINFO osvi;
-
-    ::ZeroMemory(&osvi, sizeof(OSVERSIONINFO));
-    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-
-    ::GetVersionEx(&osvi);
-
-    return  ( (osvi.dwMajorVersion > 6) ||
-            ( (osvi.dwMajorVersion == 6) && (osvi.dwMinorVersion >= 1) ));
+    return IsWindows7OrGreater();
 }
 
 //
