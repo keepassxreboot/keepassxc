@@ -57,6 +57,7 @@ void OptionDialog::loadSettings()
     ui->alwaysAllowAccess->setChecked(settings.alwaysAllowAccess());
     ui->alwaysAllowUpdate->setChecked(settings.alwaysAllowUpdate());
     ui->searchInAllDatabases->setChecked(settings.searchInAllDatabases());
+    ui->supportKphFields->setChecked(settings.supportKphFields());
 }
 
 void OptionDialog::saveSettings()
@@ -85,4 +86,5 @@ void OptionDialog::saveSettings()
     settings.setAlwaysAllowAccess(ui->alwaysAllowAccess->isChecked());
     settings.setAlwaysAllowUpdate(ui->alwaysAllowUpdate->isChecked());
     settings.setSearchInAllDatabases(ui->searchInAllDatabases->isChecked());
+    settings.setSupportKphFields(ui->supportKphFields->isChecked());
 }
