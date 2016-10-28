@@ -445,4 +445,7 @@ void TestGroup::testCopyCustomIcons()
 
     QCOMPARE(metaTarget->customIcon(group1Icon).pixel(0, 0), qRgb(1, 2, 3));
     QCOMPARE(metaTarget->customIcon(group2Icon).pixel(0, 0), qRgb(4, 5, 6));
+
+    delete dbTarget;
+    delete dbSource;
 }
