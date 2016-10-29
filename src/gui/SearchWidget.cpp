@@ -46,7 +46,7 @@ SearchWidget::SearchWidget(QWidget *parent)
     m_searchTimer = new QTimer(this);
     m_searchTimer->setSingleShot(true);
 
-    connect(m_ui->searchEdit, SIGNAL(textEdited(QString)), SLOT(startSearchTimer()));
+    connect(m_ui->searchEdit, SIGNAL(textChanged(QString)), SLOT(startSearchTimer()));
     connect(m_ui->searchEdit, SIGNAL(returnPressed()), SLOT(startSearch()));
     connect(m_searchTimer, SIGNAL(timeout()), this, SLOT(startSearch()));
     connect(&m_searchEventFilter, SIGNAL(escapePressed()), m_ui->searchEdit, SLOT(clear()));

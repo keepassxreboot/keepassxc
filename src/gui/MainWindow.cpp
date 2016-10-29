@@ -86,6 +86,7 @@ MainWindow::MainWindow()
     SearchWidget *search = new SearchWidget();
     search->connectSignals(m_actionMultiplexer);
     m_searchWidgetAction = m_ui->toolBar->addWidget(search);
+    m_searchWidgetAction->setEnabled(false);
 
     m_countDefaultAttributes = m_ui->menuEntryCopyAttribute->actions().size();
 
