@@ -1,5 +1,8 @@
 #!/bin/bash
 
+### change the path to suit your installation or set KDBX_SEARCH before calling ###
+: ${KDBX_SEARCH:=~/.KeePass/*.kdbx}
+
 PROG="$(basename $0)"
 
 function daemon_main {
@@ -11,8 +14,8 @@ function daemon_main {
 
   # fetch KeePass database passwords from kdewallet
   declare -A DBs
-  ### change the path to suit your installation ###
-  for DBPATH in ~/.keepassx/*.kdbx; do
+  for DBPATH in $KDBX_SEARCH; do
+    [[ -L "$DBPATH" ]] && DBPATH=$(readlink --canonicalize "$DBPATH")
     DBs[$DBPATH]=$(qdbus org.kde.kwalletd5 /modules/kwalletd5 org.kde.KWallet.readPassword "$handle" "Passwords" "$DBPATH" "$PROG")
   done
 

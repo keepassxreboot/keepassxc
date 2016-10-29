@@ -102,6 +102,7 @@ void Config::init(const QString& fileName)
     m_defaults.insert("security/clearclipboardtimeout", 10);
     m_defaults.insert("security/lockdatabaseidle", false);
     m_defaults.insert("security/lockdatabaseidlesec", 10);
+    m_defaults.insert("security/lockdatabaseminimize", false);
     m_defaults.insert("security/passwordscleartext", false);
     m_defaults.insert("security/autotypeask", true);
     m_defaults.insert("GUI/Language", "system");

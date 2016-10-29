@@ -522,6 +522,11 @@ void MainWindow::closeEvent(QCloseEvent* event)
     {
         event->ignore();
         hide();
+
+        if (config()->get("security/lockdatabaseminimize").toBool()) {
+            m_ui->tabWidget->lockDatabases();
+        }
+
         return;
     }
 
@@ -685,6 +690,10 @@ void MainWindow::toggleWindow()
 {
     if ((QApplication::activeWindow() == this) && isVisible() && !isMinimized()) {
         hide();
+
+        if (config()->get("security/lockdatabaseminimize").toBool()) {
+            m_ui->tabWidget->lockDatabases();
+        }
     }
     else {
         ensurePolished();

@@ -42,7 +42,7 @@ void TestCsvExporter::initTestCase()
     Crypto::init();
 }
 
-void TestCsvExporter::cleanUp()
+void TestCsvExporter::cleanup()
 {
     delete m_db;
     delete m_csvExporter;
