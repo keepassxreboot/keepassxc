@@ -34,7 +34,7 @@ public:
 private Q_SLOTS:
     void init();
     void initTestCase();
-    void cleanUp();
+    void cleanup();
     void testExport();
     void testEmptyDatabase();
     void testNestedGroups();
