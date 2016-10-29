@@ -19,6 +19,7 @@
 #include "ui_SearchWidget.h"
 
 #include <QKeyEvent>
+#include <QMenu>
 
 #include "core/FilePath.h"
 
@@ -45,7 +46,7 @@ SearchWidget::SearchWidget(QWidget *parent)
     m_searchTimer = new QTimer(this);
     m_searchTimer->setSingleShot(true);
 
-    connect(m_ui->searchEdit, SIGNAL(textChanged(QString)), SLOT(startSearchTimer()));
+    connect(m_ui->searchEdit, SIGNAL(textEdited(QString)), SLOT(startSearchTimer()));
     connect(m_ui->searchEdit, SIGNAL(returnPressed()), SLOT(startSearch()));
     connect(m_searchTimer, SIGNAL(timeout()), this, SLOT(startSearch()));
     connect(&m_searchEventFilter, SIGNAL(escapePressed()), m_ui->searchEdit, SLOT(clear()));
@@ -54,11 +55,15 @@ SearchWidget::SearchWidget(QWidget *parent)
 
     m_ui->searchIcon->setIcon(filePath()->icon("actions", "system-search"));
 
-    /*
-    connect(m_searchUi->caseSensitiveCheckBox, SIGNAL(toggled(bool)), this, SLOT(startSearch()));
-    connect(m_searchUi->searchCurrentRadioButton, SIGNAL(toggled(bool)), this, SLOT(startSearch()));
-    connect(m_searchUi->searchRootRadioButton, SIGNAL(toggled(bool)), this, SLOT(startSearch()));
-    */
+    QMenu *searchMenu = new QMenu();
+    m_actionCaseSensitive = searchMenu->addAction(tr("Case Sensitive"), this, SLOT(updateCaseSensitive()));
+    m_actionCaseSensitive->setCheckable(true);
+
+    m_actionGroupSearch = searchMenu->addAction(tr("Search Current Group"), this, SLOT(updateGroupSearch()));
+    m_actionGroupSearch->setCheckable(true);
+
+    m_ui->searchIcon->setMenu(searchMenu);
+    m_ui->searchIcon->setPopupMode(QToolButton::MenuButtonPopup);
 }
 
 SearchWidget::~SearchWidget()
@@ -69,13 +74,23 @@ SearchWidget::~SearchWidget()
 void SearchWidget::connectSignals(SignalMultiplexer& mx)
 {
     mx.connect(this, SIGNAL(search(QString)), SLOT(search(QString)));
+    mx.connect(this, SIGNAL(setCaseSensitive(bool)), SLOT(setSearchCaseSensitive(bool)));
+    mx.connect(this, SIGNAL(setGroupSearch(bool)), SLOT(setSearchCurrentGroup(bool)));
+    mx.connect(SIGNAL(groupChanged()), m_ui->searchEdit, SLOT(clear()));
 }
 
-void SearchWidget::hideEvent(QHideEvent *event)
+void SearchWidget::databaseChanged(DatabaseWidget *dbWidget)
 {
-    // TODO: might be better to disable the edit widget instead of clearing it
-    //m_ui->searchEdit->clear();
-    QWidget::hideEvent(event);
+    if (dbWidget != nullptr) {
+        // Set current search text from this database
+        m_ui->searchEdit->setText(dbWidget->getCurrentSearch());
+
+        // Enforce search policy
+        emit setCaseSensitive(m_actionCaseSensitive->isChecked());
+        emit setGroupSearch(m_actionGroupSearch->isChecked());
+    } else {
+        m_ui->searchEdit->clear();
+    }
 }
 
 void SearchWidget::startSearchTimer()
@@ -93,4 +108,14 @@ void SearchWidget::startSearch()
     }
 
     search(m_ui->searchEdit->text());
+}
+
+void SearchWidget::updateCaseSensitive()
+{
+    emit setCaseSensitive(m_actionCaseSensitive->isChecked());
+}
+
+void SearchWidget::updateGroupSearch()
+{
+    emit setGroupSearch(m_actionGroupSearch->isChecked());
 }

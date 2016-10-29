@@ -21,6 +21,7 @@
 #include <QWidget>
 #include <QTimer>
 
+#include "gui/DatabaseWidget.h"
 #include "core/SignalMultiplexer.h"
 
 namespace Ui {
@@ -48,20 +49,27 @@ public:
 
     void connectSignals(SignalMultiplexer& mx);
 
-protected:
-    virtual void hideEvent(QHideEvent *event) override;
-
 signals:
     void search(const QString &text);
+    void setCaseSensitive(bool state);
+    void setGroupSearch(bool state);
+
+public slots:
+    void databaseChanged(DatabaseWidget* dbWidget);
 
 private slots:
     void startSearchTimer();
     void startSearch();
+    void updateCaseSensitive();
+    void updateGroupSearch();
 
 private:
     const QScopedPointer<Ui::SearchWidget> m_ui;
     QTimer* m_searchTimer;
     SearchEventFilter m_searchEventFilter;
+
+    QAction *m_actionCaseSensitive;
+    QAction *m_actionGroupSearch;
 
     Q_DISABLE_COPY(SearchWidget)
 };

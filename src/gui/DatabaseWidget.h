@@ -60,6 +60,7 @@ public:
     bool dbHasKey() const;
     bool canDeleteCurrentGroup() const;
     bool isInSearchMode() const;
+    QString getCurrentSearch();
     int addWidget(QWidget* w);
     void setCurrentIndex(int index);
     void setCurrentWidget(QWidget* widget);
@@ -97,6 +98,7 @@ Q_SIGNALS:
     void searchModeActivated();
     void splitterSizesChanged();
     void entryColumnSizesChanged();
+    void updateSearch(QString text);
 
 public Q_SLOTS:
     void createEntry();
@@ -120,6 +122,11 @@ public Q_SLOTS:
     void switchToOpenDatabase(const QString& fileName);
     void switchToOpenDatabase(const QString& fileName, const QString& password, const QString& keyFile);
     void switchToImportKeepass1(const QString& fileName);
+    // Search related slots
+    void search(const QString& searchtext);
+    void setSearchCaseSensitive(bool state);
+    void setSearchCurrentGroup(bool state);
+    void endSearch();
 
 private Q_SLOTS:
     void entryActivationSignalReceived(Entry* entry, EntryModel::ModelColumn column);
@@ -136,8 +143,6 @@ private Q_SLOTS:
     void unlockDatabase(bool accepted);
     void emitCurrentModeChanged();
     void clearLastGroup(Group* group);
-    void search(const QString& searchtext);
-    void endSearch();
 
 private:
     void setClipboardTextAndMinimize(const QString& text);
@@ -163,6 +168,11 @@ private:
     Group* m_lastGroup;
     QString m_filename;
     Uuid m_groupBeforeLock;
+
+    // Search state
+    QString m_lastSearchText;
+    bool m_searchCaseSensitive;
+    bool m_searchCurrentGroup;
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H

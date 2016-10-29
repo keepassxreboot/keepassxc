@@ -139,6 +139,9 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_unlockDatabaseWidget, SIGNAL(editFinished(bool)), SLOT(unlockDatabase(bool)));
     connect(this, SIGNAL(currentChanged(int)), this, SLOT(emitCurrentModeChanged()));
 
+    m_searchCaseSensitive = false;
+    m_searchCurrentGroup = false;
+
     setCurrentWidget(m_mainWidget);
 }
 
@@ -751,34 +754,38 @@ void DatabaseWidget::search(const QString& searchtext)
     {
         m_lastGroup = m_groupView->currentGroup();
         Q_ASSERT(m_lastGroup);
-        m_groupView->setCurrentIndex(QModelIndex());
     }
 
-    Group* searchGroup;
-//    if (m_searchUi->searchCurrentRadioButton->isChecked()) {
-//        searchGroup = m_lastGroup;
-//    }
-//    else if (m_searchUi->searchRootRadioButton->isChecked()) {
-        searchGroup = m_db->rootGroup();
-//    }
-//    else {
-//        Q_ASSERT(false);
-//        return;
-//    }
-
-    Qt::CaseSensitivity sensitivity;
-//    if (m_searchUi->caseSensitiveCheckBox->isChecked()) {
-//        sensitivity = Qt::CaseSensitive;
-//    }
-//    else {
-        sensitivity = Qt::CaseInsensitive;
-//    }
+    Group* searchGroup = m_searchCurrentGroup ? m_lastGroup : m_db->rootGroup();
+    Qt::CaseSensitivity sensitivity = m_searchCaseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive;
 
     QList<Entry*> searchResult = EntrySearcher().search(searchtext, searchGroup, sensitivity);
 
     m_entryView->setEntryList(searchResult);
+    m_lastSearchText = searchtext;
 
     Q_EMIT searchModeActivated();
+}
+
+void DatabaseWidget::setSearchCaseSensitive(bool state)
+{
+    m_searchCaseSensitive = state;
+
+    if (isInSearchMode())
+        search(m_lastSearchText);
+}
+
+void DatabaseWidget::setSearchCurrentGroup(bool state)
+{
+    m_searchCurrentGroup = state;
+
+    if (isInSearchMode())
+        search(m_lastSearchText);
+}
+
+QString DatabaseWidget::getCurrentSearch()
+{
+    return m_lastSearchText;
 }
 
 void DatabaseWidget::endSearch()
@@ -790,9 +797,12 @@ void DatabaseWidget::endSearch()
         Q_EMIT listModeAboutToActivate();
 
         m_groupView->setCurrentGroup(m_lastGroup);
+        m_entryView->setGroup(m_lastGroup);
 
         Q_EMIT listModeActivated();
     }
+
+    m_lastSearchText.clear();
 }
 
 void DatabaseWidget::emitGroupContextMenuRequested(const QPoint& pos)
