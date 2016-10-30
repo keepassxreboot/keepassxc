@@ -84,6 +84,7 @@ private:
     const QScopedPointer<Ui::MainWindow> m_ui;
     SignalMultiplexer m_actionMultiplexer;
     QAction* m_clearHistoryAction;
+    QAction* m_searchWidgetAction;
     QActionGroup* m_lastDatabasesActions;
     QActionGroup* m_copyAdditionalAttributeActions;
     QStringList m_openDatabases;

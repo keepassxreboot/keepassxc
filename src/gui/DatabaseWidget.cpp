@@ -16,7 +16,6 @@
  */
 
 #include "DatabaseWidget.h"
-#include "ui_SearchWidget.h"
 
 #include <QAction>
 #include <QDesktopServices>
@@ -25,8 +24,9 @@
 #include <QLineEdit>
 #include <QKeyEvent>
 #include <QSplitter>
-#include <QTimer>
 #include <QProcess>
+#include <QHeaderView>
+#include <QApplication>
 
 #include "autotype/AutoType.h"
 #include "core/Config.h"
@@ -50,24 +50,16 @@
 DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     : QStackedWidget(parent)
     , m_db(db)
-    , m_searchUi(new Ui::SearchWidget())
-    , m_searchWidget(new QWidget())
     , m_newGroup(nullptr)
     , m_newEntry(nullptr)
     , m_newParent(nullptr)
 {
-    m_searchUi->setupUi(m_searchWidget);
-
-    m_searchTimer = new QTimer(this);
-    m_searchTimer->setSingleShot(true);
-
     m_mainWidget = new QWidget(this);
     QLayout* layout = new QHBoxLayout(m_mainWidget);
     m_splitter = new QSplitter(m_mainWidget);
     m_splitter->setChildrenCollapsible(false);
 
     QWidget* rightHandSideWidget = new QWidget(m_splitter);
-    m_searchWidget->setParent(rightHandSideWidget);
 
     m_groupView = new GroupView(db, m_splitter);
     m_groupView->setObjectName("groupView");
@@ -82,25 +74,13 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_entryView, SIGNAL(customContextMenuRequested(QPoint)),
             SLOT(emitEntryContextMenuRequested(QPoint)));
 
-    QAction* closeAction = new QAction(m_searchWidget);
-    QIcon closeIcon = filePath()->icon("actions", "dialog-close");
-    closeAction->setIcon(closeIcon);
-    m_searchUi->closeSearchButton->setDefaultAction(closeAction);
-    m_searchUi->closeSearchButton->setShortcut(Qt::Key_Escape);
-    m_searchWidget->hide();
-    m_searchUi->caseSensitiveCheckBox->setVisible(false);
-    m_searchUi->searchEdit->installEventFilter(this);
-
     QVBoxLayout* vLayout = new QVBoxLayout(rightHandSideWidget);
     vLayout->setMargin(0);
-    vLayout->addWidget(m_searchWidget);
     vLayout->addWidget(m_entryView);
 
     rightHandSideWidget->setLayout(vLayout);
 
-    setTabOrder(m_searchUi->searchRootRadioButton, m_entryView);
     setTabOrder(m_entryView, m_groupView);
-    setTabOrder(m_groupView, m_searchWidget);
 
     m_splitter->addWidget(m_groupView);
     m_splitter->addWidget(rightHandSideWidget);
@@ -162,13 +142,9 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_keepass1OpenWidget, SIGNAL(editFinished(bool)), SLOT(openDatabase(bool)));
     connect(m_unlockDatabaseWidget, SIGNAL(editFinished(bool)), SLOT(unlockDatabase(bool)));
     connect(this, SIGNAL(currentChanged(int)), this, SLOT(emitCurrentModeChanged()));
-    connect(m_searchUi->searchEdit, SIGNAL(textChanged(QString)), this, SLOT(startSearchTimer()));
-    connect(m_searchUi->caseSensitiveCheckBox, SIGNAL(toggled(bool)), this, SLOT(startSearch()));
-    connect(m_searchUi->searchCurrentRadioButton, SIGNAL(toggled(bool)), this, SLOT(startSearch()));
-    connect(m_searchUi->searchRootRadioButton, SIGNAL(toggled(bool)), this, SLOT(startSearch()));
-    connect(m_searchUi->searchEdit, SIGNAL(returnPressed()), m_entryView, SLOT(setFocus()));
-    connect(m_searchTimer, SIGNAL(timeout()), this, SLOT(search()));
-    connect(closeAction, SIGNAL(triggered()), this, SLOT(closeSearch()));
+
+    m_searchCaseSensitive = false;
+    m_searchCurrentGroup = false;
 
     setCurrentWidget(m_mainWidget);
 }
@@ -811,118 +787,69 @@ void DatabaseWidget::switchToImportKeepass1(const QString& fileName)
     setCurrentWidget(m_keepass1OpenWidget);
 }
 
-void DatabaseWidget::openSearch()
+void DatabaseWidget::search(const QString& searchtext)
 {
-    if (isInSearchMode()) {
-        m_searchUi->searchEdit->selectAll();
-
-        if (!m_searchUi->searchEdit->hasFocus()) {
-            m_searchUi->searchEdit->setFocus();
-            // make sure the search action is checked again
-            emitCurrentModeChanged();
-        }
+    if (searchtext.isEmpty())
+    {
+        endSearch();
+        return;
     }
-    else {
-        showSearch();
-    }
-}
 
-void DatabaseWidget::closeSearch()
-{
-    Q_ASSERT(m_lastGroup);
-
-    Q_EMIT listModeAboutToActivate();
-
-    m_groupView->setCurrentGroup(m_lastGroup);
-    m_searchTimer->stop();
-
-    Q_EMIT listModeActivated();
-}
-
-void DatabaseWidget::showSearch(const QString & searchString, bool caseSensitive, bool allGroups)
-{
     Q_EMIT searchModeAboutToActivate();
 
-    m_searchUi->searchEdit->blockSignals(true);
-    m_searchUi->searchEdit->setText(searchString);
-    m_searchUi->searchEdit->blockSignals(false);
-
-    m_searchUi->searchCurrentRadioButton->blockSignals(true);
-    m_searchUi->searchRootRadioButton->blockSignals(true);
-    m_searchUi->searchRootRadioButton->setChecked(allGroups);
-    m_searchUi->searchCurrentRadioButton->blockSignals(caseSensitive);
-    m_searchUi->searchRootRadioButton->blockSignals(false);
-
-    m_lastGroup = m_groupView->currentGroup();
-
-    Q_ASSERT(m_lastGroup);
-
-    if (m_lastGroup == m_db->rootGroup()) {
-        m_searchUi->optionsWidget->hide();
-        m_searchUi->searchCurrentRadioButton->hide();
-        m_searchUi->searchRootRadioButton->hide();
+    if (!isInSearchMode())
+    {
+        m_lastGroup = m_groupView->currentGroup();
+        Q_ASSERT(m_lastGroup);
     }
-    else {
-        m_searchUi->optionsWidget->show();
-        m_searchUi->searchCurrentRadioButton->show();
-        m_searchUi->searchRootRadioButton->show();
-        m_searchUi->searchCurrentRadioButton->setText(tr("Current group")
-                                                      .append(" (")
-                                                      .append(m_lastGroup->name())
-                                                      .append(")"));
-    }
-    m_groupView->setCurrentIndex(QModelIndex());
 
-    m_searchWidget->show();
-    search();
-    m_searchUi->searchEdit->setFocus();
+    Group* searchGroup = m_searchCurrentGroup ? m_lastGroup : m_db->rootGroup();
+    Qt::CaseSensitivity sensitivity = m_searchCaseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive;
+
+    QList<Entry*> searchResult = EntrySearcher().search(searchtext, searchGroup, sensitivity);
+
+    m_entryView->setEntryList(searchResult);
+    m_lastSearchText = searchtext;
 
     Q_EMIT searchModeActivated();
 }
 
-void DatabaseWidget::search()
+void DatabaseWidget::setSearchCaseSensitive(bool state)
 {
-    Q_ASSERT(m_lastGroup);
+    m_searchCaseSensitive = state;
 
-    Group* searchGroup;
-    if (m_searchUi->searchCurrentRadioButton->isChecked()) {
-        searchGroup = m_lastGroup;
-    }
-    else if (m_searchUi->searchRootRadioButton->isChecked()) {
-        searchGroup = m_db->rootGroup();
-    }
-    else {
-        Q_ASSERT(false);
-        return;
-    }
-
-    Qt::CaseSensitivity sensitivity;
-    if (m_searchUi->caseSensitiveCheckBox->isChecked()) {
-        sensitivity = Qt::CaseSensitive;
-    }
-    else {
-        sensitivity = Qt::CaseInsensitive;
-    }
-
-    QList<Entry*> searchResult = EntrySearcher().search(m_searchUi->searchEdit->text(), searchGroup, sensitivity);
-
-    m_entryView->setEntryList(searchResult);
+    if (isInSearchMode())
+        search(m_lastSearchText);
 }
 
-void DatabaseWidget::startSearchTimer()
+void DatabaseWidget::setSearchCurrentGroup(bool state)
 {
-    if (!m_searchTimer->isActive()) {
-        m_searchTimer->stop();
-    }
-    m_searchTimer->start(100);
+    m_searchCurrentGroup = state;
+
+    if (isInSearchMode())
+        search(m_lastSearchText);
 }
 
-void DatabaseWidget::startSearch()
+QString DatabaseWidget::getCurrentSearch()
 {
-    if (!m_searchTimer->isActive()) {
-        m_searchTimer->stop();
+    return m_lastSearchText;
+}
+
+void DatabaseWidget::endSearch()
+{
+    if (isInSearchMode())
+    {
+        Q_ASSERT(m_lastGroup);
+
+        Q_EMIT listModeAboutToActivate();
+
+        m_groupView->setCurrentGroup(m_lastGroup);
+        m_entryView->setGroup(m_lastGroup);
+
+        Q_EMIT listModeActivated();
     }
-    search();
+
+    m_lastSearchText.clear();
 }
 
 void DatabaseWidget::emitGroupContextMenuRequested(const QPoint& pos)
@@ -957,36 +884,16 @@ Group* DatabaseWidget::currentGroup() const
                             : m_groupView->currentGroup();
 }
 
-QString DatabaseWidget::searchText() const
-{
-    return isInSearchMode() ? m_searchUi->searchEdit->text()
-                            : QString();
-}
-
-bool DatabaseWidget::caseSensitiveSearch() const
-{
-    return m_searchUi->caseSensitiveCheckBox->isChecked();
-}
-
-bool DatabaseWidget::isAllGroupsSearch() const
-{
-    return m_searchUi->searchRootRadioButton->isChecked();
-}
-
 void DatabaseWidget::clearLastGroup(Group* group)
 {
     if (group) {
         m_lastGroup = nullptr;
-        m_searchWidget->hide();
     }
 }
 
 void DatabaseWidget::lock()
 {
     Q_ASSERT(currentMode() != DatabaseWidget::LockedMode);
-    if (isInSearchMode()) {
-        closeSearch();
-    }
 
     if (m_groupView->currentGroup()) {
         m_groupBeforeLock = m_groupView->currentGroup()->uuid();
@@ -1079,40 +986,9 @@ bool DatabaseWidget::currentEntryHasNotes()
 }
 
 GroupView* DatabaseWidget::groupView() {
-  return m_groupView;
+    return m_groupView;
 }
 
 EntryView* DatabaseWidget::entryView() {
-  return m_entryView;
-}
-
-bool DatabaseWidget::eventFilter(QObject* object, QEvent* event)
-{
-    if (object == m_searchUi->searchEdit) {
-        if (event->type() == QEvent::KeyPress) {
-            QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
-
-            if (keyEvent->matches(QKeySequence::Copy)) {
-                // If Control+C is pressed in the search edit when no
-                // text is selected, copy the password of the current
-                // entry.
-                Entry* currentEntry = m_entryView->currentEntry();
-                if (currentEntry && !m_searchUi->searchEdit->hasSelectedText()) {
-                    setClipboardTextAndMinimize(currentEntry->password());
-                    return true;
-                }
-            }
-            else if (keyEvent->matches(QKeySequence::MoveToNextLine)) {
-                // If Down is pressed at EOL in the search edit, move
-                // the focus to the entry view.
-                if (!m_searchUi->searchEdit->hasSelectedText()
-                        && m_searchUi->searchEdit->cursorPosition() == m_searchUi->searchEdit->text().size()) {
-                    m_entryView->setFocus();
-                    return true;
-                }
-            }
-        }
-    }
-
-    return false;
+    return m_entryView;
 }

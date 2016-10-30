@@ -102,6 +102,7 @@ set(keepassx_SOURCES
     gui/PasswordGeneratorWidget.cpp
     gui/PasswordComboBox.cpp
     gui/SettingsWidget.cpp
+    gui/SearchWidget.cpp
     gui/SortFilterHideProxyModel.cpp
     gui/UnlockDatabaseWidget.cpp
     gui/WelcomeWidget.cpp

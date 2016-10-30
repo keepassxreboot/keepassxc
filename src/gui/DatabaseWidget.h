@@ -42,10 +42,6 @@ class QSplitter;
 class UnlockDatabaseWidget;
 class CompositeKey;
 
-namespace Ui {
-    class SearchWidget;
-}
-
 class DatabaseWidget : public QStackedWidget
 {
     Q_OBJECT
@@ -65,10 +61,8 @@ public:
     bool dbHasKey() const;
     bool canDeleteCurrentGroup() const;
     bool isInSearchMode() const;
+    QString getCurrentSearch();
     Group* currentGroup() const;
-    QString searchText() const;
-    bool caseSensitiveSearch() const;
-    bool isAllGroupsSearch() const;
     int addWidget(QWidget* w);
     void setCurrentIndex(int index);
     void setCurrentWidget(QWidget* widget);
@@ -109,9 +103,7 @@ Q_SIGNALS:
     void searchModeActivated();
     void splitterSizesChanged();
     void entryColumnSizesChanged();
-
-protected:
-    bool eventFilter(QObject* object, QEvent* event) override;
+    void updateSearch(QString text);
 
 public Q_SLOTS:
     void createEntry();
@@ -128,6 +120,7 @@ public Q_SLOTS:
     void openUrlForEntry(Entry* entry);
     void createGroup();
     void deleteGroup();
+    void switchToView(bool accepted);
     void switchToEntryEdit();
     void switchToGroupEdit();
     void switchToMasterKeyChange();
@@ -138,9 +131,11 @@ public Q_SLOTS:
     void switchToOpenMergeDatabase(const QString& fileName);
     void switchToOpenMergeDatabase(const QString& fileName, const QString& password, const QString& keyFile);
     void switchToImportKeepass1(const QString& fileName);
-    void openSearch();
-    void switchToView(bool accepted);
-    void showSearch(const QString & searchString = QString(), bool caseSensitive = false, bool allGroups = true);
+    // Search related slots
+    void search(const QString& searchtext);
+    void setSearchCaseSensitive(bool state);
+    void setSearchCurrentGroup(bool state);
+    void endSearch();
 
 private Q_SLOTS:
     void entryActivationSignalReceived(Entry* entry, EntryModel::ModelColumn column);
@@ -157,10 +152,6 @@ private Q_SLOTS:
     void unlockDatabase(bool accepted);
     void emitCurrentModeChanged();
     void clearLastGroup(Group* group);
-    void search();
-    void startSearch();
-    void startSearchTimer();
-    void closeSearch();
 
 private:
     void setClipboardTextAndMinimize(const QString& text);
@@ -168,8 +159,6 @@ private:
     void replaceDatabase(Database* db);
 
     Database* m_db;
-    const QScopedPointer<Ui::SearchWidget> m_searchUi;
-    QWidget* const m_searchWidget;
     QWidget* m_mainWidget;
     EditEntryWidget* m_editEntryWidget;
     EditEntryWidget* m_historyEditEntryWidget;
@@ -187,9 +176,13 @@ private:
     Entry* m_newEntry;
     Group* m_newParent;
     Group* m_lastGroup;
-    QTimer* m_searchTimer;
     QString m_filename;
     Uuid m_groupBeforeLock;
+
+    // Search state
+    QString m_lastSearchText;
+    bool m_searchCaseSensitive;
+    bool m_searchCurrentGroup;
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H

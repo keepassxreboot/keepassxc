@@ -34,7 +34,10 @@ class TestGui : public QObject
 
 private Q_SLOTS:
     void initTestCase();
-    void testOpenDatabase();
+    void init();
+    void cleanup();
+    void cleanupTestCase();
+
     void testMergeDatabase();
     void testTabs();
     void testEditEntry();
@@ -49,10 +52,9 @@ private Q_SLOTS:
     void testDatabaseSettings();
     void testKeePass1Import();
     void testDatabaseLocking();
-    void cleanupTestCase();
 
 private:
-    void checkDatabase();
+    void checkDatabase(QString dbFileName = "");
     void triggerAction(const QString& name);
     void dragAndDropGroup(const QModelIndex& sourceIndex, const QModelIndex& targetIndex, int row,
                           bool expectedResult, const QString& expectedParentName, int expectedPos);
@@ -62,9 +64,8 @@ private:
     MainWindow* m_mainWindow;
     DatabaseTabWidget* m_tabWidget;
     DatabaseWidget* m_dbWidget;
-    QTemporaryFile m_orgDbFile;
-    QString m_orgDbFileName;
-    QString m_tmpFileName;
+    QTemporaryFile m_dbFile;
+    QString m_dbFileName;
     Database* m_db;
 };
 

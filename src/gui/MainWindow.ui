@@ -97,7 +97,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>20</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -106,7 +106,7 @@
     </property>
     <widget class="QMenu" name="menuRecentDatabases">
      <property name="title">
-      <string>Recent databases</string>
+      <string>&amp;Recent databases</string>
      </property>
     </widget>
     <addaction name="actionDatabaseNew"/>
@@ -128,20 +128,20 @@
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Help</string>
+     <string>He&amp;lp</string>
     </property>
     <addaction name="actionAbout"/>
    </widget>
    <widget class="QMenu" name="menuEntries">
     <property name="title">
-     <string>Entries</string>
+     <string>E&amp;ntries</string>
     </property>
     <widget class="QMenu" name="menuEntryCopyAttribute">
      <property name="enabled">
       <bool>false</bool>
      </property>
      <property name="title">
-      <string>Copy attribute to clipboard</string>
+      <string>Copy att&amp;ribute to clipboard</string>
      </property>
      <addaction name="actionEntryCopyTitle"/>
      <addaction name="actionEntryCopyURL"/>
@@ -157,11 +157,10 @@
     <addaction name="menuEntryCopyAttribute"/>
     <addaction name="actionEntryAutoType"/>
     <addaction name="actionEntryOpenUrl"/>
-    <addaction name="actionSearch"/>
    </widget>
    <widget class="QMenu" name="menuGroups">
     <property name="title">
-     <string>Groups</string>
+     <string>&amp;Groups</string>
     </property>
     <addaction name="actionGroupNew"/>
     <addaction name="actionGroupEdit"/>
@@ -176,7 +175,7 @@
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
-     <string>View</string>
+     <string>&amp;View</string>
     </property>
    </widget>
    <addaction name="menuFile"/>
@@ -207,21 +206,21 @@
    <addaction name="actionEntryCopyPassword"/>
    <addaction name="separator"/>
    <addaction name="actionLockDatabases"/>
-   <addaction name="actionSearch"/>
+   <addaction name="separator"/>
   </widget>
   <action name="actionQuit">
    <property name="text">
-    <string>Quit</string>
+    <string>&amp;Quit</string>
    </property>
   </action>
   <action name="actionAbout">
    <property name="text">
-    <string>About</string>
+    <string>&amp;About</string>
    </property>
   </action>
   <action name="actionDatabaseOpen">
    <property name="text">
-    <string>Open database</string>
+    <string>&amp;Open database</string>
    </property>
   </action>
   <action name="actionDatabaseSave">
@@ -229,7 +228,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Save database</string>
+    <string>&amp;Save database</string>
    </property>
   </action>
   <action name="actionDatabaseClose">
@@ -237,12 +236,12 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Close database</string>
+    <string>&amp;Close database</string>
    </property>
   </action>
   <action name="actionDatabaseNew">
    <property name="text">
-    <string>New database</string>
+    <string>&amp;New database</string>
    </property>
   </action>
   <action name="actionDatabaseMerge">
@@ -255,7 +254,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Add new entry</string>
+    <string>&amp;Add new entry</string>
    </property>
   </action>
   <action name="actionEntryEdit">
@@ -263,7 +262,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>View/Edit entry</string>
+    <string>&amp;View/Edit entry</string>
    </property>
   </action>
   <action name="actionEntryDelete">
@@ -271,7 +270,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Delete entry</string>
+    <string>&amp;Delete entry</string>
    </property>
   </action>
   <action name="actionGroupNew">
@@ -279,7 +278,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Add new group</string>
+    <string>&amp;Add new group</string>
    </property>
   </action>
   <action name="actionGroupEdit">
@@ -287,7 +286,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Edit group</string>
+    <string>&amp;Edit group</string>
    </property>
   </action>
   <action name="actionGroupDelete">
@@ -295,7 +294,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Delete group</string>
+    <string>&amp;Delete group</string>
    </property>
   </action>
   <action name="actionDatabaseSaveAs">
@@ -303,7 +302,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Save database as</string>
+    <string>Sa&amp;ve database as</string>
    </property>
   </action>
   <action name="actionChangeMasterKey">
@@ -311,7 +310,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Change master key</string>
+    <string>Change &amp;master key</string>
    </property>
   </action>
   <action name="actionChangeDatabaseSettings">
@@ -319,7 +318,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Database settings</string>
+    <string>&amp;Database settings</string>
    </property>
    <property name="toolTip">
     <string>Database settings</string>
@@ -327,7 +326,7 @@
   </action>
   <action name="actionImportKeePass1">
    <property name="text">
-    <string>Import KeePass 1 database</string>
+    <string>&amp;Import KeePass 1 database</string>
    </property>
   </action>
   <action name="actionEntryClone">
@@ -335,15 +334,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Clone entry</string>
-   </property>
-  </action>
-  <action name="actionSearch">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Find</string>
+    <string>&amp;Clone entry</string>
    </property>
   </action>
   <action name="actionEntryCopyUsername">
@@ -351,7 +342,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Copy username</string>
+    <string>Copy &amp;username</string>
    </property>
    <property name="toolTip">
     <string>Copy username to clipboard</string>
@@ -362,7 +353,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Copy password</string>
+    <string>Cop&amp;y password</string>
    </property>
    <property name="toolTip">
     <string>Copy password to clipboard</string>
@@ -370,7 +361,7 @@
   </action>
   <action name="actionSettings">
    <property name="text">
-    <string>Settings</string>
+    <string>&amp;Settings</string>
    </property>
   </action>
   <action name="actionEntryAutoType">
@@ -378,7 +369,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Perform Auto-Type</string>
+    <string>&amp;Perform Auto-Type</string>
    </property>
   </action>
   <action name="actionEntryOpenUrl">
@@ -386,7 +377,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Open URL</string>
+    <string>&amp;Open URL</string>
    </property>
   </action>
   <action name="actionLockDatabases">
@@ -394,7 +385,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Lock databases</string>
+    <string>&amp;Lock databases</string>
    </property>
   </action>
   <action name="actionEntryCopyTitle">
@@ -402,7 +393,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Title</string>
+    <string>&amp;Title</string>
    </property>
   </action>
   <action name="actionEntryCopyURL">
@@ -410,7 +401,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>URL</string>
+    <string>&amp;URL</string>
    </property>
   </action>
   <action name="actionEntryCopyNotes">
@@ -418,7 +409,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Notes</string>
+    <string>&amp;Notes</string>
    </property>
   </action>
   <action name="actionExportCsv">
@@ -426,12 +417,12 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Export to CSV file</string>
+    <string>&amp;Export to CSV file</string>
    </property>
   </action>
   <action name="actionRepairDatabase">
    <property name="text">
-    <string>Repair database</string>
+    <string>Re&amp;pair database</string>
    </property>
   </action>
  </widget>

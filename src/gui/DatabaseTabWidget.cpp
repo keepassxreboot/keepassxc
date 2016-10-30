@@ -311,9 +311,6 @@ void DatabaseTabWidget::checkReloadDatabases()
             Uuid currentEntry;
             if (Entry* entry = dbStruct.dbWidget->entryView()->currentEntry())
                 currentEntry = entry->uuid();
-            QString searchText = dbStruct.dbWidget->searchText();
-            bool caseSensitive = dbStruct.dbWidget->caseSensitiveSearch();
-            bool allGroups =     dbStruct.dbWidget->isAllGroupsSearch();
 
             //Reload updated db
             CompositeKey key = db->key();
@@ -328,8 +325,6 @@ void DatabaseTabWidget::checkReloadDatabases()
                 if (!currentGroup.isNull())
                     if (Group* group = db->resolveGroup(currentGroup))
                         dbStruct.dbWidget->groupView()->setCurrentGroup(group);
-                if (!searchText.isEmpty())
-                    dbStruct.dbWidget->showSearch(searchText, caseSensitive, allGroups);
                 if (!currentEntry.isNull())
                     if (Entry* entry = db->resolveEntry(currentEntry))
                         dbStruct.dbWidget->entryView()->setCurrentEntry(entry);
