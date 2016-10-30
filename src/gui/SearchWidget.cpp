@@ -20,6 +20,7 @@
 
 #include <QKeyEvent>
 #include <QMenu>
+#include <QShortcut>
 
 #include "core/FilePath.h"
 
@@ -48,12 +49,13 @@ SearchWidget::SearchWidget(QWidget *parent)
 
     connect(m_ui->searchEdit, SIGNAL(textChanged(QString)), SLOT(startSearchTimer()));
     connect(m_ui->searchEdit, SIGNAL(returnPressed()), SLOT(startSearch()));
+    connect(m_ui->searchIcon, SIGNAL(triggered(QAction*)), m_ui->searchEdit, SLOT(setFocus()));
     connect(m_searchTimer, SIGNAL(timeout()), this, SLOT(startSearch()));
     connect(&m_searchEventFilter, SIGNAL(escapePressed()), m_ui->searchEdit, SLOT(clear()));
 
-    m_ui->searchEdit->installEventFilter(&m_searchEventFilter);
+    new QShortcut(Qt::CTRL + Qt::Key_F, m_ui->searchEdit, SLOT(setFocus()), nullptr, Qt::ApplicationShortcut);
 
-    m_ui->searchIcon->setIcon(filePath()->icon("actions", "system-search"));
+    m_ui->searchEdit->installEventFilter(&m_searchEventFilter);
 
     QMenu *searchMenu = new QMenu();
     m_actionCaseSensitive = searchMenu->addAction(tr("Case Sensitive"), this, SLOT(updateCaseSensitive()));
@@ -62,6 +64,7 @@ SearchWidget::SearchWidget(QWidget *parent)
     m_actionGroupSearch = searchMenu->addAction(tr("Search Current Group"), this, SLOT(updateGroupSearch()));
     m_actionGroupSearch->setCheckable(true);
 
+    m_ui->searchIcon->setIcon(filePath()->icon("actions", "system-search"));
     m_ui->searchIcon->setMenu(searchMenu);
     m_ui->searchIcon->setPopupMode(QToolButton::MenuButtonPopup);
 }
