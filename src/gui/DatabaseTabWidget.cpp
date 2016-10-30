@@ -272,15 +272,19 @@ void DatabaseTabWidget::checkReloadDatabases()
     if (changedFiles.isEmpty())
         return;
 
-    for (DatabaseManagerStruct dbStruct: asConst(m_dbList)) {
+    QMutableHashIterator<Database*, DatabaseManagerStruct> itr(m_dbList);
+    while (itr.hasNext()) {
+        itr.next();
+        DatabaseManagerStruct& dbStruct = itr.value();
+
         QString filePath = dbStruct.filePath;
-        Database * db = dbStruct.dbWidget->database();
+        Database* db = dbStruct.dbWidget->database();
 
         if (!changedFiles.contains(filePath))
             continue;
 
-        QFileInfo fi(filePath);
-        QDateTime lastModified = fi.lastModified();
+        QFileInfo fileInfo(filePath);
+        QDateTime lastModified = fileInfo.lastModified();
         if (dbStruct.lastModified == lastModified)
             continue;
 
@@ -292,14 +296,18 @@ void DatabaseTabWidget::checkReloadDatabases()
         if (   (reloadBehavior == AlwaysAsk)
             || (reloadBehavior == ReloadUnmodified && mode == DatabaseWidget::EditMode)
             || (reloadBehavior == ReloadUnmodified && dbStruct.modified)) {
-            int res = QMessageBox::warning(this, fi.exists() ? tr("Database file changed") : tr("Database file removed"),
+            int res = QMessageBox::warning(this, fileInfo.exists() ? tr("Database file changed") : tr("Database file removed"),
                                            tr("Do you want to discard your changes and reload?"),
                                            QMessageBox::Yes|QMessageBox::No);
-            if (res == QMessageBox::No)
+            if (res == QMessageBox::No) {
+                dbStruct.modified = true;
+                updateTabName(db);
+                m_fileWatcher->addPath(filePath);
                 continue;
+            }
         }
 
-        if (fi.exists()) {
+        if (fileInfo.exists()) {
             //Ignore/cancel all edits
             dbStruct.dbWidget->switchToView(false);
             dbStruct.modified = false;
