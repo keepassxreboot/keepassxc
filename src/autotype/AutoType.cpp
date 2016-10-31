@@ -203,7 +203,7 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
         QString message = tr("Couldn't find an entry that matches the window title:");
         message.append("\n\n");
         message.append(windowTitle);
-        MessageBox::information(nullptr, tr("Auto-Type - KeePassX"), message);
+        MessageBox::information(nullptr, tr("Auto-Type - KeePassXC"), message);
     }
     else if ((entryList.size() == 1) && !config()->get("security/autotypeask").toBool()) {
         m_inAutoType = false;

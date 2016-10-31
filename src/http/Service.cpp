@@ -150,7 +150,7 @@ QString Service::storeKey(const QString &key)
                     tr("You have received an association "
                        "request for the above key.\n"
                        "If you would like to allow it access "
-                       "to your KeePassX database\n"
+                       "to your KeePassXC database\n"
                        "give it a unique name to identify and accept it."),
                     QLineEdit::Normal, QString(), &ok);
             if (!ok || id.isEmpty())
@@ -158,7 +158,7 @@ QString Service::storeKey(const QString &key)
 
             //Warn if association key already exists
         } while(config->attributes()->contains(QLatin1String(ASSOCIATE_KEY_PREFIX) + id) &&
-                QMessageBox::warning(0, tr("KeyPassX/Http: Overwrite existing key?"),
+                QMessageBox::warning(0, tr("KeyPassXC/Http: Overwrite existing key?"),
                                      tr("A shared encryption-key with the name \"%1\" already exists.\nDo you want to overwrite it?").arg(id),
                                      QMessageBox::Yes | QMessageBox::No) == QMessageBox::No);
 
