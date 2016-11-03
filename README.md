@@ -1,4 +1,4 @@
-# KeePassX Reboot
+# KeePassXC - KeePass Cross-platform Community Edition
 
 [![Travis Build Status](https://travis-ci.org/keepassxreboot/keepassx.svg?branch=develop)](https://travis-ci.org/keepassxreboot/keepassx)  [![Coverage Status](https://coveralls.io/repos/github/keepassxreboot/keepassx/badge.svg?branch=develop)](https://coveralls.io/github/keepassxreboot/keepassx?branch=develop)
 
