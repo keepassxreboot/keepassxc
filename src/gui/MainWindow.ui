@@ -156,7 +156,6 @@
     <addaction name="menuEntryCopyAttribute"/>
     <addaction name="actionEntryAutoType"/>
     <addaction name="actionEntryOpenUrl"/>
-    <addaction name="actionSearch"/>
    </widget>
    <widget class="QMenu" name="menuGroups">
     <property name="title">
@@ -206,7 +205,7 @@
    <addaction name="actionEntryCopyPassword"/>
    <addaction name="separator"/>
    <addaction name="actionLockDatabases"/>
-   <addaction name="actionSearch"/>
+   <addaction name="separator"/>
   </widget>
   <action name="actionQuit">
    <property name="text">
