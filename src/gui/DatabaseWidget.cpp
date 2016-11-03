@@ -776,6 +776,14 @@ void DatabaseWidget::search(const QString& searchtext)
     m_entryView->setEntryList(searchResult);
     m_lastSearchText = searchtext;
 
+    // Display a label detailing our search results
+    if (searchResult.size() > 0) {
+        m_searchingLabel->setText(tr("Search Results (%1)").arg(searchResult.size()));
+    }
+    else {
+        m_searchingLabel->setText(tr("No Results"));
+    }
+
     m_searchingLabel->setVisible(true);
 
     Q_EMIT searchModeActivated();
@@ -817,6 +825,8 @@ void DatabaseWidget::endSearch()
     }
 
     m_searchingLabel->setVisible(false);
+    m_searchingLabel->setText(tr("Searching..."));
+
     m_lastSearchText.clear();
 }
 
