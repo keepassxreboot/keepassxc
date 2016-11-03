@@ -19,7 +19,7 @@ if(NOT CMAKE_BUILD_TYPE)
       FORCE)
 endif()
 
-project(KeePassX)
+project(KeePassXC)
 
 cmake_minimum_required(VERSION 2.8.12)
 
@@ -33,8 +33,8 @@ option(WITH_TESTS "Enable building of unit tests" ON)
 option(WITH_GUI_TESTS "Enable building of GUI tests" OFF)
 option(WITH_DEV_BUILD "Use only for development. Disables/warns about deprecated methods." OFF)
 
-set(KEEPASSX_VERSION "2.0.3")
-set(KEEPASSX_VERSION_NUM "2.0.3")
+set(KEEPASSXC_VERSION "2.1.0")
+set(KEEPASSXC_VERSION_NUM "2.1.0")
 
 if("${CMAKE_C_COMPILER}" MATCHES "clang$" OR "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
   set(CMAKE_COMPILER_IS_CLANG 1)
@@ -120,9 +120,9 @@ if(MINGW)
 endif()
 
 if(APPLE OR MINGW)
-  set(PROGNAME KeePassX)
+  set(PROGNAME KeePassXC)
 else()
-  set(PROGNAME keepassx)
+  set(PROGNAME keepassxc)
 endif()
 
 if(APPLE AND "${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr/local")
@@ -141,8 +141,8 @@ else()
   include(GNUInstallDirs)
 
   set(BIN_INSTALL_DIR    "${CMAKE_INSTALL_BINDIR}")
-  set(PLUGIN_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/keepassx")
-  set(DATA_INSTALL_DIR   "${CMAKE_INSTALL_DATADIR}/keepassx")
+  set(PLUGIN_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/keepassxc")
+  set(DATA_INSTALL_DIR   "${CMAKE_INSTALL_DATADIR}/keepassxc")
 endif()
 
 if(WITH_TESTS)

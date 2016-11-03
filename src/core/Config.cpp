@@ -68,14 +68,14 @@ Config::Config(QObject* parent)
         userPath += QFile::decodeName(env);
     }
 
-    userPath += "/keepassx/";
+    userPath += "/keepassxc/";
 #else
     userPath = QDir::fromNativeSeparators(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
-    // storageLocation() appends the application name ("/keepassx") to the end
+    // storageLocation() appends the application name ("/keepassxc") to the end
     userPath += "/";
 #endif
 
-    userPath += "keepassx2.ini";
+    userPath += "keepassxc.ini";
 
     init(userPath);
 }

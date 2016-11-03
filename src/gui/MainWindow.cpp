@@ -72,7 +72,7 @@ class HttpPlugin: public ISettingsPage
         Service *m_service;
 };
 
-const QString MainWindow::BaseWindowTitle = "KeePassX";
+const QString MainWindow::BaseWindowTitle = "KeePassXC";
 
 MainWindow::MainWindow()
     : m_ui(new Ui::MainWindow())
