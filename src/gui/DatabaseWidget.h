@@ -39,6 +39,7 @@ class KeePass1OpenWidget;
 class QFile;
 class QMenu;
 class QSplitter;
+class QLabel;
 class UnlockDatabaseWidget;
 class CompositeKey;
 
@@ -172,6 +173,7 @@ private:
     QSplitter* m_splitter;
     GroupView* m_groupView;
     EntryView* m_entryView;
+    QLabel* m_searchingLabel;
     Group* m_newGroup;
     Entry* m_newEntry;
     Group* m_newParent;

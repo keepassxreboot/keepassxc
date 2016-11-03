@@ -24,6 +24,7 @@
 #include <QLineEdit>
 #include <QKeyEvent>
 #include <QSplitter>
+#include <QLabel>
 #include <QProcess>
 #include <QHeaderView>
 #include <QApplication>
@@ -74,9 +75,20 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_entryView, SIGNAL(customContextMenuRequested(QPoint)),
             SLOT(emitEntryContextMenuRequested(QPoint)));
 
+    // Add a notification for when we are searching
+    m_searchingLabel = new QLabel();
+    m_searchingLabel->setText(tr("Searching..."));
+    m_searchingLabel->setAlignment(Qt::AlignCenter);
+    m_searchingLabel->setStyleSheet("background-color: rgb(255, 253, 160);"
+                                    "border: 2px solid rgb(190, 190, 190);"
+                                    "border-radius: 5px;");
+
     QVBoxLayout* vLayout = new QVBoxLayout(rightHandSideWidget);
     vLayout->setMargin(0);
+    vLayout->addWidget(m_searchingLabel);
     vLayout->addWidget(m_entryView);
+
+    m_searchingLabel->setVisible(false);
 
     rightHandSideWidget->setLayout(vLayout);
 
@@ -811,6 +823,16 @@ void DatabaseWidget::search(const QString& searchtext)
     m_entryView->setEntryList(searchResult);
     m_lastSearchText = searchtext;
 
+    // Display a label detailing our search results
+    if (searchResult.size() > 0) {
+        m_searchingLabel->setText(tr("Search Results (%1)").arg(searchResult.size()));
+    }
+    else {
+        m_searchingLabel->setText(tr("No Results"));
+    }
+
+    m_searchingLabel->setVisible(true);
+
     Q_EMIT searchModeActivated();
 }
 
@@ -848,6 +870,9 @@ void DatabaseWidget::endSearch()
 
         Q_EMIT listModeActivated();
     }
+
+    m_searchingLabel->setVisible(false);
+    m_searchingLabel->setText(tr("Searching..."));
 
     m_lastSearchText.clear();
 }

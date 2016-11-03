@@ -409,6 +409,8 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionDatabaseSaveAs->setEnabled(false);
             m_ui->actionExportCsv->setEnabled(false);
             m_ui->actionDatabaseMerge->setEnabled(false);
+
+            m_searchWidgetAction->setEnabled(false);
             break;
         }
         default:
@@ -555,12 +557,17 @@ void MainWindow::changeEvent(QEvent* event)
             m_ui->tabWidget->checkReloadDatabases();
     }
     
-    if ((event->type() == QEvent::WindowStateChange) && isMinimized()
-            && isTrayIconEnabled() && m_trayIcon && m_trayIcon->isVisible()
-            && config()->get("GUI/MinimizeToTray").toBool())
-    {
-        event->ignore();
-        QTimer::singleShot(0, this, SLOT(hide()));
+    if ((event->type() == QEvent::WindowStateChange) && isMinimized()) {
+        if (isTrayIconEnabled() && m_trayIcon && m_trayIcon->isVisible()
+                && config()->get("GUI/MinimizeToTray").toBool())
+        {
+            event->ignore();
+            QTimer::singleShot(0, this, SLOT(hide()));
+        }
+
+        if (config()->get("security/lockdatabaseminimize").toBool()) {
+            m_ui->tabWidget->lockDatabases();
+        }
     }
     else {
         QMainWindow::changeEvent(event);
