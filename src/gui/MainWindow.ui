@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string notr="true">KeePassX</string>
+   <string notr="true">KeePassXC</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -329,6 +329,14 @@
    </property>
    <property name="text">
     <string>&amp;Clone entry</string>
+   </property>
+  </action>
+  <action name="actionSearch">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Find</string>
    </property>
   </action>
   <action name="actionEntryCopyUsername">
