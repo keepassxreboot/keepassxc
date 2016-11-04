@@ -358,10 +358,7 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
     QRegExp delayRegEx("delay=(\\d+)", Qt::CaseSensitive, QRegExp::RegExp2);
     if (delayRegEx.exactMatch(tmplName)) {
         num = delayRegEx.cap(1).toInt();
-
-        if (num > 0 && num < 10000) {
-            m_autoTypeDelay = num;
-        }
+        m_autoTypeDelay = std::max(0, std::min(num, 10000));
         return list;
     }
 
