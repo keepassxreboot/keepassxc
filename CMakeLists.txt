@@ -87,6 +87,10 @@ endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wcast-align")
+
+  # Include code coverage, use with -DCMAKE_BUILD_TYPE=Coverage
+  include(CodeCoverage)
+  setup_target_for_coverage(kp_coverage "make test" coverage)
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCC)
