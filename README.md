@@ -28,7 +28,7 @@ Generally you can build and install KeePassXR with the following commands from a
 ```
 mkdir build
 cd build
-cmake -DWITH_TESTS=OFF
+cmake -DWITH_TESTS=OFF ..
 make
 sudo make install
 ```
