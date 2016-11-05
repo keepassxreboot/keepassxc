@@ -39,7 +39,7 @@ sudo make install
 Clone the repository to a suitable location where you can extend and build this project.
 
 ```bash
-git clone https://github.com/keepassxreboot/keepassx.git
+git clone https://github.com/keepassxreboot/keepassxc.git
 ```
 
 **Note:** This will clone the entire contents of the repository at the HEAD revision.
@@ -54,6 +54,6 @@ git pull
 ### Contributing
 
 We're always looking for suggestions to improve our application. If you have a suggestion for improving an existing feature,
-or would like to suggest a completely new feature for KeePassX Reboot, please use the [Issues](https://github.com/keepassxreboot/keepassx/issues) section or our [Google Groups](https://groups.google.com/forum/#!forum/keepassx-reboot) forum.
+or would like to suggest a completely new feature for KeePassX Reboot, please use the [Issues](https://github.com/keepassxreboot/keepassxc/issues) section or our [Google Groups](https://groups.google.com/forum/#!forum/keepassx-reboot) forum.
 
 Please review the [CONTRIBUTING](.github/CONTRIBUTING.md) document for further information.
