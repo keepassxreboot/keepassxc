@@ -13,7 +13,7 @@ apps:
     plugs: [unity7, opengl, gsettings, home]
 
 parts:
-  keepassx:
+  keepassxc:
     source: .
     plugin: cmake
     build-packages:
