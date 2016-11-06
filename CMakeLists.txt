@@ -32,6 +32,7 @@ include(CheckCXXSourceCompiles)
 option(WITH_TESTS "Enable building of unit tests" ON)
 option(WITH_GUI_TESTS "Enable building of GUI tests" OFF)
 option(WITH_DEV_BUILD "Use only for development. Disables/warns about deprecated methods." OFF)
+option(WITH_COVERAGE "Use to build with coverage tests. (GCC ONLY)." OFF)
 
 set(KEEPASSXC_VERSION "2.1.0")
 set(KEEPASSXC_VERSION_NUM "2.1.0")
@@ -87,6 +88,12 @@ endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wcast-align")
+
+  if(WITH_COVERAGE)
+    # Include code coverage, use with -DCMAKE_BUILD_TYPE=Coverage
+    include(CodeCoverage)
+    setup_target_for_coverage(kp_coverage "make test" coverage)
+  endif()
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCC)
