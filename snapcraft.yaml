@@ -23,8 +23,8 @@ parts:
       - g++
       - libgcrypt20-dev
       - libmicrohttpd-dev
-      - libqt4-dev # upstream cmake needs libqt4-dev to find qt5-core
       - libqt5x11extras5-dev
+      - qtbase5-dev
       - qttools5-dev
       - qttools5-dev-tools
       - zlib1g-dev
