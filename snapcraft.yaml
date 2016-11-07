@@ -16,6 +16,9 @@ parts:
   keepassxc:
     source: .
     plugin: cmake
+    configflags:
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DWITH_TESTS=OFF
     build-packages:
       - g++
       - libgcrypt20-dev
