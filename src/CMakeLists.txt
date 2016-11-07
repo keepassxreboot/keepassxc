@@ -216,8 +216,12 @@ if(APPLE)
   set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSXC_VERSION_NUM}")
   include(CPack)
 
-  include(DeployQt4)
-  install_qt4_executable(${PROGNAME}.app "qjpeg;qgif;qico;qtaccessiblewidgets")
+  set(QT_BINARY_DIR "/usr/local/opt/qt5/bin")
+  add_custom_command(TARGET ${PROGNAME}
+                     POST_BUILD
+                     COMMAND ${QT_BINARY_DIR}/macdeployqt ${PROGNAME}.app
+                     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
+                     COMMENT "Deploying app bundle")
 endif()
 
 if(MINGW)
