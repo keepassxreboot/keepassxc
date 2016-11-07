@@ -38,7 +38,7 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     // Places the window on the active (virtual) desktop instead of where the main window is.
     setAttribute(Qt::WA_X11BypassTransientForHint);
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
-    setWindowTitle(tr("Auto-Type - KeePassX"));
+    setWindowTitle(tr("Auto-Type - KeePassXC"));
     setWindowIcon(filePath()->applicationIcon());
 
     QRect screenGeometry = QApplication::desktop()->availableGeometry(QCursor::pos());

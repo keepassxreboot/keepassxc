@@ -37,6 +37,7 @@ AutoType* AutoType::m_instance = nullptr;
 AutoType::AutoType(QObject* parent, bool test)
     : QObject(parent)
     , m_inAutoType(false)
+    , m_autoTypeDelay(0)
     , m_currentGlobalKey(static_cast<Qt::Key>(0))
     , m_currentGlobalModifiers(0)
     , m_pluginLoader(new QPluginLoader(this))
@@ -187,6 +188,9 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
     QList<Entry*> entryList;
     QHash<Entry*, QString> sequenceHash;
 
+    // TODO: Check if there are any active databases here, if not do nothing
+    // TODO: Check if all databases are locked, if so ask to unlock them
+
     for (Database* db : dbList) {
         const QList<Entry*> dbEntries = db->rootGroup()->entriesRecursive();
         for (Entry* entry : dbEntries) {
@@ -203,7 +207,7 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
         QString message = tr("Couldn't find an entry that matches the window title:");
         message.append("\n\n");
         message.append(windowTitle);
-        MessageBox::information(nullptr, tr("Auto-Type - KeePassX"), message);
+        MessageBox::information(nullptr, tr("Auto-Type - KeePassXC"), message);
     }
     else if ((entryList.size() == 1) && !config()->get("security/autotypeask").toBool()) {
         m_inAutoType = false;
@@ -300,6 +304,8 @@ bool AutoType::parseActions(const QString& sequence, const Entry* entry, QList<A
 {
     QString tmpl;
     bool inTmpl = false;
+    m_autoTypeDelay = 0;
+
 
     for (const QChar& ch : sequence) {
         // TODO: implement support for {{}, {}} and {DELAY=X}
@@ -329,7 +335,17 @@ bool AutoType::parseActions(const QString& sequence, const Entry* entry, QList<A
             actions.append(new AutoTypeChar(ch));
         }
     }
-
+    if (m_autoTypeDelay > 0) {
+        QList<AutoTypeAction*>::iterator i;
+        i = actions.begin();
+        while (i != actions.end()) {
+            ++i;
+            if (i != actions.end()) {
+                i = actions.insert(i, new AutoTypeDelay(m_autoTypeDelay));
+                ++i;
+            }
+        }
+    }
     return true;
 }
 
@@ -338,6 +354,13 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
     QString tmplName = tmpl.toLower();
     int num = -1;
     QList<AutoTypeAction*> list;
+
+    QRegExp delayRegEx("delay=(\\d+)", Qt::CaseSensitive, QRegExp::RegExp2);
+    if (delayRegEx.exactMatch(tmplName)) {
+        num = delayRegEx.cap(1).toInt();
+        m_autoTypeDelay = std::max(0, std::min(num, 10000));
+        return list;
+    }
 
     QRegExp repeatRegEx("(.+) (\\d+)", Qt::CaseSensitive, QRegExp::RegExp2);
     if (repeatRegEx.exactMatch(tmplName)) {

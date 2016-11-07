@@ -11,9 +11,9 @@
   <key>CFBundleExecutable</key>
   <string>${PROGNAME}</string>
   <key>CFBundleIconFile</key>
-  <string>keepassx.icns</string>
+  <string>keepassxc.icns</string>
   <key>CFBundleIdentifier</key>
-  <string>org.keepassx.keepassx</string>
+  <string>org.keepassx.keepassxc</string>
   <key>CFBundleInfoDictionaryVersion</key>
   <string>6.0</string>
   <key>CFBundleName</key>
@@ -21,13 +21,13 @@
   <key>CFBundlePackageType</key>
   <string>APPL</string>
   <key>CFBundleShortVersionString</key>
-  <string>${KEEPASSX_VERSION}</string>
+  <string>${KEEPASSXC_VERSION}</string>
   <key>CFBundleSignature</key>
   <string>KEPX</string>
   <key>CFBundleVersion</key>
-  <string>${KEEPASSX_VERSION_NUM}</string>
+  <string>${KEEPASSXC_VERSION_NUM}</string>
   <key>NSHumanReadableCopyright</key>
-    <string>Copyright 2010-2012 KeePassX Development Team</string>
+    <string>Copyright 2016 KeePassXC Development Team</string>
     <key>CFBundleDocumentTypes</key>
     <array>
       <dict>
@@ -36,9 +36,9 @@
           <string>kdbx</string>
         </array>
         <key>CFBundleTypeIconFile</key>
-        <string>keepassx.icns</string>
+        <string>keepassxc.icns</string>
         <key>CFBundleTypeName</key>
-        <string>KeePassX Password Database</string>
+        <string>KeePassXC Password Database</string>
         <key>CFBundleTypeOSTypes</key>
         <array>
           <string>kdbx</string>

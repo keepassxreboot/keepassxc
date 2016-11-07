@@ -87,12 +87,12 @@ QString FilePath::pluginPath(const QString& name)
 
 QIcon FilePath::applicationIcon()
 {
-    return icon("apps", "keepassx");
+    return icon("apps", "keepassxc");
 }
 
 QIcon FilePath::trayIconLocked()
 {
-    return icon("apps", "keepassx-locked");
+    return icon("apps", "keepassxc-locked");
 }
 
 QIcon FilePath::trayIconUnlocked()

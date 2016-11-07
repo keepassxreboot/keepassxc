@@ -1,6 +1,6 @@
-# KeePassX Reboot
+# KeePassXC - KeePass Cross-platform Community Edition
 
-[![Travis Build Status](https://travis-ci.org/keepassxreboot/keepassx.svg?branch=develop)](https://travis-ci.org/keepassxreboot/keepassx)  [![Coverage Status](https://coveralls.io/repos/github/keepassxreboot/keepassx/badge.svg?branch=develop)](https://coveralls.io/github/keepassxreboot/keepassx?branch=develop)
+[![Travis Build Status](https://travis-ci.org/keepassxreboot/keepassxc.svg?branch=develop)](https://travis-ci.org/keepassxreboot/keepassxc)  [![Coverage Status](https://coveralls.io/repos/github/keepassxreboot/keepassxc/badge.svg)](https://coveralls.io/github/keepassxreboot/keepassxc)
 
 ## About
 
@@ -28,7 +28,7 @@ Generally you can build and install KeePassXR with the following commands from a
 ```
 mkdir build
 cd build
-cmake -DWITH_TESTS=OFF
+cmake -DWITH_TESTS=OFF ..
 make
 sudo make install
 ```
@@ -39,7 +39,7 @@ sudo make install
 Clone the repository to a suitable location where you can extend and build this project.
 
 ```bash
-git clone https://github.com/keepassxreboot/keepassx.git
+git clone https://github.com/keepassxreboot/keepassxc.git
 ```
 
 **Note:** This will clone the entire contents of the repository at the HEAD revision.
@@ -54,6 +54,6 @@ git pull
 ### Contributing
 
 We're always looking for suggestions to improve our application. If you have a suggestion for improving an existing feature,
-or would like to suggest a completely new feature for KeePassX Reboot, please use the [Issues](https://github.com/keepassxreboot/keepassx/issues) section or our [Google Groups](https://groups.google.com/forum/#!forum/keepassx-reboot) forum.
+or would like to suggest a completely new feature for KeePassX Reboot, please use the [Issues](https://github.com/keepassxreboot/keepassxc/issues) section or our [Google Groups](https://groups.google.com/forum/#!forum/keepassx-reboot) forum.
 
 Please review the [CONTRIBUTING](.github/CONTRIBUTING.md) document for further information.

@@ -18,8 +18,9 @@ These are just guidelines, not rules. Use your best judgment, and feel free to p
   * [Translations](#translations)
 
 [Styleguides](#styleguides)
+  * [Git Branch Strategy](#git_branch_strategy)
   * [Git Commit Messages](#git-commit-messages)
-  * [C Styleguide](#c-styleguide)
+  * [Coding Styleguide](#coding-styleguide)
 
 
 ## What should I know before I get started?
@@ -76,7 +77,7 @@ Both issue lists are sorted by total number of comments. While not perfect, numb
 
 Along with our desire to hear your feedback and suggestions, we're also interested in accepting direct assistance in the form of code.
 
-All pull requests must comply with the above requirements.
+All pull requests must comply with the above requirements and with the [Styleguides](#styleguides).
 
 ### Translations
 
@@ -84,6 +85,15 @@ Translations are managed on [Transifex](https://www.transifex.com/keepassx-reboo
 Please join an existing language team or request a new one if there is none.
 
 ## Styleguides
+
+### Git Branch Strategy
+
+The Branch Strategy is based on [git-flow-lite](http://nvie.com/posts/a-successful-git-branching-model/).
+
+* **master** -> always points to the last release published
+* **develop** -> points to the next planned release, tested and reviewed code
+* **feature/**[name] -> points to brand new feature in codebase, candidate for merge into develop (subject to rebase)
+
 
 ### Git Commit Messages
 

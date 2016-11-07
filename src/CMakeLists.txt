@@ -102,6 +102,7 @@ set(keepassx_SOURCES
     gui/PasswordGeneratorWidget.cpp
     gui/PasswordComboBox.cpp
     gui/SettingsWidget.cpp
+    gui/SearchWidget.cpp
     gui/SortFilterHideProxyModel.cpp
     gui/UnlockDatabaseWidget.cpp
     gui/WelcomeWidget.cpp
@@ -212,7 +213,7 @@ if(APPLE)
   set(CPACK_DMG_VOLUME_NAME "${PROGNAME}")
   set(CPACK_SYSTEM_NAME "OSX")
   set(CPACK_STRIP_FILES ON)
-  set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSX_VERSION_NUM}")
+  set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSXC_VERSION_NUM}")
   include(CPack)
 
   include(DeployQt4)
@@ -222,7 +223,7 @@ endif()
 if(MINGW)
   set(CPACK_GENERATOR "ZIP")
   set(CPACK_STRIP_FILES ON)
-  set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSX_VERSION_NUM}")
+  set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSXC_VERSION_NUM}")
   include(CPack)
 
   install(CODE "
