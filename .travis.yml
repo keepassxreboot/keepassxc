@@ -39,4 +39,4 @@ script:
 
 after_success:
   - popd
-  - if [ ! -z "$BUILD" ]; then docker run -v $(pwd):/cwd snapcore/snapcraft sh -c 'cd /cwd && snapcraft'; fi
+  - if [ ! -z "$BUILD" ]; then docker run -v $(pwd):/cwd snapcore/snapcraft sh -c 'cd /cwd && apt update && snapcraft'; fi
