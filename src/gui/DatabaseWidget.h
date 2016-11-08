@@ -41,7 +41,6 @@ class QMenu;
 class QSplitter;
 class QLabel;
 class UnlockDatabaseWidget;
-class CompositeKey;
 
 class DatabaseWidget : public QStackedWidget
 {
@@ -128,7 +127,6 @@ public Q_SLOTS:
     void switchToDatabaseSettings();
     void switchToOpenDatabase(const QString& fileName);
     void switchToOpenDatabase(const QString& fileName, const QString& password, const QString& keyFile);
-    void switchToOpenDatabase(const QString &fileName, const CompositeKey &masterKey);
     void switchToOpenMergeDatabase(const QString& fileName);
     void switchToOpenMergeDatabase(const QString& fileName, const QString& password, const QString& keyFile);
     void switchToImportKeepass1(const QString& fileName);

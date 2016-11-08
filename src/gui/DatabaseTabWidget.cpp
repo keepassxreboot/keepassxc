@@ -21,9 +21,6 @@
 #include <QLockFile>
 #include <QSaveFile>
 #include <QTabWidget>
-#include <QMessageBox>
-#include <QFileSystemWatcher>
-#include <QTimer>
 
 #include "autotype/AutoType.h"
 #include "core/Config.h"
@@ -56,7 +53,6 @@ const int DatabaseTabWidget::LastDatabasesCount = 5;
 DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     : QTabWidget(parent)
     , m_dbWidgetSateSync(new DatabaseWidgetStateSync(this))
-    , m_fileWatcher(new QFileSystemWatcher(this))
 {
     DragTabBar* tabBar = new DragTabBar(this);
     setTabBar(tabBar);
@@ -66,7 +62,6 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     connect(this, SIGNAL(currentChanged(int)), SLOT(emitActivateDatabaseChanged()));
     connect(this, SIGNAL(activateDatabaseChanged(DatabaseWidget*)), m_dbWidgetSateSync, SLOT(setActive(DatabaseWidget*)));
     connect(autoType(), SIGNAL(globalShortcutTriggered()), SLOT(performGlobalAutoType()));
-    connect(m_fileWatcher, SIGNAL(fileChanged(QString)), SLOT(fileChanged(QString)));
 }
 
 DatabaseTabWidget::~DatabaseTabWidget()
@@ -115,7 +110,7 @@ void DatabaseTabWidget::openDatabase()
 }
 
 void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
-                                     const QString& keyFile, const CompositeKey& key, int index)
+                                     const QString& keyFile)
 {
     QFileInfo fileInfo(fileName);
     QString canonicalFilePath = fileInfo.canonicalFilePath();
@@ -185,17 +180,12 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
     dbStruct.filePath = fileInfo.absoluteFilePath();
     dbStruct.canonicalFilePath = canonicalFilePath;
     dbStruct.fileName = fileInfo.fileName();
-    dbStruct.lastModified = fileInfo.lastModified();
 
-    insertDatabase(db, dbStruct, index);
-    m_fileWatcher->addPath(dbStruct.filePath);
+    insertDatabase(db, dbStruct);
 
     updateLastDatabases(dbStruct.filePath);
 
-    if (!key.isEmpty()) {
-        dbStruct.dbWidget->switchToOpenDatabase(dbStruct.filePath, key);
-    }
-    else if (!pw.isNull() || !keyFile.isEmpty()) {
+    if (!pw.isNull() || !keyFile.isEmpty()) {
         dbStruct.dbWidget->switchToOpenDatabase(dbStruct.filePath, pw, keyFile);
     }
     else {
@@ -235,117 +225,6 @@ void DatabaseTabWidget::importKeePass1Database()
     insertDatabase(db, dbStruct);
 
     dbStruct.dbWidget->switchToImportKeepass1(fileName);
-}
-
-void DatabaseTabWidget::fileChanged(const QString &fileName)
-{
-    const bool wasEmpty = m_changedFiles.isEmpty();
-    m_changedFiles.insert(fileName);
-    if (wasEmpty && !m_changedFiles.isEmpty())
-        QTimer::singleShot(200, this, SLOT(checkReloadDatabases()));
-}
-
-void DatabaseTabWidget::expectFileChange(const DatabaseManagerStruct& dbStruct)
-{
-    if (dbStruct.filePath.isEmpty())
-        return;
-    m_expectedFileChanges.insert(dbStruct.filePath);
-    m_fileWatcher->removePath(dbStruct.filePath);
-}
-
-void DatabaseTabWidget::unexpectFileChange(DatabaseManagerStruct& dbStruct)
-{
-    if (dbStruct.filePath.isEmpty())
-        return;
-    m_expectedFileChanges.remove(dbStruct.filePath);
-    dbStruct.lastModified = QFileInfo(dbStruct.filePath).lastModified();
-    m_fileWatcher->addPath(dbStruct.filePath);
-}
-
-void DatabaseTabWidget::checkReloadDatabases()
-{
-    QSet<QString> changedFiles;
-
-    changedFiles = m_changedFiles.subtract(m_expectedFileChanges);
-    m_changedFiles.clear();
-
-    if (changedFiles.isEmpty())
-        return;
-
-    QMutableHashIterator<Database*, DatabaseManagerStruct> itr(m_dbList);
-    while (itr.hasNext()) {
-        itr.next();
-        DatabaseManagerStruct& dbStruct = itr.value();
-
-        QString filePath = dbStruct.filePath;
-        Database* db = dbStruct.dbWidget->database();
-
-        if (!changedFiles.contains(filePath))
-            continue;
-
-        QFileInfo fileInfo(filePath);
-        QDateTime lastModified = fileInfo.lastModified();
-        if (dbStruct.lastModified == lastModified)
-            continue;
-
-        DatabaseWidget::Mode mode = dbStruct.dbWidget->currentMode();
-        if (mode == DatabaseWidget::None || mode == DatabaseWidget::LockedMode || !db->hasKey())
-            continue;
-
-        ReloadBehavior reloadBehavior = ReloadBehavior(config()->get("ReloadBehavior").toInt());
-        if (   (reloadBehavior == AlwaysAsk)
-            || (reloadBehavior == ReloadUnmodified && mode == DatabaseWidget::EditMode)
-            || (reloadBehavior == ReloadUnmodified && dbStruct.modified)) {
-            int res = QMessageBox::warning(this, fileInfo.exists() ? tr("Database file changed") : tr("Database file removed"),
-                                           tr("Do you want to discard your changes and reload?"),
-                                           QMessageBox::Yes|QMessageBox::No);
-            if (res == QMessageBox::No) {
-                dbStruct.modified = true;
-                updateTabName(db);
-                m_fileWatcher->addPath(filePath);
-                continue;
-            }
-        }
-
-        if (fileInfo.exists()) {
-            //Ignore/cancel all edits
-            dbStruct.dbWidget->switchToView(false);
-            dbStruct.modified = false;
-
-            //Save current group/entry
-            Uuid currentGroup;
-            if (Group* group = dbStruct.dbWidget->currentGroup())
-                currentGroup = group->uuid();
-            Uuid currentEntry;
-            if (Entry* entry = dbStruct.dbWidget->entryView()->currentEntry())
-                currentEntry = entry->uuid();
-
-            //Reload updated db
-            CompositeKey key = db->key();
-            int tabIndex = databaseIndex(db);
-            closeDatabase(db);
-            openDatabase(filePath, QString(), QString(), key, tabIndex);
-
-            //Restore current group/entry
-            dbStruct = indexDatabaseManagerStruct(count() - 1);
-            if (dbStruct.dbWidget && dbStruct.dbWidget->currentMode() == DatabaseWidget::ViewMode) {
-                Database * db = dbStruct.dbWidget->database();
-                if (!currentGroup.isNull())
-                    if (Group* group = db->resolveGroup(currentGroup))
-                        dbStruct.dbWidget->groupView()->setCurrentGroup(group);
-                if (!currentEntry.isNull())
-                    if (Entry* entry = db->resolveEntry(currentEntry))
-                        dbStruct.dbWidget->entryView()->setCurrentEntry(entry);
-            }
-        } else {
-            //Ignore/cancel all edits
-            dbStruct.dbWidget->switchToView(false);
-            dbStruct.modified = false;
-
-            //Close database
-            closeDatabase(dbStruct.dbWidget->database());
-        }
-    }
 }
 
 bool DatabaseTabWidget::closeDatabase(Database* db)
@@ -406,7 +285,6 @@ void DatabaseTabWidget::deleteDatabase(Database* db)
 
     int index = databaseIndex(db);
 
-    m_fileWatcher->removePath(dbStruct.filePath);
     removeTab(index);
     toggleTabbar();
     m_dbList.remove(db);
@@ -434,8 +312,6 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
     DatabaseManagerStruct& dbStruct = m_dbList[db];
 
     if (dbStruct.saveToFilename) {
-        expectFileChange(dbStruct);
-
         QSaveFile saveFile(dbStruct.canonicalFilePath);
         if (saveFile.open(QIODevice::WriteOnly)) {
             m_writer.writeDatabase(&saveFile, db);
@@ -456,7 +332,6 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
             return false;
         }
 
-        unexpectFileChange(dbStruct);
         dbStruct.modified = false;
         updateTabName(db);
         return true;
@@ -469,15 +344,15 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
 bool DatabaseTabWidget::saveDatabaseAs(Database* db)
 {
     DatabaseManagerStruct& dbStruct = m_dbList[db];
-    QString oldFilePath;
+    QString oldFileName;
     if (dbStruct.saveToFilename) {
-        oldFilePath = dbStruct.filePath;
+        oldFileName = dbStruct.filePath;
     }
     else {
-        oldFilePath = tr("New database").append(".kdbx");
+        oldFileName = tr("New database").append(".kdbx");
     }
     QString fileName = fileDialog()->getSaveFileName(this, tr("Save database as"),
-                                                     oldFilePath, tr("KeePass 2 Database").append(" (*.kdbx)"),
+                                                     oldFileName, tr("KeePass 2 Database").append(" (*.kdbx)"),
                                                      nullptr, 0, "kdbx");
     if (!fileName.isEmpty()) {
         QFileInfo fileInfo(fileName);
@@ -535,9 +410,6 @@ bool DatabaseTabWidget::saveDatabaseAs(Database* db)
         // refresh fileinfo since the file didn't exist before
         fileInfo.refresh();
 
-        m_fileWatcher->removePath(oldFilePath);
-        dbStruct.lastModified = fileInfo.lastModified();
-        m_fileWatcher->addPath(dbStruct.filePath);
         dbStruct.modified = false;
         dbStruct.saveToFilename = true;
         dbStruct.readOnly = false;
@@ -741,13 +613,14 @@ Database* DatabaseTabWidget::databaseFromDatabaseWidget(DatabaseWidget* dbWidget
     return nullptr;
 }
 
-void DatabaseTabWidget::insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct, int index)
+void DatabaseTabWidget::insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct)
 {
     m_dbList.insert(db, dbStruct);
 
-    index = insertTab(index, dbStruct.dbWidget, "");
+    addTab(dbStruct.dbWidget, "");
     toggleTabbar();
     updateTabName(db);
+    int index = databaseIndex(db);
     setCurrentIndex(index);
     connectDatabase(db);
     connect(dbStruct.dbWidget, SIGNAL(closeRequest()), SLOT(closeDatabaseFromSender()));

@@ -771,14 +771,6 @@ void DatabaseWidget::switchToOpenDatabase(const QString& fileName, const QString
     m_databaseOpenWidget->enterKey(password, keyFile);
 }
 
-void DatabaseWidget::switchToOpenDatabase(const QString &fileName, const CompositeKey& masterKey)
-{
-    updateFilename(fileName);
-    switchToOpenDatabase(fileName);
-    m_databaseOpenWidget->enterKey(masterKey);
-}
-
-
 void DatabaseWidget::switchToOpenMergeDatabase(const QString& fileName)
 {
     m_databaseOpenMergeWidget->load(fileName);

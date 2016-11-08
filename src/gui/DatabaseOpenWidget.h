@@ -39,7 +39,6 @@ public:
     ~DatabaseOpenWidget();
     void load(const QString& filename);
     void enterKey(const QString& pw, const QString& keyFile);
-    void enterKey(const CompositeKey& masterKey);
     Database* database();
 
 Q_SIGNALS:
@@ -50,7 +49,6 @@ protected:
 
 protected Q_SLOTS:
     virtual void openDatabase();
-    void openDatabase(const CompositeKey& masterKey);
     void reject();
 
 private Q_SLOTS:
