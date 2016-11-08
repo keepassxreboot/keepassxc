@@ -201,7 +201,7 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
+        <layout class="QHBoxLayout" name="horizontalLayout_1">
          <item>
           <widget class="QLabel" name="label_5">
            <property name="sizePolicy">
@@ -225,7 +225,7 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
           <widget class="QLabel" name="label_4">
            <property name="sizePolicy">

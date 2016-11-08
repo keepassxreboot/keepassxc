@@ -105,6 +105,7 @@ public:
     void recycleGroup(Group* group);
     void setEmitModified(bool value);
     void copyAttributesFrom(const Database* other);
+    void merge(const Database* other);
 
     /**
      * Returns a unique id that is only valid as long as the Database exists.

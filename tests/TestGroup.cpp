@@ -19,6 +19,7 @@
 
 #include <QPointer>
 #include <QSignalSpy>
+#include <QDebug>
 #include <QTest>
 
 #include "core/Database.h"
@@ -448,4 +449,121 @@ void TestGroup::testCopyCustomIcons()
 
     delete dbTarget;
     delete dbSource;
+}
+
+void TestGroup::testMerge()
+{
+    Group* group1 = new Group();
+    group1->setName("group 1");
+    Group* group2 = new Group();
+    group2->setName("group 2");
+
+    Entry* entry1 = new Entry();
+    Entry* entry2 = new Entry();
+
+    entry1->setGroup(group1);
+    entry1->setUuid(Uuid::random());
+    entry2->setGroup(group1);
+    entry2->setUuid(Uuid::random());
+
+    group2->merge(group1);
+
+    QCOMPARE(group1->entries().size(), 2);
+    QCOMPARE(group2->entries().size(), 2);
+}
+
+void TestGroup::testMergeDatabase()
+{
+    Database* dbSource = createMergeTestDatabase();
+    Database* dbDest = new Database();
+
+    dbDest->merge(dbSource);
+
+    QCOMPARE(dbDest->rootGroup()->children().size(), 2);
+    QCOMPARE(dbDest->rootGroup()->children().at(0)->entries().size(), 2);
+
+    delete dbDest;
+    delete dbSource;
+}
+
+void TestGroup::testMergeConflict()
+{
+    Database* dbSource = createMergeTestDatabase();
+
+    // test merging updated entries
+    // falls back to KeepBoth mode
+    Database* dbCopy = new Database();
+    dbCopy->setRootGroup(dbSource->rootGroup()->clone(Entry::CloneNoFlags));
+
+    // sanity check
+    QCOMPARE(dbCopy->rootGroup()->children().at(0)->entries().size(), 2);
+
+    // make this entry newer than in original db
+    Entry* updatedEntry = dbCopy->rootGroup()->children().at(0)->entries().at(0);
+    TimeInfo updatedTimeInfo = updatedEntry->timeInfo();
+    updatedTimeInfo.setLastModificationTime(updatedTimeInfo.lastModificationTime().addYears(1));
+    updatedEntry->setTimeInfo(updatedTimeInfo);
+
+    dbCopy->merge(dbSource);
+
+    // one entry is duplicated because of mode
+    QCOMPARE(dbCopy->rootGroup()->children().at(0)->entries().size(), 2);
+
+    delete dbSource;
+    delete dbCopy;
+}
+
+void TestGroup::testMergeConflictKeepBoth()
+{
+    Database* dbSource = createMergeTestDatabase();
+
+    // test merging updated entries
+    // falls back to KeepBoth mode
+    Database* dbCopy = new Database();
+    dbCopy->setRootGroup(dbSource->rootGroup()->clone(Entry::CloneNoFlags));
+
+    // sanity check
+    QCOMPARE(dbCopy->rootGroup()->children().at(0)->entries().size(), 2);
+
+    // make this entry newer than in original db
+    Entry* updatedEntry = dbCopy->rootGroup()->children().at(0)->entries().at(0);
+    TimeInfo updatedTimeInfo = updatedEntry->timeInfo();
+    updatedTimeInfo.setLastModificationTime(updatedTimeInfo.lastModificationTime().addYears(1));
+    updatedEntry->setTimeInfo(updatedTimeInfo);
+
+    dbCopy->rootGroup()->setMergeMode(Group::MergeMode::KeepBoth);
+
+    dbCopy->merge(dbSource);
+
+    // one entry is duplicated because of mode
+    QCOMPARE(dbCopy->rootGroup()->children().at(0)->entries().size(), 3);
+    // the older entry was merged from the other db as last in the group
+    Entry* olderEntry = dbCopy->rootGroup()->children().at(0)->entries().at(2);
+    QVERIFY2(olderEntry->attributes()->hasKey("merged"), "older entry is marked with an attribute \"merged\"");
+
+    delete dbSource;
+    delete dbCopy;
+}
+
+Database* TestGroup::createMergeTestDatabase()
+{
+    Database* db = new Database();
+
+    Group* group1 = new Group();
+    group1->setName("group 1");
+    Group* group2 = new Group();
+    group2->setName("group 2");
+
+    Entry* entry1 = new Entry();
+    Entry* entry2 = new Entry();
+
+    entry1->setGroup(group1);
+    entry1->setUuid(Uuid::random());
+    entry2->setGroup(group1);
+    entry2->setUuid(Uuid::random());
+
+    group1->setParent(db->rootGroup());
+    group2->setParent(db->rootGroup());
+
+    return db;
 }
