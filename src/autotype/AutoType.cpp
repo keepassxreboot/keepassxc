@@ -147,7 +147,11 @@ void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow, const QS
     }
 
     if (hideWindow) {
+#if defined(Q_OS_MAC)
+        m_plugin->raiseLastActiveWindow();
+#else
         hideWindow->showMinimized();
+#endif
     }
 
     Tools::wait(m_plugin->initialTimeout());
@@ -220,6 +224,10 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
                 SLOT(performAutoTypeFromGlobal(Entry*,QString)));
         connect(selectDialog, SIGNAL(rejected()), SLOT(resetInAutoType()));
         selectDialog->setEntries(entryList, sequenceHash);
+#if defined(Q_OS_MAC)
+        m_plugin->raiseOwnWindow();
+        Tools::wait(500);
+#endif
         selectDialog->show();
         // necessary when the main window is minimized
         selectDialog->activateWindow();

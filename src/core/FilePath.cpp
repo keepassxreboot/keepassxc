@@ -49,6 +49,10 @@ QString FilePath::pluginPath(const QString& name)
     // for TestAutoType
     pluginPaths << QCoreApplication::applicationDirPath() + "/../src/autotype/test";
 
+#if defined(Q_OS_MAC)
+    pluginPaths << QCoreApplication::applicationDirPath() + "/../PlugIns";
+#endif
+
     pluginPaths << QCoreApplication::applicationDirPath();
 
     QString configuredPluginDir = KEEPASSX_PLUGIN_DIR;
