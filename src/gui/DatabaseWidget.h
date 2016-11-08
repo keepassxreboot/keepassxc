@@ -24,6 +24,7 @@
 #include "core/Uuid.h"
 
 #include "gui/entry/EntryModel.h"
+#include "core/FileSystemWatcher.h"
 
 class ChangeMasterKeyWidget;
 class DatabaseOpenWidget;
@@ -148,6 +149,7 @@ private Q_SLOTS:
     void updateMasterKey(bool accepted);
     void openDatabase(bool accepted);
     void mergeDatabase(bool accepted);
+    void databaseModifedExternally();
     void unlockDatabase(bool accepted);
     void emitCurrentModeChanged();
     void clearLastGroup(Group* group);
@@ -183,6 +185,8 @@ private:
     QString m_lastSearchText;
     bool m_searchCaseSensitive;
     bool m_searchCurrentGroup;
+
+    FileSystemWatcher m_file_watcher;
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H
