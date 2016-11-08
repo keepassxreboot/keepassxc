@@ -187,6 +187,22 @@ QString Group::defaultAutoTypeSequence() const
     return m_data.defaultAutoTypeSequence;
 }
 
+QString Group::effectiveAutoTypeSequence() const
+{
+    QString sequence;
+    const Group* grp = this;
+    do {
+        if (grp->autoTypeEnabled() == Group::Disable) {
+            return QString();
+        }
+
+        sequence = grp->defaultAutoTypeSequence();
+        grp = grp->parentGroup();
+    } while (grp && sequence.isEmpty());
+
+    return sequence;
+}
+
 Group::TriState Group::autoTypeEnabled() const
 {
     return m_data.autoTypeEnabled;
