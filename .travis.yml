@@ -38,4 +38,5 @@ script:
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then make test ARGS+="--output-on-failure"; fi
 
 after_success:
-  - if [ ! -z "$BUILD" ]; then docker run -v $(pwd):/cwd snapcore/snapcraft sh -c 'cd /cwd && ls && snapcraft'; fi
+  - popd
+  - if [ ! -z "$BUILD" ]; then docker run -v $(pwd):/cwd snapcore/snapcraft sh -c 'cd /cwd && snapcraft'; fi
