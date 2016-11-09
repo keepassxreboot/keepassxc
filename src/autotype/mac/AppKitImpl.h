@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2016 Lennart Glauer <mail@lennart-glauer.de>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,32 +15,17 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTGROUP_H
-#define KEEPASSX_TESTGROUP_H
+#import "AppKit.h"
 
-#include <QObject>
-#include "core/Database.h"
+#import <Foundation/Foundation.h>
+#import <AppKit/NSRunningApplication.h>
 
-class TestGroup : public QObject
-{
-    Q_OBJECT
+@interface AppKitImpl : NSObject
 
-private Q_SLOTS:
-    void initTestCase();
-    void testParenting();
-    void testSignals();
-    void testEntries();
-    void testDeleteSignals();
-    void testCopyCustomIcon();
-    void testClone();
-    void testCopyCustomIcons();
-    void testMerge();
-    void testMergeConflict();
-    void testMergeDatabase();
-    void testMergeConflictKeepBoth();
+@property (strong) NSRunningApplication *lastActiveApplication;
 
-private:
-    Database* createMergeTestDatabase();
-};
+- (pid_t) activeProcessId;
+- (pid_t) ownProcessId;
+- (bool) activateProcess:(pid_t) pid;
 
-#endif // KEEPASSX_TESTGROUP_H
+@end

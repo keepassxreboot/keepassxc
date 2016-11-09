@@ -29,6 +29,7 @@
 #include <QToolBar>
 #include <QToolButton>
 #include <QTimer>
+#include <QSignalSpy>
 
 #include "config-keepassx-tests.h"
 #include "core/Config.h"
@@ -105,6 +106,37 @@ void TestGui::cleanup()
 
     m_db = nullptr;
     m_dbWidget = nullptr;
+}
+
+void TestGui::testMergeDatabase()
+{
+    // this triggers a warning. Perhaps similar to https://bugreports.qt.io/browse/QTBUG-49623 ?
+    QSignalSpy dbMergeSpy(m_tabWidget->currentWidget(), SIGNAL(databaseMerged(Database*)));
+
+    // set file to merge from
+    fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx"));
+    triggerAction("actionDatabaseMerge");
+
+    QWidget* databaseOpenMergeWidget = m_mainWindow->findChild<QWidget*>("databaseOpenMergeWidget");
+    QLineEdit* editPasswordMerge = databaseOpenMergeWidget->findChild<QLineEdit*>("editPassword");
+    QVERIFY(editPasswordMerge->isVisible());
+
+    m_tabWidget->currentDatabaseWidget()->setCurrentWidget(databaseOpenMergeWidget);
+
+    QTest::keyClicks(editPasswordMerge, "a");
+    QTest::keyClick(editPasswordMerge, Qt::Key_Enter);
+
+    QTRY_COMPARE(dbMergeSpy.count(), 1);
+    QTRY_VERIFY(m_tabWidget->tabText(m_tabWidget->currentIndex()).contains("*"));
+
+    m_db = m_tabWidget->currentDatabaseWidget()->database();
+
+    // there are seven child groups of the root group
+    QCOMPARE(m_db->rootGroup()->children().size(), 7);
+    // the merged group should contain an entry
+    QCOMPARE(m_db->rootGroup()->children().at(6)->entries().size(), 1);
+    // the General group contains one entry merged from the other db
+    QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 1);
 }
 
 void TestGui::testTabs()

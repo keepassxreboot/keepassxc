@@ -115,6 +115,18 @@ bool AutoTypePlatformTest::raiseWindow(WId window)
     return false;
 }
 
+#if defined(Q_OS_MAC)
+bool AutoTypePlatformTest::raiseLastActiveWindow()
+{
+    return false;
+}
+
+bool AutoTypePlatformTest::raiseOwnWindow()
+{
+    return false;
+}
+#endif
+
 AutoTypeExecturorTest::AutoTypeExecturorTest(AutoTypePlatformTest* platform)
     : m_platform(platform)
 {

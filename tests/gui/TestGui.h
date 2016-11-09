@@ -38,6 +38,7 @@ private Q_SLOTS:
     void cleanup();
     void cleanupTestCase();
 
+    void testMergeDatabase();
     void testTabs();
     void testEditEntry();
     void testAddEntry();

@@ -55,6 +55,10 @@ void EntryView::keyPressEvent(QKeyEvent* event)
 {
     if ((event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) && currentIndex().isValid()) {
         emitEntryActivated(currentIndex());
+#ifdef Q_OS_MAC
+        // Pressing return does not emit the QTreeView::activated signal on mac os
+        Q_EMIT activated(currentIndex());
+#endif
     }
 
     QTreeView::keyPressEvent(event);

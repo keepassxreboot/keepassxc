@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2016 Lennart Glauer <mail@lennart-glauer.de>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,26 +15,22 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AUTOTYPETEST_H
-#define KEEPASSX_AUTOTYPETEST_H
+#ifndef KEEPASSX_AUTOTYPEWINDOWS_H
+#define KEEPASSX_AUTOTYPEWINDOWS_H
 
 #include <QtPlugin>
+#include <Windows.h>
 
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/AutoTypeAction.h"
-#include "autotype/test/AutoTypeTestInterface.h"
 
-class AutoTypePlatformTest : public QObject,
-                             public AutoTypePlatformInterface,
-                             public AutoTypeTestInterface
+class AutoTypePlatformWin : public QObject, public AutoTypePlatformInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.keepassx.AutoTypePlatformInterface")
-    Q_INTERFACES(AutoTypePlatformInterface AutoTypeTestInterface)
+    Q_PLUGIN_METADATA(IID "org.keepassx.AutoTypePlatformWindows")
+    Q_INTERFACES(AutoTypePlatformInterface)
 
 public:
-    QString keyToString(Qt::Key key) override;
-
     bool isAvailable() override;
     QStringList windowTitles() override;
     WId activeWindow() override;
@@ -46,39 +42,32 @@ public:
     bool raiseWindow(WId window) override;
     AutoTypeExecutor* createExecutor() override;
 
-#if defined(Q_OS_MAC)
-    bool raiseLastActiveWindow() override;
-    bool raiseOwnWindow() override;
-#endif
-
-    void setActiveWindowTitle(const QString& title) override;
-
-    QString actionChars() override;
-    int actionCount() override;
-    void clearActions() override;
-
-    void addActionChar(AutoTypeChar* action);
-    void addActionKey(AutoTypeKey* action);
+    void sendChar(const QChar& ch, bool isKeyDown);
+    void sendKey(Qt::Key key, bool isKeyDown);
 
 Q_SIGNALS:
     void globalShortcutTriggered();
 
 private:
-    QString m_activeWindowTitle;
-    QList<AutoTypeAction*> m_actionList;
-    QString m_actionChars;
+    static DWORD qtToNativeKeyCode(Qt::Key key);
+    static DWORD qtToNativeModifiers(Qt::KeyboardModifiers modifiers);
+    static BOOL isExtendedKey(DWORD nativeKeyCode);
+    static BOOL isAltTabWindow(HWND hwnd);
+    static BOOL CALLBACK windowTitleEnumProc(_In_ HWND hwnd, _In_ LPARAM lParam);
+    static QString windowTitle(HWND hwnd);
 };
 
-class AutoTypeExecturorTest : public AutoTypeExecutor
+class AutoTypeExecutorWin : public AutoTypeExecutor
 {
 public:
-    explicit AutoTypeExecturorTest(AutoTypePlatformTest* platform);
+    explicit AutoTypeExecutorWin(AutoTypePlatformWin* platform);
 
     void execChar(AutoTypeChar* action) override;
     void execKey(AutoTypeKey* action) override;
 
 private:
-    AutoTypePlatformTest* const m_platform;
+    AutoTypePlatformWin* const m_platform;
 };
 
-#endif // KEEPASSX_AUTOTYPETEST_H
+#endif // KEEPASSX_AUTOTYPEWINDOWS_H
+

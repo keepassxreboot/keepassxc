@@ -24,6 +24,7 @@
 
 #include "autotype/AutoType.h"
 #include "core/Config.h"
+#include "core/Global.h"
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -190,6 +191,21 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
     else {
         dbStruct.dbWidget->switchToOpenDatabase(dbStruct.filePath);
     }
+}
+
+void DatabaseTabWidget::mergeDatabase()
+{
+    QString filter = QString("%1 (*.kdbx);;%2 (*)").arg(tr("KeePass 2 Database"), tr("All files"));
+    const QString fileName = fileDialog()->getOpenFileName(this, tr("Merge database"), QString(),
+                                                       filter);
+    if (!fileName.isEmpty()) {
+        mergeDatabase(fileName);
+    }
+}
+
+void DatabaseTabWidget::mergeDatabase(const QString& fileName)
+{
+    currentDatabaseWidget()->switchToOpenMergeDatabase(fileName);
 }
 
 void DatabaseTabWidget::importKeePass1Database()

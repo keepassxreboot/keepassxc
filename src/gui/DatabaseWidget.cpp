@@ -118,6 +118,8 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_databaseSettingsWidget->setObjectName("databaseSettingsWidget");
     m_databaseOpenWidget = new DatabaseOpenWidget();
     m_databaseOpenWidget->setObjectName("databaseOpenWidget");
+    m_databaseOpenMergeWidget = new DatabaseOpenWidget();
+    m_databaseOpenMergeWidget->setObjectName("databaseOpenMergeWidget");
     m_keepass1OpenWidget = new KeePass1OpenWidget();
     m_keepass1OpenWidget->setObjectName("keepass1OpenWidget");
     m_unlockDatabaseWidget = new UnlockDatabaseWidget();
@@ -129,6 +131,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     addWidget(m_databaseSettingsWidget);
     addWidget(m_historyEditEntryWidget);
     addWidget(m_databaseOpenWidget);
+    addWidget(m_databaseOpenMergeWidget);
     addWidget(m_keepass1OpenWidget);
     addWidget(m_unlockDatabaseWidget);
 
@@ -147,6 +150,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_changeMasterKeyWidget, SIGNAL(editFinished(bool)), SLOT(updateMasterKey(bool)));
     connect(m_databaseSettingsWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
     connect(m_databaseOpenWidget, SIGNAL(editFinished(bool)), SLOT(openDatabase(bool)));
+    connect(m_databaseOpenMergeWidget, SIGNAL(editFinished(bool)), SLOT(mergeDatabase(bool)));
     connect(m_keepass1OpenWidget, SIGNAL(editFinished(bool)), SLOT(openDatabase(bool)));
     connect(m_unlockDatabaseWidget, SIGNAL(editFinished(bool)), SLOT(unlockDatabase(bool)));
     connect(this, SIGNAL(currentChanged(int)), this, SLOT(emitCurrentModeChanged()));
@@ -663,6 +667,28 @@ void DatabaseWidget::openDatabase(bool accepted)
     }
 }
 
+void DatabaseWidget::mergeDatabase(bool accepted)
+{
+    if (accepted) {
+        if (!m_db) {
+            MessageBox::critical(this, tr("Error"), tr("No current database."));
+            return;
+        }
+
+        Database* srcDb = static_cast<DatabaseOpenWidget*>(sender())->database();
+
+        if (!srcDb) {
+            MessageBox::critical(this, tr("Error"), tr("No source database, nothing to do."));
+            return;
+        }
+
+        m_db->merge(srcDb);
+    }
+
+    setCurrentWidget(m_mainWidget);
+    Q_EMIT databaseMerged(m_db);
+}
+
 void DatabaseWidget::unlockDatabase(bool accepted)
 {
     if (!accepted) {
@@ -743,6 +769,19 @@ void DatabaseWidget::switchToOpenDatabase(const QString& fileName, const QString
     updateFilename(fileName);
     switchToOpenDatabase(fileName);
     m_databaseOpenWidget->enterKey(password, keyFile);
+}
+
+void DatabaseWidget::switchToOpenMergeDatabase(const QString& fileName)
+{
+    m_databaseOpenMergeWidget->load(fileName);
+    setCurrentWidget(m_databaseOpenMergeWidget);
+}
+
+void DatabaseWidget::switchToOpenMergeDatabase(const QString& fileName, const QString& password,
+                                          const QString& keyFile)
+{
+    switchToOpenMergeDatabase(fileName);
+    m_databaseOpenMergeWidget->enterKey(password, keyFile);
 }
 
 void DatabaseWidget::switchToImportKeepass1(const QString& fileName)
@@ -856,6 +895,12 @@ bool DatabaseWidget::isInSearchMode() const
     return m_entryView->inEntryListMode();
 }
 
+Group* DatabaseWidget::currentGroup() const
+{
+    return isInSearchMode() ? m_lastGroup
+                            : m_groupView->currentGroup();
+}
+
 void DatabaseWidget::clearLastGroup(Group* group)
 {
     if (group) {
@@ -955,4 +1000,12 @@ bool DatabaseWidget::currentEntryHasNotes()
         return false;
     }
     return !currentEntry->notes().isEmpty();
+}
+
+GroupView* DatabaseWidget::groupView() {
+    return m_groupView;
+}
+
+EntryView* DatabaseWidget::entryView() {
+    return m_entryView;
 }
