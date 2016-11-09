@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=Keepassxc
-Comment=Cross platform password safe
-GenericName=Keepassxc
-Exec=keepassxc %U
-Icon=${SNAP}/meta/gui/icon.png
-Type=Application
-StartupNotify=true
-Categories=Utility;

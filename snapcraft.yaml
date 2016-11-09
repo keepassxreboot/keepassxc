@@ -29,3 +29,22 @@ parts:
       - qttools5-dev-tools
       - zlib1g-dev
     after: [desktop-qt5]
+  desktop-icon:
+    source: share/icons/application/256x256/apps
+    plugin: dump
+    organize:
+      keepassxc.png: icon.png
+    snap:
+      - icon.png
+  snap-meta-icon:
+    plugin: dump
+    source: share/icons/application/256x256/apps
+    organize:
+      keepassxc.png: meta/gui/icon.png
+  snap-meta-desktop:
+    plugin: dump
+    source: share/linux
+    organize:
+      keepassxc.desktop: meta/gui/icon
+    snap:
+      - keepassxc.desktop
