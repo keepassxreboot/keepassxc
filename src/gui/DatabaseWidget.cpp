@@ -29,7 +29,6 @@
 #include <QProcess>
 #include <QHeaderView>
 #include <QApplication>
-#include <QTimer>
 #include <QtDebug>
 
 #include "autotype/AutoType.h"
@@ -157,7 +156,11 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_databaseOpenMergeWidget, SIGNAL(editFinished(bool)), SLOT(mergeDatabase(bool)));
     connect(m_keepass1OpenWidget, SIGNAL(editFinished(bool)), SLOT(openDatabase(bool)));
     connect(m_unlockDatabaseWidget, SIGNAL(editFinished(bool)), SLOT(unlockDatabase(bool)));
+    connect(&m_fileWatcher, SIGNAL(fileChanged(QString)), this, SLOT(onWatchedFileChanged()));
+    connect(&m_fileWatchTimer, SIGNAL(timeout()), this, SLOT(reloadDatabaseFile()));
     connect(this, SIGNAL(currentChanged(int)), this, SLOT(emitCurrentModeChanged()));
+
+    m_fileWatchTimer.setSingleShot(true);
 
     m_searchCaseSensitive = false;
     m_searchCurrentGroup = false;
@@ -662,11 +665,10 @@ void DatabaseWidget::openDatabase(bool accepted)
         m_databaseOpenWidget = nullptr;
         delete m_keepass1OpenWidget;
         m_keepass1OpenWidget = nullptr;
-        if (config()->get("AutoReloadOnChange").toBool() ) 
-            m_file_watcher.watchFile( m_filename );
+        m_fileWatcher.addPath(m_filename);
     }
     else {
-        m_file_watcher.stopWatching();
+        m_fileWatcher.removePath(m_filename);
         if (m_databaseOpenWidget->database()) {
             delete m_databaseOpenWidget->database();
         }
@@ -939,29 +941,52 @@ void DatabaseWidget::updateFilename(const QString& fileName)
     m_filename = fileName;
 }
 
-void DatabaseWidget::databaseModifedExternally()
+void DatabaseWidget::onWatchedFileChanged()
 {
-    if ( database() == Q_NULLPTR )
+    if (m_fileWatchTimer.isActive())
         return;
 
-    if ( ! config()->get("AutoReloadOnChange").toBool() ) 
+    m_fileWatchTimer.start(500);
+}
+
+void DatabaseWidget::reloadDatabaseFile()
+{
+    if (m_db == nullptr)
         return;
+
+    // TODO: Also check if db is currently modified before reloading
+    if (! config()->get("AutoReloadOnChange").toBool()) {
+        // Ask if we want to reload the db
+        QMessageBox::StandardButton mb = MessageBox::question(this, tr("Reload database file"),
+                             tr("The database file has changed. Do you want to load the changes?"),
+                             QMessageBox::Yes | QMessageBox::No);
+
+        if (mb == QMessageBox::No) {
+            // TODO: taint database
+
+            // Rewatch the database file
+            m_fileWatcher.addPath(m_filename);
+            return;
+        }
+    }
 
     KeePass2Reader reader;
     QFile file(m_filename);
-    if (!file.open(QIODevice::ReadOnly)) {
-        // TODO: error message
-        return;
+    if (file.open(QIODevice::ReadOnly)) {
+        Database* db = reader.readDatabase(&file, database()->key());
+        if (db != nullptr) {
+            replaceDatabase(db);
+        }
+        else {
+            // TODO: error message for failure to read the new db
+        }
     }
-    Database* db = reader.readDatabase(&file, database()->key() );
-    if ( db )
-    {
-        Database* oldDb = m_db;
-        m_db = db;
-        m_groupView->changeDatabase(m_db);
-        Q_EMIT databaseChanged(m_db);
-        delete oldDb;
+    else {
+        // TODO: error message for failure to open db file
     }
+
+    // Rewatch the database file
+    m_fileWatcher.addPath(m_filename);
 }
 
 int DatabaseWidget::numberOfSelectedEntries() const

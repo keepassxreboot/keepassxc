@@ -20,11 +20,12 @@
 
 #include <QScopedPointer>
 #include <QStackedWidget>
+#include <QFileSystemWatcher>
+#include <QTimer>
 
 #include "core/Uuid.h"
 
 #include "gui/entry/EntryModel.h"
-#include "core/FileSystemWatcher.h"
 
 class ChangeMasterKeyWidget;
 class DatabaseOpenWidget;
@@ -42,6 +43,7 @@ class QMenu;
 class QSplitter;
 class QLabel;
 class UnlockDatabaseWidget;
+class QFileSystemWatcher;
 
 class DatabaseWidget : public QStackedWidget
 {
@@ -149,10 +151,12 @@ private Q_SLOTS:
     void updateMasterKey(bool accepted);
     void openDatabase(bool accepted);
     void mergeDatabase(bool accepted);
-    void databaseModifedExternally();
     void unlockDatabase(bool accepted);
     void emitCurrentModeChanged();
     void clearLastGroup(Group* group);
+    // Database autoreload slots
+    void onWatchedFileChanged();
+    void reloadDatabaseFile();
 
 private:
     void setClipboardTextAndMinimize(const QString& text);
@@ -186,7 +190,8 @@ private:
     bool m_searchCaseSensitive;
     bool m_searchCurrentGroup;
 
-    FileSystemWatcher m_file_watcher;
+    QFileSystemWatcher m_fileWatcher;
+    QTimer m_fileWatchTimer;
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H
