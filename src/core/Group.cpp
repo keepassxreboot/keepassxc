@@ -193,27 +193,22 @@ QString Group::effectiveAutoTypeSequence() const
     bool enableSet = false;
 
     const Group* group = this;
-    // check if group exist (if the entry has a group)
-    if(group) {
-      do {
-          if (!enableSet) {
-              if (group->autoTypeEnabled() == Group::Disable) {
-                  return QString();
-              }
-              else if (group->autoTypeEnabled() == Group::Enable) {
-                  enableSet = true;
-              }
-          }
+    do {
+        if (!enableSet) {
+            if (group->autoTypeEnabled() == Group::Disable) {
+                return QString();
+            }
+            else if (group->autoTypeEnabled() == Group::Enable) {
+                enableSet = true;
+            }
+        }
 
-          if (sequence.isEmpty()) {
-              sequence = group->defaultAutoTypeSequence();
-          }
+        if (sequence.isEmpty()) {
+            sequence = group->defaultAutoTypeSequence();
+        }
 
-          group = group->parentGroup();
-      } while (group && (!enableSet || sequence.isEmpty()));
-    } else {
-      sequence = QString();
-    }
+        group = group->parentGroup();
+    } while (group && (!enableSet || sequence.isEmpty()));
 
     return sequence;
 }
