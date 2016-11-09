@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2016 Lennart Glauer <mail@lennart-glauer.de>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,26 +15,25 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AUTOTYPETEST_H
-#define KEEPASSX_AUTOTYPETEST_H
+#ifndef KEEPASSX_AUTOTYPEMAC_H
+#define KEEPASSX_AUTOTYPEMAC_H
 
+#include <Carbon/Carbon.h>
 #include <QtPlugin>
+#include <memory>
 
+#include "AppKit.h"
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/AutoTypeAction.h"
-#include "autotype/test/AutoTypeTestInterface.h"
 
-class AutoTypePlatformTest : public QObject,
-                             public AutoTypePlatformInterface,
-                             public AutoTypeTestInterface
+class AutoTypePlatformMac : public QObject, public AutoTypePlatformInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.keepassx.AutoTypePlatformInterface")
-    Q_INTERFACES(AutoTypePlatformInterface AutoTypeTestInterface)
+    Q_PLUGIN_METADATA(IID "org.keepassx.AutoTypePlatformMac")
+    Q_INTERFACES(AutoTypePlatformInterface)
 
 public:
-    QString keyToString(Qt::Key key) override;
-
+    AutoTypePlatformMac();
     bool isAvailable() override;
     QStringList windowTitles() override;
     WId activeWindow() override;
@@ -43,42 +42,40 @@ public:
     void unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers) override;
     int platformEventFilter(void* event) override;
     int initialTimeout() override;
-    bool raiseWindow(WId window) override;
+    bool raiseWindow(WId pid) override;
     AutoTypeExecutor* createExecutor() override;
 
-#if defined(Q_OS_MAC)
     bool raiseLastActiveWindow() override;
     bool raiseOwnWindow() override;
-#endif
 
-    void setActiveWindowTitle(const QString& title) override;
-
-    QString actionChars() override;
-    int actionCount() override;
-    void clearActions() override;
-
-    void addActionChar(AutoTypeChar* action);
-    void addActionKey(AutoTypeKey* action);
+    void sendChar(const QChar& ch, bool isKeyDown);
+    void sendKey(Qt::Key key, bool isKeyDown);
 
 Q_SIGNALS:
     void globalShortcutTriggered();
 
 private:
-    QString m_activeWindowTitle;
-    QList<AutoTypeAction*> m_actionList;
-    QString m_actionChars;
+    std::unique_ptr<AppKit> m_appkit;
+    EventHotKeyRef m_hotkeyRef;
+    EventHotKeyID m_hotkeyId;
+
+    static uint16 qtToNativeKeyCode(Qt::Key key);
+    static uint16 qtToNativeModifiers(Qt::KeyboardModifiers modifiers);
+    static int windowLayer(CFDictionaryRef window);
+    static QString windowTitle(CFDictionaryRef window);
+    static OSStatus hotkeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData);
 };
 
-class AutoTypeExecturorTest : public AutoTypeExecutor
+class AutoTypeExecutorMac : public AutoTypeExecutor
 {
 public:
-    explicit AutoTypeExecturorTest(AutoTypePlatformTest* platform);
+    explicit AutoTypeExecutorMac(AutoTypePlatformMac* platform);
 
     void execChar(AutoTypeChar* action) override;
     void execKey(AutoTypeKey* action) override;
 
 private:
-    AutoTypePlatformTest* const m_platform;
+    AutoTypePlatformMac* const m_platform;
 };
 
-#endif // KEEPASSX_AUTOTYPETEST_H
+#endif  // KEEPASSX_AUTOTYPEMAC_H

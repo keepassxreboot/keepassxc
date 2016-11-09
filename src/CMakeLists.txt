@@ -217,15 +217,25 @@ if(APPLE)
   set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSXC_VERSION_NUM}")
   include(CPack)
 
-  include(DeployQt4)
-  install_qt4_executable(${PROGNAME}.app "qjpeg;qgif;qico;qtaccessiblewidgets")
+  if(NOT DEFINED QT_BINARY_DIR)
+    set(QT_BINARY_DIR "/usr/local/opt/qt5/bin" CACHE PATH "QT binary folder")
+  endif()
+  add_custom_command(TARGET ${PROGNAME}
+                     POST_BUILD
+                     COMMAND ${QT_BINARY_DIR}/macdeployqt ${PROGNAME}.app
+                     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
+                     COMMENT "Deploying app bundle")
 endif()
 
-if(MINGW )
+if(MINGW)
   set(CPACK_GENERATOR "ZIP")
   set(CPACK_STRIP_FILES ON)
   set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSXC_VERSION_NUM}")
   include(CPack)
+
+  install(CODE "
+  set(gp_tool \"objdump\")
+  " COMPONENT Runtime)
 
   include(DeployQt4)
   install_qt4_executable(${PROGNAME}.exe "qjpeg;qgif;qico;qtaccessiblewidgets")
