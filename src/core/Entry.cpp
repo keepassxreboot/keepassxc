@@ -196,7 +196,7 @@ QString Entry::effectiveAutoTypeSequence() const
     if(grp) {
       sequence = grp->effectiveAutoTypeSequence();
     } else {
-      sequence = QString();
+      return QString();
     }
 
     if (sequence.isEmpty() && (!username().isEmpty() || !password().isEmpty())) {
