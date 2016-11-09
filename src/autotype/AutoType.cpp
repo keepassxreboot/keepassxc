@@ -316,7 +316,7 @@ bool AutoType::parseActions(const QString& sequence, const Entry* entry, QList<A
 
 
     for (const QChar& ch : sequence) {
-        // TODO: implement support for {{}, {}} and {DELAY=X}
+        // TODO: implement support for {{}, {}}
 
         if (inTmpl) {
             if (ch == '{') {
@@ -446,7 +446,7 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
     else if (tmplName == "ptrsc") {
         list.append(new AutoTypeKey(Qt::Key_Print));
     }
-    else if (tmplName == "scolllock") {
+    else if (tmplName == "scrolllock") {
         list.append(new AutoTypeKey(Qt::Key_ScrollLock));
     }
     // Qt doesn't know about keypad keys so use the normal ones instead
