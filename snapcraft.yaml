@@ -33,18 +33,8 @@ parts:
     source: share/icons/application/256x256/apps
     plugin: dump
     organize:
-      keepassxc.png: icon.png
-    snap:
-      - icon.png
-  snap-meta-icon:
-    plugin: dump
-    source: share/icons/application/256x256/apps
-    organize:
       keepassxc.png: meta/gui/icon.png
-  snap-meta-desktop:
-    plugin: dump
-    source: share/linux
-    organize:
-      keepassxc.desktop: meta/gui/icon
+    stage:
+      - meta/gui/icon.png
     snap:
-      - keepassxc.desktop
+      - meta/gui/icon.png
