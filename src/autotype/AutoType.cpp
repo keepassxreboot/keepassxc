@@ -192,9 +192,6 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
     QList<Entry*> entryList;
     QHash<Entry*, QString> sequenceHash;
 
-    // TODO: Check if there are any active databases here, if not do nothing
-    // TODO: Check if all databases are locked, if so ask to unlock them
-
     for (Database* db : dbList) {
         const QList<Entry*> dbEntries = db->rootGroup()->entriesRecursive();
         for (Entry* entry : dbEntries) {
