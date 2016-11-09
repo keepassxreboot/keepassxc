@@ -190,15 +190,30 @@ QString Group::defaultAutoTypeSequence() const
 QString Group::effectiveAutoTypeSequence() const
 {
     QString sequence;
-    const Group* grp = this;
-    do {
-        if (grp->autoTypeEnabled() == Group::Disable) {
-            return QString();
-        }
+    bool enableSet = false;
 
-        sequence = grp->defaultAutoTypeSequence();
-        grp = grp->parentGroup();
-    } while (grp && sequence.isEmpty());
+    const Group* group = this;
+    // check if group exist (if the entry has a group)
+    if(group) {
+      do {
+          if (!enableSet) {
+              if (group->autoTypeEnabled() == Group::Disable) {
+                  return QString();
+              }
+              else if (group->autoTypeEnabled() == Group::Enable) {
+                  enableSet = true;
+              }
+          }
+
+          if (sequence.isEmpty()) {
+              sequence = group->defaultAutoTypeSequence();
+          }
+
+          group = group->parentGroup();
+      } while (group && (!enableSet || sequence.isEmpty()));
+    } else {
+      sequence = QString();
+    }
 
     return sequence;
 }
