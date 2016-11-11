@@ -91,7 +91,7 @@ private Q_SLOTS:
     void updateTabNameFromDbWidgetSender();
     void modified();
     void toggleTabbar();
-    void changeDatabase(Database* newDb);
+    void changeDatabase(Database* newDb, bool unsavedChanges);
     void emitActivateDatabaseChanged();
     void emitDatabaseUnlockedFromDbWidgetSender();
 

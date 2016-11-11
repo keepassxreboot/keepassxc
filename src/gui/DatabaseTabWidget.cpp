@@ -221,6 +221,7 @@ void DatabaseTabWidget::importKeePass1Database()
     Database* db = new Database();
     DatabaseManagerStruct dbStruct;
     dbStruct.dbWidget = new DatabaseWidget(db, this);
+    dbStruct.dbWidget->databaseModified();
     dbStruct.modified = true;
 
     insertDatabase(db, dbStruct);
@@ -312,17 +313,28 @@ bool DatabaseTabWidget::closeAllDatabases()
 bool DatabaseTabWidget::saveDatabase(Database* db)
 {
     DatabaseManagerStruct& dbStruct = m_dbList[db];
+    // temporarily disable autoreload
+    dbStruct.dbWidget->ignoreNextAutoreload();
 
     if (dbStruct.saveToFilename) {
         QSaveFile saveFile(dbStruct.canonicalFilePath);
         if (saveFile.open(QIODevice::WriteOnly)) {
+            // write the database to the file
             m_writer.writeDatabase(&saveFile, db);
             if (m_writer.hasError()) {
                 MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
                                      + m_writer.errorString());
                 return false;
             }
-            if (!saveFile.commit()) {
+
+            if (saveFile.commit()) {
+                // successfully saved database file
+                dbStruct.modified = false;
+                dbStruct.dbWidget->databaseSaved();
+                updateTabName(db);
+                return true;
+            }
+            else {
                 MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
                                      + saveFile.errorString());
                 return false;
@@ -333,10 +345,6 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
                                  + saveFile.errorString());
             return false;
         }
-
-        dbStruct.modified = false;
-        updateTabName(db);
-        return true;
     }
     else {
         return saveDatabaseAs(db);
@@ -390,22 +398,14 @@ bool DatabaseTabWidget::saveDatabaseAs(Database* db)
             }
         }
 
-        QSaveFile saveFile(fileName);
-        if (!saveFile.open(QIODevice::WriteOnly)) {
-            MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
-                                 + saveFile.errorString());
-            return false;
-        }
+        // setup variables so saveDatabase succeeds
+        dbStruct.saveToFilename = true;
+        dbStruct.canonicalFilePath = fileName;
 
-        m_writer.writeDatabase(&saveFile, db);
-        if (m_writer.hasError()) {
-            MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
-                                 + m_writer.errorString());
-            return false;
-        }
-        if (!saveFile.commit()) {
-            MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
-                                 + saveFile.errorString());
+        if (!saveDatabase(db)) {
+            // failed to save, revert back
+            dbStruct.saveToFilename = false;
+            dbStruct.canonicalFilePath = oldFileName;
             return false;
         }
 
@@ -626,7 +626,7 @@ void DatabaseTabWidget::insertDatabase(Database* db, const DatabaseManagerStruct
     setCurrentIndex(index);
     connectDatabase(db);
     connect(dbStruct.dbWidget, SIGNAL(closeRequest()), SLOT(closeDatabaseFromSender()));
-    connect(dbStruct.dbWidget, SIGNAL(databaseChanged(Database*)), SLOT(changeDatabase(Database*)));
+    connect(dbStruct.dbWidget, SIGNAL(databaseChanged(Database*, bool)), SLOT(changeDatabase(Database*, bool)));
     connect(dbStruct.dbWidget, SIGNAL(unlockedDatabase()), SLOT(updateTabNameFromDbWidgetSender()));
     connect(dbStruct.dbWidget, SIGNAL(unlockedDatabase()), SLOT(emitDatabaseUnlockedFromDbWidgetSender()));
 }
@@ -744,6 +744,7 @@ void DatabaseTabWidget::modified()
 
     if (!dbStruct.modified) {
         dbStruct.modified = true;
+        dbStruct.dbWidget->databaseModified();
         updateTabName(db);
     }
 }
@@ -765,7 +766,7 @@ void DatabaseTabWidget::updateLastDatabases(const QString& filename)
     }
 }
 
-void DatabaseTabWidget::changeDatabase(Database* newDb)
+void DatabaseTabWidget::changeDatabase(Database* newDb, bool unsavedChanges)
 {
     Q_ASSERT(sender());
     Q_ASSERT(!m_dbList.contains(newDb));
@@ -773,6 +774,7 @@ void DatabaseTabWidget::changeDatabase(Database* newDb)
     DatabaseWidget* dbWidget = static_cast<DatabaseWidget*>(sender());
     Database* oldDb = databaseFromDatabaseWidget(dbWidget);
     DatabaseManagerStruct dbStruct = m_dbList[oldDb];
+    dbStruct.modified = unsavedChanges;
     m_dbList.remove(oldDb);
     m_dbList.insert(newDb, dbStruct);
 
