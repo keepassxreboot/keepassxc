@@ -70,6 +70,7 @@ public:
     bool autoTypeEnabled() const;
     int autoTypeObfuscation() const;
     QString defaultAutoTypeSequence() const;
+    QString effectiveAutoTypeSequence() const;
     AutoTypeAssociations* autoTypeAssociations();
     const AutoTypeAssociations* autoTypeAssociations() const;
     QString title() const;

@@ -185,6 +185,35 @@ QString Entry::defaultAutoTypeSequence() const
     return m_data.defaultAutoTypeSequence;
 }
 
+QString Entry::effectiveAutoTypeSequence() const
+{
+    if (!m_data.defaultAutoTypeSequence.isEmpty()) {
+        return m_data.defaultAutoTypeSequence;
+    }
+    QString sequence;
+
+    const Group* grp = group();
+    if(grp) {
+      sequence = grp->effectiveAutoTypeSequence();
+    } else {
+      return QString();
+    }
+
+    if (sequence.isEmpty() && (!username().isEmpty() || !password().isEmpty())) {
+        if (username().isEmpty()) {
+            sequence = "{PASSWORD}{ENTER}";
+        }
+       else if (password().isEmpty()) {
+          sequence = "{USERNAME}{ENTER}";
+        }
+        else {
+            sequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
+        }
+    }
+
+    return sequence;
+}
+
 AutoTypeAssociations* Entry::autoTypeAssociations()
 {
     return m_autoTypeAssociations;

@@ -41,6 +41,25 @@ public:
         return false;
     }
 };
+#elif defined(Q_OS_WIN)
+class WinEventFilter : public QAbstractNativeEventFilter
+{
+public:
+    bool nativeEventFilter(const QByteArray& eventType, void* message, long* result) override
+    {
+        Q_UNUSED(result);
+
+        if (eventType == QByteArrayLiteral("windows_generic_MSG")
+                || eventType == QByteArrayLiteral("windows_dispatcher_MSG")) {
+            int retCode = autoType()->callEventFilter(message);
+            if (retCode == 1) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+};
 #endif
 
 Application::Application(int& argc, char** argv)
@@ -49,6 +68,8 @@ Application::Application(int& argc, char** argv)
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_OSX)
     installNativeEventFilter(new XcbEventFilter());
+#elif defined(Q_OS_WIN)
+    installNativeEventFilter(new WinEventFilter());
 #endif
 }
 

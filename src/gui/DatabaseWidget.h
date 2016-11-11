@@ -43,6 +43,7 @@ class QMenu;
 class QSplitter;
 class QLabel;
 class UnlockDatabaseWidget;
+class UnlockDatabaseDialog;
 class QFileSystemWatcher;
 
 class DatabaseWidget : public QStackedWidget
@@ -89,6 +90,8 @@ public:
     bool currentEntryHasNotes();
     GroupView* groupView();
     EntryView* entryView();
+    void showUnlockDialog();
+    void closeUnlockDialog();
 
 Q_SIGNALS:
     void closeRequest();
@@ -174,6 +177,7 @@ private:
     DatabaseOpenWidget* m_databaseOpenMergeWidget;
     KeePass1OpenWidget* m_keepass1OpenWidget;
     UnlockDatabaseWidget* m_unlockDatabaseWidget;
+    UnlockDatabaseDialog* m_unlockDatabaseDialog;
     QSplitter* m_splitter;
     GroupView* m_groupView;
     EntryView* m_entryView;
