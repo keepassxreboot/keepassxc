@@ -34,17 +34,17 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
 
     m_ui->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
 
-    connect(m_ui->editNewPassword->lineEdit(), SIGNAL(textChanged(QString)), SLOT(updateApplyEnabled(QString)));
-    connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), m_ui->editNewPassword, SLOT(setEcho(bool)));
-    connect(m_ui->buttonApply, SIGNAL(clicked()), SLOT(emitNewPassword()));
+    connect(m_ui->editNewPassword, SIGNAL(textChanged(QString)), SLOT(updateApplyEnabled(QString)));
+    connect(m_ui->editNewPassword, SIGNAL(textChanged(QString)), SLOT(updatePasswordStrength(QString)));
+    connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), SLOT(togglePasswordHidden(bool)));
+    connect(m_ui->buttonApply, SIGNAL(clicked()), SLOT(applyPassword()));
     connect(m_ui->buttonApply, SIGNAL(clicked()), SLOT(saveSettings()));
+    connect(m_ui->buttonGenerate, SIGNAL(clicked()), SLOT(generatePassword()));
 
     connect(m_ui->sliderLength, SIGNAL(valueChanged(int)), SLOT(sliderMoved()));
     connect(m_ui->spinBoxLength, SIGNAL(valueChanged(int)), SLOT(spinBoxChanged()));
 
     connect(m_ui->optionButtons, SIGNAL(buttonClicked(int)), SLOT(updateGenerator()));
-
-    m_ui->editNewPassword->setGenerator(m_generator.data());
 
     loadSettings();
     reset();
@@ -82,7 +82,7 @@ void PasswordGeneratorWidget::saveSettings()
 
 void PasswordGeneratorWidget::reset()
 {
-    m_ui->editNewPassword->lineEdit()->setText("");
+    m_ui->editNewPassword->setText("");
     m_ui->togglePasswordButton->setChecked(config()->get("security/passwordscleartext").toBool());
 
     updateGenerator();
@@ -92,7 +92,8 @@ void PasswordGeneratorWidget::regeneratePassword()
 {
     if (m_generator->isValid()) {
         QString password = m_generator->generatePassword();
-        m_ui->editNewPassword->setEditText(password);
+        m_ui->editNewPassword->setText(password);
+        updatePasswordStrength(password);
     }
 }
 
@@ -101,9 +102,28 @@ void PasswordGeneratorWidget::updateApplyEnabled(const QString& password)
     m_ui->buttonApply->setEnabled(!password.isEmpty());
 }
 
-void PasswordGeneratorWidget::emitNewPassword()
+void PasswordGeneratorWidget::updatePasswordStrength(const QString& password)
 {
-    Q_EMIT newPassword(m_ui->editNewPassword->lineEdit()->text());
+    double entropy = m_generator->calculateEntropy(password);
+
+    m_ui->entropySpinBox->setValue(entropy);
+
+    if (entropy > m_ui->entropyProgressBar->maximum()) {
+        entropy = m_ui->entropyProgressBar->maximum();
+    }
+    m_ui->entropyProgressBar->setValue(entropy);
+
+}
+
+void PasswordGeneratorWidget::generatePassword()
+{
+    QString password = m_generator->generatePassword();
+    m_ui->editNewPassword->setText(password);
+}
+
+void PasswordGeneratorWidget::applyPassword()
+{
+    Q_EMIT appliedPassword(m_ui->editNewPassword->text());
 }
 
 void PasswordGeneratorWidget::sliderMoved()
@@ -131,6 +151,15 @@ void PasswordGeneratorWidget::spinBoxChanged()
     m_updatingSpinBox = false;
 
     updateGenerator();
+}
+
+void PasswordGeneratorWidget::togglePasswordHidden(bool showing)
+{
+    if (showing) {
+        m_ui->editNewPassword->setEchoMode(QLineEdit::Normal);
+    } else {
+        m_ui->editNewPassword->setEchoMode(QLineEdit::Password);
+    }
 }
 
 PasswordGenerator::CharClasses PasswordGeneratorWidget::charClasses()

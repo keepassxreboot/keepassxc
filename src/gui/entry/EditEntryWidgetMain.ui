@@ -78,7 +78,7 @@
      <item>
       <widget class="QToolButton" name="tooglePasswordGeneratorButton">
        <property name="text">
-        <string>Gen.</string>
+        <string>Generate</string>
        </property>
        <property name="checkable">
         <bool>true</bool>

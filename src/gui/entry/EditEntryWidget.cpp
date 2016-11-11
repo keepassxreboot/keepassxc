@@ -93,7 +93,7 @@ void EditEntryWidget::setupMain()
     connect(m_mainUi->tooglePasswordGeneratorButton, SIGNAL(toggled(bool)), SLOT(togglePasswordGeneratorButton(bool)));
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
     m_mainUi->passwordRepeatEdit->enableVerifyMode(m_mainUi->passwordEdit);
-    connect(m_mainUi->passwordGenerator, SIGNAL(newPassword(QString)), SLOT(setGeneratedPassword(QString)));
+    connect(m_mainUi->passwordGenerator, SIGNAL(appliedPassword(QString)), SLOT(setGeneratedPassword(QString)));
 
     m_mainUi->expirePresets->setMenu(createPresetsMenu());
     connect(m_mainUi->expirePresets->menu(), SIGNAL(triggered(QAction*)), this, SLOT(useExpiryPreset(QAction*)));

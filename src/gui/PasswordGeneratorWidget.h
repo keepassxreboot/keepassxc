@@ -41,15 +41,18 @@ public:
     void regeneratePassword();
 
 Q_SIGNALS:
-    void newPassword(const QString& password);
+    void appliedPassword(const QString& password);
 
 private Q_SLOTS:
+    void applyPassword();
+    void generatePassword();
     void updateApplyEnabled(const QString& password);
+    void updatePasswordStrength(const QString& password);
 
-    void emitNewPassword();
     void saveSettings();
     void sliderMoved();
     void spinBoxChanged();
+    void togglePasswordHidden(bool hidden);
 
     void updateGenerator();
 
