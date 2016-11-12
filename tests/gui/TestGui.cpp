@@ -260,10 +260,10 @@ void TestGui::testEntryEntropy()
 
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "hello");
-    QCOMPARE(entropyBox->value(), 6.37);
+    QCOMPARE(entropyBox->value(), 6.38);
 
     editNewPassword->setText("");
-    QTest::keyClicks(editNewPassword, "helloword");
+    QTest::keyClicks(editNewPassword, "helloworld");
     QCOMPARE(entropyBox->value(), 13.1);
 
     editNewPassword->setText("");
