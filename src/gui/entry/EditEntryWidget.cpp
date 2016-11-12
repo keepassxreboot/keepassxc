@@ -354,12 +354,11 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_autoTypeUi->enableButton->setChecked(entry->autoTypeEnabled());
     if (entry->defaultAutoTypeSequence().isEmpty()) {
         m_autoTypeUi->inheritSequenceButton->setChecked(true);
-        m_autoTypeUi->sequenceEdit->setText("");
     }
     else {
         m_autoTypeUi->customSequenceButton->setChecked(true);
-        m_autoTypeUi->sequenceEdit->setText(entry->defaultAutoTypeSequence());
     }
+    m_autoTypeUi->sequenceEdit->setText(entry->effectiveAutoTypeSequence());
     m_autoTypeUi->windowTitleCombo->lineEdit()->clear();
     m_autoTypeUi->defaultWindowSequenceButton->setChecked(true);
     m_autoTypeUi->windowSequenceEdit->setText("");

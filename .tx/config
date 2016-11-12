@@ -1,7 +1,7 @@
 [main]
 host = https://www.transifex.com
 
-[keepassx-reboot.keepassx_ents]
+[keepassxc.keepassx_ents]
 source_file = share/translations/keepassx_en.ts
 file_filter = share/translations/keepassx_<lang>.ts
 source_lang = en
