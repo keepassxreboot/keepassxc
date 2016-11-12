@@ -107,6 +107,7 @@ void PasswordGeneratorWidget::updatePasswordStrength(const QString& password)
     double entropy = m_generator->calculateEntropy(password);
 
     m_ui->entropySpinBox->setValue(entropy);
+    colorEntropySpinBox(entropy);
 
     if (entropy > m_ui->entropyProgressBar->maximum()) {
         entropy = m_ui->entropyProgressBar->maximum();
@@ -160,6 +161,29 @@ void PasswordGeneratorWidget::togglePasswordHidden(bool showing)
     } else {
         m_ui->editNewPassword->setEchoMode(QLineEdit::Password);
     }
+}
+
+void PasswordGeneratorWidget::colorEntropySpinBox(double entropy)
+{
+    QString stylesheet("QDoubleSpinBox { ");
+    stylesheet.append("color: %2; ");
+    stylesheet.append("background: %1; ");
+
+    if(entropy < 25) {
+      stylesheet = stylesheet.arg("Red","White");
+    }
+    else if(entropy >= 25 && entropy < 45) {
+      stylesheet = stylesheet.arg("Orange","White");
+    }
+    else if(entropy >= 45 && entropy < 100) {
+      stylesheet = stylesheet.arg("GreenYellow","Black");
+    }
+    else {
+      stylesheet = stylesheet.arg("Green","White");
+    }
+
+    stylesheet.append("}");
+    setStyleSheet(stylesheet);
 }
 
 PasswordGenerator::CharClasses PasswordGeneratorWidget::charClasses()

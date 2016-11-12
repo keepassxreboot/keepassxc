@@ -9,7 +9,6 @@ See zxcvbn/zxcvbn.cpp for complete COPYRIGHT Notice
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <sys/time.h>
 #include "zxcvbn/zxcvbn.h"
 
 /* For pre-compiled headers under windows */

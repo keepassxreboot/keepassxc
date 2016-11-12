@@ -228,6 +228,62 @@ void TestGui::testAddEntry()
     QTRY_COMPARE(entryView->model()->rowCount(), 4);
 }
 
+void TestGui::testEntryEntropy()
+{
+    QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
+
+    // Find the new entry action
+    QAction* entryNewAction = m_mainWindow->findChild<QAction*>("actionEntryNew");
+    QVERIFY(entryNewAction->isEnabled());
+
+    // Find the button associated with the new entry action
+    QWidget* entryNewWidget = toolBar->widgetForAction(entryNewAction);
+    QVERIFY(entryNewWidget->isVisible());
+    QVERIFY(entryNewWidget->isEnabled());
+
+    // Click the new entry button and check that we enter edit mode
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+
+    // Add entry "test" and confirm added
+    EditEntryWidget* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+    QLineEdit* titleEdit = editEntryWidget->findChild<QLineEdit*>("titleEdit");
+    QTest::keyClicks(titleEdit, "test");
+
+    // Open the password generator
+    QToolButton* generatorButton = editEntryWidget->findChild<QToolButton*>("tooglePasswordGeneratorButton");
+    QTest::mouseClick(generatorButton, Qt::LeftButton);
+
+    // Type in some password
+    QLineEdit* editNewPassword = editEntryWidget->findChild<QLineEdit*>("editNewPassword");
+    QDoubleSpinBox* entropyBox = editEntryWidget->findChild<QDoubleSpinBox*>("entropySpinBox");
+
+    editNewPassword->setText("");
+    QTest::keyClicks(editNewPassword, "hello");
+    QCOMPARE(entropyBox->value(), 6.37);
+
+    editNewPassword->setText("");
+    QTest::keyClicks(editNewPassword, "helloword");
+    QCOMPARE(entropyBox->value(), 13.1);
+
+    editNewPassword->setText("");
+    QTest::keyClicks(editNewPassword, "password1");
+    QCOMPARE(entropyBox->value(), 4.0);
+
+    editNewPassword->setText("");
+    QTest::keyClicks(editNewPassword, "D0g..................");
+    QCOMPARE(entropyBox->value(), 19.02);
+
+    editNewPassword->setText("");
+    QTest::keyClicks(editNewPassword, "Tr0ub4dour&3");
+    QCOMPARE(entropyBox->value(), 30.87);
+
+    editNewPassword->setText("");
+    QTest::keyClicks(editNewPassword, "correcthorsebatterystaple");
+    QCOMPARE(entropyBox->value(),  47.98);
+    // We are done
+}
+
 void TestGui::testSearch()
 {
     // Add canned entries for consistent testing
