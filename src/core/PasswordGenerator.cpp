@@ -29,12 +29,7 @@ PasswordGenerator::PasswordGenerator()
 
 double PasswordGenerator::calculateEntropy(QString password)
 {
-    double entropy;
-    const char* pwd = password.toLatin1().constData();
-    //printf("pwd %s",pwd);
-    entropy = ZxcvbnMatch(pwd, 0, 0);
-    //printf(" entropy %f\n", entropy);
-    return entropy;
+    return ZxcvbnMatch(password.toLatin1(), 0, 0);
 }
 
 void PasswordGenerator::setLength(int length)
