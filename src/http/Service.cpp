@@ -146,7 +146,7 @@ QString Service::storeKey(const QString &key)
             bool ok;
             //Indicate who wants to associate, and request user to enter the 'name' of association key
             id = QInputDialog::getText(0,
-                    tr("KeyPassX/Http: New key association request"),
+                    tr("KeePassXC: New key association request"),
                     tr("You have received an association "
                        "request for the above key.\n"
                        "If you would like to allow it access "
@@ -158,7 +158,7 @@ QString Service::storeKey(const QString &key)
 
             //Warn if association key already exists
         } while(config->attributes()->contains(QLatin1String(ASSOCIATE_KEY_PREFIX) + id) &&
-                QMessageBox::warning(0, tr("KeyPassXC/Http: Overwrite existing key?"),
+                QMessageBox::warning(0, tr("KeePassXC: Overwrite existing key?"),
                                      tr("A shared encryption-key with the name \"%1\" already exists.\nDo you want to overwrite it?").arg(id),
                                      QMessageBox::Yes | QMessageBox::No) == QMessageBox::No);
 
@@ -479,7 +479,7 @@ void Service::updateEntry(const QString &, const QString &uuid, const QString &l
                 if (u != login || entry->password() != password) {
                     //ShowNotification(QString("%0: You have an entry change prompt waiting, click to activate").arg(requestId));
                     if (   HttpSettings::alwaysAllowUpdate()
-                        || QMessageBox::warning(0, tr("KeyPassX/Http: Update Entry"),
+                        || QMessageBox::warning(0, tr("KeePassXC: Update Entry"),
                                                 tr("Do you want to update the information in %1 - %2?").arg(QUrl(url).host()).arg(u),
                                                 QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes ) {
                         entry->beginUpdate();
@@ -499,7 +499,7 @@ QString Service::generatePassword()
 void Service::removeSharedEncryptionKeys()
 {
     if (!isDatabaseOpened()) {
-        QMessageBox::critical(0, tr("KeyPassX/Http: Database locked!"),
+        QMessageBox::critical(0, tr("KeePassXC: Database locked!"),
                               tr("The active database is locked!\n"
                                  "Please unlock the selected database or choose another one which is unlocked."),
                               QMessageBox::Ok);
@@ -516,16 +516,16 @@ void Service::removeSharedEncryptionKeys()
             entry->endUpdate();
 
             const int count = keysToRemove.count();
-            QMessageBox::information(0, tr("KeyPassX/Http: Removed keys from database"),
+            QMessageBox::information(0, tr("KeePassXC: Removed keys from database"),
                                      tr("Successfully removed %1 encryption-%2 from KeePassX/Http Settings.").arg(count).arg(count ? "keys" : "key"),
                                      QMessageBox::Ok);
         } else {
-            QMessageBox::information(0, tr("KeyPassX/Http: No keys found"),
+            QMessageBox::information(0, tr("KeePassXC: No keys found"),
                                      tr("No shared encryption-keys found in KeePassHttp Settings."),
                                      QMessageBox::Ok);
         }
     } else {
-        QMessageBox::information(0, tr("KeyPassX/Http: Settings not available!"),
+        QMessageBox::information(0, tr("KeePassXC: Settings not available!"),
                                  tr("The active database does not contain an entry of KeePassHttp Settings."),
                                  QMessageBox::Ok);
     }
@@ -534,7 +534,7 @@ void Service::removeSharedEncryptionKeys()
 void Service::removeStoredPermissions()
 {
     if (!isDatabaseOpened()) {
-        QMessageBox::critical(0, tr("KeyPassX/Http: Database locked!"),
+        QMessageBox::critical(0, tr("KeePassXC: Database locked!"),
                               tr("The active database is locked!\n"
                                  "Please unlock the selected database or choose another one which is unlocked."),
                               QMessageBox::Ok);
@@ -560,11 +560,11 @@ void Service::removeStoredPermissions()
         progress.reset();
 
         if (counter > 0) {
-            QMessageBox::information(0, tr("KeyPassX/Http: Removed permissions"),
+            QMessageBox::information(0, tr("KeePassXC: Removed permissions"),
                                      tr("Successfully removed permissions from %1 %2.").arg(counter).arg(counter ? "entries" : "entry"),
                                      QMessageBox::Ok);
         } else {
-            QMessageBox::information(0, tr("KeyPassX/Http: No entry with permissions found!"),
+            QMessageBox::information(0, tr("KeePassXC: No entry with permissions found!"),
                                      tr("The active database does not contain an entry with permissions."),
                                      QMessageBox::Ok);
         }
