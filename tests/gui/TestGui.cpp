@@ -21,6 +21,7 @@
 #include <QApplication>
 #include <QDialogButtonBox>
 #include <QLineEdit>
+#include <QLabel>
 #include <QMimeData>
 #include <QPushButton>
 #include <QSpinBox>
@@ -256,31 +257,31 @@ void TestGui::testEntryEntropy()
 
     // Type in some password
     QLineEdit* editNewPassword = editEntryWidget->findChild<QLineEdit*>("editNewPassword");
-    QDoubleSpinBox* entropyBox = editEntryWidget->findChild<QDoubleSpinBox*>("entropySpinBox");
+    QLabel* entropyLabel = editEntryWidget->findChild<QLabel*>("entropyLabel");
 
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "hello");
-    QCOMPARE(entropyBox->value(), 6.38);
+    QCOMPARE(entropyLabel->text(), QString::number(6.37504));
 
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "helloworld");
-    QCOMPARE(entropyBox->value(), 13.1);
+    QCOMPARE(entropyLabel->text(), QString::number(13.103));
 
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "password1");
-    QCOMPARE(entropyBox->value(), 4.0);
+    QCOMPARE(entropyLabel->text(), QString::number(4));
 
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "D0g..................");
-    QCOMPARE(entropyBox->value(), 19.02);
+    QCOMPARE(entropyLabel->text(), QString::number(19.0217));
 
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "Tr0ub4dour&3");
-    QCOMPARE(entropyBox->value(), 30.87);
+    QCOMPARE(entropyLabel->text(), QString::number(30.8735));
 
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "correcthorsebatterystaple");
-    QCOMPARE(entropyBox->value(),  47.98);
+    QCOMPARE(entropyLabel->text(),  QString::number(47.9828));
     // We are done
 }
 

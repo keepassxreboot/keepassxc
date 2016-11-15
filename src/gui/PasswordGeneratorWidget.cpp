@@ -105,15 +105,14 @@ void PasswordGeneratorWidget::updateApplyEnabled(const QString& password)
 void PasswordGeneratorWidget::updatePasswordStrength(const QString& password)
 {
     double entropy = m_generator->calculateEntropy(password);
-
-    m_ui->entropySpinBox->setValue(entropy);
-    colorEntropySpinBox(entropy);
+    m_ui->entropyLabel->setText(QString::number(entropy));
 
     if (entropy > m_ui->entropyProgressBar->maximum()) {
         entropy = m_ui->entropyProgressBar->maximum();
     }
     m_ui->entropyProgressBar->setValue(entropy);
 
+    colorStrengthLabel(entropy);
 }
 
 void PasswordGeneratorWidget::generatePassword()
@@ -163,27 +162,31 @@ void PasswordGeneratorWidget::togglePasswordHidden(bool showing)
     }
 }
 
-void PasswordGeneratorWidget::colorEntropySpinBox(double entropy)
+void PasswordGeneratorWidget::colorStrengthLabel(double entropy)
 {
-    QString stylesheet("QDoubleSpinBox { ");
+    QString stylesheet("QLabel { ");
     stylesheet.append("color: %2; ");
     stylesheet.append("background: %1; ");
 
     if(entropy < 25) {
       stylesheet = stylesheet.arg("Red","White");
+      m_ui->strengthLabel->setText("Bad");
     }
     else if(entropy >= 25 && entropy < 45) {
       stylesheet = stylesheet.arg("Orange","White");
+      m_ui->strengthLabel->setText("Medium");
     }
     else if(entropy >= 45 && entropy < 100) {
       stylesheet = stylesheet.arg("GreenYellow","Black");
+      m_ui->strengthLabel->setText("Good");
     }
     else {
       stylesheet = stylesheet.arg("Green","White");
+      m_ui->strengthLabel->setText("Very Good");
     }
 
     stylesheet.append("}");
-    setStyleSheet(stylesheet);
+    m_ui->strengthLabel->setStyleSheet(stylesheet);
 }
 
 PasswordGenerator::CharClasses PasswordGeneratorWidget::charClasses()

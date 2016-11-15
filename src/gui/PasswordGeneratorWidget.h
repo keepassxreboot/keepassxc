@@ -20,6 +20,7 @@
 
 #include <QWidget>
 #include <QComboBox>
+#include <QLabel>
 
 #include "core/PasswordGenerator.h"
 
@@ -53,7 +54,7 @@ private Q_SLOTS:
     void sliderMoved();
     void spinBoxChanged();
     void togglePasswordHidden(bool hidden);
-    void colorEntropySpinBox(double entropy);
+    void colorStrengthLabel(double entropy);
 
     void updateGenerator();
 
