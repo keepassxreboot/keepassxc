@@ -261,27 +261,27 @@ void TestGui::testEntryEntropy()
 
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "hello");
-    QCOMPARE(entropyLabel->text(), QString::number(6.37504));
+    QCOMPARE(entropyLabel->text(), QString("6.38"));
 
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "helloworld");
-    QCOMPARE(entropyLabel->text(), QString::number(13.103));
+    QCOMPARE(entropyLabel->text(), QString("13.10"));
 
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "password1");
-    QCOMPARE(entropyLabel->text(), QString::number(4));
+    QCOMPARE(entropyLabel->text(), QString("4.00"));
 
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "D0g..................");
-    QCOMPARE(entropyLabel->text(), QString::number(19.0217));
+    QCOMPARE(entropyLabel->text(), QString("19.02"));
 
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "Tr0ub4dour&3");
-    QCOMPARE(entropyLabel->text(), QString::number(30.8735));
+    QCOMPARE(entropyLabel->text(), QString("30.87"));
 
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "correcthorsebatterystaple");
-    QCOMPARE(entropyLabel->text(),  QString::number(47.9828));
+    QCOMPARE(entropyLabel->text(),  QString("47.98"));
     // We are done
 }
 
