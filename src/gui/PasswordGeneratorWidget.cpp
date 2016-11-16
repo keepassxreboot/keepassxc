@@ -105,7 +105,7 @@ void PasswordGeneratorWidget::updateApplyEnabled(const QString& password)
 void PasswordGeneratorWidget::updatePasswordStrength(const QString& password)
 {
     double entropy = m_generator->calculateEntropy(password);
-    m_ui->entropyLabel->setText(QString::number(entropy));
+    m_ui->entropyLabel->setText(QString::number(entropy, 'f', 2));
 
     if (entropy > m_ui->entropyProgressBar->maximum()) {
         entropy = m_ui->entropyProgressBar->maximum();
@@ -164,29 +164,28 @@ void PasswordGeneratorWidget::togglePasswordHidden(bool showing)
 
 void PasswordGeneratorWidget::colorStrengthLabel(double entropy)
 {
-    QString stylesheet("QLabel { ");
-    stylesheet.append("color: %2; ");
-    stylesheet.append("background: %1; ");
+    // Take the existing stylesheet and convert the text and background color to arguments
+    QString style = m_ui->strengthLabel->styleSheet();
+    style.replace(QRegExp("color:[^;]+;", Qt::CaseInsensitive), "color: %1;");
+    style.replace(QRegExp("background:[^;]+;", Qt::CaseInsensitive), "background: %2;");
 
-    if(entropy < 25) {
-      stylesheet = stylesheet.arg("Red","White");
-      m_ui->strengthLabel->setText("Bad");
+    // Set the color and background based on entropy
+    if (entropy < 35) {
+        m_ui->strengthLabel->setStyleSheet(style.arg("White", "Red"));
+        m_ui->strengthLabel->setText(tr("Bad"));
     }
-    else if(entropy >= 25 && entropy < 45) {
-      stylesheet = stylesheet.arg("Orange","White");
-      m_ui->strengthLabel->setText("Medium");
+    else if (entropy >= 35 && entropy < 55) {
+        m_ui->strengthLabel->setStyleSheet(style.arg("Black", "Orange"));
+        m_ui->strengthLabel->setText(tr("Medium"));
     }
-    else if(entropy >= 45 && entropy < 100) {
-      stylesheet = stylesheet.arg("GreenYellow","Black");
-      m_ui->strengthLabel->setText("Good");
+    else if (entropy >= 55 && entropy < 100) {
+        m_ui->strengthLabel->setStyleSheet(style.arg("Black", "GreenYellow"));
+        m_ui->strengthLabel->setText(tr("Good"));
     }
     else {
-      stylesheet = stylesheet.arg("Green","White");
-      m_ui->strengthLabel->setText("Very Good");
+        m_ui->strengthLabel->setStyleSheet(style.arg("White", "Green"));
+        m_ui->strengthLabel->setText(tr("Excellent"));
     }
-
-    stylesheet.append("}");
-    m_ui->strengthLabel->setStyleSheet(stylesheet);
 }
 
 PasswordGenerator::CharClasses PasswordGeneratorWidget::charClasses()
