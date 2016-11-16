@@ -72,6 +72,13 @@
     </widget>
    </item>
    <item row="4" column="0">
+    <widget class="QCheckBox" name="passwordRepeatCheckBox">
+     <property name="text">
+      <string>Don't require password repeat when it is visible</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
     <widget class="QCheckBox" name="autoTypeAskCheckBox">
      <property name="text">
       <string>Always ask before performing auto-type</string>
