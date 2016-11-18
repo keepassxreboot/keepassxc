@@ -105,7 +105,7 @@ void PasswordGeneratorWidget::updateApplyEnabled(const QString& password)
 void PasswordGeneratorWidget::updatePasswordStrength(const QString& password)
 {
     double entropy = m_generator->calculateEntropy(password);
-    m_ui->entropyLabel->setText(QString::number(entropy, 'f', 2));
+    m_ui->entropyLabel->setText(QString::number(entropy, 'f', 2).append(" bits"));
 
     if (entropy > m_ui->entropyProgressBar->maximum()) {
         entropy = m_ui->entropyProgressBar->maximum();

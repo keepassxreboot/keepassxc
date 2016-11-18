@@ -261,27 +261,27 @@ void TestGui::testEntryEntropy()
 
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "hello");
-    QCOMPARE(entropyLabel->text(), QString("6.38"));
+    QCOMPARE(entropyLabel->text(), QString("6.38 bits"));
 
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "helloworld");
-    QCOMPARE(entropyLabel->text(), QString("13.10"));
+    QCOMPARE(entropyLabel->text(), QString("13.10 bits"));
 
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "password1");
-    QCOMPARE(entropyLabel->text(), QString("4.00"));
+    QCOMPARE(entropyLabel->text(), QString("4.00 bits"));
 
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "D0g..................");
-    QCOMPARE(entropyLabel->text(), QString("19.02"));
+    QCOMPARE(entropyLabel->text(), QString("19.02 bits"));
 
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "Tr0ub4dour&3");
-    QCOMPARE(entropyLabel->text(), QString("30.87"));
+    QCOMPARE(entropyLabel->text(), QString("30.87 bits"));
 
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "correcthorsebatterystaple");
-    QCOMPARE(entropyLabel->text(),  QString("47.98"));
+    QCOMPARE(entropyLabel->text(),  QString("47.98 bits"));
     // We are done
 }
 
