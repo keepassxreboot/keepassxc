@@ -38,6 +38,7 @@ public:
     explicit PasswordGeneratorWidget(QWidget* parent = nullptr);
     ~PasswordGeneratorWidget();
     void loadSettings();
+    void saveSettings();
     void reset();
     void regeneratePassword();
 
@@ -50,7 +51,6 @@ private Q_SLOTS:
     void updateApplyEnabled(const QString& password);
     void updatePasswordStrength(const QString& password);
 
-    void saveSettings();
     void sliderMoved();
     void spinBoxChanged();
     void togglePasswordHidden(bool hidden);

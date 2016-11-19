@@ -39,6 +39,7 @@
 #include "http/HttpSettings.h"
 #include "http/OptionDialog.h"
 #include "gui/SettingsWidget.h"
+#include "gui/PasswordGeneratorWidget.h"
 
 class HttpPlugin: public ISettingsPage
 {
@@ -168,6 +169,7 @@ MainWindow::MainWindow()
     m_ui->actionGroupDelete->setIcon(filePath()->icon("actions", "group-delete", false));
 
     m_ui->actionSettings->setIcon(filePath()->icon("actions", "configure"));
+    m_ui->actionPasswordGenerator->setIcon(filePath()->icon("actions", "password-generator", false));
 
     m_ui->actionAbout->setIcon(filePath()->icon("actions", "help-about"));
 
@@ -261,6 +263,7 @@ MainWindow::MainWindow()
             SLOT(deleteGroup()));
 
     connect(m_ui->actionSettings, SIGNAL(triggered()), SLOT(switchToSettings()));
+    connect(m_ui->actionPasswordGenerator, SIGNAL(toggled(bool)), SLOT(switchToPasswordGen(bool)));
 
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
 
@@ -501,6 +504,19 @@ void MainWindow::switchToSettings()
 {
     m_ui->settingsWidget->loadSettings();
     m_ui->stackedWidget->setCurrentIndex(1);
+}
+
+void MainWindow::switchToPasswordGen(bool enabled)
+{
+    if (enabled == true) {
+      m_ui->passwordGeneratorWidget->loadSettings();
+      m_ui->passwordGeneratorWidget->regeneratePassword();
+      m_ui->stackedWidget->setCurrentIndex(3);
+    }
+    else {
+      m_ui->passwordGeneratorWidget->saveSettings();
+      switchToDatabases();
+    }
 }
 
 void MainWindow::databaseStatusChanged(DatabaseWidget *)

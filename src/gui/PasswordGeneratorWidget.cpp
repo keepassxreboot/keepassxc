@@ -38,7 +38,6 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     connect(m_ui->editNewPassword, SIGNAL(textChanged(QString)), SLOT(updatePasswordStrength(QString)));
     connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), SLOT(togglePasswordHidden(bool)));
     connect(m_ui->buttonApply, SIGNAL(clicked()), SLOT(applyPassword()));
-    connect(m_ui->buttonApply, SIGNAL(clicked()), SLOT(saveSettings()));
     connect(m_ui->buttonGenerate, SIGNAL(clicked()), SLOT(generatePassword()));
 
     connect(m_ui->sliderLength, SIGNAL(valueChanged(int)), SLOT(sliderMoved()));
@@ -123,6 +122,7 @@ void PasswordGeneratorWidget::generatePassword()
 
 void PasswordGeneratorWidget::applyPassword()
 {
+    saveSettings();
     Q_EMIT appliedPassword(m_ui->editNewPassword->text());
 }
 
