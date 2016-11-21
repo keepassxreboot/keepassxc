@@ -626,7 +626,20 @@ QString Entry::resolvePlaceholders(const QString& str) const
     result.replace("{PASSWORD}", password(), Qt::CaseInsensitive);
     result.replace("{NOTES}", notes(), Qt::CaseInsensitive);
 
-    // TODO: lots of other placeholders missing
+    // Permit only Upper Attributes as placeholders to avoid concurrency
+    result = result.toUpper();
+
+    const QList<QString> keyList = attributes()->keys();
+    for (const QString& key : keyList) {
+        if (!EntryAttributes::isDefaultAttribute(key)) {
+            QString tmpl_key = key;
+            tmpl_key = tmpl_key.prepend('{').append('}');
+
+            if (result == tmpl_key) {
+                result.replace(tmpl_key, attributes()->value(key));
+            }
+        }
+    }
 
     return result;
 }

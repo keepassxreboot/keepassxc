@@ -201,6 +201,10 @@ QString Group::effectiveAutoTypeSequence() const
         group = group->parentGroup();
     } while (group && sequence.isEmpty());
 
+    if (sequence.isEmpty()) {
+      sequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
+    }
+
     return sequence;
 }
 
