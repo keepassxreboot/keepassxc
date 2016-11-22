@@ -45,12 +45,6 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="PasswordEdit" name="passwordEdit">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>34</height>
-        </size>
-       </property>
        <property name="echoMode">
         <enum>QLineEdit::Password</enum>
        </property>
@@ -58,18 +52,6 @@
      </item>
      <item>
       <widget class="QToolButton" name="togglePasswordButton">
-       <property name="minimumSize">
-        <size>
-         <width>34</width>
-         <height>34</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>34</width>
-         <height>34</height>
-        </size>
-       </property>
        <property name="checkable">
         <bool>true</bool>
        </property>
@@ -88,12 +70,6 @@
     <layout class="QHBoxLayout" name="horizontalLayout_4">
      <item>
       <widget class="PasswordEdit" name="passwordRepeatEdit">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>34</height>
-        </size>
-       </property>
        <property name="echoMode">
         <enum>QLineEdit::Password</enum>
        </property>
