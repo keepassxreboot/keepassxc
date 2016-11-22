@@ -26,6 +26,8 @@ PasswordEdit::PasswordEdit(QWidget* parent)
     : QLineEdit(parent)
     , m_basePasswordEdit(nullptr)
 {
+    setEchoMode(QLineEdit::Password);
+    updateStylesheet();
 }
 
 void PasswordEdit::enableVerifyMode(PasswordEdit* basePasswordEdit)
@@ -71,15 +73,12 @@ bool PasswordEdit::passwordsEqual() const
 void PasswordEdit::updateStylesheet()
 {
     QString stylesheet("QLineEdit { ");
-
-    if (echoMode() == QLineEdit::Normal) {
 #ifdef Q_OS_MAC
-        // Qt on Mac OS doesn't seem to know the generic monospace family (tested with 4.8.6)
-        stylesheet.append("font-family: monospace,Menlo,Monaco; ");
+    // Qt on Mac OS doesn't seem to know the generic monospace family (tested with 4.8.6)
+    stylesheet.append("font-family: monospace,Menlo,Monaco;");
 #else
-        stylesheet.append("font-family: monospace,Courier New; ");
+    stylesheet.append("font-family: monospace,Courier New;");
 #endif
-    }
 
     if (m_basePasswordEdit && !passwordsEqual()) {
         stylesheet.append("background: %1; ");
