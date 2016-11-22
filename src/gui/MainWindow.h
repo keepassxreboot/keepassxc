@@ -55,6 +55,7 @@ private Q_SLOTS:
     void switchToDatabases();
     void switchToSettings();
     void switchToPasswordGen(bool enabled);
+    void closePasswordGen();
     void databaseStatusChanged(DatabaseWidget *dbWidget);
     void databaseTabChanged(int tabIndex);
     void openRecentDatabase(QAction* action);

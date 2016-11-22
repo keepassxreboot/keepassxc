@@ -82,11 +82,19 @@ void PasswordGeneratorWidget::saveSettings()
 void PasswordGeneratorWidget::reset()
 {
     m_ui->editNewPassword->setText("");
-    bool showPassword = config()->get("security/passwordscleartext").toBool();
-    m_ui->togglePasswordButton->setChecked(showPassword);
-    togglePasswordHidden(showPassword);
-
+    setStandaloneMode(false);
+    togglePasswordShown(config()->get("security/passwordscleartext").toBool());
     updateGenerator();
+}
+
+void PasswordGeneratorWidget::setStandaloneMode(bool standalone)
+{
+    if (standalone) {
+        m_ui->buttonApply->setText(tr("Close"));
+        togglePasswordShown(true);
+    } else {
+        m_ui->buttonApply->setText(tr("Apply"));
+    }
 }
 
 void PasswordGeneratorWidget::regeneratePassword()
@@ -126,6 +134,7 @@ void PasswordGeneratorWidget::applyPassword()
 {
     saveSettings();
     Q_EMIT appliedPassword(m_ui->editNewPassword->text());
+    Q_EMIT dialogTerminated();
 }
 
 void PasswordGeneratorWidget::sliderMoved()
@@ -155,13 +164,15 @@ void PasswordGeneratorWidget::spinBoxChanged()
     updateGenerator();
 }
 
-void PasswordGeneratorWidget::togglePasswordHidden(bool showing)
+void PasswordGeneratorWidget::togglePasswordShown(bool showing)
 {
     if (showing) {
         m_ui->editNewPassword->setEchoMode(QLineEdit::Normal);
     } else {
         m_ui->editNewPassword->setEchoMode(QLineEdit::Password);
     }
+    
+    m_ui->togglePasswordButton->setChecked(showing);
 }
 
 void PasswordGeneratorWidget::colorStrengthIndicator(double entropy)

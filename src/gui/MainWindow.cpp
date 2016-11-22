@@ -264,6 +264,7 @@ MainWindow::MainWindow()
 
     connect(m_ui->actionSettings, SIGNAL(triggered()), SLOT(switchToSettings()));
     connect(m_ui->actionPasswordGenerator, SIGNAL(toggled(bool)), SLOT(switchToPasswordGen(bool)));
+    connect(m_ui->passwordGeneratorWidget, SIGNAL(dialogTerminated()), SLOT(closePasswordGen()));
 
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
 
@@ -511,12 +512,18 @@ void MainWindow::switchToPasswordGen(bool enabled)
     if (enabled == true) {
       m_ui->passwordGeneratorWidget->loadSettings();
       m_ui->passwordGeneratorWidget->regeneratePassword();
+      m_ui->passwordGeneratorWidget->setStandaloneMode(true);
       m_ui->stackedWidget->setCurrentIndex(3);
-    }
-    else {
+    } else {
       m_ui->passwordGeneratorWidget->saveSettings();
       switchToDatabases();
     }
+    m_ui->actionPasswordGenerator->setChecked(enabled);
+}
+
+void MainWindow::closePasswordGen()
+{
+    switchToPasswordGen(false);
 }
 
 void MainWindow::databaseStatusChanged(DatabaseWidget *)
