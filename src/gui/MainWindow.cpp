@@ -346,8 +346,9 @@ void MainWindow::configuredMinimizeWindow()
 
 void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 {
-    bool inDatabaseTabWidget = (m_ui->stackedWidget->currentIndex() == 0);
-    bool inWelcomeWidget = (m_ui->stackedWidget->currentIndex() == 2);
+    int currentIndex = m_ui->stackedWidget->currentIndex();
+    bool inDatabaseTabWidget = (currentIndex == 0);
+    bool inWelcomeWidget = (currentIndex == 2);
 
     if (inDatabaseTabWidget && m_ui->tabWidget->currentIndex() != -1) {
         DatabaseWidget* dbWidget = m_ui->tabWidget->currentDatabaseWidget();
@@ -459,6 +460,12 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
     m_ui->actionRepairDatabase->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
 
     m_ui->actionLockDatabases->setEnabled(m_ui->tabWidget->hasLockableDatabases());
+    
+    if ((3 == currentIndex) != m_ui->actionPasswordGenerator->isChecked()) {
+        bool blocked = m_ui->actionPasswordGenerator->blockSignals(true);
+        m_ui->actionPasswordGenerator->toggle();
+        m_ui->actionPasswordGenerator->blockSignals(blocked);
+    }
 }
 
 void MainWindow::updateWindowTitle()
@@ -518,7 +525,6 @@ void MainWindow::switchToPasswordGen(bool enabled)
       m_ui->passwordGeneratorWidget->saveSettings();
       switchToDatabases();
     }
-    m_ui->actionPasswordGenerator->setChecked(enabled);
 }
 
 void MainWindow::closePasswordGen()
