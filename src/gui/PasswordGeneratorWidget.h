@@ -54,7 +54,7 @@ private Q_SLOTS:
     void sliderMoved();
     void spinBoxChanged();
     void togglePasswordHidden(bool hidden);
-    void colorStrengthLabel(double entropy);
+    void colorStrengthIndicator(double entropy);
 
     void updateGenerator();
 

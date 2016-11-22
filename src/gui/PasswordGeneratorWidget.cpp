@@ -82,7 +82,9 @@ void PasswordGeneratorWidget::saveSettings()
 void PasswordGeneratorWidget::reset()
 {
     m_ui->editNewPassword->setText("");
-    m_ui->togglePasswordButton->setChecked(config()->get("security/passwordscleartext").toBool());
+    bool showPassword = config()->get("security/passwordscleartext").toBool();
+    m_ui->togglePasswordButton->setChecked(showPassword);
+    togglePasswordHidden(showPassword);
 
     updateGenerator();
 }
@@ -104,14 +106,14 @@ void PasswordGeneratorWidget::updateApplyEnabled(const QString& password)
 void PasswordGeneratorWidget::updatePasswordStrength(const QString& password)
 {
     double entropy = m_generator->calculateEntropy(password);
-    m_ui->entropyLabel->setText(QString::number(entropy, 'f', 2).append(" bits"));
+    m_ui->entropyLabel->setText(tr("Entropy: %1 bit").arg(QString::number(entropy, 'f', 2)));
 
     if (entropy > m_ui->entropyProgressBar->maximum()) {
         entropy = m_ui->entropyProgressBar->maximum();
     }
     m_ui->entropyProgressBar->setValue(entropy);
 
-    colorStrengthLabel(entropy);
+    colorStrengthIndicator(entropy);
 }
 
 void PasswordGeneratorWidget::generatePassword()
@@ -162,29 +164,30 @@ void PasswordGeneratorWidget::togglePasswordHidden(bool showing)
     }
 }
 
-void PasswordGeneratorWidget::colorStrengthLabel(double entropy)
+void PasswordGeneratorWidget::colorStrengthIndicator(double entropy)
 {
     // Take the existing stylesheet and convert the text and background color to arguments
-    QString style = m_ui->strengthLabel->styleSheet();
-    style.replace(QRegExp("color:[^;]+;", Qt::CaseInsensitive), "color: %1;");
-    style.replace(QRegExp("background:[^;]+;", Qt::CaseInsensitive), "background: %2;");
+    QString style = m_ui->entropyProgressBar->styleSheet();
+    QRegularExpression re("(QProgressBar::chunk\\s*\\{.*?background-color:)[^;]+;",
+                          QRegularExpression::CaseInsensitiveOption |
+                          QRegularExpression::DotMatchesEverythingOption);
+    style.replace(re, "\\1 %1;");
 
     // Set the color and background based on entropy
+    // colors are taking from the KDE breeze palette
+    // <https://community.kde.org/KDE_Visual_Design_Group/HIG/Color>
     if (entropy < 35) {
-        m_ui->strengthLabel->setStyleSheet(style.arg("White", "Red"));
-        m_ui->strengthLabel->setText(tr("Bad"));
-    }
-    else if (entropy >= 35 && entropy < 55) {
-        m_ui->strengthLabel->setStyleSheet(style.arg("Black", "Orange"));
-        m_ui->strengthLabel->setText(tr("Medium"));
-    }
-    else if (entropy >= 55 && entropy < 100) {
-        m_ui->strengthLabel->setStyleSheet(style.arg("Black", "GreenYellow"));
-        m_ui->strengthLabel->setText(tr("Good"));
-    }
-    else {
-        m_ui->strengthLabel->setStyleSheet(style.arg("White", "Green"));
-        m_ui->strengthLabel->setText(tr("Excellent"));
+        m_ui->entropyProgressBar->setStyleSheet(style.arg("#c0392b"));
+        m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Poor")));
+    } else if (entropy >= 35 && entropy < 55) {
+        m_ui->entropyProgressBar->setStyleSheet(style.arg("#f39c1f"));
+        m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Weak")));
+    } else if (entropy >= 55 && entropy < 100) {
+        m_ui->entropyProgressBar->setStyleSheet(style.arg("#11d116"));
+        m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Good")));
+    } else {
+        m_ui->entropyProgressBar->setStyleSheet(style.arg("#27ae60"));
+        m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Excellent")));
     }
 }
 
