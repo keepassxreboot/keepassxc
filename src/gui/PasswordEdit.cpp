@@ -19,6 +19,8 @@
 
 #include "core/Config.h"
 
+#include <QFontDatabase>
+
 const QColor PasswordEdit::CorrectSoFarColor = QColor(255, 205, 15);
 const QColor PasswordEdit::ErrorColor = QColor(255, 125, 125);
 
@@ -28,6 +30,11 @@ PasswordEdit::PasswordEdit(QWidget* parent)
 {
     setEchoMode(QLineEdit::Password);
     updateStylesheet();
+    
+    // set font to system monospace font and increase letter spacing
+    QFont passwordFont = QFontDatabase::systemFont(QFontDatabase::FixedFont);
+    passwordFont.setLetterSpacing(QFont::PercentageSpacing, 110);
+    setFont(passwordFont);
 }
 
 void PasswordEdit::enableVerifyMode(PasswordEdit* basePasswordEdit)
@@ -73,12 +80,6 @@ bool PasswordEdit::passwordsEqual() const
 void PasswordEdit::updateStylesheet()
 {
     QString stylesheet("QLineEdit { ");
-#ifdef Q_OS_MAC
-    // Qt on Mac OS doesn't seem to know the generic monospace family (tested with 4.8.6)
-    stylesheet.append("font-family: monospace,Menlo,Monaco;");
-#else
-    stylesheet.append("font-family: monospace,Courier New;");
-#endif
 
     if (m_basePasswordEdit && !passwordsEqual()) {
         stylesheet.append("background: %1; ");
