@@ -620,14 +620,14 @@ QString Entry::resolvePlaceholders(const QString& str) const
 {
     QString result = str;
 
-    result.replace("{TITLE}", title(), Qt::CaseInsensitive);
-    result.replace("{USERNAME}", username(), Qt::CaseInsensitive);
-    result.replace("{URL}", url(), Qt::CaseInsensitive);
-    result.replace("{PASSWORD}", password(), Qt::CaseInsensitive);
-    result.replace("{NOTES}", notes(), Qt::CaseInsensitive);
-
     // Permit only Upper Attributes as placeholders to avoid concurrency
     result = result.toUpper();
+
+    result.replace("{TITLE}", title());
+    result.replace("{USERNAME}", username());
+    result.replace("{URL}", url());
+    result.replace("{PASSWORD}", password());
+    result.replace("{NOTES}", notes());
 
     const QList<QString> keyList = attributes()->keys();
     for (const QString& key : keyList) {
