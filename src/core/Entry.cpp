@@ -623,22 +623,16 @@ QString Entry::resolvePlaceholders(const QString& str) const
     // Permit only Upper Attributes as placeholders to avoid concurrency
     result = result.toUpper();
 
+    // Default attributes are stored non UpperCase so they are hardcoded
     result.replace("{TITLE}", title());
     result.replace("{USERNAME}", username());
     result.replace("{URL}", url());
     result.replace("{PASSWORD}", password());
     result.replace("{NOTES}", notes());
 
-    const QList<QString> keyList = attributes()->keys();
-    for (const QString& key : keyList) {
-        if (!EntryAttributes::isDefaultAttribute(key)) {
-            QString tmpl_key = key;
-            tmpl_key = tmpl_key.prepend('{').append('}');
-
-            if (result == tmpl_key) {
-                result.replace(tmpl_key, attributes()->value(key));
-            }
-        }
+    QString tmpl_result = result.remove('{').remove('}');
+    if (attributes()->contains(tmpl_result)) {
+        result.replace(result, attributes()->value(tmpl_result));
     }
 
     return result;
