@@ -166,13 +166,10 @@ void PasswordGeneratorWidget::spinBoxChanged()
 
 void PasswordGeneratorWidget::togglePasswordShown(bool showing)
 {
-    if (showing) {
-        m_ui->editNewPassword->setEchoMode(QLineEdit::Normal);
-    } else {
-        m_ui->editNewPassword->setEchoMode(QLineEdit::Password);
-    }
-    
+    m_ui->editNewPassword->setShowPassword(showing);
+    bool blockSignals = m_ui->togglePasswordButton->blockSignals(true);
     m_ui->togglePasswordButton->setChecked(showing);
+    m_ui->togglePasswordButton->blockSignals(blockSignals);
 }
 
 void PasswordGeneratorWidget::colorStrengthIndicator(double entropy)
