@@ -45,6 +45,12 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
 
     connect(m_ui->optionButtons, SIGNAL(buttonClicked(int)), SLOT(updateGenerator()));
 
+    // set font size of password quality and entropy labels dynamically to 80% of the default font size
+    QFont defaultFont;
+    defaultFont.setPointSize(static_cast<int>(defaultFont.pointSize() * 0.8f));
+    m_ui->entropyLabel->setFont(defaultFont);
+    m_ui->strengthLabel->setFont(defaultFont);
+    
     loadSettings();
     reset();
 }
