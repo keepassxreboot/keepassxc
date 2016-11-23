@@ -331,10 +331,6 @@ void MainWindow::openDatabase(const QString& fileName, const QString& pw, const 
 
 void MainWindow::minimizeWindow()
 {
-    /*bool minimize = isTrayIconEnabled() &&
-                    config()->get("GUI/MinimizeToTray").toBool() &&
-                    config()->get("GUI/MinimizeOnClose").toBool() &&
-                    config()->get("GUI/MinimizeOnStartup").toBool();*/
     if (isTrayIconEnabled() && config()->get("GUI/MinimizeToTray").toBool()) {
         hide();
     } else {
