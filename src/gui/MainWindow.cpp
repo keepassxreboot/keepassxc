@@ -329,14 +329,12 @@ void MainWindow::openDatabase(const QString& fileName, const QString& pw, const 
     m_ui->tabWidget->openDatabase(fileName, pw, keyFile);
 }
 
-void MainWindow::configuredMinimizeWindow()
+void MainWindow::minimizeWindow()
 {
-    bool minimize = isTrayIconEnabled() &&
-                    config()->get("GUI/MinimizeToTray").toBool() &&
-                    config()->get("GUI/MinimizeOnClose").toBool() &&
-                    config()->get("GUI/MinimizeOnStartup").toBool();
-    if (minimize) {
+    if (isTrayIconEnabled() && config()->get("GUI/MinimizeToTray").toBool()) {
         hide();
+    } else {
+        setWindowState(Qt::WindowMinimized);
     }
 }
 
@@ -523,7 +521,6 @@ void MainWindow::databaseTabChanged(int tabIndex)
 void MainWindow::closeEvent(QCloseEvent* event)
 {
     bool minimizeOnClose = isTrayIconEnabled() &&
-                           config()->get("GUI/MinimizeToTray").toBool() &&
                            config()->get("GUI/MinimizeOnClose").toBool();
     if (minimizeOnClose && !appExitCalled)
     {

@@ -74,11 +74,7 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     connect(m_generalUi->autoSaveAfterEveryChangeCheckBox, SIGNAL(toggled(bool)),
             this, SLOT(enableAutoSaveOnExit(bool)));
     connect(m_generalUi->systrayShowCheckBox, SIGNAL(toggled(bool)),
-            this, SLOT(enableSystrayMinimizeToTray(bool)));
-    connect(m_generalUi->systrayMinimizeToTrayCheckBox, SIGNAL(toggled(bool)),
-            this, SLOT(enableSystrayMinimizeToTray2(bool)));
-    connect(m_generalUi->systrayMinimizeOnCloseCheckBox, SIGNAL(toggled(bool)),
-            m_generalUi->systrayMinimizeOnStartup, SLOT(setEnabled(bool)));
+            this, SLOT(enableSystray(bool)));
 
     connect(m_secUi->clearClipboardCheckBox, SIGNAL(toggled(bool)),
             m_secUi->clearClipboardSpinBox, SLOT(setEnabled(bool)));
@@ -209,18 +205,8 @@ void SettingsWidget::enableAutoSaveOnExit(bool checked)
     m_generalUi->autoSaveOnExitCheckBox->setEnabled(!checked);
 }
 
-void SettingsWidget::enableSystrayMinimizeToTray(bool checked)
+void SettingsWidget::enableSystray(bool checked)
 {
     m_generalUi->systrayMinimizeToTrayCheckBox->setEnabled(checked);
-    bool checked2 = m_generalUi->systrayMinimizeToTrayCheckBox->checkState();
-    m_generalUi->systrayMinimizeOnCloseCheckBox->setEnabled(checked && checked2);
-    bool checked3 = m_generalUi->systrayMinimizeOnCloseCheckBox->checkState();
-    m_generalUi->systrayMinimizeOnStartup->setEnabled(checked && checked2 && checked3);
-}
-
-void SettingsWidget::enableSystrayMinimizeToTray2(bool checked)
-{
     m_generalUi->systrayMinimizeOnCloseCheckBox->setEnabled(checked);
-    bool checked2 = m_generalUi->systrayMinimizeOnCloseCheckBox->checkState();
-    m_generalUi->systrayMinimizeOnStartup->setEnabled(checked && checked2);
 }
