@@ -86,11 +86,11 @@ int main(int argc, char** argv)
 #endif
 
     MainWindow mainWindow;
-    mainWindow.show();
     app.setMainWindow(&mainWindow);
-
+    mainWindow.show();
+    
     QObject::connect(&app, SIGNAL(openFile(QString)), &mainWindow, SLOT(openDatabase(QString)));
-
+    
     for (int ii=0; ii < args.length(); ii++) {
         QString filename = args[ii];
         if (!filename.isEmpty() && QFile::exists(filename)) {
@@ -111,6 +111,11 @@ int main(int argc, char** argv)
             }
         }
     }
-
+    
+    // start minimized if configured
+    if (config()->get("GUI/MinimizeOnStartup").toBool()) {
+        mainWindow.minimizeWindow();
+    }
+    
     return app.exec();
 }
