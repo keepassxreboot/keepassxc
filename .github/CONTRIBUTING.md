@@ -81,7 +81,7 @@ All pull requests must comply with the above requirements and with the [Stylegui
 
 ### Translations
 
-Translations are managed on [Transifex](https://www.transifex.com/keepassx-reboot/keepassx-reboot/) which offers a web interface.
+Translations are managed on [Transifex](https://www.transifex.com/keepassxc/keepassxc/) which offers a web interface.
 Please join an existing language team or request a new one if there is none.
 
 ## Styleguides
