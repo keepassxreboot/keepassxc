@@ -616,23 +616,39 @@ const Database* Entry::database() const
     }
 }
 
-QString Entry::resolvePlaceholders(const QString& str) const
+QString Entry::resolveMultiplePlaceholders(const QString& str) const
+{
+    QString result = str;
+    QRegExp tmplRegEx("({.*})", Qt::CaseInsensitive, QRegExp::RegExp2);
+    QStringList tmplList;
+    int pos = 0;
+
+    while ((pos = tmplRegEx.indexIn(str, pos)) != -1) {
+        QString found = tmplRegEx.cap(1);
+        result.replace(found,resolvePlaceholder(found));
+        pos += tmplRegEx.matchedLength();
+    }
+
+    return result;
+}
+
+QString Entry::resolvePlaceholder(const QString& str) const
 {
     QString result = str;
 
-    // Permit only Upper Attributes as placeholders to avoid concurrency
-    result = result.toUpper();
+    const QList<QString> keyList = attributes()->keys();
+    for (const QString& key : keyList) {
+        Qt::CaseSensitivity cs = Qt::CaseInsensitive;
+        if (!EntryAttributes::isDefaultAttribute(key)) {
+            cs = Qt::CaseSensitive;
+        }
 
-    // Default attributes are stored non UpperCase so they are hardcoded
-    result.replace("{TITLE}", title());
-    result.replace("{USERNAME}", username());
-    result.replace("{URL}", url());
-    result.replace("{PASSWORD}", password());
-    result.replace("{NOTES}", notes());
-
-    QString tmpl_result = result.remove('{').remove('}');
-    if (attributes()->contains(tmpl_result)) {
-        result.replace(result, attributes()->value(tmpl_result));
+        QString k = key;
+        k.prepend("{").append("}");
+        if (result.compare(k,cs)==0) {
+            result.replace(result,attributes()->value(key));
+            break;
+        }
     }
 
     return result;

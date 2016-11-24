@@ -99,10 +99,10 @@ void TestAutoType::init()
     association.sequence = "{PASSWORD}:{CUSTOM}";
     m_entry4->autoTypeAssociations()->add(association);
     association.window = "//^CustomAttr2$//";
-    association.sequence = "{PASSWORD}:{CuStOm}";
+    association.sequence = "{CuStOm}";
     m_entry4->autoTypeAssociations()->add(association);
     association.window = "//^CustomAttr3$//";
-    association.sequence = "{PASSWORD}:{FOO}";
+    association.sequence = "{PaSSworD}";
     m_entry4->autoTypeAssociations()->add(association);
 }
 
@@ -213,15 +213,15 @@ void TestAutoType::testGlobalAutoTypeRegExp()
     QCOMPARE(m_test->actionChars(), QString("custom_attr:Attribute"));
     m_test->clearActions();
 
-    // with non uppercase custom attributes
+    // with (non uppercase) undefined custom attributes
     m_test->setActiveWindowTitle("CustomAttr2");
     m_autoType->performGlobalAutoType(m_dbList);
-    QCOMPARE(m_test->actionChars(), QString("custom_attr:Attribute"));
+    QCOMPARE(m_test->actionChars(), QString(""));
     m_test->clearActions();
 
-    // with undefined custom attributes
+    // with mixedcase default attributes
     m_test->setActiveWindowTitle("CustomAttr3");
     m_autoType->performGlobalAutoType(m_dbList);
-    QCOMPARE(m_test->actionChars(), QString("custom_attr:FOO"));
+    QCOMPARE(m_test->actionChars(), QString("custom_attr"));
     m_test->clearActions();
 }
