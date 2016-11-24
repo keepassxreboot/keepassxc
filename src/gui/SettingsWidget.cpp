@@ -137,6 +137,7 @@ void SettingsWidget::loadSettings()
     m_secUi->lockDatabaseMinimizeCheckBox->setChecked(config()->get("security/lockdatabaseminimize").toBool());
 
     m_secUi->passwordCleartextCheckBox->setChecked(config()->get("security/passwordscleartext").toBool());
+    m_secUi->passwordRepeatCheckBox->setChecked(config()->get("security/passwordsrepeat").toBool());
 
     m_secUi->autoTypeAskCheckBox->setChecked(config()->get("security/autotypeask").toBool());
 
@@ -181,6 +182,7 @@ void SettingsWidget::saveSettings()
     config()->set("security/lockdatabaseminimize", m_secUi->lockDatabaseMinimizeCheckBox->isChecked());
 
     config()->set("security/passwordscleartext", m_secUi->passwordCleartextCheckBox->isChecked());
+    config()->set("security/passwordsrepeat", m_secUi->passwordRepeatCheckBox->isChecked());
 
     config()->set("security/autotypeask", m_secUi->autoTypeAskCheckBox->isChecked());
 

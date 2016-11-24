@@ -24,3 +24,7 @@ target_link_libraries(kdbx-extract
                       Qt5::Widgets
                       ${GCRYPT_LIBRARIES}
                       ${ZLIB_LIBRARIES})
+
+
+add_executable(entropy-meter entropy-meter.cpp)
+target_link_libraries(entropy-meter zxcvbn)

@@ -18,12 +18,18 @@
 #include "PasswordGenerator.h"
 
 #include "crypto/Random.h"
+#include "zxcvbn/zxcvbn.h"
 
 PasswordGenerator::PasswordGenerator()
     : m_length(0)
     , m_classes(0)
     , m_flags(0)
 {
+}
+
+double PasswordGenerator::calculateEntropy(QString password)
+{
+    return ZxcvbnMatch(password.toLatin1(), 0, 0);
 }
 
 void PasswordGenerator::setLength(int length)
