@@ -1,6 +1,7 @@
 language: cpp
 sudo: required
 dist: trusty
+services: [docker]
 
 os:
   - linux
@@ -8,15 +9,10 @@ os:
 
 compiler:
   - gcc
-#  - clang
+  - clang
 
 git:
   depth: 3
-
-matrix:
-  include:
-    - env: BUILD=1
-      services: [docker]
 
 before_install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -qq update; fi
@@ -39,4 +35,4 @@ script:
 
 after_success:
   - popd
-  - if [ ! -z "$BUILD" ]; then docker run -v $(pwd):/cwd snapcore/snapcraft sh -c 'cd /cwd && apt update && snapcraft'; fi
+  - "[[ $TRAVIS_BRANCH =~ (master|develop) ]] && docker run -v $(pwd):/cwd snapcore/snapcraft sh -c 'cd /cwd && apt update && snapcraft'"
