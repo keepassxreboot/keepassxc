@@ -43,6 +43,7 @@ private Q_SLOTS:
     void testTabs();
     void testEditEntry();
     void testAddEntry();
+    void testEntryEntropy();
     void testSearch();
     void testDeleteEntry();
     void testCloneEntry();

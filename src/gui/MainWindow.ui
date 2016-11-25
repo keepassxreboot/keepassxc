@@ -87,6 +87,13 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="pagePasswordGenerator">
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="PasswordGeneratorWidget" name="passwordGeneratorWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -171,6 +178,7 @@
      <string>Tools</string>
     </property>
     <addaction name="actionLockDatabases"/>
+    <addaction name="actionPasswordGenerator"/>
     <addaction name="actionSettings"/>
    </widget>
    <widget class="QMenu" name="menuView">
@@ -205,6 +213,7 @@
    <addaction name="actionEntryCopyUsername"/>
    <addaction name="actionEntryCopyPassword"/>
    <addaction name="separator"/>
+   <addaction name="actionPasswordGenerator"/>
    <addaction name="actionLockDatabases"/>
    <addaction name="separator"/>
   </widget>
@@ -372,6 +381,14 @@
     <string>&amp;Settings</string>
    </property>
   </action>
+  <action name="actionPasswordGenerator">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Password Generator</string>
+   </property>
+  </action>
   <action name="actionEntryAutoType">
    <property name="enabled">
     <bool>false</bool>
@@ -451,6 +468,12 @@
    <class>WelcomeWidget</class>
    <extends>QWidget</extends>
    <header>gui/WelcomeWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PasswordGeneratorWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/PasswordGeneratorWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

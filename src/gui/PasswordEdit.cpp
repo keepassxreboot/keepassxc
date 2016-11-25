@@ -17,6 +17,10 @@
 
 #include "PasswordEdit.h"
 
+#include "core/Config.h"
+
+#include <QFontDatabase>
+
 const QColor PasswordEdit::CorrectSoFarColor = QColor(255, 205, 15);
 const QColor PasswordEdit::ErrorColor = QColor(255, 125, 125);
 
@@ -24,6 +28,13 @@ PasswordEdit::PasswordEdit(QWidget* parent)
     : QLineEdit(parent)
     , m_basePasswordEdit(nullptr)
 {
+    setEchoMode(QLineEdit::Password);
+    updateStylesheet();
+    
+    // set font to system monospace font and increase letter spacing
+    QFont passwordFont = QFontDatabase::systemFont(QFontDatabase::FixedFont);
+    passwordFont.setLetterSpacing(QFont::PercentageSpacing, 110);
+    setFont(passwordFont);
 }
 
 void PasswordEdit::enableVerifyMode(PasswordEdit* basePasswordEdit)
@@ -31,6 +42,8 @@ void PasswordEdit::enableVerifyMode(PasswordEdit* basePasswordEdit)
     m_basePasswordEdit = basePasswordEdit;
 
     updateStylesheet();
+    
+    connect(m_basePasswordEdit, SIGNAL(textChanged(QString)), SLOT(autocompletePassword(QString)));
     connect(m_basePasswordEdit, SIGNAL(textChanged(QString)), SLOT(updateStylesheet()));
     connect(this, SIGNAL(textChanged(QString)), SLOT(updateStylesheet()));
 
@@ -40,6 +53,21 @@ void PasswordEdit::enableVerifyMode(PasswordEdit* basePasswordEdit)
 void PasswordEdit::setShowPassword(bool show)
 {
     setEchoMode(show ? QLineEdit::Normal : QLineEdit::Password);
+    // if I have a parent, I'm the child
+    if (m_basePasswordEdit){
+        if (config()->get("security/passwordsrepeat").toBool()) {
+            setEnabled(!show);
+            setReadOnly(show);
+            setText(m_basePasswordEdit->text());
+        }
+        else {
+            // This fix a bug when the QLineEdit is disabled while switching config
+            if (isEnabled() == false) {
+                setEnabled(true);
+                setReadOnly(false);
+            }
+        }
+    }
     updateStylesheet();
     Q_EMIT showPasswordChanged(show);
 }
@@ -52,15 +80,6 @@ bool PasswordEdit::passwordsEqual() const
 void PasswordEdit::updateStylesheet()
 {
     QString stylesheet("QLineEdit { ");
-
-    if (echoMode() == QLineEdit::Normal) {
-#ifdef Q_OS_MAC
-        // Qt on Mac OS doesn't seem to know the generic monospace family (tested with 4.8.6)
-        stylesheet.append("font-family: monospace,Menlo,Monaco; ");
-#else
-        stylesheet.append("font-family: monospace,Courier New; ");
-#endif
-    }
 
     if (m_basePasswordEdit && !passwordsEqual()) {
         stylesheet.append("background: %1; ");
@@ -75,4 +94,11 @@ void PasswordEdit::updateStylesheet()
 
     stylesheet.append("}");
     setStyleSheet(stylesheet);
+}
+
+void PasswordEdit::autocompletePassword(QString password)
+{
+    if (config()->get("security/passwordsrepeat").toBool() && echoMode() == QLineEdit::Normal) {
+        setText(password);
+    }
 }

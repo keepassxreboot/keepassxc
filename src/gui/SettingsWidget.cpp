@@ -74,11 +74,7 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     connect(m_generalUi->autoSaveAfterEveryChangeCheckBox, SIGNAL(toggled(bool)),
             this, SLOT(enableAutoSaveOnExit(bool)));
     connect(m_generalUi->systrayShowCheckBox, SIGNAL(toggled(bool)),
-            this, SLOT(enableSystrayMinimizeToTray(bool)));
-    connect(m_generalUi->systrayMinimizeToTrayCheckBox, SIGNAL(toggled(bool)),
-            this, SLOT(enableSystrayMinimizeToTray2(bool)));
-    connect(m_generalUi->systrayMinimizeOnCloseCheckBox, SIGNAL(toggled(bool)),
-            m_generalUi->systrayMinimizeOnStartup, SLOT(setEnabled(bool)));
+            this, SLOT(enableSystray(bool)));
 
     connect(m_secUi->clearClipboardCheckBox, SIGNAL(toggled(bool)),
             m_secUi->clearClipboardSpinBox, SLOT(setEnabled(bool)));
@@ -142,6 +138,7 @@ void SettingsWidget::loadSettings()
     m_secUi->lockDatabaseMinimizeCheckBox->setChecked(config()->get("security/lockdatabaseminimize").toBool());
 
     m_secUi->passwordCleartextCheckBox->setChecked(config()->get("security/passwordscleartext").toBool());
+    m_secUi->passwordRepeatCheckBox->setChecked(config()->get("security/passwordsrepeat").toBool());
 
     m_secUi->autoTypeAskCheckBox->setChecked(config()->get("security/autotypeask").toBool());
 
@@ -187,6 +184,7 @@ void SettingsWidget::saveSettings()
     config()->set("security/lockdatabaseminimize", m_secUi->lockDatabaseMinimizeCheckBox->isChecked());
 
     config()->set("security/passwordscleartext", m_secUi->passwordCleartextCheckBox->isChecked());
+    config()->set("security/passwordsrepeat", m_secUi->passwordRepeatCheckBox->isChecked());
 
     config()->set("security/autotypeask", m_secUi->autoTypeAskCheckBox->isChecked());
 
@@ -211,18 +209,8 @@ void SettingsWidget::enableAutoSaveOnExit(bool checked)
     m_generalUi->autoSaveOnExitCheckBox->setEnabled(!checked);
 }
 
-void SettingsWidget::enableSystrayMinimizeToTray(bool checked)
+void SettingsWidget::enableSystray(bool checked)
 {
     m_generalUi->systrayMinimizeToTrayCheckBox->setEnabled(checked);
-    bool checked2 = m_generalUi->systrayMinimizeToTrayCheckBox->checkState();
-    m_generalUi->systrayMinimizeOnCloseCheckBox->setEnabled(checked && checked2);
-    bool checked3 = m_generalUi->systrayMinimizeOnCloseCheckBox->checkState();
-    m_generalUi->systrayMinimizeOnStartup->setEnabled(checked && checked2 && checked3);
-}
-
-void SettingsWidget::enableSystrayMinimizeToTray2(bool checked)
-{
     m_generalUi->systrayMinimizeOnCloseCheckBox->setEnabled(checked);
-    bool checked2 = m_generalUi->systrayMinimizeOnCloseCheckBox->checkState();
-    m_generalUi->systrayMinimizeOnStartup->setEnabled(checked && checked2);
 }

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>684</width>
-    <height>459</height>
+    <height>452</height>
    </rect>
   </property>
   <layout class="QFormLayout" name="formLayout">
@@ -37,7 +37,7 @@
    <item row="2" column="0">
     <widget class="QCheckBox" name="openPreviousDatabasesOnStartupCheckBox">
      <property name="text">
-      <string>Open previous databases on startup</string>
+      <string>Load previous databases on startup</string>
      </property>
     </widget>
    </item>
@@ -113,12 +113,9 @@
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>20</width>
+         <width>40</width>
          <height>20</height>
         </size>
        </property>
@@ -166,7 +163,7 @@
         <bool>false</bool>
        </property>
        <property name="text">
-        <string>Hide window to system tray instead of App Exit</string>
+        <string>Hide window to system tray instead of app exit</string>
        </property>
       </widget>
      </item>
@@ -178,25 +175,9 @@
       <enum>QLayout::SetMaximumSize</enum>
      </property>
      <item>
-      <spacer name="horizontalSpacer_3">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>60</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
       <widget class="QCheckBox" name="systrayMinimizeOnStartup">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
        <property name="text">
-        <string>Hide window to system tray on App start</string>
+        <string>Minimize window at application startup</string>
        </property>
       </widget>
      </item>
