@@ -616,17 +616,40 @@ const Database* Entry::database() const
     }
 }
 
-QString Entry::resolvePlaceholders(const QString& str) const
+QString Entry::resolveMultiplePlaceholders(const QString& str) const
+{
+    QString result = str;
+    QRegExp tmplRegEx("({.*})", Qt::CaseInsensitive, QRegExp::RegExp2);
+    QStringList tmplList;
+    int pos = 0;
+
+    while ((pos = tmplRegEx.indexIn(str, pos)) != -1) {
+        QString found = tmplRegEx.cap(1);
+        result.replace(found,resolvePlaceholder(found));
+        pos += tmplRegEx.matchedLength();
+    }
+
+    return result;
+}
+
+QString Entry::resolvePlaceholder(const QString& str) const
 {
     QString result = str;
 
-    result.replace("{TITLE}", title(), Qt::CaseInsensitive);
-    result.replace("{USERNAME}", username(), Qt::CaseInsensitive);
-    result.replace("{URL}", url(), Qt::CaseInsensitive);
-    result.replace("{PASSWORD}", password(), Qt::CaseInsensitive);
-    result.replace("{NOTES}", notes(), Qt::CaseInsensitive);
+    const QList<QString> keyList = attributes()->keys();
+    for (const QString& key : keyList) {
+        Qt::CaseSensitivity cs = Qt::CaseInsensitive;
+        if (!EntryAttributes::isDefaultAttribute(key)) {
+            cs = Qt::CaseSensitive;
+        }
 
-    // TODO: lots of other placeholders missing
+        QString k = key;
+        k.prepend("{").append("}");
+        if (result.compare(k,cs)==0) {
+            result.replace(result,attributes()->value(key));
+            break;
+        }
+    }
 
     return result;
 }

@@ -90,6 +90,20 @@ void TestAutoType::init()
     association.window = "//^REGEX3-([rd]\\d){2}$//";
     association.sequence = "regex3";
     m_entry3->autoTypeAssociations()->add(association);
+
+    m_entry4 = new Entry();
+    m_entry4->setGroup(m_group);
+    m_entry4->setPassword("custom_attr");
+    m_entry4->attributes()->set("CUSTOM","Attribute",false);
+    association.window = "//^CustomAttr1$//";
+    association.sequence = "{PASSWORD}:{CUSTOM}";
+    m_entry4->autoTypeAssociations()->add(association);
+    association.window = "//^CustomAttr2$//";
+    association.sequence = "{CuStOm}";
+    m_entry4->autoTypeAssociations()->add(association);
+    association.window = "//^CustomAttr3$//";
+    association.sequence = "{PaSSworD}";
+    m_entry4->autoTypeAssociations()->add(association);
 }
 
 void TestAutoType::cleanup()
@@ -191,5 +205,23 @@ void TestAutoType::testGlobalAutoTypeRegExp()
     m_test->setActiveWindowTitle("REGEX3-R2D2");
     m_autoType->performGlobalAutoType(m_dbList);
     QCOMPARE(m_test->actionChars(), QString("regex3"));
+    m_test->clearActions();
+
+    // with custom attributes
+    m_test->setActiveWindowTitle("CustomAttr1");
+    m_autoType->performGlobalAutoType(m_dbList);
+    QCOMPARE(m_test->actionChars(), QString("custom_attr:Attribute"));
+    m_test->clearActions();
+
+    // with (non uppercase) undefined custom attributes
+    m_test->setActiveWindowTitle("CustomAttr2");
+    m_autoType->performGlobalAutoType(m_dbList);
+    QCOMPARE(m_test->actionChars(), QString(""));
+    m_test->clearActions();
+
+    // with mixedcase default attributes
+    m_test->setActiveWindowTitle("CustomAttr3");
+    m_autoType->performGlobalAutoType(m_dbList);
+    QCOMPARE(m_test->actionChars(), QString("custom_attr"));
     m_test->clearActions();
 }

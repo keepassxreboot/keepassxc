@@ -485,7 +485,7 @@ void DatabaseWidget::openUrl()
 
 void DatabaseWidget::openUrlForEntry(Entry* entry)
 {
-    QString urlString = entry->resolvePlaceholders(entry->url());
+    QString urlString = entry->resolveMultiplePlaceholders(entry->url());
     if (urlString.isEmpty()) {
         return;
     }
