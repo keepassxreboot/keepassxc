@@ -551,7 +551,7 @@ void Group::merge(const Group* other)
         if (!findEntry(entry->uuid())) {
             entry->clone(Entry::CloneNoFlags)->setGroup(this);
         } else {
-            resolveConflict(this->findEntry(entry->uuid()), entry);
+            resolveConflict(findEntry(entry->uuid()), entry);
         }
     }
 
@@ -559,8 +559,8 @@ void Group::merge(const Group* other)
     const QList<Group*> dbChildren = other->children();
     for (Group* group : dbChildren) {
         // groups are searched by name instead of uuid
-        if (this->findChildByName(group->name())) {
-            this->findChildByName(group->name())->merge(group);
+        if (findChildByName(group->name())) {
+            findChildByName(group->name())->merge(group);
         } else {
             group->setParent(this);
         }
@@ -769,24 +769,24 @@ void Group::resolveConflict(Entry* existingEntry, Entry* otherEntry)
 
     Entry* clonedEntry;
 
-    switch(this->mergeMode()) {
+    switch(mergeMode()) {
         case KeepBoth:
             // if one entry is newer, create a clone and add it to the group
             if (timeExisting > timeOther) {
                 clonedEntry = otherEntry->clone(Entry::CloneNoFlags);
                 clonedEntry->setGroup(this);
-                this->markOlderEntry(clonedEntry);
+                markOlderEntry(clonedEntry);
             } else if (timeExisting < timeOther) {
                 clonedEntry = otherEntry->clone(Entry::CloneNoFlags);
                 clonedEntry->setGroup(this);
-                this->markOlderEntry(existingEntry);
+                markOlderEntry(existingEntry);
             }
             break;
         case KeepNewer:
             if (timeExisting < timeOther) {
                 // only if other entry is newer, replace existing one
-                this->removeEntry(existingEntry);
-                this->addEntry(otherEntry);
+                removeEntry(existingEntry);
+                addEntry(otherEntry->clone(Entry::CloneNoFlags));
             }
 
             break;

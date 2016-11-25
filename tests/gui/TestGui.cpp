@@ -21,6 +21,7 @@
 #include <QApplication>
 #include <QDialogButtonBox>
 #include <QLineEdit>
+#include <QLabel>
 #include <QMimeData>
 #include <QPushButton>
 #include <QSpinBox>
@@ -65,20 +66,20 @@ void TestGui::initTestCase()
     QByteArray tmpData;
     QFile sourceDbFile(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx"));
     QVERIFY(sourceDbFile.open(QIODevice::ReadOnly));
-    QVERIFY(Tools::readAllFromDevice(&sourceDbFile, tmpData));
+    QVERIFY(Tools::readAllFromDevice(&sourceDbFile, m_dbData));
     sourceDbFile.close();
-
-    // Write the temp storage to a temp database file for use in our tests
-    QVERIFY(m_dbFile.open());
-    QCOMPARE(m_dbFile.write(tmpData), static_cast<qint64>((tmpData.size())));
-    m_dbFile.close();
-
-    m_dbFileName = QFileInfo(m_dbFile).fileName();
 }
 
 // Every test starts with opening the temp database
 void TestGui::init()
 {
+    // Write the temp storage to a temp database file for use in our tests
+    QVERIFY(m_dbFile.open());
+    QCOMPARE(m_dbFile.write(m_dbData), static_cast<qint64>((m_dbData.size())));
+    m_dbFile.close();
+
+    m_dbFileName = QFileInfo(m_dbFile).fileName();
+
     fileDialog()->setNextFileName(m_dbFile.fileName());
     triggerAction("actionDatabaseOpen");
 
@@ -110,8 +111,8 @@ void TestGui::cleanup()
 
 void TestGui::testMergeDatabase()
 {
-    // this triggers a warning. Perhaps similar to https://bugreports.qt.io/browse/QTBUG-49623 ?
-    QSignalSpy dbMergeSpy(m_tabWidget->currentWidget(), SIGNAL(databaseMerged(Database*)));
+    // It is safe to ignore the warning this line produces
+    QSignalSpy dbMergeSpy(m_dbWidget, SIGNAL(databaseMerged(Database*)));
 
     // set file to merge from
     fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx"));
@@ -137,6 +138,74 @@ void TestGui::testMergeDatabase()
     QCOMPARE(m_db->rootGroup()->children().at(6)->entries().size(), 1);
     // the General group contains one entry merged from the other db
     QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 1);
+}
+
+void TestGui::testAutoreloadDatabase()
+{
+    config()->set("AutoReloadOnChange", false);
+
+    // Load the MergeDatabase.kdbx file into temporary storage
+    QByteArray tmpData;
+    QFile mergeDbFile(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx"));
+    QVERIFY(mergeDbFile.open(QIODevice::ReadOnly));
+    QVERIFY(Tools::readAllFromDevice(&mergeDbFile, tmpData));
+    mergeDbFile.close();
+
+    // Test accepting new file in autoreload
+    MessageBox::setNextAnswer(QMessageBox::Yes);
+    // Overwrite the current database with the temp data
+    QVERIFY(m_dbFile.open());
+    QVERIFY(m_dbFile.write(tmpData, static_cast<qint64>(tmpData.size())));
+    m_dbFile.close();
+    Tools::wait(1500);
+
+    m_db = m_dbWidget->database();
+
+    // the General group contains one entry from the new db data
+    QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 1);
+    QVERIFY(! m_tabWidget->tabText(m_tabWidget->currentIndex()).endsWith("*"));
+
+    // Reset the state
+    cleanup();
+    init();
+
+    // Test rejecting new file in autoreload
+    MessageBox::setNextAnswer(QMessageBox::No);
+    // Overwrite the current temp database with a new file
+    m_dbFile.open();
+    QVERIFY(m_dbFile.write(tmpData, static_cast<qint64>(tmpData.size())));
+    m_dbFile.close();
+    Tools::wait(1500);
+
+    m_db = m_dbWidget->database();
+
+    // Ensure the merge did not take place
+    QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 0);
+    QVERIFY(m_tabWidget->tabText(m_tabWidget->currentIndex()).endsWith("*"));
+
+    // Reset the state
+    cleanup();
+    init();
+
+     // Test accepting a merge of edits into autoreload
+    // Turn on autoload so we only get one messagebox (for the merge)
+    config()->set("AutoReloadOnChange", true);
+
+    // Modify some entries
+    testEditEntry();
+
+    // This is saying yes to merging the entries
+    MessageBox::setNextAnswer(QMessageBox::Yes);
+    // Overwrite the current database with the temp data
+    QVERIFY(m_dbFile.open());
+    QVERIFY(m_dbFile.write(tmpData, static_cast<qint64>(tmpData.size())));
+    m_dbFile.close();
+    Tools::wait(1500);
+
+    m_db = m_dbWidget->database();
+
+    QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 1);
+    QVERIFY(m_tabWidget->tabText(m_tabWidget->currentIndex()).endsWith("*"));
 }
 
 void TestGui::testTabs()
@@ -226,6 +295,80 @@ void TestGui::testAddEntry()
 
     // Confirm that 4 entries now exist
     QTRY_COMPARE(entryView->model()->rowCount(), 4);
+}
+
+void TestGui::testEntryEntropy()
+{
+    QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
+
+    // Find the new entry action
+    QAction* entryNewAction = m_mainWindow->findChild<QAction*>("actionEntryNew");
+    QVERIFY(entryNewAction->isEnabled());
+
+    // Find the button associated with the new entry action
+    QWidget* entryNewWidget = toolBar->widgetForAction(entryNewAction);
+    QVERIFY(entryNewWidget->isVisible());
+    QVERIFY(entryNewWidget->isEnabled());
+
+    // Click the new entry button and check that we enter edit mode
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+
+    // Add entry "test" and confirm added
+    EditEntryWidget* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+    QLineEdit* titleEdit = editEntryWidget->findChild<QLineEdit*>("titleEdit");
+    QTest::keyClicks(titleEdit, "test");
+
+    // Open the password generator
+    QToolButton* generatorButton = editEntryWidget->findChild<QToolButton*>("tooglePasswordGeneratorButton");
+    QTest::mouseClick(generatorButton, Qt::LeftButton);
+
+    // Type in some password
+    QLineEdit* editNewPassword = editEntryWidget->findChild<QLineEdit*>("editNewPassword");
+    QLabel* entropyLabel = editEntryWidget->findChild<QLabel*>("entropyLabel");
+    QLabel* strengthLabel = editEntryWidget->findChild<QLabel*>("strengthLabel");
+
+    editNewPassword->setText("");
+    QTest::keyClicks(editNewPassword, "hello");
+    QCOMPARE(entropyLabel->text(), QString("Entropy: 6.38 bit"));
+    QCOMPARE(strengthLabel->text(), QString("Password Quality: Poor"));
+
+    editNewPassword->setText("");
+    QTest::keyClicks(editNewPassword, "helloworld");
+    QCOMPARE(entropyLabel->text(), QString("Entropy: 13.10 bit"));
+    QCOMPARE(strengthLabel->text(), QString("Password Quality: Poor"));
+
+    editNewPassword->setText("");
+    QTest::keyClicks(editNewPassword, "password1");
+    QCOMPARE(entropyLabel->text(), QString("Entropy: 4.00 bit"));
+    QCOMPARE(strengthLabel->text(), QString("Password Quality: Poor"));
+
+    editNewPassword->setText("");
+    QTest::keyClicks(editNewPassword, "D0g..................");
+    QCOMPARE(entropyLabel->text(), QString("Entropy: 19.02 bit"));
+    QCOMPARE(strengthLabel->text(), QString("Password Quality: Poor"));
+
+    editNewPassword->setText("");
+    QTest::keyClicks(editNewPassword, "Tr0ub4dour&3");
+    QCOMPARE(entropyLabel->text(), QString("Entropy: 30.87 bit"));
+    QCOMPARE(strengthLabel->text(), QString("Password Quality: Poor"));
+
+    editNewPassword->setText("");
+    QTest::keyClicks(editNewPassword, "correcthorsebatterystaple");
+    QCOMPARE(entropyLabel->text(),  QString("Entropy: 47.98 bit"));
+    QCOMPARE(strengthLabel->text(), QString("Password Quality: Weak"));
+    
+    editNewPassword->setText("");
+    QTest::keyClicks(editNewPassword, "YQC3kbXbjC652dTDH");
+    QCOMPARE(entropyLabel->text(),  QString("Entropy: 96.07 bit"));
+    QCOMPARE(strengthLabel->text(), QString("Password Quality: Good"));
+    
+    editNewPassword->setText("");
+    QTest::keyClicks(editNewPassword, "Bs5ZFfthWzR8DGFEjaCM6bGqhmCT4km");
+    QCOMPARE(entropyLabel->text(),  QString("Entropy: 174.59 bit"));
+    QCOMPARE(strengthLabel->text(), QString("Password Quality: Excellent"));
+    
+    // We are done
 }
 
 void TestGui::testSearch()

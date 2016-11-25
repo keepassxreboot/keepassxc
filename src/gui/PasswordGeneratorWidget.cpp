@@ -34,18 +34,23 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
 
     m_ui->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
 
-    connect(m_ui->editNewPassword->lineEdit(), SIGNAL(textChanged(QString)), SLOT(updateApplyEnabled(QString)));
-    connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), m_ui->editNewPassword, SLOT(setEcho(bool)));
-    connect(m_ui->buttonApply, SIGNAL(clicked()), SLOT(emitNewPassword()));
-    connect(m_ui->buttonApply, SIGNAL(clicked()), SLOT(saveSettings()));
+    connect(m_ui->editNewPassword, SIGNAL(textChanged(QString)), SLOT(updateApplyEnabled(QString)));
+    connect(m_ui->editNewPassword, SIGNAL(textChanged(QString)), SLOT(updatePasswordStrength(QString)));
+    connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), SLOT(togglePasswordShown(bool)));
+    connect(m_ui->buttonApply, SIGNAL(clicked()), SLOT(applyPassword()));
+    connect(m_ui->buttonGenerate, SIGNAL(clicked()), SLOT(generatePassword()));
 
     connect(m_ui->sliderLength, SIGNAL(valueChanged(int)), SLOT(sliderMoved()));
     connect(m_ui->spinBoxLength, SIGNAL(valueChanged(int)), SLOT(spinBoxChanged()));
 
     connect(m_ui->optionButtons, SIGNAL(buttonClicked(int)), SLOT(updateGenerator()));
 
-    m_ui->editNewPassword->setGenerator(m_generator.data());
-
+    // set font size of password quality and entropy labels dynamically to 80% of the default font size
+    QFont defaultFont;
+    defaultFont.setPointSize(static_cast<int>(defaultFont.pointSize() * 0.8f));
+    m_ui->entropyLabel->setFont(defaultFont);
+    m_ui->strengthLabel->setFont(defaultFont);
+    
     loadSettings();
     reset();
 }
@@ -82,17 +87,28 @@ void PasswordGeneratorWidget::saveSettings()
 
 void PasswordGeneratorWidget::reset()
 {
-    m_ui->editNewPassword->lineEdit()->setText("");
-    m_ui->togglePasswordButton->setChecked(config()->get("security/passwordscleartext").toBool());
-
+    m_ui->editNewPassword->setText("");
+    setStandaloneMode(false);
+    togglePasswordShown(config()->get("security/passwordscleartext").toBool());
     updateGenerator();
+}
+
+void PasswordGeneratorWidget::setStandaloneMode(bool standalone)
+{
+    if (standalone) {
+        m_ui->buttonApply->setText(tr("Close"));
+        togglePasswordShown(true);
+    } else {
+        m_ui->buttonApply->setText(tr("Apply"));
+    }
 }
 
 void PasswordGeneratorWidget::regeneratePassword()
 {
     if (m_generator->isValid()) {
         QString password = m_generator->generatePassword();
-        m_ui->editNewPassword->setEditText(password);
+        m_ui->editNewPassword->setText(password);
+        updatePasswordStrength(password);
     }
 }
 
@@ -101,9 +117,30 @@ void PasswordGeneratorWidget::updateApplyEnabled(const QString& password)
     m_ui->buttonApply->setEnabled(!password.isEmpty());
 }
 
-void PasswordGeneratorWidget::emitNewPassword()
+void PasswordGeneratorWidget::updatePasswordStrength(const QString& password)
 {
-    Q_EMIT newPassword(m_ui->editNewPassword->lineEdit()->text());
+    double entropy = m_generator->calculateEntropy(password);
+    m_ui->entropyLabel->setText(tr("Entropy: %1 bit").arg(QString::number(entropy, 'f', 2)));
+
+    if (entropy > m_ui->entropyProgressBar->maximum()) {
+        entropy = m_ui->entropyProgressBar->maximum();
+    }
+    m_ui->entropyProgressBar->setValue(entropy);
+
+    colorStrengthIndicator(entropy);
+}
+
+void PasswordGeneratorWidget::generatePassword()
+{
+    QString password = m_generator->generatePassword();
+    m_ui->editNewPassword->setText(password);
+}
+
+void PasswordGeneratorWidget::applyPassword()
+{
+    saveSettings();
+    Q_EMIT appliedPassword(m_ui->editNewPassword->text());
+    Q_EMIT dialogTerminated();
 }
 
 void PasswordGeneratorWidget::sliderMoved()
@@ -131,6 +168,41 @@ void PasswordGeneratorWidget::spinBoxChanged()
     m_updatingSpinBox = false;
 
     updateGenerator();
+}
+
+void PasswordGeneratorWidget::togglePasswordShown(bool showing)
+{
+    m_ui->editNewPassword->setShowPassword(showing);
+    bool blockSignals = m_ui->togglePasswordButton->blockSignals(true);
+    m_ui->togglePasswordButton->setChecked(showing);
+    m_ui->togglePasswordButton->blockSignals(blockSignals);
+}
+
+void PasswordGeneratorWidget::colorStrengthIndicator(double entropy)
+{
+    // Take the existing stylesheet and convert the text and background color to arguments
+    QString style = m_ui->entropyProgressBar->styleSheet();
+    QRegularExpression re("(QProgressBar::chunk\\s*\\{.*?background-color:)[^;]+;",
+                          QRegularExpression::CaseInsensitiveOption |
+                          QRegularExpression::DotMatchesEverythingOption);
+    style.replace(re, "\\1 %1;");
+
+    // Set the color and background based on entropy
+    // colors are taking from the KDE breeze palette
+    // <https://community.kde.org/KDE_Visual_Design_Group/HIG/Color>
+    if (entropy < 35) {
+        m_ui->entropyProgressBar->setStyleSheet(style.arg("#c0392b"));
+        m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Poor")));
+    } else if (entropy >= 35 && entropy < 55) {
+        m_ui->entropyProgressBar->setStyleSheet(style.arg("#f39c1f"));
+        m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Weak")));
+    } else if (entropy >= 55 && entropy < 100) {
+        m_ui->entropyProgressBar->setStyleSheet(style.arg("#11d116"));
+        m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Good")));
+    } else {
+        m_ui->entropyProgressBar->setStyleSheet(style.arg("#27ae60"));
+        m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Excellent")));
+    }
 }
 
 PasswordGenerator::CharClasses PasswordGeneratorWidget::charClasses()

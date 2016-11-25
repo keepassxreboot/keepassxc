@@ -92,6 +92,7 @@ void Config::init(const QString& fileName)
     m_defaults.insert("RememberLastKeyFiles", true);
     m_defaults.insert("OpenPreviousDatabasesOnStartup", true);
     m_defaults.insert("AutoSaveAfterEveryChange", false);
+    m_defaults.insert("AutoReloadOnChange", true);
     m_defaults.insert("AutoSaveOnExit", false);
     m_defaults.insert("ShowToolbar", true);
     m_defaults.insert("MinimizeOnCopy", false);
@@ -102,6 +103,7 @@ void Config::init(const QString& fileName)
     m_defaults.insert("security/lockdatabaseidle", false);
     m_defaults.insert("security/lockdatabaseidlesec", 10);
     m_defaults.insert("security/lockdatabaseminimize", false);
+    m_defaults.insert("security/passwordsrepeat", false);
     m_defaults.insert("security/passwordscleartext", false);
     m_defaults.insert("security/autotypeask", true);
     m_defaults.insert("GUI/Language", "system");

@@ -20,6 +20,7 @@
 
 #include <QWidget>
 #include <QComboBox>
+#include <QLabel>
 
 #include "core/PasswordGenerator.h"
 
@@ -37,19 +38,25 @@ public:
     explicit PasswordGeneratorWidget(QWidget* parent = nullptr);
     ~PasswordGeneratorWidget();
     void loadSettings();
+    void saveSettings();
     void reset();
+    void setStandaloneMode(bool standalone);
     void regeneratePassword();
-
+    
 Q_SIGNALS:
-    void newPassword(const QString& password);
+    void appliedPassword(const QString& password);
+    void dialogTerminated();
 
 private Q_SLOTS:
+    void applyPassword();
+    void generatePassword();
     void updateApplyEnabled(const QString& password);
+    void updatePasswordStrength(const QString& password);
+    void togglePasswordShown(bool hidden);
 
-    void emitNewPassword();
-    void saveSettings();
     void sliderMoved();
     void spinBoxChanged();
+    void colorStrengthIndicator(double entropy);
 
     void updateGenerator();
 

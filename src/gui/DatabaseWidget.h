@@ -20,6 +20,8 @@
 
 #include <QScopedPointer>
 #include <QStackedWidget>
+#include <QFileSystemWatcher>
+#include <QTimer>
 
 #include "core/Uuid.h"
 
@@ -42,6 +44,7 @@ class QSplitter;
 class QLabel;
 class UnlockDatabaseWidget;
 class UnlockDatabaseDialog;
+class QFileSystemWatcher;
 
 class DatabaseWidget : public QStackedWidget
 {
@@ -89,13 +92,14 @@ public:
     EntryView* entryView();
     void showUnlockDialog();
     void closeUnlockDialog();
+    void ignoreNextAutoreload();
 
 Q_SIGNALS:
     void closeRequest();
     void currentModeChanged(DatabaseWidget::Mode mode);
     void groupChanged();
     void entrySelectionChanged();
-    void databaseChanged(Database* newDb);
+    void databaseChanged(Database* newDb, bool unsavedChanges);
     void databaseMerged(Database* mergedDb);
     void groupContextMenuRequested(const QPoint& globalPos);
     void entryContextMenuRequested(const QPoint& globalPos);
@@ -133,6 +137,8 @@ public Q_SLOTS:
     void switchToOpenMergeDatabase(const QString& fileName);
     void switchToOpenMergeDatabase(const QString& fileName, const QString& password, const QString& keyFile);
     void switchToImportKeepass1(const QString& fileName);
+    void databaseModified();
+    void databaseSaved();
     // Search related slots
     void search(const QString& searchtext);
     void setSearchCaseSensitive(bool state);
@@ -154,6 +160,9 @@ private Q_SLOTS:
     void unlockDatabase(bool accepted);
     void emitCurrentModeChanged();
     void clearLastGroup(Group* group);
+    // Database autoreload slots
+    void onWatchedFileChanged();
+    void reloadDatabaseFile();
 
 private:
     void setClipboardTextAndMinimize(const QString& text);
@@ -187,6 +196,13 @@ private:
     QString m_lastSearchText;
     bool m_searchCaseSensitive;
     bool m_searchCurrentGroup;
+
+    // Autoreload
+    QFileSystemWatcher m_fileWatcher;
+    QTimer m_fileWatchTimer;
+    bool m_ignoreNextAutoreload;
+    QTimer m_ignoreWatchTimer;
+    bool m_databaseModified;
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H
