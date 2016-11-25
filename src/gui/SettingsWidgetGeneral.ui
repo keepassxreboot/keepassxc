@@ -56,54 +56,54 @@
     </widget>
    </item>
    <item row="5" column="0">
+    <widget class="QCheckBox" name="autoReloadOnChangeCheckBox">
+     <property name="text">
+      <string>Automatically reload the database when modified externally</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
     <widget class="QCheckBox" name="minimizeOnCopyCheckBox">
      <property name="text">
       <string>Minimize when copying to clipboard</string>
      </property>
     </widget>
    </item>
-   <item row="6" column="0">
+   <item row="7" column="0">
     <widget class="QCheckBox" name="useGroupIconOnEntryCreationCheckBox">
      <property name="text">
       <string>Use group icon on entry creation</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="0">
+   <item row="8" column="0">
     <widget class="QLabel" name="autoTypeShortcutLabel">
      <property name="text">
       <string>Global Auto-Type shortcut</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="1">
+   <item row="8" column="1">
     <widget class="ShortcutWidget" name="autoTypeShortcutWidget"/>
    </item>
-   <item row="8" column="0">
+   <item row="9" column="0">
     <widget class="QCheckBox" name="autoTypeEntryTitleMatchCheckBox">
      <property name="text">
       <string>Use entry title to match windows for global auto-type</string>
      </property>
     </widget>
    </item>
-   <item row="9" column="0">
+   <item row="10" column="0">
     <widget class="QLabel" name="languageLabel">
      <property name="text">
       <string>Language</string>
      </property>
     </widget>
    </item>
-   <item row="9" column="1">
+   <item row="10" column="1">
     <widget class="QComboBox" name="languageComboBox"/>
    </item>
-   <item row="10" column="0">
-    <widget class="QCheckBox" name="systrayShowCheckBox">
-     <property name="text">
-      <string>Show a system tray icon</string>
-     </property>
-    </widget>
-   </item>
-   <item row="11" column="0">
+   <item row="12" column="0">
     <layout class="QHBoxLayout" name="systray1Layout">
      <property name="sizeConstraint">
       <enum>QLayout::SetMaximumSize</enum>
@@ -139,7 +139,7 @@
      </item>
     </layout>
    </item>
-   <item row="12" column="0">
+   <item row="13" column="0">
     <layout class="QHBoxLayout" name="systray2Layout">
      <property name="sizeConstraint">
       <enum>QLayout::SetMaximumSize</enum>
@@ -169,7 +169,7 @@
      </item>
     </layout>
    </item>
-   <item row="13" column="0">
+   <item row="14" column="0">
     <layout class="QHBoxLayout" name="systray3Layout">
      <property name="sizeConstraint">
       <enum>QLayout::SetMaximumSize</enum>
@@ -182,6 +182,13 @@
       </widget>
      </item>
     </layout>
+   </item>
+   <item row="11" column="0">
+    <widget class="QCheckBox" name="systrayShowCheckBox">
+     <property name="text">
+      <string>Show a system tray icon</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

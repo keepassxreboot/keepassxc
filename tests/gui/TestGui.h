@@ -39,6 +39,7 @@ private Q_SLOTS:
     void cleanupTestCase();
 
     void testMergeDatabase();
+    void testAutoreloadDatabase();
     void testTabs();
     void testEditEntry();
     void testAddEntry();
@@ -65,6 +66,7 @@ private:
     MainWindow* m_mainWindow;
     DatabaseTabWidget* m_tabWidget;
     DatabaseWidget* m_dbWidget;
+    QByteArray m_dbData;
     QTemporaryFile m_dbFile;
     QString m_dbFileName;
     Database* m_db;
