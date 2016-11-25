@@ -7,9 +7,15 @@ os:
   - linux
 #  - osx
 
+# Define clang compiler without any frills
 compiler:
-  - gcc
   - clang
+  
+# Define gcc compile with deploy option (only for master/develop merges)
+matrix:
+  include:
+    - compiler: gcc
+      env: DEPLOY=1
 
 git:
   depth: 3
@@ -28,11 +34,13 @@ before_script:
 
 script:
   - cmake -DCMAKE_BUILD_TYPE=Release -DWITH_GUI_TESTS=ON $CMAKE_ARGS ..
-  - make
+  - make -j2
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then make test ARGS+="-E testgui --output-on-failure"; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then xvfb-run -a --server-args="-screen 0 800x600x24" make test ARGS+="-R testgui --output-on-failure"; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then make test ARGS+="--output-on-failure"; fi
 
+# Generate snapcraft build when merging into master/develop branches
 after_success:
   - popd
-  - "[[ $TRAVIS_BRANCH =~ (master|develop) ]] && docker run -v $(pwd):/cwd snapcore/snapcraft sh -c 'cd /cwd && apt update && snapcraft'"
+  - "[[ $DEPLOY = 1 ]] && [[ $TRAVIS_BRANCH =~ (master|develop) ]] && [[ $TRAVIS_PULL_REQUEST = false ]] \
+    && docker run -v $(pwd):/cwd snapcore/snapcraft sh -c 'cd /cwd && apt update && snapcraft'"
