@@ -58,6 +58,12 @@ DatabaseOpenWidget::~DatabaseOpenWidget()
 {
 }
 
+void DatabaseOpenWidget::showEvent(QShowEvent* event)
+{
+    DialogyWidget::showEvent(event);
+    m_ui->editPassword->setFocus();
+}
+
 void DatabaseOpenWidget::load(const QString& filename)
 {
     m_filename = filename;

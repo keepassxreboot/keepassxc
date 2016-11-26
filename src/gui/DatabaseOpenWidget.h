@@ -45,6 +45,7 @@ Q_SIGNALS:
     void editFinished(bool accepted);
 
 protected:
+    void showEvent(QShowEvent* event) override;
     CompositeKey databaseKey();
 
 protected Q_SLOTS:
