@@ -333,15 +333,6 @@ void MainWindow::openDatabase(const QString& fileName, const QString& pw, const 
     m_ui->tabWidget->openDatabase(fileName, pw, keyFile);
 }
 
-void MainWindow::minimizeWindow()
-{
-    if (isTrayIconEnabled() && config()->get("GUI/MinimizeToTray").toBool()) {
-        hide();
-    } else {
-        setWindowState(Qt::WindowMinimized);
-    }
-}
-
 void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 {
     int currentIndex = m_ui->stackedWidget->currentIndex();
