@@ -17,6 +17,7 @@
 
 #include "CompositeKey.h"
 #include "CompositeKey_p.h"
+#include "ChallengeResponseKey.h"
 
 #include <QtConcurrent>
 #include <QElapsedTimer>
@@ -42,12 +43,14 @@ CompositeKey::~CompositeKey()
 void CompositeKey::clear()
 {
     qDeleteAll(m_keys);
+    qDeleteAll(m_challengeResponseKeys);
     m_keys.clear();
+    m_challengeResponseKeys.clear();
 }
 
 bool CompositeKey::isEmpty() const
 {
-    return m_keys.isEmpty();
+    return m_keys.isEmpty() && m_challengeResponseKeys.isEmpty();
 }
 
 CompositeKey* CompositeKey::clone() const
@@ -64,8 +67,12 @@ CompositeKey& CompositeKey::operator=(const CompositeKey& key)
 
     clear();
 
-    for (const Key* subKey : asConst(key.m_keys)) {
+    Q_FOREACH (const Key* subKey, key.m_keys) {
         addKey(*subKey);
+    }
+
+    Q_FOREACH (const ChallengeResponseKey* subKey, key.m_challengeResponseKeys) {
+        addChallengeResponseKey(*subKey);
     }
 
     return *this;
@@ -142,9 +149,39 @@ QByteArray CompositeKey::transformKeyRaw(const QByteArray& key, const QByteArray
     return result;
 }
 
+bool CompositeKey::challenge(const QByteArray& seed, QByteArray& result) const
+{
+    /* If no challenge response was requested, return nothing to
+     * maintain backwards compatability with regular databases.
+     */
+    if (m_challengeResponseKeys.length() == 0) {
+        result.clear();
+        return true;
+    }
+
+    CryptoHash cryptoHash(CryptoHash::Sha256);
+
+    Q_FOREACH (ChallengeResponseKey* key, m_challengeResponseKeys) {
+        /* If the device isn't present or fails, return an error */
+        if (key->challenge(seed) == false) {
+            return false;
+        }
+        cryptoHash.addData(key->rawKey());
+    }
+
+    result = cryptoHash.result();
+    return true;
+}
+
+
 void CompositeKey::addKey(const Key& key)
 {
     m_keys.append(key.clone());
+}
+
+void CompositeKey::addChallengeResponseKey(const ChallengeResponseKey& key)
+{
+    m_challengeResponseKeys.append(key.clone());
 }
 
 int CompositeKey::transformKeyBenchmark(int msec)
