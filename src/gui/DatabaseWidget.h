@@ -127,6 +127,7 @@ public Q_SLOTS:
     void openUrlForEntry(Entry* entry);
     void createGroup();
     void deleteGroup();
+    void onGroupChanged(Group* group);
     void switchToView(bool accepted);
     void switchToEntryEdit();
     void switchToGroupEdit();
@@ -142,7 +143,6 @@ public Q_SLOTS:
     // Search related slots
     void search(const QString& searchtext);
     void setSearchCaseSensitive(bool state);
-    void setSearchCurrentGroup(bool state);
     void endSearch();
 
 private Q_SLOTS:
@@ -159,7 +159,6 @@ private Q_SLOTS:
     void mergeDatabase(bool accepted);
     void unlockDatabase(bool accepted);
     void emitCurrentModeChanged();
-    void clearLastGroup(Group* group);
     // Database autoreload slots
     void onWatchedFileChanged();
     void reloadDatabaseFile();
@@ -188,14 +187,12 @@ private:
     Group* m_newGroup;
     Entry* m_newEntry;
     Group* m_newParent;
-    Group* m_lastGroup;
     QString m_filename;
     Uuid m_groupBeforeLock;
 
     // Search state
     QString m_lastSearchText;
     bool m_searchCaseSensitive;
-    bool m_searchCurrentGroup;
 
     // Autoreload
     QFileSystemWatcher m_fileWatcher;
