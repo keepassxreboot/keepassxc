@@ -59,10 +59,8 @@ SearchWidget::SearchWidget(QWidget *parent)
 
     QMenu *searchMenu = new QMenu();
     m_actionCaseSensitive = searchMenu->addAction(tr("Case Sensitive"), this, SLOT(updateCaseSensitive()));
+    m_actionCaseSensitive->setObjectName("actionSearchCaseSensitive");
     m_actionCaseSensitive->setCheckable(true);
-
-    m_actionGroupSearch = searchMenu->addAction(tr("Search Current Group"), this, SLOT(updateGroupSearch()));
-    m_actionGroupSearch->setCheckable(true);
 
     m_ui->searchIcon->setIcon(filePath()->icon("actions", "system-search"));
     m_ui->searchIcon->setMenu(searchMenu);
@@ -77,9 +75,7 @@ SearchWidget::~SearchWidget()
 void SearchWidget::connectSignals(SignalMultiplexer& mx)
 {
     mx.connect(this, SIGNAL(search(QString)), SLOT(search(QString)));
-    mx.connect(this, SIGNAL(setCaseSensitive(bool)), SLOT(setSearchCaseSensitive(bool)));
-    mx.connect(this, SIGNAL(setGroupSearch(bool)), SLOT(setSearchCurrentGroup(bool)));
-    mx.connect(SIGNAL(groupChanged()), m_ui->searchEdit, SLOT(clear()));
+    mx.connect(this, SIGNAL(caseSensitiveChanged(bool)), SLOT(setSearchCaseSensitive(bool)));
 }
 
 void SearchWidget::databaseChanged(DatabaseWidget *dbWidget)
@@ -89,8 +85,7 @@ void SearchWidget::databaseChanged(DatabaseWidget *dbWidget)
         m_ui->searchEdit->setText(dbWidget->getCurrentSearch());
 
         // Enforce search policy
-        emit setCaseSensitive(m_actionCaseSensitive->isChecked());
-        emit setGroupSearch(m_actionGroupSearch->isChecked());
+        emit caseSensitiveChanged(m_actionCaseSensitive->isChecked());
     } else {
         m_ui->searchEdit->clear();
     }
@@ -115,10 +110,11 @@ void SearchWidget::startSearch()
 
 void SearchWidget::updateCaseSensitive()
 {
-    emit setCaseSensitive(m_actionCaseSensitive->isChecked());
+    emit caseSensitiveChanged(m_actionCaseSensitive->isChecked());
 }
 
-void SearchWidget::updateGroupSearch()
+void SearchWidget::setCaseSensitive(bool state)
 {
-    emit setGroupSearch(m_actionGroupSearch->isChecked());
+    m_actionCaseSensitive->setChecked(state);
+    updateCaseSensitive();
 }

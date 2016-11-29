@@ -46,6 +46,7 @@
 #include "gui/FileDialog.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
+#include "gui/SearchWidget.h"
 #include "gui/entry/EditEntryWidget.h"
 #include "gui/entry/EntryView.h"
 #include "gui/group/GroupModel.h"
@@ -378,36 +379,50 @@ void TestGui::testSearch()
 
     QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
 
-    QWidget* searchActionWidget = toolBar->findChild<QWidget*>("SearchWidget");
-    QVERIFY(searchActionWidget->isEnabled());
-    QLineEdit* searchEdit = searchActionWidget->findChild<QLineEdit*>("searchEdit");
+    SearchWidget* searchWidget = toolBar->findChild<SearchWidget*>("SearchWidget");
+    QVERIFY(searchWidget->isEnabled());
+    QLineEdit* searchTextEdit = searchWidget->findChild<QLineEdit*>("searchEdit");
 
     EntryView* entryView = m_dbWidget->findChild<EntryView*>("entryView");
     QVERIFY(entryView->isVisible());
 
     // Enter search
-    QTest::mouseClick(searchEdit, Qt::LeftButton);
-    QTRY_VERIFY(searchEdit->hasFocus());
+    QTest::mouseClick(searchTextEdit, Qt::LeftButton);
+    QTRY_VERIFY(searchTextEdit->hasFocus());
     // Search for "ZZZ"
-    QTest::keyClicks(searchEdit, "ZZZ");
-    QTRY_COMPARE(searchEdit->text(), QString("ZZZ"));
+    QTest::keyClicks(searchTextEdit, "ZZZ");
+    QTRY_COMPARE(searchTextEdit->text(), QString("ZZZ"));
     QTRY_VERIFY(m_dbWidget->isInSearchMode());
     QTRY_COMPARE(entryView->model()->rowCount(), 0);
     // Escape clears searchedit and retains focus
-    QTest::keyClick(searchEdit, Qt::Key_Escape);
-    QTRY_VERIFY(searchEdit->text().isEmpty());
-    QTRY_VERIFY(searchEdit->hasFocus());
+    QTest::keyClick(searchTextEdit, Qt::Key_Escape);
+    QTRY_VERIFY(searchTextEdit->text().isEmpty());
+    QTRY_VERIFY(searchTextEdit->hasFocus());
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::ViewMode);
     // Search for "some"
-    QTest::keyClicks(searchEdit, "some");
+    QTest::keyClicks(searchTextEdit, "some");
     QTRY_VERIFY(m_dbWidget->isInSearchMode());
     QTRY_COMPARE(entryView->model()->rowCount(), 3);
-    // Press Down to focus on the entry view
-    QTest::keyClicks(searchEdit, "thing");
+    // Search for "someTHING"
+    QTest::keyClicks(searchTextEdit, "THING");
     QTRY_COMPARE(entryView->model()->rowCount(), 2);
-    //QVERIFY(!entryView->hasFocus());
-    //QTest::keyClick(searchEdit, Qt::Key_Down);
-    //QVERIFY(entryView->hasFocus());
+
+    // Test case sensitive search
+    searchWidget->setCaseSensitive(true);
+    QTRY_COMPARE(entryView->model()->rowCount(), 0);
+    searchWidget->setCaseSensitive(false);
+    QTRY_COMPARE(entryView->model()->rowCount(), 2);
+
+    // Test group search
+    GroupView* groupView = m_dbWidget->findChild<GroupView*>("groupView");
+    QCOMPARE(groupView->currentGroup(), m_db->rootGroup());
+    QModelIndex rootGroupIndex = groupView->model()->index(0, 0);
+    clickIndex(groupView->model()->index(0, 0, rootGroupIndex), groupView, Qt::LeftButton);
+    QCOMPARE(groupView->currentGroup()->name(), QString("General"));
+    QTRY_COMPARE(entryView->model()->rowCount(), 0);
+    // reset
+    clickIndex(rootGroupIndex, groupView, Qt::LeftButton);
+    QCOMPARE(groupView->currentGroup(), m_db->rootGroup());
 
     // Try to edit the first entry from the search view
     QModelIndex item = entryView->model()->index(0, 1);
@@ -435,12 +450,9 @@ void TestGui::testSearch()
     QCOMPARE(entry->title(), origTitle.append("_edited"));
 
     // Cancel search, should return to normal view
-    QTest::mouseClick(searchEdit, Qt::LeftButton);
-    QTest::keyClick(searchEdit, Qt::Key_Escape);
+    QTest::mouseClick(searchTextEdit, Qt::LeftButton);
+    QTest::keyClick(searchTextEdit, Qt::Key_Escape);
     QTRY_COMPARE(m_dbWidget->currentMode(), DatabaseWidget::ViewMode);
-    //QCOMPARE(entryView->model()->rowCount(), 4);
-
-    // TODO: add tests to confirm case sensitive and group search
 }
 
 void TestGui::testDeleteEntry()

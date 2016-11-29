@@ -48,11 +48,11 @@ public:
     ~SearchWidget();
 
     void connectSignals(SignalMultiplexer& mx);
+    void setCaseSensitive(bool state);
 
 signals:
     void search(const QString &text);
-    void setCaseSensitive(bool state);
-    void setGroupSearch(bool state);
+    void caseSensitiveChanged(bool state);
 
 public slots:
     void databaseChanged(DatabaseWidget* dbWidget);
@@ -61,7 +61,6 @@ private slots:
     void startSearchTimer();
     void startSearch();
     void updateCaseSensitive();
-    void updateGroupSearch();
 
 private:
     const QScopedPointer<Ui::SearchWidget> m_ui;
@@ -69,7 +68,6 @@ private:
     SearchEventFilter m_searchEventFilter;
 
     QAction *m_actionCaseSensitive;
-    QAction *m_actionGroupSearch;
 
     Q_DISABLE_COPY(SearchWidget)
 };

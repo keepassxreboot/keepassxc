@@ -142,9 +142,8 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
 
     connect(m_splitter, SIGNAL(splitterMoved(int,int)), SIGNAL(splitterSizesChanged()));
     connect(m_entryView->header(), SIGNAL(sectionResized(int,int,int)), SIGNAL(entryColumnSizesChanged()));
-    connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(clearLastGroup(Group*)));
+    connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(onGroupChanged(Group*)));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), SIGNAL(groupChanged()));
-    connect(m_groupView, SIGNAL(groupChanged(Group*)), m_entryView, SLOT(setGroup(Group*)));
     connect(m_entryView, SIGNAL(entryActivated(Entry*, EntryModel::ModelColumn)),
             SLOT(entryActivationSignalReceived(Entry*, EntryModel::ModelColumn)));
     connect(m_entryView, SIGNAL(entrySelectionChanged()), SIGNAL(entrySelectionChanged()));
@@ -171,7 +170,6 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_ignoreNextAutoreload = false;
 
     m_searchCaseSensitive = false;
-    m_searchCurrentGroup = false;
 
     setCurrentWidget(m_mainWidget);
 }
@@ -624,11 +622,7 @@ void DatabaseWidget::switchToEntryEdit(Entry* entry)
 
 void DatabaseWidget::switchToEntryEdit(Entry* entry, bool create)
 {
-    Group* group = m_groupView->currentGroup();
-    if (!group) {
-        Q_ASSERT(m_entryView->inEntryListMode());
-        group = m_lastGroup;
-    }
+    Group* group = currentGroup();
     Q_ASSERT(group);
 
     m_editEntryWidget->loadEntry(entry, create, false, group->name(), m_db);
@@ -842,16 +836,9 @@ void DatabaseWidget::search(const QString& searchtext)
 
     Q_EMIT searchModeAboutToActivate();
 
-    if (!isInSearchMode())
-    {
-        m_lastGroup = m_groupView->currentGroup();
-        Q_ASSERT(m_lastGroup);
-    }
+    Qt::CaseSensitivity caseSensitive = m_searchCaseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive;
 
-    Group* searchGroup = m_searchCurrentGroup ? m_lastGroup : m_db->rootGroup();
-    Qt::CaseSensitivity sensitivity = m_searchCaseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive;
-
-    QList<Entry*> searchResult = EntrySearcher().search(searchtext, searchGroup, sensitivity);
+    QList<Entry*> searchResult = EntrySearcher().search(searchtext, currentGroup(), caseSensitive);
 
     m_entryView->setEntryList(searchResult);
     m_lastSearchText = searchtext;
@@ -877,12 +864,13 @@ void DatabaseWidget::setSearchCaseSensitive(bool state)
         search(m_lastSearchText);
 }
 
-void DatabaseWidget::setSearchCurrentGroup(bool state)
+void DatabaseWidget::onGroupChanged(Group* group)
 {
-    m_searchCurrentGroup = state;
-
+    // Intercept group changes if in search mode
     if (isInSearchMode())
         search(m_lastSearchText);
+    else
+        m_entryView->setGroup(group);
 }
 
 QString DatabaseWidget::getCurrentSearch()
@@ -894,12 +882,10 @@ void DatabaseWidget::endSearch()
 {
     if (isInSearchMode())
     {
-        Q_ASSERT(m_lastGroup);
-
         Q_EMIT listModeAboutToActivate();
 
-        m_groupView->setCurrentGroup(m_lastGroup);
-        m_entryView->setGroup(m_lastGroup);
+        // Show the normal entry view of the current group
+        m_entryView->setGroup(currentGroup());
 
         Q_EMIT listModeActivated();
     }
@@ -938,15 +924,7 @@ bool DatabaseWidget::isInSearchMode() const
 
 Group* DatabaseWidget::currentGroup() const
 {
-    return isInSearchMode() ? m_lastGroup
-                            : m_groupView->currentGroup();
-}
-
-void DatabaseWidget::clearLastGroup(Group* group)
-{
-    if (group) {
-        m_lastGroup = nullptr;
-    }
+    return m_groupView->currentGroup();
 }
 
 void DatabaseWidget::lock()
