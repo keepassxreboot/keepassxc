@@ -40,6 +40,7 @@ set(keepassx_SOURCES
     autotype/test/AutoTypeTestInterface.h
     core/AutoTypeAssociations.cpp
     core/Config.cpp
+    core/CsvParser.cpp
     core/Database.cpp
     core/DatabaseIcons.cpp
     core/Endian.cpp
@@ -107,6 +108,9 @@ set(keepassx_SOURCES
     gui/UnlockDatabaseWidget.cpp
     gui/UnlockDatabaseDialog.cpp
     gui/WelcomeWidget.cpp
+    gui/csvImport/CsvImportWidget.cpp
+    gui/csvImport/CsvImportWizard.cpp
+    gui/csvImport/CsvParserModel.cpp
     gui/entry/AutoTypeAssociationsModel.cpp
     gui/entry/EditEntryWidget.cpp
     gui/entry/EditEntryWidget_p.h
@@ -145,6 +149,7 @@ set(keepassx_SOURCES_MAINEXE
 set(keepassx_FORMS
     gui/AboutDialog.ui
     gui/ChangeMasterKeyWidget.ui
+    gui/csvImport/CsvImportWidget.ui
     gui/DatabaseOpenWidget.ui
     gui/DatabaseSettingsWidget.ui
     gui/EditWidget.ui
