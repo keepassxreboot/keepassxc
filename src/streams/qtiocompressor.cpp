@@ -522,11 +522,11 @@ qint64 QtIOCompressor::readData(char *data, qint64 maxSize)
         // Read data if if the input buffer is empty. There could be data in the buffer
         // from a previous readData call.
         if (d->zlibStream.avail_in == 0) {
-            qint64 bytesAvalible = d->device->read(reinterpret_cast<char *>(d->buffer), d->bufferSize);
+            qint64 bytesAvailable = d->device->read(reinterpret_cast<char *>(d->buffer), d->bufferSize);
             d->zlibStream.next_in = d->buffer;
-            d->zlibStream.avail_in = bytesAvalible;
+            d->zlibStream.avail_in = bytesAvailable;
 
-            if (bytesAvalible == -1) {
+            if (bytesAvailable == -1) {
                 d->state = QtIOCompressorPrivate::Error;
                 setErrorString(QT_TRANSLATE_NOOP("QtIOCompressor", "Error reading data from underlying device: ") + d->device->errorString());
                 return -1;
@@ -534,9 +534,9 @@ qint64 QtIOCompressor::readData(char *data, qint64 maxSize)
 
             if (d->state != QtIOCompressorPrivate::InStream) {
                 // If we are not in a stream and get 0 bytes, we are probably trying to read from an empty device.
-                if(bytesAvalible == 0)
+                if(bytesAvailable == 0)
                     return 0;
-                else if (bytesAvalible > 0)
+                else if (bytesAvailable > 0)
                     d->state = QtIOCompressorPrivate::InStream;
             }
         }
