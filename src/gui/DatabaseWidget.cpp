@@ -333,8 +333,8 @@ void DatabaseWidget::deleteEntries()
         selectedEntries.append(m_entryView->entryFromIndex(index));
     }
 
-    bool inRecylceBin = Tools::hasChild(m_db->metadata()->recycleBin(), selectedEntries.first());
-    if (inRecylceBin || !m_db->metadata()->recycleBinEnabled()) {
+    bool inRecycleBin = Tools::hasChild(m_db->metadata()->recycleBin(), selectedEntries.first());
+    if (inRecycleBin || !m_db->metadata()->recycleBinEnabled()) {
         QMessageBox::StandardButton result;
 
         if (selected.size() == 1) {
@@ -525,10 +525,10 @@ void DatabaseWidget::deleteGroup()
         return;
     }
 
-    bool inRecylceBin = Tools::hasChild(m_db->metadata()->recycleBin(), currentGroup);
+    bool inRecycleBin = Tools::hasChild(m_db->metadata()->recycleBin(), currentGroup);
     bool isRecycleBin = (currentGroup == m_db->metadata()->recycleBin());
     bool isRecycleBinSubgroup = Tools::hasChild(currentGroup, m_db->metadata()->recycleBin());
-    if (inRecylceBin || isRecycleBin || isRecycleBinSubgroup || !m_db->metadata()->recycleBinEnabled()) {
+    if (inRecycleBin || isRecycleBin || isRecycleBinSubgroup || !m_db->metadata()->recycleBinEnabled()) {
         QMessageBox::StandardButton result = MessageBox::question(
             this, tr("Delete group?"),
             tr("Do you really want to delete the group \"%1\" for good?")
