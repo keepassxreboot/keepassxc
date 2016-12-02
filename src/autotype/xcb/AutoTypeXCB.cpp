@@ -247,7 +247,7 @@ int AutoTypePlatformX11::platformEventFilter(void* event)
 
 AutoTypeExecutor* AutoTypePlatformX11::createExecutor()
 {
-    return new AutoTypeExecturorX11(this);
+    return new AutoTypeExecutorX11(this);
 }
 
 QString AutoTypePlatformX11::windowTitle(Window window, bool useBlacklist)
@@ -823,17 +823,17 @@ int AutoTypePlatformX11::MyErrorHandler(Display* my_dpy, XErrorEvent* event)
 }
 
 
-AutoTypeExecturorX11::AutoTypeExecturorX11(AutoTypePlatformX11* platform)
+AutoTypeExecutorX11::AutoTypeExecutorX11(AutoTypePlatformX11* platform)
     : m_platform(platform)
 {
 }
 
-void AutoTypeExecturorX11::execChar(AutoTypeChar* action)
+void AutoTypeExecutorX11::execChar(AutoTypeChar* action)
 {
     m_platform->SendKeyPressedEvent(m_platform->charToKeySym(action->character));
 }
 
-void AutoTypeExecturorX11::execKey(AutoTypeKey* action)
+void AutoTypeExecutorX11::execKey(AutoTypeKey* action)
 {
     m_platform->SendKeyPressedEvent(m_platform->keyToKeySym(action->key));
 }

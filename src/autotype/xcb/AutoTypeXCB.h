@@ -119,10 +119,10 @@ private:
     bool m_loaded;
 };
 
-class AutoTypeExecturorX11 : public AutoTypeExecutor
+class AutoTypeExecutorX11 : public AutoTypeExecutor
 {
 public:
-    explicit AutoTypeExecturorX11(AutoTypePlatformX11* platform);
+    explicit AutoTypeExecutorX11(AutoTypePlatformX11* platform);
 
     void execChar(AutoTypeChar* action) override;
     void execKey(AutoTypeKey* action) override;
