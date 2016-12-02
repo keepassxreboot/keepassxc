@@ -135,7 +135,7 @@ void QtIOCompressorPrivate::flushZlib(int flushMode)
         if (!writeBytes(buffer, outputSize))
             return;
 
-    // If the mode is Z_FNISH we must loop until we get Z_STREAM_END,
+    // If the mode is Z_FINISH we must loop until we get Z_STREAM_END,
     // else we loop as long as zlib is able to fill the output buffer.
     } while ((flushMode == Z_FINISH && status != Z_STREAM_END) || (flushMode != Z_FINISH && zlibStream.avail_out == 0));
 
