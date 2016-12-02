@@ -100,7 +100,7 @@ private:
     uint m_currentGlobalNativeModifiers;
     int m_modifierMask;
     static bool m_catchXErrors;
-    static bool m_xErrorOccured;
+    static bool m_xErrorOccurred;
     static int (*m_oldXErrorHandler)(Display*, XErrorEvent*);
 
     static const int m_unicodeToKeysymLen;
