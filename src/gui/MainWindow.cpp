@@ -22,6 +22,8 @@
 #include <QShortcut>
 #include <QTimer>
 
+#include "config-keepassx.h"
+
 #include "autotype/AutoType.h"
 #include "core/Config.h"
 #include "core/FilePath.h"
@@ -35,12 +37,16 @@
 #include "gui/MessageBox.h"
 #include "gui/SearchWidget.h"
 
+#ifdef WITH_XC_HTTP
 #include "http/Service.h"
 #include "http/HttpSettings.h"
 #include "http/OptionDialog.h"
+#endif
+
 #include "gui/SettingsWidget.h"
 #include "gui/PasswordGeneratorWidget.h"
 
+#ifdef WITH_XC_HTTP
 class HttpPlugin: public ISettingsPage
 {
     public:
@@ -72,6 +78,7 @@ class HttpPlugin: public ISettingsPage
     private:
         Service *m_service;
 };
+#endif
 
 const QString MainWindow::BaseWindowTitle = "KeePassXC";
 
@@ -92,7 +99,9 @@ MainWindow::MainWindow()
     m_countDefaultAttributes = m_ui->menuEntryCopyAttribute->actions().size();
 
     restoreGeometry(config()->get("GUI/MainWindowGeometry").toByteArray());
+    #ifdef WITH_XC_HTTP
     m_ui->settingsWidget->addSettingsPage(new HttpPlugin(m_ui->tabWidget));
+    #endif
 
     setWindowIcon(filePath()->applicationIcon());
     QAction* toggleViewAction = m_ui->toolBar->toggleViewAction();
@@ -449,7 +458,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
     m_ui->actionRepairDatabase->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
 
     m_ui->actionLockDatabases->setEnabled(m_ui->tabWidget->hasLockableDatabases());
-    
+
     if ((3 == currentIndex) != m_ui->actionPasswordGenerator->isChecked()) {
         bool blocked = m_ui->actionPasswordGenerator->blockSignals(true);
         m_ui->actionPasswordGenerator->toggle();
