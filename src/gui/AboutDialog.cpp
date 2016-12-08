@@ -56,6 +56,22 @@ AboutDialog::AboutDialog(QWidget* parent)
             .arg(Crypto::backendVersion());
     m_ui->label_libs->setText(libs);
 
+    QString extensions;
+#ifdef WITH_XC_HTTP
+    extensions += "- KeePassHTTP\n";
+#endif
+#ifdef WITH_XC_AUTOTYPE
+    extensions += "- Autotype\n";
+#endif
+#ifdef WITH_XC_YUBIKEY
+    extensions += "- Yubikey\n";
+#endif
+
+    if (extensions.isEmpty())
+        extensions = "None";
+
+    m_ui->label_features->setText(m_ui->label_features->text() + extensions);
+
     setAttribute(Qt::WA_DeleteOnClose);
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(close()));
 }
