@@ -210,6 +210,7 @@ target_link_libraries(${PROGNAME}
                       keepassx_core
                       zxcvbn
                       ${keepasshttp_LIB}
+                      ${autotype_LIB}
                       Qt5::Core
                       Qt5::Concurrent
                       Qt5::Widgets
