@@ -29,15 +29,6 @@ endif()
 configure_file(version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/version.h @ONLY)
 
 set(keepassx_SOURCES
-    autotype/AutoType.cpp
-    autotype/AutoTypeAction.cpp
-    autotype/AutoTypePlatformPlugin.h
-    autotype/AutoTypeSelectDialog.cpp
-    autotype/AutoTypeSelectView.cpp
-    autotype/ShortcutWidget.cpp
-    autotype/WildcardMatcher.cpp
-    autotype/WindowSelectComboBox.cpp
-    autotype/test/AutoTypeTestInterface.h
     core/AutoTypeAssociations.cpp
     core/Config.cpp
     core/Database.cpp
@@ -156,6 +147,7 @@ set(keepassx_FORMS
 )
 
 add_feature_info(KeePassHTTP WITH_XC_HTTP "KeePassHTTP support for ChromeIPass and PassIFox")
+add_feature_info(Autotype WITH_XC_AUTOTYPE "Auto-type passwords in Input fields")
 
 if(WITH_XC_HTTP)
   set(keepasshttp_SOURCES
@@ -177,6 +169,20 @@ if(WITH_XC_HTTP)
   qt5_wrap_ui(keepasshttp_SOURCES ${keepasshttp_FORMS})
 endif()
 
+set(autotype_SOURCES
+    core/Tools.cpp
+    autotype/AutoType.cpp
+    autotype/AutoTypeAction.cpp
+    autotype/AutoTypePlatformPlugin.h
+    autotype/AutoTypeSelectDialog.cpp
+    autotype/AutoTypeSelectView.cpp
+    autotype/ShortcutWidget.cpp
+    autotype/WildcardMatcher.cpp
+    autotype/WindowSelectComboBox.cpp
+    autotype/test/AutoTypeTestInterface.h
+)
+set(autotype_LIB autotype)
+
 if(MINGW)
   set(keepassx_SOURCES_MAINEXE
       ${keepassx_SOURCES_MAINEXE}
@@ -193,15 +199,19 @@ if(WITH_XC_HTTP)
   target_link_libraries(keepasshttp ${MHD_LIBRARIES} Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Network)
 endif()
 
+add_library(autotype STATIC ${autotype_SOURCES})
+target_link_libraries(autotype Qt5::Core Qt5::Widgets)
+
 add_library(keepassx_core STATIC ${keepassx_SOURCES})
 set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
-target_link_libraries(keepassx_core zxcvbn ${keepasshttp_LIB} Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Network)
+target_link_libraries(keepassx_core zxcvbn ${keepasshttp_LIB} ${autotype_LIB} Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Network)
 
 add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE ${keepassx_SOURCES_MAINEXE})
 target_link_libraries(${PROGNAME}
                       keepassx_core
                       zxcvbn
                       ${keepasshttp_LIB}
+                      ${autotype_LIB}
                       Qt5::Core
                       Qt5::Concurrent
                       Qt5::Widgets

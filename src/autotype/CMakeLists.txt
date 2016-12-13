@@ -1,5 +1,3 @@
-add_feature_info(Autotype WITH_XC_AUTOTYPE "Auto-type passwords in Input fields")
-
 if(WITH_XC_AUTOTYPE)
   if(UNIX AND NOT APPLE)
     find_package(X11)
