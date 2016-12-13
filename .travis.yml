@@ -10,7 +10,7 @@ os:
 # Define clang compiler without any frills
 compiler:
   - clang
-  
+
 # Define gcc compile with deploy option (only for master/develop merges)
 matrix:
   include:
@@ -33,7 +33,7 @@ before_script:
   - mkdir build && pushd build
 
 script:
-  - cmake -DCMAKE_BUILD_TYPE=Release -DWITH_GUI_TESTS=ON $CMAKE_ARGS ..
+  - cmake -DCMAKE_BUILD_TYPE=Release -DWITH_GUI_TESTS=ON -DWITH_XC_HTTP=ON -DWITH_XC_AUTOTYPE=ON -DWITH_XC_YUBIKEY=ON $CMAKE_ARGS ..
   - make -j2
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then make test ARGS+="-E testgui --output-on-failure"; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then xvfb-run -a --server-args="-screen 0 800x600x24" make test ARGS+="-R testgui --output-on-failure"; fi
