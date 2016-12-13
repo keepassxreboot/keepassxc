@@ -170,6 +170,7 @@ if(WITH_XC_HTTP)
 endif()
 
 set(autotype_SOURCES
+    core/Tools.cpp
     autotype/AutoType.cpp
     autotype/AutoTypeAction.cpp
     autotype/AutoTypePlatformPlugin.h
