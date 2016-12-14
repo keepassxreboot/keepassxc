@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -40,7 +40,6 @@
 #include "format/KeePass2Reader.h"
 #include "gui/ChangeMasterKeyWidget.h"
 #include "gui/Clipboard.h"
-#include "gui/csvImport/CsvImportWizard.h"
 #include "gui/DatabaseOpenWidget.h"
 #include "gui/DatabaseSettingsWidget.h"
 #include "gui/KeePass1OpenWidget.h"

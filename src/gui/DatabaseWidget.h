@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -26,9 +26,9 @@
 #include "core/Uuid.h"
 
 #include "gui/entry/EntryModel.h"
+#include "gui/csvImport/CsvImportWizard.h"
 
 class ChangeMasterKeyWidget;
-class CsvImportWizard;
 class DatabaseOpenWidget;
 class DatabaseSettingsWidget;
 class Database;

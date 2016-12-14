@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Copyright (C) 2016 Enrico Mariotti <enricomariotti@yahoo.it>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -42,29 +42,31 @@ public:
     void setTextQualifier(const QChar c);
     void setBackslashSyntax(bool set);
      int getFileSize() const;
+     int getCsvRows() const;
+     int getCsvCols() const;
     QString getStatus() const;
     const csvtable getCsvTable() const;
-    int getCsvRows() const;
-    int getCsvCols() const;
 
 protected:
     csvtable m_table;
 
 private:
-    QByteArray m_array;
-    QChar m_ch, m_comment;
-    QBuffer m_csv;
-    unsigned int m_currCol, m_currRow;
-    bool m_isBackslashSyntax;
-    bool m_isEof;
-    bool m_isFileLoaded;
-    bool m_isGood;
-    qint64 m_lastPos;
-    int m_maxCols;
-    QChar m_qualifier;
-    QChar m_separator;
-    QString m_statusMsg;
-    QTextStream m_ts;
+    QByteArray   m_array;
+    QBuffer      m_csv;
+    QChar        m_ch;
+    QChar        m_comment;
+    unsigned int m_currCol;
+    unsigned int m_currRow;
+    bool         m_isBackslashSyntax;
+    bool         m_isEof;
+    bool         m_isFileLoaded;
+    bool         m_isGood;
+    qint64       m_lastPos;
+    int          m_maxCols;
+    QChar        m_qualifier;
+    QChar        m_separator;
+    QString      m_statusMsg;
+    QTextStream  m_ts;
 
     void getChar(QChar &c);
     void ungetChar();

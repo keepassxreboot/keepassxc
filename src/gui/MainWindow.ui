@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
@@ -133,6 +132,7 @@
     <addaction name="actionChangeMasterKey"/>
     <addaction name="actionChangeDatabaseSettings"/>
     <addaction name="separator"/>
+    <addaction name="actionDatabaseMerge"/>
     <addaction name="menuImport"/>
     <addaction name="actionExportCsv"/>
     <addaction name="actionRepairDatabase"/>

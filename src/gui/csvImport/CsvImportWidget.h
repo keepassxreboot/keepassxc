@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Copyright (C) 2016 Enrico Mariotti <enricomariotti@yahoo.it>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -54,6 +54,7 @@ private Q_SLOTS:
     void comboChanged(int comboId);
     void skippedChanged(int rows);
     void writeDatabase();
+    void checkGroupNames();
     void reject();
 
 private:
@@ -64,15 +65,14 @@ private:
     QSignalMapper* m_comboMapper;
     QList<QComboBox*> m_combos;
     Database *m_db;
-    int m_lastParseColumns;
 
     KeePass2Writer m_writer;
     static const QStringList m_columnheader;
     void configParser();
     void updatePreview();
     void updateTableview();
-    Group* grp(QString label);
-    Group* hasChildren(Group* current, QString grpName);
+    Group* splitGroups(QString label);
+    Group* hasChildren(Group* current, QString groupName);
 };
 
 #endif // KEEPASSX_CSVIMPORTWIDGET_H

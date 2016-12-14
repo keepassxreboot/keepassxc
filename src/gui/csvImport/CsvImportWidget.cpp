@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Copyright (C) 2016 Enrico Mariotti <enricomariotti@yahoo.it>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -43,7 +43,6 @@ CsvImportWidget::CsvImportWidget(QWidget *parent)
     , m_parserModel(new CsvParserModel(this))
     , m_comboModel(new QStringListModel(this))
     , m_comboMapper(new QSignalMapper(this))
-    , m_lastParseColumns(-1)
 {
     m_ui->setupUi(this);
 
@@ -53,7 +52,7 @@ CsvImportWidget::CsvImportWidget(QWidget *parent)
     m_ui->labelHeadline->setFont(font);
 
     m_ui->comboBoxCodec->addItems(QStringList() <<"UTF-8" <<"Windows-1252" <<"UTF-16" <<"UTF-16LE");
-    m_ui->comboBoxFieldSeparator->addItems(QStringList() <<";" <<"," <<"-" <<":" <<".");
+    m_ui->comboBoxFieldSeparator->addItems(QStringList() <<"," <<";" <<"-" <<":" <<".");
     m_ui->comboBoxTextQualifier->addItems(QStringList() <<"\"" <<"'" <<":" <<"." <<"|");
     m_ui->comboBoxComment->addItems(QStringList() <<"#" <<";" <<":" <<"@");
 
@@ -166,9 +165,8 @@ void CsvImportWidget::load(const QString& filename, Database* const db) {
     m_parserModel->setFilename(filename);
     m_ui->labelFilename->setText(filename);
     Group* group = m_db->rootGroup();
-    group->setName(tr("Root"));
     group->setUuid(Uuid::random());
-    group->setNotes(tr("Imported from CSV\nOriginal data: ") + filename);
+    group->setNotes(tr("Imported from CSV file\nOriginal data: ") + filename);
 
     parse();
 }
@@ -183,16 +181,19 @@ void CsvImportWidget::parse() {
 }
 
 void CsvImportWidget::showReport() {
-    MessageBox::warning(this, tr("Syntax error"), tr("While parsing file...\n").append(m_parserModel->getStatus()), QMessageBox::Ok, QMessageBox::Ok);
+    MessageBox::warning(this, tr("Syntax error"), tr("While parsing file...\n")
+               .append(m_parserModel->getStatus()), QMessageBox::Ok, QMessageBox::Ok);
 }
 
 void CsvImportWidget::writeDatabase() {
+
+    checkGroupNames();
     for (int r=0; r<m_parserModel->rowCount(); r++) {
         //use the validity of second column as a GO/NOGO hint for all others fields
         if (m_parserModel->data(m_parserModel->index(r, 1)).isValid()) {
             Entry* entry = new Entry();
             entry->setUuid(Uuid::random());
-            entry->setGroup(grp(m_parserModel->data(m_parserModel->index(r, 0)).toString()));
+            entry->setGroup(splitGroups(m_parserModel->data(m_parserModel->index(r, 0)).toString()));
             entry->setTitle(    m_parserModel->data(m_parserModel->index(r, 1)).toString());
             entry->setUsername( m_parserModel->data(m_parserModel->index(r, 2)).toString());
             entry->setPassword( m_parserModel->data(m_parserModel->index(r, 3)).toString());
@@ -207,24 +208,63 @@ void CsvImportWidget::writeDatabase() {
     KeePass2Writer writer;
     writer.writeDatabase(&buffer, m_db);
     if (writer.hasError()) {
-        MessageBox::warning(this, tr("Error"), tr("CSV import: writer has errors:\n").append((writer.errorString())), QMessageBox::Ok, QMessageBox::Ok);
+        MessageBox::warning(this, tr("Error"), tr("CSV import: writer has errors:\n")
+                   .append((writer.errorString())), QMessageBox::Ok, QMessageBox::Ok);
     }
     Q_EMIT editFinished(true);
 }
 
 
-Group* CsvImportWidget::grp(QString label)  {
-    Group* root = m_db->rootGroup(), *current = root;
-    Group* neu = nullptr;
-    QStringList grpList = label.split("/",  QString::SkipEmptyParts);
+void CsvImportWidget::checkGroupNames() {
+    QString groupLabel;
+    QStringList groupList;
+    bool is_root  = false
+       , is_empty = false
+       , is_label = false;
+    for (int r=0; r<m_parserModel->rowCount(); r++) {
+        groupLabel = m_parserModel->data(m_parserModel->index(r, 0)).toString();
+        //check if group name is either "root", "" (empty) or some other label
+        groupList = groupLabel.split("/", QString::SkipEmptyParts);
+        if (not groupList.first().compare("Root", Qt::CaseSensitive))
+            is_root = true;
+        else if (not groupLabel.compare(""))
+            is_empty = true;
+        else
+            is_label = true;
+        groupList.clear();
+    }
 
-    Q_FOREACH (const QString& grpName, grpList) {
-        Group *children = hasChildren(current, grpName);
+    if ((not is_label and (is_empty xor is_root))
+        or (is_label and not is_root)) {
+        m_db->rootGroup()->setName("Root");
+    }
+    else if ((is_empty and is_root)
+             or (is_label and not is_empty and is_root)) {
+        m_db->rootGroup()->setName("CSV IMPORTED");
+    }
+    else {
+        //SHOULD NEVER GET HERE
+        m_db->rootGroup()->setName("ROOT_FALLBACK");
+    }
+}
+
+Group *CsvImportWidget::splitGroups(QString label) {
+    //extract group names from nested path provided in "label"
+    Group *current = m_db->rootGroup();
+    QStringList groupList = label.split("/", QString::SkipEmptyParts);
+
+    //skip the creation of a subgroup of Root with the same name
+    if (m_db->rootGroup()->name() == "Root" && groupList.first() == "Root") {
+        groupList.removeFirst();
+    }
+
+    for (const QString& groupName : groupList) {
+        Group *children = hasChildren(current, groupName);
         if (children == nullptr) {
-            neu = new Group();
-            neu->setParent(current);
-            neu->setName(grpName);
-            current = neu;
+            Group *brandNew = new Group();
+            brandNew->setParent(current);
+            brandNew->setName(groupName);
+            current = brandNew;
         }
         else {
             Q_ASSERT(children != nullptr);
@@ -234,11 +274,11 @@ Group* CsvImportWidget::grp(QString label)  {
     return current;
 }
 
-Group* CsvImportWidget::hasChildren(Group* current, QString grpName) {
-    //returns the group whose name is "grpName" and is child of "current" group
-    Q_FOREACH(Group* grp, current->children()) {
-        if (grp->name() == grpName) {
-            return grp;
+Group* CsvImportWidget::hasChildren(Group* current, QString groupName) {
+    //returns the group whose name is "groupName" and is child of "current" group
+    for (Group * group : current->children()) {
+        if (group->name() == groupName) {
+            return group;
         }
     }
     return nullptr;
