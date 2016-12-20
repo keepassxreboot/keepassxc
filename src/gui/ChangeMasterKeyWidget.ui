@@ -124,6 +124,31 @@
     </widget>
    </item>
    <item>
+    <widget class="QGroupBox" name="challengeResponseGroup">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="title">
+      <string>Challenge Response</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="1">
+       <widget class="QComboBox" name="challengeResponseCombo"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="challengeResponseLabel">
+        <property name="text">
+         <string>Challenge Response:</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
