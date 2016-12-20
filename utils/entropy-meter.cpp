@@ -13,7 +13,9 @@ See zxcvbn/zxcvbn.cpp for complete COPYRIGHT Notice
 
 /* For pre-compiled headers under windows */
 #ifdef _WIN32
+#ifndef __MINGW32__
 #include "stdafx.h"
+#endif
 #endif
 
 static void calculate(const char *pwd, int advanced)
