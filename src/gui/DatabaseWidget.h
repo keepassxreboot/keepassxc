@@ -116,6 +116,7 @@ public Q_SLOTS:
     void createEntry();
     void cloneEntry();
     void deleteEntries();
+    void setFocus();
     void copyTitle();
     void copyUsername();
     void copyPassword();
