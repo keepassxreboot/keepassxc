@@ -406,6 +406,13 @@ void TestGui::testSearch()
     // Search for "someTHING"
     QTest::keyClicks(searchTextEdit, "THING");
     QTRY_COMPARE(entryView->model()->rowCount(), 2);
+    // Press Down to focus on the entry view if at EOL
+    QTest::keyClick(searchTextEdit, Qt::Key_Left);
+    QTest::keyClick(searchTextEdit, Qt::Key_Down);
+    QTRY_VERIFY(searchTextEdit->hasFocus());
+    QTest::keyClick(searchTextEdit, Qt::Key_Down);
+    QTRY_VERIFY(entryView->hasFocus());
+    QTest::mouseClick(searchTextEdit, Qt::LeftButton);
 
     // Test case sensitive search
     searchWidget->setCaseSensitive(true);

@@ -24,7 +24,7 @@
 
 #include "core/FilePath.h"
 
-bool SearchEventFilter::eventFilter(QObject *obj, QEvent *event)
+bool SearchWidget::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::KeyPress) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
@@ -32,6 +32,25 @@ bool SearchEventFilter::eventFilter(QObject *obj, QEvent *event)
             emit escapePressed();
             return true;
         }
+        else if (keyEvent->matches(QKeySequence::Copy)) {
+			// If Control+C is pressed in the search edit when no
+			// text is selected, copy the password of the current
+			// entry.
+			if (!m_ui->searchEdit->hasSelectedText()) {
+				emit copyPressed();
+				return true;
+			}
+		}
+		else if (keyEvent->matches(QKeySequence::MoveToNextLine)) {
+			// If Down is pressed at EOL in the search edit, move
+			// the focus to the entry view.
+			QLineEdit* searchEdit = m_ui->searchEdit;
+			if (!searchEdit->hasSelectedText() &&
+				searchEdit->cursorPosition() == searchEdit->text().length()) {
+				emit downPressed();
+				return true;
+			}
+		}
     }
 
     return QObject::eventFilter(obj, event);
@@ -51,11 +70,13 @@ SearchWidget::SearchWidget(QWidget *parent)
     connect(m_ui->searchEdit, SIGNAL(returnPressed()), SLOT(startSearch()));
     connect(m_ui->searchIcon, SIGNAL(triggered(QAction*)), m_ui->searchEdit, SLOT(setFocus()));
     connect(m_searchTimer, SIGNAL(timeout()), this, SLOT(startSearch()));
-    connect(&m_searchEventFilter, SIGNAL(escapePressed()), m_ui->searchEdit, SLOT(clear()));
+    connect(this, SIGNAL(escapePressed()), m_ui->searchEdit, SLOT(clear()));
+    connect(this, SIGNAL(copyPressed()), SLOT(copyPassword()));
+    connect(this, SIGNAL(downPressed()), SLOT(setFocusToEntry()));
 
     new QShortcut(Qt::CTRL + Qt::Key_F, m_ui->searchEdit, SLOT(setFocus()), nullptr, Qt::ApplicationShortcut);
 
-    m_ui->searchEdit->installEventFilter(&m_searchEventFilter);
+    m_ui->searchEdit->installEventFilter(this);
 
     QMenu *searchMenu = new QMenu();
     m_actionCaseSensitive = searchMenu->addAction(tr("Case Sensitive"), this, SLOT(updateCaseSensitive()));
@@ -80,6 +101,8 @@ void SearchWidget::connectSignals(SignalMultiplexer& mx)
 
 void SearchWidget::databaseChanged(DatabaseWidget *dbWidget)
 {
+	m_dbWidget = dbWidget;
+
     if (dbWidget != nullptr) {
         // Set current search text from this database
         m_ui->searchEdit->setText(dbWidget->getCurrentSearch());
@@ -117,4 +140,16 @@ void SearchWidget::setCaseSensitive(bool state)
 {
     m_actionCaseSensitive->setChecked(state);
     updateCaseSensitive();
+}
+
+void SearchWidget::copyPassword()
+{
+	if (m_dbWidget)
+		m_dbWidget->copyPassword();
+}
+
+void SearchWidget::setFocusToEntry()
+{
+	if (m_dbWidget)
+		m_dbWidget->setFocus();
 }
