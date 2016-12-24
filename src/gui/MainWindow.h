@@ -23,6 +23,7 @@
 #include <QSystemTrayIcon>
 
 #include "core/SignalMultiplexer.h"
+#include "core/ScreenLockListener.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/Application.h"
 
@@ -91,6 +92,7 @@ private slots:
     void lockDatabasesAfterInactivity();
     void repairDatabase();
     void hideTabMessage();
+    void handleScreenLock();
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);
@@ -112,6 +114,7 @@ private:
     InactivityTimer* m_inactivityTimer;
     int m_countDefaultAttributes;
     QSystemTrayIcon* m_trayIcon;
+    ScreenLockListener* m_screenLockListener;
 
     Q_DISABLE_COPY(MainWindow)
 
