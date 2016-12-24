@@ -190,6 +190,13 @@
      </property>
     </widget>
    </item>
+   <item row="15" column="0">
+    <widget class="QCheckBox" name="autoCloseOnScreenLockCheckBox">
+     <property name="text">
+      <string>Close database when session is locked or lid is closed</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>

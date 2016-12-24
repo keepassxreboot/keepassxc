@@ -130,6 +130,8 @@ void SettingsWidget::loadSettings()
         }
     }
 
+    m_generalUi->autoCloseOnScreenLockCheckBox->setChecked(config()->get("AutoCloseOnScreenLock").toBool());
+
     m_secUi->clearClipboardCheckBox->setChecked(config()->get("security/clearclipboard").toBool());
     m_secUi->clearClipboardSpinBox->setValue(config()->get("security/clearclipboardtimeout").toInt());
 
@@ -164,6 +166,8 @@ void SettingsWidget::saveSettings()
     config()->set("AutoTypeEntryTitleMatch",
                   m_generalUi->autoTypeEntryTitleMatchCheckBox->isChecked());
     int currentLangIndex = m_generalUi->languageComboBox->currentIndex();
+    config()->set("AutoCloseOnScreenLock", m_generalUi->autoCloseOnScreenLockCheckBox->isChecked());
+
     config()->set("GUI/Language", m_generalUi->languageComboBox->itemData(currentLangIndex).toString());
 
     config()->set("GUI/ShowTrayIcon", m_generalUi->systrayShowCheckBox->isChecked());

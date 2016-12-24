@@ -55,6 +55,10 @@ set(keepassx_SOURCES
     core/Metadata.cpp
     core/PasswordGenerator.cpp
     core/SignalMultiplexer.cpp
+    core/ScreenLockListener.cpp
+    core/ScreenLockListener.h
+    core/ScreenLockListenerPrivate.h
+    core/ScreenLockListenerPrivate.cpp
     core/TimeDelta.cpp
     core/TimeInfo.cpp
     core/ToDbExporter.cpp
@@ -137,6 +141,24 @@ set(keepassx_SOURCES
     streams/StoreDataStream.cpp
     streams/SymmetricCipherStream.cpp
 )
+if(APPLE)
+    set(keepassx_SOURCES ${keepassx_SOURCES}
+        core/ScreenLockListenerMac.h
+        core/ScreenLockListenerMac.cpp
+        )
+endif()
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+    set(keepassx_SOURCES ${keepassx_SOURCES}
+        core/ScreenLockListenerDBus.h
+        core/ScreenLockListenerDBus.cpp
+        )
+endif()
+if(MINGW)
+    set(keepassx_SOURCES ${keepassx_SOURCES}
+        core/ScreenLockListenerWin.h
+        core/ScreenLockListenerWin.cpp
+        )
+endif()
 
 set(keepassx_SOURCES_MAINEXE
     main.cpp
@@ -180,6 +202,16 @@ target_link_libraries(zxcvbn)
 add_library(keepassx_core STATIC ${keepassx_SOURCES})
 set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
 target_link_libraries(keepassx_core zxcvbn Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Network)
+
+if(APPLE)
+    target_link_libraries(keepassx_core "-framework Foundation")
+endif()
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+    target_link_libraries(keepassx_core Qt5::DBus)
+endif()
+if(MINGW)
+    target_link_libraries(keepassx_core Wtsapi32.lib)
+endif()
 
 add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE ${keepassx_SOURCES_MAINEXE})
 target_link_libraries(${PROGNAME}

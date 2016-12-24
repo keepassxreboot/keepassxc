@@ -268,6 +268,9 @@ MainWindow::MainWindow()
 
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
 
+    m_screenLockListener = new ScreenLockListener(this);
+    connect(m_screenLockListener, SIGNAL(screenLocked()), SLOT(handleScreenLock()));
+
     updateTrayIcon();
 }
 
@@ -777,4 +780,11 @@ bool MainWindow::isTrayIconEnabled() const
     return config()->get("GUI/ShowTrayIcon").toBool()
             && QSystemTrayIcon::isSystemTrayAvailable();
 #endif
+}
+
+void MainWindow::handleScreenLock()
+{
+    if (config()->get("AutoCloseOnScreenLock").toBool()){
+        lockDatabasesAfterInactivity();
+    }
 }
