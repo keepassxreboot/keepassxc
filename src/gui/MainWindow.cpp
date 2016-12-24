@@ -329,6 +329,9 @@ MainWindow::MainWindow()
     connect(m_ui->tabWidget, SIGNAL(messageTab(QString,MessageWidget::MessageType)), this, SLOT(displayTabMessage(QString, MessageWidget::MessageType)));
     connect(m_ui->tabWidget, SIGNAL(messageDismissTab()), this, SLOT(hideTabMessage()));
 
+    m_screenLockListener = new ScreenLockListener(this);
+    connect(m_screenLockListener, SIGNAL(screenLocked()), SLOT(handleScreenLock()));
+
     updateTrayIcon();
 
     if (config()->hasAccessError()) {
@@ -958,4 +961,11 @@ void MainWindow::hideYubiKeyPopup()
 {
     hideGlobalMessage();
     setEnabled(true);
+}
+
+void MainWindow::handleScreenLock()
+{
+    if (config()->get("AutoCloseOnScreenLock").toBool()){
+        lockDatabasesAfterInactivity();
+    }
 }
