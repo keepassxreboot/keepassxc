@@ -169,6 +169,8 @@ if(WITH_XC_HTTP)
   qt5_wrap_ui(keepasshttp_SOURCES ${keepasshttp_FORMS})
 endif()
 
+add_subdirectory(autotype)
+
 set(autotype_SOURCES
     core/Tools.cpp
     autotype/AutoType.cpp
@@ -181,7 +183,6 @@ set(autotype_SOURCES
     autotype/WindowSelectComboBox.cpp
     autotype/test/AutoTypeTestInterface.h
 )
-set(autotype_LIB autotype)
 
 if(MINGW)
   set(keepassx_SOURCES_MAINEXE
@@ -202,6 +203,8 @@ endif()
 add_library(autotype STATIC ${autotype_SOURCES})
 target_link_libraries(autotype Qt5::Core Qt5::Widgets)
 
+set(autotype_LIB autotype)
+
 add_library(keepassx_core STATIC ${keepassx_SOURCES})
 set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
 target_link_libraries(keepassx_core zxcvbn ${keepasshttp_LIB} ${autotype_LIB} Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Network)
@@ -210,8 +213,6 @@ add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE ${keepassx_SOURCES_MAINEXE})
 target_link_libraries(${PROGNAME}
                       keepassx_core
                       zxcvbn
-                      ${keepasshttp_LIB}
-                      ${autotype_LIB}
                       Qt5::Core
                       Qt5::Concurrent
                       Qt5::Widgets
@@ -230,8 +231,6 @@ endif()
 install(TARGETS ${PROGNAME}
         BUNDLE DESTINATION . COMPONENT Runtime
         RUNTIME DESTINATION ${BIN_INSTALL_DIR} COMPONENT Runtime)
-
-add_subdirectory(autotype)
 
 if(APPLE)
   if(QT_MAC_USE_COCOA AND EXISTS "${QT_LIBRARY_DIR}/Resources/qt_menu.nib")
