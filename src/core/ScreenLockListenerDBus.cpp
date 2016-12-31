@@ -5,7 +5,7 @@
 #include <QDBusReply>
 
 ScreenLockListenerDBus::ScreenLockListenerDBus(QWidget *parent):
-    ScreenLockListenerMac(parent)
+    ScreenLockListenerPrivate(parent)
 {
     QDBusConnection sessionBus = QDBusConnection::sessionBus();
     QDBusConnection systemBus = QDBusConnection::systemBus();
