@@ -2,6 +2,7 @@
 #define SCREENLOCKLISTENERDBUS_H
 #include <QObject>
 #include <QWidget>
+#include "ScreenLockListenerPrivate.h"
 
 class ScreenLockListenerDBus : public ScreenLockListenerPrivate
 {
