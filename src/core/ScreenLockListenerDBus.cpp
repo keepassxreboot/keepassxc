@@ -32,18 +32,6 @@ ScreenLockListenerDBus::ScreenLockListenerDBus(QWidget *parent):
                 "Locked", // signal name
                 this, //receiver
                 SLOT(unityLocked()));
-
-    /* Currently unable to get the current user session from login1.Manager
-    QDBusInterface login1_manager_iface("org.freedesktop.login1", "/org/freedesktop/login1",
-                              "org.freedesktop.login1.Manager", systemBus);
-    if(login1_manager_iface.isValid()){
-        qint64 my_pid = QCoreApplication::applicationPid();
-        QDBusReply<QString> reply = login1_manager_iface.call("GetSessionByPID",static_cast<quint32>(my_pid));
-        if (reply.isValid()){
-            QString current_session = reply.value();
-        }
-    }
-    */
 }
 
 void ScreenLockListenerDBus::gnomeSessionStatusChanged(uint status)
