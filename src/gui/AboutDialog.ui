@@ -53,7 +53,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">&lt;a href=&quot;http://www.keepassx.org/&quot;&gt;http://www.keepassx.org/&lt;/a&gt;</string>
+      <string notr="true">&lt;a href=&quot;http://www.keepassxc.org/&quot;&gt;http://www.keepassxc.org/&lt;/a&gt;</string>
      </property>
      <property name="openExternalLinks">
       <bool>true</bool>
