@@ -965,7 +965,7 @@ void MainWindow::hideYubiKeyPopup()
 
 void MainWindow::handleScreenLock()
 {
-    if (config()->get("AutoCloseOnScreenLock").toBool()){
+    if (config()->get("security/lockdatabasescreenlock").toBool()){
         lockDatabasesAfterInactivity();
     }
 }
