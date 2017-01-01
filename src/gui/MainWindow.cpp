@@ -784,7 +784,7 @@ bool MainWindow::isTrayIconEnabled() const
 
 void MainWindow::handleScreenLock()
 {
-    if (config()->get("AutoCloseOnScreenLock").toBool()){
+    if (config()->get("security/lockdatabasescreenlock").toBool()){
         lockDatabasesAfterInactivity();
     }
 }

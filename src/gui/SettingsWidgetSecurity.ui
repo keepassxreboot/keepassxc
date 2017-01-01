@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>374</width>
-    <height>303</height>
+    <width>542</width>
+    <height>313</height>
    </rect>
   </property>
   <layout class="QFormLayout" name="formLayout">
@@ -64,24 +64,31 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
+   <item row="4" column="0">
     <widget class="QCheckBox" name="passwordCleartextCheckBox">
      <property name="text">
       <string>Show passwords in cleartext by default</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="0">
+   <item row="5" column="0">
     <widget class="QCheckBox" name="passwordRepeatCheckBox">
      <property name="text">
       <string>Don't require password repeat when it is visible</string>
      </property>
     </widget>
    </item>
-   <item row="5" column="0">
+   <item row="6" column="0">
     <widget class="QCheckBox" name="autoTypeAskCheckBox">
      <property name="text">
       <string>Always ask before performing auto-type</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QCheckBox" name="lockDatabaseOnScreenLockCheckBox">
+     <property name="text">
+      <string>Lock databases when session is locked or lid is closed</string>
      </property>
     </widget>
    </item>
