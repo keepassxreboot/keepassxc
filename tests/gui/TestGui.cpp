@@ -79,9 +79,10 @@ void TestGui::init()
     QCOMPARE(m_dbFile.write(m_dbData), static_cast<qint64>((m_dbData.size())));
     m_dbFile.close();
 
-    m_dbFileName = QFileInfo(m_dbFile).fileName();
+    m_dbFileName = m_dbFile.fileName();
+    m_dbFilePath = m_dbFile.filePath();
 
-    fileDialog()->setNextFileName(m_dbFile.fileName());
+    fileDialog()->setNextFileName(m_dbFilePath);
     triggerAction("actionDatabaseOpen");
 
     QWidget* databaseOpenWidget = m_mainWindow->findChild<QWidget*>("databaseOpenWidget");
@@ -586,7 +587,7 @@ void TestGui::testDragAndDropGroup()
 
 void TestGui::testSaveAs()
 {
-    QFileInfo fileInfo(m_dbFile.fileName());
+    QFileInfo fileInfo(m_dbFilePath);
     QDateTime lastModified = fileInfo.lastModified();
 
     m_db->metadata()->setName("SaveAs");
@@ -623,6 +624,7 @@ void TestGui::testSave()
 
 void TestGui::testDatabaseSettings()
 {
+    m_db->metadata()->setName("Save");
     triggerAction("actionChangeDatabaseSettings");
     QWidget* dbSettingsWidget = m_dbWidget->findChild<QWidget*>("databaseSettingsWidget");
     QSpinBox* transformRoundsSpinBox = dbSettingsWidget->findChild<QSpinBox*>("transformRoundsSpinBox");
@@ -688,7 +690,7 @@ void TestGui::cleanupTestCase()
 void TestGui::checkDatabase(QString dbFileName)
 {
     if (dbFileName.isEmpty())
-        dbFileName = m_dbFile.fileName();
+        dbFileName = m_dbFilePath;
 
     CompositeKey key;
     key.addKey(PasswordKey("a"));
