@@ -28,17 +28,6 @@ namespace Ui {
     class SearchWidget;
 }
 
-class SearchEventFilter : public QObject
-{
-    Q_OBJECT
-signals:
-    void escapePressed();
-
-protected:
-    virtual bool eventFilter(QObject *obj, QEvent *event) override;
-};
-
-
 class SearchWidget : public QWidget
 {
     Q_OBJECT
@@ -50,9 +39,15 @@ public:
     void connectSignals(SignalMultiplexer& mx);
     void setCaseSensitive(bool state);
 
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
+
 signals:
     void search(const QString &text);
     void caseSensitiveChanged(bool state);
+    void escapePressed();
+    void copyPressed();
+    void downPressed();
 
 public slots:
     void databaseChanged(DatabaseWidget* dbWidget);
@@ -65,8 +60,6 @@ private slots:
 private:
     const QScopedPointer<Ui::SearchWidget> m_ui;
     QTimer* m_searchTimer;
-    SearchEventFilter m_searchEventFilter;
-
     QAction *m_actionCaseSensitive;
 
     Q_DISABLE_COPY(SearchWidget)

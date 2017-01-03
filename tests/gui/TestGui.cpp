@@ -31,6 +31,8 @@
 #include <QToolButton>
 #include <QTimer>
 #include <QSignalSpy>
+#include <QClipboard>
+#include <QDebug>
 
 #include "config-keepassx-tests.h"
 #include "core/Config.h"
@@ -287,6 +289,10 @@ void TestGui::testAddEntry()
     // Add entry "something 2"
     QTest::mouseClick(entryNewWidget, Qt::LeftButton);
     QTest::keyClicks(titleEdit, "something 2");
+    QLineEdit* passwordEdit = editEntryWidget->findChild<QLineEdit*>("passwordEdit");
+    QLineEdit* passwordRepeatEdit = editEntryWidget->findChild<QLineEdit*>("passwordRepeatEdit");
+    QTest::keyClicks(passwordEdit, "something 2");
+    QTest::keyClicks(passwordRepeatEdit, "something 2");
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
 
     // Add entry "something 3"
@@ -358,17 +364,17 @@ void TestGui::testEntryEntropy()
     QTest::keyClicks(editNewPassword, "correcthorsebatterystaple");
     QCOMPARE(entropyLabel->text(),  QString("Entropy: 47.98 bit"));
     QCOMPARE(strengthLabel->text(), QString("Password Quality: Weak"));
-    
+
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "YQC3kbXbjC652dTDH");
     QCOMPARE(entropyLabel->text(),  QString("Entropy: 96.07 bit"));
     QCOMPARE(strengthLabel->text(), QString("Password Quality: Good"));
-    
+
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "Bs5ZFfthWzR8DGFEjaCM6bGqhmCT4km");
     QCOMPARE(entropyLabel->text(),  QString("Entropy: 174.59 bit"));
     QCOMPARE(strengthLabel->text(), QString("Password Quality: Excellent"));
-    
+
     // We are done
 }
 
@@ -406,6 +412,19 @@ void TestGui::testSearch()
     // Search for "someTHING"
     QTest::keyClicks(searchTextEdit, "THING");
     QTRY_COMPARE(entryView->model()->rowCount(), 2);
+    // Press Down to focus on the entry view if at EOL
+    QTest::keyClick(searchTextEdit, Qt::Key_Right, Qt::ControlModifier);
+    QTRY_VERIFY(searchTextEdit->hasFocus());
+    QTest::keyClick(searchTextEdit, Qt::Key_Down);
+    QTRY_VERIFY(entryView->hasFocus());
+    // Test clipboard
+    QClipboard *clipboard = QApplication::clipboard();
+    QTest::keyClick(entryView, Qt::Key_C, Qt::ControlModifier);
+    QModelIndex searchedItem = entryView->model()->index(0, 1);
+    Entry* searchedEntry = entryView->entryFromIndex(searchedItem);
+    QTRY_COMPARE(searchedEntry->password(), clipboard->text());
+    // Restore focus
+    QTest::mouseClick(searchTextEdit, Qt::LeftButton);
 
     // Test case sensitive search
     searchWidget->setCaseSensitive(true);
