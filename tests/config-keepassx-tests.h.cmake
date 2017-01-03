@@ -5,4 +5,8 @@
 
 #define KEEPASSX_TEST_DATA_DIR "${KEEPASSX_TEST_DATA_DIR}"
 
+#cmakedefine WITH_XC_HTTP
+#cmakedefine WITH_XC_AUTOTYPE
+#cmakedefine WITH_XC_YUBIKEY
+
 #endif // KEEPASSX_CONFIG_TESTS_H

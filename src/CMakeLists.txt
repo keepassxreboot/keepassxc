@@ -29,15 +29,6 @@ endif()
 configure_file(version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/version.h @ONLY)
 
 set(keepassx_SOURCES
-    autotype/AutoType.cpp
-    autotype/AutoTypeAction.cpp
-    autotype/AutoTypePlatformPlugin.h
-    autotype/AutoTypeSelectDialog.cpp
-    autotype/AutoTypeSelectView.cpp
-    autotype/ShortcutWidget.cpp
-    autotype/WildcardMatcher.cpp
-    autotype/WindowSelectComboBox.cpp
-    autotype/test/AutoTypeTestInterface.h
     core/AutoTypeAssociations.cpp
     core/Config.cpp
     core/Database.cpp
@@ -118,14 +109,6 @@ set(keepassx_SOURCES
     gui/group/EditGroupWidget.cpp
     gui/group/GroupModel.cpp
     gui/group/GroupView.cpp
-    http/AccessControlDialog.cpp
-    http/EntryConfig.cpp
-    http/HttpPasswordGeneratorWidget.cpp
-    http/HttpSettings.cpp
-    http/OptionDialog.cpp
-    http/Protocol.cpp
-    http/Server.cpp
-    http/Service.cpp
     keys/CompositeKey.cpp
     keys/CompositeKey_p.h
     keys/FileKey.cpp
@@ -161,9 +144,44 @@ set(keepassx_FORMS
     gui/entry/EditEntryWidgetHistory.ui
     gui/entry/EditEntryWidgetMain.ui
     gui/group/EditGroupWidgetMain.ui
-    http/AccessControlDialog.ui
-    http/HttpPasswordGeneratorWidget.ui
-    http/OptionDialog.ui
+)
+
+add_feature_info(KeePassHTTP WITH_XC_HTTP "KeePassHTTP support for ChromeIPass and PassIFox")
+add_feature_info(Autotype WITH_XC_AUTOTYPE "Auto-type passwords in Input fields")
+
+if(WITH_XC_HTTP)
+  set(keepasshttp_SOURCES
+      http/AccessControlDialog.cpp
+      http/EntryConfig.cpp
+      http/HttpPasswordGeneratorWidget.cpp
+      http/HttpSettings.cpp
+      http/OptionDialog.cpp
+      http/Protocol.cpp
+      http/Server.cpp
+      http/Service.cpp
+  )
+  set(keepasshttp_FORMS
+      http/AccessControlDialog.ui
+      http/HttpPasswordGeneratorWidget.ui
+      http/OptionDialog.ui
+  )
+  set(keepasshttp_LIB keepasshttp)
+  qt5_wrap_ui(keepasshttp_SOURCES ${keepasshttp_FORMS})
+endif()
+
+add_subdirectory(autotype)
+
+set(autotype_SOURCES
+    core/Tools.cpp
+    autotype/AutoType.cpp
+    autotype/AutoTypeAction.cpp
+    autotype/AutoTypePlatformPlugin.h
+    autotype/AutoTypeSelectDialog.cpp
+    autotype/AutoTypeSelectView.cpp
+    autotype/ShortcutWidget.cpp
+    autotype/WildcardMatcher.cpp
+    autotype/WindowSelectComboBox.cpp
+    autotype/test/AutoTypeTestInterface.h
 )
 
 if(MINGW)
@@ -177,15 +195,24 @@ qt5_wrap_ui(keepassx_SOURCES ${keepassx_FORMS})
 add_library(zxcvbn STATIC zxcvbn/zxcvbn.cpp)
 target_link_libraries(zxcvbn)
 
+if(WITH_XC_HTTP)
+  add_library(keepasshttp STATIC ${keepasshttp_SOURCES})
+  target_link_libraries(keepasshttp ${MHD_LIBRARIES} Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Network)
+endif()
+
+add_library(autotype STATIC ${autotype_SOURCES})
+target_link_libraries(autotype Qt5::Core Qt5::Widgets)
+
+set(autotype_LIB autotype)
+
 add_library(keepassx_core STATIC ${keepassx_SOURCES})
 set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
-target_link_libraries(keepassx_core zxcvbn Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Network)
+target_link_libraries(keepassx_core zxcvbn ${keepasshttp_LIB} ${autotype_LIB} Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Network)
 
 add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE ${keepassx_SOURCES_MAINEXE})
 target_link_libraries(${PROGNAME}
                       keepassx_core
                       zxcvbn
-                      ${MHD_LIBRARIES}
                       Qt5::Core
                       Qt5::Concurrent
                       Qt5::Widgets
@@ -204,8 +231,6 @@ endif()
 install(TARGETS ${PROGNAME}
         BUNDLE DESTINATION . COMPONENT Runtime
         RUNTIME DESTINATION ${BIN_INSTALL_DIR} COMPONENT Runtime)
-
-add_subdirectory(autotype)
 
 if(APPLE)
   if(QT_MAC_USE_COCOA AND EXISTS "${QT_LIBRARY_DIR}/Resources/qt_menu.nib")

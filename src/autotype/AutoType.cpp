@@ -20,6 +20,8 @@
 #include <QApplication>
 #include <QPluginLoader>
 
+#include "config-keepassx.h"
+
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/AutoTypeSelectDialog.h"
 #include "autotype/WildcardMatcher.h"
@@ -59,7 +61,9 @@ AutoType::AutoType(QObject* parent, bool test)
     QString pluginPath = filePath()->pluginPath(pluginName);
 
     if (!pluginPath.isEmpty()) {
+        #ifdef WITH_XC_AUTOTYPE
         loadPlugin(pluginPath);
+        #endif
     }
 
     connect(qApp, SIGNAL(aboutToQuit()), SLOT(unloadPlugin()));
