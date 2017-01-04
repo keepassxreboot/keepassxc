@@ -18,9 +18,10 @@
 #ifndef KEEPASSX_TESTGUI_H
 #define KEEPASSX_TESTGUI_H
 
+#include "TemporaryFile.h"
+
 #include <QAbstractItemModel>
 #include <QObject>
-#include <QTemporaryFile>
 
 class Database;
 class DatabaseTabWidget;
@@ -67,8 +68,9 @@ private:
     DatabaseTabWidget* m_tabWidget;
     DatabaseWidget* m_dbWidget;
     QByteArray m_dbData;
-    QTemporaryFile m_dbFile;
+    TemporaryFile m_dbFile;
     QString m_dbFileName;
+    QString m_dbFilePath;
     Database* m_db;
 };
 
