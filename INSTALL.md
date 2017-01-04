@@ -1,7 +1,7 @@
-Install KeePassXR
+Install KeePassXC
 =================
 
-This document will guide you across the steps to install KeePassXR.
+This document will guide you across the steps to install KeePassXC.
 You can visit the online version of this document a the following link
 
 https://github.com/keepassxreboot/keepassx/wiki/Install-Instruction-from-Source
@@ -39,7 +39,7 @@ Build Steps
 To compile from source, open a **Terminal (on Linux/MacOS)** or a **MSYS2-MinGW shell (on Windows)**<br/>
 **Note:** on Windows make sure you are using a **MINGW shell** by checking the label before the current path
 
-Navigate to the path you have downloaded KeePassXR and type these commands:
+Navigate to the path you have downloaded KeePassXC and type these commands:
 
 ```
 mkdir build
@@ -50,7 +50,7 @@ make
 
 **Note:** If you are on MacOS you must add this parameter to **Cmake**, with the Qt version you have installed<br/> `-DCMAKE_PREFIX_PATH=/usr/local/Cellar/qt5/5.6.2/lib/cmake/`
 
-You will have the compiled KeePassXR binary inside the `./build/src/` directory.
+You will have the compiled KeePassXC binary inside the `./build/src/` directory.
 
 Common cmake parameters
 ```
@@ -79,7 +79,7 @@ DESTDIR=X
 Packaging
 =========
 
-You can create a package to redistribute KeePassXR (zip, deb, rpm, dmg, etc..)
+You can create a package to redistribute KeePassXC (zip, deb, rpm, dmg, etc..)
 ```
 make package
 ```
