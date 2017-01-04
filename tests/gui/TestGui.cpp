@@ -424,7 +424,9 @@ void TestGui::testSearch()
     Entry* searchedEntry = entryView->entryFromIndex(searchedItem);
     QTRY_COMPARE(searchedEntry->password(), clipboard->text());
     // Restore focus
-    QTest::mouseClick(searchTextEdit, Qt::LeftButton);
+    QTest::keyClick(m_mainWindow, Qt::Key_F, Qt::ControlModifier);
+    QTRY_VERIFY(searchTextEdit->hasFocus());
+    QTRY_COMPARE(searchTextEdit->selectedText(), QString("someTHING"));
 
     // Test case sensitive search
     searchWidget->setCaseSensitive(true);
