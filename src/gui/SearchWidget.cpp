@@ -24,20 +24,6 @@
 
 #include "core/FilePath.h"
 
-bool SearchEventFilter::eventFilter(QObject *obj, QEvent *event)
-{
-    if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
-        if (keyEvent->key() == Qt::Key_Escape) {
-            emit escapePressed();
-            return true;
-        }
-    }
-
-    return QObject::eventFilter(obj, event);
-}
-
-
 SearchWidget::SearchWidget(QWidget *parent)
     : QWidget(parent)
     , m_ui(new Ui::SearchWidget())
@@ -51,11 +37,11 @@ SearchWidget::SearchWidget(QWidget *parent)
     connect(m_ui->searchEdit, SIGNAL(returnPressed()), SLOT(startSearch()));
     connect(m_ui->searchIcon, SIGNAL(triggered(QAction*)), m_ui->searchEdit, SLOT(setFocus()));
     connect(m_searchTimer, SIGNAL(timeout()), this, SLOT(startSearch()));
-    connect(&m_searchEventFilter, SIGNAL(escapePressed()), m_ui->searchEdit, SLOT(clear()));
+    connect(this, SIGNAL(escapePressed()), m_ui->searchEdit, SLOT(clear()));
 
     new QShortcut(Qt::CTRL + Qt::Key_F, m_ui->searchEdit, SLOT(setFocus()), nullptr, Qt::ApplicationShortcut);
 
-    m_ui->searchEdit->installEventFilter(&m_searchEventFilter);
+    m_ui->searchEdit->installEventFilter(this);
 
     QMenu *searchMenu = new QMenu();
     m_actionCaseSensitive = searchMenu->addAction(tr("Case Sensitive"), this, SLOT(updateCaseSensitive()));
@@ -72,10 +58,44 @@ SearchWidget::~SearchWidget()
 
 }
 
+bool SearchWidget::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+        if (keyEvent->key() == Qt::Key_Escape) {
+            emit escapePressed();
+            return true;
+        }
+        else if (keyEvent->matches(QKeySequence::Copy)) {
+            // If Control+C is pressed in the search edit when no
+            // text is selected, copy the password of the current
+            // entry.
+            if (!m_ui->searchEdit->hasSelectedText()) {
+                emit copyPressed();
+                return true;
+            }
+        }
+        else if (keyEvent->matches(QKeySequence::MoveToNextLine)) {
+            // If Down is pressed at EOL in the search edit, move
+            // the focus to the entry view.
+            QLineEdit* searchEdit = m_ui->searchEdit;
+            if (!searchEdit->hasSelectedText() &&
+                searchEdit->cursorPosition() == searchEdit->text().length()) {
+                emit downPressed();
+                return true;
+            }
+        }
+    }
+
+    return QObject::eventFilter(obj, event);
+}
+
 void SearchWidget::connectSignals(SignalMultiplexer& mx)
 {
     mx.connect(this, SIGNAL(search(QString)), SLOT(search(QString)));
     mx.connect(this, SIGNAL(caseSensitiveChanged(bool)), SLOT(setSearchCaseSensitive(bool)));
+    mx.connect(this, SIGNAL(copyPressed()), SLOT(copyPassword()));
+    mx.connect(this, SIGNAL(downPressed()), SLOT(setFocus()));
 }
 
 void SearchWidget::databaseChanged(DatabaseWidget *dbWidget)

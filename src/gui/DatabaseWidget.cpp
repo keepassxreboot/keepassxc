@@ -385,6 +385,11 @@ void DatabaseWidget::deleteEntries()
     }
 }
 
+void DatabaseWidget::setFocus()
+{
+	m_entryView->setFocus();
+}
+
 void DatabaseWidget::copyTitle()
 {
     Entry* currentEntry = m_entryView->currentEntry();

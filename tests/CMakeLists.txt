@@ -85,13 +85,14 @@ endmacro(add_unit_test)
 
 set(TEST_LIBRARIES
     keepassx_core
+    ${keepasshttp_LIB}
+    ${autotype_LIB}
     Qt5::Core
     Qt5::Concurrent
     Qt5::Widgets
     Qt5::Test
     ${GCRYPT_LIBRARIES}
     ${ZLIB_LIBRARIES}
-    ${MHD_LIBRARIES} 
 )
 
 set(testsupport_SOURCES modeltest.cpp FailDevice.cpp)
@@ -143,9 +144,11 @@ add_unit_test(NAME testkeepass1reader SOURCES TestKeePass1Reader.cpp
 add_unit_test(NAME testwildcardmatcher SOURCES TestWildcardMatcher.cpp
               LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testautotype SOURCES TestAutoType.cpp
+if(WITH_XC_AUTOTYPE)
+  add_unit_test(NAME testautotype SOURCES TestAutoType.cpp
               LIBS ${TEST_LIBRARIES})
-set_target_properties(testautotype PROPERTIES ENABLE_EXPORTS ON)
+  set_target_properties(testautotype PROPERTIES ENABLE_EXPORTS ON)
+endif()
 
 add_unit_test(NAME testentry SOURCES TestEntry.cpp
               LIBS ${TEST_LIBRARIES})

@@ -12,6 +12,10 @@
 #define KEEPASSX_PLUGIN_DIR "${PLUGIN_INSTALL_DIR}"
 #define KEEPASSX_DATA_DIR "${DATA_INSTALL_DIR}"
 
+#cmakedefine WITH_XC_HTTP
+#cmakedefine WITH_XC_AUTOTYPE
+#cmakedefine WITH_XC_YUBIKEY
+
 #cmakedefine HAVE_PR_SET_DUMPABLE 1
 #cmakedefine HAVE_RLIMIT_CORE 1
 #cmakedefine HAVE_PT_DENY_ATTACH 1
