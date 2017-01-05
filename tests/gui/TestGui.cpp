@@ -413,19 +413,26 @@ void TestGui::testSearch()
     // Search for "someTHING"
     QTest::keyClicks(searchTextEdit, "THING");
     QTRY_COMPARE(entryView->model()->rowCount(), 2);
-    // Press Down to focus on the entry view if at EOL
+    // Press Down to focus on the entry view
     QTest::keyClick(searchTextEdit, Qt::Key_Right, Qt::ControlModifier);
     QTRY_VERIFY(searchTextEdit->hasFocus());
     QTest::keyClick(searchTextEdit, Qt::Key_Down);
     QTRY_VERIFY(entryView->hasFocus());
-    // Test clipboard
+    // Restore focus and search text selection
+    QTest::keyClick(m_mainWindow, Qt::Key_F, Qt::ControlModifier);
+    QTRY_COMPARE(searchTextEdit->selectedText(), QString("someTHING"));
+    // Ensure Down focuses on entry view when search text is selected
+    QTest::keyClick(searchTextEdit, Qt::Key_Down);
+    QTRY_VERIFY(entryView->hasFocus());
+    // Refocus back to search edit
+    QTest::mouseClick(searchTextEdit, Qt::LeftButton);
+    QTRY_VERIFY(searchTextEdit->hasFocus());
+    // Test password copy
     QClipboard *clipboard = QApplication::clipboard();
-    QTest::keyClick(entryView, Qt::Key_C, Qt::ControlModifier);
+    QTest::keyClick(searchTextEdit, Qt::Key_C, Qt::ControlModifier);
     QModelIndex searchedItem = entryView->model()->index(0, 1);
     Entry* searchedEntry = entryView->entryFromIndex(searchedItem);
     QTRY_COMPARE(searchedEntry->password(), clipboard->text());
-    // Restore focus
-    QTest::mouseClick(searchTextEdit, Qt::LeftButton);
 
     // Test case sensitive search
     searchWidget->setCaseSensitive(true);
@@ -445,16 +452,14 @@ void TestGui::testSearch()
     QCOMPARE(groupView->currentGroup(), m_db->rootGroup());
 
     // Try to edit the first entry from the search view
+    // Refocus back to search edit
+    QTest::mouseClick(searchTextEdit, Qt::LeftButton);
+    QTRY_VERIFY(searchTextEdit->hasFocus());
+    QVERIFY(m_dbWidget->isInSearchMode());
+
     QModelIndex item = entryView->model()->index(0, 1);
     Entry* entry = entryView->entryFromIndex(item);
-    QVERIFY(m_dbWidget->isInSearchMode());
-    clickIndex(item, entryView, Qt::LeftButton);
-    QAction* entryEditAction = m_mainWindow->findChild<QAction*>("actionEntryEdit");
-    QVERIFY(entryEditAction->isEnabled());
-    QWidget* entryEditWidget = toolBar->widgetForAction(entryEditAction);
-    QVERIFY(entryEditWidget->isVisible());
-    QVERIFY(entryEditWidget->isEnabled());
-    QTest::mouseClick(entryEditWidget, Qt::LeftButton);
+    QTest::keyClick(searchTextEdit, Qt::Key_Return);
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
 
     // Perform the edit and save it
@@ -465,7 +470,7 @@ void TestGui::testSearch()
     QDialogButtonBox* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
 
-    // Confirm the edit was made and we are back in view mode
+    // Confirm the edit was made and we are back in search mode
     QTRY_VERIFY(m_dbWidget->isInSearchMode());
     QCOMPARE(entry->title(), origTitle.append("_edited"));
 

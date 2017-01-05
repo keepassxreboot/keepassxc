@@ -34,12 +34,11 @@ SearchWidget::SearchWidget(QWidget *parent)
     m_searchTimer->setSingleShot(true);
 
     connect(m_ui->searchEdit, SIGNAL(textChanged(QString)), SLOT(startSearchTimer()));
-    connect(m_ui->searchEdit, SIGNAL(returnPressed()), SLOT(startSearch()));
     connect(m_ui->searchIcon, SIGNAL(triggered(QAction*)), m_ui->searchEdit, SLOT(setFocus()));
     connect(m_searchTimer, SIGNAL(timeout()), this, SLOT(startSearch()));
     connect(this, SIGNAL(escapePressed()), m_ui->searchEdit, SLOT(clear()));
 
-    new QShortcut(Qt::CTRL + Qt::Key_F, m_ui->searchEdit, SLOT(setFocus()), nullptr, Qt::ApplicationShortcut);
+    new QShortcut(Qt::CTRL + Qt::Key_F, this, SLOT(searchFocus()), nullptr, Qt::ApplicationShortcut);
 
     m_ui->searchEdit->installEventFilter(this);
 
@@ -76,14 +75,9 @@ bool SearchWidget::eventFilter(QObject *obj, QEvent *event)
             }
         }
         else if (keyEvent->matches(QKeySequence::MoveToNextLine)) {
-            // If Down is pressed at EOL in the search edit, move
-            // the focus to the entry view.
-            QLineEdit* searchEdit = m_ui->searchEdit;
-            if (!searchEdit->hasSelectedText() &&
-                searchEdit->cursorPosition() == searchEdit->text().length()) {
-                emit downPressed();
-                return true;
-            }
+            // If Down is pressed move the focus to the entry view.
+            emit downPressed();
+            return true;
         }
     }
 
@@ -96,6 +90,7 @@ void SearchWidget::connectSignals(SignalMultiplexer& mx)
     mx.connect(this, SIGNAL(caseSensitiveChanged(bool)), SLOT(setSearchCaseSensitive(bool)));
     mx.connect(this, SIGNAL(copyPressed()), SLOT(copyPassword()));
     mx.connect(this, SIGNAL(downPressed()), SLOT(setFocus()));
+    mx.connect(m_ui->searchEdit, SIGNAL(returnPressed()), SLOT(switchToEntryEdit()));
 }
 
 void SearchWidget::databaseChanged(DatabaseWidget *dbWidget)
@@ -137,4 +132,10 @@ void SearchWidget::setCaseSensitive(bool state)
 {
     m_actionCaseSensitive->setChecked(state);
     updateCaseSensitive();
+}
+
+void SearchWidget::searchFocus()
+{
+    m_ui->searchEdit->setFocus();
+    m_ui->searchEdit->selectAll();
 }
