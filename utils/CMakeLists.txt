@@ -25,6 +25,16 @@ target_link_libraries(kdbx-extract
                       ${GCRYPT_LIBRARIES}
                       ${ZLIB_LIBRARIES})
 
+add_executable(merge-databases merge-databases.cpp)
+target_link_libraries(merge-databases
+                      keepassx_core
+                      ${MHD_LIBRARIES}
+                      Qt5::Core
+                      Qt5::Concurrent
+                      Qt5::Widgets
+                      ${GCRYPT_LIBRARIES}
+                      ${ZLIB_LIBRARIES})
+
 
 add_executable(entropy-meter entropy-meter.cpp)
 target_link_libraries(entropy-meter zxcvbn)

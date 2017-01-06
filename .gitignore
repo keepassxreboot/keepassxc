@@ -1,2 +1,4 @@
 CMakeLists.txt.*
 build*/
+*.swp
+cmake/
