@@ -17,21 +17,8 @@ This is a rebuild from [denk-mal's keepasshttp](https://github.com/denk-mal/keep
 
 ### Installation
 
-Right now KeePassXC does not have a precompiled executable or an installation package.<br/>
-So you must install it from its source code.
-
-**More detailed instructions are available in the INSTALL file or at the [Wiki page](https://github.com/keepassxreboot/keepassx/wiki/Install-Instruction-from-Source).**
-
-First you must download the KeePassXC source code as ZIP file or with Git.
-
-Generally you can build and install KeePassXC with the following commands from a Terminal in the KeePassXC folder
-```
-mkdir build
-cd build
-cmake -DWITH_TESTS=OFF ..
-make
-sudo make install
-```
+KeePassXC does not have a precompiled executable or an installation package yet.   
+See the [wiki](https://github.com/keepassxreboot/keepassx/wiki/Install-Instruction-from-Source) or the INSTALL.md file to install KeePassXC from its source code.
 
 
 ### Clone Repository
