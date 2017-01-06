@@ -20,8 +20,6 @@
 #include <QCoreApplication>
 #include <QFile>
 #include <QSaveFile>
-#include <QStringList>
-#include <QTextStream>
 
 #include "core/Database.h"
 #include "crypto/Crypto.h"
