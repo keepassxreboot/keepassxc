@@ -20,6 +20,8 @@
 #include <QCoreApplication>
 #include <QFile>
 #include <QSaveFile>
+#include <QStringList>
+#include <QTextStream>
 
 #include "core/Database.h"
 #include "crypto/Crypto.h"
@@ -28,6 +30,7 @@
 #include "keys/CompositeKey.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
+
 
 int main(int argc, char **argv)
 {
@@ -113,7 +116,7 @@ int main(int argc, char **argv)
         return 0;
     }
 
-    qInfo("Successfully merged the database files.\n");
+    qDebug("Successfully merged the database files.\n");
     return 1;
 
 }
