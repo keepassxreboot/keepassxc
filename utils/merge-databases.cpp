@@ -36,8 +36,8 @@ int main(int argc, char **argv)
 {
     QCoreApplication app(argc, argv);
 
-    if (app.arguments().size() != 4) {
-        qCritical("Usage: merge-databases <password/key file> <kdbx file1> <kdbx file2>");
+    if (app.arguments().size() != 3) {
+        qCritical("Usage: merge-databases <kdbx file1> <kdbx file2>");
         return 1;
     }
 
@@ -45,26 +45,30 @@ int main(int argc, char **argv)
         qFatal("Fatal error while testing the cryptographic functions:\n%s", qPrintable(Crypto::errorString()));
     }
 
+    static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
+    QString line = inputTextStream.readLine();
+
     CompositeKey key;
-    if (QFile::exists(app.arguments().at(1))) {
+    if (QFile::exists(line)) {
         FileKey fileKey;
-        fileKey.load(app.arguments().at(1));
+        fileKey.load(line);
         key.addKey(fileKey);
     }
     else {
         PasswordKey password;
-        password.setPassword(app.arguments().at(1));
+        password.setPassword(line);
         key.addKey(password);
     }
 
 
-    QFile dbFile1(app.arguments().at(2));
+    QString databaseFilename1 = app.arguments().at(1);
+    QFile dbFile1(databaseFilename1);
     if (!dbFile1.exists()) {
-        qCritical("File %s does not exist.", qPrintable(app.arguments().at(2)));
+        qCritical("File %s does not exist.", qPrintable(databaseFilename1));
         return 1;
     }
     if (!dbFile1.open(QIODevice::ReadOnly)) {
-        qCritical("Unable to open file %s.", qPrintable(app.arguments().at(2)));
+        qCritical("Unable to open file %s.", qPrintable(databaseFilename1));
         return 1;
     }
 
@@ -77,13 +81,14 @@ int main(int argc, char **argv)
     }
 
 
-    QFile dbFile2(app.arguments().at(3));
+    QString databaseFilename2 = app.arguments().at(2);
+    QFile dbFile2(databaseFilename2);
     if (!dbFile2.exists()) {
-        qCritical("File %s does not exist.", qPrintable(app.arguments().at(3)));
+        qCritical("File %s does not exist.", qPrintable(databaseFilename2));
         return 1;
     }
     if (!dbFile2.open(QIODevice::ReadOnly)) {
-        qCritical("Unable to open file %s.", qPrintable(app.arguments().at(3)));
+        qCritical("Unable to open file %s.", qPrintable(databaseFilename2));
         return 1;
     }
 
@@ -97,9 +102,9 @@ int main(int argc, char **argv)
 
     db1->merge(db2);
 
-    QSaveFile saveFile(app.arguments().at(2));
+    QSaveFile saveFile(databaseFilename1);
     if (!saveFile.open(QIODevice::WriteOnly)) {
-        qCritical("Unable to open file %s for writing.", qPrintable(app.arguments().at(2)));
+        qCritical("Unable to open file %s for writing.", qPrintable(databaseFilename1));
         return 1;
     }
 
