@@ -46,18 +46,31 @@ int main(int argc, char **argv)
     }
 
     static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
-    QString line = inputTextStream.readLine();
 
-    CompositeKey key;
-    if (QFile::exists(line)) {
+    QString line1 = inputTextStream.readLine();
+    CompositeKey key1;
+    if (QFile::exists(line1)) {
         FileKey fileKey;
-        fileKey.load(line);
-        key.addKey(fileKey);
+        fileKey.load(line1);
+        key1.addKey(fileKey);
     }
     else {
         PasswordKey password;
-        password.setPassword(line);
-        key.addKey(password);
+        password.setPassword(line1);
+        key1.addKey(password);
+    }
+
+    QString line2 = inputTextStream.readLine();
+    CompositeKey key2;
+    if (QFile::exists(line2)) {
+        FileKey fileKey;
+        fileKey.load(line2);
+        key2.addKey(fileKey);
+    }
+    else {
+        PasswordKey password;
+        password.setPassword(line2);
+        key2.addKey(password);
     }
 
 
@@ -73,7 +86,7 @@ int main(int argc, char **argv)
     }
 
     KeePass2Reader reader1;
-    Database* db1 = reader1.readDatabase(&dbFile1, key);
+    Database* db1 = reader1.readDatabase(&dbFile1, key1);
 
     if (reader1.hasError()) {
         qCritical("Error while parsing the database:\n%s\n", qPrintable(reader1.errorString()));
@@ -93,10 +106,10 @@ int main(int argc, char **argv)
     }
 
     KeePass2Reader reader2;
-    Database* db2 = reader2.readDatabase(&dbFile2, key);
+    Database* db2 = reader2.readDatabase(&dbFile2, key2);
 
-    if (reader1.hasError()) {
-        qCritical("Error while parsing the database:\n%s\n", qPrintable(reader1.errorString()));
+    if (reader2.hasError()) {
+        qCritical("Error while parsing the database:\n%s\n", qPrintable(reader2.errorString()));
         return 1;
     }
 
