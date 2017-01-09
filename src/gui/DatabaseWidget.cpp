@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -122,6 +122,8 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_editGroupWidget->setObjectName("editGroupWidget");
     m_changeMasterKeyWidget = new ChangeMasterKeyWidget();
     m_changeMasterKeyWidget->headlineLabel()->setText(tr("Change master key"));
+    m_csvImportWizard = new CsvImportWizard();
+    m_csvImportWizard->setObjectName("csvImportWizard");
     QFont headlineLabelFont = m_changeMasterKeyWidget->headlineLabel()->font();
     headlineLabelFont.setBold(true);
     headlineLabelFont.setPointSize(headlineLabelFont.pointSize() + 2);
@@ -145,6 +147,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     addWidget(m_databaseSettingsWidget);
     addWidget(m_historyEditEntryWidget);
     addWidget(m_databaseOpenWidget);
+    addWidget(m_csvImportWizard);
     addWidget(m_databaseOpenMergeWidget);
     addWidget(m_keepass1OpenWidget);
     addWidget(m_unlockDatabaseWidget);
@@ -165,6 +168,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_databaseOpenWidget, SIGNAL(editFinished(bool)), SLOT(openDatabase(bool)));
     connect(m_databaseOpenMergeWidget, SIGNAL(editFinished(bool)), SLOT(mergeDatabase(bool)));
     connect(m_keepass1OpenWidget, SIGNAL(editFinished(bool)), SLOT(openDatabase(bool)));
+    connect(m_csvImportWizard, SIGNAL(importFinished(bool)), SLOT(csvImportFinished(bool)));
     connect(m_unlockDatabaseWidget, SIGNAL(editFinished(bool)), SLOT(unlockDatabase(bool)));
 	connect(m_unlockDatabaseDialog, SIGNAL(unlockDone(bool)), SLOT(unlockDatabase(bool)));
     connect(&m_fileWatcher, SIGNAL(fileChanged(QString)), this, SLOT(onWatchedFileChanged()));
@@ -624,6 +628,16 @@ void DatabaseWidget::setCurrentWidget(QWidget* widget)
     adjustSize();
 }
 
+void DatabaseWidget::csvImportFinished(bool accepted)
+{
+    if (!accepted) {
+        Q_EMIT closeRequest();
+    }
+    else {
+        setCurrentWidget(m_mainWidget);
+    }
+}
+
 void DatabaseWidget::switchToView(bool accepted)
 {
     if (m_newGroup) {
@@ -844,11 +858,20 @@ void DatabaseWidget::switchToOpenDatabase(const QString& fileName, const QString
     m_databaseOpenWidget->enterKey(password, keyFile);
 }
 
+void DatabaseWidget::switchToImportCsv(const QString& fileName)
+{
+    updateFilename(fileName);
+    switchToMasterKeyChange();
+    m_csvImportWizard->load(fileName, m_db);
+    setCurrentWidget(m_csvImportWizard);
+}
+
 void DatabaseWidget::switchToOpenMergeDatabase(const QString& fileName)
 {
     m_databaseOpenMergeWidget->load(fileName);
     setCurrentWidget(m_databaseOpenMergeWidget);
 }
+
 
 void DatabaseWidget::switchToOpenMergeDatabase(const QString& fileName, const QString& password,
                                           const QString& keyFile)

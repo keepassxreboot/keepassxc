@@ -66,6 +66,7 @@ public:
 public Q_SLOTS:
     void newDatabase();
     void openDatabase();
+    void importCsv();
     void mergeDatabase();
     void importKeePass1Database();
     bool saveDatabase(int index = -1);
