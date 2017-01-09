@@ -70,7 +70,7 @@ CompositeKey& CompositeKey::operator=(const CompositeKey& key)
     for (const Key* subKey : asConst(key.m_keys)) {
         addKey(*subKey);
     }
-    Q_FOREACH (const ChallengeResponseKey* subKey, key.m_challengeResponseKeys) {
+    for (const ChallengeResponseKey* subKey : asConst(key.m_challengeResponseKeys)) {
         addChallengeResponseKey(*subKey);
     }
 
@@ -160,7 +160,7 @@ bool CompositeKey::challenge(const QByteArray& seed, QByteArray& result) const
 
     CryptoHash cryptoHash(CryptoHash::Sha256);
 
-    Q_FOREACH (ChallengeResponseKey* key, m_challengeResponseKeys) {
+    for (ChallengeResponseKey* key : m_challengeResponseKeys) {
         /* If the device isn't present or fails, return an error */
         if (key->challenge(seed) == false) {
             return false;
