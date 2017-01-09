@@ -116,6 +116,13 @@
       <string>&amp;Recent databases</string>
      </property>
     </widget>
+    <widget class="QMenu" name="menuImport">
+     <property name="title">
+      <string>Import</string>
+     </property>
+     <addaction name="actionImportKeePass1"/>
+     <addaction name="actionImportCsv"/>
+    </widget>
     <addaction name="actionDatabaseNew"/>
     <addaction name="actionDatabaseOpen"/>
     <addaction name="menuRecentDatabases"/>
@@ -127,7 +134,7 @@
     <addaction name="actionChangeDatabaseSettings"/>
     <addaction name="separator"/>
     <addaction name="actionDatabaseMerge"/>
-    <addaction name="actionImportKeePass1"/>
+    <addaction name="menuImport"/>
     <addaction name="actionExportCsv"/>
     <addaction name="actionRepairDatabase"/>
     <addaction name="separator"/>
@@ -333,11 +340,6 @@
     <string>Database settings</string>
    </property>
   </action>
-  <action name="actionImportKeePass1">
-   <property name="text">
-    <string>&amp;Import KeePass 1 database</string>
-   </property>
-  </action>
   <action name="actionEntryClone">
    <property name="enabled">
     <bool>false</bool>
@@ -443,6 +445,16 @@
    </property>
    <property name="text">
     <string>&amp;Export to CSV file</string>
+   </property>
+  </action>
+  <action name="actionImportKeePass1">
+   <property name="text">
+    <string>Import KeePass 1 database</string>
+   </property>
+  </action>
+  <action name="actionImportCsv">
+   <property name="text">
+    <string>Import CSV file</string>
    </property>
   </action>
   <action name="actionRepairDatabase">
