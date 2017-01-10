@@ -36,8 +36,9 @@ void AccessControlDialog::setUrl(const QString &url)
 
 void AccessControlDialog::setItems(const QList<Entry *> &items)
 {
-    Q_FOREACH (Entry * entry, items)
+    for (Entry * entry : items) {
         ui->itemsList->addItem(entry->title() + " - " + entry->username());
+    }
 }
 
 bool AccessControlDialog::remember() const

@@ -142,8 +142,9 @@ void SettingsWidget::loadSettings()
 
     m_secUi->autoTypeAskCheckBox->setChecked(config()->get("security/autotypeask").toBool());
 
-    Q_FOREACH (const ExtraPage& page, m_extraPages)
+    for (const ExtraPage& page : m_extraPages) {
         page.loadSettings();
+    }
 
     setCurrentRow(0);
 }
@@ -188,8 +189,9 @@ void SettingsWidget::saveSettings()
 
     config()->set("security/autotypeask", m_secUi->autoTypeAskCheckBox->isChecked());
 
-    Q_FOREACH (const ExtraPage& page, m_extraPages)
+    for (const ExtraPage& page : m_extraPages) {
         page.saveSettings();
+    }
 
     Q_EMIT editFinished(true);
 }
