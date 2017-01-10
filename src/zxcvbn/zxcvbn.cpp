@@ -1,4 +1,4 @@
-/**********************************************************************************
+﻿/**********************************************************************************
  * C implementation of the zxcvbn password strength estimation method.
  * Copyright (c) 2015, Tony Evans
  * All rights reserved.
@@ -228,12 +228,13 @@ static void AddMatchRepeats(ZxcMatch_t **Result, ZxcMatch_t *Match, const uint8_
 
     while(MaxLen >= (Len * RepeatCount))
     {
-        if (strncmp((const char *)Passwd, (const char *)Rpt, Len) == 0)
+        if (strncmp(reinterpret_cast<const char *>(Passwd),
+                    reinterpret_cast<const char *>(Rpt), Len) == 0)
         {
             /* Found a repeat */
             ZxcMatch_t *p = AllocMatch();
             p->Entrpy = Match->Entrpy + log(RepeatCount);
-            p->Type = (ZxcTypeMatch_t)(Match->Type + MULTIPLE_MATCH);
+            p->Type = static_cast<ZxcTypeMatch_t>(Match->Type + MULTIPLE_MATCH);
             p->Length = Len * RepeatCount;
             p->Begin = Match->Begin;
             AddResult(Result, p, MaxLen);
@@ -617,7 +618,7 @@ static void DictionaryEntropy(ZxcMatch_t *m, DictMatchInfo_t *Extra, const uint8
         e += d;
     }
     /* Add entropy due to word's rank */
-    e += log((double)Extra->Rank);
+    e += log(static_cast<double>(Extra->Rank));
     m->Entrpy = e;
 }
 
@@ -794,7 +795,7 @@ static void UserMatch(ZxcMatch_t **Result, const char *Words[], const uint8_t *P
         int Caps = 0;
         int Lowers = 0;
         int Leets = 0;
-        const uint8_t *Wrd = (const uint8_t *)(Words[Rank]);
+        const uint8_t *Wrd = reinterpret_cast<const uint8_t *>(Words[Rank]);
         const uint8_t *Pwd = Passwd;
         memset(Extra.Leeted, 0, sizeof Extra.Leeted);
         memset(Extra.UnLeet, 0, sizeof Extra.UnLeet);
@@ -1169,7 +1170,7 @@ static void SpatialMatch(ZxcMatch_t **Result, const uint8_t *Passwd, int Start, 
                 int i, j, s;
                 double Degree, Entropy;
                 ZxcMatch_t *p;
-                Degree = (k->NumNear-1) - (double)k->NumBlank / (double)k->NumKeys;
+                Degree = (k->NumNear-1) - static_cast<double>(k->NumBlank) / static_cast<double>(k->NumKeys);
                 s = k->NumKeys;
                 if (k->Shifts)
                     s *= 2;
@@ -1405,13 +1406,13 @@ static void RepeatMatch(ZxcMatch_t **Result, const uint8_t *Passwd, int Start, i
         int RepeatCount = 2;
         while(MaxLen >= (Len * RepeatCount))
         {
-            if (strncmp((const char *)Passwd, (const char *)Rpt, Len) == 0)
+            if (strncmp(reinterpret_cast<const char *>(Passwd), reinterpret_cast<const char *>(Rpt), Len) == 0)
             {
                 /* Found a repeat */
                 int c = Cardinality(Passwd, Len);
                 ZxcMatch_t *p = AllocMatch();
-                p->Entrpy = log((double)c) * Len + log(RepeatCount);
-                p->Type = (ZxcTypeMatch_t)(BRUTE_MATCH + MULTIPLE_MATCH);
+                p->Entrpy = log(static_cast<double>(c)) * Len + log(RepeatCount);
+                p->Type = static_cast<ZxcTypeMatch_t>(BRUTE_MATCH + MULTIPLE_MATCH);
                 p->Length = Len * RepeatCount;
                 p->Begin = Start;
                 AddResult(Result, p, MaxLen);
@@ -1527,7 +1528,7 @@ static void SequenceMatch(ZxcMatch_t **Result, const uint8_t *Passwd, int Start,
             p->Type = SEQUENCE_MATCH;
             p->Begin = Start;
             p->Length = i;
-            p->Entrpy = e + log((double)i);
+            p->Entrpy = e + log(static_cast<double>(i));
             AddMatchRepeats(Result, p, Pwd, MaxLen);
             AddResult(Result, p, MaxLen);
         }
@@ -1578,13 +1579,13 @@ double ZxcvbnMatch(const char *Pwd, const char *UserDict[], ZxcMatch_t **Info)
     Node_t *Np;
     double e;
     int Len = strlen(Pwd);
-    const uint8_t *Passwd = (const uint8_t *)Pwd;
+    const uint8_t *Passwd = reinterpret_cast<const uint8_t *>(Pwd);
     uint8_t *RevPwd;
     /* Create the paths */
     Node_t *Nodes = MallocFn(Node_t, Len+1);
     memset(Nodes, 0, (Len+1) * sizeof *Nodes);
     i = Cardinality(Passwd, Len);
-    e = log((double)i);
+    e = log(static_cast<double>(i));
 
     /* Do matching for all parts of the password */
     for(i = 0; i < Len; ++i)
