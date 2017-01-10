@@ -1,4 +1,4 @@
-#ifndef ZXCVBN_H_F98183CE2A01_INCLUDED
+﻿#ifndef ZXCVBN_H_F98183CE2A01_INCLUDED
 #define ZXCVBN_H_F98183CE2A01_INCLUDED
 /**********************************************************************************
  * C implementation of the zxcvbn password strength estimation method.
