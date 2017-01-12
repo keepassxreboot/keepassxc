@@ -25,8 +25,8 @@ target_link_libraries(kdbx-extract
                       ${GCRYPT_LIBRARIES}
                       ${ZLIB_LIBRARIES})
 
-add_executable(merge-databases merge-databases.cpp)
-target_link_libraries(merge-databases
+add_executable(kdbx-merge kdbx-merge.cpp)
+target_link_libraries(kdbx-merge
                       keepassx_core
                       ${MHD_LIBRARIES}
                       Qt5::Core
