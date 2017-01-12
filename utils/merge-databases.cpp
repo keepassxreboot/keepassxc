@@ -17,6 +17,7 @@
 
 #include <stdio.h>
 
+#include <QCommandLineParser>
 #include <QCoreApplication>
 #include <QFile>
 #include <QSaveFile>
@@ -31,13 +32,49 @@
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
+/*
+ * Read a key from a line of input.
+ * If the line references a valid file
+ * path, the key is loaded from file.
+ */
+CompositeKey readKeyFromLine(QString line)
+{
+
+  CompositeKey key;
+  if (QFile::exists(line)) {
+      FileKey fileKey;
+      fileKey.load(line);
+      key.addKey(fileKey);
+  }
+  else {
+      PasswordKey password;
+      password.setPassword(line);
+      key.addKey(password);
+  }
+  return key;
+
+}
 
 int main(int argc, char **argv)
 {
+
     QCoreApplication app(argc, argv);
 
-    if (app.arguments().size() != 3) {
-        qCritical("Usage: merge-databases <kdbx file1> <kdbx file2>");
+    QCommandLineParser parser;
+    parser.setApplicationDescription(QCoreApplication::translate("main", "Merge 2 KeePassXC database files."));
+    parser.addPositionalArgument("database1", QCoreApplication::translate("main", "path of the database to merge into."));
+    parser.addPositionalArgument("database2", QCoreApplication::translate("main", "path of the database to merge from."));
+
+    QCommandLineOption samePasswordOption(QStringList() << "s" << "same-password",
+                                          QCoreApplication::translate("main", "use the same password for both database files."));
+
+    parser.addHelpOption();
+    parser.addOption(samePasswordOption);
+    parser.process(app);
+
+    const QStringList args = parser.positionalArguments();
+    if (args.size() != 2) {
+        parser.showHelp();
         return 1;
     }
 
@@ -48,33 +85,19 @@ int main(int argc, char **argv)
     static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
 
     QString line1 = inputTextStream.readLine();
-    CompositeKey key1;
-    if (QFile::exists(line1)) {
-        FileKey fileKey;
-        fileKey.load(line1);
-        key1.addKey(fileKey);
-    }
-    else {
-        PasswordKey password;
-        password.setPassword(line1);
-        key1.addKey(password);
-    }
+    CompositeKey key1 = readKeyFromLine(line1);
 
-    QString line2 = inputTextStream.readLine();
     CompositeKey key2;
-    if (QFile::exists(line2)) {
-        FileKey fileKey;
-        fileKey.load(line2);
-        key2.addKey(fileKey);
+    if (parser.isSet("same-password")) {
+      key2 = *key1.clone();
     }
     else {
-        PasswordKey password;
-        password.setPassword(line2);
-        key2.addKey(password);
+      QString line2 = inputTextStream.readLine();
+      key2 = readKeyFromLine(line2);
     }
 
 
-    QString databaseFilename1 = app.arguments().at(1);
+    QString databaseFilename1 = args.at(0);
     QFile dbFile1(databaseFilename1);
     if (!dbFile1.exists()) {
         qCritical("File %s does not exist.", qPrintable(databaseFilename1));
@@ -94,7 +117,7 @@ int main(int argc, char **argv)
     }
 
 
-    QString databaseFilename2 = app.arguments().at(2);
+    QString databaseFilename2 = args.at(1);
     QFile dbFile2(databaseFilename2);
     if (!dbFile2.exists()) {
         qCritical("File %s does not exist.", qPrintable(databaseFilename2));
