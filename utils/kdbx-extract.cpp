@@ -17,6 +17,7 @@
 
 #include <stdio.h>
 
+#include <QCommandLineParser>
 #include <QCoreApplication>
 #include <QFile>
 #include <QStringList>
@@ -33,8 +34,16 @@ int main(int argc, char **argv)
 {
     QCoreApplication app(argc, argv);
 
-    if (app.arguments().size() != 2) {
-        qCritical("Usage: kdbx-extract <kdbx file>");
+    QCommandLineParser parser;
+    parser.setApplicationDescription(QCoreApplication::translate("main",
+                                                                 "Extract and print a KeePassXC database file."));
+    parser.addPositionalArgument("database", QCoreApplication::translate("main", "path of the database to extract."));
+    parser.addHelpOption();
+    parser.process(app);
+
+    const QStringList args = parser.positionalArguments();
+    if (args.size() != 1) {
+        parser.showHelp();
         return 1;
     }
 
@@ -46,13 +55,14 @@ int main(int argc, char **argv)
     QString line = inputTextStream.readLine();
     CompositeKey key = CompositeKey::readFromLine(line);
 
-    QFile dbFile(app.arguments().at(1));
+    QString databaseFilename = args.at(0);
+    QFile dbFile(databaseFilename);
     if (!dbFile.exists()) {
-        qCritical("File does not exist.");
+        qCritical("File %s does not exist.", qPrintable(databaseFilename));
         return 1;
     }
     if (!dbFile.open(QIODevice::ReadOnly)) {
-        qCritical("Unable to open file.");
+        qCritical("Unable to open file %s.", qPrintable(databaseFilename));
         return 1;
     }
 
