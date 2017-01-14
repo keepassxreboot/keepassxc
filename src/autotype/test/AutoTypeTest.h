@@ -69,10 +69,10 @@ private:
     QString m_actionChars;
 };
 
-class AutoTypeExecturorTest : public AutoTypeExecutor
+class AutoTypeExecutorTest : public AutoTypeExecutor
 {
 public:
-    explicit AutoTypeExecturorTest(AutoTypePlatformTest* platform);
+    explicit AutoTypeExecutorTest(AutoTypePlatformTest* platform);
 
     void execChar(AutoTypeChar* action) override;
     void execKey(AutoTypeKey* action) override;

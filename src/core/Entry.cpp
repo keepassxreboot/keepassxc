@@ -449,7 +449,7 @@ void Entry::truncateHistory()
     int histMaxSize = db->metadata()->historyMaxSize();
     if (histMaxSize > -1) {
         int size = 0;
-        QSet<QByteArray> foundAttachements = attachments()->values().toSet();
+        QSet<QByteArray> foundAttachments = attachments()->values().toSet();
 
         QMutableListIterator<Entry*> i(m_history);
         i.toBack();
@@ -460,11 +460,11 @@ void Entry::truncateHistory()
             if (size <= histMaxSize) {
                 size += historyItem->attributes()->attributesSize();
 
-                const QSet<QByteArray> newAttachments = historyItem->attachments()->values().toSet() - foundAttachements;
+                const QSet<QByteArray> newAttachments = historyItem->attachments()->values().toSet() - foundAttachments;
                 for (const QByteArray& attachment : newAttachments) {
                     size += attachment.size();
                 }
-                foundAttachements += newAttachments;
+                foundAttachments += newAttachments;
             }
 
             if (size > histMaxSize) {
