@@ -1033,13 +1033,13 @@ void DatabaseWidget::reloadDatabaseFile()
         else {
             MessageBox::critical(this, tr("Autoreload Failed"),
                                  tr("Could not parse or unlock the new database file while attempting"
-                                    "to autoreload this database."));
+                                    " to autoreload this database."));
         }
     }
     else {
         MessageBox::critical(this, tr("Autoreload Failed"),
                              tr("Could not open the new database file while attempting to autoreload"
-                                "this database."));
+                                " this database."));
     }
 
     // Rewatch the database file
