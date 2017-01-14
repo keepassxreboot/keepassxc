@@ -28,10 +28,7 @@ target_link_libraries(kdbx-extract
 add_executable(kdbx-merge kdbx-merge.cpp)
 target_link_libraries(kdbx-merge
                       keepassx_core
-                      ${MHD_LIBRARIES}
                       Qt5::Core
-                      Qt5::Concurrent
-                      Qt5::Widgets
                       ${GCRYPT_LIBRARIES}
                       ${ZLIB_LIBRARIES})
 
