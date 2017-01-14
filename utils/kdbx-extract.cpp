@@ -33,8 +33,8 @@ int main(int argc, char **argv)
 {
     QCoreApplication app(argc, argv);
 
-    if (app.arguments().size() != 3) {
-        qCritical("Usage: kdbx-extract <password/key file> <kdbx file>");
+    if (app.arguments().size() != 2) {
+        qCritical("Usage: kdbx-extract <kdbx file>");
         return 1;
     }
 
@@ -42,19 +42,11 @@ int main(int argc, char **argv)
         qFatal("Fatal error while testing the cryptographic functions:\n%s", qPrintable(Crypto::errorString()));
     }
 
-    CompositeKey key;
-    if (QFile::exists(app.arguments().at(1))) {
-        FileKey fileKey;
-        fileKey.load(app.arguments().at(1));
-        key.addKey(fileKey);
-    }
-    else {
-        PasswordKey password;
-        password.setPassword(app.arguments().at(1));
-        key.addKey(password);
-    }
+    static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
+    QString line = inputTextStream.readLine();
+    CompositeKey key = CompositeKey::readFromLine(line);
 
-    QFile dbFile(app.arguments().at(2));
+    QFile dbFile(app.arguments().at(1));
     if (!dbFile.exists()) {
         qCritical("File does not exist.");
         return 1;

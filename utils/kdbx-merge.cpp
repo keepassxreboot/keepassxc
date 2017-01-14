@@ -29,31 +29,6 @@
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
 #include "keys/CompositeKey.h"
-#include "keys/FileKey.h"
-#include "keys/PasswordKey.h"
-
-/*
- * Read a key from a line of input.
- * If the line references a valid file
- * path, the key is loaded from file.
- */
-CompositeKey readKeyFromLine(QString line)
-{
-
-  CompositeKey key;
-  if (QFile::exists(line)) {
-      FileKey fileKey;
-      fileKey.load(line);
-      key.addKey(fileKey);
-  }
-  else {
-      PasswordKey password;
-      password.setPassword(line);
-      key.addKey(password);
-  }
-  return key;
-
-}
 
 int main(int argc, char **argv)
 {
@@ -85,7 +60,7 @@ int main(int argc, char **argv)
     static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
 
     QString line1 = inputTextStream.readLine();
-    CompositeKey key1 = readKeyFromLine(line1);
+    CompositeKey key1 = CompositeKey::readFromLine(line1);
 
     CompositeKey key2;
     if (parser.isSet("same-password")) {
@@ -93,7 +68,7 @@ int main(int argc, char **argv)
     }
     else {
       QString line2 = inputTextStream.readLine();
-      key2 = readKeyFromLine(line2);
+      key2 = CompositeKey::readFromLine(line2);
     }
 
 
