@@ -25,7 +25,7 @@
 <!--- Please go over all the following points. -->
 <!--- Again, remove any lines which don't apply. -->
 <!--- Pull Requests that don't fulfill all [REQUIRED] requisites are likely -->
-<!--- to be sent back to you for correction or will be simply rejected.  -->
+<!--- to be sent back to you for correction or will be rejected.  -->
 - ✅ I have read the **CONTRIBUTING** document. **[REQUIRED]**
 - ✅ My code follows the code style of this project. **[REQUIRED]**
 - ✅ All new and existing tests passed. **[REQUIRED]**
