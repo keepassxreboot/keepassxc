@@ -48,7 +48,7 @@
     </layout>
    </item>
    <item row="0" column="1">
-    <widget class="QLineEdit" name="searchEdit"/>
+    <widget class="SearchEdit" name="searchEdit"/>
    </item>
   </layout>
  </widget>
@@ -57,5 +57,12 @@
   <tabstop>searchEdit</tabstop>
  </tabstops>
  <resources/>
+ <customwidgets>
+  <customwidget>
+   <class>SearchEdit</class>
+   <extends>QLineEdit</extends>
+   <header>gui/SearchEdit.h</header>
+  </customwidget>
+ </customwidgets>
  <connections/>
 </ui>

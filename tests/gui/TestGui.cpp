@@ -62,7 +62,7 @@ void TestGui::initTestCase()
     m_mainWindow = new MainWindow();
     m_tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
     m_mainWindow->show();
-    m_mainWindow->activateWindow();
+    m_mainWindow->setWindowState(Qt::WindowMaximized | Qt::WindowActive);
     Tools::wait(50);
 
     // Load the NewDatabase.kdbx file into temporary storage
@@ -425,7 +425,9 @@ void TestGui::testSearch()
     Entry* searchedEntry = entryView->entryFromIndex(searchedItem);
     QTRY_COMPARE(searchedEntry->password(), clipboard->text());
     // Restore focus
-    QTest::mouseClick(searchTextEdit, Qt::LeftButton);
+    QTest::keyClick(m_mainWindow, Qt::Key_F, Qt::ControlModifier);
+    QTRY_VERIFY(searchTextEdit->hasFocus());
+    QTRY_COMPARE(searchTextEdit->selectedText(), QString("someTHING"));
 
     // Test case sensitive search
     searchWidget->setCaseSensitive(true);
