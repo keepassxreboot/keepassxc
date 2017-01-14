@@ -29,6 +29,5 @@
 - ✅ I have read the **CONTRIBUTING** document. **[REQUIRED]**
 - ✅ My code follows the code style of this project. **[REQUIRED]**
 - ✅ All new and existing tests passed. **[REQUIRED]**
-- ✅ My change requires a change to the documentation.
-- ✅ I have updated the documentation accordingly.
+- ✅ My change requires a change to the documentation and I have updated it accordingly.
 - ✅ I have added tests to cover my changes.
