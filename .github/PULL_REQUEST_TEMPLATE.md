@@ -1,4 +1,4 @@
-<!--- Provide a general summary of your changes in the Title above -->
+<!--- Provide a general summary of your changes in the title above -->
 
 ## Description
 <!--- Describe your changes in detail -->
@@ -15,21 +15,20 @@
 ## Screenshots (if appropriate):
 
 ## Types of changes
-<!--- What types of changes does your code introduce? If it apply to your pull request, -->
-<!--- replace all the `:negative_squared_cross_mark:` with `:white_check_mark:` -->
-<!--- Everybody loves emoji -->
-- :negative_squared_cross_mark: Bug fix (non-breaking change which fixes an issue)
-- :negative_squared_cross_mark: New feature (non-breaking change which adds functionality)
-- :negative_squared_cross_mark: Breaking change (fix or feature that would cause existing functionality to change)
+<!--- What types of changes does your code introduce? -->
+<!--- Please remove all lines which don't apply. -->
+- ✅ Bug fix (non-breaking change which fixes an issue)
+- ✅ New feature (non-breaking change which adds functionality)
+- ✅ Breaking change (fix or feature that would cause existing functionality to change)
 
 ## Checklist:
-<!--- Go over all the following points, if it apply to your pull request, -->
-<!--- replace all the `:negative_squared_cross_mark:` with `:white_check_mark:`. -->
-<!--- If you're unsure about any of these, don't hesitate to ask. We're here to help! -->
-<!--- Pull Requests that fail the [REQUIRED] field will likely be sent back for corrections or rejected  -->
-- :negative_squared_cross_mark: I have read the **CONTRIBUTING** document. [REQUIRED]
-- :negative_squared_cross_mark: My code follows the code style of this project. [REQUIRED]
-- :negative_squared_cross_mark: All new and existing tests passed. [REQUIRED]
-- :negative_squared_cross_mark: My change requires a change to the documentation.
-- :negative_squared_cross_mark: I have updated the documentation accordingly.
-- :negative_squared_cross_mark: I have added tests to cover my changes.
+<!--- Please go over all the following points. -->
+<!--- Again, remove any lines which don't apply. -->
+<!--- Pull Requests that don't fulfill all [REQUIRED] requisites are likely -->
+<!--- to be sent back to you for correction or will be simply rejected.  -->
+- ✅ I have read the **CONTRIBUTING** document. **[REQUIRED]**
+- ✅ My code follows the code style of this project. **[REQUIRED]**
+- ✅ All new and existing tests passed. **[REQUIRED]**
+- ✅ My change requires a change to the documentation.
+- ✅ I have updated the documentation accordingly.
+- ✅ I have added tests to cover my changes.
