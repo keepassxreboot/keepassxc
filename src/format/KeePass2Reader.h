@@ -48,7 +48,7 @@ private:
     void setCompressionFlags(const QByteArray& data);
     void setMasterSeed(const QByteArray& data);
     void setTransformSeed(const QByteArray& data);
-    void setTansformRounds(const QByteArray& data);
+    void setTransformRounds(const QByteArray& data);
     void setEncryptionIV(const QByteArray& data);
     void setProtectedStreamKey(const QByteArray& data);
     void setStreamStartBytes(const QByteArray& data);
