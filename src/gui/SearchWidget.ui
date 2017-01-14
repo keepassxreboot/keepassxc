@@ -18,7 +18,7 @@
     <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>6</number>
    </property>
    <property name="bottomMargin">
     <number>0</number>
@@ -38,17 +38,14 @@
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Find:</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </item>
    <item row="0" column="1">
-    <widget class="QLineEdit" name="searchEdit"/>
+    <widget class="QLineEdit" name="searchEdit">
+     <property name="placeholderText">
+      <string>Find:</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
