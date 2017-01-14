@@ -153,14 +153,14 @@ bool Crypto::testAes256Cbc()
         return false;
     }
 
-    SymmetricCipher aes256Descrypt(SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Decrypt);
-    if (!aes256Descrypt.init(key, iv)) {
-        raiseError(aes256Descrypt.errorString());
+    SymmetricCipher aes256Decrypt(SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Decrypt);
+    if (!aes256Decrypt.init(key, iv)) {
+        raiseError(aes256Decrypt.errorString());
         return false;
     }
-    QByteArray decryptedText = aes256Descrypt.process(cipherText, &ok);
+    QByteArray decryptedText = aes256Decrypt.process(cipherText, &ok);
     if (!ok) {
-        raiseError(aes256Descrypt.errorString());
+        raiseError(aes256Decrypt.errorString());
         return false;
     }
     if (decryptedText != plainText) {
@@ -196,14 +196,14 @@ bool Crypto::testAes256Ecb()
         return false;
     }
 
-    SymmetricCipher aes256Descrypt(SymmetricCipher::Aes256, SymmetricCipher::Ecb, SymmetricCipher::Decrypt);
-    if (!aes256Descrypt.init(key, iv)) {
-        raiseError(aes256Descrypt.errorString());
+    SymmetricCipher aes256Decrypt(SymmetricCipher::Aes256, SymmetricCipher::Ecb, SymmetricCipher::Decrypt);
+    if (!aes256Decrypt.init(key, iv)) {
+        raiseError(aes256Decrypt.errorString());
         return false;
     }
-    QByteArray decryptedText = aes256Descrypt.process(cipherText, &ok);
+    QByteArray decryptedText = aes256Decrypt.process(cipherText, &ok);
     if (!ok) {
-        raiseError(aes256Descrypt.errorString());
+        raiseError(aes256Decrypt.errorString());
         return false;
     }
     if (decryptedText != plainText) {

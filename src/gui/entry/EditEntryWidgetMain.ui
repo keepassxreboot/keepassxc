@@ -76,7 +76,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QToolButton" name="tooglePasswordGeneratorButton">
+      <widget class="QToolButton" name="togglePasswordGeneratorButton">
        <property name="text">
         <string>Generate</string>
        </property>
@@ -166,7 +166,7 @@
   <tabstop>passwordEdit</tabstop>
   <tabstop>passwordRepeatEdit</tabstop>
   <tabstop>togglePasswordButton</tabstop>
-  <tabstop>tooglePasswordGeneratorButton</tabstop>
+  <tabstop>togglePasswordGeneratorButton</tabstop>
   <tabstop>urlEdit</tabstop>
   <tabstop>expireCheck</tabstop>
   <tabstop>expireDatePicker</tabstop>

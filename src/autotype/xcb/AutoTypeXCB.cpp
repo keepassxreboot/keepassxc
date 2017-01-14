@@ -24,7 +24,7 @@
 #include <xcb/xcb.h>
 
 bool AutoTypePlatformX11::m_catchXErrors = false;
-bool AutoTypePlatformX11::m_xErrorOccured = false;
+bool AutoTypePlatformX11::m_xErrorOccurred = false;
 int (*AutoTypePlatformX11::m_oldXErrorHandler)(Display*, XErrorEvent*) = nullptr;
 
 AutoTypePlatformX11::AutoTypePlatformX11()
@@ -153,7 +153,7 @@ bool AutoTypePlatformX11::registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifi
              GrabModeAsync, GrabModeAsync);
     stopCatchXErrors();
 
-    if (!m_xErrorOccured) {
+    if (!m_xErrorOccurred) {
         m_currentGlobalKey = key;
         m_currentGlobalModifiers = modifiers;
         m_currentGlobalKeycode = keycode;
@@ -247,7 +247,7 @@ int AutoTypePlatformX11::platformEventFilter(void* event)
 
 AutoTypeExecutor* AutoTypePlatformX11::createExecutor()
 {
-    return new AutoTypeExecturorX11(this);
+    return new AutoTypeExecutorX11(this);
 }
 
 QString AutoTypePlatformX11::windowTitle(Window window, bool useBlacklist)
@@ -556,7 +556,7 @@ void AutoTypePlatformX11::startCatchXErrors()
     Q_ASSERT(!m_catchXErrors);
 
     m_catchXErrors = true;
-    m_xErrorOccured = false;
+    m_xErrorOccurred = false;
     m_oldXErrorHandler = XSetErrorHandler(x11ErrorHandler);
 }
 
@@ -575,7 +575,7 @@ int AutoTypePlatformX11::x11ErrorHandler(Display* display, XErrorEvent* error)
     Q_UNUSED(error)
 
     if (m_catchXErrors) {
-        m_xErrorOccured = true;
+        m_xErrorOccurred = true;
     }
 
     return 1;
@@ -823,17 +823,17 @@ int AutoTypePlatformX11::MyErrorHandler(Display* my_dpy, XErrorEvent* event)
 }
 
 
-AutoTypeExecturorX11::AutoTypeExecturorX11(AutoTypePlatformX11* platform)
+AutoTypeExecutorX11::AutoTypeExecutorX11(AutoTypePlatformX11* platform)
     : m_platform(platform)
 {
 }
 
-void AutoTypeExecturorX11::execChar(AutoTypeChar* action)
+void AutoTypeExecutorX11::execChar(AutoTypeChar* action)
 {
     m_platform->SendKeyPressedEvent(m_platform->charToKeySym(action->character));
 }
 
-void AutoTypeExecturorX11::execKey(AutoTypeKey* action)
+void AutoTypeExecutorX11::execKey(AutoTypeKey* action)
 {
     m_platform->SendKeyPressedEvent(m_platform->keyToKeySym(action->key));
 }

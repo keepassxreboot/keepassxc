@@ -178,7 +178,7 @@ bool KeePass2XmlReader::parseKeePassFile()
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "KeePassFile");
 
     bool rootElementFound = false;
-    bool rootParsedSuccesfully = false;
+    bool rootParsedSuccessfully = false;
 
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Meta") {
@@ -186,11 +186,11 @@ bool KeePass2XmlReader::parseKeePassFile()
         }
         else if (m_xml.name() == "Root") {
             if (rootElementFound) {
-                rootParsedSuccesfully = false;
+                rootParsedSuccessfully = false;
                 raiseError("Multiple root elements");
             }
             else {
-                rootParsedSuccesfully = parseRoot();
+                rootParsedSuccessfully = parseRoot();
                 rootElementFound = true;
             }
         }
@@ -199,7 +199,7 @@ bool KeePass2XmlReader::parseKeePassFile()
         }
     }
 
-    return rootParsedSuccesfully;
+    return rootParsedSuccessfully;
 }
 
 void KeePass2XmlReader::parseMeta()
@@ -458,12 +458,12 @@ bool KeePass2XmlReader::parseRoot()
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Root");
 
     bool groupElementFound = false;
-    bool groupParsedSuccesfully = false;
+    bool groupParsedSuccessfully = false;
 
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Group") {
             if (groupElementFound) {
-                groupParsedSuccesfully = false;
+                groupParsedSuccessfully = false;
                 raiseError("Multiple group elements");
                 continue;
             }
@@ -473,7 +473,7 @@ bool KeePass2XmlReader::parseRoot()
                 Group* oldRoot = m_db->rootGroup();
                 m_db->setRootGroup(rootGroup);
                 delete oldRoot;
-                groupParsedSuccesfully = true;
+                groupParsedSuccessfully = true;
             }
 
             groupElementFound = true;
@@ -486,7 +486,7 @@ bool KeePass2XmlReader::parseRoot()
         }
     }
 
-    return groupParsedSuccesfully;
+    return groupParsedSuccessfully;
 }
 
 Group* KeePass2XmlReader::parseGroup()
