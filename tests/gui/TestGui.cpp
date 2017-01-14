@@ -328,7 +328,7 @@ void TestGui::testEntryEntropy()
     QTest::keyClicks(titleEdit, "test");
 
     // Open the password generator
-    QToolButton* generatorButton = editEntryWidget->findChild<QToolButton*>("tooglePasswordGeneratorButton");
+    QToolButton* generatorButton = editEntryWidget->findChild<QToolButton*>("togglePasswordGeneratorButton");
     QTest::mouseClick(generatorButton, Qt::LeftButton);
 
     // Type in some password
