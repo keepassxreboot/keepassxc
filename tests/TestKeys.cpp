@@ -83,6 +83,22 @@ void TestKeys::testComposite()
     delete compositeKey4;
 }
 
+void TestKeys::testCompositeKeyReadFromLine()
+{
+
+    QString keyFilename = QString("%1/FileKeyXml.key").arg(QString(KEEPASSX_TEST_DATA_DIR));
+
+    CompositeKey compositeFileKey = CompositeKey::readFromLine(keyFilename);
+    FileKey fileKey;
+    fileKey.load(keyFilename);
+    QCOMPARE(compositeFileKey.rawKey().size(), fileKey.rawKey().size());
+
+    CompositeKey compositePasswordKey = CompositeKey::readFromLine(QString("password"));
+    PasswordKey passwordKey(QString("password"));
+    QCOMPARE(compositePasswordKey.rawKey().size(), passwordKey.rawKey().size());
+
+}
+
 void TestKeys::testFileKey()
 {
     QFETCH(QString, type);
