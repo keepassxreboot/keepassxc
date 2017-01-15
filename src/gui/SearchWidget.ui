@@ -54,6 +54,22 @@
       <string>Find</string>
      </property>
      <property name="clearButtonEnabled">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QToolButton" name="clearIcon">
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="text">
+      <string>Clear</string>
+     </property>
+     <property name="toolButtonStyle">
+      <enum>Qt::ToolButtonIconOnly</enum>
+     </property>
+     <property name="autoRaise">
       <bool>true</bool>
      </property>
     </widget>

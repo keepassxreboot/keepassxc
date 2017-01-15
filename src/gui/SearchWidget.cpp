@@ -34,7 +34,9 @@ SearchWidget::SearchWidget(QWidget *parent)
     m_searchTimer->setSingleShot(true);
 
     connect(m_ui->searchEdit, SIGNAL(textChanged(QString)), SLOT(startSearchTimer()));
-    connect(m_ui->searchIcon, SIGNAL(triggered(QAction*)), m_ui->searchEdit, SLOT(setFocus()));
+    connect(m_ui->searchIcon, SIGNAL(pressed()), m_ui->searchEdit, SLOT(setFocus()));
+    connect(m_ui->clearIcon, SIGNAL(pressed()), m_ui->searchEdit, SLOT(clear()));
+    connect(m_ui->clearIcon, SIGNAL(pressed()), m_ui->searchEdit, SLOT(setFocus()));
     connect(m_searchTimer, SIGNAL(timeout()), this, SLOT(startSearch()));
     connect(this, SIGNAL(escapePressed()), m_ui->searchEdit, SLOT(clear()));
 
@@ -50,6 +52,9 @@ SearchWidget::SearchWidget(QWidget *parent)
     m_ui->searchIcon->setIcon(filePath()->icon("actions", "system-search"));
     m_ui->searchIcon->setMenu(searchMenu);
     m_ui->searchIcon->setPopupMode(QToolButton::MenuButtonPopup);
+
+    m_ui->clearIcon->setIcon(filePath()->icon("actions", "edit-clear-locationbar-rtl"));
+    m_ui->clearIcon->setEnabled(false);
 }
 
 SearchWidget::~SearchWidget()
@@ -125,6 +130,9 @@ void SearchWidget::startSearch()
     if (!m_searchTimer->isActive()) {
         m_searchTimer->stop();
     }
+
+    bool hasText = m_ui->searchEdit->text().length() > 0;
+    m_ui->clearIcon->setEnabled(hasText);
 
     search(m_ui->searchEdit->text());
 }

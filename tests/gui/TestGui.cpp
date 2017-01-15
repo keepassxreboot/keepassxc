@@ -401,7 +401,13 @@ void TestGui::testSearch()
     QTRY_COMPARE(searchTextEdit->text(), QString("ZZZ"));
     QTRY_VERIFY(m_dbWidget->isInSearchMode());
     QTRY_COMPARE(entryView->model()->rowCount(), 0);
+    // Press the search clear button
+    QToolButton* clearButton = searchWidget->findChild<QToolButton*>("clearIcon");
+    QTest::mouseClick(clearButton, Qt::LeftButton);
+    QTRY_VERIFY(searchTextEdit->text().isEmpty());
+    QTRY_VERIFY(searchTextEdit->hasFocus());
     // Escape clears searchedit and retains focus
+    QTest::keyClicks(searchTextEdit, "ZZZ");
     QTest::keyClick(searchTextEdit, Qt::Key_Escape);
     QTRY_VERIFY(searchTextEdit->text().isEmpty());
     QTRY_VERIFY(searchTextEdit->hasFocus());
