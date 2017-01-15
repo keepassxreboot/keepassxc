@@ -64,6 +64,10 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
 
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(openDatabase()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
+
+    connect(YubiKey::instance(), SIGNAL(detected(int,bool)),
+                                 SLOT(ykDetected(int,bool)),
+                                 Qt::QueuedConnection);
 }
 
 DatabaseOpenWidget::~DatabaseOpenWidget()
@@ -92,10 +96,8 @@ void DatabaseOpenWidget::load(const QString& filename)
 
     m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
 
-    /* YubiKey init is slow */
-    connect(YubiKey::instance(), SIGNAL(detected(int,bool)),
-                                 SLOT(ykDetected(int,bool)),
-                                 Qt::QueuedConnection);
+    /* YubiKey init is slow, detect asynchronously to not block the UI */
+    m_ui->comboChallengeResponse->clear();
     QtConcurrent::run(YubiKey::instance(), &YubiKey::detect);
 
     m_ui->editPassword->setFocus();
