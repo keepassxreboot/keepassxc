@@ -21,6 +21,7 @@
 #include <QTest>
 #include <QtConcurrentRun>
 
+#include "crypto/Crypto.h"
 #include "keys/YkChallengeResponseKey.h"
 
 QTEST_GUILESS_MAIN(TestYubiKeyChalResp)
@@ -44,6 +45,9 @@ void TestYubiKeyChalResp::init()
     if (!result) {
         QSKIP("Unable to connect to YubiKey", SkipAll);
     }
+
+    /* Crypto subsystem needs to be initalized for YubiKey testing */
+    QVERIFY(Crypto::init());
 }
 
 void TestYubiKeyChalResp::detectDevices()
