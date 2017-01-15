@@ -41,6 +41,10 @@ ChangeMasterKeyWidget::ChangeMasterKeyWidget(QWidget* parent)
     m_ui->repeatPasswordEdit->enableVerifyMode(m_ui->enterPasswordEdit);
     connect(m_ui->createKeyFileButton, SIGNAL(clicked()), SLOT(createKeyFile()));
     connect(m_ui->browseKeyFileButton, SIGNAL(clicked()), SLOT(browseKeyFile()));
+
+    connect(YubiKey::instance(), SIGNAL(detected(int,bool)),
+                                 SLOT(ykDetected(int,bool)),
+                                 Qt::QueuedConnection);
 }
 
 ChangeMasterKeyWidget::~ChangeMasterKeyWidget()
@@ -88,10 +92,8 @@ void ChangeMasterKeyWidget::clearForms()
     m_ui->challengeResponseGroup->setChecked(false);
     m_ui->challengeResponseCombo->clear();
 
-    /* YubiKey init is slow */
-    connect(YubiKey::instance(), SIGNAL(detected(int,bool)),
-                                 SLOT(ykDetected(int,bool)),
-                                 Qt::QueuedConnection);
+    /* YubiKey init is slow, detect asynchronously to not block the UI */
+    m_ui->challengeResponseCombo->clear();
     QtConcurrent::run(YubiKey::instance(), &YubiKey::detect);
 
     m_ui->enterPasswordEdit->setFocus();
