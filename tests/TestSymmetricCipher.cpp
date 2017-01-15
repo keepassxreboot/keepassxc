@@ -169,13 +169,13 @@ void TestSymmetricCipher::testTwofish256CbcEncryption()
         for (int j = 0; j < 5000; ++j) {
             ctCur = cipher.process(ptNext, &ok);
             if (!ok)
-                return;
+                break;
             ptNext = ctPrev;
             ctPrev = ctCur;
             
             ctCur = cipher.process(ptNext, &ok);
             if (!ok)
-                return;
+                break;
             ptNext = ctPrev;
             ctPrev = ctCur;
         }
@@ -230,12 +230,12 @@ void TestSymmetricCipher::testTwofish256CbcDecryption()
         for (int j = 0; j < 5000; ++j) {
             ptCur = cipher.process(ctNext, &ok);
             if (!ok)
-                return;
+                break;
             ctNext = ptCur;
             
             ptCur = cipher.process(ctNext, &ok);
             if (!ok)
-                return;
+                break;
             ctNext = ptCur;
         }
         
