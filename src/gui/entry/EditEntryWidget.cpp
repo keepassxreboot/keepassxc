@@ -704,8 +704,7 @@ void EditEntryWidget::openAttachment(const QModelIndex& index)
     }
 
     if (!file->flush()) {
-        MessageBox::warning(this, tr("Error"),
-                tr("Unable to save the attachment:\n").append(file->errorString()));
+        showMessage(tr("Unable to save the attachment:\n").append(file->errorString()), MessageWidget::Error);
         return;
     }
 

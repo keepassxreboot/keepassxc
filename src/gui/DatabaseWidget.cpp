@@ -696,7 +696,7 @@ void DatabaseWidget::updateMasterKey(bool accepted)
         QApplication::restoreOverrideCursor();
 
         if (!result) {
-            MessageBox::critical(this, tr("Error"), tr("Unable to calculate master key"));
+            m_messageWidget->showMessage(tr("Unable to calculate master key"), MessageWidget::Error);
             return;
         }
     }
@@ -736,14 +736,14 @@ void DatabaseWidget::mergeDatabase(bool accepted)
 {
     if (accepted) {
         if (!m_db) {
-            MessageBox::critical(this, tr("Error"), tr("No current database."));
+            m_messageWidget->showMessage(tr("No current database."), MessageWidget::Error);
             return;
         }
 
         Database* srcDb = static_cast<DatabaseOpenWidget*>(sender())->database();
 
         if (!srcDb) {
-            MessageBox::critical(this, tr("Error"), tr("No source database, nothing to do."));
+            m_messageWidget->showMessage(tr("No source database, nothing to do."), MessageWidget::Error);
             return;
         }
 
@@ -1093,15 +1093,15 @@ void DatabaseWidget::reloadDatabaseFile()
 
         }
         else {
-            MessageBox::critical(this, tr("Autoreload Failed"),
-                                 tr("Could not parse or unlock the new database file while attempting"
-                                    " to autoreload this database."));
+            m_messageWidget->showMessage(
+                tr("Could not parse or unlock the new database file while attempting"
+                   " to autoreload this database."), MessageWidget::Error);
         }
     }
     else {
-        MessageBox::critical(this, tr("Autoreload Failed"),
-                             tr("Could not open the new database file while attempting to autoreload"
-                                " this database."));
+        m_messageWidget->showMessage(
+            tr("Could not open the new database file while attempting to autoreload this database."),
+                                     MessageWidget::Error);
     }
 
     // Rewatch the database file

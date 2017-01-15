@@ -761,7 +761,7 @@ void MainWindow::repairDatabase()
     if (fileName.isEmpty()) {
         return;
     }
-
+    
     QScopedPointer<QDialog> dialog(new QDialog(this));
     DatabaseRepairWidget* dbRepairWidget = new DatabaseRepairWidget(dialog.data());
     connect(dbRepairWidget, SIGNAL(success()), dialog.data(), SLOT(accept()));
@@ -776,8 +776,9 @@ void MainWindow::repairDatabase()
             KeePass2Writer writer;
             writer.writeDatabase(saveFileName, dbRepairWidget->database());
             if (writer.hasError()) {
-                QMessageBox::critical(this, tr("Error"),
-                    tr("Writing the database failed.").append("\n\n").append(writer.errorString()));
+                displayGlobalMessage(
+                    tr("Writing the database failed.").append("\n").append(writer.errorString()),
+                    MessageWidget::Error);
             }
         }
     }

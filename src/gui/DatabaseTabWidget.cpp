@@ -328,8 +328,8 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
             // write the database to the file
             m_writer.writeDatabase(&saveFile, db);
             if (m_writer.hasError()) {
-                MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
-                                     + m_writer.errorString());
+                Q_EMIT messageTab(tr("Writing the database failed.").append("\n")
+                .append(m_writer.errorString()), MessageWidget::Error);
                 return false;
             }
 
@@ -342,14 +342,14 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
                 return true;
             }
             else {
-                MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
-                                     + saveFile.errorString());
+                Q_EMIT messageTab(tr("Writing the database failed.").append("\n")
+                    .append(saveFile.errorString()), MessageWidget::Error);
                 return false;
             }
         }
         else {
-            Q_EMIT messageTab(tr("Writing the database failed.\n")
-                              .append("\n").append(saveFile.errorString()), MessageWidget::Error);
+            Q_EMIT messageTab(tr("Writing the database failed.").append("\n")
+            .append(saveFile.errorString()), MessageWidget::Error);
             return false;
         }
     }
@@ -494,7 +494,7 @@ void DatabaseTabWidget::exportToCsv()
     CsvExporter csvExporter;
     if (!csvExporter.exportDatabase(fileName, db)) {
         Q_EMIT messageGlobal(
-            tr("Writing the CSV file failed.").append("\n\n")
+            tr("Writing the CSV file failed.").append("\n")
             .append(csvExporter.errorString()), MessageWidget::Error);
     }
 }
