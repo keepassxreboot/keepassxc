@@ -1,6 +1,7 @@
 /* This file is part of the KDE libraries
- *
+ * 
  * Copyright (c) 2011 Aurélien Gâteau <agateau@kde.org>
+ * Copyright (c) 2014 Dominik Haumann <dhaumann@kde.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -31,8 +32,13 @@ class KMessageWidgetPrivate;
  * feedback, or to implement opportunistic interactions.
  *
  * As a feedback widget, KMessageWidget provides a less intrusive alternative
- * to "OK Only" message boxes. If you do not need the modalness of KMessageBox,
+ * to "OK Only" message boxes. If you want to avoid a modal KMessageBox,
  * consider using KMessageWidget instead.
+ *
+ * Examples of KMessageWidget look as follows, all of them having an icon set
+ * with setIcon(), and the first three show a close button:
+ *
+ * \image html kmessagewidget.png "KMessageWidget with different message types"
  *
  * <b>Negative feedback</b>
  *
@@ -67,7 +73,7 @@ class KMessageWidgetPrivate;
  * @li Confirm success of "critical" transactions
  * @li Indicate completion of background tasks
  *
- * Example of inadapted uses:
+ * Example of unadapted uses:
  *
  * @li Indicate successful saving of a file
  * @li Indicate a file has been successfully removed
@@ -87,153 +93,250 @@ class KMessageWidgetPrivate;
  * @author Aurélien Gâteau <agateau@kde.org>
  * @since 4.7
  */
-class KMessageWidget : public QFrame {
-	Q_OBJECT
-	Q_ENUMS(MessageType)
-
-	Q_PROPERTY(QString text READ text WRITE setText)
-	Q_PROPERTY(bool wordWrap READ wordWrap WRITE setWordWrap)
-	Q_PROPERTY(bool closeButtonVisible READ isCloseButtonVisible WRITE setCloseButtonVisible)
-	Q_PROPERTY(MessageType messageType READ messageType WRITE setMessageType)
-	Q_PROPERTY(QIcon icon READ icon WRITE setIcon)
+class KMessageWidget : public QFrame
+{
+    Q_OBJECT
+    Q_ENUMS(MessageType)
+    
+    Q_PROPERTY(QString text READ text WRITE setText)
+    Q_PROPERTY(bool wordWrap READ wordWrap WRITE setWordWrap)
+    Q_PROPERTY(bool closeButtonVisible READ isCloseButtonVisible WRITE setCloseButtonVisible)
+    Q_PROPERTY(MessageType messageType READ messageType WRITE setMessageType)
+    Q_PROPERTY(QIcon icon READ icon WRITE setIcon)
 public:
-	enum MessageType {
-		Positive,
-		Information,
-		Warning,
-		Error
-	};
-
-	/**
-	 * Constructs a KMessageWidget with the specified parent.
-	 */
-	explicit KMessageWidget(QWidget *parent = 0);
-
-	explicit KMessageWidget(const QString &text, QWidget *parent = 0);
-
-	~KMessageWidget();
-
-	QString text() const;
-
-	bool wordWrap() const;
-
-	bool isCloseButtonVisible() const;
-
-	MessageType messageType() const;
-
-	void addAction(QAction *action);
-
-	void removeAction(QAction *action);
-
-	QSize sizeHint() const;
-
-	QSize minimumSizeHint() const;
-
-	int heightForWidth(int width) const;
-
-	/**
-	 * The icon shown on the left of the text. By default, no icon is shown.
-	 * @since 4.11
-	 */
-	QIcon icon() const;
-
-public
-Q_SLOTS:
-	void setText(const QString &text);
-
-	void setWordWrap(bool wordWrap);
-
-	void setCloseButtonVisible(bool visible);
-
-	void setMessageType(KMessageWidget::MessageType type);
-
-	/**
-	 * Show the widget using an animation, unless
-	 * KGlobalSettings::graphicsEffectLevel() does not allow simple effects.
-	 */
-	void animatedShow();
-
-	/**
-	 * Hide the widget using an animation, unless
-	 * KGlobalSettings::graphicsEffectLevel() does not allow simple effects.
-	 */
-	void animatedHide();
-
-	/**
-	 * Define an icon to be shown on the left of the text
-	 * @since 4.11
-	 */
-	void setIcon(const QIcon &icon);
-
-	int bestContentHeight() const;
+    
+    /**
+     * Available message types.
+     * The background colors are chosen depending on the message type.
+     */
+    enum MessageType {
+        Positive,
+        Information,
+        Warning,
+        Error
+    };
+    
+    /**
+     * Constructs a KMessageWidget with the specified @p parent.
+     */
+    explicit KMessageWidget(QWidget *parent = 0);
+    
+    /**
+     * Constructs a KMessageWidget with the specified @p parent and
+     * contents @p text.
+     */
+    explicit KMessageWidget(const QString &text, QWidget *parent = 0);
+    
+    /**
+     * Destructor.
+     */
+    ~KMessageWidget();
+    
+    /**
+     * Get the text of this message widget.
+     * @see setText()
+     */
+    QString text() const;
+    
+    /**
+     * Check whether word wrap is enabled.
+     *
+     * If word wrap is enabled, the message widget wraps the displayed text
+     * as required to the available width of the widget. This is useful to
+     * avoid breaking widget layouts.
+     *
+     * @see setWordWrap()
+     */
+    bool wordWrap() const;
+    
+    /**
+     * Check whether the close button is visible.
+     *
+     * @see setCloseButtonVisible()
+     */
+    bool isCloseButtonVisible() const;
+    
+    /**
+     * Get the type of this message.
+     * By default, the type is set to KMessageWidget::Information.
+     *
+     * @see KMessageWidget::MessageType, setMessageType()
+     */
+    MessageType messageType() const;
+    
+    /**
+     * Add @p action to the message widget.
+     * For each action a button is added to the message widget in the
+     * order the actions were added.
+     *
+     * @param action the action to add
+     * @see removeAction(), QWidget::actions()
+     */
+    void addAction(QAction *action);
+    
+    /**
+     * Remove @p action from the message widget.
+     *
+     * @param action the action to remove
+     * @see KMessageWidget::MessageType, addAction(), setMessageType()
+     */
+    void removeAction(QAction *action);
+    
+    /**
+     * Returns the preferred size of the message widget.
+     */
+    QSize sizeHint() const Q_DECL_OVERRIDE;
+    
+    /**
+     * Returns the minimum size of the message widget.
+     */
+    QSize minimumSizeHint() const Q_DECL_OVERRIDE;
+    
+    /**
+     * Returns the required height for @p width.
+     * @param width the width in pixels
+     */
+    int heightForWidth(int width) const Q_DECL_OVERRIDE;
+    
+    /**
+     * The icon shown on the left of the text. By default, no icon is shown.
+     * @since 4.11
+     */
+    QIcon icon() const;
+    
+    /**
+     * Check whether the hide animation started by calling animatedHide()
+     * is still running. If animations are disabled, this function always
+     * returns @e false.
+     *
+     * @see animatedHide(), hideAnimationFinished()
+     * @since 5.0
+     */
+    bool isHideAnimationRunning() const;
+    
+    /**
+     * Check whether the show animation started by calling animatedShow()
+     * is still running. If animations are disabled, this function always
+     * returns @e false.
+     *
+     * @see animatedShow(), showAnimationFinished()
+     * @since 5.0
+     */
+    bool isShowAnimationRunning() const;
+    
+public Q_SLOTS:
+    /**
+     * Set the text of the message widget to @p text.
+     * If the message widget is already visible, the text changes on the fly.
+     *
+     * @param text the text to display, rich text is allowed
+     * @see text()
+     */
+    void setText(const QString &text);
+    
+    /**
+     * Set word wrap to @p wordWrap. If word wrap is enabled, the text()
+     * of the message widget is wrapped to fit the available width.
+     * If word wrap is disabled, the message widget's minimum size is
+     * such that the entire text fits.
+     *
+     * @param wordWrap disable/enable word wrap
+     * @see wordWrap()
+     */
+    void setWordWrap(bool wordWrap);
+    
+    /**
+     * Set the visibility of the close button. If @p visible is @e true,
+     * a close button is shown that calls animatedHide() if clicked.
+     *
+     * @see closeButtonVisible(), animatedHide()
+     */
+    void setCloseButtonVisible(bool visible);
+    
+    /**
+     * Set the message type to @p type.
+     * By default, the message type is set to KMessageWidget::Information.
+     *
+     * @see messageType(), KMessageWidget::MessageType
+     */
+    void setMessageType(KMessageWidget::MessageType type);
+    
+    /**
+     * Show the widget using an animation.
+     */
+    void animatedShow();
+    
+    /**
+     * Hide the widget using an animation.
+     */
+    void animatedHide();
+    
+    /**
+     * Define an icon to be shown on the left of the text
+     * @since 4.11
+     */
+    void setIcon(const QIcon &icon);
+    
 Q_SIGNALS:
-	/**
-	 * This signal is emitted when the user clicks a link in the text label.
-	 * The URL referred to by the href anchor is passed in contents.
-	 * @param contents text of the href anchor
-	 * @see QLabel::linkActivated()
-	 * @since 4.10
-	 */
-	void linkActivated(const QString &contents);
-
-	/**
-	 * This signal is emitted when the user hovers over a link in the text label.
-	 * The URL referred to by the href anchor is passed in contents.
-	 * @param contents text of the href anchor
-	 * @see QLabel::linkHovered()
-	 * @since 4.11
-	 */
-	void linkHovered(const QString &contents);
-
+    /**
+     * This signal is emitted when the user clicks a link in the text label.
+     * The URL referred to by the href anchor is passed in contents.
+     * @param contents text of the href anchor
+     * @see QLabel::linkActivated()
+     * @since 4.10
+     */
+    void linkActivated(const QString &contents);
+    
+    /**
+     * This signal is emitted when the user hovers over a link in the text label.
+     * The URL referred to by the href anchor is passed in contents.
+     * @param contents text of the href anchor
+     * @see QLabel::linkHovered()
+     * @since 4.11
+     */
+    void linkHovered(const QString &contents);
+    
+    /**
+     * This signal is emitted when the hide animation is finished, started by
+     * calling animatedHide(). If animations are disabled, this signal is
+     * emitted immediately after the message widget got hidden.
+     *
+     * @note This signal is @e not emitted if the widget was hidden by
+     *       calling hide(), so this signal is only useful in conjunction
+     *       with animatedHide().
+     *
+     * @see animatedHide()
+     * @since 5.0
+     */
+    void hideAnimationFinished();
+    
+    /**
+     * This signal is emitted when the show animation is finished, started by
+     * calling animatedShow(). If animations are disabled, this signal is
+     * emitted immediately after the message widget got shown.
+     *
+     * @note This signal is @e not emitted if the widget was shown by
+     *       calling show(), so this signal is only useful in conjunction
+     *       with animatedShow().
+     *
+     * @see animatedShow()
+     * @since 5.0
+     */
+    void showAnimationFinished();
+    
 protected:
-	void paintEvent(QPaintEvent *event);
-
-	bool event(QEvent *event);
-
-	void resizeEvent(QResizeEvent *event);
-
-	void showEvent(QShowEvent *event);
-
+    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
+    
+    bool event(QEvent *event) Q_DECL_OVERRIDE;
+    
+    void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
+    
 private:
-	KMessageWidgetPrivate *const d;
-	friend class KMessageWidgetPrivate;
-
-	Q_PRIVATE_SLOT(d, void slotTimeLineChanged(qreal))
-	Q_PRIVATE_SLOT(d, void slotTimeLineFinished())
+    KMessageWidgetPrivate *const d;
+    friend class KMessageWidgetPrivate;
+    
+    Q_PRIVATE_SLOT(d, void slotTimeLineChanged(qreal))
+    Q_PRIVATE_SLOT(d, void slotTimeLineFinished())
 };
 
-//---------------------------------------------------------------------
-// KMessageWidgetPrivate
-//---------------------------------------------------------------------
-class QLabel;
-class QToolButton;
-class QTimeLine;
-#include <QIcon>
-
-class KMessageWidgetPrivate {
-public:
-	void init(KMessageWidget *);
-
-	KMessageWidget *q;
-	QFrame *content;
-	QLabel *iconLabel;
-	QLabel *textLabel;
-	QToolButton *closeButton;
-	QTimeLine *timeLine;
-	QIcon icon;
-
-	KMessageWidget::MessageType messageType;
-	bool wordWrap;
-	QList<QToolButton *> buttons;
-	QPixmap contentSnapShot;
-
-	void createLayout();
-	void updateSnapShot();
-	void updateLayout();
-	void slotTimeLineChanged(qreal);
-	void slotTimeLineFinished();
-
-	int bestContentHeight() const;
-};
-
-#endif // KMESSAGEWIDGET_H
+#endif /* KMESSAGEWIDGET_H */
