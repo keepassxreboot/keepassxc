@@ -200,11 +200,11 @@ FilePath::FilePath()
     }
     else if (!isDataDirAbsolute && testSetDir(QString("%1/../%2").arg(appDirPath, KEEPASSX_DATA_DIR))) {
     }
-    else if (!isDataDirAbsolute && testSetDir(QString("%1/../%2").arg(appDirPath, KEEPASSX_DATA_DIR))) {
-    }
     else if (!isDataDirAbsolute && testSetDir(QString("%1/%2").arg(KEEPASSX_PREFIX_DIR, KEEPASSX_DATA_DIR))) {
     }
     else if (!isDataDirAbsolute && testSetDir(QString("%1/../../share").arg(appDirPath))) {
+    }
+    else if (!isDataDirAbsolute && testSetDir(QString("%1/../../../share").arg(appDirPath))) {
     }
 #endif
 #ifdef Q_OS_MAC
