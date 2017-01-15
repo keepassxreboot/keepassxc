@@ -66,18 +66,24 @@ bool SearchWidget::eventFilter(QObject *obj, QEvent *event)
             return true;
         }
         else if (keyEvent->matches(QKeySequence::Copy)) {
-            // If Control+C is pressed in the search edit when no
-            // text is selected, copy the password of the current
-            // entry.
+            // If Control+C is pressed in the search edit when no text
+            // is selected, copy the password of the current entry
             if (!m_ui->searchEdit->hasSelectedText()) {
                 emit copyPressed();
                 return true;
             }
         }
         else if (keyEvent->matches(QKeySequence::MoveToNextLine)) {
-            // If Down is pressed move the focus to the entry view.
-            emit downPressed();
-            return true;
+            if (m_ui->searchEdit->cursorPosition() == m_ui->searchEdit->text().length()) {
+                // If down is pressed at EOL, move the focus to the entry view
+                emit downPressed();
+                return true;
+            }
+            else {
+                // Otherwise move the cursor to EOL
+                m_ui->searchEdit->setCursorPosition(m_ui->searchEdit->text().length());
+                return true;
+            }
         }
     }
 
