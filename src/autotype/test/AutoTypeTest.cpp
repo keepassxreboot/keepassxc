@@ -65,7 +65,7 @@ int AutoTypePlatformTest::platformEventFilter(void* event)
 
 AutoTypeExecutor* AutoTypePlatformTest::createExecutor()
 {
-    return new AutoTypeExecturorTest(this);
+    return new AutoTypeExecutorTest(this);
 }
 
 void AutoTypePlatformTest::setActiveWindowTitle(const QString& title)
@@ -127,17 +127,17 @@ bool AutoTypePlatformTest::raiseOwnWindow()
 }
 #endif
 
-AutoTypeExecturorTest::AutoTypeExecturorTest(AutoTypePlatformTest* platform)
+AutoTypeExecutorTest::AutoTypeExecutorTest(AutoTypePlatformTest* platform)
     : m_platform(platform)
 {
 }
 
-void AutoTypeExecturorTest::execChar(AutoTypeChar* action)
+void AutoTypeExecutorTest::execChar(AutoTypeChar* action)
 {
     m_platform->addActionChar(action);
 }
 
-void AutoTypeExecturorTest::execKey(AutoTypeKey* action)
+void AutoTypeExecutorTest::execKey(AutoTypeKey* action)
 {
     m_platform->addActionKey(action);
 }

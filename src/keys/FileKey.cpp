@@ -190,18 +190,18 @@ bool FileKey::loadXml(QIODevice* device)
 
 bool FileKey::loadXmlMeta(QXmlStreamReader& xmlReader)
 {
-    bool corectVersion = false;
+    bool correctVersion = false;
 
     while (!xmlReader.error() && xmlReader.readNextStartElement()) {
         if (xmlReader.name() == "Version") {
             // TODO: error message about incompatible key file version
             if (xmlReader.readElementText() == "1.00") {
-                corectVersion = true;
+                correctVersion = true;
             }
         }
     }
 
-    return corectVersion;
+    return correctVersion;
 }
 
 QByteArray FileKey::loadXmlKey(QXmlStreamReader& xmlReader)

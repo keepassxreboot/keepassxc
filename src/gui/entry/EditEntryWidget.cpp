@@ -90,7 +90,7 @@ void EditEntryWidget::setupMain()
 
     m_mainUi->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
     connect(m_mainUi->togglePasswordButton, SIGNAL(toggled(bool)), m_mainUi->passwordEdit, SLOT(setShowPassword(bool)));
-    connect(m_mainUi->tooglePasswordGeneratorButton, SIGNAL(toggled(bool)), SLOT(togglePasswordGeneratorButton(bool)));
+    connect(m_mainUi->togglePasswordGeneratorButton, SIGNAL(toggled(bool)), SLOT(togglePasswordGeneratorButton(bool)));
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
     m_mainUi->passwordRepeatEdit->enableVerifyMode(m_mainUi->passwordEdit);
     connect(m_mainUi->passwordGenerator, SIGNAL(appliedPassword(QString)), SLOT(setGeneratedPassword(QString)));
@@ -299,8 +299,8 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_mainUi->expireCheck->setEnabled(!m_history);
     m_mainUi->expireDatePicker->setReadOnly(m_history);
     m_mainUi->notesEdit->setReadOnly(m_history);
-    m_mainUi->tooglePasswordGeneratorButton->setChecked(false);
-    m_mainUi->tooglePasswordGeneratorButton->setDisabled(m_history);
+    m_mainUi->togglePasswordGeneratorButton->setChecked(false);
+    m_mainUi->togglePasswordGeneratorButton->setDisabled(m_history);
     m_mainUi->passwordGenerator->reset();
     m_advancedUi->addAttachmentButton->setEnabled(!m_history);
     updateAttachmentButtonsEnabled(m_advancedUi->attachmentsView->currentIndex());
@@ -529,7 +529,7 @@ void EditEntryWidget::setGeneratedPassword(const QString& password)
     m_mainUi->passwordEdit->setText(password);
     m_mainUi->passwordRepeatEdit->setText(password);
 
-    m_mainUi->tooglePasswordGeneratorButton->setChecked(false);
+    m_mainUi->togglePasswordGeneratorButton->setChecked(false);
 }
 
 void EditEntryWidget::insertAttribute()

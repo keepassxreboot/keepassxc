@@ -301,7 +301,7 @@ bool KeePass2Reader::readHeaderField()
         break;
 
     case KeePass2::TransformRounds:
-        setTansformRounds(fieldData);
+        setTransformRounds(fieldData);
         break;
 
     case KeePass2::EncryptionIV:
@@ -382,7 +382,7 @@ void KeePass2Reader::setTransformSeed(const QByteArray& data)
     }
 }
 
-void KeePass2Reader::setTansformRounds(const QByteArray& data)
+void KeePass2Reader::setTransformRounds(const QByteArray& data)
 {
     if (data.size() != 8) {
         raiseError("Invalid transform rounds size");

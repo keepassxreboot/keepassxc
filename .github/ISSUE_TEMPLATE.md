@@ -26,7 +26,7 @@
 
 ## Your Environment
 <!--- Include relevant details about the environment you experienced the bug in -->
-* KeePassXR version/commit used: 
+* KeePassXC version/commit used: (can be found under Help -> About)
 * Qt version (e.g. Qt 5.3): 
 * Compiler (e.g. Clang++3.6.0): 
 * Operating System and version: 

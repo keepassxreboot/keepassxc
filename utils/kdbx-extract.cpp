@@ -17,6 +17,7 @@
 
 #include <stdio.h>
 
+#include <QCommandLineParser>
 #include <QCoreApplication>
 #include <QFile>
 #include <QStringList>
@@ -33,8 +34,16 @@ int main(int argc, char **argv)
 {
     QCoreApplication app(argc, argv);
 
-    if (app.arguments().size() != 3) {
-        qCritical("Usage: kdbx-extract <password/key file> <kdbx file>");
+    QCommandLineParser parser;
+    parser.setApplicationDescription(QCoreApplication::translate("main",
+                                                                 "Extract and print a KeePassXC database file."));
+    parser.addPositionalArgument("database", QCoreApplication::translate("main", "path of the database to extract."));
+    parser.addHelpOption();
+    parser.process(app);
+
+    const QStringList args = parser.positionalArguments();
+    if (args.size() != 1) {
+        parser.showHelp();
         return 1;
     }
 
@@ -42,25 +51,18 @@ int main(int argc, char **argv)
         qFatal("Fatal error while testing the cryptographic functions:\n%s", qPrintable(Crypto::errorString()));
     }
 
-    CompositeKey key;
-    if (QFile::exists(app.arguments().at(1))) {
-        FileKey fileKey;
-        fileKey.load(app.arguments().at(1));
-        key.addKey(fileKey);
-    }
-    else {
-        PasswordKey password;
-        password.setPassword(app.arguments().at(1));
-        key.addKey(password);
-    }
+    static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
+    QString line = inputTextStream.readLine();
+    CompositeKey key = CompositeKey::readFromLine(line);
 
-    QFile dbFile(app.arguments().at(2));
+    QString databaseFilename = args.at(0);
+    QFile dbFile(databaseFilename);
     if (!dbFile.exists()) {
-        qCritical("File does not exist.");
+        qCritical("File %s does not exist.", qPrintable(databaseFilename));
         return 1;
     }
     if (!dbFile.open(QIODevice::ReadOnly)) {
-        qCritical("Unable to open file.");
+        qCritical("Unable to open file %s.", qPrintable(databaseFilename));
         return 1;
     }
 

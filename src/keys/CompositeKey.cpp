@@ -19,12 +19,15 @@
 #include "CompositeKey_p.h"
 #include "ChallengeResponseKey.h"
 
-#include <QtConcurrent>
 #include <QElapsedTimer>
+#include <QFile>
+#include <QtConcurrent>
 
 #include "core/Global.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/SymmetricCipher.h"
+#include "keys/FileKey.h"
+#include "keys/PasswordKey.h"
 
 CompositeKey::CompositeKey()
 {
@@ -75,6 +78,29 @@ CompositeKey& CompositeKey::operator=(const CompositeKey& key)
     }
 
     return *this;
+}
+
+/*
+ * Read a key from a line of input.
+ * If the line references a valid file
+ * path, the key is loaded from file.
+ */
+CompositeKey CompositeKey::readFromLine(QString line)
+{
+
+  CompositeKey key;
+  if (QFile::exists(line)) {
+      FileKey fileKey;
+      fileKey.load(line);
+      key.addKey(fileKey);
+  }
+  else {
+      PasswordKey password;
+      password.setPassword(line);
+      key.addKey(password);
+  }
+  return key;
+
 }
 
 QByteArray CompositeKey::rawKey() const
