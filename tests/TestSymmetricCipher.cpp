@@ -123,6 +123,127 @@ void TestSymmetricCipher::testAes256CbcDecryption()
              plainText);
 }
 
+void TestSymmetricCipher::testTwofish256CbcEncryption()
+{
+    // NIST MCT Known-Answer Tests (cbc_e_m.txt)
+    // https://www.schneier.com/code/twofish-kat.zip
+    
+    QVector<QByteArray> keys {
+        QByteArray::fromHex("0000000000000000000000000000000000000000000000000000000000000000"),
+        QByteArray::fromHex("D0A260EB41755B19374BABF259A79DB3EA7162E65490B03B1AE4871FB35EF23B"),
+        QByteArray::fromHex("8D55E4849A4DED08D89881E6708EDD26BEEE942073DFB3790B2798B240ACD74A"),
+        QByteArray::fromHex("606EFDC2066A837AF0430EBE4CF1F21071CCB236C33B4B9D82404FDB05C74621"),
+        QByteArray::fromHex("B119AA9485CEEEB4CC778AF21121E54DE4BDBA3498C61C8FD9004AA0C71909C3")
+    };
+    QVector<QByteArray> ivs {
+        QByteArray::fromHex("00000000000000000000000000000000"),
+        QByteArray::fromHex("EA7162E65490B03B1AE4871FB35EF23B"),
+        QByteArray::fromHex("549FF6C6274F034211C31FADF3F22571"),
+        QByteArray::fromHex("CF222616B0E4F8E48967D769456B916B"),
+        QByteArray::fromHex("957108025BFD57125B40057BC2DE4FE2")
+    };
+    QVector<QByteArray> plainTexts {
+        QByteArray::fromHex("00000000000000000000000000000000"),
+        QByteArray::fromHex("D0A260EB41755B19374BABF259A79DB3"),
+        QByteArray::fromHex("5DF7846FDB38B611EFD32A1429294095"),
+        QByteArray::fromHex("ED3B19469C276E7228DB8F583C7F2F36"),
+        QByteArray::fromHex("D177575683A46DCE3C34844C5DD0175D")
+    };
+    QVector<QByteArray> cipherTexts {
+        QByteArray::fromHex("EA7162E65490B03B1AE4871FB35EF23B"),
+        QByteArray::fromHex("549FF6C6274F034211C31FADF3F22571"),
+        QByteArray::fromHex("CF222616B0E4F8E48967D769456B916B"),
+        QByteArray::fromHex("957108025BFD57125B40057BC2DE4FE2"),
+        QByteArray::fromHex("6F725C5950133F82EF021A94CADC8508")
+    };
+    
+    SymmetricCipher cipher(SymmetricCipher::Twofish, SymmetricCipher::Cbc, SymmetricCipher::Encrypt);
+    bool ok;
+    
+    for (int i = 0; i < keys.size(); ++i) {
+        cipher.init(keys[i], ivs[i]);
+        QByteArray ptNext = plainTexts[i];
+        QByteArray ctPrev = ivs[i];
+        QByteArray ctCur;
+        QCOMPARE(cipher.blockSize(), 16);
+        for (int j = 0; j < 5000; ++j) {
+            ctCur = cipher.process(ptNext, &ok);
+            if (!ok)
+                return;
+            ptNext = ctPrev;
+            ctPrev = ctCur;
+            
+            ctCur = cipher.process(ptNext, &ok);
+            if (!ok)
+                return;
+            ptNext = ctPrev;
+            ctPrev = ctCur;
+        }
+        
+        QVERIFY(ok);
+        QCOMPARE(ctCur, cipherTexts[i]);
+    }
+}
+
+void TestSymmetricCipher::testTwofish256CbcDecryption()
+{
+    // NIST MCT Known-Answer Tests (cbc_d_m.txt)
+    // https://www.schneier.com/code/twofish-kat.zip
+    
+    QVector<QByteArray> keys {
+        QByteArray::fromHex("0000000000000000000000000000000000000000000000000000000000000000"),
+        QByteArray::fromHex("1B1FE8F5A911CD4C0D800EDCE8ED0A942CBA6271A1044F90C30BA8FE91E1C163"),
+        QByteArray::fromHex("EBA31FF8D2A24FDD769A937353E23257294A33394E4D17A668060AD8230811A1"),
+        QByteArray::fromHex("1DCF1915C389AB273F80F897BF008F058ED89F58A95C1BE523C4B11295ED2D0F"),
+        QByteArray::fromHex("491B9A66D3ED4EF19F02180289D5B1A1C2596AE568540A95DC5244198A9B8869")
+    };
+    QVector<QByteArray> ivs {
+        QByteArray::fromHex("00000000000000000000000000000000"),
+        QByteArray::fromHex("1B1FE8F5A911CD4C0D800EDCE8ED0A94"),
+        QByteArray::fromHex("F0BCF70D7BB382917B1A9DAFBB0F38C3"),
+        QByteArray::fromHex("F66C06ED112BE4FA491A6BE4ECE2BD52"),
+        QByteArray::fromHex("54D483731064E5D6A082E09536D53EA4")
+    };
+    QVector<QByteArray> plainTexts {
+        QByteArray::fromHex("2CBA6271A1044F90C30BA8FE91E1C163"),
+        QByteArray::fromHex("05F05148EF495836AB0DA226B2E9D0C2"),
+        QByteArray::fromHex("A792AC61E7110C434BC2BBCAB6E53CAE"),
+        QByteArray::fromHex("4C81F5BDC1081170FF96F50B1F76A566"),
+        QByteArray::fromHex("BD959F5B787037631A37051EA5F369F8")
+    };
+    QVector<QByteArray> cipherTexts {
+        QByteArray::fromHex("00000000000000000000000000000000"),
+        QByteArray::fromHex("2CBA6271A1044F90C30BA8FE91E1C163"),
+        QByteArray::fromHex("05F05148EF495836AB0DA226B2E9D0C2"),
+        QByteArray::fromHex("A792AC61E7110C434BC2BBCAB6E53CAE"),
+        QByteArray::fromHex("4C81F5BDC1081170FF96F50B1F76A566")
+    };
+    
+    SymmetricCipher cipher(SymmetricCipher::Twofish, SymmetricCipher::Cbc, SymmetricCipher::Decrypt);
+    bool ok;
+    
+    for (int i = 0; i < keys.size(); ++i) {
+        cipher.init(keys[i], ivs[i]);
+        QByteArray ctNext = cipherTexts[i];
+        QByteArray ptCur;
+        QCOMPARE(cipher.blockSize(), 16);
+        for (int j = 0; j < 5000; ++j) {
+            ptCur = cipher.process(ctNext, &ok);
+            if (!ok)
+                return;
+            ctNext = ptCur;
+            
+            ptCur = cipher.process(ctNext, &ok);
+            if (!ok)
+                return;
+            ctNext = ptCur;
+        }
+        
+        QVERIFY(ok);
+        QCOMPARE(ptCur, plainTexts[i]);
+    }
+}
+
 void TestSymmetricCipher::testSalsa20()
 {
     // http://www.ecrypt.eu.org/stream/svn/viewcvs.cgi/ecrypt/trunk/submissions/salsa20/full/verified.test-vectors?logsort=rev&rev=210&view=markup
