@@ -34,6 +34,9 @@
      <property name="focusPolicy">
       <enum>Qt::ClickFocus</enum>
      </property>
+     <property name="text">
+      <string>Search</string>
+     </property>
      <property name="toolButtonStyle">
       <enum>Qt::ToolButtonIconOnly</enum>
      </property>

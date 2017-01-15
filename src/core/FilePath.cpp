@@ -211,6 +211,9 @@ FilePath::FilePath()
     else if (testSetDir(appDirPath + "/share")) {
     }
 #endif
+    // Last ditch test when running in the build directory (mainly for travis tests)
+    else if (testSetDir(QString(KEEPASSX_SOURCE_DIR) + "/share")) {
+    }
 
     if (m_dataPath.isEmpty()) {
         qWarning("FilePath::DataPath: can't find data dir");
