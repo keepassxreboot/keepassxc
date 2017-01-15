@@ -34,12 +34,13 @@ SearchWidget::SearchWidget(QWidget *parent)
     m_searchTimer->setSingleShot(true);
 
     connect(m_ui->searchEdit, SIGNAL(textChanged(QString)), SLOT(startSearchTimer()));
-    connect(m_ui->searchEdit, SIGNAL(returnPressed()), SLOT(startSearch()));
-    connect(m_ui->searchIcon, SIGNAL(triggered(QAction*)), m_ui->searchEdit, SLOT(setFocus()));
+    connect(m_ui->searchIcon, SIGNAL(pressed()), m_ui->searchEdit, SLOT(setFocus()));
+    connect(m_ui->clearIcon, SIGNAL(pressed()), m_ui->searchEdit, SLOT(clear()));
+    connect(m_ui->clearIcon, SIGNAL(pressed()), m_ui->searchEdit, SLOT(setFocus()));
     connect(m_searchTimer, SIGNAL(timeout()), this, SLOT(startSearch()));
     connect(this, SIGNAL(escapePressed()), m_ui->searchEdit, SLOT(clear()));
 
-    new QShortcut(Qt::CTRL + Qt::Key_F, m_ui->searchEdit, SLOT(setFocus()), nullptr, Qt::ApplicationShortcut);
+    new QShortcut(Qt::CTRL + Qt::Key_F, this, SLOT(searchFocus()), nullptr, Qt::ApplicationShortcut);
 
     m_ui->searchEdit->installEventFilter(this);
 
@@ -51,6 +52,9 @@ SearchWidget::SearchWidget(QWidget *parent)
     m_ui->searchIcon->setIcon(filePath()->icon("actions", "system-search"));
     m_ui->searchIcon->setMenu(searchMenu);
     m_ui->searchIcon->setPopupMode(QToolButton::MenuButtonPopup);
+
+    m_ui->clearIcon->setIcon(filePath()->icon("actions", "edit-clear-locationbar-rtl"));
+    m_ui->clearIcon->setEnabled(false);
 }
 
 SearchWidget::~SearchWidget()
@@ -67,21 +71,22 @@ bool SearchWidget::eventFilter(QObject *obj, QEvent *event)
             return true;
         }
         else if (keyEvent->matches(QKeySequence::Copy)) {
-            // If Control+C is pressed in the search edit when no
-            // text is selected, copy the password of the current
-            // entry.
+            // If Control+C is pressed in the search edit when no text
+            // is selected, copy the password of the current entry
             if (!m_ui->searchEdit->hasSelectedText()) {
                 emit copyPressed();
                 return true;
             }
         }
         else if (keyEvent->matches(QKeySequence::MoveToNextLine)) {
-            // If Down is pressed at EOL in the search edit, move
-            // the focus to the entry view.
-            QLineEdit* searchEdit = m_ui->searchEdit;
-            if (!searchEdit->hasSelectedText() &&
-                searchEdit->cursorPosition() == searchEdit->text().length()) {
+            if (m_ui->searchEdit->cursorPosition() == m_ui->searchEdit->text().length()) {
+                // If down is pressed at EOL, move the focus to the entry view
                 emit downPressed();
+                return true;
+            }
+            else {
+                // Otherwise move the cursor to EOL
+                m_ui->searchEdit->setCursorPosition(m_ui->searchEdit->text().length());
                 return true;
             }
         }
@@ -96,6 +101,7 @@ void SearchWidget::connectSignals(SignalMultiplexer& mx)
     mx.connect(this, SIGNAL(caseSensitiveChanged(bool)), SLOT(setSearchCaseSensitive(bool)));
     mx.connect(this, SIGNAL(copyPressed()), SLOT(copyPassword()));
     mx.connect(this, SIGNAL(downPressed()), SLOT(setFocus()));
+    mx.connect(m_ui->searchEdit, SIGNAL(returnPressed()), SLOT(switchToEntryEdit()));
 }
 
 void SearchWidget::databaseChanged(DatabaseWidget *dbWidget)
@@ -125,6 +131,9 @@ void SearchWidget::startSearch()
         m_searchTimer->stop();
     }
 
+    bool hasText = m_ui->searchEdit->text().length() > 0;
+    m_ui->clearIcon->setEnabled(hasText);
+
     search(m_ui->searchEdit->text());
 }
 
@@ -137,4 +146,10 @@ void SearchWidget::setCaseSensitive(bool state)
 {
     m_actionCaseSensitive->setChecked(state);
     updateCaseSensitive();
+}
+
+void SearchWidget::searchFocus()
+{
+    m_ui->searchEdit->setFocus();
+    m_ui->searchEdit->selectAll();
 }
