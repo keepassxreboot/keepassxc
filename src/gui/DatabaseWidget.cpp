@@ -750,7 +750,7 @@ void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::Mod
 void DatabaseWidget::switchToEntryEdit()
 {
     Entry* entry = m_entryView->currentEntry();
-    Q_ASSERT(entry);
+    
     if (!entry) {
         return;
     }
@@ -761,7 +761,7 @@ void DatabaseWidget::switchToEntryEdit()
 void DatabaseWidget::switchToGroupEdit()
 {
     Group* group = m_groupView->currentGroup();
-    Q_ASSERT(group);
+    
     if (!group) {
         return;
     }
