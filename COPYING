@@ -198,3 +198,9 @@ Files: src/zxcvbn/zxcvbn.*
 Copyright: 2015, Tony Evans
            2016, KeePassXC Team
 License: BSD 3-clause
+
+Files: src/gui/kmessagewidget.h
+       src/gui/kmessagewidget.cpp
+Copyright: 2011 Aurélien Gâteau <agateau@kde.org>
+           2014 Dominik Haumann <dhaumann@kde.org>
+License: LGPL-2.1
