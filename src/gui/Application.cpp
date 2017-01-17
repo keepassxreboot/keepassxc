@@ -17,12 +17,21 @@
  */
 
 #include "Application.h"
+#include "MainWindow.h"
 
 #include <QAbstractNativeEventFilter>
 #include <QFileOpenEvent>
+#include <QSocketNotifier>
 
 #include "autotype/AutoType.h"
 
+#if defined(Q_OS_UNIX)
+#include <signal.h>
+#include <unistd.h>
+#include <sys/socket.h>
+#endif
+
+class MainWindow;
 #if defined(Q_OS_UNIX) && !defined(Q_OS_OSX)
 class XcbEventFilter : public QAbstractNativeEventFilter
 {
@@ -64,12 +73,15 @@ public:
 
 Application::Application(int& argc, char** argv)
     : QApplication(argc, argv)
-    , m_mainWindow(nullptr)
+    , m_mainWindow(nullptr), m_unixSignalNotifier(nullptr)
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_OSX)
     installNativeEventFilter(new XcbEventFilter());
 #elif defined(Q_OS_WIN)
     installNativeEventFilter(new WinEventFilter());
+#endif
+#if defined(Q_OS_UNIX)
+    registerUnixSignals();
 #endif
 }
 
@@ -98,3 +110,56 @@ bool Application::event(QEvent* event)
 
     return QApplication::event(event);
 }
+
+#if defined(Q_OS_UNIX)
+int Application::unixSignalSocket[2];
+
+void Application::registerUnixSignals()
+{
+    int result = ::socketpair(AF_UNIX, SOCK_STREAM, 0, unixSignalSocket);
+    Q_ASSERT(0 == result);
+    if (0 != result) {
+        // do not register handles when socket creation failed, otherwise
+        // application will be unresponsive to signals such as SIGINT or SIGTERM
+        return;
+    }
+    
+    QVector<int> const handledSignals = { SIGQUIT, SIGINT, SIGTERM, SIGHUP };
+    for (auto s: handledSignals) {
+        struct sigaction sigAction;
+        
+        sigAction.sa_handler = handleUnixSignal;
+        sigemptyset(&sigAction.sa_mask);
+        sigAction.sa_flags = 0 | SA_RESTART;
+        sigaction(s, &sigAction, nullptr);
+    }
+    
+    m_unixSignalNotifier = new QSocketNotifier(unixSignalSocket[1], QSocketNotifier::Read, this);
+    connect(m_unixSignalNotifier, SIGNAL(activated(int)), this, SLOT(quitBySignal()));
+}
+
+void Application::handleUnixSignal(int sig)
+{
+    switch (sig) {
+        case SIGQUIT:
+        case SIGINT:
+        case SIGTERM:
+        {
+            char buf = 0;
+            ::write(unixSignalSocket[0], &buf, sizeof(buf));
+            return;
+        }
+        case SIGHUP:
+            return;
+    }
+}
+
+void Application::quitBySignal()
+{
+    char buf;
+    ::read(unixSignalSocket[1], &buf, sizeof(buf));
+    
+    if (nullptr != m_mainWindow)
+        static_cast<MainWindow*>(m_mainWindow)->appExit();
+}
+#endif
