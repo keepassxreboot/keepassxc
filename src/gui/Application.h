@@ -37,9 +37,11 @@ Q_SIGNALS:
     void openFile(const QString& filename);
 
 private Q_SLOTS:
+#if defined(Q_OS_UNIX)
     void quitBySignal();
+#endif
 
-private:    
+private:
     QWidget* m_mainWindow;
     
 #if defined(Q_OS_UNIX)
