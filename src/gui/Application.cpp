@@ -31,7 +31,6 @@
 #include <sys/socket.h>
 #endif
 
-class MainWindow;
 #if defined(Q_OS_UNIX) && !defined(Q_OS_OSX)
 class XcbEventFilter : public QAbstractNativeEventFilter
 {
@@ -156,6 +155,7 @@ void Application::handleUnixSignal(int sig)
 
 void Application::quitBySignal()
 {
+    m_unixSignalNotifier->setEnabled(false);
     char buf;
     ::read(unixSignalSocket[1], &buf, sizeof(buf));
     
