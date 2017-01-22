@@ -346,3 +346,5 @@ cd "$ORIG_CWD"
 git checkout "$ORIG_BRANCH" > /dev/null 2>&1
 
 logInfo "All done!"
+logInfo "Please merge the release branch back into the develop branch now and then push your changes."
+logInfo "Don't forget to also push the tags using \e[1mgit push --tags\e[0m."
