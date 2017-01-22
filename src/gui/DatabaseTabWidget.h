@@ -55,6 +55,7 @@ public:
     ~DatabaseTabWidget();
     void openDatabase(const QString& fileName, const QString& pw = QString(),
                       const QString& keyFile = QString());
+    void mergeDatabase(const QString& fileName);
     DatabaseWidget* currentDatabaseWidget();
     bool hasLockableDatabases() const;
 
@@ -63,6 +64,7 @@ public:
 public Q_SLOTS:
     void newDatabase();
     void openDatabase();
+    void mergeDatabase();
     void importKeePass1Database();
     bool saveDatabase(int index = -1);
     bool saveDatabaseAs(int index = -1);
@@ -80,6 +82,8 @@ Q_SIGNALS:
     void tabNameChanged();
     void databaseWithFileClosed(QString filePath);
     void activateDatabaseChanged(DatabaseWidget* dbWidget);
+    void databaseLocked(DatabaseWidget* dbWidget);
+    void databaseUnlocked(DatabaseWidget* dbWidget);
 
 private Q_SLOTS:
     void updateTabName(Database* db);
@@ -87,8 +91,9 @@ private Q_SLOTS:
     void updateTabNameFromDbWidgetSender();
     void modified();
     void toggleTabbar();
-    void changeDatabase(Database* newDb);
+    void changeDatabase(Database* newDb, bool unsavedChanges);
     void emitActivateDatabaseChanged();
+    void emitDatabaseUnlockedFromDbWidgetSender();
 
 private:
     bool saveDatabase(Database* db);

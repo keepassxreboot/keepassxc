@@ -19,6 +19,7 @@
 #define KEEPASSX_COMPOSITEKEY_H
 
 #include <QList>
+#include <QString>
 
 #include "keys/Key.h"
 
@@ -39,6 +40,7 @@ public:
     void addKey(const Key& key);
 
     static int transformKeyBenchmark(int msec);
+    static CompositeKey readFromLine(QString line);
 
 private:
     static QByteArray transformKeyRaw(const QByteArray& key, const QByteArray& seed,

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>372</width>
-    <height>301</height>
+    <height>364</height>
    </rect>
   </property>
   <layout class="QFormLayout" name="formLayout">
@@ -76,9 +76,9 @@
       </widget>
      </item>
      <item>
-      <widget class="QToolButton" name="tooglePasswordGeneratorButton">
+      <widget class="QToolButton" name="togglePasswordGeneratorButton">
        <property name="text">
-        <string>Gen.</string>
+        <string>Generate</string>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -166,7 +166,7 @@
   <tabstop>passwordEdit</tabstop>
   <tabstop>passwordRepeatEdit</tabstop>
   <tabstop>togglePasswordButton</tabstop>
-  <tabstop>tooglePasswordGeneratorButton</tabstop>
+  <tabstop>togglePasswordGeneratorButton</tabstop>
   <tabstop>urlEdit</tabstop>
   <tabstop>expireCheck</tabstop>
   <tabstop>expireDatePicker</tabstop>

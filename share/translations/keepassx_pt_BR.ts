@@ -373,6 +373,10 @@ Do you want to save it anyway?</source>
         <translation>O banco de dados que você está tentando salvar como está travado por uma outra instância de KeePassX.
 Você deseja salvá-lo mesmo assim?</translation>
     </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
@@ -423,6 +427,14 @@ Você deseja salvá-lo mesmo assim?</translation>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Não foi possível calcular chave mestra</translation>
+    </message>
+    <message>
+        <source>Move entry to recycle bin?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -738,6 +750,14 @@ Você deseja salvá-lo mesmo assim?</translation>
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
         <translation><numerusform>Não é possível apagar o ícone. Ainda usado por %n item.</numerusform><numerusform>Não é possível apagar o ícone. Ainda usado por %n itens.</numerusform></translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Can&apos;t read icon:</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
@@ -850,6 +870,10 @@ Você deseja salvá-lo mesmo assim?</translation>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Não foi possível calcular a chave mestra</translation>
+    </message>
+    <message>
+        <source>Wrong key or database file is corrupt.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1301,6 +1325,14 @@ Esta é uma migração de uma via. Você não poderá abrir o banco de dados imp
     <message>
         <source>Remember last key files</source>
         <translation>Lembrar dos últimos arquivos-chave</translation>
+    </message>
+    <message>
+        <source>Hide window to system tray instead of App Exit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide window to system tray on App start</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

@@ -49,6 +49,10 @@ QString FilePath::pluginPath(const QString& name)
     // for TestAutoType
     pluginPaths << QCoreApplication::applicationDirPath() + "/../src/autotype/test";
 
+#if defined(Q_OS_MAC)
+    pluginPaths << QCoreApplication::applicationDirPath() + "/../PlugIns";
+#endif
+
     pluginPaths << QCoreApplication::applicationDirPath();
 
     QString configuredPluginDir = KEEPASSX_PLUGIN_DIR;
@@ -87,7 +91,17 @@ QString FilePath::pluginPath(const QString& name)
 
 QIcon FilePath::applicationIcon()
 {
-    return icon("apps", "keepassx");
+    return icon("apps", "keepassxc");
+}
+
+QIcon FilePath::trayIconLocked()
+{
+    return icon("apps", "keepassxc-locked");
+}
+
+QIcon FilePath::trayIconUnlocked()
+{
+    return applicationIcon();
 }
 
 QIcon FilePath::icon(const QString& category, const QString& name, bool fromTheme)
@@ -197,6 +211,9 @@ FilePath::FilePath()
     else if (testSetDir(appDirPath + "/share")) {
     }
 #endif
+    // Last ditch test when running in the build directory (mainly for travis tests)
+    else if (testSetDir(QString(KEEPASSX_SOURCE_DIR) + "/share")) {
+    }
 
     if (m_dataPath.isEmpty()) {
         qWarning("FilePath::DataPath: can't find data dir");

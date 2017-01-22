@@ -88,6 +88,7 @@ public:
     QByteArray transformSeed() const;
     quint64 transformRounds() const;
     QByteArray transformedMasterKey() const;
+    const CompositeKey & key() const;
 
     void setCipher(const Uuid& cipher);
     void setCompressionAlgo(Database::CompressionAlgorithm algo);
@@ -105,6 +106,7 @@ public:
     void recycleGroup(Group* group);
     void setEmitModified(bool value);
     void copyAttributesFrom(const Database* other);
+    void merge(const Database* other);
 
     /**
      * Returns a unique id that is only valid as long as the Database exists.

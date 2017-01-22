@@ -22,6 +22,8 @@
 #include <QShortcut>
 #include <QTimer>
 
+#include "config-keepassx.h"
+
 #include "autotype/AutoType.h"
 #include "core/Config.h"
 #include "core/FilePath.h"
@@ -33,13 +35,20 @@
 #include "gui/DatabaseRepairWidget.h"
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
+#include "gui/SearchWidget.h"
 
+#ifdef WITH_XC_HTTP
 #include "http/Service.h"
 #include "http/HttpSettings.h"
 #include "http/OptionDialog.h"
-#include "gui/SettingsWidget.h"
+#endif
 
-class HttpPlugin: public ISettingsPage {
+#include "gui/SettingsWidget.h"
+#include "gui/PasswordGeneratorWidget.h"
+
+#ifdef WITH_XC_HTTP
+class HttpPlugin: public ISettingsPage
+{
     public:
         HttpPlugin(DatabaseTabWidget * tabWidget) {
             m_service = new Service(tabWidget);
@@ -68,9 +77,10 @@ class HttpPlugin: public ISettingsPage {
         }
     private:
         Service *m_service;
-    };
+};
+#endif
 
-const QString MainWindow::BaseWindowTitle = "KeePassX";
+const QString MainWindow::BaseWindowTitle = "KeePassXC";
 
 MainWindow::MainWindow()
     : m_ui(new Ui::MainWindow())
@@ -80,10 +90,18 @@ MainWindow::MainWindow()
 
     m_ui->setupUi(this);
 
+    // Setup the search widget in the toolbar
+    SearchWidget *search = new SearchWidget();
+    search->connectSignals(m_actionMultiplexer);
+    m_searchWidgetAction = m_ui->toolBar->addWidget(search);
+    m_searchWidgetAction->setEnabled(false);
+
     m_countDefaultAttributes = m_ui->menuEntryCopyAttribute->actions().size();
 
     restoreGeometry(config()->get("GUI/MainWindowGeometry").toByteArray());
+    #ifdef WITH_XC_HTTP
     m_ui->settingsWidget->addSettingsPage(new HttpPlugin(m_ui->tabWidget));
+    #endif
 
     setWindowIcon(filePath()->applicationIcon());
     QAction* toggleViewAction = m_ui->toolBar->toggleViewAction();
@@ -125,7 +143,6 @@ MainWindow::MainWindow()
     setShortcut(m_ui->actionDatabaseClose, QKeySequence::Close, Qt::CTRL + Qt::Key_W);
     m_ui->actionLockDatabases->setShortcut(Qt::CTRL + Qt::Key_L);
     setShortcut(m_ui->actionQuit, QKeySequence::Quit, Qt::CTRL + Qt::Key_Q);
-    setShortcut(m_ui->actionSearch, QKeySequence::Find, Qt::CTRL + Qt::Key_F);
     m_ui->actionEntryNew->setShortcut(Qt::CTRL + Qt::Key_N);
     m_ui->actionEntryEdit->setShortcut(Qt::CTRL + Qt::Key_E);
     m_ui->actionEntryDelete->setShortcut(Qt::CTRL + Qt::Key_D);
@@ -161,10 +178,9 @@ MainWindow::MainWindow()
     m_ui->actionGroupDelete->setIcon(filePath()->icon("actions", "group-delete", false));
 
     m_ui->actionSettings->setIcon(filePath()->icon("actions", "configure"));
+    m_ui->actionPasswordGenerator->setIcon(filePath()->icon("actions", "password-generator", false));
 
     m_ui->actionAbout->setIcon(filePath()->icon("actions", "help-about"));
-
-    m_ui->actionSearch->setIcon(filePath()->icon("actions", "system-search"));
 
     m_actionMultiplexer.connect(SIGNAL(currentModeChanged(DatabaseWidget::Mode)),
                                 this, SLOT(setMenuActionState(DatabaseWidget::Mode)));
@@ -177,6 +193,10 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(SIGNAL(entryContextMenuRequested(QPoint)),
                                 this, SLOT(showEntryContextMenu(QPoint)));
 
+    // Notify search when the active database changes
+    connect(m_ui->tabWidget, SIGNAL(activateDatabaseChanged(DatabaseWidget*)),
+            search, SLOT(databaseChanged(DatabaseWidget*)));
+
     connect(m_ui->tabWidget, SIGNAL(tabNameChanged()),
             SLOT(updateWindowTitle()));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)),
@@ -185,6 +205,10 @@ MainWindow::MainWindow()
             SLOT(databaseTabChanged(int)));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)),
             SLOT(setMenuActionState()));
+    connect(m_ui->tabWidget, SIGNAL(databaseLocked(DatabaseWidget*)),
+            SLOT(databaseStatusChanged(DatabaseWidget*)));
+    connect(m_ui->tabWidget, SIGNAL(databaseUnlocked(DatabaseWidget*)),
+            SLOT(databaseStatusChanged(DatabaseWidget*)));
     connect(m_ui->stackedWidget, SIGNAL(currentChanged(int)), SLOT(setMenuActionState()));
     connect(m_ui->stackedWidget, SIGNAL(currentChanged(int)), SLOT(updateWindowTitle()));
     connect(m_ui->settingsWidget, SIGNAL(editFinished(bool)), SLOT(switchToDatabases()));
@@ -200,6 +224,8 @@ MainWindow::MainWindow()
             SLOT(saveDatabaseAs()));
     connect(m_ui->actionDatabaseClose, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(closeDatabase()));
+    connect(m_ui->actionDatabaseMerge, SIGNAL(triggered()), m_ui->tabWidget,
+            SLOT(mergeDatabase()));
     connect(m_ui->actionChangeMasterKey, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(changeMasterKey()));
     connect(m_ui->actionChangeDatabaseSettings, SIGNAL(triggered()), m_ui->tabWidget,
@@ -246,11 +272,10 @@ MainWindow::MainWindow()
             SLOT(deleteGroup()));
 
     connect(m_ui->actionSettings, SIGNAL(triggered()), SLOT(switchToSettings()));
+    connect(m_ui->actionPasswordGenerator, SIGNAL(toggled(bool)), SLOT(switchToPasswordGen(bool)));
+    connect(m_ui->passwordGeneratorWidget, SIGNAL(dialogTerminated()), SLOT(closePasswordGen()));
 
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
-
-    m_actionMultiplexer.connect(m_ui->actionSearch, SIGNAL(triggered()),
-                                SLOT(openSearch()));
 
     updateTrayIcon();
 }
@@ -317,21 +342,11 @@ void MainWindow::openDatabase(const QString& fileName, const QString& pw, const 
     m_ui->tabWidget->openDatabase(fileName, pw, keyFile);
 }
 
-void MainWindow::configuredMinimizeWindow()
-{
-    bool minimize = isTrayIconEnabled() &&
-                    config()->get("GUI/MinimizeToTray").toBool() &&
-                    config()->get("GUI/MinimizeOnClose").toBool() &&
-                    config()->get("GUI/MinimizeOnStartup").toBool();
-    if (minimize) {
-        hide();
-    }
-}
-
 void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 {
-    bool inDatabaseTabWidget = (m_ui->stackedWidget->currentIndex() == 0);
-    bool inWelcomeWidget = (m_ui->stackedWidget->currentIndex() == 2);
+    int currentIndex = m_ui->stackedWidget->currentIndex();
+    bool inDatabaseTabWidget = (currentIndex == 0);
+    bool inWelcomeWidget = (currentIndex == 2);
 
     if (inDatabaseTabWidget && m_ui->tabWidget->currentIndex() != -1) {
         DatabaseWidget* dbWidget = m_ui->tabWidget->currentDatabaseWidget();
@@ -363,13 +378,14 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionGroupNew->setEnabled(groupSelected);
             m_ui->actionGroupEdit->setEnabled(groupSelected);
             m_ui->actionGroupDelete->setEnabled(groupSelected && dbWidget->canDeleteCurrentGroup());
-            // TODO: get checked state from db widget
-            m_ui->actionSearch->setEnabled(true);
             m_ui->actionChangeMasterKey->setEnabled(true);
             m_ui->actionChangeDatabaseSettings->setEnabled(true);
             m_ui->actionDatabaseSave->setEnabled(true);
             m_ui->actionDatabaseSaveAs->setEnabled(true);
             m_ui->actionExportCsv->setEnabled(true);
+            m_ui->actionDatabaseMerge->setEnabled(m_ui->tabWidget->currentIndex() != -1);
+
+            m_searchWidgetAction->setEnabled(true);
             break;
         }
         case DatabaseWidget::EditMode:
@@ -390,12 +406,14 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryCopyNotes->setEnabled(false);
             m_ui->menuEntryCopyAttribute->setEnabled(false);
 
-            m_ui->actionSearch->setEnabled(false);
             m_ui->actionChangeMasterKey->setEnabled(false);
             m_ui->actionChangeDatabaseSettings->setEnabled(false);
             m_ui->actionDatabaseSave->setEnabled(false);
             m_ui->actionDatabaseSaveAs->setEnabled(false);
             m_ui->actionExportCsv->setEnabled(false);
+            m_ui->actionDatabaseMerge->setEnabled(false);
+
+            m_searchWidgetAction->setEnabled(false);
             break;
         }
         default:
@@ -420,14 +438,15 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         m_ui->actionEntryCopyNotes->setEnabled(false);
         m_ui->menuEntryCopyAttribute->setEnabled(false);
 
-        m_ui->actionSearch->setEnabled(false);
         m_ui->actionChangeMasterKey->setEnabled(false);
         m_ui->actionChangeDatabaseSettings->setEnabled(false);
         m_ui->actionDatabaseSave->setEnabled(false);
         m_ui->actionDatabaseSaveAs->setEnabled(false);
-
         m_ui->actionDatabaseClose->setEnabled(false);
         m_ui->actionExportCsv->setEnabled(false);
+        m_ui->actionDatabaseMerge->setEnabled(false);
+
+        m_searchWidgetAction->setEnabled(false);
     }
 
     bool inDatabaseTabWidgetOrWelcomeWidget = inDatabaseTabWidget || inWelcomeWidget;
@@ -435,9 +454,16 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
     m_ui->actionDatabaseOpen->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
     m_ui->menuRecentDatabases->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
     m_ui->actionImportKeePass1->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
+    m_ui->actionDatabaseMerge->setEnabled(inDatabaseTabWidget);
     m_ui->actionRepairDatabase->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
 
     m_ui->actionLockDatabases->setEnabled(m_ui->tabWidget->hasLockableDatabases());
+
+    if ((3 == currentIndex) != m_ui->actionPasswordGenerator->isChecked()) {
+        bool blocked = m_ui->actionPasswordGenerator->blockSignals(true);
+        m_ui->actionPasswordGenerator->toggle();
+        m_ui->actionPasswordGenerator->blockSignals(blocked);
+    }
 }
 
 void MainWindow::updateWindowTitle()
@@ -486,6 +512,29 @@ void MainWindow::switchToSettings()
     m_ui->stackedWidget->setCurrentIndex(1);
 }
 
+void MainWindow::switchToPasswordGen(bool enabled)
+{
+    if (enabled == true) {
+      m_ui->passwordGeneratorWidget->loadSettings();
+      m_ui->passwordGeneratorWidget->regeneratePassword();
+      m_ui->passwordGeneratorWidget->setStandaloneMode(true);
+      m_ui->stackedWidget->setCurrentIndex(3);
+    } else {
+      m_ui->passwordGeneratorWidget->saveSettings();
+      switchToDatabases();
+    }
+}
+
+void MainWindow::closePasswordGen()
+{
+    switchToPasswordGen(false);
+}
+
+void MainWindow::databaseStatusChanged(DatabaseWidget *)
+{
+    updateTrayIcon();
+}
+
 void MainWindow::databaseTabChanged(int tabIndex)
 {
     if (tabIndex != -1 && m_ui->stackedWidget->currentIndex() == 2) {
@@ -501,12 +550,16 @@ void MainWindow::databaseTabChanged(int tabIndex)
 void MainWindow::closeEvent(QCloseEvent* event)
 {
     bool minimizeOnClose = isTrayIconEnabled() &&
-                           config()->get("GUI/MinimizeToTray").toBool() &&
                            config()->get("GUI/MinimizeOnClose").toBool();
     if (minimizeOnClose && !appExitCalled)
     {
         event->ignore();
         hide();
+
+        if (config()->get("security/lockdatabaseminimize").toBool()) {
+            m_ui->tabWidget->lockDatabases();
+        }
+
         return;
     }
 
@@ -525,12 +578,17 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
 void MainWindow::changeEvent(QEvent* event)
 {
-    if ((event->type() == QEvent::WindowStateChange) && isMinimized()
-            && isTrayIconEnabled() && m_trayIcon && m_trayIcon->isVisible()
-            && config()->get("GUI/MinimizeToTray").toBool())
-    {
-        event->ignore();
-        QTimer::singleShot(0, this, SLOT(hide()));
+    if ((event->type() == QEvent::WindowStateChange) && isMinimized()) {
+        if (isTrayIconEnabled() && m_trayIcon && m_trayIcon->isVisible()
+                && config()->get("GUI/MinimizeToTray").toBool())
+        {
+            event->ignore();
+            QTimer::singleShot(0, this, SLOT(hide()));
+        }
+
+        if (config()->get("security/lockdatabaseminimize").toBool()) {
+            m_ui->tabWidget->lockDatabases();
+        }
     }
     else {
         QMainWindow::changeEvent(event);
@@ -573,7 +631,7 @@ void MainWindow::updateTrayIcon()
 {
     if (isTrayIconEnabled()) {
         if (!m_trayIcon) {
-            m_trayIcon = new QSystemTrayIcon(filePath()->applicationIcon(), this);
+            m_trayIcon = new QSystemTrayIcon(this);
 
             QMenu* menu = new QMenu(this);
 
@@ -587,7 +645,14 @@ void MainWindow::updateTrayIcon()
             connect(actionToggle, SIGNAL(triggered()), SLOT(toggleWindow()));
 
             m_trayIcon->setContextMenu(menu);
+            m_trayIcon->setIcon(filePath()->applicationIcon());
             m_trayIcon->show();
+        }
+        if (m_ui->tabWidget->hasLockableDatabases()) {
+            m_trayIcon->setIcon(filePath()->trayIconUnlocked());
+        }
+        else {
+            m_trayIcon->setIcon(filePath()->trayIconLocked());
         }
     }
     else {
@@ -658,6 +723,10 @@ void MainWindow::toggleWindow()
 {
     if ((QApplication::activeWindow() == this) && isVisible() && !isMinimized()) {
         hide();
+
+        if (config()->get("security/lockdatabaseminimize").toBool()) {
+            m_ui->tabWidget->lockDatabases();
+        }
     }
     else {
         ensurePolished();
@@ -701,8 +770,8 @@ void MainWindow::repairDatabase()
             KeePass2Writer writer;
             writer.writeDatabase(saveFileName, dbRepairWidget->database());
             if (writer.hasError()) {
-                MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
-                                     + writer.errorString());
+                QMessageBox::critical(this, tr("Error"),
+                    tr("Writing the database failed.").append("\n\n").append(writer.errorString()));
             }
         }
     }

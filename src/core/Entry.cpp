@@ -185,6 +185,35 @@ QString Entry::defaultAutoTypeSequence() const
     return m_data.defaultAutoTypeSequence;
 }
 
+QString Entry::effectiveAutoTypeSequence() const
+{
+    if (!m_data.defaultAutoTypeSequence.isEmpty()) {
+        return m_data.defaultAutoTypeSequence;
+    }
+    QString sequence;
+
+    const Group* grp = group();
+    if(grp) {
+      sequence = grp->effectiveAutoTypeSequence();
+    } else {
+      return QString();
+    }
+
+    if (sequence.isEmpty() && (!username().isEmpty() || !password().isEmpty())) {
+        if (username().isEmpty()) {
+            sequence = "{PASSWORD}{ENTER}";
+        }
+       else if (password().isEmpty()) {
+          sequence = "{USERNAME}{ENTER}";
+        }
+        else {
+            sequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
+        }
+    }
+
+    return sequence;
+}
+
 AutoTypeAssociations* Entry::autoTypeAssociations()
 {
     return m_autoTypeAssociations;
@@ -420,7 +449,7 @@ void Entry::truncateHistory()
     int histMaxSize = db->metadata()->historyMaxSize();
     if (histMaxSize > -1) {
         int size = 0;
-        QSet<QByteArray> foundAttachements = attachments()->values().toSet();
+        QSet<QByteArray> foundAttachments = attachments()->values().toSet();
 
         QMutableListIterator<Entry*> i(m_history);
         i.toBack();
@@ -431,11 +460,11 @@ void Entry::truncateHistory()
             if (size <= histMaxSize) {
                 size += historyItem->attributes()->attributesSize();
 
-                const QSet<QByteArray> newAttachments = historyItem->attachments()->values().toSet() - foundAttachements;
+                const QSet<QByteArray> newAttachments = historyItem->attachments()->values().toSet() - foundAttachments;
                 for (const QByteArray& attachment : newAttachments) {
                     size += attachment.size();
                 }
-                foundAttachements += newAttachments;
+                foundAttachments += newAttachments;
             }
 
             if (size > histMaxSize) {
@@ -587,17 +616,40 @@ const Database* Entry::database() const
     }
 }
 
-QString Entry::resolvePlaceholders(const QString& str) const
+QString Entry::resolveMultiplePlaceholders(const QString& str) const
+{
+    QString result = str;
+    QRegExp tmplRegEx("({.*})", Qt::CaseInsensitive, QRegExp::RegExp2);
+    QStringList tmplList;
+    int pos = 0;
+
+    while ((pos = tmplRegEx.indexIn(str, pos)) != -1) {
+        QString found = tmplRegEx.cap(1);
+        result.replace(found,resolvePlaceholder(found));
+        pos += tmplRegEx.matchedLength();
+    }
+
+    return result;
+}
+
+QString Entry::resolvePlaceholder(const QString& str) const
 {
     QString result = str;
 
-    result.replace("{TITLE}", title(), Qt::CaseInsensitive);
-    result.replace("{USERNAME}", username(), Qt::CaseInsensitive);
-    result.replace("{URL}", url(), Qt::CaseInsensitive);
-    result.replace("{PASSWORD}", password(), Qt::CaseInsensitive);
-    result.replace("{NOTES}", notes(), Qt::CaseInsensitive);
+    const QList<QString> keyList = attributes()->keys();
+    for (const QString& key : keyList) {
+        Qt::CaseSensitivity cs = Qt::CaseInsensitive;
+        if (!EntryAttributes::isDefaultAttribute(key)) {
+            cs = Qt::CaseSensitive;
+        }
 
-    // TODO: lots of other placeholders missing
+        QString k = key;
+        k.prepend("{").append("}");
+        if (result.compare(k,cs)==0) {
+            result.replace(result,attributes()->value(key));
+            break;
+        }
+    }
 
     return result;
 }

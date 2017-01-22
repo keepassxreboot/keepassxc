@@ -27,6 +27,7 @@ class TestKeys : public QObject
 private Q_SLOTS:
     void initTestCase();
     void testComposite();
+    void testCompositeKeyReadFromLine();
     void testFileKey();
     void testFileKey_data();
     void testCreateFileKey();

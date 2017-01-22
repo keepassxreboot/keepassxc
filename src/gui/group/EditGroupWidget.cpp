@@ -82,7 +82,7 @@ void EditGroupWidget::loadGroup(Group* group, bool create, Database* database)
     else {
         m_mainUi->autoTypeSequenceCustomRadio->setChecked(true);
     }
-    m_mainUi->autoTypeSequenceCustomEdit->setText(group->defaultAutoTypeSequence());
+    m_mainUi->autoTypeSequenceCustomEdit->setText(group->effectiveAutoTypeSequence());
 
     IconStruct iconStruct;
     iconStruct.uuid = group->iconUuid();

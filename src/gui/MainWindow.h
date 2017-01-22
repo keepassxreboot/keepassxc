@@ -38,7 +38,6 @@ class MainWindow : public QMainWindow
 public:
     MainWindow();
     ~MainWindow();
-    void configuredMinimizeWindow();
 
 public Q_SLOTS:
     void openDatabase(const QString& fileName, const QString& pw = QString(),
@@ -54,6 +53,9 @@ private Q_SLOTS:
     void showAboutDialog();
     void switchToDatabases();
     void switchToSettings();
+    void switchToPasswordGen(bool enabled);
+    void closePasswordGen();
+    void databaseStatusChanged(DatabaseWidget *dbWidget);
     void databaseTabChanged(int tabIndex);
     void openRecentDatabase(QAction* action);
     void clearLastDatabases();
@@ -83,6 +85,7 @@ private:
     const QScopedPointer<Ui::MainWindow> m_ui;
     SignalMultiplexer m_actionMultiplexer;
     QAction* m_clearHistoryAction;
+    QAction* m_searchWidgetAction;
     QActionGroup* m_lastDatabasesActions;
     QActionGroup* m_copyAdditionalAttributeActions;
     QStringList m_openDatabases;

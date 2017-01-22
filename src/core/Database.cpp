@@ -282,6 +282,12 @@ void Database::recycleGroup(Group* group)
      }
 }
 
+void Database::merge(const Database* other)
+{
+    m_rootGroup->merge(other->rootGroup());
+    Q_EMIT modified();
+}
+
 void Database::setEmitModified(bool value)
 {
     if (m_emitModified && !value) {
@@ -318,3 +324,9 @@ void Database::startModifiedTimer()
     }
     m_timer->start(150);
 }
+
+const CompositeKey & Database::key() const
+{
+    return m_data.key;
+}
+

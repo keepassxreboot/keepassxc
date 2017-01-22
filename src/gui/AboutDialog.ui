@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>366</width>
-    <height>210</height>
+    <width>455</width>
+    <height>238</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>About KeePassX</string>
+   <string>About KeePassXC</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="sizeConstraint">
@@ -38,7 +38,7 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string notr="true">  KeePassX</string>
+        <string notr="true">  KeePassXC</string>
        </property>
       </widget>
      </item>
@@ -53,7 +53,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">&lt;a href=&quot;http://www.keepassx.org/&quot;&gt;http://www.keepassx.org/&lt;/a&gt;</string>
+      <string notr="true">&lt;a href=&quot;https://www.keepassxc.org/&quot;&gt;https://www.keepassxc.org/&lt;/a&gt;</string>
      </property>
      <property name="openExternalLinks">
       <bool>true</bool>
@@ -69,7 +69,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</string>
+      <string>KeePassXC is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
@@ -90,6 +90,14 @@
     <widget class="QLabel" name="label_libs">
      <property name="text">
       <string>Using:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_features">
+     <property name="text">
+      <string>Extensions:
+</string>
      </property>
     </widget>
    </item>

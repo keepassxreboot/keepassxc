@@ -27,6 +27,7 @@ Copyright: 2010-2012, Felix Geyer <debfx@fobos.de>
            2000-2008, Tom Sato <VEF00200@nifty.ne.jp>
            2013, Laszlo Papp <lpapp@kde.org>
            2013, David Faure <faure@kde.org>
+           2016, KeePassXC Team
 License: GPL-2 or GPL-3
 
 Files: cmake/GNUInstallDirs.cmake
@@ -34,13 +35,16 @@ Copyright: 2011 Nikita Krupen'ko <krnekit@gmail.com>
            2011 Kitware, Inc.
 License: BSD-3-clause
 
-Files: share/icons/application/*/apps/keepassx.png
-       share/icons/application/scalable/apps/keepassx.svgz
-Copyright: 2006, Otto Salminen
-           2009, Miguelito Vieira
-           2011-2013, Felix Geyer <debfx@fobos.de>
-           2012, Tobias Tangemann <tobiastangemann@gmail.com>
-License: GPL-2
+Files: share/icons/application/*/apps/keepassxc.png
+       share/icons/application/scalable/apps/keepassxc.svgz
+       share/icons/application/*/apps/keepassxc-dark.png
+       share/icons/application/scalable/apps/keepassxc-dark.svgz
+       share/icons/application/*/apps/keepassxc-locked.png
+       share/icons/application/scalable/apps/keepassxc-locked.svgz
+       share/icons/application/*/mimetypes/application-x-keepassxc.png
+       share/icons/application/scalable/mimetypes/application-x-keepassxc.svgz
+Copyright: 2016, Lorenzo Stella <lorenzo.stl@gmail.com>
+License: LGPL-2
 
 Files: share/icons/application/*/actions/auto-type.png
        share/icons/application/*/actions/database-change-key.png
@@ -136,6 +140,7 @@ Files: share/icons/application/*/actions/application-exit.png
        share/icons/application/*/actions/document-save-as.png
        share/icons/application/*/actions/edit-clear-locationbar-ltr.png
        share/icons/application/*/actions/edit-clear-locationbar-rtl.png
+       share/icons/application/*/actions/password-generator.png
        share/icons/application/*/actions/password-copy.png
        share/icons/application/*/actions/password-show-*.png
        share/icons/application/*/actions/system-search.png
@@ -187,3 +192,9 @@ License: LGPL-2.1 or GPL-3
 Files: cmake/GetGitRevisionDescription.cmake*
 Copyright: 2009-2010, Iowa State University
 License: Boost-1.0
+
+Files: src/zxcvbn/zxcvbn.*
+       src/utils/entropy-meter.cpp
+Copyright: 2015, Tony Evans
+           2016, KeePassXC Team
+License: BSD 3-clause

@@ -1,18 +1,24 @@
 language: cpp
 sudo: required
 dist: trusty
+services: [docker]
 
 os:
   - linux
 #  - osx
 
+# Define clang compiler without any frills
 compiler:
+  - clang
   - gcc
-#  - clang
+
+env:
+  - CONFIG=Release
+  - CONFIG=Debug
 
 git:
   depth: 3
-  
+
 before_install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -qq update; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get -qq install cmake libmicrohttpd10 libmicrohttpd-dev libxi-dev qtbase5-dev libqt5x11extras5-dev qttools5-dev qttools5-dev-tools libgcrypt20-dev zlib1g-dev libxtst-dev xvfb;  fi
@@ -20,14 +26,20 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew ls | grep -wq cmake || brew install cmake; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew ls | grep -wq qt5 || brew install qt5; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew ls | grep -wq libgcrypt || brew install libgcrypt; fi
-  
+
 before_script:
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then CMAKE_ARGS="-DCMAKE_PREFIX_PATH=/usr/local/opt/qt5"; fi
   - mkdir build && pushd build
-  
+
 script:
-  - cmake -DCMAKE_BUILD_TYPE=Release -DWITH_GUI_TESTS=ON $CMAKE_ARGS ..
-  - make
+  - cmake -DCMAKE_BUILD_TYPE=${CONFIG} -DWITH_GUI_TESTS=ON -DWITH_XC_HTTP=ON -DWITH_XC_AUTOTYPE=ON -DWITH_XC_YUBIKEY=ON $CMAKE_ARGS ..
+  - make -j2
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then make test ARGS+="-E testgui --output-on-failure"; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then xvfb-run -a --server-args="-screen 0 800x600x24" make test ARGS+="-R testgui --output-on-failure"; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then make test ARGS+="--output-on-failure"; fi
+
+# Generate snapcraft build when merging into master/develop branches
+#after_success:
+#  - popd
+#  - "[[ $DEPLOY = 1 ]] && [[ $CONFIG = Release ]] && [[ $TRAVIS_BRANCH =~ (master|develop) ]] && [[ $TRAVIS_PULL_REQUEST = false ]] \
+#    && docker run -v $(pwd):/cwd snapcore/snapcraft sh -c 'cd /cwd && apt update && snapcraft'"

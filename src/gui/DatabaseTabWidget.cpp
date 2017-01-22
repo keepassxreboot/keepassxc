@@ -24,6 +24,7 @@
 
 #include "autotype/AutoType.h"
 #include "core/Config.h"
+#include "core/Global.h"
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -36,6 +37,7 @@
 #include "gui/MessageBox.h"
 #include "gui/entry/EntryView.h"
 #include "gui/group/GroupView.h"
+#include "gui/UnlockDatabaseDialog.h"
 
 DatabaseManagerStruct::DatabaseManagerStruct()
     : dbWidget(nullptr)
@@ -153,7 +155,7 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
         // due to lack of permissions
         if (lockFile->error() != QLockFile::PermissionError) {
             QMessageBox::StandardButton result = MessageBox::question(this, tr("Open database"),
-                tr("The database you are trying to open is locked by another instance of KeePassX.\n"
+                tr("The database you are trying to open is locked by another instance of KeePassXC.\n"
                    "Do you want to open it anyway? Alternatively the database is opened read-only."),
                 QMessageBox::Yes | QMessageBox::No);
 
@@ -192,6 +194,21 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
     }
 }
 
+void DatabaseTabWidget::mergeDatabase()
+{
+    QString filter = QString("%1 (*.kdbx);;%2 (*)").arg(tr("KeePass 2 Database"), tr("All files"));
+    const QString fileName = fileDialog()->getOpenFileName(this, tr("Merge database"), QString(),
+                                                       filter);
+    if (!fileName.isEmpty()) {
+        mergeDatabase(fileName);
+    }
+}
+
+void DatabaseTabWidget::mergeDatabase(const QString& fileName)
+{
+    currentDatabaseWidget()->switchToOpenMergeDatabase(fileName);
+}
+
 void DatabaseTabWidget::importKeePass1Database()
 {
     QString fileName = fileDialog()->getOpenFileName(this, tr("Open KeePass 1 database"), QString(),
@@ -204,6 +221,7 @@ void DatabaseTabWidget::importKeePass1Database()
     Database* db = new Database();
     DatabaseManagerStruct dbStruct;
     dbStruct.dbWidget = new DatabaseWidget(db, this);
+    dbStruct.dbWidget->databaseModified();
     dbStruct.modified = true;
 
     insertDatabase(db, dbStruct);
@@ -219,6 +237,7 @@ bool DatabaseTabWidget::closeDatabase(Database* db)
     int index = databaseIndex(db);
     Q_ASSERT(index != -1);
 
+    dbStruct.dbWidget->closeUnlockDialog();
     QString dbName = tabText(index);
     if (dbName.right(1) == "*") {
         dbName.chop(1);
@@ -294,17 +313,28 @@ bool DatabaseTabWidget::closeAllDatabases()
 bool DatabaseTabWidget::saveDatabase(Database* db)
 {
     DatabaseManagerStruct& dbStruct = m_dbList[db];
+    // temporarily disable autoreload
+    dbStruct.dbWidget->ignoreNextAutoreload();
 
     if (dbStruct.saveToFilename) {
         QSaveFile saveFile(dbStruct.canonicalFilePath);
         if (saveFile.open(QIODevice::WriteOnly)) {
+            // write the database to the file
             m_writer.writeDatabase(&saveFile, db);
             if (m_writer.hasError()) {
                 MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
                                      + m_writer.errorString());
                 return false;
             }
-            if (!saveFile.commit()) {
+
+            if (saveFile.commit()) {
+                // successfully saved database file
+                dbStruct.modified = false;
+                dbStruct.dbWidget->databaseSaved();
+                updateTabName(db);
+                return true;
+            }
+            else {
                 MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
                                      + saveFile.errorString());
                 return false;
@@ -315,10 +345,6 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
                                  + saveFile.errorString());
             return false;
         }
-
-        dbStruct.modified = false;
-        updateTabName(db);
-        return true;
     }
     else {
         return saveDatabaseAs(db);
@@ -356,7 +382,7 @@ bool DatabaseTabWidget::saveDatabaseAs(Database* db)
             // due to lack of permissions
             if (lockFile->error() != QLockFile::PermissionError) {
                 QMessageBox::StandardButton result = MessageBox::question(this, tr("Save database as"),
-                    tr("The database you are trying to save as is locked by another instance of KeePassX.\n"
+                    tr("The database you are trying to save as is locked by another instance of KeePassXC.\n"
                        "Do you want to save it anyway?"),
                     QMessageBox::Yes | QMessageBox::No);
 
@@ -372,22 +398,14 @@ bool DatabaseTabWidget::saveDatabaseAs(Database* db)
             }
         }
 
-        QSaveFile saveFile(fileName);
-        if (!saveFile.open(QIODevice::WriteOnly)) {
-            MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
-                                 + saveFile.errorString());
-            return false;
-        }
+        // setup variables so saveDatabase succeeds
+        dbStruct.saveToFilename = true;
+        dbStruct.canonicalFilePath = fileName;
 
-        m_writer.writeDatabase(&saveFile, db);
-        if (m_writer.hasError()) {
-            MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
-                                 + m_writer.errorString());
-            return false;
-        }
-        if (!saveFile.commit()) {
-            MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
-                                 + saveFile.errorString());
+        if (!saveDatabase(db)) {
+            // failed to save, revert back
+            dbStruct.saveToFilename = false;
+            dbStruct.canonicalFilePath = oldFileName;
             return false;
         }
 
@@ -608,8 +626,9 @@ void DatabaseTabWidget::insertDatabase(Database* db, const DatabaseManagerStruct
     setCurrentIndex(index);
     connectDatabase(db);
     connect(dbStruct.dbWidget, SIGNAL(closeRequest()), SLOT(closeDatabaseFromSender()));
-    connect(dbStruct.dbWidget, SIGNAL(databaseChanged(Database*)), SLOT(changeDatabase(Database*)));
+    connect(dbStruct.dbWidget, SIGNAL(databaseChanged(Database*, bool)), SLOT(changeDatabase(Database*, bool)));
     connect(dbStruct.dbWidget, SIGNAL(unlockedDatabase()), SLOT(updateTabNameFromDbWidgetSender()));
+    connect(dbStruct.dbWidget, SIGNAL(unlockedDatabase()), SLOT(emitDatabaseUnlockedFromDbWidgetSender()));
 }
 
 DatabaseWidget* DatabaseTabWidget::currentDatabaseWidget()
@@ -706,6 +725,8 @@ void DatabaseTabWidget::lockDatabases()
         dbWidget->lock();
         // database has changed so we can't use the db variable anymore
         updateTabName(dbWidget->database());
+
+        Q_EMIT databaseLocked(dbWidget);
     }
 }
 
@@ -723,6 +744,7 @@ void DatabaseTabWidget::modified()
 
     if (!dbStruct.modified) {
         dbStruct.modified = true;
+        dbStruct.dbWidget->databaseModified();
         updateTabName(db);
     }
 }
@@ -744,7 +766,7 @@ void DatabaseTabWidget::updateLastDatabases(const QString& filename)
     }
 }
 
-void DatabaseTabWidget::changeDatabase(Database* newDb)
+void DatabaseTabWidget::changeDatabase(Database* newDb, bool unsavedChanges)
 {
     Q_ASSERT(sender());
     Q_ASSERT(!m_dbList.contains(newDb));
@@ -752,6 +774,7 @@ void DatabaseTabWidget::changeDatabase(Database* newDb)
     DatabaseWidget* dbWidget = static_cast<DatabaseWidget*>(sender());
     Database* oldDb = databaseFromDatabaseWidget(dbWidget);
     DatabaseManagerStruct dbStruct = m_dbList[oldDb];
+    dbStruct.modified = unsavedChanges;
     m_dbList.remove(oldDb);
     m_dbList.insert(newDb, dbStruct);
 
@@ -762,6 +785,11 @@ void DatabaseTabWidget::changeDatabase(Database* newDb)
 void DatabaseTabWidget::emitActivateDatabaseChanged()
 {
     Q_EMIT activateDatabaseChanged(currentDatabaseWidget());
+}
+
+void DatabaseTabWidget::emitDatabaseUnlockedFromDbWidgetSender()
+{
+    Q_EMIT databaseUnlocked(static_cast<DatabaseWidget*>(sender()));
 }
 
 void DatabaseTabWidget::connectDatabase(Database* newDb, Database* oldDb)
@@ -789,5 +817,9 @@ void DatabaseTabWidget::performGlobalAutoType()
         }
     }
 
-    autoType()->performGlobalAutoType(unlockedDatabases);
+    if (unlockedDatabases.size() > 0) {
+        autoType()->performGlobalAutoType(unlockedDatabases);
+    } else if (m_dbList.size() > 0){
+        indexDatabaseManagerStruct(0).dbWidget->showUnlockDialog();
+    }
 }

@@ -46,6 +46,11 @@ public:
     bool raiseWindow(WId window) override;
     AutoTypeExecutor* createExecutor() override;
 
+#if defined(Q_OS_MAC)
+    bool raiseLastActiveWindow() override;
+    bool raiseOwnWindow() override;
+#endif
+
     void setActiveWindowTitle(const QString& title) override;
 
     QString actionChars() override;
@@ -64,10 +69,10 @@ private:
     QString m_actionChars;
 };
 
-class AutoTypeExecturorTest : public AutoTypeExecutor
+class AutoTypeExecutorTest : public AutoTypeExecutor
 {
 public:
-    explicit AutoTypeExecturorTest(AutoTypePlatformTest* platform);
+    explicit AutoTypeExecutorTest(AutoTypePlatformTest* platform);
 
     void execChar(AutoTypeChar* action) override;
     void execKey(AutoTypeKey* action) override;

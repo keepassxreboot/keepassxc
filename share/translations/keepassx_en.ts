@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="en_US">
+<TS version="2.1" language="en_US">
 <context>
     <name>AboutDialog</name>
-    <message>
-        <source>About KeePassX</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Revision</source>
         <translation type="unfinished"></translation>
@@ -19,15 +11,47 @@
         <source>Using:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>About KeePassXC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AccessControlDialog</name>
+    <message>
+        <source>Remember this decision</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deny</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 has requested access to passwords for the following item(s).
+Please select whether you want to allow access.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC HTTP Confirm Access</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
     <message>
-        <source>Auto-Type - KeePassX</source>
+        <source>Couldn&apos;t find an entry that matches the window title:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Couldn&apos;t find an entry that matches the window title:</source>
+        <source>Auto-Type - KeePassXC</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -49,11 +73,11 @@
 <context>
     <name>AutoTypeSelectDialog</name>
     <message>
-        <source>Auto-Type - KeePassX</source>
+        <source>Select entry to Auto-Type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select entry to Auto-Type:</source>
+        <source>Auto-Type - KeePassXC</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -319,11 +343,6 @@ Save changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The database you are trying to open is locked by another instance of KeePassX.
-Do you want to open it anyway? Alternatively the database is opened read-only.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Lock database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -361,12 +380,21 @@ Discard changes and close anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The database you are trying to save as is locked by another instance of KeePassX.
-Do you want to save it anyway?</source>
+        <source>Unable to open the database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to open the database.</source>
+        <source>The database you are trying to open is locked by another instance of KeePassXC.
+Do you want to open it anyway? Alternatively the database is opened read-only.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Merge database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The database you are trying to save as is locked by another instance of KeePassXC.
+Do you want to save it anyway?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -412,10 +440,6 @@ Do you want to save it anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Current group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -429,6 +453,26 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Searching...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No current database.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No source database, nothing to do.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search Results (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No Results</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -746,19 +790,24 @@ Do you want to save it anyway?</source>
         <source>Can&apos;t delete icon!</source>
         <translation type="unfinished"></translation>
     </message>
-    <message numerus="yes">
-        <source>Can&apos;t delete icon. Still used by %n item(s).</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
     <message>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Can&apos;t read icon:</source>
+        <source>Download favicon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to fetch favicon.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t read icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t delete icon. Still used by %1 items.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -830,6 +879,61 @@ Do you want to save it anyway?</source>
     <name>Group</name>
     <message>
         <source>Recycle Bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>HttpPasswordGeneratorWidget</name>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Character Types</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Upper Case Letters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A-Z</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lower Case Letters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>a-z</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Numbers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>0-9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Special Characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>/*_&amp; ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exclude look-alike characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ensure that the password contains characters from every group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Accept</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -912,7 +1016,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>KeePassX - Error</source>
+        <source>KeePassXC - Error</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -923,99 +1027,11 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Recent databases</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Entries</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copy attribute to clipboard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Groups</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Open database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add new entry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>View/Edit entry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete entry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add new group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save database as</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change master key</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Database settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Import KeePass 1 database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clone entry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Find</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1028,30 +1044,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Perform Auto-Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open URL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lock databases</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Title</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>URL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Notes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1068,22 +1060,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Tools</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copy username</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copy password</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export to CSV file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Repair database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1104,6 +1080,252 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Writing the database failed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Recent databases</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>He&amp;lp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>E&amp;ntries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy att&amp;ribute to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Groups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Open database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Save database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Close database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;New database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Merge from KeePassX database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Add new entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;View/Edit entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Delete entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Add new group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Edit group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Delete group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sa&amp;ve database as</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change &amp;master key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Database settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Import KeePass 1 database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Clone entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Find</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy &amp;username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cop&amp;y password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Perform Auto-Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Open URL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Lock databases</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;URL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Export to CSV file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Re&amp;pair database</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>OptionDialog</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sh&amp;ow a notification when credentials are requested</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Return only best matching entries for an URL instead
+of all entries for the whole domain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Match URL schemes
+Only entries with the same scheme (http://, https://, ftp://, ...) are returned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort matching entries by &amp;username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>R&amp;emove all shared encryption-keys from active database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Re&amp;move all stored permissions from entries in active database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password generator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate the following only, if you know what you are doing!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Always allow &amp;access to entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Always allow &amp;updating entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Searc&amp;h in all opened databases for matching entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only the selected database has to be connected with a client!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Return also advanced string fields which start with &quot;KPH: &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatic creates or updates are not supported for string fields!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HTTP Host:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default host: localhost</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HTTP Port:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default port: 19455</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable KeepassXC Http protocol
+This is required for accessing your databases from ChromeIPass or PassIFox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Re&amp;quest to unlock the database if it is locked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort &amp;matching entries by title</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1151,60 +1373,9 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
 </context>
 <context>
-    <name>QCommandLineParser</name>
+    <name>QObject</name>
     <message>
-        <source>Displays version information.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Displays this help.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unknown option &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unknown options: %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Missing value after &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unexpected value after &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>[options]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Usage: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Options:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Arguments:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QSaveFile</name>
-    <message>
-        <source>Existing file %1 is not writable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Writing canceled by application</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Partial write. Partition full?</source>
+        <source>Http</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1249,15 +1420,98 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Case sensitive</source>
+        <source>Case Sensitive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Current group</source>
+        <source>Search Current Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Service</name>
+    <message>
+        <source>A shared encryption-key with the name &quot;%1&quot; already exists.
+Do you want to overwrite it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Root group</source>
+        <source>Do you want to update the information in %1 - %2?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The active database is locked!
+Please unlock the selected database or choose another one which is unlocked.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successfully removed %1 encryption-%2 from KeePassX/Http Settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No shared encryption-keys found in KeePassHttp Settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The active database does not contain an entry of KeePassHttp Settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Removing stored permissions...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Abort</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successfully removed permissions from %1 %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The active database does not contain an entry with permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC: New key association request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You have received an association request for the above key.
+If you would like to allow it access to your KeePassXC database
+give it a unique name to identify and accept it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC: Overwrite existing key?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC: Update Entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC: Database locked!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC: Removed keys from database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC: No keys found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC: Settings not available!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC: Removed permissions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC: No entry with permissions found!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1357,6 +1611,10 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <source>Always ask before performing auto-type</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Lock databases after minimizing the window</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UnlockDatabaseWidget</name>
@@ -1375,19 +1633,23 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
 <context>
     <name>main</name>
     <message>
-        <source>KeePassX - cross-platform password manager</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>filename of the password database to open (*.kdbx)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>path to a custom config file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>key file of the database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>filename(s) of the password database(s) to open (*.kdbx)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC - cross-platform password manager</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>read password of the database from stdin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

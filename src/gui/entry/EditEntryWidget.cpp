@@ -90,10 +90,10 @@ void EditEntryWidget::setupMain()
 
     m_mainUi->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
     connect(m_mainUi->togglePasswordButton, SIGNAL(toggled(bool)), m_mainUi->passwordEdit, SLOT(setShowPassword(bool)));
-    connect(m_mainUi->tooglePasswordGeneratorButton, SIGNAL(toggled(bool)), SLOT(togglePasswordGeneratorButton(bool)));
+    connect(m_mainUi->togglePasswordGeneratorButton, SIGNAL(toggled(bool)), SLOT(togglePasswordGeneratorButton(bool)));
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
     m_mainUi->passwordRepeatEdit->enableVerifyMode(m_mainUi->passwordEdit);
-    connect(m_mainUi->passwordGenerator, SIGNAL(newPassword(QString)), SLOT(setGeneratedPassword(QString)));
+    connect(m_mainUi->passwordGenerator, SIGNAL(appliedPassword(QString)), SLOT(setGeneratedPassword(QString)));
 
     m_mainUi->expirePresets->setMenu(createPresetsMenu());
     connect(m_mainUi->expirePresets->menu(), SIGNAL(triggered(QAction*)), this, SLOT(useExpiryPreset(QAction*)));
@@ -299,8 +299,8 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_mainUi->expireCheck->setEnabled(!m_history);
     m_mainUi->expireDatePicker->setReadOnly(m_history);
     m_mainUi->notesEdit->setReadOnly(m_history);
-    m_mainUi->tooglePasswordGeneratorButton->setChecked(false);
-    m_mainUi->tooglePasswordGeneratorButton->setDisabled(m_history);
+    m_mainUi->togglePasswordGeneratorButton->setChecked(false);
+    m_mainUi->togglePasswordGeneratorButton->setDisabled(m_history);
     m_mainUi->passwordGenerator->reset();
     m_advancedUi->addAttachmentButton->setEnabled(!m_history);
     updateAttachmentButtonsEnabled(m_advancedUi->attachmentsView->currentIndex());
@@ -348,17 +348,17 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     IconStruct iconStruct;
     iconStruct.uuid = entry->iconUuid();
     iconStruct.number = entry->iconNumber();
-    m_iconsWidget->load(entry->uuid(), m_database, iconStruct);
+    m_iconsWidget->load(entry->uuid(), m_database, iconStruct, entry->url());
+    connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), m_iconsWidget, SLOT(setUrl(QString)));
 
     m_autoTypeUi->enableButton->setChecked(entry->autoTypeEnabled());
     if (entry->defaultAutoTypeSequence().isEmpty()) {
         m_autoTypeUi->inheritSequenceButton->setChecked(true);
-        m_autoTypeUi->sequenceEdit->setText("");
     }
     else {
         m_autoTypeUi->customSequenceButton->setChecked(true);
-        m_autoTypeUi->sequenceEdit->setText(entry->defaultAutoTypeSequence());
     }
+    m_autoTypeUi->sequenceEdit->setText(entry->effectiveAutoTypeSequence());
     m_autoTypeUi->windowTitleCombo->lineEdit()->clear();
     m_autoTypeUi->defaultWindowSequenceButton->setChecked(true);
     m_autoTypeUi->windowSequenceEdit->setText("");
@@ -529,7 +529,7 @@ void EditEntryWidget::setGeneratedPassword(const QString& password)
     m_mainUi->passwordEdit->setText(password);
     m_mainUi->passwordRepeatEdit->setText(password);
 
-    m_mainUi->tooglePasswordGeneratorButton->setChecked(false);
+    m_mainUi->togglePasswordGeneratorButton->setChecked(false);
 }
 
 void EditEntryWidget::insertAttribute()

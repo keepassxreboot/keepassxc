@@ -103,7 +103,7 @@ bool HttpSettings::alwaysAllowUpdate()
 
 void HttpSettings::setAlwaysAllowUpdate(bool alwaysAllowUpdate)
 {
-    config()->set("Http/AlwaysAllowAccess", alwaysAllowUpdate);
+    config()->set("Http/AlwaysAllowUpdate", alwaysAllowUpdate);
 }
 
 bool HttpSettings::searchInAllDatabases()

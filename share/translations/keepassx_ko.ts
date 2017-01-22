@@ -371,6 +371,10 @@ Do you want to save it anyway?</source>
         <translation>저장하려고 하는 데이터베이스를 다른 KeePassX 인스턴스에서 잠갔습니다.
 그래도 저장하시겠습니까?</translation>
     </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
@@ -421,6 +425,14 @@ Do you want to save it anyway?</source>
     <message>
         <source>Unable to calculate master key</source>
         <translation>마스터 키를 계산할 수 없음</translation>
+    </message>
+    <message>
+        <source>Move entry to recycle bin?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -735,6 +747,14 @@ Do you want to save it anyway?</source>
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
         <translation><numerusform>아이콘을 삭제할 수 없습니다. 항목 %n개에서 사용 중입니다.</numerusform></translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Can&apos;t read icon:</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
@@ -847,6 +867,10 @@ Do you want to save it anyway?</source>
     <message>
         <source>Unable to calculate master key</source>
         <translation>마스터 키를 계산할 수 없음</translation>
+    </message>
+    <message>
+        <source>Wrong key or database file is corrupt.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1298,6 +1322,14 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <message>
         <source>Remember last key files</source>
         <translation>마지막 키 파일 기억</translation>
+    </message>
+    <message>
+        <source>Hide window to system tray instead of App Exit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide window to system tray on App start</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

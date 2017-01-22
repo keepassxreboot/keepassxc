@@ -7,119 +7,78 @@
     <x>0</x>
     <y>0</y>
     <width>630</width>
-    <height>87</height>
+    <height>34</height>
    </rect>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="leftMargin">
-    <number>0</number>
+    <number>3</number>
    </property>
    <property name="topMargin">
     <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>7</number>
    </property>
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item row="0" column="1">
-    <widget class="LineEdit" name="searchEdit"/>
+   <item>
+    <widget class="QToolButton" name="searchIcon">
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="text">
+      <string>Search</string>
+     </property>
+     <property name="toolButtonStyle">
+      <enum>Qt::ToolButtonIconOnly</enum>
+     </property>
+     <property name="autoRaise">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
-   <item row="0" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QToolButton" name="closeSearchButton">
-       <property name="focusPolicy">
-        <enum>Qt::ClickFocus</enum>
-       </property>
-       <property name="autoRaise">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Find:</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+   <item>
+    <widget class="QLineEdit" name="searchEdit">
+     <property name="styleSheet">
+      <string notr="true">padding:3px</string>
+     </property>
+     <property name="placeholderText">
+      <string>Find</string>
+     </property>
+     <property name="clearButtonEnabled">
+      <bool>false</bool>
+     </property>
+    </widget>
    </item>
-   <item row="1" column="1">
-    <widget class="QWidget" name="optionsWidget" native="true">
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QCheckBox" name="caseSensitiveCheckBox">
-        <property name="text">
-         <string>Case sensitive</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="searchCurrentRadioButton">
-        <property name="text">
-         <string>Current group</string>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="searchRootRadioButton">
-        <property name="text">
-         <string>Root group</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>255</width>
-          <height>1</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
+   <item>
+    <widget class="QToolButton" name="clearIcon">
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="text">
+      <string>Clear</string>
+     </property>
+     <property name="toolButtonStyle">
+      <enum>Qt::ToolButtonIconOnly</enum>
+     </property>
+     <property name="autoRaise">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>LineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>gui/LineEdit.h</header>
-  </customwidget>
- </customwidgets>
  <tabstops>
-  <tabstop>closeSearchButton</tabstop>
+  <tabstop>searchIcon</tabstop>
   <tabstop>searchEdit</tabstop>
-  <tabstop>caseSensitiveCheckBox</tabstop>
-  <tabstop>searchCurrentRadioButton</tabstop>
-  <tabstop>searchRootRadioButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>

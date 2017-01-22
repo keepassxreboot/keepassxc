@@ -372,6 +372,10 @@ Do you want to save it anyway?</source>
         <translation>Данное хранилище заблокировано другой запущенной копией KeePassX.
 Вы уверены, что хотите продолжить сохранение?</translation>
     </message>
+    <message>
+        <source>Unable to open the database.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
@@ -422,6 +426,14 @@ Do you want to save it anyway?</source>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Невозможно вычислить мастер-пароль</translation>
+    </message>
+    <message>
+        <source>Move entry to recycle bin?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -737,6 +749,14 @@ Do you want to save it anyway?</source>
         <source>Can&apos;t delete icon. Still used by %n item(s).</source>
         <translation><numerusform>Не могу удалить иконку, %n запись всё ещё использует её.</numerusform><numerusform>Не могу удалить иконку, %n записи всё ещё использует её.</numerusform><numerusform>Не могу удалить иконку, %n записей всё ещё использует её.</numerusform><numerusform>Не могу удалить значок, %n записей всё ещё использует его.</numerusform></translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Can&apos;t read icon:</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
@@ -849,6 +869,10 @@ Do you want to save it anyway?</source>
     <message>
         <source>Unable to calculate master key</source>
         <translation>Невозможно вычислить мастер-пароль</translation>
+    </message>
+    <message>
+        <source>Wrong key or database file is corrupt.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1300,6 +1324,14 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <message>
         <source>Remember last key files</source>
         <translation>Запоминать последние файл-ключи</translation>
+    </message>
+    <message>
+        <source>Hide window to system tray instead of App Exit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide window to system tray on App start</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

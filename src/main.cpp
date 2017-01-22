@@ -17,6 +17,7 @@
 
 #include <QCommandLineParser>
 #include <QFile>
+#include <QTextStream>
 
 #include "config-keepassx.h"
 #include "core/Config.h"
@@ -35,7 +36,7 @@ int main(int argc, char** argv)
     Tools::setupSearchPaths();
 
     Application app(argc, argv);
-    Application::setApplicationName("keepassx");
+    Application::setApplicationName("keepassxc");
     Application::setApplicationVersion(KEEPASSX_VERSION);
     // don't set organizationName as that changes the return value of
     // QStandardPaths::writableLocation(QDesktopServices::DataLocation)
@@ -47,12 +48,12 @@ int main(int argc, char** argv)
                                                     "Fatal error while testing the cryptographic functions.");
         error.append("\n");
         error.append(Crypto::errorString());
-        MessageBox::critical(nullptr, QCoreApplication::translate("Main", "KeePassX - Error"), error);
+        MessageBox::critical(nullptr, QCoreApplication::translate("Main", "KeePassXC - Error"), error);
         return 1;
     }
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main", "KeePassX - cross-platform password manager"));
+    parser.setApplicationDescription(QCoreApplication::translate("main", "KeePassXC - cross-platform password manager"));
     parser.addPositionalArgument("filename", QCoreApplication::translate("main", "filename(s) of the password database(s) to open (*.kdbx)"), "[filename(s)]");
 
     QCommandLineOption configOption("config",
@@ -61,11 +62,14 @@ int main(int argc, char** argv)
     QCommandLineOption keyfileOption("keyfile",
                                      QCoreApplication::translate("main", "key file of the database"),
                                      "keyfile");
+    QCommandLineOption pwstdinOption("pw-stdin",
+                                     QCoreApplication::translate("main", "read password of the database from stdin"));
 
     parser.addHelpOption();
     parser.addVersionOption();
     parser.addOption(configOption);
     parser.addOption(keyfileOption);
+    parser.addOption(pwstdinOption);
 
     parser.process(app);
     const QStringList args = parser.positionalArguments();
@@ -82,15 +86,25 @@ int main(int argc, char** argv)
 #endif
 
     MainWindow mainWindow;
-    mainWindow.show();
     app.setMainWindow(&mainWindow);
-
+    mainWindow.show();
+    
     QObject::connect(&app, SIGNAL(openFile(QString)), &mainWindow, SLOT(openDatabase(QString)));
-
+    
+    // start minimized if configured
+    if (config()->get("GUI/MinimizeOnStartup").toBool()) {
+        mainWindow.setWindowState(Qt::WindowMinimized);
+    }
+    
     for (int ii=0; ii < args.length(); ii++) {
         QString filename = args[ii];
         if (!filename.isEmpty() && QFile::exists(filename)) {
-            mainWindow.openDatabase(filename, QString(), parser.value(keyfileOption));
+            QString password;
+            if (parser.isSet(pwstdinOption)) {
+                static QTextStream in(stdin, QIODevice::ReadOnly);
+                password = in.readLine();
+            }
+            mainWindow.openDatabase(filename, password, parser.value(keyfileOption));
         }
     }
 
@@ -102,6 +116,6 @@ int main(int argc, char** argv)
             }
         }
     }
-
+    
     return app.exec();
 }

@@ -24,9 +24,9 @@
 
 #if defined(Q_OS_WIN)
 #  if defined(KEEPASSX_BUILDING_CORE)
-#    define KEEPASSX_EXPORT Q_DECL_EXPORT
-#  else
 #    define KEEPASSX_EXPORT Q_DECL_IMPORT
+#  else
+#    define KEEPASSX_EXPORT Q_DECL_EXPORT
 #  endif
 #else
 #  define KEEPASSX_EXPORT Q_DECL_EXPORT

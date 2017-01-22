@@ -15,11 +15,11 @@
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING
-      "Choose the type of build, options are: None Debug Release RelWithDebInfo Debug Debugfull Profile MinSizeRel."
+      "Choose the type of build, options are: None Debug Release RelWithDebInfo Debug DebugFull Profile MinSizeRel."
       FORCE)
 endif()
 
-project(KeePassX)
+project(KeePassXC)
 
 cmake_minimum_required(VERSION 2.8.12)
 
@@ -32,9 +32,14 @@ include(CheckCXXSourceCompiles)
 option(WITH_TESTS "Enable building of unit tests" ON)
 option(WITH_GUI_TESTS "Enable building of GUI tests" OFF)
 option(WITH_DEV_BUILD "Use only for development. Disables/warns about deprecated methods." OFF)
+option(WITH_COVERAGE "Use to build with coverage tests. (GCC ONLY)." OFF)
 
-set(KEEPASSX_VERSION "2.0.3")
-set(KEEPASSX_VERSION_NUM "2.0.3")
+option(WITH_XC_AUTOTYPE "Include Autotype." OFF)
+option(WITH_XC_HTTP "Include KeePassHTTP." OFF)
+option(WITH_XC_YUBIKEY "Include Yubikey support." OFF)
+
+set(KEEPASSXC_VERSION "2.1.0")
+set(KEEPASSXC_VERSION_NUM "2.1.0")
 
 if("${CMAKE_C_COMPILER}" MATCHES "clang$" OR "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
   set(CMAKE_COMPILER_IS_CLANG 1)
@@ -61,7 +66,7 @@ macro(add_gcc_compiler_flags FLAGS)
   add_gcc_compiler_cflags("${FLAGS}")
 endmacro(add_gcc_compiler_flags)
 
-add_definitions(-DQT_NO_KEYWORDS -DQT_NO_EXCEPTIONS -DQT_STRICT_ITERATORS -DQT_NO_CAST_TO_ASCII)
+add_definitions(-DQT_NO_EXCEPTIONS -DQT_STRICT_ITERATORS -DQT_NO_CAST_TO_ASCII)
 
 add_gcc_compiler_flags("-fno-common -fstack-protector --param=ssp-buffer-size=4")
 add_gcc_compiler_flags("-Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long")
@@ -87,6 +92,12 @@ endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wcast-align")
+
+  if(WITH_COVERAGE)
+    # Include code coverage, use with -DCMAKE_BUILD_TYPE=Coverage
+    include(CodeCoverage)
+    setup_target_for_coverage(kp_coverage "make test" coverage)
+  endif()
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCC)
@@ -116,12 +127,13 @@ if(MINGW)
   set(CMAKE_RC_COMPILER_INIT windres)
   enable_language(RC)
   set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> <FLAGS> -O coff <DEFINES> -i <SOURCE> -o <OBJECT>")
+  link_libraries(ws2_32 wsock32)
 endif()
 
 if(APPLE OR MINGW)
-  set(PROGNAME KeePassX)
+  set(PROGNAME KeePassXC)
 else()
-  set(PROGNAME keepassx)
+  set(PROGNAME keepassxc)
 endif()
 
 if(APPLE AND "${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr/local")
@@ -134,14 +146,14 @@ if(MINGW)
   set(DATA_INSTALL_DIR   "share")
 elseif(APPLE)
   set(BIN_INSTALL_DIR    ".")
-  set(PLUGIN_INSTALL_DIR ".")
+  set(PLUGIN_INSTALL_DIR "${PROGNAME}.app/Contents/PlugIns")
   set(DATA_INSTALL_DIR   "${PROGNAME}.app/Contents/Resources")
 else()
   include(GNUInstallDirs)
 
   set(BIN_INSTALL_DIR    "${CMAKE_INSTALL_BINDIR}")
-  set(PLUGIN_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/keepassx")
-  set(DATA_INSTALL_DIR   "${CMAKE_INSTALL_DATADIR}/keepassx")
+  set(PLUGIN_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/keepassxc")
+  set(DATA_INSTALL_DIR   "${CMAKE_INSTALL_DATADIR}/keepassxc")
 endif()
 
 if(WITH_TESTS)
@@ -201,7 +213,7 @@ if(UNIX)
   endif()
 endif()
 
-include_directories(SYSTEM ${GCRYPT_INCLUDE_DIR} ${ZLIB_INCLUDE_DIR})
+include_directories(SYSTEM ${GCRYPT_INCLUDE_DIR} ${MHD_INCLUDE_DIR} ${ZLIB_INCLUDE_DIR})
 
 include(FeatureSummary)
 
@@ -213,5 +225,10 @@ if(WITH_TESTS)
 endif(WITH_TESTS)
 
 if(PRINT_SUMMARY)
+  # This will print ENABLED, REQUIRED and DISABLED
   feature_summary(WHAT ALL)
+else()
+  # This will only print ENABLED and DISABLED feature
+  print_enabled_features()
+  print_disabled_features()
 endif()

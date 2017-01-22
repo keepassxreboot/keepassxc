@@ -39,6 +39,7 @@ Q_SIGNALS:
 
 private Q_SLOTS:
     void updateStylesheet();
+    void autocompletePassword(QString password);
 
 private:
     bool passwordsEqual() const;

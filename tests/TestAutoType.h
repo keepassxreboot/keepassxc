@@ -55,6 +55,7 @@ private:
     Entry* m_entry1;
     Entry* m_entry2;
     Entry* m_entry3;
+    Entry* m_entry4;
 };
 
 #endif // KEEPASSX_TESTAUTOTYPE_H

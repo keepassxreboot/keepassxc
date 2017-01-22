@@ -36,7 +36,7 @@ QObject* SignalMultiplexer::currentObject() const
 
 void SignalMultiplexer::setCurrentObject(QObject* object)
 {
-    // remove all Connections from the list whoes senders/receivers have been deleted
+    // remove all Connections from the list whose senders/receivers have been deleted
     QMutableListIterator<Connection> i = m_connections;
     while (i.hasNext()) {
         const Connection& con = i.next();

@@ -34,6 +34,7 @@ class Group : public QObject
 
 public:
     enum TriState { Inherit, Enable, Disable };
+    enum MergeMode { ModeInherit, KeepBoth, KeepNewer, KeepExisting };
 
     struct GroupData
     {
@@ -46,6 +47,7 @@ public:
         QString defaultAutoTypeSequence;
         Group::TriState autoTypeEnabled;
         Group::TriState searchingEnabled;
+        Group::MergeMode mergeMode;
     };
 
     Group();
@@ -64,8 +66,10 @@ public:
     TimeInfo timeInfo() const;
     bool isExpanded() const;
     QString defaultAutoTypeSequence() const;
+    QString effectiveAutoTypeSequence() const;
     Group::TriState autoTypeEnabled() const;
     Group::TriState searchingEnabled() const;
+    Group::MergeMode mergeMode() const;
     bool resolveSearchingEnabled() const;
     bool resolveAutoTypeEnabled() const;
     Entry* lastTopVisibleEntry() const;
@@ -74,6 +78,8 @@ public:
     static const int DefaultIconNumber;
     static const int RecycleBinIconNumber;
 
+    Entry* findEntry(const Uuid& uuid);
+    Group* findChildByName(const QString& name);
     void setUuid(const Uuid& uuid);
     void setName(const QString& name);
     void setNotes(const QString& notes);
@@ -87,6 +93,7 @@ public:
     void setLastTopVisibleEntry(Entry* entry);
     void setExpires(bool value);
     void setExpiryTime(const QDateTime& dateTime);
+    void setMergeMode(MergeMode newMode);
 
     void setUpdateTimeinfo(bool value);
 
@@ -113,6 +120,7 @@ public:
      */
     Group* clone(Entry::CloneFlags entryFlags = Entry::CloneNewUuid | Entry::CloneResetTimeInfo) const;
     void copyDataFrom(const Group* other);
+    void merge(const Group* other);
 
 Q_SIGNALS:
     void dataChanged(Group* group);
@@ -142,6 +150,8 @@ private:
     void addEntry(Entry* entry);
     void removeEntry(Entry* entry);
     void setParent(Database* db);
+    void markOlderEntry(Entry* entry);
+    void resolveConflict(Entry* existingEntry, Entry* otherEntry);
 
     void recSetDatabase(Database* db);
     void cleanupParent();

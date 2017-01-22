@@ -32,6 +32,7 @@ Group::Group()
     m_data.isExpanded = true;
     m_data.autoTypeEnabled = Inherit;
     m_data.searchingEnabled = Inherit;
+    m_data.mergeMode = ModeInherit;
 }
 
 Group::~Group()
@@ -186,6 +187,27 @@ QString Group::defaultAutoTypeSequence() const
     return m_data.defaultAutoTypeSequence;
 }
 
+QString Group::effectiveAutoTypeSequence() const
+{
+    QString sequence;
+
+    const Group* group = this;
+    do {
+        if (group->autoTypeEnabled() == Group::Disable) {
+            return QString();
+        }
+
+        sequence = group->defaultAutoTypeSequence();
+        group = group->parentGroup();
+    } while (group && sequence.isEmpty());
+
+    if (sequence.isEmpty()) {
+      sequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
+    }
+
+    return sequence;
+}
+
 Group::TriState Group::autoTypeEnabled() const
 {
     return m_data.autoTypeEnabled;
@@ -194,6 +216,19 @@ Group::TriState Group::autoTypeEnabled() const
 Group::TriState Group::searchingEnabled() const
 {
     return m_data.searchingEnabled;
+}
+
+Group::MergeMode Group::mergeMode() const
+{
+    if (m_data.mergeMode == Group::MergeMode::ModeInherit) {
+        if (m_parent) {
+            return m_parent->mergeMode();
+        } else {
+            return Group::MergeMode::KeepNewer; // fallback
+        }
+    } else {
+        return m_data.mergeMode;
+    }
 }
 
 Entry* Group::lastTopVisibleEntry() const
@@ -301,6 +336,11 @@ void Group::setExpiryTime(const QDateTime& dateTime)
         updateTimeinfo();
         Q_EMIT modified();
     }
+}
+
+void Group::setMergeMode(MergeMode newMode)
+{
+    set(m_data.mergeMode, newMode);
 }
 
 Group* Group::parentGroup()
@@ -440,6 +480,18 @@ QList<Entry*> Group::entriesRecursive(bool includeHistoryItems) const
     return entryList;
 }
 
+Entry* Group::findEntry(const Uuid& uuid)
+{
+    Q_ASSERT(!uuid.isNull());
+    for (Entry* entry : asConst(m_entries)) {
+        if (entry->uuid() == uuid) {
+            return entry;
+        }
+    }
+
+    return nullptr;
+}
+
 QList<const Group*> Group::groupsRecursive(bool includeSelf) const
 {
     QList<const Group*> groupList;
@@ -488,6 +540,44 @@ QSet<Uuid> Group::customIconsRecursive() const
     }
 
     return result;
+}
+
+void Group::merge(const Group* other)
+{
+    // merge entries
+    const QList<Entry*> dbEntries = other->entries();
+    for (Entry* entry : dbEntries) {
+        // entries are searched by uuid
+        if (!findEntry(entry->uuid())) {
+            entry->clone(Entry::CloneNoFlags)->setGroup(this);
+        } else {
+            resolveConflict(findEntry(entry->uuid()), entry);
+        }
+    }
+
+    // merge groups (recursively)
+    const QList<Group*> dbChildren = other->children();
+    for (Group* group : dbChildren) {
+        // groups are searched by name instead of uuid
+        if (findChildByName(group->name())) {
+            findChildByName(group->name())->merge(group);
+        } else {
+            group->setParent(this);
+        }
+    }
+
+    Q_EMIT modified();
+}
+
+Group* Group::findChildByName(const QString& name)
+{
+    for (Group* group : asConst(m_children)) {
+        if (group->name() == name) {
+            return group;
+        }
+    }
+
+    return nullptr;
 }
 
 Group* Group::clone(Entry::CloneFlags entryFlags) const
@@ -624,6 +714,14 @@ void Group::recCreateDelObjects()
     }
 }
 
+void Group::markOlderEntry(Entry* entry)
+{
+    entry->attributes()->set(
+        "merged",
+        QString("older entry merged from database \"%1\"").arg(entry->group()->database()->metadata()->name())
+    );
+}
+
 bool Group::resolveSearchingEnabled() const
 {
     switch (m_data.searchingEnabled) {
@@ -661,5 +759,41 @@ bool Group::resolveAutoTypeEnabled() const
     default:
         Q_ASSERT(false);
         return false;
+    }
+}
+
+void Group::resolveConflict(Entry* existingEntry, Entry* otherEntry)
+{
+    const QDateTime timeExisting = existingEntry->timeInfo().lastModificationTime();
+    const QDateTime timeOther = otherEntry->timeInfo().lastModificationTime();
+
+    Entry* clonedEntry;
+
+    switch(mergeMode()) {
+        case KeepBoth:
+            // if one entry is newer, create a clone and add it to the group
+            if (timeExisting > timeOther) {
+                clonedEntry = otherEntry->clone(Entry::CloneNoFlags);
+                clonedEntry->setGroup(this);
+                markOlderEntry(clonedEntry);
+            } else if (timeExisting < timeOther) {
+                clonedEntry = otherEntry->clone(Entry::CloneNoFlags);
+                clonedEntry->setGroup(this);
+                markOlderEntry(existingEntry);
+            }
+            break;
+        case KeepNewer:
+            if (timeExisting < timeOther) {
+                // only if other entry is newer, replace existing one
+                removeEntry(existingEntry);
+                addEntry(otherEntry->clone(Entry::CloneNoFlags));
+            }
+
+            break;
+        case KeepExisting:
+            break;
+        default:
+            // do nothing
+            break;
     }
 }

@@ -566,9 +566,9 @@ QString KeePass2XmlWriter::stripInvalidXml10Chars(QString str)
             // keep valid surrogate pair
             i--;
         }
-        else if ((uc < 0x20 && uc != 0x09 && uc != 0x0A && uc != 0x0D)  // control chracters
-                 || (uc >= 0x7F && uc <= 0x84)  // control chracters, valid but discouraged by XML
-                 || (uc >= 0x86 && uc <= 0x9F)  // control chracters, valid but discouraged by XML
+        else if ((uc < 0x20 && uc != 0x09 && uc != 0x0A && uc != 0x0D)  // control characters
+                 || (uc >= 0x7F && uc <= 0x84)  // control characters, valid but discouraged by XML
+                 || (uc >= 0x86 && uc <= 0x9F)  // control characters, valid but discouraged by XML
                  || (uc > 0xFFFD)               // noncharacter
                  || ch.isLowSurrogate()         // single low surrogate
                  || ch.isHighSurrogate())       // single high surrogate

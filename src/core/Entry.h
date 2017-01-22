@@ -70,6 +70,7 @@ public:
     bool autoTypeEnabled() const;
     int autoTypeObfuscation() const;
     QString defaultAutoTypeSequence() const;
+    QString effectiveAutoTypeSequence() const;
     AutoTypeAssociations* autoTypeAssociations();
     const AutoTypeAssociations* autoTypeAssociations() const;
     QString title() const;
@@ -126,7 +127,8 @@ public:
      */
     Entry* clone(CloneFlags flags) const;
     void copyDataFrom(const Entry* other);
-    QString resolvePlaceholders(const QString& str) const;
+    QString resolveMultiplePlaceholders(const QString& str) const;
+    QString resolvePlaceholder(const QString& str) const;
 
     /**
      * Call before and after set*() methods to create a history item

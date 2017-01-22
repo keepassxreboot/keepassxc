@@ -19,7 +19,8 @@
 #include "ui_EditWidgetIcons.h"
 
 #include <QFileDialog>
-#include <QImageReader>
+#include <QMessageBox>
+#include <QFileDialog>
 
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -39,6 +40,8 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     , m_database(nullptr)
     , m_defaultIconModel(new DefaultIconModel(this))
     , m_customIconModel(new CustomIconModel(this))
+    , m_networkAccessMngr(new QNetworkAccessManager(this))
+    , m_networkOperation(nullptr)
 {
     m_ui->setupUi(this);
 
@@ -55,14 +58,22 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
             this, SLOT(updateWidgetsCustomIcons(bool)));
     connect(m_ui->addButton, SIGNAL(clicked()), SLOT(addCustomIcon()));
     connect(m_ui->deleteButton, SIGNAL(clicked()), SLOT(removeCustomIcon()));
+    connect(m_ui->faviconButton, SIGNAL(clicked()), SLOT(downloadFavicon()));
+    connect(m_networkAccessMngr, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(onRequestFinished(QNetworkReply*)) );
+
+    m_ui->faviconButton->setVisible(false);
 }
 
 EditWidgetIcons::~EditWidgetIcons()
 {
 }
 
-IconStruct EditWidgetIcons::state() const
+IconStruct EditWidgetIcons::state()
 {
+    Q_ASSERT(m_database);
+    Q_ASSERT(!m_currentUuid.isNull());
+
     IconStruct iconStruct;
     if (m_ui->defaultIconsRadio->isChecked()) {
         QModelIndex index = m_ui->defaultIconsView->currentIndex();
@@ -82,7 +93,7 @@ IconStruct EditWidgetIcons::state() const
             iconStruct.number = -1;
         }
     }
-
+    
     return iconStruct;
 }
 
@@ -92,13 +103,14 @@ void EditWidgetIcons::reset()
     m_currentUuid = Uuid();
 }
 
-void EditWidgetIcons::load(Uuid currentUuid, Database* database, IconStruct iconStruct)
+void EditWidgetIcons::load(Uuid currentUuid, Database* database, IconStruct iconStruct, const QString &url)
 {
     Q_ASSERT(database);
     Q_ASSERT(!currentUuid.isNull());
 
     m_database = database;
     m_currentUuid = currentUuid;
+    setUrl(url);
 
     m_customIconModel->setIcons(database->metadata()->customIconsScaledPixmaps(),
                                 database->metadata()->customIconsOrder());
@@ -122,6 +134,97 @@ void EditWidgetIcons::load(Uuid currentUuid, Database* database, IconStruct icon
     }
 }
 
+void EditWidgetIcons::setUrl(const QString &url)
+{
+    m_url = url;
+    m_ui->faviconButton->setVisible(!url.isEmpty());
+    abortFaviconDownload();
+}
+
+void EditWidgetIcons::downloadFavicon()
+{
+    QUrl url = QUrl(m_url);
+    url.setPath("/favicon.ico");
+    fetchFavicon(url);
+}
+
+void EditWidgetIcons::fetchFavicon(QUrl url)
+{
+    if (m_networkOperation == nullptr) {
+        m_networkOperation = m_networkAccessMngr->get(QNetworkRequest(url));
+        m_ui->faviconButton->setDisabled(true);
+    }
+}
+
+void EditWidgetIcons::fetchFaviconFromGoogle(QString domain)
+{
+     if (m_fallbackToGoogle) {
+        abortFaviconDownload();
+        m_fallbackToGoogle = false;
+        fetchFavicon(QUrl("http://www.google.com/s2/favicons?domain=" + domain));
+    }
+    else {
+        abortFaviconDownload();
+        MessageBox::warning(this, tr("Error"), tr("Unable to fetch favicon."));
+    }
+}
+
+void EditWidgetIcons::abortFaviconDownload(bool clearRedirect)
+{
+    if (m_networkOperation != nullptr) {
+        m_networkOperation->abort();
+        m_networkOperation->deleteLater();
+        m_networkOperation = nullptr;
+    }
+    
+    if (clearRedirect) {
+        if (!m_redirectUrl.isEmpty()) {
+            m_redirectUrl.clear();
+        }
+        m_redirectCount = 0;
+    }
+    
+    m_fallbackToGoogle = true;
+    m_ui->faviconButton->setDisabled(false);
+}
+
+void EditWidgetIcons::onRequestFinished(QNetworkReply *reply)
+{
+    if (!reply->error()) {    
+        QImage image;
+        image.loadFromData(reply->readAll());
+
+        if (!image.isNull()) {
+            //Set the image
+            Uuid uuid = Uuid::random();
+            m_database->metadata()->addCustomIcon(uuid, image.scaled(16, 16));
+            m_customIconModel->setIcons(m_database->metadata()->customIconsScaledPixmaps(),
+                                        m_database->metadata()->customIconsOrder());
+            QModelIndex index = m_customIconModel->indexFromUuid(uuid);
+            m_ui->customIconsView->setCurrentIndex(index);
+            m_ui->customIconsRadio->setChecked(true);
+            
+            abortFaviconDownload();
+        }
+        else {
+            // Check if server has sent a redirect
+            QUrl possibleRedirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
+            if (!possibleRedirectUrl.isEmpty() && possibleRedirectUrl != m_redirectUrl && m_redirectCount < 3) {
+                abortFaviconDownload(false);
+                m_redirectUrl = possibleRedirectUrl;
+                ++m_redirectCount;
+                fetchFavicon(m_redirectUrl);
+            }
+            else { // Webpage is trying to redirect back to itself or the maximum number of redirects has been reached, fallback to Google
+                fetchFaviconFromGoogle(reply->url().host());
+            }
+        }
+    }
+    else { // Request Error e.g. 404, fallback to Google
+        fetchFaviconFromGoogle(reply->url().host());
+    }
+}
+
 void EditWidgetIcons::addCustomIcon()
 {
     if (m_database) {
@@ -131,21 +234,17 @@ void EditWidgetIcons::addCustomIcon()
         QString filename = QFileDialog::getOpenFileName(
                     this, tr("Select Image"), "", filter);
         if (!filename.isEmpty()) {
-            QImageReader imageReader(filename);
-            // detect from content, otherwise reading fails if file extension is wrong
-            imageReader.setDecideFormatFromContent(true);
-            QImage image = imageReader.read();
+            QImage image(filename);
             if (!image.isNull()) {
                 Uuid uuid = Uuid::random();
-                m_database->metadata()->addCustomIconScaled(uuid, image);
+                m_database->metadata()->addCustomIcon(uuid, image.scaled(16, 16));
                 m_customIconModel->setIcons(m_database->metadata()->customIconsScaledPixmaps(),
                                             m_database->metadata()->customIconsOrder());
                 QModelIndex index = m_customIconModel->indexFromUuid(uuid);
                 m_ui->customIconsView->setCurrentIndex(index);
             }
             else {
-                MessageBox::critical(this, tr("Error"),
-                                     tr("Can't read icon:").append("\n").append(imageReader.errorString()));
+                MessageBox::critical(this, tr("Error"), tr("Can't read icon"));
             }
         }
     }
@@ -200,7 +299,8 @@ void EditWidgetIcons::removeCustomIcon()
             }
             else {
                 MessageBox::information(this, tr("Can't delete icon!"),
-                                        tr("Can't delete icon. Still used by %n item(s).", 0, iconUsedCount));
+                                        tr("Can't delete icon. Still used by %1 items.")
+                                        .arg(iconUsedCount));
             }
         }
     }

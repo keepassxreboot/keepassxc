@@ -100,7 +100,7 @@ private:
     uint m_currentGlobalNativeModifiers;
     int m_modifierMask;
     static bool m_catchXErrors;
-    static bool m_xErrorOccured;
+    static bool m_xErrorOccurred;
     static int (*m_oldXErrorHandler)(Display*, XErrorEvent*);
 
     static const int m_unicodeToKeysymLen;
@@ -119,10 +119,10 @@ private:
     bool m_loaded;
 };
 
-class AutoTypeExecturorX11 : public AutoTypeExecutor
+class AutoTypeExecutorX11 : public AutoTypeExecutor
 {
 public:
-    explicit AutoTypeExecturorX11(AutoTypePlatformX11* platform);
+    explicit AutoTypeExecutorX11(AutoTypePlatformX11* platform);
 
     void execChar(AutoTypeChar* action) override;
     void execKey(AutoTypeKey* action) override;

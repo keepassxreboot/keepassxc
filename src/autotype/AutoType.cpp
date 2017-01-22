@@ -20,6 +20,8 @@
 #include <QApplication>
 #include <QPluginLoader>
 
+#include "config-keepassx.h"
+
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/AutoTypeSelectDialog.h"
 #include "autotype/WildcardMatcher.h"
@@ -37,6 +39,7 @@ AutoType* AutoType::m_instance = nullptr;
 AutoType::AutoType(QObject* parent, bool test)
     : QObject(parent)
     , m_inAutoType(false)
+    , m_autoTypeDelay(0)
     , m_currentGlobalKey(static_cast<Qt::Key>(0))
     , m_currentGlobalModifiers(0)
     , m_pluginLoader(new QPluginLoader(this))
@@ -58,7 +61,9 @@ AutoType::AutoType(QObject* parent, bool test)
     QString pluginPath = filePath()->pluginPath(pluginName);
 
     if (!pluginPath.isEmpty()) {
+        #ifdef WITH_XC_AUTOTYPE
         loadPlugin(pluginPath);
+        #endif
     }
 
     connect(qApp, SIGNAL(aboutToQuit()), SLOT(unloadPlugin()));
@@ -146,7 +151,11 @@ void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow, const QS
     }
 
     if (hideWindow) {
+#if defined(Q_OS_MAC)
+        m_plugin->raiseLastActiveWindow();
+#else
         hideWindow->showMinimized();
+#endif
     }
 
     Tools::wait(m_plugin->initialTimeout());
@@ -203,7 +212,7 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
         QString message = tr("Couldn't find an entry that matches the window title:");
         message.append("\n\n");
         message.append(windowTitle);
-        MessageBox::information(nullptr, tr("Auto-Type - KeePassX"), message);
+        MessageBox::information(nullptr, tr("Auto-Type - KeePassXC"), message);
     }
     else if ((entryList.size() == 1) && !config()->get("security/autotypeask").toBool()) {
         m_inAutoType = false;
@@ -216,6 +225,10 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
                 SLOT(performAutoTypeFromGlobal(Entry*,QString)));
         connect(selectDialog, SIGNAL(rejected()), SLOT(resetInAutoType()));
         selectDialog->setEntries(entryList, sequenceHash);
+#if defined(Q_OS_MAC)
+        m_plugin->raiseOwnWindow();
+        Tools::wait(500);
+#endif
         selectDialog->show();
         // necessary when the main window is minimized
         selectDialog->activateWindow();
@@ -300,9 +313,11 @@ bool AutoType::parseActions(const QString& sequence, const Entry* entry, QList<A
 {
     QString tmpl;
     bool inTmpl = false;
+    m_autoTypeDelay = 0;
+
 
     for (const QChar& ch : sequence) {
-        // TODO: implement support for {{}, {}} and {DELAY=X}
+        // TODO: implement support for {{}, {}}
 
         if (inTmpl) {
             if (ch == '{') {
@@ -329,17 +344,34 @@ bool AutoType::parseActions(const QString& sequence, const Entry* entry, QList<A
             actions.append(new AutoTypeChar(ch));
         }
     }
-
+    if (m_autoTypeDelay > 0) {
+        QList<AutoTypeAction*>::iterator i;
+        i = actions.begin();
+        while (i != actions.end()) {
+            ++i;
+            if (i != actions.end()) {
+                i = actions.insert(i, new AutoTypeDelay(m_autoTypeDelay));
+                ++i;
+            }
+        }
+    }
     return true;
 }
 
 QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, const Entry* entry)
 {
-    QString tmplName = tmpl.toLower();
+    QString tmplName = tmpl;
     int num = -1;
     QList<AutoTypeAction*> list;
 
-    QRegExp repeatRegEx("(.+) (\\d+)", Qt::CaseSensitive, QRegExp::RegExp2);
+    QRegExp delayRegEx("delay=(\\d+)", Qt::CaseInsensitive, QRegExp::RegExp2);
+    if (delayRegEx.exactMatch(tmplName)) {
+        num = delayRegEx.cap(1).toInt();
+        m_autoTypeDelay = std::max(0, std::min(num, 10000));
+        return list;
+    }
+
+    QRegExp repeatRegEx("(.+) (\\d+)", Qt::CaseInsensitive, QRegExp::RegExp2);
     if (repeatRegEx.exactMatch(tmplName)) {
         tmplName = repeatRegEx.cap(1);
         num = repeatRegEx.cap(2).toInt();
@@ -348,7 +380,7 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
             return list;
         }
         // some safety checks
-        else if (tmplName == "delay") {
+        else if (tmplName.compare("delay",Qt::CaseInsensitive)==0) {
             if (num > 10000) {
                 return list;
             }
@@ -358,98 +390,103 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
         }
     }
 
-    if (tmplName == "tab") {
+    if (tmplName.compare("tab",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeKey(Qt::Key_Tab));
     }
-    else if (tmplName == "enter") {
+    else if (tmplName.compare("enter",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeKey(Qt::Key_Enter));
     }
-    else if (tmplName == "up") {
+    else if (tmplName.compare("up",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeKey(Qt::Key_Up));
     }
-    else if (tmplName == "down") {
+    else if (tmplName.compare("down",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeKey(Qt::Key_Down));
     }
-    else if (tmplName == "left") {
+    else if (tmplName.compare("left",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeKey(Qt::Key_Left));
     }
-    else if (tmplName == "right") {
+    else if (tmplName.compare("right",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeKey(Qt::Key_Right));
     }
-    else if (tmplName == "insert" || tmplName == "ins") {
+    else if (tmplName.compare("insert",Qt::CaseInsensitive)==0 ||
+             tmplName.compare("ins",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeKey(Qt::Key_Insert));
     }
-    else if (tmplName == "delete" || tmplName == "del") {
+    else if (tmplName.compare("delete",Qt::CaseInsensitive)==0 ||
+             tmplName.compare("del",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeKey(Qt::Key_Delete));
     }
-    else if (tmplName == "home") {
+    else if (tmplName.compare("home",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeKey(Qt::Key_Home));
     }
-    else if (tmplName == "end") {
+    else if (tmplName.compare("end",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeKey(Qt::Key_End));
     }
-    else if (tmplName == "pgup") {
+    else if (tmplName.compare("pgup",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeKey(Qt::Key_PageUp));
     }
-    else if (tmplName == "pgdown") {
+    else if (tmplName.compare("pgdown",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeKey(Qt::Key_PageDown));
     }
-    else if (tmplName == "backspace" || tmplName == "bs" || tmplName == "bksp") {
+    else if (tmplName.compare("backspace",Qt::CaseInsensitive)==0 ||
+             tmplName.compare("bs",Qt::CaseInsensitive)==0 ||
+             tmplName.compare("bksp",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeKey(Qt::Key_Backspace));
     }
-    else if (tmplName == "break") {
+    else if (tmplName.compare("break",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeKey(Qt::Key_Pause));
     }
-    else if (tmplName == "capslock") {
+    else if (tmplName.compare("capslock",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeKey(Qt::Key_CapsLock));
     }
-    else if (tmplName == "esc") {
+    else if (tmplName.compare("esc",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeKey(Qt::Key_Escape));
     }
-    else if (tmplName == "help") {
+    else if (tmplName.compare("help",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeKey(Qt::Key_Help));
     }
-    else if (tmplName == "numlock") {
+    else if (tmplName.compare("numlock",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeKey(Qt::Key_NumLock));
     }
-    else if (tmplName == "ptrsc") {
+    else if (tmplName.compare("ptrsc",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeKey(Qt::Key_Print));
     }
-    else if (tmplName == "scolllock") {
+    else if (tmplName.compare("scrolllock",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeKey(Qt::Key_ScrollLock));
     }
     // Qt doesn't know about keypad keys so use the normal ones instead
-    else if (tmplName == "add" || tmplName == "+") {
+    else if (tmplName.compare("add",Qt::CaseInsensitive)==0 ||
+             tmplName.compare("+",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeChar('+'));
     }
-    else if (tmplName == "subtract") {
+    else if (tmplName.compare("subtract",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeChar('-'));
     }
-    else if (tmplName == "multiply") {
+    else if (tmplName.compare("multiply",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeChar('*'));
     }
-    else if (tmplName == "divide") {
+    else if (tmplName.compare("divide",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeChar('/'));
     }
-    else if (tmplName == "^") {
+    else if (tmplName.compare("^",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeChar('^'));
     }
-    else if (tmplName == "%") {
+    else if (tmplName.compare("%",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeChar('%'));
     }
-    else if (tmplName == "~") {
+    else if (tmplName.compare("~",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeChar('~'));
     }
-    else if (tmplName == "(") {
+    else if (tmplName.compare("(",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeChar('('));
     }
-    else if (tmplName == ")") {
+    else if (tmplName.compare(")",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeChar(')'));
     }
-    else if (tmplName == "{") {
+    else if (tmplName.compare("{",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeChar('{'));
     }
-    else if (tmplName == "}") {
+    else if (tmplName.compare("}",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeChar('}'));
     }
     else {
@@ -471,10 +508,10 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
     }
 
 
-    if (tmplName == "delay" && num > 0) {
+    if (tmplName.compare("delay",Qt::CaseInsensitive)==0 && num > 0) {
         list.append(new AutoTypeDelay(num));
     }
-    else if (tmplName == "clearfield") {
+    else if (tmplName.compare("clearfield",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeClearField());
     }
 
@@ -482,9 +519,8 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
         return list;
     }
 
-
     const QString placeholder = QString("{%1}").arg(tmplName);
-    const QString resolved = entry->resolvePlaceholders(placeholder);
+    const QString resolved = entry->resolvePlaceholder(placeholder);
     if (placeholder != resolved) {
         for (const QChar& ch : resolved) {
             if (ch == '\n') {

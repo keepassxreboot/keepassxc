@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>531</width>
-    <height>354</height>
+    <width>605</width>
+    <height>389</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <item>
     <widget class="QCheckBox" name="enableHttpServer">
      <property name="text">
-      <string>Support KeypassHttp protocol
-This is required for accessing keypass database from ChromeIPass or PassIfox</string>
+      <string>Enable KeepassXC Http protocol
+This is required for accessing your databases from ChromeIPass or PassIFox</string>
      </property>
     </widget>
    </item>
@@ -53,7 +53,7 @@ of all entries for the whole domain</string>
        <item>
         <widget class="QCheckBox" name="unlockDatabase">
          <property name="text">
-          <string>Re&amp;quest for unlocking the database if it is locked</string>
+          <string>Re&amp;quest to unlock the database if it is locked</string>
          </property>
         </widget>
        </item>
@@ -75,7 +75,7 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
        <item>
         <widget class="QRadioButton" name="sortByTitle">
          <property name="text">
-          <string>Sort matching entries by &amp;title</string>
+          <string>Sort &amp;matching entries by title</string>
          </property>
         </widget>
        </item>
@@ -201,7 +201,7 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
+        <layout class="QHBoxLayout" name="horizontalLayout_1">
          <item>
           <widget class="QLabel" name="label_5">
            <property name="sizePolicy">
@@ -225,7 +225,7 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
           <widget class="QLabel" name="label_4">
            <property name="sizePolicy">

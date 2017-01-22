@@ -58,6 +58,12 @@ DatabaseOpenWidget::~DatabaseOpenWidget()
 {
 }
 
+void DatabaseOpenWidget::showEvent(QShowEvent* event)
+{
+    DialogyWidget::showEvent(event);
+    m_ui->editPassword->setFocus();
+}
+
 void DatabaseOpenWidget::load(const QString& filename)
 {
     m_filename = filename;
@@ -113,12 +119,6 @@ void DatabaseOpenWidget::openDatabase()
 
     if (m_db) {
         Q_EMIT editFinished(true);
-        // this is a c++11 equivalent foreach construct
-        // if c++11 is not available another iteration loop style is needed!
-        for (auto widget : qApp->topLevelWidgets()) {
-            if(widget->inherits("QMainWindow"))
-                static_cast<MainWindow*>(widget)->configuredMinimizeWindow();
-        }
     }
     else {
         MessageBox::warning(this, tr("Error"), tr("Unable to open the database.").append("\n")
