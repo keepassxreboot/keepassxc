@@ -1,5 +1,6 @@
 2.1.0 (2017-01-22)
 =========================
+
 - Show unlock dialog when using autotype on a closed database [#10, #89]
 - Show different tray icon when database is locked [#37, #46]
 - Support autotype on Windows and OS X [#42, #60, #63]
