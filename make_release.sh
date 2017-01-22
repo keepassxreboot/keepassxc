@@ -256,7 +256,7 @@ logInfo "All checks pass, getting our hands dirty now!"
 
 logInfo "Merging '${BRANCH}' into '${RELEASE_BRANCH}'..."
 
-CHANGELOG=$(grep -Pzo "(?<=${RELEASE_NAME} \(\d{4}-\d{2}-\d{2}\)\n)=+\n\n(?:.|\n)+?\n(?=\n)" \
+CHANGELOG=$(grep -Pzo "(?<=${RELEASE_NAME} \(\d{4}-\d{2}-\d{2}\)\n)=+\n\n?(?:.|\n)+?\n(?=\n)" \
     CHANGELOG | grep -Pzo '(?<=\n\n)(.|\n)+' | tr -d \\0)
 COMMIT_MSG="Release ${RELEASE_NAME}"
 
