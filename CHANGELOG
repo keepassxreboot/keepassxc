@@ -1,3 +1,31 @@
+2.1.0 (2017-01-22)
+=========================
+
+- Show unlock dialog when using autotype on a closed database [#10, #89]
+- Show different tray icon when database is locked [#37, #46]
+- Support autotype on Windows and OS X [#42, #60, #63]
+- Add delay feature to autotype [#76, #77]
+- Add password strength meter [#84, #92]
+- Add option for automatically locking the database when minimizing
+  the window [#57]
+- Add feature to download favicons and use them as entry icons [#30]
+- Automatically reload and merge database when the file changed on
+  disk [#22, #33, #93]
+- Add tool for merging two databases [#22, #47, #143]
+- Add --pw-stdin commandline option to unlock the database by providing
+  a password on STDIN [#54]
+- Add utility script for reading the database password from KWallet [#55]
+- Fix some KeePassHTTP settings not being remembered [#34, #65]
+- Make search box persistent [#15, #67, #157]
+- Enhance search feature by scoping the search to selected group [#16, #118]
+- Improve interaction between search field and entry list [#131, #141]
+- Add stand-alone password-generator [#18, #92]
+- Don't require password repetition when password is visible [#27, #92]
+- Add support for entry attributes in autotype sequences [#107]
+- Always focus password field when opening the database unlock widget [#116, #117]
+- Fix compilation errors on various platforms [#53, #126, #130]
+- Restructure and improve kdbx-extract utility [#160]
+
 2.0.3 (2016-09-04)
 =========================
 
