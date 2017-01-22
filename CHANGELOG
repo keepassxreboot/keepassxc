@@ -10,7 +10,7 @@
 - Add feature to download favicons and use them as entry icons [#30]
 - Automatically reload and merge database when the file changed on
   disk [#22, #33, #93]
-- Add tool for merging two databases [#22, #47]
+- Add tool for merging two databases [#22, #47, #143]
 - Add --pw-stdin commandline option to unlock the database by providing
   a password on STDIN [#54]
 - Add utility script for reading the database password from KWallet [#55]
