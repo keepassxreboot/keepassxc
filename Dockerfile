@@ -27,7 +27,11 @@ RUN set -x \
         libqt5x11extras5-dev \
         libxi-dev \
         libxtst-dev \
-        zlib1g-dev
+        zlib1g-dev \
+        wget \
+        file \
+        fuse \
+        python
 
 VOLUME /keepassxc/src
 VOLUME /keepassxc/out

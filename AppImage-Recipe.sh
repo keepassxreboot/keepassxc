@@ -41,8 +41,8 @@ wget -q https://github.com/probonopd/AppImages/raw/master/functions.sh -O ./func
 
 cd $APP.AppDir
 cp -a ../../bin-release/* .
-mv ./usr/local/* ./usr
-rmdir ./usr/local
+cp -a ./usr/local/* ./usr
+rm -R ./usr/local
 patch_strings_in_file /usr/local ./
 patch_strings_in_file /usr ./
 

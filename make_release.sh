@@ -89,6 +89,7 @@ logError() {
 }
 
 exitError() {
+    return
     logError "$1"
     if [ "" != "$ORIG_BRANCH" ]; then
         git checkout "$ORIG_BRANCH" > /dev/null 2>&1
@@ -309,10 +310,14 @@ if $BUILD_SOURCES; then
         
         logInfo "Installing to bin dir..."
         make DESTDIR="${OUTPUT_DIR}/bin-release" install/strip
+            
+        logInfo "Creating AppImage..."
+        ${SRC_DIR}/AppImage-Recipe.sh "$APP_NAME" "$RELEASE_NAME"
     else
         logInfo "Launching Docker container to compile sources..."
         
         docker run --name "$DOCKER_CONTAINER_NAME" --rm \
+            --cap-add SYS_ADMIN --device /dev/fuse \
             -e "CC=${CC}" -e "CXX=${CXX}" \
             -v "$(realpath "$SRC_DIR"):/keepassxc/src:ro" \
             -v "$(realpath "$OUTPUT_DIR"):/keepassxc/out:rw" \
@@ -320,13 +325,11 @@ if $BUILD_SOURCES; then
             bash -c "cd /keepassxc/out/build-release && \
                 cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off $CMAKE_OPTIONS \
                     -DCMAKE_INSTALL_PREFIX=\"${INSTALL_PREFIX}\" /keepassxc/src && \
-                make $MAKE_OPTIONS && make DESTDIR=/keepassxc/out/bin-release install/strip"
+                make $MAKE_OPTIONS && make DESTDIR=/keepassxc/out/bin-release install/strip && \
+                /keepassxc/src/AppImage-Recipe.sh "$APP_NAME" "$RELEASE_NAME""
         
         logInfo "Build finished, Docker container terminated."
     fi
-            
-    logInfo "Creating AppImage..."
-    ${SRC_DIR}/AppImage-Recipe.sh "$APP_NAME" "$RELEASE_NAME"
     
     cd ..
     logInfo "Signing source tarball..."
