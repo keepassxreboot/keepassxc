@@ -43,12 +43,22 @@ cd $APP.AppDir
 cp -a ../../bin-release/* .
 cp -a ./usr/local/* ./usr
 rm -R ./usr/local
-patch_strings_in_file /usr/local ./
+patch_strings_in_file /usr/local ././
 patch_strings_in_file /usr ./
+
+# bundle Qt platform plugins
+QXCB_PLUGIN="$(find /usr/lib -name 'libqxcb.so' 2> /dev/null)"
+QT_PLUGIN_PATH="$(dirname $(dirname $QXCB_PLUGIN))"
+mkdir -p "./${QT_PLUGIN_PATH}/platforms"
+cp "$QXCB_PLUGIN" "./${QT_PLUGIN_PATH}/platforms/"
 
 get_apprun
 copy_deps
 delete_blacklisted
+
+# remove dbus and systemd libs as they are not blacklisted
+find . -name libdbus-1.so.3 -exec rm {} \;
+find . -name libsystemd.so.0 -exec rm {} \;
 
 get_desktop
 get_icon
@@ -58,7 +68,7 @@ GLIBC_NEEDED=$(glibc_needed)
 
 cd ..
 
-generate_appimage
+generate_type2_appimage
 
 mv ../out/*.AppImage ..
 rmdir ../out > /dev/null 2>&1
