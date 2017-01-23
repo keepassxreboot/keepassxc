@@ -126,18 +126,6 @@ void HttpSettings::setSupportKphFields(bool supportKphFields)
     config()->set("Http/SupportKphFields", supportKphFields);
 }
 
-QString HttpSettings::httpHost()
-{
-    static const QString host = "localhost";
-
-    return config()->get("Http/Host", host).toString().toUtf8();
-}
-
-void HttpSettings::setHttpHost(QString host)
-{
-    config()->set("Http/Host", host);
-}
-
 int  HttpSettings::httpPort()
 {
     static const int PORT = 19455;
