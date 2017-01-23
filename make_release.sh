@@ -89,7 +89,6 @@ logError() {
 }
 
 exitError() {
-    return
     logError "$1"
     if [ "" != "$ORIG_BRANCH" ]; then
         git checkout "$ORIG_BRANCH" > /dev/null 2>&1
