@@ -231,7 +231,7 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
          <item row="2" column="1">
           <widget class="QLabel" name="label_5">
            <property name="text">
-            <string>KeePassXC will listen to this port on localhost</string>
+            <string>KeePassXC will listen to this port on 127.0.0.1</string>
            </property>
           </widget>
          </item>
