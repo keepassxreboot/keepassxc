@@ -155,15 +155,15 @@
      <addaction name="actionEntryCopyNotes"/>
      <addaction name="separator"/>
     </widget>
-    <addaction name="actionEntryNew"/>
-    <addaction name="actionEntryClone"/>
-    <addaction name="actionEntryEdit"/>
-    <addaction name="actionEntryDelete"/>
     <addaction name="actionEntryCopyUsername"/>
     <addaction name="actionEntryCopyPassword"/>
     <addaction name="menuEntryCopyAttribute"/>
     <addaction name="actionEntryAutoType"/>
     <addaction name="actionEntryOpenUrl"/>
+    <addaction name="actionEntryEdit"/>
+    <addaction name="actionEntryClone"/>
+    <addaction name="actionEntryDelete"/>
+    <addaction name="actionEntryNew"/>
    </widget>
    <widget class="QMenu" name="menuGroups">
     <property name="title">
