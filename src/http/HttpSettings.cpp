@@ -18,7 +18,7 @@ PasswordGenerator HttpSettings::m_generator;
 
 bool HttpSettings::isEnabled()
 {
-    return config()->get("Http/Enabled", true).toBool();
+    return config()->get("Http/Enabled", false).toBool();
 }
 
 void HttpSettings::setEnabled(bool enabled)
