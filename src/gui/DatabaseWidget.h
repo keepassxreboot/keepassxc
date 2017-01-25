@@ -163,6 +163,7 @@ private Q_SLOTS:
     // Database autoreload slots
     void onWatchedFileChanged();
     void reloadDatabaseFile();
+    void restoreGroupEntryFocus(Uuid groupUuid, Uuid EntryUuid);
 
 private:
     void setClipboardTextAndMinimize(const QString& text);
@@ -190,6 +191,7 @@ private:
     Group* m_newParent;
     QString m_filename;
     Uuid m_groupBeforeLock;
+    Uuid m_entryBeforeLock;
 
     // Search state
     QString m_lastSearchText;

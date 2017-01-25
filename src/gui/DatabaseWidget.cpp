@@ -722,15 +722,10 @@ void DatabaseWidget::unlockDatabase(bool accepted)
 
     replaceDatabase(db);
 
-    const QList<Group*> groups = m_db->rootGroup()->groupsRecursive(true);
-    for (Group* group : groups) {
-        if (group->uuid() == m_groupBeforeLock) {
-            m_groupView->setCurrentGroup(group);
-            break;
-        }
-    }
-
+    restoreGroupEntryFocus(m_groupBeforeLock, m_entryBeforeLock);
     m_groupBeforeLock = Uuid();
+    m_entryBeforeLock = Uuid();
+
     setCurrentWidget(m_mainWidget);
     m_unlockDatabaseWidget->clearForms();
     Q_EMIT unlockedDatabase();
@@ -943,6 +938,10 @@ void DatabaseWidget::lock()
         m_groupBeforeLock = m_db->rootGroup()->uuid();
     }
 
+    if (m_entryView->currentEntry()) {
+        m_entryBeforeLock = m_entryView->currentEntry()->uuid();
+    }
+
     clearAllWidgets();
     m_unlockDatabaseWidget->load(m_filename);
     setCurrentWidget(m_unlockDatabaseWidget);
@@ -1028,7 +1027,22 @@ void DatabaseWidget::reloadDatabaseFile()
                 }
             }
 
+            Uuid groupBeforeReload;
+            if (m_groupView && m_groupView->currentGroup()) {
+                groupBeforeReload = m_groupView->currentGroup()->uuid();
+            }
+            else {
+                groupBeforeReload = m_db->rootGroup()->uuid();
+            }
+
+            Uuid entryBeforeReload;
+            if (m_entryView && m_entryView->currentEntry()) {
+                entryBeforeReload = m_entryView->currentEntry()->uuid();
+            }
+
             replaceDatabase(db);
+            restoreGroupEntryFocus(groupBeforeReload, entryBeforeReload);
+
         }
         else {
             MessageBox::critical(this, tr("Autoreload Failed"),
@@ -1059,6 +1073,35 @@ QStringList DatabaseWidget::customEntryAttributes() const
     }
 
     return entry->attributes()->customKeys();
+}
+
+/*
+ * Restores the focus on the group and entry that was focused
+ * before the database was locked or reloaded.
+ */
+void DatabaseWidget::restoreGroupEntryFocus(Uuid groupUuid, Uuid entryUuid)
+{
+    Group* restoredGroup = nullptr;
+    const QList<Group*> groups = m_db->rootGroup()->groupsRecursive(true);
+    for (Group* group : groups) {
+        if (group->uuid() == groupUuid) {
+            restoredGroup = group;
+            break;
+        }
+    }
+
+    if (restoredGroup != nullptr) {
+      m_groupView->setCurrentGroup(restoredGroup);
+
+      const QList<Entry*> entries = restoredGroup->entries();
+      for (Entry* entry : entries) {
+          if (entry->uuid() == entryUuid) {
+              m_entryView->setCurrentEntry(entry);
+              break;
+          }
+      }
+    }
+
 }
 
 bool DatabaseWidget::isGroupSelected() const
