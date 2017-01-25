@@ -174,7 +174,9 @@ set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_NONE QT_NO_DEBUG)
 
 find_package(Gcrypt 1.6.0 REQUIRED)
 
-find_package(LibMicroHTTPD REQUIRED)
+if (WITH_XC_HTTP)
+    find_package(LibMicroHTTPD REQUIRED)
+endif(WITH_XC_HTTP)
 
 find_package(ZLIB REQUIRED)
 
