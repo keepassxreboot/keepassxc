@@ -674,6 +674,10 @@ void DatabaseWidget::openDatabase(bool accepted)
         delete m_keepass1OpenWidget;
         m_keepass1OpenWidget = nullptr;
         m_fileWatcher.addPath(m_filename);
+		
+		if (config()->get("MinimizeOnUnlock").toBool()) {
+			window()->showMinimized();
+		}
     }
     else {
         m_fileWatcher.removePath(m_filename);

@@ -104,6 +104,7 @@ void SettingsWidget::loadSettings()
     m_generalUi->autoSaveOnExitCheckBox->setChecked(config()->get("AutoSaveOnExit").toBool());
     m_generalUi->autoReloadOnChangeCheckBox->setChecked(config()->get("AutoReloadOnChange").toBool());
     m_generalUi->minimizeOnCopyCheckBox->setChecked(config()->get("MinimizeOnCopy").toBool());
+    m_generalUi->minimizeOnUnlockCheckBox->setChecked(config()->get("MinimizeOnUnlock").toBool());
     m_generalUi->useGroupIconOnEntryCreationCheckBox->setChecked(config()->get("UseGroupIconOnEntryCreation").toBool());
     m_generalUi->autoTypeEntryTitleMatchCheckBox->setChecked(config()->get("AutoTypeEntryTitleMatch").toBool());
 
@@ -159,6 +160,7 @@ void SettingsWidget::saveSettings()
     config()->set("AutoSaveOnExit", m_generalUi->autoSaveOnExitCheckBox->isChecked());
     config()->set("AutoReloadOnChange", m_generalUi->autoReloadOnChangeCheckBox->isChecked());
     config()->set("MinimizeOnCopy", m_generalUi->minimizeOnCopyCheckBox->isChecked());
+    config()->set("MinimizeOnUnlock", m_generalUi->minimizeOnUnlockCheckBox->isChecked());
     config()->set("UseGroupIconOnEntryCreation",
                   m_generalUi->useGroupIconOnEntryCreationCheckBox->isChecked());
     config()->set("AutoTypeEntryTitleMatch",
