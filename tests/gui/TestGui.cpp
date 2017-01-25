@@ -481,8 +481,7 @@ void TestGui::testSearch()
     QCOMPARE(entry->title(), origTitle.append("_edited"));
 
     // Cancel search, should return to normal view
-    QTest::mouseClick(searchTextEdit, Qt::LeftButton);
-    QTest::keyClick(searchTextEdit, Qt::Key_Escape);
+    QTest::keyClick(m_mainWindow, Qt::Key_Escape);
     QTRY_COMPARE(m_dbWidget->currentMode(), DatabaseWidget::ViewMode);
 }
 
