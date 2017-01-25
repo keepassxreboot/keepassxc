@@ -1081,7 +1081,7 @@ QStringList DatabaseWidget::customEntryAttributes() const
  */
 void DatabaseWidget::restoreGroupEntryFocus(Uuid groupUuid, Uuid entryUuid)
 {
-    Group* restoredGroup;
+    Group* restoredGroup = nullptr;
     const QList<Group*> groups = m_db->rootGroup()->groupsRecursive(true);
     for (Group* group : groups) {
         if (group->uuid() == groupUuid) {
@@ -1090,18 +1090,16 @@ void DatabaseWidget::restoreGroupEntryFocus(Uuid groupUuid, Uuid entryUuid)
         }
     }
 
-    if (!restoredGroup) {
-        return;
-    }
+    if (restoredGroup != nullptr) {
+      m_groupView->setCurrentGroup(restoredGroup);
 
-    m_groupView->setCurrentGroup(restoredGroup);
-
-    const QList<Entry*> entries = restoredGroup->entries();
-    for (Entry* entry : entries) {
-        if (entry->uuid() == entryUuid) {
-            m_entryView->setCurrentEntry(entry);
-            break;
-        }
+      const QList<Entry*> entries = restoredGroup->entries();
+      for (Entry* entry : entries) {
+          if (entry->uuid() == entryUuid) {
+              m_entryView->setCurrentEntry(entry);
+              break;
+          }
+      }
     }
 
 }
