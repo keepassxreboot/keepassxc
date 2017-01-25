@@ -42,6 +42,7 @@ public:
 public Q_SLOTS:
     void openDatabase(const QString& fileName, const QString& pw = QString(),
                       const QString& keyFile = QString());
+    void appExit();
 
 protected:
      void closeEvent(QCloseEvent* event) override;
@@ -68,7 +69,6 @@ private Q_SLOTS:
     void applySettingsChanges();
     void trayIconTriggered(QSystemTrayIcon::ActivationReason reason);
     void toggleWindow();
-    void appExit();
     void lockDatabasesAfterInactivity();
     void repairDatabase();
 
