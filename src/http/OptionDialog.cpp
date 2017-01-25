@@ -15,6 +15,8 @@
 #include "ui_OptionDialog.h"
 #include "HttpSettings.h"
 
+#include <QMessageBox>
+
 OptionDialog::OptionDialog(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::OptionDialog())
@@ -41,7 +43,6 @@ void OptionDialog::loadSettings()
         ui->sortByUsername->setChecked(true);
     else
         ui->sortByTitle->setChecked(true);
-    ui->httpHost->setText(settings.httpHost());
     ui->httpPort->setText(QString::number(settings.httpPort()));
 
 /*
@@ -70,8 +71,14 @@ void OptionDialog::saveSettings()
     settings.setUnlockDatabase(ui->unlockDatabase->isChecked());
     settings.setMatchUrlScheme(ui->matchUrlScheme->isChecked());
     settings.setSortByUsername(ui->sortByUsername->isChecked());
-    settings.setHttpHost(ui->httpHost->text());
-    settings.setHttpPort(ui->httpPort->text().toInt());
+    
+    int port = ui->httpPort->text().toInt();
+    if (port < 1024) {
+        QMessageBox::warning(this, tr("Cannot bind to privileged ports"),
+            tr("Cannot bind to privileged ports below 1024!\nUsing default port 19455."));
+        port = 19455;
+    }
+    settings.setHttpPort(port);
 
 /*
     settings.setPasswordUseLowercase(ui->checkBoxLower->isChecked());
