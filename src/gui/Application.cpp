@@ -72,7 +72,10 @@ public:
 
 Application::Application(int& argc, char** argv)
     : QApplication(argc, argv)
-    , m_mainWindow(nullptr), m_unixSignalNotifier(nullptr)
+    , m_mainWindow(nullptr)
+#ifdef Q_OS_UNIX
+    , m_unixSignalNotifier(nullptr)
+#endif
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_OSX)
     installNativeEventFilter(new XcbEventFilter());
