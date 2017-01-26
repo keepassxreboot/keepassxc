@@ -132,8 +132,10 @@ void PasswordGeneratorWidget::updatePasswordStrength(const QString& password)
 
 void PasswordGeneratorWidget::generatePassword()
 {
-    QString password = m_generator->generatePassword();
-    m_ui->editNewPassword->setText(password);
+    if (m_generator->isValid()) {
+        QString password = m_generator->generatePassword();
+        m_ui->editNewPassword->setText(password);
+    }
 }
 
 void PasswordGeneratorWidget::applyPassword()
@@ -278,6 +280,13 @@ void PasswordGeneratorWidget::updateGenerator()
     m_generator->setLength(m_ui->spinBoxLength->value());
     m_generator->setCharClasses(classes);
     m_generator->setFlags(flags);
+
+    if (m_generator->isValid()) {
+        m_ui->buttonGenerate->setEnabled(true);
+    }
+    else {
+        m_ui->buttonGenerate->setEnabled(false);
+    }
 
     regeneratePassword();
 }
