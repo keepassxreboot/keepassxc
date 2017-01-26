@@ -218,6 +218,7 @@ target_link_libraries(${PROGNAME}
                       Qt5::Widgets
                       Qt5::Network
                       ${GCRYPT_LIBRARIES}
+                      ${GPGERROR_LIBRARIES}
                       ${ZLIB_LIBRARIES})
 
 set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
