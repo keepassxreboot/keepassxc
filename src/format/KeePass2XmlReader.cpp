@@ -388,7 +388,7 @@ void KeePass2XmlReader::parseBinaries()
             QString id = attr.value("ID").toString();
 
             QByteArray data;
-            if (attr.value("Compressed").compare("True", Qt::CaseInsensitive) == 0) {
+            if (attr.value("Compressed").compare(QLatin1String("True"), Qt::CaseInsensitive) == 0) {
                 data = readCompressedBinary();
             }
             else {
