@@ -172,6 +172,8 @@ set(CMAKE_AUTOMOC ON)
 # Make sure we don't enable asserts there.
 set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_NONE QT_NO_DEBUG)
 
+find_package(LibGPGError REQUIRED)
+
 find_package(Gcrypt 1.6.0 REQUIRED)
 
 if (WITH_XC_HTTP)
