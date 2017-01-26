@@ -98,7 +98,9 @@ QString AutoTypePlatformMac::activeWindowTitle()
             if (windowLayer(window) == 0) {
                 // First toplevel window in list (front to back order)
                 title = windowTitle(window);
-                break;
+                if (!title.isEmpty()) {
+                    break;
+                }
             }
         }
 
