@@ -649,8 +649,12 @@ void EditEntryWidget::protectCurrentAttribute(bool state)
     QModelIndex index = m_advancedUi->attributesView->currentIndex();
     if (!m_history && index.isValid()) {
         QString key = m_attributesModel->keyByIndex(index);
-        // Set the protected state of the current attribute
-        m_entryAttributes->set(key, m_entryAttributes->value(key), state);
+        if (state)
+            // Save the current text and protect the attribute
+            m_entryAttributes->set(key, m_advancedUi->attributesEdit->toPlainText(), true);
+        else
+            // Unprotect the current attribute value (don't save text as it is obscured)
+            m_entryAttributes->set(key, m_entryAttributes->value(key), false);
 
         // Display the attribute
         displayAttribute(index, state);
