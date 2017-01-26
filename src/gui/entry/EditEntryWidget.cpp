@@ -132,6 +132,8 @@ void EditEntryWidget::setupAdvanced()
     connect(m_advancedUi->addAttributeButton, SIGNAL(clicked()), SLOT(insertAttribute()));
     connect(m_advancedUi->editAttributeButton, SIGNAL(clicked()), SLOT(editCurrentAttribute()));
     connect(m_advancedUi->removeAttributeButton, SIGNAL(clicked()), SLOT(removeCurrentAttribute()));
+    connect(m_advancedUi->protectAttributeButton, SIGNAL(toggled(bool)), SLOT(protectCurrentAttribute(bool)));
+    connect(m_advancedUi->revealAttributeButton, SIGNAL(clicked(bool)), SLOT(revealCurrentAttribute()));
     connect(m_advancedUi->attributesView->selectionModel(),
             SIGNAL(currentChanged(QModelIndex,QModelIndex)),
             SLOT(updateCurrentAttribute()));
@@ -409,7 +411,7 @@ void EditEntryWidget::saveEntry()
         return;
     }
 
-    if (m_advancedUi->attributesView->currentIndex().isValid()) {
+    if (m_advancedUi->attributesView->currentIndex().isValid() && m_advancedUi->attributesEdit->isEnabled()) {
         QString key = m_attributesModel->keyByIndex(m_advancedUi->attributesView->currentIndex());
         m_entryAttributes->set(key, m_advancedUi->attributesEdit->toPlainText(),
                                m_entryAttributes->isProtected(key));
@@ -578,46 +580,91 @@ void EditEntryWidget::removeCurrentAttribute()
     QModelIndex index = m_advancedUi->attributesView->currentIndex();
 
     if (index.isValid()) {
-        m_entryAttributes->remove(m_attributesModel->keyByIndex(index));
+        if (MessageBox::question(this, tr("Confirm Remove"), tr("Are you sure you want to remove this attribute?"),
+                                 QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes) {
+            m_entryAttributes->remove(m_attributesModel->keyByIndex(index));
+        }
     }
 }
 
 void EditEntryWidget::updateCurrentAttribute()
 {
     QModelIndex newIndex = m_advancedUi->attributesView->currentIndex();
+    QString newKey = m_attributesModel->keyByIndex(newIndex);
 
-    if (m_history) {
-        if (newIndex.isValid()) {
-            QString key = m_attributesModel->keyByIndex(newIndex);
-            m_advancedUi->attributesEdit->setPlainText(m_entryAttributes->value(key));
-            m_advancedUi->attributesEdit->setEnabled(true);
+    if (!m_history && m_currentAttribute != newIndex) {
+        // Save changes to the currently selected attribute if editing is enabled
+        if (m_currentAttribute.isValid() && m_advancedUi->attributesEdit->isEnabled()) {
+            QString currKey = m_attributesModel->keyByIndex(m_currentAttribute);
+            m_entryAttributes->set(currKey, m_advancedUi->attributesEdit->toPlainText(),
+                                   m_entryAttributes->isProtected(currKey));
+        }        
+    }
+
+    displayAttribute(newIndex, m_entryAttributes->isProtected(newKey));
+
+    m_currentAttribute = newIndex;
+}
+
+void EditEntryWidget::displayAttribute(QModelIndex index, bool showProtected)
+{
+    // Block signals to prevent extra calls
+    m_advancedUi->protectAttributeButton->blockSignals(true);
+
+    if (index.isValid()) {
+        QString key = m_attributesModel->keyByIndex(index);
+        if (showProtected) {
+            m_advancedUi->attributesEdit->setPlainText(tr("[PROTECTED] Press reveal to view or edit"));
+            m_advancedUi->attributesEdit->setEnabled(false);
+            m_advancedUi->revealAttributeButton->setEnabled(true);
+            m_advancedUi->protectAttributeButton->setChecked(true);
         }
         else {
-            m_advancedUi->attributesEdit->setPlainText("");
-            m_advancedUi->attributesEdit->setEnabled(false);
+            m_advancedUi->attributesEdit->setPlainText(m_entryAttributes->value(key));
+            m_advancedUi->attributesEdit->setEnabled(true);
+            m_advancedUi->revealAttributeButton->setEnabled(false);
+            m_advancedUi->protectAttributeButton->setChecked(false);
         }
+
+        // Don't allow editing in history view
+        m_advancedUi->protectAttributeButton->setEnabled(!m_history);
+        m_advancedUi->editAttributeButton->setEnabled(!m_history);
+        m_advancedUi->removeAttributeButton->setEnabled(!m_history);
     }
     else {
-        if (m_currentAttribute != newIndex) {
-            if (m_currentAttribute.isValid()) {
-                QString key = m_attributesModel->keyByIndex(m_currentAttribute);
-                m_entryAttributes->set(key, m_advancedUi->attributesEdit->toPlainText(),
-                                       m_entryAttributes->isProtected(key));
-            }
+        m_advancedUi->attributesEdit->setPlainText("");
+        m_advancedUi->attributesEdit->setEnabled(false);
+        m_advancedUi->revealAttributeButton->setEnabled(false);
+        m_advancedUi->protectAttributeButton->setChecked(false);
+        m_advancedUi->protectAttributeButton->setEnabled(false);
+        m_advancedUi->editAttributeButton->setEnabled(false);
+        m_advancedUi->removeAttributeButton->setEnabled(false);
+    }
 
-            if (newIndex.isValid()) {
-                QString key = m_attributesModel->keyByIndex(newIndex);
-                m_advancedUi->attributesEdit->setPlainText(m_entryAttributes->value(key));
-                m_advancedUi->attributesEdit->setEnabled(true);
-            }
-            else {
-                m_advancedUi->attributesEdit->setPlainText("");
-                m_advancedUi->attributesEdit->setEnabled(false);
-            }
+    m_advancedUi->protectAttributeButton->blockSignals(false);
+}
 
-            m_advancedUi->editAttributeButton->setEnabled(newIndex.isValid());
-            m_advancedUi->removeAttributeButton->setEnabled(newIndex.isValid());
-            m_currentAttribute = newIndex;
+void EditEntryWidget::protectCurrentAttribute(bool state)
+{
+    QModelIndex index = m_advancedUi->attributesView->currentIndex();
+    if (!m_history && index.isValid()) {
+        QString key = m_attributesModel->keyByIndex(index);
+        // Set the protected state of the current attribute
+        m_entryAttributes->set(key, m_entryAttributes->value(key), state);
+
+        // Display the attribute
+        displayAttribute(index, state);
+    }
+}
+
+void EditEntryWidget::revealCurrentAttribute()
+{
+    if (! m_advancedUi->attributesEdit->isEnabled()) {
+        QModelIndex index = m_advancedUi->attributesView->currentIndex();
+        if (index.isValid()) {
+            QString key = m_attributesModel->keyByIndex(index);
+            m_advancedUi->attributesEdit->setPlainText(m_entryAttributes->value(key));
+            m_advancedUi->attributesEdit->setEnabled(true);
         }
     }
 }
@@ -730,8 +777,13 @@ void EditEntryWidget::removeCurrentAttachment()
         return;
     }
 
-    QString key = m_attachmentsModel->keyByIndex(index);
-    m_entryAttachments->remove(key);
+    QMessageBox::StandardButton ans = MessageBox::question(this, tr("Confirm Remove"),
+                                                           tr("Are you sure you want to remove this attachment?"),
+                                                           QMessageBox::Yes | QMessageBox::No);
+    if (ans == QMessageBox::Yes) {
+        QString key = m_attachmentsModel->keyByIndex(index);
+        m_entryAttachments->remove(key);
+    }
 }
 
 void EditEntryWidget::updateAutoTypeEnabled()

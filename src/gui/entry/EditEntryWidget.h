@@ -76,6 +76,8 @@ private Q_SLOTS:
     void editCurrentAttribute();
     void removeCurrentAttribute();
     void updateCurrentAttribute();
+    void protectCurrentAttribute(bool state);
+    void revealCurrentAttribute();
     void insertAttachment();
     void saveCurrentAttachment();
     void openAttachment(const QModelIndex& index);
@@ -109,6 +111,8 @@ private:
     void setForms(const Entry* entry, bool restore = false);
     QMenu* createPresetsMenu();
     void updateEntryData(Entry* entry) const;
+
+    void displayAttribute(QModelIndex index, bool showProtected);
 
     Entry* m_entry;
     Database* m_database;

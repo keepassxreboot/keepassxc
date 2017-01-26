@@ -28,15 +28,28 @@
      <property name="title">
       <string>Additional attributes</string>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
-       <widget class="AttributesListView" name="attributesView"/>
-      </item>
-      <item>
-       <widget class="QPlainTextEdit" name="attributesEdit">
-        <property name="enabled">
-         <bool>false</bool>
+       <widget class="QSplitter" name="splitter">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
         </property>
+        <widget class="AttributesListView" name="attributesView">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="resizeMode">
+          <enum>QListView::Adjust</enum>
+         </property>
+        </widget>
+        <widget class="QPlainTextEdit" name="attributesEdit">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
        </widget>
       </item>
       <item>
@@ -49,22 +62,22 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="editAttributeButton">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>Edit</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QPushButton" name="removeAttributeButton">
           <property name="enabled">
            <bool>false</bool>
           </property>
           <property name="text">
            <string>Remove</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="editAttributeButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Edit Name</string>
           </property>
          </widget>
         </item>
@@ -80,6 +93,35 @@
            </size>
           </property>
          </spacer>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="protectAttributeButton">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">margin-left:50%;margin-right:50%</string>
+          </property>
+          <property name="text">
+           <string>Protect</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="revealAttributeButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Reveal</string>
+          </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -172,11 +214,12 @@
   <tabstop>attributesView</tabstop>
   <tabstop>attributesEdit</tabstop>
   <tabstop>addAttributeButton</tabstop>
-  <tabstop>editAttributeButton</tabstop>
   <tabstop>removeAttributeButton</tabstop>
+  <tabstop>editAttributeButton</tabstop>
   <tabstop>attachmentsView</tabstop>
   <tabstop>addAttachmentButton</tabstop>
   <tabstop>removeAttachmentButton</tabstop>
+  <tabstop>openAttachmentButton</tabstop>
   <tabstop>saveAttachmentButton</tabstop>
  </tabstops>
  <resources/>
