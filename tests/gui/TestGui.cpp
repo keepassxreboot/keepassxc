@@ -566,7 +566,7 @@ void TestGui::testCloneEntry()
     QCOMPARE(entryView->model()->rowCount(), 2);
     Entry* entryClone = entryView->entryFromIndex(entryView->model()->index(1, 1));
     QVERIFY(entryOrg->uuid() != entryClone->uuid());
-    QCOMPARE(entryClone->title(), entryOrg->title());
+    QCOMPARE(entryClone->title(), entryOrg->title() + QString(" - Clone"));
 }
 
 void TestGui::testDragAndDropEntry()

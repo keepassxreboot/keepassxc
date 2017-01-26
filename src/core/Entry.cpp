@@ -508,7 +508,8 @@ Entry* Entry::clone(CloneFlags flags) const
         entry->m_data.timeInfo.setLocationChanged(now);
     }
 
-
+    if (flags & CloneRenameTitle)
+        entry->setTitle(entry->title() + tr(" - Clone"));
 
     return entry;
 }
