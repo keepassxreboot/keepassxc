@@ -312,8 +312,10 @@ void DatabaseWidget::cloneEntry()
         return;
     }
 
-    Entry* entry = currentEntry->clone(Entry::CloneNewUuid | Entry::CloneResetTimeInfo);
+    Entry* entry = currentEntry->clone(Entry::CloneNewUuid | Entry::CloneResetTimeInfo | Entry::CloneRenameTitle);
     entry->setGroup(currentEntry->group());
+    if (isInSearchMode())
+        search(m_lastSearchText);
     m_entryView->setFocus();
     m_entryView->setCurrentEntry(entry);
 }
