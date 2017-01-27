@@ -101,9 +101,10 @@ int main(int argc, char **argv)
                     break;
                 }
             }
-            if (line[0])
+            if (line[0]) {
                 calculate(line,advanced);
                 printf("> ");
+            }
         }
     }
     else
