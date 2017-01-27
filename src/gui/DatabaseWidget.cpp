@@ -497,7 +497,16 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
 
     if (urlString.startsWith("cmd://")) {
         if (urlString.length() > 6) {
-            QProcess::startDetached(urlString.mid(6));
+            QMessageBox::StandardButton result;
+            result = MessageBox::question(
+                this, tr("Execute command?"),
+                tr("Do you really want to execute the following command?<br><br>%1")
+                .arg(urlString.left(200).toHtmlEscaped()),
+                QMessageBox::Yes | QMessageBox::No);
+
+            if (result == QMessageBox::Yes) {
+                QProcess::startDetached(urlString.mid(6));
+            }
         }
     }
     else {
