@@ -283,8 +283,7 @@ void PasswordGeneratorWidget::updateGenerator()
 
     if (m_generator->isValid()) {
         m_ui->buttonGenerate->setEnabled(true);
-    }
-    else {
+    } else {
         m_ui->buttonGenerate->setEnabled(false);
     }
 
