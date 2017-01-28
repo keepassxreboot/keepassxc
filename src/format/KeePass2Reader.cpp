@@ -118,7 +118,7 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
     hash.addData(m_db->transformedMasterKey());
     QByteArray finalKey = hash.result();
 
-    SymmetricCipherStream cipherStream(m_device, SymmetricCipher::Aes256,
+    SymmetricCipherStream cipherStream(m_device, SymmetricCipher::cipherToAlgorithm(m_db->cipher()),
                                        SymmetricCipher::Cbc, SymmetricCipher::Decrypt);
     if (!cipherStream.init(finalKey, m_encryptionIV)) {
         raiseError(cipherStream.errorString());
@@ -330,7 +330,7 @@ void KeePass2Reader::setCipher(const QByteArray& data)
     else {
         Uuid uuid(data);
 
-        if (uuid != KeePass2::CIPHER_AES) {
+        if (uuid != KeePass2::CIPHER_AES && uuid != KeePass2::CIPHER_TWOFISH) {
             raiseError("Unsupported cipher");
         }
         else {

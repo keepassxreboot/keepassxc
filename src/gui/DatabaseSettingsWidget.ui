@@ -49,35 +49,7 @@
      <item row="2" column="1">
       <widget class="QLineEdit" name="dbDescriptionEdit"/>
      </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="transformRoundsLabel">
-       <property name="text">
-        <string>Transform rounds:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="defaultUsernameLabel">
-       <property name="text">
-        <string>Default username:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
-      <widget class="QLineEdit" name="defaultUsernameEdit">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Use recycle bin:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="1">
+     <item row="9" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QSpinBox" name="historyMaxSizeSpinBox">
@@ -100,7 +72,7 @@
        </item>
       </layout>
      </item>
-     <item row="6" column="1">
+     <item row="8" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QSpinBox" name="historyMaxItemsSpinBox">
@@ -117,7 +89,7 @@
        </item>
       </layout>
      </item>
-     <item row="3" column="1">
+     <item row="5" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
         <widget class="QSpinBox" name="transformRoundsSpinBox">
@@ -144,22 +116,71 @@
        </item>
       </layout>
      </item>
-     <item row="6" column="0">
+     <item row="8" column="0">
       <widget class="QCheckBox" name="historyMaxItemsCheckBox">
        <property name="text">
         <string>Max. history items:</string>
        </property>
       </widget>
      </item>
-     <item row="7" column="0">
+     <item row="9" column="0">
       <widget class="QCheckBox" name="historyMaxSizeCheckBox">
        <property name="text">
         <string>Max. history size:</string>
        </property>
       </widget>
      </item>
-     <item row="5" column="1">
+     <item row="5" column="0">
+      <widget class="QLabel" name="transformRoundsLabel">
+       <property name="text">
+        <string>Transform rounds:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1">
       <widget class="QCheckBox" name="recycleBinEnabledCheckBox"/>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="defaultUsernameLabel">
+       <property name="text">
+        <string>Default username:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Use recycle bin:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <widget class="QLineEdit" name="defaultUsernameEdit">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="AlgorithmLabel">
+       <property name="text">
+        <string>Algorithm:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QComboBox" name="AlgorithmComboBox">
+       <item>
+        <property name="text">
+         <string>AES:  256 Bit   (default)</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Twofish:  256 Bit</string>
+        </property>
+       </item>
+      </widget>
      </item>
     </layout>
    </item>
