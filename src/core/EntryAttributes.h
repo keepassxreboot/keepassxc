@@ -52,6 +52,7 @@ public:
     static const QString URLKey;
     static const QString NotesKey;
     static const QStringList DefaultAttributes;
+    static const QString RememberCmdExecAttr;
     static bool isDefaultAttribute(const QString& key);
 
 Q_SIGNALS:

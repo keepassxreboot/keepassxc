@@ -19,6 +19,7 @@
 
 #include <QAction>
 #include <QDesktopServices>
+#include <QCheckBox>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QFile>
@@ -312,8 +313,10 @@ void DatabaseWidget::cloneEntry()
         return;
     }
 
-    Entry* entry = currentEntry->clone(Entry::CloneNewUuid | Entry::CloneResetTimeInfo);
+    Entry* entry = currentEntry->clone(Entry::CloneNewUuid | Entry::CloneResetTimeInfo | Entry::CloneRenameTitle);
     entry->setGroup(currentEntry->group());
+    if (isInSearchMode())
+        search(m_lastSearchText);
     m_entryView->setFocus();
     m_entryView->setCurrentEntry(entry);
 }
@@ -494,8 +497,46 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
     }
 
     if (urlString.startsWith("cmd://")) {
+        // check if decision to execute command was stored
+        if (entry->attributes()->hasKey(EntryAttributes::RememberCmdExecAttr)) {
+            if (entry->attributes()->value(EntryAttributes::RememberCmdExecAttr) == "1") {
+                QProcess::startDetached(urlString.mid(6));
+            }
+            return;
+        }
+        
+        // otherwise ask user
         if (urlString.length() > 6) {
-            QProcess::startDetached(urlString.mid(6));
+            QString cmdTruncated = urlString.mid(6);
+            if (cmdTruncated.length() > 400)
+                cmdTruncated = cmdTruncated.left(400) + " […]";
+            QMessageBox msgbox(QMessageBox::Icon::Question,
+                               tr("Execute command?"),
+                               tr("Do you really want to execute the following command?<br><br>%1<br>")
+                                   .arg(cmdTruncated.toHtmlEscaped()),
+                               QMessageBox::Yes | QMessageBox::No,
+                               this
+            );
+            msgbox.setDefaultButton(QMessageBox::No);
+            
+            QCheckBox* checkbox = new QCheckBox(tr("Remember my choice"), &msgbox);
+            msgbox.setCheckBox(checkbox);
+            bool remember = false;
+            QObject::connect(checkbox, &QCheckBox::stateChanged, [&](int state) {
+                if (static_cast<Qt::CheckState>(state) == Qt::CheckState::Checked) {
+                   remember = true;
+               }
+            });
+            
+            int result = msgbox.exec();
+            if (result == QMessageBox::Yes) {
+                QProcess::startDetached(urlString.mid(6));
+            }
+            
+            if (remember) {
+                entry->attributes()->set(EntryAttributes::RememberCmdExecAttr,
+                                         result == QMessageBox::Yes ? "1" : "0");
+            }
         }
     }
     else {
@@ -750,7 +791,7 @@ void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::Mod
 void DatabaseWidget::switchToEntryEdit()
 {
     Entry* entry = m_entryView->currentEntry();
-    Q_ASSERT(entry);
+    
     if (!entry) {
         return;
     }
@@ -761,7 +802,7 @@ void DatabaseWidget::switchToEntryEdit()
 void DatabaseWidget::switchToGroupEdit()
 {
     Group* group = m_groupView->currentGroup();
-    Q_ASSERT(group);
+    
     if (!group) {
         return;
     }

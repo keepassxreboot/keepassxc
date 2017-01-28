@@ -42,7 +42,11 @@ QList<Entry*> EntrySearcher::searchEntries(const QString& searchTerm, const Grou
     const QList<Group*> children = group->children();
     for (Group* childGroup : children) {
         if (childGroup->searchingEnabled() != Group::Disable) {
-            searchResult.append(searchEntries(searchTerm, childGroup, caseSensitivity));
+            if (matchGroup(searchTerm, childGroup, caseSensitivity)) {
+                searchResult.append(childGroup->entriesRecursive());
+            } else {
+                searchResult.append(searchEntries(searchTerm, childGroup, caseSensitivity));
+            }
         }
     }
 
@@ -68,4 +72,22 @@ bool EntrySearcher::wordMatch(const QString& word, Entry* entry, Qt::CaseSensiti
             entry->username().contains(word, caseSensitivity) ||
             entry->url().contains(word, caseSensitivity) ||
             entry->notes().contains(word, caseSensitivity);
+}
+
+bool EntrySearcher::matchGroup(const QString& searchTerm, const Group* group, Qt::CaseSensitivity caseSensitivity)
+{
+    const QStringList wordList = searchTerm.split(QRegExp("\\s"), QString::SkipEmptyParts);
+    for (const QString& word : wordList) {
+        if (!wordMatch(word, group, caseSensitivity)) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool EntrySearcher::wordMatch(const QString& word, const Group* group, Qt::CaseSensitivity caseSensitivity)
+{
+    return group->name().contains(word, caseSensitivity) ||
+            group->notes().contains(word, caseSensitivity);
 }
