@@ -481,12 +481,11 @@ build() {
             cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off -G"MSYS Makefiles" \
                 -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" $CMAKE_OPTIONS "$SRC_DIR"
             
-            logInfo "Compiling sources..."
-            make $MAKE_OPTIONS
+            logInfo "Compiling and packaging sources..."
+            make $MAKE_OPTIONS package
             
-            logInfo "Bundling binary packages..."
-            make package
-        else
+            mv "./${APP_NAME}-${RELEASE_NAME}-"*.{exe,zip} ../bin-release
+        else            
             logInfo "Configuring build..."
             cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off $CMAKE_OPTIONS \
                 -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" "$SRC_DIR"
@@ -496,7 +495,6 @@ build() {
             
             logInfo "Installing to bin dir..."
             make DESTDIR="${OUTPUT_DIR}/bin-release" install/strip
-            
             
             logInfo "Creating AppImage..."
             ${SRC_DIR}/AppImage-Recipe.sh "$APP_NAME" "$RELEASE_NAME"
