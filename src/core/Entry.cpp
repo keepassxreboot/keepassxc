@@ -353,6 +353,12 @@ void Entry::setTitle(const QString& title)
 
 void Entry::setUrl(const QString& url)
 {
+    bool remove = url != m_attributes->value(EntryAttributes::URLKey) &&
+                  (m_attributes->value(EntryAttributes::RememberCmdExecAttr) == "1" ||
+                   m_attributes->value(EntryAttributes::RememberCmdExecAttr) == "0");
+    if (remove) {
+        m_attributes->remove(EntryAttributes::RememberCmdExecAttr);
+    }
     m_attributes->set(EntryAttributes::URLKey, url, m_attributes->isProtected(EntryAttributes::URLKey));
 }
 
