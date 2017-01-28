@@ -507,7 +507,7 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
         
         // otherwise ask user
         if (urlString.length() > 6) {
-            QString cmdTruncated = urlString;
+            QString cmdTruncated = urlString.mid(6);
             if (cmdTruncated.length() > 400)
                 cmdTruncated = cmdTruncated.left(400) + " […]";
             QMessageBox msgbox(QMessageBox::Icon::Question,
