@@ -232,6 +232,13 @@ checkChangeLog() {
     fi
 }
 
+checkTransifexCommandExists() {
+    command -v tx > /dev/null
+    if [ 0 -ne $? ]; then
+        exitError "Transifex tool 'tx' not installed! Please install it using 'pip install transifex-client'"
+    fi
+}
+
 
 trap exitTrap SIGINT SIGTERM
 
@@ -308,6 +315,7 @@ merge() {
     logInfo "Changing to source directory..."
     cd "${SRC_DIR}"
     
+    checkTransifexCommandExists
     checkGitRepository
     checkReleaseDoesNotExist
     checkWorkingTreeClean
@@ -317,6 +325,25 @@ merge() {
     checkChangeLog
     
     logInfo "All checks pass, getting our hands dirty now!"
+    
+    logInfo "Checking out source branch..."
+    git checkout "$SOURCE_BRANCH"
+    
+    logInfo "Updating language files..."
+    ./share/translations/update.sh
+    if [ 0 -ne $? ]; then
+        exitError "Updating translations failed!"
+    fi
+    git diff-index --quiet HEAD --
+    if [ $? -ne 0 ]; then
+        git add ./share/translations/*
+        logInfo "Committing changes..."
+        if [ "" == "$GPG_GIT_KEY" ]; then
+            git commit -m "Update translations"
+        else
+            git commit -m "Update translations" -S"$GPG_GIT_KEY"
+        fi
+    fi
 
     logInfo "Checking out target branch '${TARGET_BRANCH}'..."
     git checkout "$TARGET_BRANCH"
@@ -439,6 +466,8 @@ build() {
     checkGitRepository
     checkWorkingTreeClean
     checkOutputDirDoesNotExist
+    
+    logInfo "All checks pass, getting our hands dirty now!"
     
     logInfo "Checking out release tag '${TAG_NAME}'..."
     git checkout "$TAG_NAME"
