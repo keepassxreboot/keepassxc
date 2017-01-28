@@ -540,7 +540,7 @@ build() {
                 cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off $CMAKE_OPTIONS \
                     -DCMAKE_INSTALL_PREFIX=\"${INSTALL_PREFIX}\" /keepassxc/src && \
                 make $MAKE_OPTIONS && make DESTDIR=/keepassxc/out/bin-release install/strip && \
-                /keepassxc/src/AppImage-Recipe2.sh "$APP_NAME" "$RELEASE_NAME""
+                /keepassxc/src/AppImage-Recipe.sh "$APP_NAME" "$RELEASE_NAME""
         
         if [ 0 -ne $? ]; then
             exitError "Docker build failed!"
