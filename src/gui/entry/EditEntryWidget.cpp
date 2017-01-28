@@ -434,6 +434,9 @@ void EditEntryWidget::saveEntry()
 
 void EditEntryWidget::updateEntryData(Entry* entry) const
 {
+    entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
+    entry->attachments()->copyDataFrom(m_entryAttachments);
+    
     entry->setTitle(m_mainUi->titleEdit->text());
     entry->setUsername(m_mainUi->usernameEdit->text());
     entry->setUrl(m_mainUi->urlEdit->text());
@@ -442,9 +445,6 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
     entry->setExpiryTime(m_mainUi->expireDatePicker->dateTime().toUTC());
 
     entry->setNotes(m_mainUi->notesEdit->toPlainText());
-
-    entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
-    entry->attachments()->copyDataFrom(m_entryAttachments);
 
     IconStruct iconStruct = m_iconsWidget->state();
 

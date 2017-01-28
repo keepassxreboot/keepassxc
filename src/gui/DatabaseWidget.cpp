@@ -19,6 +19,7 @@
 
 #include <QAction>
 #include <QDesktopServices>
+#include <QCheckBox>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QFile>
@@ -496,16 +497,45 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
     }
 
     if (urlString.startsWith("cmd://")) {
+        // check if decision to execute command was stored
+        if (entry->attributes()->hasKey(EntryAttributes::RememberCmdExecAttr)) {
+            if (entry->attributes()->value(EntryAttributes::RememberCmdExecAttr) == "1") {
+                QProcess::startDetached(urlString.mid(6));
+            }
+            return;
+        }
+        
+        // otherwise ask user
         if (urlString.length() > 6) {
-            QMessageBox::StandardButton result;
-            result = MessageBox::question(
-                this, tr("Execute command?"),
-                tr("Do you really want to execute the following command?<br><br>%1")
-                .arg(urlString.left(200).toHtmlEscaped()),
-                QMessageBox::Yes | QMessageBox::No);
-
+            QString cmdTruncated = urlString.mid(6);
+            if (cmdTruncated.length() > 400)
+                cmdTruncated = cmdTruncated.left(400) + " […]";
+            QMessageBox msgbox(QMessageBox::Icon::Question,
+                               tr("Execute command?"),
+                               tr("Do you really want to execute the following command?<br><br>%1<br>")
+                                   .arg(cmdTruncated.toHtmlEscaped()),
+                               QMessageBox::Yes | QMessageBox::No,
+                               this
+            );
+            msgbox.setDefaultButton(QMessageBox::No);
+            
+            QCheckBox* checkbox = new QCheckBox(tr("Remember my choice"), &msgbox);
+            msgbox.setCheckBox(checkbox);
+            bool remember = false;
+            QObject::connect(checkbox, &QCheckBox::stateChanged, [&](int state) {
+                if (static_cast<Qt::CheckState>(state) == Qt::CheckState::Checked) {
+                   remember = true;
+               }
+            });
+            
+            int result = msgbox.exec();
             if (result == QMessageBox::Yes) {
                 QProcess::startDetached(urlString.mid(6));
+            }
+            
+            if (remember) {
+                entry->attributes()->set(EntryAttributes::RememberCmdExecAttr,
+                                         result == QMessageBox::Yes ? "1" : "0");
             }
         }
     }
