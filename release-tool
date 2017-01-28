@@ -53,8 +53,7 @@ printUsage() {
     elif [ "merge" == "$1" ] || [ "build" == "$1" ] || [ "sign" == "$1" ]; then
         cmd="$1"
     else
-        logError "Unknown command: '$1'"
-        echo
+        logError "Unknown command: '$1'\n"
         cmd="COMMAND"
     fi
     
@@ -627,4 +626,6 @@ elif [ "help" == "$MODE" ]; then
     exit
 elif [ "merge" == "$MODE" ] || [ "build" == "$MODE" ] || [ "sign" == "$MODE" ]; then
     $MODE "$@"
+else
+    printUsage "$MODE"
 fi
