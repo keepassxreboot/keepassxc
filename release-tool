@@ -64,10 +64,9 @@ printUsage() {
         cat << EOF
 
 Commands:
-  merge      Merge release development branch into main branch
-             and create release tags
+  merge      Merge release branch into main branch and create release tags
   build      Build and package binary release from sources
-  sign       Sign compile release packages
+  sign       Sign previously compiled release packages
   help       Show help for the given command
 EOF
     elif [ "merge" == "$cmd" ]; then
@@ -477,16 +476,25 @@ build() {
     export CXX="$COMPILER"
     
     if [ "" == "$DOCKER_IMAGE" ]; then
-        cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off $CMAKE_OPTIONS \
-            -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" "$SRC_DIR"
-        
-        logInfo "Compiling sources..."
-        make $MAKE_OPTIONS
         
         if [ "$(uname -i)" == "Msys" ]; then
+            logInfo "Configuring build..."
+            cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off -G"MSYS Makefiles" \
+                -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" $CMAKE_OPTIONS "$SRC_DIR"
+            
+            logInfo "Compiling sources..."
+            make $MAKE_OPTIONS
+            
             logInfo "Bundling binary packages..."
             make package
         else
+            logInfo "Configuring build..."
+            cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off $CMAKE_OPTIONS \
+                -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" "$SRC_DIR"
+                
+            logInfo "Compiling sources..."
+            make $MAKE_OPTIONS
+            
             logInfo "Installing to bin dir..."
             make DESTDIR="${OUTPUT_DIR}/bin-release" install/strip
             
