@@ -476,8 +476,7 @@ build() {
     export CXX="$COMPILER"
     
     if [ "" == "$DOCKER_IMAGE" ]; then
-        
-        if [ "$(uname -i)" == "Msys" ]; then
+        if [ "$(uname -o)" == "Msys" ]; then
             logInfo "Configuring build..."
             cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off -G"MSYS Makefiles" \
                 -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" $CMAKE_OPTIONS "$SRC_DIR"
