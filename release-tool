@@ -71,6 +71,8 @@ EOF
     elif [ "merge" == "$cmd" ]; then
         cat << EOF
 
+Merge release branch into main branch and create release tags
+
 Options:
   -v, --version        Release version number or name (required)
   -a, --app-name       Application name (default: '${APP_NAME}')
@@ -85,6 +87,8 @@ Options:
 EOF
     elif [ "build" == "$cmd" ]; then
         cat << EOF
+
+Build and package binary release from sources
 
 Options:
   -v, --version           Release version number or name (required)
@@ -110,6 +114,8 @@ Options:
 EOF
     elif [ "sign" == "$cmd" ]; then
         cat << EOF
+
+Sign previously compiled release packages
 
 Options:
   -f, --files       Files to sign (required)
