@@ -72,10 +72,6 @@ chmod +x ./usr/bin/keepassxc_env
 sed -i 's/Exec=keepassxc/Exec=keepassxc_env/' keepassxc.desktop
 get_desktopintegration $LOWERAPP
 
-# patch desktop integration script so it finds the keepassxc.png icons
-# see https://github.com/probonopd/AppImageKit/issues/341
-sed -i 's/-wholename "\*\/apps\/\${APP}.png"/-wholename "*\/apps\/keepassxc.png"/' ./usr/bin/keepassxc_env.wrapper
-
 GLIBC_NEEDED=$(glibc_needed)
 
 cd ..
