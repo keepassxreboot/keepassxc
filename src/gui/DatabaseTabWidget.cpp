@@ -716,6 +716,7 @@ void DatabaseTabWidget::lockDatabases()
             }
             else if (result == QMessageBox::Discard) {
                 m_dbList[db].modified = false;
+                m_dbList[db].dbWidget->databaseSaved();
             }
             else if (result == QMessageBox::Cancel) {
                 continue;
