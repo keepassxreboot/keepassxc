@@ -65,7 +65,7 @@ get_desktop
 get_icon
 cat << EOF > ./usr/bin/keepassxc_env
 #!/usr/bin/bash
-export QT_QPA_PLATFORMTHEME=gtk2
+#export QT_QPA_PLATFORMTHEME=gtk2
 exec keepassxc "$@"
 EOF
 chmod +x ./usr/bin/keepassxc_env
