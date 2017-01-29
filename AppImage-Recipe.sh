@@ -46,11 +46,12 @@ rm -R ./usr/local
 patch_strings_in_file /usr/local ././
 patch_strings_in_file /usr ./
 
-# bundle Qt platform plugins
+# bundle Qt platform plugins and themes
 QXCB_PLUGIN="$(find /usr/lib -name 'libqxcb.so' 2> /dev/null)"
 QT_PLUGIN_PATH="$(dirname $(dirname $QXCB_PLUGIN))"
 mkdir -p "./${QT_PLUGIN_PATH}/platforms"
 cp "$QXCB_PLUGIN" "./${QT_PLUGIN_PATH}/platforms/"
+cp -a "${QT_PLUGIN_PATH}/platformthemes" "./${QT_PLUGIN_PATH}"
 
 get_apprun
 copy_deps
@@ -62,6 +63,13 @@ find . -name libsystemd.so.0 -exec rm {} \;
 
 get_desktop
 get_icon
+cat << EOF > ./usr/bin/keepassxc_env
+#!/usr/bin/bash
+export QT_QPA_PLATFORMTHEME=gtk2
+exec keepassxc "$@"
+EOF
+chmod +x ./usr/bin/keepassxc_env
+sed -i 's/Exec=keepassxc/Exec=keepassxc_env/' keepassxc.desktop
 get_desktopintegration $LOWERAPP
 
 GLIBC_NEEDED=$(glibc_needed)
