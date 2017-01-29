@@ -518,7 +518,8 @@ build() {
             logInfo "Compiling and packaging sources..."
             make $MAKE_OPTIONS package
             
-            mv "./${APP_NAME}-${RELEASE_NAME}-"*.{exe,zip} ../bin-release
+            rmdir ../bin-release
+            mv "./${APP_NAME}-${RELEASE_NAME}-"*.{exe,zip} ../
         else            
             logInfo "Configuring build..."
             cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off $CMAKE_OPTIONS \
