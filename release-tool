@@ -494,7 +494,6 @@ build() {
     
     logInfo "Creating build directory..."
     mkdir -p "${OUTPUT_DIR}/build-release"
-    mkdir -p "${OUTPUT_DIR}/bin-release"
     cd "${OUTPUT_DIR}/build-release"
     
     logInfo "Configuring sources..."
@@ -537,9 +536,10 @@ build() {
             logInfo "Compiling and packaging sources..."
             make $MAKE_OPTIONS package
             
-            rmdir ../bin-release
             mv "./${APP_NAME}-${RELEASE_NAME}-"*.{exe,zip} ../
         else
+            mkdir -p "${OUTPUT_DIR}/bin-release"
+            
             # Building on Linux without Docker container
             logInfo "Configuring build..."
             cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off $CMAKE_OPTIONS \
@@ -555,6 +555,8 @@ build() {
             ${SRC_DIR}/AppImage-Recipe.sh "$APP_NAME" "$RELEASE_NAME"
         fi
     else
+        mkdir -p "${OUTPUT_DIR}/bin-release"
+        
         logInfo "Launching Docker container to compile sources..."
         
         docker run --name "$DOCKER_CONTAINER_NAME" --rm \
