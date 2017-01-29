@@ -14,14 +14,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-FROM ubuntu:16.04
+FROM ubuntu:14.04
 
-RUN set -x && apt-get update
 RUN set -x \
+    && apt-get update \
     && apt-get install --yes \
+        g++ \
         cmake \
         libgcrypt20-dev \
         qtbase5-dev \
+        qttools5-dev \
         qttools5-dev-tools \
         libmicrohttpd-dev \
         libqt5x11extras5-dev \
@@ -32,7 +34,7 @@ RUN set -x \
         file \
         fuse \
         python
-
+        
 VOLUME /keepassxc/src
 VOLUME /keepassxc/out
 WORKDIR /keepassxc
