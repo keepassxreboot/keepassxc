@@ -510,7 +510,26 @@ build() {
     export CXX="$COMPILER"
     
     if [ "" == "$DOCKER_IMAGE" ]; then
-        if [ "$(uname -o)" == "Msys" ]; then
+        if [ "$(uname -s)" == "Darwin" ]; then
+            # Building on OS X
+            local qt_vers="$(ls /usr/local/Cellar/qt5 2> /dev/null | sort -r | head -n1)"
+            if [ "" == "$qt_vers" ]; then
+                exitError "Couldn't find Qt5! Please make sure it is available in '/usr/local/Cellar/qt5'."
+            fi
+            export MACOSX_DEPLOYMENT_TARGET=10.7
+            
+            logInfo "Configuring build..."
+            cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
+                -DCMAKE_OSX_ARCHITECTURES=x86_64 -DWITH_CXX11=OFF \
+                -DCMAKE_PREFIX_PATH="/usr/local/Cellar/qt5/${qt_vers}/lib/cmake" \
+                -DQT_BINARY_DIR="/usr/local/Cellar/qt5/${qt_vers}/bin" $CMAKE_OPTIONS "$SRC_DIR"
+            
+            logInfo "Compiling and packaging sources..."
+            make $MAKE_OPTIONS package
+            
+            mv "./${APP_NAME}-${RELEASE_NAME}.dmg" ../
+        elif [ "$(uname -o)" == "Msys" ]; then
+            # Building on Windows with Msys
             logInfo "Configuring build..."
             cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off -G"MSYS Makefiles" \
                 -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" $CMAKE_OPTIONS "$SRC_DIR"
@@ -520,7 +539,8 @@ build() {
             
             rmdir ../bin-release
             mv "./${APP_NAME}-${RELEASE_NAME}-"*.{exe,zip} ../
-        else            
+        else
+            # Building on Linux without Docker container
             logInfo "Configuring build..."
             cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off $CMAKE_OPTIONS \
                 -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" "$SRC_DIR"
