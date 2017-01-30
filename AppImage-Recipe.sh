@@ -64,7 +64,7 @@ find . -name libsystemd.so.0 -exec rm {} \;
 get_desktop
 get_icon
 cat << EOF > ./usr/bin/keepassxc_env
-#!/usr/bin/bash
+#!/usr/bin/env bash
 #export QT_QPA_PLATFORMTHEME=gtk2
 exec keepassxc "\$@"
 EOF
