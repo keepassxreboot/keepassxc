@@ -1,4 +1,4 @@
-#  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+#  Copyright (C) 2017 KeePassXC Team
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -13,24 +13,19 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-include_directories(../src)
+set(cli_SOURCES
+    Merge.cpp
+    Merge.h
+    Extract.cpp
+    Extract.h)
 
-add_executable(kdbx-extract kdbx-extract.cpp)
-target_link_libraries(kdbx-extract
+add_library(cli STATIC ${cli_SOURCES})
+target_link_libraries(cli Qt5::Core Qt5::Widgets)
+
+add_executable(keepassxc-cli keepassxc-cli.cpp)
+target_link_libraries(keepassxc-cli
+                      cli
                       keepassx_core
                       Qt5::Core
                       ${GCRYPT_LIBRARIES}
-                      ${GPGERROR_LIBRARIES}
                       ${ZLIB_LIBRARIES})
-
-add_executable(kdbx-merge kdbx-merge.cpp)
-target_link_libraries(kdbx-merge
-                      keepassx_core
-                      Qt5::Core
-                      ${GCRYPT_LIBRARIES}
-                      ${GPGERROR_LIBRARIES}
-                      ${ZLIB_LIBRARIES})
-
-
-add_executable(entropy-meter entropy-meter.cpp)
-target_link_libraries(entropy-meter zxcvbn)

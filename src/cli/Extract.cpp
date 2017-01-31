@@ -17,6 +17,8 @@
 
 #include <stdio.h>
 
+#include "Extract.h"
+
 #include <QCommandLineParser>
 #include <QCoreApplication>
 #include <QFile>
@@ -30,7 +32,7 @@
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
-int main(int argc, char **argv)
+int Extract::execute(int argc, char **argv)
 {
     QCoreApplication app(argc, argv);
 
@@ -38,17 +40,12 @@ int main(int argc, char **argv)
     parser.setApplicationDescription(QCoreApplication::translate("main",
                                                                  "Extract and print a KeePassXC database file."));
     parser.addPositionalArgument("database", QCoreApplication::translate("main", "path of the database to extract."));
-    parser.addHelpOption();
     parser.process(app);
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 1) {
         parser.showHelp();
         return 1;
-    }
-
-    if (!Crypto::init()) {
-        qFatal("Fatal error while testing the cryptographic functions:\n%s", qPrintable(Crypto::errorString()));
     }
 
     static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
