@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <stdio.h>
+#include "Merge.h"
 
 #include <QCommandLineParser>
 #include <QCoreApplication>
@@ -25,12 +25,11 @@
 #include <QTextStream>
 
 #include "core/Database.h"
-#include "crypto/Crypto.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
 #include "keys/CompositeKey.h"
 
-int main(int argc, char **argv)
+int Merge::execute(int argc, char** argv)
 {
 
     QCoreApplication app(argc, argv);
@@ -43,7 +42,6 @@ int main(int argc, char **argv)
     QCommandLineOption samePasswordOption(QStringList() << "s" << "same-password",
                                           QCoreApplication::translate("main", "use the same password for both database files."));
 
-    parser.addHelpOption();
     parser.addOption(samePasswordOption);
     parser.process(app);
 
@@ -51,10 +49,6 @@ int main(int argc, char **argv)
     if (args.size() != 2) {
         parser.showHelp();
         return 1;
-    }
-
-    if (!Crypto::init()) {
-        qFatal("Fatal error while testing the cryptographic functions:\n%s", qPrintable(Crypto::errorString()));
     }
 
     static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
@@ -133,6 +127,6 @@ int main(int argc, char **argv)
     }
 
     qDebug("Successfully merged the database files.\n");
-    return 1;
+    return 0;
 
 }
