@@ -245,19 +245,21 @@ checkTransifexCommandExists() {
 }
 
 # re-implement realpath for OS X (thanks mschrag)
-# https://superuser.com/questions/205127/how-to-retrieve-the-absolute-path-of-an-arbitrary-file-from-the-os-x
+# https://superuser.com/questions/205127/
 if $(command -v realpath > /dev/null); then
     realpath() {
         pushd . > /dev/null
         if [ -d "$1" ]; then
-            cd "$1"; dirs -l +0
-        else cd "`dirname \"$1\"`"
-            cur_dir=`dirs -l +0`
+            cd "$1"
+            dirs -l +0
+        else
+            cd "$(dirname "$1")"
+            cur_dir=$(dirs -l +0)
             
             if [ "$cur_dir" == "/" ]; then
-                echo "$cur_dir`basename \"$1\"`"
+                echo "$cur_dir$(basename "$1")"
             else
-                echo "$cur_dir/`basename \"$1\"`"
+                echo "$cur_dir/$(basename "$1")"
             fi
         fi
         popd > /dev/null
