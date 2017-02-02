@@ -16,6 +16,8 @@
 set(cli_SOURCES
     Merge.cpp
     Merge.h
+    EntropyMeter.cpp
+    EntropyMeter.h
     Extract.cpp
     Extract.h)
 

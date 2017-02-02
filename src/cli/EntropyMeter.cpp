@@ -6,6 +6,8 @@ Copyright (c) 2016, KeePassXC Team
 See zxcvbn/zxcvbn.cpp for complete COPYRIGHT Notice
 */
 
+#include "EntropyMeter.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -76,7 +78,7 @@ static void calculate(const char *pwd, int advanced)
     }
 }
 
-int main(int argc, char **argv)
+int EntropyMeter::execute(int argc, char **argv)
 {
     printf("KeePassXC Entropy Meter, based on zxcvbn-c.\nEnter your password below or pass it as argv\n");
     printf("  Usage: entropy-meter [-a] [pwd1 pwd2 ...]\n> ");
