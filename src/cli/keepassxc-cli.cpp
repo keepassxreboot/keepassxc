@@ -23,10 +23,14 @@
 #include <QStringList>
 
 #include "config-keepassx.h"
+#include "core/Tools.h"
 #include "crypto/Crypto.h"
 
 int main(int argc, char **argv)
 {
+#ifdef QT_NO_DEBUG
+    Tools::disableCoreDumps();
+#endif
 
     if (!Crypto::init()) {
         qFatal("Fatal error while testing the cryptographic functions:\n%s", qPrintable(Crypto::errorString()));
