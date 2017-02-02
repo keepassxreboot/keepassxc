@@ -15,13 +15,14 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cli/Merge.h>
-#include <cli/Extract.h>
+#include <cstdlib>
 
 #include <QCommandLineParser>
 #include <QCoreApplication>
 #include <QStringList>
 
+#include <cli/Merge.h>
+#include <cli/Extract.h>
 #include "config-keepassx.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
@@ -34,7 +35,7 @@ int main(int argc, char **argv)
 
     if (!Crypto::init()) {
         qFatal("Fatal error while testing the cryptographic functions:\n%s", qPrintable(Crypto::errorString()));
-        return 1;
+        return EXIT_FAILURE;
     }
 
     QCoreApplication app(argc, argv);
@@ -51,7 +52,7 @@ int main(int argc, char **argv)
     const QStringList args = parser.positionalArguments();
     if (args.size() < 1) {
         parser.showHelp();
-        return 1;
+        return EXIT_FAILURE;
     }
 
     QString commandName = args.at(0);
@@ -74,6 +75,6 @@ int main(int argc, char **argv)
 
     qCritical("Invalid command %s.", qPrintable(commandName));
     parser.showHelp();
-    return 1;
+    return EXIT_FAILURE;
 
 }
