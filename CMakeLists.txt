@@ -254,7 +254,6 @@ include(FeatureSummary)
 
 add_subdirectory(src)
 add_subdirectory(share)
-add_subdirectory(utils)
 if(WITH_TESTS)
   add_subdirectory(tests)
 endif(WITH_TESTS)

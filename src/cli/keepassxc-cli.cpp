@@ -23,6 +23,7 @@
 
 #include <cli/Merge.h>
 #include <cli/Extract.h>
+#include <cli/EntropyMeter.h>
 #include "config-keepassx.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
@@ -47,15 +48,17 @@ int main(int argc, char **argv)
 
     parser.addHelpOption();
     parser.addVersionOption();
-    parser.process(app);
+    // TODO : use process once the setOptionsAfterPositionalArgumentsMode (Qt 5.6)
+    // is available. Until then, options passed to sub-commands won't be
+    // recognized by this parser.
+    // parser.process(app);
 
-    const QStringList args = parser.positionalArguments();
-    if (args.size() < 1) {
+    if (argc < 2) {
         parser.showHelp();
         return EXIT_FAILURE;
     }
 
-    QString commandName = args.at(0);
+    QString commandName = argv[1];
 
     for (int i = 1; i < argc - 1; ++i) {
       argv[i] = argv[i + 1];
@@ -71,6 +74,11 @@ int main(int argc, char **argv)
     if (commandName == "extract") {
       argv[0] = const_cast<char*>("keepassxc-cli extract");
       return Extract::execute(argc, argv);
+    }
+
+    if (commandName == "entropy-meter") {
+      argv[0] = const_cast<char*>("keepassxc-cli entropy-meter");
+      return EntropyMeter::execute(argc, argv);
     }
 
     qCritical("Invalid command %s.", qPrintable(commandName));
