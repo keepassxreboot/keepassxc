@@ -57,20 +57,18 @@ int main(int argc, char **argv)
     QString commandName = args.at(0);
 
     for (int i = 1; i < argc - 1; ++i) {
-      argv[i] = argv[i+1];
+      argv[i] = argv[i + 1];
     }
     argv[argc - 1] = nullptr;
-    argc--;
+    --argc;
 
-    if (commandName == "merge")
-    {
-      argv[0] = const_cast<char *>("keepassxc-cli merge");
+    if (commandName == "merge") {
+      argv[0] = const_cast<char*>("keepassxc-cli merge");
       return Merge::execute(argc, argv);
     }
 
-    if (commandName == "extract")
-    {
-      argv[0] = const_cast<char *>("keepassxc-cli extract");
+    if (commandName == "extract") {
+      argv[0] = const_cast<char*>("keepassxc-cli extract");
       return Extract::execute(argc, argv);
     }
 
