@@ -33,3 +33,7 @@ target_link_libraries(keepassxc-cli
                       ${GPGERROR_LIBRARIES}
                       ${ZLIB_LIBRARIES}
                       zxcvbn)
+
+install(TARGETS keepassxc-cli
+        BUNDLE DESTINATION . COMPONENT Runtime
+        RUNTIME DESTINATION ${BIN_INSTALL_DIR} COMPONENT Runtime)
