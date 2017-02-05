@@ -15,7 +15,10 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <cstdlib>
 #include <stdio.h>
+
+#include "Extract.h"
 
 #include <QCommandLineParser>
 #include <QCoreApplication>
@@ -30,7 +33,7 @@
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
-int main(int argc, char **argv)
+int Extract::execute(int argc, char **argv)
 {
     QCoreApplication app(argc, argv);
 
@@ -38,17 +41,12 @@ int main(int argc, char **argv)
     parser.setApplicationDescription(QCoreApplication::translate("main",
                                                                  "Extract and print a KeePassXC database file."));
     parser.addPositionalArgument("database", QCoreApplication::translate("main", "path of the database to extract."));
-    parser.addHelpOption();
     parser.process(app);
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 1) {
         parser.showHelp();
-        return 1;
-    }
-
-    if (!Crypto::init()) {
-        qFatal("Fatal error while testing the cryptographic functions:\n%s", qPrintable(Crypto::errorString()));
+        return EXIT_FAILURE;
     }
 
     static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
@@ -59,11 +57,11 @@ int main(int argc, char **argv)
     QFile dbFile(databaseFilename);
     if (!dbFile.exists()) {
         qCritical("File %s does not exist.", qPrintable(databaseFilename));
-        return 1;
+        return EXIT_FAILURE;
     }
     if (!dbFile.open(QIODevice::ReadOnly)) {
         qCritical("Unable to open file %s.", qPrintable(databaseFilename));
-        return 1;
+        return EXIT_FAILURE;
     }
 
     KeePass2Reader reader;
@@ -76,15 +74,15 @@ int main(int argc, char **argv)
     if (reader.hasError()) {
         if (xmlData.isEmpty()) {
             qCritical("Error while reading the database:\n%s", qPrintable(reader.errorString()));
-            return 1;
         }
         else {
             qWarning("Error while parsing the database:\n%s\n", qPrintable(reader.errorString()));
         }
+        return EXIT_FAILURE;
     }
 
     QTextStream out(stdout);
     out << xmlData.constData() << "\n";
 
-    return 0;
+    return EXIT_SUCCESS;
 }

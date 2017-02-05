@@ -15,7 +15,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <stdio.h>
+#include <cstdlib>
+
+#include "Merge.h"
 
 #include <QCommandLineParser>
 #include <QCoreApplication>
@@ -25,12 +27,11 @@
 #include <QTextStream>
 
 #include "core/Database.h"
-#include "crypto/Crypto.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
 #include "keys/CompositeKey.h"
 
-int main(int argc, char **argv)
+int Merge::execute(int argc, char** argv)
 {
 
     QCoreApplication app(argc, argv);
@@ -43,18 +44,13 @@ int main(int argc, char **argv)
     QCommandLineOption samePasswordOption(QStringList() << "s" << "same-password",
                                           QCoreApplication::translate("main", "use the same password for both database files."));
 
-    parser.addHelpOption();
     parser.addOption(samePasswordOption);
     parser.process(app);
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
         parser.showHelp();
-        return 1;
-    }
-
-    if (!Crypto::init()) {
-        qFatal("Fatal error while testing the cryptographic functions:\n%s", qPrintable(Crypto::errorString()));
+        return EXIT_FAILURE;
     }
 
     static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
@@ -76,11 +72,11 @@ int main(int argc, char **argv)
     QFile dbFile1(databaseFilename1);
     if (!dbFile1.exists()) {
         qCritical("File %s does not exist.", qPrintable(databaseFilename1));
-        return 1;
+        return EXIT_FAILURE;
     }
     if (!dbFile1.open(QIODevice::ReadOnly)) {
         qCritical("Unable to open file %s.", qPrintable(databaseFilename1));
-        return 1;
+        return EXIT_FAILURE;
     }
 
     KeePass2Reader reader1;
@@ -88,7 +84,7 @@ int main(int argc, char **argv)
 
     if (reader1.hasError()) {
         qCritical("Error while parsing the database:\n%s\n", qPrintable(reader1.errorString()));
-        return 1;
+        return EXIT_FAILURE;
     }
 
 
@@ -96,11 +92,11 @@ int main(int argc, char **argv)
     QFile dbFile2(databaseFilename2);
     if (!dbFile2.exists()) {
         qCritical("File %s does not exist.", qPrintable(databaseFilename2));
-        return 1;
+        return EXIT_FAILURE;
     }
     if (!dbFile2.open(QIODevice::ReadOnly)) {
         qCritical("Unable to open file %s.", qPrintable(databaseFilename2));
-        return 1;
+        return EXIT_FAILURE;
     }
 
     KeePass2Reader reader2;
@@ -108,7 +104,7 @@ int main(int argc, char **argv)
 
     if (reader2.hasError()) {
         qCritical("Error while parsing the database:\n%s\n", qPrintable(reader2.errorString()));
-        return 1;
+        return EXIT_FAILURE;
     }
 
     db1->merge(db2);
@@ -116,7 +112,7 @@ int main(int argc, char **argv)
     QSaveFile saveFile(databaseFilename1);
     if (!saveFile.open(QIODevice::WriteOnly)) {
         qCritical("Unable to open file %s for writing.", qPrintable(databaseFilename1));
-        return 1;
+        return EXIT_FAILURE;
     }
 
     KeePass2Writer writer;
@@ -124,15 +120,15 @@ int main(int argc, char **argv)
 
     if (writer.hasError()) {
         qCritical("Error while updating the database:\n%s\n", qPrintable(writer.errorString()));
-        return 1;
+        return EXIT_FAILURE;
     }
 
     if (!saveFile.commit()) {
         qCritical("Error while updating the database:\n%s\n", qPrintable(writer.errorString()));
-        return 0;
+        return EXIT_FAILURE;
     }
 
     qDebug("Successfully merged the database files.\n");
-    return 1;
+    return EXIT_SUCCESS;
 
 }
