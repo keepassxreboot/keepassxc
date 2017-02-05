@@ -60,10 +60,8 @@ int main(int argc, char **argv)
 
     QString commandName = argv[1];
 
-    for (int i = 1; i < argc - 1; ++i) {
-      argv[i] = argv[i + 1];
-    }
-    argv[argc - 1] = nullptr;
+    // Removing the first cli argument before dispatching.
+    ++argv;
     --argc;
 
     if (commandName == "merge") {
