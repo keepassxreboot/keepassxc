@@ -43,7 +43,7 @@ int main(int argc, char **argv)
     app.setApplicationVersion(KEEPASSX_VERSION);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main", "KeepassXC command line interface."));
+    parser.setApplicationDescription(QCoreApplication::translate("main", "KeePassXC command line interface."));
     parser.addPositionalArgument("command", QCoreApplication::translate("main", "Name of the command to execute."));
 
     parser.addHelpOption();
