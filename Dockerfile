@@ -18,15 +18,21 @@ FROM ubuntu:14.04
 
 RUN set -x \
     && apt-get update \
+    && apt-get install --yes software-properties-common
+
+RUN set -x \
+    && add-apt-repository --yes ppa:beineri/opt-qt58-trusty
+
+RUN set -x \
+    && apt-get update \
     && apt-get install --yes \
         g++ \
         cmake \
         libgcrypt20-dev \
-        qtbase5-dev \
-        qttools5-dev \
-        qttools5-dev-tools \
+        qt58base \
+        qt58tools \
+        qt58x11extras \
         libmicrohttpd-dev \
-        libqt5x11extras5-dev \
         libxi-dev \
         libxtst-dev \
         zlib1g-dev \
@@ -34,7 +40,15 @@ RUN set -x \
         file \
         fuse \
         python
+
+RUN set -x \
+    && apt-get install --yes mesa-common-dev
         
 VOLUME /keepassxc/src
 VOLUME /keepassxc/out
 WORKDIR /keepassxc
+
+ENV CMAKE_PREFIX_PATH=/opt/qt58/lib/cmake
+ENV LD_LIBRARY_PATH=/opt/qt58/lib
+RUN set -x \
+    && echo /opt/qt58/lib > /etc/ld.so.conf.d/qt58.conf

@@ -39,19 +39,27 @@ mkdir -p $APP.AppDir
 wget -q https://github.com/probonopd/AppImages/raw/master/functions.sh -O ./functions.sh
 . ./functions.sh
 
+LIB_DIR=./usr/lib
+if [ -d ./usr/lib/x86_64-linux-gnu ]; then
+    LIB_DIR=./usr/lib/x86_64-linux-gnu
+fi
+
 cd $APP.AppDir
 cp -a ../../bin-release/* .
 cp -a ./usr/local/* ./usr
 rm -R ./usr/local
+rmdir ./opt 2> /dev/null
 patch_strings_in_file /usr/local ././
 patch_strings_in_file /usr ./
 
 # bundle Qt platform plugins and themes
 QXCB_PLUGIN="$(find /usr/lib -name 'libqxcb.so' 2> /dev/null)"
+if [ "$QXCB_PLUGIN" == "" ]; then
+    QXCB_PLUGIN="$(find /opt/qt*/plugins -name 'libqxcb.so' 2> /dev/null)"
+fi
 QT_PLUGIN_PATH="$(dirname $(dirname $QXCB_PLUGIN))"
-mkdir -p "./${QT_PLUGIN_PATH}/platforms"
-cp "$QXCB_PLUGIN" "./${QT_PLUGIN_PATH}/platforms/"
-cp -a "${QT_PLUGIN_PATH}/platformthemes" "./${QT_PLUGIN_PATH}"
+mkdir -p ".${QT_PLUGIN_PATH}/platforms"
+cp "$QXCB_PLUGIN" ".${QT_PLUGIN_PATH}/platforms/"
 
 get_apprun
 copy_deps
@@ -66,6 +74,8 @@ get_icon
 cat << EOF > ./usr/bin/keepassxc_env
 #!/usr/bin/env bash
 #export QT_QPA_PLATFORMTHEME=gtk2
+export LD_LIBRARY_PATH="../opt/qt58/lib:\${LD_LIBRARY_PATH}"
+export QT_PLUGIN_PATH="..${QT_PLUGIN_PATH}"
 exec keepassxc "\$@"
 EOF
 chmod +x ./usr/bin/keepassxc_env
