@@ -1,3 +1,13 @@
+2.1.1 (2017-02-06)
+=========================
+
+- Enabled HTTP plugin build; plugin is disabled by default and limited to localhost [#147]
+- Escape HTML in dialog boxes [#247]
+- Corrected crashes in favicon download and password generator [#233, #226]
+- Increase font size of password meter [#228]
+- Fixed compatibility with Qt 5.8 [#211]
+- Use consistent button heights in password generator [#229]
+
 2.1.0 (2017-01-22)
 =========================
 
