@@ -92,6 +92,7 @@ set(TEST_LIBRARIES
     Qt5::Widgets
     Qt5::Test
     ${GCRYPT_LIBRARIES}
+    ${GPGERROR_LIBRARIES}
     ${ZLIB_LIBRARIES}
 )
 

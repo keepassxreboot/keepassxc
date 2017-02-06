@@ -41,6 +41,7 @@ SearchWidget::SearchWidget(QWidget *parent)
     connect(this, SIGNAL(escapePressed()), m_ui->searchEdit, SLOT(clear()));
 
     new QShortcut(Qt::CTRL + Qt::Key_F, this, SLOT(searchFocus()), nullptr, Qt::ApplicationShortcut);
+	new QShortcut(Qt::Key_Escape, m_ui->searchEdit, SLOT(clear()), nullptr, Qt::ApplicationShortcut);
 
     m_ui->searchEdit->installEventFilter(this);
 

@@ -218,6 +218,7 @@ target_link_libraries(${PROGNAME}
                       Qt5::Widgets
                       Qt5::Network
                       ${GCRYPT_LIBRARIES}
+                      ${GPGERROR_LIBRARIES}
                       ${ZLIB_LIBRARIES})
 
 set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
@@ -257,9 +258,25 @@ if(APPLE)
 endif()
 
 if(MINGW)
-  set(CPACK_GENERATOR "ZIP")
+  string(REPLACE "AMD" "Win" OUTPUT_FILE_POSTFIX "${CMAKE_HOST_SYSTEM_PROCESSOR}")
+  set(CPACK_GENERATOR "ZIP;NSIS")
   set(CPACK_STRIP_FILES ON)
-  set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSXC_VERSION_NUM}")
+  set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSXC_VERSION}-${OUTPUT_FILE_POSTFIX}")
+  set(CPACK_PACKAGE_INSTALL_DIRECTORY ${PROGNAME})
+  set(CPACK_PACKAGE_VERSION ${KEEPASSXC_VERSION})
+  set(CPACK_PACKAGE_VENDOR "${PROGNAME} Team")
+  string(REGEX REPLACE "/" "\\\\\\\\" CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/share/windows/installer-header.bmp")
+  set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE.GPL-2")
+  set(CPACK_NSIS_MUI_ICON "${CMAKE_SOURCE_DIR}/share/windows/keepassxc.ico")
+  set(CPACK_NSIS_MUI_UNIICON "${CPACK_NSIS_MUI_ICON}")
+  set(CPACK_NSIS_INSTALLED_ICON_NAME "\\\\${PROGNAME}.exe")
+  string(REGEX REPLACE "/" "\\\\\\\\" CPACK_NSIS_MUI_WELCOMEFINISHPAGE_BITMAP "${CMAKE_SOURCE_DIR}/share/windows/installer-wizard.bmp")
+  set(CPACK_NSIS_MUI_UNWELCOMEFINISHPAGE_BITMAP "${CPACK_NSIS_MUI_WELCOMEFINISHPAGE_BITMAP}")
+  set(CPACK_NSIS_CREATE_ICONS_EXTRA "CreateShortCut '$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\${PROGNAME}.lnk' '$INSTDIR\\\\${PROGNAME}.exe'")
+  set(CPACK_NSIS_DELETE_ICONS_EXTRA "Delete '$SMPROGRAMS\\\\$START_MENU\\\\${PROGNAME}.lnk'")
+  set(CPACK_NSIS_URL_INFO_ABOUT "https://keepassxc.org")
+  set(CPACK_NSIS_PACKAGE_NAME "${PROGNAME} v${KEEPASSXC_VERSION}")
+  set(CPACK_NSIS_MUI_FINISHPAGE_RUN "../${PROGNAME}.exe")
   include(CPack)
 
   install(CODE "
@@ -267,5 +284,9 @@ if(MINGW)
   " COMPONENT Runtime)
 
   include(DeployQt4)
-  install_qt4_executable(${PROGNAME}.exe "qjpeg;qgif;qico;qtaccessiblewidgets")
+  install_qt4_executable(${PROGNAME}.exe)
+  add_custom_command(TARGET ${PROGNAME} POST_BUILD
+                     COMMAND ${CMAKE_COMMAND} -E copy_if_different ${Qt5Core_DIR}/../../../share/qt5/plugins/platforms/qwindows$<$<CONFIG:Debug>:d>.dll
+                     $<TARGET_FILE_DIR:${PROGNAME}>)
+  install(FILES $<TARGET_FILE_DIR:${PROGNAME}>/qwindows$<$<CONFIG:Debug>:d>.dll DESTINATION "platforms")
 endif()
