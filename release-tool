@@ -1,0 +1,682 @@
+#!/usr/bin/env bash
+#  
+# KeePassXC Release Preparation Helper
+# Copyright (C) 2017 KeePassXC team <https://keepassxc.org/>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 2 or (at your option)
+# version 3 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+echo -e "\e[1m\e[32mKeePassXC\e[0m Release Preparation Helper"
+echo -e "Copyright (C) 2017 KeePassXC Team <https://keepassxc.org/>\n"
+
+
+# -----------------------------------------------------------------------
+#                        global default values
+# -----------------------------------------------------------------------
+RELEASE_NAME=""
+APP_NAME="KeePassXC"
+SRC_DIR="."
+GPG_KEY="CFB4C2166397D0D2"
+GPG_GIT_KEY=""
+OUTPUT_DIR="release"
+SOURCE_BRANCH=""
+TARGET_BRANCH="master"
+TAG_NAME=""
+DOCKER_IMAGE=""
+DOCKER_CONTAINER_NAME="keepassxc-build-container"
+CMAKE_OPTIONS=""
+COMPILER="g++"
+MAKE_OPTIONS="-j8"
+BUILD_PLUGINS="autotype"
+INSTALL_PREFIX="/usr/local"
+BUILD_SOURCE_TARBALL=true
+ORIG_BRANCH=""
+ORIG_CWD="$(pwd)"
+
+# -----------------------------------------------------------------------
+#                          helper functions
+# -----------------------------------------------------------------------
+printUsage() {
+    local cmd
+    if [ "" == "$1" ] || [ "help" == "$1" ]; then
+        cmd="COMMAND"
+    elif [ "merge" == "$1" ] || [ "build" == "$1" ] || [ "sign" == "$1" ]; then
+        cmd="$1"
+    else
+        logError "Unknown command: '$1'\n"
+        cmd="COMMAND"
+    fi
+    
+    echo -e "\e[1mUsage:\e[0m $(basename $0) $cmd [options]"
+    
+    if [ "COMMAND" == "$cmd" ]; then
+        cat << EOF
+
+Commands:
+  merge      Merge release branch into main branch and create release tags
+  build      Build and package binary release from sources
+  sign       Sign previously compiled release packages
+  help       Show help for the given command
+EOF
+    elif [ "merge" == "$cmd" ]; then
+        cat << EOF
+
+Merge release branch into main branch and create release tags
+
+Options:
+  -v, --version        Release version number or name (required)
+  -a, --app-name       Application name (default: '${APP_NAME}')
+  -s, --source-dir     Source directory (default: '${SRC_DIR}')
+  -g, --gpg-key        GPG key used to sign the merge commit and release tag,
+                       leave empty to let Git choose your default key
+                       (default: '${GPG_GIT_KEY}')
+  -r, --release-branch Source release branch to merge from (default: 'release/VERSION')
+      --target-branch  Target branch to merge to (default: '${TARGET_BRANCH}')
+  -t, --tag-name       Override release tag name (defaults to version number)
+  -h, --help           Show this help
+EOF
+    elif [ "build" == "$cmd" ]; then
+        cat << EOF
+
+Build and package binary release from sources
+
+Options:
+  -v, --version           Release version number or name (required)
+  -a, --app-name          Application name (default: '${APP_NAME}')
+  -s, --source-dir        Source directory (default: '${SRC_DIR}')
+  -o, --output-dir        Output directory where to build the release
+                          (default: '${OUTPUT_DIR}')
+  -t, --tag-name          Release tag to check out (defaults to version number)
+  -b, --build             Build sources after exporting release
+  -d, --docker-image      Use the specified Docker image to compile the application.
+                          The image must have all required build dependencies installed.
+                          This option has no effect if --build is not set.
+      --container-name    Docker container name (default: '${DOCKER_CONTAINER_NAME}')
+                          The container must not exist already
+  -c, --cmake-options     Additional CMake options for compiling the sources
+      --compiler          Compiler to use (default: '${COMPILER}')
+  -m, --make-options      Make options for compiling sources (default: '${MAKE_OPTIONS}')
+  -i, --install-prefix    Install prefix (default: '${INSTALL_PREFIX}')
+  -p, --plugins           Space-separated list of plugins to build
+                          (default: ${BUILD_PLUGINS})
+  -n, --no-source-tarball Don't build source tarball
+  -h, --help              Show this help
+EOF
+    elif [ "sign" == "$cmd" ]; then
+        cat << EOF
+
+Sign previously compiled release packages
+
+Options:
+  -f, --files       Files to sign (required)
+  -g, --gpg-key     GPG key used to sign the files (default: '${GPG_KEY}')
+  -h, --help        Show this help
+EOF
+    fi
+}
+
+logInfo() {
+    echo -e "\e[1m[ \e[34mINFO\e[39m ]\e[0m $1"
+}
+
+logError() {
+    echo -e "\e[1m[ \e[31mERROR\e[39m ]\e[0m $1" >&2
+}
+
+init() {
+    ORIG_CWD="$(pwd)"
+    cd "$SRC_DIR" > /dev/null 2>&1
+    ORIG_BRANCH="$(git rev-parse --abbrev-ref HEAD 2> /dev/null)"
+    cd "$ORIG_CWD"
+}
+
+cleanup() {
+    logInfo "Checking out original branch..."
+    if [ "" != "$ORIG_BRANCH" ]; then
+        git checkout "$ORIG_BRANCH" > /dev/null 2>&1
+    fi
+    logInfo "Leaving source directory..."
+    cd "$ORIG_CWD"
+}
+
+exitError() {
+    logError "$1"
+    cleanup
+    exit 1
+}
+
+exitTrap() {
+    exitError "Existing upon user request..."
+}
+
+checkSourceDirExists() {
+    if [ ! -d "$SRC_DIR" ]; then
+        exitError "Source directory '${SRC_DIR}' does not exist!"
+    fi
+}
+
+checkOutputDirDoesNotExist() {
+    if [ -e "$OUTPUT_DIR" ]; then
+        exitError "Output directory '$OUTPUT_DIR' already exists. Please choose a different location!"
+    fi
+}
+
+checkGitRepository() {
+    if [ ! -d .git ] || [ ! -f CHANGELOG ]; then
+        exitError "Source directory is not a valid Git repository!"
+    fi
+}
+
+checkTagExists() {
+    git tag | grep -q "$TAG_NAME"
+    if [ $? -ne 0 ]; then
+        exitError "Tag '${TAG_NAME}' does not exist!"
+    fi
+}
+
+checkReleaseDoesNotExist() {
+    git tag | grep -q "$TAG_NAME"
+    if [ $? -eq 0 ]; then
+        exitError "Release '$RELEASE_NAME' (tag: '$TAG_NAME') already exists!"
+    fi
+}
+
+checkWorkingTreeClean() {
+    git diff-index --quiet HEAD --
+    if [ $? -ne 0 ]; then
+        exitError "Current working tree is not clean! Please commit or unstage any changes."
+    fi
+}
+
+checkSourceBranchExists() {
+    git rev-parse "$SOURCE_BRANCH" > /dev/null 2>&1
+    if [ $? -ne 0 ]; then
+        exitError "Source branch '$SOURCE_BRANCH' does not exist!"
+    fi
+}
+
+checkTargetBranchExists() {
+    git rev-parse "$TARGET_BRANCH" > /dev/null 2>&1
+    if [ $? -ne 0 ]; then
+        exitError "Target branch '$TARGET_BRANCH' does not exist!"
+    fi
+}
+
+checkVersionInCMake() {
+    local app_name_upper="$(echo "$APP_NAME" | tr '[:lower:]' '[:upper:]')"
+    
+    grep -q "${app_name_upper}_VERSION \"${RELEASE_NAME}\"" CMakeLists.txt
+    if [ $? -ne 0 ]; then
+        exitError "${app_name_upper}_VERSION version not updated to '${RELEASE_NAME}' in CMakeLists.txt!"
+    fi
+
+    grep -q "${app_name_upper}_VERSION_NUM \"${RELEASE_NAME}\"" CMakeLists.txt
+    if [ $? -ne 0 ]; then
+        exitError "${app_name_upper}_VERSION_NUM version not updated to '${RELEASE_NAME}' in CMakeLists.txt!"
+    fi
+}
+
+checkChangeLog() {
+    if [ ! -f CHANGELOG ]; then
+        exitError "No CHANGELOG file found!"
+    fi
+    
+    grep -qPzo "${RELEASE_NAME} \(\d{4}-\d{2}-\d{2}\)\n=+\n" CHANGELOG
+    if [ $? -ne 0 ]; then
+        exitError "CHANGELOG does not contain any information about the '${RELEASE_NAME}' release!"
+    fi
+}
+
+checkTransifexCommandExists() {
+    command -v tx > /dev/null
+    if [ 0 -ne $? ]; then
+        exitError "Transifex tool 'tx' not installed! Please install it using 'pip install transifex-client'"
+    fi
+}
+
+# re-implement realpath for OS X (thanks mschrag)
+# https://superuser.com/questions/205127/
+if $(command -v realpath > /dev/null); then
+    realpath() {
+        pushd . > /dev/null
+        if [ -d "$1" ]; then
+            cd "$1"
+            dirs -l +0
+        else
+            cd "$(dirname "$1")"
+            cur_dir=$(dirs -l +0)
+            
+            if [ "$cur_dir" == "/" ]; then
+                echo "$cur_dir$(basename "$1")"
+            else
+                echo "$cur_dir/$(basename "$1")"
+            fi
+        fi
+        popd > /dev/null
+    }
+fi
+
+
+trap exitTrap SIGINT SIGTERM
+
+
+# -----------------------------------------------------------------------
+#                             merge command
+# -----------------------------------------------------------------------
+merge() {    
+    while [ $# -ge 1 ]; do
+        local arg="$1"
+        case "$arg" in
+            -v|--version)
+                RELEASE_NAME="$2"
+                shift ;;
+                
+            -a|--app-name)
+                APP_NAME="$2"
+                shift ;;
+            
+            -s|--source-dir)
+                SRC_DIR="$2"
+                shift ;;
+            
+            -g|--gpg-key)
+                GPG_GIT_KEY="$2"
+                shift ;;
+            
+            -r|--release-branch)
+                SOURCE_BRANCH="$2"
+                shift ;;
+            
+            --target-branch)
+                TARGET_BRANCH="$2"
+                shift ;;
+            
+            -t|--tag-name)
+                TAG_NAME="$2"
+                shift ;;
+            
+            -h|--help)
+                printUsage "merge"
+                exit ;;
+            
+            *)
+                logError "Unknown option '$arg'\n"
+                printUsage "merge"
+                exit 1 ;;
+        esac
+        shift
+    done
+
+    if [ "" == "$RELEASE_NAME" ]; then
+        logError "Missing arguments, --version is required!\n"
+        printUsage "merge"
+        exit 1
+    fi
+
+    if [ "" == "$TAG_NAME" ]; then
+        TAG_NAME="$RELEASE_NAME"
+    fi
+    
+    if [ "" == "$SOURCE_BRANCH" ]; then
+        SOURCE_BRANCH="release/${RELEASE_NAME}"
+    fi
+    
+    init
+
+    SRC_DIR="$(realpath "$SRC_DIR")"
+
+    logInfo "Performing basic checks..."
+    
+    checkSourceDirExists
+
+    logInfo "Changing to source directory..."
+    cd "${SRC_DIR}"
+    
+    checkTransifexCommandExists
+    checkGitRepository
+    checkReleaseDoesNotExist
+    checkWorkingTreeClean
+    checkSourceBranchExists
+    checkTargetBranchExists
+    checkVersionInCMake
+    checkChangeLog
+    
+    logInfo "All checks pass, getting our hands dirty now!"
+    
+    logInfo "Checking out source branch..."
+    git checkout "$SOURCE_BRANCH"
+    
+    logInfo "Updating language files..."
+    ./share/translations/update.sh
+    if [ 0 -ne $? ]; then
+        exitError "Updating translations failed!"
+    fi
+    git diff-index --quiet HEAD --
+    if [ $? -ne 0 ]; then
+        git add ./share/translations/*
+        logInfo "Committing changes..."
+        if [ "" == "$GPG_GIT_KEY" ]; then
+            git commit -m "Update translations"
+        else
+            git commit -m "Update translations" -S"$GPG_GIT_KEY"
+        fi
+    fi
+
+    logInfo "Checking out target branch '${TARGET_BRANCH}'..."
+    git checkout "$TARGET_BRANCH"
+    
+    logInfo "Merging '${SOURCE_BRANCH}' into '${TARGET_BRANCH}'..."
+
+    CHANGELOG=$(grep -Pzo "(?<=${RELEASE_NAME} \(\d{4}-\d{2}-\d{2}\)\n)=+\n\n?(?:.|\n)+?\n(?=\n)" \
+        CHANGELOG | grep -Pzo '(?<=\n\n)(.|\n)+' | tr -d \\0)
+    COMMIT_MSG="Release ${RELEASE_NAME}"
+
+    git merge "$SOURCE_BRANCH" --no-ff -m "$COMMIT_MSG" -m "${CHANGELOG}" "$SOURCE_BRANCH" -S"$GPG_GIT_KEY"
+
+    logInfo "Creating tag '${TAG_NAME}'..."
+    if [ "" == "$GPG_GIT_KEY" ]; then
+        git tag -a "$TAG_NAME" -m "$COMMIT_MSG" -m "${CHANGELOG}" -s
+    else
+        git tag -a "$TAG_NAME" -m "$COMMIT_MSG" -m "${CHANGELOG}" -s -u "$GPG_GIT_KEY"
+    fi
+    
+    cleanup
+    
+    logInfo "All done!"
+    logInfo "Please merge the release branch back into the develop branch now and then push your changes."
+    logInfo "Don't forget to also push the tags using \e[1mgit push --tags\e[0m."
+}
+
+# -----------------------------------------------------------------------
+#                             build command
+# -----------------------------------------------------------------------
+build() {    
+    while [ $# -ge 1 ]; do
+        local arg="$1"
+        case "$arg" in
+            -v|--version)
+                RELEASE_NAME="$2"
+                shift ;;
+                
+            -a|--app-name)
+                APP_NAME="$2"
+                shift ;;
+            
+            -s|--source-dir)
+                SRC_DIR="$2"
+                shift ;;
+            
+            -o|--output-dir)
+                OUTPUT_DIR="$2"
+                shift ;;
+            
+            -t|--tag-name)
+                TAG_NAME="$2"
+                shift ;;
+            
+            -d|--docker-image)
+                DOCKER_IMAGE="$2"
+                shift ;;
+            
+            --container-name)
+                DOCKER_CONTAINER_NAME="$2"
+                shift ;;
+            
+            -c|--cmake-options)
+                CMAKE_OPTIONS="$2"
+                shift ;;
+            
+            --compiler)
+                COMPILER="$2"
+                shift ;;
+            
+            -m|--make-options)
+                MAKE_OPTIONS="$2"
+                shift ;;
+            
+            -i|--install-prefix)
+                INSTALL_PREFIX="$2"
+                shift ;;
+            
+            -p|--plugins)
+                BUILD_PLUGINS="$2"
+                shift ;;
+            
+            -n|--no-source-tarball)
+                BUILD_SOURCE_TARBALL=false ;;
+            
+            -h|--help)
+                printUsage "build"
+                exit ;;
+            
+            *)
+                logError "Unknown option '$arg'\n"
+                printUsage "build"
+                exit 1 ;;
+        esac
+        shift
+    done
+    
+    if [ "" == "$RELEASE_NAME" ]; then
+        logError "Missing arguments, --version is required!\n"
+        printUsage "build"
+        exit 1
+    fi
+    
+    if [ "" == "$TAG_NAME" ]; then
+        TAG_NAME="$RELEASE_NAME"
+    fi
+    
+    init
+
+    SRC_DIR="$(realpath "$SRC_DIR")"
+    OUTPUT_DIR="$(realpath "$OUTPUT_DIR")"
+    
+    logInfo "Performing basic checks..."
+    
+    checkSourceDirExists
+    
+    logInfo "Changing to source directory..."
+    cd "${SRC_DIR}"
+    
+    checkTagExists
+    checkGitRepository
+    checkWorkingTreeClean
+    checkOutputDirDoesNotExist
+    
+    logInfo "All checks pass, getting our hands dirty now!"
+    
+    logInfo "Checking out release tag '${TAG_NAME}'..."
+    git checkout "$TAG_NAME"
+    
+    logInfo "Creating output directory..."
+    mkdir -p "$OUTPUT_DIR"
+
+    if [ $? -ne 0 ]; then
+        exitError "Failed to create output directory!"
+    fi
+
+    if $BUILD_SOURCE_TARBALL; then
+        logInfo "Creating source tarball..."
+        local app_name_lower="$(echo "$APP_NAME" | tr '[:upper:]' '[:lower:]')"
+        TARBALL_NAME="${app_name_lower}-${RELEASE_NAME}-src.tar.xz"
+        git archive --format=tar "$TAG_NAME" --prefix="${app_name_lower}-${RELEASE_NAME}/" \
+            | xz -6 >  "${OUTPUT_DIR}/${TARBALL_NAME}"
+    fi
+    
+    logInfo "Creating build directory..."
+    mkdir -p "${OUTPUT_DIR}/build-release"
+    cd "${OUTPUT_DIR}/build-release"
+    
+    logInfo "Configuring sources..."
+    for p in $BUILD_PLUGINS; do
+        CMAKE_OPTIONS="${CMAKE_OPTIONS} -DWITH_XC_$(echo $p | tr '[:lower:]' '[:upper:]')=On"
+    done
+    
+    if [ "$COMPILER" == "g++" ]; then
+        export CC=gcc
+    elif [ "$COMPILER" == "clang++" ]; then
+        export CC=clang
+    fi
+    export CXX="$COMPILER"
+    
+    if [ "" == "$DOCKER_IMAGE" ]; then
+        if [ "$(uname -s)" == "Darwin" ]; then
+            # Building on OS X
+            local qt_vers="$(ls /usr/local/Cellar/qt5 2> /dev/null | sort -r | head -n1)"
+            if [ "" == "$qt_vers" ]; then
+                exitError "Couldn't find Qt5! Please make sure it is available in '/usr/local/Cellar/qt5'."
+            fi
+            export MACOSX_DEPLOYMENT_TARGET=10.7
+            
+            logInfo "Configuring build..."
+            cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
+                -DCMAKE_OSX_ARCHITECTURES=x86_64 -DWITH_CXX11=OFF \
+                -DCMAKE_PREFIX_PATH="/usr/local/Cellar/qt5/${qt_vers}/lib/cmake" \
+                -DQT_BINARY_DIR="/usr/local/Cellar/qt5/${qt_vers}/bin" $CMAKE_OPTIONS "$SRC_DIR"
+            
+            logInfo "Compiling and packaging sources..."
+            make $MAKE_OPTIONS package
+            
+            mv "./${APP_NAME}-${RELEASE_NAME}.dmg" ../
+        elif [ "$(uname -o)" == "Msys" ]; then
+            # Building on Windows with Msys
+            logInfo "Configuring build..."
+            cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off -G"MSYS Makefiles" \
+                -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" $CMAKE_OPTIONS "$SRC_DIR"
+            
+            logInfo "Compiling and packaging sources..."
+            make $MAKE_OPTIONS package
+            
+            mv "./${APP_NAME}-${RELEASE_NAME}-"*.{exe,zip} ../
+        else
+            mkdir -p "${OUTPUT_DIR}/bin-release"
+            
+            # Building on Linux without Docker container
+            logInfo "Configuring build..."
+            cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off $CMAKE_OPTIONS \
+                -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" "$SRC_DIR"
+                
+            logInfo "Compiling sources..."
+            make $MAKE_OPTIONS
+            
+            logInfo "Installing to bin dir..."
+            make DESTDIR="${OUTPUT_DIR}/bin-release" install/strip
+            
+            logInfo "Creating AppImage..."
+            ${SRC_DIR}/AppImage-Recipe.sh "$APP_NAME" "$RELEASE_NAME"
+        fi
+    else
+        mkdir -p "${OUTPUT_DIR}/bin-release"
+        
+        logInfo "Launching Docker container to compile sources..."
+        
+        docker run --name "$DOCKER_CONTAINER_NAME" --rm \
+            --cap-add SYS_ADMIN --device /dev/fuse \
+            -e "CC=${CC}" -e "CXX=${CXX}" \
+            -v "$(realpath "$SRC_DIR"):/keepassxc/src:ro" \
+            -v "$(realpath "$OUTPUT_DIR"):/keepassxc/out:rw" \
+            "$DOCKER_IMAGE" \
+            bash -c "cd /keepassxc/out/build-release && \
+                cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off $CMAKE_OPTIONS \
+                    -DCMAKE_INSTALL_PREFIX=\"${INSTALL_PREFIX}\" /keepassxc/src && \
+                make $MAKE_OPTIONS && make DESTDIR=/keepassxc/out/bin-release install/strip && \
+                /keepassxc/src/AppImage-Recipe.sh "$APP_NAME" "$RELEASE_NAME""
+        
+        if [ 0 -ne $? ]; then
+            exitError "Docker build failed!"
+        fi
+        
+        logInfo "Build finished, Docker container terminated."
+    fi
+    
+    cleanup
+    
+    logInfo "All done!"
+}
+
+
+# -----------------------------------------------------------------------
+#                             sign command
+# -----------------------------------------------------------------------
+sign() {
+    SIGN_FILES=()
+    
+    while [ $# -ge 1 ]; do
+        local arg="$1"
+        case "$arg" in
+            -f|--files)
+                while [ "${2:0:1}" != "-" ] && [ $# -ge 2 ]; do
+                    SIGN_FILES+=("$2")
+                    shift
+                done ;;
+                
+            -g|--gpg-key)
+                GPG_KEY="$2"
+                shift ;;
+            
+            -h|--help)
+                printUsage "sign"
+                exit ;;
+            
+            *)
+                logError "Unknown option '$arg'\n"
+                printUsage "sign"
+                exit 1 ;;
+        esac
+        shift
+    done
+    
+    if [ -z "$SIGN_FILES" ]; then
+        logError "Missing arguments, --files is required!\n"
+        printUsage "sign"
+        exit 1
+    fi
+    
+    for f in "${SIGN_FILES[@]}"; do
+        if [ ! -f "$f" ]; then
+            exitError "File '${f}' does not exist!"
+        fi
+        
+        logInfo "Signing file '${f}'..."
+        gpg --output "${f}.sig" --armor --local-user "$GPG_KEY" --detach-sig "$f"
+        
+        if [ 0 -ne $? ]; then
+            exitError "Signing failed!"
+        fi
+        
+        logInfo "Creating digest for file '${f}'..."
+        sha256sum "$f"  > "${f}.DIGEST"
+    done
+    
+    logInfo "All done!"
+}
+
+
+# -----------------------------------------------------------------------
+#                       parse global command line
+# -----------------------------------------------------------------------
+MODE="$1"
+shift
+if [ "" == "$MODE" ]; then
+    logError "Missing arguments!\n"
+    printUsage
+    exit 1
+elif [ "help" == "$MODE" ]; then
+    printUsage "$1"
+    exit
+elif [ "merge" == "$MODE" ] || [ "build" == "$MODE" ] || [ "sign" == "$MODE" ]; then
+    $MODE "$@"
+else
+    printUsage "$MODE"
+fi

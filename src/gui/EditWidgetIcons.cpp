@@ -190,6 +190,10 @@ void EditWidgetIcons::abortFaviconDownload(bool clearRedirect)
 
 void EditWidgetIcons::onRequestFinished(QNetworkReply *reply)
 {
+    if (m_database == nullptr) {
+        return;
+    }
+
     if (!reply->error()) {    
         QImage image;
         image.loadFromData(reply->readAll());

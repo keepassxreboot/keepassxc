@@ -38,8 +38,8 @@ option(WITH_XC_AUTOTYPE "Include Autotype." OFF)
 option(WITH_XC_HTTP "Include KeePassHTTP." OFF)
 option(WITH_XC_YUBIKEY "Include Yubikey support." OFF)
 
-set(KEEPASSXC_VERSION "2.1.0")
-set(KEEPASSXC_VERSION_NUM "2.1.0")
+set(KEEPASSXC_VERSION "2.1.1")
+set(KEEPASSXC_VERSION_NUM "2.1.1")
 
 if("${CMAKE_C_COMPILER}" MATCHES "clang$" OR "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
   set(CMAKE_COMPILER_IS_CLANG 1)
@@ -171,6 +171,8 @@ set(CMAKE_AUTOMOC ON)
 # Debian sets the the build type to None for package builds.
 # Make sure we don't enable asserts there.
 set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_NONE QT_NO_DEBUG)
+
+find_package(LibGPGError REQUIRED)
 
 find_package(Gcrypt 1.6.0 REQUIRED)
 

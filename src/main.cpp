@@ -28,6 +28,16 @@
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 
+#ifdef QT_STATIC
+#include <QtPlugin>
+
+#ifdef Q_OS_WIN
+Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)
+#elif Q_OS_LINUX
+Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
+#endif
+#endif
+
 int main(int argc, char** argv)
 {
 #ifdef QT_NO_DEBUG

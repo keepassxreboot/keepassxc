@@ -19,6 +19,11 @@
         <source>KeePassXC is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Extensions:
+</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
@@ -475,6 +480,46 @@ Do you want to save it anyway?</source>
         <source>No Results</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Execute command?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you really want to execute the following command?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remember my choice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Autoreload Request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The database file has changed. Do you want to load the changes?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Merge Request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The database file has changed and you have unsaved changes.Do you want to merge your changes?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Autoreload Failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not parse or unlock the new database file while attempting to autoreload this database.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not open the new database file while attempting to autoreload this database.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
@@ -670,10 +715,6 @@ Do you want to save it anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Gen.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>URL:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -827,6 +868,13 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Uuid:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Entry</name>
+    <message>
+        <source> - Clone</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1226,6 +1274,10 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <source>Re&amp;pair database</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Password Generator</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OptionDialog</name>
@@ -1300,24 +1352,11 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>HTTP Host:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Default host: localhost</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>HTTP Port:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Default port: 19455</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable KeepassXC Http protocol
-This is required for accessing your databases from ChromeIPass or PassIFox</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1328,15 +1367,29 @@ This is required for accessing your databases from ChromeIPass or PassIFox</sour
         <source>Sort &amp;matching entries by title</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Enable KeepassXC HTTP protocol
+This is required for accessing your databases from ChromeIPass or PassIFox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC will listen to this port on 127.0.0.1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot bind to privileged ports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot bind to privileged ports below 1024!
+Using default port 19455.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PasswordGeneratorWidget</name>
     <message>
         <source>Password:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1364,11 +1417,63 @@ This is required for accessing your databases from ChromeIPass or PassIFox</sour
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ensure that the password contains characters from every group</source>
+        <source>Accept</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Accept</source>
+        <source>%p%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>strength</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>entropy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Length:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pick characters from every group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Generate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Entropy: %1 bit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password Quality: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weak</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Good</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Excellent</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1416,15 +1521,19 @@ This is required for accessing your databases from ChromeIPass or PassIFox</sour
 <context>
     <name>SearchWidget</name>
     <message>
-        <source>Find:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Case Sensitive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Search Current Group</source>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1537,10 +1646,6 @@ give it a unique name to identify and accept it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Open previous databases on startup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Automatically save on exit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1581,11 +1686,19 @@ give it a unique name to identify and accept it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hide window to system tray instead of App Exit</source>
+        <source>Load previous databases on startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hide window to system tray on App start</source>
+        <source>Automatically reload the database when modified externally</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide window to system tray instead of app exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Minimize window at application startup</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1613,6 +1726,10 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Lock databases after minimizing the window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t require password repeat when it is visible</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

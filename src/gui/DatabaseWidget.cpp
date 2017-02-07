@@ -344,7 +344,7 @@ void DatabaseWidget::deleteEntries()
             result = MessageBox::question(
                 this, tr("Delete entry?"),
                 tr("Do you really want to delete the entry \"%1\" for good?")
-                .arg(selectedEntries.first()->title()),
+                .arg(selectedEntries.first()->title().toHtmlEscaped()),
                 QMessageBox::Yes | QMessageBox::No);
         }
         else {
@@ -368,7 +368,7 @@ void DatabaseWidget::deleteEntries()
             result = MessageBox::question(
                 this, tr("Move entry to recycle bin?"),
                 tr("Do you really want to move entry \"%1\" to the recycle bin?")
-                .arg(selectedEntries.first()->title()),
+                .arg(selectedEntries.first()->title().toHtmlEscaped()),
                 QMessageBox::Yes | QMessageBox::No);
         }
         else {
@@ -573,7 +573,7 @@ void DatabaseWidget::deleteGroup()
         QMessageBox::StandardButton result = MessageBox::question(
             this, tr("Delete group?"),
             tr("Do you really want to delete the group \"%1\" for good?")
-            .arg(currentGroup->name()),
+            .arg(currentGroup->name().toHtmlEscaped()),
             QMessageBox::Yes | QMessageBox::No);
         if (result == QMessageBox::Yes) {
             delete currentGroup;

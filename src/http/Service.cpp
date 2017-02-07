@@ -480,7 +480,8 @@ void Service::updateEntry(const QString &, const QString &uuid, const QString &l
                     //ShowNotification(QString("%0: You have an entry change prompt waiting, click to activate").arg(requestId));
                     if (   HttpSettings::alwaysAllowUpdate()
                         || QMessageBox::warning(0, tr("KeePassXC: Update Entry"),
-                                                tr("Do you want to update the information in %1 - %2?").arg(QUrl(url).host()).arg(u),
+                                                tr("Do you want to update the information in %1 - %2?")
+                                                .arg(QUrl(url).host().toHtmlEscaped()).arg(u.toHtmlEscaped()),
                                                 QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes ) {
                         entry->beginUpdate();
                         entry->setUsername(login);
