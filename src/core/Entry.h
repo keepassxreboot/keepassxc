@@ -115,7 +115,8 @@ public:
         CloneNoFlags        = 0,
         CloneNewUuid        = 1, // generate a random uuid for the clone
         CloneResetTimeInfo  = 2, // set all TimeInfo attributes to the current time
-        CloneIncludeHistory = 4  // clone the history items
+        CloneIncludeHistory = 4, // clone the history items
+        CloneRenameTitle    = 8  // add "-Clone" after the original title
     };
     Q_DECLARE_FLAGS(CloneFlags, CloneFlag)
 

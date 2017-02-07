@@ -24,6 +24,7 @@ const QString EntryAttributes::URLKey = "URL";
 const QString EntryAttributes::NotesKey = "Notes";
 const QStringList EntryAttributes::DefaultAttributes(QStringList() << TitleKey << UserNameKey
                                                      << PasswordKey << URLKey << NotesKey);
+const QString EntryAttributes::RememberCmdExecAttr = "_EXEC_CMD";
 
 EntryAttributes::EntryAttributes(QObject* parent)
     : QObject(parent)

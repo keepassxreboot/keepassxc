@@ -45,11 +45,15 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
 
     connect(m_ui->optionButtons, SIGNAL(buttonClicked(int)), SLOT(updateGenerator()));
 
-    // set font size of password quality and entropy labels dynamically to 80% of the default font size
+    // set font size of password quality and entropy labels dynamically to 80% of
+    // the default font size, but make it no smaller than 8pt
     QFont defaultFont;
-    defaultFont.setPointSize(static_cast<int>(defaultFont.pointSize() * 0.8f));
-    m_ui->entropyLabel->setFont(defaultFont);
-    m_ui->strengthLabel->setFont(defaultFont);
+    int smallerSize = static_cast<int>(defaultFont.pointSize() * 0.8f);
+    if (smallerSize >= 8) {
+        defaultFont.setPointSize(smallerSize);
+        m_ui->entropyLabel->setFont(defaultFont);
+        m_ui->strengthLabel->setFont(defaultFont);
+    }
     
     loadSettings();
     reset();
@@ -132,8 +136,10 @@ void PasswordGeneratorWidget::updatePasswordStrength(const QString& password)
 
 void PasswordGeneratorWidget::generatePassword()
 {
-    QString password = m_generator->generatePassword();
-    m_ui->editNewPassword->setText(password);
+    if (m_generator->isValid()) {
+        QString password = m_generator->generatePassword();
+        m_ui->editNewPassword->setText(password);
+    }
 }
 
 void PasswordGeneratorWidget::applyPassword()
@@ -278,6 +284,12 @@ void PasswordGeneratorWidget::updateGenerator()
     m_generator->setLength(m_ui->spinBoxLength->value());
     m_generator->setCharClasses(classes);
     m_generator->setFlags(flags);
+
+    if (m_generator->isValid()) {
+        m_ui->buttonGenerate->setEnabled(true);
+    } else {
+        m_ui->buttonGenerate->setEnabled(false);
+    }
 
     regeneratePassword();
 }

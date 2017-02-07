@@ -364,7 +364,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             bool groupSelected = dbWidget->isGroupSelected();
 
             m_ui->actionEntryNew->setEnabled(!inSearch);
-            m_ui->actionEntryClone->setEnabled(singleEntrySelected && !inSearch);
+            m_ui->actionEntryClone->setEnabled(singleEntrySelected);
             m_ui->actionEntryEdit->setEnabled(singleEntrySelected);
             m_ui->actionEntryDelete->setEnabled(entriesSelected);
             m_ui->actionEntryCopyTitle->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTitle());

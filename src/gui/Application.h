@@ -21,6 +21,8 @@
 
 #include <QApplication>
 
+class QSocketNotifier;
+
 class Application : public QApplication
 {
     Q_OBJECT
@@ -34,8 +36,23 @@ public:
 Q_SIGNALS:
     void openFile(const QString& filename);
 
+private Q_SLOTS:
+#if defined(Q_OS_UNIX)
+    void quitBySignal();
+#endif
+
 private:
     QWidget* m_mainWindow;
+    
+#if defined(Q_OS_UNIX)
+    /**
+     * Register Unix signals such as SIGINT and SIGTERM for clean shutdown.
+     */
+    void registerUnixSignals();
+    QSocketNotifier* m_unixSignalNotifier;
+    static void handleUnixSignal(int sig);
+    static int unixSignalSocket[2];
+#endif
 };
 
 #endif // KEEPASSX_APPLICATION_H

@@ -331,68 +331,34 @@ void Server::start(void)
     if (m_started)
         return;
 
-    bool nohost = true;
+    // local loopback hardcoded, since KeePassHTTP handshake
+    // is not safe against interception
+    QHostAddress address("127.0.0.1");
     int port = HttpSettings::httpPort();
+    
+    void* addrx = NULL;
+    unsigned int flags = MHD_USE_SELECT_INTERNALLY;
 
-    QHostInfo info = QHostInfo::fromName(HttpSettings::httpHost());
-    if (!info.addresses().isEmpty()) {
-        void* addrx = NULL;
-        unsigned int flags = MHD_USE_SELECT_INTERNALLY;
-        QHostAddress address = info.addresses().first();
+    struct sockaddr_in *addr = static_cast<struct sockaddr_in*>(calloc(1, sizeof(struct sockaddr_in)));
+    addrx = static_cast<void*>(addr);
+    addr->sin_family = AF_INET;
+    addr->sin_port = htons(port);
+    addr->sin_addr.s_addr = htonl(address.toIPv4Address());
 
-        if (address.protocol() == QAbstractSocket::IPv4Protocol) {
-            struct sockaddr_in *addr = static_cast<struct sockaddr_in*>(calloc(1, sizeof(struct sockaddr_in)));
-            addrx = static_cast<void*>(addr);
-            addr->sin_family = AF_INET;
-            addr->sin_port = htons(HttpSettings::httpPort());
-            addr->sin_addr.s_addr = htonl(address.toIPv4Address());
-            nohost = false;
-        } else {
-            struct sockaddr_in6 *addr = static_cast<struct sockaddr_in6*>(calloc(1, sizeof(struct sockaddr_in6)));
-            addrx = static_cast<void*>(addr);
-            addr->sin6_family = AF_INET6;
-            addr->sin6_port = htons(HttpSettings::httpPort());
-            memcpy(&addr->sin6_addr, address.toIPv6Address().c, 16);
-            nohost = false;
-            flags |= MHD_USE_IPv6;
-        }
-
-        if (nohost) {
-            qWarning("HTTPPlugin: Faled to get configured host!");
-        } else {
-            if (NULL == (daemon = MHD_start_daemon(flags, port, NULL, NULL,
-                                                   &this->request_handler_wrapper, this,
-                                                   MHD_OPTION_NOTIFY_COMPLETED,
-                                                   this->request_completed, NULL,
-                                                   MHD_OPTION_SOCK_ADDR,
-                                                   addrx,
-                                                   MHD_OPTION_END))) {
-                nohost = true;
-                qWarning("HTTPPlugin: Failed to bind to configured host!");
-            } else {
-                nohost = false;
-                //qWarning("HTTPPlugin: Binded to configured host.");
-            }
-
-        }
-
-        if (addrx != NULL)
-            free(addrx);
+    if (NULL == (daemon = MHD_start_daemon(flags, port, NULL, NULL,
+                                           &this->request_handler_wrapper, this,
+                                           MHD_OPTION_NOTIFY_COMPLETED,
+                                           this->request_completed, NULL,
+                                           MHD_OPTION_SOCK_ADDR,
+                                           addrx,
+                                           MHD_OPTION_END))) {
+        qWarning("HTTPPlugin: Failed to bind to localhost!");
+    } else {
+        m_started = true;
     }
 
-    if (nohost) {
-        if (NULL == (daemon = MHD_start_daemon(MHD_USE_SELECT_INTERNALLY, port, NULL, NULL,
-                                 &this->request_handler_wrapper, this,
-                                 MHD_OPTION_NOTIFY_COMPLETED,
-                                 this->request_completed, NULL,
-                                 MHD_OPTION_END))) {
-            qWarning("HTTPPlugin: Fatal! Failed to bind to both configured and default hosts!");
-        } else {
-            qWarning("HTTPPlugin: Bound to fallback address 0.0.0.0/:::!");
-        }
-    }
-
-    m_started = true;
+    if (addrx != NULL)
+        free(addrx);
 }
 
 

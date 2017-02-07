@@ -89,6 +89,7 @@ void EditEntryWidget::setupMain()
     add(tr("Entry"), m_mainWidget);
 
     m_mainUi->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
+    m_mainUi->togglePasswordGeneratorButton->setIcon(filePath()->icon("actions", "password-generator", false));
     connect(m_mainUi->togglePasswordButton, SIGNAL(toggled(bool)), m_mainUi->passwordEdit, SLOT(setShowPassword(bool)));
     connect(m_mainUi->togglePasswordGeneratorButton, SIGNAL(toggled(bool)), SLOT(togglePasswordGeneratorButton(bool)));
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
@@ -271,14 +272,15 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const Q
     m_history = history;
 
     if (history) {
-        setHeadline(QString("%1 > %2").arg(parentName, tr("Entry history")));
+        setHeadline(QString("%1 > %2").arg(parentName.toHtmlEscaped(), tr("Entry history")));
     }
     else {
         if (create) {
-            setHeadline(QString("%1 > %2").arg(parentName, tr("Add entry")));
+            setHeadline(QString("%1 > %2").arg(parentName.toHtmlEscaped(), tr("Add entry")));
         }
         else {
-            setHeadline(QString("%1 > %2 > %3").arg(parentName, entry->title(), tr("Edit entry")));
+            setHeadline(QString("%1 > %2 > %3").arg(parentName.toHtmlEscaped(),
+                                                    entry->title().toHtmlEscaped(), tr("Edit entry")));
         }
     }
 
@@ -433,6 +435,9 @@ void EditEntryWidget::saveEntry()
 
 void EditEntryWidget::updateEntryData(Entry* entry) const
 {
+    entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
+    entry->attachments()->copyDataFrom(m_entryAttachments);
+    
     entry->setTitle(m_mainUi->titleEdit->text());
     entry->setUsername(m_mainUi->usernameEdit->text());
     entry->setUrl(m_mainUi->urlEdit->text());
@@ -441,9 +446,6 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
     entry->setExpiryTime(m_mainUi->expireDatePicker->dateTime().toUTC());
 
     entry->setNotes(m_mainUi->notesEdit->toPlainText());
-
-    entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
-    entry->attachments()->copyDataFrom(m_entryAttachments);
 
     IconStruct iconStruct = m_iconsWidget->state();
 
