@@ -554,7 +554,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
     if (minimizeOnClose && !appExitCalled)
     {
         event->ignore();
-        hide();
+        toggleWindow();
 
         if (config()->get("security/lockdatabaseminimize").toBool()) {
             m_ui->tabWidget->lockDatabases();
@@ -722,6 +722,7 @@ void MainWindow::trayIconTriggered(QSystemTrayIcon::ActivationReason reason)
 void MainWindow::toggleWindow()
 {
     if ((QApplication::activeWindow() == this) && isVisible() && !isMinimized()) {
+        setWindowState(windowState() | Qt::WindowMinimized);
         hide();
 
         if (config()->get("security/lockdatabaseminimize").toBool()) {
@@ -730,8 +731,8 @@ void MainWindow::toggleWindow()
     }
     else {
         ensurePolished();
-        setWindowState(windowState() & ~Qt::WindowMinimized);
         show();
+        setWindowState(windowState() & ~Qt::WindowMinimized);
         raise();
         activateWindow();
     }
