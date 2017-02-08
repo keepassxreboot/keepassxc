@@ -396,6 +396,9 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
     else if (tmplName.compare("enter",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeKey(Qt::Key_Enter));
     }
+    else if (tmplName.compare("space",Qt::CaseInsensitive)==0) {
+        list.append(new AutoTypeKey(Qt::Key_Space));
+    }
     else if (tmplName.compare("up",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeKey(Qt::Key_Up));
     }
