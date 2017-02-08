@@ -49,8 +49,6 @@ cp -a ../../bin-release/* .
 cp -a ./usr/local/* ./usr
 rm -R ./usr/local
 rmdir ./opt 2> /dev/null
-patch_strings_in_file /usr/local ././
-patch_strings_in_file /usr ./
 
 # bundle Qt platform plugins and themes
 QXCB_PLUGIN="$(find /usr/lib -name 'libqxcb.so' 2> /dev/null)"
