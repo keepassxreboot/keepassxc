@@ -91,12 +91,12 @@ QString FilePath::pluginPath(const QString& name)
 
 QIcon FilePath::applicationIcon()
 {
-    return icon("apps", "keepassxc", false);
+    return icon("apps", "keepassxc");
 }
 
 QIcon FilePath::trayIconLocked()
 {
-    return icon("apps", "keepassxc-locked", false);
+    return icon("apps", "keepassxc-locked");
 }
 
 QIcon FilePath::trayIconUnlocked()
