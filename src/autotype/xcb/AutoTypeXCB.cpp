@@ -435,6 +435,8 @@ KeySym AutoTypePlatformX11::keyToKeySym(Qt::Key key)
         return XK_Tab;
     case Qt::Key_Enter:
         return XK_Return;
+    case Qt::Key_Space:
+        return XK_space;
     case Qt::Key_Up:
         return XK_Up;
     case Qt::Key_Down:
