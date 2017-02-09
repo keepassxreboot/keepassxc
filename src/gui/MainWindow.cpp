@@ -22,6 +22,11 @@
 #include <QShortcut>
 #include <QTimer>
 
+#if defined(Q_OS_LINUX) && ! defined(QT_NO_DBUS)
+#include <QList>
+#include <QtDBus/QtDBus>
+#endif
+
 #include "config-keepassx.h"
 
 #include "autotype/AutoType.h"
@@ -735,6 +740,24 @@ void MainWindow::toggleWindow()
         setWindowState(windowState() & ~Qt::WindowMinimized);
         raise();
         activateWindow();
+        
+#if defined(Q_OS_LINUX) && ! defined(QT_NO_DBUS) && QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
+        // re-register global D-Bus menu (needed on Ubuntu with Unity)
+        // see https://github.com/keepassxreboot/keepassxc/issues/271
+        // and https://bugreports.qt.io/browse/QTBUG-58723
+        if (m_ui->menubar->isNativeMenuBar()) {
+            QDBusMessage msg = QDBusMessage::createMethodCall(
+                "com.canonical.AppMenu.Registrar",
+                "/com/canonical/AppMenu/Registrar",
+                "com.canonical.AppMenu.Registrar",
+                "RegisterWindow");
+            QList<QVariant> args;
+            args << QVariant::fromValue(static_cast<uint32_t>(winId()))
+                 << QVariant::fromValue(QDBusObjectPath("/MenuBar/1"));
+            msg.setArguments(args);
+            QDBusConnection::sessionBus().send(msg);
+        }
+#endif
     }
 }
 

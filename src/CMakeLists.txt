@@ -197,7 +197,11 @@ target_link_libraries(zxcvbn)
 
 if(WITH_XC_HTTP)
   add_library(keepasshttp STATIC ${keepasshttp_SOURCES})
-  target_link_libraries(keepasshttp ${MHD_LIBRARIES} Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Network)
+  target_link_libraries(keepasshttp ${MHD_LIBRARIES}
+                        Qt5::Core
+                        Qt5::Concurrent
+                        Qt5::Widgets 
+                        Qt5::Network)
 endif()
 
 add_library(autotype STATIC ${autotype_SOURCES})
@@ -207,7 +211,14 @@ set(autotype_LIB autotype)
 
 add_library(keepassx_core STATIC ${keepassx_SOURCES})
 set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
-target_link_libraries(keepassx_core zxcvbn ${keepasshttp_LIB} ${autotype_LIB} Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Network)
+target_link_libraries(keepassx_core zxcvbn ${keepasshttp_LIB} ${autotype_LIB}
+                      Qt5::Core
+                      Qt5::Concurrent
+                      Qt5::Widgets
+                      Qt5::Network)
+if (UNIX AND NOT APPLE)
+    target_link_libraries(keepassx_core Qt5::DBus)
+endif()
 
 add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE ${keepassx_SOURCES_MAINEXE})
 target_link_libraries(${PROGNAME}
@@ -220,6 +231,7 @@ target_link_libraries(${PROGNAME}
                       ${GCRYPT_LIBRARIES}
                       ${GPGERROR_LIBRARIES}
                       ${ZLIB_LIBRARIES})
+
 
 set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
 
