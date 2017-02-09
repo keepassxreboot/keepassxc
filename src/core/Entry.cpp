@@ -646,12 +646,17 @@ QString Entry::resolvePlaceholder(const QString& str) const
     const QList<QString> keyList = attributes()->keys();
     for (const QString& key : keyList) {
         Qt::CaseSensitivity cs = Qt::CaseInsensitive;
+        QString k = key;
+
         if (!EntryAttributes::isDefaultAttribute(key)) {
             cs = Qt::CaseSensitive;
+            k.prepend("{S:");
+        } else {
+            k.prepend("{");
         }
 
-        QString k = key;
-        k.prepend("{").append("}");
+        
+        k.append("}");
         if (result.compare(k,cs)==0) {
             result.replace(result,attributes()->value(key));
             break;
