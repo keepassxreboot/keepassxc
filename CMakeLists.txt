@@ -166,6 +166,9 @@ find_package(Qt5Widgets       5.2 REQUIRED)
 find_package(Qt5Test          5.2 REQUIRED)
 find_package(Qt5LinguistTools 5.2 REQUIRED)
 find_package(Qt5Network       5.2 REQUIRED)
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+    find_package(Qt5DBus       5.2 REQUIRED)
+endif()
 set(CMAKE_AUTOMOC ON)
 
 # Debian sets the the build type to None for package builds.
