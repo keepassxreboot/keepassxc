@@ -21,9 +21,11 @@ install(FILES ${DATABASE_ICONS} DESTINATION ${DATA_INSTALL_DIR}/icons/database)
 
 if(UNIX AND NOT APPLE)
     install(DIRECTORY icons/application/ DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor
-            FILES_MATCHING PATTERN "keepassx*.png" PATTERN "keepassx*.svgz")
+            FILES_MATCHING PATTERN "keepassx*.png" PATTERN "keepassx*.svgz"
+            PATTERN "status" EXCLUDE PATTERN "actions" EXCLUDE)
     install(DIRECTORY icons/application/ DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor
-            FILES_MATCHING PATTERN "application-x-keepassxc.png" PATTERN "application-x-keepassxc.svgz")
+            FILES_MATCHING PATTERN "application-x-keepassxc.png" PATTERN "application-x-keepassxc.svgz"
+            PATTERN "status" EXCLUDE PATTERN "actions" EXCLUDE)
     install(FILES linux/keepassxc.desktop DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
     install(FILES linux/keepassxc.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/mime/packages)
 endif(UNIX AND NOT APPLE)
