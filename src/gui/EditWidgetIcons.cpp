@@ -158,12 +158,11 @@ void EditWidgetIcons::fetchFavicon(QUrl url)
 
 void EditWidgetIcons::fetchFaviconFromGoogle(QString domain)
 {
-     if (m_fallbackToGoogle) {
+    if (m_fallbackToGoogle) {
         abortFaviconDownload();
         m_fallbackToGoogle = false;
         fetchFavicon(QUrl("http://www.google.com/s2/favicons?domain=" + domain));
-    }
-    else {
+    } else {
         abortFaviconDownload();
         MessageBox::warning(this, tr("Error"), tr("Unable to fetch favicon."));
     }

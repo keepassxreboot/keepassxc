@@ -802,9 +802,7 @@ void MainWindow::displayGlobalMessage(const QString& text, MessageWidget::Messag
 
 void MainWindow::displayTabMessage(const QString& text, MessageWidget::MessageType type)
 {
-    //if (m_ui->stackedWidget->currentIndex() == 0) {
-        m_ui->tabWidget->currentDatabaseWidget()->showMessage(text, type);
-    //}
+    m_ui->tabWidget->currentDatabaseWidget()->showMessage(text, type);
 }
 
 void MainWindow::hideGlobalMessage()

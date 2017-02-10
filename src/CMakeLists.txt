@@ -86,7 +86,7 @@ set(keepassx_SOURCES
     gui/FileDialog.cpp
     gui/IconModels.cpp
     gui/KeePass1OpenWidget.cpp
-    gui/kmessagewidget.cpp
+    gui/KMessageWidget.cpp
     gui/LineEdit.cpp
     gui/MainWindow.cpp
     gui/MessageBox.cpp

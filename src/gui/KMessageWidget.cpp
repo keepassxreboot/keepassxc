@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301  USA
  */
-#include "kmessagewidget.h"
+#include "KMessageWidget.h"
 
 #include <QAction>
 #include <QEvent>
@@ -477,4 +477,4 @@ void KMessageWidget::setIcon(const QIcon &icon)
     }
 }
 
-#include "moc_kmessagewidget.cpp"
+#include "moc_KMessageWidget.cpp"

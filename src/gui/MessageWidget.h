@@ -18,7 +18,7 @@
 #ifndef MESSAGEWIDGET_H
 #define MESSAGEWIDGET_H
 
-#include "gui/kmessagewidget.h"
+#include "gui/KMessageWidget.h"
 
 class MessageWidget : public KMessageWidget
 {
