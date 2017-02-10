@@ -49,8 +49,8 @@ void KeePass1OpenWidget::openDatabase()
 
     QFile file(m_filename);
     if (!file.open(QIODevice::ReadOnly)) {
-        MessageBox::warning(this, tr("Error"), tr("Unable to open the database.").append("\n")
-                            .append(file.errorString()));
+        m_ui->messageWidget->showMessage( tr("Unable to open the database.").append("\n")
+            .append(file.errorString()), MessageWidget::Error);
         return;
     }
     if (m_db) {
@@ -65,8 +65,9 @@ void KeePass1OpenWidget::openDatabase()
         Q_EMIT editFinished(true);
     }
     else {
-        MessageBox::warning(this, tr("Error"), tr("Unable to open the database.").append("\n")
-                            .append(reader.errorString()));
+        m_ui->messageWidget->showMessage(tr("Unable to open the database.").append("\n")
+                                         .append(reader.errorString()), MessageWidget::Error);
+
         m_ui->editPassword->clear();
     }
 }

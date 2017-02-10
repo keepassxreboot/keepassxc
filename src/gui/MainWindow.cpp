@@ -104,6 +104,7 @@ MainWindow::MainWindow()
     #endif
 
     setWindowIcon(filePath()->applicationIcon());
+    m_ui->globalMessageWidget->setHidden(true);
     QAction* toggleViewAction = m_ui->toolBar->toggleViewAction();
     toggleViewAction->setText(tr("Show toolbar"));
     m_ui->menuView->addAction(toggleViewAction);
@@ -276,6 +277,11 @@ MainWindow::MainWindow()
     connect(m_ui->passwordGeneratorWidget, SIGNAL(dialogTerminated()), SLOT(closePasswordGen()));
 
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
+
+    connect(m_ui->tabWidget, SIGNAL(messageGlobal(QString,MessageWidget::MessageType)), this, SLOT(displayGlobalMessage(QString, MessageWidget::MessageType)));
+    connect(m_ui->tabWidget, SIGNAL(messageDismissGlobal()), this, SLOT(hideGlobalMessage()));
+    connect(m_ui->tabWidget, SIGNAL(messageTab(QString,MessageWidget::MessageType)), this, SLOT(displayTabMessage(QString, MessageWidget::MessageType)));
+    connect(m_ui->tabWidget, SIGNAL(messageDismissTab()), this, SLOT(hideTabMessage()));
 
     updateTrayIcon();
 }
@@ -755,7 +761,7 @@ void MainWindow::repairDatabase()
     if (fileName.isEmpty()) {
         return;
     }
-
+    
     QScopedPointer<QDialog> dialog(new QDialog(this));
     DatabaseRepairWidget* dbRepairWidget = new DatabaseRepairWidget(dialog.data());
     connect(dbRepairWidget, SIGNAL(success()), dialog.data(), SLOT(accept()));
@@ -770,8 +776,9 @@ void MainWindow::repairDatabase()
             KeePass2Writer writer;
             writer.writeDatabase(saveFileName, dbRepairWidget->database());
             if (writer.hasError()) {
-                QMessageBox::critical(this, tr("Error"),
-                    tr("Writing the database failed.").append("\n\n").append(writer.errorString()));
+                displayGlobalMessage(
+                    tr("Writing the database failed.").append("\n").append(writer.errorString()),
+                    MessageWidget::Error);
             }
         }
     }
@@ -787,3 +794,26 @@ bool MainWindow::isTrayIconEnabled() const
             && QSystemTrayIcon::isSystemTrayAvailable();
 #endif
 }
+
+void MainWindow::displayGlobalMessage(const QString& text, MessageWidget::MessageType type)
+{
+    m_ui->globalMessageWidget->showMessage(text, type);
+}
+
+void MainWindow::displayTabMessage(const QString& text, MessageWidget::MessageType type)
+{
+    m_ui->tabWidget->currentDatabaseWidget()->showMessage(text, type);
+}
+
+void MainWindow::hideGlobalMessage()
+{
+    m_ui->globalMessageWidget->hideMessage();
+}
+
+void MainWindow::hideTabMessage()
+{
+    if (m_ui->stackedWidget->currentIndex() == 0) {
+        m_ui->tabWidget->currentDatabaseWidget()->hideMessage();
+    }
+}
+

@@ -60,7 +60,14 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     , m_newParent(nullptr)
 {
     m_mainWidget = new QWidget(this);
-    QLayout* layout = new QHBoxLayout(m_mainWidget);
+
+    m_messageWidget = new MessageWidget(this);
+    m_messageWidget->setHidden(true);
+
+    QVBoxLayout* mainLayout = new QVBoxLayout();
+    QLayout* layout = new QHBoxLayout();
+    mainLayout->addWidget(m_messageWidget);
+    mainLayout->addLayout(layout);
     m_splitter = new QSplitter(m_mainWidget);
     m_splitter->setChildrenCollapsible(false);
 
@@ -105,7 +112,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_splitter->setStretchFactor(1, 70);
 
     layout->addWidget(m_splitter);
-    m_mainWidget->setLayout(layout);
+    m_mainWidget->setLayout(mainLayout);
 
     m_editEntryWidget = new EditEntryWidget();
     m_editEntryWidget->setObjectName("editEntryWidget");
@@ -689,7 +696,7 @@ void DatabaseWidget::updateMasterKey(bool accepted)
         QApplication::restoreOverrideCursor();
 
         if (!result) {
-            MessageBox::critical(this, tr("Error"), tr("Unable to calculate master key"));
+            m_messageWidget->showMessage(tr("Unable to calculate master key"), MessageWidget::Error);
             return;
         }
     }
@@ -729,14 +736,14 @@ void DatabaseWidget::mergeDatabase(bool accepted)
 {
     if (accepted) {
         if (!m_db) {
-            MessageBox::critical(this, tr("Error"), tr("No current database."));
+            m_messageWidget->showMessage(tr("No current database."), MessageWidget::Error);
             return;
         }
 
         Database* srcDb = static_cast<DatabaseOpenWidget*>(sender())->database();
 
         if (!srcDb) {
-            MessageBox::critical(this, tr("Error"), tr("No source database, nothing to do."));
+            m_messageWidget->showMessage(tr("No source database, nothing to do."), MessageWidget::Error);
             return;
         }
 
@@ -1086,15 +1093,15 @@ void DatabaseWidget::reloadDatabaseFile()
 
         }
         else {
-            MessageBox::critical(this, tr("Autoreload Failed"),
-                                 tr("Could not parse or unlock the new database file while attempting"
-                                    " to autoreload this database."));
+            m_messageWidget->showMessage(
+                tr("Could not parse or unlock the new database file while attempting"
+                   " to autoreload this database."), MessageWidget::Error);
         }
     }
     else {
-        MessageBox::critical(this, tr("Autoreload Failed"),
-                             tr("Could not open the new database file while attempting to autoreload"
-                                " this database."));
+        m_messageWidget->showMessage(
+            tr("Could not open the new database file while attempting to autoreload this database."),
+                                     MessageWidget::Error);
     }
 
     // Rewatch the database file
@@ -1219,4 +1226,16 @@ void DatabaseWidget::showUnlockDialog()
 void DatabaseWidget::closeUnlockDialog()
 {
     m_unlockDatabaseDialog->close();
+}
+
+void DatabaseWidget::showMessage(const QString& text, MessageWidget::MessageType type)
+{
+    m_messageWidget->showMessage(text, type);
+}
+
+void DatabaseWidget::hideMessage()
+{
+    if (m_messageWidget->isVisible()) {
+        m_messageWidget->animatedHide();
+    }
 }

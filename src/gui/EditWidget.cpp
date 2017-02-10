@@ -25,6 +25,8 @@ EditWidget::EditWidget(QWidget* parent)
     m_ui->setupUi(this);
     setReadOnly(false);
 
+    m_ui->messageWidget->setHidden(true);
+
     QFont headerLabelFont = m_ui->headerLabel->font();
     headerLabelFont.setBold(true);
     headerLabelFont.setPointSize(headerLabelFont.pointSize() + 2);
@@ -85,4 +87,16 @@ void EditWidget::setReadOnly(bool readOnly)
 bool EditWidget::readOnly() const
 {
     return m_readOnly;
+}
+
+void EditWidget::showMessage(const QString& text, MessageWidget::MessageType type)
+{
+    m_ui->messageWidget->showMessage(text, type);
+}
+
+void EditWidget::hideMessage()
+{
+    if (m_ui->messageWidget->isVisible()) {
+        m_ui->messageWidget->animatedHide();
+    }
 }

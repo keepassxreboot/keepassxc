@@ -116,7 +116,7 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
     QFileInfo fileInfo(fileName);
     QString canonicalFilePath = fileInfo.canonicalFilePath();
     if (canonicalFilePath.isEmpty()) {
-        MessageBox::warning(this, tr("Warning"), tr("File not found!"));
+        Q_EMIT messageGlobal(tr("File not found!"), MessageWidget::Error);
         return;
     }
 
@@ -136,8 +136,9 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
     QFile file(fileName);
     if (!file.open(QIODevice::ReadWrite)) {
         if (!file.open(QIODevice::ReadOnly)) {
-            MessageBox::warning(this, tr("Error"), tr("Unable to open the database.").append("\n")
-                                .append(file.errorString()));
+            // can't open
+            Q_EMIT messageGlobal(
+                tr("Unable to open the database.").append("\n").append(file.errorString()), MessageWidget::Error);
             return;
         }
         else {
@@ -184,6 +185,10 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
 
     insertDatabase(db, dbStruct);
 
+    if (dbStruct.readOnly) {
+        Q_EMIT messageTab(tr("File opened in read only mode."), MessageWidget::Warning);
+    }
+
     updateLastDatabases(dbStruct.filePath);
 
     if (!pw.isNull() || !keyFile.isEmpty()) {
@@ -192,6 +197,7 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
     else {
         dbStruct.dbWidget->switchToOpenDatabase(dbStruct.filePath);
     }
+    Q_EMIT messageDismissGlobal();
 }
 
 void DatabaseTabWidget::mergeDatabase()
@@ -322,8 +328,8 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
             // write the database to the file
             m_writer.writeDatabase(&saveFile, db);
             if (m_writer.hasError()) {
-                MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
-                                     + m_writer.errorString());
+                Q_EMIT messageTab(tr("Writing the database failed.").append("\n")
+                .append(m_writer.errorString()), MessageWidget::Error);
                 return false;
             }
 
@@ -332,17 +338,18 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
                 dbStruct.modified = false;
                 dbStruct.dbWidget->databaseSaved();
                 updateTabName(db);
+                Q_EMIT messageDismissTab();
                 return true;
             }
             else {
-                MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
-                                     + saveFile.errorString());
+                Q_EMIT messageTab(tr("Writing the database failed.").append("\n")
+                    .append(saveFile.errorString()), MessageWidget::Error);
                 return false;
             }
         }
         else {
-            MessageBox::critical(this, tr("Error"), tr("Writing the database failed.") + "\n\n"
-                                 + saveFile.errorString());
+            Q_EMIT messageTab(tr("Writing the database failed.").append("\n")
+            .append(saveFile.errorString()), MessageWidget::Error);
             return false;
         }
     }
@@ -486,8 +493,9 @@ void DatabaseTabWidget::exportToCsv()
 
     CsvExporter csvExporter;
     if (!csvExporter.exportDatabase(fileName, db)) {
-        MessageBox::critical(this, tr("Error"), tr("Writing the CSV file failed.") + "\n\n"
-                             + csvExporter.errorString());
+        Q_EMIT messageGlobal(
+            tr("Writing the CSV file failed.").append("\n")
+            .append(csvExporter.errorString()), MessageWidget::Error);
     }
 }
 
