@@ -64,6 +64,13 @@
 #include "gui/SettingsWidget.h"
 #include "gui/PasswordGeneratorWidget.h"
 
+#ifdef WITH_XC_DBUS
+#if defined(Q_OS_LINUX)
+#include <QtDBus>
+#include "gui/MainWindowAdaptor.h"
+#endif
+#endif
+
 #ifdef WITH_XC_HTTP
 class HttpPlugin: public ISettingsPage
 {
@@ -168,6 +175,16 @@ MainWindow::MainWindow()
     , m_appExiting(false)
 {
     m_ui->setupUi(this);
+    #ifdef WITH_XC_DBUS
+    #if defined(Q_OS_LINUX)
+    new MainWindowAdaptor(this);
+    QDBusConnection dbus = QDBusConnection::sessionBus();
+    dbus.registerObject("/keepassxc", this);
+    dbus.registerService("org.keepassxc.MainWindow");
+    #else
+    qWarning("DBus is not available on this system");
+    #endif
+    #endif
 
     setAcceptDrops(true);
 
@@ -1122,4 +1139,9 @@ void MainWindow::dropEvent(QDropEvent* event)
             openDatabase(kdbxFile);
         }
     }
+}
+
+void MainWindow::closeAllDatabases()
+{
+    m_ui->tabWidget->closeAllDatabases();
 }

@@ -46,6 +46,7 @@ option(WITH_XC_BROWSER "Include browser integration with keepassxc-browser." OFF
 option(WITH_XC_HTTP "Include KeePassHTTP-compatible browser integration (deprecated, implies WITH_NETWORKING)." OFF)
 option(WITH_XC_YUBIKEY "Include YubiKey support." OFF)
 option(WITH_XC_SSHAGENT "Include SSH agent support." OFF)
+option(WITH_XC_DBUS "Include DBus support." OFF)
 
 if(WITH_XC_HTTP)
   message(WARNING "KeePassHTTP support has been deprecated and will be removed in a future version. Please use WITH_XC_BROWSER instead!\n"

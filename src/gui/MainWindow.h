@@ -37,6 +37,10 @@ class InactivityTimer;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+    
+#if defined(Q_OS_LINUX)
+    Q_CLASSINFO("D-Bus Interface", "org.keepassxc.MainWindow")
+#endif
 
 public:
     MainWindow();
@@ -62,6 +66,7 @@ public slots:
     void showYubiKeyPopup();
     void hideYubiKeyPopup();
     void bringToFront();
+    void closeAllDatabases();
 
 protected:
      void closeEvent(QCloseEvent* event) override;
