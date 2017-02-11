@@ -36,9 +36,6 @@ WelcomeWidget::WelcomeWidget(QWidget* parent)
 
     m_ui->iconLabel->setPixmap(filePath()->applicationIcon().pixmap(64));
 
-    // waiting for CSV PR
-    m_ui->buttonImportCSV->hide();
-
     m_ui->recentListWidget->clear();
     const QStringList lastDatabases = config()->get("LastDatabases", QVariant()).toStringList();
     for (const QString& database : lastDatabases) {
@@ -46,6 +43,10 @@ WelcomeWidget::WelcomeWidget(QWidget* parent)
         itm->setText(database);
         m_ui->recentListWidget->addItem(itm);
     }
+    bool recent_visibility = (m_ui->recentListWidget->count() > 0);
+    m_ui->startLabel->setVisible(!recent_visibility);
+    m_ui->recentListWidget->setVisible(recent_visibility);
+    m_ui->recentLabel->setVisible(recent_visibility);
 
     connect(m_ui->buttonNewDatabase, SIGNAL(clicked()), SIGNAL(newDatabase()));
     connect(m_ui->buttonOpenDatabase, SIGNAL(clicked()), SIGNAL(openDatabase()));
