@@ -84,14 +84,43 @@
     </widget>
    </item>
    <item row="9" column="0">
-    <widget class="QLabel" name="autoTypeShortcutLabel">
-     <property name="text">
-      <string>Global Auto-Type shortcut</string>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="autoTypeShortcutLabelLayout">
+      <item>
+       <widget class="QLabel" name="autoTypeShortcutLabel">
+        <property name="text">
+         <string>Global Auto-Type shortcut</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeft</set>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum"/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="autoTypeShortcutLabelSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>400</width>
+         </size>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum"/>
+        </property>
+       </spacer>
+      </item>
+    </layout>
    </item>
    <item row="9" column="1">
-    <widget class="ShortcutWidget" name="autoTypeShortcutWidget"/>
+     <widget class="ShortcutWidget" name="autoTypeShortcutWidget">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding"/>
+       </property>
+     </widget>
    </item>
    <item row="10" column="0">
     <widget class="QCheckBox" name="autoTypeEntryTitleMatchCheckBox">
@@ -101,11 +130,30 @@
     </widget>
    </item>
    <item row="11" column="0">
-    <widget class="QLabel" name="languageLabel">
-     <property name="text">
-      <string>Language</string>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="languageLabelLayout">
+     <item>
+      <widget class="QLabel" name="languageLabel">
+       <property name="text">
+        <string>Language</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="languageLabelSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>400</width>
+        </size>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum"/>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
    <item row="11" column="1">
     <widget class="QComboBox" name="languageComboBox"/>
