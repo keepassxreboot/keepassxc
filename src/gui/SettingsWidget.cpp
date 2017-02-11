@@ -65,6 +65,7 @@ SettingsWidget::SettingsWidget(QWidget* parent)
 #ifdef Q_OS_MAC
     // systray not useful on OS X
     m_generalUi->systrayShowCheckBox->setVisible(false);
+    m_generalUi->systrayMinimizeOnCloseCheckBox->setVisible(false);
     m_generalUi->systrayMinimizeToTrayCheckBox->setVisible(false);
 #endif
 
