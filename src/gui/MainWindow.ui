@@ -225,6 +225,7 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionDatabaseNew"/>
    <addaction name="actionDatabaseOpen"/>
    <addaction name="actionDatabaseSave"/>
    <addaction name="separator"/>
