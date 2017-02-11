@@ -55,6 +55,10 @@ private Q_SLOTS:
     void switchToDatabases();
     void switchToSettings();
     void switchToPasswordGen(bool enabled);
+    void switchToNewDatabase();
+    void switchToOpenDatabase();
+    void switchToDatabaseFile(QString file);
+    void switchToKeePass1Database();
     void closePasswordGen();
     void databaseStatusChanged(DatabaseWidget *dbWidget);
     void databaseTabChanged(int tabIndex);
