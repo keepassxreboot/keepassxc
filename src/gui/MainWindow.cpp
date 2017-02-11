@@ -277,6 +277,11 @@ MainWindow::MainWindow()
     connect(m_ui->actionPasswordGenerator, SIGNAL(toggled(bool)), SLOT(switchToPasswordGen(bool)));
     connect(m_ui->passwordGeneratorWidget, SIGNAL(dialogTerminated()), SLOT(closePasswordGen()));
 
+    connect(m_ui->welcomeWidget, SIGNAL(newDatabase()), SLOT(switchToNewDatabase()));
+    connect(m_ui->welcomeWidget, SIGNAL(openDatabase()), SLOT(switchToOpenDatabase()));
+    connect(m_ui->welcomeWidget, SIGNAL(openDatabaseFile(QString)), SLOT(switchToDatabaseFile(QString)));
+    connect(m_ui->welcomeWidget, SIGNAL(importKeePass1Database()), SLOT(switchToKeePass1Database()));
+
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
 
     connect(m_ui->tabWidget, SIGNAL(messageGlobal(QString,MessageWidget::MessageType)), this, SLOT(displayGlobalMessage(QString, MessageWidget::MessageType)));
@@ -535,6 +540,30 @@ void MainWindow::switchToPasswordGen(bool enabled)
 void MainWindow::closePasswordGen()
 {
     switchToPasswordGen(false);
+}
+
+void MainWindow::switchToNewDatabase()
+{
+    m_ui->tabWidget->newDatabase();
+    switchToDatabases();
+}
+
+void MainWindow::switchToOpenDatabase()
+{
+    m_ui->tabWidget->openDatabase();
+    switchToDatabases();
+}
+
+void MainWindow::switchToDatabaseFile(QString file)
+{
+    m_ui->tabWidget->openDatabase(file);
+    switchToDatabases();
+}
+
+void MainWindow::switchToKeePass1Database()
+{
+    m_ui->tabWidget->importKeePass1Database();
+    switchToDatabases();
 }
 
 void MainWindow::databaseStatusChanged(DatabaseWidget *)
