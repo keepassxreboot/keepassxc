@@ -347,6 +347,7 @@ merge() {
     checkReleaseDoesNotExist
     checkWorkingTreeClean
     checkSourceBranchExists
+    checkTargetBranchExists
     
     logInfo "Checking out source branch '${SOURCE_BRANCH}'..."
     git checkout "$SOURCE_BRANCH"
