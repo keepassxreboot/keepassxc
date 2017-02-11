@@ -353,6 +353,11 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
         m_advancedUi->attributesEdit->setEnabled(false);
     }
 
+    QList<int> sizes = m_advancedUi->attributesSplitter->sizes();
+    sizes.replace(0, m_advancedUi->attributesSplitter->width() * 0.3);
+    sizes.replace(1, m_advancedUi->attributesSplitter->width() * 0.7);
+    m_advancedUi->attributesSplitter->setSizes(sizes);
+
     IconStruct iconStruct;
     iconStruct.uuid = entry->iconUuid();
     iconStruct.number = entry->iconNumber();

@@ -30,9 +30,12 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
-       <widget class="QSplitter" name="splitter">
+       <widget class="QSplitter" name="attributesSplitter">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="childrenCollapsible">
+         <bool>false</bool>
         </property>
         <widget class="AttributesListView" name="attributesView">
          <property name="minimumSize">
@@ -40,6 +43,9 @@
            <width>0</width>
            <height>0</height>
           </size>
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QAbstractScrollArea::AdjustToContents</enum>
          </property>
          <property name="resizeMode">
           <enum>QListView::Adjust</enum>
@@ -49,11 +55,23 @@
          <property name="enabled">
           <bool>false</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>170</width>
+           <height>0</height>
+          </size>
+         </property>
         </widget>
        </widget>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <layout class="QVBoxLayout" name="attributesButtonLayout">
         <item>
          <widget class="QPushButton" name="addAttributeButton">
           <property name="text">
@@ -145,7 +163,7 @@
        </widget>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <layout class="QVBoxLayout" name="attachmentsButtonLayout">
         <item>
          <widget class="QPushButton" name="addAttachmentButton">
           <property name="text">
