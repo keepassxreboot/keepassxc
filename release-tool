@@ -246,7 +246,7 @@ checkTransifexCommandExists() {
 
 # re-implement realpath for OS X (thanks mschrag)
 # https://superuser.com/questions/205127/
-if $(command -v realpath > /dev/null); then
+if ! $(command -v realpath > /dev/null); then
     realpath() {
         pushd . > /dev/null
         if [ -d "$1" ]; then
