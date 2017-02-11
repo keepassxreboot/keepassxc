@@ -16,8 +16,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-echo -e "\e[1m\e[32mKeePassXC\e[0m Release Preparation Helper"
-echo -e "Copyright (C) 2017 KeePassXC Team <https://keepassxc.org/>\n"
+printf "\e[1m\e[32mKeePassXC\e[0m Release Preparation Helper\n"
+printf "Copyright (C) 2017 KeePassXC Team <https://keepassxc.org/>\n\n"
 
 
 # -----------------------------------------------------------------------
@@ -57,7 +57,7 @@ printUsage() {
         cmd="COMMAND"
     fi
     
-    echo -e "\e[1mUsage:\e[0m $(basename $0) $cmd [options]"
+    printf "\e[1mUsage:\e[0m $(basename $0) $cmd [options]\n"
     
     if [ "COMMAND" == "$cmd" ]; then
         cat << EOF
@@ -126,11 +126,11 @@ EOF
 }
 
 logInfo() {
-    echo -e "\e[1m[ \e[34mINFO\e[39m ]\e[0m $1"
+    printf "\e[1m[ \e[34mINFO\e[39m ]\e[0m $1\n"
 }
 
 logError() {
-    echo -e "\e[1m[ \e[31mERROR\e[39m ]\e[0m $1" >&2
+    printf "\e[1m[ \e[31mERROR\e[39m ]\e[0m $1\n" >&2
 }
 
 init() {
