@@ -347,14 +347,14 @@ merge() {
     checkReleaseDoesNotExist
     checkWorkingTreeClean
     checkSourceBranchExists
-    checkTargetBranchExists
+    
+    logInfo "Checking out source branch '${SOURCE_BRANCH}'..."
+    git checkout "$SOURCE_BRANCH"
+    
     checkVersionInCMake
     checkChangeLog
     
     logInfo "All checks pass, getting our hands dirty now!"
-    
-    logInfo "Checking out source branch..."
-    git checkout "$SOURCE_BRANCH"
     
     logInfo "Updating language files..."
     ./share/translations/update.sh
@@ -372,14 +372,14 @@ merge() {
         fi
     fi
 
+    CHANGELOG=$(grep -Pzo "(?<=${RELEASE_NAME} \(\d{4}-\d{2}-\d{2}\)\n)=+\n\n?(?:.|\n)+?\n(?=\n)" \
+        CHANGELOG | grep -Pzo '(?<=\n\n)(.|\n)+' | tr -d \\0)
+    COMMIT_MSG="Release ${RELEASE_NAME}"
+    
     logInfo "Checking out target branch '${TARGET_BRANCH}'..."
     git checkout "$TARGET_BRANCH"
     
     logInfo "Merging '${SOURCE_BRANCH}' into '${TARGET_BRANCH}'..."
-
-    CHANGELOG=$(grep -Pzo "(?<=${RELEASE_NAME} \(\d{4}-\d{2}-\d{2}\)\n)=+\n\n?(?:.|\n)+?\n(?=\n)" \
-        CHANGELOG | grep -Pzo '(?<=\n\n)(.|\n)+' | tr -d \\0)
-    COMMIT_MSG="Release ${RELEASE_NAME}"
 
     git merge "$SOURCE_BRANCH" --no-ff -m "$COMMIT_MSG" -m "${CHANGELOG}" "$SOURCE_BRANCH" -S"$GPG_GIT_KEY"
 
