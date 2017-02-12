@@ -68,6 +68,18 @@
           </item>
           <item>
            <widget class="QToolButton" name="transformBenchmarkButton">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>25</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="text">
              <string>Benchmark</string>
             </property>
