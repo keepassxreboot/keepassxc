@@ -166,7 +166,7 @@
    <item row="5" column="1">
     <widget class="QLineEdit" name="urlEdit"/>
    </item>
-   <item row="7" column="0">
+   <item row="7" column="0" alignment="Qt::AlignRight">
     <widget class="QCheckBox" name="expireCheck">
      <property name="text">
       <string>Expires</string>
