@@ -7,10 +7,22 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>315</height>
+    <height>366</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QGroupBox" name="attributesBox">
      <property name="title">
