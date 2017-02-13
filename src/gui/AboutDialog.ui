@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>455</width>
-    <height>238</height>
+    <height>266</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -53,7 +53,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string notr="true">&lt;a href=&quot;https://www.keepassxc.org/&quot;&gt;https://www.keepassxc.org/&lt;/a&gt;</string>
+      <string notr="true">&lt;a href=&quot;https://keepassxc.org/&quot;&gt;https://keepassxc.org/&lt;/a&gt;</string>
      </property>
      <property name="openExternalLinks">
       <bool>true</bool>
@@ -69,7 +69,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>KeePassXC is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</string>
+      <string>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
@@ -82,7 +82,7 @@
       <string/>
      </property>
      <property name="textInteractionFlags">
-      <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+      <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
      </property>
     </widget>
    </item>
@@ -91,6 +91,9 @@
      <property name="text">
       <string>Using:</string>
      </property>
+     <property name="textInteractionFlags">
+      <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+     </property>
     </widget>
    </item>
    <item>
@@ -98,6 +101,9 @@
      <property name="text">
       <string>Extensions:
 </string>
+     </property>
+     <property name="textInteractionFlags">
+      <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
      </property>
     </widget>
    </item>
