@@ -728,18 +728,19 @@ void MainWindow::toggleWindow()
 {
     if ((QApplication::activeWindow() == this) && isVisible() && !isMinimized()) {
         setWindowState(windowState() | Qt::WindowMinimized);
-        hide();
-
+        QTimer::singleShot(0, this, SLOT(hide()));
+        
         if (config()->get("security/lockdatabaseminimize").toBool()) {
             m_ui->tabWidget->lockDatabases();
         }
-    }
-    else {
+    } else {
         ensurePolished();
-        show();
         setWindowState(windowState() & ~Qt::WindowMinimized);
-        raise();
-        activateWindow();
+        QTimer::singleShot(0, this, [this]() {
+            show();
+            raise();
+            activateWindow();
+        });
         
 #if defined(Q_OS_LINUX) && ! defined(QT_NO_DBUS)
         // re-register global D-Bus menu (needed on Ubuntu with Unity)
