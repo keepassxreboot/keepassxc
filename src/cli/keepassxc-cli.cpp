@@ -21,6 +21,7 @@
 #include <QCoreApplication>
 #include <QStringList>
 
+#include <cli/List.h>
 #include <cli/Merge.h>
 #include <cli/Extract.h>
 #include <cli/EntropyMeter.h>
@@ -63,6 +64,11 @@ int main(int argc, char **argv)
     // Removing the first cli argument before dispatching.
     ++argv;
     --argc;
+
+    if (commandName == "list") {
+      argv[0] = const_cast<char*>("keepassxc-cli list");
+      return List::execute(argc, argv);
+    }
 
     if (commandName == "merge") {
       argv[0] = const_cast<char*>("keepassxc-cli merge");

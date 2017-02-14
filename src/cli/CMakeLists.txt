@@ -14,6 +14,8 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 set(cli_SOURCES
+    List.cpp
+    List.h
     Merge.cpp
     Merge.h
     EntropyMeter.cpp
