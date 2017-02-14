@@ -77,14 +77,9 @@ DatabaseTabWidget::~DatabaseTabWidget()
 void DatabaseTabWidget::toggleTabbar()
 {
     if (count() > 1) {
-        if (!tabBar()->isVisible()) {
-            tabBar()->show();
-        }
-    }
-    else {
-        if (tabBar()->isVisible()) {
-            tabBar()->hide();
-        }
+        tabBar()->show();
+    } else {
+        tabBar()->hide();
     }
 }
 
