@@ -19,6 +19,7 @@
 
 #include <QAction>
 #include <QDesktopServices>
+#include <QCheckBox>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QFile>
@@ -59,7 +60,14 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     , m_newParent(nullptr)
 {
     m_mainWidget = new QWidget(this);
-    QLayout* layout = new QHBoxLayout(m_mainWidget);
+
+    m_messageWidget = new MessageWidget(this);
+    m_messageWidget->setHidden(true);
+
+    QVBoxLayout* mainLayout = new QVBoxLayout();
+    QLayout* layout = new QHBoxLayout();
+    mainLayout->addWidget(m_messageWidget);
+    mainLayout->addLayout(layout);
     m_splitter = new QSplitter(m_mainWidget);
     m_splitter->setChildrenCollapsible(false);
 
@@ -104,7 +112,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_splitter->setStretchFactor(1, 70);
 
     layout->addWidget(m_splitter);
-    m_mainWidget->setLayout(layout);
+    m_mainWidget->setLayout(mainLayout);
 
     m_editEntryWidget = new EditEntryWidget();
     m_editEntryWidget->setObjectName("editEntryWidget");
@@ -312,8 +320,10 @@ void DatabaseWidget::cloneEntry()
         return;
     }
 
-    Entry* entry = currentEntry->clone(Entry::CloneNewUuid | Entry::CloneResetTimeInfo);
+    Entry* entry = currentEntry->clone(Entry::CloneNewUuid | Entry::CloneResetTimeInfo | Entry::CloneRenameTitle);
     entry->setGroup(currentEntry->group());
+    if (isInSearchMode())
+        search(m_lastSearchText);
     m_entryView->setFocus();
     m_entryView->setCurrentEntry(entry);
 }
@@ -341,7 +351,7 @@ void DatabaseWidget::deleteEntries()
             result = MessageBox::question(
                 this, tr("Delete entry?"),
                 tr("Do you really want to delete the entry \"%1\" for good?")
-                .arg(selectedEntries.first()->title()),
+                .arg(selectedEntries.first()->title().toHtmlEscaped()),
                 QMessageBox::Yes | QMessageBox::No);
         }
         else {
@@ -365,7 +375,7 @@ void DatabaseWidget::deleteEntries()
             result = MessageBox::question(
                 this, tr("Move entry to recycle bin?"),
                 tr("Do you really want to move entry \"%1\" to the recycle bin?")
-                .arg(selectedEntries.first()->title()),
+                .arg(selectedEntries.first()->title().toHtmlEscaped()),
                 QMessageBox::Yes | QMessageBox::No);
         }
         else {
@@ -494,8 +504,46 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
     }
 
     if (urlString.startsWith("cmd://")) {
+        // check if decision to execute command was stored
+        if (entry->attributes()->hasKey(EntryAttributes::RememberCmdExecAttr)) {
+            if (entry->attributes()->value(EntryAttributes::RememberCmdExecAttr) == "1") {
+                QProcess::startDetached(urlString.mid(6));
+            }
+            return;
+        }
+        
+        // otherwise ask user
         if (urlString.length() > 6) {
-            QProcess::startDetached(urlString.mid(6));
+            QString cmdTruncated = urlString.mid(6);
+            if (cmdTruncated.length() > 400)
+                cmdTruncated = cmdTruncated.left(400) + " […]";
+            QMessageBox msgbox(QMessageBox::Icon::Question,
+                               tr("Execute command?"),
+                               tr("Do you really want to execute the following command?<br><br>%1<br>")
+                                   .arg(cmdTruncated.toHtmlEscaped()),
+                               QMessageBox::Yes | QMessageBox::No,
+                               this
+            );
+            msgbox.setDefaultButton(QMessageBox::No);
+            
+            QCheckBox* checkbox = new QCheckBox(tr("Remember my choice"), &msgbox);
+            msgbox.setCheckBox(checkbox);
+            bool remember = false;
+            QObject::connect(checkbox, &QCheckBox::stateChanged, [&](int state) {
+                if (static_cast<Qt::CheckState>(state) == Qt::CheckState::Checked) {
+                   remember = true;
+               }
+            });
+            
+            int result = msgbox.exec();
+            if (result == QMessageBox::Yes) {
+                QProcess::startDetached(urlString.mid(6));
+            }
+            
+            if (remember) {
+                entry->attributes()->set(EntryAttributes::RememberCmdExecAttr,
+                                         result == QMessageBox::Yes ? "1" : "0");
+            }
         }
     }
     else {
@@ -532,7 +580,7 @@ void DatabaseWidget::deleteGroup()
         QMessageBox::StandardButton result = MessageBox::question(
             this, tr("Delete group?"),
             tr("Do you really want to delete the group \"%1\" for good?")
-            .arg(currentGroup->name()),
+            .arg(currentGroup->name().toHtmlEscaped()),
             QMessageBox::Yes | QMessageBox::No);
         if (result == QMessageBox::Yes) {
             delete currentGroup;
@@ -648,7 +696,7 @@ void DatabaseWidget::updateMasterKey(bool accepted)
         QApplication::restoreOverrideCursor();
 
         if (!result) {
-            MessageBox::critical(this, tr("Error"), tr("Unable to calculate master key"));
+            m_messageWidget->showMessage(tr("Unable to calculate master key"), MessageWidget::Error);
             return;
         }
     }
@@ -688,14 +736,14 @@ void DatabaseWidget::mergeDatabase(bool accepted)
 {
     if (accepted) {
         if (!m_db) {
-            MessageBox::critical(this, tr("Error"), tr("No current database."));
+            m_messageWidget->showMessage(tr("No current database."), MessageWidget::Error);
             return;
         }
 
         Database* srcDb = static_cast<DatabaseOpenWidget*>(sender())->database();
 
         if (!srcDb) {
-            MessageBox::critical(this, tr("Error"), tr("No source database, nothing to do."));
+            m_messageWidget->showMessage(tr("No source database, nothing to do."), MessageWidget::Error);
             return;
         }
 
@@ -722,15 +770,10 @@ void DatabaseWidget::unlockDatabase(bool accepted)
 
     replaceDatabase(db);
 
-    const QList<Group*> groups = m_db->rootGroup()->groupsRecursive(true);
-    for (Group* group : groups) {
-        if (group->uuid() == m_groupBeforeLock) {
-            m_groupView->setCurrentGroup(group);
-            break;
-        }
-    }
-
+    restoreGroupEntryFocus(m_groupBeforeLock, m_entryBeforeLock);
     m_groupBeforeLock = Uuid();
+    m_entryBeforeLock = Uuid();
+
     setCurrentWidget(m_mainWidget);
     m_unlockDatabaseWidget->clearForms();
     Q_EMIT unlockedDatabase();
@@ -755,7 +798,7 @@ void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::Mod
 void DatabaseWidget::switchToEntryEdit()
 {
     Entry* entry = m_entryView->currentEntry();
-    Q_ASSERT(entry);
+    
     if (!entry) {
         return;
     }
@@ -766,7 +809,7 @@ void DatabaseWidget::switchToEntryEdit()
 void DatabaseWidget::switchToGroupEdit()
 {
     Group* group = m_groupView->currentGroup();
-    Q_ASSERT(group);
+    
     if (!group) {
         return;
     }
@@ -943,6 +986,10 @@ void DatabaseWidget::lock()
         m_groupBeforeLock = m_db->rootGroup()->uuid();
     }
 
+    if (m_entryView->currentEntry()) {
+        m_entryBeforeLock = m_entryView->currentEntry()->uuid();
+    }
+
     clearAllWidgets();
     m_unlockDatabaseWidget->load(m_filename);
     setCurrentWidget(m_unlockDatabaseWidget);
@@ -1028,18 +1075,33 @@ void DatabaseWidget::reloadDatabaseFile()
                 }
             }
 
+            Uuid groupBeforeReload;
+            if (m_groupView && m_groupView->currentGroup()) {
+                groupBeforeReload = m_groupView->currentGroup()->uuid();
+            }
+            else {
+                groupBeforeReload = m_db->rootGroup()->uuid();
+            }
+
+            Uuid entryBeforeReload;
+            if (m_entryView && m_entryView->currentEntry()) {
+                entryBeforeReload = m_entryView->currentEntry()->uuid();
+            }
+
             replaceDatabase(db);
+            restoreGroupEntryFocus(groupBeforeReload, entryBeforeReload);
+
         }
         else {
-            MessageBox::critical(this, tr("Autoreload Failed"),
-                                 tr("Could not parse or unlock the new database file while attempting"
-                                    " to autoreload this database."));
+            m_messageWidget->showMessage(
+                tr("Could not parse or unlock the new database file while attempting"
+                   " to autoreload this database."), MessageWidget::Error);
         }
     }
     else {
-        MessageBox::critical(this, tr("Autoreload Failed"),
-                             tr("Could not open the new database file while attempting to autoreload"
-                                " this database."));
+        m_messageWidget->showMessage(
+            tr("Could not open the new database file while attempting to autoreload this database."),
+                                     MessageWidget::Error);
     }
 
     // Rewatch the database file
@@ -1059,6 +1121,35 @@ QStringList DatabaseWidget::customEntryAttributes() const
     }
 
     return entry->attributes()->customKeys();
+}
+
+/*
+ * Restores the focus on the group and entry that was focused
+ * before the database was locked or reloaded.
+ */
+void DatabaseWidget::restoreGroupEntryFocus(Uuid groupUuid, Uuid entryUuid)
+{
+    Group* restoredGroup = nullptr;
+    const QList<Group*> groups = m_db->rootGroup()->groupsRecursive(true);
+    for (Group* group : groups) {
+        if (group->uuid() == groupUuid) {
+            restoredGroup = group;
+            break;
+        }
+    }
+
+    if (restoredGroup != nullptr) {
+      m_groupView->setCurrentGroup(restoredGroup);
+
+      const QList<Entry*> entries = restoredGroup->entries();
+      for (Entry* entry : entries) {
+          if (entry->uuid() == entryUuid) {
+              m_entryView->setCurrentEntry(entry);
+              break;
+          }
+      }
+    }
+
 }
 
 bool DatabaseWidget::isGroupSelected() const
@@ -1135,4 +1226,16 @@ void DatabaseWidget::showUnlockDialog()
 void DatabaseWidget::closeUnlockDialog()
 {
     m_unlockDatabaseDialog->close();
+}
+
+void DatabaseWidget::showMessage(const QString& text, MessageWidget::MessageType type)
+{
+    m_messageWidget->showMessage(text, type);
+}
+
+void DatabaseWidget::hideMessage()
+{
+    if (m_messageWidget->isVisible()) {
+        m_messageWidget->animatedHide();
+    }
 }

@@ -158,12 +158,11 @@ void EditWidgetIcons::fetchFavicon(QUrl url)
 
 void EditWidgetIcons::fetchFaviconFromGoogle(QString domain)
 {
-     if (m_fallbackToGoogle) {
+    if (m_fallbackToGoogle) {
         abortFaviconDownload();
         m_fallbackToGoogle = false;
         fetchFavicon(QUrl("http://www.google.com/s2/favicons?domain=" + domain));
-    }
-    else {
+    } else {
         abortFaviconDownload();
         MessageBox::warning(this, tr("Error"), tr("Unable to fetch favicon."));
     }
@@ -190,6 +189,10 @@ void EditWidgetIcons::abortFaviconDownload(bool clearRedirect)
 
 void EditWidgetIcons::onRequestFinished(QNetworkReply *reply)
 {
+    if (m_database == nullptr) {
+        return;
+    }
+
     if (!reply->error()) {    
         QImage image;
         image.loadFromData(reply->readAll());
@@ -244,7 +247,7 @@ void EditWidgetIcons::addCustomIcon()
                 m_ui->customIconsView->setCurrentIndex(index);
             }
             else {
-                MessageBox::critical(this, tr("Error"), tr("Can't read icon"));
+                Q_EMIT messageEditEntry(tr("Can't read icon"), MessageWidget::Error);
             }
         }
     }
@@ -298,9 +301,8 @@ void EditWidgetIcons::removeCustomIcon()
                 }
             }
             else {
-                MessageBox::information(this, tr("Can't delete icon!"),
-                                        tr("Can't delete icon. Still used by %1 items.")
-                                        .arg(iconUsedCount));
+                Q_EMIT messageEditEntry(
+                    tr("Can't delete icon. Still used by %1 items.").arg(iconUsedCount), MessageWidget::Error);
             }
         }
     }

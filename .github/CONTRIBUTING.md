@@ -1,31 +1,32 @@
-# Contributing to KeePassX Reboot
+# Contributing to KeePassXC
 
 :+1::tada: First off, thanks for taking the time to contribute! :tada::+1:
 
-The following is a set of guidelines for contributing to KeePassX Reboot on GitHub.
+The following is a set of guidelines for contributing to KeePassXC on GitHub.
 These are just guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
 
-#### Table Of Contents
+#### Table of contents
 
 [What should I know before I get started?](#what-should-i-know-before-i-get-started)
   * [Open Source Contribution Policy](#open-source-contribution-policy)
 
-[How Can I Contribute?](#how-can-i-contribute)
-  * [Feature Requests](#feature-requests)
-  * [Bug Reports](#bug-reports)
-  * [Your First Code Contribution](#your-first-code-contribution)
-  * [Pull Requests](#pull-requests)
+[How can I contribute?](#how-can-i-contribute)
+  * [Feature requests](#feature-requests)
+  * [Bug reports](#bug-reports)
+  * [Discuss with the team](#discuss-with-the-team)
+  * [Your first code contribution](#your-first-code-contribution)
+  * [Pull requests](#pull-requests)
   * [Translations](#translations)
 
 [Styleguides](#styleguides)
-  * [Git Branch Strategy](#git_branch_strategy)
-  * [Git Commit Messages](#git-commit-messages)
-  * [Coding Styleguide](#coding-styleguide)
+  * [Git branch strategy](#git-branch-strategy)
+  * [Git commit messages](#git-commit-messages)
+  * [Coding styleguide](#coding-styleguide)
 
 
 ## What should I know before I get started?
 ### Open Source Contribution Policy
-[Version 0.3, 2015–11–18](https://medium.com/@jmaynard/a-contribution-policy-for-open-source-that-works-bfc4600c9d83#.i9ntbhmad)
+**Source**: [Version 0.3, 2015–11–18](https://medium.com/@jmaynard/a-contribution-policy-for-open-source-that-works-bfc4600c9d83#.i9ntbhmad)
 
 #### Policy
 
@@ -49,35 +50,35 @@ If we reject your contribution, it means only that we do not consider it suitabl
  * 0.3, 2011–11–19: Added “irrevocably” to “we can use” and changed “it” to “your contribution” in the “if rejected” section. Thanks to Patrick Maupin.
 
 
-## How Can I Contribute?
-### Feature Requests
+## How can I contribute?
+### Feature requests
 
-We're always looking for suggestions to improve our application. If you have a suggestion for improving an existing feature, or would like to suggest a completely new feature for KeePassX Reboot, please use the Issues section or our [Google Groups](https://groups.google.com/forum/#!forum/keepassx-reboot) forum.
+We're always looking for suggestions to improve our application. If you have a suggestion to improve an existing feature, or would like to suggest a completely new feature for KeePassXC, please use the [issue tracker on GitHub][issues-section]. For more general discussion, try using our [Google Groups][google-groups] forum.
 
-### Bug Reports
+### Bug reports
 
-Our software isn't always perfect, but we strive to always improve our work. You may file bug reports in the Issues section.
+Our software isn't always perfect, but we strive to always improve our work. You may file bug reports in the issue tracker.
 
-Before submitting a Bug Report, check if the problem has already been reported. Please refrain from opening a duplicate issue. If you want to highlight a deficiency on an existing issue, simply add a comment.
+Before submitting a bug report, check if the problem has already been reported. Please refrain from opening a duplicate issue. If you want to add further information to an existing issue, simply add a comment on that issue.
 
-### Discuss with the Team
+### Discuss with the team
 
-You can talk to the KeePassX Reboot Team about Bugs, new feature, Issue and PullRequests at our [Google Groups](https://groups.google.com/forum/#!forum/keepassx-reboot) forum
+As with feature requests, you can talk to the KeePassXC team about bugs, new features, other issues and pull requests on the dedicated issue tracker, using the [Google Groups][google-groups] forum, or in the IRC channel on Freenode (`#keepassxc-dev` on `irc.freenode.net`, or use a [webchat link](https://webchat.freenode.net/?channels=%23keepassxc-dev)).
 
-### Your First Code Contribution
+### Your first code contribution
 
-Unsure where to begin contributing to KeePassX Reboot? You can start by looking through these `beginner` and `help-wanted` issues:
+Unsure where to begin contributing to KeePassXC? You can start by looking through these `beginner` and `help-wanted` issues:
 
-* [Beginner issues][beginner] - issues which should only require a few lines of code, and a test or two.
-* [Help wanted issues][help-wanted] - issues which should be a bit more involved than `beginner` issues.
+* [Beginner issues][beginner] – issues which should only require a few lines of code, and a test or two.
+* ['Help wanted' issues][help-wanted] – issues which should be a bit more involved than `beginner` issues.
 
-Both issue lists are sorted by total number of comments. While not perfect, number of comments is a reasonable proxy for impact a given change will have.
+Both issue lists are sorted by total number of comments. While not perfect, looking at the number of comments on an issue can give a general idea of how much an impact a given change will have.
 
-### Pull Requests
+### Pull requests
 
 Along with our desire to hear your feedback and suggestions, we're also interested in accepting direct assistance in the form of code.
 
-All pull requests must comply with the above requirements and with the [Styleguides](#styleguides).
+All pull requests must comply with the above requirements and with the [styleguides](#styleguides).
 
 ### Translations
 
@@ -86,19 +87,20 @@ Please join an existing language team or request a new one if there is none.
 
 ## Styleguides
 
-### Git Branch Strategy
+### Git branch strategy
 
 The Branch Strategy is based on [git-flow-lite](http://nvie.com/posts/a-successful-git-branching-model/).
 
-* **master** -> always points to the last release published
-* **develop** -> points to the next planned release, tested and reviewed code
-* **feature/**[name] -> points to brand new feature in codebase, candidate for merge into develop (subject to rebase)
+* **master** – points to the latest public release
+* **develop** – points to the development of the next release, contains tested and reviewed code
+* **feature/**[name] – points to a branch with a new feature, one which is candidate for merge into develop (subject to rebase)
+* **hotfix/**[id]-[description] – points to a branch with a fix for a particular issue ID
 
 
-### Git Commit Messages
+### Git commit messages
 
 * Use the present tense ("Add feature" not "Added feature")
-* Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
+* Use the imperative mood ("Move cursor to…" not "Moves cursor to…")
 * Limit the first line to 72 characters or less
 * Reference issues and pull requests liberally
 * When only changing documentation, include `[ci skip]` in the commit description
@@ -114,21 +116,21 @@ The Branch Strategy is based on [git-flow-lite](http://nvie.com/posts/a-successf
     * :lock: `:lock:` when dealing with security
 
 
-### Coding Styleguide
+### Coding styleguide
 
 This project follows the [Qt Coding Style](https://wiki.qt.io/Qt_Coding_Style). All submissions are expected to follow this style.
 
-In particular Code must follow the following specific rules:
+In particular, code must stick to the following rules:
 
-#### Naming Convention
+#### Naming convention
 `lowerCamelCase`
 
-For names made of only one word, the fist letter is lowercase.  
-For names made of multiple concatenated words, the first letter is lowercase and each subsequent concatenated word is capitalized.
+For names made of only one word, the first letter should be lowercase.
+For names made of multiple concatenated words, the first letter of the whole is lowercase, and the first letter of each subsequent word is capitalized.
 
 #### Indention
-For C++ files (.cpp .h): 4 spaces  
-For Qt-UI files (.ui): 2 spaces
+For **C++ files** (*.cpp .h*): 4 spaces  
+For **Qt-UI files** (*.ui*): 2 spaces
 
 #### Pointers
 ```c
@@ -165,9 +167,8 @@ Use prefix: `m_*`
 
 Example: `m_variable`
 
-#### GUI Widget names
-Widget names must be related to the desired program behaviour.  
-Preferably end the name with the Widget Classname
+#### GUI widget names
+Widget names must be related to the desired program behavior, and preferably end with the widget's classname.
 
 Example: `<widget class="QCheckBox" name="rememberCheckBox">`
 
@@ -175,3 +176,5 @@ Example: `<widget class="QCheckBox" name="rememberCheckBox">`
 
 [beginner]:https://github.com/keepassxreboot/keepassx/issues?q=is%3Aopen+is%3Aissue+label%3Abeginner+label%3A%22help+wanted%22+sort%3Acomments-desc
 [help-wanted]:https://github.com/keepassxreboot/keepassx/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+sort%3Acomments-desc
+[issues-section]:https://github.com/keepassxreboot/keepassxc/issues
+[google-groups]:https://groups.google.com/forum/#!forum/keepassx-reboot

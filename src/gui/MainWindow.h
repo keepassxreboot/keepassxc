@@ -42,6 +42,7 @@ public:
 public Q_SLOTS:
     void openDatabase(const QString& fileName, const QString& pw = QString(),
                       const QString& keyFile = QString());
+    void appExit();
 
 protected:
      void closeEvent(QCloseEvent* event) override;
@@ -54,6 +55,10 @@ private Q_SLOTS:
     void switchToDatabases();
     void switchToSettings();
     void switchToPasswordGen(bool enabled);
+    void switchToNewDatabase();
+    void switchToOpenDatabase();
+    void switchToDatabaseFile(QString file);
+    void switchToKeePass1Database();
     void closePasswordGen();
     void databaseStatusChanged(DatabaseWidget *dbWidget);
     void databaseTabChanged(int tabIndex);
@@ -68,9 +73,12 @@ private Q_SLOTS:
     void applySettingsChanges();
     void trayIconTriggered(QSystemTrayIcon::ActivationReason reason);
     void toggleWindow();
-    void appExit();
     void lockDatabasesAfterInactivity();
     void repairDatabase();
+    void displayGlobalMessage(const QString& text, MessageWidget::MessageType type);
+    void displayTabMessage(const QString& text, MessageWidget::MessageType type);
+    void hideGlobalMessage();
+    void hideTabMessage();
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);

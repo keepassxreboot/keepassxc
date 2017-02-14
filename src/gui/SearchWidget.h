@@ -48,6 +48,7 @@ signals:
     void escapePressed();
     void copyPressed();
     void downPressed();
+    void enterPressed();
 
 public slots:
     void databaseChanged(DatabaseWidget* dbWidget);
@@ -56,6 +57,7 @@ private slots:
     void startSearchTimer();
     void startSearch();
     void updateCaseSensitive();
+    void searchFocus();
 
 private:
     const QScopedPointer<Ui::SearchWidget> m_ui;

@@ -1,14 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ru" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ru" version="2.1">
 <context>
     <name>AboutDialog</name>
-    <message>
-        <source>About KeePassX</source>
-        <translation>О KeePassX</translation>
-    </message>
-    <message>
-        <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassX распространяется на условиях Стандартной общественной лицензии GNU (GPL) версии 2 или (на ваше усмотрение) версии 3.</translation>
-    </message>
     <message>
         <source>Revision</source>
         <translation>Ревизия</translation>
@@ -17,16 +9,54 @@
         <source>Using:</source>
         <translation>С помощью:</translation>
     </message>
+    <message>
+        <source>About KeePassXC</source>
+        <translation>О KeePassXC</translation>
+    </message>
+    <message>
+        <source>KeePassXC is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
+        <translation>KeePassXC распространяется на условиях Стандартной общественной лицензии GNU (GPL) версии 2 или (на ваше усмотрение) версии 3.</translation>
+    </message>
+    <message>
+        <source>Extensions:
+</source>
+        <translation>Расширения:
+</translation>
+    </message>
+</context>
+<context>
+    <name>AccessControlDialog</name>
+    <message>
+        <source>Remember this decision</source>
+        <translation>Запомнить это решение</translation>
+    </message>
+    <message>
+        <source>Allow</source>
+        <translation>Разрешить</translation>
+    </message>
+    <message>
+        <source>Deny</source>
+        <translation>Запретить</translation>
+    </message>
+    <message>
+        <source>%1 has requested access to passwords for the following item(s).
+Please select whether you want to allow access.</source>
+        <translation>%1 запросил доступ к паролям для следующего элемента(ов). Выберете, хотите ли вы разрешить доступ.</translation>
+    </message>
+    <message>
+        <source>KeePassXC HTTP Confirm Access</source>
+        <translation>Подтверждение доступа KeePassXC HTTP</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
     <message>
-        <source>Auto-Type - KeePassX</source>
-        <translation>Автоввод — KeePassX</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
         <translation>Невозможно найти запись, соответствующую заголовку окна:</translation>
+    </message>
+    <message>
+        <source>Auto-Type - KeePassXC</source>
+        <translation>Автоввод — KeePassXC</translation>
     </message>
 </context>
 <context>
@@ -47,12 +77,12 @@
 <context>
     <name>AutoTypeSelectDialog</name>
     <message>
-        <source>Auto-Type - KeePassX</source>
-        <translation>Автоввод — KeePassX</translation>
-    </message>
-    <message>
         <source>Select entry to Auto-Type:</source>
         <translation>Выберите запись для автоввода:</translation>
+    </message>
+    <message>
+        <source>Auto-Type - KeePassXC</source>
+        <translation>Автоввод — KeePassXC</translation>
     </message>
 </context>
 <context>
@@ -187,7 +217,7 @@
     </message>
     <message>
         <source>Database opened fine. Nothing to do.</source>
-        <translation type="unfinished"/>
+        <translation>Хранилище открылось. Больше нечего делать.</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
@@ -320,11 +350,6 @@ Save changes?</source>
         <translation>заблокировано</translation>
     </message>
     <message>
-        <source>The database you are trying to open is locked by another instance of KeePassX.
-Do you want to open it anyway? Alternatively the database is opened read-only.</source>
-        <translation>Хранилище, которое Вы хотите открыть, заблокировано другой запущенной копией KeePassX. Всё равно открыть? В качестве альтернативы хранилище будет открыто в режиме для чтения.</translation>
-    </message>
-    <message>
         <source>Lock database</source>
         <translation>Заблокировать хранилище</translation>
     </message>
@@ -367,14 +392,24 @@ Discard changes and close anyway?</source>
         <translation>Не удалось записать CSV файл.</translation>
     </message>
     <message>
-        <source>The database you are trying to save as is locked by another instance of KeePassX.
-Do you want to save it anyway?</source>
-        <translation>Данное хранилище заблокировано другой запущенной копией KeePassX.
-Вы уверены, что хотите продолжить сохранение?</translation>
+        <source>Unable to open the database.</source>
+        <translation>Не удаётся открыть хранилище.</translation>
     </message>
     <message>
-        <source>Unable to open the database.</source>
-        <translation type="unfinished"/>
+        <source>The database you are trying to open is locked by another instance of KeePassXC.
+Do you want to open it anyway? Alternatively the database is opened read-only.</source>
+        <translation>Хранилище, которое Вы хотите открыть, заблокировано другой запущенной копией KeePassXC.
+Всё равно открыть? В качестве альтернативы хранилище будет открыто в режиме для чтения.</translation>
+    </message>
+    <message>
+        <source>Merge database</source>
+        <translation>Объединить хранилище</translation>
+    </message>
+    <message>
+        <source>The database you are trying to save as is locked by another instance of KeePassXC.
+Do you want to save it anyway?</source>
+        <translation>Хранилище, которые вы пытаетесь сохранить, заблокировано другим экземпляром KeePassXC.
+Хотите сохранить во всех случаях?</translation>
     </message>
 </context>
 <context>
@@ -416,10 +451,6 @@ Do you want to save it anyway?</source>
         <translation>Вы действительно хотите навсегда удалить группу «%1»?</translation>
     </message>
     <message>
-        <source>Current group</source>
-        <translation>Текущая группа</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
@@ -429,11 +460,71 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Move entry to recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Переместить запись в корзину?</translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Действительно переместить запись  &quot;%1&quot; в корзину?</translation>
+    </message>
+    <message>
+        <source>Searching...</source>
+        <translation>Поиск...</translation>
+    </message>
+    <message>
+        <source>No current database.</source>
+        <translation>Нет текущего хранилища.</translation>
+    </message>
+    <message>
+        <source>No source database, nothing to do.</source>
+        <translation>Нет исходного хранилища,  нечего обрабатывать.</translation>
+    </message>
+    <message>
+        <source>Search Results (%1)</source>
+        <translation>Результаты поиска (%1)</translation>
+    </message>
+    <message>
+        <source>No Results</source>
+        <translation>Нет результатов</translation>
+    </message>
+    <message>
+        <source>Execute command?</source>
+        <translation>Выполнить комманду?</translation>
+    </message>
+    <message>
+        <source>Do you really want to execute the following command?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</source>
+        <translation>Вы действительно хотите выполнить следующую команду?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
+    </message>
+    <message>
+        <source>Remember my choice</source>
+        <translation>Запомнить выбор</translation>
+    </message>
+    <message>
+        <source>Autoreload Request</source>
+        <translation>Запрос на автоматическую загрузку</translation>
+    </message>
+    <message>
+        <source>The database file has changed. Do you want to load the changes?</source>
+        <translation>Хранилище было изменено. Вы хотите загрузить изменения?</translation>
+    </message>
+    <message>
+        <source>Merge Request</source>
+        <translation>Запрос на слияние</translation>
+    </message>
+    <message>
+        <source>The database file has changed and you have unsaved changes.Do you want to merge your changes?</source>
+        <translation>Файл хранилища был изменён, а так же присутствуют несохранённые изменения. Вы хотите объеденить изменения?</translation>
+    </message>
+    <message>
+        <source>Autoreload Failed</source>
+        <translation>Ошибка автоматической загрузки</translation>
+    </message>
+    <message>
+        <source>Could not parse or unlock the new database file while attempting to autoreload this database.</source>
+        <translation>Не удаётся разобрать или разблокировать новый файл хранилища при попытке автоматической загрузки этого хранилища.</translation>
+    </message>
+    <message>
+        <source>Could not open the new database file while attempting to autoreload this database.</source>
+        <translation>Не удаётся открыть новый файл хранилища при попытке автоматической загрузки этого файла.</translation>
     </message>
 </context>
 <context>
@@ -625,10 +716,6 @@ Do you want to save it anyway?</source>
         <translation>Пароль ещё раз:</translation>
     </message>
     <message>
-        <source>Gen.</source>
-        <translation>Генеральный.</translation>
-    </message>
-    <message>
         <source>URL:</source>
         <translation>URL:</translation>
     </message>
@@ -745,17 +832,25 @@ Do you want to save it anyway?</source>
         <source>Can&apos;t delete icon!</source>
         <translation>Не могу удалить значок!</translation>
     </message>
-    <message numerus="yes">
-        <source>Can&apos;t delete icon. Still used by %n item(s).</source>
-        <translation><numerusform>Не могу удалить иконку, %n запись всё ещё использует её.</numerusform><numerusform>Не могу удалить иконку, %n записи всё ещё использует её.</numerusform><numerusform>Не могу удалить иконку, %n записей всё ещё использует её.</numerusform><numerusform>Не могу удалить значок, %n записей всё ещё использует его.</numerusform></translation>
-    </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Ошибка</translation>
     </message>
     <message>
-        <source>Can&apos;t read icon:</source>
-        <translation type="unfinished"/>
+        <source>Download favicon</source>
+        <translation>Скачать значок сайта</translation>
+    </message>
+    <message>
+        <source>Unable to fetch favicon.</source>
+        <translation>Не удалось получить значок сайта</translation>
+    </message>
+    <message>
+        <source>Can&apos;t read icon</source>
+        <translation>Не могу прочитать значок</translation>
+    </message>
+    <message>
+        <source>Can&apos;t delete icon. Still used by %1 items.</source>
+        <translation>Не удается удалить значок, она продолжает использоваться %1 записями.</translation>
     </message>
 </context>
 <context>
@@ -775,6 +870,13 @@ Do you want to save it anyway?</source>
     <message>
         <source>Uuid:</source>
         <translation>Uuid:</translation>
+    </message>
+</context>
+<context>
+    <name>Entry</name>
+    <message>
+        <source> - Clone</source>
+        <translation>- Колинировать</translation>
     </message>
 </context>
 <context>
@@ -830,6 +932,61 @@ Do you want to save it anyway?</source>
     </message>
 </context>
 <context>
+    <name>HttpPasswordGeneratorWidget</name>
+    <message>
+        <source>Length:</source>
+        <translation>Длина:</translation>
+    </message>
+    <message>
+        <source>Character Types</source>
+        <translation>Виды символов</translation>
+    </message>
+    <message>
+        <source>Upper Case Letters</source>
+        <translation>Заглавные буквы</translation>
+    </message>
+    <message>
+        <source>A-Z</source>
+        <translation>A-Z</translation>
+    </message>
+    <message>
+        <source>Lower Case Letters</source>
+        <translation>Строчные буквы</translation>
+    </message>
+    <message>
+        <source>a-z</source>
+        <translation>a-z</translation>
+    </message>
+    <message>
+        <source>Numbers</source>
+        <translation>Цифры</translation>
+    </message>
+    <message>
+        <source>0-9</source>
+        <translation>0-9</translation>
+    </message>
+    <message>
+        <source>Special Characters</source>
+        <translation>Особые символы</translation>
+    </message>
+    <message>
+        <source>/*_&amp; ...</source>
+        <translation>/*_&amp; ...</translation>
+    </message>
+    <message>
+        <source>Exclude look-alike characters</source>
+        <translation>Исключить выглядящие похожие символы</translation>
+    </message>
+    <message>
+        <source>Ensure that the password contains characters from every group</source>
+        <translation>Убедитесь, что пароль содержит символы всех видов</translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation>Принять</translation>
+    </message>
+</context>
+<context>
     <name>KeePass1OpenWidget</name>
     <message>
         <source>Import KeePass1 database</source>
@@ -872,7 +1029,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Неверный ключ или файл хранилища повреждён.</translation>
     </message>
 </context>
 <context>
@@ -911,8 +1068,8 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation>Неисправимая ошибка в процессе тестирования криптографических функций.</translation>
     </message>
     <message>
-        <source>KeePassX - Error</source>
-        <translation>KeePassX — Ошибка</translation>
+        <source>KeePassXC - Error</source>
+        <translation>KeePassXC — Ошибка</translation>
     </message>
 </context>
 <context>
@@ -922,100 +1079,12 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation>Хранилище</translation>
     </message>
     <message>
-        <source>Recent databases</source>
-        <translation>Недавние хранилища</translation>
-    </message>
-    <message>
-        <source>Help</source>
-        <translation>Помощь</translation>
-    </message>
-    <message>
-        <source>Entries</source>
-        <translation>Записи</translation>
-    </message>
-    <message>
-        <source>Copy attribute to clipboard</source>
-        <translation>Скопировать атрибут в буфер обмена</translation>
-    </message>
-    <message>
-        <source>Groups</source>
-        <translation>Группы</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation>Вид</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation>Выход</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation>О программе</translation>
-    </message>
-    <message>
         <source>Open database</source>
         <translation>Открыть хранилище</translation>
     </message>
     <message>
-        <source>Save database</source>
-        <translation>Сохранить хранилище</translation>
-    </message>
-    <message>
-        <source>Close database</source>
-        <translation>Закрыть хранилище</translation>
-    </message>
-    <message>
-        <source>New database</source>
-        <translation>Новое хранилище</translation>
-    </message>
-    <message>
-        <source>Add new entry</source>
-        <translation>Добавить новую запись</translation>
-    </message>
-    <message>
-        <source>View/Edit entry</source>
-        <translation>Посмотреть/редактировать запись</translation>
-    </message>
-    <message>
-        <source>Delete entry</source>
-        <translation>Удалить запись</translation>
-    </message>
-    <message>
-        <source>Add new group</source>
-        <translation>Добавить новую группу</translation>
-    </message>
-    <message>
-        <source>Edit group</source>
-        <translation>Редактировать группу</translation>
-    </message>
-    <message>
-        <source>Delete group</source>
-        <translation>Удалить группу</translation>
-    </message>
-    <message>
-        <source>Save database as</source>
-        <translation>Сохранить хранилище как</translation>
-    </message>
-    <message>
-        <source>Change master key</source>
-        <translation>Сменить мастер-пароль</translation>
-    </message>
-    <message>
         <source>Database settings</source>
         <translation>Параметры хранилища</translation>
-    </message>
-    <message>
-        <source>Import KeePass 1 database</source>
-        <translation>Импортировать хранилище KeePass 1</translation>
-    </message>
-    <message>
-        <source>Clone entry</source>
-        <translation>Клонировать запись</translation>
-    </message>
-    <message>
-        <source>Find</source>
-        <translation>Найти</translation>
     </message>
     <message>
         <source>Copy username to clipboard</source>
@@ -1028,30 +1097,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <message>
         <source>Settings</source>
         <translation>Настройки</translation>
-    </message>
-    <message>
-        <source>Perform Auto-Type</source>
-        <translation>Произвести автоввод</translation>
-    </message>
-    <message>
-        <source>Open URL</source>
-        <translation>Открыть URL</translation>
-    </message>
-    <message>
-        <source>Lock databases</source>
-        <translation>Заблокировать хранилище</translation>
-    </message>
-    <message>
-        <source>Title</source>
-        <translation>Заголовок</translation>
-    </message>
-    <message>
-        <source>URL</source>
-        <translation>URL</translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>Примечания</translation>
     </message>
     <message>
         <source>Show toolbar</source>
@@ -1070,24 +1115,8 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation>Инструменты</translation>
     </message>
     <message>
-        <source>Copy username</source>
-        <translation>Скопировать имя пользователя</translation>
-    </message>
-    <message>
-        <source>Copy password</source>
-        <translation>Скопировать пароль</translation>
-    </message>
-    <message>
-        <source>Export to CSV file</source>
-        <translation>Экспортировать в файл CSV</translation>
-    </message>
-    <message>
-        <source>Repair database</source>
-        <translation>Восстановление хранилища</translation>
-    </message>
-    <message>
         <source>KeePass 2 Database</source>
-        <translation type="unfinished"/>
+        <translation>Хранилище KeePass 2</translation>
     </message>
     <message>
         <source>All files</source>
@@ -1103,7 +1132,265 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось записать хранилище.</translation>
+    </message>
+    <message>
+        <source>&amp;Recent databases</source>
+        <translation>Недавние хранилища</translation>
+    </message>
+    <message>
+        <source>He&amp;lp</source>
+        <translation>Помощь</translation>
+    </message>
+    <message>
+        <source>E&amp;ntries</source>
+        <translation>&amp;Записи</translation>
+    </message>
+    <message>
+        <source>Copy att&amp;ribute to clipboard</source>
+        <translation>Скопировать атрибут в буфер обмена</translation>
+    </message>
+    <message>
+        <source>&amp;Groups</source>
+        <translation>Группы</translation>
+    </message>
+    <message>
+        <source>&amp;View</source>
+        <translation>Вид</translation>
+    </message>
+    <message>
+        <source>&amp;Quit</source>
+        <translation>Выход</translation>
+    </message>
+    <message>
+        <source>&amp;About</source>
+        <translation>О программе</translation>
+    </message>
+    <message>
+        <source>&amp;Open database</source>
+        <translation>Открыть хранилище</translation>
+    </message>
+    <message>
+        <source>&amp;Save database</source>
+        <translation>Сохранить хранилище</translation>
+    </message>
+    <message>
+        <source>&amp;Close database</source>
+        <translation>Закрыть хранилище</translation>
+    </message>
+    <message>
+        <source>&amp;New database</source>
+        <translation>Новое хранилище</translation>
+    </message>
+    <message>
+        <source>Merge from KeePassX database</source>
+        <translation>Объединить из хранилища KeePassX</translation>
+    </message>
+    <message>
+        <source>&amp;Add new entry</source>
+        <translation>Добавить новую запись</translation>
+    </message>
+    <message>
+        <source>&amp;View/Edit entry</source>
+        <translation>Посмотреть/редактировать запись</translation>
+    </message>
+    <message>
+        <source>&amp;Delete entry</source>
+        <translation>Удалить запись</translation>
+    </message>
+    <message>
+        <source>&amp;Add new group</source>
+        <translation>Добавить новую группу</translation>
+    </message>
+    <message>
+        <source>&amp;Edit group</source>
+        <translation>Редактировать группу</translation>
+    </message>
+    <message>
+        <source>&amp;Delete group</source>
+        <translation>Удалить группу</translation>
+    </message>
+    <message>
+        <source>Sa&amp;ve database as</source>
+        <translation>Сохранить хранилище как</translation>
+    </message>
+    <message>
+        <source>Change &amp;master key</source>
+        <translation>Изменить мастер-пароль</translation>
+    </message>
+    <message>
+        <source>&amp;Database settings</source>
+        <translation>Параметры хранилища</translation>
+    </message>
+    <message>
+        <source>&amp;Import KeePass 1 database</source>
+        <translation>Импортировать хранилище KeePass 1</translation>
+    </message>
+    <message>
+        <source>&amp;Clone entry</source>
+        <translation>Клонировать запись</translation>
+    </message>
+    <message>
+        <source>&amp;Find</source>
+        <translation>Найти</translation>
+    </message>
+    <message>
+        <source>Copy &amp;username</source>
+        <translation>Скопировать имя пользователя</translation>
+    </message>
+    <message>
+        <source>Cop&amp;y password</source>
+        <translation>Скопировать пароль</translation>
+    </message>
+    <message>
+        <source>&amp;Settings</source>
+        <translation>Настройки</translation>
+    </message>
+    <message>
+        <source>&amp;Perform Auto-Type</source>
+        <translation>Произвести автоввод</translation>
+    </message>
+    <message>
+        <source>&amp;Open URL</source>
+        <translation>Открыть URL</translation>
+    </message>
+    <message>
+        <source>&amp;Lock databases</source>
+        <translation>Заблокировать хранилище</translation>
+    </message>
+    <message>
+        <source>&amp;Title</source>
+        <translation>Заголовок</translation>
+    </message>
+    <message>
+        <source>&amp;URL</source>
+        <translation>URL</translation>
+    </message>
+    <message>
+        <source>&amp;Notes</source>
+        <translation>Примечания</translation>
+    </message>
+    <message>
+        <source>&amp;Export to CSV file</source>
+        <translation>Экспортировать в файл CSV</translation>
+    </message>
+    <message>
+        <source>Re&amp;pair database</source>
+        <translation>Восстановление хранилища</translation>
+    </message>
+    <message>
+        <source>Password Generator</source>
+        <translation>Генератор паролей</translation>
+    </message>
+</context>
+<context>
+    <name>OptionDialog</name>
+    <message>
+        <source>Dialog</source>
+        <translation>Диалог</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>Общие</translation>
+    </message>
+    <message>
+        <source>Sh&amp;ow a notification when credentials are requested</source>
+        <translation>Показывать уведомление при запросе данных для входа</translation>
+    </message>
+    <message>
+        <source>&amp;Return only best matching entries for an URL instead
+of all entries for the whole domain</source>
+        <translation>Возвращать только наиболее совпавшие с URL записи, а не все записи для домена</translation>
+    </message>
+    <message>
+        <source>&amp;Match URL schemes
+Only entries with the same scheme (http://, https://, ftp://, ...) are returned</source>
+        <translation>Совпадение со схемой URL
+Возвращать только записи с соответствующей схемой (http://, https://, ftp://, ...) </translation>
+    </message>
+    <message>
+        <source>Sort matching entries by &amp;username</source>
+        <translation>Сортировать совпавшие записи по &amp;имени пользователя</translation>
+    </message>
+    <message>
+        <source>R&amp;emove all shared encryption-keys from active database</source>
+        <translation>Удалить все общие ключи шифрования из активного хранилища</translation>
+    </message>
+    <message>
+        <source>Re&amp;move all stored permissions from entries in active database</source>
+        <translation>Удалить все сохраненные права доступа из активного хранилища </translation>
+    </message>
+    <message>
+        <source>Password generator</source>
+        <translation>Генератор паролей</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>Расширенные</translation>
+    </message>
+    <message>
+        <source>Activate the following only, if you know what you are doing!</source>
+        <translation>Включайте эти настройки только если знаете что делаете!</translation>
+    </message>
+    <message>
+        <source>Always allow &amp;access to entries</source>
+        <translation>Всегда разрешать доступ к записям</translation>
+    </message>
+    <message>
+        <source>Always allow &amp;updating entries</source>
+        <translation>Всегда разрешать обновление записей</translation>
+    </message>
+    <message>
+        <source>Searc&amp;h in all opened databases for matching entries</source>
+        <translation>Искать соответствующие записи по всем открытым хранилищам</translation>
+    </message>
+    <message>
+        <source>Only the selected database has to be connected with a client!</source>
+        <translation>Только выбранное хранилище должно быть соединено с клиентом!</translation>
+    </message>
+    <message>
+        <source>&amp;Return also advanced string fields which start with &quot;KPH: &quot;</source>
+        <translation>Возвращать дополнительные строковые поля, начинающиеся с  &quot;KPH: &quot;</translation>
+    </message>
+    <message>
+        <source>Automatic creates or updates are not supported for string fields!</source>
+        <translation>Автоматическое создание или обновление не поддерживается строковыми полями!</translation>
+    </message>
+    <message>
+        <source>HTTP Port:</source>
+        <translation>Порт HTTP:</translation>
+    </message>
+    <message>
+        <source>Default port: 19455</source>
+        <translation>Порт по умолчанию: 19455</translation>
+    </message>
+    <message>
+        <source>Re&amp;quest to unlock the database if it is locked</source>
+        <translation>Запрашивать разблокировку хранилища, если оно заблокировано</translation>
+    </message>
+    <message>
+        <source>Sort &amp;matching entries by title</source>
+        <translation>Сортировать совпавшие записи по названию</translation>
+    </message>
+    <message>
+        <source>Enable KeepassXC HTTP protocol
+This is required for accessing your databases from ChromeIPass or PassIFox</source>
+        <translation>Включить протокол KeepassXC HTTP
+Это требуется для доступа к хранилищам из ChromeIPass или PassIFox</translation>
+    </message>
+    <message>
+        <source>KeePassXC will listen to this port on 127.0.0.1</source>
+        <translation>KeePassXC будет слушать указнный порт на 127.0.0.1</translation>
+    </message>
+    <message>
+        <source>Cannot bind to privileged ports</source>
+        <translation>Не удается выполнить привязку к привилегированным портам</translation>
+    </message>
+    <message>
+        <source>Cannot bind to privileged ports below 1024!
+Using default port 19455.</source>
+        <translation>Не удается привязать к привилегированные порты ниже 1024!
+Используется порт по умолчанию 19455.</translation>
     </message>
 </context>
 <context>
@@ -1111,10 +1398,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <message>
         <source>Password:</source>
         <translation>Пароль:</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation>Длина:</translation>
     </message>
     <message>
         <source>Character Types</source>
@@ -1141,70 +1424,71 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation>Исключить похожие символы</translation>
     </message>
     <message>
-        <source>Ensure that the password contains characters from every group</source>
-        <translation>Убедитесь, что пароль содержит символы всех видов</translation>
-    </message>
-    <message>
         <source>Accept</source>
         <translation>Принять</translation>
     </message>
+    <message>
+        <source>%p%</source>
+        <translation>%p%</translation>
+    </message>
+    <message>
+        <source>strength</source>
+        <translation>надёжность</translation>
+    </message>
+    <message>
+        <source>entropy</source>
+        <translation>энтропия</translation>
+    </message>
+    <message>
+        <source>&amp;Length:</source>
+        <translation>Длина:</translation>
+    </message>
+    <message>
+        <source>Pick characters from every group</source>
+        <translation>Выберете символы из каждой группы</translation>
+    </message>
+    <message>
+        <source>Generate</source>
+        <translation>Генерировать</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Закрыть</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation>Применить</translation>
+    </message>
+    <message>
+        <source>Entropy: %1 bit</source>
+        <translation>Энтропия: %1 бит</translation>
+    </message>
+    <message>
+        <source>Password Quality: %1</source>
+        <translation>Качество пароля: %1</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <translation>Плохой</translation>
+    </message>
+    <message>
+        <source>Weak</source>
+        <translation>Слабый</translation>
+    </message>
+    <message>
+        <source>Good</source>
+        <translation>Хороший</translation>
+    </message>
+    <message>
+        <source>Excellent</source>
+        <translation>Отличный</translation>
+    </message>
 </context>
 <context>
-    <name>QCommandLineParser</name>
+    <name>QObject</name>
     <message>
-        <source>Displays version information.</source>
-        <translation>Показывает информацию о версии.</translation>
-    </message>
-    <message>
-        <source>Displays this help.</source>
-        <translation>Показывает эту справку.</translation>
-    </message>
-    <message>
-        <source>Unknown option &apos;%1&apos;.</source>
-        <translation>Неизвестная опция «%1».</translation>
-    </message>
-    <message>
-        <source>Unknown options: %1.</source>
-        <translation>Неизвестные опции %1.</translation>
-    </message>
-    <message>
-        <source>Missing value after &apos;%1&apos;.</source>
-        <translation>Пропущено значение после «%1».</translation>
-    </message>
-    <message>
-        <source>Unexpected value after &apos;%1&apos;.</source>
-        <translation>Непредвиденное значение после «%1».</translation>
-    </message>
-    <message>
-        <source>[options]</source>
-        <translation>[опции]</translation>
-    </message>
-    <message>
-        <source>Usage: %1</source>
-        <translation>Использование: %1</translation>
-    </message>
-    <message>
-        <source>Options:</source>
-        <translation>Опции:</translation>
-    </message>
-    <message>
-        <source>Arguments:</source>
-        <translation>Аргументы:</translation>
-    </message>
-</context>
-<context>
-    <name>QSaveFile</name>
-    <message>
-        <source>Existing file %1 is not writable</source>
-        <translation>Существующий файл %1 непригоден для записи</translation>
-    </message>
-    <message>
-        <source>Writing canceled by application</source>
-        <translation>Запись отменена приложением</translation>
-    </message>
-    <message>
-        <source>Partial write. Partition full?</source>
-        <translation>Частичная запись. Раздел переполнен?</translation>
+        <source>Http</source>
+        <translation>Http</translation>
     </message>
 </context>
 <context>
@@ -1244,20 +1528,110 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
 <context>
     <name>SearchWidget</name>
     <message>
-        <source>Find:</source>
-        <translation>Найти:</translation>
-    </message>
-    <message>
-        <source>Case sensitive</source>
+        <source>Case Sensitive</source>
         <translation>Чувствительно к регистру</translation>
     </message>
     <message>
-        <source>Current group</source>
-        <translation>Текущая группа</translation>
+        <source>Search</source>
+        <translation>Поиск</translation>
     </message>
     <message>
-        <source>Root group</source>
-        <translation>Корневая группа</translation>
+        <source>Find</source>
+        <translation>Найти</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>Очистить</translation>
+    </message>
+</context>
+<context>
+    <name>Service</name>
+    <message>
+        <source>A shared encryption-key with the name &quot;%1&quot; already exists.
+Do you want to overwrite it?</source>
+        <translation>Общий ключ шифрования с именем &quot;%1&quot; уже существует.
+Вы хотите его перезаписать?</translation>
+    </message>
+    <message>
+        <source>Do you want to update the information in %1 - %2?</source>
+        <translation>Вы хотите обновить информацию в %1 - %2?</translation>
+    </message>
+    <message>
+        <source>The active database is locked!
+Please unlock the selected database or choose another one which is unlocked.</source>
+        <translation>Активное хранилище заблокировано!
+Разблокируйте выбранное хранилище или выберите другое, незаблокированное.</translation>
+    </message>
+    <message>
+        <source>Successfully removed %1 encryption-%2 from KeePassX/Http Settings.</source>
+        <translation>Успешно удалено %1 шифрование-%2 из настроек  KeePassXC/Http.</translation>
+    </message>
+    <message>
+        <source>No shared encryption-keys found in KeePassHttp Settings.</source>
+        <translation>Не найдено общих ключей шифрования в настройках KeePassHttp.</translation>
+    </message>
+    <message>
+        <source>The active database does not contain an entry of KeePassHttp Settings.</source>
+        <translation>Активное хранилизе не содержит записей настроек KeePassHttp.</translation>
+    </message>
+    <message>
+        <source>Removing stored permissions...</source>
+        <translation>Удаляются сохранённые права доступа...</translation>
+    </message>
+    <message>
+        <source>Abort</source>
+        <translation>Отмена</translation>
+    </message>
+    <message>
+        <source>Successfully removed permissions from %1 %2.</source>
+        <translation>Права доступа из %1 %2 успешно удалены.</translation>
+    </message>
+    <message>
+        <source>The active database does not contain an entry with permissions.</source>
+        <translation>Активное хранилище не содержит записей с назначенными правами доступа.</translation>
+    </message>
+    <message>
+        <source>KeePassXC: New key association request</source>
+        <translation>KeePassXC: Запрос на ассоциацию нового ключа</translation>
+    </message>
+    <message>
+        <source>You have received an association request for the above key.
+If you would like to allow it access to your KeePassXC database
+give it a unique name to identify and accept it.</source>
+        <translation>Вы получили запрос на ассоциацию указанного ключа.
+Если вы хотите разрешить доступ к вашему хранилищу KeePassXC, дайте ему уникальное имя и примите запрос.</translation>
+    </message>
+    <message>
+        <source>KeePassXC: Overwrite existing key?</source>
+        <translation>KeePassXC: Перезаписать существующий ключ?</translation>
+    </message>
+    <message>
+        <source>KeePassXC: Update Entry</source>
+        <translation>KeePassXC: Обновить запись</translation>
+    </message>
+    <message>
+        <source>KeePassXC: Database locked!</source>
+        <translation>KeePassXC: Хранилище заблокировано!</translation>
+    </message>
+    <message>
+        <source>KeePassXC: Removed keys from database</source>
+        <translation>KeePassXC: Ключи удалены из хранилища</translation>
+    </message>
+    <message>
+        <source>KeePassXC: No keys found</source>
+        <translation>KeePassXC: Ключи не найдены</translation>
+    </message>
+    <message>
+        <source>KeePassXC: Settings not available!</source>
+        <translation>KeePassXC% Настройки недоступны!</translation>
+    </message>
+    <message>
+        <source>KeePassXC: Removed permissions</source>
+        <translation>KeePassXC: Права доступа удалены</translation>
+    </message>
+    <message>
+        <source>KeePassXC: No entry with permissions found!</source>
+        <translation>KeePassXC: Не найдено записей с назначенными правами доступа!</translation>
     </message>
 </context>
 <context>
@@ -1280,10 +1654,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <message>
         <source>Remember last databases</source>
         <translation>Помнить последнее хранилище</translation>
-    </message>
-    <message>
-        <source>Open previous databases on startup</source>
-        <translation>Открывать предыдущее хранилище при запуске</translation>
     </message>
     <message>
         <source>Automatically save on exit</source>
@@ -1326,12 +1696,20 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation>Запоминать последние файл-ключи</translation>
     </message>
     <message>
-        <source>Hide window to system tray instead of App Exit</source>
-        <translation type="unfinished"/>
+        <source>Load previous databases on startup</source>
+        <translation>Открывать предыдущие хранилища при запуске</translation>
     </message>
     <message>
-        <source>Hide window to system tray on App start</source>
-        <translation type="unfinished"/>
+        <source>Automatically reload the database when modified externally</source>
+        <translation>Автоматически перечитывать хранилище при его изменении внешними приложениями </translation>
+    </message>
+    <message>
+        <source>Hide window to system tray instead of app exit</source>
+        <translation>Прятать окно в системный лоток вместо выхода</translation>
+    </message>
+    <message>
+        <source>Minimize window at application startup</source>
+        <translation>Сворачивать окно при запуске приложения</translation>
     </message>
 </context>
 <context>
@@ -1356,6 +1734,14 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <source>Always ask before performing auto-type</source>
         <translation>Всегда спрашивать перед тем, как производить автоввод</translation>
     </message>
+    <message>
+        <source>Lock databases after minimizing the window</source>
+        <translation>Заблокировать хранилище при сворачивании окна</translation>
+    </message>
+    <message>
+        <source>Don&apos;t require password repeat when it is visible</source>
+        <translation>Не требовать поворный ввод пароля когда он показывается</translation>
+    </message>
 </context>
 <context>
     <name>UnlockDatabaseWidget</name>
@@ -1374,20 +1760,24 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
 <context>
     <name>main</name>
     <message>
-        <source>KeePassX - cross-platform password manager</source>
-        <translation>KeePassX — кросс-платформенный менеджер паролей</translation>
-    </message>
-    <message>
-        <source>filename of the password database to open (*.kdbx)</source>
-        <translation>имя файла открываемого хранилища паролей (*.kdbx)</translation>
-    </message>
-    <message>
         <source>path to a custom config file</source>
         <translation>путь к своему файлу настроек</translation>
     </message>
     <message>
         <source>key file of the database</source>
         <translation>файл-ключ хранилища</translation>
+    </message>
+    <message>
+        <source>filename(s) of the password database(s) to open (*.kdbx)</source>
+        <translation>имена(имя) файлов хранилищ(а) для открытия (*.kdbx)</translation>
+    </message>
+    <message>
+        <source>KeePassXC - cross-platform password manager</source>
+        <translation>KeePassXC — кросс-платформенный менеджер паролей</translation>
+    </message>
+    <message>
+        <source>read password of the database from stdin</source>
+        <translation>читать пароли хранилища из стандартного ввода &quot;stdin&quot;</translation>
     </message>
 </context>
 </TS>

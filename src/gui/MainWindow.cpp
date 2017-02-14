@@ -104,6 +104,7 @@ MainWindow::MainWindow()
     #endif
 
     setWindowIcon(filePath()->applicationIcon());
+    m_ui->globalMessageWidget->setHidden(true);
     QAction* toggleViewAction = m_ui->toolBar->toggleViewAction();
     toggleViewAction->setText(tr("Show toolbar"));
     m_ui->menuView->addAction(toggleViewAction);
@@ -137,13 +138,14 @@ MainWindow::MainWindow()
             this, SLOT(lockDatabasesAfterInactivity()));
     applySettingsChanges();
 
+    setShortcut(m_ui->actionDatabaseNew, QKeySequence::New, Qt::CTRL + Qt::Key_N);
     setShortcut(m_ui->actionDatabaseOpen, QKeySequence::Open, Qt::CTRL + Qt::Key_O);
     setShortcut(m_ui->actionDatabaseSave, QKeySequence::Save, Qt::CTRL + Qt::Key_S);
     setShortcut(m_ui->actionDatabaseSaveAs, QKeySequence::SaveAs);
     setShortcut(m_ui->actionDatabaseClose, QKeySequence::Close, Qt::CTRL + Qt::Key_W);
     m_ui->actionLockDatabases->setShortcut(Qt::CTRL + Qt::Key_L);
     setShortcut(m_ui->actionQuit, QKeySequence::Quit, Qt::CTRL + Qt::Key_Q);
-    m_ui->actionEntryNew->setShortcut(Qt::CTRL + Qt::Key_N);
+    m_ui->actionEntryNew->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_N);
     m_ui->actionEntryEdit->setShortcut(Qt::CTRL + Qt::Key_E);
     m_ui->actionEntryDelete->setShortcut(Qt::CTRL + Qt::Key_D);
     m_ui->actionEntryClone->setShortcut(Qt::CTRL + Qt::Key_K);
@@ -275,7 +277,17 @@ MainWindow::MainWindow()
     connect(m_ui->actionPasswordGenerator, SIGNAL(toggled(bool)), SLOT(switchToPasswordGen(bool)));
     connect(m_ui->passwordGeneratorWidget, SIGNAL(dialogTerminated()), SLOT(closePasswordGen()));
 
+    connect(m_ui->welcomeWidget, SIGNAL(newDatabase()), SLOT(switchToNewDatabase()));
+    connect(m_ui->welcomeWidget, SIGNAL(openDatabase()), SLOT(switchToOpenDatabase()));
+    connect(m_ui->welcomeWidget, SIGNAL(openDatabaseFile(QString)), SLOT(switchToDatabaseFile(QString)));
+    connect(m_ui->welcomeWidget, SIGNAL(importKeePass1Database()), SLOT(switchToKeePass1Database()));
+
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
+
+    connect(m_ui->tabWidget, SIGNAL(messageGlobal(QString,MessageWidget::MessageType)), this, SLOT(displayGlobalMessage(QString, MessageWidget::MessageType)));
+    connect(m_ui->tabWidget, SIGNAL(messageDismissGlobal()), this, SLOT(hideGlobalMessage()));
+    connect(m_ui->tabWidget, SIGNAL(messageTab(QString,MessageWidget::MessageType)), this, SLOT(displayTabMessage(QString, MessageWidget::MessageType)));
+    connect(m_ui->tabWidget, SIGNAL(messageDismissTab()), this, SLOT(hideTabMessage()));
 
     updateTrayIcon();
 }
@@ -364,7 +376,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             bool groupSelected = dbWidget->isGroupSelected();
 
             m_ui->actionEntryNew->setEnabled(!inSearch);
-            m_ui->actionEntryClone->setEnabled(singleEntrySelected && !inSearch);
+            m_ui->actionEntryClone->setEnabled(singleEntrySelected);
             m_ui->actionEntryEdit->setEnabled(singleEntrySelected);
             m_ui->actionEntryDelete->setEnabled(entriesSelected);
             m_ui->actionEntryCopyTitle->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTitle());
@@ -528,6 +540,30 @@ void MainWindow::switchToPasswordGen(bool enabled)
 void MainWindow::closePasswordGen()
 {
     switchToPasswordGen(false);
+}
+
+void MainWindow::switchToNewDatabase()
+{
+    m_ui->tabWidget->newDatabase();
+    switchToDatabases();
+}
+
+void MainWindow::switchToOpenDatabase()
+{
+    m_ui->tabWidget->openDatabase();
+    switchToDatabases();
+}
+
+void MainWindow::switchToDatabaseFile(QString file)
+{
+    m_ui->tabWidget->openDatabase(file);
+    switchToDatabases();
+}
+
+void MainWindow::switchToKeePass1Database()
+{
+    m_ui->tabWidget->importKeePass1Database();
+    switchToDatabases();
 }
 
 void MainWindow::databaseStatusChanged(DatabaseWidget *)
@@ -755,7 +791,7 @@ void MainWindow::repairDatabase()
     if (fileName.isEmpty()) {
         return;
     }
-
+    
     QScopedPointer<QDialog> dialog(new QDialog(this));
     DatabaseRepairWidget* dbRepairWidget = new DatabaseRepairWidget(dialog.data());
     connect(dbRepairWidget, SIGNAL(success()), dialog.data(), SLOT(accept()));
@@ -770,8 +806,9 @@ void MainWindow::repairDatabase()
             KeePass2Writer writer;
             writer.writeDatabase(saveFileName, dbRepairWidget->database());
             if (writer.hasError()) {
-                QMessageBox::critical(this, tr("Error"),
-                    tr("Writing the database failed.").append("\n\n").append(writer.errorString()));
+                displayGlobalMessage(
+                    tr("Writing the database failed.").append("\n").append(writer.errorString()),
+                    MessageWidget::Error);
             }
         }
     }
@@ -787,3 +824,26 @@ bool MainWindow::isTrayIconEnabled() const
             && QSystemTrayIcon::isSystemTrayAvailable();
 #endif
 }
+
+void MainWindow::displayGlobalMessage(const QString& text, MessageWidget::MessageType type)
+{
+    m_ui->globalMessageWidget->showMessage(text, type);
+}
+
+void MainWindow::displayTabMessage(const QString& text, MessageWidget::MessageType type)
+{
+    m_ui->tabWidget->currentDatabaseWidget()->showMessage(text, type);
+}
+
+void MainWindow::hideGlobalMessage()
+{
+    m_ui->globalMessageWidget->hideMessage();
+}
+
+void MainWindow::hideTabMessage()
+{
+    if (m_ui->stackedWidget->currentIndex() == 0) {
+        m_ui->tabWidget->currentDatabaseWidget()->hideMessage();
+    }
+}
+

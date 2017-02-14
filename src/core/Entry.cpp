@@ -353,6 +353,12 @@ void Entry::setTitle(const QString& title)
 
 void Entry::setUrl(const QString& url)
 {
+    bool remove = url != m_attributes->value(EntryAttributes::URLKey) &&
+                  (m_attributes->value(EntryAttributes::RememberCmdExecAttr) == "1" ||
+                   m_attributes->value(EntryAttributes::RememberCmdExecAttr) == "0");
+    if (remove) {
+        m_attributes->remove(EntryAttributes::RememberCmdExecAttr);
+    }
     m_attributes->set(EntryAttributes::URLKey, url, m_attributes->isProtected(EntryAttributes::URLKey));
 }
 
@@ -508,7 +514,8 @@ Entry* Entry::clone(CloneFlags flags) const
         entry->m_data.timeInfo.setLocationChanged(now);
     }
 
-
+    if (flags & CloneRenameTitle)
+        entry->setTitle(entry->title() + tr(" - Clone"));
 
     return entry;
 }
@@ -639,12 +646,17 @@ QString Entry::resolvePlaceholder(const QString& str) const
     const QList<QString> keyList = attributes()->keys();
     for (const QString& key : keyList) {
         Qt::CaseSensitivity cs = Qt::CaseInsensitive;
+        QString k = key;
+
         if (!EntryAttributes::isDefaultAttribute(key)) {
             cs = Qt::CaseSensitive;
+            k.prepend("{S:");
+        } else {
+            k.prepend("{");
         }
 
-        QString k = key;
-        k.prepend("{").append("}");
+        
+        k.append("}");
         if (result.compare(k,cs)==0) {
             result.replace(result,attributes()->value(key));
             break;

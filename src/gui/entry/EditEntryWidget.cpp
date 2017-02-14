@@ -77,6 +77,9 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
 
     connect(this, SIGNAL(accepted()), SLOT(saveEntry()));
     connect(this, SIGNAL(rejected()), SLOT(cancel()));
+
+    connect(m_iconsWidget, SIGNAL(messageEditEntry(QString, MessageWidget::MessageType)), SLOT(showMessage(QString, MessageWidget::MessageType)));
+    connect(m_iconsWidget, SIGNAL(messageEditEntryDismiss()), SLOT(hideMessage()));
 }
 
 EditEntryWidget::~EditEntryWidget()
@@ -89,6 +92,7 @@ void EditEntryWidget::setupMain()
     add(tr("Entry"), m_mainWidget);
 
     m_mainUi->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
+    m_mainUi->togglePasswordGeneratorButton->setIcon(filePath()->icon("actions", "password-generator", false));
     connect(m_mainUi->togglePasswordButton, SIGNAL(toggled(bool)), m_mainUi->passwordEdit, SLOT(setShowPassword(bool)));
     connect(m_mainUi->togglePasswordGeneratorButton, SIGNAL(toggled(bool)), SLOT(togglePasswordGeneratorButton(bool)));
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
@@ -271,14 +275,15 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const Q
     m_history = history;
 
     if (history) {
-        setHeadline(QString("%1 > %2").arg(parentName, tr("Entry history")));
+        setHeadline(QString("%1 > %2").arg(parentName.toHtmlEscaped(), tr("Entry history")));
     }
     else {
         if (create) {
-            setHeadline(QString("%1 > %2").arg(parentName, tr("Add entry")));
+            setHeadline(QString("%1 > %2").arg(parentName.toHtmlEscaped(), tr("Add entry")));
         }
         else {
-            setHeadline(QString("%1 > %2 > %3").arg(parentName, entry->title(), tr("Edit entry")));
+            setHeadline(QString("%1 > %2 > %3").arg(parentName.toHtmlEscaped(),
+                                                    entry->title().toHtmlEscaped(), tr("Edit entry")));
         }
     }
 
@@ -393,12 +398,13 @@ void EditEntryWidget::saveEntry()
 {
     if (m_history) {
         clear();
+        hideMessage();
         Q_EMIT editFinished(false);
         return;
     }
 
     if (!passwordsEqual()) {
-        MessageBox::warning(this, tr("Error"), tr("Different passwords supplied."));
+        showMessage(tr("Different passwords supplied."), MessageWidget::Error);
         return;
     }
 
@@ -433,6 +439,9 @@ void EditEntryWidget::saveEntry()
 
 void EditEntryWidget::updateEntryData(Entry* entry) const
 {
+    entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
+    entry->attachments()->copyDataFrom(m_entryAttachments);
+    
     entry->setTitle(m_mainUi->titleEdit->text());
     entry->setUsername(m_mainUi->usernameEdit->text());
     entry->setUrl(m_mainUi->urlEdit->text());
@@ -441,9 +450,6 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
     entry->setExpiryTime(m_mainUi->expireDatePicker->dateTime().toUTC());
 
     entry->setNotes(m_mainUi->notesEdit->toPlainText());
-
-    entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
-    entry->attachments()->copyDataFrom(m_entryAttachments);
 
     IconStruct iconStruct = m_iconsWidget->state();
 
@@ -472,6 +478,7 @@ void EditEntryWidget::cancel()
 {
     if (m_history) {
         clear();
+        hideMessage();
         Q_EMIT editFinished(false);
         return;
     }
@@ -495,6 +502,7 @@ void EditEntryWidget::clear()
     m_autoTypeAssoc->clear();
     m_historyModel->clear();
     m_iconsWidget->reset();
+    hideMessage();
 }
 
 bool EditEntryWidget::hasBeenModified() const
@@ -628,15 +636,13 @@ void EditEntryWidget::insertAttachment()
 
     QFile file(filename);
     if (!file.open(QIODevice::ReadOnly)) {
-        MessageBox::warning(this, tr("Error"),
-                tr("Unable to open file").append(":\n").append(file.errorString()));
+        showMessage(tr("Unable to open file").append(":\n").append(file.errorString()), MessageWidget::Error);
         return;
     }
 
     QByteArray data;
     if (!Tools::readAllFromDevice(&file, data)) {
-        MessageBox::warning(this, tr("Error"),
-                tr("Unable to open file").append(":\n").append(file.errorString()));
+        showMessage(tr("Unable to open file").append(":\n").append(file.errorString()), MessageWidget::Error);
         return;
     }
 
@@ -663,13 +669,11 @@ void EditEntryWidget::saveCurrentAttachment()
 
         QFile file(savePath);
         if (!file.open(QIODevice::WriteOnly)) {
-            MessageBox::warning(this, tr("Error"),
-                    tr("Unable to save the attachment:\n").append(file.errorString()));
+            showMessage(tr("Unable to save the attachment:\n").append(file.errorString()), MessageWidget::Error);
             return;
         }
         if (file.write(attachmentData) != attachmentData.size()) {
-            MessageBox::warning(this, tr("Error"),
-                    tr("Unable to save the attachment:\n").append(file.errorString()));
+            showMessage(tr("Unable to save the attachment:\n").append(file.errorString()), MessageWidget::Error);
             return;
         }
     }
@@ -690,20 +694,17 @@ void EditEntryWidget::openAttachment(const QModelIndex& index)
     QTemporaryFile* file = new QTemporaryFile(tmpFileTemplate, this);
 
     if (!file->open()) {
-        MessageBox::warning(this, tr("Error"),
-                tr("Unable to save the attachment:\n").append(file->errorString()));
+        showMessage(tr("Unable to save the attachment:\n").append(file->errorString()), MessageWidget::Error);
         return;
     }
 
     if (file->write(attachmentData) != attachmentData.size()) {
-        MessageBox::warning(this, tr("Error"),
-                tr("Unable to save the attachment:\n").append(file->errorString()));
+        showMessage(tr("Unable to save the attachment:\n").append(file->errorString()), MessageWidget::Error);
         return;
     }
 
     if (!file->flush()) {
-        MessageBox::warning(this, tr("Error"),
-                tr("Unable to save the attachment:\n").append(file->errorString()));
+        showMessage(tr("Unable to save the attachment:\n").append(file->errorString()), MessageWidget::Error);
         return;
     }
 

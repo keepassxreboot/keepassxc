@@ -23,12 +23,14 @@
 
 #include "format/KeePass2Writer.h"
 #include "gui/DatabaseWidget.h"
+#include "gui/MessageWidget.h"
 
 class DatabaseWidget;
 class DatabaseWidgetStateSync;
 class DatabaseOpenWidget;
 class QFile;
 class QLockFile;
+class MessageWidget;
 
 struct DatabaseManagerStruct
 {
@@ -84,6 +86,10 @@ Q_SIGNALS:
     void activateDatabaseChanged(DatabaseWidget* dbWidget);
     void databaseLocked(DatabaseWidget* dbWidget);
     void databaseUnlocked(DatabaseWidget* dbWidget);
+    void messageGlobal(const QString&, MessageWidget::MessageType type);
+    void messageTab(const QString&, MessageWidget::MessageType type);
+    void messageDismissGlobal();
+    void messageDismissTab();
 
 private Q_SLOTS:
     void updateTabName(Database* db);

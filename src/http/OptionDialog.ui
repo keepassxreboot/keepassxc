@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>605</width>
-    <height>389</height>
+    <height>429</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <item>
     <widget class="QCheckBox" name="enableHttpServer">
      <property name="text">
-      <string>Enable KeepassXC Http protocol
+      <string>Enable KeepassXC HTTP protocol
 This is required for accessing your databases from ChromeIPass or PassIFox</string>
      </property>
     </widget>
@@ -28,7 +28,7 @@ This is required for accessing your databases from ChromeIPass or PassIFox</stri
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -201,32 +201,41 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_1">
-         <item>
-          <widget class="QLabel" name="label_5">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>HTTP Host:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="httpHost">
-           <property name="placeholderText">
-            <string>Default host: localhost</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <spacer name="verticalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <item>
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="httpPort">
+           <property name="inputMask">
+            <string notr="true">d0000</string>
+           </property>
+           <property name="placeholderText">
+            <string>Default port: 19455</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>KeePassXC will listen to this port on 127.0.0.1</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
           <widget class="QLabel" name="label_4">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -237,15 +246,8 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
            <property name="text">
             <string>HTTP Port:</string>
            </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="httpPort">
-           <property name="inputMask">
-            <string notr="true">d0000</string>
-           </property>
-           <property name="placeholderText">
-            <string>Default port: 19455</string>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
            </property>
           </widget>
          </item>

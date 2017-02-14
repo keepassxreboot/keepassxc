@@ -34,6 +34,8 @@ ChangeMasterKeyWidget::ChangeMasterKeyWidget(QWidget* parent)
 {
     m_ui->setupUi(this);
 
+    m_ui->messageWidget->setHidden(true);
+
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(generateKey()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
     m_ui->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
@@ -60,7 +62,7 @@ void ChangeMasterKeyWidget::createKeyFile()
         QString errorMsg;
         bool created = FileKey::create(fileName, &errorMsg);
         if (!created) {
-            MessageBox::warning(this, tr("Error"), tr("Unable to create Key File : ") + errorMsg);
+            m_ui->messageWidget->showMessage(tr("Unable to create Key File : ").append(errorMsg), MessageWidget::Error);
         }
         else {
             m_ui->keyFileCombo->setEditText(fileName);
@@ -125,7 +127,7 @@ void ChangeMasterKeyWidget::generateKey()
             m_key.addKey(PasswordKey(m_ui->enterPasswordEdit->text()));
         }
         else {
-            MessageBox::warning(this, tr("Error"), tr("Different passwords supplied."));
+            m_ui->messageWidget->showMessage(tr("Different passwords supplied."), MessageWidget::Error);
             m_ui->enterPasswordEdit->setText("");
             m_ui->repeatPasswordEdit->setText("");
             return;
@@ -134,10 +136,10 @@ void ChangeMasterKeyWidget::generateKey()
     if (m_ui->keyFileGroup->isChecked()) {
         FileKey fileKey;
         QString errorMsg;
-        if (!fileKey.load(m_ui->keyFileCombo->currentText(), &errorMsg)) {
-            MessageBox::critical(this, tr("Failed to set key file"),
-                                 tr("Failed to set %1 as the Key file:\n%2")
-                                 .arg(m_ui->keyFileCombo->currentText(), errorMsg));
+        QString fileKeyName = m_ui->keyFileCombo->currentText();
+        if (!fileKey.load(fileKeyName, &errorMsg)) {
+            m_ui->messageWidget->showMessage(
+               tr("Failed to set %1 as the Key file:\n%2").arg(fileKeyName, errorMsg), MessageWidget::Error);
             return;
         }
         m_key.addKey(fileKey);
@@ -151,6 +153,7 @@ void ChangeMasterKeyWidget::generateKey()
         m_key.addChallengeResponseKey(key);
     }
 
+    m_ui->messageWidget->hideMessage();
     Q_EMIT editFinished(true);
 }
 

@@ -1,10 +1,11 @@
 name: keepassxc
-version: develop
+version: 2.1.0
+grade: stable
 summary: community driven port of the windows application “Keepass Password Safe”
 description: |
-  KeePassXC is an application for people with extremly high demands on secure
+  KeePassXC is an application for people with extremely high demands on secure
   personal data management. It has a light interface, is cross platform and
-  published under the terms of the GNU General Public License.
+  is published under the terms of the GNU General Public License.
 confinement: strict
 
 apps:
@@ -19,10 +20,10 @@ parts:
     configflags:
       - -DCMAKE_BUILD_TYPE=Release
       - -DWITH_TESTS=OFF
+      - -DWITH_XC_AUTOTYPE=ON
     build-packages:
       - g++
       - libgcrypt20-dev
-      - libmicrohttpd-dev
       - libqt5x11extras5-dev
       - qtbase5-dev
       - qttools5-dev

@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -14,6 +17,9 @@
    <string notr="true">KeePassXC</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <property name="leftMargin">
      <number>0</number>
@@ -28,7 +34,23 @@
      <number>0</number>
     </property>
     <item>
+     <widget class="MessageWidget" name="globalMessageWidget" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QStackedWidget" name="stackedWidget">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="currentIndex">
        <number>2</number>
       </property>
@@ -83,7 +105,45 @@
       <widget class="QWidget" name="pageWelcome">
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
-         <widget class="WelcomeWidget" name="welcomeWidget" native="true"/>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::MinimumExpanding</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>50</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="WelcomeWidget" name="welcomeWidget" native="true">
+            <zorder>horizontalSpacer_2</zorder>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::MinimumExpanding</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>50</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -104,7 +164,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>26</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -155,15 +215,15 @@
      <addaction name="actionEntryCopyNotes"/>
      <addaction name="separator"/>
     </widget>
-    <addaction name="actionEntryNew"/>
-    <addaction name="actionEntryClone"/>
-    <addaction name="actionEntryEdit"/>
-    <addaction name="actionEntryDelete"/>
     <addaction name="actionEntryCopyUsername"/>
     <addaction name="actionEntryCopyPassword"/>
     <addaction name="menuEntryCopyAttribute"/>
     <addaction name="actionEntryAutoType"/>
     <addaction name="actionEntryOpenUrl"/>
+    <addaction name="actionEntryEdit"/>
+    <addaction name="actionEntryClone"/>
+    <addaction name="actionEntryDelete"/>
+    <addaction name="actionEntryNew"/>
    </widget>
    <widget class="QMenu" name="menuGroups">
     <property name="title">
@@ -203,6 +263,7 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionDatabaseNew"/>
    <addaction name="actionDatabaseOpen"/>
    <addaction name="actionDatabaseSave"/>
    <addaction name="separator"/>
@@ -254,9 +315,9 @@
    </property>
   </action>
   <action name="actionDatabaseMerge">
-    <property name="text">
-      <string>Merge from KeePassX database</string>
-    </property>
+   <property name="text">
+    <string>Merge from KeePassX database</string>
+   </property>
   </action>
   <action name="actionEntryNew">
    <property name="enabled">
@@ -452,6 +513,12 @@
   </action>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>MessageWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/MessageWidget.h</header>
+   <container>1</container>
+  </customwidget>
   <customwidget>
    <class>DatabaseTabWidget</class>
    <extends>QTabWidget</extends>
