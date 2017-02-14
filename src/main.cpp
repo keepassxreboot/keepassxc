@@ -101,9 +101,12 @@ int main(int argc, char** argv)
     QObject::connect(&app, SIGNAL(openFile(QString)), &mainWindow, SLOT(openDatabase(QString)));
     
     // start minimized if configured
-    if (config()->get("GUI/MinimizeOnStartup").toBool()) {
+    bool minimizeOnStartup = config()->get("GUI/MinimizeOnStartup").toBool();
+    bool minimizeToTray    = config()->get("GUI/MinimizeToTray").toBool();
+    if (minimizeOnStartup) {
         mainWindow.setWindowState(Qt::WindowMinimized);
-    } else {
+    }
+    if (!(minimizeOnStartup && minimizeToTray)) {
         mainWindow.show();
     }
     
