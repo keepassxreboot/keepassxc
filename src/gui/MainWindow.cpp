@@ -745,7 +745,8 @@ void MainWindow::toggleWindow()
         // re-register global D-Bus menu (needed on Ubuntu with Unity)
         // see https://github.com/keepassxreboot/keepassxc/issues/271
         // and https://bugreports.qt.io/browse/QTBUG-58723
-        if (m_ui->menubar->isNativeMenuBar()) {
+        // check for !isVisible(), because isNativeMenuBar() does not work with appmenu-qt5
+        if (!m_ui->menubar->isVisible()) {
             QDBusMessage msg = QDBusMessage::createMethodCall(
                 "com.canonical.AppMenu.Registrar",
                 "/com/canonical/AppMenu/Registrar",
