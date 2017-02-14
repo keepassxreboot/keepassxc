@@ -27,11 +27,8 @@
 #include <QTextStream>
 
 #include "core/Database.h"
-#include "crypto/Crypto.h"
 #include "format/KeePass2Reader.h"
 #include "keys/CompositeKey.h"
-#include "keys/FileKey.h"
-#include "keys/PasswordKey.h"
 
 int Extract::execute(int argc, char **argv)
 {
