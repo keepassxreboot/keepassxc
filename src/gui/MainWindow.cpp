@@ -736,11 +736,9 @@ void MainWindow::toggleWindow()
     } else {
         ensurePolished();
         setWindowState(windowState() & ~Qt::WindowMinimized);
-        QTimer::singleShot(0, this, [this]() {
-            show();
-            raise();
-            activateWindow();
-        });
+        show();
+        raise();
+        activateWindow();
         
 #if defined(Q_OS_LINUX) && ! defined(QT_NO_DBUS)
         // re-register global D-Bus menu (needed on Ubuntu with Unity)
