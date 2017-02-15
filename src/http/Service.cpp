@@ -14,7 +14,6 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QProgressDialog>
-#include <QDebug>
 
 #include "Service.h"
 #include "Protocol.h"
