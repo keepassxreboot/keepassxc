@@ -150,23 +150,8 @@ add_feature_info(KeePassHTTP WITH_XC_HTTP "KeePassHTTP support for ChromeIPass a
 add_feature_info(Autotype WITH_XC_AUTOTYPE "Auto-type passwords in Input fields")
 
 if(WITH_XC_HTTP)
-  set(keepasshttp_SOURCES
-      http/AccessControlDialog.cpp
-      http/EntryConfig.cpp
-      http/HttpPasswordGeneratorWidget.cpp
-      http/HttpSettings.cpp
-      http/OptionDialog.cpp
-      http/Protocol.cpp
-      http/Server.cpp
-      http/Service.cpp
-  )
-  set(keepasshttp_FORMS
-      http/AccessControlDialog.ui
-      http/HttpPasswordGeneratorWidget.ui
-      http/OptionDialog.ui
-  )
-  set(keepasshttp_LIB keepasshttp)
-  qt5_wrap_ui(keepasshttp_SOURCES ${keepasshttp_FORMS})
+    add_subdirectory(http)
+    set(keepasshttp_LIB keepasshttp)
 endif()
 
 add_subdirectory(autotype)
@@ -194,15 +179,6 @@ qt5_wrap_ui(keepassx_SOURCES ${keepassx_FORMS})
 
 add_library(zxcvbn STATIC zxcvbn/zxcvbn.cpp)
 target_link_libraries(zxcvbn)
-
-if(WITH_XC_HTTP)
-  add_library(keepasshttp STATIC ${keepasshttp_SOURCES})
-  target_link_libraries(keepasshttp ${MHD_LIBRARIES}
-                        Qt5::Core
-                        Qt5::Concurrent
-                        Qt5::Widgets 
-                        Qt5::Network)
-endif()
 
 add_library(autotype STATIC ${autotype_SOURCES})
 target_link_libraries(autotype Qt5::Core Qt5::Widgets)
