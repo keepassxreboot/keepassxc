@@ -179,10 +179,6 @@ find_package(LibGPGError REQUIRED)
 
 find_package(Gcrypt 1.6.0 REQUIRED)
 
-if (WITH_XC_HTTP)
-    find_package(LibMicroHTTPD REQUIRED)
-endif(WITH_XC_HTTP)
-
 find_package(ZLIB REQUIRED)
 
 check_cxx_source_compiles("
