@@ -49,6 +49,9 @@ public:
 
         if ( bend == ETcpSocket ) {
             initTcpSocket(sokDesc);
+        
+        } else if ( bend == ESslSocket) {
+            initSslSocket(sokDesc);
 
         } else if ( bend == ELocalSocket ) {
             initLocalSocket(sokDesc);
@@ -129,6 +132,29 @@ private:
                 q_func(), &QHttpConnection::disconnected,
                 Qt::QueuedConnection
                 );
+    }
+    
+    void initSslSocket(qintptr sokDesc) {
+        QSslSocket* sok    = new QSslSocket( q_func() );
+        isocket.itcpSocket = sok;
+        sok->setSocketDescriptor(sokDesc);
+        
+        QObject::connect(
+            sok,  &QSslSocket::readyRead,
+            [this](){ onReadyRead(); }
+        );
+        QObject::connect(
+            sok,  &QSslSocket::bytesWritten,
+            [this](){
+                auto btw = isocket.itcpSocket->bytesToWrite();
+                if ( btw == 0  &&  ilastResponse )
+                    emit ilastResponse->allBytesWritten();
+            });
+        QObject::connect(
+            sok,      &QSslSocket::disconnected,
+            q_func(), &QHttpConnection::disconnected,
+                         Qt::QueuedConnection
+        );
     }
 
     void initLocalSocket(qintptr sokDesc) {

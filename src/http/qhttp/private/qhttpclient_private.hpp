@@ -78,6 +78,9 @@ public:
         if ( isocket.ibackendType == ETcpSocket ) {
             initTcpSocket();
 
+        } else if ( isocket.ibackendType == ESslSocket ) {
+            initSslSocket();
+
         } else if ( isocket.ibackendType == ELocalSocket ) {
             initLocalSocket();
         }
@@ -86,7 +89,7 @@ public:
 public:
     int  messageBegin(http_parser* parser);
     int  url(http_parser*, const char*, size_t) {
-        return 0; // not used in parsing incoming respone.
+        return 0; // not used in parsing incoming response.
     }
     int  status(http_parser* parser, const char* at, size_t length) ;
     int  headerField(http_parser* parser, const char* at, size_t length);
@@ -112,7 +115,7 @@ protected:
         while ( isocket.bytesAvailable() > 0 ) {
             char buffer[4097] = {0};
             size_t readLength = (size_t) isocket.readRaw(buffer, 4096);
-
+            
             parse(buffer, readLength);
         }
     }
@@ -150,6 +153,31 @@ private:
                 sok,      &QTcpSocket::disconnected,
                 q_func(), &QHttpClient::disconnected
                 );
+    }
+
+    void initSslSocket() {
+        QSslSocket* sok    =  new QSslSocket(q_func());
+        isocket.itcpSocket = sok;
+        
+        QObject::connect(
+            sok,  &QSslSocket::encrypted,
+            [this](){ onConnected(); }
+        );
+        QObject::connect(
+            sok,  &QSslSocket::readyRead,
+            [this](){ onReadyRead(); }
+        );
+        QObject::connect(
+            sok,  &QSslSocket::bytesWritten,
+            [this](qint64){
+                const auto& ts = isocket.itcpSocket;
+                if ( ts->bytesToWrite() == 0  &&  ilastRequest )
+                    emit ilastRequest->allBytesWritten();
+            });
+        QObject::connect(
+            sok,      &QSslSocket::disconnected,
+            q_func(), &QHttpClient::disconnected
+        );
     }
 
     void initLocalSocket() {

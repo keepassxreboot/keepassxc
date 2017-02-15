@@ -147,7 +147,7 @@ QHttpConnectionPrivate::headersComplete(http_parser* parser) {
                 );
 
     // set client information
-    if ( isocket.ibackendType == ETcpSocket ) {
+    if ( isocket.ibackendType == ETcpSocket || isocket.ibackendType == ESslSocket ) {
         ilastRequest->d_func()->iremoteAddress = isocket.itcpSocket->peerAddress().toString();
         ilastRequest->d_func()->iremotePort    = isocket.itcpSocket->peerPort();
 

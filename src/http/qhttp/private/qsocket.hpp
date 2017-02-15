@@ -13,6 +13,7 @@
 #include "qhttpfwd.hpp"
 
 #include <QTcpSocket>
+#include <QSslSocket>
 #include <QLocalSocket>
 #include <QUrl>
 ///////////////////////////////////////////////////////////////////////////////
@@ -73,8 +74,12 @@ public:
     }
 
     void connectTo(const QString& host, quint16 port) {
-        if ( itcpSocket )
-            itcpSocket->connectToHost(host, port);
+        if ( itcpSocket ) {
+            if ( ibackendType == ESslSocket )
+                static_cast<QSslSocket*>(itcpSocket)->connectToHostEncrypted(host, port);
+            else
+                itcpSocket->connectToHost(host, port);
+        }
     }
 
     qint64 readRaw(char* buffer, int maxlen) {
@@ -88,8 +93,9 @@ public:
     }
 
     void writeRaw(const QByteArray& data) {
-        if ( itcpSocket )
+        if ( itcpSocket ) {
             itcpSocket->write(data);
+        }
 
         else if ( ilocalSocket )
             ilocalSocket->write(data);

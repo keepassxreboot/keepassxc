@@ -151,7 +151,7 @@ enum TStatusCode {
 /** The backend of QHttp library. */
 enum TBackend {
     ETcpSocket     = 0, ///< client / server work on top of TCP/IP stack. (default)
-    ESslSocket     = 1, ///< client / server work on SSL/TLS tcp stack. (not implemented yet)
+    ESslSocket     = 1, ///< client / server work on SSL/TLS tcp stack.
     ELocalSocket   = 2  ///< client / server work on local socket (unix socket).
 };
 

@@ -127,7 +127,9 @@ QHttpClient::request(THttpMethod method, QUrl url,
             d->isocket.connectTo(url);
 
     } else {
-        d->isocket.ibackendType = ETcpSocket;
+        bool ssl = url.scheme() == "https";
+
+        d->isocket.ibackendType = ssl ? ESslSocket : ETcpSocket;
         d->initializeSocket();
 
         requestCreator();
@@ -135,7 +137,7 @@ QHttpClient::request(THttpMethod method, QUrl url,
         if ( d->isocket.isOpen() )
             d->onConnected();
         else
-            d->isocket.connectTo(url.host(), url.port(80));
+            d->isocket.connectTo(url.host(), url.port(ssl ? 443 : 80));
     }
 
     return true;
