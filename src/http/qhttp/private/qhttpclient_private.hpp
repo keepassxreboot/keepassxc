@@ -62,15 +62,13 @@ public:
     }
 
     void initializeSocket() {
-        if ( isocket.isOpen() ) {
-            // no need to reconnect. do nothing and simply return
-            if ( ikeepAlive )
-                return;
+        // no need to reconnect. do nothing and simply return
+        if ( ikeepAlive )
+            return;
 
-            // close previous connection now!
-            // instead being called by emitted disconnected signal
-            release();
-        }
+        // close previous connection now!
+        // instead being called by emitted disconnected signal
+        release();
 
         ikeepAlive = false;
 
