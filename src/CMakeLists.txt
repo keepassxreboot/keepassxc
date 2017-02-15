@@ -149,8 +149,8 @@ set(keepassx_FORMS
 add_feature_info(KeePassHTTP WITH_XC_HTTP "KeePassHTTP support for ChromeIPass and PassIFox")
 add_feature_info(Autotype WITH_XC_AUTOTYPE "Auto-type passwords in Input fields")
 
+add_subdirectory(http)
 if(WITH_XC_HTTP)
-    add_subdirectory(http)
     set(keepasshttp_LIB keepasshttp)
 endif()
 
@@ -186,20 +186,13 @@ target_link_libraries(autotype Qt5::Core Qt5::Widgets)
 set(autotype_LIB autotype)
 
 add_library(keepassx_core STATIC ${keepassx_SOURCES})
-set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
-target_link_libraries(keepassx_core zxcvbn ${keepasshttp_LIB} ${autotype_LIB}
-                      Qt5::Core
-                      Qt5::Concurrent
-                      Qt5::Widgets
-                      Qt5::Network)
-if (UNIX AND NOT APPLE)
-    target_link_libraries(keepassx_core Qt5::DBus)
-endif()
 
-add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE ${keepassx_SOURCES_MAINEXE})
-target_link_libraries(${PROGNAME}
-                      keepassx_core
+set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
+target_link_libraries(keepassx_core
+                      ${keepasshttp_LIB}
+                      ${autotype_LIB}
                       zxcvbn
+                      qhttp
                       Qt5::Core
                       Qt5::Concurrent
                       Qt5::Widgets
@@ -207,7 +200,12 @@ target_link_libraries(${PROGNAME}
                       ${GCRYPT_LIBRARIES}
                       ${GPGERROR_LIBRARIES}
                       ${ZLIB_LIBRARIES})
+if (UNIX AND NOT APPLE)
+    target_link_libraries(keepassx_core Qt5::DBus)
+endif()
 
+add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE ${keepassx_SOURCES_MAINEXE})
+target_link_libraries(${PROGNAME} keepassx_core)
 
 set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
 
