@@ -93,9 +93,8 @@ public:
     }
 
     void writeRaw(const QByteArray& data) {
-        if ( itcpSocket ) {
+        if ( itcpSocket )
             itcpSocket->write(data);
-        }
 
         else if ( ilocalSocket )
             ilocalSocket->write(data);
