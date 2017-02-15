@@ -70,7 +70,7 @@ public:
     void        initialize(TBackend backend, QHttpServer* parent) {
         ibackend = backend;
 
-        if ( ibackend == ETcpSocket ) {
+        if ( ibackend == ETcpSocket || ibackend == ESslSocket ) {
             itcpServer.reset( new BackendServer<QTcpServer>(parent) );
             ilocalServer.reset( nullptr );
 

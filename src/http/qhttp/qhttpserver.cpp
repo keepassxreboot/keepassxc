@@ -35,7 +35,7 @@ bool
 QHttpServer::listen(const QHostAddress& address, quint16 port, const qhttp::server::TServerHandler& handler) {
     Q_D(QHttpServer);
 
-    d->initialize(ETcpSocket, this);
+    d->initialize(d->ibackend, this);
     d->ihandler = handler;
     return d->itcpServer->listen(address, port);
 }
@@ -44,10 +44,10 @@ bool
 QHttpServer::isListening() const {
     const Q_D(QHttpServer);
 
-    if ( d->ibackend == ETcpSocket    &&    d->itcpServer )
+    if ( ( d->ibackend == ETcpSocket || d->ibackend == ESslSocket ) && d->itcpServer )
         return d->itcpServer->isListening();
 
-    else if ( d->ibackend == ELocalSocket    &&    d->ilocalServer )
+    else if ( d->ibackend == ELocalSocket && d->ilocalServer )
         return d->ilocalServer->isListening();
 
     return false;
