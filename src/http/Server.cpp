@@ -178,7 +178,8 @@ void Server::handleRequest(const QByteArray& data, QHttpResponse* response)
     }
 
     response->setStatusCode(qhttp::ESTATUS_OK);
-    response->write(out.toUtf8());
+    response->addHeader("Content-Type", "application/json");
+    response->end(out.toUtf8());
 }
 
 void Server::start(void)
@@ -194,6 +195,8 @@ void Server::start(void)
     m_server = new QHttpServer(this);
     m_server->listen(address, port);
     connect(m_server, SIGNAL(newRequest(QHttpRequest*, QHttpResponse*)), this, SLOT(onNewRequest(QHttpRequest*, QHttpResponse*)));
+
+    m_started = true;
 }
 
 void Server::stop(void)
@@ -211,6 +214,7 @@ void Server::onNewRequest(QHttpRequest* request, QHttpResponse* response)
     if (!isDatabaseOpened()) {
         if (!openDatabase()) {
             response->setStatusCode(qhttp::ESTATUS_SERVICE_UNAVAILABLE);
+            response->end();
             return;
         }
     }
