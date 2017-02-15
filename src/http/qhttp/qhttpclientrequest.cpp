@@ -82,12 +82,11 @@ void
 QHttpRequestPrivate::prepareHeadersToWrite() {
 
     if ( !iheaders.contains("host") ) {
-        quint16 port = iurl.port();
-        if ( port == 0 )
-            port = 80;
-
+        QString portStr = ( -1 != iurl.port() ) ?
+                          QString(":%1").arg(iurl.port()) : "";
+        
         iheaders.insert("host",
-                        QString("%1:%2").arg(iurl.host()).arg(port).toLatin1()
+                        QString("%1%2").arg(iurl.host()).arg(portStr).toLatin1()
                         );
     }
 }
