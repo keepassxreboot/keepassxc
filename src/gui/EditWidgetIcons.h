@@ -20,9 +20,7 @@
 
 #include <QWidget>
 #include <QSet>
-
-#include <QtNetwork/QNetworkAccessManager>
-#include <QtNetwork/QNetworkReply>
+#include <QUrl>
 
 #include "core/Global.h"
 #include "core/Uuid.h"
@@ -31,6 +29,11 @@ class Database;
 class DefaultIconModel;
 class CustomIconModel;
 
+namespace qhttp {
+    namespace client {
+        class QHttpClient;
+    }
+}
 namespace Ui {
     class EditWidgetIcons;
 }
@@ -53,17 +56,16 @@ public:
 
     IconStruct state();
     void reset();
-    void load(Uuid currentUuid, Database* database, IconStruct iconStruct, const QString &url = QString());
+    void load(const Uuid& currentUuid, Database* database, const IconStruct& iconStruct, const QString& url = "");
 
 public Q_SLOTS:
-    void setUrl(const QString &url);
+    void setUrl(const QString& url);
 
 private Q_SLOTS:
     void downloadFavicon();
-    void fetchFavicon(QUrl url);
-    void fetchFaviconFromGoogle(QString domain);
-    void abortFaviconDownload(bool clearRedirect = true);
-    void onRequestFinished(QNetworkReply *reply);
+    void fetchFavicon(const QUrl& url);
+    void fetchFaviconFromGoogle(const QString& domain);
+    void resetFaviconDownload(bool clearRedirect = true);
     void addCustomIcon();
     void removeCustomIcon();
     void updateWidgetsDefaultIcons(bool checked);
@@ -81,8 +83,7 @@ private:
     unsigned short m_redirectCount = 0;
     DefaultIconModel* const m_defaultIconModel;
     CustomIconModel* const m_customIconModel;
-    QNetworkAccessManager* const m_networkAccessMngr;
-    QNetworkReply* m_networkOperation;
+    qhttp::client::QHttpClient* m_httpClient;
 
     Q_DISABLE_COPY(EditWidgetIcons)
 };
