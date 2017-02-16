@@ -47,10 +47,10 @@ int main(int argc, char **argv)
 
     QString description("KeePassXC command line interface.");
     description = description.append(QString("\n\nAvailable commands:"));
-    description = description.append(QString("\n  extract\tExtract and print a KeePassXC database file."));
+    description = description.append(QString("\n  extract\tExtract and print the content of a database."));
     description = description.append(QString("\n  entropy-meter\tCalculate password entropy."));
     description = description.append(QString("\n  list\t\tList database entries."));
-    description = description.append(QString("\n  merge\t\tMerge 2 KeePassXC database files."));
+    description = description.append(QString("\n  merge\t\tMerge two databases."));
     parser.setApplicationDescription(QCoreApplication::translate("main", qPrintable(description)));
 
     parser.addPositionalArgument("command", QCoreApplication::translate("main", "Name of the command to execute."));

@@ -63,7 +63,7 @@ int List::execute(int argc, char **argv)
 
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::translate("main",
-                                                                 "List the passwords in the database."));
+                                                                 "List database entries."));
     parser.addPositionalArgument("database", QCoreApplication::translate("main", "path of the database."));
     parser.process(app);
 

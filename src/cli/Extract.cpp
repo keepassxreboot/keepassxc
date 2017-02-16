@@ -36,7 +36,7 @@ int Extract::execute(int argc, char **argv)
 
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::translate("main",
-                                                                 "Extract and print a KeePassXC database file."));
+                                                                 "Extract and print the content of a database."));
     parser.addPositionalArgument("database", QCoreApplication::translate("main", "path of the database to extract."));
     parser.process(app);
 

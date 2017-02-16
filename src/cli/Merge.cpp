@@ -37,7 +37,7 @@ int Merge::execute(int argc, char** argv)
     QCoreApplication app(argc, argv);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main", "Merge 2 KeePassXC database files."));
+    parser.setApplicationDescription(QCoreApplication::translate("main", "Merge two databases."));
     parser.addPositionalArgument("database1", QCoreApplication::translate("main", "path of the database to merge into."));
     parser.addPositionalArgument("database2", QCoreApplication::translate("main", "path of the database to merge from."));
 
