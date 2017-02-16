@@ -44,7 +44,15 @@ int main(int argc, char **argv)
     app.setApplicationVersion(KEEPASSX_VERSION);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main", "KeePassXC command line interface."));
+
+    QString description("KeePassXC command line interface.");
+    description = description.append(QString("\n\nAvailable commands:"));
+    description = description.append(QString("\n  extract\tExtract and print a KeePassXC database file."));
+    description = description.append(QString("\n  entropy-meter\tCalculate password entropy."));
+    description = description.append(QString("\n  list\t\tList database entries."));
+    description = description.append(QString("\n  merge\t\tMerge 2 KeePassXC database files."));
+    parser.setApplicationDescription(QCoreApplication::translate("main", qPrintable(description)));
+
     parser.addPositionalArgument("command", QCoreApplication::translate("main", "Name of the command to execute."));
 
     parser.addHelpOption();
