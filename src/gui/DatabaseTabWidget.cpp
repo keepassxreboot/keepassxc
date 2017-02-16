@@ -100,7 +100,7 @@ void DatabaseTabWidget::newDatabase()
         return;
     }
 
-    dbStruct.dbWidget->switchToMasterKeyChange();
+    dbStruct.dbWidget->switchToMasterKeyChange(true);
 }
 
 void DatabaseTabWidget::openDatabase()
