@@ -74,23 +74,23 @@ int main(int argc, char **argv)
     --argc;
 
     if (commandName == "list") {
-      argv[0] = const_cast<char*>("keepassxc-cli list");
-      return List::execute(argc, argv);
+        argv[0] = const_cast<char*>("keepassxc-cli list");
+        return List::execute(argc, argv);
     }
 
     if (commandName == "merge") {
-      argv[0] = const_cast<char*>("keepassxc-cli merge");
-      return Merge::execute(argc, argv);
+        argv[0] = const_cast<char*>("keepassxc-cli merge");
+        return Merge::execute(argc, argv);
     }
 
     if (commandName == "extract") {
-      argv[0] = const_cast<char*>("keepassxc-cli extract");
-      return Extract::execute(argc, argv);
+        argv[0] = const_cast<char*>("keepassxc-cli extract");
+        return Extract::execute(argc, argv);
     }
 
     if (commandName == "entropy-meter") {
-      argv[0] = const_cast<char*>("keepassxc-cli entropy-meter");
-      return EntropyMeter::execute(argc, argv);
+        argv[0] = const_cast<char*>("keepassxc-cli entropy-meter");
+        return EntropyMeter::execute(argc, argv);
     }
 
     qCritical("Invalid command %s.", qPrintable(commandName));
