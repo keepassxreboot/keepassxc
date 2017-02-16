@@ -60,6 +60,7 @@ void printGroup(Group* group, QString baseName, int depth) {
 int List::execute(int argc, char **argv)
 {
     QCoreApplication app(argc, argv);
+    QTextStream out(stdout);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::translate("main",
@@ -72,6 +73,9 @@ int List::execute(int argc, char **argv)
         parser.showHelp();
         return EXIT_FAILURE;
     }
+
+    out << "Insert the database password\n> ";
+    out.flush();
 
     static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
     QString line = inputTextStream.readLine();

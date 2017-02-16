@@ -35,6 +35,7 @@ int Merge::execute(int argc, char** argv)
 {
 
     QCoreApplication app(argc, argv);
+    QTextStream out(stdout);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::translate("main", "Merge two databases."));
@@ -53,8 +54,10 @@ int Merge::execute(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
+    out << "Insert the database password\n> ";
+    out.flush();
+    
     static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
-
     QString line1 = inputTextStream.readLine();
     CompositeKey key1 = CompositeKey::readFromLine(line1);
 
@@ -128,7 +131,7 @@ int Merge::execute(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    qDebug("Successfully merged the database files.\n");
+    out << "Successfully merged the database files.\n";
     return EXIT_SUCCESS;
 
 }
