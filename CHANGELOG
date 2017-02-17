@@ -1,3 +1,18 @@
+2.1.2 (2017-02-17)
+=========================
+
+- Ask for save location when creating a new database [#302]
+- Remove Libmicrohttpd dependency to clean up the code and ensure better OS X compatibility [#317, #265]
+- Prevent Qt from degrading Wifi network performance on certain platforms [#318]
+- Visually refine user interface on OS X and other platforms [#299]
+- Remove unusable tray icon setting on OS X [#293]
+- Fix compositing glitches on Ubuntu and prevent flashing when minimizing to the tray at startup [#307]
+- Fix AppImage tray icon on Ubuntu [#277, #273]
+- Fix global menu disappearing after restoring KeePassXC from the tray on Ubuntu [#276]
+- Fix result order in entry search [#320]
+- Enable HiDPI scaling on supported platforms [#315]
+- Remove empty directories from installation target [#282]
+
 2.1.1 (2017-02-06)
 =========================
 
