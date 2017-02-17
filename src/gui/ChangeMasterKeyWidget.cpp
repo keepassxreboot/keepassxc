@@ -139,3 +139,8 @@ void ChangeMasterKeyWidget::reject()
 {
     Q_EMIT editFinished(false);
 }
+
+void ChangeMasterKeyWidget::setCancelEnabled(bool enabled)
+{
+    m_ui->buttonBox->button(QDialogButtonBox::Cancel)->setEnabled(enabled);
+}

@@ -7,10 +7,22 @@
     <x>0</x>
     <y>0</y>
     <width>567</width>
-    <height>347</height>
+    <height>348</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QCheckBox" name="enableButton">
      <property name="text">
@@ -37,14 +49,14 @@
    <item>
     <widget class="QRadioButton" name="inheritSequenceButton">
      <property name="text">
-      <string>Inherit default Auto-Type sequence from the group</string>
+      <string>Inherit default Auto-Type sequence from the &amp;group</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QRadioButton" name="customSequenceButton">
      <property name="text">
-      <string>Use custom Auto-Type sequence:</string>
+      <string>&amp;Use custom Auto-Type sequence:</string>
      </property>
     </widget>
    </item>
@@ -90,39 +102,7 @@
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <item>
-          <widget class="QPushButton" name="assocAddButton">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>+</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="assocRemoveButton">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>-</string>
-           </property>
-          </widget>
-         </item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="2,1,1">
          <item>
           <spacer name="horizontalSpacer_3">
            <property name="orientation">
@@ -135,6 +115,50 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item>
+          <widget class="QToolButton" name="assocAddButton">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>+</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="assocRemoveButton">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>-</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -171,14 +195,14 @@
        <item>
         <widget class="QRadioButton" name="defaultWindowSequenceButton">
          <property name="text">
-          <string>Use default sequence</string>
+          <string>Use default se&amp;quence</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QRadioButton" name="customWindowSequenceButton">
          <property name="text">
-          <string>Set custom sequence:</string>
+          <string>Set custo&amp;m sequence:</string>
          </property>
         </widget>
        </item>

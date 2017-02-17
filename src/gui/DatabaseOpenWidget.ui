@@ -10,7 +10,7 @@
     <height>250</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0,0,1,0,0,3">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0,1,0,0,3">
    <property name="spacing">
     <number>8</number>
    </property>
@@ -31,14 +31,24 @@
     </spacer>
    </item>
    <item>
-    <widget class="QLabel" name="labelHeadline">
-     <property name="text">
-      <string>Enter master key</string>
+    <layout class="QVBoxLayout" name="labelLayout">
+     <property name="leftMargin">
+      <number>5</number>
      </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="labelFilename"/>
+     <property name="rightMargin">
+      <number>5</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="labelHeadline">
+       <property name="text">
+        <string>Enter master key</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelFilename"/>
+     </item>
+    </layout>
    </item>
    <item>
     <spacer name="verticalSpacer_3">
@@ -55,17 +65,20 @@
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout">
+     <property name="leftMargin">
+      <number>5</number>
+     </property>
      <property name="verticalSpacing">
       <number>8</number>
      </property>
-     <item row="1" column="0">
+     <item row="1" column="0" alignment="Qt::AlignVCenter">
       <widget class="QCheckBox" name="checkKeyFile">
        <property name="text">
         <string>Key File:</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
+     <item row="0" column="0" alignment="Qt::AlignVCenter">
       <widget class="QCheckBox" name="checkPassword">
        <property name="text">
         <string>Password:</string>
@@ -73,9 +86,18 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <layout class="QHBoxLayout" name="keyFileLayout">
+       <property name="leftMargin">
+        <number>5</number>
+       </property>
+       <property name="rightMargin">
+        <number>5</number>
+       </property>
        <item>
         <widget class="QComboBox" name="comboKeyFile">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -97,7 +119,13 @@
       </layout>
      </item>
      <item row="0" column="1">
-      <layout class="QHBoxLayout" name="horizontalLayout">
+      <layout class="QHBoxLayout" name="passwordLayout">
+       <property name="leftMargin">
+        <number>5</number>
+       </property>
+       <property name="rightMargin">
+        <number>5</number>
+       </property>
        <item>
         <widget class="PasswordEdit" name="editPassword">
          <property name="echoMode">
@@ -117,14 +145,21 @@
     </layout>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+    <layout class="QHBoxLayout" name="dialogButtonsLayout">
+     <property name="leftMargin">
+      <number>5</number>
      </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     <property name="rightMargin">
+      <number>5</number>
      </property>
-    </widget>
+     <item alignment="Qt::AlignRight">
+      <widget class="QDialogButtonBox" name="buttonBox">
+       <property name="standardButtons">
+        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
     <spacer name="verticalSpacer">
@@ -161,7 +196,6 @@
   <tabstop>checkKeyFile</tabstop>
   <tabstop>comboKeyFile</tabstop>
   <tabstop>buttonBrowseFile</tabstop>
-  <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources/>
  <connections/>
