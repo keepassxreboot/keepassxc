@@ -95,9 +95,11 @@ void EditEntryWidget::setupMain()
     m_mainUi->togglePasswordGeneratorButton->setIcon(filePath()->icon("actions", "password-generator", false));
     connect(m_mainUi->togglePasswordButton, SIGNAL(toggled(bool)), m_mainUi->passwordEdit, SLOT(setShowPassword(bool)));
     connect(m_mainUi->togglePasswordGeneratorButton, SIGNAL(toggled(bool)), SLOT(togglePasswordGeneratorButton(bool)));
+    connect(m_mainUi->togglePassphraseGeneratorButton, SIGNAL(toggled(bool)), SLOT(togglePassphraseGeneratorButton(bool)));
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
     m_mainUi->passwordRepeatEdit->enableVerifyMode(m_mainUi->passwordEdit);
     connect(m_mainUi->passwordGenerator, SIGNAL(appliedPassword(QString)), SLOT(setGeneratedPassword(QString)));
+    connect(m_mainUi->passphraseGenerator, SIGNAL(newPassword(QString)), SLOT(setGeneratedPassword(QString)));
 
     m_mainUi->expirePresets->setMenu(createPresetsMenu());
     connect(m_mainUi->expirePresets->menu(), SIGNAL(triggered(QAction*)), this, SLOT(useExpiryPreset(QAction*)));
@@ -109,6 +111,8 @@ void EditEntryWidget::setupMain()
 
     m_mainUi->passwordGenerator->hide();
     m_mainUi->passwordGenerator->reset();
+    m_mainUi->passphraseGenerator->hide();
+    m_mainUi->passphraseGenerator->reset();
 }
 
 void EditEntryWidget::setupAdvanced()
@@ -306,6 +310,8 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_mainUi->notesEdit->setReadOnly(m_history);
     m_mainUi->togglePasswordGeneratorButton->setChecked(false);
     m_mainUi->togglePasswordGeneratorButton->setDisabled(m_history);
+    m_mainUi->togglePassphraseGeneratorButton->setChecked(false);
+    m_mainUi->togglePassphraseGeneratorButton->setDisabled(m_history);
     m_mainUi->passwordGenerator->reset();
     m_advancedUi->addAttachmentButton->setEnabled(!m_history);
     updateAttachmentButtonsEnabled(m_advancedUi->attachmentsView->currentIndex());
@@ -521,10 +527,26 @@ bool EditEntryWidget::hasBeenModified() const
     return entry->endUpdate();
 }
 
+void EditEntryWidget::togglePassphraseGeneratorButton(bool checked)
+{
+    m_mainUi->passphraseGenerator->regeneratePassphrase();
+    m_mainUi->passphraseGenerator->setVisible(checked);
+
+    if(checked) {
+        m_mainUi->passwordGenerator->setVisible(false);
+        m_mainUi->togglePasswordGeneratorButton->setChecked(false);
+    }
+}
+
 void EditEntryWidget::togglePasswordGeneratorButton(bool checked)
 {
     m_mainUi->passwordGenerator->regeneratePassword();
     m_mainUi->passwordGenerator->setVisible(checked);
+
+    if(checked) {
+        m_mainUi->passphraseGenerator->setVisible(false);
+        m_mainUi->togglePassphraseGeneratorButton->setChecked(false);
+    }
 }
 
 bool EditEntryWidget::passwordsEqual()
