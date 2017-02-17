@@ -657,7 +657,9 @@ sign() {
         fi
         
         logInfo "Creating digest for file '${f}'..."
-        sha256sum "$f"  > "${f}.DIGEST"
+        local rp="$(realpath "$f")"
+        local bname="$(basename "$f")"
+        (cd "$(dirname "$rp")"; sha256sum "$bname"  > "${bname}.DIGEST")
     done
     
     logInfo "All done!"
