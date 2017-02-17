@@ -140,15 +140,21 @@ Entry* EntryView::entryFromIndex(const QModelIndex& index)
 void EntryView::switchToEntryListMode()
 {
     m_sortModel->hideColumn(0, false);
-    sortByColumn(1, Qt::AscendingOrder); // TODO: should probably be improved
+
+    m_sortModel->sort(1, Qt::AscendingOrder);
+    m_sortModel->sort(0, Qt::AscendingOrder);
     sortByColumn(0, Qt::AscendingOrder);
+
     m_inEntryListMode = true;
 }
 
 void EntryView::switchToGroupMode()
 {
     m_sortModel->hideColumn(0, true);
-    sortByColumn(-1, Qt::AscendingOrder);
+
+    m_sortModel->sort(-1, Qt::AscendingOrder);
+    m_sortModel->sort(0, Qt::AscendingOrder);
     sortByColumn(0, Qt::AscendingOrder);
+
     m_inEntryListMode = false;
 }
