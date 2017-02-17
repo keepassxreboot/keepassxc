@@ -16,12 +16,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>KeePassXC is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
+        <source>Extensions:
+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Extensions:
-</source>
+        <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -101,10 +101,6 @@ Please select whether you want to allow access.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Key file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Browse</source>
         <translation type="unfinished"></translation>
     </message>
@@ -155,6 +151,10 @@ Please select whether you want to allow access.</source>
     <message>
         <source>Failed to set %1 as the Key file:
 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Key file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -256,10 +256,6 @@ You can now save it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Use recycle bin:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source> MiB</source>
         <translation type="unfinished"></translation>
     </message>
@@ -273,6 +269,10 @@ You can now save it.</source>
     </message>
     <message>
         <source>Max. history size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use recycle bin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -400,6 +400,10 @@ Do you want to open it anyway? Alternatively the database is opened read-only.</
     <message>
         <source>The database you are trying to save as is locked by another instance of KeePassXC.
 Do you want to save it anyway?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Passwords</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -649,14 +653,6 @@ Do you want to save it anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Inherit default Auto-Type sequence from the group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Use custom Auto-Type sequence:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>+</source>
         <translation type="unfinished"></translation>
     </message>
@@ -669,11 +665,19 @@ Do you want to save it anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Use default sequence</source>
+        <source>Inherit default Auto-Type sequence from the &amp;group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Set custom sequence:</source>
+        <source>&amp;Use custom Auto-Type sequence:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use default se&amp;quence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set custo&amp;m sequence:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -800,14 +804,6 @@ Do you want to save it anyway?</source>
 <context>
     <name>EditWidgetIcons</name>
     <message>
-        <source>Use default icon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Use custom icon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Add custom icon</source>
         <translation type="unfinished"></translation>
     </message>
@@ -849,6 +845,14 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Can&apos;t delete icon. Still used by %1 items.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Use default icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use custo&amp;m icon</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -16,10 +16,18 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QList>
-#include <microhttpd.h>
 
+namespace qhttp {
+    namespace server {
+        class QHttpServer;
+        class QHttpRequest;
+        class QHttpResponse;
+    }
+}
 
 namespace KeepassHttpProtocol {
+
+using namespace qhttp::server;
 
 class Request;
 class Response;
@@ -31,7 +39,6 @@ class Server : public QObject
 public:
     explicit Server(QObject *parent = 0);
 
-    //TODO: use QByteArray?
     virtual bool isDatabaseOpened() const = 0;
     virtual bool openDatabase() = 0;
     virtual QString getDatabaseRootUuid() = 0;
@@ -45,18 +52,13 @@ public:
     virtual void updateEntry(const QString &id, const QString &uuid, const QString &login, const QString &password, const QString &url) = 0;
     virtual QString generatePassword() = 0;
 
-public Q_SLOTS:
+public slots:
     void start();
     void stop();
 
-private Q_SLOTS:
-    void handleRequest(const QByteArray in, QByteArray *out);
-    void handleOpenDatabase(bool *success);
-
-Q_SIGNALS:
-    void emitRequest(const QByteArray in, QByteArray *out);
-    void emitOpenDatabase(bool *success);
-    void donewrk();
+private slots:
+    void onNewRequest(QHttpRequest* request, QHttpResponse* response);
+    void handleRequest(const QByteArray& data, QHttpResponse* response);
 
 private:
     void testAssociate(const KeepassHttpProtocol::Request &r, KeepassHttpProtocol::Response *protocolResp);
@@ -67,25 +69,9 @@ private:
     void setLogin(const KeepassHttpProtocol::Request &r, KeepassHttpProtocol::Response *protocolResp);
     void generatePassword(const KeepassHttpProtocol::Request &r, KeepassHttpProtocol::Response *protocolResp);
 
-    static int request_handler_wrapper(void *me,
-        struct MHD_Connection *connection,
-        const char *url, const char *method, const char *version,
-        const char *upload_data, size_t *upload_data_size, void **con_cls);
-    static void request_completed(void *, struct MHD_Connection *,
-        void **con_cls, enum MHD_RequestTerminationCode);
-
-    int request_handler(struct MHD_Connection *connection,
-        const char *, const char *method, const char *,
-        const char *upload_data, size_t *upload_data_size, void **con_cls);
-    int send_response(struct MHD_Connection *connection, const char *page);
-    int send_unavailable(struct MHD_Connection *connection);
-
     bool m_started;
-    struct MHD_Daemon *daemon;
 
-    struct connection_info_struct {
-        char *response;
-    };
+    QHttpServer* m_server;
 };
 
 }   /*namespace KeepassHttpProtocol*/

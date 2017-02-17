@@ -77,6 +77,8 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
 
     connect(this, SIGNAL(accepted()), SLOT(saveEntry()));
     connect(this, SIGNAL(rejected()), SLOT(cancel()));
+    
+    m_mainUi->passwordGenerator->layout()->setContentsMargins(0, 0, 0, 0);
 }
 
 EditEntryWidget::~EditEntryWidget()

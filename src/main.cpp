@@ -18,6 +18,7 @@
 #include <QCommandLineParser>
 #include <QFile>
 #include <QTextStream>
+#include <QtGlobal>
 
 #include "config-keepassx.h"
 #include "core/Config.h"
@@ -44,7 +45,10 @@ int main(int argc, char** argv)
     Tools::disableCoreDumps();
 #endif
     Tools::setupSearchPaths();
-
+    
+#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+#endif
     Application app(argc, argv);
     Application::setApplicationName("keepassxc");
     Application::setApplicationVersion(KEEPASSX_VERSION);
@@ -97,13 +101,17 @@ int main(int argc, char** argv)
 
     MainWindow mainWindow;
     app.setMainWindow(&mainWindow);
-    mainWindow.show();
     
     QObject::connect(&app, SIGNAL(openFile(QString)), &mainWindow, SLOT(openDatabase(QString)));
     
     // start minimized if configured
-    if (config()->get("GUI/MinimizeOnStartup").toBool()) {
+    bool minimizeOnStartup = config()->get("GUI/MinimizeOnStartup").toBool();
+    bool minimizeToTray    = config()->get("GUI/MinimizeToTray").toBool();
+    if (minimizeOnStartup) {
         mainWindow.setWindowState(Qt::WindowMinimized);
+    }
+    if (!(minimizeOnStartup && minimizeToTray)) {
+        mainWindow.show();
     }
     
     for (int ii=0; ii < args.length(); ii++) {

@@ -28,7 +28,7 @@ This is required for accessing your databases from ChromeIPass or PassIFox</stri
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
