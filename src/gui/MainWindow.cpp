@@ -138,14 +138,14 @@ MainWindow::MainWindow()
             this, SLOT(lockDatabasesAfterInactivity()));
     applySettingsChanges();
 
-    setShortcut(m_ui->actionDatabaseNew, QKeySequence::New, Qt::CTRL + Qt::Key_N);
+    setShortcut(m_ui->actionDatabaseNew, QKeySequence::New, Qt::CTRL + Qt::SHIFT + Qt::Key_N);
     setShortcut(m_ui->actionDatabaseOpen, QKeySequence::Open, Qt::CTRL + Qt::Key_O);
     setShortcut(m_ui->actionDatabaseSave, QKeySequence::Save, Qt::CTRL + Qt::Key_S);
     setShortcut(m_ui->actionDatabaseSaveAs, QKeySequence::SaveAs);
     setShortcut(m_ui->actionDatabaseClose, QKeySequence::Close, Qt::CTRL + Qt::Key_W);
     m_ui->actionLockDatabases->setShortcut(Qt::CTRL + Qt::Key_L);
     setShortcut(m_ui->actionQuit, QKeySequence::Quit, Qt::CTRL + Qt::Key_Q);
-    m_ui->actionEntryNew->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_N);
+    m_ui->actionEntryNew->setShortcut(Qt::CTRL + Qt::Key_N);
     m_ui->actionEntryEdit->setShortcut(Qt::CTRL + Qt::Key_E);
     m_ui->actionEntryDelete->setShortcut(Qt::CTRL + Qt::Key_D);
     m_ui->actionEntryClone->setShortcut(Qt::CTRL + Qt::Key_K);
