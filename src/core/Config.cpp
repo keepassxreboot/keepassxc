@@ -75,7 +75,11 @@ Config::Config(QObject* parent)
     userPath += "/";
 #endif
 
+#ifdef QT_DEBUG
+    userPath += "keepassxc_debug.ini";
+#else
     userPath += "keepassxc.ini";
+#endif
 
     init(userPath);
 }
