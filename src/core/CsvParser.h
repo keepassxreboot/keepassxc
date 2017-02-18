@@ -23,8 +23,8 @@
 #include <QQueue>
 #include <QTextStream>
 
-typedef QStringList csvrow;
-typedef QList<csvrow> csvtable;
+typedef QStringList CsvRow;
+typedef QList<CsvRow> CsvTable;
 
 class CsvParser {
 
@@ -36,19 +36,19 @@ public:
     bool isFileLoaded();
     //reparse the same buffer (device is not opened again)
     bool reparse();
-    void setCodec(const QString s);
-    void setComment(const QChar c);
-    void setFieldSeparator(const QChar c);
-    void setTextQualifier(const QChar c);
+    void setCodec(const QString &s);
+    void setComment(const QChar &c);
+    void setFieldSeparator(const QChar &c);
+    void setTextQualifier(const QChar &c);
     void setBackslashSyntax(bool set);
-     int getFileSize() const;
-     int getCsvRows() const;
-     int getCsvCols() const;
+    int getFileSize() const;
+    int getCsvRows() const;
+    int getCsvCols() const;
     QString getStatus() const;
-    const csvtable getCsvTable() const;
+    const CsvTable getCsvTable() const;
 
 protected:
-    csvtable m_table;
+    CsvTable m_table;
 
 private:
     QByteArray   m_array;
@@ -72,22 +72,22 @@ private:
     void ungetChar();
     void peek(QChar &c);
     void fillColumns();
-    bool isTerminator(const QChar c) const;
-    bool isSeparator(const QChar c) const;
-    bool isQualifier(const QChar c) const;
+    bool isTerminator(const QChar &c) const;
+    bool isSeparator(const QChar &c) const;
+    bool isQualifier(const QChar &c) const;
     bool processEscapeMark(QString &s, QChar c);
     bool isText(QChar c) const;
     bool isComment();
-    bool isCRLF(const QChar c) const;
-    bool isSpace(const QChar c) const;
-    bool isTab(const QChar c) const;
-    bool isEmptyRow(csvrow row) const;
+    bool isCRLF(const QChar &c) const;
+    bool isSpace(const QChar &c) const;
+    bool isTab(const QChar &c) const;
+    bool isEmptyRow(CsvRow row) const;
     bool parseFile();
     void parseRecord();
-    void parseField(csvrow& row);
-    void parseSimple(QString& s);
-    void parseQuoted(QString& s);
-    void parseEscaped(QString& s);
+    void parseField(CsvRow &row);
+    void parseSimple(QString &s);
+    void parseQuoted(QString &s);
+    void parseEscaped(QString &s);
     void parseEscapedText(QString &s);
     bool readFile(QFile *device);
     void reset();

@@ -18,10 +18,11 @@
 #ifndef KEEPASSX_CSVIMPORTWIZARD_H
 #define KEEPASSX_CSVIMPORTWIZARD_H
 
+#include "CsvImportWidget.h"
+
 #include <QStackedWidget>
 #include <QGridLayout>
 
-#include "CsvImportWidget.h"
 #include "core/Database.h"
 #include "gui/ChangeMasterKeyWidget.h"
 #include "gui/DialogyWidget.h"
@@ -34,7 +35,7 @@ class CsvImportWizard : public DialogyWidget
 
 public:
     explicit CsvImportWizard(QWidget *parent = nullptr);
-    virtual ~CsvImportWizard();
+    ~CsvImportWizard();
     void load(const QString& filename, Database *database);
 
 Q_SIGNALS:

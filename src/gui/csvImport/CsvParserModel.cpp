@@ -42,39 +42,33 @@ bool CsvParserModel::parse() {
     m_columnMap.clear();
     if (CsvParser::isFileLoaded()) {
         r = CsvParser::reparse();
-    }
-    else {
+    } else {
         QFile csv(m_filename);
         r = CsvParser::parse(&csv);
     }
-    for (int i=0; i<columnCount(); i++) {
+    for (int i = 0; i < columnCount(); i++)
         m_columnMap.insert(i,0);
-    }
     addEmptyColumn();
     endResetModel();
     return r;
 }
 
 void CsvParserModel::addEmptyColumn() {
-    for (int i=0; i<m_table.size(); ++i) {
-        csvrow r = m_table.at(i);
+    for (int i = 0; i < m_table.size(); ++i) {
+        CsvRow r = m_table.at(i);
         r.prepend(QString(""));
         m_table.replace(i, r);
     }
 }
 
 void CsvParserModel::mapColumns(int csvColumn, int dbColumn) {
-    if ((csvColumn < 0) || (dbColumn < 0) ) {
+    if ((csvColumn < 0) || (dbColumn < 0))
         return;
-    }
-
     beginResetModel();
-    if (csvColumn >= getCsvCols()) {
+    if (csvColumn >= getCsvCols())
         m_columnMap[dbColumn] = 0; //map to the empty column
-    }
-    else {
+    else
         m_columnMap[dbColumn] = csvColumn;
-    }
     endResetModel();
 }
 
@@ -82,8 +76,8 @@ void CsvParserModel::setSkippedRows(int skipped) {
     m_skipped = skipped;
     QModelIndex topLeft = createIndex(skipped,0);
     QModelIndex bottomRight = createIndex(m_skipped+rowCount(), columnCount());
-    Q_EMIT dataChanged(topLeft, bottomRight);
-    Q_EMIT layoutChanged();
+    emit dataChanged(topLeft, bottomRight);
+    emit layoutChanged();
 }
 
 void CsvParserModel::setHeaderLabels(QStringList l) {
@@ -91,45 +85,37 @@ void CsvParserModel::setHeaderLabels(QStringList l) {
 }
 
 int CsvParserModel::rowCount(const QModelIndex &parent) const {
-    if (parent.isValid()) {
+    if (parent.isValid())
         return 0;
-    }
     return getCsvRows();
 }
 
 int CsvParserModel::columnCount(const QModelIndex &parent) const {
-    if (parent.isValid()) {
+    if (parent.isValid())
         return 0;
-    }
     return m_columnHeader.size();
 }
 
 QVariant CsvParserModel::data(const QModelIndex &index, int role) const {
-    if (   (index.column() >= m_columnHeader.size())
+    if ((index.column() >= m_columnHeader.size())
         || (index.row()+m_skipped >= rowCount())
-        || !index.isValid() )
-    {
+        || !index.isValid()) {
         return QVariant();
     }
-
-    if (role == Qt::DisplayRole) {
+    if (role == Qt::DisplayRole)
         return m_table.at(index.row()+m_skipped).at(m_columnMap[index.column()]);
-    }
     return QVariant();
 }
 
 QVariant CsvParserModel::headerData(int section, Qt::Orientation orientation, int role) const {
     if (role == Qt::DisplayRole) {
         if (orientation == Qt::Horizontal) {
-            if ( (section < 0) || (section >= m_columnHeader.size())) {
+            if ((section < 0) || (section >= m_columnHeader.size()))
                 return QVariant();
-            }
             return m_columnHeader.at(section);
-        }
-        else if (orientation == Qt::Vertical) {
-            if (section+m_skipped >= rowCount()) {
+        } else if (orientation == Qt::Vertical) {
+            if (section+m_skipped >= rowCount())
                 return QVariant();
-            }
             return QString::number(section+1);
         }
     }

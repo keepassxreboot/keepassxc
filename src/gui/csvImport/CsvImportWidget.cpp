@@ -17,15 +17,17 @@
 
 #include "CsvImportWidget.h"
 #include "ui_CsvImportWidget.h"
-#include "gui/MessageBox.h"
 
 #include <QFile>
 #include <QFileInfo>
 
+#include "gui/MessageBox.h"
+#include "gui/MessageWidget.h"
+
 //I wanted to make the CSV import GUI future-proof, so if one day you need entries
 //to have a new field, all you have to do is uncomment a row or two here, and the GUI will follow:
 //dynamic generation of comboBoxes, labels, placement and so on. Try it for immense fun!
-const QStringList CsvImportWidget::m_columnheader = QStringList()
+const QStringList CsvImportWidget::m_columnHeader = QStringList()
     << QObject::tr("Group")
     << QObject::tr("Title")
     << QObject::tr("Username")
@@ -46,10 +48,7 @@ CsvImportWidget::CsvImportWidget(QWidget *parent)
 {
     m_ui->setupUi(this);
 
-    QFont font = m_ui->labelHeadline->font();
-    font.setBold(true);
-    font.setPointSize(font.pointSize() + 2);
-    m_ui->labelHeadline->setFont(font);
+    m_ui->messageWidget->setHidden(true);
 
     m_ui->comboBoxCodec->addItems(QStringList() <<"UTF-8" <<"Windows-1252" <<"UTF-16" <<"UTF-16LE");
     m_ui->comboBoxFieldSeparator->addItems(QStringList() <<"," <<";" <<"-" <<":" <<".");
@@ -59,10 +58,10 @@ CsvImportWidget::CsvImportWidget(QWidget *parent)
     m_ui->tableViewFields->setSelectionMode(QAbstractItemView::NoSelection);
     m_ui->tableViewFields->setFocusPolicy(Qt::NoFocus);
 
-    for (int i=0; i<m_columnheader.count(); ++i) {
-        QLabel* label = new QLabel(m_columnheader.at(i), this);
+    for (int i = 0; i < m_columnHeader.count(); ++i) {
+        QLabel* label = new QLabel(m_columnHeader.at(i), this);
         label->setFixedWidth(label->minimumSizeHint().width());
-        font = label->font();
+        QFont font = label->font();
         font.setBold(false);
         label->setFont(font);
 
@@ -76,14 +75,14 @@ CsvImportWidget::CsvImportWidget(QWidget *parent)
         connect(combo, SIGNAL(currentIndexChanged(int)), m_comboMapper, SLOT(map()));
 
         //layout labels and combo fields in column-first order
-        int combo_rows = 1+(m_columnheader.count()-1)/2;
-        int x=i%combo_rows;
-        int y= 2*(i/combo_rows);
+        int combo_rows = 1+(m_columnHeader.count()-1)/2;
+        int x = i%combo_rows;
+        int y = 2*(i/combo_rows);
         m_ui->gridLayout_combos->addWidget(label, x, y);
         m_ui->gridLayout_combos->addWidget(combo, x, y+1);
     }
 
-    m_parserModel->setHeaderLabels(m_columnheader);
+    m_parserModel->setHeaderLabels(m_columnHeader);
     m_ui->tableViewFields->setModel(m_parserModel);
 
     connect(m_ui->spinBoxSkip, SIGNAL(valueChanged(int)), SLOT(skippedChanged(int)));
@@ -101,10 +100,9 @@ CsvImportWidget::CsvImportWidget(QWidget *parent)
 
 void CsvImportWidget::comboChanged(int comboId) {
     QComboBox* currentSender = qobject_cast<QComboBox*>(m_comboMapper->mapping(comboId));
-    if (currentSender->currentIndex() != -1) {
-        //here is the line that actually updates the GUI table
+    if (currentSender->currentIndex() != -1)
+        //this line is the one that actually updates GUI table
         m_parserModel->mapColumns(currentSender->currentIndex(), comboId);
-    }
     updateTableview();
 }
 
@@ -127,7 +125,7 @@ void CsvImportWidget::updateTableview() {
     m_ui->tableViewFields->resizeRowsToContents();
     m_ui->tableViewFields->resizeColumnsToContents();
 
-    for (int c=0; c<m_ui->tableViewFields->horizontalHeader()->count(); ++c) {
+    for (int c = 0; c < m_ui->tableViewFields->horizontalHeader()->count(); ++c) {
         m_ui->tableViewFields->horizontalHeader()->setSectionResizeMode(
                     c, QHeaderView::Stretch);
     }
@@ -137,12 +135,12 @@ void CsvImportWidget::updatePreview() {
 
     m_ui->labelSizeRowsCols->setText(m_parserModel->getFileInfo());
     m_ui->spinBoxSkip->setValue(0);
-    m_ui->spinBoxSkip->setMaximum(m_parserModel->rowCount()-1);
+    m_ui->spinBoxSkip->setMaximum(m_parserModel->rowCount() - 1);
 
     int i;
     QStringList list(tr("Not present in CSV file"));
 
-    for (i=1; i<m_parserModel->getCsvCols(); i++) {
+    for (i = 1; i < m_parserModel->getCsvCols(); i++) {
         QString s = QString(tr("Column ")) + QString::number(i);
         list << s;
     }
@@ -150,12 +148,10 @@ void CsvImportWidget::updatePreview() {
 
     i=1;
     Q_FOREACH (QComboBox* b, m_combos) {
-        if (i < m_parserModel->getCsvCols()) {
+        if (i < m_parserModel->getCsvCols())
             b->setCurrentIndex(i);
-        }
-        else {
+        else
             b->setCurrentIndex(0);
-        }
         ++i;
     }
 }
@@ -166,7 +162,7 @@ void CsvImportWidget::load(const QString& filename, Database* const db) {
     m_ui->labelFilename->setText(filename);
     Group* group = m_db->rootGroup();
     group->setUuid(Uuid::random());
-    group->setNotes(tr("Imported from CSV file\nOriginal data: ") + filename);
+    group->setNotes(tr("Imported from CSV file").append("\n").append(tr("Original data: ")) + filename);
 
     parse();
 }
@@ -181,47 +177,48 @@ void CsvImportWidget::parse() {
 }
 
 void CsvImportWidget::showReport() {
-    MessageBox::warning(this, tr("Syntax error"), tr("While parsing file...\n")
-               .append(m_parserModel->getStatus()), QMessageBox::Ok, QMessageBox::Ok);
+//    MessageBox::warning(this, tr("Syntax error"), tr("While parsing file...\n")
+//               .append(m_parserModel->getStatus()), QMessageBox::Ok, QMessageBox::Ok);
+    m_ui->messageWidget->showMessage(tr("Syntax error while parsing file.").append("\n")
+                               .append(m_parserModel->getStatus()), MessageWidget::Warning);
 }
 
 void CsvImportWidget::writeDatabase() {
 
-    checkGroupNames();
-    for (int r=0; r<m_parserModel->rowCount(); r++) {
+    setRootGroup();
+    for (int r = 0; r < m_parserModel->rowCount(); r++)
         //use the validity of second column as a GO/NOGO hint for all others fields
         if (m_parserModel->data(m_parserModel->index(r, 1)).isValid()) {
             Entry* entry = new Entry();
             entry->setUuid(Uuid::random());
             entry->setGroup(splitGroups(m_parserModel->data(m_parserModel->index(r, 0)).toString()));
-            entry->setTitle(    m_parserModel->data(m_parserModel->index(r, 1)).toString());
-            entry->setUsername( m_parserModel->data(m_parserModel->index(r, 2)).toString());
-            entry->setPassword( m_parserModel->data(m_parserModel->index(r, 3)).toString());
-            entry->setUrl(      m_parserModel->data(m_parserModel->index(r, 4)).toString());
-            entry->setNotes(    m_parserModel->data(m_parserModel->index(r, 5)).toString());
+            entry->setTitle(m_parserModel->data(m_parserModel->index(r, 1)).toString());
+            entry->setUsername(m_parserModel->data(m_parserModel->index(r, 2)).toString());
+            entry->setPassword(m_parserModel->data(m_parserModel->index(r, 3)).toString());
+            entry->setUrl(m_parserModel->data(m_parserModel->index(r, 4)).toString());
+            entry->setNotes(m_parserModel->data(m_parserModel->index(r, 5)).toString());
         }
-    }
 
     QBuffer buffer;
     buffer.open(QBuffer::ReadWrite);
 
     KeePass2Writer writer;
     writer.writeDatabase(&buffer, m_db);
-    if (writer.hasError()) {
+    if (writer.hasError())
         MessageBox::warning(this, tr("Error"), tr("CSV import: writer has errors:\n")
                    .append((writer.errorString())), QMessageBox::Ok, QMessageBox::Ok);
-    }
     Q_EMIT editFinished(true);
 }
 
 
-void CsvImportWidget::checkGroupNames() {
+void CsvImportWidget::setRootGroup() {
     QString groupLabel;
     QStringList groupList;
-    bool is_root  = false
-       , is_empty = false
-       , is_label = false;
-    for (int r=0; r<m_parserModel->rowCount(); r++) {
+    bool is_root  = false;
+    bool is_empty = false;
+    bool is_label = false;
+
+    for (int r = 0; r < m_parserModel->rowCount(); r++) {
         groupLabel = m_parserModel->data(m_parserModel->index(r, 0)).toString();
         //check if group name is either "root", "" (empty) or some other label
         groupList = groupLabel.split("/", QString::SkipEmptyParts);
@@ -234,18 +231,13 @@ void CsvImportWidget::checkGroupNames() {
         groupList.clear();
     }
 
-    if ((not is_label and (is_empty xor is_root))
-        or (is_label and not is_root)) {
+    if ((not is_label and (is_empty xor is_root)) or (is_label and not is_root))
         m_db->rootGroup()->setName("Root");
-    }
-    else if ((is_empty and is_root)
-             or (is_label and not is_empty and is_root)) {
+    else if ((is_empty and is_root) or (is_label and not is_empty and is_root))
         m_db->rootGroup()->setName("CSV IMPORTED");
-    }
-    else {
+    else
         //SHOULD NEVER GET HERE
         m_db->rootGroup()->setName("ROOT_FALLBACK");
-    }
 }
 
 Group *CsvImportWidget::splitGroups(QString label) {
@@ -254,9 +246,8 @@ Group *CsvImportWidget::splitGroups(QString label) {
     QStringList groupList = label.split("/", QString::SkipEmptyParts);
 
     //skip the creation of a subgroup of Root with the same name
-    if (m_db->rootGroup()->name() == "Root" && groupList.first() == "Root") {
+    if (m_db->rootGroup()->name() == "Root" && groupList.first() == "Root")
         groupList.removeFirst();
-    }
 
     for (const QString& groupName : groupList) {
         Group *children = hasChildren(current, groupName);
@@ -265,8 +256,7 @@ Group *CsvImportWidget::splitGroups(QString label) {
             brandNew->setParent(current);
             brandNew->setName(groupName);
             current = brandNew;
-        }
-        else {
+        } else {
             Q_ASSERT(children != nullptr);
             current = children;
         }
@@ -277,9 +267,8 @@ Group *CsvImportWidget::splitGroups(QString label) {
 Group* CsvImportWidget::hasChildren(Group* current, QString groupName) {
     //returns the group whose name is "groupName" and is child of "current" group
     for (Group * group : current->children()) {
-        if (group->name() == groupName) {
+        if (group->name() == groupName)
             return group;
-        }
     }
     return nullptr;
 }

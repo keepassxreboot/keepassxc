@@ -16,8 +16,10 @@
  */
 
 #include "CsvImportWizard.h"
+
 #include <QApplication>
 #include <QLabel>
+
 #include "gui/MessageBox.h"
 
 
@@ -49,7 +51,7 @@ void CsvImportWizard::load(const QString& filename, Database* database)
 void CsvImportWizard::keyFinished(bool accepted)
 {
     if (!accepted) {
-        Q_EMIT(importFinished(false));
+        emit(importFinished(false));
         return;
     }
 
@@ -61,12 +63,12 @@ void CsvImportWizard::keyFinished(bool accepted)
 
     if (!result) {
         MessageBox::critical(this, tr("Error"), tr("Unable to calculate master key"));
-        Q_EMIT importFinished(false);
+        emit(importFinished(false));
         return;
     }
 }
 
 void CsvImportWizard::parseFinished(bool accepted)
 {
-    Q_EMIT(importFinished(accepted));
+    emit(importFinished(accepted));
 }

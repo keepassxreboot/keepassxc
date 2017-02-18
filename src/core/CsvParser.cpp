@@ -15,10 +15,12 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "CsvParser.h"
+
 #include <QTextCodec>
 #include <QObject>
+
 #include "core/Tools.h"
-#include "CsvParser.h"
 
 CsvParser::CsvParser()
     : m_ch(0)
@@ -61,16 +63,14 @@ bool CsvParser::parse(QFile *device) {
         m_statusMsg += QObject::tr("NULL device\n");
         return false;
     }
-    if (!readFile(device)) {
+    if (!readFile(device))
         return false;
-    }
     return parseFile();
 }
 
 bool CsvParser::readFile(QFile *device) {
-    if (device->isOpen()) {
+    if (device->isOpen())
         device->close();
-    }
 
     device->open(QIODevice::ReadOnly);
     if (!Tools::readAllFromDevice(device, m_array)) {
@@ -78,14 +78,14 @@ bool CsvParser::readFile(QFile *device) {
         m_isFileLoaded = false;
     }
     else {
-    device->close();
+        device->close();
 
-    m_array.replace("\r\n", "\n");
-    m_array.replace("\r", "\n");
-    if (0 == m_array.size()) {
-        m_statusMsg += QObject::tr("File empty\n");
-    }
-    m_isFileLoaded = true;
+        m_array.replace("\r\n", "\n");
+        m_array.replace("\r", "\n");
+        if (0 == m_array.size()) {
+            m_statusMsg += QObject::tr("File empty\n");
+        }
+        m_isFileLoaded = true;
     }
     return m_isFileLoaded;
 }
@@ -117,11 +117,9 @@ void CsvParser::clear() {
 
 bool CsvParser::parseFile() {
     parseRecord();
-    while (!m_isEof)
-    {
-        if (!skipEndline()) {
+    while (!m_isEof) {
+        if (!skipEndline())
             appendStatusMsg(QObject::tr("malformed string"));
-        }
         m_currRow++;
         m_currCol = 1;
         parseRecord();
@@ -131,43 +129,36 @@ bool CsvParser::parseFile() {
 }
 
 void CsvParser::parseRecord() {
-    csvrow row;
+    CsvRow row;
     if (isComment()) {
         skipLine();
         return;
     }
-    else {
-        do {
-            parseField(row);
-            getChar(m_ch);
-        } while (isSeparator(m_ch) && !m_isEof);
+    do {
+        parseField(row);
+        getChar(m_ch);
+    } while (isSeparator(m_ch) && !m_isEof);
 
-        if (!m_isEof) {
-            ungetChar();
-        }
-        if (isEmptyRow(row)) {
-            row.clear();
-            return;
-        }
-        m_table.push_back(row);
-        if (m_maxCols < row.size()) {
-            m_maxCols = row.size();
-        }
-        m_currCol++;
+    if (!m_isEof)
+        ungetChar();
+    if (isEmptyRow(row)) {
+        row.clear();
+        return;
     }
+    m_table.push_back(row);
+    if (m_maxCols < row.size())
+        m_maxCols = row.size();
+    m_currCol++;
 }
 
-void CsvParser::parseField(csvrow& row) {
+void CsvParser::parseField(CsvRow& row) {
     QString field;
     peek(m_ch);
-    if (!isTerminator(m_ch))
-    {
-        if (isQualifier(m_ch)) {
+    if (!isTerminator(m_ch)) {
+        if (isQualifier(m_ch))
              parseQuoted(field);
-        }
-        else {
-             parseSimple(field);
-        }
+        else
+            parseSimple(field);
     }
     row.push_back(field);
 }
@@ -175,14 +166,12 @@ void CsvParser::parseField(csvrow& row) {
 void CsvParser::parseSimple(QString &s) {
     QChar c;
     getChar(c);
-    while ((isText(c)) && (!m_isEof))
-    {
+    while ((isText(c)) && (!m_isEof)) {
         s.append(c);
         getChar(c);
     }
-    if (!m_isEof) {
+    if (!m_isEof)
         ungetChar();
-    }
 }
 
 void CsvParser::parseQuoted(QString &s) {
@@ -190,25 +179,21 @@ void CsvParser::parseQuoted(QString &s) {
     getChar(m_ch);
     parseEscaped(s);
     //getChar(m_ch);
-    if (!isQualifier(m_ch)) {
+    if (!isQualifier(m_ch))
         appendStatusMsg(QObject::tr("missing closing quote"));
-    }
 }
 
 void CsvParser::parseEscaped(QString &s) {
     parseEscapedText(s);
-    while (processEscapeMark(s, m_ch)) {
+    while (processEscapeMark(s, m_ch))
         parseEscapedText(s);
-    }
-    if (!m_isEof) {
+    if (!m_isEof)
         ungetChar();
-    }
 }
 
 void CsvParser::parseEscapedText(QString &s) {
     getChar(m_ch);
-    while ((!isQualifier(m_ch)) && !m_isEof)
-    {
+    while ((!isQualifier(m_ch)) && !m_isEof) {
         s.append(m_ch);
         getChar(m_ch);
     }
@@ -218,30 +203,25 @@ bool CsvParser::processEscapeMark(QString &s, QChar c) {
     QChar buf;
     peek(buf);
     QChar c2;
-    //escape-character syntax, e.g. \"
-    if (true == m_isBackslashSyntax)
-    {
+    if (true == m_isBackslashSyntax) {
+        //escape-character syntax, e.g. \"
         if (c != '\\') {
             return false;
         }
         //consume (and append) second qualifier
         getChar(c2);
-        if (m_isEof){
+        if (m_isEof) {
             c2='\\';
             s.append('\\');
             return false;
-        }
-        else {
+        } else {
             s.append(c2);
             return true;
         }
-    }
-    //double quote syntax, e.g. ""
-    else
-    {
-        if (!isQualifier(c)) {
+    } else {
+        //double quote syntax, e.g. ""
+        if (!isQualifier(c))
             return false;
-        }
         peek(c2);
         if (!m_isEof) { //not EOF, can read one char
             if (isQualifier(c2)) {
@@ -255,13 +235,12 @@ bool CsvParser::processEscapeMark(QString &s, QChar c) {
 }
 
 void CsvParser::fillColumns() {
-    //fill the rows with lesser columns with empty fields
-
-    for (int i=0; i<m_table.size(); ++i) {
+    //fill shorter rows with empty placeholder columns
+    for (int i = 0; i < m_table.size(); ++i) {
         int gap = m_maxCols-m_table.at(i).size();
         if (gap > 0) {
-            csvrow r = m_table.at(i);
-            for (int j=0; j<gap; ++j) {
+            CsvRow r = m_table.at(i);
+            for (int j = 0; j < gap; ++j) {
                 r.append(QString(""));
             }
             m_table.replace(i, r);
@@ -271,7 +250,7 @@ void CsvParser::fillColumns() {
 
 void CsvParser::skipLine() {
     m_ts.readLine();
-    m_ts.seek(m_ts.pos()-1);
+    m_ts.seek(m_ts.pos() - 1);
 }
 
 bool CsvParser::skipEndline() {
@@ -295,18 +274,15 @@ void CsvParser::ungetChar() {
 
 void CsvParser::peek(QChar& c) {
     getChar(c);
-    if (!m_isEof) {
+    if (!m_isEof)
         ungetChar();
-    }
 }
 
-bool CsvParser::isQualifier(const QChar c) const {
-    if (true == m_isBackslashSyntax && (c != m_qualifier)) {
+bool CsvParser::isQualifier(const QChar &c) const {
+    if (true == m_isBackslashSyntax && (c != m_qualifier))
         return (c == '\\');
-    }
-    else {
-    return (c == m_qualifier);
-    }
+    else
+        return (c == m_qualifier);
 }
 
 bool CsvParser::isComment() {
@@ -314,13 +290,11 @@ bool CsvParser::isComment() {
     QChar c2;
     qint64 pos = m_ts.pos();
 
-    do {
-        getChar(c2);
-    } while ((isSpace(c2) || isTab(c2)) && (!m_isEof));
+    do getChar(c2);
+    while ((isSpace(c2) || isTab(c2)) && (!m_isEof));
 
-    if (c2 == m_comment) {
+    if (c2 == m_comment)
         result = true;
-    }
     m_ts.seek(pos);
     return result;
 }
@@ -329,32 +303,31 @@ bool CsvParser::isText(QChar c) const {
      return !( (isCRLF(c)) || (isSeparator(c)) );
 }
 
-bool CsvParser::isEmptyRow(csvrow row) const {
-    csvrow::const_iterator it = row.constBegin();
-    for (; it != row.constEnd(); ++it) {
+bool CsvParser::isEmptyRow(CsvRow row) const {
+    CsvRow::const_iterator it = row.constBegin();
+    for (; it != row.constEnd(); ++it)
         if ( ((*it) != "\n") && ((*it) != "") )
             return false;
-    }
     return true;
 }
 
-bool CsvParser::isCRLF(const QChar c) const {
+bool CsvParser::isCRLF(const QChar &c) const {
     return (c == '\n');
 }
 
-bool CsvParser::isSpace(const QChar c) const {
+bool CsvParser::isSpace(const QChar &c) const {
     return (c == 0x20);
 }
 
-bool CsvParser::isTab(const QChar c) const {
+bool CsvParser::isTab(const QChar &c) const {
     return (c == '\t');
 }
 
-bool CsvParser::isSeparator(const QChar c) const {
+bool CsvParser::isSeparator(const QChar &c) const {
     return (c == m_separator);
 }
 
-bool CsvParser::isTerminator(const QChar c) const {
+bool CsvParser::isTerminator(const QChar &c) const {
     return (isSeparator(c) || (c == '\n') || (c == '\r'));
 }
 
@@ -362,19 +335,19 @@ void CsvParser::setBackslashSyntax(bool set) {
     m_isBackslashSyntax = set;
 }
 
-void CsvParser::setComment(const QChar c) {
+void CsvParser::setComment(const QChar &c) {
     m_comment = c.unicode();
 }
 
-void CsvParser::setCodec(const QString s) {
+void CsvParser::setCodec(const QString &s) {
     m_ts.setCodec(QTextCodec::codecForName(s.toLocal8Bit()));
 }
 
-void CsvParser::setFieldSeparator(const QChar c) {
+void CsvParser::setFieldSeparator(const QChar &c) {
     m_separator = c.unicode();
 }
 
-void CsvParser::setTextQualifier(const QChar c) {
+void CsvParser::setTextQualifier(const QChar &c) {
     m_qualifier = c.unicode();
 }
 
@@ -382,11 +355,14 @@ int CsvParser::getFileSize() const {
     return m_csv.size();
 }
 
-const csvtable CsvParser::getCsvTable() const {
+const CsvTable CsvParser::getCsvTable() const {
     return m_table;
 }
 
 QString CsvParser::getStatus() const {
+    if (m_statusMsg.size() > 100)
+        return m_statusMsg.section('\n', 0, 4)
+                .append("\n[...]\n").append(QObject::tr("More messages, skipped!"));
     return m_statusMsg;
 }
 

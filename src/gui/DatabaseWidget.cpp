@@ -196,6 +196,9 @@ DatabaseWidget::Mode DatabaseWidget::currentMode() const
     if (currentWidget() == nullptr) {
         return DatabaseWidget::None;
     }
+    else if (currentWidget() == m_csvImportWizard) {
+        return DatabaseWidget::ImportMode;
+    }
     else if (currentWidget() == m_mainWidget) {
         return DatabaseWidget::ViewMode;
     }

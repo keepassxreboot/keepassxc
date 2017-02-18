@@ -62,8 +62,8 @@ private Q_SLOTS:
 private:
     QFile file;
     CsvParser* parser;
-    csvtable t;
-    void dumpRow(csvtable table, int row);
+    CsvTable t;
+    void dumpRow(CsvTable table, int row);
 };
 
 #endif // KEEPASSX_TESTCSVPARSER_H

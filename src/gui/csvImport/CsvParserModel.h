@@ -20,8 +20,9 @@
 
 #include <QAbstractTableModel>
 #include <QMap>
-#include "core/Group.h"
+
 #include "core/CsvParser.h"
+#include "core/Group.h"
 
 class CsvParserModel : public QAbstractTableModel, public CsvParser
 {
@@ -29,7 +30,7 @@ class CsvParserModel : public QAbstractTableModel, public CsvParser
 
 public:
     explicit CsvParserModel(QObject *parent = nullptr);
-    virtual ~CsvParserModel();
+    ~CsvParserModel();
     void setFilename(const QString& filename);
     QString getFileInfo();
     bool parse();
@@ -37,10 +38,10 @@ public:
     void setHeaderLabels(QStringList l);
     void mapColumns(int csvColumn, int dbColumn);
 
-    virtual int rowCount(const QModelIndex &parent  = QModelIndex()) const Q_DECL_OVERRIDE;
-    virtual int columnCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
-    virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
-    virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const Q_DECL_OVERRIDE;
+    int rowCount(const QModelIndex &parent  = QModelIndex()) const override;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 
 public Q_SLOTS:
     void setSkippedRows(int skipped);

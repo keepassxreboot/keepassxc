@@ -26,10 +26,10 @@
 #include <QComboBox>
 #include <QStackedWidget>
 
+#include "core/Metadata.h"
 #include "format/KeePass2Writer.h"
 #include "gui/csvImport/CsvParserModel.h"
 #include "keys/PasswordKey.h"
-#include "core/Metadata.h"
 
 
 namespace Ui {
@@ -42,7 +42,7 @@ class CsvImportWidget : public QWidget
 
 public:
     explicit CsvImportWidget(QWidget *parent = nullptr);
-    virtual ~CsvImportWidget();
+    ~CsvImportWidget();
     void load(const QString& filename, Database* const db);
 
 Q_SIGNALS:
@@ -54,7 +54,7 @@ private Q_SLOTS:
     void comboChanged(int comboId);
     void skippedChanged(int rows);
     void writeDatabase();
-    void checkGroupNames();
+    void setRootGroup();
     void reject();
 
 private:
@@ -67,7 +67,7 @@ private:
     Database *m_db;
 
     KeePass2Writer m_writer;
-    static const QStringList m_columnheader;
+    static const QStringList m_columnHeader;
     void configParser();
     void updatePreview();
     void updateTableview();

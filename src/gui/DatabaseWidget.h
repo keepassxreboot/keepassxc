@@ -61,6 +61,7 @@ public:
     enum Mode
     {
         None,
+        ImportMode,
         ViewMode,
         EditMode,
         LockedMode

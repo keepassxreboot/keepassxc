@@ -425,6 +425,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             break;
         }
         case DatabaseWidget::EditMode:
+        case DatabaseWidget::ImportMode:
         case DatabaseWidget::LockedMode: {
             const QList<QAction*> entryActions = m_ui->menuEntries->actions();
             for (QAction* action : entryActions) {
