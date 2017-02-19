@@ -18,7 +18,6 @@
 #include <QCommandLineParser>
 #include <QFile>
 #include <QTextStream>
-#include <QtGlobal>
 
 #include "config-keepassx.h"
 #include "core/Config.h"
@@ -45,10 +44,7 @@ int main(int argc, char** argv)
     Tools::disableCoreDumps();
 #endif
     Tools::setupSearchPaths();
-    
-#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
-    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-#endif
+
     Application app(argc, argv);
     Application::setApplicationName("keepassxc");
     Application::setApplicationVersion(KEEPASSX_VERSION);
