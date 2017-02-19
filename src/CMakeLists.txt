@@ -204,7 +204,24 @@ if (UNIX AND NOT APPLE)
     target_link_libraries(keepassx_core Qt5::DBus)
 endif()
 
-add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE ${keepassx_SOURCES_MAINEXE})
+if(MINGW)
+  string(REPLACE "." ";" VERSION_LIST ${KEEPASSXC_VERSION})
+  list(GET VERSION_LIST 0 KEEPASSXC_VERSION_MAJOR)
+  list(GET VERSION_LIST 1 KEEPASSXC_VERSION_MINOR)
+  list(GET VERSION_LIST 2 KEEPASSXC_VERSION_PATCH)
+
+  include(GenerateProductVersion)
+  generate_product_version(
+    WIN32_ProductVersionFiles
+    NAME "KeePassXC"
+    COMPANY_NAME "KeePassXC Team"
+    VERSION_MAJOR ${KEEPASSXC_VERSION_MAJOR}
+    VERSION_MINOR ${KEEPASSXC_VERSION_MINOR}
+    VERSION_PATCH ${KEEPASSXC_VERSION_PATCH}
+  )
+endif()
+
+add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE ${keepassx_SOURCES_MAINEXE} ${WIN32_ProductVersionFiles})
 target_link_libraries(${PROGNAME} keepassx_core)
 
 set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
