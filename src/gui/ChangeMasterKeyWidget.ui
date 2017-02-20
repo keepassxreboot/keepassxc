@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>818</width>
-    <height>397</height>
+    <height>424</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -90,7 +90,7 @@
    <item>
     <widget class="QGroupBox" name="keyFileGroup">
      <property name="title">
-      <string>Key file</string>
+      <string>&amp;Key file</string>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -129,22 +129,32 @@
    <item>
     <widget class="QGroupBox" name="challengeResponseGroup">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="title">
-      <string>Challenge Response</string>
+      <string>Cha&amp;llenge Response</string>
      </property>
      <property name="checkable">
       <bool>true</bool>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="1">
-       <widget class="QComboBox" name="challengeResponseCombo"/>
-      </item>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
       <item row="0" column="0">
-       <widget class="QLabel" name="challengeResponseLabel">
+       <widget class="QComboBox" name="comboChallengeResponse">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="buttonRedetectYubikey">
         <property name="text">
-         <string>Challenge Response:</string>
+         <string>Refresh</string>
         </property>
        </widget>
       </item>
