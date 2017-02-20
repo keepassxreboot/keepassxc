@@ -118,12 +118,24 @@ void ChangeMasterKeyWidget::generateKey()
 {
     m_key.clear();
 
+    bool anyChecked = m_ui->passwordGroup->isChecked();
+    anyChecked     |= m_ui->keyFileGroup->isChecked();
+    anyChecked     |= m_ui->challengeResponseGroup->isChecked();
+
+    if (!anyChecked) {
+        if (MessageBox::warning(this, tr("No authentication factor chosen"),
+                                tr("Your database will be completely unprotected!<br>Do you really want to continue?"),
+                                QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes) {
+            return;
+        }
+    }
+
     if (m_ui->passwordGroup->isChecked()) {
         if (m_ui->enterPasswordEdit->text() == m_ui->repeatPasswordEdit->text()) {
             if (m_ui->enterPasswordEdit->text().isEmpty()) {
-                if (MessageBox::question(this, tr("Question"),
-                                         tr("Do you really want to use an empty string as password?"),
-                                         QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes) {
+                if (MessageBox::warning(this, tr("Empty password"),
+                                        tr("Do you really want to use an empty string as password?"),
+                                        QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes) {
                     return;
                 }
             }
