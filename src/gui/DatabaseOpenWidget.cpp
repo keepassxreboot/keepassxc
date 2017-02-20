@@ -49,6 +49,11 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
 
     m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
 
+    m_ui->yubikeyProgress->setVisible(false);
+    QSizePolicy sp = m_ui->yubikeyProgress->sizePolicy();
+    sp.setRetainSizeWhenHidden(true);
+    m_ui->yubikeyProgress->setSizePolicy(sp);
+
     m_ui->buttonTogglePassword->setIcon(filePath()->onOffIcon("actions", "password-show"));
     connect(m_ui->buttonTogglePassword, SIGNAL(toggled(bool)),
             m_ui->editPassword, SLOT(setShowPassword(bool)));
@@ -255,6 +260,7 @@ void DatabaseOpenWidget::pollYubikey()
     m_ui->checkChallengeResponse->setChecked(false);
     m_ui->comboChallengeResponse->setEnabled(false);
     m_ui->comboChallengeResponse->clear();
+    m_ui->yubikeyProgress->setVisible(true);
     QtConcurrent::run(YubiKey::instance(), &YubiKey::detect);
 }
 
@@ -265,6 +271,7 @@ void DatabaseOpenWidget::yubikeyDetected(int slot, bool blocking)
     m_ui->comboChallengeResponse->setEnabled(true);
     m_ui->checkChallengeResponse->setEnabled(true);
     m_ui->buttonRedetectYubikey->setEnabled(true);
+    m_ui->yubikeyProgress->setVisible(false);
 
     if (config()->get("RememberLastKeyFiles").toBool()) {
         QHash<QString, QVariant> lastChallengeResponse = config()->get("LastChallengeResponse").toHash();
@@ -277,4 +284,5 @@ void DatabaseOpenWidget::yubikeyDetected(int slot, bool blocking)
 void DatabaseOpenWidget::noYubikeyFound()
 {
     m_ui->buttonRedetectYubikey->setEnabled(true);
+    m_ui->yubikeyProgress->setVisible(false);
 }

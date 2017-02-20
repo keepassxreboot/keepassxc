@@ -36,11 +36,17 @@ ChangeMasterKeyWidget::ChangeMasterKeyWidget(QWidget* parent)
 
     m_ui->messageWidget->setHidden(true);
 
+    m_ui->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
+    m_ui->repeatPasswordEdit->enableVerifyMode(m_ui->enterPasswordEdit);
+
+    m_ui->yubikeyProgress->setVisible(false);
+    QSizePolicy sp = m_ui->yubikeyProgress->sizePolicy();
+    sp.setRetainSizeWhenHidden(true);
+    m_ui->yubikeyProgress->setSizePolicy(sp);
+
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(generateKey()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
-    m_ui->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
     connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), m_ui->enterPasswordEdit, SLOT(setShowPassword(bool)));
-    m_ui->repeatPasswordEdit->enableVerifyMode(m_ui->enterPasswordEdit);
     connect(m_ui->createKeyFileButton, SIGNAL(clicked()), SLOT(createKeyFile()));
     connect(m_ui->browseKeyFileButton, SIGNAL(clicked()), SLOT(browseKeyFile()));
 
@@ -178,6 +184,7 @@ void ChangeMasterKeyWidget::pollYubikey()
     m_ui->buttonRedetectYubikey->setEnabled(false);
     m_ui->comboChallengeResponse->setEnabled(false);
     m_ui->comboChallengeResponse->clear();
+    m_ui->yubikeyProgress->setVisible(true);
 
     // YubiKey init is slow, detect asynchronously to not block the UI
     QtConcurrent::run(YubiKey::instance(), &YubiKey::detect);
@@ -189,11 +196,13 @@ void ChangeMasterKeyWidget::yubikeyDetected(int slot, bool blocking)
     m_ui->comboChallengeResponse->addItem(yk.getName(), QVariant(slot));
     m_ui->comboChallengeResponse->setEnabled(m_ui->challengeResponseGroup->isChecked());
     m_ui->buttonRedetectYubikey->setEnabled(m_ui->challengeResponseGroup->isChecked());
+    m_ui->yubikeyProgress->setVisible(false);
 }
 
 void ChangeMasterKeyWidget::noYubikeyFound()
 {
     m_ui->buttonRedetectYubikey->setEnabled(m_ui->challengeResponseGroup->isChecked());
+    m_ui->yubikeyProgress->setVisible(false);
 }
 
 void ChangeMasterKeyWidget::setCancelEnabled(bool enabled)
