@@ -145,6 +145,13 @@ void ChangeMasterKeyWidget::generateKey()
     if (m_ui->challengeResponseGroup->isChecked()) {
         int i = m_ui->comboChallengeResponse->currentIndex();
         i = m_ui->comboChallengeResponse->itemData(i).toInt();
+
+        if (0 == i) {
+            m_ui->messageWidget->showMessage(tr("Changing master key failed: no YubiKey inserted."),
+                                             MessageWidget::Error);
+            return;
+        }
+
         YkChallengeResponseKey key(i);
 
         m_key.addChallengeResponseKey(key);
