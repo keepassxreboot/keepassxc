@@ -56,6 +56,11 @@ Q_SIGNALS:
      */
     void detected(int slot, bool blocking);
 
+    /**
+     * Emitted when no Yubikey could be found.
+     */
+    void notFound();
+
 private:
     explicit YubiKey();
     static YubiKey* m_instance;

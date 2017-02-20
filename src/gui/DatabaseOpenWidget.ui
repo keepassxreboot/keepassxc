@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>596</width>
-    <height>262</height>
+    <height>264</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0,1,0,0,3">
@@ -164,6 +164,25 @@
         <widget class="QComboBox" name="comboChallengeResponse">
          <property name="enabled">
           <bool>false</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="editable">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonRedetectYubikey">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Refresh</string>
          </property>
         </widget>
        </item>

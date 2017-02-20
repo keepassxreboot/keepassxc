@@ -58,9 +58,12 @@ private Q_SLOTS:
     void activateChallengeResponse();
     void setOkButtonEnabled();
     void browseKeyFile();
-    void ykDetected(int slot, bool blocking);
+    void yubikeyDetected(int slot, bool blocking);
+    void noYubikeyFound();
+    void pollYubikey();
 
 protected:
+
     const QScopedPointer<Ui::DatabaseOpenWidget> m_ui;
     Database* m_db;
     QString m_filename;

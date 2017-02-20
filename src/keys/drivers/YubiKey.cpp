@@ -117,7 +117,6 @@ bool YubiKey::deinit()
 void YubiKey::detect()
 {
     if (init()) {
-
         for (int i = 1; i < 3; i++) {
             YubiKey::ChallengeResult result;
             QByteArray rand = randomGen()->randomArray(1);
@@ -126,10 +125,12 @@ void YubiKey::detect()
             result = challenge(i, false, rand, resp);
 
             if (result != YubiKey::ERROR) {
-                Q_EMIT detected(i, result == YubiKey::WOULDBLOCK ? true : false);
+                emit detected(i, result == YubiKey::WOULDBLOCK ? true : false);
+                return;
             }
         }
     }
+    emit notFound();
 }
 
 /**
