@@ -1,2 +1,6 @@
 CMakeLists.txt.*
 build*/
+release*/
+.idea/
+*.iml
+*.kdev4

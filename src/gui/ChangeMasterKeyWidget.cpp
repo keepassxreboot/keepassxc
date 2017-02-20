@@ -170,3 +170,8 @@ void ChangeMasterKeyWidget::ykDetected(int slot, bool blocking)
     m_ui->challengeResponseCombo->addItem(yk.getName(), QVariant(slot));
     m_ui->challengeResponseGroup->setEnabled(true);
 }
+
+void ChangeMasterKeyWidget::setCancelEnabled(bool enabled)
+{
+    m_ui->buttonBox->button(QDialogButtonBox::Cancel)->setEnabled(enabled);
+}

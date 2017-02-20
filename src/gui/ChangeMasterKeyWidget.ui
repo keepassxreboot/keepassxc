@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>438</width>
-    <height>342</height>
+    <width>818</width>
+    <height>397</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -44,8 +44,8 @@
      <property name="checked">
       <bool>true</bool>
      </property>
-     <layout class="QFormLayout" name="formLayout">
-      <item row="0" column="0">
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="enterPasswordLabel">
         <property name="text">
          <string>Enter password:</string>
@@ -70,7 +70,7 @@
         </item>
        </layout>
       </item>
-      <item row="1" column="0">
+      <item row="1" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="repeatPasswordLabel">
         <property name="text">
          <string>Repeat password:</string>

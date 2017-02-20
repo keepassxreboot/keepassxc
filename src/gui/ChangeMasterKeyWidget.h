@@ -38,6 +38,7 @@ public:
     void clearForms();
     CompositeKey newMasterKey();
     QLabel* headlineLabel();
+    void setCancelEnabled(bool enabled);
 
 Q_SIGNALS:
     void editFinished(bool accepted);
