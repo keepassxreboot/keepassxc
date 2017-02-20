@@ -29,9 +29,8 @@
 
 #include "YubiKey.h"
 
-/* Cast the void pointer from the generalized class definition
- * to the proper pointer type from the now included system headers
- */
+// Cast the void pointer from the generalized class definition
+// to the proper pointer type from the now included system headers
 #define m_yk (static_cast<YK_KEY*>(m_yk_void))
 #define m_ykds (static_cast<YK_STATUS*>(m_ykds_void))
 
@@ -41,10 +40,6 @@ YubiKey::YubiKey() : m_yk_void(NULL), m_ykds_void(NULL)
 
 YubiKey* YubiKey::m_instance(Q_NULLPTR);
 
-/**
- * @brief YubiKey::instance - get instance of singleton
- * @return
- */
 YubiKey* YubiKey::instance()
 {
     if (!m_instance) {
@@ -54,20 +49,16 @@ YubiKey* YubiKey::instance()
     return m_instance;
 }
 
-/**
- * @brief YubiKey::init - initialize yubikey library and hardware
- * @return
- */
 bool YubiKey::init()
 {
-    /* Previously initalized */
+    // previously initialized
     if (m_yk != NULL && m_ykds != NULL) {
 
         if (yk_get_status(m_yk, m_ykds)) {
-            /* Still connected */
+            // Still connected
             return true;
         } else {
-            /* Initialized but not connected anymore, re-init */
+            // Initialized but not connected anymore, re-init
             deinit();
         }
     }
@@ -76,7 +67,7 @@ bool YubiKey::init()
         return false;
     }
 
-    /* TODO: handle multiple attached hardware devices, currently own one */
+    // TODO: handle multiple attached hardware devices
     m_yk_void = static_cast<void*>(yk_open_first_key());
     if (m_yk == NULL) {
         return false;
@@ -92,10 +83,6 @@ bool YubiKey::init()
     return true;
 }
 
-/**
- * @brief YubiKey::deinit - cleanup after init
- * @return true on success
- */
 bool YubiKey::deinit()
 {
     if (m_yk) {
@@ -111,9 +98,6 @@ bool YubiKey::deinit()
     return true;
 }
 
-/**
- * @brief YubiKey::detect - probe for attached YubiKeys
- */
 void YubiKey::detect()
 {
     if (init()) {
@@ -133,11 +117,6 @@ void YubiKey::detect()
     emit notFound();
 }
 
-/**
- * @brief YubiKey::getSerial - serial number of yubikey
- * @param serial
- * @return
- */
 bool YubiKey::getSerial(unsigned int& serial) const
 {
     if (!yk_get_serial(m_yk, 1, 0, &serial)) {
@@ -162,23 +141,7 @@ static inline QString printByteArray(const QByteArray& a)
 }
 #endif
 
-/**
- * @brief YubiKey::challenge - issue a challenge
- *
- * This operation could block if the YubiKey requires a touch to trigger.
- *
- * TODO: Signal to the UI that the system is waiting for challenge response
- *       touch.
- *
- * @param slot YubiKey configuration slot
- * @param mayBlock operation is allowed to block
- * @param chal challenge input to YubiKey
- * @param resp response output from YubiKey
- * @return SUCCESS when successful
- */
-YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock,
-                                            const QByteArray& chal,
-                                            QByteArray& resp) const
+YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByteArray& chal, QByteArray& resp) const
 {
     int yk_cmd = (slot == 1) ? SLOT_CHAL_HMAC1 : SLOT_CHAL_HMAC2;
     QByteArray paddedChal = chal;
@@ -188,7 +151,7 @@ YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock,
         return ERROR;
     }
 
-    /* yk_challenge_response() insists on 64 byte response buffer */
+    // yk_challenge_response() insists on 64 byte response buffer */
     resp.resize(64);
 
     /* The challenge sent to the yubikey should always be 64 bytes for
@@ -239,7 +202,7 @@ YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock,
         }
     }
 
-    /* Actual HMAC-SHA1 response is only 20 bytes */
+    // actual HMAC-SHA1 response is only 20 bytes
     resp.resize(20);
 
 #ifdef QT_DEBUG

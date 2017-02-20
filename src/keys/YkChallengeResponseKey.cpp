@@ -27,6 +27,7 @@
 #include "keys/drivers/YubiKey.h"
 
 #include <QDebug>
+#include <QObject>
 
 YkChallengeResponseKey::YkChallengeResponseKey(int slot,
                                                bool blocking)
@@ -58,10 +59,12 @@ bool YkChallengeResponseKey::challenge(const QByteArray& chal, int retries)
         return true;
     }
 
-    /* If challenge failed, retry to detect YubiKeys int the event the YubiKey
+    /* If challenge failed, retry to detect YubiKeys in the event the YubiKey
      *  was un-plugged and re-plugged */
     while (retries > 0) {
+#ifdef QT_DEBUG
         qDebug() << "Attempt" << retries << "to re-detect YubiKey(s)";
+#endif
         retries--;
 
         if (YubiKey::instance()->init() != true) {
@@ -79,13 +82,13 @@ bool YkChallengeResponseKey::challenge(const QByteArray& chal, int retries)
 QString YkChallengeResponseKey::getName() const
 {
     unsigned int serial;
-    QString fmt("YubiKey[%1] Challenge Response - Slot %2 - %3");
+    QString fmt(QObject::tr("YubiKey[%1] Challenge Response - Slot %2 - %3"));
 
     YubiKey::instance()->getSerial(serial);
 
     return fmt.arg(QString::number(serial),
                    QString::number(m_slot),
-                   (m_blocking) ? "Press" : "Passive");
+                   (m_blocking) ? QObject::tr("Press") : QObject::tr("Passive"));
 }
 
 bool YkChallengeResponseKey::isBlocking() const

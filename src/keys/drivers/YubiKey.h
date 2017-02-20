@@ -30,21 +30,52 @@ class YubiKey : public QObject
 public:
     enum ChallengeResult { ERROR = -1, SUCCESS = 0, WOULDBLOCK };
 
+    /**
+     * @brief YubiKey::instance - get instance of singleton
+     * @return instance
+     */
     static YubiKey* instance();
 
-    /** Initialize the underlying yubico libraries */
+    /**
+     * @brief YubiKey::init - initialize yubikey library and hardware
+     * @return true on success
+     */
     bool init();
+
+    /**
+     * @brief YubiKey::deinit - cleanup after init
+     * @return true on success
+     */
     bool deinit();
 
-    /** Issue a challenge to the hardware */
+    /**
+     * @brief YubiKey::challenge - issue a challenge
+     *
+     * This operation could block if the YubiKey requires a touch to trigger.
+     *
+     * TODO: Signal to the UI that the system is waiting for challenge response
+     *       touch.
+     *
+     * @param slot YubiKey configuration slot
+     * @param mayBlock operation is allowed to block
+     * @param chal challenge input to YubiKey
+     * @param resp response output from YubiKey
+     * @return true on success
+     */
     ChallengeResult challenge(int slot, bool mayBlock,
                               const QByteArray& chal,
                               QByteArray& resp) const;
 
-    /** Read the serial number from the hardware */
+    /**
+     * @brief YubiKey::getSerial - serial number of YubiKey
+     * @param serial serial number
+     * @return true on success
+     */
     bool getSerial(unsigned int& serial) const;
 
-    /** Start looking for attached hardware devices */
+    /**
+     * @brief YubiKey::detect - probe for attached YubiKeys
+     */
     void detect();
 
 Q_SIGNALS:
@@ -65,9 +96,9 @@ private:
     explicit YubiKey();
     static YubiKey* m_instance;
 
-    /* Create void ptr here to avoid ifdef header include mess */
-    void *m_yk_void;
-    void *m_ykds_void;
+    // Create void ptr here to avoid ifdef header include mess
+    void* m_yk_void;
+    void* m_ykds_void;
 
     Q_DISABLE_COPY(YubiKey)
 };
