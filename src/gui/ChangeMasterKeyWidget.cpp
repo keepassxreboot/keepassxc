@@ -28,6 +28,8 @@
 #include "gui/MessageBox.h"
 #include "crypto/Random.h"
 
+#include "config-keepassx.h"
+
 ChangeMasterKeyWidget::ChangeMasterKeyWidget(QWidget* parent)
     : DialogyWidget(parent)
     , m_ui(new Ui::ChangeMasterKeyWidget())
@@ -50,11 +52,15 @@ ChangeMasterKeyWidget::ChangeMasterKeyWidget(QWidget* parent)
     connect(m_ui->createKeyFileButton, SIGNAL(clicked()), SLOT(createKeyFile()));
     connect(m_ui->browseKeyFileButton, SIGNAL(clicked()), SLOT(browseKeyFile()));
 
+#ifdef WITH_XC_YUBIKEY
     connect(m_ui->challengeResponseGroup, SIGNAL(clicked(bool)), SLOT(challengeResponseGroupToggled(bool)));
     connect(m_ui->buttonRedetectYubikey, SIGNAL(clicked()), SLOT(pollYubikey()));
 
     connect(YubiKey::instance(), SIGNAL(detected(int,bool)), SLOT(yubikeyDetected(int,bool)), Qt::QueuedConnection);
     connect(YubiKey::instance(), SIGNAL(notFound()), SLOT(noYubikeyFound()), Qt::QueuedConnection);
+#else
+    m_ui->challengeResponseGroup->setVisible(false);
+#endif
 }
 
 ChangeMasterKeyWidget::~ChangeMasterKeyWidget()
@@ -98,8 +104,10 @@ void ChangeMasterKeyWidget::clearForms()
     m_ui->keyFileGroup->setChecked(false);
     m_ui->togglePasswordButton->setChecked(false);
 
+#ifdef WITH_XC_YUBIKEY
     m_ui->challengeResponseGroup->setChecked(false);
     m_ui->comboChallengeResponse->clear();
+#endif
 
     m_ui->enterPasswordEdit->setFocus();
 }
@@ -118,9 +126,10 @@ void ChangeMasterKeyWidget::generateKey()
 {
     m_key.clear();
 
-    bool anyChecked = m_ui->passwordGroup->isChecked();
-    anyChecked     |= m_ui->keyFileGroup->isChecked();
-    anyChecked     |= m_ui->challengeResponseGroup->isChecked();
+    bool anyChecked = m_ui->passwordGroup->isChecked() | m_ui->keyFileGroup->isChecked();
+#ifdef WITH_XC_YUBIKEY
+    anyChecked |= m_ui->challengeResponseGroup->isChecked();
+#endif
 
     if (!anyChecked) {
         if (MessageBox::warning(this, tr("No authentication factor chosen"),
@@ -160,6 +169,7 @@ void ChangeMasterKeyWidget::generateKey()
         m_key.addKey(fileKey);
     }
 
+#ifdef WITH_XC_YUBIKEY
     if (m_ui->challengeResponseGroup->isChecked()) {
         int i = m_ui->comboChallengeResponse->currentIndex();
         i = m_ui->comboChallengeResponse->itemData(i).toInt();
@@ -174,6 +184,7 @@ void ChangeMasterKeyWidget::generateKey()
 
         m_key.addChallengeResponseKey(key);
     }
+#endif
 
     m_ui->messageWidget->hideMessage();
     emit editFinished(true);

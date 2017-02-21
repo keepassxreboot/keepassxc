@@ -195,12 +195,11 @@ if(NOT ZLIB_SUPPORTS_GZIP)
 endif()
 
 # Optional
-find_package(YubiKey)
+if(WITH_XC_YUBIKEY)
+  find_package(YubiKey REQUIRED)
 
-if(YUBIKEY_FOUND)
   include_directories(SYSTEM ${YUBIKEY_INCLUDE_DIRS})
 endif()
-
 
 if(UNIX)
   check_cxx_source_compiles("#include <sys/prctl.h>

@@ -179,7 +179,7 @@ if(MINGW)
       ${CMAKE_SOURCE_DIR}/share/windows/icon.rc)
 endif()
 
-if(YUBIKEY_FOUND)
+if(WITH_XC_YUBIKEY)
   set(keepassx_SOURCES ${keepassx_SOURCES} keys/drivers/YubiKey.cpp)
 else()
   set(keepassx_SOURCES ${keepassx_SOURCES} keys/drivers/YubiKeyStub.cpp)
@@ -209,7 +209,8 @@ target_link_libraries(keepassx_core
                       Qt5::Network
                       ${GCRYPT_LIBRARIES}
                       ${GPGERROR_LIBRARIES}
-                      ${ZLIB_LIBRARIES})
+                      ${ZLIB_LIBRARIES}
+                      ${YUBIKEY_LIBRARIES})
 if (UNIX AND NOT APPLE)
     target_link_libraries(keepassx_core Qt5::DBus)
 endif()
@@ -233,10 +234,6 @@ endif()
 
 add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE ${keepassx_SOURCES_MAINEXE} ${WIN32_ProductVersionFiles})
 target_link_libraries(${PROGNAME} keepassx_core)
-
-if(YUBIKEY_FOUND)
-  target_link_libraries(keepassx_core ${YUBIKEY_LIBRARIES})
-endif()
 
 set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
 

@@ -58,9 +58,7 @@ bool YubiKey::getSerial(unsigned int& serial) const
     return false;
 }
 
-YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock,
-                                            const QByteArray& chal,
-                                            QByteArray& resp) const
+YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByteArray& chal, QByteArray& resp) const
 {
     Q_UNUSED(slot);
     Q_UNUSED(mayBlock);

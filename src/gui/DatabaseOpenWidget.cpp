@@ -29,14 +29,16 @@
 #include "format/KeePass2Reader.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
-#include "keys/YkChallengeResponseKey.h"
 #include "crypto/Random.h"
+#include "keys/YkChallengeResponseKey.h"
+
+#include "config-keepassx.h"
 
 
 DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
-    : DialogyWidget(parent)
-    , m_ui(new Ui::DatabaseOpenWidget())
-    , m_db(nullptr)
+    : DialogyWidget(parent),
+      m_ui(new Ui::DatabaseOpenWidget()),
+      m_db(nullptr)
 {
     m_ui->setupUi(this);
 
@@ -49,11 +51,6 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
 
     m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
 
-    m_ui->yubikeyProgress->setVisible(false);
-    QSizePolicy sp = m_ui->yubikeyProgress->sizePolicy();
-    sp.setRetainSizeWhenHidden(true);
-    m_ui->yubikeyProgress->setSizePolicy(sp);
-
     m_ui->buttonTogglePassword->setIcon(filePath()->onOffIcon("actions", "password-show"));
     connect(m_ui->buttonTogglePassword, SIGNAL(toggled(bool)),
             m_ui->editPassword, SLOT(setShowPassword(bool)));
@@ -61,21 +58,33 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
 
     connect(m_ui->editPassword, SIGNAL(textChanged(QString)), SLOT(activatePassword()));
     connect(m_ui->comboKeyFile, SIGNAL(editTextChanged(QString)), SLOT(activateKeyFile()));
-    connect(m_ui->comboChallengeResponse, SIGNAL(activated(int)), SLOT(activateChallengeResponse()));
 
     connect(m_ui->checkPassword, SIGNAL(toggled(bool)), SLOT(setOkButtonEnabled()));
     connect(m_ui->checkKeyFile, SIGNAL(toggled(bool)), SLOT(setOkButtonEnabled()));
     connect(m_ui->comboKeyFile, SIGNAL(editTextChanged(QString)), SLOT(setOkButtonEnabled()));
-    connect(m_ui->checkChallengeResponse, SIGNAL(toggled(bool)), SLOT(setOkButtonEnabled()));
-    connect(m_ui->comboChallengeResponse, SIGNAL(activated(int)), SLOT(setOkButtonEnabled()));
 
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(openDatabase()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
 
+#ifdef WITH_XC_YUBIKEY
+    m_ui->yubikeyProgress->setVisible(false);
+    QSizePolicy sp = m_ui->yubikeyProgress->sizePolicy();
+    sp.setRetainSizeWhenHidden(true);
+    m_ui->yubikeyProgress->setSizePolicy(sp);
+
     connect(m_ui->buttonRedetectYubikey, SIGNAL(clicked()), SLOT(pollYubikey()));
+    connect(m_ui->comboChallengeResponse, SIGNAL(activated(int)), SLOT(activateChallengeResponse()));
+    connect(m_ui->checkChallengeResponse, SIGNAL(toggled(bool)), SLOT(setOkButtonEnabled()));
+    connect(m_ui->comboChallengeResponse, SIGNAL(activated(int)), SLOT(setOkButtonEnabled()));
 
     connect(YubiKey::instance(), SIGNAL(detected(int,bool)), SLOT(yubikeyDetected(int,bool)), Qt::QueuedConnection);
     connect(YubiKey::instance(), SIGNAL(notFound()), SLOT(noYubikeyFound()), Qt::QueuedConnection);
+#else
+    m_ui->checkChallengeResponse->setVisible(false);
+    m_ui->buttonRedetectYubikey->setVisible(false);
+    m_ui->comboChallengeResponse->setVisible(false);
+    m_ui->yubikeyProgress->setVisible(false);
+#endif
 
 #ifdef Q_OS_MACOS
     // add random padding to layouts to align widgets properly
@@ -109,10 +118,12 @@ void DatabaseOpenWidget::load(const QString& filename)
         }
     }
 
-    m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
-
+#ifdef WITH_XC_YUBIKEY
     m_ui->comboChallengeResponse->clear();
     pollYubikey();
+#endif
+
+    m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
 
     m_ui->editPassword->setFocus();
 }
@@ -199,9 +210,12 @@ CompositeKey DatabaseOpenWidget::databaseKey()
 
     if (config()->get("RememberLastKeyFiles").toBool()) {
         config()->set("LastKeyFiles", lastKeyFiles);
-        config()->set("LastChallengeResponse", lastChallengeResponse);
     }
 
+#ifdef WITH_XC_YUBIKEY
+    if (config()->get("RememberLastKeyFiles").toBool()) {
+        config()->set("LastChallengeResponse", lastChallengeResponse);
+    }
 
     if (m_ui->checkChallengeResponse->isChecked()) {
         int i = m_ui->comboChallengeResponse->currentIndex();
@@ -210,6 +224,7 @@ CompositeKey DatabaseOpenWidget::databaseKey()
 
         masterKey.addChallengeResponseKey(key);
     }
+#endif
 
     return masterKey;
 }
