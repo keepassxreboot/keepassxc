@@ -59,7 +59,6 @@ private slots:
     void activatePassword();
     void activateKeyFile();
     void activateChallengeResponse();
-    void setOkButtonEnabled();
     void browseKeyFile();
     void yubikeyDetected(int slot, bool blocking);
     void noYubikeyFound();

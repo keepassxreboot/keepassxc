@@ -49,8 +49,6 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     font.setPointSize(font.pointSize() + 2);
     m_ui->labelHeadline->setFont(font);
 
-    m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
-
     m_ui->buttonTogglePassword->setIcon(filePath()->onOffIcon("actions", "password-show"));
     connect(m_ui->buttonTogglePassword, SIGNAL(toggled(bool)),
             m_ui->editPassword, SLOT(setShowPassword(bool)));
@@ -58,10 +56,6 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
 
     connect(m_ui->editPassword, SIGNAL(textChanged(QString)), SLOT(activatePassword()));
     connect(m_ui->comboKeyFile, SIGNAL(editTextChanged(QString)), SLOT(activateKeyFile()));
-
-    connect(m_ui->checkPassword, SIGNAL(toggled(bool)), SLOT(setOkButtonEnabled()));
-    connect(m_ui->checkKeyFile, SIGNAL(toggled(bool)), SLOT(setOkButtonEnabled()));
-    connect(m_ui->comboKeyFile, SIGNAL(editTextChanged(QString)), SLOT(setOkButtonEnabled()));
 
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(openDatabase()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
@@ -74,8 +68,6 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
 
     connect(m_ui->buttonRedetectYubikey, SIGNAL(clicked()), SLOT(pollYubikey()));
     connect(m_ui->comboChallengeResponse, SIGNAL(activated(int)), SLOT(activateChallengeResponse()));
-    connect(m_ui->checkChallengeResponse, SIGNAL(toggled(bool)), SLOT(setOkButtonEnabled()));
-    connect(m_ui->comboChallengeResponse, SIGNAL(activated(int)), SLOT(setOkButtonEnabled()));
 
     connect(YubiKey::instance(), SIGNAL(detected(int,bool)), SLOT(yubikeyDetected(int,bool)), Qt::QueuedConnection);
     connect(YubiKey::instance(), SIGNAL(notFound()), SLOT(noYubikeyFound()), Qt::QueuedConnection);
@@ -244,14 +236,6 @@ void DatabaseOpenWidget::activateKeyFile()
 void DatabaseOpenWidget::activateChallengeResponse()
 {
     m_ui->checkChallengeResponse->setChecked(true);
-}
-
-void DatabaseOpenWidget::setOkButtonEnabled()
-{
-    bool enable = m_ui->checkPassword->isChecked() || m_ui->checkChallengeResponse->isChecked()
-            || (m_ui->checkKeyFile->isChecked() && !m_ui->comboKeyFile->currentText().isEmpty());
-
-    m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(enable);
 }
 
 void DatabaseOpenWidget::browseKeyFile()
