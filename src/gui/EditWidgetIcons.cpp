@@ -28,6 +28,11 @@
 #include "gui/IconModels.h"
 #include "gui/MessageBox.h"
 
+#include "http/qhttp/qhttpclient.hpp"
+#include "http/qhttp/qhttpclientresponse.hpp"
+
+using namespace qhttp::client;
+
 IconStruct::IconStruct()
     : uuid(Uuid())
     , number(0)
@@ -40,8 +45,7 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     , m_database(nullptr)
     , m_defaultIconModel(new DefaultIconModel(this))
     , m_customIconModel(new CustomIconModel(this))
-    , m_networkAccessMngr(new QNetworkAccessManager(this))
-    , m_networkOperation(nullptr)
+    , m_httpClient(nullptr)
 {
     m_ui->setupUi(this);
 
@@ -59,8 +63,6 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     connect(m_ui->addButton, SIGNAL(clicked()), SLOT(addCustomIcon()));
     connect(m_ui->deleteButton, SIGNAL(clicked()), SLOT(removeCustomIcon()));
     connect(m_ui->faviconButton, SIGNAL(clicked()), SLOT(downloadFavicon()));
-    connect(m_networkAccessMngr, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(onRequestFinished(QNetworkReply*)) );
 
     m_ui->faviconButton->setVisible(false);
 }
@@ -93,7 +95,7 @@ IconStruct EditWidgetIcons::state()
             iconStruct.number = -1;
         }
     }
-    
+
     return iconStruct;
 }
 
@@ -103,7 +105,7 @@ void EditWidgetIcons::reset()
     m_currentUuid = Uuid();
 }
 
-void EditWidgetIcons::load(Uuid currentUuid, Database* database, IconStruct iconStruct, const QString &url)
+void EditWidgetIcons::load(const Uuid& currentUuid, Database* database, const IconStruct& iconStruct, const QString& url)
 {
     Q_ASSERT(database);
     Q_ASSERT(!currentUuid.isNull());
@@ -134,11 +136,11 @@ void EditWidgetIcons::load(Uuid currentUuid, Database* database, IconStruct icon
     }
 }
 
-void EditWidgetIcons::setUrl(const QString &url)
+void EditWidgetIcons::setUrl(const QString& url)
 {
     m_url = url;
     m_ui->faviconButton->setVisible(!url.isEmpty());
-    abortFaviconDownload();
+    resetFaviconDownload();
 }
 
 void EditWidgetIcons::downloadFavicon()
@@ -148,84 +150,96 @@ void EditWidgetIcons::downloadFavicon()
     fetchFavicon(url);
 }
 
-void EditWidgetIcons::fetchFavicon(QUrl url)
+void EditWidgetIcons::fetchFavicon(const QUrl& url)
 {
-    if (m_networkOperation == nullptr) {
-        m_networkOperation = m_networkAccessMngr->get(QNetworkRequest(url));
-        m_ui->faviconButton->setDisabled(true);
+    if (nullptr == m_httpClient) {
+        m_httpClient = new QHttpClient(this);
     }
+
+    bool requestMade = m_httpClient->request(qhttp::EHTTP_GET, url, [this, url](QHttpResponse* response) {
+        if (m_database == nullptr) {
+            return;
+        }
+
+        response->collectData();
+        response->onEnd([this, response, &url]() {
+            int status = response->status();
+            if (200 == status) {
+                QImage image;
+                image.loadFromData(response->collectedData());
+
+                if (!image.isNull()) {
+                    //Set the image
+                    Uuid uuid = Uuid::random();
+                    m_database->metadata()->addCustomIcon(uuid, image.scaled(16, 16));
+                    m_customIconModel->setIcons(m_database->metadata()->customIconsScaledPixmaps(),
+                                                m_database->metadata()->customIconsOrder());
+                    QModelIndex index = m_customIconModel->indexFromUuid(uuid);
+                    m_ui->customIconsView->setCurrentIndex(index);
+                    m_ui->customIconsRadio->setChecked(true);
+
+                    resetFaviconDownload();
+                } else {
+                    fetchFaviconFromGoogle(url.host());
+                }
+            } else if (301 == status || 302 == status) {
+                // Check if server has sent a redirect
+                QUrl possibleRedirectUrl(response->headers().value("location", ""));
+                if (!possibleRedirectUrl.isEmpty() && possibleRedirectUrl != m_redirectUrl && m_redirectCount < 3) {
+                    resetFaviconDownload(false);
+                    m_redirectUrl = possibleRedirectUrl;
+                    ++m_redirectCount;
+                    fetchFavicon(m_redirectUrl);
+                } else {
+                    // website is trying to redirect to itself or
+                    // maximum number of redirects has been reached, fall back to Google
+                    fetchFaviconFromGoogle(url.host());
+                }
+            } else {
+                fetchFaviconFromGoogle(url.host());
+            }
+        });
+    });
+
+    if (!requestMade) {
+        resetFaviconDownload();
+        return;
+    }
+
+    m_httpClient->setConnectingTimeOut(5000, [this]() {
+        resetFaviconDownload();
+        MessageBox::warning(this, tr("Error"), tr("Unable to fetch favicon."));
+    });
+
+    m_ui->faviconButton->setDisabled(true);
 }
 
-void EditWidgetIcons::fetchFaviconFromGoogle(QString domain)
+void EditWidgetIcons::fetchFaviconFromGoogle(const QString& domain)
 {
     if (m_fallbackToGoogle) {
-        abortFaviconDownload();
+        resetFaviconDownload();
         m_fallbackToGoogle = false;
         fetchFavicon(QUrl("http://www.google.com/s2/favicons?domain=" + domain));
     } else {
-        abortFaviconDownload();
+        resetFaviconDownload();
         MessageBox::warning(this, tr("Error"), tr("Unable to fetch favicon."));
     }
 }
 
-void EditWidgetIcons::abortFaviconDownload(bool clearRedirect)
+void EditWidgetIcons::resetFaviconDownload(bool clearRedirect)
 {
-    if (m_networkOperation != nullptr) {
-        m_networkOperation->abort();
-        m_networkOperation->deleteLater();
-        m_networkOperation = nullptr;
-    }
-    
     if (clearRedirect) {
-        if (!m_redirectUrl.isEmpty()) {
-            m_redirectUrl.clear();
-        }
+        m_redirectUrl.clear();
         m_redirectCount = 0;
     }
-    
+
+    if (nullptr != m_httpClient) {
+        m_httpClient->deleteLater();
+        m_httpClient = nullptr;
+    }
+
     m_fallbackToGoogle = true;
     m_ui->faviconButton->setDisabled(false);
-}
-
-void EditWidgetIcons::onRequestFinished(QNetworkReply *reply)
-{
-    if (m_database == nullptr) {
-        return;
-    }
-
-    if (!reply->error()) {    
-        QImage image;
-        image.loadFromData(reply->readAll());
-
-        if (!image.isNull()) {
-            //Set the image
-            Uuid uuid = Uuid::random();
-            m_database->metadata()->addCustomIcon(uuid, image.scaled(16, 16));
-            m_customIconModel->setIcons(m_database->metadata()->customIconsScaledPixmaps(),
-                                        m_database->metadata()->customIconsOrder());
-            QModelIndex index = m_customIconModel->indexFromUuid(uuid);
-            m_ui->customIconsView->setCurrentIndex(index);
-            m_ui->customIconsRadio->setChecked(true);
-            
-            abortFaviconDownload();
-        }
-        else {
-            // Check if server has sent a redirect
-            QUrl possibleRedirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
-            if (!possibleRedirectUrl.isEmpty() && possibleRedirectUrl != m_redirectUrl && m_redirectCount < 3) {
-                abortFaviconDownload(false);
-                m_redirectUrl = possibleRedirectUrl;
-                ++m_redirectCount;
-                fetchFavicon(m_redirectUrl);
-            }
-            else { // Webpage is trying to redirect back to itself or the maximum number of redirects has been reached, fallback to Google
-                fetchFaviconFromGoogle(reply->url().host());
-            }
-        }
-    }
-    else { // Request Error e.g. 404, fallback to Google
-        fetchFaviconFromGoogle(reply->url().host());
-    }
 }
 
 void EditWidgetIcons::addCustomIcon()

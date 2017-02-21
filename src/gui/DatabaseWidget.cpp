@@ -817,9 +817,10 @@ void DatabaseWidget::switchToGroupEdit()
     switchToGroupEdit(group, false);
 }
 
-void DatabaseWidget::switchToMasterKeyChange()
+void DatabaseWidget::switchToMasterKeyChange(bool disableCancel)
 {
     m_changeMasterKeyWidget->clearForms();
+    m_changeMasterKeyWidget->setCancelEnabled(!disableCancel);
     setCurrentWidget(m_changeMasterKeyWidget);
 }
 

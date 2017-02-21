@@ -7,3 +7,7 @@ src/version.h.cmake export-subst
 snapcraft.yaml export-ignore
 make_release.sh export-ignore
 AppImage-Recipe.sh export-ignore
+
+# github-linguist language hints
+*.h linguist-language=C++
+*.cpp linguist-language=C++

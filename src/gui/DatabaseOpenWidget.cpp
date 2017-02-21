@@ -54,6 +54,13 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
 
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(openDatabase()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
+    
+#ifdef Q_OS_MACOS
+    // add random padding to layouts to align widgets properly
+    m_ui->dialogButtonsLayout->setContentsMargins(10, 0, 15, 0);
+    m_ui->gridLayout->setContentsMargins(10, 0, 0, 0);
+    m_ui->labelLayout->setContentsMargins(10, 0, 10, 0);
+#endif
 }
 
 DatabaseOpenWidget::~DatabaseOpenWidget()

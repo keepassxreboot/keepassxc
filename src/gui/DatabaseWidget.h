@@ -138,7 +138,7 @@ public Q_SLOTS:
     void switchToView(bool accepted);
     void switchToEntryEdit();
     void switchToGroupEdit();
-    void switchToMasterKeyChange();
+    void switchToMasterKeyChange(bool disableCancel = false);
     void switchToDatabaseSettings();
     void switchToOpenDatabase(const QString& fileName);
     void switchToOpenDatabase(const QString& fileName, const QString& password, const QString& keyFile);

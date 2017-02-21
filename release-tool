@@ -16,8 +16,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-echo -e "\e[1m\e[32mKeePassXC\e[0m Release Preparation Helper"
-echo -e "Copyright (C) 2017 KeePassXC Team <https://keepassxc.org/>\n"
+printf "\e[1m\e[32mKeePassXC\e[0m Release Preparation Helper\n"
+printf "Copyright (C) 2017 KeePassXC Team <https://keepassxc.org/>\n\n"
 
 
 # -----------------------------------------------------------------------
@@ -57,7 +57,7 @@ printUsage() {
         cmd="COMMAND"
     fi
     
-    echo -e "\e[1mUsage:\e[0m $(basename $0) $cmd [options]"
+    printf "\e[1mUsage:\e[0m $(basename $0) $cmd [options]\n"
     
     if [ "COMMAND" == "$cmd" ]; then
         cat << EOF
@@ -126,11 +126,11 @@ EOF
 }
 
 logInfo() {
-    echo -e "\e[1m[ \e[34mINFO\e[39m ]\e[0m $1"
+    printf "\e[1m[ \e[34mINFO\e[39m ]\e[0m $1\n"
 }
 
 logError() {
-    echo -e "\e[1m[ \e[31mERROR\e[39m ]\e[0m $1" >&2
+    printf "\e[1m[ \e[31mERROR\e[39m ]\e[0m $1\n" >&2
 }
 
 init() {
@@ -246,7 +246,7 @@ checkTransifexCommandExists() {
 
 # re-implement realpath for OS X (thanks mschrag)
 # https://superuser.com/questions/205127/
-if $(command -v realpath > /dev/null); then
+if ! $(command -v realpath > /dev/null); then
     realpath() {
         pushd . > /dev/null
         if [ -d "$1" ]; then
@@ -348,13 +348,14 @@ merge() {
     checkWorkingTreeClean
     checkSourceBranchExists
     checkTargetBranchExists
+    
+    logInfo "Checking out source branch '${SOURCE_BRANCH}'..."
+    git checkout "$SOURCE_BRANCH"
+    
     checkVersionInCMake
     checkChangeLog
     
     logInfo "All checks pass, getting our hands dirty now!"
-    
-    logInfo "Checking out source branch..."
-    git checkout "$SOURCE_BRANCH"
     
     logInfo "Updating language files..."
     ./share/translations/update.sh
@@ -372,14 +373,14 @@ merge() {
         fi
     fi
 
+    CHANGELOG=$(grep -Pzo "(?<=${RELEASE_NAME} \(\d{4}-\d{2}-\d{2}\)\n)=+\n\n?(?:.|\n)+?\n(?=\n)" \
+        CHANGELOG | grep -Pzo '(?<=\n\n)(.|\n)+' | tr -d \\0)
+    COMMIT_MSG="Release ${RELEASE_NAME}"
+    
     logInfo "Checking out target branch '${TARGET_BRANCH}'..."
     git checkout "$TARGET_BRANCH"
     
     logInfo "Merging '${SOURCE_BRANCH}' into '${TARGET_BRANCH}'..."
-
-    CHANGELOG=$(grep -Pzo "(?<=${RELEASE_NAME} \(\d{4}-\d{2}-\d{2}\)\n)=+\n\n?(?:.|\n)+?\n(?=\n)" \
-        CHANGELOG | grep -Pzo '(?<=\n\n)(.|\n)+' | tr -d \\0)
-    COMMIT_MSG="Release ${RELEASE_NAME}"
 
     git merge "$SOURCE_BRANCH" --no-ff -m "$COMMIT_MSG" -m "${CHANGELOG}" "$SOURCE_BRANCH" -S"$GPG_GIT_KEY"
 
@@ -656,7 +657,9 @@ sign() {
         fi
         
         logInfo "Creating digest for file '${f}'..."
-        sha256sum "$f"  > "${f}.DIGEST"
+        local rp="$(realpath "$f")"
+        local bname="$(basename "$f")"
+        (cd "$(dirname "$rp")"; sha256sum "$bname"  > "${bname}.DIGEST")
     done
     
     logInfo "All done!"

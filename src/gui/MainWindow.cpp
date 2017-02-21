@@ -22,6 +22,11 @@
 #include <QShortcut>
 #include <QTimer>
 
+#if defined(Q_OS_LINUX) && ! defined(QT_NO_DBUS)
+#include <QList>
+#include <QtDBus/QtDBus>
+#endif
+
 #include "config-keepassx.h"
 
 #include "autotype/AutoType.h"
@@ -138,6 +143,7 @@ MainWindow::MainWindow()
             this, SLOT(lockDatabasesAfterInactivity()));
     applySettingsChanges();
 
+    setShortcut(m_ui->actionDatabaseNew, QKeySequence::New, Qt::CTRL + Qt::SHIFT + Qt::Key_N);
     setShortcut(m_ui->actionDatabaseOpen, QKeySequence::Open, Qt::CTRL + Qt::Key_O);
     setShortcut(m_ui->actionDatabaseSave, QKeySequence::Save, Qt::CTRL + Qt::Key_S);
     setShortcut(m_ui->actionDatabaseSaveAs, QKeySequence::SaveAs);
@@ -275,6 +281,11 @@ MainWindow::MainWindow()
     connect(m_ui->actionSettings, SIGNAL(triggered()), SLOT(switchToSettings()));
     connect(m_ui->actionPasswordGenerator, SIGNAL(toggled(bool)), SLOT(switchToPasswordGen(bool)));
     connect(m_ui->passwordGeneratorWidget, SIGNAL(dialogTerminated()), SLOT(closePasswordGen()));
+
+    connect(m_ui->welcomeWidget, SIGNAL(newDatabase()), SLOT(switchToNewDatabase()));
+    connect(m_ui->welcomeWidget, SIGNAL(openDatabase()), SLOT(switchToOpenDatabase()));
+    connect(m_ui->welcomeWidget, SIGNAL(openDatabaseFile(QString)), SLOT(switchToDatabaseFile(QString)));
+    connect(m_ui->welcomeWidget, SIGNAL(importKeePass1Database()), SLOT(switchToKeePass1Database()));
 
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
 
@@ -536,6 +547,30 @@ void MainWindow::closePasswordGen()
     switchToPasswordGen(false);
 }
 
+void MainWindow::switchToNewDatabase()
+{
+    m_ui->tabWidget->newDatabase();
+    switchToDatabases();
+}
+
+void MainWindow::switchToOpenDatabase()
+{
+    m_ui->tabWidget->openDatabase();
+    switchToDatabases();
+}
+
+void MainWindow::switchToDatabaseFile(QString file)
+{
+    m_ui->tabWidget->openDatabase(file);
+    switchToDatabases();
+}
+
+void MainWindow::switchToKeePass1Database()
+{
+    m_ui->tabWidget->importKeePass1Database();
+    switchToDatabases();
+}
+
 void MainWindow::databaseStatusChanged(DatabaseWidget *)
 {
     updateTrayIcon();
@@ -560,7 +595,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
     if (minimizeOnClose && !appExitCalled)
     {
         event->ignore();
-        hide();
+        toggleWindow();
 
         if (config()->get("security/lockdatabaseminimize").toBool()) {
             m_ui->tabWidget->lockDatabases();
@@ -728,18 +763,37 @@ void MainWindow::trayIconTriggered(QSystemTrayIcon::ActivationReason reason)
 void MainWindow::toggleWindow()
 {
     if ((QApplication::activeWindow() == this) && isVisible() && !isMinimized()) {
-        hide();
-
+        setWindowState(windowState() | Qt::WindowMinimized);
+        QTimer::singleShot(0, this, SLOT(hide()));
+        
         if (config()->get("security/lockdatabaseminimize").toBool()) {
             m_ui->tabWidget->lockDatabases();
         }
-    }
-    else {
+    } else {
         ensurePolished();
         setWindowState(windowState() & ~Qt::WindowMinimized);
         show();
         raise();
         activateWindow();
+        
+#if defined(Q_OS_LINUX) && ! defined(QT_NO_DBUS)
+        // re-register global D-Bus menu (needed on Ubuntu with Unity)
+        // see https://github.com/keepassxreboot/keepassxc/issues/271
+        // and https://bugreports.qt.io/browse/QTBUG-58723
+        // check for !isVisible(), because isNativeMenuBar() does not work with appmenu-qt5
+        if (!m_ui->menubar->isVisible()) {
+            QDBusMessage msg = QDBusMessage::createMethodCall(
+                "com.canonical.AppMenu.Registrar",
+                "/com/canonical/AppMenu/Registrar",
+                "com.canonical.AppMenu.Registrar",
+                "RegisterWindow");
+            QList<QVariant> args;
+            args << QVariant::fromValue(static_cast<uint32_t>(winId()))
+                 << QVariant::fromValue(QDBusObjectPath("/MenuBar/1"));
+            msg.setArguments(args);
+            QDBusConnection::sessionBus().send(msg);
+        }
+#endif
     }
 }
 

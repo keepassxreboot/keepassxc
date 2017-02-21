@@ -38,8 +38,8 @@ option(WITH_XC_AUTOTYPE "Include Autotype." OFF)
 option(WITH_XC_HTTP "Include KeePassHTTP." OFF)
 option(WITH_XC_YUBIKEY "Include Yubikey support." OFF)
 
-set(KEEPASSXC_VERSION "2.1.1")
-set(KEEPASSXC_VERSION_NUM "2.1.1")
+set(KEEPASSXC_VERSION "2.1.2")
+set(KEEPASSXC_VERSION_NUM "2.1.2")
 
 if("${CMAKE_C_COMPILER}" MATCHES "clang$" OR "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
   set(CMAKE_COMPILER_IS_CLANG 1)
@@ -166,6 +166,9 @@ find_package(Qt5Widgets       5.2 REQUIRED)
 find_package(Qt5Test          5.2 REQUIRED)
 find_package(Qt5LinguistTools 5.2 REQUIRED)
 find_package(Qt5Network       5.2 REQUIRED)
+if (UNIX AND NOT APPLE)
+    find_package(Qt5DBus 5.2 REQUIRED)
+endif()
 set(CMAKE_AUTOMOC ON)
 
 # Debian sets the the build type to None for package builds.
@@ -175,10 +178,6 @@ set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_NONE QT_NO_DEBUG)
 find_package(LibGPGError REQUIRED)
 
 find_package(Gcrypt 1.6.0 REQUIRED)
-
-if (WITH_XC_HTTP)
-    find_package(LibMicroHTTPD REQUIRED)
-endif(WITH_XC_HTTP)
 
 find_package(ZLIB REQUIRED)
 
@@ -217,7 +216,7 @@ if(UNIX)
   endif()
 endif()
 
-include_directories(SYSTEM ${GCRYPT_INCLUDE_DIR} ${MHD_INCLUDE_DIR} ${ZLIB_INCLUDE_DIR})
+include_directories(SYSTEM ${GCRYPT_INCLUDE_DIR} ${ZLIB_INCLUDE_DIR})
 
 include(FeatureSummary)
 
