@@ -62,7 +62,7 @@ class HttpPlugin: public ISettingsPage
             //delete m_service;
         }
         virtual QString name() {
-            return QObject::tr("Http");
+            return QObject::tr("Browser Integration");
         }
         virtual QWidget * createWidget() {
             OptionDialog * dlg = new OptionDialog();

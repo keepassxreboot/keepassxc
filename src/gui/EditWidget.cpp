@@ -18,6 +18,8 @@
 #include "EditWidget.h"
 #include "ui_EditWidget.h"
 
+#include "core/FilePath.h"
+
 EditWidget::EditWidget(QWidget* parent)
     : DialogyWidget(parent)
     , m_ui(new Ui::EditWidget())
@@ -37,6 +39,11 @@ EditWidget::EditWidget(QWidget* parent)
 
     connect(m_ui->buttonBox, SIGNAL(accepted()), SIGNAL(accepted()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SIGNAL(rejected()));
+
+    connect(m_ui->scrollUp, SIGNAL(clicked()), SLOT(scrollCategoriesUp()));
+    connect(m_ui->scrollDown, SIGNAL(clicked()), SLOT(scrollCategoriesDown()));
+    connect(m_ui->categoryList->verticalScrollBar(), SIGNAL(valueChanged(int)), SLOT(updateCategoryScrollButtons()));
+    connect(m_ui->categoryList->verticalScrollBar(), SIGNAL(rangeChanged(int, int)), SLOT(updateCategoryScrollButtons()));
 }
 
 EditWidget::~EditWidget()
@@ -46,6 +53,8 @@ EditWidget::~EditWidget()
 void EditWidget::add(const QString& labelText, QWidget* widget)
 {
     m_ui->categoryList->addItem(labelText);
+    QListWidgetItem* item = m_ui->categoryList->item(m_ui->categoryList->count() - 1);
+    item->setIcon(FilePath::instance()->icon("apps", "keepassxc"));
     m_ui->stackedWidget->addWidget(widget);
 }
 
@@ -99,4 +108,34 @@ void EditWidget::hideMessage()
     if (m_ui->messageWidget->isVisible()) {
         m_ui->messageWidget->animatedHide();
     }
+}
+
+void EditWidget::updateCategoryScrollButtons()
+{
+    m_ui->scrollUp->setEnabled(m_ui->categoryList->verticalScrollBar()->value() != 0);
+    m_ui->scrollDown->setEnabled(m_ui->categoryList->verticalScrollBar()->value()
+                                 != m_ui->categoryList->verticalScrollBar()->maximum());
+
+    m_ui->scrollUp->setVisible(m_ui->categoryList->verticalScrollBar()->maximum() > 0);
+    m_ui->scrollDown->setVisible(m_ui->scrollUp->isVisible());
+}
+
+void EditWidget::showEvent(QShowEvent* event)
+{
+    QWidget::showEvent(event);
+    updateCategoryScrollButtons();
+}
+
+void EditWidget::scrollCategoriesUp()
+{
+    m_ui->categoryList->verticalScrollBar()->setValue(
+        m_ui->categoryList->verticalScrollBar()->value() - m_ui->categoryList->verticalScrollBar()->pageStep()
+    );
+}
+
+void EditWidget::scrollCategoriesDown()
+{
+    m_ui->categoryList->verticalScrollBar()->setValue(
+        m_ui->categoryList->verticalScrollBar()->value() + m_ui->categoryList->verticalScrollBar()->pageStep()
+    );
 }

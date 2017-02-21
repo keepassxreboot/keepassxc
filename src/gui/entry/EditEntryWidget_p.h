@@ -22,40 +22,84 @@
 #include <QScrollBar>
 #include <QSize>
 #include <QStyledItemDelegate>
+#include <QPainter>
 
 class CategoryListViewDelegate : public QStyledItemDelegate
 {
 public:
-    explicit CategoryListViewDelegate(QObject* parent) : QStyledItemDelegate(parent) {}
+    explicit CategoryListViewDelegate(QListView* parent = nullptr)
+        : QStyledItemDelegate(parent), m_size(96, 96)
+    {}
 
-    QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+protected:
+    void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override
     {
-        QSize size = QStyledItemDelegate::sizeHint(option, index);
-        size.setHeight(qMax(size.height(), 22));
-        return size;
+        QStyleOptionViewItem opt = option;
+        initStyleOption(&opt, index);
+
+        painter->save();
+
+        QIcon icon = opt.icon;
+        QSize iconSize = opt.icon.actualSize(QSize(32, 32));
+        opt.icon = QIcon();
+        opt.decorationAlignment = Qt::AlignHCenter | Qt::AlignVCenter;
+        opt.decorationPosition = QStyleOptionViewItem::Top;
+
+        QStyle* style = opt.widget ? opt.widget->style() : QApplication::style();
+        style->drawControl(QStyle::CE_ItemViewItem, &opt, painter, opt.widget);
+
+        QRect fontRect = painter->fontMetrics().boundingRect(
+            QRect(0, 0, m_size.width(), m_size.height()), Qt::AlignHCenter | Qt::AlignBottom | Qt::TextWordWrap, opt.text);
+
+        int paddingTop = fontRect.height() < 30 ? 15 : 10;
+        int left = opt.rect.left() + opt.rect.width() / 2 - iconSize.width() / 2;
+        painter->drawPixmap(left, opt.rect.top() + paddingTop, icon.pixmap(iconSize));
+
+        painter->restore();
     }
+
+    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override
+    {
+        Q_UNUSED(option);
+        Q_UNUSED(index);
+        return m_size;
+    }
+
+private:
+    QSize m_size;
 };
 
 class CategoryListWidget : public QListWidget
 {
 public:
-    explicit CategoryListWidget(QWidget* parent = 0) : QListWidget(parent)
+    explicit CategoryListWidget(QWidget* parent = 0)
+        : QListWidget(parent)
     {
-        setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+        setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
         setItemDelegate(new CategoryListViewDelegate(this));
+        setMovement(QListView::Static);
+        setViewMode(QListWidget::IconMode);
+        setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        setWordWrap(true);
     }
-
-    virtual QSize sizeHint() const
+protected:
+    QSize sizeHint() const override
     {
         QSize sizeHint = QListWidget::sizeHint();
 
-        int width = sizeHintForColumn(0) + frameWidth() * 2 + 5;
+        int width = sizeHintForColumn(0) + frameWidth() * 2;
         if (verticalScrollBar()->isVisible()) {
             width += verticalScrollBar()->width();
         }
         sizeHint.setWidth(width);
 
         return sizeHint;
+    }
+
+    QSize minimumSizeHint() const override
+    {
+        return QSize(sizeHint().width(), sizeHintForRow(0) * 2);
     }
 };
 
@@ -65,14 +109,13 @@ public:
     explicit AttributesListView(QWidget* parent = 0) : QListView(parent)
     {
         setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
-        setItemDelegate(new CategoryListViewDelegate(this));
     }
 
-    virtual QSize sizeHint() const
+    QSize sizeHint() const override
     {
         QSize sizeHint = QListView::sizeHint();
 
-        int width = sizeHintForColumn(0) + frameWidth() * 2 + 5;
+        int width = sizeHintForColumn(0) + frameWidth() * 2;
         if (verticalScrollBar()->isVisible()) {
             width += verticalScrollBar()->width();
         }

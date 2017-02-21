@@ -148,7 +148,7 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
           <string notr="true">color: rgb(255, 0, 0);</string>
          </property>
          <property name="text">
-          <string>Activate the following only, if you know what you are doing!</string>
+          <string>Activate the following only if you know what you are doing!</string>
          </property>
         </widget>
        </item>

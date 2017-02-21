@@ -40,7 +40,58 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="CategoryListWidget" name="categoryList"/>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QToolButton" name="scrollUp">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>15</height>
+          </size>
+         </property>
+         <property name="text">
+          <string notr="true"/>
+         </property>
+         <property name="arrowType">
+          <enum>Qt::UpArrow</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="CategoryListWidget" name="categoryList"/>
+       </item>
+       <item>
+        <widget class="QToolButton" name="scrollDown">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>15</height>
+          </size>
+         </property>
+         <property name="text">
+          <string notr="true"/>
+         </property>
+         <property name="arrowType">
+          <enum>Qt::DownArrow</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
@@ -52,7 +103,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
      <property name="topMargin">
       <number>5</number>
      </property>
@@ -82,6 +133,8 @@
  </customwidgets>
  <tabstops>
   <tabstop>categoryList</tabstop>
+  <tabstop>scrollUp</tabstop>
+  <tabstop>scrollDown</tabstop>
  </tabstops>
  <resources/>
  <connections/>

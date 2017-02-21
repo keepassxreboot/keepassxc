@@ -19,6 +19,8 @@
 #define KEEPASSX_EDITWIDGET_H
 
 #include <QScopedPointer>
+#include <QtWidgets/QStyledItemDelegate>
+#include <QStyledItemDelegate>
 
 #include "gui/DialogyWidget.h"
 #include "gui/MessageWidget.h"
@@ -45,11 +47,17 @@ public:
     void setReadOnly(bool readOnly);
     bool readOnly() const;
 
-Q_SIGNALS:
+protected:
+    void showEvent(QShowEvent* event) override;
+
+signals:
     void accepted();
     void rejected();
 
-protected Q_SLOTS:
+protected slots:
+    void updateCategoryScrollButtons();
+    void scrollCategoriesDown();
+    void scrollCategoriesUp();
     void showMessage(const QString& text, MessageWidget::MessageType type);
     void hideMessage();
 
