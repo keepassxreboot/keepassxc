@@ -116,7 +116,7 @@ private:
 
     KeePass2Writer m_writer;
     QHash<Database*, DatabaseManagerStruct> m_dbList;
-    DatabaseWidgetStateSync* m_dbWidgetSateSync;
+    DatabaseWidgetStateSync* m_dbWidgetStateSync;
 };
 
 #endif // KEEPASSX_DATABASETABWIDGET_H

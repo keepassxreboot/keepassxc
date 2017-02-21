@@ -102,6 +102,10 @@ void DatabaseOpenWidget::showEvent(QShowEvent* event)
 {
     DialogyWidget::showEvent(event);
     m_ui->editPassword->setFocus();
+
+#ifdef WITH_XC_YUBIKEY
+    pollYubikey();
+#endif
 }
 
 void DatabaseOpenWidget::load(const QString& filename)
@@ -117,11 +121,6 @@ void DatabaseOpenWidget::load(const QString& filename)
             m_ui->comboKeyFile->addItem(lastKeyFiles[m_filename].toString());
         }
     }
-
-#ifdef WITH_XC_YUBIKEY
-    m_ui->comboChallengeResponse->clear();
-    pollYubikey();
-#endif
 
     m_ui->editPassword->setFocus();
 }
@@ -229,7 +228,7 @@ CompositeKey DatabaseOpenWidget::databaseKey()
 
 void DatabaseOpenWidget::reject()
 {
-    Q_EMIT editFinished(false);
+    emit editFinished(false);
 }
 
 void DatabaseOpenWidget::activatePassword()
