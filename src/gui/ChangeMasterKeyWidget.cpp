@@ -41,19 +41,25 @@ ChangeMasterKeyWidget::ChangeMasterKeyWidget(QWidget* parent)
     m_ui->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
     m_ui->repeatPasswordEdit->enableVerifyMode(m_ui->enterPasswordEdit);
 
+    connect(m_ui->passwordGroup, SIGNAL(clicked(bool)), SLOT(setOkEnabled()));
+    connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), m_ui->enterPasswordEdit, SLOT(setShowPassword(bool)));
+
+    connect(m_ui->keyFileGroup, SIGNAL(clicked(bool)), SLOT(setOkEnabled()));
+    connect(m_ui->createKeyFileButton, SIGNAL(clicked()), SLOT(createKeyFile()));
+    connect(m_ui->browseKeyFileButton, SIGNAL(clicked()), SLOT(browseKeyFile()));
+    connect(m_ui->keyFileCombo, SIGNAL(editTextChanged(QString)), SLOT(setOkEnabled()));
+
+    connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(generateKey()));
+    connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
+
+#ifdef WITH_XC_YUBIKEY
     m_ui->yubikeyProgress->setVisible(false);
     QSizePolicy sp = m_ui->yubikeyProgress->sizePolicy();
     sp.setRetainSizeWhenHidden(true);
     m_ui->yubikeyProgress->setSizePolicy(sp);
 
-    connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(generateKey()));
-    connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
-    connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), m_ui->enterPasswordEdit, SLOT(setShowPassword(bool)));
-    connect(m_ui->createKeyFileButton, SIGNAL(clicked()), SLOT(createKeyFile()));
-    connect(m_ui->browseKeyFileButton, SIGNAL(clicked()), SLOT(browseKeyFile()));
-
-#ifdef WITH_XC_YUBIKEY
     connect(m_ui->challengeResponseGroup, SIGNAL(clicked(bool)), SLOT(challengeResponseGroupToggled(bool)));
+    connect(m_ui->challengeResponseGroup, SIGNAL(clicked(bool)), SLOT(setOkEnabled()));
     connect(m_ui->buttonRedetectYubikey, SIGNAL(clicked()), SLOT(pollYubikey()));
 
     connect(YubiKey::instance(), SIGNAL(detected(int,bool)), SLOT(yubikeyDetected(int,bool)), Qt::QueuedConnection);
@@ -126,19 +132,6 @@ void ChangeMasterKeyWidget::generateKey()
 {
     m_key.clear();
 
-    bool anyChecked = m_ui->passwordGroup->isChecked() | m_ui->keyFileGroup->isChecked();
-#ifdef WITH_XC_YUBIKEY
-    anyChecked |= m_ui->challengeResponseGroup->isChecked();
-#endif
-
-    if (!anyChecked) {
-        if (MessageBox::warning(this, tr("No authentication factor chosen"),
-                                tr("Your database will be completely unprotected!<br>Do you really want to continue?"),
-                                QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes) {
-            return;
-        }
-    }
-
     if (m_ui->passwordGroup->isChecked()) {
         if (m_ui->enterPasswordEdit->text() == m_ui->repeatPasswordEdit->text()) {
             if (m_ui->enterPasswordEdit->text().isEmpty()) {
@@ -208,6 +201,7 @@ void ChangeMasterKeyWidget::pollYubikey()
     m_ui->comboChallengeResponse->setEnabled(false);
     m_ui->comboChallengeResponse->clear();
     m_ui->yubikeyProgress->setVisible(true);
+    setOkEnabled();
 
     // YubiKey init is slow, detect asynchronously to not block the UI
     QtConcurrent::run(YubiKey::instance(), &YubiKey::detect);
@@ -220,12 +214,23 @@ void ChangeMasterKeyWidget::yubikeyDetected(int slot, bool blocking)
     m_ui->comboChallengeResponse->setEnabled(m_ui->challengeResponseGroup->isChecked());
     m_ui->buttonRedetectYubikey->setEnabled(m_ui->challengeResponseGroup->isChecked());
     m_ui->yubikeyProgress->setVisible(false);
+    setOkEnabled();
 }
 
 void ChangeMasterKeyWidget::noYubikeyFound()
 {
     m_ui->buttonRedetectYubikey->setEnabled(m_ui->challengeResponseGroup->isChecked());
     m_ui->yubikeyProgress->setVisible(false);
+    setOkEnabled();
+}
+
+void ChangeMasterKeyWidget::setOkEnabled()
+{
+    bool ok = m_ui->passwordGroup->isChecked() ||
+              (m_ui->challengeResponseGroup->isChecked() && !m_ui->comboChallengeResponse->currentText().isEmpty()) ||
+              (m_ui->keyFileGroup->isChecked() && !m_ui->keyFileCombo->currentText().isEmpty());
+
+    m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(ok);
 }
 
 void ChangeMasterKeyWidget::setCancelEnabled(bool enabled)

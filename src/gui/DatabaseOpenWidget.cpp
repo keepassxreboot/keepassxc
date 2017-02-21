@@ -123,8 +123,6 @@ void DatabaseOpenWidget::load(const QString& filename)
     pollYubikey();
 #endif
 
-    m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
-
     m_ui->editPassword->setFocus();
 }
 
