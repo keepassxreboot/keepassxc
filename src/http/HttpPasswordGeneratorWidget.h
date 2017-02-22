@@ -35,10 +35,10 @@ public:
     explicit HttpPasswordGeneratorWidget(QWidget* parent = nullptr);
     ~HttpPasswordGeneratorWidget();
     void loadSettings();
+    void saveSettings();
     void reset();
 
 private Q_SLOTS:
-    void saveSettings();
     void sliderMoved();
     void spinBoxChanged();
 
