@@ -34,9 +34,9 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
 {
     m_mainUi->setupUi(m_editGroupWidgetMain);
 
-    addPage(tr("Group"), FilePath::instance()->icon("apps", "keepassxc"), m_editGroupWidgetMain);
-    addPage(tr("Icon"), FilePath::instance()->icon("apps", "keepassxc"), m_editGroupWidgetIcons);
-    addPage(tr("Properties"), FilePath::instance()->icon("apps", "keepassxc"), m_editWidgetProperties);
+    addPage(tr("Group"), FilePath::instance()->icon("actions", "document-edit"), m_editGroupWidgetMain);
+    addPage(tr("Icon"), FilePath::instance()->icon("apps", "preferences-desktop-icons"), m_editGroupWidgetIcons);
+    addPage(tr("Properties"), FilePath::instance()->icon("actions", "document-properties"), m_editWidgetProperties);
 
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
     connect(m_mainUi->autoTypeSequenceCustomRadio, SIGNAL(toggled(bool)),
