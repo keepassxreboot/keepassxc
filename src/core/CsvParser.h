@@ -94,7 +94,7 @@ private:
     void clear();
     bool skipEndline();
     void skipLine();
-    void appendStatusMsg(QString s);
+    void appendStatusMsg(QString s, bool isCritical = false);
 };
 
 #endif //CSVPARSER_H

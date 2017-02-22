@@ -33,6 +33,10 @@ CsvImportWizard::CsvImportWizard(QWidget *parent)
     m_pages->addWidget(key = new ChangeMasterKeyWidget(m_pages));
     m_pages->addWidget(parse = new CsvImportWidget(m_pages));
     key->headlineLabel()->setText(tr("Import CSV file"));
+    QFont headLineFont = key->headlineLabel()->font();
+    headLineFont.setBold(true);
+    headLineFont.setPointSize(headLineFont.pointSize() + 2);
+    key->headlineLabel()->setFont(headLineFont);
 
     connect(key, SIGNAL(editFinished(bool)), this, SLOT(keyFinished(bool)));
     connect(parse, SIGNAL(editFinished(bool)), this, SLOT(parseFinished(bool)));
@@ -64,7 +68,6 @@ void CsvImportWizard::keyFinished(bool accepted)
     if (!result) {
         MessageBox::critical(this, tr("Error"), tr("Unable to calculate master key"));
         emit(importFinished(false));
-        return;
     }
 }
 

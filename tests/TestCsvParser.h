@@ -20,6 +20,7 @@
 
 #include <QObject>
 #include <QFile>
+#include <QTemporaryFile>
 
 #include "core/CsvParser.h"
 
@@ -60,7 +61,7 @@ private Q_SLOTS:
     void testColumns();
 
 private:
-    QFile file;
+    QTemporaryFile* file;
     CsvParser* parser;
     CsvTable t;
     void dumpRow(CsvTable table, int row);

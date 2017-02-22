@@ -60,7 +60,7 @@ bool CsvParser::reparse() {
 bool CsvParser::parse(QFile *device) {
     clear();
     if (nullptr == device) {
-        m_statusMsg += QObject::tr("NULL device\n");
+        appendStatusMsg(QObject::tr("NULL device"), true);
         return false;
     }
     if (!readFile(device))
@@ -74,7 +74,7 @@ bool CsvParser::readFile(QFile *device) {
 
     device->open(QIODevice::ReadOnly);
     if (!Tools::readAllFromDevice(device, m_array)) {
-        m_statusMsg += QObject::tr("Error reading from device\n");
+        appendStatusMsg(QObject::tr("error reading from device"), true);
         m_isFileLoaded = false;
     }
     else {
@@ -82,9 +82,8 @@ bool CsvParser::readFile(QFile *device) {
 
         m_array.replace("\r\n", "\n");
         m_array.replace("\r", "\n");
-        if (0 == m_array.size()) {
-            m_statusMsg += QObject::tr("File empty\n");
-        }
+        if (0 == m_array.size())
+           appendStatusMsg(QObject::tr("file empty !\n"));
         m_isFileLoaded = true;
     }
     return m_isFileLoaded;
@@ -119,7 +118,7 @@ bool CsvParser::parseFile() {
     parseRecord();
     while (!m_isEof) {
         if (!skipEndline())
-            appendStatusMsg(QObject::tr("malformed string"));
+            appendStatusMsg(QObject::tr("malformed string"), true);
         m_currRow++;
         m_currCol = 1;
         parseRecord();
@@ -180,7 +179,7 @@ void CsvParser::parseQuoted(QString &s) {
     parseEscaped(s);
     //getChar(m_ch);
     if (!isQualifier(m_ch))
-        appendStatusMsg(QObject::tr("missing closing quote"));
+        appendStatusMsg(QObject::tr("missing closing quote"), true);
 }
 
 void CsvParser::parseEscaped(QString &s) {
@@ -269,7 +268,7 @@ void CsvParser::getChar(QChar& c) {
 
 void CsvParser::ungetChar() {
     if (!m_ts.seek(m_lastPos))
-        m_statusMsg += QObject::tr("Internal: unget lower bound exceeded");
+        appendStatusMsg(QObject::tr("INTERNAL - unget lower bound exceeded"), true);
 }
 
 void CsvParser::peek(QChar& c) {
@@ -360,9 +359,6 @@ const CsvTable CsvParser::getCsvTable() const {
 }
 
 QString CsvParser::getStatus() const {
-    if (m_statusMsg.size() > 100)
-        return m_statusMsg.section('\n', 0, 4)
-                .append("\n[...]\n").append(QObject::tr("More messages, skipped!"));
     return m_statusMsg;
 }
 
@@ -377,11 +373,11 @@ int CsvParser::getCsvRows() const {
 }
 
 
-void CsvParser::appendStatusMsg(QString s) {
+void CsvParser::appendStatusMsg(QString s, bool isCritical) {
     m_statusMsg += s
-      .append(" @" + QString::number(m_currRow))
+      .append(": (row,col) " + QString::number(m_currRow))
       .append(",")
       .append(QString::number(m_currCol))
       .append("\n");
-    m_isGood = false;
+    m_isGood = not isCritical;
 }

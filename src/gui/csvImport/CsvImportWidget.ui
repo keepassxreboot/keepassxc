@@ -122,22 +122,6 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="3">
-       <widget class="QPushButton" name="pushButtonWarnings">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Show parser warnings</string>
-        </property>
-       </widget>
-      </item>
       <item row="3" column="2">
        <spacer name="horizontalSpacer_7">
         <property name="orientation">
@@ -161,6 +145,12 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
         </property>
         <property name="font">
          <font>
@@ -239,6 +229,12 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <weight>50</weight>
@@ -290,6 +286,12 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <weight>50</weight>
@@ -308,6 +310,12 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
         </property>
         <property name="font">
          <font>
@@ -342,7 +350,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Treat '\' as escape character</string>
+         <string>Consider '\' as escape character</string>
         </property>
        </widget>
       </item>

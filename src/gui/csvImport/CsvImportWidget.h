@@ -50,7 +50,6 @@ Q_SIGNALS:
 
 private Q_SLOTS:
     void parse();
-    void showReport();
     void comboChanged(int comboId);
     void skippedChanged(int rows);
     void writeDatabase();
@@ -73,6 +72,7 @@ private:
     void updateTableview();
     Group* splitGroups(QString label);
     Group* hasChildren(Group* current, QString groupName);
+    QString formatStatusText() const;
 };
 
 #endif // KEEPASSX_CSVIMPORTWIDGET_H
