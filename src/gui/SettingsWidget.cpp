@@ -61,13 +61,13 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     addPage(tr("General"), FilePath::instance()->icon("categories", "preferences-other"), m_generalWidget);
     addPage(tr("Security"), FilePath::instance()->icon("status", "security-high"), m_secWidget);
 
-    m_generalUi->autoTypeShortcutWidget->setVisible(autoType()->isAvailable());
-    m_generalUi->autoTypeShortcutLabel->setVisible(autoType()->isAvailable());
+    if (!autoType()->isAvailable()) {
+        m_generalUi->generalSettingsTabWidget->removeTab(1);
+    }
+
 #ifdef Q_OS_MAC
     // systray not useful on OS X
-    m_generalUi->systrayShowCheckBox->setVisible(false);
-    m_generalUi->systrayMinimizeOnCloseCheckBox->setVisible(false);
-    m_generalUi->systrayMinimizeToTrayCheckBox->setVisible(false);
+   m_generalUi->systraySettings->setVisible(false);
 #endif
 
     connect(this, SIGNAL(accepted()), SLOT(saveSettings()));
@@ -106,7 +106,7 @@ void SettingsWidget::loadSettings()
     m_generalUi->autoSaveOnExitCheckBox->setChecked(config()->get("AutoSaveOnExit").toBool());
     m_generalUi->autoReloadOnChangeCheckBox->setChecked(config()->get("AutoReloadOnChange").toBool());
     m_generalUi->minimizeOnCopyCheckBox->setChecked(config()->get("MinimizeOnCopy").toBool());
-    m_generalUi->useGroupIconOnEntryCreationCheckBox->setChecked(config()->get("UseGroupIconOnEntryCreation").toBool());
+    m_generalUi->useGroupIconOnEntryCreationCheckBox->setChecked(config()->get("UseGroupIconOnEntryCreation", true).toBool());
     m_generalUi->autoTypeEntryTitleMatchCheckBox->setChecked(config()->get("AutoTypeEntryTitleMatch").toBool());
 
     m_generalUi->languageComboBox->clear();
