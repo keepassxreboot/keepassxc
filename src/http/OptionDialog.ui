@@ -42,7 +42,7 @@ This is required for accessing your databases from ChromeIPass or PassIFox</stri
        <item>
         <widget class="QCheckBox" name="bestMatchOnly">
          <property name="text">
-          <string>&amp;Return only best matching entries for an URL instead
+          <string>&amp;Return only best matching entries for a URL instead
 of all entries for the whole domain</string>
          </property>
         </widget>
@@ -79,7 +79,7 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
        <item>
         <widget class="QPushButton" name="removeSharedEncryptionKeys">
          <property name="text">
-          <string>R&amp;emove all shared encryption-keys from active database</string>
+          <string>R&amp;emove all shared encryption keys from active database</string>
          </property>
         </widget>
        </item>
@@ -145,7 +145,7 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
           <string notr="true">color: rgb(255, 0, 0);</string>
          </property>
          <property name="text">
-          <string>Activate the following only if you know what you are doing!</string>
+          <string>The following options can be dangerous. Change them only if you know what you are doing.</string>
          </property>
         </widget>
        </item>
@@ -183,14 +183,14 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
        <item>
         <widget class="QCheckBox" name="supportKphFields">
          <property name="text">
-          <string>&amp;Return also advanced string fields which start with &quot;KPH: &quot;</string>
+          <string>&amp;Return advanced string fields which start with &quot;KPH: &quot;</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>Automatic creates or updates are not supported for string fields!</string>
+          <string>Automatically creating or updating string fields is not supported.</string>
          </property>
          <property name="indent">
           <number>30</number>
