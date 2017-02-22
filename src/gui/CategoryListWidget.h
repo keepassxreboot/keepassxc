@@ -73,13 +73,13 @@ class CategoryListWidgetDelegate : public QStyledItemDelegate
 
 public:
     explicit CategoryListWidgetDelegate(QListWidget* parent = nullptr);
+    int minWidth() const;
 
 protected:
     void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 
 private:
-    int minWidth() const;
 
     const int ICON_SIZE = 32;
 

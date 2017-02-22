@@ -49,16 +49,12 @@ QSize CategoryListWidget::sizeHint() const
 {
     QSize sizeHint = QWidget::sizeHint();
 
-    int width = m_ui->categoryList->sizeHintForColumn(0);
-    if (m_ui->categoryList->verticalScrollBar()->isVisible()) {
-        width += m_ui->categoryList->verticalScrollBar()->width();
-    }
+    int width = m_ui->categoryList->width();
 
-    QSize min = minimumSizeHint();
-    if (width < min.width()) {
-        width = min.width();
+    int min = minimumSizeHint().width();
+    if (width < min) {
+        width = min;
     }
-    width += m_ui->categoryList->frameWidth() * 2;
     sizeHint.setWidth(width);
 
     return sizeHint;
@@ -66,7 +62,7 @@ QSize CategoryListWidget::sizeHint() const
 
 QSize CategoryListWidget::minimumSizeHint() const
 {
-    return QSize(m_ui->categoryList->sizeHintForColumn(0) + m_ui->categoryList->frameWidth() * 2,
+    return QSize(m_itemDelegate->minWidth() + m_ui->categoryList->frameWidth() * 2,
                  m_ui->categoryList->sizeHintForRow(0) * 2);
 }
 
@@ -204,7 +200,10 @@ int CategoryListWidgetDelegate::minWidth() const
         }
     }
 
-    return maxWidth > m_size.height() ? maxWidth + 5 : m_size.height();
+    // add some padding
+    maxWidth += 10;
+
+    return maxWidth < m_size.height() ? m_size.height() : maxWidth;
 }
 
 QSize CategoryListWidgetDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const

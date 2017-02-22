@@ -38,11 +38,11 @@
     </spacer>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
      <item>
       <widget class="CategoryListWidget" name="categoryList" native="true">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+        <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
