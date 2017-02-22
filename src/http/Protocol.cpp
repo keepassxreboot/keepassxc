@@ -370,8 +370,9 @@ QVariant Response::getEntries() const
 
     QList<QVariant> res;
     res.reserve(m_entries.size());
-    Q_FOREACH (const Entry &entry, m_entries)
+    for (const Entry &entry : m_entries) {
         res.append(qobject2qvariant(&entry));
+    }
     return res;
 }
 
@@ -383,14 +384,15 @@ void Response::setEntries(const QList<Entry> &entries)
 
     QList<Entry> encryptedEntries;
     encryptedEntries.reserve(m_count);
-    Q_FOREACH (const Entry &entry, entries) {
+    for (const Entry &entry : entries) {
         Entry encryptedEntry(encrypt(entry.name(), m_cipher),
                              encrypt(entry.login(), m_cipher),
                              entry.password().isNull() ? QString() : encrypt(entry.password(), m_cipher),
                              encrypt(entry.uuid(), m_cipher));
-        Q_FOREACH (const StringField & field, entry.stringFields())
+        for (const StringField & field : entry.stringFields()) {
             encryptedEntry.addStringField(encrypt(field.key(), m_cipher),
                                           encrypt(field.value(), m_cipher));
+        }
         encryptedEntries << encryptedEntry;
     }
     m_entries = encryptedEntries;
@@ -508,8 +510,9 @@ QVariant Entry::getStringFields() const
 
     QList<QVariant> res;
     res.reserve(m_stringFields.size());
-    Q_FOREACH (const StringField &stringfield, m_stringFields)
+    for (const StringField &stringfield : m_stringFields) {
         res.append(qobject2qvariant(&stringfield));
+    }
     return res;
 }
 
