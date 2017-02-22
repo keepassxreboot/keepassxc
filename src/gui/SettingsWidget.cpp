@@ -106,7 +106,7 @@ void SettingsWidget::loadSettings()
     m_generalUi->autoSaveOnExitCheckBox->setChecked(config()->get("AutoSaveOnExit").toBool());
     m_generalUi->autoReloadOnChangeCheckBox->setChecked(config()->get("AutoReloadOnChange").toBool());
     m_generalUi->minimizeOnCopyCheckBox->setChecked(config()->get("MinimizeOnCopy").toBool());
-    m_generalUi->useGroupIconOnEntryCreationCheckBox->setChecked(config()->get("UseGroupIconOnEntryCreation", true).toBool());
+    m_generalUi->useGroupIconOnEntryCreationCheckBox->setChecked(config()->get("UseGroupIconOnEntryCreation").toBool());
     m_generalUi->autoTypeEntryTitleMatchCheckBox->setChecked(config()->get("AutoTypeEntryTitleMatch").toBool());
 
     m_generalUi->languageComboBox->clear();
@@ -123,6 +123,7 @@ void SettingsWidget::loadSettings()
     m_generalUi->systrayMinimizeToTrayCheckBox->setChecked(config()->get("GUI/MinimizeToTray").toBool());
     m_generalUi->systrayMinimizeOnCloseCheckBox->setChecked(config()->get("GUI/MinimizeOnClose").toBool());
     m_generalUi->systrayMinimizeOnStartup->setChecked(config()->get("GUI/MinimizeOnStartup").toBool());
+    m_generalUi->autoTypeAskCheckBox->setChecked(config()->get("security/autotypeask").toBool());
 
     if (autoType()->isAvailable()) {
         m_globalAutoTypeKey = static_cast<Qt::Key>(config()->get("GlobalAutoTypeKey").toInt());
@@ -142,7 +143,6 @@ void SettingsWidget::loadSettings()
     m_secUi->passwordCleartextCheckBox->setChecked(config()->get("security/passwordscleartext").toBool());
     m_secUi->passwordRepeatCheckBox->setChecked(config()->get("security/passwordsrepeat").toBool());
 
-    m_secUi->autoTypeAskCheckBox->setChecked(config()->get("security/autotypeask").toBool());
 
     Q_FOREACH (const ExtraPage& page, m_extraPages)
         page.loadSettings();
@@ -173,6 +173,8 @@ void SettingsWidget::saveSettings()
     config()->set("GUI/MinimizeOnClose", m_generalUi->systrayMinimizeOnCloseCheckBox->isChecked());
     config()->set("GUI/MinimizeOnStartup", m_generalUi->systrayMinimizeOnStartup->isChecked());
 
+    config()->set("security/autotypeask", m_generalUi->autoTypeAskCheckBox->isChecked());
+
     if (autoType()->isAvailable()) {
         config()->set("GlobalAutoTypeKey", m_generalUi->autoTypeShortcutWidget->key());
         config()->set("GlobalAutoTypeModifiers",
@@ -187,8 +189,6 @@ void SettingsWidget::saveSettings()
 
     config()->set("security/passwordscleartext", m_secUi->passwordCleartextCheckBox->isChecked());
     config()->set("security/passwordsrepeat", m_secUi->passwordRepeatCheckBox->isChecked());
-
-    config()->set("security/autotypeask", m_secUi->autoTypeAskCheckBox->isChecked());
 
     Q_FOREACH (const ExtraPage& page, m_extraPages)
         page.saveSettings();

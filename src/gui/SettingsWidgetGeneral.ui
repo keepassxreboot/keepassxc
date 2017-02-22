@@ -301,6 +301,16 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="autoTypeAskCheckBox">
+         <property name="text">
+          <string>Always ask before performing Auto-Type</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <property name="spacing">
           <number>15</number>
