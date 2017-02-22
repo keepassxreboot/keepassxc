@@ -22,6 +22,7 @@
 #include "autotype/AutoType.h"
 #include "core/Config.h"
 #include "core/Translator.h"
+#include "core/FilePath.h"
 
 class SettingsWidget::ExtraPage
 {
@@ -57,8 +58,8 @@ SettingsWidget::SettingsWidget(QWidget* parent)
 
     m_secUi->setupUi(m_secWidget);
     m_generalUi->setupUi(m_generalWidget);
-    add(tr("General"), m_generalWidget);
-    add(tr("Security"), m_secWidget);
+    addPage(tr("General"), FilePath::instance()->icon("apps", "keepassxc"), m_generalWidget);
+    addPage(tr("Security"), FilePath::instance()->icon("apps", "keepassxc"), m_secWidget);
 
     m_generalUi->autoTypeShortcutWidget->setVisible(autoType()->isAvailable());
     m_generalUi->autoTypeShortcutLabel->setVisible(autoType()->isAvailable());
@@ -92,7 +93,7 @@ void SettingsWidget::addSettingsPage(ISettingsPage *page)
     QWidget * widget = page->createWidget();
     widget->setParent(this);
     m_extraPages.append(ExtraPage(page, widget));
-    add(page->name(), widget);
+    addPage(page->name(), FilePath::instance()->icon("apps", "keepassxc"), widget);
 }
 
 void SettingsWidget::loadSettings()
@@ -146,7 +147,7 @@ void SettingsWidget::loadSettings()
     Q_FOREACH (const ExtraPage& page, m_extraPages)
         page.loadSettings();
 
-    setCurrentRow(0);
+    setCurrentPage(0);
 }
 
 void SettingsWidget::saveSettings()

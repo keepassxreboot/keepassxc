@@ -39,25 +39,19 @@ public:
     explicit EditWidget(QWidget* parent = nullptr);
     ~EditWidget();
 
-    void add(const QString& labelText, QWidget* widget);
-    void setRowHidden(QWidget* widget, bool hide);
-    void setCurrentRow(int index);
+    void addPage(const QString& labelText, const QIcon& icon, QWidget* widget);
+    void setPageHidden(QWidget* widget, bool hidden);
+    void setCurrentPage(int index);
     void setHeadline(const QString& text);
     QLabel* headlineLabel();
     void setReadOnly(bool readOnly);
     bool readOnly() const;
-
-protected:
-    void showEvent(QShowEvent* event) override;
 
 signals:
     void accepted();
     void rejected();
 
 protected slots:
-    void updateCategoryScrollButtons();
-    void scrollCategoriesDown();
-    void scrollCategoriesUp();
     void showMessage(const QString& text, MessageWidget::MessageType type);
     void hideMessage();
 

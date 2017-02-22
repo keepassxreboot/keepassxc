@@ -70,6 +70,7 @@ set(keepassx_SOURCES
     format/KeePass2XmlWriter.cpp
     gui/AboutDialog.cpp
     gui/Application.cpp
+    gui/CategoryListWidget.cpp
     gui/ChangeMasterKeyWidget.cpp
     gui/Clipboard.cpp
     gui/DatabaseOpenWidget.cpp
@@ -132,6 +133,7 @@ set(keepassx_FORMS
     gui/ChangeMasterKeyWidget.ui
     gui/DatabaseOpenWidget.ui
     gui/DatabaseSettingsWidget.ui
+    gui/CategoryListWidget.ui
     gui/EditWidget.ui
     gui/EditWidgetIcons.ui
     gui/EditWidgetProperties.ui
