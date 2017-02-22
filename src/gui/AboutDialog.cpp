@@ -23,15 +23,17 @@
 #include "core/FilePath.h"
 #include "crypto/Crypto.h"
 
+#include <QClipboard>
+#include <QSysInfo>
+
 AboutDialog::AboutDialog(QWidget* parent)
-    : QDialog(parent)
-    , m_ui(new Ui::AboutDialog())
+    : QDialog(parent),
+      m_ui(new Ui::AboutDialog())
 {
     m_ui->setupUi(this);
 
     m_ui->nameLabel->setText(m_ui->nameLabel->text() + " " + KEEPASSX_VERSION);
     QFont nameLabelFont = m_ui->nameLabel->font();
-    nameLabelFont.setBold(true);
     nameLabelFont.setPointSize(nameLabelFont.pointSize() + 4);
     m_ui->nameLabel->setFont(nameLabelFont);
 
@@ -45,37 +47,55 @@ AboutDialog::AboutDialog(QWidget* parent)
         commitHash = DIST_HASH;
     }
 
+    QString debugInfo = "KeePassXC - ";
+    debugInfo.append(tr("Version %1\n").arg(KEEPASSX_VERSION));
     if (!commitHash.isEmpty()) {
-        QString labelText = tr("Revision").append(": ").append(commitHash);
-        m_ui->label_git->setText(labelText);
+        debugInfo.append(tr("Revision: %1").arg(commitHash).append("\n\n"));
     }
 
-    QString libs = QString("%1\n- Qt %2\n- %3")
-            .arg(m_ui->label_libs->text())
-            .arg(QString::fromLocal8Bit(qVersion()))
-            .arg(Crypto::backendVersion());
-    m_ui->label_libs->setText(libs);
+    debugInfo.append(QString("%1\n- Qt %2\n- %3\n\n")
+             .arg(tr("Libraries:"))
+             .arg(QString::fromLocal8Bit(qVersion()))
+             .arg(Crypto::backendVersion()));
+
+    debugInfo.append(tr("Operating system: %1 (version: %2)\nCPU architecture: %3\nKernel: %4 %5")
+             .arg(QSysInfo::prettyProductName())
+             .arg(QSysInfo::productVersion())
+             .arg(QSysInfo::currentCpuArchitecture())
+             .arg(QSysInfo::kernelType())
+             .arg(QSysInfo::kernelVersion()));
+
+    debugInfo.append("\n\n");
 
     QString extensions;
 #ifdef WITH_XC_HTTP
-    extensions += "- KeePassHTTP\n";
+    extensions += "\n- KeePassHTTP";
 #endif
 #ifdef WITH_XC_AUTOTYPE
-    extensions += "- Autotype\n";
+    extensions += "\n- Auto-Type";
 #endif
 #ifdef WITH_XC_YUBIKEY
-    extensions += "- Yubikey\n";
+    extensions += "\n- YubiKey";
 #endif
 
     if (extensions.isEmpty())
-        extensions = "None";
+        extensions = " None";
 
-    m_ui->label_features->setText(m_ui->label_features->text() + extensions);
+    debugInfo.append(tr("Enabled extensions:").append(extensions));
+
+    m_ui->debugInfo->setPlainText(debugInfo);
 
     setAttribute(Qt::WA_DeleteOnClose);
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(close()));
+    connect(m_ui->copyToClipboard, SIGNAL(clicked()), SLOT(copyToClipboard()));
 }
 
 AboutDialog::~AboutDialog()
 {
+}
+
+void AboutDialog::copyToClipboard()
+{
+    QClipboard* clipboard = QApplication::clipboard();
+    clipboard->setText(m_ui->debugInfo->toPlainText());
 }
