@@ -29,6 +29,7 @@ class ISettingsPage {
 public:
     virtual ~ISettingsPage() {}
     virtual QString name() = 0;
+    virtual QIcon icon() = 0;
     virtual QWidget * createWidget() = 0;
     virtual void loadSettings(QWidget * widget) = 0;
     virtual void saveSettings(QWidget * widget) = 0;

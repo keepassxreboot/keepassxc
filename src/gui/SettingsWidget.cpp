@@ -58,8 +58,8 @@ SettingsWidget::SettingsWidget(QWidget* parent)
 
     m_secUi->setupUi(m_secWidget);
     m_generalUi->setupUi(m_generalWidget);
-    addPage(tr("General"), FilePath::instance()->icon("apps", "keepassxc"), m_generalWidget);
-    addPage(tr("Security"), FilePath::instance()->icon("apps", "keepassxc"), m_secWidget);
+    addPage(tr("General"), FilePath::instance()->icon("categories", "preferences-other"), m_generalWidget);
+    addPage(tr("Security"), FilePath::instance()->icon("status", "security-high"), m_secWidget);
 
     m_generalUi->autoTypeShortcutWidget->setVisible(autoType()->isAvailable());
     m_generalUi->autoTypeShortcutLabel->setVisible(autoType()->isAvailable());
@@ -88,12 +88,12 @@ SettingsWidget::~SettingsWidget()
 {
 }
 
-void SettingsWidget::addSettingsPage(ISettingsPage *page)
+void SettingsWidget::addSettingsPage(ISettingsPage* page)
 {
-    QWidget * widget = page->createWidget();
+    QWidget* widget = page->createWidget();
     widget->setParent(this);
     m_extraPages.append(ExtraPage(page, widget));
-    addPage(page->name(), FilePath::instance()->icon("apps", "keepassxc"), widget);
+    addPage(page->name(), page->icon(), widget);
 }
 
 void SettingsWidget::loadSettings()

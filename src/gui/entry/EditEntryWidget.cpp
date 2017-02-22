@@ -90,7 +90,7 @@ EditEntryWidget::~EditEntryWidget()
 void EditEntryWidget::setupMain()
 {
     m_mainUi->setupUi(m_mainWidget);
-    addPage(tr("Entry"), FilePath::instance()->icon("apps", "keepassxc"), m_mainWidget);
+    addPage(tr("Entry"), FilePath::instance()->icon("actions", "document-edit"), m_mainWidget);
 
     m_mainUi->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
     m_mainUi->togglePasswordGeneratorButton->setIcon(filePath()->icon("actions", "password-generator", false));
@@ -115,7 +115,7 @@ void EditEntryWidget::setupMain()
 void EditEntryWidget::setupAdvanced()
 {
     m_advancedUi->setupUi(m_advancedWidget);
-    addPage(tr("Advanced"), FilePath::instance()->icon("apps", "keepassxc"), m_advancedWidget);
+    addPage(tr("Advanced"), FilePath::instance()->icon("categories", "preferences-other"), m_advancedWidget);
 
     m_attachmentsModel->setEntryAttachments(m_entryAttachments);
     m_advancedUi->attachmentsView->setModel(m_attachmentsModel);
@@ -139,13 +139,13 @@ void EditEntryWidget::setupAdvanced()
 
 void EditEntryWidget::setupIcon()
 {
-    addPage(tr("Icon"), FilePath::instance()->icon("apps", "keepassxc"), m_iconsWidget);
+    addPage(tr("Icon"), FilePath::instance()->icon("apps", "preferences-desktop-icons"), m_iconsWidget);
 }
 
 void EditEntryWidget::setupAutoType()
 {
     m_autoTypeUi->setupUi(m_autoTypeWidget);
-    addPage(tr("Auto-Type"), FilePath::instance()->icon("apps", "keepassxc"), m_autoTypeWidget);
+    addPage(tr("Auto-Type"), FilePath::instance()->icon("actions", "key-enter"), m_autoTypeWidget);
 
     m_autoTypeDefaultSequenceGroup->addButton(m_autoTypeUi->inheritSequenceButton);
     m_autoTypeDefaultSequenceGroup->addButton(m_autoTypeUi->customSequenceButton);
@@ -177,13 +177,13 @@ void EditEntryWidget::setupAutoType()
 
 void EditEntryWidget::setupProperties()
 {
-    addPage(tr("Properties"), FilePath::instance()->icon("apps", "keepassxc"), m_editWidgetProperties);
+    addPage(tr("Properties"), FilePath::instance()->icon("actions", "document-properties"), m_editWidgetProperties);
 }
 
 void EditEntryWidget::setupHistory()
 {
     m_historyUi->setupUi(m_historyWidget);
-    addPage(tr("History"), FilePath::instance()->icon("apps", "keepassxc"), m_historyWidget);
+    addPage(tr("History"), FilePath::instance()->icon("actions", "view-history"), m_historyWidget);
 
     m_sortModel->setSourceModel(m_historyModel);
     m_sortModel->setDynamicSortFilter(true);
