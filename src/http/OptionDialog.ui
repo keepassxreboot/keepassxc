@@ -24,9 +24,6 @@ This is required for accessing your databases from ChromeIPass or PassIFox</stri
    </item>
    <item>
     <widget class="QTabWidget" name="tabWidget">
-     <property name="tabShape">
-      <enum>QTabWidget::Rounded</enum>
-     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>

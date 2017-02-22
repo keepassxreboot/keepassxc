@@ -38,9 +38,16 @@
     </spacer>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
      <item>
-      <widget class="CategoryListWidget" name="categoryList"/>
+      <widget class="CategoryListWidget" name="categoryList" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
@@ -76,8 +83,9 @@
   </customwidget>
   <customwidget>
    <class>CategoryListWidget</class>
-   <extends>QListWidget</extends>
+   <extends>QWidget</extends>
    <header>gui/CategoryListWidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

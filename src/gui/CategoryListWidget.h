@@ -17,6 +17,10 @@
 
 #include <QWidget>
 #include <QStyledItemDelegate>
+#include <QPointer>
+
+class CategoryListWidgetDelegate;
+class QListWidget;
 
 namespace Ui {
     class CategoryListWidget;
@@ -42,6 +46,7 @@ signals:
 
 protected:
     void showEvent(QShowEvent* event) override;
+    void resizeEvent(QResizeEvent * event) override;
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
 
@@ -52,6 +57,7 @@ protected slots:
     void emitCategoryChanged(int index);
 
 private:
+    QPointer<CategoryListWidgetDelegate> m_itemDelegate;
     const QScopedPointer<Ui::CategoryListWidget> m_ui;
 
     Q_DISABLE_COPY(CategoryListWidget)
@@ -66,13 +72,18 @@ class CategoryListWidgetDelegate : public QStyledItemDelegate
     Q_OBJECT
 
 public:
-    explicit CategoryListWidgetDelegate(QWidget* parent = nullptr);
+    explicit CategoryListWidgetDelegate(QListWidget* parent = nullptr);
 
 protected:
     void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 
 private:
+    int minWidth() const;
+
+    const int ICON_SIZE = 32;
+
+    QPointer<QListWidget> m_listWidget;
     QSize m_size;
 
     Q_DISABLE_COPY(CategoryListWidgetDelegate)

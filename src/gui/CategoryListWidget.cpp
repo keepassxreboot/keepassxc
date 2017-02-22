@@ -26,10 +26,12 @@
 
 CategoryListWidget::CategoryListWidget(QWidget* parent)
     : QWidget(parent),
+      m_itemDelegate(nullptr),
       m_ui(new Ui::CategoryListWidget())
 {
     m_ui->setupUi(this);
-    m_ui->categoryList->setItemDelegate(new CategoryListWidgetDelegate(this));
+    m_itemDelegate = new CategoryListWidgetDelegate(m_ui->categoryList);
+    m_ui->categoryList->setItemDelegate(m_itemDelegate);
 
     connect(m_ui->categoryList, SIGNAL(currentRowChanged(int)), SLOT(emitCategoryChanged(int)));
 
@@ -47,10 +49,16 @@ QSize CategoryListWidget::sizeHint() const
 {
     QSize sizeHint = QWidget::sizeHint();
 
-    int width = m_ui->categoryList->sizeHintForColumn(0) + m_ui->categoryList->frameWidth() * 2;
+    int width = m_ui->categoryList->sizeHintForColumn(0);
     if (m_ui->categoryList->verticalScrollBar()->isVisible()) {
         width += m_ui->categoryList->verticalScrollBar()->width();
     }
+
+    QSize min = minimumSizeHint();
+    if (width < min.width()) {
+        width = min.width();
+    }
+    width += m_ui->categoryList->frameWidth() * 2;
     sizeHint.setWidth(width);
 
     return sizeHint;
@@ -58,7 +66,8 @@ QSize CategoryListWidget::sizeHint() const
 
 QSize CategoryListWidget::minimumSizeHint() const
 {
-    return QSize(sizeHint().width(), m_ui->categoryList->sizeHintForRow(0) * 2);
+    return QSize(m_ui->categoryList->sizeHintForColumn(0) + m_ui->categoryList->frameWidth() * 2,
+                 m_ui->categoryList->sizeHintForRow(0) * 2);
 }
 
 int CategoryListWidget::addCategory(const QString& labelText, const QIcon& icon)
@@ -101,6 +110,16 @@ void CategoryListWidget::showEvent(QShowEvent* event)
     updateCategoryScrollButtons();
 }
 
+void CategoryListWidget::resizeEvent(QResizeEvent* event)
+{
+    auto newDelegate = new CategoryListWidgetDelegate(m_ui->categoryList);
+    m_ui->categoryList->setItemDelegate(newDelegate);
+    m_itemDelegate->deleteLater();
+    m_itemDelegate = newDelegate;
+
+    QWidget::resizeEvent(event);
+}
+
 void CategoryListWidget::updateCategoryScrollButtons()
 {
     m_ui->scrollUp->setEnabled(m_ui->categoryList->verticalScrollBar()->value() != 0);
@@ -134,10 +153,15 @@ void CategoryListWidget::emitCategoryChanged(int index)
 /* =============================================================================================== */
 
 
-CategoryListWidgetDelegate::CategoryListWidgetDelegate(QWidget* parent)
+CategoryListWidgetDelegate::CategoryListWidgetDelegate(QListWidget* parent)
     : QStyledItemDelegate(parent),
-      m_size(96, 96)
-{}
+      m_listWidget(parent),
+      m_size(minWidth(), 96)
+{
+    if (m_listWidget && m_listWidget->width() > m_size.width()) {
+        m_size.setWidth(m_listWidget->width());
+    }
+}
 
 void CategoryListWidgetDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
@@ -147,7 +171,7 @@ void CategoryListWidgetDelegate::paint(QPainter* painter, const QStyleOptionView
     painter->save();
 
     QIcon icon = opt.icon;
-    QSize iconSize = opt.icon.actualSize(QSize(32, 32));
+    QSize iconSize = opt.icon.actualSize(QSize(ICON_SIZE, ICON_SIZE));
     opt.icon = QIcon();
     opt.decorationAlignment = Qt::AlignHCenter | Qt::AlignVCenter;
     opt.decorationPosition = QStyleOptionViewItem::Top;
@@ -156,7 +180,7 @@ void CategoryListWidgetDelegate::paint(QPainter* painter, const QStyleOptionView
     style->drawControl(QStyle::CE_ItemViewItem, &opt, painter, opt.widget);
 
     QRect fontRect = painter->fontMetrics().boundingRect(
-      QRect(0, 0, m_size.width(), m_size.height()), Qt::AlignHCenter | Qt::AlignBottom | Qt::TextWordWrap, opt.text);
+        QRect(0, 0, minWidth(), m_size.height()), Qt::AlignHCenter | Qt::AlignBottom | Qt::TextWordWrap, opt.text);
 
     int paddingTop = fontRect.height() < 30 ? 15 : 10;
     int left = opt.rect.left() + opt.rect.width() / 2 - iconSize.width() / 2;
@@ -165,9 +189,33 @@ void CategoryListWidgetDelegate::paint(QPainter* painter, const QStyleOptionView
     painter->restore();
 }
 
+int CategoryListWidgetDelegate::minWidth() const
+{
+    int c = m_listWidget->count();
+    int maxWidth = 0;
+
+    for (int i = 0; i < c; ++i) {
+        QFontMetrics fm(m_listWidget->font());
+        QRect fontRect = fm.boundingRect(
+            QRect(0, 0, 0, 0), Qt::TextWordWrap | Qt::ElideNone, m_listWidget->item(i)->text());
+
+        if (fontRect.width() > maxWidth) {
+            maxWidth = fontRect.width();
+        }
+    }
+
+    return maxWidth > m_size.height() ? maxWidth + 5 : m_size.height();
+}
+
 QSize CategoryListWidgetDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     Q_UNUSED(option);
     Q_UNUSED(index);
-    return m_size;
+
+    int w = minWidth();
+    if (m_listWidget->width() > w) {
+        w = m_listWidget->width();
+    }
+
+    return QSize(w, m_size.height());
 }
