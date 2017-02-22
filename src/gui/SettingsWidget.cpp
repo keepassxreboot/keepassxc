@@ -22,6 +22,7 @@
 #include "autotype/AutoType.h"
 #include "core/Config.h"
 #include "core/Translator.h"
+#include "core/FilePath.h"
 
 class SettingsWidget::ExtraPage
 {
@@ -57,16 +58,16 @@ SettingsWidget::SettingsWidget(QWidget* parent)
 
     m_secUi->setupUi(m_secWidget);
     m_generalUi->setupUi(m_generalWidget);
-    add(tr("General"), m_generalWidget);
-    add(tr("Security"), m_secWidget);
+    addPage(tr("General"), FilePath::instance()->icon("categories", "preferences-other"), m_generalWidget);
+    addPage(tr("Security"), FilePath::instance()->icon("status", "security-high"), m_secWidget);
 
-    m_generalUi->autoTypeShortcutWidget->setVisible(autoType()->isAvailable());
-    m_generalUi->autoTypeShortcutLabel->setVisible(autoType()->isAvailable());
+    if (!autoType()->isAvailable()) {
+        m_generalUi->generalSettingsTabWidget->removeTab(1);
+    }
+
 #ifdef Q_OS_MAC
     // systray not useful on OS X
-    m_generalUi->systrayShowCheckBox->setVisible(false);
-    m_generalUi->systrayMinimizeOnCloseCheckBox->setVisible(false);
-    m_generalUi->systrayMinimizeToTrayCheckBox->setVisible(false);
+   m_generalUi->systraySettings->setVisible(false);
 #endif
 
     connect(this, SIGNAL(accepted()), SLOT(saveSettings()));
@@ -87,12 +88,12 @@ SettingsWidget::~SettingsWidget()
 {
 }
 
-void SettingsWidget::addSettingsPage(ISettingsPage *page)
+void SettingsWidget::addSettingsPage(ISettingsPage* page)
 {
-    QWidget * widget = page->createWidget();
+    QWidget* widget = page->createWidget();
     widget->setParent(this);
     m_extraPages.append(ExtraPage(page, widget));
-    add(page->name(), widget);
+    addPage(page->name(), page->icon(), widget);
 }
 
 void SettingsWidget::loadSettings()
@@ -122,6 +123,7 @@ void SettingsWidget::loadSettings()
     m_generalUi->systrayMinimizeToTrayCheckBox->setChecked(config()->get("GUI/MinimizeToTray").toBool());
     m_generalUi->systrayMinimizeOnCloseCheckBox->setChecked(config()->get("GUI/MinimizeOnClose").toBool());
     m_generalUi->systrayMinimizeOnStartup->setChecked(config()->get("GUI/MinimizeOnStartup").toBool());
+    m_generalUi->autoTypeAskCheckBox->setChecked(config()->get("security/autotypeask").toBool());
 
     if (autoType()->isAvailable()) {
         m_globalAutoTypeKey = static_cast<Qt::Key>(config()->get("GlobalAutoTypeKey").toInt());
@@ -141,12 +143,11 @@ void SettingsWidget::loadSettings()
     m_secUi->passwordCleartextCheckBox->setChecked(config()->get("security/passwordscleartext").toBool());
     m_secUi->passwordRepeatCheckBox->setChecked(config()->get("security/passwordsrepeat").toBool());
 
-    m_secUi->autoTypeAskCheckBox->setChecked(config()->get("security/autotypeask").toBool());
 
     Q_FOREACH (const ExtraPage& page, m_extraPages)
         page.loadSettings();
 
-    setCurrentRow(0);
+    setCurrentPage(0);
 }
 
 void SettingsWidget::saveSettings()
@@ -172,6 +173,8 @@ void SettingsWidget::saveSettings()
     config()->set("GUI/MinimizeOnClose", m_generalUi->systrayMinimizeOnCloseCheckBox->isChecked());
     config()->set("GUI/MinimizeOnStartup", m_generalUi->systrayMinimizeOnStartup->isChecked());
 
+    config()->set("security/autotypeask", m_generalUi->autoTypeAskCheckBox->isChecked());
+
     if (autoType()->isAvailable()) {
         config()->set("GlobalAutoTypeKey", m_generalUi->autoTypeShortcutWidget->key());
         config()->set("GlobalAutoTypeModifiers",
@@ -186,8 +189,6 @@ void SettingsWidget::saveSettings()
 
     config()->set("security/passwordscleartext", m_secUi->passwordCleartextCheckBox->isChecked());
     config()->set("security/passwordsrepeat", m_secUi->passwordRepeatCheckBox->isChecked());
-
-    config()->set("security/autotypeask", m_secUi->autoTypeAskCheckBox->isChecked());
 
     Q_FOREACH (const ExtraPage& page, m_extraPages)
         page.saveSettings();

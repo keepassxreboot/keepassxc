@@ -38,7 +38,7 @@ Q_SIGNALS:
     void removeStoredPermissions();
 
 private:
-    QScopedPointer<Ui::OptionDialog> ui;
+    QScopedPointer<Ui::OptionDialog> m_ui;
 };
 
 #endif // OPTIONDIALOG_H

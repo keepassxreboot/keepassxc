@@ -6,14 +6,26 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>605</width>
-    <height>429</height>
+    <width>577</width>
+    <height>404</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QCheckBox" name="enableHttpServer">
      <property name="text">
@@ -24,9 +36,6 @@ This is required for accessing your databases from ChromeIPass or PassIFox</stri
    </item>
    <item>
     <widget class="QTabWidget" name="tabWidget">
-     <property name="tabShape">
-      <enum>QTabWidget::Rounded</enum>
-     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
@@ -40,13 +49,18 @@ This is required for accessing your databases from ChromeIPass or PassIFox</stri
          <property name="text">
           <string>Sh&amp;ow a notification when credentials are requested</string>
          </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item>
         <widget class="QCheckBox" name="bestMatchOnly">
+         <property name="toolTip">
+          <string>Only returns the best matches for a specific URL instead of all entries for the whole domain.</string>
+         </property>
          <property name="text">
-          <string>&amp;Return only best matching entries for a URL instead
-of all entries for the whole domain</string>
+          <string>&amp;Return only best matching entries</string>
          </property>
         </widget>
        </item>
@@ -55,13 +69,18 @@ of all entries for the whole domain</string>
          <property name="text">
           <string>Re&amp;quest to unlock the database if it is locked</string>
          </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item>
         <widget class="QCheckBox" name="matchUrlScheme">
+         <property name="toolTip">
+          <string>Only entries with the same scheme (http://, https://, ftp://, ...) are returned.</string>
+         </property>
          <property name="text">
-          <string>&amp;Match URL schemes
-Only entries with the same scheme (http://, https://, ftp://, ...) are returned</string>
+          <string>&amp;Match URL schemes</string>
          </property>
         </widget>
        </item>
@@ -110,7 +129,7 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
      </widget>
      <widget class="QWidget" name="tab_3">
       <attribute name="title">
-       <string>Password generator</string>
+       <string>Password Generator</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
@@ -135,20 +154,14 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
       <attribute name="title">
        <string>Advanced</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
-        <widget class="QLabel" name="label">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(255, 0, 0);</string>
-         </property>
-         <property name="text">
-          <string>The following options can be dangerous. Change them only if you know what you are doing.</string>
+        <widget class="MessageWidget" name="warningWidget" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
         </widget>
        </item>
@@ -168,35 +181,21 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
        </item>
        <item>
         <widget class="QCheckBox" name="searchInAllDatabases">
+         <property name="toolTip">
+          <string>Only the selected database has to be connected with a client.</string>
+         </property>
          <property name="text">
           <string>Searc&amp;h in all opened databases for matching entries</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Only the selected database has to be connected with a client!</string>
-         </property>
-         <property name="indent">
-          <number>30</number>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QCheckBox" name="supportKphFields">
-         <property name="text">
-          <string>&amp;Return advanced string fields which start with &quot;KPH: &quot;</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_2">
-         <property name="text">
+         <property name="toolTip">
           <string>Automatically creating or updating string fields is not supported.</string>
          </property>
-         <property name="indent">
-          <number>30</number>
+         <property name="text">
+          <string>&amp;Return advanced string fields which start with &quot;KPH: &quot;</string>
          </property>
         </widget>
        </item>
@@ -217,25 +216,8 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
         </spacer>
        </item>
        <item>
-        <layout class="QGridLayout" name="gridLayout">
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="httpPort">
-           <property name="inputMask">
-            <string notr="true">d0000</string>
-           </property>
-           <property name="placeholderText">
-            <string>Default port: 19455</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QLabel" name="label_5">
-           <property name="text">
-            <string>KeePassXC will listen to this port on 127.0.0.1</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
+        <layout class="QFormLayout" name="formLayout">
+         <item row="0" column="0">
           <widget class="QLabel" name="label_4">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -248,6 +230,23 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
            </property>
            <property name="alignment">
             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="httpPort">
+           <property name="inputMask">
+            <string notr="true">d0000</string>
+           </property>
+           <property name="placeholderText">
+            <string>Default port: 19455</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>KeePassXC will listen to this port on 127.0.0.1</string>
            </property>
           </widget>
          </item>
@@ -277,6 +276,12 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
    <class>HttpPasswordGeneratorWidget</class>
    <extends>QWidget</extends>
    <header>http/HttpPasswordGeneratorWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MessageWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/MessageWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
