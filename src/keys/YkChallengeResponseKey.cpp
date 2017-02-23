@@ -15,7 +15,6 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include <QFile>
 #include <QXmlStreamReader>
 
@@ -26,11 +25,7 @@
 #include "keys/YkChallengeResponseKey.h"
 #include "keys/drivers/YubiKey.h"
 
-#include <QDebug>
-#include <QObject>
-
-YkChallengeResponseKey::YkChallengeResponseKey(int slot,
-                                               bool blocking)
+YkChallengeResponseKey::YkChallengeResponseKey(int slot, bool blocking)
     : m_slot(slot),
       m_blocking(blocking)
 {
@@ -41,40 +36,41 @@ QByteArray YkChallengeResponseKey::rawKey() const
     return m_key;
 }
 
-YkChallengeResponseKey* YkChallengeResponseKey::clone() const
-{
-    return new YkChallengeResponseKey(*this);
-}
-
-
-/** Assumes yubikey()->init() was called */
+/**
+ * Assumes yubikey()->init() was called
+ */
 bool YkChallengeResponseKey::challenge(const QByteArray& chal)
 {
     return challenge(chal, 1);
 }
-
-bool YkChallengeResponseKey::challenge(const QByteArray& chal, int retries)
+#include <QDebug>
+bool YkChallengeResponseKey::challenge(const QByteArray& chal, unsigned retries)
 {
-    if (YubiKey::instance()->challenge(m_slot, true, chal, m_key) != YubiKey::ERROR) {
-        return true;
-    }
+    Q_ASSERT(retries > 0);
 
-    /* If challenge failed, retry to detect YubiKeys in the event the YubiKey
-     *  was un-plugged and re-plugged */
-    while (retries > 0) {
-#ifdef QT_DEBUG
-        qDebug() << "Attempt" << retries << "to re-detect YubiKey(s)";
-#endif
-        retries--;
+    do {
+        --retries;
 
-        if (YubiKey::instance()->init() != true) {
+        if (m_blocking) {
+            emit userInteractionRequired();
+        }
+
+        auto result = YubiKey::instance()->challenge(m_slot, true, chal, m_key);
+
+        if (m_blocking) {
+            emit userConfirmed();
+        }
+
+        if (result != YubiKey::ERROR) {
+            return true;
+        }
+
+        // if challenge failed, retry to detect YubiKeys in the event the YubiKey was un-plugged and re-plugged
+        if (retries > 0 && YubiKey::instance()->init() != true) {
             continue;
         }
 
-        if (YubiKey::instance()->challenge(m_slot, true, chal, m_key) != YubiKey::ERROR) {
-            return true;
-        }
-    }
+    } while (retries > 0);
 
     return false;
 }

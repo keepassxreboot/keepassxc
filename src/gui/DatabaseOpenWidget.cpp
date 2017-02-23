@@ -15,8 +15,6 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtConcurrentRun>
-
 #include "DatabaseOpenWidget.h"
 #include "ui_DatabaseOpenWidget.h"
 
@@ -33,6 +31,9 @@
 #include "keys/YkChallengeResponseKey.h"
 
 #include "config-keepassx.h"
+
+#include <QtConcurrentRun>
+#include <QSharedPointer>
 
 
 DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
@@ -156,7 +157,7 @@ void DatabaseOpenWidget::openDatabase()
         if (m_ui->messageWidget->isVisible()) {
             m_ui->messageWidget->animatedHide();
         }
-        Q_EMIT editFinished(true);
+        emit editFinished(true);
     }
     else {
         m_ui->messageWidget->showMessage(tr("Unable to open the database.")
@@ -209,8 +210,10 @@ CompositeKey DatabaseOpenWidget::databaseKey()
     if (m_ui->checkChallengeResponse->isChecked()) {
         int i = m_ui->comboChallengeResponse->currentIndex();
         i = m_ui->comboChallengeResponse->itemData(i).toInt();
-        YkChallengeResponseKey key(i);
 
+        bool blocking = i & true;
+        int slot      = i >> 1;
+        auto key      = QSharedPointer<YkChallengeResponseKey>(new YkChallengeResponseKey(slot, blocking));
         masterKey.addChallengeResponseKey(key);
     }
 #endif
@@ -250,20 +253,21 @@ void DatabaseOpenWidget::browseKeyFile()
 
 void DatabaseOpenWidget::pollYubikey()
 {
-    // YubiKey init is slow, detect asynchronously to not block the UI
     m_ui->buttonRedetectYubikey->setEnabled(false);
     m_ui->checkChallengeResponse->setEnabled(false);
     m_ui->checkChallengeResponse->setChecked(false);
     m_ui->comboChallengeResponse->setEnabled(false);
     m_ui->comboChallengeResponse->clear();
     m_ui->yubikeyProgress->setVisible(true);
+
+    // YubiKey init is slow, detect asynchronously to not block the UI
     QtConcurrent::run(YubiKey::instance(), &YubiKey::detect);
 }
 
 void DatabaseOpenWidget::yubikeyDetected(int slot, bool blocking)
 {
     YkChallengeResponseKey yk(slot, blocking);
-    m_ui->comboChallengeResponse->addItem(yk.getName(), QVariant(slot));
+    m_ui->comboChallengeResponse->addItem(yk.getName(), QVariant((slot << 1) | blocking));
     m_ui->comboChallengeResponse->setEnabled(true);
     m_ui->checkChallengeResponse->setEnabled(true);
     m_ui->buttonRedetectYubikey->setEnabled(true);

@@ -25,7 +25,6 @@ class ChallengeResponseKey
 public:
     virtual ~ChallengeResponseKey() {}
     virtual QByteArray rawKey() const = 0;
-    virtual ChallengeResponseKey* clone() const = 0;
     virtual bool challenge(const QByteArray& challenge) = 0;
 };
 

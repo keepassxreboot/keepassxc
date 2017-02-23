@@ -15,8 +15,6 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtConcurrentRun>
-
 #include "ChangeMasterKeyWidget.h"
 #include "ui_ChangeMasterKeyWidget.h"
 
@@ -29,6 +27,9 @@
 #include "crypto/Random.h"
 
 #include "config-keepassx.h"
+
+#include <QtConcurrentRun>
+#include <QSharedPointer>
 
 ChangeMasterKeyWidget::ChangeMasterKeyWidget(QWidget* parent)
     : DialogyWidget(parent)
@@ -172,9 +173,9 @@ void ChangeMasterKeyWidget::generateKey()
                                              MessageWidget::Error);
             return;
         }
-
-        YkChallengeResponseKey key(i);
-
+        bool blocking = i & true;
+        int slot      = i >> 1;
+        auto key      = QSharedPointer<YkChallengeResponseKey>(new YkChallengeResponseKey(slot, blocking));
         m_key.addChallengeResponseKey(key);
     }
 #endif
@@ -210,7 +211,7 @@ void ChangeMasterKeyWidget::pollYubikey()
 void ChangeMasterKeyWidget::yubikeyDetected(int slot, bool blocking)
 {
     YkChallengeResponseKey yk(slot, blocking);
-    m_ui->comboChallengeResponse->addItem(yk.getName(), QVariant(slot));
+    m_ui->comboChallengeResponse->addItem(yk.getName(), QVariant((slot << 1) | blocking));
     m_ui->comboChallengeResponse->setEnabled(m_ui->challengeResponseGroup->isChecked());
     m_ui->buttonRedetectYubikey->setEnabled(m_ui->challengeResponseGroup->isChecked());
     m_ui->yubikeyProgress->setVisible(false);

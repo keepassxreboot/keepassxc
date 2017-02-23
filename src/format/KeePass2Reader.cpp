@@ -115,7 +115,7 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
 
     if (m_db->challengeMasterSeed(m_masterSeed) == false) {
         raiseError(tr("Unable to issue challenge-response."));
-        return Q_NULLPTR;
+        return nullptr;
     }
 
     CryptoHash hash(CryptoHash::Sha256);

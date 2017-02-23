@@ -46,7 +46,6 @@ CompositeKey::~CompositeKey()
 void CompositeKey::clear()
 {
     qDeleteAll(m_keys);
-    qDeleteAll(m_challengeResponseKeys);
     m_keys.clear();
     m_challengeResponseKeys.clear();
 }
@@ -73,8 +72,8 @@ CompositeKey& CompositeKey::operator=(const CompositeKey& key)
     for (const Key* subKey : asConst(key.m_keys)) {
         addKey(*subKey);
     }
-    for (const ChallengeResponseKey* subKey : asConst(key.m_challengeResponseKeys)) {
-        addChallengeResponseKey(*subKey);
+    for (const auto subKey : asConst(key.m_challengeResponseKeys)) {
+        addChallengeResponseKey(subKey);
     }
 
     return *this;
@@ -176,9 +175,8 @@ QByteArray CompositeKey::transformKeyRaw(const QByteArray& key, const QByteArray
 
 bool CompositeKey::challenge(const QByteArray& seed, QByteArray& result) const
 {
-    /* If no challenge response was requested, return nothing to
-     * maintain backwards compatability with regular databases.
-     */
+    // if no challenge response was requested, return nothing to
+    // maintain backwards compatibility with regular databases.
     if (m_challengeResponseKeys.length() == 0) {
         result.clear();
         return true;
@@ -186,9 +184,9 @@ bool CompositeKey::challenge(const QByteArray& seed, QByteArray& result) const
 
     CryptoHash cryptoHash(CryptoHash::Sha256);
 
-    for (ChallengeResponseKey* key : m_challengeResponseKeys) {
-        /* If the device isn't present or fails, return an error */
-        if (key->challenge(seed) == false) {
+    for (const auto key : m_challengeResponseKeys) {
+        // if the device isn't present or fails, return an error
+        if (!key->challenge(seed)) {
             return false;
         }
         cryptoHash.addData(key->rawKey());
@@ -203,10 +201,11 @@ void CompositeKey::addKey(const Key& key)
     m_keys.append(key.clone());
 }
 
-void CompositeKey::addChallengeResponseKey(const ChallengeResponseKey& key)
+void CompositeKey::addChallengeResponseKey(QSharedPointer<ChallengeResponseKey> key)
 {
-    m_challengeResponseKeys.append(key.clone());
+    m_challengeResponseKeys.append(key);
 }
+
 
 int CompositeKey::transformKeyBenchmark(int msec)
 {

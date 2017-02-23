@@ -257,18 +257,16 @@ bool Database::verifyKey(const CompositeKey& key) const
 {
     Q_ASSERT(hasKey());
 
-    /* If the database has challenge response keys, then the the verification
-     * key better as well */
     if (!m_data.challengeResponseKey.isEmpty()) {
         QByteArray result;
 
         if (!key.challenge(m_data.masterSeed, result)) {
-            /* Challenge failed, (YubiKey?) removed? */
+            // challenge failed, (YubiKey?) removed?
             return false;
         }
 
         if (m_data.challengeResponseKey != result) {
-            /* Wrong response from challenged device(s) */
+            // wrong response from challenged device(s)
             return false;
         }
     }
