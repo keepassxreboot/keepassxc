@@ -78,8 +78,8 @@
        <item>
         <widget class="QLabel" name="label_2">
          <property name="text">
-          <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Website: &lt;a href=&quot;https://keepassxc.org/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;https://keepassxc.org/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;
-Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot;&gt;https://github.com/&lt;/a&gt;&lt;/html&gt;</string>
+          <string notr="true">&lt;p&gt;Website: &lt;a href=&quot;https://keepassxc.org/&quot;&gt;https://keepassxc.org/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot;&gt;https://github.com/&lt;/a&gt;&lt;/p&gt;</string>
          </property>
          <property name="openExternalLinks">
           <bool>true</bool>
@@ -115,14 +115,15 @@ Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/iss
        <item>
         <widget class="QLabel" name="label_4">
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;div&gt;Main contributors:
+          <string>&lt;div&gt;Main contributors:
 &lt;ul&gt;
 &lt;li&gt;debfx (KeePassX)&lt;/li&gt;
 &lt;li&gt;droidmonkey&lt;/li&gt;
 &lt;li&gt;louib&lt;/li&gt;
 &lt;li&gt;phoerious&lt;li&gt;
 &lt;li&gt;thezero&lt;/li&gt;
-&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/ul&gt;
+&lt;/div&gt;</string>
          </property>
         </widget>
        </item>
