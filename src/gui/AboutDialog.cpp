@@ -59,9 +59,8 @@ AboutDialog::AboutDialog(QWidget* parent)
              .arg(Crypto::backendVersion()));
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
-    debugInfo.append(tr("Operating system: %1 (version: %2)\nCPU architecture: %3\nKernel: %4 %5")
+    debugInfo.append(tr("Operating system: %1\nCPU architecture: %2\nKernel: %3 %4")
              .arg(QSysInfo::prettyProductName())
-             .arg(QSysInfo::productVersion())
              .arg(QSysInfo::currentCpuArchitecture())
              .arg(QSysInfo::kernelType())
              .arg(QSysInfo::kernelVersion()));
