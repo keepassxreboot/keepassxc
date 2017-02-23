@@ -107,8 +107,10 @@ void YubiKey::detect()
             QByteArray resp;
 
             result = challenge(i, false, rand, resp);
-
-            if (result != YubiKey::ERROR) {
+            if (result == YubiKey::ALREADY_RUNNING) {
+                emit alreadyRunning();
+                return;
+            } else if (result != YubiKey::ERROR) {
                 emit detected(i, result == YubiKey::WOULDBLOCK ? true : false);
                 return;
             }
@@ -141,13 +143,18 @@ static inline QString printByteArray(const QByteArray& a)
 }
 #endif
 
-YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByteArray& chal, QByteArray& resp) const
+YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByteArray& chal, QByteArray& resp)
 {
+    if (!m_mutex.tryLock()) {
+        return ALREADY_RUNNING;
+    }
+
     int yk_cmd = (slot == 1) ? SLOT_CHAL_HMAC1 : SLOT_CHAL_HMAC2;
     QByteArray paddedChal = chal;
 
-    /* Ensure that YubiKey::init() succeeded */
+    // ensure that YubiKey::init() succeeded
     if (m_yk == NULL) {
+        m_mutex.unlock();
         return ERROR;
     }
 
@@ -171,13 +178,12 @@ YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByte
     r = reinterpret_cast<unsigned char*>(resp.data());
 
 #ifdef QT_DEBUG
-    qDebug().nospace() << __func__ << "(" << slot << ") c = "
-                       << printByteArray(paddedChal);
+    qDebug().nospace() << __func__ << "(" << slot << ") c = " << printByteArray(paddedChal);
 #endif
 
-    int ret = yk_challenge_response(m_yk, yk_cmd, mayBlock,
-                                    paddedChal.size(), c,
-                                    resp.size(), r);
+    int ret = yk_challenge_response(m_yk, yk_cmd, mayBlock, paddedChal.size(), c, resp.size(), r);
+
+    m_mutex.unlock();
 
     if (!ret) {
         if (yk_errno == YK_EWOULDBLOCK) {
@@ -206,8 +212,7 @@ YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByte
     resp.resize(20);
 
 #ifdef QT_DEBUG
-    qDebug().nospace() << __func__ << "(" << slot << ") r = "
-                       << printByteArray(resp) << ", ret = " << ret;
+    qDebug().nospace() << __func__ << "(" << slot << ") r = " << printByteArray(resp) << ", ret = " << ret;
 #endif
 
     return SUCCESS;

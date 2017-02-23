@@ -19,6 +19,7 @@
 #define KEEPASSX_YUBIKEY_H
 
 #include <QObject>
+#include <QMutex>
 
 /**
  * Singleton class to manage the interface to the hardware
@@ -28,7 +29,7 @@ class YubiKey : public QObject
     Q_OBJECT
 
 public:
-    enum ChallengeResult { ERROR = -1, SUCCESS = 0, WOULDBLOCK };
+    enum ChallengeResult { ERROR = -1, SUCCESS = 0, WOULDBLOCK, ALREADY_RUNNING };
 
     /**
      * @brief YubiKey::instance - get instance of singleton
@@ -64,7 +65,7 @@ public:
      */
     ChallengeResult challenge(int slot, bool mayBlock,
                               const QByteArray& chal,
-                              QByteArray& resp) const;
+                              QByteArray& resp);
 
     /**
      * @brief YubiKey::getSerial - serial number of YubiKey
@@ -92,6 +93,11 @@ Q_SIGNALS:
      */
     void notFound();
 
+    /**
+     * Emitted when detection is already running.
+     */
+    void alreadyRunning();
+
 private:
     explicit YubiKey();
     static YubiKey* m_instance;
@@ -99,6 +105,8 @@ private:
     // Create void ptr here to avoid ifdef header include mess
     void* m_yk_void;
     void* m_ykds_void;
+
+    QMutex m_mutex;
 
     Q_DISABLE_COPY(YubiKey)
 };
