@@ -96,7 +96,7 @@
    <item row="5" column="1">
     <widget class="QRadioButton" name="autoTypeSequenceInherit">
      <property name="text">
-      <string>&amp;Use default auto-type sequence of parent group</string>
+      <string>&amp;Use default Auto-Type sequence of parent group</string>
      </property>
     </widget>
    </item>
