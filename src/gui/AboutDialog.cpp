@@ -58,6 +58,7 @@ AboutDialog::AboutDialog(QWidget* parent)
              .arg(QString::fromLocal8Bit(qVersion()))
              .arg(Crypto::backendVersion()));
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
     debugInfo.append(tr("Operating system: %1 (version: %2)\nCPU architecture: %3\nKernel: %4 %5")
              .arg(QSysInfo::prettyProductName())
              .arg(QSysInfo::productVersion())
@@ -66,6 +67,7 @@ AboutDialog::AboutDialog(QWidget* parent)
              .arg(QSysInfo::kernelVersion()));
 
     debugInfo.append("\n\n");
+#endif
 
     QString extensions;
 #ifdef WITH_XC_HTTP
