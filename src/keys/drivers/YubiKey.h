@@ -59,13 +59,11 @@ public:
      *
      * @param slot YubiKey configuration slot
      * @param mayBlock operation is allowed to block
-     * @param chal challenge input to YubiKey
-     * @param resp response output from YubiKey
+     * @param challenge challenge input to YubiKey
+     * @param response response output from YubiKey
      * @return true on success
      */
-    ChallengeResult challenge(int slot, bool mayBlock,
-                              const QByteArray& chal,
-                              QByteArray& resp);
+    ChallengeResult challenge(int slot, bool mayBlock, const QByteArray& challenge, QByteArray& response);
 
     /**
      * @brief YubiKey::getSerial - serial number of YubiKey

@@ -111,7 +111,7 @@ void YubiKey::detect()
                 emit alreadyRunning();
                 return;
             } else if (result != YubiKey::ERROR) {
-                emit detected(i, result == YubiKey::WOULDBLOCK ? true : false);
+                emit detected(i, result == YubiKey::WOULDBLOCK);
                 return;
             }
         }
@@ -143,14 +143,14 @@ static inline QString printByteArray(const QByteArray& a)
 }
 #endif
 
-YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByteArray& chal, QByteArray& resp)
+YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByteArray& challenge, QByteArray& response)
 {
     if (!m_mutex.tryLock()) {
         return ALREADY_RUNNING;
     }
 
     int yk_cmd = (slot == 1) ? SLOT_CHAL_HMAC1 : SLOT_CHAL_HMAC2;
-    QByteArray paddedChal = chal;
+    QByteArray paddedChallenge = challenge;
 
     // ensure that YubiKey::init() succeeded
     if (m_yk == NULL) {
@@ -159,7 +159,7 @@ YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByte
     }
 
     // yk_challenge_response() insists on 64 byte response buffer */
-    resp.resize(64);
+    response.resize(64);
 
     /* The challenge sent to the yubikey should always be 64 bytes for
      * compatibility with all configurations.  Follow PKCS7 padding.
@@ -167,21 +167,21 @@ YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByte
      * There is some question whether or not 64 byte fixed length
      * configurations even work, some docs say avoid it.
      */
-    const int padLen = 64 - paddedChal.size();
+    const int padLen = 64 - paddedChallenge.size();
     if (padLen > 0) {
-        paddedChal.append(QByteArray(padLen, padLen));
+        paddedChallenge.append(QByteArray(padLen, padLen));
     }
 
     const unsigned char *c;
     unsigned char *r;
-    c = reinterpret_cast<const unsigned char*>(paddedChal.constData());
-    r = reinterpret_cast<unsigned char*>(resp.data());
+    c = reinterpret_cast<const unsigned char*>(paddedChallenge.constData());
+    r = reinterpret_cast<unsigned char*>(response.data());
 
 #ifdef QT_DEBUG
-    qDebug().nospace() << __func__ << "(" << slot << ") c = " << printByteArray(paddedChal);
+    qDebug().nospace() << __func__ << "(" << slot << ") c = " << printByteArray(paddedChallenge);
 #endif
 
-    int ret = yk_challenge_response(m_yk, yk_cmd, mayBlock, paddedChal.size(), c, resp.size(), r);
+    int ret = yk_challenge_response(m_yk, yk_cmd, mayBlock, paddedChallenge.size(), c, response.size(), r);
 
     m_mutex.unlock();
 
@@ -209,10 +209,10 @@ YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByte
     }
 
     // actual HMAC-SHA1 response is only 20 bytes
-    resp.resize(20);
+    response.resize(20);
 
 #ifdef QT_DEBUG
-    qDebug().nospace() << __func__ << "(" << slot << ") r = " << printByteArray(resp) << ", ret = " << ret;
+    qDebug().nospace() << __func__ << "(" << slot << ") r = " << printByteArray(response) << ", ret = " << ret;
 #endif
 
     return SUCCESS;
