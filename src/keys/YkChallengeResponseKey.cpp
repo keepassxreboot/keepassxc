@@ -33,7 +33,6 @@ YkChallengeResponseKey::YkChallengeResponseKey(int slot, bool blocking)
     : m_slot(slot),
       m_blocking(blocking)
 {
-
     connect(this, SIGNAL(userInteractionRequired()), KEEPASSXC_MAIN_WINDOW, SLOT(showYubiKeyPopup()));
     connect(this, SIGNAL(userConfirmed()), KEEPASSXC_MAIN_WINDOW, SLOT(hideYubiKeyPopup()));
 }

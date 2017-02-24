@@ -70,7 +70,7 @@ public:
      * @param serial serial number
      * @return true on success
      */
-    bool getSerial(unsigned int& serial) const;
+    bool getSerial(unsigned int& serial);
 
     /**
      * @brief YubiKey::detect - probe for attached YubiKeys

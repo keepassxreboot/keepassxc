@@ -34,7 +34,7 @@
 #define m_yk (static_cast<YK_KEY*>(m_yk_void))
 #define m_ykds (static_cast<YK_STATUS*>(m_ykds_void))
 
-YubiKey::YubiKey() : m_yk_void(NULL), m_ykds_void(NULL)
+YubiKey::YubiKey() : m_yk_void(NULL), m_ykds_void(NULL), m_mutex(QMutex::Recursive)
 {
 }
 
@@ -51,11 +51,14 @@ YubiKey* YubiKey::instance()
 
 bool YubiKey::init()
 {
+    m_mutex.lock();
+
     // previously initialized
     if (m_yk != NULL && m_ykds != NULL) {
 
         if (yk_get_status(m_yk, m_ykds)) {
             // Still connected
+            m_mutex.unlock();
             return true;
         } else {
             // Initialized but not connected anymore, re-init
@@ -64,12 +67,14 @@ bool YubiKey::init()
     }
 
     if (!yk_init()) {
+        m_mutex.unlock();
         return false;
     }
 
     // TODO: handle multiple attached hardware devices
     m_yk_void = static_cast<void*>(yk_open_first_key());
     if (m_yk == NULL) {
+        m_mutex.unlock();
         return false;
     }
 
@@ -77,14 +82,18 @@ bool YubiKey::init()
     if (m_ykds == NULL) {
         yk_close_key(m_yk);
         m_yk_void = NULL;
+        m_mutex.unlock();
         return false;
     }
 
+    m_mutex.unlock();
     return true;
 }
 
 bool YubiKey::deinit()
 {
+    m_mutex.lock();
+
     if (m_yk) {
         yk_close_key(m_yk);
         m_yk_void = NULL;
@@ -94,6 +103,8 @@ bool YubiKey::deinit()
         ykds_free(m_ykds);
         m_ykds_void = NULL;
     }
+
+    m_mutex.unlock();
 
     return true;
 }
@@ -119,9 +130,13 @@ void YubiKey::detect()
     emit notFound();
 }
 
-bool YubiKey::getSerial(unsigned int& serial) const
+bool YubiKey::getSerial(unsigned int& serial)
 {
-    if (!yk_get_serial(m_yk, 1, 0, &serial)) {
+    m_mutex.lock();
+    int result = yk_get_serial(m_yk, 1, 0, &serial);
+    m_mutex.unlock();
+
+    if (!result) {
         return false;
     }
 
