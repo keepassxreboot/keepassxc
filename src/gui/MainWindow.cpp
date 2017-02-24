@@ -871,3 +871,14 @@ void MainWindow::hideTabMessage()
     }
 }
 
+void MainWindow::showYubiKeyPopup()
+{
+    displayGlobalMessage(tr("Please touch the button on your YubiKey!"), MessageWidget::Information);
+    setEnabled(false);
+}
+
+void MainWindow::hideYubiKeyPopup()
+{
+    hideGlobalMessage();
+    setEnabled(true);
+}

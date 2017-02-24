@@ -53,8 +53,6 @@ protected:
 
 protected slots:
     virtual void openDatabase();
-    void showYubiKeyPopup();
-    void hideYubiKeyPopup();
     void reject();
 
 private slots:

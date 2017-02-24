@@ -20,6 +20,7 @@
 #include "core/Tools.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
+#include "gui/MainWindow.h"
 
 #include <QFile>
 #include <QXmlStreamReader>
@@ -32,6 +33,9 @@ YkChallengeResponseKey::YkChallengeResponseKey(int slot, bool blocking)
     : m_slot(slot),
       m_blocking(blocking)
 {
+
+    connect(this, SIGNAL(userInteractionRequired()), KEEPASSXC_MAIN_WINDOW, SLOT(showYubiKeyPopup()));
+    connect(this, SIGNAL(userConfirmed()), KEEPASSXC_MAIN_WINDOW, SLOT(hideYubiKeyPopup()));
 }
 
 QByteArray YkChallengeResponseKey::rawKey() const

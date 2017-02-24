@@ -47,6 +47,8 @@ public Q_SLOTS:
     void displayGlobalMessage(const QString& text, MessageWidget::MessageType type);
     void displayTabMessage(const QString& text, MessageWidget::MessageType type);
     void hideGlobalMessage();
+    void showYubiKeyPopup();
+    void hideYubiKeyPopup();
 
 protected:
      void closeEvent(QCloseEvent* event) override;
