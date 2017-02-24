@@ -46,7 +46,7 @@ void TestYubiKeyChalResp::init()
         QSKIP("Unable to connect to YubiKey", SkipAll);
     }
 
-    /* Crypto subsystem needs to be initalized for YubiKey testing */
+    // crypto subsystem needs to be initialized for YubiKey testing
     QVERIFY(Crypto::init());
 }
 
@@ -57,7 +57,7 @@ void TestYubiKeyChalResp::detectDevices()
                                  Qt::QueuedConnection);
     QtConcurrent::run(YubiKey::instance(), &YubiKey::detect);
 
-    /* Need to wait for the hardware (that's hopefully plugged in)... */
+    // need to wait for the hardware (that's hopefully plugged in)...
     QTest::qWait(2000);
     QVERIFY2(m_detected > 0, "Is a YubiKey attached?");
 }

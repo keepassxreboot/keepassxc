@@ -192,10 +192,6 @@ YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByte
     c = reinterpret_cast<const unsigned char*>(paddedChallenge.constData());
     r = reinterpret_cast<unsigned char*>(response.data());
 
-#ifdef QT_DEBUG
-    qDebug().nospace() << __func__ << "(" << slot << ") c = " << printByteArray(paddedChallenge);
-#endif
-
     int ret = yk_challenge_response(m_yk, yk_cmd, mayBlock, paddedChallenge.size(), c, response.size(), r);
     emit challenged();
 
@@ -226,10 +222,6 @@ YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByte
 
     // actual HMAC-SHA1 response is only 20 bytes
     response.resize(20);
-
-#ifdef QT_DEBUG
-    qDebug().nospace() << __func__ << "(" << slot << ") r = " << printByteArray(response) << ", ret = " << ret;
-#endif
 
     return SUCCESS;
 }
