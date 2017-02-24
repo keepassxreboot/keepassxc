@@ -28,9 +28,11 @@
    </property>
    <item>
     <widget class="QCheckBox" name="enableHttpServer">
+     <property name="toolTip">
+      <string>This is required for accessing your databases from ChromeIPass or PassIFox</string>
+     </property>
      <property name="text">
-      <string>Enable KeepassXC HTTP protocol
-This is required for accessing your databases from ChromeIPass or PassIFox</string>
+      <string>Enable KeePassHTTP server</string>
      </property>
     </widget>
    </item>
