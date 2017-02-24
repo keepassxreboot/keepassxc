@@ -109,6 +109,7 @@ private:
     bool appExitCalled;
 };
 
-#define KEEPASSXC_MAIN_WINDOW qobject_cast<MainWindow*>(qobject_cast<Application*>(qApp)->mainWindow())
+#define KEEPASSXC_MAIN_WINDOW (qobject_cast<Application*>(qApp) ? \
+                               qobject_cast<MainWindow*>(qobject_cast<Application*>(qApp)->mainWindow()) : nullptr)
 
 #endif // KEEPASSX_MAINWINDOW_H
