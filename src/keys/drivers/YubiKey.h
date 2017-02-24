@@ -87,6 +87,11 @@ Q_SIGNALS:
     void detected(int slot, bool blocking);
 
     /**
+     * Emitted when the YubiKey was challenged and has returned a response.
+     */
+    void challenged();
+
+    /**
      * Emitted when no Yubikey could be found.
      */
     void notFound();

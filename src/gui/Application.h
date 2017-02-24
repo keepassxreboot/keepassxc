@@ -29,6 +29,7 @@ class Application : public QApplication
 
 public:
     Application(int& argc, char** argv);
+    QWidget* mainWindow() const;
     void setMainWindow(QWidget* mainWindow);
 
     bool event(QEvent* event) override;

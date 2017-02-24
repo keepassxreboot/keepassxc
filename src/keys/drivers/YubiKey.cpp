@@ -182,6 +182,7 @@ YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByte
 #endif
 
     int ret = yk_challenge_response(m_yk, yk_cmd, mayBlock, paddedChallenge.size(), c, response.size(), r);
+    emit challenged();
 
     m_mutex.unlock();
 

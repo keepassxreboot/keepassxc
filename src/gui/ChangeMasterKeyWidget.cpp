@@ -25,6 +25,7 @@
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
 #include "crypto/Random.h"
+#include "MainWindow.h"
 
 #include "config-keepassx.h"
 
@@ -176,6 +177,8 @@ void ChangeMasterKeyWidget::generateKey()
         bool blocking = i & true;
         int slot      = i >> 1;
         auto key      = QSharedPointer<YkChallengeResponseKey>(new YkChallengeResponseKey(slot, blocking));
+        connect(key.data(), SIGNAL(userInteractionRequired()), SLOT(showYubiKeyPopup()));
+        connect(key.data(), SIGNAL(userConfirmed()), SLOT(hideYubiKeyPopup()));
         m_key.addChallengeResponseKey(key);
     }
 #endif
@@ -237,4 +240,16 @@ void ChangeMasterKeyWidget::setOkEnabled()
 void ChangeMasterKeyWidget::setCancelEnabled(bool enabled)
 {
     m_ui->buttonBox->button(QDialogButtonBox::Cancel)->setEnabled(enabled);
+}
+
+void ChangeMasterKeyWidget::showYubiKeyPopup()
+{
+    KEEPASSXC_MAIN_WINDOW->displayGlobalMessage(tr("Please touch the button on your YubiKey!"), MessageWidget::Information);
+    KEEPASSXC_MAIN_WINDOW->setEnabled(false);
+}
+
+void ChangeMasterKeyWidget::hideYubiKeyPopup()
+{
+    KEEPASSXC_MAIN_WINDOW->hideGlobalMessage();
+    KEEPASSXC_MAIN_WINDOW->setEnabled(true);
 }

@@ -14,16 +14,19 @@
 *  You should have received a copy of the GNU General Public License
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-
-#include <QFile>
-#include <QXmlStreamReader>
+#include "keys/YkChallengeResponseKey.h"
+#include "keys/drivers/YubiKey.h"
 
 #include "core/Tools.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
 
-#include "keys/YkChallengeResponseKey.h"
-#include "keys/drivers/YubiKey.h"
+#include <QFile>
+#include <QXmlStreamReader>
+#include <QtConcurrent>
+#include <QApplication>
+#include <QEventLoop>
+#include <QFutureWatcher>
 
 YkChallengeResponseKey::YkChallengeResponseKey(int slot, bool blocking)
     : m_slot(slot),
@@ -39,12 +42,12 @@ QByteArray YkChallengeResponseKey::rawKey() const
 /**
  * Assumes yubikey()->init() was called
  */
-bool YkChallengeResponseKey::challenge(const QByteArray& chal)
+bool YkChallengeResponseKey::challenge(const QByteArray& challenge)
 {
-    return challenge(chal, 1);
+    return this->challenge(challenge, 1);
 }
-#include <QDebug>
-bool YkChallengeResponseKey::challenge(const QByteArray& chal, unsigned retries)
+
+bool YkChallengeResponseKey::challenge(const QByteArray& challenge, unsigned retries)
 {
     Q_ASSERT(retries > 0);
 
@@ -55,13 +58,21 @@ bool YkChallengeResponseKey::challenge(const QByteArray& chal, unsigned retries)
             emit userInteractionRequired();
         }
 
-        auto result = YubiKey::instance()->challenge(m_slot, true, chal, m_key);
+        QFuture<YubiKey::ChallengeResult> future = QtConcurrent::run([this, challenge]() {
+            return YubiKey::instance()->challenge(m_slot, true, challenge, m_key);
+        });
+
+        QEventLoop loop;
+        QFutureWatcher<YubiKey::ChallengeResult> watcher;
+        watcher.setFuture(future);
+        connect(&watcher, SIGNAL(finished()), &loop, SLOT(quit()));
+        loop.exec();
 
         if (m_blocking) {
             emit userConfirmed();
         }
 
-        if (result != YubiKey::ERROR) {
+        if (future.result() != YubiKey::ERROR) {
             return true;
         }
 

@@ -87,6 +87,11 @@ Application::Application(int& argc, char** argv)
 #endif
 }
 
+QWidget* Application::mainWindow() const
+{
+    return m_mainWindow;
+}
+
 void Application::setMainWindow(QWidget* mainWindow)
 {
     m_mainWindow = mainWindow;

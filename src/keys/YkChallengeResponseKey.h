@@ -33,8 +33,8 @@ public:
     YkChallengeResponseKey(int slot = -1, bool blocking = false);
 
     QByteArray rawKey() const;
-    bool challenge(const QByteArray& chal);
-    bool challenge(const QByteArray& chal, unsigned retries);
+    bool challenge(const QByteArray& challenge);
+    bool challenge(const QByteArray& challenge, unsigned retries);
     QString getName() const;
     bool isBlocking() const;
 

@@ -214,6 +214,8 @@ CompositeKey DatabaseOpenWidget::databaseKey()
         bool blocking = i & true;
         int slot      = i >> 1;
         auto key      = QSharedPointer<YkChallengeResponseKey>(new YkChallengeResponseKey(slot, blocking));
+        connect(key.data(), SIGNAL(userInteractionRequired()), SLOT(showYubiKeyPopup()));
+        connect(key.data(), SIGNAL(userConfirmed()), SLOT(hideYubiKeyPopup()));
         masterKey.addChallengeResponseKey(key);
     }
 #endif
@@ -262,6 +264,18 @@ void DatabaseOpenWidget::pollYubikey()
 
     // YubiKey init is slow, detect asynchronously to not block the UI
     QtConcurrent::run(YubiKey::instance(), &YubiKey::detect);
+}
+
+void DatabaseOpenWidget::showYubiKeyPopup()
+{
+    m_ui->messageWidget->showMessage(tr("Please touch the button on your YubiKey!"), MessageWidget::Information);
+    KEEPASSXC_MAIN_WINDOW->setEnabled(false);
+}
+
+void DatabaseOpenWidget::hideYubiKeyPopup()
+{
+    m_ui->messageWidget->hideMessage();
+    KEEPASSXC_MAIN_WINDOW->setEnabled(true);
 }
 
 void DatabaseOpenWidget::yubikeyDetected(int slot, bool blocking)
