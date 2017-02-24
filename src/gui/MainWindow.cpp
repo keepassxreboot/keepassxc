@@ -523,7 +523,7 @@ void MainWindow::updateWindowTitle()
 void MainWindow::showAboutDialog()
 {
     AboutDialog* aboutDialog = new AboutDialog(this);
-    aboutDialog->show();
+    aboutDialog->open();
 }
 
 void MainWindow::switchToDatabases()

@@ -32,6 +32,9 @@ AboutDialog::AboutDialog(QWidget* parent)
 {
     m_ui->setupUi(this);
 
+    resize(minimumSize());
+    setWindowFlags(Qt::Sheet);
+
     m_ui->nameLabel->setText(m_ui->nameLabel->text() + " " + KEEPASSX_VERSION);
     QFont nameLabelFont = m_ui->nameLabel->font();
     nameLabelFont.setPointSize(nameLabelFont.pointSize() + 4);

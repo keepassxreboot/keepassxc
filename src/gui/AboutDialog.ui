@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>479</width>
-    <height>488</height>
+    <height>478</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -77,9 +77,14 @@
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <widget class="QLabel" name="label_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
-          <string notr="true">&lt;p&gt;Website: &lt;a href=&quot;https://keepassxc.org/&quot;&gt;https://keepassxc.org/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot;&gt;https://github.com/&lt;/a&gt;&lt;/p&gt;</string>
+          <string notr="true">&lt;p&gt;Website: &lt;a href=&quot;https://keepassxc.org/&quot;&gt;https://keepassxc.org/&lt;/a&gt;&lt;/p&gt;</string>
          </property>
          <property name="openExternalLinks">
           <bool>true</bool>
@@ -87,7 +92,36 @@
         </widget>
        </item>
        <item>
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>&lt;p&gt;Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot;&gt;https://github.com/&lt;/a&gt;&lt;/p&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>5</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <widget class="QLabel" name="label_3">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</string>
          </property>
@@ -107,23 +141,28 @@
          <property name="sizeHint" stdset="0">
           <size>
            <width>0</width>
-           <height>10</height>
+           <height>5</height>
           </size>
          </property>
         </spacer>
        </item>
        <item>
         <widget class="QLabel" name="label_4">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
-          <string>&lt;div&gt;Main contributors:
+          <string>&lt;p&gt;Main contributors:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;debfx (KeePassX)&lt;/li&gt;
 &lt;li&gt;droidmonkey&lt;/li&gt;
 &lt;li&gt;louib&lt;/li&gt;
 &lt;li&gt;phoerious&lt;li&gt;
 &lt;li&gt;thezero&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;</string>
+&lt;/ul&gt;</string>
          </property>
         </widget>
        </item>
@@ -149,6 +188,12 @@
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
         <widget class="QLabel" name="label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Include the following information whenever you report a bug:</string>
          </property>
@@ -156,6 +201,12 @@
        </item>
        <item>
         <widget class="QPlainTextEdit" name="debugInfo">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="readOnly">
           <bool>true</bool>
          </property>
