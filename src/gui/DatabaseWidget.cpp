@@ -168,14 +168,14 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
 	connect(m_unlockDatabaseDialog, SIGNAL(unlockDone(bool)), SLOT(unlockDatabase(bool)));
     connect(&m_fileWatcher, SIGNAL(fileChanged(QString)), this, SLOT(onWatchedFileChanged()));
     connect(&m_fileWatchTimer, SIGNAL(timeout()), this, SLOT(reloadDatabaseFile()));
-    connect(&m_ignoreWatchTimer, SIGNAL(timeout()), this, SLOT(onWatchedFileChanged()));
+    connect(&m_fileWatchUnblockTimer, SIGNAL(timeout()), this, SLOT(unblockAutoReload()));
     connect(this, SIGNAL(currentChanged(int)), this, SLOT(emitCurrentModeChanged()));
 
     m_databaseModified = false;
 
     m_fileWatchTimer.setSingleShot(true);
-    m_ignoreWatchTimer.setSingleShot(true);
-    m_ignoreNextAutoreload = false;
+    m_fileWatchUnblockTimer.setSingleShot(true);
+    m_ignoreAutoReload = false;
 
     m_searchCaseSensitive = false;
 
@@ -1001,7 +1001,7 @@ void DatabaseWidget::lock()
 
 void DatabaseWidget::updateFilename(const QString& fileName)
 {
-    if (! m_filename.isEmpty()) {
+    if (!m_filename.isEmpty()) {
         m_fileWatcher.removePath(m_filename);
     }
 
@@ -1009,26 +1009,31 @@ void DatabaseWidget::updateFilename(const QString& fileName)
     m_filename = fileName;
 }
 
-void DatabaseWidget::ignoreNextAutoreload()
+void DatabaseWidget::blockAutoReload(bool block)
 {
-    m_ignoreNextAutoreload = true;
-    m_ignoreWatchTimer.start(100);
+    if (block) {
+        m_ignoreAutoReload = true;
+        m_fileWatchTimer.stop();
+    } else {
+        m_fileWatchUnblockTimer.start(500);
+    }
+}
+
+void DatabaseWidget::unblockAutoReload()
+{
+    m_ignoreAutoReload = false;
+    updateFilename(m_filename);
 }
 
 void DatabaseWidget::onWatchedFileChanged()
 {
-    if (m_ignoreNextAutoreload) {
-        // Reset the watch
-        m_ignoreNextAutoreload = false;
-        m_ignoreWatchTimer.stop();
-        m_fileWatcher.addPath(m_filename);
+    if (m_ignoreAutoReload) {
+        return;
     }
-    else {
-        if (m_fileWatchTimer.isActive())
-            return;
+    if (m_fileWatchTimer.isActive())
+        return;
 
-        m_fileWatchTimer.start(500);
-    }
+    m_fileWatchTimer.start(500);
 }
 
 void DatabaseWidget::reloadDatabaseFile()

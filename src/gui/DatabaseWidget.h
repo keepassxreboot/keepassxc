@@ -98,9 +98,9 @@ public:
     EntryView* entryView();
     void showUnlockDialog();
     void closeUnlockDialog();
-    void ignoreNextAutoreload();
+    void blockAutoReload(bool block = true);
 
-Q_SIGNALS:
+signals:
     void closeRequest();
     void currentModeChanged(DatabaseWidget::Mode mode);
     void groupChanged();
@@ -118,7 +118,7 @@ Q_SIGNALS:
     void entryColumnSizesChanged();
     void updateSearch(QString text);
 
-public Q_SLOTS:
+public slots:
     void createEntry();
     void cloneEntry();
     void deleteEntries();
@@ -154,7 +154,7 @@ public Q_SLOTS:
     void showMessage(const QString& text, MessageWidget::MessageType type);
     void hideMessage();
 
-private Q_SLOTS:
+private slots:
     void entryActivationSignalReceived(Entry* entry, EntryModel::ModelColumn column);
     void switchBackToEntryEdit();
     void switchToHistoryView(Entry* entry);
@@ -172,6 +172,7 @@ private Q_SLOTS:
     void onWatchedFileChanged();
     void reloadDatabaseFile();
     void restoreGroupEntryFocus(Uuid groupUuid, Uuid EntryUuid);
+    void unblockAutoReload();
 
 private:
     void setClipboardTextAndMinimize(const QString& text);
@@ -209,8 +210,8 @@ private:
     // Autoreload
     QFileSystemWatcher m_fileWatcher;
     QTimer m_fileWatchTimer;
-    bool m_ignoreNextAutoreload;
-    QTimer m_ignoreWatchTimer;
+    QTimer m_fileWatchUnblockTimer;
+    bool m_ignoreAutoReload;
     bool m_databaseModified;
 };
 
