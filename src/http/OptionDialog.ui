@@ -237,6 +237,12 @@
          </item>
          <item row="0" column="1">
           <widget class="QLineEdit" name="httpPort">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="inputMask">
             <string notr="true">d0000</string>
            </property>
