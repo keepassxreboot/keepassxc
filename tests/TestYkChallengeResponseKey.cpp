@@ -30,6 +30,9 @@ void TestYubiKeyChalResp::initTestCase()
 {
     m_detected = 0;
     m_key = NULL;
+
+    // crypto subsystem needs to be initialized for YubiKey testing
+    QVERIFY(Crypto::init());
 }
 
 void TestYubiKeyChalResp::cleanupTestCase()
@@ -45,9 +48,6 @@ void TestYubiKeyChalResp::init()
     if (!result) {
         QSKIP("Unable to connect to YubiKey", SkipAll);
     }
-
-    // crypto subsystem needs to be initialized for YubiKey testing
-    QVERIFY(Crypto::init());
 }
 
 void TestYubiKeyChalResp::detectDevices()
