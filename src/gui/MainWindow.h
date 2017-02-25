@@ -44,8 +44,8 @@ public Q_SLOTS:
     void openDatabase(const QString& fileName, const QString& pw = QString(),
                       const QString& keyFile = QString());
     void appExit();
-    void displayGlobalMessage(const QString& text, MessageWidget::MessageType type);
-    void displayTabMessage(const QString& text, MessageWidget::MessageType type);
+    void displayGlobalMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton = true);
+    void displayTabMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton = true);
     void hideGlobalMessage();
     void showYubiKeyPopup();
     void hideYubiKeyPopup();

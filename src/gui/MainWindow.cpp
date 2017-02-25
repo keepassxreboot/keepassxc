@@ -862,13 +862,15 @@ bool MainWindow::isTrayIconEnabled() const
 #endif
 }
 
-void MainWindow::displayGlobalMessage(const QString& text, MessageWidget::MessageType type)
+void MainWindow::displayGlobalMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton)
 {
+    m_ui->globalMessageWidget->setCloseButtonVisible(showClosebutton);
     m_ui->globalMessageWidget->showMessage(text, type);
 }
 
-void MainWindow::displayTabMessage(const QString& text, MessageWidget::MessageType type)
+void MainWindow::displayTabMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton)
 {
+    m_ui->globalMessageWidget->setCloseButtonVisible(showClosebutton);
     m_ui->tabWidget->currentDatabaseWidget()->showMessage(text, type);
 }
 
@@ -886,7 +888,7 @@ void MainWindow::hideTabMessage()
 
 void MainWindow::showYubiKeyPopup()
 {
-    displayGlobalMessage(tr("Please touch the button on your YubiKey!"), MessageWidget::Information);
+    displayGlobalMessage(tr("Please touch the button on your YubiKey!"), MessageWidget::Information, false);
     setEnabled(false);
 }
 
