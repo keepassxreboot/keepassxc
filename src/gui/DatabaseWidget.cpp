@@ -287,7 +287,7 @@ void DatabaseWidget::createEntry()
 
 void DatabaseWidget::setIconFromParent()
 {
-    if (!config()->get("UseGroupIconOnEntryCreation").toBool()) {
+    if (!config()->get("UseGroupIconOnEntryCreation", true).toBool()) {
         return;
     }
 

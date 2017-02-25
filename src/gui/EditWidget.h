@@ -19,6 +19,8 @@
 #define KEEPASSX_EDITWIDGET_H
 
 #include <QScopedPointer>
+#include <QtWidgets/QStyledItemDelegate>
+#include <QStyledItemDelegate>
 
 #include "gui/DialogyWidget.h"
 #include "gui/MessageWidget.h"
@@ -37,19 +39,19 @@ public:
     explicit EditWidget(QWidget* parent = nullptr);
     ~EditWidget();
 
-    void add(const QString& labelText, QWidget* widget);
-    void setRowHidden(QWidget* widget, bool hide);
-    void setCurrentRow(int index);
+    void addPage(const QString& labelText, const QIcon& icon, QWidget* widget);
+    void setPageHidden(QWidget* widget, bool hidden);
+    void setCurrentPage(int index);
     void setHeadline(const QString& text);
     QLabel* headlineLabel();
     void setReadOnly(bool readOnly);
     bool readOnly() const;
 
-Q_SIGNALS:
+signals:
     void accepted();
     void rejected();
 
-protected Q_SLOTS:
+protected slots:
     void showMessage(const QString& text, MessageWidget::MessageType type);
     void hideMessage();
 

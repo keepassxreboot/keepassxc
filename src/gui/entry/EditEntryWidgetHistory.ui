@@ -25,9 +25,15 @@
    </property>
    <item>
     <widget class="QTreeView" name="historyView">
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
      <property name="sortingEnabled">
       <bool>true</bool>
      </property>
+     <attribute name="headerDefaultSectionSize">
+      <number>160</number>
+     </attribute>
     </widget>
    </item>
    <item>
