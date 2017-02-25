@@ -287,7 +287,7 @@ void DatabaseWidget::createEntry()
 
 void DatabaseWidget::setIconFromParent()
 {
-    if (!config()->get("UseGroupIconOnEntryCreation", true).toBool()) {
+    if (!config()->get("UseGroupIconOnEntryCreation").toBool()) {
         return;
     }
 
@@ -1068,8 +1068,7 @@ void DatabaseWidget::reloadDatabaseFile()
                     // Merge the old database into the new one
                     m_db->setEmitModified(false);
                     db->merge(m_db);
-                }
-                else {
+                } else {
                     // Since we are accepting the new file as-is, internally mark as unmodified
                     // TODO: when saving is moved out of DatabaseTabWidget, this should be replaced
                     m_databaseModified = false;
@@ -1093,16 +1092,10 @@ void DatabaseWidget::reloadDatabaseFile()
             restoreGroupEntryFocus(groupBeforeReload, entryBeforeReload);
 
         }
-        else {
-            m_messageWidget->showMessage(
-                tr("Could not parse or unlock the new database file while attempting"
-                   " to autoreload this database."), MessageWidget::Error);
-        }
-    }
-    else {
+    } else {
         m_messageWidget->showMessage(
             tr("Could not open the new database file while attempting to autoreload this database."),
-                                     MessageWidget::Error);
+            MessageWidget::Error);
     }
 
     // Rewatch the database file
