@@ -33,6 +33,9 @@ public:
     explicit AboutDialog(QWidget* parent = nullptr);
     ~AboutDialog();
 
+protected slots:
+    void copyToClipboard();
+
 private:
     QScopedPointer<Ui::AboutDialog> m_ui;
 };

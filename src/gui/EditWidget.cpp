@@ -18,6 +18,8 @@
 #include "EditWidget.h"
 #include "ui_EditWidget.h"
 
+#include "core/FilePath.h"
+
 EditWidget::EditWidget(QWidget* parent)
     : DialogyWidget(parent)
     , m_ui(new Ui::EditWidget())
@@ -32,7 +34,7 @@ EditWidget::EditWidget(QWidget* parent)
     headerLabelFont.setPointSize(headerLabelFont.pointSize() + 2);
     headlineLabel()->setFont(headerLabelFont);
 
-    connect(m_ui->categoryList, SIGNAL(currentRowChanged(int)),
+    connect(m_ui->categoryList, SIGNAL(categoryChanged(int)),
             m_ui->stackedWidget, SLOT(setCurrentIndex(int)));
 
     connect(m_ui->buttonBox, SIGNAL(accepted()), SIGNAL(accepted()));
@@ -43,23 +45,32 @@ EditWidget::~EditWidget()
 {
 }
 
-void EditWidget::add(const QString& labelText, QWidget* widget)
+void EditWidget::addPage(const QString& labelText, const QIcon& icon, QWidget* widget)
 {
-    m_ui->categoryList->addItem(labelText);
     m_ui->stackedWidget->addWidget(widget);
+    m_ui->categoryList->addCategory(labelText, icon);
 }
 
-void EditWidget::setRowHidden(QWidget* widget, bool hide)
+void EditWidget::setPageHidden(QWidget* widget, bool hidden)
 {
-    int row = m_ui->stackedWidget->indexOf(widget);
-    if (row != -1) {
-        m_ui->categoryList->item(row)->setHidden(hide);
+    int index = m_ui->stackedWidget->indexOf(widget);
+    if (index != -1) {
+        m_ui->categoryList->setCategoryHidden(index, hidden);
+    }
+
+    if (index == m_ui->stackedWidget->currentIndex()) {
+        int newIndex = m_ui->stackedWidget->currentIndex() - 1;
+        if (newIndex < 0) {
+            newIndex = m_ui->stackedWidget->count() - 1;
+        }
+        m_ui->stackedWidget->setCurrentIndex(newIndex);
     }
 }
 
-void EditWidget::setCurrentRow(int index)
+void EditWidget::setCurrentPage(int index)
 {
-    m_ui->categoryList->setCurrentRow(index);
+    m_ui->categoryList->setCurrentCategory(index);
+    m_ui->stackedWidget->setCurrentIndex(index);
 }
 
 void EditWidget::setHeadline(const QString& text)
