@@ -152,8 +152,9 @@ set(keepassx_FORMS
     gui/group/EditGroupWidgetMain.ui
 )
 
-add_feature_info(KeePassHTTP WITH_XC_HTTP "KeePassHTTP support for ChromeIPass and PassIFox")
-add_feature_info(Autotype WITH_XC_AUTOTYPE "Auto-type passwords in Input fields")
+add_feature_info(AutoType WITH_XC_AUTOTYPE "Automatic password typing")
+add_feature_info(KeePassHTTP WITH_XC_HTTP "Browser integration compatible with ChromeIPass and PassIFox")
+add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
 
 add_subdirectory(http)
 if(WITH_XC_HTTP)

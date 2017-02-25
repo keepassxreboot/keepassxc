@@ -34,9 +34,9 @@ option(WITH_GUI_TESTS "Enable building of GUI tests" OFF)
 option(WITH_DEV_BUILD "Use only for development. Disables/warns about deprecated methods." OFF)
 option(WITH_COVERAGE "Use to build with coverage tests. (GCC ONLY)." OFF)
 
-option(WITH_XC_AUTOTYPE "Include Autotype." OFF)
-option(WITH_XC_HTTP "Include KeePassHTTP." OFF)
-option(WITH_XC_YUBIKEY "Include Yubikey support." OFF)
+option(WITH_XC_AUTOTYPE "Include Auto-Type." OFF)
+option(WITH_XC_HTTP "Include KeePassHTTP support." OFF)
+option(WITH_XC_YUBIKEY "Include YubiKey support." OFF)
 
 set(KEEPASSXC_VERSION "2.1.2")
 set(KEEPASSXC_VERSION_NUM "2.1.2")
