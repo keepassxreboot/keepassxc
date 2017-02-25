@@ -256,6 +256,7 @@ bool createWindowsDACL()
 {
     bool bSuccess = false;
 
+#ifdef Q_OS_WIN
     // Access control list
     PACL pACL = nullptr;
     DWORD cbACL = 0;
@@ -341,6 +342,7 @@ Cleanup:
     if (pACL != nullptr) {
         HeapFree(GetProcessHeap(), 0, pACL);
     }
+#endif
 
     return bSuccess;
 }
