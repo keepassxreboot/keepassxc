@@ -91,7 +91,7 @@ void KMessageWidgetPrivate::init(KMessageWidget *q_ptr)
     QAction *closeAction = new QAction(q);
     closeAction->setText(KMessageWidget::tr("&Close"));
     closeAction->setToolTip(KMessageWidget::tr("Close message"));
-    closeAction->setIcon(FilePath::instance()->icon("actions", "dialog-close"));
+    closeAction->setIcon(FilePath::instance()->icon("actions", "message-close", false));
     
     QObject::connect(closeAction, SIGNAL(triggered(bool)), q, SLOT(animatedHide()));
     
@@ -293,11 +293,7 @@ void KMessageWidget::setMessageType(KMessageWidget::MessageType type)
     }
     
     // Colors
-#ifdef Q_OS_MAC
     fg = palette().light().color();
-#else
-    fg = palette().highlightedText().color();
-#endif
     bg0 = bg1.lighter(110);
     bg2 = bg1.darker(110);
     border = darkShade(bg1);
@@ -311,6 +307,7 @@ void KMessageWidget::setMessageType(KMessageWidget::MessageType type)
         "border-radius: 5px;"
         "border: 1px solid %4;"
         "margin: %5px;"
+        "padding: 5px;"
         "}"
         ".QLabel { color: %6; }"
         ))
