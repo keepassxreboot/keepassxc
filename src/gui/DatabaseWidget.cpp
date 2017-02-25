@@ -1061,8 +1061,7 @@ void DatabaseWidget::reloadDatabaseFile()
                     // Merge the old database into the new one
                     m_db->setEmitModified(false);
                     db->merge(m_db);
-                }
-                else {
+                } else {
                     // Since we are accepting the new file as-is, internally mark as unmodified
                     // TODO: when saving is moved out of DatabaseTabWidget, this should be replaced
                     m_databaseModified = false;
@@ -1086,16 +1085,9 @@ void DatabaseWidget::reloadDatabaseFile()
             restoreGroupEntryFocus(groupBeforeReload, entryBeforeReload);
 
         }
-        else {
-            MessageBox::critical(this, tr("Autoreload Failed"),
-                                 tr("Could not parse or unlock the new database file while attempting"
-                                    " to autoreload this database."));
-        }
-    }
-    else {
+    } else {
         MessageBox::critical(this, tr("Autoreload Failed"),
-                             tr("Could not open the new database file while attempting to autoreload"
-                                " this database."));
+                             tr("Could not open the new database file while attempting to autoreload this database."));
     }
 
     // Rewatch the database file
