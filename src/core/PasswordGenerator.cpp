@@ -195,6 +195,22 @@ QVector<PasswordGroup> PasswordGenerator::passwordGroups() const
 
         passwordGroups.append(group);
     }
+    if (m_classes & EASCII) {
+        PasswordGroup group;
+
+        for (int i = 128; i <= 169; i++) {
+            group.append(i);
+        }
+
+        for (int i = 171; i <= 254; i++) {
+            if ((m_flags & ExcludeLookAlike) && (i == 249)) { // "﹒"
+                continue;
+            }
+            group.append(i);
+        }
+
+        passwordGroups.append(group);
+    }
 
     return passwordGroups;
 }
