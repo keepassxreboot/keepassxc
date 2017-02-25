@@ -21,6 +21,7 @@
 #include <QLockFile>
 #include <QSaveFile>
 #include <QTabWidget>
+#include <QPushButton>
 
 #include "autotype/AutoType.h"
 #include "core/Config.h"
@@ -157,21 +158,29 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
         // for now silently ignore if we can't create a lock file
         // due to lack of permissions
         if (lockFile->error() != QLockFile::PermissionError) {
-            QMessageBox::StandardButton result = MessageBox::question(this, tr("Open database"),
-                tr("The database you are trying to open is locked by another instance of KeePassXC.\n"
-                   "Do you want to open it anyway? Alternatively the database is opened read-only."),
-                QMessageBox::Yes | QMessageBox::No);
+            QMessageBox msgBox;
+            msgBox.setWindowTitle(tr("Database already opened"));
+            msgBox.setText(tr("The database you are trying to open is locked by another instance of KeePassXC.\n\n"
+                              "Do you want to open it anyway?"));
+            msgBox.setIcon(QMessageBox::Question);
+            msgBox.addButton(QMessageBox::Yes);
+            msgBox.addButton(QMessageBox::No);
+            auto readOnlyButton = msgBox.addButton(tr("Open read-only"), QMessageBox::AcceptRole);
+            msgBox.setDefaultButton(readOnlyButton);
+            msgBox.setEscapeButton(QMessageBox::No);
+            auto result = msgBox.exec();
 
-            if (result == QMessageBox::No) {
+            if (msgBox.clickedButton() == readOnlyButton) {
                 dbStruct.readOnly = true;
                 delete lockFile;
                 lockFile = nullptr;
-            }
-            else {
+            } else if (result == QMessageBox::Yes) {
                 // take over the lock file if possible
                 if (lockFile->removeStaleLockFile()) {
                     lockFile->tryLock();
                 }
+            } else {
+                return;
             }
         }
     }
