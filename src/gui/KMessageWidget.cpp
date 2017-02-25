@@ -20,6 +20,8 @@
  */
 #include "KMessageWidget.h"
 
+#include "core/FilePath.h"
+
 #include <QAction>
 #include <QEvent>
 #include <QGridLayout>
@@ -89,7 +91,7 @@ void KMessageWidgetPrivate::init(KMessageWidget *q_ptr)
     QAction *closeAction = new QAction(q);
     closeAction->setText(KMessageWidget::tr("&Close"));
     closeAction->setToolTip(KMessageWidget::tr("Close message"));
-    closeAction->setIcon(q->style()->standardIcon(QStyle::SP_DialogCloseButton));
+    closeAction->setIcon(FilePath::instance()->icon("actions", "dialog-close"));
     
     QObject::connect(closeAction, SIGNAL(triggered(bool)), q, SLOT(animatedHide()));
     
