@@ -20,6 +20,8 @@
  */
 #include "KMessageWidget.h"
 
+#include "core/FilePath.h"
+
 #include <QAction>
 #include <QEvent>
 #include <QGridLayout>
@@ -89,13 +91,19 @@ void KMessageWidgetPrivate::init(KMessageWidget *q_ptr)
     QAction *closeAction = new QAction(q);
     closeAction->setText(KMessageWidget::tr("&Close"));
     closeAction->setToolTip(KMessageWidget::tr("Close message"));
-    closeAction->setIcon(q->style()->standardIcon(QStyle::SP_DialogCloseButton));
+    closeAction->setIcon(FilePath::instance()->icon("actions", "message-close", false));
     
     QObject::connect(closeAction, SIGNAL(triggered(bool)), q, SLOT(animatedHide()));
     
     closeButton = new QToolButton(content);
     closeButton->setAutoRaise(true);
     closeButton->setDefaultAction(closeAction);
+#ifdef Q_OS_MAC
+    closeButton->setStyleSheet("QToolButton { background: transparent;"
+                                   "border-radius: 2px; padding: 3px; }"
+                               "QToolButton::hover, QToolButton::focus {"
+                                   "border: 1px solid rgb(90, 200, 250); }");
+#endif
     
     q->setMessageType(KMessageWidget::Information);
 }
@@ -285,7 +293,7 @@ void KMessageWidget::setMessageType(KMessageWidget::MessageType type)
     }
     
     // Colors
-    fg = palette().highlightedText().color();
+    fg = palette().light().color();
     bg0 = bg1.lighter(110);
     bg2 = bg1.darker(110);
     border = darkShade(bg1);
@@ -299,6 +307,7 @@ void KMessageWidget::setMessageType(KMessageWidget::MessageType type)
         "border-radius: 5px;"
         "border: 1px solid %4;"
         "margin: %5px;"
+        "padding: 5px;"
         "}"
         ".QLabel { color: %6; }"
         ))
