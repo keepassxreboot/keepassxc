@@ -154,6 +154,7 @@ set(keepassx_FORMS
 
 add_feature_info(KeePassHTTP WITH_XC_HTTP "KeePassHTTP support for ChromeIPass and PassIFox")
 add_feature_info(Autotype WITH_XC_AUTOTYPE "Auto-type passwords in Input fields")
+add_feature_info(QRCode WITH_XC_QRCODE "Display passwords as QR code.")
 
 add_subdirectory(http)
 if(WITH_XC_HTTP)
@@ -203,6 +204,7 @@ target_link_libraries(keepassx_core
                       Qt5::Widgets
                       ${GCRYPT_LIBRARIES}
                       ${GPGERROR_LIBRARIES}
+                      ${QRENCODE_LIBRARY}
                       ${ZLIB_LIBRARIES})
 if (UNIX AND NOT APPLE)
     target_link_libraries(keepassx_core Qt5::DBus)
