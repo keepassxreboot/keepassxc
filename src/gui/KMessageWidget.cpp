@@ -98,6 +98,12 @@ void KMessageWidgetPrivate::init(KMessageWidget *q_ptr)
     closeButton = new QToolButton(content);
     closeButton->setAutoRaise(true);
     closeButton->setDefaultAction(closeAction);
+#ifdef Q_OS_MAC
+    closeButton->setStyleSheet("QToolButton { background: transparent;"
+                                   "border-radius: 2px; padding: 3px; }"
+                               "QToolButton::hover, QToolButton::focus {"
+                                   "border: 1px solid rgb(90, 200, 250); }");
+#endif
     
     q->setMessageType(KMessageWidget::Information);
 }
@@ -287,7 +293,11 @@ void KMessageWidget::setMessageType(KMessageWidget::MessageType type)
     }
     
     // Colors
+#ifdef Q_OS_MAC
+    fg = palette().light().color();
+#else
     fg = palette().highlightedText().color();
+#endif
     bg0 = bg1.lighter(110);
     bg2 = bg1.darker(110);
     border = darkShade(bg1);
