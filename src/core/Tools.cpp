@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 Lennart Glauer <mail@lennart-glauer.de>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,6 +28,7 @@
 
 #ifdef Q_OS_WIN
 #include <windows.h> // for Sleep(), SetDllDirectoryA() and SetSearchPathMode()
+#include <aclapi.h>
 #endif
 
 #ifdef Q_OS_UNIX
@@ -226,6 +228,10 @@ void disableCoreDumps()
     success = success && (ptrace(PT_DENY_ATTACH, 0, 0, 0) == 0);
 #endif
 
+#ifdef Q_OS_WIN
+    success = success && createWindowsDACL();
+#endif
+
     if (!success) {
         qWarning("Unable to disable core dumps.");
     }
@@ -238,6 +244,105 @@ void setupSearchPaths()
     SetDllDirectoryA("");
     SetSearchPathMode(BASE_SEARCH_PATH_ENABLE_SAFE_SEARCHMODE);
 #endif
+}
+
+//
+// Prevent memory dumps without admin privileges.
+// MiniDumpWriteDump function requires
+// PROCESS_QUERY_INFORMATION and PROCESS_VM_READ
+// see: https://msdn.microsoft.com/en-us/library/windows/desktop/ms680360%28v=vs.85%29.aspx
+//
+bool createWindowsDACL()
+{
+    bool bSuccess = false;
+
+    // Access control list
+    PACL pACL = nullptr;
+    DWORD cbACL = 0;
+
+    // Security identifiers
+    PSID pSIDAdmin = nullptr;
+    PSID pSIDSystem = nullptr;
+    SID_IDENTIFIER_AUTHORITY SIDAuthNT = SECURITY_NT_AUTHORITY;
+
+    // Create a SID for the BUILTIN\Administrators group
+    if (!AllocateAndInitializeSid(
+            &SIDAuthNT,
+            2,
+            SECURITY_BUILTIN_DOMAIN_RID,
+            DOMAIN_ALIAS_RID_ADMINS,
+            0, 0, 0, 0, 0, 0,
+            &pSIDAdmin
+    )) {
+        goto Cleanup;
+    }
+
+    // Create a SID for the System group
+    if (!AllocateAndInitializeSid(
+            &SIDAuthNT,
+            1,
+            SECURITY_LOCAL_SYSTEM_RID,
+            0, 0, 0, 0, 0, 0, 0,
+            &pSIDSystem
+    )) {
+        goto Cleanup;
+    }
+
+    cbACL = sizeof(ACL)
+        + sizeof(ACCESS_ALLOWED_ACE) + GetLengthSid(pSIDAdmin)
+        + sizeof(ACCESS_ALLOWED_ACE) + GetLengthSid(pSIDSystem);
+
+    pACL = static_cast<PACL>(HeapAlloc(GetProcessHeap(), 0, cbACL));
+    if (pACL == nullptr) {
+        goto Cleanup;
+    }
+
+    // Initialize access control list
+    if (!InitializeAcl(pACL, cbACL, ACL_REVISION)) {
+        goto Cleanup;
+    }
+
+    // Add allowed access control entries, everything else is denied
+    if (!AddAccessAllowedAce(
+        pACL,
+        ACL_REVISION,
+        SYNCHRONIZE | PROCESS_QUERY_LIMITED_INFORMATION | PROCESS_TERMINATE,    // protected process
+        pSIDAdmin
+    )) {
+        goto Cleanup;
+    }
+    if (!AddAccessAllowedAce(
+        pACL,
+        ACL_REVISION,
+        PROCESS_ALL_ACCESS,
+        pSIDSystem
+    )) {
+        goto Cleanup;
+    }
+
+    // Update discretionary access control list
+    bSuccess = ERROR_SUCCESS == SetSecurityInfo(
+        GetCurrentProcess(),        // object handle
+        SE_KERNEL_OBJECT,           // type of object
+        DACL_SECURITY_INFORMATION,  // change only the objects DACL
+        nullptr, nullptr,           // do not change owner or group
+        pACL,                       // DACL specified
+        nullptr                     // do not change SACL
+    );
+
+Cleanup:
+
+    if (pSIDAdmin != nullptr) {
+        FreeSid(pSIDAdmin);
+    }
+    if (pSIDSystem != nullptr) {
+        FreeSid(pSIDSystem);
+    }
+    if (pACL != nullptr) {
+        HeapFree(GetProcessHeap(), 0, pACL);
+    }
+
+    return bSuccess;
 }
 
 } // namespace Tools

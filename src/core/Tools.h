@@ -41,6 +41,7 @@ void sleep(int ms);
 void wait(int ms);
 void disableCoreDumps();
 void setupSearchPaths();
+bool createWindowsDACL();
 
 template <typename RandomAccessIterator, typename T>
 RandomAccessIterator binaryFind(RandomAccessIterator begin, RandomAccessIterator end, const T& value)
