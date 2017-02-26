@@ -42,7 +42,7 @@ public:
 
         // if it's a QLocalServer
         virtual void    incomingConnection(quintptr socketDescriptor) {
-            iserver->incomingConnection((qintptr) socketDescriptor);
+            iserver->incomingConnection(static_cast<qintptr>(socketDescriptor));
         }
     };
 

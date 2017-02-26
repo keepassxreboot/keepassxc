@@ -41,7 +41,7 @@ public:
         if ( !icollectRequired ) // not allowed to collect data
             return false;
 
-        int newLength = icollectedData.length() + (int) length;
+        int newLength = icollectedData.length() + static_cast<int>(length);
 
         if ( icollectCapacity > 0    &&    newLength > icollectCapacity )
             return false; // the capacity is full
