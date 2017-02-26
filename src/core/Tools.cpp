@@ -248,8 +248,7 @@ void setupSearchPaths()
 
 //
 // Prevent memory dumps without admin privileges.
-// MiniDumpWriteDump function requires
-// PROCESS_QUERY_INFORMATION and PROCESS_VM_READ
+// MiniDumpWriteDump function requires PROCESS_QUERY_INFORMATION and PROCESS_VM_READ
 // see: https://msdn.microsoft.com/en-us/library/windows/desktop/ms680360%28v=vs.85%29.aspx
 //
 bool createWindowsDACL()
@@ -257,48 +256,62 @@ bool createWindowsDACL()
     bool bSuccess = false;
 
 #ifdef Q_OS_WIN
+    // Process token and user
+    HANDLE hToken = nullptr;
+    PTOKEN_USER pTokenUser = nullptr;
+    DWORD cbBufferSize = 0;
+
     // Access control list
     PACL pACL = nullptr;
     DWORD cbACL = 0;
 
-    // Security identifiers
-    PSID pSIDAdmin = nullptr;
-    PSID pSIDSystem = nullptr;
-    SID_IDENTIFIER_AUTHORITY SIDAuthNT = SECURITY_NT_AUTHORITY;
-
-    // Create a SID for the BUILTIN\Administrators group
-    if (!AllocateAndInitializeSid(
-            &SIDAuthNT,
-            2,
-            SECURITY_BUILTIN_DOMAIN_RID,
-            DOMAIN_ALIAS_RID_ADMINS,
-            0, 0, 0, 0, 0, 0,
-            &pSIDAdmin
+    // Open the access token associated with the calling process
+    if (!OpenProcessToken(
+        GetCurrentProcess(),
+        TOKEN_QUERY,
+        &hToken
     )) {
         goto Cleanup;
     }
 
-    // Create a SID for the System group
-    if (!AllocateAndInitializeSid(
-            &SIDAuthNT,
-            1,
-            SECURITY_LOCAL_SYSTEM_RID,
-            0, 0, 0, 0, 0, 0, 0,
-            &pSIDSystem
+    // Retrieve the token information in a TOKEN_USER structure
+    GetTokenInformation(
+        hToken,
+        TokenUser,  // request for a TOKEN_USER structure
+        nullptr,
+        0,
+        &cbBufferSize
+    );
+
+    pTokenUser = static_cast<PTOKEN_USER>(HeapAlloc(GetProcessHeap(), 0, cbBufferSize));
+    if (pTokenUser == nullptr) {
+        goto Cleanup;
+    }
+
+    if (!GetTokenInformation(
+        hToken,
+        TokenUser,
+        pTokenUser,
+        cbBufferSize,
+        &cbBufferSize
     )) {
         goto Cleanup;
     }
 
+    if (!IsValidSid(pTokenUser->User.Sid)) {
+        goto Cleanup;
+    }
+
+    // Calculate the amount of memory that must be allocated for the DACL
     cbACL = sizeof(ACL)
-        + sizeof(ACCESS_ALLOWED_ACE) + GetLengthSid(pSIDAdmin)
-        + sizeof(ACCESS_ALLOWED_ACE) + GetLengthSid(pSIDSystem);
+        + sizeof(ACCESS_ALLOWED_ACE) + GetLengthSid(pTokenUser->User.Sid);
 
+    // Create and initialize an ACL
     pACL = static_cast<PACL>(HeapAlloc(GetProcessHeap(), 0, cbACL));
     if (pACL == nullptr) {
         goto Cleanup;
     }
 
-    // Initialize access control list
     if (!InitializeAcl(pACL, cbACL, ACL_REVISION)) {
         goto Cleanup;
     }
@@ -307,21 +320,13 @@ bool createWindowsDACL()
     if (!AddAccessAllowedAce(
         pACL,
         ACL_REVISION,
-        SYNCHRONIZE | PROCESS_QUERY_LIMITED_INFORMATION | PROCESS_TERMINATE,    // protected process
-        pSIDAdmin
-    )) {
-        goto Cleanup;
-    }
-    if (!AddAccessAllowedAce(
-        pACL,
-        ACL_REVISION,
-        PROCESS_ALL_ACCESS,
-        pSIDSystem
+        SYNCHRONIZE | PROCESS_QUERY_LIMITED_INFORMATION | PROCESS_TERMINATE,    // same as protected process
+        pTokenUser->User.Sid                                                    // pointer to the trustee's SID
     )) {
         goto Cleanup;
     }
 
-    // Update discretionary access control list
+    // Set discretionary access control list
     bSuccess = ERROR_SUCCESS == SetSecurityInfo(
         GetCurrentProcess(),        // object handle
         SE_KERNEL_OBJECT,           // type of object
@@ -333,14 +338,14 @@ bool createWindowsDACL()
 
 Cleanup:
 
-    if (pSIDAdmin != nullptr) {
-        FreeSid(pSIDAdmin);
-    }
-    if (pSIDSystem != nullptr) {
-        FreeSid(pSIDSystem);
-    }
     if (pACL != nullptr) {
         HeapFree(GetProcessHeap(), 0, pACL);
+    }
+    if (pTokenUser != nullptr) {
+        HeapFree(GetProcessHeap(), 0, pTokenUser);
+    }
+    if (hToken != nullptr) {
+        CloseHandle(hToken);
     }
 #endif
 
