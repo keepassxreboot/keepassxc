@@ -24,6 +24,4 @@ set(YUBIKEY_LIBRARIES ${YUBIKEY_CORE_LIBRARY} ${YUBIKEY_PERS_LIBRARY})
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(YubiKey DEFAULT_MSG YUBIKEY_LIBRARIES YUBIKEY_INCLUDE_DIRS)
 
-# TODO: Is mark_as_advanced() necessary? It's used in many examples with
-#       little explanation.  Disable for now in favor of simplicity.
-#mark_as_advanced(YUBIKEY_LIBRARIES YUBIKEY_INCLUDE_DIRS)
+mark_as_advanced(YUBIKEY_LIBRARIES YUBIKEY_INCLUDE_DIRS)
