@@ -99,6 +99,7 @@ public:
     void showUnlockDialog();
     void closeUnlockDialog();
     void ignoreNextAutoreload();
+    void refreshSearch();
 
 Q_SIGNALS:
     void closeRequest();
@@ -179,7 +180,6 @@ private:
     void setClipboardTextAndMinimize(const QString& text);
     void setIconFromParent();
     void replaceDatabase(Database* db);
-    void refreshSearch();
 
     Database* m_db;
     QWidget* m_mainWidget;

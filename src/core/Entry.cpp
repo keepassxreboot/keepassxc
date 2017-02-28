@@ -494,6 +494,18 @@ Entry* Entry::clone(CloneFlags flags) const
     entry->m_data = m_data;
     entry->m_attributes->copyDataFrom(m_attributes);
     entry->m_attachments->copyDataFrom(m_attachments);
+
+    if (flags & CloneUserAsRef) {
+        // Build the username refrence
+        QString username = "{REF:U@I:" + m_uuid.toHex() + "}";
+        entry->m_attributes->set(EntryAttributes::UserNameKey, username.toUpper(), m_attributes->isProtected(EntryAttributes::UserNameKey));
+    }
+
+    if (flags & ClonePassAsRef) {
+        QString password = "{REF:P@I:" + m_uuid.toHex() + "}";
+        entry->m_attributes->set(EntryAttributes::PasswordKey, password.toUpper(), m_attributes->isProtected(EntryAttributes::PasswordKey));
+    }
+
     entry->m_autoTypeAssociations->copyDataFrom(this->m_autoTypeAssociations);
     if (flags & CloneIncludeHistory) {
         for (Entry* historyItem : m_history) {
@@ -660,6 +672,27 @@ QString Entry::resolvePlaceholder(const QString& str) const
         if (result.compare(k,cs)==0) {
             result.replace(result,attributes()->value(key));
             break;
+        }
+    }
+
+    // resolving references in format: {REF:<WantedField>@I:<uuid of referenced entry>}
+    // using format from http://keepass.info/help/base/fieldrefs.html at the time of writing,
+    // but supporting lookups of standard fields and references by UUID only
+
+    QRegExp tmpRegExp("\\{REF:([TUPAN])@I:([^}]+)\\}", Qt::CaseInsensitive, QRegExp::RegExp2);
+    if (tmpRegExp.indexIn(result) != -1) {
+        // cap(0) contains the whole reference
+        // cap(1) contains which field is wanted
+        // cap(2) contains the uuid of the referenced entry
+        Entry* tmpRefEntry = m_group->database()->resolveEntry(Uuid(QByteArray::fromHex(tmpRegExp.cap(2).toLatin1())));
+        if (tmpRefEntry) {
+            // entry found, get the relevant field
+            QString tmpRefField = tmpRegExp.cap(1).toLower();
+            if (tmpRefField == "t") result.replace(tmpRegExp.cap(0), tmpRefEntry->title(), Qt::CaseInsensitive);
+            else if (tmpRefField == "u") result.replace(tmpRegExp.cap(0), tmpRefEntry->username(), Qt::CaseInsensitive);
+            else if (tmpRefField == "p") result.replace(tmpRegExp.cap(0), tmpRefEntry->password(), Qt::CaseInsensitive);
+            else if (tmpRefField == "a") result.replace(tmpRegExp.cap(0), tmpRefEntry->url(), Qt::CaseInsensitive);
+            else if (tmpRefField == "n") result.replace(tmpRegExp.cap(0), tmpRefEntry->notes(), Qt::CaseInsensitive);
         }
     }
 
