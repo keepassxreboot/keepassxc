@@ -1380,7 +1380,7 @@ Dies wird benötigt um von ChromeIPass oder PassIFox auf Deine Datenbank zu zugr
     </message>
     <message>
         <source>KeePassXC will listen to this port on 127.0.0.1</source>
-        <translation>KeePassXC überwacht diesen Port auf 127.0..0.1</translation>
+        <translation>KeePassXC überwacht diesen Port auf 127.0.0.1</translation>
     </message>
     <message>
         <source>Cannot bind to privileged ports</source>
