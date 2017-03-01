@@ -301,6 +301,10 @@ MainWindow::MainWindow()
     connect(m_ui->welcomeWidget, SIGNAL(importKeePass1Database()), SLOT(switchToKeePass1Database()));
 
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
+    
+#ifdef Q_OS_MAC
+    setUnifiedTitleAndToolBarOnMac(true);
+#endif
 
     connect(m_ui->tabWidget, SIGNAL(messageGlobal(QString,MessageWidget::MessageType)), this, SLOT(displayGlobalMessage(QString, MessageWidget::MessageType)));
     connect(m_ui->tabWidget, SIGNAL(messageDismissGlobal()), this, SLOT(hideGlobalMessage()));

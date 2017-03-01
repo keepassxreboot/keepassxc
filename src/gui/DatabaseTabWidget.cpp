@@ -166,7 +166,7 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
             msgBox.setIcon(QMessageBox::Question);
             msgBox.addButton(QMessageBox::Yes);
             msgBox.addButton(QMessageBox::No);
-            auto readOnlyButton = msgBox.addButton(tr("Open read-only"), QMessageBox::AcceptRole);
+            auto readOnlyButton = msgBox.addButton(tr("Open read-only"), QMessageBox::NoRole);
             msgBox.setDefaultButton(readOnlyButton);
             msgBox.setEscapeButton(QMessageBox::No);
             auto result = msgBox.exec();

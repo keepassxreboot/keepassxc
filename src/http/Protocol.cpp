@@ -110,7 +110,7 @@ static QByteArray encrypt2(const QByteArray & data, SymmetricCipherGcrypt & ciph
     //Encrypt
     QByteArray buffer = data + QByteArray(paddingSize, paddingSize);
     cipher.reset();
-    cipher.processInPlace(buffer);
+    Q_UNUSED(cipher.processInPlace(buffer));
     return buffer;
 }
 

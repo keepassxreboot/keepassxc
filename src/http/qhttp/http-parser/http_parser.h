@@ -91,7 +91,7 @@ typedef int (*http_cb) (http_parser*);
 
 
 /* Status Codes */
-#define HTTP_STATUS_MAP(XX)                                                 \
+#define HTTPPARSER_HTTP_STATUS_MAP(XX)                                      \
   XX(100, CONTINUE,                        Continue)                        \
   XX(101, SWITCHING_PROTOCOLS,             Switching Protocols)             \
   XX(102, PROCESSING,                      Processing)                      \
@@ -150,12 +150,12 @@ typedef int (*http_cb) (http_parser*);
   XX(507, INSUFFICIENT_STORAGE,            Insufficient Storage)            \
   XX(508, LOOP_DETECTED,                   Loop Detected)                   \
   XX(510, NOT_EXTENDED,                    Not Extended)                    \
-  XX(511, NETWORK_AUTHENTICATION_REQUIRED, Network Authentication Required) \
+  XX(511, NETWORK_AUTHENTICATION_REQUIRED, Network Authentication Required)
 
 enum http_status
   {
 #define XX(num, name, string) HTTP_STATUS_##name = num,
-  HTTP_STATUS_MAP(XX)
+  HTTPPARSER_HTTP_STATUS_MAP(XX)
 #undef XX
   };
 
