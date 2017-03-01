@@ -273,50 +273,74 @@ void EditWidgetIcons::removeCustomIcon()
         QModelIndex index = m_ui->customIconsView->currentIndex();
         if (index.isValid()) {
             Uuid iconUuid = m_customIconModel->uuidFromIndex(index);
-            int iconUsedCount = 0;
 
             const QList<Entry*> allEntries = m_database->rootGroup()->entriesRecursive(true);
+            QList<Entry*> entriesWithSameIcon;
             QList<Entry*> historyEntriesWithSameIcon;
 
             for (Entry* entry : allEntries) {
-                bool isHistoryEntry = !entry->group();
                 if (iconUuid == entry->iconUuid()) {
-                    if (isHistoryEntry) {
+                    // Check if this is a history entry (no assigned group)
+                    if (!entry->group()) {
                         historyEntriesWithSameIcon << entry;
-                    }
-                    else if (m_currentUuid != entry->uuid()) {
-                        iconUsedCount++;
+                    } else if (m_currentUuid != entry->uuid()) {
+                        entriesWithSameIcon << entry;
                     }
                 }
             }
 
             const QList<Group*> allGroups = m_database->rootGroup()->groupsRecursive(true);
-            for (const Group* group : allGroups) {
+            QList<Group*> groupsWithSameIcon;
+
+            for (Group* group : allGroups) {
                 if (iconUuid == group->iconUuid() && m_currentUuid != group->uuid()) {
-                    iconUsedCount++;
+                    groupsWithSameIcon << group;
                 }
             }
 
-            if (iconUsedCount == 0) {
-                for (Entry* entry : asConst(historyEntriesWithSameIcon)) {
-                    entry->setUpdateTimeinfo(false);
-                    entry->setIcon(0);
-                    entry->setUpdateTimeinfo(true);
-                }
+            int iconUseCount = entriesWithSameIcon.size() + groupsWithSameIcon.size();
+            if (iconUseCount > 0) {
+                QMessageBox::StandardButton ans = MessageBox::question(this, tr("Confirm Delete"),
+                                     tr("This icon is used by %1 entries, and will be replaced "
+                                        "by the default icon. Are you sure you want to delete it?")
+                                     .arg(iconUseCount), QMessageBox::Yes | QMessageBox::No);
 
-                m_database->metadata()->removeCustomIcon(iconUuid);
-                m_customIconModel->setIcons(m_database->metadata()->customIconsScaledPixmaps(),
-                                            m_database->metadata()->customIconsOrder());
-                if (m_customIconModel->rowCount() > 0) {
-                    m_ui->customIconsView->setCurrentIndex(m_customIconModel->index(0, 0));
-                }
-                else {
-                    updateRadioButtonDefaultIcons();
+                if (ans == QMessageBox::No) {
+                    // Early out, nothing is changed
+                    return;
+                } else {
+                    // Revert matched entries to the default entry icon
+                    for (Entry* entry : asConst(entriesWithSameIcon)) {
+                        entry->setIcon(Entry::DefaultIconNumber);
+                    }
+
+                    // Revert matched groups to the default group icon
+                    for (Group* group : asConst(groupsWithSameIcon)) {
+                        group->setIcon(Group::DefaultIconNumber);
+                    }
                 }
             }
-            else {
-                Q_EMIT messageEditEntry(
-                    tr("Can't delete icon. Still used by %1 items.").arg(iconUsedCount), MessageWidget::Error);
+
+
+            // Remove the icon from history entries
+            for (Entry* entry : asConst(historyEntriesWithSameIcon)) {
+                entry->setUpdateTimeinfo(false);
+                entry->setIcon(0);
+                entry->setUpdateTimeinfo(true);
+            }
+
+            // Remove the icon from the database
+            m_database->metadata()->removeCustomIcon(iconUuid);
+            m_customIconModel->setIcons(m_database->metadata()->customIconsScaledPixmaps(),
+                                        m_database->metadata()->customIconsOrder());
+
+            // Reset the current icon view
+            updateRadioButtonDefaultIcons();
+
+            if (m_database->resolveEntry(m_currentUuid) != nullptr) {
+                m_ui->defaultIconsView->setCurrentIndex(m_defaultIconModel->index(Entry::DefaultIconNumber));
+            } else {
+                m_ui->defaultIconsView->setCurrentIndex(m_defaultIconModel->index(Group::DefaultIconNumber));
             }
         }
     }
