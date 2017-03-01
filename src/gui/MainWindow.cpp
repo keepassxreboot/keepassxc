@@ -281,6 +281,10 @@ MainWindow::MainWindow()
     connect(m_ui->passwordGeneratorWidget, SIGNAL(dialogTerminated()), SLOT(closePasswordGen()));
 
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
+    
+#ifdef Q_OS_MAC
+    setUnifiedTitleAndToolBarOnMac(true);
+#endif
 
     updateTrayIcon();
 }
