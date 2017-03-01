@@ -281,10 +281,9 @@ void EditWidgetIcons::removeCustomIcon()
             for (Entry* entry : allEntries) {
                 if (iconUuid == entry->iconUuid()) {
                     // Check if this is a history entry (no assigned group)
-                    if (entry->group() == nullptr) {
+                    if (!entry->group()) {
                         historyEntriesWithSameIcon << entry;
-                    }
-                    else if (m_currentUuid != entry->uuid()){
+                    } else if (m_currentUuid != entry->uuid()) {
                         entriesWithSameIcon << entry;
                     }
                 }
@@ -309,8 +308,7 @@ void EditWidgetIcons::removeCustomIcon()
                 if (ans == QMessageBox::No) {
                     // Early out, nothing is changed
                     return;
-                }
-                else {
+                } else {
                     // Revert matched entries to the default entry icon
                     for (Entry* entry : asConst(entriesWithSameIcon)) {
                         entry->setIcon(Entry::DefaultIconNumber);
@@ -341,8 +339,7 @@ void EditWidgetIcons::removeCustomIcon()
 
             if (m_database->resolveEntry(m_currentUuid) != nullptr) {
                 m_ui->defaultIconsView->setCurrentIndex(m_defaultIconModel->index(Entry::DefaultIconNumber));
-            }
-            else {
+            } else {
                 m_ui->defaultIconsView->setCurrentIndex(m_defaultIconModel->index(Group::DefaultIconNumber));
             }
         }
