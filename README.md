@@ -3,22 +3,23 @@
 [![Travis Build Status](https://travis-ci.org/keepassxreboot/keepassxc.svg?branch=develop)](https://travis-ci.org/keepassxreboot/keepassxc)  [![Coverage Status](https://coveralls.io/repos/github/keepassxreboot/keepassxc/badge.svg)](https://coveralls.io/github/keepassxreboot/keepassxc)
 
 ## About
-KeePassXC is a fork of [KeePassX](https://www.keepassx.org/) that [aims to incorporate stalled pull requests, features, and bug fixes that have never made it into the main KeePassX repository](https://github.com/keepassxreboot/keepassx/issues/43).
+KeePassXC is a community fork of [KeePassX](https://www.keepassx.org/) with the goal to extend and improve it with new features and bugfixes to provide a feature-rich, fully cross-platform and modern open-source password manager.
 
 
 ## Additional features compared to KeePassX
-- Autotype on all three major platforms (Linux, Windows, OS X)
+- Auto-Type on all three major platforms (Linux, Windows, OS X)
 - Stand-alone password generator
 - Password strength meter
-- Use website's favicons as entry icons
+- Using website favicons as entry icons
 - Merging of databases
 - Automatic reload when the database changed on disk
 - KeePassHTTP support for use with [PassIFox](https://addons.mozilla.org/en-us/firefox/addon/passifox/) in Mozilla Firefox and [chromeIPass](https://chrome.google.com/webstore/detail/chromeipass/ompiailgknfdndiefoaoiligalphfdae) in Google Chrome or Chromium.
+- Many bug fixes
 
 For a full list of features and changes, read the [CHANGELOG](CHANGELOG) document.
 
 ### Note about KeePassHTTP
-KeePassHTTP is not a highly secure protocol and has certain flaw which allow an attacker to decrypt your passwords when they manage to intercept communication between a KeePassHTTP server and PassIFox/chromeIPass over a network connection (see [here](https://github.com/pfn/keepasshttp/issues/258) and [here](https://github.com/keepassxreboot/keepassxc/issues/147)). KeePassXC therefore strictly limits communication between itself and the browser plugin to your local computer. As long as your computer is not compromised, your passwords are fairly safe that way, but still use it at your own risk!
+KeePassHTTP is not a highly secure protocol and has certain flaw which allow an attacker to decrypt your passwords when they manage to intercept communication between a KeePassHTTP server and PassIFox/chromeIPass over a network connection (see [here](https://github.com/pfn/keepasshttp/issues/258) and [here](https://github.com/keepassxreboot/keepassxc/issues/147)). KeePassXC therefore strictly limits communication between itself and the browser plugin to your local computer. As long as your computer is not compromised, your passwords are fairly safe that way, but use it at your own risk!
 
 ### Installation
 Pre-compiled binaries can be found on the [downloads page](https://keepassxc.org/download).  Additionally, individual Linux distributions may ship their own versions, so please check out your distribution's package list to see if KeePassXC is available.
