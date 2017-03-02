@@ -14,14 +14,14 @@
         <translation>Apie KeePassXC</translation>
     </message>
     <message>
-        <source>KeePassXC is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassXC yra platinama GNU Bendrosios Viešosios Licencijos (GPL) versijos 2 arba (jūsų pasirinkimu) versijos 3 sąlygomis.</translation>
-    </message>
-    <message>
         <source>Extensions:
 </source>
         <translation>Plėtiniai:
 </translation>
+    </message>
+    <message>
+        <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
+        <translation>KeePassXC yra platinama GNU Bendrosios Viešosios Licencijos (GPL) versijos 2 arba (jūsų pasirinkimu) versijos 3 sąlygomis.</translation>
     </message>
 </context>
 <context>
@@ -101,10 +101,6 @@ Pasirinkite, ar norite leisti prieigą.</translation>
         <translation>Pakartokite slaptažodį:</translation>
     </message>
     <message>
-        <source>Key file</source>
-        <translation>Rakto failas</translation>
-    </message>
-    <message>
         <source>Browse</source>
         <translation>Naršyti</translation>
     </message>
@@ -157,6 +153,10 @@ Pasirinkite, ar norite leisti prieigą.</translation>
 %2</source>
         <translation>Nepavyko nustatyti %1 kaip rakto failą:
 %2</translation>
+    </message>
+    <message>
+        <source>&amp;Key file</source>
+        <translation>&amp;Rakto failas</translation>
     </message>
 </context>
 <context>
@@ -258,10 +258,6 @@ Dabar galite ją įrašyti.</translation>
         <translation>Numatytasis naudotojo vardas:</translation>
     </message>
     <message>
-        <source>Use recycle bin:</source>
-        <translation>Naudoti šiukšlinę:</translation>
-    </message>
-    <message>
         <source> MiB</source>
         <translation> MiB</translation>
     </message>
@@ -276,6 +272,10 @@ Dabar galite ją įrašyti.</translation>
     <message>
         <source>Max. history size:</source>
         <translation>Didžiausias istorijos dydis:</translation>
+    </message>
+    <message>
+        <source>Use recycle bin</source>
+        <translation>Naudoti šiukšlinę</translation>
     </message>
 </context>
 <context>
@@ -397,12 +397,6 @@ Vis tiek atmesti pakeitimus ir užverti?</translation>
         <translation>Nepavyko atverti duomenų bazės.</translation>
     </message>
     <message>
-        <source>The database you are trying to open is locked by another instance of KeePassXC.
-Do you want to open it anyway? Alternatively the database is opened read-only.</source>
-        <translation>Duomenų bazė, kurią bandote atverti, yra užrakinta kito KeePassXC egzemplioriaus.
-Ar vis tiek norite ją atverti? Tokiu atveju duomenų bazė bus atverta tik skaitymui.</translation>
-    </message>
-    <message>
         <source>Merge database</source>
         <translation>Sulieti duomenų bazę</translation>
     </message>
@@ -411,6 +405,25 @@ Ar vis tiek norite ją atverti? Tokiu atveju duomenų bazė bus atverta tik skai
 Do you want to save it anyway?</source>
         <translation>Duomenų bazė, kurią bandote įrašyti yra užrakinta kito KeePassXC programos egzemplioriaus.
 Ar vis tiek norite ją įrašyti?</translation>
+    </message>
+    <message>
+        <source>Passwords</source>
+        <translation>Slaptažodžiai</translation>
+    </message>
+    <message>
+        <source>Database already opened</source>
+        <translation>Duomenų bazė jau atverta</translation>
+    </message>
+    <message>
+        <source>The database you are trying to open is locked by another instance of KeePassXC.
+
+Do you want to open it anyway?</source>
+        <translation>Duomenų bazė, kurią bandote atverti yra užrakinta kito KeePassXC programos egzemplioriaus.
+Ar vis tiek norite ją atverti?</translation>
+    </message>
+    <message>
+        <source>Open read-only</source>
+        <translation>Atverti tik skaitymui</translation>
     </message>
 </context>
 <context>
@@ -518,10 +531,6 @@ Ar vis tiek norite ją įrašyti?</translation>
     <message>
         <source>Autoreload Failed</source>
         <translation>Automatinis įkėlimas iš naujo nepavyko</translation>
-    </message>
-    <message>
-        <source>Could not parse or unlock the new database file while attempting to autoreload this database.</source>
-        <translation>Nepavyko išanalizuoti ar atrakinti naujos duomenų bazės failo, bandant automatiškai iš naujo įkelti šią duomenų bazę.</translation>
     </message>
     <message>
         <source>Could not open the new database file while attempting to autoreload this database.</source>
@@ -651,14 +660,6 @@ Ar vis tiek norite ją įrašyti?</translation>
         <translation>Įjungti šiam įrašui automatinį rinkimą</translation>
     </message>
     <message>
-        <source>Inherit default Auto-Type sequence from the group</source>
-        <translation>Paveldėti numatytąją automatinio rinkimo seką iš grupės</translation>
-    </message>
-    <message>
-        <source>Use custom Auto-Type sequence:</source>
-        <translation>Naudoti tinkintą automatinio rinkimo seka:</translation>
-    </message>
-    <message>
         <source>+</source>
         <translation>+</translation>
     </message>
@@ -671,12 +672,20 @@ Ar vis tiek norite ją įrašyti?</translation>
         <translation>Lango antraštė:</translation>
     </message>
     <message>
-        <source>Use default sequence</source>
-        <translation>Naudoti numatytąją seką</translation>
+        <source>Inherit default Auto-Type sequence from the &amp;group</source>
+        <translation>Paveldėti numatytąją automatinio rinkimo seką iš &amp;grupės</translation>
     </message>
     <message>
-        <source>Set custom sequence:</source>
-        <translation>Nustatyti tinkintą seką:</translation>
+        <source>&amp;Use custom Auto-Type sequence:</source>
+        <translation>Na&amp;udoti tinkintą automatinio rinkimo seka:</translation>
+    </message>
+    <message>
+        <source>Use default se&amp;quence</source>
+        <translation>Naudoti numatytąją se&amp;ką</translation>
+    </message>
+    <message>
+        <source>Set custo&amp;m sequence:</source>
+        <translation>Nustatyti tinkintą s&amp;eką:</translation>
     </message>
 </context>
 <context>
@@ -802,14 +811,6 @@ Ar vis tiek norite ją įrašyti?</translation>
 <context>
     <name>EditWidgetIcons</name>
     <message>
-        <source>Use default icon</source>
-        <translation>Naudoti numatytąją piktogramą</translation>
-    </message>
-    <message>
-        <source>Use custom icon</source>
-        <translation>Naudoti tinkintą piktogramą</translation>
-    </message>
-    <message>
         <source>Add custom icon</source>
         <translation>Pridėti tinkintą piktogramą</translation>
     </message>
@@ -852,6 +853,14 @@ Ar vis tiek norite ją įrašyti?</translation>
     <message>
         <source>Can&apos;t delete icon. Still used by %1 items.</source>
         <translation>Nepavyksta ištrinti piktogramos. Vis dar naudojama %1 elementų.</translation>
+    </message>
+    <message>
+        <source>&amp;Use default icon</source>
+        <translation>Na&amp;udoti numatytąją piktogramą</translation>
+    </message>
+    <message>
+        <source>Use custo&amp;m icon</source>
+        <translation>Naudoti tinkintą piktogra&amp;mą</translation>
     </message>
 </context>
 <context>
@@ -1299,12 +1308,6 @@ Tai yra vienakryptis perkėlimas. Jūs negalėsite atverti importuotos duomenų 
         <translation>R&amp;odyti pranešimą, kai reikalaujama prisijungimo duomenų</translation>
     </message>
     <message>
-        <source>&amp;Return only best matching entries for an URL instead
-of all entries for the whole domain</source>
-        <translation>&amp;Vietoj visų įrašų, skirtų visai sričiai,
-grąžinti tik geriausiai atitinkančius įrašus, skirtus URL</translation>
-    </message>
-    <message>
         <source>&amp;Match URL schemes
 Only entries with the same scheme (http://, https://, ftp://, ...) are returned</source>
         <translation>&amp;Atitikti URL schemas
@@ -1313,10 +1316,6 @@ Bus grąžinami įrašai tik su ta pačia schema (http://, https://, ftp://, ...
     <message>
         <source>Sort matching entries by &amp;username</source>
         <translation>Rikiuoti atitinkančius įrašus pagal na&amp;udotojo vardą</translation>
-    </message>
-    <message>
-        <source>R&amp;emove all shared encryption-keys from active database</source>
-        <translation>Ša&amp;linti iš aktyvios duomenų bazės visus bendrinamus šifravimo raktus</translation>
     </message>
     <message>
         <source>Re&amp;move all stored permissions from entries in active database</source>
@@ -1329,10 +1328,6 @@ Bus grąžinami įrašai tik su ta pačia schema (http://, https://, ftp://, ...
     <message>
         <source>Advanced</source>
         <translation>Išplėstiniai</translation>
-    </message>
-    <message>
-        <source>Activate the following only, if you know what you are doing!</source>
-        <translation>Aktyvuokite tai tik tuo atveju, jeigu žinote ką darote!</translation>
     </message>
     <message>
         <source>Always allow &amp;access to entries</source>
@@ -1349,14 +1344,6 @@ Bus grąžinami įrašai tik su ta pačia schema (http://, https://, ftp://, ...
     <message>
         <source>Only the selected database has to be connected with a client!</source>
         <translation>Su klientu turi būti sujungta tik pasirinkta duomenų bazė!</translation>
-    </message>
-    <message>
-        <source>&amp;Return also advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation>&amp;Taip pat grąžinti ir išplėstines eilutes, kurios prasideda &quot;KPH: &quot;</translation>
-    </message>
-    <message>
-        <source>Automatic creates or updates are not supported for string fields!</source>
-        <translation>Šiems eilutės laukams automatiniai kūrimai ir atnaujinimai neprieinami!</translation>
     </message>
     <message>
         <source>HTTP Port:</source>
@@ -1393,6 +1380,28 @@ Tai reikalinga, norint prie savo duomenų bazių gauti prieigą iš ChromeIPass 
 Using default port 19455.</source>
         <translation>Nepavyksta susieti su privilegijuotais prievadais žemiau 1024!
 Naudojamas numatytasis prievadas 19455.</translation>
+    </message>
+    <message>
+        <source>&amp;Return only best matching entries for a URL instead
+of all entries for the whole domain</source>
+        <translation>&amp;Vietoj visų įrašų, skirtų visai sričiai,
+grąžinti tik geriausiai atitinkančius įrašus, skirtus URL</translation>
+    </message>
+    <message>
+        <source>R&amp;emove all shared encryption keys from active database</source>
+        <translation>Ša&amp;linti iš aktyvios duomenų bazės visus bendrinamus šifravimo raktus</translation>
+    </message>
+    <message>
+        <source>The following options can be dangerous. Change them only if you know what you are doing.</source>
+        <translation>Šios parinktys gali būti pavojingos. Keiskite jas tik tuo atveju, jeigu žinote ką darote!</translation>
+    </message>
+    <message>
+        <source>&amp;Return advanced string fields which start with &quot;KPH: &quot;</source>
+        <translation>&amp;Grąžinti išplėstines eilutes, kurios prasideda &quot;KPH: &quot;</translation>
+    </message>
+    <message>
+        <source>Automatically creating or updating string fields is not supported.</source>
+        <translation>Automatinis eilutės laukų kūrimas ar atnaujinimas nėra palaikomas.</translation>
     </message>
 </context>
 <context>
@@ -1463,7 +1472,7 @@ Naudojamas numatytasis prievadas 19455.</translation>
     </message>
     <message>
         <source>Entropy: %1 bit</source>
-        <translation>Entropija: %1 bit</translation>
+        <translation>Entropija: %1 bitų</translation>
     </message>
     <message>
         <source>Password Quality: %1</source>
@@ -1535,7 +1544,7 @@ Naudojamas numatytasis prievadas 19455.</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Ieškoti</translation>
+        <translation>Paieška</translation>
     </message>
     <message>
         <source>Find</source>
@@ -1772,16 +1781,16 @@ ir priimtumėte jį.</translation>
         <translation>duomenų bazės rakto failas</translation>
     </message>
     <message>
-        <source>filename(s) of the password database(s) to open (*.kdbx)</source>
-        <translation>norimos atverti slaptažodžių duomenų bazės(-ių) failo pavadinimas(-ai) (*.kdbx)</translation>
-    </message>
-    <message>
         <source>KeePassXC - cross-platform password manager</source>
         <translation>KeePassXC - daugiaplatformė slaptažodžių tvarkytuvė</translation>
     </message>
     <message>
         <source>read password of the database from stdin</source>
         <translation>nuskaityti duomenų bazės slaptažodį iš stdin</translation>
+    </message>
+    <message>
+        <source>filenames of the password databases to open (*.kdbx)</source>
+        <translation>norimų atverti slaptažodžių duomenų bazių failų pavadinimai (*.kdbx)</translation>
     </message>
 </context>
 </TS>

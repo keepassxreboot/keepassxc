@@ -18,7 +18,6 @@
 #include <QCommandLineParser>
 #include <QFile>
 #include <QTextStream>
-#include <QtGlobal>
 
 #include "config-keepassx.h"
 #include "core/Config.h"
@@ -45,10 +44,7 @@ int main(int argc, char** argv)
     Tools::disableCoreDumps();
 #endif
     Tools::setupSearchPaths();
-    
-#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
-    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-#endif
+
     Application app(argc, argv);
     Application::setApplicationName("keepassxc");
     Application::setApplicationVersion(KEEPASSX_VERSION);
@@ -68,7 +64,7 @@ int main(int argc, char** argv)
 
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::translate("main", "KeePassXC - cross-platform password manager"));
-    parser.addPositionalArgument("filename", QCoreApplication::translate("main", "filename(s) of the password database(s) to open (*.kdbx)"), "[filename(s)]");
+    parser.addPositionalArgument("filename", QCoreApplication::translate("main", "filenames of the password databases to open (*.kdbx)"), "[filename(s)]");
 
     QCommandLineOption configOption("config",
                                     QCoreApplication::translate("main", "path to a custom config file"),

@@ -389,11 +389,6 @@ Discard changes and close anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The database you are trying to open is locked by another instance of KeePassXC.
-Do you want to open it anyway? Alternatively the database is opened read-only.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Merge database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -404,6 +399,20 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Passwords</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database already opened</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The database you are trying to open is locked by another instance of KeePassXC.
+
+Do you want to open it anyway?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open read-only</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -514,10 +523,6 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Autoreload Failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not parse or unlock the new database file while attempting to autoreload this database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1298,21 +1303,12 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Return only best matching entries for an URL instead
-of all entries for the whole domain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Match URL schemes
 Only entries with the same scheme (http://, https://, ftp://, ...) are returned</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sort matching entries by &amp;username</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>R&amp;emove all shared encryption-keys from active database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1325,10 +1321,6 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
     </message>
     <message>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Activate the following only, if you know what you are doing!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1345,14 +1337,6 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
     </message>
     <message>
         <source>Only the selected database has to be connected with a client!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Return also advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automatic creates or updates are not supported for string fields!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1387,6 +1371,27 @@ This is required for accessing your databases from ChromeIPass or PassIFox</sour
     <message>
         <source>Cannot bind to privileged ports below 1024!
 Using default port 19455.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Return only best matching entries for a URL instead
+of all entries for the whole domain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>R&amp;emove all shared encryption keys from active database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The following options can be dangerous. Change them only if you know what you are doing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Return advanced string fields which start with &quot;KPH: &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatically creating or updating string fields is not supported.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1762,15 +1767,15 @@ give it a unique name to identify and accept it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>filename(s) of the password database(s) to open (*.kdbx)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>KeePassXC - cross-platform password manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>read password of the database from stdin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>filenames of the password databases to open (*.kdbx)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

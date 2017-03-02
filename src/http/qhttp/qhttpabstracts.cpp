@@ -8,7 +8,7 @@ namespace qhttp {
 #   error "to compile QHttp classes, Qt 5.0 or later is needed."
 #endif
 
-#define HTTP_STATUS_MAP(XX)                    \
+#define QHTTPABSTRACTS_HTTP_STATUS_MAP(XX)     \
     XX(100, "Continue")                        \
     XX(101, "Switching Protocols")             \
     /* RFC 2518) obsoleted by RFC 4918 */      \
@@ -78,7 +78,7 @@ static struct {
     int         code;
     const char* message;
 } g_status_codes[] {
-    HTTP_STATUS_MAP(PATCH_STATUS_CODES)
+    QHTTPABSTRACTS_HTTP_STATUS_MAP(PATCH_STATUS_CODES)
 };
 #undef PATCH_STATUS_CODES
 
