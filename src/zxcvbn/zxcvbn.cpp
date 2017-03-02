@@ -496,7 +496,7 @@ typedef struct
     uint8_t LeetCnv[sizeof L33TCnv / LEET_NORM_MAP_SIZE + 1];
  /*   uint8_t LeetChr[3]; */
     uint8_t First;
-    uint8_t PossChars[48];
+    uint8_t PossChars[49];
 } DictWork_t;
 
 /**********************************************************************************
