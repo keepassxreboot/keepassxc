@@ -27,8 +27,8 @@
 #include <QElapsedTimer>
 
 #ifdef Q_OS_WIN
-#include <windows.h> // for Sleep(), SetDllDirectoryA() and SetSearchPathMode()
-#include <aclapi.h>
+#include <windows.h> // for Sleep(), SetDllDirectoryA(), SetSearchPathMode(), ...
+#include <aclapi.h>  // for SetSecurityInfo()
 #endif
 
 #ifdef Q_OS_UNIX
@@ -247,9 +247,13 @@ void setupSearchPaths()
 }
 
 //
-// Prevent memory dumps without admin privileges.
-// MiniDumpWriteDump function requires PROCESS_QUERY_INFORMATION and PROCESS_VM_READ
-// see: https://msdn.microsoft.com/en-us/library/windows/desktop/ms680360%28v=vs.85%29.aspx
+// This function grants the user associated with the process token minimal access rights and
+// denies everything else on Windows. This includes PROCESS_QUERY_INFORMATION and
+// PROCESS_VM_READ access rights that are required for MiniDumpWriteDump() or ReadProcessMemory().
+// We do this using a discretionary access control list (DACL). Effectively this prevents
+// crash dumps and disallows other processes from accessing our memory. This works as long
+// as you do not have admin privileges, since then you are able to grant yourself the
+// SeDebugPrivilege or SeTakeOwnershipPrivilege and circumvent the DACL.
 //
 bool createWindowsDACL()
 {
@@ -277,7 +281,7 @@ bool createWindowsDACL()
     // Retrieve the token information in a TOKEN_USER structure
     GetTokenInformation(
         hToken,
-        TokenUser,  // request for a TOKEN_USER structure
+        TokenUser,
         nullptr,
         0,
         &cbBufferSize
