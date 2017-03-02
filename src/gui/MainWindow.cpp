@@ -301,7 +301,7 @@ MainWindow::MainWindow()
     connect(m_ui->welcomeWidget, SIGNAL(importKeePass1Database()), SLOT(switchToKeePass1Database()));
 
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
-    
+
 #ifdef Q_OS_MAC
     setUnifiedTitleAndToolBarOnMac(true);
 #endif
@@ -612,7 +612,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
     if (minimizeOnClose && !appExitCalled)
     {
         event->ignore();
-        toggleWindow();
+        hideWindow();
 
         if (config()->get("security/lockdatabaseminimize").toBool()) {
             m_ui->tabWidget->lockDatabases();
@@ -777,22 +777,27 @@ void MainWindow::trayIconTriggered(QSystemTrayIcon::ActivationReason reason)
     }
 }
 
+void MainWindow::hideWindow()
+{
+    setWindowState(windowState() | Qt::WindowMinimized);
+    QTimer::singleShot(0, this, SLOT(hide()));
+
+    if (config()->get("security/lockdatabaseminimize").toBool()) {
+        m_ui->tabWidget->lockDatabases();
+    }
+}
+
 void MainWindow::toggleWindow()
 {
     if ((QApplication::activeWindow() == this) && isVisible() && !isMinimized()) {
-        setWindowState(windowState() | Qt::WindowMinimized);
-        QTimer::singleShot(0, this, SLOT(hide()));
-        
-        if (config()->get("security/lockdatabaseminimize").toBool()) {
-            m_ui->tabWidget->lockDatabases();
-        }
+        hideWindow();
     } else {
         ensurePolished();
         setWindowState(windowState() & ~Qt::WindowMinimized);
         show();
         raise();
         activateWindow();
-        
+
 #if defined(Q_OS_LINUX) && ! defined(QT_NO_DBUS)
         // re-register global D-Bus menu (needed on Ubuntu with Unity)
         // see https://github.com/keepassxreboot/keepassxc/issues/271
@@ -832,7 +837,7 @@ void MainWindow::repairDatabase()
     if (fileName.isEmpty()) {
         return;
     }
-    
+
     QScopedPointer<QDialog> dialog(new QDialog(this));
     DatabaseRepairWidget* dbRepairWidget = new DatabaseRepairWidget(dialog.data());
     connect(dbRepairWidget, SIGNAL(success()), dialog.data(), SLOT(accept()));
