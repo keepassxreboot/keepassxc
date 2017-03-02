@@ -34,7 +34,7 @@ option(WITH_GUI_TESTS "Enable building of GUI tests" OFF)
 option(WITH_DEV_BUILD "Use only for development. Disables/warns about deprecated methods." OFF)
 option(WITH_COVERAGE "Use to build with coverage tests. (GCC ONLY)." OFF)
 
-option(WITH_XC_AUTOTYPE "Include Autotype." OFF)
+option(WITH_XC_AUTOTYPE "Include Autotype." ON)
 option(WITH_XC_HTTP "Include KeePassHTTP." OFF)
 option(WITH_XC_YUBIKEY "Include Yubikey support." OFF)
 
