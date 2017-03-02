@@ -1,14 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.1">
 <context>
     <name>AboutDialog</name>
-    <message>
-        <source>About KeePassX</source>
-        <translation>关于 KeePassX</translation>
-    </message>
-    <message>
-        <source>KeePassX is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassX 使用的是第 2 版 GNU 通用公共授权协议(GPL)(你可以根据需要选用第 3 版).</translation>
-    </message>
     <message>
         <source>Revision</source>
         <translation>修改</translation>
@@ -17,16 +9,54 @@
         <source>Using:</source>
         <translation>使用:</translation>
     </message>
+    <message>
+        <source>About KeePassXC</source>
+        <translation>关于 KeePassXC</translation>
+    </message>
+    <message>
+        <source>Extensions:
+</source>
+        <translation>扩展：
+</translation>
+    </message>
+    <message>
+        <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
+        <translation>KeePassXC 使用的是第 2 版 GNU 通用公共授权协议(GPL)(你可以根据需要选用第 3 版).</translation>
+    </message>
+</context>
+<context>
+    <name>AccessControlDialog</name>
+    <message>
+        <source>Remember this decision</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow</source>
+        <translation>允许</translation>
+    </message>
+    <message>
+        <source>Deny</source>
+        <translation>拒绝</translation>
+    </message>
+    <message>
+        <source>%1 has requested access to passwords for the following item(s).
+Please select whether you want to allow access.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC HTTP Confirm Access</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
     <message>
-        <source>Auto-Type - KeePassX</source>
-        <translation>KeePassX - 自动输入</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
         <translation>无法找到符合窗口标题的项目</translation>
+    </message>
+    <message>
+        <source>Auto-Type - KeePassXC</source>
+        <translation>KeePassXC - 自动输入</translation>
     </message>
 </context>
 <context>
@@ -47,12 +77,12 @@
 <context>
     <name>AutoTypeSelectDialog</name>
     <message>
-        <source>Auto-Type - KeePassX</source>
-        <translation>KeePassX - 自动输入</translation>
-    </message>
-    <message>
         <source>Select entry to Auto-Type:</source>
         <translation>选择自动输入的项目</translation>
+    </message>
+    <message>
+        <source>Auto-Type - KeePassXC</source>
+        <translation>KeePassXC - 自动输入</translation>
     </message>
 </context>
 <context>
@@ -68,10 +98,6 @@
     <message>
         <source>Repeat password:</source>
         <translation>重复密码：</translation>
-    </message>
-    <message>
-        <source>Key file</source>
-        <translation>秘钥文件</translation>
     </message>
     <message>
         <source>Browse</source>
@@ -126,6 +152,10 @@
 %2</source>
         <translation>无法设置 %1 为秘钥文件:
 %2</translation>
+    </message>
+    <message>
+        <source>&amp;Key file</source>
+        <translation>秘钥文件</translation>
     </message>
 </context>
 <context>
@@ -227,10 +257,6 @@ You can now save it.</source>
         <translation>默认用户名：</translation>
     </message>
     <message>
-        <source>Use recycle bin:</source>
-        <translation>使用垃圾桶：</translation>
-    </message>
-    <message>
         <source> MiB</source>
         <translation>MiB</translation>
     </message>
@@ -245,6 +271,10 @@ You can now save it.</source>
     <message>
         <source>Max. history size:</source>
         <translation>最大历史记录大小：</translation>
+    </message>
+    <message>
+        <source>Use recycle bin</source>
+        <translation>使用回收站</translation>
     </message>
 </context>
 <context>
@@ -320,12 +350,6 @@ Save changes?</source>
         <translation>已锁</translation>
     </message>
     <message>
-        <source>The database you are trying to open is locked by another instance of KeePassX.
-Do you want to open it anyway? Alternatively the database is opened read-only.</source>
-        <translation>你要打开的数据库已被另一个KeePassX锁住。
-你确定要以只读方式的打开吗？</translation>
-    </message>
-    <message>
         <source>Lock database</source>
         <translation>锁住数据库</translation>
     </message>
@@ -368,14 +392,37 @@ Discard changes and close anyway?</source>
         <translation>写入CSV格式文件失败</translation>
     </message>
     <message>
-        <source>The database you are trying to save as is locked by another instance of KeePassX.
+        <source>Unable to open the database.</source>
+        <translation>无法打开数据库。</translation>
+    </message>
+    <message>
+        <source>Merge database</source>
+        <translation>合并数据库</translation>
+    </message>
+    <message>
+        <source>The database you are trying to save as is locked by another instance of KeePassXC.
 Do you want to save it anyway?</source>
-        <translation>你要保存的数据库已被另一个KeePassX锁住。
+        <translation>你要保存的数据库已被另一个KeePassXC锁住。
 你仍然要保存吗？</translation>
     </message>
     <message>
-        <source>Unable to open the database.</source>
+        <source>Passwords</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database already opened</source>
+        <translation>数据库已经打开</translation>
+    </message>
+    <message>
+        <source>The database you are trying to open is locked by another instance of KeePassXC.
+
+Do you want to open it anyway?</source>
+        <translation>你要打开的数据库已被另一个KeePassXC锁住。
+你仍然要打开吗？</translation>
+    </message>
+    <message>
+        <source>Open read-only</source>
+        <translation>已只读方式打开</translation>
     </message>
 </context>
 <context>
@@ -417,10 +464,6 @@ Do you want to save it anyway?</source>
         <translation>你确定永远删除 &quot;%1&quot; 群组吗？</translation>
     </message>
     <message>
-        <source>Current group</source>
-        <translation>当前群组</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation>错误</translation>
     </message>
@@ -430,11 +473,67 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Move entry to recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>移动项目到回收站？</translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>是否删除 &quot;%1&quot; 项目到回收站？</translation>
+    </message>
+    <message>
+        <source>Searching...</source>
+        <translation>搜索中...</translation>
+    </message>
+    <message>
+        <source>No current database.</source>
+        <translation>没有当前的数据库。</translation>
+    </message>
+    <message>
+        <source>No source database, nothing to do.</source>
+        <translation>没有当前的数据库。没什么可做的。</translation>
+    </message>
+    <message>
+        <source>Search Results (%1)</source>
+        <translation>搜索结果 (%1)</translation>
+    </message>
+    <message>
+        <source>No Results</source>
+        <translation>无结果</translation>
+    </message>
+    <message>
+        <source>Execute command?</source>
+        <translation>执行命令？</translation>
+    </message>
+    <message>
+        <source>Do you really want to execute the following command?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</source>
+        <translation>你确定要执行以下命令？&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
+    </message>
+    <message>
+        <source>Remember my choice</source>
+        <translation>记住这次更改</translation>
+    </message>
+    <message>
+        <source>Autoreload Request</source>
+        <translation>自动加载请求</translation>
+    </message>
+    <message>
+        <source>The database file has changed. Do you want to load the changes?</source>
+        <translation>数据库文件已更改。是否重新载入？</translation>
+    </message>
+    <message>
+        <source>Merge Request</source>
+        <translation>合并请求</translation>
+    </message>
+    <message>
+        <source>The database file has changed and you have unsaved changes.Do you want to merge your changes?</source>
+        <translation>数据库文件已更改，您有未保存的更改。是否合并您的更改？</translation>
+    </message>
+    <message>
+        <source>Autoreload Failed</source>
+        <translation>自动加载失败</translation>
+    </message>
+    <message>
+        <source>Could not open the new database file while attempting to autoreload this database.</source>
+        <translation>在尝试 autoreload 此数据库不打开新的数据库文件。</translation>
     </message>
 </context>
 <context>
@@ -560,14 +659,6 @@ Do you want to save it anyway?</source>
         <translation>打开此项目的自动输入</translation>
     </message>
     <message>
-        <source>Inherit default Auto-Type sequence from the group</source>
-        <translation>从父群组继承默认的自动输入顺序</translation>
-    </message>
-    <message>
-        <source>Use custom Auto-Type sequence:</source>
-        <translation>使用自定义自动输入顺序</translation>
-    </message>
-    <message>
         <source>+</source>
         <translation>+</translation>
     </message>
@@ -580,11 +671,19 @@ Do you want to save it anyway?</source>
         <translation>窗口标题：</translation>
     </message>
     <message>
-        <source>Use default sequence</source>
+        <source>Inherit default Auto-Type sequence from the &amp;group</source>
+        <translation>从父群组继承默认的自动输入顺序</translation>
+    </message>
+    <message>
+        <source>&amp;Use custom Auto-Type sequence:</source>
+        <translation>使用自定义自动输入顺序</translation>
+    </message>
+    <message>
+        <source>Use default se&amp;quence</source>
         <translation>使用默认顺序</translation>
     </message>
     <message>
-        <source>Set custom sequence:</source>
+        <source>Set custo&amp;m sequence:</source>
         <translation>设置自定义顺序</translation>
     </message>
 </context>
@@ -624,10 +723,6 @@ Do you want to save it anyway?</source>
     <message>
         <source>Repeat:</source>
         <translation>重复：</translation>
-    </message>
-    <message>
-        <source>Gen.</source>
-        <translation>生成.</translation>
     </message>
     <message>
         <source>URL:</source>
@@ -715,14 +810,6 @@ Do you want to save it anyway?</source>
 <context>
     <name>EditWidgetIcons</name>
     <message>
-        <source>Use default icon</source>
-        <translation>使用默认图标</translation>
-    </message>
-    <message>
-        <source>Use custom icon</source>
-        <translation>使用自定义图标</translation>
-    </message>
-    <message>
         <source>Add custom icon</source>
         <translation>添加自定义图标</translation>
     </message>
@@ -746,17 +833,33 @@ Do you want to save it anyway?</source>
         <source>Can&apos;t delete icon!</source>
         <translation>不能删除图标！</translation>
     </message>
-    <message numerus="yes">
-        <source>Can&apos;t delete icon. Still used by %n item(s).</source>
-        <translation><numerusform>不能删除图标。仍在被 %n 个项目使用</numerusform></translation>
-    </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>错误</translation>
     </message>
     <message>
-        <source>Can&apos;t read icon:</source>
-        <translation type="unfinished"/>
+        <source>Download favicon</source>
+        <translation>下载网站头像</translation>
+    </message>
+    <message>
+        <source>Unable to fetch favicon.</source>
+        <translation>无法获取网站头像</translation>
+    </message>
+    <message>
+        <source>Can&apos;t read icon</source>
+        <translation>无法读取图标</translation>
+    </message>
+    <message>
+        <source>Can&apos;t delete icon. Still used by %1 items.</source>
+        <translation>%1 项目正在使用，无法删除图标。</translation>
+    </message>
+    <message>
+        <source>&amp;Use default icon</source>
+        <translation>使用默认图标</translation>
+    </message>
+    <message>
+        <source>Use custo&amp;m icon</source>
+        <translation>使用自定义图标</translation>
     </message>
 </context>
 <context>
@@ -776,6 +879,13 @@ Do you want to save it anyway?</source>
     <message>
         <source>Uuid:</source>
         <translation>Uuid(通用唯一识别码):</translation>
+    </message>
+</context>
+<context>
+    <name>Entry</name>
+    <message>
+        <source> - Clone</source>
+        <translation>- 复制</translation>
     </message>
 </context>
 <context>
@@ -831,6 +941,61 @@ Do you want to save it anyway?</source>
     </message>
 </context>
 <context>
+    <name>HttpPasswordGeneratorWidget</name>
+    <message>
+        <source>Length:</source>
+        <translation>长度：</translation>
+    </message>
+    <message>
+        <source>Character Types</source>
+        <translation>字符类型</translation>
+    </message>
+    <message>
+        <source>Upper Case Letters</source>
+        <translation>大写英文字母</translation>
+    </message>
+    <message>
+        <source>A-Z</source>
+        <translation>A-Z</translation>
+    </message>
+    <message>
+        <source>Lower Case Letters</source>
+        <translation>小写英文字母</translation>
+    </message>
+    <message>
+        <source>a-z</source>
+        <translation>a-z</translation>
+    </message>
+    <message>
+        <source>Numbers</source>
+        <translation>数字</translation>
+    </message>
+    <message>
+        <source>0-9</source>
+        <translation>0-9</translation>
+    </message>
+    <message>
+        <source>Special Characters</source>
+        <translation>特殊字符</translation>
+    </message>
+    <message>
+        <source>/*_&amp; ...</source>
+        <translation>/*_&amp; ...</translation>
+    </message>
+    <message>
+        <source>Exclude look-alike characters</source>
+        <translation>去除相似的字符</translation>
+    </message>
+    <message>
+        <source>Ensure that the password contains characters from every group</source>
+        <translation>确保密码包含每种的字符</translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation>接受</translation>
+    </message>
+</context>
+<context>
     <name>KeePass1OpenWidget</name>
     <message>
         <source>Import KeePass1 database</source>
@@ -873,7 +1038,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>秘钥错误或数据库损坏。</translation>
     </message>
 </context>
 <context>
@@ -911,8 +1076,8 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation>在测试加密函数时发生重大错误。</translation>
     </message>
     <message>
-        <source>KeePassX - Error</source>
-        <translation>KeePassX - 错误</translation>
+        <source>KeePassXC - Error</source>
+        <translation>KeePassXC - 错误</translation>
     </message>
 </context>
 <context>
@@ -922,100 +1087,12 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation>数据库</translation>
     </message>
     <message>
-        <source>Recent databases</source>
-        <translation>最近的数据库</translation>
-    </message>
-    <message>
-        <source>Help</source>
-        <translation>帮助</translation>
-    </message>
-    <message>
-        <source>Entries</source>
-        <translation>项目</translation>
-    </message>
-    <message>
-        <source>Copy attribute to clipboard</source>
-        <translation>将属性复制到剪贴板</translation>
-    </message>
-    <message>
-        <source>Groups</source>
-        <translation>群组</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation>显示</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation>退出</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation>关于</translation>
-    </message>
-    <message>
         <source>Open database</source>
         <translation>打开数据库</translation>
     </message>
     <message>
-        <source>Save database</source>
-        <translation>保存数据库</translation>
-    </message>
-    <message>
-        <source>Close database</source>
-        <translation>关闭数据库</translation>
-    </message>
-    <message>
-        <source>New database</source>
-        <translation>新建数据库</translation>
-    </message>
-    <message>
-        <source>Add new entry</source>
-        <translation>新增项目</translation>
-    </message>
-    <message>
-        <source>View/Edit entry</source>
-        <translation>浏览/编辑项目</translation>
-    </message>
-    <message>
-        <source>Delete entry</source>
-        <translation>删除项目</translation>
-    </message>
-    <message>
-        <source>Add new group</source>
-        <translation>新增群组</translation>
-    </message>
-    <message>
-        <source>Edit group</source>
-        <translation>编辑群组</translation>
-    </message>
-    <message>
-        <source>Delete group</source>
-        <translation>删除群组</translation>
-    </message>
-    <message>
-        <source>Save database as</source>
-        <translation>另存数据库为</translation>
-    </message>
-    <message>
-        <source>Change master key</source>
-        <translation>更改主密码</translation>
-    </message>
-    <message>
         <source>Database settings</source>
         <translation>数据库设置</translation>
-    </message>
-    <message>
-        <source>Import KeePass 1 database</source>
-        <translation>导入KeePass 1 数据库</translation>
-    </message>
-    <message>
-        <source>Clone entry</source>
-        <translation>复制项目</translation>
-    </message>
-    <message>
-        <source>Find</source>
-        <translation>查找</translation>
     </message>
     <message>
         <source>Copy username to clipboard</source>
@@ -1028,30 +1105,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <message>
         <source>Settings</source>
         <translation>设置</translation>
-    </message>
-    <message>
-        <source>Perform Auto-Type</source>
-        <translation>执行自动输入</translation>
-    </message>
-    <message>
-        <source>Open URL</source>
-        <translation>打开网址</translation>
-    </message>
-    <message>
-        <source>Lock databases</source>
-        <translation>锁住数据库</translation>
-    </message>
-    <message>
-        <source>Title</source>
-        <translation>标题</translation>
-    </message>
-    <message>
-        <source>URL</source>
-        <translation>网址</translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>备注</translation>
     </message>
     <message>
         <source>Show toolbar</source>
@@ -1068,22 +1121,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <message>
         <source>Tools</source>
         <translation>工具</translation>
-    </message>
-    <message>
-        <source>Copy username</source>
-        <translation>复制用户名</translation>
-    </message>
-    <message>
-        <source>Copy password</source>
-        <translation>复制密码</translation>
-    </message>
-    <message>
-        <source>Export to CSV file</source>
-        <translation>导出为CSV格式文件</translation>
-    </message>
-    <message>
-        <source>Repair database</source>
-        <translation>修复数据库</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
@@ -1105,16 +1142,269 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <source>Writing the database failed.</source>
         <translation>数据库写入失败</translation>
     </message>
+    <message>
+        <source>&amp;Recent databases</source>
+        <translation>最近的数据库</translation>
+    </message>
+    <message>
+        <source>He&amp;lp</source>
+        <translation>帮助</translation>
+    </message>
+    <message>
+        <source>E&amp;ntries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy att&amp;ribute to clipboard</source>
+        <translation>将属性复制到剪贴板</translation>
+    </message>
+    <message>
+        <source>&amp;Groups</source>
+        <translation>群组</translation>
+    </message>
+    <message>
+        <source>&amp;View</source>
+        <translation>显示</translation>
+    </message>
+    <message>
+        <source>&amp;Quit</source>
+        <translation>退出</translation>
+    </message>
+    <message>
+        <source>&amp;About</source>
+        <translation>关于</translation>
+    </message>
+    <message>
+        <source>&amp;Open database</source>
+        <translation>打开数据库</translation>
+    </message>
+    <message>
+        <source>&amp;Save database</source>
+        <translation>保存数据库</translation>
+    </message>
+    <message>
+        <source>&amp;Close database</source>
+        <translation>关闭数据库</translation>
+    </message>
+    <message>
+        <source>&amp;New database</source>
+        <translation>新建数据库</translation>
+    </message>
+    <message>
+        <source>Merge from KeePassX database</source>
+        <translation>从KeePassX数据库合并</translation>
+    </message>
+    <message>
+        <source>&amp;Add new entry</source>
+        <translation>新增项目</translation>
+    </message>
+    <message>
+        <source>&amp;View/Edit entry</source>
+        <translation>浏览/编辑项目</translation>
+    </message>
+    <message>
+        <source>&amp;Delete entry</source>
+        <translation>删除项目</translation>
+    </message>
+    <message>
+        <source>&amp;Add new group</source>
+        <translation>新增群组</translation>
+    </message>
+    <message>
+        <source>&amp;Edit group</source>
+        <translation>编辑群组</translation>
+    </message>
+    <message>
+        <source>&amp;Delete group</source>
+        <translation>删除群组</translation>
+    </message>
+    <message>
+        <source>Sa&amp;ve database as</source>
+        <translation>另存数据库为</translation>
+    </message>
+    <message>
+        <source>Change &amp;master key</source>
+        <translation>更改主密码</translation>
+    </message>
+    <message>
+        <source>&amp;Database settings</source>
+        <translation>数据库设置</translation>
+    </message>
+    <message>
+        <source>&amp;Import KeePass 1 database</source>
+        <translation>导入KeePass 1 数据库</translation>
+    </message>
+    <message>
+        <source>&amp;Clone entry</source>
+        <translation>复制项目</translation>
+    </message>
+    <message>
+        <source>&amp;Find</source>
+        <translation>查找</translation>
+    </message>
+    <message>
+        <source>Copy &amp;username</source>
+        <translation>复制用户名</translation>
+    </message>
+    <message>
+        <source>Cop&amp;y password</source>
+        <translation>复制密码</translation>
+    </message>
+    <message>
+        <source>&amp;Settings</source>
+        <translation>设置</translation>
+    </message>
+    <message>
+        <source>&amp;Perform Auto-Type</source>
+        <translation>执行自动输入</translation>
+    </message>
+    <message>
+        <source>&amp;Open URL</source>
+        <translation>打开网址</translation>
+    </message>
+    <message>
+        <source>&amp;Lock databases</source>
+        <translation>锁住数据库</translation>
+    </message>
+    <message>
+        <source>&amp;Title</source>
+        <translation>标题</translation>
+    </message>
+    <message>
+        <source>&amp;URL</source>
+        <translation>网址</translation>
+    </message>
+    <message>
+        <source>&amp;Notes</source>
+        <translation>备注</translation>
+    </message>
+    <message>
+        <source>&amp;Export to CSV file</source>
+        <translation>导出为CSV格式文件</translation>
+    </message>
+    <message>
+        <source>Re&amp;pair database</source>
+        <translation>修复数据库</translation>
+    </message>
+    <message>
+        <source>Password Generator</source>
+        <translation>密码生成器</translation>
+    </message>
+</context>
+<context>
+    <name>OptionDialog</name>
+    <message>
+        <source>Dialog</source>
+        <translation>对话框</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>常规</translation>
+    </message>
+    <message>
+        <source>Sh&amp;ow a notification when credentials are requested</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Match URL schemes
+Only entries with the same scheme (http://, https://, ftp://, ...) are returned</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sort matching entries by &amp;username</source>
+        <translation>按匹配用户名排序</translation>
+    </message>
+    <message>
+        <source>Re&amp;move all stored permissions from entries in active database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password generator</source>
+        <translation>密码生成器</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>高级</translation>
+    </message>
+    <message>
+        <source>Always allow &amp;access to entries</source>
+        <translation>永远允许访问项目</translation>
+    </message>
+    <message>
+        <source>Always allow &amp;updating entries</source>
+        <translation>永远允许更新项目</translation>
+    </message>
+    <message>
+        <source>Searc&amp;h in all opened databases for matching entries</source>
+        <translation>在所有打开的数据库中查找匹配项目</translation>
+    </message>
+    <message>
+        <source>Only the selected database has to be connected with a client!</source>
+        <translation>客户端只能连接选中的数据库！</translation>
+    </message>
+    <message>
+        <source>HTTP Port:</source>
+        <translation>HTTP端口：</translation>
+    </message>
+    <message>
+        <source>Default port: 19455</source>
+        <translation>默认端口：19455</translation>
+    </message>
+    <message>
+        <source>Re&amp;quest to unlock the database if it is locked</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sort &amp;matching entries by title</source>
+        <translation>用标题排序匹配的项目</translation>
+    </message>
+    <message>
+        <source>Enable KeepassXC HTTP protocol
+This is required for accessing your databases from ChromeIPass or PassIFox</source>
+        <translation>启用KeepassXC HTTP协议
+这需要ChromeIPass或PassIFox访问你的数据库</translation>
+    </message>
+    <message>
+        <source>KeePassXC will listen to this port on 127.0.0.1</source>
+        <translation>KeePassXC 将监听 127.0.0.1上的此端口</translation>
+    </message>
+    <message>
+        <source>Cannot bind to privileged ports</source>
+        <translation>无法绑定到特殊端口</translation>
+    </message>
+    <message>
+        <source>Cannot bind to privileged ports below 1024!
+Using default port 19455.</source>
+        <translation>无法绑定低于 1024的特殊端口 ！
+使用默认端口 19455。</translation>
+    </message>
+    <message>
+        <source>&amp;Return only best matching entries for a URL instead
+of all entries for the whole domain</source>
+        <translation>只返回最佳匹配条目的 URL 而不是整个域的所有条目</translation>
+    </message>
+    <message>
+        <source>R&amp;emove all shared encryption keys from active database</source>
+        <translation>移除所有激活数据库共享的加密密钥</translation>
+    </message>
+    <message>
+        <source>The following options can be dangerous. Change them only if you know what you are doing.</source>
+        <translation>以下选项不要修改。除非你知道自己在做什么。</translation>
+    </message>
+    <message>
+        <source>&amp;Return advanced string fields which start with &quot;KPH: &quot;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Automatically creating or updating string fields is not supported.</source>
+        <translation>不支持自动创建或更新字符串字段。</translation>
+    </message>
 </context>
 <context>
     <name>PasswordGeneratorWidget</name>
     <message>
         <source>Password:</source>
         <translation>密码：</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation>长度：</translation>
     </message>
     <message>
         <source>Character Types</source>
@@ -1141,70 +1431,71 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation>去除相似的字符</translation>
     </message>
     <message>
-        <source>Ensure that the password contains characters from every group</source>
-        <translation>确保密码包含每种的字符</translation>
-    </message>
-    <message>
         <source>Accept</source>
         <translation>接受</translation>
     </message>
+    <message>
+        <source>%p%</source>
+        <translation>%p%</translation>
+    </message>
+    <message>
+        <source>strength</source>
+        <translation>强度</translation>
+    </message>
+    <message>
+        <source>entropy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Length:</source>
+        <translation>长度︰</translation>
+    </message>
+    <message>
+        <source>Pick characters from every group</source>
+        <translation>从每个组选择字符</translation>
+    </message>
+    <message>
+        <source>Generate</source>
+        <translation>生成</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>关闭</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation>应用</translation>
+    </message>
+    <message>
+        <source>Entropy: %1 bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password Quality: %1</source>
+        <translation>密码强度：%1</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <translation>差</translation>
+    </message>
+    <message>
+        <source>Weak</source>
+        <translation>弱</translation>
+    </message>
+    <message>
+        <source>Good</source>
+        <translation>好</translation>
+    </message>
+    <message>
+        <source>Excellent</source>
+        <translation>优秀</translation>
+    </message>
 </context>
 <context>
-    <name>QCommandLineParser</name>
+    <name>QObject</name>
     <message>
-        <source>Displays version information.</source>
-        <translation>显示版本信息</translation>
-    </message>
-    <message>
-        <source>Displays this help.</source>
-        <translation>显示帮助信息</translation>
-    </message>
-    <message>
-        <source>Unknown option &apos;%1&apos;.</source>
-        <translation>未知选项 &apos;%1&apos;。</translation>
-    </message>
-    <message>
-        <source>Unknown options: %1.</source>
-        <translation>未知选项： %1。</translation>
-    </message>
-    <message>
-        <source>Missing value after &apos;%1&apos;.</source>
-        <translation>在 &apos;%1&apos; 后缺少值。</translation>
-    </message>
-    <message>
-        <source>Unexpected value after &apos;%1&apos;.</source>
-        <translation>&apos;%1&apos; 后有无法识别的值。</translation>
-    </message>
-    <message>
-        <source>[options]</source>
-        <translation>[选项]</translation>
-    </message>
-    <message>
-        <source>Usage: %1</source>
-        <translation>已用：%1</translation>
-    </message>
-    <message>
-        <source>Options:</source>
-        <translation>选项：</translation>
-    </message>
-    <message>
-        <source>Arguments:</source>
-        <translation>参数：</translation>
-    </message>
-</context>
-<context>
-    <name>QSaveFile</name>
-    <message>
-        <source>Existing file %1 is not writable</source>
-        <translation>当前文件%1 不可写</translation>
-    </message>
-    <message>
-        <source>Writing canceled by application</source>
-        <translation>应用程序取消写入</translation>
-    </message>
-    <message>
-        <source>Partial write. Partition full?</source>
-        <translation>写入不完整。磁盘满了吗？</translation>
+        <source>Http</source>
+        <translation>Http</translation>
     </message>
 </context>
 <context>
@@ -1244,20 +1535,109 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
 <context>
     <name>SearchWidget</name>
     <message>
-        <source>Find:</source>
-        <translation>查找：</translation>
-    </message>
-    <message>
-        <source>Case sensitive</source>
+        <source>Case Sensitive</source>
         <translation>区分大小写</translation>
     </message>
     <message>
-        <source>Current group</source>
-        <translation>当前群组</translation>
+        <source>Search</source>
+        <translation>搜索</translation>
     </message>
     <message>
-        <source>Root group</source>
-        <translation>根群组</translation>
+        <source>Find</source>
+        <translation>查找</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>清除</translation>
+    </message>
+</context>
+<context>
+    <name>Service</name>
+    <message>
+        <source>A shared encryption-key with the name &quot;%1&quot; already exists.
+Do you want to overwrite it?</source>
+        <translation>一个共享的加密密钥，名为&quot;%1&quot;已存在。
+你想要覆盖它吗？</translation>
+    </message>
+    <message>
+        <source>Do you want to update the information in %1 - %2?</source>
+        <translation>你想更新 %1-%2 中的信息吗？</translation>
+    </message>
+    <message>
+        <source>The active database is locked!
+Please unlock the selected database or choose another one which is unlocked.</source>
+        <translation>激活的数据库被锁定 ！
+请解锁选定的数据库或选择另一已解锁的数据库。</translation>
+    </message>
+    <message>
+        <source>Successfully removed %1 encryption-%2 from KeePassX/Http Settings.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No shared encryption-keys found in KeePassHttp Settings.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The active database does not contain an entry of KeePassHttp Settings.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Removing stored permissions...</source>
+        <translation>正在删除存储的权限...</translation>
+    </message>
+    <message>
+        <source>Abort</source>
+        <translation>中断</translation>
+    </message>
+    <message>
+        <source>Successfully removed permissions from %1 %2.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The active database does not contain an entry with permissions.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC: New key association request</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You have received an association request for the above key.
+If you would like to allow it access to your KeePassXC database
+give it a unique name to identify and accept it.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC: Overwrite existing key?</source>
+        <translation>KeePassXC︰ 覆盖现有的密钥吗？</translation>
+    </message>
+    <message>
+        <source>KeePassXC: Update Entry</source>
+        <translation>KeePassXC︰ 更新条目</translation>
+    </message>
+    <message>
+        <source>KeePassXC: Database locked!</source>
+        <translation>KeePassXC︰ 数据库被锁定 ！</translation>
+    </message>
+    <message>
+        <source>KeePassXC: Removed keys from database</source>
+        <translation>KeePassXC︰ 从数据库中删除键</translation>
+    </message>
+    <message>
+        <source>KeePassXC: No keys found</source>
+        <translation>KeePassXC︰ 未找到键</translation>
+    </message>
+    <message>
+        <source>KeePassXC: Settings not available!</source>
+        <translation>KeePassXC︰ 设置不可用 ！</translation>
+    </message>
+    <message>
+        <source>KeePassXC: Removed permissions</source>
+        <translation>KeePassXC︰ 已删除的权限</translation>
+    </message>
+    <message>
+        <source>KeePassXC: No entry with permissions found!</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1280,10 +1660,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <message>
         <source>Remember last databases</source>
         <translation>记住最近的数据库</translation>
-    </message>
-    <message>
-        <source>Open previous databases on startup</source>
-        <translation>在启动时打开最近的数据库</translation>
     </message>
     <message>
         <source>Automatically save on exit</source>
@@ -1326,12 +1702,20 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation>记住最近的秘钥文件</translation>
     </message>
     <message>
-        <source>Hide window to system tray instead of App Exit</source>
-        <translation type="unfinished"/>
+        <source>Load previous databases on startup</source>
+        <translation>在启动时加载最近的数据库</translation>
     </message>
     <message>
-        <source>Hide window to system tray on App start</source>
-        <translation type="unfinished"/>
+        <source>Automatically reload the database when modified externally</source>
+        <translation>当外部修改时自动重新加载数据库</translation>
+    </message>
+    <message>
+        <source>Hide window to system tray instead of app exit</source>
+        <translation>退出时将窗口最小化至任务栏</translation>
+    </message>
+    <message>
+        <source>Minimize window at application startup</source>
+        <translation>在应用程序启动时窗口最小化</translation>
     </message>
 </context>
 <context>
@@ -1356,6 +1740,14 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <source>Always ask before performing auto-type</source>
         <translation>在执行自动输入前询问</translation>
     </message>
+    <message>
+        <source>Lock databases after minimizing the window</source>
+        <translation>在最小化窗口后锁定数据库</translation>
+    </message>
+    <message>
+        <source>Don&apos;t require password repeat when it is visible</source>
+        <translation>可见时不需要重复输入密码</translation>
+    </message>
 </context>
 <context>
     <name>UnlockDatabaseWidget</name>
@@ -1374,20 +1766,24 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
 <context>
     <name>main</name>
     <message>
-        <source>KeePassX - cross-platform password manager</source>
-        <translation>KeePassX - 跨平台密码管理软件</translation>
-    </message>
-    <message>
-        <source>filename of the password database to open (*.kdbx)</source>
-        <translation>打开密码数据库文件名(*.kdbx)</translation>
-    </message>
-    <message>
         <source>path to a custom config file</source>
         <translation>自定义配置文件路径</translation>
     </message>
     <message>
         <source>key file of the database</source>
         <translation>数据库秘钥文件</translation>
+    </message>
+    <message>
+        <source>KeePassXC - cross-platform password manager</source>
+        <translation>KeePassXC - 跨平台密码管理软件</translation>
+    </message>
+    <message>
+        <source>read password of the database from stdin</source>
+        <translation>从标准输入读取数据库的密码</translation>
+    </message>
+    <message>
+        <source>filenames of the password databases to open (*.kdbx)</source>
+        <translation>打开密码数据库文件名(*.kdbx)</translation>
     </message>
 </context>
 </TS>
