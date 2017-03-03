@@ -49,6 +49,8 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     , m_customIconModel(new CustomIconModel(this))
     #ifdef WITH_XC_HTTP
     , m_httpClient(nullptr)
+    , m_fallbackToGoogle(true)
+    , m_redirectCount(0)
     #endif
 {
     m_ui->setupUi(this);
@@ -69,9 +71,6 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     connect(m_ui->faviconButton, SIGNAL(clicked()), SLOT(downloadFavicon()));
 
     m_ui->faviconButton->setVisible(false);
-
-    m_fallbackToGoogle = true;
-    m_redirectCount = 0;
 }
 
 EditWidgetIcons::~EditWidgetIcons()

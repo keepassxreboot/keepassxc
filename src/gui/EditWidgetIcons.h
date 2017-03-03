@@ -89,12 +89,12 @@ private:
     Database* m_database;
     Uuid m_currentUuid;
     QString m_url;
-    QUrl m_redirectUrl;
-    bool m_fallbackToGoogle;
-    unsigned short m_redirectCount;
     DefaultIconModel* const m_defaultIconModel;
     CustomIconModel* const m_customIconModel;
 #ifdef WITH_XC_HTTP
+    QUrl m_redirectUrl;
+    bool m_fallbackToGoogle;
+    unsigned short m_redirectCount;
     qhttp::client::QHttpClient* m_httpClient;
 #endif
 
