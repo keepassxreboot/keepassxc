@@ -87,6 +87,7 @@ set(TEST_LIBRARIES
     keepassx_core
     ${keepasshttp_LIB}
     ${autotype_LIB}
+    ${qrcode_LIB}
     Qt5::Core
     Qt5::Concurrent
     Qt5::Widgets

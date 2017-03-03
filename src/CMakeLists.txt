@@ -161,6 +161,24 @@ if(WITH_XC_HTTP)
     set(keepasshttp_LIB keepasshttp qhttp Qt5::Network)
 endif()
 
+add_subdirectory(qrcode)
+
+set(qrcode_SOURCES
+  qrcode/qrcodedialog.cpp
+  qrcode/qrcodedialog.h
+  qrcode/qrcodelabel.cpp
+  qrcode/qrcodelabel.h
+)
+
+set(qrcode_FORMS
+  qrcode/qrcodedialog.ui
+)
+
+qt5_wrap_ui(qrcode_SOURCES ${qrcode_FORMS})
+add_library(qrcode STATIC ${qrcode_SOURCES})
+target_link_libraries(qrcode Qt5::Core Qt5::Widgets)
+set(qrcode_LIB qrcode)
+
 add_subdirectory(autotype)
 
 set(autotype_SOURCES
@@ -198,6 +216,7 @@ set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUIL
 target_link_libraries(keepassx_core
                       ${keepasshttp_LIB}
                       ${autotype_LIB}
+                      ${qrcode_LIB}
                       zxcvbn
                       Qt5::Core
                       Qt5::Concurrent

@@ -61,7 +61,7 @@ AboutDialog::AboutDialog(QWidget* parent)
         debugInfo.append(tr("Revision: %1").arg(commitHash).append("\n\n"));
     }
 
-    debugInfo.append(QString("%1\n- Qt %2\n- %3\n\n")
+    debugInfo.append(QString("%1\n- Qt %2\n- %3")
              .arg(tr("Libraries:"))
              .arg(QString::fromLocal8Bit(qVersion()))
              .arg(Crypto::backendVersion()));
@@ -70,6 +70,8 @@ AboutDialog::AboutDialog(QWidget* parent)
     debugInfo.append(QString("\n- libqrencode "))
              .append(QRcode_APIVersionString());
 #endif
+
+    debugInfo.append("\n\n");
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
     debugInfo.append(tr("Operating system: %1\nCPU architecture: %2\nKernel: %3 %4")
