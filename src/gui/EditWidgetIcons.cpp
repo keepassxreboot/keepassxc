@@ -28,10 +28,12 @@
 #include "gui/IconModels.h"
 #include "gui/MessageBox.h"
 
+#ifdef WITH_XC_HTTP
 #include "http/qhttp/qhttpclient.hpp"
 #include "http/qhttp/qhttpclientresponse.hpp"
 
 using namespace qhttp::client;
+#endif
 
 IconStruct::IconStruct()
     : uuid(Uuid())
@@ -45,7 +47,11 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     , m_database(nullptr)
     , m_defaultIconModel(new DefaultIconModel(this))
     , m_customIconModel(new CustomIconModel(this))
+    #ifdef WITH_XC_HTTP
     , m_httpClient(nullptr)
+    , m_fallbackToGoogle(true)
+    , m_redirectCount(0)
+    #endif
 {
     m_ui->setupUi(this);
 
@@ -138,18 +144,25 @@ void EditWidgetIcons::load(const Uuid& currentUuid, Database* database, const Ic
 
 void EditWidgetIcons::setUrl(const QString& url)
 {
+#ifdef WITH_XC_HTTP
     m_url = url;
     m_ui->faviconButton->setVisible(!url.isEmpty());
     resetFaviconDownload();
+#else
+    m_ui->faviconButton->setVisible(false);
+#endif
 }
 
 void EditWidgetIcons::downloadFavicon()
 {
+#ifdef WITH_XC_HTTP
     QUrl url = QUrl(m_url);
     url.setPath("/favicon.ico");
     fetchFavicon(url);
+#endif
 }
 
+#ifdef WITH_XC_HTTP
 void EditWidgetIcons::fetchFavicon(const QUrl& url)
 {
     if (nullptr == m_httpClient) {
@@ -241,6 +254,7 @@ void EditWidgetIcons::resetFaviconDownload(bool clearRedirect)
     m_fallbackToGoogle = true;
     m_ui->faviconButton->setDisabled(false);
 }
+#endif
 
 void EditWidgetIcons::addCustomIcon()
 {
