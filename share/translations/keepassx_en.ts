@@ -389,11 +389,6 @@ Discard changes and close anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The database you are trying to open is locked by another instance of KeePassXC.
-Do you want to open it anyway? Alternatively the database is opened read-only.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Merge database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -404,6 +399,20 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Passwords</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database already opened</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The database you are trying to open is locked by another instance of KeePassXC.
+
+Do you want to open it anyway?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open read-only</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -514,10 +523,6 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Autoreload Failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not parse or unlock the new database file while attempting to autoreload this database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

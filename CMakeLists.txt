@@ -34,12 +34,12 @@ option(WITH_GUI_TESTS "Enable building of GUI tests" OFF)
 option(WITH_DEV_BUILD "Use only for development. Disables/warns about deprecated methods." OFF)
 option(WITH_COVERAGE "Use to build with coverage tests. (GCC ONLY)." OFF)
 
-option(WITH_XC_AUTOTYPE "Include Auto-Type." OFF)
-option(WITH_XC_HTTP "Include KeePassHTTP support." OFF)
+option(WITH_XC_AUTOTYPE "Include Auto-Type." ON)
+option(WITH_XC_HTTP "Include KeePassHTTP and Custom Icon Downloads." OFF)
 option(WITH_XC_YUBIKEY "Include YubiKey support." OFF)
 
-set(KEEPASSXC_VERSION "2.1.2")
-set(KEEPASSXC_VERSION_NUM "2.1.2")
+set(KEEPASSXC_VERSION "2.1.3")
+set(KEEPASSXC_VERSION_NUM "2.1.3")
 
 if("${CMAKE_C_COMPILER}" MATCHES "clang$" OR "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
   set(CMAKE_COMPILER_IS_CLANG 1)

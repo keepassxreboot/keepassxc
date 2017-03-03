@@ -158,7 +158,7 @@ add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
 
 add_subdirectory(http)
 if(WITH_XC_HTTP)
-    set(keepasshttp_LIB keepasshttp)
+    set(keepasshttp_LIB keepasshttp qhttp Qt5::Network)
 endif()
 
 add_subdirectory(autotype)
@@ -205,11 +205,9 @@ target_link_libraries(keepassx_core
                       ${keepasshttp_LIB}
                       ${autotype_LIB}
                       zxcvbn
-                      qhttp
                       Qt5::Core
                       Qt5::Concurrent
                       Qt5::Widgets
-                      Qt5::Network
                       ${GCRYPT_LIBRARIES}
                       ${GPGERROR_LIBRARIES}
                       ${ZLIB_LIBRARIES}

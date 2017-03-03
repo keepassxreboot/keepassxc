@@ -78,6 +78,7 @@ private Q_SLOTS:
     void rememberOpenDatabases(const QString& filePath);
     void applySettingsChanges();
     void trayIconTriggered(QSystemTrayIcon::ActivationReason reason);
+    void hideWindow();
     void toggleWindow();
     void lockDatabasesAfterInactivity();
     void repairDatabase();
