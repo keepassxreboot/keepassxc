@@ -25,7 +25,7 @@
 #include "core/FilePath.h"
 
 PassphraseGenerator::PassphraseGenerator()
-    : m_length(0)
+    : m_wordCount(0)
     , m_separator(' ')
 {
     const QString path = filePath()->dataPath("wordlists/eff_large.wordlist");
@@ -40,12 +40,12 @@ double PassphraseGenerator::calculateEntropy(QString passphrase)
         return 0;
     }
 
-    return log(m_wordlist.size()) / log(2.0) * m_length;
+    return log(m_wordlist.size()) / log(2.0) * m_wordCount;
 }
 
-void PassphraseGenerator::setLength(int length)
+void PassphraseGenerator::setWordCount(int wordCount)
 {
-    m_length = length;
+    m_wordCount = wordCount;
 }
 
 void PassphraseGenerator::setWordlist(QString path)
@@ -79,26 +79,21 @@ QString PassphraseGenerator::generatePassphrase() const
 
     // In case there was an error loading the wordlist
     if(m_wordlist.length() == 0) {
-        QString empty;
-        return empty;
+        return QString();
     }
 
-    QString passphrase;
-    for (int i = 0; i < m_length; i ++) {
-        int word_index = randomGen()->randomUInt(m_wordlist.length());
-        passphrase.append(m_wordlist.at(word_index));
-
-        if(i < m_length - 1) {
-            passphrase.append(m_separator);
-        }
+    QStringList words;
+    for (int i = 0; i < m_wordCount; i++) {
+        int wordIndex = randomGen()->randomUInt(m_wordlist.length());
+        words.append(m_wordlist.at(wordIndex));
     }
 
-    return passphrase;
+    return words.join(m_separator);
 }
 
 bool PassphraseGenerator::isValid() const
 {
-    if (m_length == 0) {
+    if (m_wordCount == 0) {
        return false;
     }
 

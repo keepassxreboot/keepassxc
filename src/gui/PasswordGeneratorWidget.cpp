@@ -63,7 +63,7 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
         m_ui->strengthLabel->setFont(defaultFont);
     }
 
-    m_ui->comboBoxWordSeparator->addItems(QStringList() <<" " <<"#" <<";" <<"-" <<":" <<"." <<"@");
+    m_ui->comboBoxWordSeparator->addItems(QStringList() << " " << "#" << ";" << "-" << ":" << "." << "@");
 
     QDir path(filePath()->dataPath("wordlists/"));
     QStringList files = path.entryList(QDir::Files);
@@ -84,10 +84,8 @@ void PasswordGeneratorWidget::loadSettings()
     m_ui->checkBoxUpper->setChecked(config()->get("generator/UpperCase", true).toBool());
     m_ui->checkBoxNumbers->setChecked(config()->get("generator/Numbers", true).toBool());
     m_ui->checkBoxSpecialChars->setChecked(config()->get("generator/SpecialChars", false).toBool());
-
     m_ui->checkBoxExcludeAlike->setChecked(config()->get("generator/ExcludeAlike", true).toBool());
     m_ui->checkBoxEnsureEvery->setChecked(config()->get("generator/EnsureEvery", true).toBool());
-
     m_ui->spinBoxLength->setValue(config()->get("generator/Length", 16).toInt());
 
     // Diceware config
@@ -106,10 +104,8 @@ void PasswordGeneratorWidget::saveSettings()
     config()->set("generator/UpperCase", m_ui->checkBoxUpper->isChecked());
     config()->set("generator/Numbers", m_ui->checkBoxNumbers->isChecked());
     config()->set("generator/SpecialChars", m_ui->checkBoxSpecialChars->isChecked());
-
     config()->set("generator/ExcludeAlike", m_ui->checkBoxExcludeAlike->isChecked());
     config()->set("generator/EnsureEvery", m_ui->checkBoxEnsureEvery->isChecked());
-
     config()->set("generator/Length", m_ui->spinBoxLength->value());
 
     // Diceware config
@@ -356,7 +352,7 @@ void PasswordGeneratorWidget::updateGenerator()
         m_ui->spinBoxWordCount->setMinimum(minWordCount);
         m_ui->sliderWordCount->setMinimum(minWordCount);
 
-        m_dicewareGenerator->setLength(m_ui->spinBoxWordCount->value());
+        m_dicewareGenerator->setWordCount(m_ui->spinBoxWordCount->value());
         if (!m_ui->comboBoxWordList->currentText().isEmpty()) {
             QString path = filePath()->dataPath("wordlists/" + m_ui->comboBoxWordList->currentText());
             m_dicewareGenerator->setWordlist(path);
