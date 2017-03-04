@@ -322,8 +322,7 @@ void DatabaseWidget::cloneEntry()
 
     Entry* entry = currentEntry->clone(Entry::CloneNewUuid | Entry::CloneResetTimeInfo | Entry::CloneRenameTitle);
     entry->setGroup(currentEntry->group());
-    if (isInSearchMode())
-        search(m_lastSearchText);
+    refreshSearch();
     m_entryView->setFocus();
     m_entryView->setCurrentEntry(entry);
 }
@@ -366,6 +365,7 @@ void DatabaseWidget::deleteEntries()
             for (Entry* entry : asConst(selectedEntries)) {
                 delete entry;
             }
+            refreshSearch();
         }
     }
     else {
@@ -875,6 +875,12 @@ void DatabaseWidget::databaseSaved()
     m_databaseModified = false;
 }
 
+void DatabaseWidget::refreshSearch() {
+    if (isInSearchMode()) {
+        search(m_lastSearchText);
+    }
+}
+
 void DatabaseWidget::search(const QString& searchtext)
 {
     if (searchtext.isEmpty())
@@ -908,9 +914,7 @@ void DatabaseWidget::search(const QString& searchtext)
 void DatabaseWidget::setSearchCaseSensitive(bool state)
 {
     m_searchCaseSensitive = state;
-
-    if (isInSearchMode())
-        search(m_lastSearchText);
+    refreshSearch();
 }
 
 void DatabaseWidget::onGroupChanged(Group* group)
