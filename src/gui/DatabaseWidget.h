@@ -147,10 +147,12 @@ public Q_SLOTS:
     void switchToImportKeepass1(const QString& fileName);
     void databaseModified();
     void databaseSaved();
+
     // Search related slots
     void search(const QString& searchtext);
     void setSearchCaseSensitive(bool state);
     void endSearch();
+
     void showMessage(const QString& text, MessageWidget::MessageType type);
     void hideMessage();
 
@@ -177,6 +179,7 @@ private:
     void setClipboardTextAndMinimize(const QString& text);
     void setIconFromParent();
     void replaceDatabase(Database* db);
+    void refreshSearch();
 
     Database* m_db;
     QWidget* m_mainWidget;
