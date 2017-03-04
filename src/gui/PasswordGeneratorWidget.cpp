@@ -96,7 +96,7 @@ void PasswordGeneratorWidget::loadSettings()
     m_ui->comboBoxWordList->setCurrentText(config()->get("generator/WordList", "eff_large.wordlist").toString());
 
     // Password or diceware?
-    m_ui->tabWidget->setCurrentIndex(config()->get("generator/Type", 1).toInt());
+    m_ui->tabWidget->setCurrentIndex(config()->get("generator/Type", 0).toInt());
 }
 
 void PasswordGeneratorWidget::saveSettings()
