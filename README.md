@@ -59,7 +59,7 @@ To enable autotype, add `-DWITH_XC_AUTOTYPE=ON` to the `cmake` command. KeePassH
 
 ### Contributing
 
-We are always looking for suggestions how to improve our application. If you find any bugs or have an idea for a new feature, please let us know by opening a report in our [issue tracker](https://github.com/keepassxreboot/keepassxc/issues) on GitHub or write to our [Google Groups](https://groups.google.com/forum/#!forum/keepassx-reboot) forum.
+We are always looking for suggestions how to improve our application. If you find any bugs or have an idea for a new feature, please let us know by opening a report in our [issue tracker](https://github.com/keepassxreboot/keepassxc/issues) on GitHub or join us on IRC on freenode channels #keepassxc or #keepassxc-dev.
 
 You can of course also directly contribute your own code. We are happy to accept your pull requests.
 
