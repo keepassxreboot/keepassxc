@@ -73,6 +73,7 @@ set(keepassx_SOURCES
     gui/CategoryListWidget.cpp
     gui/ChangeMasterKeyWidget.cpp
     gui/Clipboard.cpp
+    gui/CloneDialog.cpp
     gui/DatabaseOpenWidget.cpp
     gui/DatabaseRepairWidget.cpp
     gui/DatabaseSettingsWidget.cpp
@@ -131,6 +132,7 @@ set(keepassx_SOURCES_MAINEXE
 set(keepassx_FORMS
     gui/AboutDialog.ui
     gui/ChangeMasterKeyWidget.ui
+    gui/CloneDialog.ui
     gui/DatabaseOpenWidget.ui
     gui/DatabaseSettingsWidget.ui
     gui/CategoryListWidget.ui
