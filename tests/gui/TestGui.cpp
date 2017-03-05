@@ -45,6 +45,7 @@
 #include "format/KeePass2Reader.h"
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
+#include "gui/CloneDialog.h"
 #include "gui/FileDialog.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
@@ -562,6 +563,10 @@ void TestGui::testCloneEntry()
     clickIndex(item, entryView, Qt::LeftButton);
 
     triggerAction("actionEntryClone");
+
+     CloneDialog* cloneDialog = m_dbWidget->findChild<CloneDialog*>("CloneDialog");
+     QDialogButtonBox* cloneButtonBox = cloneDialog->findChild<QDialogButtonBox*>("buttonBox");
+     QTest::mouseClick(cloneButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
 
     QCOMPARE(entryView->model()->rowCount(), 2);
     Entry* entryClone = entryView->entryFromIndex(entryView->model()->index(1, 1));
