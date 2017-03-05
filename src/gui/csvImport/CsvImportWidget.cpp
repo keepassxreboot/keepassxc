@@ -20,6 +20,7 @@
 
 #include <QFile>
 #include <QFileInfo>
+#include <QSpacerItem>
 
 #include "gui/MessageBox.h"
 #include "gui/MessageWidget.h"
@@ -52,13 +53,13 @@ CsvImportWidget::CsvImportWidget(QWidget *parent)
     m_ui->comboBoxFieldSeparator->addItems(QStringList() <<"," <<";" <<"-" <<":" <<".");
     m_ui->comboBoxTextQualifier->addItems(QStringList() <<"\"" <<"'" <<":" <<"." <<"|");
     m_ui->comboBoxComment->addItems(QStringList() <<"#" <<";" <<":" <<"@");
-
     m_ui->tableViewFields->setSelectionMode(QAbstractItemView::NoSelection);
     m_ui->tableViewFields->setFocusPolicy(Qt::NoFocus);
+    m_ui->messageWidget->setHidden(true);
 
     for (int i = 0; i < m_columnHeader.count(); ++i) {
         QLabel* label = new QLabel(m_columnHeader.at(i), this);
-        label->setFixedWidth(label->minimumSizeHint().width());
+        label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
         QFont font = label->font();
         font.setBold(false);
         label->setFont(font);
@@ -78,6 +79,8 @@ CsvImportWidget::CsvImportWidget(QWidget *parent)
         int y = 2 * (i / combo_rows);
         m_ui->gridLayout_combos->addWidget(label, x, y);
         m_ui->gridLayout_combos->addWidget(combo, x, y+1);
+        QSpacerItem *item = new QSpacerItem(1,1, QSizePolicy::Expanding, QSizePolicy::Fixed);
+        m_ui->gridLayout_combos->addItem(item, x, y+2);
     }
 
     m_parserModel->setHeaderLabels(m_columnHeader);
@@ -169,13 +172,11 @@ void CsvImportWidget::parse() {
     bool good = m_parserModel->parse();
     updatePreview();
     QApplication::restoreOverrideCursor();
-    if (good)
-        //four newline are provided to avoid resizing at every Positive/Warning switch
-        m_ui->messageWidget->showMessage(QString("\n\n").append(tr("CSV syntax seems in good shape !"))
-                                         .append("\n\n"), MessageWidget::Positive);
-    else
+    if (!good)
         m_ui->messageWidget->showMessage(tr("Error(s) detected in CSV file !").append("\n")
                                          .append(formatStatusText()), MessageWidget::Warning);
+    else
+        m_ui->messageWidget->setHidden(true);
     QWidget::adjustSize();
 }
 
@@ -183,12 +184,12 @@ void CsvImportWidget::parse() {
 QString CsvImportWidget::formatStatusText() const {
     QString text = m_parserModel->getStatus();
     int items = text.count('\n');
-    if (items > 3)
-        return text.section('\n', 0, 2)
-                .append("\n[").append(QString::number(items - 3))
+    if (items > 2)
+        return text.section('\n', 0, 1)
+                .append("\n[").append(QString::number(items - 2))
                 .append(tr(" more messages skipped]"));
     else
-        for (int i = 0; i < 3 - items; i++)
+        for (int i = 0; i < 2 - items; i++)
             text.append(QString("\n"));
         return text;
 }

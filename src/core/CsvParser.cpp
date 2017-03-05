@@ -315,7 +315,7 @@ bool CsvParser::isCRLF(const QChar &c) const {
 }
 
 bool CsvParser::isSpace(const QChar &c) const {
-    return (c == 0x20);
+    return (c == ' ');
 }
 
 bool CsvParser::isTab(const QChar &c) const {
