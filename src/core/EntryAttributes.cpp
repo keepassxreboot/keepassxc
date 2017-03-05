@@ -69,6 +69,21 @@ bool EntryAttributes::isProtected(const QString& key) const
     return m_protectedAttributes.contains(key);
 }
 
+bool EntryAttributes::isReference(const QString& key) const
+{
+    if (!m_attributes.contains(key)) {
+        Q_ASSERT(false);
+        return false;
+    }
+
+    QString data = value(key);
+    QRegExp referenceRegExp("\\{REF:([TUPAN])@I:([^}]+)\\}", Qt::CaseInsensitive, QRegExp::RegExp2);
+    if (referenceRegExp.indexIn(data) != -1) {
+        return true;
+    }
+    return false;
+}
+
 void EntryAttributes::set(const QString& key, const QString& value, bool protect)
 {
     bool emitModified = false;
