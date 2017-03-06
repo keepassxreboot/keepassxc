@@ -35,6 +35,16 @@ QVariant Config::get(const QString& key, const QVariant& defaultValue)
     return m_settings->value(key, defaultValue);
 }
 
+bool Config::hasAccessError()
+{
+    return m_settings->status() & QSettings::AccessError;
+}
+
+QString Config::getFileName()
+{
+    return m_settings->fileName();
+}
+
 void Config::set(const QString& key, const QVariant& value)
 {
     m_settings->setValue(key, value);
@@ -91,6 +101,10 @@ Config::~Config()
 void Config::init(const QString& fileName)
 {
     m_settings.reset(new QSettings(fileName, QSettings::IniFormat));
+
+    if (hasAccessError()) {
+        qWarning("Access error with config file %s", qPrintable(fileName));
+    }
 
     m_defaults.insert("RememberLastDatabases", true);
     m_defaults.insert("RememberLastKeyFiles", true);

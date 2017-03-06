@@ -62,6 +62,11 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     addPage(tr("General"), FilePath::instance()->icon("categories", "preferences-other"), m_generalWidget);
     addPage(tr("Security"), FilePath::instance()->icon("status", "security-high"), m_secWidget);
 
+    if (config()->hasAccessError()) {
+        m_generalUi->messageWidget->showMessage(
+            tr("Access error with config file ") + config()->getFileName(), MessageWidget::Error);
+    }
+
     if (!autoType()->isAvailable()) {
         m_generalUi->generalSettingsTabWidget->removeTab(1);
     }
