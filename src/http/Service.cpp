@@ -244,7 +244,7 @@ Service::Access Service::checkAccess(const Entry *entry, const QString & host, c
 
 KeepassHttpProtocol::Entry Service::prepareEntry(const Entry* entry)
 {
-    KeepassHttpProtocol::Entry res(entry->title(), entry->username(), entry->password(), entry->uuid().toHex());
+    KeepassHttpProtocol::Entry res(entry->resolvePlaceholder(entry->title()), entry->resolvePlaceholder(entry->username()), entry->resolvePlaceholder(entry->password()), entry->uuid().toHex());
     if (HttpSettings::supportKphFields()) {
         const EntryAttributes * attr = entry->attributes();
         Q_FOREACH (const QString& key, attr->keys())

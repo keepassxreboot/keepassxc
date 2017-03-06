@@ -41,6 +41,7 @@
 #include "format/KeePass2Reader.h"
 #include "gui/ChangeMasterKeyWidget.h"
 #include "gui/Clipboard.h"
+#include "gui/CloneDialog.h"
 #include "gui/DatabaseOpenWidget.h"
 #include "gui/DatabaseSettingsWidget.h"
 #include "gui/KeePass1OpenWidget.h"
@@ -320,12 +321,9 @@ void DatabaseWidget::cloneEntry()
         return;
     }
 
-    Entry* entry = currentEntry->clone(Entry::CloneNewUuid | Entry::CloneResetTimeInfo | Entry::CloneRenameTitle);
-    entry->setGroup(currentEntry->group());
-    if (isInSearchMode())
-        search(m_lastSearchText);
-    m_entryView->setFocus();
-    m_entryView->setCurrentEntry(entry);
+    CloneDialog* cloneDialog = new CloneDialog(this, m_db, currentEntry);
+    cloneDialog->show();
+    return;
 }
 
 void DatabaseWidget::deleteEntries()
@@ -366,6 +364,7 @@ void DatabaseWidget::deleteEntries()
             for (Entry* entry : asConst(selectedEntries)) {
                 delete entry;
             }
+            refreshSearch();
         }
     }
     else {
@@ -408,7 +407,7 @@ void DatabaseWidget::copyTitle()
         return;
     }
 
-    setClipboardTextAndMinimize(currentEntry->title());
+    setClipboardTextAndMinimize(currentEntry->resolvePlaceholder(currentEntry->title()));
 }
 
 void DatabaseWidget::copyUsername()
@@ -419,7 +418,7 @@ void DatabaseWidget::copyUsername()
         return;
     }
 
-    setClipboardTextAndMinimize(currentEntry->username());
+    setClipboardTextAndMinimize(currentEntry->resolvePlaceholder(currentEntry->username()));
 }
 
 void DatabaseWidget::copyPassword()
@@ -430,7 +429,7 @@ void DatabaseWidget::copyPassword()
         return;
     }
 
-    setClipboardTextAndMinimize(currentEntry->password());
+    setClipboardTextAndMinimize(currentEntry->resolvePlaceholder(currentEntry->password()));
 }
 
 void DatabaseWidget::copyURL()
@@ -441,7 +440,7 @@ void DatabaseWidget::copyURL()
         return;
     }
 
-    setClipboardTextAndMinimize(currentEntry->url());
+    setClipboardTextAndMinimize(currentEntry->resolvePlaceholder(currentEntry->url()));
 }
 
 void DatabaseWidget::copyNotes()
@@ -452,7 +451,7 @@ void DatabaseWidget::copyNotes()
         return;
     }
 
-    setClipboardTextAndMinimize(currentEntry->notes());
+    setClipboardTextAndMinimize(currentEntry->resolvePlaceholder(currentEntry->notes()));
 }
 
 void DatabaseWidget::copyAttribute(QAction* action)
@@ -875,6 +874,12 @@ void DatabaseWidget::databaseSaved()
     m_databaseModified = false;
 }
 
+void DatabaseWidget::refreshSearch() {
+    if (isInSearchMode()) {
+        search(m_lastSearchText);
+    }
+}
+
 void DatabaseWidget::search(const QString& searchtext)
 {
     if (searchtext.isEmpty())
@@ -908,9 +913,7 @@ void DatabaseWidget::search(const QString& searchtext)
 void DatabaseWidget::setSearchCaseSensitive(bool state)
 {
     m_searchCaseSensitive = state;
-
-    if (isInSearchMode())
-        search(m_lastSearchText);
+    refreshSearch();
 }
 
 void DatabaseWidget::onGroupChanged(Group* group)
@@ -1173,7 +1176,7 @@ bool DatabaseWidget::currentEntryHasUsername()
         Q_ASSERT(false);
         return false;
     }
-    return !currentEntry->username().isEmpty();
+    return !currentEntry->resolvePlaceholder(currentEntry->username()).isEmpty();
 }
 
 bool DatabaseWidget::currentEntryHasPassword()
@@ -1183,7 +1186,7 @@ bool DatabaseWidget::currentEntryHasPassword()
         Q_ASSERT(false);
         return false;
     }
-    return !currentEntry->password().isEmpty();
+    return !currentEntry->resolvePlaceholder(currentEntry->password()).isEmpty();
 }
 
 bool DatabaseWidget::currentEntryHasUrl()
@@ -1193,7 +1196,7 @@ bool DatabaseWidget::currentEntryHasUrl()
         Q_ASSERT(false);
         return false;
     }
-    return !currentEntry->url().isEmpty();
+    return !currentEntry->resolvePlaceholder(currentEntry->url()).isEmpty();
 }
 
 bool DatabaseWidget::currentEntryHasNotes()
@@ -1203,7 +1206,7 @@ bool DatabaseWidget::currentEntryHasNotes()
         Q_ASSERT(false);
         return false;
     }
-    return !currentEntry->notes().isEmpty();
+    return !currentEntry->resolvePlaceholder(currentEntry->notes()).isEmpty();
 }
 
 GroupView* DatabaseWidget::groupView() {

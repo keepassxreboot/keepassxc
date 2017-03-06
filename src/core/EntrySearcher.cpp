@@ -68,10 +68,10 @@ QList<Entry*> EntrySearcher::matchEntry(const QString& searchTerm, Entry* entry,
 
 bool EntrySearcher::wordMatch(const QString& word, Entry* entry, Qt::CaseSensitivity caseSensitivity)
 {
-    return entry->title().contains(word, caseSensitivity) ||
-            entry->username().contains(word, caseSensitivity) ||
-            entry->url().contains(word, caseSensitivity) ||
-            entry->notes().contains(word, caseSensitivity);
+    return entry->resolvePlaceholder(entry->title()).contains(word, caseSensitivity) ||
+            entry->resolvePlaceholder(entry->username()).contains(word, caseSensitivity) ||
+            entry->resolvePlaceholder(entry->url()).contains(word, caseSensitivity) ||
+            entry->resolvePlaceholder(entry->notes()).contains(word, caseSensitivity);
 }
 
 bool EntrySearcher::matchGroup(const QString& searchTerm, const Group* group, Qt::CaseSensitivity caseSensitivity)

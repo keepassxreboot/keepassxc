@@ -565,8 +565,8 @@ QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitl
             }
         }
 
-        if (!match && config()->get("AutoTypeEntryTitleMatch").toBool() && !entry->title().isEmpty()
-                && windowTitle.contains(entry->title(), Qt::CaseInsensitive)) {
+        if (!match && config()->get("AutoTypeEntryTitleMatch").toBool() && !entry->resolvePlaceholder(entry->title()).isEmpty()
+                && windowTitle.contains(entry->resolvePlaceholder(entry->title()), Qt::CaseInsensitive)) {
             sequence = entry->defaultAutoTypeSequence();
             match = true;
         }
@@ -597,11 +597,11 @@ QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitl
         group = group->parentGroup();
     } while (group && (!enableSet || sequence.isEmpty()));
 
-    if (sequence.isEmpty() && (!entry->username().isEmpty() || !entry->password().isEmpty())) {
-        if (entry->username().isEmpty()) {
+    if (sequence.isEmpty() && (!entry->resolvePlaceholder(entry->username()).isEmpty() || !entry->resolvePlaceholder(entry->password()).isEmpty())) {
+        if (entry->resolvePlaceholder(entry->username()).isEmpty()) {
             sequence = "{PASSWORD}{ENTER}";
         }
-        else if (entry->password().isEmpty()) {
+        else if (entry->resolvePlaceholder(entry->password()).isEmpty()) {
             sequence = "{USERNAME}{ENTER}";
         }
         else {

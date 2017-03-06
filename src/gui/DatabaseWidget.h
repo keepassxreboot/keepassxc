@@ -99,6 +99,7 @@ public:
     void showUnlockDialog();
     void closeUnlockDialog();
     void blockAutoReload(bool block = true);
+    void refreshSearch();
 
 signals:
     void closeRequest();
@@ -147,10 +148,12 @@ public slots:
     void switchToImportKeepass1(const QString& fileName);
     void databaseModified();
     void databaseSaved();
+
     // Search related slots
     void search(const QString& searchtext);
     void setSearchCaseSensitive(bool state);
     void endSearch();
+
     void showMessage(const QString& text, MessageWidget::MessageType type);
     void hideMessage();
 
