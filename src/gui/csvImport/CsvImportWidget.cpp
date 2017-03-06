@@ -272,6 +272,7 @@ Group *CsvImportWidget::splitGroups(QString label) {
             Group *brandNew = new Group();
             brandNew->setParent(current);
             brandNew->setName(groupName);
+            brandNew->setUuid(Uuid::random());
             current = brandNew;
         } else {
             Q_ASSERT(children != nullptr);
