@@ -206,14 +206,14 @@ set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUIL
 target_link_libraries(keepassx_core
                       ${keepasshttp_LIB}
                       ${autotype_LIB}
+                      ${YUBIKEY_LIBRARIES}
                       zxcvbn
                       Qt5::Core
                       Qt5::Concurrent
                       Qt5::Widgets
                       ${GCRYPT_LIBRARIES}
                       ${GPGERROR_LIBRARIES}
-                      ${ZLIB_LIBRARIES}
-                      ${YUBIKEY_LIBRARIES})
+                      ${ZLIB_LIBRARIES})
 if (UNIX AND NOT APPLE)
     target_link_libraries(keepassx_core Qt5::DBus)
 endif()
