@@ -30,13 +30,23 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="AttributesListView" name="attributesView"/>
-      </item>
-      <item>
-       <widget class="QPlainTextEdit" name="attributesEdit">
-        <property name="enabled">
+       <widget class="QSplitter" name="splitter">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="childrenCollapsible">
          <bool>false</bool>
         </property>
+        <property name="title" stdset="0">
+         <string>Additional attributes</string>
+        </property>
+        <widget class="AttributesListView" name="attributesView">
+        </widget>
+        <widget class="QPlainTextEdit" name="attributesEdit">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
        </widget>
       </item>
       <item>
