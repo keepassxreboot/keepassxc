@@ -181,6 +181,12 @@ void TestEntryModel::testAttributesModel()
     QCOMPARE(spyAboutToRemove.count(), 1);
     QCOMPARE(spyRemoved.count(), 1);
 
+    // test attribute protection
+    QString value = entryAttributes->value("2nd");
+    entryAttributes->set("2nd", value, true);
+    QVERIFY(entryAttributes->isProtected("2nd"));
+    QCOMPARE(entryAttributes->value("2nd"), value);
+
     QSignalSpy spyReset(model, SIGNAL(modelReset()));
     entryAttributes->clear();
     model->setEntryAttributes(0);
