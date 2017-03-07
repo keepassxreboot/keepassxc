@@ -1,6 +1,7 @@
 # KeePassXC - KeePass Cross-platform Community Edition
 
 [![Travis Build Status](https://travis-ci.org/keepassxreboot/keepassxc.svg?branch=develop)](https://travis-ci.org/keepassxreboot/keepassxc)  [![Coverage Status](https://coveralls.io/repos/github/keepassxreboot/keepassxc/badge.svg)](https://coveralls.io/github/keepassxreboot/keepassxc)
+<a href='https://pledgie.com/campaigns/33487'><img alt='KeePassXC Authenticode Certificate Campaign!' align=right  src='https://pledgie.com/campaigns/33487.png?skin_name=chrome' border='0'></a>
 
 ## About
 KeePassXC is a community fork of [KeePassX](https://www.keepassx.org/) with the goal to extend and improve it with new features and bugfixes to provide a feature-rich, fully cross-platform and modern open-source password manager.
