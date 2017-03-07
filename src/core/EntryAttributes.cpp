@@ -28,6 +28,7 @@ const QString EntryAttributes::RememberCmdExecAttr = "_EXEC_CMD";
 
 EntryAttributes::EntryAttributes(QObject* parent)
     : QObject(parent)
+    , m_referenceRegExp("\\{REF:([TUPAN])@I:([^}]+)\\}", Qt::CaseInsensitive, QRegExp::RegExp2)
 {
     clear();
 }
@@ -67,6 +68,25 @@ bool EntryAttributes::contains(const QString &key) const
 bool EntryAttributes::isProtected(const QString& key) const
 {
     return m_protectedAttributes.contains(key);
+}
+
+bool EntryAttributes::isReference(const QString& key) const
+{
+    if (!m_attributes.contains(key)) {
+        Q_ASSERT(false);
+        return false;
+    }
+
+    QString data = value(key);
+    if (m_referenceRegExp.indexIn(data) != -1) {
+        return true;
+    }
+    return false;
+}
+
+QRegExp* EntryAttributes::referenceRegExp()
+{
+    return &m_referenceRegExp;
 }
 
 void EntryAttributes::set(const QString& key, const QString& value, bool protect)
