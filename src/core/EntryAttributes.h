@@ -36,7 +36,7 @@ public:
     bool contains(const QString& key) const;
     bool isProtected(const QString& key) const;
     bool isReference(const QString& key) const;
-    QRegExp referenceRegExp() const;
+    QRegExp* referenceRegExp();
     void set(const QString& key, const QString& value, bool protect = false);
     void remove(const QString& key);
     void rename(const QString& oldKey, const QString& newKey);

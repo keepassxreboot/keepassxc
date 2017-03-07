@@ -84,9 +84,9 @@ bool EntryAttributes::isReference(const QString& key) const
     return false;
 }
 
-QRegExp EntryAttributes::referenceRegExp() const
+QRegExp* EntryAttributes::referenceRegExp()
 {
-    return m_referenceRegExp;
+    return &m_referenceRegExp;
 }
 
 void EntryAttributes::set(const QString& key, const QString& value, bool protect)

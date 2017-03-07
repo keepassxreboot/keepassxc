@@ -690,20 +690,20 @@ QString Entry::resolvePlaceholder(const QString& str) const
     // using format from http://keepass.info/help/base/fieldrefs.html at the time of writing,
     // but supporting lookups of standard fields and references by UUID only
 
-    QRegExp tmpRegExp = m_attributes->referenceRegExp();
-    if (tmpRegExp.indexIn(result) != -1) {
+    QRegExp* tmpRegExp = m_attributes->referenceRegExp();
+    if (tmpRegExp->indexIn(result) != -1) {
         // cap(0) contains the whole reference
         // cap(1) contains which field is wanted
         // cap(2) contains the uuid of the referenced entry
-        Entry* tmpRefEntry = m_group->database()->resolveEntry(Uuid(QByteArray::fromHex(tmpRegExp.cap(2).toLatin1())));
+        Entry* tmpRefEntry = m_group->database()->resolveEntry(Uuid(QByteArray::fromHex(tmpRegExp->cap(2).toLatin1())));
         if (tmpRefEntry) {
             // entry found, get the relevant field
-            QString tmpRefField = tmpRegExp.cap(1).toLower();
-            if (tmpRefField == "t") result.replace(tmpRegExp.cap(0), tmpRefEntry->title(), Qt::CaseInsensitive);
-            else if (tmpRefField == "u") result.replace(tmpRegExp.cap(0), tmpRefEntry->username(), Qt::CaseInsensitive);
-            else if (tmpRefField == "p") result.replace(tmpRegExp.cap(0), tmpRefEntry->password(), Qt::CaseInsensitive);
-            else if (tmpRefField == "a") result.replace(tmpRegExp.cap(0), tmpRefEntry->url(), Qt::CaseInsensitive);
-            else if (tmpRefField == "n") result.replace(tmpRegExp.cap(0), tmpRefEntry->notes(), Qt::CaseInsensitive);
+            QString tmpRefField = tmpRegExp->cap(1).toLower();
+            if (tmpRefField == "t") result.replace(tmpRegExp->cap(0), tmpRefEntry->title(), Qt::CaseInsensitive);
+            else if (tmpRefField == "u") result.replace(tmpRegExp->cap(0), tmpRefEntry->username(), Qt::CaseInsensitive);
+            else if (tmpRefField == "p") result.replace(tmpRegExp->cap(0), tmpRefEntry->password(), Qt::CaseInsensitive);
+            else if (tmpRefField == "a") result.replace(tmpRegExp->cap(0), tmpRefEntry->url(), Qt::CaseInsensitive);
+            else if (tmpRefField == "n") result.replace(tmpRegExp->cap(0), tmpRefEntry->notes(), Qt::CaseInsensitive);
         }
     }
 
