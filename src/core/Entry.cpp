@@ -690,7 +690,7 @@ QString Entry::resolvePlaceholder(const QString& str) const
     // using format from http://keepass.info/help/base/fieldrefs.html at the time of writing,
     // but supporting lookups of standard fields and references by UUID only
 
-    QRegExp tmpRegExp("\\{REF:([TUPAN])@I:([^}]+)\\}", Qt::CaseInsensitive, QRegExp::RegExp2);
+    QRegExp tmpRegExp = m_attributes->referenceRegExp();
     if (tmpRegExp.indexIn(result) != -1) {
         // cap(0) contains the whole reference
         // cap(1) contains which field is wanted
