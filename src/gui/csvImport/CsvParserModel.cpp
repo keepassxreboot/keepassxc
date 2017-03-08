@@ -46,7 +46,7 @@ bool CsvParserModel::parse() {
         QFile csv(m_filename);
         r = CsvParser::parse(&csv);
     }
-    for (int i = 0; i < columnCount(); i++)
+    for (int i = 0; i < columnCount(); ++i)
         m_columnMap.insert(i,0);
     addEmptyColumn();
     endResetModel();

@@ -138,14 +138,14 @@ void CsvImportWidget::updatePreview() {
     int i;
     QStringList list(tr("Not present in CSV file"));
 
-    for (i = 1; i < m_parserModel->getCsvCols(); i++) {
+    for (i = 1; i < m_parserModel->getCsvCols(); ++i) {
         QString s = QString(tr("Column ")) + QString::number(i);
         list << s;
     }
     m_comboModel->setStringList(list);
 
     i=1;
-    Q_FOREACH (QComboBox* b, m_combos) {
+    for (QComboBox* b : m_combos) {
         if (i < m_parserModel->getCsvCols())
             b->setCurrentIndex(i);
         else
@@ -184,20 +184,21 @@ void CsvImportWidget::parse() {
 QString CsvImportWidget::formatStatusText() const {
     QString text = m_parserModel->getStatus();
     int items = text.count('\n');
-    if (items > 2)
+    if (items > 2) {
         return text.section('\n', 0, 1)
                 .append("\n[").append(QString::number(items - 2))
                 .append(tr(" more messages skipped]"));
-    else
-        for (int i = 0; i < 2 - items; i++)
-            text.append(QString("\n"));
-        return text;
+    }
+    if (items == 1) {
+        text.append(QString("\n"));
+    }
+    return text;
 }
 
 void CsvImportWidget::writeDatabase() {
 
     setRootGroup();
-    for (int r = 0; r < m_parserModel->rowCount(); r++) {
+    for (int r = 0; r < m_parserModel->rowCount(); ++r) {
         //use validity of second column as a GO/NOGO for all others fields
         if (not m_parserModel->data(m_parserModel->index(r, 1)).isValid())
             continue;
@@ -229,7 +230,7 @@ void CsvImportWidget::setRootGroup() {
     bool is_empty = false;
     bool is_label = false;
 
-    for (int r = 0; r < m_parserModel->rowCount(); r++) {
+    for (int r = 0; r < m_parserModel->rowCount(); ++r) {
         //use validity of second column as a GO/NOGO for all others fields
         if (not m_parserModel->data(m_parserModel->index(r, 1)).isValid())
             continue;
