@@ -63,7 +63,7 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
         m_ui->strengthLabel->setFont(defaultFont);
     }
 
-    m_ui->comboBoxWordSeparator->addItems(QStringList() << " " << "#" << ";" << "-" << ":" << "." << "@");
+    m_ui->comboBoxWordSeparator->addItems(QStringList() << " " << "#" << "_" << ";" << "-" << ":" << "." << "@");
 
     QDir path(filePath()->dataPath("wordlists/"));
     QStringList files = path.entryList(QDir::Files);
