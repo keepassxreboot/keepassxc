@@ -25,6 +25,7 @@
 #include <QMimeData>
 #include <QPushButton>
 #include <QSpinBox>
+#include <QPlainTextEdit>
 #include <QTemporaryFile>
 #include <QTest>
 #include <QToolBar>
@@ -241,6 +242,19 @@ void TestGui::testEditEntry()
     EditEntryWidget* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
     QLineEdit* titleEdit = editEntryWidget->findChild<QLineEdit*>("titleEdit");
     QTest::keyClicks(titleEdit, "_test");
+
+    // Test protected attributes
+    editEntryWidget->setCurrentPage(1);
+    QPlainTextEdit* attrTextEdit = editEntryWidget->findChild<QPlainTextEdit*>("attributesEdit");
+    QTest::mouseClick(editEntryWidget->findChild<QAbstractButton*>("addAttributeButton"), Qt::LeftButton);
+    QString attrText = "TEST TEXT";
+    QTest::keyClicks(attrTextEdit, attrText);
+    QCOMPARE(attrTextEdit->toPlainText(), attrText);
+    QTest::mouseClick(editEntryWidget->findChild<QAbstractButton*>("protectAttributeButton"), Qt::LeftButton);
+    QVERIFY(attrTextEdit->toPlainText().contains("PROTECTED"));
+    QTest::mouseClick(editEntryWidget->findChild<QAbstractButton*>("revealAttributeButton"), Qt::LeftButton);
+    QCOMPARE(attrTextEdit->toPlainText(), attrText);
+    editEntryWidget->setCurrentPage(0);
 
     // Save the edit
     QDialogButtonBox* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");

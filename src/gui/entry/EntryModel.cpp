@@ -19,6 +19,7 @@
 
 #include <QFont>
 #include <QMimeData>
+#include <QPalette>
 
 #include "core/DatabaseIcons.h"
 #include "core/Entry.h"
@@ -127,8 +128,10 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
     }
 
     Entry* entry = entryFromIndex(index);
+    EntryAttributes* attr = entry->attributes();
 
     if (role == Qt::DisplayRole) {
+        QString result;
         switch (index.column()) {
         case ParentGroup:
             if (entry->group()) {
@@ -136,11 +139,23 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             }
             break;
         case Title:
-            return entry->title();
+            result = entry->resolvePlaceholder(entry->title());
+            if (attr->isReference(EntryAttributes::TitleKey)) {
+                result.prepend(tr("Ref: ","Reference abbreviation"));
+            }
+            return result;
         case Username:
-            return entry->username();
+            result = entry->resolvePlaceholder(entry->username());
+            if (attr->isReference(EntryAttributes::UserNameKey)) {
+                result.prepend(tr("Ref: ","Reference abbreviation"));
+            }
+            return result;
         case Url:
-            return entry->url();
+            result = entry->resolvePlaceholder(entry->url());
+            if (attr->isReference(EntryAttributes::URLKey)) {
+                result.prepend(tr("Ref: ","Reference abbreviation"));
+            }
+            return result;
         }
     }
     else if (role == Qt::DecorationRole) {
@@ -165,6 +180,12 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             font.setStrikeOut(true);
         }
         return font;
+    }
+    else if (role == Qt::TextColorRole) {
+        if (entry->hasReferences()) {
+            QPalette p;
+            return QVariant(p.color(QPalette::Active, QPalette::Mid));
+        }
     }
 
     return QVariant();

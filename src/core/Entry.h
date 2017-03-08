@@ -79,6 +79,7 @@ public:
     QString password() const;
     QString notes() const;
     bool isExpired() const;
+    bool hasReferences() const;
     EntryAttributes* attributes();
     const EntryAttributes* attributes() const;
     EntryAttachments* attachments();
