@@ -54,7 +54,7 @@ const int DatabaseTabWidget::LastDatabasesCount = 5;
 
 DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     : QTabWidget(parent)
-    , m_dbWidgetSateSync(new DatabaseWidgetStateSync(this))
+    , m_dbWidgetStateSync(new DatabaseWidgetStateSync(this))
 {
     DragTabBar* tabBar = new DragTabBar(this);
     setTabBar(tabBar);
@@ -62,7 +62,7 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
 
     connect(this, SIGNAL(tabCloseRequested(int)), SLOT(closeDatabase(int)));
     connect(this, SIGNAL(currentChanged(int)), SLOT(emitActivateDatabaseChanged()));
-    connect(this, SIGNAL(activateDatabaseChanged(DatabaseWidget*)), m_dbWidgetSateSync, SLOT(setActive(DatabaseWidget*)));
+    connect(this, SIGNAL(activateDatabaseChanged(DatabaseWidget*)), m_dbWidgetStateSync, SLOT(setActive(DatabaseWidget*)));
     connect(autoType(), SIGNAL(globalShortcutTriggered()), SLOT(performGlobalAutoType()));
 }
 
@@ -331,17 +331,18 @@ bool DatabaseTabWidget::closeAllDatabases()
 bool DatabaseTabWidget::saveDatabase(Database* db)
 {
     DatabaseManagerStruct& dbStruct = m_dbList[db];
-    // temporarily disable autoreload
-    dbStruct.dbWidget->ignoreNextAutoreload();
 
     if (dbStruct.saveToFilename) {
         QSaveFile saveFile(dbStruct.canonicalFilePath);
         if (saveFile.open(QIODevice::WriteOnly)) {
             // write the database to the file
+            dbStruct.dbWidget->blockAutoReload(true);
             m_writer.writeDatabase(&saveFile, db);
+            dbStruct.dbWidget->blockAutoReload(false);
+
             if (m_writer.hasError()) {
                 emit messageTab(tr("Writing the database failed.").append("\n")
-                .append(m_writer.errorString()), MessageWidget::Error);
+                                .append(m_writer.errorString()), MessageWidget::Error);
                 return false;
             }
 
@@ -352,20 +353,17 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
                 updateTabName(db);
                 emit messageDismissTab();
                 return true;
-            }
-            else {
+            } else {
                 emit messageTab(tr("Writing the database failed.").append("\n")
-                    .append(saveFile.errorString()), MessageWidget::Error);
+                                .append(saveFile.errorString()), MessageWidget::Error);
                 return false;
             }
-        }
-        else {
+        } else {
             emit messageTab(tr("Writing the database failed.").append("\n")
-            .append(saveFile.errorString()), MessageWidget::Error);
+                            .append(saveFile.errorString()), MessageWidget::Error);
             return false;
         }
-    }
-    else {
+    } else {
         return saveDatabaseAs(db);
     }
 }

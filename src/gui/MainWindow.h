@@ -24,6 +24,7 @@
 
 #include "core/SignalMultiplexer.h"
 #include "gui/DatabaseWidget.h"
+#include "gui/Application.h"
 
 namespace Ui {
     class MainWindow;
@@ -43,6 +44,11 @@ public slots:
     void openDatabase(const QString& fileName, const QString& pw = QString(),
                       const QString& keyFile = QString());
     void appExit();
+    void displayGlobalMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton = true);
+    void displayTabMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton = true);
+    void hideGlobalMessage();
+    void showYubiKeyPopup();
+    void hideYubiKeyPopup();
 
 protected:
      void closeEvent(QCloseEvent* event) override;
@@ -76,9 +82,6 @@ private slots:
     void toggleWindow();
     void lockDatabasesAfterInactivity();
     void repairDatabase();
-    void displayGlobalMessage(const QString& text, MessageWidget::MessageType type);
-    void displayTabMessage(const QString& text, MessageWidget::MessageType type);
-    void hideGlobalMessage();
     void hideTabMessage();
 
 private:
@@ -106,5 +109,8 @@ private:
 
     bool appExitCalled;
 };
+
+#define KEEPASSXC_MAIN_WINDOW (qobject_cast<Application*>(qApp) ? \
+                               qobject_cast<MainWindow*>(qobject_cast<Application*>(qApp)->mainWindow()) : nullptr)
 
 #endif // KEEPASSX_MAINWINDOW_H

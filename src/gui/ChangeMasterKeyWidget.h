@@ -38,6 +38,9 @@ public:
     void clearForms();
     CompositeKey newMasterKey();
     QLabel* headlineLabel();
+
+public slots:
+    void setOkEnabled();
     void setCancelEnabled(bool enabled);
 
 signals:
@@ -48,6 +51,10 @@ private slots:
     void reject();
     void createKeyFile();
     void browseKeyFile();
+    void yubikeyDetected(int slot, bool blocking);
+    void noYubikeyFound();
+    void challengeResponseGroupToggled(bool checked);
+    void pollYubikey();
 
 private:
     const QScopedPointer<Ui::ChangeMasterKeyWidget> m_ui;

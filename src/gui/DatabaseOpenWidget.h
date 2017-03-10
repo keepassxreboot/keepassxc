@@ -41,6 +41,9 @@ public:
     void enterKey(const QString& pw, const QString& keyFile);
     Database* database();
 
+public slots:
+    void pollYubikey();
+
 signals:
     void editFinished(bool accepted);
 
@@ -55,7 +58,10 @@ protected slots:
 private slots:
     void activatePassword();
     void activateKeyFile();
+    void activateChallengeResponse();
     void browseKeyFile();
+    void yubikeyDetected(int slot, bool blocking);
+    void noYubikeyFound();
 
 protected:
     const QScopedPointer<Ui::DatabaseOpenWidget> m_ui;

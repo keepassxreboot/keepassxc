@@ -17,6 +17,7 @@
 
 #include "CompositeKey.h"
 #include "CompositeKey_p.h"
+#include "ChallengeResponseKey.h"
 
 #include <QElapsedTimer>
 #include <QFile>
@@ -46,11 +47,12 @@ void CompositeKey::clear()
 {
     qDeleteAll(m_keys);
     m_keys.clear();
+    m_challengeResponseKeys.clear();
 }
 
 bool CompositeKey::isEmpty() const
 {
-    return m_keys.isEmpty();
+    return m_keys.isEmpty() && m_challengeResponseKeys.isEmpty();
 }
 
 CompositeKey* CompositeKey::clone() const
@@ -69,6 +71,9 @@ CompositeKey& CompositeKey::operator=(const CompositeKey& key)
 
     for (const Key* subKey : asConst(key.m_keys)) {
         addKey(*subKey);
+    }
+    for (const auto subKey : asConst(key.m_challengeResponseKeys)) {
+        addChallengeResponseKey(subKey);
     }
 
     return *this;
@@ -168,10 +173,39 @@ QByteArray CompositeKey::transformKeyRaw(const QByteArray& key, const QByteArray
     return result;
 }
 
+bool CompositeKey::challenge(const QByteArray& seed, QByteArray& result) const
+{
+    // if no challenge response was requested, return nothing to
+    // maintain backwards compatibility with regular databases.
+    if (m_challengeResponseKeys.length() == 0) {
+        result.clear();
+        return true;
+    }
+
+    CryptoHash cryptoHash(CryptoHash::Sha256);
+
+    for (const auto key : m_challengeResponseKeys) {
+        // if the device isn't present or fails, return an error
+        if (!key->challenge(seed)) {
+            return false;
+        }
+        cryptoHash.addData(key->rawKey());
+    }
+
+    result = cryptoHash.result();
+    return true;
+}
+
 void CompositeKey::addKey(const Key& key)
 {
     m_keys.append(key.clone());
 }
+
+void CompositeKey::addChallengeResponseKey(QSharedPointer<ChallengeResponseKey> key)
+{
+    m_challengeResponseKeys.append(key);
+}
+
 
 int CompositeKey::transformKeyBenchmark(int msec)
 {

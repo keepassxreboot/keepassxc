@@ -20,8 +20,10 @@
 
 #include <QList>
 #include <QString>
+#include <QSharedPointer>
 
 #include "keys/Key.h"
+#include "keys/ChallengeResponseKey.h"
 
 class CompositeKey : public Key
 {
@@ -37,7 +39,10 @@ public:
     QByteArray rawKey() const;
     QByteArray transform(const QByteArray& seed, quint64 rounds,
                          bool* ok, QString* errorString) const;
+    bool challenge(const QByteArray& seed, QByteArray &result) const;
+
     void addKey(const Key& key);
+    void addChallengeResponseKey(QSharedPointer<ChallengeResponseKey> key);
 
     static int transformKeyBenchmark(int msec);
     static CompositeKey readFromLine(QString line);
@@ -47,6 +52,7 @@ private:
                                       quint64 rounds, bool* ok, QString* errorString);
 
     QList<Key*> m_keys;
+    QList<QSharedPointer<ChallengeResponseKey>> m_challengeResponseKeys;
 };
 
 #endif // KEEPASSX_COMPOSITEKEY_H

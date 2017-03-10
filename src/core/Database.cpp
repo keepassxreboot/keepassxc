@@ -176,6 +176,17 @@ QByteArray Database::transformedMasterKey() const
     return m_data.transformedMasterKey;
 }
 
+QByteArray Database::challengeResponseKey() const
+{
+    return m_data.challengeResponseKey;
+}
+
+bool Database::challengeMasterSeed(const QByteArray& masterSeed)
+{
+    m_data.masterSeed = masterSeed;
+    return m_data.key.challenge(masterSeed, m_data.challengeResponseKey);
+}
+
 void Database::setCipher(const Uuid& cipher)
 {
     Q_ASSERT(!cipher.isNull());
@@ -245,6 +256,20 @@ bool Database::hasKey() const
 bool Database::verifyKey(const CompositeKey& key) const
 {
     Q_ASSERT(hasKey());
+
+    if (!m_data.challengeResponseKey.isEmpty()) {
+        QByteArray result;
+
+        if (!key.challenge(m_data.masterSeed, result)) {
+            // challenge failed, (YubiKey?) removed?
+            return false;
+        }
+
+        if (m_data.challengeResponseKey != result) {
+            // wrong response from challenged device(s)
+            return false;
+        }
+    }
 
     return (m_data.key.rawKey() == key.rawKey());
 }

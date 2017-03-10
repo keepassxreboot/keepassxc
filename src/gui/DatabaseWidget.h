@@ -98,7 +98,7 @@ public:
     EntryView* entryView();
     void showUnlockDialog();
     void closeUnlockDialog();
-    void ignoreNextAutoreload();
+    void blockAutoReload(bool block = true);
     void refreshSearch();
 
 signals:
@@ -175,6 +175,7 @@ private slots:
     void onWatchedFileChanged();
     void reloadDatabaseFile();
     void restoreGroupEntryFocus(Uuid groupUuid, Uuid EntryUuid);
+    void unblockAutoReload();
 
 private:
     void setClipboardTextAndMinimize(const QString& text);
@@ -212,8 +213,8 @@ private:
     // Autoreload
     QFileSystemWatcher m_fileWatcher;
     QTimer m_fileWatchTimer;
-    bool m_ignoreNextAutoreload;
-    QTimer m_ignoreWatchTimer;
+    QTimer m_fileWatchUnblockTimer;
+    bool m_ignoreAutoReload;
     bool m_databaseModified;
 };
 
