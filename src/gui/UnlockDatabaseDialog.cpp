@@ -49,7 +49,7 @@ void UnlockDatabaseDialog::complete(bool r)
 {
     if (r) {
         accept();
-        Q_EMIT unlockDone(true);
+        emit unlockDone(true);
     } else {
         reject();
     }

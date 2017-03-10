@@ -40,10 +40,10 @@ public:
     QLabel* headlineLabel();
     void setCancelEnabled(bool enabled);
 
-Q_SIGNALS:
+signals:
     void editFinished(bool accepted);
 
-private Q_SLOTS:
+private slots:
     void generateKey();
     void reject();
     void createKeyFile();

@@ -227,7 +227,7 @@ bool Database::setKey(const CompositeKey& key, const QByteArray& transformSeed,
     if (updateChangedTime) {
         m_metadata->setMasterKeyChanged(QDateTime::currentDateTimeUtc());
     }
-    Q_EMIT modifiedImmediate();
+    emit modifiedImmediate();
 
     return true;
 }
@@ -285,7 +285,7 @@ void Database::recycleGroup(Group* group)
 void Database::merge(const Database* other)
 {
     m_rootGroup->merge(other->rootGroup());
-    Q_EMIT modified();
+    emit modified();
 }
 
 void Database::setEmitModified(bool value)

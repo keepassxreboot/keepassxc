@@ -24,7 +24,7 @@ class TestKeePass2RandomStream : public QObject
 {
     Q_OBJECT
 
-private Q_SLOTS:
+private slots:
     void initTestCase();
     void test();
 };

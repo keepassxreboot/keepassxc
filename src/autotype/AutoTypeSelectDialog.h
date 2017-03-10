@@ -33,13 +33,13 @@ public:
     explicit AutoTypeSelectDialog(QWidget* parent = nullptr);
     void setEntries(const QList<Entry*>& entries, const QHash<Entry*, QString>& sequences);
 
-Q_SIGNALS:
+signals:
     void entryActivated(Entry* entry, const QString& sequence);
 
-public Q_SLOTS:
+public slots:
     void done(int r) override;
 
-private Q_SLOTS:
+private slots:
     void emitEntryActivated(const QModelIndex& index);
     void entryRemoved();
 

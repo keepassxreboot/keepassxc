@@ -48,9 +48,9 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     , m_defaultIconModel(new DefaultIconModel(this))
     , m_customIconModel(new CustomIconModel(this))
     #ifdef WITH_XC_HTTP
-    , m_httpClient(nullptr)
     , m_fallbackToGoogle(true)
     , m_redirectCount(0)
+    , m_httpClient(nullptr)
     #endif
 {
     m_ui->setupUi(this);
@@ -149,6 +149,7 @@ void EditWidgetIcons::setUrl(const QString& url)
     m_ui->faviconButton->setVisible(!url.isEmpty());
     resetFaviconDownload();
 #else
+    Q_UNUSED(url);
     m_ui->faviconButton->setVisible(false);
 #endif
 }
@@ -275,7 +276,7 @@ void EditWidgetIcons::addCustomIcon()
                 m_ui->customIconsView->setCurrentIndex(index);
             }
             else {
-                Q_EMIT messageEditEntry(tr("Can't read icon"), MessageWidget::Error);
+                emit messageEditEntry(tr("Can't read icon"), MessageWidget::Error);
             }
         }
     }

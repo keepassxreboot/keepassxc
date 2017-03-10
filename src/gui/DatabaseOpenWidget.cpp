@@ -130,7 +130,7 @@ void DatabaseOpenWidget::openDatabase()
         if (m_ui->messageWidget->isVisible()) {
             m_ui->messageWidget->animatedHide();
         }
-        Q_EMIT editFinished(true);
+        emit editFinished(true);
     }
     else {
         m_ui->messageWidget->showMessage(tr("Unable to open the database.")
@@ -174,7 +174,7 @@ CompositeKey DatabaseOpenWidget::databaseKey()
 
 void DatabaseOpenWidget::reject()
 {
-    Q_EMIT editFinished(false);
+    emit editFinished(false);
 }
 
 void DatabaseOpenWidget::activatePassword()

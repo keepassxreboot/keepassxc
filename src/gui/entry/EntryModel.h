@@ -52,14 +52,14 @@ public:
 
     void setEntryList(const QList<Entry*>& entries);
 
-Q_SIGNALS:
+signals:
     void switchedToEntryListMode();
     void switchedToGroupMode();
 
-public Q_SLOTS:
+public slots:
     void setGroup(Group* group);
 
-private Q_SLOTS:
+private slots:
     void entryAboutToAdd(Entry* entry);
     void entryAdded(Entry* entry);
     void entryAboutToRemove(Entry* entry);

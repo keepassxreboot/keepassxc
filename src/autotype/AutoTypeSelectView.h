@@ -32,7 +32,7 @@ public:
 protected:
     void mouseMoveEvent(QMouseEvent* event) override;
 
-private Q_SLOTS:
+private slots:
     void selectFirstEntry();
 };
 

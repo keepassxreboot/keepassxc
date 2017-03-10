@@ -45,10 +45,10 @@ public:
     void addSettingsPage(ISettingsPage * page);
     void loadSettings();
 
-Q_SIGNALS:
+signals:
     void editFinished(bool accepted);
 
-private Q_SLOTS:
+private slots:
     void saveSettings();
     void reject();
     void enableAutoSaveOnExit(bool checked);

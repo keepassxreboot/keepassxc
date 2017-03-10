@@ -122,7 +122,7 @@ public:
     void copyDataFrom(const Group* other);
     void merge(const Group* other);
 
-Q_SIGNALS:
+signals:
     void dataChanged(Group* group);
 
     void aboutToAdd(Group* group, int index);

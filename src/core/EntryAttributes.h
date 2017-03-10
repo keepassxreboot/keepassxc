@@ -57,7 +57,7 @@ public:
     static const QString RememberCmdExecAttr;
     static bool isDefaultAttribute(const QString& key);
 
-Q_SIGNALS:
+signals:
     void modified();
     void defaultKeyModified();
     void customKeyModified(const QString& key);
