@@ -27,7 +27,7 @@ class TestKeePass1Reader : public QObject
 {
     Q_OBJECT
 
-private Q_SLOTS:
+private slots:
     void initTestCase();
     void testBasic();
     void testMasterKey();

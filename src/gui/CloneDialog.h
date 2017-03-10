@@ -39,7 +39,7 @@ public:
 private:
     QScopedPointer<Ui::CloneDialog> m_ui;
 
-private Q_SLOTS:
+private slots:
     void cloneEntry();
 
 protected:

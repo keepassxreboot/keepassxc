@@ -119,7 +119,7 @@ public:
 
     static Database* databaseByUuid(const Uuid& uuid);
 
-Q_SIGNALS:
+signals:
     void groupDataChanged(Group* group);
     void groupAboutToAdd(Group* group, int index);
     void groupAdded();
@@ -131,7 +131,7 @@ Q_SIGNALS:
     void modified();
     void modifiedImmediate();
 
-private Q_SLOTS:
+private slots:
     void startModifiedTimer();
 
 private:

@@ -62,7 +62,7 @@ void KeePass1OpenWidget::openDatabase()
 
     if (m_db) {
         m_db->metadata()->setName(QFileInfo(m_filename).completeBaseName());
-        Q_EMIT editFinished(true);
+        emit editFinished(true);
     }
     else {
         m_ui->messageWidget->showMessage(tr("Unable to open the database.").append("\n")

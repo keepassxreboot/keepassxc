@@ -21,6 +21,7 @@
 #include "KMessageWidget.h"
 
 #include "core/FilePath.h"
+#include "core/Global.h"
 
 #include <QAction>
 #include <QEvent>
@@ -117,7 +118,8 @@ void KMessageWidgetPrivate::createLayout()
     qDeleteAll(buttons);
     buttons.clear();
     
-    Q_FOREACH (QAction *action, q->actions()) {
+    const auto actions = q->actions();
+    for (QAction *action: actions) {
         QToolButton *button = new QToolButton(content);
         button->setDefaultAction(action);
         button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -137,7 +139,7 @@ void KMessageWidgetPrivate::createLayout()
         
         QHBoxLayout *buttonLayout = new QHBoxLayout;
         buttonLayout->addStretch();
-        Q_FOREACH (QToolButton *button, buttons) {
+        for (QToolButton* button: asConst(buttons)) {
             // For some reason, calling show() is necessary if wordwrap is true,
             // otherwise the buttons do not show up. It is not needed if
             // wordwrap is false.
@@ -151,7 +153,7 @@ void KMessageWidgetPrivate::createLayout()
         layout->addWidget(iconLabel);
         layout->addWidget(textLabel);
         
-        Q_FOREACH (QToolButton *button, buttons) {
+        for (QToolButton* button: asConst(buttons)) {
             layout->addWidget(button);
         }
         

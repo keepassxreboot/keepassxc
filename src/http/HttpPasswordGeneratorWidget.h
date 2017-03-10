@@ -38,7 +38,7 @@ public:
     void saveSettings();
     void reset();
 
-private Q_SLOTS:
+private slots:
     void sliderMoved();
     void spinBoxChanged();
 

@@ -146,7 +146,7 @@ public:
      */
     void copyAttributesFrom(const Metadata* other);
 
-Q_SIGNALS:
+signals:
     void nameTextChanged();
     void modified();
 

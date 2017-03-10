@@ -112,7 +112,7 @@ void GroupView::expandGroup(Group* group, bool expand)
 
 void GroupView::emitGroupChanged(const QModelIndex& index)
 {
-    Q_EMIT groupChanged(m_model->groupFromIndex(index));
+    emit groupChanged(m_model->groupFromIndex(index));
 }
 
 void GroupView::setModel(QAbstractItemModel* model)
@@ -123,7 +123,7 @@ void GroupView::setModel(QAbstractItemModel* model)
 
 void GroupView::emitGroupChanged()
 {
-    Q_EMIT groupChanged(currentGroup());
+    emit groupChanged(currentGroup());
 }
 
 void GroupView::syncExpandedState(const QModelIndex& parent, int start, int end)

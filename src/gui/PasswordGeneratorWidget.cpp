@@ -145,8 +145,8 @@ void PasswordGeneratorWidget::generatePassword()
 void PasswordGeneratorWidget::applyPassword()
 {
     saveSettings();
-    Q_EMIT appliedPassword(m_ui->editNewPassword->text());
-    Q_EMIT dialogTerminated();
+    emit appliedPassword(m_ui->editNewPassword->text());
+    emit dialogTerminated();
 }
 
 void PasswordGeneratorWidget::sliderMoved()

@@ -28,33 +28,54 @@
      <property name="title">
       <string>Additional attributes</string>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
-       <widget class="AttributesListView" name="attributesView"/>
-      </item>
-      <item>
-       <widget class="QPlainTextEdit" name="attributesEdit">
-        <property name="enabled">
+       <widget class="QSplitter" name="attributesSplitter">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="childrenCollapsible">
          <bool>false</bool>
         </property>
+        <widget class="AttributesListView" name="attributesView">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QAbstractScrollArea::AdjustToContents</enum>
+         </property>
+         <property name="resizeMode">
+          <enum>QListView::Adjust</enum>
+         </property>
+        </widget>
+        <widget class="QPlainTextEdit" name="attributesEdit">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>170</width>
+           <height>0</height>
+          </size>
+         </property>
+        </widget>
        </widget>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <layout class="QVBoxLayout" name="attributesButtonLayout">
         <item>
          <widget class="QPushButton" name="addAttributeButton">
           <property name="text">
            <string>Add</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="editAttributeButton">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>Edit</string>
           </property>
          </widget>
         </item>
@@ -65,6 +86,16 @@
           </property>
           <property name="text">
            <string>Remove</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="editAttributeButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Edit Name</string>
           </property>
          </widget>
         </item>
@@ -80,6 +111,35 @@
            </size>
           </property>
          </spacer>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="protectAttributeButton">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">margin-left:50%;margin-right:50%</string>
+          </property>
+          <property name="text">
+           <string>Protect</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="revealAttributeButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Reveal</string>
+          </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -103,7 +163,7 @@
        </widget>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <layout class="QVBoxLayout" name="attachmentsButtonLayout">
         <item>
          <widget class="QPushButton" name="addAttachmentButton">
           <property name="text">
@@ -172,11 +232,12 @@
   <tabstop>attributesView</tabstop>
   <tabstop>attributesEdit</tabstop>
   <tabstop>addAttributeButton</tabstop>
-  <tabstop>editAttributeButton</tabstop>
   <tabstop>removeAttributeButton</tabstop>
+  <tabstop>editAttributeButton</tabstop>
   <tabstop>attachmentsView</tabstop>
   <tabstop>addAttachmentButton</tabstop>
   <tabstop>removeAttachmentButton</tabstop>
+  <tabstop>openAttachmentButton</tabstop>
   <tabstop>saveAttachmentButton</tabstop>
  </tabstops>
  <resources/>

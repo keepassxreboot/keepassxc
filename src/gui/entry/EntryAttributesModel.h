@@ -38,7 +38,7 @@ public:
     QModelIndex indexByKey(const QString& key) const;
     QString keyByIndex(const QModelIndex& index) const;
 
-private Q_SLOTS:
+private slots:
     void attributeChange(const QString& key);
     void attributeAboutToAdd(const QString& key);
     void attributeAdd();

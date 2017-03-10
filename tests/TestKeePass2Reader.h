@@ -24,7 +24,7 @@ class TestKeePass2Reader : public QObject
 {
     Q_OBJECT
 
-private Q_SLOTS:
+private slots:
     void initTestCase();
     void testNonAscii();
     void testCompressed();

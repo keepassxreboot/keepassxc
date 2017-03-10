@@ -50,7 +50,7 @@ void DatabaseRepairWidget::openDatabase()
         QString errorMsg;
         if (!key.load(keyFilename, &errorMsg)) {
             MessageBox::warning(this, tr("Error"), tr("Can't open key file").append(":\n").append(errorMsg));
-            Q_EMIT editFinished(false);
+            emit editFinished(false);
             return;
         }
         masterKey.addKey(key);
@@ -62,7 +62,7 @@ void DatabaseRepairWidget::openDatabase()
     if (!file.open(QIODevice::ReadOnly)) {
         MessageBox::warning(this, tr("Error"), tr("Unable to open the database.").append("\n")
                             .append(file.errorString()));
-        Q_EMIT editFinished(false);
+        emit editFinished(false);
         return;
     }
     if (m_db) {
@@ -75,21 +75,21 @@ void DatabaseRepairWidget::openDatabase()
     switch (repairResult) {
     case KeePass2Repair::NothingTodo:
         MessageBox::information(this, tr("Error"), tr("Database opened fine. Nothing to do."));
-        Q_EMIT editFinished(false);
+        emit editFinished(false);
         return;
     case KeePass2Repair::UnableToOpen:
         MessageBox::warning(this, tr("Error"), tr("Unable to open the database.").append("\n")
                             .append(repair.errorString()));
-        Q_EMIT editFinished(false);
+        emit editFinished(false);
         return;
     case KeePass2Repair::RepairSuccess:
         m_db = repair.database();
         MessageBox::warning(this, tr("Success"), tr("The database has been successfully repaired\nYou can now save it."));
-        Q_EMIT editFinished(true);
+        emit editFinished(true);
         return;
     case KeePass2Repair::RepairFailed:
         MessageBox::warning(this, tr("Error"), tr("Unable to repair the database."));
-        Q_EMIT editFinished(false);
+        emit editFinished(false);
         return;
     }
 }
@@ -97,9 +97,9 @@ void DatabaseRepairWidget::openDatabase()
 void DatabaseRepairWidget::processEditFinished(bool result)
 {
     if (result) {
-        Q_EMIT success();
+        emit success();
     }
     else {
-        Q_EMIT error();
+        emit error();
     }
 }

@@ -63,7 +63,7 @@ public:
 
     static const int LastDatabasesCount;
 
-public Q_SLOTS:
+public slots:
     void newDatabase();
     void openDatabase();
     void mergeDatabase();
@@ -80,7 +80,7 @@ public Q_SLOTS:
     void performGlobalAutoType();
     void lockDatabases();
 
-Q_SIGNALS:
+signals:
     void tabNameChanged();
     void databaseWithFileClosed(QString filePath);
     void activateDatabaseChanged(DatabaseWidget* dbWidget);
@@ -91,7 +91,7 @@ Q_SIGNALS:
     void messageDismissGlobal();
     void messageDismissTab();
 
-private Q_SLOTS:
+private slots:
     void updateTabName(Database* db);
     void updateTabNameFromDbSender();
     void updateTabNameFromDbWidgetSender();

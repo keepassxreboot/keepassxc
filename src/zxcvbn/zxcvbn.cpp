@@ -1,4 +1,4 @@
-﻿/**********************************************************************************
+/**********************************************************************************
  * C implementation of the zxcvbn password strength estimation method.
  * Copyright (c) 2015, Tony Evans
  * All rights reserved.

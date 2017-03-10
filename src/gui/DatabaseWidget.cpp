@@ -263,7 +263,7 @@ void DatabaseWidget::clearAllWidgets()
 
 void DatabaseWidget::emitCurrentModeChanged()
 {
-    Q_EMIT currentModeChanged(currentMode());
+    emit currentModeChanged(currentMode());
 }
 
 Database* DatabaseWidget::database()
@@ -309,7 +309,7 @@ void DatabaseWidget::replaceDatabase(Database* db)
     Database* oldDb = m_db;
     m_db = db;
     m_groupView->changeDatabase(m_db);
-    Q_EMIT databaseChanged(m_db, m_databaseModified);
+    emit databaseChanged(m_db, m_databaseModified);
     delete oldDb;
 }
 
@@ -700,7 +700,7 @@ void DatabaseWidget::updateMasterKey(bool accepted)
         }
     }
     else if (!m_db->hasKey()) {
-        Q_EMIT closeRequest();
+        emit closeRequest();
         return;
     }
 
@@ -712,7 +712,7 @@ void DatabaseWidget::openDatabase(bool accepted)
     if (accepted) {
         replaceDatabase(static_cast<DatabaseOpenWidget*>(sender())->database());
         setCurrentWidget(m_mainWidget);
-        Q_EMIT unlockedDatabase();
+        emit unlockedDatabase();
 
         // We won't need those anymore and KeePass1OpenWidget closes
         // the file in its dtor.
@@ -727,7 +727,7 @@ void DatabaseWidget::openDatabase(bool accepted)
         if (m_databaseOpenWidget->database()) {
             delete m_databaseOpenWidget->database();
         }
-        Q_EMIT closeRequest();
+        emit closeRequest();
     }
 }
 
@@ -750,13 +750,13 @@ void DatabaseWidget::mergeDatabase(bool accepted)
     }
 
     setCurrentWidget(m_mainWidget);
-    Q_EMIT databaseMerged(m_db);
+    emit databaseMerged(m_db);
 }
 
 void DatabaseWidget::unlockDatabase(bool accepted)
 {
     if (!accepted) {
-        Q_EMIT closeRequest();
+        emit closeRequest();
         return;
     }
 
@@ -775,7 +775,7 @@ void DatabaseWidget::unlockDatabase(bool accepted)
 
     setCurrentWidget(m_mainWidget);
     m_unlockDatabaseWidget->clearForms();
-    Q_EMIT unlockedDatabase();
+    emit unlockedDatabase();
 
     if (sender() == m_unlockDatabaseDialog) {
         QList<Database*> dbList;
@@ -888,7 +888,7 @@ void DatabaseWidget::search(const QString& searchtext)
         return;
     }
 
-    Q_EMIT searchModeAboutToActivate();
+    emit searchModeAboutToActivate();
 
     Qt::CaseSensitivity caseSensitive = m_searchCaseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive;
 
@@ -907,7 +907,7 @@ void DatabaseWidget::search(const QString& searchtext)
 
     m_searchingLabel->setVisible(true);
 
-    Q_EMIT searchModeActivated();
+    emit searchModeActivated();
 }
 
 void DatabaseWidget::setSearchCaseSensitive(bool state)
@@ -934,12 +934,12 @@ void DatabaseWidget::endSearch()
 {
     if (isInSearchMode())
     {
-        Q_EMIT listModeAboutToActivate();
+        emit listModeAboutToActivate();
 
         // Show the normal entry view of the current group
         m_entryView->setGroup(currentGroup());
 
-        Q_EMIT listModeActivated();
+        emit listModeActivated();
     }
 
     m_searchingLabel->setVisible(false);
@@ -950,12 +950,12 @@ void DatabaseWidget::endSearch()
 
 void DatabaseWidget::emitGroupContextMenuRequested(const QPoint& pos)
 {
-    Q_EMIT groupContextMenuRequested(m_groupView->viewport()->mapToGlobal(pos));
+    emit groupContextMenuRequested(m_groupView->viewport()->mapToGlobal(pos));
 }
 
 void DatabaseWidget::emitEntryContextMenuRequested(const QPoint& pos)
 {
-    Q_EMIT entryContextMenuRequested(m_entryView->viewport()->mapToGlobal(pos));
+    emit entryContextMenuRequested(m_entryView->viewport()->mapToGlobal(pos));
 }
 
 bool DatabaseWidget::dbHasKey() const

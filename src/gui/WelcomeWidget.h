@@ -33,13 +33,13 @@ public:
     explicit WelcomeWidget(QWidget* parent = nullptr);
     ~WelcomeWidget();
 
-Q_SIGNALS:
+signals:
 	void newDatabase();
 	void openDatabase();
 	void openDatabaseFile(QString);
 	void importKeePass1Database();
 
-private Q_SLOTS:
+private slots:
 	void openDatabaseFromFile(QListWidgetItem* item);
 
 private:

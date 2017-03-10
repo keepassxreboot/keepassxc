@@ -31,13 +31,13 @@ public:
     explicit PasswordEdit(QWidget* parent = nullptr);
     void enableVerifyMode(PasswordEdit* baseEdit);
 
-public Q_SLOTS:
+public slots:
     void setShowPassword(bool show);
 
-Q_SIGNALS:
+signals:
     void showPasswordChanged(bool show);
 
-private Q_SLOTS:
+private slots:
     void updateStylesheet();
     void autocompletePassword(QString password);
 

@@ -79,6 +79,7 @@ public:
     QString password() const;
     QString notes() const;
     bool isExpired() const;
+    bool hasReferences() const;
     EntryAttributes* attributes();
     const EntryAttributes* attributes() const;
     EntryAttachments* attachments();
@@ -146,7 +147,7 @@ public:
 
     void setUpdateTimeinfo(bool value);
 
-Q_SIGNALS:
+signals:
     /**
      * Emitted when a default attribute has been changed.
      */
@@ -154,7 +155,7 @@ Q_SIGNALS:
 
     void modified();
 
-private Q_SLOTS:
+private slots:
     void emitDataChanged();
     void updateTimeinfo();
     void updateModifiedSinceBegin();

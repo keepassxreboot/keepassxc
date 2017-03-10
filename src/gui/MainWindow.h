@@ -40,7 +40,7 @@ public:
     MainWindow();
     ~MainWindow();
 
-public Q_SLOTS:
+public slots:
     void openDatabase(const QString& fileName, const QString& pw = QString(),
                       const QString& keyFile = QString());
     void appExit();
@@ -54,7 +54,7 @@ protected:
      void closeEvent(QCloseEvent* event) override;
      void changeEvent(QEvent* event) override;
 
-private Q_SLOTS:
+private slots:
     void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::None);
     void updateWindowTitle();
     void showAboutDialog();

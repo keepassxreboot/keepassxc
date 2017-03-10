@@ -91,7 +91,7 @@ void AutoTypeSelectDialog::emitEntryActivated(const QModelIndex& index)
 
     Entry* entry = m_view->entryFromIndex(index);
     accept();
-    Q_EMIT entryActivated(entry, m_sequences[entry]);
+    emit entryActivated(entry, m_sequences[entry]);
 }
 
 void AutoTypeSelectDialog::entryRemoved()
