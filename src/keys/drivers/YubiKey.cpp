@@ -143,21 +143,6 @@ bool YubiKey::getSerial(unsigned int& serial)
     return true;
 }
 
-#ifdef QT_DEBUG
-/**
- * @brief printByteArray - debug raw data
- * @param a array input
- * @return string representation of array
- */
-static inline QString printByteArray(const QByteArray& a)
-{
-    QString s;
-    for (int i = 0; i < a.size(); i++)
-        s.append(QString::number(a[i] & 0xff, 16).rightJustified(2, '0'));
-    return s;
-}
-#endif
-
 YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByteArray& challenge, QByteArray& response)
 {
     if (!m_mutex.tryLock()) {
