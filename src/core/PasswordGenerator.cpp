@@ -97,11 +97,11 @@ QString PasswordGenerator::generatePassword() const
 
 int PasswordGenerator::getbits() const
 {
-    QVector<PasswordGroup> groups = passwordGroups();
+    const QVector<PasswordGroup> groups = passwordGroups();
 
     int bits = 0;
     QVector<QChar> passwordChars;
-    Q_FOREACH (const PasswordGroup& group, groups) {
+    for (const PasswordGroup& group: groups) {
         bits += group.size();
     }
 

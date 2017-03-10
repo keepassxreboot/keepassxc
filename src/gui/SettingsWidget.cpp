@@ -23,6 +23,7 @@
 #include "core/Config.h"
 #include "core/Translator.h"
 #include "core/FilePath.h"
+#include "core/Global.h"
 
 class SettingsWidget::ExtraPage
 {
@@ -144,8 +145,9 @@ void SettingsWidget::loadSettings()
     m_secUi->passwordRepeatCheckBox->setChecked(config()->get("security/passwordsrepeat").toBool());
 
 
-    Q_FOREACH (const ExtraPage& page, m_extraPages)
+    for (const ExtraPage& page: asConst(m_extraPages)) {
         page.loadSettings();
+    }
 
     setCurrentPage(0);
 }
@@ -190,8 +192,9 @@ void SettingsWidget::saveSettings()
     config()->set("security/passwordscleartext", m_secUi->passwordCleartextCheckBox->isChecked());
     config()->set("security/passwordsrepeat", m_secUi->passwordRepeatCheckBox->isChecked());
 
-    Q_FOREACH (const ExtraPage& page, m_extraPages)
+    for (const ExtraPage& page: asConst(m_extraPages)) {
         page.saveSettings();
+    }
 
     Q_EMIT editFinished(true);
 }
