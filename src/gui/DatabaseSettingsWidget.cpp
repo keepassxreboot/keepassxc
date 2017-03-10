@@ -124,12 +124,12 @@ void DatabaseSettingsWidget::save()
         truncateHistories();
     }
 
-    Q_EMIT editFinished(true);
+    emit editFinished(true);
 }
 
 void DatabaseSettingsWidget::reject()
 {
-    Q_EMIT editFinished(false);
+    emit editFinished(false);
 }
 
 void DatabaseSettingsWidget::transformRoundsBenchmark()

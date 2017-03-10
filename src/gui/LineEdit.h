@@ -34,7 +34,7 @@ public:
 protected:
     void resizeEvent(QResizeEvent* event) override;
 
-private Q_SLOTS:
+private slots:
     void updateCloseButton(const QString& text);
 
 private:

@@ -101,7 +101,7 @@ public:
     void ignoreNextAutoreload();
     void refreshSearch();
 
-Q_SIGNALS:
+signals:
     void closeRequest();
     void currentModeChanged(DatabaseWidget::Mode mode);
     void groupChanged();
@@ -119,7 +119,7 @@ Q_SIGNALS:
     void entryColumnSizesChanged();
     void updateSearch(QString text);
 
-public Q_SLOTS:
+public slots:
     void createEntry();
     void cloneEntry();
     void deleteEntries();
@@ -157,7 +157,7 @@ public Q_SLOTS:
     void showMessage(const QString& text, MessageWidget::MessageType type);
     void hideMessage();
 
-private Q_SLOTS:
+private slots:
     void entryActivationSignalReceived(Entry* entry, EntryModel::ModelColumn column);
     void switchBackToEntryEdit();
     void switchToHistoryView(Entry* entry);

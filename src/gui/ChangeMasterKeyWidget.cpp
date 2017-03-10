@@ -131,13 +131,13 @@ void ChangeMasterKeyWidget::generateKey()
     }
 
     m_ui->messageWidget->hideMessage();
-    Q_EMIT editFinished(true);
+    emit editFinished(true);
 }
 
 
 void ChangeMasterKeyWidget::reject()
 {
-    Q_EMIT editFinished(false);
+    emit editFinished(false);
 }
 
 void ChangeMasterKeyWidget::setCancelEnabled(bool enabled)

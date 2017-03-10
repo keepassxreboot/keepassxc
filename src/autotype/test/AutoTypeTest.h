@@ -60,7 +60,7 @@ public:
     void addActionChar(AutoTypeChar* action);
     void addActionKey(AutoTypeKey* action);
 
-Q_SIGNALS:
+signals:
     void globalShortcutTriggered();
 
 private:

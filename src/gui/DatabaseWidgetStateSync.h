@@ -29,12 +29,12 @@ public:
     explicit DatabaseWidgetStateSync(QObject* parent = nullptr);
     ~DatabaseWidgetStateSync();
 
-public Q_SLOTS:
+public slots:
     void setActive(DatabaseWidget* dbWidget);
     void restoreListView();
     void restoreSearchView();
 
-private Q_SLOTS:
+private slots:
     void blockUpdates();
     void updateSplitterSizes();
     void updateColumnSizes();

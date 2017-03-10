@@ -36,7 +36,7 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
-public Q_SLOTS:
+public slots:
     void associationChange(int i);
     void associationAboutToAdd(int i);
     void associationAdd();

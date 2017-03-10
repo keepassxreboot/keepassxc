@@ -64,7 +64,7 @@ void EntryModel::setGroup(Group* group)
     makeConnections(group);
 
     endResetModel();
-    Q_EMIT switchedToGroupMode();
+    emit switchedToGroupMode();
 }
 
 void EntryModel::setEntryList(const QList<Entry*>& entries)
@@ -101,7 +101,7 @@ void EntryModel::setEntryList(const QList<Entry*>& entries)
     }
 
     endResetModel();
-    Q_EMIT switchedToEntryListMode();
+    emit switchedToEntryListMode();
 }
 
 int EntryModel::rowCount(const QModelIndex& parent) const
@@ -315,7 +315,7 @@ void EntryModel::entryRemoved()
 void EntryModel::entryDataChanged(Entry* entry)
 {
     int row = m_entries.indexOf(entry);
-    Q_EMIT dataChanged(index(row, 0), index(row, columnCount()-1));
+    emit dataChanged(index(row, 0), index(row, columnCount()-1));
 }
 
 void EntryModel::severConnections()

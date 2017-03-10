@@ -130,7 +130,7 @@ void EditGroupWidget::save()
     }
 
     clear();
-    Q_EMIT editFinished(true);
+    emit editFinished(true);
 }
 
 void EditGroupWidget::cancel()
@@ -141,7 +141,7 @@ void EditGroupWidget::cancel()
     }
 
     clear();
-    Q_EMIT editFinished(false);
+    emit editFinished(false);
 }
 
 void EditGroupWidget::clear()

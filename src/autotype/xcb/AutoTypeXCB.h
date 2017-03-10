@@ -59,7 +59,7 @@ public:
 
     void SendKeyPressedEvent(KeySym keysym);
 
-Q_SIGNALS:
+signals:
     void globalShortcutTriggered();
 
 private:

@@ -63,14 +63,14 @@ public:
     void reset();
     void load(const Uuid& currentUuid, Database* database, const IconStruct& iconStruct, const QString& url = "");
 
-public Q_SLOTS:
+public slots:
     void setUrl(const QString& url);
 
-Q_SIGNALS:
+signals:
     void messageEditEntry(QString, MessageWidget::MessageType);
     void messageEditEntryDismiss();
 
-private Q_SLOTS:
+private slots:
     void downloadFavicon();
 #ifdef WITH_XC_HTTP
     void fetchFavicon(const QUrl& url);

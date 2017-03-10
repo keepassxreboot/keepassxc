@@ -48,7 +48,7 @@ public:
 private:
     QList<AutoTypeAssociations::Association> m_associations;
 
-Q_SIGNALS:
+signals:
     void modified();
     void dataChanged(int index);
     void aboutToAdd(int index);

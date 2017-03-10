@@ -214,7 +214,7 @@ int AutoTypePlatformX11::platformEventFilter(void* event)
                 && (!QApplication::activeWindow() || QApplication::activeWindow()->isMinimized())
                 && m_loaded) {
             if (type == XCB_KEY_PRESS) {
-                Q_EMIT globalShortcutTriggered();
+                emit globalShortcutTriggered();
             }
 
             return 1;

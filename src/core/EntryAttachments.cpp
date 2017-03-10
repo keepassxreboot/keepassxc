@@ -48,7 +48,7 @@ void EntryAttachments::set(const QString& key, const QByteArray& value)
     bool addAttachment = !m_attachments.contains(key);
 
     if (addAttachment) {
-        Q_EMIT aboutToBeAdded(key);
+        emit aboutToBeAdded(key);
     }
 
     if (addAttachment || m_attachments.value(key) != value) {
@@ -57,14 +57,14 @@ void EntryAttachments::set(const QString& key, const QByteArray& value)
     }
 
     if (addAttachment) {
-        Q_EMIT added(key);
+        emit added(key);
     }
     else {
-        Q_EMIT keyModified(key);
+        emit keyModified(key);
     }
 
     if (emitModified) {
-        Q_EMIT modified();
+        emit modified();
     }
 }
 
@@ -75,12 +75,12 @@ void EntryAttachments::remove(const QString& key)
         return;
     }
 
-    Q_EMIT aboutToBeRemoved(key);
+    emit aboutToBeRemoved(key);
 
     m_attachments.remove(key);
 
-    Q_EMIT removed(key);
-    Q_EMIT modified();
+    emit removed(key);
+    emit modified();
 }
 
 void EntryAttachments::clear()
@@ -89,23 +89,23 @@ void EntryAttachments::clear()
         return;
     }
 
-    Q_EMIT aboutToBeReset();
+    emit aboutToBeReset();
 
     m_attachments.clear();
 
-    Q_EMIT reset();
-    Q_EMIT modified();
+    emit reset();
+    emit modified();
 }
 
 void EntryAttachments::copyDataFrom(const EntryAttachments* other)
 {
     if (*this != *other) {
-        Q_EMIT aboutToBeReset();
+        emit aboutToBeReset();
 
         m_attachments = other->m_attachments;
 
-        Q_EMIT reset();
-        Q_EMIT modified();
+        emit reset();
+        emit modified();
     }
 }
 

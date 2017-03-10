@@ -64,5 +64,5 @@ void WelcomeWidget::openDatabaseFromFile(QListWidgetItem* item)
 	if (item->text().isEmpty()) {
 		return;
 	}
-	Q_EMIT openDatabaseFile(item->text());
+	emit openDatabaseFile(item->text());
 }

@@ -196,7 +196,7 @@ void SettingsWidget::saveSettings()
         page.saveSettings();
     }
 
-    Q_EMIT editFinished(true);
+    emit editFinished(true);
 }
 
 void SettingsWidget::reject()
@@ -206,7 +206,7 @@ void SettingsWidget::reject()
         autoType()->registerGlobalShortcut(m_globalAutoTypeKey, m_globalAutoTypeModifiers);
     }
 
-    Q_EMIT editFinished(false);
+    emit editFinished(false);
 }
 
 void SettingsWidget::enableAutoSaveOnExit(bool checked)

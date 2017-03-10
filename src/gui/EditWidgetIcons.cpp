@@ -276,7 +276,7 @@ void EditWidgetIcons::addCustomIcon()
                 m_ui->customIconsView->setCurrentIndex(index);
             }
             else {
-                Q_EMIT messageEditEntry(tr("Can't read icon"), MessageWidget::Error);
+                emit messageEditEntry(tr("Can't read icon"), MessageWidget::Error);
             }
         }
     }

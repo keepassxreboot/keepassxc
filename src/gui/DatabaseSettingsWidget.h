@@ -38,10 +38,10 @@ public:
 
     void load(Database* db);
 
-Q_SIGNALS:
+signals:
     void editFinished(bool accepted);
 
-private Q_SLOTS:
+private slots:
     void save();
     void reject();
     void transformRoundsBenchmark();

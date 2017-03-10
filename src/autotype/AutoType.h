@@ -48,13 +48,13 @@ public:
     static AutoType* instance();
     static void createTestInstance();
 
-public Q_SLOTS:
+public slots:
     void performGlobalAutoType(const QList<Database*>& dbList);
 
-Q_SIGNALS:
+signals:
     void globalShortcutTriggered();
 
-private Q_SLOTS:
+private slots:
     void performAutoTypeFromGlobal(Entry* entry, const QString& sequence);
     void resetInAutoType();
     void unloadPlugin();

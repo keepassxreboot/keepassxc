@@ -38,7 +38,7 @@ public:
     virtual void updateEntry(const QString& id, const QString& uuid, const QString& login, const QString& password, const QString& url);
     virtual QString generatePassword();
 
-public Q_SLOTS:
+public slots:
     void removeSharedEncryptionKeys();
     void removeStoredPermissions();
 

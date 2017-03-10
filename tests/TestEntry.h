@@ -26,7 +26,7 @@ class TestEntry : public QObject
 {
     Q_OBJECT
 
-private Q_SLOTS:
+private slots:
     void initTestCase();
     void testHistoryItemDeletion();
     void testCopyDataFrom();

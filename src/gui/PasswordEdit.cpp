@@ -69,7 +69,7 @@ void PasswordEdit::setShowPassword(bool show)
         }
     }
     updateStylesheet();
-    Q_EMIT showPasswordChanged(show);
+    emit showPasswordChanged(show);
 }
 
 bool PasswordEdit::passwordsEqual() const

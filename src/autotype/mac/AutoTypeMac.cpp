@@ -460,7 +460,7 @@ OSStatus AutoTypePlatformMac::hotkeyHandler(EventHandlerCallRef nextHandler, Eve
 
     if (::GetEventParameter(theEvent, kEventParamDirectObject, typeEventHotKeyID, nullptr, sizeof(hotkeyId), nullptr, &hotkeyId) == noErr
             && hotkeyId.id == HOTKEY_ID) {
-        Q_EMIT self->globalShortcutTriggered();
+        emit self->globalShortcutTriggered();
     }
 
     return noErr;

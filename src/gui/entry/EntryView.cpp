@@ -57,7 +57,7 @@ void EntryView::keyPressEvent(QKeyEvent* event)
         emitEntryActivated(currentIndex());
 #ifdef Q_OS_MAC
         // Pressing return does not emit the QTreeView::activated signal on mac os
-        Q_EMIT activated(currentIndex());
+        emit activated(currentIndex());
 #endif
     }
 
@@ -83,7 +83,7 @@ void EntryView::setFirstEntryActive()
         setCurrentEntry(m_model->entryFromIndex(index));
     }
     else {
-        Q_EMIT entrySelectionChanged();
+        emit entrySelectionChanged();
     }
 }
 
@@ -96,7 +96,7 @@ void EntryView::emitEntryActivated(const QModelIndex& index)
 {
     Entry* entry = entryFromIndex(index);
 
-    Q_EMIT entryActivated(entry, static_cast<EntryModel::ModelColumn>(m_sortModel->mapToSource(index).column()));
+    emit entryActivated(entry, static_cast<EntryModel::ModelColumn>(m_sortModel->mapToSource(index).column()));
 }
 
 void EntryView::setModel(QAbstractItemModel* model)

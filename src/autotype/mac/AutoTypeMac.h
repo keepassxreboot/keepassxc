@@ -51,7 +51,7 @@ public:
     void sendChar(const QChar& ch, bool isKeyDown);
     void sendKey(Qt::Key key, bool isKeyDown);
 
-Q_SIGNALS:
+signals:
     void globalShortcutTriggered();
 
 private:
