@@ -29,6 +29,8 @@
 #include "core/Uuid.h"
 #include "core/PasswordGenerator.h"
 
+#include <algorithm>
+
 static const unsigned char KEEPASSHTTP_UUID_DATA[] = {
     0x34, 0x69, 0x7a, 0x40, 0x8a, 0x5b, 0x41, 0xc0,
     0x9f, 0x36, 0x89, 0x7d, 0x62, 0x3e, 0xcb, 0x31
@@ -387,7 +389,7 @@ QList<KeepassHttpProtocol::Entry> Service::findMatchingEntries(const QString& /*
             priorities.insert(entry, sortPriority(entry, host, submitUrl, baseSubmitURL));
 
         //Sort by priorities
-        qSort(pwEntries.begin(), pwEntries.end(), SortEntries(priorities, HttpSettings::sortByTitle() ? "Title" : "UserName"));
+        std::sort(pwEntries.begin(), pwEntries.end(), SortEntries(priorities, HttpSettings::sortByTitle() ? "Title" : "UserName"));
     }
 
     //if (pwEntries.count() > 0)
