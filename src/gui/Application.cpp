@@ -148,7 +148,7 @@ void Application::handleUnixSignal(int sig)
         case SIGTERM:
         {
             char buf = 0;
-            ::write(unixSignalSocket[0], &buf, sizeof(buf));
+            Q_UNUSED(::write(unixSignalSocket[0], &buf, sizeof(buf)));
             return;
         }
         case SIGHUP:
@@ -160,7 +160,7 @@ void Application::quitBySignal()
 {
     m_unixSignalNotifier->setEnabled(false);
     char buf;
-    ::read(unixSignalSocket[1], &buf, sizeof(buf));
+    Q_UNUSED(::read(unixSignalSocket[1], &buf, sizeof(buf)));
     
     if (nullptr != m_mainWindow)
         static_cast<MainWindow*>(m_mainWindow)->appExit();
