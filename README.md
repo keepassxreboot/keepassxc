@@ -1,16 +1,18 @@
-# KeePassXC - KeePass Cross-platform Community Edition
+![logo](https://keepassxc.org/logo.png)
 
-[![Travis Build Status](https://travis-ci.org/keepassxreboot/keepassxc.svg?branch=develop)](https://travis-ci.org/keepassxreboot/keepassxc)  [![Coverage Status](https://coveralls.io/repos/github/keepassxreboot/keepassxc/badge.svg)](https://coveralls.io/github/keepassxreboot/keepassxc)
-<a href='https://pledgie.com/campaigns/33487'><img alt='KeePassXC Authenticode Certificate Campaign!' align=right  src='https://pledgie.com/campaigns/33487.png?skin_name=chrome' border='0'></a>
+# KeePassXC [![Travis Build Status](https://travis-ci.org/keepassxreboot/keepassxc.svg?branch=develop)](https://travis-ci.org/keepassxreboot/keepassxc)  [![Coverage Status](https://coveralls.io/repos/github/keepassxreboot/keepassxc/badge.svg)](https://coveralls.io/github/keepassxreboot/keepassxc) <a href='https://pledgie.com/campaigns/33487'><img alt='KeePassXC Authenticode Certificate Campaign!' align=right  src='https://pledgie.com/campaigns/33487.png?skin_name=chrome' border='0'></a>
+
+KeePass Cross-platform Community Edition
 
 ## About
-KeePassXC is a community fork of [KeePassX](https://www.keepassx.org/) with the goal to extend and improve it with new features and bugfixes to provide a feature-rich, fully cross-platform and modern open-source password manager.
+[KeePassXC](https://keepassxc.org) is a community fork of [KeePassX](https://www.keepassx.org/) with the goal to extend and improve it with new features and bugfixes to provide a feature-rich, fully cross-platform and modern open-source password manager.
 
 
 ## Additional features compared to KeePassX
 - Auto-Type on all three major platforms (Linux, Windows, OS X)
 - Stand-alone password generator
 - Password strength meter
+- Yubikey 2FA support for unlocking databases
 - Using website favicons as entry icons
 - Merging of databases
 - Automatic reload when the database changed on disk
