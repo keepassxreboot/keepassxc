@@ -162,7 +162,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>29</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -222,6 +222,8 @@
     <addaction name="actionEntryClone"/>
     <addaction name="actionEntryDelete"/>
     <addaction name="actionEntryNew"/>
+    <addaction name="separator"/>
+    <addaction name="actionEntryQRCode"/>
    </widget>
    <widget class="QMenu" name="menuGroups">
     <property name="title">
@@ -509,8 +511,22 @@
     <string>Re&amp;pair database</string>
    </property>
   </action>
+  <action name="actionEntryQRCode">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;QR Code</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>PasswordGeneratorWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/PasswordGeneratorWidget.h</header>
+   <container>1</container>
+  </customwidget>
   <customwidget>
    <class>MessageWidget</class>
    <extends>QWidget</extends>
@@ -533,12 +549,6 @@
    <class>WelcomeWidget</class>
    <extends>QWidget</extends>
    <header>gui/WelcomeWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>PasswordGeneratorWidget</class>
-   <extends>QWidget</extends>
-   <header>gui/PasswordGeneratorWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -172,7 +172,7 @@ MainWindow::MainWindow()
     setShortcut(m_ui->actionEntryAutoType, QKeySequence::Paste, Qt::CTRL + Qt::Key_V);
     m_ui->actionEntryOpenUrl->setShortcut(Qt::CTRL + Qt::Key_U);
     m_ui->actionEntryCopyURL->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_U);
-
+    m_ui->actionEntryQRCode->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_Q);
     new QShortcut(Qt::CTRL + Qt::Key_M, this, SLOT(showMinimized()));
 
     m_ui->actionDatabaseNew->setIcon(filePath()->icon("actions", "document-new"));
@@ -283,6 +283,8 @@ MainWindow::MainWindow()
             SLOT(performAutoType()));
     m_actionMultiplexer.connect(m_ui->actionEntryOpenUrl, SIGNAL(triggered()),
             SLOT(openUrl()));
+    m_actionMultiplexer.connect(m_ui->actionEntryQRCode, SIGNAL(triggered()),
+            SLOT(showQRCode()));
 
     m_actionMultiplexer.connect(m_ui->actionGroupNew, SIGNAL(triggered()),
             SLOT(createGroup()));
@@ -404,6 +406,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryCopyTitle->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTitle());
             m_ui->actionEntryCopyUsername->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUsername());
             m_ui->actionEntryCopyPassword->setEnabled(singleEntrySelected && dbWidget->currentEntryHasPassword());
+            m_ui->actionEntryQRCode->setEnabled(singleEntrySelected && dbWidget->currentEntryHasPassword());
             m_ui->actionEntryCopyURL->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUrl());
             m_ui->actionEntryCopyNotes->setEnabled(singleEntrySelected && dbWidget->currentEntryHasNotes());
             m_ui->menuEntryCopyAttribute->setEnabled(singleEntrySelected);
@@ -438,6 +441,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryCopyPassword->setEnabled(false);
             m_ui->actionEntryCopyURL->setEnabled(false);
             m_ui->actionEntryCopyNotes->setEnabled(false);
+            m_ui->actionEntryQRCode->setEnabled(false);
             m_ui->menuEntryCopyAttribute->setEnabled(false);
 
             m_ui->actionChangeMasterKey->setEnabled(false);
@@ -470,6 +474,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         m_ui->actionEntryCopyPassword->setEnabled(false);
         m_ui->actionEntryCopyURL->setEnabled(false);
         m_ui->actionEntryCopyNotes->setEnabled(false);
+        m_ui->actionEntryQRCode->setEnabled(false);
         m_ui->menuEntryCopyAttribute->setEnabled(false);
 
         m_ui->actionChangeMasterKey->setEnabled(false);

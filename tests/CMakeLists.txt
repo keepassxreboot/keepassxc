@@ -87,6 +87,7 @@ set(TEST_LIBRARIES
     keepassx_core
     ${keepasshttp_LIB}
     ${autotype_LIB}
+    ${qrcode_LIB}
     Qt5::Core
     Qt5::Concurrent
     Qt5::Widgets
@@ -95,6 +96,10 @@ set(TEST_LIBRARIES
     ${GPGERROR_LIBRARIES}
     ${ZLIB_LIBRARIES}
 )
+
+if(QRENCODE_FOUND)
+  set(TEST_LIBRARIES ${TEST_LIBRARIES} ${QRENCODE_LIBRARY})
+endif()
 
 set(testsupport_SOURCES modeltest.cpp FailDevice.cpp)
 add_library(testsupport STATIC ${testsupport_SOURCES})

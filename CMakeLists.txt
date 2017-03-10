@@ -37,6 +37,7 @@ option(WITH_COVERAGE "Use to build with coverage tests. (GCC ONLY)." OFF)
 option(WITH_XC_AUTOTYPE "Include Auto-Type." ON)
 option(WITH_XC_HTTP "Include KeePassHTTP and Custom Icon Downloads." OFF)
 option(WITH_XC_YUBIKEY "Include Yubikey support." OFF)
+option(WITH_XC_QRCODE "Include QRCode support." OFF)
 
 set(KEEPASSXC_VERSION "2.1.3")
 set(KEEPASSXC_VERSION_NUM "2.1.3")
@@ -205,6 +206,12 @@ check_cxx_source_compiles("
 
 if(NOT ZLIB_SUPPORTS_GZIP)
   message(FATAL_ERROR "zlib 1.2.x or higher is required to use the gzip format")
+endif()
+
+if(WITH_XC_QRCODE)
+  find_package(LibQREncode REQUIRED)
+
+  include_directories(SYSTEM ${QRENCODE_INCLUDE_DIRS})
 endif()
 
 if(UNIX)

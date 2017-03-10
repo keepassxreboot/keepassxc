@@ -154,11 +154,30 @@ set(keepassx_FORMS
 
 add_feature_info(KeePassHTTP WITH_XC_HTTP "KeePassHTTP support for ChromeIPass and PassIFox")
 add_feature_info(Autotype WITH_XC_AUTOTYPE "Auto-type passwords in Input fields")
+add_feature_info(QRCode WITH_XC_QRCODE "Display passwords as QR code.")
 
 add_subdirectory(http)
 if(WITH_XC_HTTP)
     set(keepasshttp_LIB keepasshttp qhttp Qt5::Network)
 endif()
+
+add_subdirectory(qrcode)
+
+set(qrcode_SOURCES
+  qrcode/qrcodedialog.cpp
+  qrcode/qrcodedialog.h
+  qrcode/qrcodelabel.cpp
+  qrcode/qrcodelabel.h
+)
+
+set(qrcode_FORMS
+  qrcode/qrcodedialog.ui
+)
+
+qt5_wrap_ui(qrcode_SOURCES ${qrcode_FORMS})
+add_library(qrcode STATIC ${qrcode_SOURCES})
+target_link_libraries(qrcode Qt5::Core Qt5::Widgets)
+set(qrcode_LIB qrcode)
 
 add_subdirectory(autotype)
 
@@ -197,12 +216,14 @@ set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUIL
 target_link_libraries(keepassx_core
                       ${keepasshttp_LIB}
                       ${autotype_LIB}
+                      ${qrcode_LIB}
                       zxcvbn
                       Qt5::Core
                       Qt5::Concurrent
                       Qt5::Widgets
                       ${GCRYPT_LIBRARIES}
                       ${GPGERROR_LIBRARIES}
+                      ${QRENCODE_LIBRARY}
                       ${ZLIB_LIBRARIES})
 if (UNIX AND NOT APPLE)
     target_link_libraries(keepassx_core Qt5::DBus)
