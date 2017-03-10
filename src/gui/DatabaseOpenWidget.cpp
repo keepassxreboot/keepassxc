@@ -37,9 +37,9 @@
 
 
 DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
-    : DialogyWidget(parent),
-      m_ui(new Ui::DatabaseOpenWidget()),
-      m_db(nullptr)
+    : DialogyWidget(parent)
+    , m_ui(new Ui::DatabaseOpenWidget())
+    , m_db(nullptr)
 {
     m_ui->setupUi(this);
 
@@ -208,11 +208,12 @@ CompositeKey DatabaseOpenWidget::databaseKey()
     }
 
     if (m_ui->checkChallengeResponse->isChecked()) {
-        int i = m_ui->comboChallengeResponse->currentIndex();
-        i = m_ui->comboChallengeResponse->itemData(i).toInt();
+        int selectionIndex = m_ui->comboChallengeResponse->currentIndex();
+        int comboPayload = m_ui->comboChallengeResponse->itemData(selectionIndex).toInt();
 
-        bool blocking = i & true;
-        int slot      = i >> 1;
+        // read blocking mode from LSB and slot index number from second LSB
+        bool blocking = comboPayload & 1;
+        int slot      = comboPayload >> 1;
         auto key      = QSharedPointer<YkChallengeResponseKey>(new YkChallengeResponseKey(slot, blocking));
         masterKey.addChallengeResponseKey(key);
     }
@@ -267,6 +268,7 @@ void DatabaseOpenWidget::pollYubikey()
 void DatabaseOpenWidget::yubikeyDetected(int slot, bool blocking)
 {
     YkChallengeResponseKey yk(slot, blocking);
+    // add detected YubiKey to combo box and encode blocking mode in LSB, slot number in second LSB
     m_ui->comboChallengeResponse->addItem(yk.getName(), QVariant((slot << 1) | blocking));
     m_ui->comboChallengeResponse->setEnabled(true);
     m_ui->checkChallengeResponse->setEnabled(true);

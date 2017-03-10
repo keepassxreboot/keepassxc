@@ -166,16 +166,18 @@ void ChangeMasterKeyWidget::generateKey()
 
 #ifdef WITH_XC_YUBIKEY
     if (m_ui->challengeResponseGroup->isChecked()) {
-        int i = m_ui->comboChallengeResponse->currentIndex();
-        i = m_ui->comboChallengeResponse->itemData(i).toInt();
+        int selectionIndex = m_ui->comboChallengeResponse->currentIndex();
+        int comboPayload = m_ui->comboChallengeResponse->itemData(selectionIndex).toInt();
 
-        if (0 == i) {
+        if (0 == comboPayload) {
             m_ui->messageWidget->showMessage(tr("Changing master key failed: no YubiKey inserted."),
                                              MessageWidget::Error);
             return;
         }
-        bool blocking = i & true;
-        int slot      = i >> 1;
+
+        // read blocking mode from LSB and slot index number from second LSB
+        bool blocking = comboPayload & 1;
+        int slot      = comboPayload >> 1;
         auto key      = QSharedPointer<YkChallengeResponseKey>(new YkChallengeResponseKey(slot, blocking));
         m_key.addChallengeResponseKey(key);
     }
@@ -212,6 +214,7 @@ void ChangeMasterKeyWidget::pollYubikey()
 void ChangeMasterKeyWidget::yubikeyDetected(int slot, bool blocking)
 {
     YkChallengeResponseKey yk(slot, blocking);
+    // add detected YubiKey to combo box and encode blocking mode in LSB, slot number in second LSB
     m_ui->comboChallengeResponse->addItem(yk.getName(), QVariant((slot << 1) | blocking));
     m_ui->comboChallengeResponse->setEnabled(m_ui->challengeResponseGroup->isChecked());
     m_ui->buttonRedetectYubikey->setEnabled(m_ui->challengeResponseGroup->isChecked());
