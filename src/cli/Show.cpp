@@ -22,14 +22,12 @@
 
 #include <QCommandLineParser>
 #include <QCoreApplication>
-#include <QFile>
 #include <QStringList>
 #include <QTextStream>
 
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
-#include "format/KeePass2Reader.h"
 #include "keys/CompositeKey.h"
 
 int Show::execute(int argc, char **argv)
@@ -57,22 +55,8 @@ int Show::execute(int argc, char **argv)
     QString line = inputTextStream.readLine();
     CompositeKey key = CompositeKey::readFromLine(line);
 
-    QString databaseFilename = args.at(0);
-    QFile dbFile(databaseFilename);
-    if (!dbFile.exists()) {
-        qCritical("File %s does not exist.", qPrintable(databaseFilename));
-        return EXIT_FAILURE;
-    }
-    if (!dbFile.open(QIODevice::ReadOnly)) {
-        qCritical("Unable to open file %s.", qPrintable(databaseFilename));
-        return EXIT_FAILURE;
-    }
-
-    KeePass2Reader reader;
-    Database* db = reader.readDatabase(&dbFile, key);
-
-    if (reader.hasError()) {
-        qCritical("Error while parsing the database:\n%s\n", qPrintable(reader.errorString()));
+    Database* db = Database::openDatabaseFile(args.at(0), key);
+    if (db == nullptr) {
         return EXIT_FAILURE;
     }
 
