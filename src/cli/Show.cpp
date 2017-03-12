@@ -78,6 +78,11 @@ int Show::execute(int argc, char **argv)
 
     Uuid uuid = Uuid::fromHex(args.at(1));
     Entry* entry = db->resolveEntry(uuid);
+    if (entry == nullptr) {
+        qCritical("No entry found with uuid %s", qPrintable(uuid.toHex()));
+        return EXIT_FAILURE;
+    }
+
     out << entry->password() << "\n";
     return EXIT_SUCCESS;
 }
