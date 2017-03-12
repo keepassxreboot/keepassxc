@@ -21,10 +21,12 @@
 #include <QCoreApplication>
 #include <QStringList>
 
+#include <cli/EntropyMeter.h>
+#include <cli/Extract.h>
 #include <cli/List.h>
 #include <cli/Merge.h>
-#include <cli/Extract.h>
-#include <cli/EntropyMeter.h>
+#include <cli/Show.h>
+
 #include "config-keepassx.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
@@ -51,6 +53,7 @@ int main(int argc, char **argv)
     description = description.append(QString("\n  entropy-meter\tCalculate password entropy."));
     description = description.append(QString("\n  list\t\tList database entries."));
     description = description.append(QString("\n  merge\t\tMerge two databases."));
+    description = description.append(QString("\n  show\t\tShow a password."));
     parser.setApplicationDescription(QCoreApplication::translate("main", qPrintable(description)));
 
     parser.addPositionalArgument("command", QCoreApplication::translate("main", "Name of the command to execute."));
@@ -73,6 +76,16 @@ int main(int argc, char **argv)
     ++argv;
     --argc;
 
+    if (commandName == "entropy-meter") {
+        argv[0] = const_cast<char*>("keepassxc-cli entropy-meter");
+        return EntropyMeter::execute(argc, argv);
+    }
+
+    if (commandName == "extract") {
+        argv[0] = const_cast<char*>("keepassxc-cli extract");
+        return Extract::execute(argc, argv);
+    }
+
     if (commandName == "list") {
         argv[0] = const_cast<char*>("keepassxc-cli list");
         return List::execute(argc, argv);
@@ -83,14 +96,9 @@ int main(int argc, char **argv)
         return Merge::execute(argc, argv);
     }
 
-    if (commandName == "extract") {
-        argv[0] = const_cast<char*>("keepassxc-cli extract");
-        return Extract::execute(argc, argv);
-    }
-
-    if (commandName == "entropy-meter") {
-        argv[0] = const_cast<char*>("keepassxc-cli entropy-meter");
-        return EntropyMeter::execute(argc, argv);
+    if (commandName == "show") {
+        argv[0] = const_cast<char*>("keepassxc-cli show");
+        return Show::execute(argc, argv);
     }
 
     qCritical("Invalid command %s.", qPrintable(commandName));

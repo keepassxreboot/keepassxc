@@ -39,11 +39,11 @@ int Merge::execute(int argc, char** argv)
 
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::translate("main", "Merge two databases."));
-    parser.addPositionalArgument("database1", QCoreApplication::translate("main", "path of the database to merge into."));
-    parser.addPositionalArgument("database2", QCoreApplication::translate("main", "path of the database to merge from."));
+    parser.addPositionalArgument("database1", QCoreApplication::translate("main", "Path of the database to merge into."));
+    parser.addPositionalArgument("database2", QCoreApplication::translate("main", "Path of the database to merge from."));
 
     QCommandLineOption samePasswordOption(QStringList() << "s" << "same-password",
-                                          QCoreApplication::translate("main", "use the same password for both database files."));
+                                          QCoreApplication::translate("main", "Use the same password for both database files."));
 
     parser.addOption(samePasswordOption);
     parser.process(app);

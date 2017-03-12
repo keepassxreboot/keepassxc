@@ -14,14 +14,16 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 set(cli_SOURCES
+    EntropyMeter.cpp
+    EntropyMeter.h
+    Extract.cpp
+    Extract.h
     List.cpp
     List.h
     Merge.cpp
     Merge.h
-    EntropyMeter.cpp
-    EntropyMeter.h
-    Extract.cpp
-    Extract.h)
+    Show.cpp
+    Show.h)
 
 add_library(cli STATIC ${cli_SOURCES})
 target_link_libraries(cli Qt5::Core Qt5::Widgets)

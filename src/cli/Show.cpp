@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 #include <cstdlib>
 #include <stdio.h>
 
-#include "Extract.h"
+#include "Show.h"
 
 #include <QCommandLineParser>
 #include <QCoreApplication>
@@ -27,22 +27,25 @@
 #include <QTextStream>
 
 #include "core/Database.h"
+#include "core/Entry.h"
+#include "core/Group.h"
 #include "format/KeePass2Reader.h"
 #include "keys/CompositeKey.h"
 
-int Extract::execute(int argc, char **argv)
+int Show::execute(int argc, char **argv)
 {
     QCoreApplication app(argc, argv);
     QTextStream out(stdout);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::translate("main",
-                                                                 "Extract and print the content of a database."));
-    parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database to extract."));
+                                                                 "Show a password."));
+    parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
+    parser.addPositionalArgument("uuid", QCoreApplication::translate("main", "Uuid of the entry to show"));
     parser.process(app);
 
     const QStringList args = parser.positionalArguments();
-    if (args.size() != 1) {
+    if (args.size() != 2) {
         parser.showHelp();
         return EXIT_FAILURE;
     }
@@ -66,23 +69,15 @@ int Extract::execute(int argc, char **argv)
     }
 
     KeePass2Reader reader;
-    reader.setSaveXml(true);
     Database* db = reader.readDatabase(&dbFile, key);
-    delete db;
-
-    QByteArray xmlData = reader.xmlData();
 
     if (reader.hasError()) {
-        if (xmlData.isEmpty()) {
-            qCritical("Error while reading the database:\n%s", qPrintable(reader.errorString()));
-        }
-        else {
-            qWarning("Error while parsing the database:\n%s\n", qPrintable(reader.errorString()));
-        }
+        qCritical("Error while parsing the database:\n%s\n", qPrintable(reader.errorString()));
         return EXIT_FAILURE;
     }
 
-    out << xmlData.constData() << "\n";
-
+    Uuid uuid = Uuid::fromHex(args.at(1));
+    Entry* entry = db->resolveEntry(uuid);
+    out << entry->password() << "\n";
     return EXIT_SUCCESS;
 }

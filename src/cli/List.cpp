@@ -65,7 +65,7 @@ int List::execute(int argc, char **argv)
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::translate("main",
                                                                  "List database entries."));
-    parser.addPositionalArgument("database", QCoreApplication::translate("main", "path of the database."));
+    parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
     parser.process(app);
 
     const QStringList args = parser.positionalArguments();
