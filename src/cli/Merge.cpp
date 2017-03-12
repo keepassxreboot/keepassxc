@@ -21,13 +21,11 @@
 
 #include <QCommandLineParser>
 #include <QCoreApplication>
-#include <QFile>
 #include <QSaveFile>
 #include <QStringList>
 #include <QTextStream>
 
 #include "core/Database.h"
-#include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
 #include "keys/CompositeKey.h"
 
@@ -71,50 +69,21 @@ int Merge::execute(int argc, char** argv)
     }
 
 
-    QString databaseFilename1 = args.at(0);
-    QFile dbFile1(databaseFilename1);
-    if (!dbFile1.exists()) {
-        qCritical("File %s does not exist.", qPrintable(databaseFilename1));
-        return EXIT_FAILURE;
-    }
-    if (!dbFile1.open(QIODevice::ReadOnly)) {
-        qCritical("Unable to open file %s.", qPrintable(databaseFilename1));
+    Database* db1 = Database::openDatabaseFile(args.at(0), key1);
+    if (db1 == nullptr) {
         return EXIT_FAILURE;
     }
 
-    KeePass2Reader reader1;
-    Database* db1 = reader1.readDatabase(&dbFile1, key1);
-
-    if (reader1.hasError()) {
-        qCritical("Error while parsing the database:\n%s\n", qPrintable(reader1.errorString()));
-        return EXIT_FAILURE;
-    }
-
-
-    QString databaseFilename2 = args.at(1);
-    QFile dbFile2(databaseFilename2);
-    if (!dbFile2.exists()) {
-        qCritical("File %s does not exist.", qPrintable(databaseFilename2));
-        return EXIT_FAILURE;
-    }
-    if (!dbFile2.open(QIODevice::ReadOnly)) {
-        qCritical("Unable to open file %s.", qPrintable(databaseFilename2));
-        return EXIT_FAILURE;
-    }
-
-    KeePass2Reader reader2;
-    Database* db2 = reader2.readDatabase(&dbFile2, key2);
-
-    if (reader2.hasError()) {
-        qCritical("Error while parsing the database:\n%s\n", qPrintable(reader2.errorString()));
+    Database* db2 = Database::openDatabaseFile(args.at(1), key2);
+    if (db2 == nullptr) {
         return EXIT_FAILURE;
     }
 
     db1->merge(db2);
 
-    QSaveFile saveFile(databaseFilename1);
+    QSaveFile saveFile(args.at(0));
     if (!saveFile.open(QIODevice::WriteOnly)) {
-        qCritical("Unable to open file %s for writing.", qPrintable(databaseFilename1));
+        qCritical("Unable to open file %s for writing.", qPrintable(args.at(0)));
         return EXIT_FAILURE;
     }
 
