@@ -37,7 +37,7 @@ void printGroup(Group* group, QString baseName, int depth) {
     QString groupName = baseName + group->name() + "/";
     QString indentation = QString("  ").repeated(depth);
 
-    out << indentation << groupName << "\n";
+    out << indentation << groupName << " " << group->uuid().toHex() << "\n";
     out.flush();
 
     if (group->entries().isEmpty() && group->children().isEmpty()) {
