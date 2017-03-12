@@ -52,7 +52,7 @@ int Merge::execute(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    out << "Insert the database password\n> ";
+    out << "Insert the first database password\n> ";
     out.flush();
     
     static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
@@ -64,6 +64,8 @@ int Merge::execute(int argc, char** argv)
       key2 = *key1.clone();
     }
     else {
+      out << "Insert the second database password\n> ";
+      out.flush();
       QString line2 = inputTextStream.readLine();
       key2 = CompositeKey::readFromLine(line2);
     }
