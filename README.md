@@ -10,7 +10,7 @@ KeePass Cross-platform Community Edition
 - Auto-Type on all three major platforms (Linux, Windows, OS X)
 - Stand-alone password generator
 - Password strength meter
-- Yubikey 2FA support for unlocking databases
+- YukiKey HMAC-SHA1 authentication for unlocking databases
 - Using website favicons as entry icons
 - Merging of databases
 - Automatic reload when the database changed on disk
@@ -55,7 +55,7 @@ make -j8
 sudo make install
 ```
 
-To enable autotype, add `-DWITH_XC_AUTOTYPE=ON` to the `cmake` command. KeePassHTTP support is compiled in by adding `-DWITH_XC_HTTP=ON`. If these options are not specified, KeePassXC will be built without these plugins.
+To enable autotype, add `-DWITH_XC_AUTOTYPE=ON` to the `cmake` command. KeePassHTTP support is compiled in by adding `-DWITH_XC_HTTP=ON`. Yubikey HMAC-SHA1 authentication support is compiled in by adding `-DWITH_XC_YUBIKEY=ON`. If these options are not specified, KeePassXC will be built without these plugins.
 
 
 ### Contributing
