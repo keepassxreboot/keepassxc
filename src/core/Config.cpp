@@ -102,10 +102,6 @@ void Config::init(const QString& fileName)
 {
     m_settings.reset(new QSettings(fileName, QSettings::IniFormat));
 
-    if (hasAccessError()) {
-        qWarning("Access error with config file %s", qPrintable(fileName));
-    }
-
     m_defaults.insert("RememberLastDatabases", true);
     m_defaults.insert("RememberLastKeyFiles", true);
     m_defaults.insert("OpenPreviousDatabasesOnStartup", true);

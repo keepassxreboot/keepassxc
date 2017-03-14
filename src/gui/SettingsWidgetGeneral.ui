@@ -24,9 +24,6 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="MessageWidget" name="messageWidget" native="true"/>
-   </item>
-   <item>
     <widget class="QTabWidget" name="generalSettingsTabWidget">
      <property name="currentIndex">
       <number>0</number>
@@ -370,12 +367,6 @@
    <class>ShortcutWidget</class>
    <extends>QLineEdit</extends>
    <header>autotype/ShortcutWidget.h</header>
-  </customwidget>
-  <customwidget>
-   <class>MessageWidget</class>
-   <extends>QWidget</extends>
-   <header>gui/MessageWidget.h</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
