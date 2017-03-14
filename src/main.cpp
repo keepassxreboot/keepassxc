@@ -28,7 +28,7 @@
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 
-#ifdef WITH_ASAN
+#if defined(WITH_ASAN) && defined(WITH_LSAN)
 #include <sanitizer/lsan_interface.h>
 #endif
 
@@ -137,7 +137,7 @@ int main(int argc, char** argv)
 
     int exitCode = app.exec();
 
-#ifdef WITH_ASAN
+#if defined(WITH_ASAN) && defined(WITH_LSAN)
     // do leak check here to prevent massive tail of end-of-process leak errors from third-party libraries
     __lsan_do_leak_check();
     __lsan_disable();

@@ -86,6 +86,10 @@ add_gcc_compiler_cxxflags("-Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virt
 add_gcc_compiler_cflags("-Wchar-subscripts -Wwrite-strings")
 if(WITH_ASAN)
   add_gcc_compiler_flags("-fsanitize=address -DWITH_ASAN")
+
+  if(NOT (CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.9))
+    add_gcc_compiler_flags("-fsanitize=leak -DWITH_LSAN")
+  endif()
 endif()
 
 string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
