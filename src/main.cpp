@@ -28,6 +28,10 @@
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 
+#ifdef WITH_ASAN
+#include <sanitizer/lsan_interface.h>
+#endif
+
 #ifdef QT_STATIC
 #include <QtPlugin>
 
@@ -130,6 +134,14 @@ int main(int argc, char** argv)
             }
         }
     }
-    
-    return app.exec();
+
+    int exitCode = app.exec();
+
+#ifdef WITH_ASAN
+    // do leak check here to prevent massive tail of end-of-process leak errors from third-party libraries
+    __lsan_do_leak_check();
+    __lsan_disable();
+#endif
+
+    return exitCode;
 }

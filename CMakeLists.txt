@@ -85,7 +85,7 @@ add_gcc_compiler_cxxflags("-fno-exceptions -fno-rtti")
 add_gcc_compiler_cxxflags("-Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual")
 add_gcc_compiler_cflags("-Wchar-subscripts -Wwrite-strings")
 if(WITH_ASAN)
-  add_gcc_compiler_flags("-fsanitize=address")
+  add_gcc_compiler_flags("-fsanitize=address -DWITH_ASAN")
 endif()
 
 string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
