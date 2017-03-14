@@ -85,6 +85,10 @@ add_gcc_compiler_cxxflags("-fno-exceptions -fno-rtti")
 add_gcc_compiler_cxxflags("-Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual")
 add_gcc_compiler_cflags("-Wchar-subscripts -Wwrite-strings")
 if(WITH_ASAN)
+  if(NOT CMAKE_SYSTEM_NAME STREQUAL "Linux")
+      message(FATAL_ERROR "WITH_ASAN is only supported on Linux at the moment.")
+  endif()
+
   add_gcc_compiler_flags("-fsanitize=address -DWITH_ASAN")
 
   if(NOT (CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.9))
