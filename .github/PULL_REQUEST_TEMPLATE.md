@@ -3,11 +3,11 @@
 ## Description
 <!--- Describe your changes in detail -->
 
-## Motivation and Context
+## Motivation and context
 <!--- Why is this change required? What problem does it solve? -->
 <!--- If it fixes an open issue, please link to the issue here. -->
 
-## How Has This Been Tested?
+## How has this been tested?
 <!--- Please describe in detail how you tested your changes. -->
 <!--- Include details of your testing environment, and the tests you ran to -->
 <!--- see how your change affects other areas of the code, etc. -->
@@ -29,5 +29,6 @@
 - ✅ I have read the **CONTRIBUTING** document. **[REQUIRED]**
 - ✅ My code follows the code style of this project. **[REQUIRED]**
 - ✅ All new and existing tests passed. **[REQUIRED]**
+- ✅ I have compiled and verified my code with `-DWITH_ASAN=ON`. **[REQUIRED]**
 - ✅ My change requires a change to the documentation and I have updated it accordingly.
 - ✅ I have added tests to cover my changes.
