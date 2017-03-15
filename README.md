@@ -58,14 +58,15 @@ sudo make install
 cmake accepts the following options:
 
 ```
-  -DWITH_XC_AUTOTYPE=[ON|OFF] Enable/Disable Auto-Type. (default: ON)
-  -DWITH_XC_HTTP=[ON|OFF] Enable/Disable KeePassHTTP and Custom Icon Downloads. (default: OFF)
-  -DWITH_XC_YUBIKEY=[ON|OFF] Enable/Disable Yubikey HMAC-SHA1 authentication support. (default: OFF)
+  -DWITH_XC_AUTOTYPE=[ON|OFF] Enable/Disable Auto-Type (default: ON)
+  -DWITH_XC_HTTP=[ON|OFF] Enable/Disable KeePassHTTP and custom icon downloads (default: OFF)
+  -DWITH_XC_YUBIKEY=[ON|OFF] Enable/Disable YubiKey HMAC-SHA1 authentication support (default: OFF)
 
   -DWITH_TESTS=[ON|OFF] Enable/Disable building of unit tests (default: ON)
   -DWITH_GUI_TESTS=[ON|OFF] Enable/Disable building of GUI tests (default: OFF)
-  -DWITH_DEV_BUILD=[ON|OFF] Enable/Disable deprecated method warnings. (default: OFF)
-  -DWITH_COVERAGE=[ON|OFF] Enable/Disable coverage tests. (GCC ONLY) (default: OFF)
+  -DWITH_DEV_BUILD=[ON|OFF] Enable/Disable deprecated method warnings (default: OFF)
+  -DWITH_ASAN=[ON|OFF] Enable/Disable address sanitizer checks (Linux only) (default: OFF)
+  -DWITH_COVERAGE=[ON|OFF] Enable/Disable coverage tests (GCC only) (default: OFF)
 ```
 
 ### Contributing
