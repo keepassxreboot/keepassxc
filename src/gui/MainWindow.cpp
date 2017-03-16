@@ -250,6 +250,8 @@ MainWindow::MainWindow()
             SLOT(changeMasterKey()));
     connect(m_ui->actionChangeDatabaseSettings, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(changeDatabaseSettings()));
+    connect(m_ui->actionImportCsv, SIGNAL(triggered()), m_ui->tabWidget,
+            SLOT(importCsv()));
     connect(m_ui->actionImportKeePass1, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(importKeePass1Database()));
     connect(m_ui->actionRepairDatabase, SIGNAL(triggered()), this,
@@ -423,6 +425,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             break;
         }
         case DatabaseWidget::EditMode:
+        case DatabaseWidget::ImportMode:
         case DatabaseWidget::LockedMode: {
             const QList<QAction*> entryActions = m_ui->menuEntries->actions();
             for (QAction* action : entryActions) {
@@ -487,7 +490,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
     m_ui->actionDatabaseNew->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
     m_ui->actionDatabaseOpen->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
     m_ui->menuRecentDatabases->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
-    m_ui->actionImportKeePass1->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
+    m_ui->menuImport->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
     m_ui->actionDatabaseMerge->setEnabled(inDatabaseTabWidget);
     m_ui->actionRepairDatabase->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
 

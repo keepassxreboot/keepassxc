@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -27,6 +27,7 @@
 
 #include "gui/entry/EntryModel.h"
 #include "gui/MessageWidget.h"
+#include "gui/csvImport/CsvImportWizard.h"
 
 class ChangeMasterKeyWidget;
 class DatabaseOpenWidget;
@@ -60,6 +61,7 @@ public:
     enum Mode
     {
         None,
+        ImportMode,
         ViewMode,
         EditMode,
         LockedMode
@@ -143,6 +145,8 @@ public slots:
     void switchToDatabaseSettings();
     void switchToOpenDatabase(const QString& fileName);
     void switchToOpenDatabase(const QString& fileName, const QString& password, const QString& keyFile);
+    void switchToImportCsv(const QString& fileName);
+    void csvImportFinished(bool accepted);
     void switchToOpenMergeDatabase(const QString& fileName);
     void switchToOpenMergeDatabase(const QString& fileName, const QString& password, const QString& keyFile);
     void switchToImportKeepass1(const QString& fileName);
@@ -188,6 +192,7 @@ private:
     EditEntryWidget* m_historyEditEntryWidget;
     EditGroupWidget* m_editGroupWidget;
     ChangeMasterKeyWidget* m_changeMasterKeyWidget;
+    CsvImportWizard* m_csvImportWizard;
     DatabaseSettingsWidget* m_databaseSettingsWidget;
     DatabaseOpenWidget* m_databaseOpenWidget;
     DatabaseOpenWidget* m_databaseOpenMergeWidget;

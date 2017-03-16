@@ -26,6 +26,7 @@
 #include "crypto/Crypto.h"
 #include "gui/Application.h"
 #include "gui/MainWindow.h"
+#include "gui/csvImport/CsvImportWizard.h"
 #include "gui/MessageBox.h"
 
 #if defined(WITH_ASAN) && defined(WITH_LSAN)
