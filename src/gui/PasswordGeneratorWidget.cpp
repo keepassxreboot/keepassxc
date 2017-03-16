@@ -340,7 +340,7 @@ void PasswordGeneratorWidget::updateGenerator()
             m_ui->buttonGenerate->setEnabled(false);
         }
     } else {
-        int minWordCount = 0;
+        int minWordCount = 1;
 
         if (m_ui->spinBoxWordCount->value() < minWordCount) {
             m_updatingSpinBox = true;

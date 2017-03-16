@@ -45,7 +45,13 @@ double PassphraseGenerator::calculateEntropy(QString passphrase)
 
 void PassphraseGenerator::setWordCount(int wordCount)
 {
-    m_wordCount = wordCount;
+    if (wordCount > 0) {
+        m_wordCount = wordCount; 
+    } else {
+        // safe default if something goes wrong
+        m_wordCount = 7;
+    }
+ 
 }
 
 void PassphraseGenerator::setWordlist(QString path)
