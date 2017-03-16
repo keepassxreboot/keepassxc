@@ -10,7 +10,7 @@ KeePass Cross-platform Community Edition
 - Auto-Type on all three major platforms (Linux, Windows, OS X)
 - Stand-alone password generator
 - Password strength meter
-- YukiKey HMAC-SHA1 authentication for unlocking databases
+- YubiKey HMAC-SHA1 authentication for unlocking databases
 - Using website favicons as entry icons
 - Merging of databases
 - Automatic reload when the database changed on disk
