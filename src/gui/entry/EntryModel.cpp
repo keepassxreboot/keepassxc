@@ -139,19 +139,19 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             }
             break;
         case Title:
-            result = entry->resolvePlaceholder(entry->title());
+            result = entry->resolveMultiplePlaceholders(entry->title());
             if (attr->isReference(EntryAttributes::TitleKey)) {
                 result.prepend(tr("Ref: ","Reference abbreviation"));
             }
             return result;
         case Username:
-            result = entry->resolvePlaceholder(entry->username());
+            result = entry->resolveMultiplePlaceholders(entry->username());
             if (attr->isReference(EntryAttributes::UserNameKey)) {
                 result.prepend(tr("Ref: ","Reference abbreviation"));
             }
             return result;
         case Url:
-            result = entry->resolvePlaceholder(entry->url());
+            result = entry->resolveMultiplePlaceholders(entry->url());
             if (attr->isReference(EntryAttributes::URLKey)) {
                 result.prepend(tr("Ref: ","Reference abbreviation"));
             }

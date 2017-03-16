@@ -588,6 +588,50 @@ void TestGui::testCloneEntry()
     QCOMPARE(entryClone->title(), entryOrg->title() + QString(" - Clone"));
 }
 
+void TestGui::testEntryPlaceholders()
+{
+    QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
+    EntryView* entryView = m_dbWidget->findChild<EntryView*>("entryView");
+
+    // Find the new entry action
+    QAction* entryNewAction = m_mainWindow->findChild<QAction*>("actionEntryNew");
+    QVERIFY(entryNewAction->isEnabled());
+
+    // Find the button associated with the new entry action
+    QWidget* entryNewWidget = toolBar->widgetForAction(entryNewAction);
+    QVERIFY(entryNewWidget->isVisible());
+    QVERIFY(entryNewWidget->isEnabled());
+
+    // Click the new entry button and check that we enter edit mode
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+
+    // Add entry "test" and confirm added
+    EditEntryWidget* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+    QLineEdit* titleEdit = editEntryWidget->findChild<QLineEdit*>("titleEdit");
+    QTest::keyClicks(titleEdit, "test");
+    QLineEdit* usernameEdit = editEntryWidget->findChild<QLineEdit*>("usernameEdit");
+    QTest::keyClicks(usernameEdit, "john");
+    QLineEdit* urlEdit = editEntryWidget->findChild<QLineEdit*>("urlEdit");
+    QTest::keyClicks(urlEdit, "{TITLE}.{USERNAME}");
+    QDialogButtonBox* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+
+    QCOMPARE(entryView->model()->rowCount(), 2);
+
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::ViewMode);
+    QModelIndex item = entryView->model()->index(1, 1);
+    Entry* entry = entryView->entryFromIndex(item);
+
+    QCOMPARE(entry->title(), QString("test"));
+    QCOMPARE(entry->url(), QString("{TITLE}.{USERNAME}"));
+
+    // Test password copy
+    QClipboard *clipboard = QApplication::clipboard();
+    m_dbWidget->copyURL();
+    QTRY_COMPARE(clipboard->text(), QString("test.john"));
+}
+
 void TestGui::testDragAndDropEntry()
 {
     EntryView* entryView = m_dbWidget->findChild<EntryView*>("entryView");
