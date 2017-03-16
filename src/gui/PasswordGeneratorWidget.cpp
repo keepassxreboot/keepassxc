@@ -68,6 +68,13 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     QDir path(filePath()->dataPath("wordlists/"));
     QStringList files = path.entryList(QDir::Files);
     m_ui->comboBoxWordList->addItems(files);
+    if (files.size() > 1) {
+        m_ui->comboBoxWordList->setVisible(true);
+        m_ui->labelWordList->setVisible(true);
+    } else {
+        m_ui->comboBoxWordList->setVisible(false);
+        m_ui->labelWordList->setVisible(false);
+    }
     
     loadSettings();
     reset();
