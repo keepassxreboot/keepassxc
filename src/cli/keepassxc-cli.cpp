@@ -31,6 +31,10 @@
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 
+#if defined(WITH_ASAN) && defined(WITH_LSAN)
+#include <sanitizer/lsan_interface.h>
+#endif
+
 int main(int argc, char **argv)
 {
 #ifdef QT_NO_DEBUG
@@ -76,33 +80,35 @@ int main(int argc, char **argv)
     ++argv;
     --argc;
 
+    int exitCode = EXIT_FAILURE;
+
     if (commandName == "entropy-meter") {
         argv[0] = const_cast<char*>("keepassxc-cli entropy-meter");
-        return EntropyMeter::execute(argc, argv);
-    }
-
-    if (commandName == "extract") {
+        exitCode = EntropyMeter::execute(argc, argv);
+    } else if (commandName == "extract") {
         argv[0] = const_cast<char*>("keepassxc-cli extract");
-        return Extract::execute(argc, argv);
-    }
-
-    if (commandName == "list") {
+        exitCode = Extract::execute(argc, argv);
+    } else if (commandName == "list") {
         argv[0] = const_cast<char*>("keepassxc-cli list");
-        return List::execute(argc, argv);
-    }
-
-    if (commandName == "merge") {
+        exitCode = List::execute(argc, argv);
+    } else if (commandName == "merge") {
         argv[0] = const_cast<char*>("keepassxc-cli merge");
-        return Merge::execute(argc, argv);
-    }
-
-    if (commandName == "show") {
+        exitCode = Merge::execute(argc, argv);
+    } else if (commandName == "show") {
         argv[0] = const_cast<char*>("keepassxc-cli show");
-        return Show::execute(argc, argv);
+        exitCode = Show::execute(argc, argv);
+    } else {
+        qCritical("Invalid command %s.", qPrintable(commandName));
+        parser.showHelp();
+        exitCode = EXIT_FAILURE;
     }
 
-    qCritical("Invalid command %s.", qPrintable(commandName));
-    parser.showHelp();
-    return EXIT_FAILURE;
+#if defined(WITH_ASAN) && defined(WITH_LSAN)
+    // do leak check here to prevent massive tail of end-of-process leak errors from third-party libraries
+    __lsan_do_leak_check();
+    __lsan_disable();
+#endif
+
+    return exitCode;
 
 }
