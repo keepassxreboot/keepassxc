@@ -34,10 +34,11 @@ void AccessControlDialog::setUrl(const QString &url)
                                   "Please select whether you want to allow access.")).arg(QUrl(url).host()));
 }
 
-void AccessControlDialog::setItems(const QList<Entry *> &items)
+void AccessControlDialog::setItems(const QList<Entry*> &items)
 {
-    Q_FOREACH (Entry * entry, items)
+    for (Entry* entry: items) {
         ui->itemsList->addItem(entry->title() + " - " + entry->username());
+    }
 }
 
 bool AccessControlDialog::remember() const

@@ -64,7 +64,7 @@ void EntryModel::setGroup(Group* group)
     makeConnections(group);
 
     endResetModel();
-    Q_EMIT switchedToGroupMode();
+    emit switchedToGroupMode();
 }
 
 void EntryModel::setEntryList(const QList<Entry*>& entries)
@@ -101,7 +101,7 @@ void EntryModel::setEntryList(const QList<Entry*>& entries)
     }
 
     endResetModel();
-    Q_EMIT switchedToEntryListMode();
+    emit switchedToEntryListMode();
 }
 
 int EntryModel::rowCount(const QModelIndex& parent) const
@@ -139,19 +139,19 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             }
             break;
         case Title:
-            result = entry->resolvePlaceholder(entry->title());
+            result = entry->resolveMultiplePlaceholders(entry->title());
             if (attr->isReference(EntryAttributes::TitleKey)) {
                 result.prepend(tr("Ref: ","Reference abbreviation"));
             }
             return result;
         case Username:
-            result = entry->resolvePlaceholder(entry->username());
+            result = entry->resolveMultiplePlaceholders(entry->username());
             if (attr->isReference(EntryAttributes::UserNameKey)) {
                 result.prepend(tr("Ref: ","Reference abbreviation"));
             }
             return result;
         case Url:
-            result = entry->resolvePlaceholder(entry->url());
+            result = entry->resolveMultiplePlaceholders(entry->url());
             if (attr->isReference(EntryAttributes::URLKey)) {
                 result.prepend(tr("Ref: ","Reference abbreviation"));
             }
@@ -315,7 +315,7 @@ void EntryModel::entryRemoved()
 void EntryModel::entryDataChanged(Entry* entry)
 {
     int row = m_entries.indexOf(entry);
-    Q_EMIT dataChanged(index(row, 0), index(row, columnCount()-1));
+    emit dataChanged(index(row, 0), index(row, columnCount()-1));
 }
 
 void EntryModel::severConnections()

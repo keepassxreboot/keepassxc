@@ -21,8 +21,16 @@
 #include "core/FilePath.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
+#include "keys/YkChallengeResponseKey.h"
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
+#include "crypto/Random.h"
+#include "MainWindow.h"
+
+#include "config-keepassx.h"
+
+#include <QtConcurrentRun>
+#include <QSharedPointer>
 
 ChangeMasterKeyWidget::ChangeMasterKeyWidget(QWidget* parent)
     : DialogyWidget(parent)
@@ -32,13 +40,35 @@ ChangeMasterKeyWidget::ChangeMasterKeyWidget(QWidget* parent)
 
     m_ui->messageWidget->setHidden(true);
 
-    connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(generateKey()));
-    connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
     m_ui->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
-    connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), m_ui->enterPasswordEdit, SLOT(setShowPassword(bool)));
     m_ui->repeatPasswordEdit->enableVerifyMode(m_ui->enterPasswordEdit);
+
+    connect(m_ui->passwordGroup, SIGNAL(clicked(bool)), SLOT(setOkEnabled()));
+    connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), m_ui->enterPasswordEdit, SLOT(setShowPassword(bool)));
+
+    connect(m_ui->keyFileGroup, SIGNAL(clicked(bool)), SLOT(setOkEnabled()));
     connect(m_ui->createKeyFileButton, SIGNAL(clicked()), SLOT(createKeyFile()));
     connect(m_ui->browseKeyFileButton, SIGNAL(clicked()), SLOT(browseKeyFile()));
+    connect(m_ui->keyFileCombo, SIGNAL(editTextChanged(QString)), SLOT(setOkEnabled()));
+
+    connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(generateKey()));
+    connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
+
+#ifdef WITH_XC_YUBIKEY
+    m_ui->yubikeyProgress->setVisible(false);
+    QSizePolicy sp = m_ui->yubikeyProgress->sizePolicy();
+    sp.setRetainSizeWhenHidden(true);
+    m_ui->yubikeyProgress->setSizePolicy(sp);
+
+    connect(m_ui->challengeResponseGroup, SIGNAL(clicked(bool)), SLOT(challengeResponseGroupToggled(bool)));
+    connect(m_ui->challengeResponseGroup, SIGNAL(clicked(bool)), SLOT(setOkEnabled()));
+    connect(m_ui->buttonRedetectYubikey, SIGNAL(clicked()), SLOT(pollYubikey()));
+
+    connect(YubiKey::instance(), SIGNAL(detected(int,bool)), SLOT(yubikeyDetected(int,bool)), Qt::QueuedConnection);
+    connect(YubiKey::instance(), SIGNAL(notFound()), SLOT(noYubikeyFound()), Qt::QueuedConnection);
+#else
+    m_ui->challengeResponseGroup->setVisible(false);
+#endif
 }
 
 ChangeMasterKeyWidget::~ChangeMasterKeyWidget()
@@ -81,7 +111,11 @@ void ChangeMasterKeyWidget::clearForms()
     m_ui->repeatPasswordEdit->setText("");
     m_ui->keyFileGroup->setChecked(false);
     m_ui->togglePasswordButton->setChecked(false);
-    // TODO: clear m_ui->keyFileCombo
+
+#ifdef WITH_XC_YUBIKEY
+    m_ui->challengeResponseGroup->setChecked(false);
+    m_ui->comboChallengeResponse->clear();
+#endif
 
     m_ui->enterPasswordEdit->setFocus();
 }
@@ -103,9 +137,9 @@ void ChangeMasterKeyWidget::generateKey()
     if (m_ui->passwordGroup->isChecked()) {
         if (m_ui->enterPasswordEdit->text() == m_ui->repeatPasswordEdit->text()) {
             if (m_ui->enterPasswordEdit->text().isEmpty()) {
-                if (MessageBox::question(this, tr("Question"),
-                                         tr("Do you really want to use an empty string as password?"),
-                                         QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes) {
+                if (MessageBox::warning(this, tr("Empty password"),
+                                        tr("Do you really want to use an empty string as password?"),
+                                        QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes) {
                     return;
                 }
             }
@@ -130,14 +164,78 @@ void ChangeMasterKeyWidget::generateKey()
         m_key.addKey(fileKey);
     }
 
+#ifdef WITH_XC_YUBIKEY
+    if (m_ui->challengeResponseGroup->isChecked()) {
+        int selectionIndex = m_ui->comboChallengeResponse->currentIndex();
+        int comboPayload = m_ui->comboChallengeResponse->itemData(selectionIndex).toInt();
+
+        if (0 == comboPayload) {
+            m_ui->messageWidget->showMessage(tr("Changing master key failed: no YubiKey inserted."),
+                                             MessageWidget::Error);
+            return;
+        }
+
+        // read blocking mode from LSB and slot index number from second LSB
+        bool blocking = comboPayload & 1;
+        int slot      = comboPayload >> 1;
+        auto key      = QSharedPointer<YkChallengeResponseKey>(new YkChallengeResponseKey(slot, blocking));
+        m_key.addChallengeResponseKey(key);
+    }
+#endif
+
     m_ui->messageWidget->hideMessage();
-    Q_EMIT editFinished(true);
+    emit editFinished(true);
 }
 
 
 void ChangeMasterKeyWidget::reject()
 {
-    Q_EMIT editFinished(false);
+    emit editFinished(false);
+}
+
+void ChangeMasterKeyWidget::challengeResponseGroupToggled(bool checked)
+{
+    if (checked)
+        pollYubikey();
+}
+
+void ChangeMasterKeyWidget::pollYubikey()
+{
+    m_ui->buttonRedetectYubikey->setEnabled(false);
+    m_ui->comboChallengeResponse->setEnabled(false);
+    m_ui->comboChallengeResponse->clear();
+    m_ui->yubikeyProgress->setVisible(true);
+    setOkEnabled();
+
+    // YubiKey init is slow, detect asynchronously to not block the UI
+    QtConcurrent::run(YubiKey::instance(), &YubiKey::detect);
+}
+
+void ChangeMasterKeyWidget::yubikeyDetected(int slot, bool blocking)
+{
+    YkChallengeResponseKey yk(slot, blocking);
+    // add detected YubiKey to combo box and encode blocking mode in LSB, slot number in second LSB
+    m_ui->comboChallengeResponse->addItem(yk.getName(), QVariant((slot << 1) | blocking));
+    m_ui->comboChallengeResponse->setEnabled(m_ui->challengeResponseGroup->isChecked());
+    m_ui->buttonRedetectYubikey->setEnabled(m_ui->challengeResponseGroup->isChecked());
+    m_ui->yubikeyProgress->setVisible(false);
+    setOkEnabled();
+}
+
+void ChangeMasterKeyWidget::noYubikeyFound()
+{
+    m_ui->buttonRedetectYubikey->setEnabled(m_ui->challengeResponseGroup->isChecked());
+    m_ui->yubikeyProgress->setVisible(false);
+    setOkEnabled();
+}
+
+void ChangeMasterKeyWidget::setOkEnabled()
+{
+    bool ok = m_ui->passwordGroup->isChecked() ||
+              (m_ui->challengeResponseGroup->isChecked() && !m_ui->comboChallengeResponse->currentText().isEmpty()) ||
+              (m_ui->keyFileGroup->isChecked() && !m_ui->keyFileCombo->currentText().isEmpty());
+
+    m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(ok);
 }
 
 void ChangeMasterKeyWidget::setCancelEnabled(bool enabled)

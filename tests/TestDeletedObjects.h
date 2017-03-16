@@ -29,7 +29,7 @@ class TestDeletedObjects : public QObject
 private:
     void createAndDelete(Database* db, int delObjectsSize);
 
-private Q_SLOTS:
+private slots:
     void initTestCase();
     void testDeletedObjectsFromFile();
     void testDeletedObjectsFromNewDb();

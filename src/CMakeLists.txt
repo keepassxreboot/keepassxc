@@ -119,9 +119,11 @@ set(keepassx_SOURCES
     gui/group/GroupView.cpp
     keys/CompositeKey.cpp
     keys/CompositeKey_p.h
+    keys/drivers/YubiKey.h
     keys/FileKey.cpp
     keys/Key.h
     keys/PasswordKey.cpp
+    keys/YkChallengeResponseKey.cpp
     streams/HashedBlockStream.cpp
     streams/LayeredStream.cpp
     streams/qtiocompressor.cpp
@@ -157,8 +159,9 @@ set(keepassx_FORMS
     gui/group/EditGroupWidgetMain.ui
 )
 
-add_feature_info(KeePassHTTP WITH_XC_HTTP "KeePassHTTP support for ChromeIPass and PassIFox")
-add_feature_info(Autotype WITH_XC_AUTOTYPE "Auto-type passwords in Input fields")
+add_feature_info(AutoType WITH_XC_AUTOTYPE "Automatic password typing")
+add_feature_info(KeePassHTTP WITH_XC_HTTP "Browser integration compatible with ChromeIPass and PassIFox")
+add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
 
 add_subdirectory(http)
 if(WITH_XC_HTTP)
@@ -166,6 +169,7 @@ if(WITH_XC_HTTP)
 endif()
 
 add_subdirectory(autotype)
+add_subdirectory(cli)
 
 set(autotype_SOURCES
     core/Tools.cpp
@@ -186,6 +190,12 @@ if(MINGW)
       ${CMAKE_SOURCE_DIR}/share/windows/icon.rc)
 endif()
 
+if(WITH_XC_YUBIKEY)
+  set(keepassx_SOURCES ${keepassx_SOURCES} keys/drivers/YubiKey.cpp)
+else()
+  set(keepassx_SOURCES ${keepassx_SOURCES} keys/drivers/YubiKeyStub.cpp)
+endif()
+
 qt5_wrap_ui(keepassx_SOURCES ${keepassx_FORMS})
 
 add_library(zxcvbn STATIC zxcvbn/zxcvbn.cpp)
@@ -202,6 +212,7 @@ set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUIL
 target_link_libraries(keepassx_core
                       ${keepasshttp_LIB}
                       ${autotype_LIB}
+                      ${YUBIKEY_LIBRARIES}
                       zxcvbn
                       Qt5::Core
                       Qt5::Concurrent

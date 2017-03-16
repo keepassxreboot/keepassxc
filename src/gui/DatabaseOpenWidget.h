@@ -41,21 +41,27 @@ public:
     void enterKey(const QString& pw, const QString& keyFile);
     Database* database();
 
-Q_SIGNALS:
+public slots:
+    void pollYubikey();
+
+signals:
     void editFinished(bool accepted);
 
 protected:
     void showEvent(QShowEvent* event) override;
     CompositeKey databaseKey();
 
-protected Q_SLOTS:
+protected slots:
     virtual void openDatabase();
     void reject();
 
-private Q_SLOTS:
+private slots:
     void activatePassword();
     void activateKeyFile();
+    void activateChallengeResponse();
     void browseKeyFile();
+    void yubikeyDetected(int slot, bool blocking);
+    void noYubikeyFound();
 
 protected:
     const QScopedPointer<Ui::DatabaseOpenWidget> m_ui;

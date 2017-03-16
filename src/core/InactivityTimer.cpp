@@ -73,7 +73,7 @@ void InactivityTimer::timeout()
     }
 
     if (m_active && !m_timer->isActive()) {
-        Q_EMIT inactivityDetected();
+        emit inactivityDetected();
     }
 
     m_emitMutx.unlock();

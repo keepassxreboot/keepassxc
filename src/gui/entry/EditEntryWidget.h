@@ -63,11 +63,11 @@ public:
     void clear();
     bool hasBeenModified() const;
 
-Q_SIGNALS:
+signals:
     void editFinished(bool accepted);
     void historyEntryActivated(Entry* entry);
 
-private Q_SLOTS:
+private slots:
     void saveEntry();
     void cancel();
     void togglePasswordGeneratorButton(bool checked);

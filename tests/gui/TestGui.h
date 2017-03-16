@@ -33,7 +33,7 @@ class TestGui : public QObject
 {
     Q_OBJECT
 
-private Q_SLOTS:
+private slots:
     void initTestCase();
     void init();
     void cleanup();
@@ -48,6 +48,7 @@ private Q_SLOTS:
     void testSearch();
     void testDeleteEntry();
     void testCloneEntry();
+    void testEntryPlaceholders();
     void testDragAndDropEntry();
     void testDragAndDropGroup();
     void testSaveAs();

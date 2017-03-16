@@ -35,7 +35,7 @@ public:
     void setNumberAlternatives(int alternatives);
     void showPopup();
 
-public Q_SLOTS:
+public slots:
     void setEcho(bool echo);
 
 private:

@@ -74,7 +74,7 @@ template <class P, class V> inline bool Group::set(P& property, const V& value) 
     if (property != value) {
         property = value;
         updateTimeinfo();
-        Q_EMIT modified();
+        emit modified();
         return true;
     }
     else {
@@ -249,7 +249,7 @@ void Group::setUuid(const Uuid& uuid)
 void Group::setName(const QString& name)
 {
     if (set(m_data.name, name)) {
-        Q_EMIT dataChanged(this);
+        emit dataChanged(this);
     }
 }
 
@@ -267,8 +267,8 @@ void Group::setIcon(int iconNumber)
         m_data.customIcon = Uuid();
 
         updateTimeinfo();
-        Q_EMIT modified();
-        Q_EMIT dataChanged(this);
+        emit modified();
+        emit dataChanged(this);
     }
 }
 
@@ -281,8 +281,8 @@ void Group::setIcon(const Uuid& uuid)
         m_data.iconNumber = 0;
 
         updateTimeinfo();
-        Q_EMIT modified();
-        Q_EMIT dataChanged(this);
+        emit modified();
+        emit dataChanged(this);
     }
 }
 
@@ -296,7 +296,7 @@ void Group::setExpanded(bool expanded)
     if (m_data.isExpanded != expanded) {
         m_data.isExpanded = expanded;
         updateTimeinfo();
-        Q_EMIT modified();
+        emit modified();
     }
 }
 
@@ -325,7 +325,7 @@ void Group::setExpires(bool value)
     if (m_data.timeInfo.expires() != value) {
         m_data.timeInfo.setExpires(value);
         updateTimeinfo();
-        Q_EMIT modified();
+        emit modified();
     }
 }
 
@@ -334,7 +334,7 @@ void Group::setExpiryTime(const QDateTime& dateTime)
     if (m_data.timeInfo.expiryTime() != dateTime) {
         m_data.timeInfo.setExpiryTime(dateTime);
         updateTimeinfo();
-        Q_EMIT modified();
+        emit modified();
     }
 }
 
@@ -391,12 +391,12 @@ void Group::setParent(Group* parent, int index)
             recSetDatabase(parent->m_db);
         }
         QObject::setParent(parent);
-        Q_EMIT aboutToAdd(this, index);
+        emit aboutToAdd(this, index);
         Q_ASSERT(index <= parent->m_children.size());
         parent->m_children.insert(index, this);
     }
     else {
-        Q_EMIT aboutToMove(this, parent, index);
+        emit aboutToMove(this, parent, index);
         m_parent->m_children.removeAll(this);
         m_parent = parent;
         QObject::setParent(parent);
@@ -408,13 +408,13 @@ void Group::setParent(Group* parent, int index)
         m_data.timeInfo.setLocationChanged(QDateTime::currentDateTimeUtc());
     }
 
-    Q_EMIT modified();
+    emit modified();
 
     if (!moveWithinDatabase) {
-        Q_EMIT added();
+        emit added();
     }
     else {
-        Q_EMIT moved();
+        emit moved();
     }
 }
 
@@ -566,7 +566,7 @@ void Group::merge(const Group* other)
         }
     }
 
-    Q_EMIT modified();
+    emit modified();
 }
 
 Group* Group::findChildByName(const QString& name)
@@ -623,7 +623,7 @@ void Group::addEntry(Entry* entry)
     Q_ASSERT(entry);
     Q_ASSERT(!m_entries.contains(entry));
 
-    Q_EMIT entryAboutToAdd(entry);
+    emit entryAboutToAdd(entry);
 
     m_entries << entry;
     connect(entry, SIGNAL(dataChanged(Entry*)), SIGNAL(entryDataChanged(Entry*)));
@@ -631,23 +631,23 @@ void Group::addEntry(Entry* entry)
         connect(entry, SIGNAL(modified()), m_db, SIGNAL(modifiedImmediate()));
     }
 
-    Q_EMIT modified();
-    Q_EMIT entryAdded(entry);
+    emit modified();
+    emit entryAdded(entry);
 }
 
 void Group::removeEntry(Entry* entry)
 {
     Q_ASSERT(m_entries.contains(entry));
 
-    Q_EMIT entryAboutToRemove(entry);
+    emit entryAboutToRemove(entry);
 
     entry->disconnect(this);
     if (m_db) {
         entry->disconnect(m_db);
     }
     m_entries.removeAll(entry);
-    Q_EMIT modified();
-    Q_EMIT entryRemoved(entry);
+    emit modified();
+    emit entryRemoved(entry);
 }
 
 void Group::recSetDatabase(Database* db)
@@ -693,10 +693,10 @@ void Group::recSetDatabase(Database* db)
 void Group::cleanupParent()
 {
     if (m_parent) {
-        Q_EMIT aboutToRemove(this);
+        emit aboutToRemove(this);
         m_parent->m_children.removeAll(this);
-        Q_EMIT modified();
-        Q_EMIT removed();
+        emit modified();
+        emit removed();
     }
 }
 

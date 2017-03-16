@@ -36,10 +36,10 @@ public:
     void clearForms();
     Database* database();
 
-Q_SIGNALS:
+signals:
     void unlockDone(bool);
 
-public Q_SLOTS:
+public slots:
     void complete(bool r);
 
 private:

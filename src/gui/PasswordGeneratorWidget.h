@@ -43,11 +43,11 @@ public:
     void setStandaloneMode(bool standalone);
     void regeneratePassword();
     
-Q_SIGNALS:
+signals:
     void appliedPassword(const QString& password);
     void dialogTerminated();
 
-private Q_SLOTS:
+private slots:
     void applyPassword();
     void generatePassword();
     void updateApplyEnabled(const QString& password);

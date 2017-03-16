@@ -365,7 +365,7 @@ QMimeData* GroupModel::mimeData(const QModelIndexList& indexes) const
 void GroupModel::groupDataChanged(Group* group)
 {
     QModelIndex ix = index(group);
-    Q_EMIT dataChanged(ix, ix);
+    emit dataChanged(ix, ix);
 }
 
 void GroupModel::groupAboutToRemove(Group* group)

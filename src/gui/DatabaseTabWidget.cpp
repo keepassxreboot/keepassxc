@@ -54,7 +54,7 @@ const int DatabaseTabWidget::LastDatabasesCount = 5;
 
 DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     : QTabWidget(parent)
-    , m_dbWidgetSateSync(new DatabaseWidgetStateSync(this))
+    , m_dbWidgetStateSync(new DatabaseWidgetStateSync(this))
 {
     DragTabBar* tabBar = new DragTabBar(this);
     setTabBar(tabBar);
@@ -62,7 +62,7 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
 
     connect(this, SIGNAL(tabCloseRequested(int)), SLOT(closeDatabase(int)));
     connect(this, SIGNAL(currentChanged(int)), SLOT(emitActivateDatabaseChanged()));
-    connect(this, SIGNAL(activateDatabaseChanged(DatabaseWidget*)), m_dbWidgetSateSync, SLOT(setActive(DatabaseWidget*)));
+    connect(this, SIGNAL(activateDatabaseChanged(DatabaseWidget*)), m_dbWidgetStateSync, SLOT(setActive(DatabaseWidget*)));
     connect(autoType(), SIGNAL(globalShortcutTriggered()), SLOT(performGlobalAutoType()));
 }
 
@@ -120,7 +120,7 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
     QFileInfo fileInfo(fileName);
     QString canonicalFilePath = fileInfo.canonicalFilePath();
     if (canonicalFilePath.isEmpty()) {
-        Q_EMIT messageGlobal(tr("File not found!"), MessageWidget::Error);
+        emit messageGlobal(tr("File not found!"), MessageWidget::Error);
         return;
     }
 
@@ -141,7 +141,7 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
     if (!file.open(QIODevice::ReadWrite)) {
         if (!file.open(QIODevice::ReadOnly)) {
             // can't open
-            Q_EMIT messageGlobal(
+            emit messageGlobal(
                 tr("Unable to open the database.").append("\n").append(file.errorString()), MessageWidget::Error);
             return;
         }
@@ -198,7 +198,7 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
     insertDatabase(db, dbStruct);
 
     if (dbStruct.readOnly) {
-        Q_EMIT messageTab(tr("File opened in read only mode."), MessageWidget::Warning);
+        emit messageTab(tr("File opened in read only mode."), MessageWidget::Warning);
     }
 
     updateLastDatabases(dbStruct.filePath);
@@ -209,7 +209,7 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
     else {
         dbStruct.dbWidget->switchToOpenDatabase(dbStruct.filePath);
     }
-    Q_EMIT messageDismissGlobal();
+    emit messageDismissGlobal();
 }
 
 void DatabaseTabWidget::importCsv()
@@ -331,7 +331,7 @@ void DatabaseTabWidget::deleteDatabase(Database* db)
     delete db;
 
     if (emitDatabaseWithFileClosed) {
-        Q_EMIT databaseWithFileClosed(filePath);
+        emit databaseWithFileClosed(filePath);
     }
 }
 
@@ -348,17 +348,18 @@ bool DatabaseTabWidget::closeAllDatabases()
 bool DatabaseTabWidget::saveDatabase(Database* db)
 {
     DatabaseManagerStruct& dbStruct = m_dbList[db];
-    // temporarily disable autoreload
-    dbStruct.dbWidget->ignoreNextAutoreload();
 
     if (dbStruct.saveToFilename) {
         QSaveFile saveFile(dbStruct.canonicalFilePath);
         if (saveFile.open(QIODevice::WriteOnly)) {
             // write the database to the file
+            dbStruct.dbWidget->blockAutoReload(true);
             m_writer.writeDatabase(&saveFile, db);
+            dbStruct.dbWidget->blockAutoReload(false);
+
             if (m_writer.hasError()) {
-                Q_EMIT messageTab(tr("Writing the database failed.").append("\n")
-                .append(m_writer.errorString()), MessageWidget::Error);
+                emit messageTab(tr("Writing the database failed.").append("\n")
+                                .append(m_writer.errorString()), MessageWidget::Error);
                 return false;
             }
 
@@ -367,22 +368,19 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
                 dbStruct.modified = false;
                 dbStruct.dbWidget->databaseSaved();
                 updateTabName(db);
-                Q_EMIT messageDismissTab();
+                emit messageDismissTab();
                 return true;
-            }
-            else {
-                Q_EMIT messageTab(tr("Writing the database failed.").append("\n")
-                    .append(saveFile.errorString()), MessageWidget::Error);
+            } else {
+                emit messageTab(tr("Writing the database failed.").append("\n")
+                                .append(saveFile.errorString()), MessageWidget::Error);
                 return false;
             }
-        }
-        else {
-            Q_EMIT messageTab(tr("Writing the database failed.").append("\n")
-            .append(saveFile.errorString()), MessageWidget::Error);
+        } else {
+            emit messageTab(tr("Writing the database failed.").append("\n")
+                            .append(saveFile.errorString()), MessageWidget::Error);
             return false;
         }
-    }
-    else {
+    } else {
         return saveDatabaseAs(db);
     }
 }
@@ -520,7 +518,7 @@ void DatabaseTabWidget::exportToCsv()
 
     CsvExporter csvExporter;
     if (!csvExporter.exportDatabase(fileName, db)) {
-        Q_EMIT messageGlobal(
+        emit messageGlobal(
             tr("Writing the CSV file failed.").append("\n")
             .append(csvExporter.errorString()), MessageWidget::Error);
     }
@@ -582,7 +580,7 @@ void DatabaseTabWidget::updateTabName(Database* db)
     }
 
     setTabText(index, tabName);
-    Q_EMIT tabNameChanged();
+    emit tabNameChanged();
 }
 
 void DatabaseTabWidget::updateTabNameFromDbSender()
@@ -762,7 +760,7 @@ void DatabaseTabWidget::lockDatabases()
         // database has changed so we can't use the db variable anymore
         updateTabName(dbWidget->database());
 
-        Q_EMIT databaseLocked(dbWidget);
+        emit databaseLocked(dbWidget);
     }
 }
 
@@ -820,12 +818,12 @@ void DatabaseTabWidget::changeDatabase(Database* newDb, bool unsavedChanges)
 
 void DatabaseTabWidget::emitActivateDatabaseChanged()
 {
-    Q_EMIT activateDatabaseChanged(currentDatabaseWidget());
+    emit activateDatabaseChanged(currentDatabaseWidget());
 }
 
 void DatabaseTabWidget::emitDatabaseUnlockedFromDbWidgetSender()
 {
-    Q_EMIT databaseUnlocked(static_cast<DatabaseWidget*>(sender()));
+    emit databaseUnlocked(static_cast<DatabaseWidget*>(sender()));
 }
 
 void DatabaseTabWidget::connectDatabase(Database* newDb, Database* oldDb)

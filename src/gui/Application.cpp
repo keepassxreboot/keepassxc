@@ -87,6 +87,11 @@ Application::Application(int& argc, char** argv)
 #endif
 }
 
+QWidget* Application::mainWindow() const
+{
+    return m_mainWindow;
+}
+
 void Application::setMainWindow(QWidget* mainWindow)
 {
     m_mainWindow = mainWindow;
@@ -96,7 +101,7 @@ bool Application::event(QEvent* event)
 {
     // Handle Apple QFileOpenEvent from finder (double click on .kdbx file)
     if (event->type() == QEvent::FileOpen) {
-        Q_EMIT openFile(static_cast<QFileOpenEvent*>(event)->file());
+        emit openFile(static_cast<QFileOpenEvent*>(event)->file());
         return true;
     }
 #ifdef Q_OS_MAC
@@ -148,7 +153,7 @@ void Application::handleUnixSignal(int sig)
         case SIGTERM:
         {
             char buf = 0;
-            ::write(unixSignalSocket[0], &buf, sizeof(buf));
+            Q_UNUSED(::write(unixSignalSocket[0], &buf, sizeof(buf)));
             return;
         }
         case SIGHUP:
@@ -160,7 +165,7 @@ void Application::quitBySignal()
 {
     m_unixSignalNotifier->setEnabled(false);
     char buf;
-    ::read(unixSignalSocket[1], &buf, sizeof(buf));
+    Q_UNUSED(::read(unixSignalSocket[1], &buf, sizeof(buf)));
     
     if (nullptr != m_mainWindow)
         static_cast<MainWindow*>(m_mainWindow)->appExit();

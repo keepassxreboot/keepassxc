@@ -51,8 +51,14 @@ void KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
     QByteArray startBytes = randomGen()->randomArray(32);
     QByteArray endOfHeader = "\r\n\r\n";
 
+    if (db->challengeMasterSeed(masterSeed) == false) {
+        raiseError("Unable to issue challenge-response.");
+        return;
+    }
+
     CryptoHash hash(CryptoHash::Sha256);
     hash.addData(masterSeed);
+    hash.addData(db->challengeResponseKey());
     Q_ASSERT(!db->transformedMasterKey().isEmpty());
     hash.addData(db->transformedMasterKey());
     QByteArray finalKey = hash.result();

@@ -31,10 +31,10 @@ public:
 
     static Clipboard* instance();
 
-public Q_SLOTS:
+public slots:
     void clearCopiedText();
 
-private Q_SLOTS:
+private slots:
     void clearClipboard();
 
 private:

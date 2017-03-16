@@ -26,7 +26,7 @@ class TestWildcardMatcher : public QObject
 {
     Q_OBJECT
 
-private Q_SLOTS:
+private slots:
     void testMatcher();
     void testMatcher_data();
 

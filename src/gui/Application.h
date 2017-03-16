@@ -29,14 +29,15 @@ class Application : public QApplication
 
 public:
     Application(int& argc, char** argv);
+    QWidget* mainWindow() const;
     void setMainWindow(QWidget* mainWindow);
 
     bool event(QEvent* event) override;
 
-Q_SIGNALS:
+signals:
     void openFile(const QString& filename);
 
-private Q_SLOTS:
+private slots:
 #if defined(Q_OS_UNIX)
     void quitBySignal();
 #endif

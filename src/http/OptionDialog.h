@@ -29,11 +29,11 @@ public:
     explicit OptionDialog(QWidget *parent = nullptr);
     ~OptionDialog();
 
-public Q_SLOTS:
+public slots:
     void loadSettings();
     void saveSettings();
 
-Q_SIGNALS:
+signals:
     void removeSharedEncryptionKeys();
     void removeStoredPermissions();
 

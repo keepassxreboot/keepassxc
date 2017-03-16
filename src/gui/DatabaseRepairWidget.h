@@ -27,14 +27,14 @@ class DatabaseRepairWidget : public DatabaseOpenWidget
 public:
     explicit DatabaseRepairWidget(QWidget* parent = nullptr);
 
-Q_SIGNALS:
+signals:
     void success();
     void error();
 
 protected:
     void openDatabase() override;
 
-private Q_SLOTS:
+private slots:
     void processEditFinished(bool result);
 };
 

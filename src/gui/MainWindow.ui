@@ -123,9 +123,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="WelcomeWidget" name="welcomeWidget" native="true">
-            <zorder>horizontalSpacer_2</zorder>
-           </widget>
+           <widget class="WelcomeWidget" name="welcomeWidget" native="true"/>
           </item>
           <item>
            <spacer name="horizontalSpacer_2">

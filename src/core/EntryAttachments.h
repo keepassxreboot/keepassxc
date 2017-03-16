@@ -38,7 +38,7 @@ public:
     bool operator==(const EntryAttachments& other) const;
     bool operator!=(const EntryAttachments& other) const;
 
-Q_SIGNALS:
+signals:
     void modified();
     void keyModified(const QString& key);
     void aboutToBeAdded(const QString& key);

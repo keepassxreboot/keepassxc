@@ -25,6 +25,7 @@
 #include "core/Metadata.h"
 #include "crypto/Random.h"
 #include "format/KeePass2.h"
+#include "format/KeePass2Reader.h"
 
 QHash<Uuid, Database*> Database::m_uuidMap;
 
@@ -176,6 +177,17 @@ QByteArray Database::transformedMasterKey() const
     return m_data.transformedMasterKey;
 }
 
+QByteArray Database::challengeResponseKey() const
+{
+    return m_data.challengeResponseKey;
+}
+
+bool Database::challengeMasterSeed(const QByteArray& masterSeed)
+{
+    m_data.masterSeed = masterSeed;
+    return m_data.key.challenge(masterSeed, m_data.challengeResponseKey);
+}
+
 void Database::setCipher(const Uuid& cipher)
 {
     Q_ASSERT(!cipher.isNull());
@@ -227,7 +239,7 @@ bool Database::setKey(const CompositeKey& key, const QByteArray& transformSeed,
     if (updateChangedTime) {
         m_metadata->setMasterKeyChanged(QDateTime::currentDateTimeUtc());
     }
-    Q_EMIT modifiedImmediate();
+    emit modifiedImmediate();
 
     return true;
 }
@@ -245,6 +257,20 @@ bool Database::hasKey() const
 bool Database::verifyKey(const CompositeKey& key) const
 {
     Q_ASSERT(hasKey());
+
+    if (!m_data.challengeResponseKey.isEmpty()) {
+        QByteArray result;
+
+        if (!key.challenge(m_data.masterSeed, result)) {
+            // challenge failed, (YubiKey?) removed?
+            return false;
+        }
+
+        if (m_data.challengeResponseKey != result) {
+            // wrong response from challenged device(s)
+            return false;
+        }
+    }
 
     return (m_data.key.rawKey() == key.rawKey());
 }
@@ -285,7 +311,7 @@ void Database::recycleGroup(Group* group)
 void Database::merge(const Database* other)
 {
     m_rootGroup->merge(other->rootGroup());
-    Q_EMIT modified();
+    emit modified();
 }
 
 void Database::setEmitModified(bool value)
@@ -330,3 +356,27 @@ const CompositeKey & Database::key() const
     return m_data.key;
 }
 
+Database* Database::openDatabaseFile(QString fileName, CompositeKey key)
+{
+
+    QFile dbFile(fileName);
+    if (!dbFile.exists()) {
+        qCritical("File %s does not exist.", qPrintable(fileName));
+        return nullptr;
+    }
+    if (!dbFile.open(QIODevice::ReadOnly)) {
+        qCritical("Unable to open file %s.", qPrintable(fileName));
+        return nullptr;
+    }
+
+    KeePass2Reader reader;
+    Database* db = reader.readDatabase(&dbFile, key);
+
+    if (reader.hasError()) {
+        qCritical("Error while parsing the database: %s", qPrintable(reader.errorString()));
+        return nullptr;
+    }
+
+    return db;
+
+}

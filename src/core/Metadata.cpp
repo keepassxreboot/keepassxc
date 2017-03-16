@@ -55,7 +55,7 @@ template <class P, class V> bool Metadata::set(P& property, const V& value)
 {
     if (property != value) {
         property = value;
-        Q_EMIT modified();
+        emit modified();
         return true;
     }
     else {
@@ -69,7 +69,7 @@ template <class P, class V> bool Metadata::set(P& property, const V& value, QDat
         if (m_updateDatetime) {
             dateTime = QDateTime::currentDateTimeUtc();
         }
-        Q_EMIT modified();
+        emit modified();
         return true;
     }
     else {
@@ -308,7 +308,7 @@ void Metadata::setGenerator(const QString& value)
 void Metadata::setName(const QString& value)
 {
     if (set(m_data.name, value, m_data.nameChanged)) {
-        Q_EMIT nameTextChanged();
+        emit nameTextChanged();
     }
 }
 
@@ -391,7 +391,7 @@ void Metadata::addCustomIcon(const Uuid& uuid, const QImage& icon)
     m_customIconScaledCacheKeys[uuid] = QPixmapCache::Key();
     m_customIconsOrder.append(uuid);
     Q_ASSERT(m_customIcons.count() == m_customIconsOrder.count());
-    Q_EMIT modified();
+    emit modified();
 }
 
 void Metadata::addCustomIconScaled(const Uuid& uuid, const QImage& icon)
@@ -422,7 +422,7 @@ void Metadata::removeCustomIcon(const Uuid& uuid)
     m_customIconScaledCacheKeys.remove(uuid);
     m_customIconsOrder.removeAll(uuid);
     Q_ASSERT(m_customIcons.count() == m_customIconsOrder.count());
-    Q_EMIT modified();
+    emit modified();
 }
 
 void Metadata::copyCustomIcons(const QSet<Uuid>& iconList, const Metadata* otherMetadata)
@@ -504,7 +504,7 @@ void Metadata::addCustomField(const QString& key, const QString& value)
     Q_ASSERT(!m_customFields.contains(key));
 
     m_customFields.insert(key, value);
-    Q_EMIT modified();
+    emit modified();
 }
 
 void Metadata::removeCustomField(const QString& key)
@@ -512,5 +512,5 @@ void Metadata::removeCustomField(const QString& key)
     Q_ASSERT(m_customFields.contains(key));
 
     m_customFields.remove(key);
-    Q_EMIT modified();
+    emit modified();
 }

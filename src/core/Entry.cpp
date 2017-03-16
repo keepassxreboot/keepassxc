@@ -62,7 +62,7 @@ template <class T> inline bool Entry::set(T& property, const T& value)
 {
     if (property != value) {
         property = value;
-        Q_EMIT modified();
+        emit modified();
         return true;
     }
     else {
@@ -299,7 +299,7 @@ void Entry::setIcon(int iconNumber)
         m_data.iconNumber = iconNumber;
         m_data.customIcon = Uuid();
 
-        Q_EMIT modified();
+        emit modified();
         emitDataChanged();
     }
 }
@@ -312,7 +312,7 @@ void Entry::setIcon(const Uuid& uuid)
         m_data.customIcon = uuid;
         m_data.iconNumber = 0;
 
-        Q_EMIT modified();
+        emit modified();
         emitDataChanged();
     }
 }
@@ -392,7 +392,7 @@ void Entry::setExpires(const bool& value)
 {
     if (m_data.timeInfo.expires() != value) {
         m_data.timeInfo.setExpires(value);
-        Q_EMIT modified();
+        emit modified();
     }
 }
 
@@ -400,7 +400,7 @@ void Entry::setExpiryTime(const QDateTime& dateTime)
 {
     if (m_data.timeInfo.expiryTime() != dateTime) {
         m_data.timeInfo.setExpiryTime(dateTime);
-        Q_EMIT modified();
+        emit modified();
     }
 }
 
@@ -419,7 +419,7 @@ void Entry::addHistoryItem(Entry* entry)
     Q_ASSERT(!entry->parent());
 
     m_history.append(entry);
-    Q_EMIT modified();
+    emit modified();
 }
 
 void Entry::removeHistoryItems(const QList<Entry*>& historyEntries)
@@ -437,7 +437,7 @@ void Entry::removeHistoryItems(const QList<Entry*>& historyEntries)
         delete entry;
     }
 
-    Q_EMIT modified();
+    emit modified();
 }
 
 void Entry::truncateHistory()
@@ -633,7 +633,7 @@ void Entry::setGroup(Group* group)
 
 void Entry::emitDataChanged()
 {
-    Q_EMIT dataChanged(this);
+    emit dataChanged(this);
 }
 
 const Database* Entry::database() const
@@ -649,7 +649,8 @@ const Database* Entry::database() const
 QString Entry::resolveMultiplePlaceholders(const QString& str) const
 {
     QString result = str;
-    QRegExp tmplRegEx("({.*})", Qt::CaseInsensitive, QRegExp::RegExp2);
+    QRegExp tmplRegEx("(\\{.*\\})", Qt::CaseInsensitive, QRegExp::RegExp2);
+    tmplRegEx.setMinimal(true);
     QStringList tmplList;
     int pos = 0;
 

@@ -27,7 +27,7 @@ class MessageWidget : public KMessageWidget
 public:
     explicit MessageWidget(QWidget* parent = 0);
 
-public Q_SLOTS:
+public slots:
     void showMessage(const QString& text, MessageWidget::MessageType type);
     void hideMessage();
 

@@ -49,7 +49,7 @@ public:
 private:
     QModelIndex parent(Group* group) const;
 
-private Q_SLOTS:
+private slots:
     void groupDataChanged(Group* group);
     void groupAboutToRemove(Group* group);
     void groupRemoved();

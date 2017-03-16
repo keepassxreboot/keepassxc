@@ -1,16 +1,16 @@
-# KeePassXC - KeePass Cross-platform Community Edition
+# KeePassXC [![Travis Build Status](https://travis-ci.org/keepassxreboot/keepassxc.svg?branch=develop)](https://travis-ci.org/keepassxreboot/keepassxc)  [![Coverage Status](https://coveralls.io/repos/github/keepassxreboot/keepassxc/badge.svg)](https://coveralls.io/github/keepassxreboot/keepassxc) <a href='https://pledgie.com/campaigns/33487'><img alt='KeePassXC Authenticode Certificate Campaign!' align=right  src='https://pledgie.com/campaigns/33487.png?skin_name=chrome' border='0'></a>
 
-[![Travis Build Status](https://travis-ci.org/keepassxreboot/keepassxc.svg?branch=develop)](https://travis-ci.org/keepassxreboot/keepassxc)  [![Coverage Status](https://coveralls.io/repos/github/keepassxreboot/keepassxc/badge.svg)](https://coveralls.io/github/keepassxreboot/keepassxc)
-<a href='https://pledgie.com/campaigns/33487'><img alt='KeePassXC Authenticode Certificate Campaign!' align=right  src='https://pledgie.com/campaigns/33487.png?skin_name=chrome' border='0'></a>
+KeePass Cross-platform Community Edition
 
 ## About
-KeePassXC is a community fork of [KeePassX](https://www.keepassx.org/) with the goal to extend and improve it with new features and bugfixes to provide a feature-rich, fully cross-platform and modern open-source password manager.
+[KeePassXC](https://keepassxc.org) is a community fork of [KeePassX](https://www.keepassx.org/) with the goal to extend and improve it with new features and bugfixes to provide a feature-rich, fully cross-platform and modern open-source password manager.
 
 
 ## Additional features compared to KeePassX
 - Auto-Type on all three major platforms (Linux, Windows, OS X)
 - Stand-alone password generator
 - Password strength meter
+- YubiKey HMAC-SHA1 authentication for unlocking databases
 - Using website favicons as entry icons
 - Merging of databases
 - Automatic reload when the database changed on disk
@@ -55,8 +55,19 @@ make -j8
 sudo make install
 ```
 
-To enable autotype, add `-DWITH_XC_AUTOTYPE=ON` to the `cmake` command. KeePassHTTP support is compiled in by adding `-DWITH_XC_HTTP=ON`. If these options are not specified, KeePassXC will be built without these plugins.
+cmake accepts the following options:
 
+```
+  -DWITH_XC_AUTOTYPE=[ON|OFF] Enable/Disable Auto-Type (default: ON)
+  -DWITH_XC_HTTP=[ON|OFF] Enable/Disable KeePassHTTP and custom icon downloads (default: OFF)
+  -DWITH_XC_YUBIKEY=[ON|OFF] Enable/Disable YubiKey HMAC-SHA1 authentication support (default: OFF)
+
+  -DWITH_TESTS=[ON|OFF] Enable/Disable building of unit tests (default: ON)
+  -DWITH_GUI_TESTS=[ON|OFF] Enable/Disable building of GUI tests (default: OFF)
+  -DWITH_DEV_BUILD=[ON|OFF] Enable/Disable deprecated method warnings (default: OFF)
+  -DWITH_ASAN=[ON|OFF] Enable/Disable address sanitizer checks (Linux only) (default: OFF)
+  -DWITH_COVERAGE=[ON|OFF] Enable/Disable coverage tests (GCC only) (default: OFF)
+```
 
 ### Contributing
 

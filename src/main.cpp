@@ -29,6 +29,10 @@
 #include "gui/csvImport/CsvImportWizard.h"
 #include "gui/MessageBox.h"
 
+#if defined(WITH_ASAN) && defined(WITH_LSAN)
+#include <sanitizer/lsan_interface.h>
+#endif
+
 #ifdef QT_STATIC
 #include <QtPlugin>
 
@@ -131,6 +135,14 @@ int main(int argc, char** argv)
             }
         }
     }
-    
-    return app.exec();
+
+    int exitCode = app.exec();
+
+#if defined(WITH_ASAN) && defined(WITH_LSAN)
+    // do leak check here to prevent massive tail of end-of-process leak errors from third-party libraries
+    __lsan_do_leak_check();
+    __lsan_disable();
+#endif
+
+    return exitCode;
 }

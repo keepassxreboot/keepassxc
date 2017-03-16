@@ -63,7 +63,7 @@ public:
 
     static const int LastDatabasesCount;
 
-public Q_SLOTS:
+public slots:
     void newDatabase();
     void openDatabase();
     void importCsv();
@@ -81,7 +81,7 @@ public Q_SLOTS:
     void performGlobalAutoType();
     void lockDatabases();
 
-Q_SIGNALS:
+signals:
     void tabNameChanged();
     void databaseWithFileClosed(QString filePath);
     void activateDatabaseChanged(DatabaseWidget* dbWidget);
@@ -92,7 +92,7 @@ Q_SIGNALS:
     void messageDismissGlobal();
     void messageDismissTab();
 
-private Q_SLOTS:
+private slots:
     void updateTabName(Database* db);
     void updateTabNameFromDbSender();
     void updateTabNameFromDbWidgetSender();
@@ -117,7 +117,7 @@ private:
 
     KeePass2Writer m_writer;
     QHash<Database*, DatabaseManagerStruct> m_dbList;
-    DatabaseWidgetStateSync* m_dbWidgetSateSync;
+    DatabaseWidgetStateSync* m_dbWidgetStateSync;
 };
 
 #endif // KEEPASSX_DATABASETABWIDGET_H
