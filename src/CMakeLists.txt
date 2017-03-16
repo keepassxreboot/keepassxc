@@ -164,6 +164,7 @@ if(WITH_XC_HTTP)
 endif()
 
 add_subdirectory(autotype)
+add_subdirectory(cli)
 
 set(autotype_SOURCES
     core/Tools.cpp
