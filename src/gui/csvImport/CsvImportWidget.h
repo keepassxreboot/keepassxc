@@ -45,10 +45,10 @@ public:
     ~CsvImportWidget();
     void load(const QString& filename, Database* const db);
 
-Q_SIGNALS:
+signals:
     void editFinished(bool accepted);
 
-private Q_SLOTS:
+private slots:
     void parse();
     void comboChanged(int comboId);
     void skippedChanged(int rows);

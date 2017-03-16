@@ -77,7 +77,7 @@ public:
      */
     void detect();
 
-Q_SIGNALS:
+signals:
     /** Emitted in response to detect() when a device is found
      *
      * @slot is the slot number detected

@@ -38,10 +38,10 @@ public:
     ~CsvImportWizard();
     void load(const QString& filename, Database *database);
 
-Q_SIGNALS:
+signals:
     void importFinished(bool accepted);
 
-private Q_SLOTS:
+private slots:
     void keyFinished(bool accepted);
     void parseFinished(bool accepted);
 

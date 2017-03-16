@@ -634,7 +634,7 @@ void DatabaseWidget::setCurrentWidget(QWidget* widget)
 void DatabaseWidget::csvImportFinished(bool accepted)
 {
     if (!accepted) {
-        Q_EMIT closeRequest();
+        emit closeRequest();
     }
     else {
         setCurrentWidget(m_mainWidget);

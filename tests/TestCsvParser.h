@@ -32,7 +32,7 @@ class TestCsvParser : public QObject
 
 public:
 
-private Q_SLOTS:
+private slots:
     void init();
     void cleanup();
     void initTestCase();
