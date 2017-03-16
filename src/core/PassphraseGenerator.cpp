@@ -63,7 +63,7 @@ void PassphraseGenerator::setWordlist(QString path)
         m_wordlist.append(in.readLine());
     }
 
-    if (m_wordlist.size() < 1000) {
+    if (m_wordlist.size() < 4000) {
         qWarning("Wordlist too short!");
         return;
     }
