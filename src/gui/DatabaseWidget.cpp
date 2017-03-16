@@ -407,7 +407,7 @@ void DatabaseWidget::copyTitle()
         return;
     }
 
-    setClipboardTextAndMinimize(currentEntry->resolvePlaceholder(currentEntry->title()));
+    setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->title()));
 }
 
 void DatabaseWidget::copyUsername()
@@ -418,7 +418,7 @@ void DatabaseWidget::copyUsername()
         return;
     }
 
-    setClipboardTextAndMinimize(currentEntry->resolvePlaceholder(currentEntry->username()));
+    setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->username()));
 }
 
 void DatabaseWidget::copyPassword()
@@ -429,7 +429,7 @@ void DatabaseWidget::copyPassword()
         return;
     }
 
-    setClipboardTextAndMinimize(currentEntry->resolvePlaceholder(currentEntry->password()));
+    setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->password()));
 }
 
 void DatabaseWidget::copyURL()
@@ -440,7 +440,7 @@ void DatabaseWidget::copyURL()
         return;
     }
 
-    setClipboardTextAndMinimize(currentEntry->resolvePlaceholder(currentEntry->url()));
+    setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->url()));
 }
 
 void DatabaseWidget::copyNotes()
@@ -451,7 +451,7 @@ void DatabaseWidget::copyNotes()
         return;
     }
 
-    setClipboardTextAndMinimize(currentEntry->resolvePlaceholder(currentEntry->notes()));
+    setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->notes()));
 }
 
 void DatabaseWidget::copyAttribute(QAction* action)
@@ -1176,7 +1176,7 @@ bool DatabaseWidget::currentEntryHasUsername()
         Q_ASSERT(false);
         return false;
     }
-    return !currentEntry->resolvePlaceholder(currentEntry->username()).isEmpty();
+    return !currentEntry->resolveMultiplePlaceholders(currentEntry->username()).isEmpty();
 }
 
 bool DatabaseWidget::currentEntryHasPassword()
@@ -1186,7 +1186,7 @@ bool DatabaseWidget::currentEntryHasPassword()
         Q_ASSERT(false);
         return false;
     }
-    return !currentEntry->resolvePlaceholder(currentEntry->password()).isEmpty();
+    return !currentEntry->resolveMultiplePlaceholders(currentEntry->password()).isEmpty();
 }
 
 bool DatabaseWidget::currentEntryHasUrl()
@@ -1196,7 +1196,7 @@ bool DatabaseWidget::currentEntryHasUrl()
         Q_ASSERT(false);
         return false;
     }
-    return !currentEntry->resolvePlaceholder(currentEntry->url()).isEmpty();
+    return !currentEntry->resolveMultiplePlaceholders(currentEntry->url()).isEmpty();
 }
 
 bool DatabaseWidget::currentEntryHasNotes()
@@ -1206,7 +1206,7 @@ bool DatabaseWidget::currentEntryHasNotes()
         Q_ASSERT(false);
         return false;
     }
-    return !currentEntry->resolvePlaceholder(currentEntry->notes()).isEmpty();
+    return !currentEntry->resolveMultiplePlaceholders(currentEntry->notes()).isEmpty();
 }
 
 GroupView* DatabaseWidget::groupView() {

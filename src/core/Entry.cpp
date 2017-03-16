@@ -649,7 +649,8 @@ const Database* Entry::database() const
 QString Entry::resolveMultiplePlaceholders(const QString& str) const
 {
     QString result = str;
-    QRegExp tmplRegEx("({.*})", Qt::CaseInsensitive, QRegExp::RegExp2);
+    QRegExp tmplRegEx("(\\{.*\\})", Qt::CaseInsensitive, QRegExp::RegExp2);
+    tmplRegEx.setMinimal(true);
     QStringList tmplList;
     int pos = 0;
 
