@@ -316,6 +316,8 @@ void TestGui::testAddEntry()
     QTest::keyClicks(titleEdit, "something 3");
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
 
+    QApplication::processEvents();
+
     // Confirm that 4 entries now exist
     QTRY_COMPARE(entryView->model()->rowCount(), 4);
 }
