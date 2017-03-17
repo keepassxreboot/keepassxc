@@ -27,7 +27,7 @@
 #include "crypto/Crypto.h"
 #include "autotype/AutoType.h"
 #include "autotype/AutoTypePlatformPlugin.h"
-#include "autotype/test/AutoTypeTestInterface.h"
+#include "autotype/AutoTypeTestInterface.h"
 #include "gui/MessageBox.h"
 
 QTEST_GUILESS_MAIN(TestAutoType)

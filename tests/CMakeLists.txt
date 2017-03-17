@@ -153,6 +153,8 @@ if(WITH_XC_AUTOTYPE)
   add_unit_test(NAME testautotype SOURCES TestAutoType.cpp
               LIBS ${TEST_LIBRARIES})
   set_target_properties(testautotype PROPERTIES ENABLE_EXPORTS ON)
+
+  add_subdirectory(autotype)
 endif()
 
 add_unit_test(NAME testentry SOURCES TestEntry.cpp

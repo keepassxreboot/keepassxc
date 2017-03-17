@@ -1,5 +1,6 @@
 set(autotype_test_SOURCES
     AutoTypeTest.cpp
+    AutoTypeTestInterface.h
 )
 
 add_library(keepassx-autotype-test MODULE ${autotype_test_SOURCES})
