@@ -75,7 +75,7 @@ void PassphraseGenerator::setWordlist(QString path)
     }
 }
 
-void PassphraseGenerator::setWordseparator(QChar separator) {
+void PassphraseGenerator::setWordseparator(QString separator) {
     m_separator = separator;
 }
 

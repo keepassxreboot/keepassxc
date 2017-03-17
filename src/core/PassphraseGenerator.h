@@ -30,14 +30,14 @@ public:
     double calculateEntropy(QString passphrase);
     void setWordCount(int wordCount);
     void setWordlist(QString path);
-    void setWordseparator(QChar separator);
+    void setWordseparator(QString separator);
     bool isValid() const;
 
     QString generatePassphrase() const;
 
 private:
     int m_wordCount;
-    QChar m_separator;
+    QString m_separator;
     QVector<QString> m_wordlist;
 
     Q_DISABLE_COPY(PassphraseGenerator)

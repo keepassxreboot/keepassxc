@@ -48,7 +48,7 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     connect(m_ui->sliderWordCount, SIGNAL(valueChanged(int)), SLOT(dicewareSliderMoved()));
     connect(m_ui->spinBoxWordCount, SIGNAL(valueChanged(int)), SLOT(dicewareSpinBoxChanged()));
 
-    connect(m_ui->comboBoxWordSeparator, SIGNAL(currentIndexChanged(int)), SLOT(updateGenerator()));
+    connect(m_ui->editWordSeparator, SIGNAL(textChanged(QString)), SLOT(updateGenerator()));
     connect(m_ui->comboBoxWordList, SIGNAL(currentIndexChanged(int)), SLOT(updateGenerator()));
     connect(m_ui->optionButtons, SIGNAL(buttonClicked(int)), SLOT(updateGenerator()));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(updateGenerator()));
@@ -63,7 +63,8 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
         m_ui->strengthLabel->setFont(defaultFont);
     }
 
-    m_ui->comboBoxWordSeparator->addItems(QStringList() << " " << "#" << "_" << ";" << "-" << ":" << "." << "@");
+    // set default separator to Space
+    m_ui->editWordSeparator->setText(" ");
 
     QDir path(filePath()->dataPath("wordlists/"));
     QStringList files = path.entryList(QDir::Files);
@@ -97,7 +98,7 @@ void PasswordGeneratorWidget::loadSettings()
 
     // Diceware config
     m_ui->spinBoxWordCount->setValue(config()->get("generator/WordCount", 6).toInt());
-    m_ui->comboBoxWordSeparator->setCurrentIndex(config()->get("generator/WordSeparator", 0).toInt());
+    m_ui->editWordSeparator->setText(config()->get("generator/WordSeparator", " ").toString());
     m_ui->comboBoxWordList->setCurrentText(config()->get("generator/WordList", "eff_large.wordlist").toString());
 
     // Password or diceware?
@@ -117,7 +118,7 @@ void PasswordGeneratorWidget::saveSettings()
 
     // Diceware config
     config()->set("generator/WordCount", m_ui->spinBoxWordCount->value());
-    config()->set("generator/WordSeparator", m_ui->comboBoxWordSeparator->currentIndex());
+    config()->set("generator/WordSeparator", m_ui->editWordSeparator->text());
     config()->set("generator/WordList", m_ui->comboBoxWordList->currentText());
 
     // Password or diceware?
@@ -364,7 +365,7 @@ void PasswordGeneratorWidget::updateGenerator()
             QString path = filePath()->dataPath("wordlists/" + m_ui->comboBoxWordList->currentText());
             m_dicewareGenerator->setWordlist(path);
         }
-        m_dicewareGenerator->setWordseparator(m_ui->comboBoxWordSeparator->currentText().at(0));
+        m_dicewareGenerator->setWordseparator(m_ui->editWordSeparator->text());
 
         if (m_dicewareGenerator->isValid()) {
             m_ui->buttonGenerate->setEnabled(true);
