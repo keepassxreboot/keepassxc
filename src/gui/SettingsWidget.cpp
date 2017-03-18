@@ -99,6 +99,12 @@ void SettingsWidget::addSettingsPage(ISettingsPage* page)
 
 void SettingsWidget::loadSettings()
 {
+
+    if (config()->hasAccessError()) {
+        showMessage(
+            tr("Access error for config file ") + config()->getFileName(), MessageWidget::Error);
+    }
+
     m_generalUi->rememberLastDatabasesCheckBox->setChecked(config()->get("RememberLastDatabases").toBool());
     m_generalUi->rememberLastKeyFilesCheckBox->setChecked(config()->get("RememberLastKeyFiles").toBool());
     m_generalUi->openPreviousDatabasesOnStartupCheckBox->setChecked(
@@ -154,6 +160,15 @@ void SettingsWidget::loadSettings()
 
 void SettingsWidget::saveSettings()
 {
+
+    if (config()->hasAccessError()) {
+        showMessage(
+            tr("Access error for config file ") + config()->getFileName(), MessageWidget::Error);
+        // We prevent closing the settings page if we could not write to
+        // the config file.
+        return;
+    }
+
     config()->set("RememberLastDatabases", m_generalUi->rememberLastDatabasesCheckBox->isChecked());
     config()->set("RememberLastKeyFiles", m_generalUi->rememberLastKeyFilesCheckBox->isChecked());
     config()->set("OpenPreviousDatabasesOnStartup",
