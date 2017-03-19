@@ -317,7 +317,7 @@ MainWindow::MainWindow()
 
     if (config()->hasAccessError()) {
         m_ui->globalMessageWidget->showMessage(
-            tr("Access error for config file ") + config()->getFileName(), MessageWidget::Error);
+            tr("Access error for config file %1").arg(config()->getFileName()), MessageWidget::Error);
     }
 
 }

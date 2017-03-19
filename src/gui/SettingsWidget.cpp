@@ -102,7 +102,7 @@ void SettingsWidget::loadSettings()
 
     if (config()->hasAccessError()) {
         showMessage(
-            tr("Access error for config file ") + config()->getFileName(), MessageWidget::Error);
+            tr("Access error for config file %1").arg(config()->getFileName()), MessageWidget::Error);
     }
 
     m_generalUi->rememberLastDatabasesCheckBox->setChecked(config()->get("RememberLastDatabases").toBool());
@@ -163,7 +163,7 @@ void SettingsWidget::saveSettings()
 
     if (config()->hasAccessError()) {
         showMessage(
-            tr("Access error for config file ") + config()->getFileName(), MessageWidget::Error);
+            tr("Access error for config file %1").arg(config()->getFileName()), MessageWidget::Error);
         // We prevent closing the settings page if we could not write to
         // the config file.
         return;
