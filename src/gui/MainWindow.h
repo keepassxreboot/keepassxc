@@ -65,6 +65,7 @@ private slots:
     void switchToOpenDatabase();
     void switchToDatabaseFile(QString file);
     void switchToKeePass1Database();
+    void switchToCsvImport();
     void closePasswordGen();
     void databaseStatusChanged(DatabaseWidget *dbWidget);
     void databaseTabChanged(int tabIndex);

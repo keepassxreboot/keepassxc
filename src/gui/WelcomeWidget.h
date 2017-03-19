@@ -34,13 +34,14 @@ public:
     ~WelcomeWidget();
 
 signals:
-	void newDatabase();
-	void openDatabase();
-	void openDatabaseFile(QString);
-	void importKeePass1Database();
+    void newDatabase();
+    void openDatabase();
+    void openDatabaseFile(QString);
+    void importKeePass1Database();
+    void importCsv();
 
 private slots:
-	void openDatabaseFromFile(QListWidgetItem* item);
+    void openDatabaseFromFile(QListWidgetItem* item);
 
 private:
     const QScopedPointer<Ui::WelcomeWidget> m_ui;

@@ -51,6 +51,7 @@ WelcomeWidget::WelcomeWidget(QWidget* parent)
     connect(m_ui->buttonNewDatabase, SIGNAL(clicked()), SIGNAL(newDatabase()));
     connect(m_ui->buttonOpenDatabase, SIGNAL(clicked()), SIGNAL(openDatabase()));
     connect(m_ui->buttonImportKeePass1, SIGNAL(clicked()), SIGNAL(importKeePass1Database()));
+    connect(m_ui->buttonImportCSV, SIGNAL(clicked()), SIGNAL(importCsv()));
     connect(m_ui->recentListWidget, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, 
     	SLOT(openDatabaseFromFile(QListWidgetItem*)));
 }

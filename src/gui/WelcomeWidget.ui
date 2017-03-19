@@ -128,6 +128,13 @@
     </widget>
    </item>
    <item>
+    <widget class="QPushButton" name="buttonImportCSV">
+     <property name="text">
+      <string>Import from plain text CSV file</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <spacer name="verticalSpacer_2">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
