@@ -58,7 +58,7 @@ void TestKeePass2RandomStream::test()
     }
 
 
-    KeePass2RandomStream randomStream;
+    KeePass2RandomStream randomStream(KeePass2::Salsa20);
     bool ok;
     QVERIFY(randomStream.init(key));
     QByteArray randomStreamData;

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,24 +15,29 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTKEEPASS2READER_H
-#define KEEPASSX_TESTKEEPASS2READER_H
+#include "Kdf.h"
 
-#include <QObject>
+#include <QThread>
 
-class TestKeePass2Reader : public QObject
+#ifndef KEEPASSXC_KDF_P_H
+#define KEEPASSXC_KDF_P_H
+
+class Kdf::BenchmarkThread : public QThread
 {
     Q_OBJECT
 
-private slots:
-    void initTestCase();
-    void testNonAscii();
-    void testCompressed();
-    void testProtectedStrings();
-    void testBrokenHeaderHash();
-    void testFormat200();
-    void testFormat300();
-    void testFormat400();
+public:
+    explicit BenchmarkThread(int msec, const Kdf* kdf);
+
+    int rounds();
+
+protected:
+    void run();
+
+private:
+    int m_rounds;
+    int m_msec;
+    const Kdf* m_kdf;
 };
 
-#endif // KEEPASSX_TESTKEEPASS2READER_H
+#endif // KEEPASSXC_KDF_P_H

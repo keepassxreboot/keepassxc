@@ -21,11 +21,13 @@
 #include <QByteArray>
 
 #include "crypto/SymmetricCipher.h"
+#include "KeePass2.h"
 
 class KeePass2RandomStream
 {
 public:
-    KeePass2RandomStream();
+    KeePass2RandomStream(KeePass2::ProtectedStreamAlgo algo);
+
     bool init(const QByteArray& key);
     QByteArray randomBytes(int size, bool* ok);
     QByteArray process(const QByteArray& data, bool* ok);
@@ -38,6 +40,8 @@ private:
     SymmetricCipher m_cipher;
     QByteArray m_buffer;
     int m_offset;
+
+    static SymmetricCipher::Algorithm mapAlgo(KeePass2::ProtectedStreamAlgo algo);
 };
 
 #endif // KEEPASSX_KEEPASS2RANDOMSTREAM_H

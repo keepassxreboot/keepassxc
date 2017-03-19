@@ -20,30 +20,44 @@
 #include <QBuffer>
 #include <QFile>
 
+#include "core/Endian.h"
 #include "core/Metadata.h"
 #include "format/KeePass2RandomStream.h"
 #include "streams/QtIOCompressor"
 
 KeePass2XmlWriter::KeePass2XmlWriter()
-    : m_db(nullptr)
-    , m_meta(nullptr)
-    , m_randomStream(nullptr)
-    , m_error(false)
+    : KeePass2XmlWriter(KeePass2::FILE_VERSION_3)
+{
+}
+
+KeePass2XmlWriter::KeePass2XmlWriter(quint32 version)
+    : KeePass2XmlWriter(version, QHash<QByteArray, int>())
+{
+}
+
+KeePass2XmlWriter::KeePass2XmlWriter(quint32 version, QHash<QByteArray, int> idMap)
+        : m_db(nullptr)
+        , m_meta(nullptr)
+        , m_randomStream(nullptr)
+        , m_idMap(idMap)
+        , m_error(false)
+        , m_version(version)
 {
     m_xml.setAutoFormatting(true);
     m_xml.setAutoFormattingIndent(-1); // 1 tab
     m_xml.setCodec("UTF-8");
 }
 
-void KeePass2XmlWriter::writeDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream,
-                                      const QByteArray& headerHash)
+void KeePass2XmlWriter::writeDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream, const QByteArray& headerHash)
 {
     m_db = db;
     m_meta = db->metadata();
     m_randomStream = randomStream;
     m_headerHash = headerHash;
 
-    generateIdMap();
+    if (m_version < KeePass2::FILE_VERSION_4 && m_idMap.isEmpty()) {
+        generateIdMap();
+    }
 
     m_xml.setDevice(device);
 
@@ -99,9 +113,8 @@ void KeePass2XmlWriter::generateIdMap()
 void KeePass2XmlWriter::writeMetadata()
 {
     m_xml.writeStartElement("Meta");
-
     writeString("Generator", m_meta->generator());
-    if (!m_headerHash.isEmpty()) {
+    if (m_version < KeePass2::FILE_VERSION_4 && !m_headerHash.isEmpty()) {
         writeBinary("HeaderHash", m_headerHash);
     }
     writeString("DatabaseName", m_meta->name());
@@ -126,7 +139,12 @@ void KeePass2XmlWriter::writeMetadata()
     writeUuid("LastTopVisibleGroup", m_meta->lastTopVisibleGroup());
     writeNumber("HistoryMaxItems", m_meta->historyMaxItems());
     writeNumber("HistoryMaxSize", m_meta->historyMaxSize());
-    writeBinaries();
+    if (m_version >= KeePass2::FILE_VERSION_4) {
+        writeDateTime("SettingsChanged", m_meta->settingsChanged());
+    }
+    if (m_version < KeePass2::FILE_VERSION_4) {
+        writeBinaries();
+    }
     writeCustomData();
 
     m_xml.writeEndElement();
@@ -476,13 +494,19 @@ void KeePass2XmlWriter::writeDateTime(const QString& qualifiedName, const QDateT
     Q_ASSERT(dateTime.isValid());
     Q_ASSERT(dateTime.timeSpec() == Qt::UTC);
 
-    QString dateTimeStr = dateTime.toString(Qt::ISODate);
+    QString dateTimeStr;
+    if (m_version < KeePass2::FILE_VERSION_4) {
+        dateTimeStr = dateTime.toString(Qt::ISODate);
 
-    // Qt < 4.8 doesn't append a 'Z' at the end
-    if (!dateTimeStr.isEmpty() && dateTimeStr[dateTimeStr.size() - 1] != 'Z') {
-        dateTimeStr.append('Z');
+        // Qt < 4.8 doesn't append a 'Z' at the end
+        if (!dateTimeStr.isEmpty() && dateTimeStr[dateTimeStr.size() - 1] != 'Z') {
+            dateTimeStr.append('Z');
+        }
+    } else {
+        qint64 secs = QDateTime(QDate(1, 1, 1), QTime(0, 0, 0, 0), Qt::UTC).secsTo(dateTime);
+        QByteArray secsBytes = Endian::int64ToBytes(secs, KeePass2::BYTEORDER);
+        dateTimeStr = QString::fromLatin1(secsBytes.toBase64());
     }
-
     writeString(qualifiedName, dateTimeStr);
 }
 

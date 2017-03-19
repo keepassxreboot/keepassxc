@@ -47,6 +47,9 @@ int SymmetricCipherGcrypt::gcryptAlgo(SymmetricCipher::Algorithm algo)
     case SymmetricCipher::Salsa20:
         return GCRY_CIPHER_SALSA20;
 
+    case SymmetricCipher::ChaCha20:
+        return GCRY_CIPHER_CHACHA20;
+
     default:
         Q_ASSERT(false);
         return -1;

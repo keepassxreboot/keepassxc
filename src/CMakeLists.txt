@@ -59,10 +59,14 @@ set(keepassx_SOURCES
     crypto/SymmetricCipher.cpp
     crypto/SymmetricCipherBackend.h
     crypto/SymmetricCipherGcrypt.cpp
+    crypto/kdf/Kdf.cpp
+    crypto/kdf/Kdf_p.h
+    crypto/kdf/AesKdf.cpp
+    crypto/kdf/Argon2Kdf.cpp
     format/CsvExporter.cpp
     format/KeePass1.h
     format/KeePass1Reader.cpp
-    format/KeePass2.h
+    format/KeePass2.cpp
     format/KeePass2RandomStream.cpp
     format/KeePass2Reader.cpp
     format/KeePass2Repair.cpp
@@ -118,13 +122,13 @@ set(keepassx_SOURCES
     gui/group/GroupModel.cpp
     gui/group/GroupView.cpp
     keys/CompositeKey.cpp
-    keys/CompositeKey_p.h
     keys/drivers/YubiKey.h
     keys/FileKey.cpp
     keys/Key.h
     keys/PasswordKey.cpp
     keys/YkChallengeResponseKey.cpp
     streams/HashedBlockStream.cpp
+    streams/HmacBlockStream.cpp
     streams/LayeredStream.cpp
     streams/qtiocompressor.cpp
     streams/StoreDataStream.cpp
@@ -218,6 +222,7 @@ target_link_libraries(keepassx_core
                       Qt5::Concurrent
                       Qt5::Widgets
                       ${GCRYPT_LIBRARIES}
+                      ${ARGON2_LIBRARIES}
                       ${GPGERROR_LIBRARIES}
                       ${ZLIB_LIBRARIES})
 if (UNIX AND NOT APPLE)

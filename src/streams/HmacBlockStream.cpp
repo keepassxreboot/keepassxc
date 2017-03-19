@@ -1,5 +1,5 @@
 /*
-*  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+*  Copyright (C) 2017 KeePassXC Team
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -15,35 +15,35 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "HashedBlockStream.h"
-
-#include <cstring>
+#include "HmacBlockStream.h"
 
 #include "core/Endian.h"
 #include "crypto/CryptoHash.h"
 
-const QSysInfo::Endian HashedBlockStream::ByteOrder = QSysInfo::LittleEndian;
+const QSysInfo::Endian HmacBlockStream::ByteOrder = QSysInfo::LittleEndian;
 
-HashedBlockStream::HashedBlockStream(QIODevice* baseDevice)
+HmacBlockStream::HmacBlockStream(QIODevice* baseDevice, QByteArray key)
     : LayeredStream(baseDevice)
     , m_blockSize(1024*1024)
+    , m_key(key)
 {
     init();
 }
 
-HashedBlockStream::HashedBlockStream(QIODevice* baseDevice, qint32 blockSize)
+HmacBlockStream::HmacBlockStream(QIODevice* baseDevice, QByteArray key, qint32 blockSize)
     : LayeredStream(baseDevice)
     , m_blockSize(blockSize)
+    , m_key(key)
 {
     init();
 }
 
-HashedBlockStream::~HashedBlockStream()
+HmacBlockStream::~HmacBlockStream()
 {
     close();
 }
 
-void HashedBlockStream::init()
+void HmacBlockStream::init()
 {
     m_buffer.clear();
     m_bufferPos = 0;
@@ -52,7 +52,7 @@ void HashedBlockStream::init()
     m_error = false;
 }
 
-bool HashedBlockStream::reset()
+bool HmacBlockStream::reset()
 {
     // Write final block(s) only if device is writable and we haven't
     // already written a final block.
@@ -74,7 +74,7 @@ bool HashedBlockStream::reset()
     return true;
 }
 
-void HashedBlockStream::close()
+void HmacBlockStream::close()
 {
     // Write final block(s) only if device is writable and we haven't
     // already written a final block.
@@ -90,7 +90,7 @@ void HashedBlockStream::close()
     LayeredStream::close();
 }
 
-qint64 HashedBlockStream::readData(char* data, qint64 maxSize)
+qint64 HmacBlockStream::readData(char* data, qint64 maxSize)
 {
     if (m_error) {
         return -1;
@@ -126,50 +126,45 @@ qint64 HashedBlockStream::readData(char* data, qint64 maxSize)
     return maxSize;
 }
 
-bool HashedBlockStream::readHashedBlock()
+bool HmacBlockStream::readHashedBlock()
 {
-    bool ok;
-
-    quint32 index = Endian::readUInt32(m_baseDevice, ByteOrder, &ok);
-    if (!ok || index != m_blockIndex) {
+    if (m_eof) {
+        return false;
+    }
+    QByteArray hmac = m_baseDevice->read(32);
+    if (hmac.size() != 32) {
         m_error = true;
-        setErrorString("Invalid block index.");
+        setErrorString("Invalid HMAC size.");
         return false;
     }
 
-    QByteArray hash = m_baseDevice->read(32);
-    if (hash.size() != 32) {
+    QByteArray blockSizeBytes = m_baseDevice->read(4);
+    if (blockSizeBytes.size() != 4) {
         m_error = true;
-        setErrorString("Invalid hash size.");
+        setErrorString("Invalid block size size.");
         return false;
     }
-
-    m_blockSize = Endian::readInt32(m_baseDevice, ByteOrder, &ok);
-    if (!ok || m_blockSize < 0) {
+    qint32 blockSize = Endian::bytesToInt32(blockSizeBytes, ByteOrder);
+    if (blockSize < 0) {
         m_error = true;
         setErrorString("Invalid block size.");
         return false;
     }
 
-    if (m_blockSize == 0) {
-        if (hash.count('\0') != 32) {
-            m_error = true;
-            setErrorString("Invalid hash of final block.");
-            return false;
-        }
-
-        m_eof = true;
-        return false;
-    }
-
-    m_buffer = m_baseDevice->read(m_blockSize);
-    if (m_buffer.size() != m_blockSize) {
+    m_buffer = m_baseDevice->read(blockSize);
+    if (m_buffer.size() != blockSize) {
         m_error = true;
         setErrorString("Block too short.");
         return false;
     }
 
-    if (hash != CryptoHash::hash(m_buffer, CryptoHash::Sha256)) {
+    CryptoHash hasher(CryptoHash::Sha256, true);
+    hasher.setKey(getCurrentHmacKey());
+    hasher.addData(Endian::uint64ToBytes(m_blockIndex, ByteOrder));
+    hasher.addData(blockSizeBytes);
+    hasher.addData(m_buffer);
+
+    if (hmac != hasher.result()) {
         m_error = true;
         setErrorString("Mismatch between hash and data.");
         return false;
@@ -178,10 +173,15 @@ bool HashedBlockStream::readHashedBlock()
     m_bufferPos = 0;
     m_blockIndex++;
 
+    if (blockSize == 0) {
+        m_eof = true;
+        return false;
+    }
+
     return true;
 }
 
-qint64 HashedBlockStream::writeData(const char* data, qint64 maxSize)
+qint64 HmacBlockStream::writeData(const char* data, qint64 maxSize)
 {
     Q_ASSERT(maxSize >= 0);
 
@@ -215,22 +215,14 @@ qint64 HashedBlockStream::writeData(const char* data, qint64 maxSize)
     return maxSize;
 }
 
-bool HashedBlockStream::writeHashedBlock()
+bool HmacBlockStream::writeHashedBlock()
 {
-    if (!Endian::writeInt32(m_blockIndex, m_baseDevice, ByteOrder)) {
-        m_error = true;
-        setErrorString(m_baseDevice->errorString());
-        return false;
-    }
-    m_blockIndex++;
-
-    QByteArray hash;
-    if (!m_buffer.isEmpty()) {
-        hash = CryptoHash::hash(m_buffer, CryptoHash::Sha256);
-    }
-    else {
-        hash.fill(0, 32);
-    }
+    CryptoHash hasher(CryptoHash::Sha256, true);
+    hasher.setKey(getCurrentHmacKey());
+    hasher.addData(Endian::uint64ToBytes(m_blockIndex, ByteOrder));
+    hasher.addData(Endian::int32ToBytes(m_buffer.size(), ByteOrder));
+    hasher.addData(m_buffer);
+    QByteArray hash = hasher.result();
 
     if (m_baseDevice->write(hash) != hash.size()) {
         m_error = true;
@@ -253,10 +245,23 @@ bool HashedBlockStream::writeHashedBlock()
 
         m_buffer.clear();
     }
-
+    m_blockIndex++;
     return true;
 }
 
-bool HashedBlockStream::atEnd() const {
+QByteArray HmacBlockStream::getCurrentHmacKey() const {
+    return getHmacKey(m_blockIndex, m_key);
+}
+
+QByteArray HmacBlockStream::getHmacKey(quint64 blockIndex, QByteArray key) {
+    Q_ASSERT(key.size() == 64);
+    QByteArray indexBytes = Endian::uint64ToBytes(blockIndex, ByteOrder);
+    CryptoHash hasher(CryptoHash::Sha512);
+    hasher.addData(indexBytes);
+    hasher.addData(key);
+    return hasher.result();
+}
+
+bool HmacBlockStream::atEnd() const {
     return m_eof;
 }

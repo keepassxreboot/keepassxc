@@ -26,9 +26,11 @@
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
+#include "crypto/kdf/AesKdf.h"
 #include "format/KeePass1Reader.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
+#include "format/KeePass2.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
@@ -110,7 +112,7 @@ void TestKeePass1Reader::testBasic()
 void TestKeePass1Reader::testMasterKey()
 {
     QVERIFY(m_db->hasKey());
-    QCOMPARE(m_db->transformRounds(), static_cast<quint64>(713));
+    QCOMPARE(static_cast<AesKdf*>(m_db->kdf())->rounds(), static_cast<quint64>(713));
 }
 
 void TestKeePass1Reader::testCustomIcons()

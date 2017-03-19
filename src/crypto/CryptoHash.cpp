@@ -29,6 +29,9 @@ public:
 };
 
 CryptoHash::CryptoHash(CryptoHash::Algorithm algo)
+    : CryptoHash::CryptoHash(algo, false) {}
+
+CryptoHash::CryptoHash(CryptoHash::Algorithm algo, bool hmac)
     : d_ptr(new CryptoHashPrivate())
 {
     Q_D(CryptoHash);
@@ -36,10 +39,15 @@ CryptoHash::CryptoHash(CryptoHash::Algorithm algo)
     Q_ASSERT(Crypto::initalized());
 
     int algoGcrypt;
+    unsigned int flagsGcrypt = 0;
 
     switch (algo) {
     case CryptoHash::Sha256:
         algoGcrypt = GCRY_MD_SHA256;
+        break;
+
+    case CryptoHash::Sha512:
+        algoGcrypt = GCRY_MD_SHA512;
         break;
 
     default:
@@ -47,9 +55,16 @@ CryptoHash::CryptoHash(CryptoHash::Algorithm algo)
         break;
     }
 
-    gcry_error_t error = gcry_md_open(&d->ctx, algoGcrypt, 0);
+    if (hmac) {
+        flagsGcrypt |= GCRY_MD_FLAG_HMAC;
+    }
+
+    gcry_error_t error = gcry_md_open(&d->ctx, algoGcrypt, flagsGcrypt);
+    if (error) {
+        qWarning("Gcrypt error (ctor): %s", gcry_strerror(error));
+        qWarning("Gcrypt error (ctor): %s", gcry_strsource(error));
+    }
     Q_ASSERT(error == 0); // TODO: error handling
-    Q_UNUSED(error);
 
     d->hashLen = gcry_md_get_algo_dlen(algoGcrypt);
 }
@@ -74,6 +89,18 @@ void CryptoHash::addData(const QByteArray& data)
     gcry_md_write(d->ctx, data.constData(), data.size());
 }
 
+void CryptoHash::setKey(const QByteArray& data)
+{
+    Q_D(CryptoHash);
+
+    gcry_error_t error = gcry_md_setkey(d->ctx, data.constData(), data.size());
+    if (error) {
+        qWarning("Gcrypt error (setKey): %s", gcry_strerror(error));
+        qWarning("Gcrypt error (setKey): %s", gcry_strsource(error));
+    }
+    Q_ASSERT(error == 0);
+}
+
 void CryptoHash::reset()
 {
     Q_D(CryptoHash);
@@ -93,6 +120,15 @@ QByteArray CryptoHash::hash(const QByteArray& data, CryptoHash::Algorithm algo)
 {
     // replace with gcry_md_hash_buffer()?
     CryptoHash cryptoHash(algo);
+    cryptoHash.addData(data);
+    return cryptoHash.result();
+}
+
+QByteArray CryptoHash::hmac(const QByteArray& data, const QByteArray& key, CryptoHash::Algorithm algo)
+{
+    // replace with gcry_md_hash_buffer()?
+    CryptoHash cryptoHash(algo, true);
+    cryptoHash.setKey(key);
     cryptoHash.addData(data);
     return cryptoHash.result();
 }

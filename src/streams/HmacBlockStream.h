@@ -1,5 +1,5 @@
 /*
-*  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+*  Copyright (C) 2017 KeePassXC Team
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -15,24 +15,26 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KEEPASSX_HASHEDBLOCKSTREAM_H
-#define KEEPASSX_HASHEDBLOCKSTREAM_H
+#ifndef KEEPASSX_HMACBLOCKSTREAM_H
+#define KEEPASSX_HMACBLOCKSTREAM_H
 
 #include <QSysInfo>
 
 #include "streams/LayeredStream.h"
 
-class HashedBlockStream : public LayeredStream
+class HmacBlockStream : public LayeredStream
 {
     Q_OBJECT
 
 public:
-    explicit HashedBlockStream(QIODevice* baseDevice);
-    HashedBlockStream(QIODevice* baseDevice, qint32 blockSize);
-    ~HashedBlockStream();
+    explicit HmacBlockStream(QIODevice* baseDevice, QByteArray key);
+    HmacBlockStream(QIODevice* baseDevice, QByteArray key, qint32 blockSize);
+    ~HmacBlockStream();
 
     bool reset() override;
     void close() override;
+
+    static QByteArray getHmacKey(quint64 blockIndex, QByteArray key);
 
     bool atEnd() const override;
 
@@ -44,14 +46,16 @@ private:
     void init();
     bool readHashedBlock();
     bool writeHashedBlock();
+    QByteArray getCurrentHmacKey() const;
 
     static const QSysInfo::Endian ByteOrder;
     qint32 m_blockSize;
     QByteArray m_buffer;
+    QByteArray m_key;
     int m_bufferPos;
-    quint32 m_blockIndex;
+    quint64 m_blockIndex;
     bool m_eof;
     bool m_error;
 };
 
-#endif // KEEPASSX_HASHEDBLOCKSTREAM_H
+#endif // KEEPASSX_HMACBLOCKSTREAM_H

@@ -708,7 +708,7 @@ void DatabaseWidget::updateMasterKey(bool accepted)
 {
     if (accepted) {
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-        bool result = m_db->setKey(m_changeMasterKeyWidget->newMasterKey());
+        bool result = m_db->setKey(m_changeMasterKeyWidget->newMasterKey(), true, true);
         QApplication::restoreOverrideCursor();
 
         if (!result) {
