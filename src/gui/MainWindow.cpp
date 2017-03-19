@@ -314,6 +314,12 @@ MainWindow::MainWindow()
     connect(m_ui->tabWidget, SIGNAL(messageDismissTab()), this, SLOT(hideTabMessage()));
 
     updateTrayIcon();
+
+    if (config()->hasAccessError()) {
+        m_ui->globalMessageWidget->showMessage(
+            tr("Access error for config file %1").arg(config()->getFileName()), MessageWidget::Error);
+    }
+
 }
 
 MainWindow::~MainWindow()

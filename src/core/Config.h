@@ -31,7 +31,9 @@ public:
     ~Config();
     QVariant get(const QString& key);
     QVariant get(const QString& key, const QVariant& defaultValue);
+    QString getFileName();
     void set(const QString& key, const QVariant& value);
+    bool hasAccessError();
 
     static Config* instance();
     static void createConfigFromFile(const QString& file);

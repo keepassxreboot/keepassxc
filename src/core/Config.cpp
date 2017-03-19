@@ -35,6 +35,16 @@ QVariant Config::get(const QString& key, const QVariant& defaultValue)
     return m_settings->value(key, defaultValue);
 }
 
+bool Config::hasAccessError()
+{
+    return m_settings->status() & QSettings::AccessError;
+}
+
+QString Config::getFileName()
+{
+    return m_settings->fileName();
+}
+
 void Config::set(const QString& key, const QVariant& value)
 {
     m_settings->setValue(key, value);
