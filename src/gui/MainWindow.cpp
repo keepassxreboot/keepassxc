@@ -530,6 +530,8 @@ void MainWindow::updateWindowTitle()
         windowTitle = QString("%1 - %2").arg(customWindowTitlePart, BaseWindowTitle);
     }
 
+    setWindowModified(m_ui->tabWidget->isModified(tabWidgetIndex));
+
     setWindowTitle(windowTitle);
 }
 

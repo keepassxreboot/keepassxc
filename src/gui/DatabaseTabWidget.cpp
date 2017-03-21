@@ -543,6 +543,15 @@ bool DatabaseTabWidget::readOnly(int index)
     return indexDatabaseManagerStruct(index).readOnly;
 }
 
+bool DatabaseTabWidget::isModified(int index)
+{
+    if (index == -1) {
+        index = currentIndex();
+    }
+
+    return indexDatabaseManagerStruct(index).modified;
+}
+
 void DatabaseTabWidget::updateTabName(Database* db)
 {
     int index = databaseIndex(db);
