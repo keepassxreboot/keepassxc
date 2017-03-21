@@ -212,6 +212,23 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
     emit messageDismissGlobal();
 }
 
+void DatabaseTabWidget::importCsv()
+{
+    QString fileName = fileDialog()->getOpenFileName(this, tr("Open CSV file"), QString(),
+            tr("CSV file") + " (*.csv);;" + tr("All files (*)"));
+
+    if (fileName.isEmpty()) {
+        return;
+    }
+
+    Database* db = new Database();
+    DatabaseManagerStruct dbStruct;
+    dbStruct.dbWidget = new DatabaseWidget(db, this);
+
+    insertDatabase(db, dbStruct);
+    dbStruct.dbWidget->switchToImportCsv(fileName);
+}
+
 void DatabaseTabWidget::mergeDatabase()
 {
     QString filter = QString("%1 (*.kdbx);;%2 (*)").arg(tr("KeePass 2 Database"), tr("All files"));

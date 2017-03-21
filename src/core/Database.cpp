@@ -25,6 +25,7 @@
 #include "core/Metadata.h"
 #include "crypto/Random.h"
 #include "format/KeePass2.h"
+#include "format/KeePass2Reader.h"
 
 QHash<Uuid, Database*> Database::m_uuidMap;
 
@@ -355,3 +356,27 @@ const CompositeKey & Database::key() const
     return m_data.key;
 }
 
+Database* Database::openDatabaseFile(QString fileName, CompositeKey key)
+{
+
+    QFile dbFile(fileName);
+    if (!dbFile.exists()) {
+        qCritical("File %s does not exist.", qPrintable(fileName));
+        return nullptr;
+    }
+    if (!dbFile.open(QIODevice::ReadOnly)) {
+        qCritical("Unable to open file %s.", qPrintable(fileName));
+        return nullptr;
+    }
+
+    KeePass2Reader reader;
+    Database* db = reader.readDatabase(&dbFile, key);
+
+    if (reader.hasError()) {
+        qCritical("Error while parsing the database: %s", qPrintable(reader.errorString()));
+        return nullptr;
+    }
+
+    return db;
+
+}

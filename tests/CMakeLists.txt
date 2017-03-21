@@ -158,6 +158,9 @@ endif()
 add_unit_test(NAME testentry SOURCES TestEntry.cpp
               LIBS ${TEST_LIBRARIES})
 
+add_unit_test(NAME testcsvparser SOURCES TestCsvParser.cpp
+              LIBS ${TEST_LIBRARIES})
+
 add_unit_test(NAME testrandom SOURCES TestRandom.cpp
               LIBS ${TEST_LIBRARIES})
 

@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -122,6 +122,8 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_editGroupWidget->setObjectName("editGroupWidget");
     m_changeMasterKeyWidget = new ChangeMasterKeyWidget();
     m_changeMasterKeyWidget->headlineLabel()->setText(tr("Change master key"));
+    m_csvImportWizard = new CsvImportWizard();
+    m_csvImportWizard->setObjectName("csvImportWizard");
     QFont headlineLabelFont = m_changeMasterKeyWidget->headlineLabel()->font();
     headlineLabelFont.setBold(true);
     headlineLabelFont.setPointSize(headlineLabelFont.pointSize() + 2);
@@ -145,6 +147,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     addWidget(m_databaseSettingsWidget);
     addWidget(m_historyEditEntryWidget);
     addWidget(m_databaseOpenWidget);
+    addWidget(m_csvImportWizard);
     addWidget(m_databaseOpenMergeWidget);
     addWidget(m_keepass1OpenWidget);
     addWidget(m_unlockDatabaseWidget);
@@ -165,6 +168,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_databaseOpenWidget, SIGNAL(editFinished(bool)), SLOT(openDatabase(bool)));
     connect(m_databaseOpenMergeWidget, SIGNAL(editFinished(bool)), SLOT(mergeDatabase(bool)));
     connect(m_keepass1OpenWidget, SIGNAL(editFinished(bool)), SLOT(openDatabase(bool)));
+    connect(m_csvImportWizard, SIGNAL(importFinished(bool)), SLOT(csvImportFinished(bool)));
     connect(m_unlockDatabaseWidget, SIGNAL(editFinished(bool)), SLOT(unlockDatabase(bool)));
 	connect(m_unlockDatabaseDialog, SIGNAL(unlockDone(bool)), SLOT(unlockDatabase(bool)));
     connect(&m_fileWatcher, SIGNAL(fileChanged(QString)), this, SLOT(onWatchedFileChanged()));
@@ -191,6 +195,9 @@ DatabaseWidget::Mode DatabaseWidget::currentMode() const
 {
     if (currentWidget() == nullptr) {
         return DatabaseWidget::None;
+    }
+    else if (currentWidget() == m_csvImportWizard) {
+        return DatabaseWidget::ImportMode;
     }
     else if (currentWidget() == m_mainWidget) {
         return DatabaseWidget::ViewMode;
@@ -407,7 +414,7 @@ void DatabaseWidget::copyTitle()
         return;
     }
 
-    setClipboardTextAndMinimize(currentEntry->resolvePlaceholder(currentEntry->title()));
+    setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->title()));
 }
 
 void DatabaseWidget::copyUsername()
@@ -418,7 +425,7 @@ void DatabaseWidget::copyUsername()
         return;
     }
 
-    setClipboardTextAndMinimize(currentEntry->resolvePlaceholder(currentEntry->username()));
+    setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->username()));
 }
 
 void DatabaseWidget::copyPassword()
@@ -429,7 +436,7 @@ void DatabaseWidget::copyPassword()
         return;
     }
 
-    setClipboardTextAndMinimize(currentEntry->resolvePlaceholder(currentEntry->password()));
+    setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->password()));
 }
 
 void DatabaseWidget::copyURL()
@@ -440,7 +447,7 @@ void DatabaseWidget::copyURL()
         return;
     }
 
-    setClipboardTextAndMinimize(currentEntry->resolvePlaceholder(currentEntry->url()));
+    setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->url()));
 }
 
 void DatabaseWidget::copyNotes()
@@ -451,7 +458,7 @@ void DatabaseWidget::copyNotes()
         return;
     }
 
-    setClipboardTextAndMinimize(currentEntry->resolvePlaceholder(currentEntry->notes()));
+    setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->notes()));
 }
 
 void DatabaseWidget::copyAttribute(QAction* action)
@@ -462,7 +469,7 @@ void DatabaseWidget::copyAttribute(QAction* action)
         return;
     }
 
-    setClipboardTextAndMinimize(currentEntry->attributes()->value(action->text()));
+    setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->attributes()->value(action->text())));
 }
 
 void DatabaseWidget::setClipboardTextAndMinimize(const QString& text)
@@ -622,6 +629,16 @@ void DatabaseWidget::setCurrentWidget(QWidget* widget)
     }
 
     adjustSize();
+}
+
+void DatabaseWidget::csvImportFinished(bool accepted)
+{
+    if (!accepted) {
+        emit closeRequest();
+    }
+    else {
+        setCurrentWidget(m_mainWidget);
+    }
 }
 
 void DatabaseWidget::switchToView(bool accepted)
@@ -844,11 +861,20 @@ void DatabaseWidget::switchToOpenDatabase(const QString& fileName, const QString
     m_databaseOpenWidget->enterKey(password, keyFile);
 }
 
+void DatabaseWidget::switchToImportCsv(const QString& fileName)
+{
+    updateFilename(fileName);
+    switchToMasterKeyChange();
+    m_csvImportWizard->load(fileName, m_db);
+    setCurrentWidget(m_csvImportWizard);
+}
+
 void DatabaseWidget::switchToOpenMergeDatabase(const QString& fileName)
 {
     m_databaseOpenMergeWidget->load(fileName);
     setCurrentWidget(m_databaseOpenMergeWidget);
 }
+
 
 void DatabaseWidget::switchToOpenMergeDatabase(const QString& fileName, const QString& password,
                                           const QString& keyFile)
@@ -1176,7 +1202,7 @@ bool DatabaseWidget::currentEntryHasUsername()
         Q_ASSERT(false);
         return false;
     }
-    return !currentEntry->resolvePlaceholder(currentEntry->username()).isEmpty();
+    return !currentEntry->resolveMultiplePlaceholders(currentEntry->username()).isEmpty();
 }
 
 bool DatabaseWidget::currentEntryHasPassword()
@@ -1186,7 +1212,7 @@ bool DatabaseWidget::currentEntryHasPassword()
         Q_ASSERT(false);
         return false;
     }
-    return !currentEntry->resolvePlaceholder(currentEntry->password()).isEmpty();
+    return !currentEntry->resolveMultiplePlaceholders(currentEntry->password()).isEmpty();
 }
 
 bool DatabaseWidget::currentEntryHasUrl()
@@ -1196,7 +1222,7 @@ bool DatabaseWidget::currentEntryHasUrl()
         Q_ASSERT(false);
         return false;
     }
-    return !currentEntry->resolvePlaceholder(currentEntry->url()).isEmpty();
+    return !currentEntry->resolveMultiplePlaceholders(currentEntry->url()).isEmpty();
 }
 
 bool DatabaseWidget::currentEntryHasNotes()
@@ -1206,7 +1232,7 @@ bool DatabaseWidget::currentEntryHasNotes()
         Q_ASSERT(false);
         return false;
     }
-    return !currentEntry->resolvePlaceholder(currentEntry->notes()).isEmpty();
+    return !currentEntry->resolveMultiplePlaceholders(currentEntry->notes()).isEmpty();
 }
 
 GroupView* DatabaseWidget::groupView() {

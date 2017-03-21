@@ -31,6 +31,7 @@ configure_file(version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/version.h @ONLY)
 set(keepassx_SOURCES
     core/AutoTypeAssociations.cpp
     core/Config.cpp
+    core/CsvParser.cpp
     core/Database.cpp
     core/DatabaseIcons.cpp
     core/Endian.cpp
@@ -102,6 +103,9 @@ set(keepassx_SOURCES
     gui/UnlockDatabaseWidget.cpp
     gui/UnlockDatabaseDialog.cpp
     gui/WelcomeWidget.cpp
+    gui/csvImport/CsvImportWidget.cpp
+    gui/csvImport/CsvImportWizard.cpp
+    gui/csvImport/CsvParserModel.cpp
     gui/entry/AutoTypeAssociationsModel.cpp
     gui/entry/EditEntryWidget.cpp
     gui/entry/EditEntryWidget_p.h
@@ -135,6 +139,7 @@ set(keepassx_FORMS
     gui/AboutDialog.ui
     gui/ChangeMasterKeyWidget.ui
     gui/CloneDialog.ui
+    gui/csvImport/CsvImportWidget.ui
     gui/DatabaseOpenWidget.ui
     gui/DatabaseSettingsWidget.ui
     gui/CategoryListWidget.ui
@@ -164,6 +169,7 @@ if(WITH_XC_HTTP)
 endif()
 
 add_subdirectory(autotype)
+add_subdirectory(cli)
 
 set(autotype_SOURCES
     core/Tools.cpp

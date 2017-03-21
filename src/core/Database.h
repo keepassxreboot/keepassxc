@@ -118,6 +118,7 @@ public:
     Uuid uuid();
 
     static Database* databaseByUuid(const Uuid& uuid);
+    static Database* openDatabaseFile(QString fileName, CompositeKey key);
 
 signals:
     void groupDataChanged(Group* group);
