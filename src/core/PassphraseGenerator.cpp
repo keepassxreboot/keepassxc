@@ -29,7 +29,7 @@ PassphraseGenerator::PassphraseGenerator()
     , m_separator(' ')
 {
     const QString path = filePath()->dataPath("wordlists/eff_large.wordlist");
-    setWordlist(path);
+    setWordList(path);
 }
 
 double PassphraseGenerator::calculateEntropy(QString passphrase)
@@ -54,7 +54,7 @@ void PassphraseGenerator::setWordCount(int wordCount)
  
 }
 
-void PassphraseGenerator::setWordlist(QString path)
+void PassphraseGenerator::setWordList(QString path)
 {
     m_wordlist.clear();
 
@@ -75,7 +75,7 @@ void PassphraseGenerator::setWordlist(QString path)
     }
 }
 
-void PassphraseGenerator::setWordseparator(QString separator) {
+void PassphraseGenerator::setWordSeparator(QString separator) {
     m_separator = separator;
 }
 

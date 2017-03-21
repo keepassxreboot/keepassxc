@@ -363,9 +363,9 @@ void PasswordGeneratorWidget::updateGenerator()
         m_dicewareGenerator->setWordCount(m_ui->spinBoxWordCount->value());
         if (!m_ui->comboBoxWordList->currentText().isEmpty()) {
             QString path = filePath()->dataPath("wordlists/" + m_ui->comboBoxWordList->currentText());
-            m_dicewareGenerator->setWordlist(path);
+            m_dicewareGenerator->setWordList(path);
         }
-        m_dicewareGenerator->setWordseparator(m_ui->editWordSeparator->text());
+        m_dicewareGenerator->setWordSeparator(m_ui->editWordSeparator->text());
 
         if (m_dicewareGenerator->isValid()) {
             m_ui->buttonGenerate->setEnabled(true);

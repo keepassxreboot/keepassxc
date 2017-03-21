@@ -29,8 +29,8 @@ public:
 
     double calculateEntropy(QString passphrase);
     void setWordCount(int wordCount);
-    void setWordlist(QString path);
-    void setWordseparator(QString separator);
+    void setWordList(QString path);
+    void setWordSeparator(QString separator);
     bool isValid() const;
 
     QString generatePassphrase() const;
