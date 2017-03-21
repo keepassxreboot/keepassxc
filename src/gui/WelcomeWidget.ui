@@ -130,7 +130,7 @@
    <item>
     <widget class="QPushButton" name="buttonImportCSV">
      <property name="text">
-      <string>Import from plain text CSV file</string>
+      <string>Import from CSV</string>
      </property>
     </widget>
    </item>
