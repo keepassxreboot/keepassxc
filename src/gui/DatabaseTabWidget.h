@@ -77,6 +77,7 @@ public slots:
     void changeMasterKey();
     void changeDatabaseSettings();
     bool readOnly(int index = -1);
+    bool isModified(int index = -1);
     void performGlobalAutoType();
     void lockDatabases();
 
