@@ -552,6 +552,16 @@ bool DatabaseTabWidget::isModified(int index)
     return indexDatabaseManagerStruct(index).modified;
 }
 
+QString DatabaseTabWidget::databasePath(int index)
+{
+    if (index == -1) {
+        index = currentIndex();
+    }
+
+    return indexDatabaseManagerStruct(index).filePath;
+}
+
+
 void DatabaseTabWidget::updateTabName(Database* db)
 {
     int index = databaseIndex(db);

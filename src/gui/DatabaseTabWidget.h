@@ -81,6 +81,7 @@ public slots:
     bool isModified(int index = -1);
     void performGlobalAutoType();
     void lockDatabases();
+    QString databasePath(int index = -1);
 
 signals:
     void tabNameChanged();
