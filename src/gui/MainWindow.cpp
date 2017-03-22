@@ -530,6 +530,12 @@ void MainWindow::updateWindowTitle()
         windowTitle = QString("%1 - %2").arg(customWindowTitlePart, BaseWindowTitle);
     }
 
+    if (customWindowTitlePart.isEmpty() || stackedWidgetIndex == 1) {
+        setWindowFilePath("");
+    } else {
+        setWindowFilePath(m_ui->tabWidget->databasePath(tabWidgetIndex));
+    }
+
     setWindowModified(m_ui->tabWidget->isModified(tabWidgetIndex));
 
     setWindowTitle(windowTitle);
