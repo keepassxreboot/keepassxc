@@ -121,18 +121,22 @@
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="buttonImportKeePass1">
-     <property name="text">
-      <string>Import from KeePass 1</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="buttonImportCSV">
-     <property name="text">
-      <string>Import from CSV</string>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="buttonImportKeePass1">
+       <property name="text">
+        <string>Import from KeePass 1</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonImportCSV">
+       <property name="text">
+        <string>Import from CSV</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
     <spacer name="verticalSpacer_2">
