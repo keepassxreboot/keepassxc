@@ -488,3 +488,30 @@ void AutoTypeExecutorMac::execKey(AutoTypeKey* action)
     m_platform->sendKey(action->key, false);
     usleep(25 * 1000);
 }
+
+void execClearFieldHelper(uint16 keyCode, bool isKeyDown, bool modifier = false)
+{
+    CGEventRef keyEvent = ::CGEventCreateKeyboardEvent(nullptr, keyCode, isKeyDown);
+    if (keyEvent != nullptr) {
+        if (modifier) {
+            ::CGEventSetFlags(keyEvent, kCGEventFlagMaskCommand);
+        }
+        
+        ::CGEventPost(kCGSessionEventTap, keyEvent);
+        ::CFRelease(keyEvent);
+    }
+    usleep(25 * 1000);
+}
+
+void AutoTypeExecutorMac::execClearField(AutoTypeClearField* action = nullptr)
+{
+    Q_UNUSED(action);
+
+    execClearFieldHelper(kVK_ANSI_A, true, true);
+    execClearFieldHelper(kVK_ANSI_A, false);
+    execClearFieldHelper(kVK_Command, false);
+    execClearFieldHelper(kVK_Delete, true);
+    execClearFieldHelper(kVK_Delete, false);
+
+    usleep(25 * 1000);
+}
