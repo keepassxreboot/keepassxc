@@ -527,3 +527,37 @@ void AutoTypeExecutorWin::execKey(AutoTypeKey* action)
     ::Sleep(25);
 }
 
+void execKeyPress(const DWORD keyCode, bool isKeyDown)
+{
+    DWORD nativeFlags = 0;
+
+    if (!isKeyDown) {
+        nativeFlags |= KEYEVENTF_KEYUP;
+    }
+
+    INPUT in;
+    in.type = INPUT_KEYBOARD;
+    in.ki.wVk = LOWORD(keyCode);
+    in.ki.wScan = LOWORD(::MapVirtualKeyW(keyCode, MAPVK_VK_TO_VSC));
+    in.ki.dwFlags = nativeFlags;
+    in.ki.time = 0;
+    in.ki.dwExtraInfo = ::GetMessageExtraInfo();
+
+    ::SendInput(1, &in, sizeof(INPUT));
+
+    ::Sleep(25);
+}
+
+void AutoTypeExecutorWin::execClearField(AutoTypeClearField* action = nullptr)
+{
+    Q_UNUSED(action);
+
+    execKeyPress(VK_CONTROL, true);
+    execKeyPress(0x41, true);
+    execKeyPress(0x41, false);
+    execKeyPress(VK_CONTROL, false);
+    execKeyPress(VK_BACK, true);
+    execKeyPress(VK_BACK, false);
+
+    ::Sleep(25);
+}
