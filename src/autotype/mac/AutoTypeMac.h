@@ -49,7 +49,7 @@ public:
     bool raiseOwnWindow() override;
 
     void sendChar(const QChar& ch, bool isKeyDown);
-    void sendKey(Qt::Key key, bool isKeyDown);
+    void sendKey(Qt::Key key, bool isKeyDown, bool isCommand);
 
 signals:
     void globalShortcutTriggered();

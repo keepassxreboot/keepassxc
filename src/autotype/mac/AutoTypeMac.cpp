@@ -201,15 +201,25 @@ void AutoTypePlatformMac::sendChar(const QChar& ch, bool isKeyDown)
 // Send key code to active window
 // see: Quartz Event Services
 //
-void AutoTypePlatformMac::sendKey(Qt::Key key, bool isKeyDown)
+void AutoTypePlatformMac::sendKey(Qt::Key key, bool isKeyDown, bool isCommand = false)
 {
-    uint16 keyCode = qtToNativeKeyCode(key);
+    uint16 keyCode = 0;
+
+    if (isCommand && key == Qt::Key_Any) {
+        keyCode = kVK_Command;
+    } else {
+        keyCode = qtToNativeKeyCode(key);
+    }
+
     if (keyCode == INVALID_KEYCODE) {
         return;
     }
 
     CGEventRef keyEvent = ::CGEventCreateKeyboardEvent(nullptr, keyCode, isKeyDown);
     if (keyEvent != nullptr) {
+        if (isCommand && isKeyDown) {
+            ::CGEventSetFlags(keyEvent, kCGEventFlagMaskCommand);
+        }
         ::CGEventPost(kCGSessionEventTap, keyEvent);
         ::CFRelease(keyEvent);
     }
@@ -489,29 +499,13 @@ void AutoTypeExecutorMac::execKey(AutoTypeKey* action)
     usleep(25 * 1000);
 }
 
-void execKeyPress(uint16 keyCode, bool isKeyDown, bool modifier = false)
-{
-    CGEventRef keyEvent = ::CGEventCreateKeyboardEvent(nullptr, keyCode, isKeyDown);
-    if (keyEvent != nullptr) {
-        if (modifier) {
-            ::CGEventSetFlags(keyEvent, kCGEventFlagMaskCommand);
-        }
-        
-        ::CGEventPost(kCGSessionEventTap, keyEvent);
-        ::CFRelease(keyEvent);
-    }
-    usleep(25 * 1000);
-}
-
 void AutoTypeExecutorMac::execClearField(AutoTypeClearField* action = nullptr)
 {
     Q_UNUSED(action);
-
-    execKeyPress(kVK_ANSI_A, true, true);
-    execKeyPress(kVK_ANSI_A, false);
-    execKeyPress(kVK_Command, false);
-    execKeyPress(kVK_Delete, true);
-    execKeyPress(kVK_Delete, false);
-
+    m_platform->sendKey(Qt::Key_A, true, true);
+    m_platform->sendKey(Qt::Key_A, false);
+    m_platform->sendKey(Qt::Key_Any, false, true);
+    m_platform->sendKey(Qt::Key_Backspace, true);
+    m_platform->sendKey(Qt::Key_Backspace, false);
     usleep(25 * 1000);
 }
