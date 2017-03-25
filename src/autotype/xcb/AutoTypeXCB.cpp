@@ -473,6 +473,8 @@ KeySym AutoTypePlatformX11::keyToKeySym(Qt::Key key)
         return XK_Print;
     case Qt::Key_ScrollLock:
         return XK_Scroll_Lock;
+    case Qt::Key_Control:
+        return XK_Control_L;
     default:
         if (key >= Qt::Key_F1 && key <= Qt::Key_F16) {
             return XK_F1 + (key - Qt::Key_F1);
@@ -853,10 +855,10 @@ void AutoTypeExecutorX11::execClearField(AutoTypeClearField* action = nullptr)
 {
     Q_UNUSED(action);
 
-    m_platform->SendKey(XK_Control_L, true);
-    m_platform->SendKeyPressedEvent(XK_a);
-    m_platform->SendKey(XK_Control_L, false);
-    m_platform->SendKeyPressedEvent(XK_Delete);
+    m_platform->SendKey(m_platform->keyToKeySym(Qt::Key_Control), true);
+    m_platform->SendKeyPressedEvent(m_platform->charToKeySym('a'));
+    m_platform->SendKey(m_platform->keyToKeySym(Qt::Key_Control), false);
+    m_platform->SendKeyPressedEvent(m_platform->keyToKeySym(Qt::Key_Delete));
 
     timespec ts;
     ts.tv_sec = 0;
