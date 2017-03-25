@@ -724,6 +724,12 @@ bool AutoTypePlatformX11::keysymModifiers(KeySym keysym, int keycode, unsigned i
  */
 void AutoTypePlatformX11::SendKeyPressedEvent(KeySym keysym)
 {
+    SendKey(keysym,true);
+    SendKey(keysym,false);
+}
+
+void AutoTypePlatformX11::SendKey(KeySym keysym, bool isKeyDown)
+{
     Window cur_focus;
     int revert_to;
     XKeyEvent event;
@@ -802,8 +808,11 @@ void AutoTypePlatformX11::SendKeyPressedEvent(KeySym keysym)
 
     /* press and release key */
     event.keycode = keycode;
-    SendEvent(&event, KeyPress);
-    SendEvent(&event, KeyRelease);
+    if (isKeyDown) {
+        SendEvent(&event, KeyPress);
+    } else {
+        SendEvent(&event, KeyRelease);
+    }
 
     /* release the modifiers */
     SendModifier(&event, press_mask, KeyRelease);
@@ -839,6 +848,22 @@ void AutoTypeExecutorX11::execKey(AutoTypeKey* action)
 {
     m_platform->SendKeyPressedEvent(m_platform->keyToKeySym(action->key));
 }
+
+void AutoTypeExecutorX11::execClearField(AutoTypeClearField* action = nullptr)
+{
+    Q_UNUSED(action);
+
+    m_platform->SendKey(XK_Control_L, true);
+    m_platform->SendKeyPressedEvent(XK_a);
+    m_platform->SendKey(XK_Control_L, false);
+    m_platform->SendKeyPressedEvent(XK_Delete);
+
+    timespec ts;
+    ts.tv_sec = 0;
+    ts.tv_nsec = 25 * 1000 * 1000;
+    nanosleep(&ts, nullptr);
+}
+
 
 int AutoTypePlatformX11::initialTimeout()
 {
