@@ -502,10 +502,12 @@ void AutoTypeExecutorMac::execKey(AutoTypeKey* action)
 void AutoTypeExecutorMac::execClearField(AutoTypeClearField* action = nullptr)
 {
     Q_UNUSED(action);
+
     m_platform->sendKey(Qt::Key_A, true, true);
     m_platform->sendKey(Qt::Key_A, false);
     m_platform->sendKey(Qt::Key_Any, false, true);
     m_platform->sendKey(Qt::Key_Backspace, true);
     m_platform->sendKey(Qt::Key_Backspace, false);
+    
     usleep(25 * 1000);
 }

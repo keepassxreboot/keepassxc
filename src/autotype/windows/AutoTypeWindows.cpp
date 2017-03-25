@@ -189,6 +189,8 @@ DWORD AutoTypePlatformWin::qtToNativeKeyCode(Qt::Key key)
     case Qt::Key_Enter:
     case Qt::Key_Return:
         return VK_RETURN;   // 0x0D
+    case Qt::Key_Control:
+        return VK_CONTROL;  // 0x11
     case Qt::Key_Pause:
         return VK_PAUSE;    // 0x13
     case Qt::Key_CapsLock:
@@ -527,37 +529,16 @@ void AutoTypeExecutorWin::execKey(AutoTypeKey* action)
     ::Sleep(25);
 }
 
-void execKeyPress(const DWORD keyCode, bool isKeyDown)
-{
-    DWORD nativeFlags = 0;
-
-    if (!isKeyDown) {
-        nativeFlags |= KEYEVENTF_KEYUP;
-    }
-
-    INPUT in;
-    in.type = INPUT_KEYBOARD;
-    in.ki.wVk = LOWORD(keyCode);
-    in.ki.wScan = LOWORD(::MapVirtualKeyW(keyCode, MAPVK_VK_TO_VSC));
-    in.ki.dwFlags = nativeFlags;
-    in.ki.time = 0;
-    in.ki.dwExtraInfo = ::GetMessageExtraInfo();
-
-    ::SendInput(1, &in, sizeof(INPUT));
-
-    ::Sleep(25);
-}
-
 void AutoTypeExecutorWin::execClearField(AutoTypeClearField* action = nullptr)
 {
     Q_UNUSED(action);
 
-    execKeyPress(VK_CONTROL, true);
-    execKeyPress(0x41, true);
-    execKeyPress(0x41, false);
-    execKeyPress(VK_CONTROL, false);
-    execKeyPress(VK_BACK, true);
-    execKeyPress(VK_BACK, false);
+    m_platform->sendKey(Qt::Key_Control, true);
+    m_platform->sendKey(Qt::Key_A, true);
+    m_platform->sendKey(Qt::Key_A, false);
+    m_platform->sendKey(Qt::Key_Control, false);
+    m_platform->sendKey(Qt::Key_Backspace, true);
+    m_platform->sendKey(Qt::Key_Backspace, false);
 
     ::Sleep(25);
 }
