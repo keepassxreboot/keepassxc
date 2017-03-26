@@ -203,14 +203,7 @@ void AutoTypePlatformMac::sendChar(const QChar& ch, bool isKeyDown)
 //
 void AutoTypePlatformMac::sendKey(Qt::Key key, bool isKeyDown, bool isCommand = false)
 {
-    uint16 keyCode = 0;
-
-    if (isCommand && key == Qt::Key_Any) {
-        keyCode = kVK_Command;
-    } else {
-        keyCode = qtToNativeKeyCode(key);
-    }
-
+    uint16 keyCode = qtToNativeKeyCode(key);
     if (keyCode == INVALID_KEYCODE) {
         return;
     }
@@ -327,6 +320,8 @@ uint16 AutoTypePlatformMac::qtToNativeKeyCode(Qt::Key key)
         case Qt::Key_Period:
             return kVK_ANSI_Period;
 
+        case Qt::Key_Control:
+            return kVK_Command;
         case Qt::Key_Backspace:
             return kVK_Delete;
         case Qt::Key_Tab:
@@ -503,9 +498,10 @@ void AutoTypeExecutorMac::execClearField(AutoTypeClearField* action = nullptr)
 {
     Q_UNUSED(action);
 
+    m_platform->sendKey(Qt::Key_Control, true, true);
     m_platform->sendKey(Qt::Key_A, true, true);
+    m_platform->sendKey(Qt::Key_Control, false, true);
     m_platform->sendKey(Qt::Key_A, false);
-    m_platform->sendKey(Qt::Key_Any, false, true);
     m_platform->sendKey(Qt::Key_Backspace, true);
     m_platform->sendKey(Qt::Key_Backspace, false);
     
