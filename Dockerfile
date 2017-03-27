@@ -37,6 +37,7 @@ RUN set -x \
         zlib1g-dev \
         libyubikey-dev \
         libykpers-1-dev \
+        xvfb \
         wget \
         file \
         fuse \
