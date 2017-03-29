@@ -378,6 +378,11 @@ void MainWindow::openRecentDatabase(QAction* action)
 void MainWindow::clearLastDatabases()
 {
     config()->set("LastDatabases", QVariant());
+    bool inWelcomeWidget = (m_ui->stackedWidget->currentIndex() == 2);
+
+    if (inWelcomeWidget) {
+        m_ui->welcomeWidget->refreshLastDatabases();
+    }
 }
 
 void MainWindow::openDatabase(const QString& fileName, const QString& pw, const QString& keyFile)

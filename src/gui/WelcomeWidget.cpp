@@ -36,13 +36,8 @@ WelcomeWidget::WelcomeWidget(QWidget* parent)
 
     m_ui->iconLabel->setPixmap(filePath()->applicationIcon().pixmap(64));
 
-    m_ui->recentListWidget->clear();
-    const QStringList lastDatabases = config()->get("LastDatabases", QVariant()).toStringList();
-    for (const QString& database : lastDatabases) {
-        QListWidgetItem *itm = new QListWidgetItem;
-        itm->setText(database);
-        m_ui->recentListWidget->addItem(itm);
-    }
+    refreshLastDatabases();
+
     bool recent_visibility = (m_ui->recentListWidget->count() > 0);
     m_ui->startLabel->setVisible(!recent_visibility);
     m_ui->recentListWidget->setVisible(recent_visibility);
@@ -52,7 +47,7 @@ WelcomeWidget::WelcomeWidget(QWidget* parent)
     connect(m_ui->buttonOpenDatabase, SIGNAL(clicked()), SIGNAL(openDatabase()));
     connect(m_ui->buttonImportKeePass1, SIGNAL(clicked()), SIGNAL(importKeePass1Database()));
     connect(m_ui->buttonImportCSV, SIGNAL(clicked()), SIGNAL(importCsv()));
-    connect(m_ui->recentListWidget, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, 
+    connect(m_ui->recentListWidget, SIGNAL(itemActivated(QListWidgetItem*)), this, 
     	SLOT(openDatabaseFromFile(QListWidgetItem*)));
 }
 
@@ -66,4 +61,15 @@ void WelcomeWidget::openDatabaseFromFile(QListWidgetItem* item)
 		return;
 	}
 	emit openDatabaseFile(item->text());
+}
+
+void WelcomeWidget::refreshLastDatabases()
+{
+    m_ui->recentListWidget->clear();
+    const QStringList lastDatabases = config()->get("LastDatabases", QVariant()).toStringList();
+    for (const QString& database : lastDatabases) {
+        QListWidgetItem *itm = new QListWidgetItem;
+        itm->setText(database);
+        m_ui->recentListWidget->addItem(itm);
+    }
 }
