@@ -49,7 +49,7 @@ public:
     bool raiseOwnWindow() override;
 
     void sendChar(const QChar& ch, bool isKeyDown);
-    void sendKey(Qt::Key key, bool isKeyDown, bool isCommand);
+    void sendKey(Qt::Key key, bool isKeyDown, Qt::KeyboardModifiers modifiers);
 
 signals:
     void globalShortcutTriggered();
@@ -60,7 +60,7 @@ private:
     EventHotKeyID m_hotkeyId;
 
     static uint16 qtToNativeKeyCode(Qt::Key key);
-    static uint16 qtToNativeModifiers(Qt::KeyboardModifiers modifiers);
+    static CGEventFlags qtToNativeModifiers(Qt::KeyboardModifiers modifiers, bool native);
     static int windowLayer(CFDictionaryRef window);
     static QString windowTitle(CFDictionaryRef window);
     static OSStatus hotkeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData);
