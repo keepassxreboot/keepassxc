@@ -393,8 +393,8 @@ void MainWindow::openDatabase(const QString& fileName, const QString& pw, const 
 void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 {
     int currentIndex = m_ui->stackedWidget->currentIndex();
-    bool inDatabaseTabWidget = (currentIndex == 0);
-    bool inWelcomeWidget = (currentIndex == 2);
+    bool inDatabaseTabWidget = (currentIndex == DatabaseTabScreen);
+    bool inWelcomeWidget = (currentIndex == WelcomeScreen);
 
     if (inDatabaseTabWidget && m_ui->tabWidget->currentIndex() != -1) {
         DatabaseWidget* dbWidget = m_ui->tabWidget->currentDatabaseWidget();
@@ -508,7 +508,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 
     m_ui->actionLockDatabases->setEnabled(m_ui->tabWidget->hasLockableDatabases());
 
-    if ((3 == currentIndex) != m_ui->actionPasswordGenerator->isChecked()) {
+    if ((currentIndex == PasswordGeneratorScreen) != m_ui->actionPasswordGenerator->isChecked()) {
         bool blocked = m_ui->actionPasswordGenerator->blockSignals(true);
         m_ui->actionPasswordGenerator->toggle();
         m_ui->actionPasswordGenerator->blockSignals(blocked);
@@ -520,7 +520,7 @@ void MainWindow::updateWindowTitle()
     QString customWindowTitlePart;
     int stackedWidgetIndex = m_ui->stackedWidget->currentIndex();
     int tabWidgetIndex = m_ui->tabWidget->currentIndex();
-    if (stackedWidgetIndex == 0 && tabWidgetIndex != -1) {
+    if (stackedWidgetIndex == DatabaseTabScreen && tabWidgetIndex != -1) {
         customWindowTitlePart = m_ui->tabWidget->tabText(tabWidgetIndex);
         if (m_ui->tabWidget->readOnly(tabWidgetIndex)) {
             customWindowTitlePart.append(QString(" [%1]").arg(tr("read-only")));
@@ -556,17 +556,17 @@ void MainWindow::showAboutDialog()
 void MainWindow::switchToDatabases()
 {
     if (m_ui->tabWidget->currentIndex() == -1) {
-        m_ui->stackedWidget->setCurrentIndex(2);
+        m_ui->stackedWidget->setCurrentIndex(WelcomeScreen);
     }
     else {
-        m_ui->stackedWidget->setCurrentIndex(0);
+        m_ui->stackedWidget->setCurrentIndex(DatabaseTabScreen);
     }
 }
 
 void MainWindow::switchToSettings()
 {
     m_ui->settingsWidget->loadSettings();
-    m_ui->stackedWidget->setCurrentIndex(1);
+    m_ui->stackedWidget->setCurrentIndex(SettingsScreen);
 }
 
 void MainWindow::switchToPasswordGen(bool enabled)
@@ -575,7 +575,7 @@ void MainWindow::switchToPasswordGen(bool enabled)
       m_ui->passwordGeneratorWidget->loadSettings();
       m_ui->passwordGeneratorWidget->regeneratePassword();
       m_ui->passwordGeneratorWidget->setStandaloneMode(true);
-      m_ui->stackedWidget->setCurrentIndex(3);
+      m_ui->stackedWidget->setCurrentIndex(PasswordGeneratorScreen);
     } else {
       m_ui->passwordGeneratorWidget->saveSettings();
       switchToDatabases();
@@ -624,11 +624,11 @@ void MainWindow::databaseStatusChanged(DatabaseWidget *)
 
 void MainWindow::databaseTabChanged(int tabIndex)
 {
-    if (tabIndex != -1 && m_ui->stackedWidget->currentIndex() == 2) {
-        m_ui->stackedWidget->setCurrentIndex(0);
+    if (tabIndex != -1 && m_ui->stackedWidget->currentIndex() == WelcomeScreen) {
+        m_ui->stackedWidget->setCurrentIndex(DatabaseTabScreen);
     }
-    else if (tabIndex == -1 && m_ui->stackedWidget->currentIndex() == 0) {
-        m_ui->stackedWidget->setCurrentIndex(2);
+    else if (tabIndex == -1 && m_ui->stackedWidget->currentIndex() == DatabaseTabScreen) {
+        m_ui->stackedWidget->setCurrentIndex(WelcomeScreen);
     }
 
     m_actionMultiplexer.setCurrentObject(m_ui->tabWidget->currentDatabaseWidget());
@@ -919,7 +919,7 @@ void MainWindow::hideGlobalMessage()
 
 void MainWindow::hideTabMessage()
 {
-    if (m_ui->stackedWidget->currentIndex() == 0) {
+    if (m_ui->stackedWidget->currentIndex() == DatabaseTabScreen) {
         m_ui->tabWidget->currentDatabaseWidget()->hideMessage();
     }
 }
