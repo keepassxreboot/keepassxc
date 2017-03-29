@@ -84,6 +84,8 @@ bool Service::isDatabaseOpened() const
         case DatabaseWidget::ViewMode:
         case DatabaseWidget::EditMode:
             return true;
+        default:
+            break;
         }
     return false;
 }
@@ -101,6 +103,8 @@ bool Service::openDatabase()
         case DatabaseWidget::ViewMode:
         case DatabaseWidget::EditMode:
             return true;
+        default:
+            break;
         }
     }
     //if (HttpSettings::showNotification()
