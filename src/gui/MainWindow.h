@@ -39,6 +39,13 @@ class MainWindow : public QMainWindow
 public:
     MainWindow();
     ~MainWindow();
+    enum StackedWidgetIndex
+    {
+        DatabaseTabScreen = 0,
+        SettingsScreen = 1,
+        WelcomeScreen = 2,
+        PasswordGeneratorScreen = 3
+    };
 
 public slots:
     void openDatabase(const QString& fileName, const QString& pw = QString(),
