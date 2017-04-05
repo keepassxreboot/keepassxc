@@ -1,4 +1,4 @@
-# KeePassXC [![Travis Build Status](https://travis-ci.org/keepassxreboot/keepassxc.svg?branch=develop)](https://travis-ci.org/keepassxreboot/keepassxc)  [![Coverage Status](https://coveralls.io/repos/github/keepassxreboot/keepassxc/badge.svg)](https://coveralls.io/github/keepassxreboot/keepassxc) <a href='https://pledgie.com/campaigns/33487'><img alt='KeePassXC Authenticode Certificate Campaign!' align=right  src='https://pledgie.com/campaigns/33487.png?skin_name=chrome' border='0'></a>
+# <img src="https://keepassxc.org/logo.png" width="40" height="40"/> KeePassXC [![Travis Build Status](https://travis-ci.org/keepassxreboot/keepassxc.svg?branch=develop)](https://travis-ci.org/keepassxreboot/keepassxc)  [![Coverage Status](https://coveralls.io/repos/github/keepassxreboot/keepassxc/badge.svg)](https://coveralls.io/github/keepassxreboot/keepassxc) <a href='https://pledgie.com/campaigns/33487'><img alt='KeePassXC Authenticode Certificate Campaign!' align=right  src='https://pledgie.com/campaigns/33487.png?skin_name=chrome' border='0'></a>
 
 KeePass Cross-platform Community Edition
 
@@ -25,7 +25,7 @@ KeePassHTTP is not a highly secure protocol and has certain flaw which allow an 
 ### Installation
 Pre-compiled binaries can be found on the [downloads page](https://keepassxc.org/download).  Additionally, individual Linux distributions may ship their own versions, so please check out your distribution's package list to see if KeePassXC is available.
 
-### Building KeePassXC yourself
+### Building KeePassXC
 
 *More detailed instructions are available in the INSTALL file or on the [Wiki page](https://github.com/keepassxreboot/keepassx/wiki/Install-Instruction-from-Source).*
 
@@ -45,9 +45,9 @@ To update the project from within the project's folder, you can run the followin
 git pull
 ```
 
-Once you have downloaded the source code, you can `cd` into the source code directory and build and install KeePassXC with
+Once you have downloaded the source code, you can `cd` into the source code directory, build and install KeePassXC:
 
-```
+```bash
 mkdir build
 cd build
 cmake -DWITH_TESTS=OFF ..
@@ -75,4 +75,4 @@ We are always looking for suggestions how to improve our application. If you fin
 
 You can of course also directly contribute your own code. We are happy to accept your pull requests.
 
-Please read the [CONTRIBUTING](.github/CONTRIBUTING.md) document for further information.
+Please read the [CONTRIBUTING document](.github/CONTRIBUTING.md) for further information.
