@@ -115,6 +115,15 @@ int main(int argc, char** argv)
         mainWindow.show();
     }
     
+    if (config()->get("OpenPreviousDatabasesOnStartup").toBool()) {
+        const QStringList filenames = config()->get("LastOpenedDatabases").toStringList();
+        for (const QString& filename : filenames) {
+            if (!filename.isEmpty() && QFile::exists(filename)) {
+                mainWindow.openDatabase(filename, QString(), QString());
+            }
+        }
+    }
+
     for (int ii=0; ii < args.length(); ii++) {
         QString filename = args[ii];
         if (!filename.isEmpty() && QFile::exists(filename)) {
@@ -124,15 +133,6 @@ int main(int argc, char** argv)
                 password = in.readLine();
             }
             mainWindow.openDatabase(filename, password, parser.value(keyfileOption));
-        }
-    }
-
-    if (config()->get("OpenPreviousDatabasesOnStartup").toBool()) {
-        const QStringList filenames = config()->get("LastOpenedDatabases").toStringList();
-        for (const QString& filename : filenames) {
-            if (!filename.isEmpty() && QFile::exists(filename)) {
-                mainWindow.openDatabase(filename, QString(), QString());
-            }
         }
     }
 
