@@ -30,20 +30,17 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QToolButton" name="searchIcon">
-     <property name="focusPolicy">
-      <enum>Qt::ClickFocus</enum>
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
-     <property name="text">
-      <string>Search</string>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
      </property>
-     <property name="toolButtonStyle">
-      <enum>Qt::ToolButtonIconOnly</enum>
-     </property>
-     <property name="autoRaise">
-      <bool>true</bool>
-     </property>
-    </widget>
+    </spacer>
    </item>
    <item>
     <widget class="QLineEdit" name="searchEdit">
@@ -51,33 +48,26 @@
       <string notr="true">padding:3px</string>
      </property>
      <property name="placeholderText">
-      <string>Find</string>
+      <string>Search...</string>
      </property>
      <property name="clearButtonEnabled">
       <bool>false</bool>
      </property>
     </widget>
    </item>
-   <item>
-    <widget class="QToolButton" name="clearIcon">
-     <property name="focusPolicy">
-      <enum>Qt::ClickFocus</enum>
-     </property>
-     <property name="text">
-      <string>Clear</string>
-     </property>
-     <property name="toolButtonStyle">
-      <enum>Qt::ToolButtonIconOnly</enum>
-     </property>
-     <property name="autoRaise">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
   </layout>
+  <action name="searchIcon">
+   <property name="text">
+    <string>Search</string>
+   </property>
+  </action>
+  <action name="clearIcon">
+   <property name="text">
+    <string>Clear</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
-  <tabstop>searchIcon</tabstop>
   <tabstop>searchEdit</tabstop>
  </tabstops>
  <resources/>

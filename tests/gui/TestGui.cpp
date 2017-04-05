@@ -410,19 +410,24 @@ void TestGui::testSearch()
     EntryView* entryView = m_dbWidget->findChild<EntryView*>("entryView");
     QVERIFY(entryView->isVisible());
 
+    QAction* clearButton = searchWidget->findChild<QAction*>("clearIcon");
+    QVERIFY(!clearButton->isVisible());
+
     // Enter search
     QTest::mouseClick(searchTextEdit, Qt::LeftButton);
     QTRY_VERIFY(searchTextEdit->hasFocus());
+    QTRY_VERIFY(!clearButton->isVisible());
     // Search for "ZZZ"
     QTest::keyClicks(searchTextEdit, "ZZZ");
     QTRY_COMPARE(searchTextEdit->text(), QString("ZZZ"));
+    QTRY_VERIFY(clearButton->isVisible());
     QTRY_VERIFY(m_dbWidget->isInSearchMode());
     QTRY_COMPARE(entryView->model()->rowCount(), 0);
     // Press the search clear button
-    QToolButton* clearButton = searchWidget->findChild<QToolButton*>("clearIcon");
-    QTest::mouseClick(clearButton, Qt::LeftButton);
+    clearButton->trigger();
     QTRY_VERIFY(searchTextEdit->text().isEmpty());
     QTRY_VERIFY(searchTextEdit->hasFocus());
+    QTRY_VERIFY(!clearButton->isVisible());
     // Escape clears searchedit and retains focus
     QTest::keyClicks(searchTextEdit, "ZZZ");
     QTest::keyClick(searchTextEdit, Qt::Key_Escape);
