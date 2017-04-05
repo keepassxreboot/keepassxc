@@ -13,7 +13,7 @@ KeePassXC is a fork of [KeePassX](https://www.keepassx.org/) that [aims to incor
 - Use website's favicons as entry icons
 - Merging of databases
 - Automatic reload when the database changed on disk
-- KeePassHTTP support for use with [PassIFox](https://addons.mozilla.org/en-us/firefox/addon/passifox/) in Mozilla Firefox and [chromeIPass](https://chrome.google.com/webstore/detail/chromeipass/ompiailgknfdndiefoaoiligalphfdae) in Google Chrome or Chromium.
+- KeePassHTTP support for use with [PassIFox](https://addons.mozilla.org/en-us/firefox/addon/passifox/) in Mozilla Firefox and [chromeIPass](https://chrome.google.com/webstore/detail/chromeipass/ompiailgknfdndiefoaoiligalphfdae) in Google Chrome or Chromium, and [passafari](https://github.com/mmichaa/passafari.safariextension/) in Safari.
 
 For a full list of features and changes, read the [CHANGELOG](CHANGELOG) document.
 
