@@ -15,6 +15,9 @@
 
 add_subdirectory(translations)
 
+file(GLOB wordlists_files "wordlists/*.wordlist")
+install(FILES ${wordlists_files} DESTINATION ${DATA_INSTALL_DIR}/wordlists)
+
 file(GLOB DATABASE_ICONS icons/database/*.png)
 
 install(FILES ${DATABASE_ICONS} DESTINATION ${DATA_INSTALL_DIR}/icons/database)

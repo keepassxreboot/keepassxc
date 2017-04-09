@@ -1,6 +1,5 @@
 /*
- *  Copyright (C) 2013 Michael Curtis <michael@moltenmercury.org>
- *  Copyright (C) 2014 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2013 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,31 +15,32 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_PASSWORDCOMBOBOX_H
-#define KEEPASSX_PASSWORDCOMBOBOX_H
+#ifndef KEEPASSX_PASSPHRASEGENERATOR_H
+#define KEEPASSX_PASSPHRASEGENERATOR_H
 
-#include <QComboBox>
+#include <QFlags>
+#include <QString>
+#include <QVector>
 
-class PasswordGenerator;
-
-class PasswordComboBox : public QComboBox
+class PassphraseGenerator
 {
-    Q_OBJECT
-
 public:
-    explicit PasswordComboBox(QWidget* parent = nullptr);
-    ~PasswordComboBox();
+    PassphraseGenerator();
 
-    void setGenerator(PasswordGenerator* generator);
-    void setNumberAlternatives(int alternatives);
-    void showPopup();
+    double calculateEntropy(QString passphrase);
+    void setWordCount(int wordCount);
+    void setWordList(QString path);
+    void setWordSeparator(QString separator);
+    bool isValid() const;
 
-public slots:
-    void setEcho(bool echo);
+    QString generatePassphrase() const;
 
 private:
-    PasswordGenerator* m_generator;
-    int m_alternatives;
+    int m_wordCount;
+    QString m_separator;
+    QVector<QString> m_wordlist;
+
+    Q_DISABLE_COPY(PassphraseGenerator)
 };
 
-#endif // KEEPASSX_PASSWORDCOMBOBOX_H
+#endif // KEEPASSX_PASSPHRASEGENERATOR_H

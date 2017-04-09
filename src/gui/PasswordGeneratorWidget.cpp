@@ -19,6 +19,7 @@
 #include "ui_PasswordGeneratorWidget.h"
 
 #include <QLineEdit>
+#include <QDir>
 
 #include "core/Config.h"
 #include "core/PasswordGenerator.h"
@@ -27,7 +28,8 @@
 PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     : QWidget(parent)
     , m_updatingSpinBox(false)
-    , m_generator(new PasswordGenerator())
+    , m_passwordGenerator(new PasswordGenerator())
+    , m_dicewareGenerator(new PassphraseGenerator())
     , m_ui(new Ui::PasswordGeneratorWidget())
 {
     m_ui->setupUi(this);
@@ -38,12 +40,18 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     connect(m_ui->editNewPassword, SIGNAL(textChanged(QString)), SLOT(updatePasswordStrength(QString)));
     connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), SLOT(togglePasswordShown(bool)));
     connect(m_ui->buttonApply, SIGNAL(clicked()), SLOT(applyPassword()));
-    connect(m_ui->buttonGenerate, SIGNAL(clicked()), SLOT(generatePassword()));
+    connect(m_ui->buttonGenerate, SIGNAL(clicked()), SLOT(regeneratePassword()));
 
-    connect(m_ui->sliderLength, SIGNAL(valueChanged(int)), SLOT(sliderMoved()));
-    connect(m_ui->spinBoxLength, SIGNAL(valueChanged(int)), SLOT(spinBoxChanged()));
+    connect(m_ui->sliderLength, SIGNAL(valueChanged(int)), SLOT(passwordSliderMoved()));
+    connect(m_ui->spinBoxLength, SIGNAL(valueChanged(int)), SLOT(passwordSpinBoxChanged()));
 
+    connect(m_ui->sliderWordCount, SIGNAL(valueChanged(int)), SLOT(dicewareSliderMoved()));
+    connect(m_ui->spinBoxWordCount, SIGNAL(valueChanged(int)), SLOT(dicewareSpinBoxChanged()));
+
+    connect(m_ui->editWordSeparator, SIGNAL(textChanged(QString)), SLOT(updateGenerator()));
+    connect(m_ui->comboBoxWordList, SIGNAL(currentIndexChanged(int)), SLOT(updateGenerator()));
     connect(m_ui->optionButtons, SIGNAL(buttonClicked(int)), SLOT(updateGenerator()));
+    connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(updateGenerator()));
 
     // set font size of password quality and entropy labels dynamically to 80% of
     // the default font size, but make it no smaller than 8pt
@@ -53,6 +61,20 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
         defaultFont.setPointSize(smallerSize);
         m_ui->entropyLabel->setFont(defaultFont);
         m_ui->strengthLabel->setFont(defaultFont);
+    }
+
+    // set default separator to Space
+    m_ui->editWordSeparator->setText(" ");
+
+    QDir path(filePath()->dataPath("wordlists/"));
+    QStringList files = path.entryList(QDir::Files);
+    m_ui->comboBoxWordList->addItems(files);
+    if (files.size() > 1) {
+        m_ui->comboBoxWordList->setVisible(true);
+        m_ui->labelWordList->setVisible(true);
+    } else {
+        m_ui->comboBoxWordList->setVisible(false);
+        m_ui->labelWordList->setVisible(false);
     }
     
     loadSettings();
@@ -65,28 +87,42 @@ PasswordGeneratorWidget::~PasswordGeneratorWidget()
 
 void PasswordGeneratorWidget::loadSettings()
 {
+    // Password config
     m_ui->checkBoxLower->setChecked(config()->get("generator/LowerCase", true).toBool());
     m_ui->checkBoxUpper->setChecked(config()->get("generator/UpperCase", true).toBool());
     m_ui->checkBoxNumbers->setChecked(config()->get("generator/Numbers", true).toBool());
     m_ui->checkBoxSpecialChars->setChecked(config()->get("generator/SpecialChars", false).toBool());
-
     m_ui->checkBoxExcludeAlike->setChecked(config()->get("generator/ExcludeAlike", true).toBool());
     m_ui->checkBoxEnsureEvery->setChecked(config()->get("generator/EnsureEvery", true).toBool());
-
     m_ui->spinBoxLength->setValue(config()->get("generator/Length", 16).toInt());
+
+    // Diceware config
+    m_ui->spinBoxWordCount->setValue(config()->get("generator/WordCount", 6).toInt());
+    m_ui->editWordSeparator->setText(config()->get("generator/WordSeparator", " ").toString());
+    m_ui->comboBoxWordList->setCurrentText(config()->get("generator/WordList", "eff_large.wordlist").toString());
+
+    // Password or diceware?
+    m_ui->tabWidget->setCurrentIndex(config()->get("generator/Type", 0).toInt());
 }
 
 void PasswordGeneratorWidget::saveSettings()
 {
+    // Password config
     config()->set("generator/LowerCase", m_ui->checkBoxLower->isChecked());
     config()->set("generator/UpperCase", m_ui->checkBoxUpper->isChecked());
     config()->set("generator/Numbers", m_ui->checkBoxNumbers->isChecked());
     config()->set("generator/SpecialChars", m_ui->checkBoxSpecialChars->isChecked());
-
     config()->set("generator/ExcludeAlike", m_ui->checkBoxExcludeAlike->isChecked());
     config()->set("generator/EnsureEvery", m_ui->checkBoxEnsureEvery->isChecked());
-
     config()->set("generator/Length", m_ui->spinBoxLength->value());
+
+    // Diceware config
+    config()->set("generator/WordCount", m_ui->spinBoxWordCount->value());
+    config()->set("generator/WordSeparator", m_ui->editWordSeparator->text());
+    config()->set("generator/WordList", m_ui->comboBoxWordList->currentText());
+
+    // Password or diceware?
+    config()->set("generator/Type", m_ui->tabWidget->currentIndex());
 }
 
 void PasswordGeneratorWidget::reset()
@@ -108,11 +144,19 @@ void PasswordGeneratorWidget::setStandaloneMode(bool standalone)
 }
 
 void PasswordGeneratorWidget::regeneratePassword()
-{
-    if (m_generator->isValid()) {
-        QString password = m_generator->generatePassword();
-        m_ui->editNewPassword->setText(password);
-        updatePasswordStrength(password);
+{   
+    if (m_ui->tabWidget->currentIndex() == Password) {
+        if (m_passwordGenerator->isValid()) {
+            QString password = m_passwordGenerator->generatePassword();
+            m_ui->editNewPassword->setText(password);
+            updatePasswordStrength(password);
+        }
+    } else {
+        if (m_dicewareGenerator->isValid()) {
+            QString password = m_dicewareGenerator->generatePassphrase();
+            m_ui->editNewPassword->setText(password);
+            updatePasswordStrength(password);
+        }
     }
 }
 
@@ -123,7 +167,13 @@ void PasswordGeneratorWidget::updateApplyEnabled(const QString& password)
 
 void PasswordGeneratorWidget::updatePasswordStrength(const QString& password)
 {
-    double entropy = m_generator->calculateEntropy(password);
+    double entropy = 0.0;
+    if (m_ui->tabWidget->currentIndex() == Password) {
+        entropy = m_passwordGenerator->calculateEntropy(password);
+    } else {
+        entropy = m_dicewareGenerator->calculateEntropy(password);
+    }
+
     m_ui->entropyLabel->setText(tr("Entropy: %1 bit").arg(QString::number(entropy, 'f', 2)));
 
     if (entropy > m_ui->entropyProgressBar->maximum()) {
@@ -134,14 +184,6 @@ void PasswordGeneratorWidget::updatePasswordStrength(const QString& password)
     colorStrengthIndicator(entropy);
 }
 
-void PasswordGeneratorWidget::generatePassword()
-{
-    if (m_generator->isValid()) {
-        QString password = m_generator->generatePassword();
-        m_ui->editNewPassword->setText(password);
-    }
-}
-
 void PasswordGeneratorWidget::applyPassword()
 {
     saveSettings();
@@ -149,7 +191,7 @@ void PasswordGeneratorWidget::applyPassword()
     emit dialogTerminated();
 }
 
-void PasswordGeneratorWidget::sliderMoved()
+void PasswordGeneratorWidget::passwordSliderMoved()
 {
     if (m_updatingSpinBox) {
         return;
@@ -160,7 +202,7 @@ void PasswordGeneratorWidget::sliderMoved()
     updateGenerator();
 }
 
-void PasswordGeneratorWidget::spinBoxChanged()
+void PasswordGeneratorWidget::passwordSpinBoxChanged()
 {
     if (m_updatingSpinBox) {
         return;
@@ -172,6 +214,20 @@ void PasswordGeneratorWidget::spinBoxChanged()
     m_ui->sliderLength->setValue(m_ui->spinBoxLength->value());
 
     m_updatingSpinBox = false;
+
+    updateGenerator();
+}
+
+void PasswordGeneratorWidget::dicewareSliderMoved()
+{
+    m_ui->spinBoxWordCount->setValue(m_ui->sliderWordCount->value());
+
+    updateGenerator();
+}
+
+void PasswordGeneratorWidget::dicewareSpinBoxChanged()
+{
+    m_ui->sliderWordCount->setValue(m_ui->spinBoxWordCount->value());
 
     updateGenerator();
 }
@@ -196,13 +252,13 @@ void PasswordGeneratorWidget::colorStrengthIndicator(double entropy)
     // Set the color and background based on entropy
     // colors are taking from the KDE breeze palette
     // <https://community.kde.org/KDE_Visual_Design_Group/HIG/Color>
-    if (entropy < 35) {
+    if (entropy < 40) {
         m_ui->entropyProgressBar->setStyleSheet(style.arg("#c0392b"));
         m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Poor")));
-    } else if (entropy >= 35 && entropy < 55) {
+    } else if (entropy >= 40 && entropy < 65) {
         m_ui->entropyProgressBar->setStyleSheet(style.arg("#f39c1f"));
         m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Weak")));
-    } else if (entropy >= 55 && entropy < 100) {
+    } else if (entropy >= 65 && entropy < 100) {
         m_ui->entropyProgressBar->setStyleSheet(style.arg("#11d116"));
         m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Good")));
     } else {
@@ -251,44 +307,71 @@ PasswordGenerator::GeneratorFlags PasswordGeneratorWidget::generatorFlags()
 
 void PasswordGeneratorWidget::updateGenerator()
 {
-    PasswordGenerator::CharClasses classes = charClasses();
-    PasswordGenerator::GeneratorFlags flags = generatorFlags();
+    if (m_ui->tabWidget->currentIndex() == Password) {
+        PasswordGenerator::CharClasses classes = charClasses();
+        PasswordGenerator::GeneratorFlags flags = generatorFlags();
 
-    int minLength = 0;
-    if (flags.testFlag(PasswordGenerator::CharFromEveryGroup)) {
-        if (classes.testFlag(PasswordGenerator::LowerLetters)) {
-            minLength++;
+        int minLength = 0;
+        if (flags.testFlag(PasswordGenerator::CharFromEveryGroup)) {
+            if (classes.testFlag(PasswordGenerator::LowerLetters)) {
+                minLength++;
+            }
+            if (classes.testFlag(PasswordGenerator::UpperLetters)) {
+                minLength++;
+            }
+            if (classes.testFlag(PasswordGenerator::Numbers)) {
+                minLength++;
+            }
+            if (classes.testFlag(PasswordGenerator::SpecialCharacters)) {
+                minLength++;
+            }
         }
-        if (classes.testFlag(PasswordGenerator::UpperLetters)) {
-            minLength++;
+        minLength = qMax(minLength, 1);
+
+        if (m_ui->spinBoxLength->value() < minLength) {
+            m_updatingSpinBox = true;
+            m_ui->spinBoxLength->setValue(minLength);
+            m_ui->sliderLength->setValue(minLength);
+            m_updatingSpinBox = false;
         }
-        if (classes.testFlag(PasswordGenerator::Numbers)) {
-            minLength++;
+
+        m_ui->spinBoxLength->setMinimum(minLength);
+        m_ui->sliderLength->setMinimum(minLength);
+
+        m_passwordGenerator->setLength(m_ui->spinBoxLength->value());
+        m_passwordGenerator->setCharClasses(classes);
+        m_passwordGenerator->setFlags(flags);
+
+        if (m_passwordGenerator->isValid()) {
+            m_ui->buttonGenerate->setEnabled(true);
+        } else {
+            m_ui->buttonGenerate->setEnabled(false);
         }
-        if (classes.testFlag(PasswordGenerator::SpecialCharacters)) {
-            minLength++;
-        }
-    }
-    minLength = qMax(minLength, 1);
-
-    if (m_ui->spinBoxLength->value() < minLength) {
-        m_updatingSpinBox = true;
-        m_ui->spinBoxLength->setValue(minLength);
-        m_ui->sliderLength->setValue(minLength);
-        m_updatingSpinBox = false;
-    }
-
-    m_ui->spinBoxLength->setMinimum(minLength);
-    m_ui->sliderLength->setMinimum(minLength);
-
-    m_generator->setLength(m_ui->spinBoxLength->value());
-    m_generator->setCharClasses(classes);
-    m_generator->setFlags(flags);
-
-    if (m_generator->isValid()) {
-        m_ui->buttonGenerate->setEnabled(true);
     } else {
-        m_ui->buttonGenerate->setEnabled(false);
+        int minWordCount = 1;
+
+        if (m_ui->spinBoxWordCount->value() < minWordCount) {
+            m_updatingSpinBox = true;
+            m_ui->spinBoxWordCount->setValue(minWordCount);
+            m_ui->sliderWordCount->setValue(minWordCount);
+            m_updatingSpinBox = false;
+        }
+
+        m_ui->spinBoxWordCount->setMinimum(minWordCount);
+        m_ui->sliderWordCount->setMinimum(minWordCount);
+
+        m_dicewareGenerator->setWordCount(m_ui->spinBoxWordCount->value());
+        if (!m_ui->comboBoxWordList->currentText().isEmpty()) {
+            QString path = filePath()->dataPath("wordlists/" + m_ui->comboBoxWordList->currentText());
+            m_dicewareGenerator->setWordList(path);
+        }
+        m_dicewareGenerator->setWordSeparator(m_ui->editWordSeparator->text());
+
+        if (m_dicewareGenerator->isValid()) {
+            m_ui->buttonGenerate->setEnabled(true);
+        } else {
+            m_ui->buttonGenerate->setEnabled(false);
+        }
     }
 
     regeneratePassword();

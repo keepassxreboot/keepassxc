@@ -44,7 +44,8 @@ private slots:
     void testTabs();
     void testEditEntry();
     void testAddEntry();
-    void testEntryEntropy();
+    void testPasswordEntryEntropy();
+    void testDicewareEntryEntropy();
     void testSearch();
     void testDeleteEntry();
     void testCloneEntry();

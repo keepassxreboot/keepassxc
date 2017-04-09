@@ -26,6 +26,7 @@
 #include <QPushButton>
 #include <QSpinBox>
 #include <QPlainTextEdit>
+#include <QComboBox>
 #include <QTemporaryFile>
 #include <QTest>
 #include <QToolBar>
@@ -322,7 +323,7 @@ void TestGui::testAddEntry()
     QTRY_COMPARE(entryView->model()->rowCount(), 4);
 }
 
-void TestGui::testEntryEntropy()
+void TestGui::testPasswordEntryEntropy()
 {
     QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
 
@@ -394,6 +395,50 @@ void TestGui::testEntryEntropy()
     QCOMPARE(strengthLabel->text(), QString("Password Quality: Excellent"));
 
     // We are done
+}
+
+void TestGui::testDicewareEntryEntropy()
+{
+    QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
+
+    // Find the new entry action
+    QAction* entryNewAction = m_mainWindow->findChild<QAction*>("actionEntryNew");
+    QVERIFY(entryNewAction->isEnabled());
+
+    // Find the button associated with the new entry action
+    QWidget* entryNewWidget = toolBar->widgetForAction(entryNewAction);
+    QVERIFY(entryNewWidget->isVisible());
+    QVERIFY(entryNewWidget->isEnabled());
+
+    // Click the new entry button and check that we enter edit mode
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+
+    // Add entry "test" and confirm added
+    EditEntryWidget* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+    QLineEdit* titleEdit = editEntryWidget->findChild<QLineEdit*>("titleEdit");
+    QTest::keyClicks(titleEdit, "test");
+
+    // Open the password generator
+    QToolButton* generatorButton = editEntryWidget->findChild<QToolButton*>("togglePasswordGeneratorButton");
+    QTest::mouseClick(generatorButton, Qt::LeftButton);
+
+    // Select Diceware
+    QTabWidget* tabWidget = editEntryWidget->findChild<QTabWidget*>("tabWidget");
+    QWidget* dicewareWidget = editEntryWidget->findChild<QWidget*>("dicewareWidget");
+    tabWidget->setCurrentWidget(dicewareWidget);
+
+    QComboBox* comboBoxWordList = dicewareWidget->findChild<QComboBox*>("comboBoxWordList");
+    comboBoxWordList->setCurrentText("eff_large.wordlist");
+    QSpinBox* spinBoxWordCount = dicewareWidget->findChild<QSpinBox*>("spinBoxWordCount");
+    spinBoxWordCount->setValue(6);
+
+    // Type in some password
+    QLabel* entropyLabel = editEntryWidget->findChild<QLabel*>("entropyLabel");
+    QLabel* strengthLabel = editEntryWidget->findChild<QLabel*>("strengthLabel");
+
+    QCOMPARE(entropyLabel->text(),  QString("Entropy: 77.55 bit"));
+    QCOMPARE(strengthLabel->text(), QString("Password Quality: Good"));
 }
 
 void TestGui::testSearch()
