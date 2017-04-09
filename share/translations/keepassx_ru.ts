@@ -14,14 +14,14 @@
         <translation>О KeePassXC</translation>
     </message>
     <message>
-        <source>KeePassXC is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassXC распространяется на условиях Стандартной общественной лицензии GNU (GPL) версии 2 или (на ваше усмотрение) версии 3.</translation>
-    </message>
-    <message>
         <source>Extensions:
 </source>
         <translation>Расширения:
 </translation>
+    </message>
+    <message>
+        <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
+        <translation>KeePassXC распространяется на условиях Стандартной общественной лицензии GNU (GPL) версии 2 или (на ваше усмотрение) версии 3.</translation>
     </message>
 </context>
 <context>
@@ -100,10 +100,6 @@ Please select whether you want to allow access.</source>
         <translation>Повторите пароль:</translation>
     </message>
     <message>
-        <source>Key file</source>
-        <translation>Файл-ключ</translation>
-    </message>
-    <message>
         <source>Browse</source>
         <translation>Обзор</translation>
     </message>
@@ -156,6 +152,10 @@ Please select whether you want to allow access.</source>
 %2</source>
         <translation>Не удалось установить %1 как файл-ключ:
 %2</translation>
+    </message>
+    <message>
+        <source>&amp;Key file</source>
+        <translation>Файл—&amp;ключ</translation>
     </message>
 </context>
 <context>
@@ -257,10 +257,6 @@ You can now save it.</source>
         <translation>Имя пользователя по умолчанию:</translation>
     </message>
     <message>
-        <source>Use recycle bin:</source>
-        <translation>Использовать корзину:</translation>
-    </message>
-    <message>
         <source> MiB</source>
         <translation>МиБ</translation>
     </message>
@@ -275,6 +271,10 @@ You can now save it.</source>
     <message>
         <source>Max. history size:</source>
         <translation>Максимальный размер истории:</translation>
+    </message>
+    <message>
+        <source>Use recycle bin</source>
+        <translation>Использовать корзину</translation>
     </message>
 </context>
 <context>
@@ -396,12 +396,6 @@ Discard changes and close anyway?</source>
         <translation>Не удаётся открыть хранилище.</translation>
     </message>
     <message>
-        <source>The database you are trying to open is locked by another instance of KeePassXC.
-Do you want to open it anyway? Alternatively the database is opened read-only.</source>
-        <translation>Хранилище, которое Вы хотите открыть, заблокировано другой запущенной копией KeePassXC.
-Всё равно открыть? В качестве альтернативы хранилище будет открыто в режиме для чтения.</translation>
-    </message>
-    <message>
         <source>Merge database</source>
         <translation>Объединить хранилище</translation>
     </message>
@@ -410,6 +404,25 @@ Do you want to open it anyway? Alternatively the database is opened read-only.</
 Do you want to save it anyway?</source>
         <translation>Хранилище, которые вы пытаетесь сохранить, заблокировано другим экземпляром KeePassXC.
 Хотите сохранить во всех случаях?</translation>
+    </message>
+    <message>
+        <source>Passwords</source>
+        <translation>Пароли</translation>
+    </message>
+    <message>
+        <source>Database already opened</source>
+        <translation>Хранилище уже открыто </translation>
+    </message>
+    <message>
+        <source>The database you are trying to open is locked by another instance of KeePassXC.
+
+Do you want to open it anyway?</source>
+        <translation>Хранилище, которые вы пытаетесь открыть, заблокировано другим экземпляром KeePassXC.
+Хотите открыть во всех случаях?</translation>
+    </message>
+    <message>
+        <source>Open read-only</source>
+        <translation>Открыть в режиме &quot;только чтение&quot;</translation>
     </message>
 </context>
 <context>
@@ -517,10 +530,6 @@ Do you want to save it anyway?</source>
     <message>
         <source>Autoreload Failed</source>
         <translation>Ошибка автоматической загрузки</translation>
-    </message>
-    <message>
-        <source>Could not parse or unlock the new database file while attempting to autoreload this database.</source>
-        <translation>Не удаётся разобрать или разблокировать новый файл хранилища при попытке автоматической загрузки этого хранилища.</translation>
     </message>
     <message>
         <source>Could not open the new database file while attempting to autoreload this database.</source>
@@ -650,14 +659,6 @@ Do you want to save it anyway?</source>
         <translation>Включить автоввод для этой записи</translation>
     </message>
     <message>
-        <source>Inherit default Auto-Type sequence from the group</source>
-        <translation>Унаследовать стандартную последовательность автоввода от группы</translation>
-    </message>
-    <message>
-        <source>Use custom Auto-Type sequence:</source>
-        <translation>Использовать свою последовательность автоввода:</translation>
-    </message>
-    <message>
         <source>+</source>
         <translation>+</translation>
     </message>
@@ -670,12 +671,20 @@ Do you want to save it anyway?</source>
         <translation>Заголовок окна:</translation>
     </message>
     <message>
-        <source>Use default sequence</source>
-        <translation>Использовать стандартную последовательность</translation>
+        <source>Inherit default Auto-Type sequence from the &amp;group</source>
+        <translation>Унаследовать стандартную последовательность автоввода от &amp;группы</translation>
     </message>
     <message>
-        <source>Set custom sequence:</source>
-        <translation>Установить свою последовательность:</translation>
+        <source>&amp;Use custom Auto-Type sequence:</source>
+        <translation>Использовать сво&amp;ю последовательность автоввода:</translation>
+    </message>
+    <message>
+        <source>Use default se&amp;quence</source>
+        <translation>Использовать стан&amp;дартную последовательность</translation>
+    </message>
+    <message>
+        <source>Set custo&amp;m sequence:</source>
+        <translation>Установить сво&amp;ю последовательность:</translation>
     </message>
 </context>
 <context>
@@ -801,14 +810,6 @@ Do you want to save it anyway?</source>
 <context>
     <name>EditWidgetIcons</name>
     <message>
-        <source>Use default icon</source>
-        <translation>Использовать стандартный значок</translation>
-    </message>
-    <message>
-        <source>Use custom icon</source>
-        <translation>Использовать свой значок</translation>
-    </message>
-    <message>
         <source>Add custom icon</source>
         <translation>Добавить свой значок</translation>
     </message>
@@ -851,6 +852,14 @@ Do you want to save it anyway?</source>
     <message>
         <source>Can&apos;t delete icon. Still used by %1 items.</source>
         <translation>Не удается удалить значок, она продолжает использоваться %1 записями.</translation>
+    </message>
+    <message>
+        <source>&amp;Use default icon</source>
+        <translation>Использовать с&amp;тандартный значок</translation>
+    </message>
+    <message>
+        <source>Use custo&amp;m icon</source>
+        <translation>Использовать св&amp;ой значок</translation>
     </message>
 </context>
 <context>
@@ -1298,23 +1307,14 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation>Показывать уведомление при запросе данных для входа</translation>
     </message>
     <message>
-        <source>&amp;Return only best matching entries for an URL instead
-of all entries for the whole domain</source>
-        <translation>Возвращать только наиболее совпавшие с URL записи, а не все записи для домена</translation>
-    </message>
-    <message>
         <source>&amp;Match URL schemes
 Only entries with the same scheme (http://, https://, ftp://, ...) are returned</source>
         <translation>Совпадение со схемой URL
-Возвращать только записи с соответствующей схемой (http://, https://, ftp://, ...) </translation>
+Возвращат&amp;ь только записи с соответствующей схемой (http://, https://, ftp://, ...) </translation>
     </message>
     <message>
         <source>Sort matching entries by &amp;username</source>
         <translation>Сортировать совпавшие записи по &amp;имени пользователя</translation>
-    </message>
-    <message>
-        <source>R&amp;emove all shared encryption-keys from active database</source>
-        <translation>Удалить все общие ключи шифрования из активного хранилища</translation>
     </message>
     <message>
         <source>Re&amp;move all stored permissions from entries in active database</source>
@@ -1327,10 +1327,6 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
     <message>
         <source>Advanced</source>
         <translation>Расширенные</translation>
-    </message>
-    <message>
-        <source>Activate the following only, if you know what you are doing!</source>
-        <translation>Включайте эти настройки только если знаете что делаете!</translation>
     </message>
     <message>
         <source>Always allow &amp;access to entries</source>
@@ -1347,14 +1343,6 @@ Only entries with the same scheme (http://, https://, ftp://, ...) are returned<
     <message>
         <source>Only the selected database has to be connected with a client!</source>
         <translation>Только выбранное хранилище должно быть соединено с клиентом!</translation>
-    </message>
-    <message>
-        <source>&amp;Return also advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation>Возвращать дополнительные строковые поля, начинающиеся с  &quot;KPH: &quot;</translation>
-    </message>
-    <message>
-        <source>Automatic creates or updates are not supported for string fields!</source>
-        <translation>Автоматическое создание или обновление не поддерживается строковыми полями!</translation>
     </message>
     <message>
         <source>HTTP Port:</source>
@@ -1389,8 +1377,29 @@ This is required for accessing your databases from ChromeIPass or PassIFox</sour
     <message>
         <source>Cannot bind to privileged ports below 1024!
 Using default port 19455.</source>
-        <translation>Не удается привязать к привилегированные порты ниже 1024!
-Используется порт по умолчанию 19455.</translation>
+        <translation>Не удается привязать к привилегированным портам с номерами меньше 1024!
+Используется порт по умолчанию: 19455.</translation>
+    </message>
+    <message>
+        <source>&amp;Return only best matching entries for a URL instead
+of all entries for the whole domain</source>
+        <translation>Возвращать толь&amp;ко наиболее совпавшие с URL записи, а не все записи для домена</translation>
+    </message>
+    <message>
+        <source>R&amp;emove all shared encryption keys from active database</source>
+        <translation>&amp;Удалить все общие ключи шифрования из активного хранилища</translation>
+    </message>
+    <message>
+        <source>The following options can be dangerous. Change them only if you know what you are doing.</source>
+        <translation>Используйте эти настройки только если знаете, что делаете!</translation>
+    </message>
+    <message>
+        <source>&amp;Return advanced string fields which start with &quot;KPH: &quot;</source>
+        <translation>Возвращать дополнительные стро&amp;ковые поля, начинающиеся с  &quot;KPH: &quot;</translation>
+    </message>
+    <message>
+        <source>Automatically creating or updating string fields is not supported.</source>
+        <translation>Автоматическое создание или обновление полей, содержащих строки, не поддерживается.</translation>
     </message>
 </context>
 <context>
@@ -1768,16 +1777,16 @@ give it a unique name to identify and accept it.</source>
         <translation>файл-ключ хранилища</translation>
     </message>
     <message>
-        <source>filename(s) of the password database(s) to open (*.kdbx)</source>
-        <translation>имена(имя) файлов хранилищ(а) для открытия (*.kdbx)</translation>
-    </message>
-    <message>
         <source>KeePassXC - cross-platform password manager</source>
         <translation>KeePassXC — кросс-платформенный менеджер паролей</translation>
     </message>
     <message>
         <source>read password of the database from stdin</source>
         <translation>читать пароли хранилища из стандартного ввода &quot;stdin&quot;</translation>
+    </message>
+    <message>
+        <source>filenames of the password databases to open (*.kdbx)</source>
+        <translation>имена файлов открываемого хранилища паролей (*.kdbx)</translation>
     </message>
 </context>
 </TS>

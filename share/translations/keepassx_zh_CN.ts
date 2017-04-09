@@ -7,7 +7,7 @@
     </message>
     <message>
         <source>Using:</source>
-        <translation>使用:</translation>
+        <translation>使用：</translation>
     </message>
     <message>
         <source>About KeePassXC</source>
@@ -28,7 +28,7 @@
     <name>AccessControlDialog</name>
     <message>
         <source>Remember this decision</source>
-        <translation type="unfinished"/>
+        <translation>保存此决定</translation>
     </message>
     <message>
         <source>Allow</source>
@@ -407,7 +407,7 @@ Do you want to save it anyway?</source>
     </message>
     <message>
         <source>Passwords</source>
-        <translation type="unfinished"/>
+        <translation>密码</translation>
     </message>
     <message>
         <source>Database already opened</source>

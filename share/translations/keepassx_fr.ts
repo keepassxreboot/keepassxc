@@ -475,11 +475,11 @@ Voulez vous l&apos;ouvrir quand même ?</translation>
     </message>
     <message>
         <source>Move entry to recycle bin?</source>
-        <translation>Placer l&apos;élément dans la corbeille ?</translation>
+        <translation>Déplacer l&apos;entrée dans la corbeille ?</translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
-        <translation>Êtes-vous sûr de vouloir placer l&apos;élément &quot;%1&quot; dans la corbeille ?</translation>
+        <translation>Êtes-vous sûr de vouloir déplacer l&apos;entrée &quot;%1&quot; dans la corbeille ?</translation>
     </message>
     <message>
         <source>Searching...</source>
@@ -1311,7 +1311,8 @@ Ceci est une migration à sens unique. Vous ne serez plus en mesure d&apos;ouvri
     <message>
         <source>&amp;Match URL schemes
 Only entries with the same scheme (http://, https://, ftp://, ...) are returned</source>
-        <translation type="unfinished"/>
+        <translation>&amp; Cible des types d&apos;URL
+Seules les entrées de même type (http://, https://, ftp://, ...) sont retournées</translation>
     </message>
     <message>
         <source>Sort matching entries by &amp;username</source>
@@ -1384,7 +1385,8 @@ Restauration du port 19455 par défaut.</translation>
     <message>
         <source>&amp;Return only best matching entries for a URL instead
 of all entries for the whole domain</source>
-        <translation type="unfinished"/>
+        <translation>&amp; Retourne seulement les meilleures entrées correspondantes pour une URL,
+au lieu de toutes pour le domaine entier</translation>
     </message>
     <message>
         <source>R&amp;emove all shared encryption keys from active database</source>
@@ -1396,7 +1398,7 @@ of all entries for the whole domain</source>
     </message>
     <message>
         <source>&amp;Return advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation type="unfinished"/>
+        <translation>&amp; Retourne les champs avancés de type chaîne qui commencent par &quot;KPH:&quot;</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
@@ -1582,7 +1584,7 @@ Veuillez déverrouiller la base de données sélectionnée ou en choisir une qui
     </message>
     <message>
         <source>The active database does not contain an entry of KeePassHttp Settings.</source>
-        <translation>La base de données actuelle ne contient aucun paramètres de KeePassHttp.</translation>
+        <translation>La base de données actuelle ne contient pas d&apos;entrée de paramètres KeePassHttp.</translation>
     </message>
     <message>
         <source>Removing stored permissions...</source>
@@ -1598,7 +1600,7 @@ Veuillez déverrouiller la base de données sélectionnée ou en choisir une qui
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
-        <translation>La base de données actuelle ne contient aucun élément avec des permissions.</translation>
+        <translation>La base de données actuelle ne contient pas d&apos;entrée avec des permissions.</translation>
     </message>
     <message>
         <source>KeePassXC: New key association request</source>
@@ -1618,7 +1620,7 @@ attribuez lui un nom unique pour l&apos;identifier et acceptez la.</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
-        <translation>KeePassXC: Mettre à jour l&apos;élément</translation>
+        <translation>KeePassXC: Mettre à jour l&apos;entrée</translation>
     </message>
     <message>
         <source>KeePassXC: Database locked!</source>
@@ -1688,7 +1690,7 @@ attribuez lui un nom unique pour l&apos;identifier et acceptez la.</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global auto-type</source>
-        <translation type="unfinished"/>
+        <translation>Utiliser le titre d’entrée pour correspondre à windows pour auto-type global</translation>
     </message>
     <message>
         <source>Language</source>
@@ -1788,7 +1790,7 @@ attribuez lui un nom unique pour l&apos;identifier et acceptez la.</translation>
     </message>
     <message>
         <source>filenames of the password databases to open (*.kdbx)</source>
-        <translation type="unfinished"/>
+        <translation>noms de fichiers des bases de données de mot de passe à ouvrir (*.kdbx)</translation>
     </message>
 </context>
 </TS>
