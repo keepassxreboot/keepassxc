@@ -58,6 +58,7 @@ public:
     KeySym keyToKeySym(Qt::Key key);
 
     void SendKeyPressedEvent(KeySym keysym);
+    void SendKey(KeySym keysym, bool isKeyDown);
 
 signals:
     void globalShortcutTriggered();
@@ -126,6 +127,7 @@ public:
 
     void execChar(AutoTypeChar* action) override;
     void execKey(AutoTypeKey* action) override;
+    void execClearField(AutoTypeClearField* action) override;
 
 private:
     AutoTypePlatformX11* const m_platform;

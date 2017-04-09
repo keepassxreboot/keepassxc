@@ -64,6 +64,7 @@ public:
 
     void execChar(AutoTypeChar* action) override;
     void execKey(AutoTypeKey* action) override;
+    void execClearField(AutoTypeClearField* action) override;
 
 private:
     AutoTypePlatformWin* const m_platform;

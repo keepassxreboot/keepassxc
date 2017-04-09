@@ -120,7 +120,7 @@ bool AutoTypePlatformMac::registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifi
         qWarning("Invalid key code");
         return false;
     }
-    uint16 nativeModifiers = qtToNativeModifiers(modifiers);
+    CGEventFlags nativeModifiers = qtToNativeModifiers(modifiers, false);
     if (::RegisterEventHotKey(nativeKeyCode, nativeModifiers, m_hotkeyId, GetApplicationEventTarget(), 0, &m_hotkeyRef) != noErr) {
         qWarning("Register hotkey failed");
         return false;
@@ -201,7 +201,7 @@ void AutoTypePlatformMac::sendChar(const QChar& ch, bool isKeyDown)
 // Send key code to active window
 // see: Quartz Event Services
 //
-void AutoTypePlatformMac::sendKey(Qt::Key key, bool isKeyDown)
+void AutoTypePlatformMac::sendKey(Qt::Key key, bool isKeyDown, Qt::KeyboardModifiers modifiers = 0)
 {
     uint16 keyCode = qtToNativeKeyCode(key);
     if (keyCode == INVALID_KEYCODE) {
@@ -209,7 +209,9 @@ void AutoTypePlatformMac::sendKey(Qt::Key key, bool isKeyDown)
     }
 
     CGEventRef keyEvent = ::CGEventCreateKeyboardEvent(nullptr, keyCode, isKeyDown);
+    CGEventFlags nativeModifiers = qtToNativeModifiers(modifiers, true);
     if (keyEvent != nullptr) {
+        ::CGEventSetFlags(keyEvent, nativeModifiers);
         ::CGEventPost(kCGSessionEventTap, keyEvent);
         ::CFRelease(keyEvent);
     }
@@ -317,6 +319,10 @@ uint16 AutoTypePlatformMac::qtToNativeKeyCode(Qt::Key key)
         case Qt::Key_Period:
             return kVK_ANSI_Period;
 
+        case Qt::Key_Shift:
+            return kVK_Shift;
+        case Qt::Key_Control:
+            return kVK_Command;
         case Qt::Key_Backspace:
             return kVK_Delete;
         case Qt::Key_Tab:
@@ -395,21 +401,34 @@ uint16 AutoTypePlatformMac::qtToNativeKeyCode(Qt::Key key)
 // Translate qt key modifiers to mac os modifiers
 // see: https://doc.qt.io/qt-5/osx-issues.html#special-keys
 //
-uint16 AutoTypePlatformMac::qtToNativeModifiers(Qt::KeyboardModifiers modifiers)
+CGEventFlags AutoTypePlatformMac::qtToNativeModifiers(Qt::KeyboardModifiers modifiers, bool native)
 {
-    uint16 nativeModifiers = 0;
+    CGEventFlags nativeModifiers = 0;
+
+    CGEventFlags shiftMod = shiftKey;
+    CGEventFlags cmdMod = cmdKey;
+    CGEventFlags optionMod = optionKey;
+    CGEventFlags controlMod = controlKey;
+
+    if (native) {
+        shiftMod = kCGEventFlagMaskShift;
+        cmdMod = kCGEventFlagMaskCommand;
+        optionMod = kCGEventFlagMaskAlternate;
+        controlMod = kCGEventFlagMaskControl;
+    }
+
 
     if (modifiers & Qt::ShiftModifier) {
-        nativeModifiers |= shiftKey;
+        nativeModifiers |= shiftMod;
     }
     if (modifiers & Qt::ControlModifier) {
-        nativeModifiers |= cmdKey;
+        nativeModifiers |= cmdMod;
     }
     if (modifiers & Qt::AltModifier) {
-        nativeModifiers |= optionKey;
+        nativeModifiers |= optionMod;
     }
     if (modifiers & Qt::MetaModifier) {
-        nativeModifiers |= controlKey;
+        nativeModifiers |= controlMod;
     }
 
     return nativeModifiers;
@@ -486,5 +505,27 @@ void AutoTypeExecutorMac::execKey(AutoTypeKey* action)
 {
     m_platform->sendKey(action->key, true);
     m_platform->sendKey(action->key, false);
+    usleep(25 * 1000);
+}
+
+void AutoTypeExecutorMac::execClearField(AutoTypeClearField* action = nullptr)
+{
+    Q_UNUSED(action);
+
+    m_platform->sendKey(Qt::Key_Control, true, Qt::ControlModifier);
+    m_platform->sendKey(Qt::Key_Up, true, Qt::ControlModifier);
+    m_platform->sendKey(Qt::Key_Up, false, Qt::ControlModifier);
+    m_platform->sendKey(Qt::Key_Control, false);
+    usleep(25 * 1000);
+    m_platform->sendKey(Qt::Key_Shift, true, Qt::ShiftModifier);
+    m_platform->sendKey(Qt::Key_Control, true, Qt::ShiftModifier | Qt::ControlModifier);
+    m_platform->sendKey(Qt::Key_Down, true, Qt::ShiftModifier | Qt::ControlModifier);
+    m_platform->sendKey(Qt::Key_Down, false, Qt::ShiftModifier | Qt::ControlModifier);
+    m_platform->sendKey(Qt::Key_Control, false, Qt::ShiftModifier);
+    m_platform->sendKey(Qt::Key_Shift, false);
+    usleep(25 * 1000);
+    m_platform->sendKey(Qt::Key_Backspace, true);
+    m_platform->sendKey(Qt::Key_Backspace, false);
+
     usleep(25 * 1000);
 }
