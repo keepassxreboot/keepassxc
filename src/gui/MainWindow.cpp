@@ -184,6 +184,7 @@ MainWindow::MainWindow()
     m_ui->actionChangeMasterKey->setIcon(filePath()->icon("actions", "database-change-key", false));
     m_ui->actionLockDatabases->setIcon(filePath()->icon("actions", "document-encrypt", false));
     m_ui->actionQuit->setIcon(filePath()->icon("actions", "application-exit"));
+    m_ui->actionQuit->setMenuRole(QAction::QuitRole);
 
     m_ui->actionEntryNew->setIcon(filePath()->icon("actions", "entry-new", false));
     m_ui->actionEntryClone->setIcon(filePath()->icon("actions", "entry-clone", false));
@@ -198,9 +199,11 @@ MainWindow::MainWindow()
     m_ui->actionGroupDelete->setIcon(filePath()->icon("actions", "group-delete", false));
 
     m_ui->actionSettings->setIcon(filePath()->icon("actions", "configure"));
+    m_ui->actionSettings->setMenuRole(QAction::PreferencesRole);
     m_ui->actionPasswordGenerator->setIcon(filePath()->icon("actions", "password-generator", false));
 
     m_ui->actionAbout->setIcon(filePath()->icon("actions", "help-about"));
+    m_ui->actionAbout->setMenuRole(QAction::AboutRole);
 
     m_actionMultiplexer.connect(SIGNAL(currentModeChanged(DatabaseWidget::Mode)),
                                 this, SLOT(setMenuActionState(DatabaseWidget::Mode)));
