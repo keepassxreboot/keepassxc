@@ -14,14 +14,14 @@
         <translation>Sobre KeePassXC</translation>
     </message>
     <message>
-        <source>KeePassXC is distributed under the term of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassXC é distribuído nos termos da Licença Pública Geral (GPL), versão 2 ou (à sua escolha) versão 3, do GNU.</translation>
-    </message>
-    <message>
         <source>Extensions:
 </source>
         <translation>Extensões:
 </translation>
+    </message>
+    <message>
+        <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
+        <translation>KeePassXC é distribuído nos termos da Licença Pública Geral (GPL), versão 2 ou (à sua escolha) versão 3, do GNU.</translation>
     </message>
 </context>
 <context>
@@ -101,10 +101,6 @@ Selecione se deseja permitir o acesso.</translation>
         <translation>Repita senha:</translation>
     </message>
     <message>
-        <source>Key file</source>
-        <translation>Arquivo-Chave</translation>
-    </message>
-    <message>
         <source>Browse</source>
         <translation>Navegar</translation>
     </message>
@@ -157,6 +153,10 @@ Selecione se deseja permitir o acesso.</translation>
 %2</source>
         <translation>Falha ao definir %1 como o Arquivo-Chave:
 %2</translation>
+    </message>
+    <message>
+        <source>&amp;Key file</source>
+        <translation>&amp;Arquivo-Chave</translation>
     </message>
 </context>
 <context>
@@ -258,10 +258,6 @@ Você pode salvá-lo agora.</translation>
         <translation>Usuário padrão:</translation>
     </message>
     <message>
-        <source>Use recycle bin:</source>
-        <translation>Usar lixeira:</translation>
-    </message>
-    <message>
         <source> MiB</source>
         <translation> MB</translation>
     </message>
@@ -276,6 +272,10 @@ Você pode salvá-lo agora.</translation>
     <message>
         <source>Max. history size:</source>
         <translation>Tamanho máx. do histórico:</translation>
+    </message>
+    <message>
+        <source>Use recycle bin</source>
+        <translation>Usar lixeira</translation>
     </message>
 </context>
 <context>
@@ -397,12 +397,6 @@ Descartar alterações e fechar mesmo assim?</translation>
         <translation>Não foi possível abrir o banco de dados.</translation>
     </message>
     <message>
-        <source>The database you are trying to open is locked by another instance of KeePassXC.
-Do you want to open it anyway? Alternatively the database is opened read-only.</source>
-        <translation>A base de dados que você está tentando abrir está bloqueada por outra instância de KeePassXC.
-Mesmo assim deseja abrir? Alternativamente, a base de dados é aberta somente para leitura.</translation>
-    </message>
-    <message>
         <source>Merge database</source>
         <translation>Juntar banco de dados</translation>
     </message>
@@ -411,6 +405,26 @@ Mesmo assim deseja abrir? Alternativamente, a base de dados é aberta somente pa
 Do you want to save it anyway?</source>
         <translation>A base de dados que você está tentando abrir está bloqueada por outra instância de KeePassXC.
 Mesmo assim deseja salvá-la?</translation>
+    </message>
+    <message>
+        <source>Passwords</source>
+        <translation>Senhas</translation>
+    </message>
+    <message>
+        <source>Database already opened</source>
+        <translation>Banco de dados já aberto</translation>
+    </message>
+    <message>
+        <source>The database you are trying to open is locked by another instance of KeePassXC.
+
+Do you want to open it anyway?</source>
+        <translation>O banco de dados que você está tentando abrir está bloqueada por outra instância do KeePassXC.
+
+Mesmo assim deseja salvá-la?</translation>
+    </message>
+    <message>
+        <source>Open read-only</source>
+        <translation>Abrir somente leitura</translation>
     </message>
 </context>
 <context>
@@ -518,10 +532,6 @@ Mesmo assim deseja salvá-la?</translation>
     <message>
         <source>Autoreload Failed</source>
         <translation>Carregamento Automático Falhou</translation>
-    </message>
-    <message>
-        <source>Could not parse or unlock the new database file while attempting to autoreload this database.</source>
-        <translation>Não foi possível analisar ou desbloquear o novo arquivo da base de dados ao tentar recarregar automaticamente essa base de dados.</translation>
     </message>
     <message>
         <source>Could not open the new database file while attempting to autoreload this database.</source>
@@ -651,14 +661,6 @@ Mesmo assim deseja salvá-la?</translation>
         <translation>Habilitar Auto-Digitação para esta entrada</translation>
     </message>
     <message>
-        <source>Inherit default Auto-Type sequence from the group</source>
-        <translation>Herdar sequência pré-definida de Auto-Digitação do grupo</translation>
-    </message>
-    <message>
-        <source>Use custom Auto-Type sequence:</source>
-        <translation>Usar sequência de Auto-Digitação personalizada:</translation>
-    </message>
-    <message>
         <source>+</source>
         <translation>+</translation>
     </message>
@@ -671,12 +673,20 @@ Mesmo assim deseja salvá-la?</translation>
         <translation>Título da Janela:</translation>
     </message>
     <message>
-        <source>Use default sequence</source>
-        <translation>Usar sequência pré-definida</translation>
+        <source>Inherit default Auto-Type sequence from the &amp;group</source>
+        <translation>Herdar sequência pré-definida de Auto-Digitação do &amp;grupo</translation>
     </message>
     <message>
-        <source>Set custom sequence:</source>
-        <translation>Definir sequência personalizada:</translation>
+        <source>&amp;Use custom Auto-Type sequence:</source>
+        <translation>&amp;Usar sequência de Auto-Digitação personalizada:</translation>
+    </message>
+    <message>
+        <source>Use default se&amp;quence</source>
+        <translation>Usar se&amp;quência pré-definida</translation>
+    </message>
+    <message>
+        <source>Set custo&amp;m sequence:</source>
+        <translation>Definir sequência &amp;personalizada:</translation>
     </message>
 </context>
 <context>
@@ -802,14 +812,6 @@ Mesmo assim deseja salvá-la?</translation>
 <context>
     <name>EditWidgetIcons</name>
     <message>
-        <source>Use default icon</source>
-        <translation>Usar ícone padrão</translation>
-    </message>
-    <message>
-        <source>Use custom icon</source>
-        <translation>Usar ícone personalizado</translation>
-    </message>
-    <message>
         <source>Add custom icon</source>
         <translation>Adicionar ícone personalizado</translation>
     </message>
@@ -852,6 +854,14 @@ Mesmo assim deseja salvá-la?</translation>
     <message>
         <source>Can&apos;t delete icon. Still used by %1 items.</source>
         <translation>Não é possível apagar ícone. Ainda usado por %1 itens.</translation>
+    </message>
+    <message>
+        <source>&amp;Use default icon</source>
+        <translation>&amp;Usar ícone padrão</translation>
+    </message>
+    <message>
+        <source>Use custo&amp;m icon</source>
+        <translation>Usar ícone &amp;personalizado</translation>
     </message>
 </context>
 <context>
@@ -1299,12 +1309,6 @@ Esta é uma migração de uma via. Você não poderá abrir o banco de dados imp
         <translation>M&amp;ostrar uma notificação quando as credenciais forem solicitadas</translation>
     </message>
     <message>
-        <source>&amp;Return only best matching entries for an URL instead
-of all entries for the whole domain</source>
-        <translation>&amp;Mostrar apenas as melhores entradas correspondentes para um URL em vez de
-todas as entradas para o domínio completo</translation>
-    </message>
-    <message>
         <source>&amp;Match URL schemes
 Only entries with the same scheme (http://, https://, ftp://, ...) are returned</source>
         <translation>&amp;Esquemas de URL coincidentes
@@ -1313,10 +1317,6 @@ Somente entradas com o mesmo esquema (http://, https://, ftp://, ...) são mostr
     <message>
         <source>Sort matching entries by &amp;username</source>
         <translation>Ordenar entradas coincidentes por nome de &amp;usuário</translation>
-    </message>
-    <message>
-        <source>R&amp;emove all shared encryption-keys from active database</source>
-        <translation>R&amp;emover todas as chaves criptografadas compartilhadas da base de dados ativa</translation>
     </message>
     <message>
         <source>Re&amp;move all stored permissions from entries in active database</source>
@@ -1329,10 +1329,6 @@ Somente entradas com o mesmo esquema (http://, https://, ftp://, ...) são mostr
     <message>
         <source>Advanced</source>
         <translation>Avançado</translation>
-    </message>
-    <message>
-        <source>Activate the following only, if you know what you are doing!</source>
-        <translation>Ativar apenas os seguintes, se souber o que está fazendo!</translation>
     </message>
     <message>
         <source>Always allow &amp;access to entries</source>
@@ -1349,14 +1345,6 @@ Somente entradas com o mesmo esquema (http://, https://, ftp://, ...) são mostr
     <message>
         <source>Only the selected database has to be connected with a client!</source>
         <translation>Somente a base de dados selecionada tem que ser conectada com um cliente!</translation>
-    </message>
-    <message>
-        <source>&amp;Return also advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation>&amp;Mostrar também campos avançados que começam com &quot;KPH: &quot;</translation>
-    </message>
-    <message>
-        <source>Automatic creates or updates are not supported for string fields!</source>
-        <translation>Criação automática ou atualizações não são suportadas para os valores dos campos!</translation>
     </message>
     <message>
         <source>HTTP Port:</source>
@@ -1377,8 +1365,8 @@ Somente entradas com o mesmo esquema (http://, https://, ftp://, ...) são mostr
     <message>
         <source>Enable KeepassXC HTTP protocol
 This is required for accessing your databases from ChromeIPass or PassIFox</source>
-        <translation>Habilitar KeepassXC protocolo HTTP
-Isso é necessário para acessar os seus bancos de dados de ChromeIPass ou de PassIFox</translation>
+        <translation>Habilitar o protocolo KeepassXC HTTP
+Isso é necessário para acessar os seus bancos de dados usando o ChromeIPass ou PassIFox</translation>
     </message>
     <message>
         <source>KeePassXC will listen to this port on 127.0.0.1</source>
@@ -1393,6 +1381,28 @@ Isso é necessário para acessar os seus bancos de dados de ChromeIPass ou de Pa
 Using default port 19455.</source>
         <translation>Não é possível ligar a portas privilegiadas abaixo de 1024!
 Usando porta padrão 19455.</translation>
+    </message>
+    <message>
+        <source>&amp;Return only best matching entries for a URL instead
+of all entries for the whole domain</source>
+        <translation>&amp;Mostrar apenas as melhores entradas correspondentes para um URL em vez de
+todas as entradas para o domínio completo</translation>
+    </message>
+    <message>
+        <source>R&amp;emove all shared encryption keys from active database</source>
+        <translation>R&amp;emover todas as chaves criptografadas compartilhadas da base de dados ativa</translation>
+    </message>
+    <message>
+        <source>The following options can be dangerous. Change them only if you know what you are doing.</source>
+        <translation>As configurações abaixo podem ser perigosas. Altere-as somente se souber o que está fazendo.</translation>
+    </message>
+    <message>
+        <source>&amp;Return advanced string fields which start with &quot;KPH: &quot;</source>
+        <translation>&amp;Mostrar também campos avançados que começam com &quot;KPH: &quot;</translation>
+    </message>
+    <message>
+        <source>Automatically creating or updating string fields is not supported.</source>
+        <translation>Criação automática ou atualizações não são suportadas para os valores dos campos.</translation>
     </message>
 </context>
 <context>
@@ -1700,7 +1710,7 @@ dar-lhe um nome único para identificá-lo e aceitá-lo.</translation>
     </message>
     <message>
         <source>Load previous databases on startup</source>
-        <translation>Abrir bancos de dados anteriores na inicialização</translation>
+        <translation>Carregar bancos de dados anteriores na inicialização</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -1771,16 +1781,16 @@ dar-lhe um nome único para identificá-lo e aceitá-lo.</translation>
         <translation>arquivo-chave do banco de dados</translation>
     </message>
     <message>
-        <source>filename(s) of the password database(s) to open (*.kdbx)</source>
-        <translation>nome(s) de arquivo(s) do banco de dados de senhas a ser aberto (*.kdbx)</translation>
-    </message>
-    <message>
         <source>KeePassXC - cross-platform password manager</source>
         <translation>KeePassXC - gerenciador de senhas multiplataforma</translation>
     </message>
     <message>
         <source>read password of the database from stdin</source>
         <translation>ler a senha do banco de dados da entrada padrão</translation>
+    </message>
+    <message>
+        <source>filenames of the password databases to open (*.kdbx)</source>
+        <translation>nome de arquivo do banco de dados de senhas a ser aberto (*.kdbx)</translation>
     </message>
 </context>
 </TS>

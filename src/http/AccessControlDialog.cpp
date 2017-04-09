@@ -19,6 +19,8 @@ AccessControlDialog::AccessControlDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AccessControlDialog())
 {
+    this->setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+
     ui->setupUi(this);
     connect(ui->allowButton, SIGNAL(clicked()), this, SLOT(accept()));
     connect(ui->denyButton, SIGNAL(clicked()), this, SLOT(reject()));
