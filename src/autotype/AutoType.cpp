@@ -142,6 +142,9 @@ void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow, const QS
         sequence = customSequence;
     }
 
+    sequence.replace("{{}", "{LEFTBRACE}");
+    sequence.replace("{}}", "{RIGHTBRACE}");
+
     QList<AutoTypeAction*> actions;
     ListDeleter<AutoTypeAction*> actionsDeleter(&actions);
 
@@ -317,8 +320,6 @@ bool AutoType::parseActions(const QString& sequence, const Entry* entry, QList<A
 
 
     for (const QChar& ch : sequence) {
-        // TODO: implement support for {{}, {}}
-
         if (inTmpl) {
             if (ch == '{') {
                 qWarning("Syntax error in auto-type sequence.");
@@ -486,10 +487,10 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
     else if (tmplName.compare(")",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeChar(')'));
     }
-    else if (tmplName.compare("{",Qt::CaseInsensitive)==0) {
+    else if (tmplName.compare("leftbrace",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeChar('{'));
     }
-    else if (tmplName.compare("}",Qt::CaseInsensitive)==0) {
+    else if (tmplName.compare("rightbrace",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeChar('}'));
     }
     else {
