@@ -27,7 +27,7 @@ static const char * const STR_SET_LOGIN = "set-login";
 static const char * const STR_ASSOCIATE = "associate";
 static const char * const STR_TEST_ASSOCIATE = "test-associate";
 static const char * const STR_GENERATE_PASSWORD = "generate-password";
-static const char * const STR_VERSION = "1.8.4.1";
+static const char * const STR_VERSION = "1.8.4.2";
 
 }/*namespace KeepassHttpProtocol*/
 
