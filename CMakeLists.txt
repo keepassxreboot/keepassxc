@@ -38,8 +38,8 @@ option(WITH_XC_AUTOTYPE "Include Autotype." OFF)
 option(WITH_XC_HTTP "Include KeePassHTTP." OFF)
 option(WITH_XC_YUBIKEY "Include Yubikey support." OFF)
 
-set(KEEPASSXC_VERSION "2.1.3")
-set(KEEPASSXC_VERSION_NUM "2.1.3")
+set(KEEPASSXC_VERSION "2.1.4")
+set(KEEPASSXC_VERSION_NUM "2.1.4")
 
 if("${CMAKE_C_COMPILER}" MATCHES "clang$" OR "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
   set(CMAKE_COMPILER_IS_CLANG 1)
