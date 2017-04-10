@@ -1236,6 +1236,10 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&amp;Timed one-time password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&amp;Find</source>
         <translation type="unfinished"></translation>
     </message>

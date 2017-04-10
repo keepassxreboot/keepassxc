@@ -225,6 +225,7 @@
     <addaction name="menuEntryCopyAttribute"/>
     <addaction name="actionEntryAutoType"/>
     <addaction name="actionEntryOpenUrl"/>
+    <addaction name="actionEntryTotp"/>
     <addaction name="actionEntryEdit"/>
     <addaction name="actionEntryClone"/>
     <addaction name="actionEntryDelete"/>
@@ -519,6 +520,11 @@
   <action name="actionRepairDatabase">
    <property name="text">
     <string>Re&amp;pair database</string>
+   </property>
+  </action>
+  <action name="actionEntryTotp">
+   <property name="text">
+    <string>&amp;Timed one-time password</string>
    </property>
   </action>
  </widget>

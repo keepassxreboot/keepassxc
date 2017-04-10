@@ -21,6 +21,7 @@
 #include "core/DatabaseIcons.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "totp/totp.h"
 
 const int Entry::DefaultIconNumber = 0;
 
@@ -283,6 +284,40 @@ EntryAttachments* Entry::attachments()
 const EntryAttachments* Entry::attachments() const
 {
     return m_attachments;
+}
+
+bool Entry::hasTotp() const{
+    if (m_attributes->hasKey("otp")) {
+        // Compatibility with "KeeOtp" plugin
+        QRegExp rx("key=(.+)", Qt::CaseInsensitive, QRegExp::RegExp);
+
+        if (rx.exactMatch(m_attributes->value("otp"))) {
+            return true;
+        }
+    } else if (m_attributes->hasKey("TOTP Seed")) {
+        // Compatibility with "Tray TOTP" plugin
+        return true;
+    }
+    return false;
+}
+
+QString Entry::totp() const{
+    if (hasTotp()) {
+        QString seed = "";
+
+        if (m_attributes->hasKey("otp")) {
+            QRegExp rx("key=(.+)", Qt::CaseInsensitive, QRegExp::RegExp);
+            rx.indexIn(m_attributes->value("otp"));
+            seed = rx.cap(1);
+        } else {
+            seed = m_attributes->value("TOTP Seed");
+        }
+        QString output = QTotp::generateTotp(seed.toLatin1());
+
+        return QString(output);
+    } else {
+        return QString("");
+    }
 }
 
 void Entry::setUuid(const Uuid& uuid)
