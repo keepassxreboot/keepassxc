@@ -268,6 +268,6 @@ if(PRINT_SUMMARY)
   feature_summary(WHAT ALL)
 else()
   # This will only print ENABLED and DISABLED feature
-  print_enabled_features()
-  print_disabled_features()
+  feature_summary(WHAT ENABLED_FEATURES DESCRIPTION "Enabled features:")
+  feature_summary(WHAT DISABLED_FEATURES DESCRIPTION "Disabled features:")
 endif()
