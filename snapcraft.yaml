@@ -1,5 +1,5 @@
 name: keepassxc
-version: 2.1.3
+version: 2.1.4
 grade: stable
 summary: community driven port of the windows application “Keepass Password Safe”
 description: |
@@ -11,7 +11,7 @@ confinement: strict
 apps:
   keepassxc:
     command: desktop-launch keepassxc
-    plugs: [unity7, opengl, gsettings, home, network, network-bind]
+    plugs: [unity7, x11, opengl, gsettings, home, network, network-bind]
 
 parts:
   keepassxc:
@@ -30,4 +30,6 @@ parts:
       - qttools5-dev
       - qttools5-dev-tools
       - zlib1g-dev
+      - libxi-dev
+      - libxtst-dev
     after: [desktop-qt5]
