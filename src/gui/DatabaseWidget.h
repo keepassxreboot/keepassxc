@@ -96,6 +96,7 @@ public:
     bool currentEntryHasPassword();
     bool currentEntryHasUrl();
     bool currentEntryHasNotes();
+    bool currentEntryHasTotp();
     GroupView* groupView();
     EntryView* entryView();
     void showUnlockDialog();
@@ -133,6 +134,9 @@ public slots:
     void copyURL();
     void copyNotes();
     void copyAttribute(QAction* action);
+    void showTotp();
+    void copyTotp();
+    void setupTotp();
     void performAutoType();
     void openUrl();
     void openUrlForEntry(Entry* entry);

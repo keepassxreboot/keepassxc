@@ -100,6 +100,8 @@ set(keepassx_SOURCES
     gui/SettingsWidget.cpp
     gui/SearchWidget.cpp
     gui/SortFilterHideProxyModel.cpp
+    gui/SetupTotpDialog.cpp
+    gui/TotpDialog.cpp
     gui/UnlockDatabaseWidget.cpp
     gui/UnlockDatabaseDialog.cpp
     gui/WelcomeWidget.cpp
@@ -129,6 +131,8 @@ set(keepassx_SOURCES
     streams/qtiocompressor.cpp
     streams/StoreDataStream.cpp
     streams/SymmetricCipherStream.cpp
+    totp/totp.h
+    totp/totp.cpp
 )
 
 set(keepassx_SOURCES_MAINEXE
@@ -151,6 +155,8 @@ set(keepassx_FORMS
     gui/SearchWidget.ui
     gui/SettingsWidgetGeneral.ui
     gui/SettingsWidgetSecurity.ui
+    gui/SetupTotpDialog.ui
+    gui/TotpDialog.ui
     gui/WelcomeWidget.ui
     gui/entry/EditEntryWidgetAdvanced.ui
     gui/entry/EditEntryWidgetAutoType.ui
