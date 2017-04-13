@@ -41,6 +41,8 @@ Files: share/icons/application/*/apps/keepassxc.png
        share/icons/application/scalable/apps/keepassxc-dark.svgz
        share/icons/application/*/apps/keepassxc-locked.png
        share/icons/application/scalable/apps/keepassxc-locked.svgz
+       share/icons/application/*/apps/keepassxc-unlocked.png
+       share/icons/application/scalable/apps/keepassxc-unlocked.svgz
        share/icons/application/*/mimetypes/application-x-keepassxc.png
        share/icons/application/scalable/mimetypes/application-x-keepassxc.svgz
 Copyright: 2016, Lorenzo Stella <lorenzo.stl@gmail.com>
