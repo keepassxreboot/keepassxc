@@ -18,12 +18,6 @@
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
       <widget class="QCheckBox" name="titleClone">
-       <property name="maximumSize">
-        <size>
-         <width>170</width>
-         <height>16777215</height>
-        </size>
-       </property>
        <property name="text">
         <string>Append ' - Copy' to title</string>
        </property>
