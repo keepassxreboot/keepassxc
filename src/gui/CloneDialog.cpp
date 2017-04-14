@@ -35,6 +35,7 @@ CloneDialog::CloneDialog(DatabaseWidget* parent, Database* db, Entry* entry)
     m_parent = parent;
 
     m_ui->setupUi(this);
+    this->setFixedSize(this->sizeHint());
 
     setAttribute(Qt::WA_DeleteOnClose);
 
