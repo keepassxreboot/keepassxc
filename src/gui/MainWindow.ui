@@ -167,7 +167,7 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>Database</string>
+     <string>&amp;Database</string>
     </property>
     <widget class="QMenu" name="menuRecentDatabases">
      <property name="title">
@@ -240,7 +240,7 @@
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
-     <string>Tools</string>
+     <string>&amp;Tools</string>
     </property>
     <addaction name="actionLockDatabases"/>
     <addaction name="actionPasswordGenerator"/>
