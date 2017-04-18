@@ -95,7 +95,7 @@ Application::Application(int& argc, char** argv)
     if (userName.isEmpty()) {
         userName = qgetenv("USERNAME");
     }
-    QString identifier = "keepassx2";
+    QString identifier = "keepassxc";
     if (!userName.isEmpty()) {
         identifier.append("-");
         identifier.append(userName);

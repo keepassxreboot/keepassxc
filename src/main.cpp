@@ -57,7 +57,7 @@ int main(int argc, char** argv)
     // QStandardPaths::writableLocation(QDesktopServices::DataLocation)
 
     if (app.isAlreadyRunning()) {
-        qWarning() << QCoreApplication::translate("Main", "Another instance of KeePassX 2 is already running.").toUtf8().constData();
+        qWarning() << QCoreApplication::translate("Main", "Another instance of KeePassXC is already running.").toUtf8().constData();
         return 0;
     }
 
