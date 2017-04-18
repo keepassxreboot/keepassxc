@@ -1291,6 +1291,10 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <source>Password Generator</source>
         <translation>Генератор паролей</translation>
     </message>
+    <message>
+        <source>Clear history</source>
+        <translation>Очистить историю</translation>
+    </message>
 </context>
 <context>
     <name>OptionDialog</name>

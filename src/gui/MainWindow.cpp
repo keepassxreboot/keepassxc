@@ -130,7 +130,7 @@ MainWindow::MainWindow()
     m_ui->toolBar->setVisible(showToolbar);
     connect(m_ui->toolBar, SIGNAL(visibilityChanged(bool)), this, SLOT(saveToolbarState(bool)));
 
-    m_clearHistoryAction = new QAction("Clear history", m_ui->menuFile);
+    m_clearHistoryAction = new QAction(tr("Clear history"), m_ui->menuFile);
     m_lastDatabasesActions = new QActionGroup(m_ui->menuRecentDatabases);
     connect(m_clearHistoryAction, SIGNAL(triggered()), this, SLOT(clearLastDatabases()));
     connect(m_lastDatabasesActions, SIGNAL(triggered(QAction*)), this, SLOT(openRecentDatabase(QAction*)));
