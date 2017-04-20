@@ -108,7 +108,7 @@
        <item>
         <widget class="QCheckBox" name="ignoreGroupExpansionCheckBox">
          <property name="text">
-          <string>Do not mark a database as modified when groups are expanded</string>
+          <string>Don't mark database as modified for non-data changes (e.g., expanding groups)</string>
          </property>
         </widget>
        </item>
