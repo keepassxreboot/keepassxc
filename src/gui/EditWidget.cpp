@@ -17,6 +17,7 @@
 
 #include "EditWidget.h"
 #include "ui_EditWidget.h"
+#include <QScrollArea>
 
 #include "core/FilePath.h"
 
@@ -47,7 +48,17 @@ EditWidget::~EditWidget()
 
 void EditWidget::addPage(const QString& labelText, const QIcon& icon, QWidget* widget)
 {
-    m_ui->stackedWidget->addWidget(widget);
+    /*
+     * Instead of just adding a widget we're going to wrap it into a scroll area. It will automatically show
+     * scrollbars when the widget cannot fit into the page. This approach prevents the main window of the application
+     * from automatic resizing and it now should be able to fit into a user's monitor even if the monitor is only 768
+     * pixels high.
+     */
+    QScrollArea* scrollArea = new QScrollArea(m_ui->stackedWidget);
+    scrollArea->setFrameShape(QFrame::NoFrame);
+    scrollArea->setWidget(widget);
+    scrollArea->setWidgetResizable(true);
+    m_ui->stackedWidget->addWidget(scrollArea);
     m_ui->categoryList->addCategory(labelText, icon);
 }
 
