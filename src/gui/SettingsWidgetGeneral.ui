@@ -106,6 +106,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="ignoreGroupExpansionCheckBox">
+         <property name="text">
+          <string>Don't mark database as modified for non-data changes (e.g., expanding groups)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QWidget" name="systraySettings" native="true">
          <layout class="QVBoxLayout" name="systrayLayout">
           <property name="leftMargin">

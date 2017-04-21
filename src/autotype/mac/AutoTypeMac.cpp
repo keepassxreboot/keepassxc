@@ -403,12 +403,12 @@ uint16 AutoTypePlatformMac::qtToNativeKeyCode(Qt::Key key)
 //
 CGEventFlags AutoTypePlatformMac::qtToNativeModifiers(Qt::KeyboardModifiers modifiers, bool native)
 {
-    CGEventFlags nativeModifiers = 0;
+    CGEventFlags nativeModifiers = CGEventFlags(0);
 
-    CGEventFlags shiftMod = shiftKey;
-    CGEventFlags cmdMod = cmdKey;
-    CGEventFlags optionMod = optionKey;
-    CGEventFlags controlMod = controlKey;
+    CGEventFlags shiftMod = CGEventFlags(shiftKey);
+    CGEventFlags cmdMod = CGEventFlags(cmdKey);
+    CGEventFlags optionMod = CGEventFlags(optionKey);
+    CGEventFlags controlMod = CGEventFlags(controlKey);
 
     if (native) {
         shiftMod = kCGEventFlagMaskShift;
