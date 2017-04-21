@@ -296,6 +296,9 @@ void Group::setExpanded(bool expanded)
     if (m_data.isExpanded != expanded) {
         m_data.isExpanded = expanded;
         updateTimeinfo();
+        if (config()->get("IgnoreGroupExpansion").toBool()) {
+            return;
+        }
         emit modified();
     }
 }

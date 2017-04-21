@@ -113,6 +113,7 @@ void Config::init(const QString& fileName)
     m_defaults.insert("UseGroupIconOnEntryCreation", false);
     m_defaults.insert("AutoTypeEntryTitleMatch", true);
     m_defaults.insert("UseGroupIconOnEntryCreation", true);
+    m_defaults.insert("IgnoreGroupExpansion", false);
     m_defaults.insert("security/clearclipboard", true);
     m_defaults.insert("security/clearclipboardtimeout", 10);
     m_defaults.insert("security/lockdatabaseidle", false);
