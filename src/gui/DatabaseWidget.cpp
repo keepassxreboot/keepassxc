@@ -1267,3 +1267,38 @@ void DatabaseWidget::hideMessage()
         m_messageWidget->animatedHide();
     }
 }
+
+bool DatabaseWidget::isRecycleBinSelected() const
+{
+    return m_groupView->currentGroup() && m_groupView->currentGroup() == m_db->metadata()->recycleBin();
+}
+
+void DatabaseWidget::emptyTrash()
+{
+    Group* currentGroup = m_groupView->currentGroup();
+    if (!currentGroup) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    if (currentGroup == m_db->metadata()->recycleBin()) {
+        QMessageBox::StandardButton result = MessageBox::question(
+            this, tr("Empty recycle bin?"),
+            tr("Are you sure you want to permanently delete everytning from your recycle bin?"),
+            QMessageBox::Yes | QMessageBox::No);
+
+        if (result == QMessageBox::Yes) {
+            // destroying direct entries of the recycle bin
+            QList<Entry*> subEntries = currentGroup->entries();
+            for (Entry* entry : subEntries) {
+                delete entry;
+            }
+            // destroying direct subgroups of the recycle bin
+            QList<Group*> subGroups = currentGroup->children();
+            for (Group* group : subGroups) {
+                delete group;
+            }
+            refreshSearch();
+        }
+    }
+}
