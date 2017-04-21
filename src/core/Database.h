@@ -108,6 +108,7 @@ public:
     bool verifyKey(const CompositeKey& key) const;
     void recycleEntry(Entry* entry);
     void recycleGroup(Group* group);
+    void emptyRecycleBin();
     void setEmitModified(bool value);
     void copyAttributesFrom(const Database* other);
     void merge(const Database* other);

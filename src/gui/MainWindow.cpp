@@ -197,7 +197,7 @@ MainWindow::MainWindow()
     m_ui->actionGroupNew->setIcon(filePath()->icon("actions", "group-new", false));
     m_ui->actionGroupEdit->setIcon(filePath()->icon("actions", "group-edit", false));
     m_ui->actionGroupDelete->setIcon(filePath()->icon("actions", "group-delete", false));
-    m_ui->actionGroupEmptyTrash->setIcon(filePath()->icon("actions", "group-empty-trash", false));
+    m_ui->actionGroupEmptyRecycleBin->setIcon(filePath()->icon("actions", "group-empty-trash", false));
 
     m_ui->actionSettings->setIcon(filePath()->icon("actions", "configure"));
     m_ui->actionSettings->setMenuRole(QAction::PreferencesRole);
@@ -296,8 +296,8 @@ MainWindow::MainWindow()
             SLOT(switchToGroupEdit()));
     m_actionMultiplexer.connect(m_ui->actionGroupDelete, SIGNAL(triggered()),
             SLOT(deleteGroup()));
-    m_actionMultiplexer.connect(m_ui->actionGroupEmptyTrash, SIGNAL(triggered()),
-            SLOT(emptyTrash()));
+    m_actionMultiplexer.connect(m_ui->actionGroupEmptyRecycleBin, SIGNAL(triggered()),
+            SLOT(emptyRecycleBin()));
 
     connect(m_ui->actionSettings, SIGNAL(triggered()), SLOT(switchToSettings()));
     connect(m_ui->actionPasswordGenerator, SIGNAL(toggled(bool)), SLOT(switchToPasswordGen(bool)));
@@ -433,8 +433,8 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionGroupNew->setEnabled(groupSelected);
             m_ui->actionGroupEdit->setEnabled(groupSelected);
             m_ui->actionGroupDelete->setEnabled(groupSelected && dbWidget->canDeleteCurrentGroup());
-            m_ui->actionGroupEmptyTrash->setVisible(recycleBinSelected);
-            m_ui->actionGroupEmptyTrash->setEnabled(recycleBinSelected);
+            m_ui->actionGroupEmptyRecycleBin->setVisible(recycleBinSelected);
+            m_ui->actionGroupEmptyRecycleBin->setEnabled(recycleBinSelected);
             m_ui->actionChangeMasterKey->setEnabled(true);
             m_ui->actionChangeDatabaseSettings->setEnabled(true);
             m_ui->actionDatabaseSave->setEnabled(true);

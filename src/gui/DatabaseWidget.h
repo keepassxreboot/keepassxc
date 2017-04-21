@@ -153,7 +153,7 @@ public slots:
     void switchToImportKeepass1(const QString& fileName);
     void databaseModified();
     void databaseSaved();
-    void emptyTrash();
+    void emptyRecycleBin();
 
     // Search related slots
     void search(const QString& searchtext);

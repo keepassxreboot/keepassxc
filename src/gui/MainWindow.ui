@@ -238,7 +238,7 @@
     <addaction name="separator"/>
     <addaction name="actionGroupEdit"/>
     <addaction name="actionGroupDelete"/>
-    <addaction name="actionGroupEmptyTrash"/>
+    <addaction name="actionGroupEmptyRecycleBin"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
@@ -523,7 +523,7 @@
     <string>Re&amp;pair database</string>
    </property>
   </action>
-  <action name="actionGroupEmptyTrash">
+  <action name="actionGroupEmptyRecycleBin">
    <property name="text">
     <string>Empty recycle bin</string>
    </property>
