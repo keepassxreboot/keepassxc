@@ -78,6 +78,9 @@ public:
     QString username() const;
     QString password() const;
     QString notes() const;
+    QString totp() const;
+
+    bool hasTotp() const;
     bool isExpired() const;
     bool hasReferences() const;
     EntryAttributes* attributes();
