@@ -162,7 +162,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>29</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -235,8 +235,10 @@
      <string>&amp;Groups</string>
     </property>
     <addaction name="actionGroupNew"/>
+    <addaction name="separator"/>
     <addaction name="actionGroupEdit"/>
     <addaction name="actionGroupDelete"/>
+    <addaction name="actionGroupEmptyRecycleBin"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
@@ -519,6 +521,14 @@
   <action name="actionRepairDatabase">
    <property name="text">
     <string>Re&amp;pair database</string>
+   </property>
+  </action>
+  <action name="actionGroupEmptyRecycleBin">
+   <property name="text">
+    <string>Empty recycle bin</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
  </widget>
