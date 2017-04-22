@@ -19,11 +19,15 @@
 
 #include <QTest>
 #include <QSignalSpy>
+#include <QTemporaryFile>
 
 #include "config-keepassx-tests.h"
 #include "core/Database.h"
 #include "crypto/Crypto.h"
 #include "keys/PasswordKey.h"
+#include "core/Metadata.h"
+#include "core/Group.h"
+#include "format/KeePass2Writer.h"
 
 QTEST_GUILESS_MAIN(TestDatabase)
 
@@ -85,5 +89,24 @@ void TestDatabase::testEmptyRecycleBinOnEmpty()
 
 void TestDatabase::testEmptyRecycleBinWithHierarchicalData()
 {
-//TODO: implement
+    QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/RecycleBinWithData.kdbx");
+    CompositeKey key;
+    key.addKey(PasswordKey("123"));
+    Database* db = Database::openDatabaseFile(filename, key);
+    QVERIFY(db);
+
+    QFile originalFile(filename);
+    qint64 initialSize = originalFile.size();
+
+    db->emptyRecycleBin();
+    QVERIFY(db->metadata()->recycleBin());
+    QVERIFY(db->metadata()->recycleBin()->entries().empty());
+    QVERIFY(db->metadata()->recycleBin()->children().empty());
+
+    QTemporaryFile afterCleanup;
+    KeePass2Writer writer;
+    writer.writeDatabase(&afterCleanup, db);
+    QVERIFY(afterCleanup.size() < initialSize);
+
+    delete db;
 }
