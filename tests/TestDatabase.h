@@ -20,8 +20,6 @@
 
 #include <QObject>
 
-class Database;
-
 class TestDatabase : public QObject
 {
     Q_OBJECT

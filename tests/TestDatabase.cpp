@@ -18,9 +18,12 @@
 #include "TestDatabase.h"
 
 #include <QTest>
+#include <QSignalSpy>
 
+#include "config-keepassx-tests.h"
 #include "core/Database.h"
 #include "crypto/Crypto.h"
+#include "keys/PasswordKey.h"
 
 QTEST_GUILESS_MAIN(TestDatabase)
 
@@ -31,20 +34,56 @@ void TestDatabase::initTestCase()
 
 void TestDatabase::testEmptyRecycleBinOnDisabled()
 {
+    QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/RecycleBinDisabled.kdbx");
+    CompositeKey key;
+    key.addKey(PasswordKey("123"));
+    Database* db = Database::openDatabaseFile(filename, key);
+    QVERIFY(db);
 
+    QSignalSpy spyModified(db, SIGNAL(modifiedImmediate()));
+
+    db->emptyRecycleBin();
+    //The database must be unmodified in this test after emptying the recycle bin.
+    QCOMPARE(spyModified.count(), 0);
+
+    delete db;
 }
 
 void TestDatabase::testEmptyRecycleBinOnNotCreated()
 {
+    QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/RecycleBinNotYetCreated.kdbx");
+    CompositeKey key;
+    key.addKey(PasswordKey("123"));
+    Database* db = Database::openDatabaseFile(filename, key);
+    QVERIFY(db);
 
+    QSignalSpy spyModified(db, SIGNAL(modifiedImmediate()));
+
+    db->emptyRecycleBin();
+    //The database must be unmodified in this test after emptying the recycle bin.
+    QCOMPARE(spyModified.count(), 0);
+
+    delete db;
 }
 
 void TestDatabase::testEmptyRecycleBinOnEmpty()
 {
+    QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/RecycleBinEmpty.kdbx");
+    CompositeKey key;
+    key.addKey(PasswordKey("123"));
+    Database* db = Database::openDatabaseFile(filename, key);
+    QVERIFY(db);
 
+    QSignalSpy spyModified(db, SIGNAL(modifiedImmediate()));
+
+    db->emptyRecycleBin();
+    //The database must be unmodified in this test after emptying the recycle bin.
+    QCOMPARE(spyModified.count(), 0);
+
+    delete db;
 }
 
 void TestDatabase::testEmptyRecycleBinWithHierarchicalData()
 {
-
+//TODO: implement
 }
