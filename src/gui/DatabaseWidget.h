@@ -102,6 +102,7 @@ public:
     void closeUnlockDialog();
     void blockAutoReload(bool block = true);
     void refreshSearch();
+    bool isRecycleBinSelected() const;
 
 signals:
     void closeRequest();
@@ -152,6 +153,7 @@ public slots:
     void switchToImportKeepass1(const QString& fileName);
     void databaseModified();
     void databaseSaved();
+    void emptyRecycleBin();
 
     // Search related slots
     void search(const QString& searchtext);

@@ -1267,3 +1267,25 @@ void DatabaseWidget::hideMessage()
         m_messageWidget->animatedHide();
     }
 }
+
+bool DatabaseWidget::isRecycleBinSelected() const
+{
+    return m_groupView->currentGroup() && m_groupView->currentGroup() == m_db->metadata()->recycleBin();
+}
+
+void DatabaseWidget::emptyRecycleBin()
+{
+    if(!isRecycleBinSelected()) {
+        return;
+    }
+
+    QMessageBox::StandardButton result = MessageBox::question(
+        this, tr("Empty recycle bin?"),
+        tr("Are you sure you want to permanently delete everything from your recycle bin?"),
+        QMessageBox::Yes | QMessageBox::No);
+
+    if (result == QMessageBox::Yes) {
+        m_db->emptyRecycleBin();
+        refreshSearch();
+    }
+}

@@ -130,7 +130,7 @@ MainWindow::MainWindow()
     m_ui->toolBar->setVisible(showToolbar);
     connect(m_ui->toolBar, SIGNAL(visibilityChanged(bool)), this, SLOT(saveToolbarState(bool)));
 
-    m_clearHistoryAction = new QAction("Clear history", m_ui->menuFile);
+    m_clearHistoryAction = new QAction(tr("Clear history"), m_ui->menuFile);
     m_lastDatabasesActions = new QActionGroup(m_ui->menuRecentDatabases);
     connect(m_clearHistoryAction, SIGNAL(triggered()), this, SLOT(clearLastDatabases()));
     connect(m_lastDatabasesActions, SIGNAL(triggered(QAction*)), this, SLOT(openRecentDatabase(QAction*)));
@@ -156,14 +156,14 @@ MainWindow::MainWindow()
             this, SLOT(lockDatabasesAfterInactivity()));
     applySettingsChanges();
 
-    setShortcut(m_ui->actionDatabaseNew, QKeySequence::New, Qt::CTRL + Qt::SHIFT + Qt::Key_N);
+    m_ui->actionDatabaseNew->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_N);
     setShortcut(m_ui->actionDatabaseOpen, QKeySequence::Open, Qt::CTRL + Qt::Key_O);
     setShortcut(m_ui->actionDatabaseSave, QKeySequence::Save, Qt::CTRL + Qt::Key_S);
     setShortcut(m_ui->actionDatabaseSaveAs, QKeySequence::SaveAs);
     setShortcut(m_ui->actionDatabaseClose, QKeySequence::Close, Qt::CTRL + Qt::Key_W);
     m_ui->actionLockDatabases->setShortcut(Qt::CTRL + Qt::Key_L);
     setShortcut(m_ui->actionQuit, QKeySequence::Quit, Qt::CTRL + Qt::Key_Q);
-    m_ui->actionEntryNew->setShortcut(Qt::CTRL + Qt::Key_N);
+    setShortcut(m_ui->actionEntryNew, QKeySequence::New, Qt::CTRL + Qt::Key_N);
     m_ui->actionEntryEdit->setShortcut(Qt::CTRL + Qt::Key_E);
     m_ui->actionEntryDelete->setShortcut(Qt::CTRL + Qt::Key_D);
     m_ui->actionEntryClone->setShortcut(Qt::CTRL + Qt::Key_K);
@@ -197,6 +197,7 @@ MainWindow::MainWindow()
     m_ui->actionGroupNew->setIcon(filePath()->icon("actions", "group-new", false));
     m_ui->actionGroupEdit->setIcon(filePath()->icon("actions", "group-edit", false));
     m_ui->actionGroupDelete->setIcon(filePath()->icon("actions", "group-delete", false));
+    m_ui->actionGroupEmptyRecycleBin->setIcon(filePath()->icon("actions", "group-empty-trash", false));
 
     m_ui->actionSettings->setIcon(filePath()->icon("actions", "configure"));
     m_ui->actionSettings->setMenuRole(QAction::PreferencesRole);
@@ -295,6 +296,8 @@ MainWindow::MainWindow()
             SLOT(switchToGroupEdit()));
     m_actionMultiplexer.connect(m_ui->actionGroupDelete, SIGNAL(triggered()),
             SLOT(deleteGroup()));
+    m_actionMultiplexer.connect(m_ui->actionGroupEmptyRecycleBin, SIGNAL(triggered()),
+            SLOT(emptyRecycleBin()));
 
     connect(m_ui->actionSettings, SIGNAL(triggered()), SLOT(switchToSettings()));
     connect(m_ui->actionPasswordGenerator, SIGNAL(toggled(bool)), SLOT(switchToPasswordGen(bool)));
@@ -413,6 +416,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             bool singleEntrySelected = dbWidget->numberOfSelectedEntries() == 1;
             bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0;
             bool groupSelected = dbWidget->isGroupSelected();
+            bool recycleBinSelected = dbWidget->isRecycleBinSelected();
 
             m_ui->actionEntryNew->setEnabled(!inSearch);
             m_ui->actionEntryClone->setEnabled(singleEntrySelected);
@@ -429,6 +433,8 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionGroupNew->setEnabled(groupSelected);
             m_ui->actionGroupEdit->setEnabled(groupSelected);
             m_ui->actionGroupDelete->setEnabled(groupSelected && dbWidget->canDeleteCurrentGroup());
+            m_ui->actionGroupEmptyRecycleBin->setVisible(recycleBinSelected);
+            m_ui->actionGroupEmptyRecycleBin->setEnabled(recycleBinSelected);
             m_ui->actionChangeMasterKey->setEnabled(true);
             m_ui->actionChangeDatabaseSettings->setEnabled(true);
             m_ui->actionDatabaseSave->setEnabled(true);

@@ -308,6 +308,22 @@ void Database::recycleGroup(Group* group)
      }
 }
 
+void Database::emptyRecycleBin()
+{
+    if (m_metadata->recycleBinEnabled() && m_metadata->recycleBin()) {
+        // destroying direct entries of the recycle bin
+        QList<Entry*> subEntries = m_metadata->recycleBin()->entries();
+        for (Entry* entry : subEntries) {
+            delete entry;
+        }
+        // destroying direct subgroups of the recycle bin
+        QList<Group*> subGroups = m_metadata->recycleBin()->children();
+        for (Group* group : subGroups) {
+            delete group;
+        }
+    }
+}
+
 void Database::merge(const Database* other)
 {
     m_rootGroup->merge(other->rootGroup());
