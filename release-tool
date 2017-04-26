@@ -242,6 +242,23 @@ checkTransifexCommandExists() {
     if [ 0 -ne $? ]; then
         exitError "Transifex tool 'tx' not installed! Please install it using 'pip install transifex-client'"
     fi
+
+    command -v lupdate-qt5 > /dev/null
+    if [ 0 -ne $? ]; then
+        exitError "Qt Linguist tool (lupdate-qt5) is not installed! Please install using 'apt install qttools5-dev-tools'"
+    fi
+}
+
+checkSnapcraft() {
+    if [ ! -f snapcraft.yaml ]; then
+        echo "No snapcraft file found!"
+        return
+    fi
+
+    grep -qPzo "version: ${RELEASE_NAME}" snapcraft.yaml
+    if [ $? -ne 0 ]; then
+        exitError "snapcraft.yaml has not been updated to the '${RELEASE_NAME}' release!"
+    fi
 }
 
 # re-implement realpath for OS X (thanks mschrag)
