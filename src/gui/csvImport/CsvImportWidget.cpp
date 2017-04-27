@@ -139,11 +139,11 @@ void CsvImportWidget::updatePreview() {
     m_ui->spinBoxSkip->setRange(minSkip, qMax(minSkip, m_parserModel->rowCount() - 1));
     m_ui->spinBoxSkip->setValue(minSkip);
 
-    int i, emptyId = 0;
+    int emptyId = 0;
     QString columnName;
     QStringList list(tr("Not present in CSV file"));
 
-    for (i = 1; i < m_parserModel->getCsvCols(); ++i) {
+    for (int i = 1; i < m_parserModel->getCsvCols(); ++i) {
         if (m_ui->checkBoxFieldNames->isChecked()) {
             columnName = m_parserModel->getCsvTable().at(0).at(i);
             if (columnName.isEmpty())
@@ -155,13 +155,13 @@ void CsvImportWidget::updatePreview() {
     }
     m_comboModel->setStringList(list);
 
-    i=1;
+    int j=1;
     for (QComboBox* b : m_combos) {
-        if (i < m_parserModel->getCsvCols())
-            b->setCurrentIndex(i);
+        if (j < m_parserModel->getCsvCols())
+            b->setCurrentIndex(j);
         else
             b->setCurrentIndex(0);
-        ++i;
+        ++j;
     }
 }
 
