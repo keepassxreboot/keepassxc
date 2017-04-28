@@ -33,7 +33,7 @@ public:
         UpperLetters      = 0x2,
         Numbers           = 0x4,
         SpecialCharacters = 0x8,
-        EASCII            = 0x16
+        EASCII            = 0x10
     };
     Q_DECLARE_FLAGS(CharClasses, CharClass)
 

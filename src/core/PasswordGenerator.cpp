@@ -231,6 +231,9 @@ int PasswordGenerator::numCharClasses() const
     if (m_classes & SpecialCharacters) {
         numClasses++;
     }
+    if (m_classes & EASCII) {
+        numClasses++;
+    }
 
     return numClasses;
 }
