@@ -53,6 +53,7 @@ private slots:
     void comboChanged(int comboId);
     void skippedChanged(int rows);
     void writeDatabase();
+    void updatePreview();
     void setRootGroup();
     void reject();
 
@@ -68,7 +69,6 @@ private:
     KeePass2Writer m_writer;
     static const QStringList m_columnHeader;
     void configParser();
-    void updatePreview();
     void updateTableview();
     Group* splitGroups(QString label);
     Group* hasChildren(Group* current, QString groupName);
