@@ -198,11 +198,13 @@ QVector<PasswordGroup> PasswordGenerator::passwordGroups() const
     if (m_classes & EASCII) {
         PasswordGroup group;
 
-        for (int i = 128; i <= 169; i++) {
+        // [U+0080, U+009F] are C1 control characters,
+        // U+00A0 is non-breaking space
+        for (int i = 161; i <= 172; i++) {
             group.append(i);
         }
-
-        for (int i = 171; i <= 254; i++) {
+        // U+00AD is soft hyphen (format character)
+        for (int i = 174; i <= 255; i++) {
             if ((m_flags & ExcludeLookAlike) && (i == 249)) { // "﹒"
                 continue;
             }
