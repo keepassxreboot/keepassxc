@@ -79,10 +79,10 @@
      </property>
     </widget>
    </item>
-   <item row="9" column="0" alignment="Qt::AlignRight|Qt::AlignTop">
-    <widget class="QLabel" name="notesLabel">
+   <item row="9" column="0" alignment="Qt::AlignLeft|Qt::AlignTop">
+    <widget class="QCheckBox" name="notesEnabled">
      <property name="text">
-      <string>Notes:</string>
+      <string>Notes</string>
      </property>
     </widget>
    </item>
