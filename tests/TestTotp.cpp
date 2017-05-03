@@ -25,6 +25,7 @@
 
 #include "crypto/Crypto.h"
 #include "totp/totp.h"
+#include "totp/base32.h"
 
 QTEST_GUILESS_MAIN(TestTotp)
 
@@ -34,7 +35,7 @@ void TestTotp::initTestCase()
 }
 
 
-void TestTotp::testSecret()
+void TestTotp::testParseSecret()
 {
     quint8 digits = 0;
     quint8 step = 0;
@@ -61,19 +62,19 @@ void TestTotp::testSecret()
 void TestTotp::testBase32()
 {
     QByteArray key = QString("JBSW Y3DP EB3W 64TM MQXC 4LQA").toLatin1();
-    QByteArray secret = QTotp::base32_decode(key);
+    QByteArray secret = Base32::base32_decode(key);
     QCOMPARE(QString::fromLatin1(secret), QString("Hello world..."));
 
     key = QString("gezdgnbvgy3tqojqgezdgnbvgy3tqojq").toLatin1();
-    secret = QTotp::base32_decode(key);
+    secret = Base32::base32_decode(key);
     QCOMPARE(QString::fromLatin1(secret), QString("12345678901234567890"));
 
     key = QString("ORSXG5A=").toLatin1();
-    secret = QTotp::base32_decode(key);
+    secret = Base32::base32_decode(key);
     QCOMPARE(QString::fromLatin1(secret), QString("test"));
 
     key = QString("MZXW6YTBOI======").toLatin1();
-    secret = QTotp::base32_decode(key);
+    secret = Base32::base32_decode(key);
     QCOMPARE(QString::fromLatin1(secret), QString("foobar"));
 }
 

@@ -25,7 +25,6 @@ class QTotp
 public:
     QTotp();
     static QString parseOtpString(QString rawSecret, quint8 &digits, quint8 &step);
-    static QByteArray base32_decode(const QByteArray encoded);
     static QString generateTotp(const QByteArray key, quint64 time, const quint8 numDigits, const quint8 step);
     static const quint8 defaultStep;
     static const quint8 defaultDigits;

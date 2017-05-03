@@ -28,7 +28,7 @@ class TestTotp : public QObject
 
 private slots:
     void initTestCase();
-    void testSecret();
+    void testParseSecret();
     void testBase32();
     void testTotpCode();
 };

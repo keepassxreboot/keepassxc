@@ -41,7 +41,7 @@ TotpDialog::TotpDialog(DatabaseWidget* parent, Entry* entry)
     uCounter = resetCounter();
     updateProgressBar();
 
-    QTimer *timer = new QTimer(this);
+    QTimer* timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateProgressBar()));
     connect(timer, SIGNAL(timeout()), this, SLOT(updateSeconds()));
     timer->start(m_step * 10);

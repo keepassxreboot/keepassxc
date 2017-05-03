@@ -329,7 +329,7 @@ QString Entry::totpSeed() const
 
     if (m_attributes->hasKey("otp")) {
         secret = m_attributes->value("otp");
-    } else {
+    } else if (m_attributes->hasKey("TOTP Seed")) {
         secret = m_attributes->value("TOTP Seed");
     }
 

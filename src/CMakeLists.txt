@@ -131,6 +131,8 @@ set(keepassx_SOURCES
     streams/qtiocompressor.cpp
     streams/StoreDataStream.cpp
     streams/SymmetricCipherStream.cpp
+    totp/base32.h
+    totp/base32.cpp
     totp/totp.h
     totp/totp.cpp
 )

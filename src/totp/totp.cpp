@@ -16,6 +16,7 @@
  */
 
 #include "totp.h"
+#include "base32.h"
 #include <cmath>
 #include <QtEndian>
 #include <QRegExp>
@@ -91,62 +92,12 @@ QString QTotp::parseOtpString(QString key, quint8 &digits, quint8 &step)
     return seed;
 }
 
-
-QByteArray QTotp::base32_decode(const QByteArray encoded)
-{
-    // Base32 implementation
-    // Copyright 2010 Google Inc.
-    // Author: Markus Gutschke
-    // Licensed under the Apache License, Version 2.0
-
-    QByteArray result;
-
-    int buffer = 0;
-    int bitsLeft = 0;
-
-    for (char ch : encoded) {
-        if (ch == 0 || ch == ' ' || ch == '\t' || ch == '\r' || ch == '\n' || ch == '-' || ch == '=') {
-            continue;
-        }
-
-        buffer <<= 5;
-
-        // Deal with commonly mistyped characters
-        if (ch == '0') {
-            ch = 'O';
-        } else if (ch == '1') {
-            ch = 'L';
-        } else if (ch == '8') {
-            ch = 'B';
-        }
-
-        // Look up one base32 digit
-        if ((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z')) {
-            ch = (ch & 0x1F) - 1;
-        } else if (ch >= '2' && ch <= '7') {
-            ch -= '2' - 26;
-        } else {
-            return QByteArray();
-        }
-
-        buffer |= ch;
-        bitsLeft += 5;
-
-        if (bitsLeft >= 8) {
-            result.append(static_cast<char> (buffer >> (bitsLeft - 8)));
-            bitsLeft -= 8;
-        }
-    }
-
-    return result;
-}
-
-
-QString QTotp::generateTotp(const QByteArray key, quint64 time, const quint8 numDigits = defaultDigits, const quint8 step = defaultStep)
+QString QTotp::generateTotp(const QByteArray key, quint64 time,
+                            const quint8 numDigits = defaultDigits, const quint8 step = defaultStep)
 {
     quint64 current = qToBigEndian(time / step);
 
-    QByteArray secret = QTotp::base32_decode(key);
+    QByteArray secret = Base32::base32_decode(key);
     if (secret.isEmpty()) {
         return "Invalid TOTP secret key";
     }
