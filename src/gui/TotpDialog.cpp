@@ -67,7 +67,7 @@ void TotpDialog::copyToClipboard()
 void TotpDialog::updateProgressBar()
 {
     if (uCounter < 100) {
-        m_ui->progressBar->setValue(100 - uCounter);
+        m_ui->progressBar->setValue(static_cast<int>(100 - uCounter));
         m_ui->progressBar->update();
         uCounter++;
     } else {
@@ -85,7 +85,10 @@ void TotpDialog::updateSeconds()
 
 void TotpDialog::updateTotp()
 {
-    m_ui->totpLabel->setText(m_entry->totp());
+    QString totpCode = m_entry->totp();
+    QString firstHalf = totpCode.left(totpCode.size()/2);
+    QString secondHalf = totpCode.right(totpCode.size()/2);
+    m_ui->totpLabel->setText(firstHalf + " " + secondHalf);
 }
 
 double TotpDialog::resetCounter()

@@ -489,7 +489,7 @@ void TestGui::testTotp()
     TotpDialog* totpDialog = m_dbWidget->findChild<TotpDialog*>("TotpDialog");
     QLabel* totpLabel = totpDialog->findChild<QLabel*>("totpLabel");
 
-    QCOMPARE(totpLabel->text(), entry->totp());
+    QCOMPARE(totpLabel->text().replace(" ", ""), entry->totp());
 }
 
 void TestGui::testSearch()
