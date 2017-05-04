@@ -42,6 +42,8 @@
 #include "gui/ChangeMasterKeyWidget.h"
 #include "gui/Clipboard.h"
 #include "gui/CloneDialog.h"
+#include "gui/SetupTotpDialog.h"
+#include "gui/TotpDialog.h"
 #include "gui/DatabaseOpenWidget.h"
 #include "gui/DatabaseSettingsWidget.h"
 #include "gui/KeePass1OpenWidget.h"
@@ -332,6 +334,48 @@ void DatabaseWidget::cloneEntry()
     cloneDialog->show();
     return;
 }
+
+void DatabaseWidget::showTotp()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if (!currentEntry) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    TotpDialog* totpDialog = new TotpDialog(this, currentEntry);
+    totpDialog->open();
+}
+
+void DatabaseWidget::copyTotp()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if (!currentEntry) {
+        Q_ASSERT(false);
+        return;
+    }
+    setClipboardTextAndMinimize(currentEntry->totp());
+}
+
+void DatabaseWidget::setupTotp()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if (!currentEntry) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    SetupTotpDialog* setupTotpDialog = new SetupTotpDialog(this, currentEntry);
+    if (currentEntry->hasTotp()) {
+        setupTotpDialog->setSeed(currentEntry->totpSeed());
+        setupTotpDialog->setStep(currentEntry->totpStep());
+        setupTotpDialog->setDigits(currentEntry->totpDigits());
+    }
+
+    setupTotpDialog->open();
+
+}
+
 
 void DatabaseWidget::deleteEntries()
 {
@@ -1223,6 +1267,17 @@ bool DatabaseWidget::currentEntryHasUrl()
         return false;
     }
     return !currentEntry->resolveMultiplePlaceholders(currentEntry->url()).isEmpty();
+}
+
+
+bool DatabaseWidget::currentEntryHasTotp()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if (!currentEntry) {
+        Q_ASSERT(false);
+        return false;
+    }
+    return currentEntry->hasTotp();
 }
 
 bool DatabaseWidget::currentEntryHasNotes()

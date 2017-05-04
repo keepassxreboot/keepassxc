@@ -167,6 +167,8 @@ MainWindow::MainWindow()
     m_ui->actionEntryEdit->setShortcut(Qt::CTRL + Qt::Key_E);
     m_ui->actionEntryDelete->setShortcut(Qt::CTRL + Qt::Key_D);
     m_ui->actionEntryClone->setShortcut(Qt::CTRL + Qt::Key_K);
+    m_ui->actionEntryTotp->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_T);
+    m_ui->actionEntryCopyTotp->setShortcut(Qt::CTRL + Qt::Key_T);
     m_ui->actionEntryCopyUsername->setShortcut(Qt::CTRL + Qt::Key_B);
     m_ui->actionEntryCopyPassword->setShortcut(Qt::CTRL + Qt::Key_C);
     setShortcut(m_ui->actionEntryAutoType, QKeySequence::Paste, Qt::CTRL + Qt::Key_V);
@@ -275,6 +277,13 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(m_ui->actionEntryDelete, SIGNAL(triggered()),
             SLOT(deleteEntries()));
 
+    m_actionMultiplexer.connect(m_ui->actionEntryTotp, SIGNAL(triggered()),
+            SLOT(showTotp()));
+    m_actionMultiplexer.connect(m_ui->actionEntrySetupTotp, SIGNAL(triggered()),
+            SLOT(setupTotp()));
+
+    m_actionMultiplexer.connect(m_ui->actionEntryCopyTotp, SIGNAL(triggered()),
+            SLOT(copyTotp()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyTitle, SIGNAL(triggered()),
             SLOT(copyTitle()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyUsername, SIGNAL(triggered()),
@@ -428,8 +437,12 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryCopyURL->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUrl());
             m_ui->actionEntryCopyNotes->setEnabled(singleEntrySelected && dbWidget->currentEntryHasNotes());
             m_ui->menuEntryCopyAttribute->setEnabled(singleEntrySelected);
+            m_ui->menuEntryTotp->setEnabled(true);
             m_ui->actionEntryAutoType->setEnabled(singleEntrySelected);
             m_ui->actionEntryOpenUrl->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUrl());
+            m_ui->actionEntryTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
+            m_ui->actionEntryCopyTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
+            m_ui->actionEntrySetupTotp->setEnabled(singleEntrySelected);
             m_ui->actionGroupNew->setEnabled(groupSelected);
             m_ui->actionGroupEdit->setEnabled(groupSelected);
             m_ui->actionGroupDelete->setEnabled(groupSelected && dbWidget->canDeleteCurrentGroup());
@@ -463,6 +476,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryCopyURL->setEnabled(false);
             m_ui->actionEntryCopyNotes->setEnabled(false);
             m_ui->menuEntryCopyAttribute->setEnabled(false);
+            m_ui->menuEntryTotp->setEnabled(false);
 
             m_ui->actionChangeMasterKey->setEnabled(false);
             m_ui->actionChangeDatabaseSettings->setEnabled(false);
@@ -495,6 +509,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         m_ui->actionEntryCopyURL->setEnabled(false);
         m_ui->actionEntryCopyNotes->setEnabled(false);
         m_ui->menuEntryCopyAttribute->setEnabled(false);
+        m_ui->menuEntryTotp->setEnabled(false);
 
         m_ui->actionChangeMasterKey->setEnabled(false);
         m_ui->actionChangeDatabaseSettings->setEnabled(false);

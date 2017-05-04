@@ -14,13 +14,13 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include "Entry.h"
 
 #include "core/Database.h"
 #include "core/DatabaseIcons.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "totp/totp.h"
 
 const int Entry::DefaultIconNumber = 0;
 
@@ -35,6 +35,8 @@ Entry::Entry()
     m_data.iconNumber = DefaultIconNumber;
     m_data.autoTypeEnabled = true;
     m_data.autoTypeObfuscation = 0;
+    m_data.totpStep = QTotp::defaultStep;
+    m_data.totpDigits = QTotp::defaultDigits;
 
     connect(m_attributes, SIGNAL(modified()), this, SIGNAL(modified()));
     connect(m_attributes, SIGNAL(defaultKeyModified()), SLOT(emitDataChanged()));
@@ -283,6 +285,77 @@ EntryAttachments* Entry::attachments()
 const EntryAttachments* Entry::attachments() const
 {
     return m_attachments;
+}
+
+bool Entry::hasTotp() const
+{
+    return m_attributes->hasKey("TOTP Seed") || m_attributes->hasKey("otp");
+}
+
+QString Entry::totp() const
+{
+    if (hasTotp()) {
+        QString seed = totpSeed();
+        quint64 time = QDateTime::currentDateTime().toTime_t();
+        QString output = QTotp::generateTotp(seed.toLatin1(), time, m_data.totpDigits, m_data.totpStep);
+
+        return QString(output);
+    } else {
+        return QString("");
+    }
+}
+
+void Entry::setTotp(const QString& seed, quint8& step, quint8& digits)
+{
+    if (step == 0) {
+        step = QTotp::defaultStep;
+    }
+
+    if (digits == 0) {
+        digits = QTotp::defaultDigits;
+    }
+
+    if (m_attributes->hasKey("otp")) {
+        m_attributes->set("otp", QString("key=%1&step=%2&size=%3").arg(seed).arg(step).arg(digits), true);
+    } else {
+        m_attributes->set("TOTP Seed", seed, true);
+        m_attributes->set("TOTP Settings", QString("%1;%2").arg(step).arg(digits));
+    }
+}
+
+QString Entry::totpSeed() const
+{
+    QString secret = "";
+
+    if (m_attributes->hasKey("otp")) {
+        secret = m_attributes->value("otp");
+    } else if (m_attributes->hasKey("TOTP Seed")) {
+        secret = m_attributes->value("TOTP Seed");
+    }
+
+    m_data.totpDigits = QTotp::defaultDigits;
+    m_data.totpStep = QTotp::defaultStep;
+
+    if (m_attributes->hasKey("TOTP Settings")) {
+        QRegExp rx("(\\d+);(\\d)", Qt::CaseInsensitive, QRegExp::RegExp);
+        int pos = rx.indexIn(m_attributes->value("TOTP Settings"));
+        if (pos > -1) {
+            m_data.totpStep = rx.cap(1).toUInt();
+            m_data.totpDigits = rx.cap(2).toUInt();
+        }
+    }
+
+    return QTotp::parseOtpString(secret, m_data.totpDigits, m_data.totpStep);
+}
+
+quint8 Entry::totpStep() const
+{
+    return m_data.totpStep;
+}
+
+quint8 Entry::totpDigits() const
+{
+    return m_data.totpDigits;
 }
 
 void Entry::setUuid(const Uuid& uuid)
@@ -679,7 +752,7 @@ QString Entry::resolvePlaceholder(const QString& str) const
             k.prepend("{");
         }
 
-        
+
         k.append("}");
         if (result.compare(k,cs)==0) {
             result.replace(result,attributes()->value(key));

@@ -48,6 +48,8 @@
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/CloneDialog.h"
+#include "gui/TotpDialog.h"
+#include "gui/SetupTotpDialog.h"
 #include "gui/FileDialog.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
@@ -439,6 +441,55 @@ void TestGui::testDicewareEntryEntropy()
 
     QCOMPARE(entropyLabel->text(),  QString("Entropy: 77.55 bit"));
     QCOMPARE(strengthLabel->text(), QString("Password Quality: Good"));
+}
+
+void TestGui::testTotp()
+{
+    QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
+    EntryView* entryView = m_dbWidget->findChild<EntryView*>("entryView");
+
+    QCOMPARE(entryView->model()->rowCount(), 1);
+
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::ViewMode);
+    QModelIndex item = entryView->model()->index(0, 1);
+    Entry* entry = entryView->entryFromIndex(item);
+
+    clickIndex(item, entryView, Qt::LeftButton);
+
+    triggerAction("actionEntrySetupTotp");
+
+    SetupTotpDialog* setupTotpDialog = m_dbWidget->findChild<SetupTotpDialog*>("SetupTotpDialog");
+
+    Tools::wait(100);
+
+    QLineEdit* seedEdit = setupTotpDialog->findChild<QLineEdit*>("seedEdit");
+
+    QString exampleSeed = "gezdgnbvgy3tqojqgezdgnbvgy3tqojq";
+    QTest::keyClicks(seedEdit, exampleSeed);
+
+    QDialogButtonBox* setupTotpButtonBox = setupTotpDialog->findChild<QDialogButtonBox*>("buttonBox");
+    QTest::mouseClick(setupTotpButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+
+    QAction* entryEditAction = m_mainWindow->findChild<QAction*>("actionEntryEdit");
+    QWidget* entryEditWidget = toolBar->widgetForAction(entryEditAction);
+    QTest::mouseClick(entryEditWidget, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+    EditEntryWidget* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+
+    editEntryWidget->setCurrentPage(1);
+    QPlainTextEdit* attrTextEdit = editEntryWidget->findChild<QPlainTextEdit*>("attributesEdit");
+    QTest::mouseClick(editEntryWidget->findChild<QAbstractButton*>("revealAttributeButton"), Qt::LeftButton);
+    QCOMPARE(attrTextEdit->toPlainText(), exampleSeed);
+
+    QDialogButtonBox* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+
+    triggerAction("actionEntryTotp");
+
+    TotpDialog* totpDialog = m_dbWidget->findChild<TotpDialog*>("TotpDialog");
+    QLabel* totpLabel = totpDialog->findChild<QLabel*>("totpLabel");
+
+    QCOMPARE(totpLabel->text().replace(" ", ""), entry->totp());
 }
 
 void TestGui::testSearch()
