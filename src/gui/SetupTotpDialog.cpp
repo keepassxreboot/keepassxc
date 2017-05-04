@@ -49,7 +49,7 @@ void SetupTotpDialog::setupTotp()
     }
 
     quint8 step = m_ui->stepSpinBox->value();
-    QString seed = m_ui->seedEdit->text();
+    QString seed = QTotp::parseOtpString(m_ui->seedEdit->text(), digits, step);
     m_entry->setTotp(seed, step, digits);
     emit m_parent->entrySelectionChanged();
     close();
