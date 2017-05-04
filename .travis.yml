@@ -5,9 +5,7 @@ services: [docker]
 
 os:
   - linux
-  - osx
-
-osx_image: xcode8.2
+#  - osx
 
 # Define clang compiler without any frills
 compiler:
@@ -28,7 +26,6 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew ls | grep -wq cmake || brew install cmake; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew ls | grep -wq qt5 || brew install qt5; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew ls | grep -wq libgcrypt || brew install libgcrypt; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew ls | grep -wq libmicrohttpd || brew install libmicrohttpd; fi
 
 before_script:
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then CMAKE_ARGS="-DCMAKE_PREFIX_PATH=/usr/local/opt/qt5"; fi
