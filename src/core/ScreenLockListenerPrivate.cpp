@@ -9,11 +9,13 @@
 #include "ScreenLockListenerWin.h"
 #endif
 
-ScreenLockListenerPrivate::ScreenLockListenerPrivate(QWidget* parent):
-    QObject(parent){
+ScreenLockListenerPrivate::ScreenLockListenerPrivate(QWidget* parent)
+	: QObject(parent)
+{
 }
 
-ScreenLockListenerPrivate* ScreenLockListenerPrivate::instance(QWidget* parent){
+ScreenLockListenerPrivate* ScreenLockListenerPrivate::instance(QWidget* parent)
+{
 #if defined(Q_OS_OSX)
     Q_UNUSED(parent);
     return ScreenLockListenerMac::instance();

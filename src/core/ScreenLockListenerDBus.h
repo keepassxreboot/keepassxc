@@ -14,6 +14,7 @@ private Q_SLOTS:
     void gnomeSessionStatusChanged(uint status);
     void logindPrepareForSleep(bool beforeSleep);
     void unityLocked();
+    void freedesktopScreenSaver(bool status);
 };
 
 #endif // SCREENLOCKLISTENERDBUS_H

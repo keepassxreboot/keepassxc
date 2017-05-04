@@ -9,6 +9,15 @@ ScreenLockListenerDBus::ScreenLockListenerDBus(QWidget *parent):
 {
     QDBusConnection sessionBus = QDBusConnection::sessionBus();
     QDBusConnection systemBus = QDBusConnection::systemBus();
+
+    sessionBus.connect(
+                "org.freedesktop.ScreenSaver", // service
+                "/org/freedesktop/ScreenSaver", // path
+                "org.freedesktop.ScreenSaver", // interface
+                "ActiveChanged", // signal name
+                this, //receiver
+                SLOT(freedesktopScreenSaver(bool)));
+    
     sessionBus.connect(
                 "org.gnome.SessionManager", // service
                 "/org/gnome/SessionManager/Presence", // path
@@ -36,14 +45,14 @@ ScreenLockListenerDBus::ScreenLockListenerDBus(QWidget *parent):
 
 void ScreenLockListenerDBus::gnomeSessionStatusChanged(uint status)
 {
-    if(status != 0){
+    if (status != 0) {
         Q_EMIT screenLocked();
     }
 }
 
 void ScreenLockListenerDBus::logindPrepareForSleep(bool beforeSleep)
 {
-    if(beforeSleep){
+    if (beforeSleep) {
         Q_EMIT screenLocked();
     }
 }
@@ -51,4 +60,11 @@ void ScreenLockListenerDBus::logindPrepareForSleep(bool beforeSleep)
 void ScreenLockListenerDBus::unityLocked()
 {
     Q_EMIT screenLocked();
+}
+
+void ScreenLockListenerDBus::freedesktopScreenSaver(bool status)
+{
+    if (status) {
+        Q_EMIT screenLocked();
+    }
 }
