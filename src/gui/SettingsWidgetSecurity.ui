@@ -123,6 +123,13 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QCheckBox" name="lockDatabaseOnScreenLockCheckBox">
+        <property name="text">
+         <string>Lock databases when session is locked or lid is closed</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -141,13 +148,6 @@
       </size>
      </property>
     </spacer>
-   </item>
-   <item row="3" column="0">
-    <widget class="QCheckBox" name="lockDatabaseOnScreenLockCheckBox">
-     <property name="text">
-      <string>Lock databases when session is locked or lid is closed</string>
-     </property>
-    </widget>
    </item>
   </layout>
  </widget>

@@ -250,8 +250,15 @@ target_link_libraries(keepassx_core
                       ${GCRYPT_LIBRARIES}
                       ${GPGERROR_LIBRARIES}
                       ${ZLIB_LIBRARIES})
+
+if(APPLE)
+    target_link_libraries(keepassx_core "-framework Foundation")
+endif()
 if (UNIX AND NOT APPLE)
     target_link_libraries(keepassx_core Qt5::DBus)
+endif()
+if(MINGW)
+    target_link_libraries(keepassx_core Wtsapi32.lib)
 endif()
 
 if(MINGW)
