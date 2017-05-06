@@ -4,3 +4,5 @@ release*/
 .idea/
 *.iml
 *.kdev4
+
+\.vscode/
