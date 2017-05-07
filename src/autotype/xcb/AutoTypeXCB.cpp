@@ -848,11 +848,13 @@ AutoTypeExecutorX11::AutoTypeExecutorX11(AutoTypePlatformX11* platform)
 void AutoTypeExecutorX11::execChar(AutoTypeChar* action)
 {
     m_platform->SendKeyPressedEvent(m_platform->charToKeySym(action->character));
+    Tools::wait(25);
 }
 
 void AutoTypeExecutorX11::execKey(AutoTypeKey* action)
 {
     m_platform->SendKeyPressedEvent(m_platform->keyToKeySym(action->key));
+    Tools::wait(25);
 }
 
 void AutoTypeExecutorX11::execClearField(AutoTypeClearField* action = nullptr)
