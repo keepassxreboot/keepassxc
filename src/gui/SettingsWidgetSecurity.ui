@@ -28,7 +28,14 @@
      <property name="title">
       <string>Timeouts</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout">
+     <layout class="QFormLayout" name="formLayout">
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="clearClipboardCheckBox">
+        <property name="text">
+         <string>Clear clipboard after</string>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="1">
        <widget class="QSpinBox" name="clearClipboardSpinBox">
         <property name="enabled">
@@ -54,7 +61,20 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="lockDatabaseIdleCheckBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Lock databases after inactivity of</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
        <widget class="QSpinBox" name="lockDatabaseIdleSpinBox">
         <property name="enabled">
          <bool>false</bool>
@@ -79,20 +99,6 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0" alignment="Qt::AlignRight">
-       <widget class="QCheckBox" name="clearClipboardCheckBox">
-        <property name="text">
-         <string>Clear clipboard after</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0" alignment="Qt::AlignRight">
-       <widget class="QCheckBox" name="lockDatabaseIdleCheckBox">
-        <property name="text">
-         <string>Lock databases after inactivity of</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>
@@ -101,18 +107,11 @@
      <property name="title">
       <string>Convenience</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QCheckBox" name="passwordRepeatCheckBox">
+       <widget class="QCheckBox" name="lockDatabaseOnScreenLockCheckBox">
         <property name="text">
-         <string>Don't require password repeat when it is visible</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="passwordCleartextCheckBox">
-        <property name="text">
-         <string>Show passwords in cleartext by default</string>
+         <string>Lock databases when session is locked or lid is closed</string>
         </property>
        </widget>
       </item>
@@ -124,9 +123,16 @@
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="lockDatabaseOnScreenLockCheckBox">
+       <widget class="QCheckBox" name="passwordRepeatCheckBox">
         <property name="text">
-         <string>Lock databases when session is locked or lid is closed</string>
+         <string>Don't require password repeat when it is visible</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="passwordCleartextCheckBox">
+        <property name="text">
+         <string>Show passwords in cleartext by default</string>
         </property>
        </widget>
       </item>
