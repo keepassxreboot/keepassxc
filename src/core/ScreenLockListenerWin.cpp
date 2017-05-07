@@ -45,13 +45,18 @@ bool ScreenLockListenerWin::nativeEventFilter(const QByteArray &eventType, void 
     if (eventType == "windows_generic_MSG" || eventType == "windows_dispatcher_MSG") {
         MSG* m = static_cast<MSG *>(message);
         if (m->message == WM_POWERBROADCAST) {
-            const POWERBROADCAST_SETTING* setting = reinterpret_cast<const POWERBROADCAST_SETTING*>(m->lParam);
-            if (setting->PowerSetting == GUID_LIDSWITCH_STATE_CHANGE) {
-                const DWORD* state = reinterpret_cast<const DWORD*>(&setting->Data);
-                if (*state == 0) {
-                    Q_EMIT screenLocked();
-                    return true;
+            if (m->wParam == PBT_POWERSETTINGCHANGE) {
+                const POWERBROADCAST_SETTING* setting = reinterpret_cast<const POWERBROADCAST_SETTING*>(m->lParam);
+                if (setting != nullptr && setting->PowerSetting == GUID_LIDSWITCH_STATE_CHANGE) {
+                    const DWORD* state = reinterpret_cast<const DWORD*>(&setting->Data);
+                    if (*state == 0) {
+                        Q_EMIT screenLocked();
+                        return true;
+                    }
                 }
+            } else if (m->wParam == PBT_APMSUSPEND) {
+                Q_EMIT screenLocked();
+                return true;
             }
         }
         if (m->message == WM_WTSSESSION_CHANGE) {
