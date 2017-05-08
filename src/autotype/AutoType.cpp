@@ -326,7 +326,9 @@ bool AutoType::parseActions(const QString& sequence, const Entry* entry, QList<A
                 return false;
             }
             else if (ch == '}') {
-                actions.append(createActionFromTemplate(tmpl, entry));
+                QList<AutoTypeAction*> autoType = createActionFromTemplate(tmpl, entry);
+                if (autoType.isEmpty()) return false;
+                actions.append(autoType);
                 inTmpl = false;
                 tmpl.clear();
             }
@@ -383,11 +385,24 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
         // some safety checks
         else if (tmplName.compare("delay",Qt::CaseInsensitive)==0) {
             if (num > 10000) {
-                return list;
+                QMessageBox::StandardButton reply;
+                reply = QMessageBox::question(0,"AutoType",
+                                              "This AutoType command contains a very long delay. Do you really want to execute it?");
+
+                if (reply==QMessageBox::No) {
+                    return list;
+                }
             }
         }
         else if (num > 100) {
-            return list;
+            QMessageBox::StandardButton reply;
+            reply = QMessageBox::question(0,"AutoType",
+                                          "This AutoType command contains arguments which are repeated very often. Do you really want to execute it?");
+
+            if (reply==QMessageBox::No) {
+                return list;
+            }
+
         }
     }
 
@@ -493,6 +508,7 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
     else if (tmplName.compare("rightbrace",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeChar('}'));
     }
+
     else {
         QRegExp fnRegexp("f(\\d+)", Qt::CaseInsensitive, QRegExp::RegExp2);
         if (fnRegexp.exactMatch(tmplName)) {
@@ -507,7 +523,6 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
         for (int i = 1; i < num; i++) {
             list.append(list.at(0)->clone());
         }
-
         return list;
     }
 
@@ -547,6 +562,14 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
         }
     }
 
+    //allows to insert usernames and passwords multiple times
+    if (!list.isEmpty()) {
+        for (int i = 1; i < num; i++) {
+            for (int i = 0; i< resolved.size();i++) {
+                list.append(list.at(i)->clone());
+            }
+        }
+    }
     return list;
 }
 
