@@ -1,3 +1,20 @@
+/*
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 2 or (at your option)
+ *  version 3 of the License.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "ScreenLockListenerWin.h"
 #include <QApplication>
 #include <windows.h>
@@ -8,11 +25,11 @@
  * See https://msdn.microsoft.com/en-us/library/aa383841(v=vs.85).aspx
  * See https://blogs.msdn.microsoft.com/oldnewthing/20060104-50/?p=32783
  */
-ScreenLockListenerWin::ScreenLockListenerWin(QWidget *parent) 
+ScreenLockListenerWin::ScreenLockListenerWin(QWidget* parent) 
     : ScreenLockListenerPrivate(parent)
     , QAbstractNativeEventFilter()
 {
-    Q_ASSERT(parent != NULL);
+    Q_ASSERT(parent != nullptr);
     // On windows, we need to register for platform specific messages and
     // install a message handler for them
     QCoreApplication::instance()->installNativeEventFilter(this);
@@ -21,7 +38,7 @@ ScreenLockListenerWin::ScreenLockListenerWin(QWidget *parent)
     HPOWERNOTIFY hPnotify = RegisterPowerSettingNotification(
                 reinterpret_cast<HWND>(parent->winId()),
                 &GUID_LIDSWITCH_STATE_CHANGE, DEVICE_NOTIFY_WINDOW_HANDLE);
-    m_powernotificationhandle = reinterpret_cast<void*>(hPnotify);
+    m_powerNotificationHandle = reinterpret_cast<void*>(hPnotify);
 
     // This call requests a notification for session changes
     if (!WTSRegisterSessionNotification(
@@ -40,10 +57,10 @@ ScreenLockListenerWin::~ScreenLockListenerWin()
     }
 }
 
-bool ScreenLockListenerWin::nativeEventFilter(const QByteArray &eventType, void *message, long *)
+bool ScreenLockListenerWin::nativeEventFilter(const QByteArray &eventType, void* message, long *)
 {
     if (eventType == "windows_generic_MSG" || eventType == "windows_dispatcher_MSG") {
-        MSG* m = static_cast<MSG *>(message);
+        MSG* m = static_cast<MSG*>(message);
         if (m->message == WM_POWERBROADCAST) {
             if (m->wParam == PBT_POWERSETTINGCHANGE) {
                 const POWERBROADCAST_SETTING* setting = reinterpret_cast<const POWERBROADCAST_SETTING*>(m->lParam);
