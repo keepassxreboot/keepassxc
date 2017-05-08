@@ -574,8 +574,9 @@ QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitl
             }
         }
 
-        if (!match && config()->get("AutoTypeEntryTitleMatch").toBool() && !entry->resolvePlaceholder(entry->title()).isEmpty()
-                && windowTitle.contains(entry->resolvePlaceholder(entry->title()), Qt::CaseInsensitive)) {
+        if (!match && config()->get("AutoTypeEntryTitleMatch").toBool() 
+                && (windowMatchesTitle(windowTitle, entry->resolvePlaceholder(entry->title()))
+                || windowMatchesUrl(windowTitle, entry->resolvePlaceholder(entry->url())))) {
             sequence = entry->defaultAutoTypeSequence();
             match = true;
         }
@@ -630,4 +631,23 @@ bool AutoType::windowMatches(const QString& windowTitle, const QString& windowPa
     else {
         return WildcardMatcher(windowTitle).match(windowPattern);
     }
+}
+
+bool AutoType::windowMatchesTitle(const QString& windowTitle, const QString& resolvedTitle)
+{
+    return !resolvedTitle.isEmpty() && windowTitle.contains(resolvedTitle, Qt::CaseInsensitive);
+}
+
+bool AutoType::windowMatchesUrl(const QString& windowTitle, const QString& resolvedUrl)
+{
+    if (!resolvedUrl.isEmpty() && windowTitle.contains(resolvedUrl, Qt::CaseInsensitive)) {
+        return true;
+    }
+
+    QUrl url(resolvedUrl);
+    if (url.isValid() && !url.host().isEmpty()) {
+        return windowTitle.contains(url.host(), Qt::CaseInsensitive);
+    }
+
+    return false;
 }
