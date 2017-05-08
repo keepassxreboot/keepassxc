@@ -660,8 +660,12 @@ void MainWindow::databaseTabChanged(int tabIndex)
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    bool minimizeOnClose = isTrayIconEnabled() &&
-                           config()->get("GUI/MinimizeOnClose").toBool();
+    bool minimizeOnClose = config()->get("GUI/MinimizeOnClose").toBool();
+#ifndef Q_OS_MAC
+    // if we aren't on OS X, check if the tray is enabled.
+    // on OS X we are using the dock for the minimize action
+    minimizeOnClose = isTrayIconEnabled() && minimizeOnClose;
+#endif
     if (minimizeOnClose && !appExitCalled)
     {
         event->ignore();
