@@ -29,8 +29,9 @@ class ScreenLockListenerMac: public ScreenLockListenerPrivate {
 
 public:
     static ScreenLockListenerMac* instance();
-    static void notificationCenterCallBack(CFNotificationCenterRef /*center*/, void */*observer*/,
-                            CFNotificationName /*name*/, const void */*object*/, CFDictionaryRef /*userInfo*/);
+    static void notificationCenterCallBack(CFNotificationCenterRef center, void* observer,
+                                           CFStringRef name, const void* object,
+                                           CFDictionaryRef userInfo);
 
 private:
     ScreenLockListenerMac(QWidget* parent = nullptr);

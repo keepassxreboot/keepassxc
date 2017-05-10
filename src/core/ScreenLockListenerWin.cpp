@@ -57,7 +57,7 @@ ScreenLockListenerWin::~ScreenLockListenerWin()
     }
 }
 
-bool ScreenLockListenerWin::nativeEventFilter(const QByteArray &eventType, void* message, long *)
+bool ScreenLockListenerWin::nativeEventFilter(const QByteArray& eventType, void* message, long*)
 {
     if (eventType == "windows_generic_MSG" || eventType == "windows_dispatcher_MSG") {
         MSG* m = static_cast<MSG*>(message);

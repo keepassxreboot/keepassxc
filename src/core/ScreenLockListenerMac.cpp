@@ -32,8 +32,9 @@ ScreenLockListenerMac* ScreenLockListenerMac::instance()
     return m_ptr;
 }
 
-void ScreenLockListenerMac::notificationCenterCallBack(CFNotificationCenterRef /*center*/, void */*observer*/,
-                                        CFNotificationName /*name*/, const void */*object*/, CFDictionaryRef /*userInfo*/)
+void ScreenLockListenerMac::notificationCenterCallBack(CFNotificationCenterRef, void*,
+                                                       CFStringRef, const void*,
+                                                       CFDictionaryRef)
 {
     instance()->onSignalReception();
 }
@@ -48,12 +49,12 @@ ScreenLockListenerMac::ScreenLockListenerMac(QWidget* parent)
         return;
     }
 
-    CFNotificationCenterAddObserver(
-                distCenter,
-                this, &ScreenLockListenerMac::notificationCenterCallBack,
-                screenIsLockedSignal,
-                nullptr,
-                CFNotificationSuspensionBehaviorDeliverImmediately);
+    CFNotificationCenterAddObserver(distCenter,
+                                    this,
+                                    &ScreenLockListenerMac::notificationCenterCallBack,
+                                    screenIsLockedSignal,
+                                    nullptr,
+                                    CFNotificationSuspensionBehaviorDeliverImmediately);
 }
 
 void ScreenLockListenerMac::onSignalReception()
