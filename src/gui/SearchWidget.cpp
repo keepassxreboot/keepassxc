@@ -25,7 +25,7 @@
 
 #include "core/FilePath.h"
 
-SearchWidget::SearchWidget(QWidget *parent)
+SearchWidget::SearchWidget(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::SearchWidget())
 {
@@ -40,11 +40,11 @@ SearchWidget::SearchWidget(QWidget *parent)
     connect(this, SIGNAL(escapePressed()), m_ui->searchEdit, SLOT(clear()));
 
     new QShortcut(Qt::CTRL + Qt::Key_F, this, SLOT(searchFocus()), nullptr, Qt::ApplicationShortcut);
-	new QShortcut(Qt::Key_Escape, m_ui->searchEdit, SLOT(clear()), nullptr, Qt::ApplicationShortcut);
+    new QShortcut(Qt::Key_Escape, m_ui->searchEdit, SLOT(clear()), nullptr, Qt::ApplicationShortcut);
 
     m_ui->searchEdit->installEventFilter(this);
 
-    QMenu *searchMenu = new QMenu();
+    QMenu* searchMenu = new QMenu();
     m_actionCaseSensitive = searchMenu->addAction(tr("Case Sensitive"), this, SLOT(updateCaseSensitive()));
     m_actionCaseSensitive->setObjectName("actionSearchCaseSensitive");
     m_actionCaseSensitive->setCheckable(true);
@@ -58,39 +58,35 @@ SearchWidget::SearchWidget(QWidget *parent)
     m_ui->searchEdit->addAction(m_ui->clearIcon, QLineEdit::TrailingPosition);
 
     // Fix initial visibility of actions (bug in Qt)
-    for (QToolButton * toolButton: m_ui->searchEdit->findChildren<QToolButton *>()) {
+    for (QToolButton* toolButton : m_ui->searchEdit->findChildren<QToolButton*>()) {
         toolButton->setVisible(toolButton->defaultAction()->isVisible());
     }
 }
 
 SearchWidget::~SearchWidget()
 {
-
 }
 
-bool SearchWidget::eventFilter(QObject *obj, QEvent *event)
+bool SearchWidget::eventFilter(QObject* obj, QEvent* event)
 {
     if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+        QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
         if (keyEvent->key() == Qt::Key_Escape) {
             emit escapePressed();
             return true;
-        }
-        else if (keyEvent->matches(QKeySequence::Copy)) {
+        } else if (keyEvent->matches(QKeySequence::Copy)) {
             // If Control+C is pressed in the search edit when no text
             // is selected, copy the password of the current entry
             if (!m_ui->searchEdit->hasSelectedText()) {
                 emit copyPressed();
                 return true;
             }
-        }
-        else if (keyEvent->matches(QKeySequence::MoveToNextLine)) {
+        } else if (keyEvent->matches(QKeySequence::MoveToNextLine)) {
             if (m_ui->searchEdit->cursorPosition() == m_ui->searchEdit->text().length()) {
                 // If down is pressed at EOL, move the focus to the entry view
                 emit downPressed();
                 return true;
-            }
-            else {
+            } else {
                 // Otherwise move the cursor to EOL
                 m_ui->searchEdit->setCursorPosition(m_ui->searchEdit->text().length());
                 return true;
@@ -110,7 +106,7 @@ void SearchWidget::connectSignals(SignalMultiplexer& mx)
     mx.connect(m_ui->searchEdit, SIGNAL(returnPressed()), SLOT(switchToEntryEdit()));
 }
 
-void SearchWidget::databaseChanged(DatabaseWidget *dbWidget)
+void SearchWidget::databaseChanged(DatabaseWidget* dbWidget)
 {
     if (dbWidget != nullptr) {
         // Set current search text from this database
