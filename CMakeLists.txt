@@ -25,6 +25,9 @@ cmake_minimum_required(VERSION 2.8.12)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
+# Support Visual Studio Code
+include(CMakeToolsHelpers OPTIONAL)
+
 include(CheckCCompilerFlag)
 include(CheckCXXCompilerFlag)
 include(CheckCXXSourceCompiles)
@@ -39,8 +42,13 @@ option(WITH_XC_AUTOTYPE "Include Auto-Type." ON)
 option(WITH_XC_HTTP "Include KeePassHTTP and Custom Icon Downloads." OFF)
 option(WITH_XC_YUBIKEY "Include YubiKey support." OFF)
 
-set(KEEPASSXC_VERSION "2.1.4")
-set(KEEPASSXC_VERSION_NUM "2.1.4")
+# Process ui files automatically from source files
+set(CMAKE_AUTOUIC ON)
+
+set(KEEPASSXC_VERSION_MAJOR "2")
+set(KEEPASSXC_VERSION_MINOR "1")
+set(KEEPASSXC_VERSION_PATCH "4")
+set(KEEPASSXC_VERSION "${KEEPASSXC_VERSION_MAJOR}.${KEEPASSXC_VERSION_MINOR}.${KEEPASSXC_VERSION_PATCH}")
 
 if("${CMAKE_C_COMPILER}" MATCHES "clang$" OR "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
   set(CMAKE_COMPILER_IS_CLANG 1)
@@ -154,7 +162,6 @@ if(MINGW)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--nxcompat -Wl,--dynamicbase")
     set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--nxcompat -Wl,--dynamicbase")
   endif()
-  link_libraries(ws2_32 wsock32)
 endif()
 
 if(APPLE OR MINGW)

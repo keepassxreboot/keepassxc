@@ -419,16 +419,16 @@ CGEventFlags AutoTypePlatformMac::qtToNativeModifiers(Qt::KeyboardModifiers modi
 
 
     if (modifiers & Qt::ShiftModifier) {
-        nativeModifiers |= shiftMod;
+        nativeModifiers = CGEventFlags(nativeModifiers | shiftMod);
     }
     if (modifiers & Qt::ControlModifier) {
-        nativeModifiers |= cmdMod;
+        nativeModifiers = CGEventFlags(nativeModifiers | cmdMod);
     }
     if (modifiers & Qt::AltModifier) {
-        nativeModifiers |= optionMod;
+        nativeModifiers = CGEventFlags(nativeModifiers | optionMod);
     }
     if (modifiers & Qt::MetaModifier) {
-        nativeModifiers |= controlMod;
+        nativeModifiers = CGEventFlags(nativeModifiers | controlMod);
     }
 
     return nativeModifiers;

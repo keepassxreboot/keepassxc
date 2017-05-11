@@ -518,6 +518,14 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
     else if (tmplName.compare("clearfield",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeClearField());
     }
+    else if (tmplName.compare("totp", Qt::CaseInsensitive) == 0) {
+        QString totp = entry->totp();
+        if (!totp.isEmpty()) {
+            for (const QChar& ch : totp) {
+                list.append(new AutoTypeChar(ch));
+            }
+        }
+    }
 
     if (!list.isEmpty()) {
         return list;

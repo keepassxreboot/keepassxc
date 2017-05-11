@@ -13,13 +13,6 @@ if(WITH_XC_HTTP)
         Server.cpp
         Service.cpp
     )
-    set(keepasshttp_FORMS
-        AccessControlDialog.ui
-        HttpPasswordGeneratorWidget.ui
-        OptionDialog.ui
-    )
-
-    qt5_wrap_ui(keepasshttp_SOURCES ${keepasshttp_FORMS})
 
     add_library(keepasshttp STATIC ${keepasshttp_SOURCES})
     target_link_libraries(keepasshttp qhttp Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Network)

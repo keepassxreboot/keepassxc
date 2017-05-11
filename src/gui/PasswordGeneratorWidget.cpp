@@ -92,6 +92,7 @@ void PasswordGeneratorWidget::loadSettings()
     m_ui->checkBoxUpper->setChecked(config()->get("generator/UpperCase", true).toBool());
     m_ui->checkBoxNumbers->setChecked(config()->get("generator/Numbers", true).toBool());
     m_ui->checkBoxSpecialChars->setChecked(config()->get("generator/SpecialChars", false).toBool());
+    m_ui->checkBoxExtASCII->setChecked(config()->get("generator/EASCII", false).toBool());
     m_ui->checkBoxExcludeAlike->setChecked(config()->get("generator/ExcludeAlike", true).toBool());
     m_ui->checkBoxEnsureEvery->setChecked(config()->get("generator/EnsureEvery", true).toBool());
     m_ui->spinBoxLength->setValue(config()->get("generator/Length", 16).toInt());
@@ -112,6 +113,7 @@ void PasswordGeneratorWidget::saveSettings()
     config()->set("generator/UpperCase", m_ui->checkBoxUpper->isChecked());
     config()->set("generator/Numbers", m_ui->checkBoxNumbers->isChecked());
     config()->set("generator/SpecialChars", m_ui->checkBoxSpecialChars->isChecked());
+    config()->set("generator/EASCII", m_ui->checkBoxExtASCII->isChecked());
     config()->set("generator/ExcludeAlike", m_ui->checkBoxExcludeAlike->isChecked());
     config()->set("generator/EnsureEvery", m_ui->checkBoxEnsureEvery->isChecked());
     config()->set("generator/Length", m_ui->spinBoxLength->value());
@@ -287,6 +289,10 @@ PasswordGenerator::CharClasses PasswordGeneratorWidget::charClasses()
         classes |= PasswordGenerator::SpecialCharacters;
     }
 
+    if (m_ui->checkBoxExtASCII->isChecked()) {
+        classes |= PasswordGenerator::EASCII;
+    }
+
     return classes;
 }
 
@@ -323,6 +329,9 @@ void PasswordGeneratorWidget::updateGenerator()
                 minLength++;
             }
             if (classes.testFlag(PasswordGenerator::SpecialCharacters)) {
+                minLength++;
+            }
+            if (classes.testFlag(PasswordGenerator::EASCII)) {
                 minLength++;
             }
         }

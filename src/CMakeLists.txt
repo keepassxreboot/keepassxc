@@ -100,6 +100,8 @@ set(keepassx_SOURCES
     gui/SettingsWidget.cpp
     gui/SearchWidget.cpp
     gui/SortFilterHideProxyModel.cpp
+    gui/SetupTotpDialog.cpp
+    gui/TotpDialog.cpp
     gui/UnlockDatabaseWidget.cpp
     gui/UnlockDatabaseDialog.cpp
     gui/WelcomeWidget.cpp
@@ -129,34 +131,14 @@ set(keepassx_SOURCES
     streams/qtiocompressor.cpp
     streams/StoreDataStream.cpp
     streams/SymmetricCipherStream.cpp
+    totp/base32.h
+    totp/base32.cpp
+    totp/totp.h
+    totp/totp.cpp
 )
 
 set(keepassx_SOURCES_MAINEXE
     main.cpp
-)
-
-set(keepassx_FORMS
-    gui/AboutDialog.ui
-    gui/ChangeMasterKeyWidget.ui
-    gui/CloneDialog.ui
-    gui/csvImport/CsvImportWidget.ui
-    gui/DatabaseOpenWidget.ui
-    gui/DatabaseSettingsWidget.ui
-    gui/CategoryListWidget.ui
-    gui/EditWidget.ui
-    gui/EditWidgetIcons.ui
-    gui/EditWidgetProperties.ui
-    gui/MainWindow.ui
-    gui/PasswordGeneratorWidget.ui
-    gui/SearchWidget.ui
-    gui/SettingsWidgetGeneral.ui
-    gui/SettingsWidgetSecurity.ui
-    gui/WelcomeWidget.ui
-    gui/entry/EditEntryWidgetAdvanced.ui
-    gui/entry/EditEntryWidgetAutoType.ui
-    gui/entry/EditEntryWidgetHistory.ui
-    gui/entry/EditEntryWidgetMain.ui
-    gui/group/EditGroupWidgetMain.ui
 )
 
 add_feature_info(AutoType WITH_XC_AUTOTYPE "Automatic password typing")
@@ -191,12 +173,10 @@ if(MINGW)
 endif()
 
 if(WITH_XC_YUBIKEY)
-  set(keepassx_SOURCES ${keepassx_SOURCES} keys/drivers/YubiKey.cpp)
+  list(APPEND keepassx_SOURCES keys/drivers/YubiKey.cpp)
 else()
-  set(keepassx_SOURCES ${keepassx_SOURCES} keys/drivers/YubiKeyStub.cpp)
+  list(APPEND keepassx_SOURCES keys/drivers/YubiKeyStub.cpp)
 endif()
-
-qt5_wrap_ui(keepassx_SOURCES ${keepassx_FORMS})
 
 add_library(zxcvbn STATIC zxcvbn/zxcvbn.cpp)
 target_link_libraries(zxcvbn)
@@ -225,11 +205,6 @@ if (UNIX AND NOT APPLE)
 endif()
 
 if(MINGW)
-  string(REPLACE "." ";" VERSION_LIST ${KEEPASSXC_VERSION})
-  list(GET VERSION_LIST 0 KEEPASSXC_VERSION_MAJOR)
-  list(GET VERSION_LIST 1 KEEPASSXC_VERSION_MINOR)
-  list(GET VERSION_LIST 2 KEEPASSXC_VERSION_PATCH)
-
   include(GenerateProductVersion)
   generate_product_version(
     WIN32_ProductVersionFiles
@@ -267,7 +242,7 @@ if(APPLE)
   set(CPACK_DMG_VOLUME_NAME "${PROGNAME}")
   set(CPACK_SYSTEM_NAME "OSX")
   set(CPACK_STRIP_FILES ON)
-  set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSXC_VERSION_NUM}")
+  set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSXC_VERSION}")
   include(CPack)
 
   if(NOT DEFINED QT_BINARY_DIR)
