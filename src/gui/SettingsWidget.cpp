@@ -66,11 +66,6 @@ SettingsWidget::SettingsWidget(QWidget* parent)
         m_generalUi->generalSettingsTabWidget->removeTab(1);
     }
 
-#ifdef Q_OS_MAC
-    // systray not useful on OS X
-    m_generalUi->systraySettings->setVisible(false);
-#endif
-
     connect(this, SIGNAL(accepted()), SLOT(saveSettings()));
     connect(this, SIGNAL(rejected()), SLOT(reject()));
 

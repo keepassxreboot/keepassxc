@@ -660,13 +660,7 @@ void MainWindow::databaseTabChanged(int tabIndex)
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    bool minimizeOnClose = config()->get("GUI/MinimizeOnClose").toBool();
-#ifndef Q_OS_MAC
-    // if we aren't on OS X, check if the tray is enabled.
-    // on OS X we are using the dock for the minimize action
-    minimizeOnClose = isTrayIconEnabled() && minimizeOnClose;
-#endif
-    if (minimizeOnClose && !appExitCalled)
+    if (isTrayIconEnabled() && config()->get("GUI/MinimizeOnClose").toBool() && !appExitCalled)
     {
         event->ignore();
         hideWindow();
@@ -836,7 +830,9 @@ void MainWindow::trayIconTriggered(QSystemTrayIcon::ActivationReason reason)
 
 void MainWindow::hideWindow()
 {
+#ifndef Q_OS_MAC
     setWindowState(windowState() | Qt::WindowMinimized);
+#endif
     QTimer::singleShot(0, this, SLOT(hide()));
 
     if (config()->get("security/lockdatabaseminimize").toBool()) {
@@ -919,13 +915,8 @@ void MainWindow::repairDatabase()
 
 bool MainWindow::isTrayIconEnabled() const
 {
-#ifdef Q_OS_MAC
-    // systray not useful on OS X
-    return false;
-#else
     return config()->get("GUI/ShowTrayIcon").toBool()
             && QSystemTrayIcon::isSystemTrayAvailable();
-#endif
 }
 
 void MainWindow::displayGlobalMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton)
