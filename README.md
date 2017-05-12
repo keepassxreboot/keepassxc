@@ -27,7 +27,7 @@ Pre-compiled binaries can be found on the [downloads page](https://keepassxc.org
 
 ### Building KeePassXC
 
-*More detailed instructions are available in the INSTALL file or on the [Wiki page](https://github.com/keepassxreboot/keepassx/wiki/Install-Instruction-from-Source).*
+*More detailed instructions are available in the INSTALL file or on the [Wiki page](https://github.com/keepassxreboot/keepassxc/wiki/Building-KeePassXC).*
 
 First, you must download the KeePassXC [source tarball](https://keepassxc.org/download#source) or check out the latest version from our [Git repository](https://github.com/keepassxreboot/keepassxc).
 
