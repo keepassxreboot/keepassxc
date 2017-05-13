@@ -303,7 +303,7 @@
        <item>
         <widget class="QCheckBox" name="autoTypeEntryTitleMatchCheckBox">
          <property name="text">
-          <string>Use entry title to match windows for global Auto-Type</string>
+          <string>Use entry title and URL to match windows for global Auto-Type</string>
          </property>
         </widget>
        </item>
