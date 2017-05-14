@@ -101,7 +101,7 @@ QIcon FilePath::trayIconLocked()
 
 QIcon FilePath::trayIconUnlocked()
 {
-    return applicationIcon();
+    return icon("apps", "keepassxc-unlocked");
 }
 
 QIcon FilePath::icon(const QString& category, const QString& name, bool fromTheme)
