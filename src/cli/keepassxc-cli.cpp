@@ -36,7 +36,7 @@
 #include <sanitizer/lsan_interface.h>
 #endif
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
 #ifdef QT_NO_DEBUG
     Tools::disableCoreDumps();
@@ -115,5 +115,4 @@ int main(int argc, char **argv)
 #endif
 
     return exitCode;
-
 }

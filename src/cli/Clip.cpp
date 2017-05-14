@@ -20,9 +20,9 @@
 
 #include "Clip.h"
 
-#include <QCommandLineParser>
 #include <QApplication>
 #include <QClipboard>
+#include <QCommandLineParser>
 #include <QStringList>
 #include <QTextStream>
 
@@ -31,7 +31,6 @@
 #include "core/Group.h"
 #include "gui/Clipboard.h"
 #include "keys/CompositeKey.h"
-
 
 int Clip::execute(int argc, char** argv)
 {
@@ -77,5 +76,4 @@ int Clip::execute(int argc, char** argv)
 
     Clipboard::instance()->setText(entry->password());
     return EXIT_SUCCESS;
-
 }
