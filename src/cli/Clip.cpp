@@ -57,20 +57,20 @@ int Clip::execute(int argc, char** argv)
     CompositeKey key = CompositeKey::readFromLine(line);
 
     Database* db = Database::openDatabaseFile(args.at(0), key);
-    if (db == nullptr) {
+    if (!db) {
         return EXIT_FAILURE;
     }
 
     QString entryId = args.at(1);
     if (!Uuid::isUuid(entryId)) {
-        qCritical("Invalid Uuid %s.", qPrintable(entryId));
+        qCritical("Invalid UUID %s.", qPrintable(entryId));
         return EXIT_FAILURE;
     }
 
     Uuid entryUuid = Uuid::fromHex(entryId);
     Entry* entry = db->resolveEntry(entryUuid);
-    if (entry == nullptr) {
-        qCritical("No entry found with Uuid %s.", qPrintable(entryId));
+    if (!entry) {
+        qCritical("No entry found with UUID %s.", qPrintable(entryId));
         return EXIT_FAILURE;
     }
 
