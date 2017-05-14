@@ -20,6 +20,7 @@
 
 #include <QByteArray>
 #include <QString>
+#include <QRegExp>
 
 class Uuid
 {
