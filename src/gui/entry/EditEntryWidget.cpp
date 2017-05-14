@@ -764,6 +764,20 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
         entry->setDefaultAutoTypeSequence(QString());
     }
     else {
+        QRegExp autoTypeSyntax("(\\{[A-Z]*(\\s[0-9]*){0,1}\\})*");
+        autoTypeSyntax.setCaseSensitivity(Qt::CaseInsensitive);
+        autoTypeSyntax.setPatternSyntax(QRegExp::RegExp);
+
+
+        QRegExp highRepetition(".*[0-9]{3,}.*"); //the 3 means 3 digitnumbers are too much
+        highRepetition.setPatternSyntax(QRegExp::RegExp);
+
+        if (!autoTypeSyntax.exactMatch(m_autoTypeUi->sequenceEdit->text())) {
+            //@TODO handle wrong syntax
+        }
+        if (!highRepetition.exactMatch(m_autoTypeUi->sequenceEdit->text())) {
+            //@TODO handle too much repetition
+        }
         entry->setDefaultAutoTypeSequence(m_autoTypeUi->sequenceEdit->text());
     }
 
