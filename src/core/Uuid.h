@@ -36,8 +36,10 @@ public:
     bool operator==(const Uuid& other) const;
     bool operator!=(const Uuid& other) const;
     static const int Length;
+    static const QRegExp HexRegExp;
     static Uuid fromBase64(const QString& str);
     static Uuid fromHex(const QString& str);
+    static bool isUuid(const QString& str);
 
 private:
     QByteArray m_data;
