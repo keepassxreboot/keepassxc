@@ -14,6 +14,8 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 set(cli_SOURCES
+    Clip.cpp
+    Clip.h
     EntropyMeter.cpp
     EntropyMeter.h
     Extract.cpp

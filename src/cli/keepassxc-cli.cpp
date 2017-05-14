@@ -21,6 +21,7 @@
 #include <QCoreApplication>
 #include <QStringList>
 
+#include <cli/Clip.h>
 #include <cli/EntropyMeter.h>
 #include <cli/Extract.h>
 #include <cli/List.h>
@@ -53,6 +54,7 @@ int main(int argc, char **argv)
 
     QString description("KeePassXC command line interface.");
     description = description.append(QString("\n\nAvailable commands:"));
+    description = description.append(QString("\n  clip\tCopy a password to the clipboard."));
     description = description.append(QString("\n  extract\tExtract and print the content of a database."));
     description = description.append(QString("\n  entropy-meter\tCalculate password entropy."));
     description = description.append(QString("\n  list\t\tList database entries."));
@@ -82,7 +84,10 @@ int main(int argc, char **argv)
 
     int exitCode = EXIT_FAILURE;
 
-    if (commandName == "entropy-meter") {
+    if (commandName == "clip") {
+        argv[0] = const_cast<char*>("keepassxc-cli clip");
+        exitCode = Clip::execute(argc, argv);
+    } else if (commandName == "entropy-meter") {
         argv[0] = const_cast<char*>("keepassxc-cli entropy-meter");
         exitCode = EntropyMeter::execute(argc, argv);
     } else if (commandName == "extract") {
