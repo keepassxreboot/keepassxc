@@ -54,7 +54,7 @@ int main(int argc, char** argv)
 
     QString description("KeePassXC command line interface.");
     description = description.append(QString("\n\nAvailable commands:"));
-    description = description.append(QString("\n  clip\tCopy a password to the clipboard."));
+    description = description.append(QString("\n  clip\t\tCopy a password to the clipboard."));
     description = description.append(QString("\n  extract\tExtract and print the content of a database."));
     description = description.append(QString("\n  entropy-meter\tCalculate password entropy."));
     description = description.append(QString("\n  list\t\tList database entries."));

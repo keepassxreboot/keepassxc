@@ -63,7 +63,7 @@ int Clip::execute(int argc, char** argv)
 
     QString entryId = args.at(1);
     if (!Uuid::isUuid(entryId)) {
-        qCritical("Ivalid Uuid %s.", qPrintable(entryId));
+        qCritical("Invalid Uuid %s.", qPrintable(entryId));
         return EXIT_FAILURE;
     }
 
