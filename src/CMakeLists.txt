@@ -216,14 +216,15 @@ if(MINGW)
   )
 endif()
 
-add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE ${keepassx_SOURCES_MAINEXE} ${WIN32_ProductVersionFiles})
+add_executable(${PROGNAME} WIN32 ${keepassx_SOURCES_MAINEXE} ${WIN32_ProductVersionFiles})
 target_link_libraries(${PROGNAME} keepassx_core)
 
 set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
 
-if(APPLE)
+if(APPLE AND WITH_APP_BUNDLE)
   configure_file(${CMAKE_SOURCE_DIR}/share/macosx/Info.plist.cmake ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)
   set_target_properties(${PROGNAME} PROPERTIES
+                        MACOSX_BUNDLE ON
                         MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)
 endif()
 
@@ -231,7 +232,7 @@ install(TARGETS ${PROGNAME}
         BUNDLE DESTINATION . COMPONENT Runtime
         RUNTIME DESTINATION ${BIN_INSTALL_DIR} COMPONENT Runtime)
 
-if(APPLE)
+if(APPLE AND WITH_APP_BUNDLE)
   if(QT_MAC_USE_COCOA AND EXISTS "${QT_LIBRARY_DIR}/Resources/qt_menu.nib")
     install(DIRECTORY "${QT_LIBRARY_DIR}/Resources/qt_menu.nib"
             DESTINATION "${DATA_INSTALL_DIR}")

@@ -12,9 +12,15 @@ target_link_libraries(keepassx-autotype-cocoa ${PROGNAME} Qt5::Core Qt5::Widgets
 if(NOT DEFINED QT_BINARY_DIR)
   set(QT_BINARY_DIR "/usr/local/opt/qt5/bin" CACHE PATH "QT binary folder")
 endif()
-add_custom_command(TARGET keepassx-autotype-cocoa
-                   POST_BUILD
-                   COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/libkeepassx-autotype-cocoa.so ${PLUGIN_INSTALL_DIR}
-                   COMMAND ${QT_BINARY_DIR}/macdeployqt ${PROGNAME}.app -executable=${PLUGIN_INSTALL_DIR}/libkeepassx-autotype-cocoa.so -no-plugins
-                   WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
-COMMENT "Deploying autotype plugin")
+if(WITH_APP_BUNDLE)
+  add_custom_command(TARGET keepassx-autotype-cocoa
+                     POST_BUILD
+                     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/libkeepassx-autotype-cocoa.so ${PLUGIN_INSTALL_DIR}
+                     COMMAND ${QT_BINARY_DIR}/macdeployqt ${PROGNAME}.app -executable=${PLUGIN_INSTALL_DIR}/libkeepassx-autotype-cocoa.so -no-plugins
+                     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
+  COMMENT "Deploying autotype plugin")
+else()
+  install(TARGETS keepassx-autotype-cocoa
+          BUNDLE DESTINATION . COMPONENT Runtime
+          LIBRARY DESTINATION ${PLUGIN_INSTALL_DIR} COMPONENT Runtime)
+endif()
