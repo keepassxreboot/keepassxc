@@ -34,6 +34,7 @@ class AutoType : public QObject
 {
     Q_OBJECT
 
+
 public:
     QStringList windowTitles();
     void performAutoType(const Entry* entry, QWidget* hideWindow = nullptr,
@@ -41,6 +42,9 @@ public:
     bool registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers);
     void unregisterGlobalShortcut();
     int callEventFilter(void* event);
+    static bool checkSynatx(const QString &string);
+    static bool checkHighRepetition(const QString &string);
+    static bool checkHighDelay(const QString &string);
 
     inline bool isAvailable() {
         return m_plugin;

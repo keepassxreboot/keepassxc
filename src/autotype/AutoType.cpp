@@ -692,3 +692,43 @@ bool AutoType::windowMatchesUrl(const QString& windowTitle, const QString& resol
 
     return false;
 }
+
+bool AutoType::checkSynatx(const QString &string)
+{
+    //checks things like {word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{-}~+%@fixedstring
+    QString allowRepetition = "(\\s[0-9]*){0,1}";
+    QString normalCommands = "[A-Z]*" + allowRepetition;
+    QString specialLiterals = "[\\^\\%\\(\\)~\\{\\}\\[\\]\\+-]" + allowRepetition;
+    QString functionKeys = "(F[1-9]" + allowRepetition + "|F1[0-2])" + allowRepetition;
+    QString numpad = "NUMPAD[0-9]" + allowRepetition;
+    QString delay = "DELAY=[0-9]+";
+    QString beep = "BEEP\\s[0-9]*\\s[0-9]*";
+    QString vkey = "VKEY(-[EN]X){0,1}" + allowRepetition;
+
+    //these arent in parenthesis
+    QString shortcutKeys = "[\\^\\%~\\+@]";
+    QString fixedStrings = "[^\\^\\%~\\+@\\{\\}]*";
+
+    QRegExp autoTypeSyntax
+        ("(" + shortcutKeys + "|" + fixedStrings + "|\\{(" + normalCommands + "|" + specialLiterals + "|"
+             + functionKeys
+             + "|" + numpad + "|" + delay + "|" + beep + "|" + vkey + ")\\})*");
+    autoTypeSyntax.setCaseSensitivity(Qt::CaseInsensitive);
+    autoTypeSyntax.setPatternSyntax(QRegExp::RegExp);
+    return autoTypeSyntax.exactMatch(string);
+}
+
+bool AutoType::checkHighDelay(const QString &string)
+{
+    QRegExp highDelay(".*\\{Delay\\s[0-9]{5,}\\}.*"); //the 3 means 3 digitnumbers are too much
+    highDelay.setCaseSensitivity(Qt::CaseInsensitive);
+    highDelay.setPatternSyntax(QRegExp::RegExp);
+    return highDelay.exactMatch(string);
+}
+
+bool AutoType::checkHighRepetition(const QString &string)
+{
+    QRegExp highRepetition(".*\\s[0-9]{3,}.*");
+    highRepetition.setPatternSyntax(QRegExp::RegExp);
+    return highRepetition.exactMatch(string);
+}
