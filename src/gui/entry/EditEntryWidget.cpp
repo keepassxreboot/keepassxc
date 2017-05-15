@@ -766,7 +766,7 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
         entry->setDefaultAutoTypeSequence(QString());
     }
     else {
-        if (!AutoType::checkSynatx(m_autoTypeUi->sequenceEdit->text())) {
+        if (!AutoType::checkSyntax(m_autoTypeUi->sequenceEdit->text())) {
             //@TODO handle wrong syntax
             std::cout << "wrong syntax\n";
         }

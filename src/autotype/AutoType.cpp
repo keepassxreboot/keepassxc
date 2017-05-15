@@ -693,7 +693,7 @@ bool AutoType::windowMatchesUrl(const QString& windowTitle, const QString& resol
     return false;
 }
 
-bool AutoType::checkSynatx(const QString &string)
+bool AutoType::checkSyntax(const QString &string)
 {
     //checks things like {word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{-}~+%@fixedstring
     QString allowRepetition = "(\\s[0-9]*){0,1}";
