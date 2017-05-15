@@ -770,43 +770,67 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
         QString allowRepetition = "(\\s[0-9]*){0,1}";
         QString normalCommands = "[A-Z]*" + allowRepetition;
         QString specialLiterals = "[\\^\\%\\(\\)~\\{\\}\\[\\]\\+-]" + allowRepetition;
-        QString functionKeys = "(F[1-9]" +allowRepetition + "|F1[0-2])" + allowRepetition;
+        QString functionKeys = "(F[1-9]" + allowRepetition + "|F1[0-2])" + allowRepetition;
         QString numpad = "NUMPAD[0-9]" + allowRepetition;
         QString delay = "DELAY=[0-9]+";
         QString beep = "BEEP\\s[0-9]*\\s[0-9]*";
-        QString vkey = "VKEY-[EN]X" + allowRepetition;
+        QString vkey = "VKEY(-[EN]X){0,1}" + allowRepetition;
 
         //these arent in parenthesis
         QString shortcutKeys = "[\\^\\%~\\+@]";
         QString fixedStrings = "[^\\^\\%~\\+@\\{\\}]*";
 
         QRegExp autoTypeSyntax
-            ("("+shortcutKeys + "|" + fixedStrings + "|\\{(" + normalCommands + "|" + specialLiterals + "|" + functionKeys
-                 + "|" + numpad + "|" + delay + "|" + beep + "|" + vkey+")\\})*");
+            ("(" + shortcutKeys + "|" + fixedStrings + "|\\{(" + normalCommands + "|" + specialLiterals + "|"
+                 + functionKeys
+                 + "|" + numpad + "|" + delay + "|" + beep + "|" + vkey + ")\\})*");
         autoTypeSyntax.setCaseSensitivity(Qt::CaseInsensitive);
         autoTypeSyntax.setPatternSyntax(QRegExp::RegExp);
 
+        QRegExp highDelay(".*\\{Delay\\s[0-9]{5,}\\}.*"); //the 3 means 3 digitnumbers are too much
+        highDelay.setCaseSensitivity(Qt::CaseInsensitive);
+        highDelay.setPatternSyntax(QRegExp::RegExp);
+
+        QRegExp highRepetition(".*\\s[0-9]{3,}.*");
+        highRepetition.setPatternSyntax(QRegExp::RegExp);
 
 
         //small test @TODO delete
-        if(autoTypeSyntax.exactMatch(QString("{word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{-}~+%@fixeds{Beep 23 32}{Vkey-NX 34}"))) {
+        if (autoTypeSyntax.exactMatch(QString(
+            "{word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{-}~+%@fixeds{Beep 23 32}{Vkey-NX 34}"))) {
             std::cout << "yes\n";
         }
-        if(autoTypeSyntax.exactMatch(QString("word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{-}~+%@fixeds"))) {
+        if (autoTypeSyntax
+            .exactMatch(QString("word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{-}~+%@fixeds"))) {
             std::cout << "no1\n";
         }
-        if(autoTypeSyntax.exactMatch(QString("{@}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{-}~+%@fixeds"))) {
+        if (autoTypeSyntax
+            .exactMatch(QString("{@}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{-}~+%@fixeds"))) {
             std::cout << "no2\n";
         }
+        if (highDelay.exactMatch("{asfd}{DELAY 10000}{dasf}")) {
+            std::cout << "yes1\n";
+        }
+        if (highDelay.exactMatch("{asfd}{DELAY 1000}{dasf}")) {
+            std::cout << "no3\n";
+        }
+        if (highRepetition.exactMatch("{asfd}{DELAY 100}{dasf}")) {
+            std::cout << "yes2\n";
+        }
+        if (highRepetition.exactMatch("{asfd}{DELAY 10}{dasf}")) {
+            std::cout << "no4\n";
+        }
 
-        //@TODO restrict repetition only on normal commands and delay
-        QRegExp highRepetition(".*[0-9]{3,}.*"); //the 3 means 3 digitnumbers are too much
-        highRepetition.setPatternSyntax(QRegExp::RegExp);
+
+
 
         if (!autoTypeSyntax.exactMatch(m_autoTypeUi->sequenceEdit->text())) {
             //@TODO handle wrong syntax
         }
-        if (!highRepetition.exactMatch(m_autoTypeUi->sequenceEdit->text())) {
+        else if (highDelay.exactMatch(m_autoTypeUi->sequenceEdit->text())) {
+            //@TODO handle too long delay
+        }
+        else if (highRepetition.exactMatch(m_autoTypeUi->sequenceEdit->text())) {
             //@TODO handle too much repetition
         }
         entry->setDefaultAutoTypeSequence(m_autoTypeUi->sequenceEdit->text());
