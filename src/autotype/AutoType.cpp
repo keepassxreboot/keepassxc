@@ -725,7 +725,7 @@ bool AutoType::checkSyntax(const QString &string)
 
 bool AutoType::checkHighDelay(const QString &string)
 {
-    QRegExp highDelay(".*\\{Delay\\s[0-9]{5,}\\}.*"); //the 3 means 3 digitnumbers are too much
+    QRegExp highDelay(".*\\{Delay\\s[0-9]{5,}\\}.*"); //5 digit numbers(10 seconds) are too much
     highDelay.setCaseSensitivity(Qt::CaseInsensitive);
     highDelay.setPatternSyntax(QRegExp::RegExp);
     return highDelay.exactMatch(string);
@@ -733,7 +733,7 @@ bool AutoType::checkHighDelay(const QString &string)
 
 bool AutoType::checkHighRepetition(const QString &string)
 {
-    QRegExp highRepetition(".*\\s[0-9]{3,}.*");
+    QRegExp highRepetition(".*\\s[0-9]{3,}.*");//3 digit numbers are too much
     highRepetition.setPatternSyntax(QRegExp::RegExp);
     return highRepetition.exactMatch(string);
 }
