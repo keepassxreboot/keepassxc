@@ -21,6 +21,7 @@
 #include <QApplication>
 #include <QPluginLoader>
 #include <iostream>
+#include <QtWidgets/QErrorMessage>
 
 #include "config-keepassx.h"
 
@@ -328,8 +329,33 @@ bool AutoType::parseActions(const QString& sequence, const Entry* entry, QList<A
     m_autoTypeDelay = config()->get("AutoTypeDelay").toInt();
 
 
-    for (const QChar& ch : sequence) {
-        if (inTmpl) {
+    if (!AutoType::checkSyntax(sequence)) {
+        QMessageBox messageBox;
+        messageBox.critical(0, "AutoType", tr("The Syntax of your AutoType statement is incorrect!"));
+        return false;
+    }
+    else if (AutoType::checkHighDelay(sequence)) {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(0,
+                                      "AutoType",
+                                      tr("This AutoType command contains a very long delay. Do you really want to execute it?"));
+
+        if (reply == QMessageBox::No) {
+            return false;
+        }
+    }
+    else if (AutoType::checkHighRepetition(sequence)) {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(0,
+                                      "AutoType",
+                                      tr("This AutoType command contains arguments which are repeated very often. Do you really want to execute it?"));
+
+        if (reply == QMessageBox::No) {
+            return false;
+        }
+    }
+
+    for (const QChar &ch : sequence) {
             if (ch == '{') {
                 qWarning("Syntax error in auto-type sequence.");
                 return false;
@@ -390,30 +416,6 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
 
         if (num == 0) {
             return list;
-        }
-        // some safety checks
-        else if (tmplName.compare("delay",Qt::CaseInsensitive)==0) {
-            if (num > 10000) {
-                QMessageBox::StandardButton reply;
-                reply = QMessageBox::question(0,
-                                              "AutoType",
-                                              tr("This AutoType command contains a very long delay. Do you really want to execute it?"));
-
-                if (reply == QMessageBox::No) {
-                    return list;
-                }
-            }
-        }
-        else if (num > 100) {
-            QMessageBox::StandardButton reply;
-            reply = QMessageBox::question(0,
-                                          "AutoType",
-                                          tr("This AutoType command contains arguments which are repeated very often. Do you really want to execute it?"));
-
-            if (reply == QMessageBox::No) {
-                return list;
-            }
-
         }
     }
 
