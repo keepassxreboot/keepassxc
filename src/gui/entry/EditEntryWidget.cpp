@@ -31,6 +31,7 @@
 #include <QTemporaryFile>
 #include <QMimeData>
 #include <QEvent>
+#include <iostream>
 
 #include "core/Config.h"
 #include "core/Database.h"
@@ -764,11 +765,41 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
         entry->setDefaultAutoTypeSequence(QString());
     }
     else {
-        QRegExp autoTypeSyntax("(\\{[A-Z]*(\\s[0-9]*){0,1}\\})*");
+        //checks things like {word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{-}~+%@fixedstring
+
+        QString allowRepetition = "(\\s[0-9]*){0,1}";
+        QString normalCommands = "[A-Z]*" + allowRepetition;
+        QString specialLiterals = "[\\^\\%\\(\\)~\\{\\}\\[\\]\\+-]" + allowRepetition;
+        QString functionKeys = "(F[1-9]" +allowRepetition + "|F1[0-2])" + allowRepetition;
+        QString numpad = "NUMPAD[0-9]" + allowRepetition;
+        QString delay = "DELAY=[0-9]+";
+        QString beep = "BEEP\\s[0-9]*\\s[0-9]*";
+        QString vkey = "VKEY-[EN]X" + allowRepetition;
+
+        //these arent in parenthesis
+        QString shortcutKeys = "[\\^\\%~\\+@]";
+        QString fixedStrings = "[^\\^\\%~\\+@\\{\\}]*";
+
+        QRegExp autoTypeSyntax
+            ("("+shortcutKeys + "|" + fixedStrings + "|\\{(" + normalCommands + "|" + specialLiterals + "|" + functionKeys
+                 + "|" + numpad + "|" + delay + "|" + beep + "|" + vkey+")\\})*");
         autoTypeSyntax.setCaseSensitivity(Qt::CaseInsensitive);
         autoTypeSyntax.setPatternSyntax(QRegExp::RegExp);
 
 
+
+        //small test @TODO delete
+        if(autoTypeSyntax.exactMatch(QString("{word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{-}~+%@fixeds{Beep 23 32}{Vkey-NX 34}"))) {
+            std::cout << "yes\n";
+        }
+        if(autoTypeSyntax.exactMatch(QString("word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{-}~+%@fixeds"))) {
+            std::cout << "no1\n";
+        }
+        if(autoTypeSyntax.exactMatch(QString("{@}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{-}~+%@fixeds"))) {
+            std::cout << "no2\n";
+        }
+
+        //@TODO restrict repetition only on normal commands and delay
         QRegExp highRepetition(".*[0-9]{3,}.*"); //the 3 means 3 digitnumbers are too much
         highRepetition.setPatternSyntax(QRegExp::RegExp);
 
