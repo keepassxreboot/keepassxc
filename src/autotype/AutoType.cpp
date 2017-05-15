@@ -19,6 +19,7 @@
 
 #include <QApplication>
 #include <QPluginLoader>
+#include <iostream>
 
 #include "config-keepassx.h"
 
@@ -388,7 +389,7 @@ QList<AutoTypeAction *> AutoType::createActionFromTemplate(const QString &tmpl, 
                 QMessageBox::StandardButton reply;
                 reply = QMessageBox::question(0,
                                               "AutoType",
-                                              "This AutoType command contains a very long delay. Do you really want to execute it?");
+                                              tr("This AutoType command contains a very long delay. Do you really want to execute it?"));
 
                 if (reply == QMessageBox::No) {
                     return list;
@@ -399,7 +400,7 @@ QList<AutoTypeAction *> AutoType::createActionFromTemplate(const QString &tmpl, 
             QMessageBox::StandardButton reply;
             reply = QMessageBox::question(0,
                                           "AutoType",
-                                          "This AutoType command contains arguments which are repeated very often. Do you really want to execute it?");
+                                          tr("This AutoType command contains arguments which are repeated very often. Do you really want to execute it?"));
 
             if (reply == QMessageBox::No) {
                 return list;
