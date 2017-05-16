@@ -78,7 +78,9 @@ public:
     static const int DefaultIconNumber;
     static const int RecycleBinIconNumber;
 
-    Entry* findEntry(const Uuid& uuid);
+    Entry* findEntry(QString entryId);
+    Entry* findEntryByUuid(const Uuid& uuid);
+    Entry* findEntryByPath(QString entryPath, QString basePath = QString(""));
     Group* findChildByName(const QString& name);
     void setUuid(const Uuid& uuid);
     void setName(const QString& name);

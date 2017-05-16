@@ -483,11 +483,50 @@ QList<Entry*> Group::entriesRecursive(bool includeHistoryItems) const
     return entryList;
 }
 
-Entry* Group::findEntry(const Uuid& uuid)
+Entry* Group::findEntry(QString entryId)
+{
+    Q_ASSERT(!entryId.isEmpty());
+    Q_ASSERT(!entryId.isNull());
+
+    if (Uuid::isUuid(entryId)) {
+        Uuid entryUuid = Uuid::fromHex(entryId);
+        Entry* entry = findEntryByUuid(entryUuid);
+        if (entry != nullptr) {
+            return entry;
+        }
+    }
+
+    return findEntryByPath(entryId);
+}
+
+Entry* Group::findEntryByUuid(const Uuid& uuid)
 {
     Q_ASSERT(!uuid.isNull());
     for (Entry* entry : asConst(m_entries)) {
         if (entry->uuid() == uuid) {
+            return entry;
+        }
+    }
+
+    return nullptr;
+}
+
+Entry* Group::findEntryByPath(QString entryPath, QString basePath)
+{
+
+    Q_ASSERT(!entryPath.isEmpty());
+    Q_ASSERT(!entryPath.isNull());
+
+    for (Entry* entry : asConst(m_entries)) {
+        QString currentEntryPath = basePath + entry->title();
+        if (entryPath == currentEntryPath) {
+            return entry;
+        }
+    }
+
+    for (Group* group : asConst(m_children)) {
+        Entry* entry = findEntryByPath(entryPath, basePath + group->name() + QString("/"));
+        if (entry != nullptr) {
             return entry;
         }
     }
@@ -551,10 +590,10 @@ void Group::merge(const Group* other)
     const QList<Entry*> dbEntries = other->entries();
     for (Entry* entry : dbEntries) {
         // entries are searched by uuid
-        if (!findEntry(entry->uuid())) {
+        if (!findEntryByUuid(entry->uuid())) {
             entry->clone(Entry::CloneNoFlags)->setGroup(this);
         } else {
-            resolveConflict(findEntry(entry->uuid()), entry);
+            resolveConflict(findEntryByUuid(entry->uuid()), entry);
         }
     }
 

@@ -62,15 +62,9 @@ int Clip::execute(int argc, char** argv)
     }
 
     QString entryId = args.at(1);
-    if (!Uuid::isUuid(entryId)) {
-        qCritical("Invalid UUID %s.", qPrintable(entryId));
-        return EXIT_FAILURE;
-    }
-
-    Uuid entryUuid = Uuid::fromHex(entryId);
-    Entry* entry = db->resolveEntry(entryUuid);
+    Entry* entry = db->rootGroup()->findEntry(entryId);
     if (!entry) {
-        qCritical("No entry found with UUID %s.", qPrintable(entryId));
+        qCritical("Entry %s not found.", qPrintable(entryId));
         return EXIT_FAILURE;
     }
 

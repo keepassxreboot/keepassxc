@@ -367,7 +367,7 @@ void Database::startModifiedTimer()
     m_timer->start(150);
 }
 
-const CompositeKey & Database::key() const
+const CompositeKey& Database::key() const
 {
     return m_data.key;
 }
