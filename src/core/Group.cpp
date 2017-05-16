@@ -525,7 +525,7 @@ Entry* Group::findEntryByPath(QString entryPath, QString basePath)
     }
 
     for (Group* group : asConst(m_children)) {
-        Entry* entry = findEntryByPath(entryPath, basePath + group->name() + QString("/"));
+        Entry* entry = group->findEntryByPath(entryPath, basePath + group->name() + QString("/"));
         if (entry != nullptr) {
             return entry;
         }
