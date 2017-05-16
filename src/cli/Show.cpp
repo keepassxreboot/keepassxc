@@ -39,7 +39,7 @@ int Show::execute(int argc, char **argv)
     parser.setApplicationDescription(QCoreApplication::translate("main",
                                                                  "Show a password."));
     parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
-    parser.addPositionalArgument("uuid", QCoreApplication::translate("main", "Uuid of the entry to show"));
+    parser.addPositionalArgument("entry", QCoreApplication::translate("main", "Name of the entry to show."));
     parser.process(app);
 
     const QStringList args = parser.positionalArguments();
@@ -60,10 +60,10 @@ int Show::execute(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
-    Uuid uuid = Uuid::fromHex(args.at(1));
-    Entry* entry = db->resolveEntry(uuid);
-    if (entry == nullptr) {
-        qCritical("No entry found with uuid %s", qPrintable(uuid.toHex()));
+    QString entryId = args.at(1);
+    Entry* entry = db->rootGroup()->findEntry(entryId);
+    if (!entry) {
+        qCritical("Entry %s not found.", qPrintable(entryId));
         return EXIT_FAILURE;
     }
 
