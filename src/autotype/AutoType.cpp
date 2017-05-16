@@ -571,8 +571,8 @@ QList<AutoTypeAction *> AutoType::createActionFromTemplate(const QString &tmpl, 
     //allows to insert usernames and passwords multiple times
     if (!list.isEmpty()) {
         for (int i = 1; i < num; i++) {
-            for (int i = 0; i < resolved.size(); i++) {
-                list.append(list.at(i)->clone());
+            for (int j = 0; j < resolved.size(); j++) {
+                list.append(list.at(j)->clone());
             }
         }
     }
