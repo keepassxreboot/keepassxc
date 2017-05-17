@@ -30,7 +30,8 @@
 #include "core/Group.h"
 #include "keys/CompositeKey.h"
 
-void printGroup(Group* group, QString baseName, int depth) {
+void printGroup(Group* group, QString baseName, int depth)
+{
 
     QTextStream out(stdout);
 
@@ -46,23 +47,21 @@ void printGroup(Group* group, QString baseName, int depth) {
     }
 
     for (Entry* entry : group->entries()) {
-      out << indentation << "  " << entry->title() << " " << entry->uuid().toHex() << "\n";
+        out << indentation << "  " << entry->title() << " " << entry->uuid().toHex() << "\n";
     }
 
     for (Group* innerGroup : group->children()) {
         printGroup(innerGroup, groupName, depth + 1);
     }
-
 }
 
-int List::execute(int argc, char **argv)
+int List::execute(int argc, char** argv)
 {
     QCoreApplication app(argc, argv);
     QTextStream out(stdout);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main",
-                                                                 "List database entries."));
+    parser.setApplicationDescription(QCoreApplication::translate("main", "List database entries."));
     parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
     parser.process(app);
 
