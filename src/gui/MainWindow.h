@@ -40,6 +40,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow();
     ~MainWindow();
+
     enum StackedWidgetIndex
     {
         DatabaseTabScreen = 0,
@@ -118,7 +119,8 @@ private:
 
     Q_DISABLE_COPY(MainWindow)
 
-    bool appExitCalled;
+    bool m_appExitCalled;
+    bool m_appExiting;
 };
 
 #define KEEPASSXC_MAIN_WINDOW (qobject_cast<Application*>(qApp) ? \

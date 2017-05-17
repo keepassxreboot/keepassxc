@@ -103,9 +103,9 @@ const QString MainWindow::BaseWindowTitle = "KeePassXC";
 MainWindow::MainWindow()
     : m_ui(new Ui::MainWindow())
     , m_trayIcon(nullptr)
+    , m_appExitCalled(false)
+    , m_appExiting(false)
 {
-    appExitCalled = false;
-
     m_ui->setupUi(this);
 
     // Setup the search widget in the toolbar
@@ -347,7 +347,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::appExit()
 {
-    appExitCalled = true;
+    m_appExitCalled = true;
     close();
 }
 
@@ -663,9 +663,15 @@ void MainWindow::databaseTabChanged(int tabIndex)
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
+    // ignore double close events (happens on macOS when closing from the dock)
+    if (m_appExiting) {
+        event->accept();
+        return;
+    }
+
     bool minimizeOnClose = isTrayIconEnabled() &&
                            config()->get("GUI/MinimizeOnClose").toBool();
-    if (minimizeOnClose && !appExitCalled)
+    if (minimizeOnClose && !m_appExitCalled)
     {
         event->ignore();
         hideWindow();
@@ -680,6 +686,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
     bool accept = saveLastDatabases();
 
     if (accept) {
+        m_appExiting = true;
         saveWindowInformation();
 
         event->accept();
