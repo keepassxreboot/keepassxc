@@ -48,6 +48,10 @@ set(keepassx_SOURCES
     core/PasswordGenerator.cpp
     core/PassphraseGenerator.cpp
     core/SignalMultiplexer.cpp
+    core/ScreenLockListener.cpp
+    core/ScreenLockListener.h
+    core/ScreenLockListenerPrivate.h
+    core/ScreenLockListenerPrivate.cpp
     core/TimeDelta.cpp
     core/TimeInfo.cpp
     core/ToDbExporter.cpp
@@ -136,6 +140,24 @@ set(keepassx_SOURCES
     totp/totp.h
     totp/totp.cpp
 )
+if(APPLE)
+    set(keepassx_SOURCES ${keepassx_SOURCES}
+        core/ScreenLockListenerMac.h
+        core/ScreenLockListenerMac.cpp
+        )
+endif()
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+    set(keepassx_SOURCES ${keepassx_SOURCES}
+        core/ScreenLockListenerDBus.h
+        core/ScreenLockListenerDBus.cpp
+        )
+endif()
+if(MINGW)
+    set(keepassx_SOURCES ${keepassx_SOURCES}
+        core/ScreenLockListenerWin.h
+        core/ScreenLockListenerWin.cpp
+        )
+endif()
 
 set(keepassx_SOURCES_MAINEXE
     main.cpp
@@ -200,8 +222,15 @@ target_link_libraries(keepassx_core
                       ${GCRYPT_LIBRARIES}
                       ${GPGERROR_LIBRARIES}
                       ${ZLIB_LIBRARIES})
+
+if(APPLE)
+    target_link_libraries(keepassx_core "-framework Foundation")
+endif()
 if (UNIX AND NOT APPLE)
     target_link_libraries(keepassx_core Qt5::DBus)
+endif()
+if(MINGW)
+    target_link_libraries(keepassx_core Wtsapi32.lib)
 endif()
 
 if(MINGW)
