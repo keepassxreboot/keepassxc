@@ -30,14 +30,13 @@
 #include "core/Group.h"
 #include "keys/CompositeKey.h"
 
-int Show::execute(int argc, char **argv)
+int Show::execute(int argc, char** argv)
 {
     QCoreApplication app(argc, argv);
     QTextStream out(stdout);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main",
-                                                                 "Show a password."));
+    parser.setApplicationDescription(QCoreApplication::translate("main", "Show a password."));
     parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
     parser.addPositionalArgument("entry", QCoreApplication::translate("main", "Name of the entry to show."));
     parser.process(app);
