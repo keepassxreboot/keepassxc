@@ -59,5 +59,5 @@ ScreenLockListenerMac::ScreenLockListenerMac(QWidget* parent)
 
 void ScreenLockListenerMac::onSignalReception()
 {
-    Q_EMIT screenLocked();
+    emit screenLocked();
 }

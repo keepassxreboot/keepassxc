@@ -28,7 +28,7 @@ public:
     ScreenLockListener(QWidget* parent = nullptr);
     ~ScreenLockListener();
 
-Q_SIGNALS:
+signals:
     void screenLocked();
 
 private:

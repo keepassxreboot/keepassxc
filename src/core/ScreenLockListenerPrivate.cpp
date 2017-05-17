@@ -36,11 +36,9 @@ ScreenLockListenerPrivate* ScreenLockListenerPrivate::instance(QWidget* parent)
 #if defined(Q_OS_OSX)
     Q_UNUSED(parent);
     return ScreenLockListenerMac::instance();
-#endif
-#if defined(Q_OS_LINUX)
+#elif defined(Q_OS_LINUX)
     return new ScreenLockListenerDBus(parent);
-#endif
-#if defined(Q_OS_WIN)
+#elif defined(Q_OS_WIN)
     return new ScreenLockListenerWin(parent);
 #endif
 }

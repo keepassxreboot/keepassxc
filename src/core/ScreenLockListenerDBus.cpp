@@ -63,25 +63,25 @@ ScreenLockListenerDBus::ScreenLockListenerDBus(QWidget *parent):
 void ScreenLockListenerDBus::gnomeSessionStatusChanged(uint status)
 {
     if (status != 0) {
-        Q_EMIT screenLocked();
+        emit screenLocked();
     }
 }
 
 void ScreenLockListenerDBus::logindPrepareForSleep(bool beforeSleep)
 {
     if (beforeSleep) {
-        Q_EMIT screenLocked();
+        emit screenLocked();
     }
 }
 
 void ScreenLockListenerDBus::unityLocked()
 {
-    Q_EMIT screenLocked();
+    emit screenLocked();
 }
 
 void ScreenLockListenerDBus::freedesktopScreenSaver(bool status)
 {
     if (status) {
-        Q_EMIT screenLocked();
+        emit screenLocked();
     }
 }

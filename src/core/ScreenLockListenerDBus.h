@@ -27,7 +27,7 @@ class ScreenLockListenerDBus : public ScreenLockListenerPrivate
 public:
     explicit ScreenLockListenerDBus(QWidget *parent = 0);
 
-private Q_SLOTS:
+private slots:
     void gnomeSessionStatusChanged(uint status);
     void logindPrepareForSleep(bool beforeSleep);
     void unityLocked();

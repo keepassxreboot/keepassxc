@@ -67,22 +67,22 @@ bool ScreenLockListenerWin::nativeEventFilter(const QByteArray& eventType, void*
                 if (setting != nullptr && setting->PowerSetting == GUID_LIDSWITCH_STATE_CHANGE) {
                     const DWORD* state = reinterpret_cast<const DWORD*>(&setting->Data);
                     if (*state == 0) {
-                        Q_EMIT screenLocked();
+                        emit screenLocked();
                         return true;
                     }
                 }
             } else if (m->wParam == PBT_APMSUSPEND) {
-                Q_EMIT screenLocked();
+                emit screenLocked();
                 return true;
             }
         }
         if (m->message == WM_WTSSESSION_CHANGE) {
             if (m->wParam == WTS_CONSOLE_DISCONNECT) {
-                Q_EMIT screenLocked();
+                emit screenLocked();
                 return true;
             }
             if (m->wParam == WTS_SESSION_LOCK) {
-                Q_EMIT screenLocked();
+                emit screenLocked();
                 return true;
             }
         }
