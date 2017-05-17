@@ -490,9 +490,10 @@ Entry* Group::findEntry(QString entryId)
 
     if (Uuid::isUuid(entryId)) {
         Uuid entryUuid = Uuid::fromHex(entryId);
-        Entry* entry = findEntryByUuid(entryUuid);
-        if (entry != nullptr) {
-            return entry;
+        for (Entry* entry : entriesRecursive(false)) {
+            if (entry->uuid() == entryUuid) {
+                return entry;
+            }
         }
     }
 

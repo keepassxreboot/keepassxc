@@ -567,3 +567,55 @@ Database* TestGroup::createMergeTestDatabase()
 
     return db;
 }
+
+void TestGroup::testFindEntry()
+{
+    Database* db = new Database();
+
+    Entry* entry1 = new Entry();
+    entry1->setTitle(QString("entry1"));
+    entry1->setGroup(db->rootGroup());
+    entry1->setUuid(Uuid::random());
+
+    Group* group1 = new Group();
+    group1->setName("group1");
+
+    Entry* entry2 = new Entry();
+
+    entry2->setTitle(QString("entry2"));
+    entry2->setGroup(group1);
+    entry2->setUuid(Uuid::random());
+
+    group1->setParent(db->rootGroup());
+
+    Entry* entry;
+
+    entry = db->rootGroup()->findEntry(entry1->uuid().toHex());
+    QVERIFY(entry != nullptr);
+    QCOMPARE(entry->title(), QString("entry1"));
+
+    entry = db->rootGroup()->findEntry(QString("entry1"));
+    QVERIFY(entry != nullptr);
+    QCOMPARE(entry->title(), QString("entry1"));
+
+    entry = db->rootGroup()->findEntry(entry2->uuid().toHex());
+    QVERIFY(entry != nullptr);
+    QCOMPARE(entry->title(), QString("entry2"));
+
+    entry = db->rootGroup()->findEntry(QString("group1/entry2"));
+    QVERIFY(entry != nullptr);
+    QCOMPARE(entry->title(), QString("entry2"));
+
+    entry = db->rootGroup()->findEntry(QString("invalid/path/to/entry2"));
+    QVERIFY(entry == nullptr);
+
+    // A valid UUID that does not exist in this database.
+    entry = db->rootGroup()->findEntry(QString("febfb01ebcdf9dbd90a3f1579dc75281"));
+    QVERIFY(entry == nullptr);
+
+    // An invalid UUID.
+    entry = db->rootGroup()->findEntry(QString("febfb01ebcdf9dbd90a3f1579dc"));
+    QVERIFY(entry == nullptr);
+
+    delete db;
+}
