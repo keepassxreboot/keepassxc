@@ -747,10 +747,17 @@ void MainWindow::updateTrayIcon()
             QAction* actionToggle = new QAction(tr("Toggle window"), menu);
             menu->addAction(actionToggle);
 
+#ifdef Q_OS_MAC
+            QAction* actionQuit = new QAction(tr("Quit KeePassXC"), menu);
+            menu->addAction(actionQuit);
+
+            connect(actionQuit, SIGNAL(triggered()), SLOT(appExit()));
+#else
             menu->addAction(m_ui->actionQuit);
 
             connect(m_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
                     SLOT(trayIconTriggered(QSystemTrayIcon::ActivationReason)));
+#endif
             connect(actionToggle, SIGNAL(triggered()), SLOT(toggleWindow()));
 
             m_trayIcon->setContextMenu(menu);
