@@ -48,6 +48,10 @@ set(keepassx_SOURCES
     core/PasswordGenerator.cpp
     core/PassphraseGenerator.cpp
     core/SignalMultiplexer.cpp
+    core/ScreenLockListener.cpp
+    core/ScreenLockListener.h
+    core/ScreenLockListenerPrivate.h
+    core/ScreenLockListenerPrivate.cpp
     core/TimeDelta.cpp
     core/TimeInfo.cpp
     core/ToDbExporter.cpp
@@ -136,6 +140,24 @@ set(keepassx_SOURCES
     totp/totp.h
     totp/totp.cpp
 )
+if(APPLE)
+    set(keepassx_SOURCES ${keepassx_SOURCES}
+        core/ScreenLockListenerMac.h
+        core/ScreenLockListenerMac.cpp
+        )
+endif()
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+    set(keepassx_SOURCES ${keepassx_SOURCES}
+        core/ScreenLockListenerDBus.h
+        core/ScreenLockListenerDBus.cpp
+        )
+endif()
+if(MINGW)
+    set(keepassx_SOURCES ${keepassx_SOURCES}
+        core/ScreenLockListenerWin.h
+        core/ScreenLockListenerWin.cpp
+        )
+endif()
 
 set(keepassx_SOURCES_MAINEXE
     main.cpp
@@ -200,8 +222,15 @@ target_link_libraries(keepassx_core
                       ${GCRYPT_LIBRARIES}
                       ${GPGERROR_LIBRARIES}
                       ${ZLIB_LIBRARIES})
+
+if(APPLE)
+    target_link_libraries(keepassx_core "-framework Foundation")
+endif()
 if (UNIX AND NOT APPLE)
     target_link_libraries(keepassx_core Qt5::DBus)
+endif()
+if(MINGW)
+    target_link_libraries(keepassx_core Wtsapi32.lib)
 endif()
 
 if(MINGW)
@@ -216,14 +245,15 @@ if(MINGW)
   )
 endif()
 
-add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE ${keepassx_SOURCES_MAINEXE} ${WIN32_ProductVersionFiles})
+add_executable(${PROGNAME} WIN32 ${keepassx_SOURCES_MAINEXE} ${WIN32_ProductVersionFiles})
 target_link_libraries(${PROGNAME} keepassx_core)
 
 set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
 
-if(APPLE)
+if(APPLE AND WITH_APP_BUNDLE)
   configure_file(${CMAKE_SOURCE_DIR}/share/macosx/Info.plist.cmake ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)
   set_target_properties(${PROGNAME} PROPERTIES
+                        MACOSX_BUNDLE ON
                         MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)
 endif()
 
@@ -231,7 +261,7 @@ install(TARGETS ${PROGNAME}
         BUNDLE DESTINATION . COMPONENT Runtime
         RUNTIME DESTINATION ${BIN_INSTALL_DIR} COMPONENT Runtime)
 
-if(APPLE)
+if(APPLE AND WITH_APP_BUNDLE)
   if(QT_MAC_USE_COCOA AND EXISTS "${QT_LIBRARY_DIR}/Resources/qt_menu.nib")
     install(DIRECTORY "${QT_LIBRARY_DIR}/Resources/qt_menu.nib"
             DESTINATION "${DATA_INSTALL_DIR}")
