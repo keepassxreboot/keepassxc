@@ -759,10 +759,17 @@ void MainWindow::updateTrayIcon()
             QAction* actionToggle = new QAction(tr("Toggle window"), menu);
             menu->addAction(actionToggle);
 
+#ifdef Q_OS_MAC
+            QAction* actionQuit = new QAction(tr("Quit KeePassXC"), menu);
+            menu->addAction(actionQuit);
+
+            connect(actionQuit, SIGNAL(triggered()), SLOT(appExit()));
+#else
             menu->addAction(m_ui->actionQuit);
 
             connect(m_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
                     SLOT(trayIconTriggered(QSystemTrayIcon::ActivationReason)));
+#endif
             connect(actionToggle, SIGNAL(triggered()), SLOT(toggleWindow()));
 
             m_trayIcon->setContextMenu(menu);
@@ -842,7 +849,9 @@ void MainWindow::trayIconTriggered(QSystemTrayIcon::ActivationReason reason)
 
 void MainWindow::hideWindow()
 {
+#ifndef Q_OS_MAC
     setWindowState(windowState() | Qt::WindowMinimized);
+#endif
     QTimer::singleShot(0, this, SLOT(hide()));
 
     if (config()->get("security/lockdatabaseminimize").toBool()) {
@@ -925,13 +934,8 @@ void MainWindow::repairDatabase()
 
 bool MainWindow::isTrayIconEnabled() const
 {
-#ifdef Q_OS_MAC
-    // systray not useful on OS X
-    return false;
-#else
     return config()->get("GUI/ShowTrayIcon").toBool()
             && QSystemTrayIcon::isSystemTrayAvailable();
-#endif
 }
 
 void MainWindow::displayGlobalMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton)
