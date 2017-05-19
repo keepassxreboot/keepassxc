@@ -30,14 +30,14 @@
 #include "format/KeePass2Reader.h"
 #include "keys/CompositeKey.h"
 
-int Extract::execute(int argc, char **argv)
+int Extract::execute(int argc, char** argv)
 {
     QCoreApplication app(argc, argv);
     QTextStream out(stdout);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main",
-                                                                 "Extract and print the content of a database."));
+    parser.setApplicationDescription(
+        QCoreApplication::translate("main", "Extract and print the content of a database."));
     parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database to extract."));
     parser.process(app);
 
@@ -75,8 +75,7 @@ int Extract::execute(int argc, char **argv)
     if (reader.hasError()) {
         if (xmlData.isEmpty()) {
             qCritical("Error while reading the database:\n%s", qPrintable(reader.errorString()));
-        }
-        else {
+        } else {
             qWarning("Error while parsing the database:\n%s\n", qPrintable(reader.errorString()));
         }
         return EXIT_FAILURE;

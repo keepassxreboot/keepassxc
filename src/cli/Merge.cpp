@@ -37,11 +37,15 @@ int Merge::execute(int argc, char** argv)
 
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::translate("main", "Merge two databases."));
-    parser.addPositionalArgument("database1", QCoreApplication::translate("main", "Path of the database to merge into."));
-    parser.addPositionalArgument("database2", QCoreApplication::translate("main", "Path of the database to merge from."));
+    parser.addPositionalArgument("database1",
+                                 QCoreApplication::translate("main", "Path of the database to merge into."));
+    parser.addPositionalArgument("database2",
+                                 QCoreApplication::translate("main", "Path of the database to merge from."));
 
-    QCommandLineOption samePasswordOption(QStringList() << "s" << "same-password",
-                                          QCoreApplication::translate("main", "Use the same password for both database files."));
+    QCommandLineOption samePasswordOption(
+        QStringList() << "s"
+                      << "same-password",
+        QCoreApplication::translate("main", "Use the same password for both database files."));
 
     parser.addOption(samePasswordOption);
     parser.process(app);
@@ -54,22 +58,20 @@ int Merge::execute(int argc, char** argv)
 
     out << "Insert the first database password\n> ";
     out.flush();
-    
+
     static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
     QString line1 = inputTextStream.readLine();
     CompositeKey key1 = CompositeKey::readFromLine(line1);
 
     CompositeKey key2;
     if (parser.isSet("same-password")) {
-      key2 = *key1.clone();
+        key2 = *key1.clone();
+    } else {
+        out << "Insert the second database password\n> ";
+        out.flush();
+        QString line2 = inputTextStream.readLine();
+        key2 = CompositeKey::readFromLine(line2);
     }
-    else {
-      out << "Insert the second database password\n> ";
-      out.flush();
-      QString line2 = inputTextStream.readLine();
-      key2 = CompositeKey::readFromLine(line2);
-    }
-
 
     Database* db1 = Database::openDatabaseFile(args.at(0), key1);
     if (db1 == nullptr) {
@@ -104,5 +106,4 @@ int Merge::execute(int argc, char** argv)
 
     out << "Successfully merged the database files.\n";
     return EXIT_SUCCESS;
-
 }

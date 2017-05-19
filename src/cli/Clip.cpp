@@ -18,27 +18,29 @@
 #include <cstdlib>
 #include <stdio.h>
 
-#include "Show.h"
+#include "Clip.h"
 
+#include <QApplication>
+#include <QClipboard>
 #include <QCommandLineParser>
-#include <QCoreApplication>
 #include <QStringList>
 #include <QTextStream>
 
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
+#include "gui/Clipboard.h"
 #include "keys/CompositeKey.h"
 
-int Show::execute(int argc, char** argv)
+int Clip::execute(int argc, char** argv)
 {
-    QCoreApplication app(argc, argv);
+    QApplication app(argc, argv);
     QTextStream out(stdout);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main", "Show a password."));
+    parser.setApplicationDescription(QCoreApplication::translate("main", "Copy a password to the clipboard"));
     parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
-    parser.addPositionalArgument("entry", QCoreApplication::translate("main", "Name of the entry to show."));
+    parser.addPositionalArgument("entry", QCoreApplication::translate("main", "Name of the entry to clip."));
     parser.process(app);
 
     const QStringList args = parser.positionalArguments();
@@ -55,7 +57,7 @@ int Show::execute(int argc, char** argv)
     CompositeKey key = CompositeKey::readFromLine(line);
 
     Database* db = Database::openDatabaseFile(args.at(0), key);
-    if (db == nullptr) {
+    if (!db) {
         return EXIT_FAILURE;
     }
 
@@ -66,6 +68,6 @@ int Show::execute(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    out << entry->password() << "\n";
+    Clipboard::instance()->setText(entry->password());
     return EXIT_SUCCESS;
 }
