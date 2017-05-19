@@ -660,7 +660,9 @@ void MainWindow::databaseTabChanged(int tabIndex)
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    if (isTrayIconEnabled() && config()->get("GUI/MinimizeOnClose").toBool() && !appExitCalled)
+    bool minimizeOnClose = isTrayIconEnabled() &&
+                           config()->get("GUI/MinimizeOnClose").toBool();
+    if (minimizeOnClose && !appExitCalled)
     {
         event->ignore();
         hideWindow();
