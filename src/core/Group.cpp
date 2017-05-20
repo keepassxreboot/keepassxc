@@ -793,7 +793,8 @@ void Group::markOlderEntry(Entry* entry)
 {
     entry->attributes()->set(
         "merged",
-        QString("older entry merged from database \"%1\"").arg(entry->group()->database()->metadata()->name()));
+        QString("older entry merged from database \"%1\"").arg(entry->group()->database()->metadata()->name())
+    );
 }
 
 bool Group::resolveSearchingEnabled() const
