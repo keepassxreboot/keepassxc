@@ -558,7 +558,7 @@ QString Group::print(bool printUuids, QString baseName, int depth)
         QString newBaseName = baseName + innerGroup->name() + "/";
         response += indentation + newBaseName;
         if (printUuids) {
-            response += " " + uuid().toHex();
+            response += " " + innerGroup->uuid().toHex();
         }
         response += "\n";
         response += innerGroup->print(printUuids, newBaseName, depth + 1);

@@ -658,5 +658,9 @@ void TestGroup::testPrint()
     QVERIFY(output.contains(QString("group1/\n")));
     QVERIFY(output.contains(QString("  entry2\n")));
 
+    output = db->rootGroup()->print(true);
+    QVERIFY(output.contains(QString("entry1 " + entry1->uuid().toHex() + "\n")));
+    QVERIFY(output.contains(QString("group1/ " + group1->uuid().toHex() + "\n")));
+    QVERIFY(output.contains(QString("  entry2 " + entry2->uuid().toHex() + "\n")));
     delete db;
 }
