@@ -202,6 +202,10 @@ FilePath::FilePath()
     }
     else if (!isDataDirAbsolute && testSetDir(QString("%1/%2").arg(KEEPASSX_PREFIX_DIR, KEEPASSX_DATA_DIR))) {
     }
+    else if (!isDataDirAbsolute && testSetDir(QString("%1/../../share").arg(appDirPath))) {
+    }
+    else if (!isDataDirAbsolute && testSetDir(QString("%1/../../../share").arg(appDirPath))) {
+    }
 #endif
 #if defined(Q_OS_MAC) && defined(WITH_APP_BUNDLE)
     else if (testSetDir(appDirPath + "/../Resources")) {
