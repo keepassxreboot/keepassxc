@@ -30,30 +30,6 @@
 #include "core/Group.h"
 #include "keys/CompositeKey.h"
 
-void printGroup(Group* group, QString baseName, int depth)
-{
-
-    QTextStream out(stdout);
-
-    QString groupName = baseName + group->name() + "/";
-    QString indentation = QString("  ").repeated(depth);
-
-    out << indentation << groupName << " " << group->uuid().toHex() << "\n";
-    out.flush();
-
-    if (group->entries().isEmpty() && group->children().isEmpty()) {
-        out << indentation << "  [empty]\n";
-        return;
-    }
-
-    for (Entry* entry : group->entries()) {
-        out << indentation << "  " << entry->title() << " " << entry->uuid().toHex() << "\n";
-    }
-
-    for (Group* innerGroup : group->children()) {
-        printGroup(innerGroup, groupName, depth + 1);
-    }
-}
 
 int List::execute(int argc, char** argv)
 {
@@ -63,6 +39,11 @@ int List::execute(int argc, char** argv)
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::translate("main", "List database entries."));
     parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
+    QCommandLineOption printUuidsOption(
+        QStringList() << "u"
+                      << "print-uuids",
+        QCoreApplication::translate("main", "Print the UUIDs of the entries and groups."));
+    parser.addOption(printUuidsOption);
     parser.process(app);
 
     const QStringList args = parser.positionalArguments();
@@ -83,6 +64,7 @@ int List::execute(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    printGroup(db->rootGroup(), QString(""), 0);
+    out << db->rootGroup()->print(parser.isSet("print-uuids"));
+    out.flush();
     return EXIT_SUCCESS;
 }

@@ -123,6 +123,7 @@ public:
     Group* clone(Entry::CloneFlags entryFlags = Entry::CloneNewUuid | Entry::CloneResetTimeInfo) const;
     void copyDataFrom(const Group* other);
     void merge(const Group* other);
+    QString print(bool printUuids = false, QString baseName = QString(""), int depth = 0);
 
 signals:
     void dataChanged(Group* group);

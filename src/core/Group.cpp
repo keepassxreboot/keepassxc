@@ -18,8 +18,8 @@
 #include "Group.h"
 
 #include "core/Config.h"
-#include "core/Global.h"
 #include "core/DatabaseIcons.h"
+#include "core/Global.h"
 #include "core/Metadata.h"
 
 const int Group::DefaultIconNumber = 48;
@@ -202,7 +202,7 @@ QString Group::effectiveAutoTypeSequence() const
     } while (group && sequence.isEmpty());
 
     if (sequence.isEmpty()) {
-      sequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
+        sequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
     }
 
     return sequence;
@@ -535,6 +535,38 @@ Entry* Group::findEntryByPath(QString entryPath, QString basePath)
     return nullptr;
 }
 
+QString Group::print(bool printUuids, QString baseName, int depth)
+{
+
+    QString response;
+    QString indentation = QString("  ").repeated(depth);
+
+    if (entries().isEmpty() && children().isEmpty()) {
+        response += indentation + "[empty]\n";
+        return response;
+    }
+
+    for (Entry* entry : entries()) {
+        response += indentation + entry->title();
+        if (printUuids) {
+            response += " " + entry->uuid().toHex();
+        }
+        response += "\n";
+    }
+
+    for (Group* innerGroup : children()) {
+        QString newBaseName = baseName + innerGroup->name() + "/";
+        response += indentation + newBaseName;
+        if (printUuids) {
+            response += " " + uuid().toHex();
+        }
+        response += "\n";
+        response += innerGroup->print(printUuids, newBaseName, depth + 1);
+    }
+
+    return response;
+}
+
 QList<const Group*> Group::groupsRecursive(bool includeSelf) const
 {
     QList<const Group*> groupList;
@@ -761,8 +793,7 @@ void Group::markOlderEntry(Entry* entry)
 {
     entry->attributes()->set(
         "merged",
-        QString("older entry merged from database \"%1\"").arg(entry->group()->database()->metadata()->name())
-    );
+        QString("older entry merged from database \"%1\"").arg(entry->group()->database()->metadata()->name()));
 }
 
 bool Group::resolveSearchingEnabled() const
