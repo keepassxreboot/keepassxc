@@ -497,7 +497,18 @@ Entry* Group::findEntry(QString entryId)
         }
     }
 
-    return findEntryByPath(entryId);
+    Entry* entry = findEntryByPath(entryId);
+    if (entry) {
+      return entry;
+    }
+
+    for (Entry* entry : entriesRecursive(false)) {
+        if (entry->title() == entryId) {
+            return entry;
+        }
+    }
+
+    return nullptr;
 }
 
 Entry* Group::findEntryByUuid(const Uuid& uuid)
