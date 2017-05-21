@@ -606,7 +606,15 @@ void TestGroup::testFindEntry()
     QVERIFY(entry != nullptr);
     QCOMPARE(entry->title(), QString("entry2"));
 
+    // Should also find the entry only by title.
+    entry = db->rootGroup()->findEntry(QString("entry2"));
+    QVERIFY(entry != nullptr);
+    QCOMPARE(entry->title(), QString("entry2"));
+
     entry = db->rootGroup()->findEntry(QString("invalid/path/to/entry2"));
+    QVERIFY(entry == nullptr);
+
+    entry = db->rootGroup()->findEntry(QString("entry27"));
     QVERIFY(entry == nullptr);
 
     // A valid UUID that does not exist in this database.
