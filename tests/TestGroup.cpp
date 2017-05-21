@@ -619,3 +619,48 @@ void TestGroup::testFindEntry()
 
     delete db;
 }
+
+void TestGroup::testPrint()
+{
+    Database* db = new Database();
+
+    QString output = db->rootGroup()->print();
+    QCOMPARE(output, QString("[empty]\n"));
+
+    output = db->rootGroup()->print(true);
+    QCOMPARE(output, QString("[empty]\n"));
+
+    Entry* entry1 = new Entry();
+    entry1->setTitle(QString("entry1"));
+    entry1->setGroup(db->rootGroup());
+    entry1->setUuid(Uuid::random());
+
+    output = db->rootGroup()->print();
+    QCOMPARE(output, QString("entry1\n"));
+
+    output = db->rootGroup()->print(true);
+    QCOMPARE(output, QString("entry1 " + entry1->uuid().toHex() + "\n"));
+
+
+    Group* group1 = new Group();
+    group1->setName("group1");
+
+    Entry* entry2 = new Entry();
+
+    entry2->setTitle(QString("entry2"));
+    entry2->setGroup(group1);
+    entry2->setUuid(Uuid::random());
+
+    group1->setParent(db->rootGroup());
+
+    output = db->rootGroup()->print();
+    QVERIFY(output.contains(QString("entry1\n")));
+    QVERIFY(output.contains(QString("group1/\n")));
+    QVERIFY(output.contains(QString("  entry2\n")));
+
+    output = db->rootGroup()->print(true);
+    QVERIFY(output.contains(QString("entry1 " + entry1->uuid().toHex() + "\n")));
+    QVERIFY(output.contains(QString("group1/ " + group1->uuid().toHex() + "\n")));
+    QVERIFY(output.contains(QString("  entry2 " + entry2->uuid().toHex() + "\n")));
+    delete db;
+}

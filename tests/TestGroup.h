@@ -39,6 +39,7 @@ private slots:
     void testMergeDatabase();
     void testMergeConflictKeepBoth();
     void testFindEntry();
+    void testPrint();
 
 private:
     Database* createMergeTestDatabase();
