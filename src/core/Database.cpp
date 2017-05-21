@@ -18,6 +18,7 @@
 #include "Database.h"
 
 #include <QFile>
+#include <QTextStream>
 #include <QTimer>
 #include <QXmlStreamReader>
 
@@ -394,5 +395,19 @@ Database* Database::openDatabaseFile(QString fileName, CompositeKey key)
     }
 
     return db;
+
+}
+
+Database* Database::unlockFromStdin(QString databaseFilename)
+{
+    static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
+    QTextStream outputTextStream(stdout);
+
+    outputTextStream << QString("Insert password to unlock " + databaseFilename + "\n>");
+    outputTextStream.flush();
+
+    QString line = inputTextStream.readLine();
+    CompositeKey key = CompositeKey::readFromLine(line);
+    return Database::openDatabaseFile(databaseFilename, key);
 
 }

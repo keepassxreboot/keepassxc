@@ -26,37 +26,47 @@
 #include <QStringList>
 #include <QTextStream>
 
+#include "gui/UnlockDatabaseDialog.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "gui/Clipboard.h"
-#include "keys/CompositeKey.h"
 
 int Clip::execute(int argc, char** argv)
 {
-    QApplication app(argc, argv);
+
+    QStringList arguments;
+    for (int i = 0; i < argc; ++i) {
+        arguments << QString(argv[i]);
+    }
     QTextStream out(stdout);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::translate("main", "Copy a password to the clipboard"));
     parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
+    QCommandLineOption guiPrompt(
+        QStringList() << "g"
+                      << "gui-prompt",
+        QCoreApplication::translate("main", "Use a GUI prompt unlocking the database."));
+    parser.addOption(guiPrompt);
     parser.addPositionalArgument("entry", QCoreApplication::translate("main", "Name of the entry to clip."));
-    parser.process(app);
+    parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
+        QCoreApplication app(argc, argv);
         parser.showHelp();
         return EXIT_FAILURE;
     }
 
-    out << "Insert the database password\n> ";
-    out.flush();
+    Database* db = nullptr;
+    QApplication app(argc, argv);
+    if (parser.isSet("gui-prompt")) {
+        db = UnlockDatabaseDialog::openDatabasePrompt(args.at(0));
+    } else {
+        db = Database::unlockFromStdin(args.at(0));
+    }
 
-    static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
-    QString line = inputTextStream.readLine();
-    CompositeKey key = CompositeKey::readFromLine(line);
-
-    Database* db = Database::openDatabaseFile(args.at(0), key);
     if (!db) {
         return EXIT_FAILURE;
     }
