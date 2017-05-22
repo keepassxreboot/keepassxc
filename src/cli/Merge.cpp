@@ -19,9 +19,9 @@
 
 #include "Merge.h"
 
+#include <QApplication>
 #include <QCommandLineParser>
 #include <QCoreApplication>
-#include <QApplication>
 #include <QSaveFile>
 #include <QStringList>
 #include <QTextStream>
