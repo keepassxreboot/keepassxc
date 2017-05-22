@@ -56,29 +56,17 @@ int Merge::execute(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    out << "Insert the first database password\n> ";
-    out.flush();
-
-    static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
-    QString line1 = inputTextStream.readLine();
-    CompositeKey key1 = CompositeKey::readFromLine(line1);
-
-    CompositeKey key2;
-    if (parser.isSet("same-password")) {
-        key2 = *key1.clone();
-    } else {
-        out << "Insert the second database password\n> ";
-        out.flush();
-        QString line2 = inputTextStream.readLine();
-        key2 = CompositeKey::readFromLine(line2);
-    }
-
-    Database* db1 = Database::openDatabaseFile(args.at(0), key1);
+    Database* db1 = Database::unlockFromStdin(args.at(0));
     if (db1 == nullptr) {
         return EXIT_FAILURE;
     }
 
-    Database* db2 = Database::openDatabaseFile(args.at(1), key2);
+    Database* db2;
+    if (parser.isSet("same-password")) {
+        db2 = Database::openDatabaseFile(args.at(1), *(db1->key().clone()));
+    } else {
+        db2 = Database::unlockFromStdin(args.at(1));
+    }
     if (db2 == nullptr) {
         return EXIT_FAILURE;
     }
