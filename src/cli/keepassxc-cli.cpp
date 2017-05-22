@@ -47,9 +47,6 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    QCoreApplication app(argc, argv);
-    app.setApplicationVersion(KEEPASSX_VERSION);
-
     QCommandLineParser parser;
 
     QString description("KeePassXC command line interface.");
@@ -72,6 +69,8 @@ int main(int argc, char** argv)
     // parser.process(app);
 
     if (argc < 2) {
+        QCoreApplication app(argc, argv);
+        app.setApplicationVersion(KEEPASSX_VERSION);
         parser.showHelp();
         return EXIT_FAILURE;
     }
@@ -104,6 +103,8 @@ int main(int argc, char** argv)
         exitCode = Show::execute(argc, argv);
     } else {
         qCritical("Invalid command %s.", qPrintable(commandName));
+        QCoreApplication app(argc, argv);
+        app.setApplicationVersion(KEEPASSX_VERSION);
         parser.showHelp();
         exitCode = EXIT_FAILURE;
     }
