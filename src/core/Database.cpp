@@ -403,7 +403,7 @@ Database* Database::unlockFromStdin(QString databaseFilename)
     static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
     QTextStream outputTextStream(stdout);
 
-    outputTextStream << QString("Insert password to unlock " + databaseFilename + "\n>");
+    outputTextStream << QString("Insert password to unlock " + databaseFilename + "\n> ");
     outputTextStream.flush();
 
     QString line = inputTextStream.readLine();

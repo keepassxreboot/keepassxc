@@ -19,6 +19,7 @@
 
 #include "Merge.h"
 
+#include <QApplication>
 #include <QCommandLineParser>
 #include <QCoreApplication>
 #include <QSaveFile>
@@ -27,12 +28,15 @@
 
 #include "core/Database.h"
 #include "format/KeePass2Writer.h"
-#include "keys/CompositeKey.h"
+#include "gui/UnlockDatabaseDialog.h"
 
 int Merge::execute(int argc, char** argv)
 {
 
-    QCoreApplication app(argc, argv);
+    QStringList arguments;
+    for (int i = 0; i < argc; ++i) {
+        arguments << QString(argv[i]);
+    }
     QTextStream out(stdout);
 
     QCommandLineParser parser;
@@ -47,38 +51,45 @@ int Merge::execute(int argc, char** argv)
                       << "same-password",
         QCoreApplication::translate("main", "Use the same password for both database files."));
 
+    QCommandLineOption guiPrompt(
+        QStringList() << "g"
+                      << "gui-prompt",
+        QCoreApplication::translate("main", "Use a GUI prompt unlocking the database."));
+    parser.addOption(guiPrompt);
+
     parser.addOption(samePasswordOption);
-    parser.process(app);
+    parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
+        QCoreApplication app(argc, argv);
         parser.showHelp();
         return EXIT_FAILURE;
     }
 
-    out << "Insert the first database password\n> ";
-    out.flush();
+    Database* db1;
+    Database* db2;
 
-    static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
-    QString line1 = inputTextStream.readLine();
-    CompositeKey key1 = CompositeKey::readFromLine(line1);
-
-    CompositeKey key2;
-    if (parser.isSet("same-password")) {
-        key2 = *key1.clone();
+    if (parser.isSet("gui-prompt")) {
+        QApplication app(argc, argv);
+        db1 = UnlockDatabaseDialog::openDatabasePrompt(args.at(0));
+        if (!parser.isSet("same-password")) {
+            db2 = UnlockDatabaseDialog::openDatabasePrompt(args.at(1));
+        } else {
+            db2 = Database::openDatabaseFile(args.at(1), *(db1->key().clone()));
+        }
     } else {
-        out << "Insert the second database password\n> ";
-        out.flush();
-        QString line2 = inputTextStream.readLine();
-        key2 = CompositeKey::readFromLine(line2);
+        QCoreApplication app(argc, argv);
+        db1 = Database::unlockFromStdin(args.at(0));
+        if (!parser.isSet("same-password")) {
+            db2 = Database::unlockFromStdin(args.at(1));
+        } else {
+            db2 = Database::openDatabaseFile(args.at(1), *(db1->key().clone()));
+        }
     }
-
-    Database* db1 = Database::openDatabaseFile(args.at(0), key1);
     if (db1 == nullptr) {
         return EXIT_FAILURE;
     }
-
-    Database* db2 = Database::openDatabaseFile(args.at(1), key2);
     if (db2 == nullptr) {
         return EXIT_FAILURE;
     }
