@@ -18,11 +18,11 @@
 #ifndef KEEPASSX_SEARCHWIDGET_H
 #define KEEPASSX_SEARCHWIDGET_H
 
-#include <QWidget>
 #include <QTimer>
+#include <QWidget>
 
-#include "gui/DatabaseWidget.h"
 #include "core/SignalMultiplexer.h"
+#include "gui/DatabaseWidget.h"
 
 namespace Ui {
     class SearchWidget;
@@ -33,17 +33,17 @@ class SearchWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit SearchWidget(QWidget *parent = 0);
+    explicit SearchWidget(QWidget* parent = 0);
     ~SearchWidget();
 
     void connectSignals(SignalMultiplexer& mx);
     void setCaseSensitive(bool state);
 
 protected:
-    bool eventFilter(QObject *obj, QEvent *event);
+    bool eventFilter(QObject* obj, QEvent* event);
 
 signals:
-    void search(const QString &text);
+    void search(const QString& text);
     void caseSensitiveChanged(bool state);
     void escapePressed();
     void copyPressed();
@@ -62,7 +62,7 @@ private slots:
 private:
     const QScopedPointer<Ui::SearchWidget> m_ui;
     QTimer* m_searchTimer;
-    QAction *m_actionCaseSensitive;
+    QAction* m_actionCaseSensitive;
 
     Q_DISABLE_COPY(SearchWidget)
 };

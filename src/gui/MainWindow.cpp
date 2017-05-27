@@ -103,9 +103,9 @@ const QString MainWindow::BaseWindowTitle = "KeePassXC";
 MainWindow::MainWindow()
     : m_ui(new Ui::MainWindow())
     , m_trayIcon(nullptr)
+    , m_appExitCalled(false)
+    , m_appExiting(false)
 {
-    appExitCalled = false;
-
     m_ui->setupUi(this);
 
     // Setup the search widget in the toolbar
@@ -329,6 +329,9 @@ MainWindow::MainWindow()
     connect(m_ui->tabWidget, SIGNAL(messageTab(QString,MessageWidget::MessageType)), this, SLOT(displayTabMessage(QString, MessageWidget::MessageType)));
     connect(m_ui->tabWidget, SIGNAL(messageDismissTab()), this, SLOT(hideTabMessage()));
 
+    m_screenLockListener = new ScreenLockListener(this);
+    connect(m_screenLockListener, SIGNAL(screenLocked()), SLOT(handleScreenLock()));
+
     updateTrayIcon();
 
     if (config()->hasAccessError()) {
@@ -344,7 +347,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::appExit()
 {
-    appExitCalled = true;
+    m_appExitCalled = true;
     close();
 }
 
@@ -660,9 +663,15 @@ void MainWindow::databaseTabChanged(int tabIndex)
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
+    // ignore double close events (happens on macOS when closing from the dock)
+    if (m_appExiting) {
+        event->accept();
+        return;
+    }
+
     bool minimizeOnClose = isTrayIconEnabled() &&
                            config()->get("GUI/MinimizeOnClose").toBool();
-    if (minimizeOnClose && !appExitCalled)
+    if (minimizeOnClose && !m_appExitCalled)
     {
         event->ignore();
         hideWindow();
@@ -677,6 +686,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
     bool accept = saveLastDatabases();
 
     if (accept) {
+        m_appExiting = true;
         saveWindowInformation();
 
         event->accept();
@@ -749,10 +759,17 @@ void MainWindow::updateTrayIcon()
             QAction* actionToggle = new QAction(tr("Toggle window"), menu);
             menu->addAction(actionToggle);
 
+#ifdef Q_OS_MAC
+            QAction* actionQuit = new QAction(tr("Quit KeePassXC"), menu);
+            menu->addAction(actionQuit);
+
+            connect(actionQuit, SIGNAL(triggered()), SLOT(appExit()));
+#else
             menu->addAction(m_ui->actionQuit);
 
             connect(m_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
                     SLOT(trayIconTriggered(QSystemTrayIcon::ActivationReason)));
+#endif
             connect(actionToggle, SIGNAL(triggered()), SLOT(toggleWindow()));
 
             m_trayIcon->setContextMenu(menu);
@@ -832,7 +849,9 @@ void MainWindow::trayIconTriggered(QSystemTrayIcon::ActivationReason reason)
 
 void MainWindow::hideWindow()
 {
+#ifndef Q_OS_MAC
     setWindowState(windowState() | Qt::WindowMinimized);
+#endif
     QTimer::singleShot(0, this, SLOT(hide()));
 
     if (config()->get("security/lockdatabaseminimize").toBool()) {
@@ -915,13 +934,8 @@ void MainWindow::repairDatabase()
 
 bool MainWindow::isTrayIconEnabled() const
 {
-#ifdef Q_OS_MAC
-    // systray not useful on OS X
-    return false;
-#else
     return config()->get("GUI/ShowTrayIcon").toBool()
             && QSystemTrayIcon::isSystemTrayAvailable();
-#endif
 }
 
 void MainWindow::displayGlobalMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton)
@@ -958,4 +972,11 @@ void MainWindow::hideYubiKeyPopup()
 {
     hideGlobalMessage();
     setEnabled(true);
+}
+
+void MainWindow::handleScreenLock()
+{
+    if (config()->get("security/lockdatabasescreenlock").toBool()){
+        lockDatabasesAfterInactivity();
+    }
 }

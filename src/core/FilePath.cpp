@@ -49,7 +49,7 @@ QString FilePath::pluginPath(const QString& name)
     // for TestAutoType
     pluginPaths << QCoreApplication::applicationDirPath() + "/../src/autotype/test";
 
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MAC) && defined(WITH_APP_BUNDLE)
     pluginPaths << QCoreApplication::applicationDirPath() + "/../PlugIns";
 #endif
 
@@ -101,7 +101,7 @@ QIcon FilePath::trayIconLocked()
 
 QIcon FilePath::trayIconUnlocked()
 {
-    return applicationIcon();
+    return icon("apps", "keepassxc-unlocked");
 }
 
 QIcon FilePath::icon(const QString& category, const QString& name, bool fromTheme)
@@ -195,7 +195,7 @@ FilePath::FilePath()
     else if (testSetDir(QString(KEEPASSX_SOURCE_DIR) + "/share")) {
     }
 #endif
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+#if defined(Q_OS_UNIX) && !(defined(Q_OS_MAC) && defined(WITH_APP_BUNDLE))
     else if (isDataDirAbsolute && testSetDir(KEEPASSX_DATA_DIR)) {
     }
     else if (!isDataDirAbsolute && testSetDir(QString("%1/../%2").arg(appDirPath, KEEPASSX_DATA_DIR))) {
@@ -203,7 +203,7 @@ FilePath::FilePath()
     else if (!isDataDirAbsolute && testSetDir(QString("%1/%2").arg(KEEPASSX_PREFIX_DIR, KEEPASSX_DATA_DIR))) {
     }
 #endif
-#ifdef Q_OS_MAC
+#if defined(Q_OS_MAC) && defined(WITH_APP_BUNDLE)
     else if (testSetDir(appDirPath + "/../Resources")) {
     }
 #endif

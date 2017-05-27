@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,34 +15,28 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTGROUP_H
-#define KEEPASSX_TESTGROUP_H
-
+#ifndef SCREENLOCKLISTENERMAC_H
+#define SCREENLOCKLISTENERMAC_H
 #include <QObject>
-#include "core/Database.h"
+#include <QWidget>
 
-class TestGroup : public QObject
-{
+#include <CoreFoundation/CoreFoundation.h>
+
+#include "ScreenLockListenerPrivate.h"
+
+class ScreenLockListenerMac: public ScreenLockListenerPrivate {
     Q_OBJECT
 
-private slots:
-    void initTestCase();
-    void testParenting();
-    void testSignals();
-    void testEntries();
-    void testDeleteSignals();
-    void testCopyCustomIcon();
-    void testClone();
-    void testCopyCustomIcons();
-    void testMerge();
-    void testMergeConflict();
-    void testMergeDatabase();
-    void testMergeConflictKeepBoth();
-    void testFindEntry();
-    void testPrint();
+public:
+    static ScreenLockListenerMac* instance();
+    static void notificationCenterCallBack(CFNotificationCenterRef center, void* observer,
+                                           CFStringRef name, const void* object,
+                                           CFDictionaryRef userInfo);
 
 private:
-    Database* createMergeTestDatabase();
+    ScreenLockListenerMac(QWidget* parent = nullptr);
+    void onSignalReception();
+
 };
 
-#endif // KEEPASSX_TESTGROUP_H
+#endif // SCREENLOCKLISTENERMAC_H

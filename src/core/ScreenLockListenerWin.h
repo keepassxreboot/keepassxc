@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2016 KeePassXC Team
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,36 +15,24 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AUTOTYPEUNLOCKDIALOG_H
-#define KEEPASSX_AUTOTYPEUNLOCKDIALOG_H
+#ifndef SCREENLOCKLISTENERWIN_H
+#define SCREENLOCKLISTENERWIN_H
+#include <QObject>
+#include <QWidget>
+#include <QAbstractNativeEventFilter>
 
-#include <QDialog>
+#include "ScreenLockListenerPrivate.h"
 
-//#include <gui/DatabaseTabWidget.h>
-
-#include "core/Global.h"
-
-class UnlockDatabaseWidget;
-class Database;
-
-class UnlockDatabaseDialog : public QDialog
+class ScreenLockListenerWin : public ScreenLockListenerPrivate, public QAbstractNativeEventFilter
 {
     Q_OBJECT
 public:
-    explicit UnlockDatabaseDialog(QWidget* parent = Q_NULLPTR);
-    void setDBFilename(const QString& filename);
-    void clearForms();
-    Database* database();
-    static Database* openDatabasePrompt(QString databaseFilename);
-
-signals:
-    void unlockDone(bool);
-
-public slots:
-    void complete(bool r);
+    explicit ScreenLockListenerWin(QWidget* parent = 0);
+    ~ScreenLockListenerWin();
+    virtual bool nativeEventFilter(const QByteArray &eventType, void* message, long*) override;
 
 private:
-    UnlockDatabaseWidget* const m_view;
+    void* m_powerNotificationHandle ;
 };
 
-#endif // KEEPASSX_AUTOTYPEUNLOCKDIALOG_H
+#endif // SCREENLOCKLISTENERWIN_H

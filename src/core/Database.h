@@ -90,7 +90,7 @@ public:
     QByteArray transformSeed() const;
     quint64 transformRounds() const;
     QByteArray transformedMasterKey() const;
-    const CompositeKey & key() const;
+    const CompositeKey& key() const;
     QByteArray challengeResponseKey() const;
     bool challengeMasterSeed(const QByteArray& masterSeed);
 
@@ -120,6 +120,7 @@ public:
 
     static Database* databaseByUuid(const Uuid& uuid);
     static Database* openDatabaseFile(QString fileName, CompositeKey key);
+    static Database* unlockFromStdin(QString databaseFilename);
 
 signals:
     void groupDataChanged(Group* group);

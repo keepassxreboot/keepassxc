@@ -78,7 +78,9 @@ public:
     static const int DefaultIconNumber;
     static const int RecycleBinIconNumber;
 
-    Entry* findEntry(const Uuid& uuid);
+    Entry* findEntry(QString entryId);
+    Entry* findEntryByUuid(const Uuid& uuid);
+    Entry* findEntryByPath(QString entryPath, QString basePath = QString(""));
     Group* findChildByName(const QString& name);
     void setUuid(const Uuid& uuid);
     void setName(const QString& name);
@@ -121,6 +123,7 @@ public:
     Group* clone(Entry::CloneFlags entryFlags = Entry::CloneNewUuid | Entry::CloneResetTimeInfo) const;
     void copyDataFrom(const Group* other);
     void merge(const Group* other);
+    QString print(bool printUuids = false, QString baseName = QString(""), int depth = 0);
 
 signals:
     void dataChanged(Group* group);

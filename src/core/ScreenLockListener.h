@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2016 KeePassXC Team
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,36 +15,24 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AUTOTYPEUNLOCKDIALOG_H
-#define KEEPASSX_AUTOTYPEUNLOCKDIALOG_H
+#ifndef SCREENLOCKLISTENER_H
+#define SCREENLOCKLISTENER_H
+#include <QWidget>
 
-#include <QDialog>
+class ScreenLockListenerPrivate;
 
-//#include <gui/DatabaseTabWidget.h>
-
-#include "core/Global.h"
-
-class UnlockDatabaseWidget;
-class Database;
-
-class UnlockDatabaseDialog : public QDialog
-{
+class ScreenLockListener : public QObject {
     Q_OBJECT
+
 public:
-    explicit UnlockDatabaseDialog(QWidget* parent = Q_NULLPTR);
-    void setDBFilename(const QString& filename);
-    void clearForms();
-    Database* database();
-    static Database* openDatabasePrompt(QString databaseFilename);
+    ScreenLockListener(QWidget* parent = nullptr);
+    ~ScreenLockListener();
 
 signals:
-    void unlockDone(bool);
-
-public slots:
-    void complete(bool r);
+    void screenLocked();
 
 private:
-    UnlockDatabaseWidget* const m_view;
+    ScreenLockListenerPrivate* m_listener;
 };
 
-#endif // KEEPASSX_AUTOTYPEUNLOCKDIALOG_H
+#endif // SCREENLOCKLISTENER_H

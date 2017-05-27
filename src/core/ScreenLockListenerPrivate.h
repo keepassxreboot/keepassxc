@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,34 +15,22 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTGROUP_H
-#define KEEPASSX_TESTGROUP_H
-
+#ifndef SCREENLOCKLISTENERPRIVATE_H
+#define SCREENLOCKLISTENERPRIVATE_H
 #include <QObject>
-#include "core/Database.h"
+#include <QWidget>
 
-class TestGroup : public QObject
+class ScreenLockListenerPrivate : public QObject
 {
     Q_OBJECT
+public:
+    static ScreenLockListenerPrivate* instance(QWidget* parent = 0);
 
-private slots:
-    void initTestCase();
-    void testParenting();
-    void testSignals();
-    void testEntries();
-    void testDeleteSignals();
-    void testCopyCustomIcon();
-    void testClone();
-    void testCopyCustomIcons();
-    void testMerge();
-    void testMergeConflict();
-    void testMergeDatabase();
-    void testMergeConflictKeepBoth();
-    void testFindEntry();
-    void testPrint();
+protected:
+    ScreenLockListenerPrivate(QWidget* parent = 0);
 
-private:
-    Database* createMergeTestDatabase();
+signals:
+    void screenLocked();
 };
 
-#endif // KEEPASSX_TESTGROUP_H
+#endif // SCREENLOCKLISTENERPRIVATE_H
