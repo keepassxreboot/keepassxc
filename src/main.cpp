@@ -56,6 +56,11 @@ int main(int argc, char** argv)
     // don't set organizationName as that changes the return value of
     // QStandardPaths::writableLocation(QDesktopServices::DataLocation)
 
+    if (app.isAlreadyRunning()) {
+        qWarning() << QCoreApplication::translate("Main", "Another instance of KeePassXC is already running.").toUtf8().constData();
+        return 0;
+    }
+
     QApplication::setQuitOnLastWindowClosed(false);
 
     if (!Crypto::init()) {
@@ -102,7 +107,15 @@ int main(int argc, char** argv)
 
     MainWindow mainWindow;
     app.setMainWindow(&mainWindow);
-    
+
+    QObject::connect(&app, &Application::anotherInstanceStarted,
+                    [&]() {
+                        mainWindow.ensurePolished();
+                        mainWindow.setWindowState(mainWindow.windowState() & ~Qt::WindowMinimized);
+                        mainWindow.show();
+                        mainWindow.raise();
+                        mainWindow.activateWindow();
+                    });
     QObject::connect(&app, SIGNAL(openFile(QString)), &mainWindow, SLOT(openDatabase(QString)));
     
     // start minimized if configured

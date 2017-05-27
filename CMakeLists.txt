@@ -203,6 +203,7 @@ if(WITH_TESTS)
 endif(WITH_TESTS)
 
 find_package(Qt5Core          5.2 REQUIRED)
+find_package(Qt5Network       5.2 REQUIRED)
 find_package(Qt5Concurrent    5.2 REQUIRED)
 find_package(Qt5Widgets       5.2 REQUIRED)
 find_package(Qt5Test          5.2 REQUIRED)
