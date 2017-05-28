@@ -219,9 +219,11 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(SIGNAL(entryContextMenuRequested(QPoint)),
                                 this, SLOT(showEntryContextMenu(QPoint)));
 
-    // Notify search when the active database changes
+    // Notify search when the active database changes or gets locked
     connect(m_ui->tabWidget, SIGNAL(activateDatabaseChanged(DatabaseWidget*)),
             search, SLOT(databaseChanged(DatabaseWidget*)));
+    connect(m_ui->tabWidget, SIGNAL(databaseLocked(DatabaseWidget*)),
+            search, SLOT(databaseChanged()));
 
     connect(m_ui->tabWidget, SIGNAL(tabNameChanged()),
             SLOT(updateWindowTitle()));
