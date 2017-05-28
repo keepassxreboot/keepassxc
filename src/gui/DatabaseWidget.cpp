@@ -1064,6 +1064,7 @@ void DatabaseWidget::lock()
         m_entryBeforeLock = m_entryView->currentEntry()->uuid();
     }
 
+    endSearch();
     clearAllWidgets();
     m_unlockDatabaseWidget->load(m_filename);
     setCurrentWidget(m_unlockDatabaseWidget);

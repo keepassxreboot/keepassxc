@@ -51,7 +51,7 @@ signals:
     void enterPressed();
 
 public slots:
-    void databaseChanged(DatabaseWidget* dbWidget);
+    void databaseChanged(DatabaseWidget* dbWidget = 0);
 
 private slots:
     void startSearchTimer();
