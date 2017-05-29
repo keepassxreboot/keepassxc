@@ -309,7 +309,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_mainUi->passwordRepeatEdit->setReadOnly(m_history);
     m_mainUi->expireCheck->setEnabled(!m_history);
     m_mainUi->expireDatePicker->setReadOnly(m_history);
-    m_mainUi->notesEnabled->setChecked(false);
+    m_mainUi->notesEnabled->setChecked(true);
     m_mainUi->notesEdit->setReadOnly(m_history);
     m_mainUi->notesEdit->setVisible(false);
     m_mainUi->togglePasswordGeneratorButton->setChecked(false);
