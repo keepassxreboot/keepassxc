@@ -100,6 +100,7 @@ private slots:
     void updateHistoryButtons(const QModelIndex& current, const QModelIndex& previous);
     void useExpiryPreset(QAction* action);
     void updateAttachmentButtonsEnabled(const QModelIndex& current);
+    void toggleHideNotes(bool visible);
 
 private:
     void setupMain();

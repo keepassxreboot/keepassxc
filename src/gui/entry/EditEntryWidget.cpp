@@ -99,7 +99,7 @@ void EditEntryWidget::setupMain()
     connect(m_mainUi->togglePasswordButton, SIGNAL(toggled(bool)), m_mainUi->passwordEdit, SLOT(setShowPassword(bool)));
     connect(m_mainUi->togglePasswordGeneratorButton, SIGNAL(toggled(bool)), SLOT(togglePasswordGeneratorButton(bool)));
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
-    connect(m_mainUi->notesEnabled, SIGNAL(toggled(bool)), m_mainUi->notesEdit, SLOT(setVisible(bool)));
+    connect(m_mainUi->notesEnabled, SIGNAL(toggled(bool)), this, SLOT(toggleHideNotes(bool)));
     m_mainUi->passwordRepeatEdit->enableVerifyMode(m_mainUi->passwordEdit);
     connect(m_mainUi->passwordGenerator, SIGNAL(appliedPassword(QString)), SLOT(setGeneratedPassword(QString)));
 
@@ -262,6 +262,12 @@ void EditEntryWidget::updateAttachmentButtonsEnabled(const QModelIndex& current)
     m_advancedUi->removeAttachmentButton->setEnabled(enable && !m_history);
 }
 
+void EditEntryWidget::toggleHideNotes(bool visible)
+{
+    m_mainUi->notesEdit->setVisible(visible);
+    m_mainUi->notesHint->setVisible(!visible);
+}
+
 QString EditEntryWidget::entryTitle() const
 {
     if (m_entry) {
@@ -311,7 +317,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_mainUi->expireDatePicker->setReadOnly(m_history);
     m_mainUi->notesEnabled->setChecked(true);
     m_mainUi->notesEdit->setReadOnly(m_history);
-    m_mainUi->notesEdit->setVisible(false);
+    m_mainUi->notesEdit->setVisible(true);
     m_mainUi->togglePasswordGeneratorButton->setChecked(false);
     m_mainUi->togglePasswordGeneratorButton->setDisabled(m_history);
     m_mainUi->passwordGenerator->reset();

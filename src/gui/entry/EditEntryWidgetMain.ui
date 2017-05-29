@@ -135,6 +135,19 @@
      </property>
     </widget>
    </item>
+   <item row="9" column="1">
+    <widget class="QLabel" name="notesHint">
+     <property name="visible">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string>Toggle the checkbox to reveal the notes section.</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignTop</set>
+     </property>
+    </widget>
+   </item>
    <item row="1" column="0" alignment="Qt::AlignRight">
     <widget class="QLabel" name="usernameLabel">
      <property name="text">
