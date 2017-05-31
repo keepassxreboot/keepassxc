@@ -145,6 +145,10 @@ void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow, const QS
         sequence = customSequence;
     }
 
+    if (!checkSyntax(sequence)) {
+        return;
+    }
+
     sequence.replace("{{}", "{LEFTBRACE}");
     sequence.replace("{}}", "{RIGHTBRACE}");
 
@@ -327,33 +331,6 @@ bool AutoType::parseActions(const QString& sequence, const Entry* entry, QList<A
     QString tmpl;
     bool inTmpl = false;
     m_autoTypeDelay = config()->get("AutoTypeDelay").toInt();
-
-
-    if (!AutoType::checkSyntax(sequence)) {
-        QMessageBox messageBox;
-        messageBox.critical(0, "AutoType", tr("The Syntax of your AutoType statement is incorrect!"));
-        return false;
-    }
-    else if (AutoType::checkHighDelay(sequence)) {
-        QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(0,
-                                      "AutoType",
-                                      tr("This AutoType command contains a very long delay. Do you really want to execute it?"));
-
-        if (reply == QMessageBox::No) {
-            return false;
-        }
-    }
-    else if (AutoType::checkHighRepetition(sequence)) {
-        QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(0,
-                                      "AutoType",
-                                      tr("This AutoType command contains arguments which are repeated very often. Do you really want to execute it?"));
-
-        if (reply == QMessageBox::No) {
-            return false;
-        }
-    }
 
     for (const QChar &ch : sequence) {
         if (inTmpl) {
