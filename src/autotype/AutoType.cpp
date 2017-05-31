@@ -679,7 +679,7 @@ bool AutoType::checkSyntax(const QString &string)
 {
     //checks things like {word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{-}~+%@fixedstring
     QString allowRepetition = "(\\s[0-9]*){0,1}";
-    QString normalCommands = "[A-Z]*" + allowRepetition;
+    QString normalCommands = "[A-Z:]*" + allowRepetition; //the ":" allows custom commands
     QString specialLiterals = "[\\^\\%\\(\\)~\\{\\}\\[\\]\\+-]" + allowRepetition;
     QString functionKeys = "(F[1-9]" + allowRepetition + "|F1[0-2])" + allowRepetition;
     QString numpad = "NUMPAD[0-9]" + allowRepetition;
