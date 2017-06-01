@@ -380,15 +380,6 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
         if (num == 0) {
             return list;
         }
-        // some safety checks
-        else if (tmplName.compare("delay",Qt::CaseInsensitive)==0) {
-            if (num > 10000) {
-                return list;
-            }
-        }
-        else if (num > 100) {
-            return list;
-        }
     }
 
     if (tmplName.compare("tab",Qt::CaseInsensitive)==0) {
