@@ -90,11 +90,13 @@ bool Crypto::checkAlgorithms()
         qWarning("Crypto::checkAlgorithms: %s", qPrintable(m_errorStr));
         return false;
     }
+#if GCRYPT_VERSION_NUMBER >= 0x010600
     if (gcry_cipher_algo_info(GCRY_CIPHER_SALSA20, GCRYCTL_TEST_ALGO, nullptr, nullptr) != 0) {
         m_errorStr = "GCRY_CIPHER_SALSA20 not found.";
         qWarning("Crypto::checkAlgorithms: %s", qPrintable(m_errorStr));
         return false;
     }
+#endif
     if (gcry_md_test_algo(GCRY_MD_SHA256) != 0) {
         m_errorStr = "GCRY_MD_SHA256 not found.";
         qWarning("Crypto::checkAlgorithms: %s", qPrintable(m_errorStr));
