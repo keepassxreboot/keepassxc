@@ -121,7 +121,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Автоввод — KeePassXC</translation>
+        <translation type="unfinished">Автоввод - KeePassXC</translation>
     </message>
 </context>
 <context>
