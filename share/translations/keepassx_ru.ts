@@ -1447,11 +1447,11 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Copy username to clipboard</source>
-        <translation>Скопировать имя пользователя в буфер обмена</translation>
+        <translation>Копировать имя пользователя в буфер обмена</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
-        <translation>Скопировать пароль в буфер обмена</translation>
+        <translation>Копировать пароль в буфер обмена</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -1507,7 +1507,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Copy att&amp;ribute to clipboard</source>
-        <translation>Скопировать атрибут в буфер обмена</translation>
+        <translation>Копировать атрибут в буфер обмена</translation>
     </message>
     <message>
         <source>&amp;Groups</source>
@@ -1595,11 +1595,11 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Copy &amp;username</source>
-        <translation>Скопировать имя пользователя</translation>
+        <translation>Копировать имя пользователя</translation>
     </message>
     <message>
         <source>Cop&amp;y password</source>
-        <translation>Скопировать пароль</translation>
+        <translation>Копировать пароль</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
@@ -2457,7 +2457,7 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Copy a password to the clipboard</source>
-        <translation>Скопировать пароль в буфер обмена</translation>
+        <translation>Копировать пароль в буфер обмена</translation>
     </message>
     <message>
         <source>Path of the database.</source>
