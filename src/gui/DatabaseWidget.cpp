@@ -532,32 +532,7 @@ void DatabaseWidget::performAutoType()
         return;
     }
 
-    if (!AutoType::checkSyntax(currentEntry->effectiveAutoTypeSequence())) {
-        QMessageBox messageBox;
-        messageBox.critical(0, "AutoType", tr("The Syntax of your AutoType statement is incorrect!"));
-        return;
-    }
-    else if (AutoType::checkHighDelay(currentEntry->effectiveAutoTypeSequence())) {
-        QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(0,
-                                      "AutoType",
-                                      tr("This AutoType command contains a very long delay. Do you really want to execute it?"));
-
-        if (reply == QMessageBox::No) {
-            return;
-        }
-    }
-    else if (AutoType::checkHighRepetition(currentEntry->effectiveAutoTypeSequence())) {
-        QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(0,
-                                      "AutoType",
-                                      tr("This AutoType command contains arguments which are repeated very often. Do you really want to execute it?"));
-
-        if (reply == QMessageBox::No) {
-            return;
-        }
-    }
-    autoType()->performAutoType(currentEntry, window());
+    autoType()->performAutoTypeWithSyntaxCheckingDialog(currentEntry, window());
 }
 
 void DatabaseWidget::openUrl()
@@ -586,7 +561,7 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
             }
             return;
         }
-        
+
         // otherwise ask user
         if (urlString.length() > 6) {
             QString cmdTruncated = urlString.mid(6);
@@ -600,7 +575,7 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
                                this
             );
             msgbox.setDefaultButton(QMessageBox::No);
-            
+
             QCheckBox* checkbox = new QCheckBox(tr("Remember my choice"), &msgbox);
             msgbox.setCheckBox(checkbox);
             bool remember = false;
@@ -609,12 +584,12 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
                    remember = true;
                }
             });
-            
+
             int result = msgbox.exec();
             if (result == QMessageBox::Yes) {
                 QProcess::startDetached(urlString.mid(6));
             }
-            
+
             if (remember) {
                 entry->attributes()->set(EntryAttributes::RememberCmdExecAttr,
                                          result == QMessageBox::Yes ? "1" : "0");
