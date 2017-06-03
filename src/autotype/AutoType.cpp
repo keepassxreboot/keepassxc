@@ -252,7 +252,8 @@ void AutoType::performAutoTypeFromGlobal(Entry* entry, const QString& sequence)
     m_plugin->raiseWindow(m_windowFromGlobal);
 
     m_inAutoType = false;
-    performAutoType(entry, nullptr, sequence, m_windowFromGlobal);
+
+    performAutoTypeWithSyntaxCheckingDialog(entry, nullptr, sequence, m_windowFromGlobal);
 }
 
 void AutoType::resetInAutoType()
@@ -713,4 +714,39 @@ bool AutoType::checkHighRepetition(const QString &string)
     QRegExp highRepetition(".*\\s[0-9]{3,}.*");//3 digit numbers are too much
     highRepetition.setPatternSyntax(QRegExp::RegExp);
     return highRepetition.exactMatch(string);
+}
+
+void
+AutoType::performAutoTypeWithSyntaxCheckingDialog(const Entry *entry,
+                                                  QWidget *hideWindow,
+                                                  const QString &customSequence,
+                                                  WId window)
+{
+    if (!AutoType::checkSyntax(entry->effectiveAutoTypeSequence())) {
+        QMessageBox messageBox;
+        messageBox.critical(0, "AutoType", tr("The Syntax of your AutoType statement is incorrect!"));
+        return;
+    }
+    else if (AutoType::checkHighDelay(entry->effectiveAutoTypeSequence())) {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(0,
+                                      "AutoType",
+                                      tr("This AutoType command contains a very long delay. Do you really want to execute it?"));
+
+        if (reply == QMessageBox::No) {
+            return;
+        }
+    }
+    else if (AutoType::checkHighRepetition(entry->effectiveAutoTypeSequence())) {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(0,
+                                      "AutoType",
+                                      tr("This AutoType command contains arguments which are repeated very often. Do you really want to execute it?"));
+
+        if (reply == QMessageBox::No) {
+            return;
+        }
+    }
+    performAutoType(entry, hideWindow, customSequence, window);
+
 }

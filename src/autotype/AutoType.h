@@ -45,6 +45,10 @@ public:
     static bool checkSyntax(const QString &string);
     static bool checkHighRepetition(const QString &string);
     static bool checkHighDelay(const QString &string);
+    void performAutoTypeWithSyntaxCheckingDialog(const Entry *entry,
+                                                 QWidget *hideWindow = nullptr,
+                                                 const QString &customSequence = QString(),
+                                                 WId window = 0);
 
     inline bool isAvailable() {
         return m_plugin;
