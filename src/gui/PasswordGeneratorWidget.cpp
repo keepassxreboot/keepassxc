@@ -24,6 +24,7 @@
 #include "core/Config.h"
 #include "core/PasswordGenerator.h"
 #include "core/FilePath.h"
+#include "gui/Clipboard.h"
 
 PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     : QWidget(parent)
@@ -40,6 +41,7 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     connect(m_ui->editNewPassword, SIGNAL(textChanged(QString)), SLOT(updatePasswordStrength(QString)));
     connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), SLOT(togglePasswordShown(bool)));
     connect(m_ui->buttonApply, SIGNAL(clicked()), SLOT(applyPassword()));
+    connect(m_ui->buttonCopy, SIGNAL(clicked()), SLOT(copyPassword()));
     connect(m_ui->buttonGenerate, SIGNAL(clicked()), SLOT(regeneratePassword()));
 
     connect(m_ui->sliderLength, SIGNAL(valueChanged(int)), SLOT(passwordSliderMoved()));
@@ -191,6 +193,11 @@ void PasswordGeneratorWidget::applyPassword()
     saveSettings();
     emit appliedPassword(m_ui->editNewPassword->text());
     emit dialogTerminated();
+}
+
+void PasswordGeneratorWidget::copyPassword()
+{
+    clipboard()->setText(m_ui->editNewPassword->text());
 }
 
 void PasswordGeneratorWidget::passwordSliderMoved()

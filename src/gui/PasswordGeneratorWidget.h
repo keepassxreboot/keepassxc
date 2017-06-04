@@ -57,6 +57,7 @@ signals:
 
 private slots:
     void applyPassword();
+    void copyPassword();
     void updateApplyEnabled(const QString& password);
     void updatePasswordStrength(const QString& password);
     void togglePasswordShown(bool hidden);
