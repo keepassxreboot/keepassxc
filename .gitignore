@@ -6,3 +6,28 @@ release*/
 *.kdev4
 
 \.vscode/
+
+# generated
+Makefile
+*CMakeFiles
+CMakeCache.txt
+*_autogen
+/*.cmake
+share/*.cmake
+share/*/*.cmake
+src/*.cmake
+src/*/*.cmake
+src/*/*/*.cmake
+src/version.h
+src/config-keepassx.h
+tests/*.cmake
+tests/config-keepassx-tests.h
+Testing/
+
+# output files
+*.a
+*.qm
+*.so
+src/keepassxc
+src/cli/keepassxc-cli
+tests/test*
