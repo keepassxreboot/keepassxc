@@ -57,7 +57,8 @@ signals:
 
 private slots:
     void applyPassword();
-    void updateApplyEnabled(const QString& password);
+    void copyPassword();
+    void updateButtonsEnabled(const QString& password);
     void updatePasswordStrength(const QString& password);
     void togglePasswordShown(bool hidden);
 
@@ -71,6 +72,7 @@ private slots:
 
 private:
     bool m_updatingSpinBox;
+    bool m_standalone = false;
 
     PasswordGenerator::CharClasses charClasses();
     PasswordGenerator::GeneratorFlags generatorFlags();
