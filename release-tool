@@ -50,19 +50,20 @@ printUsage() {
     local cmd
     if [ "" == "$1" ] || [ "help" == "$1" ]; then
         cmd="COMMAND"
-    elif [ "merge" == "$1" ] || [ "build" == "$1" ] || [ "sign" == "$1" ]; then
+    elif [ "check" == "$1" ] || [ "merge" == "$1" ] || [ "build" == "$1" ] || [ "sign" == "$1" ]; then
         cmd="$1"
     else
         logError "Unknown command: '$1'\n"
         cmd="COMMAND"
     fi
     
-    printf "\e[1mUsage:\e[0m $(basename $0) $cmd [options]\n"
+    printf "\e[1mUsage:\e[0m $(basename $0) $cmd [--version x.y.z] [options]\n"
     
     if [ "COMMAND" == "$cmd" ]; then
         cat << EOF
 
 Commands:
+  check      Perform a dry-run check, nothing is changed
   merge      Merge release branch into main branch and create release tags
   build      Build and package binary release from sources
   sign       Sign previously compiled release packages
@@ -134,7 +135,22 @@ logError() {
 }
 
 init() {
+    if [ "" == "$RELEASE_NAME" ]; then
+        logError "Missing arguments, --version is required!\n"
+        printUsage "check"
+        exit 1
+    fi
+
+    if [ "" == "$TAG_NAME" ]; then
+        TAG_NAME="$RELEASE_NAME"
+    fi
+    
+    if [ "" == "$SOURCE_BRANCH" ]; then
+        SOURCE_BRANCH="release/${RELEASE_NAME}"
+    fi
+
     ORIG_CWD="$(pwd)"
+    SRC_DIR="$(realpath "$SRC_DIR")"
     cd "$SRC_DIR" > /dev/null 2>&1
     ORIG_BRANCH="$(git rev-parse --abbrev-ref HEAD 2> /dev/null)"
     cd "$ORIG_CWD"
@@ -214,15 +230,23 @@ checkTargetBranchExists() {
 
 checkVersionInCMake() {
     local app_name_upper="$(echo "$APP_NAME" | tr '[:lower:]' '[:upper:]')"
-    
-    grep -q "${app_name_upper}_VERSION \"${RELEASE_NAME}\"" CMakeLists.txt
+    local major_num="$(echo ${RELEASE_NAME} | cut -f1 -d.)"
+    local minor_num="$(echo ${RELEASE_NAME} | cut -f2 -d.)"
+    local patch_num="$(echo ${RELEASE_NAME} | cut -f3 -d.)"
+
+    grep -q "${app_name_upper}_VERSION_MAJOR \"${major_num}\"" CMakeLists.txt
     if [ $? -ne 0 ]; then
-        exitError "${app_name_upper}_VERSION version not updated to '${RELEASE_NAME}' in CMakeLists.txt!"
+        exitError "${app_name_upper}_VERSION_MAJOR not updated to '${major_num}' in CMakeLists.txt!"
     fi
 
-    grep -q "${app_name_upper}_VERSION_NUM \"${RELEASE_NAME}\"" CMakeLists.txt
+    grep -q "${app_name_upper}_VERSION_MINOR \"${minor_num}\"" CMakeLists.txt
     if [ $? -ne 0 ]; then
-        exitError "${app_name_upper}_VERSION_NUM version not updated to '${RELEASE_NAME}' in CMakeLists.txt!"
+        exitError "${app_name_upper}_VERSION_MINOR not updated to '${minor_num}' in CMakeLists.txt!"
+    fi
+
+    grep -q "${app_name_upper}_VERSION_PATCH \"${patch_num}\"" CMakeLists.txt
+    if [ $? -ne 0 ]; then
+        exitError "${app_name_upper}_VERSION_PATCH not updated to '${patch_num}' in CMakeLists.txt!"
     fi
 }
 
@@ -242,6 +266,52 @@ checkTransifexCommandExists() {
     if [ 0 -ne $? ]; then
         exitError "Transifex tool 'tx' not installed! Please install it using 'pip install transifex-client'"
     fi
+
+    command -v lupdate-qt5 > /dev/null
+    if [ 0 -ne $? ]; then
+        exitError "Qt Linguist tool (lupdate-qt5) is not installed! Please install using 'apt install qttools5-dev-tools'"
+    fi
+}
+
+checkSnapcraft() {
+    if [ ! -f snapcraft.yaml ]; then
+        echo "No snapcraft file found!"
+        return
+    fi
+
+    grep -qPzo "version: ${RELEASE_NAME}" snapcraft.yaml
+    if [ $? -ne 0 ]; then
+        exitError "snapcraft.yaml has not been updated to the '${RELEASE_NAME}' release!"
+    fi
+}
+
+performChecks() {
+    logInfo "Performing basic checks..."
+    
+    checkSourceDirExists
+
+    logInfo "Changing to source directory..."
+    cd "${SRC_DIR}"
+    
+    logInfo "Validating toolset and repository..."
+
+    checkTransifexCommandExists
+    checkGitRepository
+    checkReleaseDoesNotExist
+    checkWorkingTreeClean
+    checkSourceBranchExists
+    checkTargetBranchExists
+    
+    logInfo "Checking out '${SOURCE_BRANCH}'..."
+    git checkout "$SOURCE_BRANCH"
+    
+    logInfo "Attempting to find '${RELEASE_NAME}' in various files..."
+
+    checkVersionInCMake
+    checkChangeLog
+    checkSnapcraft
+    
+    logInfo "\e[1m\e[32mAll checks passed!\e[0m"
 }
 
 # re-implement realpath for OS X (thanks mschrag)
@@ -269,6 +339,28 @@ fi
 
 trap exitTrap SIGINT SIGTERM
 
+# -----------------------------------------------------------------------
+#                             check command
+# -----------------------------------------------------------------------
+check() {
+    while [ $# -ge 1 ]; do
+        local arg="$1"
+        case "$arg" in
+            -v|--version)
+                RELEASE_NAME="$2"
+                shift ;;
+        esac
+        shift
+    done
+
+    init
+
+    performChecks
+
+    cleanup
+
+    logInfo "Congrats! You can successfully merge, build, and sign KeepassXC."
+}
 
 # -----------------------------------------------------------------------
 #                             merge command
@@ -317,45 +409,9 @@ merge() {
         shift
     done
 
-    if [ "" == "$RELEASE_NAME" ]; then
-        logError "Missing arguments, --version is required!\n"
-        printUsage "merge"
-        exit 1
-    fi
-
-    if [ "" == "$TAG_NAME" ]; then
-        TAG_NAME="$RELEASE_NAME"
-    fi
-    
-    if [ "" == "$SOURCE_BRANCH" ]; then
-        SOURCE_BRANCH="release/${RELEASE_NAME}"
-    fi
-    
     init
 
-    SRC_DIR="$(realpath "$SRC_DIR")"
-
-    logInfo "Performing basic checks..."
-    
-    checkSourceDirExists
-
-    logInfo "Changing to source directory..."
-    cd "${SRC_DIR}"
-    
-    checkTransifexCommandExists
-    checkGitRepository
-    checkReleaseDoesNotExist
-    checkWorkingTreeClean
-    checkSourceBranchExists
-    checkTargetBranchExists
-    
-    logInfo "Checking out source branch '${SOURCE_BRANCH}'..."
-    git checkout "$SOURCE_BRANCH"
-    
-    checkVersionInCMake
-    checkChangeLog
-    
-    logInfo "All checks pass, getting our hands dirty now!"
+    performChecks
     
     logInfo "Updating language files..."
     ./share/translations/update.sh
@@ -467,35 +523,12 @@ build() {
         esac
         shift
     done
-    
-    if [ "" == "$RELEASE_NAME" ]; then
-        logError "Missing arguments, --version is required!\n"
-        printUsage "build"
-        exit 1
-    fi
-    
-    if [ "" == "$TAG_NAME" ]; then
-        TAG_NAME="$RELEASE_NAME"
-    fi
-    
-    init
 
-    SRC_DIR="$(realpath "$SRC_DIR")"
+    init
+    
+    performChecks
+
     OUTPUT_DIR="$(realpath "$OUTPUT_DIR")"
-    
-    logInfo "Performing basic checks..."
-    
-    checkSourceDirExists
-    
-    logInfo "Changing to source directory..."
-    cd "${SRC_DIR}"
-    
-    checkTagExists
-    checkGitRepository
-    checkWorkingTreeClean
-    checkOutputDirDoesNotExist
-    
-    logInfo "All checks pass, getting our hands dirty now!"
     
     logInfo "Checking out release tag '${TAG_NAME}'..."
     git checkout "$TAG_NAME"
@@ -678,7 +711,7 @@ if [ "" == "$MODE" ]; then
 elif [ "help" == "$MODE" ]; then
     printUsage "$1"
     exit
-elif [ "merge" == "$MODE" ] || [ "build" == "$MODE" ] || [ "sign" == "$MODE" ]; then
+elif [ "check" == "$MODE" ] || [ "merge" == "$MODE" ] || [ "build" == "$MODE" ] || [ "sign" == "$MODE" ]; then
     $MODE "$@"
 else
     printUsage "$MODE"
