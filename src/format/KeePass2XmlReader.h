@@ -40,6 +40,7 @@ class KeePass2XmlReader
 
 public:
     KeePass2XmlReader();
+    KeePass2XmlReader(QHash<QString, QByteArray>& binaryPool);
     Database* readDatabase(QIODevice* device);
     void readDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream = nullptr);
     Database* readDatabase(const QString& filename);

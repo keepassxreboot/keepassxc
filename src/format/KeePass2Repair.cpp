@@ -79,7 +79,7 @@ KeePass2Repair::RepairResult KeePass2Repair::repairDatabase(QIODevice* device, c
         return RepairFailed;
     }
 
-    KeePass2RandomStream randomStream;
+    KeePass2RandomStream randomStream(reader.protectedStreamAlgo());
     randomStream.init(reader.streamKey());
     KeePass2XmlReader xmlReader;
     QBuffer buffer(&xmlData);

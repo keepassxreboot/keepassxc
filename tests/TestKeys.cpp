@@ -24,9 +24,9 @@
 #include "core/Database.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
+#include "crypto/kdf/AesKdf.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
-#include "keys/CompositeKey.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
@@ -42,8 +42,6 @@ void TestKeys::testComposite()
     CompositeKey* compositeKey1 = new CompositeKey();
     PasswordKey* passwordKey1 = new PasswordKey();
     PasswordKey* passwordKey2 = new PasswordKey("test");
-    bool ok;
-    QString errorString;
 
     // make sure that addKey() creates a copy of the keys
     compositeKey1->addKey(*passwordKey1);
@@ -51,16 +49,21 @@ void TestKeys::testComposite()
     delete passwordKey1;
     delete passwordKey2;
 
-    QByteArray transformed = compositeKey1->transform(QByteArray(32, '\0'), 1, &ok, &errorString);
-    QVERIFY(ok);
-    QCOMPARE(transformed.size(), 32);
+    AesKdf kdf;
+    kdf.setRounds(1);
+    QByteArray transformed1;
+    QVERIFY(compositeKey1->transform(kdf, transformed1));
+    QCOMPARE(transformed1.size(), 32);
 
     // make sure the subkeys are copied
     CompositeKey* compositeKey2 = compositeKey1->clone();
     delete compositeKey1;
-    QCOMPARE(compositeKey2->transform(QByteArray(32, '\0'), 1, &ok, &errorString), transformed);
-    QVERIFY(ok);
+    QByteArray transformed2;
+    QVERIFY(compositeKey2->transform(kdf, transformed2));
+    QCOMPARE(transformed2.size(), 32);
     delete compositeKey2;
+
+    QCOMPARE(transformed1, transformed2);
 
     CompositeKey* compositeKey3 = new CompositeKey();
     CompositeKey* compositeKey4 = new CompositeKey();
@@ -157,14 +160,20 @@ void TestKeys::testCreateFileKey()
     dbBuffer.open(QBuffer::ReadWrite);
 
     KeePass2Writer writer;
-    writer.writeDatabase(&dbBuffer, dbOrg);
+    bool writeSuccess = writer.writeDatabase(&dbBuffer, dbOrg);
+    if (writer.hasError()) {
+        QFAIL(writer.errorString().toUtf8().constData());
+    }
+    QVERIFY(writeSuccess);
     dbBuffer.reset();
     delete dbOrg;
 
     KeePass2Reader reader;
     Database* dbRead = reader.readDatabase(&dbBuffer, compositeKey);
+    if (reader.hasError()) {
+        QFAIL(reader.errorString().toUtf8().constData());
+    }
     QVERIFY(dbRead);
-    QVERIFY(!reader.hasError());
     QCOMPARE(dbRead->metadata()->name(), dbName);
     delete dbRead;
 }
@@ -202,10 +211,12 @@ void TestKeys::benchmarkTransformKey()
 
     QByteArray seed(32, '\x4B');
 
-    bool ok;
-    QString errorString;
+    QByteArray result;
+    AesKdf kdf;
+    kdf.setSeed(seed);
+    kdf.setRounds(1e6);
 
     QBENCHMARK {
-        compositeKey.transform(seed, 1e6, &ok, &errorString);
+        Q_UNUSED(compositeKey.transform(kdf, result));
     }
 }

@@ -42,6 +42,9 @@ namespace Endian {
     QByteArray int16ToBytes(qint16 num, QSysInfo::Endian byteOrder);
     QByteArray int32ToBytes(qint32 num, QSysInfo::Endian byteOrder);
     QByteArray int64ToBytes(qint64 num, QSysInfo::Endian byteOrder);
+    QByteArray uint16ToBytes(quint16 num, QSysInfo::Endian byteOrder);
+    QByteArray uint32ToBytes(quint32 num, QSysInfo::Endian byteOrder);
+    QByteArray uint64ToBytes(quint64 num, QSysInfo::Endian byteOrder);
 
     bool writeInt16(qint16 num, QIODevice* device, QSysInfo::Endian byteOrder);
     bool writeInt32(qint32 num, QIODevice* device, QSysInfo::Endian byteOrder);

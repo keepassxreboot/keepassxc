@@ -21,6 +21,7 @@
 #include <QImage>
 #include <QTextCodec>
 
+#include "crypto/kdf/AesKdf.h"
 #include "core/Database.h"
 #include "core/Endian.h"
 #include "core/Entry.h"
@@ -33,6 +34,7 @@
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 #include "streams/SymmetricCipherStream.h"
+#include "KeePass2.h"
 
 class KeePass1Key : public CompositeKey
 {
@@ -159,10 +161,10 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
         raiseError("Invalid number of transform rounds");
         return nullptr;
     }
-    if (!m_db->setTransformRounds(m_transformRounds)) {
-        raiseError(tr("Unable to calculate master key"));
-        return nullptr;
-    }
+    AesKdf* kdf = new AesKdf();
+    kdf->setRounds(m_transformRounds);
+    kdf->setSeed(m_transformSeed);
+    db->setKdf(kdf);
 
     qint64 contentPos = m_device->pos();
 
@@ -397,12 +399,11 @@ QByteArray KeePass1Reader::key(const QByteArray& password, const QByteArray& key
     key.setPassword(password);
     key.setKeyfileData(keyfileData);
 
-    bool ok;
-    QString errorString;
-    QByteArray transformedKey = key.transform(m_transformSeed, m_transformRounds, &ok, &errorString);
+    QByteArray transformedKey;
+    bool result = key.transform(*m_db->kdf(), transformedKey);
 
-    if (!ok) {
-        raiseError(errorString);
+    if (!result) {
+        raiseError("Key transformation failed");
         return QByteArray();
     }
 

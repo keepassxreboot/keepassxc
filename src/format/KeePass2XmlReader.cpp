@@ -19,7 +19,9 @@
 
 #include <QBuffer>
 #include <QFile>
+#include <QRegularExpression>
 
+#include "core/Endian.h"
 #include "core/Database.h"
 #include "core/DatabaseIcons.h"
 #include "core/Group.h"
@@ -38,6 +40,12 @@ KeePass2XmlReader::KeePass2XmlReader()
     , m_error(false)
     , m_strictMode(false)
 {
+}
+
+KeePass2XmlReader::KeePass2XmlReader(QHash<QString, QByteArray>& binaryPool)
+    : KeePass2XmlReader()
+{
+    m_binaryPool = binaryPool;
 }
 
 void KeePass2XmlReader::setStrictMode(bool strictMode)
@@ -296,6 +304,8 @@ void KeePass2XmlReader::parseMeta()
         }
         else if (m_xml.name() == "CustomData") {
             parseCustomData();
+        } else if (m_xml.name() == "SettingsChanged") {
+            m_meta->setSettingsChanged(readDateTime());
         }
         else {
             skipCurrentElement();
@@ -1048,19 +1058,25 @@ bool KeePass2XmlReader::readBool()
 
 QDateTime KeePass2XmlReader::readDateTime()
 {
+    static QRegularExpression b64regex("^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$");
     QString str = readString();
-    QDateTime dt = QDateTime::fromString(str, Qt::ISODate);
 
-    if (!dt.isValid()) {
-        if (m_strictMode) {
-            raiseError("Invalid date time value");
-        }
-        else {
-            dt = QDateTime::currentDateTimeUtc();
+    if (b64regex.match(str).hasMatch()) {
+        QByteArray secsBytes = QByteArray::fromBase64(str.toUtf8()).leftJustified(8, '\0', true).left(8);
+        qint64 secs = Endian::bytesToInt64(secsBytes, KeePass2::BYTEORDER);
+        return QDateTime(QDate(1, 1, 1), QTime(0, 0, 0, 0), Qt::UTC).addSecs(secs);
+    } else {
+        QDateTime dt = QDateTime::fromString(str, Qt::ISODate);
+        if (dt.isValid()) {
+            return dt;
+        } else {
+            if (m_strictMode) {
+                raiseError("Invalid date time value");
+            }
+
+            return QDateTime::currentDateTimeUtc();
         }
     }
-
-    return dt;
 }
 
 QColor KeePass2XmlReader::readColor()

@@ -28,19 +28,24 @@ class KeePass2Writer
 {
 public:
     KeePass2Writer();
-    void writeDatabase(QIODevice* device, Database* db);
+    bool writeDatabase(QIODevice* device, Database* db);
     void writeDatabase(const QString& filename, Database* db);
     bool hasError();
     QString errorString();
 
 private:
     bool writeData(const QByteArray& data);
-    bool writeHeaderField(KeePass2::HeaderFieldID fieldId, const QByteArray& data);
+    bool writeHeaderField(KeePass2::HeaderFieldID fieldId, const QByteArray& data, bool kdbx3);
+    bool writeInnerHeaderField(KeePass2::InnerHeaderFieldID fieldId, const QByteArray& data);
     void raiseError(const QString& errorMessage);
 
     QIODevice* m_device;
     bool m_error;
     QString m_errorStr;
+
+    bool writeBinary(const QByteArray& data);
+
+    static bool serializeVariantMap(const QVariantMap& p, QByteArray& o);
 };
 
 #endif // KEEPASSX_KEEPASS2WRITER_H

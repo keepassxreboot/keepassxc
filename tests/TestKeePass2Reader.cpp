@@ -155,3 +155,26 @@ void TestKeePass2Reader::testFormat300()
 
     delete db;
 }
+
+void TestKeePass2Reader::testFormat400()
+{
+    QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/Format400.kdbx");
+    CompositeKey key;
+    key.addKey(PasswordKey("t"));
+    KeePass2Reader reader;
+    Database* db = reader.readDatabase(filename, key);
+    QVERIFY(db);
+    QVERIFY(!reader.hasError());
+
+    QCOMPARE(db->rootGroup()->name(), QString("Format400"));
+    QCOMPARE(db->metadata()->name(), QString("Format400"));
+    QCOMPARE(db->rootGroup()->entries().size(), 1);
+    Entry* entry = db->rootGroup()->entries().at(0);
+
+    QCOMPARE(entry->title(), QString("Format400"));
+    QCOMPARE(entry->username(), QString("Format400"));
+    QCOMPARE(entry->attributes()->keys().size(), 6);
+    QCOMPARE(entry->attributes()->value("Format400"), QString("Format400"));
+    QCOMPARE(entry->attachments()->keys().size(), 1);
+    QCOMPARE(entry->attachments()->value("Format400"), QByteArray("Format400\n"));
+}

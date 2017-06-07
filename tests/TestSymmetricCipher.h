@@ -31,6 +31,7 @@ private slots:
     void testTwofish256CbcEncryption();
     void testTwofish256CbcDecryption();
     void testSalsa20();
+    void testChaCha20();
     void testPadding();
     void testStreamReset();
 };
