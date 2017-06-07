@@ -37,7 +37,7 @@ AboutDialog::AboutDialog(QWidget* parent)
     setWindowFlags(Qt::Sheet);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-    m_ui->nameLabel->setText(m_ui->nameLabel->text() + " " + KEEPASSX_VERSION);
+    m_ui->nameLabel->setText(m_ui->nameLabel->text().replace("${VERSION}", KEEPASSX_VERSION));
     QFont nameLabelFont = m_ui->nameLabel->font();
     nameLabelFont.setPointSize(nameLabelFont.pointSize() + 4);
     m_ui->nameLabel->setFont(nameLabelFont);
