@@ -1,0 +1,32 @@
+# KeePassXC Linux Travis Dockerfile
+# Copyright (C) 2017 KeePassXC team <https://keepassxc.org/>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 2 or (at your option)
+# version 3 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+FROM ubuntu:rolling
+
+RUN locale-gen en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
+RUN set -x \
+    && apt-get -qq update \
+    && apt-get -qq install \
+        build-essential clang \
+        cmake libclang-common-3.5-dev libxi-dev qtbase5-dev libqt5x11extras5-dev \
+        qttools5-dev qttools5-dev-tools libgcrypt20-dev zlib1g-dev libxtst-dev \
+        xvfb libyubikey-dev libykpers-1-dev
+
+CMD ["/keepassxc/src/travis_linux_script.sh"]
