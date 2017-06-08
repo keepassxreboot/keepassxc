@@ -185,7 +185,6 @@ set(autotype_SOURCES
     autotype/ShortcutWidget.cpp
     autotype/WildcardMatcher.cpp
     autotype/WindowSelectComboBox.cpp
-    autotype/test/AutoTypeTestInterface.h
 )
 
 if(MINGW)

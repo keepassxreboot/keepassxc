@@ -22,7 +22,7 @@
 
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/AutoTypeAction.h"
-#include "autotype/test/AutoTypeTestInterface.h"
+#include "autotype/AutoTypeTestInterface.h"
 
 class AutoTypePlatformTest : public QObject,
                              public AutoTypePlatformInterface,

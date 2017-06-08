@@ -16,8 +16,4 @@ if(WITH_XC_AUTOTYPE)
   elseif(WIN32)
     add_subdirectory(windows)
   endif()
-
-  if(WITH_TESTS)
-    add_subdirectory(test)
-  endif()
 endif()
