@@ -1356,7 +1356,7 @@ Seules les entrées de même type (http://, https://, ftp://, ...) sont retourn�
     </message>
     <message>
         <source>Re&amp;quest to unlock the database if it is locked</source>
-        <translation>Demander de déverrouiller la base de données lorsque celle-ci est verrouiller </translation>
+        <translation>Demander de déverrouiller la base de données lorsque celle-ci est verrouillée</translation>
     </message>
     <message>
         <source>Sort &amp;matching entries by title</source>
