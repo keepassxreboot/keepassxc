@@ -77,6 +77,8 @@ Files: share/icons/application/*/actions/auto-type.png
        share/icons/application/*/actions/entry-clone.png
        share/icons/application/*/actions/entry-edit.png
        share/icons/application/*/actions/entry-new.png
+       share/icons/application/*/actions/group-empty-trash.png
+       share/icons/application/*/actions/help-about.png
        share/icons/application/*/actions/password-generate.png
        share/icons/database/C00_Password.png
        share/icons/database/C01_Package_Network.png
