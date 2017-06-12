@@ -105,7 +105,7 @@ void EditWidget::setReadOnly(bool readOnly)
     else {
         m_ui->buttonBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Apply);
         // Find and connect the apply button
-        QPushButton *applyButton = m_ui->buttonBox->button(QDialogButtonBox::Apply);
+        QPushButton* applyButton = m_ui->buttonBox->button(QDialogButtonBox::Apply);
         connect(applyButton, SIGNAL(clicked()), SIGNAL(apply()));
     }
 }
