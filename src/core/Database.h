@@ -113,6 +113,7 @@ public:
     void setEmitModified(bool value);
     void copyAttributesFrom(const Database* other);
     void merge(const Database* other);
+    QString saveToFile(QString filePath);
 
     /**
      * Returns a unique id that is only valid as long as the Database exists.

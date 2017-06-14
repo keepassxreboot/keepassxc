@@ -19,6 +19,7 @@
 #include "Database.h"
 
 #include <QFile>
+#include <QSaveFile>
 #include <QTextStream>
 #include <QTimer>
 #include <QXmlStreamReader>
@@ -28,6 +29,7 @@
 #include "crypto/Random.h"
 #include "format/KeePass2.h"
 #include "format/KeePass2Reader.h"
+#include "format/KeePass2Writer.h"
 
 QHash<Uuid, Database*> Database::m_uuidMap;
 
@@ -410,5 +412,30 @@ Database* Database::unlockFromStdin(QString databaseFilename)
     QString line = inputTextStream.readLine();
     CompositeKey key = CompositeKey::readFromLine(line);
     return Database::openDatabaseFile(databaseFilename, key);
+
+}
+
+QString Database::saveToFile(QString filePath)
+{
+    KeePass2Writer writer;
+    QSaveFile saveFile(filePath);
+    if (saveFile.open(QIODevice::WriteOnly)) {
+
+        // write the database to the file
+        writer.writeDatabase(&saveFile, this);
+
+        if (writer.hasError()) {
+            return writer.errorString();
+        }
+
+        if (saveFile.commit()) {
+            // successfully saved database file
+            return QString();
+        } else {
+            return saveFile.errorString();
+        }
+    } else {
+        return saveFile.errorString();
+    }
 
 }

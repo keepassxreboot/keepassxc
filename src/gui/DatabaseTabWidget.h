@@ -22,7 +22,6 @@
 #include <QHash>
 #include <QTabWidget>
 
-#include "format/KeePass2Writer.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/MessageWidget.h"
 
@@ -118,7 +117,6 @@ private:
     void updateLastDatabases(const QString& filename);
     void connectDatabase(Database* newDb, Database* oldDb = nullptr);
 
-    KeePass2Writer m_writer;
     QHash<Database*, DatabaseManagerStruct> m_dbList;
     DatabaseWidgetStateSync* m_dbWidgetStateSync;
 };
