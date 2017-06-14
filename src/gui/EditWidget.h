@@ -48,6 +48,7 @@ public:
     bool readOnly() const;
 
 signals:
+    void apply();
     void accepted();
     void rejected();
 

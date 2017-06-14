@@ -75,8 +75,9 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     setupProperties();
     setupHistory();
 
-    connect(this, SIGNAL(accepted()), SLOT(saveEntry()));
+    connect(this, SIGNAL(accepted()), SLOT(acceptEntry()));
     connect(this, SIGNAL(rejected()), SLOT(cancel()));
+    connect(this, SIGNAL(apply()), SLOT(saveEntry()));
     connect(m_iconsWidget, SIGNAL(messageEditEntry(QString, MessageWidget::MessageType)), SLOT(showMessage(QString, MessageWidget::MessageType)));
     connect(m_iconsWidget, SIGNAL(messageEditEntryDismiss()), SLOT(hideMessage()));
     
@@ -439,9 +440,12 @@ void EditEntryWidget::saveEntry()
     if (!m_create) {
         m_entry->endUpdate();
     }
+}
 
+void EditEntryWidget::acceptEntry()
+{
+    saveEntry();
     clear();
-
     emit editFinished(true);
 }
 

@@ -68,6 +68,7 @@ signals:
     void historyEntryActivated(Entry* entry);
 
 private slots:
+    void acceptEntry();
     void saveEntry();
     void cancel();
     void togglePasswordGeneratorButton(bool checked);

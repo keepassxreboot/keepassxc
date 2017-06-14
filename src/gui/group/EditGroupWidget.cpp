@@ -42,6 +42,7 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
     connect(m_mainUi->autoTypeSequenceCustomRadio, SIGNAL(toggled(bool)),
             m_mainUi->autoTypeSequenceCustomEdit, SLOT(setEnabled(bool)));
 
+    connect(this, SIGNAL(apply()), SLOT(apply()));
     connect(this, SIGNAL(accepted()), SLOT(save()));
     connect(this, SIGNAL(rejected()), SLOT(cancel()));
 
@@ -102,6 +103,13 @@ void EditGroupWidget::loadGroup(Group* group, bool create, Database* database)
 
 void EditGroupWidget::save()
 {
+    apply();
+    clear();
+    emit editFinished(true);
+}
+
+void EditGroupWidget::apply()
+{
     m_group->setName(m_mainUi->editName->text());
     m_group->setNotes(m_mainUi->editNotes->toPlainText());
     m_group->setExpires(m_mainUi->expireCheck->isChecked());
@@ -128,9 +136,6 @@ void EditGroupWidget::save()
     else {
         m_group->setIcon(iconStruct.uuid);
     }
-
-    clear();
-    emit editFinished(true);
 }
 
 void EditGroupWidget::cancel()

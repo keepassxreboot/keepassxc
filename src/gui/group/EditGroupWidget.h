@@ -49,6 +49,7 @@ signals:
     void messageEditEntryDismiss();
 
 private slots:
+    void apply();
     void save();
     void cancel();
 

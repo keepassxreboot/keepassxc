@@ -230,6 +230,7 @@ void TestGui::testEditEntry()
     // Select the first entry in the database
     EntryView* entryView = m_dbWidget->findChild<EntryView*>("entryView");
     QModelIndex entryItem = entryView->model()->index(0, 1);
+    Entry* entry = entryView->entryFromIndex(entryItem);
     clickIndex(entryItem, entryView, Qt::LeftButton);
 
     // Confirm the edit action button is enabled
@@ -246,6 +247,13 @@ void TestGui::testEditEntry()
     QLineEdit* titleEdit = editEntryWidget->findChild<QLineEdit*>("titleEdit");
     QTest::keyClicks(titleEdit, "_test");
 
+    // Apply the edit
+    QDialogButtonBox* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Apply), Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+    QCOMPARE(entry->title(), QString("Sample Entry_test"));
+    QCOMPARE(entry->historyItems().size(), 1);
+
     // Test protected attributes
     editEntryWidget->setCurrentPage(1);
     QPlainTextEdit* attrTextEdit = editEntryWidget->findChild<QPlainTextEdit*>("attributesEdit");
@@ -259,15 +267,13 @@ void TestGui::testEditEntry()
     QCOMPARE(attrTextEdit->toPlainText(), attrText);
     editEntryWidget->setCurrentPage(0);
 
-    // Save the edit
-    QDialogButtonBox* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
+    // Save the edit (press OK)
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
 
     // Confirm edit was made
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::ViewMode);
-    Entry* entry = entryView->entryFromIndex(entryItem);
     QCOMPARE(entry->title(), QString("Sample Entry_test"));
-    QCOMPARE(entry->historyItems().size(), 1);
+    QCOMPARE(entry->historyItems().size(), 2);
 
     // Confirm modified indicator is showing
     QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("%1*").arg(m_dbFileName));
