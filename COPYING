@@ -241,3 +241,8 @@ Files: src/gui/KMessageWidget.h
 Copyright: 2011 Aurélien Gâteau <agateau@kde.org>
            2014 Dominik Haumann <dhaumann@kde.org>
 License: LGPL-2.1
+
+Files: src/totp/base32.cpp
+       src/totp/base32.h
+Copyright: 2010 Google Inc.
+License: Apache 2.0
