@@ -1,9 +1,9 @@
 // Base32 implementation
+// Source: https://github.com/google/google-authenticator-libpam/blob/master/src/base32.h
 //
 // Copyright 2010 Google Inc.
 // Author: Markus Gutschke
-// Source: https://github.com/google/google-authenticator-libpam/blob/master/src/base32.h
-// Modifications copyright (C) 2017 KeePassXC team <https://keepassxc.org/>
+// Modifications Copyright 2017 KeePassXC team <team@keepassxc.org>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.

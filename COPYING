@@ -1,5 +1,5 @@
-KeePassX - http://www.keepassx.org/
-Copyright (C) 2010-2012 Felix Geyer <debfx@fobos.de>
+KeePassXC - http://www.keepassxc.org/
+Copyright (C) 2016-2017 KeePassXC Team <team@keepassxc.org>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -14,9 +14,9 @@ GNU General Public License for more details.
 --------------------------------------------------------------------
 
 Format-Specification: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: KeePassX
-Upstream-Contact: Felix Geyer <debfx@fobos.de>
-Source: http://www.keepassx.org/
+Upstream-Name: KeePassXC
+Upstream-Contact: KeePassXC Team <team@keepassxc.org>
+Source: http://www.keepassxc.org/
 
 Copyright: 2010-2012, Felix Geyer <debfx@fobos.de>
            2011-2012, Florian Geyer <blueice@fobos.de>
@@ -27,12 +27,36 @@ Copyright: 2010-2012, Felix Geyer <debfx@fobos.de>
            2000-2008, Tom Sato <VEF00200@nifty.ne.jp>
            2013, Laszlo Papp <lpapp@kde.org>
            2013, David Faure <faure@kde.org>
-           2016, KeePassXC Team
+           2016-2017, KeePassXC Team <team@keepassxc.org>
 License: GPL-2 or GPL-3
+
+Comment: The "KeePassXC Team" in every copyright notice is formed by the following people:
+           - droidmonkey
+           - phoerious
+           - TheZ3ro <io@thezero.org>
+           - louib
+           - weslly
+         Every other contributor is listed on https://github.com/keepassxreboot/keepassxc/graphs/contributors
 
 Files: cmake/GNUInstallDirs.cmake
 Copyright: 2011 Nikita Krupen'ko <krnekit@gmail.com>
            2011 Kitware, Inc.
+License: BSD-3-clause
+
+Files: cmake/CodeCoverage.cmake
+Copyright: 2012 - 2015, Lars Bilke
+License: BSD-3-clause
+
+Files: cmake/FindYubiKey.cmake
+Copyright: 2014 Kyle Manna <kyle@kylemanna.com>
+License: GPL-2 or GPL-3
+
+Files: cmake/GenerateProductVersion.cmake
+Copyright: 2015 halex2005 <akharlov@gmail.com>
+License: MIT
+
+Files: cmake/CodeCoverage.cmake
+Copyright: 2012 - 2015, Lars Bilke
 License: BSD-3-clause
 
 Files: share/icons/application/*/apps/keepassxc.png
@@ -53,6 +77,8 @@ Files: share/icons/application/*/actions/auto-type.png
        share/icons/application/*/actions/entry-clone.png
        share/icons/application/*/actions/entry-edit.png
        share/icons/application/*/actions/entry-new.png
+       share/icons/application/*/actions/group-empty-trash.png
+       share/icons/application/*/actions/help-about.png
        share/icons/application/*/actions/password-generate.png
        share/icons/database/C00_Password.png
        share/icons/database/C01_Package_Network.png
@@ -138,18 +164,25 @@ Files: share/icons/application/*/actions/application-exit.png
        share/icons/application/*/actions/document-encrypt.png
        share/icons/application/*/actions/document-new.png
        share/icons/application/*/actions/document-open.png
+       share/icons/application/*/actions/document-properties.png
        share/icons/application/*/actions/document-save.png
        share/icons/application/*/actions/document-save-as.png
        share/icons/application/*/actions/edit-clear-locationbar-ltr.png
        share/icons/application/*/actions/edit-clear-locationbar-rtl.png
+       share/icons/application/*/actions/key-enter.png
        share/icons/application/*/actions/password-generator.png
        share/icons/application/*/actions/password-copy.png
        share/icons/application/*/actions/password-show-*.png
        share/icons/application/*/actions/system-search.png
        share/icons/application/*/actions/username-copy.png
+       share/icons/application/*/actions/view-history.png
+       share/icons/application/*/apps/internet-web-browser.png
+       share/icons/application/*/apps/preferences-desktop-icons.png
+       share/icons/application/*/categories/preferences-other.png
        share/icons/application/*/status/dialog-error.png
        share/icons/application/*/status/dialog-information.png
        share/icons/application/*/status/dialog-warning.png
+       share/icons/application/*/status/security-high.png
        share/icons/svg/*.svgz
 Copyright: 2007, Nuno Pinheiro <nuno@oxygen-icons.org>
            2007, David Vignoni <david@icon-king.com>
@@ -196,13 +229,20 @@ Copyright: 2009-2010, Iowa State University
 License: Boost-1.0
 
 Files: src/zxcvbn/zxcvbn.*
-       src/utils/entropy-meter.cpp
 Copyright: 2015, Tony Evans
-           2016, KeePassXC Team
 License: BSD 3-clause
+
+Files: src/http/qhttp/*
+Copyright: 2014, Amir Zamani
+License: MIT
 
 Files: src/gui/KMessageWidget.h
        src/gui/KMessageWidget.cpp
 Copyright: 2011 Aurélien Gâteau <agateau@kde.org>
            2014 Dominik Haumann <dhaumann@kde.org>
 License: LGPL-2.1
+
+Files: src/totp/base32.cpp
+       src/totp/base32.h
+Copyright: 2010 Google Inc.
+License: Apache 2.0
