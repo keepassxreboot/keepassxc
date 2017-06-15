@@ -28,7 +28,6 @@
 #include <QStackedWidget>
 
 #include "core/Metadata.h"
-#include "format/KeePass2Writer.h"
 #include "gui/csvImport/CsvParserModel.h"
 #include "keys/PasswordKey.h"
 
@@ -42,7 +41,7 @@ class CsvImportWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit CsvImportWidget(QWidget *parent = nullptr);
+    explicit CsvImportWidget(QWidget* parent = nullptr);
     ~CsvImportWidget();
     void load(const QString& filename, Database* const db);
 
@@ -65,9 +64,8 @@ private:
     QStringListModel* const m_comboModel;
     QSignalMapper* m_comboMapper;
     QList<QComboBox*> m_combos;
-    Database *m_db;
+    Database* m_db;
 
-    KeePass2Writer m_writer;
     static const QStringList m_columnHeader;
     void configParser();
     void updateTableview();

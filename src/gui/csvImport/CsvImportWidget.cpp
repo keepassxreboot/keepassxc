@@ -23,6 +23,7 @@
 #include <QFileInfo>
 #include <QSpacerItem>
 
+#include "format/KeePass2Writer.h"
 #include "gui/MessageBox.h"
 #include "gui/MessageWidget.h"
 
