@@ -224,14 +224,12 @@ bool Database::setTransformRounds(quint64 rounds)
     return true;
 }
 
-bool Database::setKey(const CompositeKey& key, const QByteArray& transformSeed,
-                      bool updateChangedTime)
+bool Database::setKey(const CompositeKey& key, const QByteArray& transformSeed, bool updateChangedTime)
 {
     bool ok;
     QString errorString;
 
-    QByteArray transformedMasterKey =
-            key.transform(transformSeed, transformRounds(), &ok, &errorString);
+    QByteArray transformedMasterKey = key.transform(transformSeed, transformRounds(), &ok, &errorString);
     if (!ok) {
         return false;
     }
@@ -293,23 +291,21 @@ void Database::recycleEntry(Entry* entry)
             createRecycleBin();
         }
         entry->setGroup(metadata()->recycleBin());
-    }
-    else {
+    } else {
         delete entry;
     }
 }
 
 void Database::recycleGroup(Group* group)
 {
-     if (m_metadata->recycleBinEnabled()) {
+    if (m_metadata->recycleBinEnabled()) {
         if (!m_metadata->recycleBin()) {
             createRecycleBin();
         }
         group->setParent(metadata()->recycleBin());
-    }
-    else {
+    } else {
         delete group;
-     }
+    }
 }
 
 void Database::emptyRecycleBin()
@@ -398,7 +394,6 @@ Database* Database::openDatabaseFile(QString fileName, CompositeKey key)
     }
 
     return db;
-
 }
 
 Database* Database::unlockFromStdin(QString databaseFilename)
@@ -412,7 +407,6 @@ Database* Database::unlockFromStdin(QString databaseFilename)
     QString line = inputTextStream.readLine();
     CompositeKey key = CompositeKey::readFromLine(line);
     return Database::openDatabaseFile(databaseFilename, key);
-
 }
 
 QString Database::saveToFile(QString filePath)
@@ -437,5 +431,4 @@ QString Database::saveToFile(QString filePath)
     } else {
         return saveFile.errorString();
     }
-
 }
