@@ -47,6 +47,10 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
+    QStringList arguments;
+    for (int i = 0; i < argc; ++i) {
+        arguments << QString(argv[i]);
+    }
     QCommandLineParser parser;
 
     QString description("KeePassXC command line interface.");
@@ -63,10 +67,6 @@ int main(int argc, char** argv)
 
     parser.addHelpOption();
     parser.addVersionOption();
-    QStringList arguments;
-    for (int i = 0; i < argc; ++i) {
-        arguments << QString(argv[i]);
-    }
     // TODO : use process once the setOptionsAfterPositionalArgumentsMode (Qt 5.6)
     // is available. Until then, options passed to sub-commands won't be
     // recognized by this parser.
