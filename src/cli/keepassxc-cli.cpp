@@ -78,7 +78,7 @@ int main(int argc, char** argv)
         if (parser.isSet("version")) {
             parser.showVersion();
         }
-        parser.showHelp(EXIT_FAILURE);
+        parser.showHelp();
     }
 
     QString commandName = parser.positionalArguments().at(0);
