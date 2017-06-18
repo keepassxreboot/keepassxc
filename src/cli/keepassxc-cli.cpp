@@ -63,19 +63,26 @@ int main(int argc, char** argv)
 
     parser.addHelpOption();
     parser.addVersionOption();
+    QStringList arguments;
+    for (int i = 0; i < argc; ++i) {
+        arguments << QString(argv[i]);
+    }
     // TODO : use process once the setOptionsAfterPositionalArgumentsMode (Qt 5.6)
     // is available. Until then, options passed to sub-commands won't be
     // recognized by this parser.
-    // parser.process(app);
+    parser.parse(arguments);
 
-    if (argc < 2) {
+    if (parser.positionalArguments().size() < 1) {
         QCoreApplication app(argc, argv);
         app.setApplicationVersion(KEEPASSX_VERSION);
-        parser.showHelp();
-        return EXIT_FAILURE;
+        if (parser.isSet("version")) {
+            parser.showVersion();
+        }
+        parser.showHelp(EXIT_FAILURE);
     }
 
-    QString commandName = argv[1];
+    QString commandName = parser.positionalArguments().at(0);
+
 
     // Removing the first cli argument before dispatching.
     ++argv;
@@ -105,8 +112,9 @@ int main(int argc, char** argv)
         qCritical("Invalid command %s.", qPrintable(commandName));
         QCoreApplication app(argc, argv);
         app.setApplicationVersion(KEEPASSX_VERSION);
-        parser.showHelp();
-        exitCode = EXIT_FAILURE;
+        // showHelp exits the application immediately, so we need to set the
+        // exit code here.
+        parser.showHelp(EXIT_FAILURE);
     }
 
 #if defined(WITH_ASAN) && defined(WITH_LSAN)
