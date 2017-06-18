@@ -67,8 +67,8 @@ int main(int argc, char** argv)
 
     parser.addHelpOption();
     parser.addVersionOption();
-    // TODO : use process once the setOptionsAfterPositionalArgumentsMode (Qt 5.6)
-    // is available. Until then, options passed to sub-commands won't be
+    // TODO : use the setOptionsAfterPositionalArgumentsMode (Qt 5.6) function
+    // when available. Until then, options passed to sub-commands won't be
     // recognized by this parser.
     parser.parse(arguments);
 
@@ -83,29 +83,37 @@ int main(int argc, char** argv)
 
     QString commandName = parser.positionalArguments().at(0);
 
-
-    // Removing the first cli argument before dispatching.
-    ++argv;
-    --argc;
-
     int exitCode = EXIT_FAILURE;
 
     if (commandName == "clip") {
+        // Removing the first cli argument before dispatching.
+        ++argv;
+        --argc;
         argv[0] = const_cast<char*>("keepassxc-cli clip");
         exitCode = Clip::execute(argc, argv);
     } else if (commandName == "entropy-meter") {
+        ++argv;
+        --argc;
         argv[0] = const_cast<char*>("keepassxc-cli entropy-meter");
         exitCode = EntropyMeter::execute(argc, argv);
     } else if (commandName == "extract") {
+        ++argv;
+        --argc;
         argv[0] = const_cast<char*>("keepassxc-cli extract");
         exitCode = Extract::execute(argc, argv);
     } else if (commandName == "list") {
+        ++argv;
+        --argc;
         argv[0] = const_cast<char*>("keepassxc-cli list");
         exitCode = List::execute(argc, argv);
     } else if (commandName == "merge") {
+        ++argv;
+        --argc;
         argv[0] = const_cast<char*>("keepassxc-cli merge");
         exitCode = Merge::execute(argc, argv);
     } else if (commandName == "show") {
+        ++argv;
+        --argc;
         argv[0] = const_cast<char*>("keepassxc-cli show");
         exitCode = Show::execute(argc, argv);
     } else {
