@@ -61,7 +61,7 @@ Config::Config(QObject* parent)
     : QObject(parent)
 {
     // Check if portable config is present. If not, find it in user's directory
-    QString portablePath = QDir::currentPath() + "/keepassxc.ini";
+    QString portablePath = QCoreApplication::applicationDirPath() + "/keepassxc.ini";
     if (QFile::exists(portablePath)) {
         init(portablePath);
     } else {
