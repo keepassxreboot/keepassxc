@@ -20,6 +20,7 @@
 #include <QCommandLineParser>
 #include <QCoreApplication>
 #include <QStringList>
+#include <QTextStream>
 
 #include <cli/Clip.h>
 #include <cli/EntropyMeter.h>
@@ -76,7 +77,11 @@ int main(int argc, char** argv)
         QCoreApplication app(argc, argv);
         app.setApplicationVersion(KEEPASSX_VERSION);
         if (parser.isSet("version")) {
-            parser.showVersion();
+            // Switch to parser.showVersion() when available (QT 5.4).
+            QTextStream out(stdout);
+            out << KEEPASSX_VERSION << "\n";
+            out.flush();
+            return EXIT_SUCCESS;
         }
         parser.showHelp();
     }
