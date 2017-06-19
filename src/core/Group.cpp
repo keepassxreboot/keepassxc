@@ -532,7 +532,7 @@ Entry* Group::findEntryByPath(QString entryPath, QString basePath)
 
     for (Entry* entry : asConst(m_entries)) {
         QString currentEntryPath = basePath + entry->title();
-        if (entryPath == currentEntryPath) {
+        if (entryPath == currentEntryPath || QString("/" + currentEntryPath) == entryPath) {
             return entry;
         }
     }
@@ -545,6 +545,40 @@ Entry* Group::findEntryByPath(QString entryPath, QString basePath)
     }
 
     return nullptr;
+}
+
+Group* Group::findGroupByPath(QString groupPath, QString basePath)
+{
+
+    Q_ASSERT(!groupPath.isEmpty());
+    Q_ASSERT(!groupPath.isNull());
+
+    QStringList possiblePaths;
+    possiblePaths << groupPath;
+    if (!groupPath.startsWith("/")) {
+        possiblePaths << QString("/" + groupPath);
+    }
+    if (!groupPath.endsWith("/")) {
+        possiblePaths << QString(groupPath + "/");
+    }
+    if (!groupPath.endsWith("/") && !groupPath.endsWith("/")) {
+        possiblePaths << QString("/" + groupPath + "/");
+    }
+
+    if (possiblePaths.contains(basePath)) {
+        return this;
+    }
+
+    for (Group* innerGroup : children()) {
+        QString innerBasePath = basePath + innerGroup->name() + "/";
+        Group* group = innerGroup->findGroupByPath(groupPath, innerBasePath);
+        if (group != nullptr) {
+            return group;
+        }
+    }
+
+    return nullptr;
+
 }
 
 QString Group::print(bool printUuids, QString baseName, int depth)

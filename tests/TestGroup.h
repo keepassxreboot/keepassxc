@@ -40,6 +40,7 @@ private slots:
     void testMergeDatabase();
     void testMergeConflictKeepBoth();
     void testFindEntry();
+    void testFindGroupByPath();
     void testPrint();
 
 private:

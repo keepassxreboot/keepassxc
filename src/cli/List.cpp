@@ -44,6 +44,7 @@ int List::execute(int argc, char** argv)
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::translate("main", "List database entries."));
     parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
+    parser.addPositionalArgument("group", QCoreApplication::translate("main", "Path of the group to list. Default is /"));
     QCommandLineOption printUuidsOption(
         QStringList() << "u"
                       << "print-uuids",
@@ -57,7 +58,7 @@ int List::execute(int argc, char** argv)
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
-    if (args.size() != 1) {
+    if (args.size() != 1 && args.size() != 2) {
         QCoreApplication app(argc, argv);
         parser.showHelp();
         return EXIT_FAILURE;
@@ -76,7 +77,17 @@ int List::execute(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    out << db->rootGroup()->print(parser.isSet("print-uuids"));
+    Group* group = db->rootGroup();
+    if (args.size() == 2) {
+        QString groupPath = args.at(1);
+        group = db->rootGroup()->findGroupByPath(groupPath);
+        if (group == nullptr) {
+            qCritical("Cannot find group %s.", qPrintable(groupPath));
+            return EXIT_FAILURE;
+        }
+    }
+
+    out << group->print(parser.isSet("print-uuids"));
     out.flush();
     return EXIT_SUCCESS;
 }
