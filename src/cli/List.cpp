@@ -20,11 +20,13 @@
 
 #include "List.h"
 
+#include <QApplication>
 #include <QCommandLineParser>
 #include <QCoreApplication>
 #include <QStringList>
 #include <QTextStream>
 
+#include "gui/UnlockDatabaseDialog.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
@@ -33,7 +35,10 @@
 
 int List::execute(int argc, char** argv)
 {
-    QCoreApplication app(argc, argv);
+    QStringList arguments;
+    for (int i = 0; i < argc; ++i) {
+        arguments << QString(argv[i]);
+    }
     QTextStream out(stdout);
 
     QCommandLineParser parser;
@@ -44,22 +49,29 @@ int List::execute(int argc, char** argv)
                       << "print-uuids",
         QCoreApplication::translate("main", "Print the UUIDs of the entries and groups."));
     parser.addOption(printUuidsOption);
-    parser.process(app);
+    QCommandLineOption guiPrompt(
+        QStringList() << "g"
+                      << "gui-prompt",
+        QCoreApplication::translate("main", "Use a GUI prompt unlocking the database."));
+    parser.addOption(guiPrompt);
+    parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 1) {
+        QCoreApplication app(argc, argv);
         parser.showHelp();
         return EXIT_FAILURE;
     }
 
-    out << "Insert the database password\n> ";
-    out.flush();
+    Database* db = nullptr;
+    if (parser.isSet("gui-prompt")) {
+        QApplication app(argc, argv);
+        db = UnlockDatabaseDialog::openDatabasePrompt(args.at(0));
+    } else {
+        QCoreApplication app(argc, argv);
+        db = Database::unlockFromStdin(args.at(0));
+    }
 
-    static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
-    QString line = inputTextStream.readLine();
-    CompositeKey key = CompositeKey::readFromLine(line);
-
-    Database* db = Database::openDatabaseFile(args.at(0), key);
     if (db == nullptr) {
         return EXIT_FAILURE;
     }

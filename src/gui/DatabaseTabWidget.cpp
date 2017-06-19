@@ -20,7 +20,6 @@
 
 #include <QFileInfo>
 #include <QLockFile>
-#include <QSaveFile>
 #include <QTabWidget>
 #include <QPushButton>
 
@@ -351,36 +350,24 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
     DatabaseManagerStruct& dbStruct = m_dbList[db];
 
     if (dbStruct.saveToFilename) {
-        QSaveFile saveFile(dbStruct.canonicalFilePath);
-        if (saveFile.open(QIODevice::WriteOnly)) {
-            // write the database to the file
-            dbStruct.dbWidget->blockAutoReload(true);
-            m_writer.writeDatabase(&saveFile, db);
-            dbStruct.dbWidget->blockAutoReload(false);
 
-            if (m_writer.hasError()) {
-                emit messageTab(tr("Writing the database failed.").append("\n")
-                                .append(m_writer.errorString()), MessageWidget::Error);
-                return false;
-            }
+        dbStruct.dbWidget->blockAutoReload(true);
+        QString errorMessage = db->saveToFile(dbStruct.canonicalFilePath);
+        dbStruct.dbWidget->blockAutoReload(false);
 
-            if (saveFile.commit()) {
-                // successfully saved database file
-                dbStruct.modified = false;
-                dbStruct.dbWidget->databaseSaved();
-                updateTabName(db);
-                emit messageDismissTab();
-                return true;
-            } else {
-                emit messageTab(tr("Writing the database failed.").append("\n")
-                                .append(saveFile.errorString()), MessageWidget::Error);
-                return false;
-            }
+        if (errorMessage.isEmpty()) {
+            // successfully saved database file
+            dbStruct.modified = false;
+            dbStruct.dbWidget->databaseSaved();
+            updateTabName(db);
+            emit messageDismissTab();
+            return true;
         } else {
-            emit messageTab(tr("Writing the database failed.").append("\n")
-                            .append(saveFile.errorString()), MessageWidget::Error);
+            emit messageTab(tr("Writing the database failed.").append("\n").append(errorMessage),
+                            MessageWidget::Error);
             return false;
         }
+
     } else {
         return saveDatabaseAs(db);
     }
