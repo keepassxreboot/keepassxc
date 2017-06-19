@@ -486,7 +486,6 @@ QList<Entry*> Group::entriesRecursive(bool includeHistoryItems) const
 
 Entry* Group::findEntry(QString entryId)
 {
-    Q_ASSERT(!entryId.isEmpty());
     Q_ASSERT(!entryId.isNull());
 
     if (Uuid::isUuid(entryId)) {
@@ -527,7 +526,6 @@ Entry* Group::findEntryByUuid(const Uuid& uuid)
 Entry* Group::findEntryByPath(QString entryPath, QString basePath)
 {
 
-    Q_ASSERT(!entryPath.isEmpty());
     Q_ASSERT(!entryPath.isNull());
 
     for (Entry* entry : asConst(m_entries)) {
@@ -550,7 +548,6 @@ Entry* Group::findEntryByPath(QString entryPath, QString basePath)
 Group* Group::findGroupByPath(QString groupPath, QString basePath)
 {
 
-    Q_ASSERT(!groupPath.isEmpty());
     Q_ASSERT(!groupPath.isNull());
 
     QStringList possiblePaths;

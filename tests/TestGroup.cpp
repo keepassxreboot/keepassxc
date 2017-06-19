@@ -604,6 +604,10 @@ void TestGroup::testFindEntry()
     QVERIFY(entry != nullptr);
     QCOMPARE(entry->title(), QString("entry1"));
 
+    // But two slashes should not be accepted.
+    entry = db->rootGroup()->findEntry(QString("//entry1"));
+    QVERIFY(entry == nullptr);
+
     entry = db->rootGroup()->findEntry(entry2->uuid().toHex());
     QVERIFY(entry != nullptr);
     QCOMPARE(entry->title(), QString("entry2"));
