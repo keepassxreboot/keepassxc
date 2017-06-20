@@ -39,6 +39,7 @@ public:
 
     void connectSignals(SignalMultiplexer& mx);
     void setCaseSensitive(bool state);
+    void setLimitGroup(bool state);
 
 protected:
     bool eventFilter(QObject* obj, QEvent* event);
@@ -46,6 +47,7 @@ protected:
 signals:
     void search(const QString& text);
     void caseSensitiveChanged(bool state);
+    void limitGroupChanged(bool state);
     void escapePressed();
     void copyPressed();
     void downPressed();
@@ -58,12 +60,14 @@ private slots:
     void startSearchTimer();
     void startSearch();
     void updateCaseSensitive();
+    void updateLimitGroup();
     void searchFocus();
 
 private:
     const QScopedPointer<Ui::SearchWidget> m_ui;
     QTimer* m_searchTimer;
     QAction* m_actionCaseSensitive;
+    QAction* m_actionLimitGroup;
 
     Q_DISABLE_COPY(SearchWidget)
 };
