@@ -44,7 +44,9 @@ int List::execute(int argc, char** argv)
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::translate("main", "List database entries."));
     parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
-    parser.addPositionalArgument("group", QCoreApplication::translate("main", "Path of the group to list. Default is /"));
+    parser.addPositionalArgument("group",
+                                 QCoreApplication::translate("main", "Path of the group to list. Default is /"),
+                                 QString("[group]"));
     QCommandLineOption printUuidsOption(
         QStringList() << "u"
                       << "print-uuids",

@@ -530,7 +530,7 @@ Entry* Group::findEntryByPath(QString entryPath, QString basePath)
 
     for (Entry* entry : asConst(m_entries)) {
         QString currentEntryPath = basePath + entry->title();
-        if (entryPath == currentEntryPath || QString("/" + currentEntryPath) == entryPath) {
+        if (entryPath == currentEntryPath || entryPath == QString("/" + currentEntryPath)) {
             return entry;
         }
     }
