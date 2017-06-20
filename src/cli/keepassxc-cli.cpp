@@ -20,6 +20,7 @@
 #include <QCommandLineParser>
 #include <QCoreApplication>
 #include <QStringList>
+#include <QTextStream>
 
 #include <cli/Clip.h>
 #include <cli/EntropyMeter.h>
@@ -47,6 +48,10 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
+    QStringList arguments;
+    for (int i = 0; i < argc; ++i) {
+        arguments << QString(argv[i]);
+    }
     QCommandLineParser parser;
 
     QString description("KeePassXC command line interface.");
@@ -63,50 +68,66 @@ int main(int argc, char** argv)
 
     parser.addHelpOption();
     parser.addVersionOption();
-    // TODO : use process once the setOptionsAfterPositionalArgumentsMode (Qt 5.6)
-    // is available. Until then, options passed to sub-commands won't be
+    // TODO : use the setOptionsAfterPositionalArgumentsMode (Qt 5.6) function
+    // when available. Until then, options passed to sub-commands won't be
     // recognized by this parser.
-    // parser.process(app);
+    parser.parse(arguments);
 
-    if (argc < 2) {
+    if (parser.positionalArguments().size() < 1) {
         QCoreApplication app(argc, argv);
         app.setApplicationVersion(KEEPASSX_VERSION);
+        if (parser.isSet("version")) {
+            // Switch to parser.showVersion() when available (QT 5.4).
+            QTextStream out(stdout);
+            out << KEEPASSX_VERSION << "\n";
+            out.flush();
+            return EXIT_SUCCESS;
+        }
         parser.showHelp();
-        return EXIT_FAILURE;
     }
 
-    QString commandName = argv[1];
-
-    // Removing the first cli argument before dispatching.
-    ++argv;
-    --argc;
+    QString commandName = parser.positionalArguments().at(0);
 
     int exitCode = EXIT_FAILURE;
 
     if (commandName == "clip") {
+        // Removing the first cli argument before dispatching.
+        ++argv;
+        --argc;
         argv[0] = const_cast<char*>("keepassxc-cli clip");
         exitCode = Clip::execute(argc, argv);
     } else if (commandName == "entropy-meter") {
+        ++argv;
+        --argc;
         argv[0] = const_cast<char*>("keepassxc-cli entropy-meter");
         exitCode = EntropyMeter::execute(argc, argv);
     } else if (commandName == "extract") {
+        ++argv;
+        --argc;
         argv[0] = const_cast<char*>("keepassxc-cli extract");
         exitCode = Extract::execute(argc, argv);
     } else if (commandName == "list") {
+        ++argv;
+        --argc;
         argv[0] = const_cast<char*>("keepassxc-cli list");
         exitCode = List::execute(argc, argv);
     } else if (commandName == "merge") {
+        ++argv;
+        --argc;
         argv[0] = const_cast<char*>("keepassxc-cli merge");
         exitCode = Merge::execute(argc, argv);
     } else if (commandName == "show") {
+        ++argv;
+        --argc;
         argv[0] = const_cast<char*>("keepassxc-cli show");
         exitCode = Show::execute(argc, argv);
     } else {
         qCritical("Invalid command %s.", qPrintable(commandName));
         QCoreApplication app(argc, argv);
         app.setApplicationVersion(KEEPASSX_VERSION);
-        parser.showHelp();
-        exitCode = EXIT_FAILURE;
+        // showHelp exits the application immediately, so we need to set the
+        // exit code here.
+        parser.showHelp(EXIT_FAILURE);
     }
 
 #if defined(WITH_ASAN) && defined(WITH_LSAN)
