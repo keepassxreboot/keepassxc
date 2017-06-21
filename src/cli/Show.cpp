@@ -29,6 +29,7 @@
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "keys/CompositeKey.h"
+#include "cli/PasswordInput.h"
 
 int Show::execute(int argc, char** argv)
 {
@@ -50,8 +51,7 @@ int Show::execute(int argc, char** argv)
     out << "Insert the database password\n> ";
     out.flush();
 
-    static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
-    QString line = inputTextStream.readLine();
+    QString line = PasswordInput::getPassword();
     CompositeKey key = CompositeKey::readFromLine(line);
 
     Database* db = Database::openDatabaseFile(args.at(0), key);

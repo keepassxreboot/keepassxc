@@ -94,7 +94,8 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_searchingLabel = new QLabel();
     m_searchingLabel->setText(tr("Searching..."));
     m_searchingLabel->setAlignment(Qt::AlignCenter);
-    m_searchingLabel->setStyleSheet("background-color: rgb(255, 253, 160);"
+    m_searchingLabel->setStyleSheet("color: rgb(0, 0, 0);"
+                                    "background-color: rgb(255, 253, 160);"
                                     "border: 2px solid rgb(190, 190, 190);"
                                     "border-radius: 5px;");
 

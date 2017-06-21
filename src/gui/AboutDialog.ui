@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>479</width>
-    <height>478</height>
+    <width>450</width>
+    <height>450</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>450</width>
+    <height>450</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>About KeePassXC</string>
@@ -59,7 +71,13 @@
         </font>
        </property>
        <property name="text">
-        <string notr="true">  KeePassXC</string>
+        <string notr="true">&lt;span style=&quot;font-size: 24pt&quot;&gt; KeePassXC v${VERSION}&lt;/span&gt;</string>
+       </property>
+       <property name="margin">
+        <number>0</number>
+       </property>
+       <property name="indent">
+        <number>11</number>
        </property>
       </widget>
      </item>
@@ -84,7 +102,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string notr="true">&lt;p&gt;Website: &lt;a href=&quot;https://keepassxc.org/&quot;&gt;https://keepassxc.org/&lt;/a&gt;&lt;/p&gt;</string>
+          <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Website: &lt;a href=&quot;https://keepassxc.org/&quot;&gt;&lt;span style=&quot;text-decoration: underline; color:#0000ff;&quot;&gt;https://keepassxc.org&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="openExternalLinks">
           <bool>true</bool>
@@ -94,7 +112,7 @@
        <item>
         <widget class="QLabel" name="label_5">
          <property name="text">
-          <string>&lt;p&gt;Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot;&gt;https://github.com/&lt;/a&gt;&lt;/p&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot;&gt;&lt;span style=&quot;text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="openExternalLinks">
           <bool>true</bool>
@@ -126,7 +144,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -158,14 +176,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>&lt;p&gt;Main contributors:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;debfx (KeePassX)&lt;/li&gt;
-&lt;li&gt;droidmonkey&lt;/li&gt;
-&lt;li&gt;louib&lt;/li&gt;
-&lt;li&gt;phoerious&lt;/li&gt;
-&lt;li&gt;thezero&lt;/li&gt;
-&lt;/ul&gt;</string>
+          <string>&lt;html&gt;&lt;head&gt;&lt;style&gt;li {font-size: 10pt}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Project Maintainers:&lt;/span&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;droidmonkey&lt;/li&gt;&lt;li&gt;phoerious&lt;/li&gt;&lt;li&gt;TheZ3ro&lt;/li&gt;&lt;li&gt;louib&lt;/li&gt;&lt;li&gt;Weslly&lt;/li&gt;&lt;li&gt;debfx (KeePassX)&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </item>
@@ -184,6 +195,65 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tab_3">
+      <attribute name="title">
+       <string>Contributors</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QTextEdit" name="contributors">
+         <property name="html">
+          <string>&lt;html&gt;&lt;body&gt;
+            &lt;p style=&quot;font-size:x-large; font-weight:600;&quot;&gt;Code:&lt;/p&gt;
+            &lt;ul&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;debfx (KeePassX)&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;BlueIce (KeePassX)&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;droidmonkey&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;phoerious&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;TheZ3ro&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;louib&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;weslly&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;keithbennett (KeePassHTTP)&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;Typz (KeePassHTTP)&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;denk-mal (KeePassHTTP)&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;kylemanna (YubiKey)&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;seatedscribe (CSV Importer)&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;pgalves (Inline Messages)&lt;/li&gt;
+            &lt;/ul&gt;
+            &lt;p style=&quot;font-size:x-large; font-weight:600;&quot;&gt;Translations:&lt;/p&gt;
+            &lt;ul&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Chinese:&lt;/span&gt; Biggulu, ligyxy, BestSteve&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Czech:&lt;/span&gt; pavelb, JosefVitu&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Dutch:&lt;/span&gt; Vistaus, KnooL, apie&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Finnish:&lt;/span&gt; MawKKe&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;French:&lt;/span&gt; Scrat15, frgnca, gilbsgilbs, gtalbot, iannick, kyodev, logut&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;German:&lt;/span&gt; Calyrx, DavidHamburg, antsas, codejunky, jensrutschmann, montilo, omnisome4, origin_de, pcrcoding, phoerious, rgloor, vlenzer&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Greek:&lt;/span&gt; nplatis&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Italian:&lt;/span&gt; TheZ3ro, FranzMari, Mte90, tosky&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Kazakh:&lt;/span&gt; sotrud_nik&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Lithuanian:&lt;/span&gt; Moo&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Polish:&lt;/span&gt; konradmb, mrerexx&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Portuguese: &lt;/span&gt;vitor895, weslly, American_Jesus, mihai.ile&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Russian:&lt;/span&gt; vsvyatski, KekcuHa, wkill95&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Spanish:&lt;/span&gt; EdwardNavarro, antifaz, piegope, pquin, vsvyatski&lt;/li&gt;
+            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Swedish:&lt;/span&gt; henziger&lt;/li&gt;
+            &lt;/ul&gt;
+            &lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;See Contributions on GitHub&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="openExternalLinks">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
        <string>Debug Info</string>
@@ -198,7 +268,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>Include the following information whenever you report a bug:</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Include the following information whenever you report a bug:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </item>
