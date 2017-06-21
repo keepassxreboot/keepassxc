@@ -163,6 +163,7 @@ public slots:
     // Search related slots
     void search(const QString& searchtext);
     void setSearchCaseSensitive(bool state);
+    void setSearchLimitGroup(bool state);
     void endSearch();
 
     void showMessage(const QString& text, MessageWidget::MessageType type);
@@ -221,6 +222,7 @@ private:
     // Search state
     QString m_lastSearchText;
     bool m_searchCaseSensitive;
+    bool m_searchLimitGroup;
 
     // Autoreload
     QFileSystemWatcher m_fileWatcher;

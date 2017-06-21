@@ -577,7 +577,12 @@ void TestGui::testSearch()
     QModelIndex rootGroupIndex = groupView->model()->index(0, 0);
     clickIndex(groupView->model()->index(0, 0, rootGroupIndex), groupView, Qt::LeftButton);
     QCOMPARE(groupView->currentGroup()->name(), QString("General"));
+    
+    searchWidget->setLimitGroup(false);
+    QTRY_COMPARE(entryView->model()->rowCount(), 2);
+    searchWidget->setLimitGroup(true);
     QTRY_COMPARE(entryView->model()->rowCount(), 0);
+
     // reset
     clickIndex(rootGroupIndex, groupView, Qt::LeftButton);
     QCOMPARE(groupView->currentGroup(), m_db->rootGroup());
