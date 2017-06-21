@@ -44,8 +44,7 @@ int Show::execute(int argc, char** argv)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
-        parser.showHelp();
-        return EXIT_FAILURE;
+        parser.showHelp(EXIT_FAILURE);
     }
 
     out << "Insert the database password\n> ";

@@ -55,8 +55,7 @@ int Clip::execute(int argc, char** argv)
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
         QCoreApplication app(argc, argv);
-        parser.showHelp();
-        return EXIT_FAILURE;
+        parser.showHelp(EXIT_FAILURE);
     }
 
     Database* db = nullptr;

@@ -44,8 +44,7 @@ int Extract::execute(int argc, char** argv)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 1) {
-        parser.showHelp();
-        return EXIT_FAILURE;
+        parser.showHelp(EXIT_FAILURE);
     }
 
     out << "Insert the database password\n> ";
