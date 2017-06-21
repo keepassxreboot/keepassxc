@@ -1,5 +1,5 @@
 name: keepassxc
-version: 2.1.4
+version: 2.2.0
 grade: stable
 summary: community driven port of the windows application “Keepass Password Safe”
 description: |
@@ -22,6 +22,7 @@ parts:
       - -DWITH_TESTS=OFF
       - -DWITH_XC_AUTOTYPE=ON
       - -DWITH_XC_HTTP=ON
+      - -DWITH_XC_YUBIKEY=ON
     build-packages:
       - g++
       - libgcrypt20-dev
@@ -32,4 +33,6 @@ parts:
       - zlib1g-dev
       - libxi-dev
       - libxtst-dev
+      - libyubikey-dev
+      - libykpers-1-dev
     after: [desktop-qt5]
