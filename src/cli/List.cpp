@@ -62,8 +62,7 @@ int List::execute(int argc, char** argv)
     const QStringList args = parser.positionalArguments();
     if (args.size() != 1 && args.size() != 2) {
         QCoreApplication app(argc, argv);
-        parser.showHelp();
-        return EXIT_FAILURE;
+        parser.showHelp(EXIT_FAILURE);
     }
 
     Database* db = nullptr;
