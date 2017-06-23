@@ -599,11 +599,28 @@ void TestGroup::testFindEntry()
     QVERIFY(entry != nullptr);
     QCOMPARE(entry->title(), QString("entry1"));
 
+    // We also can find the entry with the leading slash.
+    entry = db->rootGroup()->findEntry(QString("/entry1"));
+    QVERIFY(entry != nullptr);
+    QCOMPARE(entry->title(), QString("entry1"));
+
+    // But two slashes should not be accepted.
+    entry = db->rootGroup()->findEntry(QString("//entry1"));
+    QVERIFY(entry == nullptr);
+
     entry = db->rootGroup()->findEntry(entry2->uuid().toHex());
     QVERIFY(entry != nullptr);
     QCOMPARE(entry->title(), QString("entry2"));
 
     entry = db->rootGroup()->findEntry(QString("group1/entry2"));
+    QVERIFY(entry != nullptr);
+    QCOMPARE(entry->title(), QString("entry2"));
+
+    entry = db->rootGroup()->findEntry(QString("/entry2"));
+    QVERIFY(entry == nullptr);
+
+    // We also can find the entry with the leading slash.
+    entry = db->rootGroup()->findEntry(QString("/group1/entry2"));
     QVERIFY(entry != nullptr);
     QCOMPARE(entry->title(), QString("entry2"));
 
@@ -625,6 +642,70 @@ void TestGroup::testFindEntry()
     // An invalid UUID.
     entry = db->rootGroup()->findEntry(QString("febfb01ebcdf9dbd90a3f1579dc"));
     QVERIFY(entry == nullptr);
+
+    delete db;
+}
+
+void TestGroup::testFindGroupByPath()
+{
+    Database* db = new Database();
+
+    Group* group1 = new Group();
+    group1->setName("group1");
+    group1->setParent(db->rootGroup());
+
+    Group* group2 = new Group();
+    group2->setName("group2");
+    group2->setParent(group1);
+
+    Group* group;
+
+    group = db->rootGroup()->findGroupByPath("/");
+    QVERIFY(group != nullptr);
+    QCOMPARE(group->uuid(), db->rootGroup()->uuid());
+
+    // We also accept it if the leading slash is missing.
+    group = db->rootGroup()->findGroupByPath("");
+    QVERIFY(group != nullptr);
+    QCOMPARE(group->uuid(), db->rootGroup()->uuid());
+
+    group = db->rootGroup()->findGroupByPath("/group1/");
+    QVERIFY(group != nullptr);
+    QCOMPARE(group->uuid(), group1->uuid());
+
+    // We also accept it if the leading slash is missing.
+    group = db->rootGroup()->findGroupByPath("group1/");
+    QVERIFY(group != nullptr);
+    QCOMPARE(group->uuid(), group1->uuid());
+
+    // Too many slashes at the end
+    group = db->rootGroup()->findGroupByPath("group1//");
+    QVERIFY(group == nullptr);
+
+    // Missing a slash at the end.
+    group = db->rootGroup()->findGroupByPath("/group1");
+    QVERIFY(group != nullptr);
+    QCOMPARE(group->uuid(), group1->uuid());
+
+    // Too many slashes at the start
+    group = db->rootGroup()->findGroupByPath("//group1");
+    QVERIFY(group == nullptr);
+
+    group = db->rootGroup()->findGroupByPath("/group1/group2/");
+    QVERIFY(group != nullptr);
+    QCOMPARE(group->uuid(), group2->uuid());
+
+    // We also accept it if the leading slash is missing.
+    group = db->rootGroup()->findGroupByPath("group1/group2/");
+    QVERIFY(group != nullptr);
+    QCOMPARE(group->uuid(), group2->uuid());
+
+    group = db->rootGroup()->findGroupByPath("group1/group2");
+    QVERIFY(group != nullptr);
+    QCOMPARE(group->uuid(), group2->uuid());
+
+    group = db->rootGroup()->findGroupByPath("invalid");
+    QVERIFY(group == nullptr);
 
     delete db;
 }
