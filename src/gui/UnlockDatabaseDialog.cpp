@@ -26,6 +26,7 @@ UnlockDatabaseDialog::UnlockDatabaseDialog(QWidget* parent)
     : QDialog(parent)
     , m_view(new UnlockDatabaseWidget(this))
 {
+    setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
     connect(m_view, SIGNAL(editFinished(bool)), this, SLOT(complete(bool)));
 }
 
