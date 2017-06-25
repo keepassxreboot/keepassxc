@@ -1,6 +1,7 @@
 /*
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *  Copyright (C) 2000-2008 Tom Sato <VEF00200@nifty.ne.jp>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -214,7 +215,7 @@ int AutoTypePlatformX11::platformEventFilter(void* event)
                 && (!QApplication::activeWindow() || QApplication::activeWindow()->isMinimized())
                 && m_loaded) {
             if (type == XCB_KEY_PRESS) {
-                Q_EMIT globalShortcutTriggered();
+                emit globalShortcutTriggered();
             }
 
             return 1;
@@ -435,6 +436,8 @@ KeySym AutoTypePlatformX11::keyToKeySym(Qt::Key key)
         return XK_Tab;
     case Qt::Key_Enter:
         return XK_Return;
+    case Qt::Key_Space:
+        return XK_space;
     case Qt::Key_Up:
         return XK_Up;
     case Qt::Key_Down:
@@ -471,6 +474,12 @@ KeySym AutoTypePlatformX11::keyToKeySym(Qt::Key key)
         return XK_Print;
     case Qt::Key_ScrollLock:
         return XK_Scroll_Lock;
+    case Qt::Key_Shift:
+        return XK_Shift_L;
+    case Qt::Key_Control:
+        return XK_Control_L;
+    case Qt::Key_Alt:
+        return XK_Alt_L;
     default:
         if (key >= Qt::Key_F1 && key <= Qt::Key_F16) {
             return XK_F1 + (key - Qt::Key_F1);
@@ -722,6 +731,12 @@ bool AutoTypePlatformX11::keysymModifiers(KeySym keysym, int keycode, unsigned i
  */
 void AutoTypePlatformX11::SendKeyPressedEvent(KeySym keysym)
 {
+    SendKey(keysym,true);
+    SendKey(keysym,false);
+}
+
+void AutoTypePlatformX11::SendKey(KeySym keysym, bool isKeyDown)
+{
     Window cur_focus;
     int revert_to;
     XKeyEvent event;
@@ -800,8 +815,11 @@ void AutoTypePlatformX11::SendKeyPressedEvent(KeySym keysym)
 
     /* press and release key */
     event.keycode = keycode;
-    SendEvent(&event, KeyPress);
-    SendEvent(&event, KeyRelease);
+    if (isKeyDown) {
+        SendEvent(&event, KeyPress);
+    } else {
+        SendEvent(&event, KeyRelease);
+    }
 
     /* release the modifiers */
     SendModifier(&event, press_mask, KeyRelease);
@@ -831,12 +849,39 @@ AutoTypeExecutorX11::AutoTypeExecutorX11(AutoTypePlatformX11* platform)
 void AutoTypeExecutorX11::execChar(AutoTypeChar* action)
 {
     m_platform->SendKeyPressedEvent(m_platform->charToKeySym(action->character));
+    Tools::wait(25);
 }
 
 void AutoTypeExecutorX11::execKey(AutoTypeKey* action)
 {
     m_platform->SendKeyPressedEvent(m_platform->keyToKeySym(action->key));
+    Tools::wait(25);
 }
+
+void AutoTypeExecutorX11::execClearField(AutoTypeClearField* action = nullptr)
+{
+    Q_UNUSED(action);
+
+    timespec ts;
+    ts.tv_sec = 0;
+    ts.tv_nsec = 25 * 1000 * 1000;
+
+    m_platform->SendKey(m_platform->keyToKeySym(Qt::Key_Control), true);
+    m_platform->SendKeyPressedEvent(m_platform->keyToKeySym(Qt::Key_Home));
+    m_platform->SendKey(m_platform->keyToKeySym(Qt::Key_Control), false);
+    nanosleep(&ts, nullptr);
+
+    m_platform->SendKey(m_platform->keyToKeySym(Qt::Key_Control), true);
+    m_platform->SendKey(m_platform->keyToKeySym(Qt::Key_Shift), true);
+    m_platform->SendKeyPressedEvent(m_platform->keyToKeySym(Qt::Key_End));
+    m_platform->SendKey(m_platform->keyToKeySym(Qt::Key_Shift), false);
+    m_platform->SendKey(m_platform->keyToKeySym(Qt::Key_Control), false);
+    nanosleep(&ts, nullptr);
+
+    m_platform->SendKeyPressedEvent(m_platform->keyToKeySym(Qt::Key_Backspace));
+    nanosleep(&ts, nullptr);
+}
+
 
 int AutoTypePlatformX11::initialTimeout()
 {

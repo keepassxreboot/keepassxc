@@ -39,29 +39,29 @@ void AutoTypeAssociations::copyDataFrom(const AutoTypeAssociations* other)
         return;
     }
 
-    Q_EMIT aboutToReset();
+    emit aboutToReset();
     m_associations = other->m_associations;
-    Q_EMIT reset();
-    Q_EMIT modified();
+    emit reset();
+    emit modified();
 }
 
 void AutoTypeAssociations::add(const AutoTypeAssociations::Association& association)
 {
     int index = m_associations.size();
-    Q_EMIT aboutToAdd(index);
+    emit aboutToAdd(index);
     m_associations.append(association);
-    Q_EMIT added(index);
-    Q_EMIT modified();
+    emit added(index);
+    emit modified();
 }
 
 void AutoTypeAssociations::remove(int index)
 {
     Q_ASSERT(index >= 0 && index < m_associations.size());
 
-    Q_EMIT aboutToRemove(index);
+    emit aboutToRemove(index);
     m_associations.removeAt(index);
-    Q_EMIT removed(index);
-    Q_EMIT modified();
+    emit removed(index);
+    emit modified();
 }
 
 void AutoTypeAssociations::removeEmpty()
@@ -81,8 +81,8 @@ void AutoTypeAssociations::update(int index, const AutoTypeAssociations::Associa
 
     if (m_associations.at(index) != association) {
         m_associations[index] = association;
-        Q_EMIT dataChanged(index);
-        Q_EMIT modified();
+        emit dataChanged(index);
+        emit modified();
     }
 }
 

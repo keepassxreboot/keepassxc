@@ -33,6 +33,7 @@ namespace KeePass2
     const QSysInfo::Endian BYTEORDER = QSysInfo::LittleEndian;
 
     const Uuid CIPHER_AES = Uuid(QByteArray::fromHex("31c1f2e6bf714350be5805216afc5aff"));
+    const Uuid CIPHER_TWOFISH = Uuid(QByteArray::fromHex("ad68f29f576f4bb9a36ad47af965346c"));
 
     const QByteArray INNER_STREAM_SALSA20_IV("\xE8\x30\x09\x4B\x97\x20\x5D\x2A");
 

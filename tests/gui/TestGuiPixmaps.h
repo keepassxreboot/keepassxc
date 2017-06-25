@@ -26,7 +26,7 @@ class TestGuiPixmaps : public QObject
 {
     Q_OBJECT
 
-private Q_SLOTS:
+private slots:
     void initTestCase();
     void testDatabaseIcons();
     void testEntryIcons();

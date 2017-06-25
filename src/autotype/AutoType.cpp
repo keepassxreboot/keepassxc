@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -141,6 +142,9 @@ void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow, const QS
     else {
         sequence = customSequence;
     }
+
+    sequence.replace("{{}", "{LEFTBRACE}");
+    sequence.replace("{}}", "{RIGHTBRACE}");
 
     QList<AutoTypeAction*> actions;
     ListDeleter<AutoTypeAction*> actionsDeleter(&actions);
@@ -317,8 +321,6 @@ bool AutoType::parseActions(const QString& sequence, const Entry* entry, QList<A
 
 
     for (const QChar& ch : sequence) {
-        // TODO: implement support for {{}, {}}
-
         if (inTmpl) {
             if (ch == '{') {
                 qWarning("Syntax error in auto-type sequence.");
@@ -395,6 +397,9 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
     }
     else if (tmplName.compare("enter",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeKey(Qt::Key_Enter));
+    }
+    else if (tmplName.compare("space",Qt::CaseInsensitive)==0) {
+        list.append(new AutoTypeKey(Qt::Key_Space));
     }
     else if (tmplName.compare("up",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeKey(Qt::Key_Up));
@@ -483,10 +488,10 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
     else if (tmplName.compare(")",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeChar(')'));
     }
-    else if (tmplName.compare("{",Qt::CaseInsensitive)==0) {
+    else if (tmplName.compare("leftbrace",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeChar('{'));
     }
-    else if (tmplName.compare("}",Qt::CaseInsensitive)==0) {
+    else if (tmplName.compare("rightbrace",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeChar('}'));
     }
     else {
@@ -513,6 +518,14 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
     }
     else if (tmplName.compare("clearfield",Qt::CaseInsensitive)==0) {
         list.append(new AutoTypeClearField());
+    }
+    else if (tmplName.compare("totp", Qt::CaseInsensitive) == 0) {
+        QString totp = entry->totp();
+        if (!totp.isEmpty()) {
+            for (const QChar& ch : totp) {
+                list.append(new AutoTypeChar(ch));
+            }
+        }
     }
 
     if (!list.isEmpty()) {
@@ -562,8 +575,9 @@ QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitl
             }
         }
 
-        if (!match && config()->get("AutoTypeEntryTitleMatch").toBool() && !entry->title().isEmpty()
-                && windowTitle.contains(entry->title(), Qt::CaseInsensitive)) {
+        if (!match && config()->get("AutoTypeEntryTitleMatch").toBool() 
+                && (windowMatchesTitle(windowTitle, entry->resolvePlaceholder(entry->title()))
+                || windowMatchesUrl(windowTitle, entry->resolvePlaceholder(entry->url())))) {
             sequence = entry->defaultAutoTypeSequence();
             match = true;
         }
@@ -594,11 +608,11 @@ QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitl
         group = group->parentGroup();
     } while (group && (!enableSet || sequence.isEmpty()));
 
-    if (sequence.isEmpty() && (!entry->username().isEmpty() || !entry->password().isEmpty())) {
-        if (entry->username().isEmpty()) {
+    if (sequence.isEmpty() && (!entry->resolvePlaceholder(entry->username()).isEmpty() || !entry->resolvePlaceholder(entry->password()).isEmpty())) {
+        if (entry->resolvePlaceholder(entry->username()).isEmpty()) {
             sequence = "{PASSWORD}{ENTER}";
         }
-        else if (entry->password().isEmpty()) {
+        else if (entry->resolvePlaceholder(entry->password()).isEmpty()) {
             sequence = "{USERNAME}{ENTER}";
         }
         else {
@@ -618,4 +632,23 @@ bool AutoType::windowMatches(const QString& windowTitle, const QString& windowPa
     else {
         return WildcardMatcher(windowTitle).match(windowPattern);
     }
+}
+
+bool AutoType::windowMatchesTitle(const QString& windowTitle, const QString& resolvedTitle)
+{
+    return !resolvedTitle.isEmpty() && windowTitle.contains(resolvedTitle, Qt::CaseInsensitive);
+}
+
+bool AutoType::windowMatchesUrl(const QString& windowTitle, const QString& resolvedUrl)
+{
+    if (!resolvedUrl.isEmpty() && windowTitle.contains(resolvedUrl, Qt::CaseInsensitive)) {
+        return true;
+    }
+
+    QUrl url(resolvedUrl);
+    if (url.isValid() && !url.host().isEmpty()) {
+        return windowTitle.contains(url.host(), Qt::CaseInsensitive);
+    }
+
+    return false;
 }

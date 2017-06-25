@@ -1037,6 +1037,9 @@ bool KeePass2XmlReader::readBool()
     else if (str.compare("False", Qt::CaseInsensitive) == 0) {
         return false;
     }
+    else if (str.length() == 0) {
+        return false;
+    }
     else {
         raiseError("Invalid bool value");
         return false;

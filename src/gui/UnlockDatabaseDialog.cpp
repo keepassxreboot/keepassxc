@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2016 KeePassXC Team
+ *  Copyright (C) 2016 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,18 +19,17 @@
 #include "UnlockDatabaseWidget.h"
 
 #include "autotype/AutoType.h"
-#include "gui/DragTabBar.h"
 #include "core/Database.h"
+#include "gui/DragTabBar.h"
 
-
-UnlockDatabaseDialog::UnlockDatabaseDialog(QWidget *parent)
+UnlockDatabaseDialog::UnlockDatabaseDialog(QWidget* parent)
     : QDialog(parent)
     , m_view(new UnlockDatabaseWidget(this))
 {
     connect(m_view, SIGNAL(editFinished(bool)), this, SLOT(complete(bool)));
 }
 
-void UnlockDatabaseDialog::setDBFilename(const QString &filename)
+void UnlockDatabaseDialog::setDBFilename(const QString& filename)
 {
     m_view->load(filename);
 }
@@ -40,7 +39,7 @@ void UnlockDatabaseDialog::clearForms()
     m_view->clearForms();
 }
 
-Database *UnlockDatabaseDialog::database()
+Database* UnlockDatabaseDialog::database()
 {
     return m_view->database();
 }
@@ -49,8 +48,25 @@ void UnlockDatabaseDialog::complete(bool r)
 {
     if (r) {
         accept();
-        Q_EMIT unlockDone(true);
+        emit unlockDone(true);
     } else {
         reject();
     }
+}
+
+Database* UnlockDatabaseDialog::openDatabasePrompt(QString databaseFilename)
+{
+
+    UnlockDatabaseDialog* unlockDatabaseDialog = new UnlockDatabaseDialog();
+    unlockDatabaseDialog->setObjectName("Open database");
+    unlockDatabaseDialog->setDBFilename(databaseFilename);
+    unlockDatabaseDialog->show();
+    unlockDatabaseDialog->exec();
+
+    Database* db = unlockDatabaseDialog->database();
+    if (!db) {
+        qWarning("Could not open database %s.", qPrintable(databaseFilename));
+    }
+    delete unlockDatabaseDialog;
+    return db;
 }

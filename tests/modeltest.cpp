@@ -448,7 +448,8 @@ void ModelTest::data()
     QVariant textAlignmentVariant = model->data ( model->index ( 0, 0 ), Qt::TextAlignmentRole );
     if ( textAlignmentVariant.isValid() ) {
         int alignment = textAlignmentVariant.toInt();
-        QCOMPARE( alignment, ( alignment & ( Qt::AlignHorizontal_Mask | Qt::AlignVertical_Mask ) ) );
+        QCOMPARE( alignment, static_cast<int>( alignment & ( Qt::AlignHorizontal_Mask
+                                                           | Qt::AlignVertical_Mask ) ) );
     }
 
     // General Purpose roles that should return a QColor

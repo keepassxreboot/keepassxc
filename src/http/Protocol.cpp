@@ -1,15 +1,20 @@
-/**
- ***************************************************************************
- * @file Response.cpp
- *
- * @brief
- *
- * Copyright (C) 2013
- *
- * @author	Francois Ferrand
- * @date	4/2013
- ***************************************************************************
- */
+/*
+*  Copyright (C) 2013 Francois Ferrand
+*  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 2 or (at your option)
+*  version 3 of the License.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #include "Protocol.h"
 #include <QtCore>
@@ -17,6 +22,7 @@
 #include "crypto/Random.h"
 #include "crypto/SymmetricCipher.h"
 #include "crypto/SymmetricCipherGcrypt.h"
+#include "core/Global.h"
 
 namespace KeepassHttpProtocol
 {
@@ -370,8 +376,9 @@ QVariant Response::getEntries() const
 
     QList<QVariant> res;
     res.reserve(m_entries.size());
-    Q_FOREACH (const Entry &entry, m_entries)
+    for (const Entry& entry: asConst(m_entries)) {
         res.append(qobject2qvariant(&entry));
+    }
     return res;
 }
 
@@ -383,14 +390,16 @@ void Response::setEntries(const QList<Entry> &entries)
 
     QList<Entry> encryptedEntries;
     encryptedEntries.reserve(m_count);
-    Q_FOREACH (const Entry &entry, entries) {
+    for (const Entry& entry: entries) {
         Entry encryptedEntry(encrypt(entry.name(), m_cipher),
                              encrypt(entry.login(), m_cipher),
                              entry.password().isNull() ? QString() : encrypt(entry.password(), m_cipher),
                              encrypt(entry.uuid(), m_cipher));
-        Q_FOREACH (const StringField & field, entry.stringFields())
+        const auto stringFields = entry.stringFields();
+        for (const StringField& field: stringFields) {
             encryptedEntry.addStringField(encrypt(field.key(), m_cipher),
                                           encrypt(field.value(), m_cipher));
+        }
         encryptedEntries << encryptedEntry;
     }
     m_entries = encryptedEntries;
@@ -508,8 +517,9 @@ QVariant Entry::getStringFields() const
 
     QList<QVariant> res;
     res.reserve(m_stringFields.size());
-    Q_FOREACH (const StringField &stringfield, m_stringFields)
+    for (const StringField& stringfield: asConst(m_stringFields)) {
         res.append(qobject2qvariant(&stringfield));
+    }
     return res;
 }
 

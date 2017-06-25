@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2016 KeePassXC Team
+ *  Copyright (C) 2016 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,15 +31,16 @@ class UnlockDatabaseDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit UnlockDatabaseDialog(QWidget *parent = Q_NULLPTR);
+    explicit UnlockDatabaseDialog(QWidget* parent = Q_NULLPTR);
     void setDBFilename(const QString& filename);
     void clearForms();
     Database* database();
+    static Database* openDatabasePrompt(QString databaseFilename);
 
-Q_SIGNALS:
+signals:
     void unlockDone(bool);
 
-public Q_SLOTS:
+public slots:
     void complete(bool r);
 
 private:

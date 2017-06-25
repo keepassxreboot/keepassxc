@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,7 +15,10 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <cstdlib>
 #include <stdio.h>
+
+#include "Extract.h"
 
 #include <QCommandLineParser>
 #include <QCoreApplication>
@@ -24,46 +27,41 @@
 #include <QTextStream>
 
 #include "core/Database.h"
-#include "crypto/Crypto.h"
 #include "format/KeePass2Reader.h"
 #include "keys/CompositeKey.h"
-#include "keys/FileKey.h"
-#include "keys/PasswordKey.h"
+#include "cli/PasswordInput.h"
 
-int main(int argc, char **argv)
+int Extract::execute(int argc, char** argv)
 {
     QCoreApplication app(argc, argv);
+    QTextStream out(stdout);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main",
-                                                                 "Extract and print a KeePassXC database file."));
-    parser.addPositionalArgument("database", QCoreApplication::translate("main", "path of the database to extract."));
-    parser.addHelpOption();
+    parser.setApplicationDescription(
+        QCoreApplication::translate("main", "Extract and print the content of a database."));
+    parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database to extract."));
     parser.process(app);
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 1) {
-        parser.showHelp();
-        return 1;
+        parser.showHelp(EXIT_FAILURE);
     }
 
-    if (!Crypto::init()) {
-        qFatal("Fatal error while testing the cryptographic functions:\n%s", qPrintable(Crypto::errorString()));
-    }
+    out << "Insert the database password\n> ";
+    out.flush();
 
-    static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
-    QString line = inputTextStream.readLine();
+    QString line = PasswordInput::getPassword();
     CompositeKey key = CompositeKey::readFromLine(line);
 
     QString databaseFilename = args.at(0);
     QFile dbFile(databaseFilename);
     if (!dbFile.exists()) {
         qCritical("File %s does not exist.", qPrintable(databaseFilename));
-        return 1;
+        return EXIT_FAILURE;
     }
     if (!dbFile.open(QIODevice::ReadOnly)) {
         qCritical("Unable to open file %s.", qPrintable(databaseFilename));
-        return 1;
+        return EXIT_FAILURE;
     }
 
     KeePass2Reader reader;
@@ -76,15 +74,13 @@ int main(int argc, char **argv)
     if (reader.hasError()) {
         if (xmlData.isEmpty()) {
             qCritical("Error while reading the database:\n%s", qPrintable(reader.errorString()));
-            return 1;
-        }
-        else {
+        } else {
             qWarning("Error while parsing the database:\n%s\n", qPrintable(reader.errorString()));
         }
+        return EXIT_FAILURE;
     }
 
-    QTextStream out(stdout);
     out << xmlData.constData() << "\n";
 
-    return 0;
+    return EXIT_SUCCESS;
 }

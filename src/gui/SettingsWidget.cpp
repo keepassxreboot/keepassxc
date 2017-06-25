@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,6 +23,8 @@
 #include "autotype/AutoType.h"
 #include "core/Config.h"
 #include "core/Translator.h"
+#include "core/FilePath.h"
+#include "core/Global.h"
 
 class SettingsWidget::ExtraPage
 {
@@ -57,17 +60,12 @@ SettingsWidget::SettingsWidget(QWidget* parent)
 
     m_secUi->setupUi(m_secWidget);
     m_generalUi->setupUi(m_generalWidget);
-    add(tr("General"), m_generalWidget);
-    add(tr("Security"), m_secWidget);
+    addPage(tr("General"), FilePath::instance()->icon("categories", "preferences-other"), m_generalWidget);
+    addPage(tr("Security"), FilePath::instance()->icon("status", "security-high"), m_secWidget);
 
-    m_generalUi->autoTypeShortcutWidget->setVisible(autoType()->isAvailable());
-    m_generalUi->autoTypeShortcutLabel->setVisible(autoType()->isAvailable());
-#ifdef Q_OS_MAC
-    // systray not useful on OS X
-    m_generalUi->systrayShowCheckBox->setVisible(false);
-    m_generalUi->systrayMinimizeOnCloseCheckBox->setVisible(false);
-    m_generalUi->systrayMinimizeToTrayCheckBox->setVisible(false);
-#endif
+    if (!autoType()->isAvailable()) {
+        m_generalUi->generalSettingsTabWidget->removeTab(1);
+    }
 
     connect(this, SIGNAL(accepted()), SLOT(saveSettings()));
     connect(this, SIGNAL(rejected()), SLOT(reject()));
@@ -87,16 +85,22 @@ SettingsWidget::~SettingsWidget()
 {
 }
 
-void SettingsWidget::addSettingsPage(ISettingsPage *page)
+void SettingsWidget::addSettingsPage(ISettingsPage* page)
 {
-    QWidget * widget = page->createWidget();
+    QWidget* widget = page->createWidget();
     widget->setParent(this);
     m_extraPages.append(ExtraPage(page, widget));
-    add(page->name(), widget);
+    addPage(page->name(), page->icon(), widget);
 }
 
 void SettingsWidget::loadSettings()
 {
+
+    if (config()->hasAccessError()) {
+        showMessage(
+            tr("Access error for config file %1").arg(config()->getFileName()), MessageWidget::Error);
+    }
+
     m_generalUi->rememberLastDatabasesCheckBox->setChecked(config()->get("RememberLastDatabases").toBool());
     m_generalUi->rememberLastKeyFilesCheckBox->setChecked(config()->get("RememberLastKeyFiles").toBool());
     m_generalUi->openPreviousDatabasesOnStartupCheckBox->setChecked(
@@ -107,6 +111,7 @@ void SettingsWidget::loadSettings()
     m_generalUi->minimizeOnCopyCheckBox->setChecked(config()->get("MinimizeOnCopy").toBool());
     m_generalUi->useGroupIconOnEntryCreationCheckBox->setChecked(config()->get("UseGroupIconOnEntryCreation").toBool());
     m_generalUi->autoTypeEntryTitleMatchCheckBox->setChecked(config()->get("AutoTypeEntryTitleMatch").toBool());
+    m_generalUi->ignoreGroupExpansionCheckBox->setChecked(config()->get("IgnoreGroupExpansion").toBool());
 
     m_generalUi->languageComboBox->clear();
     QList<QPair<QString, QString> > languages = Translator::availableLanguages();
@@ -122,6 +127,7 @@ void SettingsWidget::loadSettings()
     m_generalUi->systrayMinimizeToTrayCheckBox->setChecked(config()->get("GUI/MinimizeToTray").toBool());
     m_generalUi->systrayMinimizeOnCloseCheckBox->setChecked(config()->get("GUI/MinimizeOnClose").toBool());
     m_generalUi->systrayMinimizeOnStartup->setChecked(config()->get("GUI/MinimizeOnStartup").toBool());
+    m_generalUi->autoTypeAskCheckBox->setChecked(config()->get("security/autotypeask").toBool());
 
     if (autoType()->isAvailable()) {
         m_globalAutoTypeKey = static_cast<Qt::Key>(config()->get("GlobalAutoTypeKey").toInt());
@@ -131,26 +137,37 @@ void SettingsWidget::loadSettings()
         }
     }
 
+
     m_secUi->clearClipboardCheckBox->setChecked(config()->get("security/clearclipboard").toBool());
     m_secUi->clearClipboardSpinBox->setValue(config()->get("security/clearclipboardtimeout").toInt());
 
     m_secUi->lockDatabaseIdleCheckBox->setChecked(config()->get("security/lockdatabaseidle").toBool());
     m_secUi->lockDatabaseIdleSpinBox->setValue(config()->get("security/lockdatabaseidlesec").toInt());
     m_secUi->lockDatabaseMinimizeCheckBox->setChecked(config()->get("security/lockdatabaseminimize").toBool());
+    m_secUi->lockDatabaseOnScreenLockCheckBox->setChecked(config()->get("security/lockdatabasescreenlock").toBool());
 
     m_secUi->passwordCleartextCheckBox->setChecked(config()->get("security/passwordscleartext").toBool());
     m_secUi->passwordRepeatCheckBox->setChecked(config()->get("security/passwordsrepeat").toBool());
 
-    m_secUi->autoTypeAskCheckBox->setChecked(config()->get("security/autotypeask").toBool());
 
-    Q_FOREACH (const ExtraPage& page, m_extraPages)
+    for (const ExtraPage& page: asConst(m_extraPages)) {
         page.loadSettings();
+    }
 
-    setCurrentRow(0);
+    setCurrentPage(0);
 }
 
 void SettingsWidget::saveSettings()
 {
+
+    if (config()->hasAccessError()) {
+        showMessage(
+            tr("Access error for config file %1").arg(config()->getFileName()), MessageWidget::Error);
+        // We prevent closing the settings page if we could not write to
+        // the config file.
+        return;
+    }
+
     config()->set("RememberLastDatabases", m_generalUi->rememberLastDatabasesCheckBox->isChecked());
     config()->set("RememberLastKeyFiles", m_generalUi->rememberLastKeyFilesCheckBox->isChecked());
     config()->set("OpenPreviousDatabasesOnStartup",
@@ -162,15 +179,20 @@ void SettingsWidget::saveSettings()
     config()->set("MinimizeOnCopy", m_generalUi->minimizeOnCopyCheckBox->isChecked());
     config()->set("UseGroupIconOnEntryCreation",
                   m_generalUi->useGroupIconOnEntryCreationCheckBox->isChecked());
+    config()->set("IgnoreGroupExpansion",
+                  m_generalUi->ignoreGroupExpansionCheckBox->isChecked());
     config()->set("AutoTypeEntryTitleMatch",
                   m_generalUi->autoTypeEntryTitleMatchCheckBox->isChecked());
     int currentLangIndex = m_generalUi->languageComboBox->currentIndex();
+
     config()->set("GUI/Language", m_generalUi->languageComboBox->itemData(currentLangIndex).toString());
 
     config()->set("GUI/ShowTrayIcon", m_generalUi->systrayShowCheckBox->isChecked());
     config()->set("GUI/MinimizeToTray", m_generalUi->systrayMinimizeToTrayCheckBox->isChecked());
     config()->set("GUI/MinimizeOnClose", m_generalUi->systrayMinimizeOnCloseCheckBox->isChecked());
     config()->set("GUI/MinimizeOnStartup", m_generalUi->systrayMinimizeOnStartup->isChecked());
+
+    config()->set("security/autotypeask", m_generalUi->autoTypeAskCheckBox->isChecked());
 
     if (autoType()->isAvailable()) {
         config()->set("GlobalAutoTypeKey", m_generalUi->autoTypeShortcutWidget->key());
@@ -183,16 +205,16 @@ void SettingsWidget::saveSettings()
     config()->set("security/lockdatabaseidle", m_secUi->lockDatabaseIdleCheckBox->isChecked());
     config()->set("security/lockdatabaseidlesec", m_secUi->lockDatabaseIdleSpinBox->value());
     config()->set("security/lockdatabaseminimize", m_secUi->lockDatabaseMinimizeCheckBox->isChecked());
+    config()->set("security/lockdatabasescreenlock", m_secUi->lockDatabaseOnScreenLockCheckBox->isChecked());
 
     config()->set("security/passwordscleartext", m_secUi->passwordCleartextCheckBox->isChecked());
     config()->set("security/passwordsrepeat", m_secUi->passwordRepeatCheckBox->isChecked());
 
-    config()->set("security/autotypeask", m_secUi->autoTypeAskCheckBox->isChecked());
-
-    Q_FOREACH (const ExtraPage& page, m_extraPages)
+    for (const ExtraPage& page: asConst(m_extraPages)) {
         page.saveSettings();
+    }
 
-    Q_EMIT editFinished(true);
+    emit editFinished(true);
 }
 
 void SettingsWidget::reject()
@@ -202,7 +224,7 @@ void SettingsWidget::reject()
         autoType()->registerGlobalShortcut(m_globalAutoTypeKey, m_globalAutoTypeModifiers);
     }
 
-    Q_EMIT editFinished(false);
+    emit editFinished(false);
 }
 
 void SettingsWidget::enableAutoSaveOnExit(bool checked)

@@ -1,4 +1,5 @@
 #  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+#  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -31,6 +32,7 @@ configure_file(version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/version.h @ONLY)
 set(keepassx_SOURCES
     core/AutoTypeAssociations.cpp
     core/Config.cpp
+    core/CsvParser.cpp
     core/Database.cpp
     core/DatabaseIcons.cpp
     core/Endian.cpp
@@ -45,13 +47,20 @@ set(keepassx_SOURCES
     core/ListDeleter.h
     core/Metadata.cpp
     core/PasswordGenerator.cpp
+    core/PassphraseGenerator.cpp
     core/SignalMultiplexer.cpp
+    core/ScreenLockListener.cpp
+    core/ScreenLockListener.h
+    core/ScreenLockListenerPrivate.h
+    core/ScreenLockListenerPrivate.cpp
     core/TimeDelta.cpp
     core/TimeInfo.cpp
     core/ToDbExporter.cpp
     core/Tools.cpp
     core/Translator.cpp
     core/Uuid.cpp
+    cli/PasswordInput.cpp
+    cli/PasswordInput.h
     crypto/Crypto.cpp
     crypto/CryptoHash.cpp
     crypto/Random.cpp
@@ -70,8 +79,10 @@ set(keepassx_SOURCES
     format/KeePass2XmlWriter.cpp
     gui/AboutDialog.cpp
     gui/Application.cpp
+    gui/CategoryListWidget.cpp
     gui/ChangeMasterKeyWidget.cpp
     gui/Clipboard.cpp
+    gui/CloneDialog.cpp
     gui/DatabaseOpenWidget.cpp
     gui/DatabaseRepairWidget.cpp
     gui/DatabaseSettingsWidget.cpp
@@ -86,18 +97,24 @@ set(keepassx_SOURCES
     gui/FileDialog.cpp
     gui/IconModels.cpp
     gui/KeePass1OpenWidget.cpp
+    gui/KMessageWidget.cpp
     gui/LineEdit.cpp
     gui/MainWindow.cpp
     gui/MessageBox.cpp
+    gui/MessageWidget.cpp
     gui/PasswordEdit.cpp
     gui/PasswordGeneratorWidget.cpp
-    gui/PasswordComboBox.cpp
     gui/SettingsWidget.cpp
     gui/SearchWidget.cpp
     gui/SortFilterHideProxyModel.cpp
+    gui/SetupTotpDialog.cpp
+    gui/TotpDialog.cpp
     gui/UnlockDatabaseWidget.cpp
     gui/UnlockDatabaseDialog.cpp
     gui/WelcomeWidget.cpp
+    gui/csvImport/CsvImportWidget.cpp
+    gui/csvImport/CsvImportWizard.cpp
+    gui/csvImport/CsvParserModel.cpp
     gui/entry/AutoTypeAssociationsModel.cpp
     gui/entry/EditEntryWidget.cpp
     gui/entry/EditEntryWidget_p.h
@@ -111,50 +128,55 @@ set(keepassx_SOURCES
     gui/group/GroupView.cpp
     keys/CompositeKey.cpp
     keys/CompositeKey_p.h
+    keys/drivers/YubiKey.h
     keys/FileKey.cpp
     keys/Key.h
     keys/PasswordKey.cpp
+    keys/YkChallengeResponseKey.cpp
     streams/HashedBlockStream.cpp
     streams/LayeredStream.cpp
     streams/qtiocompressor.cpp
     streams/StoreDataStream.cpp
     streams/SymmetricCipherStream.cpp
+    totp/base32.h
+    totp/base32.cpp
+    totp/totp.h
+    totp/totp.cpp
 )
+if(APPLE)
+    set(keepassx_SOURCES ${keepassx_SOURCES}
+        core/ScreenLockListenerMac.h
+        core/ScreenLockListenerMac.cpp
+        )
+endif()
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+    set(keepassx_SOURCES ${keepassx_SOURCES}
+        core/ScreenLockListenerDBus.h
+        core/ScreenLockListenerDBus.cpp
+        )
+endif()
+if(MINGW)
+    set(keepassx_SOURCES ${keepassx_SOURCES}
+        core/ScreenLockListenerWin.h
+        core/ScreenLockListenerWin.cpp
+        )
+endif()
 
 set(keepassx_SOURCES_MAINEXE
     main.cpp
 )
 
-set(keepassx_FORMS
-    gui/AboutDialog.ui
-    gui/ChangeMasterKeyWidget.ui
-    gui/DatabaseOpenWidget.ui
-    gui/DatabaseSettingsWidget.ui
-    gui/EditWidget.ui
-    gui/EditWidgetIcons.ui
-    gui/EditWidgetProperties.ui
-    gui/MainWindow.ui
-    gui/PasswordGeneratorWidget.ui
-    gui/SearchWidget.ui
-    gui/SettingsWidgetGeneral.ui
-    gui/SettingsWidgetSecurity.ui
-    gui/WelcomeWidget.ui
-    gui/entry/EditEntryWidgetAdvanced.ui
-    gui/entry/EditEntryWidgetAutoType.ui
-    gui/entry/EditEntryWidgetHistory.ui
-    gui/entry/EditEntryWidgetMain.ui
-    gui/group/EditGroupWidgetMain.ui
-)
-
-add_feature_info(KeePassHTTP WITH_XC_HTTP "KeePassHTTP support for ChromeIPass and PassIFox")
-add_feature_info(Autotype WITH_XC_AUTOTYPE "Auto-type passwords in Input fields")
+add_feature_info(AutoType WITH_XC_AUTOTYPE "Automatic password typing")
+add_feature_info(KeePassHTTP WITH_XC_HTTP "Browser integration compatible with ChromeIPass and PassIFox")
+add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
 
 add_subdirectory(http)
 if(WITH_XC_HTTP)
-    set(keepasshttp_LIB keepasshttp)
+    set(keepasshttp_LIB keepasshttp qhttp Qt5::Network)
 endif()
 
 add_subdirectory(autotype)
+add_subdirectory(cli)
 
 set(autotype_SOURCES
     core/Tools.cpp
@@ -175,7 +197,11 @@ if(MINGW)
       ${CMAKE_SOURCE_DIR}/share/windows/icon.rc)
 endif()
 
-qt5_wrap_ui(keepassx_SOURCES ${keepassx_FORMS})
+if(WITH_XC_YUBIKEY)
+  list(APPEND keepassx_SOURCES keys/drivers/YubiKey.cpp)
+else()
+  list(APPEND keepassx_SOURCES keys/drivers/YubiKeyStub.cpp)
+endif()
 
 add_library(zxcvbn STATIC zxcvbn/zxcvbn.cpp)
 target_link_libraries(zxcvbn)
@@ -191,25 +217,27 @@ set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUIL
 target_link_libraries(keepassx_core
                       ${keepasshttp_LIB}
                       ${autotype_LIB}
+                      ${YUBIKEY_LIBRARIES}
                       zxcvbn
-                      qhttp
                       Qt5::Core
+                      Qt5::Network
                       Qt5::Concurrent
                       Qt5::Widgets
-                      Qt5::Network
                       ${GCRYPT_LIBRARIES}
                       ${GPGERROR_LIBRARIES}
                       ${ZLIB_LIBRARIES})
+
+if(APPLE)
+    target_link_libraries(keepassx_core "-framework Foundation")
+endif()
 if (UNIX AND NOT APPLE)
     target_link_libraries(keepassx_core Qt5::DBus)
 endif()
+if(MINGW)
+    target_link_libraries(keepassx_core Wtsapi32.lib)
+endif()
 
 if(MINGW)
-  string(REPLACE "." ";" VERSION_LIST ${KEEPASSXC_VERSION})
-  list(GET VERSION_LIST 0 KEEPASSXC_VERSION_MAJOR)
-  list(GET VERSION_LIST 1 KEEPASSXC_VERSION_MINOR)
-  list(GET VERSION_LIST 2 KEEPASSXC_VERSION_PATCH)
-
   include(GenerateProductVersion)
   generate_product_version(
     WIN32_ProductVersionFiles
@@ -221,14 +249,15 @@ if(MINGW)
   )
 endif()
 
-add_executable(${PROGNAME} WIN32 MACOSX_BUNDLE ${keepassx_SOURCES_MAINEXE} ${WIN32_ProductVersionFiles})
+add_executable(${PROGNAME} WIN32 ${keepassx_SOURCES_MAINEXE} ${WIN32_ProductVersionFiles})
 target_link_libraries(${PROGNAME} keepassx_core)
 
 set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
 
-if(APPLE)
+if(APPLE AND WITH_APP_BUNDLE)
   configure_file(${CMAKE_SOURCE_DIR}/share/macosx/Info.plist.cmake ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)
   set_target_properties(${PROGNAME} PROPERTIES
+                        MACOSX_BUNDLE ON
                         MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)
 endif()
 
@@ -236,7 +265,7 @@ install(TARGETS ${PROGNAME}
         BUNDLE DESTINATION . COMPONENT Runtime
         RUNTIME DESTINATION ${BIN_INSTALL_DIR} COMPONENT Runtime)
 
-if(APPLE)
+if(APPLE AND WITH_APP_BUNDLE)
   if(QT_MAC_USE_COCOA AND EXISTS "${QT_LIBRARY_DIR}/Resources/qt_menu.nib")
     install(DIRECTORY "${QT_LIBRARY_DIR}/Resources/qt_menu.nib"
             DESTINATION "${DATA_INSTALL_DIR}")
@@ -247,7 +276,7 @@ if(APPLE)
   set(CPACK_DMG_VOLUME_NAME "${PROGNAME}")
   set(CPACK_SYSTEM_NAME "OSX")
   set(CPACK_STRIP_FILES ON)
-  set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSXC_VERSION_NUM}")
+  set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSXC_VERSION}")
   include(CPack)
 
   if(NOT DEFINED QT_BINARY_DIR)
@@ -261,7 +290,12 @@ if(APPLE)
 endif()
 
 if(MINGW)
-  string(REPLACE "AMD" "Win" OUTPUT_FILE_POSTFIX "${CMAKE_HOST_SYSTEM_PROCESSOR}")
+  if(${CMAKE_SIZEOF_VOID_P} EQUAL "8")
+    set(OUTPUT_FILE_POSTFIX "Win64")
+  else()
+    set(OUTPUT_FILE_POSTFIX "Win32")
+  endif()
+
   set(CPACK_GENERATOR "ZIP;NSIS")
   set(CPACK_STRIP_FILES ON)
   set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSXC_VERSION}-${OUTPUT_FILE_POSTFIX}")
@@ -270,6 +304,7 @@ if(MINGW)
   set(CPACK_PACKAGE_VENDOR "${PROGNAME} Team")
   string(REGEX REPLACE "/" "\\\\\\\\" CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/share/windows/installer-header.bmp")
   set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE.GPL-2")
+  set(CPACK_NSIS_ENABLE_UNINSTALL_BEFORE_INSTALL ON)
   set(CPACK_NSIS_MUI_ICON "${CMAKE_SOURCE_DIR}/share/windows/keepassxc.ico")
   set(CPACK_NSIS_MUI_UNIICON "${CPACK_NSIS_MUI_ICON}")
   set(CPACK_NSIS_INSTALLED_ICON_NAME "\\\\${PROGNAME}.exe")
@@ -278,6 +313,7 @@ if(MINGW)
   set(CPACK_NSIS_CREATE_ICONS_EXTRA "CreateShortCut '$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\${PROGNAME}.lnk' '$INSTDIR\\\\${PROGNAME}.exe'")
   set(CPACK_NSIS_DELETE_ICONS_EXTRA "Delete '$SMPROGRAMS\\\\$START_MENU\\\\${PROGNAME}.lnk'")
   set(CPACK_NSIS_URL_INFO_ABOUT "https://keepassxc.org")
+  set(CPACK_NSIS_DISPLAY_NAME ${PROGNAME})
   set(CPACK_NSIS_PACKAGE_NAME "${PROGNAME} v${KEEPASSXC_VERSION}")
   set(CPACK_NSIS_MUI_FINISHPAGE_RUN "../${PROGNAME}.exe")
   include(CPack)

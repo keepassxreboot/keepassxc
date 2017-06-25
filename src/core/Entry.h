@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -47,6 +48,8 @@ struct EntryData
     int autoTypeObfuscation;
     QString defaultAutoTypeSequence;
     TimeInfo timeInfo;
+    mutable quint8 totpDigits;
+    mutable quint8 totpStep;
 };
 
 class Entry : public QObject
@@ -78,7 +81,14 @@ public:
     QString username() const;
     QString password() const;
     QString notes() const;
+    QString totp() const;
+    QString totpSeed() const;
+    quint8 totpDigits() const;
+    quint8 totpStep() const;
+
+    bool hasTotp() const;
     bool isExpired() const;
+    bool hasReferences() const;
     EntryAttributes* attributes();
     const EntryAttributes* attributes() const;
     EntryAttachments* attachments();
@@ -104,6 +114,7 @@ public:
     void setNotes(const QString& notes);
     void setExpires(const bool& value);
     void setExpiryTime(const QDateTime& dateTime);
+    void setTotp(const QString& seed, quint8& step, quint8& digits);
 
     QList<Entry*> historyItems();
     const QList<Entry*>& historyItems() const;
@@ -113,10 +124,12 @@ public:
 
     enum CloneFlag {
         CloneNoFlags        = 0,
-        CloneNewUuid        = 1, // generate a random uuid for the clone
-        CloneResetTimeInfo  = 2, // set all TimeInfo attributes to the current time
-        CloneIncludeHistory = 4, // clone the history items
-        CloneRenameTitle    = 8  // add "-Clone" after the original title
+        CloneNewUuid        = 1,  // generate a random uuid for the clone
+        CloneResetTimeInfo  = 2,  // set all TimeInfo attributes to the current time
+        CloneIncludeHistory = 4,  // clone the history items
+        CloneRenameTitle    = 8,  // add "-Clone" after the original title
+        CloneUserAsRef      = 16, // Add the user as a refrence to the origional entry
+        ClonePassAsRef      = 32, // Add the password as a refrence to the origional entry
     };
     Q_DECLARE_FLAGS(CloneFlags, CloneFlag)
 
@@ -144,7 +157,7 @@ public:
 
     void setUpdateTimeinfo(bool value);
 
-Q_SIGNALS:
+signals:
     /**
      * Emitted when a default attribute has been changed.
      */
@@ -152,7 +165,7 @@ Q_SIGNALS:
 
     void modified();
 
-private Q_SLOTS:
+private slots:
     void emitDataChanged();
     void updateTimeinfo();
     void updateModifiedSinceBegin();

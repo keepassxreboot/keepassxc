@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -96,14 +97,20 @@ void TestAutoType::init()
     m_entry4->setPassword("custom_attr");
     m_entry4->attributes()->set("CUSTOM","Attribute",false);
     association.window = "//^CustomAttr1$//";
-    association.sequence = "{PASSWORD}:{CUSTOM}";
+    association.sequence = "{PASSWORD}:{S:CUSTOM}";
     m_entry4->autoTypeAssociations()->add(association);
     association.window = "//^CustomAttr2$//";
-    association.sequence = "{CuStOm}";
+    association.sequence = "{S:CuStOm}";
     m_entry4->autoTypeAssociations()->add(association);
     association.window = "//^CustomAttr3$//";
     association.sequence = "{PaSSworD}";
     m_entry4->autoTypeAssociations()->add(association);
+    
+    m_entry5 = new Entry();
+    m_entry5->setGroup(m_group);
+    m_entry5->setPassword("example5");
+    m_entry5->setTitle("some title");
+    m_entry5->setUrl("http://example.org");
 }
 
 void TestAutoType::cleanup()
@@ -170,6 +177,28 @@ void TestAutoType::testGlobalAutoTypeTitleMatch()
 
     QCOMPARE(m_test->actionChars(),
              QString("%1%2").arg(m_entry2->password(), m_test->keyToString(Qt::Key_Enter)));
+}
+
+void TestAutoType::testGlobalAutoTypeUrlMatch()
+{
+    config()->set("AutoTypeEntryTitleMatch", true);
+
+    m_test->setActiveWindowTitle("Dummy - http://example.org/ - <My Browser>");
+    m_autoType->performGlobalAutoType(m_dbList);
+
+    QCOMPARE(m_test->actionChars(),
+             QString("%1%2").arg(m_entry5->password(), m_test->keyToString(Qt::Key_Enter)));
+}
+
+void TestAutoType::testGlobalAutoTypeUrlSubdomainMatch()
+{
+    config()->set("AutoTypeEntryTitleMatch", true);
+
+    m_test->setActiveWindowTitle("Dummy - http://sub.example.org/ - <My Browser>");
+    m_autoType->performGlobalAutoType(m_dbList);
+
+    QCOMPARE(m_test->actionChars(),
+             QString("%1%2").arg(m_entry5->password(), m_test->keyToString(Qt::Key_Enter)));
 }
 
 void TestAutoType::testGlobalAutoTypeTitleMatchDisabled()

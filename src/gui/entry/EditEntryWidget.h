@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -63,11 +64,12 @@ public:
     void clear();
     bool hasBeenModified() const;
 
-Q_SIGNALS:
+signals:
     void editFinished(bool accepted);
     void historyEntryActivated(Entry* entry);
 
-private Q_SLOTS:
+private slots:
+    void acceptEntry();
     void saveEntry();
     void cancel();
     void togglePasswordGeneratorButton(bool checked);
@@ -76,6 +78,8 @@ private Q_SLOTS:
     void editCurrentAttribute();
     void removeCurrentAttribute();
     void updateCurrentAttribute();
+    void protectCurrentAttribute(bool state);
+    void revealCurrentAttribute();
     void insertAttachment();
     void saveCurrentAttachment();
     void openAttachment(const QModelIndex& index);
@@ -109,6 +113,8 @@ private:
     void setForms(const Entry* entry, bool restore = false);
     QMenu* createPresetsMenu();
     void updateEntryData(Entry* entry) const;
+
+    void displayAttribute(QModelIndex index, bool showProtected);
 
     Entry* m_entry;
     Database* m_database;

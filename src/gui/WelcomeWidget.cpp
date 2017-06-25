@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,13 +19,58 @@
 #include "WelcomeWidget.h"
 #include "ui_WelcomeWidget.h"
 
+#include "config-keepassx.h"
+#include "core/FilePath.h"
+#include "core/Config.h"
+
 WelcomeWidget::WelcomeWidget(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::WelcomeWidget())
 {
     m_ui->setupUi(this);
+
+    m_ui->welcomeLabel->setText(m_ui->welcomeLabel->text() + " " + KEEPASSX_VERSION);
+    QFont welcomeLabelFont = m_ui->welcomeLabel->font();
+    welcomeLabelFont.setBold(true);
+    welcomeLabelFont.setPointSize(welcomeLabelFont.pointSize() + 4);
+    m_ui->welcomeLabel->setFont(welcomeLabelFont);
+
+    m_ui->iconLabel->setPixmap(filePath()->applicationIcon().pixmap(64));
+
+    refreshLastDatabases();
+
+    bool recent_visibility = (m_ui->recentListWidget->count() > 0);
+    m_ui->startLabel->setVisible(!recent_visibility);
+    m_ui->recentListWidget->setVisible(recent_visibility);
+    m_ui->recentLabel->setVisible(recent_visibility);
+
+    connect(m_ui->buttonNewDatabase, SIGNAL(clicked()), SIGNAL(newDatabase()));
+    connect(m_ui->buttonOpenDatabase, SIGNAL(clicked()), SIGNAL(openDatabase()));
+    connect(m_ui->buttonImportKeePass1, SIGNAL(clicked()), SIGNAL(importKeePass1Database()));
+    connect(m_ui->buttonImportCSV, SIGNAL(clicked()), SIGNAL(importCsv()));
+    connect(m_ui->recentListWidget, SIGNAL(itemActivated(QListWidgetItem*)), this, 
+    	SLOT(openDatabaseFromFile(QListWidgetItem*)));
 }
 
 WelcomeWidget::~WelcomeWidget()
 {
+}
+
+void WelcomeWidget::openDatabaseFromFile(QListWidgetItem* item)
+{
+	if (item->text().isEmpty()) {
+		return;
+	}
+	emit openDatabaseFile(item->text());
+}
+
+void WelcomeWidget::refreshLastDatabases()
+{
+    m_ui->recentListWidget->clear();
+    const QStringList lastDatabases = config()->get("LastDatabases", QVariant()).toStringList();
+    for (const QString& database : lastDatabases) {
+        QListWidgetItem *itm = new QListWidgetItem;
+        itm->setText(database);
+        m_ui->recentListWidget->addItem(itm);
+    }
 }

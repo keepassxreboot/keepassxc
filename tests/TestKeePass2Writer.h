@@ -26,7 +26,7 @@ class TestKeePass2Writer : public QObject
 {
     Q_OBJECT
 
-private Q_SLOTS:
+private slots:
     void initTestCase();
     void testBasic();
     void testProtectedAttributes();

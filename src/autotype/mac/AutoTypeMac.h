@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2016 Lennart Glauer <mail@lennart-glauer.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -49,9 +50,9 @@ public:
     bool raiseOwnWindow() override;
 
     void sendChar(const QChar& ch, bool isKeyDown);
-    void sendKey(Qt::Key key, bool isKeyDown);
+    void sendKey(Qt::Key key, bool isKeyDown, Qt::KeyboardModifiers modifiers);
 
-Q_SIGNALS:
+signals:
     void globalShortcutTriggered();
 
 private:
@@ -60,7 +61,7 @@ private:
     EventHotKeyID m_hotkeyId;
 
     static uint16 qtToNativeKeyCode(Qt::Key key);
-    static uint16 qtToNativeModifiers(Qt::KeyboardModifiers modifiers);
+    static CGEventFlags qtToNativeModifiers(Qt::KeyboardModifiers modifiers, bool native);
     static int windowLayer(CFDictionaryRef window);
     static QString windowTitle(CFDictionaryRef window);
     static OSStatus hotkeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData);
@@ -73,6 +74,7 @@ public:
 
     void execChar(AutoTypeChar* action) override;
     void execKey(AutoTypeKey* action) override;
+    void execClearField(AutoTypeClearField* action) override;
 
 private:
     AutoTypePlatformMac* const m_platform;

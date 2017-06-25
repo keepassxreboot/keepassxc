@@ -1,10 +1,21 @@
 /*
-Part of this code come from zxcvbn-c example.
-Copyright (c) 2015, Tony Evans
-Copyright (c) 2016, KeePassXC Team
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 2 or (at your option)
+ *  version 3 of the License.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-See zxcvbn/zxcvbn.cpp for complete COPYRIGHT Notice
-*/
+#include "EntropyMeter.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -76,7 +87,7 @@ static void calculate(const char *pwd, int advanced)
     }
 }
 
-int main(int argc, char **argv)
+int EntropyMeter::execute(int argc, char **argv)
 {
     printf("KeePassXC Entropy Meter, based on zxcvbn-c.\nEnter your password below or pass it as argv\n");
     printf("  Usage: entropy-meter [-a] [pwd1 pwd2 ...]\n> ");

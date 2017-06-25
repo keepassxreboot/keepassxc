@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -35,6 +36,16 @@ QVariant Config::get(const QString& key, const QVariant& defaultValue)
     return m_settings->value(key, defaultValue);
 }
 
+bool Config::hasAccessError()
+{
+    return m_settings->status() & QSettings::AccessError;
+}
+
+QString Config::getFileName()
+{
+    return m_settings->fileName();
+}
+
 void Config::set(const QString& key, const QVariant& value)
 {
     m_settings->setValue(key, value);
@@ -49,35 +60,43 @@ Config::Config(const QString& fileName, QObject* parent)
 Config::Config(QObject* parent)
     : QObject(parent)
 {
-    QString userPath;
-    QString homePath = QDir::homePath();
+    // Check if portable config is present. If not, find it in user's directory
+    QString portablePath = QCoreApplication::applicationDirPath() + "/keepassxc.ini";
+    if (QFile::exists(portablePath)) {
+        init(portablePath);
+    } else {
+        QString userPath;
+        QString homePath = QDir::homePath();
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    // we can't use QStandardPaths on X11 as it uses XDG_DATA_HOME instead of XDG_CONFIG_HOME
-    QByteArray env = qgetenv("XDG_CONFIG_HOME");
-    if (env.isEmpty()) {
-        userPath = homePath;
-        userPath += "/.config";
+    #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+        // we can't use QStandardPaths on X11 as it uses XDG_DATA_HOME instead of XDG_CONFIG_HOME
+        QByteArray env = qgetenv("XDG_CONFIG_HOME");
+        if (env.isEmpty()) {
+            userPath = homePath;
+            userPath += "/.config";
+        } else if (env[0] == '/') {
+            userPath = QFile::decodeName(env);
+        } else {
+            userPath = homePath;
+            userPath += '/';
+            userPath += QFile::decodeName(env);
+        }
+
+        userPath += "/keepassxc/";
+    #else
+        userPath = QDir::fromNativeSeparators(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
+        // storageLocation() appends the application name ("/keepassxc") to the end
+        userPath += "/";
+    #endif
+
+    #ifdef QT_DEBUG
+        userPath += "keepassxc_debug.ini";
+    #else
+        userPath += "keepassxc.ini";
+    #endif
+
+        init(userPath);
     }
-    else if (env[0] == '/') {
-        userPath = QFile::decodeName(env);
-    }
-    else {
-        userPath = homePath;
-        userPath += '/';
-        userPath += QFile::decodeName(env);
-    }
-
-    userPath += "/keepassxc/";
-#else
-    userPath = QDir::fromNativeSeparators(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
-    // storageLocation() appends the application name ("/keepassxc") to the end
-    userPath += "/";
-#endif
-
-    userPath += "keepassxc.ini";
-
-    init(userPath);
 }
 
 Config::~Config()
@@ -95,14 +114,18 @@ void Config::init(const QString& fileName)
     m_defaults.insert("AutoReloadOnChange", true);
     m_defaults.insert("AutoSaveOnExit", false);
     m_defaults.insert("ShowToolbar", true);
+    m_defaults.insert("SearchLimitGroup", false);
     m_defaults.insert("MinimizeOnCopy", false);
     m_defaults.insert("UseGroupIconOnEntryCreation", false);
     m_defaults.insert("AutoTypeEntryTitleMatch", true);
+    m_defaults.insert("UseGroupIconOnEntryCreation", true);
+    m_defaults.insert("IgnoreGroupExpansion", false);
     m_defaults.insert("security/clearclipboard", true);
     m_defaults.insert("security/clearclipboardtimeout", 10);
     m_defaults.insert("security/lockdatabaseidle", false);
-    m_defaults.insert("security/lockdatabaseidlesec", 10);
+    m_defaults.insert("security/lockdatabaseidlesec", 240);
     m_defaults.insert("security/lockdatabaseminimize", false);
+    m_defaults.insert("security/lockdatabasescreenlock", true);
     m_defaults.insert("security/passwordsrepeat", false);
     m_defaults.insert("security/passwordscleartext", false);
     m_defaults.insert("security/autotypeask", true);

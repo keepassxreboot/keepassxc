@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,18 +23,23 @@
 #include <QSet>
 #include <QUrl>
 
+#include "config-keepassx.h"
 #include "core/Global.h"
 #include "core/Uuid.h"
+#include "gui/MessageWidget.h"
 
 class Database;
 class DefaultIconModel;
 class CustomIconModel;
 
+#ifdef WITH_XC_HTTP
 namespace qhttp {
     namespace client {
         class QHttpClient;
     }
 }
+#endif
+
 namespace Ui {
     class EditWidgetIcons;
 }
@@ -58,14 +64,20 @@ public:
     void reset();
     void load(const Uuid& currentUuid, Database* database, const IconStruct& iconStruct, const QString& url = "");
 
-public Q_SLOTS:
+public slots:
     void setUrl(const QString& url);
 
-private Q_SLOTS:
+signals:
+    void messageEditEntry(QString, MessageWidget::MessageType);
+    void messageEditEntryDismiss();
+
+private slots:
     void downloadFavicon();
+#ifdef WITH_XC_HTTP
     void fetchFavicon(const QUrl& url);
     void fetchFaviconFromGoogle(const QString& domain);
     void resetFaviconDownload(bool clearRedirect = true);
+#endif
     void addCustomIcon();
     void removeCustomIcon();
     void updateWidgetsDefaultIcons(bool checked);
@@ -78,12 +90,14 @@ private:
     Database* m_database;
     Uuid m_currentUuid;
     QString m_url;
-    QUrl m_redirectUrl;
-    bool m_fallbackToGoogle = true;
-    unsigned short m_redirectCount = 0;
     DefaultIconModel* const m_defaultIconModel;
     CustomIconModel* const m_customIconModel;
+#ifdef WITH_XC_HTTP
+    QUrl m_redirectUrl;
+    bool m_fallbackToGoogle;
+    unsigned short m_redirectCount;
     qhttp::client::QHttpClient* m_httpClient;
+#endif
 
     Q_DISABLE_COPY(EditWidgetIcons)
 };

@@ -34,7 +34,7 @@ public:
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
     QString keyByIndex(const QModelIndex& index) const;
 
-private Q_SLOTS:
+private slots:
     void attachmentChange(const QString& key);
     void attachmentAboutToAdd(const QString& key);
     void attachmentAdd();

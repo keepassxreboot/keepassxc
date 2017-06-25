@@ -1,6 +1,7 @@
 /*
  *  Copyright (C) 2012 Tobias Tangemann
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,6 +23,9 @@
 #include <QAbstractNativeEventFilter>
 #include <QFileOpenEvent>
 #include <QSocketNotifier>
+#include <QLockFile>
+#include <QStandardPaths>
+#include <QtNetwork/QLocalSocket>
 
 #include "autotype/AutoType.h"
 
@@ -76,6 +80,8 @@ Application::Application(int& argc, char** argv)
 #ifdef Q_OS_UNIX
     , m_unixSignalNotifier(nullptr)
 #endif
+    , alreadyRunning(false)
+    , lock(nullptr)
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_OSX)
     installNativeEventFilter(new XcbEventFilter());
@@ -85,6 +91,63 @@ Application::Application(int& argc, char** argv)
 #if defined(Q_OS_UNIX)
     registerUnixSignals();
 #endif
+
+    QString userName = qgetenv("USER");
+    if (userName.isEmpty()) {
+        userName = qgetenv("USERNAME");
+    }
+    QString identifier = "keepassxc";
+    if (!userName.isEmpty()) {
+        identifier.append("-");
+        identifier.append(userName);
+    }
+    QString socketName = identifier + ".socket";
+    QString lockName = identifier + ".lock";
+
+    // According to documentation we should use RuntimeLocation on *nixes, but even Qt doesn't respect
+    // this and creates sockets in TempLocation, so let's be consistent.
+    lock = new QLockFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/" + lockName);
+    lock->setStaleLockTime(0);
+    lock->tryLock();
+    switch (lock->error()) {
+    case QLockFile::NoError:
+        server.setSocketOptions(QLocalServer::UserAccessOption);
+        server.listen(socketName);
+        connect(&server, SIGNAL(newConnection()), this, SIGNAL(anotherInstanceStarted()));
+        break;
+    case QLockFile::LockFailedError: {
+        alreadyRunning = true;
+        // notify the other instance
+        // try several times, in case the other instance is still starting up
+        QLocalSocket client;
+        for (int i = 0; i < 3; i++) {
+            client.connectToServer(socketName);
+            if (client.waitForConnected(150)) {
+                client.abort();
+                break;
+            }
+        }
+        break;
+    }
+    default:
+        qWarning() << QCoreApplication::translate("Main",
+                                                  "The lock file could not be created. Single-instance mode disabled.")
+                      .toUtf8().constData();
+    }
+}
+
+Application::~Application()
+{
+    server.close();
+    if (lock) {
+        lock->unlock();
+        delete lock;
+    }
+}
+
+QWidget* Application::mainWindow() const
+{
+    return m_mainWindow;
 }
 
 void Application::setMainWindow(QWidget* mainWindow)
@@ -96,7 +159,7 @@ bool Application::event(QEvent* event)
 {
     // Handle Apple QFileOpenEvent from finder (double click on .kdbx file)
     if (event->type() == QEvent::FileOpen) {
-        Q_EMIT openFile(static_cast<QFileOpenEvent*>(event)->file());
+        emit openFile(static_cast<QFileOpenEvent*>(event)->file());
         return true;
     }
 #ifdef Q_OS_MAC
@@ -148,7 +211,7 @@ void Application::handleUnixSignal(int sig)
         case SIGTERM:
         {
             char buf = 0;
-            ::write(unixSignalSocket[0], &buf, sizeof(buf));
+            Q_UNUSED(::write(unixSignalSocket[0], &buf, sizeof(buf)));
             return;
         }
         case SIGHUP:
@@ -160,9 +223,15 @@ void Application::quitBySignal()
 {
     m_unixSignalNotifier->setEnabled(false);
     char buf;
-    ::read(unixSignalSocket[1], &buf, sizeof(buf));
+    Q_UNUSED(::read(unixSignalSocket[1], &buf, sizeof(buf)));
     
     if (nullptr != m_mainWindow)
         static_cast<MainWindow*>(m_mainWindow)->appExit();
 }
 #endif
+
+bool Application::isAlreadyRunning() const
+{
+    return alreadyRunning;
+}
+

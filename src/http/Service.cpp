@@ -1,15 +1,20 @@
-/**
- ***************************************************************************
- * @file Service.cpp
- *
- * @brief
- *
- * Copyright (C) 2013
- *
- * @author	Francois Ferrand
- * @date	4/2013
- ***************************************************************************
- */
+/*
+*  Copyright (C) 2013 Francois Ferrand
+*  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 2 or (at your option)
+*  version 3 of the License.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #include <QInputDialog>
 #include <QMessageBox>
@@ -23,11 +28,14 @@
 
 #include "core/Database.h"
 #include "core/Entry.h"
+#include "core/Global.h"
 #include "core/Group.h"
 #include "core/EntrySearcher.h"
 #include "core/Metadata.h"
 #include "core/Uuid.h"
 #include "core/PasswordGenerator.h"
+
+#include <algorithm>
 
 static const unsigned char KEEPASSHTTP_UUID_DATA[] = {
     0x34, 0x69, 0x7a, 0x40, 0x8a, 0x5b, 0x41, 0xc0,
@@ -81,6 +89,8 @@ bool Service::isDatabaseOpened() const
         case DatabaseWidget::ViewMode:
         case DatabaseWidget::EditMode:
             return true;
+        default:
+            break;
         }
     return false;
 }
@@ -98,6 +108,8 @@ bool Service::openDatabase()
         case DatabaseWidget::ViewMode:
         case DatabaseWidget::EditMode:
             return true;
+        default:
+            break;
         }
     }
     //if (HttpSettings::showNotification()
@@ -187,8 +199,9 @@ bool Service::removeFirstDomain(QString & hostname)
 QList<Entry*> Service::searchEntries(Database* db, const QString& hostname)
 {
     QList<Entry*> entries;
-    if (Group* rootGroup = db->rootGroup())
-        Q_FOREACH (Entry* entry, EntrySearcher().search(hostname, rootGroup, Qt::CaseInsensitive)) {
+    if (Group* rootGroup = db->rootGroup()) {
+        const auto results = EntrySearcher().search(hostname, rootGroup, Qt::CaseInsensitive);
+        for (Entry* entry: results) {
             QString title = entry->title();
             QString url = entry->url();
 
@@ -199,6 +212,7 @@ QList<Entry*> Service::searchEntries(Database* db, const QString& hostname)
                 || (matchUrlScheme(url) && hostname.endsWith(QUrl(url).host())) )
                 entries.append(entry);
         }
+    }
     return entries;
 }
 
@@ -221,8 +235,9 @@ QList<Entry*> Service::searchEntries(const QString& text)
     QString hostname = QUrl(text).host();
     QList<Entry*> entries;
     do {
-        Q_FOREACH (Database* db, databases)
+        for (Database* db: asConst(databases)) {
             entries << searchEntries(db, hostname);
+        }
     } while(entries.isEmpty() && removeFirstDomain(hostname));
 
     return entries;
@@ -244,12 +259,15 @@ Service::Access Service::checkAccess(const Entry *entry, const QString & host, c
 
 KeepassHttpProtocol::Entry Service::prepareEntry(const Entry* entry)
 {
-    KeepassHttpProtocol::Entry res(entry->title(), entry->username(), entry->password(), entry->uuid().toHex());
+    KeepassHttpProtocol::Entry res(entry->resolvePlaceholder(entry->title()), entry->resolvePlaceholder(entry->username()), entry->resolvePlaceholder(entry->password()), entry->uuid().toHex());
     if (HttpSettings::supportKphFields()) {
         const EntryAttributes * attr = entry->attributes();
-        Q_FOREACH (const QString& key, attr->keys())
-            if (key.startsWith(QLatin1String("KPH: ")))
+        const auto keys = attr->keys();
+        for (const QString& key: keys) {
+            if (key.startsWith(QLatin1String("KPH: "))) {
                 res.addStringField(key, attr->value(key));
+            }
+        }
     }
     return res;
 }
@@ -316,7 +334,8 @@ QList<KeepassHttpProtocol::Entry> Service::findMatchingEntries(const QString& /*
     //Check entries for authorization
     QList<Entry*> pwEntriesToConfirm;
     QList<Entry*> pwEntries;
-    Q_FOREACH (Entry * entry, searchEntries(url)) {
+    const auto entries = searchEntries(url);
+    for (Entry* entry: entries) {
         switch(checkAccess(entry, host, submitHost, realm)) {
         case Denied:
             continue;
@@ -350,7 +369,7 @@ QList<KeepassHttpProtocol::Entry> Service::findMatchingEntries(const QString& /*
 
         int res = dlg.exec();
         if (dlg.remember()) {
-            Q_FOREACH (Entry * entry, pwEntriesToConfirm) {
+            for (Entry* entry: asConst(pwEntriesToConfirm)) {
                 EntryConfig config;
                 config.load(entry);
                 if (res == QDialog::Accepted) {
@@ -381,28 +400,22 @@ QList<KeepassHttpProtocol::Entry> Service::findMatchingEntries(const QString& /*
         const QString baseSubmitURL = url.toString(QUrl::StripTrailingSlash | QUrl::RemovePath | QUrl::RemoveQuery | QUrl::RemoveFragment);
 
         //Cache priorities
-        QHash<const Entry *, int> priorities;
+        QHash<const Entry*, int> priorities;
         priorities.reserve(pwEntries.size());
-        Q_FOREACH (const Entry * entry, pwEntries)
+        for (const Entry* entry: asConst(pwEntries)) {
             priorities.insert(entry, sortPriority(entry, host, submitUrl, baseSubmitURL));
+        }
 
         //Sort by priorities
-        qSort(pwEntries.begin(), pwEntries.end(), SortEntries(priorities, HttpSettings::sortByTitle() ? "Title" : "UserName"));
+        std::sort(pwEntries.begin(), pwEntries.end(), SortEntries(priorities, HttpSettings::sortByTitle() ? "Title" : "UserName"));
     }
-
-    //if (pwEntries.count() > 0)
-    //{
-    //    var names = (from e in resp.Entries select e.Name).Distinct<string>();
-    //    var n = String.Join("\n    ", names.ToArray<string>());
-    //    if (HttpSettings::receiveCredentialNotification())
-    //        ShowNotification(QString("%0: %1 is receiving credentials for:\n%2").arg(Id).arg(host).arg(n)));
-    //}
 
     //Fill the list
     QList<KeepassHttpProtocol::Entry> result;
     result.reserve(pwEntries.count());
-    Q_FOREACH (Entry * entry, pwEntries)
+    for (Entry* entry: asConst(pwEntries)) {
         result << prepareEntry(entry);
+    }
     return result;
 }
 
@@ -414,12 +427,19 @@ int Service::countMatchingEntries(const QString &, const QString &url, const QSt
 QList<KeepassHttpProtocol::Entry> Service::searchAllEntries(const QString &)
 {
     QList<KeepassHttpProtocol::Entry> result;
-    if (DatabaseWidget * dbWidget = m_dbTabWidget->currentDatabaseWidget())
-        if (Database * db = dbWidget->database())
-            if (Group * rootGroup = db->rootGroup())
-                Q_FOREACH (Entry * entry, rootGroup->entriesRecursive())
-                    if (!entry->url().isEmpty() || QUrl(entry->title()).isValid())
-                        result << KeepassHttpProtocol::Entry(entry->title(), entry->username(), QString(), entry->uuid().toHex());
+    if (DatabaseWidget* dbWidget = m_dbTabWidget->currentDatabaseWidget()) {
+        if (Database* db = dbWidget->database()) {
+            if (Group* rootGroup = db->rootGroup()) {
+                const auto entries = rootGroup->entriesRecursive();
+                for (Entry* entry: entries) {
+                    if (!entry->url().isEmpty() || QUrl(entry->title()).isValid()) {
+                        result << KeepassHttpProtocol::Entry(entry->title(), entry->username(),
+                                                             QString(), entry->uuid().toHex());
+                    }
+                }
+            }
+        }
+    }
     return result;
 }
 
@@ -428,11 +448,15 @@ Group * Service::findCreateAddEntryGroup()
     if (DatabaseWidget * dbWidget = m_dbTabWidget->currentDatabaseWidget())
         if (Database * db = dbWidget->database())
             if (Group * rootGroup = db->rootGroup()) {
-                const QString groupName = QLatin1String(KEEPASSHTTP_GROUP_NAME);//TODO: setting to decide where new keys are created
+                //TODO: setting to decide where new keys are created
+                const QString groupName = QLatin1String(KEEPASSHTTP_GROUP_NAME);
 
-                Q_FOREACH (const Group * g, rootGroup->groupsRecursive(true))
-                    if (g->name() == groupName)
+                const auto groups = rootGroup->groupsRecursive(true);
+                for (const Group * g: groups) {
+                    if (g->name() == groupName) {
                         return db->resolveGroup(g->uuid());
+                    }
+                }
 
                 Group * group;
                 group = new Group();
@@ -505,14 +529,18 @@ void Service::removeSharedEncryptionKeys()
                               QMessageBox::Ok);
     } else if (Entry* entry = getConfigEntry()) {
         QStringList keysToRemove;
-        Q_FOREACH (const QString& key, entry->attributes()->keys())
-            if (key.startsWith(ASSOCIATE_KEY_PREFIX))
+        const auto keys = entry->attributes()->keys();
+        for (const QString& key: keys) {
+            if (key.startsWith(ASSOCIATE_KEY_PREFIX)) {
                 keysToRemove << key;
+            }
+        }
 
         if(keysToRemove.count()) {
             entry->beginUpdate();
-            Q_FOREACH (const QString& key, keysToRemove)
+            for (const QString& key: asConst(keysToRemove)) {
                 entry->attributes()->remove(key);
+            }
             entry->endUpdate();
 
             const int count = keysToRemove.count();
@@ -546,7 +574,7 @@ void Service::removeStoredPermissions()
         progress.setWindowModality(Qt::WindowModal);
 
         uint counter = 0;
-        Q_FOREACH (Entry* entry, entries) {
+        for (Entry* entry: asConst(entries)) {
             if (progress.wasCanceled())
                 return;
             if (entry->attributes()->contains(KEEPASSHTTP_NAME)) {

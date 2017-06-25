@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2014 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,13 +32,13 @@ public:
     explicit PasswordEdit(QWidget* parent = nullptr);
     void enableVerifyMode(PasswordEdit* baseEdit);
 
-public Q_SLOTS:
+public slots:
     void setShowPassword(bool show);
 
-Q_SIGNALS:
+signals:
     void showPasswordChanged(bool show);
 
-private Q_SLOTS:
+private slots:
     void updateStylesheet();
     void autocompletePassword(QString password);
 

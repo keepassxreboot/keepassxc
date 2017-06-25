@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2016 Lennart Glauer <mail@lennart-glauer.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -96,7 +97,7 @@ int AutoTypePlatformWin::platformEventFilter(void* event)
     MSG *msg = static_cast<MSG *>(event);
 
     if (msg->message == WM_HOTKEY && msg->wParam == HOTKEY_ID) {
-        Q_EMIT globalShortcutTriggered();
+        emit globalShortcutTriggered();
         return 1;
     }
 
@@ -189,6 +190,10 @@ DWORD AutoTypePlatformWin::qtToNativeKeyCode(Qt::Key key)
     case Qt::Key_Enter:
     case Qt::Key_Return:
         return VK_RETURN;   // 0x0D
+    case Qt::Key_Shift:
+        return VK_SHIFT;    // 0x10
+    case Qt::Key_Control:
+        return VK_CONTROL;  // 0x11
     case Qt::Key_Pause:
         return VK_PAUSE;    // 0x13
     case Qt::Key_CapsLock:
@@ -527,3 +532,24 @@ void AutoTypeExecutorWin::execKey(AutoTypeKey* action)
     ::Sleep(25);
 }
 
+void AutoTypeExecutorWin::execClearField(AutoTypeClearField* action = nullptr)
+{
+    Q_UNUSED(action);
+
+    m_platform->sendKey(Qt::Key_Control, true);
+    m_platform->sendKey(Qt::Key_Home, true);
+    m_platform->sendKey(Qt::Key_Home, false);
+    m_platform->sendKey(Qt::Key_Control, false);
+    ::Sleep(25);
+    m_platform->sendKey(Qt::Key_Control, true);
+    m_platform->sendKey(Qt::Key_Shift, true);
+    m_platform->sendKey(Qt::Key_End, true);
+    m_platform->sendKey(Qt::Key_End, false);
+    m_platform->sendKey(Qt::Key_Shift, false);
+    m_platform->sendKey(Qt::Key_Control, false);
+    ::Sleep(25);
+    m_platform->sendKey(Qt::Key_Backspace, true);
+    m_platform->sendKey(Qt::Key_Backspace, false);
+
+    ::Sleep(25);
+}

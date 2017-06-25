@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,13 +15,13 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include "Entry.h"
 
 #include "core/Database.h"
 #include "core/DatabaseIcons.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "totp/totp.h"
 
 const int Entry::DefaultIconNumber = 0;
 
@@ -35,6 +36,8 @@ Entry::Entry()
     m_data.iconNumber = DefaultIconNumber;
     m_data.autoTypeEnabled = true;
     m_data.autoTypeObfuscation = 0;
+    m_data.totpStep = QTotp::defaultStep;
+    m_data.totpDigits = QTotp::defaultDigits;
 
     connect(m_attributes, SIGNAL(modified()), this, SIGNAL(modified()));
     connect(m_attributes, SIGNAL(defaultKeyModified()), SLOT(emitDataChanged()));
@@ -62,7 +65,7 @@ template <class T> inline bool Entry::set(T& property, const T& value)
 {
     if (property != value) {
         property = value;
-        Q_EMIT modified();
+        emit modified();
         return true;
     }
     else {
@@ -254,6 +257,17 @@ bool Entry::isExpired() const
     return m_data.timeInfo.expires() && m_data.timeInfo.expiryTime() < QDateTime::currentDateTimeUtc();
 }
 
+bool Entry::hasReferences() const
+{
+    const QList<QString> keyList = EntryAttributes::DefaultAttributes;
+    for (const QString& key : keyList) {
+        if (m_attributes->isReference(key)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 EntryAttributes* Entry::attributes()
 {
     return m_attributes;
@@ -274,6 +288,77 @@ const EntryAttachments* Entry::attachments() const
     return m_attachments;
 }
 
+bool Entry::hasTotp() const
+{
+    return m_attributes->hasKey("TOTP Seed") || m_attributes->hasKey("otp");
+}
+
+QString Entry::totp() const
+{
+    if (hasTotp()) {
+        QString seed = totpSeed();
+        quint64 time = QDateTime::currentDateTime().toTime_t();
+        QString output = QTotp::generateTotp(seed.toLatin1(), time, m_data.totpDigits, m_data.totpStep);
+
+        return QString(output);
+    } else {
+        return QString("");
+    }
+}
+
+void Entry::setTotp(const QString& seed, quint8& step, quint8& digits)
+{
+    if (step == 0) {
+        step = QTotp::defaultStep;
+    }
+
+    if (digits == 0) {
+        digits = QTotp::defaultDigits;
+    }
+
+    if (m_attributes->hasKey("otp")) {
+        m_attributes->set("otp", QString("key=%1&step=%2&size=%3").arg(seed).arg(step).arg(digits), true);
+    } else {
+        m_attributes->set("TOTP Seed", seed, true);
+        m_attributes->set("TOTP Settings", QString("%1;%2").arg(step).arg(digits));
+    }
+}
+
+QString Entry::totpSeed() const
+{
+    QString secret = "";
+
+    if (m_attributes->hasKey("otp")) {
+        secret = m_attributes->value("otp");
+    } else if (m_attributes->hasKey("TOTP Seed")) {
+        secret = m_attributes->value("TOTP Seed");
+    }
+
+    m_data.totpDigits = QTotp::defaultDigits;
+    m_data.totpStep = QTotp::defaultStep;
+
+    if (m_attributes->hasKey("TOTP Settings")) {
+        QRegExp rx("(\\d+);(\\d)", Qt::CaseInsensitive, QRegExp::RegExp);
+        int pos = rx.indexIn(m_attributes->value("TOTP Settings"));
+        if (pos > -1) {
+            m_data.totpStep = rx.cap(1).toUInt();
+            m_data.totpDigits = rx.cap(2).toUInt();
+        }
+    }
+
+    return QTotp::parseOtpString(secret, m_data.totpDigits, m_data.totpStep);
+}
+
+quint8 Entry::totpStep() const
+{
+    return m_data.totpStep;
+}
+
+quint8 Entry::totpDigits() const
+{
+    return m_data.totpDigits;
+}
+
 void Entry::setUuid(const Uuid& uuid)
 {
     Q_ASSERT(!uuid.isNull());
@@ -288,7 +373,7 @@ void Entry::setIcon(int iconNumber)
         m_data.iconNumber = iconNumber;
         m_data.customIcon = Uuid();
 
-        Q_EMIT modified();
+        emit modified();
         emitDataChanged();
     }
 }
@@ -301,7 +386,7 @@ void Entry::setIcon(const Uuid& uuid)
         m_data.customIcon = uuid;
         m_data.iconNumber = 0;
 
-        Q_EMIT modified();
+        emit modified();
         emitDataChanged();
     }
 }
@@ -381,7 +466,7 @@ void Entry::setExpires(const bool& value)
 {
     if (m_data.timeInfo.expires() != value) {
         m_data.timeInfo.setExpires(value);
-        Q_EMIT modified();
+        emit modified();
     }
 }
 
@@ -389,7 +474,7 @@ void Entry::setExpiryTime(const QDateTime& dateTime)
 {
     if (m_data.timeInfo.expiryTime() != dateTime) {
         m_data.timeInfo.setExpiryTime(dateTime);
-        Q_EMIT modified();
+        emit modified();
     }
 }
 
@@ -408,7 +493,7 @@ void Entry::addHistoryItem(Entry* entry)
     Q_ASSERT(!entry->parent());
 
     m_history.append(entry);
-    Q_EMIT modified();
+    emit modified();
 }
 
 void Entry::removeHistoryItems(const QList<Entry*>& historyEntries)
@@ -426,7 +511,7 @@ void Entry::removeHistoryItems(const QList<Entry*>& historyEntries)
         delete entry;
     }
 
-    Q_EMIT modified();
+    emit modified();
 }
 
 void Entry::truncateHistory()
@@ -494,6 +579,18 @@ Entry* Entry::clone(CloneFlags flags) const
     entry->m_data = m_data;
     entry->m_attributes->copyDataFrom(m_attributes);
     entry->m_attachments->copyDataFrom(m_attachments);
+
+    if (flags & CloneUserAsRef) {
+        // Build the username refrence
+        QString username = "{REF:U@I:" + m_uuid.toHex() + "}";
+        entry->m_attributes->set(EntryAttributes::UserNameKey, username.toUpper(), m_attributes->isProtected(EntryAttributes::UserNameKey));
+    }
+
+    if (flags & ClonePassAsRef) {
+        QString password = "{REF:P@I:" + m_uuid.toHex() + "}";
+        entry->m_attributes->set(EntryAttributes::PasswordKey, password.toUpper(), m_attributes->isProtected(EntryAttributes::PasswordKey));
+    }
+
     entry->m_autoTypeAssociations->copyDataFrom(this->m_autoTypeAssociations);
     if (flags & CloneIncludeHistory) {
         for (Entry* historyItem : m_history) {
@@ -610,7 +707,7 @@ void Entry::setGroup(Group* group)
 
 void Entry::emitDataChanged()
 {
-    Q_EMIT dataChanged(this);
+    emit dataChanged(this);
 }
 
 const Database* Entry::database() const
@@ -626,7 +723,8 @@ const Database* Entry::database() const
 QString Entry::resolveMultiplePlaceholders(const QString& str) const
 {
     QString result = str;
-    QRegExp tmplRegEx("({.*})", Qt::CaseInsensitive, QRegExp::RegExp2);
+    QRegExp tmplRegEx("(\\{.*\\})", Qt::CaseInsensitive, QRegExp::RegExp2);
+    tmplRegEx.setMinimal(true);
     QStringList tmplList;
     int pos = 0;
 
@@ -646,15 +744,41 @@ QString Entry::resolvePlaceholder(const QString& str) const
     const QList<QString> keyList = attributes()->keys();
     for (const QString& key : keyList) {
         Qt::CaseSensitivity cs = Qt::CaseInsensitive;
+        QString k = key;
+
         if (!EntryAttributes::isDefaultAttribute(key)) {
             cs = Qt::CaseSensitive;
+            k.prepend("{S:");
+        } else {
+            k.prepend("{");
         }
 
-        QString k = key;
-        k.prepend("{").append("}");
+
+        k.append("}");
         if (result.compare(k,cs)==0) {
             result.replace(result,attributes()->value(key));
             break;
+        }
+    }
+
+    // resolving references in format: {REF:<WantedField>@I:<uuid of referenced entry>}
+    // using format from http://keepass.info/help/base/fieldrefs.html at the time of writing,
+    // but supporting lookups of standard fields and references by UUID only
+
+    QRegExp* tmpRegExp = m_attributes->referenceRegExp();
+    if (tmpRegExp->indexIn(result) != -1) {
+        // cap(0) contains the whole reference
+        // cap(1) contains which field is wanted
+        // cap(2) contains the uuid of the referenced entry
+        Entry* tmpRefEntry = m_group->database()->resolveEntry(Uuid(QByteArray::fromHex(tmpRegExp->cap(2).toLatin1())));
+        if (tmpRefEntry) {
+            // entry found, get the relevant field
+            QString tmpRefField = tmpRegExp->cap(1).toLower();
+            if (tmpRefField == "t") result.replace(tmpRegExp->cap(0), tmpRefEntry->title(), Qt::CaseInsensitive);
+            else if (tmpRefField == "u") result.replace(tmpRegExp->cap(0), tmpRefEntry->username(), Qt::CaseInsensitive);
+            else if (tmpRefField == "p") result.replace(tmpRegExp->cap(0), tmpRefEntry->password(), Qt::CaseInsensitive);
+            else if (tmpRefField == "a") result.replace(tmpRegExp->cap(0), tmpRefEntry->url(), Qt::CaseInsensitive);
+            else if (tmpRefField == "n") result.replace(tmpRegExp->cap(0), tmpRefEntry->notes(), Qt::CaseInsensitive);
         }
     }
 

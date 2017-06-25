@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -54,34 +55,47 @@
 #ifdef WITH_XC_HTTP
 class HttpPlugin: public ISettingsPage
 {
-    public:
-        HttpPlugin(DatabaseTabWidget * tabWidget) {
-            m_service = new Service(tabWidget);
-        }
-        virtual ~HttpPlugin() {
-            //delete m_service;
-        }
-        virtual QString name() {
-            return QObject::tr("Http");
-        }
-        virtual QWidget * createWidget() {
-            OptionDialog * dlg = new OptionDialog();
-            QObject::connect(dlg, SIGNAL(removeSharedEncryptionKeys()), m_service, SLOT(removeSharedEncryptionKeys()));
-            QObject::connect(dlg, SIGNAL(removeStoredPermissions()), m_service, SLOT(removeStoredPermissions()));
-            return dlg;
-        }
-        virtual void loadSettings(QWidget * widget) {
-            qobject_cast<OptionDialog*>(widget)->loadSettings();
-        }
-        virtual void saveSettings(QWidget * widget) {
-            qobject_cast<OptionDialog*>(widget)->saveSettings();
-            if (HttpSettings::isEnabled())
-                m_service->start();
-            else
-                m_service->stop();
-        }
-    private:
-        Service *m_service;
+public:
+    HttpPlugin(DatabaseTabWidget * tabWidget)
+    {
+        m_service = new Service(tabWidget);
+    }
+
+    ~HttpPlugin() = default;
+
+    QString name() override
+    {
+        return QObject::tr("Browser Integration");
+    }
+
+    QIcon icon() override
+    {
+        return FilePath::instance()->icon("apps", "internet-web-browser");
+    }
+
+    QWidget * createWidget() override
+    {
+        OptionDialog * dlg = new OptionDialog();
+        QObject::connect(dlg, SIGNAL(removeSharedEncryptionKeys()), m_service, SLOT(removeSharedEncryptionKeys()));
+        QObject::connect(dlg, SIGNAL(removeStoredPermissions()), m_service, SLOT(removeStoredPermissions()));
+        return dlg;
+    }
+
+    void loadSettings(QWidget * widget) override
+    {
+        qobject_cast<OptionDialog*>(widget)->loadSettings();
+    }
+
+    void saveSettings(QWidget * widget) override
+    {
+        qobject_cast<OptionDialog*>(widget)->saveSettings();
+        if (HttpSettings::isEnabled())
+            m_service->start();
+        else
+            m_service->stop();
+    }
+private:
+    Service *m_service;
 };
 #endif
 
@@ -90,9 +104,9 @@ const QString MainWindow::BaseWindowTitle = "KeePassXC";
 MainWindow::MainWindow()
     : m_ui(new Ui::MainWindow())
     , m_trayIcon(nullptr)
+    , m_appExitCalled(false)
+    , m_appExiting(false)
 {
-    appExitCalled = false;
-
     m_ui->setupUi(this);
 
     // Setup the search widget in the toolbar
@@ -109,6 +123,7 @@ MainWindow::MainWindow()
     #endif
 
     setWindowIcon(filePath()->applicationIcon());
+    m_ui->globalMessageWidget->setHidden(true);
     QAction* toggleViewAction = m_ui->toolBar->toggleViewAction();
     toggleViewAction->setText(tr("Show toolbar"));
     m_ui->menuView->addAction(toggleViewAction);
@@ -116,7 +131,7 @@ MainWindow::MainWindow()
     m_ui->toolBar->setVisible(showToolbar);
     connect(m_ui->toolBar, SIGNAL(visibilityChanged(bool)), this, SLOT(saveToolbarState(bool)));
 
-    m_clearHistoryAction = new QAction("Clear history", m_ui->menuFile);
+    m_clearHistoryAction = new QAction(tr("Clear history"), m_ui->menuFile);
     m_lastDatabasesActions = new QActionGroup(m_ui->menuRecentDatabases);
     connect(m_clearHistoryAction, SIGNAL(triggered()), this, SLOT(clearLastDatabases()));
     connect(m_lastDatabasesActions, SIGNAL(triggered(QAction*)), this, SLOT(openRecentDatabase(QAction*)));
@@ -142,16 +157,19 @@ MainWindow::MainWindow()
             this, SLOT(lockDatabasesAfterInactivity()));
     applySettingsChanges();
 
+    m_ui->actionDatabaseNew->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_N);
     setShortcut(m_ui->actionDatabaseOpen, QKeySequence::Open, Qt::CTRL + Qt::Key_O);
     setShortcut(m_ui->actionDatabaseSave, QKeySequence::Save, Qt::CTRL + Qt::Key_S);
     setShortcut(m_ui->actionDatabaseSaveAs, QKeySequence::SaveAs);
     setShortcut(m_ui->actionDatabaseClose, QKeySequence::Close, Qt::CTRL + Qt::Key_W);
     m_ui->actionLockDatabases->setShortcut(Qt::CTRL + Qt::Key_L);
     setShortcut(m_ui->actionQuit, QKeySequence::Quit, Qt::CTRL + Qt::Key_Q);
-    m_ui->actionEntryNew->setShortcut(Qt::CTRL + Qt::Key_N);
+    setShortcut(m_ui->actionEntryNew, QKeySequence::New, Qt::CTRL + Qt::Key_N);
     m_ui->actionEntryEdit->setShortcut(Qt::CTRL + Qt::Key_E);
     m_ui->actionEntryDelete->setShortcut(Qt::CTRL + Qt::Key_D);
     m_ui->actionEntryClone->setShortcut(Qt::CTRL + Qt::Key_K);
+    m_ui->actionEntryTotp->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_T);
+    m_ui->actionEntryCopyTotp->setShortcut(Qt::CTRL + Qt::Key_T);
     m_ui->actionEntryCopyUsername->setShortcut(Qt::CTRL + Qt::Key_B);
     m_ui->actionEntryCopyPassword->setShortcut(Qt::CTRL + Qt::Key_C);
     setShortcut(m_ui->actionEntryAutoType, QKeySequence::Paste, Qt::CTRL + Qt::Key_V);
@@ -169,6 +187,7 @@ MainWindow::MainWindow()
     m_ui->actionChangeMasterKey->setIcon(filePath()->icon("actions", "database-change-key", false));
     m_ui->actionLockDatabases->setIcon(filePath()->icon("actions", "document-encrypt", false));
     m_ui->actionQuit->setIcon(filePath()->icon("actions", "application-exit"));
+    m_ui->actionQuit->setMenuRole(QAction::QuitRole);
 
     m_ui->actionEntryNew->setIcon(filePath()->icon("actions", "entry-new", false));
     m_ui->actionEntryClone->setIcon(filePath()->icon("actions", "entry-clone", false));
@@ -181,11 +200,14 @@ MainWindow::MainWindow()
     m_ui->actionGroupNew->setIcon(filePath()->icon("actions", "group-new", false));
     m_ui->actionGroupEdit->setIcon(filePath()->icon("actions", "group-edit", false));
     m_ui->actionGroupDelete->setIcon(filePath()->icon("actions", "group-delete", false));
+    m_ui->actionGroupEmptyRecycleBin->setIcon(filePath()->icon("actions", "group-empty-trash", false));
 
     m_ui->actionSettings->setIcon(filePath()->icon("actions", "configure"));
+    m_ui->actionSettings->setMenuRole(QAction::PreferencesRole);
     m_ui->actionPasswordGenerator->setIcon(filePath()->icon("actions", "password-generator", false));
 
     m_ui->actionAbout->setIcon(filePath()->icon("actions", "help-about"));
+    m_ui->actionAbout->setMenuRole(QAction::AboutRole);
 
     m_actionMultiplexer.connect(SIGNAL(currentModeChanged(DatabaseWidget::Mode)),
                                 this, SLOT(setMenuActionState(DatabaseWidget::Mode)));
@@ -198,9 +220,11 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(SIGNAL(entryContextMenuRequested(QPoint)),
                                 this, SLOT(showEntryContextMenu(QPoint)));
 
-    // Notify search when the active database changes
+    // Notify search when the active database changes or gets locked
     connect(m_ui->tabWidget, SIGNAL(activateDatabaseChanged(DatabaseWidget*)),
             search, SLOT(databaseChanged(DatabaseWidget*)));
+    connect(m_ui->tabWidget, SIGNAL(databaseLocked(DatabaseWidget*)),
+            search, SLOT(databaseChanged()));
 
     connect(m_ui->tabWidget, SIGNAL(tabNameChanged()),
             SLOT(updateWindowTitle()));
@@ -235,6 +259,8 @@ MainWindow::MainWindow()
             SLOT(changeMasterKey()));
     connect(m_ui->actionChangeDatabaseSettings, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(changeDatabaseSettings()));
+    connect(m_ui->actionImportCsv, SIGNAL(triggered()), m_ui->tabWidget,
+            SLOT(importCsv()));
     connect(m_ui->actionImportKeePass1, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(importKeePass1Database()));
     connect(m_ui->actionRepairDatabase, SIGNAL(triggered()), this,
@@ -254,6 +280,13 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(m_ui->actionEntryDelete, SIGNAL(triggered()),
             SLOT(deleteEntries()));
 
+    m_actionMultiplexer.connect(m_ui->actionEntryTotp, SIGNAL(triggered()),
+            SLOT(showTotp()));
+    m_actionMultiplexer.connect(m_ui->actionEntrySetupTotp, SIGNAL(triggered()),
+            SLOT(setupTotp()));
+
+    m_actionMultiplexer.connect(m_ui->actionEntryCopyTotp, SIGNAL(triggered()),
+            SLOT(copyTotp()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyTitle, SIGNAL(triggered()),
             SLOT(copyTitle()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyUsername, SIGNAL(triggered()),
@@ -275,10 +308,18 @@ MainWindow::MainWindow()
             SLOT(switchToGroupEdit()));
     m_actionMultiplexer.connect(m_ui->actionGroupDelete, SIGNAL(triggered()),
             SLOT(deleteGroup()));
+    m_actionMultiplexer.connect(m_ui->actionGroupEmptyRecycleBin, SIGNAL(triggered()),
+            SLOT(emptyRecycleBin()));
 
     connect(m_ui->actionSettings, SIGNAL(triggered()), SLOT(switchToSettings()));
     connect(m_ui->actionPasswordGenerator, SIGNAL(toggled(bool)), SLOT(switchToPasswordGen(bool)));
     connect(m_ui->passwordGeneratorWidget, SIGNAL(dialogTerminated()), SLOT(closePasswordGen()));
+
+    connect(m_ui->welcomeWidget, SIGNAL(newDatabase()), SLOT(switchToNewDatabase()));
+    connect(m_ui->welcomeWidget, SIGNAL(openDatabase()), SLOT(switchToOpenDatabase()));
+    connect(m_ui->welcomeWidget, SIGNAL(openDatabaseFile(QString)), SLOT(switchToDatabaseFile(QString)));
+    connect(m_ui->welcomeWidget, SIGNAL(importKeePass1Database()), SLOT(switchToKeePass1Database()));
+    connect(m_ui->welcomeWidget, SIGNAL(importCsv()), SLOT(switchToImportCsv()));
 
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
 
@@ -286,7 +327,21 @@ MainWindow::MainWindow()
     setUnifiedTitleAndToolBarOnMac(true);
 #endif
 
+    connect(m_ui->tabWidget, SIGNAL(messageGlobal(QString,MessageWidget::MessageType)), this, SLOT(displayGlobalMessage(QString, MessageWidget::MessageType)));
+    connect(m_ui->tabWidget, SIGNAL(messageDismissGlobal()), this, SLOT(hideGlobalMessage()));
+    connect(m_ui->tabWidget, SIGNAL(messageTab(QString,MessageWidget::MessageType)), this, SLOT(displayTabMessage(QString, MessageWidget::MessageType)));
+    connect(m_ui->tabWidget, SIGNAL(messageDismissTab()), this, SLOT(hideTabMessage()));
+
+    m_screenLockListener = new ScreenLockListener(this);
+    connect(m_screenLockListener, SIGNAL(screenLocked()), SLOT(handleScreenLock()));
+
     updateTrayIcon();
+
+    if (config()->hasAccessError()) {
+        m_ui->globalMessageWidget->showMessage(
+            tr("Access error for config file %1").arg(config()->getFileName()), MessageWidget::Error);
+    }
+
 }
 
 MainWindow::~MainWindow()
@@ -295,7 +350,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::appExit()
 {
-    appExitCalled = true;
+    m_appExitCalled = true;
     close();
 }
 
@@ -344,6 +399,11 @@ void MainWindow::openRecentDatabase(QAction* action)
 void MainWindow::clearLastDatabases()
 {
     config()->set("LastDatabases", QVariant());
+    bool inWelcomeWidget = (m_ui->stackedWidget->currentIndex() == 2);
+
+    if (inWelcomeWidget) {
+        m_ui->welcomeWidget->refreshLastDatabases();
+    }
 }
 
 void MainWindow::openDatabase(const QString& fileName, const QString& pw, const QString& keyFile)
@@ -354,8 +414,8 @@ void MainWindow::openDatabase(const QString& fileName, const QString& pw, const 
 void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 {
     int currentIndex = m_ui->stackedWidget->currentIndex();
-    bool inDatabaseTabWidget = (currentIndex == 0);
-    bool inWelcomeWidget = (currentIndex == 2);
+    bool inDatabaseTabWidget = (currentIndex == DatabaseTabScreen);
+    bool inWelcomeWidget = (currentIndex == WelcomeScreen);
 
     if (inDatabaseTabWidget && m_ui->tabWidget->currentIndex() != -1) {
         DatabaseWidget* dbWidget = m_ui->tabWidget->currentDatabaseWidget();
@@ -371,6 +431,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             bool singleEntrySelected = dbWidget->numberOfSelectedEntries() == 1;
             bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0;
             bool groupSelected = dbWidget->isGroupSelected();
+            bool recycleBinSelected = dbWidget->isRecycleBinSelected();
 
             m_ui->actionEntryNew->setEnabled(!inSearch);
             m_ui->actionEntryClone->setEnabled(singleEntrySelected);
@@ -382,11 +443,17 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryCopyURL->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUrl());
             m_ui->actionEntryCopyNotes->setEnabled(singleEntrySelected && dbWidget->currentEntryHasNotes());
             m_ui->menuEntryCopyAttribute->setEnabled(singleEntrySelected);
+            m_ui->menuEntryTotp->setEnabled(true);
             m_ui->actionEntryAutoType->setEnabled(singleEntrySelected);
             m_ui->actionEntryOpenUrl->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUrl());
+            m_ui->actionEntryTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
+            m_ui->actionEntryCopyTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
+            m_ui->actionEntrySetupTotp->setEnabled(singleEntrySelected);
             m_ui->actionGroupNew->setEnabled(groupSelected);
             m_ui->actionGroupEdit->setEnabled(groupSelected);
             m_ui->actionGroupDelete->setEnabled(groupSelected && dbWidget->canDeleteCurrentGroup());
+            m_ui->actionGroupEmptyRecycleBin->setVisible(recycleBinSelected);
+            m_ui->actionGroupEmptyRecycleBin->setEnabled(recycleBinSelected);
             m_ui->actionChangeMasterKey->setEnabled(true);
             m_ui->actionChangeDatabaseSettings->setEnabled(true);
             m_ui->actionDatabaseSave->setEnabled(true);
@@ -398,6 +465,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             break;
         }
         case DatabaseWidget::EditMode:
+        case DatabaseWidget::ImportMode:
         case DatabaseWidget::LockedMode: {
             const QList<QAction*> entryActions = m_ui->menuEntries->actions();
             for (QAction* action : entryActions) {
@@ -414,6 +482,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryCopyURL->setEnabled(false);
             m_ui->actionEntryCopyNotes->setEnabled(false);
             m_ui->menuEntryCopyAttribute->setEnabled(false);
+            m_ui->menuEntryTotp->setEnabled(false);
 
             m_ui->actionChangeMasterKey->setEnabled(false);
             m_ui->actionChangeDatabaseSettings->setEnabled(false);
@@ -446,6 +515,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         m_ui->actionEntryCopyURL->setEnabled(false);
         m_ui->actionEntryCopyNotes->setEnabled(false);
         m_ui->menuEntryCopyAttribute->setEnabled(false);
+        m_ui->menuEntryTotp->setEnabled(false);
 
         m_ui->actionChangeMasterKey->setEnabled(false);
         m_ui->actionChangeDatabaseSettings->setEnabled(false);
@@ -462,13 +532,13 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
     m_ui->actionDatabaseNew->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
     m_ui->actionDatabaseOpen->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
     m_ui->menuRecentDatabases->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
-    m_ui->actionImportKeePass1->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
+    m_ui->menuImport->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
     m_ui->actionDatabaseMerge->setEnabled(inDatabaseTabWidget);
     m_ui->actionRepairDatabase->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
 
     m_ui->actionLockDatabases->setEnabled(m_ui->tabWidget->hasLockableDatabases());
 
-    if ((3 == currentIndex) != m_ui->actionPasswordGenerator->isChecked()) {
+    if ((currentIndex == PasswordGeneratorScreen) != m_ui->actionPasswordGenerator->isChecked()) {
         bool blocked = m_ui->actionPasswordGenerator->blockSignals(true);
         m_ui->actionPasswordGenerator->toggle();
         m_ui->actionPasswordGenerator->blockSignals(blocked);
@@ -480,7 +550,7 @@ void MainWindow::updateWindowTitle()
     QString customWindowTitlePart;
     int stackedWidgetIndex = m_ui->stackedWidget->currentIndex();
     int tabWidgetIndex = m_ui->tabWidget->currentIndex();
-    if (stackedWidgetIndex == 0 && tabWidgetIndex != -1) {
+    if (stackedWidgetIndex == DatabaseTabScreen && tabWidgetIndex != -1) {
         customWindowTitlePart = m_ui->tabWidget->tabText(tabWidgetIndex);
         if (m_ui->tabWidget->readOnly(tabWidgetIndex)) {
             customWindowTitlePart.append(QString(" [%1]").arg(tr("read-only")));
@@ -496,29 +566,37 @@ void MainWindow::updateWindowTitle()
         windowTitle = QString("%1 - %2").arg(customWindowTitlePart, BaseWindowTitle);
     }
 
+    if (customWindowTitlePart.isEmpty() || stackedWidgetIndex == 1) {
+        setWindowFilePath("");
+    } else {
+        setWindowFilePath(m_ui->tabWidget->databasePath(tabWidgetIndex));
+    }
+
+    setWindowModified(m_ui->tabWidget->isModified(tabWidgetIndex));
+
     setWindowTitle(windowTitle);
 }
 
 void MainWindow::showAboutDialog()
 {
     AboutDialog* aboutDialog = new AboutDialog(this);
-    aboutDialog->show();
+    aboutDialog->open();
 }
 
 void MainWindow::switchToDatabases()
 {
     if (m_ui->tabWidget->currentIndex() == -1) {
-        m_ui->stackedWidget->setCurrentIndex(2);
+        m_ui->stackedWidget->setCurrentIndex(WelcomeScreen);
     }
     else {
-        m_ui->stackedWidget->setCurrentIndex(0);
+        m_ui->stackedWidget->setCurrentIndex(DatabaseTabScreen);
     }
 }
 
 void MainWindow::switchToSettings()
 {
     m_ui->settingsWidget->loadSettings();
-    m_ui->stackedWidget->setCurrentIndex(1);
+    m_ui->stackedWidget->setCurrentIndex(SettingsScreen);
 }
 
 void MainWindow::switchToPasswordGen(bool enabled)
@@ -527,7 +605,7 @@ void MainWindow::switchToPasswordGen(bool enabled)
       m_ui->passwordGeneratorWidget->loadSettings();
       m_ui->passwordGeneratorWidget->regeneratePassword();
       m_ui->passwordGeneratorWidget->setStandaloneMode(true);
-      m_ui->stackedWidget->setCurrentIndex(3);
+      m_ui->stackedWidget->setCurrentIndex(PasswordGeneratorScreen);
     } else {
       m_ui->passwordGeneratorWidget->saveSettings();
       switchToDatabases();
@@ -539,6 +617,36 @@ void MainWindow::closePasswordGen()
     switchToPasswordGen(false);
 }
 
+void MainWindow::switchToNewDatabase()
+{
+    m_ui->tabWidget->newDatabase();
+    switchToDatabases();
+}
+
+void MainWindow::switchToOpenDatabase()
+{
+    m_ui->tabWidget->openDatabase();
+    switchToDatabases();
+}
+
+void MainWindow::switchToDatabaseFile(QString file)
+{
+    m_ui->tabWidget->openDatabase(file);
+    switchToDatabases();
+}
+
+void MainWindow::switchToKeePass1Database()
+{
+    m_ui->tabWidget->importKeePass1Database();
+    switchToDatabases();
+}
+
+void MainWindow::switchToImportCsv()
+{
+    m_ui->tabWidget->importCsv();
+    switchToDatabases();
+}
+
 void MainWindow::databaseStatusChanged(DatabaseWidget *)
 {
     updateTrayIcon();
@@ -546,11 +654,11 @@ void MainWindow::databaseStatusChanged(DatabaseWidget *)
 
 void MainWindow::databaseTabChanged(int tabIndex)
 {
-    if (tabIndex != -1 && m_ui->stackedWidget->currentIndex() == 2) {
-        m_ui->stackedWidget->setCurrentIndex(0);
+    if (tabIndex != -1 && m_ui->stackedWidget->currentIndex() == WelcomeScreen) {
+        m_ui->stackedWidget->setCurrentIndex(DatabaseTabScreen);
     }
-    else if (tabIndex == -1 && m_ui->stackedWidget->currentIndex() == 0) {
-        m_ui->stackedWidget->setCurrentIndex(2);
+    else if (tabIndex == -1 && m_ui->stackedWidget->currentIndex() == DatabaseTabScreen) {
+        m_ui->stackedWidget->setCurrentIndex(WelcomeScreen);
     }
 
     m_actionMultiplexer.setCurrentObject(m_ui->tabWidget->currentDatabaseWidget());
@@ -558,9 +666,15 @@ void MainWindow::databaseTabChanged(int tabIndex)
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
+    // ignore double close events (happens on macOS when closing from the dock)
+    if (m_appExiting) {
+        event->accept();
+        return;
+    }
+
     bool minimizeOnClose = isTrayIconEnabled() &&
                            config()->get("GUI/MinimizeOnClose").toBool();
-    if (minimizeOnClose && !appExitCalled)
+    if (minimizeOnClose && !m_appExitCalled)
     {
         event->ignore();
         hideWindow();
@@ -575,6 +689,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
     bool accept = saveLastDatabases();
 
     if (accept) {
+        m_appExiting = true;
         saveWindowInformation();
 
         event->accept();
@@ -647,10 +762,17 @@ void MainWindow::updateTrayIcon()
             QAction* actionToggle = new QAction(tr("Toggle window"), menu);
             menu->addAction(actionToggle);
 
+#ifdef Q_OS_MAC
+            QAction* actionQuit = new QAction(tr("Quit KeePassXC"), menu);
+            menu->addAction(actionQuit);
+
+            connect(actionQuit, SIGNAL(triggered()), SLOT(appExit()));
+#else
             menu->addAction(m_ui->actionQuit);
 
             connect(m_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
                     SLOT(trayIconTriggered(QSystemTrayIcon::ActivationReason)));
+#endif
             connect(actionToggle, SIGNAL(triggered()), SLOT(toggleWindow()));
 
             m_trayIcon->setContextMenu(menu);
@@ -730,7 +852,9 @@ void MainWindow::trayIconTriggered(QSystemTrayIcon::ActivationReason reason)
 
 void MainWindow::hideWindow()
 {
+#ifndef Q_OS_MAC
     setWindowState(windowState() | Qt::WindowMinimized);
+#endif
     QTimer::singleShot(0, this, SLOT(hide()));
 
     if (config()->get("security/lockdatabaseminimize").toBool()) {
@@ -803,8 +927,9 @@ void MainWindow::repairDatabase()
             KeePass2Writer writer;
             writer.writeDatabase(saveFileName, dbRepairWidget->database());
             if (writer.hasError()) {
-                QMessageBox::critical(this, tr("Error"),
-                    tr("Writing the database failed.").append("\n\n").append(writer.errorString()));
+                displayGlobalMessage(
+                    tr("Writing the database failed.").append("\n").append(writer.errorString()),
+                    MessageWidget::Error);
             }
         }
     }
@@ -812,11 +937,49 @@ void MainWindow::repairDatabase()
 
 bool MainWindow::isTrayIconEnabled() const
 {
-#ifdef Q_OS_MAC
-    // systray not useful on OS X
-    return false;
-#else
     return config()->get("GUI/ShowTrayIcon").toBool()
             && QSystemTrayIcon::isSystemTrayAvailable();
-#endif
+}
+
+void MainWindow::displayGlobalMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton)
+{
+    m_ui->globalMessageWidget->setCloseButtonVisible(showClosebutton);
+    m_ui->globalMessageWidget->showMessage(text, type);
+}
+
+void MainWindow::displayTabMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton)
+{
+    m_ui->globalMessageWidget->setCloseButtonVisible(showClosebutton);
+    m_ui->tabWidget->currentDatabaseWidget()->showMessage(text, type);
+}
+
+void MainWindow::hideGlobalMessage()
+{
+    m_ui->globalMessageWidget->hideMessage();
+}
+
+void MainWindow::hideTabMessage()
+{
+    if (m_ui->stackedWidget->currentIndex() == DatabaseTabScreen) {
+        m_ui->tabWidget->currentDatabaseWidget()->hideMessage();
+    }
+}
+
+void MainWindow::showYubiKeyPopup()
+{
+    displayGlobalMessage(tr("Please touch the button on your YubiKey!"), MessageWidget::Information, false);
+    setEnabled(false);
+}
+
+void MainWindow::hideYubiKeyPopup()
+{
+    hideGlobalMessage();
+    setEnabled(true);
+}
+
+void MainWindow::handleScreenLock()
+{
+    if (config()->get("security/lockdatabasescreenlock").toBool()){
+        lockDatabasesAfterInactivity();
+    }
 }

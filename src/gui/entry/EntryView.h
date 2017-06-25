@@ -42,17 +42,17 @@ public:
     int numberOfSelectedEntries();
     void setFirstEntryActive();
 
-public Q_SLOTS:
+public slots:
     void setGroup(Group* group);
 
-Q_SIGNALS:
+signals:
     void entryActivated(Entry* entry, EntryModel::ModelColumn column);
     void entrySelectionChanged();
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;
 
-private Q_SLOTS:
+private slots:
     void emitEntryActivated(const QModelIndex& index);
     void switchToEntryListMode();
     void switchToGroupMode();

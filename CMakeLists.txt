@@ -1,4 +1,5 @@
 #  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+#  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,6 +26,9 @@ cmake_minimum_required(VERSION 2.8.12)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
+# Support Visual Studio Code
+include(CMakeToolsHelpers OPTIONAL)
+
 include(CheckCCompilerFlag)
 include(CheckCXXCompilerFlag)
 include(CheckCXXSourceCompiles)
@@ -32,14 +36,21 @@ include(CheckCXXSourceCompiles)
 option(WITH_TESTS "Enable building of unit tests" ON)
 option(WITH_GUI_TESTS "Enable building of GUI tests" OFF)
 option(WITH_DEV_BUILD "Use only for development. Disables/warns about deprecated methods." OFF)
-option(WITH_COVERAGE "Use to build with coverage tests. (GCC ONLY)." OFF)
+option(WITH_ASAN "Enable address sanitizer checks (Linux only)" OFF)
+option(WITH_COVERAGE "Use to build with coverage tests (GCC only)." OFF)
+option(WITH_APP_BUNDLE "Enable Application Bundle for OS X" ON)
 
-option(WITH_XC_AUTOTYPE "Include Autotype." OFF)
-option(WITH_XC_HTTP "Include KeePassHTTP." OFF)
-option(WITH_XC_YUBIKEY "Include Yubikey support." OFF)
+option(WITH_XC_AUTOTYPE "Include Auto-Type." ON)
+option(WITH_XC_HTTP "Include KeePassHTTP and Custom Icon Downloads." OFF)
+option(WITH_XC_YUBIKEY "Include YubiKey support." OFF)
 
-set(KEEPASSXC_VERSION "2.1.4")
-set(KEEPASSXC_VERSION_NUM "2.1.4")
+# Process ui files automatically from source files
+set(CMAKE_AUTOUIC ON)
+
+set(KEEPASSXC_VERSION_MAJOR "2")
+set(KEEPASSXC_VERSION_MINOR "2")
+set(KEEPASSXC_VERSION_PATCH "0")
+set(KEEPASSXC_VERSION "${KEEPASSXC_VERSION_MAJOR}.${KEEPASSXC_VERSION_MINOR}.${KEEPASSXC_VERSION_PATCH}")
 
 if("${CMAKE_C_COMPILER}" MATCHES "clang$" OR "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
   set(CMAKE_COMPILER_IS_CLANG 1)
@@ -68,18 +79,39 @@ endmacro(add_gcc_compiler_flags)
 
 add_definitions(-DQT_NO_EXCEPTIONS -DQT_STRICT_ITERATORS -DQT_NO_CAST_TO_ASCII)
 
-add_gcc_compiler_flags("-fno-common -fstack-protector --param=ssp-buffer-size=4")
+if(WITH_APP_BUNDLE)
+  add_definitions(-DWITH_APP_BUNDLE)
+endif()
+
+add_gcc_compiler_flags("-fno-common")
 add_gcc_compiler_flags("-Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long")
 add_gcc_compiler_flags("-Wformat=2 -Wmissing-format-attribute")
 add_gcc_compiler_flags("-fvisibility=hidden")
 add_gcc_compiler_cxxflags("-fvisibility-inlines-hidden")
 
+if((CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 4.8.999) OR CMAKE_COMPILER_IS_CLANGXX)
+    add_gcc_compiler_flags("-fstack-protector-strong")
+else()
+    add_gcc_compiler_flags("-fstack-protector --param=ssp-buffer-size=4")
+endif()
+
 add_gcc_compiler_cxxflags("-fno-exceptions -fno-rtti")
 add_gcc_compiler_cxxflags("-Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual")
 add_gcc_compiler_cflags("-Wchar-subscripts -Wwrite-strings")
+if(WITH_ASAN)
+  if(NOT CMAKE_SYSTEM_NAME STREQUAL "Linux")
+      message(FATAL_ERROR "WITH_ASAN is only supported on Linux at the moment.")
+  endif()
+
+  add_gcc_compiler_flags("-fsanitize=address -DWITH_ASAN")
+
+  if(NOT (CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.9))
+    add_gcc_compiler_flags("-fsanitize=leak -DWITH_LSAN")
+  endif()
+endif()
 
 string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
-if (CMAKE_BUILD_TYPE_LOWER MATCHES (release|relwithdebinfo|minsizerel))
+if (CMAKE_BUILD_TYPE_LOWER MATCHES "(release|relwithdebinfo|minsizerel)")
   add_gcc_compiler_flags("-D_FORTIFY_SOURCE=2")
 endif()
 
@@ -105,10 +137,14 @@ if(CMAKE_COMPILER_IS_GNUCC)
 endif()
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  if (CMAKE_COMPILER_IS_CLANGXX)
+      add_gcc_compiler_flags("-Qunused-arguments")
+  endif()
+  add_gcc_compiler_flags("-pie -fPIE")
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--no-add-needed -Wl,--as-needed -Wl,--no-undefined")
-  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-z,relro")
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-z,relro,-z,now")
   set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--no-add-needed -Wl,--as-needed")
-  set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,-z,relro")
+  set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,-z,relro,-z,now")
 endif()
 
 add_gcc_compiler_cxxflags("-std=c++11")
@@ -127,30 +163,37 @@ if(MINGW)
   set(CMAKE_RC_COMPILER_INIT windres)
   enable_language(RC)
   set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> <FLAGS> -O coff <DEFINES> -i <SOURCE> -o <OBJECT>")
-  link_libraries(ws2_32 wsock32)
+  if(NOT (CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo"))
+    # Enable DEP and ASLR
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--nxcompat -Wl,--dynamicbase")
+    set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--nxcompat -Wl,--dynamicbase")
+  endif()
 endif()
 
-if(APPLE OR MINGW)
+if(APPLE AND WITH_APP_BUNDLE OR MINGW)
   set(PROGNAME KeePassXC)
 else()
   set(PROGNAME keepassxc)
 endif()
 
-if(APPLE AND "${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr/local")
+if(APPLE AND WITH_APP_BUNDLE AND "${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr/local")
   set(CMAKE_INSTALL_PREFIX "/Applications")
 endif()
 
 if(MINGW)
+  set(CLI_INSTALL_DIR    ".")
   set(BIN_INSTALL_DIR    ".")
   set(PLUGIN_INSTALL_DIR ".")
   set(DATA_INSTALL_DIR   "share")
-elseif(APPLE)
+elseif(APPLE AND WITH_APP_BUNDLE)
+  set(CLI_INSTALL_DIR    "/usr/local/bin")
   set(BIN_INSTALL_DIR    ".")
   set(PLUGIN_INSTALL_DIR "${PROGNAME}.app/Contents/PlugIns")
   set(DATA_INSTALL_DIR   "${PROGNAME}.app/Contents/Resources")
 else()
   include(GNUInstallDirs)
 
+  set(CLI_INSTALL_DIR    "${CMAKE_INSTALL_BINDIR}")
   set(BIN_INSTALL_DIR    "${CMAKE_INSTALL_BINDIR}")
   set(PLUGIN_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/keepassxc")
   set(DATA_INSTALL_DIR   "${CMAKE_INSTALL_DATADIR}/keepassxc")
@@ -161,6 +204,7 @@ if(WITH_TESTS)
 endif(WITH_TESTS)
 
 find_package(Qt5Core          5.2 REQUIRED)
+find_package(Qt5Network       5.2 REQUIRED)
 find_package(Qt5Concurrent    5.2 REQUIRED)
 find_package(Qt5Widgets       5.2 REQUIRED)
 find_package(Qt5Test          5.2 REQUIRED)
@@ -194,6 +238,13 @@ if(NOT ZLIB_SUPPORTS_GZIP)
   message(FATAL_ERROR "zlib 1.2.x or higher is required to use the gzip format")
 endif()
 
+# Optional
+if(WITH_XC_YUBIKEY)
+  find_package(YubiKey REQUIRED)
+
+  include_directories(SYSTEM ${YUBIKEY_INCLUDE_DIRS})
+endif()
+
 if(UNIX)
   check_cxx_source_compiles("#include <sys/prctl.h>
     int main() { prctl(PR_SET_DUMPABLE, 0); return 0; }"
@@ -222,7 +273,6 @@ include(FeatureSummary)
 
 add_subdirectory(src)
 add_subdirectory(share)
-add_subdirectory(utils)
 if(WITH_TESTS)
   add_subdirectory(tests)
 endif(WITH_TESTS)
@@ -232,6 +282,6 @@ if(PRINT_SUMMARY)
   feature_summary(WHAT ALL)
 else()
   # This will only print ENABLED and DISABLED feature
-  print_enabled_features()
-  print_disabled_features()
+  feature_summary(WHAT ENABLED_FEATURES DESCRIPTION "Enabled features:")
+  feature_summary(WHAT DISABLED_FEATURES DESCRIPTION "Disabled features:")
 endif()

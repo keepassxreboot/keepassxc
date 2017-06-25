@@ -34,7 +34,7 @@ protected:
     void dropEvent(QDropEvent* event) override;
     void tabLayoutChange() override;
 
-private Q_SLOTS:
+private slots:
     void dragSwitchTab();
 
 private:

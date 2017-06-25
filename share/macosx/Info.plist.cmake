@@ -4,6 +4,8 @@
 <dict>
   <key>NSPrincipalClass</key>
   <string>NSApplication</string>
+  <key>CFBundleAllowMixedLocalizations</key>
+  <true/>
   <key>CFBundleDevelopmentRegion</key>
   <string>English</string>
   <key>CFBundleDisplayName</key>
@@ -27,7 +29,7 @@
   <key>CFBundleVersion</key>
   <string>${KEEPASSXC_VERSION_NUM}</string>
   <key>NSHumanReadableCopyright</key>
-    <string>Copyright 2016 KeePassXC Development Team</string>
+    <string>Copyright 2016-2017 KeePassXC Development Team</string>
     <key>CFBundleDocumentTypes</key>
     <array>
       <dict>

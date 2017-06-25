@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,7 +24,9 @@
 #include <QSystemTrayIcon>
 
 #include "core/SignalMultiplexer.h"
+#include "core/ScreenLockListener.h"
 #include "gui/DatabaseWidget.h"
+#include "gui/Application.h"
 
 namespace Ui {
     class MainWindow;
@@ -39,22 +42,40 @@ public:
     MainWindow();
     ~MainWindow();
 
-public Q_SLOTS:
+    enum StackedWidgetIndex
+    {
+        DatabaseTabScreen = 0,
+        SettingsScreen = 1,
+        WelcomeScreen = 2,
+        PasswordGeneratorScreen = 3
+    };
+
+public slots:
     void openDatabase(const QString& fileName, const QString& pw = QString(),
                       const QString& keyFile = QString());
     void appExit();
+    void displayGlobalMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton = true);
+    void displayTabMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton = true);
+    void hideGlobalMessage();
+    void showYubiKeyPopup();
+    void hideYubiKeyPopup();
 
 protected:
      void closeEvent(QCloseEvent* event) override;
      void changeEvent(QEvent* event) override;
 
-private Q_SLOTS:
+private slots:
     void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::None);
     void updateWindowTitle();
     void showAboutDialog();
     void switchToDatabases();
     void switchToSettings();
     void switchToPasswordGen(bool enabled);
+    void switchToNewDatabase();
+    void switchToOpenDatabase();
+    void switchToDatabaseFile(QString file);
+    void switchToKeePass1Database();
+    void switchToImportCsv();
     void closePasswordGen();
     void databaseStatusChanged(DatabaseWidget *dbWidget);
     void databaseTabChanged(int tabIndex);
@@ -72,6 +93,8 @@ private Q_SLOTS:
     void toggleWindow();
     void lockDatabasesAfterInactivity();
     void repairDatabase();
+    void hideTabMessage();
+    void handleScreenLock();
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);
@@ -93,10 +116,15 @@ private:
     InactivityTimer* m_inactivityTimer;
     int m_countDefaultAttributes;
     QSystemTrayIcon* m_trayIcon;
+    ScreenLockListener* m_screenLockListener;
 
     Q_DISABLE_COPY(MainWindow)
 
-    bool appExitCalled;
+    bool m_appExitCalled;
+    bool m_appExiting;
 };
+
+#define KEEPASSXC_MAIN_WINDOW (qobject_cast<Application*>(qApp) ? \
+                               qobject_cast<MainWindow*>(qobject_cast<Application*>(qApp)->mainWindow()) : nullptr)
 
 #endif // KEEPASSX_MAINWINDOW_H

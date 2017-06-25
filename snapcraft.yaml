@@ -1,17 +1,17 @@
 name: keepassxc
-version: 2.1.3
+version: 2.2.0
 grade: stable
 summary: community driven port of the windows application “Keepass Password Safe”
 description: |
-  KeePassXC is an application for people with extremly high demands on secure
+  KeePassXC is an application for people with extremely high demands on secure
   personal data management. It has a light interface, is cross platform and
-  published under the terms of the GNU General Public License.
+  is published under the terms of the GNU General Public License.
 confinement: strict
 
 apps:
   keepassxc:
     command: desktop-launch keepassxc
-    plugs: [unity7, opengl, gsettings, home, network, network-bind]
+    plugs: [unity7, x11, opengl, gsettings, home, network, network-bind, removable-media]
 
 parts:
   keepassxc:
@@ -22,6 +22,7 @@ parts:
       - -DWITH_TESTS=OFF
       - -DWITH_XC_AUTOTYPE=ON
       - -DWITH_XC_HTTP=ON
+      - -DWITH_XC_YUBIKEY=ON
     build-packages:
       - g++
       - libgcrypt20-dev
@@ -30,4 +31,20 @@ parts:
       - qttools5-dev
       - qttools5-dev-tools
       - zlib1g-dev
+      - libxi-dev
+      - libxtst-dev
+      - libyubikey-dev
+      - libykpers-1-dev
     after: [desktop-qt5]
+  desktop-qt5:
+    # Redefine stage packages to work with Ubuntu 17.04
+    stage-packages:
+      - libxkbcommon0
+      - ttf-ubuntu-font-family
+      - dmz-cursor-theme
+      - light-themes
+      - shared-mime-info
+      - libqt5gui5
+      - libgdk-pixbuf2.0-0
+      - libqt5svg5 # for loading icon themes which are svg
+      - locales-all

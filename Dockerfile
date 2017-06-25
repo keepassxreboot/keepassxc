@@ -32,10 +32,12 @@ RUN set -x \
         qt58base \
         qt58tools \
         qt58x11extras \
-        libmicrohttpd-dev \
         libxi-dev \
         libxtst-dev \
         zlib1g-dev \
+        libyubikey-dev \
+        libykpers-1-dev \
+        xvfb \
         wget \
         file \
         fuse \

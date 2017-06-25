@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,7 +34,7 @@ class TestGui : public QObject
 {
     Q_OBJECT
 
-private Q_SLOTS:
+private slots:
     void initTestCase();
     void init();
     void cleanup();
@@ -44,10 +45,13 @@ private Q_SLOTS:
     void testTabs();
     void testEditEntry();
     void testAddEntry();
-    void testEntryEntropy();
+    void testPasswordEntryEntropy();
+    void testDicewareEntryEntropy();
+    void testTotp();
     void testSearch();
     void testDeleteEntry();
     void testCloneEntry();
+    void testEntryPlaceholders();
     void testDragAndDropEntry();
     void testDragAndDropGroup();
     void testSaveAs();

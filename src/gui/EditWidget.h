@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,8 +20,11 @@
 #define KEEPASSX_EDITWIDGET_H
 
 #include <QScopedPointer>
+#include <QtWidgets/QStyledItemDelegate>
+#include <QStyledItemDelegate>
 
 #include "gui/DialogyWidget.h"
+#include "gui/MessageWidget.h"
 
 class QLabel;
 
@@ -36,17 +40,22 @@ public:
     explicit EditWidget(QWidget* parent = nullptr);
     ~EditWidget();
 
-    void add(const QString& labelText, QWidget* widget);
-    void setRowHidden(QWidget* widget, bool hide);
-    void setCurrentRow(int index);
+    void addPage(const QString& labelText, const QIcon& icon, QWidget* widget);
+    void setPageHidden(QWidget* widget, bool hidden);
+    void setCurrentPage(int index);
     void setHeadline(const QString& text);
     QLabel* headlineLabel();
     void setReadOnly(bool readOnly);
     bool readOnly() const;
 
-Q_SIGNALS:
+signals:
+    void apply();
     void accepted();
     void rejected();
+
+protected slots:
+    void showMessage(const QString& text, MessageWidget::MessageType type);
+    void hideMessage();
 
 private:
     const QScopedPointer<Ui::EditWidget> m_ui;

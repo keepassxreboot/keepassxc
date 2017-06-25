@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2016 Jonathan White <support@dmapps.us>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,10 +22,12 @@
 #include <QKeyEvent>
 #include <QMenu>
 #include <QShortcut>
+#include <QToolButton>
 
+#include "core/Config.h"
 #include "core/FilePath.h"
 
-SearchWidget::SearchWidget(QWidget *parent)
+SearchWidget::SearchWidget(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::SearchWidget())
 {
@@ -34,58 +37,63 @@ SearchWidget::SearchWidget(QWidget *parent)
     m_searchTimer->setSingleShot(true);
 
     connect(m_ui->searchEdit, SIGNAL(textChanged(QString)), SLOT(startSearchTimer()));
-    connect(m_ui->searchIcon, SIGNAL(pressed()), m_ui->searchEdit, SLOT(setFocus()));
-    connect(m_ui->clearIcon, SIGNAL(pressed()), m_ui->searchEdit, SLOT(clear()));
-    connect(m_ui->clearIcon, SIGNAL(pressed()), m_ui->searchEdit, SLOT(setFocus()));
+    connect(m_ui->clearIcon, SIGNAL(triggered(bool)), m_ui->searchEdit, SLOT(clear()));
     connect(m_searchTimer, SIGNAL(timeout()), this, SLOT(startSearch()));
     connect(this, SIGNAL(escapePressed()), m_ui->searchEdit, SLOT(clear()));
 
     new QShortcut(Qt::CTRL + Qt::Key_F, this, SLOT(searchFocus()), nullptr, Qt::ApplicationShortcut);
-	new QShortcut(Qt::Key_Escape, m_ui->searchEdit, SLOT(clear()), nullptr, Qt::ApplicationShortcut);
+    new QShortcut(Qt::Key_Escape, m_ui->searchEdit, SLOT(clear()), nullptr, Qt::ApplicationShortcut);
 
     m_ui->searchEdit->installEventFilter(this);
 
-    QMenu *searchMenu = new QMenu();
+    QMenu* searchMenu = new QMenu();
     m_actionCaseSensitive = searchMenu->addAction(tr("Case Sensitive"), this, SLOT(updateCaseSensitive()));
     m_actionCaseSensitive->setObjectName("actionSearchCaseSensitive");
     m_actionCaseSensitive->setCheckable(true);
 
+    m_actionLimitGroup = searchMenu->addAction(tr("Limit search to selected group"), this, SLOT(updateLimitGroup()));
+    m_actionLimitGroup->setObjectName("actionSearchLimitGroup");
+    m_actionLimitGroup->setCheckable(true);
+    m_actionLimitGroup->setChecked(config()->get("SearchLimitGroup", false).toBool());
+
     m_ui->searchIcon->setIcon(filePath()->icon("actions", "system-search"));
     m_ui->searchIcon->setMenu(searchMenu);
-    m_ui->searchIcon->setPopupMode(QToolButton::MenuButtonPopup);
+    m_ui->searchEdit->addAction(m_ui->searchIcon, QLineEdit::LeadingPosition);
 
     m_ui->clearIcon->setIcon(filePath()->icon("actions", "edit-clear-locationbar-rtl"));
-    m_ui->clearIcon->setEnabled(false);
+    m_ui->clearIcon->setVisible(false);
+    m_ui->searchEdit->addAction(m_ui->clearIcon, QLineEdit::TrailingPosition);
+
+    // Fix initial visibility of actions (bug in Qt)
+    for (QToolButton* toolButton : m_ui->searchEdit->findChildren<QToolButton*>()) {
+        toolButton->setVisible(toolButton->defaultAction()->isVisible());
+    }
 }
 
 SearchWidget::~SearchWidget()
 {
-
 }
 
-bool SearchWidget::eventFilter(QObject *obj, QEvent *event)
+bool SearchWidget::eventFilter(QObject* obj, QEvent* event)
 {
     if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+        QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
         if (keyEvent->key() == Qt::Key_Escape) {
             emit escapePressed();
             return true;
-        }
-        else if (keyEvent->matches(QKeySequence::Copy)) {
+        } else if (keyEvent->matches(QKeySequence::Copy)) {
             // If Control+C is pressed in the search edit when no text
             // is selected, copy the password of the current entry
             if (!m_ui->searchEdit->hasSelectedText()) {
                 emit copyPressed();
                 return true;
             }
-        }
-        else if (keyEvent->matches(QKeySequence::MoveToNextLine)) {
+        } else if (keyEvent->matches(QKeySequence::MoveToNextLine)) {
             if (m_ui->searchEdit->cursorPosition() == m_ui->searchEdit->text().length()) {
                 // If down is pressed at EOL, move the focus to the entry view
                 emit downPressed();
                 return true;
-            }
-            else {
+            } else {
                 // Otherwise move the cursor to EOL
                 m_ui->searchEdit->setCursorPosition(m_ui->searchEdit->text().length());
                 return true;
@@ -100,12 +108,13 @@ void SearchWidget::connectSignals(SignalMultiplexer& mx)
 {
     mx.connect(this, SIGNAL(search(QString)), SLOT(search(QString)));
     mx.connect(this, SIGNAL(caseSensitiveChanged(bool)), SLOT(setSearchCaseSensitive(bool)));
+    mx.connect(this, SIGNAL(limitGroupChanged(bool)), SLOT(setSearchLimitGroup(bool)));
     mx.connect(this, SIGNAL(copyPressed()), SLOT(copyPassword()));
     mx.connect(this, SIGNAL(downPressed()), SLOT(setFocus()));
     mx.connect(m_ui->searchEdit, SIGNAL(returnPressed()), SLOT(switchToEntryEdit()));
 }
 
-void SearchWidget::databaseChanged(DatabaseWidget *dbWidget)
+void SearchWidget::databaseChanged(DatabaseWidget* dbWidget)
 {
     if (dbWidget != nullptr) {
         // Set current search text from this database
@@ -113,6 +122,7 @@ void SearchWidget::databaseChanged(DatabaseWidget *dbWidget)
 
         // Enforce search policy
         emit caseSensitiveChanged(m_actionCaseSensitive->isChecked());
+        emit limitGroupChanged(m_actionLimitGroup->isChecked());
     } else {
         m_ui->searchEdit->clear();
     }
@@ -133,7 +143,7 @@ void SearchWidget::startSearch()
     }
 
     bool hasText = m_ui->searchEdit->text().length() > 0;
-    m_ui->clearIcon->setEnabled(hasText);
+    m_ui->clearIcon->setVisible(hasText);
 
     search(m_ui->searchEdit->text());
 }
@@ -148,6 +158,19 @@ void SearchWidget::setCaseSensitive(bool state)
     m_actionCaseSensitive->setChecked(state);
     updateCaseSensitive();
 }
+
+void SearchWidget::updateLimitGroup()
+{
+    config()->set("SearchLimitGroup", m_actionLimitGroup->isChecked());
+    emit limitGroupChanged(m_actionLimitGroup->isChecked());
+}
+
+void SearchWidget::setLimitGroup(bool state)
+{
+    m_actionLimitGroup->setChecked(state);
+    updateLimitGroup();
+}
+
 
 void SearchWidget::searchFocus()
 {

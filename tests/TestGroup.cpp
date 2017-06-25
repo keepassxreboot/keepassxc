@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -566,4 +567,190 @@ Database* TestGroup::createMergeTestDatabase()
     group2->setParent(db->rootGroup());
 
     return db;
+}
+
+void TestGroup::testFindEntry()
+{
+    Database* db = new Database();
+
+    Entry* entry1 = new Entry();
+    entry1->setTitle(QString("entry1"));
+    entry1->setGroup(db->rootGroup());
+    entry1->setUuid(Uuid::random());
+
+    Group* group1 = new Group();
+    group1->setName("group1");
+
+    Entry* entry2 = new Entry();
+
+    entry2->setTitle(QString("entry2"));
+    entry2->setGroup(group1);
+    entry2->setUuid(Uuid::random());
+
+    group1->setParent(db->rootGroup());
+
+    Entry* entry;
+
+    entry = db->rootGroup()->findEntry(entry1->uuid().toHex());
+    QVERIFY(entry != nullptr);
+    QCOMPARE(entry->title(), QString("entry1"));
+
+    entry = db->rootGroup()->findEntry(QString("entry1"));
+    QVERIFY(entry != nullptr);
+    QCOMPARE(entry->title(), QString("entry1"));
+
+    // We also can find the entry with the leading slash.
+    entry = db->rootGroup()->findEntry(QString("/entry1"));
+    QVERIFY(entry != nullptr);
+    QCOMPARE(entry->title(), QString("entry1"));
+
+    // But two slashes should not be accepted.
+    entry = db->rootGroup()->findEntry(QString("//entry1"));
+    QVERIFY(entry == nullptr);
+
+    entry = db->rootGroup()->findEntry(entry2->uuid().toHex());
+    QVERIFY(entry != nullptr);
+    QCOMPARE(entry->title(), QString("entry2"));
+
+    entry = db->rootGroup()->findEntry(QString("group1/entry2"));
+    QVERIFY(entry != nullptr);
+    QCOMPARE(entry->title(), QString("entry2"));
+
+    entry = db->rootGroup()->findEntry(QString("/entry2"));
+    QVERIFY(entry == nullptr);
+
+    // We also can find the entry with the leading slash.
+    entry = db->rootGroup()->findEntry(QString("/group1/entry2"));
+    QVERIFY(entry != nullptr);
+    QCOMPARE(entry->title(), QString("entry2"));
+
+    // Should also find the entry only by title.
+    entry = db->rootGroup()->findEntry(QString("entry2"));
+    QVERIFY(entry != nullptr);
+    QCOMPARE(entry->title(), QString("entry2"));
+
+    entry = db->rootGroup()->findEntry(QString("invalid/path/to/entry2"));
+    QVERIFY(entry == nullptr);
+
+    entry = db->rootGroup()->findEntry(QString("entry27"));
+    QVERIFY(entry == nullptr);
+
+    // A valid UUID that does not exist in this database.
+    entry = db->rootGroup()->findEntry(QString("febfb01ebcdf9dbd90a3f1579dc75281"));
+    QVERIFY(entry == nullptr);
+
+    // An invalid UUID.
+    entry = db->rootGroup()->findEntry(QString("febfb01ebcdf9dbd90a3f1579dc"));
+    QVERIFY(entry == nullptr);
+
+    delete db;
+}
+
+void TestGroup::testFindGroupByPath()
+{
+    Database* db = new Database();
+
+    Group* group1 = new Group();
+    group1->setName("group1");
+    group1->setParent(db->rootGroup());
+
+    Group* group2 = new Group();
+    group2->setName("group2");
+    group2->setParent(group1);
+
+    Group* group;
+
+    group = db->rootGroup()->findGroupByPath("/");
+    QVERIFY(group != nullptr);
+    QCOMPARE(group->uuid(), db->rootGroup()->uuid());
+
+    // We also accept it if the leading slash is missing.
+    group = db->rootGroup()->findGroupByPath("");
+    QVERIFY(group != nullptr);
+    QCOMPARE(group->uuid(), db->rootGroup()->uuid());
+
+    group = db->rootGroup()->findGroupByPath("/group1/");
+    QVERIFY(group != nullptr);
+    QCOMPARE(group->uuid(), group1->uuid());
+
+    // We also accept it if the leading slash is missing.
+    group = db->rootGroup()->findGroupByPath("group1/");
+    QVERIFY(group != nullptr);
+    QCOMPARE(group->uuid(), group1->uuid());
+
+    // Too many slashes at the end
+    group = db->rootGroup()->findGroupByPath("group1//");
+    QVERIFY(group == nullptr);
+
+    // Missing a slash at the end.
+    group = db->rootGroup()->findGroupByPath("/group1");
+    QVERIFY(group != nullptr);
+    QCOMPARE(group->uuid(), group1->uuid());
+
+    // Too many slashes at the start
+    group = db->rootGroup()->findGroupByPath("//group1");
+    QVERIFY(group == nullptr);
+
+    group = db->rootGroup()->findGroupByPath("/group1/group2/");
+    QVERIFY(group != nullptr);
+    QCOMPARE(group->uuid(), group2->uuid());
+
+    // We also accept it if the leading slash is missing.
+    group = db->rootGroup()->findGroupByPath("group1/group2/");
+    QVERIFY(group != nullptr);
+    QCOMPARE(group->uuid(), group2->uuid());
+
+    group = db->rootGroup()->findGroupByPath("group1/group2");
+    QVERIFY(group != nullptr);
+    QCOMPARE(group->uuid(), group2->uuid());
+
+    group = db->rootGroup()->findGroupByPath("invalid");
+    QVERIFY(group == nullptr);
+
+    delete db;
+}
+
+void TestGroup::testPrint()
+{
+    Database* db = new Database();
+
+    QString output = db->rootGroup()->print();
+    QCOMPARE(output, QString("[empty]\n"));
+
+    output = db->rootGroup()->print(true);
+    QCOMPARE(output, QString("[empty]\n"));
+
+    Entry* entry1 = new Entry();
+    entry1->setTitle(QString("entry1"));
+    entry1->setGroup(db->rootGroup());
+    entry1->setUuid(Uuid::random());
+
+    output = db->rootGroup()->print();
+    QCOMPARE(output, QString("entry1\n"));
+
+    output = db->rootGroup()->print(true);
+    QCOMPARE(output, QString("entry1 " + entry1->uuid().toHex() + "\n"));
+
+
+    Group* group1 = new Group();
+    group1->setName("group1");
+
+    Entry* entry2 = new Entry();
+
+    entry2->setTitle(QString("entry2"));
+    entry2->setGroup(group1);
+    entry2->setUuid(Uuid::random());
+
+    group1->setParent(db->rootGroup());
+
+    output = db->rootGroup()->print();
+    QVERIFY(output.contains(QString("entry1\n")));
+    QVERIFY(output.contains(QString("group1/\n")));
+    QVERIFY(output.contains(QString("  entry2\n")));
+
+    output = db->rootGroup()->print(true);
+    QVERIFY(output.contains(QString("entry1 " + entry1->uuid().toHex() + "\n")));
+    QVERIFY(output.contains(QString("group1/ " + group1->uuid().toHex() + "\n")));
+    QVERIFY(output.contains(QString("  entry2 " + entry2->uuid().toHex() + "\n")));
+    delete db;
 }

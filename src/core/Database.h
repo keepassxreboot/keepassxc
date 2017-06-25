@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -59,6 +60,8 @@ public:
         QByteArray transformedMasterKey;
         CompositeKey key;
         bool hasKey;
+        QByteArray masterSeed;
+        QByteArray challengeResponseKey;
     };
 
     Database();
@@ -88,7 +91,9 @@ public:
     QByteArray transformSeed() const;
     quint64 transformRounds() const;
     QByteArray transformedMasterKey() const;
-    const CompositeKey & key() const;
+    const CompositeKey& key() const;
+    QByteArray challengeResponseKey() const;
+    bool challengeMasterSeed(const QByteArray& masterSeed);
 
     void setCipher(const Uuid& cipher);
     void setCompressionAlgo(Database::CompressionAlgorithm algo);
@@ -104,9 +109,11 @@ public:
     bool verifyKey(const CompositeKey& key) const;
     void recycleEntry(Entry* entry);
     void recycleGroup(Group* group);
+    void emptyRecycleBin();
     void setEmitModified(bool value);
     void copyAttributesFrom(const Database* other);
     void merge(const Database* other);
+    QString saveToFile(QString filePath);
 
     /**
      * Returns a unique id that is only valid as long as the Database exists.
@@ -114,8 +121,10 @@ public:
     Uuid uuid();
 
     static Database* databaseByUuid(const Uuid& uuid);
+    static Database* openDatabaseFile(QString fileName, CompositeKey key);
+    static Database* unlockFromStdin(QString databaseFilename);
 
-Q_SIGNALS:
+signals:
     void groupDataChanged(Group* group);
     void groupAboutToAdd(Group* group, int index);
     void groupAdded();
@@ -127,7 +136,7 @@ Q_SIGNALS:
     void modified();
     void modifiedImmediate();
 
-private Q_SLOTS:
+private slots:
     void startModifiedTimer();
 
 private:

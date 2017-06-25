@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -26,6 +27,8 @@
 #include "core/Uuid.h"
 
 #include "gui/entry/EntryModel.h"
+#include "gui/MessageWidget.h"
+#include "gui/csvImport/CsvImportWizard.h"
 
 class ChangeMasterKeyWidget;
 class DatabaseOpenWidget;
@@ -43,8 +46,13 @@ class QMenu;
 class QSplitter;
 class QLabel;
 class UnlockDatabaseWidget;
+class MessageWidget;
 class UnlockDatabaseDialog;
 class QFileSystemWatcher;
+
+namespace Ui {
+    class SearchWidget;
+}
 
 class DatabaseWidget : public QStackedWidget
 {
@@ -54,6 +62,7 @@ public:
     enum Mode
     {
         None,
+        ImportMode,
         ViewMode,
         EditMode,
         LockedMode
@@ -88,13 +97,16 @@ public:
     bool currentEntryHasPassword();
     bool currentEntryHasUrl();
     bool currentEntryHasNotes();
+    bool currentEntryHasTotp();
     GroupView* groupView();
     EntryView* entryView();
     void showUnlockDialog();
     void closeUnlockDialog();
-    void ignoreNextAutoreload();
+    void blockAutoReload(bool block = true);
+    void refreshSearch();
+    bool isRecycleBinSelected() const;
 
-Q_SIGNALS:
+signals:
     void closeRequest();
     void currentModeChanged(DatabaseWidget::Mode mode);
     void groupChanged();
@@ -112,7 +124,7 @@ Q_SIGNALS:
     void entryColumnSizesChanged();
     void updateSearch(QString text);
 
-public Q_SLOTS:
+public slots:
     void createEntry();
     void cloneEntry();
     void deleteEntries();
@@ -123,6 +135,9 @@ public Q_SLOTS:
     void copyURL();
     void copyNotes();
     void copyAttribute(QAction* action);
+    void showTotp();
+    void copyTotp();
+    void setupTotp();
     void performAutoType();
     void openUrl();
     void openUrlForEntry(Entry* entry);
@@ -136,17 +151,25 @@ public Q_SLOTS:
     void switchToDatabaseSettings();
     void switchToOpenDatabase(const QString& fileName);
     void switchToOpenDatabase(const QString& fileName, const QString& password, const QString& keyFile);
+    void switchToImportCsv(const QString& fileName);
+    void csvImportFinished(bool accepted);
     void switchToOpenMergeDatabase(const QString& fileName);
     void switchToOpenMergeDatabase(const QString& fileName, const QString& password, const QString& keyFile);
     void switchToImportKeepass1(const QString& fileName);
     void databaseModified();
     void databaseSaved();
+    void emptyRecycleBin();
+
     // Search related slots
     void search(const QString& searchtext);
     void setSearchCaseSensitive(bool state);
+    void setSearchLimitGroup(bool state);
     void endSearch();
 
-private Q_SLOTS:
+    void showMessage(const QString& text, MessageWidget::MessageType type);
+    void hideMessage();
+
+private slots:
     void entryActivationSignalReceived(Entry* entry, EntryModel::ModelColumn column);
     void switchBackToEntryEdit();
     void switchToHistoryView(Entry* entry);
@@ -164,6 +187,7 @@ private Q_SLOTS:
     void onWatchedFileChanged();
     void reloadDatabaseFile();
     void restoreGroupEntryFocus(Uuid groupUuid, Uuid EntryUuid);
+    void unblockAutoReload();
 
 private:
     void setClipboardTextAndMinimize(const QString& text);
@@ -176,6 +200,7 @@ private:
     EditEntryWidget* m_historyEditEntryWidget;
     EditGroupWidget* m_editGroupWidget;
     ChangeMasterKeyWidget* m_changeMasterKeyWidget;
+    CsvImportWizard* m_csvImportWizard;
     DatabaseSettingsWidget* m_databaseSettingsWidget;
     DatabaseOpenWidget* m_databaseOpenWidget;
     DatabaseOpenWidget* m_databaseOpenMergeWidget;
@@ -192,16 +217,18 @@ private:
     QString m_filename;
     Uuid m_groupBeforeLock;
     Uuid m_entryBeforeLock;
+    MessageWidget* m_messageWidget;
 
     // Search state
     QString m_lastSearchText;
     bool m_searchCaseSensitive;
+    bool m_searchLimitGroup;
 
     // Autoreload
     QFileSystemWatcher m_fileWatcher;
     QTimer m_fileWatchTimer;
-    bool m_ignoreNextAutoreload;
-    QTimer m_ignoreWatchTimer;
+    QTimer m_fileWatchUnblockTimer;
+    bool m_ignoreAutoReload;
     bool m_databaseModified;
 };
 

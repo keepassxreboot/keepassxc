@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,13 +19,18 @@
 #include "Database.h"
 
 #include <QFile>
+#include <QSaveFile>
+#include <QTextStream>
 #include <QTimer>
 #include <QXmlStreamReader>
 
+#include "cli/PasswordInput.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Random.h"
 #include "format/KeePass2.h"
+#include "format/KeePass2Reader.h"
+#include "format/KeePass2Writer.h"
 
 QHash<Uuid, Database*> Database::m_uuidMap;
 
@@ -176,6 +182,17 @@ QByteArray Database::transformedMasterKey() const
     return m_data.transformedMasterKey;
 }
 
+QByteArray Database::challengeResponseKey() const
+{
+    return m_data.challengeResponseKey;
+}
+
+bool Database::challengeMasterSeed(const QByteArray& masterSeed)
+{
+    m_data.masterSeed = masterSeed;
+    return m_data.key.challenge(masterSeed, m_data.challengeResponseKey);
+}
+
 void Database::setCipher(const Uuid& cipher)
 {
     Q_ASSERT(!cipher.isNull());
@@ -208,14 +225,12 @@ bool Database::setTransformRounds(quint64 rounds)
     return true;
 }
 
-bool Database::setKey(const CompositeKey& key, const QByteArray& transformSeed,
-                      bool updateChangedTime)
+bool Database::setKey(const CompositeKey& key, const QByteArray& transformSeed, bool updateChangedTime)
 {
     bool ok;
     QString errorString;
 
-    QByteArray transformedMasterKey =
-            key.transform(transformSeed, transformRounds(), &ok, &errorString);
+    QByteArray transformedMasterKey = key.transform(transformSeed, transformRounds(), &ok, &errorString);
     if (!ok) {
         return false;
     }
@@ -227,7 +242,7 @@ bool Database::setKey(const CompositeKey& key, const QByteArray& transformSeed,
     if (updateChangedTime) {
         m_metadata->setMasterKeyChanged(QDateTime::currentDateTimeUtc());
     }
-    Q_EMIT modifiedImmediate();
+    emit modifiedImmediate();
 
     return true;
 }
@@ -246,6 +261,20 @@ bool Database::verifyKey(const CompositeKey& key) const
 {
     Q_ASSERT(hasKey());
 
+    if (!m_data.challengeResponseKey.isEmpty()) {
+        QByteArray result;
+
+        if (!key.challenge(m_data.masterSeed, result)) {
+            // challenge failed, (YubiKey?) removed?
+            return false;
+        }
+
+        if (m_data.challengeResponseKey != result) {
+            // wrong response from challenged device(s)
+            return false;
+        }
+    }
+
     return (m_data.key.rawKey() == key.rawKey());
 }
 
@@ -263,29 +292,43 @@ void Database::recycleEntry(Entry* entry)
             createRecycleBin();
         }
         entry->setGroup(metadata()->recycleBin());
-    }
-    else {
+    } else {
         delete entry;
     }
 }
 
 void Database::recycleGroup(Group* group)
 {
-     if (m_metadata->recycleBinEnabled()) {
+    if (m_metadata->recycleBinEnabled()) {
         if (!m_metadata->recycleBin()) {
             createRecycleBin();
         }
         group->setParent(metadata()->recycleBin());
-    }
-    else {
+    } else {
         delete group;
-     }
+    }
+}
+
+void Database::emptyRecycleBin()
+{
+    if (m_metadata->recycleBinEnabled() && m_metadata->recycleBin()) {
+        // destroying direct entries of the recycle bin
+        QList<Entry*> subEntries = m_metadata->recycleBin()->entries();
+        for (Entry* entry : subEntries) {
+            delete entry;
+        }
+        // destroying direct subgroups of the recycle bin
+        QList<Group*> subGroups = m_metadata->recycleBin()->children();
+        for (Group* group : subGroups) {
+            delete group;
+        }
+    }
 }
 
 void Database::merge(const Database* other)
 {
     m_rootGroup->merge(other->rootGroup());
-    Q_EMIT modified();
+    emit modified();
 }
 
 void Database::setEmitModified(bool value)
@@ -325,8 +368,67 @@ void Database::startModifiedTimer()
     m_timer->start(150);
 }
 
-const CompositeKey & Database::key() const
+const CompositeKey& Database::key() const
 {
     return m_data.key;
 }
 
+Database* Database::openDatabaseFile(QString fileName, CompositeKey key)
+{
+
+    QFile dbFile(fileName);
+    if (!dbFile.exists()) {
+        qCritical("File %s does not exist.", qPrintable(fileName));
+        return nullptr;
+    }
+    if (!dbFile.open(QIODevice::ReadOnly)) {
+        qCritical("Unable to open file %s.", qPrintable(fileName));
+        return nullptr;
+    }
+
+    KeePass2Reader reader;
+    Database* db = reader.readDatabase(&dbFile, key);
+
+    if (reader.hasError()) {
+        qCritical("Error while parsing the database: %s", qPrintable(reader.errorString()));
+        return nullptr;
+    }
+
+    return db;
+}
+
+Database* Database::unlockFromStdin(QString databaseFilename)
+{
+    QTextStream outputTextStream(stdout);
+
+    outputTextStream << QString("Insert password to unlock " + databaseFilename + "\n> ");
+    outputTextStream.flush();
+
+    QString line = PasswordInput::getPassword();
+    CompositeKey key = CompositeKey::readFromLine(line);
+    return Database::openDatabaseFile(databaseFilename, key);
+}
+
+QString Database::saveToFile(QString filePath)
+{
+    KeePass2Writer writer;
+    QSaveFile saveFile(filePath);
+    if (saveFile.open(QIODevice::WriteOnly)) {
+
+        // write the database to the file
+        writer.writeDatabase(&saveFile, this);
+
+        if (writer.hasError()) {
+            return writer.errorString();
+        }
+
+        if (saveFile.commit()) {
+            // successfully saved database file
+            return QString();
+        } else {
+            return saveFile.errorString();
+        }
+    } else {
+        return saveFile.errorString();
+    }
+}

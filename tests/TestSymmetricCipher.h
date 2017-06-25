@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,10 +25,12 @@ class TestSymmetricCipher : public QObject
 {
     Q_OBJECT
 
-private Q_SLOTS:
+private slots:
     void initTestCase();
     void testAes256CbcEncryption();
     void testAes256CbcDecryption();
+    void testTwofish256CbcEncryption();
+    void testTwofish256CbcDecryption();
     void testSalsa20();
     void testPadding();
     void testStreamReset();

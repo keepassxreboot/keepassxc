@@ -113,12 +113,18 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
         return nullptr;
     }
 
+    if (m_db->challengeMasterSeed(m_masterSeed) == false) {
+        raiseError(tr("Unable to issue challenge-response."));
+        return nullptr;
+    }
+
     CryptoHash hash(CryptoHash::Sha256);
     hash.addData(m_masterSeed);
+    hash.addData(m_db->challengeResponseKey());
     hash.addData(m_db->transformedMasterKey());
     QByteArray finalKey = hash.result();
 
-    SymmetricCipherStream cipherStream(m_device, SymmetricCipher::Aes256,
+    SymmetricCipherStream cipherStream(m_device, SymmetricCipher::cipherToAlgorithm(m_db->cipher()),
                                        SymmetricCipher::Cbc, SymmetricCipher::Decrypt);
     if (!cipherStream.init(finalKey, m_encryptionIV)) {
         raiseError(cipherStream.errorString());
@@ -192,7 +198,7 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
         QByteArray headerHash = CryptoHash::hash(headerStream.storedData(), CryptoHash::Sha256);
         if (headerHash != xmlReader.headerHash()) {
             raiseError("Header doesn't match hash");
-            return Q_NULLPTR;
+            return nullptr;
         }
     }
 
@@ -330,7 +336,7 @@ void KeePass2Reader::setCipher(const QByteArray& data)
     else {
         Uuid uuid(data);
 
-        if (uuid != KeePass2::CIPHER_AES) {
+        if (uuid != KeePass2::CIPHER_AES && uuid != KeePass2::CIPHER_TWOFISH) {
             raiseError("Unsupported cipher");
         }
         else {

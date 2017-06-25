@@ -36,10 +36,10 @@ public:
     void setCurrentGroup(Group* group);
     void expandGroup(Group* group, bool expand = true);
 
-Q_SIGNALS:
+signals:
     void groupChanged(Group* group);
 
-private Q_SLOTS:
+private slots:
     void expandedChanged(const QModelIndex& index);
     void emitGroupChanged(const QModelIndex& index);
     void emitGroupChanged();

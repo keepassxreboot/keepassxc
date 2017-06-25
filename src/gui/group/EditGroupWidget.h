@@ -43,10 +43,13 @@ public:
     void loadGroup(Group* group, bool create, Database* database);
     void clear();
 
-Q_SIGNALS:
+signals:
     void editFinished(bool accepted);
+    void messageEditEntry(QString, MessageWidget::MessageType);
+    void messageEditEntryDismiss();
 
-private Q_SLOTS:
+private slots:
+    void apply();
     void save();
     void cancel();
 

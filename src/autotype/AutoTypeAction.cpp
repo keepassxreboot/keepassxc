@@ -90,6 +90,4 @@ void AutoTypeExecutor::execDelay(AutoTypeDelay* action)
 void AutoTypeExecutor::execClearField(AutoTypeClearField* action)
 {
     Q_UNUSED(action);
-
-    // TODO: implement
 }

@@ -1,6 +1,6 @@
 /*
- *  Copyright (C) 2013 Michael Curtis <michael@moltenmercury.org>
- *  Copyright (C) 2014 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2015 Pedro Alves <devel@pgalves.com>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,31 +16,22 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_PASSWORDCOMBOBOX_H
-#define KEEPASSX_PASSWORDCOMBOBOX_H
+#ifndef MESSAGEWIDGET_H
+#define MESSAGEWIDGET_H
 
-#include <QComboBox>
+#include "gui/KMessageWidget.h"
 
-class PasswordGenerator;
-
-class PasswordComboBox : public QComboBox
+class MessageWidget : public KMessageWidget
 {
     Q_OBJECT
 
 public:
-    explicit PasswordComboBox(QWidget* parent = nullptr);
-    ~PasswordComboBox();
+    explicit MessageWidget(QWidget* parent = 0);
 
-    void setGenerator(PasswordGenerator* generator);
-    void setNumberAlternatives(int alternatives);
-    void showPopup();
+public slots:
+    void showMessage(const QString& text, MessageWidget::MessageType type);
+    void hideMessage();
 
-public Q_SLOTS:
-    void setEcho(bool echo);
-
-private:
-    PasswordGenerator* m_generator;
-    int m_alternatives;
 };
 
-#endif // KEEPASSX_PASSWORDCOMBOBOX_H
+#endif // MESSAGEWIDGET_H

@@ -1,6 +1,7 @@
 /*
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *  Copyright (C) 2000-2008 Tom Sato <VEF00200@nifty.ne.jp>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -58,8 +59,9 @@ public:
     KeySym keyToKeySym(Qt::Key key);
 
     void SendKeyPressedEvent(KeySym keysym);
+    void SendKey(KeySym keysym, bool isKeyDown);
 
-Q_SIGNALS:
+signals:
     void globalShortcutTriggered();
 
 private:
@@ -126,6 +128,7 @@ public:
 
     void execChar(AutoTypeChar* action) override;
     void execKey(AutoTypeKey* action) override;
+    void execClearField(AutoTypeClearField* action) override;
 
 private:
     AutoTypePlatformX11* const m_platform;
