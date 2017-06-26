@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,8 +19,8 @@
 #include "Group.h"
 
 #include "core/Config.h"
-#include "core/Global.h"
 #include "core/DatabaseIcons.h"
+#include "core/Global.h"
 #include "core/Metadata.h"
 
 const int Group::DefaultIconNumber = 48;
@@ -202,7 +203,7 @@ QString Group::effectiveAutoTypeSequence() const
     } while (group && sequence.isEmpty());
 
     if (sequence.isEmpty()) {
-      sequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
+        sequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
     }
 
     return sequence;
@@ -483,7 +484,34 @@ QList<Entry*> Group::entriesRecursive(bool includeHistoryItems) const
     return entryList;
 }
 
-Entry* Group::findEntry(const Uuid& uuid)
+Entry* Group::findEntry(QString entryId)
+{
+    Q_ASSERT(!entryId.isNull());
+
+    if (Uuid::isUuid(entryId)) {
+        Uuid entryUuid = Uuid::fromHex(entryId);
+        for (Entry* entry : entriesRecursive(false)) {
+            if (entry->uuid() == entryUuid) {
+                return entry;
+            }
+        }
+    }
+
+    Entry* entry = findEntryByPath(entryId);
+    if (entry) {
+      return entry;
+    }
+
+    for (Entry* entry : entriesRecursive(false)) {
+        if (entry->title() == entryId) {
+            return entry;
+        }
+    }
+
+    return nullptr;
+}
+
+Entry* Group::findEntryByUuid(const Uuid& uuid)
 {
     Q_ASSERT(!uuid.isNull());
     for (Entry* entry : asConst(m_entries)) {
@@ -493,6 +521,93 @@ Entry* Group::findEntry(const Uuid& uuid)
     }
 
     return nullptr;
+}
+
+Entry* Group::findEntryByPath(QString entryPath, QString basePath)
+{
+
+    Q_ASSERT(!entryPath.isNull());
+
+    for (Entry* entry : asConst(m_entries)) {
+        QString currentEntryPath = basePath + entry->title();
+        if (entryPath == currentEntryPath || entryPath == QString("/" + currentEntryPath)) {
+            return entry;
+        }
+    }
+
+    for (Group* group : asConst(m_children)) {
+        Entry* entry = group->findEntryByPath(entryPath, basePath + group->name() + QString("/"));
+        if (entry != nullptr) {
+            return entry;
+        }
+    }
+
+    return nullptr;
+}
+
+Group* Group::findGroupByPath(QString groupPath, QString basePath)
+{
+
+    Q_ASSERT(!groupPath.isNull());
+
+    QStringList possiblePaths;
+    possiblePaths << groupPath;
+    if (!groupPath.startsWith("/")) {
+        possiblePaths << QString("/" + groupPath);
+    }
+    if (!groupPath.endsWith("/")) {
+        possiblePaths << QString(groupPath + "/");
+    }
+    if (!groupPath.endsWith("/") && !groupPath.endsWith("/")) {
+        possiblePaths << QString("/" + groupPath + "/");
+    }
+
+    if (possiblePaths.contains(basePath)) {
+        return this;
+    }
+
+    for (Group* innerGroup : children()) {
+        QString innerBasePath = basePath + innerGroup->name() + "/";
+        Group* group = innerGroup->findGroupByPath(groupPath, innerBasePath);
+        if (group != nullptr) {
+            return group;
+        }
+    }
+
+    return nullptr;
+
+}
+
+QString Group::print(bool printUuids, QString baseName, int depth)
+{
+
+    QString response;
+    QString indentation = QString("  ").repeated(depth);
+
+    if (entries().isEmpty() && children().isEmpty()) {
+        response += indentation + "[empty]\n";
+        return response;
+    }
+
+    for (Entry* entry : entries()) {
+        response += indentation + entry->title();
+        if (printUuids) {
+            response += " " + entry->uuid().toHex();
+        }
+        response += "\n";
+    }
+
+    for (Group* innerGroup : children()) {
+        QString newBaseName = baseName + innerGroup->name() + "/";
+        response += indentation + newBaseName;
+        if (printUuids) {
+            response += " " + innerGroup->uuid().toHex();
+        }
+        response += "\n";
+        response += innerGroup->print(printUuids, newBaseName, depth + 1);
+    }
+
+    return response;
 }
 
 QList<const Group*> Group::groupsRecursive(bool includeSelf) const
@@ -551,10 +666,10 @@ void Group::merge(const Group* other)
     const QList<Entry*> dbEntries = other->entries();
     for (Entry* entry : dbEntries) {
         // entries are searched by uuid
-        if (!findEntry(entry->uuid())) {
+        if (!findEntryByUuid(entry->uuid())) {
             entry->clone(Entry::CloneNoFlags)->setGroup(this);
         } else {
-            resolveConflict(findEntry(entry->uuid()), entry);
+            resolveConflict(findEntryByUuid(entry->uuid()), entry);
         }
     }
 

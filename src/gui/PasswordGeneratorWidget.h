@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2013 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -57,7 +58,8 @@ signals:
 
 private slots:
     void applyPassword();
-    void updateApplyEnabled(const QString& password);
+    void copyPassword();
+    void updateButtonsEnabled(const QString& password);
     void updatePasswordStrength(const QString& password);
     void togglePasswordShown(bool hidden);
 
@@ -71,6 +73,7 @@ private slots:
 
 private:
     bool m_updatingSpinBox;
+    bool m_standalone = false;
 
     PasswordGenerator::CharClasses charClasses();
     PasswordGenerator::GeneratorFlags generatorFlags();

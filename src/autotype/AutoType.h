@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -74,6 +75,8 @@ private:
     bool parseActions(const QString& sequence, const Entry* entry, QList<AutoTypeAction*>& actions);
     QList<AutoTypeAction*> createActionFromTemplate(const QString& tmpl, const Entry* entry);
     QString autoTypeSequence(const Entry* entry, const QString& windowTitle = QString());
+    bool windowMatchesTitle(const QString& windowTitle, const QString& resolvedTitle);
+    bool windowMatchesUrl(const QString& windowTitle, const QString& resolvedUrl);
     bool windowMatches(const QString& windowTitle, const QString& windowPattern);
 
     bool m_inAutoType;

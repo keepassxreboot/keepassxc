@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -42,6 +43,8 @@ private slots:
     void testGlobalAutoTypeWithNoMatch();
     void testGlobalAutoTypeWithOneMatch();
     void testGlobalAutoTypeTitleMatch();
+    void testGlobalAutoTypeUrlMatch();
+    void testGlobalAutoTypeUrlSubdomainMatch();
     void testGlobalAutoTypeTitleMatchDisabled();
     void testGlobalAutoTypeRegExp();
 
@@ -56,6 +59,7 @@ private:
     Entry* m_entry2;
     Entry* m_entry3;
     Entry* m_entry4;
+    Entry* m_entry5;
 };
 
 #endif // KEEPASSX_TESTAUTOTYPE_H

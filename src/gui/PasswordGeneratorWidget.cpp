@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2013 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,6 +25,7 @@
 #include "core/Config.h"
 #include "core/PasswordGenerator.h"
 #include "core/FilePath.h"
+#include "gui/Clipboard.h"
 
 PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     : QWidget(parent)
@@ -36,10 +38,11 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
 
     m_ui->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
 
-    connect(m_ui->editNewPassword, SIGNAL(textChanged(QString)), SLOT(updateApplyEnabled(QString)));
+    connect(m_ui->editNewPassword, SIGNAL(textChanged(QString)), SLOT(updateButtonsEnabled(QString)));
     connect(m_ui->editNewPassword, SIGNAL(textChanged(QString)), SLOT(updatePasswordStrength(QString)));
     connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), SLOT(togglePasswordShown(bool)));
     connect(m_ui->buttonApply, SIGNAL(clicked()), SLOT(applyPassword()));
+    connect(m_ui->buttonCopy, SIGNAL(clicked()), SLOT(copyPassword()));
     connect(m_ui->buttonGenerate, SIGNAL(clicked()), SLOT(regeneratePassword()));
 
     connect(m_ui->sliderLength, SIGNAL(valueChanged(int)), SLOT(passwordSliderMoved()));
@@ -137,6 +140,7 @@ void PasswordGeneratorWidget::reset()
 
 void PasswordGeneratorWidget::setStandaloneMode(bool standalone)
 {
+    m_standalone = standalone;
     if (standalone) {
         m_ui->buttonApply->setText(tr("Close"));
         togglePasswordShown(true);
@@ -162,9 +166,12 @@ void PasswordGeneratorWidget::regeneratePassword()
     }
 }
 
-void PasswordGeneratorWidget::updateApplyEnabled(const QString& password)
+void PasswordGeneratorWidget::updateButtonsEnabled(const QString& password)
 {
-    m_ui->buttonApply->setEnabled(!password.isEmpty());
+    if (!m_standalone) {
+        m_ui->buttonApply->setEnabled(!password.isEmpty());
+    }
+    m_ui->buttonCopy->setEnabled(!password.isEmpty());
 }
 
 void PasswordGeneratorWidget::updatePasswordStrength(const QString& password)
@@ -191,6 +198,11 @@ void PasswordGeneratorWidget::applyPassword()
     saveSettings();
     emit appliedPassword(m_ui->editNewPassword->text());
     emit dialogTerminated();
+}
+
+void PasswordGeneratorWidget::copyPassword()
+{
+    clipboard()->setText(m_ui->editNewPassword->text());
 }
 
 void PasswordGeneratorWidget::passwordSliderMoved()

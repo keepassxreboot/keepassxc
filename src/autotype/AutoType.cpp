@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -581,9 +582,11 @@ QString AutoType::autoTypeSequence(const Entry *entry, const QString &windowTitl
             }
         }
 
-        if (!match && config()->get("AutoTypeEntryTitleMatch").toBool()
-            && !entry->resolvePlaceholder(entry->title()).isEmpty()
-            && windowTitle.contains(entry->resolvePlaceholder(entry->title()), Qt::CaseInsensitive)) {
+
+        if (!match && config()->get("AutoTypeEntryTitleMatch").toBool() 
+                && (windowMatchesTitle(windowTitle, entry->resolvePlaceholder(entry->title()))
+                || windowMatchesUrl(windowTitle, entry->resolvePlaceholder(entry->url())))) {
+          
             sequence = entry->defaultAutoTypeSequence();
             match = true;
         }
@@ -715,4 +718,22 @@ AutoType::performAutoTypeWithSyntaxCheckingDialog(const Entry *entry,
     }
     performAutoType(entry, hideWindow, customSequence, window);
 
+
+bool AutoType::windowMatchesTitle(const QString& windowTitle, const QString& resolvedTitle)
+{
+    return !resolvedTitle.isEmpty() && windowTitle.contains(resolvedTitle, Qt::CaseInsensitive);
+}
+
+bool AutoType::windowMatchesUrl(const QString& windowTitle, const QString& resolvedUrl)
+{
+    if (!resolvedUrl.isEmpty() && windowTitle.contains(resolvedUrl, Qt::CaseInsensitive)) {
+        return true;
+    }
+
+    QUrl url(resolvedUrl);
+    if (url.isValid() && !url.host().isEmpty()) {
+        return windowTitle.contains(url.host(), Qt::CaseInsensitive);
+    }
+
+    return false;
 }

@@ -1,5 +1,6 @@
-﻿/*
+/*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -162,6 +163,7 @@ public slots:
     // Search related slots
     void search(const QString& searchtext);
     void setSearchCaseSensitive(bool state);
+    void setSearchLimitGroup(bool state);
     void endSearch();
 
     void showMessage(const QString& text, MessageWidget::MessageType type);
@@ -220,6 +222,7 @@ private:
     // Search state
     QString m_lastSearchText;
     bool m_searchCaseSensitive;
+    bool m_searchLimitGroup;
 
     // Autoreload
     QFileSystemWatcher m_fileWatcher;

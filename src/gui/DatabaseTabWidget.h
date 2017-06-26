@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,7 +22,6 @@
 #include <QHash>
 #include <QTabWidget>
 
-#include "format/KeePass2Writer.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/MessageWidget.h"
 
@@ -117,7 +117,6 @@ private:
     void updateLastDatabases(const QString& filename);
     void connectDatabase(Database* newDb, Database* oldDb = nullptr);
 
-    KeePass2Writer m_writer;
     QHash<Database*, DatabaseManagerStruct> m_dbList;
     DatabaseWidgetStateSync* m_dbWidgetStateSync;
 };

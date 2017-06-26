@@ -1,6 +1,7 @@
 /*
  *  Copyright (C) 2012 Tobias Tangemann
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,6 +21,8 @@
 #define KEEPASSX_APPLICATION_H
 
 #include <QApplication>
+#include <QtNetwork/QLocalServer>
+class QLockFile;
 
 class QSocketNotifier;
 
@@ -30,12 +33,15 @@ class Application : public QApplication
 public:
     Application(int& argc, char** argv);
     QWidget* mainWindow() const;
+    ~Application();
     void setMainWindow(QWidget* mainWindow);
 
     bool event(QEvent* event) override;
+    bool isAlreadyRunning() const;
 
 signals:
     void openFile(const QString& filename);
+    void anotherInstanceStarted();
 
 private slots:
 #if defined(Q_OS_UNIX)
@@ -54,6 +60,9 @@ private:
     static void handleUnixSignal(int sig);
     static int unixSignalSocket[2];
 #endif
+    bool alreadyRunning;
+    QLockFile* lock;
+    QLocalServer server;
 };
 
 #endif // KEEPASSX_APPLICATION_H

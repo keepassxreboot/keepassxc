@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,6 +24,7 @@
 #include <QSystemTrayIcon>
 
 #include "core/SignalMultiplexer.h"
+#include "core/ScreenLockListener.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/Application.h"
 
@@ -39,6 +41,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow();
     ~MainWindow();
+
     enum StackedWidgetIndex
     {
         DatabaseTabScreen = 0,
@@ -91,6 +94,7 @@ private slots:
     void lockDatabasesAfterInactivity();
     void repairDatabase();
     void hideTabMessage();
+    void handleScreenLock();
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);
@@ -112,10 +116,12 @@ private:
     InactivityTimer* m_inactivityTimer;
     int m_countDefaultAttributes;
     QSystemTrayIcon* m_trayIcon;
+    ScreenLockListener* m_screenLockListener;
 
     Q_DISABLE_COPY(MainWindow)
 
-    bool appExitCalled;
+    bool m_appExitCalled;
+    bool m_appExiting;
 };
 
 #define KEEPASSXC_MAIN_WINDOW (qobject_cast<Application*>(qApp) ? \

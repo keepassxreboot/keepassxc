@@ -1,4 +1,5 @@
 #  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+#  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,7 +22,7 @@ endif()
 
 project(KeePassXC)
 
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.1.0)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
@@ -37,6 +38,7 @@ option(WITH_GUI_TESTS "Enable building of GUI tests" OFF)
 option(WITH_DEV_BUILD "Use only for development. Disables/warns about deprecated methods." OFF)
 option(WITH_ASAN "Enable address sanitizer checks (Linux only)" OFF)
 option(WITH_COVERAGE "Use to build with coverage tests (GCC only)." OFF)
+option(WITH_APP_BUNDLE "Enable Application Bundle for OS X" ON)
 
 option(WITH_XC_AUTOTYPE "Include Auto-Type." ON)
 option(WITH_XC_HTTP "Include KeePassHTTP and Custom Icon Downloads." OFF)
@@ -46,8 +48,8 @@ option(WITH_XC_YUBIKEY "Include YubiKey support." OFF)
 set(CMAKE_AUTOUIC ON)
 
 set(KEEPASSXC_VERSION_MAJOR "2")
-set(KEEPASSXC_VERSION_MINOR "1")
-set(KEEPASSXC_VERSION_PATCH "4")
+set(KEEPASSXC_VERSION_MINOR "2")
+set(KEEPASSXC_VERSION_PATCH "0")
 set(KEEPASSXC_VERSION "${KEEPASSXC_VERSION_MAJOR}.${KEEPASSXC_VERSION_MINOR}.${KEEPASSXC_VERSION_PATCH}")
 
 if("${CMAKE_C_COMPILER}" MATCHES "clang$" OR "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
@@ -76,6 +78,10 @@ macro(add_gcc_compiler_flags FLAGS)
 endmacro(add_gcc_compiler_flags)
 
 add_definitions(-DQT_NO_EXCEPTIONS -DQT_STRICT_ITERATORS -DQT_NO_CAST_TO_ASCII)
+
+if(WITH_APP_BUNDLE)
+  add_definitions(-DWITH_APP_BUNDLE)
+endif()
 
 add_gcc_compiler_flags("-fno-common")
 add_gcc_compiler_flags("-Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long")
@@ -164,13 +170,13 @@ if(MINGW)
   endif()
 endif()
 
-if(APPLE OR MINGW)
+if(APPLE AND WITH_APP_BUNDLE OR MINGW)
   set(PROGNAME KeePassXC)
 else()
   set(PROGNAME keepassxc)
 endif()
 
-if(APPLE AND "${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr/local")
+if(APPLE AND WITH_APP_BUNDLE AND "${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr/local")
   set(CMAKE_INSTALL_PREFIX "/Applications")
 endif()
 
@@ -179,7 +185,7 @@ if(MINGW)
   set(BIN_INSTALL_DIR    ".")
   set(PLUGIN_INSTALL_DIR ".")
   set(DATA_INSTALL_DIR   "share")
-elseif(APPLE)
+elseif(APPLE AND WITH_APP_BUNDLE)
   set(CLI_INSTALL_DIR    "/usr/local/bin")
   set(BIN_INSTALL_DIR    ".")
   set(PLUGIN_INSTALL_DIR "${PROGNAME}.app/Contents/PlugIns")
@@ -198,6 +204,7 @@ if(WITH_TESTS)
 endif(WITH_TESTS)
 
 find_package(Qt5Core          5.2 REQUIRED)
+find_package(Qt5Network       5.2 REQUIRED)
 find_package(Qt5Concurrent    5.2 REQUIRED)
 find_package(Qt5Widgets       5.2 REQUIRED)
 find_package(Qt5Test          5.2 REQUIRED)

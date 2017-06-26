@@ -1,5 +1,6 @@
-﻿/*
+/*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -93,7 +94,8 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_searchingLabel = new QLabel();
     m_searchingLabel->setText(tr("Searching..."));
     m_searchingLabel->setAlignment(Qt::AlignCenter);
-    m_searchingLabel->setStyleSheet("background-color: rgb(255, 253, 160);"
+    m_searchingLabel->setStyleSheet("color: rgb(0, 0, 0);"
+                                    "background-color: rgb(255, 253, 160);"
                                     "border: 2px solid rgb(190, 190, 190);"
                                     "border-radius: 5px;");
 
@@ -185,6 +187,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_ignoreAutoReload = false;
 
     m_searchCaseSensitive = false;
+    m_searchLimitGroup = config()->get("SearchLimitGroup", false).toBool();
 
     setCurrentWidget(m_mainWidget);
 }
@@ -962,7 +965,9 @@ void DatabaseWidget::search(const QString& searchtext)
 
     Qt::CaseSensitivity caseSensitive = m_searchCaseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive;
 
-    QList<Entry*> searchResult = EntrySearcher().search(searchtext, currentGroup(), caseSensitive);
+    Group* searchGroup = m_searchLimitGroup ? currentGroup() : m_db->rootGroup();
+
+    QList<Entry*> searchResult = EntrySearcher().search(searchtext, searchGroup, caseSensitive);
 
     m_entryView->setEntryList(searchResult);
     m_lastSearchText = searchtext;
@@ -983,6 +988,12 @@ void DatabaseWidget::search(const QString& searchtext)
 void DatabaseWidget::setSearchCaseSensitive(bool state)
 {
     m_searchCaseSensitive = state;
+    refreshSearch();
+}
+
+void DatabaseWidget::setSearchLimitGroup(bool state)
+{
+    m_searchLimitGroup = state;
     refreshSearch();
 }
 
@@ -1064,6 +1075,7 @@ void DatabaseWidget::lock()
         m_entryBeforeLock = m_entryView->currentEntry()->uuid();
     }
 
+    endSearch();
     clearAllWidgets();
     m_unlockDatabaseWidget->load(m_filename);
     setCurrentWidget(m_unlockDatabaseWidget);

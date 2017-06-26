@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -76,11 +77,11 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     setupProperties();
     setupHistory();
 
-    connect(this, SIGNAL(accepted()), SLOT(saveEntry()));
+    connect(this, SIGNAL(accepted()), SLOT(acceptEntry()));
     connect(this, SIGNAL(rejected()), SLOT(cancel()));
-    connect(m_iconsWidget,
-            SIGNAL(messageEditEntry(QString, MessageWidget::MessageType)),
-            SLOT(showMessage(QString, MessageWidget::MessageType)));
+
+    connect(this, SIGNAL(apply()), SLOT(saveEntry()));
+    connect(m_iconsWidget, SIGNAL(messageEditEntry(QString, MessageWidget::MessageType)), SLOT(showMessage(QString, MessageWidget::MessageType)));
     connect(m_iconsWidget, SIGNAL(messageEditEntryDismiss()), SLOT(hideMessage()));
 
     m_mainUi->passwordGenerator->layout()->setContentsMargins(0, 0, 0, 0);
@@ -442,9 +443,12 @@ void EditEntryWidget::saveEntry()
     if (!m_create) {
         m_entry->endUpdate();
     }
+}
 
+void EditEntryWidget::acceptEntry()
+{
+    saveEntry();
     clear();
-
     emit editFinished(true);
 }
 

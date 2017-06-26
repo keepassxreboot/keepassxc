@@ -14,4 +14,4 @@ tx push -s
 
 echo
 echo Pulling translations from Transifex
-tx pull -a --minimum-perc=80
+tx pull -af --minimum-perc=40

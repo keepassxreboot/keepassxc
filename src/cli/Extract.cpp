@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,29 +29,28 @@
 #include "core/Database.h"
 #include "format/KeePass2Reader.h"
 #include "keys/CompositeKey.h"
+#include "cli/PasswordInput.h"
 
-int Extract::execute(int argc, char **argv)
+int Extract::execute(int argc, char** argv)
 {
     QCoreApplication app(argc, argv);
     QTextStream out(stdout);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main",
-                                                                 "Extract and print the content of a database."));
+    parser.setApplicationDescription(
+        QCoreApplication::translate("main", "Extract and print the content of a database."));
     parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database to extract."));
     parser.process(app);
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 1) {
-        parser.showHelp();
-        return EXIT_FAILURE;
+        parser.showHelp(EXIT_FAILURE);
     }
 
     out << "Insert the database password\n> ";
     out.flush();
 
-    static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
-    QString line = inputTextStream.readLine();
+    QString line = PasswordInput::getPassword();
     CompositeKey key = CompositeKey::readFromLine(line);
 
     QString databaseFilename = args.at(0);
@@ -75,8 +74,7 @@ int Extract::execute(int argc, char **argv)
     if (reader.hasError()) {
         if (xmlData.isEmpty()) {
             qCritical("Error while reading the database:\n%s", qPrintable(reader.errorString()));
-        }
-        else {
+        } else {
             qWarning("Error while parsing the database:\n%s\n", qPrintable(reader.errorString()));
         }
         return EXIT_FAILURE;

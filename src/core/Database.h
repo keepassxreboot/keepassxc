@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -90,7 +91,7 @@ public:
     QByteArray transformSeed() const;
     quint64 transformRounds() const;
     QByteArray transformedMasterKey() const;
-    const CompositeKey & key() const;
+    const CompositeKey& key() const;
     QByteArray challengeResponseKey() const;
     bool challengeMasterSeed(const QByteArray& masterSeed);
 
@@ -112,6 +113,7 @@ public:
     void setEmitModified(bool value);
     void copyAttributesFrom(const Database* other);
     void merge(const Database* other);
+    QString saveToFile(QString filePath);
 
     /**
      * Returns a unique id that is only valid as long as the Database exists.
@@ -120,6 +122,7 @@ public:
 
     static Database* databaseByUuid(const Uuid& uuid);
     static Database* openDatabaseFile(QString fileName, CompositeKey key);
+    static Database* unlockFromStdin(QString databaseFilename);
 
 signals:
     void groupDataChanged(Group* group);

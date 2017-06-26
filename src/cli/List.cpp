@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,70 +20,75 @@
 
 #include "List.h"
 
+#include <QApplication>
 #include <QCommandLineParser>
 #include <QCoreApplication>
 #include <QStringList>
 #include <QTextStream>
 
+#include "gui/UnlockDatabaseDialog.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "keys/CompositeKey.h"
 
-void printGroup(Group* group, QString baseName, int depth) {
 
-    QTextStream out(stdout);
-
-    QString groupName = baseName + group->name() + "/";
-    QString indentation = QString("  ").repeated(depth);
-
-    out << indentation << groupName << " " << group->uuid().toHex() << "\n";
-    out.flush();
-
-    if (group->entries().isEmpty() && group->children().isEmpty()) {
-        out << indentation << "  [empty]\n";
-        return;
-    }
-
-    for (Entry* entry : group->entries()) {
-      out << indentation << "  " << entry->title() << " " << entry->uuid().toHex() << "\n";
-    }
-
-    for (Group* innerGroup : group->children()) {
-        printGroup(innerGroup, groupName, depth + 1);
-    }
-
-}
-
-int List::execute(int argc, char **argv)
+int List::execute(int argc, char** argv)
 {
-    QCoreApplication app(argc, argv);
+    QStringList arguments;
+    for (int i = 0; i < argc; ++i) {
+        arguments << QString(argv[i]);
+    }
     QTextStream out(stdout);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main",
-                                                                 "List database entries."));
+    parser.setApplicationDescription(QCoreApplication::translate("main", "List database entries."));
     parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
-    parser.process(app);
+    parser.addPositionalArgument("group",
+                                 QCoreApplication::translate("main", "Path of the group to list. Default is /"),
+                                 QString("[group]"));
+    QCommandLineOption printUuidsOption(
+        QStringList() << "u"
+                      << "print-uuids",
+        QCoreApplication::translate("main", "Print the UUIDs of the entries and groups."));
+    parser.addOption(printUuidsOption);
+    QCommandLineOption guiPrompt(
+        QStringList() << "g"
+                      << "gui-prompt",
+        QCoreApplication::translate("main", "Use a GUI prompt unlocking the database."));
+    parser.addOption(guiPrompt);
+    parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
-    if (args.size() != 1) {
-        parser.showHelp();
-        return EXIT_FAILURE;
+    if (args.size() != 1 && args.size() != 2) {
+        QCoreApplication app(argc, argv);
+        parser.showHelp(EXIT_FAILURE);
     }
 
-    out << "Insert the database password\n> ";
-    out.flush();
+    Database* db = nullptr;
+    if (parser.isSet("gui-prompt")) {
+        QApplication app(argc, argv);
+        db = UnlockDatabaseDialog::openDatabasePrompt(args.at(0));
+    } else {
+        QCoreApplication app(argc, argv);
+        db = Database::unlockFromStdin(args.at(0));
+    }
 
-    static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
-    QString line = inputTextStream.readLine();
-    CompositeKey key = CompositeKey::readFromLine(line);
-
-    Database* db = Database::openDatabaseFile(args.at(0), key);
     if (db == nullptr) {
         return EXIT_FAILURE;
     }
 
-    printGroup(db->rootGroup(), QString(""), 0);
+    Group* group = db->rootGroup();
+    if (args.size() == 2) {
+        QString groupPath = args.at(1);
+        group = db->rootGroup()->findGroupByPath(groupPath);
+        if (group == nullptr) {
+            qCritical("Cannot find group %s.", qPrintable(groupPath));
+            return EXIT_FAILURE;
+        }
+    }
+
+    out << group->print(parser.isSet("print-uuids"));
+    out.flush();
     return EXIT_SUCCESS;
 }

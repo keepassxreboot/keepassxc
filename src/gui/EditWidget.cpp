@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,6 +19,7 @@
 #include "EditWidget.h"
 #include "ui_EditWidget.h"
 #include <QScrollArea>
+#include <QPushButton>
 
 #include "core/FilePath.h"
 
@@ -102,7 +104,10 @@ void EditWidget::setReadOnly(bool readOnly)
         m_ui->buttonBox->setStandardButtons(QDialogButtonBox::Close);
     }
     else {
-        m_ui->buttonBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+        m_ui->buttonBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Apply);
+        // Find and connect the apply button
+        QPushButton* applyButton = m_ui->buttonBox->button(QDialogButtonBox::Apply);
+        connect(applyButton, SIGNAL(clicked()), SIGNAL(apply()));
     }
 }
 
