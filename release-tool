@@ -525,8 +525,7 @@ build() {
     done
 
     init
-    
-    performChecks
+    checkWorkingTreeClean
 
     OUTPUT_DIR="$(realpath "$OUTPUT_DIR")"
     
