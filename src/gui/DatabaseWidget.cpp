@@ -187,6 +187,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_ignoreAutoReload = false;
 
     m_searchCaseSensitive = false;
+    m_searchLimitGroup = config()->get("SearchLimitGroup", false).toBool();
 
     setCurrentWidget(m_mainWidget);
 }
@@ -964,7 +965,9 @@ void DatabaseWidget::search(const QString& searchtext)
 
     Qt::CaseSensitivity caseSensitive = m_searchCaseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive;
 
-    QList<Entry*> searchResult = EntrySearcher().search(searchtext, currentGroup(), caseSensitive);
+    Group* searchGroup = m_searchLimitGroup ? currentGroup() : m_db->rootGroup();
+
+    QList<Entry*> searchResult = EntrySearcher().search(searchtext, searchGroup, caseSensitive);
 
     m_entryView->setEntryList(searchResult);
     m_lastSearchText = searchtext;
@@ -985,6 +988,12 @@ void DatabaseWidget::search(const QString& searchtext)
 void DatabaseWidget::setSearchCaseSensitive(bool state)
 {
     m_searchCaseSensitive = state;
+    refreshSearch();
+}
+
+void DatabaseWidget::setSearchLimitGroup(bool state)
+{
+    m_searchLimitGroup = state;
     refreshSearch();
 }
 

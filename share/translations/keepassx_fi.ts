@@ -1,13 +1,13 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="da" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="fi" version="2.1">
 <context>
     <name>AboutDialog</name>
     <message>
         <source>About KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>Tietoja ohjelmasta KeePassXC</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>Om</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot;&gt;&lt;span style=&quot;text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -108,20 +108,21 @@ Kernel: %3 %4</source>
     <name>AccessControlDialog</name>
     <message>
         <source>Remember this decision</source>
-        <translation type="unfinished"/>
+        <translation>Muista tämä valinta</translation>
     </message>
     <message>
         <source>Allow</source>
-        <translation type="unfinished"/>
+        <translation>Salli</translation>
     </message>
     <message>
         <source>Deny</source>
-        <translation type="unfinished"/>
+        <translation>Estä</translation>
     </message>
     <message>
         <source>%1 has requested access to passwords for the following item(s).
 Please select whether you want to allow access.</source>
-        <translation type="unfinished"/>
+        <translation>%1 pyytää pääsyä seuraavien alkioiden salasanoihin.
+Ole hyvä ja valitse sallitaanko pääsy.</translation>
     </message>
     <message>
         <source>KeePassXC HTTP Confirm Access</source>
@@ -132,98 +133,97 @@ Please select whether you want to allow access.</source>
     <name>AutoType</name>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation>Kunne ikke finde en post, der matcher vinduets titel:</translation>
+        <translation>Ikkunan nimeä vastaavaa merkintää ei löytynyt:</translation>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>Automaattitäydennys - KeePassXC</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeAssociationsModel</name>
     <message>
         <source>Window</source>
-        <translation>Vindue</translation>
+        <translation>Ikkuna</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Sekvens</translation>
+        <translation>Sekvenssi</translation>
     </message>
     <message>
         <source>Default sequence</source>
-        <translation>Standardsekvens</translation>
+        <translation>Oletussekvenssi</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>Vælg post til Auto-Indsæt:</translation>
+        <translation>Valitse merkintä automaattitäydennystä varten:</translation>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>Automaattitäydennys - KeePassXC</translation>
     </message>
 </context>
 <context>
     <name>ChangeMasterKeyWidget</name>
     <message>
         <source>Password</source>
-        <translation>Kodeord</translation>
+        <translation>Salasana</translation>
     </message>
     <message>
         <source>Enter password:</source>
-        <translation>Indtast kodeord</translation>
+        <translation>Syötä salasana:</translation>
     </message>
     <message>
         <source>Repeat password:</source>
-        <translation>Gentag kodeord</translation>
+        <translation>Toista salasana:</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Gennemse</translation>
+        <translation>Selaa</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Opret</translation>
+        <translation>Luo</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Nøglefiler</translation>
+        <translation>Avaintiedostot</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Alle filer</translation>
+        <translation>Kaikki tiedostot</translation>
     </message>
     <message>
         <source>Create Key File...</source>
-        <translation>Opret Nøglefil...</translation>
+        <translation>Luo avaintiedosto...</translation>
     </message>
     <message>
         <source>Unable to create Key File : </source>
-        <translation>Kan ikke oprette Nøglefil :</translation>
+        <translation>Avaintiedoston luonti ei onnistunut:</translation>
     </message>
     <message>
         <source>Select a key file</source>
-        <translation>Vælg en nøglefil</translation>
+        <translation>Valitse avaintiedosto</translation>
     </message>
     <message>
         <source>Do you really want to use an empty string as password?</source>
-        <translation>Vil du virkelig bruge en tom streng som kodeord?</translation>
+        <translation>Haluatko varmasti asettaa tyhjän merkkijonon salasanaksi?</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Andre kodeord leveret.</translation>
+        <translation>Annetut salasanat eivät täsmää.</translation>
     </message>
     <message>
         <source>Failed to set %1 as the Key file:
 %2</source>
-        <translation>Kunne ikke sætte %1 som Nøglefil:
-%2</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Key file</source>
-        <translation type="unfinished"/>
+        <translation>Avaintiedosto</translation>
     </message>
     <message>
         <source>Cha&amp;llenge Response</source>
@@ -345,7 +345,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Error</source>
-        <translation>Fejl</translation>
+        <translation>Virhe</translation>
     </message>
     <message>
         <source>CSV import: writer has errors:
@@ -361,11 +361,11 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Error</source>
-        <translation>Fejl</translation>
+        <translation>Virhe</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Kan ikke beregne hovednøgle</translation>
+        <translation>Pääavaimen laskeminen ei onnistu</translation>
     </message>
 </context>
 <context>
@@ -387,39 +387,39 @@ Please select whether you want to allow access.</source>
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Enter master key</source>
-        <translation>Indtast hovednøgle</translation>
+        <translation>Syötä pääsalasana</translation>
     </message>
     <message>
         <source>Key File:</source>
-        <translation>Nøglefil:</translation>
+        <translation>Avaintiedosto:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Kodeord:</translation>
+        <translation>Salasana</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Gennemse</translation>
+        <translation>Selaa</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Kan ikke åbne databasen.</translation>
+        <translation>Tietokannan avaaminen ei onnistunut.</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>Kan ikke åbne nøglefil</translation>
+        <translation>Avaintiedostoa ei voitu avata</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Alle filer</translation>
+        <translation>Kaikki tiedostot</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Nøglefiler</translation>
+        <translation>Avaintiedostot</translation>
     </message>
     <message>
         <source>Select key file</source>
-        <translation>Vælg nøglefil</translation>
+        <translation>Valitse avaintiedosto</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -434,76 +434,76 @@ Please select whether you want to allow access.</source>
     <name>DatabaseRepairWidget</name>
     <message>
         <source>Repair database</source>
-        <translation>Reparer database</translation>
+        <translation>Korjaa tietokanta</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Fejl</translation>
+        <translation>Virhe</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>Kan ikke åbne nøglefil</translation>
+        <translation>Avaintiedoston avaaminen epäonnistui</translation>
     </message>
     <message>
         <source>Database opened fine. Nothing to do.</source>
-        <translation>Databasen åbnede fint. Intet at gøre.</translation>
+        <translation>Tietokannan avaaminen onnistui. Ei tehtävää.</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Kan ikke åbne databasen.</translation>
+        <translation>Tietokannan avaaminen epäonnistui.</translation>
     </message>
     <message>
         <source>Success</source>
-        <translation>Succes</translation>
+        <translation>Onnistui!</translation>
     </message>
     <message>
         <source>The database has been successfully repaired
 You can now save it.</source>
-        <translation>Databasen er blevet succesfuldt repareret
-Du kan gemme den nu.</translation>
+        <translation>Tietokanta korjattiin onnistuneesti.
+Voit nyt tallentaa sen.</translation>
     </message>
     <message>
         <source>Unable to repair the database.</source>
-        <translation>Kan ikke reparere databasen.</translation>
+        <translation>Tietokannan korjaus epäonnistui.</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidget</name>
     <message>
         <source>Database name:</source>
-        <translation>Databasenavn:</translation>
+        <translation>Tietokannan nimi:</translation>
     </message>
     <message>
         <source>Database description:</source>
-        <translation>Beskrivelse af database:</translation>
+        <translation>Tietokannan kuvaus:</translation>
     </message>
     <message>
         <source>Transform rounds:</source>
-        <translation>Transformationsrunder:</translation>
+        <translation>Muunnoskierroksia:</translation>
     </message>
     <message>
         <source>Default username:</source>
-        <translation>Standard brugernavn:</translation>
+        <translation>Oletuskäyttäjänimi:</translation>
     </message>
     <message>
         <source> MiB</source>
-        <translation>MB</translation>
+        <translation>MiB</translation>
     </message>
     <message>
         <source>Benchmark</source>
-        <translation>Benchmark</translation>
+        <translation>Suorituskykytesti</translation>
     </message>
     <message>
         <source>Max. history items:</source>
-        <translation>Maks. posthistorik:</translation>
+        <translation>Maks. historia-alkioiden lukumäärä:</translation>
     </message>
     <message>
         <source>Max. history size:</source>
-        <translation>Maks. historikstørrelse:</translation>
+        <translation>Maks. historian koko:</translation>
     </message>
     <message>
         <source>Use recycle bin</source>
-        <translation type="unfinished"/>
+        <translation>Käytä roskakoria</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
@@ -522,128 +522,125 @@ Du kan gemme den nu.</translation>
     <name>DatabaseTabWidget</name>
     <message>
         <source>Root</source>
-        <translation>Rod</translation>
+        <translation>Juuri</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>KeePass 2 Database</translation>
+        <translation>KeePass 2 -tietokanta</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Alle filer</translation>
+        <translation>Kaikki tiedostot</translation>
     </message>
     <message>
         <source>Open database</source>
-        <translation>Åben database</translation>
+        <translation>Avaa tietokanta</translation>
     </message>
     <message>
         <source>File not found!</source>
-        <translation>Filen blev ikke fundet!</translation>
+        <translation>Tiedostoa ei löytynyt!</translation>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
-        <translation>Åben KeePass 1 database</translation>
+        <translation>Avaa KeePass 1 -tietokanta</translation>
     </message>
     <message>
         <source>KeePass 1 database</source>
-        <translation>KeePass 1 database</translation>
+        <translation>KeePass 1 -tietokanta</translation>
     </message>
     <message>
         <source>All files (*)</source>
-        <translation>Alle filer (*)</translation>
+        <translation>Kaikki tiedostot(*)</translation>
     </message>
     <message>
         <source>Close?</source>
-        <translation>Luk?</translation>
+        <translation>Sulje?</translation>
     </message>
     <message>
         <source>Save changes?</source>
-        <translation>Gem ændringer?</translation>
+        <translation>Tallenna muutokset?</translation>
     </message>
     <message>
         <source>&quot;%1&quot; was modified.
 Save changes?</source>
-        <translation>&quot;%1&quot; blev ændret.
-Gem disse ændringer?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation>Kan ikke skrive til databasen.</translation>
+        <translation>Tietokannan kirjoitus levylle epäonnistui.</translation>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Gem database som</translation>
+        <translation>Tallenna tietokanta nimellä</translation>
     </message>
     <message>
         <source>New database</source>
-        <translation>Ny database</translation>
+        <translation>Uusi tietokanta</translation>
     </message>
     <message>
         <source>locked</source>
-        <translation>låst</translation>
+        <translation>Lukittu</translation>
     </message>
     <message>
         <source>Lock database</source>
-        <translation>Lås database</translation>
+        <translation>Lukitse tietokanta</translation>
     </message>
     <message>
         <source>Can't lock the database as you are currently editing it.
 Please press cancel to finish your changes or discard them.</source>
-        <translation>Kan ikke låse databasen, mens du redigerer i den.
-Tryk på Afbryd for at afslutte dine ændringer eller kassere dem.</translation>
+        <translation>Tietokantaa ei voida lukita, sillä se on muokkaustilassa.
+Paina Peruuta jos haluat viimeistellä muutoksesi, muussa tapauksessa muutoksesi hylätään.</translation>
     </message>
     <message>
         <source>This database has never been saved.
 You can save the database or stop locking it.</source>
-        <translation>Denne database er aldrig blevet gemt.
-Du kan gemme databasen eller stop låsning.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>This database has been modified.
 Do you want to save the database before locking it?
 Otherwise your changes are lost.</source>
-        <translation>Denne database er blevet ændret.
-Vil du gemme databasen før låsning?
-Ellers mister du dine ændringer.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&quot;%1&quot; is in edit mode.
 Discard changes and close anyway?</source>
-        <translation>&quot;%1&quot; er i redigeringstilstand.
-Kassér ændringer og luk alligevel?</translation>
+        <translation>&quot;%1&quot; on muokkaustilassa.
+Hylkää muutokset ja sulje?</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
-        <translation>Eksportér databasen til CSV-fil</translation>
+        <translation>Vie tietokanta CSV-tiedostoon</translation>
     </message>
     <message>
         <source>CSV file</source>
-        <translation>CSV-fil</translation>
+        <translation>CSV-tiedosto</translation>
     </message>
     <message>
         <source>Writing the CSV file failed.</source>
-        <translation>Kan ikke skrive til CSV-fil.</translation>
+        <translation>CSV-tiedoston kirjoitus levylle epäonnistui.</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Kan ikke åbne databasen.</translation>
+        <translation>Tietokannan avaaminen ei onnistunut.</translation>
     </message>
     <message>
         <source>Merge database</source>
-        <translation type="unfinished"/>
+        <translation>Yhdistä tietokanta</translation>
     </message>
     <message>
         <source>The database you are trying to save as is locked by another instance of KeePassXC.
 Do you want to save it anyway?</source>
-        <translation type="unfinished"/>
+        <translation>Tietokanta jota yrität avata on avoinna toisessa KeePassXC-ikkunassa.
+Haluatko tallentaa tietokannan siitä huolimatta?</translation>
     </message>
     <message>
         <source>Passwords</source>
-        <translation type="unfinished"/>
+        <translation>Salasanat</translation>
     </message>
     <message>
         <source>Database already opened</source>
-        <translation type="unfinished"/>
+        <translation>Tietokanta on jo avattu</translation>
     </message>
     <message>
         <source>The database you are trying to open is locked by another instance of KeePassXC.
@@ -653,7 +650,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Open read-only</source>
-        <translation type="unfinished"/>
+        <translation>Avaa &quot;vain luku&quot;-tilassa</translation>
     </message>
     <message>
         <source>File opened in read only mode.</source>
@@ -668,47 +665,47 @@ Do you want to open it anyway?</source>
     <name>DatabaseWidget</name>
     <message>
         <source>Change master key</source>
-        <translation>Skift hovednøgle</translation>
+        <translation>Vaihda pääsalasana</translation>
     </message>
     <message>
         <source>Delete entry?</source>
-        <translation>Slet post?</translation>
+        <translation>Poista merkintä?</translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>Vil du virkelig slette posten &quot;%1&quot; permanent?</translation>
+        <translation>Haluatko varmasti poistaa merkinnän &quot;%1&quot;, lopullisesti?</translation>
     </message>
     <message>
         <source>Delete entries?</source>
-        <translation>Slet poster?</translation>
+        <translation>Poista alkiot?</translation>
     </message>
     <message>
         <source>Do you really want to delete %1 entries for good?</source>
-        <translation>Vil du virkelig slette %1 poster permanent?</translation>
+        <translation>Haluatko varmasti poistaa alkiot %1, lopullisesti?</translation>
     </message>
     <message>
         <source>Move entries to recycle bin?</source>
-        <translation>Flyt poster til skraldespanden?</translation>
+        <translation>Siirrä alkiot roskakoriin?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Ønsker du virkelig at flytte %n post over i  papirkurven?</numerusform><numerusform>Ønsker du virkelig at flytte %n poster over i  papirkurven?</numerusform></translation>
+        <translation><numerusform>Haluatko varmasti siirtää %n kappaletta alkioita roskakoriin?</numerusform><numerusform>Haluatko varmasti siirtää %n merkintää roskakoriin?</numerusform></translation>
     </message>
     <message>
         <source>Delete group?</source>
-        <translation>Slet gruppe?</translation>
+        <translation>Poista ryhmä?</translation>
     </message>
     <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>Ønsker du at slette gruppen &quot;%1&quot; permanent?</translation>
+        <translation>Haluatko varmasti poistaa ryhmän &quot;%1&quot;, lopullisesti?</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Kan ikke  beregne hovednøgle</translation>
+        <translation>Pääavaimen laskeminen ei onnistu</translation>
     </message>
     <message>
         <source>Move entry to recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Siirrä merkintä roskakoriin?</translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
@@ -716,7 +713,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Searching...</source>
-        <translation type="unfinished"/>
+        <translation>Etsitään...</translation>
     </message>
     <message>
         <source>No current database.</source>
@@ -728,15 +725,15 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Search Results (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Etsinnän tulokset (%1)</translation>
     </message>
     <message>
         <source>No Results</source>
-        <translation type="unfinished"/>
+        <translation>Ei tuloksia.</translation>
     </message>
     <message>
         <source>Execute command?</source>
-        <translation type="unfinished"/>
+        <translation>Suorita komento?</translation>
     </message>
     <message>
         <source>Do you really want to execute the following command?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</source>
@@ -744,7 +741,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Remember my choice</source>
-        <translation type="unfinished"/>
+        <translation>Muista valintani</translation>
     </message>
     <message>
         <source>Autoreload Request</source>
@@ -779,80 +776,81 @@ Do you want to open it anyway?</source>
     <name>EditEntryWidget</name>
     <message>
         <source>Entry</source>
-        <translation>Post</translation>
+        <translation>Merkintä</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Avanceret</translation>
+        <translation>Lisäasetukset</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Ikon</translation>
+        <translation>Kuvake</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-Indsæt</translation>
+        <translation>Automaattitäydennys</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Egenskaber</translation>
+        <translation>Ominaisuudet</translation>
     </message>
     <message>
         <source>History</source>
-        <translation>Historik</translation>
+        <translation>Historia</translation>
     </message>
     <message>
         <source>Entry history</source>
-        <translation>Indtastningshistorik</translation>
+        <translation>Alkioiden historia</translation>
     </message>
     <message>
         <source>Add entry</source>
-        <translation>Tilføj post</translation>
+        <translation>Lisää alkio</translation>
     </message>
     <message>
         <source>Edit entry</source>
-        <translation>Rediger post</translation>
+        <translation>Muokkaa alkiota</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Andre kodeord leveret.</translation>
+        <translation>Annetut salasanat eivät täsmää.</translation>
     </message>
     <message>
         <source>New attribute</source>
-        <translation>Ny attribut</translation>
+        <translation>Uusi attribuutti</translation>
     </message>
     <message>
         <source>Select file</source>
-        <translation>Vælg fil</translation>
+        <translation>Valitse tiedosto</translation>
     </message>
     <message>
         <source>Unable to open file</source>
-        <translation>Filen kan ikke åbnes</translation>
+        <translation>Tiedoston avaus ei onnistu</translation>
     </message>
     <message>
         <source>Save attachment</source>
-        <translation>Gem vedhæftning</translation>
+        <translation>Tallenna liite</translation>
     </message>
     <message>
         <source>Unable to save the attachment:
 </source>
-        <translation>Kan ikke gemme vedhæftningen:</translation>
+        <translation>Liitteen tallentaminen ei onnistu:
+</translation>
     </message>
     <message>
         <source>Tomorrow</source>
-        <translation>I morgen</translation>
+        <translation>Huomenna</translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n uge</numerusform><numerusform>%n uger</numerusform></translation>
+        <translation><numerusform>%n viikkoa</numerusform><numerusform>%n viikkoa</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n måned</numerusform><numerusform>%n måneder</numerusform></translation>
+        <translation><numerusform>%n kuukautta</numerusform><numerusform>%n kuukautta</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
-        <translation>Et år</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Confirm Remove</source>
@@ -875,27 +873,27 @@ Do you want to open it anyway?</source>
     <name>EditEntryWidgetAdvanced</name>
     <message>
         <source>Additional attributes</source>
-        <translation>Yderligere attributter</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Add</source>
-        <translation>Tilføj</translation>
+        <translation>Lisää</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Fjern</translation>
+        <translation>Poista</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Vedhæftninger</translation>
+        <translation>Liitteet</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Gem</translation>
+        <translation>Tallenna</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Åben</translation>
+        <translation>Avaa</translation>
     </message>
     <message>
         <source>Edit Name</source>
@@ -914,7 +912,7 @@ Do you want to open it anyway?</source>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation>Aktivér Auto-Indsæt for denne post</translation>
+        <translation>Salli automaattitäydennys tälle merkinnälle</translation>
     </message>
     <message>
         <source>+</source>
@@ -926,11 +924,11 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Window title:</source>
-        <translation>Vinduestitel:</translation>
+        <translation>Ikkunan otsikko:</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the &amp;group</source>
-        <translation type="unfinished"/>
+        <translation>Peri automaattitäydennyksen oletussekvenssi &amp;ryhmältä</translation>
     </message>
     <message>
         <source>&amp;Use custom Auto-Type sequence:</source>
@@ -953,38 +951,38 @@ Do you want to open it anyway?</source>
     <name>EditEntryWidgetHistory</name>
     <message>
         <source>Show</source>
-        <translation>Vis</translation>
+        <translation>Näytä</translation>
     </message>
     <message>
         <source>Restore</source>
-        <translation>Gendan</translation>
+        <translation>Palauta</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Slet</translation>
+        <translation>Poista</translation>
     </message>
     <message>
         <source>Delete all</source>
-        <translation>Slet alle</translation>
+        <translation>Poista kaikki</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetMain</name>
     <message>
         <source>Title:</source>
-        <translation>Titel:</translation>
+        <translation>Otsikko:</translation>
     </message>
     <message>
         <source>Username:</source>
-        <translation>Brugernavn:</translation>
+        <translation>Käyttäjänimi</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Kodeord:</translation>
+        <translation>Salasana</translation>
     </message>
     <message>
         <source>Repeat:</source>
-        <translation>Gentag:</translation>
+        <translation>Toista:</translation>
     </message>
     <message>
         <source>URL:</source>
@@ -992,73 +990,73 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Udløber</translation>
+        <translation>Erääntyy</translation>
     </message>
     <message>
         <source>Presets</source>
-        <translation>Predefinerede</translation>
+        <translation>Esiasetus</translation>
     </message>
     <message>
         <source>Notes:</source>
-        <translation>Noter:</translation>
+        <translation>Muistiinpanot:</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidget</name>
     <message>
         <source>Group</source>
-        <translation>Gruppe</translation>
+        <translation>Ryhmä</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Ikon</translation>
+        <translation>Kuvake</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Egenskaber</translation>
+        <translation>Ominaisuudet</translation>
     </message>
     <message>
         <source>Add group</source>
-        <translation>Tilføj gruppe</translation>
+        <translation>Lisää ryhmä</translation>
     </message>
     <message>
         <source>Edit group</source>
-        <translation>Rediger gruppe</translation>
+        <translation>Muokkaa ryhmää</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation>Aktiver</translation>
+        <translation>Kytke päälle</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Deaktivér</translation>
+        <translation>Kytke pois päältä</translation>
     </message>
     <message>
         <source>Inherit from parent group (%1)</source>
-        <translation>Arv fra forældregruppe (%1)</translation>
+        <translation>Peri ylemmältä ryhmältä (%1)</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
     <message>
         <source>Name</source>
-        <translation>Navn</translation>
+        <translation>Nimi</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Noter</translation>
+        <translation>Muistiinpanot</translation>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Udløber</translation>
+        <translation>Erääntyy</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Søg</translation>
+        <translation>Etsi</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-Indsæt</translation>
+        <translation>Automaattitäydennys</translation>
     </message>
     <message>
         <source>&amp;Use default Auto-Type sequence of parent group</source>
@@ -1073,39 +1071,39 @@ Do you want to open it anyway?</source>
     <name>EditWidgetIcons</name>
     <message>
         <source>Add custom icon</source>
-        <translation>Tilføj brugerbestemt ikon</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Delete custom icon</source>
-        <translation>Slet brugerbestemt ikon</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Images</source>
-        <translation>Billeder</translation>
+        <translation>Kuvat</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Alle filer</translation>
+        <translation>Kaikki tiedostot</translation>
     </message>
     <message>
         <source>Select Image</source>
-        <translation>Vælg Billede</translation>
+        <translation>Valitse kuva</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Fejl</translation>
+        <translation>Virhe</translation>
     </message>
     <message>
         <source>Download favicon</source>
-        <translation type="unfinished"/>
+        <translation>Lataa favicon</translation>
     </message>
     <message>
         <source>Unable to fetch favicon.</source>
-        <translation type="unfinished"/>
+        <translation>Faviconin noutaminen ei onnistu</translation>
     </message>
     <message>
         <source>Can&apos;t read icon</source>
-        <translation type="unfinished"/>
+        <translation>Kuvaketta ei voida lukea</translation>
     </message>
     <message>
         <source>&amp;Use default icon</source>
@@ -1128,48 +1126,48 @@ Do you want to open it anyway?</source>
     <name>EditWidgetProperties</name>
     <message>
         <source>Created:</source>
-        <translation>Oprettet:</translation>
+        <translation>Luotu:</translation>
     </message>
     <message>
         <source>Modified:</source>
-        <translation>Ændret:</translation>
+        <translation>Muokattu:</translation>
     </message>
     <message>
         <source>Accessed:</source>
-        <translation>Tilgået:</translation>
+        <translation>Käytetty:</translation>
     </message>
     <message>
         <source>Uuid:</source>
-        <translation>Uuid:</translation>
+        <translation>UUID:</translation>
     </message>
 </context>
 <context>
     <name>Entry</name>
     <message>
         <source> - Clone</source>
-        <translation type="unfinished"/>
+        <translation>- Klooni</translation>
     </message>
 </context>
 <context>
     <name>EntryAttributesModel</name>
     <message>
         <source>Name</source>
-        <translation>Navn</translation>
+        <translation>Nimi</translation>
     </message>
 </context>
 <context>
     <name>EntryHistoryModel</name>
     <message>
         <source>Last modified</source>
-        <translation>Sidst ændret</translation>
+        <translation>Viimeksi muokattu</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Titel</translation>
+        <translation>Otsikko</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Brugernavn</translation>
+        <translation>Käyttäjätunnus</translation>
     </message>
     <message>
         <source>URL</source>
@@ -1180,15 +1178,15 @@ Do you want to open it anyway?</source>
     <name>EntryModel</name>
     <message>
         <source>Group</source>
-        <translation>Gruppe</translation>
+        <translation>Ryhmä</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Titel</translation>
+        <translation>Otsikko</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Brugernavn</translation>
+        <translation>Käyttäjätunnus</translation>
     </message>
     <message>
         <source>URL</source>
@@ -1204,58 +1202,58 @@ Do you want to open it anyway?</source>
     <name>Group</name>
     <message>
         <source>Recycle Bin</source>
-        <translation>Skraldespand</translation>
+        <translation>Roskakori</translation>
     </message>
 </context>
 <context>
     <name>HttpPasswordGeneratorWidget</name>
     <message>
         <source>Length:</source>
-        <translation>Længde:</translation>
+        <translation>Pituus:</translation>
     </message>
     <message>
         <source>Character Types</source>
-        <translation>Tegntyper</translation>
+        <translation>Merkkityypit</translation>
     </message>
     <message>
         <source>Upper Case Letters</source>
-        <translation>Store Bogstaver</translation>
+        <translation>Isot kirjaimet</translation>
     </message>
     <message>
         <source>A-Z</source>
-        <translation type="unfinished"/>
+        <translation>A-Z</translation>
     </message>
     <message>
         <source>Lower Case Letters</source>
-        <translation>Små Bogstaver</translation>
+        <translation>Pienet kirjaimet</translation>
     </message>
     <message>
         <source>a-z</source>
-        <translation type="unfinished"/>
+        <translation>a-z</translation>
     </message>
     <message>
         <source>Numbers</source>
-        <translation>Numre</translation>
+        <translation>Numerot</translation>
     </message>
     <message>
         <source>0-9</source>
-        <translation type="unfinished"/>
+        <translation>0-9</translation>
     </message>
     <message>
         <source>Special Characters</source>
-        <translation>Specialtegn</translation>
+        <translation>Erikoismerkit</translation>
     </message>
     <message>
         <source>/*_&amp; ...</source>
-        <translation type="unfinished"/>
+        <translation>/*_&amp; ...</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
-        <translation>Udeluk lool-alike tegn</translation>
+        <translation>Poissulje samannäköiset merkit</translation>
     </message>
     <message>
         <source>Ensure that the password contains characters from every group</source>
-        <translation>Vær sikker på at dit kodeord indeholder tegn fra alle grupper</translation>
+        <translation>Varmista, että salasana sisältää merkkejä jokaisesta ryhmästä</translation>
     </message>
 </context>
 <context>
@@ -1273,71 +1271,68 @@ Do you want to open it anyway?</source>
     <name>KeePass1OpenWidget</name>
     <message>
         <source>Import KeePass1 database</source>
-        <translation>Importér KeePass1 database</translation>
+        <translation>Tuo KeePass 1 -tietokanta</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Kan ikke åbne databasen.</translation>
+        <translation>Tietokannan avaaminen ei onnistunut.</translation>
     </message>
 </context>
 <context>
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
-        <translation>Kan ikke indlæse nøglefil.</translation>
+        <translation>Avaintiedoston luku ei onnistu</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Ikke en KeePass database.</translation>
+        <translation>Tiedosto ei ole KeePass-tietokanta</translation>
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
-        <translation>Ikke understøttet krypteringsalgoritme</translation>
+        <translation>Tukematon salausalgoritmi.</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>Ikke understøttet KeePass database version</translation>
+        <translation>Tukematon KeePass-tietokantaversio</translation>
     </message>
     <message>
         <source>Root</source>
-        <translation>Rod</translation>
+        <translation>Juuri</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Kan ikke beregne hovednøgle</translation>
+        <translation>Pääavaimen laskeminen ei onnistu</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
-        <translation>Forkert nøgle eller databasefil er korrupt.</translation>
+        <translation>Väärä avain tai tietokanta on korruptoitunut.</translation>
     </message>
 </context>
 <context>
     <name>KeePass2Reader</name>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Dette er ikke en KeePass database.</translation>
+        <translation>Tiedosto ei ole KeePass-tietokanta</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>KeePass database version ikke understøttet.</translation>
+        <translation>Tukematon KeePass-tietokantaversio</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
-        <translation>Forkert nøgle eller databasefil er korrupt.</translation>
+        <translation>Väärä avain tai tietokanta on korruptoitunut.</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Kan ikke beregne hovednøgle</translation>
+        <translation>Pääavaimen laskeminen ei onnistu</translation>
     </message>
     <message>
         <source>The selected file is an old KeePass 1 database (.kdb).
 
 You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
 This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
-        <translation>Den valgte fil er en gammel KeePass 1 databasefil (.kdb).
-
-Du kan importere den ved at klikke på Database &gt; &apos;Importér KeePass 1 database&apos;.
-Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den importerede database med den gamle KeePassX 0.4 version.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unable to issue challenge-response.</source>
@@ -1348,11 +1343,11 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     <name>Main</name>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
-        <translation>Fatal fejl ved test af kryptografiske funktioner.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>KeePassXC - Error</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - Virhe</translation>
     </message>
     <message>
         <source>The lock file could not be created. Single-instance mode disabled.</source>
@@ -1367,59 +1362,59 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     <name>MainWindow</name>
     <message>
         <source>Open database</source>
-        <translation>Åben database</translation>
+        <translation>Avaa tietokanta</translation>
     </message>
     <message>
         <source>Database settings</source>
-        <translation>Databaseindstillinger</translation>
+        <translation>Tietokannan asetukset</translation>
     </message>
     <message>
         <source>Copy username to clipboard</source>
-        <translation>Kopiér brugernavn til udklipsholder</translation>
+        <translation>Kopioi käyttäjätunnus leikepöydälle</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
-        <translation>Kopiér kodeord til udklipsholder</translation>
+        <translation>Kopioi salasana leikepöydälle</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Indstillinger</translation>
+        <translation>Asetukset</translation>
     </message>
     <message>
         <source>Show toolbar</source>
-        <translation>Vis værktøjslinie</translation>
+        <translation>Näytä työkalupalkki</translation>
     </message>
     <message>
         <source>read-only</source>
-        <translation>skrivebeskyttet</translation>
+        <translation>vain-luku</translation>
     </message>
     <message>
         <source>Toggle window</source>
-        <translation>Skift vindue</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>KeePass 2 Database</translation>
+        <translation>Keepass 2 -tietokanta</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Alle filer</translation>
+        <translation>Kaikki tiedostot</translation>
     </message>
     <message>
         <source>Save repaired database</source>
-        <translation>Gem repareret database</translation>
+        <translation>Tallenna korjattu tietokanta</translation>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation>Skrivning til database fejler.</translation>
+        <translation>Tietokannan kirjoitus levylle epäonnistui.</translation>
     </message>
     <message>
         <source>&amp;Recent databases</source>
-        <translation type="unfinished"/>
+        <translation>Viimeisimmät tietokannat</translation>
     </message>
     <message>
         <source>He&amp;lp</source>
-        <translation type="unfinished"/>
+        <translation>Apua</translation>
     </message>
     <message>
         <source>E&amp;ntries</source>
@@ -1431,35 +1426,35 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     </message>
     <message>
         <source>&amp;Groups</source>
-        <translation type="unfinished"/>
+        <translation>Ryhmät</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished"/>
+        <translation>Näkymä</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished"/>
+        <translation>Lopeta</translation>
     </message>
     <message>
         <source>&amp;About</source>
-        <translation type="unfinished"/>
+        <translation>Tietoja</translation>
     </message>
     <message>
         <source>&amp;Open database</source>
-        <translation type="unfinished"/>
+        <translation>Avaa tietokanta</translation>
     </message>
     <message>
         <source>&amp;Save database</source>
-        <translation type="unfinished"/>
+        <translation>Tallenna tietokanta</translation>
     </message>
     <message>
         <source>&amp;Close database</source>
-        <translation type="unfinished"/>
+        <translation>Sulje tietokanta</translation>
     </message>
     <message>
         <source>&amp;New database</source>
-        <translation type="unfinished"/>
+        <translation>Uusi tietokanta</translation>
     </message>
     <message>
         <source>Merge from KeePassX database</source>
@@ -1467,43 +1462,43 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     </message>
     <message>
         <source>&amp;Add new entry</source>
-        <translation type="unfinished"/>
+        <translation>Lisää merkintä</translation>
     </message>
     <message>
         <source>&amp;View/Edit entry</source>
-        <translation type="unfinished"/>
+        <translation>Näytä/muokkaa merkintää</translation>
     </message>
     <message>
         <source>&amp;Delete entry</source>
-        <translation type="unfinished"/>
+        <translation>Poista merkintä</translation>
     </message>
     <message>
         <source>&amp;Add new group</source>
-        <translation type="unfinished"/>
+        <translation>Lisää uusi ryhmä</translation>
     </message>
     <message>
         <source>&amp;Edit group</source>
-        <translation type="unfinished"/>
+        <translation>Muokkaa ryhmää</translation>
     </message>
     <message>
         <source>&amp;Delete group</source>
-        <translation type="unfinished"/>
+        <translation>Poista ryhmä</translation>
     </message>
     <message>
         <source>Sa&amp;ve database as</source>
-        <translation type="unfinished"/>
+        <translation>Tallenna tietokanta nimellä</translation>
     </message>
     <message>
         <source>Change &amp;master key</source>
-        <translation type="unfinished"/>
+        <translation>Vaihda pääsalasana</translation>
     </message>
     <message>
         <source>&amp;Database settings</source>
-        <translation type="unfinished"/>
+        <translation>Tietokannan asetukset</translation>
     </message>
     <message>
         <source>&amp;Clone entry</source>
-        <translation type="unfinished"/>
+        <translation>Kloonaa merkintä</translation>
     </message>
     <message>
         <source>Timed one-time password</source>
@@ -1523,55 +1518,55 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     </message>
     <message>
         <source>&amp;Find</source>
-        <translation type="unfinished"/>
+        <translation>Etsi</translation>
     </message>
     <message>
         <source>Copy &amp;username</source>
-        <translation type="unfinished"/>
+        <translation>Kopioi käyttäjätunnus</translation>
     </message>
     <message>
         <source>Cop&amp;y password</source>
-        <translation type="unfinished"/>
+        <translation>Kopioi salasana</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
-        <translation type="unfinished"/>
+        <translation>Asetukset</translation>
     </message>
     <message>
         <source>&amp;Perform Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>Suorita automaattitäydennys</translation>
     </message>
     <message>
         <source>&amp;Open URL</source>
-        <translation type="unfinished"/>
+        <translation>Avaa URL</translation>
     </message>
     <message>
         <source>&amp;Lock databases</source>
-        <translation type="unfinished"/>
+        <translation>Lukitse tietokannat</translation>
     </message>
     <message>
         <source>&amp;Title</source>
-        <translation type="unfinished"/>
+        <translation>Otsikko</translation>
     </message>
     <message>
         <source>&amp;URL</source>
-        <translation type="unfinished"/>
+        <translation>URL</translation>
     </message>
     <message>
         <source>&amp;Notes</source>
-        <translation type="unfinished"/>
+        <translation>Muistiinpanot</translation>
     </message>
     <message>
         <source>&amp;Export to CSV file</source>
-        <translation type="unfinished"/>
+        <translation>Vie CSV-tiedostoon</translation>
     </message>
     <message>
         <source>Re&amp;pair database</source>
-        <translation type="unfinished"/>
+        <translation>Korjaa tietokanta</translation>
     </message>
     <message>
         <source>Password Generator</source>
-        <translation type="unfinished"/>
+        <translation>Salasanageneraattori</translation>
     </message>
     <message>
         <source>Clear history</source>
@@ -1591,7 +1586,7 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     </message>
     <message>
         <source>Import KeePass 1 database</source>
-        <translation>Importér KeePass 1 database</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Import CSV file</source>
@@ -1618,11 +1613,11 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     <name>OptionDialog</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"/>
+        <translation>Dialogi</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Generelt</translation>
+        <translation>Yleistä</translation>
     </message>
     <message>
         <source>Sh&amp;ow a notification when credentials are requested</source>
@@ -1638,7 +1633,7 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Avanceret</translation>
+        <translation>Lisää..</translation>
     </message>
     <message>
         <source>Always allow &amp;access to entries</source>
@@ -1654,11 +1649,11 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     </message>
     <message>
         <source>HTTP Port:</source>
-        <translation type="unfinished"/>
+        <translation>HTTP-portti:</translation>
     </message>
     <message>
         <source>Default port: 19455</source>
-        <translation type="unfinished"/>
+        <translation>Oletusportti: 19455</translation>
     </message>
     <message>
         <source>Re&amp;quest to unlock the database if it is locked</source>
@@ -1719,7 +1714,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Password Generator</source>
-        <translation type="unfinished"/>
+        <translation>Salasanageneraattori</translation>
     </message>
     <message>
         <source>Only the selected database has to be connected with a client.</source>
@@ -1735,35 +1730,35 @@ Change them only if you know what you are doing.</source>
     <name>PasswordGeneratorWidget</name>
     <message>
         <source>Password:</source>
-        <translation>Kodeord:</translation>
+        <translation>Salasana</translation>
     </message>
     <message>
         <source>Character Types</source>
-        <translation>Tegntyper</translation>
+        <translation>Merkkityypit</translation>
     </message>
     <message>
         <source>Upper Case Letters</source>
-        <translation>Store Bogstaver</translation>
+        <translation>Isot kirjaimet</translation>
     </message>
     <message>
         <source>Lower Case Letters</source>
-        <translation>Små Bogstaver</translation>
+        <translation>Pienet kirjaimet</translation>
     </message>
     <message>
         <source>Numbers</source>
-        <translation>Numre</translation>
+        <translation>Numerot</translation>
     </message>
     <message>
         <source>Special Characters</source>
-        <translation>Specialtegn</translation>
+        <translation>Erikoismerkit</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
-        <translation>Udeluk lool-alike tegn</translation>
+        <translation>Poissulje samannäköiset merkit</translation>
     </message>
     <message>
         <source>Accept</source>
-        <translation>Acceptér</translation>
+        <translation>Hyväksy</translation>
     </message>
     <message>
         <source>%p%</source>
@@ -1775,7 +1770,7 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>entropy</source>
-        <translation type="unfinished"/>
+        <translation>entropia</translation>
     </message>
     <message>
         <source>&amp;Length:</source>
@@ -1787,11 +1782,11 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>Generate</source>
-        <translation type="unfinished"/>
+        <translation>Generoi</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Sulje</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -1807,23 +1802,23 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>Poor</source>
-        <translation type="unfinished"/>
+        <translation>Huono</translation>
     </message>
     <message>
         <source>Weak</source>
-        <translation type="unfinished"/>
+        <translation>Heikko</translation>
     </message>
     <message>
         <source>Good</source>
-        <translation type="unfinished"/>
+        <translation>Hyvä</translation>
     </message>
     <message>
         <source>Excellent</source>
-        <translation type="unfinished"/>
+        <translation>Erinomainen</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Kodeord</translation>
+        <translation>Salasana</translation>
     </message>
     <message>
         <source>Extended ASCII</source>
@@ -1879,19 +1874,19 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>Group</source>
-        <translation>Gruppe</translation>
+        <translation>Ryhmä</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Titel</translation>
+        <translation>Otsikko</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Brugernavn</translation>
+        <translation>Käyttäjätunnus</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Kodeord</translation>
+        <translation>Salasana</translation>
     </message>
     <message>
         <source>URL</source>
@@ -1899,7 +1894,7 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Noter</translation>
+        <translation>Muistiinpanot</translation>
     </message>
     <message>
         <source>Browser Integration</source>
@@ -1922,49 +1917,49 @@ Change them only if you know what you are doing.</source>
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
-        <translation>Intern zlib-fejl ved komprimering:</translation>
+        <translation>Sisäinen zlib virhe pakatessa:</translation>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>Fejl ved skrivning til enhed:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>Fejl ved åbning fra enhed:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation>Fejl ved læsning af data fra underliggende enhed:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation>Intern zlib-fejl ved dekomprimering:</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>QtIOCompressor::open</name>
     <message>
         <source>The gzip format not supported in this version of zlib.</source>
-        <translation>Gzip-format understøttes ikke i denne version af zlib.</translation>
+        <translation>gzip-formaatti ei ole tuettu tässä zlib-versiossa.</translation>
     </message>
     <message>
         <source>Internal zlib error: </source>
-        <translation>Intern zlib fejl:</translation>
+        <translation>Sisäinen zlib-virhe:</translation>
     </message>
 </context>
 <context>
     <name>SearchWidget</name>
     <message>
         <source>Case Sensitive</source>
-        <translation type="unfinished"/>
+        <translation>Kirjainkoko on merkitsevä</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Søg</translation>
+        <translation>Etsi</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Tyhjennä</translation>
     </message>
     <message>
         <source>Search...</source>
@@ -2009,7 +2004,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"/>
+        <translation>Keskeytä</translation>
     </message>
     <message>
         <source>Successfully removed permissions from %1 %2.</source>
@@ -2066,15 +2061,15 @@ give it a unique name to identify and accept it.</source>
     <name>SettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>Programindstillinger</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>General</source>
-        <translation>Generelt</translation>
+        <translation>Yleistä</translation>
     </message>
     <message>
         <source>Security</source>
-        <translation>Sikkerhed</translation>
+        <translation>Turvallisuus</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
@@ -2085,55 +2080,55 @@ give it a unique name to identify and accept it.</source>
     <name>SettingsWidgetGeneral</name>
     <message>
         <source>Remember last databases</source>
-        <translation>Husk seneste databaser</translation>
+        <translation>Muista viimeisimmät tietokannat</translation>
     </message>
     <message>
         <source>Automatically save on exit</source>
-        <translation>Gem automatisk ved afslutning</translation>
+        <translation>Tallenna automaattisesti suljettaessa</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation>Gem automatisk ved ændringer</translation>
+        <translation>Tallenna automaattisesti jokaisen muutoksen jälkeen</translation>
     </message>
     <message>
         <source>Minimize when copying to clipboard</source>
-        <translation>Minimér ved kopiering til udklipsholder</translation>
+        <translation>Pienennä ikkuna kopioidessa leikepöydälle</translation>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
-        <translation>Brug gruppeikon ved oprettelse af post</translation>
+        <translation>Käytä ryhmän kuvaketta merkintää luodessa</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut</source>
-        <translation>Global Auto-Indsæt genvej</translation>
+        <translation>Globaalin automaattitäydennyksen pikanäppäin</translation>
     </message>
     <message>
         <source>Language</source>
-        <translation>Sprog</translation>
+        <translation>Kieli</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>Vis et ikon i systembakken</translation>
+        <translation>Näytä ilmoitusalueen kuvake</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation>Skjul vindue i systembakken når det er minimeret</translation>
+        <translation>Piiloita pienennetty ikkuna ilmoitusalueelle</translation>
     </message>
     <message>
         <source>Load previous databases on startup</source>
-        <translation type="unfinished"/>
+        <translation>Lataa edelliset tietokannat käynnistäessä</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
-        <translation type="unfinished"/>
+        <translation>Lataa tietokanta automaattisesti uudelleen jos tietokantaa muokattiin muualla</translation>
     </message>
     <message>
         <source>Hide window to system tray instead of app exit</source>
-        <translation type="unfinished"/>
+        <translation>Piiloita ikkuna ilmoitusalueelle sulkemisen sijaan</translation>
     </message>
     <message>
         <source>Minimize window at application startup</source>
-        <translation type="unfinished"/>
+        <translation>Pienennä ikkuna ohjelman käynnistyessä</translation>
     </message>
     <message>
         <source>Basic Settings</source>
@@ -2149,7 +2144,7 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-Indsæt</translation>
+        <translation>Automaattitäydennys</translation>
     </message>
     <message>
         <source>Use entry title and URL to match windows for global Auto-Type</source>
@@ -2164,27 +2159,27 @@ give it a unique name to identify and accept it.</source>
     <name>SettingsWidgetSecurity</name>
     <message>
         <source>Clear clipboard after</source>
-        <translation>Ryd udklipsholder efter</translation>
+        <translation>Tyhjennä leikepöytä kun on kulunut</translation>
     </message>
     <message>
         <source> sec</source>
-        <translation>sek</translation>
+        <translation>s.</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
-        <translation>Lås databaserne efter inaktivitet i</translation>
+        <translation>Lukitse tietokannat jos on oltu joutilaana</translation>
     </message>
     <message>
         <source>Show passwords in cleartext by default</source>
-        <translation>Vis kodeord i klartekst som standard</translation>
+        <translation>Näytä salasanat oletuksena selkokielisenä</translation>
     </message>
     <message>
         <source>Lock databases after minimizing the window</source>
-        <translation type="unfinished"/>
+        <translation>Lukitse tietokanta ikkunan pienennyksen jälkeen</translation>
     </message>
     <message>
         <source>Don&apos;t require password repeat when it is visible</source>
-        <translation type="unfinished"/>
+        <translation>Älä vaadi salasanan toistoa jos salasana on näkyvillä</translation>
     </message>
     <message>
         <source>Timeouts</source>
@@ -2235,7 +2230,7 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source> sec</source>
-        <translation>sek</translation>
+        <translation>s.</translation>
     </message>
 </context>
 <context>
@@ -2265,7 +2260,7 @@ give it a unique name to identify and accept it.</source>
     <name>UnlockDatabaseWidget</name>
     <message>
         <source>Unlock database</source>
-        <translation>Lås database op</translation>
+        <translation>Avaa tietokannan lukitus</translation>
     </message>
 </context>
 <context>
@@ -2296,18 +2291,18 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Recent databases</source>
-        <translation>Seneste databaser</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>main</name>
     <message>
         <source>path to a custom config file</source>
-        <translation>sti til brugerdefineret indstillingsfil</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>key file of the database</source>
-        <translation>databasens nøglefil</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>KeePassXC - cross-platform password manager</source>
