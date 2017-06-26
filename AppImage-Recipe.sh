@@ -72,7 +72,7 @@ get_icon
 cat << EOF > ./usr/bin/keepassxc_env
 #!/usr/bin/env bash
 #export QT_QPA_PLATFORMTHEME=gtk2
-export LD_LIBRARY_PATH="../opt/qt58/lib:\${LD_LIBRARY_PATH}"
+export LD_LIBRARY_PATH="..$(dirname ${QT_PLUGIN_PATH})/lib:\${LD_LIBRARY_PATH}"
 export QT_PLUGIN_PATH="..${QT_PLUGIN_PATH}"
 
 # unset XDG_DATA_DIRS to make tray icon work in Ubuntu Unity
