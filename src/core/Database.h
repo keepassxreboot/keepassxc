@@ -110,6 +110,7 @@ public:
     void recycleEntry(Entry* entry);
     void recycleGroup(Group* group);
     void emptyRecycleBin();
+    void createRecycleBin();
     void setEmitModified(bool value);
     void copyAttributesFrom(const Database* other);
     void merge(const Database* other);
@@ -142,8 +143,6 @@ private slots:
 private:
     Entry* recFindEntry(const Uuid& uuid, Group* group);
     Group* recFindGroup(const Uuid& uuid, Group* group);
-
-    void createRecycleBin();
 
     Metadata* const m_metadata;
     Group* m_rootGroup;

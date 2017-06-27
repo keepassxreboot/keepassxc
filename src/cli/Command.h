@@ -15,19 +15,31 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_LIST_H
-#define KEEPASSXC_LIST_H
+#ifndef KEEPASSXC_COMMAND_H
+#define KEEPASSXC_COMMAND_H
 
-#include "Command.h"
+#include <QList>
+#include <QString>
+#include <QStringList>
 
-class List : public Command
+#include "core/Database.h"
+
+class Command
 {
 public:
-    List();
-    ~List();
-    int execute(int argc, char** argv);
-    int executeFromShell(Database* database, QString databasePath, QStringList arguments);
-    int listGroup(Database* database, QString groupPath = QString(""));
+    virtual ~Command();
+    virtual int execute(int argc, char** argv);
+    virtual int executeFromShell(Database* database, QString databasePath, QStringList arguments);
+    virtual QStringList getSuggestions(Database* database, QStringList arguments);
+    QString name;
+    QString description;
+    QString shellUsage;
+    QString getDescriptionLine();
+    bool isShellCommand();
+
+    static QList<Command*> getCommands();
+    static QList<Command*> getShellCommands();
+    static Command* getCommand(QString commandName);
 };
 
-#endif // KEEPASSXC_LIST_H
+#endif // KEEPASSXC_COMMAND_H

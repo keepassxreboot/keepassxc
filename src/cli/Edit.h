@@ -15,19 +15,22 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_LIST_H
-#define KEEPASSXC_LIST_H
+#ifndef KEEPASSXC_EDIT_H
+#define KEEPASSXC_EDIT_H
 
 #include "Command.h"
 
-class List : public Command
+#include "core/Database.h"
+
+class Edit : public Command
 {
 public:
-    List();
-    ~List();
+    Edit();
+    ~Edit();
     int execute(int argc, char** argv);
     int executeFromShell(Database* database, QString databasePath, QStringList arguments);
-    int listGroup(Database* database, QString groupPath = QString(""));
+    QStringList getSuggestions(Database* database, QStringList arguments);
+    int editEntry(Database* database, QString databasePath, QString entryPath, QString fieldName);
 };
 
-#endif // KEEPASSXC_LIST_H
+#endif // KEEPASSXC_EDIT_H

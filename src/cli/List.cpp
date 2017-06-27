@@ -30,8 +30,18 @@
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
-#include "keys/CompositeKey.h"
 
+
+List::List()
+{
+    this->name = QString("ls");
+    this->shellUsage = QString("ls [group_path]");
+    this->description = QString("List database entries.");
+}
+
+List::~List()
+{
+}
 
 int List::execute(int argc, char** argv)
 {
@@ -39,7 +49,6 @@ int List::execute(int argc, char** argv)
     for (int i = 0; i < argc; ++i) {
         arguments << QString(argv[i]);
     }
-    QTextStream out(stdout);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::translate("main", "List database entries."));
@@ -78,17 +87,43 @@ int List::execute(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    Group* group = db->rootGroup();
     if (args.size() == 2) {
-        QString groupPath = args.at(1);
-        group = db->rootGroup()->findGroupByPath(groupPath);
-        if (group == nullptr) {
-            qCritical("Cannot find group %s.", qPrintable(groupPath));
-            return EXIT_FAILURE;
-        }
+        return this->listGroup(db, args.at(1));
+    }
+    return this->listGroup(db);
+}
+
+int List::executeFromShell(Database* database, QString, QStringList arguments)
+{
+    QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
+    if (arguments.size() > 1) {
+        outputTextStream << this->shellUsage << "\n";
+        outputTextStream.flush();
+        return EXIT_FAILURE;
+    }
+    if (arguments.size() == 1) {
+        return this->listGroup(database, arguments.at(0));
+    }
+    return this->listGroup(database);
+}
+
+int List::listGroup(Database* database, QString groupPath)
+{
+    QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
+    if (groupPath.isEmpty()) {
+        outputTextStream << database->rootGroup()->print();
+        outputTextStream.flush();
+        return EXIT_SUCCESS;
     }
 
-    out << group->print(parser.isSet("print-uuids"));
-    out.flush();
+    Group* group = database->rootGroup()->findGroupByPath(groupPath);
+    if (group == nullptr) {
+        qCritical("Cannot find group %s.", qPrintable(groupPath));
+        return EXIT_FAILURE;
+    }
+
+    outputTextStream << group->print();
+    outputTextStream.flush();
     return EXIT_SUCCESS;
+
 }

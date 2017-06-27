@@ -578,7 +578,54 @@ Group* Group::findGroupByPath(QString groupPath, QString basePath)
 
 }
 
-QString Group::print(bool printUuids, QString baseName, int depth)
+/*
+ * Gets the completion suggestions, based on the path entered so far.
+ */
+QStringList Group::getSuggestions(QString currentPath, bool includeEntries)
+{
+
+    Q_ASSERT(!currentPath.isNull());
+
+    QStringList response;
+    QString partialPath = "";
+
+    Group* currentGroup = this->findGroupByPath(currentPath);
+    if (!currentGroup) {
+        QStringList groups = currentPath.split("/");
+        partialPath = groups.takeLast();
+        currentPath = groups.join("/");
+        currentGroup = this->findGroupByPath(currentPath);
+        if (!currentGroup) {
+            return response;
+        }
+    }
+
+    for (Group* group : currentGroup->children()) {
+        if (group->name().startsWith(partialPath)) {
+            response << currentPath + group->name() + "/";
+        }
+    }
+
+    if (!includeEntries) {
+        return response;
+    }
+
+
+    for (Entry* entry : currentGroup->entries()) {
+        if (entry->title().startsWith(partialPath)) {
+            if (!currentPath.isEmpty() && !currentPath.endsWith("/")) {
+                response << currentPath + "/" + entry->title();
+            } else {
+                response << currentPath + entry->title();
+            }
+        }
+    }
+
+    return response;
+
+}
+
+QString Group::print(bool recursive, int depth)
 {
 
     QString response;
@@ -590,21 +637,14 @@ QString Group::print(bool printUuids, QString baseName, int depth)
     }
 
     for (Entry* entry : entries()) {
-        response += indentation + entry->title();
-        if (printUuids) {
-            response += " " + entry->uuid().toHex();
-        }
-        response += "\n";
+        response += indentation + entry->title() + "\n";
     }
 
     for (Group* innerGroup : children()) {
-        QString newBaseName = baseName + innerGroup->name() + "/";
-        response += indentation + newBaseName;
-        if (printUuids) {
-            response += " " + innerGroup->uuid().toHex();
+        response += indentation + innerGroup->name() + "/\n";
+        if (recursive) {
+            response += innerGroup->print(recursive, depth + 1);
         }
-        response += "\n";
-        response += innerGroup->print(printUuids, newBaseName, depth + 1);
     }
 
     return response;
@@ -752,6 +792,53 @@ void Group::addEntry(Entry* entry)
     emit modified();
     emit entryAdded(entry);
 }
+
+Entry* Group::addEntryWithPath(QString entryPath)
+{
+    Q_ASSERT(!entryPath.isNull());
+
+    QStringList groups = entryPath.split("/");
+    QString entryTitle = groups.takeLast();
+    QString groupPath = groups.join("/");
+
+    Group* group = this->findGroupByPath(groupPath);
+    if (!group) {
+        return nullptr;
+    }
+
+    Entry* entry = new Entry();
+    entry->setTitle(entryTitle);
+    entry->setGroup(group);
+
+    return entry;
+
+}
+
+Group* Group::addGroupWithPath(QString groupPath)
+{
+    Q_ASSERT(!groupPath.isNull());
+
+    if (groupPath.endsWith("/")) {
+        groupPath.chop(1);
+    }
+
+    QStringList groups = groupPath.split("/");
+    QString groupName = groups.takeLast();
+    QString parentPath = groups.join("/");
+
+    Group* parent = this->findGroupByPath(parentPath);
+    if (!parent) {
+        return nullptr;
+    }
+
+    Group* group = new Group();
+    group->setName(groupName);
+    group->setParent(parent);
+
+    return group;
+
+}
+
 
 void Group::removeEntry(Entry* entry)
 {

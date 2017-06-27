@@ -18,7 +18,7 @@
 #include <cstdlib>
 #include <stdio.h>
 
-#include "Show.h"
+#include "AddGroup.h"
 
 #include <QCommandLineParser>
 #include <QCoreApplication>
@@ -26,29 +26,29 @@
 #include <QTextStream>
 
 #include "core/Database.h"
-#include "core/Entry.h"
 #include "core/Group.h"
 #include "cli/Utils.h"
 
-Show::Show()
+AddGroup::AddGroup()
 {
-    this->name = QString("show");
-    this->shellUsage = QString("show entry_path");
-    this->description = QString("Show an entry's information.");
+    this->name = QString("mkdir");
+    this->shellUsage = QString("mkdir new_group_path");
+    this->description = QString("Add a group to the database.");
 }
 
-Show::~Show()
+AddGroup::~AddGroup()
 {
 }
 
-int Show::execute(int argc, char** argv)
+int AddGroup::execute(int argc, char** argv)
 {
     QCoreApplication app(argc, argv);
+    QTextStream out(stdout);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main", "Show a password."));
+    parser.setApplicationDescription(QCoreApplication::translate("main", "Add a group to the database."));
     parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
-    parser.addPositionalArgument("entry", QCoreApplication::translate("main", "Name of the entry to show."));
+    parser.addPositionalArgument("group", QCoreApplication::translate("main", "Path of the group to add."));
     parser.process(app);
 
     const QStringList args = parser.positionalArguments();
@@ -61,10 +61,11 @@ int Show::execute(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    return this->showEntry(db, args.at(1));
+    return this->addGroup(db, args.at(0), args.at(1));
+
 }
 
-int Show::executeFromShell(Database* database, QString, QStringList arguments)
+int AddGroup::executeFromShell(Database* database, QString databasePath, QStringList arguments)
 {
 
     QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
@@ -73,26 +74,35 @@ int Show::executeFromShell(Database* database, QString, QStringList arguments)
         outputTextStream.flush();
         return EXIT_FAILURE;
     }
-    return this->showEntry(database, arguments.at(0));
+    return this->addGroup(database, databasePath, arguments.at(0));
 }
 
-int Show::showEntry(Database* database, QString entryPath)
+int AddGroup::addGroup(Database* database, QString databasePath, QString groupPath)
 {
 
     QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
     QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
 
-    Entry* entry = database->rootGroup()->findEntry(entryPath);
-    if (!entry) {
-        qCritical("Could not find entry with path %s.", qPrintable(entryPath));
+    Group* group = database->rootGroup()->findGroupByPath(groupPath);
+    if (group != nullptr) {
+	qCritical("Group %s already exists.", qPrintable(groupPath));
+	return EXIT_FAILURE;
+    }
+
+    group = database->rootGroup()->addGroupWithPath(groupPath);
+    if (group == nullptr) {
         return EXIT_FAILURE;
     }
 
-    outputTextStream << "   title: " << entry->title() << "\n";
-    outputTextStream << "username: " << entry->username() << "\n";
-    outputTextStream << "password: " << entry->password() << "\n";
-    outputTextStream << "     URL: " << entry->url() << "\n";
+    QString errorMessage = database->saveToFile(databasePath);
+    if (!errorMessage.isEmpty()) {
+        qCritical("Unable to save database to file : %s", qPrintable(errorMessage));
+        return EXIT_FAILURE;
+    }
+
+    outputTextStream << "Successfully added new group!\n";
     outputTextStream.flush();
+
     return EXIT_SUCCESS;
 
 }

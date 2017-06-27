@@ -43,6 +43,7 @@ option(WITH_APP_BUNDLE "Enable Application Bundle for OS X" ON)
 option(WITH_XC_AUTOTYPE "Include Auto-Type." ON)
 option(WITH_XC_HTTP "Include KeePassHTTP and Custom Icon Downloads." OFF)
 option(WITH_XC_YUBIKEY "Include YubiKey support." OFF)
+option(WITH_XC_READLINE "Include Readline support for KeePassXC's interactive shell." OFF)
 
 # Process ui files automatically from source files
 set(CMAKE_AUTOUIC ON)
@@ -245,6 +246,11 @@ if(WITH_XC_YUBIKEY)
   include_directories(SYSTEM ${YUBIKEY_INCLUDE_DIRS})
 endif()
 
+# Optional
+if(WITH_XC_READLINE)
+  find_package(Readline REQUIRED)
+endif()
+
 if(UNIX)
   check_cxx_source_compiles("#include <sys/prctl.h>
     int main() { prctl(PR_SET_DUMPABLE, 0); return 0; }"
@@ -267,7 +273,7 @@ if(UNIX)
   endif()
 endif()
 
-include_directories(SYSTEM ${GCRYPT_INCLUDE_DIR} ${ZLIB_INCLUDE_DIR})
+include_directories(SYSTEM ${GCRYPT_INCLUDE_DIR} ${ZLIB_INCLUDE_DIR} ${Readline_INCLUDE_DIR})
 
 include(FeatureSummary)
 

@@ -14,8 +14,18 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 set(cli_SOURCES
+    Add.cpp
+    Add.h
+    AddGroup.cpp
+    AddGroup.h
     Clip.cpp
     Clip.h
+    Command.cpp
+    Command.h
+    Create.cpp
+    Create.h
+    Edit.cpp
+    Edit.h
     EntropyMeter.cpp
     EntropyMeter.h
     Extract.cpp
@@ -24,11 +34,21 @@ set(cli_SOURCES
     List.h
     Merge.cpp
     Merge.h
+    Move.cpp
+    Move.h
+    Remove.cpp
+    Remove.h
+    RemoveGroup.cpp
+    RemoveGroup.h
+    Shell.cpp
+    Shell.h
     Show.cpp
     Show.h)
 
 add_library(cli STATIC ${cli_SOURCES})
-target_link_libraries(cli Qt5::Core Qt5::Widgets)
+target_link_libraries(cli Qt5::Core Qt5::Widgets ${Readline_LIBRARY})
+
+add_feature_info(Readline WITH_XC_READLINE "Readline support for interactive shell")
 
 add_executable(keepassxc-cli keepassxc-cli.cpp)
 target_link_libraries(keepassxc-cli
@@ -38,6 +58,7 @@ target_link_libraries(keepassxc-cli
                       ${GCRYPT_LIBRARIES}
                       ${GPGERROR_LIBRARIES}
                       ${ZLIB_LIBRARIES}
+                      ${Readline_LIBRARY}
                       ${ZXCVBN_LIBRARIES})
 
 install(TARGETS keepassxc-cli

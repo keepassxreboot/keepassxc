@@ -15,6 +15,7 @@
 #cmakedefine WITH_XC_HTTP
 #cmakedefine WITH_XC_AUTOTYPE
 #cmakedefine WITH_XC_YUBIKEY
+#cmakedefine WITH_XC_READLINE
 
 #cmakedefine HAVE_PR_SET_DUMPABLE 1
 #cmakedefine HAVE_RLIMIT_CORE 1

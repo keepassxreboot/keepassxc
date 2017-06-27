@@ -15,19 +15,21 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_LIST_H
-#define KEEPASSXC_LIST_H
+#ifndef KEEPASSXC_MOVE_H
+#define KEEPASSXC_MOVE_H
 
 #include "Command.h"
 
-class List : public Command
+#include "core/Database.h"
+
+class Move : public Command
 {
 public:
-    List();
-    ~List();
+    Move();
+    ~Move();
     int execute(int argc, char** argv);
     int executeFromShell(Database* database, QString databasePath, QStringList arguments);
-    int listGroup(Database* database, QString groupPath = QString(""));
+    int move(Database* database, QString databasePath, QString sourcePath, QString destinationPath);
 };
 
-#endif // KEEPASSXC_LIST_H
+#endif // KEEPASSXC_MOVE_H

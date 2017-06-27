@@ -28,6 +28,16 @@
 #include "core/Database.h"
 #include "gui/UnlockDatabaseDialog.h"
 
+Merge::Merge()
+{
+    this->name = QString("merge");
+    this->description = QString("Merge two databases.");
+}
+
+Merge::~Merge()
+{
+}
+
 int Merge::execute(int argc, char** argv)
 {
 

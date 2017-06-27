@@ -18,7 +18,7 @@
 #include <cstdlib>
 #include <stdio.h>
 
-#include "Show.h"
+#include "Remove.h"
 
 #include <QCommandLineParser>
 #include <QCoreApplication>
@@ -28,27 +28,28 @@
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
+#include "core/Tools.h"
 #include "cli/Utils.h"
 
-Show::Show()
+Remove::Remove()
 {
-    this->name = QString("show");
-    this->shellUsage = QString("show entry_path");
-    this->description = QString("Show an entry's information.");
+    this->name = QString("rm");
+    this->shellUsage = QString("rm entry_path");
+    this->description = QString("Remove an entry from the database.");
 }
 
-Show::~Show()
+Remove::~Remove()
 {
 }
 
-int Show::execute(int argc, char** argv)
+int Remove::execute(int argc, char** argv)
 {
     QCoreApplication app(argc, argv);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main", "Show a password."));
+    parser.setApplicationDescription(QCoreApplication::translate("main", "Remove an entry from the database."));
     parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
-    parser.addPositionalArgument("entry", QCoreApplication::translate("main", "Name of the entry to show."));
+    parser.addPositionalArgument("entry", QCoreApplication::translate("main", "Path of the entry to remove."));
     parser.process(app);
 
     const QStringList args = parser.positionalArguments();
@@ -61,10 +62,11 @@ int Show::execute(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    return this->showEntry(db, args.at(1));
+    return this->removeEntry(db, args.at(0), args.at(1));
+
 }
 
-int Show::executeFromShell(Database* database, QString, QStringList arguments)
+int Remove::executeFromShell(Database* database, QString databasePath, QStringList arguments)
 {
 
     QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
@@ -73,26 +75,40 @@ int Show::executeFromShell(Database* database, QString, QStringList arguments)
         outputTextStream.flush();
         return EXIT_FAILURE;
     }
-    return this->showEntry(database, arguments.at(0));
+    return this->removeEntry(database, databasePath, arguments.at(0));
 }
 
-int Show::showEntry(Database* database, QString entryPath)
+int Remove::removeEntry(Database* database, QString databasePath, QString entryPath)
 {
 
-    QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
     QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
-
     Entry* entry = database->rootGroup()->findEntry(entryPath);
     if (!entry) {
-        qCritical("Could not find entry with path %s.", qPrintable(entryPath));
+        qCritical("Entry %s not found.", qPrintable(entryPath));
         return EXIT_FAILURE;
     }
 
-    outputTextStream << "   title: " << entry->title() << "\n";
-    outputTextStream << "username: " << entry->username() << "\n";
-    outputTextStream << "password: " << entry->password() << "\n";
-    outputTextStream << "     URL: " << entry->url() << "\n";
+    Utils::createRecycleBin(database);
+
+    QString entryTitle = entry->title();
+    if (Tools::hasChild(database->metadata()->recycleBin(), entry) ||
+        !database->metadata()->recycleBinEnabled()) {
+        if (!Utils::askYesNoQuestion("You are about to remove entry " + entryTitle + " permanently.", true)) {
+            return EXIT_FAILURE;
+        }
+        delete entry;
+    } else {
+        database->recycleEntry(entry);
+    };
+
+    QString errorMessage = database->saveToFile(databasePath);
+    if (!errorMessage.isEmpty()) {
+        qCritical("Unable to save database to file : %s", qPrintable(errorMessage));
+        return EXIT_FAILURE;
+    }
+    outputTextStream << "Successfully removed entry " << entryTitle << ".\n";
     outputTextStream.flush();
+
     return EXIT_SUCCESS;
 
 }

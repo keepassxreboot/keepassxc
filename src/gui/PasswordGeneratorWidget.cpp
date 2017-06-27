@@ -98,7 +98,7 @@ void PasswordGeneratorWidget::loadSettings()
     m_ui->checkBoxExtASCII->setChecked(config()->get("generator/EASCII", false).toBool());
     m_ui->checkBoxExcludeAlike->setChecked(config()->get("generator/ExcludeAlike", true).toBool());
     m_ui->checkBoxEnsureEvery->setChecked(config()->get("generator/EnsureEvery", true).toBool());
-    m_ui->spinBoxLength->setValue(config()->get("generator/Length", 16).toInt());
+    m_ui->spinBoxLength->setValue(config()->get("generator/Length", PasswordGenerator::DefaultLength).toInt());
 
     // Diceware config
     m_ui->spinBoxWordCount->setValue(config()->get("generator/WordCount", 6).toInt());
