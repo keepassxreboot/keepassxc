@@ -598,10 +598,9 @@ QStringList Group::getSuggestions(QString currentPath, bool includeEntries)
         if (!currentGroup) {
             return response;
         }
-    } else {
-        if (!currentPath.isEmpty() && !currentPath.endsWith("/")) {
-            currentPath.append("/");
-        }
+    }
+    if (!currentPath.isEmpty() && !currentPath.endsWith("/")) {
+        currentPath.append("/");
     }
 
     for (Group* group : currentGroup->children()) {

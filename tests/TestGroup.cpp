@@ -799,6 +799,14 @@ void TestGroup::testGetSuggestions()
     QVERIFY(suggestions.size() == 1);
     QVERIFY(suggestions.contains("/group1/group2/"));
 
+    suggestions = db->rootGroup()->getSuggestions("group1/group", false);
+    QVERIFY(suggestions.size() == 1);
+    QVERIFY(suggestions.contains("group1/group2/"));
+
+    suggestions = db->rootGroup()->getSuggestions("/group1/group", false);
+    QVERIFY(suggestions.size() == 1);
+    QVERIFY(suggestions.contains("/group1/group2/"));
+
     suggestions = db->rootGroup()->getSuggestions("/group1", true);
     QVERIFY(suggestions.contains("/group1/entry2"));
 

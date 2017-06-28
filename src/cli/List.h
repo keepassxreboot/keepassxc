@@ -27,6 +27,7 @@ public:
     ~List();
     int execute(int argc, char** argv);
     int executeFromShell(Database* database, QString databasePath, QStringList arguments);
+    QStringList getSuggestions(Database* database, QStringList arguments);
     int listGroup(Database* database, QString groupPath = QString(""));
 };
 
