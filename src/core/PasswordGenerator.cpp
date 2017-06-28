@@ -19,7 +19,7 @@
 #include "PasswordGenerator.h"
 
 #include "crypto/Random.h"
-#include "zxcvbn/zxcvbn.h"
+#include <zxcvbn.h>
 
 PasswordGenerator::PasswordGenerator()
     : m_length(0)

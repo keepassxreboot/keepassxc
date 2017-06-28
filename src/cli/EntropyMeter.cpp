@@ -20,7 +20,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "zxcvbn/zxcvbn.h"
+#include <zxcvbn.h>
 
 /* For pre-compiled headers under windows */
 #ifdef _WIN32
