@@ -27,12 +27,12 @@ if (NOT GIT_HEAD OR NOT GIT_DESCRIBE)
     set(GIT_DESCRIBE "")
 endif()
 
-find_library(ZXCVBN_FOUND zxcvbn)
-if(NOT ZXCVBN_FOUND)
+find_library(ZXCVBN_LIBRARIES zxcvbn)
+if(NOT ZXCVBN_LIBRARIES)
   add_library(zxcvbn STATIC zxcvbn/zxcvbn.cpp)
   include_directories(${CMAKE_CURRENT_SOURCE_DIR}/zxcvbn)
-  set(ZXCVBN_FOUND zxcvbn)
-endif(NOT ZXCVBN_FOUND)
+  set(ZXCVBN_LIBRARIES zxcvbn)
+endif(NOT ZXCVBN_LIBRARIES)
 
 configure_file(version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/version.h @ONLY)
 
@@ -222,7 +222,7 @@ target_link_libraries(keepassx_core
                       ${keepasshttp_LIB}
                       ${autotype_LIB}
                       ${YUBIKEY_LIBRARIES}
-                      ${ZXCVBN_FOUND}
+                      ${ZXCVBN_LIBRARIES}
                       Qt5::Core
                       Qt5::Network
                       Qt5::Concurrent
