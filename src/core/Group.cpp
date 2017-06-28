@@ -587,6 +587,13 @@ QStringList Group::getSuggestions(QString currentPath, bool includeEntries)
     Q_ASSERT(!currentPath.isNull());
 
     QStringList response;
+
+    QString prefix("");
+    if (currentPath.startsWith("/")) {
+        currentPath.remove(0, 1);
+        prefix = QString("/");
+    }
+
     QString partialPath = "";
 
     Group* currentGroup = this->findGroupByPath(currentPath);
@@ -599,13 +606,13 @@ QStringList Group::getSuggestions(QString currentPath, bool includeEntries)
             return response;
         }
     }
-    if (!currentPath.isEmpty() && !currentPath.endsWith("/")) {
-        currentPath.append("/");
+    if (!currentPath.isEmpty()) {
+        currentPath += "/";
     }
 
     for (Group* group : currentGroup->children()) {
         if (group->name().startsWith(partialPath)) {
-            response << currentPath + group->name() + "/";
+            response << prefix + currentPath + group->name() + "/";
         }
     }
 
@@ -616,11 +623,7 @@ QStringList Group::getSuggestions(QString currentPath, bool includeEntries)
 
     for (Entry* entry : currentGroup->entries()) {
         if (entry->title().startsWith(partialPath)) {
-            if (!currentPath.isEmpty() && !currentPath.endsWith("/")) {
-                response << currentPath + "/" + entry->title();
-            } else {
-                response << currentPath + entry->title();
-            }
+            response << prefix + currentPath + entry->title();
         }
     }
 

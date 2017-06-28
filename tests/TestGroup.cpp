@@ -773,6 +773,11 @@ void TestGroup::testGetSuggestions()
     entry2->setGroup(group1);
     entry2->setUuid(Uuid::random());
 
+    Entry* entry3 = new Entry();
+    entry3->setTitle(QString("third_entry"));
+    entry3->setGroup(group1);
+    entry3->setUuid(Uuid::random());
+
     group1->setParent(db->rootGroup());
 
     Group* group2 = new Group();
@@ -812,6 +817,21 @@ void TestGroup::testGetSuggestions()
 
     suggestions = db->rootGroup()->getSuggestions("group1", true);
     QVERIFY(suggestions.contains("group1/entry2"));
+    QVERIFY(suggestions.contains("group1/third_entry"));
+
+    suggestions = db->rootGroup()->getSuggestions("group1/ent", true);
+    QVERIFY(suggestions.contains("group1/entry2"));
+    QVERIFY(!suggestions.contains("group1/third_entry"));
+
+    suggestions = db->rootGroup()->getSuggestions("/group1/ent", true);
+    QVERIFY(suggestions.contains("/group1/entry2"));
+    QVERIFY(!suggestions.contains("/group1/third_entry"));
+
+    suggestions = db->rootGroup()->getSuggestions("/ent", true);
+    QVERIFY(suggestions.contains("/entry1"));
+
+    suggestions = db->rootGroup()->getSuggestions("invalid_path", true);
+    QVERIFY(suggestions.isEmpty());
 
     delete db;
 }
