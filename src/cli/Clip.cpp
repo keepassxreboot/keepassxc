@@ -17,6 +17,8 @@
 
 #include <cstdlib>
 #include <stdio.h>
+#include <chrono>
+#include <thread>
 
 #include "Clip.h"
 
@@ -61,10 +63,14 @@ int Clip::execute(int argc, char** argv)
         QCoreApplication::translate("main", "Use a GUI prompt unlocking the database."));
     parser.addOption(guiPrompt);
     parser.addPositionalArgument("entry", QCoreApplication::translate("main", "Path of the entry to clip."));
+    parser.addPositionalArgument(
+        "timeout",
+        QCoreApplication::translate("main", "Timeout in seconds before clearing the clipboard."),
+        QString("[timeout]"));
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
-    if (args.size() != 2) {
+    if (args.size() != 2 && args.size() != 3) {
         QCoreApplication app(argc, argv);
         parser.showHelp(EXIT_FAILURE);
     }
@@ -80,22 +86,29 @@ int Clip::execute(int argc, char** argv)
     if (!db) {
         return EXIT_FAILURE;
     }
-    return this->clipEntry(db, args.at(1));
+    return this->clipEntry(db, args.at(1), args.value(2));
 }
 
 int Clip::executeFromShell(Database* database, QString, QStringList arguments)
 {
     QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
-    if (arguments.size() != 1) {
-        outputTextStream << this->shellUsage << "\n";
-        outputTextStream.flush();
+    if (arguments.size() != 1 && arguments.size() != 2) {
+        outputTextStream << this->shellUsage << endl;
         return EXIT_FAILURE;
     }
-    return this->clipEntry(database, arguments.at(0));
+    return this->clipEntry(database, arguments.at(0), arguments.value(1));
 }
 
-int Clip::clipEntry(Database* database, QString entryPath)
+int Clip::clipEntry(Database* database, QString entryPath, QString timeout)
 {
+
+    int timeoutSeconds = 0;
+    if (!timeout.isEmpty() && !timeout.toInt()) {
+        qCritical("Invalid timeout value %s.", qPrintable(timeout));
+        return EXIT_FAILURE;
+    } else {
+        timeoutSeconds = timeout.toInt();
+    }
 
     QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
     Entry* entry = database->rootGroup()->findEntry(entryPath);
@@ -106,10 +119,24 @@ int Clip::clipEntry(Database* database, QString entryPath)
 
     int exitCode = Utils::clipText(entry->password());
     if (exitCode == 0) {
-        outputTextStream << "Entry's password copied to the clipboard!\n";
-        outputTextStream.flush();
+        outputTextStream << "Entry's password copied to the clipboard!" << endl;
+    } else {
+        return exitCode;
     }
 
+    if (!timeoutSeconds) {
+        return exitCode;
+    }
+
+    while (timeoutSeconds > 0) {
+        outputTextStream << "\rClearing the clipboard in " << timeoutSeconds << " seconds...";
+        outputTextStream.flush();
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        timeoutSeconds--;
+    }
+    outputTextStream << "\nClipboard cleared!" << endl;
+
+    Utils::clipText("");
     return exitCode;
 
 }

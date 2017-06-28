@@ -71,8 +71,7 @@ int Add::executeFromShell(Database* database, QString databasePath, QStringList 
 
     QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
     if (arguments.size() != 1) {
-        outputTextStream << this->shellUsage << "\n";
-        outputTextStream.flush();
+        outputTextStream << this->shellUsage << endl;
         return EXIT_FAILURE;
     }
     return this->addEntry(database, databasePath, arguments.at(0));
@@ -137,8 +136,7 @@ int Add::addEntry(Database* database, QString databasePath, QString entryPath)
         return EXIT_FAILURE;
     }
 
-    outputTextStream << "Successfully added new entry!\n";
-    outputTextStream.flush();
+    outputTextStream << "Successfully added new entry!" << endl;
 
     return EXIT_SUCCESS;
 

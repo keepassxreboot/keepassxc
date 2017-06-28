@@ -71,8 +71,7 @@ int Remove::executeFromShell(Database* database, QString databasePath, QStringLi
 
     QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
     if (arguments.size() != 1) {
-        outputTextStream << this->shellUsage << "\n";
-        outputTextStream.flush();
+        outputTextStream << this->shellUsage << endl;
         return EXIT_FAILURE;
     }
     return this->removeEntry(database, databasePath, arguments.at(0));
@@ -106,8 +105,7 @@ int Remove::removeEntry(Database* database, QString databasePath, QString entryP
         qCritical("Unable to save database to file : %s", qPrintable(errorMessage));
         return EXIT_FAILURE;
     }
-    outputTextStream << "Successfully removed entry " << entryTitle << ".\n";
-    outputTextStream.flush();
+    outputTextStream << "Successfully removed entry " << entryTitle << "." << endl;
 
     return EXIT_SUCCESS;
 
