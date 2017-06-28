@@ -660,7 +660,6 @@ void TestGroup::testFindGroupByPath()
 
     Group* group;
 
-    return;
     group = db->rootGroup()->findGroupByPath("/");
     QVERIFY(group != nullptr);
     QCOMPARE(group->uuid(), db->rootGroup()->uuid());
