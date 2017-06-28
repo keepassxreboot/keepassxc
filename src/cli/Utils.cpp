@@ -120,13 +120,13 @@ int Utils::clipText(QString text)
     QString programName = "";
     QStringList arguments;
 
-#ifdef Q_OS_MACOS
-    programName = "pbcopy";
-#endif
-
 #ifdef Q_OS_UNIX
     programName = "xclip";
     arguments << "-i" << "-selection" << "clipboard";
+#endif
+
+#ifdef Q_OS_MACOS
+    programName = "pbcopy";
 #endif
 
     // TODO add this for windows.
