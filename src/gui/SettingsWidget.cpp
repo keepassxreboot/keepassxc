@@ -141,6 +141,7 @@ void SettingsWidget::loadSettings()
         if (m_globalAutoTypeKey > 0 && m_globalAutoTypeModifiers > 0) {
             m_generalUi->autoTypeShortcutWidget->setShortcut(m_globalAutoTypeKey, m_globalAutoTypeModifiers);
         }
+        m_generalUi->autoTypeDelaySpinBox->setValue(config()->get("AutoTypeDelay").toInt());
     }
 
 
@@ -205,6 +206,7 @@ void SettingsWidget::saveSettings()
         config()->set("GlobalAutoTypeKey", m_generalUi->autoTypeShortcutWidget->key());
         config()->set("GlobalAutoTypeModifiers",
                       static_cast<int>(m_generalUi->autoTypeShortcutWidget->modifiers()));
+        config()->set("AutoTypeDelay", m_generalUi->autoTypeDelaySpinBox->value());
     }
     config()->set("security/clearclipboard", m_secUi->clearClipboardCheckBox->isChecked());
     config()->set("security/clearclipboardtimeout", m_secUi->clearClipboardSpinBox->value());

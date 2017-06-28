@@ -318,11 +318,43 @@
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <property name="spacing">
-          <number>15</number>
+        <layout class="QGridLayout" name="gridLayout">
+         <property name="horizontalSpacing">
+          <number>12</number>
          </property>
-         <item alignment="Qt::AlignRight">
+         <property name="verticalSpacing">
+          <number>6</number>
+         </property>
+         <item row="1" column="0" alignment="Qt::AlignRight">
+          <widget class="QLabel" name="autoTypeDelayLabel">
+           <property name="text">
+            <string>Auto-Type delay</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1" alignment="Qt::AlignLeft">
+          <widget class="QSpinBox" name="autoTypeDelaySpinBox">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="suffix">
+            <string> ms</string>
+           </property>
+           <property name="prefix">
+            <string/>
+           </property>
+           <property name="maximum">
+            <number>999</number>
+           </property>
+           <property name="value">
+            <number>25</number>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0" alignment="Qt::AlignRight">
           <widget class="QLabel" name="autoTypeShortcutLabel">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -338,7 +370,7 @@
            </property>
           </widget>
          </item>
-         <item>
+         <item row="0" column="1">
           <widget class="ShortcutWidget" name="autoTypeShortcutWidget">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
