@@ -46,9 +46,6 @@ public:
     void addSettingsPage(ISettingsPage * page);
     void loadSettings();
 
-signals:
-    void editFinished(bool accepted);
-
 private slots:
     void saveSettings();
     void reject();

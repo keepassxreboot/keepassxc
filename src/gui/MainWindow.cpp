@@ -240,8 +240,10 @@ MainWindow::MainWindow()
             SLOT(databaseStatusChanged(DatabaseWidget*)));
     connect(m_ui->stackedWidget, SIGNAL(currentChanged(int)), SLOT(setMenuActionState()));
     connect(m_ui->stackedWidget, SIGNAL(currentChanged(int)), SLOT(updateWindowTitle()));
-    connect(m_ui->settingsWidget, SIGNAL(editFinished(bool)), SLOT(switchToDatabases()));
     connect(m_ui->settingsWidget, SIGNAL(accepted()), SLOT(applySettingsChanges()));
+    connect(m_ui->settingsWidget, SIGNAL(apply()), SLOT(applySettingsChanges()));
+    connect(m_ui->settingsWidget, SIGNAL(accepted()), SLOT(switchToDatabases()));
+    connect(m_ui->settingsWidget, SIGNAL(rejected()), SLOT(switchToDatabases()));
 
     connect(m_ui->actionDatabaseNew, SIGNAL(triggered()), m_ui->tabWidget,
             SLOT(newDatabase()));

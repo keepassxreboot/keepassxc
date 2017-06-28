@@ -68,6 +68,7 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     }
 
     connect(this, SIGNAL(accepted()), SLOT(saveSettings()));
+    connect(this, SIGNAL(apply()), SLOT(saveSettings()));
     connect(this, SIGNAL(rejected()), SLOT(reject()));
 
     connect(m_generalUi->autoSaveAfterEveryChangeCheckBox, SIGNAL(toggled(bool)),
@@ -213,8 +214,6 @@ void SettingsWidget::saveSettings()
     for (const ExtraPage& page: asConst(m_extraPages)) {
         page.saveSettings();
     }
-
-    emit editFinished(true);
 }
 
 void SettingsWidget::reject()
@@ -224,7 +223,6 @@ void SettingsWidget::reject()
         autoType()->registerGlobalShortcut(m_globalAutoTypeKey, m_globalAutoTypeModifiers);
     }
 
-    emit editFinished(false);
 }
 
 void SettingsWidget::enableAutoSaveOnExit(bool checked)
