@@ -23,6 +23,7 @@
 #include <QMessageBox>
 #include <QFileDialog>
 
+#include "core/Config.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
@@ -231,7 +232,7 @@ void EditWidgetIcons::fetchFavicon(const QUrl& url)
 
 void EditWidgetIcons::fetchFaviconFromGoogle(const QString& domain)
 {
-    if (m_fallbackToGoogle) {
+    if (config()->get("security/IconDownloadFallbackToGoogle", false).toBool() && m_fallbackToGoogle) {
         resetFaviconDownload();
         m_fallbackToGoogle = false;
         fetchFavicon(QUrl("http://www.google.com/s2/favicons?domain=" + domain));

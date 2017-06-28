@@ -20,6 +20,7 @@
 #include "ui_SettingsWidgetGeneral.h"
 #include "ui_SettingsWidgetSecurity.h"
 
+#include "config-keepassx.h"
 #include "autotype/AutoType.h"
 #include "core/Config.h"
 #include "core/Translator.h"
@@ -80,6 +81,10 @@ SettingsWidget::SettingsWidget(QWidget* parent)
             m_secUi->clearClipboardSpinBox, SLOT(setEnabled(bool)));
     connect(m_secUi->lockDatabaseIdleCheckBox, SIGNAL(toggled(bool)),
             m_secUi->lockDatabaseIdleSpinBox, SLOT(setEnabled(bool)));
+
+#ifndef WITH_XC_HTTP
+    m_secUi->privacy->setVisible(false);
+#endif
 }
 
 SettingsWidget::~SettingsWidget()
@@ -146,6 +151,7 @@ void SettingsWidget::loadSettings()
     m_secUi->lockDatabaseIdleSpinBox->setValue(config()->get("security/lockdatabaseidlesec").toInt());
     m_secUi->lockDatabaseMinimizeCheckBox->setChecked(config()->get("security/lockdatabaseminimize").toBool());
     m_secUi->lockDatabaseOnScreenLockCheckBox->setChecked(config()->get("security/lockdatabasescreenlock").toBool());
+    m_secUi->lockDatabaseOnScreenLockCheckBox->setChecked(config()->get("security/IconDownloadFallbackToGoogle").toBool());
 
     m_secUi->passwordCleartextCheckBox->setChecked(config()->get("security/passwordscleartext").toBool());
     m_secUi->passwordRepeatCheckBox->setChecked(config()->get("security/passwordsrepeat").toBool());
@@ -207,6 +213,7 @@ void SettingsWidget::saveSettings()
     config()->set("security/lockdatabaseidlesec", m_secUi->lockDatabaseIdleSpinBox->value());
     config()->set("security/lockdatabaseminimize", m_secUi->lockDatabaseMinimizeCheckBox->isChecked());
     config()->set("security/lockdatabasescreenlock", m_secUi->lockDatabaseOnScreenLockCheckBox->isChecked());
+    config()->set("security/IconDownloadFallbackToGoogle", m_secUi->fallbackToGoogle->isChecked());
 
     config()->set("security/passwordscleartext", m_secUi->passwordCleartextCheckBox->isChecked());
     config()->set("security/passwordsrepeat", m_secUi->passwordRepeatCheckBox->isChecked());
