@@ -38,7 +38,7 @@ target_link_libraries(keepassxc-cli
                       ${GCRYPT_LIBRARIES}
                       ${GPGERROR_LIBRARIES}
                       ${ZLIB_LIBRARIES}
-                      zxcvbn)
+                      ${ZXCVBN_LIBRARIES})
 
 install(TARGETS keepassxc-cli
         BUNDLE DESTINATION . COMPONENT Runtime

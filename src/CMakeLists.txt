@@ -27,6 +27,13 @@ if (NOT GIT_HEAD OR NOT GIT_DESCRIBE)
     set(GIT_DESCRIBE "")
 endif()
 
+find_library(ZXCVBN_LIBRARIES zxcvbn)
+if(NOT ZXCVBN_LIBRARIES)
+  add_library(zxcvbn STATIC zxcvbn/zxcvbn.cpp)
+  include_directories(${CMAKE_CURRENT_SOURCE_DIR}/zxcvbn)
+  set(ZXCVBN_LIBRARIES zxcvbn)
+endif(NOT ZXCVBN_LIBRARIES)
+
 configure_file(version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/version.h @ONLY)
 
 set(keepassx_SOURCES
@@ -203,9 +210,6 @@ else()
   list(APPEND keepassx_SOURCES keys/drivers/YubiKeyStub.cpp)
 endif()
 
-add_library(zxcvbn STATIC zxcvbn/zxcvbn.cpp)
-target_link_libraries(zxcvbn)
-
 add_library(autotype STATIC ${autotype_SOURCES})
 target_link_libraries(autotype Qt5::Core Qt5::Widgets)
 
@@ -218,7 +222,7 @@ target_link_libraries(keepassx_core
                       ${keepasshttp_LIB}
                       ${autotype_LIB}
                       ${YUBIKEY_LIBRARIES}
-                      zxcvbn
+                      ${ZXCVBN_LIBRARIES}
                       Qt5::Core
                       Qt5::Network
                       Qt5::Concurrent
