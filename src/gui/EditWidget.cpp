@@ -36,6 +36,7 @@ EditWidget::EditWidget(QWidget* parent)
     headerLabelFont.setBold(true);
     headerLabelFont.setPointSize(headerLabelFont.pointSize() + 2);
     headlineLabel()->setFont(headerLabelFont);
+    headlineLabel()->setTextFormat(Qt::PlainText);
 
     connect(m_ui->categoryList, SIGNAL(categoryChanged(int)),
             m_ui->stackedWidget, SLOT(setCurrentIndex(int)));
