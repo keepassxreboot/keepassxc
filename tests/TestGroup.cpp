@@ -755,3 +755,55 @@ void TestGroup::testPrint()
 
     delete db;
 }
+
+void TestGroup::testGetSuggestions()
+{
+    Database* db = new Database();
+
+    Entry* entry1 = new Entry();
+    entry1->setTitle(QString("entry1"));
+    entry1->setGroup(db->rootGroup());
+    entry1->setUuid(Uuid::random());
+
+    Group* group1 = new Group();
+    group1->setName("group1");
+
+    Entry* entry2 = new Entry();
+    entry2->setTitle(QString("entry2"));
+    entry2->setGroup(group1);
+    entry2->setUuid(Uuid::random());
+
+    group1->setParent(db->rootGroup());
+
+    Group* group2 = new Group();
+    group2->setName("group2");
+    group2->setParent(group1);
+
+    QStringList suggestions = db->rootGroup()->getSuggestions("", false);
+    QVERIFY(suggestions.contains("group1/"));
+
+    suggestions = db->rootGroup()->getSuggestions("", true);
+    QVERIFY(suggestions.size() == 2);
+    QVERIFY(suggestions.contains("group1/"));
+    QVERIFY(suggestions.contains("entry1"));
+
+    suggestions = db->rootGroup()->getSuggestions("/", false);
+    QVERIFY(suggestions.contains("/group1/"));
+
+    suggestions = db->rootGroup()->getSuggestions("/", true);
+    QVERIFY(suggestions.size() == 2);
+    QVERIFY(suggestions.contains("/group1/"));
+    QVERIFY(suggestions.contains("/entry1"));
+
+    suggestions = db->rootGroup()->getSuggestions("/group1", false);
+    QVERIFY(suggestions.size() == 1);
+    QVERIFY(suggestions.contains("/group1/group2/"));
+
+    suggestions = db->rootGroup()->getSuggestions("/group1", true);
+    QVERIFY(suggestions.contains("/group1/entry2"));
+
+    suggestions = db->rootGroup()->getSuggestions("group1", true);
+    QVERIFY(suggestions.contains("group1/entry2"));
+
+    delete db;
+}

@@ -42,6 +42,7 @@ private slots:
     void testFindEntry();
     void testFindGroupByPath();
     void testPrint();
+    void testGetSuggestions();
 
 private:
     Database* createMergeTestDatabase();
