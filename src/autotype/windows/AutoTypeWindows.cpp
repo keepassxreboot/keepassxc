@@ -522,14 +522,12 @@ void AutoTypeExecutorWin::execChar(AutoTypeChar* action)
 {
     m_platform->sendChar(action->character, true);
     m_platform->sendChar(action->character, false);
-    ::Sleep(25);
 }
 
 void AutoTypeExecutorWin::execKey(AutoTypeKey* action)
 {
     m_platform->sendKey(action->key, true);
     m_platform->sendKey(action->key, false);
-    ::Sleep(25);
 }
 
 void AutoTypeExecutorWin::execClearField(AutoTypeClearField* action = nullptr)
