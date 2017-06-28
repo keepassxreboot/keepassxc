@@ -112,7 +112,7 @@ int Add::addEntry(Database* database, QString databasePath, QString entryPath)
         outputTextStream.flush();
         password = Utils::getPassword();
 
-        outputTextStream << "  repeat: ";
+        outputTextStream << "repeat: ";
         outputTextStream.flush();
         QString passwordConfirmation = Utils::getPassword();
 
@@ -123,7 +123,7 @@ int Add::addEntry(Database* database, QString databasePath, QString entryPath)
 
     }
 
-    outputTextStream << "     URL: ";
+    outputTextStream << "URL: ";
     outputTextStream.flush();
     QString url = inputTextStream.readLine();
 
