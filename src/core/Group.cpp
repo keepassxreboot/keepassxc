@@ -836,6 +836,10 @@ Group* Group::addGroupWithPath(QString groupPath)
 {
     Q_ASSERT(!groupPath.isNull());
 
+    if (this->findGroupByPath(groupPath)) {
+        return nullptr;
+    }
+
     if (groupPath.endsWith("/")) {
         groupPath.chop(1);
     }
@@ -843,6 +847,9 @@ Group* Group::addGroupWithPath(QString groupPath)
     QStringList groups = groupPath.split("/");
     QString groupName = groups.takeLast();
     QString parentPath = groups.join("/");
+    if (parentPath.isNull()) {
+        parentPath = QString("");
+    }
 
     Group* parent = this->findGroupByPath(parentPath);
     if (!parent) {
@@ -851,6 +858,7 @@ Group* Group::addGroupWithPath(QString groupPath)
 
     Group* group = new Group();
     group->setName(groupName);
+    group->setUuid(Uuid::random());
     group->setParent(parent);
 
     return group;

@@ -710,6 +710,48 @@ void TestGroup::testFindGroupByPath()
     delete db;
 }
 
+void TestGroup::testAddGroupWithPath()
+{
+    Database* db = new Database();
+
+    Group* group1 = new Group();
+    group1->setName("group1");
+    group1->setParent(db->rootGroup());
+
+    Group* group2 = new Group();
+    group2->setName("group2");
+    group2->setParent(group1);
+
+    Group* group = db->rootGroup()->addGroupWithPath("group3");
+    QVERIFY(group != nullptr);
+    QVERIFY(group->name() == "group3");
+    QVERIFY(!group->uuid().isNull());
+
+    // Cannot readd the same group.
+    group = db->rootGroup()->addGroupWithPath("group3");
+    QVERIFY(group == nullptr);
+
+    group = db->rootGroup()->addGroupWithPath("/group4");
+    QVERIFY(group != nullptr);
+    QVERIFY(group->name() == "group4");
+    QVERIFY(!group->uuid().isNull());
+
+    group = db->rootGroup()->addGroupWithPath("/group1/group5");
+    QVERIFY(group != nullptr);
+    QVERIFY(group->name() == "group5");
+    QVERIFY(!group->uuid().isNull());
+
+    group = db->rootGroup()->addGroupWithPath("group1/group5/group6");
+    QVERIFY(group != nullptr);
+    QVERIFY(group->name() == "group6");
+    QVERIFY(!group->uuid().isNull());
+
+    group = db->rootGroup()->addGroupWithPath("group1/invalid_group/group6");
+    QVERIFY(group == nullptr);
+
+    delete db;
+}
+
 void TestGroup::testAddEntryWithPath()
 {
     Database* db = new Database();
