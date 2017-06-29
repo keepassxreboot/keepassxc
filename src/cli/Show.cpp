@@ -95,3 +95,12 @@ int Show::showEntry(Database* database, QString entryPath)
     return EXIT_SUCCESS;
 
 }
+
+QStringList Show::getSuggestions(Database* database, QStringList arguments)
+{
+    if (arguments.size() != 1) {
+        return QStringList();
+    }
+    QString currentText = arguments.last();
+    return database->rootGroup()->getSuggestions(arguments.at(0), true);
+}

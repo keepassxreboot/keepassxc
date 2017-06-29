@@ -93,7 +93,6 @@ int Create::execute(int argc, char** argv)
     newDb->setKey(key);
     newDb->metadata()->setName(databaseName);
     newDb->setTransformRounds(CompositeKey::transformKeyBenchmark(2000));
-    newDb->rootGroup()->setName("root");
 
     newDb->saveToFile(databasePath);
 

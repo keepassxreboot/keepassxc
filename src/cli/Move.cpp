@@ -114,3 +114,15 @@ int Move::move(Database* database, QString databasePath, QString sourcePath, QSt
     return EXIT_SUCCESS;
 
 }
+
+QStringList Move::getSuggestions(Database* database, QStringList arguments)
+{
+    if (arguments.size() != 1 && arguments.size() != 2) {
+        return QStringList();
+    }
+    QString currentText = arguments.last();
+    if (arguments.size() == 1) {
+        return database->rootGroup()->getSuggestions(arguments.at(0), true);
+    }
+    return database->rootGroup()->getSuggestions(arguments.at(0), false);
+}
