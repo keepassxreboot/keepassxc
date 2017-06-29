@@ -78,6 +78,7 @@ public:
     const AutoTypeAssociations* autoTypeAssociations() const;
     QString title() const;
     QString url() const;
+    QString webUrl() const;
     QString username() const;
     QString password() const;
     QString notes() const;
@@ -143,6 +144,7 @@ public:
     void copyDataFrom(const Entry* other);
     QString resolveMultiplePlaceholders(const QString& str) const;
     QString resolvePlaceholder(const QString& str) const;
+    QString resolveUrl(const QString& url) const;
 
     /**
      * Call before and after set*() methods to create a history item

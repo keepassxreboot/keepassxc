@@ -237,6 +237,11 @@ QString Entry::url() const
     return m_attributes->value(EntryAttributes::URLKey);
 }
 
+QString Entry::webUrl() const
+{
+    return resolveUrl(m_attributes->value(EntryAttributes::URLKey));
+}
+
 QString Entry::username() const
 {
     return m_attributes->value(EntryAttributes::UserNameKey);
@@ -783,4 +788,24 @@ QString Entry::resolvePlaceholder(const QString& str) const
     }
 
     return result;
+}
+
+QString Entry::resolveUrl(const QString& url) const
+{
+    QString newurl = url;
+    if (!url.contains("://")) {
+        // URL doesn't have a protocol, add https by default
+        newurl.prepend("https://");
+    }
+    QUrl uurl = QUrl(newurl);
+
+    if(uurl.scheme() == "cmd") {
+        // URL is a cmd, hopefully the second argument it's an URL
+        QStringList cmd = newurl.split(" ");
+        return resolveUrl(cmd[1].remove("'").remove("\""));
+    } else if(uurl.scheme() != "http" && uurl.scheme() != "https") {
+        // URL isn't very nice
+        return QString("");
+    }
+    return uurl.url();
 }
