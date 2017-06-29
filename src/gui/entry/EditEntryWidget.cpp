@@ -28,6 +28,7 @@
 #include <QMenu>
 #include <QSortFilterProxyModel>
 #include <QTemporaryFile>
+#include <autotype/AutoType.h>
 
 #include "core/Config.h"
 #include "core/Database.h"
@@ -78,10 +79,11 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
 
     connect(this, SIGNAL(accepted()), SLOT(acceptEntry()));
     connect(this, SIGNAL(rejected()), SLOT(cancel()));
+
     connect(this, SIGNAL(apply()), SLOT(saveEntry()));
     connect(m_iconsWidget, SIGNAL(messageEditEntry(QString, MessageWidget::MessageType)), SLOT(showMessage(QString, MessageWidget::MessageType)));
     connect(m_iconsWidget, SIGNAL(messageEditEntryDismiss()), SLOT(hideMessage()));
-    
+
     m_mainUi->passwordGenerator->layout()->setContentsMargins(0, 0, 0, 0);
 }
 
@@ -103,7 +105,7 @@ void EditEntryWidget::setupMain()
     connect(m_mainUi->passwordGenerator, SIGNAL(appliedPassword(QString)), SLOT(setGeneratedPassword(QString)));
 
     m_mainUi->expirePresets->setMenu(createPresetsMenu());
-    connect(m_mainUi->expirePresets->menu(), SIGNAL(triggered(QAction*)), this, SLOT(useExpiryPreset(QAction*)));
+    connect(m_mainUi->expirePresets->menu(), SIGNAL(triggered(QAction * )), this, SLOT(useExpiryPreset(QAction * )));
 
     QAction *action = new QAction(this);
     action->setShortcut(Qt::CTRL | Qt::Key_Return);
@@ -121,7 +123,7 @@ void EditEntryWidget::setupAdvanced()
 
     m_attachmentsModel->setEntryAttachments(m_entryAttachments);
     m_advancedUi->attachmentsView->setModel(m_attachmentsModel);
-    connect(m_advancedUi->attachmentsView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)),
+    connect(m_advancedUi->attachmentsView->selectionModel(), SIGNAL(currentChanged(QModelIndex, QModelIndex)),
             SLOT(updateAttachmentButtonsEnabled(QModelIndex)));
     connect(m_advancedUi->attachmentsView, SIGNAL(doubleClicked(QModelIndex)), SLOT(openAttachment(QModelIndex)));
     connect(m_advancedUi->saveAttachmentButton, SIGNAL(clicked()), SLOT(saveCurrentAttachment()));
@@ -137,7 +139,7 @@ void EditEntryWidget::setupAdvanced()
     connect(m_advancedUi->protectAttributeButton, SIGNAL(toggled(bool)), SLOT(protectCurrentAttribute(bool)));
     connect(m_advancedUi->revealAttributeButton, SIGNAL(clicked(bool)), SLOT(revealCurrentAttribute()));
     connect(m_advancedUi->attributesView->selectionModel(),
-            SIGNAL(currentChanged(QModelIndex,QModelIndex)),
+            SIGNAL(currentChanged(QModelIndex, QModelIndex)),
             SLOT(updateCurrentAttribute()));
 }
 
@@ -165,10 +167,10 @@ void EditEntryWidget::setupAutoType()
             m_autoTypeUi->windowSequenceEdit, SLOT(setEnabled(bool)));
     connect(m_autoTypeUi->assocAddButton, SIGNAL(clicked()), SLOT(insertAutoTypeAssoc()));
     connect(m_autoTypeUi->assocRemoveButton, SIGNAL(clicked()), SLOT(removeAutoTypeAssoc()));
-    connect(m_autoTypeUi->assocView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
+    connect(m_autoTypeUi->assocView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)),
             SLOT(updateAutoTypeEnabled()));
     connect(m_autoTypeAssocModel, SIGNAL(modelReset()), SLOT(updateAutoTypeEnabled()));
-    connect(m_autoTypeUi->assocView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
+    connect(m_autoTypeUi->assocView->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)),
             SLOT(loadCurrentAssoc(QModelIndex)));
     connect(m_autoTypeAssocModel, SIGNAL(modelReset()), SLOT(clearCurrentAssoc()));
     connect(m_autoTypeUi->windowTitleCombo, SIGNAL(editTextChanged(QString)),
@@ -201,23 +203,23 @@ void EditEntryWidget::setupHistory()
     connect(m_historyUi->historyView, SIGNAL(activated(QModelIndex)),
             SLOT(histEntryActivated(QModelIndex)));
     connect(m_historyUi->historyView->selectionModel(),
-            SIGNAL(currentChanged(QModelIndex,QModelIndex)),
-            SLOT(updateHistoryButtons(QModelIndex,QModelIndex)));
+            SIGNAL(currentChanged(QModelIndex, QModelIndex)),
+            SLOT(updateHistoryButtons(QModelIndex, QModelIndex)));
     connect(m_historyUi->showButton, SIGNAL(clicked()), SLOT(showHistoryEntry()));
     connect(m_historyUi->restoreButton, SIGNAL(clicked()), SLOT(restoreHistoryEntry()));
     connect(m_historyUi->deleteButton, SIGNAL(clicked()), SLOT(deleteHistoryEntry()));
     connect(m_historyUi->deleteAllButton, SIGNAL(clicked()), SLOT(deleteAllHistoryEntries()));
 }
 
-void EditEntryWidget::emitHistoryEntryActivated(const QModelIndex& index)
+void EditEntryWidget::emitHistoryEntryActivated(const QModelIndex &index)
 {
     Q_ASSERT(!m_history);
 
-    Entry* entry = m_historyModel->entryFromIndex(index);
+    Entry *entry = m_historyModel->entryFromIndex(index);
     emit historyEntryActivated(entry);
 }
 
-void EditEntryWidget::histEntryActivated(const QModelIndex& index)
+void EditEntryWidget::histEntryActivated(const QModelIndex &index)
 {
     Q_ASSERT(!m_history);
 
@@ -227,7 +229,7 @@ void EditEntryWidget::histEntryActivated(const QModelIndex& index)
     }
 }
 
-void EditEntryWidget::updateHistoryButtons(const QModelIndex& current, const QModelIndex& previous)
+void EditEntryWidget::updateHistoryButtons(const QModelIndex &current, const QModelIndex &previous)
 {
     Q_UNUSED(previous);
 
@@ -243,7 +245,7 @@ void EditEntryWidget::updateHistoryButtons(const QModelIndex& current, const QMo
     }
 }
 
-void EditEntryWidget::useExpiryPreset(QAction* action)
+void EditEntryWidget::useExpiryPreset(QAction *action)
 {
     m_mainUi->expireCheck->setChecked(true);
     TimeDelta delta = action->data().value<TimeDelta>();
@@ -252,7 +254,7 @@ void EditEntryWidget::useExpiryPreset(QAction* action)
     m_mainUi->expireDatePicker->setDateTime(expiryDateTime);
 }
 
-void EditEntryWidget::updateAttachmentButtonsEnabled(const QModelIndex& current)
+void EditEntryWidget::updateAttachmentButtonsEnabled(const QModelIndex &current)
 {
     bool enable = current.isValid();
 
@@ -271,8 +273,8 @@ QString EditEntryWidget::entryTitle() const
     }
 }
 
-void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const QString& parentName,
-                                Database* database)
+void EditEntryWidget::loadEntry(Entry *entry, bool create, bool history, const QString &parentName,
+                                Database *database)
 {
     m_entry = entry;
     m_database = database;
@@ -299,7 +301,7 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const Q
     setPageHidden(m_historyWidget, m_history || m_entry->historyItems().count() < 1);
 }
 
-void EditEntryWidget::setForms(const Entry* entry, bool restore)
+void EditEntryWidget::setForms(const Entry *entry, bool restore)
 {
     m_mainUi->titleEdit->setReadOnly(m_history);
     m_mainUi->usernameEdit->setReadOnly(m_history);
@@ -450,11 +452,11 @@ void EditEntryWidget::acceptEntry()
     emit editFinished(true);
 }
 
-void EditEntryWidget::updateEntryData(Entry* entry) const
+void EditEntryWidget::updateEntryData(Entry *entry) const
 {
     entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
     entry->attachments()->copyDataFrom(m_entryAttachments);
-    
+
     entry->setTitle(m_mainUi->titleEdit->text());
     entry->setUsername(m_mainUi->usernameEdit->text());
     entry->setUrl(m_mainUi->urlEdit->text());
@@ -481,7 +483,40 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
         entry->setDefaultAutoTypeSequence(QString());
     }
     else {
-        entry->setDefaultAutoTypeSequence(m_autoTypeUi->sequenceEdit->text());
+        if (!AutoType::checkSyntax(m_autoTypeUi->sequenceEdit->text())) {
+            //handle wrong syntax
+            QMessageBox messageBox;
+            messageBox.critical(0,
+                                "AutoType",
+                                tr("The Syntax of your AutoType statement is incorrect! It won't be saved!"));
+
+        }
+        else if (AutoType::checkHighDelay(m_autoTypeUi->sequenceEdit->text())) {
+            //handle too long delay
+            QMessageBox::StandardButton reply;
+            reply = QMessageBox::question(0,
+                                          "AutoType",
+                                          tr("This AutoType command contains a very long delay. Do you really want to save it?"));
+
+            if (reply == QMessageBox::Yes) {
+                entry->setDefaultAutoTypeSequence(m_autoTypeUi->sequenceEdit->text());
+            }
+        }
+        else if (AutoType::checkHighRepetition(m_autoTypeUi->sequenceEdit->text())) {
+            //handle too much repetition
+            QMessageBox::StandardButton reply;
+            reply = QMessageBox::question(0,
+                                          "AutoType",
+                                          tr("This AutoType command contains arguments which are repeated very often. Do you really want to save it?"));
+
+            if (reply == QMessageBox::Yes) {
+                entry->setDefaultAutoTypeSequence(m_autoTypeUi->sequenceEdit->text());
+            }
+        }
+        else {
+            entry->setDefaultAutoTypeSequence(m_autoTypeUi->sequenceEdit->text());
+        }
+
     }
 
     entry->autoTypeAssociations()->copyDataFrom(m_autoTypeAssoc);
@@ -497,7 +532,7 @@ void EditEntryWidget::cancel()
     }
 
     if (!m_entry->iconUuid().isNull() &&
-            !m_database->metadata()->containsCustomIcon(m_entry->iconUuid())) {
+        !m_database->metadata()->containsCustomIcon(m_entry->iconUuid())) {
         m_entry->setIcon(Entry::DefaultIconNumber);
     }
 
@@ -545,7 +580,7 @@ bool EditEntryWidget::passwordsEqual()
     return m_mainUi->passwordEdit->text() == m_mainUi->passwordRepeatEdit->text();
 }
 
-void EditEntryWidget::setGeneratedPassword(const QString& password)
+void EditEntryWidget::setGeneratedPassword(const QString &password)
 {
     m_mainUi->passwordEdit->setText(password);
     m_mainUi->passwordRepeatEdit->setText(password);
@@ -608,7 +643,7 @@ void EditEntryWidget::updateCurrentAttribute()
             QString currKey = m_attributesModel->keyByIndex(m_currentAttribute);
             m_entryAttributes->set(currKey, m_advancedUi->attributesEdit->toPlainText(),
                                    m_entryAttributes->isProtected(currKey));
-        }        
+        }
     }
 
     displayAttribute(newIndex, m_entryAttributes->isProtected(newKey));
@@ -662,7 +697,8 @@ void EditEntryWidget::protectCurrentAttribute(bool state)
         if (state) {
             // Save the current text and protect the attribute
             m_entryAttributes->set(key, m_advancedUi->attributesEdit->toPlainText(), true);
-        } else {
+        }
+        else {
             // Unprotect the current attribute value (don't save text as it is obscured)
             m_entryAttributes->set(key, m_entryAttributes->value(key), false);
         }
@@ -674,7 +710,7 @@ void EditEntryWidget::protectCurrentAttribute(bool state)
 
 void EditEntryWidget::revealCurrentAttribute()
 {
-    if (! m_advancedUi->attributesEdit->isEnabled()) {
+    if (!m_advancedUi->attributesEdit->isEnabled()) {
         QModelIndex index = m_advancedUi->attributesView->currentIndex();
         if (index.isValid()) {
             QString key = m_attributesModel->keyByIndex(index);
@@ -726,7 +762,7 @@ void EditEntryWidget::saveCurrentAttachment()
     }
     QDir dir(defaultDirName);
     QString savePath = fileDialog()->getSaveFileName(this, tr("Save attachment"),
-                                                       dir.filePath(filename));
+                                                     dir.filePath(filename));
     if (!savePath.isEmpty()) {
         QByteArray attachmentData = m_entryAttachments->value(filename);
 
@@ -742,7 +778,7 @@ void EditEntryWidget::saveCurrentAttachment()
     }
 }
 
-void EditEntryWidget::openAttachment(const QModelIndex& index)
+void EditEntryWidget::openAttachment(const QModelIndex &index)
 {
     if (!index.isValid()) {
         Q_ASSERT(false);
@@ -754,7 +790,7 @@ void EditEntryWidget::openAttachment(const QModelIndex& index)
 
     // tmp file will be removed once the database (or the application) has been closed
     QString tmpFileTemplate = QDir::temp().absoluteFilePath(QString("XXXXXX.").append(filename));
-    QTemporaryFile* file = new QTemporaryFile(tmpFileTemplate, this);
+    QTemporaryFile *file = new QTemporaryFile(tmpFileTemplate, this);
 
     if (!file->open()) {
         showMessage(tr("Unable to save the attachment:\n").append(file->errorString()), MessageWidget::Error);
@@ -820,7 +856,7 @@ void EditEntryWidget::updateAutoTypeEnabled()
     m_autoTypeUi->defaultWindowSequenceButton->setEnabled(!m_history && autoTypeEnabled && validIndex);
     m_autoTypeUi->customWindowSequenceButton->setEnabled(!m_history && autoTypeEnabled && validIndex);
     m_autoTypeUi->windowSequenceEdit->setEnabled(autoTypeEnabled && validIndex
-                                                 && m_autoTypeUi->customWindowSequenceButton->isChecked());
+                                                     && m_autoTypeUi->customWindowSequenceButton->isChecked());
 }
 
 void EditEntryWidget::insertAutoTypeAssoc()
@@ -842,7 +878,7 @@ void EditEntryWidget::removeAutoTypeAssoc()
     }
 }
 
-void EditEntryWidget::loadCurrentAssoc(const QModelIndex& current)
+void EditEntryWidget::loadCurrentAssoc(const QModelIndex &current)
 {
     if (current.isValid() && current.row() < m_autoTypeAssoc->size()) {
         AutoTypeAssociations::Association assoc = m_autoTypeAssoc->get(current.row());
@@ -930,9 +966,9 @@ void EditEntryWidget::deleteAllHistoryEntries()
     }
 }
 
-QMenu* EditEntryWidget::createPresetsMenu()
+QMenu *EditEntryWidget::createPresetsMenu()
 {
-    QMenu* expirePresetsMenu = new QMenu(this);
+    QMenu *expirePresetsMenu = new QMenu(this);
     expirePresetsMenu->addAction(tr("Tomorrow"))->setData(QVariant::fromValue(TimeDelta::fromDays(1)));
     expirePresetsMenu->addSeparator();
     expirePresetsMenu->addAction(tr("%n week(s)", 0, 1))->setData(QVariant::fromValue(TimeDelta::fromDays(7)));
