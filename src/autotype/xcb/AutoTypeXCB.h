@@ -58,8 +58,7 @@ public:
     KeySym charToKeySym(const QChar& ch);
     KeySym keyToKeySym(Qt::Key key);
 
-    void SendKeyPressedEvent(KeySym keysym);
-    void SendKey(KeySym keysym, bool isKeyDown);
+    void SendKey(KeySym keysym, unsigned int modifiers = 0);
 
 signals:
     void globalShortcutTriggered();
@@ -80,8 +79,8 @@ private:
     bool isRemapKeycodeValid();
     int AddKeysym(KeySym keysym);
     void AddModifier(KeySym keysym);
-    void SendEvent(XKeyEvent* event, int event_type);
-    void SendModifier(XKeyEvent *event, unsigned int mask, int event_type);
+    void SendKeyEvent(unsigned keycode, bool press);
+    void SendModifiers(unsigned int mask, bool press);
     int GetKeycode(KeySym keysym, unsigned int *mask);
     bool keysymModifiers(KeySym keysym, int keycode, unsigned int *mask);
 
