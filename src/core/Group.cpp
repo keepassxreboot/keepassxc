@@ -865,6 +865,26 @@ Group* Group::addGroupWithPath(QString groupPath)
 
 }
 
+QStringList Group::locate(QString locateTerm, QString currentPath)
+{
+    Q_ASSERT(!locateTerm.isNull());
+    QStringList response;
+
+    for (Entry* entry : asConst(m_entries)) {
+        if (entry->title().toLower().contains(locateTerm.toLower())) {
+            response << currentPath + entry->title();
+        }
+    }
+
+    for (Group* group : asConst(m_children)) {
+        for (QString path : group->locate(locateTerm, currentPath + group->name() + QString("/"))) {
+            response << path;
+        }
+    }
+
+    return response;
+
+}
 
 void Group::removeEntry(Entry* entry)
 {

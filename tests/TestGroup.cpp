@@ -752,6 +752,39 @@ void TestGroup::testAddGroupWithPath()
     delete db;
 }
 
+void TestGroup::testLocate()
+{
+    Database* db = new Database();
+
+    db->rootGroup()->addEntryWithPath("entry1");
+    db->rootGroup()->addEntryWithPath("entry2");
+    db->rootGroup()->addGroupWithPath("group1");
+    db->rootGroup()->addGroupWithPath("group1/group2");
+    db->rootGroup()->addEntryWithPath("group1/entry3");
+    db->rootGroup()->addEntryWithPath("group1/entry43");
+    db->rootGroup()->addEntryWithPath("group1/group2/Google");
+
+    QStringList results = db->rootGroup()->locate("entry");
+    QVERIFY(results.size() == 4);
+    QVERIFY(results.contains("/group1/entry43"));
+
+    results = db->rootGroup()->locate("entry1");
+    QVERIFY(results.size() == 1);
+    QVERIFY(results.contains("/entry1"));
+
+    results = db->rootGroup()->locate("Entry1");
+    QVERIFY(results.size() == 1);
+    QVERIFY(results.contains("/entry1"));
+
+    results = db->rootGroup()->locate("invalid");
+    QVERIFY(results.size() == 0);
+
+    results = db->rootGroup()->locate("google");
+    QVERIFY(results.size() == 1);
+    QVERIFY(results.contains("/group1/group2/Google"));
+
+    delete db;
+}
 void TestGroup::testAddEntryWithPath()
 {
     Database* db = new Database();
