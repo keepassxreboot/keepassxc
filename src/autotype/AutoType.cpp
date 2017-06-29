@@ -576,8 +576,13 @@ QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitl
         }
 
         if (!match && config()->get("AutoTypeEntryTitleMatch").toBool() 
-                && (windowMatchesTitle(windowTitle, entry->resolvePlaceholder(entry->title()))
-                || windowMatchesUrl(windowTitle, entry->resolvePlaceholder(entry->url())))) {
+                && windowMatchesTitle(windowTitle, entry->resolvePlaceholder(entry->title()))) {
+            sequence = entry->defaultAutoTypeSequence();
+            match = true;
+        }
+
+        if (!match && config()->get("AutoTypeEntryURLMatch").toBool()
+                && windowMatchesUrl(windowTitle, entry->resolvePlaceholder(entry->url()))) {
             sequence = entry->defaultAutoTypeSequence();
             match = true;
         }
