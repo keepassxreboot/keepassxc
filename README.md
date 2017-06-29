@@ -7,14 +7,19 @@ KeePass Cross-platform Community Edition
 
 
 ## Additional features compared to KeePassX
-- Auto-Type on all three major platforms (Linux, Windows, OS X)
-- Stand-alone password generator
+- Auto-Type on all three major platforms (Linux, Windows, macOS)
+- Twofish encryption
+- YubiKey challenge-response support
+- TOTP generation
+- CSV import
+- Command line interface
+- DEP and ASLR hardening
+- Stand-alone password and passphrase generator
 - Password strength meter
-- YubiKey HMAC-SHA1 authentication for unlocking databases
 - Using website favicons as entry icons
 - Merging of databases
-- Automatic reload when the database changed on disk
-- KeePassHTTP support for use with [PassIFox](https://addons.mozilla.org/en-us/firefox/addon/passifox/) in Mozilla Firefox and [chromeIPass](https://chrome.google.com/webstore/detail/chromeipass/ompiailgknfdndiefoaoiligalphfdae) in Google Chrome or Chromium, and [passafari](https://github.com/mmichaa/passafari.safariextension/) in Safari.
+- Automatic reload when the database was changed externally
+- KeePassHTTP support for use with [PassIFox](https://addons.mozilla.org/en-us/firefox/addon/passifox/) in Mozilla Firefox, [chromeIPass](https://chrome.google.com/webstore/detail/chromeipass/ompiailgknfdndiefoaoiligalphfdae) in Google Chrome or Chromium and [passafari](https://github.com/mmichaa/passafari.safariextension/) in Safari.
 - Many bug fixes
 
 For a full list of features and changes, read the [CHANGELOG](CHANGELOG) document.

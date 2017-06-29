@@ -25,7 +25,7 @@
 <!--- Providing context helps us come up with a solution that is most useful in the real world -->
 
 ## Debug Info
-<!--- Paste debug info from Help->About here -->
+<!--- Paste debug info from Help → About here -->
 KeePassXC - VERSION
 Revision: REVISION
 
