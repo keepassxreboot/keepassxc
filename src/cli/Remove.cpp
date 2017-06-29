@@ -108,3 +108,11 @@ int Remove::removeEntry(Database* database, QString databasePath, QString entryP
     return EXIT_SUCCESS;
 
 }
+
+QStringList Remove::getSuggestions(Database* database, QStringList arguments)
+{
+    if (arguments.size() != 1) {
+        return QStringList();
+    }
+    return database->rootGroup()->getSuggestions(arguments.at(0), true);
+}

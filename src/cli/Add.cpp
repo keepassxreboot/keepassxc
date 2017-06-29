@@ -152,6 +152,5 @@ QStringList Add::getSuggestions(Database* database, QStringList arguments)
     if (arguments.size() != 1) {
         return QStringList();
     }
-    QString currentText = arguments.last();
     return database->rootGroup()->getSuggestions(arguments.at(0), false);
 }
