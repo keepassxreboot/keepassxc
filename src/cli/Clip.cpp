@@ -93,7 +93,7 @@ int Clip::executeFromShell(Database* database, QString, QStringList arguments)
 {
     QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
     if (arguments.size() != 1 && arguments.size() != 2) {
-        outputTextStream << this->shellUsage << endl;
+        outputTextStream << this->getShellUsageLine() << endl;
         return EXIT_FAILURE;
     }
     return this->clipEntry(database, arguments.at(0), arguments.value(1));

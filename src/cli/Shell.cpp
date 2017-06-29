@@ -180,12 +180,11 @@ int Shell::execute(int argc, char** argv)
 
     out << "KeePassXC " << KEEPASSX_VERSION << " interactive shell\n";
     if (!database->metadata()->name().isNull()) {
-        out << "Using database " << database->metadata()->name() << '\n';
+        out << "Using database " << database->metadata()->name() << endl;
     } else {
-        out << "Using database " << args.at(0) << '\n';
+        out << "Using database " << args.at(0) << endl;
     }
-    out << "Use 'help' to list the available commands.\n";
-    out.flush();
+    out << "Use 'help' to list the available commands." << endl;
 
 #ifdef WITH_XC_READLINE
     rl_readline_name = const_cast<char*>("kpxcli");
@@ -218,7 +217,7 @@ int Shell::execute(int argc, char** argv)
               out << QString("Invalid command '" + commandName + "'\n");
               continue;
           }
-          out << "Usage: " << helpCommand->shellUsage << "\n";
+          out << helpCommand->getShellUsageLine() << endl;
       } else if (commandName == QString("quit")) {
           break;
       } else {

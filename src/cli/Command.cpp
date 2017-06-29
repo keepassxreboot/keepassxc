@@ -66,6 +66,11 @@ QString Command::getDescriptionLine()
 
 }
 
+QString Command::getShellUsageLine()
+{
+    return QString("Usage : ") + this->shellUsage;
+}
+
 QStringList Command::getSuggestions(Database*, QStringList)
 {
     return QStringList();

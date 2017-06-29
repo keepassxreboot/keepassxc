@@ -72,8 +72,7 @@ int Edit::executeFromShell(Database* database, QString databasePath, QStringList
 
     QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
     if (arguments.size() != 2) {
-        outputTextStream << this->shellUsage << "\n";
-        outputTextStream.flush();
+        outputTextStream << this->getShellUsageLine() << endl;
         return EXIT_FAILURE;
     }
     return this->editEntry(database, databasePath, arguments.at(0), arguments.at(1));

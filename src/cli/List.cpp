@@ -97,8 +97,7 @@ int List::executeFromShell(Database* database, QString, QStringList arguments)
 {
     QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
     if (arguments.size() > 1) {
-        outputTextStream << this->shellUsage << "\n";
-        outputTextStream.flush();
+        outputTextStream << this->getShellUsageLine() << endl;
         return EXIT_FAILURE;
     }
     if (arguments.size() == 1) {

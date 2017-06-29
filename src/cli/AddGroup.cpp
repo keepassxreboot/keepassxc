@@ -70,7 +70,7 @@ int AddGroup::executeFromShell(Database* database, QString databasePath, QString
 
     QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
     if (arguments.size() != 1) {
-        outputTextStream << this->shellUsage << endl;
+        outputTextStream << this->getShellUsageLine() << endl;
         return EXIT_FAILURE;
     }
     return this->addGroup(database, databasePath, arguments.at(0));
