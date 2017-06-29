@@ -135,3 +135,10 @@ int Utils::clipText(QString text)
     return clipProcess->exitCode();
 }
 
+char* Utils::createStringCopy(QString originalString)
+{
+    const char* original = qPrintable(originalString);
+    char* response = static_cast<char*>(malloc(sizeof(char) * strlen(original)));
+    strcpy(response, original);
+    return response;
+}

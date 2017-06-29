@@ -64,6 +64,7 @@ QStringList getArguments(QString line, bool keepEmptyParts = false)
     return line.split(QRegExp(" "), splitBehavior);
 }
 
+// There must be a better way to escape this.
 QString escapeForShell(QString text)
 {
     // There must be other characters to escape.
@@ -87,16 +88,6 @@ Database* database;
 
 
 #ifdef WITH_XC_READLINE
-
-// Each string the generator function returns as a match
-// must be allocated with malloc();
-char* createStringCopy(QString originalString)
-{
-    const char* original = qPrintable(originalString);
-    char* response = static_cast<char*>(malloc(sizeof(char) * strlen(original)));
-    strcpy(response, original);
-    return response;
-}
 
 char* commandArgumentsCompletion(const char*, int state)
 {
@@ -141,8 +132,9 @@ char* commandArgumentsCompletion(const char*, int state)
     while (currentIndex < suggestions.size()) {
         QString currentSuggestion = suggestions.at(currentIndex++);
         if (currentSuggestion.startsWith(currentText)) {
-            // There must be a better way to escape this.
-            return createStringCopy(escapeForShell(currentSuggestion));
+            // Each string the generator function returns as a match
+            // must be allocated with malloc();
+            return Utils::createStringCopy(escapeForShell(currentSuggestion));
         }
     }
 

@@ -33,6 +33,7 @@ public:
     static bool askYesNoQuestion(QString question, bool askContinue = false);
     static void createRecycleBin(Database* database);
     static int clipText(QString text);
+    static char* createStringCopy(QString string);
 };
 
 #endif // KEEPASSXC_UTILS_H
