@@ -600,7 +600,11 @@ QStringList Group::getSuggestions(QString currentPath, bool includeEntries)
     if (!currentGroup) {
         QStringList groups = currentPath.split("/");
         partialPath = groups.takeLast();
-        currentPath = groups.join("/");
+        if (groups.isEmpty()) {
+            currentPath = QString("");
+        } else {
+            currentPath = groups.join("/");
+        }
         currentGroup = this->findGroupByPath(currentPath);
         if (!currentGroup) {
             return response;
