@@ -32,6 +32,8 @@ set(cli_SOURCES
     Extract.h
     List.cpp
     List.h
+    Locate.cpp
+    Locate.h
     Merge.cpp
     Merge.h
     Move.cpp

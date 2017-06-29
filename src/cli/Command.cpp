@@ -30,6 +30,7 @@
 #include "EntropyMeter.h"
 #include "Extract.h"
 #include "List.h"
+#include "Locate.h"
 #include "Merge.h"
 #include "Move.h"
 #include "Remove.h"
@@ -91,6 +92,7 @@ void populateCommands()
         commands.insert(QString("entropy-meter"), new EntropyMeter());
         commands.insert(QString("extract"), new Extract());
         commands.insert(QString("ls"), new List());
+        commands.insert(QString("locate"), new Locate());
         commands.insert(QString("merge"), new Merge());
         commands.insert(QString("mkdir"), new AddGroup());
         commands.insert(QString("mv"), new Move());
