@@ -87,11 +87,11 @@ int Show::showEntry(Database* database, QString entryPath)
         return EXIT_FAILURE;
     }
 
-    outputTextStream << "   title: " << entry->title() << "\n";
-    outputTextStream << "username: " << entry->username() << "\n";
-    outputTextStream << "password: " << entry->password() << "\n";
-    outputTextStream << "     URL: " << entry->url() << "\n";
-    outputTextStream.flush();
+    outputTextStream << "   title: " << entry->title() << endl;
+    outputTextStream << "username: " << entry->username() << endl;
+    outputTextStream << "password: " << entry->password() << endl;
+    outputTextStream << "     URL: " << entry->url() << endl;
+    outputTextStream << "   Notes: " << entry->notes() << endl;
     return EXIT_SUCCESS;
 
 }

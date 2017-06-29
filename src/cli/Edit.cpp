@@ -110,6 +110,15 @@ int Edit::editEntry(Database* database, QString databasePath, QString entryPath,
         entry->setUsername(username);
         entry->endUpdate();
 
+    } else if (fieldName == "notes") {
+
+        outputTextStream << "enter notes below (EOF to finish editing):" << endl;
+        QString notes = inputTextStream.readAll();
+
+        entry->beginUpdate();
+        entry->setNotes(notes);
+        entry->endUpdate();
+
     } else if (fieldName == "password") {
 
         QString password;
@@ -165,6 +174,7 @@ QStringList Edit::getSuggestions(Database* database, QStringList arguments)
         fieldNames << "url";
         fieldNames << "password";
         fieldNames << "username";
+        fieldNames << "notes";
     }
 
     if (arguments.size() == 1) {
