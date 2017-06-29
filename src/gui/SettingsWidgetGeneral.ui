@@ -318,21 +318,35 @@
         </widget>
        </item>
        <item>
-        <layout class="QGridLayout" name="gridLayout">
-         <property name="horizontalSpacing">
-          <number>12</number>
+        <layout class="QFormLayout" name="formLayout_2">
+         <property name="topMargin">
+          <number>10</number>
          </property>
-         <property name="verticalSpacing">
-          <number>6</number>
-         </property>
-         <item row="1" column="0" alignment="Qt::AlignRight">
-          <widget class="QLabel" name="autoTypeDelayLabel">
+         <item row="1" column="0">
+          <widget class="QLabel" name="autoTypeShortcutLabel_2">
+           <property name="text">
+            <string>Global Auto-Type shortcut</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="ShortcutWidget" name="autoTypeShortcutWidget">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="autoTypeDelayLabel_2">
            <property name="text">
             <string>Auto-Type delay</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="1" alignment="Qt::AlignLeft">
+         <item row="2" column="1">
           <widget class="QSpinBox" name="autoTypeDelaySpinBox">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -351,32 +365,6 @@
            </property>
            <property name="value">
             <number>25</number>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0" alignment="Qt::AlignRight">
-          <widget class="QLabel" name="autoTypeShortcutLabel">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Global Auto-Type shortcut</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignLeading</set>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="ShortcutWidget" name="autoTypeShortcutWidget">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
            </property>
           </widget>
          </item>
