@@ -122,7 +122,7 @@ QStringList Move::getSuggestions(Database* database, QStringList arguments)
     }
     QString currentText = arguments.last();
     if (arguments.size() == 1) {
-        return database->rootGroup()->getSuggestions(arguments.at(0), true);
+        return database->rootGroup()->getSuggestions(currentText, true);
     }
-    return database->rootGroup()->getSuggestions(arguments.at(0), false);
+    return database->rootGroup()->getSuggestions(currentText, false);
 }
