@@ -203,7 +203,7 @@ QList<Entry*> Service::searchEntries(Database* db, const QString& hostname)
         const auto results = EntrySearcher().search(hostname, rootGroup, Qt::CaseInsensitive);
         for (Entry* entry: results) {
             QString title = entry->title();
-            QString url = entry->url();
+            QString url = entry->webUrl();
 
             //Filter to match hostname in Title and Url fields
             if (   (!title.isEmpty() && hostname.contains(title))

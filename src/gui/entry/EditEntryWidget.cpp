@@ -363,7 +363,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     IconStruct iconStruct;
     iconStruct.uuid = entry->iconUuid();
     iconStruct.number = entry->iconNumber();
-    m_iconsWidget->load(entry->uuid(), m_database, iconStruct, entry->url());
+    m_iconsWidget->load(entry->uuid(), m_database, iconStruct, entry->webUrl());
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), m_iconsWidget, SLOT(setUrl(QString)));
 
     m_autoTypeUi->enableButton->setChecked(entry->autoTypeEnabled());

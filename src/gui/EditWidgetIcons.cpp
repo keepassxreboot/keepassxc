@@ -223,8 +223,15 @@ void EditWidgetIcons::fetchFavicon(const QUrl& url)
     }
 
     m_httpClient->setConnectingTimeOut(5000, [this]() {
-        resetFaviconDownload();
-        MessageBox::warning(this, tr("Error"), tr("Unable to fetch favicon."));
+        QUrl tempurl = QUrl(m_url);
+        if (tempurl.scheme() == "http") {
+            resetFaviconDownload();
+            MessageBox::warning(this, tr("Error"), tr("Unable to fetch favicon."));
+        } else {
+            tempurl.setScheme("http");
+            tempurl.setPath("/favicon.ico");
+            fetchFavicon(tempurl);
+        }
     });
 
     m_ui->faviconButton->setDisabled(true);
