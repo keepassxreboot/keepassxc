@@ -41,6 +41,7 @@ private slots:
     void testMergeConflictKeepBoth();
     void testFindEntry();
     void testFindGroupByPath();
+    void testAddEntryWithPath();
     void testPrint();
     void testGetSuggestions();
 
