@@ -97,19 +97,6 @@ bool Utils::askYesNoQuestion(QString question, bool askContinue)
 
 }
 
-void Utils::createRecycleBin(Database* database)
-{
-
-    Group* recycleBin = database->metadata()->recycleBin();
-    if (recycleBin == nullptr) {
-        database->createRecycleBin();
-        database->metadata()->recycleBin()->setName("trash");
-    } else if (recycleBin->name() != "trash") {
-        recycleBin->setName("trash");
-    }
-
-}
-
 /*
  * A valid and running event loop is needed to use the global QClipboard,
  * so we need to use this from the CLI.

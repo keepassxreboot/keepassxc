@@ -86,8 +86,6 @@ int RemoveGroup::removeGroup(Database* database, QString databasePath, QString g
         return EXIT_FAILURE;
     }
 
-    // FIXME remove this.
-    Utils::createRecycleBin(database);
     QString groupName = group->name();
     bool inRecycleBin = Tools::hasChild(database->metadata()->recycleBin(), group);
     bool isRecycleBin = (group == database->metadata()->recycleBin());

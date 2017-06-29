@@ -87,8 +87,6 @@ int Remove::removeEntry(Database* database, QString databasePath, QString entryP
         return EXIT_FAILURE;
     }
 
-    Utils::createRecycleBin(database);
-
     QString entryTitle = entry->title();
     if (Tools::hasChild(database->metadata()->recycleBin(), entry) ||
         !database->metadata()->recycleBinEnabled()) {
