@@ -552,8 +552,14 @@ void MainWindow::updateWindowTitle()
     QString customWindowTitlePart;
     int stackedWidgetIndex = m_ui->stackedWidget->currentIndex();
     int tabWidgetIndex = m_ui->tabWidget->currentIndex();
+    bool isModified = m_ui->tabWidget->isModified(tabWidgetIndex);
+
     if (stackedWidgetIndex == DatabaseTabScreen && tabWidgetIndex != -1) {
         customWindowTitlePart = m_ui->tabWidget->tabText(tabWidgetIndex);
+        if (isModified) {
+            // remove asterisk '*' from title
+            customWindowTitlePart.remove(customWindowTitlePart.size() - 1, 1);
+        }
         if (m_ui->tabWidget->readOnly(tabWidgetIndex)) {
             customWindowTitlePart.append(QString(" [%1]").arg(tr("read-only")));
         }
@@ -565,7 +571,7 @@ void MainWindow::updateWindowTitle()
     if (customWindowTitlePart.isEmpty()) {
         windowTitle = BaseWindowTitle;
     } else {
-        windowTitle = QString("%1 - %2").arg(customWindowTitlePart, BaseWindowTitle);
+        windowTitle = QString("%1[*] - %2").arg(customWindowTitlePart, BaseWindowTitle);
     }
 
     if (customWindowTitlePart.isEmpty() || stackedWidgetIndex == 1) {
@@ -574,7 +580,7 @@ void MainWindow::updateWindowTitle()
         setWindowFilePath(m_ui->tabWidget->databasePath(tabWidgetIndex));
     }
 
-    setWindowModified(m_ui->tabWidget->isModified(tabWidgetIndex));
+    setWindowModified(isModified);
 
     setWindowTitle(windowTitle);
 }
