@@ -641,21 +641,13 @@ int AutoTypePlatformX11::AddKeysym(KeySym keysym)
  * If input focus is specified explicitly, select the window
  * before send event to the window.
  */
-void AutoTypePlatformX11::SendEvent(XKeyEvent* event, int event_type)
+void AutoTypePlatformX11::SendKeyEvent(unsigned keycode, bool press)
 {
-    XSync(event->display, False);
+    XSync(m_dpy, False);
     int (*oldHandler) (Display*, XErrorEvent*) = XSetErrorHandler(MyErrorHandler);
 
-    event->type = event_type;
-    Bool press;
-    if (event->type == KeyPress) {
-        press = True;
-    }
-    else {
-        press = False;
-    }
-    XTestFakeKeyEvent(event->display, event->keycode, press, 0);
-    XFlush(event->display);
+    XTestFakeKeyEvent(m_dpy, keycode, press, 0);
+    XFlush(m_dpy);
 
     XSetErrorHandler(oldHandler);
 }
@@ -664,17 +656,12 @@ void AutoTypePlatformX11::SendEvent(XKeyEvent* event, int event_type)
  * Send a modifier press/release event for all modifiers
  * which are set in the mask variable.
  */
-void AutoTypePlatformX11::SendModifier(XKeyEvent *event, unsigned int mask, int event_type) 
+void AutoTypePlatformX11::SendModifiers(unsigned int mask, bool press)
 {
     int mod_index;
     for (mod_index = ShiftMapIndex; mod_index <= Mod5MapIndex; mod_index ++) {
         if (mask & (1 << mod_index)) {
-            event->keycode = m_modifier_keycode[mod_index];
-            SendEvent(event, event_type);
-            if (event_type == KeyPress) 
-                event->state |= (1 << mod_index);
-            else
-                event->state &= (1 << mod_index);
+            SendKeyEvent(m_modifier_keycode[mod_index], press);
         }
     }
 }
@@ -729,43 +716,15 @@ bool AutoTypePlatformX11::keysymModifiers(KeySym keysym, int keycode, unsigned i
  * window to simulate keyboard.  If modifiers (shift, control, etc)
  * are set ON, many events will be sent.
  */
-void AutoTypePlatformX11::SendKeyPressedEvent(KeySym keysym)
+void AutoTypePlatformX11::SendKey(KeySym keysym, unsigned int modifiers)
 {
-    SendKey(keysym,true);
-    SendKey(keysym,false);
-}
-
-void AutoTypePlatformX11::SendKey(KeySym keysym, bool isKeyDown)
-{
-    Window cur_focus;
-    int revert_to;
-    XKeyEvent event;
-    int keycode;
-
     if (keysym == NoSymbol) {
         qWarning("No such key: keysym=0x%lX", keysym);
         return;
     }
 
-    XGetInputFocus(m_dpy, &cur_focus, &revert_to);
-
-    event.display = m_dpy;
-    event.window = cur_focus;
-    event.root = m_rootWindow;
-    event.subwindow = None;
-    event.time = CurrentTime;
-    event.x = 1;
-    event.y = 1;
-    event.x_root = 1;
-    event.y_root = 1;
-    event.same_screen = True;
-
-    Window root, child;
-    int root_x, root_y, x, y;
-    unsigned int wanted_mask = 0;
-    unsigned int original_mask;
-
-    XQueryPointer(m_dpy, event.root, &root, &child, &root_x, &root_y, &x, &y, &original_mask);
+    int keycode;
+    unsigned int wanted_mask;
 
     /* determine keycode and mask for the given keysym */
     keycode = GetKeycode(keysym, &wanted_mask);
@@ -773,8 +732,14 @@ void AutoTypePlatformX11::SendKey(KeySym keysym, bool isKeyDown)
         qWarning("Unable to get valid keycode for key: keysym=0x%lX", keysym);
         return;
     }
+    wanted_mask |= modifiers;
 
-    event.state = original_mask;
+    Window root, child;
+    int root_x, root_y, x, y;
+    unsigned int original_mask;
+
+    XSync(m_dpy, False);
+    XQueryPointer(m_dpy, m_rootWindow, &root, &child, &root_x, &root_y, &x, &y, &original_mask);
 
     // modifiers that need to be pressed but aren't
     unsigned int press_mask = wanted_mask & ~original_mask;
@@ -785,47 +750,52 @@ void AutoTypePlatformX11::SendKey(KeySym keysym, bool isKeyDown)
     // modifiers we need to release before sending the keycode
     unsigned int release_mask = 0;
 
-    // check every release_check_mask individually if it affects the keysym we would generate
-    // if it doesn't we probably don't need to release it
-    for (int mod_index = ShiftMapIndex; mod_index <= Mod5MapIndex; mod_index ++) {
-        if (release_check_mask & (1 << mod_index)) {
-            unsigned int mods_rtrn;
-            KeySym keysym_rtrn;
-            XkbTranslateKeyCode(m_xkb, keycode, wanted_mask | (1 << mod_index), &mods_rtrn, &keysym_rtrn);
+    if (!modifiers) {
+        // check every release_check_mask individually if it affects the keysym we would generate
+        // if it doesn't we probably don't need to release it
+        for (int mod_index = ShiftMapIndex; mod_index <= Mod5MapIndex; mod_index ++) {
+            if (release_check_mask & (1 << mod_index)) {
+                unsigned int mods_rtrn;
+                KeySym keysym_rtrn;
+                XkbTranslateKeyCode(m_xkb, keycode, wanted_mask | (1 << mod_index), &mods_rtrn, &keysym_rtrn);
 
-            if (keysym_rtrn != keysym) {
-                release_mask |= (1 << mod_index);
+                if (keysym_rtrn != keysym) {
+                    release_mask |= (1 << mod_index);
+                }
             }
         }
-    }
 
-    // finally check if the combination of pressed modifiers that we chose to ignore affects the keysym
-    unsigned int mods_rtrn;
-    KeySym keysym_rtrn;
-    XkbTranslateKeyCode(m_xkb, keycode, wanted_mask | (release_check_mask & ~release_mask), &mods_rtrn, &keysym_rtrn);
-    if (keysym_rtrn != keysym) {
-        // oh well, release all the modifiers we don't want
+        // finally check if the combination of pressed modifiers that we chose to ignore affects the keysym
+        unsigned int mods_rtrn;
+        KeySym keysym_rtrn;
+        XkbTranslateKeyCode(m_xkb, keycode, wanted_mask | (release_check_mask & ~release_mask), &mods_rtrn, &keysym_rtrn);
+        if (keysym_rtrn != keysym) {
+            // oh well, release all the modifiers we don't want
+            release_mask = release_check_mask;
+        }
+    } else {
         release_mask = release_check_mask;
     }
 
-    /* release all modifiers */
-    SendModifier(&event, release_mask, KeyRelease);
-
-    SendModifier(&event, press_mask, KeyPress);
-
-    /* press and release key */
-    event.keycode = keycode;
-    if (isKeyDown) {
-        SendEvent(&event, KeyPress);
-    } else {
-        SendEvent(&event, KeyRelease);
+    /* set modifiers mask */
+    if ((release_mask | press_mask) & LockMask) {
+        SendModifiers(LockMask, true);
+        SendModifiers(LockMask, false);
     }
+    SendModifiers(release_mask & ~LockMask, false);
+    SendModifiers(press_mask & ~LockMask, true);
 
-    /* release the modifiers */
-    SendModifier(&event, press_mask, KeyRelease);
+    /* press and release release key */
+    SendKeyEvent(keycode, true);
+    SendKeyEvent(keycode, false);
 
-    /* restore the old keyboard mask */
-    SendModifier(&event, release_mask, KeyPress);
+    /* restore previous modifiers mask */
+    SendModifiers(press_mask & ~LockMask, false);
+    SendModifiers(release_mask & ~LockMask, true);
+    if ((release_mask | press_mask) & LockMask) {
+        SendModifiers(LockMask, true);
+        SendModifiers(LockMask, false);
+    }
 }
 
 int AutoTypePlatformX11::MyErrorHandler(Display* my_dpy, XErrorEvent* event)
@@ -848,14 +818,12 @@ AutoTypeExecutorX11::AutoTypeExecutorX11(AutoTypePlatformX11* platform)
 
 void AutoTypeExecutorX11::execChar(AutoTypeChar* action)
 {
-    m_platform->SendKeyPressedEvent(m_platform->charToKeySym(action->character));
-    Tools::wait(25);
+    m_platform->SendKey(m_platform->charToKeySym(action->character));
 }
 
 void AutoTypeExecutorX11::execKey(AutoTypeKey* action)
 {
-    m_platform->SendKeyPressedEvent(m_platform->keyToKeySym(action->key));
-    Tools::wait(25);
+    m_platform->SendKey(m_platform->keyToKeySym(action->key));
 }
 
 void AutoTypeExecutorX11::execClearField(AutoTypeClearField* action = nullptr)
@@ -866,19 +834,13 @@ void AutoTypeExecutorX11::execClearField(AutoTypeClearField* action = nullptr)
     ts.tv_sec = 0;
     ts.tv_nsec = 25 * 1000 * 1000;
 
-    m_platform->SendKey(m_platform->keyToKeySym(Qt::Key_Control), true);
-    m_platform->SendKeyPressedEvent(m_platform->keyToKeySym(Qt::Key_Home));
-    m_platform->SendKey(m_platform->keyToKeySym(Qt::Key_Control), false);
+    m_platform->SendKey(m_platform->keyToKeySym(Qt::Key_Home), static_cast<unsigned int>(ControlMask));
     nanosleep(&ts, nullptr);
 
-    m_platform->SendKey(m_platform->keyToKeySym(Qt::Key_Control), true);
-    m_platform->SendKey(m_platform->keyToKeySym(Qt::Key_Shift), true);
-    m_platform->SendKeyPressedEvent(m_platform->keyToKeySym(Qt::Key_End));
-    m_platform->SendKey(m_platform->keyToKeySym(Qt::Key_Shift), false);
-    m_platform->SendKey(m_platform->keyToKeySym(Qt::Key_Control), false);
+    m_platform->SendKey(m_platform->keyToKeySym(Qt::Key_End), static_cast<unsigned int>(ControlMask | ShiftMask));
     nanosleep(&ts, nullptr);
 
-    m_platform->SendKeyPressedEvent(m_platform->keyToKeySym(Qt::Key_Backspace));
+    m_platform->SendKey(m_platform->keyToKeySym(Qt::Key_Backspace));
     nanosleep(&ts, nullptr);
 }
 
