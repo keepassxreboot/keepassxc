@@ -17,6 +17,8 @@
  */
 #include "Entry.h"
 
+#include "config-keepassx.h"
+
 #include "core/Database.h"
 #include "core/DatabaseIcons.h"
 #include "core/Group.h"
@@ -792,6 +794,7 @@ QString Entry::resolvePlaceholder(const QString& str) const
 
 QString Entry::resolveUrl(const QString& url) const
 {
+#ifdef WITH_XC_HTTP
     QString newurl = url;
     if (!url.contains("://")) {
         // URL doesn't have a protocol, add https by default
@@ -802,10 +805,15 @@ QString Entry::resolveUrl(const QString& url) const
     if(uurl.scheme() == "cmd") {
         // URL is a cmd, hopefully the second argument it's an URL
         QStringList cmd = newurl.split(" ");
-        return resolveUrl(cmd[1].remove("'").remove("\""));
-    } else if(uurl.scheme() != "http" && uurl.scheme() != "https") {
-        // URL isn't very nice
-        return QString("");
+        if (cmd.size() > 1) {
+            return resolveUrl(cmd[1].remove("'").remove("\""));
+        }
+    } else if(uurl.scheme() == "http" || uurl.scheme() == "https") {
+        // URL is nice
+        return uurl.url();
     }
-    return uurl.url();
+#else
+    Q_UNUSED(url);
+#endif
+    return QString("");
 }
