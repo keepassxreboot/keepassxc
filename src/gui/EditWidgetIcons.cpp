@@ -242,7 +242,7 @@ void EditWidgetIcons::fetchFaviconFromGoogle(const QString& domain)
     if (config()->get("security/IconDownloadFallbackToGoogle", false).toBool() && m_fallbackToGoogle) {
         resetFaviconDownload();
         m_fallbackToGoogle = false;
-        fetchFavicon(QUrl("http://www.google.com/s2/favicons?domain=" + domain));
+        fetchFavicon(QUrl("https://www.google.com/s2/favicons?domain=" + domain));
     } else {
         resetFaviconDownload();
         MessageBox::warning(this, tr("Error"), tr("Unable to fetch favicon."));

@@ -802,13 +802,13 @@ QString Entry::resolveUrl(const QString& url) const
     }
     QUrl uurl = QUrl(newurl);
 
-    if(uurl.scheme() == "cmd") {
-        // URL is a cmd, hopefully the second argument it's an URL
+    if (uurl.scheme() == "cmd") {
+        // URL is a cmd, hopefully the second argument is an URL
         QStringList cmd = newurl.split(" ");
         if (cmd.size() > 1) {
             return resolveUrl(cmd[1].remove("'").remove("\""));
         }
-    } else if(uurl.scheme() == "http" || uurl.scheme() == "https") {
+    } else if (uurl.scheme() == "http" || uurl.scheme() == "https") {
         // URL is nice
         return uurl.url();
     }
