@@ -36,7 +36,7 @@ LOWERAPP="$(echo "$APP" | tr '[:upper:]' '[:lower:]')"
 VERSION="$2"
 
 mkdir -p $APP.AppDir
-wget -q https://github.com/probonopd/AppImages/raw/master/functions.sh -O ./functions.sh
+wget -q https://github.com/AppImage/AppImages/raw/master/functions.sh -O ./functions.sh
 . ./functions.sh
 
 LIB_DIR=./usr/lib
