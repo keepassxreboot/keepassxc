@@ -36,12 +36,14 @@ LOWERAPP="$(echo "$APP" | tr '[:upper:]' '[:lower:]')"
 VERSION="$2"
 
 mkdir -p $APP.AppDir
-wget -q https://github.com/probonopd/AppImages/raw/master/functions.sh -O ./functions.sh
+wget -q https://github.com/AppImage/AppImages/raw/master/functions.sh -O ./functions.sh
 . ./functions.sh
 
 LIB_DIR=./usr/lib
 if [ -d ./usr/lib/x86_64-linux-gnu ]; then
     LIB_DIR=./usr/lib/x86_64-linux-gnu
+elif [ -d ./usr/lib/i386-linux-gnu ]; then
+    LIB_DIR=./usr/lib/i386-linux-gnu
 fi
 
 cd $APP.AppDir
