@@ -45,6 +45,7 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
+    QTextStream out(stdout);
     QStringList arguments;
     for (int i = 0; i < argc; ++i) {
         arguments << QString(argv[i]);
@@ -73,9 +74,7 @@ int main(int argc, char** argv)
         app.setApplicationVersion(KEEPASSX_VERSION);
         if (parser.isSet("version")) {
             // Switch to parser.showVersion() when available (QT 5.4).
-            QTextStream out(stdout);
-            out << KEEPASSX_VERSION << "\n";
-            out.flush();
+            out << KEEPASSX_VERSION << endl;
             return EXIT_SUCCESS;
         }
         parser.showHelp();
