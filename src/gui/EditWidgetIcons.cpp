@@ -229,6 +229,7 @@ void EditWidgetIcons::fetchFavicon(const QUrl& url)
             MessageBox::warning(this, tr("Error"), tr("Unable to fetch favicon."));
         } else {
             tempurl.setScheme("http");
+            m_url = tempurl.url();
             tempurl.setPath("/favicon.ico");
             fetchFavicon(tempurl);
         }
