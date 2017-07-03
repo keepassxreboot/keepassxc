@@ -56,7 +56,7 @@ QStringList getArguments(QString line, bool keepEmptyParts = false)
         arguments << QString(result.we_wordv[i]);
     }
     wordfree(&result);
-    if (keepEmptyParts && line.endsWith(" ")) {
+    if (keepEmptyParts && line.endsWith(" ") && !line.endsWith("\\ ")) {
         arguments << QString("");
     }
     return arguments;
@@ -68,6 +68,7 @@ QStringList getArguments(QString line, bool keepEmptyParts = false)
 QString escapeForShell(QString text)
 {
     // There must be other characters to escape.
+    text = text.replace("\\", "\\\\");
     text = text.replace(" ", "\\ ");
     text = text.replace("\"", "\\\"");
     text = text.replace("'", "\\'");
@@ -138,8 +139,24 @@ char* commandArgumentsCompletion(const char*, int state)
         }
     }
 
+    // We don't want readline to perform its default completion if this function returns no matches
+    rl_attempted_completion_over = 1;
     return nullptr;
 
+}
+
+int charIsQuoted(char* line, int index)
+{
+    if (line[index] == '\t') {
+        return 0;
+    }
+    if (index == 0) {
+        return 0;
+    }
+    if (line[index - 1] != '\\') {
+        return 0;
+    }
+    return !charIsQuoted(line, index - 1);
 }
 
 char** shellCompletion(const char* text, int, int)
@@ -226,6 +243,10 @@ int Shell::execute(int argc, char** argv)
 #ifdef WITH_XC_READLINE
     rl_readline_name = const_cast<char*>("kpxcli");
     rl_attempted_completion_function = shellCompletion;
+    // Only allow quoting with the double quotes.
+    rl_completer_quote_characters = "\"";
+    rl_completer_word_break_characters = " \t\"\'";
+    rl_char_is_quoted_p = &charIsQuoted;
 #endif
 
     while (true) {
