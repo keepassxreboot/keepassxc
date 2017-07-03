@@ -6,3 +6,4 @@ release*/
 *.kdev4
 
 \.vscode/
+*.swp

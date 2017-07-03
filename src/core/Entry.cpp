@@ -648,8 +648,7 @@ bool Entry::endUpdate()
         m_tmpHistoryItem->setUpdateTimeinfo(true);
         addHistoryItem(m_tmpHistoryItem);
         truncateHistory();
-    }
-    else {
+    } else {
         delete m_tmpHistoryItem;
     }
 

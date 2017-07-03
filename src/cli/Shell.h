@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2017 KeePassXC Team
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,20 +15,17 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_CLIP_H
-#define KEEPASSXC_CLIP_H
+#ifndef KEEPASSXC_SHELL_H
+#define KEEPASSXC_SHELL_H
 
 #include "Command.h"
 
-class Clip : public Command
+class Shell : public Command
 {
 public:
-    Clip();
-    ~Clip();
+    Shell();
+    ~Shell();
     int execute(int argc, char** argv);
-    int executeFromShell(Database* database, QString databasePath, QStringList arguments);
-    QStringList getSuggestions(Database* database, QStringList arguments);
-    int clipEntry(Database* database, QString entryPath, QString timeout);
 };
 
-#endif // KEEPASSXC_CLIP_H
+#endif // KEEPASSXC_SHELL_H

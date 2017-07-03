@@ -18,10 +18,17 @@
 #ifndef KEEPASSXC_LIST_H
 #define KEEPASSXC_LIST_H
 
-class List
+#include "Command.h"
+
+class List : public Command
 {
 public:
-    static int execute(int argc, char** argv);
+    List();
+    ~List();
+    int execute(int argc, char** argv);
+    int executeFromShell(Database* database, QString databasePath, QStringList arguments);
+    QStringList getSuggestions(Database* database, QStringList arguments);
+    int listGroup(Database* database, QString groupPath = QString(""));
 };
 
 #endif // KEEPASSXC_LIST_H

@@ -15,22 +15,32 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_SHOW_H
-#define KEEPASSXC_SHOW_H
+#ifndef KEEPASSXC_COMMAND_H
+#define KEEPASSXC_COMMAND_H
 
-#include "Command.h"
+#include <QList>
+#include <QString>
+#include <QStringList>
 
 #include "core/Database.h"
 
-class Show : public Command
+class Command
 {
 public:
-    Show();
-    ~Show();
-    int execute(int argc, char** argv);
-    int executeFromShell(Database* database, QString databasePath, QStringList arguments);
-    QStringList getSuggestions(Database* database, QStringList arguments);
-    int showEntry(Database* database, QString entryPath);
+    virtual ~Command();
+    virtual int execute(int argc, char** argv);
+    virtual int executeFromShell(Database* database, QString databasePath, QStringList arguments);
+    virtual QStringList getSuggestions(Database* database, QStringList arguments);
+    QString name;
+    QString description;
+    QString shellUsage;
+    QString getDescriptionLine();
+    QString getShellUsageLine();
+    bool isShellCommand();
+
+    static QList<Command*> getCommands();
+    static QList<Command*> getShellCommands();
+    static Command* getCommand(QString commandName);
 };
 
-#endif // KEEPASSXC_SHOW_H
+#endif // KEEPASSXC_COMMAND_H

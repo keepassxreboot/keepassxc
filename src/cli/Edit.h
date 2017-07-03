@@ -15,20 +15,22 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_CLIP_H
-#define KEEPASSXC_CLIP_H
+#ifndef KEEPASSXC_EDIT_H
+#define KEEPASSXC_EDIT_H
 
 #include "Command.h"
 
-class Clip : public Command
+#include "core/Database.h"
+
+class Edit : public Command
 {
 public:
-    Clip();
-    ~Clip();
+    Edit();
+    ~Edit();
     int execute(int argc, char** argv);
     int executeFromShell(Database* database, QString databasePath, QStringList arguments);
     QStringList getSuggestions(Database* database, QStringList arguments);
-    int clipEntry(Database* database, QString entryPath, QString timeout);
+    int editEntry(Database* database, QString databasePath, QString entryPath, QString fieldName);
 };
 
-#endif // KEEPASSXC_CLIP_H
+#endif // KEEPASSXC_EDIT_H

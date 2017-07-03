@@ -15,17 +15,20 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_PASSWORDINPUT_H
-#define KEEPASSXC_PASSWORDINPUT_H
+#ifndef KEEPASSXC_LOCATE_H
+#define KEEPASSXC_LOCATE_H
 
-#include <QtCore/qglobal.h>
+#include "Command.h"
 
-class PasswordInput
+class Locate : public Command
 {
 public:
-    PasswordInput();
-    static void setStdinEcho(bool enable);
-    static QString getPassword();
+    Locate();
+    ~Locate();
+    int execute(int argc, char** argv);
+    int executeFromShell(Database* database, QString databasePath, QStringList arguments);
+    QStringList getSuggestions(Database* database, QStringList arguments);
+    int locateEntry(Database* database, QString searchTerm);
 };
 
-#endif // KEEPASSXC_PASSWORDINPUT_H
+#endif // KEEPASSXC_LOCATE_H

@@ -93,8 +93,7 @@ CompositeKey CompositeKey::readFromLine(QString line)
       FileKey fileKey;
       fileKey.load(line);
       key.addKey(fileKey);
-  }
-  else {
+  } else {
       PasswordKey password;
       password.setPassword(line);
       key.addKey(password);

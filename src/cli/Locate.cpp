@@ -17,120 +17,101 @@
 
 #include <cstdlib>
 #include <stdio.h>
+#include <chrono>
+#include <thread>
 
-#include "List.h"
+#include "Locate.h"
 
 #include <QApplication>
 #include <QCommandLineParser>
-#include <QCoreApplication>
 #include <QStringList>
 #include <QTextStream>
 
 #include "gui/UnlockDatabaseDialog.h"
+#include "cli/Utils.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
 
-
-List::List()
+Locate::Locate()
 {
-    this->name = QString("ls");
-    this->shellUsage = QString("ls [group_path]");
-    this->description = QString("List database entries.");
+    this->name = QString("locate");
+    this->shellUsage = QString("locate search_term");
+    this->description = QString("Find entries quickly.");
 }
 
-List::~List()
+Locate::~Locate()
 {
 }
 
-int List::execute(int argc, char** argv)
+int Locate::execute(int argc, char** argv)
 {
+
     QStringList arguments;
     for (int i = 0; i < argc; ++i) {
         arguments << QString(argv[i]);
     }
+    QTextStream out(stdout);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main", "List database entries."));
+    parser.setApplicationDescription(QCoreApplication::translate("main", "Find entries quickly."));
     parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
-    parser.addPositionalArgument("group",
-                                 QCoreApplication::translate("main", "Path of the group to list. Default is /"),
-                                 QString("[group]"));
-    QCommandLineOption printUuidsOption(
-        QStringList() << "u"
-                      << "print-uuids",
-        QCoreApplication::translate("main", "Print the UUIDs of the entries and groups."));
-    parser.addOption(printUuidsOption);
     QCommandLineOption guiPrompt(
         QStringList() << "g"
                       << "gui-prompt",
         QCoreApplication::translate("main", "Use a GUI prompt unlocking the database."));
     parser.addOption(guiPrompt);
+    parser.addPositionalArgument("term", QCoreApplication::translate("main", "Search term."));
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
-    if (args.size() != 1 && args.size() != 2) {
+    if (args.size() != 2) {
         QCoreApplication app(argc, argv);
         parser.showHelp(EXIT_FAILURE);
     }
 
     Database* db = nullptr;
+    QApplication app(argc, argv);
     if (parser.isSet("gui-prompt")) {
-        QApplication app(argc, argv);
         db = UnlockDatabaseDialog::openDatabasePrompt(args.at(0));
     } else {
-        QCoreApplication app(argc, argv);
         db = Database::unlockFromStdin(args.at(0));
     }
 
-    if (db == nullptr) {
+    if (!db) {
         return EXIT_FAILURE;
     }
-
-    if (args.size() == 2) {
-        return this->listGroup(db, args.at(1));
-    }
-    return this->listGroup(db);
+    return this->locateEntry(db, args.at(1));
 }
 
-int List::executeFromShell(Database* database, QString, QStringList arguments)
+int Locate::executeFromShell(Database* database, QString, QStringList arguments)
 {
     QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
-    if (arguments.size() > 1) {
+    if (arguments.size() != 1) {
         outputTextStream << this->getShellUsageLine() << endl;
         return EXIT_FAILURE;
     }
-    if (arguments.size() == 1) {
-        return this->listGroup(database, arguments.at(0));
-    }
-    return this->listGroup(database);
+    return this->locateEntry(database, arguments.at(0));
 }
 
-int List::listGroup(Database* database, QString groupPath)
+int Locate::locateEntry(Database* database, QString searchTerm)
 {
+
     QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
-    if (groupPath.isEmpty()) {
-        outputTextStream << database->rootGroup()->print();
-        outputTextStream.flush();
+    QStringList results = database->rootGroup()->locate(searchTerm);
+    if (results.isEmpty()) {
+        outputTextStream << "No results for that search term" << endl;
         return EXIT_SUCCESS;
     }
 
-    Group* group = database->rootGroup()->findGroupByPath(groupPath);
-    if (group == nullptr) {
-        qCritical("Cannot find group %s.", qPrintable(groupPath));
-        return EXIT_FAILURE;
+    for (QString result : results) {
+        outputTextStream << result << endl;
     }
-
-    outputTextStream << group->print();
-    outputTextStream.flush();
     return EXIT_SUCCESS;
 
 }
 
-QStringList List::getSuggestions(Database* database, QStringList arguments)
+QStringList Locate::getSuggestions(Database*, QStringList)
 {
-    if (arguments.size() != 1) {
-        return QStringList();
-    }
-    return database->rootGroup()->getSuggestions(arguments.at(0), false);
+    return QStringList();
 }
