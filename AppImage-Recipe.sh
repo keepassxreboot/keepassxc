@@ -42,6 +42,8 @@ wget -q https://github.com/AppImage/AppImages/raw/master/functions.sh -O ./funct
 LIB_DIR=./usr/lib
 if [ -d ./usr/lib/x86_64-linux-gnu ]; then
     LIB_DIR=./usr/lib/x86_64-linux-gnu
+elif [ -d ./usr/lib/i386-linux-gnu ]; then
+    LIB_DIR=./usr/lib/i386-linux-gnu
 fi
 
 cd $APP.AppDir
