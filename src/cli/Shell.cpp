@@ -160,15 +160,20 @@ void printHelp()
 
 QString getLine(QString prompt)
 {
+    QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
 #ifdef WITH_XC_READLINE
     char* chars = readline(qPrintable(prompt));
+    // This happens if readline encounters an EOF while reading the line.
+    // We want to print the next prompt on a new line.
+    if (chars == nullptr) {
+        outputTextStream << endl;
+    }
     QString line(chars);
 
     if (!line.isEmpty()) {
-      add_history(chars);
+        add_history(chars);
     }
 #else
-    QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
     outputTextStream << prompt;
     outputTextStream.flush();
 
