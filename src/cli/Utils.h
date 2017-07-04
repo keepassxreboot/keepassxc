@@ -15,18 +15,25 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_CLIP_H
-#define KEEPASSXC_CLIP_H
+#ifndef KEEPASSXC_UTILS_H
+#define KEEPASSXC_UTILS_H
 
-#include "Command.h"
+#include <QtCore/qglobal.h>
 
-class Clip : public Command
+#include "core/Database.h"
+#include "core/Group.h"
+#include "core/Metadata.h"
+
+class Utils
 {
 public:
-    Clip();
-    ~Clip();
-    int execute(int argc, char** argv);
-    int clipEntry(Database* database, QString entryPath, QString timeout);
+    Utils();
+    static void setStdinEcho(bool enable);
+    static QString getPassword();
+    static bool askYesNoQuestion(QString question, bool askContinue = false);
+    static void createRecycleBin(Database* database);
+    static int clipText(QString text);
+    static char* createStringCopy(QString string);
 };
 
-#endif // KEEPASSXC_CLIP_H
+#endif // KEEPASSXC_UTILS_H

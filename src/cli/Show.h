@@ -18,10 +18,17 @@
 #ifndef KEEPASSXC_SHOW_H
 #define KEEPASSXC_SHOW_H
 
-class Show
+#include "Command.h"
+
+#include "core/Database.h"
+
+class Show : public Command
 {
 public:
-    static int execute(int argc, char** argv);
+    Show();
+    ~Show();
+    int execute(int argc, char** argv);
+    int showEntry(Database* database, QString entryPath);
 };
 
 #endif // KEEPASSXC_SHOW_H
