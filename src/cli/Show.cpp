@@ -25,10 +25,10 @@
 #include <QStringList>
 #include <QTextStream>
 
+#include "cli/Utils.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
-#include "cli/Utils.h"
 
 Show::Show()
 {
@@ -81,5 +81,4 @@ int Show::showEntry(Database* database, QString entryPath)
     outputTextStream << "     URL: " << entry->url() << endl;
     outputTextStream << "   Notes: " << entry->notes() << endl;
     return EXIT_SUCCESS;
-
 }

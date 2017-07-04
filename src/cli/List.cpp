@@ -26,11 +26,10 @@
 #include <QStringList>
 #include <QTextStream>
 
-#include "gui/UnlockDatabaseDialog.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
-
+#include "gui/UnlockDatabaseDialog.h"
 
 List::List()
 {
@@ -52,18 +51,16 @@ int List::execute(int argc, char** argv)
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::translate("main", "List database entries."));
     parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
-    parser.addPositionalArgument("group",
-                                 QCoreApplication::translate("main", "Path of the group to list. Default is /"),
-                                 QString("[group]"));
+    parser.addPositionalArgument(
+        "group", QCoreApplication::translate("main", "Path of the group to list. Default is /"), QString("[group]"));
     QCommandLineOption printUuidsOption(
         QStringList() << "u"
                       << "print-uuids",
         QCoreApplication::translate("main", "Print the UUIDs of the entries and groups."));
     parser.addOption(printUuidsOption);
-    QCommandLineOption guiPrompt(
-        QStringList() << "g"
-                      << "gui-prompt",
-        QCoreApplication::translate("main", "Use a GUI prompt unlocking the database."));
+    QCommandLineOption guiPrompt(QStringList() << "g"
+                                               << "gui-prompt",
+                                 QCoreApplication::translate("main", "Use a GUI prompt unlocking the database."));
     parser.addOption(guiPrompt);
     parser.process(arguments);
 
@@ -110,5 +107,4 @@ int List::listGroup(Database* database, QString groupPath)
     outputTextStream << group->print();
     outputTextStream.flush();
     return EXIT_SUCCESS;
-
 }

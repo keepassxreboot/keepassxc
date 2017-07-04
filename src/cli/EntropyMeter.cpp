@@ -18,8 +18,8 @@
 #include "EntropyMeter.h"
 
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 #include <zxcvbn.h>
 
 /* For pre-compiled headers under windows */

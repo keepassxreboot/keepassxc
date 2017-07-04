@@ -15,9 +15,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <chrono>
 #include <cstdlib>
 #include <stdio.h>
-#include <chrono>
 #include <thread>
 
 #include "Clip.h"
@@ -27,11 +27,11 @@
 #include <QStringList>
 #include <QTextStream>
 
-#include "gui/UnlockDatabaseDialog.h"
 #include "cli/Utils.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
+#include "gui/UnlockDatabaseDialog.h"
 
 Clip::Clip()
 {
@@ -55,10 +55,9 @@ int Clip::execute(int argc, char** argv)
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::translate("main", "Copy a password to the clipboard"));
     parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
-    QCommandLineOption guiPrompt(
-        QStringList() << "g"
-                      << "gui-prompt",
-        QCoreApplication::translate("main", "Use a GUI prompt unlocking the database."));
+    QCommandLineOption guiPrompt(QStringList() << "g"
+                                               << "gui-prompt",
+                                 QCoreApplication::translate("main", "Use a GUI prompt unlocking the database."));
     parser.addOption(guiPrompt);
     parser.addPositionalArgument("entry", QCoreApplication::translate("main", "Path of the entry to clip."));
     parser.addPositionalArgument(
@@ -126,5 +125,4 @@ int Clip::clipEntry(Database* database, QString entryPath, QString timeout)
     outputTextStream << "\nClipboard cleared!" << endl;
 
     return exitCode;
-
 }

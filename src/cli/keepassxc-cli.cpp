@@ -58,8 +58,7 @@ int main(int argc, char** argv)
     }
     parser.setApplicationDescription(QCoreApplication::translate("main", qPrintable(description)));
 
-    parser.addPositionalArgument("command",
-                                 QCoreApplication::translate("main", "Name of the command to execute."));
+    parser.addPositionalArgument("command", QCoreApplication::translate("main", "Name of the command to execute."));
 
     parser.addHelpOption();
     parser.addVersionOption();

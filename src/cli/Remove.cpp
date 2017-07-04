@@ -25,11 +25,11 @@
 #include <QStringList>
 #include <QTextStream>
 
+#include "cli/Utils.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Tools.h"
-#include "cli/Utils.h"
 
 Remove::Remove()
 {
@@ -62,7 +62,6 @@ int Remove::execute(int argc, char** argv)
     }
 
     return this->removeEntry(db, args.at(0), args.at(1));
-
 }
 
 int Remove::removeEntry(Database* database, QString databasePath, QString entryPath)
@@ -76,8 +75,7 @@ int Remove::removeEntry(Database* database, QString databasePath, QString entryP
     }
 
     QString entryTitle = entry->title();
-    if (Tools::hasChild(database->metadata()->recycleBin(), entry) ||
-        !database->metadata()->recycleBinEnabled()) {
+    if (Tools::hasChild(database->metadata()->recycleBin(), entry) || !database->metadata()->recycleBinEnabled()) {
         if (!Utils::askYesNoQuestion("You are about to remove entry " + entryTitle + " permanently.", true)) {
             return EXIT_FAILURE;
         }
@@ -94,5 +92,4 @@ int Remove::removeEntry(Database* database, QString databasePath, QString entryP
     outputTextStream << "Successfully removed entry " << entryTitle << "." << endl;
 
     return EXIT_SUCCESS;
-
 }

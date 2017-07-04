@@ -26,10 +26,10 @@
 #include <QStringList>
 #include <QTextStream>
 
+#include "cli/Utils.h"
 #include "core/Database.h"
 #include "format/KeePass2Reader.h"
 #include "keys/CompositeKey.h"
-#include "cli/Utils.h"
 
 Extract::Extract()
 {

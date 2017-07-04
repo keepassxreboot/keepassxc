@@ -21,17 +21,17 @@
 #include "Create.h"
 
 #include <QApplication>
-#include <QFile>
 #include <QCommandLineParser>
+#include <QFile>
 #include <QStringList>
 #include <QTextStream>
-#include "keys/PasswordKey.h"
 
+#include "cli/Utils.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
-#include "cli/Utils.h"
+#include "keys/PasswordKey.h"
 
 Create::Create()
 {
@@ -55,7 +55,8 @@ int Create::execute(int argc, char** argv)
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::translate("main", "Create a new database"));
     parser.addPositionalArgument("path", QCoreApplication::translate("main", "Path of the new database."));
-    parser.addPositionalArgument("name", QCoreApplication::translate("main", "Name of the new database."), QString("[name]"));
+    parser.addPositionalArgument(
+        "name", QCoreApplication::translate("main", "Name of the new database."), QString("[name]"));
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();

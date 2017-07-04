@@ -54,7 +54,6 @@ QString Command::getDescriptionLine()
     response = response.append(this->description);
     response = response.append("\n");
     return response;
-
 }
 
 void populateCommands()

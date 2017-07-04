@@ -25,11 +25,11 @@
 #include <QStringList>
 #include <QTextStream>
 
-#include "gui/UnlockDatabaseDialog.h"
 #include "cli/Utils.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
+#include "gui/UnlockDatabaseDialog.h"
 
 Locate::Locate()
 {
@@ -53,10 +53,9 @@ int Locate::execute(int argc, char** argv)
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::translate("main", "Find entries quickly."));
     parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
-    QCommandLineOption guiPrompt(
-        QStringList() << "g"
-                      << "gui-prompt",
-        QCoreApplication::translate("main", "Use a GUI prompt unlocking the database."));
+    QCommandLineOption guiPrompt(QStringList() << "g"
+                                               << "gui-prompt",
+                                 QCoreApplication::translate("main", "Use a GUI prompt unlocking the database."));
     parser.addOption(guiPrompt);
     parser.addPositionalArgument("term", QCoreApplication::translate("main", "Search term."));
     parser.process(arguments);
@@ -95,5 +94,4 @@ int Locate::locateEntry(Database* database, QString searchTerm)
         outputTextStream << result << endl;
     }
     return EXIT_SUCCESS;
-
 }

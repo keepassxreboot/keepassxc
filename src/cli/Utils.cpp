@@ -24,10 +24,9 @@
 #include <unistd.h>
 #endif
 
-#include <QTextStream>
 #include <QProcess>
 #include <QStringList>
-
+#include <QTextStream>
 
 void Utils::setStdinEcho(bool enable = true)
 {
@@ -81,7 +80,8 @@ bool Utils::askYesNoQuestion(QString question, bool askContinue)
     QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
 
     if (askContinue) {
-        outputTextStream << question << "\n" << "Do you want to continue? [Y/n] ";
+        outputTextStream << question << "\n"
+                         << "Do you want to continue? [Y/n] ";
     } else {
         outputTextStream << question << " [Y/n] ";
     }
@@ -94,7 +94,6 @@ bool Utils::askYesNoQuestion(QString question, bool askContinue)
     }
 
     return false;
-
 }
 
 /*
@@ -109,7 +108,9 @@ int Utils::clipText(QString text)
 
 #ifdef Q_OS_UNIX
     programName = "xclip";
-    arguments << "-i" << "-selection" << "clipboard";
+    arguments << "-i"
+              << "-selection"
+              << "clipboard";
 #endif
 
 #ifdef Q_OS_MACOS

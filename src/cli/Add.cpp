@@ -25,11 +25,11 @@
 #include <QStringList>
 #include <QTextStream>
 
+#include "cli/Utils.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "core/PasswordGenerator.h"
-#include "cli/Utils.h"
 
 Add::Add()
 {
@@ -62,7 +62,6 @@ int Add::execute(int argc, char** argv)
     }
 
     return this->addEntry(db, args.at(0), args.at(1));
-
 }
 
 int Add::addEntry(Database* database, QString databasePath, QString entryPath)
@@ -90,8 +89,7 @@ int Add::addEntry(Database* database, QString databasePath, QString entryPath)
     if (Utils::askYesNoQuestion("Do you want to generate a new password?")) {
         PasswordGenerator passwordGenerator;
         passwordGenerator.setLength(PasswordGenerator::DefaultLength);
-        passwordGenerator.setCharClasses(PasswordGenerator::LowerLetters |
-                                         PasswordGenerator::UpperLetters |
+        passwordGenerator.setCharClasses(PasswordGenerator::LowerLetters | PasswordGenerator::UpperLetters |
                                          PasswordGenerator::Numbers);
         password = passwordGenerator.generatePassword();
         outputTextStream << "New password generated!" << endl;
@@ -108,7 +106,6 @@ int Add::addEntry(Database* database, QString databasePath, QString entryPath)
             qCritical("Passwords do not match.");
             return EXIT_FAILURE;
         }
-
     }
 
     outputTextStream << "URL: ";
@@ -133,5 +130,4 @@ int Add::addEntry(Database* database, QString databasePath, QString entryPath)
     outputTextStream << "Successfully added new entry!" << endl;
 
     return EXIT_SUCCESS;
-
 }
