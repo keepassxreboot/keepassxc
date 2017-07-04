@@ -68,7 +68,7 @@ int Remove::removeEntry(Database* database, QString databasePath, QString entryP
 {
 
     QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
-    Entry* entry = database->rootGroup()->findEntry(entryPath);
+    Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
         qCritical("Entry %s not found.", qPrintable(entryPath));
         return EXIT_FAILURE;
