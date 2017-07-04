@@ -140,6 +140,9 @@ void DatabaseOpenWidget::openDatabase()
 {
     KeePass2Reader reader;
     CompositeKey masterKey = databaseKey();
+    if (masterKey.isEmpty()) {
+        return;
+    }
 
     QFile file(m_filename);
     if (!file.open(QIODevice::ReadOnly)) {
