@@ -55,24 +55,27 @@ int Create::execute(int argc, char** argv)
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::translate("main", "Create a new database"));
     parser.addPositionalArgument("path", QCoreApplication::translate("main", "Path of the new database."));
-    parser.addPositionalArgument("name", QCoreApplication::translate("main", "Name of the new database."));
+    parser.addPositionalArgument("name", QCoreApplication::translate("main", "Name of the new database."), QString("[name]"));
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
-    if (args.size() != 2) {
+    if (args.size() != 2 && args.size() != 1) {
         QCoreApplication app(argc, argv);
         parser.showHelp(EXIT_FAILURE);
     }
 
     QString databasePath = args.at(0);
-    QString databaseName = args.at(1);
+    QString databaseName = QString("My passwords");
+    if (args.size() == 2) {
+        databaseName = args.at(1);
+    }
 
     if (QFile::exists(databasePath)) {
         qCritical("File %s already exists!", qPrintable(databasePath));
         return EXIT_FAILURE;
     }
 
-    Database* newDb = new Database();
+    Database* db = new Database();
 
     outputTextStream << "master password: ";
     outputTextStream.flush();
@@ -90,13 +93,12 @@ int Create::execute(int argc, char** argv)
     CompositeKey key;
     key.addKey(PasswordKey(password));
 
-    newDb->setKey(key);
-    newDb->metadata()->setName(databaseName);
-    newDb->setTransformRounds(CompositeKey::transformKeyBenchmark(2000));
+    db->setKey(key);
+    db->metadata()->setName(databaseName);
+    db->setTransformRounds(CompositeKey::transformKeyBenchmark(2000));
 
-    newDb->saveToFile(databasePath);
+    db->saveToFile(databasePath);
 
-    outputTextStream << "Successfully created new KeePassXC database.\n";
-    outputTextStream.flush();
+    outputTextStream << "Successfully created new KeePassXC database." << endl;
     return EXIT_SUCCESS;
 }

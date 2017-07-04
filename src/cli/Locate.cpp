@@ -17,8 +17,6 @@
 
 #include <cstdlib>
 #include <stdio.h>
-#include <chrono>
-#include <thread>
 
 #include "Locate.h"
 
