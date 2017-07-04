@@ -15,18 +15,20 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_CLIP_H
-#define KEEPASSXC_CLIP_H
+#ifndef KEEPASSXC_REMOVE_H
+#define KEEPASSXC_REMOVE_H
 
 #include "Command.h"
 
-class Clip : public Command
+#include "core/Database.h"
+
+class Remove : public Command
 {
 public:
-    Clip();
-    ~Clip();
+    Remove();
+    ~Remove();
     int execute(int argc, char** argv);
-    int clipEntry(Database* database, QString entryPath, QString timeout);
+    int removeEntry(Database* database, QString databasePath, QString entryPath);
 };
 
-#endif // KEEPASSXC_CLIP_H
+#endif // KEEPASSXC_REMOVE_H

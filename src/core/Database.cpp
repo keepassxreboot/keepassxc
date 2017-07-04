@@ -24,7 +24,7 @@
 #include <QTimer>
 #include <QXmlStreamReader>
 
-#include "cli/PasswordInput.h"
+#include "cli/Utils.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Random.h"
@@ -401,10 +401,10 @@ Database* Database::unlockFromStdin(QString databaseFilename)
 {
     QTextStream outputTextStream(stdout);
 
-    outputTextStream << QString("Insert password to unlock " + databaseFilename + "\n> ");
+    outputTextStream << QString("Insert password to unlock " + databaseFilename + ": ");
     outputTextStream.flush();
 
-    QString line = PasswordInput::getPassword();
+    QString line = Utils::getPassword();
     CompositeKey key = CompositeKey::readFromLine(line);
     return Database::openDatabaseFile(databaseFilename, key);
 }
