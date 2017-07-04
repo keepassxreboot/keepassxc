@@ -38,9 +38,7 @@ set(cli_SOURCES
     Show.h)
 
 add_library(cli STATIC ${cli_SOURCES})
-target_link_libraries(cli Qt5::Core Qt5::Widgets ${Readline_LIBRARY})
-
-add_feature_info(Readline WITH_XC_READLINE "Readline support for interactive shell")
+target_link_libraries(cli Qt5::Core Qt5::Widgets)
 
 add_executable(keepassxc-cli keepassxc-cli.cpp)
 target_link_libraries(keepassxc-cli
@@ -50,7 +48,6 @@ target_link_libraries(keepassxc-cli
                       ${GCRYPT_LIBRARIES}
                       ${GPGERROR_LIBRARIES}
                       ${ZLIB_LIBRARIES}
-                      ${Readline_LIBRARY}
                       ${ZXCVBN_LIBRARIES})
 
 install(TARGETS keepassxc-cli

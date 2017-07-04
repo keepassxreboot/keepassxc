@@ -94,6 +94,7 @@ int Add::addEntry(Database* database, QString databasePath, QString entryPath)
                                          PasswordGenerator::UpperLetters |
                                          PasswordGenerator::Numbers);
         password = passwordGenerator.generatePassword();
+        outputTextStream << "New password generated!" << endl;
     } else {
         outputTextStream << "password: ";
         outputTextStream.flush();
