@@ -578,7 +578,7 @@ Group* Group::findGroupByPath(QString groupPath, QString basePath)
 
 }
 
-QString Group::print(bool printUuids, QString baseName, int depth)
+QString Group::print(bool recursive, int depth)
 {
 
     QString response;
@@ -590,21 +590,14 @@ QString Group::print(bool printUuids, QString baseName, int depth)
     }
 
     for (Entry* entry : entries()) {
-        response += indentation + entry->title();
-        if (printUuids) {
-            response += " " + entry->uuid().toHex();
-        }
-        response += "\n";
+        response += indentation + entry->title() + "\n";
     }
 
     for (Group* innerGroup : children()) {
-        QString newBaseName = baseName + innerGroup->name() + "/";
-        response += indentation + newBaseName;
-        if (printUuids) {
-            response += " " + innerGroup->uuid().toHex();
+        response += indentation + innerGroup->name() + "/\n";
+        if (recursive) {
+            response += innerGroup->print(recursive, depth + 1);
         }
-        response += "\n";
-        response += innerGroup->print(printUuids, newBaseName, depth + 1);
     }
 
     return response;
@@ -751,6 +744,89 @@ void Group::addEntry(Entry* entry)
 
     emit modified();
     emit entryAdded(entry);
+}
+
+Entry* Group::addEntryWithPath(QString entryPath)
+{
+    Q_ASSERT(!entryPath.isNull());
+    if (this->findEntryByPath(entryPath)) {
+        return nullptr;
+    }
+
+    QStringList groups = entryPath.split("/");
+    QString entryTitle = groups.takeLast();
+    QString groupPath = groups.join("/");
+    if (groupPath.isNull()) {
+        groupPath = QString("");
+    }
+
+    Q_ASSERT(!groupPath.isNull());
+    Group* group = this->findGroupByPath(groupPath);
+    if (!group) {
+        return nullptr;
+    }
+
+    Entry* entry = new Entry();
+    entry->setTitle(entryTitle);
+    entry->setUuid(Uuid::random());
+    entry->setGroup(group);
+
+    return entry;
+
+}
+
+Group* Group::addGroupWithPath(QString groupPath)
+{
+    Q_ASSERT(!groupPath.isNull());
+
+    if (this->findGroupByPath(groupPath)) {
+        return nullptr;
+    }
+
+    if (groupPath.endsWith("/")) {
+        groupPath.chop(1);
+    }
+
+    QStringList groups = groupPath.split("/");
+    QString groupName = groups.takeLast();
+    QString parentPath = groups.join("/");
+    if (parentPath.isNull()) {
+        parentPath = QString("");
+    }
+
+    Group* parent = this->findGroupByPath(parentPath);
+    if (!parent) {
+        return nullptr;
+    }
+
+    Group* group = new Group();
+    group->setName(groupName);
+    group->setUuid(Uuid::random());
+    group->setParent(parent);
+
+    return group;
+
+}
+
+QStringList Group::locate(QString locateTerm, QString currentPath)
+{
+    Q_ASSERT(!locateTerm.isNull());
+    QStringList response;
+
+    for (Entry* entry : asConst(m_entries)) {
+        if (entry->title().toLower().contains(locateTerm.toLower())) {
+            response << currentPath + entry->title();
+        }
+    }
+
+    for (Group* group : asConst(m_children)) {
+        for (QString path : group->locate(locateTerm, currentPath + group->name() + QString("/"))) {
+            response << path;
+        }
+    }
+
+    return response;
+
 }
 
 void Group::removeEntry(Entry* entry)

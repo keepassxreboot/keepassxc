@@ -18,10 +18,14 @@
 #ifndef KEEPASSXC_EXTRACT_H
 #define KEEPASSXC_EXTRACT_H
 
-class Extract
+#include "Command.h"
+
+class Extract : public Command
 {
 public:
-    static int execute(int argc, char** argv);
+    Extract();
+    ~Extract();
+    int execute(int argc, char** argv);
 };
 
 #endif // KEEPASSXC_EXTRACT_H

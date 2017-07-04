@@ -28,6 +28,16 @@
 #include "core/Database.h"
 #include "gui/UnlockDatabaseDialog.h"
 
+Merge::Merge()
+{
+    this->name = QString("merge");
+    this->description = QString("Merge two databases.");
+}
+
+Merge::~Merge()
+{
+}
+
 int Merge::execute(int argc, char** argv)
 {
 
@@ -49,10 +59,9 @@ int Merge::execute(int argc, char** argv)
                       << "same-password",
         QCoreApplication::translate("main", "Use the same password for both database files."));
 
-    QCommandLineOption guiPrompt(
-        QStringList() << "g"
-                      << "gui-prompt",
-        QCoreApplication::translate("main", "Use a GUI prompt unlocking the database."));
+    QCommandLineOption guiPrompt(QStringList() << "g"
+                                               << "gui-prompt",
+                                 QCoreApplication::translate("main", "Use a GUI prompt unlocking the database."));
     parser.addOption(guiPrompt);
 
     parser.addOption(samePasswordOption);
@@ -100,5 +109,4 @@ int Merge::execute(int argc, char** argv)
 
     out << "Successfully merged the database files.\n";
     return EXIT_SUCCESS;
-
 }

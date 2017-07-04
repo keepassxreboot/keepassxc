@@ -18,8 +18,8 @@
 #include "EntropyMeter.h"
 
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 #include <zxcvbn.h>
 
 /* For pre-compiled headers under windows */
@@ -28,6 +28,16 @@
 #include "stdafx.h"
 #endif
 #endif
+
+EntropyMeter::EntropyMeter()
+{
+    this->name = QString("entropy-meter");
+    this->description = QString("Calculate password entropy.");
+}
+
+EntropyMeter::~EntropyMeter()
+{
+}
 
 static void calculate(const char *pwd, int advanced)
 {

@@ -15,18 +15,18 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_CLIP_H
-#define KEEPASSXC_CLIP_H
+#ifndef KEEPASSXC_LOCATE_H
+#define KEEPASSXC_LOCATE_H
 
 #include "Command.h"
 
-class Clip : public Command
+class Locate : public Command
 {
 public:
-    Clip();
-    ~Clip();
+    Locate();
+    ~Locate();
     int execute(int argc, char** argv);
-    int clipEntry(Database* database, QString entryPath, QString timeout);
+    int locateEntry(Database* database, QString searchTerm);
 };
 
-#endif // KEEPASSXC_CLIP_H
+#endif // KEEPASSXC_LOCATE_H
