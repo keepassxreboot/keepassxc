@@ -112,9 +112,9 @@ int Add::addEntry(Database* database, QString databasePath, QString entryPath)
     outputTextStream.flush();
     QString url = inputTextStream.readLine();
 
-    outputTextStream << "Notes (EOF to finish):" << endl;
-    QString notes = inputTextStream.readAll();
-    outputTextStream << endl;
+    outputTextStream << "Notes: ";
+    outputTextStream.flush();
+    QString notes = inputTextStream.readLine();
 
     entry->setNotes(notes);
     entry->setPassword(password);
