@@ -140,7 +140,7 @@ void DatabaseOpenWidget::openDatabase()
 {
     KeePass2Reader reader;
     CompositeKey masterKey = databaseKey();
-    if (masterKey.isEmpty()) {
+    if (!masterKey.isValid()) {
         return;
     }
 
@@ -188,7 +188,7 @@ CompositeKey DatabaseOpenWidget::databaseKey()
         if (!key.load(keyFilename, &errorMsg)) {
             m_ui->messageWidget->showMessage(tr("Can't open key file").append(":\n")
                                              .append(errorMsg), MessageWidget::Error);
-            return CompositeKey();
+            return CompositeKey(false);
         }
         masterKey.addKey(key);
         lastKeyFiles[m_filename] = keyFilename;

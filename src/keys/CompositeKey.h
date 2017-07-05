@@ -30,10 +30,12 @@ class CompositeKey : public Key
 {
 public:
     CompositeKey();
+    CompositeKey(bool valid);
     CompositeKey(const CompositeKey& key);
     ~CompositeKey();
     void clear();
     bool isEmpty() const;
+    bool isValid() const;
     CompositeKey* clone() const;
     CompositeKey& operator=(const CompositeKey& key);
 
@@ -52,6 +54,7 @@ private:
     static QByteArray transformKeyRaw(const QByteArray& key, const QByteArray& seed,
                                       quint64 rounds, bool* ok, QString* errorString);
 
+    bool invalid;
     QList<Key*> m_keys;
     QList<QSharedPointer<ChallengeResponseKey>> m_challengeResponseKeys;
 };
