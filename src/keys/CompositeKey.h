@@ -54,7 +54,7 @@ private:
     static QByteArray transformKeyRaw(const QByteArray& key, const QByteArray& seed,
                                       quint64 rounds, bool* ok, QString* errorString);
 
-    bool invalid;
+    bool m_isValid;
     QList<Key*> m_keys;
     QList<QSharedPointer<ChallengeResponseKey>> m_challengeResponseKeys;
 };

@@ -32,11 +32,12 @@
 
 CompositeKey::CompositeKey()
 {
+    m_isValid = true;
 }
 
 CompositeKey::CompositeKey(bool valid)
 {
-    invalid = !valid;
+    m_isValid = valid;
 }
 
 CompositeKey::CompositeKey(const CompositeKey& key)
@@ -63,7 +64,7 @@ bool CompositeKey::isEmpty() const
 
 bool CompositeKey::isValid() const
 {
-    return !invalid;
+    return m_isValid;
 }
 
 CompositeKey* CompositeKey::clone() const
