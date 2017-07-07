@@ -40,8 +40,14 @@ cd "${BASEDIR}/../.."
 
 if $UPDATE; then
     echo "Updating source files..."
-    lupdate-qt5 -no-ui-lines -disable-heuristic similartext -locations none -no-obsolete src -ts share/translations/keepassx_en.ts
-    lupdate-qt5 -no-ui-lines -disable-heuristic similartext -locations none -pluralonly src -ts share/translations/keepassx_en_plurals.ts
+
+    LUPDATE=lupdate-qt5
+    command -v $LUPDATE > /dev/null
+    if [ $? -ne 0 ]; then
+        LUPDATE=lupdate
+    fi
+    $LUPDATE -no-ui-lines -disable-heuristic similartext -locations none -no-obsolete src -ts share/translations/keepassx_en.ts
+    $LUPDATE -no-ui-lines -disable-heuristic similartext -locations none -pluralonly src -ts share/translations/keepassx_en_plurals.ts
     echo
 fi
 
