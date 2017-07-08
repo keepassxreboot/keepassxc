@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>AboutDialog</class>
  <widget class="QDialog" name="AboutDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>652</width>
+    <height>516</height>
+   </rect>
+  </property>
   <property name="windowTitle">
    <string>About KeePassXC</string>
   </property>
@@ -204,8 +212,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>418</width>
-            <height>848</height>
+            <width>591</width>
+            <height>760</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -275,7 +283,10 @@
        <item>
         <widget class="QLabel" name="label_6">
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;See Contributions on GitHub&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
          <property name="openExternalLinks">
           <bool>true</bool>
