@@ -2,20 +2,6 @@
 <ui version="4.0">
  <class>EditEntryWidgetMain</class>
  <widget class="QWidget" name="EditEntryWidgetMain">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>692</width>
-    <height>323</height>
-   </rect>
-  </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
-  </property>
   <layout class="QGridLayout" name="gridLayout_3">
    <property name="topMargin">
     <number>0</number>
@@ -34,20 +20,7 @@
     </widget>
    </item>
    <item row="4" column="1">
-    <widget class="PasswordGeneratorWidget" name="passwordGenerator" native="true">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>0</height>
-      </size>
-     </property>
-    </widget>
+    <widget class="PasswordGeneratorWidget" name="passwordGenerator" native="true"/>
    </item>
    <item row="2" column="0" alignment="Qt::AlignRight">
     <widget class="QLabel" name="passwordLabel">
