@@ -28,9 +28,9 @@ The following libraries are required:
 Prepare the Building Environment
 ================================
 
-Building Environment on Linux    ==> https://github.com/keepassxreboot/keepassx/wiki/Building-Environment-on-Linux
-Building Environment on Windows  ==> https://github.com/keepassxreboot/keepassx/wiki/Building-Environment-on-Windows
-Building Environment on MacOS    ==> https://github.com/keepassxreboot/keepassx/wiki/Building-Environment-on-MacOS
+* Building Environment on Linux    ==> https://github.com/keepassxreboot/keepassxc/wiki/Set-up-Build-Environment-on-Linux
+* Building Environment on Windows  ==> https://github.com/keepassxreboot/keepassxc/wiki/Set-up-Build-Environment-on-Windows
+* Building Environment on MacOS    ==> https://github.com/keepassxreboot/keepassxc/wiki/Set-up-Build-Environment-on-OS-X
 
 
 Build Steps
