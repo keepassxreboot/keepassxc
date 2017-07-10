@@ -20,7 +20,7 @@
 
 #include "Create.h"
 
-#include <QApplication>
+#include <QCoreApplication>
 #include <QCommandLineParser>
 #include <QFile>
 #include <QStringList>
@@ -59,9 +59,9 @@ int Create::execute(int argc, char** argv)
         "name", QCoreApplication::translate("main", "Name of the new database."), QString("[name]"));
     parser.process(arguments);
 
+    QCoreApplication app(argc, argv);
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2 && args.size() != 1) {
-        QCoreApplication app(argc, argv);
         parser.showHelp(EXIT_FAILURE);
     }
 
