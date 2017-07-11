@@ -26,6 +26,7 @@
 #include <QTextStream>
 
 #include "cli/Utils.h"
+#include "core/Config.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
@@ -88,7 +89,7 @@ int Add::addEntry(Database* database, QString databasePath, QString entryPath)
     QString password;
     if (Utils::askYesNoQuestion("Do you want to generate a new password?")) {
         PasswordGenerator passwordGenerator;
-        passwordGenerator.setLength(PasswordGenerator::DefaultLength);
+        passwordGenerator.setLength(config()->get("generator/Length", PasswordGenerator::DefaultLength).toInt());
         passwordGenerator.setCharClasses(PasswordGenerator::LowerLetters | PasswordGenerator::UpperLetters |
                                          PasswordGenerator::Numbers);
         password = passwordGenerator.generatePassword();
