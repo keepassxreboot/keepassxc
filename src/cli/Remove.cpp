@@ -76,7 +76,7 @@ int Remove::removeEntry(Database* database, QString databasePath, QString entryP
 
     QString entryTitle = entry->title();
     if (Tools::hasChild(database->metadata()->recycleBin(), entry) || !database->metadata()->recycleBinEnabled()) {
-        if (!Utils::askYesNoQuestion("You are about to remove entry " + entryTitle + " permanently.", true)) {
+        if (!Utils::askYesNoQuestion("You are about to remove entry " + entryTitle + " permanently.", false, true)) {
             return EXIT_FAILURE;
         }
         delete entry;

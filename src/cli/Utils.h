@@ -30,7 +30,7 @@ public:
     Utils();
     static void setStdinEcho(bool enable);
     static QString getPassword();
-    static bool askYesNoQuestion(QString question, bool askContinue = false);
+    static bool askYesNoQuestion(QString question, bool defaultYes = false, bool askContinue = false);
     static void createRecycleBin(Database* database);
     static int clipText(QString text);
     static char* createStringCopy(QString string);

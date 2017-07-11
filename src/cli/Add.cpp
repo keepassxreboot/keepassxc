@@ -87,7 +87,7 @@ int Add::addEntry(Database* database, QString databasePath, QString entryPath)
     QString username = inputTextStream.readLine();
 
     QString password;
-    if (Utils::askYesNoQuestion("Do you want to generate a new password?")) {
+    if (Utils::askYesNoQuestion("Do you want to generate a new password?", true)) {
         PasswordGenerator passwordGenerator;
         passwordGenerator.setLength(config()->get("generator/Length", PasswordGenerator::DefaultLength).toInt());
         passwordGenerator.setCharClasses(PasswordGenerator::LowerLetters | PasswordGenerator::UpperLetters |

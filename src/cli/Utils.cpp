@@ -73,27 +73,33 @@ QString Utils::getPassword()
     return line;
 }
 
-bool Utils::askYesNoQuestion(QString question, bool askContinue)
+bool Utils::askYesNoQuestion(QString question, bool defaultYes, bool askContinue)
 {
 
     QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
     QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
 
+    QString choiceText = defaultYes ? "[Y/n] " : "[y/N] ";
+
     if (askContinue) {
         outputTextStream << question << "\n"
-                         << "Do you want to continue? [Y/n] ";
+                         << "Do you want to continue? " << choiceText;
     } else {
-        outputTextStream << question << " [Y/n] ";
+        outputTextStream << question << " " << choiceText;
     }
     outputTextStream.flush();
 
     QString answer = inputTextStream.readLine();
 
-    if (answer.trimmed() == "y" || answer.trimmed() == "Y") {
+    if (!defaultYes && (answer.trimmed() == "y" || answer.trimmed() == "Y")) {
         return true;
     }
 
-    return false;
+    if (defaultYes && (answer.trimmed() == "n" || answer.trimmed() == "N")) {
+        return false;
+    }
+
+    return defaultYes;
 }
 
 /*
