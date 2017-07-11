@@ -24,6 +24,7 @@
 
 #include <QApplication>
 #include <QCommandLineParser>
+#include <QCoreApplication>
 #include <QStringList>
 #include <QTextStream>
 
@@ -73,10 +74,11 @@ int Clip::execute(int argc, char** argv)
     }
 
     Database* db = nullptr;
-    QApplication app(argc, argv);
     if (parser.isSet("gui-prompt")) {
+        QApplication app(argc, argv);
         db = UnlockDatabaseDialog::openDatabasePrompt(args.at(0));
     } else {
+        QCoreApplication app(argc, argv);
         db = Database::unlockFromStdin(args.at(0));
     }
 
