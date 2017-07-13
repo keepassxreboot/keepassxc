@@ -795,22 +795,24 @@ QString Entry::resolvePlaceholder(const QString& str) const
 QString Entry::resolveUrl(const QString& url) const
 {
 #ifdef WITH_XC_HTTP
-    QString newurl = url;
+    QString newUrl = url;
     if (!url.contains("://")) {
         // URL doesn't have a protocol, add https by default
-        newurl.prepend("https://");
+        newUrl.prepend("https://");
     }
-    QUrl uurl = QUrl(newurl);
+    QUrl tempUrl = QUrl(newUrl);
 
-    if (uurl.scheme() == "cmd") {
-        // URL is a cmd, hopefully the second argument is an URL
-        QStringList cmd = newurl.split(" ");
-        if (cmd.size() > 1) {
-            return resolveUrl(cmd[1].remove("'").remove("\""));
+    if (tempUrl.isValid()) {
+        if (tempUrl.scheme() == "cmd") {
+            // URL is a cmd, hopefully the second argument is an URL
+            QStringList cmd = newUrl.split(" ");
+            if (cmd.size() > 1) {
+                return resolveUrl(cmd[1].remove("'").remove("\""));
+            }
+        } else if (tempUrl.scheme() == "http" || tempUrl.scheme() == "https") {
+            // URL is nice
+            return tempUrl.url();
         }
-    } else if (uurl.scheme() == "http" || uurl.scheme() == "https") {
-        // URL is nice
-        return uurl.url();
     }
 #else
     Q_UNUSED(url);
