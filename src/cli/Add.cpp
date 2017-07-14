@@ -44,17 +44,25 @@ Add::~Add()
 
 int Add::execute(int argc, char** argv)
 {
+    QStringList arguments;
+    // Skipping the first argument (keepassxc).
+    for (int i = 1; i < argc; ++i) {
+        arguments << QString(argv[i]);
+    }
+
     QCoreApplication app(argc, argv);
+    QTextStream out(stdout);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::translate("main", "Add an entry to the database."));
     parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
     parser.addPositionalArgument("entry", QCoreApplication::translate("main", "Name of the entry to add."));
-    parser.process(app);
+    parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
-        parser.showHelp(EXIT_FAILURE);
+        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli add");
+        return EXIT_FAILURE;
     }
 
     Database* db = Database::unlockFromStdin(args.at(0));

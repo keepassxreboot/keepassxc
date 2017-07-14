@@ -44,9 +44,12 @@ List::~List()
 int List::execute(int argc, char** argv)
 {
     QStringList arguments;
-    for (int i = 0; i < argc; ++i) {
+    // Skipping the first argument (keepassxc).
+    for (int i = 1; i < argc; ++i) {
         arguments << QString(argv[i]);
     }
+
+    QTextStream out(stdout);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::translate("main", "List database entries."));
@@ -67,7 +70,8 @@ int List::execute(int argc, char** argv)
     const QStringList args = parser.positionalArguments();
     if (args.size() != 1 && args.size() != 2) {
         QCoreApplication app(argc, argv);
-        parser.showHelp(EXIT_FAILURE);
+        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli ls");
+        return EXIT_FAILURE;
     }
 
     Database* db = nullptr;

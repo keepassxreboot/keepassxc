@@ -45,12 +45,14 @@ Create::~Create()
 
 int Create::execute(int argc, char** argv)
 {
-
     QStringList arguments;
-    for (int i = 0; i < argc; ++i) {
+    // Skipping the first argument (keepassxc).
+    for (int i = 1; i < argc; ++i) {
         arguments << QString(argv[i]);
     }
+
     QTextStream outputTextStream(stdout);
+    QCoreApplication app(argc, argv);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::translate("main", "Create a new database"));
@@ -59,10 +61,10 @@ int Create::execute(int argc, char** argv)
         "name", QCoreApplication::translate("main", "Name of the new database."), QString("[name]"));
     parser.process(arguments);
 
-    QCoreApplication app(argc, argv);
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2 && args.size() != 1) {
-        parser.showHelp(EXIT_FAILURE);
+        outputTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli create");
+        return EXIT_FAILURE;
     }
 
     QString databasePath = args.at(0);

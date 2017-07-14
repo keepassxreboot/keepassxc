@@ -40,11 +40,12 @@ Merge::~Merge()
 
 int Merge::execute(int argc, char** argv)
 {
-
     QStringList arguments;
-    for (int i = 0; i < argc; ++i) {
+    // Skipping the first argument (keepassxc).
+    for (int i = 1; i < argc; ++i) {
         arguments << QString(argv[i]);
     }
+
     QTextStream out(stdout);
 
     QCommandLineParser parser;
@@ -70,7 +71,8 @@ int Merge::execute(int argc, char** argv)
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
         QCoreApplication app(argc, argv);
-        parser.showHelp(EXIT_FAILURE);
+        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli merge");
+        return EXIT_FAILURE;
     }
 
     Database* db1;

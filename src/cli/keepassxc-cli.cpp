@@ -90,14 +90,7 @@ int main(int argc, char** argv)
         parser.showHelp(EXIT_FAILURE);
     }
 
-    char* commandFullName = Utils::createStringCopy(QString("keepassxc-cli ").append(commandName));
-
-    // Removing the first cli argument before dispatching.
-    ++argv;
-    --argc;
-    argv[0] = commandFullName;
     int exitCode = command->execute(argc, argv);
-    free(commandFullName);
 
 #if defined(WITH_ASAN) && defined(WITH_LSAN)
     // do leak check here to prevent massive tail of end-of-process leak errors from third-party libraries
