@@ -131,7 +131,8 @@ int main(int argc, char** argv)
     
     if (config()->get("OpenPreviousDatabasesOnStartup").toBool()) {
         const QStringList filenames = config()->get("LastOpenedDatabases").toStringList();
-        for (const QString& filename : filenames) {
+        for (int ii = filenames.size()-1; ii >= 0; ii--) {
+            QString filename = filenames.at(ii);
             if (!filename.isEmpty() && QFile::exists(filename)) {
                 mainWindow.openDatabase(filename, QString(), QString());
             }
