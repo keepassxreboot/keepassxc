@@ -26,31 +26,47 @@
 #include <QStringList>
 #include <QTextStream>
 
+#include "cli/Utils.h"
 #include "core/Database.h"
 #include "format/KeePass2Reader.h"
 #include "keys/CompositeKey.h"
-#include "cli/PasswordInput.h"
+
+Extract::Extract()
+{
+    this->name = QString("extract");
+    this->description = QObject::tr("Extract and print the content of a database.");
+}
+
+Extract::~Extract()
+{
+}
 
 int Extract::execute(int argc, char** argv)
 {
+    QStringList arguments;
+    // Skipping the first argument (keepassxc).
+    for (int i = 1; i < argc; ++i) {
+        arguments << QString(argv[i]);
+    }
+
     QCoreApplication app(argc, argv);
     QTextStream out(stdout);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(
-        QCoreApplication::translate("main", "Extract and print the content of a database."));
-    parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database to extract."));
-    parser.process(app);
+    parser.setApplicationDescription(this->description);
+    parser.addPositionalArgument("database", QObject::tr("Path of the database to extract."));
+    parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 1) {
-        parser.showHelp(EXIT_FAILURE);
+        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli extract");
+        return EXIT_FAILURE;
     }
 
     out << "Insert the database password\n> ";
     out.flush();
 
-    QString line = PasswordInput::getPassword();
+    QString line = Utils::getPassword();
     CompositeKey key = CompositeKey::readFromLine(line);
 
     QString databaseFilename = args.at(0);

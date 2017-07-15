@@ -710,6 +710,129 @@ void TestGroup::testFindGroupByPath()
     delete db;
 }
 
+void TestGroup::testLocate()
+{
+    Database* db = new Database();
+
+    db->rootGroup()->addEntryWithPath("entry1");
+    db->rootGroup()->addEntryWithPath("entry2");
+    db->rootGroup()->addGroupWithPath("group1");
+    db->rootGroup()->addGroupWithPath("group1/group2");
+    db->rootGroup()->addEntryWithPath("group1/entry3");
+    db->rootGroup()->addEntryWithPath("group1/entry43");
+    db->rootGroup()->addEntryWithPath("group1/group2/Google");
+
+    QStringList results = db->rootGroup()->locate("entry");
+    QVERIFY(results.size() == 4);
+    QVERIFY(results.contains("/group1/entry43"));
+
+    results = db->rootGroup()->locate("entry1");
+    QVERIFY(results.size() == 1);
+    QVERIFY(results.contains("/entry1"));
+
+    results = db->rootGroup()->locate("Entry1");
+    QVERIFY(results.size() == 1);
+    QVERIFY(results.contains("/entry1"));
+
+    results = db->rootGroup()->locate("invalid");
+    QVERIFY(results.size() == 0);
+
+    results = db->rootGroup()->locate("google");
+    QVERIFY(results.size() == 1);
+    QVERIFY(results.contains("/group1/group2/Google"));
+
+    delete db;
+}
+void TestGroup::testAddEntryWithPath()
+{
+    Database* db = new Database();
+
+    Group* group1 = new Group();
+    group1->setName("group1");
+    group1->setParent(db->rootGroup());
+
+    Group* group2 = new Group();
+    group2->setName("group2");
+    group2->setParent(group1);
+
+    Entry* entry = db->rootGroup()->addEntryWithPath("entry1");
+    QVERIFY(entry != nullptr);
+    QVERIFY(!entry->uuid().isNull());
+
+    entry = db->rootGroup()->addEntryWithPath("entry1");
+    QVERIFY(entry == nullptr);
+
+    entry = db->rootGroup()->addEntryWithPath("/entry1");
+    QVERIFY(entry == nullptr);
+
+    entry = db->rootGroup()->addEntryWithPath("entry2");
+    QVERIFY(entry != nullptr);
+    QVERIFY(entry->title() == "entry2");
+    QVERIFY(!entry->uuid().isNull());
+
+    entry = db->rootGroup()->addEntryWithPath("/entry3");
+    QVERIFY(entry != nullptr);
+    QVERIFY(entry->title() == "entry3");
+    QVERIFY(!entry->uuid().isNull());
+
+    entry = db->rootGroup()->addEntryWithPath("/group1/entry4");
+    QVERIFY(entry != nullptr);
+    QVERIFY(entry->title() == "entry4");
+    QVERIFY(!entry->uuid().isNull());
+
+    entry = db->rootGroup()->addEntryWithPath("/group1/group2/entry5");
+    QVERIFY(entry != nullptr);
+    QVERIFY(entry->title() == "entry5");
+    QVERIFY(!entry->uuid().isNull());
+
+    entry = db->rootGroup()->addEntryWithPath("/group1/invalid_group/entry6");
+    QVERIFY(entry == nullptr);
+
+    delete db;
+}
+
+void TestGroup::testAddGroupWithPath()
+{
+    Database* db = new Database();
+
+    Group* group1 = new Group();
+    group1->setName("group1");
+    group1->setParent(db->rootGroup());
+
+    Group* group2 = new Group();
+    group2->setName("group2");
+    group2->setParent(group1);
+
+    Group* group = db->rootGroup()->addGroupWithPath("group3");
+    QVERIFY(group != nullptr);
+    QVERIFY(group->name() == "group3");
+    QVERIFY(!group->uuid().isNull());
+
+    // Cannot re-add the same group.
+    group = db->rootGroup()->addGroupWithPath("group3");
+    QVERIFY(group == nullptr);
+
+    group = db->rootGroup()->addGroupWithPath("/group4");
+    QVERIFY(group != nullptr);
+    QVERIFY(group->name() == "group4");
+    QVERIFY(!group->uuid().isNull());
+
+    group = db->rootGroup()->addGroupWithPath("/group1/group5");
+    QVERIFY(group != nullptr);
+    QVERIFY(group->name() == "group5");
+    QVERIFY(!group->uuid().isNull());
+
+    group = db->rootGroup()->addGroupWithPath("group1/group5/group6");
+    QVERIFY(group != nullptr);
+    QVERIFY(group->name() == "group6");
+    QVERIFY(!group->uuid().isNull());
+
+    group = db->rootGroup()->addGroupWithPath("group1/invalid_group/group6");
+    QVERIFY(group == nullptr);
+
+    delete db;
+}
+
 void TestGroup::testPrint()
 {
     Database* db = new Database();
@@ -728,10 +851,6 @@ void TestGroup::testPrint()
     output = db->rootGroup()->print();
     QCOMPARE(output, QString("entry1\n"));
 
-    output = db->rootGroup()->print(true);
-    QCOMPARE(output, QString("entry1 " + entry1->uuid().toHex() + "\n"));
-
-
     Group* group1 = new Group();
     group1->setName("group1");
 
@@ -746,11 +865,16 @@ void TestGroup::testPrint()
     output = db->rootGroup()->print();
     QVERIFY(output.contains(QString("entry1\n")));
     QVERIFY(output.contains(QString("group1/\n")));
-    QVERIFY(output.contains(QString("  entry2\n")));
+    QVERIFY(!output.contains(QString("  entry2\n")));
 
     output = db->rootGroup()->print(true);
-    QVERIFY(output.contains(QString("entry1 " + entry1->uuid().toHex() + "\n")));
-    QVERIFY(output.contains(QString("group1/ " + group1->uuid().toHex() + "\n")));
-    QVERIFY(output.contains(QString("  entry2 " + entry2->uuid().toHex() + "\n")));
+    QVERIFY(output.contains(QString("entry1\n")));
+    QVERIFY(output.contains(QString("group1/\n")));
+    QVERIFY(output.contains(QString("  entry2\n")));
+
+    output = group1->print();
+    QVERIFY(!output.contains(QString("group1/\n")));
+    QVERIFY(output.contains(QString("entry2\n")));
+
     delete db;
 }

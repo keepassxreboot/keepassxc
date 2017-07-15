@@ -58,6 +58,8 @@ public:
     QString generatePassword() const;
     int getbits() const;
 
+    static const int DefaultLength = 16;
+
 private:
     QVector<PasswordGroup> passwordGroups() const;
     int numCharClasses() const;

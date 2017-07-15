@@ -28,31 +28,39 @@
 #include "core/Database.h"
 #include "gui/UnlockDatabaseDialog.h"
 
+Merge::Merge()
+{
+    this->name = QString("merge");
+    this->description = QObject::tr("Merge two databases.");
+}
+
+Merge::~Merge()
+{
+}
+
 int Merge::execute(int argc, char** argv)
 {
-
     QStringList arguments;
-    for (int i = 0; i < argc; ++i) {
+    // Skipping the first argument (keepassxc).
+    for (int i = 1; i < argc; ++i) {
         arguments << QString(argv[i]);
     }
+
     QTextStream out(stdout);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main", "Merge two databases."));
-    parser.addPositionalArgument("database1",
-                                 QCoreApplication::translate("main", "Path of the database to merge into."));
-    parser.addPositionalArgument("database2",
-                                 QCoreApplication::translate("main", "Path of the database to merge from."));
+    parser.setApplicationDescription(this->description);
+    parser.addPositionalArgument("database1", QObject::tr("Path of the database to merge into."));
+    parser.addPositionalArgument("database2", QObject::tr("Path of the database to merge from."));
 
     QCommandLineOption samePasswordOption(
         QStringList() << "s"
                       << "same-password",
-        QCoreApplication::translate("main", "Use the same password for both database files."));
+        QObject::tr("Use the same password for both database files."));
 
-    QCommandLineOption guiPrompt(
-        QStringList() << "g"
-                      << "gui-prompt",
-        QCoreApplication::translate("main", "Use a GUI prompt unlocking the database."));
+    QCommandLineOption guiPrompt(QStringList() << "g"
+                                               << "gui-prompt",
+                                 QObject::tr("Use a GUI prompt unlocking the database."));
     parser.addOption(guiPrompt);
 
     parser.addOption(samePasswordOption);
@@ -61,7 +69,8 @@ int Merge::execute(int argc, char** argv)
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
         QCoreApplication app(argc, argv);
-        parser.showHelp(EXIT_FAILURE);
+        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli merge");
+        return EXIT_FAILURE;
     }
 
     Database* db1;
@@ -100,5 +109,4 @@ int Merge::execute(int argc, char** argv)
 
     out << "Successfully merged the database files.\n";
     return EXIT_SUCCESS;
-
 }

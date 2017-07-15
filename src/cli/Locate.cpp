@@ -18,10 +18,10 @@
 #include <cstdlib>
 #include <stdio.h>
 
-#include "Show.h"
+#include "Locate.h"
 
+#include <QApplication>
 #include <QCommandLineParser>
-#include <QCoreApplication>
 #include <QStringList>
 #include <QTextStream>
 
@@ -29,18 +29,19 @@
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
+#include "gui/UnlockDatabaseDialog.h"
 
-Show::Show()
+Locate::Locate()
 {
-    this->name = QString("show");
-    this->description = QObject::tr("Show an entry's information.");
+    this->name = QString("locate");
+    this->description = QObject::tr("Find entries quickly.");
 }
 
-Show::~Show()
+Locate::~Locate()
 {
 }
 
-int Show::execute(int argc, char** argv)
+int Locate::execute(int argc, char** argv)
 {
     QStringList arguments;
     // Skipping the first argument (keepassxc).
@@ -48,45 +49,52 @@ int Show::execute(int argc, char** argv)
         arguments << QString(argv[i]);
     }
 
-    QCoreApplication app(argc, argv);
     QTextStream out(stdout);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(this->description);
     parser.addPositionalArgument("database", QObject::tr("Path of the database."));
-    parser.addPositionalArgument("entry", QObject::tr("Name of the entry to show."));
+    QCommandLineOption guiPrompt(QStringList() << "g"
+                                               << "gui-prompt",
+                                 QObject::tr("Use a GUI prompt unlocking the database."));
+    parser.addOption(guiPrompt);
+    parser.addPositionalArgument("term", QObject::tr("Search term."));
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
-        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli show");
+        QCoreApplication app(argc, argv);
+        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli locate");
         return EXIT_FAILURE;
     }
 
-    Database* db = Database::unlockFromStdin(args.at(0));
-    if (db == nullptr) {
-        return EXIT_FAILURE;
+    Database* db = nullptr;
+    if (parser.isSet("gui-prompt")) {
+        QApplication app(argc, argv);
+        db = UnlockDatabaseDialog::openDatabasePrompt(args.at(0));
+    } else {
+        QCoreApplication app(argc, argv);
+        db = Database::unlockFromStdin(args.at(0));
     }
 
-    return this->showEntry(db, args.at(1));
+    if (!db) {
+        return EXIT_FAILURE;
+    }
+    return this->locateEntry(db, args.at(1));
 }
 
-int Show::showEntry(Database* database, QString entryPath)
+int Locate::locateEntry(Database* database, QString searchTerm)
 {
 
-    QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
     QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
-
-    Entry* entry = database->rootGroup()->findEntry(entryPath);
-    if (!entry) {
-        qCritical("Could not find entry with path %s.", qPrintable(entryPath));
-        return EXIT_FAILURE;
+    QStringList results = database->rootGroup()->locate(searchTerm);
+    if (results.isEmpty()) {
+        outputTextStream << "No results for that search term" << endl;
+        return EXIT_SUCCESS;
     }
 
-    outputTextStream << "   title: " << entry->title() << endl;
-    outputTextStream << "username: " << entry->username() << endl;
-    outputTextStream << "password: " << entry->password() << endl;
-    outputTextStream << "     URL: " << entry->url() << endl;
-    outputTextStream << "   Notes: " << entry->notes() << endl;
+    for (QString result : results) {
+        outputTextStream << result << endl;
+    }
     return EXIT_SUCCESS;
 }
