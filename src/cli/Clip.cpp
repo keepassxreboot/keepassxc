@@ -37,7 +37,7 @@
 Clip::Clip()
 {
     this->name = QString("clip");
-    this->description = QString("Copy an entry's password to the clipboard.");
+    this->description = QObject::tr("Copy an entry's password to the clipboard.");
 }
 
 Clip::~Clip()
@@ -55,16 +55,16 @@ int Clip::execute(int argc, char** argv)
     QTextStream out(stdout);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main", "Copy a password to the clipboard"));
-    parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
+    parser.setApplicationDescription(this->description);
+    parser.addPositionalArgument("database", QObject::tr("Path of the database."));
     QCommandLineOption guiPrompt(QStringList() << "g"
                                                << "gui-prompt",
-                                 QCoreApplication::translate("main", "Use a GUI prompt unlocking the database."));
+                                 QObject::tr("Use a GUI prompt unlocking the database."));
     parser.addOption(guiPrompt);
-    parser.addPositionalArgument("entry", QCoreApplication::translate("main", "Path of the entry to clip."));
+    parser.addPositionalArgument("entry", QObject::tr("Path of the entry to clip."));
     parser.addPositionalArgument(
         "timeout",
-        QCoreApplication::translate("main", "Timeout in seconds before clearing the clipboard."),
+        QObject::tr("Timeout in seconds before clearing the clipboard."),
         QString("[timeout]"));
     parser.process(arguments);
 

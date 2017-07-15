@@ -31,7 +31,7 @@
 Merge::Merge()
 {
     this->name = QString("merge");
-    this->description = QString("Merge two databases.");
+    this->description = QObject::tr("Merge two databases.");
 }
 
 Merge::~Merge()
@@ -49,20 +49,18 @@ int Merge::execute(int argc, char** argv)
     QTextStream out(stdout);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main", "Merge two databases."));
-    parser.addPositionalArgument("database1",
-                                 QCoreApplication::translate("main", "Path of the database to merge into."));
-    parser.addPositionalArgument("database2",
-                                 QCoreApplication::translate("main", "Path of the database to merge from."));
+    parser.setApplicationDescription(this->description);
+    parser.addPositionalArgument("database1", QObject::tr("Path of the database to merge into."));
+    parser.addPositionalArgument("database2", QObject::tr("Path of the database to merge from."));
 
     QCommandLineOption samePasswordOption(
         QStringList() << "s"
                       << "same-password",
-        QCoreApplication::translate("main", "Use the same password for both database files."));
+        QObject::tr("Use the same password for both database files."));
 
     QCommandLineOption guiPrompt(QStringList() << "g"
                                                << "gui-prompt",
-                                 QCoreApplication::translate("main", "Use a GUI prompt unlocking the database."));
+                                 QObject::tr("Use a GUI prompt unlocking the database."));
     parser.addOption(guiPrompt);
 
     parser.addOption(samePasswordOption);

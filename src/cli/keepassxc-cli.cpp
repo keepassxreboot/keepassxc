@@ -56,9 +56,9 @@ int main(int argc, char** argv)
     for (Command* command : Command::getCommands()) {
         description = description.append(command->getDescriptionLine());
     }
-    parser.setApplicationDescription(QCoreApplication::translate("main", qPrintable(description)));
+    parser.setApplicationDescription(QObject::tr(qPrintable(description)));
 
-    parser.addPositionalArgument("command", QCoreApplication::translate("main", "Name of the command to execute."));
+    parser.addPositionalArgument("command", QObject::tr("Name of the command to execute."));
 
     parser.addHelpOption();
     parser.addVersionOption();

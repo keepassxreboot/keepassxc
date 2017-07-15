@@ -34,7 +34,7 @@
 Locate::Locate()
 {
     this->name = QString("locate");
-    this->description = QString("Find entries quickly.");
+    this->description = QObject::tr("Find entries quickly.");
 }
 
 Locate::~Locate()
@@ -52,13 +52,13 @@ int Locate::execute(int argc, char** argv)
     QTextStream out(stdout);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main", "Find entries quickly."));
-    parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
+    parser.setApplicationDescription(this->description);
+    parser.addPositionalArgument("database", QObject::tr("Path of the database."));
     QCommandLineOption guiPrompt(QStringList() << "g"
                                                << "gui-prompt",
-                                 QCoreApplication::translate("main", "Use a GUI prompt unlocking the database."));
+                                 QObject::tr("Use a GUI prompt unlocking the database."));
     parser.addOption(guiPrompt);
-    parser.addPositionalArgument("term", QCoreApplication::translate("main", "Search term."));
+    parser.addPositionalArgument("term", QObject::tr("Search term."));
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();

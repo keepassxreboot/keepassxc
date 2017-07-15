@@ -33,7 +33,7 @@
 Show::Show()
 {
     this->name = QString("show");
-    this->description = QString("Show an entry's information.");
+    this->description = QObject::tr("Show an entry's information.");
 }
 
 Show::~Show()
@@ -52,9 +52,9 @@ int Show::execute(int argc, char** argv)
     QTextStream out(stdout);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main", "Show a password."));
-    parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
-    parser.addPositionalArgument("entry", QCoreApplication::translate("main", "Name of the entry to show."));
+    parser.setApplicationDescription(this->description);
+    parser.addPositionalArgument("database", QObject::tr("Path of the database."));
+    parser.addPositionalArgument("entry", QObject::tr("Name of the entry to show."));
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();

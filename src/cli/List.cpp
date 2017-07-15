@@ -34,7 +34,7 @@
 List::List()
 {
     this->name = QString("ls");
-    this->description = QString("List database entries.");
+    this->description = QObject::tr("List database entries.");
 }
 
 List::~List()
@@ -52,18 +52,18 @@ int List::execute(int argc, char** argv)
     QTextStream out(stdout);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main", "List database entries."));
-    parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
+    parser.setApplicationDescription(this->description);
+    parser.addPositionalArgument("database", QObject::tr("Path of the database."));
     parser.addPositionalArgument(
-        "group", QCoreApplication::translate("main", "Path of the group to list. Default is /"), QString("[group]"));
+        "group", QObject::tr("Path of the group to list. Default is /"), QString("[group]"));
     QCommandLineOption printUuidsOption(
         QStringList() << "u"
                       << "print-uuids",
-        QCoreApplication::translate("main", "Print the UUIDs of the entries and groups."));
+        QObject::tr("Print the UUIDs of the entries and groups."));
     parser.addOption(printUuidsOption);
     QCommandLineOption guiPrompt(QStringList() << "g"
                                                << "gui-prompt",
-                                 QCoreApplication::translate("main", "Use a GUI prompt unlocking the database."));
+                                 QObject::tr("Use a GUI prompt unlocking the database."));
     parser.addOption(guiPrompt);
     parser.process(arguments);
 

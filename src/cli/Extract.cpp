@@ -34,7 +34,7 @@
 Extract::Extract()
 {
     this->name = QString("extract");
-    this->description = QString("Extract and print the content of a database.");
+    this->description = QObject::tr("Extract and print the content of a database.");
 }
 
 Extract::~Extract()
@@ -53,9 +53,8 @@ int Extract::execute(int argc, char** argv)
     QTextStream out(stdout);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(
-        QCoreApplication::translate("main", "Extract and print the content of a database."));
-    parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database to extract."));
+    parser.setApplicationDescription(this->description);
+    parser.addPositionalArgument("database", QObject::tr("Path of the database to extract."));
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();

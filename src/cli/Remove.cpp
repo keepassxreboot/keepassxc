@@ -34,7 +34,7 @@
 Remove::Remove()
 {
     this->name = QString("rm");
-    this->description = QString("Remove an entry from the database.");
+    this->description = QObject::tr("Remove an entry from the database.");
 }
 
 Remove::~Remove()
@@ -53,9 +53,9 @@ int Remove::execute(int argc, char** argv)
     QTextStream out(stdout);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main", "Remove an entry from the database."));
-    parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
-    parser.addPositionalArgument("entry", QCoreApplication::translate("main", "Path of the entry to remove."));
+    parser.setApplicationDescription(this->description);
+    parser.addPositionalArgument("database", QObject::tr("Path of the database."));
+    parser.addPositionalArgument("entry", QObject::tr("Path of the entry to remove."));
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();

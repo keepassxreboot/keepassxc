@@ -36,7 +36,7 @@
 Create::Create()
 {
     this->name = QString("create");
-    this->description = QString("Create a new database.");
+    this->description = QObject::tr("Create a new database.");
 }
 
 Create::~Create()
@@ -55,10 +55,9 @@ int Create::execute(int argc, char** argv)
     QCoreApplication app(argc, argv);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main", "Create a new database"));
-    parser.addPositionalArgument("path", QCoreApplication::translate("main", "Path of the new database."));
-    parser.addPositionalArgument(
-        "name", QCoreApplication::translate("main", "Name of the new database."), QString("[name]"));
+    parser.setApplicationDescription(this->description);
+    parser.addPositionalArgument("path", QObject::tr("Path of the new database."));
+    parser.addPositionalArgument("name", QObject::tr("Name of the new database."), QString("[name]"));
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();

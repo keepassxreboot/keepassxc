@@ -19,6 +19,7 @@
 #define KEEPASSXC_COMMAND_H
 
 #include <QList>
+#include <QObject>
 #include <QString>
 #include <QStringList>
 
