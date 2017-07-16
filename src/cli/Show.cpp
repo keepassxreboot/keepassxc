@@ -28,43 +28,64 @@
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
-#include "keys/CompositeKey.h"
-#include "cli/PasswordInput.h"
+
+Show::Show()
+{
+    this->name = QString("show");
+    this->description = QObject::tr("Show an entry's information.");
+}
+
+Show::~Show()
+{
+}
 
 int Show::execute(int argc, char** argv)
 {
+    QStringList arguments;
+    // Skipping the first argument (keepassxc).
+    for (int i = 1; i < argc; ++i) {
+        arguments << QString(argv[i]);
+    }
+
     QCoreApplication app(argc, argv);
     QTextStream out(stdout);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main", "Show a password."));
-    parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
-    parser.addPositionalArgument("entry", QCoreApplication::translate("main", "Name of the entry to show."));
-    parser.process(app);
+    parser.setApplicationDescription(this->description);
+    parser.addPositionalArgument("database", QObject::tr("Path of the database."));
+    parser.addPositionalArgument("entry", QObject::tr("Name of the entry to show."));
+    parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
-        parser.showHelp(EXIT_FAILURE);
+        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli show");
+        return EXIT_FAILURE;
     }
 
-    out << "Insert the database password\n> ";
-    out.flush();
-
-    QString line = PasswordInput::getPassword();
-    CompositeKey key = CompositeKey::readFromLine(line);
-
-    Database* db = Database::openDatabaseFile(args.at(0), key);
+    Database* db = Database::unlockFromStdin(args.at(0));
     if (db == nullptr) {
         return EXIT_FAILURE;
     }
 
-    QString entryId = args.at(1);
-    Entry* entry = db->rootGroup()->findEntry(entryId);
+    return this->showEntry(db, args.at(1));
+}
+
+int Show::showEntry(Database* database, QString entryPath)
+{
+
+    QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
+    QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
+
+    Entry* entry = database->rootGroup()->findEntry(entryPath);
     if (!entry) {
-        qCritical("Entry %s not found.", qPrintable(entryId));
+        qCritical("Could not find entry with path %s.", qPrintable(entryPath));
         return EXIT_FAILURE;
     }
 
-    out << entry->password() << "\n";
+    outputTextStream << "   title: " << entry->title() << endl;
+    outputTextStream << "username: " << entry->username() << endl;
+    outputTextStream << "password: " << entry->password() << endl;
+    outputTextStream << "     URL: " << entry->url() << endl;
+    outputTextStream << "   Notes: " << entry->notes() << endl;
     return EXIT_SUCCESS;
 }

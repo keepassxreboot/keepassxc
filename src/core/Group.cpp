@@ -578,7 +578,7 @@ Group* Group::findGroupByPath(QString groupPath, QString basePath)
 
 }
 
-QString Group::print(bool printUuids, QString baseName, int depth)
+QString Group::print(bool recursive, int depth)
 {
 
     QString response;
@@ -590,21 +590,14 @@ QString Group::print(bool printUuids, QString baseName, int depth)
     }
 
     for (Entry* entry : entries()) {
-        response += indentation + entry->title();
-        if (printUuids) {
-            response += " " + entry->uuid().toHex();
-        }
-        response += "\n";
+        response += indentation + entry->title() + "\n";
     }
 
     for (Group* innerGroup : children()) {
-        QString newBaseName = baseName + innerGroup->name() + "/";
-        response += indentation + newBaseName;
-        if (printUuids) {
-            response += " " + innerGroup->uuid().toHex();
+        response += indentation + innerGroup->name() + "/\n";
+        if (recursive) {
+            response += innerGroup->print(recursive, depth + 1);
         }
-        response += "\n";
-        response += innerGroup->print(printUuids, newBaseName, depth + 1);
     }
 
     return response;
