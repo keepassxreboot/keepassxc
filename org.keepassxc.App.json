@@ -1,0 +1,145 @@
+{
+    "app-id": "org.keepassxc.App",
+    "runtime": "org.freedesktop.Platform",
+    "runtime-version": "1.6",
+    "sdk": "org.freedesktop.Sdk",
+    "command": "keepassxc",
+    "rename-desktop-file": "keepassxc.desktop",
+    "rename-icon": "keepassxc",
+    "finish-args": [
+        "--device=all",
+        "--filesystem=home",
+        "--share=ipc",
+        "--socket=x11", "--socket=wayland"
+    ],
+    "modules": [
+        {
+            "name": "gnu-libiconv",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.15.tar.gz",
+                    "sha256": "ccf536620a45458d26ba83887a983b96827001e92a13847b45e4925cc8913178"
+                }
+            ]
+        },
+        {
+            "name": "qt5-qtbase",
+            "cleanup": [ "/bin", "/mkspecs" ],
+            "config-opts": [ "--confirm-license", "--opensource",
+                             "--release", "--shared",
+                             "-platform", "linux-g++",
+                             "-optimized-qmake",
+                             "-verbose",
+                             "-nomake", "examples",
+                             "-system-harfbuzz",
+                             "-system-sqlite",
+                             "-accessibility",
+                             "-dbus-linked",
+                             "-fontconfig",
+                             "-glib",
+                             "-icu",
+                             "-openssl-linked",
+                             "-no-pch",
+                             "-no-rpath",
+                             "-no-separate-debug-info",
+                             "-reduce-relocations",
+                             "-no-directfb",
+                             "-no-linuxfb",
+                             "-no-kms",
+                             "-system-proxies"
+                           ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://download.qt.io/official_releases/qt/5.9/5.9.1/submodules/qtbase-opensource-src-5.9.1.tar.xz",
+                    "sha256": "bc9a21e9f6fff9629019fdf9f989f064751d5073c3a28dc596def92f4d4275c6"
+                }
+            ]
+        },
+        {
+            "name": "qt5-qttools",
+            "cleanup": [ "/bin", "/mkspecs" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://download.qt.io/official_releases/qt/5.9/5.9.1/submodules/qttools-opensource-src-5.9.1.tar.xz",
+                    "sha256": "c4eb56cf24a75661b8317b566be37396c90357b4f6730ef12b8c97a7079ca0e8"
+                },
+                {
+                    "type": "script",
+                    "commands": [ "qmake" ],
+                    "dest-filename": "configure"
+                }
+            ]
+        },
+        {
+            "name": "a2x",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://downloads.sourceforge.net/project/asciidoc/asciidoc/8.6.9/asciidoc-8.6.9.tar.gz",
+                    "sha256": "78db9d0567c8ab6570a6eff7ffdf84eadd91f2dfc0a92a2d0105d323cab4e1f0"
+                }
+            ]
+        },
+        {
+            "name": "libyubikey",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/Yubico/yubico-c.git",
+                    "branch": "libyubikey-1.13"
+                },
+                {
+                    "type": "shell",
+                    "commands": [ "autoreconf --warnings=all --verbose --install"]
+                }
+            ]
+        },
+        {
+            "name": "libusb",
+            "config-opts": [ "--disable-udev"],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/libusb/libusb.git",
+                    "branch": "v1.0.21"
+                }
+            ]
+        },
+        {
+            "name": "libykpers-1",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/Yubico/yubikey-personalization.git",
+                    "branch": "v1.18.0"
+                },
+                {
+                    "type": "shell",
+                    "commands": [ "autoreconf --warnings=all --verbose --install"]
+                }
+            ]
+        },
+        {
+            "name": "keepassxc",
+            "no-autogen": true,
+            "cmake": true,
+            "config-opts": ["-DWITH_XC_YUBIKEY=On"],
+            "sources": [
+                {
+                    "type": "git",
+                    "path": "./",
+                    "branch": "HEAD"
+                },
+                {
+                    "type": "shell",
+                    "commands": [
+                        "sed -i s:Icon=keepassxc:Icon=org.keepassxc.App: share/linux/keepassxc.desktop"
+                    ]
+                }
+            ]
+        }
+    ]
+}
