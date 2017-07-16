@@ -542,7 +542,7 @@
   </action>
   <action name="actionEntrySetupTotp">
    <property name="text">
-    <string>Setup TOTP</string>
+    <string>Set up TOTP</string>
    </property>
   </action>
   <action name="actionEntryCopyTotp">
