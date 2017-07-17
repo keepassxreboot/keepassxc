@@ -21,7 +21,6 @@
 #include "Clip.h"
 
 #include <QApplication>
-#include <QClipboard>
 #include <QCommandLineParser>
 #include <QStringList>
 #include <QTextStream>
@@ -32,30 +31,41 @@
 #include "core/Group.h"
 #include "gui/Clipboard.h"
 
+Clip::Clip()
+{
+    this->name = QString("clip");
+    this->description = QObject::tr("Copy an entry's password to the clipboard.");
+}
+
+Clip::~Clip()
+{
+}
+
 int Clip::execute(int argc, char** argv)
 {
-
     QStringList arguments;
-    for (int i = 0; i < argc; ++i) {
+    // Skipping the first argument (keepassxc).
+    for (int i = 1; i < argc; ++i) {
         arguments << QString(argv[i]);
     }
+
     QTextStream out(stdout);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main", "Copy a password to the clipboard"));
-    parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
-    QCommandLineOption guiPrompt(
-        QStringList() << "g"
-                      << "gui-prompt",
-        QCoreApplication::translate("main", "Use a GUI prompt unlocking the database."));
+    parser.setApplicationDescription(this->description);
+    parser.addPositionalArgument("database", QObject::tr("Path of the database."));
+    QCommandLineOption guiPrompt(QStringList() << "g"
+                                               << "gui-prompt",
+                                 QObject::tr("Use a GUI prompt unlocking the database."));
     parser.addOption(guiPrompt);
-    parser.addPositionalArgument("entry", QCoreApplication::translate("main", "Name of the entry to clip."));
+    parser.addPositionalArgument("entry", QObject::tr("Path of the entry to clip."));
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
         QCoreApplication app(argc, argv);
-        parser.showHelp(EXIT_FAILURE);
+        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli clip");
+        return EXIT_FAILURE;
     }
 
     Database* db = nullptr;
@@ -69,14 +79,20 @@ int Clip::execute(int argc, char** argv)
     if (!db) {
         return EXIT_FAILURE;
     }
+    return this->clipEntry(db, args.at(1));
+}
 
-    QString entryId = args.at(1);
-    Entry* entry = db->rootGroup()->findEntry(entryId);
+int Clip::clipEntry(Database* database, QString entryPath)
+{
+
+    QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
+    Entry* entry = database->rootGroup()->findEntry(entryPath);
     if (!entry) {
-        qCritical("Entry %s not found.", qPrintable(entryId));
+        qCritical("Entry %s not found.", qPrintable(entryPath));
         return EXIT_FAILURE;
     }
 
     Clipboard::instance()->setText(entry->password());
     return EXIT_SUCCESS;
+
 }
