@@ -244,7 +244,7 @@ void EditWidgetIcons::fetchFaviconFromGoogle(const QString& domain)
         resetFaviconDownload();
         m_fallbackToGoogle = false;
         QUrl faviconUrl = QUrl("https://www.google.com/s2/favicons");
-        faviconUrl.setQuery("domain=" + domain);
+        faviconUrl.setQuery("domain=" + QUrl::toPercentEncoding(domain));
         fetchFavicon(faviconUrl);
     } else {
         resetFaviconDownload();
