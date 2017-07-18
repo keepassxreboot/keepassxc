@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "PasswordInput.h"
+#include "Utils.h"
 
 #ifdef Q_OS_WIN
 #include <windows.h>
@@ -24,14 +24,11 @@
 #include <unistd.h>
 #endif
 
+#include <QProcess>
 #include <QTextStream>
 
 
-PasswordInput::PasswordInput()
-{
-}
-
-void PasswordInput::setStdinEcho(bool enable = true)
+void Utils::setStdinEcho(bool enable = true)
 {
 #ifdef Q_OS_WIN
     HANDLE hIn = GetStdHandle(STD_INPUT_HANDLE);
@@ -60,7 +57,7 @@ void PasswordInput::setStdinEcho(bool enable = true)
 #endif
 }
 
-QString PasswordInput::getPassword()
+QString Utils::getPassword()
 {
     static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
     static QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
@@ -74,4 +71,52 @@ QString PasswordInput::getPassword()
     outputTextStream.flush();
 
     return line;
+}
+
+/*
+ * A valid and running event loop is needed to use the global QClipboard,
+ * so we need to use this from the CLI.
+ */
+int Utils::clipText(QString text)
+{
+
+    QString programName = "";
+    QStringList arguments;
+
+#ifdef Q_OS_UNIX
+    programName = "xclip";
+    arguments << "-i"
+              << "-selection"
+              << "clipboard";
+#endif
+
+#ifdef Q_OS_MACOS
+    programName = "pbcopy";
+#endif
+
+#ifdef Q_OS_WIN
+    programName = "clip";
+#endif
+
+    if (programName.isEmpty()) {
+        qCritical("No program defined for clipboard manipulation");
+        return EXIT_FAILURE;
+    }
+
+    QProcess* clipProcess = new QProcess(nullptr);
+    clipProcess->start(programName, arguments);
+    clipProcess->waitForStarted();
+
+    if (clipProcess->state() != QProcess::Running) {
+        qCritical("Unable to start program %s", qPrintable(programName));
+        return EXIT_FAILURE;
+    }
+
+    const char* data = qPrintable(text);
+    clipProcess->write(data, strlen(data));
+    clipProcess->waitForBytesWritten();
+    clipProcess->closeWriteChannel();
+    clipProcess->waitForFinished();
+
+    return clipProcess->exitCode();
 }
