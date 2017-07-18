@@ -107,6 +107,10 @@ void SettingsWidget::loadSettings()
             tr("Access error for config file %1").arg(config()->getFileName()), MessageWidget::Error);
     }
 
+#ifdef QT_DEBUG
+    m_generalUi->singleInstanceCheckBox->setEnabled(false);
+#endif
+    m_generalUi->singleInstanceCheckBox->setChecked(config()->get("SingleInstance").toBool());
     m_generalUi->rememberLastDatabasesCheckBox->setChecked(config()->get("RememberLastDatabases").toBool());
     m_generalUi->rememberLastKeyFilesCheckBox->setChecked(config()->get("RememberLastKeyFiles").toBool());
     m_generalUi->openPreviousDatabasesOnStartupCheckBox->setChecked(
@@ -176,6 +180,7 @@ void SettingsWidget::saveSettings()
         return;
     }
 
+    config()->set("SingleInstance", m_generalUi->singleInstanceCheckBox->isChecked());
     config()->set("RememberLastDatabases", m_generalUi->rememberLastDatabasesCheckBox->isChecked());
     config()->set("RememberLastKeyFiles", m_generalUi->rememberLastKeyFilesCheckBox->isChecked());
     config()->set("OpenPreviousDatabasesOnStartup",

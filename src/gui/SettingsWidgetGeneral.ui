@@ -34,6 +34,16 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
+        <widget class="QCheckBox" name="singleInstanceCheckBox">
+         <property name="text">
+          <string>Start only a single instance of KeePassXC</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QCheckBox" name="rememberLastDatabasesCheckBox">
          <property name="text">
           <string>Remember last databases</string>

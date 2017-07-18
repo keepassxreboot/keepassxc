@@ -57,13 +57,11 @@ int main(int argc, char** argv)
     // don't set organizationName as that changes the return value of
     // QStandardPaths::writableLocation(QDesktopServices::DataLocation)
 
-#ifndef QT_DEBUG
     if (app.isAlreadyRunning()) {
         qWarning() << QCoreApplication::translate("Main", "Another instance of KeePassXC is already running.").toUtf8().constData();
         return 0;
     }
-#endif
-
+    
     QApplication::setQuitOnLastWindowClosed(false);
 
     if (!Crypto::init()) {
