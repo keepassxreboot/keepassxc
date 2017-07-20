@@ -94,10 +94,6 @@ int Utils::clipText(QString text)
     programName = "pbcopy";
 #endif
 
-#ifdef Q_OS_WIN
-    programName = "clip";
-#endif
-
     if (programName.isEmpty()) {
         qCritical("No program defined for clipboard manipulation");
         return EXIT_FAILURE;
