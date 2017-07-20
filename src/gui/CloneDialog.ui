@@ -19,7 +19,7 @@
      <item>
       <widget class="QCheckBox" name="titleClone">
        <property name="text">
-        <string>Append ' - Copy' to title</string>
+        <string>Append ' - Clone' to title</string>
        </property>
        <property name="checked">
         <bool>true</bool>
