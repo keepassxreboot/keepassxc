@@ -19,6 +19,7 @@
 
 #include "Application.h"
 #include "MainWindow.h"
+#include "core/Config.h"
 
 #include <QAbstractNativeEventFilter>
 #include <QFileOpenEvent>
@@ -100,6 +101,10 @@ Application::Application(int& argc, char** argv)
     if (!userName.isEmpty()) {
         identifier.append("-");
         identifier.append(userName);
+#ifdef QT_DEBUG
+        // In DEBUG mode don't interfere with Release instances 
+        identifier.append("-DEBUG");
+#endif
     }
     QString socketName = identifier + ".socket";
     QString lockName = identifier + ".lock";
@@ -119,12 +124,14 @@ Application::Application(int& argc, char** argv)
         alreadyRunning = true;
         // notify the other instance
         // try several times, in case the other instance is still starting up
-        QLocalSocket client;
-        for (int i = 0; i < 3; i++) {
-            client.connectToServer(socketName);
-            if (client.waitForConnected(150)) {
-                client.abort();
-                break;
+        if (config()->get("SingleInstance").toBool()) {
+            QLocalSocket client;
+            for (int i = 0; i < 3; i++) {
+                client.connectToServer(socketName);
+                if (client.waitForConnected(150)) {
+                    client.abort();
+                    break;
+                }
             }
         }
         break;
@@ -232,6 +239,10 @@ void Application::quitBySignal()
 
 bool Application::isAlreadyRunning() const
 {
-    return alreadyRunning;
+#ifdef QT_DEBUG
+    // In DEBUG mode we can run unlimited instances
+    return false;
+#endif
+    return config()->get("SingleInstance").toBool() && alreadyRunning;
 }
 

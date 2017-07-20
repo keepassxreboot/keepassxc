@@ -223,8 +223,16 @@ void EditWidgetIcons::fetchFavicon(const QUrl& url)
     }
 
     m_httpClient->setConnectingTimeOut(5000, [this]() {
-        resetFaviconDownload();
-        MessageBox::warning(this, tr("Error"), tr("Unable to fetch favicon."));
+        QUrl tempurl = QUrl(m_url);
+        if (tempurl.scheme() == "http") {
+            resetFaviconDownload();
+            MessageBox::warning(this, tr("Error"), tr("Unable to fetch favicon.") + "\n" + tr("Hint: You can enable Google as a fallback under Tools>Settings>Security"));
+        } else {
+            tempurl.setScheme("http");
+            m_url = tempurl.url();
+            tempurl.setPath("/favicon.ico");
+            fetchFavicon(tempurl);
+        }
     });
 
     m_ui->faviconButton->setDisabled(true);
@@ -235,7 +243,9 @@ void EditWidgetIcons::fetchFaviconFromGoogle(const QString& domain)
     if (config()->get("security/IconDownloadFallbackToGoogle", false).toBool() && m_fallbackToGoogle) {
         resetFaviconDownload();
         m_fallbackToGoogle = false;
-        fetchFavicon(QUrl("http://www.google.com/s2/favicons?domain=" + domain));
+        QUrl faviconUrl = QUrl("https://www.google.com/s2/favicons");
+        faviconUrl.setQuery("domain=" + QUrl::toPercentEncoding(domain));
+        fetchFavicon(faviconUrl);
     } else {
         resetFaviconDownload();
         MessageBox::warning(this, tr("Error"), tr("Unable to fetch favicon."));

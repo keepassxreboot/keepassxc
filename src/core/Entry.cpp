@@ -17,6 +17,8 @@
  */
 #include "Entry.h"
 
+#include "config-keepassx.h"
+
 #include "core/Database.h"
 #include "core/DatabaseIcons.h"
 #include "core/Group.h"
@@ -235,6 +237,11 @@ QString Entry::title() const
 QString Entry::url() const
 {
     return m_attributes->value(EntryAttributes::URLKey);
+}
+
+QString Entry::webUrl() const
+{
+    return resolveUrl(m_attributes->value(EntryAttributes::URLKey));
 }
 
 QString Entry::username() const
@@ -783,4 +790,32 @@ QString Entry::resolvePlaceholder(const QString& str) const
     }
 
     return result;
+}
+
+QString Entry::resolveUrl(const QString& url) const
+{
+#ifdef WITH_XC_HTTP
+    QString newUrl = url;
+    if (!url.contains("://")) {
+        // URL doesn't have a protocol, add https by default
+        newUrl.prepend("https://");
+    }
+    QUrl tempUrl = QUrl(newUrl);
+
+    if (tempUrl.isValid()) {
+        if (tempUrl.scheme() == "cmd") {
+            // URL is a cmd, hopefully the second argument is an URL
+            QStringList cmd = newUrl.split(" ");
+            if (cmd.size() > 1) {
+                return resolveUrl(cmd[1].remove("'").remove("\""));
+            }
+        } else if (tempUrl.scheme() == "http" || tempUrl.scheme() == "https") {
+            // URL is nice
+            return tempUrl.url();
+        }
+    }
+#else
+    Q_UNUSED(url);
+#endif
+    return QString("");
 }
