@@ -94,6 +94,10 @@ int Utils::clipText(QString text)
     programName = "pbcopy";
 #endif
 
+#ifdef Q_OS_WIN
+    programName = "clip";
+#endif
+
     if (programName.isEmpty()) {
         qCritical("No program defined for clipboard manipulation");
         return EXIT_FAILURE;
@@ -108,8 +112,9 @@ int Utils::clipText(QString text)
         return EXIT_FAILURE;
     }
 
-    const char* data = qPrintable(text);
-    clipProcess->write(data, strlen(data));
+    if (clipProcess->write(text.toLatin1()) == -1) {
+        qDebug("Unable to write to process : %s", qPrintable(clipProcess->errorString()));
+    }
     clipProcess->waitForBytesWritten();
     clipProcess->closeWriteChannel();
     clipProcess->waitForFinished();

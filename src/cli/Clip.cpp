@@ -24,7 +24,6 @@
 
 #include <QApplication>
 #include <QCommandLineParser>
-#include <QCoreApplication>
 #include <QStringList>
 #include <QTextStream>
 
@@ -53,6 +52,7 @@ int Clip::execute(int argc, char** argv)
     }
 
     QTextStream out(stdout);
+    QApplication app(argc, argv);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(this->description);
@@ -70,17 +70,14 @@ int Clip::execute(int argc, char** argv)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2 && args.size() != 3) {
-        QCoreApplication app(argc, argv);
         out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli clip");
         return EXIT_FAILURE;
     }
 
     Database* db = nullptr;
     if (parser.isSet("gui-prompt")) {
-        QApplication app(argc, argv);
         db = UnlockDatabaseDialog::openDatabasePrompt(args.at(0));
     } else {
-        QCoreApplication app(argc, argv);
         db = Database::unlockFromStdin(args.at(0));
     }
 
