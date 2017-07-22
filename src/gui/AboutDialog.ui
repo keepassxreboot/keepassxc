@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>AboutDialog</class>
  <widget class="QDialog" name="AboutDialog">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>652</width>
-    <height>516</height>
-   </rect>
-  </property>
   <property name="windowTitle">
    <string>About KeePassXC</string>
   </property>
