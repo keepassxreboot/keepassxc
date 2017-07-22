@@ -6,3 +6,7 @@ release*/
 *.kdev4
 
 \.vscode/
+
+.flatpak-builder/
+.flatpak-test-repo/
+org.keepassxc.App.flatpak
