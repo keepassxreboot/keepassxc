@@ -115,6 +115,11 @@ void EntryHistoryModel::clear()
     endResetModel();
 }
 
+void EntryHistoryModel::clearDeletedEntries()
+{
+    m_deletedHistoryEntries.clear();
+}
+
 QList<Entry*> EntryHistoryModel::deletedEntries()
 {
     return m_deletedHistoryEntries;
