@@ -49,8 +49,9 @@ int Clip::execute(QStringList arguments)
     parser.setApplicationDescription(this->description);
     parser.addPositionalArgument("database", QObject::tr("Path of the database."));
     QCommandLineOption keyFile(QStringList() << "k"
-                                               << "key-file",
-                                 QObject::tr("Key file of the database."));
+                                             << "key-file",
+                               QObject::tr("Key file of the database."),
+                               QObject::tr("path"));
     parser.addOption(keyFile);
     parser.addPositionalArgument("entry", QObject::tr("Path of the entry to clip."));
     parser.addPositionalArgument(

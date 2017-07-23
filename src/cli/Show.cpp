@@ -45,8 +45,9 @@ int Show::execute(QStringList arguments)
     parser.setApplicationDescription(this->description);
     parser.addPositionalArgument("database", QObject::tr("Path of the database."));
     QCommandLineOption keyFile(QStringList() << "k"
-                                               << "key-file",
-                                 QObject::tr("Key file of the database."));
+                                             << "key-file",
+                               QObject::tr("Key file of the database."),
+                               QObject::tr("path"));
     parser.addOption(keyFile);
     parser.addPositionalArgument("entry", QObject::tr("Name of the entry to show."));
     parser.process(arguments);

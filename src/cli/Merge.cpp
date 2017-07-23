@@ -49,12 +49,14 @@ int Merge::execute(QStringList arguments)
         QObject::tr("Use the same credentials for both database files."));
 
     QCommandLineOption keyFile(QStringList() << "k"
-                                               << "key-file",
-                                 QObject::tr("Key file of the database."));
+                                             << "key-file",
+                               QObject::tr("Key file of the database."),
+                               QObject::tr("path"));
     parser.addOption(keyFile);
     QCommandLineOption keyFileFrom(QStringList() << "f"
-                                               << "key-file-from",
-                                 QObject::tr("Key file of the database to merge from."));
+                                                 << "key-file-from",
+                               QObject::tr("Key file of the database to merge from."),
+                               QObject::tr("path"));
     parser.addOption(keyFileFrom);
 
     parser.addOption(samePasswordOption);
@@ -73,7 +75,7 @@ int Merge::execute(QStringList arguments)
     }
 
     Database* db2;
-    if (!parser.isSet("same-password")) {
+    if (!parser.isSet("same-credentials")) {
         db2 = Database::unlockFromStdin(args.at(1), parser.value(keyFileFrom));
     } else {
         db2 = Database::openDatabaseFile(args.at(1), *(db1->key().clone()));

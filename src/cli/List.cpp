@@ -47,8 +47,9 @@ int List::execute(QStringList arguments)
     parser.addPositionalArgument(
         "group", QObject::tr("Path of the group to list. Default is /"), QString("[group]"));
     QCommandLineOption keyFile(QStringList() << "k"
-                                               << "key-file",
-                                 QObject::tr("Key file of the database."));
+                                             << "key-file",
+                               QObject::tr("Key file of the database."),
+                               QObject::tr("path"));
     parser.addOption(keyFile);
     parser.process(arguments);
 
