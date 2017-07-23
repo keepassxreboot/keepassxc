@@ -25,7 +25,7 @@ class EntropyMeter : public Command
 public:
     EntropyMeter();
     ~EntropyMeter();
-    int execute(int argc, char** argv);
+    int execute(QStringList arguments);
 };
 
 #endif // KEEPASSXC_ENTROPYMETER_H

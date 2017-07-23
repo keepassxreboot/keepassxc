@@ -20,9 +20,7 @@
 
 #include "List.h"
 
-#include <QApplication>
 #include <QCommandLineParser>
-#include <QStringList>
 #include <QTextStream>
 
 #include "core/Database.h"
@@ -39,14 +37,8 @@ List::~List()
 {
 }
 
-int List::execute(int argc, char** argv)
+int List::execute(QStringList arguments)
 {
-    QStringList arguments;
-    // Skipping the first argument (keepassxc).
-    for (int i = 1; i < argc; ++i) {
-        arguments << QString(argv[i]);
-    }
-
     QTextStream out(stdout);
 
     QCommandLineParser parser;

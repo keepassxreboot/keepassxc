@@ -25,7 +25,7 @@ class Show : public Command
 public:
     Show();
     ~Show();
-    int execute(int argc, char** argv);
+    int execute(QStringList arguments);
     int showEntry(Database* database, QString entryPath);
 };
 

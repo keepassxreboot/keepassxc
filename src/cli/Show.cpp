@@ -21,7 +21,6 @@
 #include "Show.h"
 
 #include <QCommandLineParser>
-#include <QStringList>
 #include <QTextStream>
 
 #include "core/Database.h"
@@ -38,14 +37,8 @@ Show::~Show()
 {
 }
 
-int Show::execute(int argc, char** argv)
+int Show::execute(QStringList arguments)
 {
-    QStringList arguments;
-    // Skipping the first argument (keepassxc).
-    for (int i = 1; i < argc; ++i) {
-        arguments << QString(argv[i]);
-    }
-
     QTextStream out(stdout);
 
     QCommandLineParser parser;

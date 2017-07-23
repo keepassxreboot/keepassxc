@@ -22,7 +22,6 @@
 
 #include <QCommandLineParser>
 #include <QFile>
-#include <QStringList>
 #include <QTextStream>
 
 #include "cli/Utils.h"
@@ -41,14 +40,8 @@ Extract::~Extract()
 {
 }
 
-int Extract::execute(int argc, char** argv)
+int Extract::execute(QStringList arguments)
 {
-    QStringList arguments;
-    // Skipping the first argument (keepassxc).
-    for (int i = 1; i < argc; ++i) {
-        arguments << QString(argv[i]);
-    }
-
     QTextStream out(stdout);
 
     QCommandLineParser parser;

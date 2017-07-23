@@ -19,9 +19,7 @@
 
 #include "Merge.h"
 
-#include <QApplication>
 #include <QCommandLineParser>
-#include <QStringList>
 #include <QTextStream>
 
 #include "core/Database.h"
@@ -36,14 +34,8 @@ Merge::~Merge()
 {
 }
 
-int Merge::execute(int argc, char** argv)
+int Merge::execute(QStringList arguments)
 {
-    QStringList arguments;
-    // Skipping the first argument (keepassxc).
-    for (int i = 1; i < argc; ++i) {
-        arguments << QString(argv[i]);
-    }
-
     QTextStream out(stdout);
 
     QCommandLineParser parser;
@@ -53,8 +45,8 @@ int Merge::execute(int argc, char** argv)
 
     QCommandLineOption samePasswordOption(
         QStringList() << "s"
-                      << "same-password",
-        QObject::tr("Use the same password for both database files."));
+                      << "same-credentials",
+        QObject::tr("Use the same credentials for both database files."));
 
     QCommandLineOption keyFile(QStringList() << "k"
                                                << "key-file",

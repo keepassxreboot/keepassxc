@@ -23,7 +23,6 @@
 #include "Clip.h"
 
 #include <QCommandLineParser>
-#include <QStringList>
 #include <QTextStream>
 
 #include "cli/Utils.h"
@@ -41,13 +40,8 @@ Clip::~Clip()
 {
 }
 
-int Clip::execute(int argc, char** argv)
+int Clip::execute(QStringList arguments)
 {
-    QStringList arguments;
-    // Skipping the first argument (keepassxc).
-    for (int i = 1; i < argc; ++i) {
-        arguments << QString(argv[i]);
-    }
 
     QTextStream out(stdout);
 
