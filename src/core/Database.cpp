@@ -31,6 +31,9 @@
 #include "format/KeePass2.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
+#include "keys/PasswordKey.h"
+#include "keys/FileKey.h"
+#include "keys/CompositeKey.h"
 
 QHash<Uuid, Database*> Database::m_uuidMap;
 
@@ -397,16 +400,27 @@ Database* Database::openDatabaseFile(QString fileName, CompositeKey key)
     return db;
 }
 
-Database* Database::unlockFromStdin(QString databaseFilename)
+Database* Database::unlockFromStdin(QString databaseFilename, QString keyFilename)
 {
     QTextStream outputTextStream(stdout);
 
     outputTextStream << QString("Insert password to unlock " + databaseFilename + "\n> ");
     outputTextStream.flush();
 
+    CompositeKey compositeKey;
+
     QString line = Utils::getPassword();
-    CompositeKey key = CompositeKey::readFromLine(line);
-    return Database::openDatabaseFile(databaseFilename, key);
+    PasswordKey passwordKey;
+    passwordKey.setPassword(line);
+    compositeKey.addKey(passwordKey);
+
+    if (!keyFilename.isEmpty()) {
+        FileKey fileKey;
+        fileKey.load(keyFilename);
+        compositeKey.addKey(fileKey);
+    }
+
+    return Database::openDatabaseFile(databaseFilename, compositeKey);
 }
 
 QString Database::saveToFile(QString filePath)

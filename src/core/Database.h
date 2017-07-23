@@ -122,7 +122,7 @@ public:
 
     static Database* databaseByUuid(const Uuid& uuid);
     static Database* openDatabaseFile(QString fileName, CompositeKey key);
-    static Database* unlockFromStdin(QString databaseFilename);
+    static Database* unlockFromStdin(QString databaseFilename, QString keyFilename = QString(""));
 
 signals:
     void groupDataChanged(Group* group);

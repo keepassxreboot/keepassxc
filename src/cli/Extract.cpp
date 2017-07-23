@@ -30,6 +30,7 @@
 #include "core/Database.h"
 #include "format/KeePass2Reader.h"
 #include "keys/CompositeKey.h"
+#include "keys/PasswordKey.h"
 
 Extract::Extract()
 {
@@ -66,8 +67,12 @@ int Extract::execute(int argc, char** argv)
     out << "Insert the database password\n> ";
     out.flush();
 
+    CompositeKey compositeKey;
+
     QString line = Utils::getPassword();
-    CompositeKey key = CompositeKey::readFromLine(line);
+    PasswordKey passwordKey;
+    passwordKey.setPassword(line);
+    compositeKey.addKey(passwordKey);
 
     QString databaseFilename = args.at(0);
     QFile dbFile(databaseFilename);
@@ -82,7 +87,7 @@ int Extract::execute(int argc, char** argv)
 
     KeePass2Reader reader;
     reader.setSaveXml(true);
-    Database* db = reader.readDatabase(&dbFile, key);
+    Database* db = reader.readDatabase(&dbFile, compositeKey);
     delete db;
 
     QByteArray xmlData = reader.xmlData();
