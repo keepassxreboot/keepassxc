@@ -54,20 +54,3 @@ void UnlockDatabaseDialog::complete(bool r)
         reject();
     }
 }
-
-Database* UnlockDatabaseDialog::openDatabasePrompt(QString databaseFilename)
-{
-
-    UnlockDatabaseDialog* unlockDatabaseDialog = new UnlockDatabaseDialog();
-    unlockDatabaseDialog->setObjectName("Open database");
-    unlockDatabaseDialog->setDBFilename(databaseFilename);
-    unlockDatabaseDialog->show();
-    unlockDatabaseDialog->exec();
-
-    Database* db = unlockDatabaseDialog->database();
-    if (!db) {
-        qWarning("Could not open database %s.", qPrintable(databaseFilename));
-    }
-    delete unlockDatabaseDialog;
-    return db;
-}

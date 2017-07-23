@@ -21,7 +21,6 @@
 #include "Extract.h"
 
 #include <QCommandLineParser>
-#include <QCoreApplication>
 #include <QFile>
 #include <QStringList>
 #include <QTextStream>
@@ -50,7 +49,6 @@ int Extract::execute(int argc, char** argv)
         arguments << QString(argv[i]);
     }
 
-    QCoreApplication app(argc, argv);
     QTextStream out(stdout);
 
     QCommandLineParser parser;

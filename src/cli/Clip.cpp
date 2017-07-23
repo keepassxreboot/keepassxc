@@ -22,7 +22,6 @@
 
 #include "Clip.h"
 
-#include <QApplication>
 #include <QCommandLineParser>
 #include <QStringList>
 #include <QTextStream>
@@ -31,7 +30,6 @@
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
-#include "gui/UnlockDatabaseDialog.h"
 
 Clip::Clip()
 {
@@ -52,15 +50,14 @@ int Clip::execute(int argc, char** argv)
     }
 
     QTextStream out(stdout);
-    QApplication app(argc, argv);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(this->description);
     parser.addPositionalArgument("database", QObject::tr("Path of the database."));
-    QCommandLineOption guiPrompt(QStringList() << "g"
-                                               << "gui-prompt",
-                                 QObject::tr("Use a GUI prompt unlocking the database."));
-    parser.addOption(guiPrompt);
+    QCommandLineOption keyFile(QStringList() << "k"
+                                               << "key-file",
+                                 QObject::tr("Key file of the database."));
+    parser.addOption(keyFile);
     parser.addPositionalArgument("entry", QObject::tr("Path of the entry to clip."));
     parser.addPositionalArgument(
         "timeout",
@@ -74,16 +71,11 @@ int Clip::execute(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    Database* db = nullptr;
-    if (parser.isSet("gui-prompt")) {
-        db = UnlockDatabaseDialog::openDatabasePrompt(args.at(0));
-    } else {
-        db = Database::unlockFromStdin(args.at(0));
-    }
-
+    Database* db = Database::unlockFromStdin(args.at(0), parser.value(keyFile));
     if (!db) {
         return EXIT_FAILURE;
     }
+
     return this->clipEntry(db, args.at(1), args.value(2));
 }
 

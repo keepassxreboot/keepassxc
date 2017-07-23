@@ -43,6 +43,8 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
+    QCoreApplication app(argc, argv);
+
     QTextStream out(stdout);
     QStringList arguments;
     for (int i = 0; i < argc; ++i) {
@@ -67,7 +69,6 @@ int main(int argc, char** argv)
     parser.parse(arguments);
 
     if (parser.positionalArguments().size() < 1) {
-        QCoreApplication app(argc, argv);
         app.setApplicationVersion(KEEPASSX_VERSION);
         if (parser.isSet("version")) {
             // Switch to parser.showVersion() when available (QT 5.4).
@@ -82,7 +83,6 @@ int main(int argc, char** argv)
 
     if (command == nullptr) {
         qCritical("Invalid command %s.", qPrintable(commandName));
-        QCoreApplication app(argc, argv);
         app.setApplicationVersion(KEEPASSX_VERSION);
         // showHelp exits the application immediately, so we need to set the
         // exit code here.

@@ -21,7 +21,6 @@
 #include "Show.h"
 
 #include <QCommandLineParser>
-#include <QCoreApplication>
 #include <QStringList>
 #include <QTextStream>
 
@@ -47,12 +46,15 @@ int Show::execute(int argc, char** argv)
         arguments << QString(argv[i]);
     }
 
-    QCoreApplication app(argc, argv);
     QTextStream out(stdout);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(this->description);
     parser.addPositionalArgument("database", QObject::tr("Path of the database."));
+    QCommandLineOption keyFile(QStringList() << "k"
+                                               << "key-file",
+                                 QObject::tr("Key file of the database."));
+    parser.addOption(keyFile);
     parser.addPositionalArgument("entry", QObject::tr("Name of the entry to show."));
     parser.process(arguments);
 
@@ -62,7 +64,7 @@ int Show::execute(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    Database* db = Database::unlockFromStdin(args.at(0));
+    Database* db = Database::unlockFromStdin(args.at(0), parser.value(keyFile));
     if (db == nullptr) {
         return EXIT_FAILURE;
     }
