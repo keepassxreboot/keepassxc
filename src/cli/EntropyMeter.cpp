@@ -101,12 +101,13 @@ int EntropyMeter::execute(QStringList arguments)
 {
     printf("KeePassXC Entropy Meter, based on zxcvbn-c.\nEnter your password below or pass it as argv\n");
     printf("  Usage: entropy-meter [-a] [pwd1 pwd2 ...]\n> ");
-    int i, advanced;
+    int i, advanced = 0;
     if (arguments.size() > 1 && arguments.at(1) == "-a")
     {
       advanced = 1;
+      arguments.removeAt(1);
     }
-    i = 2;
+    i = 1;
     if (i >= arguments.size())
     {
         /* No test passwords on command line, so get them from stdin */
