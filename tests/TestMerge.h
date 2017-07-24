@@ -1,5 +1,4 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -16,29 +15,32 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTGROUP_H
-#define KEEPASSX_TESTGROUP_H
+#ifndef KEEPASSX_TESTMERGE_H
+#define KEEPASSX_TESTMERGE_H
 
-#include <QObject>
 #include "core/Database.h"
+#include <QObject>
 
-class TestGroup : public QObject
+class TestMerge : public QObject
 {
     Q_OBJECT
 
 private slots:
     void initTestCase();
-    void testParenting();
-    void testSignals();
-    void testEntries();
-    void testDeleteSignals();
-    void testCopyCustomIcon();
-    void testClone();
-    void testCopyCustomIcons();
-    void testFindEntry();
-    void testFindGroupByPath();
-    void testPrint();
-    void testLocate();
+    void testMergeIntoNew();
+    void testMergeNoChanges();
+    void testResolveConflictNewer();
+    void testResolveConflictOlder();
+    void testResolveConflictKeepBoth();
+    void testMoveEntry();
+    void testMoveEntryPreserveChanges();
+    void testMoveEntryIntoNewGroup();
+    void testCreateNewGroups();
+    void testUpdateEntryDifferentLocation();
+    void testMergeAndSync();
+
+private:
+    Database* createTestDatabase();
 };
 
-#endif // KEEPASSX_TESTGROUP_H
+#endif // KEEPASSX_TESTMERGE_H
