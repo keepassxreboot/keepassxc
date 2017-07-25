@@ -20,16 +20,12 @@
 
 #include "List.h"
 
-#include <QApplication>
 #include <QCommandLineParser>
-#include <QCoreApplication>
-#include <QStringList>
 #include <QTextStream>
 
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
-#include "gui/UnlockDatabaseDialog.h"
 
 List::List()
 {
@@ -41,14 +37,8 @@ List::~List()
 {
 }
 
-int List::execute(int argc, char** argv)
+int List::execute(QStringList arguments)
 {
-    QStringList arguments;
-    // Skipping the first argument (keepassxc).
-    for (int i = 1; i < argc; ++i) {
-        arguments << QString(argv[i]);
-    }
-
     QTextStream out(stdout);
 
     QCommandLineParser parser;
@@ -56,28 +46,20 @@ int List::execute(int argc, char** argv)
     parser.addPositionalArgument("database", QObject::tr("Path of the database."));
     parser.addPositionalArgument(
         "group", QObject::tr("Path of the group to list. Default is /"), QString("[group]"));
-    QCommandLineOption guiPrompt(QStringList() << "g"
-                                               << "gui-prompt",
-                                 QObject::tr("Use a GUI prompt unlocking the database."));
-    parser.addOption(guiPrompt);
+    QCommandLineOption keyFile(QStringList() << "k"
+                                             << "key-file",
+                               QObject::tr("Key file of the database."),
+                               QObject::tr("path"));
+    parser.addOption(keyFile);
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 1 && args.size() != 2) {
-        QCoreApplication app(argc, argv);
         out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli ls");
         return EXIT_FAILURE;
     }
 
-    Database* db = nullptr;
-    if (parser.isSet("gui-prompt")) {
-        QApplication app(argc, argv);
-        db = UnlockDatabaseDialog::openDatabasePrompt(args.at(0));
-    } else {
-        QCoreApplication app(argc, argv);
-        db = Database::unlockFromStdin(args.at(0));
-    }
-
+    Database* db = Database::unlockFromStdin(args.at(0), parser.value(keyFile));
     if (db == nullptr) {
         return EXIT_FAILURE;
     }

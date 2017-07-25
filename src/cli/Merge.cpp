@@ -19,14 +19,10 @@
 
 #include "Merge.h"
 
-#include <QApplication>
 #include <QCommandLineParser>
-#include <QCoreApplication>
-#include <QStringList>
 #include <QTextStream>
 
 #include "core/Database.h"
-#include "gui/UnlockDatabaseDialog.h"
 
 Merge::Merge()
 {
@@ -38,14 +34,8 @@ Merge::~Merge()
 {
 }
 
-int Merge::execute(int argc, char** argv)
+int Merge::execute(QStringList arguments)
 {
-    QStringList arguments;
-    // Skipping the first argument (keepassxc).
-    for (int i = 1; i < argc; ++i) {
-        arguments << QString(argv[i]);
-    }
-
     QTextStream out(stdout);
 
     QCommandLineParser parser;
@@ -55,52 +45,47 @@ int Merge::execute(int argc, char** argv)
 
     QCommandLineOption samePasswordOption(
         QStringList() << "s"
-                      << "same-password",
-        QObject::tr("Use the same password for both database files."));
+                      << "same-credentials",
+        QObject::tr("Use the same credentials for both database files."));
 
-    QCommandLineOption guiPrompt(QStringList() << "g"
-                                               << "gui-prompt",
-                                 QObject::tr("Use a GUI prompt unlocking the database."));
-    parser.addOption(guiPrompt);
+    QCommandLineOption keyFile(QStringList() << "k"
+                                             << "key-file",
+                               QObject::tr("Key file of the database."),
+                               QObject::tr("path"));
+    parser.addOption(keyFile);
+    QCommandLineOption keyFileFrom(QStringList() << "f"
+                                                 << "key-file-from",
+                               QObject::tr("Key file of the database to merge from."),
+                               QObject::tr("path"));
+    parser.addOption(keyFileFrom);
 
     parser.addOption(samePasswordOption);
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
-        QCoreApplication app(argc, argv);
         out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli merge");
         return EXIT_FAILURE;
     }
 
-    Database* db1;
-    Database* db2;
 
-    if (parser.isSet("gui-prompt")) {
-        QApplication app(argc, argv);
-        db1 = UnlockDatabaseDialog::openDatabasePrompt(args.at(0));
-        if (!parser.isSet("same-password")) {
-            db2 = UnlockDatabaseDialog::openDatabasePrompt(args.at(1));
-        } else {
-            db2 = Database::openDatabaseFile(args.at(1), *(db1->key().clone()));
-        }
-    } else {
-        QCoreApplication app(argc, argv);
-        db1 = Database::unlockFromStdin(args.at(0));
-        if (!parser.isSet("same-password")) {
-            db2 = Database::unlockFromStdin(args.at(1));
-        } else {
-            db2 = Database::openDatabaseFile(args.at(1), *(db1->key().clone()));
-        }
-    }
+    Database* db1 = Database::unlockFromStdin(args.at(0), parser.value(keyFile));
     if (db1 == nullptr) {
         return EXIT_FAILURE;
+    }
+
+    Database* db2;
+    if (!parser.isSet("same-credentials")) {
+        db2 = Database::unlockFromStdin(args.at(1), parser.value(keyFileFrom));
+    } else {
+        db2 = Database::openDatabaseFile(args.at(1), *(db1->key().clone()));
     }
     if (db2 == nullptr) {
         return EXIT_FAILURE;
     }
 
     db1->merge(db2);
+
     QString errorMessage = db1->saveToFile(args.at(0));
     if (!errorMessage.isEmpty()) {
         qCritical("Unable to save database to file : %s", qPrintable(errorMessage));

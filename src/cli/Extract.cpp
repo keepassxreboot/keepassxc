@@ -21,15 +21,14 @@
 #include "Extract.h"
 
 #include <QCommandLineParser>
-#include <QCoreApplication>
 #include <QFile>
-#include <QStringList>
 #include <QTextStream>
 
 #include "cli/Utils.h"
 #include "core/Database.h"
 #include "format/KeePass2Reader.h"
 #include "keys/CompositeKey.h"
+#include "keys/PasswordKey.h"
 
 Extract::Extract()
 {
@@ -41,15 +40,8 @@ Extract::~Extract()
 {
 }
 
-int Extract::execute(int argc, char** argv)
+int Extract::execute(QStringList arguments)
 {
-    QStringList arguments;
-    // Skipping the first argument (keepassxc).
-    for (int i = 1; i < argc; ++i) {
-        arguments << QString(argv[i]);
-    }
-
-    QCoreApplication app(argc, argv);
     QTextStream out(stdout);
 
     QCommandLineParser parser;
@@ -66,8 +58,12 @@ int Extract::execute(int argc, char** argv)
     out << "Insert the database password\n> ";
     out.flush();
 
+    CompositeKey compositeKey;
+
     QString line = Utils::getPassword();
-    CompositeKey key = CompositeKey::readFromLine(line);
+    PasswordKey passwordKey;
+    passwordKey.setPassword(line);
+    compositeKey.addKey(passwordKey);
 
     QString databaseFilename = args.at(0);
     QFile dbFile(databaseFilename);
@@ -82,7 +78,7 @@ int Extract::execute(int argc, char** argv)
 
     KeePass2Reader reader;
     reader.setSaveXml(true);
-    Database* db = reader.readDatabase(&dbFile, key);
+    Database* db = reader.readDatabase(&dbFile, compositeKey);
     delete db;
 
     QByteArray xmlData = reader.xmlData();

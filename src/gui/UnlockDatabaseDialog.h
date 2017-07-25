@@ -35,7 +35,6 @@ public:
     void setDBFilename(const QString& filename);
     void clearForms();
     Database* database();
-    static Database* openDatabasePrompt(QString databaseFilename);
 
 signals:
     void unlockDone(bool);

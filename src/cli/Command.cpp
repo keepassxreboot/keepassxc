@@ -35,7 +35,7 @@ Command::~Command()
 {
 }
 
-int Command::execute(int, char**)
+int Command::execute(QStringList)
 {
     return EXIT_FAILURE;
 }

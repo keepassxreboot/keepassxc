@@ -97,17 +97,18 @@ static void calculate(const char *pwd, int advanced)
     }
 }
 
-int EntropyMeter::execute(int argc, char **argv)
+int EntropyMeter::execute(QStringList arguments)
 {
     printf("KeePassXC Entropy Meter, based on zxcvbn-c.\nEnter your password below or pass it as argv\n");
     printf("  Usage: entropy-meter [-a] [pwd1 pwd2 ...]\n> ");
-    int i, advanced;
-    if ((argc > 1) && (argv[1][0] == '-') && (!strcmp(argv[1], "-a")))
+    int i, advanced = 0;
+    if (arguments.size() > 1 && arguments.at(1) == "-a")
     {
       advanced = 1;
+      arguments.removeAt(1);
     }
-    i = 2;
-    if (i >= argc)
+    i = 1;
+    if (i >= arguments.size())
     {
         /* No test passwords on command line, so get them from stdin */
         char line[500];
@@ -131,9 +132,9 @@ int EntropyMeter::execute(int argc, char **argv)
     else
     {
         /* Do the test passwords on the command line */
-        for(; i < argc; ++i)
+        for(; i < arguments.size(); ++i)
         {
-            calculate(argv[i],advanced);
+            calculate(arguments.at(i).toLatin1(), advanced);
         }
     }
     return 0;
