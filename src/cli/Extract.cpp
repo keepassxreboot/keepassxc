@@ -28,6 +28,7 @@
 #include "core/Database.h"
 #include "format/KeePass2Reader.h"
 #include "keys/CompositeKey.h"
+#include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
 Extract::Extract()
@@ -43,10 +44,16 @@ Extract::~Extract()
 int Extract::execute(QStringList arguments)
 {
     QTextStream out(stdout);
+    QTextStream errorTextStream(stderr);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(this->description);
     parser.addPositionalArgument("database", QObject::tr("Path of the database to extract."));
+    QCommandLineOption keyFile(QStringList() << "k"
+                                             << "key-file",
+                               QObject::tr("Key file of the database."),
+                               QObject::tr("path"));
+    parser.addOption(keyFile);
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
@@ -64,6 +71,20 @@ int Extract::execute(QStringList arguments)
     PasswordKey passwordKey;
     passwordKey.setPassword(line);
     compositeKey.addKey(passwordKey);
+
+    QString keyFilePath = parser.value(keyFile);
+    if (!keyFilePath.isEmpty()) {
+        FileKey fileKey;
+        QString errorMsg;
+        if (!fileKey.load(keyFilePath, &errorMsg)) {
+            errorTextStream << QObject::tr("Failed to load key file %s: %s").arg(keyFilePath).arg(errorMsg);
+            errorTextStream << endl;
+            return EXIT_FAILURE;
+        }
+
+        compositeKey.addKey(fileKey);
+    }
+
 
     QString databaseFilename = args.at(0);
     QFile dbFile(databaseFilename);
