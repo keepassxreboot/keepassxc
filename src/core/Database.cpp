@@ -402,23 +402,27 @@ Database* Database::openDatabaseFile(QString fileName, CompositeKey key)
 
 Database* Database::unlockFromStdin(QString databaseFilename, QString keyFilename)
 {
+    CompositeKey compositeKey;
+
+    if (!keyFilename.isEmpty()) {
+        FileKey fileKey;
+        QString errorMessage;
+        if (!fileKey.load(keyFilename, &errorMessage)) {
+            qCritical("Failed to load key file %s : %s", qPrintable(keyFilename), qPrintable(errorMessage));
+            return nullptr;
+        }
+        compositeKey.addKey(fileKey);
+    }
+
     QTextStream outputTextStream(stdout);
 
     outputTextStream << QString("Insert password to unlock " + databaseFilename + "\n> ");
     outputTextStream.flush();
 
-    CompositeKey compositeKey;
-
     QString line = Utils::getPassword();
     PasswordKey passwordKey;
     passwordKey.setPassword(line);
     compositeKey.addKey(passwordKey);
-
-    if (!keyFilename.isEmpty()) {
-        FileKey fileKey;
-        fileKey.load(keyFilename);
-        compositeKey.addKey(fileKey);
-    }
 
     return Database::openDatabaseFile(databaseFilename, compositeKey);
 }
