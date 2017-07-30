@@ -404,8 +404,9 @@ Database* Database::unlockFromStdin(QString databaseFilename, QString keyFilenam
 {
     CompositeKey compositeKey;
     QTextStream outputTextStream(stdout);
+    QTextStream errorTextStream(stderr);
 
-    outputTextStream << QString("Insert password to unlock " + databaseFilename + "\n> ");
+    outputTextStream << QObject::tr("Insert password to unlock %1: ").arg(databaseFilename);
     outputTextStream.flush();
 
     QString line = Utils::getPassword();
@@ -417,7 +418,8 @@ Database* Database::unlockFromStdin(QString databaseFilename, QString keyFilenam
         FileKey fileKey;
         QString errorMessage;
         if (!fileKey.load(keyFilename, &errorMessage)) {
-            qCritical("Failed to load key file %s : %s", qPrintable(keyFilename), qPrintable(errorMessage));
+            errorTextStream << QObject::tr("Failed to load key file %1 : %2").arg(keyFilename).arg(errorMessage);
+            errorTextStream << endl;
             return nullptr;
         }
         compositeKey.addKey(fileKey);
