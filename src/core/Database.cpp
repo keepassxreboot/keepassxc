@@ -403,6 +403,15 @@ Database* Database::openDatabaseFile(QString fileName, CompositeKey key)
 Database* Database::unlockFromStdin(QString databaseFilename, QString keyFilename)
 {
     CompositeKey compositeKey;
+    QTextStream outputTextStream(stdout);
+
+    outputTextStream << QString("Insert password to unlock " + databaseFilename + "\n> ");
+    outputTextStream.flush();
+
+    QString line = Utils::getPassword();
+    PasswordKey passwordKey;
+    passwordKey.setPassword(line);
+    compositeKey.addKey(passwordKey);
 
     if (!keyFilename.isEmpty()) {
         FileKey fileKey;
@@ -413,16 +422,6 @@ Database* Database::unlockFromStdin(QString databaseFilename, QString keyFilenam
         }
         compositeKey.addKey(fileKey);
     }
-
-    QTextStream outputTextStream(stdout);
-
-    outputTextStream << QString("Insert password to unlock " + databaseFilename + "\n> ");
-    outputTextStream.flush();
-
-    QString line = Utils::getPassword();
-    PasswordKey passwordKey;
-    passwordKey.setPassword(line);
-    compositeKey.addKey(passwordKey);
 
     return Database::openDatabaseFile(databaseFilename, compositeKey);
 }
