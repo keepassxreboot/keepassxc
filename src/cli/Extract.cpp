@@ -62,7 +62,7 @@ int Extract::execute(QStringList arguments)
         return EXIT_FAILURE;
     }
 
-    out << "Insert the database password\n> ";
+    out << QObject::tr("Insert password to unlock %1: ").arg(args.at(0));
     out.flush();
 
     CompositeKey compositeKey;
@@ -77,7 +77,7 @@ int Extract::execute(QStringList arguments)
         FileKey fileKey;
         QString errorMsg;
         if (!fileKey.load(keyFilePath, &errorMsg)) {
-            errorTextStream << QObject::tr("Failed to load key file %s: %s").arg(keyFilePath).arg(errorMsg);
+            errorTextStream << QObject::tr("Failed to load key file %1 : %2").arg(keyFilePath).arg(errorMsg);
             errorTextStream << endl;
             return EXIT_FAILURE;
         }
