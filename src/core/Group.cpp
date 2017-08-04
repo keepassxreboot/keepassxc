@@ -915,8 +915,9 @@ QStringList Group::locate(QString locateTerm, QString currentPath)
     QStringList response;
 
     for (Entry* entry : asConst(m_entries)) {
-        if (entry->title().toLower().contains(locateTerm.toLower())) {
-            response << currentPath + entry->title();
+        QString entryPath = currentPath + entry->title();
+        if (entryPath.toLower().contains(locateTerm.toLower())) {
+            response << entryPath;
         }
     }
 

@@ -807,5 +807,11 @@ void TestGroup::testLocate()
     QVERIFY(results.size() == 1);
     QVERIFY(results.contains("/group1/group2/Google"));
 
+    results = db->rootGroup()->locate("group1");
+    QVERIFY(results.size() == 3);
+    QVERIFY(results.contains("/group1/entry3"));
+    QVERIFY(results.contains("/group1/entry43"));
+    QVERIFY(results.contains("/group1/group2/Google"));
+
     delete db;
 }
