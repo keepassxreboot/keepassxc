@@ -755,3 +755,63 @@ void TestGroup::testPrint()
 
     delete db;
 }
+
+void TestGroup::testLocate()
+{
+    Database* db = new Database();
+
+    Entry* entry1 = new Entry();
+    entry1->setTitle("entry1");
+    entry1->setGroup(db->rootGroup());
+
+    Entry* entry2 = new Entry();
+    entry2->setTitle("entry2");
+    entry2->setGroup(db->rootGroup());
+
+    Group* group1 = new Group();
+    group1->setName("group1");
+    group1->setParent(db->rootGroup());
+
+    Group* group2 = new Group();
+    group2->setName("group2");
+    group2->setParent(group1);
+
+    Entry* entry3 = new Entry();
+    entry3->setTitle("entry3");
+    entry3->setGroup(group1);
+
+    Entry* entry43 = new Entry();
+    entry43->setTitle("entry43");
+    entry43->setGroup(group1);
+
+    Entry* google = new Entry();
+    google->setTitle("Google");
+    google->setGroup(group2);
+
+    QStringList results = db->rootGroup()->locate("entry");
+    QVERIFY(results.size() == 4);
+    QVERIFY(results.contains("/group1/entry43"));
+
+    results = db->rootGroup()->locate("entry1");
+    QVERIFY(results.size() == 1);
+    QVERIFY(results.contains("/entry1"));
+
+    results = db->rootGroup()->locate("Entry1");
+    QVERIFY(results.size() == 1);
+    QVERIFY(results.contains("/entry1"));
+
+    results = db->rootGroup()->locate("invalid");
+    QVERIFY(results.size() == 0);
+
+    results = db->rootGroup()->locate("google");
+    QVERIFY(results.size() == 1);
+    QVERIFY(results.contains("/group1/group2/Google"));
+
+    results = db->rootGroup()->locate("group1");
+    QVERIFY(results.size() == 3);
+    QVERIFY(results.contains("/group1/entry3"));
+    QVERIFY(results.contains("/group1/entry43"));
+    QVERIFY(results.contains("/group1/group2/Google"));
+
+    delete db;
+}
