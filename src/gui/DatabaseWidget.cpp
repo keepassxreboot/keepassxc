@@ -850,8 +850,20 @@ void DatabaseWidget::unlockDatabase(bool accepted)
 
 void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::ModelColumn column)
 {
-    if (column == EntryModel::Url && !entry->url().isEmpty()) {
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Add 'copy-on-doubleclick' functionality for columns 'Username', 'Password', 'Notes'
+     * TODO: should empty username/passwords/notes be copied to clipboard?
+     * TODO: is it desirable for the notes to be copyable to clipboard?
+     */
+    if (column == EntryModel::Username && !entry->username().isEmpty()) {
+        setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->username()));
+    } else if (column == EntryModel::Password && !entry->password().isEmpty()) {
+        setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->password()));
+    } else if (column == EntryModel::Url && !entry->url().isEmpty()) {
         openUrlForEntry(entry);
+    } else if (column == EntryModel::Notes && !entry->notes().isEmpty()) {
+        setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->notes()));
     }
     else {
         switchToEntryEdit(entry);
