@@ -28,12 +28,23 @@ class EntryModel : public QAbstractTableModel
     Q_OBJECT
 
 public:
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Add entries for additional columns 'Password', 'Notes', 'Expires', 'Created', 'Modified', 'Accessed', 'Attachments'
+     */
     enum ModelColumn
     {
         ParentGroup = 0,
         Title = 1,
         Username = 2,
-        Url = 3
+        Password = 3,
+        Url = 4,
+        Notes = 5,
+        Expires = 6,
+        Created = 7,
+        Modified = 8,
+        Accessed = 9,
+        Attachments = 10
     };
 
     explicit EntryModel(QObject* parent = nullptr);

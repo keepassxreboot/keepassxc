@@ -118,7 +118,11 @@ int EntryModel::columnCount(const QModelIndex& parent) const
 {
     Q_UNUSED(parent);
 
-    return 4;
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Update column count to account for additional columns -> column count = number of entries in enum 'ModelColumn' (EntryModel.h)
+     */
+    return 11;
 }
 
 QVariant EntryModel::data(const QModelIndex& index, int role) const
@@ -127,9 +131,29 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         return QVariant();
     }
 
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Copied date/time formatting string from 'EditWidgetProperties.cpp'
+     * TODO: this shouldn't be hardcoded, neither here nor in 'EditWidgetProperties.cpp',
+     *       instead this should be global and user-configurable (or derived automatically
+     *       from current regional settings)
+     */
+    QString timeFormat("d MMM yyyy HH:mm:ss");
+
     Entry* entry = entryFromIndex(index);
     EntryAttributes* attr = entry->attributes();
 
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Add display data providers for additional columns 'Password', 'Notes', 'Expires', 'Created', 'Modified', 'Accessed', 'Attachments'
+     *
+     * TODO: check what entry->resolveMultiplePlaceholders() does and if it's necessary/useful for the additional columns
+     *       -> allows using placeholders like '{username}' that are resolved automatically
+     *       -> NOT useful for timestamps and attachments
+     *       -> PROBABLY useful for notes, but it could also be desirable to display notes exactly as typed...
+     *
+     * TODO: check what attr->isReference() does and if it's necessary/useful for the additional columns
+     */
     if (role == Qt::DisplayRole) {
         QString result;
         switch (index.column()) {
@@ -150,11 +174,54 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
                 result.prepend(tr("Ref: ","Reference abbreviation"));
             }
             return result;
+        case Password:
+
+            // Display password in cleartext
+            //result = entry->resolveMultiplePlaceholders(entry->password());
+
+            // Display password hidden/obfuscated
+            // TODO: check source code of QLineEdit to find out how they do it
+            //       -> https://github.com/openwebos/qt/blob/master/src/gui/widgets/qlineedit.cpp#L2210
+            //       -> QStyle::SH_LineEdit_PasswordCharacter (requires '#include <QStyle>')
+            //       -> find out how to derive a QChar from QStyle::SH_LineEdit_PasswordCharacter
+            //result = QString("*").repeated(6);
+            //result = QString("******");
+            result = QString(QChar(0x2022)).repeated(6);
+
+            if (attr->isReference(EntryAttributes::PasswordKey)) {
+                result.prepend(tr("Ref: ","Reference abbreviation"));
+            }
+            return result;
         case Url:
             result = entry->resolveMultiplePlaceholders(entry->url());
             if (attr->isReference(EntryAttributes::URLKey)) {
                 result.prepend(tr("Ref: ","Reference abbreviation"));
             }
+            return result;
+        case Notes:
+            // Display only first line of notes in simplified format
+            //result = entry->resolveMultiplePlaceholders(entry->notes().section("\n", 0, 0).simplified());
+            result = entry->notes().section("\n", 0, 0).simplified();
+            if (attr->isReference(EntryAttributes::NotesKey)) {
+                result.prepend(tr("Ref: ","Reference abbreviation"));
+            }
+            return result;
+        case Expires:
+            // Display either 'Never' or date of expiry
+            result = entry->timeInfo().expires() ? entry->timeInfo().expiryTime().toLocalTime().toString(timeFormat) : tr("Never");
+            return result;
+        case Created:
+            result = entry->timeInfo().creationTime().toLocalTime().toString(timeFormat);
+            return result;
+        case Modified:
+            result = entry->timeInfo().lastModificationTime().toLocalTime().toString(timeFormat);
+            return result;
+        case Accessed:
+            result = entry->timeInfo().lastAccessTime().toLocalTime().toString(timeFormat);
+            return result;
+        case Attachments:
+            // Display comma-separated list of attachments
+            result = entry->attachments()->keys().join(", ");
             return result;
         }
     }
@@ -192,6 +259,10 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
 }
 QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Add captions for additional columns 'Password', 'Notes', 'Expires', 'Created', 'Modified', 'Accessed', 'Attachments'
+     */
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
         switch (section) {
         case ParentGroup:
@@ -200,8 +271,22 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
             return tr("Title");
         case Username:
             return tr("Username");
+        case Password:
+            return tr("Password");
         case Url:
             return tr("URL");
+        case Notes:
+            return tr("Notes");
+        case Expires:
+            return tr("Expires");
+        case Created:
+            return tr("Created");
+        case Modified:
+            return tr("Modified");
+        case Accessed:
+            return tr("Accessed");
+        case Attachments:
+            return tr("Attachments");
         }
     }
 
