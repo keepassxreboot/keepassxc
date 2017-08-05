@@ -221,7 +221,15 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             return result;
         case Attachments:
             // Display comma-separated list of attachments
-            result = entry->attachments()->keys().join(", ");
+            // TODO: entry->attachments()->keys().join() works locally (http://doc.qt.io/qt-5/qlist.html#more-members),
+            //       yet it fails on GitHub/Travis CI, most likely due to an older Qt version; using loop for now
+            //result = entry->attachments()->keys().join(", ");
+            QList<QString> attachments = entry->attachments()->keys();
+            for (int i=0; i < attachments.size(); i++) {
+                if (!result.isEmpty())
+                    result.append(", ");
+                result.append(attachments.at(i));
+            }
             return result;
         }
     }
