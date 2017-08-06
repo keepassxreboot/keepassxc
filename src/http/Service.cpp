@@ -24,6 +24,7 @@
 #include "Protocol.h"
 #include "EntryConfig.h"
 #include "AccessControlDialog.h"
+#include "KeyAcceptDialog.h"
 #include "HttpSettings.h"
 
 #include "core/Database.h"
@@ -149,32 +150,43 @@ QString Service::getKey(const QString &id)
 QString Service::storeKey(const QString &key)
 {
     QString id;
-    if (Entry* config = getConfigEntry(true)) {
+    if (DatabaseWidget* dbWidget = m_dbTabWidget->currentDatabaseWidget())
+        if (Database* db = dbWidget->database())
+            if (Entry* config = getConfigEntry(true)) {
+                KeyAcceptDialog dlg;
+                QList<QString> dbNames;
 
-        //ShowNotification("New key association requested")
+                //TODO get more databases in
+                dbNames.append(m_dbTabWidget->tabText(m_dbTabWidget->currentIndex()));
 
-        do {
-            bool ok;
-            //Indicate who wants to associate, and request user to enter the 'name' of association key
-            id = QInputDialog::getText(0,
-                    tr("KeePassXC: New key association request"),
-                    tr("You have received an association "
-                       "request for the above key.\n"
-                       "If you would like to allow it access "
-                       "to your KeePassXC database\n"
-                       "give it a unique name to identify and accept it."),
-                    QLineEdit::Normal, QString(), &ok);
-            if (!ok || id.isEmpty())
-                return QString();
+                dlg.setItems(dbNames);
 
-            //Warn if association key already exists
-        } while(config->attributes()->contains(QLatin1String(ASSOCIATE_KEY_PREFIX) + id) &&
-                QMessageBox::warning(0, tr("KeePassXC: Overwrite existing key?"),
-                                     tr("A shared encryption-key with the name \"%1\" already exists.\nDo you want to overwrite it?").arg(id),
-                                     QMessageBox::Yes | QMessageBox::No) == QMessageBox::No);
 
-        config->attributes()->set(QLatin1String(ASSOCIATE_KEY_PREFIX) + id, key, true);
-    }
+
+                do {
+                    bool ok;
+                    //Indicate who wants to associate, and request user to enter the 'name' of association key
+
+                    int res = dlg.exec();
+
+                    if (res == QDialog::Accepted) {
+
+                        //TODO use this
+                        QList<int>* databases = dlg.getCheckedItems();
+                        id = dlg.getKeyName();
+                    } else {
+                        return QString();
+                    }
+
+
+                    //Warn if association key already exists
+                } while(config->attributes()->contains(QLatin1String(ASSOCIATE_KEY_PREFIX) + id) &&
+                        QMessageBox::warning(0, tr("KeePassXC: Overwrite existing key?"),
+                                             tr("A shared encryption-key with the name \"%1\" already exists.\nDo you want to overwrite it?").arg(id),
+                                             QMessageBox::Yes | QMessageBox::No) == QMessageBox::No);
+
+                config->attributes()->set(QLatin1String(ASSOCIATE_KEY_PREFIX) + id, key, true);
+            }
     return id;
 }
 
