@@ -855,6 +855,7 @@ void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::Mod
      * Add 'copy-on-doubleclick' functionality for columns 'Username', 'Password', 'Notes'
      * TODO: should empty username/passwords/notes be copied to clipboard?
      * TODO: is it desirable for the notes to be copyable to clipboard?
+     * TODO: why doesn't this call DatabaseWidget::copyURL()? would be better than duplicating its functionality
      */
     if (column == EntryModel::Username && !entry->username().isEmpty()) {
         setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->username()));
