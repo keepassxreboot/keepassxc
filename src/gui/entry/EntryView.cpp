@@ -32,6 +32,11 @@ EntryView::EntryView(QWidget* parent)
     m_sortModel->setDynamicSortFilter(true);
     m_sortModel->setSortLocaleAware(true);
     m_sortModel->setSortCaseSensitivity(Qt::CaseInsensitive);
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Set sort role -> 'if (role == Qt::UserRole)', Entrymodel.cpp
+     */
+    m_sortModel->setSortRole(Qt::UserRole);
     QTreeView::setModel(m_sortModel);
 
     setUniformRowHeights(true);

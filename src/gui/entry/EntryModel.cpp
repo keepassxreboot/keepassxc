@@ -131,15 +131,6 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         return QVariant();
     }
 
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Copied date/time formatting string from 'EditWidgetProperties.cpp'
-     * TODO: this shouldn't be hardcoded, neither here nor in 'EditWidgetProperties.cpp',
-     *       instead this should be global and user-configurable (or derived automatically
-     *       from current regional settings)
-     */
-    QString timeFormat("d MMM yyyy HH:mm:ss");
-
     Entry* entry = entryFromIndex(index);
     EntryAttributes* attr = entry->attributes();
 
@@ -207,17 +198,17 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             }
             return result;
         case Expires:
-            // Display either 'Never' or date of expiry
-            result = entry->timeInfo().expires() ? entry->timeInfo().expiryTime().toLocalTime().toString(timeFormat) : tr("Never");
+            // Display either date of expiry or 'Never'
+            result = entry->timeInfo().expires() ? entry->timeInfo().expiryTime().toLocalTime().toString(Qt::DefaultLocaleShortDate) : tr("Never");
             return result;
         case Created:
-            result = entry->timeInfo().creationTime().toLocalTime().toString(timeFormat);
+            result = entry->timeInfo().creationTime().toLocalTime().toString(Qt::DefaultLocaleShortDate);
             return result;
         case Modified:
-            result = entry->timeInfo().lastModificationTime().toLocalTime().toString(timeFormat);
+            result = entry->timeInfo().lastModificationTime().toLocalTime().toString(Qt::DefaultLocaleShortDate);
             return result;
         case Accessed:
-            result = entry->timeInfo().lastAccessTime().toLocalTime().toString(timeFormat);
+            result = entry->timeInfo().lastAccessTime().toLocalTime().toString(Qt::DefaultLocaleShortDate);
             return result;
         case Attachments:
             // Display comma-separated list of attachments
@@ -231,6 +222,26 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
                 result.append(attachments.at(i));
             }
             return result;
+        }
+    }
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Add user role to correctly sort dates -> 'm_sortModel->setSortRole(Qt::UserRole);', EntrieView.cpp
+     * TODO: is there any better way to define 'Never' (=infinity/end of time)?
+     */
+    else if (role == Qt::UserRole) {
+        switch (index.column()) {
+        case Expires:
+            return entry->timeInfo().expires() ? entry->timeInfo().expiryTime() : QDateTime(QDate(9999, 1, 1));
+        case Created:
+            return entry->timeInfo().creationTime();
+        case Modified:
+            return entry->timeInfo().lastModificationTime();
+        case Accessed:
+            return entry->timeInfo().lastAccessTime();
+        default:
+            // For all other columns, use data provided by Qt::DisplayRole
+            return data(index, Qt::DisplayRole);
         }
     }
     else if (role == Qt::DecorationRole) {
