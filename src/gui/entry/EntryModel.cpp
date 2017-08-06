@@ -175,6 +175,8 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             //       -> https://github.com/openwebos/qt/blob/master/src/gui/widgets/qlineedit.cpp#L2210
             //       -> QStyle::SH_LineEdit_PasswordCharacter (requires '#include <QStyle>')
             //       -> find out how to derive a QChar from QStyle::SH_LineEdit_PasswordCharacter
+            //       -> https://code.woboq.org/qt5/qtbase/src/widgets/styles/qcommonstyle.cpp.html#5029
+            //          -> Qt internals, does not seem to be reproducible
             //result = QString("*").repeated(6);
             //result = QString("******");
             result = QString(QChar(0x2022)).repeated(6);
