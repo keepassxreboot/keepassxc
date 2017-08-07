@@ -105,6 +105,12 @@ public:
     void blockAutoReload(bool block = true);
     void refreshSearch();
     bool isRecycleBinSelected() const;
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Methods to set/get entry view header state
+     */
+    QByteArray entryViewHeaderState();
+    bool setEntryViewHeaderState(const QByteArray &state);
 
 signals:
     void closeRequest();
@@ -121,7 +127,11 @@ signals:
     void searchModeAboutToActivate();
     void searchModeActivated();
     void splitterSizesChanged();
-    void entryColumnSizesChanged();
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Signal to signal entry view header state changes
+     */
+    void entryViewHeaderStateChanged();
     void updateSearch(QString text);
 
 public slots:

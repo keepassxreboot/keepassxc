@@ -30,7 +30,8 @@ class EntryModel : public QAbstractTableModel
 public:
     /**
      * @author Fonic <https://github.com/fonic>
-     * Add entries for additional columns 'Password', 'Notes', 'Expires', 'Created', 'Modified', 'Accessed', 'Attachments'
+     * Add entries for additional columns 'Password', 'Notes', 'Expires',
+     * 'Created', 'Modified', 'Accessed', 'Attachments'
      */
     enum ModelColumn
     {

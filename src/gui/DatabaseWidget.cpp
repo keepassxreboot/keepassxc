@@ -157,7 +157,11 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     addWidget(m_unlockDatabaseWidget);
 
     connect(m_splitter, SIGNAL(splitterMoved(int,int)), SIGNAL(splitterSizesChanged()));
-    connect(m_entryView->header(), SIGNAL(sectionResized(int,int,int)), SIGNAL(entryColumnSizesChanged()));
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Signal entry view header state changes
+     */
+    connect(m_entryView, SIGNAL(headerStateChanged()), SIGNAL(entryViewHeaderStateChanged()));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(onGroupChanged(Group*)));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), SIGNAL(groupChanged()));
     connect(m_entryView, SIGNAL(entryActivated(Entry*, EntryModel::ModelColumn)),
@@ -1368,4 +1372,26 @@ void DatabaseWidget::emptyRecycleBin()
         m_db->emptyRecycleBin();
         refreshSearch();
     }
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Method to get entry view header state
+ */
+QByteArray DatabaseWidget::entryViewHeaderState() {
+    if (m_entryView)
+        return m_entryView->headerState();
+    else
+        return QByteArray();
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Method to set entry view header state
+ */
+bool DatabaseWidget::setEntryViewHeaderState(const QByteArray &state) {
+    if (m_entryView)
+        return m_entryView->setHeaderState(state);
+    else
+        return false;
 }

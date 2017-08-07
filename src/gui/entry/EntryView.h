@@ -19,6 +19,12 @@
 #define KEEPASSX_ENTRYVIEW_H
 
 #include <QTreeView>
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Includes for columns menu
+ */
+#include <QMenu>
+#include <QAction>
 
 #include "gui/entry/EntryModel.h"
 
@@ -41,6 +47,13 @@ public:
     bool inEntryListMode();
     int numberOfSelectedEntries();
     void setFirstEntryActive();
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Methods to set/get header state -> used to save/load configuration
+     * to/from file
+     */
+    QByteArray headerState();
+    bool setHeaderState(const QByteArray &state);
 
 public slots:
     void setGroup(Group* group);
@@ -48,6 +61,11 @@ public slots:
 signals:
     void entryActivated(Entry* entry, EntryModel::ModelColumn column);
     void entrySelectionChanged();
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Signal to signal header state changes
+     */
+    void headerStateChanged();
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;
@@ -56,11 +74,30 @@ private slots:
     void emitEntryActivated(const QModelIndex& index);
     void switchToEntryListMode();
     void switchToGroupMode();
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Signal slots for columns menu
+     */
+    void showColumnsMenu(const QPoint& pos);
+    void syncColumnsMenuActions();
+    void toggleColumnVisibility();
+    void fitColumnsToWindow();
+    void fitColumnsToContents();
+    void resetColumnsToSession();
+    void resetColumnsToDefaults();
 
 private:
     EntryModel* const m_model;
     SortFilterHideProxyModel* const m_sortModel;
     bool m_inEntryListMode;
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Properties for columns menu
+     */
+    QMenu* header_menu;
+    QList<QAction *> column_actions;
+    QByteArray columns_session;
+    QByteArray columns_defaults;
 };
 
 #endif // KEEPASSX_ENTRYVIEW_H

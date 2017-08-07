@@ -116,13 +116,18 @@ int EntryModel::rowCount(const QModelIndex& parent) const
 
 int EntryModel::columnCount(const QModelIndex& parent) const
 {
-    Q_UNUSED(parent);
-
     /**
      * @author Fonic <https://github.com/fonic>
-     * Update column count to account for additional columns -> column count = number of entries in enum 'ModelColumn' (EntryModel.h)
+     * Change column count to account for additional columns (=number of
+     * entries in enum 'ModelColumn' (EntryModel.h). Also, return 0 when
+     * parent is valid as advised by Qt documentation
      */
-    return 11;
+    if (parent.isValid()) {
+        return 0;
+    }
+    else {
+        return 11;
+    }
 }
 
 QVariant EntryModel::data(const QModelIndex& index, int role) const
@@ -136,14 +141,21 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
 
     /**
      * @author Fonic <https://github.com/fonic>
-     * Add display data providers for additional columns 'Password', 'Notes', 'Expires', 'Created', 'Modified', 'Accessed', 'Attachments'
+     * Add display data providers for additional columns 'Password', 'Notes',
+     * 'Expires', 'Created', 'Modified', 'Accessed', 'Attachments'
      *
-     * TODO: check what entry->resolveMultiplePlaceholders() does and if it's necessary/useful for the additional columns
-     *       -> allows using placeholders like '{username}' that are resolved automatically
-     *       -> NOT useful for timestamps and attachments
-     *       -> PROBABLY useful for notes, but it could also be desirable to display notes exactly as typed...
+     * TODO:
+     * Check if entry->resolveMultiplePlaceholders() is necessary/useful for
+     * the additional columns
+     * -> allows using placeholders like '{username}' that are resolved auto-
+     *    matically
+     * -> NOT useful for timestamps and attachments
+     * -> PROBABLY useful for notes, but it could also be desirable to display
+     *    notes exactly as typed...
      *
-     * TODO: check what attr->isReference() does and if it's necessary/useful for the additional columns
+     * TODO:
+     * Check what attr->isReference() does and if it's necessary/useful for the
+     * additional columns
      */
     if (role == Qt::DisplayRole) {
         QString result;
@@ -171,12 +183,13 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             //result = entry->resolveMultiplePlaceholders(entry->password());
 
             // Display password hidden/obfuscated
-            // TODO: check source code of QLineEdit to find out how they do it
-            //       -> https://github.com/openwebos/qt/blob/master/src/gui/widgets/qlineedit.cpp#L2210
-            //       -> QStyle::SH_LineEdit_PasswordCharacter (requires '#include <QStyle>')
-            //       -> find out how to derive a QChar from QStyle::SH_LineEdit_PasswordCharacter
-            //       -> https://code.woboq.org/qt5/qtbase/src/widgets/styles/qcommonstyle.cpp.html#5029
-            //          -> Qt internals, does not seem to be reproducible
+            // TODO:
+            // Check source code of QLineEdit to find out how they do it
+            // -> https://github.com/openwebos/qt/blob/master/src/gui/widgets/qlineedit.cpp#L2210
+            // -> QStyle::SH_LineEdit_PasswordCharacter (requires '#include <QStyle>')
+            // -> find out how to derive a QChar from QStyle::SH_LineEdit_PasswordCharacter
+            // -> https://code.woboq.org/qt5/qtbase/src/widgets/styles/qcommonstyle.cpp.html#5029
+            //    -> uses Qt internals, does not seem to be reproducible
             //result = QString("*").repeated(6);
             //result = QString("******");
             result = QString(QChar(0x2022)).repeated(6);
@@ -214,8 +227,10 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             return result;
         case Attachments:
             // Display comma-separated list of attachments
-            // TODO: entry->attachments()->keys().join() works locally (http://doc.qt.io/qt-5/qlist.html#more-members),
-            //       yet it fails on GitHub/Travis CI, most likely due to an older Qt version; using for loop for now
+            // TODO:
+            // entry->attachments()->keys().join() works locally, yet it fails
+            // on GitHub/Travis CI, most likely due to an older Qt version, so
+            // using loop for now (http://doc.qt.io/qt-5/qlist.html#more-members)
             //result = entry->attachments()->keys().join(", ");
             QList<QString> attachments = entry->attachments()->keys();
             for (int i=0; i < attachments.size(); i++) {
@@ -228,12 +243,14 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
     }
     /**
      * @author Fonic <https://github.com/fonic>
-     * Add user role to correctly sort dates -> 'm_sortModel->setSortRole(Qt::UserRole);', EntrieView.cpp
-     * TODO: is there any better way to define 'Never' (=infinity/end of time)?
+     * Add user role to correctly sort dates
+     * -> 'm_sortModel->setSortRole(Qt::UserRole);', EntryView.cpp
      */
     else if (role == Qt::UserRole) {
         switch (index.column()) {
         case Expires:
+            // TODO: is there any better way to define 'Never' (=infinity/end
+            // of all time) using QDateTime?
             return entry->timeInfo().expires() ? entry->timeInfo().expiryTime() : QDateTime(QDate(9999, 1, 1));
         case Created:
             return entry->timeInfo().creationTime();
@@ -278,11 +295,13 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
 
     return QVariant();
 }
+
 QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     /**
      * @author Fonic <https://github.com/fonic>
-     * Add captions for additional columns 'Password', 'Notes', 'Expires', 'Created', 'Modified', 'Accessed', 'Attachments'
+     * Add captions for additional columns 'Password', 'Notes', 'Expires',
+     * 'Created', 'Modified', 'Accessed', 'Attachments'
      */
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
         switch (section) {

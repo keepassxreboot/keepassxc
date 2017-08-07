@@ -26,15 +26,23 @@ DatabaseWidgetStateSync::DatabaseWidgetStateSync(QObject* parent)
     , m_blockUpdates(false)
 {
     m_splitterSizes = variantToIntList(config()->get("GUI/SplitterState"));
-    m_columnSizesList = variantToIntList(config()->get("GUI/EntryListColumnSizes"));
-    m_columnSizesSearch = variantToIntList(config()->get("GUI/EntrySearchColumnSizes"));
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Load entry list/search header state
+     */
+    m_headerStateList = variantToByteArray(config()->get("GUI/EntryListHeaderState"));
+    m_headerStateSearch = variantToByteArray(config()->get("GUI/EntrySearchHeaderState"));
 }
 
 DatabaseWidgetStateSync::~DatabaseWidgetStateSync()
 {
     config()->set("GUI/SplitterState", intListToVariant(m_splitterSizes));
-    config()->set("GUI/EntryListColumnSizes", intListToVariant(m_columnSizesList));
-    config()->set("GUI/EntrySearchColumnSizes", intListToVariant(m_columnSizesSearch));
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Save entry list/search header state
+     */
+    config()->set("GUI/EntryListHeaderState", byteArrayToVariant(m_headerStateList));
+    config()->set("GUI/EntrySearchHeaderState", byteArrayToVariant(m_headerStateSearch));
 }
 
 void DatabaseWidgetStateSync::setActive(DatabaseWidget* dbWidget)
@@ -60,8 +68,12 @@ void DatabaseWidgetStateSync::setActive(DatabaseWidget* dbWidget)
 
         connect(m_activeDbWidget, SIGNAL(splitterSizesChanged()),
                 SLOT(updateSplitterSizes()));
-        connect(m_activeDbWidget, SIGNAL(entryColumnSizesChanged()),
-                SLOT(updateColumnSizes()));
+        /**
+         * @author Fonic <https://github.com/fonic>
+         * Receive to receive entry view header state changes
+         */
+        connect(m_activeDbWidget, SIGNAL(entryViewHeaderStateChanged()),
+                SLOT(updateHeaderStates()));
         connect(m_activeDbWidget, SIGNAL(listModeActivated()),
                 SLOT(restoreListView()));
         connect(m_activeDbWidget, SIGNAL(searchModeActivated()),
@@ -75,8 +87,12 @@ void DatabaseWidgetStateSync::setActive(DatabaseWidget* dbWidget)
 
 void DatabaseWidgetStateSync::restoreListView()
 {
-    if (!m_columnSizesList.isEmpty()) {
-        m_activeDbWidget->setEntryViewHeaderSizes(m_columnSizesList);
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Apply entry list header state to widget
+     */
+    if (!m_headerStateList.isEmpty()) {
+        m_activeDbWidget->setEntryViewHeaderState(m_headerStateList);
     }
 
     m_blockUpdates = false;
@@ -84,8 +100,12 @@ void DatabaseWidgetStateSync::restoreListView()
 
 void DatabaseWidgetStateSync::restoreSearchView()
 {
-    if (!m_columnSizesSearch.isEmpty()) {
-        m_activeDbWidget->setEntryViewHeaderSizes(m_columnSizesSearch);
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Apply entry search header state to widget
+     */
+    if (!m_headerStateSearch.isEmpty()) {
+        m_activeDbWidget->setEntryViewHeaderState(m_headerStateSearch);
     }
 
     m_blockUpdates = false;
@@ -105,17 +125,21 @@ void DatabaseWidgetStateSync::updateSplitterSizes()
     m_splitterSizes = m_activeDbWidget->splitterSizes();
 }
 
-void DatabaseWidgetStateSync::updateColumnSizes()
+void DatabaseWidgetStateSync::updateHeaderStates()
 {
     if (m_blockUpdates) {
         return;
     }
 
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Retrieve entry list/search header state from widget
+     */
     if (m_activeDbWidget->isGroupSelected()) {
-        m_columnSizesList = m_activeDbWidget->entryHeaderViewSizes();
+        m_headerStateList = m_activeDbWidget->entryViewHeaderState();
     }
     else {
-        m_columnSizesSearch = m_activeDbWidget->entryHeaderViewSizes();
+        m_headerStateSearch = m_activeDbWidget->entryViewHeaderState();
     }
 }
 
@@ -150,3 +174,23 @@ QVariant DatabaseWidgetStateSync::intListToVariant(const QList<int>& list)
     return result;
 }
 
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Method to convert QVariant to QByteArray
+ */
+QByteArray DatabaseWidgetStateSync::variantToByteArray(const QVariant& variant)
+{
+    if (variant.canConvert<QByteArray>())
+        return variant.toByteArray();
+    else
+        return QByteArray();
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Method to convert QByteArray from QVariant (trivial, just put here for the
+ * sake of completeness)
+ */
+QVariant DatabaseWidgetStateSync::byteArrayToVariant(const QByteArray& bytearray) {
+    return QVariant(bytearray);
+}
