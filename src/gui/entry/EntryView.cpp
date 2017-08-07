@@ -69,6 +69,9 @@ EntryView::EntryView(QWidget* parent)
      * Using 'section' logic of QHeaderView here and in related methods, but
      * there's no real difference between sections and columns in this context
      *
+     * TODO:
+     * Using old-style QMenu->addAction() for now as Qt version on Travis CI
+     * does not have this
      */
     header_menu = new QMenu(this);
     header_menu->setTitle(tr("Columns"));
@@ -209,7 +212,7 @@ void EntryView::switchToEntryListMode()
      * @author Fonic <https://github.com/fonic>
      * Using m_sortModel->hideColumn() somehow messes up the column/section
      * indices, most likely due to model and table getting out of sync. Using
-     * showSection()/hideSection() instead
+     * header()->howSection()/hideSection() instead
      */
     //m_sortModel->hideColumn(0, false);
     header()->showSection(0);
@@ -227,7 +230,7 @@ void EntryView::switchToGroupMode()
      * @author Fonic <https://github.com/fonic>
      * Using m_sortModel->hideColumn() somehow messes up the column/section
      * indices, most likely due to model and table getting out of sync. Using
-     * showSection()/hideSection() instead
+     * header()->howSection()/hideSection() instead
      */
     //m_sortModel->hideColumn(0, true);
     header()->hideSection(0);
@@ -251,7 +254,7 @@ QByteArray EntryView::headerState() {
  * @author Fonic <https://github.com/fonic>
  * Methods to set header state -> used to load configuration from file
  *
- * (BUG?)Fix:
+ * TODO BUG(?):
  * Sections are sometimes shown (header()->isSectionHidden() == false),
  * but their size/width is 0, which effectively renders them invisible.
  * We work around this by making sure that invisible sections are also
@@ -346,7 +349,7 @@ void EntryView::toggleColumnVisibility()
  * @author Fonic <https://github.com/fonic>
  * Adjust column sizes to fit all visible columns within the available space
  *
- * TODO:
+ * TODO BUG:
  * This won't work reliably without explicitely emitting headerStateChanged.
  * Why?
  */
@@ -360,6 +363,10 @@ void EntryView::fitColumnsToWindow()
  * @author Fonic <https://github.com/fonic>
  * Adjust column sizes to fit current table contents, i.e. all content is
  * entirely visible
+ *
+ * TODO BUG:
+ * Strangely, in contrast to fitColumnsToWindow(), this DOES work reliably
+ * without explicitely emitting headerStateChanged.
  */
 void EntryView::fitColumnsToContents()
 {
