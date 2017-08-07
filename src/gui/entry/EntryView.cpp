@@ -75,7 +75,8 @@ EntryView::EntryView(QWidget* parent)
     header_menu->addSection(tr("Columns"));
     for (int sec = 1; sec < header()->count(); sec++) {
         QString text = m_model->headerData(sec, Qt::Horizontal, Qt::DisplayRole).toString();
-        QAction *act = header_menu->addAction(text, this, &EntryView::toggleColumnVisibility);
+        //QAction *act = header_menu->addAction(text, this, &EntryView::toggleColumnVisibility);
+        QAction *act = header_menu->addAction(text, this, SLOT(toggleColumnVisibility()));
         bool hidden = header()->isSectionHidden(sec);
         act->setCheckable(true);
         act->setChecked(!hidden);
@@ -83,11 +84,15 @@ EntryView::EntryView(QWidget* parent)
         column_actions.append(act);
     }
     header_menu->addSeparator();
-    header_menu->addAction(tr("Fit to window"), this, &EntryView::fitColumnsToWindow);
-    header_menu->addAction(tr("Fit to contents"), this, &EntryView::fitColumnsToContents);
+    //header_menu->addAction(tr("Fit to window"), this, &EntryView::fitColumnsToWindow);
+    //header_menu->addAction(tr("Fit to contents"), this, &EntryView::fitColumnsToContents);
+    header_menu->addAction(tr("Fit to window"), this, SLOT(fitColumnsToWindow()));
+    header_menu->addAction(tr("Fit to contents"), this, SLOT(fitColumnsToContents()));
     header_menu->addSeparator();
-    header_menu->addAction(tr("Reset to session"), this, &EntryView::resetColumnsToSession);
-    header_menu->addAction(tr("Reset to defaults"), this, &EntryView::resetColumnsToDefaults);
+    //header_menu->addAction(tr("Reset to session"), this, &EntryView::resetColumnsToSession);
+    //header_menu->addAction(tr("Reset to defaults"), this, &EntryView::resetColumnsToDefaults);
+    header_menu->addAction(tr("Reset to session"), this, SLOT(resetColumnsToSession()));
+    header_menu->addAction(tr("Reset to defaults"), this, SLOT(resetColumnsToDefaults()));
     header()->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(header(), &QHeaderView::customContextMenuRequested, this, &EntryView::showColumnsMenu);
 
