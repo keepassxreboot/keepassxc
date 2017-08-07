@@ -159,7 +159,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_splitter, SIGNAL(splitterMoved(int,int)), SIGNAL(splitterSizesChanged()));
     /**
      * @author Fonic <https://github.com/fonic>
-     * Signal entry view header state changes
+     * Connect signal to notify about entry view header state changes
      */
     connect(m_entryView, SIGNAL(headerStateChanged()), SIGNAL(entryViewHeaderStateChanged()));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(onGroupChanged(Group*)));
@@ -183,6 +183,13 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(&m_fileWatchTimer, SIGNAL(timeout()), this, SLOT(reloadDatabaseFile()));
     connect(&m_fileWatchUnblockTimer, SIGNAL(timeout()), this, SLOT(unblockAutoReload()));
     connect(this, SIGNAL(currentChanged(int)), this, SLOT(emitCurrentModeChanged()));
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Connect signals to notify about changes of 'Hide Usernames' and 'Hide
+     * Passwords' settings of entry view
+     */
+    connect(m_entryView, SIGNAL(hideUsernamesChanged()), SIGNAL(entryViewHideUsernamesChanged()));
+    connect(m_entryView, SIGNAL(hidePasswordsChanged()), SIGNAL(entryViewHidePasswordsChanged()));
 
     m_databaseModified = false;
 
@@ -245,29 +252,6 @@ QList<int> DatabaseWidget::splitterSizes() const
 void DatabaseWidget::setSplitterSizes(const QList<int>& sizes)
 {
     m_splitter->setSizes(sizes);
-}
-
-QList<int> DatabaseWidget::entryHeaderViewSizes() const
-{
-    QList<int> sizes;
-
-    for (int i = 0; i < m_entryView->header()->count(); i++) {
-        sizes.append(m_entryView->header()->sectionSize(i));
-    }
-
-    return sizes;
-}
-
-void DatabaseWidget::setEntryViewHeaderSizes(const QList<int>& sizes)
-{
-    if (sizes.size() != m_entryView->header()->count()) {
-        Q_ASSERT(false);
-        return;
-    }
-
-    for (int i = 0; i < sizes.size(); i++) {
-        m_entryView->header()->resizeSection(i, sizes[i]);
-    }
 }
 
 void DatabaseWidget::clearAllWidgets()
@@ -1378,20 +1362,52 @@ void DatabaseWidget::emptyRecycleBin()
  * @author Fonic <https://github.com/fonic>
  * Method to get entry view header state
  */
-QByteArray DatabaseWidget::entryViewHeaderState() {
-    if (m_entryView)
-        return m_entryView->headerState();
-    else
-        return QByteArray();
+QByteArray DatabaseWidget::entryViewHeaderState() const
+{
+    return m_entryView->headerState();
 }
 
 /**
  * @author Fonic <https://github.com/fonic>
  * Method to set entry view header state
  */
-bool DatabaseWidget::setEntryViewHeaderState(const QByteArray &state) {
-    if (m_entryView)
-        return m_entryView->setHeaderState(state);
-    else
-        return false;
+bool DatabaseWidget::setEntryViewHeaderState(const QByteArray &state)
+{
+    return m_entryView->setHeaderState(state);
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Get current 'Hide Usernames' setting of entry view
+ */
+bool DatabaseWidget::entryViewHideUsernames() const
+{
+    return m_entryView->hideUsernames();
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Set 'Hide Usernames' setting of entry view
+ */
+void DatabaseWidget::setEntryViewHideUsernames(const bool hide)
+{
+    m_entryView->setHideUsernames(hide);
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Get current 'Hide Passwords' setting of entry view
+ */
+bool DatabaseWidget::entryViewHidePasswords() const
+{
+    return m_entryView->hidePasswords();
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Set 'Hide Passwords' setting of entry view
+ */
+void DatabaseWidget::setEntryViewHidePasswords(const bool hide)
+{
+    m_entryView->setHidePasswords(hide);
 }

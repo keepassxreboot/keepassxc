@@ -21,7 +21,7 @@
 #include <QKeyEvent>
 /**
  * @author Fonic <https://github.com/fonic>
- * Includes for columns menu
+ * Added includes
  */
 #include <QMetaType>
 
@@ -39,7 +39,7 @@ EntryView::EntryView(QWidget* parent)
     m_sortModel->setSortCaseSensitivity(Qt::CaseInsensitive);
     /**
      * @author Fonic <https://github.com/fonic>
-     * Set sort role -> 'if (role == Qt::UserRole)', Entrymodel.cpp
+     * Set sort role -> 'if (role == Qt::UserRole)', EntryModel::data()
      */
     m_sortModel->setSortRole(Qt::UserRole);
     QTreeView::setModel(m_sortModel);
@@ -57,12 +57,12 @@ EntryView::EntryView(QWidget* parent)
 
     /**
      * @author Fonic <https://github.com/fonic>
-     * Columns menu:
+     * Header menu:
      * - One checkable action per column to toggle visibility, actions to
      *   resize columns, actions to reset column configuration
      * - Column actions carry the index of 'their' column as data and are
      *   stored in a list to allow syncing their checkboxes to column actual
-     *   column visibility -> EntryView::syncColumnsMenuActions()
+     *   column visibility -> EntryView::syncColumnActions()
      * - Special column 'Group' (index 0) is excluded (int sec = 1)
      *
      * NOTE:
@@ -71,33 +71,44 @@ EntryView::EntryView(QWidget* parent)
      *
      * TODO:
      * Using old-style QMenu->addAction() for now as Qt version on Travis CI
-     * does not have this
+     * does not feature the new style
      */
-    header_menu = new QMenu(this);
-    header_menu->setTitle(tr("Columns"));
-    header_menu->addSection(tr("Columns"));
+    m_headerMenu = new QMenu(this);
+    m_headerMenu->setTitle(tr("View"));
+    //m_headerMenu->addSection(tr("Display"));
+    m_headerMenu->addSection(tr("View"));
+    //m_hideUsernamesAction = m_headerMenu->addAction(tr("Hide Usernames"), this, &EntryView::toggleHideUsernames);
+    m_hideUsernamesAction = m_headerMenu->addAction(tr("Hide Usernames"), m_model, SLOT(toggleHideUsernames(bool)));
+    m_hideUsernamesAction->setCheckable(true);
+    m_hideUsernamesAction->setChecked(m_model->hideUsernames());
+    //m_hidePasswordsAction = m_headerMenu->addAction(tr("Hide Passwords"), this, &EntryView::toggleHidePasswords);
+    m_hidePasswordsAction = m_headerMenu->addAction(tr("Hide Passwords"), m_model, SLOT(toggleHidePasswords(bool)));
+    m_hidePasswordsAction->setCheckable(true);
+    m_hidePasswordsAction->setChecked(m_model->hidePasswords());
+    //m_headerMenu->addSection(tr("Columns"));
+    m_headerMenu->addSeparator();
     for (int sec = 1; sec < header()->count(); sec++) {
         QString text = m_model->headerData(sec, Qt::Horizontal, Qt::DisplayRole).toString();
-        //QAction *act = header_menu->addAction(text, this, &EntryView::toggleColumnVisibility);
-        QAction *act = header_menu->addAction(text, this, SLOT(toggleColumnVisibility()));
+        //QAction *act = m_headerMenu->addAction(text, this, &EntryView::toggleColumnVisibility);
+        QAction* act = m_headerMenu->addAction(text, this, SLOT(toggleColumnVisibility()));
         bool hidden = header()->isSectionHidden(sec);
         act->setCheckable(true);
         act->setChecked(!hidden);
         act->setData(sec);
-        column_actions.append(act);
+        m_columnActions.append(act);
     }
-    header_menu->addSeparator();
-    //header_menu->addAction(tr("Fit to window"), this, &EntryView::fitColumnsToWindow);
-    //header_menu->addAction(tr("Fit to contents"), this, &EntryView::fitColumnsToContents);
-    header_menu->addAction(tr("Fit to window"), this, SLOT(fitColumnsToWindow()));
-    header_menu->addAction(tr("Fit to contents"), this, SLOT(fitColumnsToContents()));
-    header_menu->addSeparator();
-    //header_menu->addAction(tr("Reset to session"), this, &EntryView::resetColumnsToSession);
-    //header_menu->addAction(tr("Reset to defaults"), this, &EntryView::resetColumnsToDefaults);
-    header_menu->addAction(tr("Reset to session"), this, SLOT(resetColumnsToSession()));
-    header_menu->addAction(tr("Reset to defaults"), this, SLOT(resetColumnsToDefaults()));
+    m_headerMenu->addSeparator();
+    //m_headerMenu->addAction(tr("Fit to window"), this, &EntryView::fitColumnsToWindow);
+    //m_headerMenu->addAction(tr("Fit to contents"), this, &EntryView::fitColumnsToContents);
+    m_headerMenu->addAction(tr("Fit to window"), this, SLOT(fitColumnsToWindow()));
+    m_headerMenu->addAction(tr("Fit to contents"), this, SLOT(fitColumnsToContents()));
+    m_headerMenu->addSeparator();
+    //m_headerMenu->addAction(tr("Reset to session"), this, &EntryView::resetHeaderToSession);
+    //m_headerMenu->addAction(tr("Reset to defaults"), this, &EntryView::resetHeaderToDefaults);
+    m_headerMenu->addAction(tr("Reset to session"), this, SLOT(resetHeaderToSession()));
+    m_headerMenu->addAction(tr("Reset to defaults"), this, SLOT(resetHeaderToDefaults()));
     header()->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(header(), &QHeaderView::customContextMenuRequested, this, &EntryView::showColumnsMenu);
+    connect(header(), &QHeaderView::customContextMenuRequested, this, &EntryView::showHeaderMenu);
 
     /**
      * @author Fonic <https://github.com/fonic>
@@ -105,8 +116,8 @@ EntryView::EntryView(QWidget* parent)
      * state. The session state may change when a saved state is applied
      * via EntryView::setHeaderState()
      */
-    columns_session = header()->saveState();
-    columns_defaults = header()->saveState();
+    m_headerSessionState = header()->saveState();
+    m_headerDefaultState = header()->saveState();
 
     connect(this, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
     connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(entrySelectionChanged()));
@@ -114,7 +125,14 @@ EntryView::EntryView(QWidget* parent)
     connect(m_model, SIGNAL(switchedToGroupMode()), SLOT(switchToGroupMode()));
     /**
      * @author Fonic <https://github.com/fonic>
-     * Connect signals to signal header state changes
+     * Connect signals to notify about changes of 'Hide Usernames' and 'Hide
+     * Passwords' settings of model
+     */
+    connect(m_model, SIGNAL(hideUsernamesChanged()), SIGNAL(hideUsernamesChanged()));
+    connect(m_model, SIGNAL(hidePasswordsChanged()), SIGNAL(hidePasswordsChanged()));
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Connect signals to notify about header state changes
      */
     connect(header(), SIGNAL(sectionMoved(int, int, int)), SIGNAL(headerStateChanged()));
     connect(header(), SIGNAL(sectionResized(int, int, int)), SIGNAL(headerStateChanged()));
@@ -206,14 +224,21 @@ Entry* EntryView::entryFromIndex(const QModelIndex& index)
     }
 }
 
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Called by EntryModel when view enters entry list mode
+ *
+ * TODO:
+ * If header states of list and search mode should be entirely separated,
+ * we need to save search state and load list state here
+ *
+ * NOTE:
+ * Using m_sortModel->hideColumn() somehow messes up the column/section
+ * indices, most likely due to model and table getting out of sync. Using
+ * header()->howSection()/hideSection() instead
+ */
 void EntryView::switchToEntryListMode()
 {
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Using m_sortModel->hideColumn() somehow messes up the column/section
-     * indices, most likely due to model and table getting out of sync. Using
-     * header()->howSection()/hideSection() instead
-     */
     //m_sortModel->hideColumn(0, false);
     header()->showSection(0);
 
@@ -224,14 +249,21 @@ void EntryView::switchToEntryListMode()
     m_inEntryListMode = true;
 }
 
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Called by EntryModel when view enters group mode (=search mode?)
+ *
+ * TODO:
+ * If header states of list and search mode should be entirely separated,
+ * we need to save list state and load search state here
+ *
+ * NOTE:
+ * Using m_sortModel->hideColumn() somehow messes up the column/section
+ * indices, most likely due to model and table getting out of sync. Using
+ * header()->howSection()/hideSection() instead
+ */
 void EntryView::switchToGroupMode()
 {
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Using m_sortModel->hideColumn() somehow messes up the column/section
-     * indices, most likely due to model and table getting out of sync. Using
-     * header()->howSection()/hideSection() instead
-     */
     //m_sortModel->hideColumn(0, true);
     header()->hideSection(0);
 
@@ -246,7 +278,8 @@ void EntryView::switchToGroupMode()
  * @author Fonic <https://github.com/fonic>
  * Methods to get header state -> used to save configuration to file
  */
-QByteArray EntryView::headerState() {
+QByteArray EntryView::headerState() const
+{
     return header()->saveState();
 }
 
@@ -260,14 +293,15 @@ QByteArray EntryView::headerState() {
  * We work around this by making sure that invisible sections are also
  * 'officially' hidden
  */
-bool EntryView::setHeaderState(const QByteArray &state) {
+bool EntryView::setHeaderState(const QByteArray &state)
+{
     if (header()->restoreState(state)) {
         for (int sec = 1; sec < header()->count(); sec++) {
             if (header()->sectionSize(sec) == 0)
                 header()->hideSection(sec);
         }
-        columns_session = header()->saveState();
-        syncColumnsMenuActions();
+        m_headerSessionState = header()->saveState();
+        syncColumnActions();
         return true;
     }
     else {
@@ -277,13 +311,51 @@ bool EntryView::setHeaderState(const QByteArray &state) {
 
 /**
  * @author Fonic <https://github.com/fonic>
+ * Get current 'Hide Usernames' setting of model
+ */
+bool EntryView::hideUsernames() const
+{
+    return m_model->hideUsernames();
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Set 'Hide Usernames' setting of model
+ */
+void EntryView::setHideUsernames(const bool hide)
+{
+    m_model->setHideUsernames(hide);
+    m_hideUsernamesAction->setChecked(hide);
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Get current 'Hide Passwords' setting of model
+ */
+bool EntryView::hidePasswords() const
+{
+    return m_model->hidePasswords();
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Set 'Hide Passwords' setting of model
+ */
+void EntryView::setHidePasswords(const bool hide)
+{
+    m_model->setHidePasswords(hide);
+    m_hidePasswordsAction->setChecked(hide);
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
  * Display header context menu at current mouse cursor position
  */
-void EntryView::showColumnsMenu(const QPoint& pos)
+void EntryView::showHeaderMenu(const QPoint& pos)
 {
     // Could also do a sync here to be on the safe side
-    //syncColumnsMenuActions();
-    header_menu->popup(viewport()->mapToGlobal(pos));
+    //syncColumnActions();
+    m_headerMenu->popup(viewport()->mapToGlobal(pos));
 }
 
 /**
@@ -296,9 +368,9 @@ void EntryView::showColumnsMenu(const QPoint& pos)
  * pretable as an int, so we cast instead to make sure data actually IS
  * an int
  */
-void EntryView::syncColumnsMenuActions()
+void EntryView::syncColumnActions()
 {
-    foreach (QAction *act, column_actions) {
+    foreach (QAction *act, m_columnActions) {
         if (static_cast<QMetaType::Type>(act->data().type()) != QMetaType::Int) {
             Q_ASSERT(false);
             continue;
@@ -366,7 +438,7 @@ void EntryView::fitColumnsToWindow()
  *
  * TODO BUG:
  * Strangely, in contrast to fitColumnsToWindow(), this DOES work reliably
- * without explicitely emitting headerStateChanged.
+ * without explicitely emitting headerStateChanged. Why?
  */
 void EntryView::fitColumnsToContents()
 {
@@ -380,12 +452,12 @@ void EntryView::fitColumnsToContents()
  * was in effect when KeePassXC was started (NOTE: state of special column
  * 'Group' is preserved)
  */
-void EntryView::resetColumnsToSession()
+void EntryView::resetHeaderToSession()
 {
     bool grpcol = header()->isSectionHidden(0);
-    header()->restoreState(columns_session);
+    header()->restoreState(m_headerSessionState);
     header()->setSectionHidden(0, grpcol);
-    syncColumnsMenuActions();
+    syncColumnActions();
 }
 
 /**
@@ -393,10 +465,10 @@ void EntryView::resetColumnsToSession()
  * Reset column configuration (order, size and visibility) to defaults (NOTE:
  * state of special column 'Group' is preserved)
  */
-void EntryView::resetColumnsToDefaults()
+void EntryView::resetHeaderToDefaults()
 {
     bool grpcol = header()->isSectionHidden(0);
-    header()->restoreState(columns_defaults);
+    header()->restoreState(m_headerDefaultState);
     header()->setSectionHidden(0, grpcol);
-    syncColumnsMenuActions();
+    syncColumnActions();
 }

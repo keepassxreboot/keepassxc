@@ -21,6 +21,12 @@
 #include <QMimeData>
 #include <QPalette>
 
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Added includes
+ */
+#include <QDateTime>
+
 #include "core/DatabaseIcons.h"
 #include "core/Entry.h"
 #include "core/Global.h"
@@ -30,6 +36,8 @@
 EntryModel::EntryModel(QObject* parent)
     : QAbstractTableModel(parent)
     , m_group(nullptr)
+    , m_hideUsernames(false)
+    , m_hidePasswords(true)
 {
 }
 
@@ -172,27 +180,34 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             }
             return result;
         case Username:
-            result = entry->resolveMultiplePlaceholders(entry->username());
+            // Check state of 'Hide Usernames' setting, display usernames
+            // hidden/obfuscated or as cleartext accordingly
+            if (m_hideUsernames)
+                result = QString(QChar(0x2022)).repeated(6);
+            else
+                result = entry->resolveMultiplePlaceholders(entry->username());
+
             if (attr->isReference(EntryAttributes::UserNameKey)) {
                 result.prepend(tr("Ref: ","Reference abbreviation"));
             }
             return result;
         case Password:
-
-            // Display password in cleartext
-            //result = entry->resolveMultiplePlaceholders(entry->password());
-
-            // Display password hidden/obfuscated
-            // TODO:
-            // Check source code of QLineEdit to find out how they do it
-            // -> https://github.com/openwebos/qt/blob/master/src/gui/widgets/qlineedit.cpp#L2210
-            // -> QStyle::SH_LineEdit_PasswordCharacter (requires '#include <QStyle>')
-            // -> find out how to derive a QChar from QStyle::SH_LineEdit_PasswordCharacter
-            // -> https://code.woboq.org/qt5/qtbase/src/widgets/styles/qcommonstyle.cpp.html#5029
-            //    -> uses Qt internals, does not seem to be reproducible
-            //result = QString("*").repeated(6);
-            //result = QString("******");
-            result = QString(QChar(0x2022)).repeated(6);
+            // Check state of 'Hide Passwords' setting, display passwords
+            // hidden/obfuscated or as cleartext accordingly
+            if (m_hidePasswords)
+                // TODO:
+                // Check source code of QLineEdit to find out how they do it
+                // -> https://github.com/openwebos/qt/blob/master/src/gui/widgets/qlineedit.cpp#L2210
+                // -> QStyle::SH_LineEdit_PasswordCharacter (requires '#include <QStyle>')
+                // -> find out how to derive a QChar from QStyle::SH_LineEdit_PasswordCharacter
+                // -> https://code.woboq.org/qt5/qtbase/src/widgets/styles/qcommonstyle.cpp.html#5029
+                //    -> uses Qt internals, does not seem to be reproducible
+                //result = QString("*").repeated(6);
+                //result = QString("******");
+                //result = QString(QChar(0x2022)).repeated(6);
+                result = QString(QChar(0x2022)).repeated(6);
+            else
+                result = entry->resolveMultiplePlaceholders(entry->password());
 
             if (attr->isReference(EntryAttributes::PasswordKey)) {
                 result.prepend(tr("Ref: ","Reference abbreviation"));
@@ -243,8 +258,8 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
     }
     /**
      * @author Fonic <https://github.com/fonic>
-     * Add user role to correctly sort dates
-     * -> 'm_sortModel->setSortRole(Qt::UserRole);', EntryView.cpp
+     * Add custom user role to correctly sort dates
+     * -> 'm_sortModel->setSortRole(Qt::UserRole);', EntryView::EntryView(()
      */
     else if (role == Qt::UserRole) {
         switch (index.column()) {
@@ -461,4 +476,60 @@ void EntryModel::makeConnections(const Group* group)
     connect(group, SIGNAL(entryAboutToRemove(Entry*)), SLOT(entryAboutToRemove(Entry*)));
     connect(group, SIGNAL(entryRemoved(Entry*)), SLOT(entryRemoved()));
     connect(group, SIGNAL(entryDataChanged(Entry*)), SLOT(entryDataChanged(Entry*)));
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Get current 'Hide Usernames' setting
+ */
+bool EntryModel::hideUsernames() const
+{
+    return m_hideUsernames;
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Set 'Hide Usernames' setting
+ */
+void EntryModel::setHideUsernames(const bool hide)
+{
+    m_hideUsernames = hide;
+    emit hideUsernamesChanged();
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Get current 'Hide Passwords' setting
+ */
+bool EntryModel::hidePasswords() const
+{
+    return m_hidePasswords;
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Set 'Hide Passwords' setting
+ */
+void EntryModel::setHidePasswords(const bool hide)
+{
+    m_hidePasswords = hide;
+    emit hidePasswordsChanged();
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Toggle 'Hide Usernames' setting
+ */
+void EntryModel::toggleHideUsernames(bool checked)
+{
+    setHideUsernames(checked);
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Toggle 'Hide Passwords' setting
+ */
+void EntryModel::toggleHidePasswords(bool checked)
+{
+    setHidePasswords(checked);
 }

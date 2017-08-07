@@ -19,6 +19,12 @@
 #ifndef KEEPASSX_DATABASEWIDGETSTATESYNC_H
 #define KEEPASSX_DATABASEWIDGETSTATESYNC_H
 
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Added includes
+ */
+#include <QByteArray>
+
 #include "gui/DatabaseWidget.h"
 
 class DatabaseWidgetStateSync : public QObject
@@ -42,6 +48,13 @@ private slots:
      * Slot to receive entry view header state changes
      */
     void updateHeaderStates();
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Slots to receive changes of 'Hide Usernames' and 'Hide Passwords'
+     * settings
+     */
+    void updateHideUsernames();
+    void updateHidePasswords();
 
 private:
     static QList<int> variantToIntList(const QVariant& variant);
@@ -65,6 +78,13 @@ private:
      */
     QByteArray m_headerStateList;
     QByteArray m_headerStateSearch;
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Properties to store entry list 'Hide Usernames' and 'Hide Passwords'
+     * settings
+     */
+    bool m_hideUsernames;
+    bool m_hidePasswords;
 };
 
 #endif // KEEPASSX_DATABASEWIDGETSTATESYNC_H

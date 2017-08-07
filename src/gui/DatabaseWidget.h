@@ -23,6 +23,11 @@
 #include <QStackedWidget>
 #include <QFileSystemWatcher>
 #include <QTimer>
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Added includes
+ */
+#include <QByteArray>
 
 #include "core/Uuid.h"
 
@@ -89,8 +94,6 @@ public:
     bool isEditWidgetModified() const;
     QList<int> splitterSizes() const;
     void setSplitterSizes(const QList<int>& sizes);
-    QList<int> entryHeaderViewSizes() const;
-    void setEntryViewHeaderSizes(const QList<int>& sizes);
     void clearAllWidgets();
     bool currentEntryHasTitle();
     bool currentEntryHasUsername();
@@ -109,8 +112,17 @@ public:
      * @author Fonic <https://github.com/fonic>
      * Methods to set/get entry view header state
      */
-    QByteArray entryViewHeaderState();
+    QByteArray entryViewHeaderState() const;
     bool setEntryViewHeaderState(const QByteArray &state);
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Methods to get/set 'Hide Usernames' and 'Hide Passwords' settings of
+     * entry view
+     */
+    bool entryViewHideUsernames() const;
+    void setEntryViewHideUsernames(const bool hide);
+    bool entryViewHidePasswords() const;
+    void setEntryViewHidePasswords(const bool hide);
 
 signals:
     void closeRequest();
@@ -129,10 +141,17 @@ signals:
     void splitterSizesChanged();
     /**
      * @author Fonic <https://github.com/fonic>
-     * Signal to signal entry view header state changes
+     * Signal to notify about entry view header state changes
      */
     void entryViewHeaderStateChanged();
     void updateSearch(QString text);
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Signals to notify about changes of 'Hide Usernames' and 'Hide Passwords'
+     * settings of entry view
+     */
+    void entryViewHideUsernamesChanged();
+    void entryViewHidePasswordsChanged();
 
 public slots:
     void createEntry();

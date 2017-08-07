@@ -64,12 +64,35 @@ public:
 
     void setEntryList(const QList<Entry*>& entries);
 
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Methods to get/set 'Hide Usernames' and 'Hide Passwords' settings
+     */
+    bool hideUsernames() const;
+    void setHideUsernames(const bool hide);
+    bool hidePasswords() const;
+    void setHidePasswords(const bool hide);
+
 signals:
     void switchedToEntryListMode();
     void switchedToGroupMode();
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Signals to notify about changes of 'Hide Usernames' and 'Hide Passwords'
+     * settings
+     */
+    void hideUsernamesChanged();
+    void hidePasswordsChanged();
 
 public slots:
     void setGroup(Group* group);
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Signal slots to toggle 'Hide Usernames' and 'Hide Passwords' settings,
+     * used by corresponding entry view header menu actions
+     */
+    void toggleHideUsernames(bool checked);
+    void toggleHidePasswords(bool checked);
 
 private slots:
     void entryAboutToAdd(Entry* entry);
@@ -86,6 +109,12 @@ private:
     QList<Entry*> m_entries;
     QList<Entry*> m_orgEntries;
     QList<const Group*> m_allGroups;
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Properties to store 'Hide Usernames' and 'Hide Passwords' settings
+     */
+    bool m_hideUsernames;
+    bool m_hidePasswords;
 };
 
 #endif // KEEPASSX_ENTRYMODEL_H

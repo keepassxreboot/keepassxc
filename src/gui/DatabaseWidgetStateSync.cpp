@@ -32,6 +32,12 @@ DatabaseWidgetStateSync::DatabaseWidgetStateSync(QObject* parent)
      */
     m_headerStateList = variantToByteArray(config()->get("GUI/EntryListHeaderState"));
     m_headerStateSearch = variantToByteArray(config()->get("GUI/EntrySearchHeaderState"));
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Load entry list 'Hide Usernames' and 'Hide Passwords' settings
+     */
+    m_hideUsernames = config()->get("GUI/EntryListHideUsernames").toBool();
+    m_hidePasswords = config()->get("GUI/EntryListHidePasswords").toBool();
 }
 
 DatabaseWidgetStateSync::~DatabaseWidgetStateSync()
@@ -43,6 +49,12 @@ DatabaseWidgetStateSync::~DatabaseWidgetStateSync()
      */
     config()->set("GUI/EntryListHeaderState", byteArrayToVariant(m_headerStateList));
     config()->set("GUI/EntrySearchHeaderState", byteArrayToVariant(m_headerStateSearch));
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Save entry list 'Hide Usernames' and 'Hide Passwords' settings
+     */
+    config()->set("GUI/EntryListHideUsernames", m_hideUsernames);
+    config()->set("GUI/EntryListHidePasswords", m_hidePasswords);
 }
 
 void DatabaseWidgetStateSync::setActive(DatabaseWidget* dbWidget)
@@ -55,6 +67,13 @@ void DatabaseWidgetStateSync::setActive(DatabaseWidget* dbWidget)
 
     if (m_activeDbWidget) {
         m_blockUpdates = true;
+
+        /**
+         * @author Fonic <https://github.com/fonic>
+         * Apply 'Hide Usernames' and 'Hide Passwords' settings to entry view
+         */
+        m_activeDbWidget->setEntryViewHideUsernames(m_hideUsernames);
+        m_activeDbWidget->setEntryViewHidePasswords(m_hidePasswords);
 
         if (!m_splitterSizes.isEmpty())
             m_activeDbWidget->setSplitterSizes(m_splitterSizes);
@@ -70,7 +89,7 @@ void DatabaseWidgetStateSync::setActive(DatabaseWidget* dbWidget)
                 SLOT(updateSplitterSizes()));
         /**
          * @author Fonic <https://github.com/fonic>
-         * Receive to receive entry view header state changes
+         * Connect signal to receive entry view header state changes
          */
         connect(m_activeDbWidget, SIGNAL(entryViewHeaderStateChanged()),
                 SLOT(updateHeaderStates()));
@@ -82,6 +101,15 @@ void DatabaseWidgetStateSync::setActive(DatabaseWidget* dbWidget)
                 SLOT(blockUpdates()));
         connect(m_activeDbWidget, SIGNAL(searchModeAboutToActivate()),
                 SLOT(blockUpdates()));
+        /**
+         * @author Fonic <https://github.com/fonic>
+         * Connect signal to receive 'Hide Usernames' and 'Hide Passwords'
+         * settings changes from entry view
+         */
+        connect(m_activeDbWidget, SIGNAL(entryViewHideUsernamesChanged()),
+                SLOT(updateHideUsernames()));
+        connect(m_activeDbWidget, SIGNAL(entryViewHidePasswordsChanged()),
+                SLOT(updateHidePasswords()));
     }
 }
 
@@ -118,18 +146,16 @@ void DatabaseWidgetStateSync::blockUpdates()
 
 void DatabaseWidgetStateSync::updateSplitterSizes()
 {
-    if (m_blockUpdates) {
+    if (m_blockUpdates)
         return;
-    }
 
     m_splitterSizes = m_activeDbWidget->splitterSizes();
 }
 
 void DatabaseWidgetStateSync::updateHeaderStates()
 {
-    if (m_blockUpdates) {
+    if (m_blockUpdates)
         return;
-    }
 
     /**
      * @author Fonic <https://github.com/fonic>
@@ -141,6 +167,28 @@ void DatabaseWidgetStateSync::updateHeaderStates()
     else {
         m_headerStateSearch = m_activeDbWidget->entryViewHeaderState();
     }
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Retrieve current 'Hide Usernames' setting from widget
+ */
+void DatabaseWidgetStateSync::updateHideUsernames()
+{
+    if (m_blockUpdates)
+        return;
+    m_hideUsernames = m_activeDbWidget->entryViewHideUsernames();
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Retrieve current 'Hide Passwords' setting from widget
+ */
+void DatabaseWidgetStateSync::updateHidePasswords()
+{
+    if (m_blockUpdates)
+        return;
+    m_hidePasswords = m_activeDbWidget->entryViewHidePasswords();
 }
 
 QList<int> DatabaseWidgetStateSync::variantToIntList(const QVariant& variant)
@@ -177,6 +225,7 @@ QVariant DatabaseWidgetStateSync::intListToVariant(const QList<int>& list)
 /**
  * @author Fonic <https://github.com/fonic>
  * Method to convert QVariant to QByteArray
+ * TODO: should we do an assert here? -> no, variant read from configuration might be invalid
  */
 QByteArray DatabaseWidgetStateSync::variantToByteArray(const QVariant& variant)
 {
@@ -191,6 +240,7 @@ QByteArray DatabaseWidgetStateSync::variantToByteArray(const QVariant& variant)
  * Method to convert QByteArray from QVariant (trivial, just put here for the
  * sake of completeness)
  */
-QVariant DatabaseWidgetStateSync::byteArrayToVariant(const QByteArray& bytearray) {
+QVariant DatabaseWidgetStateSync::byteArrayToVariant(const QByteArray& bytearray)
+{
     return QVariant(bytearray);
 }
