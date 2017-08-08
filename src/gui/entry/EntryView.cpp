@@ -226,11 +226,12 @@ Entry* EntryView::entryFromIndex(const QModelIndex& index)
 
 /**
  * @author Fonic <https://github.com/fonic>
- * Called by EntryModel when view enters entry list mode
+ * Called by EntryModel when view enters entry list mode (= list search
+ * results)
  *
  * TODO:
  * If header states of list and search mode should be entirely separated,
- * we need to save search state and load list state here
+ * we need to save list state and load search state here
  *
  * NOTE:
  * Using m_sortModel->hideColumn() somehow messes up the column/section
@@ -251,11 +252,12 @@ void EntryView::switchToEntryListMode()
 
 /**
  * @author Fonic <https://github.com/fonic>
- * Called by EntryModel when view enters group mode (=search mode?)
+ * Called by EntryModel when view enters group mode (= list entries of
+ * selected group)
  *
  * TODO:
  * If header states of list and search mode should be entirely separated,
- * we need to save list state and load search state here
+ * we need to save search state and load list state here
  *
  * NOTE:
  * Using m_sortModel->hideColumn() somehow messes up the column/section
