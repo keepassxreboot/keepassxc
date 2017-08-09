@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>403</width>
-    <height>233</height>
+    <width>469</width>
+    <height>292</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,7 +39,10 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Which databases should this key be valid for?&lt;br&gt;(The currently selected database is pre-selected)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Which databases should this key be valid for?&lt;br&gt;(The currently selected database is pre-selected; grayed-out databases are not opened - open them to enable accepting key!)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
      </property>
     </widget>
    </item>

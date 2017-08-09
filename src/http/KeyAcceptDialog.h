@@ -36,9 +36,15 @@ public:
 
     void setItems(const QList<QString> & items);
     void setItemChecked(int itemIndex, bool checked);
-    QList<int>* getCheckedItems();
+    void setItemEnabled(int itemIndex, bool enabled);
+    QList<int> getCheckedItems();
 
     QString getKeyName();
+
+//TODO
+//public slots:
+//    void databaseUnlocked(DatabaseWidget* dbWidget);
+//    void databaseLocked(DatabaseWidget* dbWidget);
 
 private:
     QScopedPointer<Ui::KeyAcceptDialog> ui;

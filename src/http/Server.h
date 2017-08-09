@@ -22,6 +22,8 @@
 #include <QtCore/QObject>
 #include <QtCore/QList>
 
+#include "gui/DatabaseTabWidget.h"
+
 namespace qhttp {
     namespace server {
         class QHttpServer;
@@ -44,7 +46,7 @@ class Server : public QObject
 public:
     explicit Server(QObject *parent = 0);
 
-    virtual bool isDatabaseOpened() const = 0;
+    virtual bool isDatabaseOpened(DatabaseWidget* dbWidget = NULL) const = 0;
     virtual bool openDatabase() = 0;
     virtual QString getDatabaseRootUuid() = 0;
     virtual QString getDatabaseRecycleBinUuid() = 0;

@@ -43,7 +43,9 @@ KeyAcceptDialog::~KeyAcceptDialog()
 
 void KeyAcceptDialog::setItems(const QList<QString> &items)
 {
-    QStandardItemModel* listViewModel = (QStandardItemModel*) ui->databasesListView->model();
+    QStandardItemModel* listViewModel = qobject_cast<QStandardItemModel*>(ui->databasesListView->model());
+
+    listViewModel->clear();
 
     for (QString item: items) {
         QStandardItem* listItem = new QStandardItem(item);
@@ -54,9 +56,20 @@ void KeyAcceptDialog::setItems(const QList<QString> &items)
     }
 }
 
+void KeyAcceptDialog::setItemEnabled(int itemIndex, bool enabled)
+{
+    QStandardItemModel* listViewModel = qobject_cast<QStandardItemModel*>(ui->databasesListView->model());
+
+    QStandardItem* item = listViewModel->item(itemIndex);
+
+    if (item) {
+        item->setEnabled(enabled);
+    }
+}
+
 void KeyAcceptDialog::setItemChecked(int itemIndex, bool checked)
 {
-    QStandardItemModel* listViewModel = (QStandardItemModel*) ui->databasesListView->model();
+    QStandardItemModel* listViewModel = qobject_cast<QStandardItemModel*>(ui->databasesListView->model());
 
     QStandardItem* item = listViewModel->item(itemIndex);
 
@@ -69,19 +82,19 @@ void KeyAcceptDialog::setItemChecked(int itemIndex, bool checked)
     }
 }
 
-QList<int>* KeyAcceptDialog::getCheckedItems()
+QList<int> KeyAcceptDialog::getCheckedItems()
 {
-    QStandardItemModel* listViewModel = (QStandardItemModel*) ui->databasesListView->model();
+    QStandardItemModel* listViewModel = qobject_cast<QStandardItemModel*>(ui->databasesListView->model());
 
     int numRows = listViewModel->rowCount();
 
     //XXX Memory Leak
-    QList<int>* resultList = new QList<int>;
+    QList<int> resultList;
 
     for (int row = 0; row < numRows; row++) {
         QStandardItem* item = listViewModel->item(row);
         if (item->checkState() == Qt::Checked) {
-            resultList->append(row);
+            resultList << row;
         }
     }
 
@@ -92,3 +105,8 @@ QString KeyAcceptDialog::getKeyName()
 {
     return ui->keyNameLineEdit->text();
 }
+
+//TODO
+//void KeyAcceptDialog::databaseUnlocked(DatabaseWidget* dbWidget)
+//{
+//}

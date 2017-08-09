@@ -30,11 +30,12 @@ class Service : public KeepassHttpProtocol::Server
 public:
     explicit Service(DatabaseTabWidget* parent = 0);
 
-    virtual bool isDatabaseOpened() const;
+    virtual bool isDatabaseOpened(DatabaseWidget* dbWidget) const;
     virtual bool openDatabase();
     virtual QString getDatabaseRootUuid();
     virtual QString getDatabaseRecycleBinUuid();
     virtual QString getKey(const QString& id);
+    virtual QList<QString> getKeys(const QString& id);
     virtual QString storeKey(const QString& key);
     virtual QList<KeepassHttpProtocol::Entry> findMatchingEntries(const QString& id, const QString& url, const QString&  submitUrl, const QString&  realm);
     virtual int countMatchingEntries(const QString& id, const QString& url, const QString&  submitUrl, const QString&  realm);
@@ -49,7 +50,9 @@ public slots:
 
 private:
     enum Access { Denied, Unknown, Allowed};
+    QList<Entry*> getConfigEntries(bool create = false);
     Entry* getConfigEntry(bool create = false);
+    bool attributeExists(QList<Entry*> entries, const QString attribute);
     bool matchUrlScheme(const QString& url);
     Access checkAccess(const Entry* entry, const QString&  host, const QString&  submitHost, const QString&  realm);
     bool removeFirstDomain(QString& hostname);

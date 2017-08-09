@@ -79,9 +79,36 @@ Entry* Service::getConfigEntry(bool create)
     return NULL;
 }
 
-bool Service::isDatabaseOpened() const
+QList<Entry*> Service::getConfigEntries(bool create)
 {
-    if (DatabaseWidget* dbWidget = m_dbTabWidget->currentDatabaseWidget())
+    QList<Entry*> entries;
+
+    for (int i = 0; i < m_dbTabWidget->count(); i++)
+        if (DatabaseWidget* dbWidget = qobject_cast<DatabaseWidget*>(m_dbTabWidget->widget(i)))
+            if (Database* db = dbWidget->database()) {
+                Entry* entry = db->resolveEntry(KEEPASSHTTP_UUID);
+                if (!entry && create) {
+                    entry = new Entry();
+                    entry->setTitle(QLatin1String(KEEPASSHTTP_NAME));
+                    entry->setUuid(KEEPASSHTTP_UUID);
+                    entry->setAutoTypeEnabled(false);
+                    entry->setGroup(db->rootGroup());
+                } else if (entry && entry->group() == db->metadata()->recycleBin()) {
+                    if (create)
+                        entry->setGroup(db->rootGroup());
+                    else
+                        entry = NULL;
+                }
+                entries << entry;
+            }
+    return entries;
+}
+
+bool Service::isDatabaseOpened(DatabaseWidget* dbWidget) const
+{
+    if (!dbWidget)
+        dbWidget = m_dbTabWidget->currentDatabaseWidget();
+    if (dbWidget)
         switch(dbWidget->currentMode()) {
         case DatabaseWidget::None:
         case DatabaseWidget::LockedMode:
@@ -147,46 +174,78 @@ QString Service::getKey(const QString &id)
     return QString();
 }
 
+QList<QString> Service::getKeys(const QString &id)
+{
+    QList<QString> keys;
+    QList<Entry*> entries = getConfigEntries();
+    for (Entry* config : entries) {
+        keys << config->attributes()->value(QLatin1String(ASSOCIATE_KEY_PREFIX) + id);
+    }
+    return keys;
+}
+
+//XXX
+//bool Service::attributeExists(QList<Entry*> entries, const QString &attribute)
+bool Service::attributeExists(QList<Entry*> entries, const QString attribute)
+{
+    for (Entry* entry: entries)
+        if (entry->attributes()->contains(attribute))
+            return true;
+    return false;
+}
+
 QString Service::storeKey(const QString &key)
 {
     QString id;
-    if (DatabaseWidget* dbWidget = m_dbTabWidget->currentDatabaseWidget())
-        if (Database* db = dbWidget->database())
-            if (Entry* config = getConfigEntry(true)) {
-                KeyAcceptDialog dlg;
-                QList<QString> dbNames;
+    QList<DatabaseWidget*> dbWidgets;
+    QList<QString> dbTexts;
+    DatabaseWidget* currDbWidget = m_dbTabWidget->currentDatabaseWidget();
+    for (int i = 0; i < m_dbTabWidget->count(); i++) {
+        dbWidgets << qobject_cast<DatabaseWidget*>(m_dbTabWidget->widget(i));
+        dbTexts << m_dbTabWidget->tabText(i);
+    }
 
-                //TODO get more databases in
-                dbNames.append(m_dbTabWidget->tabText(m_dbTabWidget->currentIndex()));
+    QList<Entry*> configs = getConfigEntries(true);
 
-                dlg.setItems(dbNames);
+    if (dbWidgets.count() && configs.count()) {
 
+        KeyAcceptDialog dlg;
+        QList<QString> dbNames;
 
+        dlg.setItems(dbTexts);
+        for (int i=0; i<dbWidgets.count(); i++) {
+            if (!isDatabaseOpened(dbWidgets.at(i)))
+                dlg.setItemEnabled(i, false);
+            if (dbWidgets.at(i) == currDbWidget)
+                dlg.setItemChecked(i, true);
+        }
 
-                do {
-                    bool ok;
-                    //Indicate who wants to associate, and request user to enter the 'name' of association key
+        do {
+            bool ok;
+            //Indicate who wants to associate, and request user to enter the 'name' of association key
 
-                    int res = dlg.exec();
+            int res = dlg.exec();
 
-                    if (res == QDialog::Accepted) {
+            if (res != QDialog::Accepted)
+                return QString();
 
-                        //TODO use this
-                        QList<int>* databases = dlg.getCheckedItems();
-                        id = dlg.getKeyName();
-                    } else {
-                        return QString();
-                    }
-
-
-                    //Warn if association key already exists
-                } while(config->attributes()->contains(QLatin1String(ASSOCIATE_KEY_PREFIX) + id) &&
-                        QMessageBox::warning(0, tr("KeePassXC: Overwrite existing key?"),
-                                             tr("A shared encryption-key with the name \"%1\" already exists.\nDo you want to overwrite it?").arg(id),
-                                             QMessageBox::Yes | QMessageBox::No) == QMessageBox::No);
-
-                config->attributes()->set(QLatin1String(ASSOCIATE_KEY_PREFIX) + id, key, true);
-            }
+            //Warn if association key already exists
+        } while(attributeExists(configs, QLatin1String(ASSOCIATE_KEY_PREFIX) + id) &&
+                QMessageBox::warning(0, tr("KeePassXC: Overwrite existing key?"),
+                                     tr("A shared encryption-key with the name \"%1\" already exists.\nDo you want to overwrite it?").arg(id),
+                                     QMessageBox::Yes | QMessageBox::No) == QMessageBox::No);
+        QList<int> selectedDatabases = dlg.getCheckedItems();
+        id = dlg.getKeyName();
+//        for (int i=0; i<selectedDatabases.count(); i++) {
+//            int dbIdx = selectedDatabases.at(i);
+//            qWarning("adding key to db: %d", dbIdx);
+//            configs.at(dbIdx)->attributes()->set(QLatin1String(ASSOCIATE_KEY_PREFIX) + id, key, true);
+//        }
+        for (int dbIdx: selectedDatabases) {
+            qWarning("adding key to db: %d", dbIdx);
+            configs.at(dbIdx)->attributes()->set(QLatin1String(ASSOCIATE_KEY_PREFIX) + id, key, true);
+        }
+    }
     return id;
 }
 
@@ -537,7 +596,7 @@ QString Service::generatePassword()
 
 void Service::removeSharedEncryptionKeys()
 {
-    if (!isDatabaseOpened()) {
+    if (!isDatabaseOpened(NULL)) {
         QMessageBox::critical(0, tr("KeePassXC: Database locked!"),
                               tr("The active database is locked!\n"
                                  "Please unlock the selected database or choose another one which is unlocked."),
@@ -576,7 +635,7 @@ void Service::removeSharedEncryptionKeys()
 
 void Service::removeStoredPermissions()
 {
-    if (!isDatabaseOpened()) {
+    if (!isDatabaseOpened(NULL)) {
         QMessageBox::critical(0, tr("KeePassXC: Database locked!"),
                               tr("The active database is locked!\n"
                                  "Please unlock the selected database or choose another one which is unlocked."),
