@@ -225,6 +225,8 @@ find_package(Gcrypt 1.6.0 REQUIRED)
 
 find_package(ZLIB REQUIRED)
 
+set(CMAKE_REQUIRED_INCLUDES ${ZLIB_INCLUDE_DIR})
+
 check_cxx_source_compiles("
   #include <zlib.h>
 
