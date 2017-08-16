@@ -548,7 +548,7 @@ void Service::removeSharedEncryptionKeys()
 
             const int count = keysToRemove.count();
             QMessageBox::information(0, tr("KeePassXC: Removed keys from database"),
-                                     tr("Successfully removed %1 encryption-%2 from KeePassX/Http Settings.").arg(count).arg(count ? "keys" : "key"),
+                                     tr("Successfully removed %1 encryption-key(s) from KeePassX/Http Settings.", "", count).arg(count),
                                      QMessageBox::Ok);
         } else {
             QMessageBox::information(0, tr("KeePassXC: No keys found"),
