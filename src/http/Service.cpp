@@ -548,7 +548,7 @@ void Service::removeSharedEncryptionKeys()
 
             const int count = keysToRemove.count();
             QMessageBox::information(0, tr("KeePassXC: Removed keys from database"),
-                                     tr("Successfully removed %1 encryption-key(s) from KeePassX/Http Settings.", "", count).arg(count),
+                                     tr("Successfully removed %n encryption-key(s) from KeePassX/Http Settings.", "", count),
                                      QMessageBox::Ok);
         } else {
             QMessageBox::information(0, tr("KeePassXC: No keys found"),
@@ -592,7 +592,7 @@ void Service::removeStoredPermissions()
 
         if (counter > 0) {
             QMessageBox::information(0, tr("KeePassXC: Removed permissions"),
-                                     tr("Successfully removed permissions from %1 %2.").arg(counter).arg(counter ? "entries" : "entry"),
+                                     tr("Successfully removed permissions from %n entries.", "", counter),
                                      QMessageBox::Ok);
         } else {
             QMessageBox::information(0, tr("KeePassXC: No entry with permissions found!"),
