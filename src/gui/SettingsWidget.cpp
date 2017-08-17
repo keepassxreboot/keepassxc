@@ -134,6 +134,7 @@ void SettingsWidget::loadSettings()
         m_generalUi->languageComboBox->setCurrentIndex(defaultIndex);
     }
 
+    m_generalUi->detailsHideCheckBox->setChecked(config()->get("GUI/HideDetailsView").toBool());
     m_generalUi->systrayShowCheckBox->setChecked(config()->get("GUI/ShowTrayIcon").toBool());
     m_generalUi->systrayMinimizeToTrayCheckBox->setChecked(config()->get("GUI/MinimizeToTray").toBool());
     m_generalUi->systrayMinimizeOnCloseCheckBox->setChecked(config()->get("GUI/MinimizeOnClose").toBool());
@@ -160,6 +161,7 @@ void SettingsWidget::loadSettings()
     m_secUi->fallbackToGoogle->setChecked(config()->get("security/IconDownloadFallbackToGoogle").toBool());
 
     m_secUi->passwordCleartextCheckBox->setChecked(config()->get("security/passwordscleartext").toBool());
+    m_secUi->passwordDetailsCleartextCheckBox->setChecked(config()->get("security/hidepassworddetails").toBool());
     m_secUi->passwordRepeatCheckBox->setChecked(config()->get("security/passwordsrepeat").toBool());
 
 
@@ -203,6 +205,7 @@ void SettingsWidget::saveSettings()
 
     config()->set("GUI/Language", m_generalUi->languageComboBox->itemData(currentLangIndex).toString());
 
+    config()->set("GUI/HideDetailsView", m_generalUi->detailsHideCheckBox->isChecked());
     config()->set("GUI/ShowTrayIcon", m_generalUi->systrayShowCheckBox->isChecked());
     config()->set("GUI/MinimizeToTray", m_generalUi->systrayMinimizeToTrayCheckBox->isChecked());
     config()->set("GUI/MinimizeOnClose", m_generalUi->systrayMinimizeOnCloseCheckBox->isChecked());
@@ -226,6 +229,7 @@ void SettingsWidget::saveSettings()
     config()->set("security/IconDownloadFallbackToGoogle", m_secUi->fallbackToGoogle->isChecked());
 
     config()->set("security/passwordscleartext", m_secUi->passwordCleartextCheckBox->isChecked());
+    config()->set("security/hidepassworddetails", m_secUi->passwordDetailsCleartextCheckBox->isChecked());
     config()->set("security/passwordsrepeat", m_secUi->passwordRepeatCheckBox->isChecked());
 
     // Security: clear storage if related settings are disabled

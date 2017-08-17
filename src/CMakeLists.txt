@@ -98,6 +98,7 @@ set(keepassx_SOURCES
     gui/DatabaseTabWidget.cpp
     gui/DatabaseWidget.cpp
     gui/DatabaseWidgetStateSync.cpp
+    gui/DetailsWidget.cpp
     gui/DialogyWidget.cpp
     gui/DragTabBar.cpp
     gui/EditWidget.cpp

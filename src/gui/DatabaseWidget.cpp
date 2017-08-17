@@ -47,6 +47,7 @@
 #include "gui/TotpDialog.h"
 #include "gui/DatabaseOpenWidget.h"
 #include "gui/DatabaseSettingsWidget.h"
+#include "gui/DetailsWidget.h"
 #include "gui/KeePass1OpenWidget.h"
 #include "gui/MessageBox.h"
 #include "gui/UnlockDatabaseWidget.h"
@@ -74,6 +75,9 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     mainLayout->addLayout(layout);
     m_splitter = new QSplitter(m_mainWidget);
     m_splitter->setChildrenCollapsible(false);
+    m_detailSplitter = new QSplitter(m_mainWidget);
+    m_detailSplitter->setOrientation(Qt::Vertical);
+    m_detailSplitter->setChildrenCollapsible(true);
 
     QWidget* rightHandSideWidget = new QWidget(m_splitter);
 
@@ -99,10 +103,18 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
                                     "border: 2px solid rgb(190, 190, 190);"
                                     "border-radius: 5px;");
 
+    m_detailsView = new DetailsWidget(this);
+
     QVBoxLayout* vLayout = new QVBoxLayout(rightHandSideWidget);
     vLayout->setMargin(0);
     vLayout->addWidget(m_searchingLabel);
-    vLayout->addWidget(m_entryView);
+    vLayout->addWidget(m_detailSplitter);
+
+    m_detailSplitter->addWidget(m_entryView);
+    m_detailSplitter->addWidget(m_detailsView);
+
+    m_detailSplitter->setStretchFactor(0, 80);
+    m_detailSplitter->setStretchFactor(1, 20);
 
     m_searchingLabel->setVisible(false);
 
@@ -179,6 +191,12 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(&m_fileWatchTimer, SIGNAL(timeout()), this, SLOT(reloadDatabaseFile()));
     connect(&m_fileWatchUnblockTimer, SIGNAL(timeout()), this, SLOT(unblockAutoReload()));
     connect(this, SIGNAL(currentChanged(int)), this, SLOT(emitCurrentModeChanged()));
+
+    connect(m_groupView, SIGNAL(groupPressed(Group*)), SLOT(emitPressedGroup(Group*)));
+    //connect(m_groupView, SIGNAL(groupChanged(Group*)), SLOT(emitPressedGroup(Group*)));
+    connect(m_entryView, SIGNAL(entryPressed(Entry*)), SLOT(emitPressedEntry(Entry*)));
+    //connect(m_entryView, SIGNAL(entrySelectionChanged()), SLOT(emitPressedEntry()));
+    connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(emitPressedEntry()));
 
     m_databaseModified = false;
 
@@ -1039,6 +1057,32 @@ void DatabaseWidget::emitGroupContextMenuRequested(const QPoint& pos)
 void DatabaseWidget::emitEntryContextMenuRequested(const QPoint& pos)
 {
     emit entryContextMenuRequested(m_entryView->viewport()->mapToGlobal(pos));
+}
+
+void DatabaseWidget::emitPressedEntry()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    emitPressedEntry(currentEntry);
+}
+
+void DatabaseWidget::emitPressedEntry(Entry* currentEntry)
+{
+    if (!currentEntry) {
+        // if no entry is pressed, leave in details the last entry
+        return;
+    }
+
+    emit pressedEntry(currentEntry);
+}
+
+void DatabaseWidget::emitPressedGroup(Group* currentGroup)
+{
+    if (!currentGroup) {
+        // if no group is pressed, leave in details the last group
+        return;
+    }
+
+    emit pressedGroup(currentGroup);
 }
 
 bool DatabaseWidget::dbHasKey() const

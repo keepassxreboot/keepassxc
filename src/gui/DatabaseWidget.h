@@ -27,6 +27,7 @@
 #include "core/Uuid.h"
 
 #include "gui/entry/EntryModel.h"
+#include "gui/DetailsWidget.h"
 #include "gui/MessageWidget.h"
 #include "gui/csvImport/CsvImportWizard.h"
 
@@ -47,6 +48,7 @@ class QSplitter;
 class QLabel;
 class UnlockDatabaseWidget;
 class MessageWidget;
+class DetailsWidget;
 class UnlockDatabaseDialog;
 class QFileSystemWatcher;
 
@@ -115,6 +117,8 @@ signals:
     void databaseMerged(Database* mergedDb);
     void groupContextMenuRequested(const QPoint& globalPos);
     void entryContextMenuRequested(const QPoint& globalPos);
+    void pressedEntry(Entry* selectedEntry);
+    void pressedGroup(Group* selectedGroup);
     void unlockedDatabase();
     void listModeAboutToActivate();
     void listModeActivated();
@@ -179,6 +183,9 @@ private slots:
     void switchToGroupEdit(Group* entry, bool create);
     void emitGroupContextMenuRequested(const QPoint& pos);
     void emitEntryContextMenuRequested(const QPoint& pos);
+    void emitPressedEntry();
+    void emitPressedEntry(Entry* currentEntry);
+    void emitPressedGroup(Group* currentGroup);
     void updateMasterKey(bool accepted);
     void openDatabase(bool accepted);
     void mergeDatabase(bool accepted);
@@ -209,6 +216,7 @@ private:
     UnlockDatabaseWidget* m_unlockDatabaseWidget;
     UnlockDatabaseDialog* m_unlockDatabaseDialog;
     QSplitter* m_splitter;
+    QSplitter* m_detailSplitter;
     GroupView* m_groupView;
     EntryView* m_entryView;
     QLabel* m_searchingLabel;
@@ -219,6 +227,7 @@ private:
     Uuid m_groupBeforeLock;
     Uuid m_entryBeforeLock;
     MessageWidget* m_messageWidget;
+    DetailsWidget* m_detailsView;
 
     // Search state
     QString m_lastSearchText;
