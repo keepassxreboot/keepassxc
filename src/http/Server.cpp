@@ -170,7 +170,7 @@ void Server::handleRequest(const QByteArray& data, QHttpResponse* response)
     // THIS IS A FAKE HACK!!!
     // the real "error" is a misbehavior in the QJSON qobject2qvariant method
     // 1. getLogins returns an empty QList<Entry> into protocolResp->m_entries
-    // in toJson() function the following happend:
+    // in toJson() function the following happened:
     // 2. QJson::QObjectHelper::qobject2qvariant marks m_entries as invalid !!!
     // 3. QJson::Serializer write out Entries as null instead of empty list
     //(4. ChromeIPass tries to access Entries.length and fails with null pointer exception)

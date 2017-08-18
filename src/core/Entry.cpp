@@ -588,7 +588,7 @@ Entry* Entry::clone(CloneFlags flags) const
     entry->m_attachments->copyDataFrom(m_attachments);
 
     if (flags & CloneUserAsRef) {
-        // Build the username refrence
+        // Build the username reference
         QString username = "{REF:U@I:" + m_uuid.toHex() + "}";
         entry->m_attributes->set(EntryAttributes::UserNameKey, username.toUpper(), m_attributes->isProtected(EntryAttributes::UserNameKey));
     }

@@ -129,8 +129,8 @@ public:
         CloneResetTimeInfo  = 2,  // set all TimeInfo attributes to the current time
         CloneIncludeHistory = 4,  // clone the history items
         CloneRenameTitle    = 8,  // add "-Clone" after the original title
-        CloneUserAsRef      = 16, // Add the user as a refrence to the origional entry
-        ClonePassAsRef      = 32, // Add the password as a refrence to the origional entry
+        CloneUserAsRef      = 16, // Add the user as a reference to the original entry
+        ClonePassAsRef      = 32, // Add the password as a reference to the original entry
     };
     Q_DECLARE_FLAGS(CloneFlags, CloneFlag)
 
