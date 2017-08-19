@@ -621,7 +621,7 @@ QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitl
             sequence = "{USERNAME}{ENTER}";
         }
         else {
-            sequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
+            sequence = config()->get("AutoTypeSequence").toString();
         }
     }
 
