@@ -55,13 +55,13 @@ signals:
 
 public slots:
     void databaseChanged(DatabaseWidget* dbWidget = 0);
+    void searchFocus();
 
 private slots:
     void startSearchTimer();
     void startSearch();
     void updateCaseSensitive();
     void updateLimitGroup();
-    void searchFocus();
 
 private:
     const QScopedPointer<Ui::SearchWidget> m_ui;
