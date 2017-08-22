@@ -465,10 +465,6 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 
             m_searchWidgetAction->setEnabled(true);
 
-            //if not already in search mode focus the search widget and select all its content
-            if (!inSearch) {
-                m_ui->toolBar->findChild<SearchWidget *>("SearchWidget")->searchFocus();
-            }
             break;
         }
         case DatabaseWidget::EditMode:
