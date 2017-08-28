@@ -464,6 +464,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionDatabaseMerge->setEnabled(m_ui->tabWidget->currentIndex() != -1);
 
             m_searchWidgetAction->setEnabled(true);
+
             break;
         }
         case DatabaseWidget::EditMode:
