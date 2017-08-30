@@ -29,7 +29,7 @@ public:
     bool init(const QByteArray& key);
     QByteArray randomBytes(int size, bool* ok);
     QByteArray process(const QByteArray& data, bool* ok);
-    bool processInPlace(QByteArray& data) Q_REQUIRED_RESULT;
+    Q_REQUIRED_RESULT bool processInPlace(QByteArray& data);
     QString errorString() const;
 
 private:
