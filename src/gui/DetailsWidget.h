@@ -46,7 +46,6 @@ private slots:
     void showTotp(bool visible);
     void updateTotp();
     void hideDetails();
-    void togglePasswordShown(bool showing);
 
 private:
     const QScopedPointer<Ui::DetailsWidget> m_ui;
@@ -55,6 +54,7 @@ private:
     quint8 m_step;
     QTimer* m_timer;
     QString shortUrl(QString url);
+    QString shortPassword(QString password);
 };
 
 #endif // KEEPASSX_DETAILSWIDGET_H

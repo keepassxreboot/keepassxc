@@ -235,33 +235,6 @@
              <item row="1" column="1">
               <widget class="QLabel" name="usernameLabel"/>
              </item>
-             <item row="2" column="1">
-              <layout class="QHBoxLayout" name="horizontalLayout_2">
-               <item>
-                <widget class="PasswordEdit" name="passwordEdit">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="maxLength">
-                  <number>999</number>
-                 </property>
-                 <property name="readOnly">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QToolButton" name="togglePasswordButton">
-                 <property name="checkable">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
              <item row="3" column="1">
               <widget class="QLabel" name="urlLabel">
                <property name="sizePolicy">
@@ -274,6 +247,9 @@
                 <string/>
                </property>
               </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLabel" name="passwordLabel"/>
              </item>
             </layout>
            </item>
@@ -539,14 +515,6 @@
    </property>
   </action>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>PasswordEdit</class>
-   <extends>QLineEdit</extends>
-   <header>gui/PasswordEdit.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

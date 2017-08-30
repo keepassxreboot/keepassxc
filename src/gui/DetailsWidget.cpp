@@ -24,6 +24,7 @@
 #include "core/Config.h"
 #include "core/FilePath.h"
 #include "core/TimeInfo.h"
+#include "gui/Clipboard.h"
 
 DetailsWidget::DetailsWidget(QWidget* parent)
     : QWidget(parent)
@@ -38,11 +39,9 @@ DetailsWidget::DetailsWidget(QWidget* parent)
 
     m_ui->totpButton->setIcon(filePath()->icon("actions", "chronometer"));
     m_ui->closeButton->setIcon(filePath()->icon("actions", "dialog-close"));
-    m_ui->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
 
     connect(m_ui->totpButton, SIGNAL(toggled(bool)), SLOT(showTotp(bool)));
     connect(m_ui->closeButton, SIGNAL(toggled(bool)), SLOT(hideDetails()));
-    connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), SLOT(togglePasswordShown(bool)));
 
     this->hide();
 }
@@ -67,25 +66,31 @@ void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
 
     m_ui->entryIcon->setPixmap(m_currentEntry->iconPixmap());
 
-    QStringList hierarchy = m_currentEntry->group()->hierarchy();
     QString title = " / ";
-    for (QString parent : hierarchy) {
-        title.append(parent);
-        title.append(" / ");
+
+    Group* entry_group = m_currentEntry->group();
+    if (entry_group) {
+        QStringList hierarchy = entry_group->hierarchy();
+        
+        for (QString parent : hierarchy) {
+            title.append(parent);
+            title.append(" / ");
+        }
     }
-    title.append(m_currentEntry->title());
+    title.append(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->title()));
     m_ui->titleLabel->setText(title);
 
-    m_ui->usernameLabel->setText(m_currentEntry->username());
-    m_ui->groupLabel->setText(m_currentEntry->group()->name());
-    m_ui->notesEdit->setText(m_currentEntry->notes());
+    m_ui->usernameLabel->setText(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->username()));
+    if (entry_group) {
+        m_ui->groupLabel->setText(entry_group->name());
+    }
+    m_ui->notesEdit->setText(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->notes()));
 
     if (!config()->get("security/hidepassworddetails").toBool()) {
-        m_ui->passwordEdit->setText(m_currentEntry->password());
-        m_ui->togglePasswordButton->show();
+        m_ui->passwordLabel->setText(shortPassword(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->password())));
+        m_ui->passwordLabel->setToolTip(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->password()));
     } else {
-        m_ui->passwordEdit->setText("****");
-        m_ui->togglePasswordButton->hide();
+        m_ui->passwordLabel->setText("****");
     }
 
     QString url = m_currentEntry->webUrl();
@@ -199,15 +204,18 @@ QString DetailsWidget::shortUrl(QString url)
     return url;
 }
 
+QString DetailsWidget::shortPassword(QString password)
+{
+    QString newpassword = "";
+    if (password.length() > 60) {
+        newpassword.append(password.left(50));
+        newpassword.append("...");
+        return newpassword;
+    }
+    return password;
+}
+
 void DetailsWidget::hideDetails()
 {
     this->hide();
-}
-
-void DetailsWidget::togglePasswordShown(bool showing)
-{
-    m_ui->passwordEdit->setShowPassword(showing);
-    bool blockSignals = m_ui->togglePasswordButton->blockSignals(true);
-    m_ui->togglePasswordButton->setChecked(showing);
-    m_ui->togglePasswordButton->blockSignals(blockSignals);
 }

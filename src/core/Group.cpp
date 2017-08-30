@@ -439,10 +439,14 @@ QStringList Group::hierarchy()
 {
     QStringList hierarchy;
     Group* group = this;
-    while (group->parentGroup()) {
-        hierarchy << group->name();
-
+    Group* parent = m_parent;
+    hierarchy << group->name();
+    
+    while (parent) {
         group = group->parentGroup();
+        parent = group->parentGroup();
+
+        hierarchy << group->name();
     }
     return hierarchy;
 }

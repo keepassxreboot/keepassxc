@@ -193,9 +193,9 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(this, SIGNAL(currentChanged(int)), this, SLOT(emitCurrentModeChanged()));
 
     connect(m_groupView, SIGNAL(groupPressed(Group*)), SLOT(emitPressedGroup(Group*)));
-    //connect(m_groupView, SIGNAL(groupChanged(Group*)), SLOT(emitPressedGroup(Group*)));
+    connect(m_groupView, SIGNAL(groupChanged(Group*)), SLOT(emitPressedGroup(Group*)));
     connect(m_entryView, SIGNAL(entryPressed(Entry*)), SLOT(emitPressedEntry(Entry*)));
-    //connect(m_entryView, SIGNAL(entrySelectionChanged()), SLOT(emitPressedEntry()));
+    connect(m_entryView, SIGNAL(entrySelectionChanged()), SLOT(emitPressedEntry()));
     connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(emitPressedEntry()));
 
     m_databaseModified = false;
