@@ -35,8 +35,8 @@ public:
     bool setIv(const QByteArray& iv);
 
     QByteArray process(const QByteArray& data, bool* ok);
-    bool processInPlace(QByteArray& data) Q_REQUIRED_RESULT;
-    bool processInPlace(QByteArray& data, quint64 rounds) Q_REQUIRED_RESULT;
+    Q_REQUIRED_RESULT bool processInPlace(QByteArray& data);
+    Q_REQUIRED_RESULT bool processInPlace(QByteArray& data, quint64 rounds);
 
     bool reset();
     int blockSize() const;
