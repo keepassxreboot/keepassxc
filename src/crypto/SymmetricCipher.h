@@ -23,7 +23,6 @@
 #include <QString>
 
 #include "crypto/SymmetricCipherBackend.h"
-#include "format/KeePass2.h"
 
 class SymmetricCipher
 {
@@ -59,11 +58,11 @@ public:
         return m_backend->process(data, ok);
     }
 
-    inline bool processInPlace(QByteArray& data) Q_REQUIRED_RESULT {
+    Q_REQUIRED_RESULT inline bool processInPlace(QByteArray& data) {
         return m_backend->processInPlace(data);
     }
 
-    inline bool processInPlace(QByteArray& data, quint64 rounds) Q_REQUIRED_RESULT {
+    Q_REQUIRED_RESULT inline bool processInPlace(QByteArray& data, quint64 rounds) {
         Q_ASSERT(rounds > 0);
         return m_backend->processInPlace(data, rounds);
     }
@@ -71,9 +70,6 @@ public:
     bool reset();
     int blockSize() const;
     QString errorString() const;
-
-    static SymmetricCipher::Algorithm cipherToAlgorithm(Uuid cipher);
-    static Uuid algorithmToCipher(SymmetricCipher::Algorithm algo);
 
 private:
     static SymmetricCipherBackend* createBackend(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
