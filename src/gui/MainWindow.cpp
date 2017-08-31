@@ -167,6 +167,7 @@ MainWindow::MainWindow()
     setShortcut(m_ui->actionEntryNew, QKeySequence::New, Qt::CTRL + Qt::Key_N);
     m_ui->actionEntryEdit->setShortcut(Qt::CTRL + Qt::Key_E);
     m_ui->actionEntryDelete->setShortcut(Qt::CTRL + Qt::Key_D);
+    m_ui->actionEntryDelete->setShortcut(Qt::Key_Delete);
     m_ui->actionEntryClone->setShortcut(Qt::CTRL + Qt::Key_K);
     m_ui->actionEntryTotp->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_T);
     m_ui->actionEntryCopyTotp->setShortcut(Qt::CTRL + Qt::Key_T);
