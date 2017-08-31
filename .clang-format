@@ -23,11 +23,10 @@ BraceWrapping:
   AfterClass:      true
   AfterFunction:   true
   AfterControlStatement: false
-  AfterEnum:       false
-  AfterNamespace:  false
-  AfterObjCDeclaration: false
-  AfterStruct:     false
-  AfterUnion:      false
+  AfterEnum:       true
+  AfterNamespace:  true
+  AfterStruct:     true
+  AfterUnion:      true
   BeforeCatch:     false
   BeforeElse:      false
   IndentBraces:    false
