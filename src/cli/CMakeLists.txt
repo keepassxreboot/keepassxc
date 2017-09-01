@@ -14,10 +14,14 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 set(cli_SOURCES
+    Add.cpp
+    Add.h
     Clip.cpp
     Clip.h
     Command.cpp
     Command.h
+    Edit.cpp
+    Edit.h
     EntropyMeter.cpp
     EntropyMeter.h
     Extract.cpp
@@ -28,6 +32,8 @@ set(cli_SOURCES
     Locate.h
     Merge.cpp
     Merge.h
+    Remove.cpp
+    Remove.h
     Show.cpp
     Show.h)
 
