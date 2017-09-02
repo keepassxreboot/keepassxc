@@ -394,6 +394,41 @@ QSharedPointer<Totp::Settings> Entry::totpSettings() const
     return m_data.totpSettings;
 }
 
+QStringList Entry::additionalURLs(QString key) const
+{
+    QStringList urlList;
+
+    if (m_attributes->hasKey(key)) {
+        urlList = m_attributes->value(key).split('\n', QString::SkipEmptyParts);
+    }
+
+    return urlList;
+}
+
+void Entry::migrateAttributes()
+{
+    renameAttribute("altURLs", "URL_ALT");
+    renameAttribute("regExURLs", "URL_REGEX");
+}
+
+void Entry::renameAttribute(const QString& from, const QString& to)
+{
+    if (m_attributes->hasKey(from)) {
+        qDebug() << "Migrate the attribute" << from << " in entry" << title() << "to" << to;
+        m_attributes->rename(from, to);
+    }
+}
+
+QStringList Entry::altURLs() const
+{
+    return additionalURLs("URL_ALT");
+}
+
+QStringList Entry::regExURLs() const
+{
+    return additionalURLs("URL_REGEX");
+}
+
 void Entry::setUuid(const QUuid& uuid)
 {
     Q_ASSERT(!uuid.isNull());

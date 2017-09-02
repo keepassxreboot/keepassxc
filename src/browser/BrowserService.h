@@ -106,6 +106,7 @@ private:
     int
     sortPriority(const Entry* entry, const QString& host, const QString& submitUrl, const QString& baseSubmitUrl) const;
     bool matchUrlScheme(const QString& url);
+    bool matchAdditionalURLs(const Entry* entry, const QString& hostname, const QString& url);
     bool removeFirstDomain(QString& hostname);
     QString baseDomain(const QString& url) const;
     QSharedPointer<Database> getDatabase();

@@ -251,6 +251,10 @@ void KdbxXmlWriter::writeRoot()
 
     m_xml.writeStartElement("Root");
 
+    for (Entry* entry : m_db->rootGroup()->entriesRecursive()) {
+        entry->migrateAttributes();
+    }
+
     writeGroup(m_db->rootGroup());
     writeDeletedObjects();
 

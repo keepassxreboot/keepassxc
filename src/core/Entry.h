@@ -107,6 +107,8 @@ public:
     QString notes() const;
     QString totp() const;
     QSharedPointer<Totp::Settings> totpSettings() const;
+    QStringList altURLs() const;
+    QStringList regExURLs() const;
 
     bool hasTotp() const;
     bool isExpired() const;
@@ -218,6 +220,8 @@ public:
     bool canUpdateTimeinfo() const;
     void setUpdateTimeinfo(bool value);
 
+    void migrateAttributes();
+
 signals:
     /**
      * Emitted when a default attribute has been changed.
@@ -240,6 +244,8 @@ private:
     static EntryReferenceType referenceType(const QString& referenceStr);
 
     template <class T> bool set(T& property, const T& value);
+    QStringList additionalURLs(QString key) const;
+    void renameAttribute(const QString& from, const QString& to);
 
     QUuid m_uuid;
     EntryData m_data;
