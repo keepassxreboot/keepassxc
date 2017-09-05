@@ -488,18 +488,17 @@ Entry* Group::findEntry(QString entryId)
 {
     Q_ASSERT(!entryId.isNull());
 
+    Entry* entry;
     if (Uuid::isUuid(entryId)) {
-        Uuid entryUuid = Uuid::fromHex(entryId);
-        for (Entry* entry : entriesRecursive(false)) {
-            if (entry->uuid() == entryUuid) {
-                return entry;
-            }
+        entry = findEntryByUuid(Uuid::fromHex(entryId));
+        if (entry) {
+            return entry;
         }
     }
 
-    Entry* entry = findEntryByPath(entryId);
+    entry = findEntryByPath(entryId);
     if (entry) {
-      return entry;
+        return entry;
     }
 
     for (Entry* entry : entriesRecursive(false)) {
@@ -514,7 +513,7 @@ Entry* Group::findEntry(QString entryId)
 Entry* Group::findEntryByUuid(const Uuid& uuid)
 {
     Q_ASSERT(!uuid.isNull());
-    for (Entry* entry : asConst(m_entries)) {
+    for (Entry* entry : entriesRecursive(false)) {
         if (entry->uuid() == uuid) {
             return entry;
         }
@@ -575,7 +574,6 @@ Group* Group::findGroupByPath(QString groupPath, QString basePath)
     }
 
     return nullptr;
-
 }
 
 QString Group::print(bool recursive, int depth)
@@ -655,25 +653,44 @@ QSet<Uuid> Group::customIconsRecursive() const
 
 void Group::merge(const Group* other)
 {
+
+    Group* rootGroup = this;
+    while (rootGroup->parentGroup()) {
+        rootGroup = rootGroup->parentGroup();
+    }
+
     // merge entries
     const QList<Entry*> dbEntries = other->entries();
     for (Entry* entry : dbEntries) {
-        // entries are searched by uuid
-        if (!findEntryByUuid(entry->uuid())) {
+
+        Entry* existingEntry = rootGroup->findEntryByUuid(entry->uuid());
+
+        // This entry does not exist at all. Create it.
+        if (!existingEntry) {
+            qDebug("New entry %s detected. Creating it.", qPrintable(entry->title()));
             entry->clone(Entry::CloneNoFlags)->setGroup(this);
+        // Entry is already present in the database. Update it.
         } else {
-            resolveConflict(findEntryByUuid(entry->uuid()), entry);
+            bool locationChanged = existingEntry->timeInfo().locationChanged() < entry->timeInfo().locationChanged();
+            if (locationChanged && existingEntry->group() != this) {
+                existingEntry->setGroup(this);
+                qDebug("Location changed for entry %s. Updating it", qPrintable(existingEntry->title()));
+            }
+            resolveConflict(existingEntry, entry);
         }
     }
 
-    // merge groups (recursively)
+    // merge groups recursively
     const QList<Group*> dbChildren = other->children();
     for (Group* group : dbChildren) {
         // groups are searched by name instead of uuid
         if (findChildByName(group->name())) {
             findChildByName(group->name())->merge(group);
         } else {
-            group->setParent(this);
+            qDebug("New group %s detected. Creating it.", qPrintable(group->name()));
+            Group* newGroup = group->clone(Entry::CloneNoFlags, true);
+            newGroup->setParent(this);
+            newGroup->merge(group);
         }
     }
 
@@ -691,7 +708,7 @@ Group* Group::findChildByName(const QString& name)
     return nullptr;
 }
 
-Group* Group::clone(Entry::CloneFlags entryFlags) const
+Group* Group::clone(Entry::CloneFlags entryFlags, bool shallow) const
 {
     Group* clonedGroup = new Group();
 
@@ -700,16 +717,18 @@ Group* Group::clone(Entry::CloneFlags entryFlags) const
     clonedGroup->setUuid(Uuid::random());
     clonedGroup->m_data = m_data;
 
-    const QList<Entry*> entryList = entries();
-    for (Entry* entry : entryList) {
-        Entry* clonedEntry = entry->clone(entryFlags);
-        clonedEntry->setGroup(clonedGroup);
-    }
+    if (!shallow) {
+        const QList<Entry*> entryList = entries();
+        for (Entry* entry : entryList) {
+            Entry* clonedEntry = entry->clone(entryFlags);
+            clonedEntry->setGroup(clonedGroup);
+        }
 
-    const QList<Group*> childrenGroups = children();
-    for (Group* groupChild : childrenGroups) {
-        Group* clonedGroupChild = groupChild->clone(entryFlags);
-        clonedGroupChild->setParent(clonedGroup);
+        const QList<Group*> childrenGroups = children();
+        for (Group* groupChild : childrenGroups) {
+            Group* clonedGroupChild = groupChild->clone(entryFlags);
+            clonedGroupChild->setParent(clonedGroup);
+        }
     }
 
     clonedGroup->setUpdateTimeinfo(true);
@@ -829,8 +848,7 @@ void Group::markOlderEntry(Entry* entry)
 {
     entry->attributes()->set(
         "merged",
-        QString("older entry merged from database \"%1\"").arg(entry->group()->database()->metadata()->name())
-    );
+        QString("older entry merged from database \"%1\"").arg(entry->group()->database()->metadata()->name()));
 }
 
 bool Group::resolveSearchingEnabled() const
@@ -880,32 +898,34 @@ void Group::resolveConflict(Entry* existingEntry, Entry* otherEntry)
 
     Entry* clonedEntry;
 
-    switch(mergeMode()) {
-        case KeepBoth:
-            // if one entry is newer, create a clone and add it to the group
-            if (timeExisting > timeOther) {
-                clonedEntry = otherEntry->clone(Entry::CloneNoFlags);
-                clonedEntry->setGroup(this);
-                markOlderEntry(clonedEntry);
-            } else if (timeExisting < timeOther) {
-                clonedEntry = otherEntry->clone(Entry::CloneNoFlags);
-                clonedEntry->setGroup(this);
-                markOlderEntry(existingEntry);
-            }
-            break;
-        case KeepNewer:
-            if (timeExisting < timeOther) {
-                // only if other entry is newer, replace existing one
-                removeEntry(existingEntry);
-                addEntry(otherEntry->clone(Entry::CloneNoFlags));
-            }
+    switch (mergeMode()) {
+    case KeepBoth:
+        // if one entry is newer, create a clone and add it to the group
+        if (timeExisting > timeOther) {
+            clonedEntry = otherEntry->clone(Entry::CloneNewUuid);
+            clonedEntry->setGroup(this);
+            markOlderEntry(clonedEntry);
+        } else if (timeExisting < timeOther) {
+            clonedEntry = otherEntry->clone(Entry::CloneNewUuid);
+            clonedEntry->setGroup(this);
+            markOlderEntry(existingEntry);
+        }
+        break;
+    case KeepNewer:
+        if (timeExisting < timeOther) {
+            qDebug("Updating entry %s.", qPrintable(existingEntry->title()));
+            // only if other entry is newer, replace existing one
+            Group* currentGroup = existingEntry->group();
+            currentGroup->removeEntry(existingEntry);
+            otherEntry->clone(Entry::CloneNoFlags)->setGroup(currentGroup);
+        }
 
-            break;
-        case KeepExisting:
-            break;
-        default:
-            // do nothing
-            break;
+        break;
+    case KeepExisting:
+        break;
+    default:
+        // do nothing
+        break;
     }
 }
 
@@ -928,5 +948,4 @@ QStringList Group::locate(QString locateTerm, QString currentPath)
     }
 
     return response;
-
 }
