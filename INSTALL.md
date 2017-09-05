@@ -2,7 +2,7 @@ Install KeePassXC
 =================
 
 This document will guide you across the steps to install KeePassXC.
-You can visit the online version of this document a the following link
+You can visit the online version of this document at the following link
 
 https://github.com/keepassxreboot/keepassx/wiki/Install-Instruction-from-Source
 
