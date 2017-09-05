@@ -145,5 +145,6 @@ int Add::execute(QStringList arguments)
         return EXIT_FAILURE;
     }
 
+    outputTextStream << "Successfully added entry " << entry->title() << "." << endl;
     return EXIT_SUCCESS;
 }

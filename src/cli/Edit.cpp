@@ -163,5 +163,6 @@ int Edit::execute(QStringList arguments)
         return EXIT_FAILURE;
     }
 
+    outputTextStream << "Successfully edited entry " << entry->title() << "." << endl;
     return EXIT_SUCCESS;
 }
