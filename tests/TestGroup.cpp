@@ -698,3 +698,51 @@ void TestGroup::testLocate()
 
     delete db;
 }
+
+void TestGroup::testAddEntryWithPath()
+{
+    Database* db = new Database();
+
+    Group* group1 = new Group();
+    group1->setName("group1");
+    group1->setParent(db->rootGroup());
+
+    Group* group2 = new Group();
+    group2->setName("group2");
+    group2->setParent(group1);
+
+    Entry* entry = db->rootGroup()->addEntryWithPath("entry1");
+    QVERIFY(entry != nullptr);
+    QVERIFY(!entry->uuid().isNull());
+
+    entry = db->rootGroup()->addEntryWithPath("entry1");
+    QVERIFY(entry == nullptr);
+
+    entry = db->rootGroup()->addEntryWithPath("/entry1");
+    QVERIFY(entry == nullptr);
+
+    entry = db->rootGroup()->addEntryWithPath("entry2");
+    QVERIFY(entry != nullptr);
+    QVERIFY(entry->title() == "entry2");
+    QVERIFY(!entry->uuid().isNull());
+
+    entry = db->rootGroup()->addEntryWithPath("/entry3");
+    QVERIFY(entry != nullptr);
+    QVERIFY(entry->title() == "entry3");
+    QVERIFY(!entry->uuid().isNull());
+
+    entry = db->rootGroup()->addEntryWithPath("/group1/entry4");
+    QVERIFY(entry != nullptr);
+    QVERIFY(entry->title() == "entry4");
+    QVERIFY(!entry->uuid().isNull());
+
+    entry = db->rootGroup()->addEntryWithPath("/group1/group2/entry5");
+    QVERIFY(entry != nullptr);
+    QVERIFY(entry->title() == "entry5");
+    QVERIFY(!entry->uuid().isNull());
+
+    entry = db->rootGroup()->addEntryWithPath("/group1/invalid_group/entry6");
+    QVERIFY(entry == nullptr);
+
+    delete db;
+}

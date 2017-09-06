@@ -949,3 +949,32 @@ QStringList Group::locate(QString locateTerm, QString currentPath)
 
     return response;
 }
+
+Entry* Group::addEntryWithPath(QString entryPath)
+{
+    Q_ASSERT(!entryPath.isNull());
+    if (this->findEntryByPath(entryPath)) {
+        return nullptr;
+    }
+
+    QStringList groups = entryPath.split("/");
+    QString entryTitle = groups.takeLast();
+    QString groupPath = groups.join("/");
+    if (groupPath.isNull()) {
+        groupPath = QString("");
+    }
+
+    Q_ASSERT(!groupPath.isNull());
+    Group* group = this->findGroupByPath(groupPath);
+    if (!group) {
+        return nullptr;
+    }
+
+    Entry* entry = new Entry();
+    entry->setTitle(entryTitle);
+    entry->setUuid(Uuid::random());
+    entry->setGroup(group);
+
+    return entry;
+
+}

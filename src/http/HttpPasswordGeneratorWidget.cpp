@@ -56,7 +56,7 @@ void HttpPasswordGeneratorWidget::loadSettings()
     m_ui->checkBoxExcludeAlike->setChecked(config()->get("Http/generator/ExcludeAlike", true).toBool());
     m_ui->checkBoxEnsureEvery->setChecked(config()->get("Http/generator/EnsureEvery", true).toBool());
 
-    m_ui->spinBoxLength->setValue(config()->get("Http/generator/Length", 16).toInt());
+    m_ui->spinBoxLength->setValue(config()->get("Http/generator/Length", PasswordGenerator::DefaultLength).toInt());
 }
 
 void HttpPasswordGeneratorWidget::saveSettings()

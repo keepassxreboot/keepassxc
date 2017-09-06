@@ -1,5 +1,4 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -16,30 +15,20 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTGROUP_H
-#define KEEPASSX_TESTGROUP_H
+#ifndef KEEPASSXC_REMOVE_H
+#define KEEPASSXC_REMOVE_H
 
-#include <QObject>
+#include "Command.h"
+
 #include "core/Database.h"
 
-class TestGroup : public QObject
+class Remove : public Command
 {
-    Q_OBJECT
-
-private slots:
-    void initTestCase();
-    void testParenting();
-    void testSignals();
-    void testEntries();
-    void testDeleteSignals();
-    void testCopyCustomIcon();
-    void testClone();
-    void testCopyCustomIcons();
-    void testFindEntry();
-    void testFindGroupByPath();
-    void testPrint();
-    void testLocate();
-    void testAddEntryWithPath();
+public:
+    Remove();
+    ~Remove();
+    int execute(QStringList arguments);
+    int removeEntry(Database* database, QString databasePath, QString entryPath);
 };
 
-#endif // KEEPASSX_TESTGROUP_H
+#endif // KEEPASSXC_REMOVE_H
