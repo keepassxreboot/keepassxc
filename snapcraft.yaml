@@ -11,7 +11,11 @@ confinement: strict
 apps:
   keepassxc:
     command: desktop-launch keepassxc
-    plugs: [unity7, x11, opengl, gsettings, home, network, network-bind, removable-media]
+    plugs: [unity7, x11, opengl, gsettings, home, network, network-bind, removable-media, raw-usb]
+    desktop: share/applications/keepassxc.desktop
+  cli:
+    command: keepassxc-cli
+    plugs: [gsettings, home, removable-media, raw-usb]
 
 parts:
   keepassxc:
