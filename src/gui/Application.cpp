@@ -115,31 +115,42 @@ Application::Application(int& argc, char** argv)
     lock->setStaleLockTime(0);
     lock->tryLock();
     switch (lock->error()) {
-    case QLockFile::NoError:
-        server.setSocketOptions(QLocalServer::UserAccessOption);
-        server.listen(socketName);
-        connect(&server, SIGNAL(newConnection()), this, SIGNAL(anotherInstanceStarted()));
-        break;
-    case QLockFile::LockFailedError: {
-        alreadyRunning = true;
-        // notify the other instance
-        // try several times, in case the other instance is still starting up
-        if (config()->get("SingleInstance").toBool()) {
-            QLocalSocket client;
-            for (int i = 0; i < 3; i++) {
-                client.connectToServer(socketName);
-                if (client.waitForConnected(150)) {
-                    client.abort();
-                    break;
+        case QLockFile::NoError:
+            server.setSocketOptions(QLocalServer::UserAccessOption);
+            server.listen(socketName);
+            connect(&server, SIGNAL(newConnection()), this, SIGNAL(anotherInstanceStarted()));
+            break;
+        case QLockFile::LockFailedError:
+            alreadyRunning = true;
+            // notify the other instance
+            // try several times, in case the other instance is still starting up
+            if (config()->get("SingleInstance").toBool()) {
+                QLocalSocket client;
+                bool connected = false;
+                for (int i = 0; i < 3; i++) {
+                    client.connectToServer(socketName);
+                    if (client.waitForConnected(150)) {
+                        client.abort();
+                        connected = true;
+                        break;
+                    }
+                }
+
+                if (!connected) {
+                    // If we get here then the original instance is likely dead
+                    // reset the single instance lock file
+                    lock->removeStaleLockFile();
+                    lock->tryLock();
+                    server.setSocketOptions(QLocalServer::UserAccessOption);
+                    server.listen(socketName);
+                    connect(&server, SIGNAL(newConnection()), this, SIGNAL(anotherInstanceStarted()));
                 }
             }
-        }
-        break;
-    }
-    default:
-        qWarning() << QCoreApplication::translate("Main",
-                                                  "The lock file could not be created. Single-instance mode disabled.")
-                      .toUtf8().constData();
+            break;
+        default:
+            qWarning() << QCoreApplication::translate("Main",
+                            "The lock file could not be created. Single-instance mode disabled.")
+                            .toUtf8().constData();
     }
 }
 
