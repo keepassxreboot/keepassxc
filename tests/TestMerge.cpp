@@ -116,6 +116,7 @@ void TestMerge::testResolveConflictNewer()
 
     entry1 = dbDestination->rootGroup()->findEntry("entry1");
     QVERIFY(entry1 != nullptr);
+    QVERIFY(entry1->group() != nullptr);
     QCOMPARE(entry1->password(), QString("password"));
 
     // When updating an entry, it should not end up in the
