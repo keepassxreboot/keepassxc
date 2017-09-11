@@ -904,7 +904,8 @@ void Group::resolveConflict(Entry* existingEntry, Entry* otherEntry)
             if (timeExisting < timeOther) {
                 // only if other entry is newer, replace existing one
                 removeEntry(existingEntry);
-                addEntry(otherEntry->clone(Entry::CloneNoFlags));
+                clonedEntry = otherEntry->clone(Entry::CloneNoFlags);
+                clonedEntry->setGroup(this);
             }
 
             break;
