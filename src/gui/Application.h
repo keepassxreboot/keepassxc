@@ -60,9 +60,9 @@ private:
     static void handleUnixSignal(int sig);
     static int unixSignalSocket[2];
 #endif
-    bool alreadyRunning;
-    QLockFile* lock;
-    QLocalServer server;
+    bool m_alreadyRunning;
+    QLockFile* m_lockFile;
+    QLocalServer m_lockServer;
 };
 
 #endif // KEEPASSX_APPLICATION_H
