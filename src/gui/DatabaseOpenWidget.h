@@ -41,6 +41,8 @@ public:
     void load(const QString& filename);
     void enterKey(const QString& pw, const QString& keyFile);
     Database* database();
+    void clearForms();
+    void setHeadline(QString headline);
 
 public slots:
     void pollYubikey();

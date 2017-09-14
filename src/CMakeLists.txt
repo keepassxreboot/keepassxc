@@ -109,7 +109,6 @@ set(keepassx_SOURCES
     gui/SortFilterHideProxyModel.cpp
     gui/SetupTotpDialog.cpp
     gui/TotpDialog.cpp
-    gui/UnlockDatabaseWidget.cpp
     gui/UnlockDatabaseDialog.cpp
     gui/WelcomeWidget.cpp
     gui/csvImport/CsvImportWidget.cpp

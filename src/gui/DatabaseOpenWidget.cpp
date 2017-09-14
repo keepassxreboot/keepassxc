@@ -124,6 +124,22 @@ Database* DatabaseOpenWidget::database()
     return m_db;
 }
 
+void DatabaseOpenWidget::setHeadline(QString headline)
+{
+    m_ui->labelHeadline->setText(headline);
+}
+
+void DatabaseOpenWidget::clearForms()
+{
+    m_ui->editPassword->clear();
+    m_ui->comboKeyFile->clear();
+    m_ui->checkPassword->setChecked(false);
+    m_ui->checkKeyFile->setChecked(false);
+    m_ui->checkChallengeResponse->setChecked(false);
+    m_ui->buttonTogglePassword->setChecked(false);
+    m_db = nullptr;
+}
+
 void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)
 {
     if (!pw.isNull()) {

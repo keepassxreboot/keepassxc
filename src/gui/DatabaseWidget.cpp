@@ -49,7 +49,6 @@
 #include "gui/DatabaseSettingsWidget.h"
 #include "gui/KeePass1OpenWidget.h"
 #include "gui/MessageBox.h"
-#include "gui/UnlockDatabaseWidget.h"
 #include "gui/UnlockDatabaseDialog.h"
 #include "gui/entry/EditEntryWidget.h"
 #include "gui/entry/EntryView.h"
@@ -140,7 +139,8 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_databaseOpenMergeWidget->setObjectName("databaseOpenMergeWidget");
     m_keepass1OpenWidget = new KeePass1OpenWidget();
     m_keepass1OpenWidget->setObjectName("keepass1OpenWidget");
-    m_unlockDatabaseWidget = new UnlockDatabaseWidget();
+    m_unlockDatabaseWidget = new DatabaseOpenWidget();
+    m_unlockDatabaseWidget->setHeadline(tr("Unlock database"));
     m_unlockDatabaseWidget->setObjectName("unlockDatabaseWidget");
     m_unlockDatabaseDialog = new UnlockDatabaseDialog();
     m_unlockDatabaseDialog->setObjectName("unlockDatabaseDialog");
@@ -918,6 +918,7 @@ void DatabaseWidget::switchToImportCsv(const QString& fileName)
 
 void DatabaseWidget::switchToOpenMergeDatabase(const QString& fileName)
 {
+    m_databaseOpenMergeWidget->clearForms();
     m_databaseOpenMergeWidget->load(fileName);
     setCurrentWidget(m_databaseOpenMergeWidget);
 }

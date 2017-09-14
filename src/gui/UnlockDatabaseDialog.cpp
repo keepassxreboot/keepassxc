@@ -16,7 +16,7 @@
  */
 
 #include "UnlockDatabaseDialog.h"
-#include "UnlockDatabaseWidget.h"
+#include "DatabaseOpenWidget.h"
 
 #include "autotype/AutoType.h"
 #include "core/Database.h"
@@ -24,9 +24,10 @@
 
 UnlockDatabaseDialog::UnlockDatabaseDialog(QWidget* parent)
     : QDialog(parent)
-    , m_view(new UnlockDatabaseWidget(this))
+    , m_view(new DatabaseOpenWidget(this))
 {
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+    m_view->setHeadline(tr("Unlock database"));
     connect(m_view, SIGNAL(editFinished(bool)), this, SLOT(complete(bool)));
 }
 

@@ -45,7 +45,6 @@ class QFile;
 class QMenu;
 class QSplitter;
 class QLabel;
-class UnlockDatabaseWidget;
 class MessageWidget;
 class UnlockDatabaseDialog;
 class QFileSystemWatcher;
@@ -205,7 +204,7 @@ private:
     DatabaseOpenWidget* m_databaseOpenWidget;
     DatabaseOpenWidget* m_databaseOpenMergeWidget;
     KeePass1OpenWidget* m_keepass1OpenWidget;
-    UnlockDatabaseWidget* m_unlockDatabaseWidget;
+    DatabaseOpenWidget* m_unlockDatabaseWidget;
     UnlockDatabaseDialog* m_unlockDatabaseDialog;
     QSplitter* m_splitter;
     GroupView* m_groupView;
