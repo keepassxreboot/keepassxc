@@ -31,8 +31,7 @@
 DatabaseRepairWidget::DatabaseRepairWidget(QWidget* parent)
     : DatabaseOpenWidget(parent)
 {
-    m_ui->labelHeadline->setText(tr("Repair database"));
-
+    setHeadline(tr("Repair database"));
     connect(this, SIGNAL(editFinished(bool)), this, SLOT(processEditFinished(bool)));
 }
 

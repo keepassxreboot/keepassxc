@@ -24,7 +24,7 @@
 
 #include "core/Global.h"
 
-class UnlockDatabaseWidget;
+class DatabaseOpenWidget;
 class Database;
 
 class UnlockDatabaseDialog : public QDialog
@@ -44,7 +44,7 @@ public slots:
     void complete(bool r);
 
 private:
-    UnlockDatabaseWidget* const m_view;
+    DatabaseOpenWidget* const m_view;
 };
 
 #endif // KEEPASSX_AUTOTYPEUNLOCKDIALOG_H
