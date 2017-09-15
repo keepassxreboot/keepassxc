@@ -1,6 +1,8 @@
 language: cpp
 sudo: required
 dist: trusty
+# FIXME : remove when (https://github.com/google/sanitizers/issues/837) is resolved.
+group: deprecated-2017Q3
 services: [docker]
 
 os:
