@@ -26,7 +26,6 @@ class UnlockDatabaseWidget : public DatabaseOpenWidget
 
 public:
     explicit UnlockDatabaseWidget(QWidget* parent = nullptr);
-    void clearForms();
 };
 
 #endif // KEEPASSX_UNLOCKDATABASEWIDGET_H

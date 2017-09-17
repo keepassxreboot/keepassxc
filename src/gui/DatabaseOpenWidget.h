@@ -39,6 +39,7 @@ public:
     explicit DatabaseOpenWidget(QWidget* parent = nullptr);
     ~DatabaseOpenWidget();
     void load(const QString& filename);
+    void clearForms();
     void enterKey(const QString& pw, const QString& keyFile);
     Database* database();
 

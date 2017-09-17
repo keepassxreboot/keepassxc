@@ -813,6 +813,7 @@ void DatabaseWidget::mergeDatabase(bool accepted)
         m_db->merge(srcDb);
     }
 
+    m_databaseOpenMergeWidget->clearForms();
     setCurrentWidget(m_mainWidget);
     emit databaseMerged(m_db);
 }
@@ -918,6 +919,7 @@ void DatabaseWidget::switchToImportCsv(const QString& fileName)
 
 void DatabaseWidget::switchToOpenMergeDatabase(const QString& fileName)
 {
+    m_databaseOpenMergeWidget->clearForms();
     m_databaseOpenMergeWidget->load(fileName);
     setCurrentWidget(m_databaseOpenMergeWidget);
 }
