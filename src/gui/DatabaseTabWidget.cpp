@@ -129,7 +129,13 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
     while (i.hasNext()) {
         i.next();
         if (i.value().canonicalFilePath == canonicalFilePath) {
-            setCurrentIndex(databaseIndex(i.key()));
+            if (pw.isEmpty() && keyFile.isEmpty()) {
+                setCurrentIndex(databaseIndex(i.key()));
+            } else {
+                if (!i.key()->hasKey()) {
+                    i.value().dbWidget->switchToOpenDatabase(canonicalFilePath, pw, keyFile);
+                }
+            }
             return;
         }
     }
@@ -604,6 +610,41 @@ void DatabaseTabWidget::updateTabNameFromDbWidgetSender()
 
     DatabaseWidget* dbWidget = static_cast<DatabaseWidget*>(sender());
     updateTabName(databaseFromDatabaseWidget(dbWidget));
+
+    Database* db = dbWidget->database();
+    Group *autoload = db->rootGroup()->findChildByName("autoload");
+    if (autoload)
+    {
+        const DatabaseManagerStruct& dbStruct = m_dbList.value(db);
+        QFileInfo dbpath(dbStruct.canonicalFilePath);
+        QDir dbFolder(dbpath.canonicalPath());
+
+        for (auto entry : autoload->entries()) {
+
+            if (entry->url().isEmpty() || entry->password().isEmpty()) {
+                continue;
+            }
+
+            QFileInfo filepath;
+            if (entry->url().startsWith("file:/")) {
+                QUrl url(entry->url());
+                filepath.setFile(url.toLocalFile());
+            }
+            else {
+                filepath.setFile(entry->url());
+                if (filepath.isRelative()) {
+                    filepath.setFile(dbFolder, entry->url());
+                }
+            }
+
+            if (!filepath.isFile()) {
+                continue;
+            }
+
+            openDatabase(filepath.canonicalFilePath(), entry->password(), "");
+
+        }
+    }
 }
 
 int DatabaseTabWidget::databaseIndex(Database* db)
