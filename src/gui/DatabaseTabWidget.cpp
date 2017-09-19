@@ -124,7 +124,6 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
         return;
     }
 
-
     QHashIterator<Database*, DatabaseManagerStruct> i(m_dbList);
     while (i.hasNext()) {
         i.next();
@@ -612,7 +611,7 @@ void DatabaseTabWidget::updateTabNameFromDbWidgetSender()
     updateTabName(databaseFromDatabaseWidget(dbWidget));
 
     Database* db = dbWidget->database();
-    Group *autoload = db->rootGroup()->findChildByName("autoload");
+    Group *autoload = db->rootGroup()->findChildByName("AutoOpen");
     if (autoload)
     {
         const DatabaseManagerStruct& dbStruct = m_dbList.value(db);
