@@ -43,6 +43,7 @@ option(WITH_APP_BUNDLE "Enable Application Bundle for OS X" ON)
 option(WITH_XC_AUTOTYPE "Include Auto-Type." ON)
 option(WITH_XC_HTTP "Include KeePassHTTP and Custom Icon Downloads." OFF)
 option(WITH_XC_YUBIKEY "Include YubiKey support." OFF)
+option(WITH_XC_TOTPSEED_QRCODE "Enable displaying TOTP seeds as QR codes." OFF)
 
 # Process ui files automatically from source files
 set(CMAKE_AUTOUIC ON)
@@ -157,6 +158,10 @@ add_gcc_compiler_cflags("-ansi")
 
 if(WITH_DEV_BUILD)
   add_definitions(-DQT_DEPRECATED_WARNINGS -DGCRYPT_NO_DEPRECATED)
+endif()
+
+if(WITH_XC_TOTPSEED_QRCODE)
+    add_definitions(-DWITH_XC_TOTPSEED_QRCODE)
 endif()
 
 if(MINGW)
