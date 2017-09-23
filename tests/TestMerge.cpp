@@ -48,6 +48,8 @@ void TestMerge::testMergeIntoNew()
 
     QCOMPARE(dbDestination->rootGroup()->children().size(), 2);
     QCOMPARE(dbDestination->rootGroup()->children().at(0)->entries().size(), 2);
+    // Test for retention of history
+    QCOMPARE(dbDestination->rootGroup()->children().at(0)->entries().at(0)->historyItems().isEmpty(), false);
 
     delete dbDestination;
     delete dbSource;
@@ -195,7 +197,7 @@ void TestMerge::testResolveConflictKeepBoth()
     Database* dbDestination = createTestDatabase();
 
     Database* dbSource = new Database();
-    dbSource->setRootGroup(dbDestination->rootGroup()->clone(Entry::CloneNoFlags));
+    dbSource->setRootGroup(dbDestination->rootGroup()->clone(Entry::CloneIncludeHistory));
 
     // sanity check
     QCOMPARE(dbDestination->rootGroup()->children().at(0)->entries().size(), 2);
@@ -212,9 +214,11 @@ void TestMerge::testResolveConflictKeepBoth()
 
     // one entry is duplicated because of mode
     QCOMPARE(dbDestination->rootGroup()->children().at(0)->entries().size(), 3);
+    QCOMPARE(dbDestination->rootGroup()->children().at(0)->entries().at(0)->historyItems().isEmpty(), false);
     // the older entry was merged from the other db as last in the group
     Entry* olderEntry = dbDestination->rootGroup()->children().at(0)->entries().at(2);
     QVERIFY2(olderEntry->attributes()->hasKey("merged"), "older entry is marked with an attribute \"merged\"");
+    QCOMPARE(olderEntry->historyItems().isEmpty(), false);
 
     QVERIFY2(olderEntry->uuid().toHex() != updatedEntry->uuid().toHex(),
              "KeepBoth should not reuse the UUIDs when cloning.");
@@ -455,12 +459,19 @@ Database* TestMerge::createTestDatabase()
     Entry* entry1 = new Entry();
     Entry* entry2 = new Entry();
 
+    // Give Entry 1 a history
+    entry1->beginUpdate();
     entry1->setGroup(group1);
     entry1->setUuid(Uuid::random());
     entry1->setTitle("entry1");
+    entry1->endUpdate();
+
+    // Give Entry 2 a history
+    entry2->beginUpdate();
     entry2->setGroup(group1);
     entry2->setUuid(Uuid::random());
     entry2->setTitle("entry2");
+    entry2->endUpdate();
 
     group1->setParent(db->rootGroup());
     group2->setParent(db->rootGroup());
