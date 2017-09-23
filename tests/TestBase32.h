@@ -1,5 +1,4 @@
 /*
- *  Copyright (C) 2017 Weslly Honorato <﻿weslly@protonmail.com>
  *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -16,21 +15,20 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTTOTP_H
-#define KEEPASSX_TESTTOTP_H
+#ifndef KEEPASSX_TESTBASE32_H
+#define KEEPASSX_TESTBASE32_H
 
 #include <QObject>
 
-class Totp;
+class Base32;
 
-class TestTotp : public QObject
+class TestBase32 : public QObject
 {
     Q_OBJECT
 
 private slots:
-    void initTestCase();
-    void testParseSecret();
-    void testTotpCode();
+    void testEncode();
+    void testDecode();
 };
 
-#endif // KEEPASSX_TESTTOTP_H
+#endif // KEEPASSX_TESTBASE32_H
