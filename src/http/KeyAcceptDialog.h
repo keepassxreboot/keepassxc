@@ -41,6 +41,9 @@ public:
 
     QString getKeyName();
 
+public slots:
+    void keyEditChanged(const QString &text);
+
 //TODO
 //public slots:
 //    void databaseUnlocked(DatabaseWidget* dbWidget);

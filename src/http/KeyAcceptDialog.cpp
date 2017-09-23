@@ -22,6 +22,8 @@
 #include <QStandardItemModel>
 #include <QStandardItem>
 #include <Qt>
+#include <QDialogButtonBox>
+#include <QPushButton>
 
 KeyAcceptDialog::KeyAcceptDialog(QWidget *parent) :
     QDialog(parent),
@@ -32,6 +34,9 @@ KeyAcceptDialog::KeyAcceptDialog(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
     connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+
+    connect(ui->keyNameLineEdit, SIGNAL(textChanged(const QString)), this, SLOT(keyEditChanged(const QString)));
+    this->keyEditChanged("");
 
     QStandardItemModel* listViewModel = new QStandardItemModel(ui->databasesListView);
     ui->databasesListView->setModel(listViewModel);
@@ -104,6 +109,18 @@ QList<int> KeyAcceptDialog::getCheckedItems()
 QString KeyAcceptDialog::getKeyName()
 {
     return ui->keyNameLineEdit->text();
+}
+
+void KeyAcceptDialog::keyEditChanged(const QString &text)
+{
+    //TODO: Make translateable
+    if (text.isEmpty()) {
+        ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
+        ui->buttonBox->button(QDialogButtonBox::Ok)->setToolTip("Make sure the key name is not empty!");
+    } else {
+        ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
+        ui->buttonBox->button(QDialogButtonBox::Ok)->setToolTip("");
+    }
 }
 
 //TODO
