@@ -56,7 +56,7 @@ void CsvImportWizard::load(const QString& filename, Database* database)
 void CsvImportWizard::keyFinished(bool accepted)
 {
     if (!accepted) {
-        emit(importFinished(false));
+        emit importFinished(false);
         return;
     }
 
@@ -68,11 +68,11 @@ void CsvImportWizard::keyFinished(bool accepted)
 
     if (!result) {
         MessageBox::critical(this, tr("Error"), tr("Unable to calculate master key"));
-        emit(importFinished(false));
+        emit importFinished(false);
     }
 }
 
 void CsvImportWizard::parseFinished(bool accepted)
 {
-    emit(importFinished(accepted));
+    emit importFinished(accepted);
 }
