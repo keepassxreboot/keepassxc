@@ -54,10 +54,6 @@ Optional<QByteArray> Base32::decode(const QByteArray& encodedData)
     int nSpecialBytes;
 
     switch (nPads) { // in {0, 1, 3, 4, 6}
-    case 0:
-        specialOffset = 0;
-        nSpecialBytes = 0;
-        break;
     case 1:
         nSpecialBytes = 4;
         specialOffset = 3;
@@ -70,15 +66,20 @@ Optional<QByteArray> Base32::decode(const QByteArray& encodedData)
         nSpecialBytes = 2;
         specialOffset = 4;
         break;
-    default:
-        Q_ASSERT(6 == nPads);
+    case 6:
         nSpecialBytes = 1;
         specialOffset = 2;
+        break;
+    default:
+        nSpecialBytes = 0;
+        specialOffset = 0;
     }
 
+
+    Q_ASSERT(encodedData.size() > 0);
     const int nQuantums = encodedData.size() / 8;
     const int nBytes = (nQuantums - 1) * 5 + nSpecialBytes;
-    Q_ASSERT(nBytes > 0);
+
     QByteArray data(nBytes, Qt::Uninitialized);
 
     int i = 0;
