@@ -59,16 +59,16 @@ AboutDialog::AboutDialog(QWidget* parent)
     }
 
     debugInfo.append(QString("%1\n- Qt %2\n- %3\n\n")
-             .arg(tr("Libraries:"))
-             .arg(QString::fromLocal8Bit(qVersion()))
-             .arg(Crypto::backendVersion()));
+             .arg(tr("Libraries:"),
+                  QString::fromLocal8Bit(qVersion()),
+                  Crypto::backendVersion()));
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
     debugInfo.append(tr("Operating system: %1\nCPU architecture: %2\nKernel: %3 %4")
-             .arg(QSysInfo::prettyProductName())
-             .arg(QSysInfo::currentCpuArchitecture())
-             .arg(QSysInfo::kernelType())
-             .arg(QSysInfo::kernelVersion()));
+             .arg(QSysInfo::prettyProductName(),
+                  QSysInfo::currentCpuArchitecture(),
+                  QSysInfo::kernelType(),
+                  QSysInfo::kernelVersion()));
 
     debugInfo.append("\n\n");
 #endif

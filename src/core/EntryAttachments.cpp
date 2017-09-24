@@ -29,7 +29,7 @@ QList<QString> EntryAttachments::keys() const
 
 bool EntryAttachments::hasKey(const QString& key) const
 {
-    return m_attachments.keys().contains(key);
+    return m_attachments.contains(key);
 }
 
 QList<QByteArray> EntryAttachments::values() const
