@@ -52,7 +52,7 @@ private:
     enum Access { Denied, Unknown, Allowed};
     QList<Entry*> getConfigEntries(bool create = false);
     Entry* getConfigEntry(bool create = false);
-    bool attributeExists(QList<Entry*> entries, const QString attribute);
+    bool attributeExists(QList<Entry*> entries, const QString& attribute);
     bool matchUrlScheme(const QString& url);
     Access checkAccess(const Entry* entry, const QString&  host, const QString&  submitHost, const QString&  realm);
     bool removeFirstDomain(QString& hostname);

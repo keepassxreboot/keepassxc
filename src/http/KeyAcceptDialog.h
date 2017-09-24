@@ -44,11 +44,6 @@ public:
 public slots:
     void keyEditChanged(const QString &text);
 
-//TODO
-//public slots:
-//    void databaseUnlocked(DatabaseWidget* dbWidget);
-//    void databaseLocked(DatabaseWidget* dbWidget);
-
 private:
     QScopedPointer<Ui::KeyAcceptDialog> ui;
 };

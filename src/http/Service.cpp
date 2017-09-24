@@ -184,9 +184,7 @@ QList<QString> Service::getKeys(const QString &id)
     return keys;
 }
 
-//XXX
-//bool Service::attributeExists(QList<Entry*> entries, const QString &attribute)
-bool Service::attributeExists(QList<Entry*> entries, const QString attribute)
+bool Service::attributeExists(QList<Entry*> entries, const QString &attribute)
 {
     for (Entry* entry: entries)
         if (entry->attributes()->contains(attribute))
@@ -221,9 +219,7 @@ QString Service::storeKey(const QString &key)
         }
 
         do {
-            bool ok;
             //Indicate who wants to associate, and request user to enter the 'name' of association key
-
             int res = dlg.exec();
 
             if (res != QDialog::Accepted)

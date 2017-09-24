@@ -122,8 +122,3 @@ void KeyAcceptDialog::keyEditChanged(const QString &text)
         ui->buttonBox->button(QDialogButtonBox::Ok)->setToolTip("");
     }
 }
-
-//TODO
-//void KeyAcceptDialog::databaseUnlocked(DatabaseWidget* dbWidget)
-//{
-//}
