@@ -20,7 +20,7 @@
 #ifndef BASE32_H
 #define BASE32_H
 
-#include "optional.h"
+#include "Optional.h"
 #include <QtCore/qglobal.h>
 #include <QByteArray>
 

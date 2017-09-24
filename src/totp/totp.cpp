@@ -17,7 +17,7 @@
  */
 
 #include "totp.h"
-#include "tools/base32.h"
+#include "core/Base32.h"
 #include <cmath>
 #include <QtEndian>
 #include <QRegExp>

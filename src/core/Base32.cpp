@@ -17,7 +17,7 @@
 
 // Conforms to RFC 4648. For details, see: https://tools.ietf.org/html/rfc4648
 
-#include "base32.h"
+#include "Base32.h"
 
 constexpr quint64 MASK_40BIT = quint64(0xF8) << 32;
 constexpr quint64 MASK_35BIT = quint64(0x7C0000000);
