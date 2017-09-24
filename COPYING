@@ -214,10 +214,6 @@ Files: share/icons/database/C65_W.png
 Copyright: none
 License: public-domain
 
-Files: src/crypto/salsa20/*
-Copyright: none
-License: public-domain
-
 Files: src/streams/qtiocompressor.*
        src/streams/QtIOCompressor
        tests/modeltest.*
@@ -241,8 +237,3 @@ Files: src/gui/KMessageWidget.h
 Copyright: 2011 Aurélien Gâteau <agateau@kde.org>
            2014 Dominik Haumann <dhaumann@kde.org>
 License: LGPL-2.1
-
-Files: src/totp/base32.cpp
-       src/totp/base32.h
-Copyright: 2010 Google Inc.
-License: Apache 2.0

@@ -1,5 +1,4 @@
 /*
- *  Copyright (C) 2017 Weslly Honorato <﻿weslly@protonmail.com>
  *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -16,21 +15,22 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTTOTP_H
-#define KEEPASSX_TESTTOTP_H
+// Conforms to RFC 4648. For details, see: https://tools.ietf.org/html/rfc4648
 
-#include <QObject>
+#ifndef BASE32_H
+#define BASE32_H
 
-class Totp;
+#include "Optional.h"
+#include <QtCore/qglobal.h>
+#include <QByteArray>
 
-class TestTotp : public QObject
+class Base32
 {
-    Q_OBJECT
-
-private slots:
-    void initTestCase();
-    void testParseSecret();
-    void testTotpCode();
+public:
+    Base32() =default;
+    Q_REQUIRED_RESULT static Optional<QByteArray> decode(const QByteArray&);
+    Q_REQUIRED_RESULT static QByteArray encode(const QByteArray&);
 };
 
-#endif // KEEPASSX_TESTTOTP_H
+
+#endif //BASE32_H
