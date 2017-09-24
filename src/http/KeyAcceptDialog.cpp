@@ -36,10 +36,10 @@ KeyAcceptDialog::KeyAcceptDialog(QWidget *parent) :
     connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 
     connect(ui->keyNameLineEdit, SIGNAL(textChanged(const QString)), this, SLOT(keyEditChanged(const QString)));
-    this->keyEditChanged("");
 
     QStandardItemModel* listViewModel = new QStandardItemModel(ui->databasesListView);
     ui->databasesListView->setModel(listViewModel);
+    connect(listViewModel, SIGNAL(itemChanged(QStandardItem*)), this, SLOT(modelItemChanged(QStandardItem*)));
 }
 
 KeyAcceptDialog::~KeyAcceptDialog()
@@ -111,14 +111,43 @@ QString KeyAcceptDialog::getKeyName()
     return ui->keyNameLineEdit->text();
 }
 
-void KeyAcceptDialog::keyEditChanged(const QString &text)
+void KeyAcceptDialog::checkAcceptable()
 {
+    QStandardItemModel* listViewModel = qobject_cast<QStandardItemModel*>(ui->databasesListView->model());
+    int numRows = listViewModel->rowCount();
+    bool hasChecked = false;
+    for (int row = 0; row < numRows; row++) {
+        QStandardItem* item = listViewModel->item(row);
+        if (item->checkState() == Qt::Checked) {
+            hasChecked = true;
+            break;
+        }
+    }
+
     //TODO: Make translateable
-    if (text.isEmpty()) {
+    if (getKeyName().isEmpty()) {
         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
         ui->buttonBox->button(QDialogButtonBox::Ok)->setToolTip("Make sure the key name is not empty!");
+    }
+    else if (!hasChecked) {
+        ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
+        ui->buttonBox->button(QDialogButtonBox::Ok)->setToolTip("Check at least one database");
     } else {
         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
         ui->buttonBox->button(QDialogButtonBox::Ok)->setToolTip("");
     }
+}
+
+void KeyAcceptDialog::keyEditChanged(const QString &text)
+{
+    (void)text;
+
+    checkAcceptable();
+}
+
+void KeyAcceptDialog::modelItemChanged(QStandardItem *item)
+{
+    (void)item;
+
+    checkAcceptable();
 }

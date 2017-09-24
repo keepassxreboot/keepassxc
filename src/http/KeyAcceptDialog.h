@@ -21,6 +21,7 @@
 
 #include <QDialog>
 #include <QScopedPointer>
+#include <QStandardItem>
 
 namespace Ui {
 class KeyAcceptDialog;
@@ -41,8 +42,11 @@ public:
 
     QString getKeyName();
 
-public slots:
+    void checkAcceptable();
+
+private slots:
     void keyEditChanged(const QString &text);
+    void modelItemChanged(QStandardItem *item);
 
 private:
     QScopedPointer<Ui::KeyAcceptDialog> ui;

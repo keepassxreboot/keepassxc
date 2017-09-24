@@ -214,7 +214,7 @@ QString Service::storeKey(const QString &key)
         for (int i=0; i<dbWidgets.count(); i++) {
             if (!isDatabaseOpened(dbWidgets.at(i)))
                 dlg.setItemEnabled(i, false);
-            if (dbWidgets.at(i) == currDbWidget)
+            else if (dbWidgets.at(i) == currDbWidget)
                 dlg.setItemChecked(i, true);
         }
 

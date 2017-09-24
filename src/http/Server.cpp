@@ -216,13 +216,6 @@ void Server::stop(void)
 
 void Server::onNewRequest(QHttpRequest* request, QHttpResponse* response)
 {
-    if (!isDatabaseOpened()) {
-        if (!openDatabase()) {
-            response->setStatusCode(qhttp::ESTATUS_SERVICE_UNAVAILABLE);
-            response->end();
-            return;
-        }
-    }
 
     request->collectData(1024);
 
