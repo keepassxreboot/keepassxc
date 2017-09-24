@@ -177,6 +177,7 @@ set(keepassx_SOURCES_MAINEXE
 add_feature_info(AutoType WITH_XC_AUTOTYPE "Automatic password typing")
 add_feature_info(KeePassHTTP WITH_XC_HTTP "Browser integration compatible with ChromeIPass and PassIFox")
 add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
+add_feature_info(TOTPSeedQRCode WITH_XC_TOTPSEED_QRCODE "Display TOTP seeds as QR codes")
 
 add_subdirectory(http)
 if(WITH_XC_HTTP)
@@ -211,6 +212,16 @@ else()
   list(APPEND keepassx_SOURCES keys/drivers/YubiKeyStub.cpp)
 endif()
 
+if(WITH_XC_TOTPSEED_QRCODE)
+    #find_library(QRENCODE_LIBRARY qrencode)
+    add_subdirectory(qtqrencode)
+    set(keepassx_SOURCES ${keepassx_SOURCES}
+        gui/TotpSeedDialog.h
+        gui/TotpSeedDialog.cpp
+        )
+    set(qtqrencode_LIB qtqrencode)
+endif()
+
 add_library(autotype STATIC ${autotype_SOURCES})
 target_link_libraries(autotype Qt5::Core Qt5::Widgets)
 
@@ -222,6 +233,7 @@ set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUIL
 target_link_libraries(keepassx_core
                       ${keepasshttp_LIB}
                       ${autotype_LIB}
+                      ${qtqrencode_LIB}
                       ${YUBIKEY_LIBRARIES}
                       ${ZXCVBN_LIBRARIES}
                       Qt5::Core
