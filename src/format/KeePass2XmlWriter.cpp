@@ -521,9 +521,9 @@ void KeePass2XmlWriter::writeColor(const QString& qualifiedName, const QColor& c
     QString colorStr;
 
     if (color.isValid()) {
-      colorStr = QString("#%1%2%3").arg(colorPartToString(color.red()))
-              .arg(colorPartToString(color.green()))
-              .arg(colorPartToString(color.blue()));
+      colorStr = QString("#%1%2%3").arg(colorPartToString(color.red()),
+                                        colorPartToString(color.green()),
+                                        colorPartToString(color.blue()));
     }
 
     writeString(qualifiedName, colorStr);
