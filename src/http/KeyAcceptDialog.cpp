@@ -127,11 +127,11 @@ void KeyAcceptDialog::checkAcceptable()
     //TODO: Make translateable
     if (getKeyName().isEmpty()) {
         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
-        ui->buttonBox->button(QDialogButtonBox::Ok)->setToolTip("Make sure the key name is not empty!");
+        ui->buttonBox->button(QDialogButtonBox::Ok)->setToolTip(tr("Make sure the key name is not empty!"));
     }
     else if (!hasChecked) {
         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
-        ui->buttonBox->button(QDialogButtonBox::Ok)->setToolTip("Check at least one database");
+        ui->buttonBox->button(QDialogButtonBox::Ok)->setToolTip(tr("Check at least one database"));
     } else {
         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
         ui->buttonBox->button(QDialogButtonBox::Ok)->setToolTip("");
