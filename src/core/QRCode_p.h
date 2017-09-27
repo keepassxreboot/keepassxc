@@ -1,5 +1,4 @@
 /*
- *  Copyright (C) 2017 Weslly Honorato <﻿weslly@protonmail.com>
  *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -16,24 +15,19 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QTOTP_H
-#define QTOTP_H
+/* This class exists to isolate <qrencode.h> from the rest of the code base. */
 
-#include <QtCore/qglobal.h>
+#ifndef KEEPASSX_QRCODEPRIVATE_H
+#define KEEPASSX_QRCODEPRIVATE_H
 
-class QUrl;
+#include <qrencode.h>
 
-class QTotp
+struct QRCodePrivate
 {
-public:
-    QTotp();
-    static QString parseOtpString(QString rawSecret, quint8 &digits, quint8 &step);
-    static QString generateTotp(const QByteArray key, quint64 time, const quint8 numDigits, const quint8 step);
-    static QUrl generateOtpString(const QString& secret, const QString& type,
-        const QString& issuer, const QString& username, const QString& algorithm,
-        const quint8& digits, const quint8& step);
-    static const quint8 defaultStep;
-    static const quint8 defaultDigits;
+  QRcode* m_qrcode;
+
+  QRCodePrivate();
+  ~QRCodePrivate();
 };
 
-#endif // QTOTP_H
+#endif // KEEPASSX_QRCODEPRIVATE_H

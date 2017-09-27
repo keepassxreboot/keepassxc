@@ -136,6 +136,11 @@ public slots:
     void copyNotes();
     void copyAttribute(QAction* action);
     void showTotp();
+
+#ifdef WITH_XC_TOTPDISPLAYKEY
+    void showTotpKeyQRCode();
+#endif
+
     void copyTotp();
     void setupTotp();
     void performAutoType();

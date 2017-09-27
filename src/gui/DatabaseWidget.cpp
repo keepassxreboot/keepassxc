@@ -45,6 +45,11 @@
 #include "gui/CloneDialog.h"
 #include "gui/SetupTotpDialog.h"
 #include "gui/TotpDialog.h"
+
+#ifdef WITH_XC_TOTPDISPLAYKEY
+#include "gui/TotpKeyDisplayDialog.h"
+#endif
+
 #include "gui/DatabaseOpenWidget.h"
 #include "gui/DatabaseSettingsWidget.h"
 #include "gui/KeePass1OpenWidget.h"
@@ -350,6 +355,20 @@ void DatabaseWidget::showTotp()
     totpDialog->open();
 }
 
+#ifdef WITH_XC_TOTPDISPLAYKEY
+void DatabaseWidget::showTotpKeyQRCode()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    if(!currentEntry) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    TotpKeyDisplayDialog* totpKeyDisplayDialog = new TotpKeyDisplayDialog(this, currentEntry);
+    totpKeyDisplayDialog->open();
+}
+#endif
+
 void DatabaseWidget::copyTotp()
 {
     Entry* currentEntry = m_entryView->currentEntry();
@@ -564,7 +583,7 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
             }
             return;
         }
-        
+
         // otherwise ask user
         if (urlString.length() > 6) {
             QString cmdTruncated = urlString.mid(6);
@@ -578,7 +597,7 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
                                this
             );
             msgbox.setDefaultButton(QMessageBox::No);
-            
+
             QCheckBox* checkbox = new QCheckBox(tr("Remember my choice"), &msgbox);
             msgbox.setCheckBox(checkbox);
             bool remember = false;
@@ -587,12 +606,12 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
                    remember = true;
                }
             });
-            
+
             int result = msgbox.exec();
             if (result == QMessageBox::Yes) {
                 QProcess::startDetached(urlString.mid(6));
             }
-            
+
             if (remember) {
                 entry->attributes()->set(EntryAttributes::RememberCmdExecAttr,
                                          result == QMessageBox::Yes ? "1" : "0");
@@ -861,7 +880,7 @@ void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::Mod
 void DatabaseWidget::switchToEntryEdit()
 {
     Entry* entry = m_entryView->currentEntry();
-    
+
     if (!entry) {
         return;
     }
@@ -872,7 +891,7 @@ void DatabaseWidget::switchToEntryEdit()
 void DatabaseWidget::switchToGroupEdit()
 {
     Group* group = m_groupView->currentGroup();
-    
+
     if (!group) {
         return;
     }

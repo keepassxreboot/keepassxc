@@ -98,7 +98,7 @@ QString QTotp::generateTotp(const QByteArray key, quint64 time,
 {
     quint64 current = qToBigEndian(time / step);
 
-    Optional<QByteArray> secret = Base32::decode(key);
+    Optional<QByteArray> secret = Base32::decode(Base32::sanitizeInput(key));
     if (!secret.hasValue()) {
         return "Invalid TOTP secret key";
     }
@@ -119,4 +119,24 @@ QString QTotp::generateTotp(const QByteArray key, quint64 time,
 
     quint64 password = binary % digitsPower;
     return QString("%1").arg(password, numDigits, 10, QChar('0'));
+}
+
+// See: https://github.com/google/google-authenticator/wiki/Key-Uri-Format
+QUrl QTotp::generateOtpString(const QString& secret, const QString& type,
+    const QString& issuer, const QString& username, const QString& algorithm,
+    const quint8& digits, const quint8& step)
+{
+    QUrl keyUri;
+    keyUri.setScheme("otpauth");
+    keyUri.setHost(type);
+    keyUri.setPath(QString("/%1:%2").arg(issuer).arg(username));
+    QUrlQuery parameters;
+    parameters.addQueryItem("secret", secret);
+    parameters.addQueryItem("issuer", issuer);
+    parameters.addQueryItem("algorithm", algorithm);
+    parameters.addQueryItem("digits", QString::number(digits));
+    parameters.addQueryItem("period", QString::number(step));
+    keyUri.setQuery(parameters);
+
+    return keyUri;
 }

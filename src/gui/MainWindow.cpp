@@ -290,6 +290,12 @@ MainWindow::MainWindow()
 
     m_actionMultiplexer.connect(m_ui->actionEntryCopyTotp, SIGNAL(triggered()),
             SLOT(copyTotp()));
+
+#ifdef WITH_XC_TOTPDISPLAYKEY
+    m_actionMultiplexer.connect(m_ui->actionEntryTotpDisplayKey, SIGNAL(triggered()),
+            SLOT(showTotpKeyQRCode()));
+#endif
+
     m_actionMultiplexer.connect(m_ui->actionEntryCopyTitle, SIGNAL(triggered()),
             SLOT(copyTitle()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyUsername, SIGNAL(triggered()),
@@ -452,6 +458,13 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
             m_ui->actionEntryCopyTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
             m_ui->actionEntrySetupTotp->setEnabled(singleEntrySelected);
+
+#ifdef WITH_XC_TOTPDISPLAYKEY
+            m_ui->actionEntryTotpDisplayKey->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
+#else
+            m_ui->actionEntryTotpDisplayKey->setVisible(false);
+#endif
+
             m_ui->actionGroupNew->setEnabled(groupSelected);
             m_ui->actionGroupEdit->setEnabled(groupSelected);
             m_ui->actionGroupDelete->setEnabled(groupSelected && dbWidget->canDeleteCurrentGroup());
