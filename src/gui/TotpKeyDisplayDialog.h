@@ -1,5 +1,4 @@
 /*
- *  Copyright (C) 2017 Weslly Honorato <﻿weslly@protonmail.com>
  *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -16,24 +15,39 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QTOTP_H
-#define QTOTP_H
+#ifndef KEEPASSX_TOTPKEYDISPLAYDIALOG_H
+#define KEEPASSX_TOTPKEYDISPLAYDIALOG_H
 
-#include <QtCore/qglobal.h>
+#include <QDialog>
+#include <QScopedPointer>
+#include <QUrl>
+#include "core/Entry.h"
+#include "core/Database.h"
+#include "gui/DatabaseWidget.h"
 
-class QUrl;
+namespace Ui {
+    class TotpKeyDisplayDialog;
+}
 
-class QTotp
+class TotpKeyDisplayDialog : public QDialog
 {
+    Q_OBJECT
+
 public:
-    QTotp();
-    static QString parseOtpString(QString rawSecret, quint8 &digits, quint8 &step);
-    static QString generateTotp(const QByteArray key, quint64 time, const quint8 numDigits, const quint8 step);
-    static QUrl generateOtpString(const QString& secret, const QString& type,
-        const QString& issuer, const QString& username, const QString& algorithm,
-        const quint8& digits, const quint8& step);
-    static const quint8 defaultStep;
-    static const quint8 defaultDigits;
+    explicit TotpKeyDisplayDialog(DatabaseWidget* parent = nullptr, Entry* entry = nullptr);
+    ~TotpKeyDisplayDialog();
+
+private:
+    QScopedPointer<Ui::TotpKeyDisplayDialog> m_ui;
+
+private Q_SLOTS:
+    void copyToClipboard();
+
+protected:
+    Entry* m_entry;
+    DatabaseWidget* m_parent;
+
+    QUrl totpKeyUri(const Entry* entry) const;
 };
 
-#endif // QTOTP_H
+#endif // KEEPASSX_TOTPKEYDISPLAYDIALOG_H

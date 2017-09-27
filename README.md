@@ -66,6 +66,7 @@ cmake accepts the following options:
   -DWITH_XC_AUTOTYPE=[ON|OFF] Enable/Disable Auto-Type (default: ON)
   -DWITH_XC_HTTP=[ON|OFF] Enable/Disable KeePassHTTP and custom icon downloads (default: OFF)
   -DWITH_XC_YUBIKEY=[ON|OFF] Enable/Disable YubiKey HMAC-SHA1 authentication support (default: OFF)
+  -DWITH_XC_TOTPDISPLAYKEY=[ON|OFF] Enable/Disable Support for displaying TOTP keys as QR codes (default: OFF)
 
   -DWITH_TESTS=[ON|OFF] Enable/Disable building of unit tests (default: ON)
   -DWITH_GUI_TESTS=[ON|OFF] Enable/Disable building of GUI tests (default: OFF)
