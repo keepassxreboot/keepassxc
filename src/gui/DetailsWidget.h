@@ -40,15 +40,25 @@ public:
         GroupPreview = 1,
     };
 
+    enum TabWidgetIndex
+    {
+        GeneralTab = 0,
+        AttributesTab = 1,
+        NotesTab = 2,
+    };
+
 private slots:
     void getSelectedEntry(Entry* selectedEntry);
     void getSelectedGroup(Group* selectedGroup);
     void showTotp(bool visible);
     void updateTotp();
     void hideDetails();
+    void setDatabaseMode(DatabaseWidget::Mode mode);
+    void copyToClipboard(const QString& text);
 
 private:
     const QScopedPointer<Ui::DetailsWidget> m_ui;
+    bool m_locked;
     Entry* m_currentEntry;
     Group* m_currentGroup;
     quint8 m_step;

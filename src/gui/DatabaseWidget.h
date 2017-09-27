@@ -27,7 +27,6 @@
 #include "core/Uuid.h"
 
 #include "gui/entry/EntryModel.h"
-#include "gui/DetailsWidget.h"
 #include "gui/MessageWidget.h"
 #include "gui/csvImport/CsvImportWizard.h"
 

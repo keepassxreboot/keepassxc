@@ -440,14 +440,15 @@ QStringList Group::hierarchy()
     QStringList hierarchy;
     Group* group = this;
     Group* parent = m_parent;
-    hierarchy << group->name();
+    hierarchy.prepend(group->name());
     
     while (parent) {
         group = group->parentGroup();
         parent = group->parentGroup();
 
-        hierarchy << group->name();
+        hierarchy.prepend(group->name());
     }
+
     return hierarchy;
 }
 

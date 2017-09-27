@@ -25,10 +25,12 @@
 #include "core/FilePath.h"
 #include "core/TimeInfo.h"
 #include "gui/Clipboard.h"
+#include "gui/DatabaseWidget.h"
 
 DetailsWidget::DetailsWidget(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::DetailsWidget())
+    , m_locked(false)
     , m_currentEntry(nullptr)
     , m_currentGroup(nullptr)
 {
@@ -36,6 +38,7 @@ DetailsWidget::DetailsWidget(QWidget* parent)
 
     connect(parent, SIGNAL(pressedEntry(Entry*)), SLOT(getSelectedEntry(Entry*)));
     connect(parent, SIGNAL(pressedGroup(Group*)), SLOT(getSelectedGroup(Group*)));
+    connect(parent, SIGNAL(currentModeChanged(DatabaseWidget::Mode)), SLOT(setDatabaseMode(DatabaseWidget::Mode)));
 
     m_ui->totpButton->setIcon(filePath()->icon("actions", "chronometer"));
     m_ui->closeButton->setIcon(filePath()->icon("actions", "dialog-close"));
@@ -60,6 +63,9 @@ void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
 
     m_ui->stackedWidget->setCurrentIndex(EntryPreview);
 
+    m_ui->tabWidget->setTabEnabled(AttributesTab, false);
+    m_ui->tabWidget->setTabEnabled(NotesTab, false);
+
     m_ui->totpButton->hide();
     m_ui->totpWidget->hide();
     m_ui->totpButton->setChecked(false);
@@ -81,10 +87,6 @@ void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
     m_ui->titleLabel->setText(title);
 
     m_ui->usernameLabel->setText(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->username()));
-    if (entry_group) {
-        m_ui->groupLabel->setText(entry_group->name());
-    }
-    m_ui->notesEdit->setText(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->notes()));
 
     if (!config()->get("security/hidepassworddetails").toBool()) {
         m_ui->passwordLabel->setText(shortPassword(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->password())));
@@ -110,10 +112,6 @@ void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
         m_ui->expirationLabel->setText(tr("Never"));
     }
 
-    m_ui->creationLabel->setText(entryTime.creationTime().toString(Qt::DefaultLocaleShortDate));
-    m_ui->modifyLabel->setText(entryTime.lastModificationTime().toString(Qt::DefaultLocaleShortDate));
-    m_ui->accessLabel->setText(entryTime.lastAccessTime().toString(Qt::DefaultLocaleShortDate));
-
     if (m_currentEntry->hasTotp()) {
         m_ui->totpButton->show();
         updateTotp();
@@ -123,6 +121,28 @@ void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
         m_timer = new QTimer(this);
         connect(m_timer, SIGNAL(timeout()), this, SLOT(updateTotp()));
         m_timer->start(m_step * 10);
+    }
+
+    QString notes = m_currentEntry->notes();
+    if (!notes.isEmpty()) {
+        m_ui->tabWidget->setTabEnabled(NotesTab, true);
+        m_ui->notesEdit->setText(m_currentEntry->resolveMultiplePlaceholders(notes));
+    }
+
+    QStringList customAttributes = m_currentEntry->attributes()->customKeys();
+    if (customAttributes.size() > 0) {
+        m_ui->tabWidget->setTabEnabled(AttributesTab, true);
+        m_ui->attributesEdit->clear();
+
+        QString attributesText = QString();
+        for (const QString& key : customAttributes) {
+            QString value = m_currentEntry->attributes()->value(key);
+            if (m_currentEntry->attributes()->isProtected(key)) {
+                value = "<i>[PROTECTED]</i>";
+            }
+            attributesText.append(QString("<b>%1</b>: %2<br/>").arg(key, value));
+        }
+        m_ui->attributesEdit->setText(attributesText);
     }
 }
 
@@ -136,13 +156,18 @@ void DetailsWidget::getSelectedGroup(Group* selectedGroup)
 
     m_ui->stackedWidget->setCurrentIndex(GroupPreview);
 
+    m_ui->tabWidget->setTabEnabled(AttributesTab, false);
+    m_ui->tabWidget->setTabEnabled(NotesTab, false);
+
     m_ui->totpButton->hide();
     m_ui->totpWidget->hide();
 
     m_ui->entryIcon->setPixmap(m_currentGroup->iconPixmap());
 
-    QStringList hierarchy = m_currentGroup->hierarchy();
     QString title = " / ";
+
+    QStringList hierarchy = m_currentGroup->hierarchy();
+    
     for (QString parent : hierarchy) {
         title.append(parent);
         title.append(" / ");
@@ -177,6 +202,10 @@ void DetailsWidget::getSelectedGroup(Group* selectedGroup)
 
 void DetailsWidget::updateTotp()
 {
+    if (m_locked) {
+        m_timer->stop();
+        return;
+    }
     QString totpCode = m_currentEntry->totp();
     QString firstHalf = totpCode.left(totpCode.size()/2);
     QString secondHalf = totpCode.right(totpCode.size()/2);
@@ -218,4 +247,24 @@ QString DetailsWidget::shortPassword(QString password)
 void DetailsWidget::hideDetails()
 {
     this->hide();
+}
+
+void DetailsWidget::setDatabaseMode(DatabaseWidget::Mode mode)
+{
+    m_locked = false;
+    if (mode == DatabaseWidget::LockedMode) {
+        m_locked = true;
+        return;
+    }
+    if (mode == DatabaseWidget::ViewMode) {
+        if (m_ui->stackedWidget->currentIndex() == GroupPreview) {
+            getSelectedGroup(m_currentGroup);
+        } else {
+            getSelectedEntry(m_currentEntry);
+        }
+    }
+}
+
+void DetailsWidget::copyToClipboard(const QString& text) {
+    clipboard()->setText(text);
 }
