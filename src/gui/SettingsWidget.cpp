@@ -225,6 +225,15 @@ void SettingsWidget::saveSettings()
     config()->set("security/passwordscleartext", m_secUi->passwordCleartextCheckBox->isChecked());
     config()->set("security/passwordsrepeat", m_secUi->passwordRepeatCheckBox->isChecked());
 
+    // Security: clear storage if related settings are disabled
+    if (!config()->get("RememberLastDatabases").toBool()) {
+        config()->set("LastDatabases", QVariant());
+    }
+
+    if (!config()->get("RememberLastKeyFiles").toBool()) {
+        config()->set("LastKeyFiles", QVariant());
+    }
+
     for (const ExtraPage& page: asConst(m_extraPages)) {
         page.saveSettings();
     }
