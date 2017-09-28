@@ -70,17 +70,20 @@ void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
     m_ui->totpWidget->hide();
     m_ui->totpButton->setChecked(false);
 
-    m_ui->entryIcon->setPixmap(m_currentEntry->iconPixmap());
+    auto icon = m_currentEntry->iconPixmap();
+    if (icon.width() > 16 || icon.height() > 16) {
+        icon = icon.scaled(16, 16);
+    }
+    m_ui->entryIcon->setPixmap(icon);
 
-    QString title = " / ";
-
+    QString title = QString(" / ");
     Group* entry_group = m_currentEntry->group();
     if (entry_group) {
         QStringList hierarchy = entry_group->hierarchy();
-        
-        for (QString parent : hierarchy) {
-            title.append(parent);
-            title.append(" / ");
+        hierarchy.removeFirst();
+        title += hierarchy.join(" / ");
+        if (hierarchy.size() > 0) {
+            title += " / ";
         }
     }
     title.append(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->title()));
@@ -162,15 +165,18 @@ void DetailsWidget::getSelectedGroup(Group* selectedGroup)
     m_ui->totpButton->hide();
     m_ui->totpWidget->hide();
 
-    m_ui->entryIcon->setPixmap(m_currentGroup->iconPixmap());
+    auto icon = m_currentGroup->iconPixmap();
+    if (icon.width() > 32 || icon.height() > 32) {
+        icon = icon.scaled(32, 32);
+    }
+    m_ui->entryIcon->setPixmap(icon);
 
     QString title = " / ";
-
     QStringList hierarchy = m_currentGroup->hierarchy();
-    
-    for (QString parent : hierarchy) {
-        title.append(parent);
-        title.append(" / ");
+    hierarchy.removeFirst();
+    title += hierarchy.join(" / ");
+    if (hierarchy.size() > 0) {
+        title += " / ";
     }
     m_ui->titleLabel->setText(title);
 
