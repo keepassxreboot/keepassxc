@@ -40,8 +40,9 @@ parts:
       - libyubikey-dev
       - libykpers-1-dev
     after: [desktop-qt5]
+
+  # Redefine desktop-qt5 stage packages to work with Ubuntu 17.04
   desktop-qt5:
-    # Redefine stage packages to work with Ubuntu 17.04
     stage-packages:
       - libxkbcommon0
       - ttf-ubuntu-font-family
@@ -52,3 +53,12 @@ parts:
       - libgdk-pixbuf2.0-0
       - libqt5svg5 # for loading icon themes which are svg
       - locales-all
+
+  # Overcome limitation in snapd to support URL loading (CTRL+U)
+  snapd-xdg-open:
+    source: https://github.com/ubuntu-core/snapd-xdg-open.git
+    plugin: dump
+    organize:
+      data/xdg-open: bin/xdg-open
+    stage-packages:
+      - dbus
