@@ -35,6 +35,8 @@ DetailsWidget::DetailsWidget(QWidget* parent)
     , m_currentGroup(nullptr)
     , m_attributesWidget(nullptr)
     , m_autotypeWidget(nullptr)
+    , m_selectedTabEntry(0)
+    , m_selectedTabGroup(0)
 {
     m_ui->setupUi(this);
 
@@ -47,6 +49,7 @@ DetailsWidget::DetailsWidget(QWidget* parent)
 
     connect(m_ui->totpButton, SIGNAL(toggled(bool)), SLOT(showTotp(bool)));
     connect(m_ui->closeButton, SIGNAL(toggled(bool)), SLOT(hideDetails()));
+    connect(m_ui->tabWidget, SIGNAL(tabBarClicked(int)), SLOT(updateTabIndex(int)));
 
     this->hide();
 }
@@ -170,6 +173,10 @@ void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
         m_ui->autotypeTree->addTopLevelItems(items);
         m_ui->tabWidget->setTabEnabled(AutotypeTab, true);
     }
+
+    if (m_ui->tabWidget->isTabEnabled(m_selectedTabEntry)) {
+        m_ui->tabWidget->setCurrentIndex(m_selectedTabEntry);
+    }
 }
 
 void DetailsWidget::getSelectedGroup(Group* selectedGroup) 
@@ -233,6 +240,10 @@ void DetailsWidget::getSelectedGroup(Group* selectedGroup)
         m_ui->groupExpirationLabel->setText(groupTime.expiryTime().toString(Qt::DefaultLocaleShortDate));
     } else {
         m_ui->groupExpirationLabel->setText(tr("Never"));
+    }
+
+    if (m_ui->tabWidget->isTabEnabled(m_selectedTabGroup)) {
+        m_ui->tabWidget->setCurrentIndex(m_selectedTabGroup);
     }
 }
 
@@ -301,6 +312,10 @@ void DetailsWidget::setDatabaseMode(DatabaseWidget::Mode mode)
     }
 }
 
-void DetailsWidget::copyToClipboard(const QString& text) {
-    clipboard()->setText(text);
+void DetailsWidget::updateTabIndex(int index) {
+    if (m_ui->stackedWidget->currentIndex() == GroupPreview) {
+        m_selectedTabGroup = index;
+    } else {
+        m_selectedTabEntry = index;
+    }
 }

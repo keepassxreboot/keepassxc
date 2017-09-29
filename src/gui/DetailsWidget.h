@@ -56,7 +56,7 @@ private slots:
     void updateTotp();
     void hideDetails();
     void setDatabaseMode(DatabaseWidget::Mode mode);
-    void copyToClipboard(const QString& text);
+    void updateTabIndex(int index);
 
 private:
     const QScopedPointer<Ui::DetailsWidget> m_ui;
@@ -67,6 +67,8 @@ private:
     QTimer* m_timer;
     QWidget* m_attributesWidget;
     QWidget* m_autotypeWidget;
+    quint8 m_selectedTabEntry;
+    quint8 m_selectedTabGroup;
     QString shortUrl(QString url);
     QString shortPassword(QString password);
 };
