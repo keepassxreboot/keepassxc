@@ -44,7 +44,9 @@ public:
     {
         GeneralTab = 0,
         AttributesTab = 1,
+        GroupNotesTab = 1,
         NotesTab = 2,
+        AutotypeTab = 3,
     };
 
 private slots:
@@ -63,6 +65,8 @@ private:
     Group* m_currentGroup;
     quint8 m_step;
     QTimer* m_timer;
+    QWidget* m_attributesWidget;
+    QWidget* m_autotypeWidget;
     QString shortUrl(QString url);
     QString shortPassword(QString password);
 };

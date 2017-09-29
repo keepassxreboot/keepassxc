@@ -33,6 +33,8 @@ DetailsWidget::DetailsWidget(QWidget* parent)
     , m_locked(false)
     , m_currentEntry(nullptr)
     , m_currentGroup(nullptr)
+    , m_attributesWidget(nullptr)
+    , m_autotypeWidget(nullptr)
 {
     m_ui->setupUi(this);
 
@@ -63,8 +65,14 @@ void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
 
     m_ui->stackedWidget->setCurrentIndex(EntryPreview);
 
+    if (m_ui->tabWidget->count() < 4) {
+        m_ui->tabWidget->insertTab(static_cast<int>(AttributesTab), m_attributesWidget, "Attributes");
+        m_ui->tabWidget->insertTab(static_cast<int>(AutotypeTab), m_autotypeWidget, "Autotype");
+    }
+
     m_ui->tabWidget->setTabEnabled(AttributesTab, false);
     m_ui->tabWidget->setTabEnabled(NotesTab, false);
+    m_ui->tabWidget->setTabEnabled(AutotypeTab, false);
 
     m_ui->totpButton->hide();
     m_ui->totpWidget->hide();
@@ -147,6 +155,21 @@ void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
         }
         m_ui->attributesEdit->setText(attributesText);
     }
+
+    m_ui->autotypeTree->clear();
+    AutoTypeAssociations* autotypeAssociations = m_currentEntry->autoTypeAssociations();
+    QList<QTreeWidgetItem *> items;
+    for (auto assoc : autotypeAssociations->getAll()) {
+        QStringList association = QStringList() << assoc.window << assoc.sequence;
+        if (association.at(1).isEmpty()) {
+            association.replace(1, m_currentEntry->effectiveAutoTypeSequence());
+        }
+        items.append(new QTreeWidgetItem(m_ui->autotypeTree, association));
+    }
+    if (items.count() > 0) {
+        m_ui->autotypeTree->addTopLevelItems(items);
+        m_ui->tabWidget->setTabEnabled(AutotypeTab, true);
+    }
 }
 
 void DetailsWidget::getSelectedGroup(Group* selectedGroup) 
@@ -159,8 +182,15 @@ void DetailsWidget::getSelectedGroup(Group* selectedGroup)
 
     m_ui->stackedWidget->setCurrentIndex(GroupPreview);
 
-    m_ui->tabWidget->setTabEnabled(AttributesTab, false);
-    m_ui->tabWidget->setTabEnabled(NotesTab, false);
+    if (m_ui->tabWidget->count() > 2) {
+        m_autotypeWidget = m_ui->tabWidget->widget(AutotypeTab);
+        m_attributesWidget = m_ui->tabWidget->widget(AttributesTab);
+        m_ui->tabWidget->removeTab(AutotypeTab);
+        m_ui->tabWidget->removeTab(AttributesTab);
+    }
+
+    m_ui->tabWidget->setTabEnabled(GroupNotesTab, false);
+
 
     m_ui->totpButton->hide();
     m_ui->totpWidget->hide();
@@ -180,7 +210,11 @@ void DetailsWidget::getSelectedGroup(Group* selectedGroup)
     }
     m_ui->titleLabel->setText(title);
 
-    m_ui->notesEdit->setText(m_currentGroup->notes());
+    QString notes = m_currentGroup->notes();
+    if (!notes.isEmpty()) {
+        m_ui->tabWidget->setTabEnabled(GroupNotesTab, true);
+        m_ui->notesEdit->setText(notes);
+    }
 
     QString searching = tr("Disabled");
     if (m_currentGroup->resolveSearchingEnabled()) {
@@ -200,10 +234,6 @@ void DetailsWidget::getSelectedGroup(Group* selectedGroup)
     } else {
         m_ui->groupExpirationLabel->setText(tr("Never"));
     }
-
-    m_ui->groupCreationLabel->setText(groupTime.creationTime().toString(Qt::DefaultLocaleShortDate));
-    m_ui->groupModifyLabel->setText(groupTime.lastModificationTime().toString(Qt::DefaultLocaleShortDate));
-    m_ui->groupAccessLabel->setText(groupTime.lastAccessTime().toString(Qt::DefaultLocaleShortDate));
 }
 
 void DetailsWidget::updateTotp()
