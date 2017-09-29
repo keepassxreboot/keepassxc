@@ -268,6 +268,17 @@ void TestGui::testEditEntry()
     QCOMPARE(attrTextEdit->toPlainText(), attrText);
     editEntryWidget->setCurrentPage(0);
 
+    // Test mismatch passwords
+    QLineEdit* passwordEdit = editEntryWidget->findChild<QLineEdit*>("passwordEdit");
+    QString originalPassword = passwordEdit->text();
+    passwordEdit->setText("newpass");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    MessageWidget* messageWiget = editEntryWidget->findChild<MessageWidget*>("messageWidget");
+    QTRY_VERIFY(messageWiget->isVisible());
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+    QCOMPARE(passwordEdit->text(), QString("newpass"));
+    passwordEdit->setText(originalPassword);
+
     // Save the edit (press OK)
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
 
