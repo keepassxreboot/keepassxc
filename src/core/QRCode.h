@@ -18,8 +18,8 @@
 #ifndef KEEPASSX_QRCODE_H
 #define KEEPASSX_QRCODE_H
 
-#include <QtCore/qglobal.h>
 #include <QScopedPointer>
+#include <QtCore/qglobal.h>
 
 class QImage;
 class QString;
@@ -31,7 +31,8 @@ class QRCode
 {
 
 public:
-    enum class ErrorCorrectionLevel : int {
+    enum class ErrorCorrectionLevel : int
+    {
         LOW = 0,
         MEDIUM,
         QUARTILE,
@@ -39,24 +40,61 @@ public:
     };
 
     // See: http://www.qrcode.com/en/about/version.html
-    enum class Version : int {
+    enum class Version : int
+    {
         AUTO = 0,
-        V1, V2, V3, V4, V5, V6, V7, V8, V9, V10,
-        V11, V12, V13, V14, V15, V16, V17, V18, V19, V20,
-        V21, V22, V23, V24, V25, V26, V27, V28, V29, V30,
-        V31, V32, V33, V34, V35, V36, V37, V38, V39, V40
+        V1,
+        V2,
+        V3,
+        V4,
+        V5,
+        V6,
+        V7,
+        V8,
+        V9,
+        V10,
+        V11,
+        V12,
+        V13,
+        V14,
+        V15,
+        V16,
+        V17,
+        V18,
+        V19,
+        V20,
+        V21,
+        V22,
+        V23,
+        V24,
+        V25,
+        V26,
+        V27,
+        V28,
+        V29,
+        V30,
+        V31,
+        V32,
+        V33,
+        V34,
+        V35,
+        V36,
+        V37,
+        V38,
+        V39,
+        V40
     };
 
     // Uses QRcode_encodeString (can't contain NUL characters)
     explicit QRCode(const QString& data,
-        const Version version=Version::AUTO,
-        const ErrorCorrectionLevel ecl=ErrorCorrectionLevel::MEDIUM,
-        const bool caseSensitive=true);
+                    const Version version = Version::AUTO,
+                    const ErrorCorrectionLevel ecl = ErrorCorrectionLevel::HIGH,
+                    const bool caseSensitive = true);
 
     // Uses QRcode_encodeData (can contain NUL characters)
     explicit QRCode(const QByteArray& data,
-        const Version version=Version::AUTO,
-        const ErrorCorrectionLevel ecl=ErrorCorrectionLevel::HIGH);
+                    const Version version = Version::AUTO,
+                    const ErrorCorrectionLevel ecl = ErrorCorrectionLevel::HIGH);
 
     QRCode();
     ~QRCode();
@@ -64,14 +102,9 @@ public:
     QImage toQImage(const int size, const int margin) const;
 
 private:
-    void init(const QString& data,
-        const Version version,
-        const ErrorCorrectionLevel ecl,
-        const bool caseSensitive);
+    void init(const QString& data, const Version version, const ErrorCorrectionLevel ecl, const bool caseSensitive);
 
-    void init(const QByteArray& data,
-        const Version version,
-        const ErrorCorrectionLevel ecl);
+    void init(const QByteArray& data, const Version version, const ErrorCorrectionLevel ecl);
 
     QScopedPointer<QRCodePrivate> d_ptr;
 };

@@ -16,13 +16,13 @@
  */
 
 #include "TotpKeyDisplayDialog.h"
-#include "ui_TotpKeyDisplayDialog.h"
 #include "core/Config.h"
 #include "core/Entry.h"
 #include "core/QRCode.h"
-#include "totp/totp.h"
-#include "gui/DatabaseWidget.h"
 #include "gui/Clipboard.h"
+#include "gui/DatabaseWidget.h"
+#include "totp/totp.h"
+#include "ui_TotpKeyDisplayDialog.h"
 #include <QPushButton>
 
 TotpKeyDisplayDialog::TotpKeyDisplayDialog(DatabaseWidget* parent, Entry* entry)
@@ -57,15 +57,13 @@ void TotpKeyDisplayDialog::copyToClipboard()
 
 QUrl TotpKeyDisplayDialog::totpKeyUri(const Entry* entry) const
 {
-    return QTotp::generateOtpString(
-        entry->totpSeed(),
-        QString("totp"),
-        QString(entry->title()),
-        QString(entry->username()),
-        QString("SHA1"),
-        entry->totpDigits(),
-        entry->totpStep()
-    );
+    return QTotp::generateOtpString(entry->totpSeed(),
+                                    QString("totp"),
+                                    QString(entry->title()),
+                                    QString(entry->username()),
+                                    QString("SHA1"),
+                                    entry->totpDigits(),
+                                    entry->totpStep());
 }
 
 TotpKeyDisplayDialog::~TotpKeyDisplayDialog()

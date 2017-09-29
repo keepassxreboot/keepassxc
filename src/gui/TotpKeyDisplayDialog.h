@@ -18,14 +18,15 @@
 #ifndef KEEPASSX_TOTPKEYDISPLAYDIALOG_H
 #define KEEPASSX_TOTPKEYDISPLAYDIALOG_H
 
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "gui/DatabaseWidget.h"
 #include <QDialog>
 #include <QScopedPointer>
 #include <QUrl>
-#include "core/Entry.h"
-#include "core/Database.h"
-#include "gui/DatabaseWidget.h"
 
-namespace Ui {
+namespace Ui
+{
     class TotpKeyDisplayDialog;
 }
 

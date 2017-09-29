@@ -18,83 +18,77 @@
 #include "QRCode.h"
 #include "QRCode_p.h"
 
+#include <QBrush>
+#include <QByteArray>
 #include <QImage>
 #include <QPainter>
 #include <QPen>
-#include <QBrush>
 #include <QString>
-#include <QByteArray>
 
-QRCodePrivate::QRCodePrivate() : m_qrcode(nullptr)
+QRCodePrivate::QRCodePrivate()
+    : m_qrcode(nullptr)
 {
 }
 
 QRCodePrivate::~QRCodePrivate()
 {
-    if (nullptr != m_qrcode)
-       QRcode_free(m_qrcode);
+    if (nullptr != m_qrcode) {
+        QRcode_free(m_qrcode);
+    }
 }
 
-QRCode::QRCode() : d_ptr(new QRCodePrivate())
+QRCode::QRCode()
+    : d_ptr(new QRCodePrivate())
 {
 }
 
-QRCode::QRCode(const QString& data,
-    const Version version,
-    const ErrorCorrectionLevel ecl,
-    const bool caseSensitive)
+QRCode::QRCode(const QString& data, const Version version, const ErrorCorrectionLevel ecl, const bool caseSensitive)
     : d_ptr(new QRCodePrivate())
 {
     init(data, version, ecl, caseSensitive);
 }
 
-QRCode::QRCode(const QByteArray& data,
-    const Version version,
-    const ErrorCorrectionLevel ecl)
+QRCode::QRCode(const QByteArray& data, const Version version, const ErrorCorrectionLevel ecl)
     : d_ptr(new QRCodePrivate())
 {
     init(data, version, ecl);
 }
 
-QRCode::~QRCode() =default;
+QRCode::~QRCode() = default;
 
-void QRCode::init(const QString& data,
-    const Version version,
-    const ErrorCorrectionLevel ecl,
-    bool caseSensitive)
+void QRCode::init(const QString& data, const Version version, const ErrorCorrectionLevel ecl, bool caseSensitive)
 {
-    if (data.isEmpty())
+    if (data.isEmpty()) {
         return;
+    }
 
-    d_ptr->m_qrcode = QRcode_encodeString(
-        data.toLocal8Bit().data(),
-        static_cast<int>(version),
-        static_cast<QRecLevel>(ecl),
-        QR_MODE_8,
-        caseSensitive ? 1 : 0);
+    d_ptr->m_qrcode = QRcode_encodeString(data.toLocal8Bit().data(),
+                                          static_cast<int>(version),
+                                          static_cast<QRecLevel>(ecl),
+                                          QR_MODE_8,
+                                          caseSensitive ? 1 : 0);
 }
 
-void QRCode::init(const QByteArray& data,
-  const Version version,
-  const ErrorCorrectionLevel ecl)
+void QRCode::init(const QByteArray& data, const Version version, const ErrorCorrectionLevel ecl)
 {
-    if (data.isEmpty())
+    if (data.isEmpty()) {
         return;
+    }
 
-    d_ptr->m_qrcode = QRcode_encodeData(
-        data.size(),
-        reinterpret_cast<const unsigned char*>(data.data()),
-        static_cast<int>(version),
-        static_cast<QRecLevel>(ecl));
+    d_ptr->m_qrcode = QRcode_encodeData(data.size(),
+                                        reinterpret_cast<const unsigned char*>(data.data()),
+                                        static_cast<int>(version),
+                                        static_cast<QRecLevel>(ecl));
 }
 
 QImage QRCode::toQImage(const int size, const int margin) const
 {
-    if (size <= 0 || margin < 0 || nullptr == d_ptr->m_qrcode)
+    if (size <= 0 || margin < 0 || nullptr == d_ptr->m_qrcode) {
         return QImage();
+    }
 
     const int width = d_ptr->m_qrcode->width + margin * 2;
-    QImage img(QSize(width,width), QImage::Format_Mono);
+    QImage img(QSize(width, width), QImage::Format_Mono);
 
     QPainter painter;
     painter.begin(&img);
@@ -115,9 +109,10 @@ QImage QRCode::toQImage(const int size, const int margin) const
     unsigned char* dot = d_ptr->m_qrcode->data;
     for (int y = 0; y < rowSize; ++y) {
         for (int x = 0; x < rowSize; ++x) {
-            if (quint8(0x01) == (static_cast<quint8>(*dot++) & quint8(0x01)))
+            if (quint8(0x01) == (static_cast<quint8>(*dot++) & quint8(0x01))) {
                 painter.drawRect(margin + x, margin + y, 1, 1);
-      }
+            }
+        }
     }
 
     painter.end();

@@ -24,10 +24,10 @@
 
 struct QRCodePrivate
 {
-  QRcode* m_qrcode;
+    QRcode* m_qrcode;
 
-  QRCodePrivate();
-  ~QRCodePrivate();
+    QRCodePrivate();
+    ~QRCodePrivate();
 };
 
 #endif // KEEPASSX_QRCODEPRIVATE_H

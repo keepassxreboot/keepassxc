@@ -25,28 +25,23 @@
  * by all the main compiler toolchains.
  */
 
-template <typename T>
-class Optional
+template <typename T> class Optional
 {
 public:
-
     // None
-    Optional() :
-        m_hasValue(false),
-        m_value()
-    { };
+    Optional()
+        : m_hasValue(false)
+        , m_value(){};
 
     // Some T
-    Optional(const T& value) :
-        m_hasValue(true),
-        m_value(value)
-    { };
+    Optional(const T& value)
+        : m_hasValue(true)
+        , m_value(value){};
 
     // Copy
-    Optional(const Optional& other) :
-        m_hasValue(other.m_hasValue),
-        m_value(other.m_value)
-    { };
+    Optional(const Optional& other)
+        : m_hasValue(other.m_hasValue)
+        , m_value(other.m_value){};
 
     const Optional& operator=(const Optional& other)
     {
@@ -57,7 +52,7 @@ public:
 
     bool operator==(const Optional& other) const
     {
-        if(m_hasValue)
+        if (m_hasValue)
             return other.m_hasValue && m_value == other.m_value;
         else
             return !other.m_hasValue;
@@ -83,9 +78,7 @@ public:
         return Optional(value);
     }
 
-
 private:
-
     bool m_hasValue;
     T m_value;
 };
