@@ -335,6 +335,7 @@ void Database::merge(const Database* other)
     for (Uuid customIconId : other->metadata()->customIcons().keys()) {
         QImage customIcon = other->metadata()->customIcon(customIconId);
         if (!this->metadata()->containsCustomIcon(customIconId)) {
+            qDebug("Adding custom icon %s to database.", qPrintable(customIconId.toHex()));
             this->metadata()->addCustomIcon(customIconId, customIcon);
         }
     }
