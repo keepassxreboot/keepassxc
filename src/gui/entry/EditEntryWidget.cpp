@@ -446,6 +446,12 @@ void EditEntryWidget::saveEntry()
 
 void EditEntryWidget::acceptEntry()
 {
+    // Check if passwords are mismatched first to prevent saving
+    if (!passwordsEqual()) {
+        showMessage(tr("Different passwords supplied."), MessageWidget::Error);
+        return;
+    }
+
     saveEntry();
     clear();
     emit editFinished(true);
