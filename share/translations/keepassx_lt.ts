@@ -10,71 +10,12 @@
         <translation>Apie</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot;&gt;&lt;span style=&quot;text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;style&gt;li {font-size: 10pt}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Project Maintainers:&lt;/span&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;droidmonkey&lt;/li&gt;&lt;li&gt;phoerious&lt;/li&gt;&lt;li&gt;TheZ3ro&lt;/li&gt;&lt;li&gt;louib&lt;/li&gt;&lt;li&gt;Weslly&lt;/li&gt;&lt;li&gt;debfx (KeePassX)&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Contributors</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;body&gt;
-            &lt;p style=&quot;font-size:x-large; font-weight:600;&quot;&gt;Code:&lt;/p&gt;
-            &lt;ul&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;debfx (KeePassX)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;BlueIce (KeePassX)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;droidmonkey&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;phoerious&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;TheZ3ro&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;louib&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;weslly&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;keithbennett (KeePassHTTP)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;Typz (KeePassHTTP)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;denk-mal (KeePassHTTP)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;kylemanna (YubiKey)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;seatedscribe (CSV Importer)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;pgalves (Inline Messages)&lt;/li&gt;
-            &lt;/ul&gt;
-            &lt;p style=&quot;font-size:x-large; font-weight:600;&quot;&gt;Translations:&lt;/p&gt;
-            &lt;ul&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Chinese:&lt;/span&gt; Biggulu, ligyxy, BestSteve&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Czech:&lt;/span&gt; pavelb, JosefVitu&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Dutch:&lt;/span&gt; Vistaus, KnooL, apie&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Finnish:&lt;/span&gt; MawKKe&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;French:&lt;/span&gt; Scrat15, frgnca, gilbsgilbs, gtalbot, iannick, kyodev, logut&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;German:&lt;/span&gt; Calyrx, DavidHamburg, antsas, codejunky, jensrutschmann, montilo, omnisome4, origin_de, pcrcoding, phoerious, rgloor, vlenzer&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Greek:&lt;/span&gt; nplatis&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Italian:&lt;/span&gt; TheZ3ro, FranzMari, Mte90, tosky&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Kazakh:&lt;/span&gt; sotrud_nik&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Lithuanian:&lt;/span&gt; Moo&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Polish:&lt;/span&gt; konradmb, mrerexx&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Portuguese: &lt;/span&gt;vitor895, weslly, American_Jesus, mihai.ile&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Russian:&lt;/span&gt; vsvyatski, KekcuHa, wkill95&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Spanish:&lt;/span&gt; EdwardNavarro, antifaz, piegope, pquin, vsvyatski&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Swedish:&lt;/span&gt; henziger&lt;/li&gt;
-            &lt;/ul&gt;
-            &lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;See Contributions on GitHub&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>Talkininkai</translation>
     </message>
     <message>
         <source>Debug Info</source>
         <translation>Derinimo informacija</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Include the following information whenever you report a bug:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <source>Copy to clipboard</source>
@@ -98,11 +39,33 @@
         <source>Operating system: %1
 CPU architecture: %2
 Kernel: %3 %4</source>
-        <translation type="unfinished"/>
+        <translation>Operacinė sistema: %1
+Procesoriaus architektūra: %2
+Branduolys: %3 %4</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
-        <translation type="unfinished"/>
+        <translation>Įjungti plėtiniai:</translation>
+    </message>
+    <message>
+        <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
+        <translation>Apie klaidas praneškite adresu: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
+        <translation>KeePassXC yra platinama GNU Bendrosios Viešosios Licencijos (GPL) versijos 2 arba (jūsų pasirinkimu) versijos 3 sąlygomis.</translation>
+    </message>
+    <message>
+        <source>Project Maintainers:</source>
+        <translation>Projektą prižiūri:</translation>
+    </message>
+    <message>
+        <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Žiūrėti talkinimus GitHub puslapyje&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <source>Include the following information whenever you report a bug:</source>
+        <translation>Pranešdami apie klaidą, visuomet pateikite ir šią informaciją:</translation>
     </message>
 </context>
 <context>
@@ -229,121 +192,121 @@ Pasirinkite, ar norite leisti prieigą.</translation>
     </message>
     <message>
         <source>Cha&amp;llenge Response</source>
-        <translation type="unfinished"/>
+        <translation>Iššū&amp;kio atsakymas</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"/>
+        <translation>Įkelti iš naujo</translation>
     </message>
     <message>
         <source>Empty password</source>
-        <translation type="unfinished"/>
+        <translation>Tuščias slaptažodis</translation>
     </message>
     <message>
         <source>Changing master key failed: no YubiKey inserted.</source>
-        <translation type="unfinished"/>
+        <translation>Pagrindinio rakto pakeitimas nepavyko: neįterpta jokio YubiKey.</translation>
     </message>
 </context>
 <context>
     <name>CloneDialog</name>
     <message>
         <source>Clone Options</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Append &apos; - Copy&apos; to title</source>
-        <translation type="unfinished"/>
+        <translation>Dubliavimo parinktys</translation>
     </message>
     <message>
         <source>Replace username and password with references</source>
-        <translation type="unfinished"/>
+        <translation>Pakeisti naudotojo vardą ir slaptažodį nuorodomis</translation>
     </message>
     <message>
         <source>Copy history</source>
-        <translation type="unfinished"/>
+        <translation>Kopijuoti istoriją</translation>
+    </message>
+    <message>
+        <source>Append &apos; - Clone&apos; to title</source>
+        <translation>Pridėti prie pavadinimo &quot; - Dublikatas&quot;</translation>
     </message>
 </context>
 <context>
     <name>CsvImportWidget</name>
     <message>
         <source>Import CSV fields</source>
-        <translation type="unfinished"/>
+        <translation>Importuoti CSV laukus</translation>
     </message>
     <message>
         <source>filename</source>
-        <translation type="unfinished"/>
+        <translation>failo pavadinimas</translation>
     </message>
     <message>
         <source>size, rows, columns</source>
-        <translation type="unfinished"/>
+        <translation>dydis, eilučių, stulpelių</translation>
     </message>
     <message>
         <source>Encoding</source>
-        <translation type="unfinished"/>
+        <translation>Koduotė</translation>
     </message>
     <message>
         <source>Codec</source>
-        <translation type="unfinished"/>
+        <translation>Kodekas</translation>
     </message>
     <message>
         <source>Text is qualified by</source>
-        <translation type="unfinished"/>
+        <translation>Tekstas yra parengtas pagal</translation>
     </message>
     <message>
         <source>Fields are separated by</source>
-        <translation type="unfinished"/>
+        <translation>Laukai yra atskirti</translation>
     </message>
     <message>
         <source>Comments start with</source>
-        <translation type="unfinished"/>
+        <translation>Komentarai prasideda su</translation>
     </message>
     <message>
         <source>First record has field names</source>
-        <translation type="unfinished"/>
+        <translation>Pirmame įraše yra laukų pavadinimai</translation>
     </message>
     <message>
         <source>Number of headers line to discard</source>
-        <translation type="unfinished"/>
+        <translation>Antraštės eilučių, kurias atmesti, skaičius</translation>
     </message>
     <message>
         <source>Consider &apos;\&apos; an escape character</source>
-        <translation type="unfinished"/>
+        <translation>Laikyti &quot;\&quot; kaitos ženklu</translation>
     </message>
     <message>
         <source>Preview</source>
-        <translation type="unfinished"/>
+        <translation>Peržiūra</translation>
     </message>
     <message>
         <source>Column layout</source>
-        <translation type="unfinished"/>
+        <translation>Stulpelio išdėstymas</translation>
     </message>
     <message>
         <source>Not present in CSV file</source>
-        <translation type="unfinished"/>
+        <translation>Nėra CSV faile</translation>
     </message>
     <message>
         <source>Empty fieldname </source>
-        <translation type="unfinished"/>
+        <translation>Tuščias lauko pavadinimas</translation>
     </message>
     <message>
         <source>column </source>
-        <translation type="unfinished"/>
+        <translation>stulpelis </translation>
     </message>
     <message>
         <source>Imported from CSV file</source>
-        <translation type="unfinished"/>
+        <translation>Importuota iš CSV failo</translation>
     </message>
     <message>
         <source>Original data: </source>
-        <translation type="unfinished"/>
+        <translation>Pradiniai duomenys: </translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file !</source>
-        <translation type="unfinished"/>
+        <translation>CSV faile yra aptikta klaida(-os)!</translation>
     </message>
     <message>
         <source> more messages skipped]</source>
-        <translation type="unfinished"/>
+        <translation> dar žinutės praleistos]</translation>
     </message>
     <message>
         <source>Error</source>
@@ -352,14 +315,15 @@ Pasirinkite, ar norite leisti prieigą.</translation>
     <message>
         <source>CSV import: writer has errors:
 </source>
-        <translation type="unfinished"/>
+        <translation>CSV importavimas: tekstų rengyklėje yra klaidų:
+</translation>
     </message>
 </context>
 <context>
     <name>CsvImportWizard</name>
     <message>
         <source>Import CSV file</source>
-        <translation type="unfinished"/>
+        <translation>Importuoti CSV failą</translation>
     </message>
     <message>
         <source>Error</source>
@@ -374,15 +338,15 @@ Pasirinkite, ar norite leisti prieigą.</translation>
     <name>CsvParserModel</name>
     <message>
         <source> byte, </source>
-        <translation type="unfinished"/>
+        <translation> baitų, </translation>
     </message>
     <message>
         <source> rows, </source>
-        <translation type="unfinished"/>
+        <translation> eilučių, </translation>
     </message>
     <message>
         <source> columns</source>
-        <translation type="unfinished"/>
+        <translation> stulpelių</translation>
     </message>
 </context>
 <context>
@@ -425,11 +389,11 @@ Pasirinkite, ar norite leisti prieigą.</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"/>
+        <translation>Įkelti iš naujo</translation>
     </message>
     <message>
         <source>Challenge Response:</source>
-        <translation type="unfinished"/>
+        <translation>Iššūkio atsakymas:</translation>
     </message>
 </context>
 <context>
@@ -509,15 +473,15 @@ Dabar galite ją įrašyti.</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
-        <translation type="unfinished"/>
+        <translation>AES:  256 Bitų   (numatytasis)</translation>
     </message>
     <message>
         <source>Twofish:  256 Bit</source>
-        <translation type="unfinished"/>
+        <translation>Twofish:  256 Bitų</translation>
     </message>
     <message>
         <source>Algorithm:</source>
-        <translation type="unfinished"/>
+        <translation>Algoritmas:</translation>
     </message>
 </context>
 <context>
@@ -661,11 +625,11 @@ Ar vis tiek norite ją atverti?</translation>
     </message>
     <message>
         <source>File opened in read only mode.</source>
-        <translation type="unfinished"/>
+        <translation>Failas atvertas tik skaitymo veiksenoje.</translation>
     </message>
     <message>
         <source>Open CSV file</source>
-        <translation type="unfinished"/>
+        <translation>Atverti CSV failą</translation>
     </message>
 </context>
 <context>
@@ -772,11 +736,11 @@ Ar vis tiek norite ją atverti?</translation>
     </message>
     <message>
         <source>Empty recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Išvalyti šiukšlinę?</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Ar tikrai norite negrįžtamai viską ištrinti iš savo šiukšlinės?</translation>
     </message>
 </context>
 <context>
@@ -861,19 +825,19 @@ Ar vis tiek norite ją atverti?</translation>
     </message>
     <message>
         <source>Confirm Remove</source>
-        <translation type="unfinished"/>
+        <translation>Patvirtinti šalinimą</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this attribute?</source>
-        <translation type="unfinished"/>
+        <translation>Ar tikrai norite pašalinti šį požymi?</translation>
     </message>
     <message>
         <source>[PROTECTED] Press reveal to view or edit</source>
-        <translation type="unfinished"/>
+        <translation>[APSAUGOTA] Norėdami rodyti ar redaguoti, paspauskite atskleisti</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this attachment?</source>
-        <translation type="unfinished"/>
+        <translation>Ar tikrai norite pašalinti šį priedą?</translation>
     </message>
 </context>
 <context>
@@ -904,15 +868,15 @@ Ar vis tiek norite ją atverti?</translation>
     </message>
     <message>
         <source>Edit Name</source>
-        <translation type="unfinished"/>
+        <translation>Taisyti pavadinimą</translation>
     </message>
     <message>
         <source>Protect</source>
-        <translation type="unfinished"/>
+        <translation>Apsaugoti</translation>
     </message>
     <message>
         <source>Reveal</source>
-        <translation type="unfinished"/>
+        <translation>Atskleisti</translation>
     </message>
 </context>
 <context>
@@ -951,7 +915,7 @@ Ar vis tiek norite ją atverti?</translation>
     </message>
     <message>
         <source>Window Associations</source>
-        <translation type="unfinished"/>
+        <translation>Lango asociacijos</translation>
     </message>
 </context>
 <context>
@@ -1067,11 +1031,11 @@ Ar vis tiek norite ją atverti?</translation>
     </message>
     <message>
         <source>&amp;Use default Auto-Type sequence of parent group</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Naudoti numatytąją pirminės grupės automatinio rinkimo seką</translation>
     </message>
     <message>
         <source>Set default Auto-Type se&amp;quence</source>
-        <translation type="unfinished"/>
+        <translation>Nustatyti numatytąją automatinio rinkimo se&amp;ką</translation>
     </message>
 </context>
 <context>
@@ -1097,10 +1061,6 @@ Ar vis tiek norite ją atverti?</translation>
         <translation>Pasirinkite paveikslą</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translation>Klaida</translation>
-    </message>
-    <message>
         <source>Download favicon</source>
         <translation>Atsisiųsti svetainės piktogramą</translation>
     </message>
@@ -1122,10 +1082,18 @@ Ar vis tiek norite ją atverti?</translation>
     </message>
     <message>
         <source>Confirm Delete</source>
-        <translation type="unfinished"/>
+        <translation>Patvirtinti ištrynimą</translation>
     </message>
     <message>
         <source>This icon is used by %1 entries, and will be replaced by the default icon. Are you sure you want to delete it?</source>
+        <translation>Šią piktogramą naudoja %1 įrašai ir ji bus pakeista numatytąja piktograma. Ar tikrai norite ją ištrinti?</translation>
+    </message>
+    <message>
+        <source>Hint: You can enable Google as a fallback under Tools&gt;Settings&gt;Security</source>
+        <translation>Patarimas: Jūs galite įjungti Google kaip surogatą, perėję į Įrankiai&gt;Nustatymai&gt;Saugumas</translation>
+    </message>
+    <message>
+        <source>Custom icon already exists</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1202,7 +1170,7 @@ Ar vis tiek norite ją atverti?</translation>
     <message>
         <source>Ref: </source>
         <comment>Reference abbreviation</comment>
-        <translation type="unfinished"/>
+        <translation>Nuoroda: </translation>
     </message>
 </context>
 <context>
@@ -1267,11 +1235,11 @@ Ar vis tiek norite ją atverti?</translation>
     <name>KMessageWidget</name>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Užverti</translation>
     </message>
     <message>
         <source>Close message</source>
-        <translation type="unfinished"/>
+        <translation>Užverti žinutę</translation>
     </message>
 </context>
 <context>
@@ -1335,18 +1303,18 @@ Ar vis tiek norite ją atverti?</translation>
         <translation>Nepavyko apskaičiuoti pagrindinio rakto</translation>
     </message>
     <message>
+        <source>Unable to issue challenge-response.</source>
+        <translation>Nepavyko išduoti iššūkio atsakymo.</translation>
+    </message>
+    <message>
         <source>The selected file is an old KeePass 1 database (.kdb).
 
-You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
+You can import it by clicking on Database &gt; 'Import KeePass 1 database...'.
 This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
         <translation>Pasirinktas failas yra sena KeePass 1 duomenų bazė (.kdb).
 
-Jūs galite ją importuoti, nuspausdami Duomenų bazė &gt; &quot;Importuoti KeePass 1 duomenų bazę&quot;.
+Jūs galite ją importuoti, nuspausdami Duomenų bazė &gt; &quot;Importuoti KeePass 1 duomenų bazę...&quot;.
 Tai yra vienakryptis perkėlimas. Jūs negalėsite atverti importuotos duomenų bazės, naudodami senąją KeePassX 0.4 versija.</translation>
-    </message>
-    <message>
-        <source>Unable to issue challenge-response.</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1361,10 +1329,14 @@ Tai yra vienakryptis perkėlimas. Jūs negalėsite atverti importuotos duomenų 
     </message>
     <message>
         <source>The lock file could not be created. Single-instance mode disabled.</source>
-        <translation type="unfinished"/>
+        <translation>Nepavyko sukurti užrakto. Vieno egzemplioriaus veiksena išjungta.</translation>
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
+        <translation>Jau yra paleistas kitas KeePassXC egzempliorius.</translation>
+    </message>
+    <message>
+        <source>Existing single-instance lock file is invalid. Launching new instance.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1423,10 +1395,6 @@ Tai yra vienakryptis perkėlimas. Jūs negalėsite atverti importuotos duomenų 
         <translation>&amp;Paskiausiai naudotos duomenų bazės</translation>
     </message>
     <message>
-        <source>He&amp;lp</source>
-        <translation>Pa&amp;galba</translation>
-    </message>
-    <message>
         <source>E&amp;ntries</source>
         <translation>Į&amp;rašai</translation>
     </message>
@@ -1449,10 +1417,6 @@ Tai yra vienakryptis perkėlimas. Jūs negalėsite atverti importuotos duomenų 
     <message>
         <source>&amp;About</source>
         <translation>&amp;Apie</translation>
-    </message>
-    <message>
-        <source>&amp;Open database</source>
-        <translation>&amp;Atverti duomenų bazę</translation>
     </message>
     <message>
         <source>&amp;Save database</source>
@@ -1495,36 +1459,24 @@ Tai yra vienakryptis perkėlimas. Jūs negalėsite atverti importuotos duomenų 
         <translation>&amp;Ištrinti grupę</translation>
     </message>
     <message>
-        <source>Sa&amp;ve database as</source>
-        <translation>Įraš&amp;yti duomenų bazę kaip</translation>
-    </message>
-    <message>
-        <source>Change &amp;master key</source>
-        <translation>Pakeisti &amp;pagrindinį raktą</translation>
-    </message>
-    <message>
         <source>&amp;Database settings</source>
         <translation>&amp;Duomenų bazės nustatymai</translation>
     </message>
     <message>
         <source>&amp;Clone entry</source>
-        <translation>&amp;Dublikuoti įrašą</translation>
+        <translation>&amp;Dubliuoti įrašą</translation>
     </message>
     <message>
         <source>Timed one-time password</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Setup TOTP</source>
-        <translation type="unfinished"/>
+        <translation>Numatytosios trukmės vienkartinis slaptažodis</translation>
     </message>
     <message>
         <source>Copy &amp;TOTP</source>
-        <translation type="unfinished"/>
+        <translation>Kopijuoti &amp;NTVS</translation>
     </message>
     <message>
         <source>Show TOTP</source>
-        <translation type="unfinished"/>
+        <translation>Rodyti NTVS</translation>
     </message>
     <message>
         <source>&amp;Find</source>
@@ -1567,56 +1519,76 @@ Tai yra vienakryptis perkėlimas. Jūs negalėsite atverti importuotos duomenų 
         <translation>&amp;Pastabos</translation>
     </message>
     <message>
-        <source>&amp;Export to CSV file</source>
-        <translation>&amp;Eksportuoti į CSV failą</translation>
-    </message>
-    <message>
-        <source>Re&amp;pair database</source>
-        <translation>Pa&amp;taisyti duomenų bazę</translation>
-    </message>
-    <message>
         <source>Password Generator</source>
         <translation>Slaptažodžių generatorius</translation>
     </message>
     <message>
         <source>Clear history</source>
-        <translation type="unfinished"/>
+        <translation>Išvalyti istoriją</translation>
     </message>
     <message>
         <source>&amp;Database</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Duomenų bazė</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"/>
+        <translation>Importuoti</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Import KeePass 1 database</source>
-        <translation>Importuoti KeePass 1 duomenų bazę</translation>
-    </message>
-    <message>
-        <source>Import CSV file</source>
-        <translation type="unfinished"/>
+        <translation>Į&amp;rankiai</translation>
     </message>
     <message>
         <source>Empty recycle bin</source>
-        <translation type="unfinished"/>
+        <translation>Išvalyti šiukšlinę</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation type="unfinished"/>
+        <translation>Konfigūracijos failo %1 prieigos klaida</translation>
     </message>
     <message>
         <source>Quit KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>Išeiti iš KeePassXC</translation>
     </message>
     <message>
         <source>Please touch the button on your YubiKey!</source>
-        <translation type="unfinished"/>
+        <translation>Prašome priliesti mygtuką ant savo YubiKey!</translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation>Ž&amp;inynas</translation>
+    </message>
+    <message>
+        <source>&amp;Open database...</source>
+        <translation>&amp;Atverti duomenų bazę...</translation>
+    </message>
+    <message>
+        <source>Sa&amp;ve database as...</source>
+        <translation>Įraš&amp;yti duomenų bazę kaip...</translation>
+    </message>
+    <message>
+        <source>Change &amp;master key...</source>
+        <translation>Pakeisti &amp;pagrindinį raktą...</translation>
+    </message>
+    <message>
+        <source>&amp;Export to CSV file...</source>
+        <translation>&amp;Eksportuoti į CSV failą...</translation>
+    </message>
+    <message>
+        <source>Import KeePass 1 database...</source>
+        <translation>Importuoti KeePass 1 duomenų bazę...</translation>
+    </message>
+    <message>
+        <source>Import CSV file...</source>
+        <translation>Importuoti CSV failą...</translation>
+    </message>
+    <message>
+        <source>Re&amp;pair database...</source>
+        <translation>Pa&amp;taisyti duomenų bazę...</translation>
+    </message>
+    <message>
+        <source>Set up TOTP...</source>
+        <translation>Nustatyti NTVS...</translation>
     </message>
 </context>
 <context>
@@ -1701,27 +1673,27 @@ Naudojamas numatytasis prievadas 19455.</translation>
     </message>
     <message>
         <source>This is required for accessing your databases from ChromeIPass or PassIFox</source>
-        <translation type="unfinished"/>
+        <translation>Tai reikalinga, norint prie savo duomenų bazių gauti prieigą iš ChromeIPass ar PassIFox</translation>
     </message>
     <message>
         <source>Enable KeePassHTTP server</source>
-        <translation type="unfinished"/>
+        <translation>Įjungti KeePassHTTP serverį</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
-        <translation type="unfinished"/>
+        <translation>Vietoj visos srities visų įrašų, grąžina tik geriausiai tam tikrą URL atitinkančius įrašus.</translation>
     </message>
     <message>
         <source>&amp;Return only best matching entries</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Grąžinti tik labiausiai atitinkančius įrašus</translation>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, ftp://, ...) are returned.</source>
-        <translation type="unfinished"/>
+        <translation>Bus grąžinami įrašai tik su ta pačia schema (http://, https://, ftp://, ...).</translation>
     </message>
     <message>
         <source>&amp;Match URL schemes</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Atitikti URL schemas</translation>
     </message>
     <message>
         <source>Password Generator</source>
@@ -1729,12 +1701,13 @@ Naudojamas numatytasis prievadas 19455.</translation>
     </message>
     <message>
         <source>Only the selected database has to be connected with a client.</source>
-        <translation type="unfinished"/>
+        <translation>Su klientu turi būti sujungta tik pasirinkta duomenų bazė.</translation>
     </message>
     <message>
         <source>The following options can be dangerous!
 Change them only if you know what you are doing.</source>
-        <translation type="unfinished"/>
+        <translation>Šie parametrai gali būti pavojingi!
+Keiskite juos tik tuo atveju, jeigu žinote ką darote.</translation>
     </message>
 </context>
 <context>
@@ -1833,55 +1806,56 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>Extended ASCII</source>
-        <translation type="unfinished"/>
+        <translation>Papildomi ASCII</translation>
     </message>
     <message>
         <source>Passphrase</source>
-        <translation type="unfinished"/>
+        <translation>Slaptafrazė</translation>
     </message>
     <message>
         <source>Wordlist:</source>
-        <translation type="unfinished"/>
+        <translation>Žodžių sąrašas:</translation>
     </message>
     <message>
         <source>Word Count:</source>
-        <translation type="unfinished"/>
+        <translation>Žodžių skaičius:</translation>
     </message>
     <message>
         <source>Word Separator:</source>
-        <translation type="unfinished"/>
+        <translation>Žodžių skirtukas:</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Kopijuoti</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>NULL device</source>
-        <translation type="unfinished"/>
+        <translation>NIEKINIS įrenginys</translation>
     </message>
     <message>
         <source>error reading from device</source>
-        <translation type="unfinished"/>
+        <translation>klaida skaitant iš įrenginio</translation>
     </message>
     <message>
         <source>file empty !
 </source>
-        <translation type="unfinished"/>
+        <translation>failas tuščias!
+</translation>
     </message>
     <message>
         <source>malformed string</source>
-        <translation type="unfinished"/>
+        <translation>netaisyklinga eilutė</translation>
     </message>
     <message>
         <source>missing closing quote</source>
-        <translation type="unfinished"/>
+        <translation>trūksta užveriamosios kabutės</translation>
     </message>
     <message>
         <source>INTERNAL - unget lower bound exceeded</source>
-        <translation type="unfinished"/>
+        <translation>VIDINIS - viršyta apatinė negavimo riba</translation>
     </message>
     <message>
         <source>Group</source>
@@ -1909,19 +1883,19 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation type="unfinished"/>
+        <translation>Naršyklės integracija</translation>
     </message>
     <message>
         <source>YubiKey[%1] Challenge Response - Slot %2 - %3</source>
-        <translation type="unfinished"/>
+        <translation>YubiKey[%1] iššūkio atsakymas - Lizdas %2 - %3</translation>
     </message>
     <message>
         <source>Press</source>
-        <translation type="unfinished"/>
+        <translation>Paspausti</translation>
     </message>
     <message>
         <source>Passive</source>
-        <translation type="unfinished"/>
+        <translation>Pasyvus</translation>
     </message>
 </context>
 <context>
@@ -1974,11 +1948,11 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Ieškoti...</translation>
     </message>
     <message>
         <source>Limit search to selected group</source>
-        <translation type="unfinished"/>
+        <translation>Riboti paiešką iki pasirinktos grupės</translation>
     </message>
 </context>
 <context>
@@ -2089,7 +2063,7 @@ ir priimtumėte jį.</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation type="unfinished"/>
+        <translation>Konfigūracijos failo %1 prieigos klaida</translation>
     </message>
 </context>
 <context>
@@ -2148,15 +2122,15 @@ ir priimtumėte jį.</translation>
     </message>
     <message>
         <source>Basic Settings</source>
-        <translation type="unfinished"/>
+        <translation>Pagrindiniai nustatymai</translation>
     </message>
     <message>
         <source>Remember last key files and security dongles</source>
-        <translation type="unfinished"/>
+        <translation>Prisiminti paskutinius rakto failus ir saugumo saugiklius</translation>
     </message>
     <message>
         <source>Don&apos;t mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation type="unfinished"/>
+        <translation>Nežymėti duomenų bazė kaip pakeistą, jei buvo keičiami ne duomenys, o kita (pvz., išskleidžiamos grupės)</translation>
     </message>
     <message>
         <source>Auto-Type</source>
@@ -2164,11 +2138,23 @@ ir priimtumėte jį.</translation>
     </message>
     <message>
         <source>Use entry title and URL to match windows for global Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>Naudoti įrašo antraštę ir URL, norint sutapatinti langus visuotiniam automatiniam rinkimui</translation>
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>Visada klausti prieš atliekant automatinį rinkimą</translation>
+    </message>
+    <message>
+        <source>Auto-Type delay</source>
+        <translation>Automatinio rinkimo delsa</translation>
+    </message>
+    <message>
+        <source> ms</source>
+        <translation> ms</translation>
+    </message>
+    <message>
+        <source>Start only a single instance of KeePassXC</source>
+        <translation>Paleisti tik vieną KeePassXC egzempliorių</translation>
     </message>
 </context>
 <context>
@@ -2199,50 +2185,58 @@ ir priimtumėte jį.</translation>
     </message>
     <message>
         <source>Timeouts</source>
-        <translation type="unfinished"/>
+        <translation>Laiko limitai</translation>
     </message>
     <message>
         <source>Convenience</source>
-        <translation type="unfinished"/>
+        <translation>Patogumas</translation>
     </message>
     <message>
         <source>Lock databases when session is locked or lid is closed</source>
-        <translation type="unfinished"/>
+        <translation>Užrakinti duomenų bazes, kai yra užrakinamas ekranas ar uždaromas nešiojamojo kompiuterio dangtis</translation>
+    </message>
+    <message>
+        <source>Privacy</source>
+        <translation>Privatumas</translation>
+    </message>
+    <message>
+        <source>Use Google as fallback for downloading website icons</source>
+        <translation>Naudoti Google kaip surogatą svetainių piktogramų atsiuntimui</translation>
     </message>
 </context>
 <context>
     <name>SetupTotpDialog</name>
     <message>
         <source>Setup TOTP</source>
-        <translation type="unfinished"/>
+        <translation>Nustatyti NTVS</translation>
     </message>
     <message>
         <source>Key:</source>
-        <translation type="unfinished"/>
+        <translation>Raktas:</translation>
     </message>
     <message>
         <source>Use custom settings</source>
-        <translation type="unfinished"/>
+        <translation>Naudoti tinkintus nustatymus</translation>
     </message>
     <message>
         <source>Note: Change these settings only if you know what you are doing.</source>
-        <translation type="unfinished"/>
+        <translation>Pastaba: Keiskite šiuos nustatymus tik tuo atveju, jeigu žinote ką darote.</translation>
     </message>
     <message>
         <source>Time step:</source>
-        <translation type="unfinished"/>
+        <translation>Laiko žingsnis:</translation>
     </message>
     <message>
         <source>8 digits</source>
-        <translation type="unfinished"/>
+        <translation>8 skaitmenys</translation>
     </message>
     <message>
         <source>6 digits</source>
-        <translation type="unfinished"/>
+        <translation>6 skaitmenys</translation>
     </message>
     <message>
         <source>Code size:</source>
-        <translation type="unfinished"/>
+        <translation>Kodo dydis:</translation>
     </message>
     <message>
         <source> sec</source>
@@ -2253,23 +2247,23 @@ ir priimtumėte jį.</translation>
     <name>TotpDialog</name>
     <message>
         <source>Timed Password</source>
-        <translation type="unfinished"/>
+        <translation>Numatytosios trukmės slaptažodis</translation>
     </message>
     <message>
         <source>000000</source>
-        <translation type="unfinished"/>
+        <translation>000000</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Kopijuoti</translation>
     </message>
     <message>
         <source>Expires in</source>
-        <translation type="unfinished"/>
+        <translation>Nustoja galioti po</translation>
     </message>
     <message>
         <source>seconds</source>
-        <translation type="unfinished"/>
+        <translation>sekundžių</translation>
     </message>
 </context>
 <context>
@@ -2283,27 +2277,27 @@ ir priimtumėte jį.</translation>
     <name>WelcomeWidget</name>
     <message>
         <source>Welcome to KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>Sveiki atvykę į KeePassXC</translation>
     </message>
     <message>
         <source>Start storing your passwords securely in a KeePassXC database</source>
-        <translation type="unfinished"/>
+        <translation>Pradėkite saugiai laikyti savo slaptažodžius KeePassXC duomenų bazėje</translation>
     </message>
     <message>
         <source>Create new database</source>
-        <translation type="unfinished"/>
+        <translation>Sukurti naują duomenų bazę</translation>
     </message>
     <message>
         <source>Open existing database</source>
-        <translation type="unfinished"/>
+        <translation>Atverti esamą duomenų bazę</translation>
     </message>
     <message>
         <source>Import from KeePass 1</source>
-        <translation type="unfinished"/>
+        <translation>Importuoti iš KeePass </translation>
     </message>
     <message>
         <source>Import from CSV</source>
-        <translation type="unfinished"/>
+        <translation>Importuoti iš CSV</translation>
     </message>
     <message>
         <source>Recent databases</source>
@@ -2334,67 +2328,67 @@ ir priimtumėte jį.</translation>
     </message>
     <message>
         <source>Copy a password to the clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopijuoti slaptažodį į iškarpinę</translation>
     </message>
     <message>
         <source>Path of the database.</source>
-        <translation type="unfinished"/>
+        <translation>Duomenų bazės kelias.</translation>
     </message>
     <message>
         <source>Use a GUI prompt unlocking the database.</source>
-        <translation type="unfinished"/>
+        <translation>Naudoti grafinę duomenų bazės atrakinimo užklausą.</translation>
     </message>
     <message>
         <source>Name of the entry to clip.</source>
-        <translation type="unfinished"/>
+        <translation>Įrašo, kurį apkirpti, pavadinimas.</translation>
     </message>
     <message>
         <source>Extract and print the content of a database.</source>
-        <translation type="unfinished"/>
+        <translation>Išskleisti ir spausdinti duomenų bazės turinį.</translation>
     </message>
     <message>
         <source>Path of the database to extract.</source>
-        <translation type="unfinished"/>
+        <translation>Duomenų bazės, kurią išskleisti, kelias.</translation>
     </message>
     <message>
         <source>Name of the command to execute.</source>
-        <translation type="unfinished"/>
+        <translation>Komandos, kurią vykdyti, pavadinimas.</translation>
     </message>
     <message>
         <source>List database entries.</source>
-        <translation type="unfinished"/>
+        <translation>Išvardyti duomenų bazės įrašus.</translation>
     </message>
     <message>
         <source>Path of the group to list. Default is /</source>
-        <translation type="unfinished"/>
+        <translation>Grupės, kurią išvardyti, kelias. Numatytasis yra /</translation>
     </message>
     <message>
         <source>Print the UUIDs of the entries and groups.</source>
-        <translation type="unfinished"/>
+        <translation>Spausdinti įrašų ir grupių UUID.</translation>
     </message>
     <message>
         <source>Merge two databases.</source>
-        <translation type="unfinished"/>
+        <translation>Sulieti dvi duomenų bazes.</translation>
     </message>
     <message>
         <source>Path of the database to merge into.</source>
-        <translation type="unfinished"/>
+        <translation>Duomenų bazės, į kurią sulieti, kelias.</translation>
     </message>
     <message>
         <source>Path of the database to merge from.</source>
-        <translation type="unfinished"/>
+        <translation>Duomenų bazės, iš kurios sulieti, kelias.</translation>
     </message>
     <message>
         <source>Use the same password for both database files.</source>
-        <translation type="unfinished"/>
+        <translation>Abiems duomenų bazių failams naudoti tą patį slaptažodį.</translation>
     </message>
     <message>
         <source>Show a password.</source>
-        <translation type="unfinished"/>
+        <translation>Rodyti slaptažodį.</translation>
     </message>
     <message>
         <source>Name of the entry to show.</source>
-        <translation type="unfinished"/>
+        <translation>Įrašo, kurį rodyti, pavadinimas.</translation>
     </message>
 </context>
 </TS>
