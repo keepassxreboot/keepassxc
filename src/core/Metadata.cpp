@@ -15,6 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QtCore/QCryptographicHash>
 #include "Metadata.h"
 
 #include "core/Entry.h"
@@ -390,6 +391,9 @@ void Metadata::addCustomIcon(const Uuid& uuid, const QImage& icon)
     m_customIconCacheKeys[uuid] = QPixmapCache::Key();
     m_customIconScaledCacheKeys[uuid] = QPixmapCache::Key();
     m_customIconsOrder.append(uuid);
+    // Associate image hash to uuid
+    QByteArray hash = hashImage(icon);
+    m_customIconsHashes[hash] = uuid;
     Q_ASSERT(m_customIcons.count() == m_customIconsOrder.count());
     emit modified();
 }
@@ -415,6 +419,12 @@ void Metadata::removeCustomIcon(const Uuid& uuid)
     Q_ASSERT(!uuid.isNull());
     Q_ASSERT(m_customIcons.contains(uuid));
 
+    // Remove hash record only if this is the same uuid
+    QByteArray hash = hashImage(m_customIcons[uuid]);
+    if (m_customIconsHashes.contains(hash) && m_customIconsHashes[hash] == uuid) {
+        m_customIconsHashes.remove(hash);
+    }
+
     m_customIcons.remove(uuid);
     QPixmapCache::remove(m_customIconCacheKeys.value(uuid));
     m_customIconCacheKeys.remove(uuid);
@@ -423,6 +433,12 @@ void Metadata::removeCustomIcon(const Uuid& uuid)
     m_customIconsOrder.removeAll(uuid);
     Q_ASSERT(m_customIcons.count() == m_customIconsOrder.count());
     emit modified();
+}
+
+Uuid Metadata::findCustomIcon(const QImage &candidate)
+{
+    QByteArray hash = hashImage(candidate);
+    return m_customIconsHashes.value(hash, Uuid());
 }
 
 void Metadata::copyCustomIcons(const QSet<Uuid>& iconList, const Metadata* otherMetadata)
@@ -434,6 +450,12 @@ void Metadata::copyCustomIcons(const QSet<Uuid>& iconList, const Metadata* other
             addCustomIcon(uuid, otherMetadata->customIcon(uuid));
         }
     }
+}
+
+QByteArray Metadata::hashImage(const QImage& image)
+{
+    auto data = QByteArray((char*)image.bits(), image.byteCount());
+    return QCryptographicHash::hash(data, QCryptographicHash::Md5);
 }
 
 void Metadata::setRecycleBinEnabled(bool value)

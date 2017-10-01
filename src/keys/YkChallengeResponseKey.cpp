@@ -50,7 +50,7 @@ QByteArray YkChallengeResponseKey::rawKey() const
  */
 bool YkChallengeResponseKey::challenge(const QByteArray& challenge)
 {
-    return this->challenge(challenge, 1);
+    return this->challenge(challenge, 2);
 }
 
 bool YkChallengeResponseKey::challenge(const QByteArray& challenge, unsigned retries)
@@ -70,8 +70,8 @@ bool YkChallengeResponseKey::challenge(const QByteArray& challenge, unsigned ret
 
         QEventLoop loop;
         QFutureWatcher<YubiKey::ChallengeResult> watcher;
-        watcher.setFuture(future);
         connect(&watcher, SIGNAL(finished()), &loop, SLOT(quit()));
+        watcher.setFuture(future);
         loop.exec();
 
         if (m_blocking) {

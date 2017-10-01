@@ -78,7 +78,8 @@ private slots:
     void fetchFaviconFromGoogle(const QString& domain);
     void resetFaviconDownload(bool clearRedirect = true);
 #endif
-    void addCustomIcon();
+    void addCustomIconFromFile();
+    void addCustomIcon(const QImage& icon);
     void removeCustomIcon();
     void updateWidgetsDefaultIcons(bool checked);
     void updateWidgetsCustomIcons(bool checked);

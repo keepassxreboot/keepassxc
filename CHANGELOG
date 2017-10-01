@@ -1,3 +1,17 @@
+2.2.1 (2017-10-01)
+=========================
+
+- Corrected multiple snap issues [#934, #1011]
+- Corrected multiple custom icon issues [#708, #719, #994]
+- Corrected multiple Yubikey issues [#880]
+- Fixed single instance preventing load on occasion [#997]
+- Keep entry history when merging databases [#970]
+- Prevent data loss if passwords were mismatched [#1007]
+- Fixed crash after merge [#941]
+- Added configurable auto-type default delay [#703]
+- Unlock database dialog window comes to front [#663]
+- Translation and compiling fixes
+
 2.2.0 (2017-06-23)
 =========================
 

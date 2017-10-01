@@ -142,6 +142,7 @@ public:
      */
     Entry* clone(CloneFlags flags) const;
     void copyDataFrom(const Entry* other);
+    QString maskPasswordPlaceholders(const QString& str) const;
     QString resolveMultiplePlaceholders(const QString& str) const;
     QString resolvePlaceholder(const QString& str) const;
     QString resolveUrl(const QString& url) const;

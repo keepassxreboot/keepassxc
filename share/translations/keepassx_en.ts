@@ -211,15 +211,15 @@ Please select whether you want to allow access.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Append &apos; - Copy&apos; to title</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Replace username and password with references</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Copy history</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Append &apos; - Clone&apos; to title</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1056,10 +1056,6 @@ Do you want to open it anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Download favicon</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1085,6 +1081,14 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>This icon is used by %1 entries, and will be replaced by the default icon. Are you sure you want to delete it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hint: You can enable Google as a fallback under Tools&gt;Settings&gt;Security</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom icon already exists</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1294,14 +1298,14 @@ Do you want to open it anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The selected file is an old KeePass 1 database (.kdb).
-
-You can import it by clicking on Database &gt; &apos;Import KeePass 1 database&apos;.
-This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <source>Unable to issue challenge-response.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to issue challenge-response.</source>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; &apos;Import KeePass 1 database...&apos;.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1321,6 +1325,10 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Existing single-instance lock file is invalid. Launching new instance.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1379,10 +1387,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>He&amp;lp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>E&amp;ntries</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1404,10 +1408,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&amp;About</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Open database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1451,14 +1451,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sa&amp;ve database as</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change &amp;master key</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Database settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1468,10 +1460,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Timed one-time password</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Setup TOTP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1523,14 +1511,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Export to CSV file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Re&amp;pair database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Password Generator</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1551,14 +1531,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Import KeePass 1 database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Import CSV file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Empty recycle bin</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1572,6 +1544,42 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Please touch the button on your YubiKey!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Open database...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sa&amp;ve database as...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change &amp;master key...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Export to CSV file...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import KeePass 1 database...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import CSV file...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Re&amp;pair database...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set up TOTP...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2126,6 +2134,10 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source> ms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start only a single instance of KeePassXC</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

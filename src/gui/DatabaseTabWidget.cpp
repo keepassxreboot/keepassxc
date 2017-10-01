@@ -363,6 +363,8 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
             emit messageDismissTab();
             return true;
         } else {
+            dbStruct.modified = true;
+            updateTabName(db);
             emit messageTab(tr("Writing the database failed.").append("\n").append(errorMessage),
                             MessageWidget::Error);
             return false;
