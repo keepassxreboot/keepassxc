@@ -34,6 +34,16 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
+        <widget class="QCheckBox" name="singleInstanceCheckBox">
+         <property name="text">
+          <string>Start only a single instance of KeePassXC</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QCheckBox" name="rememberLastDatabasesCheckBox">
          <property name="text">
           <string>Remember last databases</string>
@@ -318,33 +328,53 @@
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <property name="spacing">
-          <number>15</number>
+        <layout class="QFormLayout" name="formLayout_2">
+         <property name="topMargin">
+          <number>10</number>
          </property>
-         <item alignment="Qt::AlignRight">
-          <widget class="QLabel" name="autoTypeShortcutLabel">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
+         <item row="1" column="0">
+          <widget class="QLabel" name="autoTypeShortcutLabel_2">
            <property name="text">
             <string>Global Auto-Type shortcut</string>
            </property>
-           <property name="alignment">
-            <set>Qt::AlignLeading</set>
-           </property>
           </widget>
          </item>
-         <item>
+         <item row="1" column="1">
           <widget class="ShortcutWidget" name="autoTypeShortcutWidget">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="autoTypeDelayLabel_2">
+           <property name="text">
+            <string>Auto-Type delay</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QSpinBox" name="autoTypeDelaySpinBox">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="suffix">
+            <string> ms</string>
+           </property>
+           <property name="prefix">
+            <string/>
+           </property>
+           <property name="maximum">
+            <number>999</number>
+           </property>
+           <property name="value">
+            <number>25</number>
            </property>
           </widget>
          </item>

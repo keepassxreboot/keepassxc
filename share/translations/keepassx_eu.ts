@@ -1,13 +1,13 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="kk" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="eu" version="2.1">
 <context>
     <name>AboutDialog</name>
     <message>
         <source>About KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC-i buruz</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"/>
+        <translation>Honi buruz</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -19,12 +19,13 @@
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopiatu arbelera</translation>
     </message>
     <message>
         <source>Version %1
 </source>
-        <translation type="unfinished"/>
+        <translation>%1 bertsioa
+</translation>
     </message>
     <message>
         <source>Revision: %1</source>
@@ -32,7 +33,7 @@
     </message>
     <message>
         <source>Libraries:</source>
-        <translation type="unfinished"/>
+        <translation>Liburutegiak:</translation>
     </message>
     <message>
         <source>Operating system: %1
@@ -42,7 +43,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Enabled extensions:</source>
-        <translation type="unfinished"/>
+        <translation>Gaitutako hedapenak:</translation>
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
@@ -58,7 +59,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Ikusi ekarpenak GitHub-en&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
@@ -69,15 +70,15 @@ Kernel: %3 %4</source>
     <name>AccessControlDialog</name>
     <message>
         <source>Remember this decision</source>
-        <translation type="unfinished"/>
+        <translation>Gogoratu erabaki hau</translation>
     </message>
     <message>
         <source>Allow</source>
-        <translation type="unfinished"/>
+        <translation>Onartu</translation>
     </message>
     <message>
         <source>Deny</source>
-        <translation type="unfinished"/>
+        <translation>Debekatu</translation>
     </message>
     <message>
         <source>%1 has requested access to passwords for the following item(s).
@@ -93,7 +94,7 @@ Please select whether you want to allow access.</source>
     <name>AutoType</name>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation>Терезе атауына сай келетін жазбаны табу мүмкін емес:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
@@ -104,22 +105,22 @@ Please select whether you want to allow access.</source>
     <name>AutoTypeAssociationsModel</name>
     <message>
         <source>Window</source>
-        <translation>Терезе</translation>
+        <translation>Leihoa</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Тізбек</translation>
+        <translation>Sekuentzia</translation>
     </message>
     <message>
         <source>Default sequence</source>
-        <translation>Үнсіз келісім тізбегі</translation>
+        <translation>Lehenetsitako sekuentzia</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>Автотеру үшін жазбаны таңдаңыз:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
@@ -130,61 +131,60 @@ Please select whether you want to allow access.</source>
     <name>ChangeMasterKeyWidget</name>
     <message>
         <source>Password</source>
-        <translation>Пароль</translation>
+        <translation>Pasahitza</translation>
     </message>
     <message>
         <source>Enter password:</source>
-        <translation>Парольді енгізіңіз:</translation>
+        <translation>Sartu pasahitza:</translation>
     </message>
     <message>
         <source>Repeat password:</source>
-        <translation>Парольді қайталаңыз:</translation>
+        <translation>Errepikatu pasahitza:</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Шолу</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Create</source>
-        <translation>Жасау</translation>
+        <translation>Sortu</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Кілттер файлдары</translation>
+        <translation>Gako fitxategiak</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Барлық файлдар</translation>
+        <translation>Fitxategi guztiak</translation>
     </message>
     <message>
         <source>Create Key File...</source>
-        <translation>Кілттер файлын жасау...</translation>
+        <translation>Sortu gako fitxategia...</translation>
     </message>
     <message>
         <source>Unable to create Key File : </source>
-        <translation>Кілттер файлын жасау мүмкін емес:</translation>
+        <translation>Ezin izan da gako fitxategia sortu :</translation>
     </message>
     <message>
         <source>Select a key file</source>
-        <translation>Кілттер файлын таңдаңыз</translation>
+        <translation>Aukeratu gako fitxategia</translation>
     </message>
     <message>
         <source>Do you really want to use an empty string as password?</source>
-        <translation>Пароль ретінде бос жолды қолдануды шынымен қалайсыз ба?</translation>
+        <translation>Kate hutsa pasahitz modura erabili?</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Әр түрлі парольдер көрсетілді.</translation>
+        <translation>Pasahitz desberdinak paratu dira.</translation>
     </message>
     <message>
         <source>Failed to set %1 as the Key file:
 %2</source>
-        <translation>%1 файлын кілттер файлы ретінде орнату қатесі:
-%2</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Key file</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Gako fitxategia</translation>
     </message>
     <message>
         <source>Cha&amp;llenge Response</source>
@@ -192,11 +192,11 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"/>
+        <translation>Freskatu</translation>
     </message>
     <message>
         <source>Empty password</source>
-        <translation type="unfinished"/>
+        <translation>Hustu pasahitza</translation>
     </message>
     <message>
         <source>Changing master key failed: no YubiKey inserted.</source>
@@ -215,7 +215,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Copy history</source>
-        <translation type="unfinished"/>
+        <translation>Kopiatu historia</translation>
     </message>
     <message>
         <source>Append &apos; - Clone&apos; to title</source>
@@ -226,19 +226,19 @@ Please select whether you want to allow access.</source>
     <name>CsvImportWidget</name>
     <message>
         <source>Import CSV fields</source>
-        <translation type="unfinished"/>
+        <translation>Inportatu CSV eremuak</translation>
     </message>
     <message>
         <source>filename</source>
-        <translation type="unfinished"/>
+        <translation>fitxategi izena</translation>
     </message>
     <message>
         <source>size, rows, columns</source>
-        <translation type="unfinished"/>
+        <translation>tamaina, errenkadak, zutabeak</translation>
     </message>
     <message>
         <source>Encoding</source>
-        <translation type="unfinished"/>
+        <translation>Kodetzea</translation>
     </message>
     <message>
         <source>Codec</source>
@@ -270,7 +270,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Preview</source>
-        <translation type="unfinished"/>
+        <translation>Aurrebista</translation>
     </message>
     <message>
         <source>Column layout</source>
@@ -286,7 +286,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>column </source>
-        <translation type="unfinished"/>
+        <translation>zutabea</translation>
     </message>
     <message>
         <source>Imported from CSV file</source>
@@ -294,11 +294,11 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Original data: </source>
-        <translation type="unfinished"/>
+        <translation>Jatorrizko datuak:</translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file !</source>
-        <translation type="unfinished"/>
+        <translation>Errorea(k) detektatu d(ir)a CSV fitxategian !</translation>
     </message>
     <message>
         <source> more messages skipped]</source>
@@ -306,7 +306,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Error</source>
-        <translation>Қате</translation>
+        <translation>Errorea</translation>
     </message>
     <message>
         <source>CSV import: writer has errors:
@@ -318,73 +318,73 @@ Please select whether you want to allow access.</source>
     <name>CsvImportWizard</name>
     <message>
         <source>Import CSV file</source>
-        <translation type="unfinished"/>
+        <translation>Inportatu CSV fitxategia</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Қате</translation>
+        <translation>Errorea</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Басты парольді есептеу мүмкін емес</translation>
+        <translation>Ezin izan da gako nagusia kalkulatu</translation>
     </message>
 </context>
 <context>
     <name>CsvParserModel</name>
     <message>
         <source> byte, </source>
-        <translation type="unfinished"/>
+        <translation>byte,</translation>
     </message>
     <message>
         <source> rows, </source>
-        <translation type="unfinished"/>
+        <translation>errenkada,</translation>
     </message>
     <message>
         <source> columns</source>
-        <translation type="unfinished"/>
+        <translation>zutabe,</translation>
     </message>
 </context>
 <context>
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Enter master key</source>
-        <translation>Басты парольді енгізіңіз:</translation>
+        <translation>Sartu gako nagusia</translation>
     </message>
     <message>
         <source>Key File:</source>
-        <translation>Кілттер файлы:</translation>
+        <translation>Gako-fitxategia:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Пароль:</translation>
+        <translation>Pasahitza:</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Шолу</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Дерекқорды ашу мүмкін емес.</translation>
+        <translation>Ezin izan da datu-basea ireki.</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>Кілттер файлын ашу мүмкін емес</translation>
+        <translation>Ezin da gako fitxategia ireki</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Барлық файлдар</translation>
+        <translation>Fitxategi guztiak</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Кілттер файлдары</translation>
+        <translation>Gako fitxategiak</translation>
     </message>
     <message>
         <source>Select key file</source>
-        <translation>Кілттер файлын таңдаңыз</translation>
+        <translation>Aukeratu gako-fitxategia</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"/>
+        <translation>Freskatu</translation>
     </message>
     <message>
         <source>Challenge Response:</source>
@@ -395,72 +395,72 @@ Please select whether you want to allow access.</source>
     <name>DatabaseRepairWidget</name>
     <message>
         <source>Repair database</source>
-        <translation>Дерекқорды жөндеу</translation>
+        <translation>Konpondu datu-basea</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Қате</translation>
+        <translation>Errorea</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>Кілттер файлын ашу мүмкін емес</translation>
+        <translation>Ezin da gako fitxategia ireki</translation>
     </message>
     <message>
         <source>Database opened fine. Nothing to do.</source>
-        <translation>Дерекқор сәтті ашылды. Басқа орындайтын әрекеттер жоқ.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Дерекқорды ашу мүмкін емес.</translation>
+        <translation>Ezin izan da datu-basea ireki.</translation>
     </message>
     <message>
         <source>Success</source>
-        <translation>Сәтті</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>The database has been successfully repaired
 You can now save it.</source>
-        <translation>Дерекқор қалпына сәтті келтірілді.
-Енді оны сақтауыңызға болады.</translation>
+        <translation>Datu-basea era egokian konpondu da
+Gorde daiteke orain.</translation>
     </message>
     <message>
         <source>Unable to repair the database.</source>
-        <translation>Дерекқорды жөндеу мүмкін емес.</translation>
+        <translation>Ezin izan da datu-basea konpondu.</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidget</name>
     <message>
         <source>Database name:</source>
-        <translation>Дерекқор аты:</translation>
+        <translation>Datu-basearen izena:</translation>
     </message>
     <message>
         <source>Database description:</source>
-        <translation>Дерекқор сипаттамасы:</translation>
+        <translation>Datu-basearen deskribapena:</translation>
     </message>
     <message>
         <source>Transform rounds:</source>
-        <translation>Түрлендірулер саны:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Default username:</source>
-        <translation>Үнсіз келісім пайдаланушы аты:</translation>
+        <translation>Lehenetsitako erabiltzaile-izena:</translation>
     </message>
     <message>
         <source> MiB</source>
-        <translation>МиБ</translation>
+        <translation> MiB</translation>
     </message>
     <message>
         <source>Benchmark</source>
-        <translation>Сынау</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Max. history items:</source>
-        <translation>Макс. тарих саны:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Max. history size:</source>
-        <translation>Макс. тарих өлшемі:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Use recycle bin</source>
@@ -468,130 +468,124 @@ You can now save it.</source>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
-        <translation type="unfinished"/>
+        <translation>AES:  256 Bit   (lehenetsia)</translation>
     </message>
     <message>
         <source>Twofish:  256 Bit</source>
-        <translation type="unfinished"/>
+        <translation>Twofish:  256 Bit</translation>
     </message>
     <message>
         <source>Algorithm:</source>
-        <translation type="unfinished"/>
+        <translation>Algoritmoa:</translation>
     </message>
 </context>
 <context>
     <name>DatabaseTabWidget</name>
     <message>
         <source>Root</source>
-        <translation>Түбір</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>KeePass 2 дерекқоры</translation>
+        <translation>KeePass 2 datu-basea</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Барлық файлдар</translation>
+        <translation>Fitxategi guztiak</translation>
     </message>
     <message>
         <source>Open database</source>
-        <translation>Дерекқорды ашу</translation>
+        <translation>Ireki datu-basea</translation>
     </message>
     <message>
         <source>File not found!</source>
-        <translation>Файл табылмады!</translation>
+        <translation>Fitxategia ez da aurkitu!</translation>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
-        <translation>KeePass 1 дерекқорын ашу</translation>
+        <translation>Ireki KeePass 1 datu-basea</translation>
     </message>
     <message>
         <source>KeePass 1 database</source>
-        <translation>KeePass 1 дерекқоры</translation>
+        <translation>KeePass 1 datu-basea</translation>
     </message>
     <message>
         <source>All files (*)</source>
-        <translation>Барлық файлдар (*)</translation>
+        <translation>Fitxategi guztiak (*)</translation>
     </message>
     <message>
         <source>Close?</source>
-        <translation>Жабу керек пе?</translation>
+        <translation>Itxi?</translation>
     </message>
     <message>
         <source>Save changes?</source>
-        <translation>Өзгерістерді сақтау керек пе?</translation>
+        <translation>Aldaketak gorde?</translation>
     </message>
     <message>
         <source>&quot;%1&quot; was modified.
 Save changes?</source>
-        <translation>&quot;%1&quot; өзгертілген.
-Өзгерістерді сақтау керек пе?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation>Дерекқорға жазу сәтсіз аяқталды.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Дерекқорды қалайша сақтау</translation>
+        <translation>Gorde datu-basea honela</translation>
     </message>
     <message>
         <source>New database</source>
-        <translation>Жаңа дерекқор</translation>
+        <translation>Datu-base berria</translation>
     </message>
     <message>
         <source>locked</source>
-        <translation>блокталған</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Lock database</source>
-        <translation>Дерекқорды блоктау</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Can't lock the database as you are currently editing it.
 Please press cancel to finish your changes or discard them.</source>
-        <translation>Дерекқорды блоктау мүмкін емес, өйткені сіз оны қазір түзетудесіз.
-Өзгерістерді аяқтау үшін бас тартуды басыңыз, немесе оларды елемеңіз.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>This database has never been saved.
 You can save the database or stop locking it.</source>
-        <translation>Дерекқор ешқашан сақталмаған.
-Сіз дерекқорды сақтай аласыз, немесе оның блокауын алып тастай аласыз.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>This database has been modified.
 Do you want to save the database before locking it?
 Otherwise your changes are lost.</source>
-        <translation>Дерекқор өзгертілген.
-Оны блоктау алдында өзгерістерді сақтау керек пе?
-Сақтамасаңыз, өзгерістер жоғалады.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&quot;%1&quot; is in edit mode.
 Discard changes and close anyway?</source>
-        <translation>&quot;%1&quot; қазір түзету режимінде.
-Оған қарамастан, өзгерістерді елемей, оны жабу керек пе?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Export database to CSV file</source>
-        <translation>Дерекқорды CSV файлына экспорттау</translation>
+        <translation>Esportatu datu-basea CSV fitxategira</translation>
     </message>
     <message>
         <source>CSV file</source>
-        <translation>CSV файлы</translation>
+        <translation>CSV fitxategia</translation>
     </message>
     <message>
         <source>Writing the CSV file failed.</source>
-        <translation>CSV файлына жазу сәтсіз аяқталды.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Дерекқорды ашу мүмкін емес.</translation>
+        <translation>Ezin izan da datu-basea ireki.</translation>
     </message>
     <message>
         <source>Merge database</source>
-        <translation type="unfinished"/>
+        <translation>Bateratu datu-basea</translation>
     </message>
     <message>
         <source>The database you are trying to save as is locked by another instance of KeePassXC.
@@ -622,62 +616,62 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Open CSV file</source>
-        <translation type="unfinished"/>
+        <translation>Ireki CSV fitxategia</translation>
     </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
     <message>
         <source>Change master key</source>
-        <translation>Басты парольді өзгерту</translation>
+        <translation>Aldatu gako nagusia</translation>
     </message>
     <message>
         <source>Delete entry?</source>
-        <translation>Жазбаны өшіру керек пе?</translation>
+        <translation>Ezabatu sarrera?</translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>&quot;%1&quot; жазбасын өшіруді шынымен қалайсыз ба?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Delete entries?</source>
-        <translation>Жазбаларды өшіру керек пе?</translation>
+        <translation>Ezabatu sarrerak?</translation>
     </message>
     <message>
         <source>Do you really want to delete %1 entries for good?</source>
-        <translation>%1 жазбаны өшіруді шынымен қалайсыз ба?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Move entries to recycle bin?</source>
-        <translation>Жазбаларды қоқыс шелегіне тастау керек пе?</translation>
+        <translation type="unfinished"/>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>%n жазбаны қоқыс шелегіне тастауды шынымен қалайсыз ба?</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Delete group?</source>
-        <translation>Топты өшіру керек пе?</translation>
+        <translation>Ezabatu taldea?</translation>
     </message>
     <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>&quot;%1&quot; тобын өшіруді шынымен қалайсыз ба?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Басты парольді есептеу мүмкін емес</translation>
+        <translation>Ezin izan da gako nagusia kalkulatu</translation>
     </message>
     <message>
         <source>Move entry to recycle bin?</source>
-        <translation>Жазбаны қоқыс шелегіне тастау керек пе?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
-        <translation>&quot;%1&quot; жазбасын қоқыс шелегіне тастауды шынымен қалайсыз ба?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Searching...</source>
-        <translation type="unfinished"/>
+        <translation>Bilatzen...</translation>
     </message>
     <message>
         <source>No current database.</source>
@@ -689,11 +683,11 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Search Results (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Bilaketa emaitzak (%1)</translation>
     </message>
     <message>
         <source>No Results</source>
-        <translation type="unfinished"/>
+        <translation>Emaitzarik ez</translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -740,81 +734,80 @@ Do you want to open it anyway?</source>
     <name>EditEntryWidget</name>
     <message>
         <source>Entry</source>
-        <translation>Жазба</translation>
+        <translation>Sarrera</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Кеңейтілген</translation>
+        <translation>Aurreratua</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Таңбаша</translation>
+        <translation>Ikonoa</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Автотеру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Қасиеттері</translation>
+        <translation>Propietateak</translation>
     </message>
     <message>
         <source>History</source>
-        <translation>Тарихы</translation>
+        <translation>Historia</translation>
     </message>
     <message>
         <source>Entry history</source>
-        <translation>Жазба тарихы</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Add entry</source>
-        <translation>Жазбаны қосу</translation>
+        <translation>Gehitu sarrera</translation>
     </message>
     <message>
         <source>Edit entry</source>
-        <translation>Жазбаны түзету</translation>
+        <translation>Editatu sarrera</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Әр түрлі парольдер көрсетілді.</translation>
+        <translation>Pasahitz desberdinak paratu dira.</translation>
     </message>
     <message>
         <source>New attribute</source>
-        <translation>Жаңа атрибут</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Select file</source>
-        <translation>Файлды таңдау</translation>
+        <translation>Aukeratu fitxategia</translation>
     </message>
     <message>
         <source>Unable to open file</source>
-        <translation>Файлды ашу мүмкін емес</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Save attachment</source>
-        <translation>Салынымды сақтау</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unable to save the attachment:
 </source>
-        <translation>Салынымды сақтау мүмкін емес:
-</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Tomorrow</source>
-        <translation>Ертең</translation>
+        <translation>Bihar</translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n апта</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n ай</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
-        <translation>1 жыл</translation>
+        <translation>urte 1</translation>
     </message>
     <message>
         <source>Confirm Remove</source>
@@ -837,35 +830,35 @@ Do you want to open it anyway?</source>
     <name>EditEntryWidgetAdvanced</name>
     <message>
         <source>Additional attributes</source>
-        <translation>Қосымша атрибуттар</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Add</source>
-        <translation>Қосу</translation>
+        <translation>Gehitu</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Өшіру</translation>
+        <translation>Kendu</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Салынымдар</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Save</source>
-        <translation>Сақтау</translation>
+        <translation>Gorde</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Ашу</translation>
+        <translation>Ireki</translation>
     </message>
     <message>
         <source>Edit Name</source>
-        <translation type="unfinished"/>
+        <translation>Izena editatu</translation>
     </message>
     <message>
         <source>Protect</source>
-        <translation type="unfinished"/>
+        <translation>Babestu</translation>
     </message>
     <message>
         <source>Reveal</source>
@@ -876,7 +869,7 @@ Do you want to open it anyway?</source>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation>Бұл жазба үшін автотеруді іске қосу</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>+</source>
@@ -888,7 +881,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Window title:</source>
-        <translation>Терезе атауы:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the &amp;group</source>
@@ -915,38 +908,38 @@ Do you want to open it anyway?</source>
     <name>EditEntryWidgetHistory</name>
     <message>
         <source>Show</source>
-        <translation>Көрсету</translation>
+        <translation>Erakutsi</translation>
     </message>
     <message>
         <source>Restore</source>
-        <translation>Қалпына келтіру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Өшіру</translation>
+        <translation>Ezabatu</translation>
     </message>
     <message>
         <source>Delete all</source>
-        <translation>Барлығын өшіру</translation>
+        <translation>Ezabatu guztiak</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetMain</name>
     <message>
         <source>Title:</source>
-        <translation>Атауы:</translation>
+        <translation>Izenburua:</translation>
     </message>
     <message>
         <source>Username:</source>
-        <translation>Пайдаланушы аты:</translation>
+        <translation>Erabitzaile-izena:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Пароль:</translation>
+        <translation>Pasahitza:</translation>
     </message>
     <message>
         <source>Repeat:</source>
-        <translation>Қайталау:</translation>
+        <translation>Errepikatu:</translation>
     </message>
     <message>
         <source>URL:</source>
@@ -954,73 +947,73 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Мерзімі аяқталады</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Presets</source>
-        <translation>Сақталған баптаулар</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Notes:</source>
-        <translation>Естеліктер:</translation>
+        <translation>Oharrak:</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidget</name>
     <message>
         <source>Group</source>
-        <translation>Топ</translation>
+        <translation>Taldea</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Таңбаша</translation>
+        <translation>Ikonoa</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Қасиеттері</translation>
+        <translation>Propietateak</translation>
     </message>
     <message>
         <source>Add group</source>
-        <translation>Топты қосу</translation>
+        <translation>Gehitu taldea</translation>
     </message>
     <message>
         <source>Edit group</source>
-        <translation>Топты түзету</translation>
+        <translation>Editatu taldea</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation>Іске қосу</translation>
+        <translation>Gaitu</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Сөндіру</translation>
+        <translation>Ezgaitu</translation>
     </message>
     <message>
         <source>Inherit from parent group (%1)</source>
-        <translation>Аталық топтан мұралау (%1)</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
     <message>
         <source>Name</source>
-        <translation>Аты</translation>
+        <translation>Izena</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Естеліктер</translation>
+        <translation>Oharrak</translation>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Мерзімі аяқталады</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Search</source>
-        <translation>Іздеу</translation>
+        <translation>Bilatu</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Автотеру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Use default Auto-Type sequence of parent group</source>
@@ -1035,31 +1028,31 @@ Do you want to open it anyway?</source>
     <name>EditWidgetIcons</name>
     <message>
         <source>Add custom icon</source>
-        <translation>Таңдауыңызша таңбашаны қосу</translation>
+        <translation>Gehitu ikono pertsonalizatua</translation>
     </message>
     <message>
         <source>Delete custom icon</source>
-        <translation>Таңдауыңызша таңбашаны өшіру</translation>
+        <translation>Ezabatu ikono pertsonalizatua</translation>
     </message>
     <message>
         <source>Images</source>
-        <translation>Суреттер</translation>
+        <translation>Irudiak</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Барлық файлдар</translation>
+        <translation>Fitxategi guztiak</translation>
     </message>
     <message>
         <source>Select Image</source>
-        <translation>Суретті таңдау</translation>
+        <translation>Aukeratu irudia</translation>
     </message>
     <message>
         <source>Download favicon</source>
-        <translation type="unfinished"/>
+        <translation>Deskargatu favicon-a</translation>
     </message>
     <message>
         <source>Unable to fetch favicon.</source>
-        <translation type="unfinished"/>
+        <translation>Ezin izan da favicon-a atzitu.</translation>
     </message>
     <message>
         <source>Can&apos;t read icon</source>
@@ -1075,7 +1068,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Confirm Delete</source>
-        <translation type="unfinished"/>
+        <translation>Baieztatu ezabaketa</translation>
     </message>
     <message>
         <source>This icon is used by %1 entries, and will be replaced by the default icon. Are you sure you want to delete it?</source>
@@ -1094,15 +1087,15 @@ Do you want to open it anyway?</source>
     <name>EditWidgetProperties</name>
     <message>
         <source>Created:</source>
-        <translation>Жасалған:</translation>
+        <translation>Noiz sortua:</translation>
     </message>
     <message>
         <source>Modified:</source>
-        <translation>Өзгертілген:</translation>
+        <translation>Noiz aldatua:</translation>
     </message>
     <message>
         <source>Accessed:</source>
-        <translation>Қатынаған:</translation>
+        <translation>Noiz eskuratua:</translation>
     </message>
     <message>
         <source>Uuid:</source>
@@ -1120,22 +1113,22 @@ Do you want to open it anyway?</source>
     <name>EntryAttributesModel</name>
     <message>
         <source>Name</source>
-        <translation>Аты</translation>
+        <translation>Izena</translation>
     </message>
 </context>
 <context>
     <name>EntryHistoryModel</name>
     <message>
         <source>Last modified</source>
-        <translation>Соңғы өзгертілген</translation>
+        <translation>Azken aldaketa</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Атауы</translation>
+        <translation>Izenburua</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Пайдаланушы аты</translation>
+        <translation>Erabiltzaile-izena</translation>
     </message>
     <message>
         <source>URL</source>
@@ -1146,15 +1139,15 @@ Do you want to open it anyway?</source>
     <name>EntryModel</name>
     <message>
         <source>Group</source>
-        <translation>Топ</translation>
+        <translation>Taldea</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Атауы</translation>
+        <translation>Izenburua</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Пайдаланушы аты</translation>
+        <translation>Erabiltzaile-izena</translation>
     </message>
     <message>
         <source>URL</source>
@@ -1170,54 +1163,54 @@ Do you want to open it anyway?</source>
     <name>Group</name>
     <message>
         <source>Recycle Bin</source>
-        <translation>Қоқыс шелегі</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>HttpPasswordGeneratorWidget</name>
     <message>
         <source>Length:</source>
-        <translation type="unfinished"/>
+        <translation>Luzeera</translation>
     </message>
     <message>
         <source>Character Types</source>
-        <translation>Таңбалар түрлері</translation>
+        <translation>Karaktere motak</translation>
     </message>
     <message>
         <source>Upper Case Letters</source>
-        <translation>Бас әріптер</translation>
+        <translation>Letra larriak</translation>
     </message>
     <message>
         <source>A-Z</source>
-        <translation type="unfinished"/>
+        <translation>A-Z</translation>
     </message>
     <message>
         <source>Lower Case Letters</source>
-        <translation>Кіші әріптер</translation>
+        <translation>Letra xeheak</translation>
     </message>
     <message>
         <source>a-z</source>
-        <translation type="unfinished"/>
+        <translation>a-z</translation>
     </message>
     <message>
         <source>Numbers</source>
-        <translation>Сандар</translation>
+        <translation>Zenbakiak</translation>
     </message>
     <message>
         <source>0-9</source>
-        <translation type="unfinished"/>
+        <translation>0-9</translation>
     </message>
     <message>
         <source>Special Characters</source>
-        <translation>Арнайы таңбалар</translation>
+        <translation>Karaktere bereziak</translation>
     </message>
     <message>
         <source>/*_&amp; ...</source>
-        <translation type="unfinished"/>
+        <translation>/*_&amp; ...</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
-        <translation>Ұқсайтын таңбаларға жол бермеу</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Ensure that the password contains characters from every group</source>
@@ -1228,72 +1221,72 @@ Do you want to open it anyway?</source>
     <name>KMessageWidget</name>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Itxi</translation>
     </message>
     <message>
         <source>Close message</source>
-        <translation type="unfinished"/>
+        <translation>Itxi mezua</translation>
     </message>
 </context>
 <context>
     <name>KeePass1OpenWidget</name>
     <message>
         <source>Import KeePass1 database</source>
-        <translation>KeePass1 дерекқорын импорттау</translation>
+        <translation>Inportatu Keepass1 datu-basea</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Дерекқорды ашу мүмкін емес.</translation>
+        <translation>Ezin izan da datu-basea ireki.</translation>
     </message>
 </context>
 <context>
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
-        <translation>Кілттер файлын оқу мүмкін емес.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>KeePass дерекқоры емес.</translation>
+        <translation>Ez da KeePass datu-basea.</translation>
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
-        <translation>Шифрлеу алгоритміне қолдау жоқ.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>KeePass дерекқоры нұсқасына қолдау жоқ.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Root</source>
-        <translation>Түбір</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Басты парольді есептеу мүмкін емес</translation>
+        <translation>Ezin izan da gako nagusia kalkulatu</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
-        <translation>Пароль қате, немесе дерекқор файлы зақымдалған.</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>KeePass2Reader</name>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>KeePass дерекқоры емес.</translation>
+        <translation>Ez da KeePass datu-basea.</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>KeePass дерекқоры нұсқасына қолдау жоқ.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
-        <translation>Пароль қате, немесе дерекқор файлы зақымдалған.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Басты парольді есептеу мүмкін емес</translation>
+        <translation>Ezin izan da gako nagusia kalkulatu</translation>
     </message>
     <message>
         <source>Unable to issue challenge-response.</source>
@@ -1311,11 +1304,11 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <name>Main</name>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
-        <translation>Криптографиялық функцияларды сынау кезіндегі қатаң қате орын алды.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>KeePassXC - Error</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - Errorea</translation>
     </message>
     <message>
         <source>The lock file could not be created. Single-instance mode disabled.</source>
@@ -1334,51 +1327,51 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <name>MainWindow</name>
     <message>
         <source>Open database</source>
-        <translation>Дерекқорды ашу</translation>
+        <translation>Ireki datu-basea</translation>
     </message>
     <message>
         <source>Database settings</source>
-        <translation>Дерекқор баптаулары</translation>
+        <translation>Datu-basearen ezarpenak</translation>
     </message>
     <message>
         <source>Copy username to clipboard</source>
-        <translation>Пайдаланушы атын алмасу буферіне көшіріп алу</translation>
+        <translation>Kopiatu erabiltzaile-izena arbelera</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
-        <translation>Парольді алмасу буферіне көшіріп алу</translation>
+        <translation>Kopiatu pasahitza arbelera</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Баптаулар</translation>
+        <translation>Ezarpenak</translation>
     </message>
     <message>
         <source>Show toolbar</source>
-        <translation>Саймандар панелін көрсету</translation>
+        <translation>Erakutsi tresna-barra</translation>
     </message>
     <message>
         <source>read-only</source>
-        <translation>тек оқу</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Toggle window</source>
-        <translation>Терезені көрсету/жасыру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>KeePass 2 дерекқоры</translation>
+        <translation>KeePass 2 datu-basea</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Барлық файлдар</translation>
+        <translation>Fitxategi guztiak</translation>
     </message>
     <message>
         <source>Save repaired database</source>
-        <translation>Жөнделген дерекқорды сақтау</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation>Дерекқорды жазу сәтсіз аяқталды.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Recent databases</source>
@@ -1510,11 +1503,11 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Password Generator</source>
-        <translation type="unfinished"/>
+        <translation>Pasahitz sortzailea</translation>
     </message>
     <message>
         <source>Clear history</source>
-        <translation type="unfinished"/>
+        <translation>Garbitu historia</translation>
     </message>
     <message>
         <source>&amp;Database</source>
@@ -1522,7 +1515,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"/>
+        <translation>Inportatu</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
@@ -1538,7 +1531,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Quit KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>Irten KeePassXC-tik</translation>
     </message>
     <message>
         <source>Please touch the button on your YubiKey!</source>
@@ -1585,11 +1578,11 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <name>OptionDialog</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"/>
+        <translation>Elkarrizketa</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Жалпы</translation>
+        <translation>Orokorra</translation>
     </message>
     <message>
         <source>Sh&amp;ow a notification when credentials are requested</source>
@@ -1605,7 +1598,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Кеңейтілген</translation>
+        <translation>Aurreratua</translation>
     </message>
     <message>
         <source>Always allow &amp;access to entries</source>
@@ -1621,11 +1614,11 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>HTTP Port:</source>
-        <translation type="unfinished"/>
+        <translation>HTTP portua:</translation>
     </message>
     <message>
         <source>Default port: 19455</source>
-        <translation type="unfinished"/>
+        <translation>Portu lehenetsia: 19455</translation>
     </message>
     <message>
         <source>Re&amp;quest to unlock the database if it is locked</source>
@@ -1662,11 +1655,11 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>This is required for accessing your databases from ChromeIPass or PassIFox</source>
-        <translation type="unfinished"/>
+        <translation>Hau beharrezkoa da ChromeIPass edo PassIFox erabilita datu-baseetara sarbidea izateko</translation>
     </message>
     <message>
         <source>Enable KeePassHTTP server</source>
-        <translation type="unfinished"/>
+        <translation>Gaitu KeePassHTTP zerbitzaria</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
@@ -1686,7 +1679,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Password Generator</source>
-        <translation type="unfinished"/>
+        <translation>Pasahitz sortzailea</translation>
     </message>
     <message>
         <source>Only the selected database has to be connected with a client.</source>
@@ -1702,35 +1695,35 @@ Change them only if you know what you are doing.</source>
     <name>PasswordGeneratorWidget</name>
     <message>
         <source>Password:</source>
-        <translation>Пароль:</translation>
+        <translation>Pasahitza:</translation>
     </message>
     <message>
         <source>Character Types</source>
-        <translation>Таңбалар түрлері</translation>
+        <translation>Karaktere motak</translation>
     </message>
     <message>
         <source>Upper Case Letters</source>
-        <translation>Бас әріптер</translation>
+        <translation>Letra larriak</translation>
     </message>
     <message>
         <source>Lower Case Letters</source>
-        <translation>Кіші әріптер</translation>
+        <translation>Letra xeheak</translation>
     </message>
     <message>
         <source>Numbers</source>
-        <translation>Сандар</translation>
+        <translation>Zenbakiak</translation>
     </message>
     <message>
         <source>Special Characters</source>
-        <translation>Арнайы таңбалар</translation>
+        <translation>Karaktere bereziak</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
-        <translation>Ұқсайтын таңбаларға жол бермеу</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Accept</source>
-        <translation>Қабылдау</translation>
+        <translation>Onartu</translation>
     </message>
     <message>
         <source>%p%</source>
@@ -1738,11 +1731,11 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>strength</source>
-        <translation type="unfinished"/>
+        <translation>sendotasuna</translation>
     </message>
     <message>
         <source>entropy</source>
-        <translation type="unfinished"/>
+        <translation>entropia</translation>
     </message>
     <message>
         <source>&amp;Length:</source>
@@ -1754,43 +1747,43 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>Generate</source>
-        <translation type="unfinished"/>
+        <translation>Sortu</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Itxi</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"/>
+        <translation>Aplikatu</translation>
     </message>
     <message>
         <source>Entropy: %1 bit</source>
-        <translation type="unfinished"/>
+        <translation>Entropia: %1 bit</translation>
     </message>
     <message>
         <source>Password Quality: %1</source>
-        <translation type="unfinished"/>
+        <translation>Pasahitzaren kalitatea: %1</translation>
     </message>
     <message>
         <source>Poor</source>
-        <translation type="unfinished"/>
+        <translation>Txarra</translation>
     </message>
     <message>
         <source>Weak</source>
-        <translation type="unfinished"/>
+        <translation>Ahula</translation>
     </message>
     <message>
         <source>Good</source>
-        <translation type="unfinished"/>
+        <translation>Ona</translation>
     </message>
     <message>
         <source>Excellent</source>
-        <translation type="unfinished"/>
+        <translation>Bikaina</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Пароль</translation>
+        <translation>Pasahitza</translation>
     </message>
     <message>
         <source>Extended ASCII</source>
@@ -1814,7 +1807,7 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Kopiatu</translation>
     </message>
 </context>
 <context>
@@ -1846,19 +1839,19 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>Group</source>
-        <translation>Топ</translation>
+        <translation>Taldea</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Атауы</translation>
+        <translation>Izenburua</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Пайдаланушы аты</translation>
+        <translation>Erabiltzaile-izena</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Пароль</translation>
+        <translation>Pasahitza</translation>
     </message>
     <message>
         <source>URL</source>
@@ -1866,7 +1859,7 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Естеліктер</translation>
+        <translation>Oharrak</translation>
     </message>
     <message>
         <source>Browser Integration</source>
@@ -1889,34 +1882,34 @@ Change them only if you know what you are doing.</source>
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
-        <translation>Сығу кезінде zlib ішкі қатесі орын алған:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>Астындағы құрылғыға жазу қатесі:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>Астындағы құрылғыны ашу қатесі:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation>Астындағы құрылғыдан деректерді оқу қатесі:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation>Тарқату кезінде zlib ішкі қатесі орын алған:</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>QtIOCompressor::open</name>
     <message>
         <source>The gzip format not supported in this version of zlib.</source>
-        <translation>zlib-тің бұл нұсқасы gzip пішімін қолдамайды.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Internal zlib error: </source>
-        <translation>Ішкі zlib қатесі:</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1927,15 +1920,15 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>Search</source>
-        <translation>Іздеу</translation>
+        <translation>Bilatu</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Garbitu</translation>
     </message>
     <message>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Bilatu...</translation>
     </message>
     <message>
         <source>Limit search to selected group</source>
@@ -1998,11 +1991,11 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Gainidatzi aurreko gakoa?</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Eguneratu sarrera</translation>
     </message>
     <message>
         <source>KeePassXC: Database locked!</source>
@@ -2014,7 +2007,7 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Ez da gakorik aurkitu</translation>
     </message>
     <message>
         <source>KeePassXC: Settings not available!</source>
@@ -2033,15 +2026,15 @@ give it a unique name to identify and accept it.</source>
     <name>SettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>Қолданба баптаулары</translation>
+        <translation>Aplikazioaren ezarpenak</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Жалпы</translation>
+        <translation>Orokorra</translation>
     </message>
     <message>
         <source>Security</source>
-        <translation>Қауіпсіздік</translation>
+        <translation>Segurtasuna</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
@@ -2052,39 +2045,39 @@ give it a unique name to identify and accept it.</source>
     <name>SettingsWidgetGeneral</name>
     <message>
         <source>Remember last databases</source>
-        <translation>Соңғы дерекқорларды есте сақтау:</translation>
+        <translation>Gogoratu azken datu-baseak</translation>
     </message>
     <message>
         <source>Automatically save on exit</source>
-        <translation>Шығу кезінде автосақтау</translation>
+        <translation>Automatikoki gorde irtetean</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation>Әр өзгерістен кейін автосақтау</translation>
+        <translation>Automatikoki gorde aldaketa oro eta gero</translation>
     </message>
     <message>
         <source>Minimize when copying to clipboard</source>
-        <translation>Алмасу буферіне көшіру кезінде қолданбаны қайыру</translation>
+        <translation>Minimizatu arbelera kopiatzean</translation>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
-        <translation>Жазбаны жасау кезінде топ таңбашасын қолдану</translation>
+        <translation>Erabili taldearen ikonoa sarrera sortzean</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut</source>
-        <translation>Глобалды автотеру жарлығы</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Language</source>
-        <translation>Тіл</translation>
+        <translation>Hizkuntza</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>Жүйелік трей таңбашасын қолдану</translation>
+        <translation>Erakutsi ikonoa sistema-erretiluan</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation>Қолданба қайырылған кезде терезені жүйелік трейге жасыру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Load previous databases on startup</source>
@@ -2104,7 +2097,7 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Basic Settings</source>
-        <translation type="unfinished"/>
+        <translation>Oinarrizko ezarpenak</translation>
     </message>
     <message>
         <source>Remember last key files and security dongles</source>
@@ -2116,7 +2109,7 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Автотеру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Use entry title and URL to match windows for global Auto-Type</source>
@@ -2143,19 +2136,19 @@ give it a unique name to identify and accept it.</source>
     <name>SettingsWidgetSecurity</name>
     <message>
         <source>Clear clipboard after</source>
-        <translation>Алмасу буферін тазалау алдындағы кідіріс</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source> sec</source>
-        <translation>сек</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
-        <translation>Дерекқорларды белсенділік жоқ кезде блоктау алдындағы кідіріс</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Show passwords in cleartext by default</source>
-        <translation>Парольдерді үнсіз келісім бойынша ашық мәтінмен көрсету</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Lock databases after minimizing the window</source>
@@ -2179,7 +2172,7 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Privacy</source>
-        <translation type="unfinished"/>
+        <translation>Pribatasuna</translation>
     </message>
     <message>
         <source>Use Google as fallback for downloading website icons</source>
@@ -2222,7 +2215,7 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source> sec</source>
-        <translation>сек</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2233,11 +2226,11 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>000000</source>
-        <translation type="unfinished"/>
+        <translation>000000</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Kopiatu</translation>
     </message>
     <message>
         <source>Expires in</source>
@@ -2245,21 +2238,21 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>seconds</source>
-        <translation type="unfinished"/>
+        <translation>segundu</translation>
     </message>
 </context>
 <context>
     <name>UnlockDatabaseWidget</name>
     <message>
         <source>Unlock database</source>
-        <translation>Дерекқорды блоктаудан босату</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>WelcomeWidget</name>
     <message>
         <source>Welcome to KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>Ongi etorri KeePassXC-era</translation>
     </message>
     <message>
         <source>Start storing your passwords securely in a KeePassXC database</source>
@@ -2267,7 +2260,7 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Create new database</source>
-        <translation type="unfinished"/>
+        <translation>Sortu datu-base berria</translation>
     </message>
     <message>
         <source>Open existing database</source>
@@ -2275,11 +2268,11 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Import from KeePass 1</source>
-        <translation type="unfinished"/>
+        <translation>Inportatu KeePass 1-etik</translation>
     </message>
     <message>
         <source>Import from CSV</source>
-        <translation type="unfinished"/>
+        <translation>Inportatu CSV-tik</translation>
     </message>
     <message>
         <source>Recent databases</source>
@@ -2290,15 +2283,15 @@ give it a unique name to identify and accept it.</source>
     <name>main</name>
     <message>
         <source>path to a custom config file</source>
-        <translation>таңдауыңызша баптаулар файлына дейінгі жол</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>key file of the database</source>
-        <translation>дерекқордың кілттер файлы</translation>
+        <translation>datu-basearen gako-fitxategia</translation>
     </message>
     <message>
         <source>KeePassXC - cross-platform password manager</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - plataforma anitzeko pasahitz kudeatzailea</translation>
     </message>
     <message>
         <source>read password of the database from stdin</source>
@@ -2338,7 +2331,7 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>List database entries.</source>
-        <translation type="unfinished"/>
+        <translation>Zerrendatu datu-baseko sarrerak.</translation>
     </message>
     <message>
         <source>Path of the group to list. Default is /</source>
@@ -2350,7 +2343,7 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Merge two databases.</source>
-        <translation type="unfinished"/>
+        <translation>Bateratu bi datu-base.</translation>
     </message>
     <message>
         <source>Path of the database to merge into.</source>
@@ -2362,15 +2355,15 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Use the same password for both database files.</source>
-        <translation type="unfinished"/>
+        <translation>Erabili pasahitz bera bi datu-base fitxategietarako.</translation>
     </message>
     <message>
         <source>Show a password.</source>
-        <translation type="unfinished"/>
+        <translation>Erakutsi pasahitz bat.</translation>
     </message>
     <message>
         <source>Name of the entry to show.</source>
-        <translation type="unfinished"/>
+        <translation>Erakutsiko den sarreraren izena.</translation>
     </message>
 </context>
 </TS>

@@ -140,6 +140,22 @@
     </widget>
    </item>
    <item>
+    <widget class="QGroupBox" name="privacy">
+     <property name="title">
+      <string>Privacy</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QCheckBox" name="fallbackToGoogle">
+        <property name="text">
+         <string>Use Google as fallback for downloading website icons</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <spacer name="verticalSpacer_2">
      <property name="orientation">
       <enum>Qt::Vertical</enum>

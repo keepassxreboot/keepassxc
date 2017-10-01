@@ -98,7 +98,7 @@ set(TEST_LIBRARIES
 
 set(testsupport_SOURCES modeltest.cpp FailDevice.cpp)
 add_library(testsupport STATIC ${testsupport_SOURCES})
-target_link_libraries(testsupport ${MHD_LIBRARIES} Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Test)
+target_link_libraries(testsupport Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Test)
 
 if(YUBIKEY_FOUND)
   set(TEST_LIBRARIES ${TEST_LIBRARIES} ${YUBIKEY_LIBRARIES})

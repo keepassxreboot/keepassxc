@@ -122,6 +122,7 @@ public:
     void addCustomIconScaled(const Uuid& uuid, const QImage& icon);
     void removeCustomIcon(const Uuid& uuid);
     void copyCustomIcons(const QSet<Uuid>& iconList, const Metadata* otherMetadata);
+    Uuid findCustomIcon(const QImage& candidate);
     void setRecycleBinEnabled(bool value);
     void setRecycleBin(Group* group);
     void setRecycleBinChanged(const QDateTime& value);
@@ -154,12 +155,15 @@ private:
     template <class P, class V> bool set(P& property, const V& value);
     template <class P, class V> bool set(P& property, const V& value, QDateTime& dateTime);
 
+    QByteArray hashImage(const QImage& image);
+
     MetadataData m_data;
 
     QHash<Uuid, QImage> m_customIcons;
     mutable QHash<Uuid, QPixmapCache::Key> m_customIconCacheKeys;
     mutable QHash<Uuid, QPixmapCache::Key> m_customIconScaledCacheKeys;
     QList<Uuid> m_customIconsOrder;
+    QHash<QByteArray, Uuid> m_customIconsHashes;
 
     QPointer<Group> m_recycleBin;
     QDateTime m_recycleBinChanged;

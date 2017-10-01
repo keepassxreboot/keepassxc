@@ -317,7 +317,7 @@ bool AutoType::parseActions(const QString& sequence, const Entry* entry, QList<A
 {
     QString tmpl;
     bool inTmpl = false;
-    m_autoTypeDelay = 0;
+    m_autoTypeDelay = config()->get("AutoTypeDelay").toInt();
 
 
     for (const QChar& ch : sequence) {

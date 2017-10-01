@@ -499,14 +499,12 @@ void AutoTypeExecutorMac::execChar(AutoTypeChar* action)
 {
     m_platform->sendChar(action->character, true);
     m_platform->sendChar(action->character, false);
-    usleep(25 * 1000);
 }
 
 void AutoTypeExecutorMac::execKey(AutoTypeKey* action)
 {
     m_platform->sendKey(action->key, true);
     m_platform->sendKey(action->key, false);
-    usleep(25 * 1000);
 }
 
 void AutoTypeExecutorMac::execClearField(AutoTypeClearField* action = nullptr)

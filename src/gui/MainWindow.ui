@@ -200,7 +200,7 @@
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>He&amp;lp</string>
+     <string>&amp;Help</string>
     </property>
     <addaction name="actionAbout"/>
    </widget>
@@ -309,7 +309,7 @@
   </action>
   <action name="actionDatabaseOpen">
    <property name="text">
-    <string>&amp;Open database</string>
+    <string>&amp;Open database...</string>
    </property>
   </action>
   <action name="actionDatabaseSave">
@@ -391,7 +391,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Sa&amp;ve database as</string>
+    <string>Sa&amp;ve database as...</string>
    </property>
   </action>
   <action name="actionChangeMasterKey">
@@ -399,7 +399,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Change &amp;master key</string>
+    <string>Change &amp;master key...</string>
    </property>
   </action>
   <action name="actionChangeDatabaseSettings">
@@ -517,22 +517,22 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Export to CSV file</string>
+    <string>&amp;Export to CSV file...</string>
    </property>
   </action>
   <action name="actionImportKeePass1">
    <property name="text">
-    <string>Import KeePass 1 database</string>
+    <string>Import KeePass 1 database...</string>
    </property>
   </action>
   <action name="actionImportCsv">
    <property name="text">
-    <string>Import CSV file</string>
+    <string>Import CSV file...</string>
    </property>
   </action>
   <action name="actionRepairDatabase">
    <property name="text">
-    <string>Re&amp;pair database</string>
+    <string>Re&amp;pair database...</string>
    </property>
   </action>
   <action name="actionEntryTotp">
@@ -542,7 +542,7 @@
   </action>
   <action name="actionEntrySetupTotp">
    <property name="text">
-    <string>Setup TOTP</string>
+    <string>Set up TOTP...</string>
    </property>
   </action>
   <action name="actionEntryCopyTotp">

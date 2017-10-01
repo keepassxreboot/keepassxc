@@ -280,15 +280,15 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const Q
     m_history = history;
 
     if (history) {
-        setHeadline(QString("%1 > %2").arg(parentName.toHtmlEscaped(), tr("Entry history")));
+        setHeadline(QString("%1 > %2").arg(parentName, tr("Entry history")));
     }
     else {
         if (create) {
-            setHeadline(QString("%1 > %2").arg(parentName.toHtmlEscaped(), tr("Add entry")));
+            setHeadline(QString("%1 > %2").arg(parentName, tr("Add entry")));
         }
         else {
-            setHeadline(QString("%1 > %2 > %3").arg(parentName.toHtmlEscaped(),
-                                                    entry->title().toHtmlEscaped(), tr("Edit entry")));
+            setHeadline(QString("%1 > %2 > %3").arg(parentName,
+                                                    entry->title(), tr("Edit entry")));
         }
     }
 
@@ -363,7 +363,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     IconStruct iconStruct;
     iconStruct.uuid = entry->iconUuid();
     iconStruct.number = entry->iconNumber();
-    m_iconsWidget->load(entry->uuid(), m_database, iconStruct, entry->url());
+    m_iconsWidget->load(entry->uuid(), m_database, iconStruct, entry->webUrl());
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), m_iconsWidget, SLOT(setUrl(QString)));
 
     m_autoTypeUi->enableButton->setChecked(entry->autoTypeEnabled());
@@ -429,6 +429,7 @@ void EditEntryWidget::saveEntry()
     // must stand before beginUpdate()
     // we don't want to create a new history item, if only the history has changed
     m_entry->removeHistoryItems(m_historyModel->deletedEntries());
+    m_historyModel->clearDeletedEntries();
 
     m_autoTypeAssoc->removeEmpty();
 
@@ -445,6 +446,12 @@ void EditEntryWidget::saveEntry()
 
 void EditEntryWidget::acceptEntry()
 {
+    // Check if passwords are mismatched first to prevent saving
+    if (!passwordsEqual()) {
+        showMessage(tr("Different passwords supplied."), MessageWidget::Error);
+        return;
+    }
+
     saveEntry();
     clear();
     emit editFinished(true);
@@ -912,8 +919,7 @@ void EditEntryWidget::deleteHistoryEntry()
         m_historyModel->deleteIndex(index);
         if (m_historyModel->rowCount() > 0) {
             m_historyUi->deleteAllButton->setEnabled(true);
-        }
-        else {
+        } else {
             m_historyUi->deleteAllButton->setEnabled(false);
         }
     }

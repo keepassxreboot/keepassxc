@@ -1,5 +1,5 @@
 name: keepassxc
-version: 2.2.0
+version: 2.2.1
 grade: stable
 summary: community driven port of the windows application “Keepass Password Safe”
 description: |
@@ -11,7 +11,11 @@ confinement: strict
 apps:
   keepassxc:
     command: desktop-launch keepassxc
-    plugs: [unity7, x11, opengl, gsettings, home, network, network-bind, removable-media]
+    plugs: [unity7, x11, opengl, gsettings, home, network, network-bind, removable-media, raw-usb]
+    desktop: share/applications/keepassxc.desktop
+  cli:
+    command: keepassxc-cli
+    plugs: [gsettings, home, removable-media, raw-usb]
 
 parts:
   keepassxc:
@@ -36,8 +40,9 @@ parts:
       - libyubikey-dev
       - libykpers-1-dev
     after: [desktop-qt5]
+
+  # Redefine desktop-qt5 stage packages to work with Ubuntu 17.04
   desktop-qt5:
-    # Redefine stage packages to work with Ubuntu 17.04
     stage-packages:
       - libxkbcommon0
       - ttf-ubuntu-font-family
@@ -48,3 +53,12 @@ parts:
       - libgdk-pixbuf2.0-0
       - libqt5svg5 # for loading icon themes which are svg
       - locales-all
+
+  # Overcome limitation in snapd to support URL loading (CTRL+U)
+  snapd-xdg-open:
+    source: https://github.com/ubuntu-core/snapd-xdg-open.git
+    plugin: dump
+    organize:
+      data/xdg-open: bin/xdg-open
+    stage-packages:
+      - dbus

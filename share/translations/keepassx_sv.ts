@@ -10,70 +10,11 @@
         <translation>Om</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot;&gt;&lt;span style=&quot;text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;style&gt;li {font-size: 10pt}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Project Maintainers:&lt;/span&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;droidmonkey&lt;/li&gt;&lt;li&gt;phoerious&lt;/li&gt;&lt;li&gt;TheZ3ro&lt;/li&gt;&lt;li&gt;louib&lt;/li&gt;&lt;li&gt;Weslly&lt;/li&gt;&lt;li&gt;debfx (KeePassX)&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Contributors</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;body&gt;
-            &lt;p style=&quot;font-size:x-large; font-weight:600;&quot;&gt;Code:&lt;/p&gt;
-            &lt;ul&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;debfx (KeePassX)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;BlueIce (KeePassX)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;droidmonkey&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;phoerious&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;TheZ3ro&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;louib&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;weslly&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;keithbennett (KeePassHTTP)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;Typz (KeePassHTTP)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;denk-mal (KeePassHTTP)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;kylemanna (YubiKey)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;seatedscribe (CSV Importer)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;pgalves (Inline Messages)&lt;/li&gt;
-            &lt;/ul&gt;
-            &lt;p style=&quot;font-size:x-large; font-weight:600;&quot;&gt;Translations:&lt;/p&gt;
-            &lt;ul&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Chinese:&lt;/span&gt; Biggulu, ligyxy, BestSteve&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Czech:&lt;/span&gt; pavelb, JosefVitu&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Dutch:&lt;/span&gt; Vistaus, KnooL, apie&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Finnish:&lt;/span&gt; MawKKe&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;French:&lt;/span&gt; Scrat15, frgnca, gilbsgilbs, gtalbot, iannick, kyodev, logut&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;German:&lt;/span&gt; Calyrx, DavidHamburg, antsas, codejunky, jensrutschmann, montilo, omnisome4, origin_de, pcrcoding, phoerious, rgloor, vlenzer&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Greek:&lt;/span&gt; nplatis&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Italian:&lt;/span&gt; TheZ3ro, FranzMari, Mte90, tosky&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Kazakh:&lt;/span&gt; sotrud_nik&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Lithuanian:&lt;/span&gt; Moo&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Polish:&lt;/span&gt; konradmb, mrerexx&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Portuguese: &lt;/span&gt;vitor895, weslly, American_Jesus, mihai.ile&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Russian:&lt;/span&gt; vsvyatski, KekcuHa, wkill95&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Spanish:&lt;/span&gt; EdwardNavarro, antifaz, piegope, pquin, vsvyatski&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Swedish:&lt;/span&gt; henziger&lt;/li&gt;
-            &lt;/ul&gt;
-            &lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;See Contributions on GitHub&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Debug Info</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Include the following information whenever you report a bug:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -103,6 +44,26 @@ Kernel: %3 %4</source>
         <source>Enabled extensions:</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
+        <translation>KeePassXC distribueras enligt villkoren i GNU General Public License (GPL) version 2 eller (om du vill) version 3.</translation>
+    </message>
+    <message>
+        <source>Project Maintainers:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Include the following information whenever you report a bug:</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
@@ -112,11 +73,11 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Allow</source>
-        <translation type="unfinished"/>
+        <translation>Tillåt</translation>
     </message>
     <message>
         <source>Deny</source>
-        <translation type="unfinished"/>
+        <translation>Neka</translation>
     </message>
     <message>
         <source>%1 has requested access to passwords for the following item(s).
@@ -231,7 +192,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"/>
+        <translation>Uppdatera</translation>
     </message>
     <message>
         <source>Empty password</source>
@@ -249,15 +210,15 @@ Please select whether you want to allow access.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Append &apos; - Copy&apos; to title</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Replace username and password with references</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Copy history</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Append &apos; - Clone&apos; to title</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -269,7 +230,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>filename</source>
-        <translation type="unfinished"/>
+        <translation>filnamn</translation>
     </message>
     <message>
         <source>size, rows, columns</source>
@@ -309,7 +270,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Preview</source>
-        <translation type="unfinished"/>
+        <translation>Förhandsgranska</translation>
     </message>
     <message>
         <source>Column layout</source>
@@ -325,7 +286,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>column </source>
-        <translation type="unfinished"/>
+        <translation>kolumn</translation>
     </message>
     <message>
         <source>Imported from CSV file</source>
@@ -380,7 +341,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source> columns</source>
-        <translation type="unfinished"/>
+        <translation> kolumner</translation>
     </message>
 </context>
 <context>
@@ -423,7 +384,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"/>
+        <translation>Uppdatera</translation>
     </message>
     <message>
         <source>Challenge Response:</source>
@@ -610,7 +571,7 @@ I annat fall försvinner ändringarna.</translation>
         <source>&quot;%1&quot; is in edit mode.
 Discard changes and close anyway?</source>
         <translation>&quot;%1&quot; är i redigeringsläge.
-Kasta ändringarna och stäng endå?</translation>
+Kasta ändringarna och stäng ändå?</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
@@ -1093,10 +1054,6 @@ Do you want to open it anyway?</source>
         <translation>Välj bild</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translation>Fel</translation>
-    </message>
-    <message>
         <source>Download favicon</source>
         <translation type="unfinished"/>
     </message>
@@ -1122,6 +1079,14 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>This icon is used by %1 entries, and will be replaced by the default icon. Are you sure you want to delete it?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hint: You can enable Google as a fallback under Tools&gt;Settings&gt;Security</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Custom icon already exists</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1331,17 +1296,14 @@ Do you want to open it anyway?</source>
         <translation>Kunde inte räkna nu master-nyckeln</translation>
     </message>
     <message>
-        <source>The selected file is an old KeePass 1 database (.kdb).
-
-You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
-This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
-        <translation>Den valda filen är en gammal KeePass 1 databas (.kdb)
-
-Du kan importera den genom att klicka på Databas &gt; Importera KeePass 1 databas.
-Detta är en envägsmigration. Du kan inte spara en databas som KeePass1 databas. Det som används i KeePassX 0.4.</translation>
+        <source>Unable to issue challenge-response.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Unable to issue challenge-response.</source>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database...'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1361,6 +1323,10 @@ Detta är en envägsmigration. Du kan inte spara en databas som KeePass1 databas
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing single-instance lock file is invalid. Launching new instance.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1419,10 +1385,6 @@ Detta är en envägsmigration. Du kan inte spara en databas som KeePass1 databas
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>He&amp;lp</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>E&amp;ntries</source>
         <translation type="unfinished"/>
     </message>
@@ -1444,10 +1406,6 @@ Detta är en envägsmigration. Du kan inte spara en databas som KeePass1 databas
     </message>
     <message>
         <source>&amp;About</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&amp;Open database</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1491,14 +1449,6 @@ Detta är en envägsmigration. Du kan inte spara en databas som KeePass1 databas
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Sa&amp;ve database as</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Change &amp;master key</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>&amp;Database settings</source>
         <translation type="unfinished"/>
     </message>
@@ -1508,10 +1458,6 @@ Detta är en envägsmigration. Du kan inte spara en databas som KeePass1 databas
     </message>
     <message>
         <source>Timed one-time password</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Setup TOTP</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1563,20 +1509,12 @@ Detta är en envägsmigration. Du kan inte spara en databas som KeePass1 databas
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>&amp;Export to CSV file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Re&amp;pair database</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Password Generator</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Clear history</source>
-        <translation type="unfinished"/>
+        <translation>Töm historiken</translation>
     </message>
     <message>
         <source>&amp;Database</source>
@@ -1584,18 +1522,10 @@ Detta är en envägsmigration. Du kan inte spara en databas som KeePass1 databas
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"/>
+        <translation>Importera</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Import KeePass 1 database</source>
-        <translation>Importera KeePass1 databas</translation>
-    </message>
-    <message>
-        <source>Import CSV file</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1612,6 +1542,42 @@ Detta är en envägsmigration. Du kan inte spara en databas som KeePass1 databas
     </message>
     <message>
         <source>Please touch the button on your YubiKey!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Open database...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sa&amp;ve database as...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Change &amp;master key...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Export to CSV file...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import KeePass 1 database...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import CSV file...</source>
+        <translation>Importera CSV fil...</translation>
+    </message>
+    <message>
+        <source>Re&amp;pair database...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set up TOTP...</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1792,7 +1758,7 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Stäng</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -1848,7 +1814,7 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Kopiera</translation>
     </message>
 </context>
 <context>
@@ -1965,7 +1931,7 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Rensa</translation>
     </message>
     <message>
         <source>Search...</source>
@@ -2010,7 +1976,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"/>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <source>Successfully removed permissions from %1 %2.</source>
@@ -2160,6 +2126,18 @@ give it a unique name to identify and accept it.</source>
         <source>Always ask before performing Auto-Type</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Auto-Type delay</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source> ms</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Start only a single instance of KeePassXC</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>
@@ -2197,6 +2175,14 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Lock databases when session is locked or lid is closed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Privacy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use Google as fallback for downloading website icons</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2251,7 +2237,7 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Kopiera</translation>
     </message>
     <message>
         <source>Expires in</source>
@@ -2281,11 +2267,11 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Create new database</source>
-        <translation type="unfinished"/>
+        <translation>Skapa ny databas</translation>
     </message>
     <message>
         <source>Open existing database</source>
-        <translation type="unfinished"/>
+        <translation>Öppna befintlig databas</translation>
     </message>
     <message>
         <source>Import from KeePass 1</source>
@@ -2293,7 +2279,7 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Import from CSV</source>
-        <translation type="unfinished"/>
+        <translation>Importera från CSV</translation>
     </message>
     <message>
         <source>Recent databases</source>

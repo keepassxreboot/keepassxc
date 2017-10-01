@@ -23,6 +23,7 @@
 #include <QMessageBox>
 #include <QFileDialog>
 
+#include "core/Config.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
@@ -67,7 +68,7 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
             this, SLOT(updateWidgetsDefaultIcons(bool)));
     connect(m_ui->customIconsRadio, SIGNAL(toggled(bool)),
             this, SLOT(updateWidgetsCustomIcons(bool)));
-    connect(m_ui->addButton, SIGNAL(clicked()), SLOT(addCustomIcon()));
+    connect(m_ui->addButton, SIGNAL(clicked()), SLOT(addCustomIconFromFile()));
     connect(m_ui->deleteButton, SIGNAL(clicked()), SLOT(removeCustomIcon()));
     connect(m_ui->faviconButton, SIGNAL(clicked()), SLOT(downloadFavicon()));
 
@@ -184,15 +185,7 @@ void EditWidgetIcons::fetchFavicon(const QUrl& url)
                 image.loadFromData(response->collectedData());
 
                 if (!image.isNull()) {
-                    //Set the image
-                    Uuid uuid = Uuid::random();
-                    m_database->metadata()->addCustomIcon(uuid, image.scaled(16, 16));
-                    m_customIconModel->setIcons(m_database->metadata()->customIconsScaledPixmaps(),
-                                                m_database->metadata()->customIconsOrder());
-                    QModelIndex index = m_customIconModel->indexFromUuid(uuid);
-                    m_ui->customIconsView->setCurrentIndex(index);
-                    m_ui->customIconsRadio->setChecked(true);
-
+                    addCustomIcon(image);
                     resetFaviconDownload();
                 } else {
                     fetchFaviconFromGoogle(url.host());
@@ -222,8 +215,18 @@ void EditWidgetIcons::fetchFavicon(const QUrl& url)
     }
 
     m_httpClient->setConnectingTimeOut(5000, [this]() {
-        resetFaviconDownload();
-        MessageBox::warning(this, tr("Error"), tr("Unable to fetch favicon."));
+        QUrl tempurl = QUrl(m_url);
+        if (tempurl.scheme() == "http") {
+            resetFaviconDownload();
+            emit messageEditEntry(tr("Unable to fetch favicon.") + "\n" +
+                                  tr("Hint: You can enable Google as a fallback under Tools>Settings>Security"),
+                                  MessageWidget::Error);
+        } else {
+            tempurl.setScheme("http");
+            m_url = tempurl.url();
+            tempurl.setPath("/favicon.ico");
+            fetchFavicon(tempurl);
+        }
     });
 
     m_ui->faviconButton->setDisabled(true);
@@ -231,13 +234,15 @@ void EditWidgetIcons::fetchFavicon(const QUrl& url)
 
 void EditWidgetIcons::fetchFaviconFromGoogle(const QString& domain)
 {
-    if (m_fallbackToGoogle) {
+    if (config()->get("security/IconDownloadFallbackToGoogle", false).toBool() && m_fallbackToGoogle) {
         resetFaviconDownload();
         m_fallbackToGoogle = false;
-        fetchFavicon(QUrl("http://www.google.com/s2/favicons?domain=" + domain));
+        QUrl faviconUrl = QUrl("https://www.google.com/s2/favicons");
+        faviconUrl.setQuery("domain=" + QUrl::toPercentEncoding(domain));
+        fetchFavicon(faviconUrl);
     } else {
         resetFaviconDownload();
-        MessageBox::warning(this, tr("Error"), tr("Unable to fetch favicon."));
+        emit messageEditEntry(tr("Unable to fetch favicon."), MessageWidget::Error);
     }
 }
 
@@ -258,7 +263,7 @@ void EditWidgetIcons::resetFaviconDownload(bool clearRedirect)
 }
 #endif
 
-void EditWidgetIcons::addCustomIcon()
+void EditWidgetIcons::addCustomIconFromFile()
 {
     if (m_database) {
         QString filter = QString("%1 (%2);;%3 (*)").arg(tr("Images"),
@@ -267,19 +272,38 @@ void EditWidgetIcons::addCustomIcon()
         QString filename = QFileDialog::getOpenFileName(
                     this, tr("Select Image"), "", filter);
         if (!filename.isEmpty()) {
-            QImage image(filename);
-            if (!image.isNull()) {
-                Uuid uuid = Uuid::random();
-                m_database->metadata()->addCustomIcon(uuid, image.scaled(16, 16));
-                m_customIconModel->setIcons(m_database->metadata()->customIconsScaledPixmaps(),
-                                            m_database->metadata()->customIconsOrder());
-                QModelIndex index = m_customIconModel->indexFromUuid(uuid);
-                m_ui->customIconsView->setCurrentIndex(index);
-            }
-            else {
+            auto icon = QImage(filename);
+            if (!icon.isNull()) {
+                addCustomIcon(QImage(filename));
+            } else {
                 emit messageEditEntry(tr("Can't read icon"), MessageWidget::Error);
             }
         }
+    }
+}
+
+void EditWidgetIcons::addCustomIcon(const QImage &icon)
+{
+    if (m_database) {
+        Uuid uuid = m_database->metadata()->findCustomIcon(icon);
+        if (uuid.isNull()) {
+            uuid = Uuid::random();
+            // Don't add an icon larger than 128x128, but retain original size if smaller
+            if (icon.width() > 128 || icon.height() > 128) {
+                m_database->metadata()->addCustomIcon(uuid, icon.scaled(128, 128));
+            } else {
+                m_database->metadata()->addCustomIcon(uuid, icon);
+            }
+
+            m_customIconModel->setIcons(m_database->metadata()->customIconsScaledPixmaps(),
+                                        m_database->metadata()->customIconsOrder());
+        } else {
+            emit messageEditEntry(tr("Custom icon already exists"), MessageWidget::Information);
+        }
+
+        // Select the new or existing icon
+        QModelIndex index = m_customIconModel->indexFromUuid(uuid);
+        m_ui->customIconsView->setCurrentIndex(index);
     }
 }
 

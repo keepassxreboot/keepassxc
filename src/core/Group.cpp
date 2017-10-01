@@ -667,7 +667,7 @@ void Group::merge(const Group* other)
     for (Entry* entry : dbEntries) {
         // entries are searched by uuid
         if (!findEntryByUuid(entry->uuid())) {
-            entry->clone(Entry::CloneNoFlags)->setGroup(this);
+            entry->clone(Entry::CloneIncludeHistory)->setGroup(this);
         } else {
             resolveConflict(findEntryByUuid(entry->uuid()), entry);
         }
@@ -891,11 +891,11 @@ void Group::resolveConflict(Entry* existingEntry, Entry* otherEntry)
         case KeepBoth:
             // if one entry is newer, create a clone and add it to the group
             if (timeExisting > timeOther) {
-                clonedEntry = otherEntry->clone(Entry::CloneNoFlags);
+                clonedEntry = otherEntry->clone(Entry::CloneIncludeHistory);
                 clonedEntry->setGroup(this);
                 markOlderEntry(clonedEntry);
             } else if (timeExisting < timeOther) {
-                clonedEntry = otherEntry->clone(Entry::CloneNoFlags);
+                clonedEntry = otherEntry->clone(Entry::CloneIncludeHistory);
                 clonedEntry->setGroup(this);
                 markOlderEntry(existingEntry);
             }
@@ -904,7 +904,8 @@ void Group::resolveConflict(Entry* existingEntry, Entry* otherEntry)
             if (timeExisting < timeOther) {
                 // only if other entry is newer, replace existing one
                 removeEntry(existingEntry);
-                addEntry(otherEntry->clone(Entry::CloneNoFlags));
+                clonedEntry = otherEntry->clone(Entry::CloneIncludeHistory);
+                clonedEntry->setGroup(this);
             }
 
             break;

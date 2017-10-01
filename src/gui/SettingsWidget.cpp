@@ -20,6 +20,7 @@
 #include "ui_SettingsWidgetGeneral.h"
 #include "ui_SettingsWidgetSecurity.h"
 
+#include "config-keepassx.h"
 #include "autotype/AutoType.h"
 #include "core/Config.h"
 #include "core/Translator.h"
@@ -68,6 +69,7 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     }
 
     connect(this, SIGNAL(accepted()), SLOT(saveSettings()));
+    connect(this, SIGNAL(apply()), SLOT(saveSettings()));
     connect(this, SIGNAL(rejected()), SLOT(reject()));
 
     connect(m_generalUi->autoSaveAfterEveryChangeCheckBox, SIGNAL(toggled(bool)),
@@ -79,6 +81,10 @@ SettingsWidget::SettingsWidget(QWidget* parent)
             m_secUi->clearClipboardSpinBox, SLOT(setEnabled(bool)));
     connect(m_secUi->lockDatabaseIdleCheckBox, SIGNAL(toggled(bool)),
             m_secUi->lockDatabaseIdleSpinBox, SLOT(setEnabled(bool)));
+
+#ifndef WITH_XC_HTTP
+    m_secUi->privacy->setVisible(false);
+#endif
 }
 
 SettingsWidget::~SettingsWidget()
@@ -101,6 +107,10 @@ void SettingsWidget::loadSettings()
             tr("Access error for config file %1").arg(config()->getFileName()), MessageWidget::Error);
     }
 
+#ifdef QT_DEBUG
+    m_generalUi->singleInstanceCheckBox->setEnabled(false);
+#endif
+    m_generalUi->singleInstanceCheckBox->setChecked(config()->get("SingleInstance").toBool());
     m_generalUi->rememberLastDatabasesCheckBox->setChecked(config()->get("RememberLastDatabases").toBool());
     m_generalUi->rememberLastKeyFilesCheckBox->setChecked(config()->get("RememberLastKeyFiles").toBool());
     m_generalUi->openPreviousDatabasesOnStartupCheckBox->setChecked(
@@ -135,6 +145,7 @@ void SettingsWidget::loadSettings()
         if (m_globalAutoTypeKey > 0 && m_globalAutoTypeModifiers > 0) {
             m_generalUi->autoTypeShortcutWidget->setShortcut(m_globalAutoTypeKey, m_globalAutoTypeModifiers);
         }
+        m_generalUi->autoTypeDelaySpinBox->setValue(config()->get("AutoTypeDelay").toInt());
     }
 
 
@@ -145,6 +156,7 @@ void SettingsWidget::loadSettings()
     m_secUi->lockDatabaseIdleSpinBox->setValue(config()->get("security/lockdatabaseidlesec").toInt());
     m_secUi->lockDatabaseMinimizeCheckBox->setChecked(config()->get("security/lockdatabaseminimize").toBool());
     m_secUi->lockDatabaseOnScreenLockCheckBox->setChecked(config()->get("security/lockdatabasescreenlock").toBool());
+    m_secUi->lockDatabaseOnScreenLockCheckBox->setChecked(config()->get("security/IconDownloadFallbackToGoogle").toBool());
 
     m_secUi->passwordCleartextCheckBox->setChecked(config()->get("security/passwordscleartext").toBool());
     m_secUi->passwordRepeatCheckBox->setChecked(config()->get("security/passwordsrepeat").toBool());
@@ -168,6 +180,7 @@ void SettingsWidget::saveSettings()
         return;
     }
 
+    config()->set("SingleInstance", m_generalUi->singleInstanceCheckBox->isChecked());
     config()->set("RememberLastDatabases", m_generalUi->rememberLastDatabasesCheckBox->isChecked());
     config()->set("RememberLastKeyFiles", m_generalUi->rememberLastKeyFilesCheckBox->isChecked());
     config()->set("OpenPreviousDatabasesOnStartup",
@@ -198,6 +211,7 @@ void SettingsWidget::saveSettings()
         config()->set("GlobalAutoTypeKey", m_generalUi->autoTypeShortcutWidget->key());
         config()->set("GlobalAutoTypeModifiers",
                       static_cast<int>(m_generalUi->autoTypeShortcutWidget->modifiers()));
+        config()->set("AutoTypeDelay", m_generalUi->autoTypeDelaySpinBox->value());
     }
     config()->set("security/clearclipboard", m_secUi->clearClipboardCheckBox->isChecked());
     config()->set("security/clearclipboardtimeout", m_secUi->clearClipboardSpinBox->value());
@@ -206,15 +220,23 @@ void SettingsWidget::saveSettings()
     config()->set("security/lockdatabaseidlesec", m_secUi->lockDatabaseIdleSpinBox->value());
     config()->set("security/lockdatabaseminimize", m_secUi->lockDatabaseMinimizeCheckBox->isChecked());
     config()->set("security/lockdatabasescreenlock", m_secUi->lockDatabaseOnScreenLockCheckBox->isChecked());
+    config()->set("security/IconDownloadFallbackToGoogle", m_secUi->fallbackToGoogle->isChecked());
 
     config()->set("security/passwordscleartext", m_secUi->passwordCleartextCheckBox->isChecked());
     config()->set("security/passwordsrepeat", m_secUi->passwordRepeatCheckBox->isChecked());
 
+    // Security: clear storage if related settings are disabled
+    if (!config()->get("RememberLastDatabases").toBool()) {
+        config()->set("LastDatabases", QVariant());
+    }
+
+    if (!config()->get("RememberLastKeyFiles").toBool()) {
+        config()->set("LastKeyFiles", QVariant());
+    }
+
     for (const ExtraPage& page: asConst(m_extraPages)) {
         page.saveSettings();
     }
-
-    emit editFinished(true);
 }
 
 void SettingsWidget::reject()
@@ -224,7 +246,6 @@ void SettingsWidget::reject()
         autoType()->registerGlobalShortcut(m_globalAutoTypeKey, m_globalAutoTypeModifiers);
     }
 
-    emit editFinished(false);
 }
 
 void SettingsWidget::enableAutoSaveOnExit(bool checked)

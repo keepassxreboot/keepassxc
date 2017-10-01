@@ -21,7 +21,13 @@ RUN set -x \
     && apt-get install --yes software-properties-common
 
 RUN set -x \
-    && add-apt-repository --yes ppa:beineri/opt-qt58-trusty
+    && add-apt-repository ppa:george-edison55/cmake-3.x
+
+ENV QT_VERSION=qt59
+
+RUN set -x \
+    && add-apt-repository --yes ppa:beineri/opt-${QT_VERSION}-trusty
+
 
 RUN set -x \
     && apt-get update \
@@ -29,9 +35,9 @@ RUN set -x \
         g++ \
         cmake \
         libgcrypt20-dev \
-        qt58base \
-        qt58tools \
-        qt58x11extras \
+        ${QT_VERSION}base \
+        ${QT_VERSION}tools \
+        ${QT_VERSION}x11extras \
         libxi-dev \
         libxtst-dev \
         zlib1g-dev \
@@ -50,7 +56,7 @@ VOLUME /keepassxc/src
 VOLUME /keepassxc/out
 WORKDIR /keepassxc
 
-ENV CMAKE_PREFIX_PATH=/opt/qt58/lib/cmake
-ENV LD_LIBRARY_PATH=/opt/qt58/lib
+ENV CMAKE_PREFIX_PATH=/opt/${QT_VERSION}/lib/cmake
+ENV LD_LIBRARY_PATH=/opt/${QT_VERSION}/lib
 RUN set -x \
-    && echo /opt/qt58/lib > /etc/ld.so.conf.d/qt58.conf
+    && echo /opt/${QT_VERSION}/lib > /etc/ld.so.conf.d/${QT_VERSION}.conf

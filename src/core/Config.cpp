@@ -107,6 +107,7 @@ void Config::init(const QString& fileName)
 {
     m_settings.reset(new QSettings(fileName, QSettings::IniFormat));
 
+    m_defaults.insert("SingleInstance", true);
     m_defaults.insert("RememberLastDatabases", true);
     m_defaults.insert("RememberLastKeyFiles", true);
     m_defaults.insert("OpenPreviousDatabasesOnStartup", true);
@@ -118,8 +119,9 @@ void Config::init(const QString& fileName)
     m_defaults.insert("MinimizeOnCopy", false);
     m_defaults.insert("UseGroupIconOnEntryCreation", false);
     m_defaults.insert("AutoTypeEntryTitleMatch", true);
+    m_defaults.insert("AutoTypeDelay", 25);
     m_defaults.insert("UseGroupIconOnEntryCreation", true);
-    m_defaults.insert("IgnoreGroupExpansion", false);
+    m_defaults.insert("IgnoreGroupExpansion", true);
     m_defaults.insert("security/clearclipboard", true);
     m_defaults.insert("security/clearclipboardtimeout", 10);
     m_defaults.insert("security/lockdatabaseidle", false);
@@ -129,6 +131,7 @@ void Config::init(const QString& fileName)
     m_defaults.insert("security/passwordsrepeat", false);
     m_defaults.insert("security/passwordscleartext", false);
     m_defaults.insert("security/autotypeask", true);
+    m_defaults.insert("security/IconDownloadFallbackToGoogle", false);
     m_defaults.insert("GUI/Language", "system");
     m_defaults.insert("GUI/ShowTrayIcon", false);
     m_defaults.insert("GUI/MinimizeToTray", false);
