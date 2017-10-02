@@ -24,7 +24,7 @@ BraceWrapping:
   AfterFunction:   true
   AfterControlStatement: false
   AfterEnum:       true
-  AfterNamespace:  true
+  AfterNamespace:  false
   AfterStruct:     true
   AfterUnion:      true
   BeforeCatch:     false

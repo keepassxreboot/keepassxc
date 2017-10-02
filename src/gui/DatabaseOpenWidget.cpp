@@ -22,20 +22,19 @@
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/FilePath.h"
-#include "gui/MainWindow.h"
-#include "gui/FileDialog.h"
-#include "gui/MessageBox.h"
+#include "crypto/Random.h"
 #include "format/KeePass2Reader.h"
+#include "gui/FileDialog.h"
+#include "gui/MainWindow.h"
+#include "gui/MessageBox.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
-#include "crypto/Random.h"
 #include "keys/YkChallengeResponseKey.h"
 
 #include "config-keepassx.h"
 
-#include <QtConcurrentRun>
 #include <QSharedPointer>
-
+#include <QtConcurrentRun>
 
 DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     : DialogyWidget(parent)
@@ -52,8 +51,7 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     m_ui->labelHeadline->setFont(font);
 
     m_ui->buttonTogglePassword->setIcon(filePath()->onOffIcon("actions", "password-show"));
-    connect(m_ui->buttonTogglePassword, SIGNAL(toggled(bool)),
-            m_ui->editPassword, SLOT(setShowPassword(bool)));
+    connect(m_ui->buttonTogglePassword, SIGNAL(toggled(bool)), m_ui->editPassword, SLOT(setShowPassword(bool)));
     connect(m_ui->buttonBrowseFile, SIGNAL(clicked()), SLOT(browseKeyFile()));
 
     connect(m_ui->editPassword, SIGNAL(textChanged(QString)), SLOT(activatePassword()));
@@ -71,7 +69,7 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     connect(m_ui->buttonRedetectYubikey, SIGNAL(clicked()), SLOT(pollYubikey()));
     connect(m_ui->comboChallengeResponse, SIGNAL(activated(int)), SLOT(activateChallengeResponse()));
 
-    connect(YubiKey::instance(), SIGNAL(detected(int,bool)), SLOT(yubikeyDetected(int,bool)), Qt::QueuedConnection);
+    connect(YubiKey::instance(), SIGNAL(detected(int, bool)), SLOT(yubikeyDetected(int, bool)), Qt::QueuedConnection);
     connect(YubiKey::instance(), SIGNAL(notFound()), SLOT(noYubikeyFound()), Qt::QueuedConnection);
 #else
     m_ui->checkChallengeResponse->setVisible(false);
@@ -151,19 +149,22 @@ void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)
 void DatabaseOpenWidget::openDatabase()
 {
     KeePass2Reader reader;
-    CompositeKey masterKey = databaseKey();
+    CompositeKey* masterKey = databaseKey();
+    if (masterKey == nullptr) {
+        return;
+    }
 
     QFile file(m_filename);
     if (!file.open(QIODevice::ReadOnly)) {
-        m_ui->messageWidget->showMessage(
-            tr("Unable to open the database.").append("\n").append(file.errorString()), MessageWidget::Error);
+        m_ui->messageWidget->showMessage(tr("Unable to open the database.").append("\n").append(file.errorString()),
+                                         MessageWidget::Error);
         return;
     }
     if (m_db) {
         delete m_db;
     }
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-    m_db = reader.readDatabase(&file, masterKey);
+    m_db = reader.readDatabase(&file, *masterKey);
     QApplication::restoreOverrideCursor();
 
     if (m_db) {
@@ -171,20 +172,21 @@ void DatabaseOpenWidget::openDatabase()
             m_ui->messageWidget->animatedHide();
         }
         emit editFinished(true);
-    }
-    else {
-        m_ui->messageWidget->showMessage(tr("Unable to open the database.")
-                                         .append("\n").append(reader.errorString()), MessageWidget::Error);
+    } else {
+        m_ui->messageWidget->showMessage(tr("Unable to open the database.").append("\n").append(reader.errorString()),
+                                         MessageWidget::Error);
         m_ui->editPassword->clear();
     }
+
+    delete masterKey;
 }
 
-CompositeKey DatabaseOpenWidget::databaseKey()
+CompositeKey* DatabaseOpenWidget::databaseKey()
 {
-    CompositeKey masterKey;
+    CompositeKey* masterKey = new CompositeKey();
 
     if (m_ui->checkPassword->isChecked()) {
-        masterKey.addKey(PasswordKey(m_ui->editPassword->text()));
+        masterKey->addKey(PasswordKey(m_ui->editPassword->text()));
     }
 
     QHash<QString, QVariant> lastKeyFiles = config()->get("LastKeyFiles").toHash();
@@ -195,11 +197,12 @@ CompositeKey DatabaseOpenWidget::databaseKey()
         QString keyFilename = m_ui->comboKeyFile->currentText();
         QString errorMsg;
         if (!key.load(keyFilename, &errorMsg)) {
-            m_ui->messageWidget->showMessage(tr("Can't open key file").append(":\n")
-                                             .append(errorMsg), MessageWidget::Error);
-            return CompositeKey();
+            m_ui->messageWidget->showMessage(tr("Can't open key file").append(":\n").append(errorMsg),
+                                             MessageWidget::Error);
+            delete masterKey;
+            return nullptr;
         }
-        masterKey.addKey(key);
+        masterKey->addKey(key);
         lastKeyFiles[m_filename] = keyFilename;
     } else {
         lastKeyFiles.remove(m_filename);
@@ -226,9 +229,9 @@ CompositeKey DatabaseOpenWidget::databaseKey()
 
         // read blocking mode from LSB and slot index number from second LSB
         bool blocking = comboPayload & 1;
-        int slot      = comboPayload >> 1;
-        auto key      = QSharedPointer<YkChallengeResponseKey>(new YkChallengeResponseKey(slot, blocking));
-        masterKey.addChallengeResponseKey(key);
+        int slot = comboPayload >> 1;
+        auto key = QSharedPointer<YkChallengeResponseKey>(new YkChallengeResponseKey(slot, blocking));
+        masterKey->addChallengeResponseKey(key);
     }
 #endif
 
