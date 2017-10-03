@@ -91,17 +91,29 @@ QString FilePath::pluginPath(const QString& name)
 
 QIcon FilePath::applicationIcon()
 {
+#ifdef KEEPASSXC_SNAP_BUILD
+    return icon("apps", "keepassxc", false);
+#else
     return icon("apps", "keepassxc");
+#endif
 }
 
 QIcon FilePath::trayIconLocked()
 {
+#ifdef KEEPASSXC_SNAP_BUILD
+    return icon("apps", "keepassxc-locked", false);
+#else
     return icon("apps", "keepassxc-locked");
+#endif
 }
 
 QIcon FilePath::trayIconUnlocked()
 {
+#ifdef KEEPASSXC_SNAP_BUILD
+    return icon("apps", "keepassxc-unlocked", false);
+#else
     return icon("apps", "keepassxc-unlocked");
+#endif
 }
 
 QIcon FilePath::icon(const QString& category, const QString& name, bool fromTheme)
