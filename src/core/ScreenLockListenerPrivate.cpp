@@ -19,7 +19,7 @@
 #if defined(Q_OS_OSX)
 #include "ScreenLockListenerMac.h"
 #endif
-#if defined(Q_OS_LINUX)
+#if defined(Q_OS_UNIX)
 #include "ScreenLockListenerDBus.h"
 #endif
 #if defined(Q_OS_WIN)
@@ -36,7 +36,7 @@ ScreenLockListenerPrivate* ScreenLockListenerPrivate::instance(QWidget* parent)
 #if defined(Q_OS_OSX)
     Q_UNUSED(parent);
     return ScreenLockListenerMac::instance();
-#elif defined(Q_OS_LINUX)
+#elif defined(Q_OS_UNIX)
     return new ScreenLockListenerDBus(parent);
 #elif defined(Q_OS_WIN)
     return new ScreenLockListenerWin(parent);

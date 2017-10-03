@@ -39,7 +39,7 @@
 
 #ifdef Q_OS_WIN
 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)
-#elif Q_OS_LINUX
+#elif Q_OS_UNIX
 Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
 #endif
 #endif
