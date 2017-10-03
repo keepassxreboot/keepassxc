@@ -156,7 +156,7 @@ void SettingsWidget::loadSettings()
     m_secUi->lockDatabaseIdleSpinBox->setValue(config()->get("security/lockdatabaseidlesec").toInt());
     m_secUi->lockDatabaseMinimizeCheckBox->setChecked(config()->get("security/lockdatabaseminimize").toBool());
     m_secUi->lockDatabaseOnScreenLockCheckBox->setChecked(config()->get("security/lockdatabasescreenlock").toBool());
-    m_secUi->lockDatabaseOnScreenLockCheckBox->setChecked(config()->get("security/IconDownloadFallbackToGoogle").toBool());
+    m_secUi->fallbackToGoogle->setChecked(config()->get("security/IconDownloadFallbackToGoogle").toBool());
 
     m_secUi->passwordCleartextCheckBox->setChecked(config()->get("security/passwordscleartext").toBool());
     m_secUi->passwordRepeatCheckBox->setChecked(config()->get("security/passwordsrepeat").toBool());
