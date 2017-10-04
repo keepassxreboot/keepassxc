@@ -181,6 +181,7 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
                     lockFile->tryLock();
                 }
             } else {
+                delete lockFile;
                 return;
             }
         }
