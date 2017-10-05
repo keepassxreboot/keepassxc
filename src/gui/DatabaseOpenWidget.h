@@ -52,7 +52,7 @@ signals:
 protected:
     void showEvent(QShowEvent* event) override;
     void hideEvent(QHideEvent* event) override;
-    CompositeKey databaseKey();
+    CompositeKey* databaseKey();
 
 protected slots:
     virtual void openDatabase();
