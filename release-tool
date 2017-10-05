@@ -119,9 +119,11 @@ EOF
 Sign previously compiled release packages
 
 Options:
-  -f, --files       Files to sign (required)
-  -g, --gpg-key     GPG key used to sign the files (default: '${GPG_KEY}')
-  -h, --help        Show this help
+  -f, --files        Files to sign (required)
+  -g, --gpg-key      GPG key used to sign the files (default: '${GPG_KEY}')
+      --signtool     Specify the signtool executable (default: 'signtool')
+      --signtool-key Provide a key to be used with signtool (for Windows EXE)
+  -h, --help         Show this help
 EOF
     fi
 }
@@ -546,10 +548,10 @@ build() {
     checkWorkingTreeClean
 
     OUTPUT_DIR="$(realpath "$OUTPUT_DIR")"
-    
+
     logInfo "Checking out release tag '${TAG_NAME}'..."
     git checkout "$TAG_NAME"
-    
+
     logInfo "Creating output directory..."
     mkdir -p "$OUTPUT_DIR"
 
@@ -663,6 +665,8 @@ build() {
 # -----------------------------------------------------------------------
 sign() {
     SIGN_FILES=()
+    SIGNTOOL="signtool"
+    SIGNTOOL_KEY=""
     
     while [ $# -ge 1 ]; do
         local arg="$1"
@@ -675,6 +679,14 @@ sign() {
                 
             -g|--gpg-key)
                 GPG_KEY="$2"
+                shift ;;
+
+            --signtool)
+                SIGNTOOL="$2"
+                shift ;;
+
+            --signtool-key)
+                SIGNTOOL_KEY="$2"
                 shift ;;
             
             -h|--help)
@@ -694,13 +706,30 @@ sign() {
         printUsage "sign"
         exit 1
     fi
+
+    if [[ -n "$SIGNTOOL_KEY" && ! -f "$SIGNTOOL_KEY" ]]; then
+        exitError "Signtool Key was not found!"
+    elif [[ -f "$SIGNTOOL_KEY" && ! -x $(command -v "${SIGNTOOL}") ]]; then
+        exitError "signtool program not found on PATH!"
+    fi
     
     for f in "${SIGN_FILES[@]}"; do
         if [ ! -f "$f" ]; then
             exitError "File '${f}' does not exist!"
         fi
+
+        if [[ -n "$SIGNTOOL_KEY" && ${f: -4} == '.exe' ]]; then
+            logInfo "Signing file '${f}' using signtool...\n"
+            read -s -p "Signtool Key Password: " password
+            echo
+            "${SIGNTOOL}" sign -f "${SIGNTOOL_KEY}" -p ${password} -v -t http://timestamp.comodoca.com/authenticode ${f}
+
+            if [ 0 -ne $? ]; then
+                exitError "Signing failed!"
+            fi
+        fi
         
-        logInfo "Signing file '${f}'..."
+        logInfo "Signing file '${f}' using release key..."
         gpg --output "${f}.sig" --armor --local-user "$GPG_KEY" --detach-sig "$f"
         
         if [ 0 -ne $? ]; then
