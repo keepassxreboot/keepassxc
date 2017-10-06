@@ -152,6 +152,9 @@ void DatabaseOpenWidget::openDatabase()
 {
     KeePass2Reader reader;
     CompositeKey masterKey = databaseKey();
+    if (!masterKey.isValid()) {
+        return;
+    }
 
     QFile file(m_filename);
     if (!file.open(QIODevice::ReadOnly)) {
@@ -197,7 +200,7 @@ CompositeKey DatabaseOpenWidget::databaseKey()
         if (!key.load(keyFilename, &errorMsg)) {
             m_ui->messageWidget->showMessage(tr("Can't open key file").append(":\n")
                                              .append(errorMsg), MessageWidget::Error);
-            return CompositeKey();
+            return CompositeKey(false);
         }
         masterKey.addKey(key);
         lastKeyFiles[m_filename] = keyFilename;
