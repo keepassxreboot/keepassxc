@@ -104,6 +104,8 @@ set(keepassx_SOURCES
     gui/EditWidget.cpp
     gui/EditWidgetIcons.cpp
     gui/EditWidgetProperties.cpp
+    gui/EditWidgetAutoType.cpp
+    gui/AutoTypeAssociationsModel.cpp
     gui/FileDialog.cpp
     gui/IconModels.cpp
     gui/KeePass1OpenWidget.cpp
@@ -125,7 +127,6 @@ set(keepassx_SOURCES
     gui/csvImport/CsvImportWidget.cpp
     gui/csvImport/CsvImportWizard.cpp
     gui/csvImport/CsvParserModel.cpp
-    gui/entry/AutoTypeAssociationsModel.cpp
     gui/entry/EditEntryWidget.cpp
     gui/entry/EditEntryWidget_p.h
     gui/entry/EntryAttachmentsModel.cpp
