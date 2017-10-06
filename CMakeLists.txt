@@ -178,6 +178,7 @@ endif()
 
 if(APPLE AND WITH_APP_BUNDLE AND "${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr/local")
   set(CMAKE_INSTALL_PREFIX "/Applications")
+  set(CMAKE_INSTALL_MANDIR "/usr/local/share/man")
 endif()
 
 if(MINGW)
