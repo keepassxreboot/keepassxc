@@ -412,7 +412,7 @@ void KeePass2XmlWriter::writeAutoType(const Entry* entry)
 {
     m_xml.writeStartElement("AutoType");
 
-    writeTriStateNew("Enabled", entry->autoTypeEnabled());
+    writeTriState("Enabled", entry->autoTypeEnabled());
     writeNumber("DataTransferObfuscation", entry->autoTypeObfuscation());
     writeString("DefaultSequence", entry->defaultAutoTypeSequence());
 
@@ -529,24 +529,7 @@ void KeePass2XmlWriter::writeColor(const QString& qualifiedName, const QColor& c
     writeString(qualifiedName, colorStr);
 }
 
-void KeePass2XmlWriter::writeTriState(const QString& qualifiedName, Group::TriState triState)
-{
-    QString value;
-
-    if (triState == Group::Inherit) {
-        value = "null";
-    }
-    else if (triState == Group::Enable) {
-        value = "true";
-    }
-    else {
-        value = "false";
-    }
-
-    writeString(qualifiedName, value);
-}
-
-void KeePass2XmlWriter::writeTriStateNew(const QString &qualifiedName, Tools::TriState triState)
+void KeePass2XmlWriter::writeTriState(const QString& qualifiedName, Tools::TriState triState)
 {
     QString value;
     if (triState == Tools::TriState::Inherit) {

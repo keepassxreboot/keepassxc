@@ -71,9 +71,7 @@ private:
     void writeUuid(const QString& qualifiedName, const Entry* entry);
     void writeBinary(const QString& qualifiedName, const QByteArray& ba);
     void writeColor(const QString& qualifiedName, const QColor& color);
-    // TODO: frost remove writeTriState
-    void writeTriState(const QString& qualifiedName, Group::TriState triState);
-    void writeTriStateNew(const QString& qualifiedName, Tools::TriState triState);
+    void writeTriState(const QString& qualifiedName, Tools::TriState triState);
     QString colorPartToString(int value);
     QString stripInvalidXml10Chars(QString str);
 

@@ -600,10 +600,10 @@ QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitl
     const Group* group = entry->group();
     do {
         if (!enableSet) {
-            if (group->autoTypeEnabled() == Group::Disable) {
+            if (group->autoTypeEnabled() == Tools::TriState::Disable) {
                 return QString();
             }
-            else if (group->autoTypeEnabled() == Group::Enable) {
+            else if (group->autoTypeEnabled() == Tools::TriState::Enable) {
                 enableSet = true;
             }
         }

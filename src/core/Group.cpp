@@ -22,6 +22,7 @@
 #include "core/DatabaseIcons.h"
 #include "core/Global.h"
 #include "core/Metadata.h"
+#include "core/Tools.h"
 
 const int Group::DefaultIconNumber = 48;
 const int Group::RecycleBinIconNumber = 43;
@@ -31,8 +32,8 @@ Group::Group()
 {
     m_data.iconNumber = DefaultIconNumber;
     m_data.isExpanded = true;
-    m_data.autoTypeEnabled = Inherit;
-    m_data.searchingEnabled = Inherit;
+    m_data.autoTypeEnabled = Tools::TriState::Inherit;
+    m_data.searchingEnabled = Tools::TriState::Inherit;
     m_data.mergeMode = ModeInherit;
 }
 
@@ -66,8 +67,8 @@ Group* Group::createRecycleBin()
     recycleBin->setUuid(Uuid::random());
     recycleBin->setName(tr("Recycle Bin"));
     recycleBin->setIcon(RecycleBinIconNumber);
-    recycleBin->setSearchingEnabled(Group::Disable);
-    recycleBin->setAutoTypeEnabled(Group::Disable);
+    recycleBin->setSearchingEnabled(Tools::TriState::Disable);
+    recycleBin->setAutoTypeEnabled(Tools::TriState::Disable);
     return recycleBin;
 }
 
@@ -194,7 +195,7 @@ QString Group::effectiveAutoTypeSequence() const
 
     const Group* group = this;
     do {
-        if (group->autoTypeEnabled() == Group::Disable) {
+        if (group->autoTypeEnabled() == Tools::TriState::Disable) {
             return QString();
         }
 
@@ -209,27 +210,12 @@ QString Group::effectiveAutoTypeSequence() const
     return sequence;
 }
 
-Group::TriState Group::autoTypeEnabled() const
+Tools::TriState Group::autoTypeEnabled() const
 {
     return m_data.autoTypeEnabled;
 }
 
-bool Group::effectiveAutoTypeEnabled() const
-{
-    const Group* group = this;
-    do {
-        if (group->autoTypeEnabled() == Group::Enable) {
-            return true;
-        } else if (group->autoTypeEnabled() == Group::Disable) {
-            return false;
-        }
-        group = group->parentGroup();
-    } while (group);
-
-    return true;
-}
-
-Group::TriState Group::searchingEnabled() const
+Tools::TriState Group::searchingEnabled() const
 {
     return m_data.searchingEnabled;
 }
@@ -324,12 +310,12 @@ void Group::setDefaultAutoTypeSequence(const QString& sequence)
     set(m_data.defaultAutoTypeSequence, sequence);
 }
 
-void Group::setAutoTypeEnabled(TriState enable)
+void Group::setAutoTypeEnabled(Tools::TriState enable)
 {
     set(m_data.autoTypeEnabled, enable);
 }
 
-void Group::setSearchingEnabled(TriState enable)
+void Group::setSearchingEnabled(Tools::TriState enable)
 {
     set(m_data.searchingEnabled, enable);
 }
@@ -885,42 +871,14 @@ void Group::markOlderEntry(Entry* entry)
 
 bool Group::resolveSearchingEnabled() const
 {
-    switch (m_data.searchingEnabled) {
-    case Inherit:
-        if (!m_parent) {
-            return true;
-        }
-        else {
-            return m_parent->resolveSearchingEnabled();
-        }
-    case Enable:
-        return true;
-    case Disable:
-        return false;
-    default:
-        Q_ASSERT(false);
-        return false;
-    }
+    const bool inheritValue = m_parent ? m_parent->resolveSearchingEnabled() : true;
+    return Tools::isTriStateEnabled(m_data.searchingEnabled, inheritValue);
 }
 
 bool Group::resolveAutoTypeEnabled() const
 {
-    switch (m_data.autoTypeEnabled) {
-    case Inherit:
-        if (!m_parent) {
-            return true;
-        }
-        else {
-            return m_parent->resolveAutoTypeEnabled();
-        }
-    case Enable:
-        return true;
-    case Disable:
-        return false;
-    default:
-        Q_ASSERT(false);
-        return false;
-    }
+    const bool inheritValue = m_parent ? m_parent->resolveAutoTypeEnabled() : true;
+    return Tools::isTriStateEnabled(m_data.autoTypeEnabled, inheritValue);
 }
 
 void Group::resolveConflict(Entry* existingEntry, Entry* otherEntry)

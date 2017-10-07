@@ -341,9 +341,9 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_iconsWidget->load(entry->uuid(), m_database, iconStruct, entry->webUrl());
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), m_iconsWidget, SLOT(setUrl(QString)));
 
-    m_editWidgetAutoType->setFields(entry->autoTypeEnabled(), entry->group()->effectiveAutoTypeEnabled(),
-                                             entry->defaultAutoTypeSequence(), entry->effectiveAutoTypeSequence(),
-                                             entry->autoTypeAssociations());
+    m_editWidgetAutoType->setFields(entry->autoTypeEnabled(), entry->group()->resolveAutoTypeEnabled(),
+                                    entry->defaultAutoTypeSequence(), entry->effectiveAutoTypeSequence(),
+                                    entry->autoTypeAssociations());
 
     m_editWidgetProperties->setFields(entry->timeInfo(), entry->uuid());
 

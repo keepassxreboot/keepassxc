@@ -56,8 +56,6 @@ private slots:
 
 private:
     void addTriStateItems(QComboBox* comboBox, bool inheritValue);
-    int indexFromTriState(Group::TriState triState);
-    Group::TriState triStateFromIndex(int index);
 
     const QScopedPointer<Ui::EditGroupWidgetMain> m_mainUi;
     QWidget* const m_editGroupWidgetMain;

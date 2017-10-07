@@ -546,36 +546,12 @@ Group* KeePass2XmlReader::parseGroup()
             group->setDefaultAutoTypeSequence(readString());
         }
         else if (m_xml.name() == "EnableAutoType") {
-            QString str = readString();
-
-            if (str.compare("null", Qt::CaseInsensitive) == 0) {
-                group->setAutoTypeEnabled(Group::Inherit);
-            }
-            else if (str.compare("true", Qt::CaseInsensitive) == 0) {
-                group->setAutoTypeEnabled(Group::Enable);
-            }
-            else if (str.compare("false", Qt::CaseInsensitive) == 0) {
-                group->setAutoTypeEnabled(Group::Disable);
-            }
-            else {
-                raiseError("Invalid EnableAutoType value");
-            }
+            const Tools::TriState state = readTriState();
+            group->setAutoTypeEnabled(state);
         }
         else if (m_xml.name() == "EnableSearching") {
-            QString str = readString();
-
-            if (str.compare("null", Qt::CaseInsensitive) == 0) {
-                group->setSearchingEnabled(Group::Inherit);
-            }
-            else if (str.compare("true", Qt::CaseInsensitive) == 0) {
-                group->setSearchingEnabled(Group::Enable);
-            }
-            else if (str.compare("false", Qt::CaseInsensitive) == 0) {
-                group->setSearchingEnabled(Group::Disable);
-            }
-            else {
-                raiseError("Invalid EnableSearching value");
-            }
+            const Tools::TriState state = readTriState();
+            group->setSearchingEnabled(state);
         }
         else if (m_xml.name() == "LastTopVisibleEntry") {
             group->setLastTopVisibleEntry(getEntry(readUuid()));
@@ -1046,17 +1022,17 @@ bool KeePass2XmlReader::readBool()
 Tools::TriState KeePass2XmlReader::readTriState() {
     QString str = readString();
 
-    if (str.compare("null", Qt::CaseInsensitive) == 0) {
+    if (str.compare("null", Qt::CaseInsensitive) == 0 || str.isEmpty()) {
         return Tools::TriState::Inherit;
     }
     else if (str.compare("true", Qt::CaseInsensitive) == 0) {
         return Tools::TriState::Enable;
     }
-    else if (str.compare("false", Qt::CaseInsensitive) == 0 || str.isEmpty()) {
+    else if (str.compare("false", Qt::CaseInsensitive) == 0) {
         return Tools::TriState::Disable;
     }
     else {
-        raiseError("Invalid EnableAutoType value");
+        raiseError("Invalid TriState value");
         return Tools::TriState::Disable;
     }
 }
