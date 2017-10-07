@@ -41,7 +41,6 @@ Metadata::Metadata(QObject* parent)
     m_data.protectPassword = true;
     m_data.protectUrl = false;
     m_data.protectNotes = false;
-    // m_data.autoEnableVisualHiding = false;
 
     QDateTime now = QDateTime::currentDateTimeUtc();
     m_data.nameChanged = now;
@@ -157,11 +156,6 @@ bool Metadata::protectNotes() const
 {
     return m_data.protectNotes;
 }
-
-/*bool Metadata::autoEnableVisualHiding() const
-{
-    return m_autoEnableVisualHiding;
-}*/
 
 QImage Metadata::customIcon(const Uuid& uuid) const
 {
@@ -375,11 +369,6 @@ void Metadata::setProtectNotes(bool value)
 {
     set(m_data.protectNotes, value);
 }
-
-/*void Metadata::setAutoEnableVisualHiding(bool value)
-{
-    set(m_autoEnableVisualHiding, value);
-}*/
 
 void Metadata::addCustomIcon(const Uuid& uuid, const QImage& icon)
 {

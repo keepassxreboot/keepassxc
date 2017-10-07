@@ -420,6 +420,29 @@ void TestMerge::testMergeAndSync()
     delete dbSource;
 }
 
+/**
+ * Custom icons should be brought over when merging.
+ */
+void TestMerge::testMergeCustomIcons()
+{
+    Database* dbDestination = new Database();
+    Database* dbSource = createTestDatabase();
+
+    Uuid customIconId = Uuid::random();
+    QImage customIcon;
+
+    dbSource->metadata()->addCustomIcon(customIconId, customIcon);
+    // Sanity check.
+    QVERIFY(dbSource->metadata()->containsCustomIcon(customIconId));
+
+    dbDestination->merge(dbSource);
+
+    QVERIFY(dbDestination->metadata()->containsCustomIcon(customIconId));
+
+    delete dbDestination;
+    delete dbSource;
+}
+
 Database* TestMerge::createTestDatabase()
 {
     Database* db = new Database();

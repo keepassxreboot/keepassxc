@@ -331,6 +331,15 @@ void Database::emptyRecycleBin()
 void Database::merge(const Database* other)
 {
     m_rootGroup->merge(other->rootGroup());
+
+    for (Uuid customIconId : other->metadata()->customIcons().keys()) {
+        QImage customIcon = other->metadata()->customIcon(customIconId);
+        if (!this->metadata()->containsCustomIcon(customIconId)) {
+            qDebug("Adding custom icon %s to database.", qPrintable(customIconId.toHex()));
+            this->metadata()->addCustomIcon(customIconId, customIcon);
+        }
+    }
+
     emit modified();
 }
 

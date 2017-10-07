@@ -141,7 +141,6 @@ void KeePass2XmlWriter::writeMemoryProtection()
     writeBool("ProtectPassword", m_meta->protectPassword());
     writeBool("ProtectURL", m_meta->protectUrl());
     writeBool("ProtectNotes", m_meta->protectNotes());
-    // writeBool("AutoEnableVisualHiding", m_meta->autoEnableVisualHiding());
 
     m_xml.writeEndElement();
 }
