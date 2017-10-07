@@ -81,6 +81,9 @@ private:
     const QScopedPointer<PasswordGenerator> m_passwordGenerator;
     const QScopedPointer<PassphraseGenerator> m_dicewareGenerator;
     const QScopedPointer<Ui::PasswordGeneratorWidget> m_ui;
+
+protected:
+    void keyPressEvent(QKeyEvent* e) override;
 };
 
 #endif // KEEPASSX_PASSWORDGENERATORWIDGET_H
