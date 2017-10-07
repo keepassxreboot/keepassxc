@@ -26,7 +26,6 @@
 
 class AutoTypeAssociations;
 class AutoTypeAssociationsModel;
-class Entry;
 
 namespace Tools {
 enum class TriState;
@@ -56,7 +55,9 @@ public:
 
 
 public slots:
-    void setFieldsFromEntry(const Entry* entry);
+    void setFields(const Tools::TriState autoTypeEnabled, const bool parentAutoTypeEnabled,
+                   const QString &defaultAutoTypeSequence, const QString &effectiveAutoTypeSequence,
+                   const AutoTypeAssociations* autoTypeAssociations);
     void setHistory(bool history);
     void clear();
     void removeEmptyAssocs();
@@ -73,7 +74,7 @@ private:
     const QScopedPointer<Ui::EditWidgetAutoType> m_ui;
 
     bool m_history;
-    bool m_groupAutoTypeEnabled;
+    bool m_parentAutoTypeEnabled;
 
     AutoTypeAssociations* const m_autoTypeAssoc;
     AutoTypeAssociationsModel* const m_autoTypeAssocModel;

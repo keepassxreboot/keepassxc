@@ -31,6 +31,7 @@
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/Entry.h"
+#include "core/Group.h"
 #include "core/FilePath.h"
 #include "core/Metadata.h"
 #include "core/TimeDelta.h"
@@ -340,7 +341,9 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_iconsWidget->load(entry->uuid(), m_database, iconStruct, entry->webUrl());
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), m_iconsWidget, SLOT(setUrl(QString)));
 
-    m_editWidgetAutoType->setFieldsFromEntry(entry);
+    m_editWidgetAutoType->setFields(entry->autoTypeEnabled(), entry->group()->effectiveAutoTypeEnabled(),
+                                             entry->defaultAutoTypeSequence(), entry->effectiveAutoTypeSequence(),
+                                             entry->autoTypeAssociations());
 
     m_editWidgetProperties->setFields(entry->timeInfo(), entry->uuid());
 

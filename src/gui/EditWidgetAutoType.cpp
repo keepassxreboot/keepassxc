@@ -20,8 +20,6 @@
 
 #include <QButtonGroup>
 
-#include "core/Entry.h"
-#include "core/Group.h"
 #include "core/Tools.h"
 #include "core/AutoTypeAssociations.h"
 #include "gui/AutoTypeAssociationsModel.h"
@@ -31,7 +29,7 @@ EditWidgetAutoType::EditWidgetAutoType(QWidget *parent)
     : QWidget(parent)
     , m_ui(new Ui::EditWidgetAutoType())
     , m_history(false)
-    , m_groupAutoTypeEnabled(false)
+    , m_parentAutoTypeEnabled(false)
     , m_autoTypeAssoc(new AutoTypeAssociations(this))
     , m_autoTypeAssocModel(new AutoTypeAssociationsModel(this))
     , m_defaultSequenceGroup(new QButtonGroup(this))
@@ -98,25 +96,24 @@ const AutoTypeAssociations *EditWidgetAutoType::autoTypeAssociations() const
     return m_autoTypeAssoc;
 }
 
-void EditWidgetAutoType::setFieldsFromEntry(const Entry* entry)
+void EditWidgetAutoType::setFields(const Tools::TriState autoTypeEnabled, const bool parentAutoTypeEnabled,
+                                   const QString &defaultAutoTypeSequence, const QString &effectiveAutoTypeSequence,
+                                   const AutoTypeAssociations* autoTypeAssociations)
 {    
-    Q_ASSERT(entry);
-    Q_ASSERT(entry->group());
-    // TODO: remove dependencies from entry and group
-    m_groupAutoTypeEnabled = entry->group()->effectiveAutoTypeEnabled();
-    m_ui->enableComboBox->addTriStateItems(m_groupAutoTypeEnabled);
-    m_ui->enableComboBox->setTriState(entry->autoTypeEnabled());
-    if (entry->defaultAutoTypeSequence().isEmpty()) {
+    m_parentAutoTypeEnabled = parentAutoTypeEnabled;
+    m_ui->enableComboBox->addTriStateItems(parentAutoTypeEnabled);
+    m_ui->enableComboBox->setTriState(autoTypeEnabled);
+    if (defaultAutoTypeSequence.isEmpty()) {
         m_ui->inheritSequenceButton->setChecked(true);
     }
     else {
         m_ui->customSequenceButton->setChecked(true);
     }
-    m_ui->sequenceEdit->setText(entry->effectiveAutoTypeSequence());
+    m_ui->sequenceEdit->setText(effectiveAutoTypeSequence);
     m_ui->windowTitleCombo->lineEdit()->clear();
     m_ui->defaultWindowSequenceButton->setChecked(true);
     m_ui->windowSequenceEdit->setText("");
-    m_autoTypeAssoc->copyDataFrom(entry->autoTypeAssociations());
+    m_autoTypeAssoc->copyDataFrom(autoTypeAssociations);
     if (m_autoTypeAssoc->size() != 0) {
         m_ui->assocView->setCurrentIndex(m_autoTypeAssocModel->index(0, 0));
     }
@@ -149,7 +146,7 @@ void EditWidgetAutoType::updateAutoTypeEnabled()
     if (m_ui->enableComboBox->currentIndex() < 0) // omit invalid values
         return;
 
-    bool autoTypeEnabled = Tools::isTriStateEnabled(m_ui->enableComboBox->triState(), m_groupAutoTypeEnabled);
+    bool autoTypeEnabled = Tools::isTriStateEnabled(m_ui->enableComboBox->triState(), m_parentAutoTypeEnabled);
     bool validIndex = m_ui->assocView->currentIndex().isValid() && m_autoTypeAssoc->size() != 0;
 
     m_ui->enableComboBox->setEnabled(!m_history);
