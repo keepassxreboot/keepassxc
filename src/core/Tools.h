@@ -57,6 +57,12 @@ RandomAccessIterator binaryFind(RandomAccessIterator begin, RandomAccessIterator
     }
 }
 
+enum class TriState { Inherit, Enable, Disable };
+
+int indexFromTriState(Tools::TriState triState);
+Tools::TriState triStateFromIndex(int index);
+bool isTriStateEnabled(Tools::TriState triState, bool inheritValue);
+
 } // namespace Tools
 
 #endif // KEEPASSX_TOOLS_H

@@ -214,6 +214,21 @@ Group::TriState Group::autoTypeEnabled() const
     return m_data.autoTypeEnabled;
 }
 
+bool Group::effectiveAutoTypeEnabled() const
+{
+    const Group* group = this;
+    do {
+        if (group->autoTypeEnabled() == Group::Enable) {
+            return true;
+        } else if (group->autoTypeEnabled() == Group::Disable) {
+            return false;
+        }
+        group = group->parentGroup();
+    } while (group);
+
+    return true;
+}
+
 Group::TriState Group::searchingEnabled() const
 {
     return m_data.searchingEnabled;

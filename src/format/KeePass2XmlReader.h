@@ -34,6 +34,10 @@ class Group;
 class KeePass2RandomStream;
 class Metadata;
 
+namespace Tools {
+enum class TriState;
+}
+
 class KeePass2XmlReader
 {
     Q_DECLARE_TR_FUNCTIONS(KeePass2XmlReader)
@@ -71,6 +75,7 @@ private:
 
     QString readString();
     bool readBool();
+    Tools::TriState readTriState();
     QDateTime readDateTime();
     QColor readColor();
     int readNumber();

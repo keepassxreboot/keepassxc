@@ -25,6 +25,7 @@
 #include "gui/EditWidget.h"
 
 class EditWidgetIcons;
+class EditWidgetAutoType;
 class EditWidgetProperties;
 
 namespace Ui {
@@ -61,6 +62,7 @@ private:
     const QScopedPointer<Ui::EditGroupWidgetMain> m_mainUi;
     QWidget* const m_editGroupWidgetMain;
     EditWidgetIcons* const m_editGroupWidgetIcons;
+    EditWidgetAutoType* const m_editGroupWidgetAutoType;
     EditWidgetProperties* const m_editWidgetProperties;
     Group* m_group;
     Database* m_database;

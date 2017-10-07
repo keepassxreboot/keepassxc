@@ -553,7 +553,8 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
 
 QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitle)
 {
-    if (!entry->autoTypeEnabled()) {
+    // TODO: calc real autoTypeEnabled
+    if (entry->autoTypeEnabled() == Tools::TriState::Disable) {
         return QString();
     }
 

@@ -23,6 +23,7 @@
 #include "core/DatabaseIcons.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/Tools.h"
 #include "totp/totp.h"
 
 const int Entry::DefaultIconNumber = 0;
@@ -38,7 +39,7 @@ Entry::Entry()
     , m_updateTimeinfo(true)
 {
     m_data.iconNumber = DefaultIconNumber;
-    m_data.autoTypeEnabled = true;
+    m_data.autoTypeEnabled = Tools::TriState::Enable;
     m_data.autoTypeObfuscation = 0;
     m_data.totpStep = QTotp::defaultStep;
     m_data.totpDigits = QTotp::defaultDigits;
@@ -177,7 +178,7 @@ TimeInfo Entry::timeInfo() const
     return m_data.timeInfo;
 }
 
-bool Entry::autoTypeEnabled() const
+Tools::TriState Entry::autoTypeEnabled() const
 {
     return m_data.autoTypeEnabled;
 }
@@ -433,7 +434,7 @@ void Entry::setTimeInfo(const TimeInfo& timeInfo)
     m_data.timeInfo = timeInfo;
 }
 
-void Entry::setAutoTypeEnabled(bool enable)
+void Entry::setAutoTypeEnabled(Tools::TriState enable)
 {
     set(m_data.autoTypeEnabled, enable);
 }

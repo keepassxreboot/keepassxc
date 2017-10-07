@@ -21,6 +21,8 @@
 #include <QButtonGroup>
 
 #include "core/Entry.h"
+#include "core/Group.h"
+#include "core/Tools.h"
 #include "core/AutoTypeAssociations.h"
 #include "gui/AutoTypeAssociationsModel.h"
 
@@ -29,6 +31,7 @@ EditWidgetAutoType::EditWidgetAutoType(QWidget *parent)
     : QWidget(parent)
     , m_ui(new Ui::EditWidgetAutoType())
     , m_history(false)
+    , m_groupAutoTypeEnabled(false)
     , m_autoTypeAssoc(new AutoTypeAssociations(this))
     , m_autoTypeAssocModel(new AutoTypeAssociationsModel(this))
     , m_defaultSequenceGroup(new QButtonGroup(this))
@@ -36,7 +39,6 @@ EditWidgetAutoType::EditWidgetAutoType(QWidget *parent)
 {
     m_ui->setupUi(this);
 
-    // move to edit widget
     m_defaultSequenceGroup->addButton(m_ui->inheritSequenceButton);
     m_defaultSequenceGroup->addButton(m_ui->customSequenceButton);
     m_windowSequenceGroup->addButton(m_ui->defaultWindowSequenceButton);
@@ -45,7 +47,7 @@ EditWidgetAutoType::EditWidgetAutoType(QWidget *parent)
     m_ui->assocView->setModel(m_autoTypeAssocModel);
     m_ui->assocView->setColumnHidden(1, true);
 
-    connect(m_ui->enableButton, SIGNAL(toggled(bool)), SLOT(updateAutoTypeEnabled()));
+    connect(m_ui->enableComboBox, SIGNAL(currentIndexChanged(int)), SLOT(updateAutoTypeEnabled()));
     connect(m_ui->customSequenceButton, SIGNAL(toggled(bool)),
             m_ui->sequenceEdit, SLOT(setEnabled(bool)));
     connect(m_ui->customWindowSequenceButton, SIGNAL(toggled(bool)),
@@ -71,9 +73,9 @@ EditWidgetAutoType::~EditWidgetAutoType()
 
 }
 
-bool EditWidgetAutoType::autoTypeEnabled() const
+Tools::TriState EditWidgetAutoType::autoTypeEnabled() const
 {
-    return m_ui->enableButton->isChecked();
+    return m_ui->enableComboBox->triState();
 }
 
 bool EditWidgetAutoType::inheritSequenceEnabled() const
@@ -97,8 +99,13 @@ const AutoTypeAssociations *EditWidgetAutoType::autoTypeAssociations() const
 }
 
 void EditWidgetAutoType::setFieldsFromEntry(const Entry* entry)
-{
-    m_ui->enableButton->setChecked(entry->autoTypeEnabled());
+{    
+    Q_ASSERT(entry);
+    Q_ASSERT(entry->group());
+    // TODO: remove dependencies from entry and group
+    m_groupAutoTypeEnabled = entry->group()->effectiveAutoTypeEnabled();
+    m_ui->enableComboBox->addTriStateItems(m_groupAutoTypeEnabled);
+    m_ui->enableComboBox->setTriState(entry->autoTypeEnabled());
     if (entry->defaultAutoTypeSequence().isEmpty()) {
         m_ui->inheritSequenceButton->setChecked(true);
     }
@@ -139,10 +146,13 @@ void EditWidgetAutoType::removeEmptyAssocs()
 
 void EditWidgetAutoType::updateAutoTypeEnabled()
 {
-    bool autoTypeEnabled = m_ui->enableButton->isChecked();
+    if (m_ui->enableComboBox->currentIndex() < 0) // omit invalid values
+        return;
+
+    bool autoTypeEnabled = Tools::isTriStateEnabled(m_ui->enableComboBox->triState(), m_groupAutoTypeEnabled);
     bool validIndex = m_ui->assocView->currentIndex().isValid() && m_autoTypeAssoc->size() != 0;
 
-    m_ui->enableButton->setEnabled(!m_history);
+    m_ui->enableComboBox->setEnabled(!m_history);
     m_ui->inheritSequenceButton->setEnabled(!m_history && autoTypeEnabled);
     m_ui->customSequenceButton->setEnabled(!m_history && autoTypeEnabled);
     m_ui->sequenceEdit->setEnabled(autoTypeEnabled && m_ui->customSequenceButton->isChecked());

@@ -36,6 +36,10 @@
 class Database;
 class Group;
 
+namespace Tools {
+enum class TriState;
+}
+
 struct EntryData
 {
     int iconNumber;
@@ -44,7 +48,7 @@ struct EntryData
     QColor backgroundColor;
     QString overrideUrl;
     QString tags;
-    bool autoTypeEnabled;
+    Tools::TriState autoTypeEnabled;
     int autoTypeObfuscation;
     QString defaultAutoTypeSequence;
     TimeInfo timeInfo;
@@ -70,7 +74,8 @@ public:
     QString overrideUrl() const;
     QString tags() const;
     TimeInfo timeInfo() const;
-    bool autoTypeEnabled() const;
+    Tools::TriState autoTypeEnabled() const;
+
     int autoTypeObfuscation() const;
     QString defaultAutoTypeSequence() const;
     QString effectiveAutoTypeSequence() const;
@@ -107,7 +112,7 @@ public:
     void setOverrideUrl(const QString& url);
     void setTags(const QString& tags);
     void setTimeInfo(const TimeInfo& timeInfo);
-    void setAutoTypeEnabled(bool enable);
+    void setAutoTypeEnabled(Tools::TriState enable);
     void setAutoTypeObfuscation(int obfuscation);
     void setDefaultAutoTypeSequence(const QString& sequence);
     void setTitle(const QString& title);

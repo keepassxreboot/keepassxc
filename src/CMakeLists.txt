@@ -106,6 +106,7 @@ set(keepassx_SOURCES
     gui/EditWidgetProperties.cpp
     gui/EditWidgetAutoType.cpp
     gui/AutoTypeAssociationsModel.cpp
+    gui/TriStateComboBox.cpp
     gui/FileDialog.cpp
     gui/IconModels.cpp
     gui/KeePass1OpenWidget.cpp

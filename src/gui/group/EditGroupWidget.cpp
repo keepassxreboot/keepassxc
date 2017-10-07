@@ -21,6 +21,7 @@
 #include "core/Metadata.h"
 #include "core/FilePath.h"
 #include "gui/EditWidgetIcons.h"
+#include "gui/EditWidgetAutoType.h"
 #include "gui/EditWidgetProperties.h"
 
 EditGroupWidget::EditGroupWidget(QWidget* parent)
@@ -28,6 +29,7 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
     , m_mainUi(new Ui::EditGroupWidgetMain())
     , m_editGroupWidgetMain(new QWidget())
     , m_editGroupWidgetIcons(new EditWidgetIcons())
+    , m_editGroupWidgetAutoType(new EditWidgetAutoType())
     , m_editWidgetProperties(new EditWidgetProperties())
     , m_group(nullptr)
     , m_database(nullptr)
@@ -36,6 +38,7 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
 
     addPage(tr("Group"), FilePath::instance()->icon("actions", "document-edit"), m_editGroupWidgetMain);
     addPage(tr("Icon"), FilePath::instance()->icon("apps", "preferences-desktop-icons"), m_editGroupWidgetIcons);
+    addPage(tr("Auto-Type"), FilePath::instance()->icon("actions", "key-enter"), m_editGroupWidgetAutoType);
     addPage(tr("Properties"), FilePath::instance()->icon("actions", "document-properties"), m_editWidgetProperties);
 
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
@@ -46,7 +49,8 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
     connect(this, SIGNAL(accepted()), SLOT(save()));
     connect(this, SIGNAL(rejected()), SLOT(cancel()));
 
-    connect(m_editGroupWidgetIcons, SIGNAL(messageEditEntry(QString, MessageWidget::MessageType)), SLOT(showMessage(QString, MessageWidget::MessageType)));
+    connect(m_editGroupWidgetIcons, SIGNAL(messageEditEntry(QString, MessageWidget::MessageType)),
+            SLOT(showMessage(QString, MessageWidget::MessageType)));
     connect(m_editGroupWidgetIcons, SIGNAL(messageEditEntryDismiss()), SLOT(hideMessage()));
 }
 

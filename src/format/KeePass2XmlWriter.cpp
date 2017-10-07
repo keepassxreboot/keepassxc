@@ -21,6 +21,7 @@
 #include <QFile>
 
 #include "core/Metadata.h"
+#include "core/Tools.h"
 #include "format/KeePass2RandomStream.h"
 #include "streams/QtIOCompressor"
 
@@ -411,7 +412,7 @@ void KeePass2XmlWriter::writeAutoType(const Entry* entry)
 {
     m_xml.writeStartElement("AutoType");
 
-    writeBool("Enabled", entry->autoTypeEnabled());
+    writeTriStateNew("Enabled", entry->autoTypeEnabled());
     writeNumber("DataTransferObfuscation", entry->autoTypeObfuscation());
     writeString("DefaultSequence", entry->defaultAutoTypeSequence());
 
@@ -536,6 +537,22 @@ void KeePass2XmlWriter::writeTriState(const QString& qualifiedName, Group::TriSt
         value = "null";
     }
     else if (triState == Group::Enable) {
+        value = "true";
+    }
+    else {
+        value = "false";
+    }
+
+    writeString(qualifiedName, value);
+}
+
+void KeePass2XmlWriter::writeTriStateNew(const QString &qualifiedName, Tools::TriState triState)
+{
+    QString value;
+    if (triState == Tools::TriState::Inherit) {
+        value = "null";
+    }
+    else if (triState == Tools::TriState::Enable) {
         value = "true";
     }
     else {

@@ -919,7 +919,7 @@ void KeePass2XmlReader::parseAutoType(Entry* entry)
 
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Enabled") {
-            entry->setAutoTypeEnabled(readBool());
+            entry->setAutoTypeEnabled(readTriState());
         }
         else if (m_xml.name() == "DataTransferObfuscation") {
             entry->setAutoTypeObfuscation(readNumber());
@@ -1040,6 +1040,24 @@ bool KeePass2XmlReader::readBool()
     else {
         raiseError("Invalid bool value");
         return false;
+    }
+}
+
+Tools::TriState KeePass2XmlReader::readTriState() {
+    QString str = readString();
+
+    if (str.compare("null", Qt::CaseInsensitive) == 0) {
+        return Tools::TriState::Inherit;
+    }
+    else if (str.compare("true", Qt::CaseInsensitive) == 0) {
+        return Tools::TriState::Enable;
+    }
+    else if (str.compare("false", Qt::CaseInsensitive) == 0 || str.isEmpty()) {
+        return Tools::TriState::Disable;
+    }
+    else {
+        raiseError("Invalid EnableAutoType value");
+        return Tools::TriState::Disable;
     }
 }
 

@@ -28,6 +28,11 @@ class AutoTypeAssociations;
 class AutoTypeAssociationsModel;
 class Entry;
 
+namespace Tools {
+enum class TriState;
+}
+
+
 class QButtonGroup;
 
 namespace Ui {
@@ -42,7 +47,7 @@ public:
     explicit EditWidgetAutoType(QWidget* parent = nullptr);
     ~EditWidgetAutoType();
 
-    bool autoTypeEnabled() const;
+    Tools::TriState autoTypeEnabled() const;
     bool inheritSequenceEnabled() const;
 
     QString sequence() const;
@@ -68,6 +73,7 @@ private:
     const QScopedPointer<Ui::EditWidgetAutoType> m_ui;
 
     bool m_history;
+    bool m_groupAutoTypeEnabled;
 
     AutoTypeAssociations* const m_autoTypeAssoc;
     AutoTypeAssociationsModel* const m_autoTypeAssocModel;
