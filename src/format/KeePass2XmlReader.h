@@ -33,6 +33,7 @@ class Entry;
 class Group;
 class KeePass2RandomStream;
 class Metadata;
+class AutoTypeAssociations;
 
 namespace Tools {
 enum class TriState;
@@ -63,13 +64,14 @@ private:
     void parseCustomDataItem();
     bool parseRoot();
     Group* parseGroup();
+    void parseGroupAutoType(Group *group);
     void parseDeletedObjects();
     void parseDeletedObject();
     Entry* parseEntry(bool history);
     void parseEntryString(Entry* entry);
     QPair<QString, QString> parseEntryBinary(Entry* entry);
-    void parseAutoType(Entry* entry);
-    void parseAutoTypeAssoc(Entry* entry);
+    void parseEntryAutoType(Entry* entry);
+    void parseAutoTypeAssoc(AutoTypeAssociations *associations);
     QList<Entry*> parseEntryHistory();
     TimeInfo parseTimes();
 

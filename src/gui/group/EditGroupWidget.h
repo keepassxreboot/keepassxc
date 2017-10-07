@@ -18,12 +18,12 @@
 #ifndef KEEPASSX_EDITGROUPWIDGET_H
 #define KEEPASSX_EDITGROUPWIDGET_H
 
-#include <QComboBox>
 #include <QScopedPointer>
 
-#include "core/Group.h"
 #include "gui/EditWidget.h"
 
+class Group;
+class Database;
 class EditWidgetIcons;
 class EditWidgetAutoType;
 class EditWidgetProperties;
@@ -55,12 +55,10 @@ private slots:
     void cancel();
 
 private:
-    void addTriStateItems(QComboBox* comboBox, bool inheritValue);
-
     const QScopedPointer<Ui::EditGroupWidgetMain> m_mainUi;
     QWidget* const m_editGroupWidgetMain;
     EditWidgetIcons* const m_editGroupWidgetIcons;
-    EditWidgetAutoType* const m_editGroupWidgetAutoType;
+    EditWidgetAutoType* const m_editWidgetAutoType;
     EditWidgetProperties* const m_editWidgetProperties;
     Group* m_group;
     Database* m_database;

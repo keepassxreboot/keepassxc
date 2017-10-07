@@ -29,6 +29,8 @@
 #include "core/TimeInfo.h"
 #include "core/Uuid.h"
 
+class AutoTypeAssociations;
+
 namespace Tools {
 enum class TriState;
 }
@@ -71,6 +73,8 @@ public:
     bool isExpanded() const;
     QString defaultAutoTypeSequence() const;
     QString effectiveAutoTypeSequence() const;
+    AutoTypeAssociations* autoTypeAssociations();
+    const AutoTypeAssociations* autoTypeAssociations() const;
     Tools::TriState autoTypeEnabled() const;
     Tools::TriState searchingEnabled() const;
     Group::MergeMode mergeMode() const;
@@ -176,6 +180,7 @@ private:
     QPointer<Entry> m_lastTopVisibleEntry;
     QList<Group*> m_children;
     QList<Entry*> m_entries;
+    AutoTypeAssociations* const m_autoTypeAssociations;
 
     QPointer<Group> m_parent;
 

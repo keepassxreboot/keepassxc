@@ -494,6 +494,7 @@ Group* KeePass2XmlReader::parseGroup()
     group->setUpdateTimeinfo(false);
     QList<Group*> children;
     QList<Entry*> entries;
+    bool autoTypeParsed = false; // for backward compatibility
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "UUID") {
             Uuid uuid = readUuid();
@@ -542,10 +543,10 @@ Group* KeePass2XmlReader::parseGroup()
         else if (m_xml.name() == "IsExpanded") {
             group->setExpanded(readBool());
         }
-        else if (m_xml.name() == "DefaultAutoTypeSequence") {
+        else if (m_xml.name() == "DefaultAutoTypeSequence" && !autoTypeParsed) {
             group->setDefaultAutoTypeSequence(readString());
         }
-        else if (m_xml.name() == "EnableAutoType") {
+        else if (m_xml.name() == "EnableAutoType" && !autoTypeParsed) {
             const Tools::TriState state = readTriState();
             group->setAutoTypeEnabled(state);
         }
@@ -568,6 +569,11 @@ Group* KeePass2XmlReader::parseGroup()
                 entries.append(newEntry);
             }
         }
+        else if (m_xml.name() == "AutoType") {
+            parseGroupAutoType(group);
+            autoTypeParsed = true;
+        }
+
         else {
             skipCurrentElement();
         }
@@ -597,6 +603,26 @@ Group* KeePass2XmlReader::parseGroup()
     }
 
     return group;
+}
+
+void KeePass2XmlReader::parseGroupAutoType(Group *group)
+{
+    Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "AutoType");
+
+    while (!m_xml.error() && m_xml.readNextStartElement()) {
+        if (m_xml.name() == "Enabled") {
+            group->setAutoTypeEnabled(readTriState());
+        }
+        else if (m_xml.name() == "DefaultSequence") {
+            group->setDefaultAutoTypeSequence(readString());
+        }
+        else if (m_xml.name() == "Association") {
+            parseAutoTypeAssoc(group->autoTypeAssociations());
+        }
+        else {
+            skipCurrentElement();
+        }
+    }
 }
 
 void KeePass2XmlReader::parseDeletedObjects()
@@ -714,7 +740,7 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
             }
         }
         else if (m_xml.name() == "AutoType") {
-            parseAutoType(entry);
+            parseEntryAutoType(entry);
         }
         else if (m_xml.name() == "History") {
             if (history) {
@@ -889,7 +915,7 @@ QPair<QString, QString> KeePass2XmlReader::parseEntryBinary(Entry* entry)
     return poolRef;
 }
 
-void KeePass2XmlReader::parseAutoType(Entry* entry)
+void KeePass2XmlReader::parseEntryAutoType(Entry* entry)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "AutoType");
 
@@ -904,7 +930,7 @@ void KeePass2XmlReader::parseAutoType(Entry* entry)
             entry->setDefaultAutoTypeSequence(readString());
         }
         else if (m_xml.name() == "Association") {
-            parseAutoTypeAssoc(entry);
+            parseAutoTypeAssoc(entry->autoTypeAssociations());
         }
         else {
             skipCurrentElement();
@@ -912,7 +938,7 @@ void KeePass2XmlReader::parseAutoType(Entry* entry)
     }
 }
 
-void KeePass2XmlReader::parseAutoTypeAssoc(Entry* entry)
+void KeePass2XmlReader::parseAutoTypeAssoc(AutoTypeAssociations* associations)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Association");
 
@@ -935,7 +961,7 @@ void KeePass2XmlReader::parseAutoTypeAssoc(Entry* entry)
     }
 
     if (windowSet && sequenceSet) {
-        entry->autoTypeAssociations()->add(assoc);
+        associations->add(assoc);
     }
     else {
         raiseError("Auto-type association window or sequence missing");

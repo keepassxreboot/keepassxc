@@ -295,13 +295,8 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_advancedUi->editAttributeButton->setEnabled(false);
     m_advancedUi->removeAttributeButton->setEnabled(false);
     m_advancedUi->attributesEdit->setReadOnly(m_history);
-    QAbstractItemView::EditTriggers editTriggers;
-    if (m_history) {
-        editTriggers = QAbstractItemView::NoEditTriggers;
-    }
-    else {
-        editTriggers = QAbstractItemView::DoubleClicked;
-    }
+    QAbstractItemView::EditTriggers editTriggers = m_history ? QAbstractItemView::NoEditTriggers
+                                                             : QAbstractItemView::DoubleClicked;
     m_advancedUi->attributesView->setEditTriggers(editTriggers);
     m_iconsWidget->setEnabled(!m_history);
     m_editWidgetAutoType->setHistory(m_history);

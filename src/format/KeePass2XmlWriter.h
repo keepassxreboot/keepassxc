@@ -54,11 +54,12 @@ private:
     void writeCustomDataItem(const QString& key, const QString& value);
     void writeRoot();
     void writeGroup(const Group* group);
+    void writeGroupAutoType(const Group* entry);
     void writeTimes(const TimeInfo& ti);
     void writeDeletedObjects();
     void writeDeletedObject(const DeletedObject& delObj);
     void writeEntry(const Entry* entry);
-    void writeAutoType(const Entry* entry);
+    void writeEntryAutoType(const Entry* entry);
     void writeAutoTypeAssoc(const AutoTypeAssociations::Association& assoc);
     void writeEntryHistory(const Entry* entry);
 

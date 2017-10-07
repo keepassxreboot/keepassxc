@@ -18,9 +18,11 @@
 #include "EditGroupWidget.h"
 #include "ui_EditGroupWidgetMain.h"
 
+#include "core/Database.h"
 #include "core/Metadata.h"
 #include "core/FilePath.h"
 #include "core/Tools.h"
+#include "core/Group.h"
 #include "gui/EditWidgetIcons.h"
 #include "gui/EditWidgetAutoType.h"
 #include "gui/EditWidgetProperties.h"
@@ -30,7 +32,7 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
     , m_mainUi(new Ui::EditGroupWidgetMain())
     , m_editGroupWidgetMain(new QWidget())
     , m_editGroupWidgetIcons(new EditWidgetIcons())
-    , m_editGroupWidgetAutoType(new EditWidgetAutoType())
+    , m_editWidgetAutoType(new EditWidgetAutoType())
     , m_editWidgetProperties(new EditWidgetProperties())
     , m_group(nullptr)
     , m_database(nullptr)
@@ -39,7 +41,7 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
 
     addPage(tr("Group"), FilePath::instance()->icon("actions", "document-edit"), m_editGroupWidgetMain);
     addPage(tr("Icon"), FilePath::instance()->icon("apps", "preferences-desktop-icons"), m_editGroupWidgetIcons);
-    addPage(tr("Auto-Type"), FilePath::instance()->icon("actions", "key-enter"), m_editGroupWidgetAutoType);
+    addPage(tr("Auto-Type"), FilePath::instance()->icon("actions", "key-enter"), m_editWidgetAutoType);
     addPage(tr("Properties"), FilePath::instance()->icon("actions", "document-properties"), m_editWidgetProperties);
 
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
@@ -62,12 +64,7 @@ void EditGroupWidget::loadGroup(Group *group, bool create, Database* database)
     m_group = group;
     m_database = database;
 
-    if (create) {
-        setHeadline(tr("Add group"));
-    }
-    else {
-        setHeadline(tr("Edit group"));
-    }
+    setHeadline(create ? tr("Add group") : tr("Edit group"));
 
     const bool parentSearchingEnabled = group->parentGroup() ? group->parentGroup()->resolveSearchingEnabled() : true;
     m_mainUi->searchComboBox->addTriStateItems(parentSearchingEnabled);
@@ -84,10 +81,9 @@ void EditGroupWidget::loadGroup(Group *group, bool create, Database* database)
     m_editGroupWidgetIcons->load(group->uuid(), database, iconStruct);
 
     const bool parentAutoTypeEnabled = group->parentGroup() ? group->parentGroup()->resolveAutoTypeEnabled() : true;
-    // TODO: frostasm - add autoTypeAssociations
-    m_editGroupWidgetAutoType->setFields(group->autoTypeEnabled(), parentAutoTypeEnabled,
+    m_editWidgetAutoType->setFields(group->autoTypeEnabled(), parentAutoTypeEnabled,
                                          group->defaultAutoTypeSequence(), group->effectiveAutoTypeSequence(),
-                                         nullptr);
+                                         group->autoTypeAssociations());
     m_editWidgetProperties->setFields(group->timeInfo(), group->uuid());
 
     setCurrentPage(0);
@@ -110,15 +106,12 @@ void EditGroupWidget::apply()
     m_group->setExpiryTime(m_mainUi->expireDatePicker->dateTime().toUTC());
 
     m_group->setSearchingEnabled(Tools::triStateFromIndex(m_mainUi->searchComboBox->currentIndex()));
-    m_group->setAutoTypeEnabled(m_editGroupWidgetAutoType->autoTypeEnabled());
+    m_group->setAutoTypeEnabled(m_editWidgetAutoType->autoTypeEnabled());
+    m_group->autoTypeAssociations()->copyDataFrom(m_editWidgetAutoType->autoTypeAssociations());
 
-
-    if (m_editGroupWidgetAutoType->inheritSequenceEnabled()) {
-        m_group->setDefaultAutoTypeSequence(QString());
-    }
-    else {
-        m_group->setDefaultAutoTypeSequence(m_editGroupWidgetAutoType->sequence());
-    }
+    const QString defaultSequence = m_editWidgetAutoType->inheritSequenceEnabled() ? QString()
+                                                                                   : m_editWidgetAutoType->sequence();
+    m_group->setDefaultAutoTypeSequence(defaultSequence);
 
     IconStruct iconStruct = m_editGroupWidgetIcons->state();
 
@@ -149,20 +142,4 @@ void EditGroupWidget::clear()
     m_group = nullptr;
     m_database = nullptr;
     m_editGroupWidgetIcons->reset();
-}
-
-void EditGroupWidget::addTriStateItems(QComboBox* comboBox, bool inheritDefault)
-{
-    QString inheritDefaultString;
-    if (inheritDefault) {
-        inheritDefaultString = tr("Enable");
-    }
-    else {
-        inheritDefaultString = tr("Disable");
-    }
-
-    comboBox->clear();
-    comboBox->addItem(tr("Inherit from parent group (%1)").arg(inheritDefaultString));
-    comboBox->addItem(tr("Enable"));
-    comboBox->addItem(tr("Disable"));
 }

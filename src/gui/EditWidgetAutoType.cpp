@@ -100,6 +100,8 @@ void EditWidgetAutoType::setFields(const Tools::TriState autoTypeEnabled, const 
                                    const QString &defaultAutoTypeSequence, const QString &effectiveAutoTypeSequence,
                                    const AutoTypeAssociations* autoTypeAssociations)
 {    
+    Q_ASSERT(autoTypeAssociations);
+
     m_parentAutoTypeEnabled = parentAutoTypeEnabled;
     m_ui->enableComboBox->addTriStateItems(parentAutoTypeEnabled);
     m_ui->enableComboBox->setTriState(autoTypeEnabled);
@@ -113,9 +115,7 @@ void EditWidgetAutoType::setFields(const Tools::TriState autoTypeEnabled, const 
     m_ui->windowTitleCombo->lineEdit()->clear();
     m_ui->defaultWindowSequenceButton->setChecked(true);
     m_ui->windowSequenceEdit->setText("");
-    // TODO: frostasm - remove check
-    if (autoTypeAssociations)
-        m_autoTypeAssoc->copyDataFrom(autoTypeAssociations);
+    m_autoTypeAssoc->copyDataFrom(autoTypeAssociations);
 
     if (m_autoTypeAssoc->size() != 0) {
         m_ui->assocView->setCurrentIndex(m_autoTypeAssocModel->index(0, 0));

@@ -268,13 +268,12 @@ void KeePass2XmlWriter::writeGroup(const Group* group)
     }
     writeTimes(group->timeInfo());
     writeBool("IsExpanded", group->isExpanded());
-    writeString("DefaultAutoTypeSequence", group->defaultAutoTypeSequence());
-
-    writeTriState("EnableAutoType", group->autoTypeEnabled());
 
     writeTriState("EnableSearching", group->searchingEnabled());
 
     writeUuid("LastTopVisibleEntry", group->lastTopVisibleEntry());
+
+    writeGroupAutoType(group);
 
     const QList<Entry*> entryList = group->entries();
     for (const Entry* entry : entryList) {
@@ -284,6 +283,21 @@ void KeePass2XmlWriter::writeGroup(const Group* group)
     const QList<Group*> children = group->children();
     for (const Group* child : children) {
         writeGroup(child);
+    }
+
+    m_xml.writeEndElement();
+}
+
+void KeePass2XmlWriter::writeGroupAutoType(const Group *group)
+{
+    m_xml.writeStartElement("AutoType");
+
+    writeTriState("Enabled", group->autoTypeEnabled());
+    writeString("DefaultSequence", group->defaultAutoTypeSequence());
+
+    const QList<AutoTypeAssociations::Association> autoTypeAssociations = group->autoTypeAssociations()->getAll();
+    for (const AutoTypeAssociations::Association& assoc : autoTypeAssociations) {
+        writeAutoTypeAssoc(assoc);
     }
 
     m_xml.writeEndElement();
@@ -399,7 +413,7 @@ void KeePass2XmlWriter::writeEntry(const Entry* entry)
         m_xml.writeEndElement();
     }
 
-    writeAutoType(entry);
+    writeEntryAutoType(entry);
     // write history only for entries that are not history items
     if (entry->parent()) {
         writeEntryHistory(entry);
@@ -408,7 +422,7 @@ void KeePass2XmlWriter::writeEntry(const Entry* entry)
     m_xml.writeEndElement();
 }
 
-void KeePass2XmlWriter::writeAutoType(const Entry* entry)
+void KeePass2XmlWriter::writeEntryAutoType(const Entry* entry)
 {
     m_xml.writeStartElement("AutoType");
 

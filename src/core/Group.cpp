@@ -18,6 +18,7 @@
 
 #include "Group.h"
 
+#include "core/AutoTypeAssociations.h"
 #include "core/Config.h"
 #include "core/DatabaseIcons.h"
 #include "core/Global.h"
@@ -28,13 +29,16 @@ const int Group::DefaultIconNumber = 48;
 const int Group::RecycleBinIconNumber = 43;
 
 Group::Group()
-    : m_updateTimeinfo(true)
+    : m_autoTypeAssociations(new AutoTypeAssociations(this))
+    , m_updateTimeinfo(true)
 {
     m_data.iconNumber = DefaultIconNumber;
     m_data.isExpanded = true;
     m_data.autoTypeEnabled = Tools::TriState::Inherit;
     m_data.searchingEnabled = Tools::TriState::Inherit;
     m_data.mergeMode = ModeInherit;
+
+    connect(m_autoTypeAssociations, SIGNAL(modified()), SIGNAL(modified()));
 }
 
 Group::~Group()
@@ -208,6 +212,16 @@ QString Group::effectiveAutoTypeSequence() const
     }
 
     return sequence;
+}
+
+AutoTypeAssociations *Group::autoTypeAssociations()
+{
+    return m_autoTypeAssociations;
+}
+
+const AutoTypeAssociations *Group::autoTypeAssociations() const
+{
+    return m_autoTypeAssociations;
 }
 
 Tools::TriState Group::autoTypeEnabled() const
@@ -734,6 +748,7 @@ Group* Group::clone(Entry::CloneFlags entryFlags, bool shallow) const
 
     clonedGroup->setUuid(Uuid::random());
     clonedGroup->m_data = m_data;
+    clonedGroup->m_autoTypeAssociations->copyDataFrom(m_autoTypeAssociations);
 
     if (!shallow) {
         const QList<Entry*> entryList = entries();
@@ -764,6 +779,7 @@ void Group::copyDataFrom(const Group* other)
 {
     m_data = other->m_data;
     m_lastTopVisibleEntry = other->m_lastTopVisibleEntry;
+    m_autoTypeAssociations->copyDataFrom(other->m_autoTypeAssociations);
 }
 
 void Group::addEntry(Entry* entry)
