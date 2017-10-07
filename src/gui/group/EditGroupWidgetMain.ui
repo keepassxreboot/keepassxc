@@ -23,6 +23,9 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
+   <item row="3" column="1">
+    <widget class="TriStateComboBox" name="searchComboBox"/>
+   </item>
    <item row="0" column="0" alignment="Qt::AlignRight">
     <widget class="QLabel" name="labelName">
      <property name="text">
@@ -30,8 +33,28 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="editName"/>
+   <item row="4" column="1">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="1">
+    <widget class="QDateTimeEdit" name="expireDatePicker">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="calendarPopup">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
    <item row="1" column="0" alignment="Qt::AlignRight|Qt::AlignTop">
     <widget class="QLabel" name="labelNotes">
@@ -56,26 +79,6 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0" alignment="Qt::AlignRight">
-    <widget class="QCheckBox" name="expireCheck">
-     <property name="text">
-      <string>Expires</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="1">
-    <widget class="QComboBox" name="autotypeComboBox"/>
-   </item>
-   <item row="2" column="1">
-    <widget class="QDateTimeEdit" name="expireDatePicker">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="calendarPopup">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
    <item row="3" column="0" alignment="Qt::AlignRight">
     <widget class="QLabel" name="searchLabel">
      <property name="text">
@@ -83,79 +86,31 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="1">
-    <widget class="QComboBox" name="searchComboBox"/>
-   </item>
-   <item row="4" column="0" alignment="Qt::AlignRight">
-    <widget class="QLabel" name="autotypeLabel">
+   <item row="2" column="0" alignment="Qt::AlignRight">
+    <widget class="QCheckBox" name="expireCheck">
      <property name="text">
-      <string>Auto-Type</string>
+      <string>Expires</string>
      </property>
     </widget>
    </item>
-   <item row="5" column="1">
-    <widget class="QRadioButton" name="autoTypeSequenceInherit">
-     <property name="text">
-      <string>&amp;Use default Auto-Type sequence of parent group</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="1">
-    <widget class="QRadioButton" name="autoTypeSequenceCustomRadio">
-     <property name="text">
-      <string>Set default Auto-Type se&amp;quence</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>13</width>
-         <height>1</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="autoTypeSequenceCustomEdit">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="8" column="1">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="editName"/>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TriStateComboBox</class>
+   <extends>QComboBox</extends>
+   <header>gui/TriStateComboBox.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>editName</tabstop>
   <tabstop>editNotes</tabstop>
   <tabstop>expireCheck</tabstop>
   <tabstop>expireDatePicker</tabstop>
   <tabstop>searchComboBox</tabstop>
-  <tabstop>autotypeComboBox</tabstop>
  </tabstops>
  <resources/>
  <connections/>

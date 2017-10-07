@@ -113,7 +113,10 @@ void EditWidgetAutoType::setFields(const Tools::TriState autoTypeEnabled, const 
     m_ui->windowTitleCombo->lineEdit()->clear();
     m_ui->defaultWindowSequenceButton->setChecked(true);
     m_ui->windowSequenceEdit->setText("");
-    m_autoTypeAssoc->copyDataFrom(autoTypeAssociations);
+    // TODO: frostasm - remove check
+    if (autoTypeAssociations)
+        m_autoTypeAssoc->copyDataFrom(autoTypeAssociations);
+
     if (m_autoTypeAssoc->size() != 0) {
         m_ui->assocView->setCurrentIndex(m_autoTypeAssocModel->index(0, 0));
     }

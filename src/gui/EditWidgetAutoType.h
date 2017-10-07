@@ -48,11 +48,9 @@ public:
 
     Tools::TriState autoTypeEnabled() const;
     bool inheritSequenceEnabled() const;
-
     QString sequence() const;
     AutoTypeAssociations* autoTypeAssociations();
     const AutoTypeAssociations* autoTypeAssociations() const;
-
 
 public slots:
     void setFields(const Tools::TriState autoTypeEnabled, const bool parentAutoTypeEnabled,
