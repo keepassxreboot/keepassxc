@@ -49,7 +49,7 @@ set(CMAKE_AUTOUIC ON)
 
 set(KEEPASSXC_VERSION_MAJOR "2")
 set(KEEPASSXC_VERSION_MINOR "2")
-set(KEEPASSXC_VERSION_PATCH "0")
+set(KEEPASSXC_VERSION_PATCH "1")
 set(KEEPASSXC_VERSION "${KEEPASSXC_VERSION_MAJOR}.${KEEPASSXC_VERSION_MINOR}.${KEEPASSXC_VERSION_PATCH}")
 
 if("${CMAKE_C_COMPILER}" MATCHES "clang$" OR "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
@@ -178,6 +178,7 @@ endif()
 
 if(APPLE AND WITH_APP_BUNDLE AND "${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr/local")
   set(CMAKE_INSTALL_PREFIX "/Applications")
+  set(CMAKE_INSTALL_MANDIR "/usr/local/share/man")
 endif()
 
 if(MINGW)
@@ -224,6 +225,8 @@ find_package(LibGPGError REQUIRED)
 find_package(Gcrypt 1.6.0 REQUIRED)
 
 find_package(ZLIB REQUIRED)
+
+set(CMAKE_REQUIRED_INCLUDES ${ZLIB_INCLUDE_DIR})
 
 check_cxx_source_compiles("
   #include <zlib.h>

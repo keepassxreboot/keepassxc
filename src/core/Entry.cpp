@@ -727,6 +727,13 @@ const Database* Entry::database() const
     }
 }
 
+QString Entry::maskPasswordPlaceholders(const QString &str) const
+{
+    QString result = str;
+    result.replace(QRegExp("(\\{PASSWORD\\})", Qt::CaseInsensitive, QRegExp::RegExp2), "******");
+    return result;
+}
+
 QString Entry::resolveMultiplePlaceholders(const QString& str) const
 {
     QString result = str;

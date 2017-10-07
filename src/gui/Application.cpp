@@ -81,8 +81,8 @@ Application::Application(int& argc, char** argv)
 #ifdef Q_OS_UNIX
     , m_unixSignalNotifier(nullptr)
 #endif
-    , alreadyRunning(false)
-    , lock(nullptr)
+    , m_alreadyRunning(false)
+    , m_lockFile(nullptr)
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_OSX)
     installNativeEventFilter(new XcbEventFilter());
@@ -99,56 +99,72 @@ Application::Application(int& argc, char** argv)
     }
     QString identifier = "keepassxc";
     if (!userName.isEmpty()) {
-        identifier.append("-");
-        identifier.append(userName);
-#ifdef QT_DEBUG
-        // In DEBUG mode don't interfere with Release instances 
-        identifier.append("-DEBUG");
-#endif
+        identifier += "-" + userName;
     }
+#ifdef QT_DEBUG
+        // In DEBUG mode don't interfere with Release instances
+        identifier += "-DEBUG";
+#endif
     QString socketName = identifier + ".socket";
     QString lockName = identifier + ".lock";
 
     // According to documentation we should use RuntimeLocation on *nixes, but even Qt doesn't respect
     // this and creates sockets in TempLocation, so let's be consistent.
-    lock = new QLockFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/" + lockName);
-    lock->setStaleLockTime(0);
-    lock->tryLock();
-    switch (lock->error()) {
+    m_lockFile = new QLockFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/" + lockName);
+    m_lockFile->setStaleLockTime(0);
+    m_lockFile->tryLock();
+
+    switch (m_lockFile->error()) {
     case QLockFile::NoError:
-        server.setSocketOptions(QLocalServer::UserAccessOption);
-        server.listen(socketName);
-        connect(&server, SIGNAL(newConnection()), this, SIGNAL(anotherInstanceStarted()));
+        // No existing lock was found, start listener
+        m_lockServer.setSocketOptions(QLocalServer::UserAccessOption);
+        m_lockServer.listen(socketName);
+        connect(&m_lockServer, SIGNAL(newConnection()), this, SIGNAL(anotherInstanceStarted()));
         break;
     case QLockFile::LockFailedError: {
-        alreadyRunning = true;
-        // notify the other instance
-        // try several times, in case the other instance is still starting up
         if (config()->get("SingleInstance").toBool()) {
+            // Attempt to connect to the existing instance
             QLocalSocket client;
             for (int i = 0; i < 3; i++) {
                 client.connectToServer(socketName);
                 if (client.waitForConnected(150)) {
+                    // Connection succeeded, this will raise the existing window if minimized
                     client.abort();
+                    m_alreadyRunning = true;
                     break;
                 }
+            }
+
+            if (!m_alreadyRunning) {
+                // If we get here then the original instance is likely dead
+                qWarning() << QCoreApplication::translate("Main",
+                                "Existing single-instance lock file is invalid. Launching new instance.")
+                                .toUtf8().constData();
+
+                // forceably reset the lock file
+                m_lockFile->removeStaleLockFile();
+                m_lockFile->tryLock();
+                // start the listen server
+                m_lockServer.setSocketOptions(QLocalServer::UserAccessOption);
+                m_lockServer.listen(socketName);
+                connect(&m_lockServer, SIGNAL(newConnection()), this, SIGNAL(anotherInstanceStarted()));
             }
         }
         break;
     }
     default:
         qWarning() << QCoreApplication::translate("Main",
-                                                  "The lock file could not be created. Single-instance mode disabled.")
-                      .toUtf8().constData();
+                        "The lock file could not be created. Single-instance mode disabled.")
+                        .toUtf8().constData();
     }
 }
 
 Application::~Application()
 {
-    server.close();
-    if (lock) {
-        lock->unlock();
-        delete lock;
+    m_lockServer.close();
+    if (m_lockFile) {
+        m_lockFile->unlock();
+        delete m_lockFile;
     }
 }
 
@@ -243,6 +259,6 @@ bool Application::isAlreadyRunning() const
     // In DEBUG mode we can run unlimited instances
     return false;
 #endif
-    return config()->get("SingleInstance").toBool() && alreadyRunning;
+    return config()->get("SingleInstance").toBool() && m_alreadyRunning;
 }
 

@@ -3,129 +3,94 @@
     <name>AboutDialog</name>
     <message>
         <source>About KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>Σχετικά με το KeepPassXC</translation>
     </message>
     <message>
         <source>About</source>
         <translation>Σχετικά</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot;&gt;&lt;span style=&quot;text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;style&gt;li {font-size: 10pt}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Project Maintainers:&lt;/span&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;droidmonkey&lt;/li&gt;&lt;li&gt;phoerious&lt;/li&gt;&lt;li&gt;TheZ3ro&lt;/li&gt;&lt;li&gt;louib&lt;/li&gt;&lt;li&gt;Weslly&lt;/li&gt;&lt;li&gt;debfx (KeePassX)&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Contributors</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;body&gt;
-            &lt;p style=&quot;font-size:x-large; font-weight:600;&quot;&gt;Code:&lt;/p&gt;
-            &lt;ul&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;debfx (KeePassX)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;BlueIce (KeePassX)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;droidmonkey&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;phoerious&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;TheZ3ro&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;louib&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;weslly&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;keithbennett (KeePassHTTP)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;Typz (KeePassHTTP)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;denk-mal (KeePassHTTP)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;kylemanna (YubiKey)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;seatedscribe (CSV Importer)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;pgalves (Inline Messages)&lt;/li&gt;
-            &lt;/ul&gt;
-            &lt;p style=&quot;font-size:x-large; font-weight:600;&quot;&gt;Translations:&lt;/p&gt;
-            &lt;ul&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Chinese:&lt;/span&gt; Biggulu, ligyxy, BestSteve&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Czech:&lt;/span&gt; pavelb, JosefVitu&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Dutch:&lt;/span&gt; Vistaus, KnooL, apie&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Finnish:&lt;/span&gt; MawKKe&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;French:&lt;/span&gt; Scrat15, frgnca, gilbsgilbs, gtalbot, iannick, kyodev, logut&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;German:&lt;/span&gt; Calyrx, DavidHamburg, antsas, codejunky, jensrutschmann, montilo, omnisome4, origin_de, pcrcoding, phoerious, rgloor, vlenzer&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Greek:&lt;/span&gt; nplatis&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Italian:&lt;/span&gt; TheZ3ro, FranzMari, Mte90, tosky&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Kazakh:&lt;/span&gt; sotrud_nik&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Lithuanian:&lt;/span&gt; Moo&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Polish:&lt;/span&gt; konradmb, mrerexx&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Portuguese: &lt;/span&gt;vitor895, weslly, American_Jesus, mihai.ile&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Russian:&lt;/span&gt; vsvyatski, KekcuHa, wkill95&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Spanish:&lt;/span&gt; EdwardNavarro, antifaz, piegope, pquin, vsvyatski&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Swedish:&lt;/span&gt; henziger&lt;/li&gt;
-            &lt;/ul&gt;
-            &lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;See Contributions on GitHub&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>Συνεισφέροντες</translation>
     </message>
     <message>
         <source>Debug Info</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Include the following information whenever you report a bug:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>Πληροφορίες Αποσφαλμάτωσης</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Αντιγραφή στο πρόχειρο</translation>
     </message>
     <message>
         <source>Version %1
 </source>
-        <translation type="unfinished"/>
+        <translation>Έκδοση %1
+</translation>
     </message>
     <message>
         <source>Revision: %1</source>
-        <translation type="unfinished"/>
+        <translation>Αναθεώρηση: %1</translation>
     </message>
     <message>
         <source>Libraries:</source>
-        <translation type="unfinished"/>
+        <translation>Βιβλιοθήκες:</translation>
     </message>
     <message>
         <source>Operating system: %1
 CPU architecture: %2
 Kernel: %3 %4</source>
-        <translation type="unfinished"/>
+        <translation>Λειτουργικό Σύστημα: %1
+Αρχιτεκτονική Επεξεργαστή: %2
+Πυρήνας: %3 %4</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
+        <translation>Ενεργοποιημένες επεκτάσεις:</translation>
+    </message>
+    <message>
+        <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
+        <translation>Αναφέρετε σφάλματα στο: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
+        <translation>Το KeePassXC διανέμεται υπό τους όρους του GNU General Public License (GPL) έκδοση 2 ή (κατά την επιλογή σας) έκδοση 3.</translation>
+    </message>
+    <message>
+        <source>Project Maintainers:</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Δείτε τους Συνεισφέροντες στο GitHub&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <source>Include the following information whenever you report a bug:</source>
+        <translation>Συμπεριλάβετε τις ακόλουθες πληροφορίες όποτε αναφέρετε κάποιο σφάλμα:</translation>
     </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
     <message>
         <source>Remember this decision</source>
-        <translation type="unfinished"/>
+        <translation>Να θυμάσαι αυτή την απόφαση</translation>
     </message>
     <message>
         <source>Allow</source>
-        <translation type="unfinished"/>
+        <translation>Αποδοχή</translation>
     </message>
     <message>
         <source>Deny</source>
-        <translation type="unfinished"/>
+        <translation>Άρνηση</translation>
     </message>
     <message>
         <source>%1 has requested access to passwords for the following item(s).
 Please select whether you want to allow access.</source>
-        <translation type="unfinished"/>
+        <translation>%1 έχει ζητήσει πρόσβαση σε κωδικούς για το/τα ακόλουθο/α αντικείμενο/α.
+Παρακαλώ επιλέξετε εάν θέλετε να επιτρέψετε τη πρόσβαση.</translation>
     </message>
     <message>
         <source>KeePassXC HTTP Confirm Access</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC HTTP Επιβεβαίωση Πρόσβασης</translation>
     </message>
 </context>
 <context>
@@ -136,7 +101,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>Auto-Type - KeePassXC</translation>
     </message>
 </context>
 <context>
@@ -162,7 +127,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>Auto-Type - KeePassXC</translation>
     </message>
 </context>
 <context>
@@ -222,7 +187,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>&amp;Key file</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Αρχείο κλειδί</translation>
     </message>
     <message>
         <source>Cha&amp;llenge Response</source>
@@ -230,33 +195,33 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"/>
+        <translation>Ανανέωση</translation>
     </message>
     <message>
         <source>Empty password</source>
-        <translation type="unfinished"/>
+        <translation>Κενός κωδικός</translation>
     </message>
     <message>
         <source>Changing master key failed: no YubiKey inserted.</source>
-        <translation type="unfinished"/>
+        <translation>Η αλλαγή του πρωτεύοντος κλειδιού απέτυχε: δεν εισήχθη YubiKey.</translation>
     </message>
 </context>
 <context>
     <name>CloneDialog</name>
     <message>
         <source>Clone Options</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Append &apos; - Copy&apos; to title</source>
-        <translation type="unfinished"/>
+        <translation>Κλωνοποίηση Επιλογών</translation>
     </message>
     <message>
         <source>Replace username and password with references</source>
-        <translation type="unfinished"/>
+        <translation>Αντικατάσταση του ονόματος χρήστη και του κωδικού με παραπομπές</translation>
     </message>
     <message>
         <source>Copy history</source>
+        <translation>Αντιγραφή ιστορικού</translation>
+    </message>
+    <message>
+        <source>Append &apos; - Clone&apos; to title</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -264,19 +229,19 @@ Please select whether you want to allow access.</source>
     <name>CsvImportWidget</name>
     <message>
         <source>Import CSV fields</source>
-        <translation type="unfinished"/>
+        <translation>Εισαγωγή πεδίων CSV</translation>
     </message>
     <message>
         <source>filename</source>
-        <translation type="unfinished"/>
+        <translation>όνομα αρχείου</translation>
     </message>
     <message>
         <source>size, rows, columns</source>
-        <translation type="unfinished"/>
+        <translation>μέγεθος, γραμμές, στήλες</translation>
     </message>
     <message>
         <source>Encoding</source>
-        <translation type="unfinished"/>
+        <translation>Κωδικοποίηση</translation>
     </message>
     <message>
         <source>Codec</source>
@@ -284,31 +249,31 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Text is qualified by</source>
-        <translation type="unfinished"/>
+        <translation>Το κείμενο χαρακτηρίζεται από</translation>
     </message>
     <message>
         <source>Fields are separated by</source>
-        <translation type="unfinished"/>
+        <translation>Τα πεδία διαχωρίζονται από</translation>
     </message>
     <message>
         <source>Comments start with</source>
-        <translation type="unfinished"/>
+        <translation>Τα σχόλια ξεκινούν με</translation>
     </message>
     <message>
         <source>First record has field names</source>
-        <translation type="unfinished"/>
+        <translation>Η πρώτη εγγραφή έχει ονόματα πεδίων</translation>
     </message>
     <message>
         <source>Number of headers line to discard</source>
-        <translation type="unfinished"/>
+        <translation>Αριθμός κεφαλίδων για απόρριψη</translation>
     </message>
     <message>
         <source>Consider &apos;\&apos; an escape character</source>
-        <translation type="unfinished"/>
+        <translation>Θεώρησε το &apos;\&apos; χαρακτήρα διαφυγής</translation>
     </message>
     <message>
         <source>Preview</source>
-        <translation type="unfinished"/>
+        <translation>Προεπισκόπηση</translation>
     </message>
     <message>
         <source>Column layout</source>
@@ -316,31 +281,31 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Not present in CSV file</source>
-        <translation type="unfinished"/>
+        <translation>Δεν υπάρχει στο αρχείο CSV</translation>
     </message>
     <message>
         <source>Empty fieldname </source>
-        <translation type="unfinished"/>
+        <translation>Κενό όνομα πεδίου</translation>
     </message>
     <message>
         <source>column </source>
-        <translation type="unfinished"/>
+        <translation>στήλη</translation>
     </message>
     <message>
         <source>Imported from CSV file</source>
-        <translation type="unfinished"/>
+        <translation>Εισήχθη από αρχείο CSV</translation>
     </message>
     <message>
         <source>Original data: </source>
-        <translation type="unfinished"/>
+        <translation>Αρχικά δεδομένα:</translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file !</source>
-        <translation type="unfinished"/>
+        <translation>Σφάλμα/τα εντοπίστηκε/αν στο αρχείο CSV !</translation>
     </message>
     <message>
         <source> more messages skipped]</source>
-        <translation type="unfinished"/>
+        <translation>Περισσότερα μηνύματα έχουν παραλειφθεί]</translation>
     </message>
     <message>
         <source>Error</source>
@@ -356,7 +321,7 @@ Please select whether you want to allow access.</source>
     <name>CsvImportWizard</name>
     <message>
         <source>Import CSV file</source>
-        <translation type="unfinished"/>
+        <translation>Εισαγωγή αρχείου CSV</translation>
     </message>
     <message>
         <source>Error</source>
@@ -371,15 +336,15 @@ Please select whether you want to allow access.</source>
     <name>CsvParserModel</name>
     <message>
         <source> byte, </source>
-        <translation type="unfinished"/>
+        <translation> byte, </translation>
     </message>
     <message>
         <source> rows, </source>
-        <translation type="unfinished"/>
+        <translation> γραμμές, </translation>
     </message>
     <message>
         <source> columns</source>
-        <translation type="unfinished"/>
+        <translation> στήλες</translation>
     </message>
 </context>
 <context>
@@ -422,11 +387,11 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"/>
+        <translation>Ανανέωση</translation>
     </message>
     <message>
         <source>Challenge Response:</source>
-        <translation type="unfinished"/>
+        <translation>Απόκριση Πρόκλησης:</translation>
     </message>
 </context>
 <context>
@@ -501,19 +466,19 @@ You can now save it.</source>
     </message>
     <message>
         <source>Use recycle bin</source>
-        <translation type="unfinished"/>
+        <translation>Χρήση κάδου ανακύκλωσης</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
-        <translation type="unfinished"/>
+        <translation>AES:  256 Bit   (προεπιλεγμένο)</translation>
     </message>
     <message>
         <source>Twofish:  256 Bit</source>
-        <translation type="unfinished"/>
+        <translation>Twofish:  256 Bit</translation>
     </message>
     <message>
         <source>Algorithm:</source>
-        <translation type="unfinished"/>
+        <translation>Αλγόριθμος:</translation>
     </message>
 </context>
 <context>
@@ -628,38 +593,40 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Merge database</source>
-        <translation type="unfinished"/>
+        <translation>Συγχώνευση βάσης δεδομένων</translation>
     </message>
     <message>
         <source>The database you are trying to save as is locked by another instance of KeePassXC.
 Do you want to save it anyway?</source>
-        <translation type="unfinished"/>
+        <translation>Η βάση δεδομένων που προσπαθείτε να αποθηκεύσετε ως είναι κλειδωμένη από μία άλλη διεργασία του KeePassXC.
+Θέλετε να την αποθηκεύσετε ούτως η άλλως;</translation>
     </message>
     <message>
         <source>Passwords</source>
-        <translation type="unfinished"/>
+        <translation>Κωδικοί</translation>
     </message>
     <message>
         <source>Database already opened</source>
-        <translation type="unfinished"/>
+        <translation>Βάση δεδομένων ήδη ανοιχτή</translation>
     </message>
     <message>
         <source>The database you are trying to open is locked by another instance of KeePassXC.
 
 Do you want to open it anyway?</source>
-        <translation type="unfinished"/>
+        <translation>Η βάση δεδομένων που προσπαθείτε να ανοίξετε είναι κλειδωμένη από μία άλλη διεργασία του KeePassXC.
+Θέλετε να την ανοίξετε ούτως η άλλως;</translation>
     </message>
     <message>
         <source>Open read-only</source>
-        <translation type="unfinished"/>
+        <translation>Άνοιγμα μόνο για ανάγνωση</translation>
     </message>
     <message>
         <source>File opened in read only mode.</source>
-        <translation type="unfinished"/>
+        <translation>Αρχείο ανοιχτό μόνο για ανάγνωση.</translation>
     </message>
     <message>
         <source>Open CSV file</source>
-        <translation type="unfinished"/>
+        <translation>Άνοιγμα αρχείου CSV</translation>
     </message>
 </context>
 <context>
@@ -714,11 +681,11 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Searching...</source>
-        <translation type="unfinished"/>
+        <translation>Αναζήτηση...</translation>
     </message>
     <message>
         <source>No current database.</source>
-        <translation type="unfinished"/>
+        <translation>Καμία τρέχουσα βάση δεδομένων.</translation>
     </message>
     <message>
         <source>No source database, nothing to do.</source>
@@ -726,51 +693,51 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Search Results (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Αποτελέσματα Αναζήτησης (%1)</translation>
     </message>
     <message>
         <source>No Results</source>
-        <translation type="unfinished"/>
+        <translation>Δεν Υπάρχουν Αποτελέσματα</translation>
     </message>
     <message>
         <source>Execute command?</source>
-        <translation type="unfinished"/>
+        <translation>Εκτέλεση εντολής;</translation>
     </message>
     <message>
         <source>Do you really want to execute the following command?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</source>
-        <translation type="unfinished"/>
+        <translation>Θέλετε πραγματικά να εκτελέσετε την ακόλουθη εντολή;&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
     </message>
     <message>
         <source>Remember my choice</source>
-        <translation type="unfinished"/>
+        <translation>Να θυμάσαι αυτή την επιλογή</translation>
     </message>
     <message>
         <source>Autoreload Request</source>
-        <translation type="unfinished"/>
+        <translation>Αίτημα Αυτόματης Επαναφόρτισης</translation>
     </message>
     <message>
         <source>The database file has changed. Do you want to load the changes?</source>
-        <translation type="unfinished"/>
+        <translation>Η βάση δεδομένων έχει αλλάξει. Θέλετε να φορτώσετε τις αλλαγές;</translation>
     </message>
     <message>
         <source>Merge Request</source>
-        <translation type="unfinished"/>
+        <translation>Αίτημα Συγχώνευσης</translation>
     </message>
     <message>
         <source>The database file has changed and you have unsaved changes.Do you want to merge your changes?</source>
-        <translation type="unfinished"/>
+        <translation>Η βάση δεδομένων έχει αλλάξει και έχετε μη αποθηκευμένες αλλαγές. Θέλετε να ενσωματώσετε τις αλλαγές σας;</translation>
     </message>
     <message>
         <source>Could not open the new database file while attempting to autoreload this database.</source>
-        <translation type="unfinished"/>
+        <translation>Δεν ήταν δυνατό το άνοιγμα του νέου αρχείου βάσης δεδομένων κατά την προσπάθεια αυτόματης επαναφόρτωσης αυτής της βάσης δεδομένων.</translation>
     </message>
     <message>
         <source>Empty recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Άδειασμα κάδου ανακύκλωσης;</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Είστε σίγουροι ότι θέλετε να διαγράψετε μόνιμα τα πάντα από το κάδο ανακύκλωσής σας;</translation>
     </message>
 </context>
 <context>
@@ -855,19 +822,19 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Confirm Remove</source>
-        <translation type="unfinished"/>
+        <translation>Επιβεβαίωση Αφαίρεσης</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this attribute?</source>
-        <translation type="unfinished"/>
+        <translation>Είστε σίγουροι ότι θέλετε να αφαιρέσετε αυτό το χαρακτηριστικό.</translation>
     </message>
     <message>
         <source>[PROTECTED] Press reveal to view or edit</source>
-        <translation type="unfinished"/>
+        <translation>[ΠΡΟΣΤΑΤΕΥΜΕΝΟ] Πατήστε αποκάλυψη για προβολή ή επεξεργασία</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this attachment?</source>
-        <translation type="unfinished"/>
+        <translation>Είστε σίγουροι ότι θέλετε να αφαιρέσετε αυτό το συνημμένο;</translation>
     </message>
 </context>
 <context>
@@ -898,15 +865,15 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Edit Name</source>
-        <translation type="unfinished"/>
+        <translation>Επεξεργασία Ονόματος</translation>
     </message>
     <message>
         <source>Protect</source>
-        <translation type="unfinished"/>
+        <translation>Προστασία</translation>
     </message>
     <message>
         <source>Reveal</source>
-        <translation type="unfinished"/>
+        <translation>Αποκάλυψη</translation>
     </message>
 </context>
 <context>
@@ -929,11 +896,11 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the &amp;group</source>
-        <translation type="unfinished"/>
+        <translation>Κληρονόμηση προεπιλεγμένης ακολουθίας Auto-Type από την &amp;ομάδα</translation>
     </message>
     <message>
         <source>&amp;Use custom Auto-Type sequence:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Χρήση προσαρμοσμένης ακολουθίας Auto-Type:</translation>
     </message>
     <message>
         <source>Use default se&amp;quence</source>
@@ -941,7 +908,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Set custo&amp;m sequence:</source>
-        <translation type="unfinished"/>
+        <translation>Χρήση προεπιλε&amp;γμένης ακολουθίας:</translation>
     </message>
     <message>
         <source>Window Associations</source>
@@ -1091,35 +1058,39 @@ Do you want to open it anyway?</source>
         <translation>Επιλογή εικόνας</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translation>Σφάλμα</translation>
-    </message>
-    <message>
         <source>Download favicon</source>
-        <translation type="unfinished"/>
+        <translation>Κατέβασμα favicon</translation>
     </message>
     <message>
         <source>Unable to fetch favicon.</source>
-        <translation type="unfinished"/>
+        <translation>Αδυναμία λήψης favicon.</translation>
     </message>
     <message>
         <source>Can&apos;t read icon</source>
-        <translation type="unfinished"/>
+        <translation>Αδυναμία ανάγνωσης εικονιδίου</translation>
     </message>
     <message>
         <source>&amp;Use default icon</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Χρήση προεπιλεγμένου εικονιδίου</translation>
     </message>
     <message>
         <source>Use custo&amp;m icon</source>
-        <translation type="unfinished"/>
+        <translation>Χρήση προσαρμο&amp;σμένου εικονιδίου</translation>
     </message>
     <message>
         <source>Confirm Delete</source>
-        <translation type="unfinished"/>
+        <translation>Επιβεβαίωση Διαγραφής</translation>
     </message>
     <message>
         <source>This icon is used by %1 entries, and will be replaced by the default icon. Are you sure you want to delete it?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hint: You can enable Google as a fallback under Tools&gt;Settings&gt;Security</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Custom icon already exists</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1146,7 +1117,7 @@ Do you want to open it anyway?</source>
     <name>Entry</name>
     <message>
         <source> - Clone</source>
-        <translation type="unfinished"/>
+        <translation> - Κλωνοποίηση</translation>
     </message>
 </context>
 <context>
@@ -1196,7 +1167,7 @@ Do you want to open it anyway?</source>
     <message>
         <source>Ref: </source>
         <comment>Reference abbreviation</comment>
-        <translation type="unfinished"/>
+        <translation>Αναφ:</translation>
     </message>
 </context>
 <context>
@@ -1222,7 +1193,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>A-Z</source>
-        <translation type="unfinished"/>
+        <translation>Α-Ω</translation>
     </message>
     <message>
         <source>Lower Case Letters</source>
@@ -1230,7 +1201,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>a-z</source>
-        <translation type="unfinished"/>
+        <translation>α-ω</translation>
     </message>
     <message>
         <source>Numbers</source>
@@ -1238,7 +1209,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>0-9</source>
-        <translation type="unfinished"/>
+        <translation>0-9</translation>
     </message>
     <message>
         <source>Special Characters</source>
@@ -1246,7 +1217,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>/*_&amp; ...</source>
-        <translation type="unfinished"/>
+        <translation>/*_&amp; ...</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
@@ -1261,11 +1232,11 @@ Do you want to open it anyway?</source>
     <name>KMessageWidget</name>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Κλείσιμο</translation>
     </message>
     <message>
         <source>Close message</source>
-        <translation type="unfinished"/>
+        <translation>Κλείσιμο Μηνύματος</translation>
     </message>
 </context>
 <context>
@@ -1329,14 +1300,14 @@ Do you want to open it anyway?</source>
         <translation>Σε θέση να υπολογίσει το κύριο κλειδί</translation>
     </message>
     <message>
-        <source>The selected file is an old KeePass 1 database (.kdb).
-
-You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
-This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
+        <source>Unable to issue challenge-response.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Unable to issue challenge-response.</source>
+        <source>The selected file is an old KeePass 1 database (.kdb).
+
+You can import it by clicking on Database &gt; 'Import KeePass 1 database...'.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1356,6 +1327,10 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
+        <translation>Μία άλλη διεργασία του KeePassXC ήδη τρέχει.</translation>
+    </message>
+    <message>
+        <source>Existing single-instance lock file is invalid. Launching new instance.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1411,15 +1386,11 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&amp;Recent databases</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>He&amp;lp</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Πρόσφατες βάσεις δεδομένων</translation>
     </message>
     <message>
         <source>E&amp;ntries</source>
-        <translation type="unfinished"/>
+        <translation>Ε&amp;γγραφές</translation>
     </message>
     <message>
         <source>Copy att&amp;ribute to clipboard</source>
@@ -1427,71 +1398,59 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&amp;Groups</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Ομάδες</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Προβολή</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Έξοδος</translation>
     </message>
     <message>
         <source>&amp;About</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&amp;Open database</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Σχετικά με</translation>
     </message>
     <message>
         <source>&amp;Save database</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Αποθήκευση βάσης δεδομένων</translation>
     </message>
     <message>
         <source>&amp;Close database</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Κλείσιμο βάσης δεδομένων</translation>
     </message>
     <message>
         <source>&amp;New database</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Νέα βάση δεδομένων</translation>
     </message>
     <message>
         <source>Merge from KeePassX database</source>
-        <translation type="unfinished"/>
+        <translation>Συγχώνευση από βάση δεδομένων KeePassX</translation>
     </message>
     <message>
         <source>&amp;Add new entry</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Προσθήκη νέας καταχώρησης</translation>
     </message>
     <message>
         <source>&amp;View/Edit entry</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Προβολή/Επεξεργασία καταχώρησης</translation>
     </message>
     <message>
         <source>&amp;Delete entry</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Διαγραφή καταχώρησης</translation>
     </message>
     <message>
         <source>&amp;Add new group</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Προσθήκη νέας ομάδας</translation>
     </message>
     <message>
         <source>&amp;Edit group</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Επεξεργασία ομάδας</translation>
     </message>
     <message>
         <source>&amp;Delete group</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Sa&amp;ve database as</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Change &amp;master key</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Διαγραφή ομάδας</translation>
     </message>
     <message>
         <source>&amp;Database settings</source>
@@ -1499,14 +1458,10 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&amp;Clone entry</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Κλωνοποίηση καταχώρησης </translation>
     </message>
     <message>
         <source>Timed one-time password</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Setup TOTP</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1523,15 +1478,15 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Copy &amp;username</source>
-        <translation type="unfinished"/>
+        <translation>Αντιγραφή &amp;ονόματος χρήστη</translation>
     </message>
     <message>
         <source>Cop&amp;y password</source>
-        <translation type="unfinished"/>
+        <translation>Αντιγρα&amp;φή κωδικού </translation>
     </message>
     <message>
         <source>&amp;Settings</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Ρυθμίσεις</translation>
     </message>
     <message>
         <source>&amp;Perform Auto-Type</source>
@@ -1539,74 +1494,94 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&amp;Open URL</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Άνοιγμα URL</translation>
     </message>
     <message>
         <source>&amp;Lock databases</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Κλείδωμα βάσεων δεδομένων</translation>
     </message>
     <message>
         <source>&amp;Title</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Τίτλος</translation>
     </message>
     <message>
         <source>&amp;URL</source>
-        <translation type="unfinished"/>
+        <translation>&amp;URL</translation>
     </message>
     <message>
         <source>&amp;Notes</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&amp;Export to CSV file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Re&amp;pair database</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Σημειώσεις</translation>
     </message>
     <message>
         <source>Password Generator</source>
-        <translation type="unfinished"/>
+        <translation>Γεννήτρια Κωδικών</translation>
     </message>
     <message>
         <source>Clear history</source>
-        <translation type="unfinished"/>
+        <translation>Καθαρισμός ιστορικού</translation>
     </message>
     <message>
         <source>&amp;Database</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Βάση Δεδομένων</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"/>
+        <translation>Εισαγωγή</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Import KeePass 1 database</source>
-        <translation>Εισαγωγή βάσης δεδομένων KeePass1</translation>
-    </message>
-    <message>
-        <source>Import CSV file</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Εργαλεία</translation>
     </message>
     <message>
         <source>Empty recycle bin</source>
-        <translation type="unfinished"/>
+        <translation>Άδειασμα κάδου ανακύκλωσης</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation type="unfinished"/>
+        <translation>Σφάλματος πρόσβασης για αρχείο ρυθμίσεων %1</translation>
     </message>
     <message>
         <source>Quit KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>Κλείσιμο KeePassXC</translation>
     </message>
     <message>
         <source>Please touch the button on your YubiKey!</source>
+        <translation>Παρακαλώ αγγίξτε το κουμπί στο YubiKey σας!</translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Open database...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sa&amp;ve database as...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Change &amp;master key...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Export to CSV file...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import KeePass 1 database...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import CSV file...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Re&amp;pair database...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set up TOTP...</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1614,7 +1589,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <name>OptionDialog</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"/>
+        <translation>Διάλογος</translation>
     </message>
     <message>
         <source>General</source>
@@ -1650,11 +1625,11 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>HTTP Port:</source>
-        <translation type="unfinished"/>
+        <translation>HTTP Θύρα:</translation>
     </message>
     <message>
         <source>Default port: 19455</source>
-        <translation type="unfinished"/>
+        <translation>Προεπιλεγμένη θύρα: 19455</translation>
     </message>
     <message>
         <source>Re&amp;quest to unlock the database if it is locked</source>
@@ -1666,7 +1641,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>KeePassXC will listen to this port on 127.0.0.1</source>
-        <translation type="unfinished"/>
+        <translation>Το KeePassXC θα ακούει σε αυτή τη θύρα στο 127.0.0.1</translation>
     </message>
     <message>
         <source>Cannot bind to privileged ports</source>
@@ -1691,11 +1666,11 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>This is required for accessing your databases from ChromeIPass or PassIFox</source>
-        <translation type="unfinished"/>
+        <translation>Αυτό είναι απαραίτητο για τη πρόσβαση στις βάσεις δεδομένων σας, από το ChromeIPass ή το PassIFox</translation>
     </message>
     <message>
         <source>Enable KeePassHTTP server</source>
-        <translation type="unfinished"/>
+        <translation>Ενεργοποίηση του εξυπηρετητή KeePassHTTP</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
@@ -1715,7 +1690,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Password Generator</source>
-        <translation type="unfinished"/>
+        <translation>Γεννήτρια Κωδικών</translation>
     </message>
     <message>
         <source>Only the selected database has to be connected with a client.</source>
@@ -1767,15 +1742,15 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>strength</source>
-        <translation type="unfinished"/>
+        <translation>ισχύς</translation>
     </message>
     <message>
         <source>entropy</source>
-        <translation type="unfinished"/>
+        <translation>εντροπία</translation>
     </message>
     <message>
         <source>&amp;Length:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Μήκος:</translation>
     </message>
     <message>
         <source>Pick characters from every group</source>
@@ -1787,11 +1762,11 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Κλείσιμο</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"/>
+        <translation>Εφαρμογή</translation>
     </message>
     <message>
         <source>Entropy: %1 bit</source>
@@ -1803,19 +1778,19 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>Poor</source>
-        <translation type="unfinished"/>
+        <translation>Φτωχή</translation>
     </message>
     <message>
         <source>Weak</source>
-        <translation type="unfinished"/>
+        <translation>Αδύναμη</translation>
     </message>
     <message>
         <source>Good</source>
-        <translation type="unfinished"/>
+        <translation>Καλή</translation>
     </message>
     <message>
         <source>Excellent</source>
-        <translation type="unfinished"/>
+        <translation>Εξαιρετική</translation>
     </message>
     <message>
         <source>Password</source>
@@ -1827,23 +1802,23 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>Passphrase</source>
-        <translation type="unfinished"/>
+        <translation>Φράση Κλειδί</translation>
     </message>
     <message>
         <source>Wordlist:</source>
-        <translation type="unfinished"/>
+        <translation>Λίστα Λέξεων:</translation>
     </message>
     <message>
         <source>Word Count:</source>
-        <translation type="unfinished"/>
+        <translation>Αριθμός Λέξεων:</translation>
     </message>
     <message>
         <source>Word Separator:</source>
-        <translation type="unfinished"/>
+        <translation>Διαχωριστικό Λέξεων:</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Αντιγραφή</translation>
     </message>
 </context>
 <context>
@@ -1854,12 +1829,13 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>error reading from device</source>
-        <translation type="unfinished"/>
+        <translation>σφάλμα κατά την ανάγνωση από συσκευή</translation>
     </message>
     <message>
         <source>file empty !
 </source>
-        <translation type="unfinished"/>
+        <translation>αρχείο κενό !
+</translation>
     </message>
     <message>
         <source>malformed string</source>
@@ -1899,7 +1875,7 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation type="unfinished"/>
+        <translation>Ενσωμάτωση Περιηγητή</translation>
     </message>
     <message>
         <source>YubiKey[%1] Challenge Response - Slot %2 - %3</source>
@@ -1945,7 +1921,7 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>Internal zlib error: </source>
-        <translation type="unfinished"/>
+        <translation>Εσωτερικό σφάλμα zlib:</translation>
     </message>
 </context>
 <context>
@@ -1964,11 +1940,11 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>Αναζήτηση...</translation>
     </message>
     <message>
         <source>Limit search to selected group</source>
-        <translation type="unfinished"/>
+        <translation>Περιορισμός αναζήτησης στην επιλεγμένη ομάδα</translation>
     </message>
 </context>
 <context>
@@ -2001,11 +1977,11 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Removing stored permissions...</source>
-        <translation type="unfinished"/>
+        <translation>Αφαίρεση αποθηκευμένων δικαιωμάτων...</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"/>
+        <translation>Διακοπή</translation>
     </message>
     <message>
         <source>Successfully removed permissions from %1 %2.</source>
@@ -2027,35 +2003,35 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Αντικατάσταση τρέχοντος κλειδιού;</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Ενημέρωση Καταχώρησης</translation>
     </message>
     <message>
         <source>KeePassXC: Database locked!</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Βάση δεδομένων κλειδωμένη!</translation>
     </message>
     <message>
         <source>KeePassXC: Removed keys from database</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Κλειδιά αφαιρέθηκαν από τη βάση</translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Δε βρεθήκαν κλειδιά</translation>
     </message>
     <message>
         <source>KeePassXC: Settings not available!</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Ρυθμισμένες μη διαθέσιμες!</translation>
     </message>
     <message>
         <source>KeePassXC: Removed permissions</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Δικαιώματα αφαιρέθηκαν</translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Δε βρέθηκε καταχώρηση με δικαιώματα!</translation>
     </message>
 </context>
 <context>
@@ -2074,7 +2050,7 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation type="unfinished"/>
+        <translation>Σφάλματος πρόσβασης για αρχείο ρυθμίσεων %1</translation>
     </message>
 </context>
 <context>
@@ -2117,11 +2093,11 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Load previous databases on startup</source>
-        <translation type="unfinished"/>
+        <translation>Φόρτωμα προηγούμενων βάσεων δεδομένων κατά την εκκίνηση</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
-        <translation type="unfinished"/>
+        <translation>Αυτόματη επαναφόρτωση βάσης σε περίπτωση εξωτερικής τροποποίησης</translation>
     </message>
     <message>
         <source>Hide window to system tray instead of app exit</source>
@@ -2129,11 +2105,11 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Minimize window at application startup</source>
-        <translation type="unfinished"/>
+        <translation>Ελαχιστοποίηση παραθύρου κατά την εκκίνηση</translation>
     </message>
     <message>
         <source>Basic Settings</source>
-        <translation type="unfinished"/>
+        <translation>Βασικές Ρυθμίσεις</translation>
     </message>
     <message>
         <source>Remember last key files and security dongles</source>
@@ -2153,6 +2129,18 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
+        <translation>Πάντα ερώτηση για την εκτέλεση του Auto-Type</translation>
+    </message>
+    <message>
+        <source>Auto-Type delay</source>
+        <translation>Καθυστέρηση Auto-Type</translation>
+    </message>
+    <message>
+        <source> ms</source>
+        <translation> ms</translation>
+    </message>
+    <message>
+        <source>Start only a single instance of KeePassXC</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2172,11 +2160,11 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Show passwords in cleartext by default</source>
-        <translation type="unfinished"/>
+        <translation>Εμφάνιση κωδίκων σε απλό κείμενο από προεπιλογή</translation>
     </message>
     <message>
         <source>Lock databases after minimizing the window</source>
-        <translation type="unfinished"/>
+        <translation>Κλείδωμα της βάσης δεδομένων μετά την ελαχιστοποίηση του παραθύρου</translation>
     </message>
     <message>
         <source>Don&apos;t require password repeat when it is visible</source>
@@ -2188,11 +2176,19 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Convenience</source>
-        <translation type="unfinished"/>
+        <translation>Ευκολία</translation>
     </message>
     <message>
         <source>Lock databases when session is locked or lid is closed</source>
+        <translation>Κλείδωμα βάσεων δεδομένων κατά το κλείδωμα της συνεδρίας ή την αναδίπλωση της οθόνης</translation>
+    </message>
+    <message>
+        <source>Privacy</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use Google as fallback for downloading website icons</source>
+        <translation>Χρήση Google ως εφεδρικό τρόπο κατεβάσματος εικονιδίων ιστοσελίδων</translation>
     </message>
 </context>
 <context>
@@ -2203,31 +2199,31 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Key:</source>
-        <translation type="unfinished"/>
+        <translation>Κλειδί:</translation>
     </message>
     <message>
         <source>Use custom settings</source>
-        <translation type="unfinished"/>
+        <translation>Χρήση προσαρμοσμένων ρυθμίσεων</translation>
     </message>
     <message>
         <source>Note: Change these settings only if you know what you are doing.</source>
-        <translation type="unfinished"/>
+        <translation>Σημείωση: Αλλάξτε αυτές τις ρυθμίσεις μόνο εάν ξέρετε τι κάνετε.</translation>
     </message>
     <message>
         <source>Time step:</source>
-        <translation type="unfinished"/>
+        <translation>Βήμα χρόνου:</translation>
     </message>
     <message>
         <source>8 digits</source>
-        <translation type="unfinished"/>
+        <translation>8 Ψηφία</translation>
     </message>
     <message>
         <source>6 digits</source>
-        <translation type="unfinished"/>
+        <translation>6 Ψηφία</translation>
     </message>
     <message>
         <source>Code size:</source>
-        <translation type="unfinished"/>
+        <translation>Μέγεθος κώδικα:</translation>
     </message>
     <message>
         <source> sec</source>
@@ -2242,19 +2238,19 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>000000</source>
-        <translation type="unfinished"/>
+        <translation>000000</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Αντιγραφή</translation>
     </message>
     <message>
         <source>Expires in</source>
-        <translation type="unfinished"/>
+        <translation>Λήγει σε</translation>
     </message>
     <message>
         <source>seconds</source>
-        <translation type="unfinished"/>
+        <translation>δευτερόλεπτα</translation>
     </message>
 </context>
 <context>
@@ -2268,27 +2264,27 @@ give it a unique name to identify and accept it.</source>
     <name>WelcomeWidget</name>
     <message>
         <source>Welcome to KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>Καλωσορίσατε στο KeePassXC</translation>
     </message>
     <message>
         <source>Start storing your passwords securely in a KeePassXC database</source>
-        <translation type="unfinished"/>
+        <translation>Ξεκινήστε να αποθηκεύετε τους κωδικούς σας με ασφάλεια σε μία βάση δεδομένων KeePassXC</translation>
     </message>
     <message>
         <source>Create new database</source>
-        <translation type="unfinished"/>
+        <translation>Δημιουργία νέας βάσης δεδομένων</translation>
     </message>
     <message>
         <source>Open existing database</source>
-        <translation type="unfinished"/>
+        <translation>Άνοιγμα υπάρχουσας βάσης δεδομένων</translation>
     </message>
     <message>
         <source>Import from KeePass 1</source>
-        <translation type="unfinished"/>
+        <translation>Εισαγωγή από KeePass 1</translation>
     </message>
     <message>
         <source>Import from CSV</source>
-        <translation type="unfinished"/>
+        <translation>Εισαγωγή από CSV</translation>
     </message>
     <message>
         <source>Recent databases</source>
@@ -2299,7 +2295,7 @@ give it a unique name to identify and accept it.</source>
     <name>main</name>
     <message>
         <source>path to a custom config file</source>
-        <translation type="unfinished"/>
+        <translation>διαδρομή σε προσαρμοσμένο αρχείο ρυθμίσεων</translation>
     </message>
     <message>
         <source>key file of the database</source>
@@ -2311,43 +2307,43 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>read password of the database from stdin</source>
-        <translation type="unfinished"/>
+        <translation>Διάβασμα κωδικού βάσης από το stdin</translation>
     </message>
     <message>
         <source>filenames of the password databases to open (*.kdbx)</source>
-        <translation type="unfinished"/>
+        <translation>ονόματα αρχείων των βάσεων δεδομένων κωδικών προς άνοιγμα (*.kdbx)</translation>
     </message>
     <message>
         <source>Copy a password to the clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Αντιγραφή ενός κωδικού στο πρόχειρο</translation>
     </message>
     <message>
         <source>Path of the database.</source>
-        <translation type="unfinished"/>
+        <translation>Διαδρομή της βάσης δεδομένων.</translation>
     </message>
     <message>
         <source>Use a GUI prompt unlocking the database.</source>
-        <translation type="unfinished"/>
+        <translation>Χρήση ενός γραφικού παραθύρου διαλόγου για το ξεκλείδωμα της βάσης δεδομένων.</translation>
     </message>
     <message>
         <source>Name of the entry to clip.</source>
-        <translation type="unfinished"/>
+        <translation>Όνομα καταχώρησης προς αντιγραφή.</translation>
     </message>
     <message>
         <source>Extract and print the content of a database.</source>
-        <translation type="unfinished"/>
+        <translation>Εξαγωγή και τύπωμα των περιεχομένων της βάσης δεδομένων.</translation>
     </message>
     <message>
         <source>Path of the database to extract.</source>
-        <translation type="unfinished"/>
+        <translation>Διαδρομή της βάσης δεδομένων προς εξαγωγή.</translation>
     </message>
     <message>
         <source>Name of the command to execute.</source>
-        <translation type="unfinished"/>
+        <translation>Όνομα εντολής προς εκτέλεση.</translation>
     </message>
     <message>
         <source>List database entries.</source>
-        <translation type="unfinished"/>
+        <translation>Προβολή καταχωρίσεων βάσης δεδομένων.</translation>
     </message>
     <message>
         <source>Path of the group to list. Default is /</source>
@@ -2355,11 +2351,11 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Print the UUIDs of the entries and groups.</source>
-        <translation type="unfinished"/>
+        <translation>Εκτύπωση των UUID των καταχωρίσεων και των ομάδων.</translation>
     </message>
     <message>
         <source>Merge two databases.</source>
-        <translation type="unfinished"/>
+        <translation>Συγχώνευση δύο βάσεων δεδομένων.</translation>
     </message>
     <message>
         <source>Path of the database to merge into.</source>
@@ -2371,15 +2367,15 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Use the same password for both database files.</source>
-        <translation type="unfinished"/>
+        <translation>Χρήση το ίδιου κωδικού και για τις δύο βάσεις δεδομένων.</translation>
     </message>
     <message>
         <source>Show a password.</source>
-        <translation type="unfinished"/>
+        <translation>Εμφάνιση ενός κωδικού.</translation>
     </message>
     <message>
         <source>Name of the entry to show.</source>
-        <translation type="unfinished"/>
+        <translation>Όνομα καταχώρησης προς προβολή.</translation>
     </message>
 </context>
 </TS>

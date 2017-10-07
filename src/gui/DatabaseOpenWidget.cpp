@@ -119,6 +119,18 @@ void DatabaseOpenWidget::load(const QString& filename)
     m_ui->editPassword->setFocus();
 }
 
+void DatabaseOpenWidget::clearForms()
+{
+    m_ui->editPassword->clear();
+    m_ui->comboKeyFile->clear();
+    m_ui->checkPassword->setChecked(false);
+    m_ui->checkKeyFile->setChecked(false);
+    m_ui->checkChallengeResponse->setChecked(false);
+    m_ui->buttonTogglePassword->setChecked(false);
+    m_db = nullptr;
+}
+
+
 Database* DatabaseOpenWidget::database()
 {
     return m_db;

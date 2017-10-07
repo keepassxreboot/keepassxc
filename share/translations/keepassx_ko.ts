@@ -3,129 +3,94 @@
     <name>AboutDialog</name>
     <message>
         <source>About KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC 정보</translation>
     </message>
     <message>
         <source>About</source>
         <translation>정보</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot;&gt;&lt;span style=&quot;text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;style&gt;li {font-size: 10pt}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Project Maintainers:&lt;/span&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;droidmonkey&lt;/li&gt;&lt;li&gt;phoerious&lt;/li&gt;&lt;li&gt;TheZ3ro&lt;/li&gt;&lt;li&gt;louib&lt;/li&gt;&lt;li&gt;Weslly&lt;/li&gt;&lt;li&gt;debfx (KeePassX)&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Contributors</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;body&gt;
-            &lt;p style=&quot;font-size:x-large; font-weight:600;&quot;&gt;Code:&lt;/p&gt;
-            &lt;ul&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;debfx (KeePassX)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;BlueIce (KeePassX)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;droidmonkey&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;phoerious&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;TheZ3ro&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;louib&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;weslly&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;keithbennett (KeePassHTTP)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;Typz (KeePassHTTP)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;denk-mal (KeePassHTTP)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;kylemanna (YubiKey)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;seatedscribe (CSV Importer)&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;pgalves (Inline Messages)&lt;/li&gt;
-            &lt;/ul&gt;
-            &lt;p style=&quot;font-size:x-large; font-weight:600;&quot;&gt;Translations:&lt;/p&gt;
-            &lt;ul&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Chinese:&lt;/span&gt; Biggulu, ligyxy, BestSteve&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Czech:&lt;/span&gt; pavelb, JosefVitu&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Dutch:&lt;/span&gt; Vistaus, KnooL, apie&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Finnish:&lt;/span&gt; MawKKe&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;French:&lt;/span&gt; Scrat15, frgnca, gilbsgilbs, gtalbot, iannick, kyodev, logut&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;German:&lt;/span&gt; Calyrx, DavidHamburg, antsas, codejunky, jensrutschmann, montilo, omnisome4, origin_de, pcrcoding, phoerious, rgloor, vlenzer&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Greek:&lt;/span&gt; nplatis&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Italian:&lt;/span&gt; TheZ3ro, FranzMari, Mte90, tosky&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Kazakh:&lt;/span&gt; sotrud_nik&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Lithuanian:&lt;/span&gt; Moo&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Polish:&lt;/span&gt; konradmb, mrerexx&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Portuguese: &lt;/span&gt;vitor895, weslly, American_Jesus, mihai.ile&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Russian:&lt;/span&gt; vsvyatski, KekcuHa, wkill95&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Spanish:&lt;/span&gt; EdwardNavarro, antifaz, piegope, pquin, vsvyatski&lt;/li&gt;
-            &lt;li style=&quot;font-size:10pt&quot;&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;Swedish:&lt;/span&gt; henziger&lt;/li&gt;
-            &lt;/ul&gt;
-            &lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;See Contributions on GitHub&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>기여자</translation>
     </message>
     <message>
         <source>Debug Info</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Include the following information whenever you report a bug:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>디버그 정보</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>클립보드에 복사</translation>
     </message>
     <message>
         <source>Version %1
 </source>
-        <translation type="unfinished"/>
+        <translation>버전 %1
+</translation>
     </message>
     <message>
         <source>Revision: %1</source>
-        <translation type="unfinished"/>
+        <translation>리비전: %1</translation>
     </message>
     <message>
         <source>Libraries:</source>
-        <translation type="unfinished"/>
+        <translation>라이브러리:</translation>
     </message>
     <message>
         <source>Operating system: %1
 CPU architecture: %2
 Kernel: %3 %4</source>
-        <translation type="unfinished"/>
+        <translation>운영 체제: %1
+CPU 아키텍처: %2
+커널: %3 %4</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
-        <translation type="unfinished"/>
+        <translation>활성화된 확장 기능:</translation>
+    </message>
+    <message>
+        <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
+        <translation> &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt; 사이트에 버그를 보고해 주십시오</translation>
+    </message>
+    <message>
+        <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
+        <translation>KeePassXC는 GNU 일반 공중 라이선스(GPL) 버전 2 및 (선택적으로) 버전 3으로 배포됩니다.</translation>
+    </message>
+    <message>
+        <source>Project Maintainers:</source>
+        <translation>프로젝트 관리자:</translation>
+    </message>
+    <message>
+        <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;GitHub에서 기여자 보기&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <source>Include the following information whenever you report a bug:</source>
+        <translation>버그를 보고할 때 다음 정보를 포함하십시오:</translation>
     </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
     <message>
         <source>Remember this decision</source>
-        <translation type="unfinished"/>
+        <translation>이 선택 기억하기</translation>
     </message>
     <message>
         <source>Allow</source>
-        <translation type="unfinished"/>
+        <translation>허용</translation>
     </message>
     <message>
         <source>Deny</source>
-        <translation type="unfinished"/>
+        <translation>거부</translation>
     </message>
     <message>
         <source>%1 has requested access to passwords for the following item(s).
 Please select whether you want to allow access.</source>
-        <translation type="unfinished"/>
+        <translation>%1에서 다음 항목의 암호를 요청했습니다.
+접근을 허용할 지 여부를 선택하십시오.</translation>
     </message>
     <message>
         <source>KeePassXC HTTP Confirm Access</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC HTTP 접근 확인</translation>
     </message>
 </context>
 <context>
@@ -136,7 +101,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>자동 입력 - KeePassXC</translation>
     </message>
 </context>
 <context>
@@ -162,7 +127,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>자동 입력 - KeePassXC</translation>
     </message>
 </context>
 <context>
@@ -222,125 +187,125 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>&amp;Key file</source>
-        <translation type="unfinished"/>
+        <translation>키 파일(&amp;K)</translation>
     </message>
     <message>
         <source>Cha&amp;llenge Response</source>
-        <translation type="unfinished"/>
+        <translation>질의 응답(&amp;L)</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"/>
+        <translation>새로 고침</translation>
     </message>
     <message>
         <source>Empty password</source>
-        <translation type="unfinished"/>
+        <translation>빈 암호</translation>
     </message>
     <message>
         <source>Changing master key failed: no YubiKey inserted.</source>
-        <translation type="unfinished"/>
+        <translation>마스터 키를 변경할 수 없음: YubiKey가 없습니다.</translation>
     </message>
 </context>
 <context>
     <name>CloneDialog</name>
     <message>
         <source>Clone Options</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Append &apos; - Copy&apos; to title</source>
-        <translation type="unfinished"/>
+        <translation>복제 옵션</translation>
     </message>
     <message>
         <source>Replace username and password with references</source>
-        <translation type="unfinished"/>
+        <translation>사용자 이름과 암호를 참조로 대체</translation>
     </message>
     <message>
         <source>Copy history</source>
-        <translation type="unfinished"/>
+        <translation>과거 기록 복사</translation>
+    </message>
+    <message>
+        <source>Append &apos; - Clone&apos; to title</source>
+        <translation>제목에 &apos; - 사본&apos; 추가</translation>
     </message>
 </context>
 <context>
     <name>CsvImportWidget</name>
     <message>
         <source>Import CSV fields</source>
-        <translation type="unfinished"/>
+        <translation>CSV 필드 가져오기</translation>
     </message>
     <message>
         <source>filename</source>
-        <translation type="unfinished"/>
+        <translation>파일 이름</translation>
     </message>
     <message>
         <source>size, rows, columns</source>
-        <translation type="unfinished"/>
+        <translation>크기, 줄, 칸</translation>
     </message>
     <message>
         <source>Encoding</source>
-        <translation type="unfinished"/>
+        <translation>인코딩</translation>
     </message>
     <message>
         <source>Codec</source>
-        <translation type="unfinished"/>
+        <translation>인코딩</translation>
     </message>
     <message>
         <source>Text is qualified by</source>
-        <translation type="unfinished"/>
+        <translation>문자열 구분자</translation>
     </message>
     <message>
         <source>Fields are separated by</source>
-        <translation type="unfinished"/>
+        <translation>필드 구분자</translation>
     </message>
     <message>
         <source>Comments start with</source>
-        <translation type="unfinished"/>
+        <translation>주석 시작 글자</translation>
     </message>
     <message>
         <source>First record has field names</source>
-        <translation type="unfinished"/>
+        <translation>첫 레코드에 필드 이름 포함</translation>
     </message>
     <message>
         <source>Number of headers line to discard</source>
-        <translation type="unfinished"/>
+        <translation>무시할 머릿글 줄 수</translation>
     </message>
     <message>
         <source>Consider &apos;\&apos; an escape character</source>
-        <translation type="unfinished"/>
+        <translation>&apos;\&apos; 글자를 탈출 문자로 간주</translation>
     </message>
     <message>
         <source>Preview</source>
-        <translation type="unfinished"/>
+        <translation>미리 보기</translation>
     </message>
     <message>
         <source>Column layout</source>
-        <translation type="unfinished"/>
+        <translation>칸 레이아웃</translation>
     </message>
     <message>
         <source>Not present in CSV file</source>
-        <translation type="unfinished"/>
+        <translation>CSV 파일에 없음</translation>
     </message>
     <message>
         <source>Empty fieldname </source>
-        <translation type="unfinished"/>
+        <translation>빈 필드 이름 </translation>
     </message>
     <message>
         <source>column </source>
-        <translation type="unfinished"/>
+        <translation>칸 </translation>
     </message>
     <message>
         <source>Imported from CSV file</source>
-        <translation type="unfinished"/>
+        <translation>CSV 파일에서 가져옴</translation>
     </message>
     <message>
         <source>Original data: </source>
-        <translation type="unfinished"/>
+        <translation>원본 데이터:</translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file !</source>
-        <translation type="unfinished"/>
+        <translation>CSV 파일에 오류가 있습니다!</translation>
     </message>
     <message>
         <source> more messages skipped]</source>
-        <translation type="unfinished"/>
+        <translation>개 메시지 더 건너뜀]</translation>
     </message>
     <message>
         <source>Error</source>
@@ -349,14 +314,15 @@ Please select whether you want to allow access.</source>
     <message>
         <source>CSV import: writer has errors:
 </source>
-        <translation type="unfinished"/>
+        <translation>CSV 가져오기: 기록 중 오류 발생:
+</translation>
     </message>
 </context>
 <context>
     <name>CsvImportWizard</name>
     <message>
         <source>Import CSV file</source>
-        <translation type="unfinished"/>
+        <translation>CSV 파일 가져오기</translation>
     </message>
     <message>
         <source>Error</source>
@@ -371,15 +337,15 @@ Please select whether you want to allow access.</source>
     <name>CsvParserModel</name>
     <message>
         <source> byte, </source>
-        <translation type="unfinished"/>
+        <translation>바이트, </translation>
     </message>
     <message>
         <source> rows, </source>
-        <translation type="unfinished"/>
+        <translation>줄, </translation>
     </message>
     <message>
         <source> columns</source>
-        <translation type="unfinished"/>
+        <translation>칸</translation>
     </message>
 </context>
 <context>
@@ -422,11 +388,11 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"/>
+        <translation>새로 고침</translation>
     </message>
     <message>
         <source>Challenge Response:</source>
-        <translation type="unfinished"/>
+        <translation>질의 응답:</translation>
     </message>
 </context>
 <context>
@@ -502,19 +468,19 @@ You can now save it.</source>
     </message>
     <message>
         <source>Use recycle bin</source>
-        <translation type="unfinished"/>
+        <translation>휴지통 사용</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
-        <translation type="unfinished"/>
+        <translation>AES: 256비트(기본값)</translation>
     </message>
     <message>
         <source>Twofish:  256 Bit</source>
-        <translation type="unfinished"/>
+        <translation>Twofish: 256비트</translation>
     </message>
     <message>
         <source>Algorithm:</source>
-        <translation type="unfinished"/>
+        <translation>알고리즘:</translation>
     </message>
 </context>
 <context>
@@ -628,38 +594,41 @@ Discard changes and close anyway?</source>
     </message>
     <message>
         <source>Merge database</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 합치기</translation>
     </message>
     <message>
         <source>The database you are trying to save as is locked by another instance of KeePassXC.
 Do you want to save it anyway?</source>
-        <translation type="unfinished"/>
+        <translation>저장하려는 데이터베이스를 다른 KeePassXC 인스턴스에서 잠갔습니다.
+그래도 저장하시겠습니까?</translation>
     </message>
     <message>
         <source>Passwords</source>
-        <translation type="unfinished"/>
+        <translation>암호</translation>
     </message>
     <message>
         <source>Database already opened</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스가 이미 열림</translation>
     </message>
     <message>
         <source>The database you are trying to open is locked by another instance of KeePassXC.
 
 Do you want to open it anyway?</source>
-        <translation type="unfinished"/>
+        <translation>열려는 데이터베이스를 다른 KeePassXC 인스턴스에서 잠갔습니다.
+
+그래도 여시겠습니까?</translation>
     </message>
     <message>
         <source>Open read-only</source>
-        <translation type="unfinished"/>
+        <translation>읽기 전용으로 열기</translation>
     </message>
     <message>
         <source>File opened in read only mode.</source>
-        <translation type="unfinished"/>
+        <translation>파일을 읽기 전용 모드로 열었습니다.</translation>
     </message>
     <message>
         <source>Open CSV file</source>
-        <translation type="unfinished"/>
+        <translation>CSV 파일 열기</translation>
     </message>
 </context>
 <context>
@@ -706,71 +675,71 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Move entry to recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>항목을 휴지통으로 이동하시겠습니까?</translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>항목 &quot;%1&quot;을(를) 휴지통으로 이동하시겠습니까?</translation>
     </message>
     <message>
         <source>Searching...</source>
-        <translation type="unfinished"/>
+        <translation>찾는 중...</translation>
     </message>
     <message>
         <source>No current database.</source>
-        <translation type="unfinished"/>
+        <translation>현재 데이터베이스가 없습니다.</translation>
     </message>
     <message>
         <source>No source database, nothing to do.</source>
-        <translation type="unfinished"/>
+        <translation>원본 데이터베이스가 없습니다.</translation>
     </message>
     <message>
         <source>Search Results (%1)</source>
-        <translation type="unfinished"/>
+        <translation>검색 결과(%1)</translation>
     </message>
     <message>
         <source>No Results</source>
-        <translation type="unfinished"/>
+        <translation>결과 없음</translation>
     </message>
     <message>
         <source>Execute command?</source>
-        <translation type="unfinished"/>
+        <translation>명령을 실행하시겠습니까?</translation>
     </message>
     <message>
         <source>Do you really want to execute the following command?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</source>
-        <translation type="unfinished"/>
+        <translation>다음 명령을 실행하시겠습니까?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
     </message>
     <message>
         <source>Remember my choice</source>
-        <translation type="unfinished"/>
+        <translation>이 선택 기억하기</translation>
     </message>
     <message>
         <source>Autoreload Request</source>
-        <translation type="unfinished"/>
+        <translation>요청 자동으로 새로 고침</translation>
     </message>
     <message>
         <source>The database file has changed. Do you want to load the changes?</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 파일이 변경되었습니다. 변경 사항을 불러오시겠습니까?</translation>
     </message>
     <message>
         <source>Merge Request</source>
-        <translation type="unfinished"/>
+        <translation>요청 합치기</translation>
     </message>
     <message>
         <source>The database file has changed and you have unsaved changes.Do you want to merge your changes?</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 파일이 변경되었고 저장하지 않은 변경 사항이 있습니다. 변경 사항을 합치겠습니까?</translation>
     </message>
     <message>
         <source>Could not open the new database file while attempting to autoreload this database.</source>
-        <translation type="unfinished"/>
+        <translation>이 데이터베이스를 자동으로 다시 불러오는 중 새 데이터베이스를 열 수 없습니다.</translation>
     </message>
     <message>
         <source>Empty recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>휴지통을 비우시겠습니까?</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>휴지통에 있는 항목을 영원히 삭제하시겠습니까?</translation>
     </message>
 </context>
 <context>
@@ -854,19 +823,19 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Confirm Remove</source>
-        <translation type="unfinished"/>
+        <translation>삭제 확인</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this attribute?</source>
-        <translation type="unfinished"/>
+        <translation>이 속성을 삭제하시겠습니까?</translation>
     </message>
     <message>
         <source>[PROTECTED] Press reveal to view or edit</source>
-        <translation type="unfinished"/>
+        <translation>[보호됨] 보거나 편집하려면 누르십시오</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this attachment?</source>
-        <translation type="unfinished"/>
+        <translation>이 첨부 항목을 삭제하시겠습니까?</translation>
     </message>
 </context>
 <context>
@@ -897,15 +866,15 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Edit Name</source>
-        <translation type="unfinished"/>
+        <translation>이름 편집</translation>
     </message>
     <message>
         <source>Protect</source>
-        <translation type="unfinished"/>
+        <translation>보호</translation>
     </message>
     <message>
         <source>Reveal</source>
-        <translation type="unfinished"/>
+        <translation>보이기</translation>
     </message>
 </context>
 <context>
@@ -928,23 +897,23 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the &amp;group</source>
-        <translation type="unfinished"/>
+        <translation>그룹의 기본 자동 입력 시퀀스 사용(&amp;G)</translation>
     </message>
     <message>
         <source>&amp;Use custom Auto-Type sequence:</source>
-        <translation type="unfinished"/>
+        <translation>사용자 정의 자동 입력 시퀀스 사용(&amp;U):</translation>
     </message>
     <message>
         <source>Use default se&amp;quence</source>
-        <translation type="unfinished"/>
+        <translation>기본 시퀀스 사용(&amp;Q)</translation>
     </message>
     <message>
         <source>Set custo&amp;m sequence:</source>
-        <translation type="unfinished"/>
+        <translation>사용자 정의 시퀀스 설정(&amp;M):</translation>
     </message>
     <message>
         <source>Window Associations</source>
-        <translation type="unfinished"/>
+        <translation>창 연결</translation>
     </message>
 </context>
 <context>
@@ -1060,11 +1029,11 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>&amp;Use default Auto-Type sequence of parent group</source>
-        <translation type="unfinished"/>
+        <translation>그룹의 기본 자동 입력 시퀀스 사용(&amp;G)</translation>
     </message>
     <message>
         <source>Set default Auto-Type se&amp;quence</source>
-        <translation type="unfinished"/>
+        <translation>기본 자동 입력 시퀀스 설정(&amp;Q)</translation>
     </message>
 </context>
 <context>
@@ -1090,35 +1059,39 @@ Do you want to open it anyway?</source>
         <translation>그림 선택</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translation>오류</translation>
-    </message>
-    <message>
         <source>Download favicon</source>
-        <translation type="unfinished"/>
+        <translation>파비콘 다운로드</translation>
     </message>
     <message>
         <source>Unable to fetch favicon.</source>
-        <translation type="unfinished"/>
+        <translation>파비콘을 다운로드할 수 없습니다.</translation>
     </message>
     <message>
         <source>Can&apos;t read icon</source>
-        <translation type="unfinished"/>
+        <translation>아이콘을 읽을 수 없음</translation>
     </message>
     <message>
         <source>&amp;Use default icon</source>
-        <translation type="unfinished"/>
+        <translation>기본 아이콘 사용(&amp;U)</translation>
     </message>
     <message>
         <source>Use custo&amp;m icon</source>
-        <translation type="unfinished"/>
+        <translation>사용자 정의 아이콘 사용(&amp;M)</translation>
     </message>
     <message>
         <source>Confirm Delete</source>
-        <translation type="unfinished"/>
+        <translation>삭제 확인</translation>
     </message>
     <message>
         <source>This icon is used by %1 entries, and will be replaced by the default icon. Are you sure you want to delete it?</source>
+        <translation>이 아이콘을 항목 %1개에서 사용하고 있으며, 삭제 시 기본 아이콘으로 대체됩니다. 그래도 삭제하시겠습니까?</translation>
+    </message>
+    <message>
+        <source>Hint: You can enable Google as a fallback under Tools&gt;Settings&gt;Security</source>
+        <translation>힌트: 도구 &gt; 설정 &gt; 보안에서 Google을 대체 항목으로 사용할 수 있습니다</translation>
+    </message>
+    <message>
+        <source>Custom icon already exists</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1145,7 +1118,7 @@ Do you want to open it anyway?</source>
     <name>Entry</name>
     <message>
         <source> - Clone</source>
-        <translation type="unfinished"/>
+        <translation> - 사본</translation>
     </message>
 </context>
 <context>
@@ -1195,7 +1168,7 @@ Do you want to open it anyway?</source>
     <message>
         <source>Ref: </source>
         <comment>Reference abbreviation</comment>
-        <translation type="unfinished"/>
+        <translation>참조: </translation>
     </message>
 </context>
 <context>
@@ -1221,7 +1194,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>A-Z</source>
-        <translation type="unfinished"/>
+        <translation>A-Z</translation>
     </message>
     <message>
         <source>Lower Case Letters</source>
@@ -1229,7 +1202,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>a-z</source>
-        <translation type="unfinished"/>
+        <translation>a-z</translation>
     </message>
     <message>
         <source>Numbers</source>
@@ -1237,7 +1210,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>0-9</source>
-        <translation type="unfinished"/>
+        <translation>0-9</translation>
     </message>
     <message>
         <source>Special Characters</source>
@@ -1245,7 +1218,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>/*_&amp; ...</source>
-        <translation type="unfinished"/>
+        <translation>/*_&amp; ...</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
@@ -1260,11 +1233,11 @@ Do you want to open it anyway?</source>
     <name>KMessageWidget</name>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished"/>
+        <translation>닫기(&amp;C)</translation>
     </message>
     <message>
         <source>Close message</source>
-        <translation type="unfinished"/>
+        <translation>메시지 닫기</translation>
     </message>
 </context>
 <context>
@@ -1328,18 +1301,18 @@ Do you want to open it anyway?</source>
         <translation>마스터 키를 계산할 수 없습니다</translation>
     </message>
     <message>
+        <source>Unable to issue challenge-response.</source>
+        <translation>질의 응답을 실행할 수 없습니다.</translation>
+    </message>
+    <message>
         <source>The selected file is an old KeePass 1 database (.kdb).
 
-You can import it by clicking on Database &gt; 'Import KeePass 1 database'.
+You can import it by clicking on Database &gt; 'Import KeePass 1 database...'.
 This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
         <translation>선택한 파일은 KeePass 1 데이터베이스(.kdb)입니다.
 
-데이터베이스 &gt; &apos;KeePass 1 데이터베이스 가져오기&apos; 항목을 선택해서 변환해야 합니다.
-변환은 한 방향으로만 이루어지며, 가져온 데이터베이스는 KeePassX 0.4 버전으로 더 이상 열 수 없습니다.</translation>
-    </message>
-    <message>
-        <source>Unable to issue challenge-response.</source>
-        <translation type="unfinished"/>
+데이터베이스 &gt; &apos;KeePass 1 데이터베이스 가져오기...&apos; 메뉴에서 항목을 가져올 수 있습니다.
+이 작업은 한 방향으로만 이뤄집니다. 가져온 데이터베이스는 KeePassX 0.4 버전에서 열 수 없습니다.</translation>
     </message>
 </context>
 <context>
@@ -1350,14 +1323,18 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>KeePassXC - Error</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - 오류</translation>
     </message>
     <message>
         <source>The lock file could not be created. Single-instance mode disabled.</source>
-        <translation type="unfinished"/>
+        <translation>잠금 파일을 만들 수 없습니다. 단일 인스턴스 모드가 비활성화되었습니다.</translation>
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
+        <translation>다른 KeePassXC 인스턴스가 이미 실행 중입니다.</translation>
+    </message>
+    <message>
+        <source>Existing single-instance lock file is invalid. Launching new instance.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1413,210 +1390,210 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&amp;Recent databases</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>He&amp;lp</source>
-        <translation type="unfinished"/>
+        <translation>최근 데이터베이스(&amp;R)</translation>
     </message>
     <message>
         <source>E&amp;ntries</source>
-        <translation type="unfinished"/>
+        <translation>항목(&amp;N)</translation>
     </message>
     <message>
         <source>Copy att&amp;ribute to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>속성을 클립보드에 복사(&amp;R)</translation>
     </message>
     <message>
         <source>&amp;Groups</source>
-        <translation type="unfinished"/>
+        <translation>그룹(&amp;G)</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished"/>
+        <translation>보기(&amp;V)</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished"/>
+        <translation>끝내기(&amp;Q)</translation>
     </message>
     <message>
         <source>&amp;About</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&amp;Open database</source>
-        <translation type="unfinished"/>
+        <translation>정보(&amp;A)</translation>
     </message>
     <message>
         <source>&amp;Save database</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 저장(&amp;S)</translation>
     </message>
     <message>
         <source>&amp;Close database</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 닫기(&amp;C)</translation>
     </message>
     <message>
         <source>&amp;New database</source>
-        <translation type="unfinished"/>
+        <translation>새 데이터베이스(&amp;N)</translation>
     </message>
     <message>
         <source>Merge from KeePassX database</source>
-        <translation type="unfinished"/>
+        <translation>KeePassX 데이터베이스에서 합치기</translation>
     </message>
     <message>
         <source>&amp;Add new entry</source>
-        <translation type="unfinished"/>
+        <translation>새 항목 추가(&amp;A)</translation>
     </message>
     <message>
         <source>&amp;View/Edit entry</source>
-        <translation type="unfinished"/>
+        <translation>항목 보기/편집(&amp;V)</translation>
     </message>
     <message>
         <source>&amp;Delete entry</source>
-        <translation type="unfinished"/>
+        <translation>항목 삭제(&amp;D)</translation>
     </message>
     <message>
         <source>&amp;Add new group</source>
-        <translation type="unfinished"/>
+        <translation>새 그룹 추가(&amp;A)</translation>
     </message>
     <message>
         <source>&amp;Edit group</source>
-        <translation type="unfinished"/>
+        <translation>그룹 편집(&amp;E)</translation>
     </message>
     <message>
         <source>&amp;Delete group</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Sa&amp;ve database as</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Change &amp;master key</source>
-        <translation type="unfinished"/>
+        <translation>그룹 삭제(&amp;D)</translation>
     </message>
     <message>
         <source>&amp;Database settings</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 설정(&amp;D)</translation>
     </message>
     <message>
         <source>&amp;Clone entry</source>
-        <translation type="unfinished"/>
+        <translation>항목 복제(&amp;C)</translation>
     </message>
     <message>
         <source>Timed one-time password</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Setup TOTP</source>
-        <translation type="unfinished"/>
+        <translation>시간 동기 일회용 암호</translation>
     </message>
     <message>
         <source>Copy &amp;TOTP</source>
-        <translation type="unfinished"/>
+        <translation>TOTP 복사(&amp;T)</translation>
     </message>
     <message>
         <source>Show TOTP</source>
-        <translation type="unfinished"/>
+        <translation>TOTP 보이기</translation>
     </message>
     <message>
         <source>&amp;Find</source>
-        <translation type="unfinished"/>
+        <translation>찾기(&amp;F)</translation>
     </message>
     <message>
         <source>Copy &amp;username</source>
-        <translation type="unfinished"/>
+        <translation>사용자 이름 복사(&amp;U)</translation>
     </message>
     <message>
         <source>Cop&amp;y password</source>
-        <translation type="unfinished"/>
+        <translation>암호 복사(&amp;Y)</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
-        <translation type="unfinished"/>
+        <translation>설정(&amp;S)</translation>
     </message>
     <message>
         <source>&amp;Perform Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>자동 입력 실행(&amp;P)</translation>
     </message>
     <message>
         <source>&amp;Open URL</source>
-        <translation type="unfinished"/>
+        <translation>URL 열기(&amp;O)</translation>
     </message>
     <message>
         <source>&amp;Lock databases</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 잠금(&amp;L)</translation>
     </message>
     <message>
         <source>&amp;Title</source>
-        <translation type="unfinished"/>
+        <translation>제목(&amp;T)</translation>
     </message>
     <message>
         <source>&amp;URL</source>
-        <translation type="unfinished"/>
+        <translation>URL(&amp;U)</translation>
     </message>
     <message>
         <source>&amp;Notes</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&amp;Export to CSV file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Re&amp;pair database</source>
-        <translation type="unfinished"/>
+        <translation>메모(&amp;N)</translation>
     </message>
     <message>
         <source>Password Generator</source>
-        <translation type="unfinished"/>
+        <translation>암호 생성기</translation>
     </message>
     <message>
         <source>Clear history</source>
-        <translation type="unfinished"/>
+        <translation>과거 기록 삭제</translation>
     </message>
     <message>
         <source>&amp;Database</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스(&amp;D)</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"/>
+        <translation>가져오기</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Import KeePass 1 database</source>
-        <translation>KeePass 1 데이터베이스 가져오기</translation>
-    </message>
-    <message>
-        <source>Import CSV file</source>
-        <translation type="unfinished"/>
+        <translation>도구(&amp;T)</translation>
     </message>
     <message>
         <source>Empty recycle bin</source>
-        <translation type="unfinished"/>
+        <translation>휴지통 비우기</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation type="unfinished"/>
+        <translation>설정 파일 %1에 접근할 수 없음</translation>
     </message>
     <message>
         <source>Quit KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC 끝내기</translation>
     </message>
     <message>
         <source>Please touch the button on your YubiKey!</source>
-        <translation type="unfinished"/>
+        <translation>YubiKey의 단추를 누르십시오!</translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation>도움말(&amp;H)</translation>
+    </message>
+    <message>
+        <source>&amp;Open database...</source>
+        <translation>데이터베이스 열기(&amp;O)...</translation>
+    </message>
+    <message>
+        <source>Sa&amp;ve database as...</source>
+        <translation>다른 이름으로 데이터베이스 저장(&amp;V)...</translation>
+    </message>
+    <message>
+        <source>Change &amp;master key...</source>
+        <translation>마스터 키 변경(&amp;M)...</translation>
+    </message>
+    <message>
+        <source>&amp;Export to CSV file...</source>
+        <translation>CSV 파일로 내보내기(&amp;E)...</translation>
+    </message>
+    <message>
+        <source>Import KeePass 1 database...</source>
+        <translation>KeePass1 데이터베이스 가져오기...</translation>
+    </message>
+    <message>
+        <source>Import CSV file...</source>
+        <translation>CSV 파일 가져오기...</translation>
+    </message>
+    <message>
+        <source>Re&amp;pair database...</source>
+        <translation>데이터베이스 복구(&amp;P)...</translation>
+    </message>
+    <message>
+        <source>Set up TOTP...</source>
+        <translation>TOTP 설정...</translation>
     </message>
 </context>
 <context>
     <name>OptionDialog</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"/>
+        <translation>대화 상자</translation>
     </message>
     <message>
         <source>General</source>
@@ -1624,15 +1601,15 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Sh&amp;ow a notification when credentials are requested</source>
-        <translation type="unfinished"/>
+        <translation>인증 정보가 필요할 때 알림 표시(&amp;O)</translation>
     </message>
     <message>
         <source>Sort matching entries by &amp;username</source>
-        <translation type="unfinished"/>
+        <translation>사용자 이름 순으로 일치하는 항목 정렬(&amp;U)</translation>
     </message>
     <message>
         <source>Re&amp;move all stored permissions from entries in active database</source>
-        <translation type="unfinished"/>
+        <translation>활성 데이터베이스에 있는 항목에서 모든 저장된 권한 삭제(&amp;M)</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -1640,93 +1617,95 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Always allow &amp;access to entries</source>
-        <translation type="unfinished"/>
+        <translation>항상 항목 접근 허용(&amp;A)</translation>
     </message>
     <message>
         <source>Always allow &amp;updating entries</source>
-        <translation type="unfinished"/>
+        <translation>항상 항목 업데이트 허용(&amp;U)</translation>
     </message>
     <message>
         <source>Searc&amp;h in all opened databases for matching entries</source>
-        <translation type="unfinished"/>
+        <translation>모든 열린 데이터베이스에서 일치하는 항목 검색(&amp;H)</translation>
     </message>
     <message>
         <source>HTTP Port:</source>
-        <translation type="unfinished"/>
+        <translation>HTTP 포트:</translation>
     </message>
     <message>
         <source>Default port: 19455</source>
-        <translation type="unfinished"/>
+        <translation>기본 포트: 19455</translation>
     </message>
     <message>
         <source>Re&amp;quest to unlock the database if it is locked</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스가 잠겼을 때 잠금 해제 요청(&amp;Q)</translation>
     </message>
     <message>
         <source>Sort &amp;matching entries by title</source>
-        <translation type="unfinished"/>
+        <translation>제목 순으로 일치하는 항목 정렬(&amp;M)</translation>
     </message>
     <message>
         <source>KeePassXC will listen to this port on 127.0.0.1</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC는 127.0.0.1의 다음 포트에서 응답을 기다립니다</translation>
     </message>
     <message>
         <source>Cannot bind to privileged ports</source>
-        <translation type="unfinished"/>
+        <translation>권한 있는 포트에 바인드할 수 없음</translation>
     </message>
     <message>
         <source>Cannot bind to privileged ports below 1024!
 Using default port 19455.</source>
-        <translation type="unfinished"/>
+        <translation>1024 이하의 권한이 필요한 포트에 바인드할 수 없습니다!
+기본 포트 19455를 사용합니다.</translation>
     </message>
     <message>
         <source>R&amp;emove all shared encryption keys from active database</source>
-        <translation type="unfinished"/>
+        <translation>활성 데이터베이스에 있는 모든 공유된 암호화 키 삭제(&amp;E)</translation>
     </message>
     <message>
         <source>&amp;Return advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation type="unfinished"/>
+        <translation>&quot;KPH: &quot;로 시작하는 고급 문자열 필드 반환(&amp;R)</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
-        <translation type="unfinished"/>
+        <translation>문자열 필드를 자동으로 만들거나 업데이트하는 것은 지원되지 않습니다.</translation>
     </message>
     <message>
         <source>This is required for accessing your databases from ChromeIPass or PassIFox</source>
-        <translation type="unfinished"/>
+        <translation>ChromeIPass나 PassIFox에서 데이터베이스에 접근하려면 필요합니다</translation>
     </message>
     <message>
         <source>Enable KeePassHTTP server</source>
-        <translation type="unfinished"/>
+        <translation>KeePassHTTP 서버 사용</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
-        <translation type="unfinished"/>
+        <translation>도메인이 일치하는 모든 항목 대신 지정한 URL과 일치하는 항목만 반환합니다.</translation>
     </message>
     <message>
         <source>&amp;Return only best matching entries</source>
-        <translation type="unfinished"/>
+        <translation>URL과 일치하는 항목만 반환(&amp;R)</translation>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, ftp://, ...) are returned.</source>
-        <translation type="unfinished"/>
+        <translation>같은 스키마(http://, https://, ftp://)를 사용하는 항목만 반환합니다.</translation>
     </message>
     <message>
         <source>&amp;Match URL schemes</source>
-        <translation type="unfinished"/>
+        <translation>URL 스키마 일치(&amp;M)</translation>
     </message>
     <message>
         <source>Password Generator</source>
-        <translation type="unfinished"/>
+        <translation>암호 생성기</translation>
     </message>
     <message>
         <source>Only the selected database has to be connected with a client.</source>
-        <translation type="unfinished"/>
+        <translation>선택한 데이터베이스만 클라이언트와 연결할 수 있습니다.</translation>
     </message>
     <message>
         <source>The following options can be dangerous!
 Change them only if you know what you are doing.</source>
-        <translation type="unfinished"/>
+        <translation>다음 옵션은 위험할 수도 있습니다!
+무엇을 하는 지 알고 있는 경우에만 변경하십시오.</translation>
     </message>
 </context>
 <context>
@@ -1765,59 +1744,59 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>%p%</source>
-        <translation type="unfinished"/>
+        <translation>%p%</translation>
     </message>
     <message>
         <source>strength</source>
-        <translation type="unfinished"/>
+        <translation>강도</translation>
     </message>
     <message>
         <source>entropy</source>
-        <translation type="unfinished"/>
+        <translation>엔트로피</translation>
     </message>
     <message>
         <source>&amp;Length:</source>
-        <translation type="unfinished"/>
+        <translation>길이(&amp;L):</translation>
     </message>
     <message>
         <source>Pick characters from every group</source>
-        <translation type="unfinished"/>
+        <translation>모든 그룹에서 글자 선택</translation>
     </message>
     <message>
         <source>Generate</source>
-        <translation type="unfinished"/>
+        <translation>생성</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>닫기</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"/>
+        <translation>적용</translation>
     </message>
     <message>
         <source>Entropy: %1 bit</source>
-        <translation type="unfinished"/>
+        <translation>엔트로피: %1비트</translation>
     </message>
     <message>
         <source>Password Quality: %1</source>
-        <translation type="unfinished"/>
+        <translation>암호 강도: %1</translation>
     </message>
     <message>
         <source>Poor</source>
-        <translation type="unfinished"/>
+        <translation>매우 약함</translation>
     </message>
     <message>
         <source>Weak</source>
-        <translation type="unfinished"/>
+        <translation>약함</translation>
     </message>
     <message>
         <source>Good</source>
-        <translation type="unfinished"/>
+        <translation>좋음</translation>
     </message>
     <message>
         <source>Excellent</source>
-        <translation type="unfinished"/>
+        <translation>매우 좋음</translation>
     </message>
     <message>
         <source>Password</source>
@@ -1825,55 +1804,56 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>Extended ASCII</source>
-        <translation type="unfinished"/>
+        <translation>확장 ASCII</translation>
     </message>
     <message>
         <source>Passphrase</source>
-        <translation type="unfinished"/>
+        <translation>암구호</translation>
     </message>
     <message>
         <source>Wordlist:</source>
-        <translation type="unfinished"/>
+        <translation>단어 목록:</translation>
     </message>
     <message>
         <source>Word Count:</source>
-        <translation type="unfinished"/>
+        <translation>단어 개수:</translation>
     </message>
     <message>
         <source>Word Separator:</source>
-        <translation type="unfinished"/>
+        <translation>단어 구분자:</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>복사</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>NULL device</source>
-        <translation type="unfinished"/>
+        <translation>NULL 장치</translation>
     </message>
     <message>
         <source>error reading from device</source>
-        <translation type="unfinished"/>
+        <translation>장치에서 읽는 중 오류 발생</translation>
     </message>
     <message>
         <source>file empty !
 </source>
-        <translation type="unfinished"/>
+        <translation>파일이 비어 있습니다!
+</translation>
     </message>
     <message>
         <source>malformed string</source>
-        <translation type="unfinished"/>
+        <translation>잘못된 문자열</translation>
     </message>
     <message>
         <source>missing closing quote</source>
-        <translation type="unfinished"/>
+        <translation>닫는 따옴표 없음</translation>
     </message>
     <message>
         <source>INTERNAL - unget lower bound exceeded</source>
-        <translation type="unfinished"/>
+        <translation>내부 - unget 최소값을 벗어남</translation>
     </message>
     <message>
         <source>Group</source>
@@ -1901,19 +1881,19 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation type="unfinished"/>
+        <translation>브라우저 통합</translation>
     </message>
     <message>
         <source>YubiKey[%1] Challenge Response - Slot %2 - %3</source>
-        <translation type="unfinished"/>
+        <translation>YubiKey[%1] 질의 응답 - 슬롯 %2 - %3</translation>
     </message>
     <message>
         <source>Press</source>
-        <translation type="unfinished"/>
+        <translation>누르기</translation>
     </message>
     <message>
         <source>Passive</source>
-        <translation type="unfinished"/>
+        <translation>수동적</translation>
     </message>
 </context>
 <context>
@@ -1954,7 +1934,7 @@ Change them only if you know what you are doing.</source>
     <name>SearchWidget</name>
     <message>
         <source>Case Sensitive</source>
-        <translation type="unfinished"/>
+        <translation>대소문자 구분</translation>
     </message>
     <message>
         <source>Search</source>
@@ -1962,15 +1942,15 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>비우기</translation>
     </message>
     <message>
         <source>Search...</source>
-        <translation type="unfinished"/>
+        <translation>찾기...</translation>
     </message>
     <message>
         <source>Limit search to selected group</source>
-        <translation type="unfinished"/>
+        <translation>지정한 그룹에서만 찾기</translation>
     </message>
 </context>
 <context>
@@ -1978,86 +1958,90 @@ Change them only if you know what you are doing.</source>
     <message>
         <source>A shared encryption-key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
-        <translation type="unfinished"/>
+        <translation>이름이 &quot;%1&quot;인 공유 암호화 키가 이미 있습니다.
+덮어쓰시겠습니까?</translation>
     </message>
     <message>
         <source>Do you want to update the information in %1 - %2?</source>
-        <translation type="unfinished"/>
+        <translation>%1 - %2의 정보를 업데이트하시겠습니까?</translation>
     </message>
     <message>
         <source>The active database is locked!
 Please unlock the selected database or choose another one which is unlocked.</source>
-        <translation type="unfinished"/>
+        <translation>활성 데이터베이스가 잠겨 있습니다!
+선택한 데이터베이스의 잠금을 풀거나 잠금이 풀린 데이터베이스를 선택하십시오.</translation>
     </message>
     <message>
         <source>Successfully removed %1 encryption-%2 from KeePassX/Http Settings.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassX/HTTP 설정에서 %1 암호화-%2을(를) 삭제했습니다.</translation>
     </message>
     <message>
         <source>No shared encryption-keys found in KeePassHttp Settings.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassHttp 설정에서 공유 암호화 키를 찾을 수 없습니다.</translation>
     </message>
     <message>
         <source>The active database does not contain an entry of KeePassHttp Settings.</source>
-        <translation type="unfinished"/>
+        <translation>활성 데이터베이스에 KeePassHttp 설정 항목이 없습니다.</translation>
     </message>
     <message>
         <source>Removing stored permissions...</source>
-        <translation type="unfinished"/>
+        <translation>저장된 권한 삭제 중...</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"/>
+        <translation>중지</translation>
     </message>
     <message>
         <source>Successfully removed permissions from %1 %2.</source>
-        <translation type="unfinished"/>
+        <translation>%1 %2에서 권한을 삭제했습니다.</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
-        <translation type="unfinished"/>
+        <translation>활성 데이터베이스에 권한이 부여된 항목이 없습니다.</translation>
     </message>
     <message>
         <source>KeePassXC: New key association request</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: 새 키 연결 요청</translation>
     </message>
     <message>
         <source>You have received an association request for the above key.
 If you would like to allow it access to your KeePassXC database
 give it a unique name to identify and accept it.</source>
-        <translation type="unfinished"/>
+        <translation>위에 있는 키의 연결 요청을 받았습니다.
+해딩 키에서 KeePassXC 데이터베이스 접근을 허용하려면
+식별할 수 있는 이름을 부여한 후 수락하십시오.</translation>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: 기존 키를 덮어쓰시겠습니까?</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: 항목 업데이트</translation>
     </message>
     <message>
         <source>KeePassXC: Database locked!</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: 데이터베이스 잠김!</translation>
     </message>
     <message>
         <source>KeePassXC: Removed keys from database</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: 데이터베이스에서 키 삭제됨</translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: 키를 찾을 수 없음</translation>
     </message>
     <message>
         <source>KeePassXC: Settings not available!</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: 설정을 사용할 수 없음!</translation>
     </message>
     <message>
         <source>KeePassXC: Removed permissions</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: 권한 삭제됨</translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: 권한이 있는 항목을 찾을 수 없음!</translation>
     </message>
 </context>
 <context>
@@ -2076,7 +2060,7 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation type="unfinished"/>
+        <translation>설정 파일 %1에 접근할 수 없음</translation>
     </message>
 </context>
 <context>
@@ -2119,31 +2103,31 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Load previous databases on startup</source>
-        <translation type="unfinished"/>
+        <translation>시작할 때 이전 데이터베이스 불러오기</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
-        <translation type="unfinished"/>
+        <translation>외부에서 데이터베이스를 수정했을 때 자동으로 새로 고침</translation>
     </message>
     <message>
         <source>Hide window to system tray instead of app exit</source>
-        <translation type="unfinished"/>
+        <translation>프로그램을 끝내지 않고 시스템 트레이로 창 숨기기</translation>
     </message>
     <message>
         <source>Minimize window at application startup</source>
-        <translation type="unfinished"/>
+        <translation>프로그램 시작 시 창 최소화</translation>
     </message>
     <message>
         <source>Basic Settings</source>
-        <translation type="unfinished"/>
+        <translation>기본 설정</translation>
     </message>
     <message>
         <source>Remember last key files and security dongles</source>
-        <translation type="unfinished"/>
+        <translation>마지막 키 파일과 보안 동글 기억</translation>
     </message>
     <message>
         <source>Don&apos;t mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation type="unfinished"/>
+        <translation>데이터가 변경되지 않았을 때 데이터베이스를 수정된 것으로 표시하지 않음(예: 그룹 확장)</translation>
     </message>
     <message>
         <source>Auto-Type</source>
@@ -2151,11 +2135,23 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Use entry title and URL to match windows for global Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>전역 자동 입력 창을 검사할 때 항목 제목과 URL 사용</translation>
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>자동 입력 시 항상 묻기</translation>
+    </message>
+    <message>
+        <source>Auto-Type delay</source>
+        <translation>자동 입력 지연 시간</translation>
+    </message>
+    <message>
+        <source> ms</source>
+        <translation>ms</translation>
+    </message>
+    <message>
+        <source>Start only a single instance of KeePassXC</source>
+        <translation>KeePassXC 단일 인스턴스만 사용</translation>
     </message>
 </context>
 <context>
@@ -2178,58 +2174,66 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Lock databases after minimizing the window</source>
-        <translation type="unfinished"/>
+        <translation>창을 최소화할 때 데이터베이스 잠금</translation>
     </message>
     <message>
         <source>Don&apos;t require password repeat when it is visible</source>
-        <translation type="unfinished"/>
+        <translation>암호가 보일 때 반복하지 않음</translation>
     </message>
     <message>
         <source>Timeouts</source>
-        <translation type="unfinished"/>
+        <translation>시간 제한</translation>
     </message>
     <message>
         <source>Convenience</source>
-        <translation type="unfinished"/>
+        <translation>편의성</translation>
     </message>
     <message>
         <source>Lock databases when session is locked or lid is closed</source>
-        <translation type="unfinished"/>
+        <translation>세션이 잠겼을 때나 덮개를 닫았을 때 데이터베이스 잠금</translation>
+    </message>
+    <message>
+        <source>Privacy</source>
+        <translation>개인 정보</translation>
+    </message>
+    <message>
+        <source>Use Google as fallback for downloading website icons</source>
+        <translation>웹 사이트 아이콘의 대체 아이콘으로 Google 사용</translation>
     </message>
 </context>
 <context>
     <name>SetupTotpDialog</name>
     <message>
         <source>Setup TOTP</source>
-        <translation type="unfinished"/>
+        <translation>TOTP 설정</translation>
     </message>
     <message>
         <source>Key:</source>
-        <translation type="unfinished"/>
+        <translation>키:</translation>
     </message>
     <message>
         <source>Use custom settings</source>
-        <translation type="unfinished"/>
+        <translation>사용자 정의 설정 사용</translation>
     </message>
     <message>
         <source>Note: Change these settings only if you know what you are doing.</source>
-        <translation type="unfinished"/>
+        <translation>메모: 무엇을 하는 지 알고 있는 경우에만 이 설정을 변경하십시오.</translation>
     </message>
     <message>
         <source>Time step:</source>
-        <translation type="unfinished"/>
+        <translation>시간 단계:</translation>
     </message>
     <message>
         <source>8 digits</source>
-        <translation type="unfinished"/>
+        <translation>8자리</translation>
     </message>
     <message>
         <source>6 digits</source>
-        <translation type="unfinished"/>
+        <translation>6자리</translation>
     </message>
     <message>
         <source>Code size:</source>
-        <translation type="unfinished"/>
+        <translation>코드 크기:</translation>
     </message>
     <message>
         <source> sec</source>
@@ -2240,23 +2244,23 @@ give it a unique name to identify and accept it.</source>
     <name>TotpDialog</name>
     <message>
         <source>Timed Password</source>
-        <translation type="unfinished"/>
+        <translation>시간 제한된 암호</translation>
     </message>
     <message>
         <source>000000</source>
-        <translation type="unfinished"/>
+        <translation>000000</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>복사</translation>
     </message>
     <message>
         <source>Expires in</source>
-        <translation type="unfinished"/>
+        <translation>만료 시간:</translation>
     </message>
     <message>
         <source>seconds</source>
-        <translation type="unfinished"/>
+        <translation>초</translation>
     </message>
 </context>
 <context>
@@ -2270,27 +2274,27 @@ give it a unique name to identify and accept it.</source>
     <name>WelcomeWidget</name>
     <message>
         <source>Welcome to KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC에 오신 것을 환영합니다</translation>
     </message>
     <message>
         <source>Start storing your passwords securely in a KeePassXC database</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC 데이터베이스에 암호를 안전하게 저장하십시오</translation>
     </message>
     <message>
         <source>Create new database</source>
-        <translation type="unfinished"/>
+        <translation>새 데이터베이스 만들기</translation>
     </message>
     <message>
         <source>Open existing database</source>
-        <translation type="unfinished"/>
+        <translation>기존 데이터베이스 열기</translation>
     </message>
     <message>
         <source>Import from KeePass 1</source>
-        <translation type="unfinished"/>
+        <translation>KeePass 1에서 가져오기</translation>
     </message>
     <message>
         <source>Import from CSV</source>
-        <translation type="unfinished"/>
+        <translation>CSV에서 가져오기</translation>
     </message>
     <message>
         <source>Recent databases</source>
@@ -2309,79 +2313,79 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>KeePassXC - cross-platform password manager</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - 크로스 플랫폼 암호 관리자</translation>
     </message>
     <message>
         <source>read password of the database from stdin</source>
-        <translation type="unfinished"/>
+        <translation>표준 입력에서 데이터베이스 암호 읽기</translation>
     </message>
     <message>
         <source>filenames of the password databases to open (*.kdbx)</source>
-        <translation type="unfinished"/>
+        <translation>열 암호 데이터베이스 파일 이름(*.kdbx)</translation>
     </message>
     <message>
         <source>Copy a password to the clipboard</source>
-        <translation type="unfinished"/>
+        <translation>클립보드에 암호 복사</translation>
     </message>
     <message>
         <source>Path of the database.</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스의 경로입니다.</translation>
     </message>
     <message>
         <source>Use a GUI prompt unlocking the database.</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 잠금을 해제할 GUI 프롬프트를 표시합니다.</translation>
     </message>
     <message>
         <source>Name of the entry to clip.</source>
-        <translation type="unfinished"/>
+        <translation>클립보드에 복사할 항목 이름입니다.</translation>
     </message>
     <message>
         <source>Extract and print the content of a database.</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스의 내용을 추출하고 표시합니다.</translation>
     </message>
     <message>
         <source>Path of the database to extract.</source>
-        <translation type="unfinished"/>
+        <translation>표시할 데이터베이스 경로입니다.</translation>
     </message>
     <message>
         <source>Name of the command to execute.</source>
-        <translation type="unfinished"/>
+        <translation>실행할 명령 이름입니다.</translation>
     </message>
     <message>
         <source>List database entries.</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 항목을 표시합니다.</translation>
     </message>
     <message>
         <source>Path of the group to list. Default is /</source>
-        <translation type="unfinished"/>
+        <translation>표시할 그룹의 경로입니다. 기본값은 /입니다</translation>
     </message>
     <message>
         <source>Print the UUIDs of the entries and groups.</source>
-        <translation type="unfinished"/>
+        <translation>항목과 그룹의 UUID를 표시합니다.</translation>
     </message>
     <message>
         <source>Merge two databases.</source>
-        <translation type="unfinished"/>
+        <translation>두 데이터베이스를 합칩니다.</translation>
     </message>
     <message>
         <source>Path of the database to merge into.</source>
-        <translation type="unfinished"/>
+        <translation>합칠 대상 데이터베이스 경로입니다.</translation>
     </message>
     <message>
         <source>Path of the database to merge from.</source>
-        <translation type="unfinished"/>
+        <translation>합칠 원본 데이터베이스 경로입니다.</translation>
     </message>
     <message>
         <source>Use the same password for both database files.</source>
-        <translation type="unfinished"/>
+        <translation>두 데이터베이스에 같은 암호를 사용합니다.</translation>
     </message>
     <message>
         <source>Show a password.</source>
-        <translation type="unfinished"/>
+        <translation>암호를 표시합니다.</translation>
     </message>
     <message>
         <source>Name of the entry to show.</source>
-        <translation type="unfinished"/>
+        <translation>표시할 항목 이름입니다.</translation>
     </message>
 </context>
 </TS>

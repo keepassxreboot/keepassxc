@@ -668,7 +668,7 @@ void Group::merge(const Group* other)
         // This entry does not exist at all. Create it.
         if (!existingEntry) {
             qDebug("New entry %s detected. Creating it.", qPrintable(entry->title()));
-            entry->clone(Entry::CloneNoFlags)->setGroup(this);
+            entry->clone(Entry::CloneIncludeHistory)->setGroup(this);
         // Entry is already present in the database. Update it.
         } else {
             bool locationChanged = existingEntry->timeInfo().locationChanged() < entry->timeInfo().locationChanged();
@@ -902,11 +902,11 @@ void Group::resolveConflict(Entry* existingEntry, Entry* otherEntry)
     case KeepBoth:
         // if one entry is newer, create a clone and add it to the group
         if (timeExisting > timeOther) {
-            clonedEntry = otherEntry->clone(Entry::CloneNewUuid);
+            clonedEntry = otherEntry->clone(Entry::CloneNewUuid | Entry::CloneIncludeHistory);
             clonedEntry->setGroup(this);
             markOlderEntry(clonedEntry);
         } else if (timeExisting < timeOther) {
-            clonedEntry = otherEntry->clone(Entry::CloneNewUuid);
+            clonedEntry = otherEntry->clone(Entry::CloneNewUuid | Entry::CloneIncludeHistory);
             clonedEntry->setGroup(this);
             markOlderEntry(existingEntry);
         }
@@ -917,7 +917,7 @@ void Group::resolveConflict(Entry* existingEntry, Entry* otherEntry)
             // only if other entry is newer, replace existing one
             Group* currentGroup = existingEntry->group();
             currentGroup->removeEntry(existingEntry);
-            otherEntry->clone(Entry::CloneNoFlags)->setGroup(currentGroup);
+            otherEntry->clone(Entry::CloneIncludeHistory)->setGroup(currentGroup);
         }
 
         break;

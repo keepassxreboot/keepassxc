@@ -331,6 +331,15 @@ void Database::emptyRecycleBin()
 void Database::merge(const Database* other)
 {
     m_rootGroup->merge(other->rootGroup());
+
+    for (Uuid customIconId : other->metadata()->customIcons().keys()) {
+        QImage customIcon = other->metadata()->customIcon(customIconId);
+        if (!this->metadata()->containsCustomIcon(customIconId)) {
+            qDebug("Adding custom icon %s to database.", qPrintable(customIconId.toHex()));
+            this->metadata()->addCustomIcon(customIconId, customIcon);
+        }
+    }
+
     emit modified();
 }
 
@@ -418,7 +427,7 @@ Database* Database::unlockFromStdin(QString databaseFilename, QString keyFilenam
         FileKey fileKey;
         QString errorMessage;
         if (!fileKey.load(keyFilename, &errorMessage)) {
-            errorTextStream << QObject::tr("Failed to load key file %1 : %2").arg(keyFilename).arg(errorMessage);
+            errorTextStream << QObject::tr("Failed to load key file %1 : %2").arg(keyFilename, errorMessage);
             errorTextStream << endl;
             return nullptr;
         }
