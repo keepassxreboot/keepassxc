@@ -75,7 +75,7 @@ public:
     QString tags() const;
     TimeInfo timeInfo() const;
     Tools::TriState autoTypeEnabled() const;
-
+    bool resolveAutoTypeEnabled() const;
     int autoTypeObfuscation() const;
     QString defaultAutoTypeSequence() const;
     QString effectiveAutoTypeSequence() const;

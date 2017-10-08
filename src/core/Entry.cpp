@@ -183,6 +183,11 @@ Tools::TriState Entry::autoTypeEnabled() const
     return m_data.autoTypeEnabled;
 }
 
+bool Entry::resolveAutoTypeEnabled() const
+{
+    return Tools::isTriStateEnabled(m_data.autoTypeEnabled, group()->resolveAutoTypeEnabled());
+}
+
 int Entry::autoTypeObfuscation() const
 {
     return m_data.autoTypeObfuscation;

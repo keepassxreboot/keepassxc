@@ -553,12 +553,10 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
 
 QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitle)
 {
-    // TODO: calc real autoTypeEnabled
-    if (entry->autoTypeEnabled() == Tools::TriState::Disable) {
+    if (!entry->resolveAutoTypeEnabled()) {
         return QString();
     }
 
-    bool enableSet = false;
     QString sequence;
     if (!windowTitle.isEmpty()) {
         bool match = false;
@@ -597,14 +595,15 @@ QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitl
         sequence = entry->defaultAutoTypeSequence();
     }
 
+    bool searching = true;
     const Group* group = entry->group();
     do {
-        if (!enableSet) {
+        if (searching) {
             if (group->autoTypeEnabled() == Tools::TriState::Disable) {
                 return QString();
             }
             else if (group->autoTypeEnabled() == Tools::TriState::Enable) {
-                enableSet = true;
+                searching = false;
             }
         }
 
@@ -613,9 +612,10 @@ QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitl
         }
 
         group = group->parentGroup();
-    } while (group && (!enableSet || sequence.isEmpty()));
+    } while (group && (searching || sequence.isEmpty()));
 
-    if (sequence.isEmpty() && (!entry->resolvePlaceholder(entry->username()).isEmpty() || !entry->resolvePlaceholder(entry->password()).isEmpty())) {
+    if (sequence.isEmpty() && (!entry->resolvePlaceholder(entry->username()).isEmpty()
+                               || !entry->resolvePlaceholder(entry->password()).isEmpty())) {
         if (entry->resolvePlaceholder(entry->username()).isEmpty()) {
             sequence = "{PASSWORD}{ENTER}";
         }
