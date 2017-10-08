@@ -429,6 +429,7 @@ void EditEntryWidget::saveEntry()
     // must stand before beginUpdate()
     // we don't want to create a new history item, if only the history has changed
     m_entry->removeHistoryItems(m_historyModel->deletedEntries());
+    m_historyModel->clearDeletedEntries();
 
     m_autoTypeAssoc->removeEmpty();
 
@@ -445,6 +446,12 @@ void EditEntryWidget::saveEntry()
 
 void EditEntryWidget::acceptEntry()
 {
+    // Check if passwords are mismatched first to prevent saving
+    if (!passwordsEqual()) {
+        showMessage(tr("Different passwords supplied."), MessageWidget::Error);
+        return;
+    }
+
     saveEntry();
     clear();
     emit editFinished(true);
@@ -912,8 +919,7 @@ void EditEntryWidget::deleteHistoryEntry()
         m_historyModel->deleteIndex(index);
         if (m_historyModel->rowCount() > 0) {
             m_historyUi->deleteAllButton->setEnabled(true);
-        }
-        else {
+        } else {
             m_historyUi->deleteAllButton->setEnabled(false);
         }
     }

@@ -15,33 +15,20 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTMERGE_H
-#define KEEPASSX_TESTMERGE_H
+#ifndef KEEPASSX_TESTBASE32_H
+#define KEEPASSX_TESTBASE32_H
 
-#include "core/Database.h"
 #include <QObject>
 
-class TestMerge : public QObject
+class Base32;
+
+class TestBase32 : public QObject
 {
     Q_OBJECT
 
 private slots:
-    void initTestCase();
-    void testMergeIntoNew();
-    void testMergeNoChanges();
-    void testResolveConflictNewer();
-    void testResolveConflictOlder();
-    void testResolveConflictKeepBoth();
-    void testMoveEntry();
-    void testMoveEntryPreserveChanges();
-    void testMoveEntryIntoNewGroup();
-    void testCreateNewGroups();
-    void testUpdateEntryDifferentLocation();
-    void testMergeAndSync();
-    void testMergeCustomIcons();
-
-private:
-    Database* createTestDatabase();
+    void testEncode();
+    void testDecode();
 };
 
-#endif // KEEPASSX_TESTMERGE_H
+#endif // KEEPASSX_TESTBASE32_H

@@ -116,6 +116,7 @@ void TestMerge::testResolveConflictNewer()
 
     entry1 = dbDestination->rootGroup()->findEntry("entry1");
     QVERIFY(entry1 != nullptr);
+    QVERIFY(entry1->group() != nullptr);
     QCOMPARE(entry1->password(), QString("password"));
 
     // When updating an entry, it should not end up in the
@@ -414,6 +415,29 @@ void TestMerge::testMergeAndSync()
 
     // Still only 2 entries, since now we detect which are already present.
     QCOMPARE(dbDestination->rootGroup()->entriesRecursive().size(), 2);
+
+    delete dbDestination;
+    delete dbSource;
+}
+
+/**
+ * Custom icons should be brought over when merging.
+ */
+void TestMerge::testMergeCustomIcons()
+{
+    Database* dbDestination = new Database();
+    Database* dbSource = createTestDatabase();
+
+    Uuid customIconId = Uuid::random();
+    QImage customIcon;
+
+    dbSource->metadata()->addCustomIcon(customIconId, customIcon);
+    // Sanity check.
+    QVERIFY(dbSource->metadata()->containsCustomIcon(customIconId));
+
+    dbDestination->merge(dbSource);
+
+    QVERIFY(dbDestination->metadata()->containsCustomIcon(customIconId));
 
     delete dbDestination;
     delete dbSource;

@@ -66,6 +66,9 @@ set(keepassx_SOURCES
     core/Tools.cpp
     core/Translator.cpp
     core/Uuid.cpp
+    core/Base32.h
+    core/Base32.cpp
+    core/Optional.h
     cli/Utils.cpp
     cli/Utils.h
     crypto/Crypto.cpp
@@ -145,8 +148,6 @@ set(keepassx_SOURCES
     streams/qtiocompressor.cpp
     streams/StoreDataStream.cpp
     streams/SymmetricCipherStream.cpp
-    totp/base32.h
-    totp/base32.cpp
     totp/totp.h
     totp/totp.cpp
 )

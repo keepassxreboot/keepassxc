@@ -186,6 +186,7 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
                     lockFile->tryLock();
                 }
             } else {
+                delete lockFile;
                 return;
             }
         }
@@ -368,6 +369,8 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
             emit messageDismissTab();
             return true;
         } else {
+            dbStruct.modified = true;
+            updateTabName(db);
             emit messageTab(tr("Writing the database failed.").append("\n").append(errorMessage),
                             MessageWidget::Error);
             return false;

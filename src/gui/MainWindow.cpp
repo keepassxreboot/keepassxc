@@ -855,7 +855,7 @@ void MainWindow::applySettingsChanges()
 
 void MainWindow::trayIconTriggered(QSystemTrayIcon::ActivationReason reason)
 {
-    if (reason == QSystemTrayIcon::Trigger) {
+    if (reason == QSystemTrayIcon::Trigger || reason == QSystemTrayIcon::MiddleClick) {
         toggleWindow();
     }
 }

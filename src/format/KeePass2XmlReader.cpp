@@ -323,9 +323,6 @@ void KeePass2XmlReader::parseMemoryProtection()
         else if (m_xml.name() == "ProtectNotes") {
             m_meta->setProtectNotes(readBool());
         }
-        /*else if (m_xml.name() == "AutoEnableVisualHiding") {
-            m_meta->setAutoEnableVisualHiding(readBool());
-        }*/
         else {
             skipCurrentElement();
         }

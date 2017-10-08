@@ -60,7 +60,6 @@ public:
         bool protectPassword;
         bool protectUrl;
         bool protectNotes;
-        // bool autoEnableVisualHiding;
     };
 
     QString generator() const;
@@ -77,7 +76,6 @@ public:
     bool protectPassword() const;
     bool protectUrl() const;
     bool protectNotes() const;
-    // bool autoEnableVisualHiding() const;
     QImage customIcon(const Uuid& uuid) const;
     QPixmap customIconPixmap(const Uuid& uuid) const;
     QPixmap customIconScaledPixmap(const Uuid& uuid) const;
@@ -117,11 +115,11 @@ public:
     void setProtectPassword(bool value);
     void setProtectUrl(bool value);
     void setProtectNotes(bool value);
-    // void setAutoEnableVisualHiding(bool value);
     void addCustomIcon(const Uuid& uuid, const QImage& icon);
     void addCustomIconScaled(const Uuid& uuid, const QImage& icon);
     void removeCustomIcon(const Uuid& uuid);
     void copyCustomIcons(const QSet<Uuid>& iconList, const Metadata* otherMetadata);
+    Uuid findCustomIcon(const QImage& candidate);
     void setRecycleBinEnabled(bool value);
     void setRecycleBin(Group* group);
     void setRecycleBinChanged(const QDateTime& value);
@@ -154,12 +152,15 @@ private:
     template <class P, class V> bool set(P& property, const V& value);
     template <class P, class V> bool set(P& property, const V& value, QDateTime& dateTime);
 
+    QByteArray hashImage(const QImage& image);
+
     MetadataData m_data;
 
     QHash<Uuid, QImage> m_customIcons;
     mutable QHash<Uuid, QPixmapCache::Key> m_customIconCacheKeys;
     mutable QHash<Uuid, QPixmapCache::Key> m_customIconScaledCacheKeys;
     QList<Uuid> m_customIconsOrder;
+    QHash<QByteArray, Uuid> m_customIconsHashes;
 
     QPointer<Group> m_recycleBin;
     QDateTime m_recycleBinChanged;

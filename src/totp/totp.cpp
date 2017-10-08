@@ -17,7 +17,7 @@
  */
 
 #include "totp.h"
-#include "base32.h"
+#include "core/Base32.h"
 #include <cmath>
 #include <QtEndian>
 #include <QRegExp>
@@ -98,13 +98,13 @@ QString QTotp::generateTotp(const QByteArray key, quint64 time,
 {
     quint64 current = qToBigEndian(time / step);
 
-    QByteArray secret = Base32::base32_decode(key);
-    if (secret.isEmpty()) {
+    Optional<QByteArray> secret = Base32::decode(key);
+    if (!secret.hasValue()) {
         return "Invalid TOTP secret key";
     }
 
     QMessageAuthenticationCode code(QCryptographicHash::Sha1);
-    code.setKey(secret);
+    code.setKey(secret.valueOr(""));
     code.addData(QByteArray(reinterpret_cast<char*>(&current), sizeof(current)));
     QByteArray hmac = code.result();
 

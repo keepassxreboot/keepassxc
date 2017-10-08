@@ -154,7 +154,7 @@ YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByte
     QByteArray paddedChallenge = challenge;
 
     // ensure that YubiKey::init() succeeded
-    if (m_yk == NULL) {
+    if (!init()) {
         m_mutex.unlock();
         return ERROR;
     }

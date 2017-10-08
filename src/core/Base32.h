@@ -15,33 +15,22 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTMERGE_H
-#define KEEPASSX_TESTMERGE_H
+// Conforms to RFC 4648. For details, see: https://tools.ietf.org/html/rfc4648
 
-#include "core/Database.h"
-#include <QObject>
+#ifndef BASE32_H
+#define BASE32_H
 
-class TestMerge : public QObject
+#include "Optional.h"
+#include <QtCore/qglobal.h>
+#include <QByteArray>
+
+class Base32
 {
-    Q_OBJECT
-
-private slots:
-    void initTestCase();
-    void testMergeIntoNew();
-    void testMergeNoChanges();
-    void testResolveConflictNewer();
-    void testResolveConflictOlder();
-    void testResolveConflictKeepBoth();
-    void testMoveEntry();
-    void testMoveEntryPreserveChanges();
-    void testMoveEntryIntoNewGroup();
-    void testCreateNewGroups();
-    void testUpdateEntryDifferentLocation();
-    void testMergeAndSync();
-    void testMergeCustomIcons();
-
-private:
-    Database* createTestDatabase();
+public:
+    Base32() =default;
+    Q_REQUIRED_RESULT static Optional<QByteArray> decode(const QByteArray&);
+    Q_REQUIRED_RESULT static QByteArray encode(const QByteArray&);
 };
 
-#endif // KEEPASSX_TESTMERGE_H
+
+#endif //BASE32_H
