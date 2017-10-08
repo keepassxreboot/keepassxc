@@ -918,10 +918,16 @@ QPair<QString, QString> KeePass2XmlReader::parseEntryBinary(Entry* entry)
 void KeePass2XmlReader::parseEntryAutoType(Entry* entry)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "AutoType");
-
+    
+    // for backward compatibility
+    bool enabledStateParsed = false;
     while (!m_xml.error() && m_xml.readNextStartElement()) {
-        if (m_xml.name() == "Enabled") {
+        if (m_xml.name() == "Enabled" && !enabledStateParsed) {
+            entry->setAutoTypeEnabled(readBool() ? Tools::TriState::Enable : Tools::TriState::Disable);
+        }
+        else if (m_xml.name() == "EnabledState") {
             entry->setAutoTypeEnabled(readTriState());
+            enabledStateParsed = true;
         }
         else if (m_xml.name() == "DataTransferObfuscation") {
             entry->setAutoTypeObfuscation(readNumber());

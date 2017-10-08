@@ -268,10 +268,12 @@ void KeePass2XmlWriter::writeGroup(const Group* group)
     }
     writeTimes(group->timeInfo());
     writeBool("IsExpanded", group->isExpanded());
-
     writeTriState("EnableSearching", group->searchingEnabled());
-
     writeUuid("LastTopVisibleEntry", group->lastTopVisibleEntry());
+    
+    // for backward compatibility
+    writeTriState("EnableAutoType", group->autoTypeEnabled());
+    writeString("DefaultAutoTypeSequence", group->defaultAutoTypeSequence());
 
     writeGroupAutoType(group);
 
@@ -426,7 +428,9 @@ void KeePass2XmlWriter::writeEntryAutoType(const Entry* entry)
 {
     m_xml.writeStartElement("AutoType");
 
-    writeTriState("Enabled", entry->autoTypeEnabled());
+    // for backward compatibility
+    writeBool("Enabled", entry->autoTypeEnabled() == Tools::TriState::Enable);
+    writeTriState("EnabledState", entry->autoTypeEnabled());
     writeNumber("DataTransferObfuscation", entry->autoTypeObfuscation());
     writeString("DefaultSequence", entry->defaultAutoTypeSequence());
 
