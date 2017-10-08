@@ -551,7 +551,7 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
     return list;
 }
 
-QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitle)
+QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitle) const
 {
     if (!entry->resolveAutoTypeEnabled()) {
         return QString();
@@ -559,20 +559,19 @@ QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitl
 
     QString sequence;
     if (!windowTitle.isEmpty()) {
-        bool match = false;
-        const QList<AutoTypeAssociations::Association> assocList = entry->autoTypeAssociations()->getAll();
-        for (const AutoTypeAssociations::Association& assoc : assocList) {
-            const QString window = entry->resolveMultiplePlaceholders(assoc.window);
-            if (windowMatches(windowTitle, window)) {
-                if (!assoc.sequence.isEmpty()) {
-                    sequence = assoc.sequence;
-                }
-                else {
-                    sequence = entry->defaultAutoTypeSequence();
-                }
-                match = true;
-                break;
-            }
+        bool match = matchAutoTypeAssociations(sequence, entry->defaultAutoTypeSequence(),
+                                               entry->autoTypeAssociations(), windowTitle);
+
+        // WIP: check if we can use parent associations
+        if (!match /*&& entry->autoTypeEnabled() == Tools::TriState::Inherit*/) {
+            const Group* group = entry->group();
+            do {
+
+                match = matchAutoTypeAssociations(sequence, group->defaultAutoTypeSequence(),
+                                                  group->autoTypeAssociations(), windowTitle);
+                group = group->parentGroup();
+                // WIP: check if we can use parent associations
+            } while (group && !match);
         }
 
         if (!match && config()->get("AutoTypeEntryTitleMatch").toBool() 
@@ -630,7 +629,21 @@ QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitl
     return sequence;
 }
 
-bool AutoType::windowMatches(const QString& windowTitle, const QString& windowPattern)
+bool AutoType::matchAutoTypeAssociations(QString &sequence, const QString &defaultAutoTypeSequence,
+                                         const AutoTypeAssociations *associations, const QString &windowTitle) const
+{
+    const QList<AutoTypeAssociations::Association> assocList = associations->getAll();
+    for (const AutoTypeAssociations::Association& assoc : assocList) {
+        if (windowMatches(windowTitle, assoc.window)) {
+            sequence = assoc.sequence.isEmpty() ? defaultAutoTypeSequence
+                                                : assoc.sequence;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool AutoType::windowMatches(const QString& windowTitle, const QString& windowPattern) const
 {
     if (windowPattern.startsWith("//") && windowPattern.endsWith("//") && windowPattern.size() >= 4) {
         QRegExp regExp(windowPattern.mid(2, windowPattern.size() - 4), Qt::CaseInsensitive, QRegExp::RegExp2);
@@ -641,12 +654,12 @@ bool AutoType::windowMatches(const QString& windowTitle, const QString& windowPa
     }
 }
 
-bool AutoType::windowMatchesTitle(const QString& windowTitle, const QString& resolvedTitle)
+bool AutoType::windowMatchesTitle(const QString& windowTitle, const QString& resolvedTitle) const
 {
     return !resolvedTitle.isEmpty() && windowTitle.contains(resolvedTitle, Qt::CaseInsensitive);
 }
 
-bool AutoType::windowMatchesUrl(const QString& windowTitle, const QString& resolvedUrl)
+bool AutoType::windowMatchesUrl(const QString& windowTitle, const QString& resolvedUrl) const
 {
     if (!resolvedUrl.isEmpty() && windowTitle.contains(resolvedUrl, Qt::CaseInsensitive)) {
         return true;

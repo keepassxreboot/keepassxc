@@ -66,7 +66,8 @@ void EditGroupWidget::loadGroup(Group *group, bool create, Database* database)
 
     setHeadline(create ? tr("Add group") : tr("Edit group"));
 
-    const bool parentSearchingEnabled = group->parentGroup() ? group->parentGroup()->resolveSearchingEnabled() : true;
+    const Group* const parentGroup = group->parentGroup();
+    const bool parentSearchingEnabled = parentGroup ? parentGroup->resolveSearchingEnabled() : true;
     m_mainUi->searchComboBox->addTriStateItems(parentSearchingEnabled);
 
     m_mainUi->editName->setText(group->name());
@@ -80,7 +81,7 @@ void EditGroupWidget::loadGroup(Group *group, bool create, Database* database)
     iconStruct.number = group->iconNumber();
     m_editGroupWidgetIcons->load(group->uuid(), database, iconStruct);
 
-    const bool parentAutoTypeEnabled = group->parentGroup() ? group->parentGroup()->resolveAutoTypeEnabled() : true;
+    const bool parentAutoTypeEnabled = parentGroup ? parentGroup->resolveAutoTypeEnabled() : true;
     m_editWidgetAutoType->setFields(group->autoTypeEnabled(), parentAutoTypeEnabled,
                                          group->defaultAutoTypeSequence(), group->effectiveAutoTypeSequence(),
                                          group->autoTypeAssociations());

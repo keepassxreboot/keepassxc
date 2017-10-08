@@ -24,6 +24,7 @@
 #include <QWidget>
 
 class AutoTypeAction;
+class AutoTypeAssociations;
 class AutoTypeExecutor;
 class AutoTypePlatformInterface;
 class Database;
@@ -66,10 +67,13 @@ private:
     void loadPlugin(const QString& pluginPath);
     bool parseActions(const QString& sequence, const Entry* entry, QList<AutoTypeAction*>& actions);
     QList<AutoTypeAction*> createActionFromTemplate(const QString& tmpl, const Entry* entry);
-    QString autoTypeSequence(const Entry* entry, const QString& windowTitle = QString());
-    bool windowMatchesTitle(const QString& windowTitle, const QString& resolvedTitle);
-    bool windowMatchesUrl(const QString& windowTitle, const QString& resolvedUrl);
-    bool windowMatches(const QString& windowTitle, const QString& windowPattern);
+    QString autoTypeSequence(const Entry* entry, const QString& windowTitle = QString()) const;
+    bool matchAutoTypeAssociations(QString &sequence, const QString &defaultAutoTypeSequence,
+                                   const AutoTypeAssociations * associations,
+                                   const QString& windowTitle) const;
+    bool windowMatchesTitle(const QString& windowTitle, const QString& resolvedTitle) const;
+    bool windowMatchesUrl(const QString& windowTitle, const QString& resolvedUrl) const;
+    bool windowMatches(const QString& windowTitle, const QString& windowPattern) const;
 
     bool m_inAutoType;
     int m_autoTypeDelay;
