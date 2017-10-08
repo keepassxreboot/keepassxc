@@ -562,16 +562,14 @@ QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitl
         bool match = matchAutoTypeAssociations(sequence, entry->defaultAutoTypeSequence(),
                                                entry->autoTypeAssociations(), windowTitle);
 
-        // WIP: check if we can use parent associations
-        if (!match /*&& entry->autoTypeEnabled() == Tools::TriState::Inherit*/) {
+        if (!match && entry->autoTypeUseParentAssociations()) {
             const Group* group = entry->group();
             do {
 
                 match = matchAutoTypeAssociations(sequence, group->defaultAutoTypeSequence(),
                                                   group->autoTypeAssociations(), windowTitle);
                 group = group->parentGroup();
-                // WIP: check if we can use parent associations
-            } while (group && !match);
+            } while (group && !match && group->autoTypeUseParentAssociations());
         }
 
         if (!match && config()->get("AutoTypeEntryTitleMatch").toBool() 

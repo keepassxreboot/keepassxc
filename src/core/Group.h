@@ -54,6 +54,7 @@ public:
         Tools::TriState autoTypeEnabled;
         Tools::TriState searchingEnabled;
         Group::MergeMode mergeMode;
+        bool autoTypeUseParentAssociations;
     };
 
     Group();
@@ -75,6 +76,7 @@ public:
     QString effectiveAutoTypeSequence() const;
     AutoTypeAssociations* autoTypeAssociations();
     const AutoTypeAssociations* autoTypeAssociations() const;
+    bool autoTypeUseParentAssociations() const;
     Tools::TriState autoTypeEnabled() const;
     Tools::TriState searchingEnabled() const;
     Group::MergeMode mergeMode() const;
@@ -101,6 +103,7 @@ public:
     void setTimeInfo(const TimeInfo& timeInfo);
     void setExpanded(bool expanded);
     void setDefaultAutoTypeSequence(const QString& sequence);
+    void setAutoTypeUseParentAssociations(bool useParentAssociations);
     void setAutoTypeEnabled(Tools::TriState enable);
     void setSearchingEnabled(Tools::TriState enable);
     void setLastTopVisibleEntry(Entry* entry);

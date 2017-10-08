@@ -51,6 +51,7 @@ struct EntryData
     Tools::TriState autoTypeEnabled;
     int autoTypeObfuscation;
     QString defaultAutoTypeSequence;
+    bool autoTypeUseParentAssociations;
     TimeInfo timeInfo;
     mutable quint8 totpDigits;
     mutable quint8 totpStep;
@@ -81,6 +82,7 @@ public:
     QString effectiveAutoTypeSequence() const;
     AutoTypeAssociations* autoTypeAssociations();
     const AutoTypeAssociations* autoTypeAssociations() const;
+    bool autoTypeUseParentAssociations() const;
     QString title() const;
     QString url() const;
     QString webUrl() const;
@@ -115,6 +117,7 @@ public:
     void setAutoTypeEnabled(Tools::TriState enable);
     void setAutoTypeObfuscation(int obfuscation);
     void setDefaultAutoTypeSequence(const QString& sequence);
+    void setAutoTypeUseParentAssociations(bool useParentAssociations);
     void setTitle(const QString& title);
     void setUrl(const QString& url);
     void setUsername(const QString& username);

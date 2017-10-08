@@ -41,6 +41,7 @@ Entry::Entry()
     m_data.iconNumber = DefaultIconNumber;
     m_data.autoTypeEnabled = Tools::TriState::Enable;
     m_data.autoTypeObfuscation = 0;
+    m_data.autoTypeUseParentAssociations = true;
     m_data.totpStep = QTotp::defaultStep;
     m_data.totpDigits = QTotp::defaultDigits;
 
@@ -235,6 +236,11 @@ AutoTypeAssociations* Entry::autoTypeAssociations()
 const AutoTypeAssociations* Entry::autoTypeAssociations() const
 {
     return m_autoTypeAssociations;
+}
+
+bool Entry::autoTypeUseParentAssociations() const
+{
+    return m_data.autoTypeUseParentAssociations;
 }
 
 QString Entry::title() const
@@ -452,6 +458,11 @@ void Entry::setAutoTypeObfuscation(int obfuscation)
 void Entry::setDefaultAutoTypeSequence(const QString& sequence)
 {
     set(m_data.defaultAutoTypeSequence, sequence);
+}
+
+void Entry::setAutoTypeUseParentAssociations(bool useParentAssociations)
+{
+    set(m_data.autoTypeUseParentAssociations, useParentAssociations);
 }
 
 void Entry::setTitle(const QString& title)

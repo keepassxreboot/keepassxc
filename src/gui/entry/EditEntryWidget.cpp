@@ -339,7 +339,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_editWidgetAutoType->setFields(entry->autoTypeEnabled(), entry->group()->resolveAutoTypeEnabled(),
                                     entry->defaultAutoTypeSequence(), entry->effectiveAutoTypeSequence(),
                                     entry->autoTypeAssociations());
-
+    m_editWidgetAutoType->setUseParentAssociations(entry->autoTypeUseParentAssociations());
     m_editWidgetProperties->setFields(entry->timeInfo(), entry->uuid());
 
     if (!m_history && !restore) {
@@ -437,9 +437,11 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
         entry->setIcon(iconStruct.uuid);
     }
 
+    const QString defaultSequence = m_editWidgetAutoType->inheritSequenceEnabled() ? QString()
+                                                                                   : m_editWidgetAutoType->sequence();
+    entry->setDefaultAutoTypeSequence(defaultSequence);
     entry->setAutoTypeEnabled(m_editWidgetAutoType->autoTypeEnabled());
-    entry->setDefaultAutoTypeSequence(m_editWidgetAutoType->inheritSequenceEnabled() ?
-                                          QString() : m_editWidgetAutoType->sequence());
+    entry->setAutoTypeUseParentAssociations(m_editWidgetAutoType->useParentAssociations());
     entry->autoTypeAssociations()->copyDataFrom(m_editWidgetAutoType->autoTypeAssociations());
 }
 

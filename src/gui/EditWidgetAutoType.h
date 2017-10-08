@@ -49,6 +49,7 @@ public:
     Tools::TriState autoTypeEnabled() const;
     bool inheritSequenceEnabled() const;
     QString sequence() const;
+    bool useParentAssociations() const;
     AutoTypeAssociations* autoTypeAssociations();
     const AutoTypeAssociations* autoTypeAssociations() const;
 
@@ -56,6 +57,7 @@ public slots:
     void setFields(const Tools::TriState autoTypeEnabled, const bool parentAutoTypeEnabled,
                    const QString &defaultAutoTypeSequence, const QString &effectiveAutoTypeSequence,
                    const AutoTypeAssociations* autoTypeAssociations);
+    void setUseParentAssociations(bool useParentAssociations);
     void setHistory(bool history);
     void clear();
     void removeEmptyAssocs();

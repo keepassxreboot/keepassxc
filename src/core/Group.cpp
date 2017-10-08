@@ -37,6 +37,7 @@ Group::Group()
     m_data.autoTypeEnabled = Tools::TriState::Inherit;
     m_data.searchingEnabled = Tools::TriState::Inherit;
     m_data.mergeMode = ModeInherit;
+    m_data.autoTypeUseParentAssociations = false;
 
     connect(m_autoTypeAssociations, SIGNAL(modified()), SIGNAL(modified()));
 }
@@ -224,6 +225,11 @@ const AutoTypeAssociations *Group::autoTypeAssociations() const
     return m_autoTypeAssociations;
 }
 
+bool Group::autoTypeUseParentAssociations() const
+{
+    return m_data.autoTypeUseParentAssociations;
+}
+
 Tools::TriState Group::autoTypeEnabled() const
 {
     return m_data.autoTypeEnabled;
@@ -322,6 +328,11 @@ void Group::setExpanded(bool expanded)
 void Group::setDefaultAutoTypeSequence(const QString& sequence)
 {
     set(m_data.defaultAutoTypeSequence, sequence);
+}
+
+void Group::setAutoTypeUseParentAssociations(bool useParentAssociations)
+{
+    set(m_data.autoTypeUseParentAssociations, useParentAssociations);
 }
 
 void Group::setAutoTypeEnabled(Tools::TriState enable)

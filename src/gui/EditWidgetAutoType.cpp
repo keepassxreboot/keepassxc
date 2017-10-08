@@ -86,6 +86,11 @@ QString EditWidgetAutoType::sequence() const
     return m_ui->sequenceEdit->text();
 }
 
+bool EditWidgetAutoType::useParentAssociations() const
+{
+    return m_ui->useParentGroupAssociations->isChecked();
+}
+
 AutoTypeAssociations *EditWidgetAutoType::autoTypeAssociations()
 {
     return m_autoTypeAssoc;
@@ -126,12 +131,18 @@ void EditWidgetAutoType::setFields(const Tools::TriState autoTypeEnabled, const 
     updateAutoTypeEnabled();
 }
 
+void EditWidgetAutoType::setUseParentAssociations(bool useParentAssociations)
+{
+    m_ui->useParentGroupAssociations->setChecked(useParentAssociations);
+}
+
 void EditWidgetAutoType::setHistory(bool history)
 {
     m_history = history;
     m_ui->sequenceEdit->setReadOnly(history);
     m_ui->windowTitleCombo->lineEdit()->setReadOnly(history);
     m_ui->windowSequenceEdit->setReadOnly(history);
+    m_ui->useParentGroupAssociations->setEnabled(history);
 }
 
 void EditWidgetAutoType::clear()
@@ -156,6 +167,7 @@ void EditWidgetAutoType::updateAutoTypeEnabled()
     m_ui->inheritSequenceButton->setEnabled(!m_history && autoTypeEnabled);
     m_ui->customSequenceButton->setEnabled(!m_history && autoTypeEnabled);
     m_ui->sequenceEdit->setEnabled(autoTypeEnabled && m_ui->customSequenceButton->isChecked());
+    m_ui->useParentGroupAssociations->setEnabled(autoTypeEnabled);
 
     m_ui->assocView->setEnabled(autoTypeEnabled);
     m_ui->assocAddButton->setEnabled(!m_history);

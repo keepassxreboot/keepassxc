@@ -83,8 +83,9 @@ void EditGroupWidget::loadGroup(Group *group, bool create, Database* database)
 
     const bool parentAutoTypeEnabled = parentGroup ? parentGroup->resolveAutoTypeEnabled() : true;
     m_editWidgetAutoType->setFields(group->autoTypeEnabled(), parentAutoTypeEnabled,
-                                         group->defaultAutoTypeSequence(), group->effectiveAutoTypeSequence(),
-                                         group->autoTypeAssociations());
+                                    group->defaultAutoTypeSequence(), group->effectiveAutoTypeSequence(),
+                                    group->autoTypeAssociations());
+    m_editWidgetAutoType->setUseParentAssociations(group->autoTypeUseParentAssociations());
     m_editWidgetProperties->setFields(group->timeInfo(), group->uuid());
 
     setCurrentPage(0);
@@ -113,6 +114,7 @@ void EditGroupWidget::apply()
     const QString defaultSequence = m_editWidgetAutoType->inheritSequenceEnabled() ? QString()
                                                                                    : m_editWidgetAutoType->sequence();
     m_group->setDefaultAutoTypeSequence(defaultSequence);
+    m_group->setAutoTypeUseParentAssociations(m_editWidgetAutoType->useParentAssociations());
 
     IconStruct iconStruct = m_editGroupWidgetIcons->state();
 

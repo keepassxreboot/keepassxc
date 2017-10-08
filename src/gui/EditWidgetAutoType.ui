@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>567</width>
-    <height>374</height>
+    <width>580</width>
+    <height>388</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -229,6 +229,13 @@
            </widget>
           </item>
          </layout>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="useParentGroupAssociations">
+          <property name="text">
+           <string>Use window associations from parent group</string>
+          </property>
+         </widget>
         </item>
         <item>
          <spacer name="verticalSpacer">

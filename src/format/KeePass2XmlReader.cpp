@@ -619,6 +619,9 @@ void KeePass2XmlReader::parseGroupAutoType(Group *group)
         else if (m_xml.name() == "Association") {
             parseAutoTypeAssoc(group->autoTypeAssociations());
         }
+        else if (m_xml.name() == "UseParentGroupAssociations") {
+            group->setAutoTypeUseParentAssociations(readBool());
+        }
         else {
             skipCurrentElement();
         }
@@ -937,6 +940,9 @@ void KeePass2XmlReader::parseEntryAutoType(Entry* entry)
         }
         else if (m_xml.name() == "Association") {
             parseAutoTypeAssoc(entry->autoTypeAssociations());
+        }
+        else if (m_xml.name() == "UseParentGroupAssociations") {
+            entry->setAutoTypeUseParentAssociations(readBool());
         }
         else {
             skipCurrentElement();

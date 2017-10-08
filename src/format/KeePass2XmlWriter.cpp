@@ -296,6 +296,7 @@ void KeePass2XmlWriter::writeGroupAutoType(const Group *group)
 
     writeTriState("Enabled", group->autoTypeEnabled());
     writeString("DefaultSequence", group->defaultAutoTypeSequence());
+    writeBool("UseParentGroupAssociations", group->autoTypeUseParentAssociations());
 
     const QList<AutoTypeAssociations::Association> autoTypeAssociations = group->autoTypeAssociations()->getAll();
     for (const AutoTypeAssociations::Association& assoc : autoTypeAssociations) {
@@ -433,6 +434,7 @@ void KeePass2XmlWriter::writeEntryAutoType(const Entry* entry)
     writeTriState("EnabledState", entry->autoTypeEnabled());
     writeNumber("DataTransferObfuscation", entry->autoTypeObfuscation());
     writeString("DefaultSequence", entry->defaultAutoTypeSequence());
+    writeBool("UseParentGroupAssociations", entry->autoTypeUseParentAssociations());
 
     const QList<AutoTypeAssociations::Association> autoTypeAssociations = entry->autoTypeAssociations()->getAll();
     for (const AutoTypeAssociations::Association& assoc : autoTypeAssociations) {
