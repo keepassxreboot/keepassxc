@@ -88,6 +88,11 @@ signals:
     void detected(int slot, bool blocking);
 
     /**
+     * Emitted when detection is complete
+     */
+    void detectComplete();
+
+    /**
      * Emitted when the YubiKey was challenged and has returned a response.
      */
     void challenged();

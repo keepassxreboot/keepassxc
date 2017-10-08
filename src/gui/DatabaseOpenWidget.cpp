@@ -70,9 +70,6 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
 
     connect(m_ui->buttonRedetectYubikey, SIGNAL(clicked()), SLOT(pollYubikey()));
     connect(m_ui->comboChallengeResponse, SIGNAL(activated(int)), SLOT(activateChallengeResponse()));
-
-    connect(YubiKey::instance(), SIGNAL(detected(int,bool)), SLOT(yubikeyDetected(int,bool)), Qt::QueuedConnection);
-    connect(YubiKey::instance(), SIGNAL(notFound()), SLOT(noYubikeyFound()), Qt::QueuedConnection);
 #else
     m_ui->checkChallengeResponse->setVisible(false);
     m_ui->buttonRedetectYubikey->setVisible(false);
@@ -98,7 +95,21 @@ void DatabaseOpenWidget::showEvent(QShowEvent* event)
     m_ui->editPassword->setFocus();
 
 #ifdef WITH_XC_YUBIKEY
+    connect(YubiKey::instance(), SIGNAL(detected(int,bool)), SLOT(yubikeyDetected(int,bool)), Qt::QueuedConnection);
+    connect(YubiKey::instance(), SIGNAL(detectComplete()), SLOT(yubikeyDetectComplete()), Qt::QueuedConnection);
+    connect(YubiKey::instance(), SIGNAL(notFound()), SLOT(noYubikeyFound()), Qt::QueuedConnection);
+
     pollYubikey();
+#endif
+}
+
+void DatabaseOpenWidget::hideEvent(QHideEvent* event)
+{
+    DialogyWidget::hideEvent(event);
+
+#ifdef WITH_XC_YUBIKEY
+    // Don't listen to any Yubikey events if we are hidden
+    disconnect(YubiKey::instance(), 0, this, 0);
 #endif
 }
 
@@ -283,10 +294,6 @@ void DatabaseOpenWidget::yubikeyDetected(int slot, bool blocking)
     YkChallengeResponseKey yk(slot, blocking);
     // add detected YubiKey to combo box and encode blocking mode in LSB, slot number in second LSB
     m_ui->comboChallengeResponse->addItem(yk.getName(), QVariant((slot << 1) | blocking));
-    m_ui->comboChallengeResponse->setEnabled(true);
-    m_ui->checkChallengeResponse->setEnabled(true);
-    m_ui->buttonRedetectYubikey->setEnabled(true);
-    m_ui->yubikeyProgress->setVisible(false);
 
     if (config()->get("RememberLastKeyFiles").toBool()) {
         QHash<QString, QVariant> lastChallengeResponse = config()->get("LastChallengeResponse").toHash();
@@ -294,6 +301,14 @@ void DatabaseOpenWidget::yubikeyDetected(int slot, bool blocking)
             m_ui->checkChallengeResponse->setChecked(true);
         }
     }
+}
+
+void DatabaseOpenWidget::yubikeyDetectComplete()
+{
+    m_ui->comboChallengeResponse->setEnabled(true);
+    m_ui->checkChallengeResponse->setEnabled(true);
+    m_ui->buttonRedetectYubikey->setEnabled(true);
+    m_ui->yubikeyProgress->setVisible(false);
 }
 
 void DatabaseOpenWidget::noYubikeyFound()

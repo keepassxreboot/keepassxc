@@ -51,6 +51,7 @@ signals:
 
 protected:
     void showEvent(QShowEvent* event) override;
+    void hideEvent(QHideEvent* event) override;
     CompositeKey databaseKey();
 
 protected slots:
@@ -63,6 +64,7 @@ private slots:
     void activateChallengeResponse();
     void browseKeyFile();
     void yubikeyDetected(int slot, bool blocking);
+    void yubikeyDetectComplete();
     void noYubikeyFound();
 
 protected:
