@@ -22,6 +22,7 @@
 #include <QLockFile>
 #include <QTabWidget>
 #include <QPushButton>
+#include <QProcess>
 
 #include "autotype/AutoType.h"
 #include "core/Config.h"
@@ -90,12 +91,12 @@ void DatabaseTabWidget::newDatabase()
     Database* db = new Database();
     db->rootGroup()->setName(tr("Root"));
     dbStruct.dbWidget = new DatabaseWidget(db, this);
-    
+
     CompositeKey emptyKey;
     db->setKey(emptyKey);
 
     insertDatabase(db, dbStruct);
-    
+
     if (!saveDatabaseAs(db)) {
         closeDatabase(db);
         return;
@@ -623,9 +624,8 @@ void DatabaseTabWidget::updateTabNameFromDbWidgetSender()
 
         for (auto entry : autoload->entries()) {
 
-            if (entry->url().isEmpty() || entry->password().isEmpty()) {
+            if (entry->url().isEmpty() || entry->password().isEmpty())
                 continue;
-            }
 
             QFileInfo filepath;
             if (entry->url().startsWith("file:/")) {
@@ -639,12 +639,34 @@ void DatabaseTabWidget::updateTabNameFromDbWidgetSender()
                 }
             }
 
-            if (!filepath.isFile()) {
+            if (!filepath.isFile())
                 continue;
-            }
 
             openDatabase(filepath.canonicalFilePath(), entry->password(), "");
 
+        }
+    }
+
+    Group *autoexec = db->rootGroup()->findChildByName("AutoExec");
+    if (autoexec)
+    {
+        for (auto entry : autoexec->entries()) {
+            if (entry->url().isEmpty())
+                continue;
+
+            QProcess *process = new QProcess;
+            process->start(entry->url());
+
+            if (!entry->notes().isEmpty())
+                process->write(entry->notes().toUtf8());
+            process->closeWriteChannel();
+
+            connect(process, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
+                        [=](int exitCode, QProcess::ExitStatus exitStatus) {
+                (void) exitCode;
+                (void) exitStatus;
+                process->deleteLater();
+            });
         }
     }
 }
