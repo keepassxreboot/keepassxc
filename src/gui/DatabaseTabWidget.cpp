@@ -22,6 +22,7 @@
 #include <QLockFile>
 #include <QTabWidget>
 #include <QPushButton>
+#include <QProcess>
 
 #include "autotype/AutoType.h"
 #include "core/Config.h"
@@ -90,12 +91,12 @@ void DatabaseTabWidget::newDatabase()
     Database* db = new Database();
     db->rootGroup()->setName(tr("Root"));
     dbStruct.dbWidget = new DatabaseWidget(db, this);
-    
+
     CompositeKey emptyKey;
     db->setKey(emptyKey);
 
     insertDatabase(db, dbStruct);
-    
+
     if (!saveDatabaseAs(db)) {
         closeDatabase(db);
         return;
@@ -124,12 +125,17 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
         return;
     }
 
-
     QHashIterator<Database*, DatabaseManagerStruct> i(m_dbList);
     while (i.hasNext()) {
         i.next();
         if (i.value().canonicalFilePath == canonicalFilePath) {
-            setCurrentIndex(databaseIndex(i.key()));
+            if (pw.isEmpty() && keyFile.isEmpty()) {
+                setCurrentIndex(databaseIndex(i.key()));
+            } else {
+                if (!i.key()->hasKey()) {
+                    i.value().dbWidget->switchToOpenDatabase(canonicalFilePath, pw, keyFile);
+                }
+            }
             return;
         }
     }
@@ -607,6 +613,62 @@ void DatabaseTabWidget::updateTabNameFromDbWidgetSender()
 
     DatabaseWidget* dbWidget = static_cast<DatabaseWidget*>(sender());
     updateTabName(databaseFromDatabaseWidget(dbWidget));
+
+    Database* db = dbWidget->database();
+    Group *autoload = db->rootGroup()->findChildByName("AutoOpen");
+    if (autoload)
+    {
+        const DatabaseManagerStruct& dbStruct = m_dbList.value(db);
+        QFileInfo dbpath(dbStruct.canonicalFilePath);
+        QDir dbFolder(dbpath.canonicalPath());
+
+        for (auto entry : autoload->entries()) {
+
+            if (entry->url().isEmpty() || entry->password().isEmpty())
+                continue;
+
+            QFileInfo filepath;
+            if (entry->url().startsWith("file:/")) {
+                QUrl url(entry->url());
+                filepath.setFile(url.toLocalFile());
+            }
+            else {
+                filepath.setFile(entry->url());
+                if (filepath.isRelative()) {
+                    filepath.setFile(dbFolder, entry->url());
+                }
+            }
+
+            if (!filepath.isFile())
+                continue;
+
+            openDatabase(filepath.canonicalFilePath(), entry->password(), "");
+
+        }
+    }
+
+    Group *autoexec = db->rootGroup()->findChildByName("AutoExec");
+    if (autoexec)
+    {
+        for (auto entry : autoexec->entries()) {
+            if (entry->url().isEmpty())
+                continue;
+
+            QProcess *process = new QProcess;
+            process->start(entry->url());
+
+            if (!entry->notes().isEmpty())
+                process->write(entry->notes().toUtf8());
+            process->closeWriteChannel();
+
+            connect(process, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
+                        [=](int exitCode, QProcess::ExitStatus exitStatus) {
+                (void) exitCode;
+                (void) exitStatus;
+                process->deleteLater();
+            });
+        }
+    }
 }
 
 int DatabaseTabWidget::databaseIndex(Database* db)
