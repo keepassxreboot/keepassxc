@@ -292,6 +292,7 @@
    <addaction name="separator"/>
    <addaction name="actionEntryCopyUsername"/>
    <addaction name="actionEntryCopyPassword"/>
+   <addaction name="actionEntryAutoType"/>
    <addaction name="separator"/>
    <addaction name="actionPasswordGenerator"/>
    <addaction name="actionLockDatabases"/>
