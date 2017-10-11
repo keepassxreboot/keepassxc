@@ -18,20 +18,50 @@
 
 #include "MessageWidget.h"
 
-MessageWidget::MessageWidget(QWidget* parent)
-    :KMessageWidget(parent)
-{
+#include "QTimer"
 
+MessageWidget::MessageWidget(QWidget* parent)
+    : KMessageWidget(parent)
+    , m_autoHideTimer(new QTimer(this))
+    , m_autoHideTimeout(6000)
+{
+    m_autoHideTimer->setSingleShot(true);
+    connect(m_autoHideTimer, SIGNAL(timeout()), this, SLOT(animatedHide()));
+    connect(this, SIGNAL(hideAnimationFinished()), m_autoHideTimer, SLOT(stop()));
+}
+
+int MessageWidget::autoHideTimeout() const
+{
+    return m_autoHideTimeout;
 }
 
 void MessageWidget::showMessage(const QString& text, MessageWidget::MessageType type)
 {
+    showMessage(text, type, m_autoHideTimeout);
+}
+
+void MessageWidget::showMessage(const QString &text, KMessageWidget::MessageType type, int autoHideTimeout)
+{
     setMessageType(type);
     setText(text);
     animatedShow();
+    if (autoHideTimeout > 0) {
+        m_autoHideTimer->start(autoHideTimeout);
+    } else {
+        m_autoHideTimer->stop();
+    }
 }
 
 void MessageWidget::hideMessage()
 {
     animatedHide();
+    m_autoHideTimer->stop();
+}
+
+void MessageWidget::setAutoHideTimeout(int autoHideTimeout)
+{
+    m_autoHideTimeout = autoHideTimeout;
+    if (autoHideTimeout <= 0) {
+        m_autoHideTimer->stop();
+    }
 }
