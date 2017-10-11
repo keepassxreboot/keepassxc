@@ -292,6 +292,7 @@
    <addaction name="separator"/>
    <addaction name="actionEntryCopyUsername"/>
    <addaction name="actionEntryCopyPassword"/>
+   <addaction name="actionEntryCopyURL"/>
    <addaction name="actionEntryAutoType"/>
    <addaction name="separator"/>
    <addaction name="actionPasswordGenerator"/>
@@ -496,6 +497,9 @@
    <property name="text">
     <string>&amp;Title</string>
    </property>
+   <property name="toolTip">
+    <string>Copy title to clipboard</string>
+   </property>
   </action>
   <action name="actionEntryCopyURL">
    <property name="enabled">
@@ -504,6 +508,9 @@
    <property name="text">
     <string>&amp;URL</string>
    </property>
+   <property name="toolTip">
+    <string>Copy URL to clipboard</string>
+   </property>
   </action>
   <action name="actionEntryCopyNotes">
    <property name="enabled">
@@ -511,6 +518,9 @@
    </property>
    <property name="text">
     <string>&amp;Notes</string>
+   </property>
+   <property name="toolTip">
+    <string>Copy notes to clipboard</string>
    </property>
   </action>
   <action name="actionExportCsv">
