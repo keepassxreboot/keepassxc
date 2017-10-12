@@ -25,6 +25,7 @@
 #include <ykdef.h>
 #include <ykstatus.h>
 
+#include "core/Tools.h"
 #include "core/Global.h"
 #include "crypto/Random.h"
 
@@ -112,23 +113,36 @@ bool YubiKey::deinit()
 
 void YubiKey::detect()
 {
-    if (init()) {
-        for (int i = 1; i < 3; i++) {
-            YubiKey::ChallengeResult result;
-            QByteArray rand = randomGen()->randomArray(1);
-            QByteArray resp;
+    bool found = false;
 
+    if (init()) {
+        YubiKey::ChallengeResult result;
+        QByteArray rand = randomGen()->randomArray(1);
+        QByteArray resp;
+
+        // Check slot 1 and 2 for Challenge-Response HMAC capability
+        for (int i = 1; i <= 2; ++i) {
             result = challenge(i, false, rand, resp);
-            if (result == YubiKey::ALREADY_RUNNING) {
-                emit alreadyRunning();
-                return;
-            } else if (result != YubiKey::ERROR) {
-                emit detected(i, result == YubiKey::WOULDBLOCK);
-                return;
+            if (result == ALREADY_RUNNING) {
+                // Try this slot again after waiting
+                Tools::sleep(300);
+                result = challenge(i, false, rand, resp);
             }
+
+            if (result != ALREADY_RUNNING && result != ERROR) {
+                emit detected(i, result == WOULDBLOCK);
+                found = true;
+            }
+            // Wait between slots to let the yubikey settle
+            Tools::sleep(150);
         }
     }
-    emit notFound();
+
+    if (!found) {
+        emit notFound();
+    } else {
+        emit detectComplete();
+    }
 }
 
 bool YubiKey::getSerial(unsigned int& serial)
@@ -160,6 +174,7 @@ YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByte
     }
 
     // yk_challenge_response() insists on 64 byte response buffer */
+    response.clear();
     response.resize(64);
 
     /* The challenge sent to the yubikey should always be 64 bytes for

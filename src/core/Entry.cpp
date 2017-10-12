@@ -801,28 +801,31 @@ QString Entry::resolvePlaceholder(const QString& str) const
 
 QString Entry::resolveUrl(const QString& url) const
 {
-#ifdef WITH_XC_HTTP
     QString newUrl = url;
-    if (!url.contains("://")) {
+    if (!url.isEmpty() && !url.contains("://")) {
         // URL doesn't have a protocol, add https by default
         newUrl.prepend("https://");
     }
-    QUrl tempUrl = QUrl(newUrl);
 
-    if (tempUrl.isValid()) {
-        if (tempUrl.scheme() == "cmd") {
-            // URL is a cmd, hopefully the second argument is an URL
-            QStringList cmd = newUrl.split(" ");
-            if (cmd.size() > 1) {
-                return resolveUrl(cmd[1].remove("'").remove("\""));
+    if (newUrl.startsWith("cmd://")) {
+        QStringList cmdList = newUrl.split(" ");
+        for (int i=1; i < cmdList.size(); ++i) {
+            // Don't pass arguments to the resolveUrl function (they look like URL's)
+            if (!cmdList[i].startsWith("-") && !cmdList[i].startsWith("/")) {
+                return resolveUrl(cmdList[i].remove(QRegExp("'|\"")));
             }
-        } else if (tempUrl.scheme() == "http" || tempUrl.scheme() == "https") {
-            // URL is nice
-            return tempUrl.url();
         }
+
+        // No URL in this command
+        return QString("");
     }
-#else
-    Q_UNUSED(url);
-#endif
+
+    // Validate the URL
+    QUrl tempUrl = QUrl(newUrl);
+    if (tempUrl.isValid() && (tempUrl.scheme() == "http" || tempUrl.scheme() == "https")) {
+        return tempUrl.url();
+    }
+
+    // No valid http URL's found
     return QString("");
 }

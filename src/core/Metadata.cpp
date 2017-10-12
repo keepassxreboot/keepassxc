@@ -443,7 +443,7 @@ void Metadata::copyCustomIcons(const QSet<Uuid>& iconList, const Metadata* other
 
 QByteArray Metadata::hashImage(const QImage& image)
 {
-    auto data = QByteArray((char*)image.bits(), image.byteCount());
+    auto data = QByteArray(reinterpret_cast<const char*>(image.bits()), image.byteCount());
     return QCryptographicHash::hash(data, QCryptographicHash::Md5);
 }
 
