@@ -31,6 +31,7 @@ private slots:
     void testHistoryItemDeletion();
     void testCopyDataFrom();
     void testClone();
+    void testResolveUrl();
 };
 
 #endif // KEEPASSX_TESTENTRY_H

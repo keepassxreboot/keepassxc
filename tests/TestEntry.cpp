@@ -16,6 +16,7 @@
  */
 
 #include "TestEntry.h"
+#include "config-keepassx-tests.h"
 
 #include <QTest>
 
@@ -129,4 +130,31 @@ void TestEntry::testClone()
     delete entryCloneHistory;
 
     delete entryOrg;
+}
+
+void TestEntry::testResolveUrl()
+{
+    Entry* entry = new Entry();
+    QString testUrl("www.google.com");
+    QString testCmd("cmd://firefox " + testUrl);
+    QString testComplexCmd("cmd://firefox --start-now --url 'http://" + testUrl + "' --quit");
+    QString nonHttpUrl("ftp://google.com");
+    QString noUrl("random text inserted here");
+
+    // Test standard URL's
+    QCOMPARE(entry->resolveUrl(""), QString(""));
+    QCOMPARE(entry->resolveUrl(testUrl), "https://" + testUrl);
+    QCOMPARE(entry->resolveUrl("http://" + testUrl), "http://" + testUrl);
+    // Test cmd:// with no URL
+    QCOMPARE(entry->resolveUrl("cmd://firefox"), QString(""));
+    QCOMPARE(entry->resolveUrl("cmd://firefox --no-url"), QString(""));
+    // Test cmd:// with URL's
+    QCOMPARE(entry->resolveUrl(testCmd), "https://" + testUrl);
+    QCOMPARE(entry->resolveUrl(testComplexCmd), "http://" + testUrl);
+    // Test non-http URL
+    QCOMPARE(entry->resolveUrl(nonHttpUrl), QString(""));
+    // Test no URL
+    QCOMPARE(entry->resolveUrl(noUrl), QString(""));
+
+    delete entry;
 }
