@@ -755,23 +755,28 @@ QString Entry::resolvePlaceholder(const QString& str) const
 {
     QString result = str;
 
-    const QList<QString> keyList = attributes()->keys();
-    for (const QString& key : keyList) {
-        Qt::CaseSensitivity cs = Qt::CaseInsensitive;
-        QString k = key;
+    const UrlPlaceholderType placeholderType = urlPlaceholderType(str);
+    if (placeholderType != UrlPlaceholderType::NotUrl) {
+        return resolveUrlPlaceholder(url(), placeholderType);
+    } else {
+        const QList<QString> keyList = attributes()->keys();
+        for (const QString& key : keyList) {
+            Qt::CaseSensitivity cs = Qt::CaseInsensitive;
+            QString k = key;
 
-        if (!EntryAttributes::isDefaultAttribute(key)) {
-            cs = Qt::CaseSensitive;
-            k.prepend("{S:");
-        } else {
-            k.prepend("{");
-        }
+            if (!EntryAttributes::isDefaultAttribute(key)) {
+                cs = Qt::CaseSensitive;
+                k.prepend("{S:");
+            } else {
+                k.prepend("{");
+            }
 
 
-        k.append("}");
-        if (result.compare(k,cs)==0) {
-            result.replace(result,attributes()->value(key));
-            break;
+            k.append("}");
+            if (result.compare(k,cs)==0) {
+                result.replace(result,attributes()->value(key));
+                break;
+            }
         }
     }
 
@@ -828,4 +833,63 @@ QString Entry::resolveUrl(const QString& url) const
 
     // No valid http URL's found
     return QString("");
+}
+
+QString Entry::resolveUrlPlaceholder(const QString &strUrl, Entry::UrlPlaceholderType placeholderType) const
+{
+    QUrl qurl(strUrl);
+    if (!qurl.isValid())
+        return QString();
+
+    switch (placeholderType) {
+    case UrlPlaceholderType::FullUrl:
+        return strUrl;
+    case UrlPlaceholderType::WithoutScheme:
+        return qurl.toString(QUrl::RemoveScheme | QUrl::FullyDecoded);
+    case UrlPlaceholderType::Scheme:
+        return qurl.scheme();
+    case UrlPlaceholderType::Host:
+        return qurl.host();
+    case UrlPlaceholderType::Port:
+        return QString::number(qurl.port());
+    case UrlPlaceholderType::Path:
+        return qurl.path();
+    case UrlPlaceholderType::Query:
+        return qurl.query();
+    case UrlPlaceholderType::Fragment:
+        return qurl.fragment();
+    case UrlPlaceholderType::UserInfo:
+        return qurl.userInfo();
+    case UrlPlaceholderType::UserName:
+        return qurl.userName();
+    case UrlPlaceholderType::Password:
+        return qurl.password();
+    default:
+        Q_ASSERT(false);
+        break;
+    }
+
+    return QString();
+}
+
+Entry::UrlPlaceholderType Entry::urlPlaceholderType(const QString &placeholder) const
+{
+    static const QMap<QString, UrlPlaceholderType> urlPlaceholders {
+        { QStringLiteral("{URL}"), UrlPlaceholderType::FullUrl },
+        { QStringLiteral("{URL:RMVSCM}"), UrlPlaceholderType::WithoutScheme },
+        { QStringLiteral("{URL:WITHOUTSCHEME}"), UrlPlaceholderType::WithoutScheme },
+        { QStringLiteral("{URL:SCM}"), UrlPlaceholderType::Scheme },
+        { QStringLiteral("{URL:SCHEME}"), UrlPlaceholderType::Scheme },
+        { QStringLiteral("{URL:HOST}"), UrlPlaceholderType::Host },
+        { QStringLiteral("{URL:PORT}"), UrlPlaceholderType::Port },
+        { QStringLiteral("{URL:PATH}"), UrlPlaceholderType::Path },
+        { QStringLiteral("{URL:QUERY}"), UrlPlaceholderType::Query },
+        { QStringLiteral("{URL:FRAGMENT}"), UrlPlaceholderType::Fragment },
+        { QStringLiteral("{URL:USERINFO}"), UrlPlaceholderType::UserInfo },
+        { QStringLiteral("{URL:USERNAME}"), UrlPlaceholderType::UserName },
+        { QStringLiteral("{URL:PASSWORD}"), UrlPlaceholderType::Password }
+    };
+
+    UrlPlaceholderType result = urlPlaceholders.value(placeholder.toUpper(), UrlPlaceholderType::NotUrl);
+    return result;
 }

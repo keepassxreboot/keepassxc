@@ -32,6 +32,7 @@ private slots:
     void testCopyDataFrom();
     void testClone();
     void testResolveUrl();
+    void testResolveUrlPlaceholders();
 };
 
 #endif // KEEPASSX_TESTENTRY_H

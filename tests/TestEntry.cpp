@@ -158,3 +158,35 @@ void TestEntry::testResolveUrl()
 
     delete entry;
 }
+
+void TestEntry::testResolveUrlPlaceholders()
+{
+    Entry* entry = new Entry();
+    entry->setUrl("https://user:pw@keepassxc.org:80/path/example.php?q=e&s=t+2#fragment");
+
+    QString rmvscm("//user:pw@keepassxc.org:80/path/example.php?q=e&s=t+2#fragment"); // Entry URL without scheme name.
+    QString scm("https"); // Scheme name of the entry URL.
+    QString host("keepassxc.org"); // Host component of the entry URL.
+    QString port("80"); // Port number of the entry URL.
+    QString path("/path/example.php"); // Path component of the entry URL.
+    QString query("q=e&s=t+2"); // Query information of the entry URL.
+    QString userinfo("user:pw"); // User information of the entry URL.
+    QString username("user"); // User name of the entry URL.
+    QString password("pw"); // Password of the entry URL.
+    QString fragment("fragment"); // Password of the entry URL.
+
+    QCOMPARE(entry->resolvePlaceholder("{URL:RMVSCM}"), rmvscm);
+    QCOMPARE(entry->resolvePlaceholder("{URL:WITHOUTSCHEME}"), rmvscm);
+    QCOMPARE(entry->resolvePlaceholder("{URL:SCM}"), scm);
+    QCOMPARE(entry->resolvePlaceholder("{URL:SCHEME}"), scm);
+    QCOMPARE(entry->resolvePlaceholder("{URL:HOST}"), host);
+    QCOMPARE(entry->resolvePlaceholder("{URL:PORT}"), port);
+    QCOMPARE(entry->resolvePlaceholder("{URL:PATH}"), path);
+    QCOMPARE(entry->resolvePlaceholder("{URL:QUERY}"), query);
+    QCOMPARE(entry->resolvePlaceholder("{URL:USERINFO}"), userinfo);
+    QCOMPARE(entry->resolvePlaceholder("{URL:USERNAME}"), username);
+    QCOMPARE(entry->resolvePlaceholder("{URL:PASSWORD}"), password);
+    QCOMPARE(entry->resolvePlaceholder("{URL:FRAGMENT}"), fragment);
+
+    delete entry;
+}

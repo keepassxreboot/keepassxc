@@ -134,6 +134,21 @@ public:
     };
     Q_DECLARE_FLAGS(CloneFlags, CloneFlag)
 
+    enum class UrlPlaceholderType {
+        NotUrl,
+        FullUrl,
+        WithoutScheme,
+        Scheme,
+        Host,
+        Port,
+        Path,
+        Query,
+        Fragment,
+        UserInfo,
+        UserName,
+        Password,
+    };
+
     /**
      * Creates a duplicate of this entry except that the returned entry isn't
      * part of any group.
@@ -145,6 +160,8 @@ public:
     QString maskPasswordPlaceholders(const QString& str) const;
     QString resolveMultiplePlaceholders(const QString& str) const;
     QString resolvePlaceholder(const QString& str) const;
+    QString resolveUrlPlaceholder(const QString& url, UrlPlaceholderType placeholderType) const;
+    UrlPlaceholderType urlPlaceholderType(const QString& placeholder) const;
     QString resolveUrl(const QString& url) const;
 
     /**
