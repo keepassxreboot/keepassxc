@@ -134,19 +134,27 @@ public:
     };
     Q_DECLARE_FLAGS(CloneFlags, CloneFlag)
 
-    enum class UrlPlaceholderType {
-        NotUrl,
-        FullUrl,
-        WithoutScheme,
-        Scheme,
-        Host,
-        Port,
-        Path,
-        Query,
-        Fragment,
-        UserInfo,
+    enum class PlaceholderType {
+        NotPlaceholder,
+        Unknown,
+        Title,
         UserName,
         Password,
+        Notes,
+        Totp,
+        Url,
+        UrlWithoutScheme,
+        UrlScheme,
+        UrlHost,
+        UrlPort,
+        UrlPath,
+        UrlQuery,
+        UrlFragment,
+        UrlUserInfo,
+        UrlUserName,
+        UrlPassword,
+        Reference,
+        CustomAttribute
     };
 
     /**
@@ -160,8 +168,8 @@ public:
     QString maskPasswordPlaceholders(const QString& str) const;
     QString resolveMultiplePlaceholders(const QString& str) const;
     QString resolvePlaceholder(const QString& str) const;
-    QString resolveUrlPlaceholder(const QString& url, UrlPlaceholderType placeholderType) const;
-    UrlPlaceholderType urlPlaceholderType(const QString& placeholder) const;
+    QString resolveUrlPlaceholder(PlaceholderType placeholderType) const;
+    PlaceholderType placeholderType(const QString& placeholder) const;
     QString resolveUrl(const QString& url) const;
 
     /**

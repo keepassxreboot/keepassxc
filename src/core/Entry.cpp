@@ -751,56 +751,142 @@ QString Entry::resolveMultiplePlaceholders(const QString& str) const
     return result;
 }
 
-QString Entry::resolvePlaceholder(const QString& str) const
+QString Entry::resolvePlaceholder(const QString& placeholder) const
 {
-    QString result = str;
+    const PlaceholderType placeholderType = this->placeholderType(placeholder);
+    switch (placeholderType) {
+    case PlaceholderType::NotPlaceholder:
+        return placeholder;
+    case PlaceholderType::Unknown:
+        qWarning("Can't resolve placeholder '%s' for entry with uuid %s", qPrintable(placeholder),
+                 qPrintable(uuid().toHex()));
+        return placeholder;
+    case PlaceholderType::Title:
+        return title();
+    case PlaceholderType::UserName:
+        return username();
+    case PlaceholderType::Password:
+        return password();
+    case PlaceholderType::Notes:
+        return notes();
+    case PlaceholderType::Totp:
+        return totp();
+    case PlaceholderType::Url:
+    case PlaceholderType::UrlWithoutScheme:
+    case PlaceholderType::UrlScheme:
+    case PlaceholderType::UrlHost:
+    case PlaceholderType::UrlPort:
+    case PlaceholderType::UrlPath:
+    case PlaceholderType::UrlQuery:
+    case PlaceholderType::UrlFragment:
+    case PlaceholderType::UrlUserInfo:
+    case PlaceholderType::UrlUserName:
+    case PlaceholderType::UrlPassword:
+        return resolveUrlPlaceholder(placeholderType);
+    case PlaceholderType::CustomAttribute: {
+        const QString key = placeholder.mid(3, placeholder.length() - 4); // {S:attribute} => mid(3, len - 4)
+        return attributes()->hasKey(key) ? attributes()->value(key) : placeholder;
+    }
+    case PlaceholderType::Reference: {
+        // resolving references in format: {REF:<WantedField>@I:<uuid of referenced entry>}
+        // using format from http://keepass.info/help/base/fieldrefs.html at the time of writing,
+        // but supporting lookups of standard fields and references by UUID only
 
-    const UrlPlaceholderType placeholderType = urlPlaceholderType(str);
-    if (placeholderType != UrlPlaceholderType::NotUrl) {
-        return resolveUrlPlaceholder(url(), placeholderType);
-    } else {
-        const QList<QString> keyList = attributes()->keys();
-        for (const QString& key : keyList) {
-            Qt::CaseSensitivity cs = Qt::CaseInsensitive;
-            QString k = key;
+        QRegExp* tmpRegExp = m_attributes->referenceRegExp();
+        if (tmpRegExp->indexIn(placeholder) != -1) {
+            constexpr int wantedFieldIndex = 1;
+            constexpr int referencedUuidIndex = 2;
+            const Uuid referencedUuid(QByteArray::fromHex(tmpRegExp->cap(referencedUuidIndex).toLatin1()));
+            const Entry* refEntry = m_group->database()->resolveEntry(referencedUuid);
+            if (refEntry) {
+                QString result;
+                const QString wantedField = tmpRegExp->cap(wantedFieldIndex).toLower();
+                if (wantedField == "t") result = refEntry->title();
+                else if (wantedField == "u") result = refEntry->username();
+                else if (wantedField == "p") result = refEntry->password();
+                else if (wantedField == "a") result = refEntry->url();
+                else if (wantedField == "n") result = refEntry->notes();
 
-            if (!EntryAttributes::isDefaultAttribute(key)) {
-                cs = Qt::CaseSensitive;
-                k.prepend("{S:");
-            } else {
-                k.prepend("{");
-            }
-
-
-            k.append("}");
-            if (result.compare(k,cs)==0) {
-                result.replace(result,attributes()->value(key));
-                break;
+                result = refEntry->resolveMultiplePlaceholders(result);
+                return result;
             }
         }
     }
-
-    // resolving references in format: {REF:<WantedField>@I:<uuid of referenced entry>}
-    // using format from http://keepass.info/help/base/fieldrefs.html at the time of writing,
-    // but supporting lookups of standard fields and references by UUID only
-
-    QRegExp* tmpRegExp = m_attributes->referenceRegExp();
-    if (tmpRegExp->indexIn(result) != -1) {
-        // cap(0) contains the whole reference
-        // cap(1) contains which field is wanted
-        // cap(2) contains the uuid of the referenced entry
-        Entry* tmpRefEntry = m_group->database()->resolveEntry(Uuid(QByteArray::fromHex(tmpRegExp->cap(2).toLatin1())));
-        if (tmpRefEntry) {
-            // entry found, get the relevant field
-            QString tmpRefField = tmpRegExp->cap(1).toLower();
-            if (tmpRefField == "t") result.replace(tmpRegExp->cap(0), tmpRefEntry->title(), Qt::CaseInsensitive);
-            else if (tmpRefField == "u") result.replace(tmpRegExp->cap(0), tmpRefEntry->username(), Qt::CaseInsensitive);
-            else if (tmpRefField == "p") result.replace(tmpRegExp->cap(0), tmpRefEntry->password(), Qt::CaseInsensitive);
-            else if (tmpRefField == "a") result.replace(tmpRegExp->cap(0), tmpRefEntry->url(), Qt::CaseInsensitive);
-            else if (tmpRefField == "n") result.replace(tmpRegExp->cap(0), tmpRefEntry->notes(), Qt::CaseInsensitive);
-        }
     }
 
+    return placeholder;
+}
+
+QString Entry::resolveUrlPlaceholder(Entry::PlaceholderType placeholderType) const
+{
+    const QString urlStr = url();
+    if (urlStr.isEmpty())
+        return QString();
+
+    const QUrl qurl(urlStr);
+    switch (placeholderType) {
+    case PlaceholderType::Url:
+        return urlStr;
+    case PlaceholderType::UrlWithoutScheme:
+        return qurl.toString(QUrl::RemoveScheme | QUrl::FullyDecoded);
+    case PlaceholderType::UrlScheme:
+        return qurl.scheme();
+    case PlaceholderType::UrlHost:
+        return qurl.host();
+    case PlaceholderType::UrlPort:
+        return QString::number(qurl.port());
+    case PlaceholderType::UrlPath:
+        return qurl.path();
+    case PlaceholderType::UrlQuery:
+        return qurl.query();
+    case PlaceholderType::UrlFragment:
+        return qurl.fragment();
+    case PlaceholderType::UrlUserInfo:
+        return qurl.userInfo();
+    case PlaceholderType::UrlUserName:
+        return qurl.userName();
+    case PlaceholderType::UrlPassword:
+        return qurl.password();
+    default:
+        Q_ASSERT(false);
+        break;
+    }
+
+    return urlStr;
+}
+
+Entry::PlaceholderType Entry::placeholderType(const QString &placeholder) const
+{
+    if (!placeholder.startsWith(QLatin1Char('{')) || !placeholder.endsWith(QLatin1Char('}'))) {
+        return PlaceholderType::NotPlaceholder;
+    } else if (placeholder.startsWith(QLatin1Literal("{S:"))) {
+        return PlaceholderType::CustomAttribute;
+    } else if (placeholder.startsWith(QLatin1Literal("{REF:"))) {
+        return PlaceholderType::Reference;
+    }
+
+    static const QMap<QString, PlaceholderType> placeholders {
+        { QStringLiteral("{TITLE}"), PlaceholderType::Title },
+        { QStringLiteral("{USERNAME}"), PlaceholderType::UserName },
+        { QStringLiteral("{PASSWORD}"), PlaceholderType::Password },
+        { QStringLiteral("{NOTES}"), PlaceholderType::Notes },
+        { QStringLiteral("{TOTP}"), PlaceholderType::Totp },
+        { QStringLiteral("{URL}"), PlaceholderType::Url },
+        { QStringLiteral("{URL:RMVSCM}"), PlaceholderType::UrlWithoutScheme },
+        { QStringLiteral("{URL:WITHOUTSCHEME}"), PlaceholderType::UrlWithoutScheme },
+        { QStringLiteral("{URL:SCM}"), PlaceholderType::UrlScheme },
+        { QStringLiteral("{URL:SCHEME}"), PlaceholderType::UrlScheme },
+        { QStringLiteral("{URL:HOST}"), PlaceholderType::UrlHost },
+        { QStringLiteral("{URL:PORT}"), PlaceholderType::UrlPort },
+        { QStringLiteral("{URL:PATH}"), PlaceholderType::UrlPath },
+        { QStringLiteral("{URL:QUERY}"), PlaceholderType::UrlQuery },
+        { QStringLiteral("{URL:FRAGMENT}"), PlaceholderType::UrlFragment },
+        { QStringLiteral("{URL:USERINFO}"), PlaceholderType::UrlUserInfo },
+        { QStringLiteral("{URL:USERNAME}"), PlaceholderType::UrlUserName },
+        { QStringLiteral("{URL:PASSWORD}"), PlaceholderType::UrlPassword }
+    };
+
+    PlaceholderType result = placeholders.value(placeholder.toUpper(), PlaceholderType::Unknown);
     return result;
 }
 
@@ -833,63 +919,4 @@ QString Entry::resolveUrl(const QString& url) const
 
     // No valid http URL's found
     return QString("");
-}
-
-QString Entry::resolveUrlPlaceholder(const QString &strUrl, Entry::UrlPlaceholderType placeholderType) const
-{
-    QUrl qurl(strUrl);
-    if (!qurl.isValid())
-        return QString();
-
-    switch (placeholderType) {
-    case UrlPlaceholderType::FullUrl:
-        return strUrl;
-    case UrlPlaceholderType::WithoutScheme:
-        return qurl.toString(QUrl::RemoveScheme | QUrl::FullyDecoded);
-    case UrlPlaceholderType::Scheme:
-        return qurl.scheme();
-    case UrlPlaceholderType::Host:
-        return qurl.host();
-    case UrlPlaceholderType::Port:
-        return QString::number(qurl.port());
-    case UrlPlaceholderType::Path:
-        return qurl.path();
-    case UrlPlaceholderType::Query:
-        return qurl.query();
-    case UrlPlaceholderType::Fragment:
-        return qurl.fragment();
-    case UrlPlaceholderType::UserInfo:
-        return qurl.userInfo();
-    case UrlPlaceholderType::UserName:
-        return qurl.userName();
-    case UrlPlaceholderType::Password:
-        return qurl.password();
-    default:
-        Q_ASSERT(false);
-        break;
-    }
-
-    return QString();
-}
-
-Entry::UrlPlaceholderType Entry::urlPlaceholderType(const QString &placeholder) const
-{
-    static const QMap<QString, UrlPlaceholderType> urlPlaceholders {
-        { QStringLiteral("{URL}"), UrlPlaceholderType::FullUrl },
-        { QStringLiteral("{URL:RMVSCM}"), UrlPlaceholderType::WithoutScheme },
-        { QStringLiteral("{URL:WITHOUTSCHEME}"), UrlPlaceholderType::WithoutScheme },
-        { QStringLiteral("{URL:SCM}"), UrlPlaceholderType::Scheme },
-        { QStringLiteral("{URL:SCHEME}"), UrlPlaceholderType::Scheme },
-        { QStringLiteral("{URL:HOST}"), UrlPlaceholderType::Host },
-        { QStringLiteral("{URL:PORT}"), UrlPlaceholderType::Port },
-        { QStringLiteral("{URL:PATH}"), UrlPlaceholderType::Path },
-        { QStringLiteral("{URL:QUERY}"), UrlPlaceholderType::Query },
-        { QStringLiteral("{URL:FRAGMENT}"), UrlPlaceholderType::Fragment },
-        { QStringLiteral("{URL:USERINFO}"), UrlPlaceholderType::UserInfo },
-        { QStringLiteral("{URL:USERNAME}"), UrlPlaceholderType::UserName },
-        { QStringLiteral("{URL:PASSWORD}"), UrlPlaceholderType::Password }
-    };
-
-    UrlPlaceholderType result = urlPlaceholders.value(placeholder.toUpper(), UrlPlaceholderType::NotUrl);
-    return result;
 }
