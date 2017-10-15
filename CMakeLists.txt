@@ -240,17 +240,8 @@ find_package(ZLIB REQUIRED)
 
 set(CMAKE_REQUIRED_INCLUDES ${ZLIB_INCLUDE_DIR})
 
-check_cxx_source_compiles("
-  #include <zlib.h>
-
-  #if !defined(ZLIB_VERNUM) || (ZLIB_VERNUM < 0x1200)
-      #error zlib 1.2.x or higher is required to use the gzip format
-  #endif
-
-  int main() { return 0; }" ZLIB_SUPPORTS_GZIP)
-
-if(NOT ZLIB_SUPPORTS_GZIP)
-  message(FATAL_ERROR "zlib 1.2.x or higher is required to use the gzip format")
+if(ZLIB_VERSION_STRING VERSION_LESS "1.2.0")
+  message(FATAL_ERROR "zlib 1.2.0 or higher is required to use the gzip format")
 endif()
 
 # Optional
