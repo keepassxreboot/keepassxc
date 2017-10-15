@@ -234,6 +234,9 @@ target_link_libraries(keepassx_core
 
 if(APPLE)
     target_link_libraries(keepassx_core "-framework Foundation")
+    if(Qt5MacExtras_FOUND)
+      target_link_libraries(keepassx_core Qt5::MacExtras)
+    endif()
 endif()
 if (UNIX AND NOT APPLE)
     target_link_libraries(keepassx_core Qt5::DBus)
@@ -264,13 +267,7 @@ if(APPLE AND WITH_APP_BUNDLE)
   set_target_properties(${PROGNAME} PROPERTIES
                         MACOSX_BUNDLE ON
                         MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)
-endif()
 
-install(TARGETS ${PROGNAME}
-        BUNDLE DESTINATION . COMPONENT Runtime
-        RUNTIME DESTINATION ${BIN_INSTALL_DIR} COMPONENT Runtime)
-
-if(APPLE AND WITH_APP_BUNDLE)
   if(QT_MAC_USE_COCOA AND EXISTS "${QT_LIBRARY_DIR}/Resources/qt_menu.nib")
     install(DIRECTORY "${QT_LIBRARY_DIR}/Resources/qt_menu.nib"
             DESTINATION "${DATA_INSTALL_DIR}")
@@ -284,15 +281,16 @@ if(APPLE AND WITH_APP_BUNDLE)
   set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSXC_VERSION}")
   include(CPack)
 
-  if(NOT DEFINED QT_BINARY_DIR)
-    set(QT_BINARY_DIR "/usr/local/opt/qt5/bin" CACHE PATH "QT binary folder")
-  endif()
   add_custom_command(TARGET ${PROGNAME}
                      POST_BUILD
-                     COMMAND ${QT_BINARY_DIR}/macdeployqt ${PROGNAME}.app
+                     COMMAND ${MACDEPLOYQT_EXE} ${PROGNAME}.app
                      WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
                      COMMENT "Deploying app bundle")
 endif()
+
+install(TARGETS ${PROGNAME}
+      BUNDLE DESTINATION . COMPONENT Runtime
+      RUNTIME DESTINATION ${BIN_INSTALL_DIR} COMPONENT Runtime)
 
 if(MINGW)
   if(${CMAKE_SIZEOF_VOID_P} EQUAL "8")

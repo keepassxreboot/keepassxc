@@ -36,7 +36,7 @@ include(CheckCXXSourceCompiles)
 option(WITH_TESTS "Enable building of unit tests" ON)
 option(WITH_GUI_TESTS "Enable building of GUI tests" OFF)
 option(WITH_DEV_BUILD "Use only for development. Disables/warns about deprecated methods." OFF)
-option(WITH_ASAN "Enable address sanitizer checks (Linux and macOS only)" OFF)
+option(WITH_ASAN "Enable address sanitizer checks (Linux / macOS only)" OFF)
 option(WITH_COVERAGE "Use to build with coverage tests (GCC only)." OFF)
 option(WITH_APP_BUNDLE "Enable Application Bundle for macOS" ON)
 
@@ -112,13 +112,13 @@ add_gcc_compiler_cxxflags("-Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virt
 add_gcc_compiler_cflags("-Wchar-subscripts -Wwrite-strings")
 
 if(WITH_ASAN)
-  if(NOT (LINUX OR APPLE))
-      message(FATAL_ERROR "WITH_ASAN is only supported on Linux and macOS at the moment.")
+  if(NOT (CMAKE_SYSTEM_NAME STREQUAL "Linux" OR APPLE))
+      message(FATAL_ERROR "WITH_ASAN is only supported on Linux / macOS at the moment.")
   endif()
 
   add_gcc_compiler_flags("-fsanitize=address -DWITH_ASAN")
 
-  if(LINUX)
+  if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     if(NOT (CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.9))
       add_gcc_compiler_flags("-fsanitize=leak -DWITH_LSAN")
     endif()
@@ -220,17 +220,33 @@ if(WITH_TESTS)
   enable_testing()
 endif(WITH_TESTS)
 
-find_package(Qt5Core          5.2 REQUIRED)
-find_package(Qt5Network       5.2 REQUIRED)
-find_package(Qt5Concurrent    5.2 REQUIRED)
-find_package(Qt5Widgets       5.2 REQUIRED)
-find_package(Qt5Test          5.2 REQUIRED)
-find_package(Qt5LinguistTools 5.2 REQUIRED)
-find_package(Qt5Network       5.2 REQUIRED)
-if (UNIX AND NOT APPLE)
-    find_package(Qt5DBus 5.2 REQUIRED)
+if(UNIX AND NOT APPLE)
+  find_package(Qt5 COMPONENTS Core Network Concurrent Widgets Test LinguistTools DBus REQUIRED)
+elseif(APPLE)
+  find_package(Qt5 COMPONENTS Core Network Concurrent Widgets Test LinguistTools MacExtras REQUIRED
+    HINTS /usr/local/Cellar/qt/*/lib/cmake ENV PATH
+  )
+else()
+  find_package(Qt5 COMPONENTS Core Network Concurrent Widgets Test LinguistTools REQUIRED)
 endif()
+
+if(Qt5Core_VERSION VERSION_LESS "5.2.0")
+  message(FATAL_ERROR "Qt version 5.2.0 or higher is required")
+endif()
+
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
+
+if(APPLE)
+  set(CMAKE_MACOSX_RPATH TRUE)
+  find_program(MACDEPLOYQT_EXE macdeployqt HINTS /usr/local/opt/qt5/bin ENV PATH)
+  if(NOT MACDEPLOYQT_EXE)
+    message(FATAL_ERROR "macdeployqt is required to use build in macOS")
+  else()
+    message(STATUS "Using macdeployqt: ${MACDEPLOYQT_EXE}")
+  endif()
+endif()
 
 # Debian sets the the build type to None for package builds.
 # Make sure we don't enable asserts there.
