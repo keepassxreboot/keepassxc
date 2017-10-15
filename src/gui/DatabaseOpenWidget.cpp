@@ -162,8 +162,8 @@ void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)
 void DatabaseOpenWidget::openDatabase()
 {
     KeePass2Reader reader;
-    CompositeKey* masterKey = databaseKey();
-    if (masterKey == nullptr) {
+    QScopedPointer<CompositeKey> masterKey(databaseKey());
+    if (masterKey.isNull()) {
         return;
     }
 
@@ -190,8 +190,6 @@ void DatabaseOpenWidget::openDatabase()
                                          MessageWidget::Error);
         m_ui->editPassword->clear();
     }
-
-    delete masterKey;
 }
 
 CompositeKey* DatabaseOpenWidget::databaseKey()
