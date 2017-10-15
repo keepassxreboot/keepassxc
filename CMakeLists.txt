@@ -223,7 +223,10 @@ endif(WITH_TESTS)
 if(UNIX AND NOT APPLE)
   find_package(Qt5 COMPONENTS Core Network Concurrent Widgets Test LinguistTools DBus REQUIRED)
 elseif(APPLE)
-  find_package(Qt5 COMPONENTS Core Network Concurrent Widgets Test LinguistTools MacExtras REQUIRED
+  find_package(Qt5 COMPONENTS Core Network Concurrent Widgets Test LinguistTools REQUIRED
+    HINTS /usr/local/Cellar/qt/*/lib/cmake ENV PATH
+  )
+  find_package(Qt5 COMPONENTS MacExtras
     HINTS /usr/local/Cellar/qt/*/lib/cmake ENV PATH
   )
 else()
@@ -242,7 +245,7 @@ if(APPLE)
   set(CMAKE_MACOSX_RPATH TRUE)
   find_program(MACDEPLOYQT_EXE macdeployqt HINTS /usr/local/opt/qt5/bin ENV PATH)
   if(NOT MACDEPLOYQT_EXE)
-    message(FATAL_ERROR "macdeployqt is required to use build in macOS")
+    message(FATAL_ERROR "macdeployqt is required to build in macOS")
   else()
     message(STATUS "Using macdeployqt: ${MACDEPLOYQT_EXE}")
   endif()
