@@ -7,3 +7,5 @@ release*/
 
 \.vscode/
 *.swp
+
+.DS_Store
