@@ -178,8 +178,8 @@ add_feature_info(AutoType WITH_XC_AUTOTYPE "Automatic password typing")
 add_feature_info(KeePassHTTP WITH_XC_HTTP "Browser integration compatible with ChromeIPass and PassIFox")
 add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
 
-add_subdirectory(http)
 if(WITH_XC_HTTP)
+    add_subdirectory(http)
     set(keepasshttp_LIB keepasshttp qhttp Qt5::Network)
 endif()
 
