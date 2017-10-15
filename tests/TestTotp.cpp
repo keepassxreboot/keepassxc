@@ -18,15 +18,14 @@
 
 #include "TestTotp.h"
 
-#include <QTest>
-#include <QTime>
 #include <QDateTime>
-#include <QtEndian>
+#include <QTest>
 #include <QTextCodec>
+#include <QTime>
+#include <QtEndian>
 
 #include "crypto/Crypto.h"
 #include "totp/totp.h"
-#include "totp/base32.h"
 
 QTEST_GUILESS_MAIN(TestTotp)
 
@@ -35,12 +34,13 @@ void TestTotp::initTestCase()
     QVERIFY(Crypto::init());
 }
 
-
 void TestTotp::testParseSecret()
 {
     quint8 digits = 0;
     quint8 step = 0;
-    QString secret = "otpauth://totp/ACME%20Co:john@example.com?secret=HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ&issuer=ACME%20Co&algorithm=SHA1&digits=6&period=30";
+    QString secret = "otpauth://totp/"
+                     "ACME%20Co:john@example.com?secret=HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ&issuer=ACME%20Co&algorithm="
+                     "SHA1&digits=6&period=30";
     QCOMPARE(QTotp::parseOtpString(secret, digits, step), QString("HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ"));
     QCOMPARE(digits, quint8(6));
     QCOMPARE(step, quint8(30));
@@ -58,25 +58,6 @@ void TestTotp::testParseSecret()
     QCOMPARE(QTotp::parseOtpString(secret, digits, step), QString("gezdgnbvgy3tqojqgezdgnbvgy3tqojq"));
     QCOMPARE(digits, quint8(6));
     QCOMPARE(step, quint8(30));
-}
-
-void TestTotp::testBase32()
-{
-    QByteArray key = QString("JBSW Y3DP EB3W 64TM MQXC 4LQA").toLatin1();
-    QByteArray secret = Base32::base32_decode(key);
-    QCOMPARE(QString::fromLatin1(secret), QString("Hello world..."));
-
-    key = QString("gezdgnbvgy3tqojqgezdgnbvgy3tqojq").toLatin1();
-    secret = Base32::base32_decode(key);
-    QCOMPARE(QString::fromLatin1(secret), QString("12345678901234567890"));
-
-    key = QString("ORSXG5A=").toLatin1();
-    secret = Base32::base32_decode(key);
-    QCOMPARE(QString::fromLatin1(secret), QString("test"));
-
-    key = QString("MZXW6YTBOI======").toLatin1();
-    secret = Base32::base32_decode(key);
-    QCOMPARE(QString::fromLatin1(secret), QString("foobar"));
 }
 
 void TestTotp::testTotpCode()
