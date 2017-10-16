@@ -598,7 +598,8 @@ build() {
             # Building on Linux without Docker container
             logInfo "Configuring build..."
             cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off $CMAKE_OPTIONS \
-                -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" "$SRC_DIR"
+                -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
+                -DKEEPASSXC_DIST_TYPE=AppImage "$SRC_DIR"
                 
             logInfo "Compiling sources..."
             make $MAKE_OPTIONS
