@@ -24,7 +24,7 @@ parts:
     configflags:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=/usr
-      - -DKEEPASSXC_SNAP_BUILD=ON
+      - -DKEEPASSXC_DIST_TYPE=Snap
       - -DWITH_TESTS=OFF
       - -DWITH_XC_AUTOTYPE=ON
       - -DWITH_XC_HTTP=ON
