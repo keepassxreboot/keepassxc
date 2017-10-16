@@ -73,7 +73,7 @@ cat << EOF > ./usr/bin/keepassxc_env
 #!/usr/bin/env bash
 #export QT_QPA_PLATFORMTHEME=gtk2
 export LD_LIBRARY_PATH="..$(dirname ${QT_PLUGIN_PATH})/lib:\${LD_LIBRARY_PATH}"
-export QT_PLUGIN_PATH="..${QT_PLUGIN_PATH}"
+export QT_PLUGIN_PATH="..${QT_PLUGIN_PATH}:\${KPXC_QT_PLUGIN_PATH}"
 
 # unset XDG_DATA_DIRS to make tray icon work in Ubuntu Unity
 # see https://github.com/probonopd/AppImageKit/issues/351
