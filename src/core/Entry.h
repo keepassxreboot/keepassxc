@@ -96,6 +96,7 @@ public:
     const EntryAttachments* attachments() const;
 
     static const int DefaultIconNumber;
+    static const int ResolveMaximumDepth;
 
     void setUuid(const Uuid& uuid);
     void setIcon(int iconNumber);
@@ -168,7 +169,7 @@ public:
     QString maskPasswordPlaceholders(const QString& str) const;
     QString resolveMultiplePlaceholders(const QString& str) const;
     QString resolvePlaceholder(const QString& str) const;
-    QString resolveUrlPlaceholder(PlaceholderType placeholderType) const;
+    QString resolveUrlPlaceholder(const QString &str, PlaceholderType placeholderType) const;
     PlaceholderType placeholderType(const QString& placeholder) const;
     QString resolveUrl(const QString& url) const;
 
@@ -199,6 +200,9 @@ private slots:
     void updateModifiedSinceBegin();
 
 private:
+    QString resolveMultiplePlaceholdersRecursive(const QString& str, int maxDepth) const;
+    QString resolvePlaceholderRecursive(const QString& placeholder, int maxDepth) const;
+
     const Database* database() const;
     template <class T> bool set(T& property, const T& value);
 

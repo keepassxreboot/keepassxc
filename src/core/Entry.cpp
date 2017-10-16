@@ -26,6 +26,8 @@
 #include "totp/totp.h"
 
 const int Entry::DefaultIconNumber = 0;
+const int Entry::ResolveMaximumDepth = 10;
+
 
 Entry::Entry()
     : m_attributes(new EntryAttributes(this))
@@ -670,6 +672,108 @@ void Entry::updateModifiedSinceBegin()
     m_modifiedSinceBegin = true;
 }
 
+QString Entry::resolveMultiplePlaceholdersRecursive(const QString &str, int maxDepth) const
+{
+    if (maxDepth <= 0) {
+        qWarning("Maximum depth of replacement has been reached. Entry uuid: %s", qPrintable(uuid().toHex()));
+        return str;
+    }
+
+    QString result = str;
+    QRegExp placeholderRegEx("(\\{[^\\}]+\\})", Qt::CaseInsensitive, QRegExp::RegExp2);
+    placeholderRegEx.setMinimal(true);
+    int pos = 0;
+    while ((pos = placeholderRegEx.indexIn(str, pos)) != -1) {
+        const QString found = placeholderRegEx.cap(1);
+        result.replace(found, resolvePlaceholderRecursive(found, maxDepth - 1));
+        pos += placeholderRegEx.matchedLength();
+    }
+
+    if (result != str) {
+        result = resolveMultiplePlaceholdersRecursive(result, maxDepth - 1);
+    }
+
+    return result;
+}
+
+QString Entry::resolvePlaceholderRecursive(const QString &placeholder, int maxDepth) const
+{
+    const PlaceholderType typeOfPlaceholder = placeholderType(placeholder);
+    switch (typeOfPlaceholder) {
+    case PlaceholderType::NotPlaceholder:
+        return placeholder;
+    case PlaceholderType::Unknown:
+        qWarning("Can't resolve placeholder %s for entry with uuid %s", qPrintable(placeholder),
+                 qPrintable(uuid().toHex()));
+        return placeholder;
+    case PlaceholderType::Title:
+        return title();
+    case PlaceholderType::UserName:
+        return username();
+    case PlaceholderType::Password:
+        return password();
+    case PlaceholderType::Notes:
+        return notes();
+    case PlaceholderType::Totp:
+        return totp();
+    case PlaceholderType::Url:
+        return url();
+    case PlaceholderType::UrlWithoutScheme:
+    case PlaceholderType::UrlScheme:
+    case PlaceholderType::UrlHost:
+    case PlaceholderType::UrlPort:
+    case PlaceholderType::UrlPath:
+    case PlaceholderType::UrlQuery:
+    case PlaceholderType::UrlFragment:
+    case PlaceholderType::UrlUserInfo:
+    case PlaceholderType::UrlUserName:
+    case PlaceholderType::UrlPassword: {
+        const QString strUrl = resolveMultiplePlaceholdersRecursive(url(), maxDepth - 1);
+        return resolveUrlPlaceholder(strUrl, typeOfPlaceholder);
+    }
+    case PlaceholderType::CustomAttribute: {
+        const QString key = placeholder.mid(3, placeholder.length() - 4); // {S:attr} => mid(3, len - 4)
+        return attributes()->hasKey(key) ? attributes()->value(key) : QString();
+    }
+    case PlaceholderType::Reference: {
+        // resolving references in format: {REF:<WantedField>@I:<uuid of referenced entry>}
+        // using format from http://keepass.info/help/base/fieldrefs.html at the time of writing,
+        // but supporting lookups of standard fields and references by UUID only
+
+        QString result;
+        QRegExp* referenceRegExp = m_attributes->referenceRegExp();
+        if (referenceRegExp->indexIn(placeholder) != -1) {
+            constexpr int wantedFieldIndex = 1;
+            constexpr int referencedUuidIndex = 2;
+            const Uuid referencedUuid(QByteArray::fromHex(referenceRegExp->cap(referencedUuidIndex).toLatin1()));
+            const Entry* refEntry = m_group->database()->resolveEntry(referencedUuid);
+            if (refEntry) {
+                const QString wantedField = referenceRegExp->cap(wantedFieldIndex).toLower();
+                if (wantedField == "t") {
+                    result = refEntry->title();
+                } else if (wantedField == "u") {
+                    result = refEntry->username();
+                } else if (wantedField == "p") {
+                    result = refEntry->password();
+                } else if (wantedField == "a") {
+                    result = refEntry->url();
+                } else if (wantedField == "n") {
+                    result = refEntry->notes();
+                }
+
+                // Referencing fields of other entries only works with standard fields, not with custom user strings.
+                // If you want to reference a custom user string, you need to place a redirection in a standard field
+                // of the entry with the custom string, using {S:<Name>}, and reference the standard field.
+                result = refEntry->resolveMultiplePlaceholdersRecursive(result, maxDepth - 1);
+            }
+        }
+        return result;
+    }
+    }
+
+    return placeholder;
+}
+
 Group* Entry::group()
 {
     return m_group;
@@ -736,97 +840,21 @@ QString Entry::maskPasswordPlaceholders(const QString &str) const
 
 QString Entry::resolveMultiplePlaceholders(const QString& str) const
 {
-    QString result = str;
-    QRegExp tmplRegEx("(\\{.*\\})", Qt::CaseInsensitive, QRegExp::RegExp2);
-    tmplRegEx.setMinimal(true);
-    QStringList tmplList;
-    int pos = 0;
-
-    while ((pos = tmplRegEx.indexIn(str, pos)) != -1) {
-        QString found = tmplRegEx.cap(1);
-        result.replace(found,resolvePlaceholder(found));
-        pos += tmplRegEx.matchedLength();
-    }
-
-    return result;
+    return resolveMultiplePlaceholdersRecursive(str, ResolveMaximumDepth);
 }
 
 QString Entry::resolvePlaceholder(const QString& placeholder) const
 {
-    const PlaceholderType placeholderType = this->placeholderType(placeholder);
-    switch (placeholderType) {
-    case PlaceholderType::NotPlaceholder:
-        return placeholder;
-    case PlaceholderType::Unknown:
-        qWarning("Can't resolve placeholder '%s' for entry with uuid %s", qPrintable(placeholder),
-                 qPrintable(uuid().toHex()));
-        return placeholder;
-    case PlaceholderType::Title:
-        return title();
-    case PlaceholderType::UserName:
-        return username();
-    case PlaceholderType::Password:
-        return password();
-    case PlaceholderType::Notes:
-        return notes();
-    case PlaceholderType::Totp:
-        return totp();
-    case PlaceholderType::Url:
-    case PlaceholderType::UrlWithoutScheme:
-    case PlaceholderType::UrlScheme:
-    case PlaceholderType::UrlHost:
-    case PlaceholderType::UrlPort:
-    case PlaceholderType::UrlPath:
-    case PlaceholderType::UrlQuery:
-    case PlaceholderType::UrlFragment:
-    case PlaceholderType::UrlUserInfo:
-    case PlaceholderType::UrlUserName:
-    case PlaceholderType::UrlPassword:
-        return resolveUrlPlaceholder(placeholderType);
-    case PlaceholderType::CustomAttribute: {
-        const QString key = placeholder.mid(3, placeholder.length() - 4); // {S:attribute} => mid(3, len - 4)
-        return attributes()->hasKey(key) ? attributes()->value(key) : placeholder;
-    }
-    case PlaceholderType::Reference: {
-        // resolving references in format: {REF:<WantedField>@I:<uuid of referenced entry>}
-        // using format from http://keepass.info/help/base/fieldrefs.html at the time of writing,
-        // but supporting lookups of standard fields and references by UUID only
-
-        QRegExp* tmpRegExp = m_attributes->referenceRegExp();
-        if (tmpRegExp->indexIn(placeholder) != -1) {
-            constexpr int wantedFieldIndex = 1;
-            constexpr int referencedUuidIndex = 2;
-            const Uuid referencedUuid(QByteArray::fromHex(tmpRegExp->cap(referencedUuidIndex).toLatin1()));
-            const Entry* refEntry = m_group->database()->resolveEntry(referencedUuid);
-            if (refEntry) {
-                QString result;
-                const QString wantedField = tmpRegExp->cap(wantedFieldIndex).toLower();
-                if (wantedField == "t") result = refEntry->title();
-                else if (wantedField == "u") result = refEntry->username();
-                else if (wantedField == "p") result = refEntry->password();
-                else if (wantedField == "a") result = refEntry->url();
-                else if (wantedField == "n") result = refEntry->notes();
-
-                result = refEntry->resolveMultiplePlaceholders(result);
-                return result;
-            }
-        }
-    }
-    }
-
-    return placeholder;
+    return resolvePlaceholderRecursive(placeholder, ResolveMaximumDepth);
 }
 
-QString Entry::resolveUrlPlaceholder(Entry::PlaceholderType placeholderType) const
+QString Entry::resolveUrlPlaceholder(const QString &str, Entry::PlaceholderType placeholderType) const
 {
-    const QString urlStr = url();
-    if (urlStr.isEmpty())
+    if (str.isEmpty())
         return QString();
 
-    const QUrl qurl(urlStr);
+    const QUrl qurl(str);
     switch (placeholderType) {
-    case PlaceholderType::Url:
-        return urlStr;
     case PlaceholderType::UrlWithoutScheme:
         return qurl.toString(QUrl::RemoveScheme | QUrl::FullyDecoded);
     case PlaceholderType::UrlScheme:
@@ -847,12 +875,13 @@ QString Entry::resolveUrlPlaceholder(Entry::PlaceholderType placeholderType) con
         return qurl.userName();
     case PlaceholderType::UrlPassword:
         return qurl.password();
-    default:
-        Q_ASSERT(false);
+    default: {
+        Q_ASSERT_X(false, "Entry::resolveUrlPlaceholder", "Bad url placeholder type");
         break;
     }
+    }
 
-    return urlStr;
+    return QString();
 }
 
 Entry::PlaceholderType Entry::placeholderType(const QString &placeholder) const
@@ -886,8 +915,7 @@ Entry::PlaceholderType Entry::placeholderType(const QString &placeholder) const
         { QStringLiteral("{URL:PASSWORD}"), PlaceholderType::UrlPassword }
     };
 
-    PlaceholderType result = placeholders.value(placeholder.toUpper(), PlaceholderType::Unknown);
-    return result;
+    return placeholders.value(placeholder.toUpper(), PlaceholderType::Unknown);
 }
 
 QString Entry::resolveUrl(const QString& url) const
