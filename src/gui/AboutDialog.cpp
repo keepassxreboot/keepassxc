@@ -55,10 +55,14 @@ AboutDialog::AboutDialog(QWidget* parent)
     QString debugInfo = "KeePassXC - ";
     debugInfo.append(tr("Version %1\n").arg(KEEPASSX_VERSION));
     if (!commitHash.isEmpty()) {
-        debugInfo.append(tr("Revision: %1").arg(commitHash).append("\n\n"));
+        debugInfo.append(tr("Revision: %1").arg(commitHash.left(7)).append("\n"));
     }
 
-    debugInfo.append(QString("%1\n- Qt %2\n- %3\n\n")
+#ifdef KEEPASSXC_DIST
+    debugInfo.append(tr("Distribution: %1").arg(KEEPASSXC_DIST_TYPE).append("\n"));
+#endif
+
+    debugInfo.append("\n").append(QString("%1\n- Qt %2\n- %3\n\n")
              .arg(tr("Libraries:"))
              .arg(QString::fromLocal8Bit(qVersion()))
              .arg(Crypto::backendVersion()));

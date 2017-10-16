@@ -16,7 +16,8 @@
 #cmakedefine WITH_XC_AUTOTYPE
 #cmakedefine WITH_XC_YUBIKEY
 
-#cmakedefine KEEPASSXC_SNAP_BUILD
+#cmakedefine KEEPASSXC_DIST
+#cmakedefine KEEPASSXC_DIST_TYPE "@KEEPASSXC_DIST_TYPE@"
 
 #cmakedefine HAVE_PR_SET_DUMPABLE 1
 #cmakedefine HAVE_RLIMIT_CORE 1
