@@ -1,18 +1,18 @@
 name: keepassxc
 version: 2.2.1
 grade: stable
-summary: community driven port of the windows application “Keepass Password Safe”
+summary: Community-driven port of the Windows application “KeePass Password Safe”
 description: |
   KeePassXC is an application for people with extremely high demands on secure
-  personal data management. It has a light interface, is cross platform and
-  is published under the terms of the GNU General Public License.
+  personal data management. It has a light interface, is cross-platform and
+  published under the terms of the GNU General Public License.
 confinement: strict
 
 apps:
   keepassxc:
     command: desktop-launch keepassxc
     plugs: [unity7, x11, opengl, gsettings, home, network, network-bind, removable-media, raw-usb]
-    desktop: usr/share/applications/keepassxc.desktop
+    desktop: usr/share/applications/org.keepassxc.desktop
   cli:
     command: keepassxc-cli
     plugs: [gsettings, home, removable-media, raw-usb]
