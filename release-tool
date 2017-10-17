@@ -289,10 +289,15 @@ checkTransifexCommandExists() {
     if [ 0 -ne $? ]; then
         exitError "Transifex tool 'tx' not installed! Please install it using 'pip install transifex-client'"
     fi
+}
 
-    command -v lupdate-qt5 > /dev/null
-    if [ 0 -ne $? ]; then
-        exitError "Qt Linguist tool (lupdate-qt5) is not installed! Please install using 'apt install qttools5-dev-tools'"
+checkQt5LUpdateExists() {
+    command -v lupdate > /dev/null
+    if [ 0 -eq $? ] && ! $(lupdate -version | grep -q "lupdate version 5\."); then
+        command -v lupdate-qt5 > /dev/null
+        if [ 0 -ne $? ]; then
+            exitError "Qt Linguist tool (lupdate-qt5) is not installed! Please install using 'apt install qttools5-dev-tools'"
+        fi
     fi
 }
 
@@ -307,6 +312,7 @@ performChecks() {
     logInfo "Validating toolset and repository..."
 
     checkTransifexCommandExists
+    checkQt5LUpdateExists
     checkGitRepository
     checkReleaseDoesNotExist
     checkWorkingTreeClean
