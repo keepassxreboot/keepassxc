@@ -42,7 +42,7 @@ parts:
       - libyubikey-dev
       - libykpers-1-dev
     install: |
-      sed -i 's|Icon=keepassxc|Icon=${SNAP}/usr/share/icons/hicolor/256x256/apps/keepassxc.png|g' $SNAPCRAFT_PART_INSTALL/usr/share/applications/keepassxc.desktop
+      sed -i 's|Icon=keepassxc|Icon=${SNAP}/usr/share/icons/hicolor/256x256/apps/keepassxc.png|g' $SNAPCRAFT_PART_INSTALL/usr/share/applications/org.keepassxc.desktop
     after: [desktop-qt5]
 
   # Redefine desktop-qt5 stage packages to work with Ubuntu 17.04
