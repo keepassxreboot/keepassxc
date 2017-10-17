@@ -91,7 +91,7 @@ QString FilePath::pluginPath(const QString& name)
 
 QIcon FilePath::applicationIcon()
 {
-#ifdef KEEPASSXC_SNAP_BUILD
+#ifdef KEEPASSXC_DIST_SNAP
     return icon("apps", "keepassxc", false);
 #else
     return icon("apps", "keepassxc");
@@ -100,7 +100,7 @@ QIcon FilePath::applicationIcon()
 
 QIcon FilePath::trayIconLocked()
 {
-#ifdef KEEPASSXC_SNAP_BUILD
+#ifdef KEEPASSXC_DIST_SNAP
     return icon("apps", "keepassxc-locked", false);
 #else
     return icon("apps", "keepassxc-locked");
@@ -109,7 +109,7 @@ QIcon FilePath::trayIconLocked()
 
 QIcon FilePath::trayIconUnlocked()
 {
-#ifdef KEEPASSXC_SNAP_BUILD
+#ifdef KEEPASSXC_DIST_SNAP
     return icon("apps", "keepassxc-unlocked", false);
 #else
     return icon("apps", "keepassxc-unlocked");
