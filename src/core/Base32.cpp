@@ -206,8 +206,9 @@ QByteArray Base32::encode(const QByteArray& data)
         }
 
         // add pad characters
-        while (o < encodedData.size())
+        while (o < encodedData.size()) {
             encodedData[o++] = '=';
+        }
     }
 
     Q_ASSERT(encodedData.size() == o);
