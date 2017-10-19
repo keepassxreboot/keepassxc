@@ -45,6 +45,7 @@ void KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
     m_error = false;
     m_errorStr.clear();
 
+    QByteArray transformSeed = randomGen()->randomArray(32);
     QByteArray masterSeed = randomGen()->randomArray(32);
     QByteArray encryptionIV = randomGen()->randomArray(16);
     QByteArray protectedStreamKey = randomGen()->randomArray(32);
@@ -52,7 +53,12 @@ void KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
     QByteArray endOfHeader = "\r\n\r\n";
 
     if (db->challengeMasterSeed(masterSeed) == false) {
-        raiseError("Unable to issue challenge-response.");
+        raiseError(tr("Unable to issue challenge-response."));
+        return;
+    }
+
+    if (!db->transformKeyWithSeed(transformSeed)) {
+        raiseError(tr("Unable to calculate master key"));
         return;
     }
 

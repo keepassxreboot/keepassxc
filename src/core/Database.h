@@ -106,6 +106,7 @@ public:
      */
     bool setKey(const CompositeKey& key);
     bool hasKey() const;
+    bool transformKeyWithSeed(const QByteArray& transformSeed);
     bool verifyKey(const CompositeKey& key) const;
     void recycleEntry(Entry* entry);
     void recycleGroup(Group* group);
