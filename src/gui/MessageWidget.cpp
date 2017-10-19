@@ -20,10 +20,13 @@
 
 #include "QTimer"
 
+const int MessageWidget::DefaultAutoHideTimeout = 6000;
+const int MessageWidget::DisableAutoHide = -1;
+
 MessageWidget::MessageWidget(QWidget* parent)
     : KMessageWidget(parent)
     , m_autoHideTimer(new QTimer(this))
-    , m_autoHideTimeout(6000)
+    , m_autoHideTimeout(DefaultAutoHideTimeout)
 {
     m_autoHideTimer->setSingleShot(true);
     connect(m_autoHideTimer, SIGNAL(timeout()), this, SLOT(animatedHide()));
