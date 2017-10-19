@@ -20,7 +20,9 @@
 
 #include <QTest>
 
+#include "core/Database.h"
 #include "core/Entry.h"
+#include "core/Group.h"
 #include "crypto/Crypto.h"
 
 QTEST_GUILESS_MAIN(TestEntry)
@@ -157,4 +159,106 @@ void TestEntry::testResolveUrl()
     QCOMPARE(entry->resolveUrl(noUrl), QString(""));
 
     delete entry;
+}
+
+void TestEntry::testResolveUrlPlaceholders()
+{
+    Entry entry;
+    entry.setUrl("https://user:pw@keepassxc.org:80/path/example.php?q=e&s=t+2#fragment");
+
+    QString rmvscm("//user:pw@keepassxc.org:80/path/example.php?q=e&s=t+2#fragment"); // Entry URL without scheme name.
+    QString scm("https"); // Scheme name of the entry URL.
+    QString host("keepassxc.org"); // Host component of the entry URL.
+    QString port("80"); // Port number of the entry URL.
+    QString path("/path/example.php"); // Path component of the entry URL.
+    QString query("q=e&s=t+2"); // Query information of the entry URL.
+    QString userinfo("user:pw"); // User information of the entry URL.
+    QString username("user"); // User name of the entry URL.
+    QString password("pw"); // Password of the entry URL.
+    QString fragment("fragment"); // Fragment of the entry URL.
+
+    QCOMPARE(entry.resolvePlaceholder("{URL:RMVSCM}"), rmvscm);
+    QCOMPARE(entry.resolvePlaceholder("{URL:WITHOUTSCHEME}"), rmvscm);
+    QCOMPARE(entry.resolvePlaceholder("{URL:SCM}"), scm);
+    QCOMPARE(entry.resolvePlaceholder("{URL:SCHEME}"), scm);
+    QCOMPARE(entry.resolvePlaceholder("{URL:HOST}"), host);
+    QCOMPARE(entry.resolvePlaceholder("{URL:PORT}"), port);
+    QCOMPARE(entry.resolvePlaceholder("{URL:PATH}"), path);
+    QCOMPARE(entry.resolvePlaceholder("{URL:QUERY}"), query);
+    QCOMPARE(entry.resolvePlaceholder("{URL:USERINFO}"), userinfo);
+    QCOMPARE(entry.resolvePlaceholder("{URL:USERNAME}"), username);
+    QCOMPARE(entry.resolvePlaceholder("{URL:PASSWORD}"), password);
+    QCOMPARE(entry.resolvePlaceholder("{URL:FRAGMENT}"), fragment);
+}
+
+void TestEntry::testResolveRecursivePlaceholders()
+{
+    Database db;
+    Group* root = db.rootGroup();
+
+    Entry* entry1 = new Entry();
+    entry1->setGroup(root);
+    entry1->setUuid(Uuid::random());
+    entry1->setTitle("{USERNAME}");
+    entry1->setUsername("{PASSWORD}");
+    entry1->setPassword("{URL}");
+    entry1->setUrl("{S:CustomTitle}");
+    entry1->attributes()->set("CustomTitle", "RecursiveValue");
+    QCOMPARE(entry1->resolveMultiplePlaceholders(entry1->title()), QString("RecursiveValue"));
+
+    Entry* entry2 = new Entry();
+    entry2->setGroup(root);
+    entry2->setUuid(Uuid::random());
+    entry2->setTitle("Entry2Title");
+    entry2->setUsername("{S:CustomUserNameAttribute}");
+    entry2->setPassword(QString("{REF:P@I:%1}").arg(entry1->uuid().toHex()));
+    entry2->setUrl("http://{S:IpAddress}:{S:Port}/{S:Uri}");
+    entry2->attributes()->set("CustomUserNameAttribute", "CustomUserNameValue");
+    entry2->attributes()->set("IpAddress", "127.0.0.1");
+    entry2->attributes()->set("Port", "1234");
+    entry2->attributes()->set("Uri", "uri/path");
+
+    Entry* entry3 = new Entry();
+    entry3->setGroup(root);
+    entry3->setUuid(Uuid::random());
+    entry3->setTitle(QString("{REF:T@I:%1}").arg(entry2->uuid().toHex()));
+    entry3->setUsername(QString("{REF:U@I:%1}").arg(entry2->uuid().toHex()));
+    entry3->setPassword(QString("{REF:P@I:%1}").arg(entry2->uuid().toHex()));
+    entry3->setUrl(QString("{REF:A@I:%1}").arg(entry2->uuid().toHex()));
+
+    QCOMPARE(entry3->resolveMultiplePlaceholders(entry3->title()), QString("Entry2Title"));
+    QCOMPARE(entry3->resolveMultiplePlaceholders(entry3->username()), QString("CustomUserNameValue"));
+    QCOMPARE(entry3->resolveMultiplePlaceholders(entry3->password()), QString("RecursiveValue"));
+    QCOMPARE(entry3->resolveMultiplePlaceholders(entry3->url()), QString("http://127.0.0.1:1234/uri/path"));
+
+    Entry* entry4 = new Entry();
+    entry4->setGroup(root);
+    entry4->setUuid(Uuid::random());
+    entry4->setTitle(QString("{REF:T@I:%1}").arg(entry3->uuid().toHex()));
+    entry4->setUsername(QString("{REF:U@I:%1}").arg(entry3->uuid().toHex()));
+    entry4->setPassword(QString("{REF:P@I:%1}").arg(entry3->uuid().toHex()));
+    entry4->setUrl(QString("{REF:A@I:%1}").arg(entry3->uuid().toHex()));
+
+    QCOMPARE(entry4->resolveMultiplePlaceholders(entry4->title()), QString("Entry2Title"));
+    QCOMPARE(entry4->resolveMultiplePlaceholders(entry4->username()), QString("CustomUserNameValue"));
+    QCOMPARE(entry4->resolveMultiplePlaceholders(entry4->password()), QString("RecursiveValue"));
+    QCOMPARE(entry4->resolveMultiplePlaceholders(entry4->url()), QString("http://127.0.0.1:1234/uri/path"));
+
+    Entry* entry5 = new Entry();
+    entry5->setGroup(root);
+    entry5->setUuid(Uuid::random());
+    entry5->attributes()->set("Scheme", "http");
+    entry5->attributes()->set("Host", "host.org");
+    entry5->attributes()->set("Port", "2017");
+    entry5->attributes()->set("Path", "/some/path");
+    entry5->attributes()->set("UserName", "username");
+    entry5->attributes()->set("Password", "password");
+    entry5->attributes()->set("Query", "q=e&t=s");
+    entry5->attributes()->set("Fragment", "fragment");
+    entry5->setUrl("{S:Scheme}://{S:UserName}:{S:Password}@{S:Host}:{S:Port}{S:Path}?{S:Query}#{S:Fragment}");
+    entry5->setTitle("title+{URL:Path}+{URL:Fragment}+title");
+
+    const QString url("http://username:password@host.org:2017/some/path?q=e&t=s#fragment");
+    QCOMPARE(entry5->resolveMultiplePlaceholders(entry5->url()), url);
+    QCOMPARE(entry5->resolveMultiplePlaceholders(entry5->title()), QString("title+/some/path+fragment+title"));
 }

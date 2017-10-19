@@ -96,6 +96,7 @@ public:
     const EntryAttachments* attachments() const;
 
     static const int DefaultIconNumber;
+    static const int ResolveMaximumDepth;
 
     void setUuid(const Uuid& uuid);
     void setIcon(int iconNumber);
@@ -134,6 +135,29 @@ public:
     };
     Q_DECLARE_FLAGS(CloneFlags, CloneFlag)
 
+    enum class PlaceholderType {
+        NotPlaceholder,
+        Unknown,
+        Title,
+        UserName,
+        Password,
+        Notes,
+        Totp,
+        Url,
+        UrlWithoutScheme,
+        UrlScheme,
+        UrlHost,
+        UrlPort,
+        UrlPath,
+        UrlQuery,
+        UrlFragment,
+        UrlUserInfo,
+        UrlUserName,
+        UrlPassword,
+        Reference,
+        CustomAttribute
+    };
+
     /**
      * Creates a duplicate of this entry except that the returned entry isn't
      * part of any group.
@@ -145,6 +169,8 @@ public:
     QString maskPasswordPlaceholders(const QString& str) const;
     QString resolveMultiplePlaceholders(const QString& str) const;
     QString resolvePlaceholder(const QString& str) const;
+    QString resolveUrlPlaceholder(const QString &str, PlaceholderType placeholderType) const;
+    PlaceholderType placeholderType(const QString& placeholder) const;
     QString resolveUrl(const QString& url) const;
 
     /**
@@ -174,6 +200,9 @@ private slots:
     void updateModifiedSinceBegin();
 
 private:
+    QString resolveMultiplePlaceholdersRecursive(const QString& str, int maxDepth) const;
+    QString resolvePlaceholderRecursive(const QString& placeholder, int maxDepth) const;
+
     const Database* database() const;
     template <class T> bool set(T& property, const T& value);
 
