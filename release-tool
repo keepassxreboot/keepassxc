@@ -615,7 +615,7 @@ build() {
         logInfo "Launching Docker container to compile sources..."
         
         docker run --name "$DOCKER_CONTAINER_NAME" --rm \
-            --cap-add SYS_ADMIN --device /dev/fuse \
+            --cap-add SYS_ADMIN --security-opt apparmor:unconfined --device /dev/fuse \
             -e "CC=${CC}" -e "CXX=${CXX}" \
             -v "$(realpath "$SRC_DIR"):/keepassxc/src:ro" \
             -v "$(realpath "$OUTPUT_DIR"):/keepassxc/out:rw" \
