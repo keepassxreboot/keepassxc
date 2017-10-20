@@ -727,7 +727,9 @@ void EditEntryWidget::insertAttachment()
         return;
     }
 
-    m_entryAttachments->set(QFileInfo(filename).fileName(), data);
+    const QFileInfo fInfo(filename);
+    config()->set("LastAttachmentDir", fInfo.absolutePath());
+    m_entryAttachments->set(fInfo.fileName(), data);
 }
 
 void EditEntryWidget::saveCurrentAttachment()
@@ -757,6 +759,7 @@ void EditEntryWidget::saveCurrentAttachment()
             showMessage(tr("Unable to save the attachment:\n").append(file.errorString()), MessageWidget::Error);
             return;
         }
+        config()->set("LastAttachmentDir", QFileInfo(savePath).absolutePath());
     }
 }
 
