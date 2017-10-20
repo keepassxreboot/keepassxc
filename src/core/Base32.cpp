@@ -94,7 +94,7 @@ Optional<QByteArray> Base32::decode(const QByteArray& encodedData)
         quint64 quantum = 0;
         int nQuantumBytes = 5;
 
-        for (int n = 0; n < 8; n++) {
+        for (int n = 0; n < 8; ++n) {
             quint8 ch = static_cast<quint8>(encodedData[i++]);
             if ((ASCII_A <= ch && ch <= ASCII_Z) || (ASCII_a <= ch && ch <= ASCII_z)) {
                 ch -= ASCII_A;
