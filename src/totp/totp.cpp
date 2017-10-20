@@ -109,8 +109,14 @@ QString QTotp::generateTotp(const QByteArray key,
     QByteArray hmac = code.result();
 
     int offset = (hmac[hmac.length() - 1] & 0xf);
-    int binary = ((hmac[offset] & 0x7f) << 24) | ((hmac[offset + 1] & 0xff) << 16) | ((hmac[offset + 2] & 0xff) << 8) |
-                 (hmac[offset + 3] & 0xff);
+
+    // clang-format off
+    int binary =
+            ((hmac[offset] & 0x7f) << 24)
+            | ((hmac[offset + 1] & 0xff) << 16)
+            | ((hmac[offset + 2] & 0xff) << 8)
+            | (hmac[offset + 3] & 0xff);
+    // clang-format on
 
     quint32 digitsPower = pow(10, numDigits);
 
