@@ -24,6 +24,7 @@
 #include <QRegExp>
 #include <QUrl>
 #include <QUrlQuery>
+#include <QVariant>
 #include <QtEndian>
 #include <cmath>
 
@@ -98,13 +99,13 @@ QString QTotp::generateTotp(const QByteArray key,
 {
     quint64 current = qToBigEndian(time / step);
 
-    Optional<QByteArray> secret = Base32::decode(Base32::sanitizeInput(key));
-    if (!secret.hasValue()) {
+    QVariant secret = Base32::decode(Base32::sanitizeInput(key));
+    if (secret.isNull()) {
         return "Invalid TOTP secret key";
     }
 
     QMessageAuthenticationCode code(QCryptographicHash::Sha1);
-    code.setKey(secret.valueOr(""));
+    code.setKey(secret.toByteArray());
     code.addData(QByteArray(reinterpret_cast<char*>(&current), sizeof(current)));
     QByteArray hmac = code.result();
 
