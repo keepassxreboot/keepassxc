@@ -40,14 +40,14 @@ constexpr quint8 ASCII_a = static_cast<quint8>('a');
 constexpr quint8 ASCII_z = static_cast<quint8>('z');
 constexpr quint8 ASCII_EQ = static_cast<quint8>('=');
 
-Optional<QByteArray> Base32::decode(const QByteArray& encodedData)
+QVariant Base32::decode(const QByteArray& encodedData)
 {
     if (encodedData.size() <= 0) {
-        return Optional<QByteArray>("");
+        return QVariant::fromValue(QByteArray(""));
     }
 
     if (encodedData.size() % 8 != 0) {
-        return Optional<QByteArray>();
+        return QVariant();
     }
 
     int nPads = 0;
@@ -114,7 +114,7 @@ Optional<QByteArray> Base32::decode(const QByteArray& encodedData)
                         continue;
                     } else {
                         // illegal character
-                        return Optional<QByteArray>();
+                        return QVariant();
                     }
                 }
             }
@@ -132,7 +132,7 @@ Optional<QByteArray> Base32::decode(const QByteArray& encodedData)
         }
     }
 
-    return Optional<QByteArray>(data);
+    return QVariant::fromValue(data);
 }
 
 QByteArray Base32::encode(const QByteArray& data)

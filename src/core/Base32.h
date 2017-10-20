@@ -24,15 +24,15 @@
 #ifndef BASE32_H
 #define BASE32_H
 
-#include "Optional.h"
 #include <QByteArray>
+#include <QVariant>
 #include <QtCore/qglobal.h>
 
 class Base32
 {
 public:
     Base32() = default;
-    Q_REQUIRED_RESULT static Optional<QByteArray> decode(const QByteArray&);
+    Q_REQUIRED_RESULT static QVariant decode(const QByteArray&);
     Q_REQUIRED_RESULT static QByteArray encode(const QByteArray&);
     Q_REQUIRED_RESULT static QByteArray addPadding(const QByteArray&);
     Q_REQUIRED_RESULT static QByteArray removePadding(const QByteArray&);

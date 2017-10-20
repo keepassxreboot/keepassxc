@@ -61,7 +61,6 @@ set(keepassx_SOURCES
     core/Uuid.cpp
     core/Base32.h
     core/Base32.cpp
-    core/Optional.h
     cli/PasswordInput.cpp
     cli/PasswordInput.h
     crypto/Crypto.cpp
