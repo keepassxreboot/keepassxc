@@ -14,7 +14,7 @@ KeePass Cross-platform Community Edition
 - Using website favicons as entry icons
 - Merging of databases
 - Automatic reload when the database changed on disk
-- KeePassHTTP support for use with [PassIFox](https://addons.mozilla.org/en-us/firefox/addon/passifox/) in Mozilla Firefox and [chromeIPass](https://chrome.google.com/webstore/detail/chromeipass/ompiailgknfdndiefoaoiligalphfdae) in Google Chrome or Chromium, and [passafari](https://github.com/mmichaa/passafari.safariextension/) in Safari.
+- KeePassHTTP support for use with KeePassHTTP-Connector for [Mozilla Firefox](https://addons.mozilla.org/en-US/firefox/addon/keepasshttp-connector/) and [Google Chrome or Chromium](https://chrome.google.com/webstore/detail/keepasshttp-connector/dafgdjggglmmknipkhngniifhplpcldb), and [passafari](https://github.com/mmichaa/passafari.safariextension/) in Safari.
 - Many bug fixes
 
 For a full list of features and changes, read the [CHANGELOG](CHANGELOG) document.
