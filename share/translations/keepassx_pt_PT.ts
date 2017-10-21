@@ -67,6 +67,10 @@ Kernel: %3 %4</translation>
         <source>Include the following information whenever you report a bug:</source>
         <translation>Inclua as seguintes informações sempre que reportar um erro:</translation>
     </message>
+    <message>
+        <source>Distribution: %1</source>
+        <translation>Distribuição: %1</translation>
+    </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
@@ -1095,7 +1099,7 @@ Ainda assim deseja abrir a base de dados?</translation>
     </message>
     <message>
         <source>Custom icon already exists</source>
-        <translation type="unfinished"/>
+        <translation>Já existe um ícone personalizado</translation>
     </message>
 </context>
 <context>
@@ -1319,6 +1323,17 @@ Esta é uma migração unidirecional. Não será possível abrir a base de dados
     </message>
 </context>
 <context>
+    <name>KeePass2Writer</name>
+    <message>
+        <source>Unable to issue challenge-response.</source>
+        <translation>Incapaz de emitir a pergunta de segurança.</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Impossível de calcular a chave-mestre</translation>
+    </message>
+</context>
+<context>
     <name>Main</name>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
@@ -1338,7 +1353,7 @@ Esta é uma migração unidirecional. Não será possível abrir a base de dados
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
-        <translation type="unfinished"/>
+        <translation>O ficheiro de bloqueio da instância única é inválido. A iniciar nova instância.</translation>
     </message>
 </context>
 <context>
