@@ -74,7 +74,6 @@ get_desktop
 get_icon
 cat << EOF > ./usr/bin/keepassxc_env
 #!/usr/bin/env bash
-#export QT_QPA_PLATFORMTHEME=gtk2
 export LD_LIBRARY_PATH="..$(dirname ${QT_PLUGIN_PATH})/lib:\${LD_LIBRARY_PATH}"
 export QT_PLUGIN_PATH="..${QT_PLUGIN_PATH}:\${KPXC_QT_PLUGIN_PATH}"
 
@@ -85,7 +84,7 @@ unset XDG_DATA_DIRS
 exec keepassxc "\$@"
 EOF
 chmod +x ./usr/bin/keepassxc_env
-sed -i 's/Exec=keepassxc/Exec=keepassxc_env/' keepassxc.desktop
+sed -i 's/Exec=keepassxc/Exec=keepassxc_env/' org.keepassxc.desktop
 get_desktopintegration $LOWERAPP
 
 GLIBC_NEEDED=$(glibc_needed)
@@ -94,5 +93,5 @@ cd ..
 
 generate_type2_appimage
 
-mv ../out/*.AppImage ..
+mv ../out/*.AppImage ../KeePassXC-${VERSION}-${ARCH}.AppImage
 rmdir ../out > /dev/null 2>&1
