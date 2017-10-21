@@ -1325,9 +1325,10 @@ void DatabaseWidget::closeUnlockDialog()
     m_unlockDatabaseDialog->close();
 }
 
-void DatabaseWidget::showMessage(const QString& text, MessageWidget::MessageType type)
+void DatabaseWidget::showMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton, int autoHideTimeout)
 {
-    m_messageWidget->showMessage(text, type);
+    m_messageWidget->setCloseButtonVisible(showClosebutton);
+    m_messageWidget->showMessage(text, type, autoHideTimeout);
 }
 
 void DatabaseWidget::hideMessage()
