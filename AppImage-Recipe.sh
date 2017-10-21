@@ -34,6 +34,7 @@ fi
 APP="$1"
 LOWERAPP="$(echo "$APP" | tr '[:upper:]' '[:lower:]')"
 VERSION="$2"
+export ARCH=x86_64
 
 mkdir -p $APP.AppDir
 wget -q https://github.com/probonopd/AppImages/raw/master/functions.sh -O ./functions.sh
@@ -42,6 +43,8 @@ wget -q https://github.com/probonopd/AppImages/raw/master/functions.sh -O ./func
 LIB_DIR=./usr/lib
 if [ -d ./usr/lib/x86_64-linux-gnu ]; then
     LIB_DIR=./usr/lib/x86_64-linux-gnu
+elif [ -d ./usr/lib64 ]; then
+    LIB_DIR=./usr/lib64
 fi
 
 cd $APP.AppDir
@@ -51,7 +54,7 @@ rm -R ./usr/local
 rmdir ./opt 2> /dev/null
 
 # bundle Qt platform plugins and themes
-QXCB_PLUGIN="$(find /usr/lib -name 'libqxcb.so' 2> /dev/null)"
+QXCB_PLUGIN="$(find /usr/lib* -name 'libqxcb.so' 2> /dev/null)"
 if [ "$QXCB_PLUGIN" == "" ]; then
     QXCB_PLUGIN="$(find /opt/qt*/plugins -name 'libqxcb.so' 2> /dev/null)"
 fi
