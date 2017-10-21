@@ -135,6 +135,7 @@ QVariant Base32::decode(const QByteArray& encodedData)
         }
     }
 
+    Q_ASSERT(encodedData.size() == i);
     Q_ASSERT(nBytes == o);
 
     return QVariant::fromValue(data);
