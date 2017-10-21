@@ -12,5 +12,5 @@ Icon=keepassxc
 Terminal=false
 Type=Application
 Version=1.0
-Categories=Utility;Security;Qt
+Categories=Utility;Security;Qt;
 MimeType=application/x-keepass2;
