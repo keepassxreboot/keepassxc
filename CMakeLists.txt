@@ -36,9 +36,9 @@ include(CheckCXXSourceCompiles)
 option(WITH_TESTS "Enable building of unit tests" ON)
 option(WITH_GUI_TESTS "Enable building of GUI tests" OFF)
 option(WITH_DEV_BUILD "Use only for development. Disables/warns about deprecated methods." OFF)
-option(WITH_ASAN "Enable address sanitizer checks (Linux only)" OFF)
+option(WITH_ASAN "Enable address sanitizer checks (Linux / macOS only)" OFF)
 option(WITH_COVERAGE "Use to build with coverage tests (GCC only)." OFF)
-option(WITH_APP_BUNDLE "Enable Application Bundle for OS X" ON)
+option(WITH_APP_BUNDLE "Enable Application Bundle for macOS" ON)
 
 option(WITH_XC_AUTOTYPE "Include Auto-Type." ON)
 option(WITH_XC_HTTP "Include KeePassHTTP and Custom Icon Downloads." OFF)
@@ -110,16 +110,20 @@ endif()
 add_gcc_compiler_cxxflags("-fno-exceptions -fno-rtti")
 add_gcc_compiler_cxxflags("-Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual")
 add_gcc_compiler_cflags("-Wchar-subscripts -Wwrite-strings")
+
 if(WITH_ASAN)
-  if(NOT CMAKE_SYSTEM_NAME STREQUAL "Linux")
-      message(FATAL_ERROR "WITH_ASAN is only supported on Linux at the moment.")
+  if(NOT (CMAKE_SYSTEM_NAME STREQUAL "Linux" OR APPLE))
+      message(FATAL_ERROR "WITH_ASAN is only supported on Linux / macOS at the moment.")
   endif()
 
   add_gcc_compiler_flags("-fsanitize=address -DWITH_ASAN")
 
-  if(NOT (CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.9))
-    add_gcc_compiler_flags("-fsanitize=leak -DWITH_LSAN")
+  if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    if(NOT (CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.9))
+      add_gcc_compiler_flags("-fsanitize=leak -DWITH_LSAN")
+    endif()
   endif()
+
 endif()
 
 string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
@@ -216,17 +220,36 @@ if(WITH_TESTS)
   enable_testing()
 endif(WITH_TESTS)
 
-find_package(Qt5Core          5.2 REQUIRED)
-find_package(Qt5Network       5.2 REQUIRED)
-find_package(Qt5Concurrent    5.2 REQUIRED)
-find_package(Qt5Widgets       5.2 REQUIRED)
-find_package(Qt5Test          5.2 REQUIRED)
-find_package(Qt5LinguistTools 5.2 REQUIRED)
-find_package(Qt5Network       5.2 REQUIRED)
-if (UNIX AND NOT APPLE)
-    find_package(Qt5DBus 5.2 REQUIRED)
+if(UNIX AND NOT APPLE)
+  find_package(Qt5 COMPONENTS Core Network Concurrent Widgets Test LinguistTools DBus REQUIRED)
+elseif(APPLE)
+  find_package(Qt5 COMPONENTS Core Network Concurrent Widgets Test LinguistTools REQUIRED
+    HINTS /usr/local/Cellar/qt/*/lib/cmake ENV PATH
+  )
+  find_package(Qt5 COMPONENTS MacExtras
+    HINTS /usr/local/Cellar/qt/*/lib/cmake ENV PATH
+  )
+else()
+  find_package(Qt5 COMPONENTS Core Network Concurrent Widgets Test LinguistTools REQUIRED)
 endif()
+
+if(Qt5Core_VERSION VERSION_LESS "5.2.0")
+  message(FATAL_ERROR "Qt version 5.2.0 or higher is required")
+endif()
+
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
+
+if(APPLE)
+  set(CMAKE_MACOSX_RPATH TRUE)
+  find_program(MACDEPLOYQT_EXE macdeployqt HINTS /usr/local/opt/qt5/bin ENV PATH)
+  if(NOT MACDEPLOYQT_EXE)
+    message(FATAL_ERROR "macdeployqt is required to build in macOS")
+  else()
+    message(STATUS "Using macdeployqt: ${MACDEPLOYQT_EXE}")
+  endif()
+endif()
 
 # Debian sets the the build type to None for package builds.
 # Make sure we don't enable asserts there.
@@ -240,17 +263,8 @@ find_package(ZLIB REQUIRED)
 
 set(CMAKE_REQUIRED_INCLUDES ${ZLIB_INCLUDE_DIR})
 
-check_cxx_source_compiles("
-  #include <zlib.h>
-
-  #if !defined(ZLIB_VERNUM) || (ZLIB_VERNUM < 0x1200)
-      #error zlib 1.2.x or higher is required to use the gzip format
-  #endif
-
-  int main() { return 0; }" ZLIB_SUPPORTS_GZIP)
-
-if(NOT ZLIB_SUPPORTS_GZIP)
-  message(FATAL_ERROR "zlib 1.2.x or higher is required to use the gzip format")
+if(ZLIB_VERSION_STRING VERSION_LESS "1.2.0")
+  message(FATAL_ERROR "zlib 1.2.0 or higher is required to use the gzip format")
 endif()
 
 # Optional

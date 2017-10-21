@@ -70,9 +70,11 @@ cmake accepts the following options:
   -DWITH_TESTS=[ON|OFF] Enable/Disable building of unit tests (default: ON)
   -DWITH_GUI_TESTS=[ON|OFF] Enable/Disable building of GUI tests (default: OFF)
   -DWITH_DEV_BUILD=[ON|OFF] Enable/Disable deprecated method warnings (default: OFF)
-  -DWITH_ASAN=[ON|OFF] Enable/Disable address sanitizer checks (Linux only) (default: OFF)
+  -DWITH_ASAN=[ON|OFF] Enable/Disable address sanitizer checks (Linux / macOS only) (default: OFF)
   -DWITH_COVERAGE=[ON|OFF] Enable/Disable coverage tests (GCC only) (default: OFF)
 ```
+
+:exclamation: When building with ASan support on macOS, you need to use `export ASAN_OPTIONS=detect_leaks=0` before running the tests (no LSan support in macOS).
 
 ### Contributing
 
