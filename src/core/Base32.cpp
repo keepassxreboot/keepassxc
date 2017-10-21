@@ -125,13 +125,9 @@ QVariant Base32::decode(const QByteArray& encodedData)
 
         const int offset = (nQuantumBytes - 1) * 8;
         quint64 mask = quint64(0xFF) << offset;
-        for (int n = offset; n >= 0; n -= 8) {
-            if (o < nBytes) {
+        for (int n = offset; n >= 0 && o < nBytes; n -= 8) {
                 data[o++] = static_cast<char>((quantum & mask) >> n);
                 mask >>= 8;
-            } else {
-              break;
-            }
         }
     }
 
