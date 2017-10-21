@@ -952,16 +952,17 @@ bool MainWindow::isTrayIconEnabled() const
             && QSystemTrayIcon::isSystemTrayAvailable();
 }
 
-void MainWindow::displayGlobalMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton)
+void MainWindow::displayGlobalMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton,
+                                      int autoHideTimeout)
 {
     m_ui->globalMessageWidget->setCloseButtonVisible(showClosebutton);
-    m_ui->globalMessageWidget->showMessage(text, type);
+    m_ui->globalMessageWidget->showMessage(text, type, autoHideTimeout);
 }
 
-void MainWindow::displayTabMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton)
+void MainWindow::displayTabMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton,
+                                   int autoHideTimeout)
 {
-    m_ui->globalMessageWidget->setCloseButtonVisible(showClosebutton);
-    m_ui->tabWidget->currentDatabaseWidget()->showMessage(text, type);
+    m_ui->tabWidget->currentDatabaseWidget()->showMessage(text, type, showClosebutton, autoHideTimeout);
 }
 
 void MainWindow::hideGlobalMessage()
@@ -978,7 +979,8 @@ void MainWindow::hideTabMessage()
 
 void MainWindow::showYubiKeyPopup()
 {
-    displayGlobalMessage(tr("Please touch the button on your YubiKey!"), MessageWidget::Information, false);
+    displayGlobalMessage(tr("Please touch the button on your YubiKey!"), MessageWidget::Information,
+                         false, MessageWidget::DisableAutoHide);
     setEnabled(false);
 }
 

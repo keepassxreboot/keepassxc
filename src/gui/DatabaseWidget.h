@@ -166,7 +166,8 @@ public slots:
     void setSearchLimitGroup(bool state);
     void endSearch();
 
-    void showMessage(const QString& text, MessageWidget::MessageType type);
+    void showMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton = true,
+                     int autoHideTimeout = MessageWidget::DefaultAutoHideTimeout);
     void hideMessage();
 
 private slots:

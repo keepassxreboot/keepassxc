@@ -103,18 +103,8 @@ The Branch Strategy is based on [git-flow-lite](http://nvie.com/posts/a-successf
 * Use the imperative mood ("Move cursor to…" not "Moves cursor to…")
 * Limit the first line to 72 characters or less
 * Reference issues and pull requests liberally
+* If your pull request fixes an existing issue, add "…, resolves #ISSUENUMBER" to your main commit
 * When only changing documentation, include `[ci skip]` in the commit description
-* Consider starting the commit message with an applicable emoji:
-    * :memo: `:memo:` when writing docs
-    * :penguin: `:penguin:` when fixing something on Linux
-    * :apple: `:apple:` when fixing something on macOS
-    * :checkered_flag: `:checkered_flag:` when fixing something on Windows
-    * :bug: `:bug:` when fixing a bug
-    * :fire: `:fire:` when removing code or files
-    * :green_heart: `:green_heart:` when fixing the CI build
-    * :white_check_mark: `:white_check_mark:` when adding tests
-    * :lock: `:lock:` when dealing with security
-
 
 ### Coding styleguide
 
