@@ -136,6 +136,7 @@ void SettingsWidget::loadSettings()
 
     m_generalUi->detailsHideCheckBox->setChecked(config()->get("GUI/HideDetailsView").toBool());
     m_generalUi->systrayShowCheckBox->setChecked(config()->get("GUI/ShowTrayIcon").toBool());
+    m_generalUi->systrayDarkIconCheckBox->setChecked(config()->get("GUI/DarkTrayIcon").toBool());
     m_generalUi->systrayMinimizeToTrayCheckBox->setChecked(config()->get("GUI/MinimizeToTray").toBool());
     m_generalUi->systrayMinimizeOnCloseCheckBox->setChecked(config()->get("GUI/MinimizeOnClose").toBool());
     m_generalUi->systrayMinimizeOnStartup->setChecked(config()->get("GUI/MinimizeOnStartup").toBool());
@@ -208,6 +209,7 @@ void SettingsWidget::saveSettings()
 
     config()->set("GUI/HideDetailsView", m_generalUi->detailsHideCheckBox->isChecked());
     config()->set("GUI/ShowTrayIcon", m_generalUi->systrayShowCheckBox->isChecked());
+    config()->set("GUI/DarkTrayIcon", m_generalUi->systrayDarkIconCheckBox->isChecked());
     config()->set("GUI/MinimizeToTray", m_generalUi->systrayMinimizeToTrayCheckBox->isChecked());
     config()->set("GUI/MinimizeOnClose", m_generalUi->systrayMinimizeOnCloseCheckBox->isChecked());
     config()->set("GUI/MinimizeOnStartup", m_generalUi->systrayMinimizeOnStartup->isChecked());
@@ -265,6 +267,7 @@ void SettingsWidget::enableAutoSaveOnExit(bool checked)
 
 void SettingsWidget::enableSystray(bool checked)
 {
+    m_generalUi->systrayDarkIconCheckBox->setEnabled(checked);
     m_generalUi->systrayMinimizeToTrayCheckBox->setEnabled(checked);
     m_generalUi->systrayMinimizeOnCloseCheckBox->setEnabled(checked);
 }

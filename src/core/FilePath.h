@@ -28,8 +28,10 @@ public:
     QString dataPath(const QString& name);
     QString pluginPath(const QString& name);
     QIcon applicationIcon();
+    QIcon applicationIconDark();
     QIcon trayIconLocked();
     QIcon trayIconUnlocked();
+    QIcon trayIconUnlockedDark();
     QIcon icon(const QString& category, const QString& name, bool fromTheme = true);
     QIcon onOffIcon(const QString& category, const QString& name);
 

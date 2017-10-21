@@ -98,6 +98,15 @@ QIcon FilePath::applicationIcon()
 #endif
 }
 
+QIcon FilePath::applicationIconDark()
+{
+#ifdef KEEPASSXC_DIST_SNAP
+    return icon("apps", "keepassxc-dark", false);
+#else
+    return icon("apps", "keepassxc-dark");
+#endif
+}
+
 QIcon FilePath::trayIconLocked()
 {
 #ifdef KEEPASSXC_DIST_SNAP
@@ -113,6 +122,15 @@ QIcon FilePath::trayIconUnlocked()
     return icon("apps", "keepassxc-unlocked", false);
 #else
     return icon("apps", "keepassxc-unlocked");
+#endif
+}
+
+QIcon FilePath::trayIconUnlockedDark()
+{
+#ifdef KEEPASSXC_DIST_SNAP
+    return icon("apps", "keepassxc-dark", false);
+#else
+    return icon("apps", "keepassxc-dark");
 #endif
 }
 
