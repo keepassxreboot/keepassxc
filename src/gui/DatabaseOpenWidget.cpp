@@ -162,7 +162,7 @@ void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)
 void DatabaseOpenWidget::openDatabase()
 {
     KeePass2Reader reader;
-    QScopedPointer<CompositeKey> masterKey(databaseKey());
+    QSharedPointer<CompositeKey> masterKey = databaseKey();
     if (masterKey.isNull()) {
         return;
     }
@@ -192,9 +192,9 @@ void DatabaseOpenWidget::openDatabase()
     }
 }
 
-CompositeKey* DatabaseOpenWidget::databaseKey()
+QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
 {
-    CompositeKey* masterKey = new CompositeKey();
+    auto masterKey = QSharedPointer<CompositeKey>::create();
 
     if (m_ui->checkPassword->isChecked()) {
         masterKey->addKey(PasswordKey(m_ui->editPassword->text()));
@@ -210,8 +210,7 @@ CompositeKey* DatabaseOpenWidget::databaseKey()
         if (!key.load(keyFilename, &errorMsg)) {
             m_ui->messageWidget->showMessage(tr("Can't open key file").append(":\n").append(errorMsg),
                                              MessageWidget::Error);
-            delete masterKey;
-            return nullptr;
+            return QSharedPointer<CompositeKey>();
         }
         masterKey->addKey(key);
         lastKeyFiles[m_filename] = keyFilename;
