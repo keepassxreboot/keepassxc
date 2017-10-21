@@ -83,7 +83,7 @@ QVariant Base32::decode(const QByteArray& encodedData)
 
     Q_ASSERT(encodedData.size() > 0);
     const int nQuanta = encodedData.size() / 8;
-    const int nBytes = (nQuanta - 1) * 5 + nSpecialBytes;
+    const int nBytes = nSpecialBytes > 0 ? (nQuanta - 1) * 5 + nSpecialBytes : nQuanta * 5;
 
     QByteArray data(nBytes, Qt::Uninitialized);
 
@@ -126,11 +126,16 @@ QVariant Base32::decode(const QByteArray& encodedData)
         const int offset = (nQuantumBytes - 1) * 8;
         quint64 mask = quint64(0xFF) << offset;
         for (int n = offset; n >= 0; n -= 8) {
-            char c = static_cast<char>((quantum & mask) >> n);
-            data[o++] = c;
-            mask >>= 8;
+            if (o < nBytes) {
+                data[o++] = static_cast<char>((quantum & mask) >> n);
+                mask >>= 8;
+            } else {
+              break;
+            }
         }
     }
+
+    Q_ASSERT(nBytes == o);
 
     return QVariant::fromValue(data);
 }
@@ -144,6 +149,7 @@ QByteArray Base32::encode(const QByteArray& data)
     const int nBits = data.size() * 8;
     const int rBits = nBits % 40; // in {0, 8, 16, 24, 32}
     const int nQuanta = nBits / 40 + (rBits > 0 ? 1 : 0);
+    const int nBytes = nQuanta * 8;
     QByteArray encodedData(nQuanta * 8, Qt::Uninitialized);
 
     int i = 0;
@@ -211,7 +217,8 @@ QByteArray Base32::encode(const QByteArray& data)
         }
     }
 
-    Q_ASSERT(encodedData.size() == o);
+    Q_ASSERT(data.size() == i);
+    Q_ASSERT(nBytes == o);
     return encodedData;
 }
 
