@@ -161,6 +161,9 @@ add_unit_test(NAME testentry SOURCES TestEntry.cpp
 add_unit_test(NAME testtotp SOURCES TestTotp.cpp
               LIBS ${TEST_LIBRARIES})
 
+add_unit_test(NAME testbase32 SOURCES TestBase32.cpp
+              LIBS ${TEST_LIBRARIES})
+
 add_unit_test(NAME testcsvparser SOURCES TestCsvParser.cpp
               LIBS ${TEST_LIBRARIES})
 

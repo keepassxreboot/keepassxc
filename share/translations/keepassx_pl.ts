@@ -67,6 +67,10 @@ Jądro: %3 %4</translation>
         <source>Include the following information whenever you report a bug:</source>
         <translation>Uwzględnij następujące informacje, gdy zgłaszasz błąd:</translation>
     </message>
+    <message>
+        <source>Distribution: %1</source>
+        <translation>Dystrybucja: %1</translation>
+    </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
@@ -1095,7 +1099,7 @@ Czy chcesz ją otworzyć mimo to?</translation>
     </message>
     <message>
         <source>Custom icon already exists</source>
-        <translation type="unfinished"/>
+        <translation>Ikona niestandardowa już istnieje</translation>
     </message>
 </context>
 <context>
@@ -1319,6 +1323,17 @@ Jest to migracja w jedną stronę. Nie będzie można otworzyć importowanej baz
     </message>
 </context>
 <context>
+    <name>KeePass2Writer</name>
+    <message>
+        <source>Unable to issue challenge-response.</source>
+        <translation>Nie można wywołać wyzwania-odpowiedzi.</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Nie mogę wyliczyć głównego klucza</translation>
+    </message>
+</context>
+<context>
     <name>Main</name>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
@@ -1338,7 +1353,7 @@ Jest to migracja w jedną stronę. Nie będzie można otworzyć importowanej baz
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
-        <translation type="unfinished"/>
+        <translation>Istniejący plik blokady pojedynczego wystąpienia jest nieprawidłowy. Uruchamianie nowego wystąpienia.</translation>
     </message>
 </context>
 <context>

@@ -67,6 +67,10 @@ Kernel: %3 %4</source>
         <source>Include the following information whenever you report a bug:</source>
         <translation>回報 Bug 時會包含以下資訊：</translation>
     </message>
+    <message>
+        <source>Distribution: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
@@ -1315,6 +1319,17 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
 
 你可以點選 資料庫 &gt; 「匯入 KeePass 1 資料庫……」。
 這是單向遷移。你無法用舊的 KeePassX 0.4 的版本開啟已匯入的資料庫。</translation>
+    </message>
+</context>
+<context>
+    <name>KeePass2Writer</name>
+    <message>
+        <source>Unable to issue challenge-response.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>無法計算主金鑰</translation>
     </message>
 </context>
 <context>

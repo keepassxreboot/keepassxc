@@ -67,6 +67,10 @@ MİB mimarisi: %2
         <source>Include the following information whenever you report a bug:</source>
         <translation>Bir hata bildirirken şu bilgileri ekleyin:</translation>
     </message>
+    <message>
+        <source>Distribution: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
@@ -1311,6 +1315,17 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
 
 Veri tabanı &gt; &apos;KeePass1 veri tabanı içe aktar...&apos;a tıklayarak içe aktarabilirsiniz.
 Bu tek yönlü bir yer değiştirmedir. İçe aktarılan veri tabanını eski KeePassX 0.4 sürümüyle açamayacaksınız.</translation>
+    </message>
+</context>
+<context>
+    <name>KeePass2Writer</name>
+    <message>
+        <source>Unable to issue challenge-response.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Ana anahtar hesaplanamıyor</translation>
     </message>
 </context>
 <context>

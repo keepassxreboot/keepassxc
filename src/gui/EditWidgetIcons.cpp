@@ -302,6 +302,7 @@ void EditWidgetIcons::addCustomIcon(const QImage &icon)
         }
 
         // Select the new or existing icon
+        updateRadioButtonCustomIcons();
         QModelIndex index = m_customIconModel->indexFromUuid(uuid);
         m_ui->customIconsView->setCurrentIndex(index);
     }

@@ -24,7 +24,8 @@
     <message>
         <source>Version %1
 </source>
-        <translation type="unfinished"/>
+        <translation>Version %1
+</translation>
     </message>
     <message>
         <source>Revision: %1</source>
@@ -62,6 +63,10 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Distribution: %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -196,7 +201,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Empty password</source>
-        <translation type="unfinished"/>
+        <translation>Tomt lösenord</translation>
     </message>
     <message>
         <source>Changing master key failed: no YubiKey inserted.</source>
@@ -254,7 +259,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Comments start with</source>
-        <translation type="unfinished"/>
+        <translation>Kommentarer inleds med</translation>
     </message>
     <message>
         <source>First record has field names</source>
@@ -282,7 +287,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Empty fieldname </source>
-        <translation type="unfinished"/>
+        <translation>Tomt fältnamn </translation>
     </message>
     <message>
         <source>column </source>
@@ -337,7 +342,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source> rows, </source>
-        <translation type="unfinished"/>
+        <translation> rader, </translation>
     </message>
     <message>
         <source> columns</source>
@@ -622,7 +627,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Open CSV file</source>
-        <translation type="unfinished"/>
+        <translation>Öppna CSV fil</translation>
     </message>
 </context>
 <context>
@@ -677,7 +682,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Searching...</source>
-        <translation type="unfinished"/>
+        <translation>Söker...</translation>
     </message>
     <message>
         <source>No current database.</source>
@@ -689,11 +694,11 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Search Results (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Sökresultat (%1)</translation>
     </message>
     <message>
         <source>No Results</source>
-        <translation type="unfinished"/>
+        <translation>Inget resultat</translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -818,7 +823,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Confirm Remove</source>
-        <translation type="unfinished"/>
+        <translation>Bekräfta borttagning</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this attribute?</source>
@@ -865,7 +870,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Protect</source>
-        <translation type="unfinished"/>
+        <translation>Skydda</translation>
     </message>
     <message>
         <source>Reveal</source>
@@ -1305,6 +1310,17 @@ Do you want to open it anyway?</source>
 You can import it by clicking on Database &gt; 'Import KeePass 1 database...'.
 This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
         <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>KeePass2Writer</name>
+    <message>
+        <source>Unable to issue challenge-response.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Kunde inte räkna nu master-nyckeln</translation>
     </message>
 </context>
 <context>

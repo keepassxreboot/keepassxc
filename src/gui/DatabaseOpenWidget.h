@@ -51,7 +51,8 @@ signals:
 
 protected:
     void showEvent(QShowEvent* event) override;
-    CompositeKey databaseKey();
+    void hideEvent(QHideEvent* event) override;
+    QSharedPointer<CompositeKey> databaseKey();
 
 protected slots:
     virtual void openDatabase();
@@ -63,6 +64,7 @@ private slots:
     void activateChallengeResponse();
     void browseKeyFile();
     void yubikeyDetected(int slot, bool blocking);
+    void yubikeyDetectComplete();
     void noYubikeyFound();
 
 protected:

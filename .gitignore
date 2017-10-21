@@ -1,5 +1,6 @@
 CMakeLists.txt.*
 build*/
+cmake-build-*/
 release*/
 .idea/
 *.iml

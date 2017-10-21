@@ -29,8 +29,8 @@ public:
     virtual bool setIv(const QByteArray& iv) = 0;
 
     virtual QByteArray process(const QByteArray& data, bool* ok) = 0;
-    virtual bool processInPlace(QByteArray& data) Q_REQUIRED_RESULT = 0;
-    virtual bool processInPlace(QByteArray& data, quint64 rounds) Q_REQUIRED_RESULT = 0;
+    Q_REQUIRED_RESULT virtual bool processInPlace(QByteArray& data) = 0;
+    Q_REQUIRED_RESULT virtual bool processInPlace(QByteArray& data, quint64 rounds) = 0;
 
     virtual bool reset() = 0;
     virtual int blockSize() const = 0;

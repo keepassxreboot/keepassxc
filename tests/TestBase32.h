@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2013 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,23 +15,23 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTENTRY_H
-#define KEEPASSX_TESTENTRY_H
+#ifndef KEEPASSX_TESTBASE32_H
+#define KEEPASSX_TESTBASE32_H
 
 #include <QObject>
 
-class Entry;
+class Base32;
 
-class TestEntry : public QObject
+class TestBase32 : public QObject
 {
     Q_OBJECT
 
 private slots:
-    void initTestCase();
-    void testHistoryItemDeletion();
-    void testCopyDataFrom();
-    void testClone();
-    void testResolveUrl();
+    void testEncode();
+    void testDecode();
+    void testAddPadding();
+    void testRemovePadding();
+    void testSanitizeInput();
 };
 
-#endif // KEEPASSX_TESTENTRY_H
+#endif // KEEPASSX_TESTBASE32_H

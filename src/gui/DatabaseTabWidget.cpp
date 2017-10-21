@@ -129,7 +129,12 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
     while (i.hasNext()) {
         i.next();
         if (i.value().canonicalFilePath == canonicalFilePath) {
-            setCurrentIndex(databaseIndex(i.key()));
+            if (!i.value().dbWidget->dbHasKey() && !(pw.isNull() && keyFile.isEmpty())) {
+                // If the database is locked and a pw or keyfile is provided, unlock it
+                i.value().dbWidget->switchToOpenDatabase(i.value().filePath, pw, keyFile);
+            } else {
+                setCurrentIndex(databaseIndex(i.key()));
+            }
             return;
         }
     }
@@ -181,6 +186,7 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
                     lockFile->tryLock();
                 }
             } else {
+                delete lockFile;
                 return;
             }
         }
@@ -203,7 +209,7 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
 
     updateLastDatabases(dbStruct.filePath);
 
-    if (!pw.isNull() || !keyFile.isEmpty()) {
+    if (!(pw.isNull() && keyFile.isEmpty())) {
         dbStruct.dbWidget->switchToOpenDatabase(dbStruct.filePath, pw, keyFile);
     }
     else {

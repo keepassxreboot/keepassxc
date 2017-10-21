@@ -67,6 +67,10 @@ Branduolys: %3 %4</translation>
         <source>Include the following information whenever you report a bug:</source>
         <translation>Pranešdami apie klaidą, visuomet pateikite ir šią informaciją:</translation>
     </message>
+    <message>
+        <source>Distribution: %1</source>
+        <translation>Platinimas: %1</translation>
+    </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
@@ -1094,7 +1098,7 @@ Ar vis tiek norite ją atverti?</translation>
     </message>
     <message>
         <source>Custom icon already exists</source>
-        <translation type="unfinished"/>
+        <translation>Tinkinta piktograma jau yra</translation>
     </message>
 </context>
 <context>
@@ -1318,6 +1322,17 @@ Tai yra vienakryptis perkėlimas. Jūs negalėsite atverti importuotos duomenų 
     </message>
 </context>
 <context>
+    <name>KeePass2Writer</name>
+    <message>
+        <source>Unable to issue challenge-response.</source>
+        <translation>Nepavyko išduoti iššūkio atsakymo.</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Nepavyko apskaičiuoti pagrindinio rakto</translation>
+    </message>
+</context>
+<context>
     <name>Main</name>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
@@ -1337,7 +1352,7 @@ Tai yra vienakryptis perkėlimas. Jūs negalėsite atverti importuotos duomenų 
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
-        <translation type="unfinished"/>
+        <translation>Esamas vieno egzemplioriaus užrakto failas yra neteisingas. Paleidžiamas naujas egzempliorius.</translation>
     </message>
 </context>
 <context>

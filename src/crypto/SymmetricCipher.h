@@ -59,11 +59,11 @@ public:
         return m_backend->process(data, ok);
     }
 
-    inline bool processInPlace(QByteArray& data) Q_REQUIRED_RESULT {
+    Q_REQUIRED_RESULT inline bool processInPlace(QByteArray& data) {
         return m_backend->processInPlace(data);
     }
 
-    inline bool processInPlace(QByteArray& data, quint64 rounds) Q_REQUIRED_RESULT {
+    Q_REQUIRED_RESULT inline bool processInPlace(QByteArray& data, quint64 rounds) {
         Q_ASSERT(rounds > 0);
         return m_backend->processInPlace(data, rounds);
     }

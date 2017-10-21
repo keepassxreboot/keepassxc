@@ -1,18 +1,18 @@
 name: keepassxc
-version: 2.2.1
+version: 2.2.2
 grade: stable
-summary: community driven port of the windows application “Keepass Password Safe”
+summary: Community-driven port of the Windows application “KeePass Password Safe”
 description: |
   KeePassXC is an application for people with extremely high demands on secure
-  personal data management. It has a light interface, is cross platform and
-  is published under the terms of the GNU General Public License.
+  personal data management. It has a light interface, is cross-platform and
+  published under the terms of the GNU General Public License.
 confinement: strict
 
 apps:
   keepassxc:
     command: desktop-launch keepassxc
     plugs: [unity7, x11, opengl, gsettings, home, network, network-bind, removable-media, raw-usb]
-    desktop: share/applications/keepassxc.desktop
+    desktop: usr/share/applications/org.keepassxc.desktop
   cli:
     command: keepassxc-cli
     plugs: [gsettings, home, removable-media, raw-usb]
@@ -23,6 +23,8 @@ parts:
     plugin: cmake
     configflags:
       - -DCMAKE_BUILD_TYPE=Release
+      - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DKEEPASSXC_DIST_TYPE=Snap
       - -DWITH_TESTS=OFF
       - -DWITH_XC_AUTOTYPE=ON
       - -DWITH_XC_HTTP=ON
@@ -39,6 +41,8 @@ parts:
       - libxtst-dev
       - libyubikey-dev
       - libykpers-1-dev
+    install: |
+      sed -i 's|Icon=keepassxc|Icon=${SNAP}/usr/share/icons/hicolor/256x256/apps/keepassxc.png|g' $SNAPCRAFT_PART_INSTALL/usr/share/applications/org.keepassxc.desktop
     after: [desktop-qt5]
 
   # Redefine desktop-qt5 stage packages to work with Ubuntu 17.04
@@ -55,10 +59,12 @@ parts:
       - locales-all
 
   # Overcome limitation in snapd to support URL loading (CTRL+U)
+  # client needs to install "snapd-xdg-open" on their system
   snapd-xdg-open:
     source: https://github.com/ubuntu-core/snapd-xdg-open.git
-    plugin: dump
-    organize:
-      data/xdg-open: bin/xdg-open
+    source-depth: 1
+    plugin: nil
+    install: |
+      install -D -t $SNAPCRAFT_PART_INSTALL/usr/bin/ data/xdg-open
     stage-packages:
       - dbus

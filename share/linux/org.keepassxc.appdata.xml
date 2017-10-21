@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 KeePassXC Team <team@keepassxc.org> -->
+<component type="desktop-application">
+    <id>org.keepassxc</id>
+    <name>KeePassXC</name>
+    <metadata_license>CC-BY-3.0</metadata_license>
+    <project_license>GPL-3.0+</project_license>
+    <icon type="stock">keepassxc</icon>
+    <url type="homepage">https://keepassxc.org</url>
+    <mimetypes>
+        <mimetype>application/x-keepass2</mimetype>
+    </mimetypes>
+    <summary>Community-driven port of the Windows application “KeePass Password Safe”</summary>
+    <description>
+        <p>
+            KeePassXC is an application for people with extremely high demands on secure
+            personal data management. It has a light interface, is cross-platform and
+            published under the terms of the GNU General Public License.
+        </p>
+    </description>
+
+    <launchable type="desktop-id">org.keepassxc.desktop</launchable>
+
+    <screenshots>
+        <screenshot type="default">
+            <image>https://keepassxc.org/images/screenshots/linux/screen_001.png</image>
+        </screenshot>
+        <screenshot>
+            <image>https://keepassxc.org/images/screenshots/linux/screen_002.png</image>
+        </screenshot>
+        <screenshot>
+            <image>https://keepassxc.org/images/screenshots/linux/screen_003.png</image>
+        </screenshot>
+        <screenshot>
+            <image>https://keepassxc.org/images/screenshots/linux/screen_004.png</image>
+        </screenshot>
+        <screenshot>
+            <image>https://keepassxc.org/images/screenshots/linux/screen_005.png</image>
+        </screenshot>
+        <screenshot>
+            <image>https://keepassxc.org/images/screenshots/linux/screen_006.png</image>
+        </screenshot>
+        <screenshot>
+            <image>https://keepassxc.org/images/screenshots/linux/screen_007.png</image>
+        </screenshot>
+        <screenshot>
+            <image>https://keepassxc.org/images/screenshots/linux/screen_008.png</image>
+        </screenshot>
+        <screenshot>
+            <image>https://keepassxc.org/images/screenshots/linux/screen_009.png</image>
+        </screenshot>
+        <screenshot>
+            <image>https://keepassxc.org/images/screenshots/linux/screen_010.png</image>
+        </screenshot>
+        <screenshot>
+            <image>https://keepassxc.org/images/screenshots/linux/screen_011.png</image>
+        </screenshot>
+        <screenshot>
+            <image>https://keepassxc.org/images/screenshots/linux/screen_012.png</image>
+        </screenshot>
+        <screenshot>
+            <image>https://keepassxc.org/images/screenshots/linux/screen_013.png</image>
+        </screenshot>
+        <screenshot>
+            <image>https://keepassxc.org/images/screenshots/linux/screen_014.png</image>
+        </screenshot>
+    </screenshots>
+
+    <releases>
+        <release version="2.2.2" date="2017-10-22">
+            <description>
+                <ul>
+                    <li>Fixed entries with empty URLs being reported to KeePassHTTP clients [#1031]</li>
+                    <li>Fixed YubiKey detection and enabled CLI tool for AppImage binary [#1100]</li>
+                    <li>Added AppStream description [#1082]</li>
+                    <li>Improved TOTP compatibility and added new Base32 implementation [#1069]</li>
+                    <li>Fixed error handling when processing invalid cipher stream [#1099]</li>
+                    <li>Fixed double warning display when opening a database [#1037]</li>
+                    <li>Fixed unlocking databases with --pw-stdin [#1087]</li>
+                    <li>Added ability to override QT_PLUGIN_PATH environment variable for AppImages [#1079]</li>
+                    <li>Fixed transform seed not being regenerated when saving the database [#1068]</li>
+                    <li>Fixed only one YubiKey slot being polled [#1048]</li>
+                    <li>Corrected an issue with entry icons while merging [#1008]</li>
+                    <li>Corrected desktop and tray icons in Snap package [#1030]</li>
+                    <li>Fixed screen lock and Google fallback settings [#1029]</li>
+                </ul>
+            </description>
+        </release><release version="2.2.1" date="2017-10-01">
+            <description>
+                <ul>
+                    <li>Corrected multiple snap issues [#934, #1011]</li>
+                    <li>Corrected multiple custom icon issues [#708, #719, #994]</li>
+                    <li>Corrected multiple Yubikey issues [#880]</li>
+                    <li>Fixed single instance preventing load on occasion [#997]</li>
+                    <li>Keep entry history when merging databases [#970]</li>
+                    <li>Prevent data loss if passwords were mismatched [#1007]</li>
+                    <li>Fixed crash after merge [#941]</li>
+                    <li>Added configurable auto-type default delay [#703]</li>
+                    <li>Unlock database dialog window comes to front [#663]</li>
+                    <li>Translation and compiling fixes</li>
+                </ul>
+            </description>
+        </release>
+        <release version="2.2.0" date="2017-06-23">
+            <description>
+                <ul>
+                    <li>Added YubiKey 2FA integration for unlocking databases [#127]</li>
+                    <li>Added TOTP support [#519]</li>
+                    <li>Added CSV import tool [#146, #490]</li>
+                    <li>Added KeePassXC CLI tool [#254]</li>
+                    <li>Added diceware password generator [#373]</li>
+                    <li>Added support for entry references [#370, #378]</li>
+                    <li>Added support for Twofish encryption [#167]</li>
+                    <li>Enabled DEP and ASLR for in-memory protection [#371]</li>
+                    <li>Enabled single instance mode [#510]</li>
+                    <li>Enabled portable mode [#645]</li>
+                    <li>Enabled database lock on screensaver and session lock [#545]</li>
+                    <li>Redesigned welcome screen with common features and recent databases [#292]</li>
+                    <li>Multiple updates to search behavior [#168, #213, #374, #471, #603, #654]</li>
+                    <li>Added auto-type fields {CLEARFIELD}, {SPACE}, {{}, {}} [#267, #427, #480]</li>
+                    <li>Fixed auto-type errors on Linux [#550]</li>
+                    <li>Prompt user prior to executing a cmd:// URL [#235]</li>
+                    <li>Entry attributes can be protected (hidden) [#220]</li>
+                    <li>Added extended ascii to password generator [#538]</li>
+                    <li>Added new database icon to toolbar [#289]</li>
+                    <li>Added context menu entry to empty recycle bin in databases [#520]</li>
+                    <li>Added "apply" button to entry and group edit windows [#624]</li>
+                    <li>Added macOS tray icon and enabled minimize on close [#583]</li>
+                    <li>Fixed issues with unclean shutdowns [#170, #580]</li>
+                    <li>Changed keyboard shortcut to create new database to CTRL+SHIFT+N [#515]</li>
+                    <li>Compare window title to entry URLs [#556]</li>
+                    <li>Implemented inline error messages [#162]</li>
+                    <li>Ignore group expansion and other minor changes when making database "dirty" [#464]</li>
+                    <li>Updated license and copyright information on souce files [#632]</li>
+                    <li>Added contributors list to about dialog [#629]</li>
+                </ul>
+            </description>
+        </release>
+        <release version="2.1.4" date="2017-04-09">
+            <description>
+                <ul>
+                    <li>Bumped KeePassHTTP version to 1.8.4.2</li>
+                    <li>KeePassHTTP confirmation window comes to foreground [#466]</li>
+                </ul>
+            </description>
+        </release>
+        <release version="2.1.3" date="2017-03-03">
+            <description>
+                <ul>
+                    <li>Fix possible overflow in zxcvbn library [#363]</li>
+                    <li>Revert HiDPI setting to avoid problems on laptop screens [#332]</li>
+                    <li>Set file meta properties in Windows executable [#330]</li>
+                    <li>Suppress error message when auto-reloading a locked database [#345]</li>
+                    <li>Improve usability of question dialog when database is already locked by a different instance [#346]</li>
+                    <li>Fix compiler warnings in QHttp library [#351]</li>
+                    <li>Use unified toolbar on Mac OS X [#361]</li>
+                    <li>Fix an issue on X11 where the main window would be raised instead of closed on Alt+F4 [#362]</li>
+                </ul>
+            </description>
+        </release>
+        <release version="2.1.2" date="2017-02-17">
+            <description>
+                <ul>
+                    <li>Ask for save location when creating a new database [#302]</li>
+                    <li>Remove Libmicrohttpd dependency to clean up the code and ensure better OS X compatibility [#317, #265]</li>
+                    <li>Prevent Qt from degrading Wifi network performance on certain platforms [#318]</li>
+                    <li>Visually refine user interface on OS X and other platforms [#299]</li>
+                    <li>Remove unusable tray icon setting on OS X [#293]</li>
+                    <li>Fix compositing glitches on Ubuntu and prevent flashing when minimizing to the tray at startup [#307]</li>
+                    <li>Fix AppImage tray icon on Ubuntu [#277, #273]</li>
+                    <li>Fix global menu disappearing after restoring KeePassXC from the tray on Ubuntu [#276]</li>
+                    <li>Fix result order in entry search [#320]</li>
+                    <li>Enable HiDPI scaling on supported platforms [#315]</li>
+                    <li>Remove empty directories from installation target [#282]</li>
+                </ul>
+            </description>
+        </release>
+        <release version="2.1.1" date="2017-02-06">
+            <description>
+                <ul>
+                    <li>Enabled HTTP plugin build; plugin is disabled by default and limited to localhost [#147]</li>
+                    <li>Escape HTML in dialog boxes [#247]</li>
+                    <li>Corrected crashes in favicon download and password generator [#233, #226]</li>
+                    <li>Increase font size of password meter [#228]</li>
+                    <li>Fixed compatibility with Qt 5.8 [#211]</li>
+                    <li>Use consistent button heights in password generator [#229]</li>
+                </ul>
+            </description>
+        </release>
+        <release version="2.1.0" date="2017-01-22">
+            <description>
+                <ul>
+                    <li>Show unlock dialog when using autotype on a closed database [#10, #89]</li>
+                    <li>Show different tray icon when database is locked [#37, #46]</li>
+                    <li>Support autotype on Windows and OS X [#42, #60, #63]</li>
+                    <li>Add delay feature to autotype [#76, #77]</li>
+                    <li>Add password strength meter [#84, #92]</li>
+                    <li>Add option for automatically locking the database when minimizing the window [#57]</li>
+                    <li>Add feature to download favicons and use them as entry icons [#30]</li>
+                    <li>Automatically reload and merge database when the file changed on disk [#22, #33, #93]</li>
+                    <li>Add tool for merging two databases [#22, #47, #143]</li>
+                    <li>Add --pw-stdin commandline option to unlock the database by providing a password on STDIN [#54]</li>
+                    <li>Add utility script for reading the database password from KWallet [#55]</li>
+                    <li>Fix some KeePassHTTP settings not being remembered [#34, #65]</li>
+                    <li>Make search box persistent [#15, #67, #157]</li>
+                    <li>Enhance search feature by scoping the search to selected group [#16, #118]</li>
+                    <li>Improve interaction between search field and entry list [#131, #141]</li>
+                    <li>Add stand-alone password-generator [#18, #92]</li>
+                    <li>Don't require password repetition when password is visible [#27, #92]</li>
+                    <li>Add support for entry attributes in autotype sequences [#107]</li>
+                    <li>Always focus password field when opening the database unlock widget [#116, #117]</li>
+                    <li>Fix compilation errors on various platforms [#53, #126, #130]</li>
+                    <li>Restructure and improve kdbx-extract utility [#160]</li>
+                </ul>
+            </description>
+        </release>
+    </releases>
+</component>

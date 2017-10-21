@@ -67,6 +67,10 @@ Kernel: %3 %4</source>
         <source>Include the following information whenever you report a bug:</source>
         <translation>Коли Ви повідомляєте про ваду, завжди долучайте таку інформацію:</translation>
     </message>
+    <message>
+        <source>Distribution: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
@@ -1316,6 +1320,17 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
 
 Щоб імпортувати його, виберіть пункт меню «Сховище &gt; Імпортувати сховище KeePass 1…».
 Перетворення можливе лише в одному напрямку. Ви не зможете відкрити імпортоване сховище старою версією KeePassX 0.4.</translation>
+    </message>
+</context>
+<context>
+    <name>KeePass2Writer</name>
+    <message>
+        <source>Unable to issue challenge-response.</source>
+        <translation>Неможливо видати виклик-відповідь.</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Неможливо вирахувати головний ключ</translation>
     </message>
 </context>
 <context>
