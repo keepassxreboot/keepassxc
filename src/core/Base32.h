@@ -15,22 +15,28 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// Conforms to RFC 4648. For details, see: https://tools.ietf.org/html/rfc4648
+/* Conforms to RFC 4648. For details, see: https://tools.ietf.org/html/rfc4648
+ * Use the functions Base32::addPadding/1, Base32::removePadding/1 or
+ * Base32::sanitizeInput/1 to fix input or output for a particular
+ * applications (e.g. to use with Google Authenticator).
+ */
 
 #ifndef BASE32_H
 #define BASE32_H
 
 #include "Optional.h"
-#include <QtCore/qglobal.h>
 #include <QByteArray>
+#include <QtCore/qglobal.h>
 
 class Base32
 {
 public:
-    Base32() =default;
+    Base32() = default;
     Q_REQUIRED_RESULT static Optional<QByteArray> decode(const QByteArray&);
     Q_REQUIRED_RESULT static QByteArray encode(const QByteArray&);
+    Q_REQUIRED_RESULT static QByteArray addPadding(const QByteArray&);
+    Q_REQUIRED_RESULT static QByteArray removePadding(const QByteArray&);
+    Q_REQUIRED_RESULT static QByteArray sanitizeInput(const QByteArray&);
 };
 
-
-#endif //BASE32_H
+#endif // BASE32_H

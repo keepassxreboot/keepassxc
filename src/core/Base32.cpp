@@ -15,7 +15,11 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// Conforms to RFC 4648. For details, see: https://tools.ietf.org/html/rfc4648
+/* Conforms to RFC 4648. For details, see: https://tools.ietf.org/html/rfc4648
+ * Use the functions Base32::addPadding/1, Base32::removePadding/1 or
+ * Base32::sanitizeInput/1 to fix input or output for a particular
+ * applications (e.g. to use with Google Authenticator).
+ */
 
 #include "Base32.h"
 
@@ -38,15 +42,17 @@ constexpr quint8 ASCII_EQ = static_cast<quint8>('=');
 
 Optional<QByteArray> Base32::decode(const QByteArray& encodedData)
 {
-    if (encodedData.size() <= 0)
+    if (encodedData.size() <= 0) {
         return Optional<QByteArray>("");
+    }
 
-    if (encodedData.size() % 8 != 0)
+    if (encodedData.size() % 8 != 0) {
         return Optional<QByteArray>();
+    }
 
     int nPads = 0;
     for (int i = -1; i > -7; --i) {
-        if ('=' == encodedData[encodedData.size()+i])
+        if ('=' == encodedData[encodedData.size() + i])
             ++nPads;
     }
 
@@ -75,10 +81,9 @@ Optional<QByteArray> Base32::decode(const QByteArray& encodedData)
         specialOffset = 0;
     }
 
-
     Q_ASSERT(encodedData.size() > 0);
-    const int nQuantums = encodedData.size() / 8;
-    const int nBytes = (nQuantums - 1) * 5 + nSpecialBytes;
+    const int nQuanta = encodedData.size() / 8;
+    const int nBytes = (nQuanta - 1) * 5 + nSpecialBytes;
 
     QByteArray data(nBytes, Qt::Uninitialized);
 
@@ -96,12 +101,12 @@ Optional<QByteArray> Base32::decode(const QByteArray& encodedData)
                 if (ch >= ALPH_POS_2)
                     ch -= ASCII_a - ASCII_A;
             } else {
-                if (ch >= ASCII_2 && ch <= ASCII_7) {
+                if (ASCII_2 <= ch && ch <= ASCII_7) {
                     ch -= ASCII_2;
                     ch += ALPH_POS_2;
                 } else {
                     if (ASCII_EQ == ch) {
-                        if(i == encodedData.size()) {
+                        if (i == encodedData.size()) {
                             // finished with special quantum
                             quantum >>= specialOffset;
                             nQuantumBytes = nSpecialBytes;
@@ -132,14 +137,15 @@ Optional<QByteArray> Base32::decode(const QByteArray& encodedData)
 
 QByteArray Base32::encode(const QByteArray& data)
 {
-    if (data.size() < 1)
+    if (data.size() < 1) {
         return QByteArray();
+    }
 
     const int nBits = data.size() * 8;
     const int rBits = nBits % 40; // in {0, 8, 16, 24, 32}
-    const int nQuantums = nBits / 40 + (rBits > 0 ? 1 : 0);
-    QByteArray encodedData(nQuantums * 8, Qt::Uninitialized);
-    
+    const int nQuanta = nBits / 40 + (rBits > 0 ? 1 : 0);
+    QByteArray encodedData(nQuanta * 8, Qt::Uninitialized);
+
     int i = 0;
     int o = 0;
     int n;
@@ -170,7 +176,7 @@ QByteArray Base32::encode(const QByteArray& data)
             quantum |= static_cast<quint64>(data[i++]) << n;
 
         switch (rBits) {
-        case 8:  // expand to 10 bits
+        case 8: // expand to 10 bits
             quantum <<= 2;
             mask = MASK_10BIT;
             n = 5;
@@ -208,3 +214,72 @@ QByteArray Base32::encode(const QByteArray& data)
     return encodedData;
 }
 
+QByteArray Base32::addPadding(const QByteArray& encodedData)
+{
+    if (encodedData.size() <= 0 || encodedData.size() % 8 == 0) {
+        return encodedData;
+    }
+
+    const int rBytes = encodedData.size() % 8;
+    // rBytes must be a member of {2, 4, 5, 7}
+    if (1 == rBytes || 3 == rBytes || 6 == rBytes) {
+        return encodedData;
+    }
+
+    QByteArray newEncodedData(encodedData);
+    for (int nPads = 8 - rBytes; nPads > 0; --nPads) {
+        newEncodedData.append('=');
+    }
+
+    return newEncodedData;
+}
+
+QByteArray Base32::removePadding(const QByteArray& encodedData)
+{
+    if (encodedData.size() <= 0 || encodedData.size() % 8 != 0) {
+        return encodedData; // return same bad input
+    }
+
+    int nPads = 0;
+    for (int i = -1; i > -7; --i) {
+        if ('=' == encodedData[encodedData.size() + i]) {
+            ++nPads;
+        }
+    }
+
+    QByteArray newEncodedData(encodedData);
+    newEncodedData.remove(encodedData.size() - nPads, nPads);
+    newEncodedData.resize(encodedData.size() - nPads);
+
+    return newEncodedData;
+}
+
+QByteArray Base32::sanitizeInput(const QByteArray& encodedData)
+{
+    if (encodedData.size() <= 0) {
+        return encodedData;
+    }
+
+    QByteArray newEncodedData(encodedData.size(), Qt::Uninitialized);
+    int i = 0;
+    for (auto ch : encodedData) {
+        switch (ch) {
+        case '0':
+            newEncodedData[i++] = 'O';
+            break;
+        case '1':
+            newEncodedData[i++] = 'L';
+            break;
+        case '8':
+            newEncodedData[i++] = 'B';
+            break;
+        default:
+            if (('A' <= ch && ch <= 'Z') || ('a' <= ch && ch <= 'z') || ('2' <= ch && ch <= '7')) {
+                newEncodedData[i++] = ch;
+            }
+        }
+    }
+    newEncodedData.resize(i);
+
+    return addPadding(newEncodedData);
+}

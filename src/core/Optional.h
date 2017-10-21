@@ -22,31 +22,26 @@
  * This utility class is for providing basic support for an option type.
  * It can be replaced by std::optional (C++17) or
  * std::experimental::optional (C++11) when they become fully supported
- * by all the compilers.
+ * by all the main compiler toolchains.
  */
 
-template <typename T>
-class Optional
+template <typename T> class Optional
 {
 public:
-   
     // None
-    Optional() :
-        m_hasValue(false),
-        m_value()
-    { };   
- 
+    Optional()
+        : m_hasValue(false)
+        , m_value(){};
+
     // Some T
-    Optional(const T& value) :
-        m_hasValue(true),
-        m_value(value)
-    { };
+    Optional(const T& value)
+        : m_hasValue(true)
+        , m_value(value){};
 
     // Copy
-    Optional(const Optional& other) :
-        m_hasValue(other.m_hasValue),
-        m_value(other.m_value)
-    { };
+    Optional(const Optional& other)
+        : m_hasValue(other.m_hasValue)
+        , m_value(other.m_value){};
 
     const Optional& operator=(const Optional& other)
     {
@@ -57,7 +52,7 @@ public:
 
     bool operator==(const Optional& other) const
     {
-        if(m_hasValue)
+        if (m_hasValue)
             return other.m_hasValue && m_value == other.m_value;
         else
             return !other.m_hasValue;
@@ -77,15 +72,13 @@ public:
     {
         return m_hasValue ? m_value : other;
     }
-    
+
     Optional static makeOptional(const T& value)
     {
         return Optional(value);
     }
 
-
 private:
-
     bool m_hasValue;
     T m_value;
 };

@@ -15,23 +15,19 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTBASE32_H
-#define KEEPASSX_TESTBASE32_H
+/* This class exists to isolate <qrencode.h> from the rest of the code base. */
 
-#include <QObject>
+#ifndef KEEPASSX_QRCODEPRIVATE_H
+#define KEEPASSX_QRCODEPRIVATE_H
 
-class Base32;
+#include <qrencode.h>
 
-class TestBase32 : public QObject
+struct QRCodePrivate
 {
-    Q_OBJECT
+    QRcode* m_qrcode;
 
-private slots:
-    void testEncode();
-    void testDecode();
-    void testAddPadding();
-    void testRemovePadding();
-    void testSanitizeInput();
+    QRCodePrivate();
+    ~QRCodePrivate();
 };
 
-#endif // KEEPASSX_TESTBASE32_H
+#endif // KEEPASSX_QRCODEPRIVATE_H

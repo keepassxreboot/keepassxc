@@ -15,23 +15,40 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTBASE32_H
-#define KEEPASSX_TESTBASE32_H
+#ifndef KEEPASSX_TOTPKEYDISPLAYDIALOG_H
+#define KEEPASSX_TOTPKEYDISPLAYDIALOG_H
 
-#include <QObject>
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "gui/DatabaseWidget.h"
+#include <QDialog>
+#include <QScopedPointer>
+#include <QUrl>
 
-class Base32;
+namespace Ui
+{
+    class TotpKeyDisplayDialog;
+}
 
-class TestBase32 : public QObject
+class TotpKeyDisplayDialog : public QDialog
 {
     Q_OBJECT
 
-private slots:
-    void testEncode();
-    void testDecode();
-    void testAddPadding();
-    void testRemovePadding();
-    void testSanitizeInput();
+public:
+    explicit TotpKeyDisplayDialog(DatabaseWidget* parent = nullptr, Entry* entry = nullptr);
+    ~TotpKeyDisplayDialog();
+
+private:
+    QScopedPointer<Ui::TotpKeyDisplayDialog> m_ui;
+
+private Q_SLOTS:
+    void copyToClipboard();
+
+protected:
+    Entry* m_entry;
+    DatabaseWidget* m_parent;
+
+    QUrl totpKeyUri(const Entry* entry) const;
 };
 
-#endif // KEEPASSX_TESTBASE32_H
+#endif // KEEPASSX_TOTPKEYDISPLAYDIALOG_H

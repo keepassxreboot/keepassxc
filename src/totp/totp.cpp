@@ -18,15 +18,14 @@
 
 #include "totp.h"
 #include "core/Base32.h"
-#include <cmath>
-#include <QtEndian>
-#include <QRegExp>
-#include <QDateTime>
 #include <QCryptographicHash>
+#include <QDateTime>
 #include <QMessageAuthenticationCode>
+#include <QRegExp>
 #include <QUrl>
 #include <QUrlQuery>
-
+#include <QtEndian>
+#include <cmath>
 
 const quint8 QTotp::defaultStep = 30;
 const quint8 QTotp::defaultDigits = 6;
@@ -35,7 +34,7 @@ QTotp::QTotp()
 {
 }
 
-QString QTotp::parseOtpString(QString key, quint8 &digits, quint8 &step)
+QString QTotp::parseOtpString(QString key, quint8& digits, quint8& step)
 {
     QUrl url(key);
 
@@ -57,7 +56,6 @@ QString QTotp::parseOtpString(QString key, quint8 &digits, quint8 &step)
         if (q_step > 0 && q_step <= 60) {
             step = q_step;
         }
-
 
     } else {
         // Compatibility with "KeeOtp" plugin string format
@@ -93,12 +91,14 @@ QString QTotp::parseOtpString(QString key, quint8 &digits, quint8 &step)
     return seed;
 }
 
-QString QTotp::generateTotp(const QByteArray key, quint64 time,
-                            const quint8 numDigits = defaultDigits, const quint8 step = defaultStep)
+QString QTotp::generateTotp(const QByteArray key,
+                            quint64 time,
+                            const quint8 numDigits = defaultDigits,
+                            const quint8 step = defaultStep)
 {
     quint64 current = qToBigEndian(time / step);
 
-    Optional<QByteArray> secret = Base32::decode(key);
+    Optional<QByteArray> secret = Base32::decode(Base32::sanitizeInput(key));
     if (!secret.hasValue()) {
         return "Invalid TOTP secret key";
     }
@@ -109,14 +109,35 @@ QString QTotp::generateTotp(const QByteArray key, quint64 time,
     QByteArray hmac = code.result();
 
     int offset = (hmac[hmac.length() - 1] & 0xf);
-    int binary =
-            ((hmac[offset] & 0x7f) << 24)
-            | ((hmac[offset + 1] & 0xff) << 16)
-            | ((hmac[offset + 2] & 0xff) << 8)
-            | (hmac[offset + 3] & 0xff);
+    int binary = ((hmac[offset] & 0x7f) << 24) | ((hmac[offset + 1] & 0xff) << 16) | ((hmac[offset + 2] & 0xff) << 8) |
+                 (hmac[offset + 3] & 0xff);
 
     quint32 digitsPower = pow(10, numDigits);
 
     quint64 password = binary % digitsPower;
     return QString("%1").arg(password, numDigits, 10, QChar('0'));
+}
+
+// See: https://github.com/google/google-authenticator/wiki/Key-Uri-Format
+QUrl QTotp::generateOtpString(const QString& secret,
+                              const QString& type,
+                              const QString& issuer,
+                              const QString& username,
+                              const QString& algorithm,
+                              const quint8& digits,
+                              const quint8& step)
+{
+    QUrl keyUri;
+    keyUri.setScheme("otpauth");
+    keyUri.setHost(type);
+    keyUri.setPath(QString("/%1:%2").arg(issuer).arg(username));
+    QUrlQuery parameters;
+    parameters.addQueryItem("secret", secret);
+    parameters.addQueryItem("issuer", issuer);
+    parameters.addQueryItem("algorithm", algorithm);
+    parameters.addQueryItem("digits", QString::number(digits));
+    parameters.addQueryItem("period", QString::number(step));
+    keyUri.setQuery(parameters);
+
+    return keyUri;
 }

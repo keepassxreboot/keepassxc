@@ -23,22 +23,22 @@ QTEST_GUILESS_MAIN(TestBase32)
 
 void TestBase32::testDecode()
 {
-    // 3 quantums, all upper case + padding
+    // 3 quanta, all upper case + padding
     QByteArray encodedData = "JBSWY3DPEB3W64TMMQXC4LQ=";
     auto data = Base32::decode(encodedData);
     QCOMPARE(QString::fromLatin1(data.valueOr("ERROR")), QString("Hello world..."));
 
-    // 4 quantums, all upper case
+    // 4 quanta, all upper case
     encodedData = "GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ";
     data = Base32::decode(encodedData);
     QCOMPARE(QString::fromLatin1(data.valueOr("ERROR")), QString("12345678901234567890"));
 
-    // 4 quantums, all lower case
+    // 4 quanta, all lower case
     encodedData = "gezdgnbvgy3tqojqgezdgnbvgy3tqojq";
     data = Base32::decode(encodedData);
     QCOMPARE(QString::fromLatin1(data.valueOr("ERROR")), QString("12345678901234567890"));
 
-    // 4 quantums, mixed upper and lower case
+    // 4 quanta, mixed upper and lower case
     encodedData = "Gezdgnbvgy3tQojqgezdGnbvgy3tQojQ";
     data = Base32::decode(encodedData);
     QCOMPARE(QString::fromLatin1(data.valueOr("ERROR")), QString("12345678901234567890"));
@@ -115,7 +115,7 @@ void TestBase32::testEncode()
 
     data = "12345678901234567890";
     encodedData = Base32::encode(data);
-    QCOMPARE(encodedData, QByteArray("GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ")); 
+    QCOMPARE(encodedData, QByteArray("GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ"));
 
     data = "012345678901234567890";
     encodedData = Base32::encode(data);
@@ -123,46 +123,156 @@ void TestBase32::testEncode()
 
     data = "test";
     encodedData = Base32::encode(data);
-    QCOMPARE(encodedData, QByteArray("ORSXG5A=")); 
+    QCOMPARE(encodedData, QByteArray("ORSXG5A="));
 
     data = "___";
     encodedData = Base32::encode(data);
-    QCOMPARE(encodedData, QByteArray("L5PV6===")); 
+    QCOMPARE(encodedData, QByteArray("L5PV6==="));
 
     data = "foo bar";
     encodedData = Base32::encode(data);
-    QCOMPARE(encodedData, QByteArray("MZXW6IDCMFZA====")); 
+    QCOMPARE(encodedData, QByteArray("MZXW6IDCMFZA===="));
 
     data = "@";
     encodedData = Base32::encode(data);
-    QCOMPARE(encodedData, QByteArray("IA======")); 
+    QCOMPARE(encodedData, QByteArray("IA======"));
 
     // RFC 4648 test vectors
     data = "";
     encodedData = Base32::encode(data);
-    QCOMPARE(encodedData, QByteArray("")); 
+    QCOMPARE(encodedData, QByteArray(""));
 
     data = "f";
     encodedData = Base32::encode(data);
-    QCOMPARE(encodedData, QByteArray("MY======")); 
+    QCOMPARE(encodedData, QByteArray("MY======"));
 
     data = "fo";
     encodedData = Base32::encode(data);
-    QCOMPARE(encodedData, QByteArray("MZXQ====")); 
+    QCOMPARE(encodedData, QByteArray("MZXQ===="));
 
     data = "foo";
     encodedData = Base32::encode(data);
     QCOMPARE(encodedData, QByteArray("MZXW6==="));
- 
+
     data = "foob";
     encodedData = Base32::encode(data);
-    QCOMPARE(encodedData, QByteArray("MZXW6YQ=")); 
+    QCOMPARE(encodedData, QByteArray("MZXW6YQ="));
 
     data = "fooba";
     encodedData = Base32::encode(data);
-    QCOMPARE(encodedData, QByteArray("MZXW6YTB")); 
+    QCOMPARE(encodedData, QByteArray("MZXW6YTB"));
 
     data = "foobar";
     encodedData = Base32::encode(data);
-    QCOMPARE(encodedData, QByteArray("MZXW6YTBOI======")); 
+    QCOMPARE(encodedData, QByteArray("MZXW6YTBOI======"));
+}
+
+void TestBase32::testAddPadding()
+{
+    // Empty. Invalid, returns input.
+    QByteArray data = "";
+    QByteArray paddedData = Base32::addPadding(data);
+    QCOMPARE(paddedData, data);
+
+    // One byte of encoded data. Invalid, returns input.
+    data = "B";
+    paddedData = Base32::addPadding(data);
+    QCOMPARE(paddedData, data);
+
+    // Two bytes of encoded data.
+    data = "BB";
+    paddedData = Base32::addPadding(data);
+    QCOMPARE(paddedData, QByteArray("BB======"));
+
+    // Three bytes of encoded data. Invalid, returns input.
+    data = "BBB";
+    paddedData = Base32::addPadding(data);
+    QCOMPARE(paddedData, data);
+
+    // Four bytes of encoded data.
+    data = "BBBB";
+    paddedData = Base32::addPadding(data);
+    QCOMPARE(paddedData, QByteArray("BBBB===="));
+
+    // Five bytes of encoded data.
+    data = "BBBBB";
+    paddedData = Base32::addPadding(data);
+    QCOMPARE(paddedData, QByteArray("BBBBB==="));
+
+    // Six bytes of encoded data. Invalid, returns input.
+    data = "BBBBBB";
+    paddedData = Base32::addPadding(data);
+    QCOMPARE(paddedData, data);
+
+    // Seven bytes of encoded data.
+    data = "BBBBBBB";
+    paddedData = Base32::addPadding(data);
+    QCOMPARE(paddedData, QByteArray("BBBBBBB="));
+
+    // Eight bytes of encoded data. Valid, but returns same as input.
+    data = "BBBBBBBB";
+    paddedData = Base32::addPadding(data);
+    QCOMPARE(paddedData, data);
+
+    // More than eight bytes (8+5).
+    data = "AAAAAAAABBBBB";
+    paddedData = Base32::addPadding(data);
+    QCOMPARE(paddedData, QByteArray("AAAAAAAABBBBB==="));
+}
+
+void TestBase32::testRemovePadding()
+{
+    QByteArray data = "";
+    QByteArray unpaddedData = Base32::removePadding(data);
+    QCOMPARE(unpaddedData, data);
+
+    data = "AAAAAAAABB======";
+    unpaddedData = Base32::removePadding(data);
+    QCOMPARE(unpaddedData, QByteArray("AAAAAAAABB"));
+
+    data = "BBBB====";
+    unpaddedData = Base32::removePadding(data);
+    QCOMPARE(unpaddedData, QByteArray("BBBB"));
+
+    data = "AAAAAAAABBBBB===";
+    unpaddedData = Base32::removePadding(data);
+    QCOMPARE(unpaddedData, QByteArray("AAAAAAAABBBBB"));
+
+    data = "BBBBBBB=";
+    unpaddedData = Base32::removePadding(data);
+    QCOMPARE(unpaddedData, QByteArray("BBBBBBB"));
+
+    // Invalid: 7 bytes of data. Returns same as input.
+    data = "IIIIIII";
+    unpaddedData = Base32::removePadding(data);
+    QCOMPARE(unpaddedData, data);
+
+    // Invalid: more padding than necessary. Returns same as input.
+    data = "AAAAAAAABBBB=====";
+    unpaddedData = Base32::removePadding(data);
+    QCOMPARE(unpaddedData, data);
+}
+
+void TestBase32::testSanitizeInput()
+{
+    // sanitize input (white space + missing padding)
+    QByteArray encodedData = "JBSW Y3DP EB3W 64TM MQXC 4LQA";
+    auto data = Base32::decode(Base32::sanitizeInput(encodedData));
+    QCOMPARE(QString::fromLatin1(data.valueOr("ERRROR")), QString("Hello world..."));
+
+    // sanitize input (typo + missing padding)
+    encodedData = "J8SWY3DPE83W64TMMQXC4LQA";
+    data = Base32::decode(Base32::sanitizeInput(encodedData));
+    QCOMPARE(QString::fromLatin1(data.valueOr("ERRROR")), QString("Hello world..."));
+
+    // sanitize input (other illegal characters)
+    encodedData = "J8SWY3D[PE83W64TMMQ]XC!4LQA";
+    data = Base32::decode(Base32::sanitizeInput(encodedData));
+    QCOMPARE(QString::fromLatin1(data.valueOr("ERRROR")), QString("Hello world..."));
+
+    // sanitize input (NUL character)
+    encodedData = "J8SWY3DPE83W64TMMQXC4LQA";
+    encodedData.insert(3, '\0');
+    data = Base32::decode(Base32::sanitizeInput(encodedData));
+    QCOMPARE(QString::fromLatin1(data.valueOr("ERRROR")), QString("Hello world..."));
 }
