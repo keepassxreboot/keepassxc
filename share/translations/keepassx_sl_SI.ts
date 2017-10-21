@@ -64,6 +64,10 @@ Kernel: %3 %4</source>
         <source>Include the following information whenever you report a bug:</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Distribution: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
@@ -1303,6 +1307,17 @@ Do you want to open it anyway?</source>
 You can import it by clicking on Database &gt; 'Import KeePass 1 database...'.
 This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
         <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>KeePass2Writer</name>
+    <message>
+        <source>Unable to issue challenge-response.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Izračun glavnega ključa ni uspel</translation>
     </message>
 </context>
 <context>

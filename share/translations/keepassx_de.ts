@@ -67,6 +67,10 @@ Kernel: %3 %4</translation>
         <source>Include the following information whenever you report a bug:</source>
         <translation>Geben Sie folgende Informationen an, wenn Sie einen Bug melden:</translation>
     </message>
+    <message>
+        <source>Distribution: %1</source>
+        <translation>Distribution: %1</translation>
+    </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
@@ -1092,7 +1096,7 @@ Möchten Sie diese dennoch öffnen?</translation>
     </message>
     <message>
         <source>Custom icon already exists</source>
-        <translation type="unfinished"/>
+        <translation>Es gibt bereits ein eigenes Symbol </translation>
     </message>
 </context>
 <context>
@@ -1316,6 +1320,17 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
     </message>
 </context>
 <context>
+    <name>KeePass2Writer</name>
+    <message>
+        <source>Unable to issue challenge-response.</source>
+        <translation>Fehler beim Ausführen des Challenge-Response-Verfahrens</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Berechnung des Hauptschlüssels gescheitert</translation>
+    </message>
+</context>
+<context>
     <name>Main</name>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
@@ -1335,7 +1350,7 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
-        <translation type="unfinished"/>
+        <translation>Vorhandene einmal-Sperrdatei ist ungültig. Starte neuen Vorgang.  </translation>
     </message>
 </context>
 <context>

@@ -67,6 +67,10 @@ Kernel: %3 %4</source>
         <source>Include the following information whenever you report a bug:</source>
         <translation>Включите следующую информацию, когда сообщаете об ошибке:</translation>
     </message>
+    <message>
+        <source>Distribution: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
@@ -1316,6 +1320,17 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
 
 Вы можете импортировать его, нажав на База Данных &gt; «Импорт KeePass 1 базы данных...».
 Это одностороннее перемещение. Вы не сможете открыть импортированную базу данных на старой версии KeePassX 0,4.</translation>
+    </message>
+</context>
+<context>
+    <name>KeePass2Writer</name>
+    <message>
+        <source>Unable to issue challenge-response.</source>
+        <translation>Не удалось выполнить запрос ответа.</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Невозможно вычислить мастер-пароль</translation>
     </message>
 </context>
 <context>

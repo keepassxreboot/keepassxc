@@ -67,7 +67,25 @@
     </screenshots>
 
     <releases>
-        <release version="2.2.1" date="2017-10-01">
+        <release version="2.2.2" date="2017-10-22">
+            <description>
+                <ul>
+                    <li>Fixed entries with empty URLs being reported to KeePassHTTP clients [#1031]</li>
+                    <li>Fixed YubiKey detection and enabled CLI tool for AppImage binary [#1100]</li>
+                    <li>Added AppStream description [#1082]</li>
+                    <li>Improved TOTP compatibility and added new Base32 implementation [#1069]</li>
+                    <li>Fixed error handling when processing invalid cipher stream [#1099]</li>
+                    <li>Fixed double warning display when opening a database [#1037]</li>
+                    <li>Fixed unlocking databases with --pw-stdin [#1087]</li>
+                    <li>Added ability to override QT_PLUGIN_PATH environment variable for AppImages [#1079]</li>
+                    <li>Fixed transform seed not being regenerated when saving the database [#1068]</li>
+                    <li>Fixed only one YubiKey slot being polled [#1048]</li>
+                    <li>Corrected an issue with entry icons while merging [#1008]</li>
+                    <li>Corrected desktop and tray icons in Snap package [#1030]</li>
+                    <li>Fixed screen lock and Google fallback settings [#1029]</li>
+                </ul>
+            </description>
+        </release><release version="2.2.1" date="2017-10-01">
             <description>
                 <ul>
                     <li>Corrected multiple snap issues [#934, #1011]</li>

@@ -67,6 +67,10 @@ CPU 架构：%2
         <source>Include the following information whenever you report a bug:</source>
         <translation>报告任何 bug 时，请包含以下信息：</translation>
     </message>
+    <message>
+        <source>Distribution: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
@@ -1314,6 +1318,17 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation>当前选择的文件是旧版本的 KeePass 1 数据库(.kdb)。
 你可以通过点击 数据库 &gt; 导入 KeePass 1 数据库 来导入。
 这是不可逆的迁移，导入后的数据库将无法由旧版本的 KeePassX 0.4 打开。</translation>
+    </message>
+</context>
+<context>
+    <name>KeePass2Writer</name>
+    <message>
+        <source>Unable to issue challenge-response.</source>
+        <translation>无法发出挑战应答</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>无法计算主密码</translation>
     </message>
 </context>
 <context>
