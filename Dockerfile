@@ -21,11 +21,8 @@ RUN set -x \
         > /etc/yum.repos.d/bugzy-keepassxc-epel-7.repo
 
 RUN set -x \
-    && curl "https://copr.fedorainfracloud.org/coprs/sic/backports/repo/epel-7/sic-backports-epel-7.repo" \
-        > /etc/yum.repos.d/sic-backports-epel-7.repo
-
-RUN set -x \
     && yum clean -y all \
+    && yum install -y epel-release \
     && yum upgrade -y
 
 # build and runtime dependencies
@@ -34,7 +31,7 @@ RUN set -x \
         make \
         automake \
         gcc-c++ \
-        cmake \
+        cmake3 \
         libgcrypt16-devel \
         qt5-qtbase-devel \
         qt5-linguist \
@@ -43,7 +40,9 @@ RUN set -x \
         qt5-qtx11extras \
         qt5-qtx11extras-devel \
         libXi-devel \
-        libXtst-devel
+        libXtst-devel \
+        libyubikey-devel \
+        ykpers-devel
 
 # AppImage dependencies
 RUN set -x \
@@ -51,30 +50,8 @@ RUN set -x \
         wget \
         fuse-libs
 
-# build libyubikey
-ENV YUBIKEY_VERSION=1.13
-RUN set -x && yum install -y libusb-devel
 RUN set -x \
-    && wget "https://developers.yubico.com/yubico-c/Releases/libyubikey-${YUBIKEY_VERSION}.tar.gz" \
-    && tar xf libyubikey-${YUBIKEY_VERSION}.tar.gz \
-    && cd libyubikey-${YUBIKEY_VERSION} \
-    && ./configure --prefix=/usr --libdir=/usr/lib64 \
-    && make \
-    && make install \
-    && cd .. \
-    && rm -Rf libyubikey-${YUBIKEY_VERSION}*
-
-# build libykpers-1
-ENV YKPERS_VERSION=1.18.0
-RUN set -x \
-    && wget "https://developers.yubico.com/yubikey-personalization/Releases/ykpers-${YKPERS_VERSION}.tar.gz" \
-    && tar xf ykpers-${YKPERS_VERSION}.tar.gz \
-    && cd ykpers-${YKPERS_VERSION} \
-    && ./configure --prefix=/usr --libdir=/usr/lib64 \
-    && make \
-    && make install \
-    && cd .. \
-    && rm -Rf ykpers-${YKPERS_VERSION}*
+    && ln -s /usr/bin/cmake3 /usr/bin/cmake
 
 VOLUME /keepassxc/src
 VOLUME /keepassxc/out
