@@ -378,6 +378,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_autoTypeUi->defaultWindowSequenceButton->setChecked(true);
     m_autoTypeUi->windowSequenceEdit->setText("");
     m_autoTypeAssoc->copyDataFrom(entry->autoTypeAssociations());
+    m_autoTypeAssocModel->setEntry(entry);
     if (m_autoTypeAssoc->size() != 0) {
         m_autoTypeUi->assocView->setCurrentIndex(m_autoTypeAssocModel->index(0, 0));
     }
