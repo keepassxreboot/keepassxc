@@ -124,12 +124,6 @@ MainWindow::MainWindow()
 
     setWindowIcon(filePath()->applicationIcon());
     m_ui->globalMessageWidget->setHidden(true);
-    QAction* toggleViewAction = m_ui->toolBar->toggleViewAction();
-    toggleViewAction->setText(tr("Show toolbar"));
-    m_ui->menuView->addAction(toggleViewAction);
-    bool showToolbar = config()->get("ShowToolbar").toBool();
-    m_ui->toolBar->setVisible(showToolbar);
-    connect(m_ui->toolBar, SIGNAL(visibilityChanged(bool)), this, SLOT(saveToolbarState(bool)));
 
     m_clearHistoryAction = new QAction(tr("Clear history"), m_ui->menuFile);
     m_lastDatabasesActions = new QActionGroup(m_ui->menuRecentDatabases);
@@ -460,7 +454,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionGroupEmptyRecycleBin->setEnabled(recycleBinSelected);
             m_ui->actionChangeMasterKey->setEnabled(true);
             m_ui->actionChangeDatabaseSettings->setEnabled(true);
-            m_ui->actionDatabaseSave->setEnabled(true);
+            m_ui->actionDatabaseSave->setEnabled(m_ui->tabWidget->canSave());
             m_ui->actionDatabaseSaveAs->setEnabled(true);
             m_ui->actionExportCsv->setEnabled(true);
             m_ui->actionDatabaseMerge->setEnabled(m_ui->tabWidget->currentIndex() != -1);
@@ -566,6 +560,7 @@ void MainWindow::updateWindowTitle()
         if (m_ui->tabWidget->readOnly(tabWidgetIndex)) {
             customWindowTitlePart.append(QString(" [%1]").arg(tr("read-only")));
         }
+        m_ui->actionDatabaseSave->setEnabled(m_ui->tabWidget->canSave(tabWidgetIndex));
     } else if (stackedWidgetIndex == 1) {
         customWindowTitlePart = tr("Settings");
     }
