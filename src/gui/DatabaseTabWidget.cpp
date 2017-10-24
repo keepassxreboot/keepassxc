@@ -539,6 +539,16 @@ bool DatabaseTabWidget::readOnly(int index)
     return indexDatabaseManagerStruct(index).readOnly;
 }
 
+bool DatabaseTabWidget::canSave(int index)
+{
+    if (index == -1) {
+        index = currentIndex();
+    }
+
+    const DatabaseManagerStruct& dbStruct = indexDatabaseManagerStruct(index);
+    return !dbStruct.saveToFilename || (dbStruct.modified && !dbStruct.readOnly);
+}
+
 bool DatabaseTabWidget::isModified(int index)
 {
     if (index == -1) {
