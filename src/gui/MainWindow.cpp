@@ -124,12 +124,6 @@ MainWindow::MainWindow()
 
     setWindowIcon(filePath()->applicationIcon());
     m_ui->globalMessageWidget->setHidden(true);
-    QAction* toggleViewAction = m_ui->toolBar->toggleViewAction();
-    toggleViewAction->setText(tr("Show toolbar"));
-    m_ui->menuView->addAction(toggleViewAction);
-    bool showToolbar = config()->get("ShowToolbar").toBool();
-    m_ui->toolBar->setVisible(showToolbar);
-    connect(m_ui->toolBar, SIGNAL(visibilityChanged(bool)), this, SLOT(saveToolbarState(bool)));
 
     m_clearHistoryAction = new QAction(tr("Clear history"), m_ui->menuFile);
     m_lastDatabasesActions = new QActionGroup(m_ui->menuRecentDatabases);
