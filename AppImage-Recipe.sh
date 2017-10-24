@@ -66,10 +66,6 @@ get_apprun
 copy_deps
 delete_blacklisted
 
-# remove dbus and systemd libs as they are not blacklisted
-find . -name libdbus-1.so.3 -exec rm {} \;
-find . -name libsystemd.so.0 -exec rm {} \;
-
 get_desktop
 get_icon
 cat << EOF > ./usr/bin/keepassxc_env
