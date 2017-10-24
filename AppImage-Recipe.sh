@@ -85,8 +85,8 @@ else
 fi
 EOF
 chmod +x ./usr/bin/keepassxc_env
-sed -i 's/Exec=keepassxc/Exec=keepassxc_env/' org.keepassxc.desktop
-get_desktopintegration $LOWERAPP
+sed -i 's/Exec=keepassxc/Exec=keepassxc_env/' org.${LOWERAPP}.desktop
+get_desktopintegration "org.${LOWERAPP}"
 
 GLIBC_NEEDED=$(glibc_needed)
 
