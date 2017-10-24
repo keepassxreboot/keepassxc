@@ -158,8 +158,7 @@ void PasswordGeneratorWidget::keyPressEvent(QKeyEvent* e)
         } else {
             e->ignore();
         }
-    }
-    else {
+    } else {
         e->ignore();
     }
 }
