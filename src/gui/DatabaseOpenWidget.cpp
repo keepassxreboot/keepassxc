@@ -95,11 +95,16 @@ void DatabaseOpenWidget::showEvent(QShowEvent* event)
     m_ui->editPassword->setFocus();
 
 #ifdef WITH_XC_YUBIKEY
-    connect(YubiKey::instance(), SIGNAL(detected(int,bool)), SLOT(yubikeyDetected(int,bool)), Qt::QueuedConnection);
-    connect(YubiKey::instance(), SIGNAL(detectComplete()), SLOT(yubikeyDetectComplete()), Qt::QueuedConnection);
-    connect(YubiKey::instance(), SIGNAL(notFound()), SLOT(noYubikeyFound()), Qt::QueuedConnection);
+    // showEvent() may be called twice, so make sure we are only polling once
+    if (!m_yubiKeyBeingPolled) {
+        connect(YubiKey::instance(), SIGNAL(detected(int, bool)), SLOT(yubikeyDetected(int, bool)),
+                Qt::QueuedConnection);
+        connect(YubiKey::instance(), SIGNAL(detectComplete()), SLOT(yubikeyDetectComplete()), Qt::QueuedConnection);
+        connect(YubiKey::instance(), SIGNAL(notFound()), SLOT(noYubikeyFound()), Qt::QueuedConnection);
 
-    pollYubikey();
+        pollYubikey();
+        m_yubiKeyBeingPolled = true;
+    }
 #endif
 }
 
@@ -110,6 +115,7 @@ void DatabaseOpenWidget::hideEvent(QHideEvent* event)
 #ifdef WITH_XC_YUBIKEY
     // Don't listen to any Yubikey events if we are hidden
     disconnect(YubiKey::instance(), 0, this, 0);
+    m_yubiKeyBeingPolled = false;
 #endif
 }
 
@@ -311,10 +317,12 @@ void DatabaseOpenWidget::yubikeyDetectComplete()
     m_ui->checkChallengeResponse->setEnabled(true);
     m_ui->buttonRedetectYubikey->setEnabled(true);
     m_ui->yubikeyProgress->setVisible(false);
+    m_yubiKeyBeingPolled = false;
 }
 
 void DatabaseOpenWidget::noYubikeyFound()
 {
     m_ui->buttonRedetectYubikey->setEnabled(true);
     m_ui->yubikeyProgress->setVisible(false);
+    m_yubiKeyBeingPolled = false;
 }
