@@ -73,6 +73,7 @@ protected:
     QString m_filename;
 
 private:
+    bool m_yubiKeyBeingPolled = false;
     Q_DISABLE_COPY(DatabaseOpenWidget)
 };
 

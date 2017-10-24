@@ -884,7 +884,7 @@ void MainWindow::toggleWindow()
         raise();
         activateWindow();
 
-#if defined(Q_OS_LINUX) && ! defined(QT_NO_DBUS)
+#if defined(Q_OS_LINUX) && ! defined(QT_NO_DBUS) && (QT_VERSION < QT_VERSION_CHECK(5, 9, 0))
         // re-register global D-Bus menu (needed on Ubuntu with Unity)
         // see https://github.com/keepassxreboot/keepassxc/issues/271
         // and https://bugreports.qt.io/browse/QTBUG-58723
