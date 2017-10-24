@@ -632,7 +632,7 @@ void EditEntryWidget::displayAttribute(QModelIndex index, bool showProtected)
     if (index.isValid()) {
         QString key = m_attributesModel->keyByIndex(index);
         if (showProtected) {
-            m_advancedUi->attributesEdit->setPlainText(tr("[PROTECTED] Press reveal to view or edit"));
+            m_advancedUi->attributesEdit->setPlainText(tr("[PROTECTED]") + " " + tr("Press reveal to view or edit"));
             m_advancedUi->attributesEdit->setEnabled(false);
             m_advancedUi->revealAttributeButton->setEnabled(true);
             m_advancedUi->protectAttributeButton->setChecked(true);

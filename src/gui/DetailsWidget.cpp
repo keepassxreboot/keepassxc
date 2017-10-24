@@ -152,7 +152,7 @@ void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
         for (const QString& key : customAttributes) {
             QString value = m_currentEntry->attributes()->value(key);
             if (m_currentEntry->attributes()->isProtected(key)) {
-                value = "<i>[PROTECTED]</i>";
+                value = "<i>" + tr("[PROTECTED]") + "</i>";
             }
             attributesText.append(QString("<b>%1</b>: %2<br/>").arg(key, value));
         }
@@ -161,7 +161,7 @@ void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
 
     m_ui->autotypeTree->clear();
     AutoTypeAssociations* autotypeAssociations = m_currentEntry->autoTypeAssociations();
-    QList<QTreeWidgetItem *> items;
+    QList<QTreeWidgetItem*> items;
     for (auto assoc : autotypeAssociations->getAll()) {
         QStringList association = QStringList() << assoc.window << assoc.sequence;
         if (association.at(1).isEmpty()) {
@@ -273,7 +273,7 @@ QString DetailsWidget::shortUrl(QString url)
     QString newurl = "";
     if (url.length() > 60) {
         newurl.append(url.left(20));
-        newurl.append("...");
+        newurl.append("…");
         newurl.append(url.right(20));
         return newurl;
     }
@@ -285,7 +285,7 @@ QString DetailsWidget::shortPassword(QString password)
     QString newpassword = "";
     if (password.length() > 60) {
         newpassword.append(password.left(50));
-        newpassword.append("...");
+        newpassword.append("…");
         return newpassword;
     }
     return password;
