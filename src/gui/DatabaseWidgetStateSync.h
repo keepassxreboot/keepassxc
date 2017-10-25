@@ -19,6 +19,12 @@
 #ifndef KEEPASSX_DATABASEWIDGETSTATESYNC_H
 #define KEEPASSX_DATABASEWIDGETSTATESYNC_H
 
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Added includes
+ */
+#include <QByteArray>
+
 #include "gui/DatabaseWidget.h"
 
 class DatabaseWidgetStateSync : public QObject
@@ -37,18 +43,48 @@ public slots:
 private slots:
     void blockUpdates();
     void updateSplitterSizes();
-    void updateColumnSizes();
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Slot to receive entry view header state changes
+     */
+    void updateHeaderStates();
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Slots to receive changes of 'Hide Usernames' and 'Hide Passwords'
+     * settings
+     */
+    void updateHideUsernames();
+    void updateHidePasswords();
 
 private:
     static QList<int> variantToIntList(const QVariant& variant);
     static QVariant intListToVariant(const QList<int>& list);
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Methods to convert QVariant from/to QByteArray (required to save/load
+     * entry list/search header state to/from configuration file)
+     */
+    static QByteArray variantToByteArray(const QVariant& variant);
+    static QVariant byteArrayToVariant(const QByteArray& bytearray);
 
     DatabaseWidget* m_activeDbWidget;
 
     bool m_blockUpdates;
     QList<int> m_splitterSizes;
-    QList<int> m_columnSizesList;
-    QList<int> m_columnSizesSearch;
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Properties to store entry list/search header states (replaces both
+     * m_columnSizesList and m_columnSizesSearch)
+     */
+    QByteArray m_headerStateList;
+    QByteArray m_headerStateSearch;
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Properties to store entry list 'Hide Usernames' and 'Hide Passwords'
+     * settings
+     */
+    bool m_hideUsernames;
+    bool m_hidePasswords;
 };
 
 #endif // KEEPASSX_DATABASEWIDGETSTATESYNC_H

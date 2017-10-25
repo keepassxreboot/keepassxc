@@ -19,6 +19,14 @@
 #define KEEPASSX_ENTRYVIEW_H
 
 #include <QTreeView>
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Added includes
+ */
+#include <QMenu>
+#include <QAction>
+#include <QPoint>
+#include <QByteArray>
 
 #include "gui/entry/EntryModel.h"
 
@@ -41,6 +49,22 @@ public:
     bool inEntryListMode();
     int numberOfSelectedEntries();
     void setFirstEntryActive();
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Methods to get/set header state -> used by DatabaseWidget to save/load
+     * configuration to/from file
+     */
+    QByteArray headerState() const;
+    bool setHeaderState(const QByteArray &state);
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Methods to get/set 'Hide Usernames' and 'Hide Passwords' settings
+     * of model
+     */
+    bool hideUsernames() const;
+    void setHideUsernames(const bool hide);
+    bool hidePasswords() const;
+    void setHidePasswords(const bool hide);
 
 public slots:
     void setGroup(Group* group);
@@ -48,6 +72,18 @@ public slots:
 signals:
     void entryActivated(Entry* entry, EntryModel::ModelColumn column);
     void entrySelectionChanged();
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Signal to notify about header state changes
+     */
+    void headerStateChanged();
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Signals to notify about changes of 'Hide Usernames' and 'Hide Passwords'
+     * settings of model
+     */
+    void hideUsernamesChanged();
+    void hidePasswordsChanged();
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;
@@ -56,11 +92,32 @@ private slots:
     void emitEntryActivated(const QModelIndex& index);
     void switchToEntryListMode();
     void switchToGroupMode();
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Signal slots for header menu
+     */
+    void showHeaderMenu(const QPoint& pos);
+    void syncColumnActions();
+    void toggleColumnVisibility();
+    void fitColumnsToWindow();
+    void fitColumnsToContents();
+    void resetHeaderToSession();
+    void resetHeaderToDefaults();
 
 private:
     EntryModel* const m_model;
     SortFilterHideProxyModel* const m_sortModel;
     bool m_inEntryListMode;
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Properties used by header menu
+     */
+    QMenu* m_headerMenu;
+    QAction* m_hideUsernamesAction;
+    QAction* m_hidePasswordsAction;
+    QList<QAction *> m_columnActions;
+    QByteArray m_headerSessionState;
+    QByteArray m_headerDefaultState;
 };
 
 #endif // KEEPASSX_ENTRYVIEW_H

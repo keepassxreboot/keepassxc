@@ -286,9 +286,13 @@ void TestEntryModel::testProxyModel()
 
     modelSource->setGroup(db->rootGroup());
 
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Update comparison value to account for additional columns
+     */
     QSignalSpy spyColumnRemove(modelProxy, SIGNAL(columnsAboutToBeRemoved(QModelIndex,int,int)));
     modelProxy->hideColumn(0, true);
-    QCOMPARE(modelProxy->columnCount(), 3);
+    QCOMPARE(modelProxy->columnCount(), 10);
     QVERIFY(spyColumnRemove.size() >= 1);
 
     int oldSpyColumnRemoveSize = spyColumnRemove.size();
@@ -302,9 +306,13 @@ void TestEntryModel::testProxyModel()
     entryList << entry;
     modelSource->setEntryList(entryList);
 
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Update comparison value to account for additional columns
+     */
     QSignalSpy spyColumnInsert(modelProxy, SIGNAL(columnsAboutToBeInserted(QModelIndex,int,int)));
     modelProxy->hideColumn(0, false);
-    QCOMPARE(modelProxy->columnCount(), 4);
+    QCOMPARE(modelProxy->columnCount(), 11);
     QVERIFY(spyColumnInsert.size() >= 1);
 
     int oldSpyColumnInsertSize = spyColumnInsert.size();
