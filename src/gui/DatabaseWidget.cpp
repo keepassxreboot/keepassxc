@@ -825,7 +825,7 @@ void DatabaseWidget::unlockDatabase(bool accepted)
         return;
     }
 
-    Database* db = Q_NULLPTR;
+    Database* db = nullptr;
     if (sender() == m_unlockDatabaseDialog) {
         db = m_unlockDatabaseDialog->database();
     } else if (sender() == m_unlockDatabaseWidget) {
