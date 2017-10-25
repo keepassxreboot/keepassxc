@@ -825,7 +825,7 @@ void DatabaseWidget::unlockDatabase(bool accepted)
         return;
     }
 
-    Database *db = Q_NULLPTR;
+    Database* db = Q_NULLPTR;
     if (sender() == m_unlockDatabaseDialog) {
         db = m_unlockDatabaseDialog->database();
     } else if (sender() == m_unlockDatabaseWidget) {
@@ -1125,8 +1125,13 @@ void DatabaseWidget::onWatchedFileChanged()
 
 void DatabaseWidget::reloadDatabaseFile()
 {
-    if (m_db == nullptr)
+    if (m_db == nullptr) {
         return;
+    }
+
+    if (currentMode() == DatabaseWidget::LockedMode) {
+        return;
+    }
 
     if (! config()->get("AutoReloadOnChange").toBool()) {
         // Ask if we want to reload the db
