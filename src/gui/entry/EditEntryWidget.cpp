@@ -315,9 +315,10 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_mainUi->passwordRepeatEdit->setReadOnly(m_history);
     m_mainUi->expireCheck->setEnabled(!m_history);
     m_mainUi->expireDatePicker->setReadOnly(m_history);
-    m_mainUi->notesEnabled->setChecked(true);
+    m_mainUi->notesEnabled->setChecked(!config()->get("security/hidenotes").toBool());
     m_mainUi->notesEdit->setReadOnly(m_history);
-    m_mainUi->notesEdit->setVisible(true);
+    m_mainUi->notesEdit->setVisible(!config()->get("security/hidenotes").toBool());
+    m_mainUi->notesHint->setVisible(config()->get("security/hidenotes").toBool());
     m_mainUi->togglePasswordGeneratorButton->setChecked(false);
     m_mainUi->togglePasswordGeneratorButton->setDisabled(m_history);
     m_mainUi->passwordGenerator->reset();
