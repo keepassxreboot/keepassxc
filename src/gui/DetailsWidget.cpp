@@ -110,10 +110,17 @@ void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
     }
 
     QString url = m_currentEntry->webUrl();
-    if (url != "") {
-        url = QString("<a href=\"%1\">%2</a>").arg(url).arg(shortUrl(url));
+    if (!url.isEmpty()) {
+        // URL is well formed and can be opened in a browser
+        // create a new display url that masks password placeholders
+        // the actual link will use the password
+        QString displayUrl = m_currentEntry->url();
+        displayUrl = m_currentEntry->maskPasswordPlaceholders(displayUrl);
+        displayUrl = m_currentEntry->resolveMultiplePlaceholders(displayUrl);
+        url = QString("<a href=\"%1\">%2</a>").arg(url).arg(shortUrl(displayUrl));
         m_ui->urlLabel->setOpenExternalLinks(true);
     } else {
+        // Fallback to the raw url string
         url = shortUrl(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->url()));
         m_ui->urlLabel->setOpenExternalLinks(false);
     }
