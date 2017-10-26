@@ -156,6 +156,7 @@ License: LGPL-2.1
 Comment: based on Nuvola icon theme
 
 Files: share/icons/application/*/actions/application-exit.png
+       share/icons/application/*/actions/chronometer.png
        share/icons/application/*/actions/configure.png
        share/icons/application/*/actions/dialog-close.png
        share/icons/application/*/actions/dialog-ok.png

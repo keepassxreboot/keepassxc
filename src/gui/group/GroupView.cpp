@@ -41,6 +41,8 @@ GroupView::GroupView(Database* db, QWidget* parent)
 
     connect(selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), SLOT(emitGroupChanged()));
 
+    connect(this, SIGNAL(clicked(QModelIndex)), SLOT(emitGroupPressed(QModelIndex)));
+
     modelReset();
 
     setDragEnabled(true);
@@ -124,6 +126,11 @@ void GroupView::setModel(QAbstractItemModel* model)
 void GroupView::emitGroupChanged()
 {
     emit groupChanged(currentGroup());
+}
+
+void GroupView::emitGroupPressed(const QModelIndex& index)
+{
+    emit groupPressed(m_model->groupFromIndex(index));
 }
 
 void GroupView::syncExpandedState(const QModelIndex& parent, int start, int end)

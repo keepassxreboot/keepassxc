@@ -136,6 +136,13 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QCheckBox" name="passwordDetailsCleartextCheckBox">
+        <property name="text">
+         <string>Hide passwords in the preview panel</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>

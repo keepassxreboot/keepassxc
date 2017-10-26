@@ -435,6 +435,23 @@ void Group::setParent(Database* db)
     QObject::setParent(db);
 }
 
+QStringList Group::hierarchy()
+{
+    QStringList hierarchy;
+    Group* group = this;
+    Group* parent = m_parent;
+    hierarchy.prepend(group->name());
+    
+    while (parent) {
+        group = group->parentGroup();
+        parent = group->parentGroup();
+
+        hierarchy.prepend(group->name());
+    }
+
+    return hierarchy;
+}
+
 Database* Group::database()
 {
     return m_db;

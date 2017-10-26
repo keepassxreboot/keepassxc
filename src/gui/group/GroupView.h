@@ -38,11 +38,13 @@ public:
 
 signals:
     void groupChanged(Group* group);
+    void groupPressed(Group* group);
 
 private slots:
     void expandedChanged(const QModelIndex& index);
     void emitGroupChanged(const QModelIndex& index);
     void emitGroupChanged();
+    void emitGroupPressed(const QModelIndex& index);
     void syncExpandedState(const QModelIndex& parent, int start, int end);
     void modelReset();
 

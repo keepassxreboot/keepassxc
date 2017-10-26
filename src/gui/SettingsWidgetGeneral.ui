@@ -154,6 +154,13 @@
            </spacer>
           </item>
           <item>
+           <widget class="QCheckBox" name="detailsHideCheckBox">
+            <property name="text">
+             <string>Hide the Details view</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QCheckBox" name="systrayShowCheckBox">
             <property name="text">
              <string>Show a system tray icon</string>
