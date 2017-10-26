@@ -79,10 +79,10 @@
      </property>
     </widget>
    </item>
-   <item row="9" column="0" alignment="Qt::AlignRight|Qt::AlignTop">
-    <widget class="QLabel" name="notesLabel">
+   <item row="9" column="0" alignment="Qt::AlignLeft|Qt::AlignTop">
+    <widget class="QCheckBox" name="notesEnabled">
      <property name="text">
-      <string>Notes:</string>
+      <string>Notes</string>
      </property>
     </widget>
    </item>
@@ -126,6 +126,25 @@
        <width>0</width>
        <height>100</height>
       </size>
+     </property>
+     <property name="font">
+      <font>
+       <family>Monospace</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="1">
+    <widget class="QLabel" name="notesHint">
+     <property name="visible">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string>Toggle the checkbox to reveal the notes section.</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignTop</set>
      </property>
     </widget>
    </item>

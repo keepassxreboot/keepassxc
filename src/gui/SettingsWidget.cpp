@@ -163,6 +163,7 @@ void SettingsWidget::loadSettings()
     m_secUi->passwordCleartextCheckBox->setChecked(config()->get("security/passwordscleartext").toBool());
     m_secUi->passwordDetailsCleartextCheckBox->setChecked(config()->get("security/hidepassworddetails").toBool());
     m_secUi->passwordRepeatCheckBox->setChecked(config()->get("security/passwordsrepeat").toBool());
+    m_secUi->hideNotesCheckBox->setChecked(config()->get("security/hidenotes").toBool());
 
 
     for (const ExtraPage& page: asConst(m_extraPages)) {
@@ -231,6 +232,7 @@ void SettingsWidget::saveSettings()
     config()->set("security/passwordscleartext", m_secUi->passwordCleartextCheckBox->isChecked());
     config()->set("security/hidepassworddetails", m_secUi->passwordDetailsCleartextCheckBox->isChecked());
     config()->set("security/passwordsrepeat", m_secUi->passwordRepeatCheckBox->isChecked());
+    config()->set("security/hidenotes", m_secUi->hideNotesCheckBox->isChecked());
 
     // Security: clear storage if related settings are disabled
     if (!config()->get("RememberLastDatabases").toBool()) {

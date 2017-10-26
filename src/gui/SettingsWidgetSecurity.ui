@@ -143,6 +143,13 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QCheckBox" name="hideNotesCheckBox">
+        <property name="text">
+         <string>Hide entry notes by default</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
