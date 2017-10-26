@@ -259,13 +259,16 @@ Service::Access Service::checkAccess(const Entry *entry, const QString & host, c
 
 KeepassHttpProtocol::Entry Service::prepareEntry(const Entry* entry)
 {
-    KeepassHttpProtocol::Entry res(entry->resolvePlaceholder(entry->title()), entry->resolvePlaceholder(entry->username()), entry->resolvePlaceholder(entry->password()), entry->uuid().toHex());
+    KeepassHttpProtocol::Entry res(entry->resolveMultiplePlaceholders(entry->title()),
+                                   entry->resolveMultiplePlaceholders(entry->username()),
+                                   entry->resolveMultiplePlaceholders(entry->password()),
+                                   entry->uuid().toHex());
     if (HttpSettings::supportKphFields()) {
         const EntryAttributes * attr = entry->attributes();
         const auto keys = attr->keys();
         for (const QString& key: keys) {
             if (key.startsWith(QLatin1String("KPH: "))) {
-                res.addStringField(key, attr->value(key));
+                res.addStringField(key, entry->resolveMultiplePlaceholders(attr->value(key)));
             }
         }
     }
