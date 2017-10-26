@@ -151,8 +151,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             }
             return result;
         case Url:
-            result = entry->maskPasswordPlaceholders(entry->url());
-            result = entry->resolveMultiplePlaceholders(result);
+            result = entry->displayUrl();
             if (attr->isReference(EntryAttributes::URLKey)) {
                 result.prepend(tr("Ref: ","Reference abbreviation"));
             }

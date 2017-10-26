@@ -79,6 +79,7 @@ public:
     QString title() const;
     QString url() const;
     QString webUrl() const;
+    QString displayUrl() const;
     QString username() const;
     QString password() const;
     QString notes() const;

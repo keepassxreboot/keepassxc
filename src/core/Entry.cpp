@@ -247,6 +247,13 @@ QString Entry::webUrl() const
     return resolveUrl(url);
 }
 
+QString Entry::displayUrl() const
+{
+    QString url = maskPasswordPlaceholders(m_attributes->value(EntryAttributes::URLKey));
+    url = resolveMultiplePlaceholders(url);
+    return resolveUrl(url);
+}
+
 QString Entry::username() const
 {
     return m_attributes->value(EntryAttributes::UserNameKey);
