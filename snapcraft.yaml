@@ -12,7 +12,7 @@ apps:
   keepassxc:
     command: desktop-launch keepassxc
     plugs: [unity7, x11, opengl, gsettings, home, network, network-bind, removable-media, raw-usb]
-    desktop: usr/share/applications/org.keepassxc.desktop
+    desktop: usr/share/applications/org.keepassxc.KeePassXC.desktop
   cli:
     command: keepassxc-cli
     plugs: [gsettings, home, removable-media, raw-usb]
@@ -42,7 +42,7 @@ parts:
       - libyubikey-dev
       - libykpers-1-dev
     install: |
-      sed -i 's|Icon=keepassxc|Icon=${SNAP}/usr/share/icons/hicolor/256x256/apps/keepassxc.png|g' $SNAPCRAFT_PART_INSTALL/usr/share/applications/org.keepassxc.desktop
+      sed -i 's|Icon=keepassxc|Icon=${SNAP}/usr/share/icons/hicolor/256x256/apps/keepassxc.png|g' $SNAPCRAFT_PART_INSTALL/usr/share/applications/org.keepassxc.KeePassXC.desktop
     after: [desktop-qt5]
 
   # Redefine desktop-qt5 stage packages to work with Ubuntu 17.04
