@@ -73,15 +73,15 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     QLayout* layout = new QHBoxLayout();
     mainLayout->addWidget(m_messageWidget);
     mainLayout->addLayout(layout);
-    m_splitter = new QSplitter(m_mainWidget);
-    m_splitter->setChildrenCollapsible(false);
+    m_mainSplitter = new QSplitter(m_mainWidget);
+    m_mainSplitter->setChildrenCollapsible(false);
     m_detailSplitter = new QSplitter(m_mainWidget);
     m_detailSplitter->setOrientation(Qt::Vertical);
     m_detailSplitter->setChildrenCollapsible(true);
 
-    QWidget* rightHandSideWidget = new QWidget(m_splitter);
+    QWidget* rightHandSideWidget = new QWidget(m_mainSplitter);
 
-    m_groupView = new GroupView(db, m_splitter);
+    m_groupView = new GroupView(db, m_mainSplitter);
     m_groupView->setObjectName("groupView");
     m_groupView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(m_groupView, SIGNAL(customContextMenuRequested(QPoint)),
@@ -122,13 +122,13 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
 
     setTabOrder(m_entryView, m_groupView);
 
-    m_splitter->addWidget(m_groupView);
-    m_splitter->addWidget(rightHandSideWidget);
+    m_mainSplitter->addWidget(m_groupView);
+    m_mainSplitter->addWidget(rightHandSideWidget);
 
-    m_splitter->setStretchFactor(0, 30);
-    m_splitter->setStretchFactor(1, 70);
+    m_mainSplitter->setStretchFactor(0, 30);
+    m_mainSplitter->setStretchFactor(1, 70);
 
-    layout->addWidget(m_splitter);
+    layout->addWidget(m_mainSplitter);
     m_mainWidget->setLayout(mainLayout);
 
     m_editEntryWidget = new EditEntryWidget();
@@ -168,7 +168,8 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     addWidget(m_keepass1OpenWidget);
     addWidget(m_unlockDatabaseWidget);
 
-    connect(m_splitter, SIGNAL(splitterMoved(int,int)), SIGNAL(splitterSizesChanged()));
+    connect(m_mainSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(mainSplitterSizesChanged()));
+    connect(m_detailSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(detailSplitterSizesChanged()));
     connect(m_entryView->header(), SIGNAL(sectionResized(int,int,int)), SIGNAL(entryColumnSizesChanged()));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(onGroupChanged(Group*)));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), SIGNAL(groupChanged()));
@@ -251,14 +252,24 @@ bool DatabaseWidget::isEditWidgetModified() const
     }
 }
 
-QList<int> DatabaseWidget::splitterSizes() const
+QList<int> DatabaseWidget::mainSplitterSizes() const
 {
-    return m_splitter->sizes();
+    return m_mainSplitter->sizes();
 }
 
-void DatabaseWidget::setSplitterSizes(const QList<int>& sizes)
+void DatabaseWidget::setMainSplitterSizes(const QList<int>& sizes)
 {
-    m_splitter->setSizes(sizes);
+    m_mainSplitter->setSizes(sizes);
+}
+
+QList<int> DatabaseWidget::detailSplitterSizes() const
+{
+    return m_detailSplitter->sizes();
+}
+
+void DatabaseWidget::setDetailSplitterSizes(const QList<int> &sizes)
+{
+    m_detailSplitter->setSizes(sizes);
 }
 
 QList<int> DatabaseWidget::entryHeaderViewSizes() const
