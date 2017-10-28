@@ -19,6 +19,7 @@
 
 #include "config-keepassx.h"
 
+#include "core/Config.h"
 #include "core/Database.h"
 #include "core/DatabaseIcons.h"
 #include "core/Group.h"
@@ -206,16 +207,8 @@ QString Entry::effectiveAutoTypeSequence() const
       return QString();
     }
 
-    if (sequence.isEmpty() && (!username().isEmpty() || !password().isEmpty())) {
-        if (username().isEmpty()) {
-            sequence = "{PASSWORD}{ENTER}";
-        }
-       else if (password().isEmpty()) {
-          sequence = "{USERNAME}{ENTER}";
-        }
-        else {
-            sequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
-        }
+    if (sequence.isEmpty() && !username().isEmpty() && !password().isEmpty()) {
+        sequence = config()->get("AutoTypeSequence").toString();
     }
 
     return sequence;

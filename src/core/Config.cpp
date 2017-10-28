@@ -121,6 +121,7 @@ void Config::init(const QString& fileName)
     m_defaults.insert("AutoTypeEntryTitleMatch", true);
     m_defaults.insert("AutoTypeEntryURLMatch", true);
     m_defaults.insert("AutoTypeDelay", 25);
+    m_defaults.insert("AutoTypeSequence", "{USERNAME}{TAB}{PASSWORD}{ENTER}");
     m_defaults.insert("UseGroupIconOnEntryCreation", true);
     m_defaults.insert("IgnoreGroupExpansion", true);
     m_defaults.insert("security/clearclipboard", true);

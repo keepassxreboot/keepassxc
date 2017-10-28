@@ -203,7 +203,7 @@ QString Group::effectiveAutoTypeSequence() const
     } while (group && sequence.isEmpty());
 
     if (sequence.isEmpty()) {
-        sequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
+        sequence = config()->get("AutoTypeSequence").toString();
     }
 
     return sequence;

@@ -614,16 +614,8 @@ QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitl
         group = group->parentGroup();
     } while (group && (!enableSet || sequence.isEmpty()));
 
-    if (sequence.isEmpty() && (!entry->resolvePlaceholder(entry->username()).isEmpty() || !entry->resolvePlaceholder(entry->password()).isEmpty())) {
-        if (entry->resolvePlaceholder(entry->username()).isEmpty()) {
-            sequence = "{PASSWORD}{ENTER}";
-        }
-        else if (entry->resolvePlaceholder(entry->password()).isEmpty()) {
-            sequence = "{USERNAME}{ENTER}";
-        }
-        else {
-            sequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
-        }
+    if (sequence.isEmpty() && !entry->resolvePlaceholder(entry->username()).isEmpty() && !entry->resolvePlaceholder(entry->password()).isEmpty()) {
+        sequence = config()->get("AutoTypeSequence").toString();
     }
 
     return sequence;
