@@ -60,6 +60,11 @@ DetailsWidget::~DetailsWidget()
 
 void DetailsWidget::getSelectedEntry(Entry* selectedEntry) 
 {
+    if (!selectedEntry) {
+        hideDetails();
+        return;
+    }
+
     m_currentEntry = selectedEntry;
 
     if (!config()->get("GUI/HideDetailsView").toBool()) {
@@ -185,6 +190,11 @@ void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
 
 void DetailsWidget::getSelectedGroup(Group* selectedGroup) 
 {
+    if (!selectedGroup) {
+        hideDetails();
+        return;
+    }
+
     m_currentGroup = selectedGroup;
 
     if (!config()->get("GUI/HideDetailsView").toBool()) {
