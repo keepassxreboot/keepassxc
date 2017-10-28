@@ -278,6 +278,7 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const Q
     m_database = database;
     m_create = create;
     m_history = history;
+    m_saved = false;
 
     if (history) {
         setHeadline(QString("%1 > %2").arg(parentName, tr("Entry history")));
@@ -438,6 +439,7 @@ void EditEntryWidget::saveEntry()
     }
 
     updateEntryData(m_entry);
+    m_saved = true;
 
     if (!m_create) {
         m_entry->endUpdate();
@@ -510,7 +512,7 @@ void EditEntryWidget::cancel()
 
     clear();
 
-    emit editFinished(false);
+    emit editFinished(m_saved);
 }
 
 void EditEntryWidget::clear()
