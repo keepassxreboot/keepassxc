@@ -131,6 +131,11 @@ void EditWidgetAutoType::setFields(const Tools::TriState autoTypeEnabled, const 
     updateAutoTypeEnabled();
 }
 
+void EditWidgetAutoType::setAssocModelEntry(const Entry *entry)
+{
+    m_autoTypeAssocModel->setEntry(entry);
+}
+
 void EditWidgetAutoType::setUseParentAssociations(bool useParentAssociations)
 {
     m_ui->useParentGroupAssociations->setChecked(useParentAssociations);

@@ -26,6 +26,7 @@
 
 class AutoTypeAssociations;
 class AutoTypeAssociationsModel;
+class Entry;
 
 namespace Tools {
 enum class TriState;
@@ -57,6 +58,7 @@ public slots:
     void setFields(const Tools::TriState autoTypeEnabled, const bool parentAutoTypeEnabled,
                    const QString &defaultAutoTypeSequence, const QString &effectiveAutoTypeSequence,
                    const AutoTypeAssociations* autoTypeAssociations);
+    void setAssocModelEntry(const Entry *entry);
     void setUseParentAssociations(bool useParentAssociations);
     void setHistory(bool history);
     void clear();

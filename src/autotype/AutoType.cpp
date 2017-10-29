@@ -559,15 +559,14 @@ QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitl
 
     QString sequence;
     if (!windowTitle.isEmpty()) {
-        bool match = matchAutoTypeAssociations(sequence, entry->defaultAutoTypeSequence(),
-                                               entry->autoTypeAssociations(), windowTitle);
+        bool match = matchAutoTypeAssociations(&sequence, entry->defaultAutoTypeSequence(),
+                                               entry->autoTypeAssociations(), windowTitle, entry);
 
         if (!match && entry->autoTypeUseParentAssociations()) {
             const Group* group = entry->group();
             do {
-
-                match = matchAutoTypeAssociations(sequence, group->defaultAutoTypeSequence(),
-                                                  group->autoTypeAssociations(), windowTitle);
+                match = matchAutoTypeAssociations(&sequence, group->defaultAutoTypeSequence(),
+                                                  group->autoTypeAssociations(), windowTitle, entry);
                 group = group->parentGroup();
             } while (group && !match && group->autoTypeUseParentAssociations());
         }
@@ -627,14 +626,17 @@ QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitl
     return sequence;
 }
 
-bool AutoType::matchAutoTypeAssociations(QString &sequence, const QString &defaultAutoTypeSequence,
-                                         const AutoTypeAssociations *associations, const QString &windowTitle) const
+bool AutoType::matchAutoTypeAssociations(QString *sequence, const QString &defaultAutoTypeSequence,
+                                         const AutoTypeAssociations *associations, const QString &windowTitle,
+                                         const Entry *entry) const
 {
+    Q_ASSERT_X(sequence, "AutoType::matchAutoTypeAssociations", "sequence pointer cannot be nullptr");
     const QList<AutoTypeAssociations::Association> assocList = associations->getAll();
     for (const AutoTypeAssociations::Association& assoc : assocList) {
-        if (windowMatches(windowTitle, assoc.window)) {
-            sequence = assoc.sequence.isEmpty() ? defaultAutoTypeSequence
-                                                : assoc.sequence;
+        const QString window = entry ? entry->resolveMultiplePlaceholders(assoc.window) : assoc.window;
+        if (windowMatches(windowTitle, window)) {
+            *sequence = assoc.sequence.isEmpty() ? defaultAutoTypeSequence
+                                                 : assoc.sequence;
             return true;
         }
     }
