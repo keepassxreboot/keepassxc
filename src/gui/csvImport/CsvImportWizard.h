@@ -38,19 +38,17 @@ public:
     explicit CsvImportWizard(QWidget *parent = nullptr);
     ~CsvImportWizard();
     void load(const QString& filename, Database *database);
+    void keyFinished(bool accepted, CompositeKey key);
 
 signals:
     void importFinished(bool accepted);
 
 private slots:
-    void keyFinished(bool accepted);
     void parseFinished(bool accepted);
 
 private:
     Database* m_db;
-    CsvImportWidget* parse;
-    ChangeMasterKeyWidget* key;
-    QStackedWidget *m_pages;
+    CsvImportWidget* m_parse;
     QGridLayout *m_layout;
 };
 

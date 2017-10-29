@@ -49,6 +49,7 @@
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/CloneDialog.h"
+#include "gui/PasswordEdit.h"
 #include "gui/TotpDialog.h"
 #include "gui/SetupTotpDialog.h"
 #include "gui/FileDialog.h"
@@ -117,6 +118,43 @@ void TestGui::cleanup()
 
     m_db = nullptr;
     m_dbWidget = nullptr;
+}
+
+void TestGui::testCreateDatabase()
+{
+    fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/NewTestDatabase.kdbx"));
+    triggerAction("actionDatabaseNew");
+
+    DatabaseWidget* dbWidget = m_tabWidget->currentDatabaseWidget();
+
+    QWidget* databaseNewWidget = dbWidget->findChild<QWidget*>("changeMasterKeyWidget");
+    QList<QWidget*> databaseNewWidgets = dbWidget->findChildren<QWidget*>("changeMasterKeyWidget");
+    PasswordEdit* editPassword = databaseNewWidget->findChild<PasswordEdit*>("enterPasswordEdit");
+    QVERIFY(editPassword->isVisible());
+
+    QLineEdit* editPasswordRepeat = databaseNewWidget->findChild<QLineEdit*>("repeatPasswordEdit");
+    QVERIFY(editPasswordRepeat->isVisible());
+
+    m_tabWidget->currentDatabaseWidget()->setCurrentWidget(databaseNewWidget);
+
+    QTest::keyClicks(editPassword, "test");
+    QTest::keyClicks(editPasswordRepeat, "test");
+    QTest::keyClick(editPasswordRepeat, Qt::Key_Enter);
+
+    QTRY_VERIFY(m_tabWidget->tabText(m_tabWidget->currentIndex()).contains("*"));
+
+    m_db = m_tabWidget->currentDatabaseWidget()->database();
+
+    // there is a new empty db
+    QCOMPARE(m_db->rootGroup()->children().size(), 0);
+
+    // clean 
+    MessageBox::setNextAnswer(QMessageBox::No);
+    triggerAction("actionDatabaseClose");
+    Tools::wait(100);
+
+    QFile dbfile(QString(KEEPASSX_TEST_DATA_DIR).append("/NewTestDatabase.kdbx"));
+    dbfile.remove();
 }
 
 void TestGui::testMergeDatabase()

@@ -236,6 +236,9 @@ private:
     bool m_searchCaseSensitive;
     bool m_searchLimitGroup;
 
+    // CSV import state
+    bool m_importingCsv;
+
     // Autoreload
     QFileSystemWatcher m_fileWatcher;
     QTimer m_fileWatchTimer;
