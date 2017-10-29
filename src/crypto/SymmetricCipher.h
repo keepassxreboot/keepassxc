@@ -38,6 +38,7 @@ public:
     enum Mode
     {
         Cbc,
+        Ctr,
         Ecb,
         Stream
     };

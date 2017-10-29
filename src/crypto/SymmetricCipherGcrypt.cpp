@@ -62,6 +62,9 @@ int SymmetricCipherGcrypt::gcryptMode(SymmetricCipher::Mode mode)
     case SymmetricCipher::Cbc:
         return GCRY_CIPHER_MODE_CBC;
 
+    case SymmetricCipher::Ctr:
+        return GCRY_CIPHER_MODE_CTR;
+
     case SymmetricCipher::Stream:
         return GCRY_CIPHER_MODE_STREAM;
 
@@ -119,7 +122,13 @@ bool SymmetricCipherGcrypt::setKey(const QByteArray& key)
 bool SymmetricCipherGcrypt::setIv(const QByteArray& iv)
 {
     m_iv = iv;
-    gcry_error_t error = gcry_cipher_setiv(m_ctx, m_iv.constData(), m_iv.size());
+    gcry_error_t error;
+
+    if (m_mode == GCRY_CIPHER_MODE_CTR) {
+        error = gcry_cipher_setctr(m_ctx, m_iv.constData(), m_iv.size());
+    } else {
+        error = gcry_cipher_setiv(m_ctx, m_iv.constData(), m_iv.size());
+    }
 
     if (error != 0) {
         setErrorString(error);
