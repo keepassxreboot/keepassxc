@@ -70,6 +70,7 @@ public:
     }
 
     bool reset();
+    int keySize() const;
     int blockSize() const;
     QString errorString() const;
 
