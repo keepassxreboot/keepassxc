@@ -727,7 +727,9 @@ void MainWindow::changeEvent(QEvent* event)
 
 void MainWindow::saveWindowInformation()
 {
-    config()->set("GUI/MainWindowGeometry", saveGeometry());
+    if (isVisible()) {
+        config()->set("GUI/MainWindowGeometry", saveGeometry());
+    }
 }
 
 bool MainWindow::saveLastDatabases()
@@ -858,6 +860,7 @@ void MainWindow::trayIconTriggered(QSystemTrayIcon::ActivationReason reason)
 
 void MainWindow::hideWindow()
 {
+    saveWindowInformation();
 #ifndef Q_OS_MAC
     setWindowState(windowState() | Qt::WindowMinimized);
 #endif
