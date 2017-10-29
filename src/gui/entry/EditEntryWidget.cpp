@@ -19,6 +19,7 @@
 #include "EditEntryWidget.h"
 #include "ui_EditEntryWidgetAdvanced.h"
 #include "ui_EditEntryWidgetAutoType.h"
+#include "ui_EditEntryWidgetSSHAgent.h"
 #include "ui_EditEntryWidgetHistory.h"
 #include "ui_EditEntryWidgetMain.h"
 
@@ -36,10 +37,16 @@
 #include "core/Metadata.h"
 #include "core/TimeDelta.h"
 #include "core/Tools.h"
+#ifdef WITH_XC_SSHAGENT
+#include "sshagent/KeeAgentSettings.h"
+#include "sshagent/OpenSSHKey.h"
+#include "sshagent/SSHAgent.h"
+#endif
 #include "gui/EditWidgetIcons.h"
 #include "gui/EditWidgetProperties.h"
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
+#include "gui/Clipboard.h"
 #include "gui/entry/AutoTypeAssociationsModel.h"
 #include "gui/entry/EntryAttachmentsModel.h"
 #include "gui/entry/EntryAttributesModel.h"
@@ -51,11 +58,13 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_mainUi(new Ui::EditEntryWidgetMain())
     , m_advancedUi(new Ui::EditEntryWidgetAdvanced())
     , m_autoTypeUi(new Ui::EditEntryWidgetAutoType())
+    , m_sshAgentUi(new Ui::EditEntryWidgetSSHAgent())
     , m_historyUi(new Ui::EditEntryWidgetHistory())
     , m_mainWidget(new QWidget())
     , m_advancedWidget(new QWidget())
     , m_iconsWidget(new EditWidgetIcons())
     , m_autoTypeWidget(new QWidget())
+    , m_sshAgentWidget(new QWidget())
     , m_editWidgetProperties(new EditWidgetProperties())
     , m_historyWidget(new QWidget())
     , m_entryAttachments(new EntryAttachments(this))
@@ -73,6 +82,14 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     setupAdvanced();
     setupIcon();
     setupAutoType();
+#ifdef WITH_XC_SSHAGENT
+    if (config()->get("SSHAgent", false).toBool()) {
+        setupSSHAgent();
+        m_sshAgentEnabled = true;
+    } else {
+        m_sshAgentEnabled = false;
+    }
+#endif
     setupProperties();
     setupHistory();
 
@@ -245,6 +262,239 @@ void EditEntryWidget::updateHistoryButtons(const QModelIndex& current, const QMo
     }
 }
 
+#ifdef WITH_XC_SSHAGENT
+void EditEntryWidget::setupSSHAgent()
+{
+    m_sshAgentUi->setupUi(m_sshAgentWidget);
+
+    connect(m_sshAgentUi->privateKeyComboBox, SIGNAL(currentTextChanged(QString)), SLOT(updateSSHAgentKeyInfo()));
+    connect(m_sshAgentUi->browseButton, SIGNAL(clicked()), SLOT(browsePrivateKey()));
+    connect(m_sshAgentUi->addToAgentButton, SIGNAL(clicked()), SLOT(addKeyToAgent()));
+    connect(m_sshAgentUi->removeFromAgentButton, SIGNAL(clicked()), SLOT(removeKeyFromAgent()));
+    connect(m_sshAgentUi->decryptButton, SIGNAL(clicked()), SLOT(decryptPrivateKey()));
+    connect(m_sshAgentUi->copyToClipboardButton, SIGNAL(clicked()), SLOT(copyPublicKey()));
+
+    addPage(tr("SSH Agent"), FilePath::instance()->icon("apps", "utilities-terminal"), m_sshAgentWidget);
+}
+
+void EditEntryWidget::updateSSHAgent()
+{
+    // TODO: unsafe use of translations
+    QString prefix = tr("Attachment") + ": ";
+    KeeAgentSettings settings;
+    settings.fromXml(m_entryAttachments->value("KeeAgent.settings"));
+
+    m_sshAgentUi->addKeyToAgentCheckBox->setChecked(settings.addAtDatabaseOpen());
+    m_sshAgentUi->removeKeyFromAgentCheckBox->setChecked(settings.removeAtDatabaseClose());
+    m_sshAgentUi->requireUserConfirmationCheckBox->setChecked(settings.useConfirmConstraintWhenAdding());
+    m_sshAgentUi->lifetimeCheckBox->setChecked(settings.useLifetimeConstraintWhenAdding());
+    m_sshAgentUi->lifetimeSpinBox->setValue(settings.lifetimeConstraintDuration());
+    m_sshAgentUi->privateKeyComboBox->clear();
+    m_sshAgentUi->addToAgentButton->setEnabled(false);
+    m_sshAgentUi->removeFromAgentButton->setEnabled(false);
+    m_sshAgentUi->copyToClipboardButton->setEnabled(false);
+
+    for (QString fileName : m_entryAttachments->keys()) {
+        if (fileName == "KeeAgent.settings") {
+            continue;
+        }
+
+        m_sshAgentUi->privateKeyComboBox->addItem(prefix + fileName);
+    }
+
+    if (settings.selectedType() == "attachment") {
+        m_sshAgentUi->privateKeyComboBox->setCurrentText(prefix + settings.attachmentName());
+    } else if (!settings.fileName().isEmpty()) {
+        m_sshAgentUi->privateKeyComboBox->addItem(settings.fileName());
+        m_sshAgentUi->privateKeyComboBox->setCurrentText(settings.fileName());
+    } else {
+        m_sshAgentUi->privateKeyComboBox->setCurrentText("");
+    }
+
+    m_sshAgentSettings = settings;
+}
+
+void EditEntryWidget::updateSSHAgentKeyInfo()
+{
+    m_sshAgentUi->addToAgentButton->setEnabled(false);
+    m_sshAgentUi->removeFromAgentButton->setEnabled(false);
+    m_sshAgentUi->copyToClipboardButton->setEnabled(false);
+    m_sshAgentUi->fingerprintEdit->setText("");
+    m_sshAgentUi->commentEdit->setText("");
+    m_sshAgentUi->decryptButton->setEnabled(false);
+    m_sshAgentUi->publicKeyEdit->document()->setPlainText("");
+
+    if (m_sshAgentUi->privateKeyComboBox->currentText().isEmpty()) {
+        return;
+    }
+
+    OpenSSHKey key;
+
+    if (!getOpenSSHKey(key)) {
+        return;
+    }
+
+    m_sshAgentUi->fingerprintEdit->setText(key.fingerprint());
+
+    if (key.encrypted()) {
+        m_sshAgentUi->commentEdit->setText(tr("(encrypted)"));
+        m_sshAgentUi->decryptButton->setEnabled(true);
+    } else {
+        m_sshAgentUi->commentEdit->setText(key.comment());
+    }
+
+    m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
+
+    // enable agent buttons only if we have an agent running
+    if (SSHAgent::instance()->isAgentRunning()) {
+        m_sshAgentUi->addToAgentButton->setEnabled(true);
+        m_sshAgentUi->removeFromAgentButton->setEnabled(true);
+    }
+
+    m_sshAgentUi->copyToClipboardButton->setEnabled(true);
+}
+
+void EditEntryWidget::saveSSHAgentConfig()
+{
+    KeeAgentSettings settings;
+    QString privateKeyPath = m_sshAgentUi->privateKeyComboBox->currentText();
+
+    settings.setAddAtDatabaseOpen(m_sshAgentUi->addKeyToAgentCheckBox->isChecked());
+    settings.setRemoveAtDatabaseClose(m_sshAgentUi->removeKeyFromAgentCheckBox->isChecked());
+    settings.setUseConfirmConstraintWhenAdding(m_sshAgentUi->requireUserConfirmationCheckBox->isChecked());
+    settings.setUseLifetimeConstraintWhenAdding(m_sshAgentUi->lifetimeCheckBox->isChecked());
+    settings.setLifetimeConstraintDuration(m_sshAgentUi->lifetimeSpinBox->value());
+
+    // TODO: unsafe use of translations
+    QString prefix = tr("Attachment") + ": ";
+    if (privateKeyPath.startsWith(prefix)) {
+        settings.setSelectedType("attachment");
+        settings.setAttachmentName(privateKeyPath.remove(0, prefix.length()));
+        settings.setFileName("");
+    } else {
+        settings.setSelectedType("file");
+        settings.setFileName(privateKeyPath);
+        settings.setAttachmentName("");
+    }
+
+    // we don't use this as we don't run an agent but for compatibility we set it if necessary
+    settings.setAllowUseOfSshKey(settings.addAtDatabaseOpen() || settings.removeAtDatabaseClose());
+
+    // we don't use this either but we don't want it to dirty flag the config
+    settings.setSaveAttachmentToTempFile(m_sshAgentSettings.saveAttachmentToTempFile());
+
+    if (settings.isDefault() && m_entryAttachments->hasKey("KeeAgent.settings")) {
+        m_entryAttachments->remove("KeeAgent.settings");
+    } else if (settings != m_sshAgentSettings) {
+        m_entryAttachments->set("KeeAgent.settings", settings.toXml());
+    }
+
+    m_sshAgentSettings = settings;
+}
+
+void EditEntryWidget::browsePrivateKey()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Select private key"), "");
+    if (!fileName.isEmpty()) {
+        m_sshAgentUi->privateKeyComboBox->addItem(fileName);
+        m_sshAgentUi->privateKeyComboBox->setCurrentText(fileName);
+    }
+}
+
+bool EditEntryWidget::getOpenSSHKey(OpenSSHKey& key)
+{
+    QString privateKeyPath = m_sshAgentUi->privateKeyComboBox->currentText();
+    QByteArray privateKeyData;
+
+    // TODO: unsafe use of translations
+    QString prefix = tr("Attachment") + ": ";
+    if (privateKeyPath.startsWith(prefix)) {
+        QString attachmentName = privateKeyPath.remove(0, prefix.length());
+        privateKeyData = m_entryAttachments->value(attachmentName);
+    } else {
+        QFile localFile(privateKeyPath);
+
+        if (localFile.size() > 1024 * 1024) {
+            showMessage(tr("File too large to be a private key"), MessageWidget::Error);
+            return false;
+        }
+
+        if (!localFile.open(QIODevice::ReadOnly)) {
+            showMessage(tr("Failed to open private key"), MessageWidget::Error);
+            return false;
+        }
+
+        privateKeyData = localFile.readAll();
+    }
+
+    if (!key.parse(privateKeyData)) {
+        showMessage(key.errorString(), MessageWidget::Error);
+        return false;
+    }
+
+    return true;
+}
+
+void EditEntryWidget::addKeyToAgent()
+{
+    OpenSSHKey key;
+
+    if (!getOpenSSHKey(key)) {
+        return;
+    }
+
+    if (!key.openPrivateKey(m_entry->password())) {
+        showMessage(key.errorString(), MessageWidget::Error);
+    } else {
+        m_sshAgentUi->commentEdit->setText(key.comment());
+        m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
+    }
+
+    quint32 lifetime = 0;
+    bool confirm = m_sshAgentUi->requireUserConfirmationCheckBox->isChecked();
+
+    if (m_sshAgentUi->lifetimeCheckBox->isChecked()) {
+        lifetime = m_sshAgentUi->lifetimeSpinBox->value();
+    }
+
+    SSHAgent::instance()->addIdentity(key, lifetime, confirm);
+
+    if (m_sshAgentUi->removeKeyFromAgentCheckBox->isChecked()) {
+        SSHAgent::instance()->removeIdentityAtLock(key, m_entry->uuid());
+    }
+}
+
+void EditEntryWidget::removeKeyFromAgent()
+{
+    OpenSSHKey key;
+
+    if (getOpenSSHKey(key)) {
+        SSHAgent::instance()->removeIdentity(key);
+    }
+}
+
+void EditEntryWidget::decryptPrivateKey()
+{
+    OpenSSHKey key;
+
+    if (!getOpenSSHKey(key)) {
+        return;
+    }
+
+    if (!key.openPrivateKey(m_entry->password())) {
+        showMessage(key.errorString(), MessageWidget::Error);
+    } else {
+        m_sshAgentUi->commentEdit->setText(key.comment());
+        m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
+    }
+}
+
+void EditEntryWidget::copyPublicKey()
+{
+    clipboard()->setText(m_sshAgentUi->publicKeyEdit->document()->toPlainText());
+}
+#endif
+
 void EditEntryWidget::useExpiryPreset(QAction* action)
 {
     m_mainUi->expireCheck->setChecked(true);
@@ -398,6 +648,12 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     }
     updateAutoTypeEnabled();
 
+#ifdef WITH_XC_SSHAGENT
+    if (m_sshAgentEnabled) {
+        updateSSHAgent();
+    }
+#endif
+
     m_editWidgetProperties->setFields(entry->timeInfo(), entry->uuid());
 
     if (!m_history && !restore) {
@@ -445,6 +701,12 @@ void EditEntryWidget::saveEntry()
 
     m_autoTypeAssoc->removeEmpty();
 
+#ifdef WITH_XC_SSHAGENT
+    if (m_sshAgentEnabled) {
+        saveSSHAgentConfig();
+    }
+#endif
+
     if (!m_create) {
         m_entry->beginUpdate();
     }
@@ -454,6 +716,12 @@ void EditEntryWidget::saveEntry()
     if (!m_create) {
         m_entry->endUpdate();
     }
+
+#ifdef WITH_XC_SSHAGENT
+    if (m_sshAgentEnabled) {
+        updateSSHAgent();
+    }
+#endif
 }
 
 void EditEntryWidget::acceptEntry()

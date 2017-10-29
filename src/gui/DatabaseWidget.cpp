@@ -57,6 +57,12 @@
 #include "gui/group/EditGroupWidget.h"
 #include "gui/group/GroupView.h"
 
+#include "config-keepassx.h"
+
+#ifdef WITH_XC_SSHAGENT
+#include "sshagent/SSHAgent.h"
+#endif
+
 DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     : QStackedWidget(parent)
     , m_db(db)
@@ -209,6 +215,13 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
 
     m_searchCaseSensitive = false;
     m_searchLimitGroup = config()->get("SearchLimitGroup", false).toBool();
+
+#ifdef WITH_XC_SSHAGENT
+    if (config()->get("SSHAgent", false).toBool()) {
+        connect(this, SIGNAL(currentModeChanged(DatabaseWidget::Mode)), SSHAgent::instance(), SLOT(databaseModeChanged(DatabaseWidget::Mode)));
+        connect(this, SIGNAL(closeRequest()), SSHAgent::instance(), SLOT(databaseModeChanged()));
+    }
+#endif
 
     setCurrentWidget(m_mainWidget);
 }
