@@ -122,7 +122,12 @@ void TestGui::cleanup()
 
 void TestGui::testCreateDatabase()
 {
-    fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/NewTestDatabase.kdbx"));
+    QTemporaryFile tmpFile;
+    QVERIFY(tmpFile.open());
+    QString tmpFileName = tmpFile.fileName();
+    tmpFile.remove();
+
+    fileDialog()->setNextFileName(tmpFileName);
     triggerAction("actionDatabaseNew");
 
     DatabaseWidget* dbWidget = m_tabWidget->currentDatabaseWidget();
@@ -148,13 +153,10 @@ void TestGui::testCreateDatabase()
     // there is a new empty db
     QCOMPARE(m_db->rootGroup()->children().size(), 0);
 
-    // clean 
+    // close the new database
     MessageBox::setNextAnswer(QMessageBox::No);
     triggerAction("actionDatabaseClose");
     Tools::wait(100);
-
-    QFile dbfile(QString(KEEPASSX_TEST_DATA_DIR).append("/NewTestDatabase.kdbx"));
-    dbfile.remove();
 }
 
 void TestGui::testMergeDatabase()
