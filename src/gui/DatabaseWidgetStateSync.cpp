@@ -50,16 +50,19 @@ void DatabaseWidgetStateSync::setActive(DatabaseWidget* dbWidget)
     if (m_activeDbWidget) {
         m_blockUpdates = true;
 
-        if (!m_mainSplitterSizes.isEmpty())
+        if (!m_mainSplitterSizes.isEmpty()) {
             m_activeDbWidget->setMainSplitterSizes(m_mainSplitterSizes);
+        }
 
-        if (!m_detailSplitterSizes.isEmpty())
+        if (!m_detailSplitterSizes.isEmpty()) {
             m_activeDbWidget->setDetailSplitterSizes(m_detailSplitterSizes);
+        }
 
-        if (m_activeDbWidget->isInSearchMode())
+        if (m_activeDbWidget->isInSearchMode()) {
             restoreSearchView();
-        else
+        } else {
             restoreListView();
+        }
 
         m_blockUpdates = false;
 
