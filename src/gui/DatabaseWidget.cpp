@@ -63,6 +63,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     , m_newGroup(nullptr)
     , m_newEntry(nullptr)
     , m_newParent(nullptr)
+    , m_importingCsv(false)
 {
     m_mainWidget = new QWidget(this);
 
@@ -137,13 +138,14 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_editGroupWidget = new EditGroupWidget();
     m_editGroupWidget->setObjectName("editGroupWidget");
     m_changeMasterKeyWidget = new ChangeMasterKeyWidget();
+    m_changeMasterKeyWidget->setObjectName("changeMasterKeyWidget");
     m_changeMasterKeyWidget->headlineLabel()->setText(tr("Change master key"));
-    m_csvImportWizard = new CsvImportWizard();
-    m_csvImportWizard->setObjectName("csvImportWizard");
     QFont headlineLabelFont = m_changeMasterKeyWidget->headlineLabel()->font();
     headlineLabelFont.setBold(true);
     headlineLabelFont.setPointSize(headlineLabelFont.pointSize() + 2);
     m_changeMasterKeyWidget->headlineLabel()->setFont(headlineLabelFont);
+    m_csvImportWizard = new CsvImportWizard();
+    m_csvImportWizard->setObjectName("csvImportWizard");
     m_databaseSettingsWidget = new DatabaseSettingsWidget();
     m_databaseSettingsWidget->setObjectName("databaseSettingsWidget");
     m_databaseOpenWidget = new DatabaseOpenWidget();
@@ -782,6 +784,12 @@ void DatabaseWidget::switchToGroupEdit(Group* group, bool create)
 
 void DatabaseWidget::updateMasterKey(bool accepted)
 {
+    if (m_importingCsv) {
+        setCurrentWidget(m_csvImportWizard);
+        m_csvImportWizard->keyFinished(accepted, m_changeMasterKeyWidget->newMasterKey());
+        return;
+    }
+
     if (accepted) {
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
         bool result = m_db->setKey(m_changeMasterKeyWidget->newMasterKey());
@@ -915,6 +923,7 @@ void DatabaseWidget::switchToMasterKeyChange(bool disableCancel)
     m_changeMasterKeyWidget->clearForms();
     m_changeMasterKeyWidget->setCancelEnabled(!disableCancel);
     setCurrentWidget(m_changeMasterKeyWidget);
+    m_importingCsv = false;
 }
 
 void DatabaseWidget::switchToDatabaseSettings()
@@ -941,9 +950,11 @@ void DatabaseWidget::switchToOpenDatabase(const QString& fileName, const QString
 void DatabaseWidget::switchToImportCsv(const QString& fileName)
 {
     updateFilename(fileName);
-    switchToMasterKeyChange();
     m_csvImportWizard->load(fileName, m_db);
-    setCurrentWidget(m_csvImportWizard);
+    m_changeMasterKeyWidget->clearForms();
+    m_changeMasterKeyWidget->setCancelEnabled(false);
+    setCurrentWidget(m_changeMasterKeyWidget);
+    m_importingCsv = true;
 }
 
 void DatabaseWidget::switchToOpenMergeDatabase(const QString& fileName)

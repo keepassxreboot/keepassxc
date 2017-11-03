@@ -40,6 +40,7 @@ private slots:
     void cleanup();
     void cleanupTestCase();
 
+    void testCreateDatabase();
     void testMergeDatabase();
     void testAutoreloadDatabase();
     void testTabs();
