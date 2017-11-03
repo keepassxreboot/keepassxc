@@ -37,6 +37,14 @@ public:
     enum TriState { Inherit, Enable, Disable };
     enum MergeMode { ModeInherit, KeepBoth, KeepNewer, KeepExisting };
 
+    enum CloneFlag {
+        CloneNoFlags        = 0,
+        CloneNewUuid        = 1,  // generate a random uuid for the clone
+        CloneResetTimeInfo  = 2,  // set all TimeInfo attributes to the current time
+        CloneIncludeEntries = 4,  // clone the group entries
+    };
+    Q_DECLARE_FLAGS(CloneFlags, CloneFlag)
+
     struct GroupData
     {
         QString name;
@@ -80,6 +88,7 @@ public:
     static const int RecycleBinIconNumber;
 
     Group* findChildByName(const QString& name);
+    Group* findChildByUuid(const Uuid& uuid);
     Entry* findEntry(QString entryId);
     Entry* findEntryByUuid(const Uuid& uuid);
     Entry* findEntryByPath(QString entryPath, QString basePath = QString(""));
@@ -126,7 +135,8 @@ public:
      * new group into another database.
      */
     Group* clone(Entry::CloneFlags entryFlags = Entry::CloneNewUuid | Entry::CloneResetTimeInfo,
-                 bool shallow = false) const;
+                 CloneFlags groupFlags = static_cast<CloneFlags>(Group::CloneNewUuid | Group::CloneResetTimeInfo |
+                                                                 Group::CloneIncludeEntries)) const;
     void copyDataFrom(const Group* other);
     void merge(const Group* other);
     QString print(bool recursive = false, int depth = 0);
@@ -160,7 +170,8 @@ private:
     void removeEntry(Entry* entry);
     void setParent(Database* db);
     void markOlderEntry(Entry* entry);
-    void resolveConflict(Entry* existingEntry, Entry* otherEntry);
+    void resolveEntryConflict(Entry* existingEntry, Entry* otherEntry);
+    void resolveGroupConflict(Group* existingGroup, Group* otherGroup);
 
     void recSetDatabase(Database* db);
     void cleanupParent();
@@ -182,5 +193,7 @@ private:
     friend Entry::~Entry();
     friend void Entry::setGroup(Group* group);
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Group::CloneFlags)
 
 #endif // KEEPASSX_GROUP_H
