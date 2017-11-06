@@ -55,10 +55,6 @@ Files: cmake/GenerateProductVersion.cmake
 Copyright: 2015 halex2005 <akharlov@gmail.com>
 License: MIT
 
-Files: cmake/CodeCoverage.cmake
-Copyright: 2012 - 2015, Lars Bilke
-License: BSD-3-clause
-
 Files: share/icons/application/*/apps/keepassxc.png
        share/icons/application/scalable/apps/keepassxc.svgz
        share/icons/application/*/apps/keepassxc-dark.png
