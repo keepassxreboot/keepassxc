@@ -52,8 +52,9 @@ QVariant Base32::decode(const QByteArray& encodedData)
 
     int nPads = 0;
     for (int i = -1; i > -7; --i) {
-        if ('=' == encodedData[encodedData.size() + i])
+        if ('=' == encodedData[encodedData.size() + i]) {
             ++nPads;
+        }
     }
 
     int specialOffset;
@@ -95,11 +96,12 @@ QVariant Base32::decode(const QByteArray& encodedData)
         int nQuantumBytes = 5;
 
         for (int n = 0; n < 8; ++n) {
-            quint8 ch = static_cast<quint8>(encodedData[i++]);
+            auto ch = static_cast<quint8>(encodedData[i++]);
             if ((ASCII_A <= ch && ch <= ASCII_Z) || (ASCII_a <= ch && ch <= ASCII_z)) {
                 ch -= ASCII_A;
-                if (ch >= ALPH_POS_2)
+                if (ch >= ALPH_POS_2) {
                     ch -= ASCII_a - ASCII_A;
+                }
             } else {
                 if (ASCII_2 <= ch && ch <= ASCII_7) {
                     ch -= ASCII_2;
@@ -126,8 +128,8 @@ QVariant Base32::decode(const QByteArray& encodedData)
         const int offset = (nQuantumBytes - 1) * 8;
         quint64 mask = quint64(0xFF) << offset;
         for (int n = offset; n >= 0 && o < nBytes; n -= 8) {
-                data[o++] = static_cast<char>((quantum & mask) >> n);
-                mask >>= 8;
+            data[o++] = static_cast<char>((quantum & mask) >> n);
+            mask >>= 8;
         }
     }
 
@@ -147,7 +149,7 @@ QByteArray Base32::encode(const QByteArray& data)
     const int rBits = nBits % 40; // in {0, 8, 16, 24, 32}
     const int nQuanta = nBits / 40 + (rBits > 0 ? 1 : 0);
     const int nBytes = nQuanta * 8;
-    QByteArray encodedData(nQuanta * 8, Qt::Uninitialized);
+    QByteArray encodedData(nBytes, Qt::Uninitialized);
 
     int i = 0;
     int o = 0;
@@ -166,6 +168,7 @@ QByteArray Base32::encode(const QByteArray& data)
         int index;
         for (n = 35; n >= 0; n -= 5) {
             index = (quantum & mask) >> n;
+            Q_ASSERT(0 <= index && index <= 31);
             encodedData[o++] = alphabet[index];
             mask >>= 5;
         }
@@ -173,10 +176,11 @@ QByteArray Base32::encode(const QByteArray& data)
 
     // < 40-bits of input at final input group
     if (i < data.size()) {
-        Q_ASSERT(rBits > 0);
+        Q_ASSERT(8 <= rBits && rBits <= 32);
         quantum = 0;
-        for (n = rBits - 8; n >= 0; n -= 8)
+        for (n = rBits - 8; n >= 0; n -= 8) {
             quantum |= static_cast<quint64>(data[i++]) << n;
+        }
 
         switch (rBits) {
         case 8: // expand to 10 bits
@@ -195,7 +199,7 @@ QByteArray Base32::encode(const QByteArray& data)
             n = 20;
             break;
         default: // expand to 35 bits
-            Q_ASSERT(rBits == 32);
+            Q_ASSERT(32 == rBits);
             quantum <<= 3;
             mask = MASK_35BIT;
             n = 30;
@@ -203,6 +207,7 @@ QByteArray Base32::encode(const QByteArray& data)
 
         while (n >= 0) {
             int index = (quantum & mask) >> n;
+            Q_ASSERT(0 <= index && index <= 31);
             encodedData[o++] = alphabet[index];
             mask >>= 5;
             n -= 5;
