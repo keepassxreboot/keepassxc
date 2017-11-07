@@ -32,8 +32,8 @@
 #include <QMimeData>
 #include <QEvent>
 #include <iostream>
-#include <autotype/AutoType.h>
 
+#include "autotype/AutoType.h"
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/Entry.h"

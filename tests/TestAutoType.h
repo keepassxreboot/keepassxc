@@ -47,6 +47,7 @@ private slots:
     void testGlobalAutoTypeUrlSubdomainMatch();
     void testGlobalAutoTypeTitleMatchDisabled();
     void testGlobalAutoTypeRegExp();
+    void testAutoTypeSyntaxChecks();
 
 private:
     AutoTypePlatformInterface* m_platform;

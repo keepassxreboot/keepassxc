@@ -584,7 +584,7 @@ void DatabaseWidget::performAutoType()
         return;
     }
 
-    autoType()->performAutoTypeWithSyntaxCheckingDialog(currentEntry, window());
+    autoType()->performAutoType(currentEntry, window());
 }
 
 void DatabaseWidget::openUrl()

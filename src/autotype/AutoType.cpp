@@ -130,7 +130,7 @@ QStringList AutoType::windowTitles()
     return m_plugin->windowTitles();
 }
 
-void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow, const QString& customSequence, WId window)
+void AutoType::_performAutoType(const Entry* entry, QWidget* hideWindow, const QString& customSequence, WId window)
 {
     if (m_inAutoType || !m_plugin) {
         return;
@@ -253,7 +253,7 @@ void AutoType::performAutoTypeFromGlobal(Entry* entry, const QString& sequence)
 
     m_inAutoType = false;
 
-    performAutoTypeWithSyntaxCheckingDialog(entry, nullptr, sequence, m_windowFromGlobal);
+    performAutoType(entry, nullptr, sequence, m_windowFromGlobal);
 }
 
 void AutoType::resetInAutoType()
@@ -556,14 +556,6 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
         }
     }
 
-    //allows to insert usernames and passwords multiple times
-    if (!list.isEmpty()) {
-        for (int i = 1; i < num; i++) {
-            for (int j = 0; j < resolved.size(); j++) {
-                list.append(list.at(j)->clone());
-            }
-        }
-    }
     return list;
 }
 
@@ -679,13 +671,13 @@ bool AutoType::windowMatchesUrl(const QString& windowTitle, const QString& resol
 bool AutoType::checkSyntax(const QString &string)
 {
     //checks things like {word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{-}~+%@fixedstring
-    QString allowRepetition = "(\\s[0-9]*){0,1}";
+    QString allowRepetition = "(\\s\\d*){0,1}";
     QString normalCommands = "[A-Z:]*" + allowRepetition; //the ":" allows custom commands
     QString specialLiterals = "[\\^\\%\\(\\)~\\{\\}\\[\\]\\+-]" + allowRepetition;
     QString functionKeys = "(F[1-9]" + allowRepetition + "|F1[0-2])" + allowRepetition;
-    QString numpad = "NUMPAD[0-9]" + allowRepetition;
-    QString delay = "DELAY=[0-9]+";
-    QString beep = "BEEP\\s[0-9]*\\s[0-9]*";
+    QString numpad = "NUMPAD\\d" + allowRepetition;
+    QString delay = "DELAY=\\d+";
+    QString beep = "BEEP\\s\\d*\\s\\d*";
     QString vkey = "VKEY(-[EN]X){0,1}" + allowRepetition;
 
     //these arent in parenthesis
@@ -703,7 +695,7 @@ bool AutoType::checkSyntax(const QString &string)
 
 bool AutoType::checkHighDelay(const QString &string)
 {
-    QRegExp highDelay(".*\\{Delay\\s[0-9]{5,}\\}.*"); //5 digit numbers(10 seconds) are too much
+    QRegExp highDelay("\\{DELAY\\s\\d{5,}\\}"); //5 digit numbers(10 seconds) are too much
     highDelay.setCaseSensitivity(Qt::CaseInsensitive);
     highDelay.setPatternSyntax(QRegExp::RegExp);
     return highDelay.exactMatch(string);
@@ -711,16 +703,14 @@ bool AutoType::checkHighDelay(const QString &string)
 
 bool AutoType::checkHighRepetition(const QString &string)
 {
-    QRegExp highRepetition(".*\\s[0-9]{3,}.*");//3 digit numbers are too much
+    QRegExp highRepetition("\\{(?!DELAY\\s)\\w*\\s\\d{3,}\\}"); //3 digit numbers are too much
+    highRepetition.setCaseSensitivity(Qt::CaseInsensitive);
     highRepetition.setPatternSyntax(QRegExp::RegExp);
     return highRepetition.exactMatch(string);
 }
 
 void
-AutoType::performAutoTypeWithSyntaxCheckingDialog(const Entry *entry,
-                                                  QWidget *hideWindow,
-                                                  const QString &customSequence,
-                                                  WId window)
+AutoType::performAutoType(const Entry *entry, QWidget *hideWindow, const QString &customSequence, WId window)
 {
     if (!AutoType::checkSyntax(entry->effectiveAutoTypeSequence())) {
         QMessageBox messageBox;
@@ -747,6 +737,6 @@ AutoType::performAutoTypeWithSyntaxCheckingDialog(const Entry *entry,
             return;
         }
     }
-    performAutoType(entry, hideWindow, customSequence, window);
+    _performAutoType(entry, hideWindow, customSequence, window);
 
 }

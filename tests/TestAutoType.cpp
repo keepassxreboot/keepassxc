@@ -282,3 +282,18 @@ void TestAutoType::testGlobalAutoTypeRegExp()
     QCOMPARE(m_test->actionChars(), QString("custom_attr_third"));
     m_test->clearActions();
 }
+
+void TestAutoType::testAutoTypeSyntaxChecks()
+{
+    // Huge sequence
+    QCOMPARE(true, AutoType::checkSyntax("{word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{-}~+%@fixedstring"));
+    // Bad sequence
+    QCOMPARE(false, AutoType::checkSyntax("{{{}}{}{}}{{}}"));
+    // High DelAY / low delay
+    QCOMPARE(true, AutoType::checkHighDelay("{DelAY 50000}"));
+    QCOMPARE(false, AutoType::checkHighDelay("{delay 50}"));
+    // Many repetition / few repetition / delay not repetition
+    QCOMPARE(true, AutoType::checkHighRepetition("{LEFT 50000000}"));
+    QCOMPARE(false, AutoType::checkHighRepetition("{SPACE 10}{TAB 3}{RIGHT 50}"));
+    QCOMPARE(false, AutoType::checkHighRepetition("{delay 5000000000}"));
+}

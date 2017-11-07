@@ -37,7 +37,7 @@ class AutoType : public QObject
 
 public:
     QStringList windowTitles();
-    void performAutoType(const Entry* entry, QWidget* hideWindow = nullptr,
+    void _performAutoType(const Entry* entry, QWidget* hideWindow = nullptr,
                          const QString& customSequence = QString(), WId window = 0);
     bool registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers);
     void unregisterGlobalShortcut();
@@ -45,10 +45,8 @@ public:
     static bool checkSyntax(const QString &string);
     static bool checkHighRepetition(const QString &string);
     static bool checkHighDelay(const QString &string);
-    void performAutoTypeWithSyntaxCheckingDialog(const Entry *entry,
-                                                 QWidget *hideWindow = nullptr,
-                                                 const QString &customSequence = QString(),
-                                                 WId window = 0);
+    void performAutoType(const Entry *entry, QWidget *hideWindow = nullptr,
+                         const QString &customSequence = QString(), WId window = 0);
 
     inline bool isAvailable() {
         return m_plugin;
