@@ -356,13 +356,16 @@ bool AutoType::parseActions(const QString& sequence, const Entry* entry, QList<A
     }
 
     for (const QChar &ch : sequence) {
+        if (inTmpl) {
             if (ch == '{') {
                 qWarning("Syntax error in auto-type sequence.");
                 return false;
             }
             else if (ch == '}') {
-                QList<AutoTypeAction*> autoType = createActionFromTemplate(tmpl, entry);
-                if (autoType.isEmpty()) return false;
+                QList<AutoTypeAction *> autoType = createActionFromTemplate(tmpl, entry);
+                if (autoType.isEmpty()) {
+                    return false;
+                }
                 actions.append(autoType);
                 inTmpl = false;
                 tmpl.clear();
