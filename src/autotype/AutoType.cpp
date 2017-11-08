@@ -20,8 +20,8 @@
 
 #include <QApplication>
 #include <QPluginLoader>
-#include <iostream>
 #include <QtWidgets/QErrorMessage>
+#include <iostream>
 
 #include "config-keepassx.h"
 
@@ -56,8 +56,7 @@ AutoType::AutoType(QObject* parent, bool test)
     QString pluginName = "keepassx-autotype-";
     if (!test) {
         pluginName += QApplication::platformName();
-    }
-    else {
+    } else {
         pluginName += "test";
     }
 
@@ -93,8 +92,7 @@ void AutoType::loadPlugin(const QString& pluginPath)
             if (m_plugin->isAvailable()) {
                 m_executor = m_plugin->createExecutor();
                 connect(pluginInstance, SIGNAL(globalShortcutTriggered()), SIGNAL(globalShortcutTriggered()));
-            }
-            else {
+            } else {
                 unloadPlugin();
             }
         }
@@ -140,8 +138,7 @@ void AutoType::_performAutoType(const Entry* entry, QWidget* hideWindow, const Q
     QString sequence;
     if (customSequence.isEmpty()) {
         sequence = autoTypeSequence(entry);
-    }
-    else {
+    } else {
         sequence = customSequence;
     }
 
@@ -223,16 +220,14 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
         message.append("\n\n");
         message.append(windowTitle);
         MessageBox::information(nullptr, tr("Auto-Type - KeePassXC"), message);
-    }
-    else if ((entryList.size() == 1) && !config()->get("security/autotypeask").toBool()) {
+    } else if ((entryList.size() == 1) && !config()->get("security/autotypeask").toBool()) {
         m_inAutoType = false;
         performAutoType(entryList.first(), nullptr, sequenceHash[entryList.first()]);
-    }
-    else {
+    } else {
         m_windowFromGlobal = m_plugin->activeWindow();
         AutoTypeSelectDialog* selectDialog = new AutoTypeSelectDialog();
-        connect(selectDialog, SIGNAL(entryActivated(Entry*,QString)),
-                SLOT(performAutoTypeFromGlobal(Entry*,QString)));
+        connect(
+            selectDialog, SIGNAL(entryActivated(Entry*, QString)), SLOT(performAutoTypeFromGlobal(Entry*, QString)));
         connect(selectDialog, SIGNAL(rejected()), SLOT(resetInAutoType()));
         selectDialog->setEntries(entryList, sequenceHash);
 #if defined(Q_OS_MAC)
@@ -301,12 +296,10 @@ bool AutoType::registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifie
             m_currentGlobalKey = key;
             m_currentGlobalModifiers = modifiers;
             return true;
-        }
-        else {
+        } else {
             return false;
         }
-    }
-    else {
+    } else {
         return true;
     }
 }
@@ -333,33 +326,28 @@ bool AutoType::parseActions(const QString& sequence, const Entry* entry, QList<A
     bool inTmpl = false;
     m_autoTypeDelay = config()->get("AutoTypeDelay").toInt();
 
-    for (const QChar &ch : sequence) {
+    for (const QChar& ch : sequence) {
         if (inTmpl) {
             if (ch == '{') {
                 qWarning("Syntax error in auto-type sequence.");
                 return false;
-            }
-            else if (ch == '}') {
-                QList<AutoTypeAction *> autoType = createActionFromTemplate(tmpl, entry);
+            } else if (ch == '}') {
+                QList<AutoTypeAction*> autoType = createActionFromTemplate(tmpl, entry);
                 if (autoType.isEmpty()) {
                     return false;
                 }
                 actions.append(autoType);
                 inTmpl = false;
                 tmpl.clear();
-            }
-            else {
+            } else {
                 tmpl += ch;
             }
-        }
-        else if (ch == '{') {
+        } else if (ch == '{') {
             inTmpl = true;
-        }
-        else if (ch == '}') {
+        } else if (ch == '}') {
             qWarning("Syntax error in auto-type sequence.");
             return false;
-        }
-        else {
+        } else {
             actions.append(new AutoTypeChar(ch));
         }
     }
@@ -402,104 +390,72 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
 
     if (tmplName.compare("tab", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeKey(Qt::Key_Tab));
-    }
-    else if (tmplName.compare("enter", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("enter", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeKey(Qt::Key_Enter));
-    }
-    else if (tmplName.compare("space", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("space", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeKey(Qt::Key_Space));
-    }
-    else if (tmplName.compare("up", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("up", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeKey(Qt::Key_Up));
-    }
-    else if (tmplName.compare("down", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("down", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeKey(Qt::Key_Down));
-    }
-    else if (tmplName.compare("left", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("left", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeKey(Qt::Key_Left));
-    }
-    else if (tmplName.compare("right", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("right", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeKey(Qt::Key_Right));
-    }
-    else if (tmplName.compare("insert", Qt::CaseInsensitive) == 0 ||
-        tmplName.compare("ins", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("insert", Qt::CaseInsensitive) == 0 ||
+               tmplName.compare("ins", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeKey(Qt::Key_Insert));
-    }
-    else if (tmplName.compare("delete", Qt::CaseInsensitive) == 0 ||
-        tmplName.compare("del", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("delete", Qt::CaseInsensitive) == 0 ||
+               tmplName.compare("del", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeKey(Qt::Key_Delete));
-    }
-    else if (tmplName.compare("home", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("home", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeKey(Qt::Key_Home));
-    }
-    else if (tmplName.compare("end", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("end", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeKey(Qt::Key_End));
-    }
-    else if (tmplName.compare("pgup", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("pgup", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeKey(Qt::Key_PageUp));
-    }
-    else if (tmplName.compare("pgdown", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("pgdown", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeKey(Qt::Key_PageDown));
-    }
-    else if (tmplName.compare("backspace", Qt::CaseInsensitive) == 0 ||
-        tmplName.compare("bs", Qt::CaseInsensitive) == 0 ||
-        tmplName.compare("bksp", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("backspace", Qt::CaseInsensitive) == 0 ||
+               tmplName.compare("bs", Qt::CaseInsensitive) == 0 || tmplName.compare("bksp", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeKey(Qt::Key_Backspace));
-    }
-    else if (tmplName.compare("break", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("break", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeKey(Qt::Key_Pause));
-    }
-    else if (tmplName.compare("capslock", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("capslock", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeKey(Qt::Key_CapsLock));
-    }
-    else if (tmplName.compare("esc", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("esc", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeKey(Qt::Key_Escape));
-    }
-    else if (tmplName.compare("help", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("help", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeKey(Qt::Key_Help));
-    }
-    else if (tmplName.compare("numlock", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("numlock", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeKey(Qt::Key_NumLock));
-    }
-    else if (tmplName.compare("ptrsc", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("ptrsc", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeKey(Qt::Key_Print));
-    }
-    else if (tmplName.compare("scrolllock", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("scrolllock", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeKey(Qt::Key_ScrollLock));
     }
-        // Qt doesn't know about keypad keys so use the normal ones instead
-    else if (tmplName.compare("add", Qt::CaseInsensitive) == 0 ||
-        tmplName.compare("+", Qt::CaseInsensitive) == 0) {
+    // Qt doesn't know about keypad keys so use the normal ones instead
+    else if (tmplName.compare("add", Qt::CaseInsensitive) == 0 || tmplName.compare("+", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeChar('+'));
-    }
-    else if (tmplName.compare("subtract", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("subtract", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeChar('-'));
-    }
-    else if (tmplName.compare("multiply", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("multiply", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeChar('*'));
-    }
-    else if (tmplName.compare("divide", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("divide", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeChar('/'));
-    }
-    else if (tmplName.compare("^", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("^", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeChar('^'));
-    }
-    else if (tmplName.compare("%", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("%", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeChar('%'));
-    }
-    else if (tmplName.compare("~", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("~", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeChar('~'));
-    }
-    else if (tmplName.compare("(", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("(", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeChar('('));
-    }
-    else if (tmplName.compare(")", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare(")", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeChar(')'));
-    }
-    else if (tmplName.compare("leftbrace", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("leftbrace", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeChar('{'));
-    }
-    else if (tmplName.compare("rightbrace", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("rightbrace", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeChar('}'));
     }
 
@@ -520,14 +476,11 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
         return list;
     }
 
-
     if (tmplName.compare("delay", Qt::CaseInsensitive) == 0 && num > 0) {
         list.append(new AutoTypeDelay(num));
-    }
-    else if (tmplName.compare("clearfield", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("clearfield", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeClearField());
-    }
-    else if (tmplName.compare("totp", Qt::CaseInsensitive) == 0) {
+    } else if (tmplName.compare("totp", Qt::CaseInsensitive) == 0) {
         QString totp = entry->totp();
         if (!totp.isEmpty()) {
             for (const QChar& ch : totp) {
@@ -546,11 +499,9 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
         for (const QChar& ch : resolved) {
             if (ch == '\n') {
                 list.append(new AutoTypeKey(Qt::Key_Enter));
-            }
-            else if (ch == '\t') {
+            } else if (ch == '\t') {
                 list.append(new AutoTypeKey(Qt::Key_Tab));
-            }
-            else {
+            } else {
                 list.append(new AutoTypeChar(ch));
             }
         }
@@ -575,8 +526,7 @@ QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitl
             if (windowMatches(windowTitle, window)) {
                 if (!assoc.sequence.isEmpty()) {
                     sequence = assoc.sequence;
-                }
-                else {
+                } else {
                     sequence = entry->defaultAutoTypeSequence();
                 }
                 match = true;
@@ -584,14 +534,14 @@ QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitl
             }
         }
 
-        if (!match && config()->get("AutoTypeEntryTitleMatch").toBool() 
-                && windowMatchesTitle(windowTitle, entry->resolvePlaceholder(entry->title()))) {
+        if (!match && config()->get("AutoTypeEntryTitleMatch").toBool() &&
+            windowMatchesTitle(windowTitle, entry->resolvePlaceholder(entry->title()))) {
             sequence = entry->defaultAutoTypeSequence();
             match = true;
         }
 
-        if (!match && config()->get("AutoTypeEntryURLMatch").toBool()
-                && windowMatchesUrl(windowTitle, entry->resolvePlaceholder(entry->url()))) {
+        if (!match && config()->get("AutoTypeEntryURLMatch").toBool() &&
+            windowMatchesUrl(windowTitle, entry->resolvePlaceholder(entry->url()))) {
             sequence = entry->defaultAutoTypeSequence();
             match = true;
         }
@@ -599,18 +549,16 @@ QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitl
         if (!match) {
             return QString();
         }
-    }
-    else {
+    } else {
         sequence = entry->defaultAutoTypeSequence();
     }
 
-    const Group *group = entry->group();
+    const Group* group = entry->group();
     do {
         if (!enableSet) {
             if (group->autoTypeEnabled() == Group::Disable) {
                 return QString();
-            }
-            else if (group->autoTypeEnabled() == Group::Enable) {
+            } else if (group->autoTypeEnabled() == Group::Enable) {
                 enableSet = true;
             }
         }
@@ -622,15 +570,13 @@ QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitl
         group = group->parentGroup();
     } while (group && (!enableSet || sequence.isEmpty()));
 
-    if (sequence.isEmpty() && (!entry->resolvePlaceholder(entry->username()).isEmpty()
-        || !entry->resolvePlaceholder(entry->password()).isEmpty())) {
+    if (sequence.isEmpty() && (!entry->resolvePlaceholder(entry->username()).isEmpty() ||
+                               !entry->resolvePlaceholder(entry->password()).isEmpty())) {
         if (entry->resolvePlaceholder(entry->username()).isEmpty()) {
             sequence = "{PASSWORD}{ENTER}";
-        }
-        else if (entry->resolvePlaceholder(entry->password()).isEmpty()) {
+        } else if (entry->resolvePlaceholder(entry->password()).isEmpty()) {
             sequence = "{USERNAME}{ENTER}";
-        }
-        else {
+        } else {
             sequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
         }
     }
@@ -643,8 +589,7 @@ bool AutoType::windowMatches(const QString& windowTitle, const QString& windowPa
     if (windowPattern.startsWith("//") && windowPattern.endsWith("//") && windowPattern.size() >= 4) {
         QRegExp regExp(windowPattern.mid(2, windowPattern.size() - 4), Qt::CaseInsensitive, QRegExp::RegExp2);
         return (regExp.indexIn(windowTitle) != -1);
-    }
-    else {
+    } else {
         return WildcardMatcher(windowTitle).match(windowPattern);
     }
 }
@@ -668,11 +613,11 @@ bool AutoType::windowMatchesUrl(const QString& windowTitle, const QString& resol
     return false;
 }
 
-bool AutoType::checkSyntax(const QString &string)
+bool AutoType::checkSyntax(const QString& string)
 {
-    //checks things like {word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{-}~+%@fixedstring
+    // checks things like {word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{-}~+%@fixedstring
     QString allowRepetition = "(\\s\\d*){0,1}";
-    QString normalCommands = "[A-Z:]*" + allowRepetition; //the ":" allows custom commands
+    QString normalCommands = "[A-Z:]*" + allowRepetition; // the ":" allows custom commands
     QString specialLiterals = "[\\^\\%\\(\\)~\\{\\}\\[\\]\\+-]" + allowRepetition;
     QString functionKeys = "(F[1-9]" + allowRepetition + "|F1[0-2])" + allowRepetition;
     QString numpad = "NUMPAD\\d" + allowRepetition;
@@ -680,63 +625,57 @@ bool AutoType::checkSyntax(const QString &string)
     QString beep = "BEEP\\s\\d*\\s\\d*";
     QString vkey = "VKEY(-[EN]X){0,1}" + allowRepetition;
 
-    //these arent in parenthesis
+    // these arent in parenthesis
     QString shortcutKeys = "[\\^\\%~\\+@]";
     QString fixedStrings = "[^\\^\\%~\\+@\\{\\}]*";
 
-    QRegExp autoTypeSyntax
-        ("(" + shortcutKeys + "|" + fixedStrings + "|\\{(" + normalCommands + "|" + specialLiterals + "|"
-             + functionKeys
-             + "|" + numpad + "|" + delay + "|" + beep + "|" + vkey + ")\\})*");
+    QRegExp autoTypeSyntax("(" + shortcutKeys + "|" + fixedStrings + "|\\{(" + normalCommands + "|" + specialLiterals +
+                           "|" + functionKeys + "|" + numpad + "|" + delay + "|" + beep + "|" + vkey + ")\\})*");
     autoTypeSyntax.setCaseSensitivity(Qt::CaseInsensitive);
     autoTypeSyntax.setPatternSyntax(QRegExp::RegExp);
     return autoTypeSyntax.exactMatch(string);
 }
 
-bool AutoType::checkHighDelay(const QString &string)
+bool AutoType::checkHighDelay(const QString& string)
 {
-    QRegExp highDelay("\\{DELAY\\s\\d{5,}\\}"); //5 digit numbers(10 seconds) are too much
+    QRegExp highDelay("\\{DELAY\\s\\d{5,}\\}"); // 5 digit numbers(10 seconds) are too much
     highDelay.setCaseSensitivity(Qt::CaseInsensitive);
     highDelay.setPatternSyntax(QRegExp::RegExp);
     return highDelay.exactMatch(string);
 }
 
-bool AutoType::checkHighRepetition(const QString &string)
+bool AutoType::checkHighRepetition(const QString& string)
 {
-    QRegExp highRepetition("\\{(?!DELAY\\s)\\w*\\s\\d{3,}\\}"); //3 digit numbers are too much
+    QRegExp highRepetition("\\{(?!DELAY\\s)\\w*\\s\\d{3,}\\}"); // 3 digit numbers are too much
     highRepetition.setCaseSensitivity(Qt::CaseInsensitive);
     highRepetition.setPatternSyntax(QRegExp::RegExp);
     return highRepetition.exactMatch(string);
 }
 
-void
-AutoType::performAutoType(const Entry *entry, QWidget *hideWindow, const QString &customSequence, WId window)
+void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow, const QString& customSequence, WId window)
 {
     if (!AutoType::checkSyntax(entry->effectiveAutoTypeSequence())) {
         QMessageBox messageBox;
-        messageBox.critical(0, "AutoType", tr("The Syntax of your AutoType statement is incorrect!"));
+        messageBox.critical(0, tr("AutoType"), tr("The Syntax of your AutoType statement is incorrect!"));
         return;
-    }
-    else if (AutoType::checkHighDelay(entry->effectiveAutoTypeSequence())) {
+    } else if (AutoType::checkHighDelay(entry->effectiveAutoTypeSequence())) {
         QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(0,
-                                      "AutoType",
-                                      tr("This AutoType command contains a very long delay. Do you really want to execute it?"));
+        reply = QMessageBox::question(
+            0,
+            tr("AutoType"),
+            tr("This AutoType command contains a very long delay. Do you really want to execute it?"));
 
         if (reply == QMessageBox::No) {
             return;
         }
-    }
-    else if (AutoType::checkHighRepetition(entry->effectiveAutoTypeSequence())) {
+    } else if (AutoType::checkHighRepetition(entry->effectiveAutoTypeSequence())) {
         QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(0,
-                                      "AutoType",
-                                      tr("This AutoType command contains arguments which are repeated very often. Do you really want to execute it?"));
+        reply = QMessageBox::question(0, tr("AutoType"), tr("This AutoType command contains arguments which are "
+                                                            "repeated very often. Do you really want to execute it?"));
 
         if (reply == QMessageBox::No) {
             return;
         }
     }
     _performAutoType(entry, hideWindow, customSequence, window);
-
 }

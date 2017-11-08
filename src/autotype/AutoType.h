@@ -34,21 +34,25 @@ class AutoType : public QObject
 {
     Q_OBJECT
 
-
 public:
     QStringList windowTitles();
-    void _performAutoType(const Entry* entry, QWidget* hideWindow = nullptr,
-                         const QString& customSequence = QString(), WId window = 0);
+    void _performAutoType(const Entry* entry,
+                          QWidget* hideWindow = nullptr,
+                          const QString& customSequence = QString(),
+                          WId window = 0);
     bool registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers);
     void unregisterGlobalShortcut();
     int callEventFilter(void* event);
-    static bool checkSyntax(const QString &string);
-    static bool checkHighRepetition(const QString &string);
-    static bool checkHighDelay(const QString &string);
-    void performAutoType(const Entry *entry, QWidget *hideWindow = nullptr,
-                         const QString &customSequence = QString(), WId window = 0);
+    static bool checkSyntax(const QString& string);
+    static bool checkHighRepetition(const QString& string);
+    static bool checkHighDelay(const QString& string);
+    void performAutoType(const Entry* entry,
+                         QWidget* hideWindow = nullptr,
+                         const QString& customSequence = QString(),
+                         WId window = 0);
 
-    inline bool isAvailable() {
+    inline bool isAvailable()
+    {
         return m_plugin;
     }
 
@@ -91,7 +95,8 @@ private:
     Q_DISABLE_COPY(AutoType)
 };
 
-inline AutoType* autoType() {
+inline AutoType* autoType()
+{
     return AutoType::instance();
 }
 
