@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2017 KeePassXC Team <team@keepassxc.org> -->
 <component type="desktop-application">
-    <id>org.keepassxc</id>
+    <id>org.keepassxc.KeePassXC.desktop</id>
     <name>KeePassXC</name>
     <metadata_license>CC-BY-3.0</metadata_license>
     <project_license>GPL-3.0+</project_license>
-    <icon type="stock">keepassxc</icon>
-    <url type="homepage">https://keepassxc.org</url>
     <mimetypes>
         <mimetype>application/x-keepass2</mimetype>
     </mimetypes>
     <summary>Community-driven port of the Windows application “KeePass Password Safe”</summary>
+    <developer_name>KeePassXC Team</developer_name>
     <description>
         <p>
             KeePassXC is an application for people with extremely high demands on secure
@@ -19,56 +18,41 @@
         </p>
     </description>
 
-    <launchable type="desktop-id">org.keepassxc.desktop</launchable>
+    <launchable type="desktop-id">org.keepassxc.KeePassXC.desktop</launchable>
+
+    <url type="homepage">https://keepassxc.org</url>
+    <url type="bugtracker">https://github.com/keepassxreboot/keepassxc/issues</url>
+    <url type="faq">https://keepassxc.org/docs#faq</url>
+    <url type="help">https://keepassxc.org/docs</url>
+    <url type="translate">https://www.transifex.com/keepassxc/keepassxc</url>
 
     <screenshots>
         <screenshot type="default">
             <image>https://keepassxc.org/images/screenshots/linux/screen_001.png</image>
+            <caption>Create, Import or Open Databases</caption>
         </screenshot>
         <screenshot>
             <image>https://keepassxc.org/images/screenshots/linux/screen_002.png</image>
+            <caption>Organize with Groups and Entries</caption>
         </screenshot>
         <screenshot>
             <image>https://keepassxc.org/images/screenshots/linux/screen_003.png</image>
+            <caption>Database Entry</caption>
         </screenshot>
         <screenshot>
             <image>https://keepassxc.org/images/screenshots/linux/screen_004.png</image>
-        </screenshot>
-        <screenshot>
-            <image>https://keepassxc.org/images/screenshots/linux/screen_005.png</image>
+            <caption>Icon Selection for Entry</caption>
         </screenshot>
         <screenshot>
             <image>https://keepassxc.org/images/screenshots/linux/screen_006.png</image>
-        </screenshot>
-        <screenshot>
-            <image>https://keepassxc.org/images/screenshots/linux/screen_007.png</image>
-        </screenshot>
-        <screenshot>
-            <image>https://keepassxc.org/images/screenshots/linux/screen_008.png</image>
-        </screenshot>
-        <screenshot>
-            <image>https://keepassxc.org/images/screenshots/linux/screen_009.png</image>
-        </screenshot>
-        <screenshot>
-            <image>https://keepassxc.org/images/screenshots/linux/screen_010.png</image>
-        </screenshot>
-        <screenshot>
-            <image>https://keepassxc.org/images/screenshots/linux/screen_011.png</image>
-        </screenshot>
-        <screenshot>
-            <image>https://keepassxc.org/images/screenshots/linux/screen_012.png</image>
-        </screenshot>
-        <screenshot>
-            <image>https://keepassxc.org/images/screenshots/linux/screen_013.png</image>
-        </screenshot>
-        <screenshot>
-            <image>https://keepassxc.org/images/screenshots/linux/screen_014.png</image>
+            <caption>Password Generator</caption>
         </screenshot>
     </screenshots>
 
     <releases>
         <release version="2.2.2" date="2017-10-22">
             <description>
+                <p>Changes included in this release:</p>
                 <ul>
                     <li>Fixed entries with empty URLs being reported to KeePassHTTP clients [#1031]</li>
                     <li>Fixed YubiKey detection and enabled CLI tool for AppImage binary [#1100]</li>
@@ -87,6 +71,7 @@
             </description>
         </release><release version="2.2.1" date="2017-10-01">
             <description>
+                <p>Changes included in this release:</p>
                 <ul>
                     <li>Corrected multiple snap issues [#934, #1011]</li>
                     <li>Corrected multiple custom icon issues [#708, #719, #994]</li>
@@ -103,6 +88,7 @@
         </release>
         <release version="2.2.0" date="2017-06-23">
             <description>
+                <p>Changes included in this release:</p>
                 <ul>
                     <li>Added YubiKey 2FA integration for unlocking databases [#127]</li>
                     <li>Added TOTP support [#519]</li>
@@ -138,6 +124,7 @@
         </release>
         <release version="2.1.4" date="2017-04-09">
             <description>
+                <p>Changes included in this release:</p>
                 <ul>
                     <li>Bumped KeePassHTTP version to 1.8.4.2</li>
                     <li>KeePassHTTP confirmation window comes to foreground [#466]</li>
@@ -146,6 +133,7 @@
         </release>
         <release version="2.1.3" date="2017-03-03">
             <description>
+                <p>Changes included in this release:</p>
                 <ul>
                     <li>Fix possible overflow in zxcvbn library [#363]</li>
                     <li>Revert HiDPI setting to avoid problems on laptop screens [#332]</li>
@@ -160,6 +148,7 @@
         </release>
         <release version="2.1.2" date="2017-02-17">
             <description>
+                <p>Changes included in this release:</p>
                 <ul>
                     <li>Ask for save location when creating a new database [#302]</li>
                     <li>Remove Libmicrohttpd dependency to clean up the code and ensure better OS X compatibility [#317, #265]</li>
@@ -177,6 +166,7 @@
         </release>
         <release version="2.1.1" date="2017-02-06">
             <description>
+                <p>Changes included in this release:</p>
                 <ul>
                     <li>Enabled HTTP plugin build; plugin is disabled by default and limited to localhost [#147]</li>
                     <li>Escape HTML in dialog boxes [#247]</li>
@@ -189,6 +179,7 @@
         </release>
         <release version="2.1.0" date="2017-01-22">
             <description>
+                <p>Changes included in this release:</p>
                 <ul>
                     <li>Show unlock dialog when using autotype on a closed database [#10, #89]</li>
                     <li>Show different tray icon when database is locked [#37, #46]</li>
