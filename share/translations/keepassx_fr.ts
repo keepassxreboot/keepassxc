@@ -33,23 +33,23 @@
     </message>
     <message>
         <source>Libraries:</source>
-        <translation>Bibliothèques:</translation>
+        <translation>Bibliothèques :</translation>
     </message>
     <message>
         <source>Operating system: %1
 CPU architecture: %2
 Kernel: %3 %4</source>
-        <translation>Système d&apos;exploitation: %1
-Architecture CPU: %2
-Kernel: %3 %4</translation>
+        <translation>Système d&apos;exploitation : %1
+Architecture CPU : %2
+Kernel : %3 %4</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
-        <translation>Extensions activées:</translation>
+        <translation>Extensions activées :</translation>
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>Signaler les bugs sur: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+        <translation>Signaler les bugs sur : &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
@@ -57,7 +57,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Project Maintainers:</source>
-        <translation>Mainteneurs du projet:</translation>
+        <translation>Mainteneurs du projet :</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
@@ -65,10 +65,10 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>Inclure l&apos;information suivante lorsque vous signaler un bug:</translation>
+        <translation>Inclure l&apos;information suivante lorsque vous signaler un bug :</translation>
     </message>
     <message>
-        <source>Distribution: %1</source>
+        <source>Distribution : %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -302,7 +302,7 @@ Veuillez sélectionner si vous souhaitez autoriser l’accès.</translation>
     </message>
     <message>
         <source>Original data: </source>
-        <translation>Données originales:</translation>
+        <translation>Données originales :</translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file !</source>
@@ -397,7 +397,7 @@ Veuillez sélectionner si vous souhaitez autoriser l’accès.</translation>
     </message>
     <message>
         <source>Challenge Response:</source>
-        <translation>Challenge-réponse:</translation>
+        <translation>Challenge-réponse :</translation>
     </message>
 </context>
 <context>
@@ -477,15 +477,15 @@ Vous pouvez maintenant la sauvegarder.</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
-        <translation>AES: 256 Bits (par défault)</translation>
+        <translation>AES : 256 Bits (par défaut)</translation>
     </message>
     <message>
         <source>Twofish:  256 Bit</source>
-        <translation>Twofish: 256 bits</translation>
+        <translation>Twofish : 256 bits</translation>
     </message>
     <message>
         <source>Algorithm:</source>
-        <translation>Algorithme:</translation>
+        <translation>Algorithme :</translation>
     </message>
 </context>
 <context>
@@ -737,7 +737,7 @@ Voulez vous l&apos;ouvrir quand même ?</translation>
     </message>
     <message>
         <source>Could not open the new database file while attempting to autoreload this database.</source>
-        <translation>La nouvelle base de données ne peux être ouverte pendant qu&apos;un rafraîchissement automatique de l&apos;actuelle est en cours.</translation>
+        <translation>La nouvelle base de données ne peut être ouverte pendant qu&apos;un rafraîchissement automatique de l&apos;actuelle est en cours.</translation>
     </message>
     <message>
         <source>Empty recycle bin?</source>
@@ -1095,7 +1095,7 @@ Voulez vous l&apos;ouvrir quand même ?</translation>
     </message>
     <message>
         <source>Hint: You can enable Google as a fallback under Tools&gt;Settings&gt;Security</source>
-        <translation>Astuce: Vous pouvez activer Google en tant que repli sous Outils&gt;Paramètres&gt;Sécurité</translation>
+        <translation>Astuce : Vous pouvez activer Google en tant que repli sous Outils&gt;Paramètres&gt;Sécurité</translation>
     </message>
     <message>
         <source>Custom icon already exists</source>
@@ -1175,7 +1175,7 @@ Voulez vous l&apos;ouvrir quand même ?</translation>
     <message>
         <source>Ref: </source>
         <comment>Reference abbreviation</comment>
-        <translation>Réf:</translation>
+        <translation>Réf : </translation>
     </message>
 </context>
 <context>
@@ -1647,11 +1647,11 @@ Il s&apos;agit d&apos;une migration à sens unique. Vous ne pourrez pas ouvrir l
     </message>
     <message>
         <source>HTTP Port:</source>
-        <translation>Port HTTP:</translation>
+        <translation>Port HTTP :</translation>
     </message>
     <message>
         <source>Default port: 19455</source>
-        <translation>Port par défaut: 19455</translation>
+        <translation>Port par défaut : 19455</translation>
     </message>
     <message>
         <source>Re&amp;quest to unlock the database if it is locked</source>
@@ -1681,7 +1681,7 @@ Restauration du port 19455 par défaut.</translation>
     </message>
     <message>
         <source>&amp;Return advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation>&amp; Retourne les champs avancés de type chaîne qui commencent par &quot;KPH:&quot;</translation>
+        <translation>&amp; Retourne les champs avancés de type chaîne qui commencent par &quot;KPH :&quot;</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
@@ -1774,7 +1774,7 @@ Ne les changez que si vous savez ce que vous faites.</translation>
     </message>
     <message>
         <source>&amp;Length:</source>
-        <translation>&amp;Longueur:</translation>
+        <translation>&amp;Longueur :</translation>
     </message>
     <message>
         <source>Pick characters from every group</source>
@@ -1794,11 +1794,11 @@ Ne les changez que si vous savez ce que vous faites.</translation>
     </message>
     <message>
         <source>Entropy: %1 bit</source>
-        <translation>Entropie: %1 bit</translation>
+        <translation>Entropie : %1 bit</translation>
     </message>
     <message>
         <source>Password Quality: %1</source>
-        <translation>Qualité du mot de passe: %1</translation>
+        <translation>Qualité du mot de passe : %1</translation>
     </message>
     <message>
         <source>Poor</source>
@@ -1830,15 +1830,15 @@ Ne les changez que si vous savez ce que vous faites.</translation>
     </message>
     <message>
         <source>Wordlist:</source>
-        <translation>Liste de mots:</translation>
+        <translation>Liste de mots :</translation>
     </message>
     <message>
         <source>Word Count:</source>
-        <translation>Nombre de mots:</translation>
+        <translation>Nombre de mots :</translation>
     </message>
     <message>
         <source>Word Separator:</source>
-        <translation>Séparateur de mot:</translation>
+        <translation>Séparateur de mot :</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2019,7 +2019,7 @@ Veuillez déverrouiller la base de données sélectionnée ou en choisir une qui
     </message>
     <message>
         <source>KeePassXC: New key association request</source>
-        <translation>KeePassXC: nouvelle demande d&apos;association</translation>
+        <translation>KeePassXC : nouvelle demande d&apos;association</translation>
     </message>
     <message>
         <source>You have received an association request for the above key.
@@ -2031,23 +2031,23 @@ attribuez lui un nom unique pour l&apos;identifier et acceptez la.</translation>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
-        <translation>KeePassXC: Écraser la clé existante ?</translation>
+        <translation>KeePassXC : Écraser la clé existante ?</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
-        <translation>KeePassXC: Mettre à jour l&apos;entrée</translation>
+        <translation>KeePassXC : Mettre à jour l&apos;entrée</translation>
     </message>
     <message>
         <source>KeePassXC: Database locked!</source>
-        <translation>KeePassXC: Base de données verrouillée !</translation>
+        <translation>KeePassXC : Base de données verrouillée !</translation>
     </message>
     <message>
         <source>KeePassXC: Removed keys from database</source>
-        <translation>KeePassXC: Les clés ont été effacées de la base de donnée</translation>
+        <translation>KeePassXC : Les clés ont été effacées de la base de donnée</translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
-        <translation>KeePassXC: Aucune clé trouvée</translation>
+        <translation>KeePassXC : Aucune clé trouvée</translation>
     </message>
     <message>
         <source>KeePassXC: Settings not available!</source>
@@ -2055,11 +2055,11 @@ attribuez lui un nom unique pour l&apos;identifier et acceptez la.</translation>
     </message>
     <message>
         <source>KeePassXC: Removed permissions</source>
-        <translation>KeePassXC: Permissions retirées</translation>
+        <translation>KeePassXC : Permissions retirées</translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
-        <translation>KeePassXC: Aucune entrée avec permissions trouvée !</translation>
+        <translation>KeePassXC : Aucune entrée avec permissions trouvée !</translation>
     </message>
 </context>
 <context>
@@ -2145,7 +2145,7 @@ attribuez lui un nom unique pour l&apos;identifier et acceptez la.</translation>
     </message>
     <message>
         <source>Don&apos;t mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation>Ne pas indiquer la base de données comme modifiée pour les changements hors-données (par exemple: groupes développés)</translation>
+        <translation>Ne pas indiquer la base de données comme modifiée pour les changements hors-données (par exemple : groupes développés)</translation>
     </message>
     <message>
         <source>Auto-Type</source>
@@ -2227,7 +2227,7 @@ attribuez lui un nom unique pour l&apos;identifier et acceptez la.</translation>
     </message>
     <message>
         <source>Key:</source>
-        <translation>Clé:</translation>
+        <translation>Clé :</translation>
     </message>
     <message>
         <source>Use custom settings</source>
@@ -2235,11 +2235,11 @@ attribuez lui un nom unique pour l&apos;identifier et acceptez la.</translation>
     </message>
     <message>
         <source>Note: Change these settings only if you know what you are doing.</source>
-        <translation>Attention: modifiez ces paramètres seulement si vous savez ce que vous faites.</translation>
+        <translation>Attention : modifiez ces paramètres seulement si vous savez ce que vous faites.</translation>
     </message>
     <message>
         <source>Time step:</source>
-        <translation>Période de temps:</translation>
+        <translation>Période de temps :</translation>
     </message>
     <message>
         <source>8 digits</source>
@@ -2251,7 +2251,7 @@ attribuez lui un nom unique pour l&apos;identifier et acceptez la.</translation>
     </message>
     <message>
         <source>Code size:</source>
-        <translation>Taille du code:</translation>
+        <translation>Taille du code :</translation>
     </message>
     <message>
         <source> sec</source>
@@ -2375,7 +2375,7 @@ attribuez lui un nom unique pour l&apos;identifier et acceptez la.</translation>
     </message>
     <message>
         <source>Path of the group to list. Default is /</source>
-        <translation>Chemin du groupe à lister. Par défaut: /</translation>
+        <translation>Chemin du groupe à lister. Par défaut : /</translation>
     </message>
     <message>
         <source>Print the UUIDs of the entries and groups.</source>
