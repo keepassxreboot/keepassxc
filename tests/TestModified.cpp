@@ -241,7 +241,7 @@ void TestModified::testEntrySets()
     entry->setExpiryTime(entry->timeInfo().expiryTime());
     QCOMPARE(spyModified.count(), spyCount);
 
-    entry->setAutoTypeEnabled(false);
+    entry->setAutoTypeEnabled(Tools::TriState::Disable);
     QCOMPARE(spyModified.count(), ++spyCount);
     entry->setAutoTypeEnabled(entry->autoTypeEnabled());
     QCOMPARE(spyModified.count(), spyCount);

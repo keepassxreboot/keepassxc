@@ -29,12 +29,17 @@
 #include "core/TimeInfo.h"
 #include "core/Uuid.h"
 
+class AutoTypeAssociations;
+
+namespace Tools {
+enum class TriState;
+}
+
 class Group : public QObject
 {
     Q_OBJECT
 
 public:
-    enum TriState { Inherit, Enable, Disable };
     enum MergeMode { ModeInherit, KeepBoth, KeepNewer, KeepExisting };
 
     struct GroupData
@@ -46,9 +51,10 @@ public:
         TimeInfo timeInfo;
         bool isExpanded;
         QString defaultAutoTypeSequence;
-        Group::TriState autoTypeEnabled;
-        Group::TriState searchingEnabled;
+        Tools::TriState autoTypeEnabled;
+        Tools::TriState searchingEnabled;
         Group::MergeMode mergeMode;
+        bool autoTypeUseParentAssociations;
     };
 
     Group();
@@ -68,8 +74,11 @@ public:
     bool isExpanded() const;
     QString defaultAutoTypeSequence() const;
     QString effectiveAutoTypeSequence() const;
-    Group::TriState autoTypeEnabled() const;
-    Group::TriState searchingEnabled() const;
+    AutoTypeAssociations* autoTypeAssociations();
+    const AutoTypeAssociations* autoTypeAssociations() const;
+    bool autoTypeUseParentAssociations() const;
+    Tools::TriState autoTypeEnabled() const;
+    Tools::TriState searchingEnabled() const;
     Group::MergeMode mergeMode() const;
     bool resolveSearchingEnabled() const;
     bool resolveAutoTypeEnabled() const;
@@ -94,8 +103,9 @@ public:
     void setTimeInfo(const TimeInfo& timeInfo);
     void setExpanded(bool expanded);
     void setDefaultAutoTypeSequence(const QString& sequence);
-    void setAutoTypeEnabled(TriState enable);
-    void setSearchingEnabled(TriState enable);
+    void setAutoTypeUseParentAssociations(bool useParentAssociations);
+    void setAutoTypeEnabled(Tools::TriState enable);
+    void setSearchingEnabled(Tools::TriState enable);
     void setLastTopVisibleEntry(Entry* entry);
     void setExpires(bool value);
     void setExpiryTime(const QDateTime& dateTime);
@@ -173,6 +183,7 @@ private:
     QPointer<Entry> m_lastTopVisibleEntry;
     QList<Group*> m_children;
     QList<Entry*> m_entries;
+    AutoTypeAssociations* const m_autoTypeAssociations;
 
     QPointer<Group> m_parent;
 

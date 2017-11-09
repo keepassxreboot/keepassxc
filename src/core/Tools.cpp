@@ -357,4 +357,41 @@ Cleanup:
     return bSuccess;
 }
 
+int indexFromTriState(Tools::TriState triState)
+{
+    switch (triState) {
+    case TriState::Inherit:
+        return 0;
+    case TriState::Enable:
+        return 1;
+    case TriState::Disable:
+        return 2;
+    default:
+        Q_ASSERT(false);
+        return 0;
+    }
+}
+
+Tools::TriState triStateFromIndex(int index)
+{
+    switch (index) {
+    case 0:
+        return TriState::Inherit;
+    case 1:
+        return TriState::Enable;
+    case 2:
+        return TriState::Disable;
+    default:
+        Q_ASSERT(false);
+        return TriState::Inherit;
+    }
+}
+
+bool isTriStateEnabled(TriState triState, bool inheritValue)
+{
+    const bool enabled = triState == TriState::Inherit ? inheritValue
+                                                       : triState == TriState::Enable;
+    return enabled;
+}
+
 } // namespace Tools

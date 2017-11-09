@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>EditEntryWidgetAutoType</class>
- <widget class="QWidget" name="EditEntryWidgetAutoType">
+ <class>EditWidgetAutoType</class>
+ <widget class="QWidget" name="EditWidgetAutoType">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>567</width>
-    <height>348</height>
+    <width>580</width>
+    <height>388</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -24,66 +24,53 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QCheckBox" name="enableButton">
-     <property name="text">
-      <string>Enable Auto-Type for this entry</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <spacer name="verticalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>1</width>
-       <height>10</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
-    <widget class="QRadioButton" name="inheritSequenceButton">
-     <property name="text">
-      <string>Inherit default Auto-Type sequence from the &amp;group</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QRadioButton" name="customSequenceButton">
-     <property name="text">
-      <string>&amp;Use custom Auto-Type sequence:</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <spacer name="horizontalSpacer">
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>State:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="TriStateComboBox" name="enableComboBox"/>
+     </item>
+     <item row="2" column="1">
+      <widget class="QRadioButton" name="inheritSequenceButton">
+       <property name="text">
+        <string>Inherit default Auto-Type sequence from the &amp;group</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QRadioButton" name="customSequenceButton">
+       <property name="text">
+        <string>&amp;Use custom Auto-Type sequence:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLineEdit" name="sequenceEdit">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <spacer name="verticalSpacer_2">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Vertical</enum>
        </property>
        <property name="sizeType">
         <enum>QSizePolicy::Fixed</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>20</width>
-         <height>1</height>
+         <width>13</width>
+         <height>13</height>
         </size>
        </property>
       </spacer>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="sequenceEdit">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-      </widget>
      </item>
     </layout>
    </item>
@@ -244,6 +231,13 @@
          </layout>
         </item>
         <item>
+         <widget class="QCheckBox" name="useParentGroupAssociations">
+          <property name="text">
+           <string>Use window associations from parent group</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <spacer name="verticalSpacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -269,9 +263,13 @@
    <extends>QComboBox</extends>
    <header>autotype/WindowSelectComboBox.h</header>
   </customwidget>
+  <customwidget>
+   <class>TriStateComboBox</class>
+   <extends>QComboBox</extends>
+   <header>gui/TriStateComboBox.h</header>
+  </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>enableButton</tabstop>
   <tabstop>inheritSequenceButton</tabstop>
   <tabstop>customSequenceButton</tabstop>
   <tabstop>sequenceEdit</tabstop>

@@ -19,6 +19,7 @@
 #include "EntrySearcher.h"
 
 #include "core/Group.h"
+#include "core/Tools.h"
 
 QList<Entry*> EntrySearcher::search(const QString& searchTerm, const Group* group,
                                     Qt::CaseSensitivity caseSensitivity)
@@ -42,7 +43,7 @@ QList<Entry*> EntrySearcher::searchEntries(const QString& searchTerm, const Grou
 
     const QList<Group*> children = group->children();
     for (Group* childGroup : children) {
-        if (childGroup->searchingEnabled() != Group::Disable) {
+        if (childGroup->searchingEnabled() != Tools::TriState::Disable) {
             if (matchGroup(searchTerm, childGroup, caseSensitivity)) {
                 searchResult.append(childGroup->entriesRecursive());
             } else {

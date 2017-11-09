@@ -494,6 +494,7 @@ Group* KeePass2XmlReader::parseGroup()
     group->setUpdateTimeinfo(false);
     QList<Group*> children;
     QList<Entry*> entries;
+    bool autoTypeParsed = false; // for backward compatibility
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "UUID") {
             Uuid uuid = readUuid();
@@ -542,40 +543,16 @@ Group* KeePass2XmlReader::parseGroup()
         else if (m_xml.name() == "IsExpanded") {
             group->setExpanded(readBool());
         }
-        else if (m_xml.name() == "DefaultAutoTypeSequence") {
+        else if (m_xml.name() == "DefaultAutoTypeSequence" && !autoTypeParsed) {
             group->setDefaultAutoTypeSequence(readString());
         }
-        else if (m_xml.name() == "EnableAutoType") {
-            QString str = readString();
-
-            if (str.compare("null", Qt::CaseInsensitive) == 0) {
-                group->setAutoTypeEnabled(Group::Inherit);
-            }
-            else if (str.compare("true", Qt::CaseInsensitive) == 0) {
-                group->setAutoTypeEnabled(Group::Enable);
-            }
-            else if (str.compare("false", Qt::CaseInsensitive) == 0) {
-                group->setAutoTypeEnabled(Group::Disable);
-            }
-            else {
-                raiseError("Invalid EnableAutoType value");
-            }
+        else if (m_xml.name() == "EnableAutoType" && !autoTypeParsed) {
+            const Tools::TriState state = readTriState();
+            group->setAutoTypeEnabled(state);
         }
         else if (m_xml.name() == "EnableSearching") {
-            QString str = readString();
-
-            if (str.compare("null", Qt::CaseInsensitive) == 0) {
-                group->setSearchingEnabled(Group::Inherit);
-            }
-            else if (str.compare("true", Qt::CaseInsensitive) == 0) {
-                group->setSearchingEnabled(Group::Enable);
-            }
-            else if (str.compare("false", Qt::CaseInsensitive) == 0) {
-                group->setSearchingEnabled(Group::Disable);
-            }
-            else {
-                raiseError("Invalid EnableSearching value");
-            }
+            const Tools::TriState state = readTriState();
+            group->setSearchingEnabled(state);
         }
         else if (m_xml.name() == "LastTopVisibleEntry") {
             group->setLastTopVisibleEntry(getEntry(readUuid()));
@@ -592,6 +569,11 @@ Group* KeePass2XmlReader::parseGroup()
                 entries.append(newEntry);
             }
         }
+        else if (m_xml.name() == "AutoType") {
+            parseGroupAutoType(group);
+            autoTypeParsed = true;
+        }
+
         else {
             skipCurrentElement();
         }
@@ -621,6 +603,29 @@ Group* KeePass2XmlReader::parseGroup()
     }
 
     return group;
+}
+
+void KeePass2XmlReader::parseGroupAutoType(Group *group)
+{
+    Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "AutoType");
+
+    while (!m_xml.error() && m_xml.readNextStartElement()) {
+        if (m_xml.name() == "Enabled") {
+            group->setAutoTypeEnabled(readTriState());
+        }
+        else if (m_xml.name() == "DefaultSequence") {
+            group->setDefaultAutoTypeSequence(readString());
+        }
+        else if (m_xml.name() == "Association") {
+            parseAutoTypeAssoc(group->autoTypeAssociations());
+        }
+        else if (m_xml.name() == "UseParentGroupAssociations") {
+            group->setAutoTypeUseParentAssociations(readBool());
+        }
+        else {
+            skipCurrentElement();
+        }
+    }
 }
 
 void KeePass2XmlReader::parseDeletedObjects()
@@ -738,7 +743,7 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
             }
         }
         else if (m_xml.name() == "AutoType") {
-            parseAutoType(entry);
+            parseEntryAutoType(entry);
         }
         else if (m_xml.name() == "History") {
             if (history) {
@@ -913,13 +918,19 @@ QPair<QString, QString> KeePass2XmlReader::parseEntryBinary(Entry* entry)
     return poolRef;
 }
 
-void KeePass2XmlReader::parseAutoType(Entry* entry)
+void KeePass2XmlReader::parseEntryAutoType(Entry* entry)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "AutoType");
-
+    
+    // for backward compatibility
+    bool enabledStateParsed = false;
     while (!m_xml.error() && m_xml.readNextStartElement()) {
-        if (m_xml.name() == "Enabled") {
-            entry->setAutoTypeEnabled(readBool());
+        if (m_xml.name() == "Enabled" && !enabledStateParsed) {
+            entry->setAutoTypeEnabled(readBool() ? Tools::TriState::Enable : Tools::TriState::Disable);
+        }
+        else if (m_xml.name() == "EnabledState") {
+            entry->setAutoTypeEnabled(readTriState());
+            enabledStateParsed = true;
         }
         else if (m_xml.name() == "DataTransferObfuscation") {
             entry->setAutoTypeObfuscation(readNumber());
@@ -928,7 +939,10 @@ void KeePass2XmlReader::parseAutoType(Entry* entry)
             entry->setDefaultAutoTypeSequence(readString());
         }
         else if (m_xml.name() == "Association") {
-            parseAutoTypeAssoc(entry);
+            parseAutoTypeAssoc(entry->autoTypeAssociations());
+        }
+        else if (m_xml.name() == "UseParentGroupAssociations") {
+            entry->setAutoTypeUseParentAssociations(readBool());
         }
         else {
             skipCurrentElement();
@@ -936,7 +950,7 @@ void KeePass2XmlReader::parseAutoType(Entry* entry)
     }
 }
 
-void KeePass2XmlReader::parseAutoTypeAssoc(Entry* entry)
+void KeePass2XmlReader::parseAutoTypeAssoc(AutoTypeAssociations* associations)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Association");
 
@@ -959,7 +973,7 @@ void KeePass2XmlReader::parseAutoTypeAssoc(Entry* entry)
     }
 
     if (windowSet && sequenceSet) {
-        entry->autoTypeAssociations()->add(assoc);
+        associations->add(assoc);
     }
     else {
         raiseError("Auto-type association window or sequence missing");
@@ -1040,6 +1054,24 @@ bool KeePass2XmlReader::readBool()
     else {
         raiseError("Invalid bool value");
         return false;
+    }
+}
+
+Tools::TriState KeePass2XmlReader::readTriState() {
+    QString str = readString();
+
+    if (str.compare("null", Qt::CaseInsensitive) == 0 || str.isEmpty()) {
+        return Tools::TriState::Inherit;
+    }
+    else if (str.compare("true", Qt::CaseInsensitive) == 0) {
+        return Tools::TriState::Enable;
+    }
+    else if (str.compare("false", Qt::CaseInsensitive) == 0) {
+        return Tools::TriState::Disable;
+    }
+    else {
+        raiseError("Invalid TriState value");
+        return Tools::TriState::Disable;
     }
 }
 

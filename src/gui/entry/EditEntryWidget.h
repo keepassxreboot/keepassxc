@@ -24,10 +24,9 @@
 
 #include "gui/EditWidget.h"
 
-class AutoTypeAssociations;
-class AutoTypeAssociationsModel;
 class Database;
 class EditWidgetIcons;
+class EditWidgetAutoType;
 class EditWidgetProperties;
 class Entry;
 class EntryAttachments;
@@ -42,7 +41,6 @@ class QStackedLayout;
 
 namespace Ui {
     class EditEntryWidgetAdvanced;
-    class EditEntryWidgetAutoType;
     class EditEntryWidgetMain;
     class EditEntryWidgetHistory;
     class EditWidget;
@@ -85,12 +83,6 @@ private slots:
     void openAttachment(const QModelIndex& index);
     void openCurrentAttachment();
     void removeCurrentAttachment();
-    void updateAutoTypeEnabled();
-    void insertAutoTypeAssoc();
-    void removeAutoTypeAssoc();
-    void loadCurrentAssoc(const QModelIndex& current);
-    void clearCurrentAssoc();
-    void applyCurrentAssoc();
     void showHistoryEntry();
     void restoreHistoryEntry();
     void deleteHistoryEntry();
@@ -124,12 +116,11 @@ private:
     bool m_history;
     const QScopedPointer<Ui::EditEntryWidgetMain> m_mainUi;
     const QScopedPointer<Ui::EditEntryWidgetAdvanced> m_advancedUi;
-    const QScopedPointer<Ui::EditEntryWidgetAutoType> m_autoTypeUi;
     const QScopedPointer<Ui::EditEntryWidgetHistory> m_historyUi;
     QWidget* const m_mainWidget;
     QWidget* const m_advancedWidget;
     EditWidgetIcons* const m_iconsWidget;
-    QWidget* const m_autoTypeWidget;
+    EditWidgetAutoType* const m_editWidgetAutoType;
     EditWidgetProperties* const m_editWidgetProperties;
     QWidget* const m_historyWidget;
     EntryAttachments* const m_entryAttachments;
@@ -139,10 +130,6 @@ private:
     EntryHistoryModel* const m_historyModel;
     QSortFilterProxyModel* const m_sortModel;
     QPersistentModelIndex m_currentAttribute;
-    AutoTypeAssociations* const m_autoTypeAssoc;
-    AutoTypeAssociationsModel* const m_autoTypeAssocModel;
-    QButtonGroup* const m_autoTypeDefaultSequenceGroup;
-    QButtonGroup* const m_autoTypeWindowSequenceGroup;
 
     Q_DISABLE_COPY(EditEntryWidget)
 };

@@ -23,6 +23,7 @@
 #include "core/DatabaseIcons.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/Tools.h"
 #include "totp/totp.h"
 
 const int Entry::DefaultIconNumber = 0;
@@ -38,8 +39,9 @@ Entry::Entry()
     , m_updateTimeinfo(true)
 {
     m_data.iconNumber = DefaultIconNumber;
-    m_data.autoTypeEnabled = true;
+    m_data.autoTypeEnabled = Tools::TriState::Enable;
     m_data.autoTypeObfuscation = 0;
+    m_data.autoTypeUseParentAssociations = true;
     m_data.totpStep = QTotp::defaultStep;
     m_data.totpDigits = QTotp::defaultDigits;
 
@@ -177,9 +179,14 @@ TimeInfo Entry::timeInfo() const
     return m_data.timeInfo;
 }
 
-bool Entry::autoTypeEnabled() const
+Tools::TriState Entry::autoTypeEnabled() const
 {
     return m_data.autoTypeEnabled;
+}
+
+bool Entry::resolveAutoTypeEnabled() const
+{
+    return Tools::isTriStateEnabled(m_data.autoTypeEnabled, group()->resolveAutoTypeEnabled());
 }
 
 int Entry::autoTypeObfuscation() const
@@ -229,6 +236,11 @@ AutoTypeAssociations* Entry::autoTypeAssociations()
 const AutoTypeAssociations* Entry::autoTypeAssociations() const
 {
     return m_autoTypeAssociations;
+}
+
+bool Entry::autoTypeUseParentAssociations() const
+{
+    return m_data.autoTypeUseParentAssociations;
 }
 
 QString Entry::title() const
@@ -433,7 +445,7 @@ void Entry::setTimeInfo(const TimeInfo& timeInfo)
     m_data.timeInfo = timeInfo;
 }
 
-void Entry::setAutoTypeEnabled(bool enable)
+void Entry::setAutoTypeEnabled(Tools::TriState enable)
 {
     set(m_data.autoTypeEnabled, enable);
 }
@@ -446,6 +458,11 @@ void Entry::setAutoTypeObfuscation(int obfuscation)
 void Entry::setDefaultAutoTypeSequence(const QString& sequence)
 {
     set(m_data.defaultAutoTypeSequence, sequence);
+}
+
+void Entry::setAutoTypeUseParentAssociations(bool useParentAssociations)
+{
+    set(m_data.autoTypeUseParentAssociations, useParentAssociations);
 }
 
 void Entry::setTitle(const QString& title)

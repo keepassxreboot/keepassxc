@@ -21,6 +21,7 @@
 #include <QFile>
 
 #include "core/Metadata.h"
+#include "core/Tools.h"
 #include "format/KeePass2RandomStream.h"
 #include "streams/QtIOCompressor"
 
@@ -267,13 +268,14 @@ void KeePass2XmlWriter::writeGroup(const Group* group)
     }
     writeTimes(group->timeInfo());
     writeBool("IsExpanded", group->isExpanded());
+    writeTriState("EnableSearching", group->searchingEnabled());
+    writeUuid("LastTopVisibleEntry", group->lastTopVisibleEntry());
+    
+    // for backward compatibility
+    writeTriState("EnableAutoType", group->autoTypeEnabled());
     writeString("DefaultAutoTypeSequence", group->defaultAutoTypeSequence());
 
-    writeTriState("EnableAutoType", group->autoTypeEnabled());
-
-    writeTriState("EnableSearching", group->searchingEnabled());
-
-    writeUuid("LastTopVisibleEntry", group->lastTopVisibleEntry());
+    writeGroupAutoType(group);
 
     const QList<Entry*> entryList = group->entries();
     for (const Entry* entry : entryList) {
@@ -283,6 +285,22 @@ void KeePass2XmlWriter::writeGroup(const Group* group)
     const QList<Group*> children = group->children();
     for (const Group* child : children) {
         writeGroup(child);
+    }
+
+    m_xml.writeEndElement();
+}
+
+void KeePass2XmlWriter::writeGroupAutoType(const Group *group)
+{
+    m_xml.writeStartElement("AutoType");
+
+    writeTriState("Enabled", group->autoTypeEnabled());
+    writeString("DefaultSequence", group->defaultAutoTypeSequence());
+    writeBool("UseParentGroupAssociations", group->autoTypeUseParentAssociations());
+
+    const QList<AutoTypeAssociations::Association> autoTypeAssociations = group->autoTypeAssociations()->getAll();
+    for (const AutoTypeAssociations::Association& assoc : autoTypeAssociations) {
+        writeAutoTypeAssoc(assoc);
     }
 
     m_xml.writeEndElement();
@@ -398,7 +416,7 @@ void KeePass2XmlWriter::writeEntry(const Entry* entry)
         m_xml.writeEndElement();
     }
 
-    writeAutoType(entry);
+    writeEntryAutoType(entry);
     // write history only for entries that are not history items
     if (entry->parent()) {
         writeEntryHistory(entry);
@@ -407,13 +425,16 @@ void KeePass2XmlWriter::writeEntry(const Entry* entry)
     m_xml.writeEndElement();
 }
 
-void KeePass2XmlWriter::writeAutoType(const Entry* entry)
+void KeePass2XmlWriter::writeEntryAutoType(const Entry* entry)
 {
     m_xml.writeStartElement("AutoType");
 
-    writeBool("Enabled", entry->autoTypeEnabled());
+    // for backward compatibility
+    writeBool("Enabled", entry->autoTypeEnabled() == Tools::TriState::Enable);
+    writeTriState("EnabledState", entry->autoTypeEnabled());
     writeNumber("DataTransferObfuscation", entry->autoTypeObfuscation());
     writeString("DefaultSequence", entry->defaultAutoTypeSequence());
+    writeBool("UseParentGroupAssociations", entry->autoTypeUseParentAssociations());
 
     const QList<AutoTypeAssociations::Association> autoTypeAssociations = entry->autoTypeAssociations()->getAll();
     for (const AutoTypeAssociations::Association& assoc : autoTypeAssociations) {
@@ -528,14 +549,13 @@ void KeePass2XmlWriter::writeColor(const QString& qualifiedName, const QColor& c
     writeString(qualifiedName, colorStr);
 }
 
-void KeePass2XmlWriter::writeTriState(const QString& qualifiedName, Group::TriState triState)
+void KeePass2XmlWriter::writeTriState(const QString& qualifiedName, Tools::TriState triState)
 {
     QString value;
-
-    if (triState == Group::Inherit) {
+    if (triState == Tools::TriState::Inherit) {
         value = "null";
     }
-    else if (triState == Group::Enable) {
+    else if (triState == Tools::TriState::Enable) {
         value = "true";
     }
     else {

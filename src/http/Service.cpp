@@ -28,12 +28,13 @@
 
 #include "core/Database.h"
 #include "core/Entry.h"
+#include "core/EntrySearcher.h"
 #include "core/Global.h"
 #include "core/Group.h"
-#include "core/EntrySearcher.h"
 #include "core/Metadata.h"
-#include "core/Uuid.h"
 #include "core/PasswordGenerator.h"
+#include "core/Tools.h"
+#include "core/Uuid.h"
 
 #include <algorithm>
 
@@ -65,7 +66,7 @@ Entry* Service::getConfigEntry(bool create)
                 entry = new Entry();
                 entry->setTitle(QLatin1String(KEEPASSHTTP_NAME));
                 entry->setUuid(KEEPASSHTTP_UUID);
-                entry->setAutoTypeEnabled(false);
+                entry->setAutoTypeEnabled(Tools::TriState::Disable);
                 entry->setGroup(db->rootGroup());
             } else if (entry && entry->group() == db->metadata()->recycleBin()) {
                 if (create)

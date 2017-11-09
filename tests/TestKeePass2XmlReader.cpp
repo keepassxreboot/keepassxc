@@ -24,6 +24,7 @@
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "format/KeePass2XmlReader.h"
 #include "format/KeePass2XmlWriter.h"
@@ -42,14 +43,14 @@ namespace QTest {
     }
 
     template<>
-    char* toString(const Group::TriState& triState)
+    char* toString(const Tools::TriState& triState)
     {
         QString value;
 
-        if (triState == Group::Inherit) {
+        if (triState == Tools::TriState::Inherit) {
             value = "null";
         }
-        else if (triState == Group::Enable) {
+        else if (triState == Tools::TriState::Enable) {
             value = "true";
         }
         else {
@@ -170,8 +171,8 @@ void TestKeePass2XmlReader::testGroupRoot()
     QCOMPARE(ti.usageCount(), 52);
     QCOMPARE(ti.locationChanged(), genDT(2010, 8, 8, 17, 24, 27));
     QCOMPARE(group->defaultAutoTypeSequence(), QString(""));
-    QCOMPARE(group->autoTypeEnabled(), Group::Inherit);
-    QCOMPARE(group->searchingEnabled(), Group::Inherit);
+    QCOMPARE(group->autoTypeEnabled(), Tools::TriState::Inherit);
+    QCOMPARE(group->searchingEnabled(), Tools::TriState::Inherit);
     QCOMPARE(group->lastTopVisibleEntry()->uuid().toBase64(), QString("+wSUOv6qf0OzW8/ZHAs2sA=="));
 
     QCOMPARE(group->children().size(), 3);
@@ -191,8 +192,8 @@ void TestKeePass2XmlReader::testGroup1()
     QCOMPARE(group->iconUuid(), Uuid());
     QCOMPARE(group->isExpanded(), true);
     QCOMPARE(group->defaultAutoTypeSequence(), QString("{Password}{ENTER}"));
-    QCOMPARE(group->autoTypeEnabled(), Group::Enable);
-    QCOMPARE(group->searchingEnabled(), Group::Disable);
+    QCOMPARE(group->autoTypeEnabled(), Tools::TriState::Enable);
+    QCOMPARE(group->searchingEnabled(), Tools::TriState::Disable);
     QVERIFY(!group->lastTopVisibleEntry());
 }
 
@@ -269,7 +270,7 @@ void TestKeePass2XmlReader::testEntry1()
     QCOMPARE(entry->historyItems().at(1)->attachments()->keys().size(), 1);
     QCOMPARE(entry->historyItems().at(1)->attachments()->value("myattach.txt"), QByteArray("abcdefghijk"));
 
-    QCOMPARE(entry->autoTypeEnabled(), false);
+    QCOMPARE(entry->autoTypeEnabled(), Tools::TriState::Disable);
     QCOMPARE(entry->autoTypeObfuscation(), 0);
     QCOMPARE(entry->defaultAutoTypeSequence(), QString(""));
     QCOMPARE(entry->autoTypeAssociations()->size(), 1);
@@ -314,7 +315,7 @@ void TestKeePass2XmlReader::testEntry2()
     QCOMPARE(entry->attachments()->keys().size(), 1);
     QCOMPARE(QString::fromLatin1(entry->attachments()->value("myattach.txt")), QString("abcdefghijk"));
 
-    QCOMPARE(entry->autoTypeEnabled(), true);
+    QCOMPARE(entry->autoTypeEnabled(), Tools::TriState::Disable);
     QCOMPARE(entry->autoTypeObfuscation(), 1);
     QCOMPARE(entry->defaultAutoTypeSequence(), QString("{USERNAME}{TAB}{PASSWORD}{ENTER}"));
     QCOMPARE(entry->autoTypeAssociations()->size(), 2);

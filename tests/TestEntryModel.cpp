@@ -27,7 +27,7 @@
 #include "crypto/Crypto.h"
 #include "gui/IconModels.h"
 #include "gui/SortFilterHideProxyModel.h"
-#include "gui/entry/AutoTypeAssociationsModel.h"
+#include "gui/AutoTypeAssociationsModel.h"
 #include "gui/entry/EntryModel.h"
 #include "gui/entry/EntryAttachmentsModel.h"
 #include "gui/entry/EntryAttributesModel.h"

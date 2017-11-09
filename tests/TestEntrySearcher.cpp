@@ -17,6 +17,8 @@
 
 #include "TestEntrySearcher.h"
 
+#include "core/Tools.h"
+
 #include <QTest>
 
 QTEST_GUILESS_MAIN(TestEntrySearcher)
@@ -53,8 +55,8 @@ void TestEntrySearcher::testSearch()
     group211->setParent(group21);
     group2111->setParent(group211);
 
-    group1->setSearchingEnabled(Group::Disable);
-    group11->setSearchingEnabled(Group::Enable);
+    group1->setSearchingEnabled(Tools::TriState::Disable);
+    group11->setSearchingEnabled(Tools::TriState::Enable);
 
     Entry* eRoot = new Entry();
     eRoot->setNotes("test search term test");

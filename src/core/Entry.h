@@ -36,6 +36,10 @@
 class Database;
 class Group;
 
+namespace Tools {
+enum class TriState;
+}
+
 struct EntryData
 {
     int iconNumber;
@@ -44,9 +48,10 @@ struct EntryData
     QColor backgroundColor;
     QString overrideUrl;
     QString tags;
-    bool autoTypeEnabled;
+    Tools::TriState autoTypeEnabled;
     int autoTypeObfuscation;
     QString defaultAutoTypeSequence;
+    bool autoTypeUseParentAssociations;
     TimeInfo timeInfo;
     mutable quint8 totpDigits;
     mutable quint8 totpStep;
@@ -70,12 +75,14 @@ public:
     QString overrideUrl() const;
     QString tags() const;
     TimeInfo timeInfo() const;
-    bool autoTypeEnabled() const;
+    Tools::TriState autoTypeEnabled() const;
+    bool resolveAutoTypeEnabled() const;
     int autoTypeObfuscation() const;
     QString defaultAutoTypeSequence() const;
     QString effectiveAutoTypeSequence() const;
     AutoTypeAssociations* autoTypeAssociations();
     const AutoTypeAssociations* autoTypeAssociations() const;
+    bool autoTypeUseParentAssociations() const;
     QString title() const;
     QString url() const;
     QString webUrl() const;
@@ -107,9 +114,10 @@ public:
     void setOverrideUrl(const QString& url);
     void setTags(const QString& tags);
     void setTimeInfo(const TimeInfo& timeInfo);
-    void setAutoTypeEnabled(bool enable);
+    void setAutoTypeEnabled(Tools::TriState enable);
     void setAutoTypeObfuscation(int obfuscation);
     void setDefaultAutoTypeSequence(const QString& sequence);
+    void setAutoTypeUseParentAssociations(bool useParentAssociations);
     void setTitle(const QString& title);
     void setUrl(const QString& url);
     void setUsername(const QString& username);
