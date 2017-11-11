@@ -105,7 +105,7 @@
      <item>
       <widget class="QToolButton" name="closeButton">
        <property name="toolTip">
-        <string>Generate TOTP Token</string>
+        <string>Close</string>
        </property>
        <property name="text">
         <string/>
