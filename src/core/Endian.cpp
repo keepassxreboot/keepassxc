@@ -139,7 +139,7 @@ QByteArray int16ToBytes(qint16 num, QSysInfo::Endian byteOrder)
         qToLittleEndian<qint16>(num, reinterpret_cast<uchar*>(ba.data()));
     }
     else {
-        qToBigEndian<qint64>(num, reinterpret_cast<uchar*>(ba.data()));
+        qToBigEndian<qint16>(num, reinterpret_cast<uchar*>(ba.data()));
     }
 
     return ba;
