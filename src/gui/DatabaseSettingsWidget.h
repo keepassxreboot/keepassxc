@@ -19,8 +19,12 @@
 #define KEEPASSX_DATABASESETTINGSWIDGET_H
 
 #include <QScopedPointer>
+#include <QWidget>
+#include <QSpinBox>
+#include <QLayout>
 
 #include "gui/DialogyWidget.h"
+#include "crypto/kdf/Kdf.h"
 
 class Database;
 
@@ -45,11 +49,18 @@ private slots:
     void save();
     void reject();
     void transformRoundsBenchmark();
+    void changeKdf(int index);
 
 private:
     void truncateHistories();
+    void displayKdf(const Kdf& kdf);
+    void clearKdfWidgets();
 
     const QScopedPointer<Ui::DatabaseSettingsWidget> m_ui;
+    QList<QWidget*> m_kdfWidgets;
+    QList<QPair<quint32, QSpinBox*>> m_kdfFields;
+    QSpinBox* m_benchmarkField;
+    QScopedPointer<Kdf> m_kdf;
     Database* m_db;
 
     Q_DISABLE_COPY(DatabaseSettingsWidget)
