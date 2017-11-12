@@ -19,7 +19,10 @@
 #define KEEPASSX_KEEPASS2_H
 
 #include <QtGlobal>
+#include <QList>
 
+#include "crypto/SymmetricCipher.h"
+#include "crypto/kdf/Kdf.h"
 #include "core/Uuid.h"
 
 namespace KeePass2
@@ -32,10 +35,27 @@ namespace KeePass2
 
     const QSysInfo::Endian BYTEORDER = QSysInfo::LittleEndian;
 
-    const Uuid CIPHER_AES = Uuid(QByteArray::fromHex("31c1f2e6bf714350be5805216afc5aff"));
-    const Uuid CIPHER_TWOFISH = Uuid(QByteArray::fromHex("ad68f29f576f4bb9a36ad47af965346c"));
+    extern const Uuid CIPHER_AES;
+    extern const Uuid CIPHER_TWOFISH;
 
-    const QByteArray INNER_STREAM_SALSA20_IV("\xE8\x30\x09\x4B\x97\x20\x5D\x2A");
+    extern const Uuid KDF_AES;
+
+    extern const QByteArray INNER_STREAM_SALSA20_IV;
+
+    class UuidNamePair
+    {
+    public:
+        UuidNamePair(const Uuid& uuid, const QString& name);
+        Uuid uuid() const;
+        QString name() const;
+
+    private:
+        Uuid m_uuid;
+        QString m_name;
+    };
+
+    extern const QList<UuidNamePair> CIPHERS;
+    extern const QList<UuidNamePair> KDFS;
 
     enum HeaderFieldID
     {
@@ -57,6 +77,9 @@ namespace KeePass2
         ArcFourVariant = 1,
         Salsa20 = 2
     };
+
+    Kdf* uuidToKdf(const Uuid& uuid);
+    Uuid kdfToUuid(const Kdf& kdf);
 }
 
 #endif // KEEPASSX_KEEPASS2_H
