@@ -131,7 +131,7 @@ void KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
         m_device = ioCompressor.data();
     }
 
-    KeePass2RandomStream randomStream;
+    KeePass2RandomStream randomStream(KeePass2::Salsa20);
     if (!randomStream.init(protectedStreamKey)) {
         raiseError(randomStream.errorString());
         return;

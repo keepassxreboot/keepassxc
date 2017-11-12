@@ -37,6 +37,7 @@ namespace KeePass2
 
     extern const Uuid CIPHER_AES;
     extern const Uuid CIPHER_TWOFISH;
+    extern const Uuid CIPHER_CHACHA20;
 
     extern const Uuid KDF_AES;
 
@@ -75,11 +76,14 @@ namespace KeePass2
     enum ProtectedStreamAlgo
     {
         ArcFourVariant = 1,
-        Salsa20 = 2
+        Salsa20 = 2,
+        ChaCha20 = 3,
+        InvalidProtectedStreamAlgo = -1
     };
 
     Kdf* uuidToKdf(const Uuid& uuid);
     Uuid kdfToUuid(const Kdf& kdf);
+    ProtectedStreamAlgo idToProtectedStreamAlgo(quint32 id);
 }
 
 #endif // KEEPASSX_KEEPASS2_H
