@@ -256,3 +256,7 @@ bool HashedBlockStream::writeHashedBlock()
 
     return true;
 }
+
+bool HashedBlockStream::atEnd() const {
+    return m_eof;
+}
