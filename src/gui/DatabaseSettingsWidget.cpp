@@ -22,6 +22,7 @@
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/SymmetricCipher.h"
+#include "crypto/kdf/AesKdf.h"
 #include "format/KeePass2.h"
 #include "keys/CompositeKey.h"
 
@@ -56,7 +57,7 @@ void DatabaseSettingsWidget::load(Database* db)
     m_ui->recycleBinEnabledCheckBox->setChecked(meta->recycleBinEnabled());
     m_ui->defaultUsernameEdit->setText(meta->defaultUserName());
     m_ui->AlgorithmComboBox->setCurrentIndex(SymmetricCipher::cipherToAlgorithm(m_db->cipher()));
-    m_ui->transformRoundsSpinBox->setValue(m_db->transformRounds());
+    m_ui->transformRoundsSpinBox->setValue(static_cast<AesKdf*>(m_db->kdf())->rounds());
     if (meta->historyMaxItems() > -1) {
         m_ui->historyMaxItemsSpinBox->setValue(meta->historyMaxItems());
         m_ui->historyMaxItemsCheckBox->setChecked(true);
@@ -88,9 +89,10 @@ void DatabaseSettingsWidget::save()
     m_db->setCipher(SymmetricCipher::algorithmToCipher(static_cast<SymmetricCipher::Algorithm>
                                                        (m_ui->AlgorithmComboBox->currentIndex())));
     meta->setRecycleBinEnabled(m_ui->recycleBinEnabledCheckBox->isChecked());
-    if (static_cast<quint64>(m_ui->transformRoundsSpinBox->value()) != m_db->transformRounds()) {
+    AesKdf* kdf = static_cast<AesKdf*>(m_db->kdf());
+    if (static_cast<quint64>(m_ui->transformRoundsSpinBox->value()) != kdf->rounds()) {
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-        m_db->setTransformRounds(m_ui->transformRoundsSpinBox->value());
+        kdf->setRounds(m_ui->transformRoundsSpinBox->value());
         QApplication::restoreOverrideCursor();
     }
 
@@ -135,7 +137,7 @@ void DatabaseSettingsWidget::reject()
 void DatabaseSettingsWidget::transformRoundsBenchmark()
 {
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-    int rounds = CompositeKey::transformKeyBenchmark(1000);
+    int rounds = m_db->kdf()->benchmark(1000);
     if (rounds != -1) {
         m_ui->transformRoundsSpinBox->setValue(rounds);
     }

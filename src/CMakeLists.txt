@@ -76,6 +76,9 @@ set(keepassx_SOURCES
     crypto/SymmetricCipher.cpp
     crypto/SymmetricCipherBackend.h
     crypto/SymmetricCipherGcrypt.cpp
+    crypto/kdf/Kdf.cpp
+    crypto/kdf/Kdf_p.h
+    crypto/kdf/AesKdf.cpp
     format/CsvExporter.cpp
     format/KeePass1.h
     format/KeePass1Reader.cpp
@@ -139,7 +142,6 @@ set(keepassx_SOURCES
     gui/group/GroupModel.cpp
     gui/group/GroupView.cpp
     keys/CompositeKey.cpp
-    keys/CompositeKey_p.h
     keys/drivers/YubiKey.h
     keys/FileKey.cpp
     keys/Key.h

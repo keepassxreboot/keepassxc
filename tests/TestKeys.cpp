@@ -27,6 +27,7 @@
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
+#include "crypto/kdf/AesKdf.h"
 #include "crypto/CryptoHash.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
@@ -45,21 +46,23 @@ void TestKeys::testComposite()
     QScopedPointer<CompositeKey> compositeKey1(new CompositeKey());
     QScopedPointer<PasswordKey> passwordKey1(new PasswordKey());
     QScopedPointer<PasswordKey> passwordKey2(new PasswordKey("test"));
-    bool ok;
-    QString errorString;
 
     // make sure that addKey() creates a copy of the keys
     compositeKey1->addKey(*passwordKey1);
     compositeKey1->addKey(*passwordKey2);
 
-    QByteArray transformed = compositeKey1->transform(QByteArray(32, '\0'), 1, &ok, &errorString);
-    QVERIFY(ok);
-    QCOMPARE(transformed.size(), 32);
+    AesKdf kdf;
+    kdf.setRounds(1);
+    QByteArray transformed1;
+    QVERIFY(compositeKey1->transform(kdf, transformed1));
+    QCOMPARE(transformed1.size(), 32);
 
     // make sure the subkeys are copied
     QScopedPointer<CompositeKey> compositeKey2(compositeKey1->clone());
-    QCOMPARE(compositeKey2->transform(QByteArray(32, '\0'), 1, &ok, &errorString), transformed);
-    QVERIFY(ok);
+    QByteArray transformed2;
+    QVERIFY(compositeKey2->transform(kdf, transformed2));
+    QCOMPARE(transformed2.size(), 32);
+    QCOMPARE(transformed1, transformed2);
 
     QScopedPointer<CompositeKey> compositeKey3(new CompositeKey());
     QScopedPointer<CompositeKey> compositeKey4(new CompositeKey());
@@ -208,10 +211,12 @@ void TestKeys::benchmarkTransformKey()
 
     QByteArray seed(32, '\x4B');
 
-    bool ok;
-    QString errorString;
+    QByteArray result;
+    AesKdf kdf;
+    kdf.setSeed(seed);
+    kdf.setRounds(1e6);
 
     QBENCHMARK {
-        compositeKey.transform(seed, 1e6, &ok, &errorString);
-    }
+        Q_UNUSED(compositeKey.transform(kdf, result));
+    };
 }

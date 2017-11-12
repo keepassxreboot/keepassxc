@@ -23,6 +23,7 @@
 #include <QHash>
 #include <QObject>
 
+#include "crypto/kdf/Kdf.h"
 #include "core/Uuid.h"
 #include "keys/CompositeKey.h"
 
@@ -56,13 +57,14 @@ public:
     {
         Uuid cipher;
         CompressionAlgorithm compressionAlgo;
-        QByteArray transformSeed;
-        quint64 transformRounds;
         QByteArray transformedMasterKey;
+        Kdf* kdf;
         CompositeKey key;
         bool hasKey;
         QByteArray masterSeed;
         QByteArray challengeResponseKey;
+
+        ~DatabaseData();
     };
 
     Database();
@@ -90,8 +92,7 @@ public:
 
     Uuid cipher() const;
     Database::CompressionAlgorithm compressionAlgo() const;
-    QByteArray transformSeed() const;
-    quint64 transformRounds() const;
+    Kdf* kdf();
     QByteArray transformedMasterKey() const;
     const CompositeKey& key() const;
     QByteArray challengeResponseKey() const;
@@ -99,16 +100,10 @@ public:
 
     void setCipher(const Uuid& cipher);
     void setCompressionAlgo(Database::CompressionAlgorithm algo);
-    bool setTransformRounds(quint64 rounds);
-    bool setKey(const CompositeKey& key, const QByteArray& transformSeed,
-                bool updateChangedTime = true);
-
-    /**
-     * Sets the database key and generates a random transform seed.
-     */
-    bool setKey(const CompositeKey& key);
+    void setKdf(Kdf* kdf);
+    bool setKey(const CompositeKey& key, bool updateChangedTime = true,
+                bool updateTransformSalt = false);
     bool hasKey() const;
-    bool transformKeyWithSeed(const QByteArray& transformSeed);
     bool verifyKey(const CompositeKey& key) const;
     void recycleEntry(Entry* entry);
     void recycleGroup(Group* group);
@@ -122,6 +117,7 @@ public:
      * Returns a unique id that is only valid as long as the Database exists.
      */
     Uuid uuid();
+    bool changeKdf(Kdf* kdf);
 
     static Database* databaseByUuid(const Uuid& uuid);
     static Database* openDatabaseFile(QString fileName, CompositeKey key);

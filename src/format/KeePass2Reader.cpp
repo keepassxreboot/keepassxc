@@ -24,6 +24,7 @@
 #include "core/Database.h"
 #include "core/Endian.h"
 #include "crypto/CryptoHash.h"
+#include "crypto/kdf/AesKdf.h"
 #include "format/KeePass1.h"
 #include "format/KeePass2.h"
 #include "format/KeePass2RandomStream.h"
@@ -53,7 +54,6 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
     m_headerEnd = false;
     m_xmlData.clear();
     m_masterSeed.clear();
-    m_transformSeed.clear();
     m_encryptionIV.clear();
     m_streamStartBytes.clear();
     m_protectedStreamKey.clear();
@@ -101,14 +101,14 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
     }
 
     // check if all required headers were present
-    if (m_masterSeed.isEmpty() || m_transformSeed.isEmpty() || m_encryptionIV.isEmpty()
+    if (m_masterSeed.isEmpty() || m_encryptionIV.isEmpty()
             || m_streamStartBytes.isEmpty() || m_protectedStreamKey.isEmpty()
             || m_db->cipher().isNull()) {
         raiseError("missing database headers");
         return nullptr;
     }
 
-    if (!m_db->setKey(key, m_transformSeed, false)) {
+    if (!m_db->setKey(key, false)) {
         raiseError(tr("Unable to calculate master key"));
         return nullptr;
     }
@@ -378,7 +378,15 @@ void KeePass2Reader::setTransformSeed(const QByteArray& data)
         raiseError("Invalid transform seed size");
     }
     else {
-        m_transformSeed = data;
+        AesKdf* aesKdf;
+        if (m_db->kdf()->type() == Kdf::Type::AES) {
+            aesKdf = static_cast<AesKdf*>(m_db->kdf());
+        } else {
+            aesKdf = new AesKdf();
+            m_db->setKdf(aesKdf);
+        }
+
+        aesKdf->setSeed(data);
     }
 }
 
@@ -388,10 +396,18 @@ void KeePass2Reader::setTransformRounds(const QByteArray& data)
         raiseError("Invalid transform rounds size");
     }
     else {
-        if (!m_db->setTransformRounds(Endian::bytesToUInt64(data, KeePass2::BYTEORDER))) {
-            raiseError(tr("Unable to calculate master key"));
-        }
-    }
+        quint64 rounds = Endian::bytesToUInt64(data, KeePass2::BYTEORDER);
+
+        AesKdf* aesKdf;
+        if (m_db->kdf()->type() == Kdf::Type::AES) {
+            aesKdf = static_cast<AesKdf*>(m_db->kdf());
+        } else {
+            aesKdf = new AesKdf();
+            m_db->setKdf(aesKdf);
+         }
+
+        aesKdf->setRounds(rounds);
+     }
 }
 
 void KeePass2Reader::setEncryptionIV(const QByteArray& data)
