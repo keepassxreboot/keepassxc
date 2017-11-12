@@ -24,7 +24,7 @@ SymmetricCipherStream::SymmetricCipherStream(QIODevice* baseDevice, SymmetricCip
     , m_bufferPos(0)
     , m_bufferFilling(false)
     , m_error(false)
-    , m_isInitalized(false)
+    , m_isInitialized(false)
     , m_dataWritten(false)
 {
 }
@@ -36,12 +36,12 @@ SymmetricCipherStream::~SymmetricCipherStream()
 
 bool SymmetricCipherStream::init(const QByteArray& key, const QByteArray& iv)
 {
-    m_isInitalized = m_cipher->init(key, iv);
-    if (!m_isInitalized) {
+    m_isInitialized = m_cipher->init(key, iv);
+    if (!m_isInitialized) {
         setErrorString(m_cipher->errorString());
     }
 
-    return m_isInitalized;
+    return m_isInitialized;
 }
 
 void SymmetricCipherStream::resetInternalState()
@@ -56,11 +56,8 @@ void SymmetricCipherStream::resetInternalState()
 
 bool SymmetricCipherStream::open(QIODevice::OpenMode mode)
 {
-    if (!m_isInitalized) {
-        return false;
-    }
+    return m_isInitialized && LayeredStream::open(mode);
 
-    return LayeredStream::open(mode);
 }
 
 bool SymmetricCipherStream::reset()

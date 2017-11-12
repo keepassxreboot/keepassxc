@@ -51,7 +51,7 @@ private:
     int m_bufferPos;
     bool m_bufferFilling;
     bool m_error;
-    bool m_isInitalized;
+    bool m_isInitialized;
     bool m_dataWritten;
 };
 
