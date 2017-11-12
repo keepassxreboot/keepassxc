@@ -42,6 +42,10 @@ CryptoHash::CryptoHash(CryptoHash::Algorithm algo)
         algoGcrypt = GCRY_MD_SHA256;
         break;
 
+    case CryptoHash::Sha512:
+        algoGcrypt = GCRY_MD_SHA512;
+        break;
+
     default:
         Q_ASSERT(false);
         break;

@@ -27,7 +27,8 @@ class CryptoHash
 public:
     enum Algorithm
     {
-        Sha256
+        Sha256,
+        Sha512
     };
 
     explicit CryptoHash(CryptoHash::Algorithm algo);
