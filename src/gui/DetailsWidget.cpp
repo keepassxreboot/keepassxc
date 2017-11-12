@@ -20,6 +20,7 @@
 #include "ui_DetailsWidget.h"
 
 #include <QDebug>
+#include <QTimer>
 
 #include "core/Config.h"
 #include "core/FilePath.h"
@@ -33,6 +34,7 @@ DetailsWidget::DetailsWidget(QWidget* parent)
     , m_locked(false)
     , m_currentEntry(nullptr)
     , m_currentGroup(nullptr)
+    , m_timer(nullptr)
     , m_attributesWidget(nullptr)
     , m_autotypeWidget(nullptr)
     , m_selectedTabEntry(0)
@@ -58,7 +60,7 @@ DetailsWidget::~DetailsWidget()
 {
 }
 
-void DetailsWidget::getSelectedEntry(Entry* selectedEntry) 
+void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
 {
     if (!selectedEntry) {
         hideDetails();
@@ -108,7 +110,8 @@ void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
     m_ui->usernameLabel->setText(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->username()));
 
     if (!config()->get("security/hidepassworddetails").toBool()) {
-        m_ui->passwordLabel->setText(shortPassword(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->password())));
+        m_ui->passwordLabel->setText(
+            shortPassword(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->password())));
         m_ui->passwordLabel->setToolTip(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->password()));
     } else {
         m_ui->passwordLabel->setText("****");
@@ -136,14 +139,16 @@ void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
     }
 
     if (m_currentEntry->hasTotp()) {
-        m_ui->totpButton->show();
-        updateTotp();
-
         m_step = m_currentEntry->totpStep();
 
+        if (nullptr != m_timer) {
+            m_timer->stop();
+        }
         m_timer = new QTimer(this);
         connect(m_timer, SIGNAL(timeout()), this, SLOT(updateTotp()));
+        updateTotp();
         m_timer->start(m_step * 10);
+        m_ui->totpButton->show();
     }
 
     QString notes = m_currentEntry->notes();
@@ -188,7 +193,7 @@ void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
     }
 }
 
-void DetailsWidget::getSelectedGroup(Group* selectedGroup) 
+void DetailsWidget::getSelectedGroup(Group* selectedGroup)
 {
     if (!selectedGroup) {
         hideDetails();
@@ -211,7 +216,6 @@ void DetailsWidget::getSelectedGroup(Group* selectedGroup)
     }
 
     m_ui->tabWidget->setTabEnabled(GroupNotesTab, false);
-
 
     m_ui->totpButton->hide();
     m_ui->totpWidget->hide();
@@ -248,7 +252,7 @@ void DetailsWidget::getSelectedGroup(Group* selectedGroup)
         autotype = tr("Enabled");
     }
     m_ui->autotypeLabel->setText(autotype);
-    
+
     TimeInfo groupTime = m_currentGroup->timeInfo();
     if (groupTime.expires()) {
         m_ui->groupExpirationLabel->setText(groupTime.expiryTime().toString(Qt::DefaultLocaleShortDate));
@@ -263,23 +267,23 @@ void DetailsWidget::getSelectedGroup(Group* selectedGroup)
 
 void DetailsWidget::updateTotp()
 {
-    if (m_locked) {
+    if (!m_locked) {
+        QString totpCode = m_currentEntry->totp();
+        QString firstHalf = totpCode.left(totpCode.size() / 2);
+        QString secondHalf = totpCode.right(totpCode.size() / 2);
+        m_ui->totpLabel->setText(firstHalf + " " + secondHalf);
+    } else if (nullptr != m_timer) {
         m_timer->stop();
-        return;
     }
-    QString totpCode = m_currentEntry->totp();
-    QString firstHalf = totpCode.left(totpCode.size()/2);
-    QString secondHalf = totpCode.right(totpCode.size()/2);
-    m_ui->totpLabel->setText(firstHalf + " " + secondHalf);
 }
 
 void DetailsWidget::showTotp(bool visible)
-{   
-    if (visible){
+{
+    if (visible) {
         m_ui->totpWidget->show();
     } else {
         m_ui->totpWidget->hide();
-    }    
+    }
 }
 
 QString DetailsWidget::shortUrl(QString url)
@@ -326,7 +330,8 @@ void DetailsWidget::setDatabaseMode(DatabaseWidget::Mode mode)
     }
 }
 
-void DetailsWidget::updateTabIndex(int index) {
+void DetailsWidget::updateTabIndex(int index)
+{
     if (m_ui->stackedWidget->currentIndex() == GroupPreview) {
         m_selectedTabGroup = index;
     } else {
