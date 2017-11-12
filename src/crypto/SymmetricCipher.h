@@ -24,6 +24,7 @@
 
 #include "crypto/SymmetricCipherBackend.h"
 #include "format/KeePass2.h"
+#include "core/Uuid.h"
 
 class SymmetricCipher
 {

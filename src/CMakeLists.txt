@@ -82,7 +82,7 @@ set(keepassx_SOURCES
     format/CsvExporter.cpp
     format/KeePass1.h
     format/KeePass1Reader.cpp
-    format/KeePass2.h
+    format/KeePass2.cpp
     format/KeePass2RandomStream.cpp
     format/KeePass2Reader.cpp
     format/KeePass2Repair.cpp
