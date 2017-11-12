@@ -45,6 +45,7 @@
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
+#include "crypto/kdf/AesKdf.h"
 #include "format/KeePass2Reader.h"
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
@@ -885,12 +886,12 @@ void TestGui::testDatabaseSettings()
     m_db->metadata()->setName("Save");
     triggerAction("actionChangeDatabaseSettings");
     QWidget* dbSettingsWidget = m_dbWidget->findChild<QWidget*>("databaseSettingsWidget");
-    QSpinBox* transformRoundsSpinBox = dbSettingsWidget->findChild<QSpinBox*>("transformRoundsSpinBox");
+    QSpinBox* transformRoundsSpinBox = dbSettingsWidget->findChild<QSpinBox*>("kdfParams0");
     transformRoundsSpinBox->setValue(100);
     QTest::keyClick(transformRoundsSpinBox, Qt::Key_Enter);
     // wait for modified timer
     QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("Save*"));
-    QCOMPARE(m_db->transformRounds(), Q_UINT64_C(100));
+    QCOMPARE(static_cast<AesKdf*>(m_db->kdf())->rounds(), Q_UINT64_C(100));
 
     triggerAction("actionDatabaseSave");
     QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("Save"));
