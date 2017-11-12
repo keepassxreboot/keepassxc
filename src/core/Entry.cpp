@@ -730,8 +730,10 @@ QString Entry::resolvePlaceholderRecursive(const QString &placeholder, int maxDe
     case PlaceholderType::NotPlaceholder:
         return placeholder;
     case PlaceholderType::Unknown:
-        qWarning("Can't resolve placeholder %s for entry with uuid %s", qPrintable(placeholder),
-                 qPrintable(uuid().toHex()));
+#ifdef QT_DEBUG
+        qWarning("Can't resolve placeholder \"%s\" for entry with title: \"%s\" (uuid \"%s\") ",
+                 qPrintable(placeholder), qPrintable(title()), qPrintable(uuid().toHex()));
+#endif
         return placeholder;
     case PlaceholderType::Title:
         return title();
