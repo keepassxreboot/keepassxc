@@ -344,3 +344,85 @@ void TestEntry::testResolveReferencePlaceholders()
     QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:A@I:%1}").arg(entry3->uuid().toHex())), QString("UrlValue"));
     QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:N@I:%1}").arg(entry3->uuid().toHex())), QString("NotesValue"));
 }
+
+static const char placeholders[] = {
+'T',
+'U',
+'P',
+'A',
+'N',
+};
+
+void TestEntry::testResolveNonIdPlaceholdersToUuid()
+{
+    Database db;
+    auto* root = db.rootGroup();
+
+    Entry referencedEntryTitle;
+    referencedEntryTitle.setGroup(root);
+    referencedEntryTitle.setTitle("myTitle");
+    referencedEntryTitle.setUuid(Uuid::random());
+
+    Entry referencedEntryUsername;
+    referencedEntryUsername.setGroup(root);
+    referencedEntryUsername.setUsername("myUser");
+    referencedEntryUsername.setUuid(Uuid::random());
+
+    Entry referencedEntryPassword;
+    referencedEntryPassword.setGroup(root);
+    referencedEntryPassword.setPassword("myPassword");
+    referencedEntryPassword.setUuid(Uuid::random());
+
+    Entry referencedEntryUrl;
+    referencedEntryUrl.setGroup(root);
+    referencedEntryUrl.setUrl("myUrl");
+    referencedEntryUrl.setUuid(Uuid::random());
+
+    Entry referencedEntryNotes;
+    referencedEntryNotes.setGroup(root);
+    referencedEntryNotes.setNotes("myNotes");
+    referencedEntryNotes.setUuid(Uuid::random());
+
+    for (const auto searchIn : placeholders) {
+        const Entry* referencedEntry = nullptr;
+        QString newEntryNotesRaw("{REF:I@%1:%2}");
+
+        switch(searchIn) {
+            case 'T':
+                referencedEntry = &referencedEntryTitle;
+                newEntryNotesRaw = newEntryNotesRaw.arg(
+                        QString(searchIn), referencedEntry->title());
+                break;
+            case 'U':
+                referencedEntry = &referencedEntryUsername;
+                newEntryNotesRaw = newEntryNotesRaw.arg(
+                        QString(searchIn), referencedEntry->username());
+                break;
+            case 'P':
+                referencedEntry = &referencedEntryPassword;
+                newEntryNotesRaw = newEntryNotesRaw.arg(
+                        QString(searchIn), referencedEntry->password());
+                break;
+            case 'A':
+                referencedEntry = &referencedEntryUrl;
+                newEntryNotesRaw = newEntryNotesRaw.arg(
+                        QString(searchIn), referencedEntry->url());
+                break;
+            case 'N':
+                referencedEntry = &referencedEntryNotes;
+                newEntryNotesRaw = newEntryNotesRaw.arg(
+                        QString(searchIn), referencedEntry->notes());
+                break;
+            default:
+                break;
+        }
+
+        Entry newEntry;
+        newEntry.setGroup(root);
+        newEntry.setNotes(newEntryNotesRaw);
+
+        const auto newEntryNotesResolved = 
+            newEntry.resolveMultiplePlaceholders(newEntry.notes());
+        QCOMPARE(newEntryNotesResolved, QString(referencedEntry->uuid().toHex()));
+    }
+}
