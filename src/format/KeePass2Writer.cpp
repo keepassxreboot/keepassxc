@@ -24,6 +24,7 @@
 #include "core/Database.h"
 #include "core/Endian.h"
 #include "crypto/CryptoHash.h"
+#include "crypto/kdf/AesKdf.h"
 #include "crypto/Random.h"
 #include "format/KeePass2RandomStream.h"
 #include "format/KeePass2XmlWriter.h"
@@ -45,7 +46,6 @@ void KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
     m_error = false;
     m_errorStr.clear();
 
-    QByteArray transformSeed = randomGen()->randomArray(32);
     QByteArray masterSeed = randomGen()->randomArray(32);
     QByteArray encryptionIV = randomGen()->randomArray(16);
     QByteArray protectedStreamKey = randomGen()->randomArray(32);
@@ -57,7 +57,7 @@ void KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
         return;
     }
 
-    if (!db->transformKeyWithSeed(transformSeed)) {
+    if (!db->setKey(db->key(), false, true)) {
         raiseError(tr("Unable to calculate master key"));
         return;
     }
@@ -81,10 +81,11 @@ void KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
     CHECK_RETURN(writeHeaderField(KeePass2::CompressionFlags,
                                   Endian::int32ToBytes(db->compressionAlgo(),
                                                        KeePass2::BYTEORDER)));
+    AesKdf* kdf = static_cast<AesKdf*>(db->kdf());
     CHECK_RETURN(writeHeaderField(KeePass2::MasterSeed, masterSeed));
-    CHECK_RETURN(writeHeaderField(KeePass2::TransformSeed, db->transformSeed()));
+    CHECK_RETURN(writeHeaderField(KeePass2::TransformSeed, kdf->seed()));
     CHECK_RETURN(writeHeaderField(KeePass2::TransformRounds,
-                                  Endian::int64ToBytes(db->transformRounds(),
+                                  Endian::int64ToBytes(kdf->rounds(),
                                                        KeePass2::BYTEORDER)));
     CHECK_RETURN(writeHeaderField(KeePass2::EncryptionIV, encryptionIV));
     CHECK_RETURN(writeHeaderField(KeePass2::ProtectedStreamKey, protectedStreamKey));

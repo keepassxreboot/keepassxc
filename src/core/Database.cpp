@@ -27,7 +27,7 @@
 #include "cli/Utils.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
-#include "crypto/Random.h"
+#include "crypto/kdf/AesKdf.h"
 #include "format/KeePass2.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
@@ -45,7 +45,8 @@ Database::Database()
 {
     m_data.cipher = KeePass2::CIPHER_AES;
     m_data.compressionAlgo = CompressionGZip;
-    m_data.transformRounds = 100000;
+    m_data.kdf = new AesKdf();
+    m_data.kdf->randomizeTransformSalt();
     m_data.hasKey = false;
 
     setRootGroup(new Group());
@@ -170,16 +171,6 @@ Database::CompressionAlgorithm Database::compressionAlgo() const
     return m_data.compressionAlgo;
 }
 
-QByteArray Database::transformSeed() const
-{
-    return m_data.transformSeed;
-}
-
-quint64 Database::transformRounds() const
-{
-    return m_data.transformRounds;
-}
-
 QByteArray Database::transformedMasterKey() const
 {
     return m_data.transformedMasterKey;
@@ -210,36 +201,18 @@ void Database::setCompressionAlgo(Database::CompressionAlgorithm algo)
     m_data.compressionAlgo = algo;
 }
 
-bool Database::setTransformRounds(quint64 rounds)
+bool Database::setKey(const CompositeKey& key, bool updateChangedTime, bool updateTransformSalt)
 {
-    if (m_data.transformRounds != rounds) {
-        quint64 oldRounds = m_data.transformRounds;
-
-        m_data.transformRounds = rounds;
-
-        if (m_data.hasKey) {
-            if (!setKey(m_data.key)) {
-                m_data.transformRounds = oldRounds;
-                return false;
-            }
-        }
+    if (updateTransformSalt) {
+        m_data.kdf->randomizeTransformSalt();
     }
 
-    return true;
-}
-
-bool Database::setKey(const CompositeKey& key, const QByteArray& transformSeed, bool updateChangedTime)
-{
-    bool ok;
-    QString errorString;
-
-    QByteArray transformedMasterKey = key.transform(transformSeed, transformRounds(), &ok, &errorString);
-    if (!ok) {
+    QByteArray transformedMasterKey;
+    if (!key.transform(*m_data.kdf, transformedMasterKey)) {
         return false;
     }
 
     m_data.key = key;
-    m_data.transformSeed = transformSeed;
     m_data.transformedMasterKey = transformedMasterKey;
     m_data.hasKey = true;
     if (updateChangedTime) {
@@ -250,33 +223,9 @@ bool Database::setKey(const CompositeKey& key, const QByteArray& transformSeed, 
     return true;
 }
 
-bool Database::setKey(const CompositeKey& key)
-{
-    return setKey(key, randomGen()->randomArray(32));
-}
-
 bool Database::hasKey() const
 {
     return m_data.hasKey;
-}
-
-bool Database::transformKeyWithSeed(const QByteArray& transformSeed)
-{
-    Q_ASSERT(hasKey());
-
-    bool ok;
-    QString errorString;
-
-    QByteArray transformedMasterKey =
-            m_data.key.transform(transformSeed, transformRounds(), &ok, &errorString);
-    if (!ok) {
-        return false;
-    }
-
-    m_data.transformSeed = transformSeed;
-    m_data.transformedMasterKey = transformedMasterKey;
-
-    return true;
 }
 
 bool Database::verifyKey(const CompositeKey& key) const
@@ -374,6 +323,7 @@ void Database::setEmitModified(bool value)
 void Database::copyAttributesFrom(const Database* other)
 {
     m_data = other->m_data;
+    m_data.kdf = m_data.kdf->clone();
     m_metadata->copyAttributesFrom(other->m_metadata);
 }
 
@@ -478,4 +428,39 @@ QString Database::saveToFile(QString filePath)
     } else {
         return saveFile.errorString();
     }
+}
+
+Kdf* Database::kdf() {
+    return m_data.kdf;
+}
+
+void Database::setKdf(Kdf* kdf) {
+    if (m_data.kdf == kdf) {
+        return;
+    }
+
+    if (m_data.kdf != nullptr) {
+        delete m_data.kdf;
+    }
+
+    m_data.kdf = kdf;
+}
+
+bool Database::changeKdf(Kdf* kdf) {
+    kdf->randomizeTransformSalt();
+    QByteArray transformedMasterKey;
+    if (!m_data.key.transform(*kdf, transformedMasterKey)) {
+        return false;
+    }
+
+    setKdf(kdf);
+    m_data.transformedMasterKey = transformedMasterKey;
+    emit modifiedImmediate();
+
+    return true;
+}
+
+Database::DatabaseData::~DatabaseData()
+{
+    delete kdf;
 }

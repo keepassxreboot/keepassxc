@@ -64,7 +64,6 @@ private:
 
     Database* m_db;
     QByteArray m_masterSeed;
-    QByteArray m_transformSeed;
     QByteArray m_encryptionIV;
     QByteArray m_streamStartBytes;
     QByteArray m_protectedStreamKey;
