@@ -27,6 +27,7 @@
 #include "keys/CompositeKey.h"
 
 class Entry;
+enum class EntryReferenceType;
 class Group;
 class Metadata;
 class QTimer;
@@ -81,6 +82,7 @@ public:
     Metadata* metadata();
     const Metadata* metadata() const;
     Entry* resolveEntry(const Uuid& uuid);
+    Entry* resolveEntry(const QString& text, EntryReferenceType referenceType);
     Group* resolveGroup(const Uuid& uuid);
     QList<DeletedObject> deletedObjects();
     void addDeletedObject(const DeletedObject& delObj);
@@ -142,6 +144,7 @@ private slots:
 
 private:
     Entry* recFindEntry(const Uuid& uuid, Group* group);
+    Entry* recFindEntry(const QString& text, EntryReferenceType referenceType, Group* group);
     Group* recFindGroup(const Uuid& uuid, Group* group);
 
     void createRecycleBin();

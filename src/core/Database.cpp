@@ -98,6 +98,11 @@ Entry* Database::resolveEntry(const Uuid& uuid)
     return recFindEntry(uuid, m_rootGroup);
 }
 
+Entry *Database::resolveEntry(const QString &text, EntryReferenceType referenceType)
+{
+    return recFindEntry(text, referenceType, m_rootGroup);
+}
+
 Entry* Database::recFindEntry(const Uuid& uuid, Group* group)
 {
     const QList<Entry*> entryList = group->entries();
@@ -110,6 +115,56 @@ Entry* Database::recFindEntry(const Uuid& uuid, Group* group)
     const QList<Group*> children = group->children();
     for (Group* child : children) {
         Entry* result = recFindEntry(uuid, child);
+        if (result) {
+            return result;
+        }
+    }
+
+    return nullptr;
+}
+
+Entry *Database::recFindEntry(const QString &text, EntryReferenceType referenceType, Group *group)
+{
+    Q_ASSERT_X(referenceType != EntryReferenceType::Unknown, "Database::recFindEntry",
+               "Can't search entry with \"referenceType\" parameter equal to \"Unknown\"");
+
+    bool found = false;
+    const QList<Entry*> entryList = group->entries();
+    for (Entry* entry : entryList) {
+        switch (referenceType) {
+        case EntryReferenceType::Unknown:
+            return nullptr;
+        case EntryReferenceType::Title:
+            found = entry->title() == text;
+            break;
+        case EntryReferenceType::UserName:
+            found = entry->username() == text;
+            break;
+        case EntryReferenceType::Password:
+            found = entry->password() == text;
+            break;
+        case EntryReferenceType::Url:
+            found = entry->url() == text;
+            break;
+        case EntryReferenceType::Notes:
+            found = entry->notes() == text;
+            break;
+        case EntryReferenceType::Uuid:
+            found = entry->uuid().toHex() == text;
+            break;
+        case EntryReferenceType::CustomAttributes:
+            found = entry->attributes()->containsValue(text);
+            break;
+        }
+
+        if (found) {
+            return entry;
+        }
+    }
+
+    const QList<Group*> children = group->children();
+    for (Group* child : children) {
+        Entry* result = recFindEntry(text, referenceType, child);
         if (result) {
             return result;
         }

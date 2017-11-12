@@ -25,11 +25,17 @@ const QString EntryAttributes::URLKey = "URL";
 const QString EntryAttributes::NotesKey = "Notes";
 const QStringList EntryAttributes::DefaultAttributes(QStringList() << TitleKey << UserNameKey
                                                      << PasswordKey << URLKey << NotesKey);
+
+const QString EntryAttributes::WantedFieldGroupName = "WantedField";
+const QString EntryAttributes::SearchInGroupName = "SearchIn";
+const QString EntryAttributes::SearchTextGroupName = "SearchText";
+
 const QString EntryAttributes::RememberCmdExecAttr = "_EXEC_CMD";
 
 EntryAttributes::EntryAttributes(QObject* parent)
     : QObject(parent)
-    , m_referenceRegExp("\\{REF:([TUPAN])@I:([^}]+)\\}", Qt::CaseInsensitive, QRegExp::RegExp2)
+    , m_referenceRegExp("\\{REF:(?<WantedField>[TUPAN])@(?<SearchIn>[TUPANIO]):(?<SearchText>[^}]+)\\}",
+                        QRegularExpression::CaseInsensitiveOption)
 {
     clear();
 }
@@ -66,6 +72,11 @@ bool EntryAttributes::contains(const QString &key) const
     return m_attributes.contains(key);
 }
 
+bool EntryAttributes::containsValue(const QString &value) const
+{
+    return m_attributes.values().contains(value);
+}
+
 bool EntryAttributes::isProtected(const QString& key) const
 {
     return m_protectedAttributes.contains(key);
@@ -78,14 +89,11 @@ bool EntryAttributes::isReference(const QString& key) const
         return false;
     }
 
-    QString data = value(key);
-    if (m_referenceRegExp.indexIn(data) != -1) {
-        return true;
-    }
-    return false;
+    const QString data = value(key);
+    return m_referenceRegExp.match(data).hasMatch();
 }
 
-QRegExp* EntryAttributes::referenceRegExp()
+QRegularExpression* EntryAttributes::referenceRegExp()
 {
     return &m_referenceRegExp;
 }
