@@ -41,6 +41,7 @@ KeePass2Reader::KeePass2Reader()
     , m_headerEnd(false)
     , m_saveXml(false)
     , m_db(nullptr)
+    , m_irsAlgo(KeePass2::InvalidProtectedStreamAlgo)
 {
 }
 
@@ -164,7 +165,7 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
         xmlDevice = ioCompressor.data();
     }
 
-    KeePass2RandomStream randomStream;
+    KeePass2RandomStream randomStream(m_irsAlgo);
     if (!randomStream.init(m_protectedStreamKey)) {
         raiseError(randomStream.errorString());
         return nullptr;
@@ -447,9 +448,14 @@ void KeePass2Reader::setInnerRandomStreamID(const QByteArray& data)
     }
     else {
         quint32 id = Endian::bytesToUInt32(data, KeePass2::BYTEORDER);
-
-        if (id != KeePass2::Salsa20) {
+        m_irsAlgo = KeePass2::idToProtectedStreamAlgo(id);
+        if (m_irsAlgo == KeePass2::ArcFourVariant || m_irsAlgo == KeePass2::InvalidProtectedStreamAlgo) {
             raiseError("Unsupported random stream algorithm");
         }
     }
+}
+
+KeePass2::ProtectedStreamAlgo KeePass2Reader::protectedStreamAlgo() const
+{
+    return m_irsAlgo;
 }

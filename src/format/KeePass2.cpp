@@ -22,6 +22,7 @@
 
 const Uuid KeePass2::CIPHER_AES = Uuid(QByteArray::fromHex("31c1f2e6bf714350be5805216afc5aff"));
 const Uuid KeePass2::CIPHER_TWOFISH = Uuid(QByteArray::fromHex("ad68f29f576f4bb9a36ad47af965346c"));
+const Uuid KeePass2::CIPHER_CHACHA20 = Uuid(QByteArray::fromHex("D6038A2B8B6F4CB5A524339A31DBB59A"));
 
 const Uuid KeePass2::KDF_AES = Uuid(QByteArray::fromHex("C9D9F39A628A4460BF740D08C18A4FEA"));
 
@@ -30,6 +31,7 @@ const QByteArray KeePass2::INNER_STREAM_SALSA20_IV("\xE8\x30\x09\x4B\x97\x20\x5D
 const QList<KeePass2::UuidNamePair> KeePass2::CIPHERS {
         KeePass2::UuidNamePair(KeePass2::CIPHER_AES, "AES: 256-bit"),
         KeePass2::UuidNamePair(KeePass2::CIPHER_TWOFISH, "Twofish: 256-bit"),
+        KeePass2::UuidNamePair(KeePass2::CIPHER_CHACHA20, "ChaCha20: 256-bit")
 };
 const QList<KeePass2::UuidNamePair> KeePass2::KDFS {
         KeePass2::UuidNamePair(KeePass2::KDF_AES, "AES-KDF"),
@@ -50,6 +52,20 @@ Uuid KeePass2::kdfToUuid(const Kdf& kdf)
             return KDF_AES;
         default:
             return Uuid();
+    }
+}
+
+KeePass2::ProtectedStreamAlgo KeePass2::idToProtectedStreamAlgo(quint32 id)
+{
+    switch (id) {
+        case static_cast<quint32>(KeePass2::ArcFourVariant):
+            return KeePass2::ArcFourVariant;
+        case static_cast<quint32>(KeePass2::Salsa20):
+            return KeePass2::Salsa20;
+        case static_cast<quint32>(KeePass2::ChaCha20):
+            return KeePass2::ChaCha20;
+        default:
+            return KeePass2::InvalidProtectedStreamAlgo;
     }
 }
 

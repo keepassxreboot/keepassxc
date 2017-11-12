@@ -21,6 +21,7 @@
 #include <QCoreApplication>
 
 #include "keys/CompositeKey.h"
+#include "format/KeePass2.h"
 
 class Database;
 class QIODevice;
@@ -38,6 +39,7 @@ public:
     void setSaveXml(bool save);
     QByteArray xmlData();
     QByteArray streamKey();
+    KeePass2::ProtectedStreamAlgo protectedStreamAlgo() const;
 
 private:
     void raiseError(const QString& errorMessage);
@@ -67,6 +69,7 @@ private:
     QByteArray m_encryptionIV;
     QByteArray m_streamStartBytes;
     QByteArray m_protectedStreamKey;
+    KeePass2::ProtectedStreamAlgo m_irsAlgo;
 };
 
 #endif // KEEPASSX_KEEPASS2READER_H
