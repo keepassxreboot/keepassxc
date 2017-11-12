@@ -34,7 +34,7 @@ const QString EntryAttributes::RememberCmdExecAttr = "_EXEC_CMD";
 
 EntryAttributes::EntryAttributes(QObject* parent)
     : QObject(parent)
-    , m_referenceRegExp("\\{REF:(?<WantedField>[TUPAN])@(?<SearchIn>[TUPANIO]):(?<SearchText>[^}]+)\\}",
+    , m_referenceRegExp("\\{REF:(?<WantedField>[TUPANI])@(?<SearchIn>[TUPANIO]):(?<SearchText>[^}]+)\\}",
                         QRegularExpression::CaseInsensitiveOption)
 {
     clear();

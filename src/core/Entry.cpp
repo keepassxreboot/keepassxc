@@ -838,6 +838,8 @@ QString Entry::referenceFieldValue(EntryReferenceType referenceType) const
         return url();
     case EntryReferenceType::Notes:
         return notes();
+    case EntryReferenceType::Uuid:
+        return uuid().toHex();
     default:
         break;
     }
