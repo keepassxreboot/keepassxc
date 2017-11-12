@@ -146,6 +146,7 @@ set(keepassx_SOURCES
     keys/PasswordKey.cpp
     keys/YkChallengeResponseKey.cpp
     streams/HashedBlockStream.cpp
+    streams/HmacBlockStream.cpp
     streams/LayeredStream.cpp
     streams/qtiocompressor.cpp
     streams/StoreDataStream.cpp
