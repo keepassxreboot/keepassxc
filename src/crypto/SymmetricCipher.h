@@ -33,14 +33,17 @@ public:
     {
         Aes256,
         Twofish,
-        Salsa20
+        Salsa20,
+        ChaCha20,
+        InvalidAlgorithm = -1
     };
 
     enum Mode
     {
         Cbc,
         Ecb,
-        Stream
+        Stream,
+        InvalidMode = -1
     };
 
     enum Direction
@@ -73,8 +76,10 @@ public:
     int blockSize() const;
     QString errorString() const;
 
-    static SymmetricCipher::Algorithm cipherToAlgorithm(Uuid cipher);
-    static Uuid algorithmToCipher(SymmetricCipher::Algorithm algo);
+    static Algorithm cipherToAlgorithm(Uuid cipher);
+    static Uuid algorithmToCipher(Algorithm algo);
+    static int algorithmIvSize(Algorithm algo);
+    static Mode algorithmMode(Algorithm algo);
 
 private:
     static SymmetricCipherBackend* createBackend(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,

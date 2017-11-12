@@ -95,6 +95,11 @@ bool Crypto::checkAlgorithms()
         qWarning("Crypto::checkAlgorithms: %s", qPrintable(m_errorStr));
         return false;
     }
+    if (gcry_cipher_algo_info(GCRY_CIPHER_CHACHA20, GCRYCTL_TEST_ALGO, nullptr, nullptr) != 0) {
+        m_errorStr = "GCRY_CIPHER_CHACHA20 not found.";
+        qWarning("Crypto::checkAlgorithms: %s", qPrintable(m_errorStr));
+        return false;
+    }
     if (gcry_md_test_algo(GCRY_MD_SHA256) != 0) {
         m_errorStr = "GCRY_MD_SHA256 not found.";
         qWarning("Crypto::checkAlgorithms: %s", qPrintable(m_errorStr));
@@ -111,7 +116,7 @@ bool Crypto::checkAlgorithms()
 
 bool Crypto::selfTest()
 {
-    return testSha256() && testSha512() && testAes256Cbc() && testAes256Ecb() && testTwofish() && testSalsa20();
+    return testSha256() && testSha512() && testAes256Cbc() && testAes256Ecb() && testTwofish() && testSalsa20() && testChaCha20();
 }
 
 void Crypto::raiseError(const QString& str)
@@ -298,6 +303,33 @@ bool Crypto::testSalsa20()
     }
     if (salsaProcessed != salsa20Cipher) {
         raiseError("Salsa20 stream cipher mismatch.");
+        return false;
+    }
+
+    return true;
+}
+
+bool Crypto::testChaCha20() {
+    QByteArray chacha20Key = QByteArray::fromHex("0000000000000000000000000000000000000000000000000000000000000000");
+    QByteArray chacha20iv = QByteArray::fromHex("0000000000000000");
+    QByteArray chacha20Plain = QByteArray::fromHex("00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+    QByteArray chacha20Cipher = QByteArray::fromHex("76b8e0ada0f13d90405d6ae55386bd28bdd219b8a08ded1aa836efcc8b770dc7da41597c5157488d7724e03fb8d84a376a43b8f41518a11cc387b669b2ee6586");
+    bool ok;
+
+    SymmetricCipher chacha20Stream(SymmetricCipher::ChaCha20, SymmetricCipher::Stream,
+                                  SymmetricCipher::Encrypt);
+    if (!chacha20Stream.init(chacha20Key, chacha20iv)) {
+        raiseError(chacha20Stream.errorString());
+        return false;
+    }
+
+    QByteArray chacha20Processed = chacha20Stream.process(chacha20Plain, &ok);
+    if (!ok) {
+        raiseError(chacha20Stream.errorString());
+        return false;
+    }
+    if (chacha20Processed != chacha20Cipher) {
+        raiseError("ChaCha20 stream cipher mismatch.");
         return false;
     }
 

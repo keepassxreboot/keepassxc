@@ -257,7 +257,7 @@ set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_NONE QT_NO_DEBUG)
 
 find_package(LibGPGError REQUIRED)
 
-find_package(Gcrypt 1.6.0 REQUIRED)
+find_package(Gcrypt 1.7.0 REQUIRED)
 
 find_package(ZLIB REQUIRED)
 
