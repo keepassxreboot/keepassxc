@@ -67,7 +67,6 @@ void DatabaseSettingsWidget::load(Database* db)
     m_ui->dbDescriptionEdit->setText(meta->description());
     m_ui->recycleBinEnabledCheckBox->setChecked(meta->recycleBinEnabled());
     m_ui->defaultUsernameEdit->setText(meta->defaultUserName());
-    m_ui->AlgorithmComboBox->setCurrentIndex(SymmetricCipher::cipherToAlgorithm(m_db->cipher()));
     if (meta->historyMaxItems() > -1) {
         m_ui->historyMaxItemsSpinBox->setValue(meta->historyMaxItems());
         m_ui->historyMaxItemsCheckBox->setChecked(true);
@@ -84,6 +83,17 @@ void DatabaseSettingsWidget::load(Database* db)
     else {
         m_ui->historyMaxSizeSpinBox->setValue(Metadata::DefaultHistoryMaxSize);
         m_ui->historyMaxSizeCheckBox->setChecked(false);
+    }
+
+    m_ui->algorithmComboBox->clear();
+    for (QList<KeePass2::UuidNamePair>::const_iterator ciphers = KeePass2::CIPHERS.constBegin();
+         ciphers != KeePass2::CIPHERS.constEnd(); ++ciphers) {
+        KeePass2::UuidNamePair cipher = *ciphers;
+        m_ui->algorithmComboBox->addItem(cipher.name(), cipher.uuid().toByteArray());
+    }
+    int cipherIndex = m_ui->algorithmComboBox->findData(m_db->cipher().toByteArray());
+    if (cipherIndex > -1) {
+        m_ui->algorithmComboBox->setCurrentIndex(cipherIndex);
     }
 
     bool blockSignals = m_ui->kdfComboBox->signalsBlocked();
@@ -112,8 +122,6 @@ void DatabaseSettingsWidget::save()
     meta->setName(m_ui->dbNameEdit->text());
     meta->setDescription(m_ui->dbDescriptionEdit->text());
     meta->setDefaultUserName(m_ui->defaultUsernameEdit->text());
-    m_db->setCipher(SymmetricCipher::algorithmToCipher(static_cast<SymmetricCipher::Algorithm>
-                                                       (m_ui->AlgorithmComboBox->currentIndex())));
     meta->setRecycleBinEnabled(m_ui->recycleBinEnabledCheckBox->isChecked());
 
     bool truncate = false;
@@ -145,6 +153,8 @@ void DatabaseSettingsWidget::save()
     if (truncate) {
         truncateHistories();
     }
+
+    m_db->setCipher(Uuid(m_ui->algorithmComboBox->currentData().toByteArray()));
 
     bool kdfValid = true;
     for (int i = 0; i < m_kdfFields.size(); ++i) {
