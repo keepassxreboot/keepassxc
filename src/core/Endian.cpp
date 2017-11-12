@@ -139,7 +139,7 @@ QByteArray int16ToBytes(qint16 num, QSysInfo::Endian byteOrder)
         qToLittleEndian<qint16>(num, reinterpret_cast<uchar*>(ba.data()));
     }
     else {
-        qToBigEndian<qint64>(num, reinterpret_cast<uchar*>(ba.data()));
+        qToBigEndian<qint16>(num, reinterpret_cast<uchar*>(ba.data()));
     }
 
     return ba;
@@ -170,6 +170,51 @@ QByteArray int64ToBytes(qint64 num, QSysInfo::Endian byteOrder)
     }
     else {
         qToBigEndian<qint64>(num, reinterpret_cast<uchar*>(ba.data()));
+    }
+
+    return ba;
+}
+
+QByteArray uint16ToBytes(quint16 num, QSysInfo::Endian byteOrder)
+{
+    QByteArray ba;
+    ba.resize(2);
+
+    if (byteOrder == QSysInfo::LittleEndian) {
+        qToLittleEndian<quint16>(num, reinterpret_cast<uchar*>(ba.data()));
+    }
+    else {
+        qToBigEndian<quint16>(num, reinterpret_cast<uchar*>(ba.data()));
+    }
+
+    return ba;
+}
+
+QByteArray uint32ToBytes(quint32 num, QSysInfo::Endian byteOrder)
+{
+    QByteArray ba;
+    ba.resize(4);
+
+    if (byteOrder == QSysInfo::LittleEndian) {
+        qToLittleEndian<quint32>(num, reinterpret_cast<uchar*>(ba.data()));
+    }
+    else {
+        qToBigEndian<quint32>(num, reinterpret_cast<uchar*>(ba.data()));
+    }
+
+    return ba;
+}
+
+QByteArray uint64ToBytes(quint64 num, QSysInfo::Endian byteOrder)
+{
+    QByteArray ba;
+    ba.resize(8);
+
+    if (byteOrder == QSysInfo::LittleEndian) {
+        qToLittleEndian<quint64>(num, reinterpret_cast<uchar*>(ba.data()));
+    }
+    else {
+        qToBigEndian<quint64>(num, reinterpret_cast<uchar*>(ba.data()));
     }
 
     return ba;
