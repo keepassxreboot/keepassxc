@@ -75,6 +75,7 @@ public:
     bool reset();
     int blockSize() const;
     QString errorString() const;
+    Algorithm algorithm() const;
 
     static Algorithm cipherToAlgorithm(Uuid cipher);
     static Uuid algorithmToCipher(Algorithm algo);
@@ -87,6 +88,7 @@ private:
 
     const QScopedPointer<SymmetricCipherBackend> m_backend;
     bool m_initialized;
+    Algorithm m_algo;
 
     Q_DISABLE_COPY(SymmetricCipher)
 };

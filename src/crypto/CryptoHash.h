@@ -32,12 +32,15 @@ public:
     };
 
     explicit CryptoHash(CryptoHash::Algorithm algo);
+    explicit CryptoHash(CryptoHash::Algorithm algo, bool hmac);
     ~CryptoHash();
     void addData(const QByteArray& data);
     void reset();
     QByteArray result() const;
+    void setKey(const QByteArray& data);
 
     static QByteArray hash(const QByteArray& data, CryptoHash::Algorithm algo);
+    static QByteArray hmac(const QByteArray& data, const QByteArray& key, Algorithm algo);
 
 private:
     CryptoHashPrivate* const d_ptr;

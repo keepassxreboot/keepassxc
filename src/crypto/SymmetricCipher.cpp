@@ -24,6 +24,7 @@ SymmetricCipher::SymmetricCipher(SymmetricCipher::Algorithm algo, SymmetricCiphe
                                  SymmetricCipher::Direction direction)
     : m_backend(createBackend(algo, mode, direction))
     , m_initialized(false)
+    , m_algo(algo)
 {
 }
 
@@ -138,4 +139,8 @@ SymmetricCipher::Mode SymmetricCipher::algorithmMode(SymmetricCipher::Algorithm 
         qWarning("SymmetricCipher::algorithmMode: invalid algorithm %d", algo);
         return SymmetricCipher::InvalidMode;
     }
+}
+
+SymmetricCipher::Algorithm SymmetricCipher::algorithm() const {
+    return m_algo;
 }
