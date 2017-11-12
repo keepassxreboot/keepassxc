@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,33 +18,48 @@
 #ifndef KEEPASSX_KEEPASS2WRITER_H
 #define KEEPASSX_KEEPASS2WRITER_H
 
+#include <QIODevice>
+#include <QByteArray>
+#include <QString>
 #include <QCoreApplication>
+#include <QScopedPointer>
 
+#include "core/Database.h"
 #include "format/KeePass2.h"
-#include "keys/CompositeKey.h"
 
-class Database;
-class QIODevice;
-
-class KeePass2Writer
+class BaseKeePass2Writer
 {
-    Q_DECLARE_TR_FUNCTIONS(KeePass2Writer)
-
 public:
-    KeePass2Writer();
-    void writeDatabase(QIODevice* device, Database* db);
-    void writeDatabase(const QString& filename, Database* db);
-    bool hasError();
-    QString errorString();
+    BaseKeePass2Writer();
 
-private:
-    bool writeData(const QByteArray& data);
-    bool writeHeaderField(KeePass2::HeaderFieldID fieldId, const QByteArray& data);
+    virtual bool writeDatabase(QIODevice* device, Database* db) = 0;
+    virtual bool writeDatabase(const QString& filename, Database* db);
+
+    virtual bool hasError();
+    virtual QString errorString();
+
+    virtual ~BaseKeePass2Writer();
+
+protected:
     void raiseError(const QString& errorMessage);
 
-    QIODevice* m_device;
     bool m_error;
     QString m_errorStr;
 };
 
-#endif // KEEPASSX_KEEPASS2WRITER_H
+class KeePass2Writer : public BaseKeePass2Writer
+{
+    Q_DECLARE_TR_FUNCTIONS(KeePass2Writer)
+
+public:
+    virtual bool writeDatabase(QIODevice* device, Database* db) override;
+    using BaseKeePass2Writer::writeDatabase;
+
+    virtual bool hasError() override;
+    virtual QString errorString() override;
+
+private:
+    QScopedPointer<BaseKeePass2Writer> m_writer;
+};
+
+#endif // KEEPASSX_KEEPASS2READER_H

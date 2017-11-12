@@ -20,6 +20,7 @@
 
 #include <QDateTime>
 #include <QObject>
+#include <QBuffer>
 
 class Database;
 
@@ -27,8 +28,8 @@ class TestKeePass2XmlReader : public QObject
 {
     Q_OBJECT
 
-private slots:
-    void initTestCase();
+protected slots:
+    virtual void initTestCase() = 0;
     void testMetadata();
     void testCustomIcons();
     void testCustomData();
@@ -46,11 +47,27 @@ private slots:
     void testRepairUuidHistoryItem();
     void cleanupTestCase();
 
-private:
+protected:
+    virtual void readDatabase(QBuffer* buf, bool strictMode, Database*& db, bool& hasError, QString& errorString) = 0;
+    virtual void readDatabase(QString path, bool strictMode, Database*& db, bool& hasError, QString& errorString) = 0;
+    virtual void writeDatabase(QBuffer* buf, Database* db, bool& hasError, QString& errorString) = 0;
     static QDateTime genDT(int year, int month, int day, int hour, int min, int second);
     static QByteArray strToBytes(const QString& str);
 
     Database* m_db;
+};
+
+class TestKdbx3XmlReader : public TestKeePass2XmlReader
+{
+    Q_OBJECT
+
+private slots:
+    virtual void initTestCase() override;
+
+protected:
+    virtual void readDatabase(QBuffer* buf, bool strictMode, Database*& db, bool& hasError, QString& errorString) override;
+    virtual void readDatabase(QString path, bool strictMode, Database*& db, bool& hasError, QString& errorString) override;
+    virtual void writeDatabase(QBuffer* buf, Database* db, bool& hasError, QString& errorString) override;
 };
 
 #endif // KEEPASSX_TESTKEEPASS2XMLREADER_H

@@ -22,7 +22,7 @@
 #include "core/Database.h"
 #include "core/Group.h"
 #include "crypto/Crypto.h"
-#include "format/KeePass2XmlReader.h"
+#include "format/Kdbx3XmlReader.h"
 #include "config-keepassx-tests.h"
 
 QTEST_GUILESS_MAIN(TestDeletedObjects)
@@ -88,7 +88,7 @@ void TestDeletedObjects::createAndDelete(Database* db, int delObjectsSize)
 
 void TestDeletedObjects::testDeletedObjectsFromFile()
 {
-    KeePass2XmlReader reader;
+    Kdbx3XmlReader reader;
     reader.setStrictMode(true);
     QString xmlFile = QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.xml");
     Database* db = reader.readDatabase(xmlFile);

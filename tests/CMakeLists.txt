@@ -107,7 +107,7 @@ endif()
 add_unit_test(NAME testgroup SOURCES TestGroup.cpp
               LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testkeepass2xmlreader SOURCES TestKeePass2XmlReader.cpp
+add_unit_test(NAME testkdbx3xmlreader SOURCES TestKeePass2XmlReader.cpp TestKdbx3XmlReader.cpp
               LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testkeys SOURCES TestKeys.cpp

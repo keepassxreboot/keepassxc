@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KEEPASS2XMLREADER_H
-#define KEEPASSX_KEEPASS2XMLREADER_H
+#ifndef KEEPASSX_KDBX3XMLREADER_H
+#define KEEPASSX_KDBX3XMLREADER_H
 
 #include <QColor>
 #include <QCoreApplication>
@@ -34,12 +34,12 @@ class Group;
 class KeePass2RandomStream;
 class Metadata;
 
-class KeePass2XmlReader
+class Kdbx3XmlReader
 {
-    Q_DECLARE_TR_FUNCTIONS(KeePass2XmlReader)
+    Q_DECLARE_TR_FUNCTIONS(Kdbx3XmlReader)
 
 public:
-    KeePass2XmlReader();
+    Kdbx3XmlReader();
     Database* readDatabase(QIODevice* device);
     void readDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream = nullptr);
     Database* readDatabase(const QString& filename);
@@ -98,4 +98,4 @@ private:
     bool m_strictMode;
 };
 
-#endif // KEEPASSX_KEEPASS2XMLREADER_H
+#endif // KEEPASSX_KDBX3XMLREADER_H
