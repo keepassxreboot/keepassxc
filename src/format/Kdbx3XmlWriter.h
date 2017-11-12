@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KEEPASS2XMLWRITER_H
-#define KEEPASSX_KEEPASS2XMLWRITER_H
+#ifndef KEEPASSX_KDBX3XMLWRITER_H
+#define KEEPASSX_KDBX3XMLWRITER_H
 
 #include <QColor>
 #include <QDateTime>
@@ -32,10 +32,10 @@
 class KeePass2RandomStream;
 class Metadata;
 
-class KeePass2XmlWriter
+class Kdbx3XmlWriter
 {
 public:
-    KeePass2XmlWriter();
+    Kdbx3XmlWriter();
     void writeDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream = nullptr,
                        const QByteArray& headerHash = QByteArray());
     void writeDatabase(const QString& filename, Database* db);
@@ -87,4 +87,4 @@ private:
     QString m_errorStr;
 };
 
-#endif // KEEPASSX_KEEPASS2XMLWRITER_H
+#endif // KEEPASSX_KDBX3XMLWRITER_H

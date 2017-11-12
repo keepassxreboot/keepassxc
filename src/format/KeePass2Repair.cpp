@@ -22,9 +22,10 @@
 #include <QScopedPointer>
 #include <QRegExp>
 
+#include "format/KeePass2.h"
 #include "format/KeePass2RandomStream.h"
 #include "format/KeePass2Reader.h"
-#include "format/KeePass2XmlReader.h"
+#include "format/Kdbx3XmlReader.h"
 
 KeePass2Repair::RepairOutcome KeePass2Repair::repairDatabase(QIODevice* device, const CompositeKey& key)
 {
@@ -73,7 +74,7 @@ KeePass2Repair::RepairOutcome KeePass2Repair::repairDatabase(QIODevice* device, 
 
     KeePass2RandomStream randomStream(reader.protectedStreamAlgo());
     randomStream.init(reader.streamKey());
-    KeePass2XmlReader xmlReader;
+    Kdbx3XmlReader xmlReader;
     QBuffer buffer(&xmlData);
     buffer.open(QIODevice::ReadOnly);
     xmlReader.readDatabase(&buffer, db.data(), &randomStream);

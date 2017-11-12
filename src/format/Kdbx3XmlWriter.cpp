@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "KeePass2XmlWriter.h"
+#include "Kdbx3XmlWriter.h"
 
 #include <QBuffer>
 #include <QFile>
@@ -24,7 +24,7 @@
 #include "format/KeePass2RandomStream.h"
 #include "streams/QtIOCompressor"
 
-KeePass2XmlWriter::KeePass2XmlWriter()
+Kdbx3XmlWriter::Kdbx3XmlWriter()
     : m_db(nullptr)
     , m_meta(nullptr)
     , m_randomStream(nullptr)
@@ -35,7 +35,7 @@ KeePass2XmlWriter::KeePass2XmlWriter()
     m_xml.setCodec("UTF-8");
 }
 
-void KeePass2XmlWriter::writeDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream,
+void Kdbx3XmlWriter::writeDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream,
                                       const QByteArray& headerHash)
 {
     m_db = db;
@@ -63,24 +63,24 @@ void KeePass2XmlWriter::writeDatabase(QIODevice* device, Database* db, KeePass2R
     }
 }
 
-void KeePass2XmlWriter::writeDatabase(const QString& filename, Database* db)
+void Kdbx3XmlWriter::writeDatabase(const QString& filename, Database* db)
 {
     QFile file(filename);
     file.open(QIODevice::WriteOnly|QIODevice::Truncate);
     writeDatabase(&file, db);
 }
 
-bool KeePass2XmlWriter::hasError()
+bool Kdbx3XmlWriter::hasError()
 {
     return m_error;
 }
 
-QString KeePass2XmlWriter::errorString()
+QString Kdbx3XmlWriter::errorString()
 {
     return m_errorStr;
 }
 
-void KeePass2XmlWriter::generateIdMap()
+void Kdbx3XmlWriter::generateIdMap()
 {
     const QList<Entry*> allEntries = m_db->rootGroup()->entriesRecursive(true);
     int nextId = 0;
@@ -96,7 +96,7 @@ void KeePass2XmlWriter::generateIdMap()
     }
 }
 
-void KeePass2XmlWriter::writeMetadata()
+void Kdbx3XmlWriter::writeMetadata()
 {
     m_xml.writeStartElement("Meta");
 
@@ -132,7 +132,7 @@ void KeePass2XmlWriter::writeMetadata()
     m_xml.writeEndElement();
 }
 
-void KeePass2XmlWriter::writeMemoryProtection()
+void Kdbx3XmlWriter::writeMemoryProtection()
 {
     m_xml.writeStartElement("MemoryProtection");
 
@@ -145,7 +145,7 @@ void KeePass2XmlWriter::writeMemoryProtection()
     m_xml.writeEndElement();
 }
 
-void KeePass2XmlWriter::writeCustomIcons()
+void Kdbx3XmlWriter::writeCustomIcons()
 {
     m_xml.writeStartElement("CustomIcons");
 
@@ -157,7 +157,7 @@ void KeePass2XmlWriter::writeCustomIcons()
     m_xml.writeEndElement();
 }
 
-void KeePass2XmlWriter::writeIcon(const Uuid& uuid, const QImage& icon)
+void Kdbx3XmlWriter::writeIcon(const Uuid& uuid, const QImage& icon)
 {
     m_xml.writeStartElement("Icon");
 
@@ -174,7 +174,7 @@ void KeePass2XmlWriter::writeIcon(const Uuid& uuid, const QImage& icon)
     m_xml.writeEndElement();
 }
 
-void KeePass2XmlWriter::writeBinaries()
+void Kdbx3XmlWriter::writeBinaries()
 {
     m_xml.writeStartElement("Binaries");
 
@@ -216,7 +216,7 @@ void KeePass2XmlWriter::writeBinaries()
     m_xml.writeEndElement();
 }
 
-void KeePass2XmlWriter::writeCustomData()
+void Kdbx3XmlWriter::writeCustomData()
 {
     m_xml.writeStartElement("CustomData");
 
@@ -229,7 +229,7 @@ void KeePass2XmlWriter::writeCustomData()
     m_xml.writeEndElement();
 }
 
-void KeePass2XmlWriter::writeCustomDataItem(const QString& key, const QString& value)
+void Kdbx3XmlWriter::writeCustomDataItem(const QString& key, const QString& value)
 {
     m_xml.writeStartElement("Item");
 
@@ -239,7 +239,7 @@ void KeePass2XmlWriter::writeCustomDataItem(const QString& key, const QString& v
     m_xml.writeEndElement();
 }
 
-void KeePass2XmlWriter::writeRoot()
+void Kdbx3XmlWriter::writeRoot()
 {
     Q_ASSERT(m_db->rootGroup());
 
@@ -251,7 +251,7 @@ void KeePass2XmlWriter::writeRoot()
     m_xml.writeEndElement();
 }
 
-void KeePass2XmlWriter::writeGroup(const Group* group)
+void Kdbx3XmlWriter::writeGroup(const Group* group)
 {
     Q_ASSERT(!group->uuid().isNull());
 
@@ -288,7 +288,7 @@ void KeePass2XmlWriter::writeGroup(const Group* group)
     m_xml.writeEndElement();
 }
 
-void KeePass2XmlWriter::writeTimes(const TimeInfo& ti)
+void Kdbx3XmlWriter::writeTimes(const TimeInfo& ti)
 {
     m_xml.writeStartElement("Times");
 
@@ -303,7 +303,7 @@ void KeePass2XmlWriter::writeTimes(const TimeInfo& ti)
     m_xml.writeEndElement();
 }
 
-void KeePass2XmlWriter::writeDeletedObjects()
+void Kdbx3XmlWriter::writeDeletedObjects()
 {
     m_xml.writeStartElement("DeletedObjects");
 
@@ -315,7 +315,7 @@ void KeePass2XmlWriter::writeDeletedObjects()
     m_xml.writeEndElement();
 }
 
-void KeePass2XmlWriter::writeDeletedObject(const DeletedObject& delObj)
+void Kdbx3XmlWriter::writeDeletedObject(const DeletedObject& delObj)
 {
     m_xml.writeStartElement("DeletedObject");
 
@@ -325,7 +325,7 @@ void KeePass2XmlWriter::writeDeletedObject(const DeletedObject& delObj)
     m_xml.writeEndElement();
 }
 
-void KeePass2XmlWriter::writeEntry(const Entry* entry)
+void Kdbx3XmlWriter::writeEntry(const Entry* entry)
 {
     Q_ASSERT(!entry->uuid().isNull());
 
@@ -407,7 +407,7 @@ void KeePass2XmlWriter::writeEntry(const Entry* entry)
     m_xml.writeEndElement();
 }
 
-void KeePass2XmlWriter::writeAutoType(const Entry* entry)
+void Kdbx3XmlWriter::writeAutoType(const Entry* entry)
 {
     m_xml.writeStartElement("AutoType");
 
@@ -423,7 +423,7 @@ void KeePass2XmlWriter::writeAutoType(const Entry* entry)
     m_xml.writeEndElement();
 }
 
-void KeePass2XmlWriter::writeAutoTypeAssoc(const AutoTypeAssociations::Association& assoc)
+void Kdbx3XmlWriter::writeAutoTypeAssoc(const AutoTypeAssociations::Association& assoc)
 {
     m_xml.writeStartElement("Association");
 
@@ -433,7 +433,7 @@ void KeePass2XmlWriter::writeAutoTypeAssoc(const AutoTypeAssociations::Associati
     m_xml.writeEndElement();
 }
 
-void KeePass2XmlWriter::writeEntryHistory(const Entry* entry)
+void Kdbx3XmlWriter::writeEntryHistory(const Entry* entry)
 {
     m_xml.writeStartElement("History");
 
@@ -445,7 +445,7 @@ void KeePass2XmlWriter::writeEntryHistory(const Entry* entry)
     m_xml.writeEndElement();
 }
 
-void KeePass2XmlWriter::writeString(const QString& qualifiedName, const QString& string)
+void Kdbx3XmlWriter::writeString(const QString& qualifiedName, const QString& string)
 {
     if (string.isEmpty()) {
         m_xml.writeEmptyElement(qualifiedName);
@@ -455,12 +455,12 @@ void KeePass2XmlWriter::writeString(const QString& qualifiedName, const QString&
     }
 }
 
-void KeePass2XmlWriter::writeNumber(const QString& qualifiedName, int number)
+void Kdbx3XmlWriter::writeNumber(const QString& qualifiedName, int number)
 {
     writeString(qualifiedName, QString::number(number));
 }
 
-void KeePass2XmlWriter::writeBool(const QString& qualifiedName, bool b)
+void Kdbx3XmlWriter::writeBool(const QString& qualifiedName, bool b)
 {
     if (b) {
         writeString(qualifiedName, "True");
@@ -470,7 +470,7 @@ void KeePass2XmlWriter::writeBool(const QString& qualifiedName, bool b)
     }
 }
 
-void KeePass2XmlWriter::writeDateTime(const QString& qualifiedName, const QDateTime& dateTime)
+void Kdbx3XmlWriter::writeDateTime(const QString& qualifiedName, const QDateTime& dateTime)
 {
     Q_ASSERT(dateTime.isValid());
     Q_ASSERT(dateTime.timeSpec() == Qt::UTC);
@@ -485,12 +485,12 @@ void KeePass2XmlWriter::writeDateTime(const QString& qualifiedName, const QDateT
     writeString(qualifiedName, dateTimeStr);
 }
 
-void KeePass2XmlWriter::writeUuid(const QString& qualifiedName, const Uuid& uuid)
+void Kdbx3XmlWriter::writeUuid(const QString& qualifiedName, const Uuid& uuid)
 {
     writeString(qualifiedName, uuid.toBase64());
 }
 
-void KeePass2XmlWriter::writeUuid(const QString& qualifiedName, const Group* group)
+void Kdbx3XmlWriter::writeUuid(const QString& qualifiedName, const Group* group)
 {
     if (group) {
         writeUuid(qualifiedName, group->uuid());
@@ -500,7 +500,7 @@ void KeePass2XmlWriter::writeUuid(const QString& qualifiedName, const Group* gro
     }
 }
 
-void KeePass2XmlWriter::writeUuid(const QString& qualifiedName, const Entry* entry)
+void Kdbx3XmlWriter::writeUuid(const QString& qualifiedName, const Entry* entry)
 {
     if (entry) {
         writeUuid(qualifiedName, entry->uuid());
@@ -510,12 +510,12 @@ void KeePass2XmlWriter::writeUuid(const QString& qualifiedName, const Entry* ent
     }
 }
 
-void KeePass2XmlWriter::writeBinary(const QString& qualifiedName, const QByteArray& ba)
+void Kdbx3XmlWriter::writeBinary(const QString& qualifiedName, const QByteArray& ba)
 {
     writeString(qualifiedName, QString::fromLatin1(ba.toBase64()));
 }
 
-void KeePass2XmlWriter::writeColor(const QString& qualifiedName, const QColor& color)
+void Kdbx3XmlWriter::writeColor(const QString& qualifiedName, const QColor& color)
 {
     QString colorStr;
 
@@ -528,7 +528,7 @@ void KeePass2XmlWriter::writeColor(const QString& qualifiedName, const QColor& c
     writeString(qualifiedName, colorStr);
 }
 
-void KeePass2XmlWriter::writeTriState(const QString& qualifiedName, Group::TriState triState)
+void Kdbx3XmlWriter::writeTriState(const QString& qualifiedName, Group::TriState triState)
 {
     QString value;
 
@@ -545,7 +545,7 @@ void KeePass2XmlWriter::writeTriState(const QString& qualifiedName, Group::TriSt
     writeString(qualifiedName, value);
 }
 
-QString KeePass2XmlWriter::colorPartToString(int value)
+QString Kdbx3XmlWriter::colorPartToString(int value)
 {
     QString str = QString::number(value, 16).toUpper();
     if (str.length() == 1) {
@@ -555,7 +555,7 @@ QString KeePass2XmlWriter::colorPartToString(int value)
     return str;
 }
 
-QString KeePass2XmlWriter::stripInvalidXml10Chars(QString str)
+QString Kdbx3XmlWriter::stripInvalidXml10Chars(QString str)
 {
     for (int i = str.size() - 1; i >= 0; i--) {
         const QChar ch = str.at(i);
@@ -580,7 +580,7 @@ QString KeePass2XmlWriter::stripInvalidXml10Chars(QString str)
     return str;
 }
 
-void KeePass2XmlWriter::raiseError(const QString& errorMessage)
+void Kdbx3XmlWriter::raiseError(const QString& errorMessage)
 {
     m_error = true;
     m_errorStr = errorMessage;

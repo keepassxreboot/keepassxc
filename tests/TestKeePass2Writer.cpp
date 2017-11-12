@@ -30,7 +30,6 @@
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Repair.h"
 #include "format/KeePass2Writer.h"
-#include "format/KeePass2XmlWriter.h"
 #include "keys/PasswordKey.h"
 
 QTEST_GUILESS_MAIN(TestKeePass2Writer)

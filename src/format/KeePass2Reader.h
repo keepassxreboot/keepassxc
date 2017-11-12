@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,58 +18,65 @@
 #ifndef KEEPASSX_KEEPASS2READER_H
 #define KEEPASSX_KEEPASS2READER_H
 
+#include <QtGlobal>
+#include <QByteArray>
+#include <QString>
 #include <QCoreApplication>
+#include <QScopedPointer>
+#include <QIODevice>
 
-#include "keys/CompositeKey.h"
 #include "format/KeePass2.h"
+#include "core/Database.h"
+#include "keys/CompositeKey.h"
 
-class Database;
-class QIODevice;
+class BaseKeePass2Reader
+{
+public:
+    BaseKeePass2Reader();
 
-class KeePass2Reader
+    virtual Database* readDatabase(QIODevice* device, const CompositeKey& key, bool keepDatabase = false) = 0;
+    virtual Database* readDatabase(const QString& filename, const CompositeKey& key);
+
+    virtual bool hasError();
+    virtual QString errorString();
+    virtual void setSaveXml(bool save);
+    virtual QByteArray xmlData();
+    virtual QByteArray streamKey();
+    virtual KeePass2::ProtectedStreamAlgo protectedStreamAlgo() const;
+
+    virtual ~BaseKeePass2Reader();
+
+protected:
+    void raiseError(const QString& errorMessage);
+
+    bool m_error;
+    QString m_errorStr;
+
+    bool m_saveXml;
+    QByteArray m_xmlData;
+    QByteArray m_protectedStreamKey;
+    KeePass2::ProtectedStreamAlgo m_irsAlgo;
+};
+
+class KeePass2Reader : public BaseKeePass2Reader
 {
     Q_DECLARE_TR_FUNCTIONS(KeePass2Reader)
 
 public:
-    KeePass2Reader();
-    Database* readDatabase(QIODevice* device, const CompositeKey& key, bool keepDatabase = false);
-    Database* readDatabase(const QString& filename, const CompositeKey& key);
-    bool hasError();
-    QString errorString();
-    void setSaveXml(bool save);
-    QByteArray xmlData();
-    QByteArray streamKey();
-    KeePass2::ProtectedStreamAlgo protectedStreamAlgo() const;
+    virtual Database* readDatabase(QIODevice* device, const CompositeKey& key, bool keepDatabase = false) override;
+    using BaseKeePass2Reader::readDatabase;
 
+    virtual bool hasError() override;
+    virtual QString errorString() override;
+    virtual QByteArray xmlData() override;
+    virtual QByteArray streamKey() override;
+    virtual KeePass2::ProtectedStreamAlgo protectedStreamAlgo() const override;
+
+    quint32 version() const;
+    BaseKeePass2Reader* reader() const;
 private:
-    void raiseError(const QString& errorMessage);
-
-    bool readHeaderField();
-
-    void setCipher(const QByteArray& data);
-    void setCompressionFlags(const QByteArray& data);
-    void setMasterSeed(const QByteArray& data);
-    void setTransformSeed(const QByteArray& data);
-    void setTransformRounds(const QByteArray& data);
-    void setEncryptionIV(const QByteArray& data);
-    void setProtectedStreamKey(const QByteArray& data);
-    void setStreamStartBytes(const QByteArray& data);
-    void setInnerRandomStreamID(const QByteArray& data);
-
-    QIODevice* m_device;
-    QIODevice* m_headerStream;
-    bool m_error;
-    QString m_errorStr;
-    bool m_headerEnd;
-    bool m_saveXml;
-    QByteArray m_xmlData;
-
-    Database* m_db;
-    QByteArray m_masterSeed;
-    QByteArray m_encryptionIV;
-    QByteArray m_streamStartBytes;
-    QByteArray m_protectedStreamKey;
-    KeePass2::ProtectedStreamAlgo m_irsAlgo;
+    QScopedPointer<BaseKeePass2Reader> m_reader;
+    quint32 m_version;
 };
 
 #endif // KEEPASSX_KEEPASS2READER_H
