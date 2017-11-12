@@ -153,12 +153,19 @@ void TestKeys::testCreateAndOpenFileKey()
 
     KeePass2Writer writer;
     writer.writeDatabase(&dbBuffer, dbOrg.data());
+    bool writeSuccess = writer.writeDatabase(&dbBuffer, dbOrg.data());
+    if (writer.hasError()) {
+        QFAIL(writer.errorString().toUtf8().constData());
+    }
+    QVERIFY(writeSuccess);
     dbBuffer.reset();
 
     KeePass2Reader reader;
     QScopedPointer<Database> dbRead(reader.readDatabase(&dbBuffer, compositeKey));
+    if (reader.hasError()) {
+        QFAIL(reader.errorString().toUtf8().constData());
+    }
     QVERIFY(dbRead);
-    QVERIFY(!reader.hasError());
     QCOMPARE(dbRead->metadata()->name(), dbName);
 }
 
