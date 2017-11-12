@@ -45,6 +45,7 @@ private:
     void resetInternalState();
     bool readBlock();
     bool writeBlock(bool lastBlock);
+    int blockSize() const;
 
     const QScopedPointer<SymmetricCipher> m_cipher;
     QByteArray m_buffer;
@@ -53,6 +54,7 @@ private:
     bool m_error;
     bool m_isInitialized;
     bool m_dataWritten;
+    bool m_streamCipher;
 };
 
 #endif // KEEPASSX_SYMMETRICCIPHERSTREAM_H
