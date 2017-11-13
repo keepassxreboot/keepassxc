@@ -39,7 +39,7 @@ CryptoHash::CryptoHash(CryptoHash::Algorithm algo, bool hmac)
     Q_ASSERT(Crypto::initalized());
 
     int algoGcrypt = -1;
-    unsigned int flagsGcrypt = 0;
+    unsigned int flagsGcrypt = GCRY_MD_FLAG_SECURE;
 
     switch (algo) {
     case CryptoHash::Sha256:
