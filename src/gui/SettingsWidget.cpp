@@ -241,6 +241,7 @@ void SettingsWidget::saveSettings()
 
     if (!config()->get("RememberLastKeyFiles").toBool()) {
         config()->set("LastKeyFiles", QVariant());
+        config()->set("LastDir", "");
     }
 
     for (const ExtraPage& page: asConst(m_extraPages)) {

@@ -36,6 +36,7 @@ public:
     QString getExistingDirectory(QWidget* parent = nullptr, const QString& caption = QString(),
                                  QString dir = QString(), QFileDialog::Options options = QFileDialog::ShowDirsOnly);
 
+    void setNextForgetDialog();
     /**
      * Sets the result of the next get* method call.
      * Use only for testing.
@@ -51,6 +52,7 @@ private:
     QString m_nextFileName;
     QStringList m_nextFileNames;
     QString m_nextDirName;
+    bool m_nextSaveLastDir = true;
 
     static FileDialog* m_instance;
 
