@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 Toni Spets <toni.spets@iki.fi>
  *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -16,26 +16,22 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTSYMMETRICCIPHER_H
-#define KEEPASSX_TESTSYMMETRICCIPHER_H
+#include "AgentSettingsWidget.h"
+#include "core/Config.h"
 
-#include <QObject>
-
-class TestSymmetricCipher : public QObject
+AgentSettingsWidget::AgentSettingsWidget(QWidget* parent)
+    : QWidget(parent)
+    , m_ui(new Ui::AgentSettingsWidget())
 {
-    Q_OBJECT
+    m_ui->setupUi(this);
+}
 
-private slots:
-    void initTestCase();
-    void testAes256CbcEncryption();
-    void testAes256CbcDecryption();
-    void testAes256CtrEncryption();
-    void testAes256CtrDecryption();
-    void testTwofish256CbcEncryption();
-    void testTwofish256CbcDecryption();
-    void testSalsa20();
-    void testPadding();
-    void testStreamReset();
-};
+void AgentSettingsWidget::loadSettings()
+{
+    m_ui->enableSSHAgentCheckBox->setChecked(config()->get("SSHAgent", false).toBool());
+}
 
-#endif // KEEPASSX_TESTSYMMETRICCIPHER_H
+void AgentSettingsWidget::saveSettings()
+{
+    config()->set("SSHAgent", m_ui->enableSSHAgentCheckBox->isChecked());
+}

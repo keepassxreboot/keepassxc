@@ -1,6 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2017 Toni Spets <toni.spets@iki.fi>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,26 +15,21 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTSYMMETRICCIPHER_H
-#define KEEPASSX_TESTSYMMETRICCIPHER_H
+#ifndef TESTOPENSSHKEY_H
+#define TESTOPENSSHKEY_H
 
 #include <QObject>
 
-class TestSymmetricCipher : public QObject
+class OpenSSHKey;
+
+class TestOpenSSHKey : public QObject
 {
     Q_OBJECT
 
 private slots:
-    void initTestCase();
-    void testAes256CbcEncryption();
-    void testAes256CbcDecryption();
-    void testAes256CtrEncryption();
-    void testAes256CtrDecryption();
-    void testTwofish256CbcEncryption();
-    void testTwofish256CbcDecryption();
-    void testSalsa20();
-    void testPadding();
-    void testStreamReset();
+    void testParse();
+    void testDecryptAES256CBC();
+    void testDecryptAES256CTR();
 };
 
-#endif // KEEPASSX_TESTSYMMETRICCIPHER_H
+#endif // TESTOPENSSHKEY_H

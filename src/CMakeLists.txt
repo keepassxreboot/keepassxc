@@ -177,6 +177,7 @@ set(keepassx_SOURCES_MAINEXE
 add_feature_info(AutoType WITH_XC_AUTOTYPE "Automatic password typing")
 add_feature_info(KeePassHTTP WITH_XC_HTTP "Browser integration compatible with ChromeIPass and PassIFox")
 add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
+add_feature_info(SSHAgent WITH_XC_SSHAGENT "SSH agent integration compatible with KeeAgent")
 
 add_subdirectory(http)
 if(WITH_XC_HTTP)
@@ -185,6 +186,11 @@ endif()
 
 add_subdirectory(autotype)
 add_subdirectory(cli)
+
+add_subdirectory(sshagent)
+if(WITH_XC_SSHAGENT)
+    set(sshagent_LIB sshagent)
+endif()
 
 set(autotype_SOURCES
     core/Tools.cpp
@@ -222,6 +228,7 @@ set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUIL
 target_link_libraries(keepassx_core
                       ${keepasshttp_LIB}
                       ${autotype_LIB}
+                      ${sshagent_LIB}
                       ${YUBIKEY_LIBRARIES}
                       ${ZXCVBN_LIBRARIES}
                       Qt5::Core

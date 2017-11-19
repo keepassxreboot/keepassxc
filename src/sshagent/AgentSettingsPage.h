@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 Toni Spets <toni.spets@iki.fi>
  *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -16,26 +16,25 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTSYMMETRICCIPHER_H
-#define KEEPASSX_TESTSYMMETRICCIPHER_H
+#ifndef AGENTSETTINGSPAGE_H
+#define AGENTSETTINGSPAGE_H
 
-#include <QObject>
+#include "gui/SettingsWidget.h"
+#include "gui/DatabaseTabWidget.h"
 
-class TestSymmetricCipher : public QObject
+class AgentSettingsPage : public ISettingsPage
 {
-    Q_OBJECT
+public:
+    AgentSettingsPage(DatabaseTabWidget* tabWidget);
+    ~AgentSettingsPage() override;
 
-private slots:
-    void initTestCase();
-    void testAes256CbcEncryption();
-    void testAes256CbcDecryption();
-    void testAes256CtrEncryption();
-    void testAes256CtrDecryption();
-    void testTwofish256CbcEncryption();
-    void testTwofish256CbcDecryption();
-    void testSalsa20();
-    void testPadding();
-    void testStreamReset();
+    QString name() override;
+    QIcon icon() override;
+    QWidget* createWidget() override;
+    void loadSettings(QWidget* widget) override;
+    void saveSettings(QWidget* widget) override;
+
+private:
 };
 
-#endif // KEEPASSX_TESTSYMMETRICCIPHER_H
+#endif // AGENTSETTINGSPAGE_H

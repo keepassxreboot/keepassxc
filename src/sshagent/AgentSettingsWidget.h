@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 Toni Spets <toni.spets@iki.fi>
  *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -16,26 +16,31 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTSYMMETRICCIPHER_H
-#define KEEPASSX_TESTSYMMETRICCIPHER_H
+#ifndef AGENTSETTINGSWIDGET_H
+#define AGENTSETTINGSWIDGET_H
 
-#include <QObject>
+#include <QWidget>
+#include <QScopedPointer>
+#include "ui_AgentSettingsWidget.h"
 
-class TestSymmetricCipher : public QObject
+namespace Ui {
+    class AgentSettingsWidget;
+}
+
+class AgentSettingsWidget : public QWidget
 {
     Q_OBJECT
+public:
+    explicit AgentSettingsWidget(QWidget* parent = nullptr);
 
-private slots:
-    void initTestCase();
-    void testAes256CbcEncryption();
-    void testAes256CbcDecryption();
-    void testAes256CtrEncryption();
-    void testAes256CtrDecryption();
-    void testTwofish256CbcEncryption();
-    void testTwofish256CbcDecryption();
-    void testSalsa20();
-    void testPadding();
-    void testStreamReset();
+signals:
+
+public slots:
+    void loadSettings();
+    void saveSettings();
+
+private:
+    QScopedPointer<Ui::AgentSettingsWidget> m_ui;
 };
 
-#endif // KEEPASSX_TESTSYMMETRICCIPHER_H
+#endif // AGENTSETTINGSWIDGET_H

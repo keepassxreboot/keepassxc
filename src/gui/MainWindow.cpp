@@ -49,6 +49,11 @@
 #include "http/OptionDialog.h"
 #endif
 
+#ifdef WITH_XC_SSHAGENT
+#include "sshagent/AgentSettingsPage.h"
+#include "sshagent/SSHAgent.h"
+#endif
+
 #include "gui/SettingsWidget.h"
 #include "gui/PasswordGeneratorWidget.h"
 
@@ -120,6 +125,10 @@ MainWindow::MainWindow()
     restoreGeometry(config()->get("GUI/MainWindowGeometry").toByteArray());
     #ifdef WITH_XC_HTTP
     m_ui->settingsWidget->addSettingsPage(new HttpPlugin(m_ui->tabWidget));
+    #endif
+    #ifdef WITH_XC_SSHAGENT
+    SSHAgent::init(this);
+    m_ui->settingsWidget->addSettingsPage(new AgentSettingsPage(m_ui->tabWidget));
     #endif
 
     setWindowIcon(filePath()->applicationIcon());

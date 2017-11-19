@@ -13,7 +13,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_SOURCE_DIR}/src)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_SOURCE_DIR}/src ${CMAKE_CURRENT_BINARY_DIR}/../src)
 
 add_definitions(-DQT_TEST_LIB)
 
@@ -153,6 +153,11 @@ if(WITH_XC_AUTOTYPE)
   add_unit_test(NAME testautotype SOURCES TestAutoType.cpp
               LIBS ${TEST_LIBRARIES})
   set_target_properties(testautotype PROPERTIES ENABLE_EXPORTS ON)
+endif()
+
+if(WITH_XC_SSHAGENT)
+  add_unit_test(NAME testopensshkey SOURCES TestOpenSSHKey.cpp
+              LIBS sshagent ${TEST_LIBRARIES})
 endif()
 
 add_unit_test(NAME testentry SOURCES TestEntry.cpp
