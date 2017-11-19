@@ -39,7 +39,6 @@ public:
     bool containsValue(const QString& value) const;
     bool isProtected(const QString& key) const;
     bool isReference(const QString& key) const;
-    QRegularExpression *referenceRegExp();
     void set(const QString& key, const QString& value, bool protect = false);
     void remove(const QString& key);
     void rename(const QString& oldKey, const QString& newKey);
@@ -50,6 +49,8 @@ public:
     void copyDataFrom(const EntryAttributes* other);
     bool operator==(const EntryAttributes& other) const;
     bool operator!=(const EntryAttributes& other) const;
+
+    static QRegularExpressionMatch matchReference(const QString& text);
 
     static const QString TitleKey;
     static const QString UserNameKey;
@@ -80,7 +81,6 @@ signals:
 private:
     QMap<QString, QString> m_attributes;
     QSet<QString> m_protectedAttributes;
-    QRegularExpression m_referenceRegExp;
 };
 
 #endif // KEEPASSX_ENTRYATTRIBUTES_H

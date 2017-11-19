@@ -86,7 +86,7 @@ void EntryAttachments::remove(const QString& key)
     emit modified();
 }
 
-void EntryAttachments::remove(const QStringList &keys)
+void EntryAttachments::remove(const QStringList& keys)
 {
     if (keys.isEmpty()) {
         return;

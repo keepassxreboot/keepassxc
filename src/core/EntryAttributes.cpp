@@ -34,8 +34,6 @@ const QString EntryAttributes::RememberCmdExecAttr = "_EXEC_CMD";
 
 EntryAttributes::EntryAttributes(QObject* parent)
     : QObject(parent)
-    , m_referenceRegExp("\\{REF:(?<WantedField>[TUPANI])@(?<SearchIn>[TUPANIO]):(?<SearchText>[^}]+)\\}",
-                        QRegularExpression::CaseInsensitiveOption)
 {
     clear();
 }
@@ -67,12 +65,12 @@ QString EntryAttributes::value(const QString& key) const
     return m_attributes.value(key);
 }
 
-bool EntryAttributes::contains(const QString &key) const
+bool EntryAttributes::contains(const QString& key) const
 {
     return m_attributes.contains(key);
 }
 
-bool EntryAttributes::containsValue(const QString &value) const
+bool EntryAttributes::containsValue(const QString& value) const
 {
     return m_attributes.values().contains(value);
 }
@@ -90,12 +88,7 @@ bool EntryAttributes::isReference(const QString& key) const
     }
 
     const QString data = value(key);
-    return m_referenceRegExp.match(data).hasMatch();
-}
-
-QRegularExpression* EntryAttributes::referenceRegExp()
-{
-    return &m_referenceRegExp;
+    return matchReference(data).hasMatch();
 }
 
 void EntryAttributes::set(const QString& key, const QString& value, bool protect)
@@ -264,6 +257,15 @@ bool EntryAttributes::operator!=(const EntryAttributes& other) const
 {
     return (m_attributes != other.m_attributes
             || m_protectedAttributes != other.m_protectedAttributes);
+}
+
+QRegularExpressionMatch EntryAttributes::matchReference(const QString& text)
+{
+    static QRegularExpression referenceRegExp(
+                "\\{REF:(?<WantedField>[TUPANI])@(?<SearchIn>[TUPANIO]):(?<SearchText>[^}]+)\\}",
+                QRegularExpression::CaseInsensitiveOption);
+
+    return referenceRegExp.match(text);
 }
 
 void EntryAttributes::clear()

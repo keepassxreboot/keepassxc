@@ -143,9 +143,9 @@ private slots:
     void startModifiedTimer();
 
 private:
-    Entry* recFindEntry(const Uuid& uuid, Group* group);
-    Entry* recFindEntry(const QString& text, EntryReferenceType referenceType, Group* group);
-    Group* recFindGroup(const Uuid& uuid, Group* group);
+    Entry* findEntryRecursive(const Uuid& uuid, Group* group);
+    Entry* findEntryRecursive(const QString& text, EntryReferenceType referenceType, Group* group);
+    Group* findGroupRecursive(const Uuid& uuid, Group* group);
 
     void createRecycleBin();
 

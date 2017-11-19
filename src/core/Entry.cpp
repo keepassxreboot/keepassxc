@@ -722,7 +722,7 @@ void Entry::updateModifiedSinceBegin()
     m_modifiedSinceBegin = true;
 }
 
-QString Entry::resolveMultiplePlaceholdersRecursive(const QString &str, int maxDepth) const
+QString Entry::resolveMultiplePlaceholdersRecursive(const QString& str, int maxDepth) const
 {
     if (maxDepth <= 0) {
         qWarning("Maximum depth of replacement has been reached. Entry uuid: %s", qPrintable(uuid().toHex()));
@@ -746,7 +746,7 @@ QString Entry::resolveMultiplePlaceholdersRecursive(const QString &str, int maxD
     return result;
 }
 
-QString Entry::resolvePlaceholderRecursive(const QString &placeholder, int maxDepth) const
+QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDepth) const
 {
     const PlaceholderType typeOfPlaceholder = placeholderType(placeholder);
     switch (typeOfPlaceholder) {
@@ -794,13 +794,12 @@ QString Entry::resolvePlaceholderRecursive(const QString &placeholder, int maxDe
     return placeholder;
 }
 
-QString Entry::resolveReferencePlaceholderRecursive(const QString &placeholder, int maxDepth) const
+QString Entry::resolveReferencePlaceholderRecursive(const QString& placeholder, int maxDepth) const
 {
     // resolving references in format: {REF:<WantedField>@<SearchIn>:<SearchText>}
     // using format from http://keepass.info/help/base/fieldrefs.html at the time of writing
 
-    QRegularExpression* referenceRegExp = m_attributes->referenceRegExp();
-    QRegularExpressionMatch match = referenceRegExp->match(placeholder);
+    QRegularExpressionMatch match = EntryAttributes::matchReference(placeholder);
     if (!match.hasMatch()) {
         return placeholder;
     }
@@ -903,7 +902,7 @@ const Database* Entry::database() const
     }
 }
 
-QString Entry::maskPasswordPlaceholders(const QString &str) const
+QString Entry::maskPasswordPlaceholders(const QString& str) const
 {
     QString result = str;
     result.replace(QRegExp("(\\{PASSWORD\\})", Qt::CaseInsensitive, QRegExp::RegExp2), "******");
@@ -920,7 +919,7 @@ QString Entry::resolvePlaceholder(const QString& placeholder) const
     return resolvePlaceholderRecursive(placeholder, ResolveMaximumDepth);
 }
 
-QString Entry::resolveUrlPlaceholder(const QString &str, Entry::PlaceholderType placeholderType) const
+QString Entry::resolveUrlPlaceholder(const QString& str, Entry::PlaceholderType placeholderType) const
 {
     if (str.isEmpty())
         return QString();
@@ -956,7 +955,7 @@ QString Entry::resolveUrlPlaceholder(const QString &str, Entry::PlaceholderType 
     return QString();
 }
 
-Entry::PlaceholderType Entry::placeholderType(const QString &placeholder) const
+Entry::PlaceholderType Entry::placeholderType(const QString& placeholder) const
 {
     if (!placeholder.startsWith(QLatin1Char('{')) || !placeholder.endsWith(QLatin1Char('}'))) {
         return PlaceholderType::NotPlaceholder;

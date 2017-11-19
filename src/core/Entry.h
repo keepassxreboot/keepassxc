@@ -181,7 +181,7 @@ public:
     QString maskPasswordPlaceholders(const QString& str) const;
     QString resolveMultiplePlaceholders(const QString& str) const;
     QString resolvePlaceholder(const QString& str) const;
-    QString resolveUrlPlaceholder(const QString &str, PlaceholderType placeholderType) const;
+    QString resolveUrlPlaceholder(const QString& str, PlaceholderType placeholderType) const;
     PlaceholderType placeholderType(const QString& placeholder) const;
     QString resolveUrl(const QString& url) const;
 
