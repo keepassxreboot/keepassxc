@@ -22,6 +22,9 @@
 #include <QTimer>
 
 #include "core/Config.h"
+#ifdef Q_OS_MAC
+#include "core/MacPasteboard.h"
+#endif
 
 Clipboard* Clipboard::m_instance(nullptr);
 
@@ -38,10 +41,18 @@ void Clipboard::setText(const QString& text)
 {
     QClipboard* clipboard = QApplication::clipboard();
 
+#ifdef Q_OS_MAC
+    new MacPasteboard;
+    QMimeData* mime = new QMimeData;
+    mime->setText(text);
+    mime->setData("application/x-nspasteboard-concealed-type", text.toUtf8());
+    clipboard->setMimeData(mime, QClipboard::Clipboard);
+#else
     clipboard->setText(text, QClipboard::Clipboard);
     if (clipboard->supportsSelection()) {
         clipboard->setText(text, QClipboard::Selection);
     }
+#endif
 
     if (config()->get("security/clearclipboard").toBool()) {
         int timeout = config()->get("security/clearclipboardtimeout").toInt();

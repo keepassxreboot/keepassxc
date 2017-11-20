@@ -155,6 +155,8 @@ if(APPLE)
     set(keepassx_SOURCES ${keepassx_SOURCES}
         core/ScreenLockListenerMac.h
         core/ScreenLockListenerMac.cpp
+        core/MacPasteboard.h
+        core/MacPasteboard.cpp
         )
 endif()
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
