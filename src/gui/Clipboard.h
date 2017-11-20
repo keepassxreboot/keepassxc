@@ -31,7 +31,6 @@ class Clipboard : public QObject
 
 public:
     void setText(const QString& text);
-    ~Clipboard();
 
     static Clipboard* instance();
 
@@ -48,7 +47,7 @@ private:
 
     QTimer* m_timer;
 #ifdef Q_OS_MAC
-    MacPasteboard* m_pasteboard;
+    QScopedPointer<MacPasteboard> m_pasteboard;
 #endif
     QString m_lastCopied;
 };

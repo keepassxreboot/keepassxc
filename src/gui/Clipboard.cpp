@@ -28,23 +28,13 @@ Clipboard* Clipboard::m_instance(nullptr);
 Clipboard::Clipboard(QObject* parent)
     : QObject(parent)
     , m_timer(new QTimer(this))
+#ifdef Q_OS_MAC
+    , m_pasteboard(new MacPasteboard)
+#endif
 {
     m_timer->setSingleShot(true);
-#ifdef Q_OS_MAC
-    m_pasteboard = new MacPasteboard;
-#endif
-
     connect(m_timer, SIGNAL(timeout()), SLOT(clearClipboard()));
     connect(qApp, SIGNAL(aboutToQuit()), SLOT(clearCopiedText()));
-}
-
-Clipboard::~Clipboard()
-{
-#ifdef Q_OS_MAC
-    if (m_pasteboard) {
-        delete m_pasteboard;
-    }
-#endif
 }
 
 void Clipboard::setText(const QString& text)
