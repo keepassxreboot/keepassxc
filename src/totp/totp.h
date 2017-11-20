@@ -20,6 +20,8 @@
 #define QTOTP_H
 
 #include <QtCore/qglobal.h>
+#include <QString>
+#include <QMap>
 
 class QUrl;
 
@@ -34,10 +36,25 @@ public:
                                   const QString& issuer,
                                   const QString& username,
                                   const QString& algorithm,
-                                  const quint8& digits,
-                                  const quint8& step);
+                                  quint8 digits,
+                                  quint8 step);
     static const quint8 defaultStep;
     static const quint8 defaultDigits;
+    struct Encoder
+    {
+        QString name;
+        QString shortName;
+        QString alphabet;
+        quint8 digits;
+        quint8 step;
+        bool reverse;
+    };
+    static const Encoder defaultEncoder;
+    // custom encoder values that overload the digits field
+    static const quint8 ENCODER_STEAM;
+    static const QMap<quint8, Encoder> encoders;
+    static const QMap<QString, quint8> shortNameToEncoder;
+    static const QMap<QString, quint8> nameToEncoder;
 };
 
 #endif // QTOTP_H

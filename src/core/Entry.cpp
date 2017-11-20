@@ -25,6 +25,8 @@
 #include "core/Metadata.h"
 #include "totp/totp.h"
 
+#include <QRegularExpression>
+
 const int Entry::DefaultIconNumber = 0;
 const int Entry::ResolveMaximumDepth = 10;
 
@@ -332,12 +334,24 @@ void Entry::setTotp(const QString& seed, quint8& step, quint8& digits)
     if (digits == 0) {
         digits = QTotp::defaultDigits;
     }
+    QString data;
+
+    const QTotp::Encoder & enc = QTotp::encoders.value(digits, QTotp::defaultEncoder);
 
     if (m_attributes->hasKey("otp")) {
-        m_attributes->set("otp", QString("key=%1&step=%2&size=%3").arg(seed).arg(step).arg(digits), true);
+        data = QString("key=%1&step=%2&size=%3").arg(seed).arg(step).arg(enc.digits == 0 ? digits : enc.digits);
+        if (!enc.name.isEmpty()) {
+            data.append("&enocder=").append(enc.name);
+        }
+        m_attributes->set("otp", data, true);
     } else {
         m_attributes->set("TOTP Seed", seed, true);
-        m_attributes->set("TOTP Settings", QString("%1;%2").arg(step).arg(digits));
+        if (!enc.shortName.isEmpty()) {
+            data = QString("%1;%2").arg(step).arg(enc.shortName);
+        } else {
+            data = QString("%1;%2").arg(step).arg(digits);
+        }
+        m_attributes->set("TOTP Settings", data);
     }
 }
 
@@ -355,11 +369,16 @@ QString Entry::totpSeed() const
     m_data.totpStep = QTotp::defaultStep;
 
     if (m_attributes->hasKey("TOTP Settings")) {
-        QRegExp rx("(\\d+);(\\d)", Qt::CaseInsensitive, QRegExp::RegExp);
-        int pos = rx.indexIn(m_attributes->value("TOTP Settings"));
-        if (pos > -1) {
-            m_data.totpStep = rx.cap(1).toUInt();
-            m_data.totpDigits = rx.cap(2).toUInt();
+        // this regex must be kept in sync with the set of allowed short names QTotp::shortNameToEncoder
+        QRegularExpression rx(QString("(\\d+);((?:\\d+)|S)"));
+        QRegularExpressionMatch m = rx.match(m_attributes->value("TOTP Settings"));
+        if (m.hasMatch()) {
+            m_data.totpStep = m.captured(1).toUInt();
+            if (QTotp::shortNameToEncoder.contains(m.captured(2))) {
+                m_data.totpDigits = QTotp::shortNameToEncoder[m.captured(2)];
+            } else {
+                m_data.totpDigits = m.captured(2).toUInt();
+            }
         }
     }
 
