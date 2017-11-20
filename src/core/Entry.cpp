@@ -751,12 +751,7 @@ QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDe
     const PlaceholderType typeOfPlaceholder = placeholderType(placeholder);
     switch (typeOfPlaceholder) {
     case PlaceholderType::NotPlaceholder:
-        return placeholder;
     case PlaceholderType::Unknown:
-#ifdef QT_DEBUG
-        qWarning("Can't resolve placeholder \"%s\" for entry with title: \"%s\" (uuid \"%s\") ",
-                 qPrintable(placeholder), qPrintable(title()), qPrintable(uuid().toHex()));
-#endif
         return placeholder;
     case PlaceholderType::Title:
         return title();
