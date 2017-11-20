@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="it" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="it">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -131,7 +133,7 @@ Seleziona se vuoi consentire l&apos;accesso.</translation>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation> KeePassXC - Auto completamento</translation>
+        <translation>KeePassXC - Auto completamento</translation>
     </message>
 </context>
 <context>
@@ -170,7 +172,7 @@ Seleziona se vuoi consentire l&apos;accesso.</translation>
     </message>
     <message>
         <source>Unable to create Key File : </source>
-        <translation>Impossibile creare file chiave:</translation>
+        <translation>Impossibile creare file chiave: </translation>
     </message>
     <message>
         <source>Select a key file</source>
@@ -290,11 +292,11 @@ Seleziona se vuoi consentire l&apos;accesso.</translation>
     </message>
     <message>
         <source>Empty fieldname </source>
-        <translation>Nome campo vuoto</translation>
+        <translation>Nome campo vuoto </translation>
     </message>
     <message>
         <source>column </source>
-        <translation>colonna</translation>
+        <translation>colonna </translation>
     </message>
     <message>
         <source>Imported from CSV file</source>
@@ -302,7 +304,7 @@ Seleziona se vuoi consentire l&apos;accesso.</translation>
     </message>
     <message>
         <source>Original data: </source>
-        <translation>Dati originali:</translation>
+        <translation>Dati originali: </translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file !</source>
@@ -557,7 +559,7 @@ Vuoi salvare le modifiche?</translation>
         <translation>Blocca database</translation>
     </message>
     <message>
-        <source>Can't lock the database as you are currently editing it.
+        <source>Can&apos;t lock the database as you are currently editing it.
 Please press cancel to finish your changes or discard them.</source>
         <translation>Non è possibile bloccare il database dato che lo stai modificando.
 Seleziona &apos;Annulla&apos; per completare le modifiche o scartarle.</translation>
@@ -664,7 +666,10 @@ Vuoi aprilo comunque?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Vuoi veramente spostare %n elemento nel Cestino?</numerusform><numerusform>Vuoi veramente spostare %n elementi nel Cestino?</numerusform></translation>
+        <translation>
+            <numerusform>Vuoi veramente spostare %n elemento nel Cestino?</numerusform>
+            <numerusform>Vuoi veramente spostare %n elementi nel Cestino?</numerusform>
+        </translation>
     </message>
     <message>
         <source>Delete group?</source>
@@ -817,11 +822,17 @@ Vuoi aprilo comunque?</translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n settimana</numerusform><numerusform>%n settimane</numerusform></translation>
+        <translation>
+            <numerusform>%n settimana</numerusform>
+            <numerusform>%n settimane</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n mese</numerusform><numerusform>%n mesi</numerusform></translation>
+        <translation>
+            <numerusform>%n mese</numerusform>
+            <numerusform>%n mesi</numerusform>
+        </translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1313,7 +1324,7 @@ Vuoi aprilo comunque?</translation>
     <message>
         <source>The selected file is an old KeePass 1 database (.kdb).
 
-You can import it by clicking on Database &gt; 'Import KeePass 1 database...'.
+You can import it by clicking on Database &gt; &apos;Import KeePass 1 database...&apos;.
 This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
         <translation>Il file selezionato è un vecchio database di KeePass 1 (.kdb).
 
@@ -1917,23 +1928,23 @@ Modificale solo se sai quello che stai facendo.</translation>
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
-        <translation>Errore interno di zlib durante la compressione:</translation>
+        <translation>Errore interno di zlib durante la compressione: </translation>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>Errore durante la scrittura nel dispositivo:</translation>
+        <translation>Errore durante la scrittura nel dispositivo: </translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>Errore durante l&apos;apertura dal dispositivo:</translation>
+        <translation>Errore durante l&apos;apertura dal dispositivo: </translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation>Errore durante la lettura dal dispositivo:</translation>
+        <translation>Errore durante la lettura dal dispositivo: </translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation>Errore interno di zlib durante la decompressione:</translation>
+        <translation>Errore interno di zlib durante la decompressione: </translation>
     </message>
 </context>
 <context>
@@ -1944,7 +1955,7 @@ Modificale solo se sai quello che stai facendo.</translation>
     </message>
     <message>
         <source>Internal zlib error: </source>
-        <translation>Errore interno di zlib:</translation>
+        <translation>Errore interno di zlib: </translation>
     </message>
 </context>
 <context>
@@ -2018,7 +2029,7 @@ Sblocca il database selezionato o scegli un altro database sbloccato.</translati
     </message>
     <message>
         <source>KeePassXC: New key association request</source>
-        <translation>KeePassXC: Nuova richiesta di associazione chiave </translation>
+        <translation>KeePassXC: nuova richiesta di associazione chiave</translation>
     </message>
     <message>
         <source>You have received an association request for the above key.
@@ -2164,7 +2175,7 @@ imposta un nome unico per identificarla ed accettarla.</translation>
     </message>
     <message>
         <source> ms</source>
-        <translation>ms</translation>
+        <translation> ms</translation>
     </message>
     <message>
         <source>Start only a single instance of KeePassXC</source>
@@ -2179,7 +2190,7 @@ imposta un nome unico per identificarla ed accettarla.</translation>
     </message>
     <message>
         <source> sec</source>
-        <translation>sec</translation>
+        <translation> sec</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
@@ -2254,7 +2265,7 @@ imposta un nome unico per identificarla ed accettarla.</translation>
     </message>
     <message>
         <source> sec</source>
-        <translation>sec</translation>
+        <translation> sec</translation>
     </message>
 </context>
 <context>
