@@ -127,12 +127,6 @@
        <height>100</height>
       </size>
      </property>
-     <property name="font">
-      <font>
-       <family>Monospace</family>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
     </widget>
    </item>
    <item row="9" column="1">
