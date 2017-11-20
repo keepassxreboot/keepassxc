@@ -22,9 +22,6 @@
 #include <QTimer>
 
 #include "core/Config.h"
-#ifdef Q_OS_MAC
-#include "core/MacPasteboard.h"
-#endif
 
 Clipboard* Clipboard::m_instance(nullptr);
 
@@ -33,8 +30,21 @@ Clipboard::Clipboard(QObject* parent)
     , m_timer(new QTimer(this))
 {
     m_timer->setSingleShot(true);
+#ifdef Q_OS_MAC
+    m_pasteboard = new MacPasteboard;
+#endif
+
     connect(m_timer, SIGNAL(timeout()), SLOT(clearClipboard()));
     connect(qApp, SIGNAL(aboutToQuit()), SLOT(clearCopiedText()));
+}
+
+Clipboard::~Clipboard()
+{
+#ifdef Q_OS_MAC
+    if (m_pasteboard) {
+        delete m_pasteboard;
+    }
+#endif
 }
 
 void Clipboard::setText(const QString& text)
@@ -42,7 +52,6 @@ void Clipboard::setText(const QString& text)
     QClipboard* clipboard = QApplication::clipboard();
 
 #ifdef Q_OS_MAC
-    new MacPasteboard;
     QMimeData* mime = new QMimeData;
     mime->setText(text);
     mime->setData("application/x-nspasteboard-concealed-type", text.toUtf8());

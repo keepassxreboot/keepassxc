@@ -26,12 +26,12 @@ class MacPasteboard : public QMacPasteboardMime
 public:
     explicit MacPasteboard() : QMacPasteboardMime(MIME_ALL) {}
 
-    QString convertorName();
-    bool canConvert(const QString &mime, QString flav);
-    QString mimeFor(QString flav);
-    QString flavorFor(const QString &mime);
-    QVariant convertToMime(const QString &mime, QList<QByteArray> data, QString flav);
-    QList<QByteArray> convertFromMime(const QString &mime, QVariant data, QString flav);
+    QString convertorName() override;
+    bool canConvert(const QString &mime, QString flav) override;
+    QString mimeFor(QString flav) override;
+    QString flavorFor(const QString &mime) override;
+    QVariant convertToMime(const QString &mime, QList<QByteArray> data, QString flav) override;
+    QList<QByteArray> convertFromMime(const QString &mime, QVariant data, QString flav) override;
 };
 
 #endif // KEEPASSXC_MACPASTEBOARD_H
