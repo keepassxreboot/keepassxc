@@ -1400,6 +1400,12 @@ void DatabaseWidget::showUnlockDialog()
 {
     m_unlockDatabaseDialog->clearForms();
     m_unlockDatabaseDialog->setDBFilename(m_filename);
+
+#if defined(Q_OS_MAC)
+    autoType()->raiseWindow();
+    Tools::wait(500);
+#endif
+
     m_unlockDatabaseDialog->show();
     m_unlockDatabaseDialog->activateWindow();
 }
