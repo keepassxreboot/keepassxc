@@ -417,6 +417,8 @@ void DatabaseWidget::setupTotp()
         setupTotpDialog->setSeed(currentEntry->totpSeed());
         setupTotpDialog->setStep(currentEntry->totpStep());
         setupTotpDialog->setDigits(currentEntry->totpDigits());
+        // now that all settings are set, decide whether it's default, steam or custom
+        setupTotpDialog->setSettings(currentEntry->totpDigits());
     }
 
     setupTotpDialog->open();

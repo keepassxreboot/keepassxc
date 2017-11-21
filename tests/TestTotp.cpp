@@ -83,3 +83,89 @@ void TestTotp::testTotpCode()
     output = QTotp::generateTotp(seed, time, 8, 30);
     QCOMPARE(output, QString("69279037"));
 }
+
+void TestTotp::testEncoderData()
+{
+    for (quint8 key: QTotp::encoders.keys()) {
+        const QTotp::Encoder& enc = QTotp::encoders.value(key);
+        QVERIFY2(enc.digits != 0,
+            qPrintable(QString("Custom encoders cannot have zero-value for digits field: %1(%2)")
+                               .arg(enc.name)
+                               .arg(key)));
+        QVERIFY2(!enc.name.isEmpty(),
+            qPrintable(QString("Custom encoders must have a name: %1(%2)")
+                               .arg(enc.name)
+                               .arg(key)));
+        QVERIFY2(!enc.shortName.isEmpty(),
+            qPrintable(QString("Custom encoders must have a shortName: %1(%2)")
+                               .arg(enc.name)
+                               .arg(key)));
+        QVERIFY2(QTotp::shortNameToEncoder.contains(enc.shortName),
+            qPrintable(QString("No shortNameToEncoder entry found for custom encoder: %1(%2) %3")
+                               .arg(enc.name)
+                               .arg(key)
+                               .arg(enc.shortName)));
+        QVERIFY2(QTotp::shortNameToEncoder[enc.shortName] == key,
+            qPrintable(QString("shortNameToEncoder doesn't reference this custome encoder: %1(%2) %3")
+                               .arg(enc.name)
+                               .arg(key)
+                               .arg(enc.shortName)));
+        QVERIFY2(QTotp::nameToEncoder.contains(enc.name),
+            qPrintable(QString("No nameToEncoder entry found for custom encoder: %1(%2) %3")
+                               .arg(enc.name)
+                               .arg(key)
+                               .arg(enc.shortName)));
+        QVERIFY2(QTotp::nameToEncoder[enc.name] == key,
+            qPrintable(QString("nameToEncoder doesn't reference this custome encoder: %1(%2) %3")
+                               .arg(enc.name)
+                               .arg(key)
+                               .arg(enc.shortName)));
+    }
+
+    for (const QString & key: QTotp::nameToEncoder.keys()) {
+        quint8 value = QTotp::nameToEncoder.value(key);
+        QVERIFY2(QTotp::encoders.contains(value),
+                qPrintable(QString("No custom encoder found for encoder named %1(%2)")
+                                   .arg(value)
+                                   .arg(key)));
+        QVERIFY2(QTotp::encoders[value].name == key,
+                qPrintable(QString("nameToEncoder doesn't reference the right custom encoder: %1(%2)")
+                                   .arg(value)
+                                   .arg(key)));
+    }
+
+    for (const QString & key: QTotp::shortNameToEncoder.keys()) {
+        quint8 value = QTotp::shortNameToEncoder.value(key);
+        QVERIFY2(QTotp::encoders.contains(value),
+                qPrintable(QString("No custom encoder found for short-name encoder %1(%2)")
+                                   .arg(value)
+                                   .arg(key)));
+        QVERIFY2(QTotp::encoders[value].shortName == key,
+                qPrintable(QString("shortNameToEncoder doesn't reference the right custom encoder: %1(%2)")
+                                   .arg(value)
+                                   .arg(key)));
+    }
+}
+
+void TestTotp::testSteamTotp()
+{
+    quint8 digits = 0;
+    quint8 step = 0;
+    QString secret = "otpauth://totp/"
+                     "test:test@example.com?secret=63BEDWCQZKTQWPESARIERL5DTTQFCJTK&issuer=Valve&algorithm="
+                     "SHA1&digits=5&period=30&encoder=steam";
+    QCOMPARE(QTotp::parseOtpString(secret, digits, step), QString("63BEDWCQZKTQWPESARIERL5DTTQFCJTK"));
+    QCOMPARE(digits, quint8(QTotp::ENCODER_STEAM));
+    QCOMPARE(step, quint8(30));
+
+
+    QByteArray seed = QString("63BEDWCQZKTQWPESARIERL5DTTQFCJTK").toLatin1();
+
+    // These time/value pairs were created by running the Steam Guard function of the
+    // Steam mobile app with a throw-away steam account. The above secret was extracted
+    // from the Steam app's data for use in testing here.
+    quint64 time = 1511200518;
+    QCOMPARE(QTotp::generateTotp(seed, time, QTotp::ENCODER_STEAM, 30), QString("FR8RV"));
+    time = 1511200714;
+    QCOMPARE(QTotp::generateTotp(seed, time, QTotp::ENCODER_STEAM, 30), QString("9P3VP"));
+}

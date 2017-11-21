@@ -270,7 +270,7 @@ void DetailsWidget::updateTotp()
     if (!m_locked) {
         QString totpCode = m_currentEntry->totp();
         QString firstHalf = totpCode.left(totpCode.size() / 2);
-        QString secondHalf = totpCode.right(totpCode.size() / 2);
+        QString secondHalf = totpCode.mid(totpCode.size() / 2);
         m_ui->totpLabel->setText(firstHalf + " " + secondHalf);
     } else if (nullptr != m_timer) {
         m_timer->stop();

@@ -39,8 +39,11 @@ public:
     void setSeed(QString value);
     void setStep(quint8 step);
     void setDigits(quint8 digits);
+    void setSettings(quint8 digits);
 
 private Q_SLOTS:
+    void toggleDefault(bool status);
+    void toggleSteam(bool status);
     void toggleCustom(bool status);
     void setupTotp();
 
