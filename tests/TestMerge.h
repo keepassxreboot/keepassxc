@@ -31,12 +31,15 @@ private slots:
     void testMergeNoChanges();
     void testResolveConflictNewer();
     void testResolveConflictOlder();
+    void testResolveGroupConflictOlder();
     void testResolveConflictKeepBoth();
     void testMoveEntry();
     void testMoveEntryPreserveChanges();
     void testMoveEntryIntoNewGroup();
     void testCreateNewGroups();
     void testUpdateEntryDifferentLocation();
+    void testUpdateGroup();
+    void testUpdateGroupLocation();
     void testMergeAndSync();
     void testMergeCustomIcons();
 
