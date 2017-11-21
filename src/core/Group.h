@@ -134,8 +134,8 @@ public:
      * Note that you need to copy the custom icons manually when inserting the
      * new group into another database.
      */
-    Group* clone(
-        Entry::CloneFlags entryFlags = DefaultEntryCloneFlags, CloneFlags groupFlags = DefaultCloneFlags) const;
+    Group* clone(Entry::CloneFlags entryFlags = DefaultEntryCloneFlags,
+                 CloneFlags groupFlags = DefaultCloneFlags) const;
 
     void copyDataFrom(const Group* other);
     void merge(const Group* other);
