@@ -681,12 +681,12 @@ void Group::merge(const Group* other)
 
         Entry* existingEntry = rootGroup->findEntryByUuid(entry->uuid());
 
-        // This entry does not exist at all. Create it.
         if (!existingEntry) {
+            // This entry does not exist at all. Create it.
             qDebug("New entry %s detected. Creating it.", qPrintable(entry->title()));
             entry->clone(Entry::CloneIncludeHistory)->setGroup(this);
-        // Entry is already present in the database. Update it.
         } else {
+            // Entry is already present in the database. Update it.
             bool locationChanged = existingEntry->timeInfo().locationChanged() < entry->timeInfo().locationChanged();
             if (locationChanged && existingEntry->group() != this) {
                 existingEntry->setGroup(this);
@@ -978,13 +978,16 @@ void Group::resolveGroupConflict(Group* existingGroup, Group* otherGroup)
     const QDateTime timeExisting = existingGroup->timeInfo().lastModificationTime();
     const QDateTime timeOther = otherGroup->timeInfo().lastModificationTime();
 
-    // only if the other group newer, update the existing one.
+    // only if the other group is newer, update the existing one.
     if (timeExisting < timeOther) {
         qDebug("Updating group %s.", qPrintable(existingGroup->name()));
         existingGroup->setName(otherGroup->name());
         existingGroup->setNotes(otherGroup->notes());
-        existingGroup->setIcon(otherGroup->iconNumber());
-        existingGroup->setIcon(otherGroup->iconUuid());
+        if (otherGroup->iconNumber() == 0) {
+          existingGroup->setIcon(otherGroup->iconUuid());
+        } else {
+          existingGroup->setIcon(otherGroup->iconNumber());
+        }
         existingGroup->setExpiryTime(otherGroup->timeInfo().expiryTime());
     }
 
