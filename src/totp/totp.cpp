@@ -28,8 +28,8 @@
 #include <QtEndian>
 #include <cmath>
 
-const quint8 QTotp::defaultStep = 30;
-const quint8 QTotp::defaultDigits = 6;
+const quint8 Totp::defaultStep = 30;
+const quint8 Totp::defaultDigits = 6;
 
 /**
  * Custom encoder types. Each should be unique and >= 128 and < 255
@@ -38,11 +38,11 @@ const quint8 QTotp::defaultDigits = 6;
 /**
  * Encoder for Steam Guard TOTP
  */
-const quint8 QTotp::ENCODER_STEAM = 254;
+const quint8 Totp::ENCODER_STEAM = 254;
 
-const QTotp::Encoder QTotp::defaultEncoder = { "", "", "0123456789", 0, 0, false };
-const QMap<quint8, QTotp::Encoder> QTotp::encoders{
-    { QTotp::ENCODER_STEAM, { "steam", "S", "23456789BCDFGHJKMNPQRTVWXY", 5, 30, true } },
+const Totp::Encoder Totp::defaultEncoder = { "", "", "0123456789", 0, 0, false };
+const QMap<quint8, Totp::Encoder> Totp::encoders{
+    { Totp::ENCODER_STEAM, { "steam", "S", "23456789BCDFGHJKMNPQRTVWXY", 5, 30, true } },
 };
 
 /**
@@ -52,23 +52,23 @@ const QMap<quint8, QTotp::Encoder> QTotp::encoders{
  * NOTE: when updating this map, a corresponding edit to the settings regex must be made
  *       in Entry::totpSeed()
  */
-const QMap<QString, quint8> QTotp::shortNameToEncoder{
-    { "S", QTotp::ENCODER_STEAM },
+const QMap<QString, quint8> Totp::shortNameToEncoder{
+    { "S", Totp::ENCODER_STEAM },
 };
 /**
  * These map the "encoder=" URL parameter of the "otp" field to our internal encoder number
  * that overloads the digits field. Make sure that the key matches the name value
  * in the corresponding Encoder
  */
-const QMap<QString, quint8> QTotp::nameToEncoder{
-    { "steam", QTotp::ENCODER_STEAM },
+const QMap<QString, quint8> Totp::nameToEncoder{
+    { "steam", Totp::ENCODER_STEAM },
 };
 
-QTotp::QTotp()
+Totp::Totp()
 {
 }
 
-QString QTotp::parseOtpString(QString key, quint8& digits, quint8& step)
+QString Totp::parseOtpString(QString key, quint8& digits, quint8& step)
 {
     QUrl url(key);
 
@@ -128,7 +128,7 @@ QString QTotp::parseOtpString(QString key, quint8& digits, quint8& step)
     return seed;
 }
 
-QString QTotp::generateTotp(const QByteArray key,
+QString Totp::generateTotp(const QByteArray key,
                             quint64 time,
                             const quint8 numDigits = defaultDigits,
                             const quint8 step = defaultStep)
@@ -176,7 +176,7 @@ QString QTotp::generateTotp(const QByteArray key,
 }
 
 // See: https://github.com/google/google-authenticator/wiki/Key-Uri-Format
-QUrl QTotp::generateOtpString(const QString& secret,
+QUrl Totp::generateOtpString(const QString& secret,
                               const QString& type,
                               const QString& issuer,
                               const QString& username,

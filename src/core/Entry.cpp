@@ -42,8 +42,8 @@ Entry::Entry()
     m_data.iconNumber = DefaultIconNumber;
     m_data.autoTypeEnabled = true;
     m_data.autoTypeObfuscation = 0;
-    m_data.totpStep = QTotp::defaultStep;
-    m_data.totpDigits = QTotp::defaultDigits;
+    m_data.totpStep = Totp::defaultStep;
+    m_data.totpDigits = Totp::defaultDigits;
 
     connect(m_attributes, SIGNAL(modified()), this, SIGNAL(modified()));
     connect(m_attributes, SIGNAL(defaultKeyModified()), SLOT(emitDataChanged()));
@@ -317,7 +317,7 @@ QString Entry::totp() const
     if (hasTotp()) {
         QString seed = totpSeed();
         quint64 time = QDateTime::currentDateTime().toTime_t();
-        QString output = QTotp::generateTotp(seed.toLatin1(), time, m_data.totpDigits, m_data.totpStep);
+        QString output = Totp::generateTotp(seed.toLatin1(), time, m_data.totpDigits, m_data.totpStep);
 
         return QString(output);
     } else {
@@ -328,15 +328,15 @@ QString Entry::totp() const
 void Entry::setTotp(const QString& seed, quint8& step, quint8& digits)
 {
     if (step == 0) {
-        step = QTotp::defaultStep;
+        step = Totp::defaultStep;
     }
 
     if (digits == 0) {
-        digits = QTotp::defaultDigits;
+        digits = Totp::defaultDigits;
     }
     QString data;
 
-    const QTotp::Encoder & enc = QTotp::encoders.value(digits, QTotp::defaultEncoder);
+    const Totp::Encoder & enc = Totp::encoders.value(digits, Totp::defaultEncoder);
 
     if (m_attributes->hasKey("otp")) {
         data = QString("key=%1&step=%2&size=%3").arg(seed).arg(step).arg(enc.digits == 0 ? digits : enc.digits);
@@ -365,24 +365,24 @@ QString Entry::totpSeed() const
         secret = m_attributes->value("TOTP Seed");
     }
 
-    m_data.totpDigits = QTotp::defaultDigits;
-    m_data.totpStep = QTotp::defaultStep;
+    m_data.totpDigits = Totp::defaultDigits;
+    m_data.totpStep = Totp::defaultStep;
 
     if (m_attributes->hasKey("TOTP Settings")) {
-        // this regex must be kept in sync with the set of allowed short names QTotp::shortNameToEncoder
+        // this regex must be kept in sync with the set of allowed short names Totp::shortNameToEncoder
         QRegularExpression rx(QString("(\\d+);((?:\\d+)|S)"));
         QRegularExpressionMatch m = rx.match(m_attributes->value("TOTP Settings"));
         if (m.hasMatch()) {
             m_data.totpStep = m.captured(1).toUInt();
-            if (QTotp::shortNameToEncoder.contains(m.captured(2))) {
-                m_data.totpDigits = QTotp::shortNameToEncoder[m.captured(2)];
+            if (Totp::shortNameToEncoder.contains(m.captured(2))) {
+                m_data.totpDigits = Totp::shortNameToEncoder[m.captured(2)];
             } else {
                 m_data.totpDigits = m.captured(2).toUInt();
             }
         }
     }
 
-    return QTotp::parseOtpString(secret, m_data.totpDigits, m_data.totpStep);
+    return Totp::parseOtpString(secret, m_data.totpDigits, m_data.totpStep);
 }
 
 quint8 Entry::totpStep() const
