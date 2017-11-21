@@ -26,6 +26,11 @@
 const int Group::DefaultIconNumber = 48;
 const int Group::RecycleBinIconNumber = 43;
 
+Group::CloneFlags Group::DefaultCloneFlags = static_cast<Group::CloneFlags>(
+    Group::CloneNewUuid | Group::CloneResetTimeInfo | Group::CloneIncludeEntries);
+Entry::CloneFlags Group::DefaultEntryCloneFlags = static_cast<Entry::CloneFlags>(
+    Entry::CloneNewUuid | Entry::CloneResetTimeInfo);
+
 Group::Group()
     : m_updateTimeinfo(true)
 {

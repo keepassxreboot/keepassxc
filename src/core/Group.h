@@ -86,6 +86,8 @@ public:
 
     static const int DefaultIconNumber;
     static const int RecycleBinIconNumber;
+    static CloneFlags DefaultCloneFlags;
+    static Entry::CloneFlags DefaultEntryCloneFlags;
 
     Group* findChildByName(const QString& name);
     Group* findChildByUuid(const Uuid& uuid);
@@ -128,15 +130,13 @@ public:
     QList<Group*> groupsRecursive(bool includeSelf);
     QSet<Uuid> customIconsRecursive() const;
     /**
-     * Creates a duplicate of this group including all child entries and groups (if not shallow).
-     * The exceptions are that the returned group doesn't have a parent group
-     * and all TimeInfo attributes are set to the current time.
+     * Creates a duplicate of this group.
      * Note that you need to copy the custom icons manually when inserting the
      * new group into another database.
      */
-    Group* clone(Entry::CloneFlags entryFlags = Entry::CloneNewUuid | Entry::CloneResetTimeInfo,
-                 CloneFlags groupFlags = static_cast<CloneFlags>(Group::CloneNewUuid | Group::CloneResetTimeInfo |
-                                                                 Group::CloneIncludeEntries)) const;
+    Group* clone(
+        Entry::CloneFlags entryFlags = DefaultEntryCloneFlags, CloneFlags groupFlags = DefaultCloneFlags) const;
+
     void copyDataFrom(const Group* other);
     void merge(const Group* other);
     QString print(bool recursive = false, int depth = 0);
