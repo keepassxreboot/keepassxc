@@ -41,21 +41,21 @@ void TestTotp::testParseSecret()
     QString secret = "otpauth://totp/"
                      "ACME%20Co:john@example.com?secret=HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ&issuer=ACME%20Co&algorithm="
                      "SHA1&digits=6&period=30";
-    QCOMPARE(QTotp::parseOtpString(secret, digits, step), QString("HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ"));
+    QCOMPARE(Totp::parseOtpString(secret, digits, step), QString("HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ"));
     QCOMPARE(digits, quint8(6));
     QCOMPARE(step, quint8(30));
 
-    digits = QTotp::defaultDigits;
-    step = QTotp::defaultStep;
+    digits = Totp::defaultDigits;
+    step = Totp::defaultStep;
     secret = "key=HXDMVJECJJWSRBY%3d&step=25&size=8";
-    QCOMPARE(QTotp::parseOtpString(secret, digits, step), QString("HXDMVJECJJWSRBY="));
+    QCOMPARE(Totp::parseOtpString(secret, digits, step), QString("HXDMVJECJJWSRBY="));
     QCOMPARE(digits, quint8(8));
     QCOMPARE(step, quint8(25));
 
     digits = 0;
     step = 0;
     secret = "gezdgnbvgy3tqojqgezdgnbvgy3tqojq";
-    QCOMPARE(QTotp::parseOtpString(secret, digits, step), QString("gezdgnbvgy3tqojqgezdgnbvgy3tqojq"));
+    QCOMPARE(Totp::parseOtpString(secret, digits, step), QString("gezdgnbvgy3tqojqgezdgnbvgy3tqojq"));
     QCOMPARE(digits, quint8(6));
     QCOMPARE(step, quint8(30));
 }
@@ -68,26 +68,26 @@ void TestTotp::testTotpCode()
     QByteArray seed = QString("GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ").toLatin1();
 
     quint64 time = 1234567890;
-    QString output = QTotp::generateTotp(seed, time, 6, 30);
+    QString output = Totp::generateTotp(seed, time, 6, 30);
     QCOMPARE(output, QString("005924"));
 
     time = 1111111109;
-    output = QTotp::generateTotp(seed, time, 6, 30);
+    output = Totp::generateTotp(seed, time, 6, 30);
     QCOMPARE(output, QString("081804"));
 
     time = 1111111111;
-    output = QTotp::generateTotp(seed, time, 8, 30);
+    output = Totp::generateTotp(seed, time, 8, 30);
     QCOMPARE(output, QString("14050471"));
 
     time = 2000000000;
-    output = QTotp::generateTotp(seed, time, 8, 30);
+    output = Totp::generateTotp(seed, time, 8, 30);
     QCOMPARE(output, QString("69279037"));
 }
 
 void TestTotp::testEncoderData()
 {
-    for (quint8 key: QTotp::encoders.keys()) {
-        const QTotp::Encoder& enc = QTotp::encoders.value(key);
+    for (quint8 key: Totp::encoders.keys()) {
+        const Totp::Encoder& enc = Totp::encoders.value(key);
         QVERIFY2(enc.digits != 0,
             qPrintable(QString("Custom encoders cannot have zero-value for digits field: %1(%2)")
                                .arg(enc.name)
@@ -100,47 +100,47 @@ void TestTotp::testEncoderData()
             qPrintable(QString("Custom encoders must have a shortName: %1(%2)")
                                .arg(enc.name)
                                .arg(key)));
-        QVERIFY2(QTotp::shortNameToEncoder.contains(enc.shortName),
+        QVERIFY2(Totp::shortNameToEncoder.contains(enc.shortName),
             qPrintable(QString("No shortNameToEncoder entry found for custom encoder: %1(%2) %3")
                                .arg(enc.name)
                                .arg(key)
                                .arg(enc.shortName)));
-        QVERIFY2(QTotp::shortNameToEncoder[enc.shortName] == key,
+        QVERIFY2(Totp::shortNameToEncoder[enc.shortName] == key,
             qPrintable(QString("shortNameToEncoder doesn't reference this custome encoder: %1(%2) %3")
                                .arg(enc.name)
                                .arg(key)
                                .arg(enc.shortName)));
-        QVERIFY2(QTotp::nameToEncoder.contains(enc.name),
+        QVERIFY2(Totp::nameToEncoder.contains(enc.name),
             qPrintable(QString("No nameToEncoder entry found for custom encoder: %1(%2) %3")
                                .arg(enc.name)
                                .arg(key)
                                .arg(enc.shortName)));
-        QVERIFY2(QTotp::nameToEncoder[enc.name] == key,
+        QVERIFY2(Totp::nameToEncoder[enc.name] == key,
             qPrintable(QString("nameToEncoder doesn't reference this custome encoder: %1(%2) %3")
                                .arg(enc.name)
                                .arg(key)
                                .arg(enc.shortName)));
     }
 
-    for (const QString & key: QTotp::nameToEncoder.keys()) {
-        quint8 value = QTotp::nameToEncoder.value(key);
-        QVERIFY2(QTotp::encoders.contains(value),
+    for (const QString & key: Totp::nameToEncoder.keys()) {
+        quint8 value = Totp::nameToEncoder.value(key);
+        QVERIFY2(Totp::encoders.contains(value),
                 qPrintable(QString("No custom encoder found for encoder named %1(%2)")
                                    .arg(value)
                                    .arg(key)));
-        QVERIFY2(QTotp::encoders[value].name == key,
+        QVERIFY2(Totp::encoders[value].name == key,
                 qPrintable(QString("nameToEncoder doesn't reference the right custom encoder: %1(%2)")
                                    .arg(value)
                                    .arg(key)));
     }
 
-    for (const QString & key: QTotp::shortNameToEncoder.keys()) {
-        quint8 value = QTotp::shortNameToEncoder.value(key);
-        QVERIFY2(QTotp::encoders.contains(value),
+    for (const QString & key: Totp::shortNameToEncoder.keys()) {
+        quint8 value = Totp::shortNameToEncoder.value(key);
+        QVERIFY2(Totp::encoders.contains(value),
                 qPrintable(QString("No custom encoder found for short-name encoder %1(%2)")
                                    .arg(value)
                                    .arg(key)));
-        QVERIFY2(QTotp::encoders[value].shortName == key,
+        QVERIFY2(Totp::encoders[value].shortName == key,
                 qPrintable(QString("shortNameToEncoder doesn't reference the right custom encoder: %1(%2)")
                                    .arg(value)
                                    .arg(key)));
@@ -154,8 +154,8 @@ void TestTotp::testSteamTotp()
     QString secret = "otpauth://totp/"
                      "test:test@example.com?secret=63BEDWCQZKTQWPESARIERL5DTTQFCJTK&issuer=Valve&algorithm="
                      "SHA1&digits=5&period=30&encoder=steam";
-    QCOMPARE(QTotp::parseOtpString(secret, digits, step), QString("63BEDWCQZKTQWPESARIERL5DTTQFCJTK"));
-    QCOMPARE(digits, quint8(QTotp::ENCODER_STEAM));
+    QCOMPARE(Totp::parseOtpString(secret, digits, step), QString("63BEDWCQZKTQWPESARIERL5DTTQFCJTK"));
+    QCOMPARE(digits, quint8(Totp::ENCODER_STEAM));
     QCOMPARE(step, quint8(30));
 
 
@@ -165,7 +165,7 @@ void TestTotp::testSteamTotp()
     // Steam mobile app with a throw-away steam account. The above secret was extracted
     // from the Steam app's data for use in testing here.
     quint64 time = 1511200518;
-    QCOMPARE(QTotp::generateTotp(seed, time, QTotp::ENCODER_STEAM, 30), QString("FR8RV"));
+    QCOMPARE(Totp::generateTotp(seed, time, Totp::ENCODER_STEAM, 30), QString("FR8RV"));
     time = 1511200714;
-    QCOMPARE(QTotp::generateTotp(seed, time, QTotp::ENCODER_STEAM, 30), QString("9P3VP"));
+    QCOMPARE(Totp::generateTotp(seed, time, Totp::ENCODER_STEAM, 30), QString("9P3VP"));
 }
