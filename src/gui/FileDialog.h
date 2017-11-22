@@ -52,7 +52,9 @@ private:
     QString m_nextFileName;
     QStringList m_nextFileNames;
     QString m_nextDirName;
-    bool m_nextSaveLastDir = true;
+    bool m_forgetLastDir = false;
+
+    void saveLastDir(QString);
 
     static FileDialog* m_instance;
 
