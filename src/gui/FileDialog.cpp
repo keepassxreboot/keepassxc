@@ -43,10 +43,7 @@ QString FileDialog::getOpenFileName(QWidget* parent, const QString& caption, QSt
             parent->activateWindow();
         }
 
-        if (!result.isEmpty()) {
-            config()->set("LastDir", QFileInfo(result).absolutePath());
-        }
-
+        saveLastDir(result);
         return result;
     }
 }
@@ -74,9 +71,8 @@ QStringList FileDialog::getOpenFileNames(QWidget *parent, const QString &caption
         }
 
         if (!results.isEmpty()) {
-            config()->set("LastDir", QFileInfo(results[0]).absolutePath());
+            saveLastDir(results[0]);
         }
-
         return results;
     }
 }
@@ -125,10 +121,7 @@ QString FileDialog::getSaveFileName(QWidget* parent, const QString& caption, QSt
             parent->activateWindow();
         }
 
-        if (!result.isEmpty()) {
-            config()->set("LastDir", QFileInfo(result).absolutePath());
-        }
-
+        saveLastDir(result);
         return result;
     }
 }
@@ -153,10 +146,7 @@ QString FileDialog::getExistingDirectory(QWidget *parent, const QString &caption
             parent->activateWindow();
         }
 
-        if (!dir.isEmpty()) {
-            config()->set("LastDir", QFileInfo(dir).absolutePath());
-        }
-
+        saveLastDir(dir);
         return dir;
     }
 }
@@ -176,8 +166,21 @@ void FileDialog::setNextDirName(const QString &dirName)
     m_nextDirName = dirName;
 }
 
+void FileDialog::setNextForgetDialog()
+{
+    m_forgetLastDir = true;
+}
+
 FileDialog::FileDialog()
 {
+}
+
+void FileDialog::saveLastDir(QString dir) {
+    if (!dir.isEmpty() && !m_forgetLastDir) {
+        config()->set("LastDir", QFileInfo(dir).absolutePath());
+    }
+
+    m_forgetLastDir = false;
 }
 
 FileDialog* FileDialog::instance()
