@@ -1125,7 +1125,7 @@ void DatabaseWidget::onWatchedFileChanged()
 
 void DatabaseWidget::reloadDatabaseFile()
 {
-    if (m_db == nullptr)
+    if (m_db == nullptr || currentMode() == DatabaseWidget::LockedMode)
         return;
 
     if (! config()->get("AutoReloadOnChange").toBool()) {
