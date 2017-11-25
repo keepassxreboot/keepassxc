@@ -253,6 +253,7 @@
  <tabstops>
   <tabstop>dbNameEdit</tabstop>
   <tabstop>dbDescriptionEdit</tabstop>
+  <tabstop>AlgorithmComboBox</tabstop>
   <tabstop>transformRoundsSpinBox</tabstop>
   <tabstop>transformBenchmarkButton</tabstop>
   <tabstop>defaultUsernameEdit</tabstop>
@@ -261,7 +262,6 @@
   <tabstop>historyMaxItemsSpinBox</tabstop>
   <tabstop>historyMaxSizeCheckBox</tabstop>
   <tabstop>historyMaxSizeSpinBox</tabstop>
-  <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources/>
  <connections/>

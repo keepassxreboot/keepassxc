@@ -48,6 +48,7 @@ private slots:
 
 private:
     void truncateHistories();
+    bool hasBeenModified() const;
 
     const QScopedPointer<Ui::DatabaseSettingsWidget> m_ui;
     Database* m_db;
