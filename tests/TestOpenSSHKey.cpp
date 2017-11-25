@@ -16,10 +16,16 @@
  */
 
 #include "TestOpenSSHKey.h"
+#include "crypto/Crypto.h"
 #include "sshagent/OpenSSHKey.h"
 #include <QTest>
 
 QTEST_GUILESS_MAIN(TestOpenSSHKey)
+
+void TestOpenSSHKey::initTestCase()
+{
+    QVERIFY(Crypto::init());
+}
 
 void TestOpenSSHKey::testParse()
 {
