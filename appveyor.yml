@@ -1,0 +1,26 @@
+image:
+  - Visual Studio 2017
+
+configuration:
+  - Debug
+  - Release
+
+clone_depth: 3
+
+platform:
+  - x64
+
+matrix:
+  fast_finish: true
+
+install:
+  - C:\msys64\usr\bin\bash -l -c "/c/projects/keepassxc/ci/appveyor-install.sh"
+
+before_build:
+  - C:\msys64\usr\bin\bash -l -c "/c/projects/keepassxc/ci/appveyor-before-build.sh"
+
+build_script:
+  - C:\msys64\usr\bin\bash -l -c "/c/projects/keepassxc/ci/appveyor-build.sh"
+
+test_script:
+  - C:\msys64\usr\bin\bash -l -c "/c/projects/keepassxc/ci/appveyor-test.sh"
