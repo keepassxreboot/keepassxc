@@ -47,6 +47,7 @@
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
 #include "gui/Clipboard.h"
+#include "gui/Font.h"
 #include "gui/entry/AutoTypeAssociationsModel.h"
 #include "gui/entry/EntryAttachmentsModel.h"
 #include "gui/entry/EntryAttributesModel.h"
@@ -267,7 +268,15 @@ void EditEntryWidget::setupSSHAgent()
 {
     m_sshAgentUi->setupUi(m_sshAgentWidget);
 
-    connect(m_sshAgentUi->privateKeyComboBox, SIGNAL(currentTextChanged(QString)), SLOT(updateSSHAgentKeyInfo()));
+    QFont fixedFont = Font::fixedFont();
+    m_sshAgentUi->fingerprintTextLabel->setFont(fixedFont);
+    m_sshAgentUi->commentTextLabel->setFont(fixedFont);
+    m_sshAgentUi->publicKeyEdit->setFont(fixedFont);
+
+    connect(m_sshAgentUi->attachmentRadioButton, SIGNAL(clicked(bool)), SLOT(updateSSHAgentKeyInfo()));
+    connect(m_sshAgentUi->attachmentComboBox, SIGNAL(currentIndexChanged(int)), SLOT(updateSSHAgentKeyInfo()));
+    connect(m_sshAgentUi->externalFileRadioButton, SIGNAL(clicked(bool)), SLOT(updateSSHAgentKeyInfo()));
+    connect(m_sshAgentUi->externalFileEdit, SIGNAL(textChanged(QString)), SLOT(updateSSHAgentKeyInfo()));
     connect(m_sshAgentUi->browseButton, SIGNAL(clicked()), SLOT(browsePrivateKey()));
     connect(m_sshAgentUi->addToAgentButton, SIGNAL(clicked()), SLOT(addKeyToAgent()));
     connect(m_sshAgentUi->removeFromAgentButton, SIGNAL(clicked()), SLOT(removeKeyFromAgent()));
@@ -279,8 +288,6 @@ void EditEntryWidget::setupSSHAgent()
 
 void EditEntryWidget::updateSSHAgent()
 {
-    // TODO: unsafe use of translations
-    QString prefix = tr("Attachment") + ": ";
     KeeAgentSettings settings;
     settings.fromXml(m_entryAttachments->value("KeeAgent.settings"));
 
@@ -289,29 +296,33 @@ void EditEntryWidget::updateSSHAgent()
     m_sshAgentUi->requireUserConfirmationCheckBox->setChecked(settings.useConfirmConstraintWhenAdding());
     m_sshAgentUi->lifetimeCheckBox->setChecked(settings.useLifetimeConstraintWhenAdding());
     m_sshAgentUi->lifetimeSpinBox->setValue(settings.lifetimeConstraintDuration());
-    m_sshAgentUi->privateKeyComboBox->clear();
+    m_sshAgentUi->attachmentComboBox->clear();
     m_sshAgentUi->addToAgentButton->setEnabled(false);
     m_sshAgentUi->removeFromAgentButton->setEnabled(false);
     m_sshAgentUi->copyToClipboardButton->setEnabled(false);
+
+    m_sshAgentUi->attachmentComboBox->addItem("");
 
     for (QString fileName : m_entryAttachments->keys()) {
         if (fileName == "KeeAgent.settings") {
             continue;
         }
 
-        m_sshAgentUi->privateKeyComboBox->addItem(prefix + fileName);
+        m_sshAgentUi->attachmentComboBox->addItem(fileName);
     }
 
+    m_sshAgentUi->attachmentComboBox->setCurrentText(settings.attachmentName());
+    m_sshAgentUi->externalFileEdit->setText(settings.fileName());
+
     if (settings.selectedType() == "attachment") {
-        m_sshAgentUi->privateKeyComboBox->setCurrentText(prefix + settings.attachmentName());
-    } else if (!settings.fileName().isEmpty()) {
-        m_sshAgentUi->privateKeyComboBox->addItem(settings.fileName());
-        m_sshAgentUi->privateKeyComboBox->setCurrentText(settings.fileName());
+        m_sshAgentUi->attachmentRadioButton->setChecked(true);
     } else {
-        m_sshAgentUi->privateKeyComboBox->setCurrentText("");
+        m_sshAgentUi->externalFileRadioButton->setChecked(true);
     }
 
     m_sshAgentSettings = settings;
+
+    updateSSHAgentKeyInfo();
 }
 
 void EditEntryWidget::updateSSHAgentKeyInfo()
@@ -319,14 +330,10 @@ void EditEntryWidget::updateSSHAgentKeyInfo()
     m_sshAgentUi->addToAgentButton->setEnabled(false);
     m_sshAgentUi->removeFromAgentButton->setEnabled(false);
     m_sshAgentUi->copyToClipboardButton->setEnabled(false);
-    m_sshAgentUi->fingerprintEdit->setText("");
-    m_sshAgentUi->commentEdit->setText("");
+    m_sshAgentUi->fingerprintTextLabel->setText(tr("n/a"));
+    m_sshAgentUi->commentTextLabel->setText(tr("n/a"));
     m_sshAgentUi->decryptButton->setEnabled(false);
     m_sshAgentUi->publicKeyEdit->document()->setPlainText("");
-
-    if (m_sshAgentUi->privateKeyComboBox->currentText().isEmpty()) {
-        return;
-    }
 
     OpenSSHKey key;
 
@@ -334,13 +341,13 @@ void EditEntryWidget::updateSSHAgentKeyInfo()
         return;
     }
 
-    m_sshAgentUi->fingerprintEdit->setText(key.fingerprint());
+    m_sshAgentUi->fingerprintTextLabel->setText(key.fingerprint());
 
     if (key.encrypted()) {
-        m_sshAgentUi->commentEdit->setText(tr("(encrypted)"));
+        m_sshAgentUi->commentTextLabel->setText(tr("(encrypted)"));
         m_sshAgentUi->decryptButton->setEnabled(true);
     } else {
-        m_sshAgentUi->commentEdit->setText(key.comment());
+        m_sshAgentUi->commentTextLabel->setText(key.comment());
     }
 
     m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
@@ -357,7 +364,7 @@ void EditEntryWidget::updateSSHAgentKeyInfo()
 void EditEntryWidget::saveSSHAgentConfig()
 {
     KeeAgentSettings settings;
-    QString privateKeyPath = m_sshAgentUi->privateKeyComboBox->currentText();
+    QString privateKeyPath = m_sshAgentUi->attachmentComboBox->currentText();
 
     settings.setAddAtDatabaseOpen(m_sshAgentUi->addKeyToAgentCheckBox->isChecked());
     settings.setRemoveAtDatabaseClose(m_sshAgentUi->removeKeyFromAgentCheckBox->isChecked());
@@ -365,17 +372,13 @@ void EditEntryWidget::saveSSHAgentConfig()
     settings.setUseLifetimeConstraintWhenAdding(m_sshAgentUi->lifetimeCheckBox->isChecked());
     settings.setLifetimeConstraintDuration(m_sshAgentUi->lifetimeSpinBox->value());
 
-    // TODO: unsafe use of translations
-    QString prefix = tr("Attachment") + ": ";
-    if (privateKeyPath.startsWith(prefix)) {
+    if (m_sshAgentUi->attachmentRadioButton->isChecked()) {
         settings.setSelectedType("attachment");
-        settings.setAttachmentName(privateKeyPath.remove(0, prefix.length()));
-        settings.setFileName("");
     } else {
         settings.setSelectedType("file");
-        settings.setFileName(privateKeyPath);
-        settings.setAttachmentName("");
     }
+    settings.setAttachmentName(m_sshAgentUi->attachmentComboBox->currentText());
+    settings.setFileName(m_sshAgentUi->externalFileEdit->text());
 
     // we don't use this as we don't run an agent but for compatibility we set it if necessary
     settings.setAllowUseOfSshKey(settings.addAtDatabaseOpen() || settings.removeAtDatabaseClose());
@@ -396,23 +399,22 @@ void EditEntryWidget::browsePrivateKey()
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Select private key"), "");
     if (!fileName.isEmpty()) {
-        m_sshAgentUi->privateKeyComboBox->addItem(fileName);
-        m_sshAgentUi->privateKeyComboBox->setCurrentText(fileName);
+        m_sshAgentUi->externalFileEdit->setText(fileName);
     }
 }
 
 bool EditEntryWidget::getOpenSSHKey(OpenSSHKey& key)
 {
-    QString privateKeyPath = m_sshAgentUi->privateKeyComboBox->currentText();
     QByteArray privateKeyData;
 
-    // TODO: unsafe use of translations
-    QString prefix = tr("Attachment") + ": ";
-    if (privateKeyPath.startsWith(prefix)) {
-        QString attachmentName = privateKeyPath.remove(0, prefix.length());
-        privateKeyData = m_entryAttachments->value(attachmentName);
+    if (m_sshAgentUi->attachmentRadioButton->isChecked()) {
+        privateKeyData = m_entryAttachments->value(m_sshAgentUi->attachmentComboBox->currentText());
     } else {
-        QFile localFile(privateKeyPath);
+        QFile localFile(m_sshAgentUi->externalFileEdit->text());
+
+        if (localFile.fileName().isEmpty()) {
+            return false;
+        }
 
         if (localFile.size() > 1024 * 1024) {
             showMessage(tr("File too large to be a private key"), MessageWidget::Error);
@@ -425,6 +427,10 @@ bool EditEntryWidget::getOpenSSHKey(OpenSSHKey& key)
         }
 
         privateKeyData = localFile.readAll();
+    }
+
+    if (privateKeyData.length() == 0) {
+        return false;
     }
 
     if (!key.parse(privateKeyData)) {
@@ -446,7 +452,7 @@ void EditEntryWidget::addKeyToAgent()
     if (!key.openPrivateKey(m_entry->password())) {
         showMessage(key.errorString(), MessageWidget::Error);
     } else {
-        m_sshAgentUi->commentEdit->setText(key.comment());
+        m_sshAgentUi->commentTextLabel->setText(key.comment());
         m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
     }
 
@@ -484,7 +490,7 @@ void EditEntryWidget::decryptPrivateKey()
     if (!key.openPrivateKey(m_entry->password())) {
         showMessage(key.errorString(), MessageWidget::Error);
     } else {
-        m_sshAgentUi->commentEdit->setText(key.comment());
+        m_sshAgentUi->commentTextLabel->setText(key.comment());
         m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
     }
 }
