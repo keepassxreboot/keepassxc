@@ -33,6 +33,7 @@ Entry::CloneFlags Group::DefaultEntryCloneFlags = static_cast<Entry::CloneFlags>
 
 Group::Group()
     : m_updateTimeinfo(true)
+    , m_modified(false)
 {
     m_data.iconNumber = DefaultIconNumber;
     m_data.isExpanded = true;
@@ -80,7 +81,7 @@ template <class P, class V> inline bool Group::set(P& property, const V& value) 
     if (property != value) {
         property = value;
         updateTimeinfo();
-        emit modified();
+        setModified(true);
         return true;
     } else {
         return false;
@@ -272,7 +273,7 @@ void Group::setIcon(int iconNumber)
         m_data.customIcon = Uuid();
 
         updateTimeinfo();
-        emit modified();
+        setModified(true);
         emit dataChanged(this);
     }
 }
@@ -286,7 +287,7 @@ void Group::setIcon(const Uuid& uuid)
         m_data.iconNumber = 0;
 
         updateTimeinfo();
-        emit modified();
+        setModified(true);
         emit dataChanged(this);
     }
 }
@@ -304,7 +305,7 @@ void Group::setExpanded(bool expanded)
         if (config()->get("IgnoreGroupExpansion").toBool()) {
             return;
         }
-        emit modified();
+        setModified(true);
     }
 }
 
@@ -333,7 +334,7 @@ void Group::setExpires(bool value)
     if (m_data.timeInfo.expires() != value) {
         m_data.timeInfo.setExpires(value);
         updateTimeinfo();
-        emit modified();
+        setModified(true);
     }
 }
 
@@ -342,7 +343,7 @@ void Group::setExpiryTime(const QDateTime& dateTime)
     if (m_data.timeInfo.expiryTime() != dateTime) {
         m_data.timeInfo.setExpiryTime(dateTime);
         updateTimeinfo();
-        emit modified();
+        setModified(true);
     }
 }
 
@@ -416,7 +417,7 @@ void Group::setParent(Group* parent, int index)
         m_data.timeInfo.setLocationChanged(QDateTime::currentDateTimeUtc());
     }
 
-    emit modified();
+    setModified(true);
 
     if (!moveWithinDatabase) {
         emit added();
@@ -622,6 +623,20 @@ QString Group::print(bool recursive, int depth)
     return response;
 }
 
+void Group::setModified(bool isModified)
+{
+    if (isModified) {
+        emit modified();
+    }
+
+    m_modified = isModified;
+}
+
+bool Group::isModified() const
+{
+    return m_modified;
+}
+
 QList<const Group*> Group::groupsRecursive(bool includeSelf) const
 {
     QList<const Group*> groupList;
@@ -724,7 +739,7 @@ void Group::merge(const Group* other)
 
     }
 
-    emit modified();
+    setModified(true);
 }
 
 Group* Group::findChildByUuid(const Uuid& uuid)
@@ -810,7 +825,7 @@ void Group::addEntry(Entry* entry)
         connect(entry, SIGNAL(modified()), m_db, SIGNAL(modifiedImmediate()));
     }
 
-    emit modified();
+    setModified(true);
     emit entryAdded(entry);
 }
 
@@ -825,7 +840,7 @@ void Group::removeEntry(Entry* entry)
         entry->disconnect(m_db);
     }
     m_entries.removeAll(entry);
-    emit modified();
+    setModified(true);
     emit entryRemoved(entry);
 }
 
@@ -874,7 +889,7 @@ void Group::cleanupParent()
     if (m_parent) {
         emit aboutToRemove(this);
         m_parent->m_children.removeAll(this);
-        emit modified();
+        setModified(true);
         emit removed();
     }
 }

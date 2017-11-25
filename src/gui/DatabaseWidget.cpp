@@ -259,8 +259,9 @@ bool DatabaseWidget::isEditWidgetModified() const
 {
     if (currentWidget() == m_editEntryWidget) {
         return m_editEntryWidget->hasBeenModified();
-    }
-    else {
+    } else if (currentWidget() == m_editGroupWidget) {
+        return m_editGroupWidget->hasBeenModified();
+    } else {
         // other edit widget don't have a hasBeenModified() method yet
         // assume that they already have been modified
         return true;
