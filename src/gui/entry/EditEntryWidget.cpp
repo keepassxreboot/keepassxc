@@ -97,7 +97,8 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     connect(this, SIGNAL(accepted()), SLOT(acceptEntry()));
     connect(this, SIGNAL(rejected()), SLOT(cancel()));
     connect(this, SIGNAL(apply()), SLOT(saveEntry()));
-    connect(m_iconsWidget, SIGNAL(messageEditEntry(QString, MessageWidget::MessageType)), SLOT(showMessage(QString, MessageWidget::MessageType)));
+    connect(m_iconsWidget, SIGNAL(messageEditEntry(QString, MessageWidget::MessageType)),
+            SLOT(showMessage(QString, MessageWidget::MessageType)));
     connect(m_iconsWidget, SIGNAL(messageEditEntryDismiss()), SLOT(hideMessage()));
     
     m_mainUi->passwordGenerator->layout()->setContentsMargins(0, 0, 0, 0);
@@ -156,8 +157,7 @@ void EditEntryWidget::setupAdvanced()
     connect(m_advancedUi->removeAttributeButton, SIGNAL(clicked()), SLOT(removeCurrentAttribute()));
     connect(m_advancedUi->protectAttributeButton, SIGNAL(toggled(bool)), SLOT(protectCurrentAttribute(bool)));
     connect(m_advancedUi->revealAttributeButton, SIGNAL(clicked(bool)), SLOT(revealCurrentAttribute()));
-    connect(m_advancedUi->attributesView->selectionModel(),
-            SIGNAL(currentChanged(QModelIndex,QModelIndex)),
+    connect(m_advancedUi->attributesView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)),
             SLOT(updateCurrentAttribute()));
 }
 
@@ -679,24 +679,18 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_mainUi->titleEdit->setFocus();
 }
 
-void EditEntryWidget::saveEntry()
+bool EditEntryWidget::saveEntry()
 {
     if (m_history) {
         clear();
         hideMessage();
         emit editFinished(false);
-        return;
+        return true;
     }
 
     if (!passwordsEqual()) {
         showMessage(tr("Different passwords supplied."), MessageWidget::Error);
-        return;
-    }
-
-    if (m_advancedUi->attributesView->currentIndex().isValid() && m_advancedUi->attributesEdit->isEnabled()) {
-        QString key = m_attributesModel->keyByIndex(m_advancedUi->attributesView->currentIndex());
-        m_entryAttributes->set(key, m_advancedUi->attributesEdit->toPlainText(),
-                               m_entryAttributes->isProtected(key));
+        return false;
     }
 
     m_currentAttribute = QPersistentModelIndex();
@@ -730,17 +724,16 @@ void EditEntryWidget::saveEntry()
         updateSSHAgent();
     }
 #endif
+
+    return true;
 }
 
 void EditEntryWidget::acceptEntry()
 {
-    // Check if passwords are mismatched first to prevent saving
-    if (!passwordsEqual()) {
-        showMessage(tr("Different passwords supplied."), MessageWidget::Error);
+    if (!saveEntry()) {
         return;
     }
 
-    saveEntry();
     clear();
     emit editFinished(true);
 }
@@ -749,7 +742,13 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
 {
     entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
     entry->attachments()->copyDataFrom(m_entryAttachments);
-    
+
+    if (m_advancedUi->attributesView->currentIndex().isValid() && m_advancedUi->attributesEdit->isEnabled()) {
+        QString key = m_attributesModel->keyByIndex(m_advancedUi->attributesView->currentIndex());
+        entry->attributes()->set(key, m_advancedUi->attributesEdit->toPlainText(),
+                                 entry->attributes()->isProtected(key));
+    }
+
     entry->setTitle(m_mainUi->titleEdit->text());
     entry->setUsername(m_mainUi->usernameEdit->text());
     entry->setUrl(m_mainUi->urlEdit->text());
@@ -789,6 +788,19 @@ void EditEntryWidget::cancel()
         hideMessage();
         emit editFinished(false);
         return;
+    }
+
+    if (hasBeenModified()) {
+        const QString question = tr("The entry has unsaved changes.");
+        auto result = MessageBox::question(this, QString(), question,
+                                           QMessageBox::Cancel | QMessageBox::Save | QMessageBox::Discard,
+                                           QMessageBox::Cancel);
+        if (result == QMessageBox::Save) {
+            saveEntry();
+            return;
+        } else if (result == QMessageBox::Cancel) {
+            return;
+        }
     }
 
     if (!m_entry->iconUuid().isNull() &&
@@ -903,7 +915,7 @@ void EditEntryWidget::updateCurrentAttribute()
             QString currKey = m_attributesModel->keyByIndex(m_currentAttribute);
             m_entryAttributes->set(currKey, m_advancedUi->attributesEdit->toPlainText(),
                                    m_entryAttributes->isProtected(currKey));
-        }        
+        }
     }
 
     displayAttribute(newIndex, m_entryAttributes->isProtected(newKey));
