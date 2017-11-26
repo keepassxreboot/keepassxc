@@ -39,9 +39,9 @@ Leave the other options at their defaults.
 ## Using Browser Integration
 
 * *Within KeePassXC,* double-click the URL of an entry,
-or select it and type Ctl+U (Cmd+U on macOS).
+or select it and type Ctrl+U (Cmd+U on macOS).
 * Your browser opens to that URL.
 * If there are username/password fields on that page, you will see the dialog below.
-Click "Allow" to confirm that KeePassXC may access the credentials to auto-fill the fields. 
+Click *Allow* to confirm that KeePassXC may access the credentials to auto-fill the fields. 
 * Check *Remember this decision* to allow this each time you visit the page.
 <img src="./KeePassXC-Confirm.png" height="200" alt="KeePassCX Confirm Access dialog">
