@@ -85,14 +85,15 @@ else
 fi
 EOF
 chmod +x ./usr/bin/keepassxc_env
-sed -i 's/Exec=keepassxc/Exec=keepassxc_env/' org.${LOWERAPP}.desktop
-get_desktopintegration "org.${LOWERAPP}"
-
-GLIBC_NEEDED=$(glibc_needed)
+sed -i 's/Exec=keepassxc/Exec=keepassxc_env/' org.${LOWERAPP}.${APP}.desktop
+get_desktopintegration "org.${LOWERAPP}.${APP}"
 
 cd ..
 
-generate_type2_appimage
+GLIBC_NEEDED=$(glibc_needed)
+NO_GLIBC_VERSION=true
 
-mv ../out/*.AppImage ../KeePassXC-${VERSION}-${ARCH}.AppImage
-rmdir ../out > /dev/null 2>&1
+generate_type2_appimage -u "gh-releases-zsync|keepassxreboot|keepassxc|latest|KeePassXC-*-${ARCH}.AppImage.zsync"
+
+mv ../out/*.AppImage* ../
+rm -rf ../out
