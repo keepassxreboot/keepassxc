@@ -147,6 +147,7 @@ private:
 
     bool m_create;
     bool m_history;
+    bool m_saved;
 #ifdef WITH_XC_SSHAGENT
     bool m_sshAgentEnabled;
     KeeAgentSettings m_sshAgentSettings;

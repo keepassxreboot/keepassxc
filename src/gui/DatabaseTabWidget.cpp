@@ -298,8 +298,7 @@ bool DatabaseTabWidget::closeDatabase(Database* db)
             if (!saveDatabase(db)) {
                 return false;
             }
-        }
-        else {
+        } else if (dbStruct.dbWidget->currentMode() != DatabaseWidget::LockedMode) {
             QMessageBox::StandardButton result =
                 MessageBox::question(
                 this, tr("Save changes?"),
@@ -307,10 +306,9 @@ bool DatabaseTabWidget::closeDatabase(Database* db)
                 QMessageBox::Yes | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Yes);
             if (result == QMessageBox::Yes) {
                 if (!saveDatabase(db)) {
-                        return false;
+                    return false;
                 }
-            }
-            else if (result == QMessageBox::Cancel) {
+            } else if (result == QMessageBox::Cancel) {
                 return false;
             }
         }
@@ -355,8 +353,13 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
 {
     DatabaseManagerStruct& dbStruct = m_dbList[db];
 
-    if (dbStruct.saveToFilename) {
+    if (dbStruct.dbWidget->currentMode() == DatabaseWidget::LockedMode) {
+        // Never allow saving a locked database; it causes corruption
+        // We return true since a save is not required
+        return true;
+    }
 
+    if (dbStruct.saveToFilename) {
         dbStruct.dbWidget->blockAutoReload(true);
         QString errorMessage = db->saveToFile(dbStruct.canonicalFilePath);
         dbStruct.dbWidget->blockAutoReload(false);
@@ -375,7 +378,6 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
                             MessageWidget::Error);
             return false;
         }
-
     } else {
         return saveDatabaseAs(db);
     }

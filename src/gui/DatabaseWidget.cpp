@@ -1206,7 +1206,7 @@ void DatabaseWidget::onWatchedFileChanged()
 
 void DatabaseWidget::reloadDatabaseFile()
 {
-    if (m_db == nullptr) {
+    if (!m_db || currentMode() == DatabaseWidget::LockedMode) {
         return;
     }
 

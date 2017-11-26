@@ -62,6 +62,7 @@ private slots:
     void testDatabaseLocking();
 
 private:
+    int addCannedEntries();
     void checkDatabase(QString dbFileName = "");
     void triggerAction(const QString& name);
     void dragAndDropGroup(const QModelIndex& sourceIndex, const QModelIndex& targetIndex, int row,
