@@ -1284,8 +1284,11 @@ void DatabaseWidget::reloadDatabaseFile()
         }
     } else {
         m_messageWidget->showMessage(
-            tr("Could not open the new database file while attempting to autoreload this database."),
+            tr("Could not open the new database file while attempting to autoreload this database.")
+                    .append("\n").append(file.errorString()),
             MessageWidget::Error);
+        // Mark db as modified since existing data may differ from file or file was deleted
+        m_db->modified();
     }
 
     // Rewatch the database file
