@@ -1287,6 +1287,7 @@ void DatabaseWidget::reloadDatabaseFile()
             tr("Could not open the new database file while attempting to autoreload this database.")
                     .append("\n").append(file.errorString()),
             MessageWidget::Error);
+        // HACK: Directly calling the database's signal
         // Mark db as modified since existing data may differ from file or file was deleted
         m_db->modified();
     }

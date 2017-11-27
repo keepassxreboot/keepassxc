@@ -166,7 +166,7 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
 
     updateLastDatabases(dbStruct.fileInfo.absoluteFilePath());
 
-    if (!(pw.isNull() && keyFile.isEmpty())) {
+    if (!pw.isNull() || !keyFile.isEmpty()) {
         dbStruct.dbWidget->switchToOpenDatabase(dbStruct.fileInfo.absoluteFilePath(), pw, keyFile);
     } else {
         dbStruct.dbWidget->switchToOpenDatabase(dbStruct.fileInfo.absoluteFilePath());
@@ -308,8 +308,10 @@ bool DatabaseTabWidget::saveDatabase(Database* db, QString filePath)
 {
     DatabaseManagerStruct& dbStruct = m_dbList[db];
 
+    // Never allow saving a locked database; it causes corruption
+    Q_ASSERT(dbStruct.dbWidget->currentMode() != DatabaseWidget::LockedMode);
+    // Release build interlock
     if (dbStruct.dbWidget->currentMode() == DatabaseWidget::LockedMode) {
-        // Never allow saving a locked database; it causes corruption
         // We return true since a save is not required
         return true;
     }
@@ -326,6 +328,7 @@ bool DatabaseTabWidget::saveDatabase(Database* db, QString filePath)
         if (errorMessage.isEmpty()) {
             // successfully saved database file
             dbStruct.modified = false;
+            dbStruct.fileInfo = QFileInfo(filePath);
             dbStruct.dbWidget->databaseSaved();
             updateTabName(db);
             emit messageDismissTab();
@@ -346,31 +349,31 @@ bool DatabaseTabWidget::saveDatabaseAs(Database* db)
 {
     while (true) {
         DatabaseManagerStruct& dbStruct = m_dbList[db];
-        QString oldFileName;
+        QString oldFilePath;
         if (dbStruct.fileInfo.exists()) {
-            oldFileName = dbStruct.fileInfo.absoluteFilePath();
+            oldFilePath = dbStruct.fileInfo.absoluteFilePath();
         } else {
-            oldFileName = QDir::toNativeSeparators(QDir::homePath() + "/" + tr("Passwords").append(".kdbx"));
+            oldFilePath = QDir::toNativeSeparators(QDir::homePath() + "/" + tr("Passwords").append(".kdbx"));
         }
-        QString fileName = fileDialog()->getSaveFileName(this, tr("Save database as"),
-                                                        oldFileName, tr("KeePass 2 Database").append(" (*.kdbx)"),
+        QString newFilePath = fileDialog()->getSaveFileName(this, tr("Save database as"),
+                                                        oldFilePath, tr("KeePass 2 Database").append(" (*.kdbx)"),
                                                         nullptr, 0, "kdbx");
-        if (!fileName.isEmpty()) {
-            if (!saveDatabase(db, fileName)) {
+        if (!newFilePath.isEmpty()) {
+            // Ensure we don't recurse back into this function
+            dbStruct.readOnly = false;
+
+            if (!saveDatabase(db, newFilePath)) {
                 // Failed to save, try again
                 continue;
             }
 
-            dbStruct.modified = false;
-            dbStruct.readOnly = false;
-            dbStruct.fileInfo = QFileInfo(fileName);
             dbStruct.dbWidget->updateFilename(dbStruct.fileInfo.absoluteFilePath());
-            updateTabName(db);
             updateLastDatabases(dbStruct.fileInfo.absoluteFilePath());
             return true;
-        } else {
-            return false;
         }
+
+        // Canceled file selection
+        return false;
     }
 }
 
