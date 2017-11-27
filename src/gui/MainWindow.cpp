@@ -114,6 +114,8 @@ MainWindow::MainWindow()
 {
     m_ui->setupUi(this);
 
+    m_ui->toolBar->setContextMenuPolicy(Qt::PreventContextMenu);
+
     // Setup the search widget in the toolbar
     SearchWidget *search = new SearchWidget();
     search->connectSignals(m_actionMultiplexer);
@@ -820,11 +822,6 @@ void MainWindow::showEntryContextMenu(const QPoint& globalPos)
 void MainWindow::showGroupContextMenu(const QPoint& globalPos)
 {
     m_ui->menuGroups->popup(globalPos);
-}
-
-void MainWindow::saveToolbarState(bool value)
-{
-    config()->set("ShowToolbar", value);
 }
 
 void MainWindow::setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback)
