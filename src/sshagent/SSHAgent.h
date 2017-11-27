@@ -63,7 +63,7 @@ private:
 #ifndef Q_OS_WIN
     QString m_socketPath;
 #else
-    const int AGENT_MAX_MSGLEN = 8192;
+    const quint32 AGENT_MAX_MSGLEN = 8192;
     const quint32 AGENT_COPYDATA_ID = 0x804e50ba;
 #endif
 

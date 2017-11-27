@@ -95,7 +95,7 @@ bool SSHAgent::sendMessage(const QByteArray& in, QByteArray& out) const
         return false;
     }
 
-    if (in.length() > AGENT_MAX_MSGLEN - 4) {
+    if (static_cast<quint32>(in.length()) > AGENT_MAX_MSGLEN - 4) {
         return false;
     }
 
