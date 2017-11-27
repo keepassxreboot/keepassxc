@@ -15,8 +15,8 @@ compiler:
   - gcc
 
 env:
-  - CONFIG=Release ASAN_OPTIONS=detect_odr_violation=1:leak_check_at_exit=0
-  - CONFIG=Debug ASAN_OPTIONS=detect_odr_violation=1:leak_check_at_exit=0
+  - CONFIG=Release ASAN_OPTIONS=detect_odr_violation=1
+  - CONFIG=Debug ASAN_OPTIONS=detect_odr_violation=1
 
 git:
   depth: 3
@@ -37,7 +37,7 @@ script:
   - cmake -DCMAKE_BUILD_TYPE=${CONFIG} -DWITH_GUI_TESTS=ON -DWITH_ASAN=ON -DWITH_XC_HTTP=ON -DWITH_XC_AUTOTYPE=ON -DWITH_XC_YUBIKEY=ON $CMAKE_ARGS ..
   - make -j2
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then make test ARGS+="-E testgui --output-on-failure"; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then xvfb-run -a --server-args="-screen 0 800x600x24" make test ARGS+="-R testgui --output-on-failure"; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then ASAN_OPTIONS=${ASAN_OPTIONS}:leak_check_at_exit=0 xvfb-run -a --server-args="-screen 0 800x600x24" make test ARGS+="-R testgui --output-on-failure"; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then make test ARGS+="--output-on-failure"; fi
 
 # Generate snapcraft build when merging into master/develop branches

@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2016 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,36 +19,29 @@
 #include "KeePass2Repair.h"
 
 #include <QBuffer>
+#include <QScopedPointer>
 #include <QRegExp>
 
 #include "format/KeePass2RandomStream.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2XmlReader.h"
 
-KeePass2Repair::KeePass2Repair()
-    : m_db(nullptr)
+KeePass2Repair::RepairOutcome KeePass2Repair::repairDatabase(QIODevice* device, const CompositeKey& key)
 {
-}
-
-KeePass2Repair::RepairResult KeePass2Repair::repairDatabase(QIODevice* device, const CompositeKey& key)
-{
-    m_db = nullptr;
     m_errorStr.clear();
 
     KeePass2Reader reader;
     reader.setSaveXml(true);
 
-    Database* db = reader.readDatabase(device, key, true);
+    QScopedPointer<Database> db(reader.readDatabase(device, key, true));
     if (!reader.hasError()) {
-        delete db;
-        return NothingTodo;
+        return qMakePair(NothingTodo, nullptr);
     }
 
     QByteArray xmlData = reader.xmlData();
     if (!db || xmlData.isEmpty()) {
-        delete db;
         m_errorStr = reader.errorString();
-        return UnableToOpen;
+        return qMakePair(UnableToOpen, nullptr);
     }
 
     bool repairAction = false;
@@ -59,8 +53,7 @@ KeePass2Repair::RepairResult KeePass2Repair::repairDatabase(QIODevice* device, c
                 && encodingRegExp.cap(1).compare("utf8", Qt::CaseInsensitive) != 0)
         {
             // database is not utf-8 encoded, we don't support repairing that
-            delete db;
-            return RepairFailed;
+            return qMakePair(RepairFailed, nullptr);
         }
     }
 
@@ -75,8 +68,7 @@ KeePass2Repair::RepairResult KeePass2Repair::repairDatabase(QIODevice* device, c
 
     if (!repairAction) {
         // we were unable to find the problem
-        delete db;
-        return RepairFailed;
+        return qMakePair(RepairFailed, nullptr);
     }
 
     KeePass2RandomStream randomStream;
@@ -84,21 +76,14 @@ KeePass2Repair::RepairResult KeePass2Repair::repairDatabase(QIODevice* device, c
     KeePass2XmlReader xmlReader;
     QBuffer buffer(&xmlData);
     buffer.open(QIODevice::ReadOnly);
-    xmlReader.readDatabase(&buffer, db, &randomStream);
+    xmlReader.readDatabase(&buffer, db.data(), &randomStream);
 
     if (xmlReader.hasError()) {
-        delete db;
-        return RepairFailed;
+        return qMakePair(RepairFailed, nullptr);
     }
     else {
-        m_db = db;
-        return RepairSuccess;
+        return qMakePair(RepairSuccess, db.take());
     }
-}
-
-Database* KeePass2Repair::database() const
-{
-    return m_db;
 }
 
 QString KeePass2Repair::errorString() const
