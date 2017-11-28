@@ -74,6 +74,11 @@ bool SymmetricCipher::reset()
     return m_backend->reset();
 }
 
+int SymmetricCipher::keySize() const
+{
+    return m_backend->keySize();
+}
+
 int SymmetricCipher::blockSize() const
 {
     return m_backend->blockSize();

@@ -68,7 +68,6 @@ set(keepassx_SOURCES
     core/Uuid.cpp
     core/Base32.h
     core/Base32.cpp
-    core/Optional.h
     cli/Utils.cpp
     cli/Utils.h
     crypto/Crypto.cpp
@@ -99,6 +98,7 @@ set(keepassx_SOURCES
     gui/DatabaseTabWidget.cpp
     gui/DatabaseWidget.cpp
     gui/DatabaseWidgetStateSync.cpp
+    gui/DetailsWidget.cpp
     gui/DialogyWidget.cpp
     gui/DragTabBar.cpp
     gui/EditWidget.cpp
@@ -155,6 +155,8 @@ if(APPLE)
     set(keepassx_SOURCES ${keepassx_SOURCES}
         core/ScreenLockListenerMac.h
         core/ScreenLockListenerMac.cpp
+        core/MacPasteboard.h
+        core/MacPasteboard.cpp
         )
 endif()
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
@@ -177,6 +179,7 @@ set(keepassx_SOURCES_MAINEXE
 add_feature_info(AutoType WITH_XC_AUTOTYPE "Automatic password typing")
 add_feature_info(KeePassHTTP WITH_XC_HTTP "Browser integration compatible with ChromeIPass and PassIFox")
 add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
+add_feature_info(SSHAgent WITH_XC_SSHAGENT "SSH agent integration compatible with KeeAgent")
 
 add_subdirectory(http)
 if(WITH_XC_HTTP)
@@ -185,6 +188,11 @@ endif()
 
 add_subdirectory(autotype)
 add_subdirectory(cli)
+
+add_subdirectory(sshagent)
+if(WITH_XC_SSHAGENT)
+    set(sshagent_LIB sshagent)
+endif()
 
 set(autotype_SOURCES
     core/Tools.cpp
@@ -222,6 +230,7 @@ set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUIL
 target_link_libraries(keepassx_core
                       ${keepasshttp_LIB}
                       ${autotype_LIB}
+                      ${sshagent_LIB}
                       ${YUBIKEY_LIBRARIES}
                       ${ZXCVBN_LIBRARIES}
                       Qt5::Core
@@ -234,6 +243,9 @@ target_link_libraries(keepassx_core
 
 if(APPLE)
     target_link_libraries(keepassx_core "-framework Foundation")
+    if(Qt5MacExtras_FOUND)
+      target_link_libraries(keepassx_core Qt5::MacExtras)
+    endif()
 endif()
 if (UNIX AND NOT APPLE)
     target_link_libraries(keepassx_core Qt5::DBus)
@@ -264,13 +276,7 @@ if(APPLE AND WITH_APP_BUNDLE)
   set_target_properties(${PROGNAME} PROPERTIES
                         MACOSX_BUNDLE ON
                         MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)
-endif()
 
-install(TARGETS ${PROGNAME}
-        BUNDLE DESTINATION . COMPONENT Runtime
-        RUNTIME DESTINATION ${BIN_INSTALL_DIR} COMPONENT Runtime)
-
-if(APPLE AND WITH_APP_BUNDLE)
   if(QT_MAC_USE_COCOA AND EXISTS "${QT_LIBRARY_DIR}/Resources/qt_menu.nib")
     install(DIRECTORY "${QT_LIBRARY_DIR}/Resources/qt_menu.nib"
             DESTINATION "${DATA_INSTALL_DIR}")
@@ -284,15 +290,16 @@ if(APPLE AND WITH_APP_BUNDLE)
   set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSXC_VERSION}")
   include(CPack)
 
-  if(NOT DEFINED QT_BINARY_DIR)
-    set(QT_BINARY_DIR "/usr/local/opt/qt5/bin" CACHE PATH "QT binary folder")
-  endif()
   add_custom_command(TARGET ${PROGNAME}
                      POST_BUILD
-                     COMMAND ${QT_BINARY_DIR}/macdeployqt ${PROGNAME}.app
+                     COMMAND ${MACDEPLOYQT_EXE} ${PROGNAME}.app
                      WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
                      COMMENT "Deploying app bundle")
 endif()
+
+install(TARGETS ${PROGNAME}
+      BUNDLE DESTINATION . COMPONENT Runtime
+      RUNTIME DESTINATION ${BIN_INSTALL_DIR} COMPONENT Runtime)
 
 if(MINGW)
   if(${CMAKE_SIZEOF_VOID_P} EQUAL "8")

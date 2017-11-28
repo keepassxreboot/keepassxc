@@ -260,6 +260,25 @@ bool Database::hasKey() const
     return m_data.hasKey;
 }
 
+bool Database::transformKeyWithSeed(const QByteArray& transformSeed)
+{
+    Q_ASSERT(hasKey());
+
+    bool ok;
+    QString errorString;
+
+    QByteArray transformedMasterKey =
+            m_data.key.transform(transformSeed, transformRounds(), &ok, &errorString);
+    if (!ok) {
+        return false;
+    }
+
+    m_data.transformSeed = transformSeed;
+    m_data.transformedMasterKey = transformedMasterKey;
+
+    return true;
+}
+
 bool Database::verifyKey(const CompositeKey& key) const
 {
     Q_ASSERT(hasKey());

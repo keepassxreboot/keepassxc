@@ -25,14 +25,16 @@ DatabaseWidgetStateSync::DatabaseWidgetStateSync(QObject* parent)
     , m_activeDbWidget(nullptr)
     , m_blockUpdates(false)
 {
-    m_splitterSizes = variantToIntList(config()->get("GUI/SplitterState"));
+    m_mainSplitterSizes = variantToIntList(config()->get("GUI/SplitterState"));
+    m_detailSplitterSizes = variantToIntList(config()->get("GUI/DetailSplitterState"));
     m_columnSizesList = variantToIntList(config()->get("GUI/EntryListColumnSizes"));
     m_columnSizesSearch = variantToIntList(config()->get("GUI/EntrySearchColumnSizes"));
 }
 
 DatabaseWidgetStateSync::~DatabaseWidgetStateSync()
 {
-    config()->set("GUI/SplitterState", intListToVariant(m_splitterSizes));
+    config()->set("GUI/SplitterState", intListToVariant(m_mainSplitterSizes));
+    config()->set("GUI/DetailSplitterState", intListToVariant(m_detailSplitterSizes));
     config()->set("GUI/EntryListColumnSizes", intListToVariant(m_columnSizesList));
     config()->set("GUI/EntrySearchColumnSizes", intListToVariant(m_columnSizesSearch));
 }
@@ -48,17 +50,25 @@ void DatabaseWidgetStateSync::setActive(DatabaseWidget* dbWidget)
     if (m_activeDbWidget) {
         m_blockUpdates = true;
 
-        if (!m_splitterSizes.isEmpty())
-            m_activeDbWidget->setSplitterSizes(m_splitterSizes);
+        if (!m_mainSplitterSizes.isEmpty()) {
+            m_activeDbWidget->setMainSplitterSizes(m_mainSplitterSizes);
+        }
 
-        if (m_activeDbWidget->isInSearchMode())
+        if (!m_detailSplitterSizes.isEmpty()) {
+            m_activeDbWidget->setDetailSplitterSizes(m_detailSplitterSizes);
+        }
+
+        if (m_activeDbWidget->isInSearchMode()) {
             restoreSearchView();
-        else
+        } else {
             restoreListView();
+        }
 
         m_blockUpdates = false;
 
-        connect(m_activeDbWidget, SIGNAL(splitterSizesChanged()),
+        connect(m_activeDbWidget, SIGNAL(mainSplitterSizesChanged()),
+                SLOT(updateSplitterSizes()));
+        connect(m_activeDbWidget, SIGNAL(detailSplitterSizesChanged()),
                 SLOT(updateSplitterSizes()));
         connect(m_activeDbWidget, SIGNAL(entryColumnSizesChanged()),
                 SLOT(updateColumnSizes()));
@@ -102,7 +112,8 @@ void DatabaseWidgetStateSync::updateSplitterSizes()
         return;
     }
 
-    m_splitterSizes = m_activeDbWidget->splitterSizes();
+    m_mainSplitterSizes = m_activeDbWidget->mainSplitterSizes();
+    m_detailSplitterSizes = m_activeDbWidget->detailSplitterSizes();
 }
 
 void DatabaseWidgetStateSync::updateColumnSizes()

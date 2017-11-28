@@ -47,6 +47,7 @@
 #include "gui/TotpDialog.h"
 #include "gui/DatabaseOpenWidget.h"
 #include "gui/DatabaseSettingsWidget.h"
+#include "gui/DetailsWidget.h"
 #include "gui/KeePass1OpenWidget.h"
 #include "gui/MessageBox.h"
 #include "gui/UnlockDatabaseWidget.h"
@@ -56,12 +57,19 @@
 #include "gui/group/EditGroupWidget.h"
 #include "gui/group/GroupView.h"
 
+#include "config-keepassx.h"
+
+#ifdef WITH_XC_SSHAGENT
+#include "sshagent/SSHAgent.h"
+#endif
+
 DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     : QStackedWidget(parent)
     , m_db(db)
     , m_newGroup(nullptr)
     , m_newEntry(nullptr)
     , m_newParent(nullptr)
+    , m_importingCsv(false)
 {
     m_mainWidget = new QWidget(this);
 
@@ -72,12 +80,15 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     QLayout* layout = new QHBoxLayout();
     mainLayout->addWidget(m_messageWidget);
     mainLayout->addLayout(layout);
-    m_splitter = new QSplitter(m_mainWidget);
-    m_splitter->setChildrenCollapsible(false);
+    m_mainSplitter = new QSplitter(m_mainWidget);
+    m_mainSplitter->setChildrenCollapsible(false);
+    m_detailSplitter = new QSplitter(m_mainWidget);
+    m_detailSplitter->setOrientation(Qt::Vertical);
+    m_detailSplitter->setChildrenCollapsible(true);
 
-    QWidget* rightHandSideWidget = new QWidget(m_splitter);
+    QWidget* rightHandSideWidget = new QWidget(m_mainSplitter);
 
-    m_groupView = new GroupView(db, m_splitter);
+    m_groupView = new GroupView(db, m_mainSplitter);
     m_groupView->setObjectName("groupView");
     m_groupView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(m_groupView, SIGNAL(customContextMenuRequested(QPoint)),
@@ -99,10 +110,18 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
                                     "border: 2px solid rgb(190, 190, 190);"
                                     "border-radius: 5px;");
 
+    m_detailsView = new DetailsWidget(this);
+
     QVBoxLayout* vLayout = new QVBoxLayout(rightHandSideWidget);
     vLayout->setMargin(0);
     vLayout->addWidget(m_searchingLabel);
-    vLayout->addWidget(m_entryView);
+    vLayout->addWidget(m_detailSplitter);
+
+    m_detailSplitter->addWidget(m_entryView);
+    m_detailSplitter->addWidget(m_detailsView);
+
+    m_detailSplitter->setStretchFactor(0, 80);
+    m_detailSplitter->setStretchFactor(1, 20);
 
     m_searchingLabel->setVisible(false);
 
@@ -110,13 +129,13 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
 
     setTabOrder(m_entryView, m_groupView);
 
-    m_splitter->addWidget(m_groupView);
-    m_splitter->addWidget(rightHandSideWidget);
+    m_mainSplitter->addWidget(m_groupView);
+    m_mainSplitter->addWidget(rightHandSideWidget);
 
-    m_splitter->setStretchFactor(0, 30);
-    m_splitter->setStretchFactor(1, 70);
+    m_mainSplitter->setStretchFactor(0, 30);
+    m_mainSplitter->setStretchFactor(1, 70);
 
-    layout->addWidget(m_splitter);
+    layout->addWidget(m_mainSplitter);
     m_mainWidget->setLayout(mainLayout);
 
     m_editEntryWidget = new EditEntryWidget();
@@ -125,13 +144,14 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_editGroupWidget = new EditGroupWidget();
     m_editGroupWidget->setObjectName("editGroupWidget");
     m_changeMasterKeyWidget = new ChangeMasterKeyWidget();
+    m_changeMasterKeyWidget->setObjectName("changeMasterKeyWidget");
     m_changeMasterKeyWidget->headlineLabel()->setText(tr("Change master key"));
-    m_csvImportWizard = new CsvImportWizard();
-    m_csvImportWizard->setObjectName("csvImportWizard");
     QFont headlineLabelFont = m_changeMasterKeyWidget->headlineLabel()->font();
     headlineLabelFont.setBold(true);
     headlineLabelFont.setPointSize(headlineLabelFont.pointSize() + 2);
     m_changeMasterKeyWidget->headlineLabel()->setFont(headlineLabelFont);
+    m_csvImportWizard = new CsvImportWizard();
+    m_csvImportWizard->setObjectName("csvImportWizard");
     m_databaseSettingsWidget = new DatabaseSettingsWidget();
     m_databaseSettingsWidget->setObjectName("databaseSettingsWidget");
     m_databaseOpenWidget = new DatabaseOpenWidget();
@@ -156,7 +176,8 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     addWidget(m_keepass1OpenWidget);
     addWidget(m_unlockDatabaseWidget);
 
-    connect(m_splitter, SIGNAL(splitterMoved(int,int)), SIGNAL(splitterSizesChanged()));
+    connect(m_mainSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(mainSplitterSizesChanged()));
+    connect(m_detailSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(detailSplitterSizesChanged()));
     connect(m_entryView->header(), SIGNAL(sectionResized(int,int,int)), SIGNAL(entryColumnSizesChanged()));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(onGroupChanged(Group*)));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), SIGNAL(groupChanged()));
@@ -180,6 +201,12 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(&m_fileWatchUnblockTimer, SIGNAL(timeout()), this, SLOT(unblockAutoReload()));
     connect(this, SIGNAL(currentChanged(int)), this, SLOT(emitCurrentModeChanged()));
 
+    connect(m_groupView, SIGNAL(groupPressed(Group*)), SLOT(emitPressedGroup(Group*)));
+    connect(m_groupView, SIGNAL(groupChanged(Group*)), SLOT(emitPressedGroup(Group*)));
+    connect(m_entryView, SIGNAL(entryPressed(Entry*)), SLOT(emitPressedEntry(Entry*)));
+    connect(m_entryView, SIGNAL(entrySelectionChanged()), SLOT(emitPressedEntry()));
+    connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(emitPressedEntry()));
+
     m_databaseModified = false;
 
     m_fileWatchTimer.setSingleShot(true);
@@ -188,6 +215,13 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
 
     m_searchCaseSensitive = false;
     m_searchLimitGroup = config()->get("SearchLimitGroup", false).toBool();
+
+#ifdef WITH_XC_SSHAGENT
+    if (config()->get("SSHAgent", false).toBool()) {
+        connect(this, SIGNAL(currentModeChanged(DatabaseWidget::Mode)), SSHAgent::instance(), SLOT(databaseModeChanged(DatabaseWidget::Mode)));
+        connect(this, SIGNAL(closeRequest()), SSHAgent::instance(), SLOT(databaseModeChanged()));
+    }
+#endif
 
     setCurrentWidget(m_mainWidget);
 }
@@ -233,14 +267,24 @@ bool DatabaseWidget::isEditWidgetModified() const
     }
 }
 
-QList<int> DatabaseWidget::splitterSizes() const
+QList<int> DatabaseWidget::mainSplitterSizes() const
 {
-    return m_splitter->sizes();
+    return m_mainSplitter->sizes();
 }
 
-void DatabaseWidget::setSplitterSizes(const QList<int>& sizes)
+void DatabaseWidget::setMainSplitterSizes(const QList<int>& sizes)
 {
-    m_splitter->setSizes(sizes);
+    m_mainSplitter->setSizes(sizes);
+}
+
+QList<int> DatabaseWidget::detailSplitterSizes() const
+{
+    return m_detailSplitter->sizes();
+}
+
+void DatabaseWidget::setDetailSplitterSizes(const QList<int> &sizes)
+{
+    m_detailSplitter->setSizes(sizes);
 }
 
 QList<int> DatabaseWidget::entryHeaderViewSizes() const
@@ -373,6 +417,8 @@ void DatabaseWidget::setupTotp()
         setupTotpDialog->setSeed(currentEntry->totpSeed());
         setupTotpDialog->setStep(currentEntry->totpStep());
         setupTotpDialog->setDigits(currentEntry->totpDigits());
+        // now that all settings are set, decide whether it's default, steam or custom
+        setupTotpDialog->setSettings(currentEntry->totpDigits());
     }
 
     setupTotpDialog->open();
@@ -753,6 +799,12 @@ void DatabaseWidget::switchToGroupEdit(Group* group, bool create)
 
 void DatabaseWidget::updateMasterKey(bool accepted)
 {
+    if (m_importingCsv) {
+        setCurrentWidget(m_csvImportWizard);
+        m_csvImportWizard->keyFinished(accepted, m_changeMasterKeyWidget->newMasterKey());
+        return;
+    }
+
     if (accepted) {
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
         bool result = m_db->setKey(m_changeMasterKeyWidget->newMasterKey());
@@ -825,7 +877,7 @@ void DatabaseWidget::unlockDatabase(bool accepted)
         return;
     }
 
-    Database *db = Q_NULLPTR;
+    Database* db = nullptr;
     if (sender() == m_unlockDatabaseDialog) {
         db = m_unlockDatabaseDialog->database();
     } else if (sender() == m_unlockDatabaseWidget) {
@@ -886,6 +938,7 @@ void DatabaseWidget::switchToMasterKeyChange(bool disableCancel)
     m_changeMasterKeyWidget->clearForms();
     m_changeMasterKeyWidget->setCancelEnabled(!disableCancel);
     setCurrentWidget(m_changeMasterKeyWidget);
+    m_importingCsv = false;
 }
 
 void DatabaseWidget::switchToDatabaseSettings()
@@ -921,9 +974,11 @@ void DatabaseWidget::switchToOpenDatabase(const QString& fileName, const QString
 void DatabaseWidget::switchToImportCsv(const QString& fileName)
 {
     updateFilename(fileName);
-    switchToMasterKeyChange();
     m_csvImportWizard->load(fileName, m_db);
-    setCurrentWidget(m_csvImportWizard);
+    m_changeMasterKeyWidget->clearForms();
+    m_changeMasterKeyWidget->setCancelEnabled(false);
+    setCurrentWidget(m_changeMasterKeyWidget);
+    m_importingCsv = true;
 }
 
 void DatabaseWidget::switchToOpenMergeDatabase(const QString& fileName)
@@ -1050,6 +1105,32 @@ void DatabaseWidget::emitEntryContextMenuRequested(const QPoint& pos)
     emit entryContextMenuRequested(m_entryView->viewport()->mapToGlobal(pos));
 }
 
+void DatabaseWidget::emitPressedEntry()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    emitPressedEntry(currentEntry);
+}
+
+void DatabaseWidget::emitPressedEntry(Entry* currentEntry)
+{
+    if (!currentEntry) {
+        // if no entry is pressed, leave in details the last entry
+        return;
+    }
+
+    emit pressedEntry(currentEntry);
+}
+
+void DatabaseWidget::emitPressedGroup(Group* currentGroup)
+{
+    if (!currentGroup) {
+        // if no group is pressed, leave in details the last group
+        return;
+    }
+
+    emit pressedGroup(currentGroup);
+}
+
 bool DatabaseWidget::dbHasKey() const
 {
     return m_db->hasKey();
@@ -1134,8 +1215,13 @@ void DatabaseWidget::onWatchedFileChanged()
 
 void DatabaseWidget::reloadDatabaseFile()
 {
-    if (m_db == nullptr)
+    if (!m_db || currentMode() == DatabaseWidget::LockedMode) {
         return;
+    }
+
+    if (currentMode() == DatabaseWidget::LockedMode) {
+        return;
+    }
 
     if (! config()->get("AutoReloadOnChange").toBool()) {
         // Ask if we want to reload the db
@@ -1325,6 +1411,12 @@ void DatabaseWidget::showUnlockDialog()
 {
     m_unlockDatabaseDialog->clearForms();
     m_unlockDatabaseDialog->setDBFilename(m_filename);
+
+#if defined(Q_OS_MAC)
+    autoType()->raiseWindow();
+    Tools::wait(500);
+#endif
+
     m_unlockDatabaseDialog->show();
     m_unlockDatabaseDialog->activateWindow();
 }
@@ -1334,9 +1426,10 @@ void DatabaseWidget::closeUnlockDialog()
     m_unlockDatabaseDialog->close();
 }
 
-void DatabaseWidget::showMessage(const QString& text, MessageWidget::MessageType type)
+void DatabaseWidget::showMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton, int autoHideTimeout)
 {
-    m_messageWidget->showMessage(text, type);
+    m_messageWidget->setCloseButtonVisible(showClosebutton);
+    m_messageWidget->showMessage(text, type, autoHideTimeout);
 }
 
 void DatabaseWidget::hideMessage()

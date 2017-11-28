@@ -87,8 +87,8 @@ void TotpDialog::updateSeconds()
 void TotpDialog::updateTotp()
 {
     QString totpCode = m_entry->totp();
-    QString firstHalf = totpCode.left(totpCode.size()/2);
-    QString secondHalf = totpCode.right(totpCode.size()/2);
+    QString firstHalf = totpCode.left(totpCode.size() / 2);
+    QString secondHalf = totpCode.mid(totpCode.size() / 2);
     m_ui->totpLabel->setText(firstHalf + " " + secondHalf);
 }
 

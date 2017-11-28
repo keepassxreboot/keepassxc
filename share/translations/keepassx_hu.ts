@@ -67,6 +67,10 @@ Kernel: %3 %4</translation>
         <source>Include the following information whenever you report a bug:</source>
         <translation>Minden hibajelentésnél legyenek mellékelve ezek az információk:</translation>
     </message>
+    <message>
+        <source>Distribution: %1</source>
+        <translation>Disztribúció: %1</translation>
+    </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
@@ -1094,7 +1098,7 @@ Mindenképp megnyitja?</translation>
     </message>
     <message>
         <source>Custom icon already exists</source>
-        <translation type="unfinished"/>
+        <translation>Az egyéni ikon már létezik</translation>
     </message>
 </context>
 <context>
@@ -1318,6 +1322,17 @@ Ez egyirányú migráció. Nem lehet majd megnyitni az importált adatbázist a 
     </message>
 </context>
 <context>
+    <name>KeePass2Writer</name>
+    <message>
+        <source>Unable to issue challenge-response.</source>
+        <translation>Nem lehet kiutalni a kihívás-választ.</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Nem lehet kiszámítani a mesterkulcsot</translation>
+    </message>
+</context>
+<context>
     <name>Main</name>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
@@ -1337,7 +1352,7 @@ Ez egyirányú migráció. Nem lehet majd megnyitni az importált adatbázist a 
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
-        <translation type="unfinished"/>
+        <translation>A meglévő egypéldányos zárolási fájl érvénytelen. Új példány indítása.</translation>
     </message>
 </context>
 <context>

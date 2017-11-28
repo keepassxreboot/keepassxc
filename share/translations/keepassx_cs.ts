@@ -67,6 +67,10 @@ Jádro systému: %3 %4</translation>
         <source>Include the following information whenever you report a bug:</source>
         <translation>K hlášení chyby vždy připojte následující údaje:</translation>
     </message>
+    <message>
+        <source>Distribution: %1</source>
+        <translation>Distribuce: %1</translation>
+    </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
@@ -1095,7 +1099,7 @@ Chcete ji přesto otevřít?</translation>
     </message>
     <message>
         <source>Custom icon already exists</source>
-        <translation type="unfinished"/>
+        <translation>Tato vlastní ikona už existuje</translation>
     </message>
 </context>
 <context>
@@ -1319,6 +1323,17 @@ Jedná se o jednosměrný převod. Databázi, vzniklou z importu, nepůjde otev�
     </message>
 </context>
 <context>
+    <name>KeePass2Writer</name>
+    <message>
+        <source>Unable to issue challenge-response.</source>
+        <translation>Nedaří se vyvolat výzva-odpověď.</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Nedaří se spočítat hlavní klíč</translation>
+    </message>
+</context>
+<context>
     <name>Main</name>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
@@ -1338,7 +1353,7 @@ Jedná se o jednosměrný převod. Databázi, vzniklou z importu, nepůjde otev�
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
-        <translation type="unfinished"/>
+        <translation>Existující uzamykací soubor, zajišťující spuštění pouze jedné instance, není platný. Spouští se nová instance.</translation>
     </message>
 </context>
 <context>

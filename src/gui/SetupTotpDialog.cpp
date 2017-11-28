@@ -35,7 +35,9 @@ SetupTotpDialog::SetupTotpDialog(DatabaseWidget* parent, Entry* entry)
 
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(close()));
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(setupTotp()));
-    connect(m_ui->customSettingsCheckBox, SIGNAL(toggled(bool)), SLOT(toggleCustom(bool)));
+    connect(m_ui->radioDefault, SIGNAL(toggled(bool)), SLOT(toggleDefault(bool)));
+    connect(m_ui->radioSteam, SIGNAL(toggled(bool)), SLOT(toggleSteam(bool)));
+    connect(m_ui->radioCustom, SIGNAL(toggled(bool)), SLOT(toggleCustom(bool)));
 }
 
 
@@ -43,17 +45,35 @@ void SetupTotpDialog::setupTotp()
 {
     quint8 digits;
 
-    if (m_ui->radio8Digits->isChecked()) {
+    if (m_ui->radioSteam->isChecked()) {
+        digits = Totp::ENCODER_STEAM;
+    } else if (m_ui->radio8Digits->isChecked()) {
         digits = 8;
     } else {
         digits = 6;
     }
 
     quint8 step = m_ui->stepSpinBox->value();
-    QString seed = QTotp::parseOtpString(m_ui->seedEdit->text(), digits, step);
+    QString seed = Totp::parseOtpString(m_ui->seedEdit->text(), digits, step);
     m_entry->setTotp(seed, step, digits);
     emit m_parent->entrySelectionChanged();
     close();
+}
+
+void SetupTotpDialog::toggleDefault(bool status)
+{
+    if (status) {
+        setStep(Totp::defaultStep);
+        setDigits(Totp::defaultDigits);
+    }
+}
+
+void SetupTotpDialog::toggleSteam(bool status)
+{
+    if (status) {
+        setStep(Totp::defaultStep);
+        setDigits(Totp::ENCODER_STEAM);
+    }
 }
 
 void SetupTotpDialog::toggleCustom(bool status)
@@ -72,13 +92,25 @@ void SetupTotpDialog::setSeed(QString value)
     m_ui->seedEdit->setText(value);
 }
 
+void SetupTotpDialog::setSettings(quint8 digits) {
+    quint8 step = m_ui->stepSpinBox->value();
+
+    bool isDefault = ((step == Totp::defaultStep) &&
+        (digits == Totp::defaultDigits));
+    bool isSteam = (digits == Totp::ENCODER_STEAM);
+
+    if (isSteam) {
+        m_ui->radioSteam->setChecked(true);
+    } else if (isDefault) {
+        m_ui->radioDefault->setChecked(true);
+    } else {
+        m_ui->radioCustom->setChecked(true);
+    }
+}
+
 void SetupTotpDialog::setStep(quint8 step)
 {
     m_ui->stepSpinBox->setValue(step);
-
-    if (step != QTotp::defaultStep) {
-        m_ui->customSettingsCheckBox->setChecked(true);
-    }
 }
 
 void SetupTotpDialog::setDigits(quint8 digits)
@@ -90,12 +122,7 @@ void SetupTotpDialog::setDigits(quint8 digits)
         m_ui->radio6Digits->setChecked(true);
         m_ui->radio8Digits->setChecked(false);
     }
-
-    if (digits != QTotp::defaultDigits) {
-        m_ui->customSettingsCheckBox->setChecked(true);
-    }
 }
-
 
 SetupTotpDialog::~SetupTotpDialog()
 {

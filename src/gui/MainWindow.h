@@ -54,8 +54,10 @@ public slots:
     void openDatabase(const QString& fileName, const QString& pw = QString(),
                       const QString& keyFile = QString());
     void appExit();
-    void displayGlobalMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton = true);
-    void displayTabMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton = true);
+    void displayGlobalMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton = true,
+                              int autoHideTimeout = MessageWidget::DefaultAutoHideTimeout);
+    void displayTabMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton = true,
+                           int autoHideTimeout = MessageWidget::DefaultAutoHideTimeout);
     void hideGlobalMessage();
     void showYubiKeyPopup();
     void hideYubiKeyPopup();
@@ -85,7 +87,6 @@ private slots:
     void updateCopyAttributesMenu();
     void showEntryContextMenu(const QPoint& globalPos);
     void showGroupContextMenu(const QPoint& globalPos);
-    void saveToolbarState(bool value);
     void rememberOpenDatabases(const QString& filePath);
     void applySettingsChanges();
     void trayIconTriggered(QSystemTrayIcon::ActivationReason reason);

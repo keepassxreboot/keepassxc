@@ -21,6 +21,8 @@
 #include <QMap>
 #include <QObject>
 
+class QStringList;
+
 class EntryAttachments : public QObject
 {
     Q_OBJECT
@@ -33,6 +35,7 @@ public:
     QByteArray value(const QString& key) const;
     void set(const QString& key, const QByteArray& value);
     void remove(const QString& key);
+    void remove(const QStringList& keys);
     void clear();
     void copyDataFrom(const EntryAttachments* other);
     bool operator==(const EntryAttachments& other) const;

@@ -47,6 +47,7 @@ class QSplitter;
 class QLabel;
 class UnlockDatabaseWidget;
 class MessageWidget;
+class DetailsWidget;
 class UnlockDatabaseDialog;
 class QFileSystemWatcher;
 
@@ -87,8 +88,10 @@ public:
     bool isGroupSelected() const;
     bool isInEditMode() const;
     bool isEditWidgetModified() const;
-    QList<int> splitterSizes() const;
-    void setSplitterSizes(const QList<int>& sizes);
+    QList<int> mainSplitterSizes() const;
+    void setMainSplitterSizes(const QList<int>& sizes);
+    QList<int> detailSplitterSizes() const;
+    void setDetailSplitterSizes(const QList<int>& sizes);
     QList<int> entryHeaderViewSizes() const;
     void setEntryViewHeaderSizes(const QList<int>& sizes);
     void clearAllWidgets();
@@ -115,12 +118,15 @@ signals:
     void databaseMerged(Database* mergedDb);
     void groupContextMenuRequested(const QPoint& globalPos);
     void entryContextMenuRequested(const QPoint& globalPos);
+    void pressedEntry(Entry* selectedEntry);
+    void pressedGroup(Group* selectedGroup);
     void unlockedDatabase();
     void listModeAboutToActivate();
     void listModeActivated();
     void searchModeAboutToActivate();
     void searchModeActivated();
-    void splitterSizesChanged();
+    void mainSplitterSizesChanged();
+    void detailSplitterSizesChanged();
     void entryColumnSizesChanged();
     void updateSearch(QString text);
 
@@ -166,7 +172,8 @@ public slots:
     void setSearchLimitGroup(bool state);
     void endSearch();
 
-    void showMessage(const QString& text, MessageWidget::MessageType type);
+    void showMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton = true,
+                     int autoHideTimeout = MessageWidget::DefaultAutoHideTimeout);
     void hideMessage();
 
 private slots:
@@ -178,6 +185,9 @@ private slots:
     void switchToGroupEdit(Group* entry, bool create);
     void emitGroupContextMenuRequested(const QPoint& pos);
     void emitEntryContextMenuRequested(const QPoint& pos);
+    void emitPressedEntry();
+    void emitPressedEntry(Entry* currentEntry);
+    void emitPressedGroup(Group* currentGroup);
     void updateMasterKey(bool accepted);
     void openDatabase(bool accepted);
     void mergeDatabase(bool accepted);
@@ -207,7 +217,8 @@ private:
     KeePass1OpenWidget* m_keepass1OpenWidget;
     UnlockDatabaseWidget* m_unlockDatabaseWidget;
     UnlockDatabaseDialog* m_unlockDatabaseDialog;
-    QSplitter* m_splitter;
+    QSplitter* m_mainSplitter;
+    QSplitter* m_detailSplitter;
     GroupView* m_groupView;
     EntryView* m_entryView;
     QLabel* m_searchingLabel;
@@ -218,11 +229,15 @@ private:
     Uuid m_groupBeforeLock;
     Uuid m_entryBeforeLock;
     MessageWidget* m_messageWidget;
+    DetailsWidget* m_detailsView;
 
     // Search state
     QString m_lastSearchText;
     bool m_searchCaseSensitive;
     bool m_searchLimitGroup;
+
+    // CSV import state
+    bool m_importingCsv;
 
     // Autoreload
     QFileSystemWatcher m_fileWatcher;

@@ -31,9 +31,18 @@ PasswordEdit::PasswordEdit(QWidget* parent)
 {
     setEchoMode(QLineEdit::Password);
     updateStylesheet();
-    
-    // set font to system monospace font and increase letter spacing
+
+    // use a monospace font for the password field
     QFont passwordFont = QFontDatabase::systemFont(QFontDatabase::FixedFont);
+#ifdef Q_OS_WIN
+    // try to use Consolas on Windows, because the default Courier New has too many similar characters
+    QFont consolasFont = QFontDatabase().font("Consolas", passwordFont.styleName(), passwordFont.pointSize());
+    const QFont defaultFont;
+    if (passwordFont != defaultFont) {
+        passwordFont = consolasFont;
+    }
+#endif
+
     passwordFont.setLetterSpacing(QFont::PercentageSpacing, 110);
     setFont(passwordFont);
 }

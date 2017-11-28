@@ -47,6 +47,7 @@ public slots:
 
 signals:
     void entryActivated(Entry* entry, EntryModel::ModelColumn column);
+    void entryPressed(Entry* entry);
     void entrySelectionChanged();
 
 protected:
@@ -54,6 +55,7 @@ protected:
 
 private slots:
     void emitEntryActivated(const QModelIndex& index);
+    void emitEntryPressed(const QModelIndex& index);
     void switchToEntryListMode();
     void switchToGroupMode();
 

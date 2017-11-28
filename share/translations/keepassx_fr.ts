@@ -67,6 +67,10 @@ Kernel: %3 %4</translation>
         <source>Include the following information whenever you report a bug:</source>
         <translation>Inclure l&apos;information suivante lorsque vous signaler un bug:</translation>
     </message>
+    <message>
+        <source>Distribution: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
@@ -1316,6 +1320,17 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
 
 Vous pouvez l&apos;importer en cliquant sur Base de données&gt;&apos;Importer une base de données KeePass 1 ...&apos;
 Il s&apos;agit d&apos;une migration à sens unique. Vous ne pourrez pas ouvrir la base de données importée avec l&apos;ancienne version de KeePassX 0.4.</translation>
+    </message>
+</context>
+<context>
+    <name>KeePass2Writer</name>
+    <message>
+        <source>Unable to issue challenge-response.</source>
+        <translation>Impossible de lancer une challenge-réponse.</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Impossible de calculer la clé maître</translation>
     </message>
 </context>
 <context>

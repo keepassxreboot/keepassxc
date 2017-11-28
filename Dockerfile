@@ -16,47 +16,48 @@
 
 FROM ubuntu:14.04
 
-RUN set -x \
-    && apt-get update \
-    && apt-get install --yes software-properties-common
+ENV QT5_VERSION=59
+ENV QT5_PPA_VERSION=${QT5_VERSION}2
 
 RUN set -x \
-    && add-apt-repository ppa:george-edison55/cmake-3.x
-
-ENV QT_VERSION=qt59
-
-RUN set -x \
-    && add-apt-repository --yes ppa:beineri/opt-${QT_VERSION}-trusty
-
+    && apt-get update -y \
+    && apt-get -y install software-properties-common
 
 RUN set -x \
-    && apt-get update \
-    && apt-get install --yes \
+    && add-apt-repository ppa:beineri/opt-qt${QT5_PPA_VERSION}-trusty \
+    && add-apt-repository ppa:phoerious/keepassxc
+
+RUN set -x \
+    && apt-get update -y \
+    && apt-get upgrade -y
+
+# build and runtime dependencies
+RUN set -x \
+    && apt-get install -y \
+        cmake3 \
         g++ \
-        cmake \
         libgcrypt20-dev \
-        ${QT_VERSION}base \
-        ${QT_VERSION}tools \
-        ${QT_VERSION}x11extras \
+        qt${QT5_VERSION}base \
+        qt${QT5_VERSION}tools \
+        qt${QT5_VERSION}x11extras \
+        zlib1g-dev \
         libxi-dev \
         libxtst-dev \
-        zlib1g-dev \
+        mesa-common-dev \
         libyubikey-dev \
-        libykpers-1-dev \
-        xvfb \
-        wget \
-        file \
-        fuse \
-        python
+        libykpers-1-dev
 
+ENV CMAKE_PREFIX_PATH=/opt/qt${QT5_VERSION}/lib/cmake
+ENV LD_LIBRARY_PATH=/opt/qt${QT5_VERSION}/lib
 RUN set -x \
-    && apt-get install --yes mesa-common-dev
-        
+    && echo /opt/qt${QT_VERSION}/lib > /etc/ld.so.conf.d/qt${QT5_VERSION}.conf
+
+# AppImage dependencies
+RUN set -x \
+    && apt-get install -y \
+        libfuse2 \
+        wget
+
 VOLUME /keepassxc/src
 VOLUME /keepassxc/out
 WORKDIR /keepassxc
-
-ENV CMAKE_PREFIX_PATH=/opt/${QT_VERSION}/lib/cmake
-ENV LD_LIBRARY_PATH=/opt/${QT_VERSION}/lib
-RUN set -x \
-    && echo /opt/${QT_VERSION}/lib > /etc/ld.so.conf.d/${QT_VERSION}.conf

@@ -55,10 +55,6 @@ Files: cmake/GenerateProductVersion.cmake
 Copyright: 2015 halex2005 <akharlov@gmail.com>
 License: MIT
 
-Files: cmake/CodeCoverage.cmake
-Copyright: 2012 - 2015, Lars Bilke
-License: BSD-3-clause
-
 Files: share/icons/application/*/apps/keepassxc.png
        share/icons/application/scalable/apps/keepassxc.svgz
        share/icons/application/*/apps/keepassxc-dark.png
@@ -156,6 +152,7 @@ License: LGPL-2.1
 Comment: based on Nuvola icon theme
 
 Files: share/icons/application/*/actions/application-exit.png
+       share/icons/application/*/actions/chronometer.png
        share/icons/application/*/actions/configure.png
        share/icons/application/*/actions/dialog-close.png
        share/icons/application/*/actions/dialog-ok.png
@@ -178,6 +175,7 @@ Files: share/icons/application/*/actions/application-exit.png
        share/icons/application/*/actions/view-history.png
        share/icons/application/*/apps/internet-web-browser.png
        share/icons/application/*/apps/preferences-desktop-icons.png
+       share/icons/application/*/apps/utilities-terminal.png
        share/icons/application/*/categories/preferences-other.png
        share/icons/application/*/status/dialog-error.png
        share/icons/application/*/status/dialog-information.png

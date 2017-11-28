@@ -260,15 +260,9 @@
     <addaction name="actionPasswordGenerator"/>
     <addaction name="actionSettings"/>
    </widget>
-   <widget class="QMenu" name="menuView">
-    <property name="title">
-     <string>&amp;View</string>
-    </property>
-   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEntries"/>
    <addaction name="menuGroups"/>
-   <addaction name="menuView"/>
    <addaction name="menuTools"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -563,7 +557,7 @@
   </action>
   <action name="actionGroupEmptyRecycleBin">
    <property name="text">
-    <string>Empty recycle bin</string>
+    <string>E&amp;mpty recycle bin</string>
    </property>
    <property name="visible">
     <bool>false</bool>

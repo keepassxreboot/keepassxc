@@ -19,6 +19,9 @@
 #define KEEPASSX_CLIPBOARD_H
 
 #include <QObject>
+#ifdef Q_OS_MAC
+#include "core/MacPasteboard.h"
+#endif
 
 class QTimer;
 
@@ -43,6 +46,9 @@ private:
     static Clipboard* m_instance;
 
     QTimer* m_timer;
+#ifdef Q_OS_MAC
+    QScopedPointer<MacPasteboard> m_pasteboard;
+#endif
     QString m_lastCopied;
 };
 

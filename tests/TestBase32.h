@@ -29,6 +29,9 @@ class TestBase32 : public QObject
 private slots:
     void testEncode();
     void testDecode();
+    void testAddPadding();
+    void testRemovePadding();
+    void testSanitizeInput();
 };
 
 #endif // KEEPASSX_TESTBASE32_H

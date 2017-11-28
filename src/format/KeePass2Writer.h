@@ -18,6 +18,8 @@
 #ifndef KEEPASSX_KEEPASS2WRITER_H
 #define KEEPASSX_KEEPASS2WRITER_H
 
+#include <QCoreApplication>
+
 #include "format/KeePass2.h"
 #include "keys/CompositeKey.h"
 
@@ -26,6 +28,8 @@ class QIODevice;
 
 class KeePass2Writer
 {
+    Q_DECLARE_TR_FUNCTIONS(KeePass2Writer)
+
 public:
     KeePass2Writer();
     void writeDatabase(QIODevice* device, Database* db);

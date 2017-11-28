@@ -23,6 +23,7 @@
 #include <QScopedPointer>
 
 #include "gui/EditWidget.h"
+#include "config-keepassx.h"
 
 class AutoTypeAssociations;
 class AutoTypeAssociationsModel;
@@ -39,10 +40,15 @@ class QButtonGroup;
 class QMenu;
 class QSortFilterProxyModel;
 class QStackedLayout;
+#ifdef WITH_XC_SSHAGENT
+#include "sshagent/KeeAgentSettings.h"
+class OpenSSHKey;
+#endif
 
 namespace Ui {
     class EditEntryWidgetAdvanced;
     class EditEntryWidgetAutoType;
+    class EditEntryWidgetSSHAgent;
     class EditEntryWidgetMain;
     class EditEntryWidgetHistory;
     class EditWidget;
@@ -80,11 +86,12 @@ private slots:
     void updateCurrentAttribute();
     void protectCurrentAttribute(bool state);
     void revealCurrentAttribute();
-    void insertAttachment();
-    void saveCurrentAttachment();
+    void insertAttachments();
+    void saveSelectedAttachment();
+    void saveSelectedAttachments();
     void openAttachment(const QModelIndex& index);
-    void openCurrentAttachment();
-    void removeCurrentAttachment();
+    void openSelectedAttachments();
+    void removeSelectedAttachments();
     void updateAutoTypeEnabled();
     void insertAutoTypeAssoc();
     void removeAutoTypeAssoc();
@@ -100,12 +107,25 @@ private slots:
     void updateHistoryButtons(const QModelIndex& current, const QModelIndex& previous);
     void useExpiryPreset(QAction* action);
     void updateAttachmentButtonsEnabled(const QModelIndex& current);
+    void toggleHideNotes(bool visible);
+#ifdef WITH_XC_SSHAGENT
+    void updateSSHAgent();
+    void updateSSHAgentKeyInfo();
+    void browsePrivateKey();
+    void addKeyToAgent();
+    void removeKeyFromAgent();
+    void decryptPrivateKey();
+    void copyPublicKey();
+#endif
 
 private:
     void setupMain();
     void setupAdvanced();
     void setupIcon();
     void setupAutoType();
+#ifdef WITH_XC_SSHAGENT
+    void setupSSHAgent();
+#endif
     void setupProperties();
     void setupHistory();
 
@@ -113,22 +133,35 @@ private:
     void setForms(const Entry* entry, bool restore = false);
     QMenu* createPresetsMenu();
     void updateEntryData(Entry* entry) const;
+#ifdef WITH_XC_SSHAGENT
+    bool getOpenSSHKey(OpenSSHKey& key);
+    void saveSSHAgentConfig();
+#endif
 
     void displayAttribute(QModelIndex index, bool showProtected);
+
+    bool openAttachment(const QModelIndex& index, QString *errorMessage);
 
     Entry* m_entry;
     Database* m_database;
 
     bool m_create;
     bool m_history;
+    bool m_saved;
+#ifdef WITH_XC_SSHAGENT
+    bool m_sshAgentEnabled;
+    KeeAgentSettings m_sshAgentSettings;
+#endif
     const QScopedPointer<Ui::EditEntryWidgetMain> m_mainUi;
     const QScopedPointer<Ui::EditEntryWidgetAdvanced> m_advancedUi;
     const QScopedPointer<Ui::EditEntryWidgetAutoType> m_autoTypeUi;
+    const QScopedPointer<Ui::EditEntryWidgetSSHAgent> m_sshAgentUi;
     const QScopedPointer<Ui::EditEntryWidgetHistory> m_historyUi;
     QWidget* const m_mainWidget;
     QWidget* const m_advancedWidget;
     EditWidgetIcons* const m_iconsWidget;
     QWidget* const m_autoTypeWidget;
+    QWidget* const m_sshAgentWidget;
     EditWidgetProperties* const m_editWidgetProperties;
     QWidget* const m_historyWidget;
     EntryAttachments* const m_entryAttachments;

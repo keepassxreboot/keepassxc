@@ -256,6 +256,13 @@ void AutoType::resetInAutoType()
     m_inAutoType = false;
 }
 
+void AutoType::raiseWindow()
+{
+#if defined(Q_OS_MAC)
+    m_plugin->raiseOwnWindow();
+#endif
+}
+
 void AutoType::unloadPlugin()
 {
     if (m_executor) {
@@ -563,7 +570,8 @@ QString AutoType::autoTypeSequence(const Entry* entry, const QString& windowTitl
         bool match = false;
         const QList<AutoTypeAssociations::Association> assocList = entry->autoTypeAssociations()->getAll();
         for (const AutoTypeAssociations::Association& assoc : assocList) {
-            if (windowMatches(windowTitle, assoc.window)) {
+            const QString window = entry->resolveMultiplePlaceholders(assoc.window);
+            if (windowMatches(windowTitle, window)) {
                 if (!assoc.sequence.isEmpty()) {
                     sequence = assoc.sequence;
                 }

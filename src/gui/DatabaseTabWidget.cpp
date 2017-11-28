@@ -129,12 +129,11 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
     while (i.hasNext()) {
         i.next();
         if (i.value().canonicalFilePath == canonicalFilePath) {
-            if (pw.isEmpty() && keyFile.isEmpty()) {
-                setCurrentIndex(databaseIndex(i.key()));
+            if (!i.value().dbWidget->dbHasKey() && !(pw.isNull() && keyFile.isEmpty())) {
+                // If the database is locked and a pw or keyfile is provided, unlock it
+                i.value().dbWidget->switchToOpenDatabase(i.value().filePath, pw, keyFile);
             } else {
-                if (!i.key()->hasKey()) {
-                    i.value().dbWidget->switchToOpenDatabase(canonicalFilePath, pw, keyFile);
-                }
+                setCurrentIndex(databaseIndex(i.key()));
             }
             return;
         }
@@ -210,7 +209,7 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
 
     updateLastDatabases(dbStruct.filePath);
 
-    if (!pw.isNull() || !keyFile.isEmpty()) {
+    if (!(pw.isNull() && keyFile.isEmpty())) {
         dbStruct.dbWidget->switchToOpenDatabase(dbStruct.filePath, pw, keyFile);
     }
     else {
@@ -299,8 +298,7 @@ bool DatabaseTabWidget::closeDatabase(Database* db)
             if (!saveDatabase(db)) {
                 return false;
             }
-        }
-        else {
+        } else if (dbStruct.dbWidget->currentMode() != DatabaseWidget::LockedMode) {
             QMessageBox::StandardButton result =
                 MessageBox::question(
                 this, tr("Save changes?"),
@@ -308,10 +306,9 @@ bool DatabaseTabWidget::closeDatabase(Database* db)
                 QMessageBox::Yes | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Yes);
             if (result == QMessageBox::Yes) {
                 if (!saveDatabase(db)) {
-                        return false;
+                    return false;
                 }
-            }
-            else if (result == QMessageBox::Cancel) {
+            } else if (result == QMessageBox::Cancel) {
                 return false;
             }
         }
@@ -356,8 +353,13 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
 {
     DatabaseManagerStruct& dbStruct = m_dbList[db];
 
-    if (dbStruct.saveToFilename) {
+    if (dbStruct.dbWidget->currentMode() == DatabaseWidget::LockedMode) {
+        // Never allow saving a locked database; it causes corruption
+        // We return true since a save is not required
+        return true;
+    }
 
+    if (dbStruct.saveToFilename) {
         dbStruct.dbWidget->blockAutoReload(true);
         QString errorMessage = db->saveToFile(dbStruct.canonicalFilePath);
         dbStruct.dbWidget->blockAutoReload(false);
@@ -376,7 +378,6 @@ bool DatabaseTabWidget::saveDatabase(Database* db)
                             MessageWidget::Error);
             return false;
         }
-
     } else {
         return saveDatabaseAs(db);
     }
@@ -538,6 +539,16 @@ bool DatabaseTabWidget::readOnly(int index)
     }
 
     return indexDatabaseManagerStruct(index).readOnly;
+}
+
+bool DatabaseTabWidget::canSave(int index)
+{
+    if (index == -1) {
+        index = currentIndex();
+    }
+
+    const DatabaseManagerStruct& dbStruct = indexDatabaseManagerStruct(index);
+    return !dbStruct.saveToFilename || (dbStruct.modified && !dbStruct.readOnly);
 }
 
 bool DatabaseTabWidget::isModified(int index)

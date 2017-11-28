@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>282</width>
-    <height>257</height>
+    <height>364</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,11 +29,38 @@
     </layout>
    </item>
    <item>
-    <widget class="QCheckBox" name="customSettingsCheckBox">
-     <property name="text">
-      <string>Use custom settings</string>
-     </property>
-    </widget>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QRadioButton" name="radioDefault">
+       <property name="text">
+        <string>Default RFC 6238 token settings</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">settingsButtonGroup</string>
+       </attribute>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="radioSteam">
+       <property name="text">
+        <string>Steam token settings</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">settingsButtonGroup</string>
+       </attribute>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="radioCustom">
+       <property name="text">
+        <string>Use custom settings</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">settingsButtonGroup</string>
+       </attribute>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
     <widget class="QLabel" name="label_4">
@@ -134,4 +161,7 @@
  </widget>
  <resources/>
  <connections/>
+ <buttongroups>
+  <buttongroup name="settingsButtonGroup"/>
+ </buttongroups>
 </ui>

@@ -67,6 +67,10 @@ CPU アーキテクチャ: %2
         <source>Include the following information whenever you report a bug:</source>
         <translation>バグを報告する際に下記の情報を含めてください:</translation>
     </message>
+    <message>
+        <source>Distribution: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
@@ -1094,7 +1098,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Custom icon already exists</source>
-        <translation type="unfinished"/>
+        <translation>カスタムアイコンは既に存在します</translation>
     </message>
 </context>
 <context>
@@ -1318,6 +1322,17 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
 </context>
 <context>
+    <name>KeePass2Writer</name>
+    <message>
+        <source>Unable to issue challenge-response.</source>
+        <translation>チャレンジレスポンスを発行することができません。</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>マスターキーを計算できません</translation>
+    </message>
+</context>
+<context>
     <name>Main</name>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
@@ -1337,7 +1352,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
-        <translation type="unfinished"/>
+        <translation>既存のシングルインスタンスロックファイルは無効です。新しいインスタンスを起動します。</translation>
     </message>
 </context>
 <context>

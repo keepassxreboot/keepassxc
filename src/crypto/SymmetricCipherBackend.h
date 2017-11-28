@@ -33,6 +33,7 @@ public:
     Q_REQUIRED_RESULT virtual bool processInPlace(QByteArray& data, quint64 rounds) = 0;
 
     virtual bool reset() = 0;
+    virtual int keySize() const = 0;
     virtual int blockSize() const = 0;
 
     virtual QString errorString() const = 0;

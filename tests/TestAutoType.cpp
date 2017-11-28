@@ -96,6 +96,9 @@ void TestAutoType::init()
     m_entry4->setGroup(m_group);
     m_entry4->setPassword("custom_attr");
     m_entry4->attributes()->set("CUSTOM","Attribute",false);
+    m_entry4->attributes()->set("CustomAttrFirst","AttrValueFirst",false);
+    m_entry4->attributes()->set("CustomAttrSecond","AttrValueSecond",false);
+    m_entry4->attributes()->set("CustomAttrThird","AttrValueThird",false);
     association.window = "//^CustomAttr1$//";
     association.sequence = "{PASSWORD}:{S:CUSTOM}";
     m_entry4->autoTypeAssociations()->add(association);
@@ -105,7 +108,16 @@ void TestAutoType::init()
     association.window = "//^CustomAttr3$//";
     association.sequence = "{PaSSworD}";
     m_entry4->autoTypeAssociations()->add(association);
-    
+    association.window = "//^{S:CustomAttrFirst}$//";
+    association.sequence = "custom_attr_first";
+    m_entry4->autoTypeAssociations()->add(association);
+    association.window = "//{S:CustomAttrFirst}And{S:CustomAttrSecond}//";
+    association.sequence = "custom_attr_first_and_second";
+    m_entry4->autoTypeAssociations()->add(association);
+    association.window = "//{S:CustomAttrThird}//";
+    association.sequence = "custom_attr_third";
+    m_entry4->autoTypeAssociations()->add(association);
+
     m_entry5 = new Entry();
     m_entry5->setGroup(m_group);
     m_entry5->setPassword("example5");
@@ -252,5 +264,21 @@ void TestAutoType::testGlobalAutoTypeRegExp()
     m_test->setActiveWindowTitle("CustomAttr3");
     m_autoType->performGlobalAutoType(m_dbList);
     QCOMPARE(m_test->actionChars(), QString("custom_attr"));
+    m_test->clearActions();
+
+    // with resolve placeholders in window association title
+    m_test->setActiveWindowTitle("AttrValueFirst");
+    m_autoType->performGlobalAutoType(m_dbList);
+    QCOMPARE(m_test->actionChars(), QString("custom_attr_first"));
+    m_test->clearActions();
+
+    m_test->setActiveWindowTitle("lorem AttrValueFirstAndAttrValueSecond ipsum");
+    m_autoType->performGlobalAutoType(m_dbList);
+    QCOMPARE(m_test->actionChars(), QString("custom_attr_first_and_second"));
+    m_test->clearActions();
+
+    m_test->setActiveWindowTitle("lorem AttrValueThird ipsum");
+    m_autoType->performGlobalAutoType(m_dbList);
+    QCOMPARE(m_test->actionChars(), QString("custom_attr_third"));
     m_test->clearActions();
 }

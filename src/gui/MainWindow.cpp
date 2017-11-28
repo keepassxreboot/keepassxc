@@ -49,6 +49,11 @@
 #include "http/OptionDialog.h"
 #endif
 
+#ifdef WITH_XC_SSHAGENT
+#include "sshagent/AgentSettingsPage.h"
+#include "sshagent/SSHAgent.h"
+#endif
+
 #include "gui/SettingsWidget.h"
 #include "gui/PasswordGeneratorWidget.h"
 
@@ -109,6 +114,8 @@ MainWindow::MainWindow()
 {
     m_ui->setupUi(this);
 
+    m_ui->toolBar->setContextMenuPolicy(Qt::PreventContextMenu);
+
     // Setup the search widget in the toolbar
     SearchWidget *search = new SearchWidget();
     search->connectSignals(m_actionMultiplexer);
@@ -121,15 +128,13 @@ MainWindow::MainWindow()
     #ifdef WITH_XC_HTTP
     m_ui->settingsWidget->addSettingsPage(new HttpPlugin(m_ui->tabWidget));
     #endif
+    #ifdef WITH_XC_SSHAGENT
+    SSHAgent::init(this);
+    m_ui->settingsWidget->addSettingsPage(new AgentSettingsPage(m_ui->tabWidget));
+    #endif
 
     setWindowIcon(filePath()->applicationIcon());
     m_ui->globalMessageWidget->setHidden(true);
-    QAction* toggleViewAction = m_ui->toolBar->toggleViewAction();
-    toggleViewAction->setText(tr("Show toolbar"));
-    m_ui->menuView->addAction(toggleViewAction);
-    bool showToolbar = config()->get("ShowToolbar").toBool();
-    m_ui->toolBar->setVisible(showToolbar);
-    connect(m_ui->toolBar, SIGNAL(visibilityChanged(bool)), this, SLOT(saveToolbarState(bool)));
 
     m_clearHistoryAction = new QAction(tr("Clear history"), m_ui->menuFile);
     m_lastDatabasesActions = new QActionGroup(m_ui->menuRecentDatabases);
@@ -460,7 +465,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionGroupEmptyRecycleBin->setEnabled(recycleBinSelected);
             m_ui->actionChangeMasterKey->setEnabled(true);
             m_ui->actionChangeDatabaseSettings->setEnabled(true);
-            m_ui->actionDatabaseSave->setEnabled(true);
+            m_ui->actionDatabaseSave->setEnabled(m_ui->tabWidget->canSave());
             m_ui->actionDatabaseSaveAs->setEnabled(true);
             m_ui->actionExportCsv->setEnabled(true);
             m_ui->actionDatabaseMerge->setEnabled(m_ui->tabWidget->currentIndex() != -1);
@@ -566,6 +571,7 @@ void MainWindow::updateWindowTitle()
         if (m_ui->tabWidget->readOnly(tabWidgetIndex)) {
             customWindowTitlePart.append(QString(" [%1]").arg(tr("read-only")));
         }
+        m_ui->actionDatabaseSave->setEnabled(m_ui->tabWidget->canSave(tabWidgetIndex));
     } else if (stackedWidgetIndex == 1) {
         customWindowTitlePart = tr("Settings");
     }
@@ -732,7 +738,9 @@ void MainWindow::changeEvent(QEvent* event)
 
 void MainWindow::saveWindowInformation()
 {
-    config()->set("GUI/MainWindowGeometry", saveGeometry());
+    if (isVisible()) {
+        config()->set("GUI/MainWindowGeometry", saveGeometry());
+    }
 }
 
 bool MainWindow::saveLastDatabases()
@@ -816,11 +824,6 @@ void MainWindow::showGroupContextMenu(const QPoint& globalPos)
     m_ui->menuGroups->popup(globalPos);
 }
 
-void MainWindow::saveToolbarState(bool value)
-{
-    config()->set("ShowToolbar", value);
-}
-
 void MainWindow::setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback)
 {
     if (!QKeySequence::keyBindings(standard).isEmpty()) {
@@ -863,6 +866,7 @@ void MainWindow::trayIconTriggered(QSystemTrayIcon::ActivationReason reason)
 
 void MainWindow::hideWindow()
 {
+    saveWindowInformation();
 #ifndef Q_OS_MAC
     setWindowState(windowState() | Qt::WindowMinimized);
 #endif
@@ -884,7 +888,7 @@ void MainWindow::toggleWindow()
         raise();
         activateWindow();
 
-#if defined(Q_OS_LINUX) && ! defined(QT_NO_DBUS)
+#if defined(Q_OS_LINUX) && ! defined(QT_NO_DBUS) && (QT_VERSION < QT_VERSION_CHECK(5, 9, 0))
         // re-register global D-Bus menu (needed on Ubuntu with Unity)
         // see https://github.com/keepassxreboot/keepassxc/issues/271
         // and https://bugreports.qt.io/browse/QTBUG-58723
@@ -952,16 +956,17 @@ bool MainWindow::isTrayIconEnabled() const
             && QSystemTrayIcon::isSystemTrayAvailable();
 }
 
-void MainWindow::displayGlobalMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton)
+void MainWindow::displayGlobalMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton,
+                                      int autoHideTimeout)
 {
     m_ui->globalMessageWidget->setCloseButtonVisible(showClosebutton);
-    m_ui->globalMessageWidget->showMessage(text, type);
+    m_ui->globalMessageWidget->showMessage(text, type, autoHideTimeout);
 }
 
-void MainWindow::displayTabMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton)
+void MainWindow::displayTabMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton,
+                                   int autoHideTimeout)
 {
-    m_ui->globalMessageWidget->setCloseButtonVisible(showClosebutton);
-    m_ui->tabWidget->currentDatabaseWidget()->showMessage(text, type);
+    m_ui->tabWidget->currentDatabaseWidget()->showMessage(text, type, showClosebutton, autoHideTimeout);
 }
 
 void MainWindow::hideGlobalMessage()
@@ -978,7 +983,8 @@ void MainWindow::hideTabMessage()
 
 void MainWindow::showYubiKeyPopup()
 {
-    displayGlobalMessage(tr("Please touch the button on your YubiKey!"), MessageWidget::Information, false);
+    displayGlobalMessage(tr("Please touch the button on your YubiKey!"), MessageWidget::Information,
+                         false, MessageWidget::DisableAutoHide);
     setEnabled(false);
 }
 

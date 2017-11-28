@@ -49,6 +49,8 @@ EntryView::EntryView(QWidget* parent)
     connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(entrySelectionChanged()));
     connect(m_model, SIGNAL(switchedToEntryListMode()), SLOT(switchToEntryListMode()));
     connect(m_model, SIGNAL(switchedToGroupMode()), SLOT(switchToGroupMode()));
+
+    connect(this, SIGNAL(clicked(QModelIndex)), SLOT(emitEntryPressed(QModelIndex)));
 }
 
 void EntryView::keyPressEvent(QKeyEvent* event)
@@ -97,6 +99,11 @@ void EntryView::emitEntryActivated(const QModelIndex& index)
     Entry* entry = entryFromIndex(index);
 
     emit entryActivated(entry, static_cast<EntryModel::ModelColumn>(m_sortModel->mapToSource(index).column()));
+}
+
+void EntryView::emitEntryPressed(const QModelIndex& index)
+{
+    emit entryPressed(entryFromIndex(index));
 }
 
 void EntryView::setModel(QAbstractItemModel* model)

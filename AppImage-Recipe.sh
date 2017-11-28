@@ -34,6 +34,7 @@ fi
 APP="$1"
 LOWERAPP="$(echo "$APP" | tr '[:upper:]' '[:lower:]')"
 VERSION="$2"
+export ARCH=x86_64
 
 mkdir -p $APP.AppDir
 wget -q https://github.com/AppImage/AppImages/raw/master/functions.sh -O ./functions.sh
@@ -44,6 +45,8 @@ if [ -d ./usr/lib/x86_64-linux-gnu ]; then
     LIB_DIR=./usr/lib/x86_64-linux-gnu
 elif [ -d ./usr/lib/i386-linux-gnu ]; then
     LIB_DIR=./usr/lib/i386-linux-gnu
+elif [ -d ./usr/lib64 ]; then
+    LIB_DIR=./usr/lib64
 fi
 
 cd $APP.AppDir
@@ -53,7 +56,7 @@ rm -R ./usr/local
 rmdir ./opt 2> /dev/null
 
 # bundle Qt platform plugins and themes
-QXCB_PLUGIN="$(find /usr/lib -name 'libqxcb.so' 2> /dev/null)"
+QXCB_PLUGIN="$(find /usr/lib* -name 'libqxcb.so' 2> /dev/null)"
 if [ "$QXCB_PLUGIN" == "" ]; then
     QXCB_PLUGIN="$(find /opt/qt*/plugins -name 'libqxcb.so' 2> /dev/null)"
 fi
@@ -65,33 +68,34 @@ get_apprun
 copy_deps
 delete_blacklisted
 
-# remove dbus and systemd libs as they are not blacklisted
-find . -name libdbus-1.so.3 -exec rm {} \;
-find . -name libsystemd.so.0 -exec rm {} \;
-
 get_desktop
 get_icon
 cat << EOF > ./usr/bin/keepassxc_env
 #!/usr/bin/env bash
-#export QT_QPA_PLATFORMTHEME=gtk2
 export LD_LIBRARY_PATH="..$(dirname ${QT_PLUGIN_PATH})/lib:\${LD_LIBRARY_PATH}"
-export QT_PLUGIN_PATH="..${QT_PLUGIN_PATH}"
+export QT_PLUGIN_PATH="..${QT_PLUGIN_PATH}:\${KPXC_QT_PLUGIN_PATH}"
 
 # unset XDG_DATA_DIRS to make tray icon work in Ubuntu Unity
-# see https://github.com/probonopd/AppImageKit/issues/351
+# see https://github.com/AppImage/AppImageKit/issues/351
 unset XDG_DATA_DIRS
 
-exec keepassxc "\$@"
+if [ "\${1}" == "cli" ]; then
+    shift
+    exec keepassxc-cli "\$@"
+else
+    exec keepassxc "\$@"
+fi
 EOF
 chmod +x ./usr/bin/keepassxc_env
-sed -i 's/Exec=keepassxc/Exec=keepassxc_env/' keepassxc.desktop
-get_desktopintegration $LOWERAPP
-
-GLIBC_NEEDED=$(glibc_needed)
+sed -i 's/Exec=keepassxc/Exec=keepassxc_env/' org.${LOWERAPP}.${APP}.desktop
+get_desktopintegration "org.${LOWERAPP}.${APP}"
 
 cd ..
 
-generate_type2_appimage
+GLIBC_NEEDED=$(glibc_needed)
+NO_GLIBC_VERSION=true
 
-mv ../out/*.AppImage ..
-rmdir ../out > /dev/null 2>&1
+generate_type2_appimage -u "gh-releases-zsync|keepassxreboot|keepassxc|latest|KeePassXC-*-${ARCH}.AppImage.zsync"
+
+mv ../out/*.AppImage* ../
+rm -rf ../out

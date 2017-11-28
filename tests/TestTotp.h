@@ -31,6 +31,8 @@ private slots:
     void initTestCase();
     void testParseSecret();
     void testTotpCode();
+    void testEncoderData();
+    void testSteamTotp();
 };
 
 #endif // KEEPASSX_TESTTOTP_H

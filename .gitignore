@@ -1,5 +1,6 @@
 CMakeLists.txt.*
 build*/
+cmake-build-*/
 release*/
 .idea/
 *.iml
@@ -7,3 +8,5 @@ release*/
 
 \.vscode/
 *.swp
+
+.DS_Store

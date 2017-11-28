@@ -67,6 +67,10 @@ CPU 아키텍처: %2
         <source>Include the following information whenever you report a bug:</source>
         <translation>버그를 보고할 때 다음 정보를 포함하십시오:</translation>
     </message>
+    <message>
+        <source>Distribution: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
@@ -1313,6 +1317,17 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
 
 데이터베이스 &gt; &apos;KeePass 1 데이터베이스 가져오기...&apos; 메뉴에서 항목을 가져올 수 있습니다.
 이 작업은 한 방향으로만 이뤄집니다. 가져온 데이터베이스는 KeePassX 0.4 버전에서 열 수 없습니다.</translation>
+    </message>
+</context>
+<context>
+    <name>KeePass2Writer</name>
+    <message>
+        <source>Unable to issue challenge-response.</source>
+        <translation>질의 응답을 실행할 수 없습니다.</translation>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>마스터 키를 계산할 수 없습니다</translation>
     </message>
 </context>
 <context>

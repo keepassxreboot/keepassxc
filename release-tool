@@ -119,9 +119,11 @@ EOF
 Sign previously compiled release packages
 
 Options:
-  -f, --files       Files to sign (required)
-  -g, --gpg-key     GPG key used to sign the files (default: '${GPG_KEY}')
-  -h, --help        Show this help
+  -f, --files        Files to sign (required)
+  -g, --gpg-key      GPG key used to sign the files (default: '${GPG_KEY}')
+      --signtool     Specify the signtool executable (default: 'signtool')
+      --signtool-key Provide a key to be used with signtool (for Windows EXE)
+  -h, --help         Show this help
 EOF
     fi
 }
@@ -257,19 +259,18 @@ checkChangeLog() {
     
     grep -qPzo "${RELEASE_NAME} \(\d{4}-\d{2}-\d{2}\)\n=+\n" CHANGELOG
     if [ $? -ne 0 ]; then
-        exitError "CHANGELOG does not contain any information about the '${RELEASE_NAME}' release!"
+        exitError "'CHANGELOG' has not been updated to the '${RELEASE_NAME}' release!"
     fi
 }
 
-checkTransifexCommandExists() {
-    command -v tx > /dev/null
-    if [ 0 -ne $? ]; then
-        exitError "Transifex tool 'tx' not installed! Please install it using 'pip install transifex-client'"
+checkAppStreamInfo() {
+    if [ ! -f share/linux/org.keepassxc.KeePassXC.appdata.xml ]; then
+        exitError "No AppStream info file found!"
     fi
 
-    command -v lupdate-qt5 > /dev/null
-    if [ 0 -ne $? ]; then
-        exitError "Qt Linguist tool (lupdate-qt5) is not installed! Please install using 'apt install qttools5-dev-tools'"
+    grep -qPzo "<release version=\"${RELEASE_NAME}\" date=\"\d{4}-\d{2}-\d{2}\">" share/linux/org.keepassxc.KeePassXC.appdata.xml
+    if [ $? -ne 0 ]; then
+        exitError "'share/linux/org.keepassxc.KeePassXC.appdata.xml' has not been updated to the '${RELEASE_NAME}' release!"
     fi
 }
 
@@ -281,7 +282,24 @@ checkSnapcraft() {
 
     grep -qPzo "version: ${RELEASE_NAME}" snapcraft.yaml
     if [ $? -ne 0 ]; then
-        exitError "snapcraft.yaml has not been updated to the '${RELEASE_NAME}' release!"
+        exitError "'snapcraft.yaml' has not been updated to the '${RELEASE_NAME}' release!"
+    fi
+}
+
+checkTransifexCommandExists() {
+    command -v tx > /dev/null
+    if [ 0 -ne $? ]; then
+        exitError "Transifex tool 'tx' not installed! Please install it using 'pip install transifex-client'"
+    fi
+}
+
+checkQt5LUpdateExists() {
+    command -v lupdate > /dev/null
+    if [ 0 -eq $? ] && ! $(lupdate -version | grep -q "lupdate version 5\."); then
+        command -v lupdate-qt5 > /dev/null
+        if [ 0 -ne $? ]; then
+            exitError "Qt Linguist tool (lupdate-qt5) is not installed! Please install using 'apt install qttools5-dev-tools'"
+        fi
     fi
 }
 
@@ -296,6 +314,7 @@ performChecks() {
     logInfo "Validating toolset and repository..."
 
     checkTransifexCommandExists
+    checkQt5LUpdateExists
     checkGitRepository
     checkReleaseDoesNotExist
     checkWorkingTreeClean
@@ -309,6 +328,7 @@ performChecks() {
 
     checkVersionInCMake
     checkChangeLog
+    checkAppStreamInfo
     checkSnapcraft
     
     logInfo "\e[1m\e[32mAll checks passed!\e[0m"
@@ -528,10 +548,10 @@ build() {
     checkWorkingTreeClean
 
     OUTPUT_DIR="$(realpath "$OUTPUT_DIR")"
-    
+
     logInfo "Checking out release tag '${TAG_NAME}'..."
     git checkout "$TAG_NAME"
-    
+
     logInfo "Creating output directory..."
     mkdir -p "$OUTPUT_DIR"
 
@@ -598,7 +618,8 @@ build() {
             # Building on Linux without Docker container
             logInfo "Configuring build..."
             cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off $CMAKE_OPTIONS \
-                -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" "$SRC_DIR"
+                -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
+                -DKEEPASSXC_DIST_TYPE=AppImage "$SRC_DIR"
                 
             logInfo "Compiling sources..."
             make $MAKE_OPTIONS
@@ -615,7 +636,7 @@ build() {
         logInfo "Launching Docker container to compile sources..."
         
         docker run --name "$DOCKER_CONTAINER_NAME" --rm \
-            --cap-add SYS_ADMIN --device /dev/fuse \
+            --cap-add SYS_ADMIN --security-opt apparmor:unconfined --device /dev/fuse \
             -e "CC=${CC}" -e "CXX=${CXX}" \
             -v "$(realpath "$SRC_DIR"):/keepassxc/src:ro" \
             -v "$(realpath "$OUTPUT_DIR"):/keepassxc/out:rw" \
@@ -644,6 +665,8 @@ build() {
 # -----------------------------------------------------------------------
 sign() {
     SIGN_FILES=()
+    SIGNTOOL="signtool"
+    SIGNTOOL_KEY=""
     
     while [ $# -ge 1 ]; do
         local arg="$1"
@@ -656,6 +679,14 @@ sign() {
                 
             -g|--gpg-key)
                 GPG_KEY="$2"
+                shift ;;
+
+            --signtool)
+                SIGNTOOL="$2"
+                shift ;;
+
+            --signtool-key)
+                SIGNTOOL_KEY="$2"
                 shift ;;
             
             -h|--help)
@@ -675,13 +706,30 @@ sign() {
         printUsage "sign"
         exit 1
     fi
+
+    if [[ -n "$SIGNTOOL_KEY" && ! -f "$SIGNTOOL_KEY" ]]; then
+        exitError "Signtool Key was not found!"
+    elif [[ -f "$SIGNTOOL_KEY" && ! -x $(command -v "${SIGNTOOL}") ]]; then
+        exitError "signtool program not found on PATH!"
+    fi
     
     for f in "${SIGN_FILES[@]}"; do
         if [ ! -f "$f" ]; then
             exitError "File '${f}' does not exist!"
         fi
+
+        if [[ -n "$SIGNTOOL_KEY" && ${f: -4} == '.exe' ]]; then
+            logInfo "Signing file '${f}' using signtool...\n"
+            read -s -p "Signtool Key Password: " password
+            echo
+            "${SIGNTOOL}" sign -f "${SIGNTOOL_KEY}" -p ${password} -v -t http://timestamp.comodoca.com/authenticode ${f}
+
+            if [ 0 -ne $? ]; then
+                exitError "Signing failed!"
+            fi
+        fi
         
-        logInfo "Signing file '${f}'..."
+        logInfo "Signing file '${f}' using release key..."
         gpg --output "${f}.sig" --armor --local-user "$GPG_KEY" --detach-sig "$f"
         
         if [ 0 -ne $? ]; then

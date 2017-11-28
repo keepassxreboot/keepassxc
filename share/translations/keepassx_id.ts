@@ -67,6 +67,10 @@ Kernel: %3 %4</translation>
         <source>Include the following information whenever you report a bug:</source>
         <translation>Sertakan informasi berikut setiap Anda melaporkan bug:</translation>
     </message>
+    <message>
+        <source>Distribution: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
@@ -1315,6 +1319,17 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
 
 Anda bisa mengimpornya dengan mengklik Basis Data &gt; &apos;Impor basis data KeePass 1...&apos;.
 Ini adalah migrasi satu arah. Anda tidak akan bisa membuka basis data yang diimpor dengan versi lama KeePassX 0.4.</translation>
+    </message>
+</context>
+<context>
+    <name>KeePass2Writer</name>
+    <message>
+        <source>Unable to issue challenge-response.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to calculate master key</source>
+        <translation>Tidak bisa mengkalkulasi kunci utama</translation>
     </message>
 </context>
 <context>

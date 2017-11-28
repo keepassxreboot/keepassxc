@@ -49,6 +49,7 @@
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/CloneDialog.h"
+#include "gui/PasswordEdit.h"
 #include "gui/TotpDialog.h"
 #include "gui/SetupTotpDialog.h"
 #include "gui/FileDialog.h"
@@ -117,6 +118,45 @@ void TestGui::cleanup()
 
     m_db = nullptr;
     m_dbWidget = nullptr;
+}
+
+void TestGui::testCreateDatabase()
+{
+    QTemporaryFile tmpFile;
+    QVERIFY(tmpFile.open());
+    QString tmpFileName = tmpFile.fileName();
+    tmpFile.remove();
+
+    fileDialog()->setNextFileName(tmpFileName);
+    triggerAction("actionDatabaseNew");
+
+    DatabaseWidget* dbWidget = m_tabWidget->currentDatabaseWidget();
+
+    QWidget* databaseNewWidget = dbWidget->findChild<QWidget*>("changeMasterKeyWidget");
+    QList<QWidget*> databaseNewWidgets = dbWidget->findChildren<QWidget*>("changeMasterKeyWidget");
+    PasswordEdit* editPassword = databaseNewWidget->findChild<PasswordEdit*>("enterPasswordEdit");
+    QVERIFY(editPassword->isVisible());
+
+    QLineEdit* editPasswordRepeat = databaseNewWidget->findChild<QLineEdit*>("repeatPasswordEdit");
+    QVERIFY(editPasswordRepeat->isVisible());
+
+    m_tabWidget->currentDatabaseWidget()->setCurrentWidget(databaseNewWidget);
+
+    QTest::keyClicks(editPassword, "test");
+    QTest::keyClicks(editPasswordRepeat, "test");
+    QTest::keyClick(editPasswordRepeat, Qt::Key_Enter);
+
+    QTRY_VERIFY(m_tabWidget->tabText(m_tabWidget->currentIndex()).contains("*"));
+
+    m_db = m_tabWidget->currentDatabaseWidget()->database();
+
+    // there is a new empty db
+    QCOMPARE(m_db->rootGroup()->children().size(), 0);
+
+    // close the new database
+    MessageBox::setNextAnswer(QMessageBox::No);
+    triggerAction("actionDatabaseClose");
+    Tools::wait(100);
 }
 
 void TestGui::testMergeDatabase()
@@ -332,15 +372,27 @@ void TestGui::testAddEntry()
     QTest::keyClicks(passwordRepeatEdit, "something 2");
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
 
-    // Add entry "something 3"
+    // Add entry "something 3" using the apply button then click ok
     QTest::mouseClick(entryNewWidget, Qt::LeftButton);
     QTest::keyClicks(titleEdit, "something 3");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Apply), Qt::LeftButton);
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+
+    // Add entry "something 4" using the apply button then click cancel
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QTest::keyClicks(titleEdit, "something 4");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Apply), Qt::LeftButton);
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Cancel), Qt::LeftButton);
+
+    // Add entry "something 5" but click cancel button (does NOT add entry)
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QTest::keyClicks(titleEdit, "something 5");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Cancel), Qt::LeftButton);
 
     QApplication::processEvents();
 
-    // Confirm that 4 entries now exist
-    QTRY_COMPARE(entryView->model()->rowCount(), 4);
+    // Confirm that 5 entries now exist
+    QTRY_COMPARE(entryView->model()->rowCount(), 5);
 }
 
 void TestGui::testPasswordEntryEntropy()
@@ -513,7 +565,7 @@ void TestGui::testTotp()
 void TestGui::testSearch()
 {
     // Add canned entries for consistent testing
-    testAddEntry();
+    Q_UNUSED(addCannedEntries());
 
     QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
 
@@ -629,7 +681,7 @@ void TestGui::testSearch()
 void TestGui::testDeleteEntry()
 {
     // Add canned entries for consistent testing
-    testAddEntry();
+    Q_UNUSED(addCannedEntries());
 
     GroupView* groupView = m_dbWidget->findChild<GroupView*>("groupView");
     EntryView* entryView = m_dbWidget->findChild<EntryView*>("entryView");
@@ -903,6 +955,42 @@ void TestGui::testDatabaseLocking()
 void TestGui::cleanupTestCase()
 {
     delete m_mainWindow;
+}
+
+int TestGui::addCannedEntries()
+{
+    int entries_added = 0;
+
+    // Find buttons
+    QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
+    QWidget* entryNewWidget = toolBar->widgetForAction(m_mainWindow->findChild<QAction*>("actionEntryNew"));
+    EditEntryWidget* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+    QLineEdit* titleEdit = editEntryWidget->findChild<QLineEdit*>("titleEdit");
+    QLineEdit* passwordEdit = editEntryWidget->findChild<QLineEdit*>("passwordEdit");
+    QLineEdit* passwordRepeatEdit = editEntryWidget->findChild<QLineEdit*>("passwordRepeatEdit");
+
+    // Add entry "test" and confirm added
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QTest::keyClicks(titleEdit, "test");
+    QDialogButtonBox* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    ++entries_added;
+
+    // Add entry "something 2"
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QTest::keyClicks(titleEdit, "something 2");
+    QTest::keyClicks(passwordEdit, "something 2");
+    QTest::keyClicks(passwordRepeatEdit, "something 2");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    ++entries_added;
+
+    // Add entry "something 3"
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QTest::keyClicks(titleEdit, "something 3");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    ++entries_added;
+
+    return entries_added;
 }
 
 void TestGui::checkDatabase(QString dbFileName)

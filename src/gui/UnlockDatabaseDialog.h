@@ -31,7 +31,7 @@ class UnlockDatabaseDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit UnlockDatabaseDialog(QWidget* parent = Q_NULLPTR);
+    explicit UnlockDatabaseDialog(QWidget* parent = nullptr);
     void setDBFilename(const QString& filename);
     void clearForms();
     Database* database();

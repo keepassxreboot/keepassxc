@@ -52,7 +52,7 @@ signals:
 protected:
     void showEvent(QShowEvent* event) override;
     void hideEvent(QHideEvent* event) override;
-    CompositeKey databaseKey();
+    QSharedPointer<CompositeKey> databaseKey();
 
 protected slots:
     virtual void openDatabase();
@@ -73,6 +73,7 @@ protected:
     QString m_filename;
 
 private:
+    bool m_yubiKeyBeingPolled = false;
     Q_DISABLE_COPY(DatabaseOpenWidget)
 };
 
