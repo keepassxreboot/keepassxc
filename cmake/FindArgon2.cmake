@@ -18,7 +18,7 @@ if (MINGW)
   # find static library on Windows, and redefine used symbols to
   # avoid definition name conflicts with libsodium
   find_library(ARGON2_SYS_LIBRARIES libargon2.a)
-  message(STATUS "Patching libargon2...")
+  message(STATUS "Patching libargon2...\n")
   execute_process(COMMAND objcopy
               --redefine-sym argon2_hash=libargon2_argon2_hash
               --redefine-sym argon2_error_message=libargon2_argon2_error_message

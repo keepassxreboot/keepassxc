@@ -38,6 +38,7 @@ RUN set -x \
     && apt-get install -y \
         cmake3 \
         g++ \
+        git \
         libgcrypt20-18-dev \
         libargon2-0-dev \
         libsodium-dev \

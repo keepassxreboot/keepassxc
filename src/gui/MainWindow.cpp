@@ -424,6 +424,13 @@ MainWindow::MainWindow()
         connect(m_ui->tabWidget, SIGNAL(messageDismissGlobal()), this, SLOT(showKeePassHTTPDeprecationNotice()));
     }
 #endif
+
+#ifndef KEEPASSXC_RELEASE_BUILD
+    m_ui->globalMessageWidget->showMessage(tr("WARNING: You are using an unstable build of KeePassXC!\n"
+                                              "There is a high risk of corruption, maintain a backup of your databases.\n"
+                                              "This version is not meant for production use."),
+                                           MessageWidget::Warning, -1);
+#endif
 }
 
 MainWindow::~MainWindow()

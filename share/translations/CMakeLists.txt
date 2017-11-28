@@ -18,7 +18,7 @@ file(GLOB TRANSLATION_FILES *.ts)
 get_filename_component(TRANSLATION_EN_ABS keepassx_en.ts ABSOLUTE)
 list(REMOVE_ITEM TRANSLATION_FILES keepassx_en.ts)
 list(REMOVE_ITEM TRANSLATION_FILES ${TRANSLATION_EN_ABS})
-message(STATUS "${TRANSLATION_FILES}")
+message(STATUS "Including translations...\n")
 
 qt5_add_translation(QM_FILES ${TRANSLATION_FILES})
 

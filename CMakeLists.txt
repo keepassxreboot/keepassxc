@@ -40,6 +40,8 @@ option(WITH_ASAN "Enable address sanitizer checks (Linux / macOS only)" OFF)
 option(WITH_COVERAGE "Use to build with coverage tests (GCC only)." OFF)
 option(WITH_APP_BUNDLE "Enable Application Bundle for macOS" ON)
 
+set(WITH_XC_ALL OFF CACHE BOOLEAN "Build in all available plugins")
+
 option(WITH_XC_AUTOTYPE "Include Auto-Type." ON)
 option(WITH_XC_NETWORKING "Include networking code (e.g. for downlading website icons)." OFF)
 option(WITH_XC_BROWSER "Include browser integration with keepassxc-browser." OFF)
@@ -53,13 +55,30 @@ if(WITH_XC_HTTP)
   set(WITH_XC_NETWORKING ON CACHE BOOL "Include networking code (e.g. for downlading website icons)." FORCE)
 endif()
 
+if(WITH_XC_ALL)
+  # Enable all options
+  set(WITH_XC_AUTOTYPE ON)
+  set(WITH_XC_NETWORKING ON)
+  set(WITH_XC_BROWSER ON)
+  set(WITH_XC_HTTP ON) # Deprecated
+  set(WITH_XC_YUBIKEY ON)
+  set(WITH_XC_SSHAGENT ON)
+endif()
+
 # Process ui files automatically from source files
 set(CMAKE_AUTOUIC ON)
 
 set(KEEPASSXC_VERSION_MAJOR "2")
-set(KEEPASSXC_VERSION_MINOR "2")
-set(KEEPASSXC_VERSION_PATCH "4")
+set(KEEPASSXC_VERSION_MINOR "3")
+set(KEEPASSXC_VERSION_PATCH "0")
 set(KEEPASSXC_VERSION "${KEEPASSXC_VERSION_MAJOR}.${KEEPASSXC_VERSION_MINOR}.${KEEPASSXC_VERSION_PATCH}")
+
+set(KEEPASSXC_RELEASE_BUILD OFF CACHE BOOLEAN "Remove stability warnings")
+if(NOT KEEPASSXC_RELEASE_BUILD)
+  set(KEEPASSXC_VERSION "${KEEPASSXC_VERSION}-snapshot")
+endif()
+
+message(STATUS "Setting up build for KeePassXC v${KEEPASSXC_VERSION}\n")
 
 # Distribution info
 set(KEEPASSXC_DIST True)

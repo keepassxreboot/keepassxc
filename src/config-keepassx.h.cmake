@@ -24,6 +24,8 @@
 #cmakedefine KEEPASSXC_DIST_SNAP
 #cmakedefine KEEPASSXC_DIST_APPIMAGE
 
+#cmakedefine KEEPASSXC_RELEASE_BUILD
+
 #cmakedefine HAVE_PR_SET_DUMPABLE 1
 #cmakedefine HAVE_RLIMIT_CORE 1
 #cmakedefine HAVE_PT_DENY_ATTACH 1
