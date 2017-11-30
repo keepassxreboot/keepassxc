@@ -128,7 +128,7 @@ QStringList AutoType::windowTitles()
     return m_plugin->windowTitles();
 }
 
-void AutoType::_performAutoType(const Entry* entry, QWidget* hideWindow, const QString& customSequence, WId window)
+void AutoType::executeAutoType(const Entry* entry, QWidget* hideWindow, const QString& customSequence, WId window)
 {
     if (m_inAutoType || !m_plugin) {
         return;
@@ -677,5 +677,5 @@ void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow, const QS
             return;
         }
     }
-    _performAutoType(entry, hideWindow, customSequence, window);
+    executeAutoType(entry, hideWindow, customSequence, window);
 }

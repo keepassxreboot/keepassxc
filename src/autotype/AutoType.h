@@ -36,7 +36,7 @@ class AutoType : public QObject
 
 public:
     QStringList windowTitles();
-    void _performAutoType(const Entry* entry,
+    void executeAutoType(const Entry* entry,
                           QWidget* hideWindow = nullptr,
                           const QString& customSequence = QString(),
                           WId window = 0);
