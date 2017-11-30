@@ -950,8 +950,13 @@ void DatabaseWidget::switchToDatabaseSettings()
 void DatabaseWidget::switchToOpenDatabase(const QString& fileName)
 {
     updateFilename(fileName);
-    m_databaseOpenWidget->load(fileName);
-    setCurrentWidget(m_databaseOpenWidget);
+    if (m_databaseOpenWidget) {
+        m_databaseOpenWidget->load(fileName);
+        setCurrentWidget(m_databaseOpenWidget);
+    } else if (m_unlockDatabaseWidget) {
+        m_unlockDatabaseWidget->load(fileName);
+        setCurrentWidget(m_unlockDatabaseWidget);
+    }
 }
 
 void DatabaseWidget::switchToOpenDatabase(const QString& fileName, const QString& password,
@@ -959,7 +964,11 @@ void DatabaseWidget::switchToOpenDatabase(const QString& fileName, const QString
 {
     updateFilename(fileName);
     switchToOpenDatabase(fileName);
-    m_databaseOpenWidget->enterKey(password, keyFile);
+    if (m_databaseOpenWidget) {
+        m_databaseOpenWidget->enterKey(password, keyFile);
+    } else if (m_unlockDatabaseWidget) {
+        m_unlockDatabaseWidget->enterKey(password, keyFile);
+    }
 }
 
 void DatabaseWidget::switchToImportCsv(const QString& fileName)
