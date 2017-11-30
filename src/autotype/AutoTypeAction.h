@@ -25,6 +25,7 @@
 #include "core/Global.h"
 
 class AutoTypeExecutor;
+class AutoTypePlatformInterface;
 
 class KEEPASSX_EXPORT AutoTypeAction
 {
@@ -75,11 +76,12 @@ public:
 class KEEPASSX_EXPORT AutoTypePickChars : public AutoTypeAction
 {
 public:
-    AutoTypePickChars(QString string);
+    AutoTypePickChars(QString string, AutoTypePlatformInterface* plugin);
     AutoTypeAction* clone();
     void accept(AutoTypeExecutor* executor);
 
     const QString string;
+    AutoTypePlatformInterface* plugin;
 };
 
 class KEEPASSX_EXPORT AutoTypeExecutor

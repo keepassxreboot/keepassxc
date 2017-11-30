@@ -198,6 +198,7 @@ set(autotype_SOURCES
     core/Tools.cpp
     autotype/AutoType.cpp
     autotype/AutoTypeAction.cpp
+    autotype/AutoTypePickCharsDialog.cpp
     autotype/AutoTypePlatformPlugin.h
     autotype/AutoTypeSelectDialog.cpp
     autotype/AutoTypeSelectView.cpp
@@ -220,7 +221,7 @@ else()
 endif()
 
 add_library(autotype STATIC ${autotype_SOURCES})
-target_link_libraries(autotype Qt5::Core Qt5::Widgets)
+target_link_libraries(autotype Qt5::Core Qt5::Widgets keepassx_core)
 
 set(autotype_LIB autotype)
 
