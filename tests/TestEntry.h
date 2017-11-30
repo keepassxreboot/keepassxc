@@ -34,6 +34,8 @@ private slots:
     void testResolveUrl();
     void testResolveUrlPlaceholders();
     void testResolveRecursivePlaceholders();
+    void testResolveReferencePlaceholders();
+    void testResolveNonIdPlaceholdersToUuid();
 };
 
 #endif // KEEPASSX_TESTENTRY_H
