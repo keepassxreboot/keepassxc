@@ -82,6 +82,22 @@ void AutoTypeClearField::accept(AutoTypeExecutor* executor)
 }
 
 
+AutoTypePickChars::AutoTypePickChars(QString string)
+    : string(string)
+{
+}
+
+AutoTypeAction* AutoTypePickChars::clone()
+{
+    return new AutoTypePickChars(string);
+}
+
+void AutoTypePickChars::accept(AutoTypeExecutor* executor)
+{
+    executor->execPickChars(this);
+}
+
+
 void AutoTypeExecutor::execDelay(AutoTypeDelay* action)
 {
     Tools::wait(action->delayMs);
@@ -89,5 +105,11 @@ void AutoTypeExecutor::execDelay(AutoTypeDelay* action)
 
 void AutoTypeExecutor::execClearField(AutoTypeClearField* action)
 {
+    Q_UNUSED(action);
+}
+
+void AutoTypeExecutor::execPickChars(AutoTypePickChars* action)
+{
+    // TODO: prompt user for chars and enter them
     Q_UNUSED(action);
 }

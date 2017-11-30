@@ -19,6 +19,7 @@
 #define KEEPASSX_AUTOTYPEACTION_H
 
 #include <QChar>
+#include <QString>
 #include <Qt>
 
 #include "core/Global.h"
@@ -71,6 +72,16 @@ public:
     void accept(AutoTypeExecutor* executor);
 };
 
+class KEEPASSX_EXPORT AutoTypePickChars : public AutoTypeAction
+{
+public:
+    AutoTypePickChars(QString string);
+    AutoTypeAction* clone();
+    void accept(AutoTypeExecutor* executor);
+
+    const QString string;
+};
+
 class KEEPASSX_EXPORT AutoTypeExecutor
 {
 public:
@@ -79,6 +90,7 @@ public:
     virtual void execKey(AutoTypeKey* action) = 0;
     virtual void execDelay(AutoTypeDelay* action);
     virtual void execClearField(AutoTypeClearField* action);
+    virtual void execPickChars(AutoTypePickChars* action);
 };
 
 #endif // KEEPASSX_AUTOTYPEACTION_H

@@ -535,6 +535,20 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
         }
     }
 
+    if (tmplName.compare("pickchars",Qt::CaseInsensitive)==0) {
+        list.append(new AutoTypePickChars(entry->password()));
+    }
+    else {
+        QRegExp pickCharsRegEx("pickchars (.+)", Qt::CaseInsensitive, QRegExp::RegExp2);
+        if (pickCharsRegEx.exactMatch(tmplName)) {
+            const QString placeholder = QString("{%1}").arg(pickCharsRegEx.cap(1));
+            const QString resolved = entry->resolvePlaceholder(placeholder);
+            if (placeholder != resolved) {
+                list.append(new AutoTypePickChars(resolved));
+            }
+        }
+    }
+
     if (!list.isEmpty()) {
         return list;
     }
