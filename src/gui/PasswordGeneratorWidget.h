@@ -65,6 +65,7 @@ private slots:
 
     void passwordSliderMoved();
     void passwordSpinBoxChanged();
+    void updateHexadecimalState();
     void dicewareSliderMoved();
     void dicewareSpinBoxChanged();
     void colorStrengthIndicator(double entropy);

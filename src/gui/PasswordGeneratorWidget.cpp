@@ -47,6 +47,9 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
 
     connect(m_ui->sliderLength, SIGNAL(valueChanged(int)), SLOT(passwordSliderMoved()));
     connect(m_ui->spinBoxLength, SIGNAL(valueChanged(int)), SLOT(passwordSpinBoxChanged()));
+    connect(m_ui->checkBoxHexadecimal, SIGNAL(stateChanged(int)), SLOT(updateHexadecimalState()));
+    connect(m_ui->radioButtonUpper, SIGNAL(toggled(bool)), SLOT(updateHexadecimalState()));
+    connect(m_ui->radioButtonLower, SIGNAL(toggled(bool)), SLOT(updateHexadecimalState()));
 
     connect(m_ui->sliderWordCount, SIGNAL(valueChanged(int)), SLOT(dicewareSliderMoved()));
     connect(m_ui->spinBoxWordCount, SIGNAL(valueChanged(int)), SLOT(dicewareSpinBoxChanged()));
@@ -98,6 +101,9 @@ void PasswordGeneratorWidget::loadSettings()
     m_ui->checkBoxExtASCII->setChecked(config()->get("generator/EASCII", false).toBool());
     m_ui->checkBoxExcludeAlike->setChecked(config()->get("generator/ExcludeAlike", true).toBool());
     m_ui->checkBoxEnsureEvery->setChecked(config()->get("generator/EnsureEvery", true).toBool());
+    m_ui->checkBoxHexadecimal->setChecked(config()->get("generator/Hexadecimal", false).toBool());
+    m_ui->radioButtonUpper->setChecked(config()->get("generator/UpperHex", true).toBool());
+    m_ui->radioButtonLower->setChecked(config()->get("generator/LowerHex", false).toBool());
     m_ui->spinBoxLength->setValue(config()->get("generator/Length", PasswordGenerator::DefaultLength).toInt());
 
     // Diceware config
@@ -119,6 +125,9 @@ void PasswordGeneratorWidget::saveSettings()
     config()->set("generator/EASCII", m_ui->checkBoxExtASCII->isChecked());
     config()->set("generator/ExcludeAlike", m_ui->checkBoxExcludeAlike->isChecked());
     config()->set("generator/EnsureEvery", m_ui->checkBoxEnsureEvery->isChecked());
+    config()->set("generator/Hexadecimal", m_ui->checkBoxHexadecimal->isChecked());
+    config()->set("generator/UpperHex", m_ui->radioButtonUpper->isChecked());
+    config()->set("generator/LowerHex", m_ui->radioButtonLower->isChecked());
     config()->set("generator/Length", m_ui->spinBoxLength->value());
 
     // Diceware config
@@ -135,6 +144,7 @@ void PasswordGeneratorWidget::reset()
     m_ui->editNewPassword->setText("");
     setStandaloneMode(false);
     togglePasswordShown(config()->get("security/passwordscleartext").toBool());
+    updateHexadecimalState();
     updateGenerator();
 }
 
@@ -232,6 +242,48 @@ void PasswordGeneratorWidget::passwordSpinBoxChanged()
     updateGenerator();
 }
 
+void PasswordGeneratorWidget::updateHexadecimalState()
+{
+    if (m_ui->checkBoxHexadecimal->isChecked()) {
+        m_ui->checkBoxExcludeAlike->setEnabled(false);
+        m_ui->checkBoxEnsureEvery->setEnabled(false);
+        m_ui->checkBoxUpper->setEnabled(false);
+        m_ui->checkBoxLower->setEnabled(false);
+        m_ui->checkBoxNumbers->setEnabled(false);
+        m_ui->checkBoxSpecialChars->setEnabled(false);
+        m_ui->checkBoxExtASCII->setEnabled(false);
+        m_ui->radioButtonUpper->setEnabled(true);
+        m_ui->radioButtonLower->setEnabled(true);
+
+        if (m_ui->radioButtonUpper->isChecked()) {
+            m_ui->checkBoxUpper->setChecked(true);
+            m_ui->checkBoxLower->setChecked(false);
+        }
+        else {
+            m_ui->checkBoxUpper->setChecked(false);
+            m_ui->checkBoxLower->setChecked(true);
+        }
+        m_ui->checkBoxNumbers->setChecked(true);
+        m_ui->checkBoxSpecialChars->setChecked(false);
+        m_ui->checkBoxExtASCII->setChecked(false);
+        m_ui->checkBoxExcludeAlike->setChecked(false);
+        m_ui->checkBoxEnsureEvery->setChecked(false);
+    }
+    else {
+        m_ui->checkBoxExcludeAlike->setEnabled(true);
+        m_ui->checkBoxEnsureEvery->setEnabled(true);
+        m_ui->checkBoxUpper->setEnabled(true);
+        m_ui->checkBoxLower->setEnabled(true);
+        m_ui->checkBoxNumbers->setEnabled(true);
+        m_ui->checkBoxSpecialChars->setEnabled(true);
+        m_ui->checkBoxExtASCII->setEnabled(true);
+        m_ui->radioButtonUpper->setEnabled(false);
+        m_ui->radioButtonLower->setEnabled(false);
+    }
+
+    updateGenerator();
+}
+
 void PasswordGeneratorWidget::dicewareSliderMoved()
 {
     m_ui->spinBoxWordCount->setValue(m_ui->sliderWordCount->value());
@@ -318,6 +370,10 @@ PasswordGenerator::GeneratorFlags PasswordGeneratorWidget::generatorFlags()
 
     if (m_ui->checkBoxEnsureEvery->isChecked()) {
         flags |= PasswordGenerator::CharFromEveryGroup;
+    }
+
+    if (m_ui->checkBoxHexadecimal->isChecked()) {
+        flags |= PasswordGenerator::Hexadecimal;
     }
 
     return flags;
