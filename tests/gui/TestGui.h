@@ -48,6 +48,7 @@ private slots:
     void testAddEntry();
     void testPasswordEntryEntropy();
     void testDicewareEntryEntropy();
+    void testHexadecimalPasswords();
     void testTotp();
     void testSearch();
     void testDeleteEntry();
