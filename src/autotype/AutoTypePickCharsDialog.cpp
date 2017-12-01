@@ -21,7 +21,6 @@
 #include <QDesktopWidget>
 #include <QDialogButtonBox>
 #include <QGridLayout>
-#include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
 #include <QSignalMapper>
@@ -50,14 +49,31 @@ AutoTypePickCharsDialog::AutoTypePickCharsDialog(QString string, QWidget* parent
     layout->addWidget(descriptionLabel);
 
     // create buttons for choosing characters
-    QHBoxLayout* buttonLayout = new QHBoxLayout();
+    int count = m_string.length();
+    int rowLength = count;
+    if (count > 10) {
+        // split long rows
+        if (count % 2 == 0 && count / 2 <= 10) {
+            // split in half if it's short enough
+            rowLength = count / 2;
+        }
+        else if ((count + 1) % 2 == 0 && (count + 1) / 2 <= 10) {
+            // split in half if it's short enough
+            rowLength = (count + 1) / 2;
+        }
+        else {
+            // split into rows of 10 buttons each
+            rowLength = 10;
+        }
+    }
+    QGridLayout* buttonLayout = new QGridLayout();
     QSignalMapper* signalMapper = new QSignalMapper(this);
-    for (int i = 0; i < m_string.length(); i++) {
+    for (int i = 0; i < count; i++) {
         QPushButton* button = new QPushButton(QString::number(i + 1), this);
         button->setMaximumWidth(qMin(button->width(), button->height() * 2));
         connect(button, SIGNAL(clicked(bool)), signalMapper, SLOT(map()));
         signalMapper->setMapping(button, i);
-        buttonLayout->addWidget(button);
+        buttonLayout->addWidget(button, i / rowLength, i % rowLength);
     }
     connect(signalMapper, SIGNAL(mapped(int)), SLOT(addChar(int)));
     layout->addLayout(buttonLayout);
