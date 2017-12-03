@@ -25,7 +25,7 @@
 #include "Add.h"
 #include "Edit.h"
 #include "Clip.h"
-#include "EntropyMeter.h"
+#include "Estimate.h"
 #include "Extract.h"
 #include "List.h"
 #include "Locate.h"
@@ -62,7 +62,7 @@ void populateCommands()
         commands.insert(QString("add"), new Add());
         commands.insert(QString("clip"), new Clip());
         commands.insert(QString("edit"), new Edit());
-        commands.insert(QString("entropy-meter"), new EntropyMeter());
+        commands.insert(QString("estimate"), new Estimate());
         commands.insert(QString("extract"), new Extract());
         commands.insert(QString("locate"), new Locate());
         commands.insert(QString("ls"), new List());

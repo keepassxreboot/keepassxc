@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "EntropyMeter.h"
+#include "Estimate.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,13 +29,13 @@
 #endif
 #endif
 
-EntropyMeter::EntropyMeter()
+Estimate::Estimate()
 {
-    this->name = QString("entropy-meter");
-    this->description = QObject::tr("Calculate password entropy.");
+    this->name = QString("estimate");
+    this->description = QObject::tr("Estimate the entropy of a password.");
 }
 
-EntropyMeter::~EntropyMeter()
+Estimate::~Estimate()
 {
 }
 
@@ -97,7 +97,7 @@ static void calculate(const char *pwd, int advanced)
     }
 }
 
-int EntropyMeter::execute(QStringList arguments)
+int Estimate::execute(QStringList arguments)
 {
     printf("KeePassXC Entropy Meter, based on zxcvbn-c.\nEnter your password below or pass it as argv\n");
     printf("  Usage: entropy-meter [-a] [pwd1 pwd2 ...]\n> ");
