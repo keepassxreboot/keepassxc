@@ -137,8 +137,9 @@ static void calculate(const char* pwd, bool advanced)
             p = p->Next;
         }
         ZxcvbnFreeInfo(info);
-        if (ChkLen != len)
+        if (ChkLen != len) {
             printf("*** Password length (%d) != sum of length of parts (%d) ***\n", len, ChkLen);
+        }
     }
 }
 
@@ -157,7 +158,7 @@ int Estimate::execute(QStringList arguments)
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
-    if (args.size() != 1 && args.size() != 0) {
+    if (args.size() > 1) {
         outputTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli estimate");
         return EXIT_FAILURE;
     }
