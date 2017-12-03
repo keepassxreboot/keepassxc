@@ -17,6 +17,9 @@
 
 #include "Estimate.h"
 
+#include <QCommandLineParser>
+#include <QTextStream>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -39,11 +42,11 @@ Estimate::~Estimate()
 {
 }
 
-static void calculate(const char *pwd, int advanced)
+static void calculate(const char *pwd, bool advanced)
 {
     double e;
     int len = strlen(pwd);
-    if (advanced == 0){
+    if (!advanced){
       e = ZxcvbnMatch(pwd, 0, 0);
       printf("Pass '%s' \tLength %d\tEntropy %.3f\tLog10 %.3f\n", pwd, len, e, e * 0.301029996);
     } else {
@@ -99,43 +102,31 @@ static void calculate(const char *pwd, int advanced)
 
 int Estimate::execute(QStringList arguments)
 {
-    printf("KeePassXC Entropy Meter, based on zxcvbn-c.\nEnter your password below or pass it as argv\n");
-    printf("  Usage: entropy-meter [-a] [pwd1 pwd2 ...]\n> ");
-    int i, advanced = 0;
-    if (arguments.size() > 1 && arguments.at(1) == "-a")
-    {
-      advanced = 1;
-      arguments.removeAt(1);
+    QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
+    QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
+
+    QCommandLineParser parser;
+    parser.setApplicationDescription(this->description);
+    parser.addPositionalArgument("password", QObject::tr("Password for which to estimate the entropy."), "[password]");
+    QCommandLineOption advancedOption(QStringList() << "a"
+                                                    << "advanced",
+                                      QObject::tr("Perform advanced estimation."));
+    parser.addOption(advancedOption);
+    parser.process(arguments);
+
+    const QStringList args = parser.positionalArguments();
+    if (args.size() != 1 && args.size() != 0) {
+        outputTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli estimate");
+        return EXIT_FAILURE;
     }
-    i = 1;
-    if (i >= arguments.size())
-    {
-        /* No test passwords on command line, so get them from stdin */
-        char line[500];
-        while(fgets(line, sizeof line, stdin))
-        {
-            /* Drop the trailing newline character */
-            for(i = 0; i < static_cast<int>(sizeof line - 1); ++i)
-            {
-                if (line[i] < ' ')
-                {
-                    line[i] = 0;
-                    break;
-                }
-            }
-            if (line[0]) {
-                calculate(line,advanced);
-                printf("> ");
-            }
-        }
+
+    QString password;
+    if (args.size() == 1) {
+      password = args.at(0);
+    } else {
+      password = inputTextStream.readLine();
     }
-    else
-    {
-        /* Do the test passwords on the command line */
-        for(; i < arguments.size(); ++i)
-        {
-            calculate(arguments.at(i).toLatin1(), advanced);
-        }
-    }
-    return 0;
+
+    calculate(password.toLatin1(), parser.isSet(advancedOption));
+    return EXIT_SUCCESS;
 }
