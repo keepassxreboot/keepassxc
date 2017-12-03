@@ -152,7 +152,7 @@ int Estimate::execute(QStringList arguments)
     parser.addPositionalArgument("password", QObject::tr("Password for which to estimate the entropy."), "[password]");
     QCommandLineOption advancedOption(QStringList() << "a"
                                                     << "advanced",
-                                      QObject::tr("Perform advanced analysis for the password."));
+                                      QObject::tr("Perform advanced analysis on the password."));
     parser.addOption(advancedOption);
     parser.process(arguments);
 
