@@ -23,8 +23,8 @@
 #include "Command.h"
 
 #include "Add.h"
-#include "Edit.h"
 #include "Clip.h"
+#include "Edit.h"
 #include "Estimate.h"
 #include "Extract.h"
 #include "List.h"

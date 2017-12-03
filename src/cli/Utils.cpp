@@ -27,7 +27,6 @@
 #include <QProcess>
 #include <QTextStream>
 
-
 void Utils::setStdinEcho(bool enable = true)
 {
 #ifdef Q_OS_WIN

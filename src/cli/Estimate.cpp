@@ -42,61 +42,103 @@ Estimate::~Estimate()
 {
 }
 
-static void calculate(const char *pwd, bool advanced)
+static void calculate(const char* pwd, bool advanced)
 {
     double e;
     int len = strlen(pwd);
-    if (!advanced){
-      e = ZxcvbnMatch(pwd, 0, 0);
-      printf("Pass '%s' \tLength %d\tEntropy %.3f\tLog10 %.3f\n", pwd, len, e, e * 0.301029996);
+    if (!advanced) {
+        e = ZxcvbnMatch(pwd, 0, 0);
+        printf("Pass '%s' \tLength %d\tEntropy %.3f\tLog10 %.3f\n", pwd, len, e, e * 0.301029996);
     } else {
-      int ChkLen;
-      ZxcMatch_t *info, *p;
-      double m = 0.0;
-      e = ZxcvbnMatch(pwd, 0, &info);
-      for(p = info; p; p = p->Next) {
-          m += p->Entrpy;
-      }
-      m = e - m;
-      printf("Pass '%s' \tLength %d\tEntropy %.3f\tLog10 %.3f\n  Multi-word extra bits %.1f\n", pwd, len, e, e * 0.301029996, m);
-      p = info;
-      ChkLen = 0;
-      while(p) {
-        int n;
-        switch(static_cast<int>(p->Type))
-        {
-            case BRUTE_MATCH:                     printf("  Type: Bruteforce     ");   break;
-            case DICTIONARY_MATCH:                printf("  Type: Dictionary     ");   break;
-            case DICT_LEET_MATCH:                 printf("  Type: Dict+Leet      ");   break;
-            case USER_MATCH:                      printf("  Type: User Words     ");   break;
-            case USER_LEET_MATCH:                 printf("  Type: User+Leet      ");   break;
-            case REPEATS_MATCH:                   printf("  Type: Repeated       ");   break;
-            case SEQUENCE_MATCH:                  printf("  Type: Sequence       ");   break;
-            case SPATIAL_MATCH:                   printf("  Type: Spatial        ");   break;
-            case DATE_MATCH:                      printf("  Type: Date           ");   break;
-            case BRUTE_MATCH+MULTIPLE_MATCH:      printf("  Type: Bruteforce(Rep)");   break;
-            case DICTIONARY_MATCH+MULTIPLE_MATCH: printf("  Type: Dictionary(Rep)");   break;
-            case DICT_LEET_MATCH+MULTIPLE_MATCH:  printf("  Type: Dict+Leet(Rep) ");   break;
-            case USER_MATCH+MULTIPLE_MATCH:       printf("  Type: User Words(Rep)");   break;
-            case USER_LEET_MATCH+MULTIPLE_MATCH:  printf("  Type: User+Leet(Rep) ");   break;
-            case REPEATS_MATCH+MULTIPLE_MATCH:    printf("  Type: Repeated(Rep)  ");   break;
-            case SEQUENCE_MATCH+MULTIPLE_MATCH:   printf("  Type: Sequence(Rep)  ");   break;
-            case SPATIAL_MATCH+MULTIPLE_MATCH:    printf("  Type: Spatial(Rep)   ");   break;
-            case DATE_MATCH+MULTIPLE_MATCH:       printf("  Type: Date(Rep)      ");   break;
+        int ChkLen;
+        ZxcMatch_t *info, *p;
+        double m = 0.0;
+        e = ZxcvbnMatch(pwd, 0, &info);
+        for (p = info; p; p = p->Next) {
+            m += p->Entrpy;
+        }
+        m = e - m;
+        printf("Pass '%s' \tLength %d\tEntropy %.3f\tLog10 %.3f\n  Multi-word extra bits %.1f\n",
+               pwd,
+               len,
+               e,
+               e * 0.301029996,
+               m);
+        p = info;
+        ChkLen = 0;
+        while (p) {
+            int n;
+            switch (static_cast<int>(p->Type)) {
+            case BRUTE_MATCH:
+                printf("  Type: Bruteforce     ");
+                break;
+            case DICTIONARY_MATCH:
+                printf("  Type: Dictionary     ");
+                break;
+            case DICT_LEET_MATCH:
+                printf("  Type: Dict+Leet      ");
+                break;
+            case USER_MATCH:
+                printf("  Type: User Words     ");
+                break;
+            case USER_LEET_MATCH:
+                printf("  Type: User+Leet      ");
+                break;
+            case REPEATS_MATCH:
+                printf("  Type: Repeated       ");
+                break;
+            case SEQUENCE_MATCH:
+                printf("  Type: Sequence       ");
+                break;
+            case SPATIAL_MATCH:
+                printf("  Type: Spatial        ");
+                break;
+            case DATE_MATCH:
+                printf("  Type: Date           ");
+                break;
+            case BRUTE_MATCH + MULTIPLE_MATCH:
+                printf("  Type: Bruteforce(Rep)");
+                break;
+            case DICTIONARY_MATCH + MULTIPLE_MATCH:
+                printf("  Type: Dictionary(Rep)");
+                break;
+            case DICT_LEET_MATCH + MULTIPLE_MATCH:
+                printf("  Type: Dict+Leet(Rep) ");
+                break;
+            case USER_MATCH + MULTIPLE_MATCH:
+                printf("  Type: User Words(Rep)");
+                break;
+            case USER_LEET_MATCH + MULTIPLE_MATCH:
+                printf("  Type: User+Leet(Rep) ");
+                break;
+            case REPEATS_MATCH + MULTIPLE_MATCH:
+                printf("  Type: Repeated(Rep)  ");
+                break;
+            case SEQUENCE_MATCH + MULTIPLE_MATCH:
+                printf("  Type: Sequence(Rep)  ");
+                break;
+            case SPATIAL_MATCH + MULTIPLE_MATCH:
+                printf("  Type: Spatial(Rep)   ");
+                break;
+            case DATE_MATCH + MULTIPLE_MATCH:
+                printf("  Type: Date(Rep)      ");
+                break;
 
-            default:                printf("  Type: Unknown%d ", p->Type);   break;
+            default:
+                printf("  Type: Unknown%d ", p->Type);
+                break;
+            }
+            ChkLen += p->Length;
+            printf("  Length %d  Entropy %6.3f (%.2f) ", p->Length, p->Entrpy, p->Entrpy * 0.301029996);
+            for (n = 0; n < p->Length; ++n, ++pwd) {
+                printf("%c", *pwd);
+            }
+            printf("\n");
+            p = p->Next;
         }
-        ChkLen += p->Length;
-        printf("  Length %d  Entropy %6.3f (%.2f) ", p->Length, p->Entrpy, p->Entrpy * 0.301029996);
-        for(n = 0; n < p->Length; ++n, ++pwd) {
-          printf("%c", *pwd);
-        }
-        printf("\n");
-        p = p->Next;
-      }
-      ZxcvbnFreeInfo(info);
-      if (ChkLen != len)
-          printf("*** Password length (%d) != sum of length of parts (%d) ***\n", len, ChkLen);
+        ZxcvbnFreeInfo(info);
+        if (ChkLen != len)
+            printf("*** Password length (%d) != sum of length of parts (%d) ***\n", len, ChkLen);
     }
 }
 
@@ -122,9 +164,9 @@ int Estimate::execute(QStringList arguments)
 
     QString password;
     if (args.size() == 1) {
-      password = args.at(0);
+        password = args.at(0);
     } else {
-      password = inputTextStream.readLine();
+        password = inputTextStream.readLine();
     }
 
     calculate(password.toLatin1(), parser.isSet(advancedOption));
