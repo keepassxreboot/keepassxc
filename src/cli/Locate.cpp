@@ -83,5 +83,4 @@ int Locate::locateEntry(Database* database, QString searchTerm)
         outputTextStream << result << endl;
     }
     return EXIT_SUCCESS;
-
 }
