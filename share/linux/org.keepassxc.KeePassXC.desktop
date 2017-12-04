@@ -9,6 +9,7 @@ Comment=Community-driven port of the Windows application “KeePass Password Saf
 Exec=keepassxc %f
 TryExec=keepassxc
 Icon=keepassxc
+StartupWMClass=keepassxc
 Terminal=false
 Type=Application
 Version=1.0
