@@ -881,11 +881,7 @@ void MainWindow::toggleWindow()
     if ((QApplication::activeWindow() == this) && isVisible() && !isMinimized()) {
         hideWindow();
     } else {
-        ensurePolished();
-        setWindowState(windowState() & ~Qt::WindowMinimized);
-        show();
-        raise();
-        activateWindow();
+        bringToFront();
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_DBUS) && (QT_VERSION < QT_VERSION_CHECK(5, 9, 0))
         // re-register global D-Bus menu (needed on Ubuntu with Unity)
@@ -993,6 +989,15 @@ void MainWindow::hideYubiKeyPopup()
     setEnabled(true);
 }
 
+void MainWindow::bringToFront()
+{
+    ensurePolished();
+    setWindowState(windowState() & ~Qt::WindowMinimized);
+    show();
+    raise();
+    activateWindow();
+}
+
 void MainWindow::handleScreenLock()
 {
     if (config()->get("security/lockdatabasescreenlock").toBool()){
@@ -1030,7 +1035,7 @@ void MainWindow::dropEvent(QDropEvent* event)
     const QMimeData* mimeData = event->mimeData();
     if (mimeData->hasUrls()) {
         const QStringList kdbxFiles = kdbxFilesFromUrls(mimeData->urls());
-        for(const QString &kdbxFile: kdbxFiles) {
+        for (const QString& kdbxFile: kdbxFiles) {
             openDatabase(kdbxFile);
         }
     }

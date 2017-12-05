@@ -61,6 +61,7 @@ public slots:
     void hideGlobalMessage();
     void showYubiKeyPopup();
     void hideYubiKeyPopup();
+    void bringToFront();
 
 protected:
      void closeEvent(QCloseEvent* event) override;
