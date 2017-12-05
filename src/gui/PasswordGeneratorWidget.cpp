@@ -258,8 +258,7 @@ void PasswordGeneratorWidget::updateHexadecimalState()
         if (m_ui->radioButtonUpper->isChecked()) {
             m_ui->checkBoxUpper->setChecked(true);
             m_ui->checkBoxLower->setChecked(false);
-        }
-        else {
+        } else {
             m_ui->checkBoxUpper->setChecked(false);
             m_ui->checkBoxLower->setChecked(true);
         }
@@ -268,8 +267,7 @@ void PasswordGeneratorWidget::updateHexadecimalState()
         m_ui->checkBoxExtASCII->setChecked(false);
         m_ui->checkBoxExcludeAlike->setChecked(false);
         m_ui->checkBoxEnsureEvery->setChecked(false);
-    }
-    else {
+    } else {
         m_ui->checkBoxExcludeAlike->setEnabled(true);
         m_ui->checkBoxEnsureEvery->setEnabled(true);
         m_ui->checkBoxUpper->setEnabled(true);
