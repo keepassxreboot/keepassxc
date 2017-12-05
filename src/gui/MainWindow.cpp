@@ -114,6 +114,8 @@ MainWindow::MainWindow()
 {
     m_ui->setupUi(this);
 
+    setAcceptDrops(true);
+
     m_ui->toolBar->setContextMenuPolicy(Qt::PreventContextMenu);
 
     // Setup the search widget in the toolbar
@@ -995,5 +997,41 @@ void MainWindow::handleScreenLock()
 {
     if (config()->get("security/lockdatabasescreenlock").toBool()){
         lockDatabasesAfterInactivity();
+    }
+}
+
+QStringList MainWindow::kdbxFilesFromUrls(const QList<QUrl>& urls)
+{
+    QStringList kdbxFiles;
+    for (const QUrl& url: urls) {
+        const QFileInfo fInfo(url.toLocalFile());
+        const bool isKdbxFile = fInfo.isFile() && fInfo.suffix().toLower() == "kdbx";
+        if (isKdbxFile) {
+            kdbxFiles.append(fInfo.absoluteFilePath());
+        }
+    }
+
+    return kdbxFiles;
+}
+
+void MainWindow::dragEnterEvent(QDragEnterEvent* event)
+{
+    const QMimeData* mimeData = event->mimeData();
+    if (mimeData->hasUrls()) {
+        const QStringList kdbxFiles = kdbxFilesFromUrls(mimeData->urls());
+        if (!kdbxFiles.isEmpty()) {
+            event->acceptProposedAction();
+        }
+    }
+}
+
+void MainWindow::dropEvent(QDropEvent* event)
+{
+    const QMimeData* mimeData = event->mimeData();
+    if (mimeData->hasUrls()) {
+        const QStringList kdbxFiles = kdbxFilesFromUrls(mimeData->urls());
+        for(const QString &kdbxFile: kdbxFiles) {
+            openDatabase(kdbxFile);
+        }
     }
 }

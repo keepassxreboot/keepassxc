@@ -107,6 +107,10 @@ private:
     void updateTrayIcon();
     bool isTrayIconEnabled() const;
 
+    static QStringList kdbxFilesFromUrls(const QList<QUrl>& urls);
+    void dragEnterEvent(QDragEnterEvent* event) override;
+    void dropEvent(QDropEvent* event) override;
+
     const QScopedPointer<Ui::MainWindow> m_ui;
     SignalMultiplexer m_actionMultiplexer;
     QAction* m_clearHistoryAction;
