@@ -29,6 +29,9 @@
 #include <QMenu>
 #include <QSortFilterProxyModel>
 #include <QTemporaryFile>
+#include <QMimeData>
+#include <QEvent>
+
 
 #include "core/Config.h"
 #include "core/Database.h"
@@ -138,6 +141,10 @@ void EditEntryWidget::setupAdvanced()
     m_advancedUi->setupUi(m_advancedWidget);
     addPage(tr("Advanced"), FilePath::instance()->icon("categories", "preferences-other"), m_advancedWidget);
 
+    m_advancedUi->attachmentsView->setAcceptDrops(false);
+    m_advancedUi->attachmentsView->viewport()->setAcceptDrops(true);
+    m_advancedUi->attachmentsView->viewport()->installEventFilter(this);
+
     m_attachmentsModel->setEntryAttachments(m_entryAttachments);
     m_advancedUi->attachmentsView->setModel(m_attachmentsModel);
     m_advancedUi->attachmentsView->horizontalHeader()->setStretchLastSection(true);
@@ -145,7 +152,6 @@ void EditEntryWidget::setupAdvanced()
     m_advancedUi->attachmentsView->setSelectionBehavior(QAbstractItemView::SelectRows);
     m_advancedUi->attachmentsView->setSelectionMode(QAbstractItemView::MultiSelection);
 
-    m_advancedUi->attachmentsView->setSelectionMode(QAbstractItemView::ExtendedSelection);
     connect(m_advancedUi->attachmentsView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
             SLOT(updateAttachmentButtonsEnabled()));
     connect(m_advancedUi->attachmentsView, SIGNAL(doubleClicked(QModelIndex)), SLOT(openAttachment(QModelIndex)));
@@ -971,6 +977,43 @@ bool EditEntryWidget::openAttachment(const QModelIndex &index, QString *errorMes
     return true;
 }
 
+bool EditEntryWidget::eventFilter(QObject* watched, QEvent* e)
+{
+    switch (e->type()) {
+    case QEvent::DragEnter:
+    case QEvent::DragMove: {
+        QDropEvent* dropEv = static_cast<QDropEvent*>(e);
+        const QMimeData* mimeData = dropEv->mimeData();
+        if (mimeData->hasUrls()) {
+            dropEv->acceptProposedAction();
+            return true;
+        }
+        break;
+    }
+    case QEvent::Drop: {
+        QDropEvent* dropEv = static_cast<QDropEvent*>(e);
+        const QMimeData* mimeData = dropEv->mimeData();
+        if (mimeData->hasUrls()) {
+            dropEv->acceptProposedAction();
+            QStringList filenames;
+            for (const QUrl url: mimeData->urls()) {
+                QFileInfo fInfo(url.toLocalFile());
+                if (fInfo.isFile()) {
+                    filenames.append(fInfo.absoluteFilePath());
+                }
+            }
+            insertAttachments(filenames);
+
+            return true;
+        }
+    }
+    default:
+        break;
+    }
+
+    return EditWidget::eventFilter(watched, e);
+}
+
 void EditEntryWidget::protectCurrentAttribute(bool state)
 {
     QModelIndex index = m_advancedUi->attributesView->currentIndex();
@@ -1001,6 +1044,26 @@ void EditEntryWidget::revealCurrentAttribute()
     }
 }
 
+void EditEntryWidget::insertAttachments(const QStringList &filenames, QString *errorMessage)
+{
+    QStringList errors;
+    for (const QString &filename: filenames) {
+        const QFileInfo fInfo(filename);
+        QFile file(filename);
+        QByteArray data;
+        const bool readOk = file.open(QIODevice::ReadOnly) && Tools::readAllFromDevice(&file, data);
+        if (readOk) {
+            m_entryAttachments->set(fInfo.fileName(), data);
+        } else {
+            errors.append(QString("%1 - %2").arg(fInfo.fileName(), file.errorString()));
+        }
+    }
+
+    if (errorMessage && !errors.isEmpty()) {
+        *errorMessage = tr("Unable to open files:\n%1").arg(errors.join('\n'));;
+    }
+}
+
 void EditEntryWidget::insertAttachments()
 {
     Q_ASSERT(!m_history);
@@ -1017,22 +1080,10 @@ void EditEntryWidget::insertAttachments()
 
     config()->set("LastAttachmentDir", QFileInfo(filenames.first()).absolutePath());
 
-    QStringList errors;
-    for (const QString &filename: filenames) {
-        const QFileInfo fInfo(filename);
-        QFile file(filename);
-        QByteArray data;
-        const bool readOk = file.open(QIODevice::ReadOnly) && Tools::readAllFromDevice(&file, data);
-        if (!readOk) {
-            errors.append(QString("%1 - %2").arg(fInfo.fileName(), file.errorString()));
-            continue;
-        }
-
-        m_entryAttachments->set(fInfo.fileName(), data);
-    }
-
-    if (!errors.isEmpty()) {
-        showMessage(tr("Unable to open files:\n%1").arg(errors.join('\n')), MessageWidget::Error);
+    QString error;
+    insertAttachments(filenames, &error);
+    if (!error.isEmpty()) {
+        showMessage(error, MessageWidget::Error);
     }
 }
 

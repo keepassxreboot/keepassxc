@@ -86,6 +86,7 @@ private slots:
     void updateCurrentAttribute();
     void protectCurrentAttribute(bool state);
     void revealCurrentAttribute();
+    void insertAttachments(const QStringList &fileNames, QString *errorMessage = nullptr);
     void insertAttachments();
     void saveSelectedAttachment();
     void saveSelectedAttachments();
@@ -141,6 +142,8 @@ private:
     void displayAttribute(QModelIndex index, bool showProtected);
 
     bool openAttachment(const QModelIndex& index, QString *errorMessage);
+
+    bool eventFilter(QObject* watched, QEvent* event) override;
 
     Entry* m_entry;
     Database* m_database;
