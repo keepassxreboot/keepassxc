@@ -543,8 +543,7 @@ void DatabaseTabWidget::updateTabNameFromDbWidgetSender()
     Group *autoload = db->rootGroup()->findChildByName("AutoOpen");
     if (autoload) {
         const DatabaseManagerStruct& dbStruct = m_dbList.value(db);
-        QFileInfo dbpath(dbStruct.canonicalFilePath);
-        QDir dbFolder(dbpath.canonicalPath());
+        QDir dbFolder(dbStruct.fileInfo.canonicalPath());
         for (auto entry : autoload->entries()) {
             if (entry->url().isEmpty() || entry->password().isEmpty()) {
                 continue;
