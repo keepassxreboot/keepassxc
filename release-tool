@@ -609,9 +609,13 @@ build() {
                 -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" $CMAKE_OPTIONS "$SRC_DIR"
             
             logInfo "Compiling and packaging sources..."
-            make $MAKE_OPTIONS package
+            make $MAKE_OPTIONS preinstall
+            # Call cpack directly instead of calling make package.
+            # This is important because we want to build the MSI when making a
+            # release.
+            cpack -G "NSIS;WIX;ZIP"
             
-            mv "./${APP_NAME}-${RELEASE_NAME}-"*.{exe,zip} ../
+            mv "./${APP_NAME}-${RELEASE_NAME}-"*.{exe,msi,zip} ../
         else
             mkdir -p "${OUTPUT_DIR}/bin-release"
             
