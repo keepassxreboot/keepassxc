@@ -140,9 +140,14 @@ void EditEntryWidget::setupAdvanced()
 
     m_attachmentsModel->setEntryAttachments(m_entryAttachments);
     m_advancedUi->attachmentsView->setModel(m_attachmentsModel);
+    m_advancedUi->attachmentsView->horizontalHeader()->setStretchLastSection(true);
+    m_advancedUi->attachmentsView->horizontalHeader()->resizeSection(0, 600);
+    m_advancedUi->attachmentsView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    m_advancedUi->attachmentsView->setSelectionMode(QAbstractItemView::MultiSelection);
+
     m_advancedUi->attachmentsView->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    connect(m_advancedUi->attachmentsView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)),
-            SLOT(updateAttachmentButtonsEnabled(QModelIndex)));
+    connect(m_advancedUi->attachmentsView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+            SLOT(updateAttachmentButtonsEnabled()));
     connect(m_advancedUi->attachmentsView, SIGNAL(doubleClicked(QModelIndex)), SLOT(openAttachment(QModelIndex)));
     connect(m_advancedUi->saveAttachmentButton, SIGNAL(clicked()), SLOT(saveSelectedAttachments()));
     connect(m_advancedUi->openAttachmentButton, SIGNAL(clicked()), SLOT(openSelectedAttachments()));
@@ -510,15 +515,6 @@ void EditEntryWidget::useExpiryPreset(QAction* action)
     m_mainUi->expireDatePicker->setDateTime(expiryDateTime);
 }
 
-void EditEntryWidget::updateAttachmentButtonsEnabled(const QModelIndex& current)
-{
-    bool enable = current.isValid();
-
-    m_advancedUi->saveAttachmentButton->setEnabled(enable);
-    m_advancedUi->openAttachmentButton->setEnabled(enable);
-    m_advancedUi->removeAttachmentButton->setEnabled(enable && !m_history);
-}
-
 void EditEntryWidget::toggleHideNotes(bool visible)
 {
     m_mainUi->notesEdit->setVisible(visible);
@@ -581,7 +577,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_mainUi->togglePasswordGeneratorButton->setDisabled(m_history);
     m_mainUi->passwordGenerator->reset();
     m_advancedUi->addAttachmentButton->setEnabled(!m_history);
-    updateAttachmentButtonsEnabled(m_advancedUi->attachmentsView->currentIndex());
+    updateAttachmentButtonsEnabled();
     m_advancedUi->addAttributeButton->setEnabled(!m_history);
     m_advancedUi->editAttributeButton->setEnabled(false);
     m_advancedUi->removeAttributeButton->setEnabled(false);
@@ -1069,7 +1065,7 @@ void EditEntryWidget::saveSelectedAttachment()
 
 void EditEntryWidget::saveSelectedAttachments()
 {
-    const QModelIndexList indexes = m_advancedUi->attachmentsView->selectionModel()->selectedIndexes();
+    const QModelIndexList indexes = m_advancedUi->attachmentsView->selectionModel()->selectedRows(0);
     if (indexes.isEmpty()) {
         return;
     } else if (indexes.count() == 1) {
@@ -1140,7 +1136,7 @@ void EditEntryWidget::openAttachment(const QModelIndex& index)
 
 void EditEntryWidget::openSelectedAttachments()
 {
-    const QModelIndexList indexes = m_advancedUi->attachmentsView->selectionModel()->selectedIndexes();
+    const QModelIndexList indexes = m_advancedUi->attachmentsView->selectionModel()->selectedRows(0);
     if (indexes.isEmpty()) {
         return;
     }
@@ -1163,7 +1159,7 @@ void EditEntryWidget::removeSelectedAttachments()
 {
     Q_ASSERT(!m_history);
 
-    const QModelIndexList indexes = m_advancedUi->attachmentsView->selectionModel()->selectedIndexes();
+    const QModelIndexList indexes = m_advancedUi->attachmentsView->selectionModel()->selectedRows(0);
     if (indexes.isEmpty()) {
         return;
     }
@@ -1178,6 +1174,15 @@ void EditEntryWidget::removeSelectedAttachments()
         }
         m_entryAttachments->remove(keys);
     }
+}
+
+void EditEntryWidget::updateAttachmentButtonsEnabled()
+{
+    const bool hasSelection = m_advancedUi->attachmentsView->selectionModel()->hasSelection();
+
+    m_advancedUi->saveAttachmentButton->setEnabled(hasSelection);
+    m_advancedUi->openAttachmentButton->setEnabled(hasSelection);
+    m_advancedUi->removeAttachmentButton->setEnabled(hasSelection && !m_history);
 }
 
 void EditEntryWidget::updateAutoTypeEnabled()

@@ -92,6 +92,7 @@ private slots:
     void openAttachment(const QModelIndex& index);
     void openSelectedAttachments();
     void removeSelectedAttachments();
+    void updateAttachmentButtonsEnabled();
     void updateAutoTypeEnabled();
     void insertAutoTypeAssoc();
     void removeAutoTypeAssoc();
@@ -106,7 +107,6 @@ private slots:
     void histEntryActivated(const QModelIndex& index);
     void updateHistoryButtons(const QModelIndex& current, const QModelIndex& previous);
     void useExpiryPreset(QAction* action);
-    void updateAttachmentButtonsEnabled(const QModelIndex& current);
     void toggleHideNotes(bool visible);
 #ifdef WITH_XC_SSHAGENT
     void updateSSHAgent();

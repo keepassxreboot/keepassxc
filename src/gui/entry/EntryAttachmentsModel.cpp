@@ -26,6 +26,8 @@ EntryAttachmentsModel::EntryAttachmentsModel(QObject* parent)
     : QAbstractListModel(parent)
     , m_entryAttachments(nullptr)
 {
+    m_headers << tr("Name")
+              << tr("Size");
 }
 
 void EntryAttachmentsModel::setEntryAttachments(EntryAttachments* entryAttachments)
@@ -65,7 +67,17 @@ int EntryAttachmentsModel::columnCount(const QModelIndex& parent) const
 {
     Q_UNUSED(parent);
 
-    return 1;
+    return Columns::ColumnsCount;
+}
+
+QVariant EntryAttachmentsModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+    if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
+        Q_ASSERT(m_headers.size() == columnCount());
+        return m_headers[section];
+    }
+
+    return QAbstractListModel::headerData(section, orientation, role);
 }
 
 QVariant EntryAttachmentsModel::data(const QModelIndex& index, int role) const
@@ -74,15 +86,18 @@ QVariant EntryAttachmentsModel::data(const QModelIndex& index, int role) const
         return QVariant();
     }
 
-    if (role == Qt::DisplayRole && index.column() == 0) {
+    if (role == Qt::DisplayRole) {
         QString key = keyByIndex(index);
-
-        return QString("%1 (%2)").arg(key,
-                Tools::humanReadableFileSize(m_entryAttachments->value(key).size()));
+        switch (index.column()) {
+        case Columns::NameColumn:
+            return key;
+        case Columns::SizeColumn:
+            return Tools::humanReadableFileSize(m_entryAttachments->value(key).size());
+        default:
+            break;
+        }
     }
-    else {
-        return QVariant();
-    }
+    return QVariant();
 }
 
 QString EntryAttachmentsModel::keyByIndex(const QModelIndex& index) const

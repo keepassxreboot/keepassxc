@@ -153,14 +153,7 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="QListView" name="attachmentsView">
-        <property name="flow">
-         <enum>QListView::LeftToRight</enum>
-        </property>
-        <property name="isWrapping" stdset="0">
-         <bool>true</bool>
-        </property>
-       </widget>
+       <widget class="QTableView" name="attachmentsView"/>
       </item>
       <item>
        <layout class="QVBoxLayout" name="attachmentsButtonLayout">
@@ -234,7 +227,6 @@
   <tabstop>addAttributeButton</tabstop>
   <tabstop>removeAttributeButton</tabstop>
   <tabstop>editAttributeButton</tabstop>
-  <tabstop>attachmentsView</tabstop>
   <tabstop>addAttachmentButton</tabstop>
   <tabstop>removeAttachmentButton</tabstop>
   <tabstop>openAttachmentButton</tabstop>
