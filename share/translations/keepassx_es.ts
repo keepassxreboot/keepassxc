@@ -69,7 +69,7 @@ Núcleo: %3 %4</translation>
     </message>
     <message>
         <source>Distribution: %1</source>
-        <translation type="unfinished"/>
+        <translation>Distribución: %1</translation>
     </message>
 </context>
 <context>
@@ -250,7 +250,7 @@ Por favor seleccione si desea autorizar su acceso.</translation>
     </message>
     <message>
         <source>Codec</source>
-        <translation>Codificación</translation>
+        <translation>Códec</translation>
     </message>
     <message>
         <source>Text is qualified by</source>
@@ -302,11 +302,11 @@ Por favor seleccione si desea autorizar su acceso.</translation>
     </message>
     <message>
         <source>Original data: </source>
-        <translation>Datos originales:</translation>
+        <translation>Dato original:</translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file !</source>
-        <translation>¡Se detectaron errores en el archivo CSV!</translation>
+        <translation>¡Error(es) detectado(s) en el archivo CSV!</translation>
     </message>
     <message>
         <source> more messages skipped]</source>
@@ -728,7 +728,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Merge Request</source>
-        <translation>Solicitud de unión</translation>
+        <translation>Solicitud de Unión</translation>
     </message>
     <message>
         <source>The database file has changed and you have unsaved changes.Do you want to merge your changes?</source>
@@ -744,7 +744,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
-        <translation>¿Está seguro(a) que quiere permanentemente eliminar todo de su papelera de reciclaje?</translation>
+        <translation>¿Está seguro que quiere eliminar permanentemente todo de su papelera de reciclaje?</translation>
     </message>
 </context>
 <context>
@@ -795,7 +795,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Select file</source>
-        <translation>Seleccionar archivo llave</translation>
+        <translation>Seleccionar archivo</translation>
     </message>
     <message>
         <source>Unable to open file</source>
@@ -817,11 +817,11 @@ Do you want to open it anyway?</source>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n semana</numerusform><numerusform>%n semanas</numerusform></translation>
+        <translation><numerusform>%n semana</numerusform><numerusform>%n semana(s)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n mes</numerusform><numerusform>%n meses</numerusform></translation>
+        <translation><numerusform>%n mes</numerusform><numerusform>%n mes(es)</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -969,7 +969,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Presets</source>
-        <translation>Predeterminado</translation>
+        <translation>Programar</translation>
     </message>
     <message>
         <source>Notes:</source>
@@ -1098,7 +1098,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Custom icon already exists</source>
-        <translation type="unfinished"/>
+        <translation>El icono personalizado ya existe</translation>
     </message>
 </context>
 <context>
@@ -1352,7 +1352,7 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
-        <translation type="unfinished"/>
+        <translation>El archivo de bloqueo de instancia única existente no es válido. Lanzando nueva instancia.</translation>
     </message>
 </context>
 <context>
@@ -1483,7 +1483,7 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
     </message>
     <message>
         <source>Timed one-time password</source>
-        <translation>Contraseña programada de único uso (TOTP)</translation>
+        <translation>Contraseña programada de único uso</translation>
     </message>
     <message>
         <source>Copy &amp;TOTP</source>

@@ -69,7 +69,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Distribution: %1</source>
-        <translation type="unfinished"/>
+        <translation>Дистрибутив: %1</translation>
     </message>
 </context>
 <context>
@@ -219,7 +219,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Replace username and password with references</source>
-        <translation>Заменить имя пользователя и пароль к ссылкам</translation>
+        <translation>Использовать ссылки для имени пользователя и пароля</translation>
     </message>
     <message>
         <source>Copy history</source>
@@ -227,7 +227,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Append &apos; - Clone&apos; to title</source>
-        <translation>Добавить&apos; - Клонировать&apos; в заголовок</translation>
+        <translation>Добавить к названию « - клон»</translation>
     </message>
 </context>
 <context>
@@ -579,7 +579,7 @@ Otherwise your changes are lost.</source>
     <message>
         <source>&quot;%1&quot; is in edit mode.
 Discard changes and close anyway?</source>
-        <translation>«%1» в режиме редактирования.
+        <translation>«%1» в режиме правки.
 Отменить изменения и всё равно закрыть?</translation>
     </message>
     <message>
@@ -741,7 +741,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Empty recycle bin?</source>
-        <translation>Корзина пустая?</translation>
+        <translation>Очистить корзину?</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
@@ -784,7 +784,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Edit entry</source>
-        <translation>Редактировать запись</translation>
+        <translation>Править запись</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
@@ -838,7 +838,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>[PROTECTED] Press reveal to view or edit</source>
-        <translation>[Защищён] Нажмите для открытия просмотра или редактирования</translation>
+        <translation>[Защищён] Нажмите для открытия просмотра или правки</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this attachment?</source>
@@ -853,7 +853,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Add</source>
-        <translation>Добавить</translation>
+        <translation>Создать</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -946,7 +946,7 @@ Do you want to open it anyway?</source>
     <name>EditEntryWidgetMain</name>
     <message>
         <source>Title:</source>
-        <translation>Заголовок:</translation>
+        <translation>Название:</translation>
     </message>
     <message>
         <source>Username:</source>
@@ -997,7 +997,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Edit group</source>
-        <translation>Редактировать группу</translation>
+        <translation>Править группу</translation>
     </message>
     <message>
         <source>Enable</source>
@@ -1095,22 +1095,22 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Hint: You can enable Google as a fallback under Tools&gt;Settings&gt;Security</source>
-        <translation>Подсказка: вы можете включить Google в качестве резервного копирования в меню «Инструменты»&gt; «Настройки»&gt; «Безопасность»</translation>
+        <translation>Подсказка: в качестве резервного варианта для получения значков сайтов возможно использовать  Google. Включите этот параметр в меню «Инструменты» -&gt; «Настройки» -&gt; «Безопасность»</translation>
     </message>
     <message>
         <source>Custom icon already exists</source>
-        <translation type="unfinished"/>
+        <translation>Пользовательский значок уже существует</translation>
     </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
     <message>
         <source>Created:</source>
-        <translation>Создано:</translation>
+        <translation>Создание:</translation>
     </message>
     <message>
         <source>Modified:</source>
-        <translation>Изменено:</translation>
+        <translation>Изменение:</translation>
     </message>
     <message>
         <source>Accessed:</source>
@@ -1125,7 +1125,7 @@ Do you want to open it anyway?</source>
     <name>Entry</name>
     <message>
         <source> - Clone</source>
-        <translation> - Клонировать</translation>
+        <translation> - клон</translation>
     </message>
 </context>
 <context>
@@ -1143,7 +1143,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Title</source>
-        <translation>Заголовок</translation>
+        <translation>Имя записи</translation>
     </message>
     <message>
         <source>Username</source>
@@ -1162,7 +1162,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Title</source>
-        <translation>Заголовок</translation>
+        <translation>Имя записи</translation>
     </message>
     <message>
         <source>Username</source>
@@ -1353,7 +1353,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
-        <translation type="unfinished"/>
+        <translation>Запускается новый экземпляр программы, т.к. файл блокировки запуска повреждён.</translation>
     </message>
 </context>
 <context>
@@ -1452,11 +1452,11 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&amp;Add new entry</source>
-        <translation>&amp;Добавить новую запись</translation>
+        <translation>&amp;Создать запись</translation>
     </message>
     <message>
         <source>&amp;View/Edit entry</source>
-        <translation>&amp;Посмотреть/редактировать запись</translation>
+        <translation>&amp;Открыть/править запись</translation>
     </message>
     <message>
         <source>&amp;Delete entry</source>
@@ -1464,11 +1464,11 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&amp;Add new group</source>
-        <translation>&amp;Добавить новую группу</translation>
+        <translation>&amp;Создать группу</translation>
     </message>
     <message>
         <source>&amp;Edit group</source>
-        <translation>&amp;Редактировать группу</translation>
+        <translation>&amp;Править группу</translation>
     </message>
     <message>
         <source>&amp;Delete group</source>
@@ -1524,7 +1524,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&amp;Title</source>
-        <translation>&amp;Заголовок</translation>
+        <translation>&amp;Имя записи</translation>
     </message>
     <message>
         <source>&amp;URL</source>
@@ -1556,7 +1556,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Empty recycle bin</source>
-        <translation>Корзина пустая</translation>
+        <translation>Очистить корзину</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
@@ -1701,15 +1701,15 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>&amp;Return only best matching entries</source>
-        <translation>&amp;Возврат только наиболее совпадающих записей</translation>
+        <translation>&amp;Показывать только лучшие совпадения</translation>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, ftp://, ...) are returned.</source>
-        <translation>Возвращаются только записи с той же схемой (http: //, https: //, ftp: //, ...).</translation>
+        <translation>Будут отобраны только записи с совпадающим протоколом  (http://, https://, ftp://, ...).</translation>
     </message>
     <message>
         <source>&amp;Match URL schemes</source>
-        <translation>&amp;Совпадения схем адресов</translation>
+        <translation>&amp;Проверять протокол</translation>
     </message>
     <message>
         <source>Password Generator</source>
@@ -1879,7 +1879,7 @@ Change them only if you know what you are doing.</source>
     </message>
     <message>
         <source>Title</source>
-        <translation>Заголовок</translation>
+        <translation>Имя записи</translation>
     </message>
     <message>
         <source>Username</source>
@@ -2085,7 +2085,7 @@ give it a unique name to identify and accept it.</source>
     <name>SettingsWidgetGeneral</name>
     <message>
         <source>Remember last databases</source>
-        <translation>Помнить последнюю базу данных</translation>
+        <translation>Запоминать последнюю базу данных</translation>
     </message>
     <message>
         <source>Automatically save on exit</source>
@@ -2117,7 +2117,7 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation>При сворачивании прятать окно в системный лоток</translation>
+        <translation>При сворачивании скрывать окно в системный лоток</translation>
     </message>
     <message>
         <source>Load previous databases on startup</source>
@@ -2129,7 +2129,7 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Hide window to system tray instead of app exit</source>
-        <translation>Прятать окно в системный лоток вместо выхода</translation>
+        <translation>Скрывать окно в системный лоток вместо выхода</translation>
     </message>
     <message>
         <source>Minimize window at application startup</source>
@@ -2141,11 +2141,11 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Remember last key files and security dongles</source>
-        <translation>Помнить последние ключевые файлы и ключи безопасности</translation>
+        <translation>Запоминать последние использованные файлы ключей и устройства</translation>
     </message>
     <message>
         <source>Don&apos;t mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation>Не помечать базу данных как измененную без изменения данных (например, для расширения групп)</translation>
+        <translation>Не помечать базу данных изменённой при действиях, не связанных с изменением данных (например, при распахивании групп)</translation>
     </message>
     <message>
         <source>Auto-Type</source>
@@ -2153,7 +2153,7 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Use entry title and URL to match windows for global Auto-Type</source>
-        <translation>Использовать URL и заголовок записи при сопоставлении окон для глобального автоввода</translation>
+        <translation>Использовать для поиска URL и название записи</translation>
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
@@ -2184,7 +2184,7 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
-        <translation>Заблокировать базу данных после неактивности длительностью</translation>
+        <translation>Блокировать базу данных при отсутствии активности длительностью</translation>
     </message>
     <message>
         <source>Show passwords in cleartext by default</source>
@@ -2192,7 +2192,7 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Lock databases after minimizing the window</source>
-        <translation>Блокировать базу данных после сворачивания окна</translation>
+        <translation>Блокировать базу данных при сворачивания окна</translation>
     </message>
     <message>
         <source>Don&apos;t require password repeat when it is visible</source>
@@ -2216,7 +2216,7 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Use Google as fallback for downloading website icons</source>
-        <translation>Использовать Google как резерв для загрузки значков веб-сайтов</translation>
+        <translation>Использовать Google в качестве резервного варианта для получения значков веб-сайтов</translation>
     </message>
 </context>
 <context>
