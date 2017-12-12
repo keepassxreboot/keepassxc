@@ -86,6 +86,8 @@ bool SymmetricCipherGcrypt::init()
 
     gcry_error_t error;
 
+    if(m_ctx != nullptr)
+        gcry_cipher_close(m_ctx);
     error = gcry_cipher_open(&m_ctx, m_algo, m_mode, 0);
     if (error != 0) {
         setErrorString(error);

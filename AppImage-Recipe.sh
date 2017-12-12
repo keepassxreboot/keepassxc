@@ -66,10 +66,6 @@ get_apprun
 copy_deps
 delete_blacklisted
 
-# remove dbus and systemd libs as they are not blacklisted
-find . -name libdbus-1.so.3 -exec rm {} \;
-find . -name libsystemd.so.0 -exec rm {} \;
-
 get_desktop
 get_icon
 cat << EOF > ./usr/bin/keepassxc_env
@@ -89,14 +85,15 @@ else
 fi
 EOF
 chmod +x ./usr/bin/keepassxc_env
-sed -i 's/Exec=keepassxc/Exec=keepassxc_env/' org.keepassxc.desktop
-get_desktopintegration $LOWERAPP
-
-GLIBC_NEEDED=$(glibc_needed)
+sed -i 's/Exec=keepassxc/Exec=keepassxc_env/' org.${LOWERAPP}.${APP}.desktop
+get_desktopintegration "org.${LOWERAPP}.${APP}"
 
 cd ..
 
-generate_type2_appimage
+GLIBC_NEEDED=$(glibc_needed)
+NO_GLIBC_VERSION=true
 
-mv ../out/*.AppImage ../KeePassXC-${VERSION}-${ARCH}.AppImage
-rmdir ../out > /dev/null 2>&1
+generate_type2_appimage -u "gh-releases-zsync|keepassxreboot|keepassxc|latest|KeePassXC-*-${ARCH}.AppImage.zsync"
+
+mv ../out/*.AppImage* ../
+rm -rf ../out

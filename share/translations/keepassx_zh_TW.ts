@@ -69,7 +69,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Distribution: %1</source>
-        <translation type="unfinished"/>
+        <translation>散佈：%1</translation>
     </message>
 </context>
 <context>
@@ -196,7 +196,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Cha&amp;llenge Response</source>
-        <translation type="unfinished"/>
+        <translation>挑戰回應</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -208,7 +208,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Changing master key failed: no YubiKey inserted.</source>
-        <translation type="unfinished"/>
+        <translation>挑戰主金鑰失敗：沒有插入 YubiKey</translation>
     </message>
 </context>
 <context>
@@ -397,7 +397,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Challenge Response:</source>
-        <translation type="unfinished"/>
+        <translation>挑戰驗證：</translation>
     </message>
 </context>
 <context>
@@ -1098,7 +1098,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Custom icon already exists</source>
-        <translation type="unfinished"/>
+        <translation>自訂圖示已經存在</translation>
     </message>
 </context>
 <context>
@@ -2140,7 +2140,7 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Remember last key files and security dongles</source>
-        <translation>記住最近的金鑰檔案與安全加密狗</translation>
+        <translation>記住最近的金鑰檔案與安全鎖</translation>
     </message>
     <message>
         <source>Don&apos;t mark database as modified for non-data changes (e.g., expanding groups)</source>

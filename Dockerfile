@@ -14,67 +14,49 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-FROM centos:7
+FROM ubuntu:14.04
+
+ENV QT5_VERSION=59
+ENV QT5_PPA_VERSION=${QT5_VERSION}2
 
 RUN set -x \
-    && curl "https://copr.fedorainfracloud.org/coprs/bugzy/keepassxc/repo/epel-7/bugzy-keepassxc-epel-7.repo" \
-        > /etc/yum.repos.d/bugzy-keepassxc-epel-7.repo
+    && apt-get update -y \
+    && apt-get -y install software-properties-common
 
 RUN set -x \
-    && curl "https://copr.fedorainfracloud.org/coprs/sic/backports/repo/epel-7/sic-backports-epel-7.repo" \
-        > /etc/yum.repos.d/sic-backports-epel-7.repo
+    && add-apt-repository ppa:beineri/opt-qt${QT5_PPA_VERSION}-trusty \
+    && add-apt-repository ppa:phoerious/keepassxc
 
 RUN set -x \
-    && yum clean -y all \
-    && yum upgrade -y
+    && apt-get update -y \
+    && apt-get upgrade -y
 
 # build and runtime dependencies
 RUN set -x \
-    && yum install -y \
-        make \
-        automake \
-        gcc-c++ \
-        cmake \
-        libgcrypt16-devel \
-        qt5-qtbase-devel \
-        qt5-linguist \
-        qt5-qttools \
-        zlib-devel \
-        qt5-qtx11extras \
-        qt5-qtx11extras-devel \
-        libXi-devel \
-        libXtst-devel
+    && apt-get install -y \
+        cmake3 \
+        g++ \
+        libgcrypt20-dev \
+        qt${QT5_VERSION}base \
+        qt${QT5_VERSION}tools \
+        qt${QT5_VERSION}x11extras \
+        zlib1g-dev \
+        libxi-dev \
+        libxtst-dev \
+        mesa-common-dev \
+        libyubikey-dev \
+        libykpers-1-dev
+
+ENV CMAKE_PREFIX_PATH=/opt/qt${QT5_VERSION}/lib/cmake
+ENV LD_LIBRARY_PATH=/opt/qt${QT5_VERSION}/lib
+RUN set -x \
+    && echo /opt/qt${QT_VERSION}/lib > /etc/ld.so.conf.d/qt${QT5_VERSION}.conf
 
 # AppImage dependencies
 RUN set -x \
-    && yum install -y \
-        wget \
-        fuse-libs
-
-# build libyubikey
-ENV YUBIKEY_VERSION=1.13
-RUN set -x && yum install -y libusb-devel
-RUN set -x \
-    && wget "https://developers.yubico.com/yubico-c/Releases/libyubikey-${YUBIKEY_VERSION}.tar.gz" \
-    && tar xf libyubikey-${YUBIKEY_VERSION}.tar.gz \
-    && cd libyubikey-${YUBIKEY_VERSION} \
-    && ./configure --prefix=/usr --libdir=/usr/lib64 \
-    && make \
-    && make install \
-    && cd .. \
-    && rm -Rf libyubikey-${YUBIKEY_VERSION}*
-
-# build libykpers-1
-ENV YKPERS_VERSION=1.18.0
-RUN set -x \
-    && wget "https://developers.yubico.com/yubikey-personalization/Releases/ykpers-${YKPERS_VERSION}.tar.gz" \
-    && tar xf ykpers-${YKPERS_VERSION}.tar.gz \
-    && cd ykpers-${YKPERS_VERSION} \
-    && ./configure --prefix=/usr --libdir=/usr/lib64 \
-    && make \
-    && make install \
-    && cd .. \
-    && rm -Rf ykpers-${YKPERS_VERSION}*
+    && apt-get install -y \
+        libfuse2 \
+        wget
 
 VOLUME /keepassxc/src
 VOLUME /keepassxc/out

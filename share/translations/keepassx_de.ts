@@ -571,7 +571,7 @@ Sie können sie speichern oder die Sperre freigeben.</translation>
 Do you want to save the database before locking it?
 Otherwise your changes are lost.</source>
         <translation>Dieses Datenbank wurde geändert.
-Soll sie gespeichert werden bevor sie gesperrt wirt?
+Soll sie gespeichert werden bevor sie gesperrt wird?
 Anderenfalls gehen Ihre Änderungen verloren.</translation>
     </message>
     <message>
