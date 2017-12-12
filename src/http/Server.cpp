@@ -1,50 +1,49 @@
 /*
-*  Copyright (C) 2013 Francois Ferrand
-*  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
-*
-*  This program is free software: you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation, either version 2 or (at your option)
-*  version 3 of the License.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  You should have received a copy of the GNU General Public License
-*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ *  Copyright (C) 2013 Francois Ferrand
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 2 or (at your option)
+ *  version 3 of the License.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include <QEventLoop>
-#include <QtCore/QHash>
 #include <QtCore/QCryptographicHash>
+#include <QtCore/QHash>
 #include <QtWidgets/QMessageBox>
 
 #include "qhttp/qhttpserver.hpp"
-#include "qhttp/qhttpserverresponse.hpp"
 #include "qhttp/qhttpserverrequest.hpp"
+#include "qhttp/qhttpserverresponse.hpp"
 
-#include "Server.h"
-#include "Protocol.h"
 #include "HttpSettings.h"
+#include "Protocol.h"
+#include "Server.h"
 #include "crypto/Crypto.h"
 
 using namespace KeepassHttpProtocol;
 using namespace qhttp::server;
 
-Server::Server(QObject *parent) :
-    QObject(parent),
-    m_started(false),
-    m_server(nullptr)
+Server::Server(QObject* parent)
+    : QObject(parent)
+    , m_started(false)
+    , m_server(nullptr)
 {
-
 }
 
-void Server::testAssociate(const Request& r, Response * protocolResp)
+void Server::testAssociate(const Request& r, Response* protocolResp)
 {
     if (r.id().isEmpty())
-        return;   //ping
+        return; // ping
 
     QString key = getKey(r.id());
     if (key.isEmpty() || !r.CheckVerifier(key))
@@ -55,7 +54,7 @@ void Server::testAssociate(const Request& r, Response * protocolResp)
     protocolResp->setVerifier(key);
 }
 
-void Server::associate(const Request& r, Response * protocolResp)
+void Server::associate(const Request& r, Response* protocolResp)
 {
     if (!r.CheckVerifier(r.key()))
         return;
@@ -69,7 +68,7 @@ void Server::associate(const Request& r, Response * protocolResp)
     protocolResp->setVerifier(r.key());
 }
 
-void Server::getLogins(const Request &r, Response *protocolResp)
+void Server::getLogins(const Request& r, Response* protocolResp)
 {
     QString key = getKey(r.id());
     if (!r.CheckVerifier(key))
@@ -78,14 +77,15 @@ void Server::getLogins(const Request &r, Response *protocolResp)
     protocolResp->setSuccess();
     protocolResp->setId(r.id());
     protocolResp->setVerifier(key);
-    QList<Entry> entries = findMatchingEntries(r.id(), r.url(), r.submitUrl(), r.realm());  //TODO: filtering, request confirmation [in db adaptation layer?]
+    QList<Entry> entries = findMatchingEntries(
+        r.id(), r.url(), r.submitUrl(), r.realm()); // TODO: filtering, request confirmation [in db adaptation layer?]
     if (r.sortSelection()) {
-        //TODO: sorting (in db adaptation layer? here?)
+        // TODO: sorting (in db adaptation layer? here?)
     }
     protocolResp->setEntries(entries);
 }
 
-void Server::getLoginsCount(const Request &r, Response *protocolResp)
+void Server::getLoginsCount(const Request& r, Response* protocolResp)
 {
     QString key = getKey(r.id());
     if (!r.CheckVerifier(key))
@@ -97,7 +97,7 @@ void Server::getLoginsCount(const Request &r, Response *protocolResp)
     protocolResp->setCount(countMatchingEntries(r.id(), r.url(), r.submitUrl(), r.realm()));
 }
 
-void Server::getAllLogins(const Request &r, Response *protocolResp)
+void Server::getAllLogins(const Request& r, Response* protocolResp)
 {
     QString key = getKey(r.id());
     if (!r.CheckVerifier(key))
@@ -106,10 +106,10 @@ void Server::getAllLogins(const Request &r, Response *protocolResp)
     protocolResp->setSuccess();
     protocolResp->setId(r.id());
     protocolResp->setVerifier(key);
-    protocolResp->setEntries(searchAllEntries(r.id()));   //TODO: ensure there is no password --> change API?
+    protocolResp->setEntries(searchAllEntries(r.id())); // TODO: ensure there is no password --> change API?
 }
 
-void Server::setLogin(const Request &r, Response *protocolResp)
+void Server::setLogin(const Request& r, Response* protocolResp)
 {
     QString key = getKey(r.id());
     if (!r.CheckVerifier(key))
@@ -126,7 +126,7 @@ void Server::setLogin(const Request &r, Response *protocolResp)
     protocolResp->setVerifier(key);
 }
 
-void Server::generatePassword(const Request &r, Response *protocolResp)
+void Server::generatePassword(const Request& r, Response* protocolResp)
 {
     QString key = getKey(r.id());
     if (!r.CheckVerifier(key))
@@ -149,20 +149,35 @@ void Server::handleRequest(const QByteArray& data, QHttpResponse* response)
     if (!r.fromJson(data))
         return;
 
-    QByteArray hash = QCryptographicHash::hash(
-        (getDatabaseRootUuid() + getDatabaseRecycleBinUuid()).toUtf8(),
-         QCryptographicHash::Sha1).toHex();
+    QByteArray hash = QCryptographicHash::hash((getDatabaseRootUuid() + getDatabaseRecycleBinUuid()).toUtf8(),
+                                               QCryptographicHash::Sha1)
+                          .toHex();
 
     Response protocolResp(r, QString::fromLatin1(hash));
-    switch(r.requestType()) {
-    case INVALID: break;
-    case GET_LOGINS:        getLogins(r, &protocolResp); break;
-    case GET_LOGINS_COUNT:  getLoginsCount(r, &protocolResp); break;
-    case GET_ALL_LOGINS:    getAllLogins(r, &protocolResp); break;
-    case SET_LOGIN:         setLogin(r, &protocolResp); break;
-    case ASSOCIATE:         associate(r, &protocolResp); break;
-    case TEST_ASSOCIATE:    testAssociate(r, &protocolResp); break;
-    case GENERATE_PASSWORD: generatePassword(r, &protocolResp); break;
+    switch (r.requestType()) {
+    case INVALID:
+        break;
+    case GET_LOGINS:
+        getLogins(r, &protocolResp);
+        break;
+    case GET_LOGINS_COUNT:
+        getLoginsCount(r, &protocolResp);
+        break;
+    case GET_ALL_LOGINS:
+        getAllLogins(r, &protocolResp);
+        break;
+    case SET_LOGIN:
+        setLogin(r, &protocolResp);
+        break;
+    case ASSOCIATE:
+        associate(r, &protocolResp);
+        break;
+    case TEST_ASSOCIATE:
+        testAssociate(r, &protocolResp);
+        break;
+    case GENERATE_PASSWORD:
+        generatePassword(r, &protocolResp);
+        break;
     }
 
     QString out = protocolResp.toJson().toUtf8();
@@ -199,7 +214,10 @@ void Server::start(void)
 
     m_server = new QHttpServer(this);
     m_server->listen(address, port);
-    connect(m_server, SIGNAL(newRequest(QHttpRequest*, QHttpResponse*)), this, SLOT(onNewRequest(QHttpRequest*, QHttpResponse*)));
+    connect(m_server,
+            SIGNAL(newRequest(QHttpRequest*, QHttpResponse*)),
+            this,
+            SLOT(onNewRequest(QHttpRequest*, QHttpResponse*)));
 
     m_started = true;
 }
@@ -219,7 +237,5 @@ void Server::onNewRequest(QHttpRequest* request, QHttpResponse* response)
 
     request->collectData(1024);
 
-    request->onEnd([=]() {
-        this->handleRequest(request->collectedData(), response);
-    });
+    request->onEnd([=]() { this->handleRequest(request->collectedData(), response); });
 }

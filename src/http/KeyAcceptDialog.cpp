@@ -1,33 +1,33 @@
 /*
-*  Copyright (C) 2013 Francois Ferrand
-*  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
-*
-*  This program is free software: you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation, either version 2 or (at your option)
-*  version 3 of the License.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  You should have received a copy of the GNU General Public License
-*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ *  Copyright (C) 2013 Francois Ferrand
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 2 or (at your option)
+ *  version 3 of the License.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "KeyAcceptDialog.h"
-#include "ui_KeyAcceptDialog.h"
 #include "core/Entry.h"
-#include <QStandardItemModel>
-#include <QStandardItem>
-#include <Qt>
+#include "ui_KeyAcceptDialog.h"
 #include <QDialogButtonBox>
 #include <QPushButton>
+#include <QStandardItem>
+#include <QStandardItemModel>
+#include <Qt>
 
-KeyAcceptDialog::KeyAcceptDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::KeyAcceptDialog())
+KeyAcceptDialog::KeyAcceptDialog(QWidget* parent)
+    : QDialog(parent)
+    , ui(new Ui::KeyAcceptDialog())
 {
     this->setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 
@@ -46,13 +46,13 @@ KeyAcceptDialog::~KeyAcceptDialog()
 {
 }
 
-void KeyAcceptDialog::setItems(const QList<QString> &items)
+void KeyAcceptDialog::setItems(const QList<QString>& items)
 {
     QStandardItemModel* listViewModel = qobject_cast<QStandardItemModel*>(ui->databasesListView->model());
 
     listViewModel->clear();
 
-    for (QString item: items) {
+    for (QString item : items) {
         QStandardItem* listItem = new QStandardItem(item);
         listItem->setFlags(Qt::ItemIsEnabled | Qt::ItemIsUserCheckable);
         listItem->setData(Qt::Unchecked, Qt::CheckStateRole);
@@ -93,7 +93,7 @@ QList<int> KeyAcceptDialog::getCheckedItems()
 
     int numRows = listViewModel->rowCount();
 
-    //XXX Memory Leak
+    // XXX Memory Leak
     QList<int> resultList;
 
     for (int row = 0; row < numRows; row++) {
@@ -124,12 +124,11 @@ void KeyAcceptDialog::checkAcceptable()
         }
     }
 
-    //TODO: Make translateable
+    // TODO: Make translateable
     if (getKeyName().isEmpty()) {
         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
         ui->buttonBox->button(QDialogButtonBox::Ok)->setToolTip(tr("Make sure the key name is not empty!"));
-    }
-    else if (!hasChecked) {
+    } else if (!hasChecked) {
         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
         ui->buttonBox->button(QDialogButtonBox::Ok)->setToolTip(tr("Check at least one database"));
     } else {
@@ -138,14 +137,14 @@ void KeyAcceptDialog::checkAcceptable()
     }
 }
 
-void KeyAcceptDialog::keyEditChanged(const QString &text)
+void KeyAcceptDialog::keyEditChanged(const QString& text)
 {
     (void)text;
 
     checkAcceptable();
 }
 
-void KeyAcceptDialog::modelItemChanged(QStandardItem *item)
+void KeyAcceptDialog::modelItemChanged(QStandardItem* item)
 {
     (void)item;
 
