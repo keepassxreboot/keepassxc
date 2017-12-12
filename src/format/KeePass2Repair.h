@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2016 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,6 +21,7 @@
 
 #include <QCoreApplication>
 #include <QIODevice>
+#include <QPair>
 
 #include "core/Database.h"
 #include "keys/CompositeKey.h"
@@ -36,14 +38,12 @@ public:
         RepairSuccess,
         RepairFailed
     };
+    using RepairOutcome = QPair<RepairResult, Database*>;
 
-    KeePass2Repair();
-    RepairResult repairDatabase(QIODevice* device, const CompositeKey& key);
-    Database* database() const;
+    RepairOutcome repairDatabase(QIODevice* device, const CompositeKey& key);
     QString errorString() const;
 
 private:
-    Database* m_db;
     QString m_errorStr;
 };
 

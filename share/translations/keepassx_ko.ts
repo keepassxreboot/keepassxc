@@ -69,7 +69,7 @@ CPU 아키텍처: %2
     </message>
     <message>
         <source>Distribution: %1</source>
-        <translation type="unfinished"/>
+        <translation>배포판: %1</translation>
     </message>
 </context>
 <context>
@@ -1096,7 +1096,7 @@ Do you want to open it anyway?</source>
     </message>
     <message>
         <source>Custom icon already exists</source>
-        <translation type="unfinished"/>
+        <translation>사용자 정의 아이콘이 이미 존재함</translation>
     </message>
 </context>
 <context>
@@ -1350,7 +1350,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
-        <translation type="unfinished"/>
+        <translation>존재하는 단일 인스턴스 잠금 파일이 잘못되었습니다. 새 인스턴스를 실행합니다.</translation>
     </message>
 </context>
 <context>

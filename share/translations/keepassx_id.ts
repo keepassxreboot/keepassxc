@@ -69,7 +69,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Distribution: %1</source>
-        <translation type="unfinished"/>
+        <translation>Distribusi: %1</translation>
     </message>
 </context>
 <context>

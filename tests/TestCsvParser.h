@@ -22,6 +22,7 @@
 #include <QObject>
 #include <QFile>
 #include <QTemporaryFile>
+#include <QScopedPointer>
 
 #include "core/CsvParser.h"
 
@@ -37,7 +38,6 @@ private slots:
     void init();
     void cleanup();
     void initTestCase();
-    void cleanupTestCase();
 
     void testUnicode();
     void testLF();
@@ -62,8 +62,8 @@ private slots:
     void testColumns();
 
 private:
-    QTemporaryFile* file;
-    CsvParser* parser;
+    QScopedPointer<QTemporaryFile> file;
+    QScopedPointer<CsvParser> parser;
     CsvTable t;
     void dumpRow(CsvTable table, int row);
 };
