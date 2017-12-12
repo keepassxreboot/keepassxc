@@ -90,6 +90,9 @@ AboutDialog::AboutDialog(QWidget* parent)
 #ifdef WITH_XC_SSHAGENT
     extensions += "\n- SSH Agent";
 #endif
+#ifdef WITH_XC_BROWSER
+    extensions += "\n- Native messaging browser extension";
+#endif
 
     if (extensions.isEmpty())
         extensions = " None";

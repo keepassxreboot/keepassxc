@@ -25,7 +25,8 @@ RUN set -x \
 
 RUN set -x \
     && add-apt-repository ppa:beineri/opt-qt${QT5_PPA_VERSION}-trusty \
-    && add-apt-repository ppa:phoerious/keepassxc
+    && add-apt-repository ppa:phoerious/keepassxc \
+    && LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
 
 RUN set -x \
     && apt-get update -y \
@@ -46,7 +47,8 @@ RUN set -x \
         libxtst-dev \
         mesa-common-dev \
         libyubikey-dev \
-        libykpers-1-dev
+        libykpers-1-dev \
+        libsodium-dev
 
 ENV CMAKE_PREFIX_PATH=/opt/qt${QT5_VERSION}/lib/cmake
 ENV LD_LIBRARY_PATH=/opt/qt${QT5_VERSION}/lib

@@ -30,6 +30,7 @@ public:
     double calculateEntropy(QString passphrase);
     void setWordCount(int wordCount);
     void setWordList(QString path);
+    void setDefaultWordList();
     void setWordSeparator(QString separator);
     bool isValid() const;
 

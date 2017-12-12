@@ -6,7 +6,7 @@ You can visit the online version of this document at the following link:
 
 https://github.com/keepassxreboot/keepassx/wiki/Install-Instruction-from-Source
 
-The [KeePassXC QuickStart](./docs/QUICKSTART.md) gets you started using KeePassXC on your 
+The [KeePassXC QuickStart](./docs/QUICKSTART.md) gets you started using KeePassXC on your
 Windows, Mac, or Linux computer using the pre-built binaries.
 
 Build Dependencies
@@ -25,6 +25,7 @@ The following libraries are required:
 * zlib
 * libmicrohttpd
 * libxi, libxtst, qtx11extras (optional for auto-type on X11)
+* libsodium (>= 1.0.12, optional for keepassxc-browser support)
 
 
 Prepare the Building Environment
@@ -40,7 +41,7 @@ Build Steps
 To compile from source, open a **Terminal (on Linux/MacOS)** or a **MSYS2-MinGW shell (on Windows)**<br/>
 **Note:** on Windows make sure you are using a **MINGW shell** by checking the label before the current path
 
-First, download the KeePassXC [source tarball](https://keepassxc.org/download#source) 
+First, download the KeePassXC [source tarball](https://keepassxc.org/download#source)
 or check out the latest version from our [Git repository](https://github.com/keepassxreboot/keepassxc).
 
 To clone the project from Git, `cd` to a suitable location and run
@@ -66,10 +67,10 @@ cd build
 cmake -DWITH_TESTS=OFF ...and other options - see below...
 make
 ```
-These steps place the compiled KeePassXC binary inside the `./build/src/` directory. 
+These steps place the compiled KeePassXC binary inside the `./build/src/` directory.
 (Note the cmake notes/options below.)
 
-**Cmake Notes:** 
+**Cmake Notes:**
 
 * Common cmake parameters
 
@@ -86,7 +87,8 @@ These steps place the compiled KeePassXC binary inside the `./build/src/` direct
 	  -DWITH_XC_AUTOTYPE=[ON|OFF] Enable/Disable Auto-Type (default: ON)
 	  -DWITH_XC_HTTP=[ON|OFF] Enable/Disable KeePassHTTP and custom icon downloads (default: OFF)
 	  -DWITH_XC_YUBIKEY=[ON|OFF] Enable/Disable YubiKey HMAC-SHA1 authentication support (default: OFF)
-	
+	  -DWITH_XC_BROWSER=[ON|OFF] Enable/Disable keepassxc-browser extension support (default: OFF)
+
 	  -DWITH_TESTS=[ON|OFF] Enable/Disable building of unit tests (default: ON)
 	  -DWITH_GUI_TESTS=[ON|OFF] Enable/Disable building of GUI tests (default: OFF)
 	  -DWITH_DEV_BUILD=[ON|OFF] Enable/Disable deprecated method warnings (default: OFF)
