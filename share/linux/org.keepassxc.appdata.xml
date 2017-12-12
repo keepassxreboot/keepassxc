@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2017 KeePassXC Team <team@keepassxc.org> -->
+<!-<li>Copyright 2017 KeePassXC Team <team@keepassxc.org> -->
 <component type="desktop-application">
     <id>org.keepassxc</id>
     <name>KeePassXC</name>
@@ -67,6 +67,18 @@
     </screenshots>
 
     <releases>
+        <release version="2.2.3" date="2017-12-11">
+            <description>
+                <ul>
+                    <li>Prevent database corruption when locked [#1219]</li>
+                    <li>Fixes apply button not saving new entries [#1141]</li>
+                    <li>Switch to Consolas font on Windows for password edit [#1229]</li>
+                    <li>Multiple fixes to AppImage deployment [#1115, #1228]</li>
+                    <li>Fixes multiple memory leaks [#1213]</li>
+                    <li>Resize message close to 16x16 pixels [#1253]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.2.2" date="2017-10-22">
             <description>
                 <ul>
@@ -85,7 +97,8 @@
                     <li>Fixed screen lock and Google fallback settings [#1029]</li>
                 </ul>
             </description>
-        </release><release version="2.2.1" date="2017-10-01">
+        </release>
+        <release version="2.2.1" date="2017-10-01">
             <description>
                 <ul>
                     <li>Corrected multiple snap issues [#934, #1011]</li>
