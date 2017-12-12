@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-<li>Copyright 2017 KeePassXC Team <team@keepassxc.org> -->
+<!--Copyright 2017 KeePassXC Team <team@keepassxc.org> -->
 <component type="desktop-application">
     <id>org.keepassxc</id>
     <name>KeePassXC</name>
