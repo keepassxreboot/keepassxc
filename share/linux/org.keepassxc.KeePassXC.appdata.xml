@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-<li>Copyright 2017 KeePassXC Team <team@keepassxc.org> -->
+<!--Copyright 2017 KeePassXC Team <team@keepassxc.org> -->
 <component type="desktop-application">
     <id>org.keepassxc</id>
     <name>KeePassXC</name>
@@ -67,7 +67,7 @@
     </screenshots>
 
     <releases>
-        <release version="2.2.3" date="2017-12-11">
+        <release version="2.2.4" date="2017-12-13">
             <description>
                 <ul>
                     <li>Prevent database corruption when locked [#1219]</li>
