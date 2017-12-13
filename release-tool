@@ -264,13 +264,13 @@ checkChangeLog() {
 }
 
 checkAppStreamInfo() {
-    if [ ! -f share/linux/org.keepassxc.appdata.xml ]; then
+    if [ ! -f share/linux/org.keepassxc.KeePassXC.appdata.xml ]; then
         exitError "No AppStream info file found!"
     fi
 
-    grep -qPzo "<release version=\"${RELEASE_NAME}\" date=\"\d{4}-\d{2}-\d{2}\">" share/linux/org.keepassxc.appdata.xml
+    grep -qPzo "<release version=\"${RELEASE_NAME}\" date=\"\d{4}-\d{2}-\d{2}\">" share/linux/org.keepassxc.KeePassXC.appdata.xml
     if [ $? -ne 0 ]; then
-        exitError "'share/linux/org.keepassxc.appdata.xml' has not been updated to the '${RELEASE_NAME}' release!"
+        exitError "'share/linux/org.keepassxc.KeePassXC.appdata.xml' has not been updated to the '${RELEASE_NAME}' release!"
     fi
 }
 
