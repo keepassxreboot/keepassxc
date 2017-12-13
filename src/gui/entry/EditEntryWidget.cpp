@@ -32,7 +32,6 @@
 #include <QMimeData>
 #include <QEvent>
 
-
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/Entry.h"
@@ -150,7 +149,7 @@ void EditEntryWidget::setupAdvanced()
     m_advancedUi->attachmentsView->horizontalHeader()->setStretchLastSection(true);
     m_advancedUi->attachmentsView->horizontalHeader()->resizeSection(0, 600);
     m_advancedUi->attachmentsView->setSelectionBehavior(QAbstractItemView::SelectRows);
-    m_advancedUi->attachmentsView->setSelectionMode(QAbstractItemView::MultiSelection);
+    m_advancedUi->attachmentsView->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
     connect(m_advancedUi->attachmentsView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
             SLOT(updateAttachmentButtonsEnabled()));
@@ -1044,7 +1043,7 @@ void EditEntryWidget::revealCurrentAttribute()
     }
 }
 
-void EditEntryWidget::insertAttachments(const QStringList &filenames, QString *errorMessage)
+void EditEntryWidget::insertAttachments(const QStringList& filenames, QString* errorMessage)
 {
     QStringList errors;
     for (const QString &filename: filenames) {

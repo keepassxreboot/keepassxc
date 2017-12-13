@@ -86,7 +86,7 @@ private slots:
     void updateCurrentAttribute();
     void protectCurrentAttribute(bool state);
     void revealCurrentAttribute();
-    void insertAttachments(const QStringList &fileNames, QString *errorMessage = nullptr);
+    void insertAttachments(const QStringList& fileNames, QString* errorMessage = nullptr);
     void insertAttachments();
     void saveSelectedAttachment();
     void saveSelectedAttachments();

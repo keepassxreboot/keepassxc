@@ -21,12 +21,16 @@
 
 #include <QDebug>
 #include <QTimer>
+#include <QDir>
+#include <QDesktopServices>
+#include <QTemporaryFile>
 
 #include "core/Config.h"
 #include "core/FilePath.h"
 #include "core/TimeInfo.h"
 #include "gui/Clipboard.h"
 #include "gui/DatabaseWidget.h"
+#include "entry/EntryAttachmentsModel.h"
 
 DetailsWidget::DetailsWidget(QWidget* parent)
     : QWidget(parent)
@@ -36,9 +40,11 @@ DetailsWidget::DetailsWidget(QWidget* parent)
     , m_currentGroup(nullptr)
     , m_timer(nullptr)
     , m_attributesWidget(nullptr)
+    , m_attachmentsWidget(nullptr)
     , m_autotypeWidget(nullptr)
     , m_selectedTabEntry(0)
     , m_selectedTabGroup(0)
+    , m_attachmentsModel(new EntryAttachmentsModel(this))
 {
     m_ui->setupUi(this);
 
@@ -52,6 +58,17 @@ DetailsWidget::DetailsWidget(QWidget* parent)
     connect(m_ui->totpButton, SIGNAL(toggled(bool)), SLOT(showTotp(bool)));
     connect(m_ui->closeButton, SIGNAL(toggled(bool)), SLOT(hideDetails()));
     connect(m_ui->tabWidget, SIGNAL(tabBarClicked(int)), SLOT(updateTabIndex(int)));
+
+    m_ui->attachmentsTableView->setModel(m_attachmentsModel);
+    m_ui->attachmentsTableView->horizontalHeader()->setStretchLastSection(true);
+    m_ui->attachmentsTableView->horizontalHeader()->resizeSection(0, 600);
+    m_ui->attachmentsTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    m_ui->attachmentsTableView->setSelectionMode(QAbstractItemView::SingleSelection);
+    connect(m_ui->attachmentsTableView, SIGNAL(activated(QModelIndex)), SLOT(openAttachment(QModelIndex)));
+
+    m_attributesWidget = m_ui->tabWidget->widget(AttributesTab);
+    m_attachmentsWidget = m_ui->tabWidget->widget(AttachmentsTab);
+    m_autotypeWidget = m_ui->tabWidget->widget(AutotypeTab);
 
     this->hide();
 }
@@ -75,8 +92,9 @@ void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
 
     m_ui->stackedWidget->setCurrentIndex(EntryPreview);
 
-    if (m_ui->tabWidget->count() < 4) {
+    if (m_ui->tabWidget->count() < 5) {
         m_ui->tabWidget->insertTab(static_cast<int>(AttributesTab), m_attributesWidget, "Attributes");
+        m_ui->tabWidget->insertTab(static_cast<int>(AttachmentsTab), m_attachmentsWidget, "Attachments");
         m_ui->tabWidget->insertTab(static_cast<int>(AutotypeTab), m_autotypeWidget, "Autotype");
     }
 
@@ -173,6 +191,10 @@ void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
         m_ui->attributesEdit->setText(attributesText);
     }
 
+    const bool hasAttachments = !m_currentEntry->attachments()->isEmpty();
+    m_ui->tabWidget->setTabEnabled(AttachmentsTab, hasAttachments);
+    m_attachmentsModel->setEntryAttachments(hasAttachments ? m_currentEntry->attachments() : nullptr);
+
     m_ui->autotypeTree->clear();
     AutoTypeAssociations* autotypeAssociations = m_currentEntry->autoTypeAssociations();
     QList<QTreeWidgetItem*> items;
@@ -209,9 +231,8 @@ void DetailsWidget::getSelectedGroup(Group* selectedGroup)
     m_ui->stackedWidget->setCurrentIndex(GroupPreview);
 
     if (m_ui->tabWidget->count() > 2) {
-        m_autotypeWidget = m_ui->tabWidget->widget(AutotypeTab);
-        m_attributesWidget = m_ui->tabWidget->widget(AttributesTab);
         m_ui->tabWidget->removeTab(AutotypeTab);
+        m_ui->tabWidget->removeTab(AttachmentsTab);
         m_ui->tabWidget->removeTab(AttributesTab);
     }
 
@@ -338,3 +359,28 @@ void DetailsWidget::updateTabIndex(int index)
         m_selectedTabEntry = index;
     }
 }
+
+void DetailsWidget::openAttachment(const QModelIndex& index)
+{
+    Q_ASSERT(m_currentEntry != nullptr);
+    const QString filename = m_attachmentsModel->keyByIndex(index);
+    const QByteArray attachmentData = m_currentEntry->attachments()->value(filename);
+
+    // tmp file will be removed once the database (or the application) has been closed
+    const QString tmpFileTemplate = QDir::temp().absoluteFilePath(QString("XXXXXX.").append(filename));
+    QTemporaryFile* tmpFile = new QTemporaryFile(tmpFileTemplate, this);
+
+    const bool saveOk = tmpFile->open()
+                        && tmpFile->write(attachmentData) == attachmentData.size()
+                        && tmpFile->flush();
+
+    if (!saveOk) {
+        delete tmpFile;
+        emit errorOccured(tr("Unable to open the attachment:\n").append(tmpFile->errorString()));
+        return;
+    }
+
+    tmpFile->close();
+    QDesktopServices::openUrl(QUrl::fromLocalFile(tmpFile->fileName()));
+}
+

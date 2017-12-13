@@ -454,6 +454,16 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="attachmentsTab">
+      <attribute name="title">
+       <string>Attachments</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <widget class="QTableView" name="attachmentsTableView"/>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="notesTab">
       <attribute name="title">
        <string>Notes</string>

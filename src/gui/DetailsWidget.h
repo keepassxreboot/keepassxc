@@ -25,6 +25,8 @@ namespace Ui {
     class DetailsWidget;
 }
 
+class EntryAttachmentsModel;
+
 class DetailsWidget : public QWidget
 {
     Q_OBJECT
@@ -44,9 +46,13 @@ public:
         GeneralTab = 0,
         AttributesTab = 1,
         GroupNotesTab = 1,
-        NotesTab = 2,
-        AutotypeTab = 3,
+        AttachmentsTab = 2,
+        NotesTab = 3,
+        AutotypeTab = 4,
     };
+
+signals:
+    void errorOccured(const QString& error);
 
 private slots:
     void getSelectedEntry(Entry* selectedEntry);
@@ -56,6 +62,7 @@ private slots:
     void hideDetails();
     void setDatabaseMode(DatabaseWidget::Mode mode);
     void updateTabIndex(int index);
+    void openAttachment(const QModelIndex& index);
 
 private:
     const QScopedPointer<Ui::DetailsWidget> m_ui;
@@ -65,9 +72,11 @@ private:
     quint8 m_step;
     QTimer* m_timer;
     QWidget* m_attributesWidget;
+    QWidget* m_attachmentsWidget;
     QWidget* m_autotypeWidget;
     quint8 m_selectedTabEntry;
     quint8 m_selectedTabGroup;
+    EntryAttachmentsModel* const m_attachmentsModel;
     QString shortUrl(QString url);
     QString shortPassword(QString password);
 };
