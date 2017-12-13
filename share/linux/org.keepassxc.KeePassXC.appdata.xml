@@ -50,7 +50,7 @@
     </screenshots>
 
     <releases>
-        <release version="2.2.3" date="2017-12-11">
+        <release version="2.2.4" date="2017-12-13">
             <description>
                 <ul>
                     <li>Prevent database corruption when locked [#1219]</li>
