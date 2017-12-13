@@ -385,18 +385,19 @@ void TestGroup::testClone()
     QCOMPARE(clonedGroupKeepUuid->entries().at(0)->uuid(), originalGroupEntry->uuid());
     QCOMPARE(clonedGroupKeepUuid->children().at(0)->entries().at(0)->uuid(), subGroupEntry->uuid());
 
-    Group* clonedGroupNoFlags = originalGroup->clone(Entry::CloneNoFlags, Group::CloneNoFlags);
+    QScopedPointer<Group> clonedGroupNoFlags(originalGroup->clone(Entry::CloneNoFlags, Group::CloneNoFlags));
     QCOMPARE(clonedGroupNoFlags->entries().size(), 0);
     QVERIFY(clonedGroupNoFlags->uuid() == originalGroup->uuid());
 
-    Group* clonedGroupNewUuid = originalGroup->clone(Entry::CloneNoFlags, Group::CloneNewUuid);
+    QScopedPointer<Group> clonedGroupNewUuid(originalGroup->clone(Entry::CloneNoFlags, Group::CloneNewUuid));
     QCOMPARE(clonedGroupNewUuid->entries().size(), 0);
     QVERIFY(clonedGroupNewUuid->uuid() != originalGroup->uuid());
 
     // Making sure the new modification date is not the same.
     QTest::qSleep(1);
 
-    Group* clonedGroupResetTimeInfo = originalGroup->clone(Entry::CloneNoFlags, Group::CloneNewUuid | Group::CloneResetTimeInfo);
+    QScopedPointer<Group> clonedGroupResetTimeInfo(originalGroup->clone(Entry::CloneNoFlags,
+                                                                        Group::CloneNewUuid | Group::CloneResetTimeInfo));
     QCOMPARE(clonedGroupResetTimeInfo->entries().size(), 0);
     QVERIFY(clonedGroupResetTimeInfo->uuid() != originalGroup->uuid());
     QVERIFY(clonedGroupResetTimeInfo->timeInfo().lastModificationTime() != originalGroup->timeInfo().lastModificationTime());
