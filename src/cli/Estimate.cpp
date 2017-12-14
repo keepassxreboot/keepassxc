@@ -42,13 +42,13 @@ Estimate::~Estimate()
 {
 }
 
-static void calculate(const char* pwd, bool advanced)
+static void estimate(const char* pwd, bool advanced)
 {
     double e;
     int len = strlen(pwd);
     if (!advanced) {
         e = ZxcvbnMatch(pwd, 0, 0);
-        printf("Pass '%s' \tLength %d\tEntropy %.3f\tLog10 %.3f\n", pwd, len, e, e * 0.301029996);
+        printf("Length %d\tEntropy %.3f\tLog10 %.3f\n", len, e, e * 0.301029996);
     } else {
         int ChkLen;
         ZxcMatch_t *info, *p;
@@ -58,8 +58,7 @@ static void calculate(const char* pwd, bool advanced)
             m += p->Entrpy;
         }
         m = e - m;
-        printf("Pass '%s' \tLength %d\tEntropy %.3f\tLog10 %.3f\n  Multi-word extra bits %.1f\n",
-               pwd,
+        printf("Length %d\tEntropy %.3f\tLog10 %.3f\n  Multi-word extra bits %.1f\n",
                len,
                e,
                e * 0.301029996,
@@ -170,6 +169,6 @@ int Estimate::execute(QStringList arguments)
         password = inputTextStream.readLine();
     }
 
-    calculate(password.toLatin1(), parser.isSet(advancedOption));
+    estimate(password.toLatin1(), parser.isSet(advancedOption));
     return EXIT_SUCCESS;
 }
