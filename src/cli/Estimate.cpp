@@ -58,11 +58,7 @@ static void estimate(const char* pwd, bool advanced)
             m += p->Entrpy;
         }
         m = e - m;
-        printf("Length %d\tEntropy %.3f\tLog10 %.3f\n  Multi-word extra bits %.1f\n",
-               len,
-               e,
-               e * 0.301029996,
-               m);
+        printf("Length %d\tEntropy %.3f\tLog10 %.3f\n  Multi-word extra bits %.1f\n", len, e, e * 0.301029996, m);
         p = info;
         ChkLen = 0;
         while (p) {
