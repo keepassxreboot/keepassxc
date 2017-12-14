@@ -150,7 +150,7 @@ Entry* Database::findEntryRecursive(const QString& text, EntryReferenceType refe
             found = entry->notes() == text;
             break;
         case EntryReferenceType::Uuid:
-            found = entry->uuid().toHex() == text;
+            found = entry->uuid() == Uuid::fromHex(text);
             break;
         case EntryReferenceType::CustomAttributes:
             found = entry->attributes()->containsValue(text);
