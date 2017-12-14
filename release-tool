@@ -303,10 +303,10 @@ checkTransifexCommandExists() {
     fi
 }
 
-checkSigntoolCommandExists() {
-    command -v signtool > /dev/null
+checkOsslsigncodeCommandExists() {
+    command -v osslsigncode > /dev/null
     if [ 0 -ne $? ]; then
-        exitError "signtool command not found on the PATH! Please check that you have correctly installed the Windows SDK."
+        exitError "osslsigncode command not found on the PATH! Please install it using 'pacman -S mingw-w64-osslsigncode'."
     fi
 }
 
@@ -851,7 +851,7 @@ appsign() {
             exit 1
         fi
 
-        checkSigntoolCommandExists
+        checkOsslsigncodeCommandExists
 
         if [[ ! -f "${signtool_key}" ]]; then
             exitError "Key file was not found!"
@@ -862,12 +862,18 @@ appsign() {
 
         for f in "${sign_files[@]}"; do
             if [[ ${f: -4} == '.exe' ]]; then
-                logInfo "Signing file '${f}' using signtool..."
-                signtool sign -f "${signtool_key}" -p "${password}" -v -t "http://timestamp.comodoca.com/authenticode" "${f}"
+                logInfo "Signing file '${f}' using osslsigncode..."
+                # output a signed exe; we have to use a different name due to osslsigntool limitations
+                osslsigncode sign -pkcs12 "${signtool_key}" -pass "${password}" \
+                    -t "http://timestamp.comodoca.com/authenticode" -in "${f}" -out "${f}.signed"
 
                 if [ 0 -ne $? ]; then
+                    rm -f "${f}.signed"
                     exitError "Signing failed!"
                 fi
+
+                # overwrite the original exe with the signed exe
+                mv -f "${f}.signed" "${f}"
             else
                 logInfo "Skipping non-EXE file '${f}'..."
             fi
