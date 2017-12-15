@@ -338,11 +338,22 @@ void TestEntry::testResolveReferencePlaceholders()
     QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:N@N:%1}").arg(entry2->notes())), entry2->notes());
 
     QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@I:%1}").arg(entry3->uuid().toHex())), entry3->attributes()->value("AttributeTitle"));
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@I:%1}").arg(entry3->uuid().toHex())), entry3->attributes()->value("AttributeTitle"));
     QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:U@I:%1}").arg(entry3->uuid().toHex())), entry3->attributes()->value("AttributeUsername"));
     QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:P@I:%1}").arg(entry3->uuid().toHex())), entry3->attributes()->value("AttributePassword"));
     QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:A@I:%1}").arg(entry3->uuid().toHex())), entry3->attributes()->value("AttributeUrl"));
     QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:N@I:%1}").arg(entry3->uuid().toHex())), entry3->attributes()->value("AttributeNotes"));
+
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@I:%1}").arg(entry3->uuid().toHex().toUpper())), entry3->attributes()->value("AttributeTitle"));
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:U@I:%1}").arg(entry3->uuid().toHex().toUpper())), entry3->attributes()->value("AttributeUsername"));
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:P@I:%1}").arg(entry3->uuid().toHex().toUpper())), entry3->attributes()->value("AttributePassword"));
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:A@I:%1}").arg(entry3->uuid().toHex().toUpper())), entry3->attributes()->value("AttributeUrl"));
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:N@I:%1}").arg(entry3->uuid().toHex().toUpper())), entry3->attributes()->value("AttributeNotes"));
+
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:t@i:%1}").arg(entry3->uuid().toHex().toLower())), entry3->attributes()->value("AttributeTitle"));
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:u@i:%1}").arg(entry3->uuid().toHex().toLower())), entry3->attributes()->value("AttributeUsername"));
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:p@i:%1}").arg(entry3->uuid().toHex().toLower())), entry3->attributes()->value("AttributePassword"));
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:a@i:%1}").arg(entry3->uuid().toHex().toLower())), entry3->attributes()->value("AttributeUrl"));
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:n@i:%1}").arg(entry3->uuid().toHex().toLower())), entry3->attributes()->value("AttributeNotes"));
 }
 
 void TestEntry::testResolveNonIdPlaceholdersToUuid()
@@ -409,8 +420,86 @@ void TestEntry::testResolveNonIdPlaceholdersToUuid()
         newEntry.setGroup(root);
         newEntry.setNotes(newEntryNotesRaw);
 
-        const auto newEntryNotesResolved = 
+        const auto newEntryNotesResolved =
             newEntry.resolveMultiplePlaceholders(newEntry.notes());
         QCOMPARE(newEntryNotesResolved, QString(referencedEntry->uuid().toHex()));
     }
+}
+
+void TestEntry::testResolveClonedEntry()
+{
+    Database db;
+    Group* root = db.rootGroup();
+
+    Entry* original = new Entry();
+    original->setGroup(root);
+    original->setUuid(Uuid::random());
+    original->setTitle("Title");
+    original->setUsername("SomeUsername");
+    original->setPassword("SomePassword");
+
+    QCOMPARE(original->resolveMultiplePlaceholders(original->username()), original->username());
+    QCOMPARE(original->resolveMultiplePlaceholders(original->password()), original->password());
+
+    // Top-level clones.
+    Entry* clone1 = original->clone(Entry::CloneNewUuid);
+    clone1->setGroup(root);
+    Entry* clone2 = original->clone(Entry::CloneUserAsRef | Entry::CloneNewUuid);
+    clone2->setGroup(root);
+    Entry* clone3 = original->clone(Entry::ClonePassAsRef | Entry::CloneNewUuid);
+    clone3->setGroup(root);
+    Entry* clone4 = original->clone(Entry::CloneUserAsRef | Entry::ClonePassAsRef | Entry::CloneNewUuid);
+    clone4->setGroup(root);
+
+    QCOMPARE(clone1->resolveMultiplePlaceholders(clone1->username()), original->username());
+    QCOMPARE(clone1->resolveMultiplePlaceholders(clone1->password()), original->password());
+    QCOMPARE(clone2->resolveMultiplePlaceholders(clone2->username()), original->username());
+    QCOMPARE(clone2->resolveMultiplePlaceholders(clone2->password()), original->password());
+    QCOMPARE(clone3->resolveMultiplePlaceholders(clone3->username()), original->username());
+    QCOMPARE(clone3->resolveMultiplePlaceholders(clone3->password()), original->password());
+    QCOMPARE(clone4->resolveMultiplePlaceholders(clone4->username()), original->username());
+    QCOMPARE(clone4->resolveMultiplePlaceholders(clone4->password()), original->password());
+
+    // Second-level clones.
+    Entry* cclone1 = clone4->clone(Entry::CloneNewUuid);
+    cclone1->setGroup(root);
+    Entry* cclone2 = clone4->clone(Entry::CloneUserAsRef | Entry::CloneNewUuid);
+    cclone2->setGroup(root);
+    Entry* cclone3 = clone4->clone(Entry::ClonePassAsRef | Entry::CloneNewUuid);
+    cclone3->setGroup(root);
+    Entry* cclone4 = clone4->clone(Entry::CloneUserAsRef | Entry::ClonePassAsRef | Entry::CloneNewUuid);
+    cclone4->setGroup(root);
+
+    QCOMPARE(cclone1->resolveMultiplePlaceholders(cclone1->username()), original->username());
+    QCOMPARE(cclone1->resolveMultiplePlaceholders(cclone1->password()), original->password());
+    QCOMPARE(cclone2->resolveMultiplePlaceholders(cclone2->username()), original->username());
+    QCOMPARE(cclone2->resolveMultiplePlaceholders(cclone2->password()), original->password());
+    QCOMPARE(cclone3->resolveMultiplePlaceholders(cclone3->username()), original->username());
+    QCOMPARE(cclone3->resolveMultiplePlaceholders(cclone3->password()), original->password());
+    QCOMPARE(cclone4->resolveMultiplePlaceholders(cclone4->username()), original->username());
+    QCOMPARE(cclone4->resolveMultiplePlaceholders(cclone4->password()), original->password());
+
+    // Change the original's attributes and make sure that the changes are tracked.
+    QString oldUsername = original->username();
+    QString oldPassword = original->password();
+    original->setUsername("DifferentUsername");
+    original->setPassword("DifferentPassword");
+
+    QCOMPARE(clone1->resolveMultiplePlaceholders(clone1->username()), oldUsername);
+    QCOMPARE(clone1->resolveMultiplePlaceholders(clone1->password()), oldPassword);
+    QCOMPARE(clone2->resolveMultiplePlaceholders(clone2->username()), original->username());
+    QCOMPARE(clone2->resolveMultiplePlaceholders(clone2->password()), oldPassword);
+    QCOMPARE(clone3->resolveMultiplePlaceholders(clone3->username()), oldUsername);
+    QCOMPARE(clone3->resolveMultiplePlaceholders(clone3->password()), original->password());
+    QCOMPARE(clone4->resolveMultiplePlaceholders(clone4->username()), original->username());
+    QCOMPARE(clone4->resolveMultiplePlaceholders(clone4->password()), original->password());
+
+    QCOMPARE(cclone1->resolveMultiplePlaceholders(cclone1->username()), original->username());
+    QCOMPARE(cclone1->resolveMultiplePlaceholders(cclone1->password()), original->password());
+    QCOMPARE(cclone2->resolveMultiplePlaceholders(cclone2->username()), original->username());
+    QCOMPARE(cclone2->resolveMultiplePlaceholders(cclone2->password()), original->password());
+    QCOMPARE(cclone3->resolveMultiplePlaceholders(cclone3->username()), original->username());
+    QCOMPARE(cclone3->resolveMultiplePlaceholders(cclone3->password()), original->password());
+    QCOMPARE(cclone4->resolveMultiplePlaceholders(cclone4->username()), original->username());
+    QCOMPARE(cclone4->resolveMultiplePlaceholders(cclone4->password()), original->password());
 }
