@@ -26,7 +26,7 @@ public:
     Show();
     ~Show();
     int execute(QStringList arguments);
-    int showEntry(Database* database, QString entryPath);
+    int showEntry(Database* database, QStringList attributes, QString entryPath);
 };
 
 #endif // KEEPASSXC_SHOW_H
