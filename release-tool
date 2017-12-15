@@ -50,14 +50,14 @@ printUsage() {
     local cmd
     if [ "" == "$1" ] || [ "help" == "$1" ]; then
         cmd="COMMAND"
-    elif [ "check" == "$1" ] || [ "merge" == "$1" ] || [ "build" == "$1" ] || [ "sign" == "$1" ]; then
+    elif [ "check" == "$1" ] || [ "merge" == "$1" ] || [ "build" == "$1" ] || [ "gpgsign" == "$1" ] || [ "appsign" == "$1" ]; then
         cmd="$1"
     else
         logError "Unknown command: '$1'\n"
         cmd="COMMAND"
     fi
-    
-    printf "\e[1mUsage:\e[0m $(basename $0) $cmd [--version x.y.z] [options]\n"
+
+    printf "\e[1mUsage:\e[0m $(basename $0) $cmd [options]\n"
     
     if [ "COMMAND" == "$cmd" ]; then
         cat << EOF
@@ -66,7 +66,8 @@ Commands:
   check      Perform a dry-run check, nothing is changed
   merge      Merge release branch into main branch and create release tags
   build      Build and package binary release from sources
-  sign       Sign previously compiled release packages
+  gpgsign    Sign previously compiled release packages with GPG
+  appsign    Sign binaries with code signing certificates on Windows and macOS
   help       Show help for the given command
 EOF
     elif [ "merge" == "$cmd" ]; then
@@ -113,16 +114,25 @@ Options:
   -n, --no-source-tarball Don't build source tarball
   -h, --help              Show this help
 EOF
-    elif [ "sign" == "$cmd" ]; then
+    elif [ "gpgsign" == "$cmd" ]; then
         cat << EOF
 
-Sign previously compiled release packages
+Sign previously compiled release packages with GPG
 
 Options:
   -f, --files        Files to sign (required)
   -g, --gpg-key      GPG key used to sign the files (default: '${GPG_KEY}')
-      --signtool     Specify the signtool executable (default: 'signtool')
-      --signtool-key Provide a key to be used with signtool (for Windows EXE)
+  -h, --help         Show this help
+EOF
+    elif [ "appsign" == "$cmd" ]; then
+        cat << EOF
+
+Sign binaries with code signing certificates on Windows and macOS
+
+Options:
+  -f, --files        Files to sign (required)
+  -k, --signtool-key Key to be used with signtool (required for Windows EXE)
+  -i, --identity     Apple Developer ID to be used with codesign (required for macOS APP and DMG)
   -h, --help         Show this help
 EOF
     fi
@@ -289,7 +299,28 @@ checkSnapcraft() {
 checkTransifexCommandExists() {
     command -v tx > /dev/null
     if [ 0 -ne $? ]; then
-        exitError "Transifex tool 'tx' not installed! Please install it using 'pip install transifex-client'"
+        exitError "Transifex tool 'tx' not installed! Please install it using 'pip install transifex-client'."
+    fi
+}
+
+checkOsslsigncodeCommandExists() {
+    command -v osslsigncode > /dev/null
+    if [ 0 -ne $? ]; then
+        exitError "osslsigncode command not found on the PATH! Please install it using 'pacman -S mingw-w64-osslsigncode'."
+    fi
+}
+
+checkCodesignCommandExists() {
+    command -v codesign > /dev/null
+    if [ 0 -ne $? ]; then
+        exitError "codesign command not found on the PATH! Please check that you have correctly installed Xcode."
+    fi
+}
+
+checkCreateDMGCommandExists() {
+    command -v create-dmg > /dev/null
+    if [ 0 -ne $? ]; then
+        exitError "create-dmg command not found on the PATH! Please install it using 'npm install --global create-dmg'."
     fi
 }
 
@@ -661,87 +692,197 @@ build() {
 
 
 # -----------------------------------------------------------------------
-#                             sign command
+#                           gpgsign command
 # -----------------------------------------------------------------------
-sign() {
-    SIGN_FILES=()
-    SIGNTOOL="signtool"
-    SIGNTOOL_KEY=""
-    
+gpgsign() {
+    local sign_files=()
+
     while [ $# -ge 1 ]; do
         local arg="$1"
         case "$arg" in
             -f|--files)
                 while [ "${2:0:1}" != "-" ] && [ $# -ge 2 ]; do
-                    SIGN_FILES+=("$2")
+                    sign_files+=("$2")
                     shift
                 done ;;
-                
+
             -g|--gpg-key)
                 GPG_KEY="$2"
                 shift ;;
 
-            --signtool)
-                SIGNTOOL="$2"
-                shift ;;
-
-            --signtool-key)
-                SIGNTOOL_KEY="$2"
-                shift ;;
-            
             -h|--help)
-                printUsage "sign"
+                printUsage "gpgsign"
                 exit ;;
-            
+
             *)
                 logError "Unknown option '$arg'\n"
-                printUsage "sign"
+                printUsage "gpgsign"
                 exit 1 ;;
         esac
         shift
     done
     
-    if [ -z "$SIGN_FILES" ]; then
+    if [ -z "${sign_files}" ]; then
         logError "Missing arguments, --files is required!\n"
-        printUsage "sign"
+        printUsage "gpgsign"
         exit 1
     fi
 
-    if [[ -n "$SIGNTOOL_KEY" && ! -f "$SIGNTOOL_KEY" ]]; then
-        exitError "Signtool Key was not found!"
-    elif [[ -f "$SIGNTOOL_KEY" && ! -x $(command -v "${SIGNTOOL}") ]]; then
-        exitError "signtool program not found on PATH!"
-    fi
-    
-    for f in "${SIGN_FILES[@]}"; do
+    for f in "${sign_files[@]}"; do
         if [ ! -f "$f" ]; then
-            exitError "File '${f}' does not exist!"
+            exitError "File '${f}' does not exist or is not a file!"
         fi
 
-        if [[ -n "$SIGNTOOL_KEY" && ${f: -4} == '.exe' ]]; then
-            logInfo "Signing file '${f}' using signtool...\n"
-            read -s -p "Signtool Key Password: " password
-            echo
-            "${SIGNTOOL}" sign -f "${SIGNTOOL_KEY}" -p ${password} -v -t http://timestamp.comodoca.com/authenticode ${f}
-
-            if [ 0 -ne $? ]; then
-                exitError "Signing failed!"
-            fi
-        fi
-        
         logInfo "Signing file '${f}' using release key..."
         gpg --output "${f}.sig" --armor --local-user "$GPG_KEY" --detach-sig "$f"
         
         if [ 0 -ne $? ]; then
             exitError "Signing failed!"
         fi
-        
+
         logInfo "Creating digest for file '${f}'..."
         local rp="$(realpath "$f")"
         local bname="$(basename "$f")"
         (cd "$(dirname "$rp")"; sha256sum "$bname"  > "${bname}.DIGEST")
     done
     
+    logInfo "All done!"
+}
+
+
+
+# -----------------------------------------------------------------------
+#                           appsign command
+# -----------------------------------------------------------------------
+appsign() {
+    local sign_files=()
+    local signtool_key
+    local codesign_identity
+
+    while [ $# -ge 1 ]; do
+        local arg="$1"
+        case "$arg" in
+            -f|--files)
+                while [ "${2:0:1}" != "-" ] && [ $# -ge 2 ]; do
+                    sign_files+=("$2")
+                    shift
+                done ;;
+
+            -k|--signtool-key)
+                signtool_key="$2"
+                shift ;;
+
+            -i|--identity)
+                codesign_identity="$2"
+                shift ;;
+
+            -h|--help)
+                printUsage "appsign"
+                exit ;;
+
+            *)
+                logError "Unknown option '$arg'\n"
+                printUsage "appsign"
+                exit 1 ;;
+        esac
+        shift
+    done
+
+    if [ -z "${sign_files}" ]; then
+        logError "Missing arguments, --files is required!\n"
+        printUsage "appsign"
+        exit 1
+    fi
+
+    for f in "${sign_files[@]}"; do
+        if [ ! -f "${f}" ]; then
+            exitError "File '${f}' does not exist or is not a file!"
+        fi
+    done
+
+    if [ "$(uname -s)" == "Darwin" ]; then
+        if [ -z "${codesign_identity}" ]; then
+            logError "Missing arguments, --identity is required on macOS!\n"
+            printUsage "appsign"
+            exit 1
+        fi
+
+        checkCodesignCommandExists
+        checkCreateDMGCommandExists
+
+        local orig_dir="$(pwd)"
+        for f in "${sign_files[@]}"; do
+            if [[ ${f: -4} == '.dmg' ]]; then
+                logInfo "Unpacking disk image '${f}'..."
+                local tmp_dir="/tmp/KeePassXC_${RANDOM}"
+                mkdir -p ${tmp_dir}/{mnt,app}
+                hdiutil attach -quiet -noautoopen -mountpoint ${tmp_dir}/mnt "${f}"
+                cd ${tmp_dir}
+                cp -a ./mnt/KeePassXC.app ./app
+                hdiutil detach -quiet ${tmp_dir}/mnt
+
+                if [ ! -d ./app/KeePassXC.app ]; then
+                    cd "${orig_dir}"
+                    exitError "Unpacking failed!"
+                fi
+
+                logInfo "Signing app using codesign..."
+                codesign --sign "${codesign_identity}" --verbose --deep ./app/KeePassXC.app
+
+                if [ 0 -ne $? ]; then
+                    cd "${orig_dir}"
+                    exitError "Signing failed!"
+                fi
+
+                logInfo "Repacking and signing disk image..."
+                create-dmg ./app/KeePassXC.app
+                cd "${orig_dir}"
+                cp -f ${tmp_dir}/KeePassXC-*.dmg "${f}"
+                rm -Rf ${tmp_dir}
+            else
+                logInfo "Skipping non-DMG file '${f}'..."
+            fi
+        done
+
+    elif [ "$(uname -o)" == "Msys" ]; then
+        if [ -z "${signtool_key}" ]; then
+            logError "Missing arguments, --signtool-key is required on Windows!\n"
+            printUsage "appsign"
+            exit 1
+        fi
+
+        checkOsslsigncodeCommandExists
+
+        if [[ ! -f "${signtool_key}" ]]; then
+            exitError "Key file was not found!"
+        fi
+
+        read -s -p "Key password: " password
+        echo
+
+        for f in "${sign_files[@]}"; do
+            if [[ ${f: -4} == '.exe' ]]; then
+                logInfo "Signing file '${f}' using osslsigncode..."
+                # output a signed exe; we have to use a different name due to osslsigntool limitations
+                osslsigncode sign -pkcs12 "${signtool_key}" -pass "${password}" \
+                    -t "http://timestamp.comodoca.com/authenticode" -in "${f}" -out "${f}.signed"
+
+                if [ 0 -ne $? ]; then
+                    rm -f "${f}.signed"
+                    exitError "Signing failed!"
+                fi
+
+                # overwrite the original exe with the signed exe
+                mv -f "${f}.signed" "${f}"
+            else
+                logInfo "Skipping non-EXE file '${f}'..."
+            fi
+        done
+
+    else
+        exitError "Unsupported platform for code signing!\n"
+    fi
+
     logInfo "All done!"
 }
 
@@ -758,8 +899,8 @@ if [ "" == "$MODE" ]; then
 elif [ "help" == "$MODE" ]; then
     printUsage "$1"
     exit
-elif [ "check" == "$MODE" ] || [ "merge" == "$MODE" ] || [ "build" == "$MODE" ] || [ "sign" == "$MODE" ]; then
-    $MODE "$@"
+elif [ "check" == "$MODE" ] || [ "merge" == "$MODE" ] || [ "build" == "$MODE" ] || [ "gpgsign" == "$MODE" ] || [ "appsign" == "$MODE" ]; then
+    ${MODE} "$@"
 else
     printUsage "$MODE"
 fi
