@@ -62,13 +62,13 @@ Database* Kdbx3Reader::readDatabase(QIODevice* device, const CompositeKey& key, 
 
     bool ok;
 
-    quint32 signature1 = Endian::readUInt32(m_headerStream, KeePass2::BYTEORDER, &ok);
+    quint32 signature1 = Endian::readSizedInt<quint32>(m_headerStream, KeePass2::BYTEORDER, &ok);
     if (!ok || signature1 != KeePass2::SIGNATURE_1) {
         raiseError(tr("Not a KeePass database."));
         return nullptr;
     }
 
-    quint32 signature2 = Endian::readUInt32(m_headerStream, KeePass2::BYTEORDER, &ok);
+    quint32 signature2 = Endian::readSizedInt<quint32>(m_headerStream, KeePass2::BYTEORDER, &ok);
     if (ok && signature2 == KeePass1::SIGNATURE_2) {
         raiseError(tr("The selected file is an old KeePass 1 database (.kdb).\n\n"
                       "You can import it by clicking on Database > 'Import KeePass 1 database...'.\n"
@@ -81,7 +81,7 @@ Database* Kdbx3Reader::readDatabase(QIODevice* device, const CompositeKey& key, 
         return nullptr;
     }
 
-    quint32 version = Endian::readUInt32(m_headerStream, KeePass2::BYTEORDER, &ok)
+    quint32 version = Endian::readSizedInt<quint32>(m_headerStream, KeePass2::BYTEORDER, &ok)
             & KeePass2::FILE_VERSION_CRITICAL_MASK;
     quint32 maxVersion = KeePass2::FILE_VERSION & KeePass2::FILE_VERSION_CRITICAL_MASK;
     if (!ok || (version < KeePass2::FILE_VERSION_MIN) || (version > maxVersion)) {
@@ -214,7 +214,7 @@ bool Kdbx3Reader::readHeaderField()
     quint8 fieldID = fieldIDArray.at(0);
 
     bool ok;
-    quint16 fieldLen = Endian::readUInt16(m_headerStream, KeePass2::BYTEORDER, &ok);
+    quint16 fieldLen = Endian::readSizedInt<quint16>(m_headerStream, KeePass2::BYTEORDER, &ok);
     if (!ok) {
         raiseError("Invalid header field length");
         return false;
@@ -299,7 +299,7 @@ void Kdbx3Reader::setCompressionFlags(const QByteArray& data)
         raiseError("Invalid compression flags length");
     }
     else {
-        quint32 id = Endian::bytesToUInt32(data, KeePass2::BYTEORDER);
+        quint32 id = Endian::bytesToSizedInt<quint32>(data, KeePass2::BYTEORDER);
 
         if (id > Database::CompressionAlgorithmMax) {
             raiseError("Unsupported compression algorithm");
@@ -344,7 +344,7 @@ void Kdbx3Reader::setTransformRounds(const QByteArray& data)
         raiseError("Invalid transform rounds size");
     }
     else {
-        quint64 rounds = Endian::bytesToUInt64(data, KeePass2::BYTEORDER);
+        quint64 rounds = Endian::bytesToSizedInt<quint64>(data, KeePass2::BYTEORDER);
 
         AesKdf* aesKdf;
         if (m_db->kdf()->type() == Kdf::Type::AES) {
@@ -383,7 +383,7 @@ void Kdbx3Reader::setInnerRandomStreamID(const QByteArray& data)
     if (data.size() != 4) {
         raiseError("Invalid random stream id size");
     } else {
-        quint32 id = Endian::bytesToUInt32(data, KeePass2::BYTEORDER);
+        quint32 id = Endian::bytesToSizedInt<quint32>(data, KeePass2::BYTEORDER);
         KeePass2::ProtectedStreamAlgo irsAlgo = KeePass2::idToProtectedStreamAlgo(id);
         if (irsAlgo == KeePass2::InvalidProtectedStreamAlgo || irsAlgo == KeePass2::ArcFourVariant) {
             raiseError("Invalid inner random stream cipher");

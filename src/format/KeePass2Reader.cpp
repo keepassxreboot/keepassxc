@@ -99,13 +99,13 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
 
     bool ok;
 
-    quint32 signature1 = Endian::readUInt32(device, KeePass2::BYTEORDER, &ok);
+    quint32 signature1 = Endian::readSizedInt<quint32>(device, KeePass2::BYTEORDER, &ok);
     if (!ok || signature1 != KeePass2::SIGNATURE_1) {
         raiseError(tr("Not a KeePass database."));
         return nullptr;
     }
 
-    quint32 signature2 = Endian::readUInt32(device, KeePass2::BYTEORDER, &ok);
+    quint32 signature2 = Endian::readSizedInt<quint32>(device, KeePass2::BYTEORDER, &ok);
     if (ok && signature2 == KeePass1::SIGNATURE_2) {
         raiseError(tr("The selected file is an old KeePass 1 database (.kdb).\n\n"
                       "You can import it by clicking on Database > 'Import KeePass 1 database...'.\n"
@@ -118,7 +118,7 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
         return nullptr;
     }
 
-    m_version = Endian::readUInt32(device, KeePass2::BYTEORDER, &ok)
+    m_version = Endian::readSizedInt<quint32>(device, KeePass2::BYTEORDER, &ok)
             & KeePass2::FILE_VERSION_CRITICAL_MASK;
     quint32 maxVersion = KeePass2::FILE_VERSION & KeePass2::FILE_VERSION_CRITICAL_MASK;
     if (!ok || (m_version < KeePass2::FILE_VERSION_MIN) || (m_version > maxVersion)) {

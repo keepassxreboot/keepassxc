@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -20,35 +21,58 @@
 
 #include <QByteArray>
 #include <QSysInfo>
+#include <QtEndian>
+#include <QIODevice>
 
-class QIODevice;
+namespace Endian
+{
 
-namespace Endian {
+template<typename SizedQInt>
+SizedQInt bytesToSizedInt(const QByteArray& ba, QSysInfo::Endian byteOrder)
+{
+    Q_ASSERT(ba.size() == sizeof(SizedQInt));
 
-    qint16 bytesToInt16(const QByteArray& ba, QSysInfo::Endian byteOrder);
-    quint16 bytesToUInt16(const QByteArray& ba, QSysInfo::Endian byteOrder);
-    qint32 bytesToInt32(const QByteArray& ba, QSysInfo::Endian byteOrder);
-    quint32 bytesToUInt32(const QByteArray& ba, QSysInfo::Endian byteOrder);
-    qint64 bytesToInt64(const QByteArray& ba, QSysInfo::Endian byteOrder);
-    quint64 bytesToUInt64(const QByteArray& ba, QSysInfo::Endian byteOrder);
+    if (byteOrder == QSysInfo::LittleEndian) {
+        return qFromLittleEndian<SizedQInt>(reinterpret_cast<const uchar*>(ba.constData()));
+    }
+    return qFromBigEndian<SizedQInt>(reinterpret_cast<const uchar*>(ba.constData()));
+}
 
-    qint16 readInt16(QIODevice* device, QSysInfo::Endian byteOrder, bool* ok);
-    quint16 readUInt16(QIODevice* device, QSysInfo::Endian byteOrder, bool* ok);
-    qint32 readInt32(QIODevice* device, QSysInfo::Endian byteOrder, bool* ok);
-    quint32 readUInt32(QIODevice* device, QSysInfo::Endian byteOrder, bool* ok);
-    qint64 readInt64(QIODevice* device, QSysInfo::Endian byteOrder, bool* ok);
-    quint64 readUInt64(QIODevice* device, QSysInfo::Endian byteOrder, bool* ok);
+template<typename SizedQInt>
+SizedQInt readSizedInt(QIODevice* device, QSysInfo::Endian byteOrder, bool* ok)
+{
+    QByteArray ba = device->read(sizeof(SizedQInt));
 
-    QByteArray int16ToBytes(qint16 num, QSysInfo::Endian byteOrder);
-    QByteArray int32ToBytes(qint32 num, QSysInfo::Endian byteOrder);
-    QByteArray int64ToBytes(qint64 num, QSysInfo::Endian byteOrder);
-    QByteArray uint16ToBytes(quint16 num, QSysInfo::Endian byteOrder);
-    QByteArray uint32ToBytes(quint32 num, QSysInfo::Endian byteOrder);
-    QByteArray uint64ToBytes(quint64 num, QSysInfo::Endian byteOrder);
+    if (ba.size() != sizeof(SizedQInt)) {
+        *ok = false;
+        return 0;
+    }
+    *ok = true;
+    return bytesToSizedInt<SizedQInt>(ba, byteOrder);
+}
 
-    bool writeInt16(qint16 num, QIODevice* device, QSysInfo::Endian byteOrder);
-    bool writeInt32(qint32 num, QIODevice* device, QSysInfo::Endian byteOrder);
-    bool writeInt64(qint64 num, QIODevice* device, QSysInfo::Endian byteOrder);
+template<typename SizedQInt>
+QByteArray sizedIntToBytes(SizedQInt num, QSysInfo::Endian byteOrder)
+{
+    QByteArray ba;
+    ba.resize(sizeof(SizedQInt));
+
+    if (byteOrder == QSysInfo::LittleEndian) {
+        qToLittleEndian<SizedQInt>(num, reinterpret_cast<uchar*>(ba.data()));
+    } else {
+        qToBigEndian<SizedQInt>(num, reinterpret_cast<uchar*>(ba.data()));
+    }
+
+    return ba;
+}
+
+template<typename SizedQInt>
+bool writeSizedInt(SizedQInt num, QIODevice* device, QSysInfo::Endian byteOrder)
+{
+    QByteArray ba = sizedIntToBytes<SizedQInt>(num, byteOrder);
+    qint64 bytesWritten = device->write(ba);
+    return (bytesWritten == ba.size());
+}
 
 } // namespace Endian
 

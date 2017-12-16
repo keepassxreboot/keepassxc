@@ -42,7 +42,6 @@ set(keepassx_SOURCES
     core/CsvParser.cpp
     core/Database.cpp
     core/DatabaseIcons.cpp
-    core/Endian.cpp
     core/Entry.cpp
     core/EntryAttachments.cpp
     core/EntryAttributes.cpp

@@ -144,7 +144,7 @@ bool HmacBlockStream::readHashedBlock()
         setErrorString("Invalid block size size.");
         return false;
     }
-    qint32 blockSize = Endian::bytesToInt32(blockSizeBytes, ByteOrder);
+    qint32 blockSize = Endian::bytesToSizedInt<qint32>(blockSizeBytes, ByteOrder);
     if (blockSize < 0) {
         m_error = true;
         setErrorString("Invalid block size.");
@@ -160,7 +160,7 @@ bool HmacBlockStream::readHashedBlock()
 
     CryptoHash hasher(CryptoHash::Sha256, true);
     hasher.setKey(getCurrentHmacKey());
-    hasher.addData(Endian::uint64ToBytes(m_blockIndex, ByteOrder));
+    hasher.addData(Endian::sizedIntToBytes<quint64>(m_blockIndex, ByteOrder));
     hasher.addData(blockSizeBytes);
     hasher.addData(m_buffer);
 
@@ -219,8 +219,8 @@ bool HmacBlockStream::writeHashedBlock()
 {
     CryptoHash hasher(CryptoHash::Sha256, true);
     hasher.setKey(getCurrentHmacKey());
-    hasher.addData(Endian::uint64ToBytes(m_blockIndex, ByteOrder));
-    hasher.addData(Endian::int32ToBytes(m_buffer.size(), ByteOrder));
+    hasher.addData(Endian::sizedIntToBytes<quint64>(m_blockIndex, ByteOrder));
+    hasher.addData(Endian::sizedIntToBytes<qint32>(m_buffer.size(), ByteOrder));
     hasher.addData(m_buffer);
     QByteArray hash = hasher.result();
 
@@ -230,7 +230,7 @@ bool HmacBlockStream::writeHashedBlock()
         return false;
     }
 
-    if (!Endian::writeInt32(m_buffer.size(), m_baseDevice, ByteOrder)) {
+    if (!Endian::writeSizedInt<qint32>(m_buffer.size(), m_baseDevice, ByteOrder)) {
         m_error = true;
         setErrorString(m_baseDevice->errorString());
         return false;
@@ -255,7 +255,7 @@ QByteArray HmacBlockStream::getCurrentHmacKey() const {
 
 QByteArray HmacBlockStream::getHmacKey(quint64 blockIndex, QByteArray key) {
     Q_ASSERT(key.size() == 64);
-    QByteArray indexBytes = Endian::uint64ToBytes(blockIndex, ByteOrder);
+    QByteArray indexBytes = Endian::sizedIntToBytes<quint64>(blockIndex, ByteOrder);
     CryptoHash hasher(CryptoHash::Sha512);
     hasher.addData(indexBytes);
     hasher.addData(key);
