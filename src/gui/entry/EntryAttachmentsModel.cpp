@@ -86,17 +86,20 @@ QVariant EntryAttachmentsModel::data(const QModelIndex& index, int role) const
         return QVariant();
     }
 
-    if (role == Qt::DisplayRole) {
-        QString key = keyByIndex(index);
-        switch (index.column()) {
-        case Columns::NameColumn:
+    if (role == Qt::DisplayRole || role == Qt::EditRole) {
+        const QString key = keyByIndex(index);
+        const int column = index.column();
+        if (column == Columns::NameColumn) {
             return key;
-        case Columns::SizeColumn:
-            return Tools::humanReadableFileSize(m_entryAttachments->value(key).size());
-        default:
-            break;
+        } else if (column == SizeColumn) {
+            const int attachmentSize = m_entryAttachments->value(key).size();
+            if (role == Qt::DisplayRole) {
+                return Tools::humanReadableFileSize(attachmentSize);
+            }
+            return attachmentSize;
         }
     }
+
     return QVariant();
 }
 
