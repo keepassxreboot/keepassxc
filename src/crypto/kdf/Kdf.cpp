@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,11 +23,11 @@
 #include <QtConcurrent>
 
 Kdf::Field::Field(quint32 id, const QString& name, quint64 min, quint64 max, bool benchmark)
-        : m_id(id)
-          , m_name(name)
-          , m_min(min)
-          , m_max(max)
-          , m_benchmark(benchmark)
+    : m_id(id)
+    , m_name(name)
+    , m_min(min)
+    , m_max(max)
+    , m_benchmark(benchmark)
 {
 }
 
@@ -71,8 +71,7 @@ int Kdf::benchmark(int msec) const
 }
 
 Kdf::BenchmarkThread::BenchmarkThread(int msec, const Kdf* kdf)
-        : m_msec(msec)
-          , m_kdf(kdf)
+    : m_msec(msec), m_kdf(kdf)
 {
 }
 
@@ -81,6 +80,7 @@ int Kdf::BenchmarkThread::rounds()
     return m_rounds;
 }
 
-void Kdf::BenchmarkThread::run() {
+void Kdf::BenchmarkThread::run()
+{
     m_rounds = m_kdf->benchmarkImpl(m_msec);
 }

@@ -48,24 +48,24 @@ Kdf* KeePass2::uuidToKdf(const Uuid& uuid) {
 Uuid KeePass2::kdfToUuid(const Kdf& kdf)
 {
     switch (kdf.type()) {
-        case Kdf::Type::AES:
-            return KDF_AES;
-        default:
-            return Uuid();
+    case Kdf::Type::AES:
+        return KDF_AES;
+    default:
+        return Uuid();
     }
 }
 
 KeePass2::ProtectedStreamAlgo KeePass2::idToProtectedStreamAlgo(quint32 id)
 {
     switch (id) {
-        case static_cast<quint32>(KeePass2::ArcFourVariant):
-            return KeePass2::ArcFourVariant;
-        case static_cast<quint32>(KeePass2::Salsa20):
-            return KeePass2::Salsa20;
-        case static_cast<quint32>(KeePass2::ChaCha20):
-            return KeePass2::ChaCha20;
-        default:
-            return KeePass2::InvalidProtectedStreamAlgo;
+    case static_cast<quint32>(KeePass2::ArcFourVariant):
+        return KeePass2::ArcFourVariant;
+    case static_cast<quint32>(KeePass2::Salsa20):
+        return KeePass2::Salsa20;
+    case static_cast<quint32>(KeePass2::ChaCha20):
+        return KeePass2::ChaCha20;
+    default:
+        return KeePass2::InvalidProtectedStreamAlgo;
     }
 }
 

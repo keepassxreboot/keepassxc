@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,11 +25,13 @@
 class Kdf
 {
 public:
-    enum class Type {
+    enum class Type
+    {
         AES
     };
 
-    class Field {
+    class Field
+    {
     public:
         Field(quint32 id, const QString& name, quint64 min, quint64 max, bool benchmark = false);
 
@@ -48,9 +50,11 @@ public:
     };
 
     virtual ~Kdf() {}
+
+    virtual QByteArray seed() const = 0;
+    virtual Type type() const = 0;
     virtual bool transform(const QByteArray& raw, QByteArray& result) const = 0;
     virtual void randomizeTransformSalt() = 0;
-    virtual Type type() const = 0;
     virtual Kdf* clone() const = 0;
 
     virtual const QList<Field> fields() const = 0;

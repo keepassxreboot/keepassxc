@@ -71,18 +71,17 @@ Database* Kdbx3Reader::readDatabase(QIODevice* device, const CompositeKey& key, 
     quint32 signature2 = Endian::readSizedInt<quint32>(m_headerStream, KeePass2::BYTEORDER, &ok);
     if (ok && signature2 == KeePass1::SIGNATURE_2) {
         raiseError(tr("The selected file is an old KeePass 1 database (.kdb).\n\n"
-                      "You can import it by clicking on Database > 'Import KeePass 1 database...'.\n"
-                      "This is a one-way migration. You won't be able to open the imported "
-                      "database with the old KeePassX 0.4 version."));
+                          "You can import it by clicking on Database > 'Import KeePass 1 database...'.\n"
+                          "This is a one-way migration. You won't be able to open the imported "
+                          "database with the old KeePassX 0.4 version."));
         return nullptr;
-    }
-    else if (!ok || signature2 != KeePass2::SIGNATURE_2) {
+    } else if (!ok || signature2 != KeePass2::SIGNATURE_2) {
         raiseError(tr("Not a KeePass database."));
         return nullptr;
     }
 
     quint32 version = Endian::readSizedInt<quint32>(m_headerStream, KeePass2::BYTEORDER, &ok)
-            & KeePass2::FILE_VERSION_CRITICAL_MASK;
+        & KeePass2::FILE_VERSION_CRITICAL_MASK;
     quint32 maxVersion = KeePass2::FILE_VERSION & KeePass2::FILE_VERSION_CRITICAL_MASK;
     if (!ok || (version < KeePass2::FILE_VERSION_MIN) || (version > maxVersion)) {
         raiseError(tr("Unsupported KeePass KDBX 2 or 3 database version."));
@@ -100,8 +99,8 @@ Database* Kdbx3Reader::readDatabase(QIODevice* device, const CompositeKey& key, 
 
     // check if all required headers were present
     if (m_masterSeed.isEmpty() || m_encryptionIV.isEmpty()
-            || m_streamStartBytes.isEmpty() || m_protectedStreamKey.isEmpty()
-            || m_db->cipher().isNull()) {
+        || m_streamStartBytes.isEmpty() || m_protectedStreamKey.isEmpty()
+        || m_db->cipher().isNull()) {
         raiseError("missing database headers");
         return nullptr;
     }
@@ -152,8 +151,7 @@ Database* Kdbx3Reader::readDatabase(QIODevice* device, const CompositeKey& key, 
 
     if (m_db->compressionAlgo() == Database::CompressionNone) {
         xmlDevice = &hashedStream;
-    }
-    else {
+    } else {
         ioCompressor.reset(new QtIOCompressor(&hashedStream));
         ioCompressor->setStreamFormat(QtIOCompressor::GzipFormat);
         if (!ioCompressor->open(QIODevice::ReadOnly)) {
@@ -185,8 +183,7 @@ Database* Kdbx3Reader::readDatabase(QIODevice* device, const CompositeKey& key, 
         raiseError(xmlReader.errorString());
         if (keepDatabase) {
             return db.take();
-        }
-        else {
+        } else {
             return nullptr;
         }
     }
@@ -297,14 +294,12 @@ void Kdbx3Reader::setCompressionFlags(const QByteArray& data)
 {
     if (data.size() != 4) {
         raiseError("Invalid compression flags length");
-    }
-    else {
+    } else {
         quint32 id = Endian::bytesToSizedInt<quint32>(data, KeePass2::BYTEORDER);
 
         if (id > Database::CompressionAlgorithmMax) {
             raiseError("Unsupported compression algorithm");
-        }
-        else {
+        } else {
             m_db->setCompressionAlgo(static_cast<Database::CompressionAlgorithm>(id));
         }
     }
@@ -314,8 +309,7 @@ void Kdbx3Reader::setMasterSeed(const QByteArray& data)
 {
     if (data.size() != 32) {
         raiseError("Invalid master seed size");
-    }
-    else {
+    } else {
         m_masterSeed = data;
     }
 }
@@ -324,8 +318,7 @@ void Kdbx3Reader::setTransformSeed(const QByteArray& data)
 {
     if (data.size() != 32) {
         raiseError("Invalid transform seed size");
-    }
-    else {
+    } else {
         AesKdf* aesKdf;
         if (m_db->kdf()->type() == Kdf::Type::AES) {
             aesKdf = static_cast<AesKdf*>(m_db->kdf());
@@ -342,8 +335,7 @@ void Kdbx3Reader::setTransformRounds(const QByteArray& data)
 {
     if (data.size() != 8) {
         raiseError("Invalid transform rounds size");
-    }
-    else {
+    } else {
         quint64 rounds = Endian::bytesToSizedInt<quint64>(data, KeePass2::BYTEORDER);
 
         AesKdf* aesKdf;
@@ -352,10 +344,10 @@ void Kdbx3Reader::setTransformRounds(const QByteArray& data)
         } else {
             aesKdf = new AesKdf();
             m_db->setKdf(aesKdf);
-         }
+        }
 
         aesKdf->setRounds(rounds);
-     }
+    }
 }
 
 void Kdbx3Reader::setEncryptionIV(const QByteArray& data)
@@ -372,8 +364,7 @@ void Kdbx3Reader::setStreamStartBytes(const QByteArray& data)
 {
     if (data.size() != 32) {
         raiseError("Invalid start bytes size");
-    }
-    else {
+    } else {
         m_streamStartBytes = data;
     }
 }

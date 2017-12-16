@@ -485,7 +485,7 @@ QString Database::saveToFile(QString filePath)
     }
 }
 
-Kdf* Database::kdf() {
+Kdf* Database::kdf() const {
     return m_data.kdf;
 }
 

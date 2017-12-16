@@ -28,10 +28,7 @@ public:
     int hashLen;
 };
 
-CryptoHash::CryptoHash(CryptoHash::Algorithm algo)
-    : CryptoHash::CryptoHash(algo, false) {}
-
-CryptoHash::CryptoHash(CryptoHash::Algorithm algo, bool hmac)
+CryptoHash::CryptoHash(Algorithm algo, bool hmac)
     : d_ptr(new CryptoHashPrivate())
 {
     Q_D(CryptoHash);
@@ -86,14 +83,14 @@ void CryptoHash::addData(const QByteArray& data)
         return;
     }
 
-    gcry_md_write(d->ctx, data.constData(), data.size());
+    gcry_md_write(d->ctx, data.constData(), static_cast<size_t>(data.size()));
 }
 
 void CryptoHash::setKey(const QByteArray& data)
 {
     Q_D(CryptoHash);
 
-    gcry_error_t error = gcry_md_setkey(d->ctx, data.constData(), data.size());
+    gcry_error_t error = gcry_md_setkey(d->ctx, data.constData(), static_cast<size_t>(data.size()));
     if (error) {
         qWarning("Gcrypt error (setKey): %s", gcry_strerror(error));
         qWarning("Gcrypt error (setKey): %s", gcry_strsource(error));
@@ -112,11 +109,11 @@ QByteArray CryptoHash::result() const
 {
     Q_D(const CryptoHash);
 
-    const char* result = reinterpret_cast<const char*>(gcry_md_read(d->ctx, 0));
+    const auto* result = reinterpret_cast<const char*>(gcry_md_read(d->ctx, 0));
     return QByteArray(result, d->hashLen);
 }
 
-QByteArray CryptoHash::hash(const QByteArray& data, CryptoHash::Algorithm algo)
+QByteArray CryptoHash::hash(const QByteArray& data, Algorithm algo)
 {
     // replace with gcry_md_hash_buffer()?
     CryptoHash cryptoHash(algo);
@@ -124,7 +121,7 @@ QByteArray CryptoHash::hash(const QByteArray& data, CryptoHash::Algorithm algo)
     return cryptoHash.result();
 }
 
-QByteArray CryptoHash::hmac(const QByteArray& data, const QByteArray& key, CryptoHash::Algorithm algo)
+QByteArray CryptoHash::hmac(const QByteArray& data, const QByteArray& key, Algorithm algo)
 {
     // replace with gcry_md_hash_buffer()?
     CryptoHash cryptoHash(algo, true);

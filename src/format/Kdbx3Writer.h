@@ -27,9 +27,9 @@
 class Database;
 class QIODevice;
 
-class Kdbx3Writer : public BaseKeePass2Writer
+class Kdbx3Writer: public BaseKeePass2Writer
 {
-    Q_DECLARE_TR_FUNCTIONS(Kdbx3Writer)
+Q_DECLARE_TR_FUNCTIONS(Kdbx3Writer)
 
 public:
     Kdbx3Writer();

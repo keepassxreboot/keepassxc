@@ -20,8 +20,7 @@
 #include "config-keepassx.h"
 #include "crypto/SymmetricCipherGcrypt.h"
 
-SymmetricCipher::SymmetricCipher(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
-                                 SymmetricCipher::Direction direction)
+SymmetricCipher::SymmetricCipher(Algorithm algo, Mode mode, Direction direction)
     : m_backend(createBackend(algo, mode, direction))
     , m_initialized(false)
     , m_algo(algo)
@@ -55,14 +54,13 @@ bool SymmetricCipher::isInitalized() const
     return m_initialized;
 }
 
-SymmetricCipherBackend* SymmetricCipher::createBackend(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
-                                                       SymmetricCipher::Direction direction)
+SymmetricCipherBackend* SymmetricCipher::createBackend(Algorithm algo, Mode mode, Direction direction)
 {
     switch (algo) {
-    case SymmetricCipher::Aes256:
-    case SymmetricCipher::Twofish:
-    case SymmetricCipher::Salsa20:
-    case SymmetricCipher::ChaCha20:
+    case Aes256:
+    case Twofish:
+    case Salsa20:
+    case ChaCha20:
         return new SymmetricCipherGcrypt(algo, mode, direction);
 
     default:
@@ -94,25 +92,25 @@ QString SymmetricCipher::errorString() const
 SymmetricCipher::Algorithm SymmetricCipher::cipherToAlgorithm(Uuid cipher)
 {
     if (cipher == KeePass2::CIPHER_AES) {
-        return SymmetricCipher::Aes256;
+        return Aes256;
     } else if (cipher == KeePass2::CIPHER_CHACHA20) {
-        return SymmetricCipher::ChaCha20;
+        return ChaCha20;
     } else if (cipher == KeePass2::CIPHER_TWOFISH) {
-        return SymmetricCipher::Twofish;
+        return Twofish;
     }
 
     qWarning("SymmetricCipher::cipherToAlgorithm: invalid Uuid %s", cipher.toByteArray().toHex().data());
     return InvalidAlgorithm;
 }
 
-Uuid SymmetricCipher::algorithmToCipher(SymmetricCipher::Algorithm algo)
+Uuid SymmetricCipher::algorithmToCipher(Algorithm algo)
 {
     switch (algo) {
-    case SymmetricCipher::Aes256:
+    case Aes256:
         return KeePass2::CIPHER_AES;
-    case SymmetricCipher::ChaCha20:
+    case ChaCha20:
         return KeePass2::CIPHER_CHACHA20;
-    case SymmetricCipher::Twofish:
+    case Twofish:
         return KeePass2::CIPHER_TWOFISH;
     default:
         qWarning("SymmetricCipher::algorithmToCipher: invalid algorithm %d", algo);
@@ -120,12 +118,14 @@ Uuid SymmetricCipher::algorithmToCipher(SymmetricCipher::Algorithm algo)
     }
 }
 
-int SymmetricCipher::algorithmIvSize(SymmetricCipher::Algorithm algo) {
+int SymmetricCipher::algorithmIvSize(Algorithm algo)
+{
     switch (algo) {
-    case SymmetricCipher::ChaCha20:
+    case ChaCha20:
         return 12;
-    case SymmetricCipher::Aes256:
-    case SymmetricCipher::Twofish:
+    case Aes256:
+        return 16;
+    case Twofish:
         return 16;
     default:
         qWarning("SymmetricCipher::algorithmIvSize: invalid algorithm %d", algo);
@@ -133,19 +133,21 @@ int SymmetricCipher::algorithmIvSize(SymmetricCipher::Algorithm algo) {
     }
 }
 
-SymmetricCipher::Mode SymmetricCipher::algorithmMode(SymmetricCipher::Algorithm algo) {
+SymmetricCipher::Mode SymmetricCipher::algorithmMode(Algorithm algo)
+{
     switch (algo) {
-    case SymmetricCipher::ChaCha20:
-        return SymmetricCipher::Stream;
-    case SymmetricCipher::Aes256:
-    case SymmetricCipher::Twofish:
-        return SymmetricCipher::Cbc;
+    case ChaCha20:
+        return Stream;
+    case Aes256:
+    case Twofish:
+        return Cbc;
     default:
         qWarning("SymmetricCipher::algorithmMode: invalid algorithm %d", algo);
-        return SymmetricCipher::InvalidMode;
+        return InvalidMode;
     }
 }
 
-SymmetricCipher::Algorithm SymmetricCipher::algorithm() const {
+SymmetricCipher::Algorithm SymmetricCipher::algorithm() const
+{
     return m_algo;
 }

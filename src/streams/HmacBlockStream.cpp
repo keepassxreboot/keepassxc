@@ -1,5 +1,5 @@
 /*
-*  Copyright (C) 2017 KeePassXC Team
+*  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ const QSysInfo::Endian HmacBlockStream::ByteOrder = QSysInfo::LittleEndian;
 
 HmacBlockStream::HmacBlockStream(QIODevice* baseDevice, QByteArray key)
     : LayeredStream(baseDevice)
-    , m_blockSize(1024*1024)
+    , m_blockSize(1024 * 1024)
     , m_key(key)
 {
     init();
@@ -94,8 +94,7 @@ qint64 HmacBlockStream::readData(char* data, qint64 maxSize)
 {
     if (m_error) {
         return -1;
-    }
-    else if (m_eof) {
+    } else if (m_eof) {
         return 0;
     }
 
@@ -107,8 +106,7 @@ qint64 HmacBlockStream::readData(char* data, qint64 maxSize)
             if (!readHashedBlock()) {
                 if (m_error) {
                     return -1;
-                }
-                else {
+                } else {
                     return maxSize - bytesRemaining;
                 }
             }
@@ -204,8 +202,7 @@ qint64 HmacBlockStream::writeData(const char* data, qint64 maxSize)
             if (!writeHashedBlock()) {
                 if (m_error) {
                     return -1;
-                }
-                else {
+                } else {
                     return maxSize - bytesRemaining;
                 }
             }
@@ -249,11 +246,13 @@ bool HmacBlockStream::writeHashedBlock()
     return true;
 }
 
-QByteArray HmacBlockStream::getCurrentHmacKey() const {
+QByteArray HmacBlockStream::getCurrentHmacKey() const
+{
     return getHmacKey(m_blockIndex, m_key);
 }
 
-QByteArray HmacBlockStream::getHmacKey(quint64 blockIndex, QByteArray key) {
+QByteArray HmacBlockStream::getHmacKey(quint64 blockIndex, QByteArray key)
+{
     Q_ASSERT(key.size() == 64);
     QByteArray indexBytes = Endian::sizedIntToBytes<quint64>(blockIndex, ByteOrder);
     CryptoHash hasher(CryptoHash::Sha512);
@@ -262,6 +261,7 @@ QByteArray HmacBlockStream::getHmacKey(quint64 blockIndex, QByteArray key) {
     return hasher.result();
 }
 
-bool HmacBlockStream::atEnd() const {
+bool HmacBlockStream::atEnd() const
+{
     return m_eof;
 }

@@ -1,5 +1,5 @@
 /*
-*  Copyright (C) 2017 KeePassXC Team
+*  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -22,9 +22,9 @@
 
 #include "streams/LayeredStream.h"
 
-class HmacBlockStream : public LayeredStream
+class HmacBlockStream: public LayeredStream
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
     explicit HmacBlockStream(QIODevice* baseDevice, QByteArray key);

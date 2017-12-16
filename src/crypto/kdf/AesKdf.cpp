@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ const QList<Kdf::Field> AesKdf::FIELDS = AesKdf::initFields();
 QList<Kdf::Field> AesKdf::initFields()
 {
     return QList<Kdf::Field> {
-            Kdf::Field(static_cast<quint32>(Fields::ROUNDS), "Transform rounds", 1, UINT64_MAX, true),
+        Kdf::Field(static_cast<quint32>(Fields::ROUNDS), "Transform rounds", 1, UINT64_MAX, true),
     };
 }
 
@@ -67,7 +67,8 @@ bool AesKdf::transformKeyRaw(const QByteArray& key, const QByteArray& seed, quin
     *result = key;
 
     if (!cipher.processInPlace(*result, rounds)) {
-        qWarning("AesKdf::transformKeyRaw: error in SymmetricCipher::processInPlace: %s", cipher.errorString().toUtf8().data());
+        qWarning("AesKdf::transformKeyRaw: error in SymmetricCipher::processInPlace: %s",
+                 cipher.errorString().toUtf8().data());
         return false;
     }
 
@@ -129,20 +130,20 @@ const QList<Kdf::Field> AesKdf::fields() const
 quint64 AesKdf::field(quint32 id) const
 {
     switch (static_cast<Fields>(id)) {
-        case Fields::ROUNDS:
-            return m_rounds;
-        default:
-            return 0;
+    case Fields::ROUNDS:
+        return m_rounds;
+    default:
+        return 0;
     }
 }
 
 bool AesKdf::setField(quint32 id, quint64 val)
 {
     switch (static_cast<Fields>(id)) {
-        case Fields::ROUNDS:
-            return setRounds(val);
-        default:
-            return false;
+    case Fields::ROUNDS:
+        return setRounds(val);
+    default:
+        return false;
     }
 }
 
@@ -165,7 +166,8 @@ int AesKdf::benchmarkImpl(int msec) const
             break;
         }
         rounds += 10000;
-    } while (!t.hasExpired(msec));
+    }
+    while (!t.hasExpired(msec));
 
     return rounds;
 }

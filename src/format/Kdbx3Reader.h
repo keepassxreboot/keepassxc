@@ -26,9 +26,9 @@
 class Database;
 class QIODevice;
 
-class Kdbx3Reader : public BaseKeePass2Reader
+class Kdbx3Reader: public BaseKeePass2Reader
 {
-    Q_DECLARE_TR_FUNCTIONS(Kdbx3Reader)
+Q_DECLARE_TR_FUNCTIONS(Kdbx3Reader)
 
 public:
     Kdbx3Reader();

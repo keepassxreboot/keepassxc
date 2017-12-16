@@ -36,7 +36,7 @@ class Metadata;
 
 class Kdbx3XmlReader
 {
-    Q_DECLARE_TR_FUNCTIONS(Kdbx3XmlReader)
+Q_DECLARE_TR_FUNCTIONS(Kdbx3XmlReader)
 
 public:
     Kdbx3XmlReader();

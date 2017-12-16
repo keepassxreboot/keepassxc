@@ -78,20 +78,20 @@ bool Kdbx3Writer::writeDatabase(QIODevice* device, Database* db)
 
     CHECK_RETURN_FALSE(writeHeaderField(KeePass2::CipherID, db->cipher().toByteArray()));
     CHECK_RETURN_FALSE(writeHeaderField(KeePass2::CompressionFlags,
-                                  Endian::sizedIntToBytes<qint32>(db->compressionAlgo(),
-                                                       KeePass2::BYTEORDER)));
+                                        Endian::sizedIntToBytes<qint32>(db->compressionAlgo(),
+                                                                        KeePass2::BYTEORDER)));
     AesKdf* kdf = static_cast<AesKdf*>(db->kdf());
     CHECK_RETURN_FALSE(writeHeaderField(KeePass2::MasterSeed, masterSeed));
     CHECK_RETURN_FALSE(writeHeaderField(KeePass2::TransformSeed, kdf->seed()));
     CHECK_RETURN_FALSE(writeHeaderField(KeePass2::TransformRounds,
-                                  Endian::sizedIntToBytes<qint64>(kdf->rounds(),
-                                                       KeePass2::BYTEORDER)));
+                                        Endian::sizedIntToBytes<qint64>(kdf->rounds(),
+                                                                        KeePass2::BYTEORDER)));
     CHECK_RETURN_FALSE(writeHeaderField(KeePass2::EncryptionIV, encryptionIV));
     CHECK_RETURN_FALSE(writeHeaderField(KeePass2::ProtectedStreamKey, protectedStreamKey));
     CHECK_RETURN_FALSE(writeHeaderField(KeePass2::StreamStartBytes, startBytes));
     CHECK_RETURN_FALSE(writeHeaderField(KeePass2::InnerRandomStreamID,
-                                  Endian::sizedIntToBytes<qint32>(KeePass2::Salsa20,
-                                                       KeePass2::BYTEORDER)));
+                                        Endian::sizedIntToBytes<qint32>(KeePass2::Salsa20,
+                                                                        KeePass2::BYTEORDER)));
     CHECK_RETURN_FALSE(writeHeaderField(KeePass2::EndOfHeader, endOfHeader));
 
     header.close();
@@ -120,8 +120,7 @@ bool Kdbx3Writer::writeDatabase(QIODevice* device, Database* db)
 
     if (db->compressionAlgo() == Database::CompressionNone) {
         m_device = &hashedStream;
-    }
-    else {
+    } else {
         ioCompressor.reset(new QtIOCompressor(&hashedStream));
         ioCompressor->setStreamFormat(QtIOCompressor::GzipFormat);
         if (!ioCompressor->open(QIODevice::WriteOnly)) {
@@ -166,8 +165,7 @@ bool Kdbx3Writer::writeData(const QByteArray& data)
     if (m_device->write(data) != data.size()) {
         raiseError(m_device->errorString());
         return false;
-    }
-    else {
+    } else {
         return true;
     }
 }
@@ -180,7 +178,7 @@ bool Kdbx3Writer::writeHeaderField(KeePass2::HeaderFieldID fieldId, const QByteA
     fieldIdArr[0] = fieldId;
     CHECK_RETURN_FALSE(writeData(fieldIdArr));
     CHECK_RETURN_FALSE(writeData(Endian::sizedIntToBytes<qint16>(static_cast<quint16>(data.size()),
-                                                      KeePass2::BYTEORDER)));
+                                                                 KeePass2::BYTEORDER)));
     CHECK_RETURN_FALSE(writeData(data));
 
     return true;

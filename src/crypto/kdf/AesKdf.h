@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 
 #include "Kdf.h"
 
-class AesKdf : public Kdf
+class AesKdf: public Kdf
 {
 public:
     AesKdf();
@@ -40,7 +40,7 @@ public:
     bool setRounds(quint64 rounds);
     bool setSeed(const QByteArray& seed);
 
-    enum class Fields : quint32
+    enum class Fields: quint32
     {
         ROUNDS,
         SEED
@@ -55,7 +55,10 @@ private:
     quint64 m_rounds;
     QByteArray m_seed;
 
-    static bool transformKeyRaw(const QByteArray& key, const QByteArray& seed, quint64 rounds, QByteArray* result) Q_REQUIRED_RESULT;
+    static bool transformKeyRaw(const QByteArray& key,
+                                const QByteArray& seed,
+                                quint64 rounds,
+                                QByteArray* result) Q_REQUIRED_RESULT;
     static QList<Kdf::Field> initFields();
 };
 

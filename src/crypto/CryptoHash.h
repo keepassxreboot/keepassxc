@@ -31,15 +31,14 @@ public:
         Sha512
     };
 
-    explicit CryptoHash(CryptoHash::Algorithm algo);
-    explicit CryptoHash(CryptoHash::Algorithm algo, bool hmac);
+    explicit CryptoHash(Algorithm algo, bool hmac = false);
     ~CryptoHash();
     void addData(const QByteArray& data);
     void reset();
     QByteArray result() const;
     void setKey(const QByteArray& data);
 
-    static QByteArray hash(const QByteArray& data, CryptoHash::Algorithm algo);
+    static QByteArray hash(const QByteArray& data, Algorithm algo);
     static QByteArray hmac(const QByteArray& data, const QByteArray& key, Algorithm algo);
 
 private:

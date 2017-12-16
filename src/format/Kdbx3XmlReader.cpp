@@ -150,14 +150,12 @@ QString Kdbx3XmlReader::errorString()
 {
     if (m_error) {
         return m_errorStr;
-    }
-    else if (m_xml.hasError()) {
+    } else if (m_xml.hasError()) {
         return QString("XML error:\n%1\nLine %2, column %3")
-                .arg(m_xml.errorString())
-                .arg(m_xml.lineNumber())
-                .arg(m_xml.columnNumber());
-    }
-    else {
+            .arg(m_xml.errorString())
+            .arg(m_xml.lineNumber())
+            .arg(m_xml.columnNumber());
+    } else {
         return QString();
     }
 }
@@ -183,18 +181,15 @@ bool Kdbx3XmlReader::parseKeePassFile()
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Meta") {
             parseMeta();
-        }
-        else if (m_xml.name() == "Root") {
+        } else if (m_xml.name() == "Root") {
             if (rootElementFound) {
                 rootParsedSuccessfully = false;
                 raiseError("Multiple root elements");
-            }
-            else {
+            } else {
                 rootParsedSuccessfully = parseRoot();
                 rootElementFound = true;
             }
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
@@ -209,95 +204,67 @@ void Kdbx3XmlReader::parseMeta()
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Generator") {
             m_meta->setGenerator(readString());
-        }
-        else if (m_xml.name() == "HeaderHash") {
+        } else if (m_xml.name() == "HeaderHash") {
             m_headerHash = readBinary();
-        }
-        else if (m_xml.name() == "DatabaseName") {
+        } else if (m_xml.name() == "DatabaseName") {
             m_meta->setName(readString());
-        }
-        else if (m_xml.name() == "DatabaseNameChanged") {
+        } else if (m_xml.name() == "DatabaseNameChanged") {
             m_meta->setNameChanged(readDateTime());
-        }
-        else if (m_xml.name() == "DatabaseDescription") {
+        } else if (m_xml.name() == "DatabaseDescription") {
             m_meta->setDescription(readString());
-        }
-        else if (m_xml.name() == "DatabaseDescriptionChanged") {
+        } else if (m_xml.name() == "DatabaseDescriptionChanged") {
             m_meta->setDescriptionChanged(readDateTime());
-        }
-        else if (m_xml.name() == "DefaultUserName") {
+        } else if (m_xml.name() == "DefaultUserName") {
             m_meta->setDefaultUserName(readString());
-        }
-        else if (m_xml.name() == "DefaultUserNameChanged") {
+        } else if (m_xml.name() == "DefaultUserNameChanged") {
             m_meta->setDefaultUserNameChanged(readDateTime());
-        }
-        else if (m_xml.name() == "MaintenanceHistoryDays") {
+        } else if (m_xml.name() == "MaintenanceHistoryDays") {
             m_meta->setMaintenanceHistoryDays(readNumber());
-        }
-        else if (m_xml.name() == "Color") {
+        } else if (m_xml.name() == "Color") {
             m_meta->setColor(readColor());
-        }
-        else if (m_xml.name() == "MasterKeyChanged") {
+        } else if (m_xml.name() == "MasterKeyChanged") {
             m_meta->setMasterKeyChanged(readDateTime());
-        }
-        else if (m_xml.name() == "MasterKeyChangeRec") {
+        } else if (m_xml.name() == "MasterKeyChangeRec") {
             m_meta->setMasterKeyChangeRec(readNumber());
-        }
-        else if (m_xml.name() == "MasterKeyChangeForce") {
+        } else if (m_xml.name() == "MasterKeyChangeForce") {
             m_meta->setMasterKeyChangeForce(readNumber());
-        }
-        else if (m_xml.name() == "MemoryProtection") {
+        } else if (m_xml.name() == "MemoryProtection") {
             parseMemoryProtection();
-        }
-        else if (m_xml.name() == "CustomIcons") {
+        } else if (m_xml.name() == "CustomIcons") {
             parseCustomIcons();
-        }
-        else if (m_xml.name() == "RecycleBinEnabled") {
+        } else if (m_xml.name() == "RecycleBinEnabled") {
             m_meta->setRecycleBinEnabled(readBool());
-        }
-        else if (m_xml.name() == "RecycleBinUUID") {
+        } else if (m_xml.name() == "RecycleBinUUID") {
             m_meta->setRecycleBin(getGroup(readUuid()));
-        }
-        else if (m_xml.name() == "RecycleBinChanged") {
+        } else if (m_xml.name() == "RecycleBinChanged") {
             m_meta->setRecycleBinChanged(readDateTime());
-        }
-        else if (m_xml.name() == "EntryTemplatesGroup") {
+        } else if (m_xml.name() == "EntryTemplatesGroup") {
             m_meta->setEntryTemplatesGroup(getGroup(readUuid()));
-        }
-        else if (m_xml.name() == "EntryTemplatesGroupChanged") {
+        } else if (m_xml.name() == "EntryTemplatesGroupChanged") {
             m_meta->setEntryTemplatesGroupChanged(readDateTime());
-        }
-        else if (m_xml.name() == "LastSelectedGroup") {
+        } else if (m_xml.name() == "LastSelectedGroup") {
             m_meta->setLastSelectedGroup(getGroup(readUuid()));
-        }
-        else if (m_xml.name() == "LastTopVisibleGroup") {
+        } else if (m_xml.name() == "LastTopVisibleGroup") {
             m_meta->setLastTopVisibleGroup(getGroup(readUuid()));
-        }
-        else if (m_xml.name() == "HistoryMaxItems") {
+        } else if (m_xml.name() == "HistoryMaxItems") {
             int value = readNumber();
             if (value >= -1) {
                 m_meta->setHistoryMaxItems(value);
-            }
-            else {
+            } else {
                 raiseError("HistoryMaxItems invalid number");
             }
-        }
-        else if (m_xml.name() == "HistoryMaxSize") {
+        } else if (m_xml.name() == "HistoryMaxSize") {
             int value = readNumber();
             if (value >= -1) {
                 m_meta->setHistoryMaxSize(value);
-            }
-            else {
+            } else {
                 raiseError("HistoryMaxSize invalid number");
             }
-        }
-        else if (m_xml.name() == "Binaries") {
+        } else if (m_xml.name() == "Binaries") {
             parseBinaries();
-        }
-        else if (m_xml.name() == "CustomData") {
+        } else if (m_xml.name() == "CustomData") {
             parseCustomData();
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
@@ -310,20 +277,15 @@ void Kdbx3XmlReader::parseMemoryProtection()
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "ProtectTitle") {
             m_meta->setProtectTitle(readBool());
-        }
-        else if (m_xml.name() == "ProtectUserName") {
+        } else if (m_xml.name() == "ProtectUserName") {
             m_meta->setProtectUsername(readBool());
-        }
-        else if (m_xml.name() == "ProtectPassword") {
+        } else if (m_xml.name() == "ProtectPassword") {
             m_meta->setProtectPassword(readBool());
-        }
-        else if (m_xml.name() == "ProtectURL") {
+        } else if (m_xml.name() == "ProtectURL") {
             m_meta->setProtectUrl(readBool());
-        }
-        else if (m_xml.name() == "ProtectNotes") {
+        } else if (m_xml.name() == "ProtectNotes") {
             m_meta->setProtectNotes(readBool());
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
@@ -336,8 +298,7 @@ void Kdbx3XmlReader::parseCustomIcons()
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Icon") {
             parseIcon();
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
@@ -356,20 +317,17 @@ void Kdbx3XmlReader::parseIcon()
         if (m_xml.name() == "UUID") {
             uuid = readUuid();
             uuidSet = !uuid.isNull();
-        }
-        else if (m_xml.name() == "Data") {
+        } else if (m_xml.name() == "Data") {
             icon.loadFromData(readBinary());
             iconSet = true;
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
 
     if (uuidSet && iconSet) {
         m_meta->addCustomIcon(uuid, icon);
-    }
-    else {
+    } else {
         raiseError("Missing icon uuid or data");
     }
 }
@@ -387,8 +345,7 @@ void Kdbx3XmlReader::parseBinaries()
             QByteArray data;
             if (attr.value("Compressed").compare(QLatin1String("True"), Qt::CaseInsensitive) == 0) {
                 data = readCompressedBinary();
-            }
-            else {
+            } else {
                 data = readBinary();
             }
 
@@ -398,8 +355,7 @@ void Kdbx3XmlReader::parseBinaries()
             }
 
             m_binaryPool.insert(id, data);
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
@@ -412,8 +368,7 @@ void Kdbx3XmlReader::parseCustomData()
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Item") {
             parseCustomDataItem();
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
@@ -432,20 +387,17 @@ void Kdbx3XmlReader::parseCustomDataItem()
         if (m_xml.name() == "Key") {
             key = readString();
             keySet = true;
-        }
-        else if (m_xml.name() == "Value") {
+        } else if (m_xml.name() == "Value") {
             value = readString();
             valueSet = true;
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
 
     if (keySet && valueSet) {
         m_meta->addCustomField(key, value);
-    }
-    else {
+    } else {
         raiseError("Missing custom data key or value");
     }
 }
@@ -474,11 +426,9 @@ bool Kdbx3XmlReader::parseRoot()
             }
 
             groupElementFound = true;
-        }
-        else if (m_xml.name() == "DeletedObjects") {
+        } else if (m_xml.name() == "DeletedObjects") {
             parseDeletedObjects();
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
@@ -500,99 +450,77 @@ Group* Kdbx3XmlReader::parseGroup()
             if (uuid.isNull()) {
                 if (m_strictMode) {
                     raiseError("Null group uuid");
-                }
-                else {
+                } else {
                     group->setUuid(Uuid::random());
                 }
-            }
-            else {
+            } else {
                 group->setUuid(uuid);
             }
-        }
-        else if (m_xml.name() == "Name") {
+        } else if (m_xml.name() == "Name") {
             group->setName(readString());
-        }
-        else if (m_xml.name() == "Notes") {
+        } else if (m_xml.name() == "Notes") {
             group->setNotes(readString());
-        }
-        else if (m_xml.name() == "IconID") {
+        } else if (m_xml.name() == "IconID") {
             int iconId = readNumber();
             if (iconId < 0) {
                 if (m_strictMode) {
                     raiseError("Invalid group icon number");
                 }
                 iconId = 0;
-            }
-            else {
+            } else {
                 if (iconId >= DatabaseIcons::IconCount) {
                     qWarning("Kdbx3XmlReader::parseGroup: icon id \"%d\" not supported", iconId);
                 }
                 group->setIcon(iconId);
             }
-        }
-        else if (m_xml.name() == "CustomIconUUID") {
+        } else if (m_xml.name() == "CustomIconUUID") {
             Uuid uuid = readUuid();
             if (!uuid.isNull()) {
                 group->setIcon(uuid);
             }
-        }
-        else if (m_xml.name() == "Times") {
+        } else if (m_xml.name() == "Times") {
             group->setTimeInfo(parseTimes());
-        }
-        else if (m_xml.name() == "IsExpanded") {
+        } else if (m_xml.name() == "IsExpanded") {
             group->setExpanded(readBool());
-        }
-        else if (m_xml.name() == "DefaultAutoTypeSequence") {
+        } else if (m_xml.name() == "DefaultAutoTypeSequence") {
             group->setDefaultAutoTypeSequence(readString());
-        }
-        else if (m_xml.name() == "EnableAutoType") {
+        } else if (m_xml.name() == "EnableAutoType") {
             QString str = readString();
 
             if (str.compare("null", Qt::CaseInsensitive) == 0) {
                 group->setAutoTypeEnabled(Group::Inherit);
-            }
-            else if (str.compare("true", Qt::CaseInsensitive) == 0) {
+            } else if (str.compare("true", Qt::CaseInsensitive) == 0) {
                 group->setAutoTypeEnabled(Group::Enable);
-            }
-            else if (str.compare("false", Qt::CaseInsensitive) == 0) {
+            } else if (str.compare("false", Qt::CaseInsensitive) == 0) {
                 group->setAutoTypeEnabled(Group::Disable);
-            }
-            else {
+            } else {
                 raiseError("Invalid EnableAutoType value");
             }
-        }
-        else if (m_xml.name() == "EnableSearching") {
+        } else if (m_xml.name() == "EnableSearching") {
             QString str = readString();
 
             if (str.compare("null", Qt::CaseInsensitive) == 0) {
                 group->setSearchingEnabled(Group::Inherit);
-            }
-            else if (str.compare("true", Qt::CaseInsensitive) == 0) {
+            } else if (str.compare("true", Qt::CaseInsensitive) == 0) {
                 group->setSearchingEnabled(Group::Enable);
-            }
-            else if (str.compare("false", Qt::CaseInsensitive) == 0) {
+            } else if (str.compare("false", Qt::CaseInsensitive) == 0) {
                 group->setSearchingEnabled(Group::Disable);
-            }
-            else {
+            } else {
                 raiseError("Invalid EnableSearching value");
             }
-        }
-        else if (m_xml.name() == "LastTopVisibleEntry") {
+        } else if (m_xml.name() == "LastTopVisibleEntry") {
             group->setLastTopVisibleEntry(getEntry(readUuid()));
-        }
-        else if (m_xml.name() == "Group") {
+        } else if (m_xml.name() == "Group") {
             Group* newGroup = parseGroup();
             if (newGroup) {
                 children.append(newGroup);
             }
-        }
-        else if (m_xml.name() == "Entry") {
+        } else if (m_xml.name() == "Entry") {
             Entry* newEntry = parseEntry(false);
             if (newEntry) {
                 entries.append(newEntry);
             }
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
@@ -607,8 +535,7 @@ Group* Kdbx3XmlReader::parseGroup()
         group->copyDataFrom(tmpGroup);
         group->setUpdateTimeinfo(false);
         delete tmpGroup;
-    }
-    else if (!hasError()) {
+    } else if (!hasError()) {
         raiseError("No group uuid found");
     }
 
@@ -630,8 +557,7 @@ void Kdbx3XmlReader::parseDeletedObjects()
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "DeletedObject") {
             parseDeletedObject();
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
@@ -650,23 +576,19 @@ void Kdbx3XmlReader::parseDeletedObject()
                 if (m_strictMode) {
                     raiseError("Null DeleteObject uuid");
                 }
-            }
-            else {
+            } else {
                 delObj.uuid = uuid;
             }
-        }
-        else if (m_xml.name() == "DeletionTime") {
+        } else if (m_xml.name() == "DeletionTime") {
             delObj.deletionTime = readDateTime();
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
 
     if (!delObj.uuid.isNull() && !delObj.deletionTime.isNull()) {
         m_db->addDeletedObject(delObj);
-    }
-    else if (m_strictMode) {
+    } else if (m_strictMode) {
         raiseError("Missing DeletedObject uuid or time");
     }
 }
@@ -686,69 +608,53 @@ Entry* Kdbx3XmlReader::parseEntry(bool history)
             if (uuid.isNull()) {
                 if (m_strictMode) {
                     raiseError("Null entry uuid");
-                }
-                else {
+                } else {
                     entry->setUuid(Uuid::random());
                 }
-            }
-            else {
+            } else {
                 entry->setUuid(uuid);
             }
-        }
-        else if (m_xml.name() == "IconID") {
+        } else if (m_xml.name() == "IconID") {
             int iconId = readNumber();
             if (iconId < 0) {
                 if (m_strictMode) {
                     raiseError("Invalid entry icon number");
                 }
                 iconId = 0;
-            }
-            else {
+            } else {
                 entry->setIcon(iconId);
             }
-        }
-        else if (m_xml.name() == "CustomIconUUID") {
+        } else if (m_xml.name() == "CustomIconUUID") {
             Uuid uuid = readUuid();
             if (!uuid.isNull()) {
                 entry->setIcon(uuid);
             }
-        }
-        else if (m_xml.name() == "ForegroundColor") {
+        } else if (m_xml.name() == "ForegroundColor") {
             entry->setForegroundColor(readColor());
-        }
-        else if (m_xml.name() == "BackgroundColor") {
+        } else if (m_xml.name() == "BackgroundColor") {
             entry->setBackgroundColor(readColor());
-        }
-        else if (m_xml.name() == "OverrideURL") {
+        } else if (m_xml.name() == "OverrideURL") {
             entry->setOverrideUrl(readString());
-        }
-        else if (m_xml.name() == "Tags") {
+        } else if (m_xml.name() == "Tags") {
             entry->setTags(readString());
-        }
-        else if (m_xml.name() == "Times") {
+        } else if (m_xml.name() == "Times") {
             entry->setTimeInfo(parseTimes());
-        }
-        else if (m_xml.name() == "String") {
+        } else if (m_xml.name() == "String") {
             parseEntryString(entry);
-        }
-        else if (m_xml.name() == "Binary") {
+        } else if (m_xml.name() == "Binary") {
             QPair<QString, QString> ref = parseEntryBinary(entry);
             if (!ref.first.isNull() && !ref.second.isNull()) {
                 binaryRefs.append(ref);
             }
-        }
-        else if (m_xml.name() == "AutoType") {
+        } else if (m_xml.name() == "AutoType") {
             parseAutoType(entry);
-        }
-        else if (m_xml.name() == "History") {
+        } else if (m_xml.name() == "History") {
             if (history) {
                 raiseError("History element in history entry");
-            }
-            else {
+            } else {
                 historyItems = parseEntryHistory();
             }
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
@@ -760,8 +666,7 @@ Entry* Kdbx3XmlReader::parseEntry(bool history)
     if (!entry->uuid().isNull()) {
         if (history) {
             entry->setUpdateTimeinfo(false);
-        }
-        else {
+        } else {
             Entry* tmpEntry = entry;
 
             entry = getEntry(tmpEntry->uuid());
@@ -770,8 +675,7 @@ Entry* Kdbx3XmlReader::parseEntry(bool history)
 
             delete tmpEntry;
         }
-    }
-    else if (!hasError()) {
+    } else if (!hasError()) {
         raiseError("No entry uuid found");
     }
 
@@ -807,8 +711,7 @@ void Kdbx3XmlReader::parseEntryString(Entry* entry)
         if (m_xml.name() == "Key") {
             key = readString();
             keySet = true;
-        }
-        else if (m_xml.name() == "Value") {
+        } else if (m_xml.name() == "Value") {
             QXmlStreamAttributes attr = m_xml.attributes();
             value = readString();
 
@@ -823,20 +726,17 @@ void Kdbx3XmlReader::parseEntryString(Entry* entry)
                     if (!ok) {
                         value.clear();
                         raiseError(m_randomStream->errorString());
-                    }
-                    else {
+                    } else {
                         value = QString::fromUtf8(plaintext);
                     }
-                }
-                else {
+                } else {
                     raiseError("Unable to decrypt entry string");
                 }
             }
 
             protect = isProtected || protectInMemory;
             valueSet = true;
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
@@ -845,12 +745,10 @@ void Kdbx3XmlReader::parseEntryString(Entry* entry)
         // the default attributes are always there so additionally check if it's empty
         if (entry->attributes()->hasKey(key) && !entry->attributes()->value(key).isEmpty()) {
             raiseError("Duplicate custom attribute found");
-        }
-        else {
+        } else {
             entry->attributes()->set(key, value, protect);
         }
-    }
-    else {
+    } else {
         raiseError("Entry string key or value missing");
     }
 }
@@ -870,19 +768,17 @@ QPair<QString, QString> Kdbx3XmlReader::parseEntryBinary(Entry* entry)
         if (m_xml.name() == "Key") {
             key = readString();
             keySet = true;
-        }
-        else if (m_xml.name() == "Value") {
+        } else if (m_xml.name() == "Value") {
             QXmlStreamAttributes attr = m_xml.attributes();
 
             if (attr.hasAttribute("Ref")) {
                 poolRef = qMakePair(attr.value("Ref").toString(), key);
                 m_xml.skipCurrentElement();
-            }
-            else {
+            } else {
                 // format compatibility
                 value = readBinary();
                 bool isProtected = attr.hasAttribute("Protected")
-                        && (attr.value("Protected") == "True");
+                    && (attr.value("Protected") == "True");
 
                 if (isProtected && !value.isEmpty()) {
                     if (!m_randomStream->processInPlace(value)) {
@@ -892,8 +788,7 @@ QPair<QString, QString> Kdbx3XmlReader::parseEntryBinary(Entry* entry)
             }
 
             valueSet = true;
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
@@ -901,12 +796,10 @@ QPair<QString, QString> Kdbx3XmlReader::parseEntryBinary(Entry* entry)
     if (keySet && valueSet) {
         if (entry->attachments()->hasKey(key)) {
             raiseError("Duplicate attachment found");
-        }
-        else {
+        } else {
             entry->attachments()->set(key, value);
         }
-    }
-    else {
+    } else {
         raiseError("Entry binary key or value missing");
     }
 
@@ -920,17 +813,13 @@ void Kdbx3XmlReader::parseAutoType(Entry* entry)
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Enabled") {
             entry->setAutoTypeEnabled(readBool());
-        }
-        else if (m_xml.name() == "DataTransferObfuscation") {
+        } else if (m_xml.name() == "DataTransferObfuscation") {
             entry->setAutoTypeObfuscation(readNumber());
-        }
-        else if (m_xml.name() == "DefaultSequence") {
+        } else if (m_xml.name() == "DefaultSequence") {
             entry->setDefaultAutoTypeSequence(readString());
-        }
-        else if (m_xml.name() == "Association") {
+        } else if (m_xml.name() == "Association") {
             parseAutoTypeAssoc(entry);
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
@@ -948,20 +837,17 @@ void Kdbx3XmlReader::parseAutoTypeAssoc(Entry* entry)
         if (m_xml.name() == "Window") {
             assoc.window = readString();
             windowSet = true;
-        }
-        else if (m_xml.name() == "KeystrokeSequence") {
+        } else if (m_xml.name() == "KeystrokeSequence") {
             assoc.sequence = readString();
             sequenceSet = true;
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
 
     if (windowSet && sequenceSet) {
         entry->autoTypeAssociations()->add(assoc);
-    }
-    else {
+    } else {
         raiseError("Auto-type association window or sequence missing");
     }
 }
@@ -975,8 +861,7 @@ QList<Entry*> Kdbx3XmlReader::parseEntryHistory()
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Entry") {
             historyItems.append(parseEntry(true));
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
@@ -992,26 +877,19 @@ TimeInfo Kdbx3XmlReader::parseTimes()
     while (!m_xml.error() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "LastModificationTime") {
             timeInfo.setLastModificationTime(readDateTime());
-        }
-        else if (m_xml.name() == "CreationTime") {
+        } else if (m_xml.name() == "CreationTime") {
             timeInfo.setCreationTime(readDateTime());
-        }
-        else if (m_xml.name() == "LastAccessTime") {
+        } else if (m_xml.name() == "LastAccessTime") {
             timeInfo.setLastAccessTime(readDateTime());
-        }
-        else if (m_xml.name() == "ExpiryTime") {
+        } else if (m_xml.name() == "ExpiryTime") {
             timeInfo.setExpiryTime(readDateTime());
-        }
-        else if (m_xml.name() == "Expires") {
+        } else if (m_xml.name() == "Expires") {
             timeInfo.setExpires(readBool());
-        }
-        else if (m_xml.name() == "UsageCount") {
+        } else if (m_xml.name() == "UsageCount") {
             timeInfo.setUsageCount(readNumber());
-        }
-        else if (m_xml.name() == "LocationChanged") {
+        } else if (m_xml.name() == "LocationChanged") {
             timeInfo.setLocationChanged(readDateTime());
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
@@ -1030,14 +908,11 @@ bool Kdbx3XmlReader::readBool()
 
     if (str.compare("True", Qt::CaseInsensitive) == 0) {
         return true;
-    }
-    else if (str.compare("False", Qt::CaseInsensitive) == 0) {
+    } else if (str.compare("False", Qt::CaseInsensitive) == 0) {
         return false;
-    }
-    else if (str.length() == 0) {
+    } else if (str.length() == 0) {
         return false;
-    }
-    else {
+    } else {
         raiseError("Invalid bool value");
         return false;
     }
@@ -1051,8 +926,7 @@ QDateTime Kdbx3XmlReader::readDateTime()
     if (!dt.isValid()) {
         if (m_strictMode) {
             raiseError("Invalid date time value");
-        }
-        else {
+        } else {
             dt = QDateTime::currentDateTimeUtc();
         }
     }
@@ -1077,7 +951,7 @@ QColor Kdbx3XmlReader::readColor()
 
     QColor color;
     for (int i = 0; i <= 2; i++) {
-        QString rgbPartStr = colorStr.mid(1 + 2*i, 2);
+        QString rgbPartStr = colorStr.mid(1 + 2 * i, 2);
         bool ok;
         int rgbPart = rgbPartStr.toInt(&ok, 16);
         if (!ok || rgbPart > 255) {
@@ -1089,11 +963,9 @@ QColor Kdbx3XmlReader::readColor()
 
         if (i == 0) {
             color.setRed(rgbPart);
-        }
-        else if (i == 1) {
+        } else if (i == 1) {
             color.setGreen(rgbPart);
-        }
-        else {
+        } else {
             color.setBlue(rgbPart);
         }
     }
@@ -1116,14 +988,12 @@ Uuid Kdbx3XmlReader::readUuid()
     QByteArray uuidBin = readBinary();
     if (uuidBin.isEmpty()) {
         return Uuid();
-    }
-    else if (uuidBin.length() != Uuid::Length) {
+    } else if (uuidBin.length() != Uuid::Length) {
         if (m_strictMode) {
             raiseError("Invalid uuid value");
         }
         return Uuid();
-    }
-    else {
+    } else {
         return Uuid(uuidBin);
     }
 }
@@ -1159,8 +1029,7 @@ Group* Kdbx3XmlReader::getGroup(const Uuid& uuid)
 
     if (m_groups.contains(uuid)) {
         return m_groups.value(uuid);
-    }
-    else {
+    } else {
         Group* group = new Group();
         group->setUpdateTimeinfo(false);
         group->setUuid(uuid);
@@ -1178,8 +1047,7 @@ Entry* Kdbx3XmlReader::getEntry(const Uuid& uuid)
 
     if (m_entries.contains(uuid)) {
         return m_entries.value(uuid);
-    }
-    else {
+    } else {
         Entry* entry = new Entry();
         entry->setUpdateTimeinfo(false);
         entry->setUuid(uuid);
