@@ -93,7 +93,6 @@ QList<int> KeyAcceptDialog::getCheckedItems()
 
     int numRows = listViewModel->rowCount();
 
-    // XXX Memory Leak
     QList<int> resultList;
 
     for (int row = 0; row < numRows; row++) {
@@ -124,7 +123,6 @@ void KeyAcceptDialog::checkAcceptable()
         }
     }
 
-    // TODO: Make translateable
     if (getKeyName().isEmpty()) {
         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
         ui->buttonBox->button(QDialogButtonBox::Ok)->setToolTip(tr("Make sure the key name is not empty!"));
