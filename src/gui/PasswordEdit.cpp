@@ -19,8 +19,7 @@
 #include "PasswordEdit.h"
 
 #include "core/Config.h"
-
-#include <QFontDatabase>
+#include "gui/Font.h"
 
 const QColor PasswordEdit::CorrectSoFarColor = QColor(255, 205, 15);
 const QColor PasswordEdit::ErrorColor = QColor(255, 125, 125);
@@ -33,16 +32,7 @@ PasswordEdit::PasswordEdit(QWidget* parent)
     updateStylesheet();
 
     // use a monospace font for the password field
-    QFont passwordFont = QFontDatabase::systemFont(QFontDatabase::FixedFont);
-#ifdef Q_OS_WIN
-    // try to use Consolas on Windows, because the default Courier New has too many similar characters
-    QFont consolasFont = QFontDatabase().font("Consolas", passwordFont.styleName(), passwordFont.pointSize());
-    const QFont defaultFont;
-    if (passwordFont != defaultFont) {
-        passwordFont = consolasFont;
-    }
-#endif
-
+    QFont passwordFont = Font::fixedFont();
     passwordFont.setLetterSpacing(QFont::PercentageSpacing, 110);
     setFont(passwordFont);
 }

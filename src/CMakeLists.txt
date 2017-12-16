@@ -105,6 +105,7 @@ set(keepassx_SOURCES
     gui/EditWidgetIcons.cpp
     gui/EditWidgetProperties.cpp
     gui/FileDialog.cpp
+    gui/Font.cpp
     gui/IconModels.cpp
     gui/KeePass1OpenWidget.cpp
     gui/KMessageWidget.cpp
