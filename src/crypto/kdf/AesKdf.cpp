@@ -18,19 +18,9 @@
 #include <QtConcurrent>
 
 #include "format/KeePass2.h"
-#include "crypto/SymmetricCipher.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
 #include "AesKdf.h"
-
-const QList<Kdf::Field> AesKdf::FIELDS = AesKdf::initFields();
-
-QList<Kdf::Field> AesKdf::initFields()
-{
-    return QList<Kdf::Field> {
-        Kdf::Field(static_cast<quint32>(Fields::ROUNDS), "Transform rounds", 1, UINT64_MAX, true),
-    };
-}
 
 bool AesKdf::transform(const QByteArray& raw, QByteArray& result) const
 {
@@ -76,7 +66,8 @@ bool AesKdf::transformKeyRaw(const QByteArray& key, const QByteArray& seed, quin
 }
 
 AesKdf::AesKdf()
-    : m_rounds(100000ull)
+    : Kdf::Kdf(KeePass2::KDF_AES)
+    , m_rounds(100000ull)
     , m_seed(QByteArray(32, 0))
 {
 }
@@ -112,39 +103,9 @@ void AesKdf::randomizeTransformSalt()
     setSeed(randomGen()->randomArray(32));
 }
 
-Kdf::Type AesKdf::type() const
+QSharedPointer<Kdf> AesKdf::clone() const
 {
-    return Kdf::Type::AES;
-}
-
-Kdf* AesKdf::clone() const
-{
-    return static_cast<Kdf*>(new AesKdf(*this));
-}
-
-const QList<Kdf::Field> AesKdf::fields() const
-{
-    return FIELDS;
-}
-
-quint64 AesKdf::field(quint32 id) const
-{
-    switch (static_cast<Fields>(id)) {
-    case Fields::ROUNDS:
-        return m_rounds;
-    default:
-        return 0;
-    }
-}
-
-bool AesKdf::setField(quint32 id, quint64 val)
-{
-    switch (static_cast<Fields>(id)) {
-    case Fields::ROUNDS:
-        return setRounds(val);
-    default:
-        return false;
-    }
+    return QSharedPointer<AesKdf>::create(*this);
 }
 
 int AesKdf::benchmarkImpl(int msec) const

@@ -40,6 +40,7 @@ Q_OBJECT
 public:
     explicit DatabaseSettingsWidget(QWidget* parent = nullptr);
     ~DatabaseSettingsWidget();
+    Q_DISABLE_COPY(DatabaseSettingsWidget)
 
     void load(Database* db);
 
@@ -50,19 +51,12 @@ private slots:
     void save();
     void reject();
     void transformRoundsBenchmark();
-    void changeKdf(int index);
 
 private:
     void truncateHistories();
-    void displayKdf(const Kdf& kdf);
-    void clearKdfWidgets();
 
     const QScopedPointer<Ui::DatabaseSettingsWidget> m_ui;
-    QList<QWidget*> m_kdfWidgets;
-    QScopedPointer<Kdf> m_kdf;
     Database* m_db;
-
-    Q_DISABLE_COPY(DatabaseSettingsWidget)
 };
 
 #endif // KEEPASSX_DATABASESETTINGSWIDGET_H

@@ -20,6 +20,7 @@
 
 #include <QMessageBox>
 
+#include "core/Global.h"
 #include "core/AsyncTask.h"
 #include "core/Database.h"
 #include "core/Group.h"
@@ -40,7 +41,6 @@ DatabaseSettingsWidget::DatabaseSettingsWidget(QWidget* parent)
             m_ui->historyMaxItemsSpinBox, SLOT(setEnabled(bool)));
     connect(m_ui->historyMaxSizeCheckBox, SIGNAL(toggled(bool)),
             m_ui->historyMaxSizeSpinBox, SLOT(setEnabled(bool)));
-    connect(m_ui->kdfComboBox, SIGNAL(currentIndexChanged(int)), SLOT(changeKdf(int)));
     connect(m_ui->transformBenchmarkButton, SIGNAL(clicked()), SLOT(transformRoundsBenchmark()));
 }
 
@@ -61,8 +61,7 @@ void DatabaseSettingsWidget::load(Database* db)
     if (meta->historyMaxItems() > -1) {
         m_ui->historyMaxItemsSpinBox->setValue(meta->historyMaxItems());
         m_ui->historyMaxItemsCheckBox->setChecked(true);
-    }
-    else {
+    } else {
         m_ui->historyMaxItemsSpinBox->setValue(Metadata::DefaultHistoryMaxItems);
         m_ui->historyMaxItemsCheckBox->setChecked(false);
     }
@@ -70,17 +69,14 @@ void DatabaseSettingsWidget::load(Database* db)
     if (historyMaxSizeMiB > 0) {
         m_ui->historyMaxSizeSpinBox->setValue(historyMaxSizeMiB);
         m_ui->historyMaxSizeCheckBox->setChecked(true);
-    }
-    else {
+    } else {
         m_ui->historyMaxSizeSpinBox->setValue(Metadata::DefaultHistoryMaxSize);
         m_ui->historyMaxSizeCheckBox->setChecked(false);
     }
 
     m_ui->algorithmComboBox->clear();
-    for (QList<KeePass2::UuidNamePair>::const_iterator ciphers = KeePass2::CIPHERS.constBegin();
-         ciphers != KeePass2::CIPHERS.constEnd(); ++ciphers) {
-        KeePass2::UuidNamePair cipher = *ciphers;
-        m_ui->algorithmComboBox->addItem(cipher.name(), cipher.uuid().toByteArray());
+    for (auto& cipher: asConst(KeePass2::CIPHERS)) {
+        m_ui->algorithmComboBox->addItem(cipher.second, cipher.first.toByteArray());
     }
     int cipherIndex = m_ui->algorithmComboBox->findData(m_db->cipher().toByteArray());
     if (cipherIndex > -1) {
@@ -89,20 +85,17 @@ void DatabaseSettingsWidget::load(Database* db)
 
     bool blockSignals = m_ui->kdfComboBox->signalsBlocked();
     m_ui->kdfComboBox->blockSignals(true);
-    m_kdf.reset(m_db->kdf()->clone());
+
     m_ui->kdfComboBox->clear();
-    for (QList<KeePass2::UuidNamePair>::const_iterator kdfs = KeePass2::KDFS.constBegin();
-         kdfs != KeePass2::KDFS.constEnd(); ++kdfs) {
-        KeePass2::UuidNamePair kdf = *kdfs;
-        m_ui->kdfComboBox->addItem(kdf.name(), kdf.uuid().toByteArray());
+    for (auto& kdf: asConst(KeePass2::KDFS)) {
+        m_ui->kdfComboBox->addItem(kdf.second, kdf.first.toByteArray());
     }
-    int kdfIndex = m_ui->kdfComboBox->findData(KeePass2::kdfToUuid(*m_kdf).toByteArray());
+    int kdfIndex = m_ui->kdfComboBox->findData(m_db->kdf()->uuid().toByteArray());
     if (kdfIndex > -1) {
         m_ui->kdfComboBox->setCurrentIndex(kdfIndex);
     }
-    displayKdf(*m_kdf);
     m_ui->kdfComboBox->blockSignals(blockSignals);
-    m_ui->transformRoundsSpinBox->setValue(static_cast<unsigned>(m_kdf->rounds()));
+    m_ui->transformRoundsSpinBox->setValue(static_cast<unsigned>(m_db->kdf()->rounds()));
 
     m_ui->dbNameEdit->setFocus();
 }
@@ -121,8 +114,7 @@ void DatabaseSettingsWidget::save()
     int historyMaxItems;
     if (m_ui->historyMaxItemsCheckBox->isChecked()) {
         historyMaxItems = m_ui->historyMaxItemsSpinBox->value();
-    }
-    else {
+    } else {
         historyMaxItems = -1;
     }
     if (historyMaxItems != meta->historyMaxItems()) {
@@ -133,8 +125,7 @@ void DatabaseSettingsWidget::save()
     int historyMaxSize;
     if (m_ui->historyMaxSizeCheckBox->isChecked()) {
         historyMaxSize = m_ui->historyMaxSizeSpinBox->value() * 1048576;
-    }
-    else {
+    } else {
         historyMaxSize = -1;
     }
     if (historyMaxSize != meta->historyMaxSize()) {
@@ -148,31 +139,20 @@ void DatabaseSettingsWidget::save()
 
     m_db->setCipher(Uuid(m_ui->algorithmComboBox->currentData().toByteArray()));
 
-    bool kdfValid = true;
-    for (int i = 0; i < m_kdfFields.size(); ++i) {
-        QPair<quint32, QSpinBox*> field = m_kdfFields.at(i);
-        kdfValid &= m_kdf->setField(field.first, static_cast<quint64>(qMax(0, field.second->value())));
-        if (!kdfValid) {
-            break;
-        }
-    }
+    auto kdf = KeePass2::uuidToKdf(Uuid(m_ui->kdfComboBox->currentData().toByteArray()));
+    kdf->setRounds(static_cast<quint64>(qMax(0, m_ui->transformRoundsSpinBox->value())));
 
-    if (kdfValid) {
-        Kdf* kdf = m_kdf.take();
-        bool ok = m_db->changeKdf(kdf);
-        if (!ok) {
-            MessageBox::warning(this, tr("KDF unchanged"),
-                                tr("Failed to transform key with new KDF parameters; KDF unchanged."),
-                                QMessageBox::Ok);
-            delete kdf; // m_db has not taken ownership
-        }
-    } else {
+    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+    // TODO: we should probably use AsyncTask::runAndWaitForFuture() here,
+    //       but not without making Database thread-safe
+    bool ok = m_db->changeKdf(kdf);
+    QApplication::restoreOverrideCursor();
+
+    if (!ok) {
         MessageBox::warning(this, tr("KDF unchanged"),
-                            tr("Invalid KDF parameters; KDF unchanged."),
+                            tr("Failed to transform key with new KDF parameters; KDF unchanged."),
                             QMessageBox::Ok);
     }
-    clearKdfWidgets();
-
     emit editFinished(true);
 }
 
@@ -185,7 +165,7 @@ void DatabaseSettingsWidget::transformRoundsBenchmark()
 {
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
     m_ui->transformRoundsSpinBox->setValue(AsyncTask::runAndWaitForFuture([this]() {
-        int rounds = m_kdf->benchmark(1000);
+        int rounds = m_db->kdf()->benchmark(1000);
         QApplication::restoreOverrideCursor();
         return rounds;
     }));
@@ -197,67 +177,4 @@ void DatabaseSettingsWidget::truncateHistories()
     for (Entry* entry : allEntries) {
         entry->truncateHistory();
     }
-}
-
-void DatabaseSettingsWidget::changeKdf(int index) {
-    QByteArray uuidBytes = m_ui->kdfComboBox->itemData(index).toByteArray();
-    if (uuidBytes.size() != Uuid::Length) {
-        return;
-    }
-    Kdf* newKdf = KeePass2::uuidToKdf(Uuid(uuidBytes));
-    if (newKdf != nullptr) {
-        m_kdf.reset(newKdf);
-        displayKdf(*m_kdf);
-    }
-}
-
-void DatabaseSettingsWidget::displayKdf(const Kdf& kdf)
-{
-    clearKdfWidgets();
-
-    QWidget* lastWidget = nullptr;
-    int columnStart = m_ui->gridLayout->columnCount();
-    int rowStart = m_ui->gridLayout->rowCount();
-    QList<Kdf::Field> fields = kdf.fields();
-    for (int i = 0; i < fields.size(); i++) {
-        const Kdf::Field& field = fields.at(i);
-        QLabel* label = new QLabel(QString("%1:").arg(field.name()));
-        QSpinBox* spinBox = new QSpinBox();
-        m_kdfWidgets.append(label);
-        m_kdfWidgets.append(spinBox);
-        m_kdfFields.append(QPair<quint32, QSpinBox*>(field.id(), spinBox));
-        spinBox->setMinimum(static_cast<qint32>(qMin(qMax(0ull, field.min()), 0x7FFFFFFFull)));
-        spinBox->setMaximum(static_cast<qint32>(qMin(qMax(0ull, field.max()), 0x7FFFFFFFull)));
-        spinBox->setValue(static_cast<qint32>(qMin(qMax(0ull, kdf.field(field.id())), 0x7FFFFFFFull)));
-        spinBox->setObjectName(QString("kdfParams%1").arg(i));
-        m_ui->gridLayout->addWidget(label, rowStart + i, columnStart - 3, Qt::AlignRight);
-        if (field.benchmarked()) {
-            Q_ASSERT(m_benchmarkField == nullptr);
-            QPushButton* benchBtn = new QPushButton("Benchmark");
-            connect(benchBtn, &QPushButton::clicked, this, &DatabaseSettingsWidget::transformRoundsBenchmark);
-            m_kdfWidgets.append(benchBtn);
-            m_ui->gridLayout->addWidget(spinBox, rowStart + i, columnStart - 2);
-            m_ui->gridLayout->addWidget(benchBtn, rowStart + i, columnStart - 1);
-            m_benchmarkField = spinBox;
-            lastWidget = benchBtn;
-        } else {
-            m_ui->gridLayout->addWidget(spinBox, rowStart + i, columnStart - 2, 1, 2);
-            lastWidget = spinBox;
-        }
-    }
-    if (lastWidget != nullptr) {
-        QWidget::setTabOrder(lastWidget, m_ui->buttonBox->button(QDialogButtonBox::StandardButton::Cancel));
-        QWidget::setTabOrder(m_ui->buttonBox->button(QDialogButtonBox::StandardButton::Cancel), m_ui->buttonBox->button(QDialogButtonBox::StandardButton::Ok));
-    }
-}
-
-void DatabaseSettingsWidget::clearKdfWidgets()
-{
-    m_benchmarkField = nullptr;
-    for (int i = 0; i < m_kdfWidgets.size(); ++i) {
-        m_ui->gridLayout->removeWidget(m_kdfWidgets.at(i));
-        m_kdfWidgets.at(i)->deleteLater();
-    }
-    m_kdfWidgets.clear();
-    m_kdfFields.clear();
 }

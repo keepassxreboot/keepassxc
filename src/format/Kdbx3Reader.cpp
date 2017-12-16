@@ -318,36 +318,33 @@ void Kdbx3Reader::setTransformSeed(const QByteArray& data)
 {
     if (data.size() != 32) {
         raiseError("Invalid transform seed size");
-    } else {
-        AesKdf* aesKdf;
-        if (m_db->kdf()->type() == Kdf::Type::AES) {
-            aesKdf = static_cast<AesKdf*>(m_db->kdf());
-        } else {
-            aesKdf = new AesKdf();
-            m_db->setKdf(aesKdf);
-        }
-
-        aesKdf->setSeed(data);
+        return;
     }
+
+    auto kdf = m_db->kdf();
+    if (!kdf) {
+        kdf = QSharedPointer<AesKdf>::create();
+        m_db->setKdf(kdf);
+    }
+
+    kdf->setSeed(data);
 }
 
 void Kdbx3Reader::setTransformRounds(const QByteArray& data)
 {
     if (data.size() != 8) {
         raiseError("Invalid transform rounds size");
-    } else {
-        quint64 rounds = Endian::bytesToSizedInt<quint64>(data, KeePass2::BYTEORDER);
-
-        AesKdf* aesKdf;
-        if (m_db->kdf()->type() == Kdf::Type::AES) {
-            aesKdf = static_cast<AesKdf*>(m_db->kdf());
-        } else {
-            aesKdf = new AesKdf();
-            m_db->setKdf(aesKdf);
-        }
-
-        aesKdf->setRounds(rounds);
+        return;
     }
+
+    auto rounds = Endian::bytesToSizedInt<quint64>(data, KeePass2::BYTEORDER);
+    auto kdf = m_db->kdf();
+    if (!kdf) {
+        kdf = QSharedPointer<AesKdf>::create();
+        m_db->setKdf(kdf);
+    }
+
+    kdf->setRounds(rounds);
 }
 
 void Kdbx3Reader::setEncryptionIV(const QByteArray& data)

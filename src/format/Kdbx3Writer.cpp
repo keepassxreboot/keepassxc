@@ -80,7 +80,7 @@ bool Kdbx3Writer::writeDatabase(QIODevice* device, Database* db)
     CHECK_RETURN_FALSE(writeHeaderField(KeePass2::CompressionFlags,
                                         Endian::sizedIntToBytes<qint32>(db->compressionAlgo(),
                                                                         KeePass2::BYTEORDER)));
-    AesKdf* kdf = static_cast<AesKdf*>(db->kdf());
+    auto kdf = db->kdf();
     CHECK_RETURN_FALSE(writeHeaderField(KeePass2::MasterSeed, masterSeed));
     CHECK_RETURN_FALSE(writeHeaderField(KeePass2::TransformSeed, kdf->seed()));
     CHECK_RETURN_FALSE(writeHeaderField(KeePass2::TransformRounds,

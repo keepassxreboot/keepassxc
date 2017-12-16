@@ -160,7 +160,7 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
         raiseError("Invalid number of transform rounds");
         return nullptr;
     }
-    AesKdf* kdf = new AesKdf();
+    auto kdf = QSharedPointer<AesKdf>::create();
     kdf->setRounds(m_transformRounds);
     kdf->setSeed(m_transformSeed);
     db->setKdf(kdf);

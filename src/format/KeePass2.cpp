@@ -16,9 +16,9 @@
  */
 
 #include "KeePass2.h"
-#include "crypto/CryptoHash.h"
 #include "crypto/kdf/AesKdf.h"
-#include "core/Uuid.h"
+#include <QSharedPointer>
+
 
 const Uuid KeePass2::CIPHER_AES = Uuid(QByteArray::fromHex("31c1f2e6bf714350be5805216afc5aff"));
 const Uuid KeePass2::CIPHER_TWOFISH = Uuid(QByteArray::fromHex("ad68f29f576f4bb9a36ad47af965346c"));
@@ -28,31 +28,23 @@ const Uuid KeePass2::KDF_AES = Uuid(QByteArray::fromHex("C9D9F39A628A4460BF740D0
 
 const QByteArray KeePass2::INNER_STREAM_SALSA20_IV("\xE8\x30\x09\x4B\x97\x20\x5D\x2A");
 
-const QList<KeePass2::UuidNamePair> KeePass2::CIPHERS {
-        KeePass2::UuidNamePair(KeePass2::CIPHER_AES, "AES: 256-bit"),
-        KeePass2::UuidNamePair(KeePass2::CIPHER_TWOFISH, "Twofish: 256-bit"),
-        KeePass2::UuidNamePair(KeePass2::CIPHER_CHACHA20, "ChaCha20: 256-bit")
+const QList<QPair<Uuid, QString>> KeePass2::CIPHERS {
+        qMakePair(KeePass2::CIPHER_AES, QObject::tr("AES: 256-bit")),
+        qMakePair(KeePass2::CIPHER_TWOFISH, QObject::tr("Twofish: 256-bit")),
+        qMakePair(KeePass2::CIPHER_CHACHA20, QObject::tr("ChaCha20: 256-bit"))
 };
-const QList<KeePass2::UuidNamePair> KeePass2::KDFS {
-        KeePass2::UuidNamePair(KeePass2::KDF_AES, "AES-KDF"),
+const QList<QPair<Uuid, QString>> KeePass2::KDFS {
+        qMakePair(KeePass2::KDF_AES, QObject::tr("AES-KDF")),
 };
 
-Kdf* KeePass2::uuidToKdf(const Uuid& uuid) {
-    if (uuid == KDF_AES) {
-        return static_cast<Kdf*>(new AesKdf());
-    }
-
-    return nullptr;
-}
-
-Uuid KeePass2::kdfToUuid(const Kdf& kdf)
+QSharedPointer<Kdf> KeePass2::uuidToKdf(const Uuid& uuid)
 {
-    switch (kdf.type()) {
-    case Kdf::Type::AES:
-        return KDF_AES;
-    default:
-        return Uuid();
+    if (uuid == KDF_AES) {
+        return QSharedPointer<AesKdf>::create();
     }
+
+    Q_ASSERT_X(false, "uuidToKdf", "Invalid UUID");
+    return nullptr;
 }
 
 KeePass2::ProtectedStreamAlgo KeePass2::idToProtectedStreamAlgo(quint32 id)
@@ -67,20 +59,4 @@ KeePass2::ProtectedStreamAlgo KeePass2::idToProtectedStreamAlgo(quint32 id)
     default:
         return KeePass2::InvalidProtectedStreamAlgo;
     }
-}
-
-KeePass2::UuidNamePair::UuidNamePair(const Uuid& uuid, const QString& name)
-    : m_uuid(uuid)
-    , m_name(name)
-{
-}
-
-Uuid KeePass2::UuidNamePair::uuid() const
-{
-    return m_uuid;
-}
-
-QString KeePass2::UuidNamePair::name() const
-{
-    return m_name;
 }

@@ -18,42 +18,16 @@
 #include "Kdf.h"
 #include "Kdf_p.h"
 
-#include <QThread>
-#include <QElapsedTimer>
 #include <QtConcurrent>
 
-Kdf::Field::Field(quint32 id, const QString& name, quint64 min, quint64 max, bool benchmark)
-    : m_id(id)
-    , m_name(name)
-    , m_min(min)
-    , m_max(max)
-    , m_benchmark(benchmark)
+Kdf::Kdf(Uuid uuid)
+    : m_uuid(uuid)
 {
 }
 
-quint32 Kdf::Field::id() const
+Uuid Kdf::uuid() const
 {
-    return m_id;
-}
-
-QString Kdf::Field::name() const
-{
-    return m_name;
-}
-
-quint64 Kdf::Field::min() const
-{
-    return m_min;
-}
-
-quint64 Kdf::Field::max() const
-{
-    return m_max;
-}
-
-bool Kdf::Field::benchmarked() const
-{
-    return m_benchmark;
+    return m_uuid;
 }
 
 int Kdf::benchmark(int msec) const

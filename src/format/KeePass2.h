@@ -43,20 +43,8 @@ namespace KeePass2
 
     extern const QByteArray INNER_STREAM_SALSA20_IV;
 
-    class UuidNamePair
-    {
-    public:
-        UuidNamePair(const Uuid& uuid, const QString& name);
-        Uuid uuid() const;
-        QString name() const;
-
-    private:
-        Uuid m_uuid;
-        QString m_name;
-    };
-
-    extern const QList<UuidNamePair> CIPHERS;
-    extern const QList<UuidNamePair> KDFS;
+    extern const QList<QPair<Uuid, QString>> CIPHERS;
+    extern const QList<QPair<Uuid, QString>> KDFS;
 
     enum HeaderFieldID
     {
@@ -81,8 +69,7 @@ namespace KeePass2
         InvalidProtectedStreamAlgo = -1
     };
 
-    Kdf* uuidToKdf(const Uuid& uuid);
-    Uuid kdfToUuid(const Kdf& kdf);
+    QSharedPointer<Kdf> uuidToKdf(const Uuid& uuid);
     ProtectedStreamAlgo idToProtectedStreamAlgo(quint32 id);
 }
 

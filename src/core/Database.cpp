@@ -33,7 +33,6 @@
 #include "format/KeePass2Writer.h"
 #include "keys/PasswordKey.h"
 #include "keys/FileKey.h"
-#include "keys/CompositeKey.h"
 
 QHash<Uuid, Database*> Database::m_uuidMap;
 
@@ -45,7 +44,7 @@ Database::Database()
 {
     m_data.cipher = KeePass2::CIPHER_AES;
     m_data.compressionAlgo = CompressionGZip;
-    m_data.kdf = new AesKdf();
+    m_data.kdf = QSharedPointer<AesKdf>::create();
     m_data.kdf->randomizeTransformSalt();
     m_data.hasKey = false;
 
@@ -485,23 +484,18 @@ QString Database::saveToFile(QString filePath)
     }
 }
 
-Kdf* Database::kdf() const {
+QSharedPointer<Kdf> Database::kdf() const
+{
     return m_data.kdf;
 }
 
-void Database::setKdf(Kdf* kdf) {
-    if (m_data.kdf == kdf) {
-        return;
-    }
-
-    if (m_data.kdf != nullptr) {
-        delete m_data.kdf;
-    }
-
-    m_data.kdf = kdf;
+void Database::setKdf(QSharedPointer<Kdf> kdf)
+{
+    m_data.kdf = std::move(kdf);
 }
 
-bool Database::changeKdf(Kdf* kdf) {
+bool Database::changeKdf(QSharedPointer<Kdf> kdf)
+{
     kdf->randomizeTransformSalt();
     QByteArray transformedMasterKey;
     if (!m_data.key.transform(*kdf, transformedMasterKey)) {
@@ -513,9 +507,4 @@ bool Database::changeKdf(Kdf* kdf) {
     emit modifiedImmediate();
 
     return true;
-}
-
-Database::DatabaseData::~DatabaseData()
-{
-    delete kdf;
 }

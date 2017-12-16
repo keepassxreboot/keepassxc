@@ -27,26 +27,13 @@ public:
 
     bool transform(const QByteArray& raw, QByteArray& result) const override;
     void randomizeTransformSalt() override;
-    Kdf::Type type() const override;
-    Kdf* clone() const override;
+    QSharedPointer<Kdf> clone() const override;
 
-    const QList<Field> fields() const override;
-    quint64 field(quint32 id) const override;
-    bool setField(quint32 id, quint64 val) override;
+    quint64 rounds() const override;
+    QByteArray seed() const override;
 
-    quint64 rounds() const;
-    QByteArray seed() const;
-
-    bool setRounds(quint64 rounds);
-    bool setSeed(const QByteArray& seed);
-
-    enum class Fields: quint32
-    {
-        ROUNDS,
-        SEED
-    };
-
-    static const QList<Kdf::Field> FIELDS;
+    bool setRounds(quint64 rounds) override;
+    bool setSeed(const QByteArray& seed) override;
 
 protected:
     int benchmarkImpl(int msec) const override;
@@ -59,7 +46,6 @@ private:
                                 const QByteArray& seed,
                                 quint64 rounds,
                                 QByteArray* result) Q_REQUIRED_RESULT;
-    static QList<Kdf::Field> initFields();
 };
 
 #endif // KEEPASSX_AESKDF_H

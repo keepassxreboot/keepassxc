@@ -17,19 +17,11 @@
 */
 
 #include "CompositeKey.h"
-#include "ChallengeResponseKey.h"
-
-#include <QElapsedTimer>
 #include <QFile>
 #include <QtConcurrent>
 
-#include "crypto/kdf/Kdf.h"
-#include "format/KeePass2.h"
 #include "core/Global.h"
 #include "crypto/CryptoHash.h"
-#include "crypto/SymmetricCipher.h"
-#include "keys/FileKey.h"
-#include "keys/PasswordKey.h"
 
 CompositeKey::CompositeKey()
 {

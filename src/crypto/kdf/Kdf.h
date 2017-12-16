@@ -25,41 +25,19 @@
 class Kdf
 {
 public:
-    enum class Type
-    {
-        AES
-    };
+    explicit Kdf(Uuid uuid);
+    virtual ~Kdf() = default;
 
-    class Field
-    {
-    public:
-        Field(quint32 id, const QString& name, quint64 min, quint64 max, bool benchmark = false);
+    Uuid uuid() const;
 
-        quint32 id() const;
-        QString name() const;
-        quint64 min() const;
-        quint64 max() const;
-        bool benchmarked() const;
-
-    private:
-        quint32 m_id;
-        QString m_name;
-        quint64 m_min;
-        quint64 m_max;
-        bool m_benchmark;
-    };
-
-    virtual ~Kdf() {}
-
+    virtual quint64 rounds() const = 0;
+    virtual bool setRounds(quint64 rounds) = 0;
     virtual QByteArray seed() const = 0;
-    virtual Type type() const = 0;
+    virtual bool setSeed(const QByteArray& seed) = 0;
     virtual bool transform(const QByteArray& raw, QByteArray& result) const = 0;
     virtual void randomizeTransformSalt() = 0;
-    virtual Kdf* clone() const = 0;
+    virtual QSharedPointer<Kdf> clone() const = 0;
 
-    virtual const QList<Field> fields() const = 0;
-    virtual quint64 field(quint32 id) const = 0;
-    virtual bool setField(quint32 id, quint64 val) = 0;
     virtual int benchmark(int msec) const;
 
 protected:
@@ -67,6 +45,7 @@ protected:
 
 private:
     class BenchmarkThread;
+    const Uuid m_uuid;
 
 };
 
