@@ -102,7 +102,7 @@ int Show::showEntry(Database* database, QStringList attributes, QString entryPat
         if (showAttributeNames) {
             outputTextStream << attribute << ": ";
         }
-        outputTextStream << entry->attributes()->value(attribute) << endl;
+        outputTextStream << entry->resolveMultiplePlaceholders(entry->attributes()->value(attribute)) << endl;
     }
     return sawUnknownAttribute ? EXIT_FAILURE : EXIT_SUCCESS;
 }
