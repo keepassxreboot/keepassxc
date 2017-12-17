@@ -38,6 +38,7 @@ configure_file(version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/version.h @ONLY)
 
 set(keepassx_SOURCES
     core/AutoTypeAssociations.cpp
+    core/AsyncTask.h
     core/Config.cpp
     core/CsvParser.cpp
     core/Database.cpp

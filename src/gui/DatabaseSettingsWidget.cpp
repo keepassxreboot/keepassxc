@@ -18,28 +18,18 @@
 #include "DatabaseSettingsWidget.h"
 #include "ui_DatabaseSettingsWidget.h"
 
-#include <QList>
-#include <QLabel>
-#include <QPushButton>
-#include <QHBoxLayout>
-#include <QSpinBox>
 #include <QMessageBox>
-#include <QDialogButtonBox>
 
+#include "core/AsyncTask.h"
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/SymmetricCipher.h"
-#include "format/KeePass2.h"
-#include "keys/CompositeKey.h"
-#include "format/KeePass2.h"
-#include "crypto/kdf/Kdf.h"
 #include "MessageBox.h"
 
 DatabaseSettingsWidget::DatabaseSettingsWidget(QWidget* parent)
     : DialogyWidget(parent)
     , m_ui(new Ui::DatabaseSettingsWidget())
-    , m_benchmarkField(nullptr)
     , m_db(nullptr)
 {
     m_ui->setupUi(this);
@@ -51,6 +41,7 @@ DatabaseSettingsWidget::DatabaseSettingsWidget(QWidget* parent)
     connect(m_ui->historyMaxSizeCheckBox, SIGNAL(toggled(bool)),
             m_ui->historyMaxSizeSpinBox, SLOT(setEnabled(bool)));
     connect(m_ui->kdfComboBox, SIGNAL(currentIndexChanged(int)), SLOT(changeKdf(int)));
+    connect(m_ui->transformBenchmarkButton, SIGNAL(clicked()), SLOT(transformRoundsBenchmark()));
 }
 
 DatabaseSettingsWidget::~DatabaseSettingsWidget()
@@ -111,6 +102,7 @@ void DatabaseSettingsWidget::load(Database* db)
     }
     displayKdf(*m_kdf);
     m_ui->kdfComboBox->blockSignals(blockSignals);
+    m_ui->transformRoundsSpinBox->setValue(static_cast<unsigned>(m_kdf->rounds()));
 
     m_ui->dbNameEdit->setFocus();
 }
@@ -191,13 +183,12 @@ void DatabaseSettingsWidget::reject()
 
 void DatabaseSettingsWidget::transformRoundsBenchmark()
 {
-    if (m_benchmarkField == nullptr) {
-        Q_ASSERT(false);
-        return;
-    }
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-    m_benchmarkField->setValue(m_kdf->benchmark(1000));
-    QApplication::restoreOverrideCursor();
+    m_ui->transformRoundsSpinBox->setValue(AsyncTask::runAndWaitForFuture([this]() {
+        int rounds = m_kdf->benchmark(1000);
+        QApplication::restoreOverrideCursor();
+        return rounds;
+    }));
 }
 
 void DatabaseSettingsWidget::truncateHistories()

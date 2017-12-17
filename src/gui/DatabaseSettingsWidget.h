@@ -28,13 +28,14 @@
 
 class Database;
 
-namespace Ui {
-    class DatabaseSettingsWidget;
+namespace Ui
+{
+class DatabaseSettingsWidget;
 }
 
-class DatabaseSettingsWidget : public DialogyWidget
+class DatabaseSettingsWidget: public DialogyWidget
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
     explicit DatabaseSettingsWidget(QWidget* parent = nullptr);
@@ -58,8 +59,6 @@ private:
 
     const QScopedPointer<Ui::DatabaseSettingsWidget> m_ui;
     QList<QWidget*> m_kdfWidgets;
-    QList<QPair<quint32, QSpinBox*>> m_kdfFields;
-    QSpinBox* m_benchmarkField;
     QScopedPointer<Kdf> m_kdf;
     Database* m_db;
 
