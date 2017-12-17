@@ -38,7 +38,7 @@ public:
     virtual void randomizeTransformSalt() = 0;
     virtual QSharedPointer<Kdf> clone() const = 0;
 
-    virtual int benchmark(int msec) const;
+    int benchmark(int msec) const;
 
 protected:
     virtual int benchmarkImpl(int msec) const = 0;
