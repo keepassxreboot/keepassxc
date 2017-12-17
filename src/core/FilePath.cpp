@@ -23,6 +23,7 @@
 
 #include "config-keepassx.h"
 #include "core/Global.h"
+#include "core/Config.h"
 
 FilePath* FilePath::m_instance(nullptr);
 
@@ -91,21 +92,15 @@ QString FilePath::pluginPath(const QString& name)
 
 QIcon FilePath::applicationIcon()
 {
+    bool darkIcon = useDarkIcon();
+
 #ifdef KEEPASSXC_DIST_SNAP
-    return icon("apps", "keepassxc", false);
+    return (darkIcon) ? icon("apps", "keepassxc-dark", false) : icon("apps", "keepassxc", false);
 #else
-    return icon("apps", "keepassxc");
+    return (darkIcon) ? icon("apps", "keepassxc-dark") : icon("apps", "keepassxc");
 #endif
 }
 
-QIcon FilePath::applicationIconDark()
-{
-#ifdef KEEPASSXC_DIST_SNAP
-    return icon("apps", "keepassxc-dark", false);
-#else
-    return icon("apps", "keepassxc-dark");
-#endif
-}
 
 QIcon FilePath::trayIconLocked()
 {
@@ -118,19 +113,12 @@ QIcon FilePath::trayIconLocked()
 
 QIcon FilePath::trayIconUnlocked()
 {
-#ifdef KEEPASSXC_DIST_SNAP
-    return icon("apps", "keepassxc-unlocked", false);
-#else
-    return icon("apps", "keepassxc-unlocked");
-#endif
-}
+    bool darkIcon = useDarkIcon();
 
-QIcon FilePath::trayIconUnlockedDark()
-{
 #ifdef KEEPASSXC_DIST_SNAP
-    return icon("apps", "keepassxc-dark", false);
+    return (darkIcon) ? icon("apps", "keepassxc-dark", false) : icon("apps", "keepassxc-unlocked", false);
 #else
-    return icon("apps", "keepassxc-dark");
+    return (darkIcon) ? icon("apps", "keepassxc-dark") : icon("apps", "keepassxc-unlocked");
 #endif
 }
 
@@ -262,6 +250,11 @@ bool FilePath::testSetDir(const QString& dir)
     else {
         return false;
     }
+}
+
+bool FilePath::useDarkIcon()
+{
+    return config()->get("GUI/DarkTrayIcon").toBool();
 }
 
 FilePath* FilePath::instance()

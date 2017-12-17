@@ -28,10 +28,8 @@ public:
     QString dataPath(const QString& name);
     QString pluginPath(const QString& name);
     QIcon applicationIcon();
-    QIcon applicationIconDark();
     QIcon trayIconLocked();
     QIcon trayIconUnlocked();
-    QIcon trayIconUnlockedDark();
     QIcon icon(const QString& category, const QString& name, bool fromTheme = true);
     QIcon onOffIcon(const QString& category, const QString& name);
 
@@ -40,6 +38,7 @@ public:
 private:
     FilePath();
     bool testSetDir(const QString& dir);
+    bool useDarkIcon();
 
     static FilePath* m_instance;
 

@@ -773,8 +773,6 @@ bool MainWindow::saveLastDatabases()
 void MainWindow::updateTrayIcon()
 {
     if (isTrayIconEnabled()) {
-        bool darkIcon = config()->get("GUI/DarkTrayIcon").toBool();
-        
         if (!m_trayIcon) {
             m_trayIcon = new QSystemTrayIcon(this);
             QMenu* menu = new QMenu(this);
@@ -797,20 +795,11 @@ void MainWindow::updateTrayIcon()
 
             m_trayIcon->setContextMenu(menu);
             
-            if(darkIcon){
-                m_trayIcon->setIcon(filePath()->applicationIconDark());
-            } else {
-                m_trayIcon->setIcon(filePath()->applicationIcon());
-            }
-
+            m_trayIcon->setIcon(filePath()->applicationIcon());
             m_trayIcon->show();
         }
         if (m_ui->tabWidget->hasLockableDatabases()) {
-            if(darkIcon){
-                m_trayIcon->setIcon(filePath()->trayIconUnlockedDark());
-            } else {
-                m_trayIcon->setIcon(filePath()->trayIconUnlocked());
-            }
+            m_trayIcon->setIcon(filePath()->trayIconUnlocked());
         }
         else {
             m_trayIcon->setIcon(filePath()->trayIconLocked());
