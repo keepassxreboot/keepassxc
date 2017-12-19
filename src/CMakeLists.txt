@@ -1,5 +1,5 @@
-#  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
 #  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+#  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -352,7 +352,7 @@ if(MINGW)
   include(DeployQt4)
   install_qt4_executable(${PROGNAME}.exe)
   add_custom_command(TARGET ${PROGNAME} POST_BUILD
-                     COMMAND ${CMAKE_COMMAND} -E copy_if_different ${Qt5Core_DIR}/../../../share/qt5/plugins/platforms/qwindows$<$<CONFIG:Debug>:d>.dll
+                     COMMAND ${CMAKE_COMMAND} -E copy_if_different ${Qt5_DIR}/../../../share/qt5/plugins/platforms/qwindows$<$<CONFIG:Debug>:d>.dll
                      $<TARGET_FILE_DIR:${PROGNAME}>)
   install(FILES $<TARGET_FILE_DIR:${PROGNAME}>/qwindows$<$<CONFIG:Debug>:d>.dll DESTINATION "platforms")
 endif()
