@@ -130,6 +130,7 @@ set(keepassx_SOURCES
     gui/entry/EditEntryWidget.cpp
     gui/entry/EditEntryWidget_p.h
     gui/entry/EntryAttachmentsModel.cpp
+    gui/entry/EntryAttachmentsWidget.cpp
     gui/entry/EntryAttributesModel.cpp
     gui/entry/EntryHistoryModel.cpp
     gui/entry/EntryModel.cpp

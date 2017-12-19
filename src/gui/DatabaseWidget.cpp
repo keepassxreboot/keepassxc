@@ -111,8 +111,8 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
                                     "border-radius: 5px;");
 
     m_detailsView = new DetailsWidget(this);
-    connect(m_detailsView, &DetailsWidget::errorOccured, this, [this](const QString& error) {
-        showMessage(error, MessageWidget::MessageType::Error, false);
+    connect(m_detailsView, &DetailsWidget::errorOccurred, this, [this](const QString& error) {
+        showMessage(error, MessageWidget::MessageType::Error);
     });
 
     QVBoxLayout* vLayout = new QVBoxLayout(rightHandSideWidget);

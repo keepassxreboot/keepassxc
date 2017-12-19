@@ -70,8 +70,6 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_sshAgentWidget(new QWidget())
     , m_editWidgetProperties(new EditWidgetProperties())
     , m_historyWidget(new QWidget())
-    , m_entryAttachments(new EntryAttachments(this))
-    , m_attachmentsModel(new EntryAttachmentsModel(m_advancedWidget))
     , m_entryAttributes(new EntryAttributes(this))
     , m_attributesModel(new EntryAttributesModel(m_advancedWidget))
     , m_historyModel(new EntryHistoryModel(this))
@@ -140,24 +138,12 @@ void EditEntryWidget::setupAdvanced()
     m_advancedUi->setupUi(m_advancedWidget);
     addPage(tr("Advanced"), FilePath::instance()->icon("categories", "preferences-other"), m_advancedWidget);
 
-    m_advancedUi->attachmentsView->setAcceptDrops(false);
-    m_advancedUi->attachmentsView->viewport()->setAcceptDrops(true);
-    m_advancedUi->attachmentsView->viewport()->installEventFilter(this);
+    m_advancedUi->attachmentsWidget->setReadOnly(false);
+    m_advancedUi->attachmentsWidget->setButtonsVisible(true);
 
-    m_attachmentsModel->setEntryAttachments(m_entryAttachments);
-    m_advancedUi->attachmentsView->setModel(m_attachmentsModel);
-    m_advancedUi->attachmentsView->horizontalHeader()->setStretchLastSection(true);
-    m_advancedUi->attachmentsView->horizontalHeader()->resizeSection(0, 600);
-    m_advancedUi->attachmentsView->setSelectionBehavior(QAbstractItemView::SelectRows);
-    m_advancedUi->attachmentsView->setSelectionMode(QAbstractItemView::ExtendedSelection);
-
-    connect(m_advancedUi->attachmentsView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
-            SLOT(updateAttachmentButtonsEnabled()));
-    connect(m_advancedUi->attachmentsView, SIGNAL(doubleClicked(QModelIndex)), SLOT(openAttachment(QModelIndex)));
-    connect(m_advancedUi->saveAttachmentButton, SIGNAL(clicked()), SLOT(saveSelectedAttachments()));
-    connect(m_advancedUi->openAttachmentButton, SIGNAL(clicked()), SLOT(openSelectedAttachments()));
-    connect(m_advancedUi->addAttachmentButton, SIGNAL(clicked()), SLOT(insertAttachments()));
-    connect(m_advancedUi->removeAttachmentButton, SIGNAL(clicked()), SLOT(removeSelectedAttachments()));
+    connect(m_advancedUi->attachmentsWidget, &EntryAttachmentsWidget::errorOccurred, this, [this](const QString &error) {
+        showMessage(error, MessageWidget::Error);
+    });
 
     m_attributesModel->setEntryAttributes(m_entryAttributes);
     m_advancedUi->attributesView->setModel(m_attributesModel);
@@ -581,8 +567,8 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_mainUi->togglePasswordGeneratorButton->setChecked(false);
     m_mainUi->togglePasswordGeneratorButton->setDisabled(m_history);
     m_mainUi->passwordGenerator->reset();
-    m_advancedUi->addAttachmentButton->setEnabled(!m_history);
-    updateAttachmentButtonsEnabled();
+
+    m_advancedUi->attachmentsWidget->setReadOnly(m_history);
     m_advancedUi->addAttributeButton->setEnabled(!m_history);
     m_advancedUi->editAttributeButton->setEnabled(false);
     m_advancedUi->removeAttributeButton->setEnabled(false);
@@ -613,7 +599,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
 
     m_mainUi->notesEdit->setPlainText(entry->notes());
 
-    m_entryAttachments->copyDataFrom(entry->attachments());
+    m_advancedUi->attachmentsWidget->setEntryAttachments(entry->attachments());
     m_entryAttributes->copyCustomKeysFrom(entry->attributes());
 
     if (m_attributesModel->rowCount() != 0) {
@@ -749,8 +735,8 @@ void EditEntryWidget::acceptEntry()
 void EditEntryWidget::updateEntryData(Entry* entry) const
 {
     entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
-    entry->attachments()->copyDataFrom(m_entryAttachments);
-    
+    entry->attachments()->copyDataFrom(m_advancedUi->attachmentsWidget->entryAttachments());
+
     entry->setTitle(m_mainUi->titleEdit->text());
     entry->setUsername(m_mainUi->usernameEdit->text());
     entry->setUrl(m_mainUi->urlEdit->text());
@@ -807,7 +793,7 @@ void EditEntryWidget::clear()
     m_entry = nullptr;
     m_database = nullptr;
     m_entryAttributes->clear();
-    m_entryAttachments->clear();
+    m_advancedUi->attachmentsWidget->clearAttachments();
     m_autoTypeAssoc->clear();
     m_historyModel->clear();
     m_iconsWidget->reset();
@@ -950,69 +936,6 @@ void EditEntryWidget::displayAttribute(QModelIndex index, bool showProtected)
     m_advancedUi->protectAttributeButton->blockSignals(false);
 }
 
-bool EditEntryWidget::openAttachment(const QModelIndex &index, QString *errorMessage)
-{
-    const QString filename = m_attachmentsModel->keyByIndex(index);
-    const QByteArray attachmentData = m_entryAttachments->value(filename);
-
-    // tmp file will be removed once the database (or the application) has been closed
-    const QString tmpFileTemplate = QDir::temp().absoluteFilePath(QString("XXXXXX.").append(filename));
-    QTemporaryFile* tmpFile = new QTemporaryFile(tmpFileTemplate, this);
-
-    const bool saveOk = tmpFile->open()
-                        && tmpFile->write(attachmentData) == attachmentData.size()
-                        && tmpFile->flush();
-    if (!saveOk) {
-        if (errorMessage) {
-            *errorMessage = tr("Unable to save the attachment:\n").append(tmpFile->errorString());
-        }
-        delete tmpFile;
-        return false;
-    }
-
-    tmpFile->close();
-    QDesktopServices::openUrl(QUrl::fromLocalFile(tmpFile->fileName()));
-
-    return true;
-}
-
-bool EditEntryWidget::eventFilter(QObject* watched, QEvent* e)
-{
-    switch (e->type()) {
-    case QEvent::DragEnter:
-    case QEvent::DragMove: {
-        QDropEvent* dropEv = static_cast<QDropEvent*>(e);
-        const QMimeData* mimeData = dropEv->mimeData();
-        if (mimeData->hasUrls()) {
-            dropEv->acceptProposedAction();
-            return true;
-        }
-        break;
-    }
-    case QEvent::Drop: {
-        QDropEvent* dropEv = static_cast<QDropEvent*>(e);
-        const QMimeData* mimeData = dropEv->mimeData();
-        if (mimeData->hasUrls()) {
-            dropEv->acceptProposedAction();
-            QStringList filenames;
-            for (const QUrl url: mimeData->urls()) {
-                QFileInfo fInfo(url.toLocalFile());
-                if (fInfo.isFile()) {
-                    filenames.append(fInfo.absoluteFilePath());
-                }
-            }
-            insertAttachments(filenames);
-
-            return true;
-        }
-    }
-    default:
-        break;
-    }
-
-    return EditWidget::eventFilter(watched, e);
-}
-
 void EditEntryWidget::protectCurrentAttribute(bool state)
 {
     QModelIndex index = m_advancedUi->attributesView->currentIndex();
@@ -1041,198 +964,6 @@ void EditEntryWidget::revealCurrentAttribute()
             m_advancedUi->attributesEdit->setEnabled(true);
         }
     }
-}
-
-void EditEntryWidget::insertAttachments(const QStringList& filenames, QString* errorMessage)
-{
-    QStringList errors;
-    for (const QString &filename: filenames) {
-        const QFileInfo fInfo(filename);
-        QFile file(filename);
-        QByteArray data;
-        const bool readOk = file.open(QIODevice::ReadOnly) && Tools::readAllFromDevice(&file, data);
-        if (readOk) {
-            m_entryAttachments->set(fInfo.fileName(), data);
-        } else {
-            errors.append(QString("%1 - %2").arg(fInfo.fileName(), file.errorString()));
-        }
-    }
-
-    if (errorMessage && !errors.isEmpty()) {
-        *errorMessage = tr("Unable to open files:\n%1").arg(errors.join('\n'));;
-    }
-}
-
-void EditEntryWidget::insertAttachments()
-{
-    Q_ASSERT(!m_history);
-
-    QString defaultDir = config()->get("LastAttachmentDir").toString();
-    if (defaultDir.isEmpty() || !QDir(defaultDir).exists()) {
-        defaultDir = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).value(0);
-    }
-
-    const QStringList filenames = fileDialog()->getOpenFileNames(this, tr("Select files"), defaultDir);
-    if (filenames.isEmpty()) {
-        return;
-    }
-
-    config()->set("LastAttachmentDir", QFileInfo(filenames.first()).absolutePath());
-
-    QString error;
-    insertAttachments(filenames, &error);
-    if (!error.isEmpty()) {
-        showMessage(error, MessageWidget::Error);
-    }
-}
-
-void EditEntryWidget::saveSelectedAttachment()
-{
-    const QModelIndex index = m_advancedUi->attachmentsView->currentIndex();
-    if (!index.isValid()) {
-        return;
-    }
-
-    const QString filename = m_attachmentsModel->keyByIndex(index);
-    QString defaultDirName = config()->get("LastAttachmentDir").toString();
-    if (defaultDirName.isEmpty() || !QDir(defaultDirName).exists()) {
-        defaultDirName = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-    }
-
-    const QString savePath = fileDialog()->getSaveFileName(this, tr("Save attachment"),
-                                                           QDir(defaultDirName).filePath(filename));
-    if (!savePath.isEmpty()) {
-        config()->set("LastAttachmentDir", QFileInfo(savePath).absolutePath());
-
-        QFile file(savePath);
-        const QByteArray attachmentData = m_entryAttachments->value(filename);
-        const bool saveOk = file.open(QIODevice::WriteOnly) && file.write(attachmentData) == attachmentData.size();
-        if (!saveOk) {
-            showMessage(tr("Unable to save the attachment:\n").append(file.errorString()), MessageWidget::Error);
-        }
-    }
-}
-
-void EditEntryWidget::saveSelectedAttachments()
-{
-    const QModelIndexList indexes = m_advancedUi->attachmentsView->selectionModel()->selectedRows(0);
-    if (indexes.isEmpty()) {
-        return;
-    } else if (indexes.count() == 1) {
-        saveSelectedAttachment();
-        return;
-    }
-
-    QString defaultDirName = config()->get("LastAttachmentDir").toString();
-    if (defaultDirName.isEmpty() || !QDir(defaultDirName).exists()) {
-        defaultDirName = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-    }
-
-    const QString savePath = fileDialog()->getExistingDirectory(this, tr("Save attachments"), defaultDirName);
-    if (savePath.isEmpty()) {
-        return;
-    }
-
-    QDir saveDir(savePath);
-    if (!saveDir.exists()) {
-        if (saveDir.mkpath(saveDir.absolutePath())) {
-            showMessage(tr("Unable to create the directory:\n").append(saveDir.absolutePath()), MessageWidget::Error);
-            return;
-        }
-    }
-    config()->set("LastAttachmentDir", QFileInfo(saveDir.absolutePath()).absolutePath());
-
-    QStringList errors;
-    for (const QModelIndex &index: indexes) {
-        const QString filename = m_attachmentsModel->keyByIndex(index);
-        const QString attachmentPath = saveDir.absoluteFilePath(filename);
-
-        if (QFileInfo::exists(attachmentPath)) {
-            const QString question(tr("Are you sure you want to overwrite existing file \"%1\" with the attachment?"));
-            auto ans = MessageBox::question(this, tr("Confirm overwrite"), question.arg(filename),
-                                            QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
-            if (ans == QMessageBox::No) {
-                continue;
-            } else if (ans == QMessageBox::Cancel) {
-                return;
-            }
-        }
-
-        QFile file(attachmentPath);
-        const QByteArray attachmentData = m_entryAttachments->value(filename);
-        const bool saveOk = file.open(QIODevice::WriteOnly) && file.write(attachmentData) == attachmentData.size();
-        if (!saveOk) {
-            errors.append(QString("%1 - %2").arg(filename, file.errorString()));
-        }
-    }
-
-    if (!errors.isEmpty()) {
-        showMessage(tr("Unable to save the attachments:\n").append(errors.join('\n')), MessageWidget::Error);
-    }
-}
-
-void EditEntryWidget::openAttachment(const QModelIndex& index)
-{
-    if (!index.isValid()) {
-        Q_ASSERT(false);
-        return;
-    }
-
-    QString errorMessage;
-    if (!openAttachment(index, &errorMessage)) {
-        showMessage(errorMessage, MessageWidget::Error);
-    }
-}
-
-void EditEntryWidget::openSelectedAttachments()
-{
-    const QModelIndexList indexes = m_advancedUi->attachmentsView->selectionModel()->selectedRows(0);
-    if (indexes.isEmpty()) {
-        return;
-    }
-
-    QStringList errors;
-    for (const QModelIndex &index: indexes) {
-        QString errorMessage;
-        if (!openAttachment(index, &errorMessage)) {
-            const QString filename = m_attachmentsModel->keyByIndex(index);
-            errors.append(QString("%1 - %2").arg(filename, errorMessage));
-        };
-    }
-
-    if (!errors.isEmpty()) {
-        showMessage(tr("Unable to open the attachments:\n").append(errors.join('\n')), MessageWidget::Error);
-    }
-}
-
-void EditEntryWidget::removeSelectedAttachments()
-{
-    Q_ASSERT(!m_history);
-
-    const QModelIndexList indexes = m_advancedUi->attachmentsView->selectionModel()->selectedRows(0);
-    if (indexes.isEmpty()) {
-        return;
-    }
-
-    const QString question = tr("Are you sure you want to remove %n attachments?", "", indexes.count());
-    QMessageBox::StandardButton ans = MessageBox::question(this, tr("Confirm Remove"),
-                                                           question, QMessageBox::Yes | QMessageBox::No);
-    if (ans == QMessageBox::Yes) {
-        QStringList keys;
-        for (const QModelIndex &index: indexes) {
-            keys.append(m_attachmentsModel->keyByIndex(index));
-        }
-        m_entryAttachments->remove(keys);
-    }
-}
-
-void EditEntryWidget::updateAttachmentButtonsEnabled()
-{
-    const bool hasSelection = m_advancedUi->attachmentsView->selectionModel()->hasSelection();
-
-    m_advancedUi->saveAttachmentButton->setEnabled(hasSelection);
-    m_advancedUi->openAttachmentButton->setEnabled(hasSelection);
-    m_advancedUi->removeAttachmentButton->setEnabled(hasSelection && !m_history);
 }
 
 void EditEntryWidget::updateAutoTypeEnabled()

@@ -376,7 +376,7 @@ void DetailsWidget::openAttachment(const QModelIndex& index)
 
     if (!saveOk) {
         delete tmpFile;
-        emit errorOccured(tr("Unable to open the attachment:\n").append(tmpFile->errorString()));
+        emit errorOccurred(tr("Unable to open the attachment:\n").append(tmpFile->errorString()));
         return;
     }
 

@@ -52,7 +52,7 @@ public:
     };
 
 signals:
-    void errorOccured(const QString& error);
+    void errorOccurred(const QString& error);
 
 private slots:
     void getSelectedEntry(Entry* selectedEntry);
