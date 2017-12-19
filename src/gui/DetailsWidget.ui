@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>DetailsWidget</class>
  <widget class="QWidget" name="DetailsWidget">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>600</width>
-    <height>200</height>
-   </rect>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0,0,0">
@@ -460,7 +452,7 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
-        <widget class="QTableView" name="attachmentsTableView"/>
+        <widget class="EntryAttachmentsWidget" name="attachmentsWidget" native="true"/>
        </item>
       </layout>
      </widget>
@@ -543,6 +535,14 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>EntryAttachmentsWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/entry/EntryAttachmentsWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
