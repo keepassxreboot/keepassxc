@@ -28,12 +28,24 @@ class EntryModel : public QAbstractTableModel
     Q_OBJECT
 
 public:
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Add entries for additional columns 'Password', 'Notes', 'Expires',
+     * 'Created', 'Modified', 'Accessed' and 'Attachments'
+     */
     enum ModelColumn
     {
         ParentGroup = 0,
         Title = 1,
         Username = 2,
-        Url = 3
+        Password = 3,
+        Url = 4,
+        Notes = 5,
+        Expires = 6,
+        Created = 7,
+        Modified = 8,
+        Accessed = 9,
+        Attachments = 10
     };
 
     explicit EntryModel(QObject* parent = nullptr);
@@ -52,9 +64,26 @@ public:
 
     void setEntryList(const QList<Entry*>& entries);
 
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Methods to get/set state of 'Hide Usernames' and 'Hide Passwords'
+     * settings
+     */
+    bool hideUsernames() const;
+    void setHideUsernames(const bool hide);
+    bool hidePasswords() const;
+    void setHidePasswords(const bool hide);
+
 signals:
     void switchedToEntryListMode();
     void switchedToGroupMode();
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Signals to notify about state changes of 'Hide Usernames' and 'Hide
+     * Passwords' settings
+     */
+    void hideUsernamesChanged();
+    void hidePasswordsChanged();
 
 public slots:
     void setGroup(Group* group);
@@ -74,6 +103,28 @@ private:
     QList<Entry*> m_entries;
     QList<Entry*> m_orgEntries;
     QList<const Group*> m_allGroups;
+
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Properties to store state of 'Hide Usernames' and 'Hide Passwords'
+     * settings
+     */
+    bool m_hideUsernames;
+    bool m_hidePasswords;
+
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Constant string used to display hidden content in columns 'Username'
+     * and 'Password'
+     */
+    static const QString HiddenContent;
+
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Date format used to display dates in columns 'Expires', 'Created',
+     * 'Modified' and 'Accessed'
+     */
+    static const Qt::DateFormat DateFormat;
 };
 
 #endif // KEEPASSX_ENTRYMODEL_H

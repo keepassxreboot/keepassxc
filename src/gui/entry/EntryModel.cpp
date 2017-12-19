@@ -20,6 +20,12 @@
 #include <QFont>
 #include <QMimeData>
 #include <QPalette>
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Add include required for additional columns 'Expires', 'Created', 'Modified'
+ * and 'Accessed'
+ */
+#include <QDateTime>
 
 #include "core/DatabaseIcons.h"
 #include "core/Entry.h"
@@ -27,9 +33,36 @@
 #include "core/Group.h"
 #include "core/Metadata.h"
 
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Define constant string used to display hidden content in columns 'Username'
+ * and 'Password'
+ *
+ * TODO:
+ * Decide which of the proposed options should be used (stars, bullet, black
+ * circle)
+ */
+//const QString EntryModel::HiddenContent("******");
+//const QString EntryModel::HiddenContent(QString(QChar(0x2022)).repeated(6));
+const QString EntryModel::HiddenContent(QString(QChar(0x25CF)).repeated(6));
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Define date format used to display dates in columns 'Expires', 'Created',
+ * 'Modified' and 'Accessed'
+ */
+const Qt::DateFormat EntryModel::DateFormat = Qt::DefaultLocaleShortDate;
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Initialize 'Hide Usernames' and 'Hide Passwords' settings using sane
+ * defaults (usernames visible, passwords hidden)
+ */
 EntryModel::EntryModel(QObject* parent)
     : QAbstractTableModel(parent)
     , m_group(nullptr)
+    , m_hideUsernames(false)
+    , m_hidePasswords(true)
 {
 }
 
@@ -116,9 +149,18 @@ int EntryModel::rowCount(const QModelIndex& parent) const
 
 int EntryModel::columnCount(const QModelIndex& parent) const
 {
-    Q_UNUSED(parent);
-
-    return 4;
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Change column count to include additional columns 'Password', 'Notes',
+     * 'Expires', 'Created', 'Modified', 'Accessed' and 'Attachments'. Also,
+     * return 0 when parent is valid as advised by Qt documentation
+     */
+    if (parent.isValid()) {
+        return 0;
+    }
+    else {
+        return 11;
+    }
 }
 
 QVariant EntryModel::data(const QModelIndex& index, int role) const
@@ -130,6 +172,25 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
     Entry* entry = entryFromIndex(index);
     EntryAttributes* attr = entry->attributes();
 
+    /**
+     * @author Fonic <https://github.com/fonic>
+     *
+     * Add display data providers for additional columns 'Password', 'Notes',
+     * 'Expires', 'Created', 'Modified', 'Accessed' and 'Attachments'
+     *
+     * Add ability to display usernames and passwords hidden or visible
+     * depending on current state of 'Hide Usernames' and 'Hide Passwords'
+     * settings
+     *
+     * TODO:
+     * Decide which of the additional columns should expand placeholders
+     * -> code added where applicable, but currently commented out
+     *
+     * Check what attr->isReference() does and if it applies to any of the
+     * additional columns
+     * -> code added for columns 'Password' and 'Notes', as EntryAttributes::
+     *    PasswordKey and EntryAttributes::NotesKey already existed
+     */
     if (role == Qt::DisplayRole) {
         QString result;
         switch (index.column()) {
@@ -145,17 +206,139 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             }
             return result;
         case Username:
-            result = entry->resolveMultiplePlaceholders(entry->username());
+            /*
+             * Display usernames hidden or visible according to current state
+             * of 'Hide Usernames' setting
+             */
+            if (m_hideUsernames) {
+                result = EntryModel::HiddenContent;
+            }
+            else {
+                //result = entry->username();
+                result = entry->resolveMultiplePlaceholders(entry->username());
+            }
             if (attr->isReference(EntryAttributes::UserNameKey)) {
                 result.prepend(tr("Ref: ","Reference abbreviation"));
             }
             return result;
+        case Password:
+            /*
+             * Display passwords hidden or visible according to current state
+             * of 'Hide Passwords' setting
+             */
+            if (m_hidePasswords) {
+                result = EntryModel::HiddenContent;
+            }
+            else {
+                //result = entry->resolveMultiplePlaceholders(entry->password());
+                result = entry->password();
+            }
+            if (attr->isReference(EntryAttributes::PasswordKey)) {
+                result.prepend(tr("Ref: ","Reference abbreviation"));
+            }
+            return result;
         case Url:
+            //result = entry->resolveMultiplePlaceholders(entry->displayUrl());
             result = entry->displayUrl();
             if (attr->isReference(EntryAttributes::URLKey)) {
                 result.prepend(tr("Ref: ","Reference abbreviation"));
             }
             return result;
+        case Notes:
+            /*
+             * Display only first line of notes in simplified format like
+             * KeePassX does
+             */
+            //result = entry->resolveMultiplePlaceholders(entry->notes().section("\n", 0, 0).simplified());
+            result = entry->notes().section("\n", 0, 0).simplified();
+            if (attr->isReference(EntryAttributes::NotesKey)) {
+                result.prepend(tr("Ref: ","Reference abbreviation"));
+            }
+            return result;
+        case Expires:
+            /*
+             * Display either date of expiry or 'Never' like KeePassX does
+             */
+            result = entry->timeInfo().expires() ? entry->timeInfo().expiryTime().toLocalTime().toString(EntryModel::DateFormat) : tr("Never");
+            return result;
+        case Created:
+            result = entry->timeInfo().creationTime().toLocalTime().toString(EntryModel::DateFormat);
+            return result;
+        case Modified:
+            result = entry->timeInfo().lastModificationTime().toLocalTime().toString(EntryModel::DateFormat);
+            return result;
+        case Accessed:
+            result = entry->timeInfo().lastAccessTime().toLocalTime().toString(EntryModel::DateFormat);
+            return result;
+        case Attachments:
+            /*
+             * Display comma-separated list of attachments
+             *
+             * TODO:
+             * 'entry->attachments()->keys().join()' works locally, yet it fails
+             * on GitHub/Travis CI, most likely due to an older Qt version, thus
+             * using loop for now (http://doc.qt.io/qt-5/qlist.html#more-members)
+             */
+            //result = entry->resolveMultiplePlaceholders(entry->attachments()->keys().join(", "));
+            //result = entry->attachments()->keys().join(", ");
+
+            QList<QString> attachments = entry->attachments()->keys();
+            for (int i=0; i < attachments.size(); i++) {
+                if (result.isEmpty()) {
+                    result.append(attachments.at(i));
+                }
+                else {
+                    result.append(QString(", ") + attachments.at(i));
+                }
+            }
+            //result = entry->resolveMultiplePlaceholders(result);
+            return result;
+        }
+
+    }
+    /**
+     * @author Fonic <https://github.com/fonic>
+     *
+     * Add sort data providers for columns 'Username' and 'Password', required
+     * for correct sorting even if displayed hidden (i.e. settings 'Hide User-
+     * names' and/or 'Hide Passwords' are enabled)
+     *
+     * Add sort data providers for columns 'Expires', 'Created', 'Modified'
+     * and 'Accessed', required for correct sorting of dates (without this,
+     * sorting would be based on string representation of dates, yielding un-
+     * desired results)
+     *
+     * NOTE:
+     * Qt::UserRole is used as sort role, using 'm_sortModel->setSortRole(Qt::
+     * UserRole)' in EntryView.cpp, EntryView::EntryView()
+     */
+    else if (role == Qt::UserRole) {
+        switch (index.column()) {
+        case Username:
+            //return entry->username();
+            return entry->resolveMultiplePlaceholders(entry->username());
+        case Password:
+            //return entry->resolveMultiplePlaceholders(entry->password());
+            return entry->password();
+        case Expires:
+            /*
+             * TODO:
+             * Is there any better way to return a QDateTime representing
+             * 'Never' / infinity / end of all time?
+             */
+            return entry->timeInfo().expires() ? entry->timeInfo().expiryTime() : QDateTime(QDate(9999, 1, 1));
+        case Created:
+            return entry->timeInfo().creationTime();
+        case Modified:
+            return entry->timeInfo().lastModificationTime();
+        case Accessed:
+            return entry->timeInfo().lastAccessTime();
+        default:
+            /*
+             * For all other columns, simply use data provided by Qt::Display-
+             * Role for sorting
+             */
+            return data(index, Qt::DisplayRole);
         }
     }
     else if (role == Qt::DecorationRole) {
@@ -190,8 +373,14 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
 
     return QVariant();
 }
+
 QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Add captions for additional columns 'Password', 'Notes', 'Expires',
+     * 'Created', 'Modified', 'Accessed' and 'Attachments'
+     */
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
         switch (section) {
         case ParentGroup:
@@ -200,8 +389,22 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
             return tr("Title");
         case Username:
             return tr("Username");
+        case Password:
+            return tr("Password");
         case Url:
             return tr("URL");
+        case Notes:
+            return tr("Notes");
+        case Expires:
+            return tr("Expires");
+        case Created:
+            return tr("Created");
+        case Modified:
+            return tr("Modified");
+        case Accessed:
+            return tr("Accessed");
+        case Attachments:
+            return tr("Attachments");
         }
     }
 
@@ -336,4 +539,42 @@ void EntryModel::makeConnections(const Group* group)
     connect(group, SIGNAL(entryAboutToRemove(Entry*)), SLOT(entryAboutToRemove(Entry*)));
     connect(group, SIGNAL(entryRemoved(Entry*)), SLOT(entryRemoved()));
     connect(group, SIGNAL(entryDataChanged(Entry*)), SLOT(entryDataChanged(Entry*)));
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Get current state of 'Hide Usernames' setting
+ */
+bool EntryModel::hideUsernames() const
+{
+    return m_hideUsernames;
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Set state of 'Hide Usernames' setting and signal change
+ */
+void EntryModel::setHideUsernames(const bool hide)
+{
+    m_hideUsernames = hide;
+    emit hideUsernamesChanged();
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Get current state of 'Hide Passwords' setting
+ */
+bool EntryModel::hidePasswords() const
+{
+    return m_hidePasswords;
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Set state of 'Hide Passwords' setting and signal change
+ */
+void EntryModel::setHidePasswords(const bool hide)
+{
+    m_hidePasswords = hide;
+    emit hidePasswordsChanged();
 }
