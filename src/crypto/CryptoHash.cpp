@@ -57,7 +57,7 @@ CryptoHash::CryptoHash(Algorithm algo, bool hmac)
     }
 
     gcry_error_t error = gcry_md_open(&d->ctx, algoGcrypt, flagsGcrypt);
-    if (error) {
+    if (error != GPG_ERR_NO_ERROR) {
         qWarning("Gcrypt error (ctor): %s", gcry_strerror(error));
         qWarning("Gcrypt error (ctor): %s", gcry_strsource(error));
     }

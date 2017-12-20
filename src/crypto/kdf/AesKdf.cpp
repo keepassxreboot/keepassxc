@@ -114,13 +114,12 @@ int AesKdf::benchmarkImpl(int msec) const
     QByteArray seed = QByteArray(32, '\x4B');
     QByteArray iv(16, 0);
 
-    SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Ecb,
-                           SymmetricCipher::Encrypt);
+    SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Ecb, SymmetricCipher::Encrypt);
     cipher.init(seed, iv);
 
     int rounds = 0;
-    QElapsedTimer t;
-    t.start();
+    QElapsedTimer timer;
+    timer.start();
     do {
         if (!cipher.processInPlace(key, 10000)) {
             rounds = -1;
@@ -128,7 +127,7 @@ int AesKdf::benchmarkImpl(int msec) const
         }
         rounds += 10000;
     }
-    while (!t.hasExpired(msec));
+    while (!timer.hasExpired(msec));
 
     return rounds;
 }

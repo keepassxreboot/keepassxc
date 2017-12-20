@@ -26,17 +26,15 @@
 #include "format/KeePass2.h"
 #include "format/Kdbx3Reader.h"
 
-BaseKeePass2Reader::BaseKeePass2Reader() :
-    m_error(false),
-    m_saveXml(false),
-    m_irsAlgo(KeePass2::InvalidProtectedStreamAlgo)
+BaseKeePass2Reader::BaseKeePass2Reader()
+    : m_error(false)
+    , m_saveXml(false)
+    , m_irsAlgo(KeePass2::InvalidProtectedStreamAlgo)
 {
     m_errorStr.clear();
     m_xmlData.clear();
     m_protectedStreamKey.clear();
 }
-
-BaseKeePass2Reader::~BaseKeePass2Reader() {}
 
 Database* BaseKeePass2Reader::readDatabase(const QString& filename, const CompositeKey& key)
 {
@@ -134,35 +132,30 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
 
 bool KeePass2Reader::hasError()
 {
-    return m_error || (m_reader && m_reader->hasError());
+    return m_error || (!m_reader.isNull() && m_reader->hasError());
 }
 
 QString KeePass2Reader::errorString()
 {
-    return m_reader ? m_reader->errorString() : m_errorStr;
+    return !m_reader.isNull() ? m_reader->errorString() : m_errorStr;
 }
 
 QByteArray KeePass2Reader::xmlData()
 {
-    return m_reader ? m_reader->xmlData() : m_xmlData;
+    return !m_reader.isNull() ? m_reader->xmlData() : m_xmlData;
 }
 
 QByteArray KeePass2Reader::streamKey()
 {
-    return m_reader ? m_reader->streamKey() : m_protectedStreamKey;
+    return !m_reader.isNull() ? m_reader->streamKey() : m_protectedStreamKey;
 }
 
 KeePass2::ProtectedStreamAlgo KeePass2Reader::protectedStreamAlgo() const
 {
-    return m_reader ? m_reader->protectedStreamAlgo() : m_irsAlgo;
+    return !m_reader.isNull() ? m_reader->protectedStreamAlgo() : m_irsAlgo;
 }
 
 quint32 KeePass2Reader::version() const
 {
     return m_version;
-}
-
-BaseKeePass2Reader* KeePass2Reader::reader() const
-{
-    return m_reader.data();
 }

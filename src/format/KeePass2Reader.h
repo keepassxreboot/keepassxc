@@ -31,6 +31,8 @@
 
 class BaseKeePass2Reader
 {
+    Q_DECLARE_TR_FUNCTIONS(BaseKeePass2Reader)
+
 public:
     BaseKeePass2Reader();
 
@@ -44,7 +46,7 @@ public:
     virtual QByteArray streamKey();
     virtual KeePass2::ProtectedStreamAlgo protectedStreamAlgo() const;
 
-    virtual ~BaseKeePass2Reader();
+    virtual ~BaseKeePass2Reader() = default;
 
 protected:
     void raiseError(const QString& errorMessage);
@@ -60,20 +62,17 @@ protected:
 
 class KeePass2Reader : public BaseKeePass2Reader
 {
-    Q_DECLARE_TR_FUNCTIONS(KeePass2Reader)
-
 public:
-    virtual Database* readDatabase(QIODevice* device, const CompositeKey& key, bool keepDatabase = false) override;
+    Database* readDatabase(QIODevice* device, const CompositeKey& key, bool keepDatabase = false) override;
     using BaseKeePass2Reader::readDatabase;
 
-    virtual bool hasError() override;
-    virtual QString errorString() override;
-    virtual QByteArray xmlData() override;
-    virtual QByteArray streamKey() override;
-    virtual KeePass2::ProtectedStreamAlgo protectedStreamAlgo() const override;
+    bool hasError() override;
+    QString errorString() override;
+    QByteArray xmlData() override;
+    QByteArray streamKey() override;
+    KeePass2::ProtectedStreamAlgo protectedStreamAlgo() const override;
 
     quint32 version() const;
-    BaseKeePass2Reader* reader() const;
 private:
     QScopedPointer<BaseKeePass2Reader> m_reader;
     quint32 m_version;

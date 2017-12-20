@@ -322,12 +322,9 @@ void Kdbx3Reader::setTransformSeed(const QByteArray& data)
     }
 
     auto kdf = m_db->kdf();
-    if (!kdf) {
-        kdf = QSharedPointer<AesKdf>::create();
-        m_db->setKdf(kdf);
+    if (!kdf.isNull()) {
+        kdf->setSeed(data);
     }
-
-    kdf->setSeed(data);
 }
 
 void Kdbx3Reader::setTransformRounds(const QByteArray& data)
@@ -339,12 +336,9 @@ void Kdbx3Reader::setTransformRounds(const QByteArray& data)
 
     auto rounds = Endian::bytesToSizedInt<quint64>(data, KeePass2::BYTEORDER);
     auto kdf = m_db->kdf();
-    if (!kdf) {
-        kdf = QSharedPointer<AesKdf>::create();
-        m_db->setKdf(kdf);
+    if (!kdf.isNull()) {
+        kdf->setRounds(rounds);
     }
-
-    kdf->setRounds(rounds);
 }
 
 void Kdbx3Reader::setEncryptionIV(const QByteArray& data)
