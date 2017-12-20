@@ -62,7 +62,6 @@ set(keepassx_SOURCES
     core/ScreenLockListenerPrivate.cpp
     core/TimeDelta.cpp
     core/TimeInfo.cpp
-    core/ToDbExporter.cpp
     core/Tools.cpp
     core/Translator.cpp
     core/Uuid.cpp

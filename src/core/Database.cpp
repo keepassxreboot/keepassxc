@@ -374,12 +374,6 @@ void Database::setEmitModified(bool value)
     m_emitModified = value;
 }
 
-void Database::copyAttributesFrom(const Database* other)
-{
-    m_data = other->m_data;
-    m_data.kdf = m_data.kdf->clone();
-    m_metadata->copyAttributesFrom(other->m_metadata);
-}
 
 Uuid Database::uuid()
 {
