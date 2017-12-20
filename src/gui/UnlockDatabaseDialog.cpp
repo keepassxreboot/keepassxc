@@ -30,9 +30,9 @@ UnlockDatabaseDialog::UnlockDatabaseDialog(QWidget* parent)
     connect(m_view, SIGNAL(editFinished(bool)), this, SLOT(complete(bool)));
 }
 
-void UnlockDatabaseDialog::setDBFilename(const QString& filename)
+void UnlockDatabaseDialog::setFilePath(const QString &filePath)
 {
-    m_view->load(filename);
+    m_view->load(filePath);
 }
 
 void UnlockDatabaseDialog::clearForms()

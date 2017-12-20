@@ -355,9 +355,9 @@ bool DatabaseTabWidget::saveDatabaseAs(Database* db)
         } else {
             oldFilePath = QDir::toNativeSeparators(QDir::homePath() + "/" + tr("Passwords").append(".kdbx"));
         }
-        QString newFilePath = fileDialog()->getSaveFileName(this, tr("Save database as"),
-                                                        oldFilePath, tr("KeePass 2 Database").append(" (*.kdbx)"),
-                                                        nullptr, 0, "kdbx");
+        QString newFilePath = fileDialog()->getSaveFileName(this, tr("Save database as"), oldFilePath,
+                                                            tr("KeePass 2 Database").append(" (*.kdbx)"),
+                                                            nullptr, 0, "kdbx");
         if (!newFilePath.isEmpty()) {
             // Ensure we don't recurse back into this function
             dbStruct.readOnly = false;
@@ -367,7 +367,7 @@ bool DatabaseTabWidget::saveDatabaseAs(Database* db)
                 continue;
             }
 
-            dbStruct.dbWidget->updateFilename(dbStruct.fileInfo.absoluteFilePath());
+            dbStruct.dbWidget->updateFilePath(dbStruct.fileInfo.absoluteFilePath());
             updateLastDatabases(dbStruct.fileInfo.absoluteFilePath());
             return true;
         }
@@ -669,7 +669,7 @@ void DatabaseTabWidget::lockDatabases()
         DatabaseWidget* dbWidget = static_cast<DatabaseWidget*>(widget(i));
         Database* db = databaseFromDatabaseWidget(dbWidget);
 
-        if (dbWidget->currentMode() == DatabaseWidget::LockedMode) {
+        if (dbWidget->currentMode() == DatabaseWidget::LockedMode || !dbWidget->dbHasKey()) {
             continue;
         }
 

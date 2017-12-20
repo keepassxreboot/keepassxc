@@ -839,10 +839,10 @@ void DatabaseWidget::openDatabase(bool accepted)
         m_databaseOpenWidget = nullptr;
         delete m_keepass1OpenWidget;
         m_keepass1OpenWidget = nullptr;
-        m_fileWatcher.addPath(m_filename);
+        m_fileWatcher.addPath(m_filePath);
     }
     else {
-        m_fileWatcher.removePath(m_filename);
+        m_fileWatcher.removePath(m_filePath);
         if (m_databaseOpenWidget->database()) {
             delete m_databaseOpenWidget->database();
         }
@@ -950,23 +950,23 @@ void DatabaseWidget::switchToDatabaseSettings()
     setCurrentWidget(m_databaseSettingsWidget);
 }
 
-void DatabaseWidget::switchToOpenDatabase(const QString& fileName)
+void DatabaseWidget::switchToOpenDatabase(const QString& filePath)
 {
-    updateFilename(fileName);
+    updateFilePath(filePath);
     if (m_databaseOpenWidget) {
-        m_databaseOpenWidget->load(fileName);
+        m_databaseOpenWidget->load(filePath);
         setCurrentWidget(m_databaseOpenWidget);
     } else if (m_unlockDatabaseWidget) {
-        m_unlockDatabaseWidget->load(fileName);
+        m_unlockDatabaseWidget->load(filePath);
         setCurrentWidget(m_unlockDatabaseWidget);
     }
 }
 
-void DatabaseWidget::switchToOpenDatabase(const QString& fileName, const QString& password,
+void DatabaseWidget::switchToOpenDatabase(const QString& filePath, const QString& password,
                                           const QString& keyFile)
 {
-    updateFilename(fileName);
-    switchToOpenDatabase(fileName);
+    updateFilePath(filePath);
+    switchToOpenDatabase(filePath);
     if (m_databaseOpenWidget) {
         m_databaseOpenWidget->enterKey(password, keyFile);
     } else if (m_unlockDatabaseWidget) {
@@ -974,35 +974,35 @@ void DatabaseWidget::switchToOpenDatabase(const QString& fileName, const QString
     }
 }
 
-void DatabaseWidget::switchToImportCsv(const QString& fileName)
+void DatabaseWidget::switchToImportCsv(const QString& filePath)
 {
-    updateFilename(fileName);
-    m_csvImportWizard->load(fileName, m_db);
+    updateFilePath(filePath);
+    m_csvImportWizard->load(filePath, m_db);
     m_changeMasterKeyWidget->clearForms();
     m_changeMasterKeyWidget->setCancelEnabled(false);
     setCurrentWidget(m_changeMasterKeyWidget);
     m_importingCsv = true;
 }
 
-void DatabaseWidget::switchToOpenMergeDatabase(const QString& fileName)
+void DatabaseWidget::switchToOpenMergeDatabase(const QString& filePath)
 {
     m_databaseOpenMergeWidget->clearForms();
-    m_databaseOpenMergeWidget->load(fileName);
+    m_databaseOpenMergeWidget->load(filePath);
     setCurrentWidget(m_databaseOpenMergeWidget);
 }
 
 
-void DatabaseWidget::switchToOpenMergeDatabase(const QString& fileName, const QString& password,
+void DatabaseWidget::switchToOpenMergeDatabase(const QString& filePath, const QString& password,
                                           const QString& keyFile)
 {
-    switchToOpenMergeDatabase(fileName);
+    switchToOpenMergeDatabase(filePath);
     m_databaseOpenMergeWidget->enterKey(password, keyFile);
 }
 
-void DatabaseWidget::switchToImportKeepass1(const QString& fileName)
+void DatabaseWidget::switchToImportKeepass1(const QString& filePath)
 {
-    updateFilename(fileName);
-    m_keepass1OpenWidget->load(fileName);
+    updateFilePath(filePath);
+    m_keepass1OpenWidget->load(filePath);
     setCurrentWidget(m_keepass1OpenWidget);
 }
 
@@ -1172,21 +1172,21 @@ void DatabaseWidget::lock()
 
     endSearch();
     clearAllWidgets();
-    m_unlockDatabaseWidget->load(m_filename);
+    m_unlockDatabaseWidget->load(m_filePath);
     setCurrentWidget(m_unlockDatabaseWidget);
     Database* newDb = new Database();
     newDb->metadata()->setName(m_db->metadata()->name());
     replaceDatabase(newDb);
 }
 
-void DatabaseWidget::updateFilename(const QString& fileName)
+void DatabaseWidget::updateFilePath(const QString &filePath)
 {
-    if (!m_filename.isEmpty()) {
-        m_fileWatcher.removePath(m_filename);
+    if (!m_filePath.isEmpty()) {
+        m_fileWatcher.removePath(m_filePath);
     }
 
-    m_fileWatcher.addPath(fileName);
-    m_filename = fileName;
+    m_fileWatcher.addPath(filePath);
+    m_filePath = filePath;
 }
 
 void DatabaseWidget::blockAutoReload(bool block)
@@ -1202,7 +1202,7 @@ void DatabaseWidget::blockAutoReload(bool block)
 void DatabaseWidget::unblockAutoReload()
 {
     m_ignoreAutoReload = false;
-    updateFilename(m_filename);
+    updateFilePath(m_filePath);
 }
 
 void DatabaseWidget::onWatchedFileChanged()
@@ -1237,13 +1237,13 @@ void DatabaseWidget::reloadDatabaseFile()
             emit m_db->modified();
             m_databaseModified = true;
             // Rewatch the database file
-            m_fileWatcher.addPath(m_filename);
+            m_fileWatcher.addPath(m_filePath);
             return;
         }
     }
 
     KeePass2Reader reader;
-    QFile file(m_filename);
+    QFile file(m_filePath);
     if (file.open(QIODevice::ReadOnly)) {
         Database* db = reader.readDatabase(&file, database()->key());
         if (db != nullptr) {
@@ -1293,7 +1293,7 @@ void DatabaseWidget::reloadDatabaseFile()
     }
 
     // Rewatch the database file
-    m_fileWatcher.addPath(m_filename);
+    m_fileWatcher.addPath(m_filePath);
 }
 
 int DatabaseWidget::numberOfSelectedEntries() const
@@ -1417,7 +1417,7 @@ EntryView* DatabaseWidget::entryView() {
 void DatabaseWidget::showUnlockDialog()
 {
     m_unlockDatabaseDialog->clearForms();
-    m_unlockDatabaseDialog->setDBFilename(m_filename);
+    m_unlockDatabaseDialog->setFilePath(m_filePath);
 
 #if defined(Q_OS_MAC)
     autoType()->raiseWindow();
