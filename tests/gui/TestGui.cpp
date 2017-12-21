@@ -686,6 +686,21 @@ void TestGui::testSearch()
     QTRY_COMPARE(m_dbWidget->currentMode(), DatabaseWidget::ViewMode);
 }
 
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Update clicks within entry view referencing column indices to account
+ * for changed column indices due to new way of showing/hiding column Entry
+ * Model::ParentGroup. This column now has fixed index 0 wether it's shown
+ * or hidden, thus all indices need to be shifted by +1 when not in search
+ * mode (which is the case within this entire method)
+ *
+ * Old:
+ * clickIndex(entryView->model()->index(row, column), button);
+ *
+ * New:
+ * clickIndex(entryView->model()->index(row, column+1), button);
+ *
+ */
 void TestGui::testDeleteEntry()
 {
     // Add canned entries for consistent testing
@@ -698,7 +713,7 @@ void TestGui::testDeleteEntry()
     QWidget* entryDeleteWidget = toolBar->widgetForAction(entryDeleteAction);
 
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::ViewMode);
-    clickIndex(entryView->model()->index(1, 0), entryView, Qt::LeftButton);
+    clickIndex(entryView->model()->index(1, 1), entryView, Qt::LeftButton);
     QVERIFY(entryDeleteWidget->isVisible());
     QVERIFY(entryDeleteWidget->isEnabled());
     QVERIFY(!m_db->metadata()->recycleBin());
@@ -709,8 +724,8 @@ void TestGui::testDeleteEntry()
     QCOMPARE(entryView->model()->rowCount(), 3);
     QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 1);
 
-    clickIndex(entryView->model()->index(1, 0), entryView, Qt::LeftButton);
-    clickIndex(entryView->model()->index(2, 0), entryView, Qt::LeftButton, Qt::ControlModifier);
+    clickIndex(entryView->model()->index(1, 1), entryView, Qt::LeftButton);
+    clickIndex(entryView->model()->index(2, 1), entryView, Qt::LeftButton, Qt::ControlModifier);
     QCOMPARE(entryView->selectionModel()->selectedRows().size(), 2);
 
     MessageBox::setNextAnswer(QMessageBox::No);
@@ -729,7 +744,7 @@ void TestGui::testDeleteEntry()
                groupView, Qt::LeftButton);
     QCOMPARE(groupView->currentGroup()->name(), m_db->metadata()->recycleBin()->name());
 
-    clickIndex(entryView->model()->index(0, 0), entryView, Qt::LeftButton);
+    clickIndex(entryView->model()->index(0, 1), entryView, Qt::LeftButton);
     MessageBox::setNextAnswer(QMessageBox::No);
     QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
     QCOMPARE(entryView->model()->rowCount(), 3);
@@ -740,8 +755,8 @@ void TestGui::testDeleteEntry()
     QCOMPARE(entryView->model()->rowCount(), 2);
     QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 2);
 
-    clickIndex(entryView->model()->index(0, 0), entryView, Qt::LeftButton);
-    clickIndex(entryView->model()->index(1, 0), entryView, Qt::LeftButton, Qt::ControlModifier);
+    clickIndex(entryView->model()->index(0, 1), entryView, Qt::LeftButton);
+    clickIndex(entryView->model()->index(1, 1), entryView, Qt::LeftButton, Qt::ControlModifier);
     MessageBox::setNextAnswer(QMessageBox::Yes);
     QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
     QCOMPARE(entryView->model()->rowCount(), 0);
