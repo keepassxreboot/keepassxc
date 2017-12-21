@@ -908,12 +908,39 @@ void DatabaseWidget::unlockDatabase(bool accepted)
     }
 }
 
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Add 'copy-on-doubleclick' functionality for certain columns
+ *
+ * TODO:
+ * If pull request #1298 gets merged, double-clicking column 'Attachments'
+ * could open the new details view (see second screenshot)
+ */
 void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::ModelColumn column)
 {
-    if (column == EntryModel::Url && !entry->url().isEmpty()) {
-        openUrlForEntry(entry);
+    /* Should never happen */
+    if (!entry) {
+        Q_ASSERT(false);
+        return;
     }
-    else {
+
+    /* Decide what to do based on specified column */
+    switch (column) {
+    case EntryModel::Username:
+        setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->username()));
+        break;
+    case EntryModel::Password:
+        setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->password()));
+        break;
+    case EntryModel::Url:
+        if (!entry->url().isEmpty()) {
+            openUrlForEntry(entry);
+        }
+        break;
+    case EntryModel::Notes:
+        setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->notes()));
+        break;
+    default:
         switchToEntryEdit(entry);
     }
 }
