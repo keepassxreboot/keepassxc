@@ -77,6 +77,7 @@ public:
 signals:
     void switchedToEntryListMode();
     void switchedToGroupMode();
+
     /**
      * @author Fonic <https://github.com/fonic>
      * Signals to notify about state changes of 'Hide Usernames' and 'Hide
@@ -87,6 +88,13 @@ signals:
 
 public slots:
     void setGroup(Group* group);
+
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Slots to toggle state of 'Hide Usernames' and 'Hide Passwords' settings
+     */
+    void toggleHideUsernames(const bool hide);
+    void toggleHidePasswords(const bool hide);
 
 private slots:
     void entryAboutToAdd(Entry* entry);

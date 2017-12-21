@@ -578,3 +578,21 @@ void EntryModel::setHidePasswords(const bool hide)
     m_hidePasswords = hide;
     emit hidePasswordsChanged();
 }
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Toggle state of 'Hide Usernames' setting
+ */
+void EntryModel::toggleHideUsernames(const bool hide)
+{
+    setHideUsernames(hide);
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Toggle state of 'Hide Passwords' setting
+ */
+void EntryModel::toggleHidePasswords(const bool hide)
+{
+    setHidePasswords(hide);
+}

@@ -26,6 +26,11 @@ class Entry;
 class EntryModel;
 class Group;
 class SortFilterHideProxyModel;
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Add forward declaration for QActionGroup
+ */
+class QActionGroup;
 
 class EntryView : public QTreeView
 {
@@ -59,10 +64,29 @@ private slots:
     void switchToEntryListMode();
     void switchToGroupMode();
 
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Slots for header context menu and actions
+     */
+    void showHeaderMenu(const QPoint& position);
+    void toggleColumnVisibility(QAction *action);
+    void fitColumnsToWindow();
+    void fitColumnsToContents();
+    void resetViewToDefaults();
+
 private:
     EntryModel* const m_model;
     SortFilterHideProxyModel* const m_sortModel;
     bool m_inEntryListMode;
+
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Properties to store header context menu and actions
+     */
+    QMenu* m_headerMenu;
+    QAction* m_hideUsernamesAction;
+    QAction* m_hidePasswordsAction;
+    QActionGroup* m_columnActions;
 };
 
 #endif // KEEPASSX_ENTRYVIEW_H
