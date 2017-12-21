@@ -678,7 +678,8 @@ build() {
             "$DOCKER_IMAGE" \
             bash -c "cd /keepassxc/out/build-release && \
                 cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off $CMAKE_OPTIONS \
-                    -DCMAKE_INSTALL_PREFIX=\"${INSTALL_PREFIX}\" /keepassxc/src && \
+                    -DCMAKE_INSTALL_PREFIX=\"${INSTALL_PREFIX}\" \
+                    -DKEEPASSXC_DIST_TYPE=AppImage /keepassxc/src && \
                 make $MAKE_OPTIONS && make DESTDIR=/keepassxc/out/bin-release install/strip && \
                 /keepassxc/src/AppImage-Recipe.sh "$APP_NAME" "$RELEASE_NAME""
         
