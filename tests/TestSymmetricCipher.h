@@ -29,6 +29,8 @@ private slots:
     void initTestCase();
     void testAes256CbcEncryption();
     void testAes256CbcDecryption();
+    void testAes256CtrEncryption();
+    void testAes256CtrDecryption();
     void testTwofish256CbcEncryption();
     void testTwofish256CbcDecryption();
     void testSalsa20();

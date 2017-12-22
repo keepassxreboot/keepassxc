@@ -22,8 +22,8 @@ Copies the password of a database entry to the clipboard. If multiple entries wi
 .IP "edit [options] <database> <entry>"
 Edits a database entry. A password can be generated (\fI-g\fP option), or a prompt can be displayed to input the password (\fI-p\fP option).
 
-.IP "entropy-meter [-a pwd1 pwd2 ...]"
-Calculates the entropy of a single, or multiple passwords specified using the \fI-a\fP option. If no passwords are specified, the program will run in interactive mode and prompt the user to enter a password.
+.IP "estimate [options] [password]"
+Estimates the entropy of a password. The password to estimate can be provided as a positional argument, or using the standard input.
 
 .IP "extract [options] <database>"
 Extracts and prints the contents of a database to standard output in XML format.
@@ -88,6 +88,20 @@ Specify the length of the password to generate.
 
 .IP "-t, --title <title>"
 Specify the title of the entry.
+
+
+.SS "Estimate options"
+
+.IP "-a, --advanced"
+Perform advanced analysis on the password.
+
+
+.SS "Show options"
+
+.IP "-a, --attributes <attribute>..."
+Names of the attributes to show. This option can be specified more than once,
+with each attribute shown one-per-line in the given order. If no attributes are
+specified, a summary of the default attributes is given.
 
 
 .SH REPORTING BUGS

@@ -49,6 +49,11 @@
 #include "http/OptionDialog.h"
 #endif
 
+#ifdef WITH_XC_SSHAGENT
+#include "sshagent/AgentSettingsPage.h"
+#include "sshagent/SSHAgent.h"
+#endif
+
 #include "gui/SettingsWidget.h"
 #include "gui/PasswordGeneratorWidget.h"
 
@@ -109,6 +114,8 @@ MainWindow::MainWindow()
 {
     m_ui->setupUi(this);
 
+    m_ui->toolBar->setContextMenuPolicy(Qt::PreventContextMenu);
+
     // Setup the search widget in the toolbar
     SearchWidget *search = new SearchWidget();
     search->connectSignals(m_actionMultiplexer);
@@ -120,6 +127,10 @@ MainWindow::MainWindow()
     restoreGeometry(config()->get("GUI/MainWindowGeometry").toByteArray());
     #ifdef WITH_XC_HTTP
     m_ui->settingsWidget->addSettingsPage(new HttpPlugin(m_ui->tabWidget));
+    #endif
+    #ifdef WITH_XC_SSHAGENT
+    SSHAgent::init(this);
+    m_ui->settingsWidget->addSettingsPage(new AgentSettingsPage(m_ui->tabWidget));
     #endif
 
     setWindowIcon(filePath()->applicationIcon());
@@ -727,7 +738,9 @@ void MainWindow::changeEvent(QEvent* event)
 
 void MainWindow::saveWindowInformation()
 {
-    config()->set("GUI/MainWindowGeometry", saveGeometry());
+    if (isVisible()) {
+        config()->set("GUI/MainWindowGeometry", saveGeometry());
+    }
 }
 
 bool MainWindow::saveLastDatabases()
@@ -811,11 +824,6 @@ void MainWindow::showGroupContextMenu(const QPoint& globalPos)
     m_ui->menuGroups->popup(globalPos);
 }
 
-void MainWindow::saveToolbarState(bool value)
-{
-    config()->set("ShowToolbar", value);
-}
-
 void MainWindow::setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback)
 {
     if (!QKeySequence::keyBindings(standard).isEmpty()) {
@@ -858,6 +866,7 @@ void MainWindow::trayIconTriggered(QSystemTrayIcon::ActivationReason reason)
 
 void MainWindow::hideWindow()
 {
+    saveWindowInformation();
 #ifndef Q_OS_MAC
     setWindowState(windowState() | Qt::WindowMinimized);
 #endif

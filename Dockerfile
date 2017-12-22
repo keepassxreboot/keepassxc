@@ -24,7 +24,8 @@ RUN set -x \
     && apt-get -y install software-properties-common
 
 RUN set -x \
-    && add-apt-repository ppa:beineri/opt-qt${QT5_PPA_VERSION}-trusty
+    && add-apt-repository ppa:beineri/opt-qt${QT5_PPA_VERSION}-trusty \
+    && add-apt-repository ppa:phoerious/keepassxc
 
 RUN set -x \
     && apt-get update -y \
@@ -42,7 +43,9 @@ RUN set -x \
         zlib1g-dev \
         libxi-dev \
         libxtst-dev \
-        mesa-common-dev
+        mesa-common-dev \
+        libyubikey-dev \
+        libykpers-1-dev
 
 ENV CMAKE_PREFIX_PATH=/opt/qt${QT5_VERSION}/lib/cmake
 ENV LD_LIBRARY_PATH=/opt/qt${QT5_VERSION}/lib
@@ -52,34 +55,8 @@ RUN set -x \
 # AppImage dependencies
 RUN set -x \
     && apt-get install -y \
-        wget \
-        libfuse2
-
-# build libyubikey
-ENV YUBIKEY_VERSION=1.13
-RUN set -x \
-    && wget "https://developers.yubico.com/yubico-c/Releases/libyubikey-${YUBIKEY_VERSION}.tar.gz" \
-    && tar xf libyubikey-${YUBIKEY_VERSION}.tar.gz \
-    && cd libyubikey-${YUBIKEY_VERSION} \
-    && ./configure --prefix=/usr --libdir=/usr/lib/x86_64-linux-gnu \
-    && make \
-    && make install \
-    && cd .. \
-    && rm -Rf libyubikey-${YUBIKEY_VERSION}*
-
-# build libykpers-1
-ENV YKPERS_VERSION=1.18.0
-RUN set -x \
-    && apt-get install -y libusb-dev
-RUN set -x \
-    && wget "https://developers.yubico.com/yubikey-personalization/Releases/ykpers-${YKPERS_VERSION}.tar.gz" \
-    && tar xf ykpers-${YKPERS_VERSION}.tar.gz \
-    && cd ykpers-${YKPERS_VERSION} \
-    && ./configure --prefix=/usr --libdir=/usr/lib/x86_64-linux-gnu \
-    && make \
-    && make install \
-    && cd .. \
-    && rm -Rf ykpers-${YKPERS_VERSION}*
+        libfuse2 \
+        wget
 
 VOLUME /keepassxc/src
 VOLUME /keepassxc/out

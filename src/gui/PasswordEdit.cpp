@@ -19,8 +19,7 @@
 #include "PasswordEdit.h"
 
 #include "core/Config.h"
-
-#include <QFontDatabase>
+#include "gui/Font.h"
 
 const QColor PasswordEdit::CorrectSoFarColor = QColor(255, 205, 15);
 const QColor PasswordEdit::ErrorColor = QColor(255, 125, 125);
@@ -31,9 +30,9 @@ PasswordEdit::PasswordEdit(QWidget* parent)
 {
     setEchoMode(QLineEdit::Password);
     updateStylesheet();
-    
-    // set font to system monospace font and increase letter spacing
-    QFont passwordFont = QFontDatabase::systemFont(QFontDatabase::FixedFont);
+
+    // use a monospace font for the password field
+    QFont passwordFont = Font::fixedFont();
     passwordFont.setLetterSpacing(QFont::PercentageSpacing, 110);
     setFont(passwordFont);
 }

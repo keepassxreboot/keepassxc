@@ -15,17 +15,17 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_ENTROPYMETER_H
-#define KEEPASSXC_ENTROPYMETER_H
+#ifndef KEEPASSXC_ESTIMATE_H
+#define KEEPASSXC_ESTIMATE_H
 
 #include "Command.h"
 
-class EntropyMeter : public Command
+class Estimate : public Command
 {
 public:
-    EntropyMeter();
-    ~EntropyMeter();
+    Estimate();
+    ~Estimate();
     int execute(QStringList arguments);
 };
 
-#endif // KEEPASSXC_ENTROPYMETER_H
+#endif // KEEPASSXC_ESTIMATE_H

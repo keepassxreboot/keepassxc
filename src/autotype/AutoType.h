@@ -51,6 +51,7 @@ public:
 
 public slots:
     void performGlobalAutoType(const QList<Database*>& dbList);
+    void raiseWindow();
 
 signals:
     void globalShortcutTriggered();

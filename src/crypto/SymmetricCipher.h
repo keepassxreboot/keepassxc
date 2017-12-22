@@ -38,6 +38,7 @@ public:
     enum Mode
     {
         Cbc,
+        Ctr,
         Ecb,
         Stream
     };
@@ -69,6 +70,7 @@ public:
     }
 
     bool reset();
+    int keySize() const;
     int blockSize() const;
     QString errorString() const;
 

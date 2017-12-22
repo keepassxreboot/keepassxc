@@ -22,8 +22,8 @@ set(cli_SOURCES
     Command.h
     Edit.cpp
     Edit.h
-    EntropyMeter.cpp
-    EntropyMeter.h
+    Estimate.cpp
+    Estimate.h
     Extract.cpp
     Extract.h
     List.cpp

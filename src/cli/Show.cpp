@@ -49,6 +49,13 @@ int Show::execute(QStringList arguments)
                                QObject::tr("Key file of the database."),
                                QObject::tr("path"));
     parser.addOption(keyFile);
+    QCommandLineOption attributes(QStringList() << "a"
+                                                << "attributes",
+                                  QObject::tr("Names of the attributes to show. "
+                                              "This option can be specified more than once, with each attribute shown one-per-line in the given order. "
+                                              "If no attributes are specified, a summary of the default attributes is given."),
+                                  QObject::tr("attribute"));
+    parser.addOption(attributes);
     parser.addPositionalArgument("entry", QObject::tr("Name of the entry to show."));
     parser.process(arguments);
 
@@ -63,10 +70,10 @@ int Show::execute(QStringList arguments)
         return EXIT_FAILURE;
     }
 
-    return this->showEntry(db, args.at(1));
+    return this->showEntry(db, parser.values(attributes), args.at(1));
 }
 
-int Show::showEntry(Database* database, QString entryPath)
+int Show::showEntry(Database* database, QStringList attributes, QString entryPath)
 {
 
     QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
@@ -78,10 +85,24 @@ int Show::showEntry(Database* database, QString entryPath)
         return EXIT_FAILURE;
     }
 
-    outputTextStream << "   title: " << entry->title() << endl;
-    outputTextStream << "username: " << entry->username() << endl;
-    outputTextStream << "password: " << entry->password() << endl;
-    outputTextStream << "     URL: " << entry->url() << endl;
-    outputTextStream << "   Notes: " << entry->notes() << endl;
-    return EXIT_SUCCESS;
+    // If no attributes specified, output the default attribute set.
+    bool showAttributeNames = attributes.isEmpty();
+    if (attributes.isEmpty()) {
+        attributes = EntryAttributes::DefaultAttributes;
+    }
+
+    // Iterate over the attributes and output them line-by-line.
+    bool sawUnknownAttribute = false;
+    for (QString attribute : attributes) {
+        if (!entry->attributes()->contains(attribute)) {
+            sawUnknownAttribute = true;
+            qCritical("ERROR: unknown attribute '%s'.", qPrintable(attribute));
+            continue;
+        }
+        if (showAttributeNames) {
+            outputTextStream << attribute << ": ";
+        }
+        outputTextStream << entry->resolveMultiplePlaceholders(entry->attributes()->value(attribute)) << endl;
+    }
+    return sawUnknownAttribute ? EXIT_FAILURE : EXIT_SUCCESS;
 }

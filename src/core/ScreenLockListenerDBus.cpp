@@ -37,6 +37,14 @@ ScreenLockListenerDBus::ScreenLockListenerDBus(QWidget *parent):
                 SLOT(freedesktopScreenSaver(bool)));
 
     sessionBus.connect(
+                "org.gnome.ScreenSaver", // service
+                "/org/gnome/ScreenSaver", // path
+                "org.gnome.ScreenSaver", // interface
+                "ActiveChanged", // signal name
+                this, //receiver
+                SLOT(freedesktopScreenSaver(bool)));
+
+    sessionBus.connect(
                 "org.gnome.SessionManager", // service
                 "/org/gnome/SessionManager/Presence", // path
                 "org.gnome.SessionManager.Presence", // interface

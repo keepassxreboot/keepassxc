@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2016 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -69,7 +70,8 @@ void DatabaseRepairWidget::openDatabase()
         delete m_db;
     }
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-    KeePass2Repair::RepairResult repairResult = repair.repairDatabase(&file, masterKey);
+    auto repairOutcome = repair.repairDatabase(&file, masterKey);
+    KeePass2Repair::RepairResult repairResult = repairOutcome.first;
     QApplication::restoreOverrideCursor();
 
     switch (repairResult) {
@@ -83,7 +85,7 @@ void DatabaseRepairWidget::openDatabase()
         emit editFinished(false);
         return;
     case KeePass2Repair::RepairSuccess:
-        m_db = repair.database();
+        m_db = repairOutcome.second;
         MessageBox::warning(this, tr("Success"), tr("The database has been successfully repaired\nYou can now save it."));
         emit editFinished(true);
         return;

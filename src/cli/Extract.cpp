@@ -85,7 +85,6 @@ int Extract::execute(QStringList arguments)
         compositeKey.addKey(fileKey);
     }
 
-
     QString databaseFilename = args.at(0);
     QFile dbFile(databaseFilename);
     if (!dbFile.exists()) {

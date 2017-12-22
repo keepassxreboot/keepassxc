@@ -15,6 +15,7 @@
 #cmakedefine WITH_XC_HTTP
 #cmakedefine WITH_XC_AUTOTYPE
 #cmakedefine WITH_XC_YUBIKEY
+#cmakedefine WITH_XC_SSHAGENT
 
 #cmakedefine KEEPASSXC_DIST
 #cmakedefine KEEPASSXC_DIST_TYPE "@KEEPASSXC_DIST_TYPE@"

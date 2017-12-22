@@ -43,10 +43,9 @@ int Merge::execute(QStringList arguments)
     parser.addPositionalArgument("database1", QObject::tr("Path of the database to merge into."));
     parser.addPositionalArgument("database2", QObject::tr("Path of the database to merge from."));
 
-    QCommandLineOption samePasswordOption(
-        QStringList() << "s"
-                      << "same-credentials",
-        QObject::tr("Use the same credentials for both database files."));
+    QCommandLineOption samePasswordOption(QStringList() << "s"
+                                                        << "same-credentials",
+                                          QObject::tr("Use the same credentials for both database files."));
 
     QCommandLineOption keyFile(QStringList() << "k"
                                              << "key-file",
@@ -55,8 +54,8 @@ int Merge::execute(QStringList arguments)
     parser.addOption(keyFile);
     QCommandLineOption keyFileFrom(QStringList() << "f"
                                                  << "key-file-from",
-                               QObject::tr("Key file of the database to merge from."),
-                               QObject::tr("path"));
+                                   QObject::tr("Key file of the database to merge from."),
+                                   QObject::tr("path"));
     parser.addOption(keyFileFrom);
 
     parser.addOption(samePasswordOption);
@@ -67,7 +66,6 @@ int Merge::execute(QStringList arguments)
         out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli merge");
         return EXIT_FAILURE;
     }
-
 
     Database* db1 = Database::unlockFromStdin(args.at(0), parser.value(keyFile));
     if (db1 == nullptr) {

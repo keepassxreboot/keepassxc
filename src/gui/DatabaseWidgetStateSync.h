@@ -46,7 +46,8 @@ private:
     DatabaseWidget* m_activeDbWidget;
 
     bool m_blockUpdates;
-    QList<int> m_splitterSizes;
+    QList<int> m_mainSplitterSizes;
+    QList<int> m_detailSplitterSizes;
     QList<int> m_columnSizesList;
     QList<int> m_columnSizesSearch;
 };

@@ -557,7 +557,7 @@
   </action>
   <action name="actionGroupEmptyRecycleBin">
    <property name="text">
-    <string>Empty recycle bin</string>
+    <string>E&amp;mpty recycle bin</string>
    </property>
    <property name="visible">
     <bool>false</bool>

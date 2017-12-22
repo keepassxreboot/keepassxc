@@ -87,6 +87,9 @@ AboutDialog::AboutDialog(QWidget* parent)
 #ifdef WITH_XC_YUBIKEY
     extensions += "\n- YubiKey";
 #endif
+#ifdef WITH_XC_SSHAGENT
+    extensions += "\n- SSH Agent";
+#endif
 
     if (extensions.isEmpty())
         extensions = " None";

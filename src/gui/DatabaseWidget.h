@@ -88,8 +88,10 @@ public:
     bool isGroupSelected() const;
     bool isInEditMode() const;
     bool isEditWidgetModified() const;
-    QList<int> splitterSizes() const;
-    void setSplitterSizes(const QList<int>& sizes);
+    QList<int> mainSplitterSizes() const;
+    void setMainSplitterSizes(const QList<int>& sizes);
+    QList<int> detailSplitterSizes() const;
+    void setDetailSplitterSizes(const QList<int>& sizes);
     QList<int> entryHeaderViewSizes() const;
     void setEntryViewHeaderSizes(const QList<int>& sizes);
     void clearAllWidgets();
@@ -123,7 +125,8 @@ signals:
     void listModeActivated();
     void searchModeAboutToActivate();
     void searchModeActivated();
-    void splitterSizesChanged();
+    void mainSplitterSizesChanged();
+    void detailSplitterSizesChanged();
     void entryColumnSizesChanged();
     void updateSearch(QString text);
 
@@ -214,7 +217,7 @@ private:
     KeePass1OpenWidget* m_keepass1OpenWidget;
     UnlockDatabaseWidget* m_unlockDatabaseWidget;
     UnlockDatabaseDialog* m_unlockDatabaseDialog;
-    QSplitter* m_splitter;
+    QSplitter* m_mainSplitter;
     QSplitter* m_detailSplitter;
     GroupView* m_groupView;
     EntryView* m_entryView;
@@ -232,6 +235,9 @@ private:
     QString m_lastSearchText;
     bool m_searchCaseSensitive;
     bool m_searchLimitGroup;
+
+    // CSV import state
+    bool m_importingCsv;
 
     // Autoreload
     QFileSystemWatcher m_fileWatcher;

@@ -256,6 +256,13 @@ void AutoType::resetInAutoType()
     m_inAutoType = false;
 }
 
+void AutoType::raiseWindow()
+{
+#if defined(Q_OS_MAC)
+    m_plugin->raiseOwnWindow();
+#endif
+}
+
 void AutoType::unloadPlugin()
 {
     if (m_executor) {

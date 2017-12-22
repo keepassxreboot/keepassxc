@@ -21,6 +21,7 @@
 
 #include <QMap>
 #include <QObject>
+#include <QRegularExpression>
 #include <QSet>
 #include <QStringList>
 
@@ -35,9 +36,9 @@ public:
     QList<QString> customKeys();
     QString value(const QString& key) const;
     bool contains(const QString& key) const;
+    bool containsValue(const QString& value) const;
     bool isProtected(const QString& key) const;
     bool isReference(const QString& key) const;
-    QRegExp* referenceRegExp();
     void set(const QString& key, const QString& value, bool protect = false);
     void remove(const QString& key);
     void rename(const QString& oldKey, const QString& newKey);
@@ -49,6 +50,8 @@ public:
     bool operator==(const EntryAttributes& other) const;
     bool operator!=(const EntryAttributes& other) const;
 
+    static QRegularExpressionMatch matchReference(const QString& text);
+
     static const QString TitleKey;
     static const QString UserNameKey;
     static const QString PasswordKey;
@@ -57,6 +60,10 @@ public:
     static const QStringList DefaultAttributes;
     static const QString RememberCmdExecAttr;
     static bool isDefaultAttribute(const QString& key);
+
+    static const QString WantedFieldGroupName;
+    static const QString SearchInGroupName;
+    static const QString SearchTextGroupName;
 
 signals:
     void modified();
@@ -74,7 +81,6 @@ signals:
 private:
     QMap<QString, QString> m_attributes;
     QSet<QString> m_protectedAttributes;
-    QRegExp m_referenceRegExp;
 };
 
 #endif // KEEPASSX_ENTRYATTRIBUTES_H

@@ -124,6 +124,46 @@ void TestSymmetricCipher::testAes256CbcDecryption()
              plainText);
 }
 
+void TestSymmetricCipher::testAes256CtrEncryption()
+{
+    // http://csrc.nist.gov/publications/nistpubs/800-38a/sp800-38a.pdf
+
+    QByteArray key = QByteArray::fromHex("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4");
+    QByteArray ctr = QByteArray::fromHex("f0f1f2f3f4f5f6f7f8f9fafbfcfdfeff");
+    QByteArray plainText = QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172a");
+    plainText.append(QByteArray::fromHex("ae2d8a571e03ac9c9eb76fac45af8e51"));
+    QByteArray cipherText = QByteArray::fromHex("601ec313775789a5b7a7f504bbf3d228");
+    cipherText.append(QByteArray::fromHex("f443e3ca4d62b59aca84e990cacaf5c5"));
+    bool ok;
+
+    SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Ctr, SymmetricCipher::Encrypt);
+    QVERIFY(cipher.init(key, ctr));
+    QCOMPARE(cipher.blockSize(), 16);
+
+    QCOMPARE(cipher.process(plainText, &ok),
+             cipherText);
+    QVERIFY(ok);
+}
+
+void TestSymmetricCipher::testAes256CtrDecryption()
+{
+    QByteArray key = QByteArray::fromHex("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4");
+    QByteArray ctr = QByteArray::fromHex("f0f1f2f3f4f5f6f7f8f9fafbfcfdfeff");
+    QByteArray cipherText = QByteArray::fromHex("601ec313775789a5b7a7f504bbf3d228");
+    cipherText.append(QByteArray::fromHex("f443e3ca4d62b59aca84e990cacaf5c5"));
+    QByteArray plainText = QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172a");
+    plainText.append(QByteArray::fromHex("ae2d8a571e03ac9c9eb76fac45af8e51"));
+    bool ok;
+
+    SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Ctr, SymmetricCipher::Decrypt);
+    QVERIFY(cipher.init(key, ctr));
+    QCOMPARE(cipher.blockSize(), 16);
+
+    QCOMPARE(cipher.process(cipherText, &ok),
+             plainText);
+    QVERIFY(ok);
+}
+
 void TestSymmetricCipher::testTwofish256CbcEncryption()
 {
     // NIST MCT Known-Answer Tests (cbc_e_m.txt)
@@ -162,7 +202,7 @@ void TestSymmetricCipher::testTwofish256CbcEncryption()
     bool ok;
     
     for (int i = 0; i < keys.size(); ++i) {
-        cipher.init(keys[i], ivs[i]);
+        QVERIFY(cipher.init(keys[i], ivs[i]));
         QByteArray ptNext = plainTexts[i];
         QByteArray ctPrev = ivs[i];
         QByteArray ctCur;

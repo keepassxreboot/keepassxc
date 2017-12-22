@@ -18,9 +18,8 @@
 #ifndef KEEPASSX_DETAILSWIDGET_H
 #define KEEPASSX_DETAILSWIDGET_H
 
-#include <QWidget>
-
 #include "gui/DatabaseWidget.h"
+#include <QWidget>
 
 namespace Ui {
     class DetailsWidget;

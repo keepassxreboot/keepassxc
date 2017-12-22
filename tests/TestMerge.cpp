@@ -64,7 +64,7 @@ void TestMerge::testMergeNoChanges()
     Database* dbDestination = createTestDatabase();
 
     Database* dbSource = new Database();
-    dbSource->setRootGroup(dbDestination->rootGroup()->clone(Entry::CloneNoFlags));
+    dbSource->setRootGroup(dbDestination->rootGroup()->clone(Entry::CloneNoFlags, Group::CloneIncludeEntries));
 
     QCOMPARE(dbDestination->rootGroup()->entriesRecursive().size(), 2);
     QCOMPARE(dbSource->rootGroup()->entriesRecursive().size(), 2);
@@ -92,7 +92,7 @@ void TestMerge::testResolveConflictNewer()
     Database* dbDestination = createTestDatabase();
 
     Database* dbSource = new Database();
-    dbSource->setRootGroup(dbDestination->rootGroup()->clone(Entry::CloneNoFlags));
+    dbSource->setRootGroup(dbDestination->rootGroup()->clone(Entry::CloneNoFlags, Group::CloneIncludeEntries));
 
     // sanity check
     Group* group1 = dbSource->rootGroup()->findChildByName("group1");
@@ -141,7 +141,7 @@ void TestMerge::testResolveConflictOlder()
     Database* dbDestination = createTestDatabase();
 
     Database* dbSource = new Database();
-    dbSource->setRootGroup(dbDestination->rootGroup()->clone(Entry::CloneNoFlags));
+    dbSource->setRootGroup(dbDestination->rootGroup()->clone(Entry::CloneNoFlags, Group::CloneIncludeEntries));
 
     // sanity check
     Group* group1 = dbSource->rootGroup()->findChildByName("group1");
@@ -197,7 +197,7 @@ void TestMerge::testResolveConflictKeepBoth()
     Database* dbDestination = createTestDatabase();
 
     Database* dbSource = new Database();
-    dbSource->setRootGroup(dbDestination->rootGroup()->clone(Entry::CloneIncludeHistory));
+    dbSource->setRootGroup(dbDestination->rootGroup()->clone(Entry::CloneIncludeHistory, Group::CloneIncludeEntries));
 
     // sanity check
     QCOMPARE(dbDestination->rootGroup()->children().at(0)->entries().size(), 2);
@@ -236,7 +236,7 @@ void TestMerge::testMoveEntry()
     Database* dbDestination = createTestDatabase();
 
     Database* dbSource = new Database();
-    dbSource->setRootGroup(dbDestination->rootGroup()->clone(Entry::CloneNoFlags));
+    dbSource->setRootGroup(dbDestination->rootGroup()->clone(Entry::CloneNoFlags, Group::CloneIncludeEntries));
 
     Entry* entry1 = dbSource->rootGroup()->findEntry("entry1");
     QVERIFY(entry1 != nullptr);
@@ -270,7 +270,7 @@ void TestMerge::testMoveEntryPreserveChanges()
     Database* dbDestination = createTestDatabase();
 
     Database* dbSource = new Database();
-    dbSource->setRootGroup(dbDestination->rootGroup()->clone(Entry::CloneNoFlags));
+    dbSource->setRootGroup(dbDestination->rootGroup()->clone(Entry::CloneNoFlags, Group::CloneIncludeEntries));
 
     Entry* entry1 = dbSource->rootGroup()->findEntry("entry1");
     QVERIFY(entry1 != nullptr);
@@ -307,11 +307,12 @@ void TestMerge::testCreateNewGroups()
     Database* dbDestination = createTestDatabase();
 
     Database* dbSource = new Database();
-    dbSource->setRootGroup(dbDestination->rootGroup()->clone(Entry::CloneNoFlags));
+    dbSource->setRootGroup(dbDestination->rootGroup()->clone(Entry::CloneNoFlags, Group::CloneIncludeEntries));
 
     QTest::qSleep(1);
     Group* group3 = new Group();
     group3->setName("group3");
+    group3->setUuid(Uuid::random());
     group3->setParent(dbSource->rootGroup());
 
     dbDestination->merge(dbSource);
@@ -329,11 +330,12 @@ void TestMerge::testMoveEntryIntoNewGroup()
     Database* dbDestination = createTestDatabase();
 
     Database* dbSource = new Database();
-    dbSource->setRootGroup(dbDestination->rootGroup()->clone(Entry::CloneNoFlags));
+    dbSource->setRootGroup(dbDestination->rootGroup()->clone(Entry::CloneNoFlags, Group::CloneIncludeEntries));
 
     QTest::qSleep(1);
     Group* group3 = new Group();
     group3->setName("group3");
+    group3->setUuid(Uuid::random());
     group3->setParent(dbSource->rootGroup());
 
     Entry* entry1 = dbSource->rootGroup()->findEntry("entry1");
@@ -365,10 +367,11 @@ void TestMerge::testUpdateEntryDifferentLocation()
     Database* dbDestination = createTestDatabase();
 
     Database* dbSource = new Database();
-    dbSource->setRootGroup(dbDestination->rootGroup()->clone(Entry::CloneNoFlags));
+    dbSource->setRootGroup(dbDestination->rootGroup()->clone(Entry::CloneNoFlags, Group::CloneIncludeEntries));
 
     Group* group3 = new Group();
     group3->setName("group3");
+    group3->setUuid(Uuid::random());
     group3->setParent(dbDestination->rootGroup());
 
     Entry* entry1 = dbDestination->rootGroup()->findEntry("entry1");
@@ -394,6 +397,84 @@ void TestMerge::testUpdateEntryDifferentLocation()
     QCOMPARE(entry1->username(), QString("username"));
     QCOMPARE(entry1->group()->name(), QString("group3"));
     QCOMPARE(uuidBeforeSyncing, entry1->uuid());
+
+    delete dbDestination;
+    delete dbSource;
+}
+
+/**
+ * Groups should be updated using the uuids.
+ */
+void TestMerge::testUpdateGroup()
+{
+    Database* dbDestination = createTestDatabase();
+
+    Database* dbSource = new Database();
+    dbSource->setRootGroup(dbDestination->rootGroup()->clone(Entry::CloneNoFlags, Group::CloneIncludeEntries));
+
+    QTest::qSleep(1);
+
+    Group* group2 = dbSource->rootGroup()->findChildByName("group2");
+    group2->setName("group2 renamed");
+    group2->setNotes("updated notes");
+    Uuid customIconId = Uuid::random();
+    QImage customIcon;
+    dbSource->metadata()->addCustomIcon(customIconId, customIcon);
+    group2->setIcon(customIconId);
+
+    Entry* entry1 = dbSource->rootGroup()->findEntry("entry1");
+    QVERIFY(entry1 != nullptr);
+    entry1->setGroup(group2);
+    entry1->setTitle("entry1 renamed");
+    Uuid uuidBeforeSyncing = entry1->uuid();
+
+    dbDestination->merge(dbSource);
+
+    QCOMPARE(dbDestination->rootGroup()->entriesRecursive().size(), 2);
+
+    entry1 = dbDestination->rootGroup()->findEntry("entry1 renamed");
+    QVERIFY(entry1 != nullptr);
+    QVERIFY(entry1->group() != nullptr);
+    QCOMPARE(entry1->group()->name(), QString("group2 renamed"));
+    QCOMPARE(uuidBeforeSyncing, entry1->uuid());
+
+    group2 = dbDestination->rootGroup()->findChildByName("group2 renamed");
+    QCOMPARE(group2->notes(), QString("updated notes"));
+    QCOMPARE(group2->iconUuid(), customIconId);
+
+    delete dbDestination;
+    delete dbSource;
+}
+
+void TestMerge::testUpdateGroupLocation()
+{
+    Database* dbDestination = createTestDatabase();
+    Group* group3 = new Group();
+    Uuid group3Uuid = Uuid::random();
+    group3->setUuid(group3Uuid);
+    group3->setName("group3");
+    group3->setParent(dbDestination->rootGroup()->findChildByName("group1"));
+
+    Database* dbSource = new Database();
+    dbSource->setRootGroup(dbDestination->rootGroup()->clone(Entry::CloneNoFlags, Group::CloneIncludeEntries));
+
+    // Sanity check
+    group3 = dbSource->rootGroup()->findChildByUuid(group3Uuid);
+    QVERIFY(group3 != nullptr);
+
+    QTest::qSleep(1);
+
+    group3->setParent(dbSource->rootGroup()->findChildByName("group2"));
+
+    dbDestination->merge(dbSource);
+    group3 = dbDestination->rootGroup()->findChildByUuid(group3Uuid);
+    QVERIFY(group3 != nullptr);
+    QCOMPARE(group3->parent(), dbDestination->rootGroup()->findChildByName("group2"));
+
+    dbDestination->merge(dbSource);
+    group3 = dbDestination->rootGroup()->findChildByUuid(group3Uuid);
+    QVERIFY(group3 != nullptr);
+    QCOMPARE(group3->parent(), dbDestination->rootGroup()->findChildByName("group2"));
 
     delete dbDestination;
     delete dbSource;
@@ -447,14 +528,54 @@ void TestMerge::testMergeCustomIcons()
     delete dbSource;
 }
 
+/**
+ * If the group is updated in the source database, and the
+ * destination database after, the group should remain the
+ * same.
+ */
+void TestMerge::testResolveGroupConflictOlder()
+{
+    Database* dbDestination = createTestDatabase();
+
+    Database* dbSource = new Database();
+    dbSource->setRootGroup(dbDestination->rootGroup()->clone(Entry::CloneNoFlags, Group::CloneIncludeEntries));
+
+    // sanity check
+    Group* group1 = dbSource->rootGroup()->findChildByName("group1");
+    QVERIFY(group1 != nullptr);
+
+    // Make sure the two changes have a different timestamp.
+    QTest::qSleep(1);
+    group1->setName("group1 updated in source");
+
+    // Make sure the two changes have a different timestamp.
+    QTest::qSleep(1);
+
+    group1 = dbDestination->rootGroup()->findChildByName("group1");
+    group1->setName("group1 updated in destination");
+
+    dbDestination->merge(dbSource);
+
+    // sanity check
+    group1 = dbDestination->rootGroup()->findChildByName("group1 updated in destination");
+    QVERIFY(group1 != nullptr);
+
+    delete dbDestination;
+    delete dbSource;
+}
+
+
 Database* TestMerge::createTestDatabase()
 {
     Database* db = new Database();
 
     Group* group1 = new Group();
     group1->setName("group1");
+    group1->setUuid(Uuid::random());
+
     Group* group2 = new Group();
     group2->setName("group2");
+    group2->setUuid(Uuid::random());
 
     Entry* entry1 = new Entry();
     Entry* entry2 = new Entry();

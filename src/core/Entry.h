@@ -36,6 +36,17 @@
 class Database;
 class Group;
 
+enum class EntryReferenceType {
+    Unknown,
+    Title,
+    UserName,
+    Password,
+    Url,
+    Notes,
+    Uuid,
+    CustomAttributes
+};
+
 struct EntryData
 {
     int iconNumber;
@@ -170,7 +181,7 @@ public:
     QString maskPasswordPlaceholders(const QString& str) const;
     QString resolveMultiplePlaceholders(const QString& str) const;
     QString resolvePlaceholder(const QString& str) const;
-    QString resolveUrlPlaceholder(const QString &str, PlaceholderType placeholderType) const;
+    QString resolveUrlPlaceholder(const QString& str, PlaceholderType placeholderType) const;
     PlaceholderType placeholderType(const QString& placeholder) const;
     QString resolveUrl(const QString& url) const;
 
@@ -203,6 +214,10 @@ private slots:
 private:
     QString resolveMultiplePlaceholdersRecursive(const QString& str, int maxDepth) const;
     QString resolvePlaceholderRecursive(const QString& placeholder, int maxDepth) const;
+    QString resolveReferencePlaceholderRecursive(const QString& placeholder, int maxDepth) const;
+    QString referenceFieldValue(EntryReferenceType referenceType) const;
+
+    static EntryReferenceType referenceType(const QString& referenceStr);
 
     const Database* database() const;
     template <class T> bool set(T& property, const T& value);
