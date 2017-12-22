@@ -1035,6 +1035,9 @@ void MainWindow::dropEvent(QDropEvent* event)
     const QMimeData* mimeData = event->mimeData();
     if (mimeData->hasUrls()) {
         const QStringList kdbxFiles = kdbxFilesFromUrls(mimeData->urls());
+        if (!kdbxFiles.isEmpty()) {
+            event->acceptProposedAction();
+        }
         for (const QString& kdbxFile: kdbxFiles) {
             openDatabase(kdbxFile);
         }
