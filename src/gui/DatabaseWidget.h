@@ -19,16 +19,16 @@
 #ifndef KEEPASSX_DATABASEWIDGET_H
 #define KEEPASSX_DATABASEWIDGET_H
 
+#include <QFileSystemWatcher>
 #include <QScopedPointer>
 #include <QStackedWidget>
-#include <QFileSystemWatcher>
 #include <QTimer>
 
 #include "core/Uuid.h"
 
-#include "gui/entry/EntryModel.h"
 #include "gui/MessageWidget.h"
 #include "gui/csvImport/CsvImportWizard.h"
+#include "gui/entry/EntryModel.h"
 
 class ChangeMasterKeyWidget;
 class DatabaseOpenWidget;
@@ -51,7 +51,8 @@ class DetailsWidget;
 class UnlockDatabaseDialog;
 class QFileSystemWatcher;
 
-namespace Ui {
+namespace Ui
+{
     class SearchWidget;
 }
 
@@ -172,7 +173,9 @@ public slots:
     void setSearchLimitGroup(bool state);
     void endSearch();
 
-    void showMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton = true,
+    void showMessage(const QString& text,
+                     MessageWidget::MessageType type,
+                     bool showClosebutton = true,
                      int autoHideTimeout = MessageWidget::DefaultAutoHideTimeout);
     void hideMessage();
 
