@@ -43,7 +43,7 @@ EntryView::EntryView(QWidget* parent)
     : QTreeView(parent)
     , m_model(new EntryModel(this))
     , m_sortModel(new SortFilterHideProxyModel(this))
-    , m_inEntryListMode(false)
+    , m_inSearchMode(false)
 {
     m_sortModel->setSourceModel(m_model);
     m_sortModel->setDynamicSortFilter(true);
@@ -70,8 +70,20 @@ EntryView::EntryView(QWidget* parent)
 
     connect(this, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
     connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(entrySelectionChanged()));
-    connect(m_model, SIGNAL(switchedToEntryListMode()), SLOT(switchToEntryListMode()));
-    connect(m_model, SIGNAL(switchedToGroupMode()), SLOT(switchToGroupMode()));
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Connect signals to get notified about list/search mode switches (NOTE:
+     * previously named 'switch[ed]ToGroupMode'/'switch[ed]ToEntryListMode')
+     */
+    connect(m_model, SIGNAL(switchedToListMode()), SLOT(switchToListMode()));
+    connect(m_model, SIGNAL(switchedToSearchMode()), SLOT(switchToSearchMode()));
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Connect signals to notify about changes of view state when state of
+     * 'Hide Usernames'/'Hide Passwords' settings changes in model
+     */
+    connect(m_model, SIGNAL(hideUsernamesChanged()), SIGNAL(viewStateChanged()));
+    connect(m_model, SIGNAL(hidePasswordsChanged()), SIGNAL(viewStateChanged()));
 
     connect(this, SIGNAL(clicked(QModelIndex)), SLOT(emitEntryPressed(QModelIndex)));
 
@@ -118,25 +130,51 @@ EntryView::EntryView(QWidget* parent)
      * - Disable stretching of last section (interferes with fitting columns
      *   to window)
      * - Associate with context menu
+     * - Connect signals to notify about changes of view state when state
+     *   of header changes
      */
     header()->setDefaultSectionSize(100);
     header()->setStretchLastSection(false);
     header()->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(header(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showHeaderMenu(QPoint)));
+    connect(header(), SIGNAL(sectionCountChanged(int, int)), this, SIGNAL(viewStateChanged()));
+    connect(header(), SIGNAL(sectionMoved(int, int, int)), this, SIGNAL(viewStateChanged()));
+    connect(header(), SIGNAL(sectionResized(int, int, int)), this, SIGNAL(viewStateChanged()));
+    connect(header(), SIGNAL(sortIndicatorChanged(int, Qt::SortOrder)), this, SIGNAL(viewStateChanged()));
 
     /**
      * @author Fonic <https://github.com/fonic>
-     * Finalize setup by resetting view to defaults. Although not really
-     * necessary at this point, it makes sense in order to avoid duplicating
-     * code (sorting order, visibility of first column etc.)
+     * Fit columns to window
      *
      * TODO:
      * Not working as expected, columns will end up being very small, most
-     * likely due to EntryView not being sized properly at this time. Either
-     * find a way to make this work by analizing when/where EntryView is
-     * created or remove
+     * likely due to EntryView not being sized properly at this time. Find
+     * a way to make this work by analizing when/where EntryView is created
      */
-    //resetViewToDefaults();
+    //fitColumnsToWindow();
+
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Configure default search view state and save for later use
+     */
+    header()->showSection(EntryModel::ParentGroup);
+    m_sortModel->sort(EntryModel::ParentGroup, Qt::AscendingOrder);
+    sortByColumn(EntryModel::ParentGroup, Qt::AscendingOrder);
+    m_defaultSearchViewState = header()->saveState();
+
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Configure default list view state and save for later use
+     *
+     * NOTE:
+     * Default list view is intentionally configured last since this is the
+     * view that's supposed to be active after initialization as m_inSearchMode
+     * is initialized with 'false'
+     */
+    header()->hideSection(EntryModel::ParentGroup);
+    m_sortModel->sort(EntryModel::Title, Qt::AscendingOrder);
+    sortByColumn(EntryModel::Title, Qt::AscendingOrder);
+    m_defaultListViewState = header()->saveState();
 }
 
 void EntryView::keyPressEvent(QKeyEvent* event)
@@ -175,9 +213,9 @@ void EntryView::setFirstEntryActive()
     }
 }
 
-bool EntryView::inEntryListMode()
+bool EntryView::inSearchMode()
 {
-    return m_inEntryListMode;
+    return m_inSearchMode;
 }
 
 void EntryView::emitEntryActivated(const QModelIndex& index)
@@ -230,53 +268,112 @@ Entry* EntryView::entryFromIndex(const QModelIndex& index)
     }
 }
 
-void EntryView::switchToEntryListMode()
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Switch to list mode, i.e. list entries of group (NOTE: previously named
+ * 'switchToGroupMode')
+ */
+void EntryView::switchToListMode()
 {
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Use header()->showSection() instead of m_sortModel->hideColumn() as
-     * the latter messes up column indices, interfering with code relying on
-     * proper indices
-     */
-    header()->showSection(EntryModel::ParentGroup);
-    if (header()->sectionSize(EntryModel::ParentGroup) == 0) {
-        header()->resizeSection(EntryModel::ParentGroup, header()->defaultSectionSize());
+    /* Check if already in this mode */
+    if (!m_inSearchMode) {
+        return;
     }
 
     /**
-     * @author Fonic <https://github.com/fonic>
-     * Set sorting column and order (TODO: check what first two lines do, if
-     * they are actually necessary, if indices are still correct and if indices
-     * may be replaced by EntryModel::<column>)
-     */
-    m_sortModel->sort(1, Qt::AscendingOrder);
-    m_sortModel->sort(0, Qt::AscendingOrder);
-    sortByColumn(EntryModel::ParentGroup, Qt::AscendingOrder);
-
-    m_inEntryListMode = true;
-}
-
-void EntryView::switchToGroupMode()
-{
-    /**
-     * @author Fonic <https://github.com/fonic>
      * Use header()->hideSection() instead of m_sortModel->hideColumn() as
      * the latter messes up column indices, interfering with code relying on
      * proper indices
      */
     header()->hideSection(EntryModel::ParentGroup);
 
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Set sorting column and order (TODO: check what first two lines do, if
-     * they are actually necessary, if indices are still correct and if indices
-     * may be replaced by EntryModel::<column>)
-     */
-    m_sortModel->sort(-1, Qt::AscendingOrder);
-    m_sortModel->sort(0, Qt::AscendingOrder);
-    sortByColumn(EntryModel::Title, Qt::AscendingOrder);
+    m_inSearchMode = false;
+}
 
-    m_inEntryListMode = false;
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Switch to search mode, i.e. list search results (NOTE: previously named
+ * 'switchToEntryListMode')
+ */
+void EntryView::switchToSearchMode()
+{
+    /* Check if already in this mode */
+    if (m_inSearchMode) {
+        return;
+    }
+
+    /*
+     * Use header()->showSection() instead of m_sortModel->hideColumn() as
+     * the latter messes up column indices, interfering with code relying on
+     * proper indices
+     */
+    header()->showSection(EntryModel::ParentGroup);
+
+    /*
+     * Always set sorting to column 'Group', as it does not feel right to have
+     * the last known sort configuration of search view restored by 'Database
+     * WidgetStateSync', which is what happens without this
+     */
+    m_sortModel->sort(EntryModel::ParentGroup, Qt::AscendingOrder);
+    sortByColumn(EntryModel::ParentGroup, Qt::AscendingOrder);
+
+    m_inSearchMode = true;
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Get current state of 'Hide Usernames' setting (NOTE: just pass-through for
+ * m_model)
+ */
+bool EntryView::hideUsernames() const
+{
+    return m_model->hideUsernames();
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Set state of 'Hide Usernames' setting (NOTE: just pass-through for m_model)
+ */
+void EntryView::setHideUsernames(const bool hide)
+{
+    m_model->setHideUsernames(hide);
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Get current state of 'Hide Passwords' setting (NOTE: just pass-through for
+ * m_model)
+ */
+bool EntryView::hidePasswords() const
+{
+    return m_model->hidePasswords();
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Set state of 'Hide Passwords' setting (NOTE: just pass-through for m_model)
+ */
+void EntryView::setHidePasswords(const bool hide)
+{
+    m_model->setHidePasswords(hide);
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Get current state of view
+ */
+QByteArray EntryView::viewState() const
+{
+    return header()->saveState();
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Set state of entry view view
+ */
+bool EntryView::setViewState(const QByteArray& state) const
+{
+    return header()->restoreState(state);
 }
 
 /**
@@ -351,10 +448,16 @@ void EntryView::toggleColumnVisibility(QAction *action)
  * its implementation MUST call the corresponding parent method using
  * 'QTreeView::resizeEvent(event)'. Without this, fitting to window will
  * be broken and/or work unreliably (stumbled upon during testing)
+ *
+ * NOTE:
+ * Testing showed that it is absolutely necessary to emit signal 'viewState
+ * Changed' here. Without this, an incomplete view state might get saved by
+ * 'DatabaseWidgetStateSync' (e.g. only some columns resized)
  */
 void EntryView::fitColumnsToWindow()
 {
     header()->resizeSections(QHeaderView::Stretch);
+    emit viewStateChanged();
 }
 
 /**
@@ -395,16 +498,17 @@ void EntryView::fitColumnsToContents()
         }
         header()->resizeSection(header()->logicalIndex(last), header()->sectionSize(last) + (header()->width() - width));
     }
+
+    /*
+     * This should not be necessary due to use of header()->resizeSection,
+     * but lets do it anyway for the sake of completeness
+     */
+    emit viewStateChanged();
 }
 
 /**
  * @author Fonic <https://github.com/fonic>
  * Reset view to defaults
- *
- * NOTE:
- * header()->saveState()/restoreState() could also be used for this, but
- * testing showed that it complicates things more than it helps when trying
- * to account for current list mode
  */
 void EntryView::resetViewToDefaults()
 {
@@ -412,19 +516,12 @@ void EntryView::resetViewToDefaults()
     m_model->setHideUsernames(false);
     m_model->setHidePasswords(true);
 
-    /* Reset visibility, size and position of all columns */
-    for (int colidx = 0; colidx < header()->count(); colidx++) {
-        header()->showSection(colidx);
-        header()->resizeSection(colidx, header()->defaultSectionSize());
-        header()->moveSection(header()->visualIndex(colidx), colidx);
-    }
-
-    /* Reenter current list mode (affects first column and sorting) */
-    if (m_inEntryListMode) {
-        switchToEntryListMode();
+    /* Reset columns (size, order, sorting etc.) */
+    if (m_inSearchMode) {
+        header()->restoreState(m_defaultSearchViewState);
     }
     else {
-        switchToGroupMode();
+        header()->restoreState(m_defaultListViewState);
     }
 
     /* Nicely fitting columns to window feels like a sane default */

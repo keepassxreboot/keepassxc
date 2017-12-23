@@ -43,9 +43,26 @@ public:
     void setCurrentEntry(Entry* entry);
     Entry* entryFromIndex(const QModelIndex& index);
     void setEntryList(const QList<Entry*>& entries);
-    bool inEntryListMode();
+    bool inSearchMode();
     int numberOfSelectedEntries();
     void setFirstEntryActive();
+
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Methods to get/set state of 'Hide Usernames'/'Hide Passwords' settings
+     * (NOTE: these are just pass-through methods to avoid exposing entry model)
+     */
+    bool hideUsernames() const;
+    void setHideUsernames(const bool hide);
+    bool hidePasswords() const;
+    void setHidePasswords(const bool hide);
+
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Methods to get/set state of view
+     */
+    QByteArray viewState() const;
+    bool setViewState(const QByteArray& state) const;
 
 public slots:
     void setGroup(Group* group);
@@ -54,6 +71,11 @@ signals:
     void entryActivated(Entry* entry, EntryModel::ModelColumn column);
     void entryPressed(Entry* entry);
     void entrySelectionChanged();
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Signal to notify about changes of view state
+     */
+    void viewStateChanged();
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;
@@ -61,8 +83,13 @@ protected:
 private slots:
     void emitEntryActivated(const QModelIndex& index);
     void emitEntryPressed(const QModelIndex& index);
-    void switchToEntryListMode();
-    void switchToGroupMode();
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Methods to switch to list/search mode (NOTE: previously named 'switch
+     * ToGroupMode'/'switchToEntryListMode')
+     */
+    void switchToListMode();
+    void switchToSearchMode();
 
     /**
      * @author Fonic <https://github.com/fonic>
@@ -77,8 +104,14 @@ private slots:
 private:
     EntryModel* const m_model;
     SortFilterHideProxyModel* const m_sortModel;
-    bool m_inEntryListMode;
+    bool m_inSearchMode;
 
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Properties to store default view states used by resetViewToDefaults()
+     */
+    QByteArray m_defaultListViewState;
+    QByteArray m_defaultSearchViewState;
     /**
      * @author Fonic <https://github.com/fonic>
      * Properties to store header context menu and actions

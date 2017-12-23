@@ -27,16 +27,40 @@ DatabaseWidgetStateSync::DatabaseWidgetStateSync(QObject* parent)
 {
     m_mainSplitterSizes = variantToIntList(config()->get("GUI/SplitterState"));
     m_detailSplitterSizes = variantToIntList(config()->get("GUI/DetailSplitterState"));
-    m_columnSizesList = variantToIntList(config()->get("GUI/EntryListColumnSizes"));
-    m_columnSizesSearch = variantToIntList(config()->get("GUI/EntrySearchColumnSizes"));
+
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Load state of entry view 'Hide Usernames'/'Hide Passwords' settings
+     */
+    m_entryHideUsernames = config()->get("GUI/EntryHideUsernames").toBool();
+    m_entryHidePasswords = config()->get("GUI/EntryHidePasswords").toBool();
+
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Load states of entry view list/search view
+     */
+    m_entryListViewState = config()->get("GUI/EntryListViewState").toByteArray();
+    m_entrySearchViewState = config()->get("GUI/EntrySearchViewState").toByteArray();
 }
 
 DatabaseWidgetStateSync::~DatabaseWidgetStateSync()
 {
     config()->set("GUI/SplitterState", intListToVariant(m_mainSplitterSizes));
     config()->set("GUI/DetailSplitterState", intListToVariant(m_detailSplitterSizes));
-    config()->set("GUI/EntryListColumnSizes", intListToVariant(m_columnSizesList));
-    config()->set("GUI/EntrySearchColumnSizes", intListToVariant(m_columnSizesSearch));
+
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Save state of entry view 'Hide Usernames'/'Hide Passwords' settings
+     */
+    config()->set("GUI/EntryHideUsernames", m_entryHideUsernames);
+    config()->set("GUI/EntryHidePasswords", m_entryHidePasswords);
+
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Save states of entry view list/search view
+     */
+    config()->set("GUI/EntryListViewState", m_entryListViewState);
+    config()->set("GUI/EntrySearchViewState", m_entrySearchViewState);
 }
 
 void DatabaseWidgetStateSync::setActive(DatabaseWidget* dbWidget)
@@ -70,8 +94,14 @@ void DatabaseWidgetStateSync::setActive(DatabaseWidget* dbWidget)
                 SLOT(updateSplitterSizes()));
         connect(m_activeDbWidget, SIGNAL(detailSplitterSizesChanged()),
                 SLOT(updateSplitterSizes()));
-        connect(m_activeDbWidget, SIGNAL(entryColumnSizesChanged()),
-                SLOT(updateColumnSizes()));
+
+        /**
+         * @author Fonic <https://github.com/fonic>
+         * Connect signal to receive state changes of entry view view
+         */
+        connect(m_activeDbWidget, SIGNAL(entryViewStateChanged()),
+                SLOT(updateViewState()));
+
         connect(m_activeDbWidget, SIGNAL(listModeActivated()),
                 SLOT(restoreListView()));
         connect(m_activeDbWidget, SIGNAL(searchModeActivated()),
@@ -83,19 +113,59 @@ void DatabaseWidgetStateSync::setActive(DatabaseWidget* dbWidget)
     }
 }
 
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Restore entry view list view state
+ *
+ * NOTE:
+ * States of entry view 'Hide Usernames'/'Hide Passwords' settings are considered
+ * 'global', i.e. they are the same for both list and search mode
+ *
+ * NOTE:
+ * If m_entryListViewState is empty, it is the first time after clean/invalid
+ * config that list view is activated. Thus, save its current state. Without
+ * this, m_entryListViewState would remain empty until there is an actual view
+ * state change (e.g. column is resized)
+ */
 void DatabaseWidgetStateSync::restoreListView()
 {
-    if (!m_columnSizesList.isEmpty()) {
-        m_activeDbWidget->setEntryViewHeaderSizes(m_columnSizesList);
+    m_activeDbWidget->setEntryViewHideUsernames(m_entryHideUsernames);
+    m_activeDbWidget->setEntryViewHidePasswords(m_entryHidePasswords);
+
+    if (!m_entryListViewState.isEmpty()) {
+        m_activeDbWidget->setEntryViewViewState(m_entryListViewState);
+    }
+    else {
+        m_entryListViewState = m_activeDbWidget->entryViewViewState();
     }
 
     m_blockUpdates = false;
 }
 
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Restore entry view search view state
+ *
+ * NOTE:
+ * States of entry view 'Hide Usernames'/'Hide Passwords' settings are considered
+ * 'global', i.e. they are the same for both list and search mode
+ *
+ * NOTE:
+ * If m_entrySearchViewState is empty, it is the first time after clean/invalid
+ * config that search view is activated. Thus, save its current state. Without
+ * this, m_entrySearchViewState would remain empty until there is an actual view
+ * state change (e.g. column is resized)
+ */
 void DatabaseWidgetStateSync::restoreSearchView()
 {
-    if (!m_columnSizesSearch.isEmpty()) {
-        m_activeDbWidget->setEntryViewHeaderSizes(m_columnSizesSearch);
+    m_activeDbWidget->setEntryViewHideUsernames(m_entryHideUsernames);
+    m_activeDbWidget->setEntryViewHidePasswords(m_entryHidePasswords);
+
+    if (!m_entrySearchViewState.isEmpty()) {
+        m_activeDbWidget->setEntryViewViewState(m_entrySearchViewState);
+    }
+    else {
+        m_entrySearchViewState = m_activeDbWidget->entryViewViewState();
     }
 
     m_blockUpdates = false;
@@ -116,17 +186,26 @@ void DatabaseWidgetStateSync::updateSplitterSizes()
     m_detailSplitterSizes = m_activeDbWidget->detailSplitterSizes();
 }
 
-void DatabaseWidgetStateSync::updateColumnSizes()
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Update entry view list/search view state (NOTE: states of entry view
+ * 'Hide Usernames'/'Hide Passwords' settings are considered 'global',
+ * i.e. they are the same for both list and search mode)
+ */
+void DatabaseWidgetStateSync::updateViewState()
 {
     if (m_blockUpdates) {
         return;
     }
 
-    if (m_activeDbWidget->isGroupSelected()) {
-        m_columnSizesList = m_activeDbWidget->entryHeaderViewSizes();
+    m_entryHideUsernames = m_activeDbWidget->entryViewHideUsernames();
+    m_entryHidePasswords = m_activeDbWidget->entryViewHidePasswords();
+
+    if (m_activeDbWidget->isInSearchMode()) {
+        m_entrySearchViewState = m_activeDbWidget->entryViewViewState();
     }
     else {
-        m_columnSizesSearch = m_activeDbWidget->entryHeaderViewSizes();
+        m_entryListViewState = m_activeDbWidget->entryViewViewState();
     }
 }
 

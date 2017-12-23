@@ -75,8 +75,13 @@ public:
     void setHidePasswords(const bool hide);
 
 signals:
-    void switchedToEntryListMode();
-    void switchedToGroupMode();
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Signals to notify about list/search mode switches (NOTE: previously
+     * named 'switchedToGroupMode'/'switchedToEntryListMode')
+     */
+    void switchedToListMode();
+    void switchedToSearchMode();
 
     /**
      * @author Fonic <https://github.com/fonic>

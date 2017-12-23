@@ -37,7 +37,12 @@ public slots:
 private slots:
     void blockUpdates();
     void updateSplitterSizes();
-    void updateColumnSizes();
+
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Slot to update entry view view state
+     */
+    void updateViewState();
 
 private:
     static QList<int> variantToIntList(const QVariant& variant);
@@ -48,8 +53,22 @@ private:
     bool m_blockUpdates;
     QList<int> m_mainSplitterSizes;
     QList<int> m_detailSplitterSizes;
-    QList<int> m_columnSizesList;
-    QList<int> m_columnSizesSearch;
+
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Properties to store state of entry view 'Hide Usernames'/'Hide
+     * Passwords' settings
+     */
+    bool m_entryHideUsernames;
+    bool m_entryHidePasswords;
+
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Properties to store states of entry view list/search view (replaces
+     * m_columnSizesList/m_columnSizesSearch)
+     */
+    QByteArray m_entryListViewState;
+    QByteArray m_entrySearchViewState;
 };
 
 #endif // KEEPASSX_DATABASEWIDGETSTATESYNC_H

@@ -181,7 +181,13 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
 
     connect(m_mainSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(mainSplitterSizesChanged()));
     connect(m_detailSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(detailSplitterSizesChanged()));
-    connect(m_entryView->header(), SIGNAL(sectionResized(int,int,int)), SIGNAL(entryColumnSizesChanged()));
+
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Connect signal to pass through state changes of entry view view
+     */
+    connect(m_entryView, SIGNAL(viewStateChanged()), SIGNAL(entryViewStateChanged()));
+
     connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(onGroupChanged(Group*)));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), SIGNAL(groupChanged()));
     connect(m_entryView, SIGNAL(entryActivated(Entry*, EntryModel::ModelColumn)),
@@ -290,28 +296,58 @@ void DatabaseWidget::setDetailSplitterSizes(const QList<int> &sizes)
     m_detailSplitter->setSizes(sizes);
 }
 
-QList<int> DatabaseWidget::entryHeaderViewSizes() const
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Get current state of entry view 'Hide Usernames' setting
+ */
+bool DatabaseWidget::entryViewHideUsernames() const
 {
-    QList<int> sizes;
-
-    for (int i = 0; i < m_entryView->header()->count(); i++) {
-        sizes.append(m_entryView->header()->sectionSize(i));
-    }
-
-    return sizes;
+    return m_entryView->hideUsernames();
 }
 
-void DatabaseWidget::setEntryViewHeaderSizes(const QList<int>& sizes)
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Set state of entry view 'Hide Usernames' setting
+ */
+void DatabaseWidget::setEntryViewHideUsernames(const bool hide)
 {
-    const bool enoughSizes = sizes.size() == m_entryView->header()->count();
-    Q_ASSERT(enoughSizes);
-    if (!enoughSizes) {
-        return;
-    }
+    m_entryView->setHideUsernames(hide);
+}
 
-    for (int i = 0; i < sizes.size(); i++) {
-        m_entryView->header()->resizeSection(i, sizes[i]);
-    }
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Get current state of entry view 'Hide Passwords' setting
+ */
+bool DatabaseWidget::entryViewHidePasswords() const
+{
+    return m_entryView->hidePasswords();
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Set state of entry view 'Hide Passwords' setting
+ */
+void DatabaseWidget::setEntryViewHidePasswords(const bool hide)
+{
+    m_entryView->setHidePasswords(hide);
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Get current state of entry view view
+ */
+QByteArray DatabaseWidget::entryViewViewState() const
+{
+    return m_entryView->viewState();
+}
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Set state of entry view view
+ */
+bool DatabaseWidget::setEntryViewViewState(const QByteArray& state) const
+{
+    return m_entryView->setViewState(state);
 }
 
 void DatabaseWidget::clearAllWidgets()
@@ -1178,7 +1214,7 @@ bool DatabaseWidget::canDeleteCurrentGroup() const
 
 bool DatabaseWidget::isInSearchMode() const
 {
-    return m_entryView->inEntryListMode();
+    return m_entryView->inSearchMode();
 }
 
 Group* DatabaseWidget::currentGroup() const
