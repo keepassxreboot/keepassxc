@@ -95,10 +95,15 @@ const Metadata* Database::metadata() const
 
 Entry* Database::resolveEntry(const Uuid& uuid)
 {
-    return recFindEntry(uuid, m_rootGroup);
+    return findEntryRecursive(uuid, m_rootGroup);
 }
 
-Entry* Database::recFindEntry(const Uuid& uuid, Group* group)
+Entry* Database::resolveEntry(const QString& text, EntryReferenceType referenceType)
+{
+    return findEntryRecursive(text, referenceType, m_rootGroup);
+}
+
+Entry* Database::findEntryRecursive(const Uuid& uuid, Group* group)
 {
     const QList<Entry*> entryList = group->entries();
     for (Entry* entry : entryList) {
@@ -109,7 +114,57 @@ Entry* Database::recFindEntry(const Uuid& uuid, Group* group)
 
     const QList<Group*> children = group->children();
     for (Group* child : children) {
-        Entry* result = recFindEntry(uuid, child);
+        Entry* result = findEntryRecursive(uuid, child);
+        if (result) {
+            return result;
+        }
+    }
+
+    return nullptr;
+}
+
+Entry* Database::findEntryRecursive(const QString& text, EntryReferenceType referenceType, Group* group)
+{
+    Q_ASSERT_X(referenceType != EntryReferenceType::Unknown, "Database::findEntryRecursive",
+               "Can't search entry with \"referenceType\" parameter equal to \"Unknown\"");
+
+    bool found = false;
+    const QList<Entry*> entryList = group->entries();
+    for (Entry* entry : entryList) {
+        switch (referenceType) {
+        case EntryReferenceType::Unknown:
+            return nullptr;
+        case EntryReferenceType::Title:
+            found = entry->title() == text;
+            break;
+        case EntryReferenceType::UserName:
+            found = entry->username() == text;
+            break;
+        case EntryReferenceType::Password:
+            found = entry->password() == text;
+            break;
+        case EntryReferenceType::Url:
+            found = entry->url() == text;
+            break;
+        case EntryReferenceType::Notes:
+            found = entry->notes() == text;
+            break;
+        case EntryReferenceType::Uuid:
+            found = entry->uuid() == Uuid::fromHex(text);
+            break;
+        case EntryReferenceType::CustomAttributes:
+            found = entry->attributes()->containsValue(text);
+            break;
+        }
+
+        if (found) {
+            return entry;
+        }
+    }
+
+    const QList<Group*> children = group->children();
+    for (Group* child : children) {
+        Entry* result = findEntryRecursive(text, referenceType, child);
         if (result) {
             return result;
         }
@@ -120,10 +175,10 @@ Entry* Database::recFindEntry(const Uuid& uuid, Group* group)
 
 Group* Database::resolveGroup(const Uuid& uuid)
 {
-    return recFindGroup(uuid, m_rootGroup);
+    return findGroupRecursive(uuid, m_rootGroup);
 }
 
-Group* Database::recFindGroup(const Uuid& uuid, Group* group)
+Group* Database::findGroupRecursive(const Uuid& uuid, Group* group)
 {
     if (group->uuid() == uuid) {
         return group;
@@ -131,7 +186,7 @@ Group* Database::recFindGroup(const Uuid& uuid, Group* group)
 
     const QList<Group*> children = group->children();
     for (Group* child : children) {
-        Group* result = recFindGroup(uuid, child);
+        Group* result = findGroupRecursive(uuid, child);
         if (result) {
             return result;
         }

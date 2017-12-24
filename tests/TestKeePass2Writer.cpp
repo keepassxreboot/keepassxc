@@ -148,13 +148,15 @@ void TestKeePass2Writer::testRepair()
     KeePass2Repair repair;
     QFile file(brokenDbFilename);
     file.open(QIODevice::ReadOnly);
-    QCOMPARE(repair.repairDatabase(&file, key), KeePass2Repair::RepairSuccess);
-    Database* dbRepaired = repair.database();
+    auto result = repair.repairDatabase(&file, key);
+    QCOMPARE(result.first, KeePass2Repair::RepairSuccess);
+    Database* dbRepaired = result.second;
     QVERIFY(dbRepaired);
 
     QCOMPARE(dbRepaired->rootGroup()->entries().size(), 1);
     QCOMPARE(dbRepaired->rootGroup()->entries().at(0)->username(), QString("testuser").append(QChar(0x20AC)));
     QCOMPARE(dbRepaired->rootGroup()->entries().at(0)->password(), QString("testpw"));
+    delete dbRepaired;
 }
 
 void TestKeePass2Writer::cleanupTestCase()

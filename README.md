@@ -39,7 +39,7 @@ For a full list of features and changes, read the [CHANGELOG](CHANGELOG) documen
 
 ## Building KeePassXC
 
-Detailed instructions are available in the [Build and Install](./BUILD-INSTALL.md) 
+Detailed instructions are available in the [Build and Install](./INSTALL.md) 
 page or on the [Wiki page](https://github.com/keepassxreboot/keepassxc/wiki/Building-KeePassXC).
 
 ## Contributing

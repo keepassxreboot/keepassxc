@@ -69,7 +69,7 @@ CPU アーキテクチャ: %2
     </message>
     <message>
         <source>Distribution: %1</source>
-        <translation type="unfinished"/>
+        <translation>配布形式: %1</translation>
     </message>
 </context>
 <context>

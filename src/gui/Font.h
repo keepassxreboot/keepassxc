@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2013 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,28 +15,17 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTENTRY_H
-#define KEEPASSX_TESTENTRY_H
+#ifndef KEEPASSX_FONT_H
+#define KEEPASSX_FONT_H
 
-#include <QObject>
+#include <QFont>
 
-class Entry;
-
-class TestEntry : public QObject
+class Font
 {
-    Q_OBJECT
-
-private slots:
-    void initTestCase();
-    void testHistoryItemDeletion();
-    void testCopyDataFrom();
-    void testClone();
-    void testResolveUrl();
-    void testResolveUrlPlaceholders();
-    void testResolveRecursivePlaceholders();
-    void testResolveReferencePlaceholders();
-    void testResolveNonIdPlaceholdersToUuid();
-    void testResolveClonedEntry();
+public:
+    static QFont fixedFont();
+private:
+    Font() {}
 };
 
-#endif // KEEPASSX_TESTENTRY_H
+#endif // KEEPASSX_FONT_H

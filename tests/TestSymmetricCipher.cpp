@@ -202,7 +202,7 @@ void TestSymmetricCipher::testTwofish256CbcEncryption()
     bool ok;
     
     for (int i = 0; i < keys.size(); ++i) {
-        cipher.init(keys[i], ivs[i]);
+        QVERIFY(cipher.init(keys[i], ivs[i]));
         QByteArray ptNext = plainTexts[i];
         QByteArray ctPrev = ivs[i];
         QByteArray ctCur;

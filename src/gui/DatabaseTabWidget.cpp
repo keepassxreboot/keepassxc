@@ -90,12 +90,12 @@ void DatabaseTabWidget::newDatabase()
     Database* db = new Database();
     db->rootGroup()->setName(tr("Root"));
     dbStruct.dbWidget = new DatabaseWidget(db, this);
-    
+
     CompositeKey emptyKey;
     db->setKey(emptyKey);
 
     insertDatabase(db, dbStruct);
-    
+
     if (!saveDatabaseAs(db)) {
         closeDatabase(db);
         return;
@@ -624,6 +624,36 @@ void DatabaseTabWidget::updateTabNameFromDbWidgetSender()
 
     DatabaseWidget* dbWidget = static_cast<DatabaseWidget*>(sender());
     updateTabName(databaseFromDatabaseWidget(dbWidget));
+
+    Database* db = dbWidget->database();
+    Group *autoload = db->rootGroup()->findChildByName("AutoOpen");
+    if (autoload) {
+        const DatabaseManagerStruct& dbStruct = m_dbList.value(db);
+        QFileInfo dbpath(dbStruct.canonicalFilePath);
+        QDir dbFolder(dbpath.canonicalPath());
+        for (auto entry : autoload->entries()) {
+            if (entry->url().isEmpty() || entry->password().isEmpty()) {
+                continue;
+            }
+            QFileInfo filepath;
+            if (entry->url().startsWith("file://")) {
+                QUrl url(entry->url());
+                filepath.setFile(url.toLocalFile());
+            }
+            else {
+                filepath.setFile(entry->url());
+                if (filepath.isRelative()) {
+                    filepath.setFile(dbFolder, entry->url());
+                }
+            }
+
+            if (!filepath.isFile()) {
+                continue;
+            }
+
+            openDatabase(filepath.canonicalFilePath(), entry->password(), "");
+        }
+    }
 }
 
 int DatabaseTabWidget::databaseIndex(Database* db)

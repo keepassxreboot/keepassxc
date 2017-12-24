@@ -1,5 +1,5 @@
-#  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
 #  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+#  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -105,6 +105,7 @@ set(keepassx_SOURCES
     gui/EditWidgetIcons.cpp
     gui/EditWidgetProperties.cpp
     gui/FileDialog.cpp
+    gui/Font.cpp
     gui/IconModels.cpp
     gui/KeePass1OpenWidget.cpp
     gui/KMessageWidget.cpp
@@ -309,6 +310,13 @@ if(MINGW)
     set(OUTPUT_FILE_POSTFIX "Win32")
   endif()
 
+  # We have to copy the license file in the configuration phase.
+  # CMake checks that CPACK_RESOURCE_FILE_LICENSE actually exists and
+  # we have to copy it because WiX needs it to have a .txt extension.
+  execute_process(COMMAND ${CMAKE_COMMAND} -E copy
+                  "${CMAKE_SOURCE_DIR}/LICENSE.GPL-2"
+                  "${CMAKE_CURRENT_BINARY_DIR}/INSTALLER_LICENSE.txt")
+
   set(CPACK_GENERATOR "ZIP;NSIS")
   set(CPACK_STRIP_FILES ON)
   set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSXC_VERSION}-${OUTPUT_FILE_POSTFIX}")
@@ -316,7 +324,7 @@ if(MINGW)
   set(CPACK_PACKAGE_VERSION ${KEEPASSXC_VERSION})
   set(CPACK_PACKAGE_VENDOR "${PROGNAME} Team")
   string(REGEX REPLACE "/" "\\\\\\\\" CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/share/windows/installer-header.bmp")
-  set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE.GPL-2")
+  set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_BINARY_DIR}/INSTALLER_LICENSE.txt")
   set(CPACK_NSIS_ENABLE_UNINSTALL_BEFORE_INSTALL ON)
   set(CPACK_NSIS_MUI_ICON "${CMAKE_SOURCE_DIR}/share/windows/keepassxc.ico")
   set(CPACK_NSIS_MUI_UNIICON "${CPACK_NSIS_MUI_ICON}")
@@ -329,6 +337,13 @@ if(MINGW)
   set(CPACK_NSIS_DISPLAY_NAME ${PROGNAME})
   set(CPACK_NSIS_PACKAGE_NAME "${PROGNAME} v${KEEPASSXC_VERSION}")
   set(CPACK_NSIS_MUI_FINISHPAGE_RUN "../${PROGNAME}.exe")
+  set(CPACK_WIX_UPGRADE_GUID 88785A72-3EAE-4F29-89E3-BC6B19BA9A5B)
+  set(CPACK_WIX_PRODUCT_ICON "${CMAKE_SOURCE_DIR}/share/windows/keepassxc.ico")
+  set(CPACK_WIX_UI_BANNER "${CMAKE_SOURCE_DIR}/share/windows/wix-banner.bmp")
+  set(CPACK_WIX_UI_DIALOG "${CMAKE_SOURCE_DIR}/share/windows/wix-dialog.bmp")
+  set(CPACK_WIX_TEMPLATE "${CMAKE_SOURCE_DIR}/share/windows/wix-template.xml")
+  set(CPACK_WIX_PATCH_FILE "${CMAKE_SOURCE_DIR}/share/windows/wix-patch.xml")
+  set(CPACK_WIX_PROPERTY_ARPURLINFOABOUT "https://keepassxc.org")
   include(CPack)
 
   install(CODE "
@@ -338,7 +353,7 @@ if(MINGW)
   include(DeployQt4)
   install_qt4_executable(${PROGNAME}.exe)
   add_custom_command(TARGET ${PROGNAME} POST_BUILD
-                     COMMAND ${CMAKE_COMMAND} -E copy_if_different ${Qt5Core_DIR}/../../../share/qt5/plugins/platforms/qwindows$<$<CONFIG:Debug>:d>.dll
+                     COMMAND ${CMAKE_COMMAND} -E copy_if_different ${Qt5_DIR}/../../../share/qt5/plugins/platforms/qwindows$<$<CONFIG:Debug>:d>.dll
                      $<TARGET_FILE_DIR:${PROGNAME}>)
   install(FILES $<TARGET_FILE_DIR:${PROGNAME}>/qwindows$<$<CONFIG:Debug>:d>.dll DESTINATION "platforms")
 endif()

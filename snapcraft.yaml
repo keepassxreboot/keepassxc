@@ -1,5 +1,5 @@
 name: keepassxc
-version: 2.2.2
+version: 2.2.4
 grade: stable
 summary: Community-driven port of the Windows application “KeePass Password Safe”
 description: |
@@ -41,8 +41,13 @@ parts:
       - libxtst-dev
       - libyubikey-dev
       - libykpers-1-dev
+    stage-packages:
+      - dbus
+      - qttranslations5-l10n # common translations
     install: |
       sed -i 's|Icon=keepassxc|Icon=${SNAP}/usr/share/icons/hicolor/256x256/apps/keepassxc.png|g' $SNAPCRAFT_PART_INSTALL/usr/share/applications/org.keepassxc.KeePassXC.desktop
+    organize:
+      usr/share/qt5/translations/*.qm: usr/share/keepassxc/translations/
     after: [desktop-qt5]
 
   # Redefine desktop-qt5 stage packages to work with Ubuntu 17.04
@@ -52,19 +57,12 @@ parts:
       - ttf-ubuntu-font-family
       - dmz-cursor-theme
       - light-themes
+      - adwaita-icon-theme
+      - gnome-themes-standard
       - shared-mime-info
       - libqt5gui5
       - libgdk-pixbuf2.0-0
       - libqt5svg5 # for loading icon themes which are svg
       - locales-all
+      - xdg-user-dirs
 
-  # Overcome limitation in snapd to support URL loading (CTRL+U)
-  # client needs to install "snapd-xdg-open" on their system
-  snapd-xdg-open:
-    source: https://github.com/ubuntu-core/snapd-xdg-open.git
-    source-depth: 1
-    plugin: nil
-    install: |
-      install -D -t $SNAPCRAFT_PART_INSTALL/usr/bin/ data/xdg-open
-    stage-packages:
-      - dbus

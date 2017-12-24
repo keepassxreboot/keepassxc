@@ -55,9 +55,7 @@ int Clip::execute(QStringList arguments)
     parser.addOption(keyFile);
     parser.addPositionalArgument("entry", QObject::tr("Path of the entry to clip."));
     parser.addPositionalArgument(
-        "timeout",
-        QObject::tr("Timeout in seconds before clearing the clipboard."),
-        QString("[timeout]"));
+        "timeout", QObject::tr("Timeout in seconds before clearing the clipboard."), QString("[timeout]"));
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();

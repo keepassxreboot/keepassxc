@@ -25,11 +25,15 @@ const QString EntryAttributes::URLKey = "URL";
 const QString EntryAttributes::NotesKey = "Notes";
 const QStringList EntryAttributes::DefaultAttributes(QStringList() << TitleKey << UserNameKey
                                                      << PasswordKey << URLKey << NotesKey);
+
+const QString EntryAttributes::WantedFieldGroupName = "WantedField";
+const QString EntryAttributes::SearchInGroupName = "SearchIn";
+const QString EntryAttributes::SearchTextGroupName = "SearchText";
+
 const QString EntryAttributes::RememberCmdExecAttr = "_EXEC_CMD";
 
 EntryAttributes::EntryAttributes(QObject* parent)
     : QObject(parent)
-    , m_referenceRegExp("\\{REF:([TUPAN])@I:([^}]+)\\}", Qt::CaseInsensitive, QRegExp::RegExp2)
 {
     clear();
 }
@@ -61,9 +65,14 @@ QString EntryAttributes::value(const QString& key) const
     return m_attributes.value(key);
 }
 
-bool EntryAttributes::contains(const QString &key) const
+bool EntryAttributes::contains(const QString& key) const
 {
     return m_attributes.contains(key);
+}
+
+bool EntryAttributes::containsValue(const QString& value) const
+{
+    return m_attributes.values().contains(value);
 }
 
 bool EntryAttributes::isProtected(const QString& key) const
@@ -78,16 +87,8 @@ bool EntryAttributes::isReference(const QString& key) const
         return false;
     }
 
-    QString data = value(key);
-    if (m_referenceRegExp.indexIn(data) != -1) {
-        return true;
-    }
-    return false;
-}
-
-QRegExp* EntryAttributes::referenceRegExp()
-{
-    return &m_referenceRegExp;
+    const QString data = value(key);
+    return matchReference(data).hasMatch();
 }
 
 void EntryAttributes::set(const QString& key, const QString& value, bool protect)
@@ -256,6 +257,15 @@ bool EntryAttributes::operator!=(const EntryAttributes& other) const
 {
     return (m_attributes != other.m_attributes
             || m_protectedAttributes != other.m_protectedAttributes);
+}
+
+QRegularExpressionMatch EntryAttributes::matchReference(const QString& text)
+{
+    static QRegularExpression referenceRegExp(
+                "\\{REF:(?<WantedField>[TUPANI])@(?<SearchIn>[TUPANIO]):(?<SearchText>[^}]+)\\}",
+                QRegularExpression::CaseInsensitiveOption);
+
+    return referenceRegExp.match(text);
 }
 
 void EntryAttributes::clear()

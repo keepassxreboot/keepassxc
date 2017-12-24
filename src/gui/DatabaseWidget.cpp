@@ -950,8 +950,13 @@ void DatabaseWidget::switchToDatabaseSettings()
 void DatabaseWidget::switchToOpenDatabase(const QString& fileName)
 {
     updateFilename(fileName);
-    m_databaseOpenWidget->load(fileName);
-    setCurrentWidget(m_databaseOpenWidget);
+    if (m_databaseOpenWidget) {
+        m_databaseOpenWidget->load(fileName);
+        setCurrentWidget(m_databaseOpenWidget);
+    } else if (m_unlockDatabaseWidget) {
+        m_unlockDatabaseWidget->load(fileName);
+        setCurrentWidget(m_unlockDatabaseWidget);
+    }
 }
 
 void DatabaseWidget::switchToOpenDatabase(const QString& fileName, const QString& password,
@@ -959,7 +964,11 @@ void DatabaseWidget::switchToOpenDatabase(const QString& fileName, const QString
 {
     updateFilename(fileName);
     switchToOpenDatabase(fileName);
-    m_databaseOpenWidget->enterKey(password, keyFile);
+    if (m_databaseOpenWidget) {
+        m_databaseOpenWidget->enterKey(password, keyFile);
+    } else if (m_unlockDatabaseWidget) {
+        m_unlockDatabaseWidget->enterKey(password, keyFile);
+    }
 }
 
 void DatabaseWidget::switchToImportCsv(const QString& fileName)
@@ -1238,7 +1247,7 @@ void DatabaseWidget::reloadDatabaseFile()
             if (m_databaseModified) {
                 // Ask if we want to merge changes into new database
                 QMessageBox::StandardButton mb = MessageBox::question(this, tr("Merge Request"),
-                                     tr("The database file has changed and you have unsaved changes."
+                                     tr("The database file has changed and you have unsaved changes.\n"
                                         "Do you want to merge your changes?"),
                                      QMessageBox::Yes | QMessageBox::No);
 
