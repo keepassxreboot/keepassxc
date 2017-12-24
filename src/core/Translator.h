@@ -24,13 +24,12 @@
 class Translator
 {
 public:
-    static void installTranslator();
-    static QList<QPair<QString, QString> > availableLanguages();
+    static void installTranslators();
+    static QList<QPair<QString, QString>> availableLanguages();
 
 private:
-    static bool installTranslator(const QString& language);
     static bool installTranslator(const QString& language, const QString& path);
-    static bool installQtTranslator(const QString& language);
+    static bool installQtTranslator(const QString& language, const QString& path);
 };
 
 #endif // KEEPASSX_TRANSLATOR_H
