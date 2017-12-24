@@ -36,6 +36,11 @@
 #include <QSignalSpy>
 #include <QClipboard>
 #include <QDebug>
+#include <QDateTimeEdit>
+#include <QRadioButton>
+#include <QListView>
+#include <QCheckBox>
+
 
 #include "config-keepassx-tests.h"
 #include "core/Config.h"
@@ -60,6 +65,7 @@
 #include "gui/entry/EntryView.h"
 #include "gui/group/GroupModel.h"
 #include "gui/group/GroupView.h"
+#include "gui/group/EditGroupWidget.h"
 #include "keys/PasswordKey.h"
 
 void TestGui::initTestCase()
@@ -118,6 +124,11 @@ void TestGui::cleanup()
 
     m_db = nullptr;
     m_dbWidget = nullptr;
+}
+
+void TestGui::cleanupTestCase()
+{
+    delete m_mainWindow;
 }
 
 void TestGui::testCreateDatabase()
@@ -262,6 +273,112 @@ void TestGui::testTabs()
 {
     QCOMPARE(m_tabWidget->count(), 1);
     QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), m_dbFileName);
+}
+
+void TestGui::testEditGroup()
+{
+    constexpr int waitMSec = 10;
+
+    // Select the first group in the database
+    GroupView* groupView = m_dbWidget->findChild<GroupView*>("groupView");
+    GroupModel* groupModel = qobject_cast<GroupModel*>(groupView->model());
+    QModelIndex rootGroupIndex = groupView->model()->index(0, 0);
+    QModelIndex groupIndex = groupView->model()->index(0, 0, rootGroupIndex);
+    Group* group = groupModel->groupFromIndex(groupIndex);
+    group->setName("Name");
+    group->setNotes("");
+    group->setExpires(false);
+    group->setExpiryTime(QDateTime::currentDateTime().addDays(+2).toUTC()); // not expired
+    group->setSearchingEnabled(Group::TriState::Inherit);
+    group->setAutoTypeEnabled(Group::TriState::Inherit);
+    group->setDefaultAutoTypeSequence(QString());
+
+    EditGroupWidget* editGroupWidget = m_dbWidget->findChild<EditGroupWidget*>("editGroupWidget");
+    QDialogButtonBox* editGroupWidgetButtonBox = editGroupWidget->findChild<QDialogButtonBox*>("buttonBox");
+    QVERIFY(editGroupWidgetButtonBox != nullptr);
+    QPushButton* applyButton = editGroupWidgetButtonBox->button(QDialogButtonBox::Apply);
+    QVERIFY(applyButton != nullptr);
+
+    clickIndex(groupIndex, groupView, Qt::LeftButton);
+    triggerAction("actionGroupEdit");
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+
+    // Name
+    QVERIFY(!editGroupWidget->hasBeenModified());
+    QLineEdit* nameEdit = editGroupWidget->findChild<QLineEdit*>("editName");
+    QTest::keyClicks(nameEdit, "_edited");
+    QVERIFY(editGroupWidget->hasBeenModified());
+    QTest::mouseClick(applyButton, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+    QCOMPARE(group->name(), QString("Name_edited"));
+    QTest::qWait(waitMSec);
+
+    // Notes
+    QVERIFY(!editGroupWidget->hasBeenModified());
+    QPlainTextEdit* notesEdit = editGroupWidget->findChild<QPlainTextEdit*>("editNotes");
+    QTest::keyClicks(notesEdit, "_edited");
+    QVERIFY(editGroupWidget->hasBeenModified());
+    QTest::mouseClick(applyButton, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+    QCOMPARE(group->notes(), QString("_edited"));
+    QTest::qWait(waitMSec);
+
+    // Expire
+    QVERIFY(!editGroupWidget->hasBeenModified());
+    QCheckBox* expireCheck = editGroupWidget->findChild<QCheckBox*>("expireCheck");
+    QDateTimeEdit* expireDatePicker = editGroupWidget->findChild<QDateTimeEdit*>("expireDatePicker");
+    expireDatePicker->setDisplayFormat("yyyy/MM/dd hh:mm:ss");
+    QTest::qWait(waitMSec);
+
+    // enable expire
+    QTest::mouseClick(expireCheck, Qt::LeftButton);
+    QVERIFY(editGroupWidget->hasBeenModified());
+    QTest::mouseClick(applyButton, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+    QTest::qWait(waitMSec);
+
+    // change expire year
+    QTest::keyClick(expireDatePicker, Qt::Key_Down);
+    QVERIFY(editGroupWidget->hasBeenModified());
+    QTest::mouseClick(applyButton, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+    QCOMPARE(group->isExpired(), true);
+    QTest::qWait(waitMSec);
+
+    // Search enabled
+    QVERIFY(!editGroupWidget->hasBeenModified());
+    QComboBox* searchComboBox = editGroupWidget->findChild<QComboBox*>("searchComboBox");
+    clickIndex(1, searchComboBox, Qt::LeftButton);
+    QVERIFY(editGroupWidget->hasBeenModified());
+    QTest::mouseClick(applyButton, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+    QCOMPARE(group->searchingEnabled(), Group::TriState::Enable);
+    QTest::qWait(waitMSec);
+
+    // Auto-type enabled
+    QVERIFY(!editGroupWidget->hasBeenModified());
+    QComboBox* autotypeComboBox = editGroupWidget->findChild<QComboBox*>("autotypeComboBox");
+    clickIndex(2, autotypeComboBox, Qt::LeftButton);
+    QVERIFY(editGroupWidget->hasBeenModified());
+    QTest::mouseClick(applyButton, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+    QCOMPARE(group->autoTypeEnabled(), Group::TriState::Disable);
+    QTest::qWait(waitMSec);
+
+    // Auto-type sequence
+    QVERIFY(!editGroupWidget->hasBeenModified());
+    QRadioButton* autoTypeSequenceInherit = editGroupWidget->findChild<QRadioButton*>("autoTypeSequenceInherit");
+    QCOMPARE(autoTypeSequenceInherit->isChecked(), true);
+    QRadioButton* autoTypeSequenceCustomRadio = editGroupWidget->findChild<QRadioButton*>("autoTypeSequenceCustomRadio");
+    QTest::mouseClick(autoTypeSequenceCustomRadio, Qt::LeftButton, Qt::NoModifier, QPoint(5, 5));
+    QCOMPARE(autoTypeSequenceCustomRadio->isChecked(), true);
+    QLineEdit* sequenceEdit = editGroupWidget->findChild<QLineEdit*>("autoTypeSequenceCustomEdit");
+    sequenceEdit->clear();
+    QTest::keyClicks(sequenceEdit, "new_secuence");
+    QVERIFY(editGroupWidget->hasBeenModified());
+    QTest::mouseClick(applyButton, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+    QCOMPARE(group->defaultAutoTypeSequence(), QString("new_secuence"));
 }
 
 void TestGui::testEditEntry()
@@ -953,11 +1070,6 @@ void TestGui::testDatabaseLocking()
     QCOMPARE(m_tabWidget->tabText(0).remove('&'), origDbName);
 }
 
-void TestGui::cleanupTestCase()
-{
-    delete m_mainWindow;
-}
-
 int TestGui::addCannedEntries()
 {
     int entries_added = 0;
@@ -1039,7 +1151,20 @@ void TestGui::dragAndDropGroup(const QModelIndex& sourceIndex, const QModelIndex
 void TestGui::clickIndex(const QModelIndex& index, QAbstractItemView* view, Qt::MouseButton button,
                          Qt::KeyboardModifiers stateKey)
 {
-    QTest::mouseClick(view->viewport(), button, stateKey, view->visualRect(index).center());
+    QVERIFY(index.isValid());
+    const QPoint itemCenter = view->visualRect(index).center();
+    QVERIFY(!itemCenter.isNull());
+    QTest::mouseClick(view->viewport(), button, stateKey, itemCenter);
+}
+
+void TestGui::clickIndex(int index, QComboBox* comboBox, Qt::MouseButton button, Qt::KeyboardModifiers stateKey)
+{
+    QTest::mouseClick(comboBox, Qt::LeftButton);
+    QTest::qWait(500);
+    QListView* listview = comboBox->findChild<QListView *>();
+    QVERIFY(listview != nullptr);
+    const QModelIndex idx = listview->model()->index(index, 0);
+    clickIndex(idx, listview, button, stateKey);
 }
 
 QTEST_MAIN(TestGui)
