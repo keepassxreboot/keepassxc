@@ -141,6 +141,9 @@ public:
     void merge(const Group* other);
     QString print(bool recursive = false, int depth = 0);
 
+    void setModified(bool modified);
+    bool isModified() const;
+
 signals:
     void dataChanged(Group* group);
 
@@ -188,6 +191,7 @@ private:
     QPointer<Group> m_parent;
 
     bool m_updateTimeinfo;
+    bool m_modified;
 
     friend void Database::setRootGroup(Group* group);
     friend Entry::~Entry();

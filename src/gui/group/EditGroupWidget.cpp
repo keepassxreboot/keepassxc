@@ -18,10 +18,11 @@
 #include "EditGroupWidget.h"
 #include "ui_EditGroupWidgetMain.h"
 
-#include "core/Metadata.h"
 #include "core/FilePath.h"
+#include "core/Metadata.h"
 #include "gui/EditWidgetIcons.h"
 #include "gui/EditWidgetProperties.h"
+#include "gui/MessageBox.h"
 
 EditGroupWidget::EditGroupWidget(QWidget* parent)
     : EditWidget(parent)
@@ -110,36 +111,24 @@ void EditGroupWidget::save()
 
 void EditGroupWidget::apply()
 {
-    m_group->setName(m_mainUi->editName->text());
-    m_group->setNotes(m_mainUi->editNotes->toPlainText());
-    m_group->setExpires(m_mainUi->expireCheck->isChecked());
-    m_group->setExpiryTime(m_mainUi->expireDatePicker->dateTime().toUTC());
-
-    m_group->setSearchingEnabled(triStateFromIndex(m_mainUi->searchComboBox->currentIndex()));
-    m_group->setAutoTypeEnabled(triStateFromIndex(m_mainUi->autotypeComboBox->currentIndex()));
-
-    if (m_mainUi->autoTypeSequenceInherit->isChecked()) {
-        m_group->setDefaultAutoTypeSequence(QString());
-    }
-    else {
-        m_group->setDefaultAutoTypeSequence(m_mainUi->autoTypeSequenceCustomEdit->text());
-    }
-
-    IconStruct iconStruct = m_editGroupWidgetIcons->state();
-
-    if (iconStruct.number < 0) {
-        m_group->setIcon(Group::DefaultIconNumber);
-    }
-    else if (iconStruct.uuid.isNull()) {
-        m_group->setIcon(iconStruct.number);
-    }
-    else {
-        m_group->setIcon(iconStruct.uuid);
-    }
+    updateEntryData(m_group);
 }
 
 void EditGroupWidget::cancel()
 {
+    if (hasBeenModified()) {
+        const QString question = tr("The group has unsaved changes.");
+        auto result = MessageBox::question(this, QString(), question,
+                                           QMessageBox::Cancel | QMessageBox::Save | QMessageBox::Discard,
+                                           QMessageBox::Cancel);
+        if (result == QMessageBox::Save) {
+            save();
+            return;
+        } else if (result == QMessageBox::Cancel) {
+            return;
+        }
+    }
+
     if (!m_group->iconUuid().isNull() &&
             !m_database->metadata()->containsCustomIcon(m_group->iconUuid())) {
         m_group->setIcon(Entry::DefaultIconNumber);
@@ -156,6 +145,17 @@ void EditGroupWidget::clear()
     m_editGroupWidgetIcons->reset();
 }
 
+bool EditGroupWidget::hasBeenModified() const
+{
+    // check if updating the group would modify it
+    QScopedPointer<Group> group(new Group());
+    group->copyDataFrom(m_group);
+    group->setModified(false);
+
+    updateEntryData(group.data());
+    return group->isModified();
+}
+
 void EditGroupWidget::addTriStateItems(QComboBox* comboBox, bool inheritDefault)
 {
     QString inheritDefaultString;
@@ -170,6 +170,31 @@ void EditGroupWidget::addTriStateItems(QComboBox* comboBox, bool inheritDefault)
     comboBox->addItem(tr("Inherit from parent group (%1)").arg(inheritDefaultString));
     comboBox->addItem(tr("Enable"));
     comboBox->addItem(tr("Disable"));
+}
+
+void EditGroupWidget::updateEntryData(Group *group) const
+{
+    group->setName(m_mainUi->editName->text());
+    group->setNotes(m_mainUi->editNotes->toPlainText());
+    group->setExpires(m_mainUi->expireCheck->isChecked());
+    group->setExpiryTime(m_mainUi->expireDatePicker->dateTime().toUTC());
+
+    group->setSearchingEnabled(triStateFromIndex(m_mainUi->searchComboBox->currentIndex()));
+    group->setAutoTypeEnabled(triStateFromIndex(m_mainUi->autotypeComboBox->currentIndex()));
+
+    QString sequence = m_mainUi->autoTypeSequenceInherit->isChecked() ? QString()
+                                                                      : m_mainUi->autoTypeSequenceCustomEdit->text();
+    group->setDefaultAutoTypeSequence(sequence);
+
+    IconStruct iconStruct = m_editGroupWidgetIcons->state();
+    if (iconStruct.number < 0) {
+        group->setIcon(Group::DefaultIconNumber);
+    } else if (iconStruct.uuid.isNull()) {
+        group->setIcon(iconStruct.number);
+    } else {
+        group->setIcon(iconStruct.uuid);
+    }
+
 }
 
 int EditGroupWidget::indexFromTriState(Group::TriState triState)

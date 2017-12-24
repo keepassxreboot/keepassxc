@@ -42,6 +42,7 @@ public:
 
     void loadGroup(Group* group, bool create, Database* database);
     void clear();
+    bool hasBeenModified() const;
 
 signals:
     void editFinished(bool accepted);
@@ -55,8 +56,9 @@ private slots:
 
 private:
     void addTriStateItems(QComboBox* comboBox, bool inheritValue);
-    int indexFromTriState(Group::TriState triState);
-    Group::TriState triStateFromIndex(int index);
+    void updateEntryData(Group* group) const;
+    static int indexFromTriState(Group::TriState triState);
+    static Group::TriState triStateFromIndex(int index);
 
     const QScopedPointer<Ui::EditGroupWidgetMain> m_mainUi;
     QWidget* const m_editGroupWidgetMain;

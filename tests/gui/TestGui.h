@@ -24,6 +24,8 @@
 #include <QAbstractItemModel>
 #include <QObject>
 
+class QComboBox;
+
 class Database;
 class DatabaseTabWidget;
 class DatabaseWidget;
@@ -44,6 +46,7 @@ private slots:
     void testMergeDatabase();
     void testAutoreloadDatabase();
     void testTabs();
+    void testEditGroup();
     void testEditEntry();
     void testAddEntry();
     void testPasswordEntryEntropy();
@@ -68,6 +71,8 @@ private:
     void dragAndDropGroup(const QModelIndex& sourceIndex, const QModelIndex& targetIndex, int row,
                           bool expectedResult, const QString& expectedParentName, int expectedPos);
     void clickIndex(const QModelIndex& index, QAbstractItemView* view, Qt::MouseButton button,
+                    Qt::KeyboardModifiers stateKey = 0);
+    void clickIndex(int index, QComboBox* comboBox, Qt::MouseButton button,
                     Qt::KeyboardModifiers stateKey = 0);
 
     MainWindow* m_mainWindow;

@@ -23,7 +23,12 @@
 #include "core/Metadata.h"
 #include "crypto/SymmetricCipher.h"
 #include "format/KeePass2.h"
+#include "gui/MessageBox.h"
 #include "keys/CompositeKey.h"
+
+namespace {
+constexpr int Megabyte = 1024 * 1024;
+}
 
 DatabaseSettingsWidget::DatabaseSettingsWidget(QWidget* parent)
     : DialogyWidget(parent)
@@ -65,7 +70,7 @@ void DatabaseSettingsWidget::load(Database* db)
         m_ui->historyMaxItemsSpinBox->setValue(Metadata::DefaultHistoryMaxItems);
         m_ui->historyMaxItemsCheckBox->setChecked(false);
     }
-    int historyMaxSizeMiB = qRound(meta->historyMaxSize() / qreal(1048576));
+    int historyMaxSizeMiB = qRound(meta->historyMaxSize() / qreal(Megabyte));
     if (historyMaxSizeMiB > 0) {
         m_ui->historyMaxSizeSpinBox->setValue(historyMaxSizeMiB);
         m_ui->historyMaxSizeCheckBox->setChecked(true);
@@ -110,7 +115,7 @@ void DatabaseSettingsWidget::save()
 
     int historyMaxSize;
     if (m_ui->historyMaxSizeCheckBox->isChecked()) {
-        historyMaxSize = m_ui->historyMaxSizeSpinBox->value() * 1048576;
+        historyMaxSize = m_ui->historyMaxSizeSpinBox->value() * Megabyte;
     }
     else {
         historyMaxSize = -1;
@@ -129,6 +134,18 @@ void DatabaseSettingsWidget::save()
 
 void DatabaseSettingsWidget::reject()
 {
+    if (hasBeenModified()) {
+        const QString question = tr("The database settings has unsaved changes.");
+        auto result = MessageBox::question(this, QString(), question,
+                                           QMessageBox::Cancel | QMessageBox::Save | QMessageBox::Discard,
+                                           QMessageBox::Cancel);
+        if (result == QMessageBox::Save) {
+            save();
+            return;
+        } else if (result == QMessageBox::Cancel) {
+            return;
+        }
+    }
     emit editFinished(false);
 }
 
@@ -148,4 +165,25 @@ void DatabaseSettingsWidget::truncateHistories()
     for (Entry* entry : allEntries) {
         entry->truncateHistory();
     }
+}
+
+bool DatabaseSettingsWidget::hasBeenModified() const
+{
+    const int historyMaxItems = m_ui->historyMaxItemsCheckBox->isChecked() ? m_ui->historyMaxItemsSpinBox->value()
+                                                                           : -1;
+    const int historyMaxSize = m_ui->historyMaxSizeCheckBox->isChecked() ? m_ui->historyMaxSizeSpinBox->value() * Megabyte
+                                                                         : -1;
+    const auto algorithm = static_cast<SymmetricCipher::Algorithm>(m_ui->AlgorithmComboBox->currentIndex());
+    const Metadata* const meta = m_db->metadata();
+
+    const bool modified = meta->name() != m_ui->dbNameEdit->text()
+                        || meta->description() != m_ui->dbDescriptionEdit->text()
+                        || meta->defaultUserName() != m_ui->defaultUsernameEdit->text()
+                        || m_db->cipher() != SymmetricCipher::algorithmToCipher(algorithm)
+                        || meta->recycleBinEnabled() != m_ui->recycleBinEnabledCheckBox->isChecked()
+                        || m_db->transformRounds() != static_cast<quint64>(m_ui->transformRoundsSpinBox->value())
+                        || meta->historyMaxItems() != historyMaxItems
+                        || meta->historyMaxSize() != historyMaxSize;
+
+    return modified;
 }
