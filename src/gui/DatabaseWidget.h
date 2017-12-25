@@ -178,6 +178,7 @@ public slots:
 
     void showMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton = true,
                      int autoHideTimeout = MessageWidget::DefaultAutoHideTimeout);
+    void showErrorMessage(const QString& errorMessage);
     void hideMessage();
 
 private slots:
