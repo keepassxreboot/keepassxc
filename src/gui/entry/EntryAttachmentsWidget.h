@@ -8,6 +8,7 @@ namespace Ui {
 class EntryAttachmentsWidget;
 }
 
+class QByteArray;
 class EntryAttachments;
 class EntryAttachmentsModel;
 
@@ -23,6 +24,10 @@ public:
     const EntryAttachments* entryAttachments() const;
     bool isReadOnly() const;
     bool isButtonsVisible() const;
+
+    QByteArray getAttachment(const QString& name);
+    void setAttachment(const QString& name, const QByteArray& value);
+    void removeAttachment(const QString& name);
 
 public slots:
     void setEntryAttachments(const EntryAttachments* attachments);

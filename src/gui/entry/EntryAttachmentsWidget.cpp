@@ -106,6 +106,23 @@ void EntryAttachmentsWidget::setButtonsVisible(bool buttonsVisible)
     emit buttonsVisibleChanged(m_buttonsVisible);
 }
 
+QByteArray EntryAttachmentsWidget::getAttachment(const QString &name)
+{
+    return m_entryAttachments->value(name);
+}
+
+void EntryAttachmentsWidget::setAttachment(const QString &name, const QByteArray &value)
+{
+    m_entryAttachments->set(name, value);
+}
+
+void EntryAttachmentsWidget::removeAttachment(const QString &name)
+{
+    if (!isReadOnly() && m_entryAttachments->hasKey(name)) {
+        m_entryAttachments->remove(name);
+    }
+}
+
 void EntryAttachmentsWidget::insertAttachments()
 {
     Q_ASSERT(!isReadOnly());
