@@ -111,6 +111,11 @@ void EntryAttachments::remove(const QStringList& keys)
     }
 }
 
+bool EntryAttachments::isEmpty() const
+{
+    return m_attachments.isEmpty();
+}
+
 void EntryAttachments::clear()
 {
     if (m_attachments.isEmpty()) {

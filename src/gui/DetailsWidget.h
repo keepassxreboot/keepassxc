@@ -44,9 +44,13 @@ public:
         GeneralTab = 0,
         AttributesTab = 1,
         GroupNotesTab = 1,
-        NotesTab = 2,
-        AutotypeTab = 3,
+        AttachmentsTab = 2,
+        NotesTab = 3,
+        AutotypeTab = 4,
     };
+
+signals:
+    void errorOccurred(const QString& error);
 
 private slots:
     void getSelectedEntry(Entry* selectedEntry);
@@ -64,8 +68,9 @@ private:
     Group* m_currentGroup;
     quint8 m_step;
     QTimer* m_timer;
-    QWidget* m_attributesWidget;
-    QWidget* m_autotypeWidget;
+    QWidget* m_attributesTabWidget;
+    QWidget* m_attachmentsTabWidget;
+    QWidget* m_autotypeTabWidget;
     quint8 m_selectedTabEntry;
     quint8 m_selectedTabGroup;
     QString shortUrl(QString url);

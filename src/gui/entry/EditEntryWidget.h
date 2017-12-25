@@ -31,8 +31,6 @@ class Database;
 class EditWidgetIcons;
 class EditWidgetProperties;
 class Entry;
-class EntryAttachments;
-class EntryAttachmentsModel;
 class EntryAttributes;
 class EntryAttributesModel;
 class EntryHistoryModel;
@@ -86,12 +84,6 @@ private slots:
     void updateCurrentAttribute();
     void protectCurrentAttribute(bool state);
     void revealCurrentAttribute();
-    void insertAttachments();
-    void saveSelectedAttachment();
-    void saveSelectedAttachments();
-    void openAttachment(const QModelIndex& index);
-    void openSelectedAttachments();
-    void removeSelectedAttachments();
     void updateAutoTypeEnabled();
     void insertAutoTypeAssoc();
     void removeAutoTypeAssoc();
@@ -106,7 +98,6 @@ private slots:
     void histEntryActivated(const QModelIndex& index);
     void updateHistoryButtons(const QModelIndex& current, const QModelIndex& previous);
     void useExpiryPreset(QAction* action);
-    void updateAttachmentButtonsEnabled(const QModelIndex& current);
     void toggleHideNotes(bool visible);
 #ifdef WITH_XC_SSHAGENT
     void updateSSHAgent();
@@ -140,8 +131,6 @@ private:
 
     void displayAttribute(QModelIndex index, bool showProtected);
 
-    bool openAttachment(const QModelIndex& index, QString *errorMessage);
-
     Entry* m_entry;
     Database* m_database;
 
@@ -164,8 +153,6 @@ private:
     QWidget* const m_sshAgentWidget;
     EditWidgetProperties* const m_editWidgetProperties;
     QWidget* const m_historyWidget;
-    EntryAttachments* const m_entryAttachments;
-    EntryAttachmentsModel* const m_attachmentsModel;
     EntryAttributes* const m_entryAttributes;
     EntryAttributesModel* const m_attributesModel;
     EntryHistoryModel* const m_historyModel;

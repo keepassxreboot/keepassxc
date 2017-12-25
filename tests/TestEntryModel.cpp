@@ -122,9 +122,11 @@ void TestEntryModel::testAttachmentsModel()
     entryAttachments->set("first", QByteArray("123"));
 
     entryAttachments->set("2nd", QByteArray("456"));
-    entryAttachments->set("2nd", QByteArray("789"));
+    entryAttachments->set("2nd", QByteArray("7890"));
 
-    QCOMPARE(model->data(model->index(0, 0)).toString().left(4), QString("2nd "));
+    const int firstRow = 0;
+    QCOMPARE(model->data(model->index(firstRow, EntryAttachmentsModel::NameColumn)).toString(), QString("2nd"));
+    QCOMPARE(model->data(model->index(firstRow, EntryAttachmentsModel::SizeColumn), Qt::EditRole).toInt(), 4);
 
     entryAttachments->remove("first");
 

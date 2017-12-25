@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>EditEntryWidgetAdvanced</class>
  <widget class="QWidget" name="EditEntryWidgetAdvanced">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>400</width>
-    <height>366</height>
-   </rect>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">
     <number>0</number>
@@ -153,68 +145,14 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="QListView" name="attachmentsView">
-        <property name="flow">
-         <enum>QListView::LeftToRight</enum>
-        </property>
-        <property name="isWrapping" stdset="0">
-         <bool>true</bool>
+       <widget class="EntryAttachmentsWidget" name="attachmentsWidget" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>100</height>
+         </size>
         </property>
        </widget>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="attachmentsButtonLayout">
-        <item>
-         <widget class="QPushButton" name="addAttachmentButton">
-          <property name="text">
-           <string>Add</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="removeAttachmentButton">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>Remove</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="openAttachmentButton">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>Open</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="saveAttachmentButton">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>Save</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="verticalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
       </item>
      </layout>
     </widget>
@@ -222,6 +160,12 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>EntryAttachmentsWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/entry/EntryAttachmentsWidget.h</header>
+   <container>1</container>
+  </customwidget>
   <customwidget>
    <class>AttributesListView</class>
    <extends>QListView</extends>
@@ -234,11 +178,6 @@
   <tabstop>addAttributeButton</tabstop>
   <tabstop>removeAttributeButton</tabstop>
   <tabstop>editAttributeButton</tabstop>
-  <tabstop>attachmentsView</tabstop>
-  <tabstop>addAttachmentButton</tabstop>
-  <tabstop>removeAttachmentButton</tabstop>
-  <tabstop>openAttachmentButton</tabstop>
-  <tabstop>saveAttachmentButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>

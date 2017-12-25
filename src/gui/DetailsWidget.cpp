@@ -21,12 +21,16 @@
 
 #include <QDebug>
 #include <QTimer>
+#include <QDir>
+#include <QDesktopServices>
+#include <QTemporaryFile>
 
 #include "core/Config.h"
 #include "core/FilePath.h"
 #include "core/TimeInfo.h"
 #include "gui/Clipboard.h"
 #include "gui/DatabaseWidget.h"
+#include "entry/EntryAttachmentsModel.h"
 
 DetailsWidget::DetailsWidget(QWidget* parent)
     : QWidget(parent)
@@ -35,8 +39,9 @@ DetailsWidget::DetailsWidget(QWidget* parent)
     , m_currentEntry(nullptr)
     , m_currentGroup(nullptr)
     , m_timer(nullptr)
-    , m_attributesWidget(nullptr)
-    , m_autotypeWidget(nullptr)
+    , m_attributesTabWidget(nullptr)
+    , m_attachmentsTabWidget(nullptr)
+    , m_autotypeTabWidget(nullptr)
     , m_selectedTabEntry(0)
     , m_selectedTabGroup(0)
 {
@@ -52,6 +57,13 @@ DetailsWidget::DetailsWidget(QWidget* parent)
     connect(m_ui->totpButton, SIGNAL(toggled(bool)), SLOT(showTotp(bool)));
     connect(m_ui->closeButton, SIGNAL(toggled(bool)), SLOT(hideDetails()));
     connect(m_ui->tabWidget, SIGNAL(tabBarClicked(int)), SLOT(updateTabIndex(int)));
+
+    m_ui->attachmentsWidget->setReadOnly(true);
+    m_ui->attachmentsWidget->setButtonsVisible(false);
+
+    m_attributesTabWidget = m_ui->tabWidget->widget(AttributesTab);
+    m_attachmentsTabWidget = m_ui->tabWidget->widget(AttachmentsTab);
+    m_autotypeTabWidget = m_ui->tabWidget->widget(AutotypeTab);
 
     this->hide();
 }
@@ -75,9 +87,10 @@ void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
 
     m_ui->stackedWidget->setCurrentIndex(EntryPreview);
 
-    if (m_ui->tabWidget->count() < 4) {
-        m_ui->tabWidget->insertTab(static_cast<int>(AttributesTab), m_attributesWidget, "Attributes");
-        m_ui->tabWidget->insertTab(static_cast<int>(AutotypeTab), m_autotypeWidget, "Autotype");
+    if (m_ui->tabWidget->count() < 5) {
+        m_ui->tabWidget->insertTab(static_cast<int>(AttributesTab), m_attributesTabWidget, tr("Attributes"));
+        m_ui->tabWidget->insertTab(static_cast<int>(AttachmentsTab), m_attachmentsTabWidget, tr("Attachments"));
+        m_ui->tabWidget->insertTab(static_cast<int>(AutotypeTab), m_autotypeTabWidget, tr("Autotype"));
     }
 
     m_ui->tabWidget->setTabEnabled(AttributesTab, false);
@@ -173,6 +186,10 @@ void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
         m_ui->attributesEdit->setText(attributesText);
     }
 
+    const bool hasAttachments = !m_currentEntry->attachments()->isEmpty();
+    m_ui->tabWidget->setTabEnabled(AttachmentsTab, hasAttachments);
+    m_ui->attachmentsWidget->setEntryAttachments(m_currentEntry->attachments());
+
     m_ui->autotypeTree->clear();
     AutoTypeAssociations* autotypeAssociations = m_currentEntry->autoTypeAssociations();
     QList<QTreeWidgetItem*> items;
@@ -209,9 +226,8 @@ void DetailsWidget::getSelectedGroup(Group* selectedGroup)
     m_ui->stackedWidget->setCurrentIndex(GroupPreview);
 
     if (m_ui->tabWidget->count() > 2) {
-        m_autotypeWidget = m_ui->tabWidget->widget(AutotypeTab);
-        m_attributesWidget = m_ui->tabWidget->widget(AttributesTab);
         m_ui->tabWidget->removeTab(AutotypeTab);
+        m_ui->tabWidget->removeTab(AttachmentsTab);
         m_ui->tabWidget->removeTab(AttributesTab);
     }
 
