@@ -285,7 +285,7 @@ void EditEntryWidget::setupSSHAgent()
 void EditEntryWidget::updateSSHAgent()
 {
     KeeAgentSettings settings;
-    settings.fromXml(m_entryAttachments->value("KeeAgent.settings"));
+    settings.fromXml(m_advancedUi->attachmentsWidget->getAttachment("KeeAgent.settings"));
 
     m_sshAgentUi->addKeyToAgentCheckBox->setChecked(settings.addAtDatabaseOpen());
     m_sshAgentUi->removeKeyFromAgentCheckBox->setChecked(settings.removeAtDatabaseClose());
@@ -299,7 +299,8 @@ void EditEntryWidget::updateSSHAgent()
 
     m_sshAgentUi->attachmentComboBox->addItem("");
 
-    for (QString fileName : m_entryAttachments->keys()) {
+    auto attachments = m_advancedUi->attachmentsWidget->entryAttachments();
+    for (const QString& fileName : attachments->keys()) {
         if (fileName == "KeeAgent.settings") {
             continue;
         }
@@ -382,10 +383,10 @@ void EditEntryWidget::saveSSHAgentConfig()
     // we don't use this either but we don't want it to dirty flag the config
     settings.setSaveAttachmentToTempFile(m_sshAgentSettings.saveAttachmentToTempFile());
 
-    if (settings.isDefault() && m_entryAttachments->hasKey("KeeAgent.settings")) {
-        m_entryAttachments->remove("KeeAgent.settings");
+    if (settings.isDefault()) {
+        m_advancedUi->attachmentsWidget->removeAttachment("KeeAgent.settings");
     } else if (settings != m_sshAgentSettings) {
-        m_entryAttachments->set("KeeAgent.settings", settings.toXml());
+        m_advancedUi->attachmentsWidget->setAttachment("KeeAgent.settings", settings.toXml());
     }
 
     m_sshAgentSettings = settings;
@@ -404,7 +405,7 @@ bool EditEntryWidget::getOpenSSHKey(OpenSSHKey& key)
     QByteArray privateKeyData;
 
     if (m_sshAgentUi->attachmentRadioButton->isChecked()) {
-        privateKeyData = m_entryAttachments->value(m_sshAgentUi->attachmentComboBox->currentText());
+        privateKeyData = m_advancedUi->attachmentsWidget->getAttachment(m_sshAgentUi->attachmentComboBox->currentText());
     } else {
         QFile localFile(m_sshAgentUi->externalFileEdit->text());
 
