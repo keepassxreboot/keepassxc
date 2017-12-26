@@ -1,4 +1,5 @@
 /*
+*  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
 *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
 *
 *  This program is free software: you can redistribute it and/or modify
@@ -18,16 +19,30 @@
 #include "FileKey.h"
 
 #include <QFile>
-#include <QXmlStreamReader>
 
 #include "core/Tools.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
 
-FileKey::FileKey()
-{
-}
-
+/**
+ * Read key file from device while trying to detect its file format.
+ *
+ * If no legacy key file format was detected, the SHA-256 hash of the
+ * key file will be used, allowing usage of arbitrary files as key files.
+ * In case of a detected legacy key file format, the raw byte contents
+ * will be extracted from the file.
+ *
+ * Supported legacy formats are:
+ *  - KeePass 2 XML key file
+ *  - Fixed 32 byte binary
+ *  - Fixed 32 byte ASCII hex-encoded binary
+ *
+ * Usage of legacy formats is discouraged and support for them may be
+ * removed in a future version.
+ *
+ * @param device input device
+ * @return true if key file was loaded successfully
+ */
 bool FileKey::load(QIODevice* device)
 {
     // we may need to read the file multiple times
@@ -39,8 +54,7 @@ bool FileKey::load(QIODevice* device)
         return false;
     }
 
-    // try different key file formats
-
+    // try different legacy key file formats
     if (!device->reset()) {
         return false;
     }
@@ -65,13 +79,31 @@ bool FileKey::load(QIODevice* device)
     if (!device->reset()) {
         return false;
     }
-    if (loadHashed(device)) {
-        return true;
-    }
 
-    return false;
+    // if no legacy format was detected, generate SHA-256 hash of key file
+    return loadHashed(device);
 }
 
+/**
+ * Load key file from path while trying to detect its file format.
+ *
+ * If no legacy key file format was detected, the SHA-256 hash of the
+ * key file will be used, allowing usage of arbitrary files as key files.
+ * In case of a detected legacy key file format, the raw byte contents
+ * will be extracted from the file.
+ *
+ * Supported legacy formats are:
+ *  - KeePass 2 XML key file
+ *  - Fixed 32 byte binary
+ *  - Fixed 32 byte ASCII hex-encoded binary
+ *
+ * Usage of legacy formats is discouraged and support for them may be
+ * removed in a future version.
+ *
+ * @param fileName input file name
+ * @param errorMsg error message if loading failed
+ * @return true if key file was loaded successfully
+ */
 bool FileKey::load(const QString& fileName, QString* errorMsg)
 {
     QFile file(fileName);
@@ -95,41 +127,42 @@ bool FileKey::load(const QString& fileName, QString* errorMsg)
     return result;
 }
 
+/**
+ * @return key data as bytes
+ */
 QByteArray FileKey::rawKey() const
 {
     return m_key;
 }
 
+/**
+ * @return cloned \link FileKey instance
+ */
 FileKey* FileKey::clone() const
 {
     return new FileKey(*this);
 }
 
-void FileKey::create(QIODevice* device)
+/**
+ * Generate a new key file from random bytes.
+ *
+ * @param device output device
+ * @param number of random bytes to generate
+ */
+void FileKey::create(QIODevice* device, int size)
 {
-    QXmlStreamWriter xmlWriter(device);
-
-    xmlWriter.writeStartDocument("1.0");
-
-    xmlWriter.writeStartElement("KeyFile");
-
-    xmlWriter.writeStartElement("Meta");
-
-    xmlWriter.writeTextElement("Version", "1.00");
-
-    xmlWriter.writeEndElement();
-
-    xmlWriter.writeStartElement("Key");
-
-    QByteArray data = randomGen()->randomArray(32);
-    xmlWriter.writeTextElement("Data", QString::fromLatin1(data.toBase64()));
-
-    xmlWriter.writeEndElement();
-
-    xmlWriter.writeEndDocument();
+    device->write(randomGen()->randomArray(size));
 }
 
-bool FileKey::create(const QString& fileName, QString* errorMsg)
+/**
+ * Create a new key file from random bytes.
+ *
+ * @param fileName output file name
+ * @param errorMsg error message if generation failed
+ * @param number of random bytes to generate
+ * @return true on successful creation
+ */
+bool FileKey::create(const QString& fileName, QString* errorMsg, int size)
 {
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly)) {
@@ -138,8 +171,7 @@ bool FileKey::create(const QString& fileName, QString* errorMsg)
         }
         return false;
     }
-    create(&file);
-
+    create(&file, size);
     file.close();
 
     if (file.error()) {
@@ -149,11 +181,17 @@ bool FileKey::create(const QString& fileName, QString* errorMsg)
 
         return false;
     }
-    else {
-        return true;
-    }
+
+    return true;
 }
 
+/**
+ * Load key file in legacy KeePass 2 XML format.
+ *
+ * @param device input device
+ * @return true on success
+ * @deprecated
+ */
 bool FileKey::loadXml(QIODevice* device)
 {
     QXmlStreamReader xmlReader(device);
@@ -162,8 +200,7 @@ bool FileKey::loadXml(QIODevice* device)
         if (xmlReader.name() != "KeyFile") {
             return false;
         }
-    }
-    else {
+    } else {
         return false;
     }
 
@@ -173,8 +210,7 @@ bool FileKey::loadXml(QIODevice* device)
     while (!xmlReader.error() && xmlReader.readNextStartElement()) {
         if (xmlReader.name() == "Meta") {
             correctMeta = loadXmlMeta(xmlReader);
-        }
-        else if (xmlReader.name() == "Key") {
+        } else if (xmlReader.name() == "Key") {
             data = loadXmlKey(xmlReader);
         }
     }
@@ -183,18 +219,23 @@ bool FileKey::loadXml(QIODevice* device)
         m_key = data;
         return true;
     }
-    else {
-        return false;
-    }
+
+    return false;
 }
 
+/**
+ * Load meta data from legacy KeePass 2 XML key file.
+ *
+ * @param xmlReader input XML reader
+ * @return true on success
+ * @deprecated
+ */
 bool FileKey::loadXmlMeta(QXmlStreamReader& xmlReader)
 {
     bool correctVersion = false;
 
     while (!xmlReader.error() && xmlReader.readNextStartElement()) {
         if (xmlReader.name() == "Version") {
-            // TODO: error message about incompatible key file version
             if (xmlReader.readElementText() == "1.00") {
                 correctVersion = true;
             }
@@ -204,13 +245,19 @@ bool FileKey::loadXmlMeta(QXmlStreamReader& xmlReader)
     return correctVersion;
 }
 
+/**
+ * Load base64 key data from legacy KeePass 2 XML key file.
+ *
+ * @param xmlReader input XML reader
+ * @return true on success
+ * @deprecated
+ */
 QByteArray FileKey::loadXmlKey(QXmlStreamReader& xmlReader)
 {
     QByteArray data;
 
     while (!xmlReader.error() && xmlReader.readNextStartElement()) {
         if (xmlReader.name() == "Data") {
-            // TODO: do we need to enforce a specific data.size()?
             QByteArray rawData = xmlReader.readElementText().toLatin1();
             if (Tools::isBase64(rawData)) {
                 data = QByteArray::fromBase64(rawData);
@@ -221,6 +268,13 @@ QByteArray FileKey::loadXmlKey(QXmlStreamReader& xmlReader)
     return data;
 }
 
+/**
+ * Load fixed 32-bit binary key file.
+ *
+ * @param device input device
+ * @return true on success
+ * @deprecated
+ */
 bool FileKey::loadBinary(QIODevice* device)
 {
     if (device->size() != 32) {
@@ -230,13 +284,19 @@ bool FileKey::loadBinary(QIODevice* device)
     QByteArray data;
     if (!Tools::readAllFromDevice(device, data) || data.size() != 32) {
         return false;
-    }
-    else {
+    } else {
         m_key = data;
         return true;
     }
 }
 
+/**
+ * Load hex-encoded representation of fixed 32-bit binary key file.
+ *
+ * @param device input device
+ * @return true on success
+ * @deprecated
+ */
 bool FileKey::loadHex(QIODevice* device)
 {
     if (device->size() != 64) {
@@ -262,6 +322,12 @@ bool FileKey::loadHex(QIODevice* device)
     return true;
 }
 
+/**
+ * Generate SHA-256 hash of arbitrary text or binary key file.
+ *
+ * @param device input device
+ * @return true on success
+ */
 bool FileKey::loadHashed(QIODevice* device)
 {
     CryptoHash cryptoHash(CryptoHash::Sha256);
@@ -272,7 +338,8 @@ bool FileKey::loadHashed(QIODevice* device)
             return false;
         }
         cryptoHash.addData(buffer);
-    } while (!buffer.isEmpty());
+    }
+    while (!buffer.isEmpty());
 
     m_key = cryptoHash.result();
 
