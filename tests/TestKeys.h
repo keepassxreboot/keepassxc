@@ -31,6 +31,8 @@ private slots:
     void testFileKey();
     void testFileKey_data();
     void testCreateFileKey();
+    void testCreateAndOpenFileKey();
+    void testFileKeyHash();
     void testFileKeyError();
     void benchmarkTransformKey();
 };
