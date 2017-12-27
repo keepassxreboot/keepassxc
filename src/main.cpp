@@ -37,9 +37,9 @@
 #ifdef QT_STATIC
 #include <QtPlugin>
 
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN)
 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)
-#elif Q_OS_LINUX
+#elif defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
 Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
 #endif
 #endif
