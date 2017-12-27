@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -116,9 +117,9 @@ QIcon FilePath::trayIconUnlocked()
     bool darkIcon = useDarkIcon();
 
 #ifdef KEEPASSXC_DIST_SNAP
-    return (darkIcon) ? icon("apps", "keepassxc-dark", false) : icon("apps", "keepassxc-unlocked", false);
+    return darkIcon ? icon("apps", "keepassxc-dark", false) : icon("apps", "keepassxc-unlocked", false);
 #else
-    return (darkIcon) ? icon("apps", "keepassxc-dark") : icon("apps", "keepassxc-unlocked");
+    return darkIcon ? icon("apps", "keepassxc-dark") : icon("apps", "keepassxc-unlocked");
 #endif
 }
 
