@@ -45,6 +45,8 @@
  */
 bool FileKey::load(QIODevice* device)
 {
+    m_type = None;
+
     // we may need to read the file multiple times
     if (device->isSequential()) {
         return false;
@@ -59,6 +61,7 @@ bool FileKey::load(QIODevice* device)
         return false;
     }
     if (loadXml(device)) {
+        m_type = KeePass2XML;
         return true;
     }
 
@@ -66,6 +69,7 @@ bool FileKey::load(QIODevice* device)
         return false;
     }
     if (loadBinary(device)) {
+        m_type = FixedBinary;
         return true;
     }
 
@@ -73,15 +77,20 @@ bool FileKey::load(QIODevice* device)
         return false;
     }
     if (loadHex(device)) {
+        m_type = FixedBinaryHex;
         return true;
     }
 
+    // if no legacy format was detected, generate SHA-256 hash of key file
     if (!device->reset()) {
         return false;
     }
+    if (loadHashed(device)) {
+        m_type = Hashed;
+        return true;
+    }
 
-    // if no legacy format was detected, generate SHA-256 hash of key file
-    return loadHashed(device);
+    return false;
 }
 
 /**
@@ -344,4 +353,12 @@ bool FileKey::loadHashed(QIODevice* device)
     m_key = cryptoHash.result();
 
     return true;
+}
+
+/**
+ * @return type of loaded key file
+ */
+FileKey::Type FileKey::type() const
+{
+    return m_type;
 }

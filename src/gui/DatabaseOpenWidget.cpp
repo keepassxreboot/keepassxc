@@ -218,6 +218,23 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
                                              MessageWidget::Error);
             return QSharedPointer<CompositeKey>();
         }
+        if (key.type() != FileKey::Hashed && !config()->get("Messages/NoLegacyKeyFileWarning").toBool()) {
+            QMessageBox legacyWarning;
+            legacyWarning.setWindowTitle(tr("Legacy key file format"));
+            legacyWarning.setText(tr("You are using a legacy key file format which may become\n"
+                                         "unsupported in the future.\n\n"
+                                         "Please consider generating a new key file."));
+            legacyWarning.setIcon(QMessageBox::Icon::Warning);
+            legacyWarning.addButton(QMessageBox::Ok);
+            legacyWarning.setDefaultButton(QMessageBox::Ok);
+            legacyWarning.setCheckBox(new QCheckBox(tr("Don't show this warning again")));
+
+            connect(legacyWarning.checkBox(), &QCheckBox::stateChanged, [](int state){
+                config()->set("Messages/NoLegacyKeyFileWarning", state == Qt::CheckState::Checked);
+            });
+
+            legacyWarning.exec();
+        }
         masterKey->addKey(key);
         lastKeyFiles[m_filename] = keyFilename;
     } else {

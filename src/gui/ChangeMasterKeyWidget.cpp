@@ -162,6 +162,14 @@ void ChangeMasterKeyWidget::generateKey()
                tr("Failed to set %1 as the Key file:\n%2").arg(fileKeyName, errorMsg), MessageWidget::Error);
             return;
         }
+        if (fileKey.type() != FileKey::Hashed) {
+            QMessageBox::warning(this,
+                                 tr("Legacy key file format"),
+                                 tr("You are using a legacy key file format which may become\n"
+                                        "unsupported in the future.\n\n"
+                                        "Please consider generating a new key file."),
+                                 QMessageBox::Ok);
+        }
         m_key.addKey(fileKey);
     }
 
