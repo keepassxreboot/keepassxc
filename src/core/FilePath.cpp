@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -23,6 +24,7 @@
 
 #include "config-keepassx.h"
 #include "core/Global.h"
+#include "core/Config.h"
 
 FilePath* FilePath::m_instance(nullptr);
 
@@ -91,12 +93,15 @@ QString FilePath::pluginPath(const QString& name)
 
 QIcon FilePath::applicationIcon()
 {
+    bool darkIcon = useDarkIcon();
+
 #ifdef KEEPASSXC_DIST_SNAP
-    return icon("apps", "keepassxc", false);
+    return (darkIcon) ? icon("apps", "keepassxc-dark", false) : icon("apps", "keepassxc", false);
 #else
-    return icon("apps", "keepassxc");
+    return (darkIcon) ? icon("apps", "keepassxc-dark") : icon("apps", "keepassxc");
 #endif
 }
+
 
 QIcon FilePath::trayIconLocked()
 {
@@ -109,10 +114,12 @@ QIcon FilePath::trayIconLocked()
 
 QIcon FilePath::trayIconUnlocked()
 {
+    bool darkIcon = useDarkIcon();
+
 #ifdef KEEPASSXC_DIST_SNAP
-    return icon("apps", "keepassxc-unlocked", false);
+    return darkIcon ? icon("apps", "keepassxc-dark", false) : icon("apps", "keepassxc-unlocked", false);
 #else
-    return icon("apps", "keepassxc-unlocked");
+    return darkIcon ? icon("apps", "keepassxc-dark") : icon("apps", "keepassxc-unlocked");
 #endif
 }
 
@@ -244,6 +251,11 @@ bool FilePath::testSetDir(const QString& dir)
     else {
         return false;
     }
+}
+
+bool FilePath::useDarkIcon()
+{
+    return config()->get("GUI/DarkTrayIcon").toBool();
 }
 
 FilePath* FilePath::instance()

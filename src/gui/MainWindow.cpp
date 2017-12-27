@@ -775,7 +775,6 @@ void MainWindow::updateTrayIcon()
     if (isTrayIconEnabled()) {
         if (!m_trayIcon) {
             m_trayIcon = new QSystemTrayIcon(this);
-
             QMenu* menu = new QMenu(this);
 
             QAction* actionToggle = new QAction(tr("Toggle window"), menu);
@@ -795,6 +794,7 @@ void MainWindow::updateTrayIcon()
             connect(actionToggle, SIGNAL(triggered()), SLOT(toggleWindow()));
 
             m_trayIcon->setContextMenu(menu);
+            
             m_trayIcon->setIcon(filePath()->applicationIcon());
             m_trayIcon->show();
         }

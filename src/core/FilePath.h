@@ -38,6 +38,7 @@ public:
 private:
     FilePath();
     bool testSetDir(const QString& dir);
+    bool useDarkIcon();
 
     static FilePath* m_instance;
 
