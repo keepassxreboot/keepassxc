@@ -35,6 +35,7 @@
 #include "keys/PasswordKey.h"
 
 QTEST_GUILESS_MAIN(TestKeys)
+Q_DECLARE_METATYPE(FileKey::Type);
 
 void TestKeys::initTestCase()
 {
@@ -84,9 +85,10 @@ void TestKeys::testComposite()
 
 void TestKeys::testFileKey()
 {
-    QFETCH(QString, type);
+    QFETCH(FileKey::Type, type);
+    QFETCH(QString, typeString);
 
-    QString name = QString("FileKey").append(type);
+    QString name = QString("FileKey").append(typeString);
 
     KeePass2Reader reader;
 
@@ -97,6 +99,9 @@ void TestKeys::testFileKey()
     FileKey fileKey;
     QVERIFY(fileKey.load(keyFilename));
     QCOMPARE(fileKey.rawKey().size(), 32);
+
+    QCOMPARE(fileKey.type(), type);
+
     compositeKey.addKey(fileKey);
 
     QScopedPointer<Database> db(reader.readDatabase(dbFilename, compositeKey));
@@ -107,12 +112,13 @@ void TestKeys::testFileKey()
 
 void TestKeys::testFileKey_data()
 {
-    QTest::addColumn<QString>("type");
-    QTest::newRow("Xml") << QString("Xml");
-    QTest::newRow("XmlBrokenBase64") << QString("XmlBrokenBase64");
-    QTest::newRow("Binary") << QString("Binary");
-    QTest::newRow("Hex") << QString("Hex");
-    QTest::newRow("Hashed") << QString("Hashed");
+    QTest::addColumn<FileKey::Type>("type");
+    QTest::addColumn<QString>("typeString");
+    QTest::newRow("Xml")             << FileKey::KeePass2XML    << QString("Xml");
+    QTest::newRow("XmlBrokenBase64") << FileKey::Hashed         << QString("XmlBrokenBase64");
+    QTest::newRow("Binary")          << FileKey::FixedBinary    << QString("Binary");
+    QTest::newRow("Hex")             << FileKey::FixedBinaryHex << QString("Hex");
+    QTest::newRow("Hashed")          << FileKey::Hashed         << QString("Hashed");
 }
 
 void TestKeys::testCreateFileKey()
