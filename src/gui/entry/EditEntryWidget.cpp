@@ -766,40 +766,9 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
         entry->setDefaultAutoTypeSequence(QString());
     }
     else {
-        if (!AutoType::checkSyntax(m_autoTypeUi->sequenceEdit->text())) {
-            //handle wrong syntax
-            QMessageBox messageBox;
-            messageBox.critical(0,
-                                "AutoType",
-                                tr("The Syntax of your AutoType statement is incorrect! It won't be saved!"));
-
-        }
-        else if (AutoType::checkHighDelay(m_autoTypeUi->sequenceEdit->text())) {
-            //handle too long delay
-            QMessageBox::StandardButton reply;
-            reply = QMessageBox::question(0,
-                                          "AutoType",
-                                          tr("This AutoType command contains a very long delay. Do you really want to save it?"));
-
-            if (reply == QMessageBox::Yes) {
-                entry->setDefaultAutoTypeSequence(m_autoTypeUi->sequenceEdit->text());
-            }
-        }
-        else if (AutoType::checkHighRepetition(m_autoTypeUi->sequenceEdit->text())) {
-            //handle too much repetition
-            QMessageBox::StandardButton reply;
-            reply = QMessageBox::question(0,
-                                          "AutoType",
-                                          tr("This AutoType command contains arguments which are repeated very often. Do you really want to save it?"));
-
-            if (reply == QMessageBox::Yes) {
-                entry->setDefaultAutoTypeSequence(m_autoTypeUi->sequenceEdit->text());
-            }
-        }
-        else {
+        if (AutoType::verifyAutoTypeSyntax(m_autoTypeUi->sequenceEdit->text())) {
             entry->setDefaultAutoTypeSequence(m_autoTypeUi->sequenceEdit->text());
         }
-
     }
 
     entry->autoTypeAssociations()->copyDataFrom(m_autoTypeAssoc);

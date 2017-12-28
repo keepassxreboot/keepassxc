@@ -20,8 +20,7 @@
 
 #include <QApplication>
 #include <QPluginLoader>
-#include <QtWidgets/QErrorMessage>
-#include <iostream>
+#include <QRegularExpression> 
 
 #include "config-keepassx.h"
 
@@ -128,7 +127,7 @@ QStringList AutoType::windowTitles()
     return m_plugin->windowTitles();
 }
 
-void AutoType::executeAutoType(const Entry* entry, QWidget* hideWindow, const QString& customSequence, WId window)
+void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, const QString& customSequence, WId window)
 {
     if (m_inAutoType || !m_plugin) {
         return;
@@ -457,9 +456,7 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
         list.append(new AutoTypeChar('{'));
     } else if (tmplName.compare("rightbrace", Qt::CaseInsensitive) == 0) {
         list.append(new AutoTypeChar('}'));
-    }
-
-    else {
+    } else {
         QRegExp fnRegexp("f(\\d+)", Qt::CaseInsensitive, QRegExp::RegExp2);
         if (fnRegexp.exactMatch(tmplName)) {
             int fnNo = fnRegexp.cap(1).toInt();
@@ -615,67 +612,93 @@ bool AutoType::windowMatchesUrl(const QString& windowTitle, const QString& resol
 
 bool AutoType::checkSyntax(const QString& string)
 {
-    // checks things like {word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{-}~+%@fixedstring
-    QString allowRepetition = "(\\s\\d*){0,1}";
-    QString normalCommands = "[A-Z:]*" + allowRepetition; // the ":" allows custom commands
+    QString allowRepetition = "(?:\\s\\d+)?";
+    // the ":" allows custom commands with syntax S:Field
+    // exclude BEEP otherwise will be checked as valid
+    QString normalCommands = "(?!BEEP\\s)[A-Z:]*" + allowRepetition; 
     QString specialLiterals = "[\\^\\%\\(\\)~\\{\\}\\[\\]\\+-]" + allowRepetition;
-    QString functionKeys = "(F[1-9]" + allowRepetition + "|F1[0-2])" + allowRepetition;
+    QString functionKeys = "(?:F[1-9]" + allowRepetition + "|F1[0-2])" + allowRepetition;
     QString numpad = "NUMPAD\\d" + allowRepetition;
     QString delay = "DELAY=\\d+";
-    QString beep = "BEEP\\s\\d*\\s\\d*";
-    QString vkey = "VKEY(-[EN]X){0,1}" + allowRepetition;
+    QString beep = "BEEP\\s\\d+\\s\\d+";
+    QString vkey = "VKEY(?:-[EN]X)?\\s\\w+";
 
-    // these arent in parenthesis
+    // these chars aren't in parentheses
     QString shortcutKeys = "[\\^\\%~\\+@]";
+    // a normal string not in parentheses
     QString fixedStrings = "[^\\^\\%~\\+@\\{\\}]*";
 
-    QRegExp autoTypeSyntax("(" + shortcutKeys + "|" + fixedStrings + "|\\{(" + normalCommands + "|" + specialLiterals +
-                           "|" + functionKeys + "|" + numpad + "|" + delay + "|" + beep + "|" + vkey + ")\\})*");
-    autoTypeSyntax.setCaseSensitivity(Qt::CaseInsensitive);
-    autoTypeSyntax.setPatternSyntax(QRegExp::RegExp);
-    return autoTypeSyntax.exactMatch(string);
+    QRegularExpression autoTypeSyntax("^(?:" + shortcutKeys + "|" + fixedStrings + "|\\{(?:" + normalCommands + "|" + specialLiterals +
+                           "|" + functionKeys + "|" + numpad + "|" + delay + "|" + beep + "|" + vkey + ")\\})*$",
+                           QRegularExpression::CaseInsensitiveOption);
+    QRegularExpressionMatch match = autoTypeSyntax.match(string);
+    return match.hasMatch();
 }
 
 bool AutoType::checkHighDelay(const QString& string)
 {
-    QRegExp highDelay("\\{DELAY\\s\\d{5,}\\}"); // 5 digit numbers(10 seconds) are too much
-    highDelay.setCaseSensitivity(Qt::CaseInsensitive);
-    highDelay.setPatternSyntax(QRegExp::RegExp);
-    return highDelay.exactMatch(string);
+    // 5 digit numbers(10 seconds) are too much
+    QRegularExpression highDelay("\\{DELAY\\s\\d{5,}\\}", QRegularExpression::CaseInsensitiveOption); 
+    QRegularExpressionMatch match = highDelay.match(string);
+    return match.hasMatch();
+}
+
+bool AutoType::checkSlowKeypress(const QString& string)
+{
+    // 3 digit numbers(100 milliseconds) are too much
+    QRegularExpression slowKeypress("\\{DELAY=\\d{3,}\\}", QRegularExpression::CaseInsensitiveOption); 
+    QRegularExpressionMatch match = slowKeypress.match(string);
+    return match.hasMatch();
 }
 
 bool AutoType::checkHighRepetition(const QString& string)
 {
-    QRegExp highRepetition("\\{(?!DELAY\\s)\\w*\\s\\d{3,}\\}"); // 3 digit numbers are too much
-    highRepetition.setCaseSensitivity(Qt::CaseInsensitive);
-    highRepetition.setPatternSyntax(QRegExp::RegExp);
-    return highRepetition.exactMatch(string);
+    // 3 digit numbers are too much
+    QRegularExpression highRepetition("\\{(?!DELAY\\s)\\w+\\s\\d{3,}\\}", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpressionMatch match = highRepetition.match(string);
+    return match.hasMatch();
 }
+
+bool AutoType::verifyAutoTypeSyntax(const QString& sequence)
+{
+    if (!AutoType::checkSyntax(sequence)) {
+        QMessageBox messageBox;
+        messageBox.critical(0, tr("Auto-Type"), tr("The Syntax of your AutoType statement is incorrect!"));
+        return false;
+    } else if (AutoType::checkHighDelay(sequence)) {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(0, tr("Auto-Type"),
+            tr("This AutoType command contains a very long delay. Do you really want to proceed?"));
+
+        if (reply == QMessageBox::No) {
+            return false;
+        }
+    } else if (AutoType::checkSlowKeypress(sequence)) {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(0, tr("Auto-Type"),
+            tr("This AutoType command contains very slow key-press. Do you really want to proceed?"));
+
+        if (reply == QMessageBox::No) {
+            return false;
+        }
+    } else if (AutoType::checkHighRepetition(sequence)) {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(0, tr("Auto-Type"), 
+            tr("This AutoType command contains arguments which are "
+            "repeated very often. Do you really want to proceed?"));
+
+        if (reply == QMessageBox::No) {
+            return false;
+        }
+    }
+    return true;
+}
+
 
 void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow, const QString& customSequence, WId window)
 {
-    if (!AutoType::checkSyntax(entry->effectiveAutoTypeSequence())) {
-        QMessageBox messageBox;
-        messageBox.critical(0, tr("AutoType"), tr("The Syntax of your AutoType statement is incorrect!"));
-        return;
-    } else if (AutoType::checkHighDelay(entry->effectiveAutoTypeSequence())) {
-        QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(
-            0,
-            tr("AutoType"),
-            tr("This AutoType command contains a very long delay. Do you really want to execute it?"));
-
-        if (reply == QMessageBox::No) {
-            return;
-        }
-    } else if (AutoType::checkHighRepetition(entry->effectiveAutoTypeSequence())) {
-        QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(0, tr("AutoType"), tr("This AutoType command contains arguments which are "
-                                                            "repeated very often. Do you really want to execute it?"));
-
-        if (reply == QMessageBox::No) {
-            return;
-        }
+    auto sequence = entry->effectiveAutoTypeSequence();
+    if (verifyAutoTypeSyntax(sequence)) {
+        executeAutoTypeActions(entry, hideWindow, customSequence, window);
     }
-    executeAutoType(entry, hideWindow, customSequence, window);
 }

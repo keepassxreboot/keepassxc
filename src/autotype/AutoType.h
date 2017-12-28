@@ -36,7 +36,7 @@ class AutoType : public QObject
 
 public:
     QStringList windowTitles();
-    void executeAutoType(const Entry* entry,
+    void executeAutoTypeActions(const Entry* entry,
                           QWidget* hideWindow = nullptr,
                           const QString& customSequence = QString(),
                           WId window = 0);
@@ -45,7 +45,9 @@ public:
     int callEventFilter(void* event);
     static bool checkSyntax(const QString& string);
     static bool checkHighRepetition(const QString& string);
+    static bool checkSlowKeypress(const QString& string);
     static bool checkHighDelay(const QString& string);
+    static bool verifyAutoTypeSyntax(const QString& sequence);
     void performAutoType(const Entry* entry,
                          QWidget* hideWindow = nullptr,
                          const QString& customSequence = QString(),
