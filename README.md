@@ -32,7 +32,7 @@ so please check out your distribution's package list to see if KeePassXC is avai
 - Browser integration with KeePassHTTP-Connector for 
 [Mozilla Firefox](https://addons.mozilla.org/en-US/firefox/addon/keepasshttp-connector/) and 
 [Google Chrome or Chromium](https://chrome.google.com/webstore/detail/keepasshttp-connector/dafgdjggglmmknipkhngniifhplpcldb), and 
-[passafari](https://github.com/mmichaa/passafari.safariextension/) in Safari. [[See note about KeePassHTTP]](#Note_about_KeePassHTTP)
+[passafari](https://github.com/mmichaa/passafari.safariextension/) in Safari. [[See note about KeePassHTTP]](#note-about-keepasshttp)
 - Many bug fixes
 
 For a full list of features and changes, read the [CHANGELOG](CHANGELOG) document.
