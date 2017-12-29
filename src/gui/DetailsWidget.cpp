@@ -30,7 +30,6 @@
 
 namespace {
 constexpr int GeneralTabIndex = 0;
-const QString hierarchySeparator(" / ");
 }
 
 DetailsWidget::DetailsWidget(QWidget* parent)
@@ -168,25 +167,25 @@ void DetailsWidget::updateEntryGeneralTab()
 
     if (!config()->get("security/hidepassworddetails").toBool()) {
         const QString password = m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->password());
-        m_ui->entryPasswordLabel->setText(shortPassword(password));
+        m_ui->entryPasswordLabel->setRawText(password);
         m_ui->entryPasswordLabel->setToolTip(password);
     } else {
-        m_ui->entryPasswordLabel->setText(QString("\u25cf").repeated(6));
+        m_ui->entryPasswordLabel->setRawText(QString("\u25cf").repeated(6));
+        m_ui->entryPasswordLabel->setToolTip({});
     }
 
-    QString url = m_currentEntry->webUrl();
+    const QString url = m_currentEntry->webUrl();
     if (!url.isEmpty()) {
         // URL is well formed and can be opened in a browser
         // create a new display url that masks password placeholders
         // the actual link will use the password
-        url = QString("<a href=\"%1\">%2</a>").arg(url).arg(shortUrl(m_currentEntry->displayUrl()));
-        m_ui->entryUrlLabel->setOpenExternalLinks(true);
+        m_ui->entryUrlLabel->setRawText(m_currentEntry->displayUrl());
+        m_ui->entryUrlLabel->setUrl(url);
     } else {
         // Fallback to the raw url string
-        url = shortUrl(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->url()));
-        m_ui->entryUrlLabel->setOpenExternalLinks(false);
+        m_ui->entryUrlLabel->setRawText(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->url()));
+        m_ui->entryUrlLabel->setUrl({});
     }
-    m_ui->entryUrlLabel->setText(url);
 
     const TimeInfo entryTime = m_currentEntry->timeInfo();
     const QString expires = entryTime.expires() ? entryTime.expiryTime().toString(Qt::DefaultLocaleShortDate)
@@ -251,7 +250,7 @@ void DetailsWidget::updateEntryAutotypeTab()
 void DetailsWidget::updateGroupHeaderLine()
 {
     Q_ASSERT(m_currentGroup);
-    m_ui->groupTitleLabel->setText(hierarchy(m_currentGroup, QString()));
+    m_ui->groupTitleLabel->setText(hierarchy(m_currentGroup, {}));
     m_ui->groupIcon->setPixmap(preparePixmap(m_currentGroup->iconPixmap(), 32));
 }
 
@@ -326,33 +325,11 @@ QPixmap DetailsWidget::preparePixmap(const QPixmap& pixmap, int size)
     return pixmap;
 }
 
-
-QString DetailsWidget::shortUrl(const QString& url)
-{
-    // TODO: create elided text
-    QString newurl = "";
-    if (url.length() > 60) {
-        newurl.append(url.left(20));
-        newurl.append("…");
-        newurl.append(url.right(20));
-        return newurl;
-    }
-    return url;
-}
-
-QString DetailsWidget::shortPassword(const QString& password)
-{
-    // TODO: create elided text
-    if (password.length() > 60) {
-        return QString("%1…").arg(password.left(60));
-    }
-    return password;
-}
-
 QString DetailsWidget::hierarchy(const Group* group, const QString& title)
 {
+    const QString separator(" / ");
     QStringList hierarchy = group->hierarchy();
     hierarchy.removeFirst();
     hierarchy.append(title);
-    return QString("%1%2").arg(hierarchySeparator, hierarchy.join(hierarchySeparator));
+    return QString("%1%2").arg(separator, hierarchy.join(separator));
 }

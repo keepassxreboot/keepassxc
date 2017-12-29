@@ -132,6 +132,7 @@ set(keepassx_SOURCES
     gui/UnlockDatabaseWidget.cpp
     gui/UnlockDatabaseDialog.cpp
     gui/WelcomeWidget.cpp
+    gui/widgets/ElidedLabel.cpp
     gui/csvImport/CsvImportWidget.cpp
     gui/csvImport/CsvImportWizard.cpp
     gui/csvImport/CsvParserModel.cpp

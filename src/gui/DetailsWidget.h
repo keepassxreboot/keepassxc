@@ -61,10 +61,9 @@ private slots:
     void updateTabIndexes();
 
 private:
-    void setTabEnabled(QTabWidget *tabWidget, QWidget* widget, bool enabled);
+    void setTabEnabled(QTabWidget* tabWidget, QWidget* widget, bool enabled);
+
     static QPixmap preparePixmap(const QPixmap& pixmap, int size);
-    static QString shortUrl(const QString& url);
-    static QString shortPassword(const QString& password);
     static QString hierarchy(const Group* group, const QString& title);
 
     const QScopedPointer<Ui::DetailsWidget> m_ui;

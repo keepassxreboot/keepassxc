@@ -152,7 +152,7 @@
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>
             <widget class="QWidget" name="entryGeneralWidget" native="true">
-             <layout class="QGridLayout" name="gridLayout" columnstretch="0,0,1">
+             <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,1" columnstretch="0,0,1">
               <item row="0" column="0">
                <spacer name="entryLeftHorizontalSpacer">
                 <property name="orientation">
@@ -196,6 +196,12 @@
               </item>
               <item row="0" column="2">
                <widget class="QLabel" name="entryUsernameLabel">
+                <property name="minimumSize">
+                 <size>
+                  <width>100</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="textInteractionFlags">
                  <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
                 </property>
@@ -224,7 +230,14 @@
                </widget>
               </item>
               <item row="1" column="2">
-               <widget class="QLabel" name="entryPasswordLabel"/>
+               <widget class="ElidedLabel" name="entryPasswordLabel">
+                <property name="minimumSize">
+                 <size>
+                  <width>100</width>
+                  <height>0</height>
+                 </size>
+                </property>
+               </widget>
               </item>
               <item row="2" column="1">
                <widget class="QLabel" name="entryUrlTitleLabel">
@@ -249,12 +262,12 @@
                </widget>
               </item>
               <item row="2" column="2">
-               <widget class="QLabel" name="entryUrlLabel">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
+               <widget class="ElidedLabel" name="entryUrlLabel">
+                <property name="minimumSize">
+                 <size>
+                  <width>100</width>
+                  <height>0</height>
+                 </size>
                 </property>
                 <property name="cursor">
                  <cursorShape>PointingHandCursor</cursorShape>
@@ -297,7 +310,7 @@
                 <property name="sizeHint" stdset="0">
                  <size>
                   <width>20</width>
-                  <height>40</height>
+                  <height>10</height>
                  </size>
                 </property>
                </spacer>
@@ -530,14 +543,7 @@
                </widget>
               </item>
               <item row="0" column="2">
-               <widget class="QLabel" name="groupAutotypeLabel">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-               </widget>
+               <widget class="QLabel" name="groupAutotypeLabel"/>
               </item>
               <item row="1" column="1">
                <widget class="QLabel" name="groupSearchingTitleLabel">
@@ -562,14 +568,7 @@
                </widget>
               </item>
               <item row="1" column="2">
-               <widget class="QLabel" name="groupSearchingLabel">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-               </widget>
+               <widget class="QLabel" name="groupSearchingLabel"/>
               </item>
               <item row="2" column="1">
                <widget class="QLabel" name="groupExpirationTitleLabel">
@@ -594,14 +593,7 @@
                </widget>
               </item>
               <item row="2" column="2">
-               <widget class="QLabel" name="groupExpirationLabel">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-               </widget>
+               <widget class="QLabel" name="groupExpirationLabel"/>
               </item>
               <item row="3" column="2">
                <spacer name="groupBottomVerticalSpacer">
@@ -611,7 +603,7 @@
                 <property name="sizeHint" stdset="0">
                  <size>
                   <width>20</width>
-                  <height>40</height>
+                  <height>10</height>
                  </size>
                 </property>
                </spacer>
@@ -662,6 +654,11 @@
    <extends>QWidget</extends>
    <header>gui/entry/EntryAttachmentsWidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ElidedLabel</class>
+   <extends>QLabel</extends>
+   <header>gui/widgets/ElidedLabel.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
