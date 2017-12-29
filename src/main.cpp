@@ -145,7 +145,7 @@ int main(int argc, char** argv)
         if (!filename.isEmpty() && QFile::exists(filename)) {
             QString password;
             if (parser.isSet(pwstdinOption)) {
-                QTextStream in(stdin, QIODevice::ReadOnly);
+                static QTextStream in(stdin, QIODevice::ReadOnly);
                 password = in.readLine();
             }
 	    #ifdef Q_OS_WIN
