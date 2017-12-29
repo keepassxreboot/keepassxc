@@ -147,11 +147,11 @@ int main(int argc, char** argv)
                 QTextStream in(stdin, QIODevice::ReadOnly);
                 password = in.readLine();
             }
-			#ifdef Q_OS_WIN
-				mainWindow.openDatabase(filename, parser.value(pwstdinOption), parser.value(keyfileOption));
-			#else
-				mainWindow.openDatabase(filename, password, parser.value(keyfileOption));
-			#endif
+	    #ifdef Q_OS_WIN
+		mainWindow.openDatabase(filename, parser.value(pwstdinOption), parser.value(keyfileOption));
+	    #else
+		mainWindow.openDatabase(filename, password, parser.value(keyfileOption));
+	    #endif
         }
     }
 
