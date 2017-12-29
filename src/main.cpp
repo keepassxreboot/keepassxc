@@ -37,9 +37,9 @@
 #ifdef QT_STATIC
 #include <QtPlugin>
 
-#if defined(Q_OS_WIN)
+#ifdef Q_OS_WIN
 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)
-#elif defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+#elif Q_OS_LINUX
 Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
 #endif
 #endif
@@ -100,7 +100,7 @@ int main(int argc, char** argv)
         Config::createConfigFromFile(parser.value(configOption));
     }
 
-    Translator::installTranslators();
+    Translator::installTranslator();
 
 #ifdef Q_OS_MAC
     // Don't show menu icons on OSX
@@ -132,8 +132,7 @@ int main(int argc, char** argv)
     
     if (config()->get("OpenPreviousDatabasesOnStartup").toBool()) {
         const QStringList filenames = config()->get("LastOpenedDatabases").toStringList();
-        for (int ii = filenames.size()-1; ii >= 0; ii--) {
-            QString filename = filenames.at(ii);
+        for (const QString& filename : filenames) {
             if (!filename.isEmpty() && QFile::exists(filename)) {
                 mainWindow.openDatabase(filename, QString(), QString());
             }
@@ -148,11 +147,11 @@ int main(int argc, char** argv)
                 QTextStream in(stdin, QIODevice::ReadOnly);
                 password = in.readLine();
             }
-	    #ifdef Q_OS_WIN
-		mainWindow.openDatabase(filename, parser.value(pwstdinOption), parser.value(keyfileOption));
-	    #else
-		mainWindow.openDatabase(filename, password, parser.value(keyfileOption));
-	    #endif
+			#ifdef Q_OS_WIN
+				mainWindow.openDatabase(filename, parser.value(pwstdinOption), parser.value(keyfileOption));
+			#else
+				mainWindow.openDatabase(filename, password, parser.value(keyfileOption));
+			#endif
         }
     }
 
