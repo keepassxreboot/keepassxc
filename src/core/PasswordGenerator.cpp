@@ -20,7 +20,7 @@
 
 #include "crypto/Random.h"
 #include <zxcvbn.h>
-#include <QDebug>
+//#include <QDebug>
 
 PasswordGenerator::PasswordGenerator()
     : m_length(0)
@@ -65,7 +65,7 @@ QString PasswordGenerator::generatePassword() const
     QVector<QChar> passwordChars = passwordChars_original;
 
     QString password;
-    qDebug().noquote().nospace() << "*** Begin generating password ***";
+    //qDebug().noquote().nospace() << "*** Begin generating password ***";
 
     if (m_flags & CharFromEveryGroup) {
 
@@ -106,12 +106,12 @@ QString PasswordGenerator::generatePassword() const
             int pos = randomGen()->randomUInt(groups[group].size());
             password.append(groups[group][pos]);
 
-            qDebug().noquote().nospace() << "i: " << i << ", group: " << group << ", pos: " << pos << ", groups[group][pos]: '" << groups[group][pos] << "', groups[group]: " << groups[group];
+            //qDebug().noquote().nospace() << "i: " << i << ", group: " << group << ", pos: " << pos << ", groups[group][pos]: '" << groups[group][pos] << "', groups[group]: " << groups[group];
 
             if (m_flags & MinimizeRecurrence) {
                 groups[group].remove(pos);
                 if (groups[group].isEmpty()) {
-                    qDebug().noquote().nospace() << "exhausted group " << group << ", resetting";
+                    //qDebug().noquote().nospace() << "exhausted group " << group << ", resetting";
                     groups[group] = groups_original[group];
                 }
             }
@@ -133,19 +133,19 @@ QString PasswordGenerator::generatePassword() const
             int pos = randomGen()->randomUInt(passwordChars.size());
             password.append(passwordChars[pos]);
 
-            qDebug().noquote().nospace() << "i: " << i << ", pos: " << pos << ", passwordChars[pos]: '" << passwordChars[pos] << "', passwordChars: " << passwordChars;
+            //qDebug().noquote().nospace() << "i: " << i << ", pos: " << pos << ", passwordChars[pos]: '" << passwordChars[pos] << "', passwordChars: " << passwordChars;
 
             if (m_flags & MinimizeRecurrence) {
                 passwordChars.remove(pos);
                 if (passwordChars.isEmpty()) {
-                    qDebug().noquote().nospace() << "exhausted passwordChars, resetting";
+                    //qDebug().noquote().nospace() << "exhausted passwordChars, resetting";
                     passwordChars = passwordChars_original;
                 }
             }
         }
     }
 
-    qDebug().noquote().nospace() << "*** End generating password ***";
+    //qDebug().noquote().nospace() << "*** End generating password ***";
     return password;
 }
 
