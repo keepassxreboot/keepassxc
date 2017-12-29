@@ -85,7 +85,7 @@ int main(int argc, char** argv)
                                      "keyfile");
     QCommandLineOption pwstdinOption("pw-stdin",
                                      QCoreApplication::translate("main", "read password of the database from stdin"),
-									 "pw-stdin");
+				     "pw-stdin");
 
     parser.addHelpOption();
     parser.addVersionOption();
