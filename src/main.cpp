@@ -37,9 +37,9 @@
 #ifdef QT_STATIC
 #include <QtPlugin>
 
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN)
 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)
-#elif Q_OS_LINUX
+#elif defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
 Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
 #endif
 #endif
@@ -100,7 +100,7 @@ int main(int argc, char** argv)
         Config::createConfigFromFile(parser.value(configOption));
     }
 
-    Translator::installTranslator();
+    Translator::installTranslators();
 
 #ifdef Q_OS_MAC
     // Don't show menu icons on OSX
@@ -132,7 +132,8 @@ int main(int argc, char** argv)
     
     if (config()->get("OpenPreviousDatabasesOnStartup").toBool()) {
         const QStringList filenames = config()->get("LastOpenedDatabases").toStringList();
-        for (const QString& filename : filenames) {
+        for (int ii = filenames.size()-1; ii >= 0; ii--) {
+            QString filename = filenames.at(ii);
             if (!filename.isEmpty() && QFile::exists(filename)) {
                 mainWindow.openDatabase(filename, QString(), QString());
             }
