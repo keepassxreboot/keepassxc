@@ -100,7 +100,7 @@ int main(int argc, char** argv)
         Config::createConfigFromFile(parser.value(configOption));
     }
 
-    Translator::installTranslator();
+    Translator::installTranslators();
 
 #ifdef Q_OS_MAC
     // Don't show menu icons on OSX
