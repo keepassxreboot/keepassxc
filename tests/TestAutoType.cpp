@@ -286,7 +286,7 @@ void TestAutoType::testGlobalAutoTypeRegExp()
 void TestAutoType::testAutoTypeSyntaxChecks()
 {
     // Huge sequence
-    QCOMPARE(true, AutoType::checkSyntax("{word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{-}~+%@fixedstring"));
+    QCOMPARE(true, AutoType::checkSyntax("{word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{SUBTRACT}~+%@fixedstring"));
 
     QCOMPARE(true, AutoType::checkSyntax("{NUMPAD1 3}"));
 
@@ -298,6 +298,10 @@ void TestAutoType::testAutoTypeSyntaxChecks()
     QCOMPARE(true, AutoType::checkSyntax("{VKEY-EX 0x01}"));
     // Bad sequence
     QCOMPARE(false, AutoType::checkSyntax("{{{}}{}{}}{{}}"));
+    // Good sequence
+    QCOMPARE(true, AutoType::checkSyntax("{{}{}}{}}{{}"));
+    QCOMPARE(true, AutoType::checkSyntax("{]}{[}{[}{]}"));
+    QCOMPARE(true, AutoType::checkSyntax("{)}{(}{(}{)}"));
     // High DelAY / low delay
     QCOMPARE(true, AutoType::checkHighDelay("{DelAY 50000}"));
     QCOMPARE(false, AutoType::checkHighDelay("{delay 50}"));

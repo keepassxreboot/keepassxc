@@ -31,7 +31,6 @@
 #include <QTemporaryFile>
 #include <QMimeData>
 #include <QEvent>
-#include <iostream>
 
 #include "autotype/AutoType.h"
 #include "core/Config.h"
