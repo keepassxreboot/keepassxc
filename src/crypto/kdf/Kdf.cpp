@@ -20,14 +20,49 @@
 
 #include <QtConcurrent>
 
+#include "crypto/Random.h"
+
 Kdf::Kdf(Uuid uuid)
-    : m_uuid(uuid)
+    : m_rounds(KDF_DEFAULT_ROUNDS)
+    , m_seed(QByteArray(KDF_DEFAULT_SEED_SIZE, 0))
+    , m_uuid(uuid)
 {
 }
 
 Uuid Kdf::uuid() const
 {
     return m_uuid;
+}
+
+int Kdf::rounds() const
+{
+    return m_rounds;
+}
+
+QByteArray Kdf::seed() const
+{
+    return m_seed;
+}
+
+bool Kdf::setRounds(int rounds)
+{
+    m_rounds = rounds;
+    return true;
+}
+
+bool Kdf::setSeed(const QByteArray& seed)
+{
+    if (seed.size() != m_seed.size()) {
+        return false;
+    }
+
+    m_seed = seed;
+    return true;
+}
+
+void Kdf::randomizeSeed()
+{
+    setSeed(randomGen()->randomArray(m_seed.size()));
 }
 
 int Kdf::benchmark(int msec) const
@@ -41,7 +76,7 @@ int Kdf::benchmark(int msec) const
     thread1.wait();
     thread2.wait();
 
-    return qMin(thread1.rounds(), thread2.rounds());
+    return qMax(1, qMin(thread1.rounds(), thread2.rounds()));
 }
 
 Kdf::BenchmarkThread::BenchmarkThread(int msec, const Kdf* kdf)

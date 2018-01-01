@@ -51,6 +51,7 @@ private slots:
     void save();
     void reject();
     void transformRoundsBenchmark();
+    void kdfChanged(int index);
 
 private:
     void truncateHistories();

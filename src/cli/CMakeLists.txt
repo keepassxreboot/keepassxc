@@ -46,6 +46,7 @@ target_link_libraries(keepassxc-cli
                       keepassx_core
                       Qt5::Core
                       ${GCRYPT_LIBRARIES}
+                      ${ARGON2_LIBRARIES}
                       ${GPGERROR_LIBRARIES}
                       ${ZLIB_LIBRARIES}
                       ${ZXCVBN_LIBRARIES})

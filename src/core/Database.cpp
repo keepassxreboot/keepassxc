@@ -45,7 +45,7 @@ Database::Database()
     m_data.cipher = KeePass2::CIPHER_AES;
     m_data.compressionAlgo = CompressionGZip;
     m_data.kdf = QSharedPointer<AesKdf>::create();
-    m_data.kdf->randomizeTransformSalt();
+    m_data.kdf->randomizeSeed();
     m_data.hasKey = false;
 
     setRootGroup(new Group());
@@ -258,7 +258,7 @@ void Database::setCompressionAlgo(Database::CompressionAlgorithm algo)
 bool Database::setKey(const CompositeKey& key, bool updateChangedTime, bool updateTransformSalt)
 {
     if (updateTransformSalt) {
-        m_data.kdf->randomizeTransformSalt();
+        m_data.kdf->randomizeSeed();
     }
 
     QByteArray transformedMasterKey;
@@ -490,7 +490,7 @@ void Database::setKdf(QSharedPointer<Kdf> kdf)
 
 bool Database::changeKdf(QSharedPointer<Kdf> kdf)
 {
-    kdf->randomizeTransformSalt();
+    kdf->randomizeSeed();
     QByteArray transformedMasterKey;
     if (!m_data.key.transform(*kdf, transformedMasterKey)) {
         return false;

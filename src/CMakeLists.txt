@@ -78,6 +78,7 @@ set(keepassx_SOURCES
     crypto/kdf/Kdf.cpp
     crypto/kdf/Kdf_p.h
     crypto/kdf/AesKdf.cpp
+    crypto/kdf/Argon2Kdf.cpp
     format/CsvExporter.cpp
     format/KeePass1.h
     format/KeePass1Reader.cpp
@@ -252,6 +253,7 @@ target_link_libraries(keepassx_core
                       Qt5::Network
                       Qt5::Concurrent
                       Qt5::Widgets
+                      ${ARGON2_LIBRARIES}
                       ${GCRYPT_LIBRARIES}
                       ${GPGERROR_LIBRARIES}
                       ${ZLIB_LIBRARIES})

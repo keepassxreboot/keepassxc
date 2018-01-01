@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2017 KeePassXC Team
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,27 +15,36 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AESKDF_H
-#define KEEPASSX_AESKDF_H
+#ifndef KEEPASSX_ARGON2KDF_H
+#define KEEPASSX_ARGON2KDF_H
 
 #include "Kdf.h"
 
-class AesKdf: public Kdf
-{
+class Argon2Kdf : public Kdf {
 public:
-    AesKdf();
+    Argon2Kdf();
 
     bool transform(const QByteArray& raw, QByteArray& result) const override;
     QSharedPointer<Kdf> clone() const override;
 
+    quint32 memory() const;
+    bool setMemory(quint32 memory_kb);
+    quint32 parallelism() const;
+    bool setParallelism(quint32 threads);
+
 protected:
     int benchmarkImpl(int msec) const override;
+
+    quint32 m_memory;
+    quint32 m_parallelism;
 
 private:
     static bool transformKeyRaw(const QByteArray& key,
                                 const QByteArray& seed,
                                 int rounds,
-                                QByteArray* result) Q_REQUIRED_RESULT;
+                                quint32 memory,
+                                quint32 parallelism,
+                                QByteArray& result) Q_REQUIRED_RESULT;
 };
 
-#endif // KEEPASSX_AESKDF_H
+#endif // KEEPASSX_ARGON2KDF_H

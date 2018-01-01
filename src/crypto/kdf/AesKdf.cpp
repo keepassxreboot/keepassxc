@@ -15,12 +15,17 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "AesKdf.h"
+
 #include <QtConcurrent>
 
 #include "format/KeePass2.h"
 #include "crypto/CryptoHash.h"
-#include "crypto/Random.h"
-#include "AesKdf.h"
+
+AesKdf::AesKdf()
+    : Kdf::Kdf(KeePass2::KDF_AES)
+{
+}
 
 bool AesKdf::transform(const QByteArray& raw, QByteArray& result) const
 {
@@ -44,7 +49,7 @@ bool AesKdf::transform(const QByteArray& raw, QByteArray& result) const
     return true;
 }
 
-bool AesKdf::transformKeyRaw(const QByteArray& key, const QByteArray& seed, quint64 rounds, QByteArray* result)
+bool AesKdf::transformKeyRaw(const QByteArray& key, const QByteArray& seed, int rounds, QByteArray* result)
 {
     QByteArray iv(16, 0);
     SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Ecb,
@@ -65,44 +70,6 @@ bool AesKdf::transformKeyRaw(const QByteArray& key, const QByteArray& seed, quin
     return true;
 }
 
-AesKdf::AesKdf()
-    : Kdf::Kdf(KeePass2::KDF_AES)
-    , m_rounds(100000ull)
-    , m_seed(QByteArray(32, 0))
-{
-}
-
-quint64 AesKdf::rounds() const
-{
-    return m_rounds;
-}
-
-QByteArray AesKdf::seed() const
-{
-    return m_seed;
-}
-
-bool AesKdf::setRounds(quint64 rounds)
-{
-    m_rounds = rounds;
-    return true;
-}
-
-bool AesKdf::setSeed(const QByteArray& seed)
-{
-    if (seed.size() != 32) {
-        return false;
-    }
-
-    m_seed = seed;
-    return true;
-}
-
-void AesKdf::randomizeTransformSalt()
-{
-    setSeed(randomGen()->randomArray(32));
-}
-
 QSharedPointer<Kdf> AesKdf::clone() const
 {
     return QSharedPointer<AesKdf>::create(*this);
@@ -117,17 +84,13 @@ int AesKdf::benchmarkImpl(int msec) const
     SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Ecb, SymmetricCipher::Encrypt);
     cipher.init(seed, iv);
 
-    int rounds = 0;
+    quint64 rounds = 1000000;
     QElapsedTimer timer;
     timer.start();
-    do {
-        if (!cipher.processInPlace(key, 10000)) {
-            rounds = -1;
-            break;
-        }
-        rounds += 10000;
-    }
-    while (!timer.hasExpired(msec));
 
-    return rounds;
+    if (!cipher.processInPlace(key, rounds)) {
+        return -1;
+    }
+
+    return static_cast<int>(rounds * (static_cast<float>(msec) / timer.elapsed()));
 }

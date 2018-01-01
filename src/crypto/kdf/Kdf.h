@@ -22,6 +22,9 @@
 
 #include "core/Uuid.h"
 
+#define KDF_DEFAULT_SEED_SIZE 32
+#define KDF_DEFAULT_ROUNDS 100000ull
+
 class Kdf
 {
 public:
@@ -30,18 +33,22 @@ public:
 
     Uuid uuid() const;
 
-    virtual quint64 rounds() const = 0;
-    virtual bool setRounds(quint64 rounds) = 0;
-    virtual QByteArray seed() const = 0;
-    virtual bool setSeed(const QByteArray& seed) = 0;
+    int rounds() const;
+    virtual bool setRounds(int rounds);
+    QByteArray seed() const;
+    virtual bool setSeed(const QByteArray& seed);
+    virtual void randomizeSeed();
+
     virtual bool transform(const QByteArray& raw, QByteArray& result) const = 0;
-    virtual void randomizeTransformSalt() = 0;
     virtual QSharedPointer<Kdf> clone() const = 0;
 
     int benchmark(int msec) const;
 
 protected:
     virtual int benchmarkImpl(int msec) const = 0;
+
+    int m_rounds;
+    QByteArray m_seed;
 
 private:
     class BenchmarkThread;

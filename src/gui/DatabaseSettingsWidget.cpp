@@ -26,6 +26,7 @@
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/SymmetricCipher.h"
+#include "crypto/kdf/Argon2Kdf.h"
 #include "MessageBox.h"
 
 DatabaseSettingsWidget::DatabaseSettingsWidget(QWidget* parent)
@@ -42,6 +43,7 @@ DatabaseSettingsWidget::DatabaseSettingsWidget(QWidget* parent)
     connect(m_ui->historyMaxSizeCheckBox, SIGNAL(toggled(bool)),
             m_ui->historyMaxSizeSpinBox, SLOT(setEnabled(bool)));
     connect(m_ui->transformBenchmarkButton, SIGNAL(clicked()), SLOT(transformRoundsBenchmark()));
+    connect(m_ui->kdfComboBox, SIGNAL(currentIndexChanged(int)), SLOT(kdfChanged(int)));
 }
 
 DatabaseSettingsWidget::~DatabaseSettingsWidget()
@@ -83,19 +85,29 @@ void DatabaseSettingsWidget::load(Database* db)
         m_ui->algorithmComboBox->setCurrentIndex(cipherIndex);
     }
 
-    bool blockSignals = m_ui->kdfComboBox->signalsBlocked();
+    // Setup kdf combo box
     m_ui->kdfComboBox->blockSignals(true);
-
     m_ui->kdfComboBox->clear();
     for (auto& kdf: asConst(KeePass2::KDFS)) {
         m_ui->kdfComboBox->addItem(kdf.second, kdf.first.toByteArray());
     }
-    int kdfIndex = m_ui->kdfComboBox->findData(m_db->kdf()->uuid().toByteArray());
+    m_ui->kdfComboBox->blockSignals(false);
+
+    auto kdfUuid = m_db->kdf()->uuid();
+    int kdfIndex = m_ui->kdfComboBox->findData(kdfUuid.toByteArray());
     if (kdfIndex > -1) {
         m_ui->kdfComboBox->setCurrentIndex(kdfIndex);
+        kdfChanged(kdfIndex);
     }
-    m_ui->kdfComboBox->blockSignals(blockSignals);
-    m_ui->transformRoundsSpinBox->setValue(static_cast<unsigned>(m_db->kdf()->rounds()));
+
+    // Setup kdf parameters
+    auto kdf = m_db->kdf();
+    m_ui->transformRoundsSpinBox->setValue(kdf->rounds());
+    if (kdfUuid == KeePass2::KDF_ARGON2) {
+        auto argon2Kdf = kdf.staticCast<Argon2Kdf>();
+        m_ui->memorySpinBox->setValue(argon2Kdf->memory());
+        m_ui->parallelismSpinBox->setValue(argon2Kdf->parallelism());
+    }
 
     m_ui->dbNameEdit->setFocus();
 }
@@ -139,8 +151,14 @@ void DatabaseSettingsWidget::save()
 
     m_db->setCipher(Uuid(m_ui->algorithmComboBox->currentData().toByteArray()));
 
+    // Save kdf parameters
     auto kdf = KeePass2::uuidToKdf(Uuid(m_ui->kdfComboBox->currentData().toByteArray()));
-    kdf->setRounds(static_cast<quint64>(qMax(0, m_ui->transformRoundsSpinBox->value())));
+    kdf->setRounds(m_ui->transformRoundsSpinBox->value());
+    if (kdf->uuid() == KeePass2::KDF_ARGON2) {
+        auto argon2Kdf = kdf.staticCast<Argon2Kdf>();
+        argon2Kdf->setMemory(m_ui->memorySpinBox->value());
+        argon2Kdf->setParallelism(m_ui->parallelismSpinBox->value());
+    }
 
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
     // TODO: we should probably use AsyncTask::runAndWaitForFuture() here,
@@ -164,11 +182,26 @@ void DatabaseSettingsWidget::reject()
 void DatabaseSettingsWidget::transformRoundsBenchmark()
 {
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-    m_ui->transformRoundsSpinBox->setValue(AsyncTask::runAndWaitForFuture([this]() {
-        int rounds = m_db->kdf()->benchmark(1000);
-        QApplication::restoreOverrideCursor();
-        return rounds;
-    }));
+    m_ui->transformBenchmarkButton->setEnabled(false);
+
+    // Create a new kdf with the current parameters
+    auto kdf = KeePass2::uuidToKdf(Uuid(m_ui->kdfComboBox->currentData().toByteArray()));
+    kdf->setRounds(m_ui->transformRoundsSpinBox->value());
+    if (kdf->uuid() == KeePass2::KDF_ARGON2) {
+        auto argon2Kdf = kdf.staticCast<Argon2Kdf>();
+        argon2Kdf->setMemory(m_ui->memorySpinBox->value());
+        argon2Kdf->setParallelism(m_ui->parallelismSpinBox->value());
+    }
+
+    // Determine the number of rounds required to meet 1 second delay
+    int rounds = AsyncTask::runAndWaitForFuture([this, kdf]() {
+        return kdf->benchmark(1000);
+    });
+
+    m_ui->transformRoundsSpinBox->setValue(rounds);
+
+    QApplication::restoreOverrideCursor();
+    m_ui->transformBenchmarkButton->setEnabled(true);
 }
 
 void DatabaseSettingsWidget::truncateHistories()
@@ -176,5 +209,17 @@ void DatabaseSettingsWidget::truncateHistories()
     const QList<Entry*> allEntries = m_db->rootGroup()->entriesRecursive(false);
     for (Entry* entry : allEntries) {
         entry->truncateHistory();
+    }
+}
+
+void DatabaseSettingsWidget::kdfChanged(int index)
+{
+    Uuid id(m_ui->kdfComboBox->itemData(index).toByteArray());
+    if (id == KeePass2::KDF_ARGON2) {
+        m_ui->memorySpinBox->setEnabled(true);
+        m_ui->parallelismSpinBox->setEnabled(true);
+    } else {
+        m_ui->memorySpinBox->setEnabled(false);
+        m_ui->parallelismSpinBox->setEnabled(false);
     }
 }

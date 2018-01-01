@@ -40,6 +40,7 @@ namespace KeePass2
     extern const Uuid CIPHER_CHACHA20;
 
     extern const Uuid KDF_AES;
+    extern const Uuid KDF_ARGON2;
 
     extern const QByteArray INNER_STREAM_SALSA20_IV;
 

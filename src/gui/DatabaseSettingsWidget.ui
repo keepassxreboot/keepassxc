@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>DatabaseSettingsWidget</class>
  <widget class="QWidget" name="DatabaseSettingsWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1082</width>
+    <height>506</height>
+   </rect>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,2,5,1">
    <item>
     <spacer name="verticalSpacer_2">
@@ -35,39 +43,36 @@
       <widget class="QWidget" name="widget" native="true">
        <property name="maximumSize">
         <size>
-         <width>800</width>
+         <width>400</width>
          <height>16777215</height>
         </size>
        </property>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="4" column="2">
+        <item row="11" column="1">
+         <widget class="QCheckBox" name="historyMaxSizeCheckBox">
+          <property name="text">
+           <string>Max. history size:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLineEdit" name="dbNameEdit"/>
+        </item>
+        <item row="7" column="2">
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
-           <widget class="QSpinBox" name="transformRoundsSpinBox">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+           <widget class="QSpinBox" name="memorySpinBox">
+            <property name="suffix">
+             <string> MB</string>
             </property>
             <property name="minimum">
              <number>1</number>
             </property>
             <property name="maximum">
-             <number>1000000000</number>
+             <number>1048576</number>
             </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="transformBenchmarkButton">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Benchmark</string>
+            <property name="value">
+             <number>64</number>
             </property>
            </widget>
           </item>
@@ -80,31 +85,55 @@
           </property>
          </widget>
         </item>
-        <item row="8" column="1">
-         <widget class="QCheckBox" name="historyMaxSizeCheckBox">
-          <property name="text">
-           <string>Max. history size:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1" alignment="Qt::AlignRight">
-         <widget class="QLabel" name="transformRoundsLabel">
-          <property name="text">
-           <string>Transform rounds:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="1">
+        <item row="10" column="1">
          <widget class="QCheckBox" name="historyMaxItemsCheckBox">
           <property name="text">
            <string>Max. history items:</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="2">
-         <widget class="QLineEdit" name="dbNameEdit"/>
+        <item row="4" column="1">
+         <widget class="QLabel" name="kdfLabel">
+          <property name="text">
+           <string>Key Derivation Function</string>
+          </property>
+         </widget>
         </item>
-        <item row="7" column="2">
+        <item row="3" column="2">
+         <widget class="QComboBox" name="algorithmComboBox">
+          <item>
+           <property name="text">
+            <string>AES:  256 Bit   (default)</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Twofish:  256 Bit</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="3" column="1" alignment="Qt::AlignRight">
+         <widget class="QLabel" name="algorithmLabel">
+          <property name="text">
+           <string>Encryption Algorithm:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" alignment="Qt::AlignRight">
+         <widget class="QLabel" name="dbDescriptionLabel">
+          <property name="text">
+           <string>Database description:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QLineEdit" name="dbDescriptionEdit"/>
+        </item>
+        <item row="4" column="2">
+         <widget class="QComboBox" name="kdfComboBox"/>
+        </item>
+        <item row="10" column="2">
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
            <widget class="QSpinBox" name="historyMaxItemsSpinBox">
@@ -121,17 +150,7 @@
           </item>
          </layout>
         </item>
-        <item row="5" column="1" alignment="Qt::AlignRight">
-         <widget class="QLabel" name="defaultUsernameLabel">
-          <property name="text">
-           <string>Default username:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QLineEdit" name="dbDescriptionEdit"/>
-        </item>
-        <item row="8" column="2">
+        <item row="11" column="2">
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
            <widget class="QSpinBox" name="historyMaxSizeSpinBox">
@@ -155,54 +174,101 @@
          </layout>
         </item>
         <item row="6" column="2">
-         <widget class="QCheckBox" name="recycleBinEnabledCheckBox">
-          <property name="text">
-           <string>Use recycle bin</string>
+         <widget class="QSpinBox" name="transformRoundsSpinBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>1000000000</number>
           </property>
          </widget>
         </item>
         <item row="5" column="2">
+         <widget class="QToolButton" name="transformBenchmarkButton">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Benchmark 1-second delay</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
          <widget class="QLineEdit" name="defaultUsernameEdit">
           <property name="enabled">
            <bool>true</bool>
           </property>
          </widget>
         </item>
-        <item row="1" column="1" alignment="Qt::AlignRight">
-         <widget class="QLabel" name="dbDescriptionLabel">
+        <item row="2" column="1">
+         <widget class="QLabel" name="defaultUsernameLabel">
           <property name="text">
-           <string>Database description:</string>
+           <string>Default username:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
         </item>
-        <item row="2" column="2">
-         <widget class="QComboBox" name="algorithmComboBox">
-          <item>
-           <property name="text">
-            <string>AES:  256 Bit   (default)</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Twofish:  256 Bit</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="2" column="1" alignment="Qt::AlignRight">
-         <widget class="QLabel" name="algorithmLabel">
+        <item row="6" column="1">
+         <widget class="QLabel" name="transformRoundsLabel">
           <property name="text">
-           <string>Encryption Algorithm:</string>
+           <string>Transform rounds:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
         </item>
-        <item row="3" column="2">
-         <widget class="QComboBox" name="kdfComboBox"/>
-        </item>
-        <item row="3" column="1">
-         <widget class="QLabel" name="kdfLabel">
+        <item row="7" column="1">
+         <widget class="QLabel" name="memoryUsageLabel">
           <property name="text">
-           <string>Key Derivation Function</string>
+           <string>Memory Usage:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="1">
+         <widget class="QLabel" name="parallelismLabel">
+          <property name="text">
+           <string>Parallelism:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="2">
+         <widget class="QSpinBox" name="parallelismSpinBox">
+          <property name="suffix">
+           <string> thread</string>
+          </property>
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>128</number>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="1">
+         <widget class="QCheckBox" name="recycleBinEnabledCheckBox">
+          <property name="text">
+           <string>Use recycle bin</string>
           </property>
          </widget>
         </item>
@@ -249,10 +315,6 @@
  <tabstops>
   <tabstop>dbNameEdit</tabstop>
   <tabstop>dbDescriptionEdit</tabstop>
-  <tabstop>transformRoundsSpinBox</tabstop>
-  <tabstop>transformBenchmarkButton</tabstop>
-  <tabstop>defaultUsernameEdit</tabstop>
-  <tabstop>recycleBinEnabledCheckBox</tabstop>
   <tabstop>historyMaxItemsCheckBox</tabstop>
   <tabstop>historyMaxItemsSpinBox</tabstop>
   <tabstop>historyMaxSizeCheckBox</tabstop>
