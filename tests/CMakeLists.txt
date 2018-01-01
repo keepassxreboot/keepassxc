@@ -181,9 +181,6 @@ add_unit_test(NAME testrandom SOURCES TestRandom.cpp
 add_unit_test(NAME testentrysearcher SOURCES TestEntrySearcher.cpp
               LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testexporter SOURCES TestExporter.cpp
-              LIBS ${TEST_LIBRARIES})
-
 add_unit_test(NAME testcsvexporter SOURCES TestCsvExporter.cpp
               LIBS ${TEST_LIBRARIES})
 
