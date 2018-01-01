@@ -898,7 +898,8 @@ void TestGui::testDatabaseSettings()
     m_db->metadata()->setName("Save");
     triggerAction("actionChangeDatabaseSettings");
     QWidget* dbSettingsWidget = m_dbWidget->findChild<QWidget*>("databaseSettingsWidget");
-    QSpinBox* transformRoundsSpinBox = dbSettingsWidget->findChild<QSpinBox*>("kdfParams0");
+    QSpinBox* transformRoundsSpinBox = dbSettingsWidget->findChild<QSpinBox*>("transformRoundsSpinBox");
+    QVERIFY(transformRoundsSpinBox != nullptr);
     transformRoundsSpinBox->setValue(100);
     QTest::keyClick(transformRoundsSpinBox, Qt::Key_Enter);
     // wait for modified timer
