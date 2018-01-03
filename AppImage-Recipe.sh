@@ -31,13 +31,16 @@ if [ ! -d ../bin-release ]; then
     exit 1
 fi
 
+# exit with error if any sub command fails
+set -e
+
 APP="$1"
 LOWERAPP="$(echo "$APP" | tr '[:upper:]' '[:lower:]')"
 VERSION="$2"
 export ARCH=x86_64
 
 mkdir -p $APP.AppDir
-wget -q https://github.com/AppImage/AppImages/raw/master/functions.sh -O ./functions.sh
+wget -q https://github.com/AppImage/AppImages/raw/master/functions.sh -O ./functions.sh 2>&1
 . ./functions.sh
 
 LIB_DIR=./usr/lib
@@ -64,12 +67,12 @@ QT_PLUGIN_PATH="$(dirname $(dirname $QXCB_PLUGIN))"
 mkdir -p ".${QT_PLUGIN_PATH}/platforms"
 cp "$QXCB_PLUGIN" ".${QT_PLUGIN_PATH}/platforms/"
 
-get_apprun
-copy_deps
-delete_blacklisted
+get_apprun 2>&1
+copy_deps 2>&1
+delete_blacklisted 2>&1
 
-get_desktop
-get_icon
+get_desktop 2>&1
+get_icon 2>&1
 cat << EOF > ./usr/bin/keepassxc_env
 #!/usr/bin/env bash
 export LD_LIBRARY_PATH="..$(dirname ${QT_PLUGIN_PATH})/lib:\${LD_LIBRARY_PATH}"
@@ -88,14 +91,14 @@ fi
 EOF
 chmod +x ./usr/bin/keepassxc_env
 sed -i 's/Exec=keepassxc/Exec=keepassxc_env/' org.${LOWERAPP}.${APP}.desktop
-get_desktopintegration "org.${LOWERAPP}.${APP}"
+get_desktopintegration "org.${LOWERAPP}.${APP}" 2>&1
 
 cd ..
 
 GLIBC_NEEDED=$(glibc_needed)
 NO_GLIBC_VERSION=true
 
-generate_type2_appimage -u "gh-releases-zsync|keepassxreboot|keepassxc|latest|KeePassXC-*-${ARCH}.AppImage.zsync"
+generate_type2_appimage -u "gh-releases-zsync|keepassxreboot|keepassxc|latest|KeePassXC-*-${ARCH}.AppImage.zsync" 2>&1
 
 mv ../out/*.AppImage* ../
 rm -rf ../out
