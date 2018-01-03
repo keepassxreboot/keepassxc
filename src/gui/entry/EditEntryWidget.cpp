@@ -32,6 +32,7 @@
 #include <QMimeData>
 #include <QEvent>
 
+#include "autotype/AutoType.h"
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/Entry.h"
@@ -764,7 +765,9 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
         entry->setDefaultAutoTypeSequence(QString());
     }
     else {
-        entry->setDefaultAutoTypeSequence(m_autoTypeUi->sequenceEdit->text());
+        if (AutoType::verifyAutoTypeSyntax(m_autoTypeUi->sequenceEdit->text())) {
+            entry->setDefaultAutoTypeSequence(m_autoTypeUi->sequenceEdit->text());
+        }
     }
 
     entry->autoTypeAssociations()->copyDataFrom(m_autoTypeAssoc);

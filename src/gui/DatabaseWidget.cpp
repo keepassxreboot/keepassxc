@@ -613,7 +613,7 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
             }
             return;
         }
-        
+
         // otherwise ask user
         if (urlString.length() > 6) {
             QString cmdTruncated = urlString.mid(6);
@@ -627,7 +627,7 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
                                this
             );
             msgbox.setDefaultButton(QMessageBox::No);
-            
+
             QCheckBox* checkbox = new QCheckBox(tr("Remember my choice"), &msgbox);
             msgbox.setCheckBox(checkbox);
             bool remember = false;
@@ -636,12 +636,12 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
                    remember = true;
                }
             });
-            
+
             int result = msgbox.exec();
             if (result == QMessageBox::Yes) {
                 QProcess::startDetached(urlString.mid(6));
             }
-            
+
             if (remember) {
                 entry->attributes()->set(EntryAttributes::RememberCmdExecAttr,
                                          result == QMessageBox::Yes ? "1" : "0");
