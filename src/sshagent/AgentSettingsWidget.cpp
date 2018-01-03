@@ -17,6 +17,7 @@
  */
 
 #include "AgentSettingsWidget.h"
+#include "ui_AgentSettingsWidget.h"
 #include "core/Config.h"
 
 AgentSettingsWidget::AgentSettingsWidget(QWidget* parent)
@@ -24,6 +25,10 @@ AgentSettingsWidget::AgentSettingsWidget(QWidget* parent)
     , m_ui(new Ui::AgentSettingsWidget())
 {
     m_ui->setupUi(this);
+}
+
+AgentSettingsWidget::~AgentSettingsWidget()
+{
 }
 
 void AgentSettingsWidget::loadSettings()
