@@ -69,12 +69,18 @@ int main(int argc, char** argv)
                                      "keyfile");
     QCommandLineOption pwstdinOption("pw-stdin",
                                      QCoreApplication::translate("main", "read password of the database from stdin"));
+    // This is needed under Windows where clients send --parent-window parameter with Native Messaging connect method
+    QCommandLineOption parentWindowOption(QStringList() << "pw"
+                                                        << "parent-window",
+                                                        QCoreApplication::translate("main", "Parent window handle"),
+                                                        "handle");
 
     parser.addHelpOption();
     parser.addVersionOption();
     parser.addOption(configOption);
     parser.addOption(keyfileOption);
     parser.addOption(pwstdinOption);
+    parser.addOption(parentWindowOption);
 
     parser.process(app);
     const QStringList fileNames = parser.positionalArguments();
@@ -86,7 +92,7 @@ int main(int argc, char** argv)
         qWarning() << QCoreApplication::translate("Main", "Another instance of KeePassXC is already running.").toUtf8().constData();
         return 0;
     }
-    
+
     QApplication::setQuitOnLastWindowClosed(false);
 
     if (!Crypto::init()) {
@@ -116,7 +122,7 @@ int main(int argc, char** argv)
     QObject::connect(&app, SIGNAL(applicationActivated()), &mainWindow, SLOT(bringToFront()));
     QObject::connect(&app, SIGNAL(openFile(QString)), &mainWindow, SLOT(openDatabase(QString)));
     QObject::connect(&app, SIGNAL(quitSignalReceived()), &mainWindow, SLOT(appExit()), Qt::DirectConnection);
-    
+
     // start minimized if configured
     bool minimizeOnStartup = config()->get("GUI/MinimizeOnStartup").toBool();
     bool minimizeToTray    = config()->get("GUI/MinimizeToTray").toBool();
@@ -126,7 +132,7 @@ int main(int argc, char** argv)
     if (!(minimizeOnStartup && minimizeToTray)) {
         mainWindow.show();
     }
-    
+
     if (config()->get("OpenPreviousDatabasesOnStartup").toBool()) {
         const QStringList fileNames = config()->get("LastOpenedDatabases").toStringList();
         for (const QString& filename: fileNames) {
@@ -138,13 +144,12 @@ int main(int argc, char** argv)
 
     const bool pwstdin = parser.isSet(pwstdinOption);
     for (const QString& filename: fileNames) {
-        if (!filename.isEmpty() && QFile::exists(filename)) {
+        if (!filename.isEmpty() && QFile::exists(filename) && !filename.endsWith(".json", Qt::CaseInsensitive)) {
             QString password;
             if (pwstdin) {
                 static QTextStream in(stdin, QIODevice::ReadOnly);
                 password = in.readLine();
             }
-            mainWindow.openDatabase(filename, password, parser.value(keyfileOption));
         }
     }
 

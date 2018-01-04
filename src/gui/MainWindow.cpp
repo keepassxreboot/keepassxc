@@ -54,6 +54,12 @@
 #include "sshagent/SSHAgent.h"
 #endif
 
+#ifdef WITH_XC_BROWSER
+#include "browser/NativeMessagingHost.h"
+#include "browser/BrowserSettings.h"
+#include "browser/BrowserOptionDialog.h"
+#endif
+
 #include "gui/SettingsWidget.h"
 #include "gui/PasswordGeneratorWidget.h"
 
@@ -104,6 +110,54 @@ private:
 };
 #endif
 
+#ifdef WITH_XC_BROWSER
+class BrowserPlugin: public ISettingsPage
+{
+    public:
+        BrowserPlugin(DatabaseTabWidget* tabWidget) {
+            m_nativeMessagingHost = QSharedPointer<NativeMessagingHost>(new NativeMessagingHost(tabWidget));
+        }
+
+        ~BrowserPlugin() {
+
+        }
+
+        QString name() override
+        {
+            return QObject::tr("Browser extension with native messaging");
+        }
+
+        QIcon icon() override
+        {
+            return FilePath::instance()->icon("apps", "internet-web-browser");
+        }
+
+        QWidget* createWidget() override {
+            BrowserOptionDialog* dlg = new BrowserOptionDialog();
+            QObject::connect(dlg, SIGNAL(removeSharedEncryptionKeys()), m_nativeMessagingHost.data(), SLOT(removeSharedEncryptionKeys()));
+            QObject::connect(dlg, SIGNAL(removeStoredPermissions()), m_nativeMessagingHost.data(), SLOT(removeStoredPermissions()));
+            return dlg;
+        }
+
+        void loadSettings(QWidget* widget) override
+        {
+            qobject_cast<BrowserOptionDialog*>(widget)->loadSettings();
+        }
+
+        void saveSettings(QWidget* widget) override
+        {
+            qobject_cast<BrowserOptionDialog*>(widget)->saveSettings();
+            if (BrowserSettings::isEnabled()) {
+                m_nativeMessagingHost->run();
+            } else {
+                m_nativeMessagingHost->stop();
+            }
+        }
+    private:
+        QSharedPointer<NativeMessagingHost>  m_nativeMessagingHost;
+};
+#endif
+
 const QString MainWindow::BaseWindowTitle = "KeePassXC";
 
 MainWindow::MainWindow()
@@ -133,6 +187,9 @@ MainWindow::MainWindow()
     #ifdef WITH_XC_SSHAGENT
     SSHAgent::init(this);
     m_ui->settingsWidget->addSettingsPage(new AgentSettingsPage(m_ui->tabWidget));
+    #endif
+    #ifdef WITH_XC_BROWSER
+    m_ui->settingsWidget->addSettingsPage(new BrowserPlugin(m_ui->tabWidget));
     #endif
 
     setWindowIcon(filePath()->applicationIcon());

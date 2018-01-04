@@ -16,6 +16,7 @@
 #cmakedefine WITH_XC_AUTOTYPE
 #cmakedefine WITH_XC_YUBIKEY
 #cmakedefine WITH_XC_SSHAGENT
+#cmakedefine WITH_XC_BROWSER
 
 #cmakedefine KEEPASSXC_DIST
 #cmakedefine KEEPASSXC_DIST_TYPE "@KEEPASSXC_DIST_TYPE@"

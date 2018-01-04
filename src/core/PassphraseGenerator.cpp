@@ -28,8 +28,7 @@ PassphraseGenerator::PassphraseGenerator()
     : m_wordCount(0)
     , m_separator(' ')
 {
-    const QString path = filePath()->dataPath("wordlists/eff_large.wordlist");
-    setWordList(path);
+    
 }
 
 double PassphraseGenerator::calculateEntropy(QString passphrase)
@@ -46,12 +45,12 @@ double PassphraseGenerator::calculateEntropy(QString passphrase)
 void PassphraseGenerator::setWordCount(int wordCount)
 {
     if (wordCount > 0) {
-        m_wordCount = wordCount; 
+        m_wordCount = wordCount;
     } else {
         // safe default if something goes wrong
         m_wordCount = 7;
     }
- 
+
 }
 
 void PassphraseGenerator::setWordList(QString path)
@@ -73,6 +72,12 @@ void PassphraseGenerator::setWordList(QString path)
         qWarning("Wordlist too short!");
         return;
     }
+}
+
+void PassphraseGenerator::setDefaultWordList()
+{
+    const QString path = filePath()->dataPath("wordlists/eff_large.wordlist");
+    setWordList(path);
 }
 
 void PassphraseGenerator::setWordSeparator(QString separator) {
