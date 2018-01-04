@@ -61,6 +61,10 @@ RUN set -x \
         libfuse2 \
         wget
 
+RUN set -x \
+    && apt-get autoremove --purge \
+    && rm -rf /var/lib/apt/lists/*
+
 VOLUME /keepassxc/src
 VOLUME /keepassxc/out
 WORKDIR /keepassxc

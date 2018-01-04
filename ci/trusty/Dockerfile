@@ -16,7 +16,18 @@
 
 # TIP: check this Dockerfile using this online tool: https://www.fromlatest.io
 
-FROM ubuntu:trusty
+FROM ubuntu:14.04
+
+ENV QT5_VERSION=53
+ENV QT5_PPA_VERSION=${QT5_VERSION}2
+
+RUN set -x \
+     && apt-get update -y \
+     && apt-get -y install software-properties-common
+
+RUN set -x \
+    && add-apt-repository ppa:beineri/opt-qt${QT5_PPA_VERSION}-trusty \
+    && LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
 
 RUN set -x \
     && apt-get -y update \
@@ -24,13 +35,21 @@ RUN set -x \
       git build-essential clang-3.6 libclang-common-3.6-dev clang-format-3.6 cmake3 make \
       curl ca-certificates gnupg2 \
       libgcrypt20-dev zlib1g-dev libyubikey-dev libykpers-1-dev \
-      qttools5-dev \
-      qttools5-dev-tools \
-      qtbase5-dev \
-      libqt5x11extras5-dev \
+      qt${QT5_VERSION}base \
+      qt${QT5_VERSION}tools \
+      qt${QT5_VERSION}x11extras \
+      qt${QT5_VERSION}translations \
       libxi-dev \
       libxtst-dev \
       xvfb \
+      libsodium-dev
+
+ENV CMAKE_PREFIX_PATH=/opt/qt${QT5_VERSION}/lib/cmake
+ENV LD_LIBRARY_PATH=/opt/qt${QT5_VERSION}/lib
+RUN set -x \
+    && echo /opt/qt${QT_VERSION}/lib > /etc/ld.so.conf.d/qt${QT5_VERSION}.conf
+
+RUN set -x \
     && apt-get autoremove --purge \
     && rm -rf /var/lib/apt/lists/*
 
