@@ -25,6 +25,7 @@
 #include "format/KeePass1.h"
 #include "format/KeePass2.h"
 #include "format/Kdbx3Reader.h"
+#include "format/Kdbx4Reader.h"
 
 BaseKeePass2Reader::BaseKeePass2Reader()
     : m_error(false)
@@ -118,14 +119,21 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& ke
 
     m_version = Endian::readSizedInt<quint32>(device, KeePass2::BYTEORDER, &ok)
             & KeePass2::FILE_VERSION_CRITICAL_MASK;
-    quint32 maxVersion = KeePass2::FILE_VERSION & KeePass2::FILE_VERSION_CRITICAL_MASK;
+    quint32 maxVersion = KeePass2::FILE_VERSION_4 & KeePass2::FILE_VERSION_CRITICAL_MASK;
     if (!ok || (m_version < KeePass2::FILE_VERSION_MIN) || (m_version > maxVersion)) {
         raiseError(tr("Unsupported KeePass 2 database version."));
         return nullptr;
     }
 
     device->seek(0);
-    m_reader.reset(static_cast<BaseKeePass2Reader*>(new Kdbx3Reader()));
+
+    // Determine KDBX3 vs KDBX4
+    if (m_version < KeePass2::FILE_VERSION_4) {
+        m_reader.reset(new Kdbx3Reader());
+    } else {
+        m_reader.reset(new Kdbx4Reader());
+    }
+
     m_reader->setSaveXml(m_saveXml);
     return m_reader->readDatabase(device, key, keepDatabase);
 }
@@ -158,4 +166,9 @@ KeePass2::ProtectedStreamAlgo KeePass2Reader::protectedStreamAlgo() const
 quint32 KeePass2Reader::version() const
 {
     return m_version;
+}
+
+QSharedPointer<BaseKeePass2Reader> KeePass2Reader::reader()
+{
+    return m_reader;
 }

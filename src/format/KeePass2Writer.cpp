@@ -22,6 +22,7 @@
 #include "format/KeePass2Writer.h"
 #include "core/Database.h"
 #include "format/Kdbx3Writer.h"
+#include "format/Kdbx4Writer.h"
 
 BaseKeePass2Writer::BaseKeePass2Writer() : m_error(false)
 {
@@ -67,6 +68,22 @@ QString KeePass2Writer::errorString()
 }
 
 bool KeePass2Writer::writeDatabase(QIODevice* device, Database* db) {
-    m_writer.reset(static_cast<BaseKeePass2Writer*>(new Kdbx3Writer()));
+    bool useKdbx4 = false;
+
+    if (db->kdf()->uuid() != KeePass2::KDF_AES) {
+        useKdbx4 = true;
+    }
+
+    if (db->publicCustomData().size() > 0) {
+        useKdbx4 = true;
+    }
+
+    // Determine KDBX3 vs KDBX4
+    if (useKdbx4) {
+        m_writer.reset(new Kdbx4Writer());
+    } else {
+        m_writer.reset(new Kdbx3Writer());
+    }
+
     return m_writer->writeDatabase(device, db);
 }

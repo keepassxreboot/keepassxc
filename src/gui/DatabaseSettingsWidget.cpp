@@ -105,7 +105,7 @@ void DatabaseSettingsWidget::load(Database* db)
     m_ui->transformRoundsSpinBox->setValue(kdf->rounds());
     if (kdfUuid == KeePass2::KDF_ARGON2) {
         auto argon2Kdf = kdf.staticCast<Argon2Kdf>();
-        m_ui->memorySpinBox->setValue(argon2Kdf->memory());
+        m_ui->memorySpinBox->setValue(argon2Kdf->memory() / (1<<10));
         m_ui->parallelismSpinBox->setValue(argon2Kdf->parallelism());
     }
 
@@ -120,6 +120,7 @@ void DatabaseSettingsWidget::save()
     meta->setDescription(m_ui->dbDescriptionEdit->text());
     meta->setDefaultUserName(m_ui->defaultUsernameEdit->text());
     meta->setRecycleBinEnabled(m_ui->recycleBinEnabledCheckBox->isChecked());
+    meta->setSettingsChanged(QDateTime::currentDateTimeUtc());
 
     bool truncate = false;
 
@@ -156,7 +157,7 @@ void DatabaseSettingsWidget::save()
     kdf->setRounds(m_ui->transformRoundsSpinBox->value());
     if (kdf->uuid() == KeePass2::KDF_ARGON2) {
         auto argon2Kdf = kdf.staticCast<Argon2Kdf>();
-        argon2Kdf->setMemory(m_ui->memorySpinBox->value());
+        argon2Kdf->setMemory(m_ui->memorySpinBox->value() * (1<<10));
         argon2Kdf->setParallelism(m_ui->parallelismSpinBox->value());
     }
 
@@ -189,8 +190,12 @@ void DatabaseSettingsWidget::transformRoundsBenchmark()
     kdf->setRounds(m_ui->transformRoundsSpinBox->value());
     if (kdf->uuid() == KeePass2::KDF_ARGON2) {
         auto argon2Kdf = kdf.staticCast<Argon2Kdf>();
-        argon2Kdf->setMemory(m_ui->memorySpinBox->value());
-        argon2Kdf->setParallelism(m_ui->parallelismSpinBox->value());
+        if (!argon2Kdf->setMemory(m_ui->memorySpinBox->value() * (1<<10))) {
+            m_ui->memorySpinBox->setValue(argon2Kdf->memory() / (1<<10));
+        }
+        if (!argon2Kdf->setParallelism(m_ui->parallelismSpinBox->value())) {
+            m_ui->parallelismSpinBox->setValue(argon2Kdf->parallelism());
+        }
     }
 
     // Determine the number of rounds required to meet 1 second delay

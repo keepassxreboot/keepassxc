@@ -46,8 +46,12 @@ QByteArray Kdf::seed() const
 
 bool Kdf::setRounds(int rounds)
 {
-    m_rounds = rounds;
-    return true;
+    if (rounds >= 1 && rounds < INT_MAX) {
+        m_rounds = rounds;
+        return true;
+    }
+    m_rounds = 1;
+    return false;
 }
 
 bool Kdf::setSeed(const QByteArray& seed)

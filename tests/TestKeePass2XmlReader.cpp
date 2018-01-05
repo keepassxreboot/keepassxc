@@ -27,6 +27,8 @@
 #include "crypto/Crypto.h"
 #include "format/Kdbx3XmlReader.h"
 #include "format/Kdbx3XmlWriter.h"
+#include "format/Kdbx4XmlReader.h"
+#include "format/Kdbx4XmlWriter.h"
 #include "config-keepassx-tests.h"
 
 namespace QTest {
@@ -89,6 +91,18 @@ void TestKdbx3XmlReader::initTestCase()
     QVERIFY(!reader.hasError());
 }
 
+void TestKdbx4XmlReader::initTestCase()
+{
+    QVERIFY(Crypto::init());
+
+    Kdbx4XmlReader reader;
+    reader.setStrictMode(true);
+    QString xmlFile = QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.xml");
+    m_db = reader.readDatabase(xmlFile);
+    QVERIFY(m_db);
+    QVERIFY(!reader.hasError());
+}
+
 void TestKdbx3XmlReader::readDatabase(QString path, bool strictMode, Database*& db, bool& hasError, QString& errorString)
 {
     Kdbx3XmlReader reader;
@@ -110,6 +124,32 @@ void TestKdbx3XmlReader::readDatabase(QBuffer* buf, bool strictMode, Database*& 
 void TestKdbx3XmlReader::writeDatabase(QBuffer* buf, Database* db, bool& hasError, QString& errorString)
 {
     Kdbx3XmlWriter writer;
+    writer.writeDatabase(buf, db);
+    hasError = writer.hasError();
+    errorString = writer.errorString();
+}
+
+void TestKdbx4XmlReader::readDatabase(QString path, bool strictMode, Database*& db, bool& hasError, QString& errorString)
+{
+    Kdbx4XmlReader reader;
+    reader.setStrictMode(strictMode);
+    db = reader.readDatabase(path);
+    hasError = reader.hasError();
+    errorString = reader.errorString();
+}
+
+void TestKdbx4XmlReader::readDatabase(QBuffer* buf, bool strictMode, Database*& db, bool& hasError, QString& errorString)
+{
+    Kdbx4XmlReader reader;
+    reader.setStrictMode(strictMode);
+    db = reader.readDatabase(buf);
+    hasError = reader.hasError();
+    errorString = reader.errorString();
+}
+
+void TestKdbx4XmlReader::writeDatabase(QBuffer* buf, Database* db, bool& hasError, QString& errorString)
+{
+    Kdbx4XmlWriter writer;
     writer.writeDatabase(buf, db);
     hasError = writer.hasError();
     errorString = writer.errorString();

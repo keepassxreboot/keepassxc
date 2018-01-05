@@ -70,4 +70,17 @@ protected:
     virtual void writeDatabase(QBuffer* buf, Database* db, bool& hasError, QString& errorString) override;
 };
 
+class TestKdbx4XmlReader : public TestKeePass2XmlReader
+{
+    Q_OBJECT
+
+private slots:
+    virtual void initTestCase() override;
+
+protected:
+    virtual void readDatabase(QBuffer* buf, bool strictMode, Database*& db, bool& hasError, QString& errorString) override;
+    virtual void readDatabase(QString path, bool strictMode, Database*& db, bool& hasError, QString& errorString) override;
+    virtual void writeDatabase(QBuffer* buf, Database* db, bool& hasError, QString& errorString) override;
+};
+
 #endif // KEEPASSX_TESTKEEPASS2XMLREADER_H

@@ -70,11 +70,12 @@ public:
     QString errorString() override;
     QByteArray xmlData() override;
     QByteArray streamKey() override;
+    QSharedPointer<BaseKeePass2Reader> reader();
     KeePass2::ProtectedStreamAlgo protectedStreamAlgo() const override;
 
     quint32 version() const;
 private:
-    QScopedPointer<BaseKeePass2Reader> m_reader;
+    QSharedPointer<BaseKeePass2Reader> m_reader;
     quint32 m_version;
 };
 

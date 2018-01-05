@@ -25,7 +25,9 @@
 #include "format/KeePass2.h"
 #include "format/KeePass2RandomStream.h"
 #include "format/KeePass2Reader.h"
+#include "format/Kdbx4Reader.h"
 #include "format/Kdbx3XmlReader.h"
+#include "format/Kdbx4XmlReader.h"
 
 KeePass2Repair::RepairOutcome KeePass2Repair::repairDatabase(QIODevice* device, const CompositeKey& key)
 {
@@ -74,12 +76,23 @@ KeePass2Repair::RepairOutcome KeePass2Repair::repairDatabase(QIODevice* device, 
 
     KeePass2RandomStream randomStream(reader.protectedStreamAlgo());
     randomStream.init(reader.streamKey());
-    Kdbx3XmlReader xmlReader;
+    bool hasError;
+
     QBuffer buffer(&xmlData);
     buffer.open(QIODevice::ReadOnly);
-    xmlReader.readDatabase(&buffer, db.data(), &randomStream);
+    if ((reader.version() & KeePass2::FILE_VERSION_CRITICAL_MASK) < KeePass2::FILE_VERSION_4) {
+        Kdbx3XmlReader xmlReader;
+        xmlReader.readDatabase(&buffer, db.data(), &randomStream);
+        hasError = xmlReader.hasError();
+    } else {
+        auto reader4 = reader.reader().staticCast<Kdbx4Reader>();
+        QHash<QString, QByteArray> pool = reader4->binaryPool();
+        Kdbx4XmlReader xmlReader(pool);
+        xmlReader.readDatabase(&buffer, db.data(), &randomStream);
+        hasError = xmlReader.hasError();
+    }
 
-    if (xmlReader.hasError()) {
+    if (hasError) {
         return qMakePair(RepairFailed, nullptr);
     }
     else {

@@ -82,7 +82,7 @@ Database* Kdbx3Reader::readDatabase(QIODevice* device, const CompositeKey& key, 
 
     quint32 version = Endian::readSizedInt<quint32>(m_headerStream, KeePass2::BYTEORDER, &ok)
         & KeePass2::FILE_VERSION_CRITICAL_MASK;
-    quint32 maxVersion = KeePass2::FILE_VERSION & KeePass2::FILE_VERSION_CRITICAL_MASK;
+    quint32 maxVersion = KeePass2::FILE_VERSION_3 & KeePass2::FILE_VERSION_CRITICAL_MASK;
     if (!ok || (version < KeePass2::FILE_VERSION_MIN) || (version > maxVersion)) {
         raiseError(tr("Unsupported KeePass KDBX 2 or 3 database version."));
         return nullptr;

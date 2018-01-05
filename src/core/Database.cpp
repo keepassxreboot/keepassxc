@@ -494,6 +494,14 @@ void Database::setKdf(QSharedPointer<Kdf> kdf)
     m_data.kdf = std::move(kdf);
 }
 
+void Database::setPublicCustomData(QByteArray data) {
+    m_data.publicCustomData = data;
+}
+
+QByteArray Database::publicCustomData() const {
+    return m_data.publicCustomData;
+}
+
 bool Database::changeKdf(QSharedPointer<Kdf> kdf)
 {
     kdf->randomizeSeed();

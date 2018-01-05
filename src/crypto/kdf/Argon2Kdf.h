@@ -24,25 +24,31 @@ class Argon2Kdf : public Kdf {
 public:
     Argon2Kdf();
 
+    bool processParameters(const QVariantMap& p) override;
+    QVariantMap writeParameters() override;
     bool transform(const QByteArray& raw, QByteArray& result) const override;
     QSharedPointer<Kdf> clone() const override;
 
-    quint32 memory() const;
-    bool setMemory(quint32 memory_kb);
+    quint32 version() const;
+    bool setVersion(quint32 version);
+    quint64 memory() const;
+    bool setMemory(quint64 kibibytes);
     quint32 parallelism() const;
     bool setParallelism(quint32 threads);
 
 protected:
     int benchmarkImpl(int msec) const override;
 
-    quint32 m_memory;
+    quint32 m_version;
+    quint64 m_memory;
     quint32 m_parallelism;
 
 private:
     static bool transformKeyRaw(const QByteArray& key,
                                 const QByteArray& seed,
-                                int rounds,
-                                quint32 memory,
+                                quint32 version,
+                                quint32 rounds,
+                                quint64 memory,
                                 quint32 parallelism,
                                 QByteArray& result) Q_REQUIRED_RESULT;
 };

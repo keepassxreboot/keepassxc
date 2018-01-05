@@ -74,7 +74,7 @@ bool Kdbx3Writer::writeDatabase(QIODevice* device, Database* db)
 
     CHECK_RETURN_FALSE(writeData(Endian::sizedIntToBytes<qint32>(KeePass2::SIGNATURE_1, KeePass2::BYTEORDER)));
     CHECK_RETURN_FALSE(writeData(Endian::sizedIntToBytes<qint32>(KeePass2::SIGNATURE_2, KeePass2::BYTEORDER)));
-    CHECK_RETURN_FALSE(writeData(Endian::sizedIntToBytes<qint32>(KeePass2::FILE_VERSION, KeePass2::BYTEORDER)));
+    CHECK_RETURN_FALSE(writeData(Endian::sizedIntToBytes<qint32>(KeePass2::FILE_VERSION_3, KeePass2::BYTEORDER)));
 
     CHECK_RETURN_FALSE(writeHeaderField(KeePass2::CipherID, db->cipher().toByteArray()));
     CHECK_RETURN_FALSE(writeHeaderField(KeePass2::CompressionFlags,

@@ -91,6 +91,10 @@ set(keepassx_SOURCES
     format/Kdbx3Writer.cpp
     format/Kdbx3XmlReader.cpp
     format/Kdbx3XmlWriter.cpp
+    format/Kdbx4Reader.cpp
+    format/Kdbx4Writer.cpp
+    format/Kdbx4XmlReader.cpp
+    format/Kdbx4XmlWriter.cpp
     gui/AboutDialog.cpp
     gui/Application.cpp
     gui/CategoryListWidget.cpp

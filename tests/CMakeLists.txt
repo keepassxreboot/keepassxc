@@ -110,6 +110,9 @@ add_unit_test(NAME testgroup SOURCES TestGroup.cpp
 add_unit_test(NAME testkdbx3xmlreader SOURCES TestKeePass2XmlReader.cpp TestKdbx3XmlReader.cpp
               LIBS ${TEST_LIBRARIES})
 
+add_unit_test(NAME testkdbx4xmlreader SOURCES TestKeePass2XmlReader.cpp TestKdbx4XmlReader.cpp
+              LIBS ${TEST_LIBRARIES})
+
 add_unit_test(NAME testkeys SOURCES TestKeys.cpp
               LIBS ${TEST_LIBRARIES})
 

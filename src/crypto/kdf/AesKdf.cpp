@@ -27,6 +27,31 @@ AesKdf::AesKdf()
 {
 }
 
+bool AesKdf::processParameters(const QVariantMap &p)
+{
+    bool ok;
+    int rounds = p.value(KeePass2::KDFPARAM_AES_ROUNDS).toInt(&ok);
+    if (!ok || !setRounds(rounds)) {
+        return false;
+    }
+
+    QByteArray seed = p.value(KeePass2::KDFPARAM_AES_SEED).toByteArray();
+    if (!setSeed(seed)) {
+        return false;
+    }
+
+    return true;
+}
+
+QVariantMap AesKdf::writeParameters()
+{
+    QVariantMap p;
+    p.insert(KeePass2::KDFPARAM_UUID, KeePass2::KDF_AES.toByteArray());
+    p.insert(KeePass2::KDFPARAM_AES_ROUNDS, rounds());
+    p.insert(KeePass2::KDFPARAM_AES_SEED, seed());
+    return p;
+}
+
 bool AesKdf::transform(const QByteArray& raw, QByteArray& result) const
 {
     QByteArray resultLeft;

@@ -39,6 +39,8 @@ public:
     virtual bool setSeed(const QByteArray& seed);
     virtual void randomizeSeed();
 
+    virtual bool processParameters(const QVariantMap& p) = 0;
+    virtual QVariantMap writeParameters() = 0;
     virtual bool transform(const QByteArray& raw, QByteArray& result) const = 0;
     virtual QSharedPointer<Kdf> clone() const = 0;
 

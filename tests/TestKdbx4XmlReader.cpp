@@ -15,29 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AESKDF_H
-#define KEEPASSX_AESKDF_H
+#include <QTest>
 
-#include "Kdf.h"
+#include "TestKeePass2XmlReader.h"
 
-class AesKdf: public Kdf
-{
-public:
-    AesKdf();
-
-    bool processParameters(const QVariantMap& p) override;
-    QVariantMap writeParameters() override;
-    bool transform(const QByteArray& raw, QByteArray& result) const override;
-    QSharedPointer<Kdf> clone() const override;
-
-protected:
-    int benchmarkImpl(int msec) const override;
-
-private:
-    static bool transformKeyRaw(const QByteArray& key,
-                                const QByteArray& seed,
-                                int rounds,
-                                QByteArray* result) Q_REQUIRED_RESULT;
-};
-
-#endif // KEEPASSX_AESKDF_H
+QTEST_GUILESS_MAIN(TestKdbx4XmlReader)
