@@ -82,7 +82,7 @@ public:
     void setCurrentWidget(QWidget* widget);
     DatabaseWidget::Mode currentMode() const;
     void lock();
-    void updateFilename(const QString& filename);
+    void updateFilePath(const QString &filePath);
     int numberOfSelectedEntries() const;
     QStringList customEntryAttributes() const;
     bool isGroupSelected() const;
@@ -155,13 +155,13 @@ public slots:
     void switchToGroupEdit();
     void switchToMasterKeyChange(bool disableCancel = false);
     void switchToDatabaseSettings();
-    void switchToOpenDatabase(const QString& fileName);
-    void switchToOpenDatabase(const QString& fileName, const QString& password, const QString& keyFile);
-    void switchToImportCsv(const QString& fileName);
+    void switchToOpenDatabase(const QString& filePath);
+    void switchToOpenDatabase(const QString& filePath, const QString& password, const QString& keyFile);
+    void switchToImportCsv(const QString& filePath);
     void csvImportFinished(bool accepted);
-    void switchToOpenMergeDatabase(const QString& fileName);
-    void switchToOpenMergeDatabase(const QString& fileName, const QString& password, const QString& keyFile);
-    void switchToImportKeepass1(const QString& fileName);
+    void switchToOpenMergeDatabase(const QString& filePath);
+    void switchToOpenMergeDatabase(const QString& filePath, const QString& password, const QString& keyFile);
+    void switchToImportKeepass1(const QString& filePath);
     void databaseModified();
     void databaseSaved();
     void emptyRecycleBin();
@@ -225,7 +225,7 @@ private:
     Group* m_newGroup;
     Entry* m_newEntry;
     Group* m_newParent;
-    QString m_filename;
+    QString m_filePath;
     Uuid m_groupBeforeLock;
     Uuid m_entryBeforeLock;
     MessageWidget* m_messageWidget;
