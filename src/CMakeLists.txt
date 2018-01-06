@@ -306,28 +306,6 @@ if(APPLE AND WITH_APP_BUNDLE)
                      COMMAND ${MACDEPLOYQT_EXE} ${PROGNAME}.app
                      WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
                      COMMENT "Deploying app bundle")
-
-  if(WITH_XC_BROWSER)
-    set(PROXY_BINARY_DIR "${CMAKE_BINARY_DIR}/src/proxy/keepassxc-proxy")
-    set(PROXY_APP_DIR "${PROGNAME}.app/Contents/MacOS/keepassxc-proxy")
-    add_custom_command(TARGET ${PROGNAME}
-                       POST_BUILD
-                       COMMAND ${CMAKE_COMMAND} -E copy ${PROXY_BINARY_DIR} ${PROXY_APP_DIR}
-                       WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
-                       COMMENT "Copying keepassxc-proxy inside the application")
-
-    add_custom_command(TARGET ${PROGNAME}
-                       POST_BUILD
-                       COMMAND ${CMAKE_INSTALL_NAME_TOOL} -change /usr/local/opt/qt/lib/QtCore.framework/Versions/5/QtCore "@executable_path/../Frameworks/QtCore.framework/Versions/5/QtCore" ${PROXY_APP_DIR}
-                       WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
-                       COMMENT "Changing linking of keepassxc-proxy QtCore")
-
-    add_custom_command(TARGET ${PROGNAME}
-                       POST_BUILD
-                       COMMAND ${CMAKE_INSTALL_NAME_TOOL} -change /usr/local/opt/qt/lib/QtNetwork.framework/Versions/5/QtNetwork "@executable_path/../Frameworks/QtNetwork.framework/Versions/5/QtNetwork" ${PROXY_APP_DIR}
-                       WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
-                       COMMENT "Changing linking of keepassxc-proxy QtNetwork")
-  endif()
 endif()
 
 install(TARGETS ${PROGNAME}
