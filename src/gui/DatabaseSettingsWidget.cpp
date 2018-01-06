@@ -17,10 +17,13 @@
 
 #include "DatabaseSettingsWidget.h"
 #include "ui_DatabaseSettingsWidget.h"
+#include "ui_DatabaseSettingsWidgetGeneral.h"
+#include "ui_DatabaseSettingsWidgetEncryption.h"
 
 #include <QMessageBox>
 
 #include "core/Global.h"
+#include "core/FilePath.h"
 #include "core/AsyncTask.h"
 #include "core/Database.h"
 #include "core/Group.h"
@@ -32,18 +35,31 @@
 DatabaseSettingsWidget::DatabaseSettingsWidget(QWidget* parent)
     : DialogyWidget(parent)
     , m_ui(new Ui::DatabaseSettingsWidget())
+    , m_uiGeneral(new Ui::DatabaseSettingsWidgetGeneral())
+    , m_uiEncryption(new Ui::DatabaseSettingsWidgetEncryption())
+    , m_uiGeneralPage(new QWidget())
+    , m_uiEncryptionPage(new QWidget())
     , m_db(nullptr)
 {
     m_ui->setupUi(this);
+    m_uiGeneral->setupUi(m_uiGeneralPage);
+    m_uiEncryption->setupUi(m_uiEncryptionPage);
 
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(save()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
-    connect(m_ui->historyMaxItemsCheckBox, SIGNAL(toggled(bool)),
-            m_ui->historyMaxItemsSpinBox, SLOT(setEnabled(bool)));
-    connect(m_ui->historyMaxSizeCheckBox, SIGNAL(toggled(bool)),
-            m_ui->historyMaxSizeSpinBox, SLOT(setEnabled(bool)));
-    connect(m_ui->transformBenchmarkButton, SIGNAL(clicked()), SLOT(transformRoundsBenchmark()));
-    connect(m_ui->kdfComboBox, SIGNAL(currentIndexChanged(int)), SLOT(kdfChanged(int)));
+    connect(m_uiGeneral->historyMaxItemsCheckBox, SIGNAL(toggled(bool)),
+            m_uiGeneral->historyMaxItemsSpinBox, SLOT(setEnabled(bool)));
+    connect(m_uiGeneral->historyMaxSizeCheckBox, SIGNAL(toggled(bool)),
+            m_uiGeneral->historyMaxSizeSpinBox, SLOT(setEnabled(bool)));
+    connect(m_uiEncryption->transformBenchmarkButton, SIGNAL(clicked()), SLOT(transformRoundsBenchmark()));
+    connect(m_uiEncryption->kdfComboBox, SIGNAL(currentIndexChanged(int)), SLOT(kdfChanged(int)));
+
+    m_ui->categoryList->addCategory(tr("General"), FilePath::instance()->icon("categories", "preferences-other"));
+    m_ui->categoryList->addCategory(tr("Encryption"), FilePath::instance()->icon("actions", "document-encrypt"));
+    m_ui->stackedWidget->addWidget(m_uiGeneralPage);
+    m_ui->stackedWidget->addWidget(m_uiEncryptionPage);
+
+    connect(m_ui->categoryList, SIGNAL(categoryChanged(int)), m_ui->stackedWidget, SLOT(setCurrentIndex(int)));
 }
 
 DatabaseSettingsWidget::~DatabaseSettingsWidget()
@@ -56,77 +72,77 @@ void DatabaseSettingsWidget::load(Database* db)
 
     Metadata* meta = m_db->metadata();
 
-    m_ui->dbNameEdit->setText(meta->name());
-    m_ui->dbDescriptionEdit->setText(meta->description());
-    m_ui->recycleBinEnabledCheckBox->setChecked(meta->recycleBinEnabled());
-    m_ui->defaultUsernameEdit->setText(meta->defaultUserName());
+    m_uiGeneral->dbNameEdit->setText(meta->name());
+    m_uiGeneral->dbDescriptionEdit->setText(meta->description());
+    m_uiGeneral->recycleBinEnabledCheckBox->setChecked(meta->recycleBinEnabled());
+    m_uiGeneral->defaultUsernameEdit->setText(meta->defaultUserName());
     if (meta->historyMaxItems() > -1) {
-        m_ui->historyMaxItemsSpinBox->setValue(meta->historyMaxItems());
-        m_ui->historyMaxItemsCheckBox->setChecked(true);
+        m_uiGeneral->historyMaxItemsSpinBox->setValue(meta->historyMaxItems());
+        m_uiGeneral->historyMaxItemsCheckBox->setChecked(true);
     } else {
-        m_ui->historyMaxItemsSpinBox->setValue(Metadata::DefaultHistoryMaxItems);
-        m_ui->historyMaxItemsCheckBox->setChecked(false);
+        m_uiGeneral->historyMaxItemsSpinBox->setValue(Metadata::DefaultHistoryMaxItems);
+        m_uiGeneral->historyMaxItemsCheckBox->setChecked(false);
     }
     int historyMaxSizeMiB = qRound(meta->historyMaxSize() / qreal(1048576));
     if (historyMaxSizeMiB > 0) {
-        m_ui->historyMaxSizeSpinBox->setValue(historyMaxSizeMiB);
-        m_ui->historyMaxSizeCheckBox->setChecked(true);
+        m_uiGeneral->historyMaxSizeSpinBox->setValue(historyMaxSizeMiB);
+        m_uiGeneral->historyMaxSizeCheckBox->setChecked(true);
     } else {
-        m_ui->historyMaxSizeSpinBox->setValue(Metadata::DefaultHistoryMaxSize);
-        m_ui->historyMaxSizeCheckBox->setChecked(false);
+        m_uiGeneral->historyMaxSizeSpinBox->setValue(Metadata::DefaultHistoryMaxSize);
+        m_uiGeneral->historyMaxSizeCheckBox->setChecked(false);
     }
 
-    m_ui->algorithmComboBox->clear();
+    m_uiEncryption->algorithmComboBox->clear();
     for (auto& cipher: asConst(KeePass2::CIPHERS)) {
-        m_ui->algorithmComboBox->addItem(cipher.second, cipher.first.toByteArray());
+        m_uiEncryption->algorithmComboBox->addItem(cipher.second, cipher.first.toByteArray());
     }
-    int cipherIndex = m_ui->algorithmComboBox->findData(m_db->cipher().toByteArray());
+    int cipherIndex = m_uiEncryption->algorithmComboBox->findData(m_db->cipher().toByteArray());
     if (cipherIndex > -1) {
-        m_ui->algorithmComboBox->setCurrentIndex(cipherIndex);
+        m_uiEncryption->algorithmComboBox->setCurrentIndex(cipherIndex);
     }
 
     // Setup kdf combo box
-    m_ui->kdfComboBox->blockSignals(true);
-    m_ui->kdfComboBox->clear();
+    m_uiEncryption->kdfComboBox->blockSignals(true);
+    m_uiEncryption->kdfComboBox->clear();
     for (auto& kdf: asConst(KeePass2::KDFS)) {
-        m_ui->kdfComboBox->addItem(kdf.second, kdf.first.toByteArray());
+        m_uiEncryption->kdfComboBox->addItem(kdf.second, kdf.first.toByteArray());
     }
-    m_ui->kdfComboBox->blockSignals(false);
+    m_uiEncryption->kdfComboBox->blockSignals(false);
 
     auto kdfUuid = m_db->kdf()->uuid();
-    int kdfIndex = m_ui->kdfComboBox->findData(kdfUuid.toByteArray());
+    int kdfIndex = m_uiEncryption->kdfComboBox->findData(kdfUuid.toByteArray());
     if (kdfIndex > -1) {
-        m_ui->kdfComboBox->setCurrentIndex(kdfIndex);
+        m_uiEncryption->kdfComboBox->setCurrentIndex(kdfIndex);
         kdfChanged(kdfIndex);
     }
 
     // Setup kdf parameters
     auto kdf = m_db->kdf();
-    m_ui->transformRoundsSpinBox->setValue(kdf->rounds());
+    m_uiEncryption->transformRoundsSpinBox->setValue(kdf->rounds());
     if (kdfUuid == KeePass2::KDF_ARGON2) {
         auto argon2Kdf = kdf.staticCast<Argon2Kdf>();
-        m_ui->memorySpinBox->setValue(argon2Kdf->memory() / (1<<10));
-        m_ui->parallelismSpinBox->setValue(argon2Kdf->parallelism());
+        m_uiEncryption->memorySpinBox->setValue(static_cast<int>(argon2Kdf->memory()) / (1 << 10));
+        m_uiEncryption->parallelismSpinBox->setValue(argon2Kdf->parallelism());
     }
 
-    m_ui->dbNameEdit->setFocus();
+    m_uiGeneral->dbNameEdit->setFocus();
 }
 
 void DatabaseSettingsWidget::save()
 {
     Metadata* meta = m_db->metadata();
 
-    meta->setName(m_ui->dbNameEdit->text());
-    meta->setDescription(m_ui->dbDescriptionEdit->text());
-    meta->setDefaultUserName(m_ui->defaultUsernameEdit->text());
-    meta->setRecycleBinEnabled(m_ui->recycleBinEnabledCheckBox->isChecked());
+    meta->setName(m_uiGeneral->dbNameEdit->text());
+    meta->setDescription(m_uiGeneral->dbDescriptionEdit->text());
+    meta->setDefaultUserName(m_uiGeneral->defaultUsernameEdit->text());
+    meta->setRecycleBinEnabled(m_uiGeneral->recycleBinEnabledCheckBox->isChecked());
     meta->setSettingsChanged(QDateTime::currentDateTimeUtc());
 
     bool truncate = false;
 
     int historyMaxItems;
-    if (m_ui->historyMaxItemsCheckBox->isChecked()) {
-        historyMaxItems = m_ui->historyMaxItemsSpinBox->value();
+    if (m_uiGeneral->historyMaxItemsCheckBox->isChecked()) {
+        historyMaxItems = m_uiGeneral->historyMaxItemsSpinBox->value();
     } else {
         historyMaxItems = -1;
     }
@@ -136,8 +152,8 @@ void DatabaseSettingsWidget::save()
     }
 
     int historyMaxSize;
-    if (m_ui->historyMaxSizeCheckBox->isChecked()) {
-        historyMaxSize = m_ui->historyMaxSizeSpinBox->value() * 1048576;
+    if (m_uiGeneral->historyMaxSizeCheckBox->isChecked()) {
+        historyMaxSize = m_uiGeneral->historyMaxSizeSpinBox->value() * 1048576;
     } else {
         historyMaxSize = -1;
     }
@@ -150,15 +166,15 @@ void DatabaseSettingsWidget::save()
         truncateHistories();
     }
 
-    m_db->setCipher(Uuid(m_ui->algorithmComboBox->currentData().toByteArray()));
+    m_db->setCipher(Uuid(m_uiEncryption->algorithmComboBox->currentData().toByteArray()));
 
     // Save kdf parameters
-    auto kdf = KeePass2::uuidToKdf(Uuid(m_ui->kdfComboBox->currentData().toByteArray()));
-    kdf->setRounds(m_ui->transformRoundsSpinBox->value());
+    auto kdf = KeePass2::uuidToKdf(Uuid(m_uiEncryption->kdfComboBox->currentData().toByteArray()));
+    kdf->setRounds(m_uiEncryption->transformRoundsSpinBox->value());
     if (kdf->uuid() == KeePass2::KDF_ARGON2) {
         auto argon2Kdf = kdf.staticCast<Argon2Kdf>();
-        argon2Kdf->setMemory(m_ui->memorySpinBox->value() * (1<<10));
-        argon2Kdf->setParallelism(m_ui->parallelismSpinBox->value());
+        argon2Kdf->setMemory(static_cast<quint64>(m_uiEncryption->memorySpinBox->value()) * (1 << 10));
+        argon2Kdf->setParallelism(static_cast<quint32>(m_uiEncryption->parallelismSpinBox->value()));
     }
 
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
@@ -183,30 +199,30 @@ void DatabaseSettingsWidget::reject()
 void DatabaseSettingsWidget::transformRoundsBenchmark()
 {
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-    m_ui->transformBenchmarkButton->setEnabled(false);
+    m_uiEncryption->transformBenchmarkButton->setEnabled(false);
+    m_uiEncryption->transformRoundsSpinBox->setFocus();
 
     // Create a new kdf with the current parameters
-    auto kdf = KeePass2::uuidToKdf(Uuid(m_ui->kdfComboBox->currentData().toByteArray()));
-    kdf->setRounds(m_ui->transformRoundsSpinBox->value());
+    auto kdf = KeePass2::uuidToKdf(Uuid(m_uiEncryption->kdfComboBox->currentData().toByteArray()));
+    kdf->setRounds(m_uiEncryption->transformRoundsSpinBox->value());
     if (kdf->uuid() == KeePass2::KDF_ARGON2) {
         auto argon2Kdf = kdf.staticCast<Argon2Kdf>();
-        if (!argon2Kdf->setMemory(m_ui->memorySpinBox->value() * (1<<10))) {
-            m_ui->memorySpinBox->setValue(argon2Kdf->memory() / (1<<10));
+        if (!argon2Kdf->setMemory(static_cast<quint64>(m_uiEncryption->memorySpinBox->value()) * (1 << 10))) {
+            m_uiEncryption->memorySpinBox->setValue(static_cast<int>(argon2Kdf->memory() / (1 << 10)));
         }
-        if (!argon2Kdf->setParallelism(m_ui->parallelismSpinBox->value())) {
-            m_ui->parallelismSpinBox->setValue(argon2Kdf->parallelism());
+        if (!argon2Kdf->setParallelism(static_cast<quint32>(m_uiEncryption->parallelismSpinBox->value()))) {
+            m_uiEncryption->parallelismSpinBox->setValue(argon2Kdf->parallelism());
         }
     }
 
     // Determine the number of rounds required to meet 1 second delay
-    int rounds = AsyncTask::runAndWaitForFuture([kdf]() {
+    int rounds = AsyncTask::runAndWaitForFuture([&kdf]() {
         return kdf->benchmark(1000);
     });
 
-    m_ui->transformRoundsSpinBox->setValue(rounds);
-
+    m_uiEncryption->transformRoundsSpinBox->setValue(rounds);
+    m_uiEncryption->transformBenchmarkButton->setEnabled(true);
     QApplication::restoreOverrideCursor();
-    m_ui->transformBenchmarkButton->setEnabled(true);
 }
 
 void DatabaseSettingsWidget::truncateHistories()
@@ -219,12 +235,13 @@ void DatabaseSettingsWidget::truncateHistories()
 
 void DatabaseSettingsWidget::kdfChanged(int index)
 {
-    Uuid id(m_ui->kdfComboBox->itemData(index).toByteArray());
-    if (id == KeePass2::KDF_ARGON2) {
-        m_ui->memorySpinBox->setEnabled(true);
-        m_ui->parallelismSpinBox->setEnabled(true);
-    } else {
-        m_ui->memorySpinBox->setEnabled(false);
-        m_ui->parallelismSpinBox->setEnabled(false);
-    }
+    Uuid id(m_uiEncryption->kdfComboBox->itemData(index).toByteArray());
+
+    bool memoryEnabled = id == KeePass2::KDF_ARGON2;
+    m_uiEncryption->memoryUsageLabel->setEnabled(memoryEnabled);
+    m_uiEncryption->memorySpinBox->setEnabled(memoryEnabled);
+
+    bool parallelismEnabled = id == KeePass2::KDF_ARGON2;
+    m_uiEncryption->parallelismLabel->setEnabled(parallelismEnabled);
+    m_uiEncryption->parallelismSpinBox->setEnabled(parallelismEnabled);
 }

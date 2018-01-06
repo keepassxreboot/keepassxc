@@ -31,6 +31,8 @@ class Database;
 namespace Ui
 {
 class DatabaseSettingsWidget;
+class DatabaseSettingsWidgetGeneral;
+class DatabaseSettingsWidgetEncryption;
 }
 
 class DatabaseSettingsWidget: public DialogyWidget
@@ -57,6 +59,10 @@ private:
     void truncateHistories();
 
     const QScopedPointer<Ui::DatabaseSettingsWidget> m_ui;
+    const QScopedPointer<Ui::DatabaseSettingsWidgetGeneral> m_uiGeneral;
+    const QScopedPointer<Ui::DatabaseSettingsWidgetEncryption> m_uiEncryption;
+    QWidget* m_uiGeneralPage;
+    QWidget* m_uiEncryptionPage;
     Database* m_db;
 };
 
