@@ -23,7 +23,7 @@
 #include "core/Uuid.h"
 
 #define KDF_DEFAULT_SEED_SIZE 32
-#define KDF_DEFAULT_ROUNDS 100000ull
+#define KDF_DEFAULT_ROUNDS 1000000ull
 
 class Kdf
 {

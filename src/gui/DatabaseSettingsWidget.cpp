@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -21,6 +22,7 @@
 #include "ui_DatabaseSettingsWidgetEncryption.h"
 
 #include <QMessageBox>
+#include <QPushButton>
 
 #include "core/Global.h"
 #include "core/FilePath.h"
@@ -130,6 +132,36 @@ void DatabaseSettingsWidget::load(Database* db)
 
 void DatabaseSettingsWidget::save()
 {
+    // first perform safety check for KDF rounds
+    auto kdf = KeePass2::uuidToKdf(Uuid(m_uiEncryption->kdfComboBox->currentData().toByteArray()));
+    if (kdf->uuid() == KeePass2::KDF_ARGON2 and m_uiEncryption->transformRoundsSpinBox->value() > 1000) {
+        QMessageBox warning;
+        warning.setIcon(QMessageBox::Warning);
+        warning.setWindowTitle(tr("Number of rounds too high"));
+        warning.setText(tr("You are using a very high number of key transform rounds with Argon2.\n\n"
+                           "If you keep this number, your database may take hours or days (or even longer) to open!"));
+        auto ok = warning.addButton(tr("Understood, keep number"), QMessageBox::ButtonRole::AcceptRole);
+        auto cancel = warning.addButton(tr("Cancel"), QMessageBox::ButtonRole::RejectRole);
+        warning.setDefaultButton(cancel);
+        warning.exec();
+        if (warning.clickedButton() != ok) {
+            return;
+        }
+    } else if (kdf->uuid() == KeePass2::KDF_AES and m_uiEncryption->transformRoundsSpinBox->value() < 100000) {
+        QMessageBox warning;
+        warning.setIcon(QMessageBox::Warning);
+        warning.setWindowTitle(tr("Number of rounds too low"));
+        warning.setText(tr("You are using a very low number of key transform rounds with AES-KDF.\n\n"
+                           "If you keep this number, your database may be too easy to crack!"));
+        auto ok = warning.addButton(tr("Understood, keep number"), QMessageBox::ButtonRole::AcceptRole);
+        auto cancel = warning.addButton(tr("Cancel"), QMessageBox::ButtonRole::RejectRole);
+        warning.setDefaultButton(cancel);
+        warning.exec();
+        if (warning.clickedButton() != ok) {
+            return;
+        }
+    }
+
     Metadata* meta = m_db->metadata();
 
     meta->setName(m_uiGeneral->dbNameEdit->text());
@@ -169,7 +201,6 @@ void DatabaseSettingsWidget::save()
     m_db->setCipher(Uuid(m_uiEncryption->algorithmComboBox->currentData().toByteArray()));
 
     // Save kdf parameters
-    auto kdf = KeePass2::uuidToKdf(Uuid(m_uiEncryption->kdfComboBox->currentData().toByteArray()));
     kdf->setRounds(m_uiEncryption->transformRoundsSpinBox->value());
     if (kdf->uuid() == KeePass2::KDF_ARGON2) {
         auto argon2Kdf = kdf.staticCast<Argon2Kdf>();
@@ -188,6 +219,7 @@ void DatabaseSettingsWidget::save()
                             tr("Failed to transform key with new KDF parameters; KDF unchanged."),
                             QMessageBox::Ok);
     }
+
     emit editFinished(true);
 }
 
@@ -244,4 +276,6 @@ void DatabaseSettingsWidget::kdfChanged(int index)
     bool parallelismEnabled = id == KeePass2::KDF_ARGON2;
     m_uiEncryption->parallelismLabel->setEnabled(parallelismEnabled);
     m_uiEncryption->parallelismSpinBox->setEnabled(parallelismEnabled);
+
+    transformRoundsBenchmark();
 }
