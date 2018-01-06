@@ -109,7 +109,7 @@ QByteArray CryptoHash::result() const
 {
     Q_D(const CryptoHash);
 
-    const auto* result = reinterpret_cast<const char*>(gcry_md_read(d->ctx, 0));
+    const auto result = reinterpret_cast<const char*>(gcry_md_read(d->ctx, 0));
     return QByteArray(result, d->hashLen);
 }
 

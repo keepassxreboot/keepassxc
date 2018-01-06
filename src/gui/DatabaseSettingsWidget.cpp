@@ -199,7 +199,7 @@ void DatabaseSettingsWidget::transformRoundsBenchmark()
     }
 
     // Determine the number of rounds required to meet 1 second delay
-    int rounds = AsyncTask::runAndWaitForFuture([this, kdf]() {
+    int rounds = AsyncTask::runAndWaitForFuture([kdf]() {
         return kdf->benchmark(1000);
     });
 
