@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -32,9 +33,6 @@
 #include "streams/QtIOCompressor"
 #include "streams/SymmetricCipherStream.h"
 
-#define CHECK_RETURN(x) if (!(x)) return;
-#define CHECK_RETURN_FALSE(x) if (!(x)) return false;
-
 Kdbx3Writer::Kdbx3Writer()
     : m_device(0)
 {
@@ -51,7 +49,7 @@ bool Kdbx3Writer::writeDatabase(QIODevice* device, Database* db)
     QByteArray startBytes = randomGen()->randomArray(32);
     QByteArray endOfHeader = "\r\n\r\n";
 
-    if (db->challengeMasterSeed(masterSeed) == false) {
+    if (!db->challengeMasterSeed(masterSeed)) {
         raiseError(tr("Unable to issue challenge-response."));
         return false;
     }
@@ -76,23 +74,23 @@ bool Kdbx3Writer::writeDatabase(QIODevice* device, Database* db)
     CHECK_RETURN_FALSE(writeData(Endian::sizedIntToBytes<qint32>(KeePass2::SIGNATURE_2, KeePass2::BYTEORDER)));
     CHECK_RETURN_FALSE(writeData(Endian::sizedIntToBytes<qint32>(KeePass2::FILE_VERSION_3, KeePass2::BYTEORDER)));
 
-    CHECK_RETURN_FALSE(writeHeaderField(KeePass2::CipherID, db->cipher().toByteArray()));
-    CHECK_RETURN_FALSE(writeHeaderField(KeePass2::CompressionFlags,
+    CHECK_RETURN_FALSE(writeHeaderField(KeePass2::HeaderFieldID::CipherID, db->cipher().toByteArray()));
+    CHECK_RETURN_FALSE(writeHeaderField(KeePass2::HeaderFieldID::CompressionFlags,
                                         Endian::sizedIntToBytes<qint32>(db->compressionAlgo(),
                                                                         KeePass2::BYTEORDER)));
     auto kdf = db->kdf();
-    CHECK_RETURN_FALSE(writeHeaderField(KeePass2::MasterSeed, masterSeed));
-    CHECK_RETURN_FALSE(writeHeaderField(KeePass2::TransformSeed, kdf->seed()));
-    CHECK_RETURN_FALSE(writeHeaderField(KeePass2::TransformRounds,
+    CHECK_RETURN_FALSE(writeHeaderField(KeePass2::HeaderFieldID::MasterSeed, masterSeed));
+    CHECK_RETURN_FALSE(writeHeaderField(KeePass2::HeaderFieldID::TransformSeed, kdf->seed()));
+    CHECK_RETURN_FALSE(writeHeaderField(KeePass2::HeaderFieldID::TransformRounds,
                                         Endian::sizedIntToBytes<qint64>(kdf->rounds(),
                                                                         KeePass2::BYTEORDER)));
-    CHECK_RETURN_FALSE(writeHeaderField(KeePass2::EncryptionIV, encryptionIV));
-    CHECK_RETURN_FALSE(writeHeaderField(KeePass2::ProtectedStreamKey, protectedStreamKey));
-    CHECK_RETURN_FALSE(writeHeaderField(KeePass2::StreamStartBytes, startBytes));
-    CHECK_RETURN_FALSE(writeHeaderField(KeePass2::InnerRandomStreamID,
-                                        Endian::sizedIntToBytes<qint32>(KeePass2::Salsa20,
+    CHECK_RETURN_FALSE(writeHeaderField(KeePass2::HeaderFieldID::EncryptionIV, encryptionIV));
+    CHECK_RETURN_FALSE(writeHeaderField(KeePass2::HeaderFieldID::ProtectedStreamKey, protectedStreamKey));
+    CHECK_RETURN_FALSE(writeHeaderField(KeePass2::HeaderFieldID::StreamStartBytes, startBytes));
+    CHECK_RETURN_FALSE(writeHeaderField(KeePass2::HeaderFieldID::InnerRandomStreamID,
+                                        Endian::sizedIntToBytes<qint32>(static_cast<qint32>(KeePass2::ProtectedStreamAlgo::Salsa20),
                                                                         KeePass2::BYTEORDER)));
-    CHECK_RETURN_FALSE(writeHeaderField(KeePass2::EndOfHeader, endOfHeader));
+    CHECK_RETURN_FALSE(writeHeaderField(KeePass2::HeaderFieldID::EndOfHeader, endOfHeader));
 
     header.close();
     m_device = device;
@@ -130,7 +128,7 @@ bool Kdbx3Writer::writeDatabase(QIODevice* device, Database* db)
         m_device = ioCompressor.data();
     }
 
-    KeePass2RandomStream randomStream(KeePass2::Salsa20);
+    KeePass2RandomStream randomStream(KeePass2::ProtectedStreamAlgo::Salsa20);
     if (!randomStream.init(protectedStreamKey)) {
         raiseError(randomStream.errorString());
         return false;
@@ -175,7 +173,7 @@ bool Kdbx3Writer::writeHeaderField(KeePass2::HeaderFieldID fieldId, const QByteA
     Q_ASSERT(data.size() <= 65535);
 
     QByteArray fieldIdArr;
-    fieldIdArr[0] = fieldId;
+    fieldIdArr[0] = static_cast<char>(fieldId);
     CHECK_RETURN_FALSE(writeData(fieldIdArr));
     CHECK_RETURN_FALSE(writeData(Endian::sizedIntToBytes<qint16>(static_cast<quint16>(data.size()),
                                                                  KeePass2::BYTEORDER)));

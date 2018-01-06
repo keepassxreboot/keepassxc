@@ -123,9 +123,9 @@ bool KeePass2RandomStream::loadBlock()
 
 SymmetricCipher::Algorithm KeePass2RandomStream::mapAlgo(KeePass2::ProtectedStreamAlgo algo) {
     switch (algo) {
-    case KeePass2::ChaCha20:
+    case KeePass2::ProtectedStreamAlgo::ChaCha20:
         return SymmetricCipher::ChaCha20;
-    case KeePass2::Salsa20:
+    case KeePass2::ProtectedStreamAlgo::Salsa20:
         return SymmetricCipher::Salsa20;
     default:
         return SymmetricCipher::InvalidAlgorithm;

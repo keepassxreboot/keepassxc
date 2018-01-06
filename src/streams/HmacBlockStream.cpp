@@ -57,10 +57,8 @@ bool HmacBlockStream::reset()
     // Write final block(s) only if device is writable and we haven't
     // already written a final block.
     if (isWritable() && (!m_buffer.isEmpty() || m_blockIndex != 0)) {
-        if (!m_buffer.isEmpty()) {
-            if (!writeHashedBlock()) {
-                return false;
-            }
+        if (!m_buffer.isEmpty() && !writeHashedBlock()) {
+            return false;
         }
 
         // write empty final block
@@ -106,15 +104,14 @@ qint64 HmacBlockStream::readData(char* data, qint64 maxSize)
             if (!readHashedBlock()) {
                 if (m_error) {
                     return -1;
-                } else {
-                    return maxSize - bytesRemaining;
                 }
+                return maxSize - bytesRemaining;
             }
         }
 
-        int bytesToCopy = qMin(bytesRemaining, static_cast<qint64>(m_buffer.size() - m_bufferPos));
+        qint64 bytesToCopy = qMin(bytesRemaining, static_cast<qint64>(m_buffer.size() - m_bufferPos));
 
-        memcpy(data + offset, m_buffer.constData() + m_bufferPos, bytesToCopy);
+        memcpy(data + offset, m_buffer.constData() + m_bufferPos, static_cast<size_t>(bytesToCopy));
 
         offset += bytesToCopy;
         m_bufferPos += bytesToCopy;
@@ -142,7 +139,7 @@ bool HmacBlockStream::readHashedBlock()
         setErrorString("Invalid block size size.");
         return false;
     }
-    qint32 blockSize = Endian::bytesToSizedInt<qint32>(blockSizeBytes, ByteOrder);
+    auto blockSize = Endian::bytesToSizedInt<qint32>(blockSizeBytes, ByteOrder);
     if (blockSize < 0) {
         m_error = true;
         setErrorString("Invalid block size.");
@@ -169,7 +166,7 @@ bool HmacBlockStream::readHashedBlock()
     }
 
     m_bufferPos = 0;
-    m_blockIndex++;
+    ++m_blockIndex;
 
     if (blockSize == 0) {
         m_eof = true;
@@ -191,21 +188,18 @@ qint64 HmacBlockStream::writeData(const char* data, qint64 maxSize)
     qint64 offset = 0;
 
     while (bytesRemaining > 0) {
-        int bytesToCopy = qMin(bytesRemaining, static_cast<qint64>(m_blockSize - m_buffer.size()));
+        qint64 bytesToCopy = qMin(bytesRemaining, static_cast<qint64>(m_blockSize - m_buffer.size()));
 
-        m_buffer.append(data + offset, bytesToCopy);
+        m_buffer.append(data + offset, static_cast<int>(bytesToCopy));
 
         offset += bytesToCopy;
         bytesRemaining -= bytesToCopy;
 
-        if (m_buffer.size() == m_blockSize) {
-            if (!writeHashedBlock()) {
-                if (m_error) {
-                    return -1;
-                } else {
-                    return maxSize - bytesRemaining;
-                }
+        if (m_buffer.size() == m_blockSize && !writeHashedBlock()) {
+            if (m_error) {
+                return -1;
             }
+            return maxSize - bytesRemaining;
         }
     }
 
@@ -242,7 +236,7 @@ bool HmacBlockStream::writeHashedBlock()
 
         m_buffer.clear();
     }
-    m_blockIndex++;
+    ++m_blockIndex;
     return true;
 }
 

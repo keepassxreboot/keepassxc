@@ -252,7 +252,6 @@ bool SymmetricCipherStream::writeBlock(bool lastBlock)
 int SymmetricCipherStream::blockSize() const {
     if (m_streamCipher) {
         return 1024;
-    } else {
-        return m_cipher->blockSize();
     }
+    return m_cipher->blockSize();
 }

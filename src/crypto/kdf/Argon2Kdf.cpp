@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@
 Argon2Kdf::Argon2Kdf()
         : Kdf::Kdf(KeePass2::KDF_ARGON2)
         , m_version(0x13)
-        , m_memory(1<<16)
+        , m_memory(1 << 16)
         , m_parallelism(2)
 {
     m_rounds = 1;
@@ -63,7 +63,7 @@ quint64 Argon2Kdf::memory() const
 bool Argon2Kdf::setMemory(quint64 kibibytes)
 {
     // MIN=8KB; MAX=2,147,483,648KB
-    if (kibibytes >= 8 && kibibytes < (1ULL<<32)) {
+    if (kibibytes >= 8 && kibibytes < (1ULL << 32)) {
         m_memory = kibibytes;
         return true;
     }
@@ -79,7 +79,7 @@ quint32 Argon2Kdf::parallelism() const
 bool Argon2Kdf::setParallelism(quint32 threads)
 {
     // MIN=1; MAX=16,777,215
-    if (threads >= 1 && threads < (1<<24)) {
+    if (threads >= 1 && threads < (1 << 24)) {
         m_parallelism = threads;
         return true;
     }

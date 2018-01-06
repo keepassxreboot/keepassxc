@@ -65,7 +65,7 @@ namespace KeePass2
     extern const QList<QPair<Uuid, QString>> CIPHERS;
     extern const QList<QPair<Uuid, QString>> KDFS;
 
-    enum HeaderFieldID
+    enum class HeaderFieldID
     {
         EndOfHeader = 0,
         Comment = 1,
@@ -90,7 +90,7 @@ namespace KeePass2
         Binary = 3
     };
 
-    enum ProtectedStreamAlgo
+    enum class ProtectedStreamAlgo
     {
         ArcFourVariant = 1,
         Salsa20 = 2,

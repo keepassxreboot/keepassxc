@@ -30,7 +30,7 @@
 BaseKeePass2Reader::BaseKeePass2Reader()
     : m_error(false)
     , m_saveXml(false)
-    , m_irsAlgo(KeePass2::InvalidProtectedStreamAlgo)
+    , m_irsAlgo(KeePass2::ProtectedStreamAlgo::InvalidProtectedStreamAlgo)
 {
     m_errorStr.clear();
     m_xmlData.clear();

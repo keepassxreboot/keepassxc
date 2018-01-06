@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -161,7 +162,7 @@ Database* Kdbx3Reader::readDatabase(QIODevice* device, const CompositeKey& key, 
         xmlDevice = ioCompressor.data();
     }
 
-    KeePass2RandomStream randomStream(KeePass2::Salsa20);
+    KeePass2RandomStream randomStream(KeePass2::ProtectedStreamAlgo::Salsa20);
     if (!randomStream.init(m_protectedStreamKey)) {
         raiseError(randomStream.errorString());
         return nullptr;
@@ -208,10 +209,10 @@ bool Kdbx3Reader::readHeaderField()
         raiseError("Invalid header id size");
         return false;
     }
-    quint8 fieldID = fieldIDArray.at(0);
+    char fieldID = fieldIDArray.at(0);
 
     bool ok;
-    quint16 fieldLen = Endian::readSizedInt<quint16>(m_headerStream, KeePass2::BYTEORDER, &ok);
+    auto fieldLen = Endian::readSizedInt<quint16>(m_headerStream, KeePass2::BYTEORDER, &ok);
     if (!ok) {
         raiseError("Invalid header field length");
         return false;
@@ -226,44 +227,44 @@ bool Kdbx3Reader::readHeaderField()
         }
     }
 
-    switch (fieldID) {
-    case KeePass2::EndOfHeader:
+    switch (static_cast<KeePass2::HeaderFieldID>(fieldID)) {
+    case KeePass2::HeaderFieldID::EndOfHeader:
         m_headerEnd = true;
         break;
 
-    case KeePass2::CipherID:
+    case KeePass2::HeaderFieldID::CipherID:
         setCipher(fieldData);
         break;
 
-    case KeePass2::CompressionFlags:
+    case KeePass2::HeaderFieldID::CompressionFlags:
         setCompressionFlags(fieldData);
         break;
 
-    case KeePass2::MasterSeed:
+    case KeePass2::HeaderFieldID::MasterSeed:
         setMasterSeed(fieldData);
         break;
 
-    case KeePass2::TransformSeed:
+    case KeePass2::HeaderFieldID::TransformSeed:
         setTransformSeed(fieldData);
         break;
 
-    case KeePass2::TransformRounds:
+    case KeePass2::HeaderFieldID::TransformRounds:
         setTransformRounds(fieldData);
         break;
 
-    case KeePass2::EncryptionIV:
+    case KeePass2::HeaderFieldID::EncryptionIV:
         setEncryptionIV(fieldData);
         break;
 
-    case KeePass2::ProtectedStreamKey:
+    case KeePass2::HeaderFieldID::ProtectedStreamKey:
         setProtectedStreamKey(fieldData);
         break;
 
-    case KeePass2::StreamStartBytes:
+    case KeePass2::HeaderFieldID::StreamStartBytes:
         setStreamStartBytes(fieldData);
         break;
 
-    case KeePass2::InnerRandomStreamID:
+    case KeePass2::HeaderFieldID::InnerRandomStreamID:
         setInnerRandomStreamID(fieldData);
         break;
 
@@ -279,39 +280,40 @@ void Kdbx3Reader::setCipher(const QByteArray& data)
 {
     if (data.size() != Uuid::Length) {
         raiseError("Invalid cipher uuid length");
-    } else {
-        Uuid uuid(data);
-
-        if (SymmetricCipher::cipherToAlgorithm(uuid) == SymmetricCipher::InvalidAlgorithm) {
-            raiseError("Unsupported cipher");
-        } else {
-            m_db->setCipher(uuid);
-        }
+        return;
     }
+
+    Uuid uuid(data);
+
+    if (SymmetricCipher::cipherToAlgorithm(uuid) == SymmetricCipher::InvalidAlgorithm) {
+        raiseError("Unsupported cipher");
+        return;
+    }
+    m_db->setCipher(uuid);
 }
 
 void Kdbx3Reader::setCompressionFlags(const QByteArray& data)
 {
     if (data.size() != 4) {
         raiseError("Invalid compression flags length");
-    } else {
-        quint32 id = Endian::bytesToSizedInt<quint32>(data, KeePass2::BYTEORDER);
-
-        if (id > Database::CompressionAlgorithmMax) {
-            raiseError("Unsupported compression algorithm");
-        } else {
-            m_db->setCompressionAlgo(static_cast<Database::CompressionAlgorithm>(id));
-        }
+        return;
     }
+    auto id = Endian::bytesToSizedInt<quint32>(data, KeePass2::BYTEORDER);
+
+    if (id > Database::CompressionAlgorithmMax) {
+        raiseError("Unsupported compression algorithm");
+        return;
+    }
+    m_db->setCompressionAlgo(static_cast<Database::CompressionAlgorithm>(id));
 }
 
 void Kdbx3Reader::setMasterSeed(const QByteArray& data)
 {
     if (data.size() != 32) {
         raiseError("Invalid master seed size");
-    } else {
-        m_masterSeed = data;
+        return;
     }
+    m_masterSeed = data;
 }
 
 void Kdbx3Reader::setTransformSeed(const QByteArray& data)
@@ -355,22 +357,23 @@ void Kdbx3Reader::setStreamStartBytes(const QByteArray& data)
 {
     if (data.size() != 32) {
         raiseError("Invalid start bytes size");
-    } else {
-        m_streamStartBytes = data;
+        return;
     }
+    m_streamStartBytes = data;
 }
 
 void Kdbx3Reader::setInnerRandomStreamID(const QByteArray& data)
 {
     if (data.size() != 4) {
         raiseError("Invalid random stream id size");
-    } else {
-        quint32 id = Endian::bytesToSizedInt<quint32>(data, KeePass2::BYTEORDER);
-        KeePass2::ProtectedStreamAlgo irsAlgo = KeePass2::idToProtectedStreamAlgo(id);
-        if (irsAlgo == KeePass2::InvalidProtectedStreamAlgo || irsAlgo == KeePass2::ArcFourVariant) {
-            raiseError("Invalid inner random stream cipher");
-        } else {
-            m_irsAlgo = irsAlgo;
-        }
+        return;
     }
+    quint32 id = Endian::bytesToSizedInt<quint32>(data, KeePass2::BYTEORDER);
+    KeePass2::ProtectedStreamAlgo irsAlgo = KeePass2::idToProtectedStreamAlgo(id);
+    if (irsAlgo == KeePass2::ProtectedStreamAlgo::InvalidProtectedStreamAlgo ||
+        irsAlgo == KeePass2::ProtectedStreamAlgo::ArcFourVariant) {
+        raiseError("Invalid inner random stream cipher");
+        return;
+    }
+    m_irsAlgo = irsAlgo;
 }

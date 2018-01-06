@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -72,8 +72,7 @@ Database* Kdbx4Reader::readDatabase(QIODevice* device, const CompositeKey& key, 
                       "This is a one-way migration. You won't be able to open the imported "
                       "database with the old KeePassX 0.4 version."));
         return nullptr;
-    }
-    else if (!ok || signature2 != KeePass2::SIGNATURE_2) {
+    } else if (!ok || signature2 != KeePass2::SIGNATURE_2) {
         raiseError(tr("Not a KeePass database."));
         return nullptr;
     }
@@ -203,9 +202,7 @@ Database* Kdbx4Reader::readDatabase(QIODevice* device, const CompositeKey& key, 
         if (keepDatabase) {
             return db.take();
         }
-        else {
-            return nullptr;
-        }
+        return nullptr;
     }
 
     return db.take();
@@ -218,10 +215,10 @@ bool Kdbx4Reader::readHeaderField(QIODevice* device)
         raiseError("Invalid header id size");
         return false;
     }
-    quint8 fieldID = fieldIDArray.at(0);
+    char fieldID = fieldIDArray.at(0);
 
     bool ok;
-    quint32 fieldLen = Endian::readSizedInt<quint32>(device, KeePass2::BYTEORDER, &ok);
+    auto fieldLen = Endian::readSizedInt<quint32>(device, KeePass2::BYTEORDER, &ok);
     if (!ok) {
         raiseError("Invalid header field length");
         return false;
@@ -236,27 +233,27 @@ bool Kdbx4Reader::readHeaderField(QIODevice* device)
         }
     }
 
-    switch (fieldID) {
-    case KeePass2::EndOfHeader:
+    switch (static_cast<KeePass2::HeaderFieldID>(fieldID)) {
+    case KeePass2::HeaderFieldID::EndOfHeader:
         return false;
 
-    case KeePass2::CipherID:
+    case KeePass2::HeaderFieldID::CipherID:
         setCipher(fieldData);
         break;
 
-    case KeePass2::CompressionFlags:
+    case KeePass2::HeaderFieldID::CompressionFlags:
         setCompressionFlags(fieldData);
         break;
 
-    case KeePass2::MasterSeed:
+    case KeePass2::HeaderFieldID::MasterSeed:
         setMasterSeed(fieldData);
         break;
 
-    case KeePass2::EncryptionIV:
+    case KeePass2::HeaderFieldID::EncryptionIV:
         setEncryptionIV(fieldData);
         break;
 
-    case KeePass2::KdfParameters: {
+    case KeePass2::HeaderFieldID::KdfParameters: {
         QBuffer bufIoDevice(&fieldData);
         if (!bufIoDevice.open(QIODevice::ReadOnly)) {
             raiseError("Failed to open buffer for KDF parameters in header");
@@ -264,7 +261,7 @@ bool Kdbx4Reader::readHeaderField(QIODevice* device)
         }
         QVariantMap kdfParams = readVariantMap(&bufIoDevice);
         QSharedPointer<Kdf> kdf = KeePass2::kdfFromParameters(kdfParams);
-        if (kdf == nullptr) {
+        if (!kdf) {
             raiseError("Invalid KDF parameters");
             return false;
         }
@@ -272,15 +269,15 @@ bool Kdbx4Reader::readHeaderField(QIODevice* device)
         break;
     }
 
-    case KeePass2::PublicCustomData:
+    case KeePass2::HeaderFieldID::PublicCustomData:
         m_db->setPublicCustomData(fieldData);
         break;
 
-    case KeePass2::ProtectedStreamKey:
-    case KeePass2::TransformRounds:
-    case KeePass2::TransformSeed:
-    case KeePass2::StreamStartBytes:
-    case KeePass2::InnerRandomStreamID:
+    case KeePass2::HeaderFieldID::ProtectedStreamKey:
+    case KeePass2::HeaderFieldID::TransformRounds:
+    case KeePass2::HeaderFieldID::TransformSeed:
+    case KeePass2::HeaderFieldID::StreamStartBytes:
+    case KeePass2::HeaderFieldID::InnerRandomStreamID:
         raiseError("Legacy header fields found in KDBX4 file.");
         return false;
 
@@ -456,39 +453,39 @@ void Kdbx4Reader::setCipher(const QByteArray& data)
 {
     if (data.size() != Uuid::Length) {
         raiseError("Invalid cipher uuid length");
-    } else {
-        Uuid uuid(data);
-
-        if (SymmetricCipher::cipherToAlgorithm(uuid) == SymmetricCipher::InvalidAlgorithm) {
-            raiseError("Unsupported cipher");
-        } else {
-            m_db->setCipher(uuid);
-        }
+        return;
     }
+    Uuid uuid(data);
+
+    if (SymmetricCipher::cipherToAlgorithm(uuid) == SymmetricCipher::InvalidAlgorithm) {
+        raiseError("Unsupported cipher");
+        return;
+    }
+    m_db->setCipher(uuid);
 }
 
 void Kdbx4Reader::setCompressionFlags(const QByteArray& data)
 {
     if (data.size() != 4) {
         raiseError("Invalid compression flags length");
-    } else {
-        quint32 id = Endian::bytesToSizedInt<quint32>(data, KeePass2::BYTEORDER);
-
-        if (id > Database::CompressionAlgorithmMax) {
-            raiseError("Unsupported compression algorithm");
-        } else {
-            m_db->setCompressionAlgo(static_cast<Database::CompressionAlgorithm>(id));
-        }
+        return;
     }
+    auto id = Endian::bytesToSizedInt<quint32>(data, KeePass2::BYTEORDER);
+
+    if (id > Database::CompressionAlgorithmMax) {
+        raiseError("Unsupported compression algorithm");
+        return;
+    }
+    m_db->setCompressionAlgo(static_cast<Database::CompressionAlgorithm>(id));
 }
 
 void Kdbx4Reader::setMasterSeed(const QByteArray& data)
 {
     if (data.size() != 32) {
         raiseError("Invalid master seed size");
-    } else {
-        m_masterSeed = data;
+        return;
     }
+    m_masterSeed = data;
 }
 
 void Kdbx4Reader::setEncryptionIV(const QByteArray& data)
@@ -505,15 +502,15 @@ void Kdbx4Reader::setInnerRandomStreamID(const QByteArray& data)
 {
     if (data.size() != 4) {
         raiseError("Invalid random stream id size");
-    } else {
-        quint32 id = Endian::bytesToSizedInt<quint32>(data, KeePass2::BYTEORDER);
-        KeePass2::ProtectedStreamAlgo irsAlgo = KeePass2::idToProtectedStreamAlgo(id);
-        if (irsAlgo == KeePass2::InvalidProtectedStreamAlgo || irsAlgo == KeePass2::ArcFourVariant) {
-            raiseError("Invalid inner random stream cipher");
-        } else {
-            m_irsAlgo = irsAlgo;
-        }
+        return;
     }
+    auto id = Endian::bytesToSizedInt<quint32>(data, KeePass2::BYTEORDER);
+    KeePass2::ProtectedStreamAlgo irsAlgo = KeePass2::idToProtectedStreamAlgo(id);
+    if (irsAlgo == KeePass2::ProtectedStreamAlgo::InvalidProtectedStreamAlgo || irsAlgo == KeePass2::ProtectedStreamAlgo::ArcFourVariant) {
+        raiseError("Invalid inner random stream cipher");
+        return;
+    }
+    m_irsAlgo = irsAlgo;
 }
 
 QHash<QString, QByteArray> Kdbx4Reader::binaryPool()

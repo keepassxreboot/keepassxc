@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -458,11 +459,7 @@ void Kdbx3XmlWriter::writeNumber(const QString& qualifiedName, int number)
 
 void Kdbx3XmlWriter::writeBool(const QString& qualifiedName, bool b)
 {
-    if (b) {
-        writeString(qualifiedName, "True");
-    } else {
-        writeString(qualifiedName, "False");
-    }
+    writeString(qualifiedName, b ? "True" : "False");
 }
 
 void Kdbx3XmlWriter::writeDateTime(const QString& qualifiedName, const QDateTime& dateTime)
@@ -487,20 +484,12 @@ void Kdbx3XmlWriter::writeUuid(const QString& qualifiedName, const Uuid& uuid)
 
 void Kdbx3XmlWriter::writeUuid(const QString& qualifiedName, const Group* group)
 {
-    if (group) {
-        writeUuid(qualifiedName, group->uuid());
-    } else {
-        writeUuid(qualifiedName, Uuid());
-    }
+    writeUuid(qualifiedName, group ? group->uuid() : Uuid());
 }
 
 void Kdbx3XmlWriter::writeUuid(const QString& qualifiedName, const Entry* entry)
 {
-    if (entry) {
-        writeUuid(qualifiedName, entry->uuid());
-    } else {
-        writeUuid(qualifiedName, Uuid());
-    }
+    writeUuid(qualifiedName, entry ? entry->uuid() : Uuid());
 }
 
 void Kdbx3XmlWriter::writeBinary(const QString& qualifiedName, const QByteArray& ba)

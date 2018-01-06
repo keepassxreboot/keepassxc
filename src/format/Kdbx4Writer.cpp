@@ -1,5 +1,4 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -34,8 +33,6 @@
 #include "streams/QtIOCompressor"
 #include "streams/SymmetricCipherStream.h"
 
-#define CHECK_RETURN_FALSE(x) if (!(x)) return false;
-
 Kdbx4Writer::Kdbx4Writer()
     : m_device(nullptr)
 {
@@ -63,7 +60,7 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
     QByteArray startBytes;
     QByteArray endOfHeader = "\r\n\r\n";
 
-    if (db->challengeMasterSeed(masterSeed) == false) {
+    if (!db->challengeMasterSeed(masterSeed)) {
         raiseError(tr("Unable to issue challenge-response."));
         return false;
     }
@@ -88,12 +85,12 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
         CHECK_RETURN_FALSE(writeData(Endian::sizedIntToBytes(KeePass2::SIGNATURE_1, KeePass2::BYTEORDER)));
         CHECK_RETURN_FALSE(writeData(Endian::sizedIntToBytes(KeePass2::SIGNATURE_2, KeePass2::BYTEORDER)));
         CHECK_RETURN_FALSE(writeData(Endian::sizedIntToBytes(KeePass2::FILE_VERSION_4, KeePass2::BYTEORDER)));
-        CHECK_RETURN_FALSE(writeHeaderField(KeePass2::CipherID, db->cipher().toByteArray()));
-        CHECK_RETURN_FALSE(writeHeaderField(KeePass2::CompressionFlags,
+        CHECK_RETURN_FALSE(writeHeaderField(KeePass2::HeaderFieldID::CipherID, db->cipher().toByteArray()));
+        CHECK_RETURN_FALSE(writeHeaderField(KeePass2::HeaderFieldID::CompressionFlags,
                                             Endian::sizedIntToBytes(static_cast<int>(db->compressionAlgo()),
                                                                     KeePass2::BYTEORDER)));
-        CHECK_RETURN_FALSE(writeHeaderField(KeePass2::MasterSeed, masterSeed));
-        CHECK_RETURN_FALSE(writeHeaderField(KeePass2::EncryptionIV, encryptionIV));
+        CHECK_RETURN_FALSE(writeHeaderField(KeePass2::HeaderFieldID::MasterSeed, masterSeed));
+        CHECK_RETURN_FALSE(writeHeaderField(KeePass2::HeaderFieldID::EncryptionIV, encryptionIV));
 
         // Convert current Kdf to basic parameters
         QVariantMap kdfParams = KeePass2::kdfToParameters(db->kdf());
@@ -104,12 +101,12 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
             return false;
         }
         QByteArray publicCustomData = db->publicCustomData();
-        CHECK_RETURN_FALSE(writeHeaderField(KeePass2::KdfParameters, kdfParamBytes));
+        CHECK_RETURN_FALSE(writeHeaderField(KeePass2::HeaderFieldID::KdfParameters, kdfParamBytes));
         if (!publicCustomData.isEmpty()) {
-            CHECK_RETURN_FALSE(writeHeaderField(KeePass2::PublicCustomData, publicCustomData));
+            CHECK_RETURN_FALSE(writeHeaderField(KeePass2::HeaderFieldID::PublicCustomData, publicCustomData));
         }
 
-        CHECK_RETURN_FALSE(writeHeaderField(KeePass2::EndOfHeader, endOfHeader));
+        CHECK_RETURN_FALSE(writeHeaderField(KeePass2::HeaderFieldID::EndOfHeader, endOfHeader));
         header.close();
         m_device = device;
         headerData = header.data();
@@ -161,7 +158,7 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
     QHash<QByteArray, int> idMap;
 
     CHECK_RETURN_FALSE(writeInnerHeaderField(KeePass2::InnerHeaderFieldID::InnerRandomStreamID,
-                                             Endian::sizedIntToBytes(static_cast<int>(KeePass2::ChaCha20),
+                                             Endian::sizedIntToBytes(static_cast<int>(KeePass2::ProtectedStreamAlgo::ChaCha20),
                                                                      KeePass2::BYTEORDER)));
     CHECK_RETURN_FALSE(writeInnerHeaderField(KeePass2::InnerHeaderFieldID::InnerRandomStreamKey,
                                              protectedStreamKey));
@@ -180,7 +177,7 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
     }
     CHECK_RETURN_FALSE(writeInnerHeaderField(KeePass2::InnerHeaderFieldID::End, QByteArray()));
 
-    KeePass2RandomStream randomStream(KeePass2::ChaCha20);
+    KeePass2RandomStream randomStream(KeePass2::ProtectedStreamAlgo::ChaCha20);
     if (!randomStream.init(protectedStreamKey)) {
         raiseError(randomStream.errorString());
         return false;
@@ -217,15 +214,13 @@ bool Kdbx4Writer::writeData(const QByteArray& data)
         raiseError(m_device->errorString());
         return false;
     }
-    else {
-        return true;
-    }
+    return true;
 }
 
 bool Kdbx4Writer::writeHeaderField(KeePass2::HeaderFieldID fieldId, const QByteArray& data)
 {
     QByteArray fieldIdArr;
-    fieldIdArr[0] = fieldId;
+    fieldIdArr[0] = static_cast<char>(fieldId);
     CHECK_RETURN_FALSE(writeData(fieldIdArr));
     CHECK_RETURN_FALSE(writeData(Endian::sizedIntToBytes(static_cast<quint32>(data.size()), KeePass2::BYTEORDER)));
     CHECK_RETURN_FALSE(writeData(data));
@@ -264,47 +259,46 @@ bool Kdbx4Writer::serializeVariantMap(const QVariantMap& p, QByteArray& o)
 
     bool ok;
     QList<QString> keys = p.keys();
-    for (int i = 0; i < keys.size(); ++i) {
-        QString k = keys.at(i);
+    for (const auto& k : keys) {
         KeePass2::VariantMapFieldType fieldType;
         QByteArray data;
         QVariant v = p.value(k);
         switch (static_cast<QMetaType::Type>(v.type())) {
-            case QMetaType::Type::Int:
-                fieldType = KeePass2::VariantMapFieldType::Int32;
-                data = Endian::sizedIntToBytes(v.toInt(&ok), KeePass2::BYTEORDER);
-                CHECK_RETURN_FALSE(ok);
-                break;
-            case QMetaType::Type::UInt:
-                fieldType = KeePass2::VariantMapFieldType::UInt32;
-                data = Endian::sizedIntToBytes(v.toUInt(&ok), KeePass2::BYTEORDER);
-                CHECK_RETURN_FALSE(ok);
-                break;
-            case QMetaType::Type::LongLong:
-                fieldType = KeePass2::VariantMapFieldType::Int64;
-                data = Endian::sizedIntToBytes(v.toLongLong(&ok), KeePass2::BYTEORDER);
-                CHECK_RETURN_FALSE(ok);
-                break;
-            case QMetaType::Type::ULongLong:
-                fieldType = KeePass2::VariantMapFieldType::UInt64;
-                data = Endian::sizedIntToBytes(v.toULongLong(&ok), KeePass2::BYTEORDER);
-                CHECK_RETURN_FALSE(ok);
-                break;
-            case QMetaType::Type::QString:
-                fieldType = KeePass2::VariantMapFieldType::String;
-                data = v.toString().toUtf8();
-                break;
-            case QMetaType::Type::Bool:
-                fieldType = KeePass2::VariantMapFieldType::Bool;
-                data = QByteArray(1, (v.toBool() ? '\1' : '\0'));
-                break;
-            case QMetaType::Type::QByteArray:
-                fieldType = KeePass2::VariantMapFieldType::ByteArray;
-                data = v.toByteArray();
-                break;
-            default:
-                qWarning("Unknown object type %d in QVariantMap", v.type());
-                return false;
+        case QMetaType::Type::Int:
+            fieldType = KeePass2::VariantMapFieldType::Int32;
+            data = Endian::sizedIntToBytes(v.toInt(&ok), KeePass2::BYTEORDER);
+            CHECK_RETURN_FALSE(ok);
+            break;
+        case QMetaType::Type::UInt:
+            fieldType = KeePass2::VariantMapFieldType::UInt32;
+            data = Endian::sizedIntToBytes(v.toUInt(&ok), KeePass2::BYTEORDER);
+            CHECK_RETURN_FALSE(ok);
+            break;
+        case QMetaType::Type::LongLong:
+            fieldType = KeePass2::VariantMapFieldType::Int64;
+            data = Endian::sizedIntToBytes(v.toLongLong(&ok), KeePass2::BYTEORDER);
+            CHECK_RETURN_FALSE(ok);
+            break;
+        case QMetaType::Type::ULongLong:
+            fieldType = KeePass2::VariantMapFieldType::UInt64;
+            data = Endian::sizedIntToBytes(v.toULongLong(&ok), KeePass2::BYTEORDER);
+            CHECK_RETURN_FALSE(ok);
+            break;
+        case QMetaType::Type::QString:
+            fieldType = KeePass2::VariantMapFieldType::String;
+            data = v.toString().toUtf8();
+            break;
+        case QMetaType::Type::Bool:
+            fieldType = KeePass2::VariantMapFieldType::Bool;
+            data = QByteArray(1, static_cast<char>(v.toBool() ? '\1' : '\0'));
+            break;
+        case QMetaType::Type::QByteArray:
+            fieldType = KeePass2::VariantMapFieldType::ByteArray;
+            data = v.toByteArray();
+            break;
+        default:
+            qWarning("Unknown object type %d in QVariantMap", v.type());
+            return false;
         }
         QByteArray typeBytes;
         typeBytes[0] = static_cast<char>(fieldType);

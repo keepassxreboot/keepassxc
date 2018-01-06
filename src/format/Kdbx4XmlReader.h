@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,10 +27,10 @@
 
 #include "core/TimeInfo.h"
 #include "core/Uuid.h"
+#include "core/Group.h"
 
 class Database;
 class Entry;
-class Group;
 class KeePass2RandomStream;
 class Metadata;
 
@@ -88,7 +88,7 @@ private:
     KeePass2RandomStream* m_randomStream;
     Database* m_db;
     Metadata* m_meta;
-    Group* m_tmpParent;
+    QScopedPointer<Group> m_tmpParent;
     QHash<Uuid, Group*> m_groups;
     QHash<Uuid, Entry*> m_entries;
     QHash<QString, QByteArray> m_binaryPool;

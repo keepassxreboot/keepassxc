@@ -89,7 +89,8 @@ QSharedPointer<Kdf> KeePass2::uuidToKdf(const Uuid& uuid)
 {
     if (uuid == KDF_AES) {
         return QSharedPointer<AesKdf>::create();
-    } else if (uuid == KDF_ARGON2) {
+    }
+    if (uuid == KDF_ARGON2) {
         return QSharedPointer<Argon2Kdf>::create();
     }
 
@@ -100,13 +101,13 @@ QSharedPointer<Kdf> KeePass2::uuidToKdf(const Uuid& uuid)
 KeePass2::ProtectedStreamAlgo KeePass2::idToProtectedStreamAlgo(quint32 id)
 {
     switch (id) {
-    case static_cast<quint32>(KeePass2::ArcFourVariant):
-        return KeePass2::ArcFourVariant;
-    case static_cast<quint32>(KeePass2::Salsa20):
-        return KeePass2::Salsa20;
-    case static_cast<quint32>(KeePass2::ChaCha20):
-        return KeePass2::ChaCha20;
+    case static_cast<quint32>(KeePass2::ProtectedStreamAlgo::ArcFourVariant):
+        return KeePass2::ProtectedStreamAlgo::ArcFourVariant;
+    case static_cast<quint32>(KeePass2::ProtectedStreamAlgo::Salsa20):
+        return KeePass2::ProtectedStreamAlgo::Salsa20;
+    case static_cast<quint32>(KeePass2::ProtectedStreamAlgo::ChaCha20):
+        return KeePass2::ProtectedStreamAlgo::ChaCha20;
     default:
-        return KeePass2::InvalidProtectedStreamAlgo;
+        return KeePass2::ProtectedStreamAlgo::InvalidProtectedStreamAlgo;
     }
 }

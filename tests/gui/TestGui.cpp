@@ -900,11 +900,11 @@ void TestGui::testDatabaseSettings()
     QWidget* dbSettingsWidget = m_dbWidget->findChild<QWidget*>("databaseSettingsWidget");
     QSpinBox* transformRoundsSpinBox = dbSettingsWidget->findChild<QSpinBox*>("transformRoundsSpinBox");
     QVERIFY(transformRoundsSpinBox != nullptr);
-    transformRoundsSpinBox->setValue(100);
+    transformRoundsSpinBox->setValue(123456);
     QTest::keyClick(transformRoundsSpinBox, Qt::Key_Enter);
     // wait for modified timer
     QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("Save*"));
-    QCOMPARE(m_db->kdf()->rounds(), Q_UINT64_C(100));
+    QCOMPARE(m_db->kdf()->rounds(), Q_UINT64_C(123456));
 
     triggerAction("actionDatabaseSave");
     QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("Save"));

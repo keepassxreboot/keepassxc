@@ -134,7 +134,7 @@ void DatabaseSettingsWidget::save()
 {
     // first perform safety check for KDF rounds
     auto kdf = KeePass2::uuidToKdf(Uuid(m_uiEncryption->kdfComboBox->currentData().toByteArray()));
-    if (kdf->uuid() == KeePass2::KDF_ARGON2 and m_uiEncryption->transformRoundsSpinBox->value() > 1000) {
+    if (kdf->uuid() == KeePass2::KDF_ARGON2 && m_uiEncryption->transformRoundsSpinBox->value() > 1000) {
         QMessageBox warning;
         warning.setIcon(QMessageBox::Warning);
         warning.setWindowTitle(tr("Number of rounds too high"));
@@ -147,7 +147,7 @@ void DatabaseSettingsWidget::save()
         if (warning.clickedButton() != ok) {
             return;
         }
-    } else if (kdf->uuid() == KeePass2::KDF_AES and m_uiEncryption->transformRoundsSpinBox->value() < 100000) {
+    } else if (kdf->uuid() == KeePass2::KDF_AES && m_uiEncryption->transformRoundsSpinBox->value() < 100000) {
         QMessageBox warning;
         warning.setIcon(QMessageBox::Warning);
         warning.setWindowTitle(tr("Number of rounds too low"));

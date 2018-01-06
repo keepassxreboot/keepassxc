@@ -27,6 +27,8 @@
 #include "core/Database.h"
 #include "format/KeePass2.h"
 
+#define CHECK_RETURN_FALSE(x) if (!(x)) return false;
+
 class BaseKeePass2Writer
 {
 public:
