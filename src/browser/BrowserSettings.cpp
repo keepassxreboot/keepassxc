@@ -156,7 +156,10 @@ void BrowserSettings::setUseCustomProxy(bool enabled)
 
 QString BrowserSettings::customProxyLocation()
 {
-    return config()->get("Browser/CustomProxyLocation", " ").toString();
+    if (!useCustomProxy()) {
+        return QString();
+    }
+    return config()->get("Browser/CustomProxyLocation", "").toString();
 }
 
 void BrowserSettings::setCustomProxyLocation(QString location)
