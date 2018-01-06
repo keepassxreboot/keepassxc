@@ -332,10 +332,9 @@ bool AutoType::parseActions(const QString& sequence, const Entry* entry, QList<A
                 return false;
             } else if (ch == '}') {
                 QList<AutoTypeAction*> autoType = createActionFromTemplate(tmpl, entry);
-                if (autoType.isEmpty()) {
-                    return false;
+                if (!autoType.isEmpty()) {
+                    actions.append(autoType);
                 }
-                actions.append(autoType);
                 inTmpl = false;
                 tmpl.clear();
             } else {
