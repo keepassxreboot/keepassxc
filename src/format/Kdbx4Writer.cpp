@@ -114,24 +114,25 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
     CHECK_RETURN_FALSE(writeData(headerData));
     QByteArray headerHash = CryptoHash::hash(headerData, CryptoHash::Sha256);
 
-    QScopedPointer<QIODevice> firstLayer, secondLayer;
-
     QByteArray hmacKey = KeePass2::hmacKey(masterSeed, db->transformedMasterKey());
     QByteArray headerHmac = CryptoHash::hmac(headerData, HmacBlockStream::getHmacKey(UINT64_MAX, hmacKey),
                                              CryptoHash::Sha256);
     CHECK_RETURN_FALSE(writeData(headerHash));
     CHECK_RETURN_FALSE(writeData(headerHmac));
 
-    HmacBlockStream* hmacStream = new HmacBlockStream(device, hmacKey);
-    if (!hmacStream->open(QIODevice::WriteOnly)) {
-        raiseError(hmacStream->errorString());
+    QScopedPointer<HmacBlockStream> hmacBlockStream;
+    QScopedPointer<SymmetricCipherStream> cipherStream;
+
+    hmacBlockStream.reset(new HmacBlockStream(device, hmacKey));
+    if (!hmacBlockStream->open(QIODevice::WriteOnly)) {
+        raiseError(hmacBlockStream->errorString());
         return false;
     }
-    firstLayer.reset(static_cast<QIODevice*>(hmacStream));
 
-    SymmetricCipherStream* cipherStream = new SymmetricCipherStream(hmacStream, algo,
-                                                                    SymmetricCipher::algorithmMode(algo),
-                                                                    SymmetricCipher::Encrypt);
+    cipherStream.reset(new SymmetricCipherStream(hmacBlockStream.data(), algo,
+                                                SymmetricCipher::algorithmMode(algo),
+                                                SymmetricCipher::Encrypt));
+
     if (!cipherStream->init(finalKey, encryptionIV)) {
         raiseError(cipherStream->errorString());
         return false;
@@ -140,13 +141,12 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
         raiseError(cipherStream->errorString());
         return false;
     }
-    secondLayer.reset(static_cast<QIODevice*>(cipherStream));
 
     QScopedPointer<QtIOCompressor> ioCompressor;
     if (db->compressionAlgo() == Database::CompressionNone) {
-        m_device = secondLayer.data();
+        m_device = cipherStream.data();
     } else {
-        ioCompressor.reset(new QtIOCompressor(secondLayer.data()));
+        ioCompressor.reset(new QtIOCompressor(cipherStream.data()));
         ioCompressor->setStreamFormat(QtIOCompressor::GzipFormat);
         if (!ioCompressor->open(QIODevice::WriteOnly)) {
             raiseError(ioCompressor->errorString());
@@ -191,12 +191,12 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
     if (ioCompressor) {
         ioCompressor->close();
     }
-    if (!secondLayer->reset()) {
-        raiseError(secondLayer->errorString());
+    if (!cipherStream->reset()) {
+        raiseError(cipherStream->errorString());
         return false;
     }
-    if (!firstLayer->reset()) {
-        raiseError(firstLayer->errorString());
+    if (!hmacBlockStream->reset()) {
+        raiseError(hmacBlockStream->errorString());
         return false;
     }
 

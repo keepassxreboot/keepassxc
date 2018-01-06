@@ -23,6 +23,7 @@
 
 #include <QAbstractItemModel>
 #include <QObject>
+#include <QPointer>
 
 class Database;
 class DatabaseTabWidget;
@@ -71,14 +72,14 @@ private:
     void clickIndex(const QModelIndex& index, QAbstractItemView* view, Qt::MouseButton button,
                     Qt::KeyboardModifiers stateKey = 0);
 
-    MainWindow* m_mainWindow;
-    DatabaseTabWidget* m_tabWidget;
-    DatabaseWidget* m_dbWidget;
+    QPointer<MainWindow> m_mainWindow;
+    QPointer<DatabaseTabWidget> m_tabWidget;
+    QPointer<DatabaseWidget> m_dbWidget;
+    QPointer<Database> m_db;
     QByteArray m_dbData;
     TemporaryFile m_dbFile;
     QString m_dbFileName;
     QString m_dbFilePath;
-    Database* m_db;
 };
 
 #endif // KEEPASSX_TESTGUI_H

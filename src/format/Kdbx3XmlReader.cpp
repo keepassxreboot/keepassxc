@@ -1031,7 +1031,7 @@ Group* Kdbx3XmlReader::getGroup(const Uuid& uuid)
     if (m_groups.contains(uuid)) {
         return m_groups.value(uuid);
     } else {
-        Group* group = new Group();
+        auto group = new Group();
         group->setUpdateTimeinfo(false);
         group->setUuid(uuid);
         group->setParent(m_tmpParent);

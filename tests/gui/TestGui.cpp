@@ -117,7 +117,14 @@ void TestGui::cleanup()
     triggerAction("actionDatabaseClose");
     Tools::wait(100);
 
+    if (m_db) {
+        delete m_db;
+    }
     m_db = nullptr;
+
+    if (m_dbWidget) {
+        delete m_dbWidget;
+    }
     m_dbWidget = nullptr;
 }
 
@@ -1060,7 +1067,7 @@ void TestGui::dragAndDropGroup(const QModelIndex& sourceIndex, const QModelIndex
     QVERIFY(sourceIndex.isValid());
     QVERIFY(targetIndex.isValid());
 
-    GroupModel* groupModel = qobject_cast<GroupModel*>(m_dbWidget->findChild<GroupView*>("groupView")->model());
+    auto groupModel = qobject_cast<GroupModel*>(m_dbWidget->findChild<GroupView*>("groupView")->model());
 
     QMimeData mimeData;
     QByteArray encoded;
