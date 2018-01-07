@@ -65,16 +65,16 @@ QSharedPointer<Kdf> KeePass2::kdfFromParameters(const QVariantMap &p)
 {
     QByteArray uuidBytes = p.value(KDFPARAM_UUID).toByteArray();
     if (uuidBytes.size() != Uuid::Length) {
-        return nullptr;
+        return {};
     }
 
     QSharedPointer<Kdf> kdf(uuidToKdf(Uuid(uuidBytes)));
     if (kdf.isNull()) {
-        return nullptr;
+        return {};
     }
 
     if (!kdf->processParameters(p)) {
-        return nullptr;
+        return {};
     }
 
     return kdf;
@@ -95,7 +95,7 @@ QSharedPointer<Kdf> KeePass2::uuidToKdf(const Uuid& uuid)
     }
 
     Q_ASSERT_X(false, "uuidToKdf", "Invalid UUID");
-    return nullptr;
+    return {};
 }
 
 KeePass2::ProtectedStreamAlgo KeePass2::idToProtectedStreamAlgo(quint32 id)
