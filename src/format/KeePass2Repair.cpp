@@ -19,15 +19,13 @@
 #include "KeePass2Repair.h"
 
 #include <QBuffer>
-#include <QScopedPointer>
-#include <QRegExp>
 
+#include "core/Group.h"
 #include "format/KeePass2.h"
 #include "format/KeePass2RandomStream.h"
 #include "format/KeePass2Reader.h"
 #include "format/Kdbx4Reader.h"
-#include "format/Kdbx3XmlReader.h"
-#include "format/Kdbx4XmlReader.h"
+#include "format/KdbxXmlReader.h"
 
 KeePass2Repair::RepairOutcome KeePass2Repair::repairDatabase(QIODevice* device, const CompositeKey& key)
 {
@@ -41,7 +39,7 @@ KeePass2Repair::RepairOutcome KeePass2Repair::repairDatabase(QIODevice* device, 
         return qMakePair(NothingTodo, nullptr);
     }
 
-    QByteArray xmlData = reader.xmlData();
+    QByteArray xmlData = reader.reader()->xmlData();
     if (!db || xmlData.isEmpty()) {
         m_errorStr = reader.errorString();
         return qMakePair(UnableToOpen, nullptr);
@@ -62,7 +60,7 @@ KeePass2Repair::RepairOutcome KeePass2Repair::repairDatabase(QIODevice* device, 
 
     // try to fix broken databases because of bug #392
     for (int i = (xmlData.size() - 1); i >= 0; i--) {
-        quint8 ch = static_cast<quint8>(xmlData.at(i));
+        auto ch = static_cast<quint8>(xmlData.at(i));
         if (ch < 0x20 && ch != 0x09 && ch != 0x0A && ch != 0x0D) {
             xmlData.remove(i, 1);
             repairAction = true;
@@ -74,20 +72,20 @@ KeePass2Repair::RepairOutcome KeePass2Repair::repairDatabase(QIODevice* device, 
         return qMakePair(RepairFailed, nullptr);
     }
 
-    KeePass2RandomStream randomStream(reader.protectedStreamAlgo());
-    randomStream.init(reader.streamKey());
+    KeePass2RandomStream randomStream(reader.reader()->protectedStreamAlgo());
+    randomStream.init(reader.reader()->streamKey());
     bool hasError;
 
     QBuffer buffer(&xmlData);
     buffer.open(QIODevice::ReadOnly);
     if ((reader.version() & KeePass2::FILE_VERSION_CRITICAL_MASK) < KeePass2::FILE_VERSION_4) {
-        Kdbx3XmlReader xmlReader;
+        KdbxXmlReader xmlReader(KeePass2::FILE_VERSION_3);
         xmlReader.readDatabase(&buffer, db.data(), &randomStream);
         hasError = xmlReader.hasError();
     } else {
         auto reader4 = reader.reader().staticCast<Kdbx4Reader>();
         QHash<QString, QByteArray> pool = reader4->binaryPool();
-        Kdbx4XmlReader xmlReader(pool);
+        KdbxXmlReader xmlReader(KeePass2::FILE_VERSION_4, pool);
         xmlReader.readDatabase(&buffer, db.data(), &randomStream);
         hasError = xmlReader.hasError();
     }

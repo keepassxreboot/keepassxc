@@ -18,6 +18,11 @@
 #ifndef KEEPASSX_KEEPASS2READER_H
 #define KEEPASSX_KEEPASS2READER_H
 
+#include "format/KeePass2.h"
+#include "core/Database.h"
+#include "keys/CompositeKey.h"
+#include "KdbxReader.h"
+
 #include <QtGlobal>
 #include <QByteArray>
 #include <QString>
@@ -25,58 +30,31 @@
 #include <QScopedPointer>
 #include <QIODevice>
 
-#include "format/KeePass2.h"
-#include "core/Database.h"
-#include "keys/CompositeKey.h"
-
-class BaseKeePass2Reader
+class KeePass2Reader
 {
-    Q_DECLARE_TR_FUNCTIONS(BaseKeePass2Reader)
+Q_DECLARE_TR_FUNCTIONS(KdbxReader)
 
 public:
-    BaseKeePass2Reader();
+    Database* readDatabase(const QString& filename, const CompositeKey& key);
+    Database* readDatabase(QIODevice* device, const CompositeKey& key, bool keepDatabase = false);
 
-    virtual Database* readDatabase(QIODevice* device, const CompositeKey& key, bool keepDatabase = false) = 0;
-    virtual Database* readDatabase(const QString& filename, const CompositeKey& key);
+    bool hasError() const;
+    QString errorString() const;
 
-    virtual bool hasError();
-    virtual QString errorString();
-    virtual void setSaveXml(bool save);
-    virtual QByteArray xmlData();
-    virtual QByteArray streamKey();
-    virtual KeePass2::ProtectedStreamAlgo protectedStreamAlgo() const;
+    bool saveXml() const;
+    void setSaveXml(bool save);
 
-    virtual ~BaseKeePass2Reader() = default;
-
-protected:
-    void raiseError(const QString& errorMessage);
-
-    bool m_error;
-    QString m_errorStr;
-
-    bool m_saveXml;
-    QByteArray m_xmlData;
-    QByteArray m_protectedStreamKey;
-    KeePass2::ProtectedStreamAlgo m_irsAlgo;
-};
-
-class KeePass2Reader : public BaseKeePass2Reader
-{
-public:
-    Database* readDatabase(QIODevice* device, const CompositeKey& key, bool keepDatabase = false) override;
-    using BaseKeePass2Reader::readDatabase;
-
-    bool hasError() override;
-    QString errorString() override;
-    QByteArray xmlData() override;
-    QByteArray streamKey() override;
-    QSharedPointer<BaseKeePass2Reader> reader();
-    KeePass2::ProtectedStreamAlgo protectedStreamAlgo() const override;
-
+    QSharedPointer<KdbxReader> reader() const;
     quint32 version() const;
 private:
-    QSharedPointer<BaseKeePass2Reader> m_reader;
-    quint32 m_version;
+    void raiseError(const QString& errorMessage);
+
+    bool m_saveXml = false;
+    bool m_error = false;
+    QString m_errorStr = "";
+
+    QSharedPointer<KdbxReader> m_reader;
+    quint32 m_version = 0;
 };
 
 #endif // KEEPASSX_KEEPASS2READER_H

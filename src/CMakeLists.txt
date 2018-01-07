@@ -85,16 +85,16 @@ set(keepassx_SOURCES
     format/KeePass2.cpp
     format/KeePass2RandomStream.cpp
     format/KeePass2Repair.cpp
+    format/KdbxReader.cpp
+    format/KdbxWriter.cpp
+    format/KdbxXmlReader.cpp
     format/KeePass2Reader.cpp
     format/KeePass2Writer.cpp
     format/Kdbx3Reader.cpp
     format/Kdbx3Writer.cpp
-    format/Kdbx3XmlReader.cpp
-    format/Kdbx3XmlWriter.cpp
     format/Kdbx4Reader.cpp
     format/Kdbx4Writer.cpp
-    format/Kdbx4XmlReader.cpp
-    format/Kdbx4XmlWriter.cpp
+    format/KdbxXmlWriter.cpp
     gui/AboutDialog.cpp
     gui/Application.cpp
     gui/CategoryListWidget.cpp

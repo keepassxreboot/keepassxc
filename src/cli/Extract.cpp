@@ -101,7 +101,7 @@ int Extract::execute(QStringList arguments)
     Database* db = reader.readDatabase(&dbFile, compositeKey);
     delete db;
 
-    QByteArray xmlData = reader.xmlData();
+    QByteArray xmlData = reader.reader()->xmlData();
 
     if (reader.hasError()) {
         if (xmlData.isEmpty()) {

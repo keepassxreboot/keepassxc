@@ -19,45 +19,19 @@
 #ifndef KEEPASSX_KDBX3READER_H
 #define KEEPASSX_KDBX3READER_H
 
-#include <QCoreApplication>
+#include "format/KdbxReader.h"
 
-#include "format/KeePass2Reader.h"
-#include "keys/CompositeKey.h"
-
-class Database;
-class QIODevice;
-
-class Kdbx3Reader: public BaseKeePass2Reader
+/**
+ * KDBX 2/3 reader implementation.
+ */
+class Kdbx3Reader: public KdbxReader
 {
-Q_DECLARE_TR_FUNCTIONS(Kdbx3Reader)
-
 public:
-    Kdbx3Reader();
+    Database* readDatabaseImpl(QIODevice* device, const QByteArray& headerData,
+                               const CompositeKey& key, bool keepDatabase) override;
 
-    using BaseKeePass2Reader::readDatabase;
-    virtual Database* readDatabase(QIODevice* device, const CompositeKey& key, bool keepDatabase = false) override;
-
-private:
-    bool readHeaderField();
-
-    void setCipher(const QByteArray& data);
-    void setCompressionFlags(const QByteArray& data);
-    void setMasterSeed(const QByteArray& data);
-    void setTransformSeed(const QByteArray& data);
-    void setTransformRounds(const QByteArray& data);
-    void setEncryptionIV(const QByteArray& data);
-    void setProtectedStreamKey(const QByteArray& data);
-    void setStreamStartBytes(const QByteArray& data);
-    void setInnerRandomStreamID(const QByteArray& data);
-
-    QIODevice* m_device;
-    QIODevice* m_headerStream;
-    bool m_headerEnd;
-
-    Database* m_db;
-    QByteArray m_masterSeed;
-    QByteArray m_encryptionIV;
-    QByteArray m_streamStartBytes;
+protected:
+    bool readHeaderField(StoreDataStream& headerStream) override;
 };
 
 #endif // KEEPASSX_KDBX3READER_H

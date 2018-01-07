@@ -18,48 +18,27 @@
 #ifndef KEEPASSX_KDBX4READER_H
 #define KEEPASSX_KDBX4READER_H
 
-#include <QCoreApplication>
-#include <QHash>
-#include <QString>
-#include <QByteArray>
+#include "format/KdbxReader.h"
 
-#include "format/KeePass2.h"
-#include "format/KeePass2Reader.h"
-#include "crypto/SymmetricCipher.h"
-#include "keys/CompositeKey.h"
+#include <QVariantMap>
 
-class Database;
-class QIODevice;
-
-class Kdbx4Reader : public BaseKeePass2Reader
+/**
+ * KDBX4 reader implementation.
+ */
+class Kdbx4Reader : public KdbxReader
 {
-    Q_DECLARE_TR_FUNCTIONS(Kdbx4Reader)
-
 public:
-    Kdbx4Reader();
+    Database* readDatabaseImpl(QIODevice* device, const QByteArray& headerData,
+                               const CompositeKey& key, bool keepDatabase) override;
+    QHash<QString, QByteArray> binaryPool() const;
 
-    using BaseKeePass2Reader::readDatabase;
-    virtual Database* readDatabase(QIODevice* device, const CompositeKey& key, bool keepDatabase = false) override;
-
-    QHash<QString, QByteArray> binaryPool();
+protected:
+    bool readHeaderField(StoreDataStream& headerStream) override;
 
 private:
-    bool readHeaderField(QIODevice* device);
     bool readInnerHeaderField(QIODevice* device);
     QVariantMap readVariantMap(QIODevice* device);
 
-    void setCipher(const QByteArray& data);
-    void setCompressionFlags(const QByteArray& data);
-    void setMasterSeed(const QByteArray& data);
-    void setEncryptionIV(const QByteArray& data);
-    void setProtectedStreamKey(const QByteArray& data);
-    void setInnerRandomStreamID(const QByteArray& data);
-
-    QIODevice* m_device;
-
-    Database* m_db;
-    QByteArray m_masterSeed;
-    QByteArray m_encryptionIV;
     QHash<QString, QByteArray> m_binaryPool;
 };
 

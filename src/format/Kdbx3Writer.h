@@ -1,6 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,30 +18,15 @@
 #ifndef KEEPASSX_KDBX3WRITER_H
 #define KEEPASSX_KDBX3WRITER_H
 
-#include <QCoreApplication>
+#include "KdbxWriter.h"
 
-#include "format/KeePass2.h"
-#include "format/KeePass2Writer.h"
-#include "keys/CompositeKey.h"
-
-class Database;
-class QIODevice;
-
-class Kdbx3Writer: public BaseKeePass2Writer
+/**
+ * KDBX2/3 writer implementation.
+ */
+class Kdbx3Writer: public KdbxWriter
 {
-Q_DECLARE_TR_FUNCTIONS(Kdbx3Writer)
-
 public:
-    Kdbx3Writer();
-
-    using BaseKeePass2Writer::writeDatabase;
-    bool writeDatabase(QIODevice* device, Database* db);
-
-private:
-    bool writeData(const QByteArray& data);
-    bool writeHeaderField(KeePass2::HeaderFieldID fieldId, const QByteArray& data);
-
-    QIODevice* m_device;
+    bool writeDatabase(QIODevice* device, Database* db) override;
 };
 
 #endif // KEEPASSX_KDBX3WRITER_H

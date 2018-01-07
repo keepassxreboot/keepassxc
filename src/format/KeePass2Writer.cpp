@@ -16,7 +16,6 @@
  */
 
 #include <QIODevice>
-#include <QString>
 #include <QFile>
 
 #include "format/KeePass2Writer.h"
@@ -24,66 +23,79 @@
 #include "format/Kdbx3Writer.h"
 #include "format/Kdbx4Writer.h"
 
-BaseKeePass2Writer::BaseKeePass2Writer() : m_error(false)
-{
-    m_errorStr.clear();
-}
-
-BaseKeePass2Writer::~BaseKeePass2Writer() {}
-
-bool BaseKeePass2Writer::hasError()
-{
-    return m_error;
-}
-
-QString BaseKeePass2Writer::errorString()
-{
-    return m_errorStr;
-}
-
-void BaseKeePass2Writer::raiseError(const QString& errorMessage)
-{
-    m_error = true;
-    m_errorStr = errorMessage;
-}
-
-bool BaseKeePass2Writer::writeDatabase(const QString& filename, Database* db)
+/**
+ * Write a database to a KDBX file.
+ *
+ * @param filename output filename
+ * @param db source database
+ * @return true on success
+ */
+bool KeePass2Writer::writeDatabase(const QString& filename, Database* db)
 {
     QFile file(filename);
-    if (!file.open(QIODevice::WriteOnly|QIODevice::Truncate)) {
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
         raiseError(file.errorString());
         return false;
     }
     return writeDatabase(&file, db);
 }
 
-bool KeePass2Writer::hasError()
-{
-    return m_error || (m_writer && m_writer->hasError());
-}
-
-QString KeePass2Writer::errorString()
-{
-    return m_writer ? m_writer->errorString() : m_errorStr;
-}
-
+/**
+ * Write a database to a device in KDBX format.
+ *
+ * @param device output device
+ * @param db source database
+ * @return true on success
+ */
 bool KeePass2Writer::writeDatabase(QIODevice* device, Database* db) {
-    bool useKdbx4 = false;
+    m_error = false;
+    m_errorStr.clear();
 
-    if (db->kdf()->uuid() != KeePass2::KDF_AES) {
-        useKdbx4 = true;
-    }
-
-    if (db->publicCustomData().size() > 0) {
-        useKdbx4 = true;
-    }
-
-    // Determine KDBX3 vs KDBX4
-    if (useKdbx4) {
+    // determine KDBX3 vs KDBX4
+    if (db->kdf()->uuid() != KeePass2::KDF_AES || db->publicCustomData().size() > 0) {
+        m_version = KeePass2::FILE_VERSION_4;
         m_writer.reset(new Kdbx4Writer());
     } else {
+        m_version = KeePass2::FILE_VERSION_3;
         m_writer.reset(new Kdbx3Writer());
     }
 
     return m_writer->writeDatabase(device, db);
+}
+
+bool KeePass2Writer::hasError() const
+{
+    return m_error || (m_writer && m_writer->hasError());
+}
+
+QString KeePass2Writer::errorString() const
+{
+    return m_writer ? m_writer->errorString() : m_errorStr;
+}
+
+/**
+ * Raise an error. Use in case of an unexpected write error.
+ *
+ * @param errorMessage error message
+ */
+void KeePass2Writer::raiseError(const QString& errorMessage)
+{
+    m_error = true;
+    m_errorStr = errorMessage;
+}
+
+/**
+ * @return KDBX writer used for writing the output file
+ */
+QSharedPointer<KdbxWriter> KeePass2Writer::writer() const
+{
+    return QSharedPointer<KdbxWriter>();
+}
+
+/**
+ * @return KDBX version used for writing the output file
+ */
+quint32 KeePass2Writer::version() const
+{
+    return m_version;
 }

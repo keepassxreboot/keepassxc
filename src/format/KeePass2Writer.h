@@ -18,50 +18,36 @@
 #ifndef KEEPASSX_KEEPASS2WRITER_H
 #define KEEPASSX_KEEPASS2WRITER_H
 
-#include <QIODevice>
-#include <QByteArray>
-#include <QString>
+#include "KdbxWriter.h"
+
 #include <QCoreApplication>
 #include <QScopedPointer>
 
-#include "core/Database.h"
-#include "format/KeePass2.h"
+class QIODevice;
+class Database;
 
-#define CHECK_RETURN_FALSE(x) if (!(x)) return false;
-
-class BaseKeePass2Writer
+class KeePass2Writer
 {
-public:
-    BaseKeePass2Writer();
-
-    virtual bool writeDatabase(QIODevice* device, Database* db) = 0;
-    virtual bool writeDatabase(const QString& filename, Database* db);
-
-    virtual bool hasError();
-    virtual QString errorString();
-
-    virtual ~BaseKeePass2Writer();
-
-protected:
-    void raiseError(const QString& errorMessage);
-
-    bool m_error;
-    QString m_errorStr;
-};
-
-class KeePass2Writer : public BaseKeePass2Writer
-{
-    Q_DECLARE_TR_FUNCTIONS(KeePass2Writer)
+Q_DECLARE_TR_FUNCTIONS(KeePass2Writer)
 
 public:
-    virtual bool writeDatabase(QIODevice* device, Database* db) override;
-    using BaseKeePass2Writer::writeDatabase;
+    bool writeDatabase(const QString& filename, Database* db);
+    bool writeDatabase(QIODevice* device, Database* db);
 
-    virtual bool hasError() override;
-    virtual QString errorString() override;
+    QSharedPointer<KdbxWriter> writer() const;
+    quint32 version() const;
+
+    bool hasError() const;
+    QString errorString() const;
 
 private:
-    QScopedPointer<BaseKeePass2Writer> m_writer;
+    void raiseError(const QString& errorMessage);
+
+    bool m_error = false;
+    QString m_errorStr = "";
+
+    QScopedPointer<KdbxWriter> m_writer;
+    quint32 m_version = 0;
 };
 
 #endif // KEEPASSX_KEEPASS2READER_H

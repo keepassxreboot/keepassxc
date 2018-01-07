@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Kdbx4XmlWriter.h"
+#include "KdbxXmlWriter.h"
 
 #include <QBuffer>
 #include <QFile>
@@ -25,51 +25,35 @@
 #include "format/KeePass2RandomStream.h"
 #include "streams/QtIOCompressor"
 
-Kdbx4XmlWriter::Kdbx4XmlWriter()
-    : Kdbx4XmlWriter(KeePass2::FILE_VERSION_3)
+/**
+ * @param version KDBX version
+ */
+KdbxXmlWriter::KdbxXmlWriter(quint32 version)
+    : m_kdbxVersion(version)
 {
 }
 
-Kdbx4XmlWriter::Kdbx4XmlWriter(quint32 version)
-    : Kdbx4XmlWriter(version, QHash<QByteArray, int>())
-{
-}
-
-Kdbx4XmlWriter::Kdbx4XmlWriter(quint32 version, QHash<QByteArray, int> idMap)
-        : m_db(nullptr)
-        , m_meta(nullptr)
-        , m_randomStream(nullptr)
-        , m_idMap(idMap)
-        , m_error(false)
-        , m_version(version)
-{
-    m_xml.setAutoFormatting(true);
-    m_xml.setAutoFormattingIndent(-1); // 1 tab
-    m_xml.setCodec("UTF-8");
-}
-
-void Kdbx4XmlWriter::writeDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream, const QByteArray& headerHash)
+void KdbxXmlWriter::writeDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream, const QByteArray& headerHash)
 {
     m_db = db;
     m_meta = db->metadata();
     m_randomStream = randomStream;
     m_headerHash = headerHash;
 
-    if (m_version < KeePass2::FILE_VERSION_4 && m_idMap.isEmpty()) {
-        generateIdMap();
-    }
+    m_xml.setAutoFormatting(true);
+    m_xml.setAutoFormattingIndent(-1); // 1 tab
+    m_xml.setCodec("UTF-8");
+
+    generateIdMap();
 
     m_xml.setDevice(device);
-
     m_xml.writeStartDocument("1.0", true);
-
     m_xml.writeStartElement("KeePassFile");
 
     writeMetadata();
     writeRoot();
 
     m_xml.writeEndElement();
-
     m_xml.writeEndDocument();
 
     if (m_xml.hasError()) {
@@ -77,24 +61,24 @@ void Kdbx4XmlWriter::writeDatabase(QIODevice* device, Database* db, KeePass2Rand
     }
 }
 
-void Kdbx4XmlWriter::writeDatabase(const QString& filename, Database* db)
+void KdbxXmlWriter::writeDatabase(const QString& filename, Database* db)
 {
     QFile file(filename);
     file.open(QIODevice::WriteOnly|QIODevice::Truncate);
     writeDatabase(&file, db);
 }
 
-bool Kdbx4XmlWriter::hasError()
+bool KdbxXmlWriter::hasError()
 {
     return m_error;
 }
 
-QString Kdbx4XmlWriter::errorString()
+QString KdbxXmlWriter::errorString()
 {
     return m_errorStr;
 }
 
-void Kdbx4XmlWriter::generateIdMap()
+void KdbxXmlWriter::generateIdMap()
 {
     const QList<Entry*> allEntries = m_db->rootGroup()->entriesRecursive(true);
     int nextId = 0;
@@ -110,11 +94,11 @@ void Kdbx4XmlWriter::generateIdMap()
     }
 }
 
-void Kdbx4XmlWriter::writeMetadata()
+void KdbxXmlWriter::writeMetadata()
 {
     m_xml.writeStartElement("Meta");
     writeString("Generator", m_meta->generator());
-    if (m_version < KeePass2::FILE_VERSION_4 && !m_headerHash.isEmpty()) {
+    if (m_kdbxVersion < KeePass2::FILE_VERSION_4 && !m_headerHash.isEmpty()) {
         writeBinary("HeaderHash", m_headerHash);
     }
     writeString("DatabaseName", m_meta->name());
@@ -139,10 +123,10 @@ void Kdbx4XmlWriter::writeMetadata()
     writeUuid("LastTopVisibleGroup", m_meta->lastTopVisibleGroup());
     writeNumber("HistoryMaxItems", m_meta->historyMaxItems());
     writeNumber("HistoryMaxSize", m_meta->historyMaxSize());
-    if (m_version >= KeePass2::FILE_VERSION_4) {
+    if (m_kdbxVersion >= KeePass2::FILE_VERSION_4) {
         writeDateTime("SettingsChanged", m_meta->settingsChanged());
     }
-    if (m_version < KeePass2::FILE_VERSION_4) {
+    if (m_kdbxVersion < KeePass2::FILE_VERSION_4) {
         writeBinaries();
     }
     writeCustomData();
@@ -150,7 +134,7 @@ void Kdbx4XmlWriter::writeMetadata()
     m_xml.writeEndElement();
 }
 
-void Kdbx4XmlWriter::writeMemoryProtection()
+void KdbxXmlWriter::writeMemoryProtection()
 {
     m_xml.writeStartElement("MemoryProtection");
 
@@ -163,7 +147,7 @@ void Kdbx4XmlWriter::writeMemoryProtection()
     m_xml.writeEndElement();
 }
 
-void Kdbx4XmlWriter::writeCustomIcons()
+void KdbxXmlWriter::writeCustomIcons()
 {
     m_xml.writeStartElement("CustomIcons");
 
@@ -175,7 +159,7 @@ void Kdbx4XmlWriter::writeCustomIcons()
     m_xml.writeEndElement();
 }
 
-void Kdbx4XmlWriter::writeIcon(const Uuid& uuid, const QImage& icon)
+void KdbxXmlWriter::writeIcon(const Uuid& uuid, const QImage& icon)
 {
     m_xml.writeStartElement("Icon");
 
@@ -192,7 +176,7 @@ void Kdbx4XmlWriter::writeIcon(const Uuid& uuid, const QImage& icon)
     m_xml.writeEndElement();
 }
 
-void Kdbx4XmlWriter::writeBinaries()
+void KdbxXmlWriter::writeBinaries()
 {
     m_xml.writeStartElement("Binaries");
 
@@ -234,7 +218,7 @@ void Kdbx4XmlWriter::writeBinaries()
     m_xml.writeEndElement();
 }
 
-void Kdbx4XmlWriter::writeCustomData()
+void KdbxXmlWriter::writeCustomData()
 {
     m_xml.writeStartElement("CustomData");
 
@@ -247,7 +231,7 @@ void Kdbx4XmlWriter::writeCustomData()
     m_xml.writeEndElement();
 }
 
-void Kdbx4XmlWriter::writeCustomDataItem(const QString& key, const QString& value)
+void KdbxXmlWriter::writeCustomDataItem(const QString& key, const QString& value)
 {
     m_xml.writeStartElement("Item");
 
@@ -257,7 +241,7 @@ void Kdbx4XmlWriter::writeCustomDataItem(const QString& key, const QString& valu
     m_xml.writeEndElement();
 }
 
-void Kdbx4XmlWriter::writeRoot()
+void KdbxXmlWriter::writeRoot()
 {
     Q_ASSERT(m_db->rootGroup());
 
@@ -269,7 +253,7 @@ void Kdbx4XmlWriter::writeRoot()
     m_xml.writeEndElement();
 }
 
-void Kdbx4XmlWriter::writeGroup(const Group* group)
+void KdbxXmlWriter::writeGroup(const Group* group)
 {
     Q_ASSERT(!group->uuid().isNull());
 
@@ -293,12 +277,12 @@ void Kdbx4XmlWriter::writeGroup(const Group* group)
 
     writeUuid("LastTopVisibleEntry", group->lastTopVisibleEntry());
 
-    const QList<Entry*> entryList = group->entries();
+    const QList<Entry*>& entryList = group->entries();
     for (const Entry* entry : entryList) {
         writeEntry(entry);
     }
 
-    const QList<Group*> children = group->children();
+    const QList<Group*>& children = group->children();
     for (const Group* child : children) {
         writeGroup(child);
     }
@@ -306,7 +290,7 @@ void Kdbx4XmlWriter::writeGroup(const Group* group)
     m_xml.writeEndElement();
 }
 
-void Kdbx4XmlWriter::writeTimes(const TimeInfo& ti)
+void KdbxXmlWriter::writeTimes(const TimeInfo& ti)
 {
     m_xml.writeStartElement("Times");
 
@@ -321,7 +305,7 @@ void Kdbx4XmlWriter::writeTimes(const TimeInfo& ti)
     m_xml.writeEndElement();
 }
 
-void Kdbx4XmlWriter::writeDeletedObjects()
+void KdbxXmlWriter::writeDeletedObjects()
 {
     m_xml.writeStartElement("DeletedObjects");
 
@@ -333,7 +317,7 @@ void Kdbx4XmlWriter::writeDeletedObjects()
     m_xml.writeEndElement();
 }
 
-void Kdbx4XmlWriter::writeDeletedObject(const DeletedObject& delObj)
+void KdbxXmlWriter::writeDeletedObject(const DeletedObject& delObj)
 {
     m_xml.writeStartElement("DeletedObject");
 
@@ -343,7 +327,7 @@ void Kdbx4XmlWriter::writeDeletedObject(const DeletedObject& delObj)
     m_xml.writeEndElement();
 }
 
-void Kdbx4XmlWriter::writeEntry(const Entry* entry)
+void KdbxXmlWriter::writeEntry(const Entry* entry)
 {
     Q_ASSERT(!entry->uuid().isNull());
 
@@ -425,7 +409,7 @@ void Kdbx4XmlWriter::writeEntry(const Entry* entry)
     m_xml.writeEndElement();
 }
 
-void Kdbx4XmlWriter::writeAutoType(const Entry* entry)
+void KdbxXmlWriter::writeAutoType(const Entry* entry)
 {
     m_xml.writeStartElement("AutoType");
 
@@ -441,7 +425,7 @@ void Kdbx4XmlWriter::writeAutoType(const Entry* entry)
     m_xml.writeEndElement();
 }
 
-void Kdbx4XmlWriter::writeAutoTypeAssoc(const AutoTypeAssociations::Association& assoc)
+void KdbxXmlWriter::writeAutoTypeAssoc(const AutoTypeAssociations::Association& assoc)
 {
     m_xml.writeStartElement("Association");
 
@@ -451,7 +435,7 @@ void Kdbx4XmlWriter::writeAutoTypeAssoc(const AutoTypeAssociations::Association&
     m_xml.writeEndElement();
 }
 
-void Kdbx4XmlWriter::writeEntryHistory(const Entry* entry)
+void KdbxXmlWriter::writeEntryHistory(const Entry* entry)
 {
     m_xml.writeStartElement("History");
 
@@ -463,7 +447,7 @@ void Kdbx4XmlWriter::writeEntryHistory(const Entry* entry)
     m_xml.writeEndElement();
 }
 
-void Kdbx4XmlWriter::writeString(const QString& qualifiedName, const QString& string)
+void KdbxXmlWriter::writeString(const QString& qualifiedName, const QString& string)
 {
     if (string.isEmpty()) {
         m_xml.writeEmptyElement(qualifiedName);
@@ -473,12 +457,12 @@ void Kdbx4XmlWriter::writeString(const QString& qualifiedName, const QString& st
     }
 }
 
-void Kdbx4XmlWriter::writeNumber(const QString& qualifiedName, int number)
+void KdbxXmlWriter::writeNumber(const QString& qualifiedName, int number)
 {
     writeString(qualifiedName, QString::number(number));
 }
 
-void Kdbx4XmlWriter::writeBool(const QString& qualifiedName, bool b)
+void KdbxXmlWriter::writeBool(const QString& qualifiedName, bool b)
 {
     if (b) {
         writeString(qualifiedName, "True");
@@ -488,13 +472,13 @@ void Kdbx4XmlWriter::writeBool(const QString& qualifiedName, bool b)
     }
 }
 
-void Kdbx4XmlWriter::writeDateTime(const QString& qualifiedName, const QDateTime& dateTime)
+void KdbxXmlWriter::writeDateTime(const QString& qualifiedName, const QDateTime& dateTime)
 {
     Q_ASSERT(dateTime.isValid());
     Q_ASSERT(dateTime.timeSpec() == Qt::UTC);
 
     QString dateTimeStr;
-    if (m_version < KeePass2::FILE_VERSION_4) {
+    if (m_kdbxVersion < KeePass2::FILE_VERSION_4) {
         dateTimeStr = dateTime.toString(Qt::ISODate);
 
         // Qt < 4.8 doesn't append a 'Z' at the end
@@ -509,12 +493,12 @@ void Kdbx4XmlWriter::writeDateTime(const QString& qualifiedName, const QDateTime
     writeString(qualifiedName, dateTimeStr);
 }
 
-void Kdbx4XmlWriter::writeUuid(const QString& qualifiedName, const Uuid& uuid)
+void KdbxXmlWriter::writeUuid(const QString& qualifiedName, const Uuid& uuid)
 {
     writeString(qualifiedName, uuid.toBase64());
 }
 
-void Kdbx4XmlWriter::writeUuid(const QString& qualifiedName, const Group* group)
+void KdbxXmlWriter::writeUuid(const QString& qualifiedName, const Group* group)
 {
     if (group) {
         writeUuid(qualifiedName, group->uuid());
@@ -524,7 +508,7 @@ void Kdbx4XmlWriter::writeUuid(const QString& qualifiedName, const Group* group)
     }
 }
 
-void Kdbx4XmlWriter::writeUuid(const QString& qualifiedName, const Entry* entry)
+void KdbxXmlWriter::writeUuid(const QString& qualifiedName, const Entry* entry)
 {
     if (entry) {
         writeUuid(qualifiedName, entry->uuid());
@@ -534,12 +518,12 @@ void Kdbx4XmlWriter::writeUuid(const QString& qualifiedName, const Entry* entry)
     }
 }
 
-void Kdbx4XmlWriter::writeBinary(const QString& qualifiedName, const QByteArray& ba)
+void KdbxXmlWriter::writeBinary(const QString& qualifiedName, const QByteArray& ba)
 {
     writeString(qualifiedName, QString::fromLatin1(ba.toBase64()));
 }
 
-void Kdbx4XmlWriter::writeColor(const QString& qualifiedName, const QColor& color)
+void KdbxXmlWriter::writeColor(const QString& qualifiedName, const QColor& color)
 {
     QString colorStr;
 
@@ -552,7 +536,7 @@ void Kdbx4XmlWriter::writeColor(const QString& qualifiedName, const QColor& colo
     writeString(qualifiedName, colorStr);
 }
 
-void Kdbx4XmlWriter::writeTriState(const QString& qualifiedName, Group::TriState triState)
+void KdbxXmlWriter::writeTriState(const QString& qualifiedName, Group::TriState triState)
 {
     QString value;
 
@@ -569,7 +553,7 @@ void Kdbx4XmlWriter::writeTriState(const QString& qualifiedName, Group::TriState
     writeString(qualifiedName, value);
 }
 
-QString Kdbx4XmlWriter::colorPartToString(int value)
+QString KdbxXmlWriter::colorPartToString(int value)
 {
     QString str = QString::number(value, 16).toUpper();
     if (str.length() == 1) {
@@ -579,7 +563,7 @@ QString Kdbx4XmlWriter::colorPartToString(int value)
     return str;
 }
 
-QString Kdbx4XmlWriter::stripInvalidXml10Chars(QString str)
+QString KdbxXmlWriter::stripInvalidXml10Chars(QString str)
 {
     for (int i = str.size() - 1; i >= 0; i--) {
         const QChar ch = str.at(i);
@@ -604,7 +588,7 @@ QString Kdbx4XmlWriter::stripInvalidXml10Chars(QString str)
     return str;
 }
 
-void Kdbx4XmlWriter::raiseError(const QString& errorMessage)
+void KdbxXmlWriter::raiseError(const QString& errorMessage)
 {
     m_error = true;
     m_errorStr = errorMessage;

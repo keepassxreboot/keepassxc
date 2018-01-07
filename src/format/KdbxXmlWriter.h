@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KDBX4XMLWRITER_H
-#define KEEPASSX_KDBX4XMLWRITER_H
+#ifndef KEEPASSX_KDBXXMLWRITER_H
+#define KEEPASSX_KDBXXMLWRITER_H
 
 #include <QColor>
 #include <QDateTime>
@@ -32,12 +32,11 @@
 class KeePass2RandomStream;
 class Metadata;
 
-class Kdbx4XmlWriter
+class KdbxXmlWriter
 {
 public:
-    Kdbx4XmlWriter();
-    Kdbx4XmlWriter(quint32 version);
-    Kdbx4XmlWriter(quint32 version, QHash<QByteArray, int> idMap);
+    explicit KdbxXmlWriter(quint32 version);
+
     void writeDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream = nullptr,
                        const QByteArray& headerHash = QByteArray());
     void writeDatabase(const QString& filename, Database* db);
@@ -79,15 +78,18 @@ private:
 
     void raiseError(const QString& errorMessage);
 
+    const quint32 m_kdbxVersion;
+
     QXmlStreamWriter m_xml;
-    Database* m_db;
-    Metadata* m_meta;
-    KeePass2RandomStream* m_randomStream;
+    QPointer<Database> m_db;
+    QPointer<Metadata> m_meta;
+    KeePass2RandomStream* m_randomStream = nullptr;
     QHash<QByteArray, int> m_idMap;
-    bool m_error;
-    QString m_errorStr;
-    quint32 m_version;
     QByteArray m_headerHash;
+
+    bool m_error = false;
+
+    QString m_errorStr = "";
 };
 
-#endif // KEEPASSX_KDBX4XMLWRITER_H
+#endif // KEEPASSX_KDBXXMLWRITER_H

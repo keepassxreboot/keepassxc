@@ -18,35 +18,20 @@
 #ifndef KEEPASSX_KDBX4WRITER_H
 #define KEEPASSX_KDBX4WRITER_H
 
-#include <QCoreApplication>
+#include "KdbxWriter.h"
 
-#include "format/KeePass2.h"
-#include "format/KeePass2Writer.h"
-#include "keys/CompositeKey.h"
-
-class Database;
-class QIODevice;
-
-class Kdbx4Writer : public BaseKeePass2Writer
+/**
+ * KDBX4 writer implementation.
+ */
+class Kdbx4Writer : public KdbxWriter
 {
-    Q_DECLARE_TR_FUNCTIONS(Kdbx4Writer)
-
 public:
-    Kdbx4Writer();
-
-    using BaseKeePass2Writer::writeDatabase;
-    bool writeDatabase(QIODevice* device, Database* db);
+    bool writeDatabase(QIODevice* device, Database* db) override;
 
 private:
-    bool writeData(const QByteArray& data);
-    bool writeHeaderField(KeePass2::HeaderFieldID fieldId, const QByteArray& data);
-    bool writeInnerHeaderField(KeePass2::InnerHeaderFieldID fieldId, const QByteArray& data);
-
-    QIODevice* m_device;
-
-    bool writeBinary(const QByteArray& data);
-
-    static bool serializeVariantMap(const QVariantMap& p, QByteArray& o);
+    bool writeInnerHeaderField(QIODevice* device, KeePass2::InnerHeaderFieldID fieldId, const QByteArray& data);
+    bool writeBinary(QIODevice* device, const QByteArray& data);
+    static bool serializeVariantMap(const QVariantMap& map, QByteArray& outputBytes);
 };
 
 #endif // KEEPASSX_KDBX4WRITER_H
