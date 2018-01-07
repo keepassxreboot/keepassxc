@@ -19,6 +19,7 @@
 #include "CompositeKey.h"
 #include <QFile>
 #include <QtConcurrent>
+#include <format/KeePass2.h>
 
 #include "core/Global.h"
 #include "crypto/CryptoHash.h"
@@ -73,7 +74,31 @@ CompositeKey& CompositeKey::operator=(const CompositeKey& key)
     return *this;
 }
 
+/**
+ * Get raw key hash as bytes.
+ *
+ * The key hash does not contain contributions by challenge-response components for
+ * backwards compatibility with KeePassXC's pre-KDBX4 challenge-response
+ * implementation. To include challenge-response in the raw key,
+ * use \link CompositeKey::rawKey(const QByteArray*) instead.
+ *
+ * @return key hash
+ */
 QByteArray CompositeKey::rawKey() const
+{
+    return rawKey(nullptr);
+}
+
+/**
+ * Get raw key hash as bytes.
+ *
+ * Challenge-response key components will use the provided <tt>transformSeed</tt>
+ * as a challenge to acquire their key contribution.
+ *
+ * @param transformSeed transform seed to challenge or nullptr to exclude challenge-response components
+ * @return key hash
+ */
+QByteArray CompositeKey::rawKey(const QByteArray* transformSeed) const
 {
     CryptoHash cryptoHash(CryptoHash::Sha256);
 
@@ -81,12 +106,38 @@ QByteArray CompositeKey::rawKey() const
         cryptoHash.addData(key->rawKey());
     }
 
+    if (transformSeed) {
+        QByteArray challengeResult;
+        challenge(*transformSeed, challengeResult);
+        cryptoHash.addData(challengeResult);
+    }
+
     return cryptoHash.result();
 }
 
+/**
+ * Transform this composite key.
+ *
+ * If using AES-KDF as transform function, the transformed key will not include
+ * any challenge-response components. Only static key components will be hashed
+ * for backwards-compatibility with KeePassXC's KDBX3 implementation, which added
+ * challenge response key components after key transformation.
+ * KDBX4+ KDFs transform the whole key including challenge-response components.
+ *
+ * @param kdf key derivation function
+ * @param result transformed key hash
+ * @return true on success
+ */
 bool CompositeKey::transform(const Kdf& kdf, QByteArray& result) const
 {
-    return kdf.transform(rawKey(), result);
+    if (kdf.uuid() == KeePass2::KDF_AES) {
+        // legacy KDBX3 AES-KDF, challenge response is added later to the hash
+        return kdf.transform(rawKey(), result);
+    }
+
+    QByteArray seed = kdf.seed();
+    Q_ASSERT(!seed.isEmpty());
+    return kdf.transform(rawKey(&seed), result);
 }
 
 bool CompositeKey::challenge(const QByteArray& seed, QByteArray& result) const
@@ -103,6 +154,7 @@ bool CompositeKey::challenge(const QByteArray& seed, QByteArray& result) const
     for (const auto key : m_challengeResponseKeys) {
         // if the device isn't present or fails, return an error
         if (!key->challenge(seed)) {
+            qWarning("Failed to issue challenge");
             return false;
         }
         cryptoHash.addData(key->rawKey());

@@ -20,7 +20,6 @@
 #include <QBuffer>
 
 #include "core/Group.h"
-#include "core/Database.h"
 #include "core/Endian.h"
 #include "crypto/CryptoHash.h"
 #include "format/KeePass2RandomStream.h"
@@ -48,19 +47,13 @@ Database* Kdbx4Reader::readDatabaseImpl(QIODevice* device, const QByteArray& hea
         return nullptr;
     }
 
-    if (!m_db->setKey(key, false)) {
+    if (!m_db->setKey(key, false, false)) {
         raiseError(tr("Unable to calculate master key"));
-        return nullptr;
-    }
-
-    if (!m_db->challengeMasterSeed(m_masterSeed)) {
-        raiseError(tr("Unable to issue challenge-response."));
         return nullptr;
     }
 
     CryptoHash hash(CryptoHash::Sha256);
     hash.addData(m_masterSeed);
-    hash.addData(m_db->challengeResponseKey());
     hash.addData(m_db->transformedMasterKey());
     QByteArray finalKey = hash.result();
 
