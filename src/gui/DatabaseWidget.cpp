@@ -303,8 +303,9 @@ QList<int> DatabaseWidget::entryHeaderViewSizes() const
 
 void DatabaseWidget::setEntryViewHeaderSizes(const QList<int>& sizes)
 {
-    if (sizes.size() != m_entryView->header()->count()) {
-        Q_ASSERT(false);
+    const bool enoughSizes = sizes.size() == m_entryView->header()->count();
+    Q_ASSERT(enoughSizes);
+    if (!enoughSizes) {
         return;
     }
 
@@ -332,8 +333,8 @@ Database* DatabaseWidget::database()
 
 void DatabaseWidget::createEntry()
 {
+    Q_ASSERT(m_groupView->currentGroup());
     if (!m_groupView->currentGroup()) {
-        Q_ASSERT(false);
         return;
     }
 
@@ -375,33 +376,32 @@ void DatabaseWidget::replaceDatabase(Database* db)
 void DatabaseWidget::cloneEntry()
 {
     Entry* currentEntry = m_entryView->currentEntry();
+    Q_ASSERT(currentEntry);
     if (!currentEntry) {
-        Q_ASSERT(false);
         return;
     }
 
-    CloneDialog* cloneDialog = new CloneDialog(this, m_db, currentEntry);
+    auto cloneDialog = new CloneDialog(this, m_db, currentEntry);
     cloneDialog->show();
-    return;
 }
 
 void DatabaseWidget::showTotp()
 {
     Entry* currentEntry = m_entryView->currentEntry();
+    Q_ASSERT(currentEntry);
     if (!currentEntry) {
-        Q_ASSERT(false);
         return;
     }
 
-    TotpDialog* totpDialog = new TotpDialog(this, currentEntry);
+    auto totpDialog = new TotpDialog(this, currentEntry);
     totpDialog->open();
 }
 
 void DatabaseWidget::copyTotp()
 {
     Entry* currentEntry = m_entryView->currentEntry();
+    Q_ASSERT(currentEntry);
     if (!currentEntry) {
-        Q_ASSERT(false);
         return;
     }
     setClipboardTextAndMinimize(currentEntry->totp());
@@ -410,12 +410,12 @@ void DatabaseWidget::copyTotp()
 void DatabaseWidget::setupTotp()
 {
     Entry* currentEntry = m_entryView->currentEntry();
+    Q_ASSERT(currentEntry);
     if (!currentEntry) {
-        Q_ASSERT(false);
         return;
     }
 
-    SetupTotpDialog* setupTotpDialog = new SetupTotpDialog(this, currentEntry);
+    auto setupTotpDialog = new SetupTotpDialog(this, currentEntry);
     if (currentEntry->hasTotp()) {
         setupTotpDialog->setSeed(currentEntry->totpSeed());
         setupTotpDialog->setStep(currentEntry->totpStep());
@@ -425,7 +425,6 @@ void DatabaseWidget::setupTotp()
     }
 
     setupTotpDialog->open();
-
 }
 
 
@@ -433,8 +432,8 @@ void DatabaseWidget::deleteEntries()
 {
     const QModelIndexList selected = m_entryView->selectionModel()->selectedRows();
 
+    Q_ASSERT(!selected.isEmpty());
     if (selected.isEmpty()) {
-        Q_ASSERT(false);
         return;
     }
 
@@ -505,8 +504,8 @@ void DatabaseWidget::setFocus()
 void DatabaseWidget::copyTitle()
 {
     Entry* currentEntry = m_entryView->currentEntry();
+    Q_ASSERT(currentEntry);
     if (!currentEntry) {
-        Q_ASSERT(false);
         return;
     }
 
@@ -516,8 +515,8 @@ void DatabaseWidget::copyTitle()
 void DatabaseWidget::copyUsername()
 {
     Entry* currentEntry = m_entryView->currentEntry();
+    Q_ASSERT(currentEntry);
     if (!currentEntry) {
-        Q_ASSERT(false);
         return;
     }
 
@@ -527,8 +526,8 @@ void DatabaseWidget::copyUsername()
 void DatabaseWidget::copyPassword()
 {
     Entry* currentEntry = m_entryView->currentEntry();
+    Q_ASSERT(currentEntry);
     if (!currentEntry) {
-        Q_ASSERT(false);
         return;
     }
 
@@ -538,8 +537,8 @@ void DatabaseWidget::copyPassword()
 void DatabaseWidget::copyURL()
 {
     Entry* currentEntry = m_entryView->currentEntry();
+    Q_ASSERT(currentEntry);
     if (!currentEntry) {
-        Q_ASSERT(false);
         return;
     }
 
@@ -549,8 +548,8 @@ void DatabaseWidget::copyURL()
 void DatabaseWidget::copyNotes()
 {
     Entry* currentEntry = m_entryView->currentEntry();
+    Q_ASSERT(currentEntry);
     if (!currentEntry) {
-        Q_ASSERT(false);
         return;
     }
 
@@ -560,8 +559,8 @@ void DatabaseWidget::copyNotes()
 void DatabaseWidget::copyAttribute(QAction* action)
 {
     Entry* currentEntry = m_entryView->currentEntry();
+    Q_ASSERT(currentEntry);
     if (!currentEntry) {
-        Q_ASSERT(false);
         return;
     }
 
@@ -579,8 +578,8 @@ void DatabaseWidget::setClipboardTextAndMinimize(const QString& text)
 void DatabaseWidget::performAutoType()
 {
     Entry* currentEntry = m_entryView->currentEntry();
+    Q_ASSERT(currentEntry);
     if (!currentEntry) {
-        Q_ASSERT(false);
         return;
     }
 
@@ -590,8 +589,8 @@ void DatabaseWidget::performAutoType()
 void DatabaseWidget::openUrl()
 {
     Entry* currentEntry = m_entryView->currentEntry();
+    Q_ASSERT(currentEntry);
     if (!currentEntry) {
-        Q_ASSERT(false);
         return;
     }
 
@@ -917,7 +916,7 @@ void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::Mod
 void DatabaseWidget::switchToEntryEdit()
 {
     Entry* entry = m_entryView->currentEntry();
-    
+
     if (!entry) {
         return;
     }
@@ -928,7 +927,7 @@ void DatabaseWidget::switchToEntryEdit()
 void DatabaseWidget::switchToGroupEdit()
 {
     Group* group = m_groupView->currentGroup();
-    
+
     if (!group) {
         return;
     }
@@ -1348,8 +1347,8 @@ bool DatabaseWidget::isGroupSelected() const
 bool DatabaseWidget::currentEntryHasTitle()
 {
     Entry* currentEntry = m_entryView->currentEntry();
+    Q_ASSERT(currentEntry);
     if (!currentEntry) {
-        Q_ASSERT(false);
         return false;
     }
     return !currentEntry->title().isEmpty();
@@ -1358,8 +1357,8 @@ bool DatabaseWidget::currentEntryHasTitle()
 bool DatabaseWidget::currentEntryHasUsername()
 {
     Entry* currentEntry = m_entryView->currentEntry();
+    Q_ASSERT(currentEntry);
     if (!currentEntry) {
-        Q_ASSERT(false);
         return false;
     }
     return !currentEntry->resolveMultiplePlaceholders(currentEntry->username()).isEmpty();
@@ -1368,8 +1367,8 @@ bool DatabaseWidget::currentEntryHasUsername()
 bool DatabaseWidget::currentEntryHasPassword()
 {
     Entry* currentEntry = m_entryView->currentEntry();
+    Q_ASSERT(currentEntry);
     if (!currentEntry) {
-        Q_ASSERT(false);
         return false;
     }
     return !currentEntry->resolveMultiplePlaceholders(currentEntry->password()).isEmpty();
@@ -1378,8 +1377,8 @@ bool DatabaseWidget::currentEntryHasPassword()
 bool DatabaseWidget::currentEntryHasUrl()
 {
     Entry* currentEntry = m_entryView->currentEntry();
+    Q_ASSERT(currentEntry);
     if (!currentEntry) {
-        Q_ASSERT(false);
         return false;
     }
     return !currentEntry->resolveMultiplePlaceholders(currentEntry->url()).isEmpty();
@@ -1389,8 +1388,8 @@ bool DatabaseWidget::currentEntryHasUrl()
 bool DatabaseWidget::currentEntryHasTotp()
 {
     Entry* currentEntry = m_entryView->currentEntry();
+    Q_ASSERT(currentEntry);
     if (!currentEntry) {
-        Q_ASSERT(false);
         return false;
     }
     return currentEntry->hasTotp();
@@ -1399,8 +1398,8 @@ bool DatabaseWidget::currentEntryHasTotp()
 bool DatabaseWidget::currentEntryHasNotes()
 {
     Entry* currentEntry = m_entryView->currentEntry();
+    Q_ASSERT(currentEntry);
     if (!currentEntry) {
-        Q_ASSERT(false);
         return false;
     }
     return !currentEntry->resolveMultiplePlaceholders(currentEntry->notes()).isEmpty();
