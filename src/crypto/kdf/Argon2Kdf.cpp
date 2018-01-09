@@ -21,7 +21,6 @@
 #include <argon2.h>
 
 #include "format/KeePass2.h"
-#include "crypto/CryptoHash.h"
 
 /**
  * KeePass' Argon2 implementation supports all parameters that are defined in the official specification,
@@ -34,7 +33,7 @@ Argon2Kdf::Argon2Kdf()
         : Kdf::Kdf(KeePass2::KDF_ARGON2)
         , m_version(0x13)
         , m_memory(1 << 16)
-        , m_parallelism(2)
+        , m_parallelism(static_cast<quint32>(QThread::idealThreadCount()))
 {
     m_rounds = 1;
 }

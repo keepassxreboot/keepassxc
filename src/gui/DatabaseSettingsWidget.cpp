@@ -23,6 +23,7 @@
 
 #include <QMessageBox>
 #include <QPushButton>
+#include <QThread>
 
 #include "core/Global.h"
 #include "core/FilePath.h"
@@ -118,6 +119,9 @@ void DatabaseSettingsWidget::load(Database* db)
         kdfChanged(kdfIndex);
     }
 
+    // properly initialize parallelism spin box (may be overwritten by actual KDF values)
+    m_uiEncryption->parallelismSpinBox->setValue(QThread::idealThreadCount());
+
     // Setup kdf parameters
     auto kdf = m_db->kdf();
     m_uiEncryption->transformRoundsSpinBox->setValue(kdf->rounds());
@@ -134,7 +138,7 @@ void DatabaseSettingsWidget::save()
 {
     // first perform safety check for KDF rounds
     auto kdf = KeePass2::uuidToKdf(Uuid(m_uiEncryption->kdfComboBox->currentData().toByteArray()));
-    if (kdf->uuid() == KeePass2::KDF_ARGON2 && m_uiEncryption->transformRoundsSpinBox->value() > 1000) {
+    if (kdf->uuid() == KeePass2::KDF_ARGON2 && m_uiEncryption->transformRoundsSpinBox->value() > 10000) {
         QMessageBox warning;
         warning.setIcon(QMessageBox::Warning);
         warning.setWindowTitle(tr("Number of rounds too high"));
