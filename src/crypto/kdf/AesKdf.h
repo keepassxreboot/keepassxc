@@ -24,6 +24,7 @@ class AesKdf: public Kdf
 {
 public:
     AesKdf();
+    explicit AesKdf(bool legacyKdbx3);
 
     bool processParameters(const QVariantMap& p) override;
     QVariantMap writeParameters() override;

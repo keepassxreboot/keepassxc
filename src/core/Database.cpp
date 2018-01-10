@@ -44,7 +44,10 @@ Database::Database()
 {
     m_data.cipher = KeePass2::CIPHER_AES;
     m_data.compressionAlgo = CompressionGZip;
-    m_data.kdf = QSharedPointer<AesKdf>::create();
+
+    // instantiate default AES-KDF with legacy KDBX3 flag set
+    // KDBX4+ will re-initialize the KDF using parameters read from the KDBX file
+    m_data.kdf = QSharedPointer<AesKdf>::create(true);
     m_data.kdf->randomizeSeed();
     m_data.hasKey = false;
 

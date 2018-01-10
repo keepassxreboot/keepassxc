@@ -22,6 +22,7 @@
 #include <format/KeePass2.h>
 
 #include "core/Global.h"
+#include "crypto/kdf/AesKdf.h"
 #include "crypto/CryptoHash.h"
 
 CompositeKey::CompositeKey()
@@ -130,7 +131,7 @@ QByteArray CompositeKey::rawKey(const QByteArray* transformSeed) const
  */
 bool CompositeKey::transform(const Kdf& kdf, QByteArray& result) const
 {
-    if (kdf.uuid() == KeePass2::KDF_AES) {
+    if (kdf.uuid() == KeePass2::KDF_AES_KDBX3) {
         // legacy KDBX3 AES-KDF, challenge response is added later to the hash
         return kdf.transform(rawKey(), result);
     }

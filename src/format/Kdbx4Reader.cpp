@@ -22,6 +22,7 @@
 #include "core/Group.h"
 #include "core/Endian.h"
 #include "crypto/CryptoHash.h"
+#include "crypto/kdf/AesKdf.h"
 #include "format/KeePass2RandomStream.h"
 #include "format/KdbxXmlReader.h"
 #include "streams/HmacBlockStream.h"

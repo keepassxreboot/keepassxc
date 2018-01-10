@@ -151,7 +151,8 @@ void DatabaseSettingsWidget::save()
         if (warning.clickedButton() != ok) {
             return;
         }
-    } else if (kdf->uuid() == KeePass2::KDF_AES && m_uiEncryption->transformRoundsSpinBox->value() < 100000) {
+    } else if ((kdf->uuid() == KeePass2::KDF_AES_KDBX3 || kdf->uuid() == KeePass2::KDF_AES_KDBX4)
+        && m_uiEncryption->transformRoundsSpinBox->value() < 100000) {
         QMessageBox warning;
         warning.setIcon(QMessageBox::Warning);
         warning.setWindowTitle(tr("Number of rounds too low"));

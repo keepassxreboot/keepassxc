@@ -18,8 +18,9 @@
 #include <QIODevice>
 #include <QFile>
 
-#include "format/KeePass2Writer.h"
 #include "core/Database.h"
+#include "crypto/kdf/AesKdf.h"
+#include "format/KeePass2Writer.h"
 #include "format/Kdbx3Writer.h"
 #include "format/Kdbx4Writer.h"
 
@@ -52,12 +53,12 @@ bool KeePass2Writer::writeDatabase(QIODevice* device, Database* db) {
     m_errorStr.clear();
 
     // determine KDBX3 vs KDBX4
-    if (db->kdf()->uuid() != KeePass2::KDF_AES || db->publicCustomData().size() > 0) {
-        m_version = KeePass2::FILE_VERSION_4;
-        m_writer.reset(new Kdbx4Writer());
-    } else {
+    if (db->kdf()->uuid() == KeePass2::KDF_AES_KDBX3 && db->publicCustomData().isEmpty()) {
         m_version = KeePass2::FILE_VERSION_3;
         m_writer.reset(new Kdbx3Writer());
+    } else {
+        m_version = KeePass2::FILE_VERSION_4;
+        m_writer.reset(new Kdbx4Writer());
     }
 
     return m_writer->writeDatabase(device, db);

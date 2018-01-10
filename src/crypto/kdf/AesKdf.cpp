@@ -23,7 +23,15 @@
 #include "crypto/CryptoHash.h"
 
 AesKdf::AesKdf()
-    : Kdf::Kdf(KeePass2::KDF_AES)
+    : Kdf::Kdf(KeePass2::KDF_AES_KDBX4)
+{
+}
+
+/**
+ * @param legacyKdbx3 initialize as legacy KDBX3 KDF
+ */
+AesKdf::AesKdf(bool legacyKdbx3)
+    : Kdf::Kdf(legacyKdbx3 ? KeePass2::KDF_AES_KDBX3 : KeePass2::KDF_AES_KDBX4)
 {
 }
 
@@ -36,17 +44,16 @@ bool AesKdf::processParameters(const QVariantMap &p)
     }
 
     QByteArray seed = p.value(KeePass2::KDFPARAM_AES_SEED).toByteArray();
-    if (!setSeed(seed)) {
-        return false;
-    }
-
-    return true;
+    return setSeed(seed);
 }
 
 QVariantMap AesKdf::writeParameters()
 {
     QVariantMap p;
-    p.insert(KeePass2::KDFPARAM_UUID, KeePass2::KDF_AES.toByteArray());
+
+    // always write old KDBX3 AES-KDF UUID for compatibility with other applications
+    p.insert(KeePass2::KDFPARAM_UUID, KeePass2::KDF_AES_KDBX3.toByteArray());
+
     p.insert(KeePass2::KDFPARAM_AES_ROUNDS, rounds());
     p.insert(KeePass2::KDFPARAM_AES_SEED, seed());
     return p;
