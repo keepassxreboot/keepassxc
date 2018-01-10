@@ -122,7 +122,7 @@ namespace KeePass2
     };
 
     QByteArray hmacKey(QByteArray masterSeed, QByteArray transformedMasterKey);
-    QSharedPointer<Kdf> kdfFromParameters(const QVariantMap &p);
+    QSharedPointer<Kdf> kdfFromParameters(const QVariantMap& p);
     QVariantMap kdfToParameters(QSharedPointer<Kdf> kdf);
     QSharedPointer<Kdf> uuidToKdf(const Uuid& uuid);
     Uuid kdfToUuid(QSharedPointer<Kdf> kdf);

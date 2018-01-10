@@ -203,7 +203,7 @@ bool Kdbx4Reader::readHeaderField(StoreDataStream& device)
         QVariantMap kdfParams = readVariantMap(&bufIoDevice);
         QSharedPointer<Kdf> kdf = KeePass2::kdfFromParameters(kdfParams);
         if (!kdf) {
-            raiseError(tr("Invalid KDF parameters"));
+            raiseError(tr("Unsupported key derivation function (KDF) or invalid parameters"));
             return false;
         }
         m_db->setKdf(kdf);

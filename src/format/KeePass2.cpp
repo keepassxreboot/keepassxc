@@ -70,7 +70,7 @@ QByteArray KeePass2::hmacKey(QByteArray masterSeed, QByteArray transformedMaster
  * @param p variant map containing parameters
  * @return initialized KDF
  */
-QSharedPointer<Kdf> KeePass2::kdfFromParameters(const QVariantMap &p)
+QSharedPointer<Kdf> KeePass2::kdfFromParameters(const QVariantMap& p)
 {
     QByteArray uuidBytes = p.value(KDFPARAM_UUID).toByteArray();
     if (uuidBytes.size() != Uuid::Length) {
@@ -111,7 +111,6 @@ QSharedPointer<Kdf> KeePass2::uuidToKdf(const Uuid& uuid)
         return QSharedPointer<Argon2Kdf>::create();
     }
 
-    Q_ASSERT_X(false, "uuidToKdf", "Invalid UUID");
     return {};
 }
 
