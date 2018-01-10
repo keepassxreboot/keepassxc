@@ -54,7 +54,7 @@ QVariantMap AesKdf::writeParameters()
     // always write old KDBX3 AES-KDF UUID for compatibility with other applications
     p.insert(KeePass2::KDFPARAM_UUID, KeePass2::KDF_AES_KDBX3.toByteArray());
 
-    p.insert(KeePass2::KDFPARAM_AES_ROUNDS, rounds());
+    p.insert(KeePass2::KDFPARAM_AES_ROUNDS, static_cast<quint64>(rounds()));
     p.insert(KeePass2::KDFPARAM_AES_SEED, seed());
     return p;
 }
