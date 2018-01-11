@@ -100,6 +100,7 @@ void PasswordGeneratorWidget::loadSettings()
     m_ui->checkBoxExtASCII->setChecked(config()->get("generator/EASCII", false).toBool());
     m_ui->checkBoxExcludeAlike->setChecked(config()->get("generator/ExcludeAlike", true).toBool());
     m_ui->checkBoxEnsureEvery->setChecked(config()->get("generator/EnsureEvery", true).toBool());
+    m_ui->checkBoxMinimizeRec->setChecked(config()->get("generator/MinimizeRec", false).toBool());
     m_ui->spinBoxLength->setValue(config()->get("generator/Length", PasswordGenerator::DefaultLength).toInt());
 
     // Diceware config
@@ -121,6 +122,7 @@ void PasswordGeneratorWidget::saveSettings()
     config()->set("generator/EASCII", m_ui->checkBoxExtASCII->isChecked());
     config()->set("generator/ExcludeAlike", m_ui->checkBoxExcludeAlike->isChecked());
     config()->set("generator/EnsureEvery", m_ui->checkBoxEnsureEvery->isChecked());
+    config()->set("generator/MinimizeRec", m_ui->checkBoxMinimizeRec->isChecked());
     config()->set("generator/Length", m_ui->spinBoxLength->value());
 
     // Diceware config
@@ -333,6 +335,10 @@ PasswordGenerator::GeneratorFlags PasswordGeneratorWidget::generatorFlags()
 
     if (m_ui->checkBoxEnsureEvery->isChecked()) {
         flags |= PasswordGenerator::CharFromEveryGroup;
+    }
+
+    if (m_ui->checkBoxMinimizeRec->isChecked()) {
+        flags |= PasswordGenerator::MinimizeRecurrence;
     }
 
     return flags;

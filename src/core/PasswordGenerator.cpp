@@ -20,6 +20,7 @@
 
 #include "crypto/Random.h"
 #include <zxcvbn.h>
+//#include <QDebug>
 
 PasswordGenerator::PasswordGenerator()
     : m_length(0)
@@ -52,47 +53,99 @@ QString PasswordGenerator::generatePassword() const
 {
     Q_ASSERT(isValid());
 
-    const QVector<PasswordGroup> groups = passwordGroups();
+    const QVector<PasswordGroup> groups_original = passwordGroups();
+    QVector<PasswordGroup> groups = groups_original;
 
-    QVector<QChar> passwordChars;
+    QVector<QChar> passwordChars_original;
     for (const PasswordGroup& group : groups) {
         for (QChar ch : group) {
-            passwordChars.append(ch);
+            passwordChars_original.append(ch);
         }
     }
+    QVector<QChar> passwordChars = passwordChars_original;
 
     QString password;
+    //qDebug().noquote().nospace() << "*** Begin generating password ***";
 
     if (m_flags & CharFromEveryGroup) {
-        for (int i = 0; i < groups.size(); i++) {
-            int pos = randomGen()->randomUInt(groups[i].size());
 
-            password.append(groups[i][pos]);
+        /*
+         * Continuously add one random character from each group until pass-
+         * word has reached the desired length
+         *
+         * NOTE:
+         * Same as below, but more readable, just for reference
+         */
+        /*while (password.length() < m_length) {
+            for (int i = 0; i < groups.size(); i++) {
+                int pos = randomGen()->randomUInt(groups[i].size());
+                password.append(groups[i][pos]);
+
+                if (m_flags & MinimizeRecurrence) {
+                    groups[i].remove(pos);
+                    if (groups[i].isEmpty()) {
+                        groups[i] = groups_original[i];
+                    }
+                }
+
+                if (password.length() >= m_length) {
+                    break;
+                }
+            }
+        }*/
+
+        /*
+         * Continuously add one random character from each group until pass-
+         * word has reached the desired length
+         *
+         * NOTE:
+         * Optimized variant of above algorithm
+         */
+        for (int i = 0; i < m_length; i++) {
+            int group = i % groups.size();
+            int pos = randomGen()->randomUInt(groups[group].size());
+            password.append(groups[group][pos]);
+
+            //qDebug().noquote().nospace() << "i: " << i << ", group: " << group << ", pos: " << pos << ", groups[group][pos]: '" << groups[group][pos] << "', groups[group]: " << groups[group];
+
+            if (m_flags & MinimizeRecurrence) {
+                groups[group].remove(pos);
+                if (groups[group].isEmpty()) {
+                    //qDebug().noquote().nospace() << "exhausted group " << group << ", resetting";
+                    groups[group] = groups_original[group];
+                }
+            }
         }
 
-        for (int i = groups.size(); i < m_length; i++) {
-            int pos = randomGen()->randomUInt(passwordChars.size());
-
-            password.append(passwordChars[pos]);
-        }
-
-        // shuffle chars
+        /*
+         * Shuffle characters to dissolve pattern caused by generation loop
+         */
         for (int i = (password.size() - 1); i >= 1; i--) {
             int j = randomGen()->randomUInt(i + 1);
-
             QChar tmp = password[i];
             password[i] = password[j];
             password[j] = tmp;
         }
+
     }
     else {
         for (int i = 0; i < m_length; i++) {
             int pos = randomGen()->randomUInt(passwordChars.size());
-
             password.append(passwordChars[pos]);
+
+            //qDebug().noquote().nospace() << "i: " << i << ", pos: " << pos << ", passwordChars[pos]: '" << passwordChars[pos] << "', passwordChars: " << passwordChars;
+
+            if (m_flags & MinimizeRecurrence) {
+                passwordChars.remove(pos);
+                if (passwordChars.isEmpty()) {
+                    //qDebug().noquote().nospace() << "exhausted passwordChars, resetting";
+                    passwordChars = passwordChars_original;
+                }
+            }
         }
     }
 
+    //qDebug().noquote().nospace() << "*** End generating password ***";
     return password;
 }
 
