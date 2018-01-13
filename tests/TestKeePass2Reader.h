@@ -32,6 +32,7 @@ private slots:
     void testBrokenHeaderHash();
     void testFormat200();
     void testFormat300();
+    void testFormat400();
 };
 
 #endif // KEEPASSX_TESTKEEPASS2READER_H

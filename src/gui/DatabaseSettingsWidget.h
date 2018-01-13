@@ -19,22 +19,30 @@
 #define KEEPASSX_DATABASESETTINGSWIDGET_H
 
 #include <QScopedPointer>
+#include <QWidget>
+#include <QSpinBox>
+#include <QLayout>
 
 #include "gui/DialogyWidget.h"
+#include "crypto/kdf/Kdf.h"
 
 class Database;
 
-namespace Ui {
-    class DatabaseSettingsWidget;
+namespace Ui
+{
+class DatabaseSettingsWidget;
+class DatabaseSettingsWidgetGeneral;
+class DatabaseSettingsWidgetEncryption;
 }
 
-class DatabaseSettingsWidget : public DialogyWidget
+class DatabaseSettingsWidget: public DialogyWidget
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
     explicit DatabaseSettingsWidget(QWidget* parent = nullptr);
     ~DatabaseSettingsWidget();
+    Q_DISABLE_COPY(DatabaseSettingsWidget)
 
     void load(Database* db);
 
@@ -45,14 +53,17 @@ private slots:
     void save();
     void reject();
     void transformRoundsBenchmark();
+    void kdfChanged(int index);
 
 private:
     void truncateHistories();
 
     const QScopedPointer<Ui::DatabaseSettingsWidget> m_ui;
+    const QScopedPointer<Ui::DatabaseSettingsWidgetGeneral> m_uiGeneral;
+    const QScopedPointer<Ui::DatabaseSettingsWidgetEncryption> m_uiEncryption;
+    QWidget* m_uiGeneralPage;
+    QWidget* m_uiEncryptionPage;
     Database* m_db;
-
-    Q_DISABLE_COPY(DatabaseSettingsWidget)
 };
 
 #endif // KEEPASSX_DATABASESETTINGSWIDGET_H

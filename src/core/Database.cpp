@@ -27,13 +27,12 @@
 #include "cli/Utils.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
-#include "crypto/Random.h"
+#include "crypto/kdf/AesKdf.h"
 #include "format/KeePass2.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
 #include "keys/PasswordKey.h"
 #include "keys/FileKey.h"
-#include "keys/CompositeKey.h"
 
 QHash<Uuid, Database*> Database::m_uuidMap;
 
@@ -45,7 +44,11 @@ Database::Database()
 {
     m_data.cipher = KeePass2::CIPHER_AES;
     m_data.compressionAlgo = CompressionGZip;
-    m_data.transformRounds = 100000;
+
+    // instantiate default AES-KDF with legacy KDBX3 flag set
+    // KDBX4+ will re-initialize the KDF using parameters read from the KDBX file
+    m_data.kdf = QSharedPointer<AesKdf>::create(true);
+    m_data.kdf->randomizeSeed();
     m_data.hasKey = false;
 
     setRootGroup(new Group());
@@ -225,16 +228,6 @@ Database::CompressionAlgorithm Database::compressionAlgo() const
     return m_data.compressionAlgo;
 }
 
-QByteArray Database::transformSeed() const
-{
-    return m_data.transformSeed;
-}
-
-quint64 Database::transformRounds() const
-{
-    return m_data.transformRounds;
-}
-
 QByteArray Database::transformedMasterKey() const
 {
     return m_data.transformedMasterKey;
@@ -265,73 +258,44 @@ void Database::setCompressionAlgo(Database::CompressionAlgorithm algo)
     m_data.compressionAlgo = algo;
 }
 
-bool Database::setTransformRounds(quint64 rounds)
+/**
+ * Set and transform a new encryption key.
+ *
+ * @param key key to set and transform
+ * @param updateChangedTime true to update database change time
+ * @param updateTransformSalt true to update the transform salt
+ * @return true on success
+ */
+bool Database::setKey(const CompositeKey& key, bool updateChangedTime, bool updateTransformSalt)
 {
-    if (m_data.transformRounds != rounds) {
-        quint64 oldRounds = m_data.transformRounds;
-
-        m_data.transformRounds = rounds;
-
-        if (m_data.hasKey) {
-            if (!setKey(m_data.key)) {
-                m_data.transformRounds = oldRounds;
-                return false;
-            }
-        }
+    if (updateTransformSalt) {
+        m_data.kdf->randomizeSeed();
+        Q_ASSERT(!m_data.kdf->seed().isEmpty());
     }
 
-    return true;
-}
-
-bool Database::setKey(const CompositeKey& key, const QByteArray& transformSeed, bool updateChangedTime)
-{
-    bool ok;
-    QString errorString;
-
-    QByteArray transformedMasterKey = key.transform(transformSeed, transformRounds(), &ok, &errorString);
-    if (!ok) {
+    QByteArray oldTransformedMasterKey = m_data.transformedMasterKey;
+    QByteArray transformedMasterKey;
+    if (!key.transform(*m_data.kdf, transformedMasterKey)) {
         return false;
     }
 
     m_data.key = key;
-    m_data.transformSeed = transformSeed;
     m_data.transformedMasterKey = transformedMasterKey;
     m_data.hasKey = true;
     if (updateChangedTime) {
         m_metadata->setMasterKeyChanged(QDateTime::currentDateTimeUtc());
     }
-    emit modifiedImmediate();
+
+    if (oldTransformedMasterKey != m_data.transformedMasterKey) {
+        emit modifiedImmediate();
+    }
 
     return true;
-}
-
-bool Database::setKey(const CompositeKey& key)
-{
-    return setKey(key, randomGen()->randomArray(32));
 }
 
 bool Database::hasKey() const
 {
     return m_data.hasKey;
-}
-
-bool Database::transformKeyWithSeed(const QByteArray& transformSeed)
-{
-    Q_ASSERT(hasKey());
-
-    bool ok;
-    QString errorString;
-
-    QByteArray transformedMasterKey =
-            m_data.key.transform(transformSeed, transformRounds(), &ok, &errorString);
-    if (!ok) {
-        return false;
-    }
-
-    m_data.transformSeed = transformSeed;
-    m_data.transformedMasterKey = transformedMasterKey;
-
-    return true;
 }
 
 bool Database::verifyKey(const CompositeKey& key) const
@@ -426,11 +390,6 @@ void Database::setEmitModified(bool value)
     m_emitModified = value;
 }
 
-void Database::copyAttributesFrom(const Database* other)
-{
-    m_data = other->m_data;
-    m_metadata->copyAttributesFrom(other->m_metadata);
-}
 
 Uuid Database::uuid()
 {
@@ -518,7 +477,9 @@ QString Database::saveToFile(QString filePath)
     if (saveFile.open(QIODevice::WriteOnly)) {
 
         // write the database to the file
+        setEmitModified(false);
         writer.writeDatabase(&saveFile, this);
+        setEmitModified(true);
 
         if (writer.hasError()) {
             return writer.errorString();
@@ -533,4 +494,37 @@ QString Database::saveToFile(QString filePath)
     } else {
         return saveFile.errorString();
     }
+}
+
+QSharedPointer<Kdf> Database::kdf() const
+{
+    return m_data.kdf;
+}
+
+void Database::setKdf(QSharedPointer<Kdf> kdf)
+{
+    m_data.kdf = std::move(kdf);
+}
+
+void Database::setPublicCustomData(QByteArray data) {
+    m_data.publicCustomData = data;
+}
+
+QByteArray Database::publicCustomData() const {
+    return m_data.publicCustomData;
+}
+
+bool Database::changeKdf(QSharedPointer<Kdf> kdf)
+{
+    kdf->randomizeSeed();
+    QByteArray transformedMasterKey;
+    if (!m_data.key.transform(*kdf, transformedMasterKey)) {
+        return false;
+    }
+
+    setKdf(kdf);
+    m_data.transformedMasterKey = transformedMasterKey;
+    emit modifiedImmediate();
+
+    return true;
 }

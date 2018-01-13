@@ -26,6 +26,7 @@ The following libraries are required:
 * libmicrohttpd
 * libxi, libxtst, qtx11extras (optional for auto-type on X11)
 * libsodium (>= 1.0.12, optional for keepassxc-browser support)
+* libargon2
 
 
 Prepare the Building Environment

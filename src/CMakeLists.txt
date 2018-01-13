@@ -38,11 +38,11 @@ configure_file(version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/version.h @ONLY)
 
 set(keepassx_SOURCES
     core/AutoTypeAssociations.cpp
+    core/AsyncTask.h
     core/Config.cpp
     core/CsvParser.cpp
     core/Database.cpp
     core/DatabaseIcons.cpp
-    core/Endian.cpp
     core/Entry.cpp
     core/EntryAttachments.cpp
     core/EntryAttributes.cpp
@@ -62,7 +62,6 @@ set(keepassx_SOURCES
     core/ScreenLockListenerPrivate.cpp
     core/TimeDelta.cpp
     core/TimeInfo.cpp
-    core/ToDbExporter.cpp
     core/Tools.cpp
     core/Translator.cpp
     core/Uuid.cpp
@@ -76,16 +75,26 @@ set(keepassx_SOURCES
     crypto/SymmetricCipher.cpp
     crypto/SymmetricCipherBackend.h
     crypto/SymmetricCipherGcrypt.cpp
+    crypto/kdf/Kdf.cpp
+    crypto/kdf/Kdf_p.h
+    crypto/kdf/AesKdf.cpp
+    crypto/kdf/Argon2Kdf.cpp
     format/CsvExporter.cpp
     format/KeePass1.h
     format/KeePass1Reader.cpp
-    format/KeePass2.h
+    format/KeePass2.cpp
     format/KeePass2RandomStream.cpp
-    format/KeePass2Reader.cpp
     format/KeePass2Repair.cpp
+    format/KdbxReader.cpp
+    format/KdbxWriter.cpp
+    format/KdbxXmlReader.cpp
+    format/KeePass2Reader.cpp
     format/KeePass2Writer.cpp
-    format/KeePass2XmlReader.cpp
-    format/KeePass2XmlWriter.cpp
+    format/Kdbx3Reader.cpp
+    format/Kdbx3Writer.cpp
+    format/Kdbx4Reader.cpp
+    format/Kdbx4Writer.cpp
+    format/KdbxXmlWriter.cpp
     gui/AboutDialog.cpp
     gui/Application.cpp
     gui/CategoryListWidget.cpp
@@ -139,13 +148,13 @@ set(keepassx_SOURCES
     gui/group/GroupModel.cpp
     gui/group/GroupView.cpp
     keys/CompositeKey.cpp
-    keys/CompositeKey_p.h
     keys/drivers/YubiKey.h
     keys/FileKey.cpp
     keys/Key.h
     keys/PasswordKey.cpp
     keys/YkChallengeResponseKey.cpp
     streams/HashedBlockStream.cpp
+    streams/HmacBlockStream.cpp
     streams/LayeredStream.cpp
     streams/qtiocompressor.cpp
     streams/StoreDataStream.cpp
@@ -248,6 +257,7 @@ target_link_libraries(keepassx_core
                       Qt5::Network
                       Qt5::Concurrent
                       Qt5::Widgets
+                      ${ARGON2_LIBRARIES}
                       ${GCRYPT_LIBRARIES}
                       ${GPGERROR_LIBRARIES}
                       ${ZLIB_LIBRARIES})

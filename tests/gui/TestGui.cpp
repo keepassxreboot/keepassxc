@@ -45,6 +45,7 @@
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
+#include "crypto/kdf/AesKdf.h"
 #include "format/KeePass2Reader.h"
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
@@ -116,7 +117,14 @@ void TestGui::cleanup()
     triggerAction("actionDatabaseClose");
     Tools::wait(100);
 
+    if (m_db) {
+        delete m_db;
+    }
     m_db = nullptr;
+
+    if (m_dbWidget) {
+        delete m_dbWidget;
+    }
     m_dbWidget = nullptr;
 }
 
@@ -898,11 +906,12 @@ void TestGui::testDatabaseSettings()
     triggerAction("actionChangeDatabaseSettings");
     QWidget* dbSettingsWidget = m_dbWidget->findChild<QWidget*>("databaseSettingsWidget");
     QSpinBox* transformRoundsSpinBox = dbSettingsWidget->findChild<QSpinBox*>("transformRoundsSpinBox");
-    transformRoundsSpinBox->setValue(100);
+    QVERIFY(transformRoundsSpinBox != nullptr);
+    transformRoundsSpinBox->setValue(123456);
     QTest::keyClick(transformRoundsSpinBox, Qt::Key_Enter);
     // wait for modified timer
     QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("Save*"));
-    QCOMPARE(m_db->transformRounds(), Q_UINT64_C(100));
+    QCOMPARE(m_db->kdf()->rounds(), 123456);
 
     triggerAction("actionDatabaseSave");
     QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("Save"));
@@ -1058,7 +1067,7 @@ void TestGui::dragAndDropGroup(const QModelIndex& sourceIndex, const QModelIndex
     QVERIFY(sourceIndex.isValid());
     QVERIFY(targetIndex.isValid());
 
-    GroupModel* groupModel = qobject_cast<GroupModel*>(m_dbWidget->findChild<GroupView*>("groupView")->model());
+    auto groupModel = qobject_cast<GroupModel*>(m_dbWidget->findChild<GroupView*>("groupView")->model());
 
     QMimeData mimeData;
     QByteArray encoded;

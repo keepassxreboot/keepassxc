@@ -49,6 +49,7 @@ Metadata::Metadata(QObject* parent)
     m_recycleBinChanged = now;
     m_entryTemplatesGroupChanged = now;
     m_masterKeyChanged = now;
+    m_settingsChanged = now;
 }
 
 template <class P, class V> bool Metadata::set(P& property, const V& value)
@@ -524,4 +525,13 @@ void Metadata::removeCustomField(const QString& key)
 
     m_customFields.remove(key);
     emit modified();
+}
+
+QDateTime Metadata::settingsChanged() const {
+    return m_settingsChanged;
+}
+
+void Metadata::setSettingsChanged(const QDateTime& value) {
+    Q_ASSERT(value.timeSpec() == Qt::UTC);
+    m_settingsChanged = value;
 }

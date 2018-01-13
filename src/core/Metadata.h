@@ -69,6 +69,7 @@ public:
     QDateTime descriptionChanged() const;
     QString defaultUserName() const;
     QDateTime defaultUserNameChanged() const;
+    QDateTime settingsChanged() const;
     int maintenanceHistoryDays() const;
     QColor color() const;
     bool protectTitle() const;
@@ -108,6 +109,7 @@ public:
     void setDescriptionChanged(const QDateTime& value);
     void setDefaultUserName(const QString& value);
     void setDefaultUserNameChanged(const QDateTime& value);
+    void setSettingsChanged(const QDateTime& value);
     void setMaintenanceHistoryDays(int value);
     void setColor(const QColor& value);
     void setProtectTitle(bool value);
@@ -141,6 +143,7 @@ public:
      * - Master key changed date
      * - Custom icons
      * - Custom fields
+     * - Settings changed date
      */
     void copyAttributesFrom(const Metadata* other);
 
@@ -170,6 +173,7 @@ private:
     QPointer<Group> m_lastTopVisibleGroup;
 
     QDateTime m_masterKeyChanged;
+    QDateTime m_settingsChanged;
 
     QHash<QString, QString> m_customFields;
 

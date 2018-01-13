@@ -1,6 +1,5 @@
 /*
- *  Copyright (C) 2014 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2014 Florian Geyer <blueice@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,18 +15,23 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TODBEXPORTER_H
-#define KEEPASSX_TODBEXPORTER_H
+#ifndef KEEPASSX_KDBX4WRITER_H
+#define KEEPASSX_KDBX4WRITER_H
 
-#include "core/Exporter.h"
+#include "KdbxWriter.h"
 
-class Database;
-class Group;
-
-class ToDbExporter : Exporter
+/**
+ * KDBX4 writer implementation.
+ */
+class Kdbx4Writer : public KdbxWriter
 {
 public:
-    Database* exportGroup(Group* group);
+    bool writeDatabase(QIODevice* device, Database* db) override;
+
+private:
+    bool writeInnerHeaderField(QIODevice* device, KeePass2::InnerHeaderFieldID fieldId, const QByteArray& data);
+    bool writeBinary(QIODevice* device, const QByteArray& data);
+    static bool serializeVariantMap(const QVariantMap& map, QByteArray& outputBytes);
 };
 
-#endif // KEEPASSX_TODBEXPORTER_H
+#endif // KEEPASSX_KDBX4WRITER_H

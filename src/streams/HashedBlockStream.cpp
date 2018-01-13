@@ -130,7 +130,7 @@ bool HashedBlockStream::readHashedBlock()
 {
     bool ok;
 
-    quint32 index = Endian::readUInt32(m_baseDevice, ByteOrder, &ok);
+    quint32 index = Endian::readSizedInt<quint32>(m_baseDevice, ByteOrder, &ok);
     if (!ok || index != m_blockIndex) {
         m_error = true;
         setErrorString("Invalid block index.");
@@ -144,7 +144,7 @@ bool HashedBlockStream::readHashedBlock()
         return false;
     }
 
-    m_blockSize = Endian::readInt32(m_baseDevice, ByteOrder, &ok);
+    m_blockSize = Endian::readSizedInt<qint32>(m_baseDevice, ByteOrder, &ok);
     if (!ok || m_blockSize < 0) {
         m_error = true;
         setErrorString("Invalid block size.");
@@ -217,7 +217,7 @@ qint64 HashedBlockStream::writeData(const char* data, qint64 maxSize)
 
 bool HashedBlockStream::writeHashedBlock()
 {
-    if (!Endian::writeInt32(m_blockIndex, m_baseDevice, ByteOrder)) {
+    if (!Endian::writeSizedInt<qint32>(m_blockIndex, m_baseDevice, ByteOrder)) {
         m_error = true;
         setErrorString(m_baseDevice->errorString());
         return false;
@@ -238,7 +238,7 @@ bool HashedBlockStream::writeHashedBlock()
         return false;
     }
 
-    if (!Endian::writeInt32(m_buffer.size(), m_baseDevice, ByteOrder)) {
+    if (!Endian::writeSizedInt<qint32>(m_buffer.size(), m_baseDevice, ByteOrder)) {
         m_error = true;
         setErrorString(m_baseDevice->errorString());
         return false;
@@ -255,4 +255,8 @@ bool HashedBlockStream::writeHashedBlock()
     }
 
     return true;
+}
+
+bool HashedBlockStream::atEnd() const {
+    return m_eof;
 }

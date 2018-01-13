@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KEEPASS2XMLWRITER_H
-#define KEEPASSX_KEEPASS2XMLWRITER_H
+#ifndef KEEPASSX_KDBXXMLWRITER_H
+#define KEEPASSX_KDBXXMLWRITER_H
 
 #include <QColor>
 #include <QDateTime>
@@ -32,10 +32,11 @@
 class KeePass2RandomStream;
 class Metadata;
 
-class KeePass2XmlWriter
+class KdbxXmlWriter
 {
 public:
-    KeePass2XmlWriter();
+    explicit KdbxXmlWriter(quint32 version);
+
     void writeDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream = nullptr,
                        const QByteArray& headerHash = QByteArray());
     void writeDatabase(const QString& filename, Database* db);
@@ -77,14 +78,18 @@ private:
 
     void raiseError(const QString& errorMessage);
 
+    const quint32 m_kdbxVersion;
+
     QXmlStreamWriter m_xml;
-    Database* m_db;
-    Metadata* m_meta;
-    KeePass2RandomStream* m_randomStream;
-    QByteArray m_headerHash;
+    QPointer<Database> m_db;
+    QPointer<Metadata> m_meta;
+    KeePass2RandomStream* m_randomStream = nullptr;
     QHash<QByteArray, int> m_idMap;
-    bool m_error;
-    QString m_errorStr;
+    QByteArray m_headerHash;
+
+    bool m_error = false;
+
+    QString m_errorStr = "";
 };
 
-#endif // KEEPASSX_KEEPASS2XMLWRITER_H
+#endif // KEEPASSX_KDBXXMLWRITER_H

@@ -20,16 +20,27 @@
 #include "crypto/CryptoHash.h"
 #include "format/KeePass2.h"
 
-KeePass2RandomStream::KeePass2RandomStream()
-    : m_cipher(SymmetricCipher::Salsa20, SymmetricCipher::Stream, SymmetricCipher::Encrypt)
+KeePass2RandomStream::KeePass2RandomStream(KeePass2::ProtectedStreamAlgo algo)
+    : m_cipher(mapAlgo(algo), SymmetricCipher::Stream, SymmetricCipher::Encrypt)
     , m_offset(0)
 {
 }
 
 bool KeePass2RandomStream::init(const QByteArray& key)
 {
-    return m_cipher.init(CryptoHash::hash(key, CryptoHash::Sha256),
-                         KeePass2::INNER_STREAM_SALSA20_IV);
+    switch (m_cipher.algorithm()) {
+    case SymmetricCipher::Salsa20:
+        return m_cipher.init(CryptoHash::hash(key, CryptoHash::Sha256),
+                             KeePass2::INNER_STREAM_SALSA20_IV);
+    case SymmetricCipher::ChaCha20: {
+        QByteArray keyIv = CryptoHash::hash(key, CryptoHash::Sha512);
+        return m_cipher.init(keyIv.left(32), keyIv.mid(32, 12));
+    }
+    default:
+        qWarning("Invalid stream algorithm (%d)", m_cipher.algorithm());
+        break;
+    }
+    return false;
 }
 
 QByteArray KeePass2RandomStream::randomBytes(int size, bool* ok)
@@ -108,4 +119,15 @@ bool KeePass2RandomStream::loadBlock()
     m_offset = 0;
 
     return true;
+}
+
+SymmetricCipher::Algorithm KeePass2RandomStream::mapAlgo(KeePass2::ProtectedStreamAlgo algo) {
+    switch (algo) {
+    case KeePass2::ProtectedStreamAlgo::ChaCha20:
+        return SymmetricCipher::ChaCha20;
+    case KeePass2::ProtectedStreamAlgo::Salsa20:
+        return SymmetricCipher::Salsa20;
+    default:
+        return SymmetricCipher::InvalidAlgorithm;
+    }
 }
