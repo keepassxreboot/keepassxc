@@ -30,7 +30,6 @@
 #include "core/Tools.h"
 #include "crypto/CryptoHash.h"
 #include "format/KeePass1.h"
-#include "keys/CompositeKey.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 #include "streams/SymmetricCipherStream.h"
@@ -94,13 +93,13 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
 
     bool ok;
 
-    quint32 signature1 = Endian::readSizedInt<quint32>(m_device, KeePass1::BYTEORDER, &ok);
+    auto signature1 = Endian::readSizedInt<quint32>(m_device, KeePass1::BYTEORDER, &ok);
     if (!ok || signature1 != KeePass1::SIGNATURE_1) {
         raiseError(tr("Not a KeePass database."));
         return nullptr;
     }
 
-    quint32 signature2 = Endian::readSizedInt<quint32>(m_device, KeePass1::BYTEORDER, &ok);
+    auto signature2 = Endian::readSizedInt<quint32>(m_device, KeePass1::BYTEORDER, &ok);
     if (!ok || signature2 != KeePass1::SIGNATURE_2) {
         raiseError(tr("Not a KeePass database."));
         return nullptr;
@@ -112,7 +111,7 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
         return nullptr;
     }
 
-    quint32 version = Endian::readSizedInt<quint32>(m_device, KeePass1::BYTEORDER, &ok);
+    auto version = Endian::readSizedInt<quint32>(m_device, KeePass1::BYTEORDER, &ok);
     if (!ok || (version & KeePass1::FILE_VERSION_CRITICAL_MASK)
             != (KeePass1::FILE_VERSION & KeePass1::FILE_VERSION_CRITICAL_MASK)) {
         raiseError(tr("Unsupported KeePass database version."));
@@ -131,13 +130,13 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
         return nullptr;
     }
 
-    quint32 numGroups = Endian::readSizedInt<quint32>(m_device, KeePass1::BYTEORDER, &ok);
+    auto numGroups = Endian::readSizedInt<quint32>(m_device, KeePass1::BYTEORDER, &ok);
     if (!ok) {
         raiseError("Invalid number of groups");
         return nullptr;
     }
 
-    quint32 numEntries = Endian::readSizedInt<quint32>(m_device, KeePass1::BYTEORDER, &ok);
+    auto numEntries = Endian::readSizedInt<quint32>(m_device, KeePass1::BYTEORDER, &ok);
     if (!ok) {
         raiseError("Invalid number of entries");
         return nullptr;
@@ -160,7 +159,7 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
         raiseError("Invalid number of transform rounds");
         return nullptr;
     }
-    auto kdf = QSharedPointer<AesKdf>::create();
+    auto kdf = QSharedPointer<AesKdf>::create(true);
     kdf->setRounds(m_transformRounds);
     kdf->setSeed(m_transformSeed);
     db->setKdf(kdf);
