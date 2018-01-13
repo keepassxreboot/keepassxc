@@ -629,7 +629,7 @@ void KdbxXmlReader::parseDeletedObject()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "DeletedObject");
 
-    DeletedObject delObj{};
+    DeletedObject delObj{{}, {}};
 
     while (!m_xml.hasError() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "UUID") {
