@@ -235,3 +235,7 @@ Files: src/gui/KMessageWidget.h
 Copyright: 2011 Aurélien Gâteau <agateau@kde.org>
            2014 Dominik Haumann <dhaumann@kde.org>
 License: LGPL-2.1
+
+Files: share/macosx/dmg-background.tiff
+Copyright: 2008-2014, Andrey Tarantsov
+License: MIT

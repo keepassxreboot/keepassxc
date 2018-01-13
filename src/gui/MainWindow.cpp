@@ -20,6 +20,7 @@
 #include "ui_MainWindow.h"
 
 #include <QCloseEvent>
+#include <QMimeData>
 #include <QShortcut>
 #include <QTimer>
 

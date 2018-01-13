@@ -29,7 +29,7 @@
   <key>CFBundleVersion</key>
   <string>${KEEPASSXC_VERSION_NUM}</string>
   <key>NSHumanReadableCopyright</key>
-    <string>Copyright 2016-2017 KeePassXC Development Team</string>
+    <string>Copyright 2016-2018 KeePassXC Development Team</string>
     <key>CFBundleDocumentTypes</key>
     <array>
       <dict>
