@@ -132,6 +132,7 @@ void DatabaseSettingsWidget::load(Database* db)
     }
 
     m_uiGeneral->dbNameEdit->setFocus();
+    m_ui->categoryList->setCurrentCategory(0);
 }
 
 void DatabaseSettingsWidget::save()

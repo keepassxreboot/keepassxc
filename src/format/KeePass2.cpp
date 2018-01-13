@@ -51,7 +51,7 @@ const QList<QPair<Uuid, QString>> KeePass2::CIPHERS{
 };
 
 const QList<QPair<Uuid, QString>> KeePass2::KDFS{
-    qMakePair(KeePass2::KDF_ARGON2, QObject::tr("Argon2 (recommended)")),
+    qMakePair(KeePass2::KDF_ARGON2, QObject::tr("Argon2 (KDBX 4 – recommended)")),
     qMakePair(KeePass2::KDF_AES_KDBX4, QObject::tr("AES-KDF (KDBX 4)")),
     qMakePair(KeePass2::KDF_AES_KDBX3, QObject::tr("AES-KDF (KDBX 3.1)"))
 };
