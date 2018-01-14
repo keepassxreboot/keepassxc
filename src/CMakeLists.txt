@@ -195,14 +195,7 @@ add_feature_info(KeePassHTTP WITH_XC_HTTP "Browser integration compatible with C
 add_feature_info(SSHAgent WITH_XC_SSHAGENT "SSH agent integration compatible with KeeAgent")
 add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
 
-if(WITH_XC_HTTP)
-    add_subdirectory(http)
-    set(keepasshttp_LIB keepasshttp)
-endif()
-if(WITH_XC_NETWORKING)
-    add_subdirectory(http/qhttp)
-    set(keepassxcnetwork_LIB qhttp Qt5::Network)
-endif()
+add_subdirectory(http)
 
 set(BROWSER_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/browser)
 add_subdirectory(browser)
@@ -247,16 +240,13 @@ endif()
 add_library(autotype STATIC ${autotype_SOURCES})
 target_link_libraries(autotype Qt5::Core Qt5::Widgets)
 
-set(autotype_LIB autotype)
-
 add_library(keepassx_core STATIC ${keepassx_SOURCES})
 
 set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
 target_link_libraries(keepassx_core
+                      keepasshttp
                       ${keepassxcbrowser_LIB}
-                      ${keepasshttp_LIB}
-                      ${keepassxcnetwork_LIB}
-                      ${autotype_LIB}
+                      autotype
                       ${sshagent_LIB}
                       ${YUBIKEY_LIBRARIES}
                       ${ZXCVBN_LIBRARIES}
