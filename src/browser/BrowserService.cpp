@@ -174,15 +174,15 @@ QString BrowserService::storeKey(const QString& key)
 
     Entry* config = getConfigEntry(true);
     if (!config) {
-        return QString();
+        return {};
     }
 
-    bool contains = false;
+    bool contains;
     QMessageBox::StandardButton dialogResult = QMessageBox::No;
 
     do {
         bool ok = false;
-        id = QInputDialog::getText(0, tr("KeePassXC: New key association request"),
+        id = QInputDialog::getText(nullptr, tr("KeePassXC: New key association request"),
                                    tr("You have received an association "
                                       "request for the above key.\n"
                                       "If you would like to allow it access "
@@ -190,13 +190,17 @@ QString BrowserService::storeKey(const QString& key)
                                       "give it a unique name to identify and accept it."),
                                     QLineEdit::Normal, QString(), &ok);
         if (!ok || id.isEmpty()) {
-            return QString();
+            return {};
         }
 
         contains = config->attributes()->contains(QLatin1String(ASSOCIATE_KEY_PREFIX) + id);
-        dialogResult = QMessageBox::warning(0, tr("KeePassXC: Overwrite existing key?"),
-                                                 tr("A shared encryption key with the name \"%1\" already exists.\nDo you want to overwrite it?").arg(id),
-                                                 QMessageBox::Yes | QMessageBox::No);
+        if (contains) {
+            dialogResult = QMessageBox::warning(nullptr, tr("KeePassXC: Overwrite existing key?"),
+                                                tr("A shared encryption key with the name \"%1\" "
+                                                   "already exists.\nDo you want to overwrite it?")
+                                                    .arg(id),
+                                                QMessageBox::Yes | QMessageBox::No);
+        }
     } while (contains && dialogResult == QMessageBox::No);
 
     config->attributes()->set(QLatin1String(ASSOCIATE_KEY_PREFIX) + id, key, true);
