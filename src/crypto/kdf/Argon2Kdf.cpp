@@ -18,8 +18,8 @@
 #include "Argon2Kdf.h"
 
 #include <QtConcurrent>
-#include <argon2.h>
 
+#include "crypto/argon2/argon2.h"
 #include "format/KeePass2.h"
 
 /**
