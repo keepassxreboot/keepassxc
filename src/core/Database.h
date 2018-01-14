@@ -111,7 +111,7 @@ public:
     void emptyRecycleBin();
     void setEmitModified(bool value);
     void merge(const Database* other);
-    QString saveToFile(QString filePath);
+    QString saveToFile(QString filePath, bool keepOld = false);
 
     /**
      * Returns a unique id that is only valid as long as the Database exists.

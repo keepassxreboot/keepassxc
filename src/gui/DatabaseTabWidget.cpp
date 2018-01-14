@@ -28,6 +28,7 @@
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/AsyncTask.h"
 #include "format/CsvExporter.h"
 #include "gui/Clipboard.h"
 #include "gui/DatabaseWidget.h"
@@ -322,7 +323,8 @@ bool DatabaseTabWidget::saveDatabase(Database* db, QString filePath)
         }
 
         dbStruct.dbWidget->blockAutoReload(true);
-        QString errorMessage = db->saveToFile(filePath);
+        // TODO: Make this async, but lock out the database widget to prevent re-entrance
+        QString errorMessage = db->saveToFile(filePath, config()->get("BackupBeforeSave").toBool());
         dbStruct.dbWidget->blockAutoReload(false);
 
         if (errorMessage.isEmpty()) {

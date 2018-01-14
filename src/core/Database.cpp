@@ -19,7 +19,7 @@
 #include "Database.h"
 
 #include <QFile>
-#include <QSaveFile>
+#include <QTemporaryFile>
 #include <QTextStream>
 #include <QTimer>
 #include <QXmlStreamReader>
@@ -470,30 +470,52 @@ Database* Database::unlockFromStdin(QString databaseFilename, QString keyFilenam
     return Database::openDatabaseFile(databaseFilename, compositeKey);
 }
 
-QString Database::saveToFile(QString filePath)
+/**
+ * Save the database to a file.
+ *
+ * This function uses QTemporaryFile instead of QSaveFile due to a bug
+ * in Qt (https://bugreports.qt.io/browse/QTBUG-57299) that may prevent
+ * the QSaveFile from renaming itself when using DropBox, Drive, or OneDrive.
+ *
+ * The risk in using QTemporaryFile is that the rename function is not atomic
+ * and may result in loss of data if there is a crash or power loss at the
+ * wrong moment.
+ *
+ * @param filePath Absolute path of the file to save
+ * @param keepOld Rename the original database file instead of deleting
+ * @return error string, if any
+ */
+QString Database::saveToFile(QString filePath, bool keepOld)
 {
     KeePass2Writer writer;
-    QSaveFile saveFile(filePath);
-    if (saveFile.open(QIODevice::WriteOnly)) {
-
+    QTemporaryFile saveFile;
+    if (saveFile.open()) {
         // write the database to the file
         setEmitModified(false);
         writer.writeDatabase(&saveFile, this);
         setEmitModified(true);
 
         if (writer.hasError()) {
+            // the writer failed
             return writer.errorString();
         }
 
-        if (saveFile.commit()) {
-            // successfully saved database file
-            return QString();
-        } else {
-            return saveFile.errorString();
+        saveFile.close(); // flush to disk
+
+        if (keepOld) {
+            QFile::remove(filePath + ".old");
+            QFile::rename(filePath, filePath + ".old");
         }
-    } else {
-        return saveFile.errorString();
+
+        QFile::remove(filePath);
+        if (saveFile.rename(filePath)) {
+            // successfully saved database file
+            saveFile.setAutoRemove(false);
+            return {};
+        }
     }
+
+    return saveFile.errorString();
 }
 
 QSharedPointer<Kdf> Database::kdf() const

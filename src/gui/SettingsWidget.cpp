@@ -117,6 +117,7 @@ void SettingsWidget::loadSettings()
         config()->get("OpenPreviousDatabasesOnStartup").toBool());
     m_generalUi->autoSaveAfterEveryChangeCheckBox->setChecked(config()->get("AutoSaveAfterEveryChange").toBool());
     m_generalUi->autoSaveOnExitCheckBox->setChecked(config()->get("AutoSaveOnExit").toBool());
+    m_generalUi->backupBeforeSaveCheckBox->setChecked(config()->get("BackupBeforeSave").toBool());
     m_generalUi->autoReloadOnChangeCheckBox->setChecked(config()->get("AutoReloadOnChange").toBool());
     m_generalUi->minimizeOnCopyCheckBox->setChecked(config()->get("MinimizeOnCopy").toBool());
     m_generalUi->useGroupIconOnEntryCreationCheckBox->setChecked(config()->get("UseGroupIconOnEntryCreation").toBool());
@@ -193,6 +194,7 @@ void SettingsWidget::saveSettings()
     config()->set("AutoSaveAfterEveryChange",
                   m_generalUi->autoSaveAfterEveryChangeCheckBox->isChecked());
     config()->set("AutoSaveOnExit", m_generalUi->autoSaveOnExitCheckBox->isChecked());
+    config()->set("BackupBeforeSave", m_generalUi->backupBeforeSaveCheckBox->isChecked());
     config()->set("AutoReloadOnChange", m_generalUi->autoReloadOnChangeCheckBox->isChecked());
     config()->set("MinimizeOnCopy", m_generalUi->minimizeOnCopyCheckBox->isChecked());
     config()->set("UseGroupIconOnEntryCreation",
