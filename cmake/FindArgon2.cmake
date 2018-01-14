@@ -14,7 +14,20 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 find_path(ARGON2_INCLUDE_DIR argon2.h)
-find_library(ARGON2_LIBRARIES argon2)
+if (MINGW)
+  # find static library on Windows, and redefine used symbols to
+  # avoid definition name conflicts with libsodium
+  find_library(ARGON2_SYS_LIBRARIES libargon2.a)
+  message(STATUS "Patching libargon2...")
+  execute_process(COMMAND objcopy
+              --redefine-sym argon2_hash=libargon2_argon2_hash
+              --redefine-sym argon2_error_message=libargon2_argon2_error_message
+              ${ARGON2_SYS_LIBRARIES} ${CMAKE_BINARY_DIR}/libargon2_patched.a
+          WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+  find_library(ARGON2_LIBRARIES libargon2_patched.a PATHS ${CMAKE_BINARY_DIR} NO_DEFAULT_PATH)
+else()
+  find_library(ARGON2_LIBRARIES argon2)
+endif()
 mark_as_advanced(ARGON2_LIBRARIES ARGON2_INCLUDE_DIR)
 
 include(FindPackageHandleStandardArgs)
