@@ -28,8 +28,7 @@
 const QString HostInstaller::HOST_NAME = "org.keepassxc.keepassxc_browser";
 const QStringList HostInstaller::ALLOWED_ORIGINS = QStringList()
     << "chrome-extension://iopaggbpplllidnfmcghoonnokmjoicf/"
-    << "chrome-extension://fhakpkpdnjecjfceboihdjpfmgajebii/"
-    << "chrome-extension://jaikbblhommnkeialomogohhdlndpfbi/";
+    << "chrome-extension://oboonakemofpalcgghocfoadofidjkkk/";
 
 const QStringList HostInstaller::ALLOWED_EXTENSIONS = QStringList()
     << "keepassxc-browser@keepassxc.org";
