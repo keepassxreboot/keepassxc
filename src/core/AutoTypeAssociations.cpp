@@ -103,6 +103,15 @@ int AutoTypeAssociations::size() const
     return m_associations.size();
 }
 
+int AutoTypeAssociations::associationsSize() const
+{
+    int size = 0;
+    foreach (const Association &association, m_associations) {
+        size += association.sequence.toUtf8().size() + association.window.toUtf8().size();
+    }
+    return size;
+}
+
 void AutoTypeAssociations::clear()
 {
     m_associations.clear();
