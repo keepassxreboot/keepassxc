@@ -292,11 +292,11 @@ void TestEntryModel::testProxyModel()
      * @author Fonic <https://github.com/fonic>
      * Update comparison value of modelProxy->columnCount() to account for
      * additional columns 'Password', 'Notes', 'Expires', 'Created', 'Modified',
-     * 'Accessed' and 'Attachments'
+     * 'Accessed', 'Paperclip' and 'Attachments'
      */
     QSignalSpy spyColumnRemove(modelProxy, SIGNAL(columnsAboutToBeRemoved(QModelIndex,int,int)));
     modelProxy->hideColumn(0, true);
-    QCOMPARE(modelProxy->columnCount(), 10);
+    QCOMPARE(modelProxy->columnCount(), 11);
     QVERIFY(spyColumnRemove.size() >= 1);
 
     int oldSpyColumnRemoveSize = spyColumnRemove.size();
@@ -314,11 +314,11 @@ void TestEntryModel::testProxyModel()
      * @author Fonic <https://github.com/fonic>
      * Update comparison value of modelProxy->columnCount() to account for
      * additional columns 'Password', 'Notes', 'Expires', 'Created', 'Modified',
-     * 'Accessed' and 'Attachments'
+     * 'Accessed', 'Paperclip' and 'Attachments'
      */
     QSignalSpy spyColumnInsert(modelProxy, SIGNAL(columnsAboutToBeInserted(QModelIndex,int,int)));
     modelProxy->hideColumn(0, false);
-    QCOMPARE(modelProxy->columnCount(), 11);
+    QCOMPARE(modelProxy->columnCount(), 12);
     QVERIFY(spyColumnInsert.size() >= 1);
 
     int oldSpyColumnInsertSize = spyColumnInsert.size();
