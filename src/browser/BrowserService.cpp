@@ -31,6 +31,7 @@
 #include "core/Metadata.h"
 #include "core/Uuid.h"
 #include "core/PasswordGenerator.h"
+#include "gui/MainWindow.h"
 
 
 // de887cc3-0363-43b8-974b-5911b8816224
@@ -60,11 +61,8 @@ bool BrowserService::isDatabaseOpened() const
         return false;
     }
 
-    if (dbWidget->currentMode() == DatabaseWidget::ViewMode || dbWidget->currentMode() == DatabaseWidget::EditMode) {
-        return true;
-    }
+    return dbWidget->currentMode() == DatabaseWidget::ViewMode || dbWidget->currentMode() == DatabaseWidget::EditMode;
 
-    return false;
 }
 
 bool BrowserService::openDatabase()
@@ -82,7 +80,8 @@ bool BrowserService::openDatabase()
         return true;
     }
 
-    m_dbTabWidget->activateWindow();
+    KEEPASSXC_MAIN_WINDOW->bringToFront();
+
     return false;
 }
 
@@ -181,15 +180,20 @@ QString BrowserService::storeKey(const QString& key)
     QMessageBox::StandardButton dialogResult = QMessageBox::No;
 
     do {
-        bool ok = false;
-        id = QInputDialog::getText(nullptr, tr("KeePassXC: New key association request"),
-                                   tr("You have received an association "
-                                      "request for the above key.\n"
-                                      "If you would like to allow it access "
-                                      "to your KeePassXC database,\n"
-                                      "give it a unique name to identify and accept it."),
-                                    QLineEdit::Normal, QString(), &ok);
-        if (!ok || id.isEmpty()) {
+        QInputDialog keyDialog;
+        keyDialog.setWindowTitle(tr("KeePassXC: New key association request"));
+        keyDialog.setLabelText(tr("You have received an association request for the above key.\n\n"
+                                      "If you would like to allow it access to your KeePassXC database,\n"
+                                      "give it a unique name to identify and accept it."));
+        keyDialog.setOkButtonText(tr("Save and allow access"));
+        keyDialog.show();
+        keyDialog.activateWindow();
+        keyDialog.raise();
+        auto ok = keyDialog.exec();
+
+        id = keyDialog.textValue();
+
+        if (ok != QDialog::Accepted || id.isEmpty()) {
             return {};
         }
 
