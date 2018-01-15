@@ -20,7 +20,6 @@
 
 #include <QTest>
 
-#include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "crypto/Crypto.h"
@@ -48,6 +47,7 @@ void TestEntry::testHistoryItemDeletion()
 
     delete entry;
 }
+
 void TestEntry::testCopyDataFrom()
 {
     Entry* entry = new Entry();

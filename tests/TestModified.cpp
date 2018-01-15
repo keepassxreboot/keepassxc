@@ -465,5 +465,52 @@ void TestModified::testHistoryItem()
     entry3->endUpdate();
     QCOMPARE(entry3->historyItems().size(), 2);
 
+    Entry* entry4 = new Entry();
+    entry4->setGroup(root);
+    QCOMPARE(entry4->historyItems().size(), 0);
+
+    int reservedSize = entry4->attributes()->attributesSize();
+    entry4->beginUpdate();
+    entry4->attachments()->set("test1", QByteArray(17000 - 5 - reservedSize + 1, 'a'));
+    entry4->endUpdate();
+    QCOMPARE(entry4->historyItems().size(), 1);
+
+    entry4->beginUpdate();
+    entry4->attachments()->remove("test1");
+    entry4->endUpdate();
+    QCOMPARE(entry4->historyItems().size(), 0);
+
+    entry4->beginUpdate();
+    entry4->setTags(QByteArray(17000 - reservedSize + 1, 'a'));
+    entry4->endUpdate();
+    QCOMPARE(entry4->historyItems().size(), 1);
+
+    entry4->beginUpdate();
+    entry4->setTags("");
+    entry4->endUpdate();
+    QCOMPARE(entry4->historyItems().size(), 0);
+
+    entry4->beginUpdate();
+    entry4->attributes()->set("test3", QByteArray(17000 - 5 - reservedSize + 1, 'a'));
+    entry4->endUpdate();
+    QCOMPARE(entry4->historyItems().size(), 1);
+
+    entry4->beginUpdate();
+    entry4->attributes()->remove("test3");
+    entry4->endUpdate();
+    QCOMPARE(entry4->historyItems().size(), 0);
+
+    entry4->beginUpdate();
+    AutoTypeAssociations::Association association;
+    association.window = "test3";
+    association.sequence = QByteArray(17000 - 5 - reservedSize + 1, 'a');
+    entry4->autoTypeAssociations()->add(association);
+    entry4->endUpdate();
+    QCOMPARE(entry4->historyItems().size(), 1);
+
+    entry4->beginUpdate();
+    entry4->autoTypeAssociations()->remove(0);
+    entry4->endUpdate();
+    QCOMPARE(entry4->historyItems().size(), 0);
     delete db;
 }

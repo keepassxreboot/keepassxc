@@ -156,9 +156,13 @@ bool EntryAttachments::operator!=(const EntryAttachments& other) const
 int EntryAttachments::attachmentsSize(const QSet<QByteArray> &ignoredAttachments) const
 {
     int size = 0;
-    const QSet<QByteArray> consideredAttachments = m_attachments.values().toSet() - ignoredAttachments;
-    for (const QByteArray& attachment : consideredAttachments) {
-        size += attachment.size();
+
+    QMapIterator<QString, QByteArray> i(m_attachments);
+    while (i.hasNext()) {
+        i.next();
+        if( ! ignoredAttachments.contains( i.value() )){
+            size += i.key().toUtf8().size() + i.value().size();
+         }
     }
     return size;
 }
