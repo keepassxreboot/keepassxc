@@ -24,11 +24,6 @@
 #include <QShortcut>
 #include <QTimer>
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_DBUS)
-#include <QList>
-#include <QtDBus/QtDBus>
-#endif
-
 #include "config-keepassx.h"
 
 #include "autotype/AutoType.h"
@@ -61,15 +56,14 @@
 #include "browser/BrowserOptionDialog.h"
 #endif
 
-#include "gui/SettingsWidget.h"
-#include "gui/PasswordGeneratorWidget.h"
-
-#ifdef WITH_XC_DBUS
-#if defined(Q_OS_LINUX)
-#include <QtDBus>
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_DBUS)
+#include <QList>
+#include <QtDBus/QtDBus>
 #include "gui/MainWindowAdaptor.h"
 #endif
-#endif
+
+#include "gui/SettingsWidget.h"
+#include "gui/PasswordGeneratorWidget.h"
 
 #ifdef WITH_XC_HTTP
 class HttpPlugin: public ISettingsPage
@@ -175,16 +169,13 @@ MainWindow::MainWindow()
     , m_appExiting(false)
 {
     m_ui->setupUi(this);
-    #ifdef WITH_XC_DBUS
-    #if defined(Q_OS_LINUX)
+    
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_DBUS)
     new MainWindowAdaptor(this);
     QDBusConnection dbus = QDBusConnection::sessionBus();
     dbus.registerObject("/keepassxc", this);
-    dbus.registerService("org.keepassxc.MainWindow");
-    #else
-    qWarning("DBus is not available on this system");
-    #endif
-    #endif
+    dbus.registerService("org.keepassxc.KeePassXC.MainWindow");
+#endif
 
     setAcceptDrops(true);
 
@@ -1144,4 +1135,9 @@ void MainWindow::dropEvent(QDropEvent* event)
 void MainWindow::closeAllDatabases()
 {
     m_ui->tabWidget->closeAllDatabases();
+}
+
+void MainWindow::lockAllDatabases()
+{
+    lockDatabasesAfterInactivity();
 }

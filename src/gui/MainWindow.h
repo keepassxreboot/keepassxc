@@ -38,8 +38,8 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
     
-#if defined(Q_OS_LINUX)
-    Q_CLASSINFO("D-Bus Interface", "org.keepassxc.MainWindow")
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_DBUS)
+    Q_CLASSINFO("D-Bus Interface", "org.keepassxc.KeePassXC.MainWindow")
 #endif
 
 public:
@@ -67,10 +67,11 @@ public slots:
     void hideYubiKeyPopup();
     void bringToFront();
     void closeAllDatabases();
+    void lockAllDatabases();
 
 protected:
-     void closeEvent(QCloseEvent* event) override;
-     void changeEvent(QEvent* event) override;
+    void closeEvent(QCloseEvent* event) override;
+    void changeEvent(QEvent* event) override;
 
 private slots:
     void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::None);
