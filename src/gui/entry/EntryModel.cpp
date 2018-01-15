@@ -42,9 +42,9 @@
  * Decide which of the proposed options should be used (stars, bullet, black
  * circle)
  */
-//const QString EntryModel::HiddenContent("******");
-//const QString EntryModel::HiddenContent(QString(QChar(0x2022)).repeated(6));
-const QString EntryModel::HiddenContent(QString(QChar(0x25CF)).repeated(6));
+//const QString EntryModel::HiddenContentDisplay("******");
+//const QString EntryModel::HiddenContentDisplay(QString(QChar(0x2022)).repeated(6));
+const QString EntryModel::HiddenContentDisplay(QString(QChar(0x25CF)).repeated(6));
 
 /**
  * @author Fonic <https://github.com/fonic>
@@ -52,6 +52,18 @@ const QString EntryModel::HiddenContent(QString(QChar(0x25CF)).repeated(6));
  * 'Modified' and 'Accessed'
  */
 const Qt::DateFormat EntryModel::DateFormat = Qt::DefaultLocaleShortDate;
+
+/**
+ * @author Fonic <https://github.com/fonic>
+ * Define constant string used to display header and data of column 'Paper-
+ * clip'
+ *
+ * TODO:
+ * When using unicode, ASAN reports memory leaks, but when using a plain
+ * string like 'x', no leaks are reported. Check if this is something to
+ * worry about, might as well be a Qt bug
+ */
+const QString EntryModel::PaperClipDisplay(QString("\U0001f4ce"));
 
 /**
  * @author Fonic <https://github.com/fonic>
@@ -152,14 +164,15 @@ int EntryModel::columnCount(const QModelIndex& parent) const
     /**
      * @author Fonic <https://github.com/fonic>
      * Change column count to include additional columns 'Password', 'Notes',
-     * 'Expires', 'Created', 'Modified', 'Accessed' and 'Attachments'. Also,
-     * return 0 when parent is valid as advised by Qt documentation
+     * 'Expires', 'Created', 'Modified', 'Accessed', 'Paperclip' and
+     * 'Attachments'. Also, return 0 when parent is valid as advised by Qt
+     * documentation
      */
     if (parent.isValid()) {
         return 0;
     }
     else {
-        return 11;
+        return 12;
     }
 }
 
@@ -176,7 +189,8 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
      * @author Fonic <https://github.com/fonic>
      *
      * Add display data providers for additional columns 'Password', 'Notes',
-     * 'Expires', 'Created', 'Modified', 'Accessed' and 'Attachments'
+     * 'Expires', 'Created', 'Modified', 'Accessed', 'Paperclip' and
+     * 'Attachments'
      *
      * Add ability to display usernames and passwords hidden or visible
      * depending on current state of 'Hide Usernames' and 'Hide Passwords'
@@ -211,7 +225,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
              * of 'Hide Usernames' setting
              */
             if (m_hideUsernames) {
-                result = EntryModel::HiddenContent;
+                result = EntryModel::HiddenContentDisplay;
             }
             else {
                 //result = entry->username();
@@ -227,7 +241,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
              * of 'Hide Passwords' setting
              */
             if (m_hidePasswords) {
-                result = EntryModel::HiddenContent;
+                result = EntryModel::HiddenContentDisplay;
             }
             else {
                 //result = entry->resolveMultiplePlaceholders(entry->password());
@@ -270,6 +284,9 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         case Accessed:
             result = entry->timeInfo().lastAccessTime().toLocalTime().toString(EntryModel::DateFormat);
             return result;
+        case Paperclip:
+            result = entry->attachments()->keys().isEmpty() ? QString() : EntryModel::PaperClipDisplay;
+            return result;
         case Attachments:
             /*
              * Display comma-separated list of attachments
@@ -308,6 +325,10 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
      * sorting would be based on string representation of dates, yielding un-
      * desired results)
      *
+     * Add sort data provider for column 'Paperclip', required to display
+     * entries with attachments above those without when sorting ascendingly
+     * (and vice versa when sorting descendingly)
+     *
      * NOTE:
      * Qt::UserRole is used as sort role, using 'm_sortModel->setSortRole(Qt::
      * UserRole)' in EntryView.cpp, EntryView::EntryView()
@@ -333,6 +354,8 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             return entry->timeInfo().lastModificationTime();
         case Accessed:
             return entry->timeInfo().lastAccessTime();
+        case Paperclip:
+            return entry->attachments()->keys().isEmpty() ? 1 : 0;
         default:
             /*
              * For all other columns, simply use data provided by Qt::Display-
@@ -379,7 +402,7 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
     /**
      * @author Fonic <https://github.com/fonic>
      * Add captions for additional columns 'Password', 'Notes', 'Expires',
-     * 'Created', 'Modified', 'Accessed' and 'Attachments'
+     * 'Created', 'Modified', 'Accessed', 'Paperclip' and 'Attachments'
      */
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
         switch (section) {
@@ -403,6 +426,8 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
             return tr("Modified");
         case Accessed:
             return tr("Accessed");
+        case Paperclip:
+            return EntryModel::PaperClipDisplay;
         case Attachments:
             return tr("Attachments");
         }

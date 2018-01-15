@@ -45,7 +45,8 @@ public:
         Created = 7,
         Modified = 8,
         Accessed = 9,
-        Attachments = 10
+        Paperclip = 10,
+        Attachments = 11
     };
 
     explicit EntryModel(QObject* parent = nullptr);
@@ -130,7 +131,7 @@ private:
      * Constant string used to display hidden content in columns 'Username'
      * and 'Password'
      */
-    static const QString HiddenContent;
+    static const QString HiddenContentDisplay;
 
     /**
      * @author Fonic <https://github.com/fonic>
@@ -138,6 +139,13 @@ private:
      * 'Modified' and 'Accessed'
      */
     static const Qt::DateFormat DateFormat;
+
+    /**
+     * @author Fonic <https://github.com/fonic>
+     * Constant string used to display header and data of column 'Paper-
+     * clip'
+     */
+    static const QString PaperClipDisplay;
 };
 
 #endif // KEEPASSX_ENTRYMODEL_H
