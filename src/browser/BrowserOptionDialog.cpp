@@ -23,6 +23,7 @@
 #include "core/FilePath.h"
 
 #include <QMessageBox>
+#include <QtWidgets/QFileDialog>
 
 BrowserOptionDialog::BrowserOptionDialog(QWidget* parent) :
     QWidget(parent),
@@ -40,7 +41,10 @@ BrowserOptionDialog::BrowserOptionDialog(QWidget* parent) :
     connect(m_ui->enableBrowserSupport, SIGNAL(toggled(bool)), m_ui->tabWidget, SLOT(setEnabled(bool)));
 
     m_ui->customProxyLocation->setEnabled(m_ui->useCustomProxy->isChecked());
+    m_ui->customProxyLocationBrowseButton->setEnabled(m_ui->useCustomProxy->isChecked());
     connect(m_ui->useCustomProxy, SIGNAL(toggled(bool)), m_ui->customProxyLocation, SLOT(setEnabled(bool)));
+    connect(m_ui->useCustomProxy, SIGNAL(toggled(bool)), m_ui->customProxyLocationBrowseButton, SLOT(setEnabled(bool)));
+    connect(m_ui->customProxyLocationBrowseButton, SIGNAL(clicked()), this, SLOT(showProxyLocationFileDialog()));
 }
 
 BrowserOptionDialog::~BrowserOptionDialog()
@@ -56,6 +60,11 @@ void BrowserOptionDialog::loadSettings()
     m_ui->bestMatchOnly->setChecked(settings.bestMatchOnly());
     m_ui->unlockDatabase->setChecked(settings.unlockDatabase());
     m_ui->matchUrlScheme->setChecked(settings.matchUrlScheme());
+
+    // hide unimplemented options
+    // TODO: fix this
+    m_ui->showNotification->hide();
+    m_ui->bestMatchOnly->hide();
 
     if (settings.sortByUsername()) {
         m_ui->sortByUsername->setChecked(true);
@@ -101,4 +110,17 @@ void BrowserOptionDialog::saveSettings()
     settings.setChromiumSupport(m_ui->chromiumSupport->isChecked());
     settings.setFirefoxSupport(m_ui->firefoxSupport->isChecked());
     settings.setVivaldiSupport(m_ui->vivaldiSupport->isChecked());
+}
+
+void BrowserOptionDialog::showProxyLocationFileDialog()
+{
+#ifdef Q_OS_WIN
+    QString fileTypeFilter(tr("Executable Files (*.exe);;All Files (*.*)"));
+#else
+    QString fileTypeFilter(tr("Executable Files (*.*)"));
+#endif
+    auto proxyLocation = QFileDialog::getOpenFileName(this, tr("Select custom proxy location"),
+                                                      QFileInfo(QCoreApplication::applicationDirPath()).filePath(),
+                                                      fileTypeFilter);
+    m_ui->customProxyLocation->setText(proxyLocation);
 }

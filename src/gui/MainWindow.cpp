@@ -77,7 +77,7 @@ public:
 
     QString name() override
     {
-        return QObject::tr("Browser Integration");
+        return QObject::tr("Browser Integration (old)");
     }
 
     QIcon icon() override
@@ -125,7 +125,7 @@ class BrowserPlugin: public ISettingsPage
 
         QString name() override
         {
-            return QObject::tr("Browser extension with native messaging");
+            return QObject::tr("Browser Integration");
         }
 
         QIcon icon() override
@@ -182,16 +182,16 @@ MainWindow::MainWindow()
     m_countDefaultAttributes = m_ui->menuEntryCopyAttribute->actions().size();
 
     restoreGeometry(config()->get("GUI/MainWindowGeometry").toByteArray());
-    #ifdef WITH_XC_HTTP
+#ifdef WITH_XC_BROWSER
+    m_ui->settingsWidget->addSettingsPage(new BrowserPlugin(m_ui->tabWidget));
+#endif
+#ifdef WITH_XC_HTTP
     m_ui->settingsWidget->addSettingsPage(new HttpPlugin(m_ui->tabWidget));
-    #endif
-    #ifdef WITH_XC_SSHAGENT
+#endif
+#ifdef WITH_XC_SSHAGENT
     SSHAgent::init(this);
     m_ui->settingsWidget->addSettingsPage(new AgentSettingsPage(m_ui->tabWidget));
-    #endif
-    #ifdef WITH_XC_BROWSER
-    m_ui->settingsWidget->addSettingsPage(new BrowserPlugin(m_ui->tabWidget));
-    #endif
+#endif
 
     setWindowIcon(filePath()->applicationIcon());
     m_ui->globalMessageWidget->setHidden(true);
