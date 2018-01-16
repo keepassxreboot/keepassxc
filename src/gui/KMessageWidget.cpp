@@ -287,7 +287,7 @@ void KMessageWidget::setMessageType(KMessageWidget::MessageType type)
             bg1 = palette().highlight().color();
             break;
         case Warning:
-            bg1.setRgb(181, 102, 0); // values taken from kcolorscheme.cpp (Neutral)
+            bg1.setRgb(191, 126, 7); // values taken from kcolorscheme.cpp (Neutral)
             break;
         case Error:
             bg1.setRgb(191, 3, 3); // values taken from kcolorscheme.cpp (Negative)

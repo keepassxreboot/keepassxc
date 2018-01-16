@@ -47,6 +47,7 @@ void MessageWidget::showMessage(const QString &text, KMessageWidget::MessageType
 {
     setMessageType(type);
     setText(text);
+    emit showAnimationStarted();
     animatedShow();
     if (autoHideTimeout > 0) {
         m_autoHideTimer->start(autoHideTimeout);

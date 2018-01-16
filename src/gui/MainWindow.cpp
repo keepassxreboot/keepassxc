@@ -23,6 +23,7 @@
 #include <QMimeData>
 #include <QShortcut>
 #include <QTimer>
+#include <QDesktopServices>
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_DBUS)
 #include <QList>
@@ -195,6 +196,9 @@ MainWindow::MainWindow()
 
     setWindowIcon(filePath()->applicationIcon());
     m_ui->globalMessageWidget->setHidden(true);
+    connect(m_ui->globalMessageWidget, SIGNAL(linkActivated(const QString&)), this, SLOT(openLink(const QString&)));
+    connect(m_ui->globalMessageWidget, SIGNAL(showAnimationStarted()), m_ui->globalMessageWidgetContainer, SLOT(show()));
+    connect(m_ui->globalMessageWidget, SIGNAL(hideAnimationFinished()), m_ui->globalMessageWidgetContainer, SLOT(hide()));
 
     m_clearHistoryAction = new QAction(tr("Clear history"), m_ui->menuFile);
     m_lastDatabasesActions = new QActionGroup(m_ui->menuRecentDatabases);
@@ -407,11 +411,42 @@ MainWindow::MainWindow()
         m_ui->globalMessageWidget->showMessage(
             tr("Access error for config file %1").arg(config()->getFileName()), MessageWidget::Error);
     }
-
+#ifdef WITH_XC_HTTP
+    if (config()->get("Http/Enabled", false).toBool() && !config()->get("Http/DeprecationNoticeShown", false).toBool()) {
+        // show message after tab widget dismissed all messages
+        connect(m_ui->tabWidget, SIGNAL(messageDismissGlobal()), this, SLOT(showKeePassHTTPDeprecationNotice()));
+    }
+#endif
 }
 
 MainWindow::~MainWindow()
 {
+}
+
+void MainWindow::showKeePassHTTPDeprecationNotice()
+{
+    displayGlobalMessage(tr("<p>It looks like you are using KeePassHTTP for browser integration.<br>"
+                                "This feature has been deprecated and will be removed in the future.<br>"
+                                "Please switch to keepassxc-browser instead! For help with migration,<br>"
+                                "visit our <a href=\"https://keepassxc.org/docs/keepassxc-browser-migration\">"
+                                "keepassxc-browser migration guide</a>.</p>"),
+                         MessageWidget::Warning, true, -1);
+
+    config()->set("Http/DeprecationNoticeShown", true);
+    disconnect(m_ui->tabWidget, SIGNAL(messageDismissGlobal()), this, SLOT(showKeePassHTTPDeprecationNotice()));
+}
+
+/**
+ * Open a link using the system's default handler.
+ * Links that are not HTTP(s) links are ignored.
+ *
+ * @param link link URL
+ */
+void MainWindow::openLink(const QString& link)
+{
+    if (link.startsWith("http://") || link.startsWith("https://")) {
+        QDesktopServices::openUrl(QUrl(link));
+    }
 }
 
 void MainWindow::appExit()

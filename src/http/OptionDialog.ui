@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>577</width>
-    <height>404</height>
+    <width>803</width>
+    <height>433</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,6 +26,13 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
+   <item>
+    <widget class="QLabel" name="deprecationNotice">
+     <property name="text">
+      <string>&lt;p&gt;&lt;b&gt;NOTE:&lt;/b&gt; KeePassHTTP has been deprecated and will be removed in the future.&lt;br&gt;Please switch to keepassxc-browser instead! For help with migration, visit our &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;keepassxc-browser migration guide&lt;/a&gt;.&lt;/p&gt;</string>
+     </property>
+    </widget>
+   </item>
    <item>
     <widget class="QCheckBox" name="enableHttpServer">
      <property name="toolTip">

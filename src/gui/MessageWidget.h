@@ -35,6 +35,9 @@ public:
     static const int DefaultAutoHideTimeout;
     static const int DisableAutoHide;
 
+signals:
+    void showAnimationStarted();
+
 public slots:
     void showMessage(const QString& text, MessageWidget::MessageType type);
     void showMessage(const QString& text, MessageWidget::MessageType type, int autoHideTimeout);

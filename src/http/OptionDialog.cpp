@@ -39,6 +39,8 @@ OptionDialog::OptionDialog(QWidget *parent) :
 
     m_ui->tabWidget->setEnabled(m_ui->enableHttpServer->isChecked());
     connect(m_ui->enableHttpServer, SIGNAL(toggled(bool)), m_ui->tabWidget, SLOT(setEnabled(bool)));
+
+    m_ui->deprecationNotice->setOpenExternalLinks(true);
 }
 
 OptionDialog::~OptionDialog()

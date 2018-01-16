@@ -23,7 +23,7 @@
 #include "core/FilePath.h"
 
 #include <QMessageBox>
-#include <QtWidgets/QFileDialog>
+#include <QFileDialog>
 
 BrowserOptionDialog::BrowserOptionDialog(QWidget* parent) :
     QWidget(parent),
@@ -36,6 +36,7 @@ BrowserOptionDialog::BrowserOptionDialog(QWidget* parent) :
     m_ui->warningWidget->showMessage(tr("The following options can be dangerous!\nChange them only if you know what you are doing."), MessageWidget::Warning);
     m_ui->warningWidget->setIcon(FilePath::instance()->icon("status", "dialog-warning"));
     m_ui->warningWidget->setCloseButtonVisible(false);
+    m_ui->warningWidget->setAutoHideTimeout(-1);
 
     m_ui->tabWidget->setEnabled(m_ui->enableBrowserSupport->isChecked());
     connect(m_ui->enableBrowserSupport, SIGNAL(toggled(bool)), m_ui->tabWidget, SLOT(setEnabled(bool)));

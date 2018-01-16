@@ -82,7 +82,7 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     connect(m_secUi->lockDatabaseIdleCheckBox, SIGNAL(toggled(bool)),
             m_secUi->lockDatabaseIdleSpinBox, SLOT(setEnabled(bool)));
 
-#ifndef WITH_XC_HTTP
+#ifndef WITH_XC_NETWORKING
     m_secUi->privacy->setVisible(false);
 #endif
 }

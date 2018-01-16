@@ -32,7 +32,7 @@ class Database;
 class DefaultIconModel;
 class CustomIconModel;
 
-#ifdef WITH_XC_HTTP
+#ifdef WITH_XC_NETWORKING
 namespace qhttp {
     namespace client {
         class QHttpClient;
@@ -73,7 +73,7 @@ signals:
 
 private slots:
     void downloadFavicon();
-#ifdef WITH_XC_HTTP
+#ifdef WITH_XC_NETWORKING
     void fetchFavicon(const QUrl& url);
     void fetchFaviconFromGoogle(const QString& domain);
     void resetFaviconDownload(bool clearRedirect = true);
@@ -93,7 +93,7 @@ private:
     QString m_url;
     DefaultIconModel* const m_defaultIconModel;
     CustomIconModel* const m_customIconModel;
-#ifdef WITH_XC_HTTP
+#ifdef WITH_XC_NETWORKING
     QUrl m_redirectUrl;
     bool m_fallbackToGoogle;
     unsigned short m_redirectCount;
