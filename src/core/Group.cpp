@@ -192,6 +192,10 @@ QString Group::defaultAutoTypeSequence() const
     return m_data.defaultAutoTypeSequence;
 }
 
+/**
+ * Determine the effective sequence that will be injected
+ * This function return an empty string if the current group or any parent has autotype disabled
+ */
 QString Group::effectiveAutoTypeSequence() const
 {
     QString sequence;

@@ -48,6 +48,7 @@ private slots:
     void testGlobalAutoTypeTitleMatchDisabled();
     void testGlobalAutoTypeRegExp();
     void testAutoTypeSyntaxChecks();
+    void testAutoTypeEffectiveSequences();
 
 private:
     AutoTypePlatformInterface* m_platform;

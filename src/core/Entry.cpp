@@ -218,30 +218,28 @@ QString Entry::defaultAutoTypeSequence() const
     return m_data.defaultAutoTypeSequence;
 }
 
+/**
+ * Determine the effective sequence that will be injected
+ * This function return an empty string if a parent group has autotype disabled or if the entry has no parent
+ */
 QString Entry::effectiveAutoTypeSequence() const
 {
+    if (autoTypeEnabled() == false) {
+        return QString();
+    }
+
+    const Group* parent = group();
+    if (!parent) {
+        return QString();
+    }
+    
+    QString sequence = parent->effectiveAutoTypeSequence();
+    if (sequence.isEmpty()) {
+        return QString();
+    }
+
     if (!m_data.defaultAutoTypeSequence.isEmpty()) {
         return m_data.defaultAutoTypeSequence;
-    }
-    QString sequence;
-
-    const Group* grp = group();
-    if(grp) {
-      sequence = grp->effectiveAutoTypeSequence();
-    } else {
-      return QString();
-    }
-
-    if (sequence.isEmpty() && (!username().isEmpty() || !password().isEmpty())) {
-        if (username().isEmpty()) {
-            sequence = "{PASSWORD}{ENTER}";
-        }
-       else if (password().isEmpty()) {
-          sequence = "{USERNAME}{ENTER}";
-        }
-        else {
-            sequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
-        }
     }
 
     return sequence;

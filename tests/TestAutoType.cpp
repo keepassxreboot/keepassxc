@@ -311,3 +311,83 @@ void TestAutoType::testAutoTypeSyntaxChecks()
     QCOMPARE(false, AutoType::checkHighRepetition("{SPACE 10}{TAB 3}{RIGHT 50}"));
     QCOMPARE(false, AutoType::checkHighRepetition("{delay 5000000000}"));
 }
+
+void TestAutoType::testAutoTypeEffectiveSequences()
+{
+    QString defaultSequence("{USERNAME}{TAB}{PASSWORD}{ENTER}");
+    QString sequenceG1("{TEST_GROUP1}");
+    QString sequenceG3("{TEST_GROUP3}");
+    QString sequenceE2("{TEST_ENTRY2}");
+    QString sequenceDisabled("{TEST_DISABLED}");
+    QString sequenceOrphan("{TEST_ORPHAN}");
+
+    Database* db = new Database();
+    QPointer<Group> rootGroup = db->rootGroup();
+
+    // Group with autotype enabled and custom default sequence
+    QPointer<Group> group1 = new Group();
+    group1->setParent(rootGroup);
+    group1->setDefaultAutoTypeSequence(sequenceG1);
+    
+    // Child group with inherit
+    QPointer<Group> group2 = new Group();
+    group2->setParent(group1);
+
+    // Group with autotype disabled and custom default sequence
+    QPointer<Group> group3 = new Group();
+    group3->setParent(group1);
+    group3->setAutoTypeEnabled(Group::Disable);
+    group3->setDefaultAutoTypeSequence(sequenceG3);
+
+    QCOMPARE(rootGroup->defaultAutoTypeSequence(), QString());
+    QCOMPARE(rootGroup->effectiveAutoTypeSequence(), defaultSequence);
+    QCOMPARE(group1->defaultAutoTypeSequence(), sequenceG1);
+    QCOMPARE(group1->effectiveAutoTypeSequence(), sequenceG1);
+    QCOMPARE(group2->defaultAutoTypeSequence(), QString());
+    QCOMPARE(group2->effectiveAutoTypeSequence(), sequenceG1);
+    QCOMPARE(group3->defaultAutoTypeSequence(), sequenceG3);
+    QCOMPARE(group3->effectiveAutoTypeSequence(), QString());
+
+    // Entry from root group
+    QPointer<Entry> entry1 = new Entry();
+    entry1->setGroup(rootGroup);
+
+    // Entry with custom default sequence
+    QPointer<Entry> entry2 = new Entry();
+    entry2->setDefaultAutoTypeSequence(sequenceE2);
+    entry2->setGroup(rootGroup);
+
+    // Entry from enabled child group
+    QPointer<Entry> entry3 = new Entry();
+    entry3->setGroup(group2);
+
+    // Entry from disabled group
+    QPointer<Entry> entry4 = new Entry();
+    entry4->setDefaultAutoTypeSequence(sequenceDisabled);
+    entry4->setGroup(group3);
+
+    // Entry from enabled group with disabled autotype
+    QPointer<Entry> entry5 = new Entry();
+    entry5->setGroup(group2);
+    entry5->setDefaultAutoTypeSequence(sequenceDisabled);
+    entry5->setAutoTypeEnabled(false);
+
+    // Entry with no parent
+    QPointer<Entry> entry6 = new Entry();
+    entry6->setDefaultAutoTypeSequence(sequenceOrphan);
+
+    QCOMPARE(entry1->defaultAutoTypeSequence(), QString());
+    QCOMPARE(entry1->effectiveAutoTypeSequence(), defaultSequence);
+    QCOMPARE(entry2->defaultAutoTypeSequence(), sequenceE2);
+    QCOMPARE(entry2->effectiveAutoTypeSequence(), sequenceE2);
+    QCOMPARE(entry3->defaultAutoTypeSequence(), QString());
+    QCOMPARE(entry3->effectiveAutoTypeSequence(), sequenceG1);
+    QCOMPARE(entry4->defaultAutoTypeSequence(), sequenceDisabled);
+    QCOMPARE(entry4->effectiveAutoTypeSequence(), QString());
+    QCOMPARE(entry5->defaultAutoTypeSequence(), sequenceDisabled);
+    QCOMPARE(entry5->effectiveAutoTypeSequence(), QString());
+    QCOMPARE(entry6->defaultAutoTypeSequence(), sequenceOrphan);
+    QCOMPARE(entry6->effectiveAutoTypeSequence(), QString());
+
+    delete db;
+}
