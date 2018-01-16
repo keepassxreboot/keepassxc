@@ -1,5 +1,6 @@
 /*
- *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2015 David Wu <lightvector@gmail.com>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,27 +16,24 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AUTOTYPESELECTVIEW_H
-#define KEEPASSX_AUTOTYPESELECTVIEW_H
+#include "AutoTypeMatch.h"
 
-#include "gui/entry/AutoTypeMatchView.h"
+AutoTypeMatch::AutoTypeMatch()
+  : entry(nullptr),
+    sequence()
+{}
 
-class AutoTypeSelectView : public AutoTypeMatchView
+AutoTypeMatch::AutoTypeMatch(Entry* entry, QString sequence)
+  : entry(entry),
+    sequence(sequence)
+{}
+
+bool AutoTypeMatch::operator==(const AutoTypeMatch& other) const
 {
-    Q_OBJECT
+    return entry == other.entry && sequence == other.sequence;
+}
 
-public:
-    explicit AutoTypeSelectView(QWidget* parent = nullptr);
-
-protected:
-    void mouseMoveEvent(QMouseEvent* event) override;
-    void keyReleaseEvent(QKeyEvent* e) override;
-
-private slots:
-    void selectFirstMatch();
-
-signals:
-    void rejected();
-};
-
-#endif // KEEPASSX_AUTOTYPESELECTVIEW_H
+bool AutoTypeMatch::operator!=(const AutoTypeMatch& other) const
+{
+    return entry != other.entry || sequence != other.sequence;
+}

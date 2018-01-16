@@ -23,6 +23,8 @@
 #include <QStringList>
 #include <QWidget>
 
+#include "core/AutoTypeMatch.h"
+
 class AutoTypeAction;
 class AutoTypeExecutor;
 class AutoTypePlatformInterface;
@@ -69,7 +71,7 @@ signals:
     void globalShortcutTriggered();
 
 private slots:
-    void performAutoTypeFromGlobal(Entry* entry, const QString& sequence);
+    void performAutoTypeFromGlobal(AutoTypeMatch match);
     void resetInAutoType();
     void unloadPlugin();
 
@@ -79,7 +81,7 @@ private:
     void loadPlugin(const QString& pluginPath);
     bool parseActions(const QString& sequence, const Entry* entry, QList<AutoTypeAction*>& actions);
     QList<AutoTypeAction*> createActionFromTemplate(const QString& tmpl, const Entry* entry);
-    QString autoTypeSequence(const Entry* entry, const QString& windowTitle = QString());
+    QList<QString> autoTypeSequences(const Entry* entry, const QString& windowTitle = QString());
     bool windowMatchesTitle(const QString& windowTitle, const QString& resolvedTitle);
     bool windowMatchesUrl(const QString& windowTitle, const QString& resolvedUrl);
     bool windowMatches(const QString& windowTitle, const QString& windowPattern);

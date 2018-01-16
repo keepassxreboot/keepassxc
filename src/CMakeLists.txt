@@ -39,6 +39,7 @@ configure_file(version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/version.h @ONLY)
 set(keepassx_SOURCES
     core/AutoTypeAssociations.cpp
     core/AsyncTask.h
+    core/AutoTypeMatch.cpp
     core/Config.cpp
     core/CsvParser.cpp
     core/Database.cpp
@@ -137,6 +138,8 @@ set(keepassx_SOURCES
     gui/csvImport/CsvImportWizard.cpp
     gui/csvImport/CsvParserModel.cpp
     gui/entry/AutoTypeAssociationsModel.cpp
+    gui/entry/AutoTypeMatchModel.cpp
+    gui/entry/AutoTypeMatchView.cpp
     gui/entry/EditEntryWidget.cpp
     gui/entry/EditEntryWidget_p.h
     gui/entry/EntryAttachmentsModel.cpp

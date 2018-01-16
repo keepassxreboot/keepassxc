@@ -22,8 +22,9 @@
 #include <QDialog>
 #include <QHash>
 
+#include "core/AutoTypeMatch.h"
+
 class AutoTypeSelectView;
-class Entry;
 
 class AutoTypeSelectDialog : public QDialog
 {
@@ -31,22 +32,21 @@ class AutoTypeSelectDialog : public QDialog
 
 public:
     explicit AutoTypeSelectDialog(QWidget* parent = nullptr);
-    void setEntries(const QList<Entry*>& entries, const QHash<Entry*, QString>& sequences);
+    void setMatchList(const QList<AutoTypeMatch>& matchList);
 
 signals:
-    void entryActivated(Entry* entry, const QString& sequence);
+    void matchActivated(AutoTypeMatch match);
 
 public slots:
     void done(int r) override;
 
 private slots:
-    void emitEntryActivated(const QModelIndex& index);
-    void entryRemoved();
+    void emitMatchActivated(const QModelIndex& index);
+    void matchRemoved();
 
 private:
     AutoTypeSelectView* const m_view;
-    QHash<Entry*, QString> m_sequences;
-    bool m_entryActivatedEmitted;
+    bool m_matchActivatedEmitted;
 };
 
 #endif // KEEPASSX_AUTOTYPESELECTDIALOG_H
