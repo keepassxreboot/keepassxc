@@ -138,13 +138,8 @@ void Config::init(const QString& fileName)
     m_defaults.insert("GUI/DarkTrayIcon", false);
     m_defaults.insert("GUI/MinimizeToTray", false);
     m_defaults.insert("GUI/MinimizeOnClose", false);
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Set defaults for state of 'Hide Usernames'/'Hide Passwords' settings
-     * of entry view
-     */
-    m_defaults.insert("GUI/EntryHideUsernames", false);
-    m_defaults.insert("GUI/EntryHidePasswords", true);
+    m_defaults.insert("GUI/HideUsernames", false);
+    m_defaults.insert("GUI/HidePasswords", true);
 }
 
 Config* Config::instance()

@@ -127,7 +127,7 @@ void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
             shortPassword(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->password())));
         m_ui->passwordLabel->setToolTip(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->password()));
     } else {
-        m_ui->passwordLabel->setText("****");
+        m_ui->passwordLabel->setText(QString("\u25cf").repeated(6));
     }
 
     QString url = m_currentEntry->webUrl();

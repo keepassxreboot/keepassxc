@@ -26,10 +26,6 @@ class Entry;
 class EntryModel;
 class Group;
 class SortFilterHideProxyModel;
-/**
- * @author Fonic <https://github.com/fonic>
- * Add forward declaration for QActionGroup
- */
 class QActionGroup;
 
 class EntryView : public QTreeView
@@ -46,21 +42,10 @@ public:
     bool inSearchMode();
     int numberOfSelectedEntries();
     void setFirstEntryActive();
-
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Methods to get/set state of 'Hide Usernames'/'Hide Passwords' settings
-     * (NOTE: these are just pass-through methods to avoid exposing entry model)
-     */
-    bool hideUsernames() const;
-    void setHideUsernames(const bool hide);
-    bool hidePasswords() const;
-    void setHidePasswords(const bool hide);
-
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Methods to get/set state of view
-     */
+    bool isUsernamesHidden() const;
+    void setUsernamesHidden(const bool hide);
+    bool isPasswordsHidden() const;
+    void setPasswordsHidden(const bool hide);
     QByteArray viewState() const;
     bool setViewState(const QByteArray& state) const;
 
@@ -71,10 +56,6 @@ signals:
     void entryActivated(Entry* entry, EntryModel::ModelColumn column);
     void entryPressed(Entry* entry);
     void entrySelectionChanged();
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Signal to notify about changes of view state
-     */
     void viewStateChanged();
 
 protected:
@@ -83,18 +64,8 @@ protected:
 private slots:
     void emitEntryActivated(const QModelIndex& index);
     void emitEntryPressed(const QModelIndex& index);
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Methods to switch to list/search mode (NOTE: previously named 'switch
-     * ToGroupMode'/'switchToEntryListMode')
-     */
     void switchToListMode();
     void switchToSearchMode();
-
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Slots for header context menu and actions
-     */
     void showHeaderMenu(const QPoint& position);
     void toggleColumnVisibility(QAction *action);
     void fitColumnsToWindow();
@@ -106,16 +77,9 @@ private:
     SortFilterHideProxyModel* const m_sortModel;
     bool m_inSearchMode;
 
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Properties to store default view states used by resetViewToDefaults()
-     */
     QByteArray m_defaultListViewState;
     QByteArray m_defaultSearchViewState;
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Properties to store header context menu and actions
-     */
+
     QMenu* m_headerMenu;
     QAction* m_hideUsernamesAction;
     QAction* m_hidePasswordsAction;

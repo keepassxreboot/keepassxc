@@ -27,40 +27,20 @@ DatabaseWidgetStateSync::DatabaseWidgetStateSync(QObject* parent)
 {
     m_mainSplitterSizes = variantToIntList(config()->get("GUI/SplitterState"));
     m_detailSplitterSizes = variantToIntList(config()->get("GUI/DetailSplitterState"));
-
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Load state of entry view 'Hide Usernames'/'Hide Passwords' settings
-     */
-    m_entryHideUsernames = config()->get("GUI/EntryHideUsernames").toBool();
-    m_entryHidePasswords = config()->get("GUI/EntryHidePasswords").toBool();
-
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Load states of entry view list/search view
-     */
-    m_entryListViewState = config()->get("GUI/EntryListViewState").toByteArray();
-    m_entrySearchViewState = config()->get("GUI/EntrySearchViewState").toByteArray();
+    m_hideUsernames = config()->get("GUI/HideUsernames").toBool();
+    m_hidePasswords = config()->get("GUI/HidePasswords").toBool();
+    m_listViewState = config()->get("GUI/ListViewState").toByteArray();
+    m_searchViewState = config()->get("GUI/SearchViewState").toByteArray();
 }
 
 DatabaseWidgetStateSync::~DatabaseWidgetStateSync()
 {
     config()->set("GUI/SplitterState", intListToVariant(m_mainSplitterSizes));
     config()->set("GUI/DetailSplitterState", intListToVariant(m_detailSplitterSizes));
-
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Save state of entry view 'Hide Usernames'/'Hide Passwords' settings
-     */
-    config()->set("GUI/EntryHideUsernames", m_entryHideUsernames);
-    config()->set("GUI/EntryHidePasswords", m_entryHidePasswords);
-
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Save states of entry view list/search view
-     */
-    config()->set("GUI/EntryListViewState", m_entryListViewState);
-    config()->set("GUI/EntrySearchViewState", m_entrySearchViewState);
+    config()->set("GUI/HideUsernames", m_hideUsernames);
+    config()->set("GUI/HidePasswords", m_hidePasswords);
+    config()->set("GUI/ListViewState", m_listViewState);
+    config()->set("GUI/SearchViewState", m_searchViewState);
 }
 
 void DatabaseWidgetStateSync::setActive(DatabaseWidget* dbWidget)
@@ -94,14 +74,8 @@ void DatabaseWidgetStateSync::setActive(DatabaseWidget* dbWidget)
                 SLOT(updateSplitterSizes()));
         connect(m_activeDbWidget, SIGNAL(detailSplitterSizesChanged()),
                 SLOT(updateSplitterSizes()));
-
-        /**
-         * @author Fonic <https://github.com/fonic>
-         * Connect signal to receive state changes of entry view view
-         */
         connect(m_activeDbWidget, SIGNAL(entryViewStateChanged()),
                 SLOT(updateViewState()));
-
         connect(m_activeDbWidget, SIGNAL(listModeActivated()),
                 SLOT(restoreListView()));
         connect(m_activeDbWidget, SIGNAL(searchModeActivated()),
@@ -114,58 +88,54 @@ void DatabaseWidgetStateSync::setActive(DatabaseWidget* dbWidget)
 }
 
 /**
- * @author Fonic <https://github.com/fonic>
  * Restore entry view list view state
  *
  * NOTE:
- * States of entry view 'Hide Usernames'/'Hide Passwords' settings are considered
- * 'global', i.e. they are the same for both list and search mode
+ * States of entry view 'Hide Usernames'/'Hide Passwords' settings are global,
+ * i.e. they are the same for both list and search mode
  *
  * NOTE:
- * If m_entryListViewState is empty, it is the first time after clean/invalid
- * config that list view is activated. Thus, save its current state. Without
- * this, m_entryListViewState would remain empty until there is an actual view
- * state change (e.g. column is resized)
+ * If m_listViewState is empty, the list view has been activated for the first
+ * time after starting with a clean (or invalid) config. Thus, save the current
+ * state. Without this, m_listViewState would remain empty until there is an
+ * actual view state change (e.g. column is resized)
  */
 void DatabaseWidgetStateSync::restoreListView()
 {
-    m_activeDbWidget->setEntryViewHideUsernames(m_entryHideUsernames);
-    m_activeDbWidget->setEntryViewHidePasswords(m_entryHidePasswords);
+    m_activeDbWidget->setUsernamesHidden(m_hideUsernames);
+    m_activeDbWidget->setPasswordsHidden(m_hidePasswords);
 
-    if (!m_entryListViewState.isEmpty()) {
-        m_activeDbWidget->setEntryViewViewState(m_entryListViewState);
-    }
-    else {
-        m_entryListViewState = m_activeDbWidget->entryViewViewState();
+    if (!m_listViewState.isEmpty()) {
+        m_activeDbWidget->setEntryViewState(m_listViewState);
+    } else {
+        m_listViewState = m_activeDbWidget->entryViewState();
     }
 
     m_blockUpdates = false;
 }
 
 /**
- * @author Fonic <https://github.com/fonic>
  * Restore entry view search view state
  *
  * NOTE:
- * States of entry view 'Hide Usernames'/'Hide Passwords' settings are considered
- * 'global', i.e. they are the same for both list and search mode
+ * States of entry view 'Hide Usernames'/'Hide Passwords' settings are global,
+ * i.e. they are the same for both list and search mode
  *
  * NOTE:
- * If m_entrySearchViewState is empty, it is the first time after clean/invalid
- * config that search view is activated. Thus, save its current state. Without
- * this, m_entrySearchViewState would remain empty until there is an actual view
- * state change (e.g. column is resized)
+ * If m_searchViewState is empty, the search view has been activated for the
+ * first time after starting with a clean (or invalid) config. Thus, save the
+ * current state. Without this, m_searchViewState would remain empty until
+ * there is an actual view state change (e.g. column is resized)
  */
 void DatabaseWidgetStateSync::restoreSearchView()
 {
-    m_activeDbWidget->setEntryViewHideUsernames(m_entryHideUsernames);
-    m_activeDbWidget->setEntryViewHidePasswords(m_entryHidePasswords);
+    m_activeDbWidget->setUsernamesHidden(m_hideUsernames);
+    m_activeDbWidget->setPasswordsHidden(m_hidePasswords);
 
-    if (!m_entrySearchViewState.isEmpty()) {
-        m_activeDbWidget->setEntryViewViewState(m_entrySearchViewState);
-    }
-    else {
-        m_entrySearchViewState = m_activeDbWidget->entryViewViewState();
+    if (!m_searchViewState.isEmpty()) {
+        m_activeDbWidget->setEntryViewState(m_searchViewState);
+    } else {
+        m_searchViewState = m_activeDbWidget->entryViewState();
     }
 
     m_blockUpdates = false;
@@ -187,10 +157,11 @@ void DatabaseWidgetStateSync::updateSplitterSizes()
 }
 
 /**
- * @author Fonic <https://github.com/fonic>
- * Update entry view list/search view state (NOTE: states of entry view
- * 'Hide Usernames'/'Hide Passwords' settings are considered 'global',
- * i.e. they are the same for both list and search mode)
+ * Update entry view list/search view state
+ *
+ * NOTE:
+ * States of entry view 'Hide Usernames'/'Hide Passwords' settings are global,
+ * i.e. they are the same for both list and search mode
  */
 void DatabaseWidgetStateSync::updateViewState()
 {
@@ -198,14 +169,13 @@ void DatabaseWidgetStateSync::updateViewState()
         return;
     }
 
-    m_entryHideUsernames = m_activeDbWidget->entryViewHideUsernames();
-    m_entryHidePasswords = m_activeDbWidget->entryViewHidePasswords();
+    m_hideUsernames = m_activeDbWidget->isUsernamesHidden();
+    m_hidePasswords = m_activeDbWidget->isPasswordsHidden();
 
     if (m_activeDbWidget->isInSearchMode()) {
-        m_entrySearchViewState = m_activeDbWidget->entryViewViewState();
-    }
-    else {
-        m_entryListViewState = m_activeDbWidget->entryViewViewState();
+        m_searchViewState = m_activeDbWidget->entryViewState();
+    } else {
+        m_listViewState = m_activeDbWidget->entryViewState();
     }
 }
 
@@ -219,8 +189,7 @@ QList<int> DatabaseWidgetStateSync::variantToIntList(const QVariant& variant)
         int size = var.toInt(&ok);
         if (ok) {
             result.append(size);
-        }
-        else {
+        } else {
             result.clear();
             break;
         }
@@ -239,4 +208,3 @@ QVariant DatabaseWidgetStateSync::intListToVariant(const QList<int>& list)
 
     return result;
 }
-

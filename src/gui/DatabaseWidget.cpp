@@ -181,13 +181,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
 
     connect(m_mainSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(mainSplitterSizesChanged()));
     connect(m_detailSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(detailSplitterSizesChanged()));
-
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Connect signal to pass through state changes of entry view view
-     */
     connect(m_entryView, SIGNAL(viewStateChanged()), SIGNAL(entryViewStateChanged()));
-
     connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(onGroupChanged(Group*)));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), SIGNAL(groupChanged()));
     connect(m_entryView, SIGNAL(entryActivated(Entry*, EntryModel::ModelColumn)),
@@ -297,55 +291,49 @@ void DatabaseWidget::setDetailSplitterSizes(const QList<int> &sizes)
 }
 
 /**
- * @author Fonic <https://github.com/fonic>
  * Get current state of entry view 'Hide Usernames' setting
  */
-bool DatabaseWidget::entryViewHideUsernames() const
+bool DatabaseWidget::isUsernamesHidden() const
 {
-    return m_entryView->hideUsernames();
+    return m_entryView->isUsernamesHidden();
 }
 
 /**
- * @author Fonic <https://github.com/fonic>
  * Set state of entry view 'Hide Usernames' setting
  */
-void DatabaseWidget::setEntryViewHideUsernames(const bool hide)
+void DatabaseWidget::setUsernamesHidden(const bool hide)
 {
-    m_entryView->setHideUsernames(hide);
+    m_entryView->setUsernamesHidden(hide);
 }
 
 /**
- * @author Fonic <https://github.com/fonic>
  * Get current state of entry view 'Hide Passwords' setting
  */
-bool DatabaseWidget::entryViewHidePasswords() const
+bool DatabaseWidget::isPasswordsHidden() const
 {
-    return m_entryView->hidePasswords();
+    return m_entryView->isPasswordsHidden();
 }
 
 /**
- * @author Fonic <https://github.com/fonic>
  * Set state of entry view 'Hide Passwords' setting
  */
-void DatabaseWidget::setEntryViewHidePasswords(const bool hide)
+void DatabaseWidget::setPasswordsHidden(const bool hide)
 {
-    m_entryView->setHidePasswords(hide);
+    m_entryView->setPasswordsHidden(hide);
 }
 
 /**
- * @author Fonic <https://github.com/fonic>
- * Get current state of entry view view
+ * Get current view state of entry view
  */
-QByteArray DatabaseWidget::entryViewViewState() const
+QByteArray DatabaseWidget::entryViewState() const
 {
     return m_entryView->viewState();
 }
 
 /**
- * @author Fonic <https://github.com/fonic>
- * Set state of entry view view
+ * Set view state of entry view
  */
-bool DatabaseWidget::setEntryViewViewState(const QByteArray& state) const
+bool DatabaseWidget::setEntryViewState(const QByteArray& state) const
 {
     return m_entryView->setViewState(state);
 }
@@ -696,8 +684,8 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
 
 void DatabaseWidget::createGroup()
 {
+    Q_ASSERT(m_groupView->currentGroup());
     if (!m_groupView->currentGroup()) {
-        Q_ASSERT(false);
         return;
     }
 
@@ -710,8 +698,8 @@ void DatabaseWidget::createGroup()
 void DatabaseWidget::deleteGroup()
 {
     Group* currentGroup = m_groupView->currentGroup();
+    Q_ASSERT(currentGroup && canDeleteCurrentGroup());
     if (!currentGroup || !canDeleteCurrentGroup()) {
-        Q_ASSERT(false);
         return;
     }
 
@@ -944,23 +932,14 @@ void DatabaseWidget::unlockDatabase(bool accepted)
     }
 }
 
-/**
- * @author Fonic <https://github.com/fonic>
- * Add 'copy-on-doubleclick' functionality for certain columns
- *
- * TODO:
- * If pull request #1298 gets merged, double-clicking column 'Attachments'
- * could open the new details view (see second screenshot)
- */
 void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::ModelColumn column)
 {
-    /* Should never happen */
+    Q_ASSERT(entry);
     if (!entry) {
-        Q_ASSERT(false);
         return;
     }
 
-    /* Decide what to do based on specified column */
+    // Implement 'copy-on-doubleclick' functionality for certain columns
     switch (column) {
     case EntryModel::Username:
         setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->username()));
@@ -973,9 +952,12 @@ void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::Mod
             openUrlForEntry(entry);
         }
         break;
-    case EntryModel::Notes:
-        setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->notes()));
-        break;
+    // TODO: switch to 'Notes' tab in details view/pane
+    //case EntryModel::Notes:
+    //    break;
+    // TODO: switch to 'Attachments' tab in details view/pane
+    //case EntryModel::Attachments:
+    //    break;
     default:
         switchToEntryEdit(entry);
     }

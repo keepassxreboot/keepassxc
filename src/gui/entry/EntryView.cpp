@@ -19,25 +19,9 @@
 
 #include <QHeaderView>
 #include <QKeyEvent>
-/**
- * @author Fonic <https://github.com/fonic>
- * Add include required for header context menu
- */
 #include <QMenu>
 
 #include "gui/SortFilterHideProxyModel.h"
-
-/**
- * @author Fonic <https://github.com/fonic>
- *
- * TODO NOTE:
- * Currently, 'zombie' columns which are not hidden but have width == 0
- * (rendering them invisible) may appear. This is caused by DatabaseWidget
- * StateSync. Corresponding checks/workarounds may be removed once sync
- * code is updated accordingly
- * -> relevant code pieces: if (header()->sectionSize(...) == 0) { ... }
- *
- */
 
 EntryView::EntryView(QWidget* parent)
     : QTreeView(parent)
@@ -49,12 +33,7 @@ EntryView::EntryView(QWidget* parent)
     m_sortModel->setDynamicSortFilter(true);
     m_sortModel->setSortLocaleAware(true);
     m_sortModel->setSortCaseSensitivity(Qt::CaseInsensitive);
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Set Qt::UserRole as sort role
-     * -> refer to 'if (role == Qt::UserRole)', EntryModel.cpp, EntryModel::
-     *    data() for details
-     */
+    // Use Qt::UserRole as sort role, see EntryModel::data()
     m_sortModel->setSortRole(Qt::UserRole);
     QTreeView::setModel(m_sortModel);
 
@@ -70,49 +49,31 @@ EntryView::EntryView(QWidget* parent)
 
     connect(this, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
     connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(entrySelectionChanged()));
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Connect signals to get notified about list/search mode switches (NOTE:
-     * previously named 'switch[ed]ToGroupMode'/'switch[ed]ToEntryListMode')
-     */
     connect(m_model, SIGNAL(switchedToListMode()), SLOT(switchToListMode()));
     connect(m_model, SIGNAL(switchedToSearchMode()), SLOT(switchToSearchMode()));
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Connect signals to notify about changes of view state when state of
-     * 'Hide Usernames'/'Hide Passwords' settings changes in model
-     */
-    connect(m_model, SIGNAL(hideUsernamesChanged()), SIGNAL(viewStateChanged()));
-    connect(m_model, SIGNAL(hidePasswordsChanged()), SIGNAL(viewStateChanged()));
-
+    connect(m_model, SIGNAL(usernamesHiddenChanged()), SIGNAL(viewStateChanged()));
+    connect(m_model, SIGNAL(passwordsHiddenChanged()), SIGNAL(viewStateChanged()));
     connect(this, SIGNAL(clicked(QModelIndex)), SLOT(emitEntryPressed(QModelIndex)));
 
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Create header context menu:
-     * - Actions to toggle state of 'Hide Usernames'/'Hide Passwords' settings
-     * - Actions to toggle column visibility, with each action carrying 'its'
-     *   column index as data
-     * - Actions to resize columns
-     * - Action to reset view to defaults
-     */
     m_headerMenu = new QMenu(this);
     m_headerMenu->setTitle(tr("Customize View"));
     m_headerMenu->addSection(tr("Customize View"));
 
-    m_hideUsernamesAction = m_headerMenu->addAction(tr("Hide Usernames"), m_model, SLOT(toggleHideUsernames(bool)));
+    m_hideUsernamesAction = m_headerMenu->addAction(tr("Hide Usernames"), m_model, SLOT(toggleUsernamesHidden(bool)));
     m_hideUsernamesAction->setCheckable(true);
-    m_hidePasswordsAction = m_headerMenu->addAction(tr("Hide Passwords"), m_model, SLOT(toggleHidePasswords(bool)));
+    m_hidePasswordsAction = m_headerMenu->addAction(tr("Hide Passwords"), m_model, SLOT(togglePasswordsHidden(bool)));
     m_hidePasswordsAction->setCheckable(true);
     m_headerMenu->addSeparator();
 
+    // Actions to toggle column visibility, each carrying the corresponding
+    // colummn index as data
     m_columnActions = new QActionGroup(this);
     m_columnActions->setExclusive(false);
-    for (int colidx = 1; colidx < header()->count(); colidx++) {
-        QString caption = m_model->headerData(colidx, Qt::Horizontal, Qt::DisplayRole).toString();
+    for (int columnIndex = 1; columnIndex < header()->count(); ++columnIndex) {
+        QString caption = m_model->headerData(columnIndex, Qt::Horizontal, Qt::DisplayRole).toString();
         QAction* action = m_headerMenu->addAction(caption);
         action->setCheckable(true);
-        action->setData(colidx);
+        action->setData(columnIndex);
         m_columnActions->addAction(action);
     }
     connect(m_columnActions, SIGNAL(triggered(QAction*)), this, SLOT(toggleColumnVisibility(QAction*)));
@@ -123,17 +84,8 @@ EntryView::EntryView(QWidget* parent)
     m_headerMenu->addSeparator();
     m_headerMenu->addAction(tr("Reset to defaults"), this, SLOT(resetViewToDefaults()));
 
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Configure header:
-     * - Set default section size
-     * - Disable stretching of last section (interferes with fitting columns
-     *   to window)
-     * - Associate with context menu
-     * - Connect signals to notify about changes of view state when state
-     *   of header changes
-     */
     header()->setDefaultSectionSize(100);
+    // Stretching of last section interferes with fitting columns to window
     header()->setStretchLastSection(false);
     header()->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(header(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showHeaderMenu(QPoint)));
@@ -142,35 +94,17 @@ EntryView::EntryView(QWidget* parent)
     connect(header(), SIGNAL(sectionResized(int, int, int)), this, SIGNAL(viewStateChanged()));
     connect(header(), SIGNAL(sortIndicatorChanged(int, Qt::SortOrder)), this, SIGNAL(viewStateChanged()));
 
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Fit columns to window
-     *
-     * TODO:
-     * Not working as expected, columns will end up being very small, most
-     * likely due to EntryView not being sized properly at this time. Find
-     * a way to make this work by analizing when/where EntryView is created
-     */
+    // TODO: not working as expected, columns will end up being very small,
+    // most likely due to the widget not being sized properly at this time
     //fitColumnsToWindow();
 
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Configure default search view state and save for later use
-     */
+    // Configure default search view state and save for later use
     header()->showSection(EntryModel::ParentGroup);
     m_sortModel->sort(EntryModel::ParentGroup, Qt::AscendingOrder);
     sortByColumn(EntryModel::ParentGroup, Qt::AscendingOrder);
     m_defaultSearchViewState = header()->saveState();
 
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Configure default list view state and save for later use
-     *
-     * NOTE:
-     * Default list view is intentionally configured last since this is the
-     * view that's supposed to be active after initialization as m_inSearchMode
-     * is initialized with 'false'
-     */
+    // Configure default list view state and save for later use
     header()->hideSection(EntryModel::ParentGroup);
     m_sortModel->sort(EntryModel::Title, Qt::AscendingOrder);
     sortByColumn(EntryModel::Title, Qt::AscendingOrder);
@@ -207,8 +141,7 @@ void EntryView::setFirstEntryActive()
     if (m_model->rowCount() > 0) {
         QModelIndex index = m_sortModel->mapToSource(m_sortModel->index(0, 0));
         setCurrentEntry(m_model->entryFromIndex(index));
-    }
-    else {
+    } else {
         emit entrySelectionChanged();
     }
 }
@@ -241,8 +174,7 @@ Entry* EntryView::currentEntry()
     QModelIndexList list = selectionModel()->selectedRows();
     if (list.size() == 1) {
         return m_model->entryFromIndex(m_sortModel->mapToSource(list.first()));
-    }
-    else {
+    } else {
         return nullptr;
     }
 }
@@ -262,58 +194,38 @@ Entry* EntryView::entryFromIndex(const QModelIndex& index)
 {
     if (index.isValid()) {
         return m_model->entryFromIndex(m_sortModel->mapToSource(index));
-    }
-    else {
+    } else {
         return nullptr;
     }
 }
 
 /**
- * @author Fonic <https://github.com/fonic>
- * Switch to list mode, i.e. list entries of group (NOTE: previously named
- * 'switchToGroupMode')
+ * Switch to list mode, i.e. list entries of group
  */
 void EntryView::switchToListMode()
 {
-    /* Check if already in this mode */
     if (!m_inSearchMode) {
         return;
     }
 
-    /**
-     * Use header()->hideSection() instead of m_sortModel->hideColumn() as
-     * the latter messes up column indices, interfering with code relying on
-     * proper indices
-     */
     header()->hideSection(EntryModel::ParentGroup);
-
     m_inSearchMode = false;
 }
 
 /**
- * @author Fonic <https://github.com/fonic>
- * Switch to search mode, i.e. list search results (NOTE: previously named
- * 'switchToEntryListMode')
+ * Switch to search mode, i.e. list search results
  */
 void EntryView::switchToSearchMode()
 {
-    /* Check if already in this mode */
     if (m_inSearchMode) {
         return;
     }
 
-    /*
-     * Use header()->showSection() instead of m_sortModel->hideColumn() as
-     * the latter messes up column indices, interfering with code relying on
-     * proper indices
-     */
     header()->showSection(EntryModel::ParentGroup);
 
-    /*
-     * Always set sorting to column 'Group', as it does not feel right to have
-     * the last known sort configuration of search view restored by 'Database
-     * WidgetStateSync', which is what happens without this
-     */
+    // Always set sorting to column 'Group', as it does not feel right to
+    // have the last known sort configuration of search view restored by
+    // 'DatabaseWidgetStateSync', which is what happens without this
     m_sortModel->sort(EntryModel::ParentGroup, Qt::AscendingOrder);
     sortByColumn(EntryModel::ParentGroup, Qt::AscendingOrder);
 
@@ -321,46 +233,41 @@ void EntryView::switchToSearchMode()
 }
 
 /**
- * @author Fonic <https://github.com/fonic>
  * Get current state of 'Hide Usernames' setting (NOTE: just pass-through for
  * m_model)
  */
-bool EntryView::hideUsernames() const
+bool EntryView::isUsernamesHidden() const
 {
-    return m_model->hideUsernames();
+    return m_model->isUsernamesHidden();
 }
 
 /**
- * @author Fonic <https://github.com/fonic>
  * Set state of 'Hide Usernames' setting (NOTE: just pass-through for m_model)
  */
-void EntryView::setHideUsernames(const bool hide)
+void EntryView::setUsernamesHidden(const bool hide)
 {
-    m_model->setHideUsernames(hide);
+    m_model->setUsernamesHidden(hide);
 }
 
 /**
- * @author Fonic <https://github.com/fonic>
  * Get current state of 'Hide Passwords' setting (NOTE: just pass-through for
  * m_model)
  */
-bool EntryView::hidePasswords() const
+bool EntryView::isPasswordsHidden() const
 {
-    return m_model->hidePasswords();
+    return m_model->isPasswordsHidden();
 }
 
 /**
- * @author Fonic <https://github.com/fonic>
  * Set state of 'Hide Passwords' setting (NOTE: just pass-through for m_model)
  */
-void EntryView::setHidePasswords(const bool hide)
+void EntryView::setPasswordsHidden(const bool hide)
 {
-    m_model->setHidePasswords(hide);
+    m_model->setPasswordsHidden(hide);
 }
 
 /**
- * @author Fonic <https://github.com/fonic>
- * Get current state of view
+ * Get current view state
  */
 QByteArray EntryView::viewState() const
 {
@@ -368,8 +275,7 @@ QByteArray EntryView::viewState() const
 }
 
 /**
- * @author Fonic <https://github.com/fonic>
- * Set state of entry view view
+ * Set view state
  */
 bool EntryView::setViewState(const QByteArray& state) const
 {
@@ -377,70 +283,59 @@ bool EntryView::setViewState(const QByteArray& state) const
 }
 
 /**
- * @author Fonic <https://github.com/fonic>
  * Sync checkable menu actions to current state and display header context
  * menu at specified position
  */
 void EntryView::showHeaderMenu(const QPoint& position)
 {
-    /* Sync checked state of menu actions to current state of view */
-    m_hideUsernamesAction->setChecked(m_model->hideUsernames());
-    m_hidePasswordsAction->setChecked(m_model->hidePasswords());
-    foreach (QAction *action, m_columnActions->actions()) {
+    m_hideUsernamesAction->setChecked(m_model->isUsernamesHidden());
+    m_hidePasswordsAction->setChecked(m_model->isPasswordsHidden());
+    const QList<QAction*> actions = m_columnActions->actions();
+    for (auto& action : actions) {
+        Q_ASSERT(static_cast<QMetaType::Type>(action->data().type()) == QMetaType::Int);
         if (static_cast<QMetaType::Type>(action->data().type()) != QMetaType::Int) {
-            Q_ASSERT(false);
             continue;
         }
-        int colidx = action->data().toInt();
-        bool hidden = header()->isSectionHidden(colidx) || (header()->sectionSize(colidx) == 0);
+        int columnIndex = action->data().toInt();
+        bool hidden = header()->isSectionHidden(columnIndex) || (header()->sectionSize(columnIndex) == 0);
         action->setChecked(!hidden);
     }
 
-    /* Display menu */
     m_headerMenu->popup(mapToGlobal(position));
 }
 
 /**
- * @author Fonic <https://github.com/fonic>
  * Toggle visibility of column referenced by triggering action
  */
 void EntryView::toggleColumnVisibility(QAction *action)
 {
-    /*
-     * Verify action carries a column index as data. Since QVariant.toInt()
-     * below will accept anything that's interpretable as int, perform a type
-     * check here to make sure data actually IS int
-     */
+    // Verify action carries a column index as data. Since QVariant.toInt()
+    // below will accept anything that's interpretable as int, perform a type
+    // check here to make sure data actually IS int
+    Q_ASSERT(static_cast<QMetaType::Type>(action->data().type()) == QMetaType::Int);
     if (static_cast<QMetaType::Type>(action->data().type()) != QMetaType::Int) {
-        Q_ASSERT(false);
         return;
     }
 
-    /*
-     * Toggle column visibility. Visible columns will only be hidden if at
-     * least one visible column remains, as the table header will disappear
-     * entirely when all columns are hidden, rendering the context menu in-
-     * accessible
-     */
-    int colidx = action->data().toInt();
+    // Toggle column visibility. Visible columns will only be hidden if at
+    // least one visible column remains, as the table header will disappear
+    // entirely when all columns are hidden
+    int columnIndex = action->data().toInt();
     if (action->isChecked()) {
-        header()->showSection(colidx);
-        if (header()->sectionSize(colidx) == 0) {
-            header()->resizeSection(colidx, header()->defaultSectionSize());
+        header()->showSection(columnIndex);
+        if (header()->sectionSize(columnIndex) == 0) {
+            header()->resizeSection(columnIndex, header()->defaultSectionSize());
         }
+        return;
     }
-    else {
-        if ((header()->count() - header()->hiddenSectionCount()) > 1) {
-            header()->hideSection(colidx);
-        }
-        else {
-            action->setChecked(true);
-        }
+    if ((header()->count() - header()->hiddenSectionCount()) > 1) {
+        header()->hideSection(columnIndex);
+        return;
     }
+    action->setChecked(true);
 }
 
 /**
- * @author Fonic <https://github.com/fonic>
  * Resize columns to fit all visible columns within the available space
  *
  * NOTE:
@@ -461,69 +356,60 @@ void EntryView::fitColumnsToWindow()
 }
 
 /**
- * @author Fonic <https://github.com/fonic>
  * Resize columns to fit current table contents, i.e. make all contents
  * entirely visible
  */
 void EntryView::fitColumnsToContents()
 {
-    /* Resize columns to fit contents */
+    // Resize columns to fit contents
     header()->resizeSections(QHeaderView::ResizeToContents);
 
-    /*
-     * Determine total width of currently visible columns. If there is
-     * still some space available on the header, equally distribute it to
-     * visible columns and add remaining fraction to last visible column
-     */
+    // Determine total width of currently visible columns. If there is
+    // still some space available on the header, equally distribute it to
+    // visible columns and add remaining fraction to last visible column
     int width = 0;
-    for (int colidx = 0; colidx < header()->count(); colidx++) {
-        if (!header()->isSectionHidden(colidx)) {
-            width += header()->sectionSize(colidx);
+    for (int columnIndex = 0; columnIndex < header()->count(); ++columnIndex) {
+        if (!header()->isSectionHidden(columnIndex)) {
+            width += header()->sectionSize(columnIndex);
         }
     }
     int visible = header()->count() - header()->hiddenSectionCount();
     int avail = header()->width() - width;
-    if ((visible > 0) && (avail > 0)) {
-        int add = avail / visible;
-        width = 0;
-        int last = 0;
-        for (int colidx = 0; colidx < header()->count(); colidx++) {
-            if (!header()->isSectionHidden(colidx)) {
-                header()->resizeSection(colidx, header()->sectionSize(colidx) + add);
-                width += header()->sectionSize(colidx);
-                if (header()->visualIndex(colidx) > last) {
-                    last = header()->visualIndex(colidx);
-                }
+    if ((visible <= 0) || (avail <= 0)) {
+        return;
+    }
+    int add = avail / visible;
+    width = 0;
+    int last = 0;
+    for (int columnIndex = 0; columnIndex < header()->count(); ++columnIndex) {
+        if (!header()->isSectionHidden(columnIndex)) {
+            header()->resizeSection(columnIndex, header()->sectionSize(columnIndex) + add);
+            width += header()->sectionSize(columnIndex);
+            if (header()->visualIndex(columnIndex) > last) {
+                last = header()->visualIndex(columnIndex);
             }
         }
-        header()->resizeSection(header()->logicalIndex(last), header()->sectionSize(last) + (header()->width() - width));
     }
+    header()->resizeSection(header()->logicalIndex(last), header()->sectionSize(last) + (header()->width() - width));
 
-    /*
-     * This should not be necessary due to use of header()->resizeSection,
-     * but lets do it anyway for the sake of completeness
-     */
+    // Shouldn't be necessary due to use of header()->resizeSection, but
+    // lets just do it anyway for the sake of completeness
     emit viewStateChanged();
 }
 
 /**
- * @author Fonic <https://github.com/fonic>
  * Reset view to defaults
  */
 void EntryView::resetViewToDefaults()
 {
-    /* Reset state of 'Hide Usernames'/'Hide Passwords' settings */
-    m_model->setHideUsernames(false);
-    m_model->setHidePasswords(true);
+    m_model->setUsernamesHidden(false);
+    m_model->setPasswordsHidden(true);
 
-    /* Reset columns (size, order, sorting etc.) */
     if (m_inSearchMode) {
         header()->restoreState(m_defaultSearchViewState);
-    }
-    else {
+    } else {
         header()->restoreState(m_defaultListViewState);
     }
 
-    /* Nicely fitting columns to window feels like a sane default */
     fitColumnsToWindow();
 }

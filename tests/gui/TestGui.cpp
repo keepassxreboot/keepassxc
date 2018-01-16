@@ -686,21 +686,6 @@ void TestGui::testSearch()
     QTRY_COMPARE(m_dbWidget->currentMode(), DatabaseWidget::ViewMode);
 }
 
-/**
- * @author Fonic <https://github.com/fonic>
- * Update clicks within entry view referencing column indices to account
- * for changed column indices due to new way of showing/hiding column Entry
- * Model::ParentGroup. This column now has fixed index 0 wether it's shown
- * or hidden, thus all indices need to be shifted by +1 when not in search
- * mode (which is the case within this entire method)
- *
- * Old:
- * clickIndex(entryView->model()->index(row, column), button);
- *
- * New:
- * clickIndex(entryView->model()->index(row, column+1), button);
- *
- */
 void TestGui::testDeleteEntry()
 {
     // Add canned entries for consistent testing

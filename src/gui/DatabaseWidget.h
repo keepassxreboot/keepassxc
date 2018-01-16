@@ -92,23 +92,12 @@ public:
     void setMainSplitterSizes(const QList<int>& sizes);
     QList<int> detailSplitterSizes() const;
     void setDetailSplitterSizes(const QList<int>& sizes);
-
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Methods to get/set state of entry view 'Hide Usernames'/'Hide
-     * Passwords' settings
-     */
-    bool entryViewHideUsernames() const;
-    void setEntryViewHideUsernames(const bool hide);
-    bool entryViewHidePasswords() const;
-    void setEntryViewHidePasswords(const bool hide);
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Methods to get/set state of entry view view state
-     */
-    QByteArray entryViewViewState() const;
-    bool setEntryViewViewState(const QByteArray& state) const;
-
+    bool isUsernamesHidden() const;
+    void setUsernamesHidden(const bool hide);
+    bool isPasswordsHidden() const;
+    void setPasswordsHidden(const bool hide);
+    QByteArray entryViewState() const;
+    bool setEntryViewState(const QByteArray& state) const;
     void clearAllWidgets();
     bool currentEntryHasTitle();
     bool currentEntryHasUsername();
@@ -142,13 +131,7 @@ signals:
     void searchModeActivated();
     void mainSplitterSizesChanged();
     void detailSplitterSizesChanged();
-
-    /**
-     * @author Fonic <https://github.com/fonic>
-     * Signal to notify about state changes entry view view
-     */
     void entryViewStateChanged();
-
     void updateSearch(QString text);
 
 public slots:
