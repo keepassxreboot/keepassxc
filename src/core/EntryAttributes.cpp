@@ -286,11 +286,8 @@ void EntryAttributes::clear()
 int EntryAttributes::attributesSize() const
 {
     int size = 0;
-
-    QMapIterator<QString, QString> i(m_attributes);
-    while (i.hasNext()) {
-        i.next();
-        size += i.key().toUtf8().size() + i.value().toUtf8().size();
+    for (auto it = m_attributes.constBegin(); it != m_attributes.constEnd(); ++it) {
+        size += it.key().toUtf8().size() + it.value().toUtf8().size();
     }
     return size;
 }

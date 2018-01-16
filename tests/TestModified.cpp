@@ -400,8 +400,10 @@ void TestModified::testHistoryItem()
     entry2->endUpdate();
     QCOMPARE(entry2->historyItems().size(), 0);
 
+    const int historyMaxSize = 17000;
+
     db->metadata()->setHistoryMaxItems(-1);
-    db->metadata()->setHistoryMaxSize(17000);
+    db->metadata()->setHistoryMaxSize(historyMaxSize);
 
     entry2->beginUpdate();
     entry2->attachments()->set("test", QByteArray(18000, 'X'));
@@ -469,19 +471,21 @@ void TestModified::testHistoryItem()
     entry4->setGroup(root);
     QCOMPARE(entry4->historyItems().size(), 0);
 
+    const QString key("test");
+
     int reservedSize = entry4->attributes()->attributesSize();
     entry4->beginUpdate();
-    entry4->attachments()->set("test1", QByteArray(17000 - 5 - reservedSize + 1, 'a'));
+    entry4->attachments()->set(key, QByteArray(historyMaxSize - key.size() - reservedSize + 1, 'a'));
     entry4->endUpdate();
     QCOMPARE(entry4->historyItems().size(), 1);
 
     entry4->beginUpdate();
-    entry4->attachments()->remove("test1");
+    entry4->attachments()->remove(key);
     entry4->endUpdate();
     QCOMPARE(entry4->historyItems().size(), 0);
 
     entry4->beginUpdate();
-    entry4->setTags(QByteArray(17000 - reservedSize + 1, 'a'));
+    entry4->setTags(QByteArray(historyMaxSize - reservedSize + 1, 'a'));
     entry4->endUpdate();
     QCOMPARE(entry4->historyItems().size(), 1);
 
@@ -491,19 +495,19 @@ void TestModified::testHistoryItem()
     QCOMPARE(entry4->historyItems().size(), 0);
 
     entry4->beginUpdate();
-    entry4->attributes()->set("test3", QByteArray(17000 - 5 - reservedSize + 1, 'a'));
+    entry4->attributes()->set(key, QByteArray(historyMaxSize - key.size() - reservedSize + 1, 'a'));
     entry4->endUpdate();
     QCOMPARE(entry4->historyItems().size(), 1);
 
     entry4->beginUpdate();
-    entry4->attributes()->remove("test3");
+    entry4->attributes()->remove(key);
     entry4->endUpdate();
     QCOMPARE(entry4->historyItems().size(), 0);
 
     entry4->beginUpdate();
     AutoTypeAssociations::Association association;
-    association.window = "test3";
-    association.sequence = QByteArray(17000 - 5 - reservedSize + 1, 'a');
+    association.window = key;
+    association.sequence = QByteArray(historyMaxSize - key.size() - reservedSize + 1, 'a');
     entry4->autoTypeAssociations()->add(association);
     entry4->endUpdate();
     QCOMPARE(entry4->historyItems().size(), 1);

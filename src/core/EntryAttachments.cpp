@@ -153,16 +153,13 @@ bool EntryAttachments::operator!=(const EntryAttachments& other) const
     return m_attachments != other.m_attachments;
 }
 
-int EntryAttachments::attachmentsSize(const QSet<QByteArray> &ignoredAttachments) const
+int EntryAttachments::attachmentsSize(const QSet<QByteArray>& ignoredAttachments) const
 {
     int size = 0;
-
-    QMapIterator<QString, QByteArray> i(m_attachments);
-    while (i.hasNext()) {
-        i.next();
-        if( ! ignoredAttachments.contains( i.value() )){
-            size += i.key().toUtf8().size() + i.value().size();
-         }
+    for (auto it = m_attachments.constBegin(); it != m_attachments.constEnd(); ++it) {
+        if (!ignoredAttachments.contains(it.value())) {
+            size += it.key().toUtf8().size() + it.value().size();
+        }
     }
     return size;
 }

@@ -41,7 +41,7 @@ public:
     void copyDataFrom(const EntryAttachments* other);
     bool operator==(const EntryAttachments& other) const;
     bool operator!=(const EntryAttachments& other) const;
-    int attachmentsSize(const QSet<QByteArray> &ignoredAttachments) const;
+    int attachmentsSize(const QSet<QByteArray>& ignoredAttachments) const;
 
 signals:
     void modified();

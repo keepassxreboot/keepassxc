@@ -586,6 +586,7 @@ void Entry::truncateHistory()
 
         QMutableListIterator<Entry*> i(m_history);
         i.toBack();
+        const QRegularExpression delimiter(",|:|;");
         while (i.hasPrevious()) {
             Entry* historyItem = i.previous();
 
@@ -594,7 +595,8 @@ void Entry::truncateHistory()
                 size += historyItem->attributes()->attributesSize();
                 size += historyItem->autoTypeAssociations()->associationsSize();
                 size += historyItem->attachments()->attachmentsSize(foundAttachments);
-                foreach( const QString &tag, historyItem->tags().split(QRegExp(",|;|:"), QString::SkipEmptyParts)){
+                const QStringList tags = historyItem->tags().split(delimiter, QString::SkipEmptyParts);
+                for (const QString& tag : tags) {
                     size += tag.toUtf8().size();
                 }
                 foundAttachments += historyItem->attachments()->values();
