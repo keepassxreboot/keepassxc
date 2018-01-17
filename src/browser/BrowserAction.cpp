@@ -39,6 +39,12 @@ QJsonObject BrowserAction::readResponse(const QJsonObject& json)
         return QJsonObject();
     }
 
+    bool triggerUnlock = false;
+    const QString trigger = json.value("triggerUnlock").toString();
+    if (!trigger.isEmpty() && trigger.compare("true", Qt::CaseSensitive) == 0) {
+        triggerUnlock = true;
+    }
+
     const QString action = json.value("action").toString();
     if (action.isEmpty()) {
         return QJsonObject();
@@ -48,7 +54,7 @@ QJsonObject BrowserAction::readResponse(const QJsonObject& json)
     if (action.compare("change-public-keys", Qt::CaseSensitive) != 0 && !m_browserService.isDatabaseOpened()) {
         if (m_clientPublicKey.isEmpty()) {
             return getErrorReply(action, ERROR_KEEPASS_CLIENT_PUBLIC_KEY_NOT_RECEIVED);
-        } else if (!m_browserService.openDatabase()) {
+        } else if (!m_browserService.openDatabase(triggerUnlock)) {
             return getErrorReply(action, ERROR_KEEPASS_DATABASE_NOT_OPENED);
         }
     }
@@ -134,10 +140,11 @@ QJsonObject BrowserAction::handleGetDatabaseHash(const QJsonObject& json, const 
 
     QString command = decrypted.value("action").toString();
     if (!command.isEmpty() && command.compare("get-databasehash", Qt::CaseSensitive) == 0) {
-        QJsonObject message;
+        const QString newNonce = incrementNonce(nonce);
+
+        QJsonObject message = buildMessage(newNonce);
         message["hash"] = hash;
-        message["version"] = KEEPASSX_VERSION;
-        return buildResponse(action, message, incrementNonce(nonce));
+        return buildResponse(action, message, newNonce);
     }
 
     return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
@@ -237,7 +244,7 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
     const QJsonArray users = m_browserService.findMatchingEntries(id, url, submit, "");
 
     if (users.isEmpty()) {
-        return QJsonObject();   // No logins found. Not an error, return an empty JSON object.
+        return getErrorReply(action, ERROR_KEEPASS_NO_LOGINS_FOUND);
     }
 
     const QString newNonce = incrementNonce(nonce);
@@ -379,21 +386,22 @@ QJsonObject BrowserAction::buildResponse(const QString& action, const QJsonObjec
 QString BrowserAction::getErrorMessage(const int errorCode) const
 {
     switch (errorCode) {
-    case ERROR_KEEPASS_DATABASE_NOT_OPENED:             return "Database not opened";
-    case ERROR_KEEPASS_DATABASE_HASH_NOT_RECEIVED:      return "Database hash not available";
-    case ERROR_KEEPASS_CLIENT_PUBLIC_KEY_NOT_RECEIVED:  return "Client public key not received";
-    case ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE:          return "Cannot decrypt message";
-    case ERROR_KEEPASS_TIMEOUT_OR_NOT_CONNECTED:        return "Timeout or cannot connect to KeePassXC";
-    case ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED:      return "Action cancelled or denied";
-    case ERROR_KEEPASS_CANNOT_ENCRYPT_MESSAGE:          return "Cannot encrypt message or public key not found. Is Native Messaging enabled in KeePassXC?";
-    case ERROR_KEEPASS_ASSOCIATION_FAILED:              return "KeePassXC association failed, try again";
-    case ERROR_KEEPASS_KEY_CHANGE_FAILED:               return "Key change was not successful";
-    case ERROR_KEEPASS_ENCRYPTION_KEY_UNRECOGNIZED:     return "Encryption key is not recognized";
-    case ERROR_KEEPASS_NO_SAVED_DATABASES_FOUND:        return "No saved databases found";
-    case ERROR_KEEPASS_INCORRECT_ACTION:                return "Incorrect action";
-    case ERROR_KEEPASS_EMPTY_MESSAGE_RECEIVED:          return "Empty message received";
-    case ERROR_KEEPASS_NO_URL_PROVIDED:                 return "No URL provided";
-    default:                                            return "Unknown error";
+    case ERROR_KEEPASS_DATABASE_NOT_OPENED:             return QObject::tr("Database not opened");
+    case ERROR_KEEPASS_DATABASE_HASH_NOT_RECEIVED:      return QObject::tr("Database hash not available");
+    case ERROR_KEEPASS_CLIENT_PUBLIC_KEY_NOT_RECEIVED:  return QObject::tr("Client public key not received");
+    case ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE:          return QObject::tr("Cannot decrypt message");
+    case ERROR_KEEPASS_TIMEOUT_OR_NOT_CONNECTED:        return QObject::tr("Timeout or cannot connect to KeePassXC");
+    case ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED:      return QObject::tr("Action cancelled or denied");
+    case ERROR_KEEPASS_CANNOT_ENCRYPT_MESSAGE:          return QObject::tr("Cannot encrypt message or public key not found. Is Native Messaging enabled in KeePassXC?");
+    case ERROR_KEEPASS_ASSOCIATION_FAILED:              return QObject::tr("KeePassXC association failed, try again");
+    case ERROR_KEEPASS_KEY_CHANGE_FAILED:               return QObject::tr("Key change was not successful");
+    case ERROR_KEEPASS_ENCRYPTION_KEY_UNRECOGNIZED:     return QObject::tr("Encryption key is not recognized");
+    case ERROR_KEEPASS_NO_SAVED_DATABASES_FOUND:        return QObject::tr("No saved databases found");
+    case ERROR_KEEPASS_INCORRECT_ACTION:                return QObject::tr("Incorrect action");
+    case ERROR_KEEPASS_EMPTY_MESSAGE_RECEIVED:          return QObject::tr("Empty message received");
+    case ERROR_KEEPASS_NO_URL_PROVIDED:                 return QObject::tr("No URL provided");
+    case ERROR_KEEPASS_NO_LOGINS_FOUND:                 return QObject::tr("No logins found");
+    default:                                            return QObject::tr("Unknown error");
     }
 }
 

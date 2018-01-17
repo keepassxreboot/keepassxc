@@ -72,6 +72,11 @@ void NativeMessagingHost::run()
     if (BrowserSettings::supportBrowserProxy()) {
         QString serverPath = getLocalServerPath();
         QFile::remove(serverPath);
+
+        if (m_localServer->isListening()) {
+            m_localServer->close();
+        }
+
         m_localServer->listen(serverPath);
         connect(m_localServer.data(), SIGNAL(newConnection()), this, SLOT(newLocalConnection()));
     } else {
@@ -120,8 +125,10 @@ void NativeMessagingHost::readStdIn(const quint32 length)
 void NativeMessagingHost::newLocalConnection()
 {
     QLocalSocket* socket = m_localServer->nextPendingConnection();
-    connect(socket, SIGNAL(readyRead()), this, SLOT(newLocalMessage()));
-    connect(socket, SIGNAL(disconnected()), this, SLOT(disconnectSocket()));
+    if (socket) {
+        connect(socket, SIGNAL(readyRead()), this, SLOT(newLocalMessage()));
+        connect(socket, SIGNAL(disconnected()), this, SLOT(disconnectSocket()));
+    }
 }
 
 void NativeMessagingHost::newLocalMessage()

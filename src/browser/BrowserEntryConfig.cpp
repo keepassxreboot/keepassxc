@@ -21,7 +21,7 @@
 #include "core/Entry.h"
 #include "core/EntryAttributes.h"
 
-static const char KEEPASSBROWSER_NAME[] = "keepassxc-browser Settings";  //TODO: duplicated string (also in Service.cpp)
+static const char KEEPASSBROWSER_NAME[] = "KeePassXC-Browser Settings";
 
 
 BrowserEntryConfig::BrowserEntryConfig(QObject* parent) :

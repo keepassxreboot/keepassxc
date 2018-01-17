@@ -43,7 +43,8 @@ class BrowserAction : public QObject
         ERROR_KEEPASS_NO_SAVED_DATABASES_FOUND =        11,
         ERROR_KEEPASS_INCORRECT_ACTION =                12,
         ERROR_KEEPASS_EMPTY_MESSAGE_RECEIVED =          13,
-        ERROR_KEEPASS_NO_URL_PROVIDED =                 14
+        ERROR_KEEPASS_NO_URL_PROVIDED =                 14,
+        ERROR_KEEPASS_NO_LOGINS_FOUND =                 15
     };
 
 public:
