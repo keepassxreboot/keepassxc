@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,8 +15,22 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QTest>
+#ifndef KEEPASSXC_TEST_KDBX3_H
+#define KEEPASSXC_TEST_KDBX3_H
 
 #include "TestKeePass2XmlReader.h"
 
-QTEST_GUILESS_MAIN(TestKdbx3XmlReader)
+class TestKdbx3 : public TestKeePass2XmlReader
+{
+Q_OBJECT
+
+private slots:
+    virtual void initTestCase() override;
+
+protected:
+    virtual Database* readDatabase(QBuffer* buf, bool strictMode, bool& hasError, QString& errorString) override;
+    virtual Database* readDatabase(QString path, bool strictMode, bool& hasError, QString& errorString) override;
+    virtual void writeDatabase(QBuffer* buf, Database* db, bool& hasError, QString& errorString) override;
+};
+
+#endif // KEEPASSXC_TEST_KDBX3_H
