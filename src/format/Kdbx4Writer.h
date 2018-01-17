@@ -30,7 +30,7 @@ public:
 
 private:
     bool writeInnerHeaderField(QIODevice* device, KeePass2::InnerHeaderFieldID fieldId, const QByteArray& data);
-    bool writeBinary(QIODevice* device, const QByteArray& data);
+    void writeAttachments(QIODevice* device, Database* db);
     static bool serializeVariantMap(const QVariantMap& map, QByteArray& outputBytes);
 };
 
