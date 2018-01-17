@@ -72,7 +72,7 @@ int main(int argc, char** argv)
     QCommandLineOption parentWindowOption(QStringList() << "pw"
                                                         << "parent-window",
                                                         QCoreApplication::translate("main", "Parent window handle"),
-                                     "handle");
+                                    		        "handle");
 
     parser.addHelpOption();
     parser.addVersionOption();
