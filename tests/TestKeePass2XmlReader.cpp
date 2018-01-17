@@ -20,16 +20,15 @@
 #include <QBuffer>
 #include <QFile>
 #include <QTest>
+#include <format/KeePass2.h>
 
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
-#include "format/KeePass2XmlReader.h"
-#include "format/KeePass2XmlWriter.h"
+#include "format/KdbxXmlReader.h"
+#include "format/KdbxXmlWriter.h"
 #include "config-keepassx-tests.h"
-
-QTEST_GUILESS_MAIN(TestKeePass2XmlReader)
 
 namespace QTest {
     template<>
@@ -79,16 +78,80 @@ QByteArray TestKeePass2XmlReader::strToBytes(const QString& str)
     return result;
 }
 
-void TestKeePass2XmlReader::initTestCase()
+void TestKdbx3XmlReader::initTestCase()
 {
     QVERIFY(Crypto::init());
 
-    KeePass2XmlReader reader;
+    KdbxXmlReader reader(KeePass2::FILE_VERSION_3);
     reader.setStrictMode(true);
     QString xmlFile = QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.xml");
     m_db = reader.readDatabase(xmlFile);
     QVERIFY(m_db);
     QVERIFY(!reader.hasError());
+}
+
+void TestKdbx4XmlReader::initTestCase()
+{
+    QVERIFY(Crypto::init());
+
+    KdbxXmlReader reader(KeePass2::FILE_VERSION_3);
+    reader.setStrictMode(true);
+    QString xmlFile = QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.xml");
+    m_db = reader.readDatabase(xmlFile);
+    QVERIFY(m_db);
+    QVERIFY(!reader.hasError());
+}
+
+void TestKdbx3XmlReader::readDatabase(QString path, bool strictMode, Database*& db, bool& hasError, QString& errorString)
+{
+    KdbxXmlReader reader(KeePass2::FILE_VERSION_3);
+    reader.setStrictMode(strictMode);
+    db = reader.readDatabase(path);
+    hasError = reader.hasError();
+    errorString = reader.errorString();
+}
+
+void TestKdbx3XmlReader::readDatabase(QBuffer* buf, bool strictMode, Database*& db, bool& hasError, QString& errorString)
+{
+    KdbxXmlReader reader(KeePass2::FILE_VERSION_3);
+    reader.setStrictMode(strictMode);
+    db = reader.readDatabase(buf);
+    hasError = reader.hasError();
+    errorString = reader.errorString();
+}
+
+void TestKdbx3XmlReader::writeDatabase(QBuffer* buf, Database* db, bool& hasError, QString& errorString)
+{
+    KdbxXmlWriter writer(KeePass2::FILE_VERSION_3);
+    writer.writeDatabase(buf, db);
+    hasError = writer.hasError();
+    errorString = writer.errorString();
+}
+
+void TestKdbx4XmlReader::readDatabase(QString path, bool strictMode, Database*& db, bool& hasError, QString& errorString)
+{
+    KdbxXmlReader reader(KeePass2::FILE_VERSION_3);
+    reader.setStrictMode(strictMode);
+    db = reader.readDatabase(path);
+    hasError = reader.hasError();
+    errorString = reader.errorString();
+}
+
+void TestKdbx4XmlReader::readDatabase(QBuffer* buf, bool strictMode, Database*& db, bool& hasError, QString& errorString)
+{
+    KdbxXmlReader reader(KeePass2::FILE_VERSION_3);
+    reader.setStrictMode(strictMode);
+    db = reader.readDatabase(buf);
+    hasError = reader.hasError();
+    errorString = reader.errorString();
+}
+
+void TestKdbx4XmlReader::writeDatabase(QBuffer* buf, Database* db, bool& hasError, QString& errorString)
+{
+    KdbxXmlWriter writer(KeePass2::FILE_VERSION_3);
+    writer.writeDatabase(buf, db);
+    hasError = writer.hasError();
+    errorString = writer.errorString();
 }
 
 void TestKeePass2XmlReader::testMetadata()
@@ -374,15 +437,20 @@ void TestKeePass2XmlReader::testBroken()
     QFETCH(bool, strictMode);
     QFETCH(bool, expectError);
 
-    KeePass2XmlReader reader;
-    reader.setStrictMode(strictMode);
+
     QString xmlFile = QString("%1/%2.xml").arg(KEEPASSX_TEST_DATA_DIR, baseName);
     QVERIFY(QFile::exists(xmlFile));
-    QScopedPointer<Database> db(reader.readDatabase(xmlFile));
-    if (reader.hasError()) {
-        qWarning("Reader error: %s", qPrintable(reader.errorString()));
+    bool hasError;
+    QString errorString;
+    Database* db;
+    readDatabase(xmlFile, strictMode, db, hasError, errorString);
+    if (hasError) {
+        qWarning("Reader error: %s", qPrintable(errorString));
     }
-    QCOMPARE(reader.hasError(), expectError);
+    QCOMPARE(hasError, expectError);
+    if (db) {
+        delete db;
+    }
 }
 
 void TestKeePass2XmlReader::testBroken_data()
@@ -412,15 +480,20 @@ void TestKeePass2XmlReader::testBroken_data()
 
 void TestKeePass2XmlReader::testEmptyUuids()
 {
-    KeePass2XmlReader reader;
-    reader.setStrictMode(true);
+
     QString xmlFile = QString("%1/%2.xml").arg(KEEPASSX_TEST_DATA_DIR, "EmptyUuids");
     QVERIFY(QFile::exists(xmlFile));
-    QScopedPointer<Database> db(reader.readDatabase(xmlFile));
-    if (reader.hasError()) {
-        qWarning("Reader error: %s", qPrintable(reader.errorString()));
+    Database* dbp;
+    bool hasError;
+    QString errorString;
+    readDatabase(xmlFile, true, dbp, hasError, errorString);
+    if (hasError) {
+        qWarning("Reader error: %s", qPrintable(errorString));
     }
-    QVERIFY(!reader.hasError());
+    QVERIFY(!hasError);
+    if (dbp) {
+        delete dbp;
+    }
 }
 
 void TestKeePass2XmlReader::testInvalidXmlChars()
@@ -459,19 +532,19 @@ void TestKeePass2XmlReader::testInvalidXmlChars()
 
     QBuffer buffer;
     buffer.open(QIODevice::ReadWrite);
-    KeePass2XmlWriter writer;
-    writer.writeDatabase(&buffer, dbWrite.data());
-    QVERIFY(!writer.hasError());
+    bool hasError;
+    QString errorString;
+    writeDatabase(&buffer, dbWrite.data(), hasError, errorString);
+    QVERIFY(!hasError);
     buffer.seek(0);
 
-    KeePass2XmlReader reader;
-    reader.setStrictMode(true);
-    QScopedPointer<Database> dbRead(reader.readDatabase(&buffer));
-    if (reader.hasError()) {
-        qWarning("Database read error: %s", qPrintable(reader.errorString()));
+    Database* dbRead;
+    readDatabase(&buffer, true, dbRead, hasError, errorString);
+    if (hasError) {
+        qWarning("Database read error: %s", qPrintable(errorString));
     }
-    QVERIFY(!reader.hasError());
-    QVERIFY(!dbRead.isNull());
+    QVERIFY(!hasError);
+    QVERIFY(dbRead);
     QCOMPARE(dbRead->rootGroup()->entries().size(), 1);
     Entry* entryRead = dbRead->rootGroup()->entries().at(0);
     EntryAttributes* attrRead = entryRead->attributes();
@@ -486,22 +559,28 @@ void TestKeePass2XmlReader::testInvalidXmlChars()
     QCOMPARE(strToBytes(attrRead->value("LowLowSurrogate")), QByteArray());
     QCOMPARE(strToBytes(attrRead->value("SurrogateValid1")), strToBytes(strSurrogateValid1));
     QCOMPARE(strToBytes(attrRead->value("SurrogateValid2")), strToBytes(strSurrogateValid2));
+
+    if (dbRead) {
+        delete dbRead;
+    }
 }
 
 void TestKeePass2XmlReader::testRepairUuidHistoryItem()
 {
-    KeePass2XmlReader reader;
     QString xmlFile = QString("%1/%2.xml").arg(KEEPASSX_TEST_DATA_DIR, "BrokenDifferentEntryHistoryUuid");
     QVERIFY(QFile::exists(xmlFile));
-    QScopedPointer<Database> db(reader.readDatabase(xmlFile));
-    if (reader.hasError()) {
-        qWarning("Database read error: %s", qPrintable(reader.errorString()));
+    Database* db;
+    bool hasError;
+    QString errorString;
+    readDatabase(xmlFile, true, db, hasError, errorString);
+    if (hasError) {
+        qWarning("Database read error: %s", qPrintable(errorString));
     }
-    QVERIFY(!reader.hasError());
+    QVERIFY(!hasError);
 
 
 
-    QList<Entry*> entries = db.data()->rootGroup()->entries();
+    QList<Entry*> entries = db->rootGroup()->entries();
     QCOMPARE(entries.size(), 1);
     Entry* entry = entries.at(0);
 
@@ -512,6 +591,10 @@ void TestKeePass2XmlReader::testRepairUuidHistoryItem()
     QVERIFY(!entry->uuid().isNull());
     QVERIFY(!historyItem->uuid().isNull());
     QCOMPARE(historyItem->uuid(), entry->uuid());
+
+    if (db) {
+        delete db;
+    }
 }
 
 void TestKeePass2XmlReader::cleanupTestCase()

@@ -1,10 +1,10 @@
 /*
-*  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
+*  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation, either version 2 or (at your option)
-*  version 3 of the License.
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
 *
 *  This program is distributed in the hope that it will be useful,
 *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -15,25 +15,11 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KEEPASSX_COMPOSITEKEY_P_H
-#define KEEPASSX_COMPOSITEKEY_P_H
+#ifndef VARIANT_H
+#define VARIANT_H
 
-#include <QThread>
+#include <QtCore>
 
-class TransformKeyBenchmarkThread : public QThread
-{
-    Q_OBJECT
+QVariantMap qo2qv(const QObject* object, const QStringList& ignoredProperties = QStringList(QString(QLatin1String("objectName"))));
 
-public:
-    explicit TransformKeyBenchmarkThread(int msec);
-    int rounds();
-
-protected:
-    void run();
-
-private:
-    int m_msec;
-    int m_rounds;
-};
-
-#endif // KEEPASSX_COMPOSITEKEY_P_H
+#endif // VARIANT_H

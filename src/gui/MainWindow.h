@@ -61,6 +61,7 @@ public slots:
     void hideGlobalMessage();
     void showYubiKeyPopup();
     void hideYubiKeyPopup();
+    void bringToFront();
 
 protected:
      void closeEvent(QCloseEvent* event) override;
@@ -106,6 +107,10 @@ private:
     bool saveLastDatabases();
     void updateTrayIcon();
     bool isTrayIconEnabled() const;
+
+    static QStringList kdbxFilesFromUrls(const QList<QUrl>& urls);
+    void dragEnterEvent(QDragEnterEvent* event) override;
+    void dropEvent(QDropEvent* event) override;
 
     const QScopedPointer<Ui::MainWindow> m_ui;
     SignalMultiplexer m_actionMultiplexer;

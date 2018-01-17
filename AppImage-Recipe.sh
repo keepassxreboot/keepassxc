@@ -72,6 +72,8 @@ get_desktop
 get_icon
 cat << EOF > ./usr/bin/keepassxc_env
 #!/usr/bin/env bash
+export LD_LIBRARY_PATH="/opt/libgcrypt20-18/lib/x86_64-linux-gnu:\${LD_LIBRARY_PATH}"
+export LD_LIBRARY_PATH="/opt/gpg-error-127/lib/x86_64-linux-gnu:\${LD_LIBRARY_PATH}"
 export LD_LIBRARY_PATH="..$(dirname ${QT_PLUGIN_PATH})/lib:\${LD_LIBRARY_PATH}"
 export QT_PLUGIN_PATH="..${QT_PLUGIN_PATH}:\${KPXC_QT_PLUGIN_PATH}"
 

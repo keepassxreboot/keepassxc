@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BrowserOptionDialog</class>
+ <widget class="QWidget" name="BrowserOptionDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>577</width>
+    <height>404</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QCheckBox" name="enableBrowserSupport">
+     <property name="toolTip">
+      <string>This is required for accessing your databases with keepassxc-browser</string>
+     </property>
+     <property name="text">
+      <string>Enable KeepassXC browser extension</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>General</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QCheckBox" name="showNotification">
+         <property name="text">
+          <string>Sh&amp;ow a notification when credentials are requested</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="bestMatchOnly">
+         <property name="toolTip">
+          <string>Only returns the best matches for a specific URL instead of all entries for the whole domain.</string>
+         </property>
+         <property name="text">
+          <string>&amp;Return only best-matching entries</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="unlockDatabase">
+         <property name="text">
+          <string>Re&amp;quest to unlock the database if it is locked</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="matchUrlScheme">
+         <property name="toolTip">
+          <string>Only entries with the same scheme (http://, https://, ...) are returned.</string>
+         </property>
+         <property name="text">
+          <string>&amp;Match URL schemes</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="sortByUsername">
+         <property name="text">
+          <string>Sort matching entries by &amp;username</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="sortByTitle">
+         <property name="text">
+          <string>Sort &amp;matching entries by title</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="removeSharedEncryptionKeys">
+         <property name="text">
+          <string>R&amp;emove all shared encryption keys from active database</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="removeStoredPermissions">
+         <property name="text">
+          <string>Re&amp;move all stored permissions from entries in active database</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_3">
+      <attribute name="title">
+       <string>Supported browsers</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+          <widget class="QLabel" name="browserLabel1">
+           <property name="text">
+            <string>Native messaging requires certain .json files to be installed. Already installed browsers are automatically detected.</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+        </item>
+        <item>
+          <widget class="QLabel" name="browserLabel2">
+           <property name="text">
+            <string>Enable KeePassXC native messaging extension for these browsers:</string>
+           </property>
+          </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chromeSupport">
+          <property name="text">
+           <string>Chrome</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chromiumSupport">
+          <property name="text">
+           <string>Chromium</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="firefoxSupport">
+          <property name="text">
+           <string>Firefox</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="vivaldiSupport">
+          <property name="text">
+           <string>Vivaldi</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       <item>
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>Advanced</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <widget class="MessageWidget" name="warningWidget" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="alwaysAllowAccess">
+         <property name="text">
+          <string>Always allow &amp;access to entries</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="alwaysAllowUpdate">
+         <property name="text">
+          <string>Always allow &amp;updating entries</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="searchInAllDatabases">
+         <property name="toolTip">
+          <string>Only the selected database has to be connected with a client.</string>
+         </property>
+         <property name="text">
+          <string>Searc&amp;h in all opened databases for matching entries</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="supportKphFields">
+         <property name="toolTip">
+          <string>Automatically creating or updating string fields is not supported.</string>
+         </property>
+         <property name="text">
+          <string>&amp;Return advanced string fields which start with &quot;KPH: &quot;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="updateBinaryPath">
+         <property name="toolTip">
+          <string>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</string>
+         </property>
+         <property name="text">
+          <string>&amp;Update KeePassXC binary path automatically to native messaging scripts on startup</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="supportBrowserProxy">
+         <property name="toolTip">
+          <string>Support a proxy application between KeePassXC and browser extension.</string>
+         </property>
+         <property name="text">
+          <string>&amp;Enable support for proxy application between KeePassXC and browser extension</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="useCustomProxy">
+         <property name="toolTip">
+          <string>Use a custom proxy location if you installed a proxy manually.</string>
+         </property>
+         <property name="text">
+          <string>&amp;Use a custom proxy location</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="customProxyLocation">
+         <property name="maxLength">
+          <number>999</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MessageWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/MessageWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

@@ -21,7 +21,6 @@
 
 #include <QWidget>
 #include <QScopedPointer>
-#include "ui_AgentSettingsWidget.h"
 
 namespace Ui {
     class AgentSettingsWidget;
@@ -32,8 +31,7 @@ class AgentSettingsWidget : public QWidget
     Q_OBJECT
 public:
     explicit AgentSettingsWidget(QWidget* parent = nullptr);
-
-signals:
+    ~AgentSettingsWidget();
 
 public slots:
     void loadSettings();

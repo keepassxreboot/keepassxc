@@ -317,13 +317,6 @@ checkCodesignCommandExists() {
     fi
 }
 
-checkCreateDMGCommandExists() {
-    command -v create-dmg > /dev/null
-    if [ 0 -ne $? ]; then
-        exitError "create-dmg command not found on the PATH! Please install it using 'npm install --global create-dmg'."
-    fi
-}
-
 checkQt5LUpdateExists() {
     command -v lupdate > /dev/null
     if [ 0 -eq $? ] && ! $(lupdate -version | grep -q "lupdate version 5\."); then
@@ -813,17 +806,16 @@ appsign() {
         fi
 
         checkCodesignCommandExists
-        checkCreateDMGCommandExists
 
         local orig_dir="$(pwd)"
         for f in "${sign_files[@]}"; do
             if [[ ${f: -4} == '.dmg' ]]; then
                 logInfo "Unpacking disk image '${f}'..."
                 local tmp_dir="/tmp/KeePassXC_${RANDOM}"
-                mkdir -p ${tmp_dir}/{mnt,app}
+                mkdir -p ${tmp_dir}/mnt
                 hdiutil attach -quiet -noautoopen -mountpoint ${tmp_dir}/mnt "${f}"
                 cd ${tmp_dir}
-                cp -a ./mnt/KeePassXC.app ./app
+                cp -a ./mnt ./app
                 hdiutil detach -quiet ${tmp_dir}/mnt
 
                 if [ ! -d ./app/KeePassXC.app ]; then
@@ -839,10 +831,17 @@ appsign() {
                     exitError "Signing failed!"
                 fi
 
-                logInfo "Repacking and signing disk image..."
-                create-dmg ./app/KeePassXC.app
+                logInfo "Repacking disk image..."
+                hdiutil create \
+                    -volname "KeePassXC" \
+                    -size $((1000 * ($(du -sk ./app | cut -f1) + 5000))) \
+                    -srcfolder ./app \
+                    -fs HFS+ \
+                    -fsargs "-c c=64,a=16,e=16" \
+                    -format UDBZ \
+                    "${tmp_dir}/$(basename "${f}")"
                 cd "${orig_dir}"
-                cp -f ${tmp_dir}/KeePassXC-*.dmg "${f}"
+                cp -f "${tmp_dir}/$(basename "${f}")" "${f}"
                 rm -Rf ${tmp_dir}
             else
                 logInfo "Skipping non-DMG file '${f}'..."

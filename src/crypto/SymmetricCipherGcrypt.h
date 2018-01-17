@@ -23,7 +23,7 @@
 #include "crypto/SymmetricCipher.h"
 #include "crypto/SymmetricCipherBackend.h"
 
-class SymmetricCipherGcrypt : public SymmetricCipherBackend
+class SymmetricCipherGcrypt: public SymmetricCipherBackend
 {
 public:
     SymmetricCipherGcrypt(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,

@@ -21,6 +21,7 @@
 
 #include <QHash>
 #include <QTabWidget>
+#include <QFileInfo>
 
 #include "gui/DatabaseWidget.h"
 #include "gui/MessageWidget.h"
@@ -29,7 +30,6 @@ class DatabaseWidget;
 class DatabaseWidgetStateSync;
 class DatabaseOpenWidget;
 class QFile;
-class QLockFile;
 class MessageWidget;
 
 struct DatabaseManagerStruct
@@ -37,11 +37,7 @@ struct DatabaseManagerStruct
     DatabaseManagerStruct();
 
     DatabaseWidget* dbWidget;
-    QLockFile* lockFile;
-    QString filePath;
-    QString canonicalFilePath;
-    QString fileName;
-    bool saveToFilename;
+    QFileInfo fileInfo;
     bool modified;
     bool readOnly;
 };
@@ -106,7 +102,7 @@ private slots:
     void emitDatabaseUnlockedFromDbWidgetSender();
 
 private:
-    bool saveDatabase(Database* db);
+    bool saveDatabase(Database* db, QString filePath = "");
     bool saveDatabaseAs(Database* db);
     bool closeDatabase(Database* db);
     void deleteDatabase(Database* db);

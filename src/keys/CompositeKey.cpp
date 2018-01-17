@@ -17,18 +17,13 @@
 */
 
 #include "CompositeKey.h"
-#include "CompositeKey_p.h"
-#include "ChallengeResponseKey.h"
-
-#include <QElapsedTimer>
 #include <QFile>
 #include <QtConcurrent>
+#include <format/KeePass2.h>
 
 #include "core/Global.h"
+#include "crypto/kdf/AesKdf.h"
 #include "crypto/CryptoHash.h"
-#include "crypto/SymmetricCipher.h"
-#include "keys/FileKey.h"
-#include "keys/PasswordKey.h"
 
 CompositeKey::CompositeKey()
 {
@@ -80,7 +75,31 @@ CompositeKey& CompositeKey::operator=(const CompositeKey& key)
     return *this;
 }
 
+/**
+ * Get raw key hash as bytes.
+ *
+ * The key hash does not contain contributions by challenge-response components for
+ * backwards compatibility with KeePassXC's pre-KDBX4 challenge-response
+ * implementation. To include challenge-response in the raw key,
+ * use \link CompositeKey::rawKey(const QByteArray*) instead.
+ *
+ * @return key hash
+ */
 QByteArray CompositeKey::rawKey() const
+{
+    return rawKey(nullptr);
+}
+
+/**
+ * Get raw key hash as bytes.
+ *
+ * Challenge-response key components will use the provided <tt>transformSeed</tt>
+ * as a challenge to acquire their key contribution.
+ *
+ * @param transformSeed transform seed to challenge or nullptr to exclude challenge-response components
+ * @return key hash
+ */
+QByteArray CompositeKey::rawKey(const QByteArray* transformSeed) const
 {
     CryptoHash cryptoHash(CryptoHash::Sha256);
 
@@ -88,67 +107,38 @@ QByteArray CompositeKey::rawKey() const
         cryptoHash.addData(key->rawKey());
     }
 
+    if (transformSeed) {
+        QByteArray challengeResult;
+        challenge(*transformSeed, challengeResult);
+        cryptoHash.addData(challengeResult);
+    }
+
     return cryptoHash.result();
 }
 
-QByteArray CompositeKey::transform(const QByteArray& seed, quint64 rounds,
-                                   bool* ok, QString* errorString) const
+/**
+ * Transform this composite key.
+ *
+ * If using AES-KDF as transform function, the transformed key will not include
+ * any challenge-response components. Only static key components will be hashed
+ * for backwards-compatibility with KeePassXC's KDBX3 implementation, which added
+ * challenge response key components after key transformation.
+ * KDBX4+ KDFs transform the whole key including challenge-response components.
+ *
+ * @param kdf key derivation function
+ * @param result transformed key hash
+ * @return true on success
+ */
+bool CompositeKey::transform(const Kdf& kdf, QByteArray& result) const
 {
-    Q_ASSERT(seed.size() == 32);
-    Q_ASSERT(rounds > 0);
-
-    bool okLeft;
-    QString errorStringLeft;
-    bool okRight;
-    QString errorStringRight;
-
-    QByteArray key = rawKey();
-
-    QFuture<QByteArray> future = QtConcurrent::run(transformKeyRaw, key.left(16), seed, rounds,
-                                                   &okLeft, &errorStringLeft);
-    QByteArray result2 = transformKeyRaw(key.right(16), seed, rounds, &okRight, &errorStringRight);
-
-    QByteArray transformed;
-    transformed.append(future.result());
-    transformed.append(result2);
-
-    *ok = (okLeft && okRight);
-
-    if (!okLeft) {
-        *errorString = errorStringLeft;
-        return QByteArray();
+    if (kdf.uuid() == KeePass2::KDF_AES_KDBX3) {
+        // legacy KDBX3 AES-KDF, challenge response is added later to the hash
+        return kdf.transform(rawKey(), result);
     }
 
-    if (!okRight) {
-        *errorString = errorStringRight;
-        return QByteArray();
-    }
-
-    return CryptoHash::hash(transformed, CryptoHash::Sha256);
-}
-
-QByteArray CompositeKey::transformKeyRaw(const QByteArray& key, const QByteArray& seed,
-                                         quint64 rounds, bool* ok, QString* errorString)
-{
-    QByteArray iv(16, 0);
-    SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Ecb,
-                           SymmetricCipher::Encrypt);
-    if (!cipher.init(seed, iv)) {
-        *ok = false;
-        *errorString = cipher.errorString();
-        return QByteArray();
-    }
-
-    QByteArray result = key;
-
-    if (!cipher.processInPlace(result, rounds)) {
-        *ok = false;
-        *errorString = cipher.errorString();
-        return QByteArray();
-    }
-
-    *ok = true;
-    return result;
+    QByteArray seed = kdf.seed();
+    Q_ASSERT(!seed.isEmpty());
+    return kdf.transform(rawKey(&seed), result);
 }
 
 bool CompositeKey::challenge(const QByteArray& seed, QByteArray& result) const
@@ -165,6 +155,7 @@ bool CompositeKey::challenge(const QByteArray& seed, QByteArray& result) const
     for (const auto key : m_challengeResponseKeys) {
         // if the device isn't present or fails, return an error
         if (!key->challenge(seed)) {
+            qWarning("Failed to issue challenge");
             return false;
         }
         cryptoHash.addData(key->rawKey());
@@ -182,54 +173,4 @@ void CompositeKey::addKey(const Key& key)
 void CompositeKey::addChallengeResponseKey(QSharedPointer<ChallengeResponseKey> key)
 {
     m_challengeResponseKeys.append(key);
-}
-
-
-int CompositeKey::transformKeyBenchmark(int msec)
-{
-    TransformKeyBenchmarkThread thread1(msec);
-    TransformKeyBenchmarkThread thread2(msec);
-
-    thread1.start();
-    thread2.start();
-
-    thread1.wait();
-    thread2.wait();
-
-    return qMin(thread1.rounds(), thread2.rounds());
-}
-
-
-TransformKeyBenchmarkThread::TransformKeyBenchmarkThread(int msec)
-    : m_msec(msec)
-    , m_rounds(0)
-{
-    Q_ASSERT(msec > 0);
-}
-
-int TransformKeyBenchmarkThread::rounds()
-{
-    return m_rounds;
-}
-
-void TransformKeyBenchmarkThread::run()
-{
-    QByteArray key = QByteArray(16, '\x7E');
-    QByteArray seed = QByteArray(32, '\x4B');
-    QByteArray iv(16, 0);
-
-    SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Ecb,
-                           SymmetricCipher::Encrypt);
-    cipher.init(seed, iv);
-
-    QElapsedTimer t;
-    t.start();
-
-    do {
-        if (!cipher.processInPlace(key, 10000)) {
-            m_rounds = -1;
-            return;
-        }
-        m_rounds += 10000;
-    } while (!t.hasExpired(m_msec));
 }

@@ -1,51 +1,86 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ * Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 or (at your option)
- *  version 3 of the License.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 or (at your option)
+ * version 3 of the License.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "KeePass2XmlReader.h"
-
-#include <QBuffer>
-#include <QFile>
-
-#include "core/Database.h"
-#include "core/DatabaseIcons.h"
-#include "core/Group.h"
-#include "core/Metadata.h"
+#include "KdbxXmlReader.h"
+#include "KeePass2RandomStream.h"
+#include "core/Global.h"
 #include "core/Tools.h"
-#include "format/KeePass2RandomStream.h"
+#include "core/Entry.h"
+#include "core/Group.h"
+#include "core/DatabaseIcons.h"
+#include "core/Endian.h"
 #include "streams/QtIOCompressor"
 
-typedef QPair<QString, QString> StringPair;
+#include <QFile>
+#include <QBuffer>
 
-KeePass2XmlReader::KeePass2XmlReader()
-    : m_randomStream(nullptr)
-    , m_db(nullptr)
-    , m_meta(nullptr)
-    , m_tmpParent(nullptr)
-    , m_error(false)
-    , m_strictMode(false)
+/**
+ * @param version KDBX version
+ */
+KdbxXmlReader::KdbxXmlReader(quint32 version)
+    : m_kdbxVersion(version)
 {
 }
 
-void KeePass2XmlReader::setStrictMode(bool strictMode)
+/**
+ * @param version KDBX version
+ * @param binaryPool binary pool
+ */
+KdbxXmlReader::KdbxXmlReader(quint32 version, QHash<QString, QByteArray>& binaryPool)
+    : m_kdbxVersion(version)
+    , m_binaryPool(binaryPool)
 {
-    m_strictMode = strictMode;
 }
 
-void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream)
+/**
+ * Read XML contents from a file into a new database.
+ *
+ * @param device input file
+ * @return pointer to the new database
+ */
+Database* KdbxXmlReader::readDatabase(const QString& filename)
+{
+    QFile file(filename);
+    file.open(QIODevice::ReadOnly);
+    return readDatabase(&file);
+}
+
+/**
+ * Read XML stream from a device into a new database.
+ *
+ * @param device input device
+ * @return pointer to the new database
+ */
+Database* KdbxXmlReader::readDatabase(QIODevice* device)
+{
+    auto db = new Database();
+    readDatabase(device, db);
+    return db;
+}
+
+/**
+ * Read XML contents from a device into a given database using a \link KeePass2RandomStream.
+ *
+ * @param device input device
+ * @param db database to read into
+ * @param randomStream random stream to use for decryption
+ */
+#include "QDebug"
+void KdbxXmlReader::readDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream)
 {
     m_error = false;
     m_errorStr.clear();
@@ -60,30 +95,32 @@ void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Ra
     m_randomStream = randomStream;
     m_headerHash.clear();
 
-    m_tmpParent = new Group();
+    m_tmpParent.reset(new Group());
 
     bool rootGroupParsed = false;
 
-    if (!m_xml.error() && m_xml.readNextStartElement()) {
-        if (m_xml.name() == "KeePassFile") {
-            rootGroupParsed = parseKeePassFile();
-        }
+    if (m_xml.hasError()) {
+        raiseError(tr("XML parsing failure: %1").arg(m_xml.error()));
+        return;
     }
 
-    if (!m_xml.error() && !rootGroupParsed) {
-        raiseError("No root group");
+    if (m_xml.readNextStartElement() && m_xml.name() == "KeePassFile") {
+        rootGroupParsed = parseKeePassFile();
     }
 
-    if (!m_xml.error()) {
-        if (!m_tmpParent->children().isEmpty()) {
-            qWarning("KeePass2XmlReader::readDatabase: found %d invalid group reference(s)",
-                     m_tmpParent->children().size());
-        }
+    if (!rootGroupParsed) {
+        raiseError(tr("No root group"));
+        return;
+    }
 
-        if (!m_tmpParent->entries().isEmpty()) {
-            qWarning("KeePass2XmlReader::readDatabase: found %d invalid entry reference(s)",
-                     m_tmpParent->children().size());
-        }
+    if (!m_tmpParent->children().isEmpty()) {
+        qWarning("KdbxXmlReader::readDatabase: found %d invalid group reference(s)",
+                 m_tmpParent->children().size());
+    }
+
+    if (!m_tmpParent->entries().isEmpty()) {
+        qWarning("KdbxXmlReader::readDatabase: found %d invalid entry reference(s)",
+                 m_tmpParent->children().size());
     }
 
     const QSet<QString> poolKeys = m_binaryPool.keys().toSet();
@@ -92,13 +129,11 @@ void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Ra
     const QSet<QString> unusedKeys = poolKeys - entryKeys;
 
     if (!unmappedKeys.isEmpty()) {
-        raiseError("Unmapped keys left.");
+        qWarning("Unmapped keys left.");
     }
 
-    if (!m_xml.error()) {
-        for (const QString& key : unusedKeys) {
-            qWarning("KeePass2XmlReader::readDatabase: found unused key \"%s\"", qPrintable(key));
-        }
+    for (const QString& key : unusedKeys) {
+        qWarning("KdbxXmlReader::readDatabase: found unused key \"%s\"", qPrintable(key));
     }
 
     QHash<QString, QPair<Entry*, QString> >::const_iterator i;
@@ -123,227 +158,187 @@ void KeePass2XmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Ra
             histEntry->setUpdateTimeinfo(true);
         }
     }
-
-    delete m_tmpParent;
 }
 
-Database* KeePass2XmlReader::readDatabase(QIODevice* device)
+bool KdbxXmlReader::strictMode() const
 {
-    Database* db = new Database();
-    readDatabase(device, db);
-    return db;
+    return m_strictMode;
 }
 
-Database* KeePass2XmlReader::readDatabase(const QString& filename)
+void KdbxXmlReader::setStrictMode(bool strictMode)
 {
-    QFile file(filename);
-    file.open(QIODevice::ReadOnly);
-    return readDatabase(&file);
+    m_strictMode = strictMode;
 }
 
-bool KeePass2XmlReader::hasError()
+bool KdbxXmlReader::hasError() const
 {
     return m_error || m_xml.hasError();
 }
 
-QString KeePass2XmlReader::errorString()
+QString KdbxXmlReader::errorString() const
 {
     if (m_error) {
         return m_errorStr;
-    }
-    else if (m_xml.hasError()) {
+    }if (m_xml.hasError()) {
         return QString("XML error:\n%1\nLine %2, column %3")
-                .arg(m_xml.errorString())
-                .arg(m_xml.lineNumber())
-                .arg(m_xml.columnNumber());
+            .arg(m_xml.errorString())
+            .arg(m_xml.lineNumber())
+            .arg(m_xml.columnNumber());
     }
-    else {
-        return QString();
-    }
+    return QString();
 }
 
-void KeePass2XmlReader::raiseError(const QString& errorMessage)
+void KdbxXmlReader::raiseError(const QString& errorMessage)
 {
     m_error = true;
     m_errorStr = errorMessage;
 }
 
-QByteArray KeePass2XmlReader::headerHash()
+QByteArray KdbxXmlReader::headerHash() const
 {
     return m_headerHash;
 }
 
-bool KeePass2XmlReader::parseKeePassFile()
+bool KdbxXmlReader::parseKeePassFile()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "KeePassFile");
 
     bool rootElementFound = false;
     bool rootParsedSuccessfully = false;
 
-    while (!m_xml.error() && m_xml.readNextStartElement()) {
+    while (!m_xml.hasError() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Meta") {
             parseMeta();
+            continue;
         }
-        else if (m_xml.name() == "Root") {
+
+        if (m_xml.name() == "Root") {
             if (rootElementFound) {
                 rootParsedSuccessfully = false;
-                raiseError("Multiple root elements");
-            }
-            else {
+                qWarning("Multiple root elements");
+            } else {
                 rootParsedSuccessfully = parseRoot();
                 rootElementFound = true;
             }
+            continue;
         }
-        else {
-            skipCurrentElement();
-        }
+
+        skipCurrentElement();
     }
 
     return rootParsedSuccessfully;
 }
 
-void KeePass2XmlReader::parseMeta()
+void KdbxXmlReader::parseMeta()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Meta");
 
-    while (!m_xml.error() && m_xml.readNextStartElement()) {
+    while (!m_xml.hasError() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Generator") {
             m_meta->setGenerator(readString());
-        }
-        else if (m_xml.name() == "HeaderHash") {
+        } else if (m_xml.name() == "HeaderHash") {
             m_headerHash = readBinary();
-        }
-        else if (m_xml.name() == "DatabaseName") {
+        } else if (m_xml.name() == "DatabaseName") {
             m_meta->setName(readString());
-        }
-        else if (m_xml.name() == "DatabaseNameChanged") {
+        } else if (m_xml.name() == "DatabaseNameChanged") {
             m_meta->setNameChanged(readDateTime());
-        }
-        else if (m_xml.name() == "DatabaseDescription") {
+        } else if (m_xml.name() == "DatabaseDescription") {
             m_meta->setDescription(readString());
-        }
-        else if (m_xml.name() == "DatabaseDescriptionChanged") {
+        } else if (m_xml.name() == "DatabaseDescriptionChanged") {
             m_meta->setDescriptionChanged(readDateTime());
-        }
-        else if (m_xml.name() == "DefaultUserName") {
+        } else if (m_xml.name() == "DefaultUserName") {
             m_meta->setDefaultUserName(readString());
-        }
-        else if (m_xml.name() == "DefaultUserNameChanged") {
+        } else if (m_xml.name() == "DefaultUserNameChanged") {
             m_meta->setDefaultUserNameChanged(readDateTime());
-        }
-        else if (m_xml.name() == "MaintenanceHistoryDays") {
+        } else if (m_xml.name() == "MaintenanceHistoryDays") {
             m_meta->setMaintenanceHistoryDays(readNumber());
-        }
-        else if (m_xml.name() == "Color") {
+        } else if (m_xml.name() == "Color") {
             m_meta->setColor(readColor());
-        }
-        else if (m_xml.name() == "MasterKeyChanged") {
+        } else if (m_xml.name() == "MasterKeyChanged") {
             m_meta->setMasterKeyChanged(readDateTime());
-        }
-        else if (m_xml.name() == "MasterKeyChangeRec") {
+        } else if (m_xml.name() == "MasterKeyChangeRec") {
             m_meta->setMasterKeyChangeRec(readNumber());
-        }
-        else if (m_xml.name() == "MasterKeyChangeForce") {
+        } else if (m_xml.name() == "MasterKeyChangeForce") {
             m_meta->setMasterKeyChangeForce(readNumber());
-        }
-        else if (m_xml.name() == "MemoryProtection") {
+        } else if (m_xml.name() == "MemoryProtection") {
             parseMemoryProtection();
-        }
-        else if (m_xml.name() == "CustomIcons") {
+        } else if (m_xml.name() == "CustomIcons") {
             parseCustomIcons();
-        }
-        else if (m_xml.name() == "RecycleBinEnabled") {
+        } else if (m_xml.name() == "RecycleBinEnabled") {
             m_meta->setRecycleBinEnabled(readBool());
-        }
-        else if (m_xml.name() == "RecycleBinUUID") {
+        } else if (m_xml.name() == "RecycleBinUUID") {
             m_meta->setRecycleBin(getGroup(readUuid()));
-        }
-        else if (m_xml.name() == "RecycleBinChanged") {
+        } else if (m_xml.name() == "RecycleBinChanged") {
             m_meta->setRecycleBinChanged(readDateTime());
-        }
-        else if (m_xml.name() == "EntryTemplatesGroup") {
+        } else if (m_xml.name() == "EntryTemplatesGroup") {
             m_meta->setEntryTemplatesGroup(getGroup(readUuid()));
-        }
-        else if (m_xml.name() == "EntryTemplatesGroupChanged") {
+        } else if (m_xml.name() == "EntryTemplatesGroupChanged") {
             m_meta->setEntryTemplatesGroupChanged(readDateTime());
-        }
-        else if (m_xml.name() == "LastSelectedGroup") {
+        } else if (m_xml.name() == "LastSelectedGroup") {
             m_meta->setLastSelectedGroup(getGroup(readUuid()));
-        }
-        else if (m_xml.name() == "LastTopVisibleGroup") {
+        } else if (m_xml.name() == "LastTopVisibleGroup") {
             m_meta->setLastTopVisibleGroup(getGroup(readUuid()));
-        }
-        else if (m_xml.name() == "HistoryMaxItems") {
+        } else if (m_xml.name() == "HistoryMaxItems") {
             int value = readNumber();
             if (value >= -1) {
                 m_meta->setHistoryMaxItems(value);
+            } else {
+                qWarning("HistoryMaxItems invalid number");
             }
-            else {
-                raiseError("HistoryMaxItems invalid number");
-            }
-        }
-        else if (m_xml.name() == "HistoryMaxSize") {
+        } else if (m_xml.name() == "HistoryMaxSize") {
             int value = readNumber();
             if (value >= -1) {
                 m_meta->setHistoryMaxSize(value);
+            } else {
+                qWarning("HistoryMaxSize invalid number");
             }
-            else {
-                raiseError("HistoryMaxSize invalid number");
-            }
-        }
-        else if (m_xml.name() == "Binaries") {
+        } else if (m_xml.name() == "Binaries") {
             parseBinaries();
-        }
-        else if (m_xml.name() == "CustomData") {
+        } else if (m_xml.name() == "CustomData") {
             parseCustomData();
-        }
-        else {
+        } else if (m_xml.name() == "SettingsChanged") {
+            m_meta->setSettingsChanged(readDateTime());
+        } else {
             skipCurrentElement();
         }
     }
 }
 
-void KeePass2XmlReader::parseMemoryProtection()
+void KdbxXmlReader::parseMemoryProtection()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "MemoryProtection");
 
-    while (!m_xml.error() && m_xml.readNextStartElement()) {
+    while (!m_xml.hasError() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "ProtectTitle") {
             m_meta->setProtectTitle(readBool());
-        }
-        else if (m_xml.name() == "ProtectUserName") {
+        } else if (m_xml.name() == "ProtectUserName") {
             m_meta->setProtectUsername(readBool());
-        }
-        else if (m_xml.name() == "ProtectPassword") {
+        } else if (m_xml.name() == "ProtectPassword") {
             m_meta->setProtectPassword(readBool());
-        }
-        else if (m_xml.name() == "ProtectURL") {
+        } else if (m_xml.name() == "ProtectURL") {
             m_meta->setProtectUrl(readBool());
-        }
-        else if (m_xml.name() == "ProtectNotes") {
+        } else if (m_xml.name() == "ProtectNotes") {
             m_meta->setProtectNotes(readBool());
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
 }
 
-void KeePass2XmlReader::parseCustomIcons()
+void KdbxXmlReader::parseCustomIcons()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "CustomIcons");
 
-    while (!m_xml.error() && m_xml.readNextStartElement()) {
+    while (!m_xml.hasError() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Icon") {
             parseIcon();
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
 }
 
-void KeePass2XmlReader::parseIcon()
+void KdbxXmlReader::parseIcon()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Icon");
 
@@ -352,74 +347,70 @@ void KeePass2XmlReader::parseIcon()
     bool uuidSet = false;
     bool iconSet = false;
 
-    while (!m_xml.error() && m_xml.readNextStartElement()) {
+    while (!m_xml.hasError() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "UUID") {
             uuid = readUuid();
             uuidSet = !uuid.isNull();
-        }
-        else if (m_xml.name() == "Data") {
+        } else if (m_xml.name() == "Data") {
             icon.loadFromData(readBinary());
             iconSet = true;
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
 
     if (uuidSet && iconSet) {
         m_meta->addCustomIcon(uuid, icon);
+        return;
     }
-    else {
-        raiseError("Missing icon uuid or data");
-    }
+
+    raiseError(tr("Missing icon uuid or data"));
 }
 
-void KeePass2XmlReader::parseBinaries()
+void KdbxXmlReader::parseBinaries()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Binaries");
 
-    while (!m_xml.error() && m_xml.readNextStartElement()) {
-        if (m_xml.name() == "Binary") {
-            QXmlStreamAttributes attr = m_xml.attributes();
-
-            QString id = attr.value("ID").toString();
-
-            QByteArray data;
-            if (attr.value("Compressed").compare(QLatin1String("True"), Qt::CaseInsensitive) == 0) {
-                data = readCompressedBinary();
-            }
-            else {
-                data = readBinary();
-            }
-
-            if (m_binaryPool.contains(id)) {
-                qWarning("KeePass2XmlReader::parseBinaries: overwriting binary item \"%s\"",
-                         qPrintable(id));
-            }
-
-            m_binaryPool.insert(id, data);
-        }
-        else {
+    while (!m_xml.hasError() && m_xml.readNextStartElement()) {
+        if (m_xml.name() != "Binary") {
             skipCurrentElement();
+            continue;
         }
+
+        QXmlStreamAttributes attr = m_xml.attributes();
+
+        QString id = attr.value("ID").toString();
+
+        QByteArray data;
+        if (attr.value("Compressed").compare(QLatin1String("True"), Qt::CaseInsensitive) == 0) {
+            data = readCompressedBinary();
+        } else {
+            data = readBinary();
+        }
+
+        if (m_binaryPool.contains(id)) {
+            qWarning("KdbxXmlReader::parseBinaries: overwriting binary item \"%s\"",
+                     qPrintable(id));
+        }
+
+        m_binaryPool.insert(id, data);
     }
 }
 
-void KeePass2XmlReader::parseCustomData()
+void KdbxXmlReader::parseCustomData()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "CustomData");
 
-    while (!m_xml.error() && m_xml.readNextStartElement()) {
+    while (!m_xml.hasError() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Item") {
             parseCustomDataItem();
+            continue;
         }
-        else {
-            skipCurrentElement();
-        }
+        skipCurrentElement();
     }
 }
 
-void KeePass2XmlReader::parseCustomDataItem()
+void KdbxXmlReader::parseCustomDataItem()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Item");
 
@@ -428,40 +419,38 @@ void KeePass2XmlReader::parseCustomDataItem()
     bool keySet = false;
     bool valueSet = false;
 
-    while (!m_xml.error() && m_xml.readNextStartElement()) {
+    while (!m_xml.hasError() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Key") {
             key = readString();
             keySet = true;
-        }
-        else if (m_xml.name() == "Value") {
+        } else if (m_xml.name() == "Value") {
             value = readString();
             valueSet = true;
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
 
     if (keySet && valueSet) {
         m_meta->addCustomField(key, value);
+        return;
     }
-    else {
-        raiseError("Missing custom data key or value");
-    }
+
+    raiseError(tr("Missing custom data key or value"));
 }
 
-bool KeePass2XmlReader::parseRoot()
+bool KdbxXmlReader::parseRoot()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Root");
 
     bool groupElementFound = false;
     bool groupParsedSuccessfully = false;
 
-    while (!m_xml.error() && m_xml.readNextStartElement()) {
+    while (!m_xml.hasError() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Group") {
             if (groupElementFound) {
                 groupParsedSuccessfully = false;
-                raiseError("Multiple group elements");
+                raiseError(tr("Multiple group elements"));
                 continue;
             }
 
@@ -474,11 +463,9 @@ bool KeePass2XmlReader::parseRoot()
             }
 
             groupElementFound = true;
-        }
-        else if (m_xml.name() == "DeletedObjects") {
+        } else if (m_xml.name() == "DeletedObjects") {
             parseDeletedObjects();
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
@@ -486,115 +473,118 @@ bool KeePass2XmlReader::parseRoot()
     return groupParsedSuccessfully;
 }
 
-Group* KeePass2XmlReader::parseGroup()
+Group* KdbxXmlReader::parseGroup()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Group");
 
-    Group* group = new Group();
+    auto group = new Group();
     group->setUpdateTimeinfo(false);
     QList<Group*> children;
     QList<Entry*> entries;
-    while (!m_xml.error() && m_xml.readNextStartElement()) {
+    while (!m_xml.hasError() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "UUID") {
             Uuid uuid = readUuid();
             if (uuid.isNull()) {
                 if (m_strictMode) {
-                    raiseError("Null group uuid");
-                }
-                else {
+                    raiseError(tr("Null group uuid"));
+                } else {
                     group->setUuid(Uuid::random());
                 }
-            }
-            else {
+            } else {
                 group->setUuid(uuid);
             }
+            continue;
         }
-        else if (m_xml.name() == "Name") {
+        if (m_xml.name() == "Name") {
             group->setName(readString());
+            continue;
         }
-        else if (m_xml.name() == "Notes") {
+        if (m_xml.name() == "Notes") {
             group->setNotes(readString());
+            continue;
         }
-        else if (m_xml.name() == "IconID") {
+        if (m_xml.name() == "IconID") {
             int iconId = readNumber();
             if (iconId < 0) {
                 if (m_strictMode) {
-                    raiseError("Invalid group icon number");
+                    raiseError(tr("Invalid group icon number"));
                 }
                 iconId = 0;
+            } else if (iconId >= DatabaseIcons::IconCount) {
+                qWarning("KdbxXmlReader::parseGroup: icon id \"%d\" not supported", iconId);
+                iconId = DatabaseIcons::IconCount - 1;
             }
-            else {
-                if (iconId >= DatabaseIcons::IconCount) {
-                    qWarning("KeePass2XmlReader::parseGroup: icon id \"%d\" not supported", iconId);
-                }
-                group->setIcon(iconId);
-            }
+
+            group->setIcon(iconId);
+            continue;
         }
-        else if (m_xml.name() == "CustomIconUUID") {
+        if (m_xml.name() == "CustomIconUUID") {
             Uuid uuid = readUuid();
             if (!uuid.isNull()) {
                 group->setIcon(uuid);
             }
+            continue;
         }
-        else if (m_xml.name() == "Times") {
+        if (m_xml.name() == "Times") {
             group->setTimeInfo(parseTimes());
+            continue;
         }
-        else if (m_xml.name() == "IsExpanded") {
+        if (m_xml.name() == "IsExpanded") {
             group->setExpanded(readBool());
+            continue;
         }
-        else if (m_xml.name() == "DefaultAutoTypeSequence") {
+        if (m_xml.name() == "DefaultAutoTypeSequence") {
             group->setDefaultAutoTypeSequence(readString());
+            continue;
         }
-        else if (m_xml.name() == "EnableAutoType") {
+        if (m_xml.name() == "EnableAutoType") {
             QString str = readString();
 
             if (str.compare("null", Qt::CaseInsensitive) == 0) {
                 group->setAutoTypeEnabled(Group::Inherit);
-            }
-            else if (str.compare("true", Qt::CaseInsensitive) == 0) {
+            } else if (str.compare("true", Qt::CaseInsensitive) == 0) {
                 group->setAutoTypeEnabled(Group::Enable);
-            }
-            else if (str.compare("false", Qt::CaseInsensitive) == 0) {
+            } else if (str.compare("false", Qt::CaseInsensitive) == 0) {
                 group->setAutoTypeEnabled(Group::Disable);
+            } else {
+                raiseError(tr("Invalid EnableAutoType value"));
             }
-            else {
-                raiseError("Invalid EnableAutoType value");
-            }
+            continue;
         }
-        else if (m_xml.name() == "EnableSearching") {
+        if (m_xml.name() == "EnableSearching") {
             QString str = readString();
 
             if (str.compare("null", Qt::CaseInsensitive) == 0) {
                 group->setSearchingEnabled(Group::Inherit);
-            }
-            else if (str.compare("true", Qt::CaseInsensitive) == 0) {
+            } else if (str.compare("true", Qt::CaseInsensitive) == 0) {
                 group->setSearchingEnabled(Group::Enable);
-            }
-            else if (str.compare("false", Qt::CaseInsensitive) == 0) {
+            } else if (str.compare("false", Qt::CaseInsensitive) == 0) {
                 group->setSearchingEnabled(Group::Disable);
+            } else {
+                raiseError(tr("Invalid EnableSearching value"));
             }
-            else {
-                raiseError("Invalid EnableSearching value");
-            }
+            continue;
         }
-        else if (m_xml.name() == "LastTopVisibleEntry") {
+        if (m_xml.name() == "LastTopVisibleEntry") {
             group->setLastTopVisibleEntry(getEntry(readUuid()));
+            continue;
         }
-        else if (m_xml.name() == "Group") {
+        if (m_xml.name() == "Group") {
             Group* newGroup = parseGroup();
             if (newGroup) {
                 children.append(newGroup);
             }
+            continue;
         }
-        else if (m_xml.name() == "Entry") {
+        if (m_xml.name() == "Entry") {
             Entry* newEntry = parseEntry(false);
             if (newEntry) {
                 entries.append(newEntry);
             }
+            continue;
         }
-        else {
-            skipCurrentElement();
-        }
+
+        skipCurrentElement();
     }
 
     if (group->uuid().isNull() && !m_strictMode) {
@@ -607,9 +597,8 @@ Group* KeePass2XmlReader::parseGroup()
         group->copyDataFrom(tmpGroup);
         group->setUpdateTimeinfo(false);
         delete tmpGroup;
-    }
-    else if (!hasError()) {
-        raiseError("No group uuid found");
+    } else if (!hasError()) {
+        raiseError(tr("No group uuid found"));
     }
 
     for (Group* child : asConst(children)) {
@@ -623,134 +612,139 @@ Group* KeePass2XmlReader::parseGroup()
     return group;
 }
 
-void KeePass2XmlReader::parseDeletedObjects()
+void KdbxXmlReader::parseDeletedObjects()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "DeletedObjects");
 
-    while (!m_xml.error() && m_xml.readNextStartElement()) {
+    while (!m_xml.hasError() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "DeletedObject") {
             parseDeletedObject();
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
 }
 
-void KeePass2XmlReader::parseDeletedObject()
+void KdbxXmlReader::parseDeletedObject()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "DeletedObject");
 
-    DeletedObject delObj;
+    DeletedObject delObj{{}, {}};
 
-    while (!m_xml.error() && m_xml.readNextStartElement()) {
+    while (!m_xml.hasError() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "UUID") {
             Uuid uuid = readUuid();
             if (uuid.isNull()) {
                 if (m_strictMode) {
-                    raiseError("Null DeleteObject uuid");
+                    raiseError(tr("Null DeleteObject uuid"));
                 }
+                continue;
             }
-            else {
-                delObj.uuid = uuid;
-            }
+            delObj.uuid = uuid;
+            continue;
         }
-        else if (m_xml.name() == "DeletionTime") {
+        if (m_xml.name() == "DeletionTime") {
             delObj.deletionTime = readDateTime();
+            continue;
         }
-        else {
-            skipCurrentElement();
-        }
+        skipCurrentElement();
     }
 
     if (!delObj.uuid.isNull() && !delObj.deletionTime.isNull()) {
         m_db->addDeletedObject(delObj);
+        return;
     }
-    else if (m_strictMode) {
-        raiseError("Missing DeletedObject uuid or time");
+
+    if (m_strictMode) {
+        raiseError(tr("Missing DeletedObject uuid or time"));
     }
 }
 
-Entry* KeePass2XmlReader::parseEntry(bool history)
+Entry* KdbxXmlReader::parseEntry(bool history)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Entry");
 
-    Entry* entry = new Entry();
+    auto entry = new Entry();
     entry->setUpdateTimeinfo(false);
     QList<Entry*> historyItems;
     QList<StringPair> binaryRefs;
 
-    while (!m_xml.error() && m_xml.readNextStartElement()) {
+    while (!m_xml.hasError() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "UUID") {
             Uuid uuid = readUuid();
             if (uuid.isNull()) {
                 if (m_strictMode) {
-                    raiseError("Null entry uuid");
-                }
-                else {
+                    raiseError(tr("Null entry uuid"));
+                } else {
                     entry->setUuid(Uuid::random());
                 }
-            }
-            else {
+            } else {
                 entry->setUuid(uuid);
             }
+            continue;
         }
-        else if (m_xml.name() == "IconID") {
+        if (m_xml.name() == "IconID") {
             int iconId = readNumber();
             if (iconId < 0) {
                 if (m_strictMode) {
-                    raiseError("Invalid entry icon number");
+                    raiseError(tr("Invalid entry icon number"));
                 }
                 iconId = 0;
             }
-            else {
-                entry->setIcon(iconId);
-            }
+            entry->setIcon(iconId);
+            continue;
         }
-        else if (m_xml.name() == "CustomIconUUID") {
+        if (m_xml.name() == "CustomIconUUID") {
             Uuid uuid = readUuid();
             if (!uuid.isNull()) {
                 entry->setIcon(uuid);
             }
-        }
-        else if (m_xml.name() == "ForegroundColor") {
+            continue;
+        }if (m_xml.name() == "ForegroundColor") {
             entry->setForegroundColor(readColor());
+            continue;
         }
-        else if (m_xml.name() == "BackgroundColor") {
+        if (m_xml.name() == "BackgroundColor") {
             entry->setBackgroundColor(readColor());
+            continue;
         }
-        else if (m_xml.name() == "OverrideURL") {
+        if (m_xml.name() == "OverrideURL") {
             entry->setOverrideUrl(readString());
+            continue;
         }
-        else if (m_xml.name() == "Tags") {
+        if (m_xml.name() == "Tags") {
             entry->setTags(readString());
+            continue;
         }
-        else if (m_xml.name() == "Times") {
+        if (m_xml.name() == "Times") {
             entry->setTimeInfo(parseTimes());
+            continue;
         }
-        else if (m_xml.name() == "String") {
+        if (m_xml.name() == "String") {
             parseEntryString(entry);
+            continue;
         }
-        else if (m_xml.name() == "Binary") {
+        if (m_xml.name() == "Binary") {
             QPair<QString, QString> ref = parseEntryBinary(entry);
             if (!ref.first.isNull() && !ref.second.isNull()) {
                 binaryRefs.append(ref);
             }
+            continue;
         }
-        else if (m_xml.name() == "AutoType") {
+        if (m_xml.name() == "AutoType") {
             parseAutoType(entry);
+            continue;
         }
-        else if (m_xml.name() == "History") {
+        if (m_xml.name() == "History") {
             if (history) {
-                raiseError("History element in history entry");
-            }
-            else {
+                raiseError(tr("History element in history entry"));
+            } else {
                 historyItems = parseEntryHistory();
             }
+            continue;
         }
-        else {
-            skipCurrentElement();
-        }
+
+        skipCurrentElement();
     }
 
     if (entry->uuid().isNull() && !m_strictMode) {
@@ -760,8 +754,7 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
     if (!entry->uuid().isNull()) {
         if (history) {
             entry->setUpdateTimeinfo(false);
-        }
-        else {
+        } else {
             Entry* tmpEntry = entry;
 
             entry = getEntry(tmpEntry->uuid());
@@ -770,15 +763,14 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
 
             delete tmpEntry;
         }
-    }
-    else if (!hasError()) {
-        raiseError("No entry uuid found");
+    } else if (!hasError()) {
+        raiseError(tr("No entry uuid found"));
     }
 
     for (Entry* historyItem : asConst(historyItems)) {
         if (historyItem->uuid() != entry->uuid()) {
             if (m_strictMode) {
-                raiseError("History element with different uuid");
+                raiseError(tr("History element with different uuid"));
             } else {
                 historyItem->setUuid(entry->uuid());
             }
@@ -793,7 +785,7 @@ Entry* KeePass2XmlReader::parseEntry(bool history)
     return entry;
 }
 
-void KeePass2XmlReader::parseEntryString(Entry* entry)
+void KdbxXmlReader::parseEntryString(Entry* entry)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "String");
 
@@ -803,12 +795,14 @@ void KeePass2XmlReader::parseEntryString(Entry* entry)
     bool keySet = false;
     bool valueSet = false;
 
-    while (!m_xml.error() && m_xml.readNextStartElement()) {
+    while (!m_xml.hasError() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Key") {
             key = readString();
             keySet = true;
+            continue;
         }
-        else if (m_xml.name() == "Value") {
+
+        if (m_xml.name() == "Value") {
             QXmlStreamAttributes attr = m_xml.attributes();
             value = readString();
 
@@ -823,39 +817,37 @@ void KeePass2XmlReader::parseEntryString(Entry* entry)
                     if (!ok) {
                         value.clear();
                         raiseError(m_randomStream->errorString());
-                    }
-                    else {
+                    } else {
                         value = QString::fromUtf8(plaintext);
                     }
-                }
-                else {
-                    raiseError("Unable to decrypt entry string");
+                } else {
+                    raiseError(tr("Unable to decrypt entry string"));
+                    continue;
                 }
             }
 
             protect = isProtected || protectInMemory;
             valueSet = true;
+            continue;
         }
-        else {
-            skipCurrentElement();
-        }
+
+        skipCurrentElement();
     }
 
     if (keySet && valueSet) {
         // the default attributes are always there so additionally check if it's empty
         if (entry->attributes()->hasKey(key) && !entry->attributes()->value(key).isEmpty()) {
-            raiseError("Duplicate custom attribute found");
+            raiseError(tr("Duplicate custom attribute found"));
+            return;
         }
-        else {
-            entry->attributes()->set(key, value, protect);
-        }
+        entry->attributes()->set(key, value, protect);
+        return;
     }
-    else {
-        raiseError("Entry string key or value missing");
-    }
+
+    raiseError(tr("Entry string key or value missing"));
 }
 
-QPair<QString, QString> KeePass2XmlReader::parseEntryBinary(Entry* entry)
+QPair<QString, QString> KdbxXmlReader::parseEntryBinary(Entry* entry)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Binary");
 
@@ -866,23 +858,23 @@ QPair<QString, QString> KeePass2XmlReader::parseEntryBinary(Entry* entry)
     bool keySet = false;
     bool valueSet = false;
 
-    while (!m_xml.error() && m_xml.readNextStartElement()) {
+    while (!m_xml.hasError() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Key") {
             key = readString();
             keySet = true;
+            continue;
         }
-        else if (m_xml.name() == "Value") {
+        if (m_xml.name() == "Value") {
             QXmlStreamAttributes attr = m_xml.attributes();
 
             if (attr.hasAttribute("Ref")) {
                 poolRef = qMakePair(attr.value("Ref").toString(), key);
                 m_xml.skipCurrentElement();
-            }
-            else {
+            } else {
                 // format compatibility
                 value = readBinary();
                 bool isProtected = attr.hasAttribute("Protected")
-                        && (attr.value("Protected") == "True");
+                    && (attr.value("Protected") == "True");
 
                 if (isProtected && !value.isEmpty()) {
                     if (!m_randomStream->processInPlace(value)) {
@@ -892,51 +884,44 @@ QPair<QString, QString> KeePass2XmlReader::parseEntryBinary(Entry* entry)
             }
 
             valueSet = true;
+            continue;
         }
-        else {
-            skipCurrentElement();
-        }
+        skipCurrentElement();
     }
 
     if (keySet && valueSet) {
         if (entry->attachments()->hasKey(key)) {
-            raiseError("Duplicate attachment found");
-        }
-        else {
+            raiseError(tr("Duplicate attachment found"));
+        } else {
             entry->attachments()->set(key, value);
         }
-    }
-    else {
-        raiseError("Entry binary key or value missing");
+    } else {
+        raiseError(tr("Entry binary key or value missing"));
     }
 
     return poolRef;
 }
 
-void KeePass2XmlReader::parseAutoType(Entry* entry)
+void KdbxXmlReader::parseAutoType(Entry* entry)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "AutoType");
 
-    while (!m_xml.error() && m_xml.readNextStartElement()) {
+    while (!m_xml.hasError() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Enabled") {
             entry->setAutoTypeEnabled(readBool());
-        }
-        else if (m_xml.name() == "DataTransferObfuscation") {
+        } else if (m_xml.name() == "DataTransferObfuscation") {
             entry->setAutoTypeObfuscation(readNumber());
-        }
-        else if (m_xml.name() == "DefaultSequence") {
+        } else if (m_xml.name() == "DefaultSequence") {
             entry->setDefaultAutoTypeSequence(readString());
-        }
-        else if (m_xml.name() == "Association") {
+        } else if (m_xml.name() == "Association") {
             parseAutoTypeAssoc(entry);
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
 }
 
-void KeePass2XmlReader::parseAutoTypeAssoc(Entry* entry)
+void KdbxXmlReader::parseAutoTypeAssoc(Entry* entry)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Association");
 
@@ -944,39 +929,35 @@ void KeePass2XmlReader::parseAutoTypeAssoc(Entry* entry)
     bool windowSet = false;
     bool sequenceSet = false;
 
-    while (!m_xml.error() && m_xml.readNextStartElement()) {
+    while (!m_xml.hasError() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Window") {
             assoc.window = readString();
             windowSet = true;
-        }
-        else if (m_xml.name() == "KeystrokeSequence") {
+        } else if (m_xml.name() == "KeystrokeSequence") {
             assoc.sequence = readString();
             sequenceSet = true;
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
 
     if (windowSet && sequenceSet) {
         entry->autoTypeAssociations()->add(assoc);
+        return;
     }
-    else {
-        raiseError("Auto-type association window or sequence missing");
-    }
+    raiseError(tr("Auto-type association window or sequence missing"));
 }
 
-QList<Entry*> KeePass2XmlReader::parseEntryHistory()
+QList<Entry*> KdbxXmlReader::parseEntryHistory()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "History");
 
     QList<Entry*> historyItems;
 
-    while (!m_xml.error() && m_xml.readNextStartElement()) {
+    while (!m_xml.hasError() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Entry") {
             historyItems.append(parseEntry(true));
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
@@ -984,34 +965,27 @@ QList<Entry*> KeePass2XmlReader::parseEntryHistory()
     return historyItems;
 }
 
-TimeInfo KeePass2XmlReader::parseTimes()
+TimeInfo KdbxXmlReader::parseTimes()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Times");
 
     TimeInfo timeInfo;
-    while (!m_xml.error() && m_xml.readNextStartElement()) {
+    while (!m_xml.hasError() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "LastModificationTime") {
             timeInfo.setLastModificationTime(readDateTime());
-        }
-        else if (m_xml.name() == "CreationTime") {
+        } else if (m_xml.name() == "CreationTime") {
             timeInfo.setCreationTime(readDateTime());
-        }
-        else if (m_xml.name() == "LastAccessTime") {
+        } else if (m_xml.name() == "LastAccessTime") {
             timeInfo.setLastAccessTime(readDateTime());
-        }
-        else if (m_xml.name() == "ExpiryTime") {
+        } else if (m_xml.name() == "ExpiryTime") {
             timeInfo.setExpiryTime(readDateTime());
-        }
-        else if (m_xml.name() == "Expires") {
+        } else if (m_xml.name() == "Expires") {
             timeInfo.setExpires(readBool());
-        }
-        else if (m_xml.name() == "UsageCount") {
+        } else if (m_xml.name() == "UsageCount") {
             timeInfo.setUsageCount(readNumber());
-        }
-        else if (m_xml.name() == "LocationChanged") {
+        } else if (m_xml.name() == "LocationChanged") {
             timeInfo.setLocationChanged(readDateTime());
-        }
-        else {
+        } else {
             skipCurrentElement();
         }
     }
@@ -1019,81 +993,83 @@ TimeInfo KeePass2XmlReader::parseTimes()
     return timeInfo;
 }
 
-QString KeePass2XmlReader::readString()
+QString KdbxXmlReader::readString()
 {
     return m_xml.readElementText();
 }
 
-bool KeePass2XmlReader::readBool()
+bool KdbxXmlReader::readBool()
 {
     QString str = readString();
 
     if (str.compare("True", Qt::CaseInsensitive) == 0) {
         return true;
     }
-    else if (str.compare("False", Qt::CaseInsensitive) == 0) {
+    if (str.compare("False", Qt::CaseInsensitive) == 0) {
         return false;
     }
-    else if (str.length() == 0) {
+    if (str.length() == 0) {
         return false;
     }
-    else {
-        raiseError("Invalid bool value");
-        return false;
-    }
+    raiseError(tr("Invalid bool value"));
+    return false;
 }
 
-QDateTime KeePass2XmlReader::readDateTime()
+QDateTime KdbxXmlReader::readDateTime()
 {
+    static QRegularExpression b64regex("^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$");
     QString str = readString();
-    QDateTime dt = QDateTime::fromString(str, Qt::ISODate);
 
-    if (!dt.isValid()) {
-        if (m_strictMode) {
-            raiseError("Invalid date time value");
-        }
-        else {
-            dt = QDateTime::currentDateTimeUtc();
-        }
+    if (b64regex.match(str).hasMatch()) {
+        QByteArray secsBytes = QByteArray::fromBase64(str.toUtf8()).leftJustified(8, '\0', true).left(8);
+        qint64 secs = Endian::bytesToSizedInt<quint64>(secsBytes, KeePass2::BYTEORDER);
+        return QDateTime(QDate(1, 1, 1), QTime(0, 0, 0, 0), Qt::UTC).addSecs(secs);
     }
 
-    return dt;
+    QDateTime dt = QDateTime::fromString(str, Qt::ISODate);
+    if (dt.isValid()) {
+        return dt;
+    }
+
+    if (m_strictMode) {
+        raiseError(tr("Invalid date time value"));
+    }
+
+    return QDateTime::currentDateTimeUtc();
 }
 
-QColor KeePass2XmlReader::readColor()
+QColor KdbxXmlReader::readColor()
 {
     QString colorStr = readString();
 
     if (colorStr.isEmpty()) {
-        return QColor();
+        return {};
     }
 
     if (colorStr.length() != 7 || colorStr[0] != '#') {
         if (m_strictMode) {
-            raiseError("Invalid color value");
+            raiseError(tr("Invalid color value"));
         }
-        return QColor();
+        return {};
     }
 
     QColor color;
-    for (int i = 0; i <= 2; i++) {
-        QString rgbPartStr = colorStr.mid(1 + 2*i, 2);
+    for (int i = 0; i <= 2; ++i) {
+        QString rgbPartStr = colorStr.mid(1 + 2 * i, 2);
         bool ok;
         int rgbPart = rgbPartStr.toInt(&ok, 16);
         if (!ok || rgbPart > 255) {
             if (m_strictMode) {
-                raiseError("Invalid color rgb part");
+                raiseError(tr("Invalid color rgb part"));
             }
-            return QColor();
+            return {};
         }
 
         if (i == 0) {
             color.setRed(rgbPart);
-        }
-        else if (i == 1) {
+        } else if (i == 1) {
             color.setGreen(rgbPart);
-        }
-        else {
+        } else {
             color.setBlue(rgbPart);
         }
     }
@@ -1101,39 +1077,37 @@ QColor KeePass2XmlReader::readColor()
     return color;
 }
 
-int KeePass2XmlReader::readNumber()
+int KdbxXmlReader::readNumber()
 {
     bool ok;
     int result = readString().toInt(&ok);
     if (!ok) {
-        raiseError("Invalid number value");
+        raiseError(tr("Invalid number value"));
     }
     return result;
 }
 
-Uuid KeePass2XmlReader::readUuid()
+Uuid KdbxXmlReader::readUuid()
 {
     QByteArray uuidBin = readBinary();
     if (uuidBin.isEmpty()) {
-        return Uuid();
+        return {};
     }
-    else if (uuidBin.length() != Uuid::Length) {
+    if (uuidBin.length() != Uuid::Length) {
         if (m_strictMode) {
-            raiseError("Invalid uuid value");
+            raiseError(tr("Invalid uuid value"));
         }
-        return Uuid();
+        return {};
     }
-    else {
-        return Uuid(uuidBin);
-    }
+    return Uuid(uuidBin);
 }
 
-QByteArray KeePass2XmlReader::readBinary()
+QByteArray KdbxXmlReader::readBinary()
 {
     return QByteArray::fromBase64(readString().toLatin1());
 }
 
-QByteArray KeePass2XmlReader::readCompressedBinary()
+QByteArray KdbxXmlReader::readCompressedBinary()
 {
     QByteArray rawData = readBinary();
 
@@ -1146,12 +1120,12 @@ QByteArray KeePass2XmlReader::readCompressedBinary()
 
     QByteArray result;
     if (!Tools::readAllFromDevice(&compressor, result)) {
-        raiseError("Unable to decompress binary");
+        raiseError(tr("Unable to decompress binary"));
     }
     return result;
 }
 
-Group* KeePass2XmlReader::getGroup(const Uuid& uuid)
+Group* KdbxXmlReader::getGroup(const Uuid& uuid)
 {
     if (uuid.isNull()) {
         return nullptr;
@@ -1160,17 +1134,16 @@ Group* KeePass2XmlReader::getGroup(const Uuid& uuid)
     if (m_groups.contains(uuid)) {
         return m_groups.value(uuid);
     }
-    else {
-        Group* group = new Group();
-        group->setUpdateTimeinfo(false);
-        group->setUuid(uuid);
-        group->setParent(m_tmpParent);
-        m_groups.insert(uuid, group);
-        return group;
-    }
+
+    auto group = new Group();
+    group->setUpdateTimeinfo(false);
+    group->setUuid(uuid);
+    group->setParent(m_tmpParent.data());
+    m_groups.insert(uuid, group);
+    return group;
 }
 
-Entry* KeePass2XmlReader::getEntry(const Uuid& uuid)
+Entry* KdbxXmlReader::getEntry(const Uuid& uuid)
 {
     if (uuid.isNull()) {
         return nullptr;
@@ -1179,18 +1152,18 @@ Entry* KeePass2XmlReader::getEntry(const Uuid& uuid)
     if (m_entries.contains(uuid)) {
         return m_entries.value(uuid);
     }
-    else {
-        Entry* entry = new Entry();
-        entry->setUpdateTimeinfo(false);
-        entry->setUuid(uuid);
-        entry->setGroup(m_tmpParent);
-        m_entries.insert(uuid, entry);
-        return entry;
-    }
+
+    auto entry = new Entry();
+    entry->setUpdateTimeinfo(false);
+    entry->setUuid(uuid);
+    entry->setGroup(m_tmpParent.data());
+    m_entries.insert(uuid, entry);
+    return entry;
 }
 
-void KeePass2XmlReader::skipCurrentElement()
+void KdbxXmlReader::skipCurrentElement()
 {
-    qWarning("KeePass2XmlReader::skipCurrentElement: skip element \"%s\"", qPrintable(m_xml.name().toString()));
+    qWarning("KdbxXmlReader::skipCurrentElement: skip element \"%s\"", qPrintable(m_xml.name().toString()));
     m_xml.skipCurrentElement();
 }
+

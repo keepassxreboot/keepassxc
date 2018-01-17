@@ -39,14 +39,20 @@ public:
     bool event(QEvent* event) override;
     bool isAlreadyRunning() const;
 
+    bool sendFileNamesToRunningInstance(const QStringList& fileNames);
+
 signals:
     void openFile(const QString& filename);
     void anotherInstanceStarted();
+    void applicationActivated();
+    void quitSignalReceived();
 
 private slots:
 #if defined(Q_OS_UNIX)
     void quitBySignal();
 #endif
+    void processIncomingConnection();
+    void socketReadyRead();
 
 private:
     QWidget* m_mainWindow;
@@ -63,6 +69,7 @@ private:
     bool m_alreadyRunning;
     QLockFile* m_lockFile;
     QLocalServer m_lockServer;
+    QString m_socketName;
 };
 
 #endif // KEEPASSX_APPLICATION_H

@@ -282,3 +282,34 @@ void TestAutoType::testGlobalAutoTypeRegExp()
     QCOMPARE(m_test->actionChars(), QString("custom_attr_third"));
     m_test->clearActions();
 }
+
+void TestAutoType::testAutoTypeSyntaxChecks()
+{
+    // Huge sequence
+    QCOMPARE(true, AutoType::checkSyntax("{word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{SUBTRACT}~+%@fixedstring"));
+
+    QCOMPARE(true, AutoType::checkSyntax("{NUMPAD1 3}"));
+
+    QCOMPARE(true, AutoType::checkSyntax("{BEEP 3 3}"));
+    QCOMPARE(false, AutoType::checkSyntax("{BEEP 3}"));
+
+    QCOMPARE(true, AutoType::checkSyntax("{VKEY 0x01}"));
+    QCOMPARE(true, AutoType::checkSyntax("{VKEY VK_LBUTTON}"));
+    QCOMPARE(true, AutoType::checkSyntax("{VKEY-EX 0x01}"));
+    // Bad sequence
+    QCOMPARE(false, AutoType::checkSyntax("{{{}}{}{}}{{}}"));
+    // Good sequence
+    QCOMPARE(true, AutoType::checkSyntax("{{}{}}{}}{{}"));
+    QCOMPARE(true, AutoType::checkSyntax("{]}{[}{[}{]}"));
+    QCOMPARE(true, AutoType::checkSyntax("{)}{(}{(}{)}"));
+    // High DelAY / low delay
+    QCOMPARE(true, AutoType::checkHighDelay("{DelAY 50000}"));
+    QCOMPARE(false, AutoType::checkHighDelay("{delay 50}"));
+    // Slow typing
+    QCOMPARE(true, AutoType::checkSlowKeypress("{DelAY=50000}"));
+    QCOMPARE(false, AutoType::checkSlowKeypress("{delay=50}"));
+    // Many repetition / few repetition / delay not repetition
+    QCOMPARE(true, AutoType::checkHighRepetition("{LEFT 50000000}"));
+    QCOMPARE(false, AutoType::checkHighRepetition("{SPACE 10}{TAB 3}{RIGHT 50}"));
+    QCOMPARE(false, AutoType::checkHighRepetition("{delay 5000000000}"));
+}

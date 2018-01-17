@@ -45,6 +45,7 @@
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
+#include "crypto/kdf/AesKdf.h"
 #include "format/KeePass2Reader.h"
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
@@ -116,7 +117,14 @@ void TestGui::cleanup()
     triggerAction("actionDatabaseClose");
     Tools::wait(100);
 
+    if (m_db) {
+        delete m_db;
+    }
     m_db = nullptr;
+
+    if (m_dbWidget) {
+        delete m_dbWidget;
+    }
     m_dbWidget = nullptr;
 }
 
@@ -898,11 +906,12 @@ void TestGui::testDatabaseSettings()
     triggerAction("actionChangeDatabaseSettings");
     QWidget* dbSettingsWidget = m_dbWidget->findChild<QWidget*>("databaseSettingsWidget");
     QSpinBox* transformRoundsSpinBox = dbSettingsWidget->findChild<QSpinBox*>("transformRoundsSpinBox");
-    transformRoundsSpinBox->setValue(100);
+    QVERIFY(transformRoundsSpinBox != nullptr);
+    transformRoundsSpinBox->setValue(123456);
     QTest::keyClick(transformRoundsSpinBox, Qt::Key_Enter);
     // wait for modified timer
     QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("Save*"));
-    QCOMPARE(m_db->transformRounds(), Q_UINT64_C(100));
+    QCOMPARE(m_db->kdf()->rounds(), 123456);
 
     triggerAction("actionDatabaseSave");
     QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("Save"));
@@ -950,6 +959,43 @@ void TestGui::testDatabaseLocking()
     QTest::keyClick(editPassword, Qt::Key_Enter);
 
     QCOMPARE(m_tabWidget->tabText(0).remove('&'), origDbName);
+}
+
+void TestGui::testDragAndDropKdbxFiles()
+{
+    const int openedDatabasesCount =  m_tabWidget->count();
+
+    const QString badDatabaseFilePath(QString(KEEPASSX_TEST_DATA_DIR).append("/NotDatabase.notkdbx"));
+    QMimeData badMimeData;
+    badMimeData.setUrls({QUrl::fromLocalFile(badDatabaseFilePath)});
+    QDragEnterEvent badDragEvent(QPoint(1, 1), Qt::LinkAction, &badMimeData, Qt::LeftButton, Qt::NoModifier);
+    qApp->notify(m_mainWindow, &badDragEvent);
+    QCOMPARE(badDragEvent.isAccepted(), false);
+
+    QDropEvent badDropEvent(QPoint(1, 1), Qt::LinkAction, &badMimeData, Qt::LeftButton, Qt::NoModifier);
+    qApp->notify(m_mainWindow, &badDropEvent);
+    QCOMPARE(badDropEvent.isAccepted(), false);
+
+    QCOMPARE(m_tabWidget->count(), openedDatabasesCount);
+
+    const QString goodDatabaseFilePath(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx"));
+    QMimeData goodMimeData;
+    goodMimeData.setUrls({QUrl::fromLocalFile(goodDatabaseFilePath)});
+    QDragEnterEvent goodDragEvent(QPoint(1, 1), Qt::LinkAction, &goodMimeData, Qt::LeftButton, Qt::NoModifier);
+    qApp->notify(m_mainWindow, &goodDragEvent);
+    QCOMPARE(goodDragEvent.isAccepted(), true);
+
+    QDropEvent goodDropEvent(QPoint(1, 1), Qt::LinkAction, &goodMimeData, Qt::LeftButton, Qt::NoModifier);
+    qApp->notify(m_mainWindow, &goodDropEvent);
+    QCOMPARE(goodDropEvent.isAccepted(), true);
+
+    QCOMPARE(m_tabWidget->count(), openedDatabasesCount + 1);
+
+    MessageBox::setNextAnswer(QMessageBox::No);
+    triggerAction("actionDatabaseClose");
+    Tools::wait(100);
+
+    QCOMPARE(m_tabWidget->count(), openedDatabasesCount);
 }
 
 void TestGui::cleanupTestCase()
@@ -1021,7 +1067,7 @@ void TestGui::dragAndDropGroup(const QModelIndex& sourceIndex, const QModelIndex
     QVERIFY(sourceIndex.isValid());
     QVERIFY(targetIndex.isValid());
 
-    GroupModel* groupModel = qobject_cast<GroupModel*>(m_dbWidget->findChild<GroupView*>("groupView")->model());
+    auto groupModel = qobject_cast<GroupModel*>(m_dbWidget->findChild<GroupView*>("groupView")->model());
 
     QMimeData mimeData;
     QByteArray encoded;

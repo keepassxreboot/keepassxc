@@ -28,10 +28,19 @@ class QIODevice;
 class FileKey: public Key
 {
 public:
+    enum Type {
+        None,
+        Hashed,
+        KeePass2XML,
+        FixedBinary,
+        FixedBinaryHex
+    };
+
     bool load(QIODevice* device);
     bool load(const QString& fileName, QString* errorMsg = nullptr);
     QByteArray rawKey() const override;
     FileKey* clone() const override;
+    Type type() const;
     static void create(QIODevice* device, int size = 128);
     static bool create(const QString& fileName, QString* errorMsg = nullptr, int size = 128);
 
@@ -44,6 +53,7 @@ private:
     bool loadHashed(QIODevice* device);
 
     QByteArray m_key;
+    Type m_type = None;
 };
 
 #endif // KEEPASSX_FILEKEY_H

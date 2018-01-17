@@ -46,6 +46,9 @@ int SymmetricCipherGcrypt::gcryptAlgo(SymmetricCipher::Algorithm algo)
     case SymmetricCipher::Salsa20:
         return GCRY_CIPHER_SALSA20;
 
+    case SymmetricCipher::ChaCha20:
+        return GCRY_CIPHER_CHACHA20;
+
     default:
         Q_ASSERT(false);
         return -1;
@@ -142,8 +145,7 @@ QByteArray SymmetricCipherGcrypt::process(const QByteArray& data, bool* ok)
 
     if (m_direction == SymmetricCipher::Decrypt) {
         error = gcry_cipher_decrypt(m_ctx, result.data(), data.size(), data.constData(), data.size());
-    }
-    else {
+    } else {
         error = gcry_cipher_encrypt(m_ctx, result.data(), data.size(), data.constData(), data.size());
     }
 
@@ -151,7 +153,7 @@ QByteArray SymmetricCipherGcrypt::process(const QByteArray& data, bool* ok)
         setErrorString(error);
         *ok = false;
     } else {
-      *ok = true;
+        *ok = true;
     }
 
     return result;
@@ -165,8 +167,7 @@ bool SymmetricCipherGcrypt::processInPlace(QByteArray& data)
 
     if (m_direction == SymmetricCipher::Decrypt) {
         error = gcry_cipher_decrypt(m_ctx, data.data(), data.size(), nullptr, 0);
-    }
-    else {
+    } else {
         error = gcry_cipher_encrypt(m_ctx, data.data(), data.size(), nullptr, 0);
     }
 
@@ -196,8 +197,7 @@ bool SymmetricCipherGcrypt::processInPlace(QByteArray& data, quint64 rounds)
                 return false;
             }
         }
-    }
-    else {
+    } else {
         for (quint64 i = 0; i != rounds; ++i) {
             error = gcry_cipher_encrypt(m_ctx, rawData, size, nullptr, 0);
 

@@ -82,6 +82,13 @@ int Extract::execute(QStringList arguments)
             return EXIT_FAILURE;
         }
 
+        if (fileKey.type() != FileKey::Hashed) {
+            errorTextStream << QObject::tr("WARNING: You are using a legacy key file format which may become\n"
+                                               "unsupported in the future.\n\n"
+                                               "Please consider generating a new key file.");
+            errorTextStream << endl;
+        }
+
         compositeKey.addKey(fileKey);
     }
 
@@ -101,7 +108,7 @@ int Extract::execute(QStringList arguments)
     Database* db = reader.readDatabase(&dbFile, compositeKey);
     delete db;
 
-    QByteArray xmlData = reader.xmlData();
+    QByteArray xmlData = reader.reader()->xmlData();
 
     if (reader.hasError()) {
         if (xmlData.isEmpty()) {

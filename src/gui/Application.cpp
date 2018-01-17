@@ -22,19 +22,26 @@
 #include "core/Config.h"
 
 #include <QAbstractNativeEventFilter>
+#include <QFileInfo>
 #include <QFileOpenEvent>
-#include <QSocketNotifier>
 #include <QLockFile>
+#include <QSocketNotifier>
 #include <QStandardPaths>
 #include <QtNetwork/QLocalSocket>
 
 #include "autotype/AutoType.h"
+#include "core/Global.h"
 
 #if defined(Q_OS_UNIX)
 #include <signal.h>
 #include <unistd.h>
 #include <sys/socket.h>
 #endif
+
+namespace {
+constexpr int WaitTimeoutMSec = 150;
+const char BlockSizeProperty[] = "blockSize";
+}
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_OSX)
 class XcbEventFilter : public QAbstractNativeEventFilter
@@ -105,8 +112,8 @@ Application::Application(int& argc, char** argv)
         // In DEBUG mode don't interfere with Release instances
         identifier += "-DEBUG";
 #endif
-    QString socketName = identifier + ".socket";
     QString lockName = identifier + ".lock";
+    m_socketName = identifier + ".socket";
 
     // According to documentation we should use RuntimeLocation on *nixes, but even Qt doesn't respect
     // this and creates sockets in TempLocation, so let's be consistent.
@@ -114,20 +121,22 @@ Application::Application(int& argc, char** argv)
     m_lockFile->setStaleLockTime(0);
     m_lockFile->tryLock();
 
+    m_lockServer.setSocketOptions(QLocalServer::UserAccessOption);
+    connect(&m_lockServer, SIGNAL(newConnection()), this, SIGNAL(anotherInstanceStarted()));
+    connect(&m_lockServer, SIGNAL(newConnection()), this, SLOT(processIncomingConnection()));
+
     switch (m_lockFile->error()) {
     case QLockFile::NoError:
         // No existing lock was found, start listener
-        m_lockServer.setSocketOptions(QLocalServer::UserAccessOption);
-        m_lockServer.listen(socketName);
-        connect(&m_lockServer, SIGNAL(newConnection()), this, SIGNAL(anotherInstanceStarted()));
+        m_lockServer.listen(m_socketName);
         break;
     case QLockFile::LockFailedError: {
         if (config()->get("SingleInstance").toBool()) {
             // Attempt to connect to the existing instance
             QLocalSocket client;
-            for (int i = 0; i < 3; i++) {
-                client.connectToServer(socketName);
-                if (client.waitForConnected(150)) {
+            for (int i = 0; i < 3; ++i) {
+                client.connectToServer(m_socketName);
+                if (client.waitForConnected(WaitTimeoutMSec)) {
                     // Connection succeeded, this will raise the existing window if minimized
                     client.abort();
                     m_alreadyRunning = true;
@@ -145,9 +154,7 @@ Application::Application(int& argc, char** argv)
                 m_lockFile->removeStaleLockFile();
                 m_lockFile->tryLock();
                 // start the listen server
-                m_lockServer.setSocketOptions(QLocalServer::UserAccessOption);
-                m_lockServer.listen(socketName);
-                connect(&m_lockServer, SIGNAL(newConnection()), this, SIGNAL(anotherInstanceStarted()));
+                m_lockServer.listen(m_socketName);
             }
         }
         break;
@@ -187,12 +194,8 @@ bool Application::event(QEvent* event)
     }
 #ifdef Q_OS_MAC
     // restore main window when clicking on the docker icon
-    else if ((event->type() == QEvent::ApplicationActivate) && m_mainWindow) {
-        m_mainWindow->ensurePolished();
-        m_mainWindow->setWindowState(m_mainWindow->windowState() & ~Qt::WindowMinimized);
-        m_mainWindow->show();
-        m_mainWindow->raise();
-        m_mainWindow->activateWindow();
+    else if (event->type() == QEvent::ApplicationActivate) {
+        emit applicationActivated();
     }
 #endif
 
@@ -247,11 +250,53 @@ void Application::quitBySignal()
     m_unixSignalNotifier->setEnabled(false);
     char buf;
     Q_UNUSED(::read(unixSignalSocket[1], &buf, sizeof(buf)));
-    
-    if (nullptr != m_mainWindow)
-        static_cast<MainWindow*>(m_mainWindow)->appExit();
+    emit quitSignalReceived();
 }
 #endif
+
+void Application::processIncomingConnection()
+{
+    if (m_lockServer.hasPendingConnections()) {
+        QLocalSocket* socket = m_lockServer.nextPendingConnection();
+        socket->setProperty(BlockSizeProperty, 0);
+        connect(socket, SIGNAL(readyRead()), this, SLOT(socketReadyRead()));
+    }
+}
+
+void Application::socketReadyRead()
+{
+    QLocalSocket* socket = qobject_cast<QLocalSocket*>(sender());
+    if (!socket) {
+        return;
+    }
+
+    QDataStream in(socket);
+    in.setVersion(QDataStream::Qt_5_0);
+
+    int blockSize = socket->property(BlockSizeProperty).toInt();
+    if (blockSize == 0) {
+        // Relies on the fact that QDataStream format streams a quint32 into sizeof(quint32) bytes
+        if (socket->bytesAvailable() < qint64(sizeof(quint32))) {
+            return;
+        }
+        in >> blockSize;
+    }
+
+    if (socket->bytesAvailable() < blockSize || in.atEnd()) {
+        socket->setProperty(BlockSizeProperty, blockSize);
+        return;
+    }
+
+    QStringList fileNames;
+    in >> fileNames;
+    for (const QString& fileName: asConst(fileNames)) {
+        const QFileInfo fInfo(fileName);
+        if (fInfo.isFile() && fInfo.suffix().toLower() == "kdbx") {
+            emit openFile(fileName);
+        }
+    }
+    socket->deleteLater();
+}
 
 bool Application::isAlreadyRunning() const
 {
@@ -260,5 +305,28 @@ bool Application::isAlreadyRunning() const
     return false;
 #endif
     return config()->get("SingleInstance").toBool() && m_alreadyRunning;
+}
+
+bool Application::sendFileNamesToRunningInstance(const QStringList& fileNames)
+{
+    QLocalSocket client;
+    client.connectToServer(m_socketName);
+    const bool connected = client.waitForConnected(WaitTimeoutMSec);
+    if (!connected) {
+        return false;
+    }
+
+    QByteArray data;
+    QDataStream out(&data, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_5_0);
+    out << quint32(0)
+        << fileNames;
+    out.device()->seek(0);
+    out << quint32(data.size() - sizeof(quint32));
+
+    const bool writeOk = client.write(data) != -1 && client.waitForBytesWritten(WaitTimeoutMSec);
+    client.disconnectFromServer();
+    const bool disconnected = client.waitForDisconnected(WaitTimeoutMSec);
+    return writeOk && disconnected;
 }
 

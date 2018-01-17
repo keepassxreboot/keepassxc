@@ -29,6 +29,7 @@ parts:
       - -DWITH_XC_AUTOTYPE=ON
       - -DWITH_XC_HTTP=ON
       - -DWITH_XC_YUBIKEY=ON
+      - -DWITH_XC_BROWSER=ON
     build-packages:
       - g++
       - libgcrypt20-dev
@@ -41,6 +42,7 @@ parts:
       - libxtst-dev
       - libyubikey-dev
       - libykpers-1-dev
+      - libsodium-dev
     stage-packages:
       - dbus
       - qttranslations5-l10n # common translations
@@ -65,4 +67,3 @@ parts:
       - libqt5svg5 # for loading icon themes which are svg
       - locales-all
       - xdg-user-dirs
-

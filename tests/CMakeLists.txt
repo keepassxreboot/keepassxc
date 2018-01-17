@@ -107,7 +107,10 @@ endif()
 add_unit_test(NAME testgroup SOURCES TestGroup.cpp
               LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testkeepass2xmlreader SOURCES TestKeePass2XmlReader.cpp
+add_unit_test(NAME testkdbx3xmlreader SOURCES TestKeePass2XmlReader.cpp TestKdbx3XmlReader.cpp
+              LIBS ${TEST_LIBRARIES})
+
+add_unit_test(NAME testkdbx4xmlreader SOURCES TestKeePass2XmlReader.cpp TestKdbx4XmlReader.cpp
               LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testkeys SOURCES TestKeys.cpp
@@ -179,9 +182,6 @@ add_unit_test(NAME testrandom SOURCES TestRandom.cpp
               LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testentrysearcher SOURCES TestEntrySearcher.cpp
-              LIBS ${TEST_LIBRARIES})
-
-add_unit_test(NAME testexporter SOURCES TestExporter.cpp
               LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testcsvexporter SOURCES TestCsvExporter.cpp

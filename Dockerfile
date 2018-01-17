@@ -16,6 +16,8 @@
 
 FROM ubuntu:14.04
 
+ENV REBUILD_COUNTER=2
+
 ENV QT5_VERSION=59
 ENV QT5_PPA_VERSION=${QT5_VERSION}2
 
@@ -36,7 +38,9 @@ RUN set -x \
     && apt-get install -y \
         cmake3 \
         g++ \
-        libgcrypt20-dev \
+        libgcrypt20-18-dev \
+        libargon2-0-dev \
+        libsodium-dev \
         qt${QT5_VERSION}base \
         qt${QT5_VERSION}tools \
         qt${QT5_VERSION}x11extras \
@@ -48,16 +52,24 @@ RUN set -x \
         libyubikey-dev \
         libykpers-1-dev
 
-ENV CMAKE_PREFIX_PATH=/opt/qt${QT5_VERSION}/lib/cmake
-ENV LD_LIBRARY_PATH=/opt/qt${QT5_VERSION}/lib
+ENV CMAKE_PREFIX_PATH="/opt/qt${QT5_VERSION}/lib/cmake"
+ENV CMAKE_INCLUDE_PATH="/opt/libgcrypt20-18/include:/opt/gpg-error-127/include"
+ENV CMAKE_LIBRARY_PATH="/opt/libgcrypt20-18/lib/x86_64-linux-gnu:/opt/gpg-error-127/lib/x86_64-linux-gnu"
+ENV LD_LIBRARY_PATH="/opt/qt${QT5_VERSION}/lib:/opt/libgcrypt20-18/lib/x86_64-linux-gnu:/opt/gpg-error-127/lib/x86_64-linux-gnu"
 RUN set -x \
-    && echo /opt/qt${QT_VERSION}/lib > /etc/ld.so.conf.d/qt${QT5_VERSION}.conf
+    && echo "/opt/qt${QT_VERSION}/lib" > /etc/ld.so.conf.d/qt${QT5_VERSION}.conf \
+    && echo "/opt/libgcrypt20-18/lib/x86_64-linux-gnu" > /etc/ld.so.conf.d/libgcrypt20-18.conf \
+    && echo "/opt/gpg-error-127/lib/x86_64-linux-gnu" > /etc/ld.so.conf.d/libgpg-error-127.conf
 
 # AppImage dependencies
 RUN set -x \
     && apt-get install -y \
         libfuse2 \
         wget
+
+RUN set -x \
+    && apt-get autoremove --purge \
+    && rm -rf /var/lib/apt/lists/*
 
 VOLUME /keepassxc/src
 VOLUME /keepassxc/out

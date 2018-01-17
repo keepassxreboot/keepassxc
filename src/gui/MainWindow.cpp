@@ -20,6 +20,7 @@
 #include "ui_MainWindow.h"
 
 #include <QCloseEvent>
+#include <QMimeData>
 #include <QShortcut>
 #include <QTimer>
 
@@ -52,6 +53,12 @@
 #ifdef WITH_XC_SSHAGENT
 #include "sshagent/AgentSettingsPage.h"
 #include "sshagent/SSHAgent.h"
+#endif
+
+#ifdef WITH_XC_BROWSER
+#include "browser/NativeMessagingHost.h"
+#include "browser/BrowserSettings.h"
+#include "browser/BrowserOptionDialog.h"
 #endif
 
 #include "gui/SettingsWidget.h"
@@ -104,6 +111,54 @@ private:
 };
 #endif
 
+#ifdef WITH_XC_BROWSER
+class BrowserPlugin: public ISettingsPage
+{
+    public:
+        BrowserPlugin(DatabaseTabWidget* tabWidget) {
+            m_nativeMessagingHost = QSharedPointer<NativeMessagingHost>(new NativeMessagingHost(tabWidget));
+        }
+
+        ~BrowserPlugin() {
+
+        }
+
+        QString name() override
+        {
+            return QObject::tr("Browser extension with native messaging");
+        }
+
+        QIcon icon() override
+        {
+            return FilePath::instance()->icon("apps", "internet-web-browser");
+        }
+
+        QWidget* createWidget() override {
+            BrowserOptionDialog* dlg = new BrowserOptionDialog();
+            QObject::connect(dlg, SIGNAL(removeSharedEncryptionKeys()), m_nativeMessagingHost.data(), SLOT(removeSharedEncryptionKeys()));
+            QObject::connect(dlg, SIGNAL(removeStoredPermissions()), m_nativeMessagingHost.data(), SLOT(removeStoredPermissions()));
+            return dlg;
+        }
+
+        void loadSettings(QWidget* widget) override
+        {
+            qobject_cast<BrowserOptionDialog*>(widget)->loadSettings();
+        }
+
+        void saveSettings(QWidget* widget) override
+        {
+            qobject_cast<BrowserOptionDialog*>(widget)->saveSettings();
+            if (BrowserSettings::isEnabled()) {
+                m_nativeMessagingHost->run();
+            } else {
+                m_nativeMessagingHost->stop();
+            }
+        }
+    private:
+        QSharedPointer<NativeMessagingHost>  m_nativeMessagingHost;
+};
+#endif
+
 const QString MainWindow::BaseWindowTitle = "KeePassXC";
 
 MainWindow::MainWindow()
@@ -113,6 +168,8 @@ MainWindow::MainWindow()
     , m_appExiting(false)
 {
     m_ui->setupUi(this);
+
+    setAcceptDrops(true);
 
     m_ui->toolBar->setContextMenuPolicy(Qt::PreventContextMenu);
 
@@ -131,6 +188,9 @@ MainWindow::MainWindow()
     #ifdef WITH_XC_SSHAGENT
     SSHAgent::init(this);
     m_ui->settingsWidget->addSettingsPage(new AgentSettingsPage(m_ui->tabWidget));
+    #endif
+    #ifdef WITH_XC_BROWSER
+    m_ui->settingsWidget->addSettingsPage(new BrowserPlugin(m_ui->tabWidget));
     #endif
 
     setWindowIcon(filePath()->applicationIcon());
@@ -879,11 +939,7 @@ void MainWindow::toggleWindow()
     if ((QApplication::activeWindow() == this) && isVisible() && !isMinimized()) {
         hideWindow();
     } else {
-        ensurePolished();
-        setWindowState(windowState() & ~Qt::WindowMinimized);
-        show();
-        raise();
-        activateWindow();
+        bringToFront();
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_DBUS) && (QT_VERSION < QT_VERSION_CHECK(5, 9, 0))
         // re-register global D-Bus menu (needed on Ubuntu with Unity)
@@ -991,9 +1047,57 @@ void MainWindow::hideYubiKeyPopup()
     setEnabled(true);
 }
 
+void MainWindow::bringToFront()
+{
+    ensurePolished();
+    setWindowState(windowState() & ~Qt::WindowMinimized);
+    show();
+    raise();
+    activateWindow();
+}
+
 void MainWindow::handleScreenLock()
 {
     if (config()->get("security/lockdatabasescreenlock").toBool()){
         lockDatabasesAfterInactivity();
+    }
+}
+
+QStringList MainWindow::kdbxFilesFromUrls(const QList<QUrl>& urls)
+{
+    QStringList kdbxFiles;
+    for (const QUrl& url: urls) {
+        const QFileInfo fInfo(url.toLocalFile());
+        const bool isKdbxFile = fInfo.isFile() && fInfo.suffix().toLower() == "kdbx";
+        if (isKdbxFile) {
+            kdbxFiles.append(fInfo.absoluteFilePath());
+        }
+    }
+
+    return kdbxFiles;
+}
+
+void MainWindow::dragEnterEvent(QDragEnterEvent* event)
+{
+    const QMimeData* mimeData = event->mimeData();
+    if (mimeData->hasUrls()) {
+        const QStringList kdbxFiles = kdbxFilesFromUrls(mimeData->urls());
+        if (!kdbxFiles.isEmpty()) {
+            event->acceptProposedAction();
+        }
+    }
+}
+
+void MainWindow::dropEvent(QDropEvent* event)
+{
+    const QMimeData* mimeData = event->mimeData();
+    if (mimeData->hasUrls()) {
+        const QStringList kdbxFiles = kdbxFilesFromUrls(mimeData->urls());
+        if (!kdbxFiles.isEmpty()) {
+            event->acceptProposedAction();
+        }
+        for (const QString& kdbxFile: kdbxFiles) {
+            openDatabase(kdbxFile);
+        }
     }
 }

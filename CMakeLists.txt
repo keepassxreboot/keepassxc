@@ -44,6 +44,7 @@ option(WITH_XC_AUTOTYPE "Include Auto-Type." ON)
 option(WITH_XC_HTTP "Include KeePassHTTP and Custom Icon Downloads." OFF)
 option(WITH_XC_YUBIKEY "Include YubiKey support." OFF)
 option(WITH_XC_SSHAGENT "Include SSH agent support." OFF)
+option(WITH_XC_BROWSER "Include browser extension support." OFF)
 
 # Process ui files automatically from source files
 set(CMAKE_AUTOUIC ON)
@@ -129,7 +130,7 @@ endif()
 
 string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
 if (CMAKE_BUILD_TYPE_LOWER MATCHES "(release|relwithdebinfo|minsizerel)")
-  add_gcc_compiler_flags("-D_FORTIFY_SOURCE=2")
+  add_gcc_compiler_flags("-U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2")
 endif()
 
 check_c_compiler_flag("-Werror=format-security -Werror=implicit-function-declaration" WERROR_C_AVAILABLE)
@@ -200,11 +201,13 @@ endif()
 
 if(MINGW)
   set(CLI_INSTALL_DIR    ".")
+  set(PROXY_INSTALL_DIR  ".")
   set(BIN_INSTALL_DIR    ".")
   set(PLUGIN_INSTALL_DIR ".")
   set(DATA_INSTALL_DIR   "share")
 elseif(APPLE AND WITH_APP_BUNDLE)
   set(CLI_INSTALL_DIR    "/usr/local/bin")
+  set(PROXY_INSTALL_DIR  "/usr/local/bin")
   set(BIN_INSTALL_DIR    ".")
   set(PLUGIN_INSTALL_DIR "${PROGNAME}.app/Contents/PlugIns")
   set(DATA_INSTALL_DIR   "${PROGNAME}.app/Contents/Resources")
@@ -212,6 +215,7 @@ else()
   include(GNUInstallDirs)
 
   set(CLI_INSTALL_DIR    "${CMAKE_INSTALL_BINDIR}")
+  set(PROXY_INSTALL_DIR  "${CMAKE_INSTALL_BINDIR}")
   set(BIN_INSTALL_DIR    "${CMAKE_INSTALL_BINDIR}")
   set(PLUGIN_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/keepassxc")
   set(DATA_INSTALL_DIR   "${CMAKE_INSTALL_DATADIR}/keepassxc")
@@ -257,8 +261,8 @@ endif()
 set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_NONE QT_NO_DEBUG)
 
 find_package(LibGPGError REQUIRED)
-
-find_package(Gcrypt 1.6.0 REQUIRED)
+find_package(Gcrypt 1.7.0 REQUIRED)
+find_package(Argon2 REQUIRED)
 
 find_package(ZLIB REQUIRED)
 

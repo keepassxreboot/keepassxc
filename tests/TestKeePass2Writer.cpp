@@ -30,7 +30,6 @@
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Repair.h"
 #include "format/KeePass2Writer.h"
-#include "format/KeePass2XmlWriter.h"
 #include "keys/PasswordKey.h"
 
 QTEST_GUILESS_MAIN(TestKeePass2Writer)
@@ -66,12 +65,15 @@ void TestKeePass2Writer::initTestCase()
     buffer.open(QBuffer::ReadWrite);
 
     KeePass2Writer writer;
-    writer.writeDatabase(&buffer, m_dbOrg);
+    bool writeSuccess = writer.writeDatabase(&buffer, m_dbOrg);
+    QVERIFY(writeSuccess);
     QVERIFY(!writer.hasError());
     buffer.seek(0);
     KeePass2Reader reader;
     m_dbTest = reader.readDatabase(&buffer, key);
-    QVERIFY(!reader.hasError());
+    if (reader.hasError()) {
+        QFAIL(reader.errorString().toUtf8().constData());
+    }
     QVERIFY(m_dbTest);
 }
 
