@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,30 +15,18 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTKEEPASS2WRITER_H
-#define KEEPASSX_TESTKEEPASS2WRITER_H
+#ifndef KEEPASSXC_TEST_KDBX2_H
+#define KEEPASSXC_TEST_KDBX2_H
 
 #include <QObject>
 
-class Database;
-
-class TestKeePass2Writer : public QObject
+class TestKdbx2 : public QObject
 {
-    Q_OBJECT
+Q_OBJECT
 
 private slots:
     void initTestCase();
-    void testBasic();
-    void testProtectedAttributes();
-    void testAttachments();
-    void testNonAsciiPasswords();
-    void testDeviceFailure();
-    void testRepair();
-    void cleanupTestCase();
-
-private:
-    Database* m_dbOrg;
-    Database* m_dbTest;
+    void testFormat200();
 };
 
-#endif // KEEPASSX_TESTKEEPASS2WRITER_H
+#endif // KEEPASSXC_TEST_KDBX2_H

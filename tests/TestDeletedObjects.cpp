@@ -89,7 +89,7 @@ void TestDeletedObjects::createAndDelete(Database* db, int delObjectsSize)
 
 void TestDeletedObjects::testDeletedObjectsFromFile()
 {
-    KdbxXmlReader reader(KeePass2::FILE_VERSION_3);
+    KdbxXmlReader reader(KeePass2::FILE_VERSION_3_1);
     reader.setStrictMode(true);
     QString xmlFile = QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.xml");
     Database* db = reader.readDatabase(xmlFile);

@@ -107,20 +107,17 @@ endif()
 add_unit_test(NAME testgroup SOURCES TestGroup.cpp
         LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testkdbx3 SOURCES TestKeePass2XmlReader.cpp TestKdbx3.cpp
+add_unit_test(NAME testkdbx2 SOURCES TestKdbx2.cpp
         LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testkdbx4 SOURCES TestKeePass2XmlReader.cpp TestKdbx4.cpp
+add_unit_test(NAME testkdbx3 SOURCES TestKeePass2Format.cpp FailDevice.cpp TestKdbx3.cpp
+        LIBS ${TEST_LIBRARIES})
+
+add_unit_test(NAME testkdbx4 SOURCES TestKeePass2Format.cpp FailDevice.cpp TestKdbx4.cpp
         LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testkeys SOURCES TestKeys.cpp
         LIBS ${TEST_LIBRARIES})
-
-add_unit_test(NAME testkeepass2reader SOURCES TestKeePass2Reader.cpp
-        LIBS ${TEST_LIBRARIES})
-
-add_unit_test(NAME testkeepass2writer SOURCES TestKeePass2Writer.cpp
-        LIBS testsupport ${TEST_LIBRARIES})
 
 add_unit_test(NAME testgroupmodel SOURCES TestGroupModel.cpp
         LIBS testsupport ${TEST_LIBRARIES})

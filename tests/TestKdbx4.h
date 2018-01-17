@@ -18,19 +18,29 @@
 #ifndef KEEPASSXC_TEST_KDBX4_H
 #define KEEPASSXC_TEST_KDBX4_H
 
-#include "TestKeePass2XmlReader.h"
+#include "TestKeePass2Format.h"
 
-class TestKdbx4 : public TestKeePass2XmlReader
+class TestKdbx4 : public TestKeePass2Format
 {
 Q_OBJECT
 
 private slots:
-    virtual void initTestCase() override;
+    void testFormat400();
+    void testFormat400Upgrade();
+    void testFormat400Upgrade_data();
 
 protected:
-    virtual Database* readDatabase(QBuffer* buf, bool strictMode, bool& hasError, QString& errorString) override;
-    virtual Database* readDatabase(QString path, bool strictMode, bool& hasError, QString& errorString) override;
-    virtual void writeDatabase(QBuffer* buf, Database* db, bool& hasError, QString& errorString) override;
+    void initTestCaseImpl() override;
+
+    Database* readXml(QBuffer* buf, bool strictMode, bool& hasError, QString& errorString) override;
+    Database* readXml(const QString& path, bool strictMode, bool& hasError, QString& errorString) override;
+    void writeXml(QBuffer* buf, Database* db, bool& hasError, QString& errorString) override;
+
+    void readKdbx(const QString& path, CompositeKey const& key, QScopedPointer<Database>& db,
+                  bool& hasError, QString& errorString) override;
+    void readKdbx(QIODevice* device, CompositeKey const& key, QScopedPointer<Database>& db,
+                  bool& hasError, QString& errorString) override;
+    void writeKdbx(QIODevice* device, Database* db, bool& hasError, QString& errorString) override;
 };
 
 #endif // KEEPASSXC_TEST_KDBX4_H
