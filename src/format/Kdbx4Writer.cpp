@@ -152,6 +152,9 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
     CHECK_RETURN_FALSE(writeInnerHeaderField(outputDevice, KeePass2::InnerHeaderFieldID::InnerRandomStreamKey,
                                              protectedStreamKey));
 
+    // Write attachments to the inner header
+    writeAttachments(outputDevice, db);
+
     CHECK_RETURN_FALSE(writeInnerHeaderField(outputDevice, KeePass2::InnerHeaderFieldID::End, QByteArray()));
 
     KeePass2RandomStream randomStream(KeePass2::ProtectedStreamAlgo::ChaCha20);
@@ -204,24 +207,17 @@ bool Kdbx4Writer::writeInnerHeaderField(QIODevice* device, KeePass2::InnerHeader
     return true;
 }
 
-/**
- * Write binary header field..
- *
- * @param device output device
- * @param fieldId field identifier
- * @param data header payload
- * @return true on success
- */
-bool Kdbx4Writer::writeBinary(QIODevice* device, const QByteArray& data)
+void Kdbx4Writer::writeAttachments(QIODevice* device, Database* db)
 {
-    QByteArray fieldIdArr;
-    fieldIdArr[0] = static_cast<char>(KeePass2::InnerHeaderFieldID::Binary);
-    CHECK_RETURN_FALSE(writeData(device, fieldIdArr));
-    CHECK_RETURN_FALSE(writeData(device, Endian::sizedIntToBytes(static_cast<quint32>(data.size() + 1), KeePass2::BYTEORDER)));
-    CHECK_RETURN_FALSE(writeData(device, QByteArray(1, '\1')));
-    CHECK_RETURN_FALSE(writeData(device, data));
-
-    return true;
+    const QList<Entry*> allEntries = db->rootGroup()->entriesRecursive(true);
+    for (Entry* entry : allEntries) {
+        const QList<QString> attachmentKeys = entry->attachments()->keys();
+        for (const QString& key : attachmentKeys) {
+            QByteArray data = entry->attachments()->value(key);
+            data.prepend("\x01");
+            writeInnerHeaderField(device, KeePass2::InnerHeaderFieldID::Binary, data);
+        }
+    }
 }
 
 /**
