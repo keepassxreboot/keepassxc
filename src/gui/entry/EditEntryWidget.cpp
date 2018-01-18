@@ -170,8 +170,7 @@ void EditEntryWidget::setupAutoType()
 
     m_autoTypeDefaultSequenceGroup->addButton(m_autoTypeUi->inheritSequenceButton);
     m_autoTypeDefaultSequenceGroup->addButton(m_autoTypeUi->customSequenceButton);
-    m_autoTypeWindowSequenceGroup->addButton(m_autoTypeUi->defaultWindowSequenceButton);
-    m_autoTypeWindowSequenceGroup->addButton(m_autoTypeUi->customWindowSequenceButton);
+    //m_autoTypeWindowSequenceGroup->addButton(m_autoTypeUi->customWindowSequenceButton);
     m_autoTypeAssocModel->setAutoTypeAssociations(m_autoTypeAssoc);
     m_autoTypeUi->assocView->setModel(m_autoTypeAssocModel);
     m_autoTypeUi->assocView->setColumnHidden(1, true);
@@ -189,8 +188,6 @@ void EditEntryWidget::setupAutoType()
             SLOT(loadCurrentAssoc(QModelIndex)));
     connect(m_autoTypeAssocModel, SIGNAL(modelReset()), SLOT(clearCurrentAssoc()));
     connect(m_autoTypeUi->windowTitleCombo, SIGNAL(editTextChanged(QString)),
-            SLOT(applyCurrentAssoc()));
-    connect(m_autoTypeUi->defaultWindowSequenceButton, SIGNAL(toggled(bool)),
             SLOT(applyCurrentAssoc()));
     connect(m_autoTypeUi->windowSequenceEdit, SIGNAL(textChanged(QString)),
             SLOT(applyCurrentAssoc()));
@@ -644,7 +641,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     }
     m_autoTypeUi->sequenceEdit->setText(entry->effectiveAutoTypeSequence());
     m_autoTypeUi->windowTitleCombo->lineEdit()->clear();
-    m_autoTypeUi->defaultWindowSequenceButton->setChecked(true);
+    m_autoTypeUi->customWindowSequenceButton->setChecked(false);
     m_autoTypeUi->windowSequenceEdit->setText("");
     m_autoTypeAssoc->copyDataFrom(entry->autoTypeAssociations());
     m_autoTypeAssocModel->setEntry(entry);
@@ -998,7 +995,6 @@ void EditEntryWidget::updateAutoTypeEnabled()
 
     m_autoTypeUi->windowTitleLabel->setEnabled(autoTypeEnabled && validIndex);
     m_autoTypeUi->windowTitleCombo->setEnabled(autoTypeEnabled && validIndex);
-    m_autoTypeUi->defaultWindowSequenceButton->setEnabled(!m_history && autoTypeEnabled && validIndex);
     m_autoTypeUi->customWindowSequenceButton->setEnabled(!m_history && autoTypeEnabled && validIndex);
     m_autoTypeUi->windowSequenceEdit->setEnabled(autoTypeEnabled && validIndex
                                                  && m_autoTypeUi->customWindowSequenceButton->isChecked());
@@ -1029,16 +1025,15 @@ void EditEntryWidget::loadCurrentAssoc(const QModelIndex& current)
         AutoTypeAssociations::Association assoc = m_autoTypeAssoc->get(current.row());
         m_autoTypeUi->windowTitleCombo->setEditText(assoc.window);
         if (assoc.sequence.isEmpty()) {
-            m_autoTypeUi->defaultWindowSequenceButton->setChecked(true);
-        }
-        else {
+            m_autoTypeUi->customWindowSequenceButton->setChecked(false);
+            m_autoTypeUi->windowSequenceEdit->setText(m_entry->effectiveAutoTypeSequence());
+        } else {
             m_autoTypeUi->customWindowSequenceButton->setChecked(true);
+            m_autoTypeUi->windowSequenceEdit->setText(assoc.sequence);
         }
-        m_autoTypeUi->windowSequenceEdit->setText(assoc.sequence);
 
         updateAutoTypeEnabled();
-    }
-    else {
+    } else {
         clearCurrentAssoc();
     }
 }
@@ -1047,7 +1042,7 @@ void EditEntryWidget::clearCurrentAssoc()
 {
     m_autoTypeUi->windowTitleCombo->setEditText("");
 
-    m_autoTypeUi->defaultWindowSequenceButton->setChecked(true);
+    m_autoTypeUi->customWindowSequenceButton->setChecked(false);
     m_autoTypeUi->windowSequenceEdit->setText("");
 
     updateAutoTypeEnabled();
