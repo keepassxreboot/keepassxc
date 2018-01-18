@@ -493,13 +493,13 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 
         switch (mode) {
         case DatabaseWidget::ViewMode: {
-            bool inSearch = dbWidget->isInSearchMode();
+            //bool inSearch = dbWidget->isInSearchMode();
             bool singleEntrySelected = dbWidget->numberOfSelectedEntries() == 1;
             bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0;
             bool groupSelected = dbWidget->isGroupSelected();
             bool recycleBinSelected = dbWidget->isRecycleBinSelected();
 
-            m_ui->actionEntryNew->setEnabled(!inSearch);
+            m_ui->actionEntryNew->setEnabled(true);
             m_ui->actionEntryClone->setEnabled(singleEntrySelected);
             m_ui->actionEntryEdit->setEnabled(singleEntrySelected);
             m_ui->actionEntryDelete->setEnabled(entriesSelected);
