@@ -20,12 +20,14 @@
 #include "keys/CompositeKey.h"
 #include "keys/PasswordKey.h"
 #include "format/KeePass2Reader.h"
+#include "format/KeePass2Writer.h"
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "config-keepassx-tests.h"
 
 #include <QTest>
+#include <QBuffer>
 
 QTEST_GUILESS_MAIN(TestKdbx2)
 
@@ -34,17 +36,12 @@ void TestKdbx2::initTestCase()
     QVERIFY(Crypto::init());
 }
 
-void TestKdbx2::testFormat200()
+/**
+ * Helper method for verifying contents of the sample KDBX 2 file.
+ */
+void TestKdbx2::verifyKdbx2Db(Database* db)
 {
-    QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/Format200.kdbx");
-    CompositeKey key;
-    key.addKey(PasswordKey("a"));
-    KeePass2Reader reader;
-    QScopedPointer<Database> db(reader.readDatabase(filename, key));
-    QCOMPARE(reader.version(), KeePass2::FILE_VERSION_2);
-    QVERIFY(db.data());
-    QVERIFY(!reader.hasError());
-
+    QVERIFY(db);
     QCOMPARE(db->rootGroup()->name(), QString("Format200"));
     QVERIFY(!db->metadata()->protectTitle());
     QVERIFY(db->metadata()->protectUsername());
@@ -65,4 +62,50 @@ void TestKdbx2::testFormat200()
     QCOMPARE(entry->historyItems().at(0)->attachments()->keys().size(), 0);
     QCOMPARE(entry->historyItems().at(1)->attachments()->keys().size(), 1);
     QCOMPARE(entry->historyItems().at(1)->attachments()->value("myattach.txt"), QByteArray("abcdefghijk"));
+}
+
+void TestKdbx2::testFormat200()
+{
+    QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/Format200.kdbx");
+    CompositeKey key;
+    key.addKey(PasswordKey("a"));
+    KeePass2Reader reader;
+    QScopedPointer<Database> db(reader.readDatabase(filename, key));
+    QCOMPARE(reader.version(), KeePass2::FILE_VERSION_2 & KeePass2::FILE_VERSION_CRITICAL_MASK);
+
+    QVERIFY(!reader.hasError());
+    verifyKdbx2Db(db.data());
+}
+
+void TestKdbx2::testFormat200Upgrade()
+{
+    QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/Format200.kdbx");
+    CompositeKey key;
+    key.addKey(PasswordKey("a"));
+    KeePass2Reader reader;
+    QScopedPointer<Database> db(reader.readDatabase(filename, key));
+    QCOMPARE(reader.version(), KeePass2::FILE_VERSION_2 & KeePass2::FILE_VERSION_CRITICAL_MASK);
+    QCOMPARE(db->kdf()->uuid(), KeePass2::KDF_AES_KDBX3);
+
+    QBuffer buffer;
+    buffer.open(QBuffer::ReadWrite);
+
+    // write KDBX 3 to upgrade it
+    KeePass2Writer writer;
+    writer.writeDatabase(&buffer, db.data());
+    if (writer.hasError()) {
+        QFAIL(qPrintable(QString("Error while writing database: %1").arg(writer.errorString())));
+    }
+
+    // read buffer back
+    buffer.seek(0);
+    QScopedPointer<Database> targetDb(reader.readDatabase(&buffer, key));
+    if (reader.hasError()) {
+        QFAIL(qPrintable(QString("Error while reading database: %1").arg(reader.errorString())));
+    }
+
+    // database should now be upgraded to KDBX 3 without data loss
+    verifyKdbx2Db(targetDb.data());
+    QCOMPARE(reader.version(), KeePass2::FILE_VERSION_3_1 & KeePass2::FILE_VERSION_CRITICAL_MASK);
+    QCOMPARE(targetDb->kdf()->uuid(), KeePass2::KDF_AES_KDBX3);
 }
