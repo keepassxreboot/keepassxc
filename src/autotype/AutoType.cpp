@@ -103,6 +103,19 @@ void AutoType::loadPlugin(const QString& pluginPath)
     }
 }
 
+void AutoType::unloadPlugin()
+{
+    if (m_executor) {
+        delete m_executor;
+        m_executor = nullptr;
+    }
+
+    if (m_plugin) {
+        m_plugin->unload();
+        m_plugin = nullptr;
+    }
+}
+
 AutoType* AutoType::instance()
 {
     if (!m_instance) {
@@ -126,6 +139,62 @@ QStringList AutoType::windowTitles()
     }
 
     return m_plugin->windowTitles();
+}
+
+void AutoType::resetInAutoType()
+{
+    Q_ASSERT(m_inAutoType);
+
+    m_inAutoType = false;
+}
+
+void AutoType::raiseWindow()
+{
+#if defined(Q_OS_MAC)
+    m_plugin->raiseOwnWindow();
+#endif
+}
+
+bool AutoType::registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers)
+{
+    Q_ASSERT(key);
+    Q_ASSERT(modifiers);
+
+    if (!m_plugin) {
+        return false;
+    }
+
+    if (key != m_currentGlobalKey || modifiers != m_currentGlobalModifiers) {
+        if (m_currentGlobalKey && m_currentGlobalModifiers) {
+            m_plugin->unregisterGlobalShortcut(m_currentGlobalKey, m_currentGlobalModifiers);
+        }
+
+        if (m_plugin->registerGlobalShortcut(key, modifiers)) {
+            m_currentGlobalKey = key;
+            m_currentGlobalModifiers = modifiers;
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return true;
+    }
+}
+
+void AutoType::unregisterGlobalShortcut()
+{
+    if (m_plugin && m_currentGlobalKey && m_currentGlobalModifiers) {
+        m_plugin->unregisterGlobalShortcut(m_currentGlobalKey, m_currentGlobalModifiers);
+    }
+}
+
+int AutoType::callEventFilter(void* event)
+{
+    if (!m_plugin) {
+        return -1;
+    }
+
+    return m_plugin->platformEventFilter(event);
 }
 
 /**
@@ -263,76 +332,6 @@ void AutoType::performAutoTypeFromGlobal(AutoTypeMatch match)
     m_inAutoType = false;
 
     executeAutoTypeActions(match.entry, nullptr, match.sequence, m_windowFromGlobal);
-}
-
-void AutoType::resetInAutoType()
-{
-    Q_ASSERT(m_inAutoType);
-
-    m_inAutoType = false;
-}
-
-void AutoType::raiseWindow()
-{
-#if defined(Q_OS_MAC)
-    m_plugin->raiseOwnWindow();
-#endif
-}
-
-void AutoType::unloadPlugin()
-{
-    if (m_executor) {
-        delete m_executor;
-        m_executor = nullptr;
-    }
-
-    if (m_plugin) {
-        m_plugin->unload();
-        m_plugin = nullptr;
-    }
-}
-
-
-bool AutoType::registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers)
-{
-    Q_ASSERT(key);
-    Q_ASSERT(modifiers);
-
-    if (!m_plugin) {
-        return false;
-    }
-
-    if (key != m_currentGlobalKey || modifiers != m_currentGlobalModifiers) {
-        if (m_currentGlobalKey && m_currentGlobalModifiers) {
-            m_plugin->unregisterGlobalShortcut(m_currentGlobalKey, m_currentGlobalModifiers);
-        }
-
-        if (m_plugin->registerGlobalShortcut(key, modifiers)) {
-            m_currentGlobalKey = key;
-            m_currentGlobalModifiers = modifiers;
-            return true;
-        } else {
-            return false;
-        }
-    } else {
-        return true;
-    }
-}
-
-void AutoType::unregisterGlobalShortcut()
-{
-    if (m_plugin && m_currentGlobalKey && m_currentGlobalModifiers) {
-        m_plugin->unregisterGlobalShortcut(m_currentGlobalKey, m_currentGlobalModifiers);
-    }
-}
-
-int AutoType::callEventFilter(void* event)
-{
-    if (!m_plugin) {
-        return -1;
-    }
-
-    return m_plugin->platformEventFilter(event);
 }
 
 /**
