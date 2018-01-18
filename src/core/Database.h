@@ -32,6 +32,7 @@ enum class EntryReferenceType;
 class Group;
 class Metadata;
 class QTimer;
+class QIODevice;
 
 struct DeletedObject
 {
@@ -111,7 +112,7 @@ public:
     void emptyRecycleBin();
     void setEmitModified(bool value);
     void merge(const Database* other);
-    QString saveToFile(QString filePath, bool keepOld = false);
+    QString saveToFile(QString filePath, bool atomic = true, bool backup = false);
 
     /**
      * Returns a unique id that is only valid as long as the Database exists.
@@ -144,6 +145,8 @@ private:
     Group* findGroupRecursive(const Uuid& uuid, Group* group);
 
     void createRecycleBin();
+    QString writeDatabase(QIODevice* device);
+    bool backupDatabase(QString filePath);
 
     Metadata* const m_metadata;
     Group* m_rootGroup;

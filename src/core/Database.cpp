@@ -19,6 +19,7 @@
 #include "Database.h"
 
 #include <QFile>
+#include <QSaveFile>
 #include <QTemporaryFile>
 #include <QTextStream>
 #include <QTimer>
@@ -482,40 +483,92 @@ Database* Database::unlockFromStdin(QString databaseFilename, QString keyFilenam
  * wrong moment.
  *
  * @param filePath Absolute path of the file to save
- * @param keepOld Rename the original database file instead of deleting
+ * @param atomic Use atomic file transactions
+ * @param backup Backup the existing database file, if exists
  * @return error string, if any
  */
-QString Database::saveToFile(QString filePath, bool keepOld)
+QString Database::saveToFile(QString filePath, bool atomic, bool backup)
+{
+    QString error;
+    if (atomic) {
+        QSaveFile saveFile(filePath);
+        if (saveFile.open(QIODevice::WriteOnly)) {
+            // write the database to the file
+            error = writeDatabase(&saveFile);
+            if (!error.isEmpty()) {
+                return error;
+            }
+
+            if (backup) {
+                backupDatabase(filePath);
+            }
+
+            if (saveFile.commit()) {
+                // successfully saved database file
+                return {};
+            }
+        }
+        error = saveFile.errorString();
+    } else {
+        QTemporaryFile tempFile;
+        if (tempFile.open()) {
+            // write the database to the file
+            error = writeDatabase(&tempFile);
+            if (!error.isEmpty()) {
+                return error;
+            }
+
+            tempFile.close(); // flush to disk
+
+            if (backup) {
+                backupDatabase(filePath);
+            }
+
+            // Delete the original db and move the temp file in place
+            QFile::remove(filePath);
+            if (tempFile.rename(filePath)) {
+                // successfully saved database file
+                tempFile.setAutoRemove(false);
+                return {};
+            }
+        }
+        error = tempFile.errorString();
+    }
+    // Saving failed
+    return error;
+}
+
+QString Database::writeDatabase(QIODevice* device)
 {
     KeePass2Writer writer;
-    QTemporaryFile saveFile;
-    if (saveFile.open()) {
-        // write the database to the file
-        setEmitModified(false);
-        writer.writeDatabase(&saveFile, this);
-        setEmitModified(true);
+    setEmitModified(false);
+    writer.writeDatabase(device, this);
+    setEmitModified(true);
 
-        if (writer.hasError()) {
-            // the writer failed
-            return writer.errorString();
-        }
-
-        saveFile.close(); // flush to disk
-
-        if (keepOld) {
-            QFile::remove(filePath + ".old");
-            QFile::rename(filePath, filePath + ".old");
-        }
-
-        QFile::remove(filePath);
-        if (saveFile.rename(filePath)) {
-            // successfully saved database file
-            saveFile.setAutoRemove(false);
-            return {};
-        }
+    if (writer.hasError()) {
+        // the writer failed
+        return writer.errorString();
     }
+    return {};
+}
 
-    return saveFile.errorString();
+/**
+ * Remove the old backup and replace it with a new one
+ * backups are named <filename>.old.kdbx4
+ *
+ * @param filePath Path to the file to backup
+ * @return
+ */
+bool Database::backupDatabase(QString filePath)
+{
+    QString backupFilePath = filePath;
+    backupFilePath.replace(".kdbx", ".old.kdbx", Qt::CaseInsensitive);
+    if (!backupFilePath.endsWith(".old.kdbx")) {
+        // Fallback in case of poorly named file
+        backupFilePath = filePath + ".old";
+    }
+    QFile::remove(backupFilePath);
+    return QFile::copy(filePath, backupFilePath);
 }
 
 QSharedPointer<Kdf> Database::kdf() const
