@@ -136,7 +136,7 @@ void TestAutoType::testInternal()
     QCOMPARE(m_platform->activeWindowTitle(), QString("Test"));
 }
 
-void TestAutoType::testAutoTypeWithoutSequence()
+void TestAutoType::testSingleAutoType()
 {
     m_autoType->performAutoType(m_entry1, nullptr);
 
@@ -145,17 +145,6 @@ void TestAutoType::testAutoTypeWithoutSequence()
              QString("myuser%1mypass%2")
              .arg(m_test->keyToString(Qt::Key_Tab))
              .arg(m_test->keyToString(Qt::Key_Enter)));
-}
-
-void TestAutoType::testAutoTypeWithSequence()
-{
-    m_autoType->performAutoType(m_entry1, nullptr, "{Username}abc{PaSsWoRd}");
-
-    QCOMPARE(m_test->actionCount(), 15);
-    QCOMPARE(m_test->actionChars(),
-             QString("%1abc%2")
-             .arg(m_entry1->username())
-             .arg(m_entry1->password()));
 }
 
 void TestAutoType::testGlobalAutoTypeWithNoMatch()

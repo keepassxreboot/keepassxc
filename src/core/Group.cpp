@@ -25,6 +25,7 @@
 
 const int Group::DefaultIconNumber = 48;
 const int Group::RecycleBinIconNumber = 43;
+const QString Group::RootAutoTypeSequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
 
 Group::CloneFlags Group::DefaultCloneFlags = static_cast<Group::CloneFlags>(
     Group::CloneNewUuid | Group::CloneResetTimeInfo | Group::CloneIncludeEntries);
@@ -211,7 +212,7 @@ QString Group::effectiveAutoTypeSequence() const
     } while (group && sequence.isEmpty());
 
     if (sequence.isEmpty()) {
-        sequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
+        sequence = RootAutoTypeSequence;
     }
 
     return sequence;

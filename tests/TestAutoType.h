@@ -38,8 +38,7 @@ private slots:
     void cleanup();
 
     void testInternal();
-    void testAutoTypeWithoutSequence();
-    void testAutoTypeWithSequence();
+    void testSingleAutoType();
     void testGlobalAutoTypeWithNoMatch();
     void testGlobalAutoTypeWithOneMatch();
     void testGlobalAutoTypeTitleMatch();

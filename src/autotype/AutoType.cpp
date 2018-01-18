@@ -128,31 +128,16 @@ QStringList AutoType::windowTitles()
     return m_plugin->windowTitles();
 }
 
-void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, const QString& customSequence, WId window)
+/**
+ * Core Autotype function that will execute actions
+ */
+void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, const QString& sequence, WId window)
 {
-    if (m_inAutoType || !m_plugin) {
+    // no edit to the sequence beyond this point
+    if (!verifyAutoTypeSyntax(sequence)) {
+        m_inAutoType = false; // TODO: make this automatic
         return;
     }
-    m_inAutoType = true;
-
-    QString sequence;
-    if (customSequence.isEmpty()) {
-        QList<QString> sequences = autoTypeSequences(entry);
-        if(sequences.isEmpty()) {
-            sequence = "";
-        } else {
-            sequence = sequences.first();
-        }
-    } else {
-        sequence = customSequence;
-    }
-
-    if (!checkSyntax(sequence)) {
-        return;
-    }
-
-    sequence.replace("{{}", "{LEFTBRACE}");
-    sequence.replace("{}}", "{RIGHTBRACE}");
 
     QList<AutoTypeAction*> actions;
     ListDeleter<AutoTypeAction*> actionsDeleter(&actions);
@@ -191,6 +176,30 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
     m_inAutoType = false;
 }
 
+/**
+ * Single Autotype entry-point function
+ * Perfom autotype sequence in the active window
+ */
+void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow)
+{
+    if (m_inAutoType || !m_plugin) {
+        return;
+    }
+
+    QList<QString> sequences = autoTypeSequences(entry);
+    if(sequences.isEmpty()) {
+        return;
+    }
+
+    m_inAutoType = true;
+
+    executeAutoTypeActions(entry, hideWindow, sequences.first());
+}
+
+/**
+ * Global Autotype entry-point funcion
+ * Perform global autotype on the active window
+ */
 void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
 {
     if (m_inAutoType || !m_plugin) {
@@ -227,7 +236,7 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
         MessageBox::information(nullptr, tr("Auto-Type - KeePassXC"), message);
     } else if ((matchList.size() == 1) && !config()->get("security/autotypeask").toBool()) {
         m_inAutoType = false;
-        performAutoType(matchList.first().entry, nullptr, matchList.first().sequence);
+        executeAutoTypeActions(matchList.first().entry, nullptr, matchList.first().sequence);
     } else {
         m_windowFromGlobal = m_plugin->activeWindow();
         AutoTypeSelectDialog* selectDialog = new AutoTypeSelectDialog();
@@ -253,7 +262,7 @@ void AutoType::performAutoTypeFromGlobal(AutoTypeMatch match)
 
     m_inAutoType = false;
 
-    performAutoType(match.entry, nullptr, match.sequence, m_windowFromGlobal);
+    executeAutoTypeActions(match.entry, nullptr, match.sequence, m_windowFromGlobal);
 }
 
 void AutoType::resetInAutoType()
@@ -282,6 +291,7 @@ void AutoType::unloadPlugin()
         m_plugin = nullptr;
     }
 }
+
 
 bool AutoType::registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers)
 {
@@ -325,11 +335,18 @@ int AutoType::callEventFilter(void* event)
     return m_plugin->platformEventFilter(event);
 }
 
-bool AutoType::parseActions(const QString& sequence, const Entry* entry, QList<AutoTypeAction*>& actions)
+/**
+ * Parse an autotype sequence and resolve its Template/command inside as AutoTypeActions
+ */
+bool AutoType::parseActions(const QString& actionSequence, const Entry* entry, QList<AutoTypeAction*>& actions)
 {
     QString tmpl;
     bool inTmpl = false;
     m_autoTypeDelay = config()->get("AutoTypeDelay").toInt();
+
+    QString sequence = actionSequence;
+    sequence.replace("{{}", "{LEFTBRACE}");
+    sequence.replace("{}}", "{RIGHTBRACE}");
 
     for (const QChar& ch : sequence) {
         if (inTmpl) {
@@ -369,6 +386,9 @@ bool AutoType::parseActions(const QString& sequence, const Entry* entry, QList<A
     return true;
 }
 
+/**
+ * Convert an autotype Template/command to its AutoTypeAction that will be executed by the plugin executor
+ */
 QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, const Entry* entry)
 {
     QString tmplName = tmpl;
@@ -512,6 +532,9 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
     return list;
 }
 
+/**
+ * Retrive the autotype sequences matches for a given windowTitle
+ */
 QList<QString> AutoType::autoTypeSequences(const Entry* entry, const QString& windowTitle)
 {
     QList<QString> sequenceList;
@@ -564,6 +587,9 @@ QList<QString> AutoType::autoTypeSequences(const Entry* entry, const QString& wi
     return sequenceList;
 }
 
+/**
+ * Checks if a window title matches a pattern
+ */
 bool AutoType::windowMatches(const QString& windowTitle, const QString& windowPattern)
 {
     if (windowPattern.startsWith("//") && windowPattern.endsWith("//") && windowPattern.size() >= 4) {
@@ -574,11 +600,19 @@ bool AutoType::windowMatches(const QString& windowTitle, const QString& windowPa
     }
 }
 
+/**
+ * Checks if a window title matches an entry Title
+ * The entry title should be Spr-compiled by the caller
+ */
 bool AutoType::windowMatchesTitle(const QString& windowTitle, const QString& resolvedTitle)
 {
     return !resolvedTitle.isEmpty() && windowTitle.contains(resolvedTitle, Qt::CaseInsensitive);
 }
 
+/**
+ * Checks if a window title matches an entry URL
+ * The entry URL should be Spr-compiled by the caller
+ */
 bool AutoType::windowMatchesUrl(const QString& windowTitle, const QString& resolvedUrl)
 {
     if (!resolvedUrl.isEmpty() && windowTitle.contains(resolvedUrl, Qt::CaseInsensitive)) {
@@ -593,6 +627,9 @@ bool AutoType::windowMatchesUrl(const QString& windowTitle, const QString& resol
     return false;
 }
 
+/**
+ * Checks if the overall syntax of an autotype sequence is fine
+ */
 bool AutoType::checkSyntax(const QString& string)
 {
     QString allowRepetition = "(?:\\s\\d+)?";
@@ -618,6 +655,9 @@ bool AutoType::checkSyntax(const QString& string)
     return match.hasMatch();
 }
 
+/**
+ * Checks an autotype sequence for high delay
+ */
 bool AutoType::checkHighDelay(const QString& string)
 {
     // 5 digit numbers(10 seconds) are too much
@@ -626,6 +666,9 @@ bool AutoType::checkHighDelay(const QString& string)
     return match.hasMatch();
 }
 
+/**
+ * Checks an autotype sequence for slow keypress
+ */
 bool AutoType::checkSlowKeypress(const QString& string)
 {
     // 3 digit numbers(100 milliseconds) are too much
@@ -634,6 +677,9 @@ bool AutoType::checkSlowKeypress(const QString& string)
     return match.hasMatch();
 }
 
+/**
+ * Checks an autotype sequence for high repetition command
+ */
 bool AutoType::checkHighRepetition(const QString& string)
 {
     // 3 digit numbers are too much
@@ -642,6 +688,9 @@ bool AutoType::checkHighRepetition(const QString& string)
     return match.hasMatch();
 }
 
+/**
+ * Verify if the syntax of an autotype sequence is correct and doesn't have silly parameters
+ */
 bool AutoType::verifyAutoTypeSyntax(const QString& sequence)
 {
     if (!AutoType::checkSyntax(sequence)) {
@@ -674,13 +723,4 @@ bool AutoType::verifyAutoTypeSyntax(const QString& sequence)
         }
     }
     return true;
-}
-
-
-void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow, const QString& customSequence, WId window)
-{
-    auto sequence = entry->effectiveAutoTypeSequence();
-    if (verifyAutoTypeSyntax(sequence)) {
-        executeAutoTypeActions(entry, hideWindow, customSequence, window);
-    }
 }
