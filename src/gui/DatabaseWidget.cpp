@@ -339,6 +339,11 @@ void DatabaseWidget::createEntry()
     }
 
     m_newEntry = new Entry();
+
+    if (isInSearchMode()) {
+        m_newEntry->setTitle(getCurrentSearch());
+        endSearch();
+    }
     m_newEntry->setUuid(Uuid::random());
     m_newEntry->setUsername(m_db->metadata()->defaultUserName());
     m_newParent = m_groupView->currentGroup();
