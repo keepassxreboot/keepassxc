@@ -23,7 +23,6 @@
 #include <QMimeData>
 #include <QShortcut>
 #include <QTimer>
-#include <QDesktopServices>
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_DBUS)
 #include <QList>
@@ -78,7 +77,7 @@ public:
 
     QString name() override
     {
-        return QObject::tr("Browser Integration (old)");
+        return QObject::tr("Legacy Browser Integration");
     }
 
     QIcon icon() override
@@ -196,7 +195,7 @@ MainWindow::MainWindow()
 
     setWindowIcon(filePath()->applicationIcon());
     m_ui->globalMessageWidget->setHidden(true);
-    connect(m_ui->globalMessageWidget, SIGNAL(linkActivated(const QString&)), this, SLOT(openLink(const QString&)));
+    connect(m_ui->globalMessageWidget, &MessageWidget::linkActivated, &MessageWidget::openHttpUrl);
     connect(m_ui->globalMessageWidget, SIGNAL(showAnimationStarted()), m_ui->globalMessageWidgetContainer, SLOT(show()));
     connect(m_ui->globalMessageWidget, SIGNAL(hideAnimationFinished()), m_ui->globalMessageWidgetContainer, SLOT(hide()));
 
@@ -412,7 +411,7 @@ MainWindow::MainWindow()
             tr("Access error for config file %1").arg(config()->getFileName()), MessageWidget::Error);
     }
 #ifdef WITH_XC_HTTP
-    if (config()->get("Http/Enabled", false).toBool() && !config()->get("Http/DeprecationNoticeShown", false).toBool()) {
+    if (config()->get("Http/Enabled", false).toBool() && config()->get("Http/DeprecationNoticeShown", 0).toInt() < 3) {
         // show message after tab widget dismissed all messages
         connect(m_ui->tabWidget, SIGNAL(messageDismissGlobal()), this, SLOT(showKeePassHTTPDeprecationNotice()));
     }
@@ -425,28 +424,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::showKeePassHTTPDeprecationNotice()
 {
+    int warningNum = config()->get("Http/DeprecationNoticeShown", 0).toInt();
     displayGlobalMessage(tr("<p>It looks like you are using KeePassHTTP for browser integration. "
                                 "This feature has been deprecated and will be removed in the future.<br>"
-                                "Please switch to keepassxc-browser instead! For help with migration, "
+                                "Please switch to KeePassXC-Browser instead! For help with migration, "
                                 "visit our <a class=\"link\"  href=\"https://keepassxc.org/docs/keepassxc-browser-migration\">"
-                                "keepassxc-browser migration guide</a>.</p>"),
+                                "migration guide</a> (warning %1 of 3).</p>").arg(warningNum + 1),
                          MessageWidget::Warning, true, -1);
 
-//    config()->set("Http/DeprecationNoticeShown", true);
+    config()->set("Http/DeprecationNoticeShown", warningNum + 1);
     disconnect(m_ui->tabWidget, SIGNAL(messageDismissGlobal()), this, SLOT(showKeePassHTTPDeprecationNotice()));
-}
-
-/**
- * Open a link using the system's default handler.
- * Links that are not HTTP(s) links are ignored.
- *
- * @param link link URL
- */
-void MainWindow::openLink(const QString& link)
-{
-    if (link.startsWith("http://") || link.startsWith("https://")) {
-        QDesktopServices::openUrl(QUrl(link));
-    }
 }
 
 void MainWindow::appExit()

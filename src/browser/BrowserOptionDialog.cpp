@@ -33,7 +33,7 @@ BrowserOptionDialog::BrowserOptionDialog(QWidget* parent) :
     connect(m_ui->removeSharedEncryptionKeys, SIGNAL(clicked()), this, SIGNAL(removeSharedEncryptionKeys()));
     connect(m_ui->removeStoredPermissions, SIGNAL(clicked()), this, SIGNAL(removeStoredPermissions()));
 
-    m_ui->warningWidget->showMessage(tr("The following options can be dangerous!\nChange them only if you know what you are doing."), MessageWidget::Warning);
+    m_ui->warningWidget->showMessage(tr("<b>Warning:</b> The following options can be dangerous!"), MessageWidget::Warning);
     m_ui->warningWidget->setCloseButtonVisible(false);
     m_ui->warningWidget->setAutoHideTimeout(-1);
 
