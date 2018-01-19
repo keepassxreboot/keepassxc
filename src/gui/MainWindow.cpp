@@ -77,7 +77,7 @@ public:
 
     QString name() override
     {
-        return QObject::tr("Browser Integration");
+        return QObject::tr("Legacy Browser Integration");
     }
 
     QIcon icon() override
@@ -125,7 +125,7 @@ class BrowserPlugin: public ISettingsPage
 
         QString name() override
         {
-            return QObject::tr("Browser extension with native messaging");
+            return QObject::tr("Browser Integration");
         }
 
         QIcon icon() override
@@ -182,19 +182,22 @@ MainWindow::MainWindow()
     m_countDefaultAttributes = m_ui->menuEntryCopyAttribute->actions().size();
 
     restoreGeometry(config()->get("GUI/MainWindowGeometry").toByteArray());
-    #ifdef WITH_XC_HTTP
+#ifdef WITH_XC_BROWSER
+    m_ui->settingsWidget->addSettingsPage(new BrowserPlugin(m_ui->tabWidget));
+#endif
+#ifdef WITH_XC_HTTP
     m_ui->settingsWidget->addSettingsPage(new HttpPlugin(m_ui->tabWidget));
-    #endif
-    #ifdef WITH_XC_SSHAGENT
+#endif
+#ifdef WITH_XC_SSHAGENT
     SSHAgent::init(this);
     m_ui->settingsWidget->addSettingsPage(new AgentSettingsPage(m_ui->tabWidget));
-    #endif
-    #ifdef WITH_XC_BROWSER
-    m_ui->settingsWidget->addSettingsPage(new BrowserPlugin(m_ui->tabWidget));
-    #endif
+#endif
 
     setWindowIcon(filePath()->applicationIcon());
     m_ui->globalMessageWidget->setHidden(true);
+    connect(m_ui->globalMessageWidget, &MessageWidget::linkActivated, &MessageWidget::openHttpUrl);
+    connect(m_ui->globalMessageWidget, SIGNAL(showAnimationStarted()), m_ui->globalMessageWidgetContainer, SLOT(show()));
+    connect(m_ui->globalMessageWidget, SIGNAL(hideAnimationFinished()), m_ui->globalMessageWidgetContainer, SLOT(hide()));
 
     m_clearHistoryAction = new QAction(tr("Clear history"), m_ui->menuFile);
     m_lastDatabasesActions = new QActionGroup(m_ui->menuRecentDatabases);
@@ -407,11 +410,30 @@ MainWindow::MainWindow()
         m_ui->globalMessageWidget->showMessage(
             tr("Access error for config file %1").arg(config()->getFileName()), MessageWidget::Error);
     }
-
+#ifdef WITH_XC_HTTP
+    if (config()->get("Http/Enabled", false).toBool() && config()->get("Http/DeprecationNoticeShown", 0).toInt() < 3) {
+        // show message after tab widget dismissed all messages
+        connect(m_ui->tabWidget, SIGNAL(messageDismissGlobal()), this, SLOT(showKeePassHTTPDeprecationNotice()));
+    }
+#endif
 }
 
 MainWindow::~MainWindow()
 {
+}
+
+void MainWindow::showKeePassHTTPDeprecationNotice()
+{
+    int warningNum = config()->get("Http/DeprecationNoticeShown", 0).toInt();
+    displayGlobalMessage(tr("<p>It looks like you are using KeePassHTTP for browser integration. "
+                                "This feature has been deprecated and will be removed in the future.<br>"
+                                "Please switch to KeePassXC-Browser instead! For help with migration, "
+                                "visit our <a class=\"link\"  href=\"https://keepassxc.org/docs/keepassxc-browser-migration\">"
+                                "migration guide</a> (warning %1 of 3).</p>").arg(warningNum + 1),
+                         MessageWidget::Warning, true, -1);
+
+    config()->set("Http/DeprecationNoticeShown", warningNum + 1);
+    disconnect(m_ui->tabWidget, SIGNAL(messageDismissGlobal()), this, SLOT(showKeePassHTTPDeprecationNotice()));
 }
 
 void MainWindow::appExit()

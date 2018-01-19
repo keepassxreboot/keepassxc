@@ -18,7 +18,9 @@
 
 #include "MessageWidget.h"
 
-#include "QTimer"
+#include <QTimer>
+#include <QDesktopServices>
+#include <QUrl>
 
 const int MessageWidget::DefaultAutoHideTimeout = 6000;
 const int MessageWidget::DisableAutoHide = -1;
@@ -47,6 +49,7 @@ void MessageWidget::showMessage(const QString &text, KMessageWidget::MessageType
 {
     setMessageType(type);
     setText(text);
+    emit showAnimationStarted();
     animatedShow();
     if (autoHideTimeout > 0) {
         m_autoHideTimer->start(autoHideTimeout);
@@ -66,5 +69,18 @@ void MessageWidget::setAutoHideTimeout(int autoHideTimeout)
     m_autoHideTimeout = autoHideTimeout;
     if (autoHideTimeout <= 0) {
         m_autoHideTimer->stop();
+    }
+}
+
+/**
+ * Open a link using the system's default handler.
+ * Links that are not HTTP(S) links are ignored.
+ *
+ * @param link link URL
+ */
+void MessageWidget::openHttpUrl(const QString& link)
+{
+    if (link.startsWith("http://") || link.startsWith("https://")) {
+        QDesktopServices::openUrl(QUrl(link));
     }
 }

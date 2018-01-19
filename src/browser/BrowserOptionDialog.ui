@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>577</width>
-    <height>404</height>
+    <width>456</width>
+    <height>385</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,7 +32,7 @@
       <string>This is required for accessing your databases with keepassxc-browser</string>
      </property>
      <property name="text">
-      <string>Enable KeepassXC browser extension</string>
+      <string>Enable KeepassXC browser integration</string>
      </property>
     </widget>
    </item>
@@ -47,22 +47,93 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QCheckBox" name="showNotification">
-         <property name="text">
-          <string>Sh&amp;ow a notification when credentials are requested</string>
+        <widget class="QGroupBox" name="browsersGroupBox">
+         <property name="title">
+          <string>Enable integration for these browsers:</string>
          </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <property name="horizontalSpacing">
+           <number>40</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="chromeSupport">
+            <property name="text">
+             <string>&amp;Google Chrome</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QCheckBox" name="firefoxSupport">
+            <property name="text">
+             <string>&amp;Firefox</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>179</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="chromiumSupport">
+            <property name="text">
+             <string>&amp;Chromium</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QCheckBox" name="vivaldiSupport">
+            <property name="text">
+             <string>&amp;Vivaldi</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="bestMatchOnly">
-         <property name="toolTip">
-          <string>Only returns the best matches for a specific URL instead of all entries for the whole domain.</string>
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>4</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="showNotification">
          <property name="text">
-          <string>&amp;Return only best-matching entries</string>
+          <string>Show a &amp;notification when credentials are requested</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -82,117 +153,82 @@
           <string>Only entries with the same scheme (http://, https://, ...) are returned.</string>
          </property>
          <property name="text">
-          <string>&amp;Match URL schemes</string>
+          <string>&amp;Match URL scheme (e.g., https://...)</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QRadioButton" name="sortByUsername">
+        <widget class="QCheckBox" name="bestMatchOnly">
+         <property name="toolTip">
+          <string>Only returns the best matches for a specific URL instead of all entries for the whole domain.</string>
+         </property>
          <property name="text">
-          <string>Sort matching entries by &amp;username</string>
+          <string>&amp;Return only best-matching credentials</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QRadioButton" name="sortByTitle">
          <property name="text">
-          <string>Sort &amp;matching entries by title</string>
+          <string>Sort &amp;matching credentials by title</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="removeSharedEncryptionKeys">
+        <widget class="QRadioButton" name="sortByUsername">
          <property name="text">
-          <string>R&amp;emove all shared encryption keys from active database</string>
+          <string>Sort matching credentials by &amp;username</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="removeStoredPermissions">
-         <property name="text">
-          <string>Re&amp;move all stored permissions from entries in active database</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer_2">
+        <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>40</height>
+           <height>10</height>
           </size>
          </property>
         </spacer>
        </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab_3">
-      <attribute name="title">
-       <string>Supported browsers</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_4">
-        <item>
-          <widget class="QLabel" name="browserLabel1">
-           <property name="text">
-            <string>Native messaging requires certain .json files to be installed. Already installed browsers are automatically detected.</string>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
-           </property>
-          </widget>
-        </item>
-        <item>
-          <widget class="QLabel" name="browserLabel2">
-           <property name="text">
-            <string>Enable KeePassXC native messaging extension for these browsers:</string>
-           </property>
-          </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="chromeSupport">
-          <property name="text">
-           <string>Chrome</string>
-          </property>
-          <property name="checked">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="chromiumSupport">
-          <property name="text">
-           <string>Chromium</string>
-          </property>
-          <property name="checked">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="firefoxSupport">
-          <property name="text">
-           <string>Firefox</string>
-          </property>
-          <property name="checked">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="vivaldiSupport">
-          <property name="text">
-           <string>Vivaldi</string>
-          </property>
-          <property name="checked">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
        <item>
-        <spacer name="verticalSpacer_3">
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QPushButton" name="removeSharedEncryptionKeys">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>&amp;Disconnect all browsers</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="removeStoredPermissions">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Forget all remembered &amp;permissions</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -224,14 +260,14 @@
        <item>
         <widget class="QCheckBox" name="alwaysAllowAccess">
          <property name="text">
-          <string>Always allow &amp;access to entries</string>
+          <string>Never &amp;ask before accessing credentials</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QCheckBox" name="alwaysAllowUpdate">
          <property name="text">
-          <string>Always allow &amp;updating entries</string>
+          <string>Never ask before &amp;updating credentials</string>
          </property>
         </widget>
        </item>
@@ -241,7 +277,7 @@
           <string>Only the selected database has to be connected with a client.</string>
          </property>
          <property name="text">
-          <string>Searc&amp;h in all opened databases for matching entries</string>
+          <string>Searc&amp;h in all opened databases for matching credentials</string>
          </property>
         </widget>
        </item>
@@ -261,7 +297,7 @@
           <string>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</string>
          </property>
          <property name="text">
-          <string>&amp;Update KeePassXC binary path automatically to native messaging scripts on startup</string>
+          <string>Update &amp;native messaging manifest files at startup</string>
          </property>
         </widget>
        </item>
@@ -271,7 +307,7 @@
           <string>Support a proxy application between KeePassXC and browser extension.</string>
          </property>
          <property name="text">
-          <string>&amp;Enable support for proxy application between KeePassXC and browser extension</string>
+          <string>Use a &amp;proxy application between KeePassXC and browser extension</string>
          </property>
         </widget>
        </item>
@@ -281,19 +317,30 @@
           <string>Use a custom proxy location if you installed a proxy manually.</string>
          </property>
          <property name="text">
-          <string>&amp;Use a custom proxy location</string>
+          <string>Use a &amp;custom proxy location</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="customProxyLocation">
-         <property name="maxLength">
-          <number>999</number>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLineEdit" name="customProxyLocation">
+           <property name="maxLength">
+            <number>999</number>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="customProxyLocationBrowseButton">
+           <property name="text">
+            <string>Browse...</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <spacer name="verticalSpacer_4">

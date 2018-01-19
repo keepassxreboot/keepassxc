@@ -35,11 +35,15 @@ public:
     static const int DefaultAutoHideTimeout;
     static const int DisableAutoHide;
 
+signals:
+    void showAnimationStarted();
+
 public slots:
     void showMessage(const QString& text, MessageWidget::MessageType type);
     void showMessage(const QString& text, MessageWidget::MessageType type, int autoHideTimeout);
     void hideMessage();
     void setAutoHideTimeout(int autoHideTimeout);
+    static void openHttpUrl(QString const& url);
 
 private:
     QTimer* m_autoHideTimer;

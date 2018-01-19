@@ -32,13 +32,20 @@ OptionDialog::OptionDialog(QWidget *parent) :
     connect(m_ui->removeSharedEncryptionKeys, SIGNAL(clicked()), this, SIGNAL(removeSharedEncryptionKeys()));
     connect(m_ui->removeStoredPermissions, SIGNAL(clicked()), this, SIGNAL(removeStoredPermissions()));
 
-    m_ui->warningWidget->showMessage(tr("The following options can be dangerous!\nChange them only if you know what you are doing."), MessageWidget::Warning);
-    m_ui->warningWidget->setIcon(FilePath::instance()->icon("status", "dialog-warning"));
+    m_ui->warningWidget->showMessage(tr("<b>Warning:</b> The following options can be dangerous!"), MessageWidget::Warning);
     m_ui->warningWidget->setCloseButtonVisible(false);
     m_ui->warningWidget->setAutoHideTimeout(MessageWidget::DisableAutoHide);
 
     m_ui->tabWidget->setEnabled(m_ui->enableHttpServer->isChecked());
     connect(m_ui->enableHttpServer, SIGNAL(toggled(bool)), m_ui->tabWidget, SLOT(setEnabled(bool)));
+
+    m_ui->deprecationNotice->showMessage(tr("<p>KeePassHTTP has been deprecated and will be removed in the future.<br>"
+                                            "Please switch to KeePassXC-Browser instead! For help with migration, visit "
+                                            "our <a href=\"https://keepassxc.org/docs/keepassxc-browser-migration\">"
+                                            "migration guide</a>.</p>"), MessageWidget::Warning);
+    m_ui->deprecationNotice->setCloseButtonVisible(false);
+    m_ui->deprecationNotice->setAutoHideTimeout(-1);
+    connect(m_ui->deprecationNotice, &MessageWidget::linkActivated, &MessageWidget::openHttpUrl);
 }
 
 OptionDialog::~OptionDialog()

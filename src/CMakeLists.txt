@@ -187,15 +187,21 @@ set(keepassx_SOURCES_MAINEXE
     main.cpp
 )
 
-add_feature_info(AutoType WITH_XC_AUTOTYPE "Automatic password typing")
-add_feature_info(KeePassHTTP WITH_XC_HTTP "Browser integration compatible with ChromeIPass and PassIFox")
-add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
+add_feature_info(Auto-Type WITH_XC_AUTOTYPE "Automatic password typing")
+add_feature_info(Networking WITH_XC_NETWORKING "Compile KeePassXC with network access code (e.g. for downloading website icons)")
+add_feature_info(keepassxc-browser WITH_XC_BROWSER "Browser integration with keepassxc-browser")
+add_feature_info(KeePassHTTP WITH_XC_HTTP "Browser integration compatible with ChromeIPass and PassIFox (deprecated, implies Networking)")
 add_feature_info(SSHAgent WITH_XC_SSHAGENT "SSH agent integration compatible with KeeAgent")
-add_feature_info(keepassxc-browser WITH_XC_BROWSER "KeePassXC browser support with keepassxc-browser")
+add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
 
-add_subdirectory(http)
+
 if(WITH_XC_HTTP)
-    set(keepasshttp_LIB keepasshttp qhttp Qt5::Network)
+    add_subdirectory(http)
+    set(keepasshttp_LIB keepasshttp)
+endif()
+if(WITH_XC_NETWORKING)
+    add_subdirectory(http/qhttp)
+    set(keepassxcnetwork_LIB qhttp Qt5::Network)
 endif()
 
 set(BROWSER_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/browser)
@@ -247,8 +253,9 @@ add_library(keepassx_core STATIC ${keepassx_SOURCES})
 
 set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
 target_link_libraries(keepassx_core
-                      ${keepasshttp_LIB}
                       ${keepassxcbrowser_LIB}
+                      ${keepasshttp_LIB}
+                      ${keepassxcnetwork_LIB}
                       ${autotype_LIB}
                       ${sshagent_LIB}
                       ${YUBIKEY_LIBRARIES}

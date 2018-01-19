@@ -97,6 +97,7 @@ private slots:
     void repairDatabase();
     void hideTabMessage();
     void handleScreenLock();
+    void showKeePassHTTPDeprecationNotice();
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);

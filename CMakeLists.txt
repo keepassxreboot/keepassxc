@@ -1,5 +1,5 @@
-#  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
 #  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+#  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -41,10 +41,17 @@ option(WITH_COVERAGE "Use to build with coverage tests (GCC only)." OFF)
 option(WITH_APP_BUNDLE "Enable Application Bundle for macOS" ON)
 
 option(WITH_XC_AUTOTYPE "Include Auto-Type." ON)
-option(WITH_XC_HTTP "Include KeePassHTTP and Custom Icon Downloads." OFF)
+option(WITH_XC_NETWORKING "Include networking code (e.g. for downlading website icons)." OFF)
+option(WITH_XC_BROWSER "Include browser integration with keepassxc-browser." OFF)
+option(WITH_XC_HTTP "Include KeePassHTTP-compatible browser integration (deprecated, implies WITH_NETWORKING)." OFF)
 option(WITH_XC_YUBIKEY "Include YubiKey support." OFF)
 option(WITH_XC_SSHAGENT "Include SSH agent support." OFF)
-option(WITH_XC_BROWSER "Include browser extension support." OFF)
+
+if(WITH_XC_HTTP)
+  message(WARNING "KeePassHTTP support has been deprecated and will be removed in a future version. Please use WITH_XC_BROWSER instead!\n"
+          "For enabling / disabling network access code, WITH_XC_HTTP has been replaced by WITH_XC_NETWORKING.")
+  set(WITH_XC_NETWORKING ON CACHE BOOL "Include networking code (e.g. for downlading website icons)." FORCE)
+endif()
 
 # Process ui files automatically from source files
 set(CMAKE_AUTOUIC ON)

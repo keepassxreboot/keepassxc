@@ -34,7 +34,7 @@ public:
     static void setShowNotification(bool showNotification);
     static bool bestMatchOnly();     //TODO!!
     static void setBestMatchOnly(bool bestMatchOnly);
-    static bool unlockDatabase();    //TODO!!
+    static bool unlockDatabase();
     static void setUnlockDatabase(bool unlockDatabase);
     static bool matchUrlScheme();
     static void setMatchUrlScheme(bool matchUrlScheme);

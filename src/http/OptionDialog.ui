@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>577</width>
-    <height>404</height>
+    <width>803</width>
+    <height>433</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,6 +35,9 @@
       <string>Enable KeePassHTTP server</string>
      </property>
     </widget>
+   </item>
+   <item>
+    <widget class="MessageWidget" name="deprecationNotice" native="true"/>
    </item>
    <item>
     <widget class="QTabWidget" name="tabWidget">

@@ -23,6 +23,7 @@
 #include "core/FilePath.h"
 
 #include <QMessageBox>
+#include <QFileDialog>
 
 BrowserOptionDialog::BrowserOptionDialog(QWidget* parent) :
     QWidget(parent),
@@ -32,15 +33,18 @@ BrowserOptionDialog::BrowserOptionDialog(QWidget* parent) :
     connect(m_ui->removeSharedEncryptionKeys, SIGNAL(clicked()), this, SIGNAL(removeSharedEncryptionKeys()));
     connect(m_ui->removeStoredPermissions, SIGNAL(clicked()), this, SIGNAL(removeStoredPermissions()));
 
-    m_ui->warningWidget->showMessage(tr("The following options can be dangerous!\nChange them only if you know what you are doing."), MessageWidget::Warning);
-    m_ui->warningWidget->setIcon(FilePath::instance()->icon("status", "dialog-warning"));
+    m_ui->warningWidget->showMessage(tr("<b>Warning:</b> The following options can be dangerous!"), MessageWidget::Warning);
     m_ui->warningWidget->setCloseButtonVisible(false);
+    m_ui->warningWidget->setAutoHideTimeout(-1);
 
     m_ui->tabWidget->setEnabled(m_ui->enableBrowserSupport->isChecked());
     connect(m_ui->enableBrowserSupport, SIGNAL(toggled(bool)), m_ui->tabWidget, SLOT(setEnabled(bool)));
 
     m_ui->customProxyLocation->setEnabled(m_ui->useCustomProxy->isChecked());
+    m_ui->customProxyLocationBrowseButton->setEnabled(m_ui->useCustomProxy->isChecked());
     connect(m_ui->useCustomProxy, SIGNAL(toggled(bool)), m_ui->customProxyLocation, SLOT(setEnabled(bool)));
+    connect(m_ui->useCustomProxy, SIGNAL(toggled(bool)), m_ui->customProxyLocationBrowseButton, SLOT(setEnabled(bool)));
+    connect(m_ui->customProxyLocationBrowseButton, SIGNAL(clicked()), this, SLOT(showProxyLocationFileDialog()));
 }
 
 BrowserOptionDialog::~BrowserOptionDialog()
@@ -56,6 +60,11 @@ void BrowserOptionDialog::loadSettings()
     m_ui->bestMatchOnly->setChecked(settings.bestMatchOnly());
     m_ui->unlockDatabase->setChecked(settings.unlockDatabase());
     m_ui->matchUrlScheme->setChecked(settings.matchUrlScheme());
+
+    // hide unimplemented options
+    // TODO: fix this
+    m_ui->showNotification->hide();
+    m_ui->bestMatchOnly->hide();
 
     if (settings.sortByUsername()) {
         m_ui->sortByUsername->setChecked(true);
@@ -101,4 +110,17 @@ void BrowserOptionDialog::saveSettings()
     settings.setChromiumSupport(m_ui->chromiumSupport->isChecked());
     settings.setFirefoxSupport(m_ui->firefoxSupport->isChecked());
     settings.setVivaldiSupport(m_ui->vivaldiSupport->isChecked());
+}
+
+void BrowserOptionDialog::showProxyLocationFileDialog()
+{
+#ifdef Q_OS_WIN
+    QString fileTypeFilter(tr("Executable Files (*.exe);;All Files (*.*)"));
+#else
+    QString fileTypeFilter(tr("Executable Files (*.*)"));
+#endif
+    auto proxyLocation = QFileDialog::getOpenFileName(this, tr("Select custom proxy location"),
+                                                      QFileInfo(QCoreApplication::applicationDirPath()).filePath(),
+                                                      fileTypeFilter);
+    m_ui->customProxyLocation->setText(proxyLocation);
 }

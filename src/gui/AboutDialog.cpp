@@ -78,20 +78,20 @@ AboutDialog::AboutDialog(QWidget* parent)
 #endif
 
     QString extensions;
-#ifdef WITH_XC_HTTP
-    extensions += "\n- KeePassHTTP";
-#endif
 #ifdef WITH_XC_AUTOTYPE
     extensions += "\n- Auto-Type";
 #endif
-#ifdef WITH_XC_YUBIKEY
-    extensions += "\n- YubiKey";
+#ifdef WITH_XC_BROWSER
+    extensions += "\n- Browser Integration";
+#endif
+#ifdef WITH_XC_HTTP
+    extensions += "\n- Legacy Browser Integration (KeePassHTTP)";
 #endif
 #ifdef WITH_XC_SSHAGENT
     extensions += "\n- SSH Agent";
 #endif
-#ifdef WITH_XC_BROWSER
-    extensions += "\n- Native messaging browser extension";
+#ifdef WITH_XC_YUBIKEY
+    extensions += "\n- YubiKey";
 #endif
 
     if (extensions.isEmpty())

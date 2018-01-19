@@ -43,6 +43,9 @@ signals:
     void removeSharedEncryptionKeys();
     void removeStoredPermissions();
 
+private slots:
+    void showProxyLocationFileDialog();
+
 private:
     QScopedPointer<Ui::BrowserOptionDialog> m_ui;
 };
