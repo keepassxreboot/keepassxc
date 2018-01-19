@@ -54,7 +54,7 @@ bool KeePass2Writer::writeDatabase(QIODevice* device, Database* db) {
 
     // determine KDBX3 vs KDBX4
     if (db->kdf()->uuid() == KeePass2::KDF_AES_KDBX3 && db->publicCustomData().isEmpty()) {
-        m_version = KeePass2::FILE_VERSION_3;
+        m_version = KeePass2::FILE_VERSION_3_1;
         m_writer.reset(new Kdbx3Writer());
     } else {
         m_version = KeePass2::FILE_VERSION_4;

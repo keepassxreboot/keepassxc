@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,183 +15,105 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "TestKeePass2XmlReader.h"
+#include "TestKeePass2Format.h"
 
-#include <QBuffer>
-#include <QFile>
-#include <QTest>
-#include <format/KeePass2.h>
-
-#include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
+#include "keys/PasswordKey.h"
 #include "format/KdbxXmlReader.h"
-#include "format/KdbxXmlWriter.h"
+
+#include "FailDevice.h"
 #include "config-keepassx-tests.h"
 
-namespace QTest {
-    template<>
-    char* toString(const Uuid& uuid)
-    {
-        QByteArray ba = "Uuid(";
-        ba += uuid.toBase64().toLatin1().constData();
-        ba += ")";
-        return qstrdup(ba.constData());
-    }
+#include <QFile>
+#include <QTest>
 
-    template<>
-    char* toString(const Group::TriState& triState)
-    {
-        QString value;
-
-        if (triState == Group::Inherit) {
-            value = "null";
-        }
-        else if (triState == Group::Enable) {
-            value = "true";
-        }
-        else {
-            value = "false";
-        }
-
-        return qstrdup(value.toLocal8Bit().constData());
-    }
-}
-
-QDateTime TestKeePass2XmlReader::genDT(int year, int month, int day, int hour, int min, int second)
-{
-    QDate date(year, month, day);
-    QTime time(hour, min, second);
-    return QDateTime(date, time, Qt::UTC);
-}
-
-QByteArray TestKeePass2XmlReader::strToBytes(const QString& str)
-{
-    QByteArray result;
-
-    for (int i = 0; i < str.size(); i++) {
-        result.append(str.at(i).unicode() >> 8);
-        result.append(str.at(i).unicode() & 0xFF);
-    }
-
-    return result;
-}
-
-void TestKdbx3XmlReader::initTestCase()
+void TestKeePass2Format::initTestCase()
 {
     QVERIFY(Crypto::init());
 
-    KdbxXmlReader reader(KeePass2::FILE_VERSION_3);
-    reader.setStrictMode(true);
-    QString xmlFile = QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.xml");
-    m_db = reader.readDatabase(xmlFile);
-    QVERIFY(m_db);
-    QVERIFY(!reader.hasError());
+    // read raw XML database
+    bool hasError;
+    QString errorString;
+    m_xmlDb.reset(readXml(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.xml"), true, hasError, errorString));
+    if (hasError) {
+        QFAIL(qPrintable(QString("Error while reading XML: ").append(errorString)));
+    }
+    QVERIFY(m_xmlDb.data());
+
+    // construct and write KDBX to buffer
+    CompositeKey key;
+    key.addKey(PasswordKey("test"));
+
+    m_kdbxSourceDb.reset(new Database());
+    m_kdbxSourceDb->setKey(key);
+    m_kdbxSourceDb->metadata()->setName("TESTDB");
+    Group* group = m_kdbxSourceDb->rootGroup();
+    group->setUuid(Uuid::random());
+    group->setNotes("I'm a note!");
+    auto entry = new Entry();
+    entry->setPassword(QString::fromUtf8("\xc3\xa4\xa3\xb6\xc3\xbc\xe9\x9b\xbb\xe7\xb4\x85"));
+    entry->setUuid(Uuid::random());
+    entry->attributes()->set("test", "protectedTest", true);
+    QVERIFY(entry->attributes()->isProtected("test"));
+    entry->attachments()->set("myattach.txt", QByteArray("this is an attachment"));
+    entry->attachments()->set("aaa.txt", QByteArray("also an attachment"));
+    entry->setGroup(group);
+    auto groupNew = new Group();
+    groupNew->setUuid(Uuid::random());
+    groupNew->setName("TESTGROUP");
+    groupNew->setNotes("I'm a sub group note!");
+    groupNew->setParent(group);
+
+    m_kdbxTargetBuffer.open(QBuffer::ReadWrite);
+    writeKdbx(&m_kdbxTargetBuffer, m_kdbxSourceDb.data(), hasError, errorString);
+    if (hasError) {
+        QFAIL(qPrintable(QString("Error while writing database: ").append(errorString)));
+    }
+
+    // call sub class init method
+    initTestCaseImpl();
 }
 
-void TestKdbx4XmlReader::initTestCase()
+void TestKeePass2Format::testXmlMetadata()
 {
-    QVERIFY(Crypto::init());
-
-    KdbxXmlReader reader(KeePass2::FILE_VERSION_3);
-    reader.setStrictMode(true);
-    QString xmlFile = QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.xml");
-    m_db = reader.readDatabase(xmlFile);
-    QVERIFY(m_db);
-    QVERIFY(!reader.hasError());
+    QCOMPARE(m_xmlDb->metadata()->generator(), QString("KeePass"));
+    QCOMPARE(m_xmlDb->metadata()->name(), QString("ANAME"));
+    QCOMPARE(m_xmlDb->metadata()->nameChanged(), genDT(2010, 8, 8, 17, 24, 53));
+    QCOMPARE(m_xmlDb->metadata()->description(), QString("ADESC"));
+    QCOMPARE(m_xmlDb->metadata()->descriptionChanged(), genDT(2010, 8, 8, 17, 27, 12));
+    QCOMPARE(m_xmlDb->metadata()->defaultUserName(), QString("DEFUSERNAME"));
+    QCOMPARE(m_xmlDb->metadata()->defaultUserNameChanged(), genDT(2010, 8, 8, 17, 27, 45));
+    QCOMPARE(m_xmlDb->metadata()->maintenanceHistoryDays(), 127);
+    QCOMPARE(m_xmlDb->metadata()->color(), QColor(0xff, 0xef, 0x00));
+    QCOMPARE(m_xmlDb->metadata()->masterKeyChanged(), genDT(2012, 4, 5, 17, 9, 34));
+    QCOMPARE(m_xmlDb->metadata()->masterKeyChangeRec(), 101);
+    QCOMPARE(m_xmlDb->metadata()->masterKeyChangeForce(), -1);
+    QCOMPARE(m_xmlDb->metadata()->protectTitle(), false);
+    QCOMPARE(m_xmlDb->metadata()->protectUsername(), true);
+    QCOMPARE(m_xmlDb->metadata()->protectPassword(), false);
+    QCOMPARE(m_xmlDb->metadata()->protectUrl(), true);
+    QCOMPARE(m_xmlDb->metadata()->protectNotes(), false);
+    QCOMPARE(m_xmlDb->metadata()->recycleBinEnabled(), true);
+    QVERIFY(m_xmlDb->metadata()->recycleBin() != nullptr);
+    QCOMPARE(m_xmlDb->metadata()->recycleBin()->name(), QString("Recycle Bin"));
+    QCOMPARE(m_xmlDb->metadata()->recycleBinChanged(), genDT(2010, 8, 25, 16, 12, 57));
+    QVERIFY(m_xmlDb->metadata()->entryTemplatesGroup() == nullptr);
+    QCOMPARE(m_xmlDb->metadata()->entryTemplatesGroupChanged(), genDT(2010, 8, 8, 17, 24, 19));
+    QVERIFY(m_xmlDb->metadata()->lastSelectedGroup() != nullptr);
+    QCOMPARE(m_xmlDb->metadata()->lastSelectedGroup()->name(), QString("NewDatabase"));
+    QVERIFY(m_xmlDb->metadata()->lastTopVisibleGroup() == m_xmlDb->metadata()->lastSelectedGroup());
+    QCOMPARE(m_xmlDb->metadata()->historyMaxItems(), -1);
+    QCOMPARE(m_xmlDb->metadata()->historyMaxSize(), 5242880);
 }
 
-void TestKdbx3XmlReader::readDatabase(QString path, bool strictMode, Database*& db, bool& hasError, QString& errorString)
+void TestKeePass2Format::testXmlCustomIcons()
 {
-    KdbxXmlReader reader(KeePass2::FILE_VERSION_3);
-    reader.setStrictMode(strictMode);
-    db = reader.readDatabase(path);
-    hasError = reader.hasError();
-    errorString = reader.errorString();
-}
-
-void TestKdbx3XmlReader::readDatabase(QBuffer* buf, bool strictMode, Database*& db, bool& hasError, QString& errorString)
-{
-    KdbxXmlReader reader(KeePass2::FILE_VERSION_3);
-    reader.setStrictMode(strictMode);
-    db = reader.readDatabase(buf);
-    hasError = reader.hasError();
-    errorString = reader.errorString();
-}
-
-void TestKdbx3XmlReader::writeDatabase(QBuffer* buf, Database* db, bool& hasError, QString& errorString)
-{
-    KdbxXmlWriter writer(KeePass2::FILE_VERSION_3);
-    writer.writeDatabase(buf, db);
-    hasError = writer.hasError();
-    errorString = writer.errorString();
-}
-
-void TestKdbx4XmlReader::readDatabase(QString path, bool strictMode, Database*& db, bool& hasError, QString& errorString)
-{
-    KdbxXmlReader reader(KeePass2::FILE_VERSION_3);
-    reader.setStrictMode(strictMode);
-    db = reader.readDatabase(path);
-    hasError = reader.hasError();
-    errorString = reader.errorString();
-}
-
-void TestKdbx4XmlReader::readDatabase(QBuffer* buf, bool strictMode, Database*& db, bool& hasError, QString& errorString)
-{
-    KdbxXmlReader reader(KeePass2::FILE_VERSION_3);
-    reader.setStrictMode(strictMode);
-    db = reader.readDatabase(buf);
-    hasError = reader.hasError();
-    errorString = reader.errorString();
-}
-
-void TestKdbx4XmlReader::writeDatabase(QBuffer* buf, Database* db, bool& hasError, QString& errorString)
-{
-    KdbxXmlWriter writer(KeePass2::FILE_VERSION_3);
-    writer.writeDatabase(buf, db);
-    hasError = writer.hasError();
-    errorString = writer.errorString();
-}
-
-void TestKeePass2XmlReader::testMetadata()
-{
-    QCOMPARE(m_db->metadata()->generator(), QString("KeePass"));
-    QCOMPARE(m_db->metadata()->name(), QString("ANAME"));
-    QCOMPARE(m_db->metadata()->nameChanged(), genDT(2010, 8, 8, 17, 24, 53));
-    QCOMPARE(m_db->metadata()->description(), QString("ADESC"));
-    QCOMPARE(m_db->metadata()->descriptionChanged(), genDT(2010, 8, 8, 17, 27, 12));
-    QCOMPARE(m_db->metadata()->defaultUserName(), QString("DEFUSERNAME"));
-    QCOMPARE(m_db->metadata()->defaultUserNameChanged(), genDT(2010, 8, 8, 17, 27, 45));
-    QCOMPARE(m_db->metadata()->maintenanceHistoryDays(), 127);
-    QCOMPARE(m_db->metadata()->color(), QColor(0xff, 0xef, 0x00));
-    QCOMPARE(m_db->metadata()->masterKeyChanged(), genDT(2012, 4, 5, 17, 9, 34));
-    QCOMPARE(m_db->metadata()->masterKeyChangeRec(), 101);
-    QCOMPARE(m_db->metadata()->masterKeyChangeForce(), -1);
-    QCOMPARE(m_db->metadata()->protectTitle(), false);
-    QCOMPARE(m_db->metadata()->protectUsername(), true);
-    QCOMPARE(m_db->metadata()->protectPassword(), false);
-    QCOMPARE(m_db->metadata()->protectUrl(), true);
-    QCOMPARE(m_db->metadata()->protectNotes(), false);
-    QCOMPARE(m_db->metadata()->recycleBinEnabled(), true);
-    QVERIFY(m_db->metadata()->recycleBin() != nullptr);
-    QCOMPARE(m_db->metadata()->recycleBin()->name(), QString("Recycle Bin"));
-    QCOMPARE(m_db->metadata()->recycleBinChanged(), genDT(2010, 8, 25, 16, 12, 57));
-    QVERIFY(m_db->metadata()->entryTemplatesGroup() == nullptr);
-    QCOMPARE(m_db->metadata()->entryTemplatesGroupChanged(), genDT(2010, 8, 8, 17, 24, 19));
-    QVERIFY(m_db->metadata()->lastSelectedGroup() != nullptr);
-    QCOMPARE(m_db->metadata()->lastSelectedGroup()->name(), QString("NewDatabase"));
-    QVERIFY(m_db->metadata()->lastTopVisibleGroup() == m_db->metadata()->lastSelectedGroup());
-    QCOMPARE(m_db->metadata()->historyMaxItems(), -1);
-    QCOMPARE(m_db->metadata()->historyMaxSize(), 5242880);
-}
-
-void TestKeePass2XmlReader::testCustomIcons()
-{
-    QCOMPARE(m_db->metadata()->customIcons().size(), 1);
+    QCOMPARE(m_xmlDb->metadata()->customIcons().size(), 1);
     Uuid uuid = Uuid::fromBase64("++vyI+daLk6omox4a6kQGA==");
-    QVERIFY(m_db->metadata()->customIcons().contains(uuid));
-    QImage icon = m_db->metadata()->customIcon(uuid);
+    QVERIFY(m_xmlDb->metadata()->customIcons().contains(uuid));
+    QImage icon = m_xmlDb->metadata()->customIcon(uuid);
     QCOMPARE(icon.width(), 16);
     QCOMPARE(icon.height(), 16);
 
@@ -205,18 +127,18 @@ void TestKeePass2XmlReader::testCustomIcons()
     }
 }
 
-void TestKeePass2XmlReader::testCustomData()
+void TestKeePass2Format::testXmlCustomData()
 {
-    QHash<QString, QString> customFields = m_db->metadata()->customFields();
+    QHash<QString, QString> customFields = m_xmlDb->metadata()->customFields();
 
     QCOMPARE(customFields.size(), 2);
     QCOMPARE(customFields.value("A Sample Test Key"), QString("valu"));
     QCOMPARE(customFields.value("custom key"), QString("blub"));
 }
 
-void TestKeePass2XmlReader::testGroupRoot()
+void TestKeePass2Format::testXmlGroupRoot()
 {
-    const Group* group = m_db->rootGroup();
+    const Group* group = m_xmlDb->rootGroup();
     QVERIFY(group);
     QCOMPARE(group->uuid().toBase64(), QString("lmU+9n0aeESKZvcEze+bRg=="));
     QCOMPARE(group->name(), QString("NewDatabase"));
@@ -238,14 +160,14 @@ void TestKeePass2XmlReader::testGroupRoot()
     QCOMPARE(group->lastTopVisibleEntry()->uuid().toBase64(), QString("+wSUOv6qf0OzW8/ZHAs2sA=="));
 
     QCOMPARE(group->children().size(), 3);
-    QVERIFY(m_db->metadata()->recycleBin() == m_db->rootGroup()->children().at(2));
+    QVERIFY(m_xmlDb->metadata()->recycleBin() == m_xmlDb->rootGroup()->children().at(2));
 
     QCOMPARE(group->entries().size(), 2);
 }
 
-void TestKeePass2XmlReader::testGroup1()
+void TestKeePass2Format::testXmlGroup1()
 {
-    const Group* group = m_db->rootGroup()->children().at(0);
+    const Group* group = m_xmlDb->rootGroup()->children().at(0);
 
     QCOMPARE(group->uuid().toBase64(), QString("AaUYVdXsI02h4T1RiAlgtg=="));
     QCOMPARE(group->name(), QString("General"));
@@ -259,9 +181,9 @@ void TestKeePass2XmlReader::testGroup1()
     QVERIFY(!group->lastTopVisibleEntry());
 }
 
-void TestKeePass2XmlReader::testGroup2()
+void TestKeePass2Format::testXmlGroup2()
 {
-    const Group* group = m_db->rootGroup()->children().at(1);
+    const Group* group = m_xmlDb->rootGroup()->children().at(1);
 
     QCOMPARE(group->uuid().toBase64(), QString("1h4NtL5DK0yVyvaEnN//4A=="));
     QCOMPARE(group->name(), QString("Windows"));
@@ -279,9 +201,9 @@ void TestKeePass2XmlReader::testGroup2()
     QCOMPARE(entry->title(), QString("Subsub Entry"));
 }
 
-void TestKeePass2XmlReader::testEntry1()
+void TestKeePass2Format::testXmlEntry1()
 {
-    const Entry* entry = m_db->rootGroup()->entries().at(0);
+    const Entry* entry = m_xmlDb->rootGroup()->entries().at(0);
 
     QCOMPARE(entry->uuid().toBase64(), QString("+wSUOv6qf0OzW8/ZHAs2sA=="));
     QCOMPARE(entry->historyItems().size(), 2);
@@ -341,9 +263,9 @@ void TestKeePass2XmlReader::testEntry1()
     QCOMPARE(assoc1.sequence, QString(""));
 }
 
-void TestKeePass2XmlReader::testEntry2()
+void TestKeePass2Format::testXmlEntry2()
 {
-    const Entry* entry = m_db->rootGroup()->entries().at(1);
+    const Entry* entry = m_xmlDb->rootGroup()->entries().at(1);
 
     QCOMPARE(entry->uuid().toBase64(), QString("4jbADG37hkiLh2O0qUdaOQ=="));
     QCOMPARE(entry->iconNumber(), 0);
@@ -389,9 +311,9 @@ void TestKeePass2XmlReader::testEntry2()
     QCOMPARE(assoc2.sequence, QString("{Title}{UserName} test"));
 }
 
-void TestKeePass2XmlReader::testEntryHistory()
+void TestKeePass2Format::testXmlEntryHistory()
 {
-    const Entry* entryMain = m_db->rootGroup()->entries().at(0);
+    const Entry* entryMain = m_xmlDb->rootGroup()->entries().at(0);
     QCOMPARE(entryMain->historyItems().size(), 2);
 
     {
@@ -415,9 +337,9 @@ void TestKeePass2XmlReader::testEntryHistory()
     }
 }
 
-void TestKeePass2XmlReader::testDeletedObjects()
+void TestKeePass2Format::testXmlDeletedObjects()
 {
-    QList<DeletedObject> objList = m_db->deletedObjects();
+    QList<DeletedObject> objList = m_xmlDb->deletedObjects();
     DeletedObject delObj;
 
     delObj = objList.takeFirst();
@@ -431,72 +353,63 @@ void TestKeePass2XmlReader::testDeletedObjects()
     QVERIFY(objList.isEmpty());
 }
 
-void TestKeePass2XmlReader::testBroken()
+void TestKeePass2Format::testXmlBroken()
 {
     QFETCH(QString, baseName);
     QFETCH(bool, strictMode);
     QFETCH(bool, expectError);
 
-
     QString xmlFile = QString("%1/%2.xml").arg(KEEPASSX_TEST_DATA_DIR, baseName);
     QVERIFY(QFile::exists(xmlFile));
     bool hasError;
     QString errorString;
-    Database* db;
-    readDatabase(xmlFile, strictMode, db, hasError, errorString);
+    QScopedPointer<Database> db(readXml(xmlFile, strictMode, hasError, errorString));
     if (hasError) {
         qWarning("Reader error: %s", qPrintable(errorString));
     }
     QCOMPARE(hasError, expectError);
-    if (db) {
-        delete db;
-    }
 }
 
-void TestKeePass2XmlReader::testBroken_data()
+void TestKeePass2Format::testXmlBroken_data()
 {
     QTest::addColumn<QString>("baseName");
     QTest::addColumn<bool>("strictMode");
     QTest::addColumn<bool>("expectError");
 
-    //                                                    testfile                 strict?  error?
-    QTest::newRow("BrokenNoGroupUuid     (strict)")    << "BrokenNoGroupUuid"    << true  << true;
-    QTest::newRow("BrokenNoGroupUuid (not strict)")    << "BrokenNoGroupUuid"    << false << false;
-    QTest::newRow("BrokenNoEntryUuid     (strict)")    << "BrokenNoEntryUuid"    << true  << true;
-    QTest::newRow("BrokenNoEntryUuid (not strict)")    << "BrokenNoEntryUuid"    << false << false;
-    QTest::newRow("BrokenNoRootGroup     (strict)")    << "BrokenNoRootGroup"    << true  << true;
-    QTest::newRow("BrokenNoRootGroup (not strict)")    << "BrokenNoRootGroup"    << false << true;
-    QTest::newRow("BrokenTwoRoots     (strict)")       << "BrokenTwoRoots"       << true  << true;
-    QTest::newRow("BrokenTwoRoots (not strict)")       << "BrokenTwoRoots"       << false << true;
-    QTest::newRow("BrokenTwoRootGroups     (strict)")  << "BrokenTwoRootGroups"  << true  << true;
-    QTest::newRow("BrokenTwoRootGroups (not strict)")  << "BrokenTwoRootGroups"  << false << true;
-    QTest::newRow("BrokenGroupReference     (strict)") << "BrokenGroupReference" << true  << false;
-    QTest::newRow("BrokenGroupReference (not strict)") << "BrokenGroupReference" << false << false;
-    QTest::newRow("BrokenDeletedObjects     (strict)") << "BrokenDeletedObjects" << true  << true;
-    QTest::newRow("BrokenDeletedObjects (not strict)") << "BrokenDeletedObjects" << false << false;
-    QTest::newRow("BrokenDifferentEntryHistoryUuid (strict)") << "BrokenDifferentEntryHistoryUuid" << true << true;
+    //                                                                testfile                            strict?  error?
+    QTest::newRow("BrokenNoGroupUuid                   (strict)") << "BrokenNoGroupUuid"               << true  << true;
+    QTest::newRow("BrokenNoGroupUuid               (not strict)") << "BrokenNoGroupUuid"               << false << false;
+    QTest::newRow("BrokenNoEntryUuid                   (strict)") << "BrokenNoEntryUuid"               << true  << true;
+    QTest::newRow("BrokenNoEntryUuid               (not strict)") << "BrokenNoEntryUuid"               << false << false;
+    QTest::newRow("BrokenNoRootGroup                   (strict)") << "BrokenNoRootGroup"               << true  << true;
+    QTest::newRow("BrokenNoRootGroup               (not strict)") << "BrokenNoRootGroup"               << false << true;
+    QTest::newRow("BrokenTwoRoots                      (strict)") << "BrokenTwoRoots"                  << true  << true;
+    QTest::newRow("BrokenTwoRoots                  (not strict)") << "BrokenTwoRoots"                  << false << true;
+    QTest::newRow("BrokenTwoRootGroups                 (strict)") << "BrokenTwoRootGroups"             << true  << true;
+    QTest::newRow("BrokenTwoRootGroups             (not strict)") << "BrokenTwoRootGroups"             << false << true;
+    QTest::newRow("BrokenGroupReference                (strict)") << "BrokenGroupReference"            << true  << false;
+    QTest::newRow("BrokenGroupReference            (not strict)") << "BrokenGroupReference"            << false << false;
+    QTest::newRow("BrokenDeletedObjects                (strict)") << "BrokenDeletedObjects"            << true  << true;
+    QTest::newRow("BrokenDeletedObjects            (not strict)") << "BrokenDeletedObjects"            << false << false;
+    QTest::newRow("BrokenDifferentEntryHistoryUuid     (strict)") << "BrokenDifferentEntryHistoryUuid" << true  << true;
     QTest::newRow("BrokenDifferentEntryHistoryUuid (not strict)") << "BrokenDifferentEntryHistoryUuid" << false << false;
 }
 
-void TestKeePass2XmlReader::testEmptyUuids()
+void TestKeePass2Format::testXmlEmptyUuids()
 {
 
     QString xmlFile = QString("%1/%2.xml").arg(KEEPASSX_TEST_DATA_DIR, "EmptyUuids");
     QVERIFY(QFile::exists(xmlFile));
-    Database* dbp;
     bool hasError;
     QString errorString;
-    readDatabase(xmlFile, true, dbp, hasError, errorString);
+    QScopedPointer<Database> dbp(readXml(xmlFile, true, hasError, errorString));
     if (hasError) {
         qWarning("Reader error: %s", qPrintable(errorString));
     }
     QVERIFY(!hasError);
-    if (dbp) {
-        delete dbp;
-    }
 }
 
-void TestKeePass2XmlReader::testInvalidXmlChars()
+void TestKeePass2Format::testXmlInvalidXmlChars()
 {
     QScopedPointer<Database> dbWrite(new Database());
 
@@ -514,9 +427,10 @@ void TestKeePass2XmlReader::testInvalidXmlChars()
     QString strSingleLowSurrogate2 = QString().append(QChar((0x31))).append(QChar(0xDC37)).append(QChar(0x32));
     QString strLowLowSurrogate = QString().append(QChar(0xDC37)).append(QChar(0xDC37));
     QString strSurrogateValid1 = QString().append(QChar(0xD801)).append(QChar(0xDC37));
-    QString strSurrogateValid2 = QString().append(QChar(0x31)).append(QChar(0xD801)).append(QChar(0xDC37)).append(QChar(0x32));
+    QString strSurrogateValid2 = QString().append(QChar(0x31)).append(QChar(0xD801)).append(QChar(0xDC37))
+            .append(QChar(0x32));
 
-    Entry* entry = new Entry();
+    auto entry = new Entry();
     entry->setUuid(Uuid::random());
     entry->setGroup(dbWrite->rootGroup());
     entry->attributes()->set("PlainInvalid", strPlainInvalid);
@@ -534,17 +448,16 @@ void TestKeePass2XmlReader::testInvalidXmlChars()
     buffer.open(QIODevice::ReadWrite);
     bool hasError;
     QString errorString;
-    writeDatabase(&buffer, dbWrite.data(), hasError, errorString);
+    writeXml(&buffer, dbWrite.data(), hasError, errorString);
     QVERIFY(!hasError);
     buffer.seek(0);
 
-    Database* dbRead;
-    readDatabase(&buffer, true, dbRead, hasError, errorString);
+    QScopedPointer<Database> dbRead(readXml(&buffer, true, hasError, errorString));
     if (hasError) {
         qWarning("Database read error: %s", qPrintable(errorString));
     }
     QVERIFY(!hasError);
-    QVERIFY(dbRead);
+    QVERIFY(dbRead.data());
     QCOMPARE(dbRead->rootGroup()->entries().size(), 1);
     Entry* entryRead = dbRead->rootGroup()->entries().at(0);
     EntryAttributes* attrRead = entryRead->attributes();
@@ -559,26 +472,19 @@ void TestKeePass2XmlReader::testInvalidXmlChars()
     QCOMPARE(strToBytes(attrRead->value("LowLowSurrogate")), QByteArray());
     QCOMPARE(strToBytes(attrRead->value("SurrogateValid1")), strToBytes(strSurrogateValid1));
     QCOMPARE(strToBytes(attrRead->value("SurrogateValid2")), strToBytes(strSurrogateValid2));
-
-    if (dbRead) {
-        delete dbRead;
-    }
 }
 
-void TestKeePass2XmlReader::testRepairUuidHistoryItem()
+void TestKeePass2Format::testXmlRepairUuidHistoryItem()
 {
     QString xmlFile = QString("%1/%2.xml").arg(KEEPASSX_TEST_DATA_DIR, "BrokenDifferentEntryHistoryUuid");
     QVERIFY(QFile::exists(xmlFile));
-    Database* db;
     bool hasError;
     QString errorString;
-    readDatabase(xmlFile, true, db, hasError, errorString);
+    QScopedPointer<Database> db(readXml(xmlFile, false, hasError, errorString));
     if (hasError) {
         qWarning("Database read error: %s", qPrintable(errorString));
     }
     QVERIFY(!hasError);
-
-
 
     QList<Entry*> entries = db->rootGroup()->entries();
     QCOMPARE(entries.size(), 1);
@@ -591,13 +497,126 @@ void TestKeePass2XmlReader::testRepairUuidHistoryItem()
     QVERIFY(!entry->uuid().isNull());
     QVERIFY(!historyItem->uuid().isNull());
     QCOMPARE(historyItem->uuid(), entry->uuid());
-
-    if (db) {
-        delete db;
-    }
 }
 
-void TestKeePass2XmlReader::cleanupTestCase()
+void TestKeePass2Format::testReadBackTargetDb()
 {
-    delete m_db;
+    // read back previously constructed KDBX
+    CompositeKey key;
+    key.addKey(PasswordKey("test"));
+
+    bool hasError;
+    QString errorString;
+
+    m_kdbxTargetBuffer.seek(0);
+    readKdbx(&m_kdbxTargetBuffer, key, m_kdbxTargetDb, hasError, errorString);
+    if (hasError) {
+        QFAIL(qPrintable(QString("Error while reading database: ").append(errorString)));
+    }
+    QVERIFY(m_kdbxTargetDb.data());
+}
+
+void TestKeePass2Format::testKdbxBasic()
+{
+    QCOMPARE(m_kdbxTargetDb->metadata()->name(), m_kdbxSourceDb->metadata()->name());
+    QVERIFY(m_kdbxTargetDb->rootGroup());
+    QCOMPARE(m_kdbxTargetDb->rootGroup()->children()[0]->name(), m_kdbxSourceDb->rootGroup()->children()[0]->name());
+    QCOMPARE(m_kdbxTargetDb->rootGroup()->notes(), m_kdbxSourceDb->rootGroup()->notes());
+    QCOMPARE(m_kdbxTargetDb->rootGroup()->children()[0]->notes(), m_kdbxSourceDb->rootGroup()->children()[0]->notes());
+}
+
+void TestKeePass2Format::testKdbxProtectedAttributes()
+{
+    QCOMPARE(m_kdbxTargetDb->rootGroup()->entries().size(), 1);
+    Entry* entry = m_kdbxTargetDb->rootGroup()->entries().at(0);
+    QCOMPARE(entry->attributes()->value("test"), QString("protectedTest"));
+    QCOMPARE(entry->attributes()->isProtected("test"), true);
+}
+
+void TestKeePass2Format::testKdbxAttachments()
+{
+    Entry* entry = m_kdbxTargetDb->rootGroup()->entries().at(0);
+    QCOMPARE(entry->attachments()->keys().size(), 2);
+    QCOMPARE(entry->attachments()->value("myattach.txt"), QByteArray("this is an attachment"));
+    QCOMPARE(entry->attachments()->value("aaa.txt"), QByteArray("also an attachment"));
+}
+
+void TestKeePass2Format::testKdbxNonAsciiPasswords()
+{
+    QCOMPARE(m_kdbxTargetDb->rootGroup()->entries()[0]->password(), m_kdbxSourceDb->rootGroup()->entries()[0]->password());
+}
+
+void TestKeePass2Format::testKdbxDeviceFailure()
+{
+    CompositeKey key;
+    key.addKey(PasswordKey("test"));
+    QScopedPointer<Database> db(new Database());
+    db->setKey(key);
+    // Disable compression so we write a predictable number of bytes.
+    db->setCompressionAlgo(Database::CompressionNone);
+
+    auto entry = new Entry();
+    entry->setParent(db->rootGroup());
+    QByteArray attachment(4096, 'Z');
+    entry->attachments()->set("test", attachment);
+
+    FailDevice failDevice(512);
+    QVERIFY(failDevice.open(QIODevice::WriteOnly));
+    bool hasError;
+    QString errorString;
+    writeKdbx(&failDevice, db.data(), hasError, errorString);
+    QVERIFY(hasError);
+    QCOMPARE(errorString, QString("FAILDEVICE"));
+}
+
+
+
+// ====================================================================================================
+// Helper functions
+// ====================================================================================================
+
+namespace QTest {
+template<>
+char* toString(const Uuid& uuid)
+{
+    QByteArray ba = "Uuid(";
+    ba += uuid.toBase64().toLatin1().constData();
+    ba += ")";
+    return qstrdup(ba.constData());
+}
+
+template<>
+char* toString(const Group::TriState& triState)
+{
+    QString value;
+
+    if (triState == Group::Inherit) {
+        value = "null";
+    } else if (triState == Group::Enable) {
+        value = "true";
+    } else {
+        value = "false";
+    }
+
+    return qstrdup(value.toLocal8Bit().constData());
+}
+}
+
+QDateTime TestKeePass2Format::genDT(int year, int month, int day, int hour, int min, int second)
+{
+    QDate date(year, month, day);
+    QTime time(hour, min, second);
+    return QDateTime(date, time, Qt::UTC);
+}
+
+QByteArray TestKeePass2Format::strToBytes(const QString& str)
+{
+    QByteArray result;
+
+    for (auto i : str) {
+        result.append(static_cast<char>(i.unicode() >> 8));
+        result.append(static_cast<char>(i.unicode() & 0xFF));
+    }
+
+    return result;
 }

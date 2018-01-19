@@ -105,94 +105,91 @@ if(YUBIKEY_FOUND)
 endif()
 
 add_unit_test(NAME testgroup SOURCES TestGroup.cpp
-              LIBS ${TEST_LIBRARIES})
+        LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testkdbx3xmlreader SOURCES TestKeePass2XmlReader.cpp TestKdbx3XmlReader.cpp
-              LIBS ${TEST_LIBRARIES})
+add_unit_test(NAME testkdbx2 SOURCES TestKdbx2.cpp
+        LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testkdbx4xmlreader SOURCES TestKeePass2XmlReader.cpp TestKdbx4XmlReader.cpp
-              LIBS ${TEST_LIBRARIES})
+add_unit_test(NAME testkdbx3 SOURCES TestKeePass2Format.cpp FailDevice.cpp TestKdbx3.cpp
+        LIBS ${TEST_LIBRARIES})
+
+add_unit_test(NAME testkdbx4 SOURCES TestKeePass2Format.cpp FailDevice.cpp TestKdbx4.cpp
+        LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testkeys SOURCES TestKeys.cpp
-              LIBS ${TEST_LIBRARIES})
-
-add_unit_test(NAME testkeepass2reader SOURCES TestKeePass2Reader.cpp
-              LIBS ${TEST_LIBRARIES})
-
-add_unit_test(NAME testkeepass2writer SOURCES TestKeePass2Writer.cpp
-              LIBS testsupport ${TEST_LIBRARIES})
+        LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testgroupmodel SOURCES TestGroupModel.cpp
-              LIBS testsupport ${TEST_LIBRARIES})
+        LIBS testsupport ${TEST_LIBRARIES})
 
 add_unit_test(NAME testentrymodel SOURCES TestEntryModel.cpp
-              LIBS testsupport ${TEST_LIBRARIES})
+        LIBS testsupport ${TEST_LIBRARIES})
 
 add_unit_test(NAME testcryptohash SOURCES TestCryptoHash.cpp
-              LIBS ${TEST_LIBRARIES})
+        LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testsymmetriccipher SOURCES TestSymmetricCipher.cpp
-              LIBS ${TEST_LIBRARIES})
+        LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testhashedblockstream SOURCES TestHashedBlockStream.cpp
-              LIBS testsupport ${TEST_LIBRARIES})
+        LIBS testsupport ${TEST_LIBRARIES})
 
 add_unit_test(NAME testkeepass2randomstream SOURCES TestKeePass2RandomStream.cpp
-              LIBS ${TEST_LIBRARIES})
+        LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testmodified SOURCES TestModified.cpp
-              LIBS ${TEST_LIBRARIES})
+        LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testdeletedobjects SOURCES TestDeletedObjects.cpp
-              LIBS ${TEST_LIBRARIES})
+        LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testkeepass1reader SOURCES TestKeePass1Reader.cpp
-              LIBS ${TEST_LIBRARIES})
+        LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testwildcardmatcher SOURCES TestWildcardMatcher.cpp
-              LIBS ${TEST_LIBRARIES})
+        LIBS ${TEST_LIBRARIES})
 
 if(WITH_XC_AUTOTYPE)
   add_unit_test(NAME testautotype SOURCES TestAutoType.cpp
-              LIBS ${TEST_LIBRARIES})
+          LIBS ${TEST_LIBRARIES})
   set_target_properties(testautotype PROPERTIES ENABLE_EXPORTS ON)
 endif()
 
 if(WITH_XC_SSHAGENT)
   add_unit_test(NAME testopensshkey SOURCES TestOpenSSHKey.cpp
-              LIBS sshagent ${TEST_LIBRARIES})
+          LIBS sshagent ${TEST_LIBRARIES})
 endif()
 
 add_unit_test(NAME testentry SOURCES TestEntry.cpp
-              LIBS ${TEST_LIBRARIES})
+        LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testmerge SOURCES TestMerge.cpp
-              LIBS ${TEST_LIBRARIES})
+        LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testtotp SOURCES TestTotp.cpp
-              LIBS ${TEST_LIBRARIES})
+        LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testbase32 SOURCES TestBase32.cpp
-              LIBS ${TEST_LIBRARIES})
+        LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testcsvparser SOURCES TestCsvParser.cpp
-              LIBS ${TEST_LIBRARIES})
+        LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testrandom SOURCES TestRandom.cpp
-              LIBS ${TEST_LIBRARIES})
+        LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testentrysearcher SOURCES TestEntrySearcher.cpp
-              LIBS ${TEST_LIBRARIES})
+        LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testcsvexporter SOURCES TestCsvExporter.cpp
-              LIBS ${TEST_LIBRARIES})
+        LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testykchallengeresponsekey
-              SOURCES TestYkChallengeResponseKey.cpp TestYkChallengeResponseKey.h
-              LIBS ${TEST_LIBRARIES})
+        SOURCES TestYkChallengeResponseKey.cpp TestYkChallengeResponseKey.h
+        LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testdatabase SOURCES TestDatabase.cpp
-              LIBS ${TEST_LIBRARIES})
+        LIBS ${TEST_LIBRARIES})
 
 if(WITH_GUI_TESTS)
   add_subdirectory(gui)
