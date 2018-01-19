@@ -29,7 +29,7 @@
    <item>
     <widget class="QCheckBox" name="enableBrowserSupport">
      <property name="toolTip">
-      <string>This is required for accessing your databases with keepassxc-browser</string>
+      <string>This is required for accessing your databases with KeePassXC-Browser</string>
      </property>
      <property name="text">
       <string>Enable KeepassXC browser integration</string>

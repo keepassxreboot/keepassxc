@@ -25,7 +25,7 @@ The following libraries are required:
 * zlib
 * libmicrohttpd
 * libxi, libxtst, qtx11extras (optional for auto-type on X11)
-* libsodium (>= 1.0.12, optional for keepassxc-browser support)
+* libsodium (>= 1.0.12, optional for KeePassXC-Browser support)
 * libargon2
 
 
@@ -88,7 +88,7 @@ These steps place the compiled KeePassXC binary inside the `./build/src/` direct
 	  -DWITH_XC_AUTOTYPE=[ON|OFF] Enable/Disable Auto-Type (default: ON)
 	  -DWITH_XC_HTTP=[ON|OFF] Enable/Disable KeePassHTTP and custom icon downloads (default: OFF)
 	  -DWITH_XC_YUBIKEY=[ON|OFF] Enable/Disable YubiKey HMAC-SHA1 authentication support (default: OFF)
-	  -DWITH_XC_BROWSER=[ON|OFF] Enable/Disable keepassxc-browser extension support (default: OFF)
+	  -DWITH_XC_BROWSER=[ON|OFF] Enable/Disable KeePassXC-Browser extension support (default: OFF)
 
 	  -DWITH_TESTS=[ON|OFF] Enable/Disable building of unit tests (default: ON)
 	  -DWITH_GUI_TESTS=[ON|OFF] Enable/Disable building of GUI tests (default: OFF)

@@ -121,7 +121,7 @@ void NativeMessagingBase::sendReply(const QJsonObject& json)
 void NativeMessagingBase::sendReply(const QString& reply)
 {
     if (!reply.isEmpty()) {
-    uint len = reply.length();
+        uint len = reply.length();
         std::cout << char(((len>>0) & 0xFF)) << char(((len>>8) & 0xFF)) << char(((len>>16) & 0xFF)) << char(((len>>24) & 0xFF));
         std::cout << reply.toStdString() << std::flush;
     }

@@ -35,7 +35,7 @@ public:
     explicit        BrowserService(DatabaseTabWidget* parent);
 
     bool            isDatabaseOpened() const;
-    bool            openDatabase();
+    bool            openDatabase(bool triggerUnlock);
     QString         getDatabaseRootUuid();
     QString         getDatabaseRecycleBinUuid();
     Entry*          getConfigEntry(bool create = false);

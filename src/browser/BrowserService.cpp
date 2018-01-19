@@ -40,9 +40,9 @@ static const unsigned char KEEPASSXCBROWSER_UUID_DATA[] = {
     0x97, 0x4b, 0x59, 0x11, 0xb8, 0x81, 0x62, 0x24
 };
 static const Uuid KEEPASSXCBROWSER_UUID = Uuid(QByteArray::fromRawData(reinterpret_cast<const char *>(KEEPASSXCBROWSER_UUID_DATA), sizeof(KEEPASSXCBROWSER_UUID_DATA)));
-static const char KEEPASSXCBROWSER_NAME[] = "keepassxc-browser Settings";
+static const char KEEPASSXCBROWSER_NAME[] = "KeePassXC-Browser Settings";
 static const char ASSOCIATE_KEY_PREFIX[] = "Public Key: ";
-static const char KEEPASSXCBROWSER_GROUP_NAME[] = "keepassxc-browser Passwords";
+static const char KEEPASSXCBROWSER_GROUP_NAME[] = "KeePassXC-Browser Passwords";
 static int        KEEPASSXCBROWSER_DEFAULT_ICON = 1;
 
 BrowserService::BrowserService(DatabaseTabWidget* parent) :
@@ -65,7 +65,7 @@ bool BrowserService::isDatabaseOpened() const
 
 }
 
-bool BrowserService::openDatabase()
+bool BrowserService::openDatabase(bool triggerUnlock)
 {
     if (!BrowserSettings::unlockDatabase()) {
         return false;
@@ -80,7 +80,9 @@ bool BrowserService::openDatabase()
         return true;
     }
 
-    KEEPASSXC_MAIN_WINDOW->bringToFront();
+    if (triggerUnlock) {
+        KEEPASSXC_MAIN_WINDOW->bringToFront();
+    }
 
     return false;
 }
@@ -189,6 +191,7 @@ QString BrowserService::storeKey(const QString& key)
         keyDialog.show();
         keyDialog.activateWindow();
         keyDialog.raise();
+        keyDialog.setWindowFlags(keyDialog.windowFlags() | Qt::WindowStaysOnTopHint);
         auto ok = keyDialog.exec();
 
         id = keyDialog.textValue();
@@ -221,7 +224,6 @@ QString BrowserService::getKey(const QString& id)
     return config->attributes()->value(QLatin1String(ASSOCIATE_KEY_PREFIX) + id);
 }
 
-// No need to use KeepassHttpProtocol. Just return a JSON array.
 QJsonArray BrowserService::findMatchingEntries(const QString& id, const QString& url, const QString& submitUrl, const QString& realm)
 {
     QJsonArray result;
