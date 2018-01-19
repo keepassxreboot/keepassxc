@@ -425,14 +425,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::showKeePassHTTPDeprecationNotice()
 {
-    displayGlobalMessage(tr("<p>It looks like you are using KeePassHTTP for browser integration.<br>"
+    displayGlobalMessage(tr("<p>It looks like you are using KeePassHTTP for browser integration. "
                                 "This feature has been deprecated and will be removed in the future.<br>"
-                                "Please switch to keepassxc-browser instead! For help with migration,<br>"
-                                "visit our <a href=\"https://keepassxc.org/docs/keepassxc-browser-migration\">"
+                                "Please switch to keepassxc-browser instead! For help with migration, "
+                                "visit our <a class=\"link\"  href=\"https://keepassxc.org/docs/keepassxc-browser-migration\">"
                                 "keepassxc-browser migration guide</a>.</p>"),
                          MessageWidget::Warning, true, -1);
 
-    config()->set("Http/DeprecationNoticeShown", true);
+//    config()->set("Http/DeprecationNoticeShown", true);
     disconnect(m_ui->tabWidget, SIGNAL(messageDismissGlobal()), this, SLOT(showKeePassHTTPDeprecationNotice()));
 }
 

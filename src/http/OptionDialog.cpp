@@ -33,7 +33,6 @@ OptionDialog::OptionDialog(QWidget *parent) :
     connect(m_ui->removeStoredPermissions, SIGNAL(clicked()), this, SIGNAL(removeStoredPermissions()));
 
     m_ui->warningWidget->showMessage(tr("The following options can be dangerous!\nChange them only if you know what you are doing."), MessageWidget::Warning);
-    m_ui->warningWidget->setIcon(FilePath::instance()->icon("status", "dialog-warning"));
     m_ui->warningWidget->setCloseButtonVisible(false);
     m_ui->warningWidget->setAutoHideTimeout(MessageWidget::DisableAutoHide);
 

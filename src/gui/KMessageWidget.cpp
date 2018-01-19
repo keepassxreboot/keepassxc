@@ -33,6 +33,7 @@
 #include <QTimeLine>
 #include <QToolButton>
 #include <QStyle>
+#include <QtGui/QBitmap>
 
 //---------------------------------------------------------------------
 // KMessageWidgetPrivate
@@ -49,6 +50,7 @@ public:
     QToolButton *closeButton;
     QTimeLine *timeLine;
     QIcon icon;
+    QPixmap closeButtonPixmap;
     
     KMessageWidget::MessageType messageType;
     bool wordWrap;
@@ -95,10 +97,11 @@ void KMessageWidgetPrivate::init(KMessageWidget *q_ptr)
     closeAction->setIcon(FilePath::instance()->icon("actions", "message-close", false));
     
     QObject::connect(closeAction, SIGNAL(triggered(bool)), q, SLOT(animatedHide()));
-    
+
     closeButton = new QToolButton(content);
     closeButton->setAutoRaise(true);
     closeButton->setDefaultAction(closeAction);
+    closeButtonPixmap = QPixmap(closeButton->icon().pixmap(closeButton->icon().actualSize(QSize(16, 16))));
 #ifdef Q_OS_MAC
     closeButton->setStyleSheet("QToolButton { background: transparent;"
                                    "border-radius: 2px; padding: 3px; }"
@@ -256,49 +259,42 @@ KMessageWidget::MessageType KMessageWidget::messageType() const
     return d->messageType;
 }
 
-static QColor darkShade(QColor c)
-{
-    qreal contrast = 0.7; // taken from kcolorscheme for the dark shade
-    
-    qreal darkAmount;
-    if (c.lightnessF() < 0.006) { /* too dark */
-        darkAmount = 0.02 + 0.40 * contrast;
-    } else if (c.lightnessF() > 0.93) { /* too bright */
-        darkAmount = -0.06 - 0.60 * contrast;
-    } else {
-        darkAmount = (-c.lightnessF()) * (0.55 + contrast * 0.35);
-    }
-    
-    qreal v = c.lightnessF() + darkAmount;
-    v = v > 0.0 ? (v < 1.0 ? v : 1.0) : 0.0;
-    c.setHsvF(c.hslHueF(), c.hslSaturationF(), v);
-    return c;
-}
-
 void KMessageWidget::setMessageType(KMessageWidget::MessageType type)
 {
     d->messageType = type;
-    QColor bg0, bg1, bg2, border, fg;
+    QColor bg0, bg1, bg2, border;
+    QColor fg = palette().light().color();
     switch (type) {
-        case Positive:
-            bg1.setRgb(0, 110,  40); // values taken from kcolorscheme.cpp (Positive)
-            break;
-        case Information:
-            bg1 = palette().highlight().color();
-            break;
-        case Warning:
-            bg1.setRgb(191, 126, 7); // values taken from kcolorscheme.cpp (Neutral)
-            break;
-        case Error:
-            bg1.setRgb(191, 3, 3); // values taken from kcolorscheme.cpp (Negative)
-            break;
+    case Positive:
+        bg1.setRgb(37, 163, 83);
+        break;
+    case Information:
+        bg1.setRgb(24, 187, 242);
+        break;
+    case Warning:
+        bg1.setRgb(252, 193, 57);
+        fg = palette().foreground().color();
+        break;
+    case Error:
+        bg1.setRgb(198, 69, 21);
+        break;
     }
-    
+
     // Colors
-    fg = palette().light().color();
-    bg0 = bg1.lighter(110);
-    bg2 = bg1.darker(110);
-    border = darkShade(bg1);
+    bg0 = bg1.lighter(105);
+    bg2 = bg1.darker(105);
+    border = bg1.darker(115);
+
+    // Tint close icon
+    auto closeButtonPixmap = d->closeButtonPixmap;
+    QPixmap mask(closeButtonPixmap);
+    QPainter painter;
+    painter.begin(&closeButtonPixmap);
+    painter.setRenderHints(QPainter::HighQualityAntialiasing);
+    painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
+    painter.fillRect(QRect(0, 0, 16, 16), fg);
+    painter.end();
+    d->closeButton->setIcon(closeButtonPixmap);
     
     d->content->setStyleSheet(
         QString(QLatin1String(".QFrame {"
@@ -306,10 +302,10 @@ void KMessageWidget::setMessageType(KMessageWidget::MessageType type)
         "    stop: 0 %1,"
         "    stop: 0.1 %2,"
         "    stop: 1.0 %3);"
-        "border-radius: 5px;"
-        "border: 1px solid %4;"
-        "margin: %5px;"
-        "padding: 5px;"
+        "    border-radius: 2px;"
+        "    border: 1px solid %4;"
+        "    margin: %5px;"
+        "    padding: 5px;"
         "}"
         ".QLabel { color: %6; }"
         ))
@@ -317,8 +313,9 @@ void KMessageWidget::setMessageType(KMessageWidget::MessageType type)
         .arg(bg1.name())
         .arg(bg2.name())
         .arg(border.name())
-        // DefaultFrameWidth returns the size of the external margin + border width. We know our border is 1px, so we subtract this from the frame normal QStyle FrameWidth to get our margin
-        .arg(style()->pixelMetric(QStyle::PM_DefaultFrameWidth, 0, this) - 1)
+        // DefaultFrameWidth returns the size of the external margin + border width. We know our border is 1px,
+        // so we subtract this from the frame normal QStyle FrameWidth to get our margin
+        .arg(style()->pixelMetric(QStyle::PM_DefaultFrameWidth, nullptr, this) - 1)
         .arg(fg.name())
     );
 }
