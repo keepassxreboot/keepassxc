@@ -20,6 +20,8 @@ set(cli_SOURCES
     Clip.h
     Command.cpp
     Command.h
+    Diceware.cpp
+    Diceware.h
     Edit.cpp
     Edit.h
     Estimate.cpp
@@ -32,6 +34,8 @@ set(cli_SOURCES
     Locate.h
     Merge.cpp
     Merge.h
+    PassGen.cpp
+    PassGen.h
     Remove.cpp
     Remove.h
     Show.cpp

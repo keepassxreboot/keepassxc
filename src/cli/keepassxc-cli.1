@@ -1,4 +1,4 @@
-.TH KEEPASSXC-CLI 1 "Aug 22, 2017"
+.TH KEEPASSXC-CLI 1 "Jan 19, 2018"
 
 .SH NAME
 keepassxc-cli \- command line interface for the \fBKeePassXC\fP password manager.
@@ -19,6 +19,9 @@ Adds a new entry to a database. A password can be generated (\fI-g\fP option), o
 .IP "clip [options] <database> <entry> [timeout]"
 Copies the password of a database entry to the clipboard. If multiple entries with the same name exist in different groups, only the password for the first one is going to be copied. For copying the password of an entry in a specific group, the group path to the entry should be specified as well, instead of just the name. Optionally, a timeout in seconds can be specified to automatically clear the clipboard.
 
+.IP "diceware [options] <words>"
+Generate a random diceware passphrase.
+
 .IP "edit [options] <database> <entry>"
 Edits a database entry. A password can be generated (\fI-g\fP option), or a prompt can be displayed to input the password (\fI-p\fP option).
 
@@ -36,6 +39,9 @@ Lists the contents of a group in a database. If no group is specified, it will d
 
 .IP "merge [options] <database1> <database2>"
 Merges two databases together. The first database file is going to be replaced by the result of the merge, for that reason it is advisable to keep a backup of the two database files before attempting a merge. In the case that both databases make use of the same credentials, the \fI--same-credentials\fP or \fI-s\fP option can be used.
+
+.IP "passgen [options] <length>"
+Generate a random password
 
 .IP "rm [options] <database> <entry>"
 Removes an entry from a database. If the database has a recycle bin, the entry will be moved there. If the entry is already in the recycle bin, it will be removed permanently.
@@ -102,6 +108,33 @@ Perform advanced analysis on the password.
 Names of the attributes to show. This option can be specified more than once,
 with each attribute shown one-per-line in the given order. If no attributes are
 specified, a summary of the default attributes is given.
+
+
+.SS "Diceware options"
+
+.IP "-w, --wordlist <path>"
+Path of the wordlist for the diceware generator. The wordlist must have > 1000 words,
+otherwise the program will fail. If the wordlist has < 4000 words a warning will
+be printed to STDERR.
+
+
+.SS "PassGen options"
+
+.IP "-l"
+Use lowercase characters for the password generator
+
+.IP "-u"
+Use uppercase characters for the password generator
+
+.IP "-n"
+Use numbers characters for the password generator
+
+.IP "-s"
+Use special characters for the password generator
+
+.IP "-e"
+Use extended ascii characters for the password generator
+
 
 
 .SH REPORTING BUGS
