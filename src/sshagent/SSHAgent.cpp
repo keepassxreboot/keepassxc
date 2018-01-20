@@ -217,8 +217,14 @@ void SSHAgent::databaseModeChanged(DatabaseWidget::Mode mode)
     } else if (mode == DatabaseWidget::ViewMode && !m_keys.contains(uuid.toHex())) {
         for (Entry* e : widget->database()->rootGroup()->entriesRecursive()) {
 
-            if (!e->attachments()->hasKey("KeeAgent.settings"))
+            if (widget->database()->metadata()->recycleBinEnabled()
+                && e->group() == widget->database()->metadata()->recycleBin()) {
                 continue;
+            }
+
+            if (!e->attachments()->hasKey("KeeAgent.settings")) {
+                continue;
+            }
 
             KeeAgentSettings settings;
             settings.fromXml(e->attachments()->value("KeeAgent.settings"));
