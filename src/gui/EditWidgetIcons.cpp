@@ -53,9 +53,6 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     , m_fallbackToGoogle(true)
     , m_redirectCount(0)
 #endif
-#ifdef WITH_XC_HTTP
-    , m_httpClient(nullptr)
-#endif
 {
     m_ui->setupUi(this);
 

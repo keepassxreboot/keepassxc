@@ -97,7 +97,7 @@ private:
     QUrl m_redirectUrl;
     bool m_fallbackToGoogle;
     unsigned short m_redirectCount;
-    qhttp::client::QHttpClient* m_httpClient;
+    qhttp::client::QHttpClient* m_httpClient = nullptr;
 #endif
 
     Q_DISABLE_COPY(EditWidgetIcons)
