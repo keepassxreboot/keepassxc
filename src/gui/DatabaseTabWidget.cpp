@@ -85,7 +85,7 @@ void DatabaseTabWidget::newDatabase()
 {
     DatabaseManagerStruct dbStruct;
     Database* db = new Database();
-    db->rootGroup()->setName(tr("Root"));
+    db->rootGroup()->setName(tr("Root", "Root group"));
     dbStruct.dbWidget = new DatabaseWidget(db, this);
 
     CompositeKey emptyKey;

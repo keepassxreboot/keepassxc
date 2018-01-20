@@ -671,7 +671,7 @@ Entry* Entry::clone(CloneFlags flags) const
     }
 
     if (flags & CloneRenameTitle)
-        entry->setTitle(entry->title() + tr(" - Clone"));
+        entry->setTitle(entry->title() + tr(" - Clone", "Suffix added to cloned entries"));
 
     return entry;
 }

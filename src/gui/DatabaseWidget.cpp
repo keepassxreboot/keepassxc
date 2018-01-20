@@ -1277,7 +1277,7 @@ void DatabaseWidget::reloadDatabaseFile()
 
     if (! config()->get("AutoReloadOnChange").toBool()) {
         // Ask if we want to reload the db
-        QMessageBox::StandardButton mb = MessageBox::question(this, tr("Autoreload Request"),
+        QMessageBox::StandardButton mb = MessageBox::question(this, tr("File has changed"),
                              tr("The database file has changed. Do you want to load the changes?"),
                              QMessageBox::Yes | QMessageBox::No);
 

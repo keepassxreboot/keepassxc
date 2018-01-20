@@ -298,6 +298,7 @@ QVariantMap Kdbx4Reader::readVariantMap(QIODevice* device)
             & KeePass2::VARIANTMAP_CRITICAL_MASK;
     quint16 maxVersion = KeePass2::VARIANTMAP_VERSION & KeePass2::VARIANTMAP_CRITICAL_MASK;
     if (!ok || (version > maxVersion)) {
+        //: Translation: variant map = data structure for storing meta data
         raiseError(tr("Unsupported KeePass variant map version."));
         return {};
     }
@@ -310,6 +311,7 @@ QVariantMap Kdbx4Reader::readVariantMap(QIODevice* device)
                != KeePass2::VariantMapFieldType::End)) {
         auto nameLen = Endian::readSizedInt<quint32>(device, KeePass2::BYTEORDER, &ok);
         if (!ok) {
+            //: Translation: variant map = data structure for storing meta data
             raiseError(tr("Invalid variant map entry name length"));
             return {};
         }
@@ -317,6 +319,7 @@ QVariantMap Kdbx4Reader::readVariantMap(QIODevice* device)
         if (nameLen != 0) {
             nameBytes = device->read(nameLen);
             if (static_cast<quint32>(nameBytes.size()) != nameLen) {
+                //: Translation: variant map = data structure for storing meta data
                 raiseError(tr("Invalid variant map entry name data"));
                 return {};
             }
@@ -325,6 +328,7 @@ QVariantMap Kdbx4Reader::readVariantMap(QIODevice* device)
 
         auto valueLen = Endian::readSizedInt<quint32>(device, KeePass2::BYTEORDER, &ok);
         if (!ok) {
+            //: Translation: variant map = data structure for storing meta data
             raiseError(tr("Invalid variant map entry value length"));
             return {};
         }
@@ -332,6 +336,7 @@ QVariantMap Kdbx4Reader::readVariantMap(QIODevice* device)
         if (valueLen != 0) {
             valueBytes = device->read(valueLen);
             if (static_cast<quint32>(valueBytes.size()) != valueLen) {
+                //: Translation comment: variant map = data structure for storing meta data
                 raiseError(tr("Invalid variant map entry value data"));
                 return {};
             }
@@ -342,6 +347,7 @@ QVariantMap Kdbx4Reader::readVariantMap(QIODevice* device)
             if (valueLen == 1) {
                 vm.insert(name, QVariant(valueBytes.at(0) != 0));
             } else {
+                //: Translation: variant map = data structure for storing meta data
                 raiseError(tr("Invalid variant map Bool entry value length"));
                 return {};
             }
@@ -351,6 +357,7 @@ QVariantMap Kdbx4Reader::readVariantMap(QIODevice* device)
             if (valueLen == 4) {
                 vm.insert(name, QVariant(Endian::bytesToSizedInt<qint32>(valueBytes, KeePass2::BYTEORDER)));
             } else {
+                //: Translation: variant map = data structure for storing meta data
                 raiseError(tr("Invalid variant map Int32 entry value length"));
                 return {};
             }
@@ -360,6 +367,7 @@ QVariantMap Kdbx4Reader::readVariantMap(QIODevice* device)
             if (valueLen == 4) {
                 vm.insert(name, QVariant(Endian::bytesToSizedInt<quint32>(valueBytes, KeePass2::BYTEORDER)));
             } else {
+                //: Translation: variant map = data structure for storing meta data
                 raiseError(tr("Invalid variant map UInt32 entry value length"));
                 return {};
             }
@@ -369,6 +377,7 @@ QVariantMap Kdbx4Reader::readVariantMap(QIODevice* device)
             if (valueLen == 8) {
                 vm.insert(name, QVariant(Endian::bytesToSizedInt<qint64>(valueBytes, KeePass2::BYTEORDER)));
             } else {
+                //: Translation: variant map = data structure for storing meta data
                 raiseError(tr("Invalid variant map Int64 entry value length"));
                 return {};
             }
@@ -378,6 +387,7 @@ QVariantMap Kdbx4Reader::readVariantMap(QIODevice* device)
             if (valueLen == 8) {
                 vm.insert(name, QVariant(Endian::bytesToSizedInt<quint64>(valueBytes, KeePass2::BYTEORDER)));
             } else {
+                //: Translation: variant map = data structure for storing meta data
                 raiseError(tr("Invalid variant map UInt64 entry value length"));
                 return {};
             }
@@ -392,12 +402,14 @@ QVariantMap Kdbx4Reader::readVariantMap(QIODevice* device)
             break;
 
         default:
+            //: Translation: variant map = data structure for storing meta data
             raiseError(tr("Invalid variant map entry type"));
             return {};
         }
     }
 
     if (fieldTypeArray.size() != 1) {
+        //: Translation: variant map = data structure for storing meta data
         raiseError(tr("Invalid variant map field type size"));
         return {};
     }
