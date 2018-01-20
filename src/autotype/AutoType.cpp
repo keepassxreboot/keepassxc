@@ -328,7 +328,7 @@ bool AutoType::parseActions(const QString& sequence, const Entry* entry, QList<A
     for (const QChar& ch : sequence) {
         if (inTmpl) {
             if (ch == '{') {
-                qWarning("Syntax error in auto-type sequence.");
+                qWarning("Syntax error in Auto-Type sequence.");
                 return false;
             } else if (ch == '}') {
                 QList<AutoTypeAction*> autoType = createActionFromTemplate(tmpl, entry);
@@ -343,7 +343,7 @@ bool AutoType::parseActions(const QString& sequence, const Entry* entry, QList<A
         } else if (ch == '{') {
             inTmpl = true;
         } else if (ch == '}') {
-            qWarning("Syntax error in auto-type sequence.");
+            qWarning("Syntax error in Auto-Type sequence.");
             return false;
         } else {
             actions.append(new AutoTypeChar(ch));
@@ -662,29 +662,28 @@ bool AutoType::verifyAutoTypeSyntax(const QString& sequence)
 {
     if (!AutoType::checkSyntax(sequence)) {
         QMessageBox messageBox;
-        messageBox.critical(0, tr("Auto-Type"), tr("The Syntax of your AutoType statement is incorrect!"));
+        messageBox.critical(nullptr, tr("Auto-Type"), tr("The Syntax of your Auto-Type statement is incorrect!"));
         return false;
     } else if (AutoType::checkHighDelay(sequence)) {
         QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(0, tr("Auto-Type"),
-            tr("This AutoType command contains a very long delay. Do you really want to proceed?"));
+        reply = QMessageBox::question(nullptr, tr("Auto-Type"),
+            tr("This Auto-Type command contains a very long delay. Do you really want to proceed?"));
 
         if (reply == QMessageBox::No) {
             return false;
         }
     } else if (AutoType::checkSlowKeypress(sequence)) {
         QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(0, tr("Auto-Type"),
-            tr("This AutoType command contains very slow key-press. Do you really want to proceed?"));
+        reply = QMessageBox::question(nullptr, tr("Auto-Type"),
+            tr("This Auto-Type command contains very slow key presses. Do you really want to proceed?"));
 
         if (reply == QMessageBox::No) {
             return false;
         }
     } else if (AutoType::checkHighRepetition(sequence)) {
         QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(0, tr("Auto-Type"), 
-            tr("This AutoType command contains arguments which are "
-            "repeated very often. Do you really want to proceed?"));
+        reply = QMessageBox::question(nullptr, tr("Auto-Type"),
+            tr("This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?"));
 
         if (reply == QMessageBox::No) {
             return false;
