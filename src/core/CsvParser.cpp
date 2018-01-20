@@ -268,8 +268,10 @@ void CsvParser::getChar(QChar& c) {
 }
 
 void CsvParser::ungetChar() {
-    if (!m_ts.seek(m_lastPos))
-        appendStatusMsg(QObject::tr("INTERNAL - unget lower bound exceeded"), true);
+    if (!m_ts.seek(m_lastPos)) {
+        qWarning("CSV Parser: unget lower bound exceeded");
+        m_isGood = false;
+    }
 }
 
 void CsvParser::peek(QChar& c) {
@@ -380,5 +382,5 @@ void CsvParser::appendStatusMsg(QString s, bool isCritical) {
       .append(",")
       .append(QString::number(m_currCol))
       .append("\n");
-    m_isGood = not isCritical;
+    m_isGood = !isCritical;
 }
