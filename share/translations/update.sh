@@ -49,7 +49,6 @@ if $UPDATE; then
         LUPDATE=lupdate
     fi
     $LUPDATE -no-ui-lines -disable-heuristic similartext -locations none -no-obsolete src -ts share/translations/keepassx_en.ts
-    $LUPDATE -no-ui-lines -disable-heuristic similartext -locations none -pluralonly src -ts share/translations/keepassx_en_plurals.ts
     echo
 fi
 
