@@ -26,6 +26,7 @@ class Entry;
 class EntryModel;
 class Group;
 class SortFilterHideProxyModel;
+class QActionGroup;
 
 class EntryView : public QTreeView
 {
@@ -38,9 +39,15 @@ public:
     void setCurrentEntry(Entry* entry);
     Entry* entryFromIndex(const QModelIndex& index);
     void setEntryList(const QList<Entry*>& entries);
-    bool inEntryListMode();
+    bool inSearchMode();
     int numberOfSelectedEntries();
     void setFirstEntryActive();
+    bool isUsernamesHidden() const;
+    void setUsernamesHidden(const bool hide);
+    bool isPasswordsHidden() const;
+    void setPasswordsHidden(const bool hide);
+    QByteArray viewState() const;
+    bool setViewState(const QByteArray& state) const;
 
 public slots:
     void setGroup(Group* group);
@@ -49,6 +56,7 @@ signals:
     void entryActivated(Entry* entry, EntryModel::ModelColumn column);
     void entryPressed(Entry* entry);
     void entrySelectionChanged();
+    void viewStateChanged();
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;
@@ -56,13 +64,26 @@ protected:
 private slots:
     void emitEntryActivated(const QModelIndex& index);
     void emitEntryPressed(const QModelIndex& index);
-    void switchToEntryListMode();
-    void switchToGroupMode();
+    void switchToListMode();
+    void switchToSearchMode();
+    void showHeaderMenu(const QPoint& position);
+    void toggleColumnVisibility(QAction *action);
+    void fitColumnsToWindow();
+    void fitColumnsToContents();
+    void resetViewToDefaults();
 
 private:
     EntryModel* const m_model;
     SortFilterHideProxyModel* const m_sortModel;
-    bool m_inEntryListMode;
+    bool m_inSearchMode;
+
+    QByteArray m_defaultListViewState;
+    QByteArray m_defaultSearchViewState;
+
+    QMenu* m_headerMenu;
+    QAction* m_hideUsernamesAction;
+    QAction* m_hidePasswordsAction;
+    QActionGroup* m_columnActions;
 };
 
 #endif // KEEPASSX_ENTRYVIEW_H

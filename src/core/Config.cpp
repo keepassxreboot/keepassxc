@@ -138,6 +138,8 @@ void Config::init(const QString& fileName)
     m_defaults.insert("GUI/DarkTrayIcon", false);
     m_defaults.insert("GUI/MinimizeToTray", false);
     m_defaults.insert("GUI/MinimizeOnClose", false);
+    m_defaults.insert("GUI/HideUsernames", false);
+    m_defaults.insert("GUI/HidePasswords", true);
 }
 
 Config* Config::instance()

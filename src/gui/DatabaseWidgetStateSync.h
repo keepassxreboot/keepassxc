@@ -37,7 +37,7 @@ public slots:
 private slots:
     void blockUpdates();
     void updateSplitterSizes();
-    void updateColumnSizes();
+    void updateViewState();
 
 private:
     static QList<int> variantToIntList(const QVariant& variant);
@@ -48,8 +48,12 @@ private:
     bool m_blockUpdates;
     QList<int> m_mainSplitterSizes;
     QList<int> m_detailSplitterSizes;
-    QList<int> m_columnSizesList;
-    QList<int> m_columnSizesSearch;
+
+    bool m_hideUsernames;
+    bool m_hidePasswords;
+
+    QByteArray m_listViewState;
+    QByteArray m_searchViewState;
 };
 
 #endif // KEEPASSX_DATABASEWIDGETSTATESYNC_H

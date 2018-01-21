@@ -92,8 +92,12 @@ public:
     void setMainSplitterSizes(const QList<int>& sizes);
     QList<int> detailSplitterSizes() const;
     void setDetailSplitterSizes(const QList<int>& sizes);
-    QList<int> entryHeaderViewSizes() const;
-    void setEntryViewHeaderSizes(const QList<int>& sizes);
+    bool isUsernamesHidden() const;
+    void setUsernamesHidden(const bool hide);
+    bool isPasswordsHidden() const;
+    void setPasswordsHidden(const bool hide);
+    QByteArray entryViewState() const;
+    bool setEntryViewState(const QByteArray& state) const;
     void clearAllWidgets();
     bool currentEntryHasTitle();
     bool currentEntryHasUsername();
@@ -127,7 +131,7 @@ signals:
     void searchModeActivated();
     void mainSplitterSizesChanged();
     void detailSplitterSizesChanged();
-    void entryColumnSizesChanged();
+    void entryViewStateChanged();
     void updateSearch(QString text);
 
 public slots:

@@ -181,7 +181,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
 
     connect(m_mainSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(mainSplitterSizesChanged()));
     connect(m_detailSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(detailSplitterSizesChanged()));
-    connect(m_entryView->header(), SIGNAL(sectionResized(int,int,int)), SIGNAL(entryColumnSizesChanged()));
+    connect(m_entryView, SIGNAL(viewStateChanged()), SIGNAL(entryViewStateChanged()));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(onGroupChanged(Group*)));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), SIGNAL(groupChanged()));
     connect(m_entryView, SIGNAL(entryActivated(Entry*, EntryModel::ModelColumn)),
@@ -290,28 +290,52 @@ void DatabaseWidget::setDetailSplitterSizes(const QList<int> &sizes)
     m_detailSplitter->setSizes(sizes);
 }
 
-QList<int> DatabaseWidget::entryHeaderViewSizes() const
+/**
+ * Get current state of entry view 'Hide Usernames' setting
+ */
+bool DatabaseWidget::isUsernamesHidden() const
 {
-    QList<int> sizes;
-
-    for (int i = 0; i < m_entryView->header()->count(); i++) {
-        sizes.append(m_entryView->header()->sectionSize(i));
-    }
-
-    return sizes;
+    return m_entryView->isUsernamesHidden();
 }
 
-void DatabaseWidget::setEntryViewHeaderSizes(const QList<int>& sizes)
+/**
+ * Set state of entry view 'Hide Usernames' setting
+ */
+void DatabaseWidget::setUsernamesHidden(const bool hide)
 {
-    const bool enoughSizes = sizes.size() == m_entryView->header()->count();
-    Q_ASSERT(enoughSizes);
-    if (!enoughSizes) {
-        return;
-    }
+    m_entryView->setUsernamesHidden(hide);
+}
 
-    for (int i = 0; i < sizes.size(); i++) {
-        m_entryView->header()->resizeSection(i, sizes[i]);
-    }
+/**
+ * Get current state of entry view 'Hide Passwords' setting
+ */
+bool DatabaseWidget::isPasswordsHidden() const
+{
+    return m_entryView->isPasswordsHidden();
+}
+
+/**
+ * Set state of entry view 'Hide Passwords' setting
+ */
+void DatabaseWidget::setPasswordsHidden(const bool hide)
+{
+    m_entryView->setPasswordsHidden(hide);
+}
+
+/**
+ * Get current view state of entry view
+ */
+QByteArray DatabaseWidget::entryViewState() const
+{
+    return m_entryView->viewState();
+}
+
+/**
+ * Set view state of entry view
+ */
+bool DatabaseWidget::setEntryViewState(const QByteArray& state) const
+{
+    return m_entryView->setViewState(state);
 }
 
 void DatabaseWidget::clearAllWidgets()
@@ -660,8 +684,8 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
 
 void DatabaseWidget::createGroup()
 {
+    Q_ASSERT(m_groupView->currentGroup());
     if (!m_groupView->currentGroup()) {
-        Q_ASSERT(false);
         return;
     }
 
@@ -674,8 +698,8 @@ void DatabaseWidget::createGroup()
 void DatabaseWidget::deleteGroup()
 {
     Group* currentGroup = m_groupView->currentGroup();
+    Q_ASSERT(currentGroup && canDeleteCurrentGroup());
     if (!currentGroup || !canDeleteCurrentGroup()) {
-        Q_ASSERT(false);
         return;
     }
 
@@ -910,10 +934,31 @@ void DatabaseWidget::unlockDatabase(bool accepted)
 
 void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::ModelColumn column)
 {
-    if (column == EntryModel::Url && !entry->url().isEmpty()) {
-        openUrlForEntry(entry);
+    Q_ASSERT(entry);
+    if (!entry) {
+        return;
     }
-    else {
+
+    // Implement 'copy-on-doubleclick' functionality for certain columns
+    switch (column) {
+    case EntryModel::Username:
+        setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->username()));
+        break;
+    case EntryModel::Password:
+        setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->password()));
+        break;
+    case EntryModel::Url:
+        if (!entry->url().isEmpty()) {
+            openUrlForEntry(entry);
+        }
+        break;
+    // TODO: switch to 'Notes' tab in details view/pane
+    //case EntryModel::Notes:
+    //    break;
+    // TODO: switch to 'Attachments' tab in details view/pane
+    //case EntryModel::Attachments:
+    //    break;
+    default:
         switchToEntryEdit(entry);
     }
 }
@@ -1151,7 +1196,7 @@ bool DatabaseWidget::canDeleteCurrentGroup() const
 
 bool DatabaseWidget::isInSearchMode() const
 {
-    return m_entryView->inEntryListMode();
+    return m_entryView->inSearchMode();
 }
 
 Group* DatabaseWidget::currentGroup() const
