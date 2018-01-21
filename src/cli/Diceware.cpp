@@ -43,7 +43,7 @@ int Diceware::execute(QStringList arguments)
     QCommandLineParser parser;
     parser.setApplicationDescription(this->description);
     QCommandLineOption wordlistFile(QStringList() << "w"
-                                             << "wordlist",
+                                             << "word-list",
                                QObject::tr("Wordlist fot the diceware generator.\n[Default: EFF English]"),
                                QObject::tr("path"));
     parser.addOption(wordlistFile);
@@ -68,7 +68,7 @@ int Diceware::execute(QStringList arguments)
     }
 
     if (!dicewareGenerator.isValid()) {
-        outputTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli passgen");
+        outputTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli diceware");
         return EXIT_FAILURE;
     }
     

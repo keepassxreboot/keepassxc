@@ -42,6 +42,10 @@ int PassGen::execute(QStringList arguments)
 
     QCommandLineParser parser;
     parser.setApplicationDescription(this->description);
+    QCommandLineOption len(QStringList() << "L" << "length",
+                                QObject::tr("Length of the generated password."),
+                                QObject::tr("length"));
+    parser.addOption(len);
     QCommandLineOption lower(QStringList() << "l",
                                QObject::tr("Use lowercase in the generated password."));
     parser.addOption(lower);
@@ -57,19 +61,22 @@ int PassGen::execute(QStringList arguments)
     QCommandLineOption extended(QStringList() << "e",
                                QObject::tr("Use extended ascii in the generated password."));
     parser.addOption(extended);
-    parser.addPositionalArgument("length", QObject::tr("Length of the generated password."));
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
-    if (args.size() != 1) {
+    if (args.size() != 0) {
         outputTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli passgen");
         return EXIT_FAILURE;
     }
 
     PasswordGenerator passwordGenerator;
 
-    int length = args.at(0).toInt();
-    passwordGenerator.setLength(length);
+    if (parser.value(len).isEmpty()) {
+        passwordGenerator.setLength(PasswordGenerator::DefaultLength);
+    } else {
+        int length = parser.value(len).toInt();
+        passwordGenerator.setLength(length);
+    }
 
     PasswordGenerator::CharClasses classes = 0x0;
 
