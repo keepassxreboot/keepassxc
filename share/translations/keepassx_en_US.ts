@@ -1,212 +1,212 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="hu" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="en_US" version="2.1">
 <context>
     <name>AboutDialog</name>
     <message>
         <source>About KeePassXC</source>
-        <translation>A KeePassXC névjegye</translation>
+        <translation>About KeePassXC</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>Névjegy</translation>
+        <translation>About</translation>
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>Hibajelentés: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+        <translation>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>A KeePassXC a GNU General Public License (GPL) 2. vagy (válaszhatóan ) 3. verziója szerint kerül terjesztésre.</translation>
+        <translation>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</translation>
     </message>
     <message>
         <source>Project Maintainers:</source>
-        <translation>Projektkarbantartók:</translation>
+        <translation>Project Maintainers:</translation>
     </message>
     <message>
         <source>Contributors</source>
-        <translation>Közreműködők</translation>
+        <translation>Contributors</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Közreműködők megtekintése a GitHubon&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>Hibakeresési információk</translation>
+        <translation>Debug Info</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>Minden hibajelentésnél legyenek mellékelve ezek az információk:</translation>
+        <translation>Include the following information whenever you report a bug:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>Vágólapra másolás</translation>
+        <translation>Copy to clipboard</translation>
     </message>
     <message>
         <source>Version %1
 </source>
-        <translation>Verzió: %1
+        <translation>Version %1
 </translation>
     </message>
     <message>
         <source>Revision: %1</source>
-        <translation>Revízió: %1</translation>
+        <translation>Revision: %1</translation>
     </message>
     <message>
         <source>Distribution: %1</source>
-        <translation>Disztribúció: %1</translation>
+        <translation>Distribution: %1</translation>
     </message>
     <message>
         <source>Libraries:</source>
-        <translation>Függvénykönyvtárak:</translation>
+        <translation>Libraries:</translation>
     </message>
     <message>
         <source>Operating system: %1
 CPU architecture: %2
 Kernel: %3 %4</source>
-        <translation>Operációs rendszer: %1
-CPU architektúra: %2
+        <translation>Operating system: %1
+CPU architecture: %2
 Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
-        <translation>Engedélyezett kiterjesztések:</translation>
+        <translation>Enabled extensions:</translation>
     </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
     <message>
         <source>KeePassXC HTTP Confirm Access</source>
-        <translation>KeePassXC HTTP hozzáférési engedély</translation>
+        <translation>KeePassXC HTTP Confirm Access</translation>
     </message>
     <message>
         <source>Remember this decision</source>
-        <translation>Döntés megjegyzése</translation>
+        <translation>Remember this decision</translation>
     </message>
     <message>
         <source>Allow</source>
-        <translation>Engedélyezés</translation>
+        <translation>Allow</translation>
     </message>
     <message>
         <source>Deny</source>
-        <translation>Megtagadás</translation>
+        <translation>Deny</translation>
     </message>
     <message>
         <source>%1 has requested access to passwords for the following item(s).
 Please select whether you want to allow access.</source>
-        <translation>A %1 jelszóengedélyt kér a következő elem(ek) számára.
-Válassza ki, hogy engedélyezi-e a hozzáférést.</translation>
+        <translation>%1 has requested access to passwords for the following item(s).
+Please select whether you want to allow access.</translation>
     </message>
 </context>
 <context>
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent (requires restart)</source>
-        <translation>SSH-ügynök engedélyezése (újraindítást igényel)</translation>
+        <translation>Enable SSH Agent (requires restart)</translation>
     </message>
 </context>
 <context>
     <name>AutoType</name>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation>Nem található olyan bejegyzés, amely illeszkedik az ablak címsorára:</translation>
+        <translation>Couldn&apos;t find an entry that matches the window title:</translation>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Automatikus beírás – KeePassXC</translation>
+        <translation>Auto-Type - KeePassXC</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Automatikus beírás</translation>
+        <translation>Auto-Type</translation>
     </message>
     <message>
         <source>The Syntax of your Auto-Type statement is incorrect!</source>
-        <translation>Az automatikus beírás utasításszintaxisa helytelen!</translation>
+        <translation>The Syntax of your Auto-Type statement is incorrect!</translation>
     </message>
     <message>
         <source>This Auto-Type command contains a very long delay. Do you really want to proceed?</source>
-        <translation>Ez az automatikus beírás parancs nagyon hosszú késleltetést tartalmaz. Valóban folytatható?</translation>
+        <translation>This Auto-Type command contains a very long delay. Do you really want to proceed?</translation>
     </message>
     <message>
         <source>This Auto-Type command contains very slow key presses. Do you really want to proceed?</source>
-        <translation>Ez az automatikus beírás parancs nagyon lassú billentyűlenyomásokat tartalmaz. Valóban folytatható?</translation>
+        <translation>This Auto-Type command contains very slow key presses. Do you really want to proceed?</translation>
     </message>
     <message>
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
-        <translation>Ez az automatikus beírás parancs nagyon gyakran ismétlődő paramétert tartalmaz. Valóban folytatható?</translation>
+        <translation>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeAssociationsModel</name>
     <message>
         <source>Window</source>
-        <translation>Ablak</translation>
+        <translation>Window</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Sorrend</translation>
+        <translation>Sequence</translation>
     </message>
     <message>
         <source>Default sequence</source>
-        <translation>Alapértelmezett sorrend</translation>
+        <translation>Default sequence</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Automatikus beírás – KeePassXC</translation>
+        <translation>Auto-Type - KeePassXC</translation>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>Bejegyzés kijelölése automatikus beírásra:</translation>
+        <translation>Select entry to Auto-Type:</translation>
     </message>
 </context>
 <context>
     <name>BrowserAccessControlDialog</name>
     <message>
         <source>KeePassXC-Browser Confirm Access</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC-Browser Confirm Access</translation>
     </message>
     <message>
         <source>Remember this decision</source>
-        <translation>Döntés megjegyzése</translation>
+        <translation>Remember this decision</translation>
     </message>
     <message>
         <source>Allow</source>
-        <translation>Engedélyezés</translation>
+        <translation>Allow</translation>
     </message>
     <message>
         <source>Deny</source>
-        <translation>Megtagadás</translation>
+        <translation>Deny</translation>
     </message>
     <message>
         <source>%1 has requested access to passwords for the following item(s).
 Please select whether you want to allow access.</source>
-        <translation>A %1 jelszóengedélyt kér a következő elem(ek) számára.
-Válassza ki, hogy engedélyezi-e a hozzáférést.</translation>
+        <translation>%1 has requested access to passwords for the following item(s).
+Please select whether you want to allow access.</translation>
     </message>
 </context>
 <context>
     <name>BrowserOptionDialog</name>
     <message>
         <source>Dialog</source>
-        <translation>Párbeszédablak</translation>
+        <translation>Dialog</translation>
     </message>
     <message>
         <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation type="unfinished"/>
+        <translation>This is required for accessing your databases with KeePassXC-Browser</translation>
     </message>
     <message>
         <source>Enable KeepassXC browser integration</source>
-        <translation>KeepassXC böngészőintegráció engedélyezése</translation>
+        <translation>Enable KeepassXC browser integration</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Általános</translation>
+        <translation>General</translation>
     </message>
     <message>
         <source>Enable integration for these browsers:</source>
-        <translation>Böngészőintegráció engedélyezése a következőkhöz:</translation>
+        <translation>Enable integration for these browsers:</translation>
     </message>
     <message>
         <source>&amp;Google Chrome</source>
@@ -227,414 +227,421 @@ Válassza ki, hogy engedélyezi-e a hozzáférést.</translation>
     <message>
         <source>Show a &amp;notification when credentials are requested</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>É&amp;rtesítés megjelenítése hitelesítési adatok kérésekor</translation>
+        <translation>Show a &amp;notification when credentials are requested</translation>
     </message>
     <message>
         <source>Re&amp;quest to unlock the database if it is locked</source>
-        <translation>Adatbázis feloldási &amp;kérelem, ha zárolva van</translation>
+        <translation>Re&amp;quest to unlock the database if it is locked</translation>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, ...) are returned.</source>
-        <translation>Csak az azonos sémájú (http://, https://, ...) bejegyzések visszaadása.</translation>
+        <translation>Only entries with the same scheme (http://, https://, ...) are returned.</translation>
     </message>
     <message>
         <source>&amp;Match URL scheme (e.g., https://...)</source>
-        <translation>&amp;URL sémákra illeszkedés (pl. https://...)</translation>
+        <translation>&amp;Match URL scheme (e.g., https://...)</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
-        <translation>Egy konkrét URL-hez tartozó legjobb találatokat adja vissza, a teljes domainhoz tartozó összes bejegyzés helyett.</translation>
+        <translation>Only returns the best matches for a specific URL instead of all entries for the whole domain.</translation>
     </message>
     <message>
         <source>&amp;Return only best-matching credentials</source>
-        <translation>Csak a &amp;legjobb hitelesítési adatok visszaadása</translation>
+        <translation>&amp;Return only best-matching credentials</translation>
     </message>
     <message>
         <source>Sort &amp;matching credentials by title</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Illeszkedő hitelesítési adatok rendezése &amp;cím szerint</translation>
+        <translation>Sort &amp;matching credentials by title</translation>
     </message>
     <message>
         <source>Sort matching credentials by &amp;username</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Illeszkedő hitelesítési adatok rendezése &amp;felhasználónév szerint</translation>
+        <translation>Sort matching credentials by &amp;username</translation>
     </message>
     <message>
         <source>&amp;Disconnect all browsers</source>
-        <translation>Minden böngésző &amp;leválasztása</translation>
+        <translation>&amp;Disconnect all browsers</translation>
     </message>
     <message>
         <source>Forget all remembered &amp;permissions</source>
-        <translation>Minden tárolt hozzáférés törlése</translation>
+        <translation>Forget all remembered &amp;permissions</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Speciális</translation>
+        <translation>Advanced</translation>
     </message>
     <message>
         <source>Never &amp;ask before accessing credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Hozzáférési adatok elérése előtt soha ne &amp;kérdezzen</translation>
+        <translation>Never &amp;ask before accessing credentials</translation>
     </message>
     <message>
         <source>Never ask before &amp;updating credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Hozzáférési adatok &amp;frissítése előtt soha ne kérdezzen</translation>
+        <translation>Never ask before &amp;updating credentials</translation>
     </message>
     <message>
         <source>Only the selected database has to be connected with a client.</source>
-        <translation>Csak a kijelölt adatbázishoz kell kapcsolódnia egy klienssel.</translation>
+        <translation>Only the selected database has to be connected with a client.</translation>
     </message>
     <message>
         <source>Searc&amp;h in all opened databases for matching credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>&amp;Keresés minden megnyitott adatbázis hitelesítési adataiban</translation>
+        <translation>Searc&amp;h in all opened databases for matching credentials</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
-        <translation>A karakterlánc mezők automatikus létrehozása vagy frissítése nem támogatott.</translation>
+        <translation>Automatically creating or updating string fields is not supported.</translation>
     </message>
     <message>
         <source>&amp;Return advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation>A „KPH:”-val kezdődő fejlett karakterlánc mezők &amp;visszaadása</translation>
+        <translation>&amp;Return advanced string fields which start with &quot;KPH: &quot;</translation>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
-        <translation type="unfinished"/>
+        <translation>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</translation>
     </message>
     <message>
         <source>Update &amp;native messaging manifest files at startup</source>
-        <translation type="unfinished"/>
+        <translation>Update &amp;native messaging manifest files at startup</translation>
     </message>
     <message>
         <source>Support a proxy application between KeePassXC and browser extension.</source>
-        <translation type="unfinished"/>
+        <translation>Support a proxy application between KeePassXC and browser extension.</translation>
     </message>
     <message>
         <source>Use a &amp;proxy application between KeePassXC and browser extension</source>
-        <translation type="unfinished"/>
+        <translation>Use a &amp;proxy application between KeePassXC and browser extension</translation>
     </message>
     <message>
         <source>Use a custom proxy location if you installed a proxy manually.</source>
-        <translation type="unfinished"/>
+        <translation>Use a custom proxy location if you installed a proxy manually.</translation>
     </message>
     <message>
         <source>Use a &amp;custom proxy location</source>
         <comment>Meant is the proxy for KeePassXC-Browser</comment>
-        <translation type="unfinished"/>
+        <translation>Use a &amp;custom proxy location</translation>
     </message>
     <message>
         <source>Browse...</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation type="unfinished"/>
+        <translation>Browse...</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</translation>
     </message>
     <message>
         <source>Executable Files (*.exe);;All Files (*.*)</source>
-        <translation type="unfinished"/>
+        <translation>Executable Files (*.exe);;All Files (*.*)</translation>
     </message>
     <message>
         <source>Executable Files (*)</source>
-        <translation type="unfinished"/>
+        <translation>Executable Files (*)</translation>
     </message>
     <message>
         <source>Select custom proxy location</source>
-        <translation type="unfinished"/>
+        <translation>Select custom proxy location</translation>
     </message>
 </context>
 <context>
     <name>BrowserService</name>
     <message>
         <source>KeePassXC: New key association request</source>
-        <translation>KeePassXC: Új kulcstársítási kérés</translation>
+        <translation>KeePassXC: New key association request</translation>
     </message>
     <message>
         <source>You have received an association request for the above key.
 
 If you would like to allow it access to your KeePassXC database,
 give it a unique name to identify and accept it.</source>
-        <translation type="unfinished"/>
+        <translation>You have received an association request for the above key.
+
+If you would like to allow it access to your KeePassXC database,
+give it a unique name to identify and accept it.</translation>
     </message>
     <message>
         <source>Save and allow access</source>
-        <translation type="unfinished"/>
+        <translation>Save and allow access</translation>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
-        <translation>KeePassXC: Felülírja a létező kulcsot?</translation>
+        <translation>KeePassXC: Overwrite existing key?</translation>
     </message>
     <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
-        <translation type="unfinished"/>
+        <translation>A shared encryption key with the name &quot;%1&quot; already exists.
+Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
-        <translation>KeePassXC: Bejegyzés frissítése</translation>
+        <translation>KeePassXC: Update Entry</translation>
     </message>
     <message>
         <source>Do you want to update the information in %1 - %2?</source>
-        <translation>Frissíti az információt ebben: %1 – %2?</translation>
+        <translation>Do you want to update the information in %1 - %2?</translation>
     </message>
     <message>
         <source>KeePassXC: Database locked!</source>
-        <translation>KeePassXC: Adatbázis zárolva!</translation>
+        <translation>KeePassXC: Database locked!</translation>
     </message>
     <message>
         <source>The active database is locked!
 Please unlock the selected database or choose another one which is unlocked.</source>
-        <translation>Az aktív adatbázis zárolt.
-Fel kell oldani a kijelölt adatbázist, vagy egy másik nem zároltat kell választania.</translation>
+        <translation>The active database is locked!
+Please unlock the selected database or choose another one which is unlocked.</translation>
     </message>
     <message>
         <source>KeePassXC: Settings not available!</source>
-        <translation>KeePassXC: Nincs ilyen beállítás!</translation>
+        <translation>KeePassXC: Settings not available!</translation>
     </message>
     <message>
         <source>The active database does not contain a settings entry.</source>
-        <translation type="unfinished"/>
+        <translation>The active database does not contain a settings entry.</translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
-        <translation>KeePassXC: Nincs találat a kulcsok között</translation>
+        <translation>KeePassXC: No keys found</translation>
     </message>
     <message>
         <source>No shared encryption keys found in KeePassXC Settings.</source>
-        <translation type="unfinished"/>
+        <translation>No shared encryption keys found in KeePassXC Settings.</translation>
     </message>
     <message>
         <source>KeePassXC: Removed keys from database</source>
-        <translation>KeePassXC: Kulcsok eltávolítva az adatbázisból</translation>
+        <translation>KeePassXC: Removed keys from database</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Successfully removed %n encryption key from KeePassXC settings.</numerusform><numerusform>Successfully removed %n encryption keys from KeePassXC settings.</numerusform></translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
-        <translation type="unfinished"/>
+        <translation>Removing stored permissions…</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation>Megszakítás</translation>
+        <translation>Abort</translation>
     </message>
     <message>
         <source>KeePassXC: Removed permissions</source>
-        <translation>KeePassXC: Jogosultságok eltávolítva</translation>
+        <translation>KeePassXC: Removed permissions</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Successfully removed permissions from %n entry.</numerusform><numerusform>Successfully removed permissions from %n entries.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
-        <translation>KeePassXC: Nem található bejegyzés ilyen jogosultsággal!</translation>
+        <translation>KeePassXC: No entry with permissions found!</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
-        <translation>Az aktív adatbázisban nincs egyetlen jogosultsági bejegyzés sem.</translation>
+        <translation>The active database does not contain an entry with permissions.</translation>
     </message>
 </context>
 <context>
     <name>ChangeMasterKeyWidget</name>
     <message>
         <source>Password</source>
-        <translation>Jelszó</translation>
+        <translation>Password</translation>
     </message>
     <message>
         <source>Enter password:</source>
-        <translation>Jelszó megadása:</translation>
+        <translation>Enter password:</translation>
     </message>
     <message>
         <source>Repeat password:</source>
-        <translation>Jelszó ismétlése:</translation>
+        <translation>Repeat password:</translation>
     </message>
     <message>
         <source>&amp;Key file</source>
-        <translation>&amp;Kulcsfájl</translation>
+        <translation>&amp;Key file</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Tallózás</translation>
+        <translation>Browse</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Létrehozás</translation>
+        <translation>Create</translation>
     </message>
     <message>
         <source>Cha&amp;llenge Response</source>
-        <translation>Ki&amp;hívás-válasz</translation>
+        <translation>Cha&amp;llenge Response</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>Frissítés</translation>
+        <translation>Refresh</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Kulcsfájlok</translation>
+        <translation>Key files</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Minden fájl</translation>
+        <translation>All files</translation>
     </message>
     <message>
         <source>Create Key File...</source>
-        <translation>Kulcsfájl létrehozása…</translation>
+        <translation>Create Key File...</translation>
     </message>
     <message>
         <source>Unable to create Key File : </source>
-        <translation>Nem hozható létre kulcsfájl: </translation>
+        <translation>Unable to create Key File : </translation>
     </message>
     <message>
         <source>Select a key file</source>
-        <translation>Kulcsfájl kiválasztása</translation>
+        <translation>Select a key file</translation>
     </message>
     <message>
         <source>Empty password</source>
-        <translation>Üres jelszó</translation>
+        <translation>Empty password</translation>
     </message>
     <message>
         <source>Do you really want to use an empty string as password?</source>
-        <translation>Valóban üres szöveget szeretne használni jelszóként?</translation>
+        <translation>Do you really want to use an empty string as password?</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Eltérő jelszavak lettek megadva.</translation>
+        <translation>Different passwords supplied.</translation>
     </message>
     <message>
         <source>Failed to set %1 as the Key file:
 %2</source>
-        <translation>A(z) %1 kulcsfájl beállítása sikertelen:
+        <translation>Failed to set %1 as the Key file:
 %2</translation>
     </message>
     <message>
         <source>Legacy key file format</source>
-        <translation type="unfinished"/>
+        <translation>Legacy key file format</translation>
     </message>
     <message>
         <source>You are using a legacy key file format which may become
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>You are using a legacy key file format which may become
+unsupported in the future.
+
+Please consider generating a new key file.</translation>
     </message>
     <message>
         <source>Changing master key failed: no YubiKey inserted.</source>
-        <translation>A mesterkulcs módosítása sikertelen: nincs YubiKey behelyezve.</translation>
+        <translation>Changing master key failed: no YubiKey inserted.</translation>
     </message>
 </context>
 <context>
     <name>CloneDialog</name>
     <message>
         <source>Clone Options</source>
-        <translation>Beállítások klónozása</translation>
+        <translation>Clone Options</translation>
     </message>
     <message>
         <source>Append &apos; - Clone&apos; to title</source>
-        <translation>„- klón” hozzáfűzése a címhez</translation>
+        <translation>Append &apos; - Clone&apos; to title</translation>
     </message>
     <message>
         <source>Replace username and password with references</source>
-        <translation>A felhasználónév és a jelszó cseréje hivatkozásokra</translation>
+        <translation>Replace username and password with references</translation>
     </message>
     <message>
         <source>Copy history</source>
-        <translation>Előzmények másolása</translation>
+        <translation>Copy history</translation>
     </message>
 </context>
 <context>
     <name>CsvImportWidget</name>
     <message>
         <source>Import CSV fields</source>
-        <translation>CSV-mezők importálása</translation>
+        <translation>Import CSV fields</translation>
     </message>
     <message>
         <source>filename</source>
-        <translation>fájlnév</translation>
+        <translation>filename</translation>
     </message>
     <message>
         <source>size, rows, columns</source>
-        <translation>méret, sorok, oszlopok</translation>
+        <translation>size, rows, columns</translation>
     </message>
     <message>
         <source>Encoding</source>
-        <translation>Kódolás</translation>
+        <translation>Encoding</translation>
     </message>
     <message>
         <source>Codec</source>
-        <translation>Kodek</translation>
+        <translation>Codec</translation>
     </message>
     <message>
         <source>Text is qualified by</source>
-        <translation>Szöveghatároló</translation>
+        <translation>Text is qualified by</translation>
     </message>
     <message>
         <source>Fields are separated by</source>
-        <translation>Mezőhatároló</translation>
+        <translation>Fields are separated by</translation>
     </message>
     <message>
         <source>Comments start with</source>
-        <translation>Megjegyzések kezdete</translation>
+        <translation>Comments start with</translation>
     </message>
     <message>
         <source>First record has field names</source>
-        <translation>Az első sor fejléc</translation>
+        <translation>First record has field names</translation>
     </message>
     <message>
         <source>Number of headers line to discard</source>
-        <translation>Kihagyandó fejléc sorok száma</translation>
+        <translation>Number of headers line to discard</translation>
     </message>
     <message>
         <source>Consider &apos;\&apos; an escape character</source>
-        <translation>„\” feloldójelnek értelmezve</translation>
+        <translation>Consider &apos;\&apos; an escape character</translation>
     </message>
     <message>
         <source>Preview</source>
-        <translation>Előnézet</translation>
+        <translation>Preview</translation>
     </message>
     <message>
         <source>Column layout</source>
-        <translation>Oszlopelrendezés</translation>
+        <translation>Column layout</translation>
     </message>
     <message>
         <source>Not present in CSV file</source>
-        <translation>Nincs jelen a CSV-fájlban</translation>
+        <translation>Not present in CSV file</translation>
     </message>
     <message>
         <source>Empty fieldname </source>
-        <translation>Üres mezőnév</translation>
+        <translation>Empty fieldname </translation>
     </message>
     <message>
         <source>column </source>
-        <translation>oszlop</translation>
+        <translation>column </translation>
     </message>
     <message>
         <source>Imported from CSV file</source>
-        <translation>CSV-fájlból importálva</translation>
+        <translation>Imported from CSV file</translation>
     </message>
     <message>
         <source>Original data: </source>
-        <translation>Eredeti adatok:</translation>
+        <translation>Original data: </translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file !</source>
-        <translation>Hibák találhatók a CSV-fájlban!</translation>
+        <translation>Error(s) detected in CSV file !</translation>
     </message>
     <message>
         <source> more messages skipped]</source>
-        <translation>további üzenet mellőzve]</translation>
+        <translation> more messages skipped]</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Hiba</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>CSV import: writer has errors:
 </source>
-        <translation>CSV importálás: a mentés hibába ütközött:
+        <translation>CSV import: writer has errors:
 </translation>
     </message>
 </context>
@@ -642,248 +649,255 @@ Please consider generating a new key file.</source>
     <name>CsvImportWizard</name>
     <message>
         <source>Error</source>
-        <translation>Hiba</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Nem lehet kiszámítani a mesterkulcsot</translation>
+        <translation>Unable to calculate master key</translation>
     </message>
 </context>
 <context>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n byte(s), </source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n byte, </numerusform><numerusform>%n bytes, </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n row, </numerusform><numerusform>%n rows, </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n column</numerusform><numerusform>%n columns</numerusform></translation>
     </message>
 </context>
 <context>
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Enter master key</source>
-        <translation>Mesterkulcs megadása</translation>
+        <translation>Enter master key</translation>
     </message>
     <message>
         <source>Key File:</source>
-        <translation>Kulcsfájl:</translation>
+        <translation>Key File:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Jelszó:</translation>
+        <translation>Password:</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Tallózás</translation>
+        <translation>Browse</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>Frissítés</translation>
+        <translation>Refresh</translation>
     </message>
     <message>
         <source>Challenge Response:</source>
-        <translation>Kihívás-válasz:</translation>
+        <translation>Challenge Response:</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Nem lehet megnyitni az adatbázist.</translation>
+        <translation>Unable to open the database.</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>Nem lehet megnyitni a kulcsfájlt</translation>
+        <translation>Can&apos;t open key file</translation>
     </message>
     <message>
         <source>Legacy key file format</source>
-        <translation type="unfinished"/>
+        <translation>Legacy key file format</translation>
     </message>
     <message>
         <source>You are using a legacy key file format which may become
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>You are using a legacy key file format which may become
+unsupported in the future.
+
+Please consider generating a new key file.</translation>
     </message>
     <message>
         <source>Don&apos;t show this warning again</source>
-        <translation type="unfinished"/>
+        <translation>Don&apos;t show this warning again</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Minden fájl</translation>
+        <translation>All files</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Kulcsfájlok</translation>
+        <translation>Key files</translation>
     </message>
     <message>
         <source>Select key file</source>
-        <translation>Kulcsfájl kiválasztása</translation>
+        <translation>Select key file</translation>
     </message>
 </context>
 <context>
     <name>DatabaseRepairWidget</name>
     <message>
         <source>Repair database</source>
-        <translation>Adatbázis javítása</translation>
+        <translation>Repair database</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Hiba</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>Nem lehet megnyitni a kulcsfájlt</translation>
+        <translation>Can&apos;t open key file</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Nem lehet megnyitni az adatbázist.</translation>
+        <translation>Unable to open the database.</translation>
     </message>
     <message>
         <source>Database opened fine. Nothing to do.</source>
-        <translation>Az adatbázis megnyitása sikeres. Nincs további teendő.</translation>
+        <translation>Database opened fine. Nothing to do.</translation>
     </message>
     <message>
         <source>Success</source>
-        <translation>Sikeres</translation>
+        <translation>Success</translation>
     </message>
     <message>
         <source>The database has been successfully repaired
 You can now save it.</source>
-        <translation>Az adatbázis sikeresen meg lett javítva.
-Most már el lehet menteni.</translation>
+        <translation>The database has been successfully repaired
+You can now save it.</translation>
     </message>
     <message>
         <source>Unable to repair the database.</source>
-        <translation>Nem lehet megjavítani az adatbázist.</translation>
+        <translation>Unable to repair the database.</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidget</name>
     <message>
         <source>General</source>
-        <translation>Általános</translation>
+        <translation>General</translation>
     </message>
     <message>
         <source>Encryption</source>
-        <translation type="unfinished"/>
+        <translation>Encryption</translation>
     </message>
     <message>
         <source>Number of rounds too high</source>
         <comment>Key transformation rounds</comment>
-        <translation type="unfinished"/>
+        <translation>Number of rounds too high</translation>
     </message>
     <message>
         <source>You are using a very high number of key transform rounds with Argon2.
 
 If you keep this number, your database may take hours or days (or even longer) to open!</source>
-        <translation type="unfinished"/>
+        <translation>You are using a very high number of key transform rounds with Argon2.
+
+If you keep this number, your database may take hours or days (or even longer) to open!</translation>
     </message>
     <message>
         <source>Understood, keep number</source>
-        <translation type="unfinished"/>
+        <translation>Understood, keep number</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Cancel</translation>
     </message>
     <message>
         <source>Number of rounds too low</source>
         <comment>Key transformation rounds</comment>
-        <translation type="unfinished"/>
+        <translation>Number of rounds too low</translation>
     </message>
     <message>
         <source>You are using a very low number of key transform rounds with AES-KDF.
 
 If you keep this number, your database may be too easy to crack!</source>
-        <translation type="unfinished"/>
+        <translation>You are using a very low number of key transform rounds with AES-KDF.
+
+If you keep this number, your database may be too easy to crack!</translation>
     </message>
     <message>
         <source>KDF unchanged</source>
-        <translation type="unfinished"/>
+        <translation>KDF unchanged</translation>
     </message>
     <message>
         <source>Failed to transform key with new KDF parameters; KDF unchanged.</source>
-        <translation type="unfinished"/>
+        <translation>Failed to transform key with new KDF parameters; KDF unchanged.</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetEncryption</name>
     <message>
         <source>Encryption Algorithm:</source>
-        <translation type="unfinished"/>
+        <translation>Encryption Algorithm:</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
-        <translation>AES:  256 Bit   (alapértelmezett)</translation>
+        <translation>AES:  256 Bit   (default)</translation>
     </message>
     <message>
         <source>Twofish:  256 Bit</source>
-        <translation>Twofish:  256 bit</translation>
+        <translation>Twofish:  256 Bit</translation>
     </message>
     <message>
         <source>Key Derivation Function:</source>
-        <translation type="unfinished"/>
+        <translation>Key Derivation Function:</translation>
     </message>
     <message>
         <source>Transform rounds:</source>
-        <translation>Átalakítási körök száma:</translation>
+        <translation>Transform rounds:</translation>
     </message>
     <message>
         <source>Benchmark 1-second delay</source>
-        <translation type="unfinished"/>
+        <translation>Benchmark 1-second delay</translation>
     </message>
     <message>
         <source>Memory Usage:</source>
-        <translation type="unfinished"/>
+        <translation>Memory Usage:</translation>
     </message>
     <message>
         <source> MB</source>
-        <translation type="unfinished"/>
+        <translation> MB</translation>
     </message>
     <message>
         <source>Parallelism:</source>
-        <translation type="unfinished"/>
+        <translation>Parallelism:</translation>
     </message>
     <message>
         <source> thread</source>
-        <translation type="unfinished"/>
+        <translation> thread</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetGeneral</name>
     <message>
         <source>Database Meta Data</source>
-        <translation type="unfinished"/>
+        <translation>Database Meta Data</translation>
     </message>
     <message>
         <source>Database name:</source>
-        <translation>Adatbázisnév:</translation>
+        <translation>Database name:</translation>
     </message>
     <message>
         <source>Database description:</source>
-        <translation>Adatbázis leírása:</translation>
+        <translation>Database description:</translation>
     </message>
     <message>
         <source>Default username:</source>
-        <translation>Alapértelmezett felhasználónév:</translation>
+        <translation>Default username:</translation>
     </message>
     <message>
         <source>History Settings</source>
-        <translation type="unfinished"/>
+        <translation>History Settings</translation>
     </message>
     <message>
         <source>Max. history items:</source>
-        <translation>Előzmények legnagyobb száma:</translation>
+        <translation>Max. history items:</translation>
     </message>
     <message>
         <source>Max. history size:</source>
-        <translation>Előzmények legnagyobb mérete:</translation>
+        <translation>Max. history size:</translation>
     </message>
     <message>
         <source> MiB</source>
@@ -891,7 +905,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Use recycle bin</source>
-        <translation>Kuka használata</translation>
+        <translation>Use recycle bin</translation>
     </message>
 </context>
 <context>
@@ -899,252 +913,253 @@ If you keep this number, your database may be too easy to crack!</source>
     <message>
         <source>Root</source>
         <comment>Root group</comment>
-        <translation>Gyökér</translation>
+        <translation>Root</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>KeePass 2 adatbázis</translation>
+        <translation>KeePass 2 Database</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Minden fájl</translation>
+        <translation>All files</translation>
     </message>
     <message>
         <source>Open database</source>
-        <translation>Adatbázis megnyitása</translation>
+        <translation>Open database</translation>
     </message>
     <message>
         <source>File not found!</source>
-        <translation>A fájl nem található!</translation>
+        <translation>File not found!</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Nem lehet megnyitni az adatbázist.</translation>
+        <translation>Unable to open the database.</translation>
     </message>
     <message>
         <source>File opened in read only mode.</source>
-        <translation>Fájl megnyitva csak olvashatóként</translation>
+        <translation>File opened in read only mode.</translation>
     </message>
     <message>
         <source>Open CSV file</source>
-        <translation>CSV-fájl megnyitása</translation>
+        <translation>Open CSV file</translation>
     </message>
     <message>
         <source>CSV file</source>
-        <translation>CSV-fájl</translation>
+        <translation>CSV file</translation>
     </message>
     <message>
         <source>All files (*)</source>
-        <translation>Minden fájl (*)</translation>
+        <translation>All files (*)</translation>
     </message>
     <message>
         <source>Merge database</source>
-        <translation>Adatbázis összeolvasztása</translation>
+        <translation>Merge database</translation>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
-        <translation>KeePass 1 adatbázis megnyitása</translation>
+        <translation>Open KeePass 1 database</translation>
     </message>
     <message>
         <source>KeePass 1 database</source>
-        <translation>KeePass 1 adatbázis</translation>
+        <translation>KeePass 1 database</translation>
     </message>
     <message>
         <source>Close?</source>
-        <translation>Bezárja?</translation>
+        <translation>Close?</translation>
     </message>
     <message>
         <source>&quot;%1&quot; is in edit mode.
 Discard changes and close anyway?</source>
-        <translation>A(z) „%1” szerkesztési módban van.
-Elveti a módosításokat és mindenképp bezárja? </translation>
+        <translation>&quot;%1&quot; is in edit mode.
+Discard changes and close anyway?</translation>
     </message>
     <message>
         <source>Save changes?</source>
-        <translation>Menti a módosításokat?</translation>
+        <translation>Save changes?</translation>
     </message>
     <message>
         <source>&quot;%1&quot; was modified.
 Save changes?</source>
-        <translation>A(z) „%1” módosítva lett.
-Menti a módosításokat?</translation>
+        <translation>&quot;%1&quot; was modified.
+Save changes?</translation>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation>Az adatbázis kiírása sikertelen.</translation>
+        <translation>Writing the database failed.</translation>
     </message>
     <message>
         <source>Passwords</source>
-        <translation>Jelszavak</translation>
+        <translation>Passwords</translation>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Adatbázis mentése más néven</translation>
+        <translation>Save database as</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
-        <translation>Adatbázis exportálása CSV-fájlba</translation>
+        <translation>Export database to CSV file</translation>
     </message>
     <message>
         <source>Writing the CSV file failed.</source>
-        <translation>A CSV-fájl mentése sikertelen.</translation>
+        <translation>Writing the CSV file failed.</translation>
     </message>
     <message>
         <source>New database</source>
-        <translation>Új adatbázis</translation>
+        <translation>New database</translation>
     </message>
     <message>
         <source>locked</source>
-        <translation>zárolva</translation>
+        <translation>locked</translation>
     </message>
     <message>
         <source>Lock database</source>
-        <translation>Adatbázis zárolása</translation>
+        <translation>Lock database</translation>
     </message>
     <message>
         <source>Can't lock the database as you are currently editing it.
 Please press cancel to finish your changes or discard them.</source>
-        <translation>Nem lehet zárolni az adatbázist, mivel jelenleg azt szerkeszti.
-Nyomja meg a „Mégse” gombot a módosítások befejezéshez vagy dobja el azokat.</translation>
+        <translation>Can&apos;t lock the database as you are currently editing it.
+Please press cancel to finish your changes or discard them.</translation>
     </message>
     <message>
         <source>This database has been modified.
 Do you want to save the database before locking it?
 Otherwise your changes are lost.</source>
-        <translation>Ez az adatbázis módosítva lett.
-Szeretné elmenteni az adatbázist zárolás előtt?
-Különben a módosítások elvesznek.</translation>
+        <translation>This database has been modified.
+Do you want to save the database before locking it?
+Otherwise your changes are lost.</translation>
     </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
     <message>
         <source>Searching...</source>
-        <translation>Keresés…</translation>
+        <translation>Searching...</translation>
     </message>
     <message>
         <source>Change master key</source>
-        <translation>Mesterkulcs módosítása</translation>
+        <translation>Change master key</translation>
     </message>
     <message>
         <source>Delete entry?</source>
-        <translation>Törli a bejegyzést?</translation>
+        <translation>Delete entry?</translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>Valóban végleg szeretné törölni a bejegyzést: „%1”?</translation>
+        <translation>Do you really want to delete the entry &quot;%1&quot; for good?</translation>
     </message>
     <message>
         <source>Delete entries?</source>
-        <translation>Törli a bejegyzéseket?</translation>
+        <translation>Delete entries?</translation>
     </message>
     <message>
         <source>Do you really want to delete %1 entries for good?</source>
-        <translation>Valóban végleg szeretne törölni %1 bejegyzést?</translation>
+        <translation>Do you really want to delete %1 entries for good?</translation>
     </message>
     <message>
         <source>Move entry to recycle bin?</source>
-        <translation>Kukába dobja a bejegyzést?</translation>
+        <translation>Move entry to recycle bin?</translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
-        <translation>Valóban kukába szeretné dobni a bejegyzést: „%1”?</translation>
+        <translation>Do you really want to move entry &quot;%1&quot; to the recycle bin?</translation>
     </message>
     <message>
         <source>Move entries to recycle bin?</source>
-        <translation>Kukába dobja a bejegyzéseket?</translation>
+        <translation>Move entries to recycle bin?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Do you really want to move %n entry to the recycle bin?</numerusform><numerusform>Do you really want to move %n entries to the recycle bin?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
-        <translation>Végrehajtja a parancsot?</translation>
+        <translation>Execute command?</translation>
     </message>
     <message>
         <source>Do you really want to execute the following command?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</source>
-        <translation>Valóban végrehajtja a következő parancsot? &lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
+        <translation>Do you really want to execute the following command?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
     </message>
     <message>
         <source>Remember my choice</source>
-        <translation>Válasz megjegyzése</translation>
+        <translation>Remember my choice</translation>
     </message>
     <message>
         <source>Delete group?</source>
-        <translation>Törli a csoportot?</translation>
+        <translation>Delete group?</translation>
     </message>
     <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>Valóban végleg szeretné törölni a csoportot: „%1”?</translation>
+        <translation>Do you really want to delete the group &quot;%1&quot; for good?</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Nem lehet kiszámítani a mesterkulcsot</translation>
+        <translation>Unable to calculate master key</translation>
     </message>
     <message>
         <source>No current database.</source>
-        <translation>Nincs aktuális adatbázis.</translation>
+        <translation>No current database.</translation>
     </message>
     <message>
         <source>No source database, nothing to do.</source>
-        <translation>Nincs forrásadatbázis. Nincs további teendő.</translation>
+        <translation>No source database, nothing to do.</translation>
     </message>
     <message>
         <source>Search Results (%1)</source>
-        <translation>Találatok (%1)</translation>
+        <translation>Search Results (%1)</translation>
     </message>
     <message>
         <source>No Results</source>
-        <translation>Nincs találat</translation>
+        <translation>No Results</translation>
     </message>
     <message>
         <source>File has changed</source>
-        <translation type="unfinished"/>
+        <translation>File has changed</translation>
     </message>
     <message>
         <source>The database file has changed. Do you want to load the changes?</source>
-        <translation>Az adatbázisfájl módosult. Betölti a módosításokat? </translation>
+        <translation>The database file has changed. Do you want to load the changes?</translation>
     </message>
     <message>
         <source>Merge Request</source>
-        <translation>Összeolvasztási kérelem</translation>
+        <translation>Merge Request</translation>
     </message>
     <message>
         <source>The database file has changed and you have unsaved changes.
 Do you want to merge your changes?</source>
-        <translation type="unfinished"/>
+        <translation>The database file has changed and you have unsaved changes.
+Do you want to merge your changes?</translation>
     </message>
     <message>
         <source>Could not open the new database file while attempting to autoreload this database.</source>
-        <translation>Nem lehet megnyitni az új adatbázisfájlt ennek az adatbázisnak az automatikus újranyitási kísérlete közben.</translation>
+        <translation>Could not open the new database file while attempting to autoreload this database.</translation>
     </message>
     <message>
         <source>Empty recycle bin?</source>
-        <translation>Kuka ürítése?</translation>
+        <translation>Empty recycle bin?</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
-        <translation>Valóban véglegesen töröl mindent a kukából?</translation>
+        <translation>Are you sure you want to permanently delete everything from your recycle bin?</translation>
     </message>
 </context>
 <context>
     <name>DetailsWidget</name>
     <message>
         <source>Generate TOTP Token</source>
-        <translation type="unfinished"/>
+        <translation>Generate TOTP Token</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Bezárás</translation>
+        <translation>Close</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Általános</translation>
+        <translation>General</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Jelszó</translation>
+        <translation>Password</translation>
     </message>
     <message>
         <source>URL</source>
@@ -1152,216 +1167,216 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Expiration</source>
-        <translation type="unfinished"/>
+        <translation>Expiration</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Felhasználónév</translation>
+        <translation>Username</translation>
     </message>
     <message>
         <source>Autotype</source>
-        <translation type="unfinished"/>
+        <translation>Auto-Type</translation>
     </message>
     <message>
         <source>Searching</source>
-        <translation type="unfinished"/>
+        <translation>Searching</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation type="unfinished"/>
+        <translation>Attributes</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Mellékletek</translation>
+        <translation>Attachments</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Jegyzetek</translation>
+        <translation>Notes</translation>
     </message>
     <message>
         <source>Window</source>
-        <translation>Ablak</translation>
+        <translation>Window</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Sorrend</translation>
+        <translation>Sequence</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Keresés</translation>
+        <translation>Search</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Törlés</translation>
+        <translation>Clear</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Never</translation>
     </message>
     <message>
         <source>[PROTECTED]</source>
-        <translation type="unfinished"/>
+        <translation>[PROTECTED]</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"/>
+        <translation>Disabled</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation type="unfinished"/>
+        <translation>Enabled</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
     <message>
         <source>Entry</source>
-        <translation>Bejegyzés</translation>
+        <translation>Entry</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Speciális</translation>
+        <translation>Advanced</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Ikon</translation>
+        <translation>Icon</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Automatikus beírás</translation>
+        <translation>Auto-Type</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Tulajdonságok</translation>
+        <translation>Properties</translation>
     </message>
     <message>
         <source>History</source>
-        <translation>Előzmények</translation>
+        <translation>History</translation>
     </message>
     <message>
         <source>SSH Agent</source>
-        <translation>SSH ügynök</translation>
+        <translation>SSH Agent</translation>
     </message>
     <message>
         <source>n/a</source>
-        <translation type="unfinished"/>
+        <translation>n/a</translation>
     </message>
     <message>
         <source>(encrypted)</source>
-        <translation type="unfinished"/>
+        <translation>(encrypted)</translation>
     </message>
     <message>
         <source>Select private key</source>
-        <translation type="unfinished"/>
+        <translation>Select private key</translation>
     </message>
     <message>
         <source>File too large to be a private key</source>
-        <translation type="unfinished"/>
+        <translation>File too large to be a private key</translation>
     </message>
     <message>
         <source>Failed to open private key</source>
-        <translation type="unfinished"/>
+        <translation>Failed to open private key</translation>
     </message>
     <message>
         <source>Entry history</source>
-        <translation>Előzmény-bejegyzés</translation>
+        <translation>Entry history</translation>
     </message>
     <message>
         <source>Add entry</source>
-        <translation>Bejegyzés hozzáadása</translation>
+        <translation>Add entry</translation>
     </message>
     <message>
         <source>Edit entry</source>
-        <translation>Bejegyzés szerkesztése</translation>
+        <translation>Edit entry</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Eltérő jelszavak lettek megadva.</translation>
+        <translation>Different passwords supplied.</translation>
     </message>
     <message>
         <source>New attribute</source>
-        <translation>Új attribútum</translation>
+        <translation>New attribute</translation>
     </message>
     <message>
         <source>Confirm Remove</source>
-        <translation>Törlés megerősítése</translation>
+        <translation>Confirm Remove</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this attribute?</source>
-        <translation>Valóban eltávolítja ezt az attribútumot?</translation>
+        <translation>Are you sure you want to remove this attribute?</translation>
     </message>
     <message>
         <source>[PROTECTED]</source>
-        <translation type="unfinished"/>
+        <translation>[PROTECTED]</translation>
     </message>
     <message>
         <source>Press reveal to view or edit</source>
-        <translation type="unfinished"/>
+        <translation>Press reveal to view or edit</translation>
     </message>
     <message>
         <source>Tomorrow</source>
-        <translation>Holnap</translation>
+        <translation>Tomorrow</translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n week</numerusform><numerusform>%n weeks</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n month</numerusform><numerusform>%n months</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
-        <translation>1 év</translation>
+        <translation>1 year</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
     <message>
         <source>Additional attributes</source>
-        <translation>További attribútumok</translation>
+        <translation>Additional attributes</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>Hozzáadás</translation>
+        <translation>Add</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Eltávolítás</translation>
+        <translation>Remove</translation>
     </message>
     <message>
         <source>Edit Name</source>
-        <translation>Név szerkesztése</translation>
+        <translation>Edit Name</translation>
     </message>
     <message>
         <source>Protect</source>
-        <translation>Védelem</translation>
+        <translation>Protect</translation>
     </message>
     <message>
         <source>Reveal</source>
-        <translation>Felfedés</translation>
+        <translation>Reveal</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Mellékletek</translation>
+        <translation>Attachments</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation>Automatikus beírás engedélyezése ennél a bejegyzésnél</translation>
+        <translation>Enable Auto-Type for this entry</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the &amp;group</source>
-        <translation>Az alapértelmezett automatikus beírási sorrend öröklése a cso&amp;porttól</translation>
+        <translation>Inherit default Auto-Type sequence from the &amp;group</translation>
     </message>
     <message>
         <source>&amp;Use custom Auto-Type sequence:</source>
-        <translation>Egyéni automatikus beírási sorrend használata:</translation>
+        <translation>&amp;Use custom Auto-Type sequence:</translation>
     </message>
     <message>
         <source>Window Associations</source>
-        <translation>Ablaktársítások</translation>
+        <translation>Window Associations</translation>
     </message>
     <message>
         <source>+</source>
@@ -1369,38 +1384,38 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>-</source>
-        <translation>−</translation>
+        <translation>-</translation>
     </message>
     <message>
         <source>Window title:</source>
-        <translation>Ablakcím:</translation>
+        <translation>Window title:</translation>
     </message>
     <message>
         <source>Use default se&amp;quence</source>
-        <translation>&amp;Alapértelmezett sorrend használata</translation>
+        <translation>Use default se&amp;quence</translation>
     </message>
     <message>
         <source>Set custo&amp;m sequence:</source>
-        <translation>&amp;Egyéni sorrend használata:</translation>
+        <translation>Set custo&amp;m sequence:</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
     <message>
         <source>Show</source>
-        <translation>Megjelenítés</translation>
+        <translation>Show</translation>
     </message>
     <message>
         <source>Restore</source>
-        <translation>Visszaállítás</translation>
+        <translation>Restore</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Törlés</translation>
+        <translation>Delete</translation>
     </message>
     <message>
         <source>Delete all</source>
-        <translation>Összes törlése</translation>
+        <translation>Delete all</translation>
     </message>
 </context>
 <context>
@@ -1411,255 +1426,255 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Jelszó:</translation>
+        <translation>Password:</translation>
     </message>
     <message>
         <source>Repeat:</source>
-        <translation>Ismétlés:</translation>
+        <translation>Repeat:</translation>
     </message>
     <message>
         <source>Title:</source>
-        <translation>Cím:</translation>
+        <translation>Title:</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Jegyzetek</translation>
+        <translation>Notes</translation>
     </message>
     <message>
         <source>Presets</source>
-        <translation>Előbeállítások</translation>
+        <translation>Presets</translation>
     </message>
     <message>
         <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation type="unfinished"/>
+        <translation>Toggle the checkbox to reveal the notes section.</translation>
     </message>
     <message>
         <source>Username:</source>
-        <translation>Felhasználónév:</translation>
+        <translation>Username:</translation>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Lejárat</translation>
+        <translation>Expires</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetSSHAgent</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Remove key from agent after</source>
-        <translation type="unfinished"/>
+        <translation>Remove key from agent after</translation>
     </message>
     <message>
         <source> seconds</source>
-        <translation type="unfinished"/>
+        <translation> seconds</translation>
     </message>
     <message>
         <source>Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>Fingerprint</translation>
     </message>
     <message>
         <source>Remove key from agent when database is closed/locked</source>
-        <translation type="unfinished"/>
+        <translation>Remove key from agent when database is closed/locked</translation>
     </message>
     <message>
         <source>Public key</source>
-        <translation type="unfinished"/>
+        <translation>Public key</translation>
     </message>
     <message>
         <source>Add key to agent when database is opened/unlocked</source>
-        <translation type="unfinished"/>
+        <translation>Add key to agent when database is opened/unlocked</translation>
     </message>
     <message>
         <source>Comment</source>
-        <translation type="unfinished"/>
+        <translation>Comment</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation type="unfinished"/>
+        <translation>Decrypt</translation>
     </message>
     <message>
         <source>n/a</source>
-        <translation type="unfinished"/>
+        <translation>n/a</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>Vágólapra másolás</translation>
+        <translation>Copy to clipboard</translation>
     </message>
     <message>
         <source>Private key</source>
-        <translation type="unfinished"/>
+        <translation>Private key</translation>
     </message>
     <message>
         <source>External file</source>
-        <translation type="unfinished"/>
+        <translation>External file</translation>
     </message>
     <message>
         <source>Browse...</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation type="unfinished"/>
+        <translation>Browse...</translation>
     </message>
     <message>
         <source>Attachment</source>
-        <translation type="unfinished"/>
+        <translation>Attachment</translation>
     </message>
     <message>
         <source>Add to agent</source>
-        <translation type="unfinished"/>
+        <translation>Add to agent</translation>
     </message>
     <message>
         <source>Remove from agent</source>
-        <translation type="unfinished"/>
+        <translation>Remove from agent</translation>
     </message>
     <message>
         <source>Require user confirmation when this key is used</source>
-        <translation type="unfinished"/>
+        <translation>Require user confirmation when this key is used</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidget</name>
     <message>
         <source>Group</source>
-        <translation>Csoport</translation>
+        <translation>Group</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Ikon</translation>
+        <translation>Icon</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Tulajdonságok</translation>
+        <translation>Properties</translation>
     </message>
     <message>
         <source>Add group</source>
-        <translation>Csoport hozzáadása</translation>
+        <translation>Add group</translation>
     </message>
     <message>
         <source>Edit group</source>
-        <translation>Csoport szerkesztése</translation>
+        <translation>Edit group</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation>Engedélyezés</translation>
+        <translation>Enable</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Letiltás</translation>
+        <translation>Disable</translation>
     </message>
     <message>
         <source>Inherit from parent group (%1)</source>
-        <translation>Öröklés a szülőcsoporttól (%1)</translation>
+        <translation>Inherit from parent group (%1)</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
     <message>
         <source>Name</source>
-        <translation>Név</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Jegyzetek</translation>
+        <translation>Notes</translation>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Lejárat</translation>
+        <translation>Expires</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Keresés</translation>
+        <translation>Search</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Automatikus beírás</translation>
+        <translation>Auto-Type</translation>
     </message>
     <message>
         <source>&amp;Use default Auto-Type sequence of parent group</source>
-        <translation>A szülőcsoport automatikus beírási sorrendjének &amp;használata</translation>
+        <translation>&amp;Use default Auto-Type sequence of parent group</translation>
     </message>
     <message>
         <source>Set default Auto-Type se&amp;quence</source>
-        <translation>&amp;Egyéni automatikus beírási sorrend beállítása</translation>
+        <translation>Set default Auto-Type se&amp;quence</translation>
     </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
     <message>
         <source>&amp;Use default icon</source>
-        <translation>Alapértelmezett &amp;ikon használata</translation>
+        <translation>&amp;Use default icon</translation>
     </message>
     <message>
         <source>Use custo&amp;m icon</source>
-        <translation>&amp;Egyéni ikon használata</translation>
+        <translation>Use custo&amp;m icon</translation>
     </message>
     <message>
         <source>Add custom icon</source>
-        <translation>Egyéni ikon hozzáadása</translation>
+        <translation>Add custom icon</translation>
     </message>
     <message>
         <source>Delete custom icon</source>
-        <translation>Egyéni ikon törlése</translation>
+        <translation>Delete custom icon</translation>
     </message>
     <message>
         <source>Download favicon</source>
-        <translation>Favicon letöltése</translation>
+        <translation>Download favicon</translation>
     </message>
     <message>
         <source>Unable to fetch favicon.</source>
-        <translation>A favicon letöltése sikertelen.</translation>
+        <translation>Unable to fetch favicon.</translation>
     </message>
     <message>
         <source>Hint: You can enable Google as a fallback under Tools&gt;Settings&gt;Security</source>
-        <translation>Tipp: A Google-t tartalékként az Eszközök&gt;Beállítások&gt;Biztonság menüpontban engedélyezheti</translation>
+        <translation>Hint: You can enable Google as a fallback under Tools&gt;Settings&gt;Security</translation>
     </message>
     <message>
         <source>Images</source>
-        <translation>Képek</translation>
+        <translation>Images</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Minden fájl</translation>
+        <translation>All files</translation>
     </message>
     <message>
         <source>Select Image</source>
-        <translation>Kép kiválasztása</translation>
+        <translation>Select Image</translation>
     </message>
     <message>
         <source>Can&apos;t read icon</source>
-        <translation>Az ikon nem olvasható</translation>
+        <translation>Can&apos;t read icon</translation>
     </message>
     <message>
         <source>Custom icon already exists</source>
-        <translation>Az egyéni ikon már létezik</translation>
+        <translation>Custom icon already exists</translation>
     </message>
     <message>
         <source>Confirm Delete</source>
-        <translation>Törlés megerősítése</translation>
+        <translation>Confirm Delete</translation>
     </message>
     <message>
         <source>This icon is used by %1 entries, and will be replaced by the default icon. Are you sure you want to delete it?</source>
-        <translation>Ezt az ikont %1 elem használja, és le lesz cserélve az alapértelmezett ikonra. Valóban törli?</translation>
+        <translation>This icon is used by %1 entries, and will be replaced by the default icon. Are you sure you want to delete it?</translation>
     </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
     <message>
         <source>Created:</source>
-        <translation>Létrehozva:</translation>
+        <translation>Created:</translation>
     </message>
     <message>
         <source>Modified:</source>
-        <translation>Módosítva:</translation>
+        <translation>Modified:</translation>
     </message>
     <message>
         <source>Accessed:</source>
-        <translation>Elérve:</translation>
+        <translation>Accessed:</translation>
     </message>
     <message>
         <source>Uuid:</source>
-        <translation>Uuid:</translation>
+        <translation>UUID:</translation>
     </message>
 </context>
 <context>
@@ -1667,112 +1682,117 @@ Do you want to merge your changes?</source>
     <message>
         <source> - Clone</source>
         <comment>Suffix added to cloned entries</comment>
-        <translation> - klón</translation>
+        <translation> - Clone</translation>
     </message>
 </context>
 <context>
     <name>EntryAttachmentsModel</name>
     <message>
         <source>Name</source>
-        <translation>Név</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>Size</translation>
     </message>
 </context>
 <context>
     <name>EntryAttachmentsWidget</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>Hozzáadás</translation>
+        <translation>Add</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Eltávolítás</translation>
+        <translation>Remove</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Megnyitás</translation>
+        <translation>Open</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Mentés</translation>
+        <translation>Save</translation>
     </message>
     <message>
         <source>Select files</source>
-        <translation type="unfinished"/>
+        <translation>Select files</translation>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Are you sure you want to remove %n attachment?</numerusform><numerusform>Are you sure you want to remove %n attachments?</numerusform></translation>
     </message>
     <message>
         <source>Confirm Remove</source>
-        <translation>Törlés megerősítése</translation>
+        <translation>Confirm Remove</translation>
     </message>
     <message>
         <source>Save attachments</source>
-        <translation type="unfinished"/>
+        <translation>Save attachments</translation>
     </message>
     <message>
         <source>Unable to create directory:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Unable to create directory:
+%1</translation>
     </message>
     <message>
         <source>Are you sure you want to overwrite the existing file &quot;%1&quot; with the attachment?</source>
-        <translation type="unfinished"/>
+        <translation>Are you sure you want to overwrite the existing file &quot;%1&quot; with the attachment?</translation>
     </message>
     <message>
         <source>Confirm overwrite</source>
-        <translation type="unfinished"/>
+        <translation>Confirm overwrite</translation>
     </message>
     <message>
         <source>Unable to save attachments:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Unable to save attachments:
+%1</translation>
     </message>
     <message>
         <source>Unable to open attachment:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Unable to open attachment:
+%1</translation>
     </message>
     <message>
         <source>Unable to open attachments:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Unable to open attachments:
+%1</translation>
     </message>
     <message>
         <source>Unable to open files:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Unable to open files:
+%1</translation>
     </message>
 </context>
 <context>
     <name>EntryAttributesModel</name>
     <message>
         <source>Name</source>
-        <translation>Név</translation>
+        <translation>Name</translation>
     </message>
 </context>
 <context>
     <name>EntryHistoryModel</name>
     <message>
         <source>Last modified</source>
-        <translation>Legutóbb módosítva</translation>
+        <translation>Last modified</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Cím</translation>
+        <translation>Title</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Felhasználónév</translation>
+        <translation>Username</translation>
     </message>
     <message>
         <source>URL</source>
@@ -1784,19 +1804,19 @@ Do you want to merge your changes?</source>
     <message>
         <source>Ref: </source>
         <comment>Reference abbreviation</comment>
-        <translation>Hivatkozás:</translation>
+        <translation>Ref: </translation>
     </message>
     <message>
         <source>Group</source>
-        <translation>Csoport</translation>
+        <translation>Group</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Cím</translation>
+        <translation>Title</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Felhasználónév</translation>
+        <translation>Username</translation>
     </message>
     <message>
         <source>URL</source>
@@ -1807,33 +1827,33 @@ Do you want to merge your changes?</source>
     <name>Group</name>
     <message>
         <source>Recycle Bin</source>
-        <translation>Kuka</translation>
+        <translation>Recycle Bin</translation>
     </message>
 </context>
 <context>
     <name>HostInstaller</name>
     <message>
         <source>KeePassXC: Cannot save file!</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Cannot save file!</translation>
     </message>
     <message>
         <source>Cannot save the native messaging script file.</source>
-        <translation type="unfinished"/>
+        <translation>Cannot save the native messaging script file.</translation>
     </message>
 </context>
 <context>
     <name>HttpPasswordGeneratorWidget</name>
     <message>
         <source>Length:</source>
-        <translation>Hosszúság:</translation>
+        <translation>Length:</translation>
     </message>
     <message>
         <source>Character Types</source>
-        <translation>Karaktertípusok</translation>
+        <translation>Character Types</translation>
     </message>
     <message>
         <source>Upper Case Letters</source>
-        <translation>Nagybetűk</translation>
+        <translation>Upper Case Letters</translation>
     </message>
     <message>
         <source>A-Z</source>
@@ -1841,7 +1861,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Lower Case Letters</source>
-        <translation>Kisbetűk</translation>
+        <translation>Lower Case Letters</translation>
     </message>
     <message>
         <source>a-z</source>
@@ -1849,7 +1869,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Numbers</source>
-        <translation>Számok</translation>
+        <translation>Numbers</translation>
     </message>
     <message>
         <source>0-9</source>
@@ -1857,7 +1877,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Special Characters</source>
-        <translation>Speciális karakterek</translation>
+        <translation>Special Characters</translation>
     </message>
     <message>
         <source>/*_&amp; ...</source>
@@ -1865,722 +1885,722 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
-        <translation>Hasonlóan kinéző karakterek kizárása</translation>
+        <translation>Exclude look-alike characters</translation>
     </message>
     <message>
         <source>Ensure that the password contains characters from every group</source>
-        <translation>Legyen a jelszóban minden csoportból karakter</translation>
+        <translation>Ensure that the password contains characters from every group</translation>
     </message>
 </context>
 <context>
     <name>KMessageWidget</name>
     <message>
         <source>&amp;Close</source>
-        <translation>&amp;Bezárás</translation>
+        <translation>&amp;Close</translation>
     </message>
     <message>
         <source>Close message</source>
-        <translation>Bezárási üzenet</translation>
+        <translation>Close message</translation>
     </message>
 </context>
 <context>
     <name>Kdbx3Reader</name>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Nem lehet kiszámítani a mesterkulcsot</translation>
+        <translation>Unable to calculate master key</translation>
     </message>
     <message>
         <source>Unable to issue challenge-response.</source>
-        <translation>Nem lehet kiutalni a kihívás-választ.</translation>
+        <translation>Unable to issue challenge-response.</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
-        <translation>Rossz kulcs vagy sérült adatbázisfájl.</translation>
+        <translation>Wrong key or database file is corrupt.</translation>
     </message>
 </context>
 <context>
     <name>Kdbx3Writer</name>
     <message>
         <source>Unable to issue challenge-response.</source>
-        <translation>Nem lehet kiutalni a kihívás-választ.</translation>
+        <translation>Unable to issue challenge-response.</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Nem lehet kiszámítani a mesterkulcsot</translation>
+        <translation>Unable to calculate master key</translation>
     </message>
 </context>
 <context>
     <name>Kdbx4Reader</name>
     <message>
         <source>missing database headers</source>
-        <translation type="unfinished"/>
+        <translation>missing database headers</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Nem lehet kiszámítani a mesterkulcsot</translation>
+        <translation>Unable to calculate master key</translation>
     </message>
     <message>
         <source>Invalid header checksum size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid header checksum size</translation>
     </message>
     <message>
         <source>Header SHA256 mismatch</source>
-        <translation type="unfinished"/>
+        <translation>Header SHA256 mismatch</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt. (HMAC mismatch)</source>
-        <translation type="unfinished"/>
+        <translation>Wrong key or database file is corrupt. (HMAC mismatch)</translation>
     </message>
     <message>
         <source>Unknown cipher</source>
-        <translation type="unfinished"/>
+        <translation>Unknown cipher</translation>
     </message>
     <message>
         <source>Invalid header id size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid header id size</translation>
     </message>
     <message>
         <source>Invalid header field length</source>
-        <translation type="unfinished"/>
+        <translation>Invalid header field length</translation>
     </message>
     <message>
         <source>Invalid header data length</source>
-        <translation type="unfinished"/>
+        <translation>Invalid header data length</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
-        <translation type="unfinished"/>
+        <translation>Failed to open buffer for KDF parameters in header</translation>
     </message>
     <message>
         <source>Unsupported key derivation function (KDF) or invalid parameters</source>
-        <translation type="unfinished"/>
+        <translation>Unsupported key derivation function (KDF) or invalid parameters</translation>
     </message>
     <message>
         <source>Legacy header fields found in KDBX4 file.</source>
-        <translation type="unfinished"/>
+        <translation>Legacy header fields found in KDBX4 file.</translation>
     </message>
     <message>
         <source>Invalid inner header id size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid inner header id size</translation>
     </message>
     <message>
         <source>Invalid inner header field length</source>
-        <translation type="unfinished"/>
+        <translation>Invalid inner header field length</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid inner header binary size</translation>
     </message>
     <message>
         <source>Unsupported KeePass variant map version.</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Unsupported KeePass variant map version.</translation>
     </message>
     <message>
         <source>Invalid variant map entry name length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Invalid variant map entry name length</translation>
     </message>
     <message>
         <source>Invalid variant map entry name data</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Invalid variant map entry name data</translation>
     </message>
     <message>
         <source>Invalid variant map entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Invalid variant map entry value length</translation>
     </message>
     <message>
         <source>Invalid variant map entry value data</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Invalid variant map entry value data</translation>
     </message>
     <message>
         <source>Invalid variant map Bool entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Invalid variant map Bool entry value length</translation>
     </message>
     <message>
         <source>Invalid variant map Int32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Invalid variant map Int32 entry value length</translation>
     </message>
     <message>
         <source>Invalid variant map UInt32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Invalid variant map UInt32 entry value length</translation>
     </message>
     <message>
         <source>Invalid variant map Int64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Invalid variant map Int64 entry value length</translation>
     </message>
     <message>
         <source>Invalid variant map UInt64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Invalid variant map UInt64 entry value length</translation>
     </message>
     <message>
         <source>Invalid variant map entry type</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Invalid variant map entry type</translation>
     </message>
     <message>
         <source>Invalid variant map field type size</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Invalid variant map field type size</translation>
     </message>
 </context>
 <context>
     <name>Kdbx4Writer</name>
     <message>
         <source>Invalid symmetric cipher algorithm.</source>
-        <translation type="unfinished"/>
+        <translation>Invalid symmetric cipher algorithm.</translation>
     </message>
     <message>
         <source>Invalid symmetric cipher IV size.</source>
         <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation type="unfinished"/>
+        <translation>Invalid symmetric cipher IV size.</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Nem lehet kiszámítani a mesterkulcsot</translation>
+        <translation>Unable to calculate master key</translation>
     </message>
     <message>
         <source>Failed to serialize KDF parameters variant map</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Failed to serialize KDF parameters variant map</translation>
     </message>
 </context>
 <context>
     <name>KdbxReader</name>
     <message>
         <source>Invalid cipher uuid length</source>
-        <translation type="unfinished"/>
+        <translation>Invalid cipher UUID length</translation>
     </message>
     <message>
         <source>Unsupported cipher</source>
-        <translation type="unfinished"/>
+        <translation>Unsupported cipher</translation>
     </message>
     <message>
         <source>Invalid compression flags length</source>
-        <translation type="unfinished"/>
+        <translation>Invalid compression flags length</translation>
     </message>
     <message>
         <source>Unsupported compression algorithm</source>
-        <translation type="unfinished"/>
+        <translation>Unsupported compression algorithm</translation>
     </message>
     <message>
         <source>Invalid master seed size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid master seed size</translation>
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid transform seed size</translation>
     </message>
     <message>
         <source>Invalid transform rounds size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid transform rounds size</translation>
     </message>
     <message>
         <source>Invalid start bytes size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid start bytes size</translation>
     </message>
     <message>
         <source>Invalid random stream id size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid random stream id size</translation>
     </message>
     <message>
         <source>Invalid inner random stream cipher</source>
-        <translation type="unfinished"/>
+        <translation>Invalid inner random stream cipher</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Nem KeePass adatbázis.</translation>
+        <translation>Not a KeePass database.</translation>
     </message>
     <message>
         <source>The selected file is an old KeePass 1 database (.kdb).
 
 You can import it by clicking on Database &gt; 'Import KeePass 1 database...'.
 This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
-        <translation>A kijelölt fájl egy régi KeePass 1 adatbázis (.kdb).
+        <translation>The selected file is an old KeePass 1 database (.kdb).
 
-Be lehet importálni az Adatbázis &gt; „KeePass 1 adatbázis importálása…” menüpontban.
-Ez egyirányú migráció. Nem lehet majd megnyitni az importált adatbázist a régi KeePassX 0.4 verzióval.</translation>
+You can import it by clicking on Database &gt; &apos;Import KeePass 1 database...&apos;.
+This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</translation>
     </message>
     <message>
         <source>Unsupported KeePass 2 database version.</source>
-        <translation type="unfinished"/>
+        <translation>Unsupported KeePass 2 database version.</translation>
     </message>
 </context>
 <context>
     <name>KdbxXmlReader</name>
     <message>
         <source>XML parsing failure: %1</source>
-        <translation type="unfinished"/>
+        <translation>XML parsing failure: %1</translation>
     </message>
     <message>
         <source>No root group</source>
-        <translation type="unfinished"/>
+        <translation>No root group</translation>
     </message>
     <message>
         <source>Missing icon uuid or data</source>
-        <translation type="unfinished"/>
+        <translation>Missing icon UUID or data</translation>
     </message>
     <message>
         <source>Missing custom data key or value</source>
-        <translation type="unfinished"/>
+        <translation>Missing custom data key or value</translation>
     </message>
     <message>
         <source>Multiple group elements</source>
-        <translation type="unfinished"/>
+        <translation>Multiple group elements</translation>
     </message>
     <message>
         <source>Null group uuid</source>
-        <translation type="unfinished"/>
+        <translation>Null group UUID</translation>
     </message>
     <message>
         <source>Invalid group icon number</source>
-        <translation type="unfinished"/>
+        <translation>Invalid group icon number</translation>
     </message>
     <message>
         <source>Invalid EnableAutoType value</source>
-        <translation type="unfinished"/>
+        <translation>Invalid EnableAutoType value</translation>
     </message>
     <message>
         <source>Invalid EnableSearching value</source>
-        <translation type="unfinished"/>
+        <translation>Invalid EnableSearching value</translation>
     </message>
     <message>
         <source>No group uuid found</source>
-        <translation type="unfinished"/>
+        <translation>No group UUID found</translation>
     </message>
     <message>
         <source>Null DeleteObject uuid</source>
-        <translation type="unfinished"/>
+        <translation>Null DeleteObject UUID</translation>
     </message>
     <message>
         <source>Missing DeletedObject uuid or time</source>
-        <translation type="unfinished"/>
+        <translation>Missing DeletedObject UUID or time</translation>
     </message>
     <message>
         <source>Null entry uuid</source>
-        <translation type="unfinished"/>
+        <translation>Null entry UUID</translation>
     </message>
     <message>
         <source>Invalid entry icon number</source>
-        <translation type="unfinished"/>
+        <translation>Invalid entry icon number</translation>
     </message>
     <message>
         <source>History element in history entry</source>
-        <translation type="unfinished"/>
+        <translation>History element in history entry</translation>
     </message>
     <message>
         <source>No entry uuid found</source>
-        <translation type="unfinished"/>
+        <translation>No entry UUID found</translation>
     </message>
     <message>
         <source>History element with different uuid</source>
-        <translation type="unfinished"/>
+        <translation>History element with different UUID</translation>
     </message>
     <message>
         <source>Unable to decrypt entry string</source>
-        <translation type="unfinished"/>
+        <translation>Unable to decrypt entry string</translation>
     </message>
     <message>
         <source>Duplicate custom attribute found</source>
-        <translation type="unfinished"/>
+        <translation>Duplicate custom attribute found</translation>
     </message>
     <message>
         <source>Entry string key or value missing</source>
-        <translation type="unfinished"/>
+        <translation>Entry string key or value missing</translation>
     </message>
     <message>
         <source>Duplicate attachment found</source>
-        <translation type="unfinished"/>
+        <translation>Duplicate attachment found</translation>
     </message>
     <message>
         <source>Entry binary key or value missing</source>
-        <translation type="unfinished"/>
+        <translation>Entry binary key or value missing</translation>
     </message>
     <message>
         <source>Auto-type association window or sequence missing</source>
-        <translation type="unfinished"/>
+        <translation>Auto-Type association window or sequence missing</translation>
     </message>
     <message>
         <source>Invalid bool value</source>
-        <translation type="unfinished"/>
+        <translation>Invalid bool value</translation>
     </message>
     <message>
         <source>Invalid date time value</source>
-        <translation type="unfinished"/>
+        <translation>Invalid date time value</translation>
     </message>
     <message>
         <source>Invalid color value</source>
-        <translation type="unfinished"/>
+        <translation>Invalid color value</translation>
     </message>
     <message>
         <source>Invalid color rgb part</source>
-        <translation type="unfinished"/>
+        <translation>Invalid color rgb part</translation>
     </message>
     <message>
         <source>Invalid number value</source>
-        <translation type="unfinished"/>
+        <translation>Invalid number value</translation>
     </message>
     <message>
         <source>Invalid uuid value</source>
-        <translation type="unfinished"/>
+        <translation>Invalid UUID value</translation>
     </message>
     <message>
         <source>Unable to decompress binary</source>
         <extracomment>Translator meant is a binary data inside an entry</extracomment>
-        <translation type="unfinished"/>
+        <translation>Unable to decompress binary</translation>
     </message>
 </context>
 <context>
     <name>KeePass1OpenWidget</name>
     <message>
         <source>Import KeePass1 database</source>
-        <translation>KeePass1 adatbázis importálása</translation>
+        <translation>Import KeePass1 database</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Nem lehet megnyitni az adatbázist.</translation>
+        <translation>Unable to open the database.</translation>
     </message>
 </context>
 <context>
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
-        <translation>A kulcsfájl nem olvasható.</translation>
+        <translation>Unable to read keyfile.</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Nem KeePass adatbázis.</translation>
+        <translation>Not a KeePass database.</translation>
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
-        <translation>Nem támogatott titkosítási algoritmus.</translation>
+        <translation>Unsupported encryption algorithm.</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>Nem támogatott KeePass adatbázis-verzió.</translation>
+        <translation>Unsupported KeePass database version.</translation>
     </message>
     <message>
         <source>Unable to read encryption IV</source>
         <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation type="unfinished"/>
+        <translation>Unable to read encryption IV</translation>
     </message>
     <message>
         <source>Invalid number of groups</source>
-        <translation type="unfinished"/>
+        <translation>Invalid number of groups</translation>
     </message>
     <message>
         <source>Invalid number of entries</source>
-        <translation type="unfinished"/>
+        <translation>Invalid number of entries</translation>
     </message>
     <message>
         <source>Invalid content hash size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid content hash size</translation>
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid transform seed size</translation>
     </message>
     <message>
         <source>Invalid number of transform rounds</source>
-        <translation type="unfinished"/>
+        <translation>Invalid number of transform rounds</translation>
     </message>
     <message>
         <source>Unable to construct group tree</source>
-        <translation type="unfinished"/>
+        <translation>Unable to construct group tree</translation>
     </message>
     <message>
         <source>Root</source>
-        <translation>Gyökér</translation>
+        <translation>Root</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Nem lehet kiszámítani a mesterkulcsot</translation>
+        <translation>Unable to calculate master key</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
-        <translation>Rossz kulcs vagy sérült adatbázisfájl.</translation>
+        <translation>Wrong key or database file is corrupt.</translation>
     </message>
     <message>
         <source>Key transformation failed</source>
-        <translation type="unfinished"/>
+        <translation>Key transformation failed</translation>
     </message>
     <message>
         <source>Invalid group field type number</source>
-        <translation type="unfinished"/>
+        <translation>Invalid group field type number</translation>
     </message>
     <message>
         <source>Invalid group field size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid group field size</translation>
     </message>
     <message>
         <source>Read group field data doesn&apos;t match size</source>
-        <translation type="unfinished"/>
+        <translation>Read group field data doesn&apos;t match size</translation>
     </message>
     <message>
         <source>Incorrect group id field size</source>
-        <translation type="unfinished"/>
+        <translation>Incorrect group id field size</translation>
     </message>
     <message>
         <source>Incorrect group creation time field size</source>
-        <translation type="unfinished"/>
+        <translation>Incorrect group creation time field size</translation>
     </message>
     <message>
         <source>Incorrect group modification time field size</source>
-        <translation type="unfinished"/>
+        <translation>Incorrect group modification time field size</translation>
     </message>
     <message>
         <source>Incorrect group access time field size</source>
-        <translation type="unfinished"/>
+        <translation>Incorrect group access time field size</translation>
     </message>
     <message>
         <source>Incorrect group expiry time field size</source>
-        <translation type="unfinished"/>
+        <translation>Incorrect group expiry time field size</translation>
     </message>
     <message>
         <source>Incorrect group icon field size</source>
-        <translation type="unfinished"/>
+        <translation>Incorrect group icon field size</translation>
     </message>
     <message>
         <source>Incorrect group level field size</source>
-        <translation type="unfinished"/>
+        <translation>Incorrect group level field size</translation>
     </message>
     <message>
         <source>Invalid group field type</source>
-        <translation type="unfinished"/>
+        <translation>Invalid group field type</translation>
     </message>
     <message>
         <source>Missing group id or level</source>
-        <translation type="unfinished"/>
+        <translation>Missing group id or level</translation>
     </message>
     <message>
         <source>Missing entry field type number</source>
-        <translation type="unfinished"/>
+        <translation>Missing entry field type number</translation>
     </message>
     <message>
         <source>Invalid entry field size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid entry field size</translation>
     </message>
     <message>
         <source>Read entry field data doesn&apos;t match size</source>
-        <translation type="unfinished"/>
+        <translation>Read entry field data doesn&apos;t match size</translation>
     </message>
     <message>
         <source>Invalid entry uuid field size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid entry uuid field size</translation>
     </message>
     <message>
         <source>Invalid entry group id field size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid entry group id field size</translation>
     </message>
     <message>
         <source>Invalid entry icon field size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid entry icon field size</translation>
     </message>
     <message>
         <source>Invalid entry creation time field size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid entry creation time field size</translation>
     </message>
     <message>
         <source>Invalid entry modification time field size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid entry modification time field size</translation>
     </message>
     <message>
         <source>Invalid entry expiry time field size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid entry expiry time field size</translation>
     </message>
     <message>
         <source>Invalid entry field type</source>
-        <translation type="unfinished"/>
+        <translation>Invalid entry field type</translation>
     </message>
 </context>
 <context>
     <name>Main</name>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
-        <translation>A meglévő egypéldányos zárolási fájl érvénytelen. Új példány indítása.</translation>
+        <translation>Existing single-instance lock file is invalid. Launching new instance.</translation>
     </message>
     <message>
         <source>The lock file could not be created. Single-instance mode disabled.</source>
-        <translation>A zárolási fájlt nem lehet létrehozni. Egyedi példány mód letiltva.</translation>
+        <translation>The lock file could not be created. Single-instance mode disabled.</translation>
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
-        <translation>A KeePassXC egy másik példánya is fut.</translation>
+        <translation>Another instance of KeePassXC is already running.</translation>
     </message>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
-        <translation>Végzetes hiba a kriptográfiai funkciók tesztelése közben.</translation>
+        <translation>Fatal error while testing the cryptographic functions.</translation>
     </message>
     <message>
         <source>KeePassXC - Error</source>
-        <translation>KeePassXC – Hiba</translation>
+        <translation>KeePassXC - Error</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>&amp;Database</source>
-        <translation>&amp;Adatbázis</translation>
+        <translation>&amp;Database</translation>
     </message>
     <message>
         <source>&amp;Recent databases</source>
-        <translation>&amp;Friss adatbázisok</translation>
+        <translation>&amp;Recent databases</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation>Importálás</translation>
+        <translation>Import</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>&amp;Súgó</translation>
+        <translation>&amp;Help</translation>
     </message>
     <message>
         <source>E&amp;ntries</source>
-        <translation>Be&amp;jegyzések</translation>
+        <translation>E&amp;ntries</translation>
     </message>
     <message>
         <source>Copy att&amp;ribute to clipboard</source>
-        <translation>&amp;Attribútum másolása a vágólapra</translation>
+        <translation>Copy att&amp;ribute to clipboard</translation>
     </message>
     <message>
         <source>Time-based one-time password</source>
-        <translation type="unfinished"/>
+        <translation>Time-based one-time password</translation>
     </message>
     <message>
         <source>&amp;Groups</source>
-        <translation>Cso&amp;portok</translation>
+        <translation>&amp;Groups</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation>&amp;Eszközök</translation>
+        <translation>&amp;Tools</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation>&amp;Kilépés</translation>
+        <translation>&amp;Quit</translation>
     </message>
     <message>
         <source>&amp;About</source>
-        <translation>&amp;Névjegy</translation>
+        <translation>&amp;About</translation>
     </message>
     <message>
         <source>&amp;Open database...</source>
-        <translation>&amp;Adatbázis megnyitása…</translation>
+        <translation>&amp;Open database...</translation>
     </message>
     <message>
         <source>&amp;Save database</source>
-        <translation>Adatbázis &amp;mentése</translation>
+        <translation>&amp;Save database</translation>
     </message>
     <message>
         <source>&amp;Close database</source>
-        <translation>Adatbázis &amp;bezárása</translation>
+        <translation>&amp;Close database</translation>
     </message>
     <message>
         <source>&amp;New database</source>
-        <translation>Ú&amp;j adatbázis</translation>
+        <translation>&amp;New database</translation>
     </message>
     <message>
         <source>Merge from KeePassX database</source>
-        <translation>Összeolvasztás KeePassX adatbázisból</translation>
+        <translation>Merge from KeePassX database</translation>
     </message>
     <message>
         <source>&amp;Add new entry</source>
-        <translation>Új bejegyzés &amp;hozzáadása</translation>
+        <translation>&amp;Add new entry</translation>
     </message>
     <message>
         <source>&amp;View/Edit entry</source>
-        <translation>Bejegyzés &amp;megtekintése/szerkesztése</translation>
+        <translation>&amp;View/Edit entry</translation>
     </message>
     <message>
         <source>&amp;Delete entry</source>
-        <translation>Bejegyzés &amp;törlése</translation>
+        <translation>&amp;Delete entry</translation>
     </message>
     <message>
         <source>&amp;Add new group</source>
-        <translation>Új cso&amp;port hozzáadása</translation>
+        <translation>&amp;Add new group</translation>
     </message>
     <message>
         <source>&amp;Edit group</source>
-        <translation>Csoport sz&amp;erkesztése</translation>
+        <translation>&amp;Edit group</translation>
     </message>
     <message>
         <source>&amp;Delete group</source>
-        <translation>Csoport &amp;törlése</translation>
+        <translation>&amp;Delete group</translation>
     </message>
     <message>
         <source>Sa&amp;ve database as...</source>
-        <translation>Adatbázis mentése más &amp;néven…</translation>
+        <translation>Sa&amp;ve database as...</translation>
     </message>
     <message>
         <source>Change &amp;master key...</source>
-        <translation>&amp;Mesterkulcs módosítása…</translation>
+        <translation>Change &amp;master key...</translation>
     </message>
     <message>
         <source>&amp;Database settings</source>
-        <translation>Adatbázis-&amp;beállítások</translation>
+        <translation>&amp;Database settings</translation>
     </message>
     <message>
         <source>Database settings</source>
-        <translation>Adatbázis-beállítások</translation>
+        <translation>Database settings</translation>
     </message>
     <message>
         <source>&amp;Clone entry</source>
-        <translation>Bejegyzés &amp;klónozása</translation>
+        <translation>&amp;Clone entry</translation>
     </message>
     <message>
         <source>&amp;Find</source>
-        <translation>&amp;Keresés</translation>
+        <translation>&amp;Find</translation>
     </message>
     <message>
         <source>Copy &amp;username</source>
-        <translation>&amp;Felhasználónév másolása</translation>
+        <translation>Copy &amp;username</translation>
     </message>
     <message>
         <source>Copy username to clipboard</source>
-        <translation>Felhasználónév másolása a vágólapra</translation>
+        <translation>Copy username to clipboard</translation>
     </message>
     <message>
         <source>Cop&amp;y password</source>
-        <translation>&amp;Jelszó másolása</translation>
+        <translation>Cop&amp;y password</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
-        <translation>Jelszó másolása a vágólapra</translation>
+        <translation>Copy password to clipboard</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
-        <translation>&amp;Beállítások</translation>
+        <translation>&amp;Settings</translation>
     </message>
     <message>
         <source>Password Generator</source>
-        <translation>Jelszógenerátor</translation>
+        <translation>Password Generator</translation>
     </message>
     <message>
         <source>&amp;Perform Auto-Type</source>
-        <translation>&amp;Automatikus beírás</translation>
+        <translation>&amp;Perform Auto-Type</translation>
     </message>
     <message>
         <source>&amp;Open URL</source>
-        <translation>&amp;URL megnyitása</translation>
+        <translation>&amp;Open URL</translation>
     </message>
     <message>
         <source>&amp;Lock databases</source>
-        <translation>Adatbázisok &amp;zárolása</translation>
+        <translation>&amp;Lock databases</translation>
     </message>
     <message>
         <source>&amp;Title</source>
-        <translation>&amp;Cím</translation>
+        <translation>&amp;Title</translation>
     </message>
     <message>
         <source>Copy title to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Copy title to clipboard</translation>
     </message>
     <message>
         <source>&amp;URL</source>
@@ -2588,316 +2608,316 @@ Ez egyirányú migráció. Nem lehet majd megnyitni az importált adatbázist a 
     </message>
     <message>
         <source>Copy URL to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Copy URL to clipboard</translation>
     </message>
     <message>
         <source>&amp;Notes</source>
-        <translation>&amp;Jegyzetek</translation>
+        <translation>&amp;Notes</translation>
     </message>
     <message>
         <source>Copy notes to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Copy notes to clipboard</translation>
     </message>
     <message>
         <source>&amp;Export to CSV file...</source>
-        <translation>&amp;Exportálás CSV-fájlba…</translation>
+        <translation>&amp;Export to CSV file...</translation>
     </message>
     <message>
         <source>Import KeePass 1 database...</source>
-        <translation>KeePass 1 adatbázis importálása…</translation>
+        <translation>Import KeePass 1 database...</translation>
     </message>
     <message>
         <source>Import CSV file...</source>
-        <translation>CSV-fájl importálása…</translation>
+        <translation>Import CSV file...</translation>
     </message>
     <message>
         <source>Re&amp;pair database...</source>
-        <translation>Adatbázis &amp;javítása…</translation>
+        <translation>Re&amp;pair database...</translation>
     </message>
     <message>
         <source>Show TOTP</source>
-        <translation>TOTP megjelenítése</translation>
+        <translation>Show TOTP</translation>
     </message>
     <message>
         <source>Set up TOTP...</source>
-        <translation>TOTP beállítása…</translation>
+        <translation>Set up TOTP...</translation>
     </message>
     <message>
         <source>Copy &amp;TOTP</source>
-        <translation>&amp;TOTP másolása</translation>
+        <translation>Copy &amp;TOTP</translation>
     </message>
     <message>
         <source>E&amp;mpty recycle bin</source>
-        <translation type="unfinished"/>
+        <translation>E&amp;mpty recycle bin</translation>
     </message>
     <message>
         <source>Clear history</source>
-        <translation>Előzmények törlése</translation>
+        <translation>Clear history</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation>Hozzáférési hiba a beállítási fájlhoz: %1</translation>
+        <translation>Access error for config file %1</translation>
     </message>
     <message>
         <source>&lt;p&gt;It looks like you are using KeePassHTTP for browser integration. This feature has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a class=&quot;link&quot;  href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt; (warning %1 of 3).&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;It looks like you are using KeePassHTTP for browser integration. This feature has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a class=&quot;link&quot;  href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt; (warning %1 of 3).&lt;/p&gt;</translation>
     </message>
     <message>
         <source>read-only</source>
-        <translation>csak olvasható</translation>
+        <translation>read-only</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Beállítások</translation>
+        <translation>Settings</translation>
     </message>
     <message>
         <source>Toggle window</source>
-        <translation>Ablak átváltása</translation>
+        <translation>Toggle window</translation>
     </message>
     <message>
         <source>Quit KeePassXC</source>
-        <translation>Kilépés a KeePassXC-ből</translation>
+        <translation>Quit KeePassXC</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>KeePass 2 adatbázis</translation>
+        <translation>KeePass 2 Database</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Minden fájl</translation>
+        <translation>All files</translation>
     </message>
     <message>
         <source>Open database</source>
-        <translation>Adatbázis megnyitása</translation>
+        <translation>Open database</translation>
     </message>
     <message>
         <source>Save repaired database</source>
-        <translation>Javított adatbázis mentése</translation>
+        <translation>Save repaired database</translation>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation>Az adatbázis kiírása sikertelen.</translation>
+        <translation>Writing the database failed.</translation>
     </message>
     <message>
         <source>Please touch the button on your YubiKey!</source>
-        <translation>Meg kell érinteni a gombot a YubiKeyen!</translation>
+        <translation>Please touch the button on your YubiKey!</translation>
     </message>
 </context>
 <context>
     <name>OpenSSHKey</name>
     <message>
         <source>Invalid key file, expecting an OpenSSH key</source>
-        <translation type="unfinished"/>
+        <translation>Invalid key file, expecting an OpenSSH key</translation>
     </message>
     <message>
         <source>PEM boundary mismatch</source>
-        <translation type="unfinished"/>
+        <translation>PEM boundary mismatch</translation>
     </message>
     <message>
         <source>This is not an OpenSSH key, only modern keys are supported</source>
-        <translation type="unfinished"/>
+        <translation>This is not an OpenSSH key, only modern keys are supported</translation>
     </message>
     <message>
         <source>Base64 decoding failed</source>
-        <translation type="unfinished"/>
+        <translation>Base64 decoding failed</translation>
     </message>
     <message>
         <source>Key file way too small.</source>
-        <translation type="unfinished"/>
+        <translation>Key file way too small.</translation>
     </message>
     <message>
         <source>Key file magic header id invalid</source>
-        <translation type="unfinished"/>
+        <translation>Key file magic header id invalid</translation>
     </message>
     <message>
         <source>Found zero keys</source>
-        <translation type="unfinished"/>
+        <translation>Found zero keys</translation>
     </message>
     <message>
         <source>Failed to read public key.</source>
-        <translation type="unfinished"/>
+        <translation>Failed to read public key.</translation>
     </message>
     <message>
         <source>Corrupted key file, reading private key failed</source>
-        <translation type="unfinished"/>
+        <translation>Corrupted key file, reading private key failed</translation>
     </message>
     <message>
         <source>No private key payload to decrypt</source>
-        <translation type="unfinished"/>
+        <translation>No private key payload to decrypt</translation>
     </message>
     <message>
         <source>Unknown cipher: </source>
-        <translation type="unfinished"/>
+        <translation>Unknown cipher: </translation>
     </message>
     <message>
         <source>Trying to run KDF without cipher</source>
-        <translation type="unfinished"/>
+        <translation>Trying to run KDF without cipher</translation>
     </message>
     <message>
         <source>Passphrase is required to decrypt this key</source>
-        <translation type="unfinished"/>
+        <translation>Passphrase is required to decrypt this key</translation>
     </message>
     <message>
         <source>Key derivation failed, key file corrupted?</source>
-        <translation type="unfinished"/>
+        <translation>Key derivation failed, key file corrupted?</translation>
     </message>
     <message>
         <source>Unknown KDF: </source>
-        <translation type="unfinished"/>
+        <translation>Unknown KDF: </translation>
     </message>
     <message>
         <source>Decryption failed, wrong passphrase?</source>
-        <translation type="unfinished"/>
+        <translation>Decryption failed, wrong passphrase?</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading public key</source>
-        <translation type="unfinished"/>
+        <translation>Unexpected EOF while reading public key</translation>
     </message>
     <message>
         <source>Unknown key type: </source>
-        <translation type="unfinished"/>
+        <translation>Unknown key type: </translation>
     </message>
     <message>
         <source>Unexpected EOF while reading private key</source>
-        <translation type="unfinished"/>
+        <translation>Unexpected EOF while reading private key</translation>
     </message>
     <message>
         <source>Can&apos;t write public key as it is empty</source>
-        <translation type="unfinished"/>
+        <translation>Can&apos;t write public key as it is empty</translation>
     </message>
     <message>
         <source>Unexpected EOF when writing public key</source>
-        <translation type="unfinished"/>
+        <translation>Unexpected EOF when writing public key</translation>
     </message>
     <message>
         <source>Can&apos;t write private key as it is empty</source>
-        <translation type="unfinished"/>
+        <translation>Can&apos;t write private key as it is empty</translation>
     </message>
     <message>
         <source>Unexpected EOF when writing private key</source>
-        <translation type="unfinished"/>
+        <translation>Unexpected EOF when writing private key</translation>
     </message>
 </context>
 <context>
     <name>OptionDialog</name>
     <message>
         <source>Dialog</source>
-        <translation>Párbeszédablak</translation>
+        <translation>Dialog</translation>
     </message>
     <message>
         <source>This is required for accessing your databases from ChromeIPass or PassIFox</source>
-        <translation>Ez szükséges az adatbázis ChromeIPassból vagy PassIFoxból történő eléréséhez</translation>
+        <translation>This is required for accessing your databases from ChromeIPass or PassIFox</translation>
     </message>
     <message>
         <source>Enable KeePassHTTP server</source>
-        <translation>KeePassHTTP kiszolgáló engedélyezése</translation>
+        <translation>Enable KeePassHTTP server</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Általános</translation>
+        <translation>General</translation>
     </message>
     <message>
         <source>Sh&amp;ow a notification when credentials are requested</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>É&amp;rtesítés megjelenítése hitelesítési adatok kérésekor</translation>
+        <translation>Sh&amp;ow a notification when credentials are requested</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
-        <translation>Egy konkrét URL-hez tartozó legjobb találatokat adja vissza, a teljes domainhoz tartozó összes bejegyzés helyett.</translation>
+        <translation>Only returns the best matches for a specific URL instead of all entries for the whole domain.</translation>
     </message>
     <message>
         <source>&amp;Return only best matching entries</source>
-        <translation>Csak a &amp;legjobb találatok visszaadása</translation>
+        <translation>&amp;Return only best matching entries</translation>
     </message>
     <message>
         <source>Re&amp;quest to unlock the database if it is locked</source>
-        <translation>Adatbázis feloldási &amp;kérelem, ha zárolva van</translation>
+        <translation>Re&amp;quest to unlock the database if it is locked</translation>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, ftp://, ...) are returned.</source>
-        <translation>Csak az azonos sémájú (http://, https://, ftp://, …) bejegyzések visszaadása.</translation>
+        <translation>Only entries with the same scheme (http://, https://, ftp://, ...) are returned.</translation>
     </message>
     <message>
         <source>&amp;Match URL schemes</source>
-        <translation>&amp;URL sémákra illeszkedés</translation>
+        <translation>&amp;Match URL schemes</translation>
     </message>
     <message>
         <source>Sort matching entries by &amp;username</source>
-        <translation>Találatok rendezése &amp;felhasználónév szerint</translation>
+        <translation>Sort matching entries by &amp;username</translation>
     </message>
     <message>
         <source>Sort &amp;matching entries by title</source>
-        <translation>Találatok rendezése &amp;cím szerint</translation>
+        <translation>Sort &amp;matching entries by title</translation>
     </message>
     <message>
         <source>R&amp;emove all shared encryption keys from active database</source>
-        <translation>Az összes megosztott titkosítási kulcs &amp;eltávolítása az aktív adatbázisból</translation>
+        <translation>R&amp;emove all shared encryption keys from active database</translation>
     </message>
     <message>
         <source>Re&amp;move all stored permissions from entries in active database</source>
-        <translation>Az összes tárolt bejegyzés jogosultságának &amp;törlése az aktív adatbázisból</translation>
+        <translation>Re&amp;move all stored permissions from entries in active database</translation>
     </message>
     <message>
         <source>Password Generator</source>
-        <translation>Jelszógenerátor</translation>
+        <translation>Password Generator</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Speciális</translation>
+        <translation>Advanced</translation>
     </message>
     <message>
         <source>Always allow &amp;access to entries</source>
-        <translation>&amp;Hozzáférés mindenkori engedélyezése a bejegyzésekhez</translation>
+        <translation>Always allow &amp;access to entries</translation>
     </message>
     <message>
         <source>Always allow &amp;updating entries</source>
-        <translation>Bejegyzések &amp;frissítésének mindenkori engedélyezése</translation>
+        <translation>Always allow &amp;updating entries</translation>
     </message>
     <message>
         <source>Only the selected database has to be connected with a client.</source>
-        <translation>Csak a kijelölt adatbázishoz kell kapcsolódnia egy klienssel.</translation>
+        <translation>Only the selected database has to be connected with a client.</translation>
     </message>
     <message>
         <source>Searc&amp;h in all opened databases for matching entries</source>
-        <translation>&amp;Keresés minden megnyitott adatbázis bejegyzéseiben</translation>
+        <translation>Searc&amp;h in all opened databases for matching entries</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
-        <translation>A karakterlánc mezők automatikus létrehozása vagy frissítése nem támogatott.</translation>
+        <translation>Automatically creating or updating string fields is not supported.</translation>
     </message>
     <message>
         <source>&amp;Return advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation>A „KPH:”-val kezdődő fejlett karakterlánc mezők &amp;visszaadása</translation>
+        <translation>&amp;Return advanced string fields which start with &quot;KPH: &quot;</translation>
     </message>
     <message>
         <source>HTTP Port:</source>
-        <translation>HTTP port:</translation>
+        <translation>HTTP Port:</translation>
     </message>
     <message>
         <source>Default port: 19455</source>
-        <translation>Alapértelmezett port: 19455</translation>
+        <translation>Default port: 19455</translation>
     </message>
     <message>
         <source>KeePassXC will listen to this port on 127.0.0.1</source>
-        <translation>A KeePassXC ezen a porton fog figyelni: 127.0.0.1</translation>
+        <translation>KeePassXC will listen to this port on 127.0.0.1</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</translation>
     </message>
     <message>
         <source>&lt;p&gt;KeePassHTTP has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;KeePassHTTP has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Cannot bind to privileged ports</source>
-        <translation>Nem lehet privilegizált portokhoz kötődni</translation>
+        <translation>Cannot bind to privileged ports</translation>
     </message>
     <message>
         <source>Cannot bind to privileged ports below 1024!
 Using default port 19455.</source>
-        <translation>Nem lehet az 1024 alatti, privilegizált portokhoz kötődni!
-Az alapértelmezett 19455 port lesz használva.</translation>
+        <translation>Cannot bind to privileged ports below 1024!
+Using default port 19455.</translation>
     </message>
 </context>
 <context>
@@ -2908,215 +2928,215 @@ Az alapértelmezett 19455 port lesz használva.</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Jelszó:</translation>
+        <translation>Password:</translation>
     </message>
     <message>
         <source>strength</source>
         <comment>Password strength</comment>
-        <translation>erősség</translation>
+        <translation>strength</translation>
     </message>
     <message>
         <source>entropy</source>
-        <translation>entrópia</translation>
+        <translation>entropy</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Jelszó</translation>
+        <translation>Password</translation>
     </message>
     <message>
         <source>Character Types</source>
-        <translation>Karaktertípusok</translation>
+        <translation>Character Types</translation>
     </message>
     <message>
         <source>Upper Case Letters</source>
-        <translation>Nagybetűk</translation>
+        <translation>Upper Case Letters</translation>
     </message>
     <message>
         <source>Lower Case Letters</source>
-        <translation>Kisbetűk</translation>
+        <translation>Lower Case Letters</translation>
     </message>
     <message>
         <source>Numbers</source>
-        <translation>Számok</translation>
+        <translation>Numbers</translation>
     </message>
     <message>
         <source>Special Characters</source>
-        <translation>Speciális karakterek</translation>
+        <translation>Special Characters</translation>
     </message>
     <message>
         <source>Extended ASCII</source>
-        <translation>Bővített ASCII</translation>
+        <translation>Extended ASCII</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
-        <translation>Hasonlóan kinéző karakterek kizárása</translation>
+        <translation>Exclude look-alike characters</translation>
     </message>
     <message>
         <source>Pick characters from every group</source>
-        <translation>Karakterek minden csoportból</translation>
+        <translation>Pick characters from every group</translation>
     </message>
     <message>
         <source>&amp;Length:</source>
-        <translation>&amp;Hossz:</translation>
+        <translation>&amp;Length:</translation>
     </message>
     <message>
         <source>Passphrase</source>
-        <translation>Jelmondat</translation>
+        <translation>Passphrase</translation>
     </message>
     <message>
         <source>Wordlist:</source>
-        <translation>Szólista:</translation>
+        <translation>Wordlist:</translation>
     </message>
     <message>
         <source>Word Count:</source>
-        <translation>Szavak száma:</translation>
+        <translation>Word Count:</translation>
     </message>
     <message>
         <source>Word Separator:</source>
-        <translation>Szóelválasztó:</translation>
+        <translation>Word Separator:</translation>
     </message>
     <message>
         <source>Generate</source>
-        <translation>Előállítás</translation>
+        <translation>Generate</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Másolás</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Accept</source>
-        <translation>Elfogadás</translation>
+        <translation>Accept</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Bezárás</translation>
+        <translation>Close</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation>Alkalmaz</translation>
+        <translation>Apply</translation>
     </message>
     <message>
         <source>Entropy: %1 bit</source>
-        <translation>Entrópia: %1 bit</translation>
+        <translation>Entropy: %1 bit</translation>
     </message>
     <message>
         <source>Password Quality: %1</source>
-        <translation>Jelszóminőség: %1</translation>
+        <translation>Password Quality: %1</translation>
     </message>
     <message>
         <source>Poor</source>
         <comment>Password quality</comment>
-        <translation>Silány</translation>
+        <translation>Poor</translation>
     </message>
     <message>
         <source>Weak</source>
         <comment>Password quality</comment>
-        <translation>Gyenge</translation>
+        <translation>Weak</translation>
     </message>
     <message>
         <source>Good</source>
         <comment>Password quality</comment>
-        <translation>Jó</translation>
+        <translation>Good</translation>
     </message>
     <message>
         <source>Excellent</source>
         <comment>Password quality</comment>
-        <translation>Kiváló</translation>
+        <translation>Excellent</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Database not opened</source>
-        <translation type="unfinished"/>
+        <translation>Database not opened</translation>
     </message>
     <message>
         <source>Database hash not available</source>
-        <translation type="unfinished"/>
+        <translation>Database hash not available</translation>
     </message>
     <message>
         <source>Client public key not received</source>
-        <translation type="unfinished"/>
+        <translation>Client public key not received</translation>
     </message>
     <message>
         <source>Cannot decrypt message</source>
-        <translation type="unfinished"/>
+        <translation>Cannot decrypt message</translation>
     </message>
     <message>
         <source>Timeout or cannot connect to KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>Timeout or cannot connect to KeePassXC</translation>
     </message>
     <message>
         <source>Action cancelled or denied</source>
-        <translation type="unfinished"/>
+        <translation>Action cancelled or denied</translation>
     </message>
     <message>
         <source>Cannot encrypt message or public key not found. Is Native Messaging enabled in KeePassXC?</source>
-        <translation type="unfinished"/>
+        <translation>Cannot encrypt message or public key not found. Is Native Messaging enabled in KeePassXC?</translation>
     </message>
     <message>
         <source>KeePassXC association failed, try again</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC association failed, try again</translation>
     </message>
     <message>
         <source>Key change was not successful</source>
-        <translation type="unfinished"/>
+        <translation>Key change was not successful</translation>
     </message>
     <message>
         <source>Encryption key is not recognized</source>
-        <translation type="unfinished"/>
+        <translation>Encryption key is not recognized</translation>
     </message>
     <message>
         <source>No saved databases found</source>
-        <translation type="unfinished"/>
+        <translation>No saved databases found</translation>
     </message>
     <message>
         <source>Incorrect action</source>
-        <translation type="unfinished"/>
+        <translation>Incorrect action</translation>
     </message>
     <message>
         <source>Empty message received</source>
-        <translation type="unfinished"/>
+        <translation>Empty message received</translation>
     </message>
     <message>
         <source>No URL provided</source>
-        <translation type="unfinished"/>
+        <translation>No URL provided</translation>
     </message>
     <message>
         <source>No logins found</source>
-        <translation type="unfinished"/>
+        <translation>No logins found</translation>
     </message>
     <message>
         <source>Unknown error</source>
-        <translation type="unfinished"/>
+        <translation>Unknown error</translation>
     </message>
     <message>
         <source>Add a new entry to a database.</source>
-        <translation type="unfinished"/>
+        <translation>Add a new entry to a database.</translation>
     </message>
     <message>
         <source>Path of the database.</source>
-        <translation>Adatbázis útvonala.</translation>
+        <translation>Path of the database.</translation>
     </message>
     <message>
         <source>Key file of the database.</source>
-        <translation type="unfinished"/>
+        <translation>Key file of the database.</translation>
     </message>
     <message>
         <source>path</source>
-        <translation type="unfinished"/>
+        <translation>path</translation>
     </message>
     <message>
         <source>Username for the entry.</source>
-        <translation type="unfinished"/>
+        <translation>Username for the entry.</translation>
     </message>
     <message>
         <source>username</source>
-        <translation type="unfinished"/>
+        <translation>username</translation>
     </message>
     <message>
         <source>URL for the entry.</source>
-        <translation type="unfinished"/>
+        <translation>URL for the entry.</translation>
     </message>
     <message>
         <source>URL</source>
@@ -3124,188 +3144,194 @@ Az alapértelmezett 19455 port lesz használva.</translation>
     </message>
     <message>
         <source>Prompt for the entry&apos;s password.</source>
-        <translation type="unfinished"/>
+        <translation>Prompt for the entry&apos;s password.</translation>
     </message>
     <message>
         <source>Generate a password for the entry.</source>
-        <translation type="unfinished"/>
+        <translation>Generate a password for the entry.</translation>
     </message>
     <message>
         <source>Length for the generated password.</source>
-        <translation type="unfinished"/>
+        <translation>Length for the generated password.</translation>
     </message>
     <message>
         <source>length</source>
-        <translation type="unfinished"/>
+        <translation>length</translation>
     </message>
     <message>
         <source>Path of the entry to add.</source>
-        <translation type="unfinished"/>
+        <translation>Path of the entry to add.</translation>
     </message>
     <message>
         <source>Copy an entry&apos;s password to the clipboard.</source>
-        <translation type="unfinished"/>
+        <translation>Copy an entry&apos;s password to the clipboard.</translation>
     </message>
     <message>
         <source>Path of the entry to clip.</source>
         <comment>clip = copy to clipboard</comment>
-        <translation type="unfinished"/>
+        <translation>Path of the entry to clip.</translation>
     </message>
     <message>
         <source>Timeout in seconds before clearing the clipboard.</source>
-        <translation type="unfinished"/>
+        <translation>Timeout in seconds before clearing the clipboard.</translation>
     </message>
     <message>
         <source>Edit an entry.</source>
-        <translation type="unfinished"/>
+        <translation>Edit an entry.</translation>
     </message>
     <message>
         <source>Title for the entry.</source>
-        <translation type="unfinished"/>
+        <translation>Title for the entry.</translation>
     </message>
     <message>
         <source>title</source>
-        <translation type="unfinished"/>
+        <translation>title</translation>
     </message>
     <message>
         <source>Path of the entry to edit.</source>
-        <translation type="unfinished"/>
+        <translation>Path of the entry to edit.</translation>
     </message>
     <message>
         <source>Estimate the entropy of a password.</source>
-        <translation type="unfinished"/>
+        <translation>Estimate the entropy of a password.</translation>
     </message>
     <message>
         <source>Password for which to estimate the entropy.</source>
-        <translation type="unfinished"/>
+        <translation>Password for which to estimate the entropy.</translation>
     </message>
     <message>
         <source>Perform advanced analysis on the password.</source>
-        <translation type="unfinished"/>
+        <translation>Perform advanced analysis on the password.</translation>
     </message>
     <message>
         <source>Extract and print the content of a database.</source>
-        <translation>Adatbázis tartalmának kinyerése és kiírása.</translation>
+        <translation>Extract and print the content of a database.</translation>
     </message>
     <message>
         <source>Path of the database to extract.</source>
-        <translation>Kinyerendő adatbázis útvonala.</translation>
+        <translation>Path of the database to extract.</translation>
     </message>
     <message>
         <source>Insert password to unlock %1: </source>
-        <translation type="unfinished"/>
+        <translation>Insert password to unlock %1: </translation>
     </message>
     <message>
         <source>Failed to load key file %1 : %2</source>
-        <translation type="unfinished"/>
+        <translation>Failed to load key file %1 : %2</translation>
     </message>
     <message>
         <source>WARNING: You are using a legacy key file format which may become
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>WARNING: You are using a legacy key file format which may become
+unsupported in the future.
+
+Please consider generating a new key file.</translation>
     </message>
     <message>
         <source>
 
 Available commands:
 </source>
-        <translation type="unfinished"/>
+        <translation>
+
+Available commands:
+</translation>
     </message>
     <message>
         <source>Name of the command to execute.</source>
-        <translation>Végrehajtandó parancs neve.</translation>
+        <translation>Name of the command to execute.</translation>
     </message>
     <message>
         <source>List database entries.</source>
-        <translation>Adatbázis-bejegyzések felsorolása.</translation>
+        <translation>List database entries.</translation>
     </message>
     <message>
         <source>Path of the group to list. Default is /</source>
-        <translation>Felsorolandó csoport útvonala. Az alapértelezett: /</translation>
+        <translation>Path of the group to list. Default is /</translation>
     </message>
     <message>
         <source>Find entries quickly.</source>
-        <translation type="unfinished"/>
+        <translation>Find entries quickly.</translation>
     </message>
     <message>
         <source>Search term.</source>
-        <translation type="unfinished"/>
+        <translation>Search term.</translation>
     </message>
     <message>
         <source>Merge two databases.</source>
-        <translation>Két adatbázis összeolvasztása.</translation>
+        <translation>Merge two databases.</translation>
     </message>
     <message>
         <source>Path of the database to merge into.</source>
-        <translation>Az összeolvasztás céladatbázisának útvonala.</translation>
+        <translation>Path of the database to merge into.</translation>
     </message>
     <message>
         <source>Path of the database to merge from.</source>
-        <translation>Az összeolvasztás forrásadatbázisának útvonala.</translation>
+        <translation>Path of the database to merge from.</translation>
     </message>
     <message>
         <source>Use the same credentials for both database files.</source>
-        <translation type="unfinished"/>
+        <translation>Use the same credentials for both database files.</translation>
     </message>
     <message>
         <source>Key file of the database to merge from.</source>
-        <translation type="unfinished"/>
+        <translation>Key file of the database to merge from.</translation>
     </message>
     <message>
         <source>Show an entry&apos;s information.</source>
-        <translation type="unfinished"/>
+        <translation>Show an entry&apos;s information.</translation>
     </message>
     <message>
         <source>Names of the attributes to show. This option can be specified more than once, with each attribute shown one-per-line in the given order. If no attributes are specified, a summary of the default attributes is given.</source>
-        <translation type="unfinished"/>
+        <translation>Names of the attributes to show. This option can be specified more than once, with each attribute shown one-per-line in the given order. If no attributes are specified, a summary of the default attributes is given.</translation>
     </message>
     <message>
         <source>attribute</source>
-        <translation>attribútum</translation>
+        <translation>attribute</translation>
     </message>
     <message>
         <source>Name of the entry to show.</source>
-        <translation>A megjelenítendő bejegyzés neve.</translation>
+        <translation>Name of the entry to show.</translation>
     </message>
     <message>
         <source>NULL device</source>
-        <translation>NULL eszkösz</translation>
+        <translation>NULL device</translation>
     </message>
     <message>
         <source>error reading from device</source>
-        <translation>hiba az eszköz olvasása közben</translation>
+        <translation>error reading from device</translation>
     </message>
     <message>
         <source>file empty !
 </source>
-        <translation>a fájl üres!
+        <translation>file empty !
 </translation>
     </message>
     <message>
         <source>malformed string</source>
-        <translation>rosszul formázott karakterlánc</translation>
+        <translation>malformed string</translation>
     </message>
     <message>
         <source>missing closing quote</source>
-        <translation>hiányzó lezáró idézőjel</translation>
+        <translation>missing closing quote</translation>
     </message>
     <message>
         <source>AES: 256-bit</source>
-        <translation>AES: 256 bites</translation>
+        <translation>AES: 256-bit</translation>
     </message>
     <message>
         <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256 bites</translation>
+        <translation>Twofish: 256-bit</translation>
     </message>
     <message>
         <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256 bites</translation>
+        <translation>ChaCha20: 256-bit</translation>
     </message>
     <message>
         <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – ajánlott)</translation>
+        <translation>Argon2 (KDBX 4 – recommended)</translation>
     </message>
     <message>
         <source>AES-KDF (KDBX 4)</source>
@@ -3317,436 +3343,437 @@ Available commands:
     </message>
     <message>
         <source>Group</source>
-        <translation>Csoport</translation>
+        <translation>Group</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Cím</translation>
+        <translation>Title</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Felhasználónév</translation>
+        <translation>Username</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Jelszó</translation>
+        <translation>Password</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Jegyzetek</translation>
+        <translation>Notes</translation>
     </message>
     <message>
         <source>Last Modified</source>
-        <translation>Legutóbb módosítva</translation>
+        <translation>Last Modified</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>Létrehozva</translation>
+        <translation>Created</translation>
     </message>
     <message>
         <source>Legacy Browser Integration</source>
-        <translation>Hagyományos böngészőintegráció</translation>
+        <translation>Legacy Browser Integration</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Böngészőintegráció</translation>
+        <translation>Browser Integration</translation>
     </message>
     <message>
         <source>YubiKey[%1] Challenge Response - Slot %2 - %3</source>
-        <translation>YubiKey[%1] kihívás-válasz – %2. foglalat – %3</translation>
+        <translation>YubiKey[%1] Challenge Response - Slot %2 - %3</translation>
     </message>
     <message>
         <source>Press</source>
-        <translation>Lenyomás</translation>
+        <translation>Press</translation>
     </message>
     <message>
         <source>Passive</source>
-        <translation>Passzív</translation>
+        <translation>Passive</translation>
     </message>
     <message>
         <source>SSH Agent</source>
-        <translation>SSH ügynök</translation>
+        <translation>SSH Agent</translation>
     </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
-        <translation>Belső zlib hiba a tömörítés közben: </translation>
+        <translation>Internal zlib error when compressing: </translation>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>Hiba az alárendelt eszközre való írás közben: </translation>
+        <translation>Error writing to underlying device: </translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>Hiba az alárendelt eszköz megnyitásakor: </translation>
+        <translation>Error opening underlying device: </translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation>Hiba az alárendelt eszközről történő adatolvasás során: </translation>
+        <translation>Error reading data from underlying device: </translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation>Belső zlib hiba kibontás közben: </translation>
+        <translation>Internal zlib error when decompressing: </translation>
     </message>
 </context>
 <context>
     <name>QtIOCompressor::open</name>
     <message>
         <source>The gzip format not supported in this version of zlib.</source>
-        <translation>A gzip formátum nem támogatott a zlib ezen verziójában.</translation>
+        <translation>The gzip format not supported in this version of zlib.</translation>
     </message>
     <message>
         <source>Internal zlib error: </source>
-        <translation>Belső zlib hiba: </translation>
+        <translation>Internal zlib error: </translation>
     </message>
 </context>
 <context>
     <name>SearchWidget</name>
     <message>
         <source>Search...</source>
-        <translation>Keresés…</translation>
+        <translation>Search...</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Keresés</translation>
+        <translation>Search</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Törlés</translation>
+        <translation>Clear</translation>
     </message>
     <message>
         <source>Case Sensitive</source>
-        <translation>Nagy- és kisbetű érzékeny</translation>
+        <translation>Case Sensitive</translation>
     </message>
     <message>
         <source>Limit search to selected group</source>
-        <translation>Keresés korlátozása a kijelölt csoportra</translation>
+        <translation>Limit search to selected group</translation>
     </message>
 </context>
 <context>
     <name>Service</name>
     <message>
         <source>KeePassXC: New key association request</source>
-        <translation>KeePassXC: Új kulcstársítási kérés</translation>
+        <translation>KeePassXC: New key association request</translation>
     </message>
     <message>
         <source>You have received an association request for the above key.
 If you would like to allow it access to your KeePassXC database
 give it a unique name to identify and accept it.</source>
-        <translation>A fenti kulcsra társítási kérelem érkezett.
-A KeePassXC adatbázishoz való hozzáférés engedélyezéséhez egy egyedi név hozzárendelése és elfogadása szükséges.</translation>
+        <translation>You have received an association request for the above key.
+If you would like to allow it access to your KeePassXC database
+give it a unique name to identify and accept it.</translation>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
-        <translation>KeePassXC: Felülírja a létező kulcsot?</translation>
+        <translation>KeePassXC: Overwrite existing key?</translation>
     </message>
     <message>
         <source>A shared encryption-key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
-        <translation>Létezik már egy megosztott titkosítási kulcs ezzel a névvel: „%1”.
-Valóban felülírja?</translation>
+        <translation>A shared encryption-key with the name &quot;%1&quot; already exists.
+Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
-        <translation>KeePassXC: Bejegyzés frissítése</translation>
+        <translation>KeePassXC: Update Entry</translation>
     </message>
     <message>
         <source>Do you want to update the information in %1 - %2?</source>
-        <translation>Frissíti az információt ebben: %1 – %2?</translation>
+        <translation>Do you want to update the information in %1 - %2?</translation>
     </message>
     <message>
         <source>KeePassXC: Database locked!</source>
-        <translation>KeePassXC: Adatbázis zárolva!</translation>
+        <translation>KeePassXC: Database locked!</translation>
     </message>
     <message>
         <source>The active database is locked!
 Please unlock the selected database or choose another one which is unlocked.</source>
-        <translation>Az aktív adatbázis zárolt.
-Fel kell oldani a kijelölt adatbázist, vagy egy másik nem zároltat kell választania.</translation>
+        <translation>The active database is locked!
+Please unlock the selected database or choose another one which is unlocked.</translation>
     </message>
     <message>
         <source>KeePassXC: Removed keys from database</source>
-        <translation>KeePassXC: Kulcsok eltávolítva az adatbázisból</translation>
+        <translation>KeePassXC: Removed keys from database</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption-key(s) from KeePassX/Http Settings.</source>
-        <translation><numerusform>Sikeresen eltávolításra került %n titkosítási kulcs a KeePassX/HTTP beállításokból.</numerusform><numerusform>Sikeresen eltávolításra került %n titkosítási kulcs a KeePassX/HTTP beállításokból.</numerusform></translation>
+        <translation><numerusform>Successfully removed %n encryption key from KeePassXC/HTTP Settings.</numerusform><numerusform>Successfully removed %n encryption keys from KeePassXC/HTTP Settings.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
-        <translation>KeePassXC: Nincs találat a kulcsok között</translation>
+        <translation>KeePassXC: No keys found</translation>
     </message>
     <message>
         <source>No shared encryption-keys found in KeePassHttp Settings.</source>
-        <translation>Nem található megosztott titkosítási kulcs a KeePassHTTP beállításokban.</translation>
+        <translation>No shared encryption-keys found in KeePassHttp Settings.</translation>
     </message>
     <message>
         <source>KeePassXC: Settings not available!</source>
-        <translation>KeePassXC: Nincs ilyen beállítás!</translation>
+        <translation>KeePassXC: Settings not available!</translation>
     </message>
     <message>
         <source>The active database does not contain an entry of KeePassHttp Settings.</source>
-        <translation>Az aktív adatbázisban nincs egyetlen KeePassHTTP beállítási bejegyzés sem.</translation>
+        <translation>The active database does not contain an entry of KeePassHttp Settings.</translation>
     </message>
     <message>
         <source>Removing stored permissions...</source>
-        <translation>Tárolt jogosultságok törlése…</translation>
+        <translation>Removing stored permissions...</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation>Megszakítás</translation>
+        <translation>Abort</translation>
     </message>
     <message>
         <source>KeePassXC: Removed permissions</source>
-        <translation>KeePassXC: Jogosultságok eltávolítva</translation>
+        <translation>KeePassXC: Removed permissions</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entries.</source>
-        <translation><numerusform>Sikeresen el lett távolítva a jogosultság %n elemről.</numerusform><numerusform>Sikeresen el lett távolítva a jogosultság %n elemről.</numerusform></translation>
+        <translation><numerusform>Successfully removed permissions from %n entry.</numerusform><numerusform>Successfully removed permissions from %n entries.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
-        <translation>KeePassXC: Nem található bejegyzés ilyen jogosultsággal!</translation>
+        <translation>KeePassXC: No entry with permissions found!</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
-        <translation>Az aktív adatbázisban nincs egyetlen jogosultsági bejegyzés sem.</translation>
+        <translation>The active database does not contain an entry with permissions.</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>Alkalmazásbeállítások</translation>
+        <translation>Application Settings</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Általános</translation>
+        <translation>General</translation>
     </message>
     <message>
         <source>Security</source>
-        <translation>Biztonság</translation>
+        <translation>Security</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation>Hozzáférési hiba a beállítási fájlhoz: %1</translation>
+        <translation>Access error for config file %1</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidgetGeneral</name>
     <message>
         <source>Basic Settings</source>
-        <translation>Alapvető beállítások</translation>
+        <translation>Basic Settings</translation>
     </message>
     <message>
         <source>Start only a single instance of KeePassXC</source>
-        <translation>A KeePassXC többszörös indításának tiltása</translation>
+        <translation>Start only a single instance of KeePassXC</translation>
     </message>
     <message>
         <source>Remember last databases</source>
-        <translation>Utolsó adatbázis megjegyzése</translation>
+        <translation>Remember last databases</translation>
     </message>
     <message>
         <source>Remember last key files and security dongles</source>
-        <translation>Az utolsó kulcsfájlok és biztonsági hardverkulcsok megjegyzése</translation>
+        <translation>Remember last key files and security dongles</translation>
     </message>
     <message>
         <source>Load previous databases on startup</source>
-        <translation>Előző adatbázisok betöltése indításkor</translation>
+        <translation>Load previous databases on startup</translation>
     </message>
     <message>
         <source>Automatically save on exit</source>
-        <translation>Automatikus mentés kilépéskor</translation>
+        <translation>Automatically save on exit</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation>Automatikus mentés minden módosítás után</translation>
+        <translation>Automatically save after every change</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
-        <translation>Külső módosításkor az adatbázis automatikus újratöltése</translation>
+        <translation>Automatically reload the database when modified externally</translation>
     </message>
     <message>
         <source>Minimize when copying to clipboard</source>
-        <translation>Kicsinyítés a vágólapra történő másoláskor</translation>
+        <translation>Minimize when copying to clipboard</translation>
     </message>
     <message>
         <source>Minimize window at application startup</source>
-        <translation>Indításkor az ablak kicsinyítése</translation>
+        <translation>Minimize window at application startup</translation>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
-        <translation>A csoport ikonjának használata a bejegyzés létrehozásakor</translation>
+        <translation>Use group icon on entry creation</translation>
     </message>
     <message>
         <source>Don&apos;t mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation>Nem adatjellegű változások (pl. csoport lenyitása) esetén az adatbázis módosított állapotba kerülésének megakadályozása</translation>
+        <translation>Don&apos;t mark database as modified for non-data changes (e.g., expanding groups)</translation>
     </message>
     <message>
         <source>Hide the Details view</source>
-        <translation type="unfinished"/>
+        <translation>Hide the Details view</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>Rendszertálca-ikon megjelenítése</translation>
+        <translation>Show a system tray icon</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation>Az ablak rendszertálcára rejtése kicsinyítéskor</translation>
+        <translation>Hide window to system tray when minimized</translation>
     </message>
     <message>
         <source>Hide window to system tray instead of app exit</source>
-        <translation>Kilépés helyett rendszertálcára való rejtés</translation>
+        <translation>Hide window to system tray instead of app exit</translation>
     </message>
     <message>
         <source>Dark system tray icon</source>
-        <translation type="unfinished"/>
+        <translation>Dark system tray icon</translation>
     </message>
     <message>
         <source>Language</source>
-        <translation>Nyelv</translation>
+        <translation>Language</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Automatikus beírás</translation>
+        <translation>Auto-Type</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>Use entry title to match windows for global Auto-Type</translation>
     </message>
     <message>
         <source>Use entry URL to match windows for global Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>Use entry URL to match windows for global Auto-Type</translation>
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
-        <translation>Mindig kérdezzen az automatikus beírás megkezdése előtt</translation>
+        <translation>Always ask before performing Auto-Type</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut</source>
-        <translation>Globális automatikus beírás gyorsbillentyűje</translation>
+        <translation>Global Auto-Type shortcut</translation>
     </message>
     <message>
         <source>Auto-Type delay</source>
-        <translation>Automatikus beírás késleltetése</translation>
+        <translation>Auto-Type delay</translation>
     </message>
     <message>
         <source> ms</source>
         <comment>Milliseconds</comment>
-        <translation>ms</translation>
+        <translation> ms</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>
     <message>
         <source>Timeouts</source>
-        <translation>Időtúllépések</translation>
+        <translation>Timeouts</translation>
     </message>
     <message>
         <source>Clear clipboard after</source>
-        <translation>Vágólap törlése ennyi idő után</translation>
+        <translation>Clear clipboard after</translation>
     </message>
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation> mp</translation>
+        <translation> sec</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
-        <translation>Adatbázis zárolása ennyi inaktivitás után</translation>
+        <translation>Lock databases after inactivity of</translation>
     </message>
     <message>
         <source>Convenience</source>
-        <translation>Kényelem</translation>
+        <translation>Convenience</translation>
     </message>
     <message>
         <source>Lock databases when session is locked or lid is closed</source>
-        <translation>Adatbázis zárolása munkamenet zárolásakor vagy a fedél lecsukásakor</translation>
+        <translation>Lock databases when session is locked or lid is closed</translation>
     </message>
     <message>
         <source>Lock databases after minimizing the window</source>
-        <translation>Adatbázis zárolása az ablak lekicsinyítésekor</translation>
+        <translation>Lock databases after minimizing the window</translation>
     </message>
     <message>
         <source>Don&apos;t require password repeat when it is visible</source>
-        <translation>Jelszóismétlés elkerülése látható jelszó esetén</translation>
+        <translation>Don&apos;t require password repeat when it is visible</translation>
     </message>
     <message>
         <source>Show passwords in cleartext by default</source>
-        <translation>Jelszavak megjelenítése alapértelmezetten egyszerű szövegként</translation>
+        <translation>Show passwords in cleartext by default</translation>
     </message>
     <message>
         <source>Hide passwords in the preview panel</source>
-        <translation type="unfinished"/>
+        <translation>Hide passwords in the preview panel</translation>
     </message>
     <message>
         <source>Hide entry notes by default</source>
-        <translation type="unfinished"/>
+        <translation>Hide entry notes by default</translation>
     </message>
     <message>
         <source>Privacy</source>
-        <translation>Adatvédelem</translation>
+        <translation>Privacy</translation>
     </message>
     <message>
         <source>Use Google as fallback for downloading website icons</source>
-        <translation>A Google használata tartalékként, a webhelyikonok letöltésére</translation>
+        <translation>Use Google as fallback for downloading website icons</translation>
     </message>
 </context>
 <context>
     <name>SetupTotpDialog</name>
     <message>
         <source>Setup TOTP</source>
-        <translation>TOTP beállítása</translation>
+        <translation>Setup TOTP</translation>
     </message>
     <message>
         <source>Key:</source>
-        <translation>Kulcs:</translation>
+        <translation>Key:</translation>
     </message>
     <message>
         <source>Default RFC 6238 token settings</source>
-        <translation type="unfinished"/>
+        <translation>Default RFC 6238 token settings</translation>
     </message>
     <message>
         <source>Steam token settings</source>
-        <translation type="unfinished"/>
+        <translation>Steam token settings</translation>
     </message>
     <message>
         <source>Use custom settings</source>
-        <translation>Egyéni beállítások alkalmazása</translation>
+        <translation>Use custom settings</translation>
     </message>
     <message>
         <source>Note: Change these settings only if you know what you are doing.</source>
-        <translation>Megjegyzés: Ezeket a beállításokat csak a hatásuk pontos ismeretében érdemes megváltoztatni.</translation>
+        <translation>Note: Change these settings only if you know what you are doing.</translation>
     </message>
     <message>
         <source>Time step:</source>
-        <translation>Időléptetés:</translation>
+        <translation>Time step:</translation>
     </message>
     <message>
         <source>8 digits</source>
-        <translation>8-számjegyű</translation>
+        <translation>8 digits</translation>
     </message>
     <message>
         <source>6 digits</source>
-        <translation>6-számjegyű</translation>
+        <translation>6 digits</translation>
     </message>
     <message>
         <source>Code size:</source>
-        <translation>Kódméret:</translation>
+        <translation>Code size:</translation>
     </message>
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation> mp</translation>
+        <translation> sec</translation>
     </message>
 </context>
 <context>
     <name>TotpDialog</name>
     <message>
         <source>Timed Password</source>
-        <translation>Időalapú jelszó</translation>
+        <translation>Timed Password</translation>
     </message>
     <message>
         <source>000000</source>
@@ -3754,92 +3781,92 @@ Fel kell oldani a kijelölt adatbázist, vagy egy másik nem zároltat kell vál
     </message>
     <message>
         <source>Copy</source>
-        <translation>Másolás</translation>
+        <translation>Copy</translation>
     </message>
     <message>
         <source>Expires in</source>
-        <translation>Lejárat:</translation>
+        <translation>Expires in</translation>
     </message>
     <message>
         <source>seconds</source>
-        <translation>mp</translation>
+        <translation>seconds</translation>
     </message>
 </context>
 <context>
     <name>UnlockDatabaseWidget</name>
     <message>
         <source>Unlock database</source>
-        <translation>Adatbázis feloldása</translation>
+        <translation>Unlock database</translation>
     </message>
 </context>
 <context>
     <name>WelcomeWidget</name>
     <message>
         <source>Welcome to KeePassXC</source>
-        <translation>Üdvözöljük a KeePassXC-ben</translation>
+        <translation>Welcome to KeePassXC</translation>
     </message>
     <message>
         <source>Start storing your passwords securely in a KeePassXC database</source>
-        <translation>Máris elkezdhető a jelszavak titkosított tárolása a KeePassXC adatbázisban</translation>
+        <translation>Start storing your passwords securely in a KeePassXC database</translation>
     </message>
     <message>
         <source>Create new database</source>
-        <translation>Új adatbázis létrehozása</translation>
+        <translation>Create new database</translation>
     </message>
     <message>
         <source>Open existing database</source>
-        <translation>Meglévő adatbázis megnyitása</translation>
+        <translation>Open existing database</translation>
     </message>
     <message>
         <source>Import from KeePass 1</source>
-        <translation>Importálás KeePass 1-ből</translation>
+        <translation>Import from KeePass 1</translation>
     </message>
     <message>
         <source>Import from CSV</source>
-        <translation>Importálás CSV-ből</translation>
+        <translation>Import from CSV</translation>
     </message>
     <message>
         <source>Recent databases</source>
-        <translation>Friss adatbázisok</translation>
+        <translation>Recent databases</translation>
     </message>
 </context>
 <context>
     <name>main</name>
     <message>
         <source>Remove an entry from the database.</source>
-        <translation type="unfinished"/>
+        <translation>Remove an entry from the database.</translation>
     </message>
     <message>
         <source>Path of the database.</source>
-        <translation>Adatbázis útvonala.</translation>
+        <translation>Path of the database.</translation>
     </message>
     <message>
         <source>Path of the entry to remove.</source>
-        <translation type="unfinished"/>
+        <translation>Path of the entry to remove.</translation>
     </message>
     <message>
         <source>KeePassXC - cross-platform password manager</source>
-        <translation>KeePassXC – keresztplatformos jelszókezelő</translation>
+        <translation>KeePassXC - cross-platform password manager</translation>
     </message>
     <message>
         <source>filenames of the password databases to open (*.kdbx)</source>
-        <translation>megnyitandó jelszóadatbázisok fájlnevei (*.kdbx)</translation>
+        <translation>filenames of the password databases to open (*.kdbx)</translation>
     </message>
     <message>
         <source>path to a custom config file</source>
-        <translation>útvonal az egyéni beállítófájlhoz</translation>
+        <translation>path to a custom config file</translation>
     </message>
     <message>
         <source>key file of the database</source>
-        <translation>adatbázis kulcsfájlja</translation>
+        <translation>key file of the database</translation>
     </message>
     <message>
         <source>read password of the database from stdin</source>
-        <translation>adatbázis jelszó beolvasása az stdin-ről</translation>
+        <translation>read password of the database from stdin</translation>
     </message>
     <message>
         <source>Parent window handle</source>
-        <translation type="unfinished"/>
+        <translation>Parent window handle</translation>
     </message>
 </context>
 </TS>

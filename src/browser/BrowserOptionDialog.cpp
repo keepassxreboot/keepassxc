@@ -117,7 +117,7 @@ void BrowserOptionDialog::showProxyLocationFileDialog()
 #ifdef Q_OS_WIN
     QString fileTypeFilter(tr("Executable Files (*.exe);;All Files (*.*)"));
 #else
-    QString fileTypeFilter(tr("Executable Files (*.*)"));
+    QString fileTypeFilter(tr("Executable Files (*)"));
 #endif
     auto proxyLocation = QFileDialog::getOpenFileName(this, tr("Select custom proxy location"),
                                                       QFileInfo(QCoreApplication::applicationDirPath()).filePath(),

@@ -1120,6 +1120,7 @@ QByteArray KdbxXmlReader::readCompressedBinary()
 
     QByteArray result;
     if (!Tools::readAllFromDevice(&compressor, result)) {
+        //: Translator meant is a binary data inside an entry
         raiseError(tr("Unable to decompress binary"));
     }
     return result;

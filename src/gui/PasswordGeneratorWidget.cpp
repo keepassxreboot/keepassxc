@@ -283,16 +283,16 @@ void PasswordGeneratorWidget::colorStrengthIndicator(double entropy)
     // <https://community.kde.org/KDE_Visual_Design_Group/HIG/Color>
     if (entropy < 40) {
         m_ui->entropyProgressBar->setStyleSheet(style.arg("#c0392b"));
-        m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Poor")));
+        m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Poor", "Password quality")));
     } else if (entropy >= 40 && entropy < 65) {
         m_ui->entropyProgressBar->setStyleSheet(style.arg("#f39c1f"));
-        m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Weak")));
+        m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Weak", "Password quality")));
     } else if (entropy >= 65 && entropy < 100) {
         m_ui->entropyProgressBar->setStyleSheet(style.arg("#11d116"));
-        m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Good")));
+        m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Good", "Password quality")));
     } else {
         m_ui->entropyProgressBar->setStyleSheet(style.arg("#27ae60"));
-        m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Excellent")));
+        m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Excellent", "Password quality")));
     }
 }
 

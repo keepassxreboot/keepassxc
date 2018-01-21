@@ -38,6 +38,10 @@ void Translator::installTranslators()
     if (language == "system" || language.isEmpty()) {
         language = QLocale::system().name();
     }
+    if (language == "en") {
+        // use actual English translation instead of the English locale source language
+        language = "en_US";
+    }
 
     const QStringList paths = {
 #ifdef QT_DEBUG
@@ -48,8 +52,7 @@ void Translator::installTranslators()
 
     bool translationsLoaded = false;
     for (const QString& path : paths) {
-        translationsLoaded |= installTranslator(language, path) || installTranslator("en_plurals", path);
-        installQtTranslator(language, path);
+        translationsLoaded |= installTranslator(language, path) || installTranslator("en_US", path);
     }
     if (!translationsLoaded) {
         // couldn't load configured language or fallback
@@ -79,12 +82,16 @@ QList<QPair<QString, QString>> Translator::availableLanguages()
             QRegularExpressionMatch match = regExp.match(filename);
             if (match.hasMatch()) {
                 QString langcode = match.captured(1);
-                if (langcode == "en_plurals") {
-                    langcode = "en";
+                if (langcode == "en") {
+                    continue;
                 }
 
                 QLocale locale(langcode);
                 QString languageStr = QLocale::languageToString(locale.language());
+                if (langcode == "la") {
+                    // langcode "la" (Latin) is translated into "C" by QLocale::languageToString()
+                    languageStr = "Latin";
+                }
                 QString countryStr;
                 if (langcode.contains("_")) {
                     countryStr = QString(" (%1)").arg(QLocale::countryToString(locale.country()));

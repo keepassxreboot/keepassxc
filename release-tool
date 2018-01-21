@@ -458,7 +458,8 @@ merge() {
     performChecks
     
     logInfo "Updating language files..."
-    ./share/translations/update.sh
+    ./share/translations/update.sh update
+    ./share/translations/update.sh pull
     if [ 0 -ne $? ]; then
         exitError "Updating translations failed!"
     fi

@@ -53,7 +53,7 @@ int Clip::execute(QStringList arguments)
                                QObject::tr("Key file of the database."),
                                QObject::tr("path"));
     parser.addOption(keyFile);
-    parser.addPositionalArgument("entry", QObject::tr("Path of the entry to clip."));
+    parser.addPositionalArgument("entry", QObject::tr("Path of the entry to clip.", "clip = copy to clipboard"));
     parser.addPositionalArgument(
         "timeout", QObject::tr("Timeout in seconds before clearing the clipboard."), QString("[timeout]"));
     parser.process(arguments);

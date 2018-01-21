@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>595</width>
-    <height>443</height>
+    <height>446</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -48,7 +48,7 @@
          </sizepolicy>
         </property>
         <property name="suffix">
-         <string> sec</string>
+         <string comment="Seconds"> sec</string>
         </property>
         <property name="minimum">
          <number>1</number>
@@ -86,7 +86,7 @@
          </sizepolicy>
         </property>
         <property name="suffix">
-         <string> sec</string>
+         <string comment="Seconds"> sec</string>
         </property>
         <property name="minimum">
          <number>10</number>

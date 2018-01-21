@@ -25,6 +25,8 @@
  */
 class Kdbx3Writer: public KdbxWriter
 {
+Q_DECLARE_TR_FUNCTIONS(Kdbx3Writer)
+
 public:
     bool writeDatabase(QIODevice* device, Database* db) override;
 };

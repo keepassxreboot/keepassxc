@@ -41,7 +41,7 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
     }
     int ivSize = SymmetricCipher::algorithmIvSize(algo);
     if (ivSize < 0) {
-        raiseError(tr("Invalid symmetric cipher IV size."));
+        raiseError(tr("Invalid symmetric cipher IV size.", "IV = Initialization Vector for symmetric cipher"));
         return false;
     }
 
@@ -82,6 +82,7 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
         QVariantMap kdfParams = KeePass2::kdfToParameters(db->kdf());
         QByteArray kdfParamBytes;
         if (!serializeVariantMap(kdfParams, kdfParamBytes)) {
+            //: Translation comment: variant map = data structure for storing meta data
             raiseError(tr("Failed to serialize KDF parameters variant map"));
             return false;
         }

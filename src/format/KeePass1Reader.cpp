@@ -126,37 +126,37 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
 
     m_encryptionIV = m_device->read(16);
     if (m_encryptionIV.size() != 16) {
-        raiseError("Unable to read encryption IV");
+        raiseError(tr("Unable to read encryption IV", "IV = Initialization Vector for symmetric cipher"));
         return nullptr;
     }
 
     auto numGroups = Endian::readSizedInt<quint32>(m_device, KeePass1::BYTEORDER, &ok);
     if (!ok) {
-        raiseError("Invalid number of groups");
+        raiseError(tr("Invalid number of groups"));
         return nullptr;
     }
 
     auto numEntries = Endian::readSizedInt<quint32>(m_device, KeePass1::BYTEORDER, &ok);
     if (!ok) {
-        raiseError("Invalid number of entries");
+        raiseError(tr("Invalid number of entries"));
         return nullptr;
     }
 
     m_contentHashHeader = m_device->read(32);
     if (m_contentHashHeader.size() != 32) {
-        raiseError("Invalid content hash size");
+        raiseError(tr("Invalid content hash size"));
         return nullptr;
     }
 
     m_transformSeed = m_device->read(32);
     if (m_transformSeed.size() != 32) {
-        raiseError("Invalid transform seed size");
+        raiseError(tr("Invalid transform seed size"));
         return nullptr;
     }
 
     m_transformRounds = Endian::readSizedInt<quint32>(m_device, KeePass1::BYTEORDER, &ok);
     if (!ok) {
-        raiseError("Invalid number of transform rounds");
+        raiseError(tr("Invalid number of transform rounds"));
         return nullptr;
     }
     auto kdf = QSharedPointer<AesKdf>::create(true);
@@ -191,7 +191,7 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
     }
 
     if (!constructGroupTree(groups)) {
-        raiseError("Unable to construct group tree");
+        raiseError(tr("Unable to construct group tree"));
         return nullptr;
     }
 
@@ -401,7 +401,7 @@ QByteArray KeePass1Reader::key(const QByteArray& password, const QByteArray& key
     bool result = key.transform(*m_db->kdf(), transformedKey);
 
     if (!result) {
-        raiseError("Key transformation failed");
+        raiseError(tr("Key transformation failed"));
         return QByteArray();
     }
 
@@ -445,19 +445,19 @@ Group* KeePass1Reader::readGroup(QIODevice* cipherStream)
     do {
         quint16 fieldType = Endian::readSizedInt<quint16>(cipherStream, KeePass1::BYTEORDER, &ok);
         if (!ok) {
-            raiseError("Invalid group field type number");
+            raiseError(tr("Invalid group field type number"));
             return nullptr;
         }
 
         int fieldSize = static_cast<int>(Endian::readSizedInt<quint32>(cipherStream, KeePass1::BYTEORDER, &ok));
         if (!ok) {
-            raiseError("Invalid group field size");
+            raiseError(tr("Invalid group field size"));
             return nullptr;
         }
 
         QByteArray fieldData = cipherStream->read(fieldSize);
         if (fieldData.size() != fieldSize) {
-            raiseError("Read group field data doesn't match size");
+            raiseError(tr("Read group field data doesn't match size"));
             return nullptr;
         }
 
@@ -467,7 +467,7 @@ Group* KeePass1Reader::readGroup(QIODevice* cipherStream)
             break;
         case 0x0001:
             if (fieldSize != 4) {
-                raiseError("Incorrect group id field size");
+                raiseError(tr("Incorrect group id field size"));
                 return nullptr;
             }
             groupId = Endian::bytesToSizedInt<quint32>(fieldData, KeePass1::BYTEORDER);
@@ -479,7 +479,7 @@ Group* KeePass1Reader::readGroup(QIODevice* cipherStream)
         case 0x0003:
         {
             if (fieldSize != 5) {
-                raiseError("Incorrect group creation time field size");
+                raiseError(tr("Incorrect group creation time field size"));
                 return nullptr;
             }
             QDateTime dateTime = dateFromPackedStruct(fieldData);
@@ -491,7 +491,7 @@ Group* KeePass1Reader::readGroup(QIODevice* cipherStream)
         case 0x0004:
         {
             if (fieldSize != 5) {
-                raiseError("Incorrect group modification time field size");
+                raiseError(tr("Incorrect group modification time field size"));
                 return nullptr;
             }
             QDateTime dateTime = dateFromPackedStruct(fieldData);
@@ -503,7 +503,7 @@ Group* KeePass1Reader::readGroup(QIODevice* cipherStream)
         case 0x0005:
         {
             if (fieldSize != 5) {
-                raiseError("Incorrect group access time field size");
+                raiseError(tr("Incorrect group access time field size"));
             }
             QDateTime dateTime = dateFromPackedStruct(fieldData);
             if (dateTime.isValid()) {
@@ -514,7 +514,7 @@ Group* KeePass1Reader::readGroup(QIODevice* cipherStream)
         case 0x0006:
         {
             if (fieldSize != 5) {
-                raiseError("Incorrect group expiry time field size");
+                raiseError(tr("Incorrect group expiry time field size"));
             }
             QDateTime dateTime = dateFromPackedStruct(fieldData);
             if (dateTime.isValid()) {
@@ -526,7 +526,7 @@ Group* KeePass1Reader::readGroup(QIODevice* cipherStream)
         case 0x0007:
         {
             if (fieldSize != 4) {
-                raiseError("Incorrect group icon field size");
+                raiseError(tr("Incorrect group icon field size"));
                 return nullptr;
             }
             quint32 iconNumber = Endian::bytesToSizedInt<quint32>(fieldData, KeePass1::BYTEORDER);
@@ -536,7 +536,7 @@ Group* KeePass1Reader::readGroup(QIODevice* cipherStream)
         case 0x0008:
         {
             if (fieldSize != 2) {
-                raiseError("Incorrect group level field size");
+                raiseError(tr("Incorrect group level field size"));
                 return nullptr;
             }
             groupLevel = Endian::bytesToSizedInt<quint16>(fieldData, KeePass1::BYTEORDER);
@@ -551,13 +551,13 @@ Group* KeePass1Reader::readGroup(QIODevice* cipherStream)
             break;
         default:
             // invalid field
-            raiseError("Invalid group field type");
+            raiseError(tr("Invalid group field type"));
             return nullptr;
         }
     } while (!reachedEnd);
 
     if (!groupIdSet || !groupLevelSet) {
-        raiseError("Missing group id or level");
+        raiseError(tr("Missing group id or level"));
         return nullptr;
     }
 
@@ -583,19 +583,19 @@ Entry* KeePass1Reader::readEntry(QIODevice* cipherStream)
     do {
         quint16 fieldType = Endian::readSizedInt<quint16>(cipherStream, KeePass1::BYTEORDER, &ok);
         if (!ok) {
-            raiseError("Missing entry field type number");
+            raiseError(tr("Missing entry field type number"));
             return nullptr;
         }
 
         int fieldSize = static_cast<int>(Endian::readSizedInt<quint32>(cipherStream, KeePass1::BYTEORDER, &ok));
         if (!ok) {
-            raiseError("Invalid entry field size");
+            raiseError(tr("Invalid entry field size"));
             return nullptr;
         }
 
         QByteArray fieldData = cipherStream->read(fieldSize);
         if (fieldData.size() != fieldSize) {
-            raiseError("Read entry field data doesn't match size");
+            raiseError(tr("Read entry field data doesn't match size"));
             return nullptr;
         }
 
@@ -605,7 +605,7 @@ Entry* KeePass1Reader::readEntry(QIODevice* cipherStream)
             break;
         case 0x0001:
             if (fieldSize != 16) {
-                raiseError("Invalid entry uuid field size");
+                raiseError(tr("Invalid entry uuid field size"));
                 return nullptr;
             }
             m_entryUuids.insert(fieldData, entry.data());
@@ -613,7 +613,7 @@ Entry* KeePass1Reader::readEntry(QIODevice* cipherStream)
         case 0x0002:
         {
             if (fieldSize != 4) {
-                raiseError("Invalid entry group id field size");
+                raiseError(tr("Invalid entry group id field size"));
                 return nullptr;
             }
             quint32 groupId = Endian::bytesToSizedInt<quint32>(fieldData, KeePass1::BYTEORDER);
@@ -623,7 +623,7 @@ Entry* KeePass1Reader::readEntry(QIODevice* cipherStream)
         case 0x0003:
         {
             if (fieldSize != 4) {
-                raiseError("Invalid entry icon field size");
+                raiseError(tr("Invalid entry icon field size"));
                 return nullptr;
             }
             quint32 iconNumber = Endian::bytesToSizedInt<quint32>(fieldData, KeePass1::BYTEORDER);
@@ -648,7 +648,7 @@ Entry* KeePass1Reader::readEntry(QIODevice* cipherStream)
         case 0x0009:
         {
             if (fieldSize != 5) {
-                raiseError("Invalid entry creation time field size");
+                raiseError(tr("Invalid entry creation time field size"));
                 return nullptr;
             }
             QDateTime dateTime = dateFromPackedStruct(fieldData);
@@ -660,7 +660,7 @@ Entry* KeePass1Reader::readEntry(QIODevice* cipherStream)
         case 0x000A:
         {
             if (fieldSize != 5) {
-                raiseError("Invalid entry modification time field size");
+                raiseError(tr("Invalid entry modification time field size"));
                 return nullptr;
             }
             QDateTime dateTime = dateFromPackedStruct(fieldData);
@@ -672,7 +672,7 @@ Entry* KeePass1Reader::readEntry(QIODevice* cipherStream)
         case 0x000B:
         {
             if (fieldSize != 5) {
-                raiseError("Invalid entry creation time field size");
+                raiseError(tr("Invalid entry creation time field size"));
                 return nullptr;
             }
             QDateTime dateTime = dateFromPackedStruct(fieldData);
@@ -684,7 +684,7 @@ Entry* KeePass1Reader::readEntry(QIODevice* cipherStream)
         case 0x000C:
         {
             if (fieldSize != 5) {
-                raiseError("Invalid entry expiry time field size");
+                raiseError(tr("Invalid entry expiry time field size"));
                 return nullptr;
             }
             QDateTime dateTime = dateFromPackedStruct(fieldData);
@@ -707,7 +707,7 @@ Entry* KeePass1Reader::readEntry(QIODevice* cipherStream)
             break;
         default:
             // invalid field
-            raiseError("Invalid entry field type");
+            raiseError(tr("Invalid entry field type"));
             return nullptr;
         }
     } while (!reachedEnd);

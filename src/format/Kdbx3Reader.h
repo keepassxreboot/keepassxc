@@ -26,6 +26,8 @@
  */
 class Kdbx3Reader: public KdbxReader
 {
+Q_DECLARE_TR_FUNCTIONS(Kdbx3Reader)
+
 public:
     Database* readDatabaseImpl(QIODevice* device, const QByteArray& headerData,
                                const CompositeKey& key, bool keepDatabase) override;
