@@ -141,6 +141,10 @@ QVector<PasswordGroup> PasswordGenerator::passwordGroups() const
             }
 
             group.append(i);
+
+            if ((m_flags & Hexadecimal) && (i == 102)) { // 'f'
+                break;
+            }
         }
 
         passwordGroups.append(group);
@@ -154,6 +158,10 @@ QVector<PasswordGroup> PasswordGenerator::passwordGroups() const
             }
 
             group.append(i);
+
+            if ((m_flags & Hexadecimal) && (i == 70)) { // 'F'
+                break;
+            }
         }
 
         passwordGroups.append(group);

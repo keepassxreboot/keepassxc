@@ -41,7 +41,8 @@ public:
     enum GeneratorFlag
     {
         ExcludeLookAlike   = 0x1,
-        CharFromEveryGroup = 0x2
+        CharFromEveryGroup = 0x2,
+        Hexadecimal        = 0x4
     };
     Q_DECLARE_FLAGS(GeneratorFlags, GeneratorFlag)
 

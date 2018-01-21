@@ -25,6 +25,9 @@
 #include <QLabel>
 #include <QMimeData>
 #include <QPushButton>
+#include <QCheckBox>
+#include <QRadioButton>
+#include <QWidget>
 #include <QSpinBox>
 #include <QPlainTextEdit>
 #include <QComboBox>
@@ -36,6 +39,7 @@
 #include <QSignalSpy>
 #include <QClipboard>
 #include <QDebug>
+#include <QRegularExpression>
 
 #include "config-keepassx-tests.h"
 #include "core/Config.h"
@@ -51,6 +55,7 @@
 #include "gui/DatabaseWidget.h"
 #include "gui/CloneDialog.h"
 #include "gui/PasswordEdit.h"
+#include "gui/PasswordGeneratorWidget.h"
 #include "gui/TotpDialog.h"
 #include "gui/SetupTotpDialog.h"
 #include "gui/FileDialog.h"
@@ -519,6 +524,115 @@ void TestGui::testDicewareEntryEntropy()
 
     QCOMPARE(entropyLabel->text(),  QString("Entropy: 77.55 bit"));
     QCOMPARE(strengthLabel->text(), QString("Password Quality: Good"));
+}
+
+void TestGui::testHexadecimalPasswords()
+{
+    QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
+
+    // Find the new entry action
+    QAction* entryNewAction = m_mainWindow->findChild<QAction*>("actionEntryNew");
+    QVERIFY(entryNewAction->isEnabled());
+
+    // Find the button associated with the new entry action
+    QWidget* entryNewWidget = toolBar->widgetForAction(entryNewAction);
+    QVERIFY(entryNewWidget->isVisible());
+    QVERIFY(entryNewWidget->isEnabled());
+
+    // Click the new entry button, check that we enter edit mode
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+
+    // Find all character types buttons and checkboxes
+    EditEntryWidget* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+    QToolButton* checkBoxUpper = editEntryWidget->findChild<QToolButton*>("checkBoxUpper");
+    QToolButton* checkBoxLower = editEntryWidget->findChild<QToolButton*>("checkBoxLower");
+    QToolButton* checkBoxNumbers = editEntryWidget->findChild<QToolButton*>("checkBoxNumbers");
+    QToolButton* checkBoxSpecialChars = editEntryWidget->findChild<QToolButton*>("checkBoxSpecialChars");
+    QToolButton* checkBoxExtASCII = editEntryWidget->findChild<QToolButton*>("checkBoxExtASCII");
+    QCheckBox* checkBoxExcludeAlike = editEntryWidget->findChild<QCheckBox*>("checkBoxExcludeAlike");
+    QCheckBox* checkBoxEnsureEvery = editEntryWidget->findChild<QCheckBox*>("checkBoxEnsureEvery");
+    QCheckBox* checkBoxHexadecimal = editEntryWidget->findChild<QCheckBox*>("checkBoxHexadecimal");
+    QRadioButton* radioButtonUpper = editEntryWidget->findChild<QRadioButton*>("radioButtonUpper");
+    QRadioButton* radioButtonLower = editEntryWidget->findChild<QRadioButton*>("radioButtonLower");
+
+    // Test uppercase hexadecimal mode
+    if (!checkBoxHexadecimal->isChecked()) { // Default value may change in the future
+        QTest::mouseClick(checkBoxHexadecimal, Qt::LeftButton);
+    }
+    QTest::mouseClick(radioButtonUpper, Qt::LeftButton);
+    QVERIFY(checkBoxHexadecimal->isChecked());
+
+    QVERIFY(checkBoxUpper->isChecked());
+    QVERIFY(!checkBoxLower->isChecked());
+    QVERIFY(checkBoxNumbers->isChecked());
+    QVERIFY(!checkBoxSpecialChars->isChecked());
+    QVERIFY(!checkBoxExtASCII->isChecked());
+    QVERIFY(!checkBoxExcludeAlike->isChecked());
+    QVERIFY(!checkBoxEnsureEvery->isChecked());
+    QVERIFY(radioButtonUpper->isChecked());
+    QVERIFY(!radioButtonLower->isChecked());
+
+    QVERIFY(!checkBoxUpper->isEnabled());
+    QVERIFY(!checkBoxLower->isEnabled());
+    QVERIFY(!checkBoxNumbers->isEnabled());
+    QVERIFY(!checkBoxSpecialChars->isEnabled());
+    QVERIFY(!checkBoxExtASCII->isEnabled());
+    QVERIFY(!checkBoxExcludeAlike->isEnabled());
+    QVERIFY(!checkBoxEnsureEvery->isEnabled());
+    QVERIFY(checkBoxHexadecimal->isEnabled());
+    QVERIFY(radioButtonUpper->isEnabled());
+    QVERIFY(radioButtonLower->isEnabled());
+
+    QString password = editEntryWidget->findChild<PasswordEdit*>("editNewPassword")->text();
+    QString length = QString::number(editEntryWidget->findChild<QSpinBox*>("spinBoxLength")->value());
+    QRegularExpression reUpper("^[\\dA-F]{" + length + "}$");
+    QVERIFY(reUpper.match(password).hasMatch());
+
+    // Test lowercase hexadecimal mode
+    QTest::mouseClick(radioButtonLower, Qt::LeftButton);
+    QVERIFY(checkBoxHexadecimal->isChecked());
+
+    QVERIFY(!checkBoxUpper->isChecked());
+    QVERIFY(checkBoxLower->isChecked());
+    QVERIFY(checkBoxNumbers->isChecked());
+    QVERIFY(!checkBoxSpecialChars->isChecked());
+    QVERIFY(!checkBoxExtASCII->isChecked());
+    QVERIFY(!checkBoxExcludeAlike->isChecked());
+    QVERIFY(!checkBoxEnsureEvery->isChecked());
+    QVERIFY(!radioButtonUpper->isChecked());
+    QVERIFY(radioButtonLower->isChecked());
+
+    QVERIFY(!checkBoxUpper->isEnabled());
+    QVERIFY(!checkBoxLower->isEnabled());
+    QVERIFY(!checkBoxNumbers->isEnabled());
+    QVERIFY(!checkBoxSpecialChars->isEnabled());
+    QVERIFY(!checkBoxExtASCII->isEnabled());
+    QVERIFY(!checkBoxExcludeAlike->isEnabled());
+    QVERIFY(!checkBoxEnsureEvery->isEnabled());
+    QVERIFY(checkBoxHexadecimal->isEnabled());
+    QVERIFY(radioButtonUpper->isEnabled());
+    QVERIFY(radioButtonLower->isEnabled());
+
+    password = editEntryWidget->findChild<PasswordEdit*>("editNewPassword")->text();
+    length = QString::number(editEntryWidget->findChild<QSpinBox*>("spinBoxLength")->value());
+    QRegularExpression reLower("^[\\da-f]{" + length + "}$");
+    QVERIFY(reLower.match(password).hasMatch());
+
+    // Test with hexadecimal mode disabled
+    QTest::mouseClick(checkBoxHexadecimal, Qt::LeftButton);
+    QVERIFY(!checkBoxHexadecimal->isChecked());
+
+    QVERIFY(checkBoxUpper->isEnabled());
+    QVERIFY(checkBoxLower->isEnabled());
+    QVERIFY(checkBoxNumbers->isEnabled());
+    QVERIFY(checkBoxSpecialChars->isEnabled());
+    QVERIFY(checkBoxExtASCII->isEnabled());
+    QVERIFY(checkBoxExcludeAlike->isEnabled());
+    QVERIFY(checkBoxEnsureEvery->isEnabled());
+    QVERIFY(checkBoxHexadecimal->isEnabled());
+    QVERIFY(!radioButtonUpper->isEnabled());
+    QVERIFY(!radioButtonLower->isEnabled());
 }
 
 void TestGui::testTotp()
