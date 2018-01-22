@@ -19,7 +19,6 @@
 
 #include <QKeyEvent>
 #include <QMouseEvent>
-#include <QDebug>
 
 AutoTypeSelectView::AutoTypeSelectView(QWidget* parent)
     : EntryView(parent)
@@ -59,14 +58,8 @@ void AutoTypeSelectView::selectFirstEntry()
 
 void AutoTypeSelectView::keyReleaseEvent(QKeyEvent* e)
 {
-    qDebug() << e->key();
-
-    if (!e->modifiers() || (e->modifiers() & Qt::KeypadModifier && e->key() == Qt::Key_Enter)) {
-        if (e->key() == Qt::Key_Escape) {
-            emit rejected();
-        } else {
-            e->ignore();
-        }
+    if (e->key() == Qt::Key_Escape) {
+        emit rejected();
     } else {
         e->ignore();
     }
