@@ -133,8 +133,7 @@ int Add::execute(QStringList arguments)
             passwordGenerator.setLength(passwordLength.toInt());
         }
 
-        passwordGenerator.setCharClasses(PasswordGenerator::LowerLetters | PasswordGenerator::UpperLetters |
-                                         PasswordGenerator::Numbers);
+        passwordGenerator.setCharClasses(PasswordGenerator::DefaultCharset);
         QString password = passwordGenerator.generatePassword();
         entry->setPassword(password);
     }

@@ -96,12 +96,7 @@ int PassGen::execute(QStringList arguments)
         classes |= PasswordGenerator::EASCII; 
     }
 
-    if (classes == 0x0) {
-        passwordGenerator.setCharClasses(PasswordGenerator::LowerLetters | PasswordGenerator::UpperLetters |
-                                         PasswordGenerator::Numbers);
-    } else {
-        passwordGenerator.setCharClasses(classes);
-    }
+    passwordGenerator.setCharClasses(classes);
 
     if (!passwordGenerator.isValid()) {
         outputTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli passgen");

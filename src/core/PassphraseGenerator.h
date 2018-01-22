@@ -36,6 +36,8 @@ public:
 
     QString generatePassphrase() const;
 
+    static const int DefaultWordCount = 7;
+
 private:
     int m_wordCount;
     QString m_separator;

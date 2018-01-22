@@ -48,7 +48,7 @@ void PassphraseGenerator::setWordCount(int wordCount)
         m_wordCount = wordCount;
     } else {
         // safe default if something goes wrong
-        m_wordCount = 7;
+        m_wordCount = DefaultWordCount;
     }
 
 }
