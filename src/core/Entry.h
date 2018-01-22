@@ -210,6 +210,7 @@ private slots:
     void emitDataChanged();
     void updateTimeinfo();
     void updateModifiedSinceBegin();
+    void updateTotp();
 
 private:
     QString resolveMultiplePlaceholdersRecursive(const QString& str, int maxDepth) const;

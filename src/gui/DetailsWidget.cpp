@@ -20,16 +20,12 @@
 #include "ui_DetailsWidget.h"
 
 #include <QDebug>
-#include <QTimer>
 #include <QDir>
 #include <QDesktopServices>
-#include <QTemporaryFile>
 
 #include "core/Config.h"
 #include "core/FilePath.h"
-#include "core/TimeInfo.h"
 #include "gui/Clipboard.h"
-#include "gui/DatabaseWidget.h"
 #include "entry/EntryAttachmentsModel.h"
 
 DetailsWidget::DetailsWidget(QWidget* parent)
@@ -70,6 +66,9 @@ DetailsWidget::DetailsWidget(QWidget* parent)
 
 DetailsWidget::~DetailsWidget()
 {
+    if (m_timer) {
+        delete m_timer;
+    }
 }
 
 void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
@@ -154,13 +153,13 @@ void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
     if (m_currentEntry->hasTotp()) {
         m_step = m_currentEntry->totpStep();
 
-        if (nullptr != m_timer) {
-            m_timer->stop();
+        if (m_timer) {
+            delete m_timer;
         }
-        m_timer = new QTimer(this);
+        m_timer = new QTimer(selectedEntry);
         connect(m_timer, SIGNAL(timeout()), this, SLOT(updateTotp()));
         updateTotp();
-        m_timer->start(m_step * 10);
+        m_timer->start(m_step * 1000);
         m_ui->totpButton->show();
     }
 
@@ -288,7 +287,7 @@ void DetailsWidget::updateTotp()
         QString firstHalf = totpCode.left(totpCode.size() / 2);
         QString secondHalf = totpCode.mid(totpCode.size() / 2);
         m_ui->totpLabel->setText(firstHalf + " " + secondHalf);
-    } else if (nullptr != m_timer) {
+    } else if (m_timer) {
         m_timer->stop();
     }
 }

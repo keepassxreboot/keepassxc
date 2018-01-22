@@ -45,6 +45,7 @@ Entry::Entry()
     m_data.totpStep = Totp::defaultStep;
     m_data.totpDigits = Totp::defaultDigits;
 
+    connect(m_attributes, SIGNAL(modified()), SLOT(updateTotp()));
     connect(m_attributes, SIGNAL(modified()), this, SIGNAL(modified()));
     connect(m_attributes, SIGNAL(defaultKeyModified()), SLOT(emitDataChanged()));
     connect(m_attachments, SIGNAL(modified()), this, SIGNAL(modified()));
@@ -343,9 +344,8 @@ QString Entry::totp() const
         QString output = Totp::generateTotp(seed.toLatin1(), time, m_data.totpDigits, m_data.totpStep);
 
         return QString(output);
-    } else {
-        return QString("");
     }
+    return {};
 }
 
 void Entry::setTotp(const QString& seed, quint8& step, quint8& digits)
@@ -386,23 +386,6 @@ QString Entry::totpSeed() const
         secret = m_attributes->value("otp");
     } else if (m_attributes->hasKey("TOTP Seed")) {
         secret = m_attributes->value("TOTP Seed");
-    }
-
-    m_data.totpDigits = Totp::defaultDigits;
-    m_data.totpStep = Totp::defaultStep;
-
-    if (m_attributes->hasKey("TOTP Settings")) {
-        // this regex must be kept in sync with the set of allowed short names Totp::shortNameToEncoder
-        QRegularExpression rx(QString("(\\d+);((?:\\d+)|S)"));
-        QRegularExpressionMatch m = rx.match(m_attributes->value("TOTP Settings"));
-        if (m.hasMatch()) {
-            m_data.totpStep = m.captured(1).toUInt();
-            if (Totp::shortNameToEncoder.contains(m.captured(2))) {
-                m_data.totpDigits = Totp::shortNameToEncoder[m.captured(2)];
-            } else {
-                m_data.totpDigits = m.captured(2).toUInt();
-            }
-        }
     }
 
     return Totp::parseOtpString(secret, m_data.totpDigits, m_data.totpStep);
@@ -720,6 +703,33 @@ bool Entry::endUpdate()
 void Entry::updateModifiedSinceBegin()
 {
     m_modifiedSinceBegin = true;
+}
+
+/**
+ * Update TOTP data whenever entry attributes have changed.
+ */
+void Entry::updateTotp()
+{
+    m_data.totpDigits = Totp::defaultDigits;
+    m_data.totpStep = Totp::defaultStep;
+
+    if (!m_attributes->hasKey("TOTP Settings")) {
+        return;
+    }
+
+    // this regex must be kept in sync with the set of allowed short names Totp::shortNameToEncoder
+    QRegularExpression rx(QString("(\\d+);((?:\\d+)|S)"));
+    QRegularExpressionMatch m = rx.match(m_attributes->value("TOTP Settings"));
+    if (!m.hasMatch()) {
+        return;
+    }
+
+    m_data.totpStep = static_cast<quint8>(m.captured(1).toUInt());
+    if (Totp::shortNameToEncoder.contains(m.captured(2))) {
+        m_data.totpDigits = Totp::shortNameToEncoder[m.captured(2)];
+    } else {
+        m_data.totpDigits = static_cast<quint8>(m.captured(2).toUInt());
+    }
 }
 
 QString Entry::resolveMultiplePlaceholdersRecursive(const QString& str, int maxDepth) const

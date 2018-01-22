@@ -20,6 +20,7 @@
 
 #include "gui/DatabaseWidget.h"
 #include <QWidget>
+#include <QTimer>
 
 namespace Ui {
     class DetailsWidget;
@@ -67,7 +68,7 @@ private:
     Entry* m_currentEntry;
     Group* m_currentGroup;
     quint8 m_step;
-    QTimer* m_timer;
+    QPointer<QTimer> m_timer = nullptr;
     QWidget* m_attributesTabWidget;
     QWidget* m_attachmentsTabWidget;
     QWidget* m_autotypeTabWidget;
