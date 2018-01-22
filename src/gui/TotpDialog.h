@@ -21,6 +21,8 @@
 
 #include <QDialog>
 #include <QScopedPointer>
+#include <QTimer>
+#include <totp/totp.h>
 #include "core/Entry.h"
 #include "core/Database.h"
 #include "gui/DatabaseWidget.h"
@@ -39,8 +41,9 @@ public:
 
 private:
     double uCounter;
-    quint8 m_step;
+    quint8 m_step = Totp::defaultStep;
     QScopedPointer<Ui::TotpDialog> m_ui;
+    QPointer<QTimer> m_totpUpdateTimer;
 
 private Q_SLOTS:
     void updateTotp();
@@ -51,7 +54,6 @@ private Q_SLOTS:
 
 protected:
     Entry* m_entry;
-    DatabaseWidget* m_parent;
 };
 
 #endif // KEEPASSX_TOTPDIALOG_H
