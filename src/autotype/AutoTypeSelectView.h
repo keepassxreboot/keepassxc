@@ -31,9 +31,13 @@ public:
 
 protected:
     void mouseMoveEvent(QMouseEvent* event) override;
+    void keyReleaseEvent(QKeyEvent* e) override;
 
 private slots:
     void selectFirstEntry();
+
+signals:
+    void rejected();
 };
 
 #endif // KEEPASSX_AUTOTYPESELECTVIEW_H
