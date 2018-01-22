@@ -17,6 +17,7 @@
 
 #include "AutoTypeSelectView.h"
 
+#include <QKeyEvent>
 #include <QMouseEvent>
 
 AutoTypeSelectView::AutoTypeSelectView(QWidget* parent)
@@ -52,5 +53,14 @@ void AutoTypeSelectView::selectFirstEntry()
 
     if (index.isValid()) {
         setCurrentIndex(index);
+    }
+}
+
+void AutoTypeSelectView::keyReleaseEvent(QKeyEvent* e)
+{
+    if (e->key() == Qt::Key_Escape) {
+        emit rejected();
+    } else {
+        e->ignore();
     }
 }

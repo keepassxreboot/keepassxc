@@ -58,6 +58,7 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
 
     connect(m_view, SIGNAL(activated(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
     connect(m_view, SIGNAL(clicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
+    connect(m_view, SIGNAL(rejected()), SLOT(reject()));
     connect(m_view->model(), SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(entryRemoved()));
     layout->addWidget(m_view);
 

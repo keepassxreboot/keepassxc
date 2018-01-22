@@ -153,12 +153,8 @@ void PasswordGeneratorWidget::setStandaloneMode(bool standalone)
 
 void PasswordGeneratorWidget::keyPressEvent(QKeyEvent* e)
 {
-    if (!e->modifiers() || (e->modifiers() & Qt::KeypadModifier && e->key() == Qt::Key_Enter)) {
-        if (e->key() == Qt::Key_Escape && m_standalone == true) {
-            emit dialogTerminated();
-        } else {
-            e->ignore();
-        }
+    if (e->key() == Qt::Key_Escape && m_standalone == true) {
+        emit dialogTerminated();
     } else {
         e->ignore();
     }
