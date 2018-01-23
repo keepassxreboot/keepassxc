@@ -582,22 +582,24 @@ void Entry::truncateHistory()
     int histMaxSize = db->metadata()->historyMaxSize();
     if (histMaxSize > -1) {
         int size = 0;
-        QSet<QByteArray> foundAttachments = attachments()->values().toSet();
+        QSet<QByteArray> foundAttachments = attachments()->values();
 
         QMutableListIterator<Entry*> i(m_history);
         i.toBack();
+        const QRegularExpression delimiter(",|:|;");
         while (i.hasPrevious()) {
             Entry* historyItem = i.previous();
 
             // don't calculate size if it's already above the maximum
             if (size <= histMaxSize) {
                 size += historyItem->attributes()->attributesSize();
-
-                const QSet<QByteArray> newAttachments = historyItem->attachments()->values().toSet() - foundAttachments;
-                for (const QByteArray& attachment : newAttachments) {
-                    size += attachment.size();
+                size += historyItem->autoTypeAssociations()->associationsSize();
+                size += historyItem->attachments()->attachmentsSize();
+                const QStringList tags = historyItem->tags().split(delimiter, QString::SkipEmptyParts);
+                for (const QString& tag : tags) {
+                    size += tag.toUtf8().size();
                 }
-                foundAttachments += newAttachments;
+                foundAttachments += historyItem->attachments()->values();
             }
 
             if (size > histMaxSize) {
@@ -633,7 +635,7 @@ Entry* Entry::clone(CloneFlags flags) const
         entry->m_attributes->set(EntryAttributes::PasswordKey, password.toUpper(), m_attributes->isProtected(EntryAttributes::PasswordKey));
     }
 
-    entry->m_autoTypeAssociations->copyDataFrom(this->m_autoTypeAssociations);
+    entry->m_autoTypeAssociations->copyDataFrom(m_autoTypeAssociations);
     if (flags & CloneIncludeHistory) {
         for (Entry* historyItem : m_history) {
             Entry* historyItemClone = historyItem->clone(flags & ~CloneIncludeHistory & ~CloneNewUuid);
@@ -679,6 +681,7 @@ void Entry::beginUpdate()
     m_tmpHistoryItem->m_data = m_data;
     m_tmpHistoryItem->m_attributes->copyDataFrom(m_attributes);
     m_tmpHistoryItem->m_attachments->copyDataFrom(m_attachments);
+    m_tmpHistoryItem->m_autoTypeAssociations->copyDataFrom(m_autoTypeAssociations);
 
     m_modifiedSinceBegin = false;
 }

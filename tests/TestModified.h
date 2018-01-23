@@ -29,7 +29,8 @@ private slots:
     void testSignals();
     void testGroupSets();
     void testEntrySets();
-    void testHistoryItem();
+    void testHistoryItems();
+    void testHistoryMaxSize();
 };
 
 #endif // KEEPASSX_TESTMODIFIED_H

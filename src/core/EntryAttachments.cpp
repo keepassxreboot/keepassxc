@@ -18,6 +18,7 @@
 #include "EntryAttachments.h"
 
 #include <QStringList>
+#include <QSet>
 
 EntryAttachments::EntryAttachments(QObject* parent)
     : QObject(parent)
@@ -34,9 +35,9 @@ bool EntryAttachments::hasKey(const QString& key) const
     return m_attachments.contains(key);
 }
 
-QList<QByteArray> EntryAttachments::values() const
+QSet<QByteArray> EntryAttachments::values() const
 {
-    return m_attachments.values();
+    return m_attachments.values().toSet();
 }
 
 QByteArray EntryAttachments::value(const QString& key) const
@@ -150,4 +151,13 @@ bool EntryAttachments::operator==(const EntryAttachments& other) const
 bool EntryAttachments::operator!=(const EntryAttachments& other) const
 {
     return m_attachments != other.m_attachments;
+}
+
+int EntryAttachments::attachmentsSize() const
+{
+    int size = 0;
+    for (auto it = m_attachments.constBegin(); it != m_attachments.constEnd(); ++it) {
+        size += it.key().toUtf8().size() + it.value().size();
+    }
+    return size;
 }
