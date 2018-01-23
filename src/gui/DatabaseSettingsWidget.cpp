@@ -79,6 +79,8 @@ void DatabaseSettingsWidget::load(Database* db)
     m_uiGeneral->dbDescriptionEdit->setText(meta->description());
     m_uiGeneral->recycleBinEnabledCheckBox->setChecked(meta->recycleBinEnabled());
     m_uiGeneral->defaultUsernameEdit->setText(meta->defaultUserName());
+    m_uiGeneral->compressionCheckbox->setChecked(m_db->compressionAlgo() != Database::CompressionNone);
+
     if (meta->historyMaxItems() > -1) {
         m_uiGeneral->historyMaxItemsSpinBox->setValue(meta->historyMaxItems());
         m_uiGeneral->historyMaxItemsCheckBox->setChecked(true);
@@ -167,6 +169,8 @@ void DatabaseSettingsWidget::save()
             return;
         }
     }
+
+    m_db->setCompressionAlgo(m_uiGeneral->compressionCheckbox->isChecked() ? Database::CompressionGZip : Database::CompressionNone);
 
     Metadata* meta = m_db->metadata();
 
