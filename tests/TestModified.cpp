@@ -288,14 +288,14 @@ void TestModified::testEntrySets()
     delete db;
 }
 
-void TestModified::testHistoryItem()
+void TestModified::testHistoryItems()
 {
-    Entry* entry = new Entry();
+    QScopedPointer<Entry> entry(new Entry());
     QDateTime created = entry->timeInfo().creationTime();
     entry->setUuid(Uuid::random());
     entry->setTitle("a");
     entry->setTags("a");
-    EntryAttributes* attributes = new EntryAttributes();
+    QScopedPointer<EntryAttributes> attributes(new EntryAttributes());
     attributes->copyCustomKeysFrom(entry->attributes());
 
     Entry* historyEntry;
@@ -338,15 +338,12 @@ void TestModified::testHistoryItem()
 
     attributes->set("k", "myvalue");
     entry->beginUpdate();
-    entry->attributes()->copyCustomKeysFrom(attributes);
+    entry->attributes()->copyCustomKeysFrom(attributes.data());
     entry->endUpdate();
     QCOMPARE(entry->historyItems().size(), ++historyItemsSize);
     QVERIFY(!entry->historyItems().at(historyItemsSize - 1)->attributes()->keys().contains("k"));
 
-    delete attributes;
-    delete entry;
-
-    Database* db = new Database();
+    QScopedPointer<Database> db(new Database());
     Group* root = db->rootGroup();
     db->metadata()->setHistoryMaxItems(3);
     db->metadata()->setHistoryMaxSize(-1);
@@ -400,14 +397,16 @@ void TestModified::testHistoryItem()
     entry2->endUpdate();
     QCOMPARE(entry2->historyItems().size(), 0);
 
-    const int historyMaxSize = 17000;
+    const int historyMaxSize = 19000;
 
     db->metadata()->setHistoryMaxItems(-1);
     db->metadata()->setHistoryMaxSize(historyMaxSize);
 
+    const QString key("test");
     entry2->beginUpdate();
-    entry2->attachments()->set("test", QByteArray(18000, 'X'));
+    entry2->attachments()->set(key, QByteArray(18000, 'X'));
     entry2->endUpdate();
+    QCOMPARE(entry2->attachments()->attachmentsSize(), 18000 + key.size());
     QCOMPARE(entry2->historyItems().size(), 1);
 
     historyEntry2 = entry2->historyItems().at(0);
@@ -419,102 +418,167 @@ void TestModified::testHistoryItem()
     QCOMPARE(entry2->historyItems().size(), 2);
 
     entry2->beginUpdate();
-    entry2->attachments()->remove("test");
+    entry2->attachments()->remove(key);
     entry2->endUpdate();
-    QCOMPARE(entry2->historyItems().size(), 0);
+    QCOMPARE(entry2->attachments()->attachmentsSize(), 0);
+    QCOMPARE(entry2->historyItems().size(), 1);
 
     entry2->beginUpdate();
     entry2->attachments()->set("test2", QByteArray(6000, 'a'));
     entry2->endUpdate();
-    QCOMPARE(entry2->historyItems().size(), 1);
+    QCOMPARE(entry2->attachments()->attachmentsSize(), 6000 + key.size() + 1);
+    QCOMPARE(entry2->historyItems().size(), 2);
 
     entry2->beginUpdate();
     entry2->attachments()->set("test3", QByteArray(6000, 'b'));
     entry2->endUpdate();
+    QCOMPARE(entry2->attachments()->attachmentsSize(), 12000 + (key.size() + 1) * 2);
     QCOMPARE(entry2->historyItems().size(), 2);
 
     entry2->beginUpdate();
     entry2->attachments()->set("test4", QByteArray(6000, 'c'));
     entry2->endUpdate();
+    QCOMPARE(entry2->attachments()->attachmentsSize(), 18000 + (key.size() + 1) * 3);
     QCOMPARE(entry2->historyItems().size(), 3);
 
     entry2->beginUpdate();
     entry2->attachments()->set("test5", QByteArray(6000, 'd'));
     entry2->endUpdate();
-    QCOMPARE(entry2->historyItems().size(), 4);
+    QCOMPARE(entry2->attachments()->attachmentsSize(), 24000 + (key.size() + 1) * 4);
+    QCOMPARE(entry2->historyItems().size(), 1);
+}
 
-    Entry* entry3 = new Entry();
-    entry3->setGroup(root);
-    QCOMPARE(entry3->historyItems().size(), 0);
-
-    entry3->beginUpdate();
-    entry3->attachments()->set("test", QByteArray(6000, 'a'));
-    entry3->endUpdate();
-    QCOMPARE(entry3->historyItems().size(), 1);
-
-    entry3->beginUpdate();
-    entry3->attachments()->set("test", QByteArray(6000, 'b'));
-    entry3->endUpdate();
-    QCOMPARE(entry3->historyItems().size(), 2);
-
-    entry3->beginUpdate();
-    entry3->attachments()->set("test", QByteArray(6000, 'c'));
-    entry3->endUpdate();
-    QCOMPARE(entry3->historyItems().size(), 3);
-
-    entry3->beginUpdate();
-    entry3->attachments()->set("test", QByteArray(6000, 'd'));
-    entry3->endUpdate();
-    QCOMPARE(entry3->historyItems().size(), 2);
-
-    Entry* entry4 = new Entry();
-    entry4->setGroup(root);
-    QCOMPARE(entry4->historyItems().size(), 0);
-
+void TestModified::testHistoryMaxSize()
+{
+    QScopedPointer<Database> db(new Database());
     const QString key("test");
 
-    int reservedSize = entry4->attributes()->attributesSize();
-    entry4->beginUpdate();
-    entry4->attachments()->set(key, QByteArray(historyMaxSize - key.size() - reservedSize + 1, 'a'));
-    entry4->endUpdate();
-    QCOMPARE(entry4->historyItems().size(), 1);
 
-    entry4->beginUpdate();
-    entry4->attachments()->remove(key);
-    entry4->endUpdate();
-    QCOMPARE(entry4->historyItems().size(), 0);
+    auto entry1 = new Entry();
+    entry1->setGroup(db->rootGroup());
+    QCOMPARE(entry1->historyItems().size(), 0);
 
-    entry4->beginUpdate();
-    entry4->setTags(QByteArray(historyMaxSize - reservedSize + 1, 'a'));
-    entry4->endUpdate();
-    QCOMPARE(entry4->historyItems().size(), 1);
+    const int reservedSize1 = entry1->attributes()->attributesSize();
+    db->metadata()->setHistoryMaxItems(-1);
+    db->metadata()->setHistoryMaxSize(18000 + key.size() * 3 + reservedSize1 * 4);
 
-    entry4->beginUpdate();
-    entry4->setTags("");
-    entry4->endUpdate();
-    QCOMPARE(entry4->historyItems().size(), 0);
+    entry1->beginUpdate();
+    entry1->attachments()->set(key, QByteArray(6000, 'a'));
+    entry1->endUpdate();
+    QCOMPARE(entry1->attachments()->attachmentsSize(), 6000 + key.size());
+    QCOMPARE(entry1->historyItems().size(), 1);
 
-    entry4->beginUpdate();
-    entry4->attributes()->set(key, QByteArray(historyMaxSize - key.size() - reservedSize + 1, 'a'));
-    entry4->endUpdate();
-    QCOMPARE(entry4->historyItems().size(), 1);
+    entry1->beginUpdate();
+    entry1->attachments()->set(key, QByteArray(6000, 'b'));
+    entry1->endUpdate();
+    QCOMPARE(entry1->attachments()->attachmentsSize(), 6000 + key.size());
+    QCOMPARE(entry1->historyItems().size(), 2);
 
-    entry4->beginUpdate();
-    entry4->attributes()->remove(key);
-    entry4->endUpdate();
-    QCOMPARE(entry4->historyItems().size(), 0);
+    entry1->beginUpdate();
+    entry1->attachments()->set(key, QByteArray(6000, 'c'));
+    entry1->endUpdate();
+    QCOMPARE(entry1->attachments()->attachmentsSize(), 6000 + key.size());
+    QCOMPARE(entry1->historyItems().size(), 3);
 
-    entry4->beginUpdate();
+    entry1->beginUpdate();
+    entry1->attachments()->set(key, QByteArray(6000, 'd'));
+    entry1->endUpdate();
+    QCOMPARE(entry1->attachments()->attachmentsSize(), 6000 + key.size());
+    QCOMPARE(entry1->historyItems().size(), 4);
+
+
+    auto entry2 = new Entry();
+    entry2->setGroup(db->rootGroup());
+    QCOMPARE(entry2->historyItems().size(), 0);
+
+    const int historyMaxSize = 17000;
+    const int reservedSize2 = entry2->attributes()->attributesSize();
+    db->metadata()->setHistoryMaxSize(historyMaxSize);
+
+    entry2->beginUpdate();
+    entry2->attachments()->set(key, QByteArray(historyMaxSize - key.size() - reservedSize2 + 1, 'a'));
+    entry2->endUpdate();
+    QCOMPARE(entry2->attachments()->attachmentsSize(), historyMaxSize - reservedSize2 + 1);
+    QCOMPARE(entry2->historyItems().size(), 1);
+
+    // history size overflow
+    entry2->beginUpdate();
+    entry2->attachments()->set(key, QByteArray(historyMaxSize - key.size() - reservedSize2 + 1, 'b'));
+    entry2->endUpdate();
+    QCOMPARE(entry2->historyItems().size(), 0);
+
+    entry2->beginUpdate();
+    entry2->attachments()->remove(key);
+    entry2->endUpdate();
+    QCOMPARE(entry2->attachments()->attachmentsSize(), 0);
+    QCOMPARE(entry2->historyItems().size(), 0);
+
+    entry2->beginUpdate();
+    entry2->attachments()->set(key, QByteArray(historyMaxSize - key.size() - reservedSize2 + 1, 'a'));
+    entry2->endUpdate();
+    QCOMPARE(entry2->attachments()->attachmentsSize(), historyMaxSize - reservedSize2 + 1);
+    QCOMPARE(entry2->historyItems().size(), 1);
+
+    // history size overflow
+    entry2->beginUpdate();
+    entry2->attachments()->set(key, QByteArray(historyMaxSize - key.size() - reservedSize2 + 1, 'b'));
+    entry2->endUpdate();
+    QCOMPARE(entry2->historyItems().size(), 0);
+
+    entry2->beginUpdate();
+    entry2->attachments()->remove(key);
+    entry2->endUpdate();
+    QCOMPARE(entry2->attachments()->attachmentsSize(), 0);
+    QCOMPARE(entry2->historyItems().size(), 0);
+
+    entry2->beginUpdate();
+    entry2->setTags(QByteArray(historyMaxSize - reservedSize2 + 1, 'a'));
+    entry2->endUpdate();
+    QCOMPARE(entry2->tags().size(), historyMaxSize - reservedSize2 + 1);
+    QCOMPARE(entry2->historyItems().size(), 1);
+
+    // history size overflow
+    entry2->beginUpdate();
+    entry2->setTags(QByteArray(historyMaxSize - reservedSize2 + 1, 'b'));
+    entry2->endUpdate();
+    QCOMPARE(entry2->historyItems().size(), 0);
+
+    entry2->beginUpdate();
+    entry2->setTags("");
+    entry2->endUpdate();
+    QCOMPARE(entry2->historyItems().size(), 0);
+
+    entry2->beginUpdate();
+    entry2->attributes()->set(key, QByteArray(historyMaxSize - key.size() - reservedSize2 + 1, 'a'));
+    entry2->endUpdate();
+    QCOMPARE(entry2->attributes()->attributesSize(), historyMaxSize + 1);
+    QCOMPARE(entry2->historyItems().size(), 1);
+
+    // history size overflow
+    entry2->beginUpdate();
+    entry2->attributes()->set(key, QByteArray(historyMaxSize - key.size() - reservedSize2 + 1, 'b'));
+    entry2->endUpdate();
+    QCOMPARE(entry2->attributes()->attributesSize(), historyMaxSize + 1);
+    QCOMPARE(entry2->historyItems().size(), 0);
+
+    entry2->beginUpdate();
+    entry2->attributes()->remove(key);
+    entry2->endUpdate();
+    QCOMPARE(entry2->attributes()->attributesSize(), reservedSize2);
+    QCOMPARE(entry2->historyItems().size(), 0);
+
+    entry2->beginUpdate();
     AutoTypeAssociations::Association association;
     association.window = key;
-    association.sequence = QByteArray(historyMaxSize - key.size() - reservedSize + 1, 'a');
-    entry4->autoTypeAssociations()->add(association);
-    entry4->endUpdate();
-    QCOMPARE(entry4->historyItems().size(), 1);
+    association.sequence = QByteArray(historyMaxSize - key.size() - reservedSize2 + 1, 'a');
+    entry2->autoTypeAssociations()->add(association);
+    entry2->endUpdate();
+    QCOMPARE(entry2->autoTypeAssociations()->associationsSize(), historyMaxSize - reservedSize2 + 1);
+    QCOMPARE(entry2->historyItems().size(), 1);
 
-    entry4->beginUpdate();
-    entry4->autoTypeAssociations()->remove(0);
-    entry4->endUpdate();
-    QCOMPARE(entry4->historyItems().size(), 0);
-    delete db;
+    entry2->beginUpdate();
+    entry2->autoTypeAssociations()->remove(0);
+    entry2->endUpdate();
+    QCOMPARE(entry2->autoTypeAssociations()->associationsSize(), 0);
+    QCOMPARE(entry2->historyItems().size(), 0);
 }
