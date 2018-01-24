@@ -17,17 +17,15 @@
  */
 
 #include "TestDatabase.h"
+#include "TestGlobal.h"
 
-#include <QTest>
 #include <QSignalSpy>
 #include <QTemporaryFile>
 
 #include "config-keepassx-tests.h"
-#include "core/Database.h"
 #include "crypto/Crypto.h"
 #include "keys/PasswordKey.h"
 #include "core/Metadata.h"
-#include "core/Group.h"
 #include "format/KeePass2Writer.h"
 
 QTEST_GUILESS_MAIN(TestDatabase)

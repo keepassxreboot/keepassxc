@@ -16,9 +16,9 @@
  */
 
 #include "TestEntryModel.h"
+#include "TestGlobal.h"
 
 #include <QSignalSpy>
-#include <QTest>
 
 #include "modeltest.h"
 #include "core/DatabaseIcons.h"

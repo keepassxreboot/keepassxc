@@ -16,6 +16,8 @@
  */
 
 #include "TestKdbx4.h"
+#include "TestGlobal.h"
+
 #include "core/Metadata.h"
 #include "keys/PasswordKey.h"
 #include "format/KeePass2.h"
@@ -25,7 +27,6 @@
 #include "format/KdbxXmlWriter.h"
 #include "config-keepassx-tests.h"
 
-#include <QTest>
 
 QTEST_GUILESS_MAIN(TestKdbx4)
 

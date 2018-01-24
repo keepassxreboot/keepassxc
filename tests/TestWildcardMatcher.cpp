@@ -16,9 +16,7 @@
  */
 
 #include "TestWildcardMatcher.h"
-
-#include <QTest>
-
+#include "TestGlobal.h"
 #include "autotype/WildcardMatcher.h"
 
 QTEST_GUILESS_MAIN(TestWildcardMatcher)

@@ -16,12 +16,8 @@
  */
 
 #include "TestMerge.h"
+#include "TestGlobal.h"
 
-#include <QDebug>
-#include <QTest>
-
-#include "core/Database.h"
-#include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
 

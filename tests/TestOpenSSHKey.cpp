@@ -16,9 +16,9 @@
  */
 
 #include "TestOpenSSHKey.h"
-#include "crypto/Crypto.h"
+#include "TestGlobal.h"
 #include "sshagent/OpenSSHKey.h"
-#include <QTest>
+#include "crypto/Crypto.h"
 
 QTEST_GUILESS_MAIN(TestOpenSSHKey)
 

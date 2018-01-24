@@ -17,15 +17,10 @@
  */
 
 #include "TestGroup.h"
+#include "TestGlobal.h"
 
-#include <QDebug>
-#include <QPointer>
-#include <QScopedPointer>
 #include <QSignalSpy>
-#include <QTest>
 
-#include "core/Database.h"
-#include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
 

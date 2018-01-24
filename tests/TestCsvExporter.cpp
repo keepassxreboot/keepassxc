@@ -17,13 +17,10 @@
  */
 
 #include "TestCsvExporter.h"
+#include "TestGlobal.h"
 
 #include <QBuffer>
-#include <QTest>
 
-#include "core/Database.h"
-#include "core/Entry.h"
-#include "core/Group.h"
 #include "crypto/Crypto.h"
 #include "format/CsvExporter.h"
 

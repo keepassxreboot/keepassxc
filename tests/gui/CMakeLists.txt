@@ -13,6 +13,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/..)
+
 add_unit_test(NAME testgui SOURCES TestGui.cpp TemporaryFile.cpp LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testguipixmaps SOURCES TestGuiPixmaps.cpp LIBS ${TEST_LIBRARIES})
