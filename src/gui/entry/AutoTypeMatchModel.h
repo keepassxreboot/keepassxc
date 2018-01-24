@@ -50,7 +50,7 @@ public:
 
     void setMatchList(const QList<AutoTypeMatch>& matches);
 
-private Q_SLOTS:
+private slots:
     void entryAboutToRemove(Entry* entry);
     void entryRemoved();
     void entryDataChanged(Entry* entry);

@@ -33,21 +33,20 @@ class AutoTypeMatchView : public QTreeView
 
 public:
     explicit AutoTypeMatchView(QWidget* parent = nullptr);
-    void setModel(QAbstractItemModel* model) override;
     AutoTypeMatch currentMatch();
     void setCurrentMatch(AutoTypeMatch match);
     AutoTypeMatch matchFromIndex(const QModelIndex& index);
     void setMatchList(const QList<AutoTypeMatch>& matches);
     void setFirstMatchActive();
 
-Q_SIGNALS:
+signals:
     void matchActivated(AutoTypeMatch match);
     void matchSelectionChanged();
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;
 
-private Q_SLOTS:
+private slots:
     void emitMatchActivated(const QModelIndex& index);
 
 private:

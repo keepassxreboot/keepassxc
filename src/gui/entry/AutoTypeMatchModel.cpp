@@ -55,7 +55,7 @@ void AutoTypeMatchModel::setMatchList(const QList<AutoTypeMatch>& matches)
 
     QSet<Database*> databases;
 
-    for (AutoTypeMatch match : asConst(m_matches)) {
+    for (AutoTypeMatch& match : m_matches) {
         databases.insert(match.entry->group()->database());
     }
 
@@ -81,9 +81,8 @@ int AutoTypeMatchModel::rowCount(const QModelIndex& parent) const
 {
     if (parent.isValid()) {
         return 0;
-    } else {
-        return m_matches.size();
     }
+    return m_matches.size();
 }
 
 int AutoTypeMatchModel::columnCount(const QModelIndex& parent) const
@@ -96,7 +95,7 @@ int AutoTypeMatchModel::columnCount(const QModelIndex& parent) const
 QVariant AutoTypeMatchModel::data(const QModelIndex& index, int role) const
 {
     if (!index.isValid()) {
-        return QVariant();
+        return {};
     }
 
     AutoTypeMatch match = matchFromIndex(index);
@@ -138,7 +137,7 @@ QVariant AutoTypeMatchModel::data(const QModelIndex& index, int role) const
         return font;
     }
 
-    return QVariant();
+    return {};
 }
 
 QVariant AutoTypeMatchModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -156,12 +155,12 @@ QVariant AutoTypeMatchModel::headerData(int section, Qt::Orientation orientation
         }
     }
 
-    return QVariant();
+    return {};
 }
 
 void AutoTypeMatchModel::entryDataChanged(Entry* entry)
 {
-    for (int row = 0; row < m_matches.size(); row++) {
+    for (int row = 0; row < m_matches.size(); ++row) {
         AutoTypeMatch match = m_matches[row];
         if (match.entry == entry) {
             emit dataChanged(index(row, 0), index(row, columnCount()-1));
@@ -172,13 +171,13 @@ void AutoTypeMatchModel::entryDataChanged(Entry* entry)
 
 void AutoTypeMatchModel::entryAboutToRemove(Entry* entry)
 {
-    for (int row = 0; row < m_matches.size(); row++) {
+    for (int row = 0; row < m_matches.size(); ++row) {
         AutoTypeMatch match = m_matches[row];
         if (match.entry == entry) {
             beginRemoveRows(QModelIndex(), row, row);
             m_matches.removeAt(row);
             endRemoveRows();
-            row--;
+            --row;
         }
     }
 }

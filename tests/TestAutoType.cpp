@@ -310,7 +310,7 @@ void TestAutoType::testAutoTypeEffectiveSequences()
     QString sequenceDisabled("{TEST_DISABLED}");
     QString sequenceOrphan("{TEST_ORPHAN}");
 
-    Database* db = new Database();
+    QScopedPointer<Database> db(new Database());
     QPointer<Group> rootGroup = db->rootGroup();
 
     // Group with autotype enabled and custom default sequence
@@ -362,7 +362,7 @@ void TestAutoType::testAutoTypeEffectiveSequences()
     entry5->setAutoTypeEnabled(false);
 
     // Entry with no parent
-    QPointer<Entry> entry6 = new Entry();
+    QScopedPointer<Entry> entry6(new Entry());
     entry6->setDefaultAutoTypeSequence(sequenceOrphan);
 
     QCOMPARE(entry1->defaultAutoTypeSequence(), QString());
@@ -377,6 +377,4 @@ void TestAutoType::testAutoTypeEffectiveSequences()
     QCOMPARE(entry5->effectiveAutoTypeSequence(), QString());
     QCOMPARE(entry6->defaultAutoTypeSequence(), sequenceOrphan);
     QCOMPARE(entry6->effectiveAutoTypeSequence(), QString());
-
-    delete db;
 }

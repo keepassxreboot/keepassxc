@@ -61,7 +61,7 @@ void AutoTypeMatchView::setMatchList(const QList<AutoTypeMatch>& matches)
     for (int i = 0; i < m_model->columnCount(); ++i) {
         resizeColumnToContents(i);
         if (columnWidth(i) > 250) {
-          setColumnWidth(i, 250);
+            setColumnWidth(i, 250);
         }
     }
     setFirstMatchActive();
@@ -84,20 +84,13 @@ void AutoTypeMatchView::emitMatchActivated(const QModelIndex& index)
     emit matchActivated(match);
 }
 
-void AutoTypeMatchView::setModel(QAbstractItemModel* model)
-{
-    Q_UNUSED(model);
-    Q_ASSERT(false);
-}
-
 AutoTypeMatch AutoTypeMatchView::currentMatch()
 {
     QModelIndexList list = selectionModel()->selectedRows();
     if (list.size() == 1) {
         return m_model->matchFromIndex(m_sortModel->mapToSource(list.first()));
-    } else {
-        return AutoTypeMatch();
     }
+    return AutoTypeMatch();
 }
 
 void AutoTypeMatchView::setCurrentMatch(AutoTypeMatch match)
@@ -110,7 +103,6 @@ AutoTypeMatch AutoTypeMatchView::matchFromIndex(const QModelIndex& index)
 {
     if (index.isValid()) {
         return m_model->matchFromIndex(m_sortModel->mapToSource(index));
-    } else {
-        return AutoTypeMatch();
     }
+    return AutoTypeMatch();
 }

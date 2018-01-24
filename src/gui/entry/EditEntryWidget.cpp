@@ -170,7 +170,6 @@ void EditEntryWidget::setupAutoType()
 
     m_autoTypeDefaultSequenceGroup->addButton(m_autoTypeUi->inheritSequenceButton);
     m_autoTypeDefaultSequenceGroup->addButton(m_autoTypeUi->customSequenceButton);
-    //m_autoTypeWindowSequenceGroup->addButton(m_autoTypeUi->customWindowSequenceButton);
     m_autoTypeAssocModel->setAutoTypeAssociations(m_autoTypeAssoc);
     m_autoTypeUi->assocView->setModel(m_autoTypeAssocModel);
     m_autoTypeUi->assocView->setColumnHidden(1, true);

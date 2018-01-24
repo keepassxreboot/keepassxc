@@ -173,12 +173,10 @@ bool AutoType::registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifie
             m_currentGlobalKey = key;
             m_currentGlobalModifiers = modifiers;
             return true;
-        } else {
-            return false;
         }
-    } else {
-        return true;
+        return false;
     }
+    return true;
 }
 
 void AutoType::unregisterGlobalShortcut()
@@ -202,9 +200,13 @@ int AutoType::callEventFilter(void* event)
  */
 void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, const QString& sequence, WId window)
 {
+    Q_ASSERT(m_inAutoType);
+    if (!m_inAutoType) {
+        return;
+    }
+
     // no edit to the sequence beyond this point
     if (!verifyAutoTypeSyntax(sequence)) {
-        m_inAutoType = false; // TODO: make this automatic
         return;
     }
 
@@ -212,7 +214,6 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
     ListDeleter<AutoTypeAction*> actionsDeleter(&actions);
 
     if (!parseActions(sequence, entry, actions)) {
-        m_inAutoType = false; // TODO: make this automatic
         return;
     }
 
@@ -241,8 +242,6 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
         action->accept(m_executor);
         QCoreApplication::processEvents(QEventLoop::AllEvents, 10);
     }
-
-    m_inAutoType = false;
 }
 
 /**
@@ -256,13 +255,15 @@ void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow)
     }
 
     QList<QString> sequences = autoTypeSequences(entry);
-    if(sequences.isEmpty()) {
+    if (sequences.isEmpty()) {
         return;
     }
 
     m_inAutoType = true;
 
     executeAutoTypeActions(entry, hideWindow, sequences.first());
+
+    m_inAutoType = false;
 }
 
 /**
@@ -304,8 +305,8 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
         message.append(windowTitle);
         MessageBox::information(nullptr, tr("Auto-Type - KeePassXC"), message);
     } else if ((matchList.size() == 1) && !config()->get("security/autotypeask").toBool()) {
-        m_inAutoType = false;
         executeAutoTypeActions(matchList.first().entry, nullptr, matchList.first().sequence);
+        m_inAutoType = false;
     } else {
         m_windowFromGlobal = m_plugin->activeWindow();
         AutoTypeSelectDialog* selectDialog = new AutoTypeSelectDialog();
@@ -329,9 +330,9 @@ void AutoType::performAutoTypeFromGlobal(AutoTypeMatch match)
 
     m_plugin->raiseWindow(m_windowFromGlobal);
 
-    m_inAutoType = false;
-
     executeAutoTypeActions(match.entry, nullptr, match.sequence, m_windowFromGlobal);
+
+    m_inAutoType = false;
 }
 
 /**
@@ -542,6 +543,17 @@ QList<QString> AutoType::autoTypeSequences(const Entry* entry, const QString& wi
         return sequenceList;
     }
 
+    const Group* group = entry->group();
+    do {
+        if (group->autoTypeEnabled() == Group::Disable) {
+            return sequenceList;
+        } else if (group->autoTypeEnabled() == Group::Enable) {
+            break;
+        }
+        group = group->parentGroup();
+
+    } while (group);
+
     if (!windowTitle.isEmpty()) {
         const QList<AutoTypeAssociations::Association> assocList = entry->autoTypeAssociations()->getAll();
         for (const AutoTypeAssociations::Association& assoc : assocList) {
@@ -571,17 +583,6 @@ QList<QString> AutoType::autoTypeSequences(const Entry* entry, const QString& wi
     } else {
         sequenceList.append(entry->effectiveAutoTypeSequence()); 
     }
-
-    const Group* group = entry->group();
-    do {
-        if (group->autoTypeEnabled() == Group::Disable) {
-            return QList<QString>();
-        } else if (group->autoTypeEnabled() == Group::Enable) {
-            return sequenceList;
-        }
-        group = group->parentGroup();
-
-    } while (group);
 
     return sequenceList;
 }

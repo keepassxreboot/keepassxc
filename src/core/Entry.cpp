@@ -226,18 +226,18 @@ QString Entry::defaultAutoTypeSequence() const
  */
 QString Entry::effectiveAutoTypeSequence() const
 {
-    if (autoTypeEnabled() == false) {
-        return QString();
+    if (!autoTypeEnabled()) {
+        return {};
     }
 
     const Group* parent = group();
     if (!parent) {
-        return QString();
+        return {};
     }
 
     QString sequence = parent->effectiveAutoTypeSequence();
     if (sequence.isEmpty()) {
-        return QString();
+        return {};
     }
 
     if (!m_data.defaultAutoTypeSequence.isEmpty()) {
