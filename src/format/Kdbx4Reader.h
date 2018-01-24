@@ -32,6 +32,7 @@ Q_DECLARE_TR_FUNCTIONS(Kdbx4Reader)
 public:
     Database* readDatabaseImpl(QIODevice* device, const QByteArray& headerData,
                                const CompositeKey& key, bool keepDatabase) override;
+    QHash<QByteArray, QString> binaryPoolInverse() const;
     QHash<QString, QByteArray> binaryPool() const;
 
 protected:
@@ -41,7 +42,7 @@ private:
     bool readInnerHeaderField(QIODevice* device);
     QVariantMap readVariantMap(QIODevice* device);
 
-    QHash<QString, QByteArray> m_binaryPool;
+    QHash<QByteArray, QString> m_binaryPoolInverse;
 };
 
 #endif // KEEPASSX_KDBX4READER_H
