@@ -17,13 +17,12 @@
  */
 
 #include "TestKeys.h"
+#include "TestGlobal.h"
 
 #include <QBuffer>
-#include <QTest>
 
 #include "config-keepassx-tests.h"
 
-#include "core/Database.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"

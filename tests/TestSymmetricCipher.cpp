@@ -17,9 +17,9 @@
  */
 
 #include "TestSymmetricCipher.h"
+#include "TestGlobal.h"
 
 #include <QBuffer>
-#include <QTest>
 
 #include "crypto/Crypto.h"
 #include "crypto/SymmetricCipher.h"

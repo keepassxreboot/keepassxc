@@ -17,6 +17,7 @@
  */
 
 #include "TestGui.h"
+#include "TestGlobal.h"
 
 #include <QAction>
 #include <QApplication>
@@ -29,7 +30,6 @@
 #include <QPlainTextEdit>
 #include <QComboBox>
 #include <QTemporaryFile>
-#include <QTest>
 #include <QToolBar>
 #include <QToolButton>
 #include <QTimer>

@@ -16,17 +16,15 @@
  */
 
 #include "TestKdbx2.h"
+#include "TestGlobal.h"
+
 #include "crypto/Crypto.h"
-#include "keys/CompositeKey.h"
 #include "keys/PasswordKey.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
-#include "core/Entry.h"
-#include "core/Group.h"
 #include "core/Metadata.h"
 #include "config-keepassx-tests.h"
 
-#include <QTest>
 #include <QBuffer>
 
 QTEST_GUILESS_MAIN(TestKdbx2)

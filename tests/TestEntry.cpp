@@ -16,12 +16,7 @@
  */
 
 #include "TestEntry.h"
-#include "config-keepassx-tests.h"
-
-#include <QTest>
-
-#include "core/Entry.h"
-#include "core/Group.h"
+#include "TestGlobal.h"
 #include "crypto/Crypto.h"
 
 QTEST_GUILESS_MAIN(TestEntry)

@@ -82,7 +82,6 @@ macro(add_unit_test)
   endif()
 endmacro(add_unit_test)
 
-
 set(TEST_LIBRARIES
     keepassx_core
     ${keepasshttp_LIB}
@@ -96,7 +95,7 @@ set(TEST_LIBRARIES
     ${ZLIB_LIBRARIES}
 )
 
-set(testsupport_SOURCES modeltest.cpp FailDevice.cpp)
+set(testsupport_SOURCES TestGlobal.h modeltest.cpp FailDevice.cpp)
 add_library(testsupport STATIC ${testsupport_SOURCES})
 target_link_libraries(testsupport Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Test)
 
@@ -185,7 +184,7 @@ add_unit_test(NAME testcsvexporter SOURCES TestCsvExporter.cpp
         LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testykchallengeresponsekey
-        SOURCES TestYkChallengeResponseKey.cpp TestYkChallengeResponseKey.h
+        SOURCES TestYkChallengeResponseKey.cpp
         LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testdatabase SOURCES TestDatabase.cpp

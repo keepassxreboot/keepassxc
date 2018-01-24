@@ -16,8 +16,8 @@
  */
 
 #include "TestKeePass2Format.h"
+#include "TestGlobal.h"
 
-#include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
 #include "keys/PasswordKey.h"
@@ -25,9 +25,6 @@
 
 #include "FailDevice.h"
 #include "config-keepassx-tests.h"
-
-#include <QFile>
-#include <QTest>
 
 void TestKeePass2Format::initTestCase()
 {
@@ -80,14 +77,14 @@ void TestKeePass2Format::testXmlMetadata()
 {
     QCOMPARE(m_xmlDb->metadata()->generator(), QString("KeePass"));
     QCOMPARE(m_xmlDb->metadata()->name(), QString("ANAME"));
-    QCOMPARE(m_xmlDb->metadata()->nameChanged(), genDT(2010, 8, 8, 17, 24, 53));
+    QCOMPARE(m_xmlDb->metadata()->nameChanged(), Test::datetime(2010, 8, 8, 17, 24, 53));
     QCOMPARE(m_xmlDb->metadata()->description(), QString("ADESC"));
-    QCOMPARE(m_xmlDb->metadata()->descriptionChanged(), genDT(2010, 8, 8, 17, 27, 12));
+    QCOMPARE(m_xmlDb->metadata()->descriptionChanged(), Test::datetime(2010, 8, 8, 17, 27, 12));
     QCOMPARE(m_xmlDb->metadata()->defaultUserName(), QString("DEFUSERNAME"));
-    QCOMPARE(m_xmlDb->metadata()->defaultUserNameChanged(), genDT(2010, 8, 8, 17, 27, 45));
+    QCOMPARE(m_xmlDb->metadata()->defaultUserNameChanged(), Test::datetime(2010, 8, 8, 17, 27, 45));
     QCOMPARE(m_xmlDb->metadata()->maintenanceHistoryDays(), 127);
     QCOMPARE(m_xmlDb->metadata()->color(), QColor(0xff, 0xef, 0x00));
-    QCOMPARE(m_xmlDb->metadata()->masterKeyChanged(), genDT(2012, 4, 5, 17, 9, 34));
+    QCOMPARE(m_xmlDb->metadata()->masterKeyChanged(), Test::datetime(2012, 4, 5, 17, 9, 34));
     QCOMPARE(m_xmlDb->metadata()->masterKeyChangeRec(), 101);
     QCOMPARE(m_xmlDb->metadata()->masterKeyChangeForce(), -1);
     QCOMPARE(m_xmlDb->metadata()->protectTitle(), false);
@@ -98,9 +95,9 @@ void TestKeePass2Format::testXmlMetadata()
     QCOMPARE(m_xmlDb->metadata()->recycleBinEnabled(), true);
     QVERIFY(m_xmlDb->metadata()->recycleBin() != nullptr);
     QCOMPARE(m_xmlDb->metadata()->recycleBin()->name(), QString("Recycle Bin"));
-    QCOMPARE(m_xmlDb->metadata()->recycleBinChanged(), genDT(2010, 8, 25, 16, 12, 57));
+    QCOMPARE(m_xmlDb->metadata()->recycleBinChanged(), Test::datetime(2010, 8, 25, 16, 12, 57));
     QVERIFY(m_xmlDb->metadata()->entryTemplatesGroup() == nullptr);
-    QCOMPARE(m_xmlDb->metadata()->entryTemplatesGroupChanged(), genDT(2010, 8, 8, 17, 24, 19));
+    QCOMPARE(m_xmlDb->metadata()->entryTemplatesGroupChanged(), Test::datetime(2010, 8, 8, 17, 24, 19));
     QVERIFY(m_xmlDb->metadata()->lastSelectedGroup() != nullptr);
     QCOMPARE(m_xmlDb->metadata()->lastSelectedGroup()->name(), QString("NewDatabase"));
     QVERIFY(m_xmlDb->metadata()->lastTopVisibleGroup() == m_xmlDb->metadata()->lastSelectedGroup());
@@ -147,13 +144,13 @@ void TestKeePass2Format::testXmlGroupRoot()
     QCOMPARE(group->iconUuid(), Uuid());
     QVERIFY(group->isExpanded());
     TimeInfo ti = group->timeInfo();
-    QCOMPARE(ti.lastModificationTime(), genDT(2010, 8, 8, 17, 24, 27));
-    QCOMPARE(ti.creationTime(), genDT(2010, 8, 7, 17, 24, 27));
-    QCOMPARE(ti.lastAccessTime(), genDT(2010, 8, 9, 9, 9, 44));
-    QCOMPARE(ti.expiryTime(), genDT(2010, 8, 8, 17, 24, 17));
+    QCOMPARE(ti.lastModificationTime(), Test::datetime(2010, 8, 8, 17, 24, 27));
+    QCOMPARE(ti.creationTime(), Test::datetime(2010, 8, 7, 17, 24, 27));
+    QCOMPARE(ti.lastAccessTime(), Test::datetime(2010, 8, 9, 9, 9, 44));
+    QCOMPARE(ti.expiryTime(), Test::datetime(2010, 8, 8, 17, 24, 17));
     QVERIFY(!ti.expires());
     QCOMPARE(ti.usageCount(), 52);
-    QCOMPARE(ti.locationChanged(), genDT(2010, 8, 8, 17, 24, 27));
+    QCOMPARE(ti.locationChanged(), Test::datetime(2010, 8, 8, 17, 24, 27));
     QCOMPARE(group->defaultAutoTypeSequence(), QString(""));
     QCOMPARE(group->autoTypeEnabled(), Group::Inherit);
     QCOMPARE(group->searchingEnabled(), Group::Inherit);
@@ -215,13 +212,13 @@ void TestKeePass2Format::testXmlEntry1()
     QCOMPARE(entry->tags(), QString("a b c"));
 
     const TimeInfo ti = entry->timeInfo();
-    QCOMPARE(ti.lastModificationTime(), genDT(2010, 8, 25, 16, 19, 25));
-    QCOMPARE(ti.creationTime(), genDT(2010, 8, 25, 16, 13, 54));
-    QCOMPARE(ti.lastAccessTime(), genDT(2010, 8, 25, 16, 19, 25));
-    QCOMPARE(ti.expiryTime(), genDT(2010, 8, 25, 16, 12, 57));
+    QCOMPARE(ti.lastModificationTime(), Test::datetime(2010, 8, 25, 16, 19, 25));
+    QCOMPARE(ti.creationTime(), Test::datetime(2010, 8, 25, 16, 13, 54));
+    QCOMPARE(ti.lastAccessTime(), Test::datetime(2010, 8, 25, 16, 19, 25));
+    QCOMPARE(ti.expiryTime(), Test::datetime(2010, 8, 25, 16, 12, 57));
     QVERIFY(!ti.expires());
     QCOMPARE(ti.usageCount(), 8);
-    QCOMPARE(ti.locationChanged(), genDT(2010, 8, 25, 16, 13, 54));
+    QCOMPARE(ti.locationChanged(), Test::datetime(2010, 8, 25, 16, 13, 54));
 
     QList<QString> attrs = entry->attributes()->keys();
     QCOMPARE(entry->attributes()->value("Notes"), QString("Notes"));
@@ -320,7 +317,7 @@ void TestKeePass2Format::testXmlEntryHistory()
         const Entry* entry = entryMain->historyItems().at(0);
         QCOMPARE(entry->uuid(), entryMain->uuid());
         QVERIFY(!entry->parent());
-        QCOMPARE(entry->timeInfo().lastModificationTime(), genDT(2010, 8, 25, 16, 13, 54));
+        QCOMPARE(entry->timeInfo().lastModificationTime(), Test::datetime(2010, 8, 25, 16, 13, 54));
         QCOMPARE(entry->timeInfo().usageCount(), 3);
         QCOMPARE(entry->title(), QString("Sample Entry"));
         QCOMPARE(entry->url(), QString("http://www.somesite.com/"));
@@ -330,7 +327,7 @@ void TestKeePass2Format::testXmlEntryHistory()
         const Entry* entry = entryMain->historyItems().at(1);
         QCOMPARE(entry->uuid(), entryMain->uuid());
         QVERIFY(!entry->parent());
-        QCOMPARE(entry->timeInfo().lastModificationTime(), genDT(2010, 8, 25, 16, 15, 43));
+        QCOMPARE(entry->timeInfo().lastModificationTime(), Test::datetime(2010, 8, 25, 16, 15, 43));
         QCOMPARE(entry->timeInfo().usageCount(), 7);
         QCOMPARE(entry->title(), QString("Sample Entry 1"));
         QCOMPARE(entry->url(), QString("http://www.somesite.com/"));
@@ -344,11 +341,11 @@ void TestKeePass2Format::testXmlDeletedObjects()
 
     delObj = objList.takeFirst();
     QCOMPARE(delObj.uuid.toBase64(), QString("5K/bzWCSmkCv5OZxYl4N/w=="));
-    QCOMPARE(delObj.deletionTime, genDT(2010, 8, 25, 16, 14, 12));
+    QCOMPARE(delObj.deletionTime, Test::datetime(2010, 8, 25, 16, 14, 12));
 
     delObj = objList.takeFirst();
     QCOMPARE(delObj.uuid.toBase64(), QString("80h8uSNWgkKhKCp1TgXF7g=="));
-    QCOMPARE(delObj.deletionTime, genDT(2010, 8, 25, 16, 14, 14));
+    QCOMPARE(delObj.deletionTime, Test::datetime(2010, 8, 25, 16, 14, 14));
 
     QVERIFY(objList.isEmpty());
 }
@@ -462,16 +459,16 @@ void TestKeePass2Format::testXmlInvalidXmlChars()
     Entry* entryRead = dbRead->rootGroup()->entries().at(0);
     EntryAttributes* attrRead = entryRead->attributes();
 
-    QCOMPARE(strToBytes(attrRead->value("PlainInvalid")), QByteArray());
-    QCOMPARE(strToBytes(attrRead->value("PlainValid")), strToBytes(strPlainValid));
-    QCOMPARE(strToBytes(attrRead->value("SingleHighSurrogate1")), QByteArray());
-    QCOMPARE(strToBytes(attrRead->value("SingleHighSurrogate2")), strToBytes(QString("12")));
-    QCOMPARE(strToBytes(attrRead->value("HighHighSurrogate")), QByteArray());
-    QCOMPARE(strToBytes(attrRead->value("SingleLowSurrogate1")), QByteArray());
-    QCOMPARE(strToBytes(attrRead->value("SingleLowSurrogate2")), strToBytes(QString("12")));
-    QCOMPARE(strToBytes(attrRead->value("LowLowSurrogate")), QByteArray());
-    QCOMPARE(strToBytes(attrRead->value("SurrogateValid1")), strToBytes(strSurrogateValid1));
-    QCOMPARE(strToBytes(attrRead->value("SurrogateValid2")), strToBytes(strSurrogateValid2));
+    QCOMPARE(attrRead->value("PlainInvalid"), QString());
+    QCOMPARE(attrRead->value("PlainValid"), strPlainValid);
+    QCOMPARE(attrRead->value("SingleHighSurrogate1"), QString());
+    QCOMPARE(attrRead->value("SingleHighSurrogate2"), QString("12"));
+    QCOMPARE(attrRead->value("HighHighSurrogate"), QString());
+    QCOMPARE(attrRead->value("SingleLowSurrogate1"), QString());
+    QCOMPARE(attrRead->value("SingleLowSurrogate2"), QString("12"));
+    QCOMPARE(attrRead->value("LowLowSurrogate"), QString());
+    QCOMPARE(attrRead->value("SurrogateValid1"), strSurrogateValid1);
+    QCOMPARE(attrRead->value("SurrogateValid2"), strSurrogateValid2);
 }
 
 void TestKeePass2Format::testXmlRepairUuidHistoryItem()
@@ -567,56 +564,4 @@ void TestKeePass2Format::testKdbxDeviceFailure()
     writeKdbx(&failDevice, db.data(), hasError, errorString);
     QVERIFY(hasError);
     QCOMPARE(errorString, QString("FAILDEVICE"));
-}
-
-
-
-// ====================================================================================================
-// Helper functions
-// ====================================================================================================
-
-namespace QTest {
-template<>
-char* toString(const Uuid& uuid)
-{
-    QByteArray ba = "Uuid(";
-    ba += uuid.toBase64().toLatin1().constData();
-    ba += ")";
-    return qstrdup(ba.constData());
-}
-
-template<>
-char* toString(const Group::TriState& triState)
-{
-    QString value;
-
-    if (triState == Group::Inherit) {
-        value = "null";
-    } else if (triState == Group::Enable) {
-        value = "true";
-    } else {
-        value = "false";
-    }
-
-    return qstrdup(value.toLocal8Bit().constData());
-}
-}
-
-QDateTime TestKeePass2Format::genDT(int year, int month, int day, int hour, int min, int second)
-{
-    QDate date(year, month, day);
-    QTime time(hour, min, second);
-    return QDateTime(date, time, Qt::UTC);
-}
-
-QByteArray TestKeePass2Format::strToBytes(const QString& str)
-{
-    QByteArray result;
-
-    for (auto i : str) {
-        result.append(static_cast<char>(i.unicode() >> 8));
-        result.append(static_cast<char>(i.unicode() & 0xFF));
-    }
-
-    return result;
 }

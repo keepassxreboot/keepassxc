@@ -18,36 +18,23 @@
  */
 
 #include "TestYkChallengeResponseKey.h"
-
-#include <QTest>
-#include <QtConcurrentRun>
-
+#include "TestGlobal.h"
 #include "crypto/Crypto.h"
-#include "keys/YkChallengeResponseKey.h"
+
+#include <QtConcurrentRun>
 
 QTEST_GUILESS_MAIN(TestYubiKeyChalResp)
 
 void TestYubiKeyChalResp::initTestCase()
 {
-    m_detected = 0;
-    m_key = NULL;
-
     // crypto subsystem needs to be initialized for YubiKey testing
     QVERIFY(Crypto::init());
 }
 
-void TestYubiKeyChalResp::cleanupTestCase()
-{
-    if (m_key)
-        delete m_key;
-}
-
 void TestYubiKeyChalResp::init()
 {
-    bool result = YubiKey::instance()->init();
-
-    if (!result) {
-        QSKIP("Unable to connect to YubiKey", SkipAll);
+    if (!YubiKey::instance()->init()) {
+        QSKIP("Unable to connect to YubiKey");
     }
 }
 
@@ -104,7 +91,7 @@ void TestYubiKeyChalResp::ykDetected(int slot, bool blocking)
 
     /* Key used for later testing */
     if (!m_key)
-        m_key = new YkChallengeResponseKey(slot, blocking);
+        m_key.reset(new YkChallengeResponseKey(slot, blocking));
 }
 
 void TestYubiKeyChalResp::deinit()

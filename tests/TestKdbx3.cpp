@@ -16,6 +16,8 @@
  */
 
 #include "TestKdbx3.h"
+#include "TestGlobal.h"
+
 #include "core/Metadata.h"
 #include "keys/PasswordKey.h"
 #include "format/KeePass2.h"
@@ -26,7 +28,6 @@
 #include "format/KeePass2Repair.h"
 #include "config-keepassx-tests.h"
 
-#include <QTest>
 
 QTEST_GUILESS_MAIN(TestKdbx3)
 

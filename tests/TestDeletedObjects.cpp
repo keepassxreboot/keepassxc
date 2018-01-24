@@ -16,11 +16,8 @@
  */
 
 #include "TestDeletedObjects.h"
+#include "TestGlobal.h"
 
-#include <QTest>
-
-#include "core/Database.h"
-#include "core/Group.h"
 #include "crypto/Crypto.h"
 #include "format/KeePass2.h"
 #include "format/KdbxXmlReader.h"

@@ -16,11 +16,10 @@
  */
 
 #include "TestRandom.h"
-
+#include "TestGlobal.h"
 #include "core/Endian.h"
 #include "core/Global.h"
 
-#include <QTest>
 
 QTEST_GUILESS_MAIN(TestRandom)
 

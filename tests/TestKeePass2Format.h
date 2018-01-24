@@ -77,9 +77,6 @@ protected:
                           bool& hasError, QString& errorString) = 0;
     virtual void writeKdbx(QIODevice* device, Database* db, bool& hasError, QString& errorString) = 0;
 
-    static QDateTime genDT(int year, int month, int day, int hour, int min, int second);
-    static QByteArray strToBytes(const QString& str);
-
     QScopedPointer<Database> m_xmlDb;
     QScopedPointer<Database> m_kdbxSourceDb;
     QScopedPointer<Database> m_kdbxTargetDb;

@@ -17,12 +17,7 @@
  */
 
 #include "TestTotp.h"
-
-#include <QDateTime>
-#include <QTest>
-#include <QTextCodec>
-#include <QTime>
-#include <QtEndian>
+#include "TestGlobal.h"
 
 #include "crypto/Crypto.h"
 #include "totp/totp.h"
