@@ -26,9 +26,6 @@
         <property name="text">
          <string>Database name:</string>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
        </widget>
       </item>
       <item row="0" column="1">
@@ -39,9 +36,6 @@
         <property name="text">
          <string>Database description:</string>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
        </widget>
       </item>
       <item row="1" column="1">
@@ -51,9 +45,6 @@
        <widget class="QLabel" name="defaultUsernameLabel">
         <property name="text">
          <string>Default username:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
@@ -130,6 +121,25 @@
          </size>
         </property>
        </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="title">
+      <string>Additional Database Settings</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QCheckBox" name="compressionCheckbox">
+        <property name="text">
+         <string>Enable &amp;compression (recommended)</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
