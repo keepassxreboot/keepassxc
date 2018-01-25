@@ -22,7 +22,6 @@
 #include "core/Group.h"
 #include "core/Endian.h"
 #include "crypto/CryptoHash.h"
-#include "crypto/kdf/AesKdf.h"
 #include "format/KeePass2RandomStream.h"
 #include "format/KdbxXmlReader.h"
 #include "streams/HmacBlockStream.h"
@@ -34,7 +33,7 @@ Database* Kdbx4Reader::readDatabaseImpl(QIODevice* device, const QByteArray& hea
 {
     Q_ASSERT(m_kdbxVersion == KeePass2::FILE_VERSION_4);
 
-    m_binaryPool.clear();
+    m_binaryPoolInverse.clear();
 
     if (hasError()) {
         return nullptr;
@@ -135,7 +134,7 @@ Database* Kdbx4Reader::readDatabaseImpl(QIODevice* device, const QByteArray& hea
 
     Q_ASSERT(xmlDevice);
 
-    KdbxXmlReader xmlReader(KeePass2::FILE_VERSION_4, m_binaryPool);
+    KdbxXmlReader xmlReader(KeePass2::FILE_VERSION_4, binaryPool());
     xmlReader.readDatabase(xmlDevice, m_db.data(), &randomStream);
 
     if (xmlReader.hasError()) {
@@ -273,13 +272,19 @@ bool Kdbx4Reader::readInnerHeaderField(QIODevice* device)
         setProtectedStreamKey(fieldData);
         break;
 
-    case KeePass2::InnerHeaderFieldID::Binary:
+    case KeePass2::InnerHeaderFieldID::Binary: {
         if (fieldLen < 1) {
             raiseError(tr("Invalid inner header binary size"));
             return false;
         }
-        m_binaryPool.insert(QString::number(m_binaryPool.size()), fieldData.mid(1));
+        auto data = fieldData.mid(1);
+        if (m_binaryPoolInverse.contains(data)) {
+            qWarning("Skipping duplicate binary record");
+            break;
+        }
+        m_binaryPoolInverse.insert(data, QString::number(m_binaryPoolInverse.size()));
         break;
+    }
     }
 
     return true;
@@ -417,7 +422,22 @@ QVariantMap Kdbx4Reader::readVariantMap(QIODevice* device)
     return vm;
 }
 
+/**
+ * @return mapping from attachment keys to binary data
+ */
 QHash<QString, QByteArray> Kdbx4Reader::binaryPool() const
 {
-    return m_binaryPool;
+    QHash<QString, QByteArray> binaryPool;
+    for (auto it = m_binaryPoolInverse.cbegin(); it != m_binaryPoolInverse.cend(); ++it) {
+        binaryPool.insert(it.value(), it.key());
+    }
+    return binaryPool;
+}
+
+/**
+ * @return mapping from binary data to attachment keys
+ */
+QHash<QByteArray, QString> Kdbx4Reader::binaryPoolInverse() const
+{
+    return m_binaryPoolInverse;
 }

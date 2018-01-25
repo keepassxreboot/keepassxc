@@ -211,12 +211,20 @@ bool Kdbx4Writer::writeInnerHeaderField(QIODevice* device, KeePass2::InnerHeader
 void Kdbx4Writer::writeAttachments(QIODevice* device, Database* db)
 {
     const QList<Entry*> allEntries = db->rootGroup()->entriesRecursive(true);
+    QSet<QByteArray> writtenAttachments;
+
     for (Entry* entry : allEntries) {
         const QList<QString> attachmentKeys = entry->attachments()->keys();
         for (const QString& key : attachmentKeys) {
-            QByteArray data = entry->attachments()->value(key);
-            data.prepend("\x01");
+            QByteArray data("\x01");
+            data.append(entry->attachments()->value(key));
+
+            if (writtenAttachments.contains(data)) {
+                continue;
+            }
+
             writeInnerHeaderField(device, KeePass2::InnerHeaderFieldID::Binary, data);
+            writtenAttachments.insert(data);
         }
     }
 }

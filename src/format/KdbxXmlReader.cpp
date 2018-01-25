@@ -40,7 +40,7 @@ KdbxXmlReader::KdbxXmlReader(quint32 version)
  * @param version KDBX version
  * @param binaryPool binary pool
  */
-KdbxXmlReader::KdbxXmlReader(quint32 version, QHash<QString, QByteArray>& binaryPool)
+KdbxXmlReader::KdbxXmlReader(quint32 version, const QHash<QString, QByteArray>& binaryPool)
     : m_kdbxVersion(version)
     , m_binaryPool(binaryPool)
 {

@@ -42,7 +42,7 @@ Q_DECLARE_TR_FUNCTIONS(KdbxXmlReader)
 
 public:
     explicit KdbxXmlReader(quint32 version);
-    explicit KdbxXmlReader(quint32 version, QHash<QString, QByteArray>& binaryPool);
+    explicit KdbxXmlReader(quint32 version, const QHash<QString, QByteArray>& binaryPool);
     virtual ~KdbxXmlReader() = default;
 
     virtual Database* readDatabase(const QString& filename);
