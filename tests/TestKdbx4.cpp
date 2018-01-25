@@ -188,3 +188,73 @@ void TestKdbx4::testFormat400Upgrade_data()
     QTest::newRow("AES-KDF          + Twofish")  << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_TWOFISH  << kdbx4;
     QTest::newRow("AES-KDF (legacy) + Twofish")  << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_TWOFISH  << kdbx3;
 }
+
+/**
+ * Test for catching mapping errors with duplicate attachments.
+ */
+void TestKdbx4::testDuplicateAttachments()
+{
+    QScopedPointer<Database> db(new Database());
+    db->setKey(CompositeKey());
+    db->setKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2));
+
+    const QByteArray attachment1("abc");
+    const QByteArray attachment2("def");
+    const QByteArray attachment3("ghi");
+
+    auto entry1 = new Entry();
+    entry1->setGroup(db->rootGroup());
+    entry1->setUuid(Uuid("aaaaaaaaaaaaaaaa"));
+    entry1->attachments()->set("a", attachment1);
+
+    auto entry2 = new Entry();
+    entry2->setGroup(db->rootGroup());
+    entry2->setUuid(Uuid("bbbbbbbbbbbbbbbb"));
+    entry2->attachments()->set("b1", attachment1);
+    entry2->beginUpdate();
+    entry2->attachments()->set("b2", attachment1);
+    entry2->endUpdate();
+    entry2->beginUpdate();
+    entry2->attachments()->set("b3", attachment2);
+    entry2->endUpdate();
+    entry2->beginUpdate();
+    entry2->attachments()->set("b4", attachment2);
+    entry2->endUpdate();
+
+    auto entry3 = new Entry();
+    entry3->setGroup(db->rootGroup());
+    entry3->setUuid(Uuid("cccccccccccccccc"));
+    entry3->attachments()->set("c1", attachment2);
+    entry3->attachments()->set("c2", attachment2);
+    entry3->attachments()->set("c3", attachment3);
+
+    QBuffer buffer;
+    buffer.open(QBuffer::ReadWrite);
+
+    KeePass2Writer writer;
+    writer.writeDatabase(&buffer, db.data());
+    if (writer.hasError()) {
+        QFAIL(qPrintable(QString("Error while writing database: %1").arg(writer.errorString())));
+    }
+
+    buffer.seek(0);
+    KeePass2Reader reader;
+    db.reset(reader.readDatabase(&buffer, CompositeKey()));
+    if (reader.hasError()) {
+        QFAIL(qPrintable(QString("Error while reading database: %1").arg(reader.errorString())));
+    }
+
+    QCOMPARE(db->rootGroup()->entries()[0]->attachments()->value("a"), attachment1);
+
+    QCOMPARE(db->rootGroup()->entries()[1]->attachments()->value("b1"), attachment1);
+    QCOMPARE(db->rootGroup()->entries()[1]->attachments()->value("b2"), attachment1);
+    QCOMPARE(db->rootGroup()->entries()[1]->attachments()->value("b3"), attachment2);
+    QCOMPARE(db->rootGroup()->entries()[1]->attachments()->value("b4"), attachment2);
+    QCOMPARE(db->rootGroup()->entries()[1]->historyItems()[0]->attachments()->value("b1"), attachment1);
+    QCOMPARE(db->rootGroup()->entries()[1]->historyItems()[1]->attachments()->value("b2"), attachment1);
+    QCOMPARE(db->rootGroup()->entries()[1]->historyItems()[2]->attachments()->value("b3"), attachment2);
+
+    QCOMPARE(db->rootGroup()->entries()[2]->attachments()->value("c1"), attachment2);
+    QCOMPARE(db->rootGroup()->entries()[2]->attachments()->value("c2"), attachment2);
+    QCOMPARE(db->rootGroup()->entries()[2]->attachments()->value("c3"), attachment3);
+}
