@@ -565,3 +565,75 @@ void TestKeePass2Format::testKdbxDeviceFailure()
     QVERIFY(hasError);
     QCOMPARE(errorString, QString("FAILDEVICE"));
 }
+
+/**
+ * Test for catching mapping errors with duplicate attachments.
+ */
+void TestKeePass2Format::testDuplicateAttachments()
+{
+    QScopedPointer<Database> db(new Database());
+    db->setKey(CompositeKey());
+
+    const QByteArray attachment1("abc");
+    const QByteArray attachment2("def");
+    const QByteArray attachment3("ghi");
+
+    auto entry1 = new Entry();
+    entry1->setGroup(db->rootGroup());
+    entry1->setUuid(Uuid("aaaaaaaaaaaaaaaa"));
+    entry1->attachments()->set("a", attachment1);
+
+    auto entry2 = new Entry();
+    entry2->setGroup(db->rootGroup());
+    entry2->setUuid(Uuid("bbbbbbbbbbbbbbbb"));
+    entry2->attachments()->set("b1", attachment1);
+    entry2->beginUpdate();
+    entry2->attachments()->set("b2", attachment1);
+    entry2->endUpdate();
+    entry2->beginUpdate();
+    entry2->attachments()->set("b3", attachment2);
+    entry2->endUpdate();
+    entry2->beginUpdate();
+    entry2->attachments()->set("b4", attachment2);
+    entry2->endUpdate();
+
+    auto entry3 = new Entry();
+    entry3->setGroup(db->rootGroup());
+    entry3->setUuid(Uuid("cccccccccccccccc"));
+    entry3->attachments()->set("c1", attachment2);
+    entry3->attachments()->set("c2", attachment2);
+    entry3->attachments()->set("c3", attachment3);
+
+    QBuffer buffer;
+    buffer.open(QBuffer::ReadWrite);
+
+    bool hasError = false;
+    QString errorString;
+    writeKdbx(&buffer, db.data(), hasError, errorString);
+    if (hasError) {
+        QFAIL(qPrintable(QString("Error while writing database: %1").arg(errorString)));
+    }
+
+    buffer.seek(0);
+    readKdbx(&buffer, CompositeKey(), db, hasError, errorString);
+    if (hasError) {
+        QFAIL(qPrintable(QString("Error while reading database: %1").arg(errorString)));
+    }
+
+    QCOMPARE(db->rootGroup()->entries()[0]->attachments()->value("a"), attachment1);
+
+    QCOMPARE(db->rootGroup()->entries()[1]->attachments()->value("b1"), attachment1);
+    QCOMPARE(db->rootGroup()->entries()[1]->attachments()->value("b2"), attachment1);
+    QCOMPARE(db->rootGroup()->entries()[1]->attachments()->value("b3"), attachment2);
+    QCOMPARE(db->rootGroup()->entries()[1]->attachments()->value("b4"), attachment2);
+    QCOMPARE(db->rootGroup()->entries()[1]->historyItems()[0]->attachments()->value("b1"), attachment1);
+    QCOMPARE(db->rootGroup()->entries()[1]->historyItems()[1]->attachments()->value("b1"), attachment1);
+    QCOMPARE(db->rootGroup()->entries()[1]->historyItems()[1]->attachments()->value("b2"), attachment1);
+    QCOMPARE(db->rootGroup()->entries()[1]->historyItems()[2]->attachments()->value("b1"), attachment1);
+    QCOMPARE(db->rootGroup()->entries()[1]->historyItems()[2]->attachments()->value("b2"), attachment1);
+    QCOMPARE(db->rootGroup()->entries()[1]->historyItems()[2]->attachments()->value("b3"), attachment2);
+
+    QCOMPARE(db->rootGroup()->entries()[2]->attachments()->value("c1"), attachment2);
+    QCOMPARE(db->rootGroup()->entries()[2]->attachments()->value("c2"), attachment2);
+    QCOMPARE(db->rootGroup()->entries()[2]->attachments()->value("c3"), attachment3);
+}

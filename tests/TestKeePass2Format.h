@@ -63,6 +63,7 @@ private slots:
     void testKdbxAttachments();
     void testKdbxNonAsciiPasswords();
     void testKdbxDeviceFailure();
+    void testDuplicateAttachments();
 
 protected:
     virtual void initTestCaseImpl() = 0;
