@@ -28,7 +28,6 @@ private slots:
     void testFormat400();
     void testFormat400Upgrade();
     void testFormat400Upgrade_data();
-    void testDuplicateAttachments();
 
 protected:
     void initTestCaseImpl() override;
