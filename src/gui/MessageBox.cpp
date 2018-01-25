@@ -76,7 +76,8 @@ MessageBox::Button MessageBox::messageBox(QWidget* parent,
                                           const QString& title,
                                           const QString& text,
                                           MessageBox::Buttons buttons,
-                                          MessageBox::Button defaultButton)
+                                          MessageBox::Button defaultButton,
+                                          MessageBox::Action action)
 {
     if (m_nextAnswer == MessageBox::NoButton) {
         QMessageBox msgBox(parent);
@@ -101,6 +102,11 @@ MessageBox::Button MessageBox::messageBox(QWidget* parent,
             }
         }
 
+        if (action == MessageBox::Raise) {
+            msgBox.setWindowFlags(Qt::WindowStaysOnTopHint);
+            msgBox.activateWindow();
+            msgBox.raise();
+        }
         msgBox.exec();
 
         Button returnButton = m_addedButtonLookup[msgBox.clickedButton()];
@@ -118,36 +124,40 @@ MessageBox::Button MessageBox::critical(QWidget* parent,
                                         const QString& title,
                                         const QString& text,
                                         MessageBox::Buttons buttons,
-                                        MessageBox::Button defaultButton)
+                                        MessageBox::Button defaultButton,
+                                        MessageBox::Action action)
 {
-    return messageBox(parent, QMessageBox::Critical, title, text, buttons, defaultButton);
+    return messageBox(parent, QMessageBox::Critical, title, text, buttons, defaultButton, action);
 }
 
 MessageBox::Button MessageBox::information(QWidget* parent,
                                            const QString& title,
                                            const QString& text,
                                            MessageBox::Buttons buttons,
-                                           MessageBox::Button defaultButton)
+                                           MessageBox::Button defaultButton,
+                                           MessageBox::Action action)
 {
-    return messageBox(parent, QMessageBox::Information, title, text, buttons, defaultButton);
+    return messageBox(parent, QMessageBox::Information, title, text, buttons, defaultButton, action);
 }
 
 MessageBox::Button MessageBox::question(QWidget* parent,
                                         const QString& title,
                                         const QString& text,
                                         MessageBox::Buttons buttons,
-                                        MessageBox::Button defaultButton)
+                                        MessageBox::Button defaultButton,
+                                        MessageBox::Action action)
 {
-    return messageBox(parent, QMessageBox::Question, title, text, buttons, defaultButton);
+    return messageBox(parent, QMessageBox::Question, title, text, buttons, defaultButton, action);
 }
 
 MessageBox::Button MessageBox::warning(QWidget* parent,
                                        const QString& title,
                                        const QString& text,
                                        MessageBox::Buttons buttons,
-                                       MessageBox::Button defaultButton)
+                                       MessageBox::Button defaultButton,
+                                       MessageBox::Action action)
 {
-    return messageBox(parent, QMessageBox::Warning, title, text, buttons, defaultButton);
+    return messageBox(parent, QMessageBox::Warning, title, text, buttons, defaultButton, action);
 }
 
 void MessageBox::setNextAnswer(MessageBox::Button button)

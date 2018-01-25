@@ -63,6 +63,11 @@ public:
         Last = Merge,
     };
 
+    enum Action {
+        None  = 0,
+        Raise = 1,
+    };
+
     typedef uint64_t Buttons;
 
     static void initializeButtonDefs();
@@ -72,22 +77,26 @@ public:
                            const QString& title,
                            const QString& text,
                            Buttons buttons = MessageBox::Ok,
-                           Button defaultButton = MessageBox::NoButton);
+                           Button defaultButton = MessageBox::NoButton,
+                           Action action = MessageBox::None);
     static Button information(QWidget* parent,
                               const QString& title,
                               const QString& text,
                               Buttons buttons = MessageBox::Ok,
-                              Button defaultButton = MessageBox::NoButton);
+                              Button defaultButton = MessageBox::NoButton,
+                              Action action = MessageBox::None);
     static Button question(QWidget* parent,
                            const QString& title,
                            const QString& text,
                            Buttons buttons = MessageBox::Ok,
-                           Button defaultButton = MessageBox::NoButton);
+                           Button defaultButton = MessageBox::NoButton,
+                           Action action = MessageBox::None);
     static Button warning(QWidget* parent,
                           const QString& title,
                           const QString& text,
                           Buttons buttons = MessageBox::Ok,
-                          Button defaultButton = MessageBox::NoButton);
+                          Button defaultButton = MessageBox::NoButton,
+                          Action action = MessageBox::None);
 
 private:
     static Button m_nextAnswer;
@@ -99,7 +108,8 @@ private:
                              const QString& title,
                              const QString& text,
                              Buttons buttons = MessageBox::Ok,
-                             Button defaultButton = MessageBox::NoButton);
+                             Button defaultButton = MessageBox::NoButton,
+                             Action action = MessageBox::None);
 
     static QString stdButtonText(QMessageBox::StandardButton button);
 
