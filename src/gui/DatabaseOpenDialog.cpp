@@ -25,7 +25,11 @@ DatabaseOpenDialog::DatabaseOpenDialog(QWidget* parent)
     , m_view(new DatabaseOpenWidget(this))
 {
     setWindowTitle(tr("Unlock Database - KeePassXC"));
+#ifdef Q_OS_MACOS
+    setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+#else
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint | Qt::ForeignWindow);
+#endif
     connect(m_view, SIGNAL(dialogFinished(bool)), this, SLOT(complete(bool)));
 }
 

@@ -174,7 +174,9 @@ if(APPLE)
     set(keepassx_SOURCES
             ${keepassx_SOURCES}
             core/ScreenLockListenerMac.cpp
-            core/MacPasteboard.cpp)
+            core/MacPasteboard.cpp
+            gui/macutils/MacUtils.cpp
+            gui/macutils/AppKitImpl.mm)
 endif()
 if(UNIX AND NOT APPLE)
     set(keepassx_SOURCES
@@ -272,7 +274,7 @@ target_link_libraries(keepassx_core
         ${ZXCVBN_LIBRARIES})
 
 if(APPLE)
-    target_link_libraries(keepassx_core "-framework Foundation")
+    target_link_libraries(keepassx_core "-framework Foundation -framework AppKit")
     if(Qt5MacExtras_FOUND)
         target_link_libraries(keepassx_core Qt5::MacExtras)
     endif()
