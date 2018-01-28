@@ -72,9 +72,6 @@
    </item>
    <item>
     <widget class="QLabel" name="welcomeLabel">
-     <property name="text">
-      <string>Welcome to KeePassXC</string>
-     </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
