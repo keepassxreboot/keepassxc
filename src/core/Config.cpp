@@ -111,7 +111,7 @@ void Config::init(const QString& fileName)
     m_defaults.insert("RememberLastDatabases", true);
     m_defaults.insert("RememberLastKeyFiles", true);
     m_defaults.insert("OpenPreviousDatabasesOnStartup", true);
-    m_defaults.insert("AutoSaveAfterEveryChange", false);
+    m_defaults.insert("AutoSaveAfterEveryChange", true);
     m_defaults.insert("AutoReloadOnChange", true);
     m_defaults.insert("AutoSaveOnExit", false);
     m_defaults.insert("BackupBeforeSave", false);

@@ -325,7 +325,7 @@ bool DatabaseTabWidget::saveDatabase(Database* db, QString filePath)
 
         dbStruct.dbWidget->blockAutoReload(true);
         // TODO: Make this async, but lock out the database widget to prevent re-entrance
-        bool useAtomicSaves = config()->get("UseAtomicSaves").toBool();
+        bool useAtomicSaves = config()->get("UseAtomicSaves", true).toBool();
         QString errorMessage = db->saveToFile(filePath, useAtomicSaves, config()->get("BackupBeforeSave").toBool());
         dbStruct.dbWidget->blockAutoReload(false);
 

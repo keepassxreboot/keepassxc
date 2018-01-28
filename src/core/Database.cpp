@@ -476,7 +476,7 @@ Database* Database::unlockFromStdin(QString databaseFilename, QString keyFilenam
  *
  * This function uses QTemporaryFile instead of QSaveFile due to a bug
  * in Qt (https://bugreports.qt.io/browse/QTBUG-57299) that may prevent
- * the QSaveFile from renaming itself when using DropBox, Drive, or OneDrive.
+ * the QSaveFile from renaming itself when using Dropbox, Drive, or OneDrive.
  *
  * The risk in using QTemporaryFile is that the rename function is not atomic
  * and may result in loss of data if there is a crash or power loss at the
@@ -554,7 +554,7 @@ QString Database::writeDatabase(QIODevice* device)
 
 /**
  * Remove the old backup and replace it with a new one
- * backups are named <filename>.old.kdbx4
+ * backups are named <filename>.old.kdbx
  *
  * @param filePath Path to the file to backup
  * @return
@@ -562,11 +562,8 @@ QString Database::writeDatabase(QIODevice* device)
 bool Database::backupDatabase(QString filePath)
 {
     QString backupFilePath = filePath;
-    backupFilePath.replace(".kdbx", ".old.kdbx", Qt::CaseInsensitive);
-    if (!backupFilePath.endsWith(".old.kdbx")) {
-        // Fallback in case of poorly named file
-        backupFilePath = filePath + ".old";
-    }
+    auto re = QRegularExpression("(?:\\.kdbx)?$", QRegularExpression::CaseInsensitiveOption);
+    backupFilePath.replace(re, ".old.kdbx");
     QFile::remove(backupFilePath);
     return QFile::copy(filePath, backupFilePath);
 }

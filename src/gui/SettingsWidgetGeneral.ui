@@ -95,7 +95,7 @@
           <item>
            <widget class="QCheckBox" name="useAtomicSavesCheckBox">
             <property name="text">
-             <string>Safely save database files (may be incompatible with DropBox, etc)</string>
+             <string>Safely save database files (may be incompatible with Dropbox, etc)</string>
             </property>
             <property name="checked">
              <bool>true</bool>
