@@ -28,6 +28,7 @@
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/AsyncTask.h"
 #include "format/CsvExporter.h"
 #include "gui/Clipboard.h"
 #include "gui/DatabaseWidget.h"
@@ -43,6 +44,7 @@ DatabaseManagerStruct::DatabaseManagerStruct()
     : dbWidget(nullptr)
     , modified(false)
     , readOnly(false)
+    , saveAttempts(0)
 {
 }
 
@@ -322,12 +324,15 @@ bool DatabaseTabWidget::saveDatabase(Database* db, QString filePath)
         }
 
         dbStruct.dbWidget->blockAutoReload(true);
-        QString errorMessage = db->saveToFile(filePath);
+        // TODO: Make this async, but lock out the database widget to prevent re-entrance
+        bool useAtomicSaves = config()->get("UseAtomicSaves", true).toBool();
+        QString errorMessage = db->saveToFile(filePath, useAtomicSaves, config()->get("BackupBeforeSave").toBool());
         dbStruct.dbWidget->blockAutoReload(false);
 
         if (errorMessage.isEmpty()) {
             // successfully saved database file
             dbStruct.modified = false;
+            dbStruct.saveAttempts = 0;
             dbStruct.fileInfo = QFileInfo(filePath);
             dbStruct.dbWidget->databaseSaved();
             updateTabName(db);
@@ -336,6 +341,22 @@ bool DatabaseTabWidget::saveDatabase(Database* db, QString filePath)
         } else {
             dbStruct.modified = true;
             updateTabName(db);
+
+            if (++dbStruct.saveAttempts > 2 && useAtomicSaves) {
+                // Saving failed 3 times, issue a warning and attempt to resolve
+                auto choice = MessageBox::question(this, tr("Disable safe saves?"),
+                                                   tr("KeePassXC has failed to save the database multiple times. "
+                                                   "This is likely caused by file sync services holding a lock on "
+                                                   "the save file.\nDisable safe saves and try again?"),
+                                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+                if (choice == QMessageBox::Yes) {
+                    config()->set("UseAtomicSaves", false);
+                    return saveDatabase(db, filePath);
+                }
+                // Reset save attempts without changing anything
+                dbStruct.saveAttempts = 0;
+            }
+
             emit messageTab(tr("Writing the database failed.").append("\n").append(errorMessage),
                             MessageWidget::Error);
             return false;

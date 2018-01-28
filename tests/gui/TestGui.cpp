@@ -67,6 +67,9 @@ void TestGui::initTestCase()
 {
     QVERIFY(Crypto::init());
     Config::createTempFileInstance();
+    // Disable autosave so we can test the modified file indicator
+    Config::instance()->set("AutoSaveAfterEveryChange", false);
+
     m_mainWindow = new MainWindow();
     m_tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
     m_mainWindow->show();
@@ -141,7 +144,6 @@ void TestGui::testCreateDatabase()
     DatabaseWidget* dbWidget = m_tabWidget->currentDatabaseWidget();
 
     QWidget* databaseNewWidget = dbWidget->findChild<QWidget*>("changeMasterKeyWidget");
-    QList<QWidget*> databaseNewWidgets = dbWidget->findChildren<QWidget*>("changeMasterKeyWidget");
     PasswordEdit* editPassword = databaseNewWidget->findChild<PasswordEdit*>("enterPasswordEdit");
     QVERIFY(editPassword->isVisible());
 
@@ -154,6 +156,7 @@ void TestGui::testCreateDatabase()
     QTest::keyClicks(editPasswordRepeat, "test");
     QTest::keyClick(editPasswordRepeat, Qt::Key_Enter);
 
+    // Auto-save after every change is enabled by default, ensure the db saves right away
     QTRY_VERIFY(m_tabWidget->tabText(m_tabWidget->currentIndex()).contains("*"));
 
     m_db = m_tabWidget->currentDatabaseWidget()->database();

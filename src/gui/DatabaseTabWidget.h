@@ -40,6 +40,7 @@ struct DatabaseManagerStruct
     QFileInfo fileInfo;
     bool modified;
     bool readOnly;
+    int saveAttempts;
 };
 
 Q_DECLARE_TYPEINFO(DatabaseManagerStruct, Q_MOVABLE_TYPE);
