@@ -174,6 +174,7 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux" OR ${CMAKE_SYSTEM_NAME} STREQUAL "OpenB
     set(keepassx_SOURCES ${keepassx_SOURCES}
         core/ScreenLockListenerDBus.h
         core/ScreenLockListenerDBus.cpp
+        gui/MainWindowAdaptor.cpp
         )
 endif()
 if(MINGW)
@@ -193,7 +194,6 @@ add_feature_info(KeePassXC-Browser WITH_XC_BROWSER "Browser integration with Kee
 add_feature_info(KeePassHTTP WITH_XC_HTTP "Browser integration compatible with ChromeIPass and PassIFox (deprecated, implies Networking)")
 add_feature_info(SSHAgent WITH_XC_SSHAGENT "SSH agent integration compatible with KeeAgent")
 add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
-
 
 if(WITH_XC_HTTP)
     add_subdirectory(http)

@@ -1,0 +1,23 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.keepassxc.KeePassXC.MainWindow">
+    <method name="openDatabase">
+      <arg name="fileName" type="s" direction="in"/>
+      <arg name="pw" type="s" direction="in"/>
+      <arg name="keyFile" type="s" direction="in"/>
+    </method>
+    <method name="openDatabase">
+      <arg name="fileName" type="s" direction="in"/>
+      <arg name="pw" type="s" direction="in"/>
+    </method>
+    <method name="openDatabase">
+      <arg name="fileName" type="s" direction="in"/>
+    </method>
+    <method name="appExit">
+    </method>
+    <method name="lockAllDatabases">
+    </method>
+    <method name="closeAllDatabases">
+    </method>
+  </interface>
+</node>

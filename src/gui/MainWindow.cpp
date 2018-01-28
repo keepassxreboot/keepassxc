@@ -24,11 +24,6 @@
 #include <QShortcut>
 #include <QTimer>
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_DBUS)
-#include <QList>
-#include <QtDBus/QtDBus>
-#endif
-
 #include "config-keepassx.h"
 
 #include "autotype/AutoType.h"
@@ -59,6 +54,12 @@
 #include "browser/NativeMessagingHost.h"
 #include "browser/BrowserSettings.h"
 #include "browser/BrowserOptionDialog.h"
+#endif
+
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_DBUS)
+#include <QList>
+#include <QtDBus/QtDBus>
+#include "gui/MainWindowAdaptor.h"
 #endif
 
 #include "gui/SettingsWidget.h"
@@ -168,6 +169,13 @@ MainWindow::MainWindow()
     , m_appExiting(false)
 {
     m_ui->setupUi(this);
+    
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_DBUS)
+    new MainWindowAdaptor(this);
+    QDBusConnection dbus = QDBusConnection::sessionBus();
+    dbus.registerObject("/keepassxc", this);
+    dbus.registerService("org.keepassxc.KeePassXC.MainWindow");
+#endif
 
     setAcceptDrops(true);
 
@@ -1122,4 +1130,14 @@ void MainWindow::dropEvent(QDropEvent* event)
             openDatabase(kdbxFile);
         }
     }
+}
+
+void MainWindow::closeAllDatabases()
+{
+    m_ui->tabWidget->closeAllDatabases();
+}
+
+void MainWindow::lockAllDatabases()
+{
+    lockDatabasesAfterInactivity();
 }
