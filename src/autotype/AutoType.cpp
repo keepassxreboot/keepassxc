@@ -41,7 +41,6 @@ AutoType* AutoType::m_instance = nullptr;
 
 AutoType::AutoType(QObject* parent, bool test)
     : QObject(parent)
-    , m_inAutoType(false)
     , m_autoTypeDelay(0)
     , m_currentGlobalKey(static_cast<Qt::Key>(0))
     , m_currentGlobalModifiers(0)
@@ -143,9 +142,7 @@ QStringList AutoType::windowTitles()
 
 void AutoType::resetInAutoType()
 {
-    Q_ASSERT(m_inAutoType);
-
-    m_inAutoType = false;
+    m_inAutoType.unlock();
 }
 
 void AutoType::raiseWindow()
@@ -200,11 +197,6 @@ int AutoType::callEventFilter(void* event)
  */
 void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, const QString& sequence, WId window)
 {
-    Q_ASSERT(m_inAutoType);
-    if (!m_inAutoType) {
-        return;
-    }
-
     // no edit to the sequence beyond this point
     if (!verifyAutoTypeSyntax(sequence)) {
         return;
@@ -250,7 +242,7 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
  */
 void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow)
 {
-    if (m_inAutoType || !m_plugin) {
+    if (!m_plugin) {
         return;
     }
 
@@ -259,11 +251,13 @@ void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow)
         return;
     }
 
-    m_inAutoType = true;
+    if (!m_inAutoType.tryLock()) {
+        return;
+    }
 
     executeAutoTypeActions(entry, hideWindow, sequences.first());
 
-    m_inAutoType = false;
+    m_inAutoType.unlock();
 }
 
 /**
@@ -272,7 +266,7 @@ void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow)
  */
 void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
 {
-    if (m_inAutoType || !m_plugin) {
+    if (!m_plugin) {
         return;
     }
 
@@ -282,7 +276,9 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
         return;
     }
 
-    m_inAutoType = true;
+    if (!m_inAutoType.tryLock()) {
+        return;
+    }
 
     QList<AutoTypeMatch> matchList;
 
@@ -290,7 +286,7 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
         const QList<Entry*> dbEntries = db->rootGroup()->entriesRecursive();
         for (Entry* entry : dbEntries) {
             const QList<QString> sequences = autoTypeSequences(entry, windowTitle);
-            for (QString sequence : sequences) {
+            for (const QString& sequence : sequences) {
                 if (!sequence.isEmpty()) {
                     matchList << AutoTypeMatch(entry,sequence);
                 }
@@ -299,14 +295,14 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
     }
 
     if (matchList.isEmpty()) {
-        m_inAutoType = false;
+        m_inAutoType.unlock();
         QString message = tr("Couldn't find an entry that matches the window title:");
         message.append("\n\n");
         message.append(windowTitle);
         MessageBox::information(nullptr, tr("Auto-Type - KeePassXC"), message);
     } else if ((matchList.size() == 1) && !config()->get("security/autotypeask").toBool()) {
         executeAutoTypeActions(matchList.first().entry, nullptr, matchList.first().sequence);
-        m_inAutoType = false;
+        m_inAutoType.unlock();
     } else {
         m_windowFromGlobal = m_plugin->activeWindow();
         AutoTypeSelectDialog* selectDialog = new AutoTypeSelectDialog();
@@ -326,13 +322,14 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
 
 void AutoType::performAutoTypeFromGlobal(AutoTypeMatch match)
 {
-    Q_ASSERT(m_inAutoType);
+    // We don't care about the result here, the mutex should already be locked. Now it's locked for sure
+    m_inAutoType.tryLock();
 
     m_plugin->raiseWindow(m_windowFromGlobal);
 
     executeAutoTypeActions(match.entry, nullptr, match.sequence, m_windowFromGlobal);
 
-    m_inAutoType = false;
+    m_inAutoType.unlock();
 }
 
 /**

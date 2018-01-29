@@ -20,6 +20,7 @@
 
 #include <QChar>
 #include <Qt>
+#include <QObject>
 
 #include "core/Global.h"
 

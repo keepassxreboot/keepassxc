@@ -1,4 +1,4 @@
-/*
+ /*
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
@@ -22,6 +22,7 @@
 #include <QObject>
 #include <QStringList>
 #include <QWidget>
+#include <QMutex>
 
 #include "core/AutoTypeMatch.h"
 
@@ -84,7 +85,7 @@ private:
     bool windowMatchesUrl(const QString& windowTitle, const QString& resolvedUrl);
     bool windowMatches(const QString& windowTitle, const QString& windowPattern);
 
-    bool m_inAutoType;
+    QMutex m_inAutoType;
     int m_autoTypeDelay;
     Qt::Key m_currentGlobalKey;
     Qt::KeyboardModifiers m_currentGlobalModifiers;
