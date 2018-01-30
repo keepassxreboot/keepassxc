@@ -135,6 +135,22 @@
     </widget>
    </item>
    <item>
+    <widget class="QGroupBox" name="tagsBox">
+     <property name="title">
+      <string>Tags</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLineEdit" name="tagsEdit">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="QGroupBox" name="attachmentsBox">
      <property name="title">
       <string>Attachments</string>
