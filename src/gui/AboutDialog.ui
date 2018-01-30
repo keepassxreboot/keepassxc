@@ -148,13 +148,6 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLabel" name="label_7">
-         <property name="text">
-          <string>Project Maintainers:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QLabel" name="label_4">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -163,14 +156,15 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string notr="true">&lt;ul&gt;
+          <string notr="true">&lt;p&gt;Project Maintainers:&lt;/p&gt;
+&lt;ul&gt;
     &lt;li&gt;droidmonkey&lt;/li&gt;
     &lt;li&gt;phoerious&lt;/li&gt;
     &lt;li&gt;TheZ3ro&lt;/li&gt;
     &lt;li&gt;louib&lt;/li&gt;
-    &lt;li&gt;Weslly&lt;/li&gt;
-    &lt;li&gt;debfx (KeePassX)&lt;/li&gt;
-&lt;/ul&gt;</string>
+    &lt;li&gt;weslly&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.&lt;/&gt;</string>
          </property>
         </widget>
        </item>
@@ -204,8 +198,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>591</width>
-            <height>760</height>
+            <width>423</width>
+            <height>816</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -221,40 +215,55 @@
               <cursorShape>IBeamCursor</cursorShape>
              </property>
              <property name="text">
-              <string notr="true">&lt;h2&gt;Code:&lt;/h2&gt;
+              <string notr="true">&lt;h3&gt;Notable Code Contributions:&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;debfx (KeePassX) &lt;/li&gt;
-&lt;li&gt;BlueIce (KeePassX) &lt;/li&gt;
-&lt;li&gt;droidmonkey &lt;/li&gt;
-&lt;li&gt;phoerious &lt;/li&gt;
-&lt;li&gt;TheZ3ro &lt;/li&gt;
-&lt;li&gt;louib &lt;/li&gt;
-&lt;li &gt;weslly &lt;/li&gt;
-&lt;li&gt;keithbennett (KeePassHTTP) &lt;/li&gt;
-&lt;li&gt;Typz (KeePassHTTP) &lt;/li&gt;
-&lt;li&gt;denk-mal (KeePassHTTP) &lt;/li&gt;
-&lt;li&gt;kylemanna (YubiKey) &lt;/li&gt;
-&lt;li&gt;seatedscribe (CSV Importer) &lt;/li&gt;
-&lt;li&gt;pgalves (Inline Messages) &lt;/li&gt;
+&lt;li&gt;droidmonkey&lt;/li&gt;
+&lt;li&gt;phoerious&lt;/li&gt;
+&lt;li&gt;TheZ3ro&lt;/li&gt;
+&lt;li&gt;louib&lt;/li&gt;
+&lt;li &gt;weslly&lt;/li&gt;
+&lt;li&gt;varjolintu (KeePassXC-Browser)&lt;/li&gt;
+&lt;li&gt;hifi (SSH Agent)&lt;/li&gt;
+&lt;li&gt;frostasm&lt;/li&gt;
+&lt;li&gt;fonic (Entry Table View)&lt;/li&gt;
+&lt;li&gt;kylemanna (YubiKey)&lt;/li&gt;
+&lt;li&gt;keithbennett (KeePassHTTP)&lt;/li&gt;
+&lt;li&gt;Typz (KeePassHTTP)&lt;/li&gt;
+&lt;li&gt;denk-mal (KeePassHTTP)&lt;/li&gt;
+&lt;li&gt;angelsl (KDBX 4)&lt;/li&gt;
+&lt;li&gt;seatedscribe (CSV Import)&lt;/li&gt;
+&lt;li&gt;debfx (KeePassX)&lt;/li&gt;
+&lt;li&gt;BlueIce (KeePassX)&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2&gt;Translations:&lt;/h2&gt;
+&lt;h3&gt;Translations:&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;b&gt;Chinese:&lt;/b&gt; Biggulu, ligyxy, BestSteve &lt;/li&gt;
-&lt;li&gt;&lt;b&gt;Czech:&lt;/b&gt; pavelb, JosefVitu &lt;/li&gt;
-&lt;li&gt;&lt;b&gt;Dutch:&lt;/b&gt; Vistaus, KnooL, apie &lt;/li&gt;
-&lt;li&gt;&lt;b&gt;Finnish:&lt;/b&gt; MawKKe &lt;/li&gt;
-&lt;li&gt;&lt;b&gt;French:&lt;/b&gt; Scrat15, frgnca, gilbsgilbs, gtalbot, iannick, kyodev, logut &lt;/li&gt;
-&lt;li&gt;&lt;b&gt;German:&lt;/b&gt; Calyrx, DavidHamburg, antsas, codejunky, jensrutschmann, montilo, omnisome4, origin_de, pcrcoding, phoerious, rgloor, vlenzer &lt;/li&gt;
-&lt;li&gt;&lt;b&gt;Greek:&lt;/b&gt; nplatis &lt;/li&gt;
-&lt;li&gt;&lt;b&gt;Italian:&lt;/b&gt; TheZ3ro, FranzMari, Mte90, tosky &lt;/li&gt;
-&lt;li&gt;&lt;b&gt;Kazakh:&lt;/b&gt; sotrud_nik &lt;/li&gt;
-&lt;li&gt;&lt;b&gt;Lithuanian:&lt;/b&gt; Moo &lt;/li&gt;
-&lt;li&gt;&lt;b&gt;Polish:&lt;/b&gt; konradmb, mrerexx &lt;/li&gt;
-&lt;li&gt;&lt;b&gt;Portuguese: &lt;/b&gt;vitor895, weslly, American_Jesus, mihai.ile &lt;/li&gt;
-&lt;li&gt;&lt;b&gt;Russian:&lt;/b&gt; vsvyatski, KekcuHa, wkill95 &lt;/li&gt;
-&lt;li&gt;&lt;b&gt;Spanish:&lt;/b&gt; EdwardNavarro, antifaz, piegope, pquin, vsvyatski &lt;/li&gt;
-&lt;li&gt;&lt;b&gt;Swedish:&lt;/b&gt; henziger &lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Basque:&lt;/b&gt; azken_tximinoa, Hey_neken&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Catalan:&lt;/b&gt; capitantrueno, dsoms, mcus, raulua, ZJaume&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Chinese (China):&lt;/b&gt; Biggulu, Brandon_c, hoilc, ligyxy, vc5, Small_Ku&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Chinese (Taiwan):&lt;/b&gt; BestSteve, MiauLightouch, Small_Ku, yan12125, ymhuang0808&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Czech:&lt;/b&gt; DanielMilde, JosefVitu, pavelb, tpavelek&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Danish:&lt;/b&gt; nlkl&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Dutch:&lt;/b&gt; apie, bartlibert, evanoosten, fvw, KnooL, srgvg, Vistaus, wanderingidea&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Finnish:&lt;/b&gt; artnay, Jarppi, MawKKe &lt;/li&gt;
+&lt;li&gt;&lt;b&gt;French:&lt;/b&gt; A1RO, aghilas.messara, bisaloo, frgnca, ggtr1138, gilbsgilbs, gtalbot, Gui13, iannick, jlutran, kyodev, logut, MartialBis, narzb, pBouillon, plunkets, Raphi111, Scrat15, tl_pierre, wilfriedroset&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;German:&lt;/b&gt; antsas, BasicBaer, Calyrx, codejunky, DavidHamburg, eth0, for1real, jensrutschmann, joe776, kflesch, MarcEdinger, marcbone, mcliquid, mfernau77, montilo, nursoda, omnisome4, origin_de, pcrcoding, phoerious, rgloor, transi_222, vlenzer, waster&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Greek:&lt;/b&gt; magkopian, nplatis, tassos.b, xinomilo&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Hungarian:&lt;/b&gt; bubu, meskobalazs, urbalazs&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Indonesian:&lt;/b&gt; zk&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Italian:&lt;/b&gt; amaxis, bovirus, duncanmid, FranzMari, lucaim, Mte90, Peo, TheZ3ro, tosky, VosaxAlo&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Japanese:&lt;/b&gt; masoo, metalic_cat, p2635, Shinichirou_Yamada, vargas.peniel, vmemjp, yukinakato&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Korean:&lt;/b&gt; cancantun, peremen&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Lithuanian:&lt;/b&gt; Moo&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Polish:&lt;/b&gt; keypress, konradmb, mrerexx, psobczak&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Portuguese (Brazil): &lt;/b&gt; danielbibit, fabiom, flaviobn, vitor895, weslly&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Portuguese (Portugal): &lt;/b&gt; American_Jesus, hds, mihai.ile, VictorR2007, smarquespt&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Russian:&lt;/b&gt; _nomoretears_, agag11507, anm, denoos, KekcuHa, Mogost, NcNZllQnHVU, netforhack, NetWormKido, RKuchma, VictorR2007, vsvyatski, wkill95&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Spanish:&lt;/b&gt; antifaz, EdwardNavarro, eliluminado, gonrial, jojobrambs, LeoBeltran, piegope, pquin, puchrojo, vargas.peniel, vsvyatski, Zranz&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Swedish:&lt;/b&gt; Anders_Bergqvist, LIINdd, henziger, jpyllman, peron&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Thai:&lt;/b&gt; arthit&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Turkish:&lt;/b&gt; etc, N3pp&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Ukrainian:&lt;/b&gt; brisk022, netforhack, zoresvit&lt;/li&gt;
 &lt;/ul&gt;</string>
              </property>
              <property name="textFormat">
