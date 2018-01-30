@@ -15,17 +15,17 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_PASSGEN_H
-#define KEEPASSXC_PASSGEN_H
+#ifndef KEEPASSXC_GENERATE_H
+#define KEEPASSXC_GENERATE_H
 
 #include "Command.h"
 
-class PassGen : public Command
+class Generate : public Command
 {
 public:
-    PassGen();
-    ~PassGen();
+    Generate();
+    ~Generate();
     int execute(QStringList arguments);
 };
 
-#endif // KEEPASSXC_PASSGEN_H
+#endif // KEEPASSXC_GENERATE_H

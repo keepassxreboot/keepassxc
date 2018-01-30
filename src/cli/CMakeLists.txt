@@ -28,14 +28,14 @@ set(cli_SOURCES
     Estimate.h
     Extract.cpp
     Extract.h
+    Generate.cpp
+    Generate.h
     List.cpp
     List.h
     Locate.cpp
     Locate.h
     Merge.cpp
     Merge.h
-    PassGen.cpp
-    PassGen.h
     Remove.cpp
     Remove.h
     Show.cpp

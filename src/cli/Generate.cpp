@@ -18,24 +18,24 @@
 #include <cstdlib>
 #include <stdio.h>
 
-#include "PassGen.h"
+#include "Generate.h"
 
 #include <QCommandLineParser>
 #include <QTextStream>
 
 #include "core/PasswordGenerator.h"
 
-PassGen::PassGen()
+Generate::Generate()
 {
-    this->name = QString("passgen");
+    this->name = QString("generate");
     this->description = QObject::tr("Generate a new random password.");
 }
 
-PassGen::~PassGen()
+Generate::~Generate()
 {
 }
 
-int PassGen::execute(QStringList arguments)
+int Generate::execute(QStringList arguments)
 {
     QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
     QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
@@ -65,7 +65,7 @@ int PassGen::execute(QStringList arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 0) {
-        outputTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli passgen");
+        outputTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli generate");
         return EXIT_FAILURE;
     }
 
@@ -99,7 +99,7 @@ int PassGen::execute(QStringList arguments)
     passwordGenerator.setCharClasses(classes);
 
     if (!passwordGenerator.isValid()) {
-        outputTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli passgen");
+        outputTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli generate");
         return EXIT_FAILURE;
     }
 

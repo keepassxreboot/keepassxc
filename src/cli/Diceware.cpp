@@ -42,24 +42,31 @@ int Diceware::execute(QStringList arguments)
 
     QCommandLineParser parser;
     parser.setApplicationDescription(this->description);
+    QCommandLineOption words(QStringList() << "W" << "words",
+                                QObject::tr("Word count for the diceware passphrase."),
+                                QObject::tr("count"));
+    parser.addOption(words);
     QCommandLineOption wordlistFile(QStringList() << "w"
                                              << "word-list",
                                QObject::tr("Wordlist fot the diceware generator.\n[Default: EFF English]"),
                                QObject::tr("path"));
     parser.addOption(wordlistFile);
-    parser.addPositionalArgument("words", QObject::tr("Word count for the diceware generator."));
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
-    if (args.size() != 1) {
+    if (args.size() != 0) {
         outputTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli diceware");
         return EXIT_FAILURE;
     }
 
     PassphraseGenerator dicewareGenerator;
 
-    int words = args.at(0).toInt();
-    dicewareGenerator.setWordCount(words);
+    if (parser.value(words).isEmpty()) {
+        dicewareGenerator.setWordCount(PassphraseGenerator::DefaultWordCount);
+    } else {
+        int wordcount = parser.value(words).toInt();
+        dicewareGenerator.setWordCount(wordcount);
+    }
 
     if (!parser.value(wordlistFile).isEmpty()) {
         dicewareGenerator.setWordList(parser.value(wordlistFile));
