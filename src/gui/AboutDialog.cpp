@@ -54,6 +54,9 @@ AboutDialog::AboutDialog(QWidget* parent)
 
     QString debugInfo = "KeePassXC - ";
     debugInfo.append(tr("Version %1\n").arg(KEEPASSX_VERSION));
+#ifndef KEEPASSXC_RELEASE_BUILD
+    debugInfo.append(tr("Build Type: Snapshot\n"));
+#endif
     if (!commitHash.isEmpty()) {
         debugInfo.append(tr("Revision: %1").arg(commitHash.left(7)).append("\n"));
     }

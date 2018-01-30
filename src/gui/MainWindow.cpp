@@ -420,9 +420,19 @@ MainWindow::MainWindow()
     }
 #ifdef WITH_XC_HTTP
     if (config()->get("Http/Enabled", false).toBool() && config()->get("Http/DeprecationNoticeShown", 0).toInt() < 3) {
-        // show message after tab widget dismissed all messages
-        connect(m_ui->tabWidget, SIGNAL(messageDismissGlobal()), this, SLOT(showKeePassHTTPDeprecationNotice()));
+        // show message after global widget dismissed all messages
+        connect(m_ui->globalMessageWidget, SIGNAL(hideAnimationFinished()), this, SLOT(showKeePassHTTPDeprecationNotice()));
     }
+#endif
+
+#ifndef KEEPASSXC_RELEASE_BUILD
+    m_ui->globalMessageWidget->showMessage(tr("WARNING: You are using an unstable build of KeePassXC!\n"
+                                              "There is a high risk of corruption, maintain a backup of your databases.\n"
+                                              "This version is not meant for production use."),
+                                           MessageWidget::Warning, -1);
+#else
+    // Show the HTTP deprecation message if enabled above
+    emit m_ui->globalMessageWidget->hideAnimationFinished();
 #endif
 }
 
@@ -441,7 +451,7 @@ void MainWindow::showKeePassHTTPDeprecationNotice()
                          MessageWidget::Warning, true, -1);
 
     config()->set("Http/DeprecationNoticeShown", warningNum + 1);
-    disconnect(m_ui->tabWidget, SIGNAL(messageDismissGlobal()), this, SLOT(showKeePassHTTPDeprecationNotice()));
+    disconnect(m_ui->globalMessageWidget, SIGNAL(hideAnimationFinished()), this, SLOT(showKeePassHTTPDeprecationNotice()));
 }
 
 void MainWindow::appExit()

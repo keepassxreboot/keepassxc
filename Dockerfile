@@ -16,7 +16,7 @@
 
 FROM ubuntu:14.04
 
-ENV REBUILD_COUNTER=2
+ENV REBUILD_COUNTER=4
 
 ENV QT5_VERSION=59
 ENV QT5_PPA_VERSION=${QT5_VERSION}2
@@ -38,6 +38,7 @@ RUN set -x \
     && apt-get install -y \
         cmake3 \
         g++ \
+        git \
         libgcrypt20-18-dev \
         libargon2-0-dev \
         libsodium-dev \

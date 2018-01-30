@@ -173,7 +173,8 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
     } else {
         dbStruct.dbWidget->switchToOpenDatabase(dbStruct.fileInfo.absoluteFilePath());
     }
-    emit messageDismissGlobal();
+    
+    emit messageDismissTab();
 }
 
 void DatabaseTabWidget::importCsv()

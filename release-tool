@@ -37,9 +37,10 @@ DOCKER_CONTAINER_NAME="keepassxc-build-container"
 CMAKE_OPTIONS=""
 COMPILER="g++"
 MAKE_OPTIONS="-j8"
-BUILD_PLUGINS="autotype http yubikey"
+BUILD_PLUGINS="all"
 INSTALL_PREFIX="/usr/local"
 BUILD_SOURCE_TARBALL=true
+BUILD_SNAPSHOT=false
 ORIG_BRANCH=""
 ORIG_CWD="$(pwd)"
 
@@ -111,6 +112,7 @@ Options:
   -i, --install-prefix    Install prefix (default: '${INSTALL_PREFIX}')
   -p, --plugins           Space-separated list of plugins to build
                           (default: ${BUILD_PLUGINS})
+      --snapshot          Don't checkout the release tag
   -n, --no-source-tarball Don't build source tarball
   -h, --help              Show this help
 EOF
@@ -307,6 +309,13 @@ checkOsslsigncodeCommandExists() {
     command -v osslsigncode > /dev/null
     if [ 0 -ne $? ]; then
         exitError "osslsigncode command not found on the PATH! Please install it using 'pacman -S mingw-w64-osslsigncode'."
+    fi
+}
+
+checkSigntoolCommandExists() {
+    command -v signtool > /dev/null
+    if [ 0 -ne $? ]; then
+        exitError "signtool command not found on the PATH! Add the Windows SDK binary folder to your PATH."
     fi
 }
 
@@ -556,6 +565,9 @@ build() {
             
             -n|--no-source-tarball)
                 BUILD_SOURCE_TARBALL=false ;;
+
+            --snapshot)
+                BUILD_SNAPSHOT=true ;;
             
             -h|--help)
                 printUsage "build"
@@ -574,8 +586,16 @@ build() {
 
     OUTPUT_DIR="$(realpath "$OUTPUT_DIR")"
 
-    logInfo "Checking out release tag '${TAG_NAME}'..."
-    git checkout "$TAG_NAME"
+    if $BUILD_SNAPSHOT; then
+        TAG_NAME="HEAD"
+        local branch=`git rev-parse --abbrev-ref HEAD`
+        logInfo "Using current branch ${branch} to build..."
+        RELEASE_NAME="${RELEASE_NAME}-snapshot"
+    else
+        logInfo "Checking out release tag '${TAG_NAME}'..."
+        git checkout "$TAG_NAME"
+        CMAKE_OPTIONS="${CMAKE_OPTIONS} -DKEEPASSXC_RELEASE_BUILD=ON"
+    fi
 
     logInfo "Creating output directory..."
     mkdir -p "$OUTPUT_DIR"
@@ -866,10 +886,10 @@ appsign() {
         echo
 
         for f in "${sign_files[@]}"; do
-            if [[ ${f: -4} == '.exe' ]]; then
+            if [[ ${f: -4} == ".exe" ]]; then
                 logInfo "Signing file '${f}' using osslsigncode..."
                 # output a signed exe; we have to use a different name due to osslsigntool limitations
-                osslsigncode sign -pkcs12 "${signtool_key}" -pass "${password}" \
+                osslsigncode sign -pkcs12 "${signtool_key}" -pass "${password}" -n "KeePassXC" \
                     -t "http://timestamp.comodoca.com/authenticode" -in "${f}" -out "${f}.signed"
 
                 if [ 0 -ne $? ]; then
@@ -879,8 +899,20 @@ appsign() {
 
                 # overwrite the original exe with the signed exe
                 mv -f "${f}.signed" "${f}"
+            elif [[ ${f: -4} == ".msi" ]]; then
+                # Make sure we can find the signtool
+                checkSigntoolCommandExists
+
+                # osslsigncode does not succeed at signing MSI files at this time...
+                logInfo "Signing file '${f}' using Microsoft signtool..."
+                signtool sign -f "${signtool_key}" -p "${password}" -d "KeePassXC" \
+                    -t "http://timestamp.comodoca.com/authenticode" "${f}"
+                
+                if [ 0 -ne $? ]; then
+                    exitError "Signing failed!"
+                fi
             else
-                logInfo "Skipping non-EXE file '${f}'..."
+                logInfo "Skipping non-executable file '${f}'..."
             fi
         done
 
