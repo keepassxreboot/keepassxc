@@ -285,10 +285,10 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
     for (Database* db : dbList) {
         const QList<Entry*> dbEntries = db->rootGroup()->entriesRecursive();
         for (Entry* entry : dbEntries) {
-            const QList<QString> sequences = autoTypeSequences(entry, windowTitle);
+            const QSet<QString> sequences = autoTypeSequences(entry, windowTitle).toSet();
             for (const QString& sequence : sequences) {
                 if (!sequence.isEmpty()) {
-                    matchList << AutoTypeMatch(entry,sequence);
+                    matchList << AutoTypeMatch(entry, sequence);
                 }
             }
         }
@@ -531,6 +531,7 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
 
 /**
  * Retrive the autotype sequences matches for a given windowTitle
+ * This returns a list with priority ordering. If you don't want duplicates call .toSet() on it.
  */
 QList<QString> AutoType::autoTypeSequences(const Entry* entry, const QString& windowTitle)
 {
