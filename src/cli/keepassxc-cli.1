@@ -19,7 +19,7 @@ Adds a new entry to a database. A password can be generated (\fI-g\fP option), o
 .IP "clip [options] <database> <entry> [timeout]"
 Copies the password of a database entry to the clipboard. If multiple entries with the same name exist in different groups, only the password for the first one is going to be copied. For copying the password of an entry in a specific group, the group path to the entry should be specified as well, instead of just the name. Optionally, a timeout in seconds can be specified to automatically clear the clipboard.
 
-.IP "diceware [options] <words>"
+.IP "diceware [options]"
 Generate a random diceware passphrase.
 
 .IP "edit [options] <database> <entry>"
@@ -31,6 +31,9 @@ Estimates the entropy of a password. The password to estimate can be provided as
 .IP "extract [options] <database>"
 Extracts and prints the contents of a database to standard output in XML format.
 
+.IP "generate [options]"
+Generate a random password
+
 .IP "locate [options] <database> <term>"
 Locates all the entries that match a specific search term in a database.
 
@@ -39,9 +42,6 @@ Lists the contents of a group in a database. If no group is specified, it will d
 
 .IP "merge [options] <database1> <database2>"
 Merges two databases together. The first database file is going to be replaced by the result of the merge, for that reason it is advisable to keep a backup of the two database files before attempting a merge. In the case that both databases make use of the same credentials, the \fI--same-credentials\fP or \fI-s\fP option can be used.
-
-.IP "passgen [options] <length>"
-Generate a random password
 
 .IP "rm [options] <database> <entry>"
 Removes an entry from a database. If the database has a recycle bin, the entry will be moved there. If the entry is already in the recycle bin, it will be removed permanently.
@@ -112,28 +112,34 @@ specified, a summary of the default attributes is given.
 
 .SS "Diceware options"
 
+.IP "-W, --words <count>"
+Desired number of words for the generated passphrase. [Default: 7]
+
 .IP "-w, --word-list <path>"
 Path of the wordlist for the diceware generator. The wordlist must have > 1000 words,
 otherwise the program will fail. If the wordlist has < 4000 words a warning will
 be printed to STDERR.
 
 
-.SS "PassGen options"
+.SS "Generate options"
+
+.IP "-L, --length <length>"
+Desired length for the generated password. [Default: 16]
 
 .IP "-l"
-Use lowercase characters for the password generator
+Use lowercase characters for the generated password. [Default: Enabled]
 
 .IP "-u"
-Use uppercase characters for the password generator
+Use uppercase characters for the generated password. [Default: Enabled]
 
 .IP "-n"
-Use numbers characters for the password generator
+Use numbers characters for the generated password. [Default: Enabled]
 
 .IP "-s"
-Use special characters for the password generator
+Use special characters for the generated password. [Default: Disabled]
 
 .IP "-e"
-Use extended ascii characters for the password generator
+Use extended ascii characters for the generated password. [Default: Disabled]
 
 
 
