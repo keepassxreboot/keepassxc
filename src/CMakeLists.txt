@@ -196,6 +196,10 @@ add_feature_info(SSHAgent WITH_XC_SSHAGENT "SSH agent integration compatible wit
 add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
 
 add_subdirectory(http)
+if(WITH_XC_NETWORKING)
+  find_package(curl REQUIRED)
+  set(keepassxcnetwork_LIB curl)
+endif()
 
 set(BROWSER_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/browser)
 add_subdirectory(browser)
@@ -246,6 +250,7 @@ set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUIL
 target_link_libraries(keepassx_core
                       keepasshttp
                       ${keepassxcbrowser_LIB}
+                      ${keepassxcnetwork_LIB}
                       autotype
                       ${sshagent_LIB}
                       ${YUBIKEY_LIBRARIES}
