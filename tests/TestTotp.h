@@ -33,6 +33,7 @@ private slots:
     void testTotpCode();
     void testEncoderData();
     void testSteamTotp();
+    void testEntryHistory();
 };
 
 #endif // KEEPASSX_TESTTOTP_H

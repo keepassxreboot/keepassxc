@@ -350,6 +350,7 @@ QString Entry::totp() const
 
 void Entry::setTotp(const QString& seed, quint8& step, quint8& digits)
 {
+    beginUpdate();
     if (step == 0) {
         step = Totp::defaultStep;
     }
@@ -376,6 +377,7 @@ void Entry::setTotp(const QString& seed, quint8& step, quint8& digits)
         }
         m_attributes->set("TOTP Settings", data);
     }
+    endUpdate();
 }
 
 QString Entry::totpSeed() const
