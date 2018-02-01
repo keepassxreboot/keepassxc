@@ -164,3 +164,15 @@ void TestTotp::testSteamTotp()
     time = 1511200714;
     QCOMPARE(Totp::generateTotp(seed, time, Totp::ENCODER_STEAM, 30), QString("9P3VP"));
 }
+
+void TestTotp::testEntryHistory()
+{
+    Entry entry;
+    quint8 step = 16;
+    quint8 digits = 6;
+    QCOMPARE(entry.historyItems().size(), 0);
+    entry.setTotp("GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ", step, digits);
+    QCOMPARE(entry.historyItems().size(), 1);
+    entry.setTotp("foo", step, digits);
+    QCOMPARE(entry.historyItems().size(), 2);
+}
