@@ -1,5 +1,6 @@
 /*
- *  Copyright (C) 2017 Toni Spets <toni.spets@iki.fi>
+ *  Copyright (C) 2018 Toni Spets <toni.spets@iki.fi>
+ *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,24 +16,16 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TESTOPENSSHKEY_H
-#define TESTOPENSSHKEY_H
+#ifndef ASN1KEY_H
+#define ASN1KEY_H
 
-#include <QObject>
+#include "OpenSSHKey.h"
+#include <QtCore>
 
-class OpenSSHKey;
-
-class TestOpenSSHKey : public QObject
+namespace ASN1Key
 {
-    Q_OBJECT
+    bool parseDSA(QByteArray& ba, OpenSSHKey& key);
+    bool parseRSA(QByteArray& ba, OpenSSHKey& key);
+}
 
-private slots:
-    void initTestCase();
-    void testParse();
-    void testParseDSA();
-    void testParseRSA();
-    void testDecryptAES256CBC();
-    void testDecryptAES256CTR();
-};
-
-#endif // TESTOPENSSHKEY_H
+#endif // ASN1KEY_H

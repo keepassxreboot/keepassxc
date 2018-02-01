@@ -260,6 +260,10 @@ void SSHAgent::databaseModeChanged(DatabaseWidget::Mode mode)
                 continue;
             }
 
+            if (key.comment().isEmpty()) {
+                key.setComment(e->username());
+            }
+
             if (settings.removeAtDatabaseClose()) {
                 removeIdentityAtLock(key, uuid);
             }
