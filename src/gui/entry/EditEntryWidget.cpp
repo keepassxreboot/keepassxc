@@ -271,7 +271,7 @@ void EditEntryWidget::setupSSHAgent()
     m_sshAgentUi->publicKeyEdit->setFont(fixedFont);
 
     connect(m_sshAgentUi->attachmentRadioButton, SIGNAL(clicked(bool)), SLOT(updateSSHAgentKeyInfo()));
-    connect(m_sshAgentUi->attachmentComboBox, SIGNAL(currentIndexChanged(int)), SLOT(updateSSHAgentKeyInfo()));
+    connect(m_sshAgentUi->attachmentComboBox, SIGNAL(currentIndexChanged(int)), SLOT(updateSSHAgentAttachment()));
     connect(m_sshAgentUi->externalFileRadioButton, SIGNAL(clicked(bool)), SLOT(updateSSHAgentKeyInfo()));
     connect(m_sshAgentUi->externalFileEdit, SIGNAL(textChanged(QString)), SLOT(updateSSHAgentKeyInfo()));
     connect(m_sshAgentUi->browseButton, SIGNAL(clicked()), SLOT(browsePrivateKey()));
@@ -320,6 +320,12 @@ void EditEntryWidget::updateSSHAgent()
 
     m_sshAgentSettings = settings;
 
+    updateSSHAgentKeyInfo();
+}
+
+void EditEntryWidget::updateSSHAgentAttachment()
+{
+    m_sshAgentUi->attachmentRadioButton->setChecked(true);
     updateSSHAgentKeyInfo();
 }
 
@@ -398,6 +404,8 @@ void EditEntryWidget::browsePrivateKey()
     QString fileName = QFileDialog::getOpenFileName(this, tr("Select private key"), "");
     if (!fileName.isEmpty()) {
         m_sshAgentUi->externalFileEdit->setText(fileName);
+        m_sshAgentUi->externalFileRadioButton->setChecked(true);
+        updateSSHAgentKeyInfo();
     }
 }
 
