@@ -101,6 +101,7 @@ private slots:
     void toggleHideNotes(bool visible);
 #ifdef WITH_XC_SSHAGENT
     void updateSSHAgent();
+    void updateSSHAgentAttachment();
     void updateSSHAgentKeyInfo();
     void browsePrivateKey();
     void addKeyToAgent();
