@@ -22,6 +22,7 @@
 #include <QDir>
 #include <QSettings>
 #include <QTemporaryFile>
+#include <QStandardPaths>
 
 Config* Config::m_instance(nullptr);
 
