@@ -21,7 +21,6 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QSettings>
-#include <QStandardPaths>
 #include <QTemporaryFile>
 
 Config* Config::m_instance(nullptr);
@@ -49,6 +48,18 @@ QString Config::getFileName()
 void Config::set(const QString& key, const QVariant& value)
 {
     m_settings->setValue(key, value);
+}
+
+/**
+ * Sync configuration with persistent storage.
+ *
+ * Usually, you don't need to call this method manually, but if you are writing
+ * configurations after an emitted \link QCoreApplication::aboutToQuit() signal,
+ * use it to guarantee your config values are persisted.
+ */
+void Config::sync()
+{
+    m_settings->sync();
 }
 
 Config::Config(const QString& fileName, QObject* parent)
@@ -106,6 +117,7 @@ Config::~Config()
 void Config::init(const QString& fileName)
 {
     m_settings.reset(new QSettings(fileName, QSettings::IniFormat));
+    connect(qApp, &QCoreApplication::aboutToQuit, this, &Config::sync);
 
     m_defaults.insert("SingleInstance", true);
     m_defaults.insert("RememberLastDatabases", true);
@@ -162,7 +174,7 @@ void Config::createConfigFromFile(const QString& file)
 void Config::createTempFileInstance()
 {
     Q_ASSERT(!m_instance);
-    QTemporaryFile* tmpFile = new QTemporaryFile();
+    auto* tmpFile = new QTemporaryFile();
     bool openResult = tmpFile->open();
     Q_ASSERT(openResult);
     Q_UNUSED(openResult);
