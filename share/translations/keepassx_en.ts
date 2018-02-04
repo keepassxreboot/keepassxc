@@ -20,10 +20,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Project Maintainers:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Contributors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -68,6 +64,11 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Enabled extensions:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Build Type: Snapshot
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -819,6 +820,22 @@ If you keep this number, your database may be too easy to crack!</source>
         <source>Failed to transform key with new KDF parameters; KDF unchanged.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message numerus="yes">
+        <source> MiB</source>
+        <comment>Abbreviation for Mebibytes (KDF settings)</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source> thread(s)</source>
+        <comment>Threads for parallel execution (KDF settings)</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetEncryption</name>
@@ -851,15 +868,7 @@ If you keep this number, your database may be too easy to crack!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> MB</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Parallelism:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> thread</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -899,6 +908,14 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Use recycle bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Additional Database Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable &amp;compression (recommended)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1016,6 +1033,15 @@ Please press cancel to finish your changes or discard them.</source>
         <source>This database has been modified.
 Do you want to save the database before locking it?
 Otherwise your changes are lost.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable safe saves?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
+Disable safe saves and try again?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1815,6 +1841,65 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>URL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Created</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Accessed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attachments</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EntryView</name>
+    <message>
+        <source>Customize View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide Usernames</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide Passwords</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fit to window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fit to contents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset to defaults</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2692,6 +2777,12 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Please touch the button on your YubiKey!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WARNING: You are using an unstable build of KeePassXC!
+There is a high risk of corruption, maintain a backup of your databases.
+This version is not meant for production use.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3650,6 +3741,30 @@ Please unlock the selected database or choose another one which is unlocked.</so
         <comment>Milliseconds</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Startup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File Management</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Safely save database files (may be incompatible with Dropbox, etc)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup database file before saving</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Entry Management</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>
@@ -3788,10 +3903,6 @@ Please unlock the selected database or choose another one which is unlocked.</so
 <context>
     <name>WelcomeWidget</name>
     <message>
-        <source>Welcome to KeePassXC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Start storing your passwords securely in a KeePassXC database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3813,6 +3924,10 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Recent databases</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Welcome to KeePassXC %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -139,17 +139,11 @@
        <height>16777215</height>
       </size>
      </property>
-     <property name="suffix">
-      <string> MB</string>
-     </property>
      <property name="minimum">
       <number>1</number>
      </property>
      <property name="maximum">
       <number>1048576</number>
-     </property>
-     <property name="value">
-      <number>64</number>
      </property>
     </widget>
    </item>
@@ -173,9 +167,6 @@
        <width>150</width>
        <height>16777215</height>
       </size>
-     </property>
-     <property name="suffix">
-      <string> thread</string>
      </property>
      <property name="minimum">
       <number>1</number>
