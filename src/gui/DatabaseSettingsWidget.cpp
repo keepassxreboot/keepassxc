@@ -57,6 +57,9 @@ DatabaseSettingsWidget::DatabaseSettingsWidget(QWidget* parent)
     connect(m_uiEncryption->transformBenchmarkButton, SIGNAL(clicked()), SLOT(transformRoundsBenchmark()));
     connect(m_uiEncryption->kdfComboBox, SIGNAL(currentIndexChanged(int)), SLOT(kdfChanged(int)));
 
+    connect(m_uiEncryption->memorySpinBox, SIGNAL(valueChanged(int)), this, SLOT(memoryChanged(int)));
+    connect(m_uiEncryption->parallelismSpinBox, SIGNAL(valueChanged(int)), this, SLOT(parallelismChanged(int)));
+
     m_ui->categoryList->addCategory(tr("General"), FilePath::instance()->icon("categories", "preferences-other"));
     m_ui->categoryList->addCategory(tr("Encryption"), FilePath::instance()->icon("actions", "document-encrypt"));
     m_ui->stackedWidget->addWidget(m_uiGeneralPage);
@@ -121,7 +124,7 @@ void DatabaseSettingsWidget::load(Database* db)
         kdfChanged(kdfIndex);
     }
 
-    // properly initialize parallelism spin box (may be overwritten by actual KDF values)
+    m_uiEncryption->memorySpinBox->setValue(64);
     m_uiEncryption->parallelismSpinBox->setValue(QThread::idealThreadCount());
 
     // Setup kdf parameters
@@ -288,4 +291,22 @@ void DatabaseSettingsWidget::kdfChanged(int index)
     m_uiEncryption->parallelismSpinBox->setEnabled(parallelismEnabled);
 
     transformRoundsBenchmark();
+}
+
+/**
+ * Update memory spin box suffix on value change.
+ */
+void DatabaseSettingsWidget::memoryChanged(int value)
+{
+    m_uiEncryption->memorySpinBox->setSuffix(
+        tr(" MiB", "Abbreviation for Mebibytes (KDF settings)", value));
+}
+
+/**
+ * Update parallelism spin box suffix on value change.
+ */
+void DatabaseSettingsWidget::parallelismChanged(int value)
+{
+    m_uiEncryption->parallelismSpinBox->setSuffix(
+        tr(" thread(s)", "Threads for parallel execution (KDF settings)", value));
 }

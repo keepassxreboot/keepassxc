@@ -197,13 +197,12 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
   set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,-z,relro,-z,now")
 endif()
 
+add_gcc_compiler_cflags("-std=c99")
 add_gcc_compiler_cxxflags("-std=c++11")
 
 if(APPLE)
   add_gcc_compiler_cxxflags("-stdlib=libc++")
 endif()
-
-add_gcc_compiler_cflags("-ansi")
 
 if(WITH_DEV_BUILD)
   add_definitions(-DQT_DEPRECATED_WARNINGS -DGCRYPT_NO_DEPRECATED)
