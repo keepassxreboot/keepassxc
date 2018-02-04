@@ -28,153 +28,189 @@
 #include "gui/Clipboard.h"
 #include "entry/EntryAttachmentsModel.h"
 
+namespace {
+constexpr int GeneralTabIndex = 0;
+}
+
 DetailsWidget::DetailsWidget(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::DetailsWidget())
     , m_locked(false)
     , m_currentEntry(nullptr)
     , m_currentGroup(nullptr)
-    , m_timer(nullptr)
-    , m_attributesTabWidget(nullptr)
-    , m_attachmentsTabWidget(nullptr)
-    , m_autotypeTabWidget(nullptr)
+    , m_step(0)
+    , m_totpTimer(nullptr)
     , m_selectedTabEntry(0)
     , m_selectedTabGroup(0)
 {
     m_ui->setupUi(this);
 
-    connect(parent, SIGNAL(pressedEntry(Entry*)), SLOT(getSelectedEntry(Entry*)));
-    connect(parent, SIGNAL(pressedGroup(Group*)), SLOT(getSelectedGroup(Group*)));
-    connect(parent, SIGNAL(currentModeChanged(DatabaseWidget::Mode)), SLOT(setDatabaseMode(DatabaseWidget::Mode)));
+    // Entry
+    m_ui->entryTotpButton->setIcon(filePath()->icon("actions", "chronometer"));
+    m_ui->entryCloseButton->setIcon(filePath()->icon("actions", "dialog-close"));
 
-    m_ui->totpButton->setIcon(filePath()->icon("actions", "chronometer"));
-    m_ui->closeButton->setIcon(filePath()->icon("actions", "dialog-close"));
+    m_ui->entryAttachmentsWidget->setReadOnly(true);
+    m_ui->entryAttachmentsWidget->setButtonsVisible(false);
 
-    connect(m_ui->totpButton, SIGNAL(toggled(bool)), SLOT(showTotp(bool)));
-    connect(m_ui->closeButton, SIGNAL(toggled(bool)), SLOT(hideDetails()));
-    connect(m_ui->tabWidget, SIGNAL(tabBarClicked(int)), SLOT(updateTabIndex(int)));
+    connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotpWidget, SLOT(setVisible(bool)));
+    connect(m_ui->entryCloseButton, SIGNAL(toggled(bool)), SLOT(hide()));
+    connect(m_ui->entryTabWidget, SIGNAL(tabBarClicked(int)), SLOT(updateTabIndexes()), Qt::QueuedConnection);
 
-    m_ui->attachmentsWidget->setReadOnly(true);
-    m_ui->attachmentsWidget->setButtonsVisible(false);
-
-    m_attributesTabWidget = m_ui->tabWidget->widget(AttributesTab);
-    m_attachmentsTabWidget = m_ui->tabWidget->widget(AttachmentsTab);
-    m_autotypeTabWidget = m_ui->tabWidget->widget(AutotypeTab);
-
-    this->hide();
+    // Group
+    m_ui->groupCloseButton->setIcon(filePath()->icon("actions", "dialog-close"));
+    connect(m_ui->groupCloseButton, SIGNAL(toggled(bool)), SLOT(hide()));
+    connect(m_ui->groupTabWidget, SIGNAL(tabBarClicked(int)), SLOT(updateTabIndexes()), Qt::QueuedConnection);
 }
 
 DetailsWidget::~DetailsWidget()
 {
-    if (m_timer) {
-        delete m_timer;
-    }
+    deleteTotpTimer();
 }
 
-void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
+void DetailsWidget::setEntry(Entry* selectedEntry)
 {
     if (!selectedEntry) {
-        hideDetails();
+        hide();
         return;
     }
 
     m_currentEntry = selectedEntry;
 
-    if (!config()->get("GUI/HideDetailsView").toBool()) {
-        this->show();
+    updateEntryHeaderLine();
+    updateEntryTotp();
+    updateEntryGeneralTab();
+    updateEntryNotesTab();
+    updateEntryAttributesTab();
+    updateEntryAttachmentsTab();
+    updateEntryAutotypeTab();
+
+    setVisible(!config()->get("GUI/HideDetailsView").toBool());
+
+    m_ui->stackedWidget->setCurrentWidget(m_ui->pageEntry);
+    const int tabIndex = m_ui->entryTabWidget->isTabEnabled(m_selectedTabEntry) ? m_selectedTabEntry
+                                                                                : GeneralTabIndex;
+    Q_ASSERT(m_ui->entryTabWidget->isTabEnabled(GeneralTabIndex));
+    m_ui->entryTabWidget->setCurrentIndex(tabIndex);
+}
+
+void DetailsWidget::setGroup(Group* selectedGroup)
+{
+    if (!selectedGroup) {
+        hide();
+        return;
     }
 
-    m_ui->stackedWidget->setCurrentIndex(EntryPreview);
+    m_currentGroup = selectedGroup;
+    updateGroupHeaderLine();
+    updateGroupGeneralTab();
+    updateGroupNotesTab();
 
-    if (m_ui->tabWidget->count() < 5) {
-        m_ui->tabWidget->insertTab(static_cast<int>(AttributesTab), m_attributesTabWidget, tr("Attributes"));
-        m_ui->tabWidget->insertTab(static_cast<int>(AttachmentsTab), m_attachmentsTabWidget, tr("Attachments"));
-        m_ui->tabWidget->insertTab(static_cast<int>(AutotypeTab), m_autotypeTabWidget, tr("Autotype"));
+    setVisible(!config()->get("GUI/HideDetailsView").toBool());
+
+    m_ui->stackedWidget->setCurrentWidget(m_ui->pageGroup);
+    const int tabIndex = m_ui->groupTabWidget->isTabEnabled(m_selectedTabGroup) ? m_selectedTabGroup
+                                                                                : GeneralTabIndex;
+    Q_ASSERT(m_ui->groupTabWidget->isTabEnabled(GeneralTabIndex));
+    m_ui->groupTabWidget->setCurrentIndex(tabIndex);
+}
+
+void DetailsWidget::setDatabaseMode(DatabaseWidget::Mode mode)
+{
+    m_locked = mode == DatabaseWidget::LockedMode;
+    if (m_locked) {
+        return;
     }
 
-    m_ui->tabWidget->setTabEnabled(AttributesTab, false);
-    m_ui->tabWidget->setTabEnabled(NotesTab, false);
-    m_ui->tabWidget->setTabEnabled(AutotypeTab, false);
-
-    m_ui->totpButton->hide();
-    m_ui->totpWidget->hide();
-    m_ui->totpButton->setChecked(false);
-
-    auto icon = m_currentEntry->iconPixmap();
-    if (icon.width() > 16 || icon.height() > 16) {
-        icon = icon.scaled(16, 16);
-    }
-    m_ui->entryIcon->setPixmap(icon);
-
-    QString title = QString(" / ");
-    Group* entry_group = m_currentEntry->group();
-    if (entry_group) {
-        QStringList hierarchy = entry_group->hierarchy();
-        hierarchy.removeFirst();
-        title += hierarchy.join(" / ");
-        if (hierarchy.size() > 0) {
-            title += " / ";
+    if (mode == DatabaseWidget::ViewMode) {
+        if (m_ui->stackedWidget->currentWidget() == m_ui->pageGroup) {
+            setGroup(m_currentGroup);
+        } else {
+            setEntry(m_currentEntry);
         }
     }
-    title.append(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->title()));
-    m_ui->titleLabel->setText(title);
+}
 
-    m_ui->usernameLabel->setText(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->username()));
+void DetailsWidget::updateEntryHeaderLine()
+{
+    Q_ASSERT(m_currentEntry);
+    const QString title = m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->title());
+    m_ui->entryTitleLabel->setText(hierarchy(m_currentEntry->group(), title));
+    m_ui->entryIcon->setPixmap(preparePixmap(m_currentEntry->iconPixmap(), 16));
+}
+
+void DetailsWidget::updateEntryTotp()
+{
+    Q_ASSERT(m_currentEntry);
+    const bool hasTotp = m_currentEntry->hasTotp();
+    m_ui->entryTotpButton->setVisible(hasTotp);
+    m_ui->entryTotpWidget->hide();
+    m_ui->entryTotpButton->setChecked(false);
+
+    if (hasTotp) {
+        deleteTotpTimer();
+        m_totpTimer = new QTimer(m_currentEntry);
+        connect(m_totpTimer, SIGNAL(timeout()), this, SLOT(updateTotpLabel()));
+        m_totpTimer->start(1000);
+
+        m_step = m_currentEntry->totpStep();
+        updateTotpLabel();
+    } else {
+        m_ui->entryTotpLabel->clear();
+        stopTotpTimer();
+    }
+}
+
+void DetailsWidget::updateEntryGeneralTab()
+{
+    Q_ASSERT(m_currentEntry);
+    m_ui->entryUsernameLabel->setText(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->username()));
 
     if (!config()->get("security/hidepassworddetails").toBool()) {
-        m_ui->passwordLabel->setText(
-            shortPassword(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->password())));
-        m_ui->passwordLabel->setToolTip(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->password()));
+        const QString password = m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->password());
+        m_ui->entryPasswordLabel->setRawText(password);
+        m_ui->entryPasswordLabel->setToolTip(password);
     } else {
-        m_ui->passwordLabel->setText(QString("\u25cf").repeated(6));
+        m_ui->entryPasswordLabel->setRawText(QString("\u25cf").repeated(6));
+        m_ui->entryPasswordLabel->setToolTip({});
     }
 
-    QString url = m_currentEntry->webUrl();
+    const QString url = m_currentEntry->webUrl();
     if (!url.isEmpty()) {
         // URL is well formed and can be opened in a browser
         // create a new display url that masks password placeholders
         // the actual link will use the password
-        url = QString("<a href=\"%1\">%2</a>").arg(url).arg(shortUrl(m_currentEntry->displayUrl()));
-        m_ui->urlLabel->setOpenExternalLinks(true);
+        m_ui->entryUrlLabel->setRawText(m_currentEntry->displayUrl());
+        m_ui->entryUrlLabel->setUrl(url);
     } else {
         // Fallback to the raw url string
-        url = shortUrl(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->url()));
-        m_ui->urlLabel->setOpenExternalLinks(false);
-    }
-    m_ui->urlLabel->setText(url);
-
-    TimeInfo entryTime = m_currentEntry->timeInfo();
-    if (entryTime.expires()) {
-        m_ui->expirationLabel->setText(entryTime.expiryTime().toString(Qt::DefaultLocaleShortDate));
-    } else {
-        m_ui->expirationLabel->setText(tr("Never"));
+        m_ui->entryUrlLabel->setRawText(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->url()));
+        m_ui->entryUrlLabel->setUrl({});
     }
 
-    if (m_currentEntry->hasTotp()) {
-        m_step = m_currentEntry->totpStep();
+    const TimeInfo entryTime = m_currentEntry->timeInfo();
+    const QString expires = entryTime.expires() ? entryTime.expiryTime().toString(Qt::DefaultLocaleShortDate)
+                                                : tr("Never");
+    m_ui->entryExpirationLabel->setText(expires);
+}
 
-        if (m_timer) {
-            delete m_timer;
-        }
-        m_timer = new QTimer(selectedEntry);
-        connect(m_timer, SIGNAL(timeout()), this, SLOT(updateTotp()));
-        updateTotp();
-        m_timer->start(m_step * 1000);
-        m_ui->totpButton->show();
-    }
+void DetailsWidget::updateEntryNotesTab()
+{
+    Q_ASSERT(m_currentEntry);
+    const QString notes = m_currentEntry->notes();
+    setTabEnabled(m_ui->entryTabWidget, m_ui->entryNotesTab, !notes.isEmpty());
+    m_ui->entryNotesEdit->setText(m_currentEntry->resolveMultiplePlaceholders(notes));
+}
 
-    QString notes = m_currentEntry->notes();
-    if (!notes.isEmpty()) {
-        m_ui->tabWidget->setTabEnabled(NotesTab, true);
-        m_ui->notesEdit->setText(m_currentEntry->resolveMultiplePlaceholders(notes));
-    }
-
-    QStringList customAttributes = m_currentEntry->attributes()->customKeys();
-    if (customAttributes.size() > 0) {
-        m_ui->tabWidget->setTabEnabled(AttributesTab, true);
-        m_ui->attributesEdit->clear();
-
-        QString attributesText = QString();
+void DetailsWidget::updateEntryAttributesTab()
+{
+    Q_ASSERT(m_currentEntry);
+    m_ui->entryAttributesEdit->clear();
+    const EntryAttributes* attributes = m_currentEntry->attributes();
+    const QStringList customAttributes = attributes->customKeys();
+    const bool haveAttributes = customAttributes.size() > 0;
+    setTabEnabled(m_ui->entryTabWidget, m_ui->entryAttributesTab, haveAttributes);
+    if (haveAttributes) {
+        QString attributesText;
         for (const QString& key : customAttributes) {
             QString value = m_currentEntry->attributes()->value(key);
             if (m_currentEntry->attributes()->isProtected(key)) {
@@ -182,174 +218,118 @@ void DetailsWidget::getSelectedEntry(Entry* selectedEntry)
             }
             attributesText.append(QString("<b>%1</b>: %2<br/>").arg(key, value));
         }
-        m_ui->attributesEdit->setText(attributesText);
+        m_ui->entryAttributesEdit->setText(attributesText);
     }
+}
 
+void DetailsWidget::updateEntryAttachmentsTab()
+{
+    Q_ASSERT(m_currentEntry);
     const bool hasAttachments = !m_currentEntry->attachments()->isEmpty();
-    m_ui->tabWidget->setTabEnabled(AttachmentsTab, hasAttachments);
-    m_ui->attachmentsWidget->setEntryAttachments(m_currentEntry->attachments());
+    setTabEnabled(m_ui->entryTabWidget, m_ui->entryAttachmentsTab, hasAttachments);
+    m_ui->entryAttachmentsWidget->setEntryAttachments(m_currentEntry->attachments());
+}
 
-    m_ui->autotypeTree->clear();
-    AutoTypeAssociations* autotypeAssociations = m_currentEntry->autoTypeAssociations();
+void DetailsWidget::updateEntryAutotypeTab()
+{
+    Q_ASSERT(m_currentEntry);
+    m_ui->entryAutotypeTree->clear();
     QList<QTreeWidgetItem*> items;
-    for (auto assoc : autotypeAssociations->getAll()) {
-        QStringList association = QStringList() << assoc.window << assoc.sequence;
-        if (association.at(1).isEmpty()) {
-            association.replace(1, m_currentEntry->effectiveAutoTypeSequence());
-        }
-        items.append(new QTreeWidgetItem(m_ui->autotypeTree, association));
-    }
-    if (items.count() > 0) {
-        m_ui->autotypeTree->addTopLevelItems(items);
-        m_ui->tabWidget->setTabEnabled(AutotypeTab, true);
+    const AutoTypeAssociations* autotypeAssociations = m_currentEntry->autoTypeAssociations();
+    const auto associations = autotypeAssociations->getAll();
+    for (const auto& assoc : associations) {
+        const QString sequence = assoc.sequence.isEmpty() ? m_currentEntry->effectiveAutoTypeSequence()
+                                                          : assoc.sequence;
+        items.append(new QTreeWidgetItem(m_ui->entryAutotypeTree, {assoc.window, sequence}));
     }
 
-    if (m_ui->tabWidget->isTabEnabled(m_selectedTabEntry)) {
-        m_ui->tabWidget->setCurrentIndex(m_selectedTabEntry);
+    m_ui->entryAutotypeTree->addTopLevelItems(items);
+    setTabEnabled(m_ui->entryTabWidget, m_ui->entryAutotypeTab, !items.isEmpty());
+}
+
+void DetailsWidget::updateGroupHeaderLine()
+{
+    Q_ASSERT(m_currentGroup);
+    m_ui->groupTitleLabel->setText(hierarchy(m_currentGroup, {}));
+    m_ui->groupIcon->setPixmap(preparePixmap(m_currentGroup->iconPixmap(), 32));
+}
+
+void DetailsWidget::updateGroupGeneralTab()
+{
+    Q_ASSERT(m_currentGroup);
+    const QString searchingText = m_currentGroup->resolveSearchingEnabled() ? tr("Enabled") : tr("Disabled");
+    m_ui->groupSearchingLabel->setText(searchingText);
+
+    const QString autotypeText = m_currentGroup->resolveAutoTypeEnabled() ? tr("Enabled") : tr("Disabled");
+    m_ui->groupAutotypeLabel->setText(autotypeText);
+
+    const TimeInfo groupTime = m_currentGroup->timeInfo();
+    const QString expiresText = groupTime.expires() ? groupTime.expiryTime().toString(Qt::DefaultLocaleShortDate)
+                                                    : tr("Never");
+    m_ui->groupExpirationLabel->setText(expiresText);
+}
+
+void DetailsWidget::updateGroupNotesTab()
+{
+    Q_ASSERT(m_currentGroup);
+    const QString notes = m_currentGroup->notes();
+    setTabEnabled(m_ui->groupTabWidget, m_ui->groupNotesTab, !notes.isEmpty());
+    m_ui->groupNotesEdit->setText(notes);
+}
+
+void DetailsWidget::stopTotpTimer()
+{
+    if (m_totpTimer) {
+        m_totpTimer->stop();
     }
 }
 
-void DetailsWidget::getSelectedGroup(Group* selectedGroup)
+void DetailsWidget::deleteTotpTimer()
 {
-    if (!selectedGroup) {
-        hideDetails();
-        return;
+    if (m_totpTimer) {
+        delete m_totpTimer;
     }
+}
 
-    m_currentGroup = selectedGroup;
-
-    if (!config()->get("GUI/HideDetailsView").toBool()) {
-        this->show();
+void DetailsWidget::updateTotpLabel()
+{
+    if (!m_locked && m_currentEntry) {
+        const QString totpCode = m_currentEntry->totp();
+        const QString firstHalf = totpCode.left(totpCode.size() / 2);
+        const QString secondHalf = totpCode.mid(totpCode.size() / 2);
+        m_ui->entryTotpLabel->setText(firstHalf + " " + secondHalf);
+    } else {
+        m_ui->entryTotpLabel->clear();
+        stopTotpTimer();
     }
+}
 
-    m_ui->stackedWidget->setCurrentIndex(GroupPreview);
+void DetailsWidget::updateTabIndexes()
+{
+    m_selectedTabEntry = m_ui->entryTabWidget->currentIndex();
+    m_selectedTabGroup = m_ui->groupTabWidget->currentIndex();
+}
 
-    if (m_ui->tabWidget->count() > 2) {
-        m_ui->tabWidget->removeTab(AutotypeTab);
-        m_ui->tabWidget->removeTab(AttachmentsTab);
-        m_ui->tabWidget->removeTab(AttributesTab);
+void DetailsWidget::setTabEnabled(QTabWidget* tabWidget, QWidget* widget, bool enabled)
+{
+    const int tabIndex = tabWidget->indexOf(widget);
+    Q_ASSERT(tabIndex != -1);
+    tabWidget->setTabEnabled(tabIndex, enabled);
+}
+
+QPixmap DetailsWidget::preparePixmap(const QPixmap& pixmap, int size)
+{
+    if (pixmap.width() > size || pixmap.height() > size) {
+        return pixmap.scaled(size, size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     }
+    return pixmap;
+}
 
-    m_ui->tabWidget->setTabEnabled(GroupNotesTab, false);
-
-    m_ui->totpButton->hide();
-    m_ui->totpWidget->hide();
-
-    auto icon = m_currentGroup->iconPixmap();
-    if (icon.width() > 32 || icon.height() > 32) {
-        icon = icon.scaled(32, 32);
-    }
-    m_ui->entryIcon->setPixmap(icon);
-
-    QString title = " / ";
-    QStringList hierarchy = m_currentGroup->hierarchy();
+QString DetailsWidget::hierarchy(const Group* group, const QString& title)
+{
+    const QString separator(" / ");
+    QStringList hierarchy = group->hierarchy();
     hierarchy.removeFirst();
-    title += hierarchy.join(" / ");
-    if (hierarchy.size() > 0) {
-        title += " / ";
-    }
-    m_ui->titleLabel->setText(title);
-
-    QString notes = m_currentGroup->notes();
-    if (!notes.isEmpty()) {
-        m_ui->tabWidget->setTabEnabled(GroupNotesTab, true);
-        m_ui->notesEdit->setText(notes);
-    }
-
-    QString searching = tr("Disabled");
-    if (m_currentGroup->resolveSearchingEnabled()) {
-        searching = tr("Enabled");
-    }
-    m_ui->searchingLabel->setText(searching);
-
-    QString autotype = tr("Disabled");
-    if (m_currentGroup->resolveAutoTypeEnabled()) {
-        autotype = tr("Enabled");
-    }
-    m_ui->autotypeLabel->setText(autotype);
-
-    TimeInfo groupTime = m_currentGroup->timeInfo();
-    if (groupTime.expires()) {
-        m_ui->groupExpirationLabel->setText(groupTime.expiryTime().toString(Qt::DefaultLocaleShortDate));
-    } else {
-        m_ui->groupExpirationLabel->setText(tr("Never"));
-    }
-
-    if (m_ui->tabWidget->isTabEnabled(m_selectedTabGroup)) {
-        m_ui->tabWidget->setCurrentIndex(m_selectedTabGroup);
-    }
-}
-
-void DetailsWidget::updateTotp()
-{
-    if (!m_locked) {
-        QString totpCode = m_currentEntry->totp();
-        QString firstHalf = totpCode.left(totpCode.size() / 2);
-        QString secondHalf = totpCode.mid(totpCode.size() / 2);
-        m_ui->totpLabel->setText(firstHalf + " " + secondHalf);
-    } else if (m_timer) {
-        m_timer->stop();
-    }
-}
-
-void DetailsWidget::showTotp(bool visible)
-{
-    if (visible) {
-        m_ui->totpWidget->show();
-    } else {
-        m_ui->totpWidget->hide();
-    }
-}
-
-QString DetailsWidget::shortUrl(QString url)
-{
-    QString newurl = "";
-    if (url.length() > 60) {
-        newurl.append(url.left(20));
-        newurl.append("…");
-        newurl.append(url.right(20));
-        return newurl;
-    }
-    return url;
-}
-
-QString DetailsWidget::shortPassword(QString password)
-{
-    QString newpassword = "";
-    if (password.length() > 60) {
-        newpassword.append(password.left(50));
-        newpassword.append("…");
-        return newpassword;
-    }
-    return password;
-}
-
-void DetailsWidget::hideDetails()
-{
-    this->hide();
-}
-
-void DetailsWidget::setDatabaseMode(DatabaseWidget::Mode mode)
-{
-    m_locked = false;
-    if (mode == DatabaseWidget::LockedMode) {
-        m_locked = true;
-        return;
-    }
-    if (mode == DatabaseWidget::ViewMode) {
-        if (m_ui->stackedWidget->currentIndex() == GroupPreview) {
-            getSelectedGroup(m_currentGroup);
-        } else {
-            getSelectedEntry(m_currentEntry);
-        }
-    }
-}
-
-void DetailsWidget::updateTabIndex(int index)
-{
-    if (m_ui->stackedWidget->currentIndex() == GroupPreview) {
-        m_selectedTabGroup = index;
-    } else {
-        m_selectedTabEntry = index;
-    }
+    hierarchy.append(title);
+    return QString("%1%2").arg(separator, hierarchy.join(separator));
 }

@@ -33,7 +33,7 @@ public:
     explicit EntryAttributes(QObject* parent = nullptr);
     QList<QString> keys() const;
     bool hasKey(const QString& key) const;
-    QList<QString> customKeys();
+    QList<QString> customKeys() const;
     QString value(const QString& key) const;
     bool contains(const QString& key) const;
     bool containsValue(const QString& value) const;

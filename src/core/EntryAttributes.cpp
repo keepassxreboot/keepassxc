@@ -48,7 +48,7 @@ bool EntryAttributes::hasKey(const QString& key) const
     return m_attributes.contains(key);
 }
 
-QList<QString> EntryAttributes::customKeys()
+QList<QString> EntryAttributes::customKeys() const
 {
     QList<QString> customKeys;
     const QList<QString> keyList = keys();

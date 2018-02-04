@@ -117,7 +117,7 @@ public:
     Group* parentGroup();
     const Group* parentGroup() const;
     void setParent(Group* parent, int index = -1);
-    QStringList hierarchy();
+    QStringList hierarchy() const;
 
     Database* database();
     const Database* database() const;

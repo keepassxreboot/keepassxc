@@ -19,8 +19,8 @@
 #define KEEPASSX_DETAILSWIDGET_H
 
 #include "gui/DatabaseWidget.h"
+
 #include <QWidget>
-#include <QTimer>
 
 namespace Ui {
     class DetailsWidget;
@@ -34,48 +34,46 @@ public:
     explicit DetailsWidget(QWidget* parent = nullptr);
     ~DetailsWidget();
 
-    enum StackedWidgetIndex
-    {
-        EntryPreview = 0,
-        GroupPreview = 1,
-    };
-
-    enum TabWidgetIndex
-    {
-        GeneralTab = 0,
-        AttributesTab = 1,
-        GroupNotesTab = 1,
-        AttachmentsTab = 2,
-        NotesTab = 3,
-        AutotypeTab = 4,
-    };
+public slots:
+    void setEntry(Entry* selectedEntry);
+    void setGroup(Group* selectedGroup);
+    void setDatabaseMode(DatabaseWidget::Mode mode);
 
 signals:
     void errorOccurred(const QString& error);
 
 private slots:
-    void getSelectedEntry(Entry* selectedEntry);
-    void getSelectedGroup(Group* selectedGroup);
-    void showTotp(bool visible);
-    void updateTotp();
-    void hideDetails();
-    void setDatabaseMode(DatabaseWidget::Mode mode);
-    void updateTabIndex(int index);
+    void updateEntryHeaderLine();
+    void updateEntryTotp();
+    void updateEntryGeneralTab();
+    void updateEntryNotesTab();
+    void updateEntryAttributesTab();
+    void updateEntryAttachmentsTab();
+    void updateEntryAutotypeTab();
+
+    void updateGroupHeaderLine();
+    void updateGroupGeneralTab();
+    void updateGroupNotesTab();
+
+    void stopTotpTimer();
+    void deleteTotpTimer();
+    void updateTotpLabel();
+    void updateTabIndexes();
 
 private:
+    void setTabEnabled(QTabWidget* tabWidget, QWidget* widget, bool enabled);
+
+    static QPixmap preparePixmap(const QPixmap& pixmap, int size);
+    static QString hierarchy(const Group* group, const QString& title);
+
     const QScopedPointer<Ui::DetailsWidget> m_ui;
     bool m_locked;
     Entry* m_currentEntry;
     Group* m_currentGroup;
     quint8 m_step;
-    QPointer<QTimer> m_timer = nullptr;
-    QWidget* m_attributesTabWidget;
-    QWidget* m_attachmentsTabWidget;
-    QWidget* m_autotypeTabWidget;
+    QPointer<QTimer> m_totpTimer;
     quint8 m_selectedTabEntry;
     quint8 m_selectedTabGroup;
-    QString shortUrl(QString url);
-    QString shortPassword(QString password);
 };
 
 #endif // KEEPASSX_DETAILSWIDGET_H
