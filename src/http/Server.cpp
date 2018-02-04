@@ -21,9 +21,9 @@
 #include <QtCore/QCryptographicHash>
 #include <QtWidgets/QMessageBox>
 
-#include "qhttp/qhttpserver.hpp"
-#include "qhttp/qhttpserverresponse.hpp"
-#include "qhttp/qhttpserverrequest.hpp"
+#include "qhttpengine/server.h"
+#include "qhttpengine/socket.h"
+#include "qhttpengine/qobjecthandler.h"
 
 #include "Server.h"
 #include "Protocol.h"
@@ -31,14 +31,14 @@
 #include "crypto/Crypto.h"
 
 using namespace KeepassHttpProtocol;
-using namespace qhttp::server;
 
 Server::Server(QObject *parent) :
     QObject(parent),
-    m_started(false),
-    m_server(nullptr)
+    m_server(new QHttpEngine::Server(this)),
+    m_handler(new QHttpEngine::QObjectHandler(this))
 {
-
+    m_handler->registerMethod("", this, &Server::handleRequest);
+    m_server->setHandler(m_handler);
 }
 
 void Server::testAssociate(const Request& r, Response * protocolResp)
@@ -143,8 +143,18 @@ void Server::generatePassword(const Request &r, Response *protocolResp)
     memset(password.data(), 0, password.length());
 }
 
-void Server::handleRequest(const QByteArray& data, QHttpResponse* response)
+void Server::handleRequest(QHttpEngine::Socket* socket)
 {
+    if (!isDatabaseOpened()) {
+        if (!openDatabase()) {
+            socket->writeError(QHttpEngine::Socket::ServiceUnavailable);
+            return;
+        }
+    }
+
+    // All data is received prior to the slot being invoked (qhttpengine)
+    QByteArray data = socket->readAll();
+
     Request r;
     if (!r.fromJson(data))
         return;
@@ -182,51 +192,27 @@ void Server::handleRequest(const QByteArray& data, QHttpResponse* response)
         out.replace(pos2, 15, "\"Entries\":[],");
     }
 
-    response->setStatusCode(qhttp::ESTATUS_OK);
-    response->addHeader("Content-Type", "application/json");
-    response->end(out.toUtf8());
+    socket->setHeader("Content-Type", "application/json");
+    socket->write(out.toUtf8());
+    socket->close();
 }
 
 void Server::start(void)
 {
-    if (m_started)
+    if (m_server->isListening()) {
         return;
+    }
 
     // local loopback hardcoded, since KeePassHTTP handshake
     // is not safe against interception
-    QHostAddress address("127.0.0.1");
-    int port = HttpSettings::httpPort();
-
-    m_server = new QHttpServer(this);
-    m_server->listen(address, port);
-    connect(m_server, SIGNAL(newRequest(QHttpRequest*, QHttpResponse*)), this, SLOT(onNewRequest(QHttpRequest*, QHttpResponse*)));
-
-    m_started = true;
+    bool result = m_server->listen(QHostAddress("127.0.0.1"), HttpSettings::httpPort());
+    if (!result) {
+        qWarning("Could not start the KeePassHTTP server on 127.0.0.1:%i", HttpSettings::httpPort());
+        stop();
+    }
 }
 
 void Server::stop(void)
 {
-    if (!m_started)
-        return;
-
-    m_server->stopListening();
-    m_server->deleteLater();
-    m_started = false;
-}
-
-void Server::onNewRequest(QHttpRequest* request, QHttpResponse* response)
-{
-    if (!isDatabaseOpened()) {
-        if (!openDatabase()) {
-            response->setStatusCode(qhttp::ESTATUS_SERVICE_UNAVAILABLE);
-            response->end();
-            return;
-        }
-    }
-
-    request->collectData(1024);
-
-    request->onEnd([=]() {
-        this->handleRequest(request->collectedData(), response);
-    });
+    m_server->close();
 }

@@ -22,17 +22,13 @@
 #include <QtCore/QObject>
 #include <QtCore/QList>
 
-namespace qhttp {
-    namespace server {
-        class QHttpServer;
-        class QHttpRequest;
-        class QHttpResponse;
-    }
+namespace QHttpEngine {
+    class Server;
+    class QObjectHandler;
+    class Socket;
 }
 
 namespace KeepassHttpProtocol {
-
-using namespace qhttp::server;
 
 class Request;
 class Response;
@@ -62,8 +58,7 @@ public slots:
     void stop();
 
 private slots:
-    void onNewRequest(QHttpRequest* request, QHttpResponse* response);
-    void handleRequest(const QByteArray& data, QHttpResponse* response);
+    void handleRequest(QHttpEngine::Socket* socket);
 
 private:
     void testAssociate(const KeepassHttpProtocol::Request &r, KeepassHttpProtocol::Response *protocolResp);
@@ -74,9 +69,8 @@ private:
     void setLogin(const KeepassHttpProtocol::Request &r, KeepassHttpProtocol::Response *protocolResp);
     void generatePassword(const KeepassHttpProtocol::Request &r, KeepassHttpProtocol::Response *protocolResp);
 
-    bool m_started;
-
-    QHttpServer* m_server;
+    QHttpEngine::Server* m_server;
+    QHttpEngine::QObjectHandler* m_handler;
 };
 
 }   /*namespace KeepassHttpProtocol*/
