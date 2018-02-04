@@ -111,9 +111,13 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
                                     "border-radius: 5px;");
 
     m_detailsView = new DetailsWidget(this);
-    connect(m_detailsView, &DetailsWidget::errorOccurred, this, [this](const QString& error) {
-        showMessage(error, MessageWidget::MessageType::Error);
-    });
+    m_detailsView->hide();
+    connect(this, SIGNAL(pressedEntry(Entry*)), m_detailsView, SLOT(setEntry(Entry*)));
+    connect(this, SIGNAL(pressedGroup(Group*)), m_detailsView, SLOT(setGroup(Group*)));
+    connect(this, SIGNAL(currentModeChanged(DatabaseWidget::Mode)),
+            m_detailsView, SLOT(setDatabaseMode(DatabaseWidget::Mode)));
+    connect(m_detailsView, SIGNAL(errorOccurred(QString)), this, SLOT(showErrorMessage(QString)));
+
 
     QVBoxLayout* vLayout = new QVBoxLayout(rightHandSideWidget);
     vLayout->setMargin(0);
@@ -1486,6 +1490,11 @@ void DatabaseWidget::showMessage(const QString& text, MessageWidget::MessageType
 {
     m_messageWidget->setCloseButtonVisible(showClosebutton);
     m_messageWidget->showMessage(text, type, autoHideTimeout);
+}
+
+void DatabaseWidget::showErrorMessage(const QString& errorMessage)
+{
+    showMessage(errorMessage, MessageWidget::MessageType::Error);
 }
 
 void DatabaseWidget::hideMessage()

@@ -9,6 +9,7 @@ if(WITH_XC_SSHAGENT)
         BinaryStream.cpp
         KeeAgentSettings.cpp
         OpenSSHKey.cpp
+        ASN1Key.cpp
         SSHAgent.cpp
     )
 

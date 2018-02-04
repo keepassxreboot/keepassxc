@@ -188,10 +188,10 @@ QString BrowserService::storeKey(const QString& key)
                                       "If you would like to allow it access to your KeePassXC database,\n"
                                       "give it a unique name to identify and accept it."));
         keyDialog.setOkButtonText(tr("Save and allow access"));
+        keyDialog.setWindowFlags(keyDialog.windowFlags() | Qt::WindowStaysOnTopHint);
         keyDialog.show();
         keyDialog.activateWindow();
         keyDialog.raise();
-        keyDialog.setWindowFlags(keyDialog.windowFlags() | Qt::WindowStaysOnTopHint);
         auto ok = keyDialog.exec();
 
         id = keyDialog.textValue();

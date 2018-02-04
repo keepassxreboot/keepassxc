@@ -17,10 +17,15 @@
  */
 
 #include "OpenSSHKey.h"
+#include "ASN1Key.h"
 #include <QRegularExpression>
 #include <QStringList>
 #include <QCryptographicHash>
 #include "crypto/SymmetricCipher.h"
+
+const QString OpenSSHKey::TYPE_DSA = "DSA PRIVATE KEY";
+const QString OpenSSHKey::TYPE_RSA = "RSA PRIVATE KEY";
+const QString OpenSSHKey::TYPE_OPENSSH = "OPENSSH PRIVATE KEY";
 
 // bcrypt_pbkdf.cpp
 int bcrypt_pbkdf(const QByteArray& pass, const QByteArray& salt, QByteArray& key, quint32 rounds);
@@ -34,6 +39,7 @@ OpenSSHKey::OpenSSHKey(QObject *parent)
     , m_rawPrivateData(QByteArray())
     , m_publicData(QList<QByteArray>())
     , m_privateData(QList<QByteArray>())
+    , m_privateType(QString())
     , m_comment(QString())
     , m_error(QString())
 {
@@ -178,13 +184,30 @@ bool OpenSSHKey::parsePEM(const QByteArray& in, QByteArray& out)
         return false;
     }
 
-    if (beginMatch.captured(1) != "OPENSSH PRIVATE KEY") {
-        m_error = tr("This is not an OpenSSH key, only modern keys are supported");
-        return false;
-    }
+    m_privateType = beginMatch.captured(1);
 
     rows.removeFirst();
     rows.removeLast();
+
+    QRegularExpression keyValueExpr = QRegularExpression("^([A-Za-z0-9-]+): (.+)$");
+    QMap<QString, QString> pemOptions;
+
+    do {
+        QRegularExpressionMatch keyValueMatch = keyValueExpr.match(rows.first());
+
+        if (!keyValueMatch.hasMatch()) {
+            break;
+        }
+
+        pemOptions.insert(keyValueMatch.captured(1), keyValueMatch.captured(2));
+
+        rows.removeFirst();
+    } while (!rows.isEmpty());
+
+    if (pemOptions.contains("Proc-Type")) {
+        m_error = tr("Encrypted keys are not yet supported");
+        return false;
+    }
 
     out = QByteArray::fromBase64(rows.join("").toLatin1());
 
@@ -204,51 +227,58 @@ bool OpenSSHKey::parse(const QByteArray& in)
         return false;
     }
 
-    BinaryStream stream(&data);
+    if (m_privateType == TYPE_DSA || m_privateType == TYPE_RSA) {
+        m_rawPrivateData = data;
+    } else if (m_privateType == TYPE_OPENSSH) {
+        BinaryStream stream(&data);
 
-    QByteArray magic;
-    magic.resize(15);
+        QByteArray magic;
+        magic.resize(15);
 
-    if (!stream.read(magic)) {
-        m_error = tr("Key file way too small.");
-        return false;
-    }
-
-    if (QString::fromLatin1(magic) != "openssh-key-v1") {
-        m_error = tr("Key file magic header id invalid");
-        return false;
-    }
-
-    stream.readString(m_cipherName);
-    stream.readString(m_kdfName);
-    stream.readString(m_kdfOptions);
-
-    quint32 numberOfKeys;
-    stream.read(numberOfKeys);
-
-    if (numberOfKeys == 0) {
-        m_error = tr("Found zero keys");
-        return false;
-    }
-
-    for (quint32 i = 0; i < numberOfKeys; ++i) {
-        QByteArray publicKey;
-        if (!stream.readString(publicKey)) {
-            m_error = tr("Failed to read public key.");
+        if (!stream.read(magic)) {
+            m_error = tr("Key file way too small.");
             return false;
         }
 
-        if (i == 0) {
-            BinaryStream publicStream(&publicKey);
-            if (!readPublic(publicStream)) {
+        if (QString::fromLatin1(magic) != "openssh-key-v1") {
+            m_error = tr("Key file magic header id invalid");
+            return false;
+        }
+
+        stream.readString(m_cipherName);
+        stream.readString(m_kdfName);
+        stream.readString(m_kdfOptions);
+
+        quint32 numberOfKeys;
+        stream.read(numberOfKeys);
+
+        if (numberOfKeys == 0) {
+            m_error = tr("Found zero keys");
+            return false;
+        }
+
+        for (quint32 i = 0; i < numberOfKeys; ++i) {
+            QByteArray publicKey;
+            if (!stream.readString(publicKey)) {
+                m_error = tr("Failed to read public key.");
                 return false;
             }
-        }
-    }
 
-    // padded list of keys
-    if (!stream.readString(m_rawPrivateData)) {
-        m_error = tr("Corrupted key file, reading private key failed");
+            if (i == 0) {
+                BinaryStream publicStream(&publicKey);
+                if (!readPublic(publicStream)) {
+                    return false;
+                }
+            }
+        }
+
+        // padded list of keys
+        if (!stream.readString(m_rawPrivateData)) {
+            m_error = tr("Corrupted key file, reading private key failed");
+            return false;
+        }
+    } else {
+        m_error = tr("Unsupported key type: %s").arg(m_privateType);
         return false;
     }
 
@@ -283,7 +313,7 @@ bool OpenSSHKey::openPrivateKey(const QString& passphrase)
     } else if (m_cipherName == "aes256-ctr") {
         cipher.reset(new SymmetricCipher(SymmetricCipher::Aes256, SymmetricCipher::Ctr, SymmetricCipher::Decrypt));
     } else if (m_cipherName != "none") {
-        m_error = tr("Unknown cipher: ") + m_cipherName;
+        m_error = tr("Unknown cipher: %s").arg(m_cipherName);
         return false;
     }
 
@@ -320,8 +350,13 @@ bool OpenSSHKey::openPrivateKey(const QString& passphrase)
         ivData.setRawData(decryptKey.data() + cipher->keySize(), cipher->blockSize());
 
         cipher->init(keyData, ivData);
+
+        if (!cipher->init(keyData, ivData)) {
+            m_error = cipher->errorString();
+            return false;
+        }
     } else if (m_kdfName != "none") {
-        m_error = tr("Unknown KDF: ") + m_kdfName;
+        m_error = tr("Unknown KDF: %s").arg(m_kdfName);
         return false;
     }
 
@@ -336,20 +371,39 @@ bool OpenSSHKey::openPrivateKey(const QString& passphrase)
         }
     }
 
-    BinaryStream keyStream(&rawPrivateData);
+    if (m_privateType == TYPE_DSA) {
+        if (!ASN1Key::parseDSA(rawPrivateData, *this)) {
+            m_error = tr("Reading DSA private key failed, only unencrypted keys are supported at this time");
+            return false;
+        }
 
-    quint32 checkInt1;
-    quint32 checkInt2;
+        return true;
+    } else if (m_privateType == TYPE_RSA) {
+        if (!ASN1Key::parseRSA(rawPrivateData, *this)) {
+            m_error = tr("Reading RSA private key failed, only unencrypted keys are supported at this time");
+            return false;
+        }
 
-    keyStream.read(checkInt1);
-    keyStream.read(checkInt2);
+        return true;
+    } else if (m_privateType == TYPE_OPENSSH) {
+        BinaryStream keyStream(&rawPrivateData);
 
-    if (checkInt1 != checkInt2) {
-        m_error = tr("Decryption failed, wrong passphrase?");
-        return false;
+        quint32 checkInt1;
+        quint32 checkInt2;
+
+        keyStream.read(checkInt1);
+        keyStream.read(checkInt2);
+
+        if (checkInt1 != checkInt2) {
+            m_error = tr("Decryption failed, wrong passphrase?");
+            return false;
+        }
+
+        return readPrivate(keyStream);
     }
 
-    return readPrivate(keyStream);
+    m_error = tr("Unsupported key type: %s").arg(m_privateType);
+    return false;
 }
 
 bool OpenSSHKey::readPublic(BinaryStream& stream)
@@ -371,7 +425,7 @@ bool OpenSSHKey::readPublic(BinaryStream& stream)
     } else if (m_type == "ssh-ed25519") {
         keyParts = 1;
     } else {
-        m_error = tr("Unknown key type: ") + m_type;
+        m_error = tr("Unknown key type: %s").arg(m_type);
         return false;
     }
 
@@ -408,7 +462,7 @@ bool OpenSSHKey::readPrivate(BinaryStream& stream)
     } else if (m_type == "ssh-ed25519") {
         keyParts = 2;
     } else {
-        m_error = tr("Unknown key type: ") + m_type;
+        m_error = tr("Unknown key type: %s").arg(m_type);
         return false;
     }
 

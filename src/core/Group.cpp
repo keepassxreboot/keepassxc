@@ -439,11 +439,11 @@ void Group::setParent(Database* db)
     QObject::setParent(db);
 }
 
-QStringList Group::hierarchy()
+QStringList Group::hierarchy() const
 {
     QStringList hierarchy;
-    Group* group = this;
-    Group* parent = m_parent;
+    const Group* group = this;
+    const Group* parent = m_parent;
     hierarchy.prepend(group->name());
     
     while (parent) {
