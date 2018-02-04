@@ -55,6 +55,10 @@ public:
     bool writePrivate(BinaryStream& stream);
 
 private:
+    static const QString TYPE_DSA;
+    static const QString TYPE_RSA;
+    static const QString TYPE_OPENSSH;
+
     bool parsePEM(const QByteArray& in, QByteArray& out);
 
     QString m_type;
@@ -64,6 +68,7 @@ private:
     QByteArray m_rawPrivateData;
     QList<QByteArray> m_publicData;
     QList<QByteArray> m_privateData;
+    QString m_privateType;
     QString m_comment;
     QString m_error;
 };

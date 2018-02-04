@@ -444,6 +444,10 @@ bool EditEntryWidget::getOpenSSHKey(OpenSSHKey& key)
         return false;
     }
 
+    if (key.comment().isEmpty()) {
+        key.setComment(m_entry->username());
+    }
+
     return true;
 }
 
