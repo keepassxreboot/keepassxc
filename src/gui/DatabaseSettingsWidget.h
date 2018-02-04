@@ -54,6 +54,8 @@ private slots:
     void reject();
     void transformRoundsBenchmark();
     void kdfChanged(int index);
+    void memoryChanged(int value);
+    void parallelismChanged(int value);
 
 private:
     void truncateHistories();
