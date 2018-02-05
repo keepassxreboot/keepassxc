@@ -35,6 +35,7 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     : QDialog(parent)
     , m_view(new AutoTypeSelectView(this))
     , m_matchActivatedEmitted(false)
+    , m_rejected(false)
 {
     setAttribute(Qt::WA_DeleteOnClose);
     // Places the window on the active (virtual) desktop instead of where the main window is.
@@ -83,6 +84,13 @@ void AutoTypeSelectDialog::done(int r)
     QDialog::done(r);
 }
 
+void AutoTypeSelectDialog::reject()
+{
+    m_rejected = true;
+
+    QDialog::reject();
+}
+
 void AutoTypeSelectDialog::emitMatchActivated(const QModelIndex& index)
 {
     // make sure we don't emit the signal twice when both activated() and clicked() are triggered
@@ -98,6 +106,10 @@ void AutoTypeSelectDialog::emitMatchActivated(const QModelIndex& index)
 
 void AutoTypeSelectDialog::matchRemoved()
 {
+    if (m_rejected) {
+        return;
+    }
+    
     if (m_view->model()->rowCount() == 0) {
         reject();
     }

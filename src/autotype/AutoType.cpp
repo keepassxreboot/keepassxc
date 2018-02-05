@@ -143,6 +143,8 @@ QStringList AutoType::windowTitles()
 void AutoType::resetInAutoType()
 {
     m_inAutoType.unlock();
+
+    emit autotypeRejected();
 }
 
 void AutoType::raiseWindow()
@@ -199,6 +201,7 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
 {
     // no edit to the sequence beyond this point
     if (!verifyAutoTypeSyntax(sequence)) {
+        emit autotypeRejected();
         return;
     }
 
@@ -206,6 +209,7 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
     ListDeleter<AutoTypeAction*> actionsDeleter(&actions);
 
     if (!parseActions(sequence, entry, actions)) {
+        emit autotypeRejected();
         return;
     }
 
@@ -228,12 +232,16 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
     for (AutoTypeAction* action : asConst(actions)) {
         if (m_plugin->activeWindow() != window) {
             qWarning("Active window changed, interrupting auto-type.");
-            break;
+            emit autotypeRejected();
+            return;
         }
 
         action->accept(m_executor);
         QCoreApplication::processEvents(QEventLoop::AllEvents, 10);
     }
+
+    // emit signal only if autotype performed correctly
+    emit autotypePerformed();
 }
 
 /**
@@ -300,6 +308,8 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
         message.append("\n\n");
         message.append(windowTitle);
         MessageBox::information(nullptr, tr("Auto-Type - KeePassXC"), message);
+
+        emit autotypeRejected();
     } else if ((matchList.size() == 1) && !config()->get("security/autotypeask").toBool()) {
         executeAutoTypeActions(matchList.first().entry, nullptr, matchList.first().sequence);
         m_inAutoType.unlock();

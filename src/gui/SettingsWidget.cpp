@@ -161,6 +161,7 @@ void SettingsWidget::loadSettings()
     m_secUi->lockDatabaseIdleSpinBox->setValue(config()->get("security/lockdatabaseidlesec").toInt());
     m_secUi->lockDatabaseMinimizeCheckBox->setChecked(config()->get("security/lockdatabaseminimize").toBool());
     m_secUi->lockDatabaseOnScreenLockCheckBox->setChecked(config()->get("security/lockdatabasescreenlock").toBool());
+    m_secUi->relockDatabaseAutoTypeCheckBox->setChecked(config()->get("security/relockautotype").toBool());
     m_secUi->fallbackToGoogle->setChecked(config()->get("security/IconDownloadFallbackToGoogle").toBool());
 
     m_secUi->passwordCleartextCheckBox->setChecked(config()->get("security/passwordscleartext").toBool());
@@ -233,6 +234,7 @@ void SettingsWidget::saveSettings()
     config()->set("security/lockdatabaseidlesec", m_secUi->lockDatabaseIdleSpinBox->value());
     config()->set("security/lockdatabaseminimize", m_secUi->lockDatabaseMinimizeCheckBox->isChecked());
     config()->set("security/lockdatabasescreenlock", m_secUi->lockDatabaseOnScreenLockCheckBox->isChecked());
+    config()->set("security/relockautotype", m_secUi->relockDatabaseAutoTypeCheckBox->isChecked());
     config()->set("security/IconDownloadFallbackToGoogle", m_secUi->fallbackToGoogle->isChecked());
 
     config()->set("security/passwordscleartext", m_secUi->passwordCleartextCheckBox->isChecked());

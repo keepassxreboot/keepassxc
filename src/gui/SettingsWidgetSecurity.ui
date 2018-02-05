@@ -122,6 +122,13 @@
         </property>
        </widget>
       </item>
+      <item row="6" column="0">
+       <widget class="QCheckBox" name="relockDatabaseAutoTypeCheckBox">
+        <property name="text">
+         <string>Re-lock previously locked database after performing Auto-Type</string>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QCheckBox" name="passwordRepeatCheckBox">
         <property name="text">

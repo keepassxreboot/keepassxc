@@ -64,6 +64,8 @@ public slots:
 
 signals:
     void globalShortcutTriggered();
+    void autotypePerformed();
+    void autotypeRejected();
 
 private slots:
     void performAutoTypeFromGlobal(AutoTypeMatch match);

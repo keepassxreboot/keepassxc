@@ -54,6 +54,7 @@ const int DatabaseTabWidget::LastDatabasesCount = 5;
 DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     : QTabWidget(parent)
     , m_dbWidgetStateSync(new DatabaseWidgetStateSync(this))
+    , m_dbPendingLock(nullptr)
 {
     DragTabBar* tabBar = new DragTabBar(this);
     setTabBar(tabBar);
@@ -63,6 +64,7 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     connect(this, SIGNAL(currentChanged(int)), SLOT(emitActivateDatabaseChanged()));
     connect(this, SIGNAL(activateDatabaseChanged(DatabaseWidget*)), m_dbWidgetStateSync, SLOT(setActive(DatabaseWidget*)));
     connect(autoType(), SIGNAL(globalShortcutTriggered()), SLOT(performGlobalAutoType()));
+    connect(autoType(), SIGNAL(autotypePerformed()), SLOT(relockPendingDatabase()));
 }
 
 DatabaseTabWidget::~DatabaseTabWidget()
@@ -737,6 +739,27 @@ void DatabaseTabWidget::lockDatabases()
     }
 }
 
+/**
+ * This function relock the pending database when autotype has been performed successfully
+ * A database is marked as pending when it's unlocked after a global Auto-Type invocation
+ */
+void DatabaseTabWidget::relockPendingDatabase()
+{
+    if (!m_dbPendingLock || !config()->get("security/relockautotype").toBool()) {
+        return;
+    }
+
+    if (m_dbPendingLock->currentMode() == DatabaseWidget::LockedMode || !m_dbPendingLock->dbHasKey()) {
+        m_dbPendingLock = nullptr;
+        return;
+    }
+
+    m_dbPendingLock->lock();
+
+    emit databaseLocked(m_dbPendingLock);
+    m_dbPendingLock = nullptr;
+}
+
 void DatabaseTabWidget::modified()
 {
     Q_ASSERT(qobject_cast<Database*>(sender()));
@@ -827,6 +850,7 @@ void DatabaseTabWidget::performGlobalAutoType()
     if (unlockedDatabases.size() > 0) {
         autoType()->performGlobalAutoType(unlockedDatabases);
     } else if (m_dbList.size() > 0){
-        indexDatabaseManagerStruct(0).dbWidget->showUnlockDialog();
+        m_dbPendingLock = indexDatabaseManagerStruct(0).dbWidget;
+        m_dbPendingLock->showUnlockDialog();
     }
 }

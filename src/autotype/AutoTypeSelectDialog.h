@@ -39,6 +39,7 @@ signals:
 
 public slots:
     void done(int r) override;
+    void reject() override;
 
 private slots:
     void emitMatchActivated(const QModelIndex& index);
@@ -47,6 +48,7 @@ private slots:
 private:
     AutoTypeSelectView* const m_view;
     bool m_matchActivatedEmitted;
+    bool m_rejected;
 };
 
 #endif // KEEPASSX_AUTOTYPESELECTDIALOG_H
