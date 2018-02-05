@@ -85,6 +85,7 @@ public:
     int autoTypeObfuscation() const;
     QString defaultAutoTypeSequence() const;
     QString effectiveAutoTypeSequence() const;
+    QString effectiveNewAutoTypeSequence() const;
     AutoTypeAssociations* autoTypeAssociations();
     const AutoTypeAssociations* autoTypeAssociations() const;
     QString title() const;
@@ -109,6 +110,8 @@ public:
 
     static const int DefaultIconNumber;
     static const int ResolveMaximumDepth;
+    static const QString AutoTypeSequenceUsername;
+    static const QString AutoTypeSequencePassword;
 
     void setUuid(const Uuid& uuid);
     void setIcon(int iconNumber);

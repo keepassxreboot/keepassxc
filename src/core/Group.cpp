@@ -25,6 +25,7 @@
 
 const int Group::DefaultIconNumber = 48;
 const int Group::RecycleBinIconNumber = 43;
+const QString Group::RootAutoTypeSequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
 
 Group::CloneFlags Group::DefaultCloneFlags = static_cast<Group::CloneFlags>(
     Group::CloneNewUuid | Group::CloneResetTimeInfo | Group::CloneIncludeEntries);
@@ -192,6 +193,10 @@ QString Group::defaultAutoTypeSequence() const
     return m_data.defaultAutoTypeSequence;
 }
 
+/**
+ * Determine the effective sequence that will be injected
+ * This function return an empty string if the current group or any parent has autotype disabled
+ */
 QString Group::effectiveAutoTypeSequence() const
 {
     QString sequence;
@@ -207,7 +212,7 @@ QString Group::effectiveAutoTypeSequence() const
     } while (group && sequence.isEmpty());
 
     if (sequence.isEmpty()) {
-        sequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
+        sequence = RootAutoTypeSequence;
     }
 
     return sequence;
