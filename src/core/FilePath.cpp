@@ -91,6 +91,11 @@ QString FilePath::pluginPath(const QString& name)
     return QString();
 }
 
+QString FilePath::wordlistPath(const QString& name)
+{
+    return m_instance->dataPath("wordlists/" + name);
+}
+
 QIcon FilePath::applicationIcon()
 {
     bool darkIcon = useDarkIcon();

@@ -24,9 +24,12 @@
 #include "crypto/Random.h"
 #include "core/FilePath.h"
 
+const QString PassphraseGenerator::DefaultSeparator = " ";
+const QString PassphraseGenerator::DefaultWordList = "eff_large.wordlist";
+
 PassphraseGenerator::PassphraseGenerator()
     : m_wordCount(0)
-    , m_separator(' ')
+    , m_separator(PassphraseGenerator::DefaultSeparator)
 {
     
 }
@@ -76,7 +79,7 @@ void PassphraseGenerator::setWordList(QString path)
 
 void PassphraseGenerator::setDefaultWordList()
 {
-    const QString path = filePath()->dataPath("wordlists/eff_large.wordlist");
+    const QString path = filePath()->wordlistPath(PassphraseGenerator::DefaultWordList);
     setWordList(path);
 }
 
