@@ -95,6 +95,7 @@ void EditGroupWidget::loadGroup(Group* group, bool create, Database* database)
     m_editGroupWidgetIcons->load(group->uuid(), database, iconStruct);
 
     m_editWidgetProperties->setFields(group->timeInfo(), group->uuid());
+    m_editWidgetProperties->setCustomData(group->customData());
 
     setCurrentPage(0);
 
@@ -117,6 +118,8 @@ void EditGroupWidget::apply()
 
     m_group->setSearchingEnabled(triStateFromIndex(m_mainUi->searchComboBox->currentIndex()));
     m_group->setAutoTypeEnabled(triStateFromIndex(m_mainUi->autotypeComboBox->currentIndex()));
+
+    m_group->customData()->copyDataFrom(m_editWidgetProperties->customData());
 
     if (m_mainUi->autoTypeSequenceInherit->isChecked()) {
         m_group->setDefaultAutoTypeSequence(QString());

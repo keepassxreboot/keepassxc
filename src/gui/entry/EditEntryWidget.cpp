@@ -661,6 +661,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
 #endif
 
     m_editWidgetProperties->setFields(entry->timeInfo(), entry->uuid());
+    m_editWidgetProperties->setCustomData(entry->customData());
 
     if (!m_history && !restore) {
         m_historyModel->setEntries(entry->historyItems());
@@ -748,7 +749,7 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
 {
     entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
     entry->attachments()->copyDataFrom(m_advancedUi->attachmentsWidget->entryAttachments());
-
+    entry->customData()->copyDataFrom(m_editWidgetProperties->customData());
     entry->setTitle(m_mainUi->titleEdit->text());
     entry->setUsername(m_mainUi->usernameEdit->text());
     entry->setUrl(m_mainUi->urlEdit->text());
