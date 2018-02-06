@@ -278,7 +278,7 @@ bool OpenSSHKey::parse(const QByteArray& in)
             return false;
         }
     } else {
-        m_error = tr("Unsupported key type: %s").arg(m_privateType);
+        m_error = tr("Unsupported key type: %1").arg(m_privateType);
         return false;
     }
 
@@ -313,7 +313,7 @@ bool OpenSSHKey::openPrivateKey(const QString& passphrase)
     } else if (m_cipherName == "aes256-ctr") {
         cipher.reset(new SymmetricCipher(SymmetricCipher::Aes256, SymmetricCipher::Ctr, SymmetricCipher::Decrypt));
     } else if (m_cipherName != "none") {
-        m_error = tr("Unknown cipher: %s").arg(m_cipherName);
+        m_error = tr("Unknown cipher: %1").arg(m_cipherName);
         return false;
     }
 
@@ -356,7 +356,7 @@ bool OpenSSHKey::openPrivateKey(const QString& passphrase)
             return false;
         }
     } else if (m_kdfName != "none") {
-        m_error = tr("Unknown KDF: %s").arg(m_kdfName);
+        m_error = tr("Unknown KDF: %1").arg(m_kdfName);
         return false;
     }
 
@@ -402,7 +402,7 @@ bool OpenSSHKey::openPrivateKey(const QString& passphrase)
         return readPrivate(keyStream);
     }
 
-    m_error = tr("Unsupported key type: %s").arg(m_privateType);
+    m_error = tr("Unsupported key type: %1").arg(m_privateType);
     return false;
 }
 
@@ -425,7 +425,7 @@ bool OpenSSHKey::readPublic(BinaryStream& stream)
     } else if (m_type == "ssh-ed25519") {
         keyParts = 1;
     } else {
-        m_error = tr("Unknown key type: %s").arg(m_type);
+        m_error = tr("Unknown key type: %1").arg(m_type);
         return false;
     }
 
@@ -462,7 +462,7 @@ bool OpenSSHKey::readPrivate(BinaryStream& stream)
     } else if (m_type == "ssh-ed25519") {
         keyParts = 2;
     } else {
-        m_error = tr("Unknown key type: %s").arg(m_type);
+        m_error = tr("Unknown key type: %1").arg(m_type);
         return false;
     }
 
