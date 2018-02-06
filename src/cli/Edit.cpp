@@ -31,15 +31,15 @@
 
 Edit::Edit()
 {
-    this->name = QString("edit");
-    this->description = QObject::tr("Edit an entry.");
+    name = QString("edit");
+    description = QObject::tr("Edit an entry.");
 }
 
 Edit::~Edit()
 {
 }
 
-int Edit::execute(QStringList arguments)
+int Edit::execute(const QStringList& arguments)
 {
 
     QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
@@ -150,6 +150,7 @@ int Edit::execute(QStringList arguments)
         }
 
         passwordGenerator.setCharClasses(PasswordGenerator::DefaultCharset);
+        passwordGenerator.setFlags(PasswordGenerator::DefaultFlags);
         QString password = passwordGenerator.generatePassword();
         entry->setPassword(password);
     }

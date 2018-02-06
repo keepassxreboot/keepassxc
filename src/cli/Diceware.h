@@ -25,7 +25,7 @@ class Diceware : public Command
 public:
     Diceware();
     ~Diceware();
-    int execute(QStringList arguments);
+    int execute(const QStringList& arguments);
 };
 
 #endif // KEEPASSXC_DICEWARE_H

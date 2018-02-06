@@ -41,7 +41,7 @@ Command::~Command()
 {
 }
 
-int Command::execute(QStringList)
+int Command::execute(const QStringList&)
 {
     return EXIT_FAILURE;
 }

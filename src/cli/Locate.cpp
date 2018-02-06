@@ -31,15 +31,15 @@
 
 Locate::Locate()
 {
-    this->name = QString("locate");
-    this->description = QObject::tr("Find entries quickly.");
+    name = QString("locate");
+    description = QObject::tr("Find entries quickly.");
 }
 
 Locate::~Locate()
 {
 }
 
-int Locate::execute(QStringList arguments)
+int Locate::execute(const QStringList& arguments)
 {
 
     QTextStream out(stdout);

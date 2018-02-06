@@ -25,7 +25,7 @@ class Generate : public Command
 public:
     Generate();
     ~Generate();
-    int execute(QStringList arguments);
+    int execute(const QStringList& arguments);
 };
 
 #endif // KEEPASSXC_GENERATE_H

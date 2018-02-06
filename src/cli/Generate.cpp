@@ -27,15 +27,15 @@
 
 Generate::Generate()
 {
-    this->name = QString("generate");
-    this->description = QObject::tr("Generate a new random password.");
+    name = QString("generate");
+    description = QObject::tr("Generate a new random password.");
 }
 
 Generate::~Generate()
 {
 }
 
-int Generate::execute(QStringList arguments)
+int Generate::execute(const QStringList& arguments)
 {
     QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
     QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
@@ -47,10 +47,10 @@ int Generate::execute(QStringList arguments)
                                 QObject::tr("length"));
     parser.addOption(len);
     QCommandLineOption lower(QStringList() << "l",
-                               QObject::tr("Use lowercase in the generated password."));
+                               QObject::tr("Use lowercase characters in the generated password."));
     parser.addOption(lower);
     QCommandLineOption upper(QStringList() << "u",
-                               QObject::tr("Use uppercase in the generated password."));
+                               QObject::tr("Use uppercase characters in the generated password."));
     parser.addOption(upper);
     QCommandLineOption numeric(QStringList() << "n",
                                QObject::tr("Use numbers in the generated password."));
@@ -59,12 +59,12 @@ int Generate::execute(QStringList arguments)
                                QObject::tr("Use special characters in the generated password."));
     parser.addOption(special);
     QCommandLineOption extended(QStringList() << "e",
-                               QObject::tr("Use extended ascii in the generated password."));
+                               QObject::tr("Use extended ASCII in the generated password."));
     parser.addOption(extended);
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
-    if (args.size() != 0) {
+    if (!args.isEmpty()) {
         outputTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli generate");
         return EXIT_FAILURE;
     }
@@ -97,6 +97,7 @@ int Generate::execute(QStringList arguments)
     }
 
     passwordGenerator.setCharClasses(classes);
+    passwordGenerator.setFlags(PasswordGenerator::DefaultFlags);
 
     if (!passwordGenerator.isValid()) {
         outputTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli generate");

@@ -27,15 +27,15 @@
 
 Diceware::Diceware()
 {
-    this->name = QString("diceware");
-    this->description = QObject::tr("Generate a new random password.");
+    name = QString("diceware");
+    description = QObject::tr("Generate a new random diceware passphrase.");
 }
 
 Diceware::~Diceware()
 {
 }
 
-int Diceware::execute(QStringList arguments)
+int Diceware::execute(const QStringList& arguments)
 {
     QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
     QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
@@ -48,13 +48,13 @@ int Diceware::execute(QStringList arguments)
     parser.addOption(words);
     QCommandLineOption wordlistFile(QStringList() << "w"
                                              << "word-list",
-                               QObject::tr("Wordlist fot the diceware generator.\n[Default: EFF English]"),
+                               QObject::tr("Wordlist for the diceware generator.\n[Default: EFF English]"),
                                QObject::tr("path"));
     parser.addOption(wordlistFile);
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
-    if (args.size() != 0) {
+    if (!args.isEmpty()) {
         outputTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli diceware");
         return EXIT_FAILURE;
     }

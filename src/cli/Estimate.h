@@ -25,7 +25,7 @@ class Estimate : public Command
 public:
     Estimate();
     ~Estimate();
-    int execute(QStringList arguments);
+    int execute(const QStringList& arguments);
 };
 
 #endif // KEEPASSXC_ESTIMATE_H

@@ -31,15 +31,15 @@
 
 Add::Add()
 {
-    this->name = QString("add");
-    this->description = QObject::tr("Add a new entry to a database.");
+    name = QString("add");
+    description = QObject::tr("Add a new entry to a database.");
 }
 
 Add::~Add()
 {
 }
 
-int Add::execute(QStringList arguments)
+int Add::execute(const QStringList& arguments)
 {
 
     QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
@@ -134,6 +134,7 @@ int Add::execute(QStringList arguments)
         }
 
         passwordGenerator.setCharClasses(PasswordGenerator::DefaultCharset);
+        passwordGenerator.setFlags(PasswordGenerator::DefaultFlags);
         QString password = passwordGenerator.generatePassword();
         entry->setPassword(password);
     }

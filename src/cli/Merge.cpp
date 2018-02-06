@@ -26,15 +26,15 @@
 
 Merge::Merge()
 {
-    this->name = QString("merge");
-    this->description = QObject::tr("Merge two databases.");
+    name = QString("merge");
+    description = QObject::tr("Merge two databases.");
 }
 
 Merge::~Merge()
 {
 }
 
-int Merge::execute(QStringList arguments)
+int Merge::execute(const QStringList& arguments)
 {
     QTextStream out(stdout);
 

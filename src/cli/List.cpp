@@ -29,15 +29,15 @@
 
 List::List()
 {
-    this->name = QString("ls");
-    this->description = QObject::tr("List database entries.");
+    name = QString("ls");
+    description = QObject::tr("List database entries.");
 }
 
 List::~List()
 {
 }
 
-int List::execute(QStringList arguments)
+int List::execute(const QStringList& arguments)
 {
     QTextStream out(stdout);
 
