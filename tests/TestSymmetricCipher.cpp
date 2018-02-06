@@ -32,6 +32,90 @@ void TestSymmetricCipher::initTestCase()
     QVERIFY(Crypto::init());
 }
 
+void TestSymmetricCipher::testAes128CbcEncryption()
+{
+    // http://csrc.nist.gov/publications/nistpubs/800-38a/sp800-38a.pdf
+
+    QByteArray key = QByteArray::fromHex("2b7e151628aed2a6abf7158809cf4f3c");
+    QByteArray iv = QByteArray::fromHex("000102030405060708090a0b0c0d0e0f");
+    QByteArray plainText = QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172a");
+    plainText.append(QByteArray::fromHex("ae2d8a571e03ac9c9eb76fac45af8e51"));
+    QByteArray cipherText = QByteArray::fromHex("7649abac8119b246cee98e9b12e9197d");
+    cipherText.append(QByteArray::fromHex("5086cb9b507219ee95db113a917678b2"));
+    bool ok;
+
+    SymmetricCipher cipher(SymmetricCipher::Aes128, SymmetricCipher::Cbc, SymmetricCipher::Encrypt);
+    QVERIFY(cipher.init(key, iv));
+    QCOMPARE(cipher.blockSize(), 16);
+    QCOMPARE(cipher.process(plainText, &ok), cipherText);
+    QVERIFY(ok);
+
+    QBuffer buffer;
+    SymmetricCipherStream stream(&buffer, SymmetricCipher::Aes128, SymmetricCipher::Cbc,
+                                 SymmetricCipher::Encrypt);
+    QVERIFY(stream.init(key, iv));
+    buffer.open(QIODevice::WriteOnly);
+    QVERIFY(stream.open(QIODevice::WriteOnly));
+    QVERIFY(stream.reset());
+
+    buffer.reset();
+    buffer.buffer().clear();
+    QCOMPARE(stream.write(plainText.left(16)), qint64(16));
+    QCOMPARE(buffer.data(), cipherText.left(16));
+    QVERIFY(stream.reset());
+    // make sure padding is written
+    QCOMPARE(buffer.data().size(), 32);
+
+    buffer.reset();
+    buffer.buffer().clear();
+    QCOMPARE(stream.write(plainText.left(10)), qint64(10));
+    QVERIFY(buffer.data().isEmpty());
+
+    QVERIFY(stream.reset());
+    buffer.reset();
+    buffer.buffer().clear();
+    QCOMPARE(stream.write(plainText.left(10)), qint64(10));
+    stream.close();
+    QCOMPARE(buffer.data().size(), 16);
+}
+
+void TestSymmetricCipher::testAes128CbcDecryption()
+{
+    QByteArray key = QByteArray::fromHex("2b7e151628aed2a6abf7158809cf4f3c");
+    QByteArray iv = QByteArray::fromHex("000102030405060708090a0b0c0d0e0f");
+    QByteArray cipherText = QByteArray::fromHex("7649abac8119b246cee98e9b12e9197d");
+    cipherText.append(QByteArray::fromHex("5086cb9b507219ee95db113a917678b2"));
+    QByteArray plainText = QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172a");
+    plainText.append(QByteArray::fromHex("ae2d8a571e03ac9c9eb76fac45af8e51"));
+    bool ok;
+
+    SymmetricCipher cipher(SymmetricCipher::Aes128, SymmetricCipher::Cbc, SymmetricCipher::Decrypt);
+    QVERIFY(cipher.init(key, iv));
+    QCOMPARE(cipher.blockSize(), 16);
+    QCOMPARE(cipher.process(cipherText, &ok), plainText);
+    QVERIFY(ok);
+
+    // padded with 16 0x10 bytes
+    QByteArray cipherTextPadded = cipherText + QByteArray::fromHex("55e21d7100b988ffec32feeafaf23538");
+    QBuffer buffer(&cipherTextPadded);
+    SymmetricCipherStream stream(&buffer, SymmetricCipher::Aes128, SymmetricCipher::Cbc,
+                                 SymmetricCipher::Decrypt);
+    QVERIFY(stream.init(key, iv));
+    buffer.open(QIODevice::ReadOnly);
+    QVERIFY(stream.open(QIODevice::ReadOnly));
+
+    QCOMPARE(stream.read(10), plainText.left(10));
+    buffer.reset();
+    QVERIFY(stream.reset());
+    QCOMPARE(stream.read(20), plainText.left(20));
+    buffer.reset();
+    QVERIFY(stream.reset());
+    QCOMPARE(stream.read(16), plainText.left(16));
+    buffer.reset();
+    QVERIFY(stream.reset());
+    QCOMPARE(stream.read(100), plainText);
+}
+
 void TestSymmetricCipher::testAes256CbcEncryption()
 {
     // http://csrc.nist.gov/publications/nistpubs/800-38a/sp800-38a.pdf

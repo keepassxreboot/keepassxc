@@ -31,6 +31,7 @@ class SymmetricCipher
 public:
     enum Algorithm
     {
+        Aes128,
         Aes256,
         Twofish,
         Salsa20,
