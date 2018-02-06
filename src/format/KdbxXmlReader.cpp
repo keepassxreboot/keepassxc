@@ -295,7 +295,7 @@ void KdbxXmlReader::parseMeta()
         } else if (m_xml.name() == "Binaries") {
             parseBinaries();
         } else if (m_xml.name() == "CustomData") {
-            parseCustomData();
+            parseCustomData(m_meta->customData());
         } else if (m_xml.name() == "SettingsChanged") {
             m_meta->setSettingsChanged(readDateTime());
         } else {
@@ -397,20 +397,20 @@ void KdbxXmlReader::parseBinaries()
     }
 }
 
-void KdbxXmlReader::parseCustomData()
+void KdbxXmlReader::parseCustomData(CustomData *customData)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "CustomData");
 
     while (!m_xml.hasError() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "Item") {
-            parseCustomDataItem();
+            parseCustomDataItem(customData);
             continue;
         }
         skipCurrentElement();
     }
 }
 
-void KdbxXmlReader::parseCustomDataItem()
+void KdbxXmlReader::parseCustomDataItem(CustomData *customData)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Item");
 
@@ -432,7 +432,7 @@ void KdbxXmlReader::parseCustomDataItem()
     }
 
     if (keySet && valueSet) {
-        m_meta->addCustomField(key, value);
+        customData->set(key, value);
         return;
     }
 
@@ -581,6 +581,10 @@ Group* KdbxXmlReader::parseGroup()
             if (newEntry) {
                 entries.append(newEntry);
             }
+            continue;
+        }
+        if (m_xml.name() == "CustomData") {
+            parseCustomData(group->customData());
             continue;
         }
 
@@ -743,7 +747,10 @@ Entry* KdbxXmlReader::parseEntry(bool history)
             }
             continue;
         }
-
+        if (m_xml.name() == "CustomData" ){
+            parseCustomData(entry->customData());
+            continue;
+        }
         skipCurrentElement();
     }
 

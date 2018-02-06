@@ -66,8 +66,8 @@ protected:
     virtual void parseCustomIcons();
     virtual void parseIcon();
     virtual void parseBinaries();
-    virtual void parseCustomData();
-    virtual void parseCustomDataItem();
+    virtual void parseCustomData(CustomData *customData);
+    virtual void parseCustomDataItem(CustomData *customData);
     virtual bool parseRoot();
     virtual Group* parseGroup();
     virtual void parseDeletedObjects();

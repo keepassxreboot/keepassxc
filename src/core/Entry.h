@@ -28,6 +28,7 @@
 #include <QUrl>
 
 #include "core/AutoTypeAssociations.h"
+#include "core/CustomData.h"
 #include "core/EntryAttachments.h"
 #include "core/EntryAttributes.h"
 #include "core/TimeInfo.h"
@@ -107,6 +108,8 @@ public:
     const EntryAttributes* attributes() const;
     EntryAttachments* attachments();
     const EntryAttachments* attachments() const;
+    CustomData *customData();
+    const CustomData *customData() const;
 
     static const int DefaultIconNumber;
     static const int ResolveMaximumDepth;
@@ -231,6 +234,8 @@ private:
     EntryAttributes* const m_attributes;
     EntryAttachments* const m_attachments;
     AutoTypeAssociations* const m_autoTypeAssociations;
+
+    CustomData* const m_customData;
 
     QList<Entry*> m_history;
     Entry* m_tmpHistoryItem;

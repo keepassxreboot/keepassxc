@@ -27,6 +27,7 @@
 #include <QPointer>
 
 #include "core/Uuid.h"
+#include "core/CustomData.h"
 
 class Database;
 class Group;
@@ -97,7 +98,8 @@ public:
     int masterKeyChangeForce() const;
     int historyMaxItems() const;
     int historyMaxSize() const;
-    QHash<QString, QString> customFields() const;
+    CustomData *customData();
+    const CustomData *customData() const;
 
     static const int DefaultHistoryMaxItems;
     static const int DefaultHistoryMaxSize;
@@ -134,8 +136,6 @@ public:
     void setMasterKeyChangeForce(int value);
     void setHistoryMaxItems(int value);
     void setHistoryMaxSize(int value);
-    void addCustomField(const QString& key, const QString& value);
-    void removeCustomField(const QString& key);
     void setUpdateDatetime(bool value);
     /*
      * Copy all attributes from other except:
@@ -175,7 +175,7 @@ private:
     QDateTime m_masterKeyChanged;
     QDateTime m_settingsChanged;
 
-    QHash<QString, QString> m_customFields;
+    CustomData *const m_customData;
 
     bool m_updateDatetime;
 };
