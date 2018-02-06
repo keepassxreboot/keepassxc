@@ -42,6 +42,7 @@ set(keepassx_SOURCES
     core/AutoTypeMatch.cpp
     core/Config.cpp
     core/CsvParser.cpp
+    core/CustomData.cpp
     core/Database.cpp
     core/DatabaseIcons.cpp
     core/Entry.cpp

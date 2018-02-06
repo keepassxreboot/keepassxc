@@ -26,6 +26,7 @@
 
 #include "core/Database.h"
 #include "core/Entry.h"
+#include "core/CustomData.h"
 #include "core/TimeInfo.h"
 #include "core/Uuid.h"
 
@@ -83,6 +84,8 @@ public:
     bool resolveAutoTypeEnabled() const;
     Entry* lastTopVisibleEntry() const;
     bool isExpired() const;
+    CustomData *customData();
+    const CustomData *customData() const;
 
     static const int DefaultIconNumber;
     static const int RecycleBinIconNumber;
@@ -164,6 +167,9 @@ signals:
 
     void modified();
 
+private slots:
+    void updateTimeinfo();
+
 private:
     template <class P, class V> bool set(P& property, const V& value);
 
@@ -177,7 +183,6 @@ private:
     void recSetDatabase(Database* db);
     void cleanupParent();
     void recCreateDelObjects();
-    void updateTimeinfo();
 
     QPointer<Database> m_db;
     Uuid m_uuid;
@@ -185,6 +190,8 @@ private:
     QPointer<Entry> m_lastTopVisibleEntry;
     QList<Group*> m_children;
     QList<Entry*> m_entries;
+
+    CustomData *const m_customData;
 
     QPointer<Group> m_parent;
 

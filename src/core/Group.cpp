@@ -33,13 +33,17 @@ Entry::CloneFlags Group::DefaultEntryCloneFlags = static_cast<Entry::CloneFlags>
     Entry::CloneNewUuid | Entry::CloneResetTimeInfo);
 
 Group::Group()
-    : m_updateTimeinfo(true)
+    : m_customData(new CustomData(this))
+    , m_updateTimeinfo(true)
 {
     m_data.iconNumber = DefaultIconNumber;
     m_data.isExpanded = true;
     m_data.autoTypeEnabled = Inherit;
     m_data.searchingEnabled = Inherit;
     m_data.mergeMode = ModeInherit;
+
+    connect(m_customData, SIGNAL(modified()), this, SIGNAL(modified()));
+    connect(this, SIGNAL(modified()), SLOT(updateTimeinfo()));
 }
 
 Group::~Group()
@@ -80,7 +84,6 @@ Group* Group::createRecycleBin()
 template <class P, class V> inline bool Group::set(P& property, const V& value) {
     if (property != value) {
         property = value;
-        updateTimeinfo();
         emit modified();
         return true;
     } else {
@@ -251,6 +254,16 @@ bool Group::isExpired() const
     return m_data.timeInfo.expires() && m_data.timeInfo.expiryTime() < QDateTime::currentDateTimeUtc();
 }
 
+CustomData *Group::customData()
+{
+    return m_customData;
+}
+
+const CustomData *Group::customData() const
+{
+    return m_customData;
+}
+
 void Group::setUuid(const Uuid& uuid)
 {
     set(m_uuid, uuid);
@@ -275,8 +288,6 @@ void Group::setIcon(int iconNumber)
     if (m_data.iconNumber != iconNumber || !m_data.customIcon.isNull()) {
         m_data.iconNumber = iconNumber;
         m_data.customIcon = Uuid();
-
-        updateTimeinfo();
         emit modified();
         emit dataChanged(this);
     }
@@ -289,8 +300,6 @@ void Group::setIcon(const Uuid& uuid)
     if (m_data.customIcon != uuid) {
         m_data.customIcon = uuid;
         m_data.iconNumber = 0;
-
-        updateTimeinfo();
         emit modified();
         emit dataChanged(this);
     }
@@ -305,8 +314,8 @@ void Group::setExpanded(bool expanded)
 {
     if (m_data.isExpanded != expanded) {
         m_data.isExpanded = expanded;
-        updateTimeinfo();
         if (config()->get("IgnoreGroupExpansion").toBool()) {
+            updateTimeinfo();
             return;
         }
         emit modified();
@@ -337,7 +346,6 @@ void Group::setExpires(bool value)
 {
     if (m_data.timeInfo.expires() != value) {
         m_data.timeInfo.setExpires(value);
-        updateTimeinfo();
         emit modified();
     }
 }
@@ -346,7 +354,6 @@ void Group::setExpiryTime(const QDateTime& dateTime)
 {
     if (m_data.timeInfo.expiryTime() != dateTime) {
         m_data.timeInfo.setExpiryTime(dateTime);
-        updateTimeinfo();
         emit modified();
     }
 }
@@ -768,6 +775,7 @@ Group* Group::clone(Entry::CloneFlags entryFlags, Group::CloneFlags groupFlags) 
     }
 
     clonedGroup->m_data = m_data;
+    clonedGroup->m_customData->copyDataFrom(m_customData);
 
     if (groupFlags & Group::CloneIncludeEntries) {
         const QList<Entry*> entryList = entries();
@@ -799,6 +807,7 @@ Group* Group::clone(Entry::CloneFlags entryFlags, Group::CloneFlags groupFlags) 
 void Group::copyDataFrom(const Group* other)
 {
     m_data = other->m_data;
+    m_customData->copyDataFrom(other->m_customData);
     m_lastTopVisibleEntry = other->m_lastTopVisibleEntry;
 }
 
