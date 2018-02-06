@@ -79,6 +79,7 @@ public slots:
     bool isModified(int index = -1);
     void performGlobalAutoType();
     void lockDatabases();
+    void relockPendingDatabase();
     QString databasePath(int index = -1);
 
 signals:
@@ -117,6 +118,7 @@ private:
 
     QHash<Database*, DatabaseManagerStruct> m_dbList;
     QPointer<DatabaseWidgetStateSync> m_dbWidgetStateSync;
+    QPointer<DatabaseWidget> m_dbPendingLock;
 };
 
 #endif // KEEPASSX_DATABASETABWIDGET_H
