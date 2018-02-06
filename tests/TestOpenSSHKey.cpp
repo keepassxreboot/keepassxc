@@ -90,6 +90,54 @@ void TestOpenSSHKey::testParseDSA()
     QCOMPARE(key.fingerprint(), QString("SHA256:tbbNuLN1hja8JNASDTlLOZQsbTlJDzJlz/oAGK3sX18"));
 }
 
+void TestOpenSSHKey::testDecryptAES128CBC()
+{
+    const QString keyString = QString(
+	"-----BEGIN RSA PRIVATE KEY-----\n"
+	"Proc-Type: 4,ENCRYPTED\n"
+	"DEK-Info: AES-128-CBC,804E4D214D1263FF94E3743FE799DBB4\n"
+	"\n"
+	"lM9TDfOTbiRhaGGDh7Hn+rqw8CCWcYBZYu7smyYLdnWKXKPmbne8CQFZBAS1FJwZ\n"
+	"6Mj6n075yFGyzN9/OfeqKiUA4adlbwLbGwB+yyKsC2FlsvRIEr4hup02WWM47vHj\n"
+	"DS4TRmNkE7MKFLhpNCyt5OGGM45s+/lwVTw51K0Hm99TBd72IrX4jfY9ZxAVbL3l\n"
+	"aTohL8x6oOTe7q318QgJoFi+DjJhDWLGLLJ7fBqD2imz2fmrY4j8Jpw2sDe1rj82\n"
+	"gMqqNG3FrfN0S4uYlWYH5pAh+BUcB1UdmTU/rV5wJMK1oUytmZv/J2+X/0k3Y93F\n"
+	"aw6JWOy28OizW+TQXvv8gREWsp5PEclqUZhhGQbVbCQCiDOxg+xiXNySdRH1IqjR\n"
+	"zQiKgD4SPzkxQekExPaIQT/KutWZdMNYybEqooCx8YyeDoN31z7Wa2rv6OulOn/j\n"
+	"wJFvyd2PT/6brHKI4ky8RYroDf4FbVYKfyEW5CSAg2OyL/tY/kSPgy/k0WT7fDwq\n"
+	"dPSuYM9yeWNL6kAhDqDOv8+s3xvOVEljktBvQvItQwVLmHszC3E2AcnaxzdblKPu\n"
+	"e3+mBT80NXHjERK2ht+/9JYseK1ujNbNAaG8SbKfU3FF0VlyJ0QW6TuIEdpNnymT\n"
+	"0fm0cDfKNaoeJIFnBRZhgIOJAic9DM0cTe/vSG69DaUYsaQPp36al7Fbux3GpFHS\n"
+	"OtJEySYGro/6zvJ9dDIEfIGZjA3RaMt6+DuyJZXQdT2RNXa9j60xW7dXh0En4n82\n"
+	"JUKTxYhDPLS5c8BzpJqoopxpKwElmrJ7Y3xpd6z2vIlD8ftuZrkk6siTMNQ2s7MI\n"
+	"Xl332O+0H4k7uSfczHPOOw36TFhNjGQAP0b7O+0/RVG0ttOIoAn7ZkX3nfdbtG5B\n"
+	"DWKvDaopvrcC2/scQ5uLUnqnBiGw1XiYpdg5ang7knHNzHZAIekVaYYZigpCAKp+\n"
+	"OtoaDeUEzqFhYVmF8ad1fgvC9ZUsuxS4XUHCKl0H6CJcvW9MJPVbveqYoK+j9qKd\n"
+	"iMIkQBP1kE2rzGZVGUkZTpM9LVD9nP0nsbr6E8BatFcNgRirsg2BTJglNpXlCmY6\n"
+	"ldzJ/ELBbzoXIn+0wTGai0o4eBPx55baef69JfPuZqEB9pLNE+mHstrqIwcfqYu4\n"
+	"M+Vzun1QshRMj9a1PVkIHfs1fLeebI4QCHO0vJlc9K4iYPM4rsDNO3YaAgGRuARS\n"
+	"f3McGiGFxkv5zxe8i05ZBnn+exE77jpRKxd223jAMe2wu4WiFB7ZVo4Db6b5Oo2T\n"
+	"TPh3VuY7TNMEKkcUi+mGLKjroocQ5j8WQYlfnyOaTalUVQDzOTNb67QIIoiszR0U\n"
+	"+AXGyxHj0QtotZFoPME+AbS9Zqy3SgSOuIzPBPU5zS4uoKNdD5NPE5YAuafCjsDy\n"
+	"MT4DVy+cPOQYUK022S7T2nsA1btmvUvD5LL2Mc8VuKsWOn/7FKZua6OCfipt6oX0\n"
+	"1tzYrw0/ALK+CIdVdYIiPPfxGZkr+JSLOOg7u50tpmen9GzxgNTv63miygwUAIDF\n"
+	"u0GbQwOueoA453/N75FcXOgrbqTdivyadUbRP+l7YJk/SfIytyJMOigejp+Z1lzF\n"
+	"-----END RSA PRIVATE KEY-----\n"
+    );
+
+    const QByteArray keyData = keyString.toLatin1();
+
+    OpenSSHKey key;
+    QVERIFY(key.parse(keyData));
+    QVERIFY(key.encrypted());
+    QCOMPARE(key.cipherName(), QString("AES-128-CBC"));
+    QVERIFY(!key.openPrivateKey("incorrectpassphrase"));
+    QVERIFY(key.openPrivateKey("correctpassphrase"));
+    QCOMPARE(key.type(), QString("ssh-rsa"));
+    QCOMPARE(key.comment(), QString(""));
+    QCOMPARE(key.fingerprint(), QString("SHA256:1Hsebt2WWnmc72FERsUOgvaajIGHkrMONxXylcmk87U"));
+}
+
 void TestOpenSSHKey::testParseRSA()
 {
     const QString keyString = QString(
