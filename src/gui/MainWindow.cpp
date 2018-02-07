@@ -69,7 +69,7 @@
 class HttpPlugin: public ISettingsPage
 {
 public:
-    HttpPlugin(DatabaseTabWidget * tabWidget)
+    HttpPlugin(DatabaseTabWidget* tabWidget)
     {
         m_service = new Service(tabWidget);
     }
@@ -88,18 +88,18 @@ public:
 
     QWidget * createWidget() override
     {
-        OptionDialog * dlg = new OptionDialog();
+        OptionDialog* dlg = new OptionDialog();
         QObject::connect(dlg, SIGNAL(removeSharedEncryptionKeys()), m_service, SLOT(removeSharedEncryptionKeys()));
         QObject::connect(dlg, SIGNAL(removeStoredPermissions()), m_service, SLOT(removeStoredPermissions()));
         return dlg;
     }
 
-    void loadSettings(QWidget * widget) override
+    void loadSettings(QWidget* widget) override
     {
         qobject_cast<OptionDialog*>(widget)->loadSettings();
     }
 
-    void saveSettings(QWidget * widget) override
+    void saveSettings(QWidget* widget) override
     {
         qobject_cast<OptionDialog*>(widget)->saveSettings();
         if (HttpSettings::isEnabled())
@@ -108,7 +108,7 @@ public:
             m_service->stop();
     }
 private:
-    Service *m_service;
+    Service* m_service;
 };
 #endif
 

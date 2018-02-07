@@ -42,6 +42,7 @@ parts:
       - libxtst-dev
       - libyubikey-dev
       - libykpers-1-dev
+      - libcurl4-openssl-dev
       - libsodium-dev
     stage-packages:
       - dbus
