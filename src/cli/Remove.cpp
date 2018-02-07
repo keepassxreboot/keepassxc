@@ -34,15 +34,15 @@
 
 Remove::Remove()
 {
-    this->name = QString("rm");
-    this->description = QString("Remove an entry from the database.");
+    name = QString("rm");
+    description = QString("Remove an entry from the database.");
 }
 
 Remove::~Remove()
 {
 }
 
-int Remove::execute(QStringList arguments)
+int Remove::execute(const QStringList& arguments)
 {
     QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
 

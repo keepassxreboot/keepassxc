@@ -76,7 +76,7 @@ QString Utils::getPassword()
  * A valid and running event loop is needed to use the global QClipboard,
  * so we need to use this from the CLI.
  */
-int Utils::clipText(QString text)
+int Utils::clipText(const QString& text)
 {
 
     QString programName = "";

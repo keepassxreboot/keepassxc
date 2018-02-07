@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,17 +15,17 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_ESTIMATE_H
-#define KEEPASSXC_ESTIMATE_H
+#ifndef KEEPASSXC_DICEWARE_H
+#define KEEPASSXC_DICEWARE_H
 
 #include "Command.h"
 
-class Estimate : public Command
+class Diceware : public Command
 {
 public:
-    Estimate();
-    ~Estimate();
+    Diceware();
+    ~Diceware();
     int execute(const QStringList& arguments);
 };
 
-#endif // KEEPASSXC_ESTIMATE_H
+#endif // KEEPASSXC_DICEWARE_H

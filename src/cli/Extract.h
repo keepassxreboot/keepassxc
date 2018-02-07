@@ -25,7 +25,7 @@ class Extract : public Command
 public:
     Extract();
     ~Extract();
-    int execute(QStringList arguments);
+    int execute(const QStringList& arguments);
 };
 
 #endif // KEEPASSXC_EXTRACT_H

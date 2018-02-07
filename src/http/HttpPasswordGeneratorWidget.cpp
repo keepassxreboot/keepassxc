@@ -48,13 +48,14 @@ HttpPasswordGeneratorWidget::~HttpPasswordGeneratorWidget()
 
 void HttpPasswordGeneratorWidget::loadSettings()
 {
-    m_ui->checkBoxLower->setChecked(config()->get("Http/generator/LowerCase", true).toBool());
-    m_ui->checkBoxUpper->setChecked(config()->get("Http/generator/UpperCase", true).toBool());
-    m_ui->checkBoxNumbers->setChecked(config()->get("Http/generator/Numbers", true).toBool());
-    m_ui->checkBoxSpecialChars->setChecked(config()->get("Http/generator/SpecialChars", false).toBool());
+    m_ui->checkBoxLower->setChecked(config()->get("Http/generator/LowerCase", PasswordGenerator::DefaultLower).toBool());
+    m_ui->checkBoxUpper->setChecked(config()->get("Http/generator/UpperCase", PasswordGenerator::DefaultUpper).toBool());
+    m_ui->checkBoxNumbers->setChecked(config()->get("Http/generator/Numbers", PasswordGenerator::DefaultNumbers).toBool());
+    m_ui->checkBoxSpecialChars->setChecked(config()->get("Http/generator/SpecialChars", PasswordGenerator::DefaultSpecial).toBool());
+    m_ui->checkBoxSpecialChars->setChecked(config()->get("Http/generator/EASCII", PasswordGenerator::DefaultEASCII).toBool());
 
-    m_ui->checkBoxExcludeAlike->setChecked(config()->get("Http/generator/ExcludeAlike", true).toBool());
-    m_ui->checkBoxEnsureEvery->setChecked(config()->get("Http/generator/EnsureEvery", true).toBool());
+    m_ui->checkBoxExcludeAlike->setChecked(config()->get("Http/generator/ExcludeAlike", PasswordGenerator::DefaultLookAlike).toBool());
+    m_ui->checkBoxEnsureEvery->setChecked(config()->get("Http/generator/EnsureEvery", PasswordGenerator::DefaultFromEveryGroup).toBool());
 
     m_ui->spinBoxLength->setValue(config()->get("Http/generator/Length", PasswordGenerator::DefaultLength).toInt());
 }
@@ -65,6 +66,7 @@ void HttpPasswordGeneratorWidget::saveSettings()
     config()->set("Http/generator/UpperCase", m_ui->checkBoxUpper->isChecked());
     config()->set("Http/generator/Numbers", m_ui->checkBoxNumbers->isChecked());
     config()->set("Http/generator/SpecialChars", m_ui->checkBoxSpecialChars->isChecked());
+    config()->set("Http/generator/EASCII", m_ui->checkBoxExtASCII->isChecked());
 
     config()->set("Http/generator/ExcludeAlike", m_ui->checkBoxExcludeAlike->isChecked());
     config()->set("Http/generator/EnsureEvery", m_ui->checkBoxEnsureEvery->isChecked());
@@ -118,6 +120,10 @@ PasswordGenerator::CharClasses HttpPasswordGeneratorWidget::charClasses()
 
     if (m_ui->checkBoxSpecialChars->isChecked()) {
         classes |= PasswordGenerator::SpecialCharacters;
+    }
+
+    if (m_ui->checkBoxExtASCII->isChecked()) {
+        classes |= PasswordGenerator::EASCII;
     }
 
     return classes;

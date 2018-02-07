@@ -32,15 +32,15 @@
 
 Clip::Clip()
 {
-    this->name = QString("clip");
-    this->description = QObject::tr("Copy an entry's password to the clipboard.");
+    name = QString("clip");
+    description = QObject::tr("Copy an entry's password to the clipboard.");
 }
 
 Clip::~Clip()
 {
 }
 
-int Clip::execute(QStringList arguments)
+int Clip::execute(const QStringList& arguments)
 {
 
     QTextStream out(stdout);

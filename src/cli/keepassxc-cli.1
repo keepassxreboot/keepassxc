@@ -1,4 +1,4 @@
-.TH KEEPASSXC-CLI 1 "Aug 22, 2017"
+.TH KEEPASSXC-CLI 1 "Jan 19, 2018"
 
 .SH NAME
 keepassxc-cli \- command line interface for the \fBKeePassXC\fP password manager.
@@ -19,6 +19,9 @@ Adds a new entry to a database. A password can be generated (\fI-g\fP option), o
 .IP "clip [options] <database> <entry> [timeout]"
 Copies the password of a database entry to the clipboard. If multiple entries with the same name exist in different groups, only the password for the first one is going to be copied. For copying the password of an entry in a specific group, the group path to the entry should be specified as well, instead of just the name. Optionally, a timeout in seconds can be specified to automatically clear the clipboard.
 
+.IP "diceware [options]"
+Generate a random diceware passphrase.
+
 .IP "edit [options] <database> <entry>"
 Edits a database entry. A password can be generated (\fI-g\fP option), or a prompt can be displayed to input the password (\fI-p\fP option).
 
@@ -27,6 +30,9 @@ Estimates the entropy of a password. The password to estimate can be provided as
 
 .IP "extract [options] <database>"
 Extracts and prints the contents of a database to standard output in XML format.
+
+.IP "generate [options]"
+Generate a random password.
 
 .IP "locate [options] <database> <term>"
 Locates all the entries that match a specific search term in a database.
@@ -102,6 +108,39 @@ Perform advanced analysis on the password.
 Names of the attributes to show. This option can be specified more than once,
 with each attribute shown one-per-line in the given order. If no attributes are
 specified, a summary of the default attributes is given.
+
+
+.SS "Diceware options"
+
+.IP "-W, --words <count>"
+Desired number of words for the generated passphrase. [Default: 7]
+
+.IP "-w, --word-list <path>"
+Path of the wordlist for the diceware generator. The wordlist must have > 1000 words,
+otherwise the program will fail. If the wordlist has < 4000 words a warning will
+be printed to STDERR.
+
+
+.SS "Generate options"
+
+.IP "-L, --length <length>"
+Desired length for the generated password. [Default: 16]
+
+.IP "-l"
+Use lowercase characters for the generated password. [Default: Enabled]
+
+.IP "-u"
+Use uppercase characters for the generated password. [Default: Enabled]
+
+.IP "-n"
+Use numbers characters for the generated password. [Default: Enabled]
+
+.IP "-s"
+Use special characters for the generated password. [Default: Disabled]
+
+.IP "-e"
+Use extended ASCII characters for the generated password. [Default: Disabled]
+
 
 
 .SH REPORTING BUGS

@@ -29,7 +29,7 @@ class Command
 {
 public:
     virtual ~Command();
-    virtual int execute(QStringList arguments);
+    virtual int execute(const QStringList& arguments);
     QString name;
     QString description;
     QString getDescriptionLine();

@@ -58,6 +58,8 @@ public:
     static void setPasswordUseUppercase(bool useUppercase);
     static bool passwordUseSpecial();
     static void setPasswordUseSpecial(bool useSpecial);
+    static bool passwordUseEASCII();
+    static void setPasswordUseEASCII(bool useExtended);
     static bool passwordEveryGroup();
     static void setPasswordEveryGroup(bool everyGroup);
     static bool passwordExcludeAlike();

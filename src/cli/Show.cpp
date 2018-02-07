@@ -29,15 +29,15 @@
 
 Show::Show()
 {
-    this->name = QString("show");
-    this->description = QObject::tr("Show an entry's information.");
+    name = QString("show");
+    description = QObject::tr("Show an entry's information.");
 }
 
 Show::~Show()
 {
 }
 
-int Show::execute(QStringList arguments)
+int Show::execute(const QStringList& arguments)
 {
     QTextStream out(stdout);
 

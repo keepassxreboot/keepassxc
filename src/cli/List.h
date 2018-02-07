@@ -25,7 +25,7 @@ class List : public Command
 public:
     List();
     ~List();
-    int execute(QStringList arguments);
+    int execute(const QStringList& arguments);
     int listGroup(Database* database, QString groupPath = QString(""));
 };
 

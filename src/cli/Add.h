@@ -25,7 +25,7 @@ class Add : public Command
 public:
     Add();
     ~Add();
-    int execute(QStringList arguments);
+    int execute(const QStringList& arguments);
 };
 
 #endif // KEEPASSXC_ADD_H

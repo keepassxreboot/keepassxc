@@ -25,7 +25,7 @@ class Edit : public Command
 public:
     Edit();
     ~Edit();
-    int execute(QStringList arguments);
+    int execute(const QStringList& arguments);
 };
 
 #endif // KEEPASSXC_EDIT_H

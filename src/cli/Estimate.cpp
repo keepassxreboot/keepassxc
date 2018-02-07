@@ -34,8 +34,8 @@
 
 Estimate::Estimate()
 {
-    this->name = QString("estimate");
-    this->description = QObject::tr("Estimate the entropy of a password.");
+    name = QString("estimate");
+    description = QObject::tr("Estimate the entropy of a password.");
 }
 
 Estimate::~Estimate()
@@ -138,7 +138,7 @@ static void estimate(const char* pwd, bool advanced)
     }
 }
 
-int Estimate::execute(QStringList arguments)
+int Estimate::execute(const QStringList& arguments)
 {
     QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
     QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
