@@ -202,7 +202,6 @@ add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
 add_subdirectory(http)
 if(WITH_XC_NETWORKING)
   find_package(CURL REQUIRED)
-  set(keepassxcnetwork_LIB curl)
 endif()
 
 set(BROWSER_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/browser)
@@ -254,13 +253,13 @@ set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUIL
 target_link_libraries(keepassx_core
                       autotype
                       ${keepassxchttp_LIB}
-                      ${keepassxcnetwork_LIB}
                       ${keepassxcbrowser_LIB}
                       ${sshagent_LIB}
                       Qt5::Core
                       Qt5::Network
                       Qt5::Concurrent
                       Qt5::Widgets
+                      ${CURL_LIBRARIES}
                       ${YUBIKEY_LIBRARIES}
                       ${ZXCVBN_LIBRARIES}
                       ${ARGON2_LIBRARIES}

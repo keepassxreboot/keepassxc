@@ -31,9 +31,8 @@
 #include "gui/MessageBox.h"
 
 #ifdef WITH_XC_NETWORKING
-#include <QFuture>
-#include <QtConcurrent>
 #include <curl/curl.h>
+#include "core/AsyncTask.h"
 #undef MessageBox
 #endif
 
@@ -84,17 +83,14 @@ IconStruct EditWidgetIcons::state()
         QModelIndex index = m_ui->defaultIconsView->currentIndex();
         if (index.isValid()) {
             iconStruct.number = index.row();
-        }
-        else {
+        } else {
             Q_ASSERT(false);
         }
-    }
-    else {
+    } else {
         QModelIndex index = m_ui->customIconsView->currentIndex();
         if (index.isValid()) {
             iconStruct.uuid = m_customIconModel->uuidFromIndex(m_ui->customIconsView->currentIndex());
-        }
-        else {
+        } else {
             iconStruct.number = -1;
         }
     }
@@ -125,14 +121,12 @@ void EditWidgetIcons::load(const Uuid& currentUuid, Database* database, const Ic
         int iconNumber = iconStruct.number;
         m_ui->defaultIconsView->setCurrentIndex(m_defaultIconModel->index(iconNumber, 0));
         m_ui->defaultIconsRadio->setChecked(true);
-    }
-    else {
+    } else {
         QModelIndex index = m_customIconModel->indexFromUuid(iconUuid);
         if (index.isValid()) {
             m_ui->customIconsView->setCurrentIndex(index);
             m_ui->customIconsRadio->setChecked(true);
-        }
-        else {
+        } else {
             m_ui->defaultIconsView->setCurrentIndex(m_defaultIconModel->index(0, 0));
             m_ui->defaultIconsRadio->setChecked(true);
         }
@@ -182,19 +176,21 @@ void EditWidgetIcons::downloadFavicon()
 }
 
 #ifdef WITH_XC_NETWORKING
-size_t writeCurlResponse(char* ptr, size_t size, size_t nmemb, void* data)
+namespace {
+std::size_t writeCurlResponse(char* ptr, std::size_t size, std::size_t nmemb, void* data)
 {
     QByteArray* response = static_cast<QByteArray*>(data);
-    size_t realsize = size * nmemb;
+    std::size_t realsize = size * nmemb;
     response->append(ptr, realsize);
     return realsize;
+}
 }
 
 QImage EditWidgetIcons::fetchFavicon(const QUrl& url)
 {
     QImage image;
     CURL* curl = curl_easy_init();
-    if (curl != nullptr) {
+    if (curl) {
         QByteArray imagedata;
         QByteArray baUrl = url.url().toLatin1();
 
@@ -208,21 +204,15 @@ QImage EditWidgetIcons::fetchFavicon(const QUrl& url)
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &writeCurlResponse);
 
         // Perform the request in another thread
-        QFuture<CURLcode> future = QtConcurrent::run([curl]() {
+        CURLcode result = AsyncTask::runAndWaitForFuture([curl]() {
             return curl_easy_perform(curl);
         });
 
-        QEventLoop loop;
-        QFutureWatcher<CURLcode> watcher;
-        connect(&watcher, SIGNAL(finished()), &loop, SLOT(quit()));
-        watcher.setFuture(future);
-        loop.exec();
-
-        curl_easy_cleanup(curl);
-
-        if (future.result() == CURLE_OK) {
+        if (result == CURLE_OK) {
             image.loadFromData(imagedata);
         }
+
+        curl_easy_cleanup(curl);
     }
 
     return image;
@@ -359,8 +349,7 @@ void EditWidgetIcons::updateWidgetsDefaultIcons(bool check)
         QModelIndex index = m_ui->defaultIconsView->currentIndex();
         if (!index.isValid()) {
             m_ui->defaultIconsView->setCurrentIndex(m_defaultIconModel->index(0, 0));
-        }
-        else {
+        } else {
             m_ui->defaultIconsView->setCurrentIndex(index);
         }
         m_ui->customIconsView->selectionModel()->clearSelection();
@@ -375,8 +364,7 @@ void EditWidgetIcons::updateWidgetsCustomIcons(bool check)
         QModelIndex index = m_ui->customIconsView->currentIndex();
         if (!index.isValid()) {
             m_ui->customIconsView->setCurrentIndex(m_customIconModel->index(0, 0));
-        }
-        else {
+        } else {
             m_ui->customIconsView->setCurrentIndex(index);
         }
         m_ui->defaultIconsView->selectionModel()->clearSelection();
