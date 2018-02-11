@@ -38,8 +38,7 @@ private slots:
     void cleanup();
 
     void testInternal();
-    void testAutoTypeWithoutSequence();
-    void testAutoTypeWithSequence();
+    void testSingleAutoType();
     void testGlobalAutoTypeWithNoMatch();
     void testGlobalAutoTypeWithOneMatch();
     void testGlobalAutoTypeTitleMatch();
@@ -48,6 +47,7 @@ private slots:
     void testGlobalAutoTypeTitleMatchDisabled();
     void testGlobalAutoTypeRegExp();
     void testAutoTypeSyntaxChecks();
+    void testAutoTypeEffectiveSequences();
 
 private:
     AutoTypePlatformInterface* m_platform;

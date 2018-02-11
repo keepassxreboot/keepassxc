@@ -88,6 +88,7 @@ public:
     static const int RecycleBinIconNumber;
     static CloneFlags DefaultCloneFlags;
     static Entry::CloneFlags DefaultEntryCloneFlags;
+    static const QString RootAutoTypeSequence;
 
     Group* findChildByName(const QString& name);
     Group* findChildByUuid(const Uuid& uuid);

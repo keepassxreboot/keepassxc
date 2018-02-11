@@ -20,12 +20,16 @@ set(cli_SOURCES
     Clip.h
     Command.cpp
     Command.h
+    Diceware.cpp
+    Diceware.h
     Edit.cpp
     Edit.h
     Estimate.cpp
     Estimate.h
     Extract.cpp
     Extract.h
+    Generate.cpp
+    Generate.h
     List.cpp
     List.h
     Locate.cpp

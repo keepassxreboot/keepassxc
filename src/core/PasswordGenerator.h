@@ -34,14 +34,16 @@ public:
         UpperLetters      = 0x2,
         Numbers           = 0x4,
         SpecialCharacters = 0x8,
-        EASCII            = 0x10
+        EASCII            = 0x10,
+        DefaultCharset    = LowerLetters | UpperLetters | Numbers
     };
     Q_DECLARE_FLAGS(CharClasses, CharClass)
 
     enum GeneratorFlag
     {
         ExcludeLookAlike   = 0x1,
-        CharFromEveryGroup = 0x2
+        CharFromEveryGroup = 0x2,
+        DefaultFlags       = ExcludeLookAlike | CharFromEveryGroup
     };
     Q_DECLARE_FLAGS(GeneratorFlags, GeneratorFlag)
 
@@ -59,6 +61,13 @@ public:
     int getbits() const;
 
     static const int DefaultLength = 16;
+    static constexpr bool DefaultLower = (DefaultCharset & LowerLetters) != 0;
+    static constexpr bool DefaultUpper = (DefaultCharset & UpperLetters) != 0;
+    static constexpr bool DefaultNumbers = (DefaultCharset & Numbers) != 0;
+    static constexpr bool DefaultSpecial = (DefaultCharset & SpecialCharacters) != 0;
+    static constexpr bool DefaultEASCII = (DefaultCharset & EASCII) != 0;
+    static constexpr bool DefaultLookAlike = (DefaultFlags & ExcludeLookAlike) != 0;
+    static constexpr bool DefaultFromEveryGroup = (DefaultFlags & CharFromEveryGroup) != 0;
 
 private:
     QVector<PasswordGroup> passwordGroups() const;

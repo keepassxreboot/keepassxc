@@ -39,6 +39,7 @@ configure_file(version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/version.h @ONLY)
 set(keepassx_SOURCES
     core/AutoTypeAssociations.cpp
     core/AsyncTask.h
+    core/AutoTypeMatch.cpp
     core/Config.cpp
     core/CsvParser.cpp
     core/Database.cpp
@@ -137,6 +138,8 @@ set(keepassx_SOURCES
     gui/csvImport/CsvImportWizard.cpp
     gui/csvImport/CsvParserModel.cpp
     gui/entry/AutoTypeAssociationsModel.cpp
+    gui/entry/AutoTypeMatchModel.cpp
+    gui/entry/AutoTypeMatchView.cpp
     gui/entry/EditEntryWidget.cpp
     gui/entry/EditEntryWidget_p.h
     gui/entry/EntryAttachmentsModel.cpp
@@ -196,13 +199,9 @@ add_feature_info(KeePassHTTP WITH_XC_HTTP "Browser integration compatible with C
 add_feature_info(SSHAgent WITH_XC_SSHAGENT "SSH agent integration compatible with KeeAgent")
 add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
 
-if(WITH_XC_HTTP)
-    add_subdirectory(http)
-    set(keepasshttp_LIB keepasshttp)
-endif()
+add_subdirectory(http)
 if(WITH_XC_NETWORKING)
-    add_subdirectory(http/qhttp)
-    set(keepassxcnetwork_LIB qhttp Qt5::Network)
+  find_package(CURL REQUIRED)
 endif()
 
 set(BROWSER_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/browser)
@@ -248,23 +247,21 @@ endif()
 add_library(autotype STATIC ${autotype_SOURCES})
 target_link_libraries(autotype Qt5::Core Qt5::Widgets)
 
-set(autotype_LIB autotype)
-
 add_library(keepassx_core STATIC ${keepassx_SOURCES})
 
 set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
 target_link_libraries(keepassx_core
+                      autotype
+                      ${keepassxchttp_LIB}
                       ${keepassxcbrowser_LIB}
-                      ${keepasshttp_LIB}
-                      ${keepassxcnetwork_LIB}
-                      ${autotype_LIB}
                       ${sshagent_LIB}
-                      ${YUBIKEY_LIBRARIES}
-                      ${ZXCVBN_LIBRARIES}
                       Qt5::Core
                       Qt5::Network
                       Qt5::Concurrent
                       Qt5::Widgets
+                      ${CURL_LIBRARIES}
+                      ${YUBIKEY_LIBRARIES}
+                      ${ZXCVBN_LIBRARIES}
                       ${ARGON2_LIBRARIES}
                       ${GCRYPT_LIBRARIES}
                       ${GPGERROR_LIBRARIES}

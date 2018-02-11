@@ -1,5 +1,6 @@
 /*
- *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2015 David Wu <lightvector@gmail.com>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,40 +16,42 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AUTOTYPESELECTDIALOG_H
-#define KEEPASSX_AUTOTYPESELECTDIALOG_H
+#ifndef KEEPASSX_AUTOTYPEMATCHVIEW_H
+#define KEEPASSX_AUTOTYPEMATCHVIEW_H
 
-#include <QAbstractItemModel>
-#include <QDialog>
-#include <QHash>
+#include <QTreeView>
 
 #include "core/AutoTypeMatch.h"
 
-class AutoTypeSelectView;
+#include "gui/entry/AutoTypeMatchModel.h"
 
-class AutoTypeSelectDialog : public QDialog
+class SortFilterHideProxyModel;
+
+class AutoTypeMatchView : public QTreeView
 {
     Q_OBJECT
 
 public:
-    explicit AutoTypeSelectDialog(QWidget* parent = nullptr);
-    void setMatchList(const QList<AutoTypeMatch>& matchList);
+    explicit AutoTypeMatchView(QWidget* parent = nullptr);
+    AutoTypeMatch currentMatch();
+    void setCurrentMatch(AutoTypeMatch match);
+    AutoTypeMatch matchFromIndex(const QModelIndex& index);
+    void setMatchList(const QList<AutoTypeMatch>& matches);
+    void setFirstMatchActive();
 
 signals:
     void matchActivated(AutoTypeMatch match);
+    void matchSelectionChanged();
 
-public slots:
-    void done(int r) override;
-    void reject() override;
+protected:
+    void keyPressEvent(QKeyEvent* event) override;
 
 private slots:
     void emitMatchActivated(const QModelIndex& index);
-    void matchRemoved();
 
 private:
-    AutoTypeSelectView* const m_view;
-    bool m_matchActivatedEmitted;
-    bool m_rejected;
+    AutoTypeMatchModel* const m_model;
+    SortFilterHideProxyModel* const m_sortModel;
 };
 
-#endif // KEEPASSX_AUTOTYPESELECTDIALOG_H
+#endif // KEEPASSX_AUTOTYPEMATCHVIEW_H

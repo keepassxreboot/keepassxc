@@ -15,17 +15,17 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_ESTIMATE_H
-#define KEEPASSXC_ESTIMATE_H
+#ifndef KEEPASSXC_GENERATE_H
+#define KEEPASSXC_GENERATE_H
 
 #include "Command.h"
 
-class Estimate : public Command
+class Generate : public Command
 {
 public:
-    Estimate();
-    ~Estimate();
+    Generate();
+    ~Generate();
     int execute(const QStringList& arguments);
 };
 
-#endif // KEEPASSXC_ESTIMATE_H
+#endif // KEEPASSXC_GENERATE_H

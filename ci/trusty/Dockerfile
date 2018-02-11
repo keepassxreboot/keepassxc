@@ -43,6 +43,7 @@ RUN set -x \
       libgcrypt20-18-dev \
       libargon2-0-dev \
       libsodium-dev \
+      libcurl4-openssl-dev \
       qt${QT5_VERSION}base \
       qt${QT5_VERSION}tools \
       qt${QT5_VERSION}x11extras \

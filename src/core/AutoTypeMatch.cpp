@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2015 David Wu <lightvector@gmail.com>
  *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -15,17 +16,24 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_ESTIMATE_H
-#define KEEPASSXC_ESTIMATE_H
+#include "AutoTypeMatch.h"
 
-#include "Command.h"
+AutoTypeMatch::AutoTypeMatch()
+  : entry(nullptr),
+    sequence()
+{}
 
-class Estimate : public Command
+AutoTypeMatch::AutoTypeMatch(Entry* entry, QString sequence)
+  : entry(entry),
+    sequence(sequence)
+{}
+
+bool AutoTypeMatch::operator==(const AutoTypeMatch& other) const
 {
-public:
-    Estimate();
-    ~Estimate();
-    int execute(const QStringList& arguments);
-};
+    return entry == other.entry && sequence == other.sequence;
+}
 
-#endif // KEEPASSXC_ESTIMATE_H
+bool AutoTypeMatch::operator!=(const AutoTypeMatch& other) const
+{
+    return entry != other.entry || sequence != other.sequence;
+}

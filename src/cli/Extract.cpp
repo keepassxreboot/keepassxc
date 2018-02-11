@@ -33,15 +33,15 @@
 
 Extract::Extract()
 {
-    this->name = QString("extract");
-    this->description = QObject::tr("Extract and print the content of a database.");
+    name = QString("extract");
+    description = QObject::tr("Extract and print the content of a database.");
 }
 
 Extract::~Extract()
 {
 }
 
-int Extract::execute(QStringList arguments)
+int Extract::execute(const QStringList& arguments)
 {
     QTextStream out(stdout);
     QTextStream errorTextStream(stderr);

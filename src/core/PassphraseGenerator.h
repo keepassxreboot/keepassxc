@@ -26,22 +26,25 @@ class PassphraseGenerator
 {
 public:
     PassphraseGenerator();
+    Q_DISABLE_COPY(PassphraseGenerator)
 
-    double calculateEntropy(QString passphrase);
+    double calculateEntropy(const QString& passphrase);
     void setWordCount(int wordCount);
-    void setWordList(QString path);
+    void setWordList(const QString& path);
     void setDefaultWordList();
-    void setWordSeparator(QString separator);
+    void setWordSeparator(const QString& separator);
     bool isValid() const;
 
     QString generatePassphrase() const;
+
+    static constexpr int DefaultWordCount = 7;
+    static const char* DefaultSeparator;
+    static const char* DefaultWordList;
 
 private:
     int m_wordCount;
     QString m_separator;
     QVector<QString> m_wordlist;
-
-    Q_DISABLE_COPY(PassphraseGenerator)
 };
 
 #endif // KEEPASSX_PASSPHRASEGENERATOR_H

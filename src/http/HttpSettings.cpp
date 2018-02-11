@@ -145,7 +145,7 @@ void HttpSettings::setHttpPort(int port)
 
 bool HttpSettings::passwordUseNumbers()
 {
-    return config()->get("Http/generator/Numbers", true).toBool();
+    return config()->get("Http/generator/Numbers", PasswordGenerator::DefaultNumbers).toBool();
 }
 
 void HttpSettings::setPasswordUseNumbers(bool useNumbers)
@@ -155,7 +155,7 @@ void HttpSettings::setPasswordUseNumbers(bool useNumbers)
 
 bool HttpSettings::passwordUseLowercase()
 {
-    return config()->get("Http/generator/LowerCase", true).toBool();
+    return config()->get("Http/generator/LowerCase", PasswordGenerator::DefaultLower).toBool();
 }
 
 void HttpSettings::setPasswordUseLowercase(bool useLowercase)
@@ -165,7 +165,7 @@ void HttpSettings::setPasswordUseLowercase(bool useLowercase)
 
 bool HttpSettings::passwordUseUppercase()
 {
-    return config()->get("Http/generator/UpperCase", true).toBool();
+    return config()->get("Http/generator/UpperCase", PasswordGenerator::DefaultUpper).toBool();
 }
 
 void HttpSettings::setPasswordUseUppercase(bool useUppercase)
@@ -175,7 +175,7 @@ void HttpSettings::setPasswordUseUppercase(bool useUppercase)
 
 bool HttpSettings::passwordUseSpecial()
 {
-    return config()->get("Http/generator/SpecialChars", false).toBool();
+    return config()->get("Http/generator/SpecialChars", PasswordGenerator::DefaultSpecial).toBool();
 }
 
 void HttpSettings::setPasswordUseSpecial(bool useSpecial)
@@ -183,9 +183,19 @@ void HttpSettings::setPasswordUseSpecial(bool useSpecial)
     config()->set("Http/generator/SpecialChars", useSpecial);
 }
 
+bool HttpSettings::passwordUseEASCII()
+{
+    return config()->get("Http/generator/EASCII", PasswordGenerator::DefaultEASCII).toBool();
+}
+
+void HttpSettings::setPasswordUseEASCII(bool useExtended)
+{
+    config()->set("Http/generator/EASCII", useExtended);
+}
+
 bool HttpSettings::passwordEveryGroup()
 {
-    return config()->get("Http/generator/EnsureEvery", true).toBool();
+    return config()->get("Http/generator/EnsureEvery", PasswordGenerator::DefaultFromEveryGroup).toBool();
 }
 
 void HttpSettings::setPasswordEveryGroup(bool everyGroup)
@@ -195,7 +205,7 @@ void HttpSettings::setPasswordEveryGroup(bool everyGroup)
 
 bool HttpSettings::passwordExcludeAlike()
 {
-    return config()->get("Http/generator/ExcludeAlike", true).toBool();
+    return config()->get("Http/generator/ExcludeAlike", PasswordGenerator::DefaultLookAlike).toBool();
 }
 
 void HttpSettings::setPasswordExcludeAlike(bool excludeAlike)
@@ -205,7 +215,7 @@ void HttpSettings::setPasswordExcludeAlike(bool excludeAlike)
 
 int HttpSettings::passwordLength()
 {
-    return config()->get("Http/generator/Length", 20).toInt();
+    return config()->get("Http/generator/Length", PasswordGenerator::DefaultLength).toInt();
 }
 
 void HttpSettings::setPasswordLength(int length)
@@ -217,14 +227,21 @@ void HttpSettings::setPasswordLength(int length)
 PasswordGenerator::CharClasses HttpSettings::passwordCharClasses()
 {
     PasswordGenerator::CharClasses classes;
-    if (passwordUseLowercase())
+    if (passwordUseLowercase()) {
         classes |= PasswordGenerator::LowerLetters;
-    if (passwordUseUppercase())
+    }
+    if (passwordUseUppercase()) {
         classes |= PasswordGenerator::UpperLetters;
-    if (passwordUseNumbers())
+    }
+    if (passwordUseNumbers()) {
         classes |= PasswordGenerator::Numbers;
-    if (passwordUseSpecial())
+    }
+    if (passwordUseSpecial()) {
         classes |= PasswordGenerator::SpecialCharacters;
+    }
+    if (passwordUseEASCII()) {
+        classes |= PasswordGenerator::EASCII;
+    }
     return classes;
 }
 

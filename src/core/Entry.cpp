@@ -29,6 +29,8 @@
 
 const int Entry::DefaultIconNumber = 0;
 const int Entry::ResolveMaximumDepth = 10;
+const QString Entry::AutoTypeSequenceUsername = "{USERNAME}{ENTER}";
+const QString Entry::AutoTypeSequencePassword = "{PASSWORD}{ENTER}";
 
 
 Entry::Entry()
@@ -218,30 +220,37 @@ QString Entry::defaultAutoTypeSequence() const
     return m_data.defaultAutoTypeSequence;
 }
 
+/**
+ * Determine the effective sequence that will be injected
+ * This function return an empty string if a parent group has autotype disabled or if the entry has no parent
+ */
 QString Entry::effectiveAutoTypeSequence() const
 {
+    if (!autoTypeEnabled()) {
+        return {};
+    }
+
+    const Group* parent = group();
+    if (!parent) {
+        return {};
+    }
+
+    QString sequence = parent->effectiveAutoTypeSequence();
+    if (sequence.isEmpty()) {
+        return {};
+    }
+
     if (!m_data.defaultAutoTypeSequence.isEmpty()) {
         return m_data.defaultAutoTypeSequence;
     }
-    QString sequence;
 
-    const Group* grp = group();
-    if(grp) {
-      sequence = grp->effectiveAutoTypeSequence();
-    } else {
-      return QString();
-    }
-
-    if (sequence.isEmpty() && (!username().isEmpty() || !password().isEmpty())) {
+    if (sequence == Group::RootAutoTypeSequence && (!username().isEmpty() || !password().isEmpty())) {
         if (username().isEmpty()) {
-            sequence = "{PASSWORD}{ENTER}";
+            return AutoTypeSequencePassword;
+        } else if (password().isEmpty()) {
+            return AutoTypeSequenceUsername;
         }
-       else if (password().isEmpty()) {
-          sequence = "{USERNAME}{ENTER}";
-        }
-        else {
-            sequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
-        }
+        return Group::RootAutoTypeSequence;
     }
 
     return sequence;

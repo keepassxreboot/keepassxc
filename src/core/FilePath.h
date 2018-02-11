@@ -27,6 +27,7 @@ class FilePath
 public:
     QString dataPath(const QString& name);
     QString pluginPath(const QString& name);
+    QString wordlistPath(const QString& name);
     QIcon applicationIcon();
     QIcon trayIconLocked();
     QIcon trayIconUnlocked();

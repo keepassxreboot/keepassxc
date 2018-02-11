@@ -16,7 +16,7 @@
 
 FROM ubuntu:14.04
 
-ENV REBUILD_COUNTER=4
+ENV REBUILD_COUNTER=5
 
 ENV QT5_VERSION=59
 ENV QT5_PPA_VERSION=${QT5_VERSION}2
@@ -51,7 +51,8 @@ RUN set -x \
         libxtst-dev \
         mesa-common-dev \
         libyubikey-dev \
-        libykpers-1-dev
+        libykpers-1-dev \
+        libcurl4-openssl-dev
 
 ENV CMAKE_PREFIX_PATH="/opt/qt${QT5_VERSION}/lib/cmake"
 ENV CMAKE_INCLUDE_PATH="/opt/libgcrypt20-18/include:/opt/gpg-error-127/include"

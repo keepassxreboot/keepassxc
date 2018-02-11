@@ -25,7 +25,7 @@ class Utils
 public:
     static void setStdinEcho(bool enable);
     static QString getPassword();
-    static int clipText(QString text);
+    static int clipText(const QString& text);
 };
 
 #endif // KEEPASSXC_UTILS_H

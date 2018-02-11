@@ -18,11 +18,9 @@
 #ifndef KEEPASSX_AUTOTYPESELECTVIEW_H
 #define KEEPASSX_AUTOTYPESELECTVIEW_H
 
-#include "gui/entry/EntryView.h"
+#include "gui/entry/AutoTypeMatchView.h"
 
-class Entry;
-
-class AutoTypeSelectView : public EntryView
+class AutoTypeSelectView : public AutoTypeMatchView
 {
     Q_OBJECT
 
@@ -34,7 +32,7 @@ protected:
     void keyReleaseEvent(QKeyEvent* e) override;
 
 private slots:
-    void selectFirstEntry();
+    void selectFirstMatch();
 
 signals:
     void rejected();
