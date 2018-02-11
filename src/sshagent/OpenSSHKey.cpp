@@ -204,9 +204,10 @@ bool OpenSSHKey::parsePEM(const QByteArray& in, QByteArray& out)
         rows.removeFirst();
     } while (!rows.isEmpty());
 
-    if (pemOptions.contains("Proc-Type")) {
-        m_error = tr("Encrypted keys are not yet supported");
-        return false;
+    if (pemOptions.value("Proc-Type").compare("4,encrypted", Qt::CaseInsensitive) == 0) {
+        m_kdfName = "md5";
+        m_cipherName = pemOptions.value("DEK-Info").section(",", 0, 0);
+        m_cipherIV = QByteArray::fromHex(pemOptions.value("DEK-Info").section(",", 1, 1).toLatin1());
     }
 
     out = QByteArray::fromBase64(rows.join("").toLatin1());
@@ -278,7 +279,7 @@ bool OpenSSHKey::parse(const QByteArray& in)
             return false;
         }
     } else {
-        m_error = tr("Unsupported key type: %s").arg(m_privateType);
+        m_error = tr("Unsupported key type: %1").arg(m_privateType);
         return false;
     }
 
@@ -308,12 +309,14 @@ bool OpenSSHKey::openPrivateKey(const QString& passphrase)
         return false;
     }
 
-    if (m_cipherName == "aes256-cbc") {
+    if (m_cipherName.compare("aes-128-cbc", Qt::CaseInsensitive) == 0) {
+        cipher.reset(new SymmetricCipher(SymmetricCipher::Aes128, SymmetricCipher::Cbc, SymmetricCipher::Decrypt));
+    } else if (m_cipherName == "aes256-cbc") {
         cipher.reset(new SymmetricCipher(SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Decrypt));
     } else if (m_cipherName == "aes256-ctr") {
         cipher.reset(new SymmetricCipher(SymmetricCipher::Aes256, SymmetricCipher::Ctr, SymmetricCipher::Decrypt));
     } else if (m_cipherName != "none") {
-        m_error = tr("Unknown cipher: %s").arg(m_cipherName);
+        m_error = tr("Unknown cipher: %1").arg(m_cipherName);
         return false;
     }
 
@@ -355,8 +358,23 @@ bool OpenSSHKey::openPrivateKey(const QString& passphrase)
             m_error = cipher->errorString();
             return false;
         }
+    } else if (m_kdfName == "md5") {
+        if (m_cipherIV.length() < 8) {
+            m_error = tr("Cipher IV is too short for MD5 kdf");
+            return false;
+        }
+
+        QCryptographicHash hash(QCryptographicHash::Md5);
+        hash.addData(passphrase.toUtf8());
+        hash.addData(m_cipherIV.data(), 8);
+        QByteArray keyData = hash.result();
+
+        if (!cipher->init(keyData, m_cipherIV)) {
+            m_error = cipher->errorString();
+            return false;
+        }
     } else if (m_kdfName != "none") {
-        m_error = tr("Unknown KDF: %s").arg(m_kdfName);
+        m_error = tr("Unknown KDF: %1").arg(m_kdfName);
         return false;
     }
 
@@ -373,14 +391,14 @@ bool OpenSSHKey::openPrivateKey(const QString& passphrase)
 
     if (m_privateType == TYPE_DSA) {
         if (!ASN1Key::parseDSA(rawPrivateData, *this)) {
-            m_error = tr("Reading DSA private key failed, only unencrypted keys are supported at this time");
+            m_error = tr("Decryption failed, wrong passphrase?");
             return false;
         }
 
         return true;
     } else if (m_privateType == TYPE_RSA) {
         if (!ASN1Key::parseRSA(rawPrivateData, *this)) {
-            m_error = tr("Reading RSA private key failed, only unencrypted keys are supported at this time");
+            m_error = tr("Decryption failed, wrong passphrase?");
             return false;
         }
 
@@ -402,7 +420,7 @@ bool OpenSSHKey::openPrivateKey(const QString& passphrase)
         return readPrivate(keyStream);
     }
 
-    m_error = tr("Unsupported key type: %s").arg(m_privateType);
+    m_error = tr("Unsupported key type: %1").arg(m_privateType);
     return false;
 }
 
@@ -425,7 +443,7 @@ bool OpenSSHKey::readPublic(BinaryStream& stream)
     } else if (m_type == "ssh-ed25519") {
         keyParts = 1;
     } else {
-        m_error = tr("Unknown key type: %s").arg(m_type);
+        m_error = tr("Unknown key type: %1").arg(m_type);
         return false;
     }
 
@@ -462,7 +480,7 @@ bool OpenSSHKey::readPrivate(BinaryStream& stream)
     } else if (m_type == "ssh-ed25519") {
         keyParts = 2;
     } else {
-        m_error = tr("Unknown key type: %s").arg(m_type);
+        m_error = tr("Unknown key type: %1").arg(m_type);
         return false;
     }
 

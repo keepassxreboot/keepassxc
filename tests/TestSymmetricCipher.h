@@ -27,6 +27,8 @@ class TestSymmetricCipher : public QObject
 
 private slots:
     void initTestCase();
+    void testAes128CbcEncryption();
+    void testAes128CbcDecryption();
     void testAes256CbcEncryption();
     void testAes256CbcDecryption();
     void testAes256CtrEncryption();

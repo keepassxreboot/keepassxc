@@ -37,6 +37,9 @@ SymmetricCipherGcrypt::~SymmetricCipherGcrypt()
 int SymmetricCipherGcrypt::gcryptAlgo(SymmetricCipher::Algorithm algo)
 {
     switch (algo) {
+    case SymmetricCipher::Aes128:
+        return GCRY_CIPHER_AES128;
+
     case SymmetricCipher::Aes256:
         return GCRY_CIPHER_AES256;
 

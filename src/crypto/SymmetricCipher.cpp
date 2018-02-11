@@ -57,6 +57,7 @@ bool SymmetricCipher::isInitalized() const
 SymmetricCipherBackend* SymmetricCipher::createBackend(Algorithm algo, Mode mode, Direction direction)
 {
     switch (algo) {
+    case Aes128:
     case Aes256:
     case Twofish:
     case Salsa20:

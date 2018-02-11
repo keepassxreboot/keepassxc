@@ -63,6 +63,7 @@ private:
 
     QString m_type;
     QString m_cipherName;
+    QByteArray m_cipherIV;
     QString m_kdfName;
     QByteArray m_kdfOptions;
     QByteArray m_rawPrivateData;
