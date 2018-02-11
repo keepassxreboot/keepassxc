@@ -93,7 +93,7 @@ QString FilePath::pluginPath(const QString& name)
 
 QString FilePath::wordlistPath(const QString& name)
 {
-    return m_instance->dataPath("wordlists/" + name);
+    return dataPath("wordlists/" + name);
 }
 
 QIcon FilePath::applicationIcon()

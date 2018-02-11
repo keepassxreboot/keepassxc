@@ -17,32 +17,31 @@
 
 #include "PassphraseGenerator.h"
 
-#include <math.h>
+#include <cmath>
 #include <QFile>
 #include <QTextStream>
 
 #include "crypto/Random.h"
 #include "core/FilePath.h"
 
-const QString PassphraseGenerator::DefaultSeparator = " ";
-const QString PassphraseGenerator::DefaultWordList = "eff_large.wordlist";
+const char* PassphraseGenerator::DefaultSeparator = " ";
+const char* PassphraseGenerator::DefaultWordList = "eff_large.wordlist";
 
 PassphraseGenerator::PassphraseGenerator()
     : m_wordCount(0)
     , m_separator(PassphraseGenerator::DefaultSeparator)
 {
-    
 }
 
-double PassphraseGenerator::calculateEntropy(QString passphrase)
+double PassphraseGenerator::calculateEntropy(const QString& passphrase)
 {
     Q_UNUSED(passphrase);
 
-    if (m_wordlist.size() == 0) {
-        return 0;
+    if (m_wordlist.isEmpty()) {
+        return 0.0;
     }
 
-    return log(m_wordlist.size()) / log(2.0) * m_wordCount;
+    return std::log2(m_wordlist.size()) * m_wordCount;
 }
 
 void PassphraseGenerator::setWordCount(int wordCount)
@@ -56,7 +55,7 @@ void PassphraseGenerator::setWordCount(int wordCount)
 
 }
 
-void PassphraseGenerator::setWordList(QString path)
+void PassphraseGenerator::setWordList(const QString& path)
 {
     m_wordlist.clear();
 
@@ -83,7 +82,7 @@ void PassphraseGenerator::setDefaultWordList()
     setWordList(path);
 }
 
-void PassphraseGenerator::setWordSeparator(QString separator) {
+void PassphraseGenerator::setWordSeparator(const QString& separator) {
     m_separator = separator;
 }
 
@@ -97,8 +96,8 @@ QString PassphraseGenerator::generatePassphrase() const
     }
 
     QStringList words;
-    for (int i = 0; i < m_wordCount; i++) {
-        int wordIndex = randomGen()->randomUInt(m_wordlist.length());
+    for (int i = 0; i < m_wordCount; ++i) {
+        int wordIndex = randomGen()->randomUInt(static_cast<quint32>(m_wordlist.length()));
         words.append(m_wordlist.at(wordIndex));
     }
 
@@ -111,9 +110,5 @@ bool PassphraseGenerator::isValid() const
        return false;
     }
 
-    if (m_wordlist.size() < 1000) {
-        return false;
-    }
-
-    return true;
+    return m_wordlist.size() >= 1000;
 }
