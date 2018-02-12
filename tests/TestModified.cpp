@@ -47,26 +47,26 @@ void TestModified::testSignals()
     db->setKey(compositeKey);
     QCOMPARE(spyModified.count(), ++spyCount);
 
-    Group* g1 = new Group();
-    g1->setParent(root);
+    Group* group1 = new Group();
+    group1->setParent(root);
     QCOMPARE(spyModified.count(), ++spyCount);
 
-    Group* g2 = new Group();
-    g2->setParent(root);
+    Group* group2 = new Group();
+    group2->setParent(root);
     QCOMPARE(spyModified.count(), ++spyCount);
 
-    g2->setParent(root, 0);
+    group2->setParent(root, 0);
     QCOMPARE(spyModified.count(), ++spyCount);
 
     Entry* entry1 = new Entry();
-    entry1->setGroup(g1);
+    entry1->setGroup(group1);
     QCOMPARE(spyModified.count(), ++spyCount);
 
     Database* db2 = new Database();
     Group* root2 = db2->rootGroup();
     QSignalSpy spyModified2(db2, SIGNAL(modifiedImmediate()));
 
-    g1->setParent(root2);
+    group1->setParent(root2);
     QCOMPARE(spyModified.count(), ++spyCount);
     QCOMPARE(spyModified2.count(), ++spyCount2);
 
@@ -75,7 +75,7 @@ void TestModified::testSignals()
     QCOMPARE(spyModified2.count(), ++spyCount2);
 
     Entry* entry2 = new Entry();
-    entry2->setGroup(g2);
+    entry2->setGroup(group2);
     QCOMPARE(spyModified.count(), ++spyCount);
     QCOMPARE(spyModified2.count(), spyCount2);
 
@@ -87,15 +87,15 @@ void TestModified::testSignals()
     QCOMPARE(spyModified.count(), spyCount);
     QCOMPARE(spyModified2.count(), ++spyCount2);
 
-    Group* g3 = new Group();
-    g3->setParent(root);
+    Group* group3 = new Group();
+    group3->setParent(root);
     QCOMPARE(spyModified.count(), ++spyCount);
 
-    Group* g4 = new Group();
-    g4->setParent(g3);
+    Group* group4 = new Group();
+    group4->setParent(group3);
     QCOMPARE(spyModified.count(), ++spyCount);
 
-    delete g4;
+    delete group4;
     QCOMPARE(spyModified.count(), ++spyCount);
 
     delete entry2;
@@ -114,8 +114,8 @@ void TestModified::testGroupSets()
     Database* db = new Database();
     Group* root = db->rootGroup();
 
-    Group* g = new Group();
-    g->setParent(root);
+    Group* group = new Group();
+    group->setParent(root);
 
     QSignalSpy spyModified(db, SIGNAL(modifiedImmediate()));
 
@@ -145,29 +145,29 @@ void TestModified::testGroupSets()
     QCOMPARE(spyModified.count(), spyCount);
 
 
-    g->setUuid(Uuid::random());
+    group->setUuid(Uuid::random());
     QCOMPARE(spyModified.count(), ++spyCount);
-    g->setUuid(g->uuid());
+    group->setUuid(group->uuid());
     QCOMPARE(spyModified.count(), spyCount);
 
-    g->setName("test");
+    group->setName("test");
     QCOMPARE(spyModified.count(), ++spyCount);
-    g->setName(g->name());
+    group->setName(group->name());
     QCOMPARE(spyModified.count(), spyCount);
 
-    g->setNotes("test");
+    group->setNotes("test");
     QCOMPARE(spyModified.count(), ++spyCount);
-    g->setNotes(g->notes());
+    group->setNotes(group->notes());
     QCOMPARE(spyModified.count(), spyCount);
 
-    g->setIcon(1);
+    group->setIcon(1);
     QCOMPARE(spyModified.count(), ++spyCount);
-    g->setIcon(g->iconNumber());
+    group->setIcon(group->iconNumber());
     QCOMPARE(spyModified.count(), spyCount);
 
-    g->setIcon(Uuid::random());
+    group->setIcon(Uuid::random());
     QCOMPARE(spyModified.count(), ++spyCount);
-    g->setIcon(g->iconUuid());
+    group->setIcon(group->iconUuid());
     QCOMPARE(spyModified.count(), spyCount);
 
     delete db;
@@ -179,10 +179,10 @@ void TestModified::testEntrySets()
     Database* db = new Database();
     Group* root = db->rootGroup();
 
-    Group* g = new Group();
-    g->setParent(root);
+    Group* group = new Group();
+    group->setParent(root);
     Entry* entry = new Entry();
-    entry->setGroup(g);
+    entry->setGroup(group);
 
     QSignalSpy spyModified(db, SIGNAL(modifiedImmediate()));
 
@@ -298,8 +298,6 @@ void TestModified::testHistoryItems()
     QScopedPointer<EntryAttributes> attributes(new EntryAttributes());
     attributes->copyCustomKeysFrom(entry->attributes());
 
-    Entry* historyEntry;
-
     int historyItemsSize = 0;
 
     entry->beginUpdate();
@@ -315,7 +313,7 @@ void TestModified::testHistoryItems()
     entry->setTitle("b");
     entry->endUpdate();
     QCOMPARE(entry->historyItems().size(), ++historyItemsSize);
-    historyEntry = entry->historyItems().at(historyItemsSize - 1);
+    Entry *historyEntry = entry->historyItems().at(historyItemsSize - 1);
     QCOMPARE(historyEntry->title(), QString("a"));
     QCOMPARE(historyEntry->uuid(), entry->uuid());
     QCOMPARE(historyEntry->tags(), entry->tags());
@@ -581,4 +579,35 @@ void TestModified::testHistoryMaxSize()
     entry2->endUpdate();
     QCOMPARE(entry2->autoTypeAssociations()->associationsSize(), 0);
     QCOMPARE(entry2->historyItems().size(), 0);
+}
+
+void TestModified::testCustomData()
+{
+    int spyCount = 0;
+    Database* db = new Database();
+    Group* root = db->rootGroup();
+
+    Group* group = new Group();
+    group->setParent(root);
+    Entry* entry = new Entry();
+    entry->setGroup(group);
+
+    QSignalSpy spyModified(db, SIGNAL(modifiedImmediate()));
+
+    db->metadata()->customData()->set("Key", "Value");
+    QCOMPARE(spyModified.count(), ++spyCount);
+    db->metadata()->customData()->set("Key", "Value");
+    QCOMPARE(spyModified.count(), spyCount);
+
+    entry->customData()->set("Key", "Value");
+    QCOMPARE(spyModified.count(), ++spyCount);
+    entry->customData()->set("Key", "Value");
+    QCOMPARE(spyModified.count(), spyCount);
+
+    group->customData()->set("Key", "Value");
+    QCOMPARE(spyModified.count(), ++spyCount);
+    group->customData()->set("Key", "Value");
+    QCOMPARE(spyModified.count(), spyCount);
+
+    delete db;
 }

@@ -31,6 +31,7 @@ private slots:
     void testEntrySets();
     void testHistoryItems();
     void testHistoryMaxSize();
+    void testCustomData();
 };
 
 #endif // KEEPASSX_TESTMODIFIED_H
