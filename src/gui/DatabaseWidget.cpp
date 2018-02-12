@@ -819,7 +819,16 @@ void DatabaseWidget::switchToEntryEdit(Entry* entry)
 
 void DatabaseWidget::switchToEntryEdit(Entry* entry, bool create)
 {
-    Group* group = currentGroup();
+    // If creating an entry, it will be in `currentGroup()` so it's
+    // okay to use but when editing, the entry may not be in
+    // `currentGroup()` so we get the entry's group.
+    Group* group;
+    if (create) {
+        group = currentGroup();
+    } else {
+        group = entry->group();
+    }
+
     Q_ASSERT(group);
 
     m_editEntryWidget->loadEntry(entry, create, false, group->name(), m_db);
