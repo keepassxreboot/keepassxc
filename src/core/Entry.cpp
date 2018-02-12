@@ -618,7 +618,7 @@ void Entry::truncateHistory()
                 size += historyItem->attributes()->attributesSize();
                 size += historyItem->autoTypeAssociations()->associationsSize();
                 size += historyItem->attachments()->attachmentsSize();
-                size += customData()->dataSize();
+                size += historyItem->customData()->dataSize();
                 const QStringList tags = historyItem->tags().split(delimiter, QString::SkipEmptyParts);
                 for (const QString& tag : tags) {
                     size += tag.toUtf8().size();
