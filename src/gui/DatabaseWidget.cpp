@@ -81,12 +81,12 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     mainLayout->addWidget(m_messageWidget);
     mainLayout->addLayout(layout);
     m_mainSplitter = new QSplitter(m_mainWidget);
-    m_mainSplitter->setChildrenCollapsible(false);
     m_detailSplitter = new QSplitter(m_mainWidget);
     m_detailSplitter->setOrientation(Qt::Vertical);
     m_detailSplitter->setChildrenCollapsible(true);
 
     QWidget* rightHandSideWidget = new QWidget(m_mainSplitter);
+    m_mainSplitter->setCollapsible(0, false);
 
     m_groupView = new GroupView(db, m_mainSplitter);
     m_groupView->setObjectName("groupView");
