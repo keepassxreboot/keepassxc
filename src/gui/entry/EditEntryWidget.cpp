@@ -188,6 +188,8 @@ void EditEntryWidget::setupAutoType()
     connect(m_autoTypeAssocModel, SIGNAL(modelReset()), SLOT(clearCurrentAssoc()));
     connect(m_autoTypeUi->windowTitleCombo, SIGNAL(editTextChanged(QString)),
             SLOT(applyCurrentAssoc()));
+    connect(m_autoTypeUi->customWindowSequenceButton, SIGNAL(toggled(bool)),
+            SLOT(applyCurrentAssoc()));
     connect(m_autoTypeUi->windowSequenceEdit, SIGNAL(textChanged(QString)),
             SLOT(applyCurrentAssoc()));
 }
