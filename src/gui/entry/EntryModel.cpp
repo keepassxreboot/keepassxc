@@ -179,7 +179,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             }
             return result;
         case Url:
-            result = entry->resolveMultiplePlaceholders(entry->displayUrl());
+            result = entry->displayUrl();
             if (attr->isReference(EntryAttributes::URLKey)) {
                 result.prepend(tr("Ref: ", "Reference abbreviation"));
             }
