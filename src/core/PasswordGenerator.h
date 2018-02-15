@@ -54,6 +54,7 @@ public:
     void setLength(int length);
     void setCharClasses(const CharClasses& classes);
     void setFlags(const GeneratorFlags& flags);
+    void setExcludeChars(const QString& excludeChars);
 
     bool isValid() const;
 
@@ -71,11 +72,13 @@ public:
 
 private:
     QVector<PasswordGroup> passwordGroups() const;
+    QVector<QChar> passwordChars() const;
     int numCharClasses() const;
 
     int m_length;
     CharClasses m_classes;
     GeneratorFlags m_flags;
+    QString m_excludeChars;
 
     Q_DISABLE_COPY(PasswordGenerator)
 };

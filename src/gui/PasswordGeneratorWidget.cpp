@@ -49,6 +49,8 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     connect(m_ui->sliderLength, SIGNAL(valueChanged(int)), SLOT(passwordSliderMoved()));
     connect(m_ui->spinBoxLength, SIGNAL(valueChanged(int)), SLOT(passwordSpinBoxChanged()));
 
+    connect(m_ui->editExclude, SIGNAL(textChanged(QString)), SLOT(updateGenerator()));
+
     connect(m_ui->sliderWordCount, SIGNAL(valueChanged(int)), SLOT(dicewareSliderMoved()));
     connect(m_ui->spinBoxWordCount, SIGNAL(valueChanged(int)), SLOT(dicewareSpinBoxChanged()));
 
@@ -373,6 +375,8 @@ void PasswordGeneratorWidget::updateGenerator()
         m_passwordGenerator->setLength(m_ui->spinBoxLength->value());
         m_passwordGenerator->setCharClasses(classes);
         m_passwordGenerator->setFlags(flags);
+
+        m_passwordGenerator->setExcludeChars(m_ui->editExclude->text());
 
         if (m_passwordGenerator->isValid()) {
             m_ui->buttonGenerate->setEnabled(true);

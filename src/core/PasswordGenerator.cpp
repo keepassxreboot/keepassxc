@@ -20,6 +20,7 @@
 
 #include "crypto/Random.h"
 #include <zxcvbn.h>
+#include <iostream>
 
 PasswordGenerator::PasswordGenerator()
     : m_length(0)
@@ -56,32 +57,35 @@ void PasswordGenerator::setFlags(const GeneratorFlags& flags)
     m_flags = flags;
 }
 
+void PasswordGenerator::setExcludeChars(const QString& excludeChars)
+{
+    m_excludeChars = excludeChars;
+}
+
 QString PasswordGenerator::generatePassword() const
 {
     Q_ASSERT(isValid());
 
-    const QVector<PasswordGroup> groups = passwordGroups();
-
-    QVector<QChar> passwordChars;
-    for (const PasswordGroup& group : groups) {
-        for (QChar ch : group) {
-            passwordChars.append(ch);
-        }
-    }
-
+    QVector<PasswordGroup> groups = passwordGroups();
+    QVector<QChar> chars = passwordChars();
     QString password;
 
     if (m_flags & CharFromEveryGroup) {
         for (int i = 0; i < groups.size(); i++) {
+          QChar ch;
+          do
+          {
             int pos = randomGen()->randomUInt(groups[i].size());
-
-            password.append(groups[i][pos]);
+            ch = groups[i][pos];
+          }
+          while(m_excludeChars.contains(ch));
+          password.append(ch);
         }
 
         for (int i = groups.size(); i < m_length; i++) {
-            int pos = randomGen()->randomUInt(passwordChars.size());
+            int pos = randomGen()->randomUInt(chars.size());
 
-            password.append(passwordChars[pos]);
+            password.append(chars[pos]);
         }
 
         // shuffle chars
@@ -95,9 +99,9 @@ QString PasswordGenerator::generatePassword() const
     }
     else {
         for (int i = 0; i < m_length; i++) {
-            int pos = randomGen()->randomUInt(passwordChars.size());
+            int pos = randomGen()->randomUInt(chars.size());
 
-            password.append(passwordChars[pos]);
+            password.append(chars[pos]);
         }
     }
 
@@ -133,9 +137,26 @@ bool PasswordGenerator::isValid() const
         return false;
     }
 
+    if(passwordChars().isEmpty())
+      return false;
+
     return true;
 }
 
+QVector<QChar> PasswordGenerator::passwordChars() const
+{
+  const QVector<PasswordGroup> groups = passwordGroups();
+  QVector<QChar> passwordChars;
+  for (const PasswordGroup& group : groups) {
+    for (QChar ch : group) {
+      if(!m_excludeChars.contains(ch))
+      {
+        passwordChars.append(ch);
+      }
+    }
+  }
+  return passwordChars;
+}
 QVector<PasswordGroup> PasswordGenerator::passwordGroups() const
 {
     QVector<PasswordGroup> passwordGroups;
