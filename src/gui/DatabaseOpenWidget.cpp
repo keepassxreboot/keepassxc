@@ -44,6 +44,7 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     m_ui->setupUi(this);
 
     m_ui->messageWidget->setHidden(true);
+    m_ui->checkPassword->setChecked(true);
 
     QFont font = m_ui->labelHeadline->font();
     font.setBold(true);
@@ -138,7 +139,7 @@ void DatabaseOpenWidget::clearForms()
 {
     m_ui->editPassword->clear();
     m_ui->comboKeyFile->clear();
-    m_ui->checkPassword->setChecked(false);
+    m_ui->checkPassword->setChecked(true);
     m_ui->checkKeyFile->setChecked(false);
     m_ui->checkChallengeResponse->setChecked(false);
     m_ui->buttonTogglePassword->setChecked(false);
