@@ -149,7 +149,7 @@ void TestEntry::testResolveUrl()
     QCOMPARE(entry->resolveUrl(testCmd), "https://" + testUrl);
     QCOMPARE(entry->resolveUrl(testComplexCmd), "http://" + testUrl);
     // Test non-http URL
-    QCOMPARE(entry->resolveUrl(nonHttpUrl), QString(""));
+    QCOMPARE(entry->resolveUrl(nonHttpUrl), QString(nonHttpUrl));
     // Test no URL
     QCOMPARE(entry->resolveUrl(noUrl), QString(""));
 
