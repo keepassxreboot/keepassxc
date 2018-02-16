@@ -342,12 +342,12 @@ const EntryAttachments* Entry::attachments() const
     return m_attachments;
 }
 
-CustomData *Entry::customData()
+CustomData* Entry::customData()
 {
     return m_customData;
 }
 
-const CustomData *Entry::customData() const
+const CustomData* Entry::customData() const
 {
     return m_customData;
 }

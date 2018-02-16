@@ -747,7 +747,7 @@ Entry* KdbxXmlReader::parseEntry(bool history)
             }
             continue;
         }
-        if (m_xml.name() == "CustomData" ){
+        if (m_xml.name() == "CustomData") {
             parseCustomData(entry->customData());
             continue;
         }
