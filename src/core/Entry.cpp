@@ -37,6 +37,7 @@ Entry::Entry()
     : m_attributes(new EntryAttributes(this))
     , m_attachments(new EntryAttachments(this))
     , m_autoTypeAssociations(new AutoTypeAssociations(this))
+    , m_customData(new CustomData(this))
     , m_tmpHistoryItem(nullptr)
     , m_modifiedSinceBegin(false)
     , m_updateTimeinfo(true)
@@ -52,6 +53,7 @@ Entry::Entry()
     connect(m_attributes, SIGNAL(defaultKeyModified()), SLOT(emitDataChanged()));
     connect(m_attachments, SIGNAL(modified()), this, SIGNAL(modified()));
     connect(m_autoTypeAssociations, SIGNAL(modified()), SIGNAL(modified()));
+    connect(m_customData, SIGNAL(modified()), this, SIGNAL(modified()));
 
     connect(this, SIGNAL(modified()), SLOT(updateTimeinfo()));
     connect(this, SIGNAL(modified()), SLOT(updateModifiedSinceBegin()));
@@ -340,6 +342,16 @@ const EntryAttachments* Entry::attachments() const
     return m_attachments;
 }
 
+CustomData* Entry::customData()
+{
+    return m_customData;
+}
+
+const CustomData* Entry::customData() const
+{
+    return m_customData;
+}
+
 bool Entry::hasTotp() const
 {
     return m_attributes->hasKey("TOTP Seed") || m_attributes->hasKey("otp");
@@ -606,6 +618,7 @@ void Entry::truncateHistory()
                 size += historyItem->attributes()->attributesSize();
                 size += historyItem->autoTypeAssociations()->associationsSize();
                 size += historyItem->attachments()->attachmentsSize();
+                size += historyItem->customData()->dataSize();
                 const QStringList tags = historyItem->tags().split(delimiter, QString::SkipEmptyParts);
                 for (const QString& tag : tags) {
                     size += tag.toUtf8().size();
@@ -632,6 +645,7 @@ Entry* Entry::clone(CloneFlags flags) const
         entry->m_uuid = m_uuid;
     }
     entry->m_data = m_data;
+    entry->m_customData->copyDataFrom(m_customData);
     entry->m_attributes->copyDataFrom(m_attributes);
     entry->m_attachments->copyDataFrom(m_attachments);
 
@@ -676,6 +690,7 @@ void Entry::copyDataFrom(const Entry* other)
 {
     setUpdateTimeinfo(false);
     m_data = other->m_data;
+    m_customData->copyDataFrom(other->m_customData);
     m_attributes->copyDataFrom(other->m_attributes);
     m_attachments->copyDataFrom(other->m_attachments);
     m_autoTypeAssociations->copyDataFrom(other->m_autoTypeAssociations);

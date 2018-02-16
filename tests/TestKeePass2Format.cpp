@@ -53,6 +53,7 @@ void TestKeePass2Format::initTestCase()
     entry->setPassword(QString::fromUtf8("\xc3\xa4\xa3\xb6\xc3\xbc\xe9\x9b\xbb\xe7\xb4\x85"));
     entry->setUuid(Uuid::random());
     entry->attributes()->set("test", "protectedTest", true);
+    entry->customData()->set("CustomDataEntryKey", "CustomDataValue");
     QVERIFY(entry->attributes()->isProtected("test"));
     entry->attachments()->set("myattach.txt", QByteArray("this is an attachment"));
     entry->attachments()->set("aaa.txt", QByteArray("also an attachment"));
@@ -126,11 +127,31 @@ void TestKeePass2Format::testXmlCustomIcons()
 
 void TestKeePass2Format::testXmlCustomData()
 {
-    QHash<QString, QString> customFields = m_xmlDb->metadata()->customFields();
+    const CustomData *metadataCustomFields = m_xmlDb->metadata()->customData();
+    QCOMPARE(metadataCustomFields->keys().size(), 2);
+    QCOMPARE(metadataCustomFields->value("CustomData Metadata key 1"), QString("CustomData Metadata value 1"));
+    QCOMPARE(metadataCustomFields->value("CustomData Metadata key 2"), QString("CustomData Metadata value 2"));
 
-    QCOMPARE(customFields.size(), 2);
-    QCOMPARE(customFields.value("A Sample Test Key"), QString("valu"));
-    QCOMPARE(customFields.value("custom key"), QString("blub"));
+    const CustomData *groupCustomFields = m_xmlDb->rootGroup()->customData();
+    QCOMPARE(groupCustomFields->keys().size(), 2);
+    QCOMPARE(groupCustomFields->value("CustomData Group key 1"), QString("CustomData Group value 1"));
+    QCOMPARE(groupCustomFields->value("CustomData Group key 2"), QString("CustomData Group value 2"));
+
+    const CustomData *entry0CustomFields = m_xmlDb->rootGroup()->entries().value(0)->customData();
+    QCOMPARE(entry0CustomFields->keys().size(), 2);
+    QCOMPARE(entry0CustomFields->value("CustomData Entry key 1"), QString("CustomData Entry value 1"));
+    QCOMPARE(entry0CustomFields->value("CustomData Entry key 2"), QString("CustomData Entry value 2"));
+
+    const CustomData *history00CustomFields = m_xmlDb->rootGroup()->entries().value(0)->historyItems().value(0)->customData();
+    QCOMPARE(history00CustomFields->keys().size(), 2);
+    QCOMPARE(history00CustomFields->value("CustomData Entry key 1"), QString("CustomData Entry value 1"));
+    QCOMPARE(history00CustomFields->value("CustomData Entry key 2"), QString("CustomData Entry value 2"));
+
+    const CustomData *history01CustomFields = m_xmlDb->rootGroup()->entries().value(0)->historyItems().value(1)->customData();
+    QCOMPARE(history01CustomFields->keys().size(), 0);
+
+    const CustomData *entry1CustomFields = m_xmlDb->rootGroup()->entries().value(1)->customData();
+    QCOMPARE(entry1CustomFields->keys().size(), 0);
 }
 
 void TestKeePass2Format::testXmlGroupRoot()
@@ -155,7 +176,6 @@ void TestKeePass2Format::testXmlGroupRoot()
     QCOMPARE(group->autoTypeEnabled(), Group::Inherit);
     QCOMPARE(group->searchingEnabled(), Group::Inherit);
     QCOMPARE(group->lastTopVisibleEntry()->uuid().toBase64(), QString("+wSUOv6qf0OzW8/ZHAs2sA=="));
-
     QCOMPARE(group->children().size(), 3);
     QVERIFY(m_xmlDb->metadata()->recycleBin() == m_xmlDb->rootGroup()->children().at(2));
 
@@ -518,8 +538,12 @@ void TestKeePass2Format::testKdbxBasic()
     QCOMPARE(m_kdbxTargetDb->metadata()->name(), m_kdbxSourceDb->metadata()->name());
     QVERIFY(m_kdbxTargetDb->rootGroup());
     QCOMPARE(m_kdbxTargetDb->rootGroup()->children()[0]->name(), m_kdbxSourceDb->rootGroup()->children()[0]->name());
+    QVERIFY(m_kdbxTargetDb->rootGroup()->customData());
+    QCOMPARE(*m_kdbxTargetDb->rootGroup()->customData(), *m_kdbxSourceDb->rootGroup()->customData());
     QCOMPARE(m_kdbxTargetDb->rootGroup()->notes(), m_kdbxSourceDb->rootGroup()->notes());
     QCOMPARE(m_kdbxTargetDb->rootGroup()->children()[0]->notes(), m_kdbxSourceDb->rootGroup()->children()[0]->notes());
+    QVERIFY(m_kdbxTargetDb->rootGroup()->children()[0]->customData());
+    QCOMPARE(*m_kdbxTargetDb->rootGroup()->children()[0]->customData(), *m_kdbxSourceDb->rootGroup()->children()[0]->customData());
 }
 
 void TestKeePass2Format::testKdbxProtectedAttributes()

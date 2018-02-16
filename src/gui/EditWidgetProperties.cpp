@@ -21,17 +21,22 @@
 EditWidgetProperties::EditWidgetProperties(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::EditWidgetProperties())
+    , m_customData(new CustomData(this))
+    , m_customDataModel(new QStandardItemModel(this))
 {
     m_ui->setupUi(this);
+    m_ui->customDataTable->setModel(m_customDataModel);
+
+    connect(m_ui->removeCustomDataButton, SIGNAL(clicked()), SLOT(removeSelectedPluginData()));
 }
 
 EditWidgetProperties::~EditWidgetProperties()
 {
 }
 
-void EditWidgetProperties::setFields(TimeInfo timeInfo, Uuid uuid)
+void EditWidgetProperties::setFields(const TimeInfo& timeInfo, const Uuid& uuid)
 {
-    QString timeFormat("d MMM yyyy HH:mm:ss");
+    static const QString timeFormat("d MMM yyyy HH:mm:ss");
     m_ui->modifiedEdit->setText(
                 timeInfo.lastModificationTime().toLocalTime().toString(timeFormat));
     m_ui->createdEdit->setText(
@@ -39,4 +44,37 @@ void EditWidgetProperties::setFields(TimeInfo timeInfo, Uuid uuid)
     m_ui->accessedEdit->setText(
                 timeInfo.lastAccessTime().toLocalTime().toString(timeFormat));
     m_ui->uuidEdit->setText(uuid.toHex());
+}
+
+void EditWidgetProperties::setCustomData(const CustomData *customData)
+{
+    Q_ASSERT(customData);
+    m_customData->copyDataFrom(customData);
+
+    this->updateModel();
+}
+
+const CustomData* EditWidgetProperties::customData() const
+{
+    return m_customData;
+}
+
+void EditWidgetProperties::removeSelectedPluginData()
+{
+    const QItemSelectionModel* itemSelectionModel = m_ui->customDataTable->selectionModel();
+    if (itemSelectionModel) {
+        for (const QModelIndex& index : itemSelectionModel->selectedRows(0)) {
+            const QString key = index.data().toString();
+            m_customData->remove(key);
+        }
+        this->updateModel();
+    }
+}
+
+void EditWidgetProperties::updateModel()
+{
+    m_customDataModel->clear();
+    for (const QString& key : m_customData->keys()) {
+        m_customDataModel->appendRow(QList<QStandardItem*>() << new QStandardItem(key) << new QStandardItem(m_customData->value(key)));
+    }
 }

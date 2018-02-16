@@ -41,12 +41,12 @@
 		</Binaries>
 		<CustomData>
 			<Item>
-				<Key>A Sample Test Key</Key>
-				<Value>valu</Value>
+				<Key>CustomData Metadata key 1</Key>
+				<Value>CustomData Metadata value 1</Value>
 			</Item>
 			<Item>
-				<Key>custom key</Key>
-				<Value>blub</Value>
+				<Key>CustomData Metadata key 2</Key>
+				<Value>CustomData Metadata value 2</Value>
 			</Item>
 		</CustomData>
 	</Meta>
@@ -70,6 +70,16 @@
 			<EnableAutoType>null</EnableAutoType>
 			<EnableSearching>null</EnableSearching>
 			<LastTopVisibleEntry>+wSUOv6qf0OzW8/ZHAs2sA==</LastTopVisibleEntry>
+			<CustomData>
+				<Item>
+					<Key>CustomData Group key 1</Key>
+					<Value>CustomData Group value 1</Value>
+				</Item>
+				<Item>
+					<Key>CustomData Group key 2</Key>
+					<Value>CustomData Group value 2</Value>
+				</Item>
+			</CustomData>
 			<Entry>
 				<UUID>+wSUOv6qf0OzW8/ZHAs2sA==</UUID>
 				<IconID>0</IconID>
@@ -118,6 +128,16 @@
 						<KeystrokeSequence />
 					</Association>
 				</AutoType>
+				<CustomData>
+					<Item>
+						<Key>CustomData Entry key 1</Key>
+						<Value>CustomData Entry value 1</Value>
+					</Item>
+					<Item>
+						<Key>CustomData Entry key 2</Key>
+						<Value>CustomData Entry value 2</Value>
+					</Item>
+				</CustomData>
 				<History>
 					<Entry>
 						<UUID>+wSUOv6qf0OzW8/ZHAs2sA==</UUID>
@@ -159,6 +179,16 @@
 							<Key>myattach.txt</Key>
 							<Value Ref="0" />
 						</Binary>
+						<CustomData>
+							<Item>
+								<Key>CustomData Entry key 1</Key>
+								<Value>CustomData Entry value 1</Value>
+							</Item>
+							<Item>
+								<Key>CustomData Entry key 2</Key>
+								<Value>CustomData Entry value 2</Value>
+							</Item>
+						</CustomData>
 						<AutoType>
 							<Enabled>True</Enabled>
 							<DataTransferObfuscation>0</DataTransferObfuscation>
