@@ -269,8 +269,8 @@ void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow)
 }
 
 /**
- * Global Autotype entry-point funcion
- * Perform global autotype on the active window
+ * Global Autotype entry-point function
+ * Perform global Auto-Type on the active window
  */
 void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
 {
@@ -304,10 +304,19 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
 
     if (matchList.isEmpty()) {
         m_inAutoType.unlock();
-        QString message = tr("Couldn't find an entry that matches the window title:");
-        message.append("\n\n");
-        message.append(windowTitle);
-        MessageBox::information(nullptr, tr("Auto-Type - KeePassXC"), message);
+
+        if (qobject_cast<QApplication*>(QCoreApplication::instance())) {
+            auto* msgBox = new QMessageBox();
+            msgBox->setAttribute(Qt::WA_DeleteOnClose);
+            msgBox->setWindowTitle(tr("Auto-Type - KeePassXC"));
+            msgBox->setText(tr("Couldn't find an entry that matches the window title:").append("\n\n")
+                                .append(windowTitle));
+            msgBox->setIcon(QMessageBox::Information);
+            msgBox->setStandardButtons(QMessageBox::Ok);
+            msgBox->show();
+            msgBox->raise();
+            msgBox->activateWindow();
+        }
 
         emit autotypeRejected();
     } else if ((matchList.size() == 1) && !config()->get("security/autotypeask").toBool()) {
@@ -315,7 +324,7 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
         m_inAutoType.unlock();
     } else {
         m_windowFromGlobal = m_plugin->activeWindow();
-        AutoTypeSelectDialog* selectDialog = new AutoTypeSelectDialog();
+        auto* selectDialog = new AutoTypeSelectDialog();
         connect(selectDialog, SIGNAL(matchActivated(AutoTypeMatch)),
                 SLOT(performAutoTypeFromGlobal(AutoTypeMatch)));
         connect(selectDialog, SIGNAL(rejected()), SLOT(resetInAutoType()));
