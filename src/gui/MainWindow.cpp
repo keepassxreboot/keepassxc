@@ -425,7 +425,7 @@ MainWindow::MainWindow()
     }
 #endif
 
-#ifndef KEEPASSXC_RELEASE_BUILD
+#ifndef KEEPASSXC_BUILD_TYPE_RELEASE
     m_ui->globalMessageWidget->showMessage(tr("WARNING: You are using an unstable build of KeePassXC!\n"
                                               "There is a high risk of corruption, maintain a backup of your databases.\n"
                                               "This version is not meant for production use."),

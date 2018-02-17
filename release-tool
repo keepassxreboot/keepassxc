@@ -246,7 +246,7 @@ checkVersionInCMake() {
     local app_name_upper="$(echo "$APP_NAME" | tr '[:lower:]' '[:upper:]')"
     local major_num="$(echo ${RELEASE_NAME} | cut -f1 -d.)"
     local minor_num="$(echo ${RELEASE_NAME} | cut -f2 -d.)"
-    local patch_num="$(echo ${RELEASE_NAME} | cut -f3 -d.)"
+    local patch_num="$(echo ${RELEASE_NAME} | cut -f3 -d. | cut -f1 -d-)"
 
     grep -q "${app_name_upper}_VERSION_MAJOR \"${major_num}\"" CMakeLists.txt
     if [ $? -ne 0 ]; then
@@ -582,19 +582,26 @@ build() {
     done
 
     init
-    checkWorkingTreeClean
 
     OUTPUT_DIR="$(realpath "$OUTPUT_DIR")"
 
-    if $BUILD_SNAPSHOT; then
+    if ${BUILD_SNAPSHOT}; then
         TAG_NAME="HEAD"
         local branch=`git rev-parse --abbrev-ref HEAD`
         logInfo "Using current branch ${branch} to build..."
         RELEASE_NAME="${RELEASE_NAME}-snapshot"
+        CMAKE_OPTIONS="${CMAKE_OPTIONS} -DKEEPASSXC_BUILD_TYPE=Snapshot"
     else
-        logInfo "Checking out release tag '${TAG_NAME}'..."
+        checkWorkingTreeClean
+
+        if $(echo "$TAG_NAME" | grep -qP "\-(alpha|beta)\\d+\$"); then
+            CMAKE_OPTIONS="${CMAKE_OPTIONS} -DKEEPASSXC_BUILD_TYPE=PreRelease"
+            logInfo "Checking out pre-release tag '${TAG_NAME}'..."
+        else
+            CMAKE_OPTIONS="${CMAKE_OPTIONS} -DKEEPASSXC_BUILD_TYPE=Release"
+            logInfo "Checking out release tag '${TAG_NAME}'..."
+        fi
         git checkout "$TAG_NAME"
-        CMAKE_OPTIONS="${CMAKE_OPTIONS} -DKEEPASSXC_RELEASE_BUILD=ON"
     fi
 
     logInfo "Creating output directory..."
@@ -604,20 +611,28 @@ build() {
         exitError "Failed to create output directory!"
     fi
 
-    if $BUILD_SOURCE_TARBALL; then
+    if ${BUILD_SOURCE_TARBALL}; then
         logInfo "Creating source tarball..."
         local app_name_lower="$(echo "$APP_NAME" | tr '[:upper:]' '[:lower:]')"
         TARBALL_NAME="${app_name_lower}-${RELEASE_NAME}-src.tar.xz"
         git archive --format=tar "$TAG_NAME" --prefix="${app_name_lower}-${RELEASE_NAME}/" \
-            | xz -6 >  "${OUTPUT_DIR}/${TARBALL_NAME}"
+            | xz -6 > "${OUTPUT_DIR}/${TARBALL_NAME}"
     fi
-    
+
+    if [ -e "${OUTPUT_DIR}/build-release" ]; then
+        logInfo "Cleaning existing build directory..."
+        rm -r "${OUTPUT_DIR}/build-release" 2> /dev/null
+        if [ $? -ne 0 ]; then
+            exitError "Failed to clean existing build directory, please do it manually."
+        fi
+    fi
+
     logInfo "Creating build directory..."
     mkdir -p "${OUTPUT_DIR}/build-release"
     cd "${OUTPUT_DIR}/build-release"
     
     logInfo "Configuring sources..."
-    for p in $BUILD_PLUGINS; do
+    for p in ${BUILD_PLUGINS}; do
         CMAKE_OPTIONS="${CMAKE_OPTIONS} -DWITH_XC_$(echo $p | tr '[:lower:]' '[:upper:]')=On"
     done
     
@@ -654,13 +669,13 @@ build() {
                 -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" $CMAKE_OPTIONS "$SRC_DIR"
             
             logInfo "Compiling and packaging sources..."
-            make $MAKE_OPTIONS preinstall
+            mingw32-make $MAKE_OPTIONS preinstall
             # Call cpack directly instead of calling make package.
             # This is important because we want to build the MSI when making a
             # release.
-            cpack -G "NSIS;WIX;ZIP"
+            cpack -G "NSIS;ZIP;${CPACK_GENERATORS}"
             
-            mv "./${APP_NAME}-${RELEASE_NAME}-"*.{exe,msi,zip} ../
+            mv "./${APP_NAME}-${RELEASE_NAME}-"*.* ../
         else
             mkdir -p "${OUTPUT_DIR}/bin-release"
             
