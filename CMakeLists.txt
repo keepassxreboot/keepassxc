@@ -73,27 +73,49 @@ set(KEEPASSXC_VERSION_MINOR "3")
 set(KEEPASSXC_VERSION_PATCH "0")
 set(KEEPASSXC_VERSION "${KEEPASSXC_VERSION_MAJOR}.${KEEPASSXC_VERSION_MINOR}.${KEEPASSXC_VERSION_PATCH}")
 
-set(KEEPASSXC_RELEASE_BUILD OFF CACHE BOOLEAN "Remove stability warnings")
+set(KEEPASSXC_BUILD_TYPE "Snapshot" CACHE STRING "Set KeePassXC build type to distinguish between stable releases and snapshots")
+set_property(CACHE KEEPASSXC_BUILD_TYPE PROPERTY STRINGS Snapshot Release PreRelease)
+
 # Check if on a tag, if so build as a release
 execute_process(COMMAND git tag --points-at HEAD
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         OUTPUT_VARIABLE GIT_TAG)
 if(GIT_TAG)
-  set(KEEPASSXC_RELEASE_BUILD ON)
-elseif(NOT KEEPASSXC_RELEASE_BUILD)
+  string(REGEX REPLACE "\r?\n$" "" GIT_TAG "${GIT_TAG}")
+
+  if(GIT_TAG MATCHES "^[\\.0-9]+-(alpha|beta)[0-9]+$")
+    set(KEEPASSXC_BUILD_TYPE PreRelease)
+    set(KEEPASSXC_VERSION ${GIT_TAG})
+  elseif(GIT_TAG MATCHES "^[\\.0-9]+$")
+    set(KEEPASSXC_BUILD_TYPE Release)
+    set(KEEPASSXC_VERSION ${GIT_TAG})
+  endif()
+endif()
+
+if(KEEPASSXC_BUILD_TYPE STREQUAL "PreRelease" AND NOT GIT_TAG)
+  set(KEEPASSXC_VERSION "${KEEPASSXC_VERSION}-preview")
+elseif(KEEPASSXC_BUILD_TYPE STREQUAL "Snapshot")
   set(KEEPASSXC_VERSION "${KEEPASSXC_VERSION}-snapshot")
+endif()
+
+if(KEEPASSXC_BUILD_TYPE STREQUAL "Release")
+  set(KEEPASSXC_BUILD_TYPE_RELEASE ON)
+elseif(KEEPASSXC_BUILD_TYPE STREQUAL "PreRelease")
+  set(KEEPASSXC_BUILD_TYPE_PRE_RELEASE ON)
+else()
+  set(KEEPASSXC_BUILD_TYPE_SNAPSHOT ON)
 endif()
 
 message(STATUS "Setting up build for KeePassXC v${KEEPASSXC_VERSION}\n")
 
 # Distribution info
-set(KEEPASSXC_DIST True)
-set(KEEPASSXC_DIST_TYPE "Other" CACHE STRING "KeePassXC Distribution type")
+set(KEEPASSXC_DIST ON)
+set(KEEPASSXC_DIST_TYPE "Other" CACHE STRING "KeePassXC Distribution Type")
 set_property(CACHE KEEPASSXC_DIST_TYPE PROPERTY STRINGS Snap AppImage Other)
 if(KEEPASSXC_DIST_TYPE STREQUAL "Snap")
-  set(KEEPASSXC_DIST_SNAP True)
+  set(KEEPASSXC_DIST_SNAP ON)
 elseif(KEEPASSXC_DIST_TYPE STREQUAL "AppImage")
-  set(KEEPASSXC_DIST_APPIMAGE True)
+  set(KEEPASSXC_DIST_APPIMAGE ON)
 elseif(KEEPASSXC_DIST_TYPE STREQUAL "Other")
   unset(KEEPASSXC_DIST)
 endif()
