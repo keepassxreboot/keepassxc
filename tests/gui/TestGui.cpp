@@ -61,6 +61,7 @@
 #include "gui/entry/EntryView.h"
 #include "gui/group/GroupModel.h"
 #include "gui/group/GroupView.h"
+#include "gui/group/EditGroupWidget.h"
 #include "keys/PasswordKey.h"
 
 void TestGui::initTestCase()
@@ -340,6 +341,58 @@ void TestGui::testEditEntry()
 
     // Confirm modified indicator is showing
     QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("%1*").arg(m_dbFileName));
+}
+
+void TestGui::testSearchEditEntry()
+{
+    // Regression test for Issue #1447 -- Uses example from issue description
+
+    // Find buttons for group creation
+    EditGroupWidget* editGroupWidget = m_dbWidget->findChild<EditGroupWidget*>("editGroupWidget");
+    QLineEdit* nameEdit = editGroupWidget->findChild<QLineEdit*>("nameEdit");
+    QDialogButtonBox* editGroupWidgetButtonBox = editGroupWidget->findChild<QDialogButtonBox*>("buttonBox");
+
+    // Add groups "Good" and "Bad"
+    m_dbWidget->createGroup();
+    QTest::keyClicks(nameEdit, "Good");
+    QTest::mouseClick(editGroupWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    m_dbWidget->groupView()->setCurrentGroup(m_db->rootGroup()); // Makes "Good" and "Bad" on the same level
+    m_dbWidget->createGroup();
+    QTest::keyClicks(nameEdit, "Bad");
+    QTest::mouseClick(editGroupWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    m_dbWidget->groupView()->setCurrentGroup(m_db->rootGroup());
+
+    // Find buttons for entry creation
+    QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
+    QWidget* entryNewWidget = toolBar->widgetForAction(m_mainWindow->findChild<QAction*>("actionEntryNew"));
+    EditEntryWidget* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+    QLineEdit* titleEdit = editEntryWidget->findChild<QLineEdit*>("titleEdit");
+    QDialogButtonBox* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
+
+    // Create "Doggy" in "Good"
+    Group* goodGroup = m_dbWidget->currentGroup()->findChildByName(QString("Good"));
+    m_dbWidget->groupView()->setCurrentGroup(goodGroup);
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QTest::keyClicks(titleEdit, "Doggy");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    // Select "Bad" group in groupView
+    Group* badGroup = m_db->rootGroup()->findChildByName(QString("Bad"));
+    m_dbWidget->groupView()->setCurrentGroup(badGroup);
+
+    // Search for "Doggy" entry
+    SearchWidget* searchWidget = toolBar->findChild<SearchWidget*>("SearchWidget");
+    QLineEdit* searchTextEdit = searchWidget->findChild<QLineEdit*>("searchEdit");
+    QTest::mouseClick(searchTextEdit, Qt::LeftButton);
+    QTest::keyClicks(searchTextEdit, "Doggy");
+    QTRY_VERIFY(m_dbWidget->isInSearchMode());
+
+    // Goto "Doggy"'s edit view
+    QTest::keyClick(searchTextEdit, Qt::Key_Return);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+
+    // Check the path in header is "parent-group > entry"
+    QCOMPARE(m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget")->findChild<QLabel*>("headerLabel")->text(),
+             QString("Good > Doggy > Edit entry"));
 }
 
 void TestGui::testAddEntry()
