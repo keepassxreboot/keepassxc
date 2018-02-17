@@ -772,6 +772,11 @@ QString Entry::resolveMultiplePlaceholdersRecursive(const QString& str, int maxD
 
 QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDepth) const
 {
+    if (maxDepth <= 0) {
+        qWarning("Maximum depth of replacement has been reached. Entry uuid: %s", qPrintable(uuid().toHex()));
+        return placeholder;
+    }
+
     const PlaceholderType typeOfPlaceholder = placeholderType(placeholder);
     switch (typeOfPlaceholder) {
     case PlaceholderType::NotPlaceholder:
@@ -831,6 +836,11 @@ QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDe
 
 QString Entry::resolveReferencePlaceholderRecursive(const QString& placeholder, int maxDepth) const
 {
+    if (maxDepth <= 0) {
+        qWarning("Maximum depth of replacement has been reached. Entry uuid: %s", qPrintable(uuid().toHex()));
+        return placeholder;
+    }
+
     // resolving references in format: {REF:<WantedField>@<SearchIn>:<SearchText>}
     // using format from http://keepass.info/help/base/fieldrefs.html at the time of writing
 
@@ -844,6 +854,9 @@ QString Entry::resolveReferencePlaceholderRecursive(const QString& placeholder, 
     const QString searchText = match.captured(EntryAttributes::SearchTextGroupName);
 
     const EntryReferenceType searchInType = Entry::referenceType(searchIn);
+
+    Q_ASSERT(m_group);
+    Q_ASSERT(m_group->database());
     const Entry* refEntry = m_group->database()->resolveEntry(searchText, searchInType);
 
     if (refEntry) {
