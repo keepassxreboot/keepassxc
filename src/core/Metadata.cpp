@@ -294,12 +294,12 @@ int Metadata::historyMaxSize() const
     return m_data.historyMaxSize;
 }
 
-CustomData *Metadata::customData()
+CustomData* Metadata::customData()
 {
     return m_customData;
 }
 
-const CustomData *Metadata::customData() const
+const CustomData* Metadata::customData() const
 {
     return m_customData;
 }

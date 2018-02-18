@@ -59,7 +59,6 @@ public:
         Uuid cipher;
         CompressionAlgorithm compressionAlgo;
         QByteArray transformedMasterKey;
-        QByteArray publicCustomData;
         QSharedPointer<Kdf> kdf;
         CompositeKey key;
         bool hasKey;
@@ -93,7 +92,6 @@ public:
     Uuid cipher() const;
     Database::CompressionAlgorithm compressionAlgo() const;
     QSharedPointer<Kdf> kdf() const;
-    QByteArray publicCustomData() const;
     QByteArray transformedMasterKey() const;
     const CompositeKey& key() const;
     QByteArray challengeResponseKey() const;
@@ -102,7 +100,6 @@ public:
     void setCipher(const Uuid& cipher);
     void setCompressionAlgo(Database::CompressionAlgorithm algo);
     void setKdf(QSharedPointer<Kdf> kdf);
-    void setPublicCustomData(QByteArray data);
     bool setKey(const CompositeKey& key, bool updateChangedTime = true,
                 bool updateTransformSalt = false);
     bool hasKey() const;

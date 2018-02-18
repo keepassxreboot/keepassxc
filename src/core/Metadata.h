@@ -98,8 +98,8 @@ public:
     int masterKeyChangeForce() const;
     int historyMaxItems() const;
     int historyMaxSize() const;
-    CustomData *customData();
-    const CustomData *customData() const;
+    CustomData* customData();
+    const CustomData* customData() const;
 
     static const int DefaultHistoryMaxItems;
     static const int DefaultHistoryMaxSize;
@@ -175,7 +175,7 @@ private:
     QDateTime m_masterKeyChanged;
     QDateTime m_settingsChanged;
 
-    CustomData *const m_customData;
+    QPointer<CustomData> m_customData;
 
     bool m_updateDatetime;
 };

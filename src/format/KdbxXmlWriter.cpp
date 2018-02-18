@@ -218,13 +218,16 @@ void KdbxXmlWriter::writeBinaries()
     m_xml.writeEndElement();
 }
 
-void KdbxXmlWriter::writeCustomData(const CustomData *customData)
+void KdbxXmlWriter::writeCustomData(const CustomData* customData)
 {
+    if (customData->isEmpty()) {
+        return;
+    }
     m_xml.writeStartElement("CustomData");
 
     const QList<QString> keyList = customData->keys();
     for (const QString& key : keyList) {
-        writeCustomDataItem(key, customData->value(key));
+        writeCustomDataItem(key, customData->value(key).toString());
     }
 
     m_xml.writeEndElement();
@@ -276,9 +279,7 @@ void KdbxXmlWriter::writeGroup(const Group* group)
 
     writeUuid("LastTopVisibleEntry", group->lastTopVisibleEntry());
 
-    if (!group->customData()->isEmpty()){
-        writeCustomData(group->customData());
-    }
+    writeCustomData(group->customData());
 
     const QList<Entry*>& entryList = group->entries();
     for (const Entry* entry : entryList) {
@@ -405,9 +406,7 @@ void KdbxXmlWriter::writeEntry(const Entry* entry)
 
     writeAutoType(entry);
 
-    if (!entry->customData()->isEmpty()){
-        writeCustomData(entry->customData());
-    }
+    writeCustomData(entry->customData());
 
     // write history only for entries that are not history items
     if (entry->parent()) {

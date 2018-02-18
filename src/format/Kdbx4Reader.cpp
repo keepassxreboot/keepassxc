@@ -209,9 +209,14 @@ bool Kdbx4Reader::readHeaderField(StoreDataStream& device)
         break;
     }
 
-    case KeePass2::HeaderFieldID::PublicCustomData:
-        m_db->setPublicCustomData(fieldData);
+    case KeePass2::HeaderFieldID::PublicCustomData: {
+        QBuffer variantBuffer;
+        variantBuffer.setBuffer(&fieldData);
+        variantBuffer.open(QBuffer::ReadOnly);
+        QVariantMap data = readVariantMap(&variantBuffer);
+        m_db->metadata()->customData()->set(data);
         break;
+    }
 
     case KeePass2::HeaderFieldID::ProtectedStreamKey:
     case KeePass2::HeaderFieldID::TransformRounds:
@@ -291,10 +296,10 @@ bool Kdbx4Reader::readInnerHeaderField(QIODevice* device)
 }
 
 /**
- * Helper method for reading KDF parameters into variant map.
+ * Helper method for reading a serialized variant map.
  *
  * @param device input device
- * @return filled variant map
+ * @return de-serialized variant map
  */
 QVariantMap Kdbx4Reader::readVariantMap(QIODevice* device)
 {

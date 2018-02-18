@@ -33,7 +33,6 @@ QTEST_GUILESS_MAIN(TestKdbx3)
 
 void TestKdbx3::initTestCaseImpl()
 {
-
 }
 
 Database* TestKdbx3::readXml(const QString& path, bool strictMode, bool& hasError, QString& errorString)

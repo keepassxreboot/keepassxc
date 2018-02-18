@@ -397,7 +397,7 @@ void KdbxXmlReader::parseBinaries()
     }
 }
 
-void KdbxXmlReader::parseCustomData(CustomData *customData)
+void KdbxXmlReader::parseCustomData(CustomData* customData)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "CustomData");
 
@@ -410,12 +410,12 @@ void KdbxXmlReader::parseCustomData(CustomData *customData)
     }
 }
 
-void KdbxXmlReader::parseCustomDataItem(CustomData *customData)
+void KdbxXmlReader::parseCustomDataItem(CustomData* customData)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Item");
 
     QString key;
-    QString value;
+    QVariant value;
     bool keySet = false;
     bool valueSet = false;
 
@@ -747,7 +747,7 @@ Entry* KdbxXmlReader::parseEntry(bool history)
             }
             continue;
         }
-        if (m_xml.name() == "CustomData" ){
+        if (m_xml.name() == "CustomData") {
             parseCustomData(entry->customData());
             continue;
         }

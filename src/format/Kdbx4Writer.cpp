@@ -22,6 +22,8 @@
 
 #include "streams/HmacBlockStream.h"
 #include "core/Database.h"
+#include "core/Metadata.h"
+#include "core/CustomData.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
 #include "format/KeePass2RandomStream.h"
@@ -86,10 +88,13 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
             raiseError(tr("Failed to serialize KDF parameters variant map"));
             return false;
         }
-        QByteArray publicCustomData = db->publicCustomData();
+        CustomData* publicCustomData = db->metadata()->customData();
         CHECK_RETURN_FALSE(writeHeaderField<quint32>(&header, KeePass2::HeaderFieldID::KdfParameters, kdfParamBytes));
-        if (!publicCustomData.isEmpty()) {
-            CHECK_RETURN_FALSE(writeHeaderField<quint32>(&header, KeePass2::HeaderFieldID::PublicCustomData, publicCustomData));
+        if (!publicCustomData->isEmpty()) {
+            QByteArray serialized;
+            serializeVariantMap(publicCustomData->raw(), serialized);
+            CHECK_RETURN_FALSE(writeHeaderField<quint32>(
+                &header, KeePass2::HeaderFieldID::PublicCustomData, serialized));
         }
 
         CHECK_RETURN_FALSE(writeHeaderField<quint32>(&header, KeePass2::HeaderFieldID::EndOfHeader, endOfHeader));
@@ -230,7 +235,7 @@ void Kdbx4Writer::writeAttachments(QIODevice* device, Database* db)
 }
 
 /**
- * Serialize KDF parameter variant map to byte array.
+ * Serialize variant map to byte array.
  *
  * @param map input variant map
  * @param outputBytes output byte array

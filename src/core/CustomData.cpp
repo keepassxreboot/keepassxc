@@ -1,6 +1,5 @@
 /*
- *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,9 +32,14 @@ bool CustomData::hasKey(const QString& key) const
     return m_data.contains(key);
 }
 
-QString CustomData::value(const QString& key) const
+QVariant CustomData::value(const QString& key) const
 {
     return m_data.value(key);
+}
+
+QVariantMap CustomData::raw() const
+{
+    return m_data;
 }
 
 bool CustomData::contains(const QString& key) const
@@ -43,34 +47,33 @@ bool CustomData::contains(const QString& key) const
     return m_data.contains(key);
 }
 
-bool CustomData::containsValue(const QString& value) const
+bool CustomData::containsValue(const QVariant& value) const
 {
     return m_data.values().contains(value);
 }
 
-void CustomData::set(const QString& key, const QString& value)
+void CustomData::set(const QString& key, const QVariant& value)
 {
-    bool emitModified = false;
-
     bool addAttribute = !m_data.contains(key);
     bool changeValue = !addAttribute && (m_data.value(key) != value);
 
-    if (addAttribute ) {
+    if (addAttribute) {
         emit aboutToBeAdded(key);
-    }
+     }
 
     if (addAttribute || changeValue) {
         m_data.insert(key, value);
-        emitModified = true;
-    }
-
-    if (emitModified) {
         emit modified();
     }
 
     if (addAttribute) {
         emit added(key);
     }
+}
+
+void CustomData::set(const QVariantMap& data)
+{
+    m_data = data;
 }
 
 void CustomData::remove(const QString& key)
@@ -85,17 +88,14 @@ void CustomData::remove(const QString& key)
 
 void CustomData::rename(const QString& oldKey, const QString& newKey)
 {
-    if (!m_data.contains(oldKey)) {
-        Q_ASSERT(false);
+    const bool containsOldKey = m_data.contains(oldKey);
+    const bool containsNewKey = m_data.contains(newKey);
+    Q_ASSERT(containsOldKey && !containsNewKey);
+    if (!containsOldKey || containsNewKey) {
         return;
     }
 
-    if (m_data.contains(newKey)) {
-        Q_ASSERT(false);
-        return;
-    }
-
-    QString data = value(oldKey);
+    QVariant data = value(oldKey);
 
     emit aboutToRename(oldKey, newKey);
 
@@ -108,16 +108,17 @@ void CustomData::rename(const QString& oldKey, const QString& newKey)
 
 void CustomData::copyDataFrom(const CustomData* other)
 {
-    if (*this != *other) {
-        emit aboutToBeReset();
-
-        m_data = other->m_data;
-
-        emit reset();
-        emit modified();
+    if (*this == *other) {
+        return;
     }
-}
 
+    emit aboutToBeReset();
+
+    m_data = other->m_data;
+
+    emit reset();
+    emit modified();
+}
 bool CustomData::operator==(const CustomData& other) const
 {
     return (m_data == other.m_data);
@@ -143,14 +144,14 @@ bool CustomData::isEmpty() const
     return m_data.isEmpty();
 }
 
-int CustomData::dataSize()
+int CustomData::dataSize() const
 {
     int size = 0;
 
-    QHashIterator<QString, QString> i(m_data);
+    QMapIterator<QString, QVariant> i(m_data);
     while (i.hasNext()) {
         i.next();
-        size += i.key().toUtf8().size() + i.value().toUtf8().size();
+        size += i.key().toUtf8().size() + i.value().toString().toUtf8().size();
     }
     return size;
 }

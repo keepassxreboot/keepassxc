@@ -1,6 +1,5 @@
 /*
- *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,10 +15,10 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_CUSTOMDATA_H
-#define KEEPASSX_CUSTOMDATA_H
+#ifndef KEEPASSXC_CUSTOMDATA_H
+#define KEEPASSXC_CUSTOMDATA_H
 
-#include <QMap>
+#include <QVariantMap>
 #include <QObject>
 #include <QSet>
 #include <QStringList>
@@ -32,15 +31,17 @@ public:
     explicit CustomData(QObject* parent = nullptr);
     QList<QString> keys() const;
     bool hasKey(const QString& key) const;
-    QString value(const QString& key) const;
+    QVariant value(const QString& key) const;
+    QVariantMap raw() const;
     bool contains(const QString& key) const;
-    bool containsValue(const QString& value) const;
-    void set(const QString& key, const QString& value);
+    bool containsValue(const QVariant& value) const;
+    void set(const QString& key, const QVariant& value);
+    void set(const QVariantMap& data);
     void remove(const QString& key);
     void rename(const QString& oldKey, const QString& newKey);
     void clear();
     bool isEmpty() const;
-    int dataSize();
+    int dataSize() const;
     void copyDataFrom(const CustomData* other);
     bool operator==(const CustomData& other) const;
     bool operator!=(const CustomData& other) const;
@@ -58,7 +59,7 @@ signals:
     void reset();
 
 private:
-    QHash<QString, QString> m_data;
+    QVariantMap m_data;
 };
 
-#endif // KEEPASSX_CUSTOMDATA_H
+#endif // KEEPASSXC_CUSTOMDATA_H

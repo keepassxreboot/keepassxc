@@ -19,6 +19,8 @@
 #include <QFile>
 
 #include "core/Database.h"
+#include "core/Group.h"
+#include "core/Metadata.h"
 #include "crypto/kdf/AesKdf.h"
 #include "format/KeePass2Writer.h"
 #include "format/Kdbx3Writer.h"
@@ -48,12 +50,25 @@ bool KeePass2Writer::writeDatabase(const QString& filename, Database* db)
  * @param db source database
  * @return true on success
  */
+#include <QDebug>
 bool KeePass2Writer::writeDatabase(QIODevice* device, Database* db) {
     m_error = false;
     m_errorStr.clear();
 
     // determine KDBX3 vs KDBX4
-    if (db->kdf()->uuid() == KeePass2::KDF_AES_KDBX3 && db->publicCustomData().isEmpty()) {
+    bool hasCustomData = (db->metadata()->customData() && !db->metadata()->customData()->isEmpty());
+    if (!hasCustomData) {
+        for (const auto& entry: db->rootGroup()->entriesRecursive(true)) {
+            if (!entry->customData())
+                if ((entry->customData() && !entry->customData()->isEmpty()) ||
+                    (entry->group()->customData() && !entry->group()->customData()->isEmpty())) {
+                    hasCustomData = true;
+                    break;
+                }
+        }
+    }
+
+    if (db->kdf()->uuid() == KeePass2::KDF_AES_KDBX3 && !hasCustomData) {
         m_version = KeePass2::FILE_VERSION_3_1;
         m_writer.reset(new Kdbx3Writer());
     } else {

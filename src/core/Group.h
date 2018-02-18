@@ -84,8 +84,8 @@ public:
     bool resolveAutoTypeEnabled() const;
     Entry* lastTopVisibleEntry() const;
     bool isExpired() const;
-    CustomData *customData();
-    const CustomData *customData() const;
+    CustomData* customData();
+    const CustomData* customData() const;
 
     static const int DefaultIconNumber;
     static const int RecycleBinIconNumber;
@@ -191,7 +191,7 @@ private:
     QList<Group*> m_children;
     QList<Entry*> m_entries;
 
-    CustomData *const m_customData;
+    QPointer<CustomData> m_customData;
 
     QPointer<Group> m_parent;
 
