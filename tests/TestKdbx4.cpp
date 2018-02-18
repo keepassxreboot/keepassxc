@@ -208,3 +208,93 @@ void TestKdbx4::testFormat400Upgrade_data()
     QTest::newRow("AES-KDF          + Twofish  + CustomData") << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_TWOFISH   << true  << kdbx4;
     QTest::newRow("AES-KDF (legacy) + Twofish  + CustomData") << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_TWOFISH   << true  << kdbx4;
 }
+
+void TestKdbx4::testCustomData()
+{
+    Database db;
+
+    // test public custom data
+    QVariantMap publicCustomData;
+    publicCustomData.insert("CD1", 123);
+    publicCustomData.insert("CD2", true);
+    publicCustomData.insert("CD3", "abcäöü");
+    publicCustomData.insert("CD4", QByteArray::fromHex("ababa123ff"));
+    db.setPublicCustomData(publicCustomData);
+    QCOMPARE(db.publicCustomData(), publicCustomData);
+
+    const QString customDataKey1 = "CD1";
+    const QString customDataKey2 = "CD2";
+    const QString customData1 = "abcäöü";
+    const QString customData2 = "Hello World";
+    const int dataSize = customDataKey1.toUtf8().size() + customDataKey1.toUtf8().size() +
+            customData1.toUtf8().size() + customData2.toUtf8().size();
+
+    // test custom database data
+    db.metadata()->customData()->set(customDataKey1, customData1);
+    db.metadata()->customData()->set(customDataKey2, customData2);
+    QCOMPARE(db.metadata()->customData()->size(), 2);
+    QCOMPARE(db.metadata()->customData()->dataSize(), dataSize);
+
+    // test custom root group data
+    Group* root = db.rootGroup();
+    root->customData()->set(customDataKey1, customData1);
+    root->customData()->set(customDataKey2, customData2);
+    QCOMPARE(root->customData()->size(), 2);
+    QCOMPARE(root->customData()->dataSize(), dataSize);
+
+    // test copied custom group data
+    auto* group = new Group();
+    group->setParent(root);
+    group->setUuid(Uuid::random());
+    group->customData()->copyDataFrom(root->customData());
+    QCOMPARE(*group->customData(), *root->customData());
+
+    // test copied custom entry data
+    auto* entry = new Entry();
+    entry->setGroup(group);
+    entry->setUuid(Uuid::random());
+    entry->customData()->copyDataFrom(group->customData());
+    QCOMPARE(*entry->customData(), *root->customData());
+
+    // test custom data deletion
+    entry->customData()->set("additional item", "foobar");
+    QCOMPARE(entry->customData()->size(), 3);
+    entry->customData()->remove("additional item");
+    QCOMPARE(entry->customData()->size(), 2);
+    QCOMPARE(entry->customData()->dataSize(), dataSize);
+
+    // test custom data on cloned groups
+    QScopedPointer<Group> clonedGroup(group->clone());
+    QCOMPARE(*clonedGroup->customData(), *group->customData());
+
+    // test custom data on cloned entries
+    QScopedPointer<Entry> clonedEntry(entry->clone(Entry::CloneNoFlags));
+    QCOMPARE(*clonedEntry->customData(), *entry->customData());
+
+    QBuffer buffer;
+    buffer.open(QBuffer::ReadWrite);
+    KeePass2Writer writer;
+    writer.writeDatabase(&buffer, &db);
+
+    // read buffer back
+    buffer.seek(0);
+    KeePass2Reader reader;
+    QSharedPointer<Database> newDb(reader.readDatabase(&buffer, CompositeKey()));
+
+    // test all custom data are read back successfully from KDBX
+    QCOMPARE(newDb->publicCustomData(), publicCustomData);
+
+    QCOMPARE(newDb->metadata()->customData()->value(customDataKey1), customData1);
+    QCOMPARE(newDb->metadata()->customData()->value(customDataKey2), customData2);
+
+    QCOMPARE(newDb->rootGroup()->customData()->value(customDataKey1), customData1);
+    QCOMPARE(newDb->rootGroup()->customData()->value(customDataKey2), customData2);
+
+    auto* newGroup = newDb->rootGroup()->children()[0];
+    QCOMPARE(newGroup->customData()->value(customDataKey1), customData1);
+    QCOMPARE(newGroup->customData()->value(customDataKey2), customData2);
+
+    auto* newEntry = newDb->rootGroup()->children()[0]->entries()[0];
+    QCOMPARE(newEntry->customData()->value(customDataKey1), customData1);
+    QCOMPARE(newEntry->customData()->value(customDataKey2), customData2);
+}
