@@ -49,16 +49,18 @@ public:
     void saveSettings();
     void reset();
     void setStandaloneMode(bool standalone);
-public Q_SLOTS:
+    QString getGeneratedPassword();
+
+public slots:
     void regeneratePassword();
+    void applyPassword();
+    void copyPassword();
     
 signals:
     void appliedPassword(const QString& password);
     void dialogTerminated();
 
 private slots:
-    void applyPassword();
-    void copyPassword();
     void updateButtonsEnabled(const QString& password);
     void updatePasswordStrength(const QString& password);
     void togglePasswordShown(bool hidden);

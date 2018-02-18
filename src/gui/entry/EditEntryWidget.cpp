@@ -98,7 +98,7 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
 
     connect(this, SIGNAL(accepted()), SLOT(acceptEntry()));
     connect(this, SIGNAL(rejected()), SLOT(cancel()));
-    connect(this, SIGNAL(apply()), SLOT(saveEntry()));
+    connect(this, SIGNAL(apply()), SLOT(commitEntry()));
     connect(m_iconsWidget, SIGNAL(messageEditEntry(QString, MessageWidget::MessageType)), SLOT(showMessage(QString, MessageWidget::MessageType)));
     connect(m_iconsWidget, SIGNAL(messageEditEntryDismiss()), SLOT(hideMessage()));
     
@@ -128,7 +128,7 @@ void EditEntryWidget::setupMain()
 
     QAction *action = new QAction(this);
     action->setShortcut(Qt::CTRL | Qt::Key_Return);
-    connect(action, SIGNAL(triggered()), this, SLOT(saveEntry()));
+    connect(action, SIGNAL(triggered()), this, SLOT(commitEntry()));
     this->addAction(action);
 
     m_mainUi->passwordGenerator->hide();
@@ -683,19 +683,38 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_mainUi->titleEdit->setFocus();
 }
 
-void EditEntryWidget::saveEntry()
+/**
+ * Commit the form values to in-memory database representation
+ *
+ * @return true is commit successful, otherwise false
+ */
+bool EditEntryWidget::commitEntry()
 {
     if (m_history) {
         clear();
         hideMessage();
         emit editFinished(false);
-        return;
+        return true;
     }
 
     if (!passwordsEqual()) {
         showMessage(tr("Different passwords supplied."), MessageWidget::Error);
-        return;
+        return false;
     }
+
+    // Ask the user to apply the generator password, if open
+    if (m_mainUi->togglePasswordGeneratorButton->isChecked() &&
+            m_mainUi->passwordGenerator->getGeneratedPassword() != m_mainUi->passwordEdit->text()) {
+        auto answer = MessageBox::question(this, tr("Apply generated password?"),
+                             tr("Do you want to apply the generated password to this entry?"),
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+        if (answer == QMessageBox::Yes) {
+            m_mainUi->passwordGenerator->applyPassword();
+        }
+    }
+
+    // Hide the password generator
+    m_mainUi->togglePasswordGeneratorButton->setChecked(false);
 
     if (m_advancedUi->attributesView->currentIndex().isValid() && m_advancedUi->attributesEdit->isEnabled()) {
         QString key = m_attributesModel->keyByIndex(m_advancedUi->attributesView->currentIndex());
@@ -734,19 +753,18 @@ void EditEntryWidget::saveEntry()
         updateSSHAgent();
     }
 #endif
+
+    showMessage(tr("Entry updated successfully."), MessageWidget::Positive);
+    return true;
 }
 
 void EditEntryWidget::acceptEntry()
 {
-    // Check if passwords are mismatched first to prevent saving
-    if (!passwordsEqual()) {
-        showMessage(tr("Different passwords supplied."), MessageWidget::Error);
-        return;
+    if (commitEntry()) {
+        clear();
+        hideMessage();
+        emit editFinished(true);
     }
-
-    saveEntry();
-    clear();
-    emit editFinished(true);
 }
 
 void EditEntryWidget::updateEntryData(Entry* entry) const
