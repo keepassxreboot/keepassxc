@@ -175,6 +175,12 @@
        </item>
        <item>
         <widget class="QLabel" name="label_7">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</string>
          </property>
