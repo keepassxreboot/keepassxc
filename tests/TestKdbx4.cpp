@@ -208,3 +208,72 @@ void TestKdbx4::testFormat400Upgrade_data()
     QTest::newRow("AES-KDF          + Twofish  + CustomData") << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_TWOFISH   << true  << kdbx4;
     QTest::newRow("AES-KDF (legacy) + Twofish  + CustomData") << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_TWOFISH   << true  << kdbx4;
 }
+
+void TestKdbx4::testCustomData()
+{
+    QVariant cd1 = 123;
+    QVariant cd2 = true;
+    QVariant cd3 = "abcäöü";
+    QVariant cd4 = QByteArray::fromHex("ababa123ff");
+
+    Database db;
+
+    db.metadata()->customData()->set("CD1", cd1);
+    db.metadata()->customData()->set("CD2", cd2);
+    db.metadata()->customData()->set("CD3", cd3);
+    db.metadata()->customData()->set("CD4", cd4);
+
+    Group* root = db.rootGroup();
+    root->customData()->set("CD1", cd1);
+    root->customData()->set("CD2", cd2);
+    root->customData()->set("CD3", cd3);
+    root->customData()->set("CD4", cd4);
+
+    auto* group = new Group();
+    group->setParent(root);
+    group->setUuid(Uuid::random());
+    group->customData()->set("CD1", cd1);
+    group->customData()->set("CD2", cd2);
+    group->customData()->set("CD3", cd3);
+    group->customData()->set("CD4", cd4);
+
+    auto* entry = new Entry();
+    entry->setGroup(group);
+    entry->setUuid(Uuid::random());
+    entry->customData()->set("CD1", cd1);
+    entry->customData()->set("CD2", cd2);
+    entry->customData()->set("CD3", cd3);
+    entry->customData()->set("CD4", cd4);
+
+    QBuffer buffer;
+    buffer.open(QBuffer::ReadWrite);
+    KeePass2Writer writer;
+    writer.writeDatabase(&buffer, &db);
+
+    // read buffer back
+    buffer.seek(0);
+    KeePass2Reader reader;
+    QSharedPointer<Database> newDb(reader.readDatabase(&buffer, CompositeKey()));
+
+    QCOMPARE(newDb->metadata()->customData()->value("CD1"), cd1);
+    QCOMPARE(newDb->metadata()->customData()->value("CD2"), cd2);
+    QCOMPARE(newDb->metadata()->customData()->value("CD3"), cd3);
+    QCOMPARE(newDb->metadata()->customData()->value("CD4"), cd4);
+
+    QCOMPARE(newDb->rootGroup()->customData()->value("CD1"), cd1);
+    QCOMPARE(newDb->rootGroup()->customData()->value("CD2"), cd2);
+    QCOMPARE(newDb->rootGroup()->customData()->value("CD3"), cd3);
+    QCOMPARE(newDb->rootGroup()->customData()->value("CD4"), cd4);
+
+    auto* newGroup = newDb->rootGroup()->children()[0];
+    QCOMPARE(newGroup->customData()->value("CD1"), cd1);
+    QCOMPARE(newGroup->customData()->value("CD2"), cd2);
+    QCOMPARE(newGroup->customData()->value("CD3"), cd3);
+    QCOMPARE(newGroup->customData()->value("CD4"), cd4);
+
+    auto* newEntry = newDb->rootGroup()->children()[0]->entries()[0];
+    QCOMPARE(newEntry->customData()->value("CD1"), cd1);
+    QCOMPARE(newEntry->customData()->value("CD2"), cd2);
+    QCOMPARE(newEntry->customData()->value("CD3"), cd3);
+    QCOMPARE(newEntry->customData()->value("CD4"), cd4);
+}
