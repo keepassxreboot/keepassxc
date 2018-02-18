@@ -74,7 +74,7 @@ signals:
 
 private slots:
     void acceptEntry();
-    void saveEntry();
+    bool commitEntry();
     void cancel();
     void togglePasswordGeneratorButton(bool checked);
     void setGeneratedPassword(const QString& password);

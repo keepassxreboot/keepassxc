@@ -151,6 +151,11 @@ void PasswordGeneratorWidget::setStandaloneMode(bool standalone)
     }
 }
 
+QString PasswordGeneratorWidget::getGeneratedPassword()
+{
+    return m_ui->editNewPassword->text();
+}
+
 void PasswordGeneratorWidget::keyPressEvent(QKeyEvent* e)
 {
     if (e->key() == Qt::Key_Escape && m_standalone == true) {

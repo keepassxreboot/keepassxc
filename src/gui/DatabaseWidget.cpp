@@ -776,26 +776,27 @@ void DatabaseWidget::switchToView(bool accepted)
             m_newGroup->setParent(m_newParent);
             m_groupView->setCurrentGroup(m_newGroup);
             m_groupView->expandGroup(m_newParent);
-        }
-        else {
+        } else {
             delete m_newGroup;
         }
 
         m_newGroup = nullptr;
         m_newParent = nullptr;
-    }
-    else if (m_newEntry) {
+    } else if (m_newEntry) {
         if (accepted) {
             m_newEntry->setGroup(m_newParent);
             m_entryView->setFocus();
             m_entryView->setCurrentEntry(m_newEntry);
-        }
-        else {
+        } else {
             delete m_newEntry;
         }
 
         m_newEntry = nullptr;
         m_newParent = nullptr;
+    }
+
+    if (accepted) {
+        showMessage(tr("Entry updated successfully."), MessageWidget::Positive, false, 2000);
     }
 
     setCurrentWidget(m_mainWidget);
