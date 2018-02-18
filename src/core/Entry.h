@@ -108,8 +108,8 @@ public:
     const EntryAttributes* attributes() const;
     EntryAttachments* attachments();
     const EntryAttachments* attachments() const;
-    CustomData *customData();
-    const CustomData *customData() const;
+    CustomData* customData();
+    const CustomData* customData() const;
 
     static const int DefaultIconNumber;
     static const int ResolveMaximumDepth;
@@ -231,11 +231,10 @@ private:
 
     Uuid m_uuid;
     EntryData m_data;
-    EntryAttributes* const m_attributes;
-    EntryAttachments* const m_attachments;
-    AutoTypeAssociations* const m_autoTypeAssociations;
-
-    CustomData* const m_customData;
+    QPointer<EntryAttributes> m_attributes;
+    QPointer<EntryAttachments> m_attachments;
+    QPointer<AutoTypeAssociations> m_autoTypeAssociations;
+    QPointer<CustomData> m_customData;
 
     QList<Entry*> m_history;
     Entry* m_tmpHistoryItem;

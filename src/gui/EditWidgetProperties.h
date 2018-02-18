@@ -38,10 +38,10 @@ public:
     explicit EditWidgetProperties(QWidget* parent = nullptr);
     ~EditWidgetProperties();
 
-    void setFields(const TimeInfo &timeInfo, const Uuid &uuid);
-    void setCustomData(const CustomData *customData);
+    void setFields(const TimeInfo& timeInfo, const Uuid& uuid);
+    void setCustomData(const CustomData* customData);
 
-    const CustomData *customData() const;
+    const CustomData* customData() const;
 
 private slots:
     void removeSelectedPluginData();

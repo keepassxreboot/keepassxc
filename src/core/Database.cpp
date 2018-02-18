@@ -320,6 +320,17 @@ bool Database::verifyKey(const CompositeKey& key) const
     return (m_data.key.rawKey() == key.rawKey());
 }
 
+QVariantMap Database::publicCustomData() const
+{
+    return m_data.publicCustomData;
+}
+
+void Database::setPublicCustomData(const QVariantMap& customData)
+{
+    m_data.publicCustomData = customData;
+}
+
+
 void Database::createRecycleBin()
 {
     Group* recycleBin = Group::createRecycleBin();
@@ -576,14 +587,6 @@ QSharedPointer<Kdf> Database::kdf() const
 void Database::setKdf(QSharedPointer<Kdf> kdf)
 {
     m_data.kdf = std::move(kdf);
-}
-
-void Database::setPublicCustomData(QByteArray data) {
-    m_data.publicCustomData = data;
-}
-
-QByteArray Database::publicCustomData() const {
-    return m_data.publicCustomData;
 }
 
 bool Database::changeKdf(QSharedPointer<Kdf> kdf)

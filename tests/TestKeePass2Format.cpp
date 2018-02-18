@@ -124,15 +124,6 @@ void TestKeePass2Format::testXmlCustomIcons()
     }
 }
 
-void TestKeePass2Format::testXmlCustomData()
-{
-    QHash<QString, QString> customFields = m_xmlDb->metadata()->customFields();
-
-    QCOMPARE(customFields.size(), 2);
-    QCOMPARE(customFields.value("A Sample Test Key"), QString("valu"));
-    QCOMPARE(customFields.value("custom key"), QString("blub"));
-}
-
 void TestKeePass2Format::testXmlGroupRoot()
 {
     const Group* group = m_xmlDb->rootGroup();
@@ -155,7 +146,6 @@ void TestKeePass2Format::testXmlGroupRoot()
     QCOMPARE(group->autoTypeEnabled(), Group::Inherit);
     QCOMPARE(group->searchingEnabled(), Group::Inherit);
     QCOMPARE(group->lastTopVisibleEntry()->uuid().toBase64(), QString("+wSUOv6qf0OzW8/ZHAs2sA=="));
-
     QCOMPARE(group->children().size(), 3);
     QVERIFY(m_xmlDb->metadata()->recycleBin() == m_xmlDb->rootGroup()->children().at(2));
 

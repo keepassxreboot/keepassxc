@@ -1,6 +1,5 @@
 /*
- *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -50,21 +49,15 @@ bool CustomData::containsValue(const QString& value) const
 
 void CustomData::set(const QString& key, const QString& value)
 {
-    bool emitModified = false;
-
     bool addAttribute = !m_data.contains(key);
     bool changeValue = !addAttribute && (m_data.value(key) != value);
 
-    if (addAttribute ) {
+    if (addAttribute) {
         emit aboutToBeAdded(key);
-    }
+     }
 
     if (addAttribute || changeValue) {
         m_data.insert(key, value);
-        emitModified = true;
-    }
-
-    if (emitModified) {
         emit modified();
     }
 
@@ -85,13 +78,10 @@ void CustomData::remove(const QString& key)
 
 void CustomData::rename(const QString& oldKey, const QString& newKey)
 {
-    if (!m_data.contains(oldKey)) {
-        Q_ASSERT(false);
-        return;
-    }
-
-    if (m_data.contains(newKey)) {
-        Q_ASSERT(false);
+    const bool containsOldKey = m_data.contains(oldKey);
+    const bool containsNewKey = m_data.contains(newKey);
+    Q_ASSERT(containsOldKey && !containsNewKey);
+    if (!containsOldKey || containsNewKey) {
         return;
     }
 
@@ -108,16 +98,17 @@ void CustomData::rename(const QString& oldKey, const QString& newKey)
 
 void CustomData::copyDataFrom(const CustomData* other)
 {
-    if (*this != *other) {
-        emit aboutToBeReset();
-
-        m_data = other->m_data;
-
-        emit reset();
-        emit modified();
+    if (*this == *other) {
+        return;
     }
-}
 
+    emit aboutToBeReset();
+
+    m_data = other->m_data;
+
+    emit reset();
+    emit modified();
+}
 bool CustomData::operator==(const CustomData& other) const
 {
     return (m_data == other.m_data);
@@ -143,7 +134,12 @@ bool CustomData::isEmpty() const
     return m_data.isEmpty();
 }
 
-int CustomData::dataSize()
+int CustomData::size() const
+{
+    return m_data.size();
+}
+
+int CustomData::dataSize() const
 {
     int size = 0;
 

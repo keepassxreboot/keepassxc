@@ -40,7 +40,6 @@ private slots:
      */
     void testXmlMetadata();
     void testXmlCustomIcons();
-    void testXmlCustomData();
     void testXmlGroupRoot();
     void testXmlGroup1();
     void testXmlGroup2();
