@@ -254,12 +254,12 @@ bool Group::isExpired() const
     return m_data.timeInfo.expires() && m_data.timeInfo.expiryTime() < QDateTime::currentDateTimeUtc();
 }
 
-CustomData *Group::customData()
+CustomData* Group::customData()
 {
     return m_customData;
 }
 
-const CustomData *Group::customData() const
+const CustomData* Group::customData() const
 {
     return m_customData;
 }

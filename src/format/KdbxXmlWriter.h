@@ -51,7 +51,7 @@ private:
     void writeCustomIcons();
     void writeIcon(const Uuid& uuid, const QImage& icon);
     void writeBinaries();
-    void writeCustomData(const CustomData *customData);
+    void writeCustomData(const CustomData* customData);
     void writeCustomDataItem(const QString& key, const QString& value);
     void writeRoot();
     void writeGroup(const Group* group);

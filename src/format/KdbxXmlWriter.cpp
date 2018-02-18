@@ -129,7 +129,9 @@ void KdbxXmlWriter::writeMetadata()
     if (m_kdbxVersion < KeePass2::FILE_VERSION_4) {
         writeBinaries();
     }
-    writeCustomData(m_meta->customData());
+    if (m_kdbxVersion >= KeePass2::FILE_VERSION_4) {
+        writeCustomData(m_meta->customData());
+    }
 
     m_xml.writeEndElement();
 }
@@ -218,8 +220,11 @@ void KdbxXmlWriter::writeBinaries()
     m_xml.writeEndElement();
 }
 
-void KdbxXmlWriter::writeCustomData(const CustomData *customData)
+void KdbxXmlWriter::writeCustomData(const CustomData* customData)
 {
+    if (customData->isEmpty()) {
+        return;
+    }
     m_xml.writeStartElement("CustomData");
 
     const QList<QString> keyList = customData->keys();
@@ -276,7 +281,7 @@ void KdbxXmlWriter::writeGroup(const Group* group)
 
     writeUuid("LastTopVisibleEntry", group->lastTopVisibleEntry());
 
-    if (!group->customData()->isEmpty()){
+    if (m_kdbxVersion >= KeePass2::FILE_VERSION_4) {
         writeCustomData(group->customData());
     }
 
@@ -405,7 +410,7 @@ void KdbxXmlWriter::writeEntry(const Entry* entry)
 
     writeAutoType(entry);
 
-    if (!entry->customData()->isEmpty()){
+    if (m_kdbxVersion >= KeePass2::FILE_VERSION_4) {
         writeCustomData(entry->customData());
     }
 

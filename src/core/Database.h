@@ -59,12 +59,12 @@ public:
         Uuid cipher;
         CompressionAlgorithm compressionAlgo;
         QByteArray transformedMasterKey;
-        QByteArray publicCustomData;
         QSharedPointer<Kdf> kdf;
         CompositeKey key;
         bool hasKey;
         QByteArray masterSeed;
         QByteArray challengeResponseKey;
+        QVariantMap publicCustomData;
     };
 
     Database();
@@ -93,7 +93,6 @@ public:
     Uuid cipher() const;
     Database::CompressionAlgorithm compressionAlgo() const;
     QSharedPointer<Kdf> kdf() const;
-    QByteArray publicCustomData() const;
     QByteArray transformedMasterKey() const;
     const CompositeKey& key() const;
     QByteArray challengeResponseKey() const;
@@ -102,11 +101,12 @@ public:
     void setCipher(const Uuid& cipher);
     void setCompressionAlgo(Database::CompressionAlgorithm algo);
     void setKdf(QSharedPointer<Kdf> kdf);
-    void setPublicCustomData(QByteArray data);
     bool setKey(const CompositeKey& key, bool updateChangedTime = true,
                 bool updateTransformSalt = false);
     bool hasKey() const;
     bool verifyKey(const CompositeKey& key) const;
+    QVariantMap publicCustomData() const;
+    void setPublicCustomData(const QVariantMap& customData);
     void recycleEntry(Entry* entry);
     void recycleGroup(Group* group);
     void emptyRecycleBin();

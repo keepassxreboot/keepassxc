@@ -1,6 +1,5 @@
 /*
- *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,17 +15,17 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_CUSTOMDATA_H
-#define KEEPASSX_CUSTOMDATA_H
+#ifndef KEEPASSXC_CUSTOMDATA_H
+#define KEEPASSXC_CUSTOMDATA_H
 
-#include <QMap>
+#include <QHash>
 #include <QObject>
 #include <QSet>
 #include <QStringList>
 
 class CustomData : public QObject
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
     explicit CustomData(QObject* parent = nullptr);
@@ -40,7 +39,8 @@ public:
     void rename(const QString& oldKey, const QString& newKey);
     void clear();
     bool isEmpty() const;
-    int dataSize();
+    int size() const;
+    int dataSize() const;
     void copyDataFrom(const CustomData* other);
     bool operator==(const CustomData& other) const;
     bool operator!=(const CustomData& other) const;
@@ -61,4 +61,4 @@ private:
     QHash<QString, QString> m_data;
 };
 
-#endif // KEEPASSX_CUSTOMDATA_H
+#endif // KEEPASSXC_CUSTOMDATA_H
