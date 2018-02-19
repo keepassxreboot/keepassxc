@@ -108,16 +108,14 @@ void CustomData::rename(const QString& oldKey, const QString& newKey)
 
 void CustomData::copyDataFrom(const CustomData* other)
 {
-    if (*this == *other) {
-        return;
+    if (*this != *other) {
+        emit aboutToBeReset();
+
+        m_data = other->m_data;
+
+        emit reset();
+        emit modified();
     }
-
-    emit aboutToBeReset();
-
-    m_data = other->m_data;
-
-    emit reset();
-    emit modified();
 }
 bool CustomData::operator==(const CustomData& other) const
 {

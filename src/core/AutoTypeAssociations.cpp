@@ -35,14 +35,12 @@ AutoTypeAssociations::AutoTypeAssociations(QObject* parent)
 
 void AutoTypeAssociations::copyDataFrom(const AutoTypeAssociations* other)
 {
-    if (m_associations == other->m_associations) {
-        return;
+    if (m_associations != other->m_associations) {
+        emit aboutToReset();
+        m_associations = other->m_associations;
+        emit reset();
+        emit modified();
     }
-
-    emit aboutToReset();
-    m_associations = other->m_associations;
-    emit reset();
-    emit modified();
 }
 
 void AutoTypeAssociations::add(const AutoTypeAssociations::Association& association)
