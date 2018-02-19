@@ -31,6 +31,7 @@
 #include <QTemporaryFile>
 #include <QMimeData>
 #include <QEvent>
+#include <QColorDialog>
 
 #include "autotype/AutoType.h"
 #include "core/Config.h"
@@ -156,6 +157,8 @@ void EditEntryWidget::setupAdvanced()
     connect(m_advancedUi->attributesView->selectionModel(),
             SIGNAL(currentChanged(QModelIndex,QModelIndex)),
             SLOT(updateCurrentAttribute()));
+    connect(m_advancedUi->fgColorButton, SIGNAL(clicked()), SLOT(pickColor()));
+    connect(m_advancedUi->bgColorButton, SIGNAL(clicked()), SLOT(pickColor()));
 }
 
 void EditEntryWidget::setupIcon()
@@ -593,6 +596,8 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
         editTriggers = QAbstractItemView::DoubleClicked;
     }
     m_advancedUi->attributesView->setEditTriggers(editTriggers);
+    setupColorButton(true, entry->foregroundColor());
+    setupColorButton(false, entry->backgroundColor());
     m_iconsWidget->setEnabled(!m_history);
     m_autoTypeUi->sequenceEdit->setReadOnly(m_history);
     m_autoTypeUi->windowTitleCombo->lineEdit()->setReadOnly(m_history);
@@ -758,26 +763,35 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
 
     entry->setNotes(m_mainUi->notesEdit->toPlainText());
 
+    if (m_advancedUi->fgColorCheckBox->isChecked() &&
+            m_advancedUi->fgColorButton->property("color").isValid()) {
+        entry->setForegroundColor(QColor(m_advancedUi->fgColorButton->property("color").toString()));
+    } else {
+        entry->setForegroundColor(QColor());
+    }
+
+    if (m_advancedUi->bgColorCheckBox->isChecked() &&
+            m_advancedUi->bgColorButton->property("color").isValid()) {
+        entry->setBackgroundColor(QColor(m_advancedUi->bgColorButton->property("color").toString()));
+    } else {
+        entry->setBackgroundColor(QColor());
+    }
+
     IconStruct iconStruct = m_iconsWidget->state();
 
     if (iconStruct.number < 0) {
         entry->setIcon(Entry::DefaultIconNumber);
-    }
-    else if (iconStruct.uuid.isNull()) {
+    } else if (iconStruct.uuid.isNull()) {
         entry->setIcon(iconStruct.number);
-    }
-    else {
+    } else {
         entry->setIcon(iconStruct.uuid);
     }
 
     entry->setAutoTypeEnabled(m_autoTypeUi->enableButton->isChecked());
     if (m_autoTypeUi->inheritSequenceButton->isChecked()) {
         entry->setDefaultAutoTypeSequence(QString());
-    }
-    else {
-        if (AutoType::verifyAutoTypeSyntax(m_autoTypeUi->sequenceEdit->text())) {
-            entry->setDefaultAutoTypeSequence(m_autoTypeUi->sequenceEdit->text());
-        }
+    } else if (AutoType::verifyAutoTypeSyntax(m_autoTypeUi->sequenceEdit->text())) {
+        entry->setDefaultAutoTypeSequence(m_autoTypeUi->sequenceEdit->text());
     }
 
     entry->autoTypeAssociations()->copyDataFrom(m_autoTypeAssoc);
@@ -1121,4 +1135,39 @@ QMenu* EditEntryWidget::createPresetsMenu()
     expirePresetsMenu->addSeparator();
     expirePresetsMenu->addAction(tr("1 year"))->setData(QVariant::fromValue(TimeDelta::fromYears(1)));
     return expirePresetsMenu;
+}
+
+void EditEntryWidget::setupColorButton(bool foreground, QColor color)
+{
+    QWidget* button = m_advancedUi->fgColorButton;
+    QCheckBox* checkBox = m_advancedUi->fgColorCheckBox;
+    if (!foreground) {
+        button = m_advancedUi->bgColorButton;
+        checkBox = m_advancedUi->bgColorCheckBox;
+    }
+
+    if (color.isValid()) {
+        button->setStyleSheet(QString("background-color:%1").arg(color.name()));
+        button->setProperty("color", color.name());
+        checkBox->setChecked(true);
+    } else {
+        button->setStyleSheet("");
+        button->setProperty("color", QVariant());
+        checkBox->setChecked(false);
+    }
+}
+
+void EditEntryWidget::pickColor()
+{
+    bool isForeground = (sender() == m_advancedUi->fgColorButton);
+    QColor oldColor = QColor(m_advancedUi->fgColorButton->property("color").toString());
+    if (!isForeground) {
+        oldColor = QColor(m_advancedUi->bgColorButton->property("color").toString());
+    }
+
+    QColorDialog colorDialog;
+    QColor newColor = colorDialog.getColor(oldColor);
+    if (newColor.isValid()) {
+        setupColorButton(isForeground, newColor);
+    }
 }

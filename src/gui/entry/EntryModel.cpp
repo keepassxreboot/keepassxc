@@ -18,6 +18,7 @@
 #include "EntryModel.h"
 
 #include <QFont>
+#include <QFontMetrics>
 #include <QMimeData>
 #include <QPalette>
 #include <QDateTime>
@@ -263,10 +264,26 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             font.setStrikeOut(true);
         }
         return font;
-    } else if (role == Qt::TextColorRole) {
+    } else if (role == Qt::ForegroundRole) {
         if (entry->hasReferences()) {
             QPalette p;
             return QVariant(p.color(QPalette::Active, QPalette::Mid));
+        } else if (entry->foregroundColor().isValid()) {
+            return QVariant(entry->foregroundColor());
+        }
+    } else if (role == Qt::BackgroundRole) {
+        if (entry->backgroundColor().isValid()) {
+            return QVariant(entry->backgroundColor());
+        }
+    } else if (role == Qt::TextAlignmentRole) {
+        if (index.column() == Paperclip) {
+            return Qt::AlignCenter;
+        }
+    } else if (role == Qt::SizeHintRole) {
+        if (index.column() == Paperclip) {
+            QFont font;
+            QFontMetrics fm(font);
+            return fm.width(PaperClipDisplay) / 2;
         }
     }
 
@@ -275,7 +292,9 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
 
 QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
+    Q_UNUSED(orientation);
+
+    if (role == Qt::DisplayRole) {
         switch (section) {
         case ParentGroup:
             return tr("Group");
@@ -301,6 +320,11 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
             return EntryModel::PaperClipDisplay;
         case Attachments:
             return tr("Attachments");
+        }
+    } else if (role == Qt::TextAlignmentRole) {
+        switch (section) {
+        case Paperclip:
+            return Qt::AlignCenter;
         }
     }
 
