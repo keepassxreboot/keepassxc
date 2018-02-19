@@ -51,7 +51,7 @@ void EditWidgetProperties::setCustomData(const CustomData* customData)
     Q_ASSERT(customData);
     m_customData->copyDataFrom(customData);
 
-    this->updateModel();
+    updateModel();
 }
 
 const CustomData* EditWidgetProperties::customData() const
