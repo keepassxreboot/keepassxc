@@ -17,6 +17,7 @@
 
 #include "EditWidgetProperties.h"
 #include "ui_EditWidgetProperties.h"
+#include "MessageBox.h"
 
 EditWidgetProperties::EditWidgetProperties(QWidget* parent)
     : QWidget(parent)
@@ -25,8 +26,11 @@ EditWidgetProperties::EditWidgetProperties(QWidget* parent)
     , m_customDataModel(new QStandardItemModel(this))
 {
     m_ui->setupUi(this);
+    m_ui->removeCustomDataButton->setEnabled(false);
     m_ui->customDataTable->setModel(m_customDataModel);
 
+    connect(m_ui->customDataTable->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
+            SLOT(toggleRemoveButton(QItemSelection)));
     connect(m_ui->removeCustomDataButton, SIGNAL(clicked()), SLOT(removeSelectedPluginData()));
 }
 
@@ -51,7 +55,7 @@ void EditWidgetProperties::setCustomData(const CustomData* customData)
     Q_ASSERT(customData);
     m_customData->copyDataFrom(customData);
 
-    this->updateModel();
+    updateModel();
 }
 
 const CustomData* EditWidgetProperties::customData() const
@@ -61,6 +65,14 @@ const CustomData* EditWidgetProperties::customData() const
 
 void EditWidgetProperties::removeSelectedPluginData()
 {
+    if (QMessageBox::Yes != MessageBox::question(this,
+            tr("Delete plugin data?"),
+            tr("Do you really want to delete the selected plugin data?\n"
+               "This may cause the affected plugins to malfunction."),
+            QMessageBox::Yes | QMessageBox::Cancel, QMessageBox::Cancel)) {
+        return;
+    }
+
     const QItemSelectionModel* itemSelectionModel = m_ui->customDataTable->selectionModel();
     if (itemSelectionModel) {
         for (const QModelIndex& index : itemSelectionModel->selectedRows(0)) {
@@ -71,12 +83,22 @@ void EditWidgetProperties::removeSelectedPluginData()
     }
 }
 
+void EditWidgetProperties::toggleRemoveButton(const QItemSelection& selected)
+{
+    m_ui->removeCustomDataButton->setEnabled(!selected.isEmpty());
+}
+
 void EditWidgetProperties::updateModel()
 {
     m_customDataModel->clear();
+
+    m_customDataModel->setHorizontalHeaderLabels({tr("Key"), tr("Value")});
+
     for (const QString& key : m_customData->keys()) {
         m_customDataModel->appendRow(QList<QStandardItem*>()
                                          << new QStandardItem(key)
                                          << new QStandardItem(m_customData->value(key)));
     }
+
+    m_ui->removeCustomDataButton->setEnabled(false);
 }

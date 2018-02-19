@@ -19,6 +19,7 @@
 #define KEEPASSX_EDITWIDGETPROPERTIES_H
 
 #include <QStandardItemModel>
+#include <QItemSelection>
 #include <QPointer>
 #include <QWidget>
 
@@ -45,6 +46,7 @@ public:
 
 private slots:
     void removeSelectedPluginData();
+    void toggleRemoveButton(const QItemSelection& selected);
 
 private:
     void updateModel();
