@@ -26,6 +26,7 @@
 #include <QLabel>
 #include <QMimeData>
 #include <QPushButton>
+#include <QCheckBox>
 #include <QSpinBox>
 #include <QPlainTextEdit>
 #include <QComboBox>
@@ -279,6 +280,7 @@ void TestGui::testTabs()
 void TestGui::testEditEntry()
 {
     QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
+    int editCount = 0;
 
     // Select the first entry in the database
     EntryView* entryView = m_dbWidget->findChild<EntryView*>("entryView");
@@ -305,7 +307,24 @@ void TestGui::testEditEntry()
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Apply), Qt::LeftButton);
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
     QCOMPARE(entry->title(), QString("Sample Entry_test"));
-    QCOMPARE(entry->historyItems().size(), 1);
+    QCOMPARE(entry->historyItems().size(), ++editCount);
+
+    // Test entry colors (simulate choosing a color)
+    editEntryWidget->setCurrentPage(1);
+    auto fgColor = QColor(Qt::red);
+    auto bgColor = QColor(Qt::blue);
+    // Set foreground color
+    auto colorButton = editEntryWidget->findChild<QPushButton*>("fgColorButton");
+    auto colorCheckBox = editEntryWidget->findChild<QCheckBox*>("fgColorCheckBox");
+    colorButton->setProperty("color", fgColor);
+    colorCheckBox->setChecked(true);
+    // Set background color
+    colorButton = editEntryWidget->findChild<QPushButton*>("bgColorButton");
+    colorCheckBox = editEntryWidget->findChild<QCheckBox*>("bgColorCheckBox");
+    colorButton->setProperty("color", bgColor);
+    colorCheckBox->setChecked(true);
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Apply), Qt::LeftButton);
+    QCOMPARE(entry->historyItems().size(), ++editCount);
 
     // Test protected attributes
     editEntryWidget->setCurrentPage(1);
@@ -337,7 +356,11 @@ void TestGui::testEditEntry()
     // Confirm edit was made
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::ViewMode);
     QCOMPARE(entry->title(), QString("Sample Entry_test"));
-    QCOMPARE(entry->historyItems().size(), 2);
+    QCOMPARE(entry->foregroundColor(), fgColor);
+    QCOMPARE(entryItem.data(Qt::ForegroundRole), QVariant(fgColor));
+    QCOMPARE(entry->backgroundColor(), bgColor);
+    QCOMPARE(entryItem.data(Qt::BackgroundRole), QVariant(bgColor));
+    QCOMPARE(entry->historyItems().size(), ++editCount);
 
     // Confirm modified indicator is showing
     QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("%1*").arg(m_dbFileName));

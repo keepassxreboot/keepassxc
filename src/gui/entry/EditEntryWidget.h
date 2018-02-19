@@ -121,7 +121,7 @@ private:
 #endif
     void setupProperties();
     void setupHistory();
-    void setupColorButton(bool foreground, QColor color);
+    void setupColorButton(bool foreground, const QColor& color);
 
     bool passwordsEqual();
     void setForms(const Entry* entry, bool restore = false);
