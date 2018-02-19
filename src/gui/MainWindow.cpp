@@ -84,12 +84,6 @@ public:
     QWidget* createWidget() override
     {
         BrowserOptionDialog* dlg = new BrowserOptionDialog();
-        QObject::connect(dlg,
-                         SIGNAL(removeSharedEncryptionKeys()),
-                         m_nativeMessagingHost.data(),
-                         SLOT(removeSharedEncryptionKeys()));
-        QObject::connect(
-            dlg, SIGNAL(removeStoredPermissions()), m_nativeMessagingHost.data(), SLOT(removeStoredPermissions()));
         return dlg;
     }
 
@@ -108,8 +102,8 @@ public:
         }
     }
 
-private:
-    QSharedPointer<NativeMessagingHost> m_nativeMessagingHost;
+    private:
+        QSharedPointer<NativeMessagingHost> m_nativeMessagingHost;
 };
 #endif
 

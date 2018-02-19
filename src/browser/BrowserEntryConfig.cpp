@@ -21,7 +21,7 @@
 #include "core/EntryAttributes.h"
 #include <QtCore>
 
-static const char KEEPASSBROWSER_NAME[] = "KeePassXC-Browser Settings";
+static const char KEEPASSXCBROWSER_NAME[] = "KeePassXC-Browser Settings";
 
 BrowserEntryConfig::BrowserEntryConfig(QObject* parent)
     : QObject(parent)
@@ -82,7 +82,7 @@ void BrowserEntryConfig::setRealm(const QString& realm)
 
 bool BrowserEntryConfig::load(const Entry* entry)
 {
-    QString s = entry->attributes()->value(KEEPASSBROWSER_NAME);
+    QString s = entry->customData()->value(KEEPASSXCBROWSER_NAME);
     if (s.isEmpty()) {
         return false;
     }
@@ -104,5 +104,5 @@ void BrowserEntryConfig::save(Entry* entry)
     QVariantMap v = qo2qv(this);
     QJsonObject o = QJsonObject::fromVariantMap(v);
     QByteArray json = QJsonDocument(o).toJson(QJsonDocument::Compact);
-    entry->attributes()->set(KEEPASSBROWSER_NAME, json);
+    entry->customData()->set(KEEPASSXCBROWSER_NAME, json);
 }

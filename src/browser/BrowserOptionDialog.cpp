@@ -24,15 +24,12 @@
 #include "ui_BrowserOptionDialog.h"
 
 #include <QFileDialog>
-#include <QMessageBox>
 
 BrowserOptionDialog::BrowserOptionDialog(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::BrowserOptionDialog())
 {
     m_ui->setupUi(this);
-    connect(m_ui->removeSharedEncryptionKeys, SIGNAL(clicked()), this, SIGNAL(removeSharedEncryptionKeys()));
-    connect(m_ui->removeStoredPermissions, SIGNAL(clicked()), this, SIGNAL(removeStoredPermissions()));
 
     m_ui->extensionLabel->setOpenExternalLinks(true);
     m_ui->extensionLabel->setText(tr("KeePassXC-Browser is needed for the browser integration to work. <br />Download it for %1 and %2.").arg(

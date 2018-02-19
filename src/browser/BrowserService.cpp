@@ -35,10 +35,14 @@
 #include "core/PasswordGenerator.h"
 #include "gui/MainWindow.h"
 
-static const char KEEPASSXCBROWSER_NAME[] = "KeePassXC-Browser Settings";
-static const char ASSOCIATE_KEY_PREFIX[] = "Public Key: ";
+const char BrowserService::KEEPASSXCBROWSER_NAME[] = "KeePassXC-Browser Settings";
+const char BrowserService::ASSOCIATE_KEY_PREFIX[] = "KPXC_BROWSER_";
 static const char KEEPASSXCBROWSER_GROUP_NAME[] = "KeePassXC-Browser Passwords";
 static int KEEPASSXCBROWSER_DEFAULT_ICON = 1;
+// These are for the settings and password conversion
+const char BrowserService::LEGACY_ASSOCIATE_KEY_PREFIX[] = "Public Key: ";
+static const char KEEPASSHTTP_NAME[] = "KeePassHttp Settings";
+static const char KEEPASSHTTP_GROUP_NAME[] = "KeePassHttp Passwords";
 
 BrowserService::BrowserService(DatabaseTabWidget* parent)
     : m_dbTabWidget(parent)
@@ -46,12 +50,15 @@ BrowserService::BrowserService(DatabaseTabWidget* parent)
     , m_bringToFrontRequested(false)
     , m_keepassBrowserUUID(QUuid::fromRfc4122(QByteArray::fromHex("de887cc3036343b8974b5911b8816224")))
 {
-    connect(m_dbTabWidget, SIGNAL(databaseLocked(DatabaseWidget*)), this, SLOT(databaseLocked(DatabaseWidget*)));
-    connect(m_dbTabWidget, SIGNAL(databaseUnlocked(DatabaseWidget*)), this, SLOT(databaseUnlocked(DatabaseWidget*)));
-    connect(m_dbTabWidget,
-            SIGNAL(activateDatabaseChanged(DatabaseWidget*)),
-            this,
-            SLOT(activateDatabaseChanged(DatabaseWidget*)));
+    // Don't connect the signals when used from DatabaseSettingsWidgetBrowser (parent is nullptr)
+    if (m_dbTabWidget) {
+        connect(m_dbTabWidget, SIGNAL(databaseLocked(DatabaseWidget*)), this, SLOT(databaseLocked(DatabaseWidget*)));
+        connect(m_dbTabWidget, SIGNAL(databaseUnlocked(DatabaseWidget*)), this, SLOT(databaseUnlocked(DatabaseWidget*)));
+        connect(m_dbTabWidget,
+                SIGNAL(activateDatabaseChanged(DatabaseWidget*)),
+                this,
+                SLOT(activateDatabaseChanged(DatabaseWidget*)));
+    }
 }
 
 bool BrowserService::isDatabaseOpened() const
@@ -107,12 +114,12 @@ QString BrowserService::getDatabaseRootUuid()
 {
     Database* db = getDatabase();
     if (!db) {
-        return QString();
+        return {};
     }
 
     Group* rootGroup = db->rootGroup();
     if (!rootGroup) {
-        return QString();
+        return {};
     }
 
     return rootGroup->uuidToHex();
@@ -122,44 +129,14 @@ QString BrowserService::getDatabaseRecycleBinUuid()
 {
     Database* db = getDatabase();
     if (!db) {
-        return QString();
+        return {};
     }
 
     Group* recycleBin = db->metadata()->recycleBin();
     if (!recycleBin) {
-        return QString();
+        return {};
     }
     return recycleBin->uuidToHex();
-}
-
-Entry* BrowserService::getConfigEntry(bool create)
-{
-    Entry* entry = nullptr;
-    Database* db = getDatabase();
-    if (!db) {
-        return nullptr;
-    }
-
-    entry = db->resolveEntry(m_keepassBrowserUUID);
-    if (!entry && create) {
-        entry = new Entry();
-        entry->setTitle(QLatin1String(KEEPASSXCBROWSER_NAME));
-        entry->setUuid(m_keepassBrowserUUID);
-        entry->setAutoTypeEnabled(false);
-        entry->setGroup(db->rootGroup());
-        return entry;
-    }
-
-    if (entry && entry->group() == db->metadata()->recycleBin()) {
-        if (!create) {
-            return nullptr;
-        } else {
-            entry->setGroup(db->rootGroup());
-            return entry;
-        }
-    }
-
-    return entry;
 }
 
 QString BrowserService::storeKey(const QString& key)
@@ -172,8 +149,8 @@ QString BrowserService::storeKey(const QString& key)
         return id;
     }
 
-    Entry* config = getConfigEntry(true);
-    if (!config) {
+    Database* db = getDatabase();
+    if (!db) {
         return {};
     }
 
@@ -199,7 +176,7 @@ QString BrowserService::storeKey(const QString& key)
             return {};
         }
 
-        contains = config->attributes()->contains(QLatin1String(ASSOCIATE_KEY_PREFIX) + id);
+        contains = db->metadata()->customData()->contains(QLatin1String(ASSOCIATE_KEY_PREFIX) + id);
         if (contains) {
             dialogResult = QMessageBox::warning(nullptr,
                                                 tr("KeePassXC: Overwrite existing key?"),
@@ -210,18 +187,18 @@ QString BrowserService::storeKey(const QString& key)
         }
     } while (contains && dialogResult == QMessageBox::No);
 
-    config->attributes()->set(QLatin1String(ASSOCIATE_KEY_PREFIX) + id, key, true);
+    db->metadata()->customData()->set(QLatin1String(ASSOCIATE_KEY_PREFIX) + id, key);
     return id;
 }
 
 QString BrowserService::getKey(const QString& id)
 {
-    Entry* config = getConfigEntry();
-    if (!config) {
-        return QString();
+    Database* db = getDatabase();
+    if (!db) {
+        return {};
     }
 
-    return config->attributes()->value(QLatin1String(ASSOCIATE_KEY_PREFIX) + id);
+    return db->metadata()->customData()->value(QLatin1String(ASSOCIATE_KEY_PREFIX) + id);
 }
 
 QJsonArray BrowserService::findMatchingEntries(const QString& id,
@@ -445,12 +422,9 @@ QList<Entry*> BrowserService::searchEntries(const QString& url, const StringPair
                 if (Database* db = dbWidget->database()) {
                      // Check if database is connected with KeePassXC-Browser
                     for (const StringPair keyPair : keyList) {
-                        Entry* entry = db->resolveEntry(m_keepassBrowserUUID);
-                        if (entry) {
-                            QString key = entry->attributes()->value(QLatin1String(ASSOCIATE_KEY_PREFIX) + keyPair.first);
-                            if (!key.isEmpty() && keyPair.second == key) {
-                                databases << db;
-                            }
+                        QString key = db->metadata()->customData()->value(QLatin1String(ASSOCIATE_KEY_PREFIX) + keyPair.first);
+                        if (!key.isEmpty() && keyPair.second == key) {
+                            databases << db;
                         }
                     }
                 }
@@ -472,101 +446,69 @@ QList<Entry*> BrowserService::searchEntries(const QString& url, const StringPair
     return entries;
 }
 
-void BrowserService::removeSharedEncryptionKeys()
+void BrowserService::convertAttributesToCustomData(Database *currentDb)
 {
-    if (!isDatabaseOpened()) {
-        QMessageBox::critical(0,
-                              tr("KeePassXC: Database locked!"),
-                              tr("The active database is locked!\n"
-                                 "Please unlock the selected database or choose another one which is unlocked."),
-                              QMessageBox::Ok);
-        return;
-    }
-
-    Entry* entry = getConfigEntry();
-    if (!entry) {
-        QMessageBox::information(0,
-                                 tr("KeePassXC: Settings not available!"),
-                                 tr("The active database does not contain a settings entry."),
-                                 QMessageBox::Ok);
-        return;
-    }
-
-    QStringList keysToRemove;
-    for (const QString& key : entry->attributes()->keys()) {
-        if (key.startsWith(ASSOCIATE_KEY_PREFIX)) {
-            keysToRemove << key;
-        }
-    }
-
-    if (keysToRemove.isEmpty()) {
-        QMessageBox::information(0,
-                                 tr("KeePassXC: No keys found"),
-                                 tr("No shared encryption keys found in KeePassXC settings."),
-                                 QMessageBox::Ok);
-        return;
-    }
-
-    entry->beginUpdate();
-    for (const QString& key : keysToRemove) {
-        entry->attributes()->remove(key);
-    }
-    entry->endUpdate();
-
-    const int count = keysToRemove.count();
-    QMessageBox::information(0,
-                             tr("KeePassXC: Removed keys from database"),
-                             tr("Successfully removed %n encryption key(s) from KeePassXC settings.", "", count),
-                             QMessageBox::Ok);
-}
-
-void BrowserService::removeStoredPermissions()
-{
-    if (!isDatabaseOpened()) {
-        QMessageBox::critical(0,
-                              tr("KeePassXC: Database locked!"),
-                              tr("The active database is locked!\n"
-                                 "Please unlock the selected database or choose another one which is unlocked."),
-                              QMessageBox::Ok);
-        return;
-    }
-
-    Database* db = m_dbTabWidget->currentDatabaseWidget()->database();
+    Database* db = currentDb ? currentDb : getDatabase();
     if (!db) {
         return;
     }
 
     QList<Entry*> entries = db->rootGroup()->entriesRecursive();
-
-    QProgressDialog progress(tr("Removing stored permissions…"), tr("Abort"), 0, entries.count());
+    QProgressDialog progress(tr("Converting attributes to custom data…"), tr("Abort"), 0, entries.count());
     progress.setWindowModality(Qt::WindowModal);
 
-    uint counter = 0;
+    int counter = 0;
+    int keyCounter = 0;
     for (Entry* entry : entries) {
         if (progress.wasCanceled()) {
             return;
         }
 
-        if (entry->attributes()->contains(KEEPASSXCBROWSER_NAME)) {
-            entry->beginUpdate();
-            entry->attributes()->remove(KEEPASSXCBROWSER_NAME);
-            entry->endUpdate();
+        if (moveSettingsToCustomData(entry, KEEPASSHTTP_NAME)) {
             ++counter;
         }
+        if (moveSettingsToCustomData(entry, KEEPASSXCBROWSER_NAME)) {
+            ++counter;
+        }
+
+        if (entry->title() == KEEPASSHTTP_NAME || entry->title() == KEEPASSXCBROWSER_NAME) {
+            keyCounter += moveKeysToCustomData(entry, db);
+            delete entry;
+        }
+
         progress.setValue(progress.value() + 1);
     }
     progress.reset();
 
     if (counter > 0) {
-        QMessageBox::information(0,
-                                 tr("KeePassXC: Removed permissions"),
-                                 tr("Successfully removed permissions from %n entry(s).", "", counter),
+        QMessageBox::information(0, tr("KeePassXC: Converted KeePassHTTP attributes"),
+                                 tr("Successfully converted attributes from %1 entry(s).\n"
+                                    "Moved %2 keys to custom data.", "").arg(counter).arg(keyCounter),
+                                 QMessageBox::Ok);
+    } else if (counter == 0 && keyCounter > 0) {
+        QMessageBox::information(0, tr("KeePassXC: Converted KeePassHTTP attributes"),
+                                 tr("Successfully moved %n keys to custom data.", "", keyCounter),
                                  QMessageBox::Ok);
     } else {
-        QMessageBox::information(0,
-                                 tr("KeePassXC: No entry with permissions found!"),
-                                 tr("The active database does not contain an entry with permissions."),
+        QMessageBox::information(0, tr("KeePassXC: No entry with KeePassHTTP attributes found!"),
+                                 tr("The active database does not contain an entry with KeePassHTTP attributes."),
                                  QMessageBox::Ok);
+    }
+
+    // Rename password groupName
+    Group* rootGroup = db->rootGroup();
+    if (!rootGroup) {
+        return;
+    }
+
+    const QString keePassBrowserGroupName = QLatin1String(KEEPASSXCBROWSER_GROUP_NAME);
+    const QString keePassHttpGroupName = QLatin1String(KEEPASSHTTP_GROUP_NAME);
+
+    for (Group* g : rootGroup->groupsRecursive(true)) {
+        if (g->name() == keePassHttpGroupName) {
+            g->setName(keePassBrowserGroupName);
+            break;
+        }
     }
 }
 
@@ -873,6 +815,75 @@ Database* BrowserService::selectedDatabase()
     return getDatabase();
 }
 
+bool BrowserService::moveSettingsToCustomData(Entry* entry, const QString& name) const
+{
+    if (entry->attributes()->contains(name)) {
+        QString attr = entry->attributes()->value(name);
+        entry->beginUpdate();
+        if (!attr.isEmpty()) {
+            entry->customData()->set(KEEPASSXCBROWSER_NAME, attr);
+        }
+        entry->attributes()->remove(name);
+        entry->endUpdate();
+        return true;
+    }
+    return false;
+}
+
+int BrowserService::moveKeysToCustomData(Entry* entry, Database* db) const
+{
+    int keyCounter = 0;
+    for (const auto& key : entry->attributes()->keys()) {
+        if (key.contains(LEGACY_ASSOCIATE_KEY_PREFIX)) {
+            QString publicKey = key;
+            publicKey.remove(LEGACY_ASSOCIATE_KEY_PREFIX);
+
+            // Add key to database custom data
+            if (db && !db->metadata()->customData()->contains(QLatin1String(ASSOCIATE_KEY_PREFIX) + publicKey)) {
+                db->metadata()->customData()->set(QLatin1String(ASSOCIATE_KEY_PREFIX) + publicKey, entry->attributes()->value(key));
+                ++keyCounter;
+            }
+        }
+    }
+
+    return keyCounter;
+}
+
+bool BrowserService::checkLegacySettings()
+{
+    Database* db = getDatabase();
+    if (!db) {
+        return false;
+    }
+
+    bool legacySettingsFound = false;
+    QList<Entry*> entries = db->rootGroup()->entriesRecursive();
+    for (const auto& e : entries) {
+        if ((e->attributes()->contains(KEEPASSHTTP_NAME) || e->attributes()->contains(KEEPASSXCBROWSER_NAME)) ||
+            (e->title() == KEEPASSHTTP_NAME || e->title() == KEEPASSXCBROWSER_NAME)) {
+            legacySettingsFound = true;
+            break;
+        }
+    }
+
+    if (!legacySettingsFound) {
+        return false;
+    }
+
+    auto dialogResult = QMessageBox::warning(nullptr,
+                                             tr("KeePassXC: Legacy browser integration settings detected"),
+                                             tr("Legacy browser integration settings have been detected.\n"
+                                                "Do you want to upgrade the settings to the latest standard?\n"
+                                                "This is necessary to maintain compatibility with the browser plugin."),
+                                             QMessageBox::Yes | QMessageBox::No);
+        
+    if (dialogResult == QMessageBox::No) {
+        return false;
+    }
+
+    return true;
+}
+
 void BrowserService::databaseLocked(DatabaseWidget* dbWidget)
 {
     if (dbWidget) {
@@ -888,6 +899,10 @@ void BrowserService::databaseUnlocked(DatabaseWidget* dbWidget)
             m_bringToFrontRequested = false;
         }
         emit databaseUnlocked();
+
+        if (checkLegacySettings()) {
+            convertAttributesToCustomData();
+        }
     }
 }
 

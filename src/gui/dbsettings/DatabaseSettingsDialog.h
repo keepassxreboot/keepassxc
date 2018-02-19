@@ -19,6 +19,7 @@
 #define KEEPASSX_DATABASESETTINGSWIDGET_H
 
 #include "gui/DialogyWidget.h"
+#include "config-keepassx.h"
 
 #include <QScopedPointer>
 #include <QPointer>
@@ -27,6 +28,9 @@ class Database;
 class DatabaseSettingsWidgetGeneral;
 class DatabaseSettingsWidgetEncryption;
 class DatabaseSettingsWidgetMasterKey;
+#ifdef WITH_XC_BROWSER
+class DatabaseSettingsWidgetBrowser;
+#endif
 class QTabWidget;
 
 namespace Ui
@@ -68,6 +72,9 @@ private:
     QPointer<QTabWidget> m_securityTabWidget;
     QPointer<DatabaseSettingsWidgetMasterKey> m_masterKeyWidget;
     QPointer<DatabaseSettingsWidgetEncryption> m_encryptionWidget;
+#ifdef WITH_XC_BROWSER
+    QPointer<DatabaseSettingsWidgetBrowser> m_browserWidget;
+#endif
 };
 
 #endif // KEEPASSX_DATABASESETTINGSWIDGET_H
