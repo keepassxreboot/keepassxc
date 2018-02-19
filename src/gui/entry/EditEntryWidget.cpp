@@ -1137,7 +1137,7 @@ QMenu* EditEntryWidget::createPresetsMenu()
     return expirePresetsMenu;
 }
 
-void EditEntryWidget::setupColorButton(bool foreground, QColor color)
+void EditEntryWidget::setupColorButton(bool foreground, const QColor& color)
 {
     QWidget* button = m_advancedUi->fgColorButton;
     QCheckBox* checkBox = m_advancedUi->fgColorCheckBox;
@@ -1165,7 +1165,7 @@ void EditEntryWidget::pickColor()
         oldColor = QColor(m_advancedUi->bgColorButton->property("color").toString());
     }
 
-    QColorDialog colorDialog;
+    QColorDialog colorDialog(this);
     QColor newColor = colorDialog.getColor(oldColor);
     if (newColor.isValid()) {
         setupColorButton(isForeground, newColor);
