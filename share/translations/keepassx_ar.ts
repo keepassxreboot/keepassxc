@@ -3518,11 +3518,11 @@ Available commands:
     </message>
     <message>
         <source>Legacy Browser Integration</source>
-        <translation type="unfinished"/>
+        <translation>تكامل المتصفح القديم</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation type="unfinished"/>
+        <translation>تكامل المتصفح</translation>
     </message>
     <message>
         <source>YubiKey[%1] Challenge Response - Slot %2 - %3</source>
@@ -3534,7 +3534,7 @@ Available commands:
     </message>
     <message>
         <source>Passive</source>
-        <translation type="unfinished"/>
+        <translation>سلبي</translation>
     </message>
     <message>
         <source>SSH Agent</source>
