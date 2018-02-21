@@ -18,10 +18,6 @@
         <translation>Το KeePassXC διανέμεται υπό τους όρους του GNU General Public License (GPL) έκδοση 2 ή (κατά την επιλογή σας) έκδοση 3.</translation>
     </message>
     <message>
-        <source>Project Maintainers:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Contributors</source>
         <translation>Συνεισφέροντες</translation>
     </message>
@@ -53,7 +49,7 @@
     </message>
     <message>
         <source>Distribution: %1</source>
-        <translation type="unfinished"/>
+        <translation>Διανομή: %1</translation>
     </message>
     <message>
         <source>Libraries:</source>
@@ -70,6 +66,19 @@ Kernel: %3 %4</source>
     <message>
         <source>Enabled extensions:</source>
         <translation>Ενεργοποιημένες επεκτάσεις:</translation>
+    </message>
+    <message>
+        <source>Project Maintainers:</source>
+        <translation>Υποστήριξη έργου:</translation>
+    </message>
+    <message>
+        <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Build Type: %1
+</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -101,7 +110,7 @@ Please select whether you want to allow access.</source>
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent (requires restart)</source>
-        <translation type="unfinished"/>
+        <translation>Ενεργοποίηση πράκτορα SSH (απαιτεί επανεκκίνηση)</translation>
     </message>
 </context>
 <context>
@@ -148,6 +157,25 @@ Please select whether you want to allow access.</source>
     <message>
         <source>Default sequence</source>
         <translation>Προεπιλεγμένη ακολουθία</translation>
+    </message>
+</context>
+<context>
+    <name>AutoTypeMatchModel</name>
+    <message>
+        <source>Group</source>
+        <translation>Όμαδα</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Τίτλος</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Όνομα χρήστη</translation>
+    </message>
+    <message>
+        <source>Sequence</source>
+        <translation>Ακολουθία</translation>
     </message>
 </context>
 <context>
@@ -807,6 +835,16 @@ If you keep this number, your database may be too easy to crack!</source>
         <source>Failed to transform key with new KDF parameters; KDF unchanged.</source>
         <translation type="unfinished"/>
     </message>
+    <message numerus="yes">
+        <source> MiB</source>
+        <comment>Abbreviation for Mebibytes (KDF settings)</comment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source> thread(s)</source>
+        <comment>Threads for parallel execution (KDF settings)</comment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetEncryption</name>
@@ -839,15 +877,7 @@ If you keep this number, your database may be too easy to crack!</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source> MB</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Parallelism:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source> thread</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -888,6 +918,14 @@ If you keep this number, your database may be too easy to crack!</source>
     <message>
         <source>Use recycle bin</source>
         <translation>Χρήση κάδου ανακύκλωσης</translation>
+    </message>
+    <message>
+        <source>Additional Database Settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Enable &amp;compression (recommended)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1011,6 +1049,15 @@ Otherwise your changes are lost.</source>
 Θέλετε να αποθηκεύσετε τις αλλαγές σας πρίν την κλειδώσετε:
 Αλλιώς οι αλλαγές σας θα χαθούν.</translation>
     </message>
+    <message>
+        <source>Disable safe saves?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
+Disable safe saves and try again?</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
@@ -1122,6 +1169,10 @@ Do you want to merge your changes?</source>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>Είστε σίγουροι ότι θέλετε να διαγράψετε μόνιμα τα πάντα από το κάδο ανακύκλωσής σας;</translation>
+    </message>
+    <message>
+        <source>Entry updated successfully.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1235,7 +1286,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>SSH Agent</source>
-        <translation type="unfinished"/>
+        <translation>πράκτορας SSH</translation>
     </message>
     <message>
         <source>n/a</source>
@@ -1309,6 +1360,18 @@ Do you want to merge your changes?</source>
         <source>1 year</source>
         <translation>1 χρόνο</translation>
     </message>
+    <message>
+        <source>Apply generated password?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to apply the generated password to this entry?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry updated successfully.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
@@ -1339,6 +1402,14 @@ Do you want to merge your changes?</source>
     <message>
         <source>Attachments</source>
         <translation>Συνημμένα</translation>
+    </message>
+    <message>
+        <source>Foreground Color:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Background Color:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1372,12 +1443,8 @@ Do you want to merge your changes?</source>
         <translation>Τίτλος Παραθύρου:</translation>
     </message>
     <message>
-        <source>Use default se&amp;quence</source>
+        <source>Use a specific sequence for this association:</source>
         <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Set custo&amp;m sequence:</source>
-        <translation>Χρήση προεπιλε&amp;γμένης ακολουθίας:</translation>
     </message>
 </context>
 <context>
@@ -1657,6 +1724,31 @@ Do you want to merge your changes?</source>
         <source>Uuid:</source>
         <translation>UUID:</translation>
     </message>
+    <message>
+        <source>Plugin Data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Αφαίρεση</translation>
+    </message>
+    <message>
+        <source>Delete plugin data?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to delete the selected plugin data?
+This may cause the affected plugins to malfunction.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Entry</name>
@@ -1798,6 +1890,65 @@ Do you want to merge your changes?</source>
         <source>URL</source>
         <translation>URL</translation>
     </message>
+    <message>
+        <source>Never</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Κωδικός</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation>Σημειώσεις</translation>
+    </message>
+    <message>
+        <source>Expires</source>
+        <translation>Λήγει</translation>
+    </message>
+    <message>
+        <source>Created</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Accessed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Attachments</source>
+        <translation>Συνημμένα</translation>
+    </message>
+</context>
+<context>
+    <name>EntryView</name>
+    <message>
+        <source>Customize View</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide Usernames</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide Passwords</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fit to window</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fit to contents</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset to defaults</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Group</name>
@@ -1866,6 +2017,10 @@ Do you want to merge your changes?</source>
     <message>
         <source>Ensure that the password contains characters from every group</source>
         <translation>Βεβαιωθείται οτι ο κωδικός περιέχει χαρακτήρες απο κάθε ομάδα</translation>
+    </message>
+    <message>
+        <source>Extended ASCII</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2675,6 +2830,12 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <source>Please touch the button on your YubiKey!</source>
         <translation>Παρακαλώ αγγίξτε το κουμπί στο YubiKey σας!</translation>
     </message>
+    <message>
+        <source>WARNING: You are using an unstable build of KeePassXC!
+There is a high risk of corruption, maintain a backup of your databases.
+This version is not meant for production use.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>OpenSSHKey</name>
@@ -2684,10 +2845,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>PEM boundary mismatch</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>This is not an OpenSSH key, only modern keys are supported</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2719,10 +2876,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Unknown cipher: </source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Trying to run KDF without cipher</source>
         <translation type="unfinished"/>
     </message>
@@ -2735,19 +2888,11 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Unknown KDF: </source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Decryption failed, wrong passphrase?</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Unexpected EOF while reading public key</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unknown key type: </source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2768,6 +2913,26 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Unexpected EOF when writing private key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unsupported key type: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unknown cipher: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cipher IV is too short for MD5 kdf</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unknown KDF: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unknown key type: %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3357,6 +3522,51 @@ Available commands:
     </message>
     <message>
         <source>SSH Agent</source>
+        <translation>πράκτορας SSH</translation>
+    </message>
+    <message>
+        <source>Generate a new random diceware passphrase.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Word count for the diceware passphrase.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>count</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Wordlist for the diceware generator.
+[Default: EFF English]</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Generate a new random password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Length of the generated password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use lowercase characters in the generated password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use uppercase characters in the generated password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use numbers in the generated password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use special characters in the generated password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use extended ASCII in the generated password.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3626,6 +3836,30 @@ Please unlock the selected database or choose another one which is unlocked.</so
         <comment>Milliseconds</comment>
         <translation> ms</translation>
     </message>
+    <message>
+        <source>Startup</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>File Management</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Safely save database files (may be incompatible with Dropbox, etc)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Backup database file before saving</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry Management</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>Γενικά</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>
@@ -3681,6 +3915,10 @@ Please unlock the selected database or choose another one which is unlocked.</so
     <message>
         <source>Use Google as fallback for downloading website icons</source>
         <translation>Χρήση Google ως εφεδρικό τρόπο κατεβάσματος εικονιδίων ιστοσελίδων</translation>
+    </message>
+    <message>
+        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3764,10 +4002,6 @@ Please unlock the selected database or choose another one which is unlocked.</so
 <context>
     <name>WelcomeWidget</name>
     <message>
-        <source>Welcome to KeePassXC</source>
-        <translation>Καλωσορίσατε στο KeePassXC</translation>
-    </message>
-    <message>
         <source>Start storing your passwords securely in a KeePassXC database</source>
         <translation>Ξεκινήστε να αποθηκεύετε τους κωδικούς σας με ασφάλεια σε μία βάση δεδομένων KeePassXC</translation>
     </message>
@@ -3790,6 +4024,10 @@ Please unlock the selected database or choose another one which is unlocked.</so
     <message>
         <source>Recent databases</source>
         <translation>Πρόσφατες βάσεις δεδομένων</translation>
+    </message>
+    <message>
+        <source>Welcome to KeePassXC %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

@@ -18,10 +18,6 @@
         <translation>KeePassXC se distribuye bajo la Licencia Pública General de GNU (GPL) versión 2 o versión 3 (si así lo prefiere).</translation>
     </message>
     <message>
-        <source>Project Maintainers:</source>
-        <translation>Mantenedores del proyecto:</translation>
-    </message>
-    <message>
         <source>Contributors</source>
         <translation>Contribuidores</translation>
     </message>
@@ -70,6 +66,19 @@ Núcleo: %3 %4</translation>
     <message>
         <source>Enabled extensions:</source>
         <translation>Extensiones habilitadas:</translation>
+    </message>
+    <message>
+        <source>Project Maintainers:</source>
+        <translation>Mantenedores del proyecto:</translation>
+    </message>
+    <message>
+        <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Build Type: %1
+</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -148,6 +157,25 @@ Por favor seleccione si desea autorizar su acceso.</translation>
     <message>
         <source>Default sequence</source>
         <translation>Secuencia por defecto</translation>
+    </message>
+</context>
+<context>
+    <name>AutoTypeMatchModel</name>
+    <message>
+        <source>Group</source>
+        <translation>Grupo</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Título</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Nombre de usuario:</translation>
+    </message>
+    <message>
+        <source>Sequence</source>
+        <translation>Secuencia</translation>
     </message>
 </context>
 <context>
@@ -279,7 +307,7 @@ Por favor seleccione si desea autorizar su acceso.</translation>
     <message>
         <source>Never ask before &amp;updating credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>No preguntar y guardar los credenciales</translation>
     </message>
     <message>
         <source>Only the selected database has to be connected with a client.</source>
@@ -288,7 +316,7 @@ Por favor seleccione si desea autorizar su acceso.</translation>
     <message>
         <source>Searc&amp;h in all opened databases for matching credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Buscar &amp;h en todas las bases de datos abiertas los credenciales correspondientes</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
@@ -300,11 +328,11 @@ Por favor seleccione si desea autorizar su acceso.</translation>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
-        <translation type="unfinished"/>
+        <translation>Actualizaciones KeePassXC o keepassxc-proxy binario automáticamente para obtener los mensajes nativos en el arranque.</translation>
     </message>
     <message>
         <source>Update &amp;native messaging manifest files at startup</source>
-        <translation type="unfinished"/>
+        <translation>Actualizar &amp;native mensajes al inicear</translation>
     </message>
     <message>
         <source>Support a proxy application between KeePassXC and browser extension.</source>
@@ -312,11 +340,11 @@ Por favor seleccione si desea autorizar su acceso.</translation>
     </message>
     <message>
         <source>Use a &amp;proxy application between KeePassXC and browser extension</source>
-        <translation type="unfinished"/>
+        <translation>Utilizar un &amp;proxy entre KeePassXC y la extensión del navegador</translation>
     </message>
     <message>
         <source>Use a custom proxy location if you installed a proxy manually.</source>
-        <translation type="unfinished"/>
+        <translation>Utilizar un proxy instalado manualmente</translation>
     </message>
     <message>
         <source>Use a &amp;custom proxy location</source>
@@ -356,7 +384,11 @@ Por favor seleccione si desea autorizar su acceso.</translation>
 
 If you would like to allow it access to your KeePassXC database,
 give it a unique name to identify and accept it.</source>
-        <translation type="unfinished"/>
+        <translation>¿Quiere asociar la base de datos al navegador? 
+
+Si quiere autirizar el acceso a la base de datos de KeePassXC 
+de un nombre único para identificar la autorización
+(se guarda como una entrada más)</translation>
     </message>
     <message>
         <source>Save and allow access</source>
@@ -369,7 +401,8 @@ give it a unique name to identify and accept it.</source>
     <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
-        <translation type="unfinished"/>
+        <translation>Existe una llave con el nombre &quot;%1&quot;.
+¿Quiere sobreescribirlo?</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
@@ -427,7 +460,7 @@ Por favor desbloquee la base de datos seleccionada o elija otra que esté desblo
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Los permisos fueron eliminados exitosamente de %n entradas</numerusform><numerusform>Los permisos fueron eliminados exitosamente de %n entradas</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -512,14 +545,17 @@ Por favor desbloquee la base de datos seleccionada o elija otra que esté desblo
     </message>
     <message>
         <source>Legacy key file format</source>
-        <translation type="unfinished"/>
+        <translation>Formato de archivo llave heredado</translation>
     </message>
     <message>
         <source>You are using a legacy key file format which may become
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>Está utilizando un formato de archivo llave heredado que puede convertirse
+ en no soportado en el futuro.
+
+Considere generar un nuevo archivo llave.</translation>
     </message>
     <message>
         <source>Changing master key failed: no YubiKey inserted.</source>
@@ -585,7 +621,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Number of headers line to discard</source>
-        <translation>Cantidad de líneas a descartar del encabezado</translation>
+        <translation>Cantidad de líneas a descartar de la cabecera</translation>
     </message>
     <message>
         <source>Consider &apos;\&apos; an escape character</source>
@@ -700,18 +736,21 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Legacy key file format</source>
-        <translation type="unfinished"/>
+        <translation>Formato de archivo llave heredado</translation>
     </message>
     <message>
         <source>You are using a legacy key file format which may become
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>Está utilizando un formato de archivo llave heredado que puede convertirse
+ en no soportado en el futuro.
+
+Considere generar un nuevo archivo llave.</translation>
     </message>
     <message>
         <source>Don&apos;t show this warning again</source>
-        <translation type="unfinished"/>
+        <translation>No mostrar nuevamente esta advertencia</translation>
     </message>
     <message>
         <source>All files</source>
@@ -776,47 +815,61 @@ Ahora puede guardarla.</translation>
     <message>
         <source>Number of rounds too high</source>
         <comment>Key transformation rounds</comment>
-        <translation type="unfinished"/>
+        <translation>Número de rondas demasiado altas</translation>
     </message>
     <message>
         <source>You are using a very high number of key transform rounds with Argon2.
 
 If you keep this number, your database may take hours or days (or even longer) to open!</source>
-        <translation type="unfinished"/>
+        <translation>Está utilizando una gran cantidad de rondas de transformación de clave con Argon2.
+
+Si conserva este número, ¡su base de datos puede tardar horas o días (o incluso más) en abrirse!</translation>
     </message>
     <message>
         <source>Understood, keep number</source>
-        <translation type="unfinished"/>
+        <translation>Entendido, mantenga el número</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Number of rounds too low</source>
         <comment>Key transformation rounds</comment>
-        <translation type="unfinished"/>
+        <translation>Número de rondas demasiado bajas</translation>
     </message>
     <message>
         <source>You are using a very low number of key transform rounds with AES-KDF.
 
 If you keep this number, your database may be too easy to crack!</source>
-        <translation type="unfinished"/>
+        <translation>Está utilizando una cantidad muy baja de rondas de transformación de llave con AES-KDF.
+
+Si conserva este número, ¡su base de datos puede ser muy fácil de descifrar!</translation>
     </message>
     <message>
         <source>KDF unchanged</source>
-        <translation type="unfinished"/>
+        <translation>KDF sin cambios</translation>
     </message>
     <message>
         <source>Failed to transform key with new KDF parameters; KDF unchanged.</source>
-        <translation type="unfinished"/>
+        <translation>Error al transformar la llave con nuevos parámetros KDF; KDF sin cambios.</translation>
+    </message>
+    <message numerus="yes">
+        <source> MiB</source>
+        <comment>Abbreviation for Mebibytes (KDF settings)</comment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source> thread(s)</source>
+        <comment>Threads for parallel execution (KDF settings)</comment>
+        <translation><numerusform>hilo(s)</numerusform><numerusform>hilo(s)</numerusform></translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetEncryption</name>
     <message>
         <source>Encryption Algorithm:</source>
-        <translation type="unfinished"/>
+        <translation>Algoritmo de cifrado:</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
@@ -828,7 +881,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Key Derivation Function:</source>
-        <translation type="unfinished"/>
+        <translation>Función de derivación de la llave:</translation>
     </message>
     <message>
         <source>Transform rounds:</source>
@@ -840,26 +893,18 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Memory Usage:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source> MB</source>
-        <translation type="unfinished"/>
+        <translation>Memoria utilizada:</translation>
     </message>
     <message>
         <source>Parallelism:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source> thread</source>
-        <translation type="unfinished"/>
+        <translation>Paralelismo:</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetGeneral</name>
     <message>
         <source>Database Meta Data</source>
-        <translation type="unfinished"/>
+        <translation>Metadatos de la Base de Datos</translation>
     </message>
     <message>
         <source>Database name:</source>
@@ -875,7 +920,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>History Settings</source>
-        <translation type="unfinished"/>
+        <translation>Configuración del Historial</translation>
     </message>
     <message>
         <source>Max. history items:</source>
@@ -892,6 +937,14 @@ If you keep this number, your database may be too easy to crack!</source>
     <message>
         <source>Use recycle bin</source>
         <translation>Usar papelera de reciclaje</translation>
+    </message>
+    <message>
+        <source>Additional Database Settings</source>
+        <translation>Configuraciones Adicionales de la Base de Datos</translation>
+    </message>
+    <message>
+        <source>Enable &amp;compression (recommended)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1015,6 +1068,15 @@ Otherwise your changes are lost.</source>
 ¿Desea guardar la base de datos antes de bloquearla?
 De lo contrario se perderán los cambios.</translation>
     </message>
+    <message>
+        <source>Disable safe saves?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
+Disable safe saves and try again?</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
@@ -1100,7 +1162,7 @@ De lo contrario se perderán los cambios.</translation>
     </message>
     <message>
         <source>File has changed</source>
-        <translation type="unfinished"/>
+        <translation>El archivo ha cambiado</translation>
     </message>
     <message>
         <source>The database file has changed. Do you want to load the changes?</source>
@@ -1113,7 +1175,7 @@ De lo contrario se perderán los cambios.</translation>
     <message>
         <source>The database file has changed and you have unsaved changes.
 Do you want to merge your changes?</source>
-        <translation type="unfinished"/>
+        <translation>El archivo de la base de datos ha cambiado y usted tiene modificaciones sin guardar. ¿Desea unir sus modificaciones?</translation>
     </message>
     <message>
         <source>Could not open the new database file while attempting to autoreload this database.</source>
@@ -1127,12 +1189,16 @@ Do you want to merge your changes?</source>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>¿Está seguro que quiere eliminar permanentemente todo de su papelera de reciclaje?</translation>
     </message>
+    <message>
+        <source>Entry updated successfully.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DetailsWidget</name>
     <message>
         <source>Generate TOTP Token</source>
-        <translation type="unfinished"/>
+        <translation>Generar Token TOTP</translation>
     </message>
     <message>
         <source>Close</source>
@@ -1152,7 +1218,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Expiration</source>
-        <translation type="unfinished"/>
+        <translation>Vencimiento</translation>
     </message>
     <message>
         <source>Username</source>
@@ -1160,15 +1226,15 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Autotype</source>
-        <translation type="unfinished"/>
+        <translation>Autoescritura</translation>
     </message>
     <message>
         <source>Searching</source>
-        <translation type="unfinished"/>
+        <translation>Buscando...</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation type="unfinished"/>
+        <translation>Atributos</translation>
     </message>
     <message>
         <source>Attachments</source>
@@ -1196,19 +1262,19 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Nunca</translation>
     </message>
     <message>
         <source>[PROTECTED]</source>
-        <translation type="unfinished"/>
+        <translation>[PROTEGIDO]</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"/>
+        <translation>Deshabilitado</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation type="unfinished"/>
+        <translation>Habilitado</translation>
     </message>
 </context>
 <context>
@@ -1239,27 +1305,27 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>SSH Agent</source>
-        <translation type="unfinished"/>
+        <translation>Agente de SSH</translation>
     </message>
     <message>
         <source>n/a</source>
-        <translation type="unfinished"/>
+        <translation>n/a</translation>
     </message>
     <message>
         <source>(encrypted)</source>
-        <translation type="unfinished"/>
+        <translation>(encriptado)</translation>
     </message>
     <message>
         <source>Select private key</source>
-        <translation type="unfinished"/>
+        <translation>Seleccione la llave privada</translation>
     </message>
     <message>
         <source>File too large to be a private key</source>
-        <translation type="unfinished"/>
+        <translation>Archivo demasiado grande para ser una llave privada</translation>
     </message>
     <message>
         <source>Failed to open private key</source>
-        <translation type="unfinished"/>
+        <translation>Error al abrir la llave privada</translation>
     </message>
     <message>
         <source>Entry history</source>
@@ -1291,11 +1357,11 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>[PROTECTED]</source>
-        <translation type="unfinished"/>
+        <translation>[PROTEGIDO]</translation>
     </message>
     <message>
         <source>Press reveal to view or edit</source>
-        <translation type="unfinished"/>
+        <translation>Presione revelar para ver o editar</translation>
     </message>
     <message>
         <source>Tomorrow</source>
@@ -1312,6 +1378,18 @@ Do you want to merge your changes?</source>
     <message>
         <source>1 year</source>
         <translation>1 año</translation>
+    </message>
+    <message>
+        <source>Apply generated password?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to apply the generated password to this entry?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry updated successfully.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1343,6 +1421,14 @@ Do you want to merge your changes?</source>
     <message>
         <source>Attachments</source>
         <translation>Adjuntos</translation>
+    </message>
+    <message>
+        <source>Foreground Color:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Background Color:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1376,12 +1462,8 @@ Do you want to merge your changes?</source>
         <translation>Título de la ventana:</translation>
     </message>
     <message>
-        <source>Use default se&amp;quence</source>
-        <translation>Usar secuencia por &amp;defecto</translation>
-    </message>
-    <message>
-        <source>Set custo&amp;m sequence:</source>
-        <translation>Definir secuencia personalizada:</translation>
+        <source>Use a specific sequence for this association:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1431,7 +1513,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation type="unfinished"/>
+        <translation>Cambie la casilla de verificación para mostrar la sección de notas.</translation>
     </message>
     <message>
         <source>Username:</source>
@@ -1446,7 +1528,7 @@ Do you want to merge your changes?</source>
     <name>EditEntryWidgetSSHAgent</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>Forma</translation>
     </message>
     <message>
         <source>Remove key from agent after</source>
@@ -1454,35 +1536,35 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source> seconds</source>
-        <translation type="unfinished"/>
+        <translation>segundos</translation>
     </message>
     <message>
         <source>Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>Huella dactilar</translation>
     </message>
     <message>
         <source>Remove key from agent when database is closed/locked</source>
-        <translation type="unfinished"/>
+        <translation>Eliminar llave del agente cuando la base de datos está cerrada/bloqueada</translation>
     </message>
     <message>
         <source>Public key</source>
-        <translation type="unfinished"/>
+        <translation>Llave Pública</translation>
     </message>
     <message>
         <source>Add key to agent when database is opened/unlocked</source>
-        <translation type="unfinished"/>
+        <translation>Agregar llave al agente cuando la base de datos se abre/desbloquea</translation>
     </message>
     <message>
         <source>Comment</source>
-        <translation type="unfinished"/>
+        <translation>Comentario</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation type="unfinished"/>
+        <translation>Descifrar</translation>
     </message>
     <message>
         <source>n/a</source>
-        <translation type="unfinished"/>
+        <translation>n/a</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
@@ -1490,11 +1572,11 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Private key</source>
-        <translation type="unfinished"/>
+        <translation>Llave Privada</translation>
     </message>
     <message>
         <source>External file</source>
-        <translation type="unfinished"/>
+        <translation>Archivo externo</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -1503,19 +1585,19 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Attachment</source>
-        <translation type="unfinished"/>
+        <translation>Adjunto</translation>
     </message>
     <message>
         <source>Add to agent</source>
-        <translation type="unfinished"/>
+        <translation>Añadir a agente</translation>
     </message>
     <message>
         <source>Remove from agent</source>
-        <translation type="unfinished"/>
+        <translation>Eliminar del agente</translation>
     </message>
     <message>
         <source>Require user confirmation when this key is used</source>
-        <translation type="unfinished"/>
+        <translation>Requiere confirmación del usuario cuando se usa esta llave</translation>
     </message>
 </context>
 <context>
@@ -1661,6 +1743,31 @@ Do you want to merge your changes?</source>
         <source>Uuid:</source>
         <translation>Uuid:</translation>
     </message>
+    <message>
+        <source>Plugin Data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Eliminar</translation>
+    </message>
+    <message>
+        <source>Delete plugin data?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to delete the selected plugin data?
+This may cause the affected plugins to malfunction.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Entry</name>
@@ -1678,14 +1785,14 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>Tamaño</translation>
     </message>
 </context>
 <context>
     <name>EntryAttachmentsWidget</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>Forma</translation>
     </message>
     <message>
         <source>Add</source>
@@ -1705,7 +1812,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Select files</source>
-        <translation type="unfinished"/>
+        <translation>Seleccionar archivos</translation>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
@@ -1717,20 +1824,21 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Save attachments</source>
-        <translation type="unfinished"/>
+        <translation>Guardar adjuntos</translation>
     </message>
     <message>
         <source>Unable to create directory:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>No se puede crear directorio:
+%1</translation>
     </message>
     <message>
         <source>Are you sure you want to overwrite the existing file &quot;%1&quot; with the attachment?</source>
-        <translation type="unfinished"/>
+        <translation>¿Seguro que quieres sobrescribir el archivo existente &quot;%1&quot; con el archivo adjunto?</translation>
     </message>
     <message>
         <source>Confirm overwrite</source>
-        <translation type="unfinished"/>
+        <translation>Confirmar sobreescritura</translation>
     </message>
     <message>
         <source>Unable to save attachments:
@@ -1802,6 +1910,65 @@ Do you want to merge your changes?</source>
         <source>URL</source>
         <translation>URL</translation>
     </message>
+    <message>
+        <source>Never</source>
+        <translation>Nunca</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Contraseña</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation>Notas</translation>
+    </message>
+    <message>
+        <source>Expires</source>
+        <translation>Expira</translation>
+    </message>
+    <message>
+        <source>Created</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Accessed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Attachments</source>
+        <translation>Adjuntos</translation>
+    </message>
+</context>
+<context>
+    <name>EntryView</name>
+    <message>
+        <source>Customize View</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide Usernames</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide Passwords</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fit to window</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fit to contents</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset to defaults</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Group</name>
@@ -1814,11 +1981,11 @@ Do you want to merge your changes?</source>
     <name>HostInstaller</name>
     <message>
         <source>KeePassXC: Cannot save file!</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: ¡No se puede guardar el archivo!</translation>
     </message>
     <message>
         <source>Cannot save the native messaging script file.</source>
-        <translation type="unfinished"/>
+        <translation>No se puede guardar el archivo de script de mensajería nativo.</translation>
     </message>
 </context>
 <context>
@@ -1870,6 +2037,10 @@ Do you want to merge your changes?</source>
     <message>
         <source>Ensure that the password contains characters from every group</source>
         <translation>Asegurar que la contraseña contiene caracteres de todos los grupos</translation>
+    </message>
+    <message>
+        <source>Extended ASCII</source>
+        <translation>ASCII Extendido</translation>
     </message>
 </context>
 <context>
@@ -1941,55 +2112,55 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Invalid header field length</source>
-        <translation>Tamaño del campo en la cabecera inválido</translation>
+        <translation>Longitud del campo en la cabecera inválido</translation>
     </message>
     <message>
         <source>Invalid header data length</source>
-        <translation>Tamaño del campo de datos en la cabecera incorrecto</translation>
+        <translation>Longitud del campo de datos en la cabecera incorrecto</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
-        <translation type="unfinished"/>
+        <translation>Error al abrir el búfer para los parámetros KDF en la cabecera</translation>
     </message>
     <message>
         <source>Unsupported key derivation function (KDF) or invalid parameters</source>
-        <translation type="unfinished"/>
+        <translation>Función de derivación de llave no soportada (KDF) o parámetros no válidos</translation>
     </message>
     <message>
         <source>Legacy header fields found in KDBX4 file.</source>
-        <translation type="unfinished"/>
+        <translation>Los campos heredados de la cabecera  se encuentran en el archivo KDBX4.</translation>
     </message>
     <message>
         <source>Invalid inner header id size</source>
-        <translation type="unfinished"/>
+        <translation>Tamaño id de la cabecera interna inválido</translation>
     </message>
     <message>
         <source>Invalid inner header field length</source>
-        <translation type="unfinished"/>
+        <translation>Longitud del campo en la cabecera interna inválido</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
-        <translation type="unfinished"/>
+        <translation>Tamaño binario de la cabecera interna inválido</translation>
     </message>
     <message>
         <source>Unsupported KeePass variant map version.</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Versión de mapa de variante de KeePass no soportada.</translation>
     </message>
     <message>
         <source>Invalid variant map entry name length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Longitud del nombre de la entrada del mapa de variante inválida</translation>
     </message>
     <message>
         <source>Invalid variant map entry name data</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Datos del nombre de la entrada de mapa de variante inválida</translation>
     </message>
     <message>
         <source>Invalid variant map entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Longitud del valor de la entrada del mapa de variante inválida</translation>
     </message>
     <message>
         <source>Invalid variant map entry value data</source>
@@ -2294,7 +2465,7 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
     </message>
     <message>
         <source>Unable to construct group tree</source>
-        <translation type="unfinished"/>
+        <translation>Incapaz de crear un grupo</translation>
     </message>
     <message>
         <source>Root</source>
@@ -2310,7 +2481,7 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
     </message>
     <message>
         <source>Key transformation failed</source>
-        <translation type="unfinished"/>
+        <translation>Error en la transformación de la llave</translation>
     </message>
     <message>
         <source>Invalid group field type number</source>
@@ -2452,7 +2623,7 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
     </message>
     <message>
         <source>Time-based one-time password</source>
-        <translation type="unfinished"/>
+        <translation>Contraseña temporal de un solo uso</translation>
     </message>
     <message>
         <source>&amp;Groups</source>
@@ -2580,7 +2751,7 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
     </message>
     <message>
         <source>Copy title to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Copiar título al portapapeles</translation>
     </message>
     <message>
         <source>&amp;URL</source>
@@ -2588,7 +2759,7 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
     </message>
     <message>
         <source>Copy URL to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Copiar URL al portapapeles</translation>
     </message>
     <message>
         <source>&amp;Notes</source>
@@ -2596,7 +2767,7 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
     </message>
     <message>
         <source>Copy notes to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Copiar notas al portapapeles</translation>
     </message>
     <message>
         <source>&amp;Export to CSV file...</source>
@@ -2628,7 +2799,7 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
     </message>
     <message>
         <source>E&amp;mpty recycle bin</source>
-        <translation type="unfinished"/>
+        <translation>Vaciar papelera de reciclaje</translation>
     </message>
     <message>
         <source>Clear history</source>
@@ -2682,6 +2853,12 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
         <source>Please touch the button on your YubiKey!</source>
         <translation>Por favor presione el botón en su YubiKey!</translation>
     </message>
+    <message>
+        <source>WARNING: You are using an unstable build of KeePassXC!
+There is a high risk of corruption, maintain a backup of your databases.
+This version is not meant for production use.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>OpenSSHKey</name>
@@ -2691,10 +2868,6 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
     </message>
     <message>
         <source>PEM boundary mismatch</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>This is not an OpenSSH key, only modern keys are supported</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2726,23 +2899,15 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Unknown cipher: </source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Trying to run KDF without cipher</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Passphrase is required to decrypt this key</source>
-        <translation type="unfinished"/>
+        <translation>Frase de contraseña necesaria para descrifrar esta clave</translation>
     </message>
     <message>
         <source>Key derivation failed, key file corrupted?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unknown KDF: </source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2751,10 +2916,6 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
     </message>
     <message>
         <source>Unexpected EOF while reading public key</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unknown key type: </source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2776,6 +2937,26 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
     <message>
         <source>Unexpected EOF when writing private key</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unsupported key type: %1</source>
+        <translation>Tipo de clave no soportada: %1</translation>
+    </message>
+    <message>
+        <source>Unknown cipher: %1</source>
+        <translation>Cifrado desconocido: %1</translation>
+    </message>
+    <message>
+        <source>Cipher IV is too short for MD5 kdf</source>
+        <translation>Cifrado IV demasiado corto para MD5 kdf</translation>
+    </message>
+    <message>
+        <source>Unknown KDF: %1</source>
+        <translation>KDF desconocido: %1</translation>
+    </message>
+    <message>
+        <source>Unknown key type: %1</source>
+        <translation>Tipo de clave desconocida: %1</translation>
     </message>
 </context>
 <context>
@@ -3088,7 +3269,7 @@ Usando el puerto por defecto 19455</translation>
     </message>
     <message>
         <source>Unknown error</source>
-        <translation type="unfinished"/>
+        <translation>Error desconocido</translation>
     </message>
     <message>
         <source>Add a new entry to a database.</source>
@@ -3100,11 +3281,11 @@ Usando el puerto por defecto 19455</translation>
     </message>
     <message>
         <source>Key file of the database.</source>
-        <translation type="unfinished"/>
+        <translation>Archivo de llave de la base de datos</translation>
     </message>
     <message>
         <source>path</source>
-        <translation type="unfinished"/>
+        <translation>ruta</translation>
     </message>
     <message>
         <source>Username for the entry.</source>
@@ -3112,7 +3293,7 @@ Usando el puerto por defecto 19455</translation>
     </message>
     <message>
         <source>username</source>
-        <translation type="unfinished"/>
+        <translation>nombre de usuario</translation>
     </message>
     <message>
         <source>URL for the entry.</source>
@@ -3132,11 +3313,11 @@ Usando el puerto por defecto 19455</translation>
     </message>
     <message>
         <source>Length for the generated password.</source>
-        <translation type="unfinished"/>
+        <translation>Tamaño de la contraseña a generar</translation>
     </message>
     <message>
         <source>length</source>
-        <translation type="unfinished"/>
+        <translation>Tamaño</translation>
     </message>
     <message>
         <source>Path of the entry to add.</source>
@@ -3157,11 +3338,11 @@ Usando el puerto por defecto 19455</translation>
     </message>
     <message>
         <source>Edit an entry.</source>
-        <translation type="unfinished"/>
+        <translation>Editar una entrada</translation>
     </message>
     <message>
         <source>Title for the entry.</source>
-        <translation type="unfinished"/>
+        <translation>Título para la entrada</translation>
     </message>
     <message>
         <source>title</source>
@@ -3365,6 +3546,51 @@ Available commands:
     </message>
     <message>
         <source>SSH Agent</source>
+        <translation>Agente de SSH</translation>
+    </message>
+    <message>
+        <source>Generate a new random diceware passphrase.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Word count for the diceware passphrase.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>count</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Wordlist for the diceware generator.
+[Default: EFF English]</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Generate a new random password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Length of the generated password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use lowercase characters in the generated password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use uppercase characters in the generated password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use numbers in the generated password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use special characters in the generated password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use extended ASCII in the generated password.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3638,6 +3864,30 @@ Por favor desbloquee la base de datos seleccionada o elija otra que esté desblo
         <comment>Milliseconds</comment>
         <translation>Micro segundo</translation>
     </message>
+    <message>
+        <source>Startup</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>File Management</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Safely save database files (may be incompatible with Dropbox, etc)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Backup database file before saving</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry Management</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>General</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>
@@ -3693,6 +3943,10 @@ Por favor desbloquee la base de datos seleccionada o elija otra que esté desblo
     <message>
         <source>Use Google as fallback for downloading website icons</source>
         <translation>Usar Google como una alternativa para descargar iconos de sitios web</translation>
+    </message>
+    <message>
+        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3776,10 +4030,6 @@ Por favor desbloquee la base de datos seleccionada o elija otra que esté desblo
 <context>
     <name>WelcomeWidget</name>
     <message>
-        <source>Welcome to KeePassXC</source>
-        <translation>Bienvenido(a) a KeePassXC</translation>
-    </message>
-    <message>
         <source>Start storing your passwords securely in a KeePassXC database</source>
         <translation>Empiece a guardar sus contraseñas con seguridad en una base de datos de KeePassXC</translation>
     </message>
@@ -3802,6 +4052,10 @@ Por favor desbloquee la base de datos seleccionada o elija otra que esté desblo
     <message>
         <source>Recent databases</source>
         <translation>Bases de datos recientes</translation>
+    </message>
+    <message>
+        <source>Welcome to KeePassXC %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

@@ -18,10 +18,6 @@
         <translation>KeePassXC 遵循 GNU 通用公共許可證 (GPL) 第二版 或（依你的需求）以第三版發行。</translation>
     </message>
     <message>
-        <source>Project Maintainers:</source>
-        <translation>專案維護者：</translation>
-    </message>
-    <message>
         <source>Contributors</source>
         <translation>貢獻者</translation>
     </message>
@@ -71,12 +67,25 @@ Kernel: %3 %4</source>
         <source>Enabled extensions:</source>
         <translation>已啟用的擴充元件：</translation>
     </message>
+    <message>
+        <source>Project Maintainers:</source>
+        <translation>專案維護者：</translation>
+    </message>
+    <message>
+        <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Build Type: %1
+</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
     <message>
         <source>KeePassXC HTTP Confirm Access</source>
-        <translation>KeePassXC HTTP 確認存取</translation>
+        <translation>KeePassXC HTTP 存取確認</translation>
     </message>
     <message>
         <source>Remember this decision</source>
@@ -101,7 +110,7 @@ Please select whether you want to allow access.</source>
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent (requires restart)</source>
-        <translation type="unfinished"/>
+        <translation>啟用 SSH 代理 (需要重新啟動)</translation>
     </message>
 </context>
 <context>
@@ -120,19 +129,19 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>The Syntax of your Auto-Type statement is incorrect!</source>
-        <translation type="unfinished"/>
+        <translation>自動輸入語法不正確！</translation>
     </message>
     <message>
         <source>This Auto-Type command contains a very long delay. Do you really want to proceed?</source>
-        <translation type="unfinished"/>
+        <translation>此自動輸入命令包含很長的延遲。真的要繼續嗎？</translation>
     </message>
     <message>
         <source>This Auto-Type command contains very slow key presses. Do you really want to proceed?</source>
-        <translation type="unfinished"/>
+        <translation>此自動輸入命令包含非常緩慢的按鍵操作。真的要繼續嗎？</translation>
     </message>
     <message>
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
-        <translation type="unfinished"/>
+        <translation>此自動輸入命令包含頻繁重複的參數。真的要繼續嗎？</translation>
     </message>
 </context>
 <context>
@@ -151,6 +160,25 @@ Please select whether you want to allow access.</source>
     </message>
 </context>
 <context>
+    <name>AutoTypeMatchModel</name>
+    <message>
+        <source>Group</source>
+        <translation>群組</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>標題</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>使用者名稱</translation>
+    </message>
+    <message>
+        <source>Sequence</source>
+        <translation>序列</translation>
+    </message>
+</context>
+<context>
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassXC</source>
@@ -165,7 +193,7 @@ Please select whether you want to allow access.</source>
     <name>BrowserAccessControlDialog</name>
     <message>
         <source>KeePassXC-Browser Confirm Access</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC-Browser 瀏覽器擴充功能存取確認</translation>
     </message>
     <message>
         <source>Remember this decision</source>
@@ -194,11 +222,11 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation type="unfinished"/>
+        <translation>需要使用 KeePassXC-Browser 瀏覽器擴充功能存取你的資料庫</translation>
     </message>
     <message>
         <source>Enable KeepassXC browser integration</source>
-        <translation type="unfinished"/>
+        <translation>啟用 KeepassXC browser 瀏覽器擴充功能整合</translation>
     </message>
     <message>
         <source>General</source>
@@ -206,28 +234,28 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Enable integration for these browsers:</source>
-        <translation type="unfinished"/>
+        <translation>於下列瀏覽器啟用整合功能：</translation>
     </message>
     <message>
         <source>&amp;Google Chrome</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Google Chrome</translation>
     </message>
     <message>
         <source>&amp;Firefox</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Firefox</translation>
     </message>
     <message>
         <source>&amp;Chromium</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Chromium</translation>
     </message>
     <message>
         <source>&amp;Vivaldi</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Vivaldi</translation>
     </message>
     <message>
         <source>Show a &amp;notification when credentials are requested</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>要求認證時顯示通知 (&amp;N)</translation>
     </message>
     <message>
         <source>Re&amp;quest to unlock the database if it is locked</source>
@@ -235,11 +263,11 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, ...) are returned.</source>
-        <translation type="unfinished"/>
+        <translation>只顯示相同協定的項目。(http://, https://, ...)</translation>
     </message>
     <message>
         <source>&amp;Match URL scheme (e.g., https://...)</source>
-        <translation type="unfinished"/>
+        <translation>符合網址協定  (例如：https://……) (&amp;M)</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
@@ -247,25 +275,25 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>&amp;Return only best-matching credentials</source>
-        <translation type="unfinished"/>
+        <translation>只回傳最佳的相符憑證 (&amp;R)</translation>
     </message>
     <message>
         <source>Sort &amp;matching credentials by title</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>依名稱排序符合認證 (&amp;M)</translation>
     </message>
     <message>
         <source>Sort matching credentials by &amp;username</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>依使用者名稱排序符合認證 (&amp;U)</translation>
     </message>
     <message>
         <source>&amp;Disconnect all browsers</source>
-        <translation type="unfinished"/>
+        <translation>與所有瀏覽器中斷連線 (&amp;D)</translation>
     </message>
     <message>
         <source>Forget all remembered &amp;permissions</source>
-        <translation type="unfinished"/>
+        <translation>取消所有先前記住的權限 (&amp;P)</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -274,12 +302,12 @@ Please select whether you want to allow access.</source>
     <message>
         <source>Never &amp;ask before accessing credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>存取認證時不再詢問 (&amp;A)</translation>
     </message>
     <message>
         <source>Never ask before &amp;updating credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>更新認證時不再詢問 (&amp;U)</translation>
     </message>
     <message>
         <source>Only the selected database has to be connected with a client.</source>
@@ -288,7 +316,7 @@ Please select whether you want to allow access.</source>
     <message>
         <source>Searc&amp;h in all opened databases for matching credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>在所有開啟的資料庫內搜尋相符的認證 (&amp;H)</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
@@ -300,49 +328,49 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
-        <translation type="unfinished"/>
+        <translation>啟動時自動將 KeePassXC 或 KeePassXC 代理執行檔路徑更新為 native messaging 腳本。</translation>
     </message>
     <message>
         <source>Update &amp;native messaging manifest files at startup</source>
-        <translation type="unfinished"/>
+        <translation>啟動時更新 native messaging 的 manifest 檔案 (&amp;N)</translation>
     </message>
     <message>
         <source>Support a proxy application between KeePassXC and browser extension.</source>
-        <translation type="unfinished"/>
+        <translation>支援 KeePassXC 和瀏覽器擴充功能之間的代理應用程式。</translation>
     </message>
     <message>
         <source>Use a &amp;proxy application between KeePassXC and browser extension</source>
-        <translation type="unfinished"/>
+        <translation>在 KeePassXC 和瀏覽器擴充功能之間使用代理應用程式 (&amp;P)</translation>
     </message>
     <message>
         <source>Use a custom proxy location if you installed a proxy manually.</source>
-        <translation type="unfinished"/>
+        <translation>如果自行安裝了代理，請設定自訂代理位置。</translation>
     </message>
     <message>
         <source>Use a &amp;custom proxy location</source>
         <comment>Meant is the proxy for KeePassXC-Browser</comment>
-        <translation type="unfinished"/>
+        <translation>使用自訂代理位置 (&amp;C)</translation>
     </message>
     <message>
         <source>Browse...</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation type="unfinished"/>
+        <translation>瀏覽……</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;警告：&lt;/b&gt;下列選項可能極具風險！</translation>
     </message>
     <message>
         <source>Executable Files (*.exe);;All Files (*.*)</source>
-        <translation type="unfinished"/>
+        <translation>可執行檔 (* .exe);;所有檔案 (*)</translation>
     </message>
     <message>
         <source>Executable Files (*)</source>
-        <translation type="unfinished"/>
+        <translation>可執行檔 (*)</translation>
     </message>
     <message>
         <source>Select custom proxy location</source>
-        <translation type="unfinished"/>
+        <translation>選擇自訂代理位置</translation>
     </message>
 </context>
 <context>
@@ -356,11 +384,14 @@ Please select whether you want to allow access.</source>
 
 If you would like to allow it access to your KeePassXC database,
 give it a unique name to identify and accept it.</source>
-        <translation type="unfinished"/>
+        <translation>你已接收到上述金鑰的關聯請求。
+
+如果你允許透過此金鑰存取你的 KeePassXC 資料庫，
+請取一個唯一識別名並按下接受。</translation>
     </message>
     <message>
         <source>Save and allow access</source>
-        <translation type="unfinished"/>
+        <translation>儲存並允許存取</translation>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
@@ -369,7 +400,8 @@ give it a unique name to identify and accept it.</source>
     <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
-        <translation type="unfinished"/>
+        <translation>已存在名為「%1」的共用加密金鑰。
+是否要覆蓋？</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
@@ -377,7 +409,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Do you want to update the information in %1 - %2?</source>
-        <translation>更新 %1 到 %2 的資訊？</translation>
+        <translation>是否要更新 %1 到 %2 的資訊？</translation>
     </message>
     <message>
         <source>KeePassXC: Database locked!</source>
@@ -395,7 +427,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>The active database does not contain a settings entry.</source>
-        <translation type="unfinished"/>
+        <translation>目前的資料庫中沒有帶有設定的項目。</translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
@@ -403,7 +435,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>No shared encryption keys found in KeePassXC Settings.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC 設定中找不到共享加密金鑰。</translation>
     </message>
     <message>
         <source>KeePassXC: Removed keys from database</source>
@@ -411,11 +443,11 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>成功從 KeePassXC 移除 %n 個加密金鑰。</numerusform></translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
-        <translation type="unfinished"/>
+        <translation>正在移除所有已儲存的權限……</translation>
     </message>
     <message>
         <source>Abort</source>
@@ -427,7 +459,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>成功從 %n 個項目中移除權限。</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -512,14 +544,16 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Legacy key file format</source>
-        <translation type="unfinished"/>
+        <translation>舊式金鑰檔案格式</translation>
     </message>
     <message>
         <source>You are using a legacy key file format which may become
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>你正在使用未來將不再支援的舊式金鑰檔案格式。
+
+請考慮產生新的金鑰。</translation>
     </message>
     <message>
         <source>Changing master key failed: no YubiKey inserted.</source>
@@ -569,7 +603,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Text is qualified by</source>
-        <translation type="unfinished"/>
+        <translation>文字資料標示符號</translation>
     </message>
     <message>
         <source>Fields are separated by</source>
@@ -577,15 +611,15 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Comments start with</source>
-        <translation type="unfinished"/>
+        <translation>註解標示符號</translation>
     </message>
     <message>
         <source>First record has field names</source>
-        <translation type="unfinished"/>
+        <translation>首行為欄位名稱</translation>
     </message>
     <message>
         <source>Number of headers line to discard</source>
-        <translation type="unfinished"/>
+        <translation>要捨棄的標題行數</translation>
     </message>
     <message>
         <source>Consider &apos;\&apos; an escape character</source>
@@ -597,7 +631,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Column layout</source>
-        <translation type="unfinished"/>
+        <translation>欄位布局</translation>
     </message>
     <message>
         <source>Not present in CSV file</source>
@@ -653,15 +687,15 @@ Please consider generating a new key file.</source>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n byte(s), </source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n 位元組，</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n 行，</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n 列，</numerusform></translation>
     </message>
 </context>
 <context>
@@ -688,7 +722,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Challenge Response:</source>
-        <translation>挑戰驗證：</translation>
+        <translation>挑戰回應：</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
@@ -700,18 +734,20 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Legacy key file format</source>
-        <translation type="unfinished"/>
+        <translation>舊式金鑰檔案格式</translation>
     </message>
     <message>
         <source>You are using a legacy key file format which may become
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>你正在使用未來將不再支援的舊式金鑰檔案格式。
+
+請考慮產生新的金鑰。</translation>
     </message>
     <message>
         <source>Don&apos;t show this warning again</source>
-        <translation type="unfinished"/>
+        <translation>不再顯示此警告</translation>
     </message>
     <message>
         <source>All files</source>
@@ -770,52 +806,66 @@ You can now save it.</source>
     </message>
     <message>
         <source>Encryption</source>
-        <translation type="unfinished"/>
+        <translation>加密</translation>
     </message>
     <message>
         <source>Number of rounds too high</source>
         <comment>Key transformation rounds</comment>
-        <translation type="unfinished"/>
+        <translation>回合數太高</translation>
     </message>
     <message>
         <source>You are using a very high number of key transform rounds with Argon2.
 
 If you keep this number, your database may take hours or days (or even longer) to open!</source>
-        <translation type="unfinished"/>
+        <translation>你正在對 Argon2 使用相當高的金鑰轉換回合數。
+
+如果仍執意使用此數量，你的資料庫可能需要花費數小時、數天、或是更久的時間才能打開！</translation>
     </message>
     <message>
         <source>Understood, keep number</source>
-        <translation type="unfinished"/>
+        <translation>了解，仍使用此數量</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>取消</translation>
     </message>
     <message>
         <source>Number of rounds too low</source>
         <comment>Key transformation rounds</comment>
-        <translation type="unfinished"/>
+        <translation>回合數太低</translation>
     </message>
     <message>
         <source>You are using a very low number of key transform rounds with AES-KDF.
 
 If you keep this number, your database may be too easy to crack!</source>
-        <translation type="unfinished"/>
+        <translation>你正對 AES-KDF 使用過低的金鑰轉換回合數。
+
+如果仍執意使用此數量，你的資料庫可能會變得相當簡單即能破解！</translation>
     </message>
     <message>
         <source>KDF unchanged</source>
-        <translation type="unfinished"/>
+        <translation>KDF 不變</translation>
     </message>
     <message>
         <source>Failed to transform key with new KDF parameters; KDF unchanged.</source>
-        <translation type="unfinished"/>
+        <translation>無法用新的 KDF 參數轉換金鑰；KDF 不變。</translation>
+    </message>
+    <message numerus="yes">
+        <source> MiB</source>
+        <comment>Abbreviation for Mebibytes (KDF settings)</comment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source> thread(s)</source>
+        <comment>Threads for parallel execution (KDF settings)</comment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetEncryption</name>
     <message>
         <source>Encryption Algorithm:</source>
-        <translation type="unfinished"/>
+        <translation>加密演算法：</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
@@ -827,7 +877,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Key Derivation Function:</source>
-        <translation type="unfinished"/>
+        <translation>金鑰衍生函數：</translation>
     </message>
     <message>
         <source>Transform rounds:</source>
@@ -835,30 +885,22 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Benchmark 1-second delay</source>
-        <translation type="unfinished"/>
+        <translation>效能測試一秒延遲</translation>
     </message>
     <message>
         <source>Memory Usage:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source> MB</source>
-        <translation type="unfinished"/>
+        <translation>記憶體使用量：</translation>
     </message>
     <message>
         <source>Parallelism:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source> thread</source>
-        <translation type="unfinished"/>
+        <translation>平行運算：</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetGeneral</name>
     <message>
         <source>Database Meta Data</source>
-        <translation type="unfinished"/>
+        <translation>資料庫中繼資料</translation>
     </message>
     <message>
         <source>Database name:</source>
@@ -874,7 +916,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>History Settings</source>
-        <translation type="unfinished"/>
+        <translation>歷史設定</translation>
     </message>
     <message>
         <source>Max. history items:</source>
@@ -891,6 +933,14 @@ If you keep this number, your database may be too easy to crack!</source>
     <message>
         <source>Use recycle bin</source>
         <translation>使用回收桶</translation>
+    </message>
+    <message>
+        <source>Additional Database Settings</source>
+        <translation>額外的資料庫設定</translation>
+    </message>
+    <message>
+        <source>Enable &amp;compression (recommended)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -990,7 +1040,7 @@ Save changes?</source>
     </message>
     <message>
         <source>New database</source>
-        <translation>新增資料庫</translation>
+        <translation>新的資料庫</translation>
     </message>
     <message>
         <source>locked</source>
@@ -1013,6 +1063,15 @@ Otherwise your changes are lost.</source>
         <translation>此資料庫已修改。
 要在鎖定之前儲存資料庫？
 不然則會遺失所有修改。</translation>
+    </message>
+    <message>
+        <source>Disable safe saves?</source>
+        <translation>關閉安全存檔?</translation>
+    </message>
+    <message>
+        <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
+Disable safe saves and try again?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1055,7 +1114,7 @@ Otherwise your changes are lost.</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>真的要將 %n 個項目移到回收桶？</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1099,7 +1158,7 @@ Otherwise your changes are lost.</source>
     </message>
     <message>
         <source>File has changed</source>
-        <translation type="unfinished"/>
+        <translation>檔案已變更</translation>
     </message>
     <message>
         <source>The database file has changed. Do you want to load the changes?</source>
@@ -1112,7 +1171,8 @@ Otherwise your changes are lost.</source>
     <message>
         <source>The database file has changed and you have unsaved changes.
 Do you want to merge your changes?</source>
-        <translation type="unfinished"/>
+        <translation>資料庫檔案已變更，且有尚未儲存的變更。
+合併變更？</translation>
     </message>
     <message>
         <source>Could not open the new database file while attempting to autoreload this database.</source>
@@ -1126,12 +1186,16 @@ Do you want to merge your changes?</source>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>確定要永久刪除回收桶內的項目？</translation>
     </message>
+    <message>
+        <source>Entry updated successfully.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DetailsWidget</name>
     <message>
         <source>Generate TOTP Token</source>
-        <translation type="unfinished"/>
+        <translation>產生 TOTP Token</translation>
     </message>
     <message>
         <source>Close</source>
@@ -1151,7 +1215,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Expiration</source>
-        <translation type="unfinished"/>
+        <translation>過期</translation>
     </message>
     <message>
         <source>Username</source>
@@ -1159,15 +1223,15 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Autotype</source>
-        <translation type="unfinished"/>
+        <translation>自動輸入</translation>
     </message>
     <message>
         <source>Searching</source>
-        <translation type="unfinished"/>
+        <translation>搜尋中</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation type="unfinished"/>
+        <translation>屬性</translation>
     </message>
     <message>
         <source>Attachments</source>
@@ -1195,19 +1259,19 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>從不</translation>
     </message>
     <message>
         <source>[PROTECTED]</source>
-        <translation type="unfinished"/>
+        <translation>[被保護]</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"/>
+        <translation>停用</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation type="unfinished"/>
+        <translation>啟用</translation>
     </message>
 </context>
 <context>
@@ -1238,27 +1302,27 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>SSH Agent</source>
-        <translation type="unfinished"/>
+        <translation>SSH 代理</translation>
     </message>
     <message>
         <source>n/a</source>
-        <translation type="unfinished"/>
+        <translation>無</translation>
     </message>
     <message>
         <source>(encrypted)</source>
-        <translation type="unfinished"/>
+        <translation>（已加密）</translation>
     </message>
     <message>
         <source>Select private key</source>
-        <translation type="unfinished"/>
+        <translation>選擇私密金鑰</translation>
     </message>
     <message>
         <source>File too large to be a private key</source>
-        <translation type="unfinished"/>
+        <translation>檔案太大，無法作為私密金鑰</translation>
     </message>
     <message>
         <source>Failed to open private key</source>
-        <translation type="unfinished"/>
+        <translation>無法打開私密金鑰</translation>
     </message>
     <message>
         <source>Entry history</source>
@@ -1290,11 +1354,11 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>[PROTECTED]</source>
-        <translation type="unfinished"/>
+        <translation>[被保護]</translation>
     </message>
     <message>
         <source>Press reveal to view or edit</source>
-        <translation type="unfinished"/>
+        <translation>請按「揭示」以檢視或編輯</translation>
     </message>
     <message>
         <source>Tomorrow</source>
@@ -1302,22 +1366,34 @@ Do you want to merge your changes?</source>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n 個禮拜</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n 個月</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
         <translation>1 年</translation>
+    </message>
+    <message>
+        <source>Apply generated password?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to apply the generated password to this entry?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry updated successfully.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
     <message>
         <source>Additional attributes</source>
-        <translation>額外屬性</translation>
+        <translation>額外的屬性</translation>
     </message>
     <message>
         <source>Add</source>
@@ -1342,6 +1418,14 @@ Do you want to merge your changes?</source>
     <message>
         <source>Attachments</source>
         <translation>附件</translation>
+    </message>
+    <message>
+        <source>Foreground Color:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Background Color:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1375,12 +1459,8 @@ Do you want to merge your changes?</source>
         <translation>視窗標題：</translation>
     </message>
     <message>
-        <source>Use default se&amp;quence</source>
-        <translation>使用預設序列 (&amp;Q)</translation>
-    </message>
-    <message>
-        <source>Set custo&amp;m sequence:</source>
-        <translation>設定自訂序列 (&amp;M)：</translation>
+        <source>Use a specific sequence for this association:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1430,7 +1510,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation type="unfinished"/>
+        <translation>切換核取方塊以揭示備註欄位。</translation>
     </message>
     <message>
         <source>Username:</source>
@@ -1445,43 +1525,43 @@ Do you want to merge your changes?</source>
     <name>EditEntryWidgetSSHAgent</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>表單</translation>
     </message>
     <message>
         <source>Remove key from agent after</source>
-        <translation type="unfinished"/>
+        <translation>從代理中刪除金鑰於</translation>
     </message>
     <message>
         <source> seconds</source>
-        <translation type="unfinished"/>
+        <translation> 秒</translation>
     </message>
     <message>
         <source>Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>指紋</translation>
     </message>
     <message>
         <source>Remove key from agent when database is closed/locked</source>
-        <translation type="unfinished"/>
+        <translation>當關閉/鎖定資料庫時從代理中刪除金鑰</translation>
     </message>
     <message>
         <source>Public key</source>
-        <translation type="unfinished"/>
+        <translation>公開金鑰</translation>
     </message>
     <message>
         <source>Add key to agent when database is opened/unlocked</source>
-        <translation type="unfinished"/>
+        <translation>當打開/解鎖資料庫時向代理新增金鑰</translation>
     </message>
     <message>
         <source>Comment</source>
-        <translation type="unfinished"/>
+        <translation>評論</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation type="unfinished"/>
+        <translation>解密</translation>
     </message>
     <message>
         <source>n/a</source>
-        <translation type="unfinished"/>
+        <translation>無</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
@@ -1489,32 +1569,32 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Private key</source>
-        <translation type="unfinished"/>
+        <translation>私密金鑰</translation>
     </message>
     <message>
         <source>External file</source>
-        <translation type="unfinished"/>
+        <translation>外部檔案</translation>
     </message>
     <message>
         <source>Browse...</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation type="unfinished"/>
+        <translation>瀏覽……</translation>
     </message>
     <message>
         <source>Attachment</source>
-        <translation type="unfinished"/>
+        <translation>附件</translation>
     </message>
     <message>
         <source>Add to agent</source>
-        <translation type="unfinished"/>
+        <translation>新增到代理</translation>
     </message>
     <message>
         <source>Remove from agent</source>
-        <translation type="unfinished"/>
+        <translation>從代理中刪除</translation>
     </message>
     <message>
         <source>Require user confirmation when this key is used</source>
-        <translation type="unfinished"/>
+        <translation>使用此金鑰時需要使用者確認</translation>
     </message>
 </context>
 <context>
@@ -1660,6 +1740,31 @@ Do you want to merge your changes?</source>
         <source>Uuid:</source>
         <translation>Uuid：</translation>
     </message>
+    <message>
+        <source>Plugin Data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>移除</translation>
+    </message>
+    <message>
+        <source>Delete plugin data?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to delete the selected plugin data?
+This may cause the affected plugins to malfunction.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Entry</name>
@@ -1677,14 +1782,14 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>大小</translation>
     </message>
 </context>
 <context>
     <name>EntryAttachmentsWidget</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>表單</translation>
     </message>
     <message>
         <source>Add</source>
@@ -1704,11 +1809,11 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Select files</source>
-        <translation type="unfinished"/>
+        <translation>選擇檔案</translation>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>確定移除 %n 個附件？</numerusform></translation>
     </message>
     <message>
         <source>Confirm Remove</source>
@@ -1716,40 +1821,45 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Save attachments</source>
-        <translation type="unfinished"/>
+        <translation>儲存附件</translation>
     </message>
     <message>
         <source>Unable to create directory:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>無法建立資料夾：
+%1</translation>
     </message>
     <message>
         <source>Are you sure you want to overwrite the existing file &quot;%1&quot; with the attachment?</source>
-        <translation type="unfinished"/>
+        <translation>確定要以附件覆蓋現有的檔案 &quot;%1&quot; 嗎？</translation>
     </message>
     <message>
         <source>Confirm overwrite</source>
-        <translation type="unfinished"/>
+        <translation>確認覆蓋</translation>
     </message>
     <message>
         <source>Unable to save attachments:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>無法保存附件：
+%1</translation>
     </message>
     <message>
         <source>Unable to open attachment:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>無法打開附件：
+%1</translation>
     </message>
     <message>
         <source>Unable to open attachments:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>無法打開附件：
+%1</translation>
     </message>
     <message>
         <source>Unable to open files:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>無法打開檔案：
+%1</translation>
     </message>
 </context>
 <context>
@@ -1801,6 +1911,65 @@ Do you want to merge your changes?</source>
         <source>URL</source>
         <translation>網址</translation>
     </message>
+    <message>
+        <source>Never</source>
+        <translation>從不</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>密碼</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation>附註</translation>
+    </message>
+    <message>
+        <source>Expires</source>
+        <translation>過期</translation>
+    </message>
+    <message>
+        <source>Created</source>
+        <translation>已建立</translation>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation>已修改</translation>
+    </message>
+    <message>
+        <source>Accessed</source>
+        <translation>已存取</translation>
+    </message>
+    <message>
+        <source>Attachments</source>
+        <translation>附件</translation>
+    </message>
+</context>
+<context>
+    <name>EntryView</name>
+    <message>
+        <source>Customize View</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide Usernames</source>
+        <translation>隱藏使用者名稱</translation>
+    </message>
+    <message>
+        <source>Hide Passwords</source>
+        <translation>隱藏密碼</translation>
+    </message>
+    <message>
+        <source>Fit to window</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fit to contents</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset to defaults</source>
+        <translation>重設為預設</translation>
+    </message>
 </context>
 <context>
     <name>Group</name>
@@ -1813,11 +1982,11 @@ Do you want to merge your changes?</source>
     <name>HostInstaller</name>
     <message>
         <source>KeePassXC: Cannot save file!</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: 無法保存檔案！</translation>
     </message>
     <message>
         <source>Cannot save the native messaging script file.</source>
-        <translation type="unfinished"/>
+        <translation>無法保存 native messaging 指令檔。</translation>
     </message>
 </context>
 <context>
@@ -1870,6 +2039,10 @@ Do you want to merge your changes?</source>
         <source>Ensure that the password contains characters from every group</source>
         <translation>確保密碼包含每一組字元</translation>
     </message>
+    <message>
+        <source>Extended ASCII</source>
+        <translation>擴展 ASCII 碼</translation>
+    </message>
 </context>
 <context>
     <name>KMessageWidget</name>
@@ -1890,7 +2063,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Unable to issue challenge-response.</source>
-        <translation type="unfinished"/>
+        <translation>無法發出挑戰-回應。</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
@@ -1901,7 +2074,7 @@ Do you want to merge your changes?</source>
     <name>Kdbx3Writer</name>
     <message>
         <source>Unable to issue challenge-response.</source>
-        <translation type="unfinished"/>
+        <translation>無法發出挑戰-回應。</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
@@ -1912,7 +2085,7 @@ Do you want to merge your changes?</source>
     <name>Kdbx4Reader</name>
     <message>
         <source>missing database headers</source>
-        <translation type="unfinished"/>
+        <translation>缺少資料庫標頭</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
@@ -1920,127 +2093,127 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Invalid header checksum size</source>
-        <translation type="unfinished"/>
+        <translation>無效的標頭校驗大小</translation>
     </message>
     <message>
         <source>Header SHA256 mismatch</source>
-        <translation type="unfinished"/>
+        <translation>SHA256 標頭不相符</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt. (HMAC mismatch)</source>
-        <translation type="unfinished"/>
+        <translation>金鑰不正確或是資料庫損壞。（HMAC 不相符）</translation>
     </message>
     <message>
         <source>Unknown cipher</source>
-        <translation type="unfinished"/>
+        <translation>未知的加密</translation>
     </message>
     <message>
         <source>Invalid header id size</source>
-        <translation type="unfinished"/>
+        <translation>無效的標頭 ID 大小</translation>
     </message>
     <message>
         <source>Invalid header field length</source>
-        <translation type="unfinished"/>
+        <translation>無效的標頭欄位長度</translation>
     </message>
     <message>
         <source>Invalid header data length</source>
-        <translation type="unfinished"/>
+        <translation>無效的資料長度</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
-        <translation type="unfinished"/>
+        <translation>無法打開標頭中 KDF 參數的緩衝區</translation>
     </message>
     <message>
         <source>Unsupported key derivation function (KDF) or invalid parameters</source>
-        <translation type="unfinished"/>
+        <translation>不支援的金鑰衍生函數 (KDF) 或參數無效</translation>
     </message>
     <message>
         <source>Legacy header fields found in KDBX4 file.</source>
-        <translation type="unfinished"/>
+        <translation>在 KDBX4 檔中找到的舊式標頭欄位。</translation>
     </message>
     <message>
         <source>Invalid inner header id size</source>
-        <translation type="unfinished"/>
+        <translation>無效的內部標頭 ID 大小</translation>
     </message>
     <message>
         <source>Invalid inner header field length</source>
-        <translation type="unfinished"/>
+        <translation>無效的內部標頭欄位長度</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
-        <translation type="unfinished"/>
+        <translation>無效的內部標頭二進位大小</translation>
     </message>
     <message>
         <source>Unsupported KeePass variant map version.</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>不支援的 KeePass 變體映射版本。</translation>
     </message>
     <message>
         <source>Invalid variant map entry name length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>無效的變體映射項目名稱長度</translation>
     </message>
     <message>
         <source>Invalid variant map entry name data</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>無效的變體映射項目名稱資料</translation>
     </message>
     <message>
         <source>Invalid variant map entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>無效的變體映射項目值長度</translation>
     </message>
     <message>
         <source>Invalid variant map entry value data</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>無效的變數映射項目值資料</translation>
     </message>
     <message>
         <source>Invalid variant map Bool entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>無效的變體映射布林項目值長度</translation>
     </message>
     <message>
         <source>Invalid variant map Int32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>無效的變體映射 Int32 項目值長度</translation>
     </message>
     <message>
         <source>Invalid variant map UInt32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>無效的變體映射 UInt32 項目值長度</translation>
     </message>
     <message>
         <source>Invalid variant map Int64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>無效的變體映射 Int64 項目值長度</translation>
     </message>
     <message>
         <source>Invalid variant map UInt64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>無效的變體映射 UInt64 項目值長度</translation>
     </message>
     <message>
         <source>Invalid variant map entry type</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>無效的變體映射項目類型</translation>
     </message>
     <message>
         <source>Invalid variant map field type size</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>無效的變體映射欄位類型大小</translation>
     </message>
 </context>
 <context>
     <name>Kdbx4Writer</name>
     <message>
         <source>Invalid symmetric cipher algorithm.</source>
-        <translation type="unfinished"/>
+        <translation>無效的對稱密碼演算法。</translation>
     </message>
     <message>
         <source>Invalid symmetric cipher IV size.</source>
         <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation type="unfinished"/>
+        <translation>無效的對稱密碼 IV 大小。</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
@@ -2049,50 +2222,50 @@ Do you want to merge your changes?</source>
     <message>
         <source>Failed to serialize KDF parameters variant map</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>無法序列化 KDF 參數變體映射</translation>
     </message>
 </context>
 <context>
     <name>KdbxReader</name>
     <message>
         <source>Invalid cipher uuid length</source>
-        <translation type="unfinished"/>
+        <translation>無效的加密法 uuid 長度</translation>
     </message>
     <message>
         <source>Unsupported cipher</source>
-        <translation type="unfinished"/>
+        <translation>不支援的加密</translation>
     </message>
     <message>
         <source>Invalid compression flags length</source>
-        <translation type="unfinished"/>
+        <translation>不正確壓縮旗幟長度</translation>
     </message>
     <message>
         <source>Unsupported compression algorithm</source>
-        <translation type="unfinished"/>
+        <translation>不支援的壓縮演算法</translation>
     </message>
     <message>
         <source>Invalid master seed size</source>
-        <translation type="unfinished"/>
+        <translation>無效的主種子大小</translation>
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation type="unfinished"/>
+        <translation>無效的轉換種子大小</translation>
     </message>
     <message>
         <source>Invalid transform rounds size</source>
-        <translation type="unfinished"/>
+        <translation>無效的轉換回合數</translation>
     </message>
     <message>
         <source>Invalid start bytes size</source>
-        <translation type="unfinished"/>
+        <translation>無效的起始位元組大小</translation>
     </message>
     <message>
         <source>Invalid random stream id size</source>
-        <translation type="unfinished"/>
+        <translation>無效的隨機資料流 ID 大小</translation>
     </message>
     <message>
         <source>Invalid inner random stream cipher</source>
-        <translation type="unfinished"/>
+        <translation>無效的內部隨機資料流密碼</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
@@ -2110,131 +2283,131 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Unsupported KeePass 2 database version.</source>
-        <translation type="unfinished"/>
+        <translation>不支援的 KeePass 2 資料庫版本。</translation>
     </message>
 </context>
 <context>
     <name>KdbxXmlReader</name>
     <message>
         <source>XML parsing failure: %1</source>
-        <translation type="unfinished"/>
+        <translation>XML 分析失敗：%1</translation>
     </message>
     <message>
         <source>No root group</source>
-        <translation type="unfinished"/>
+        <translation>無根權限群組</translation>
     </message>
     <message>
         <source>Missing icon uuid or data</source>
-        <translation type="unfinished"/>
+        <translation>缺少圖示的 uuid 或資料</translation>
     </message>
     <message>
         <source>Missing custom data key or value</source>
-        <translation type="unfinished"/>
+        <translation>缺少自訂資料鍵或值</translation>
     </message>
     <message>
         <source>Multiple group elements</source>
-        <translation type="unfinished"/>
+        <translation>多重群組元素</translation>
     </message>
     <message>
         <source>Null group uuid</source>
-        <translation type="unfinished"/>
+        <translation>空的群組 uuid</translation>
     </message>
     <message>
         <source>Invalid group icon number</source>
-        <translation type="unfinished"/>
+        <translation>無效的群組圖示標號</translation>
     </message>
     <message>
         <source>Invalid EnableAutoType value</source>
-        <translation type="unfinished"/>
+        <translation>無效的 EnableAutoType 值</translation>
     </message>
     <message>
         <source>Invalid EnableSearching value</source>
-        <translation type="unfinished"/>
+        <translation>無效的 EnableSearching 值</translation>
     </message>
     <message>
         <source>No group uuid found</source>
-        <translation type="unfinished"/>
+        <translation>找不到群組 uuid</translation>
     </message>
     <message>
         <source>Null DeleteObject uuid</source>
-        <translation type="unfinished"/>
+        <translation>空的 DeleteObject uuid</translation>
     </message>
     <message>
         <source>Missing DeletedObject uuid or time</source>
-        <translation type="unfinished"/>
+        <translation>缺少 DeletedObject uuid 或時間</translation>
     </message>
     <message>
         <source>Null entry uuid</source>
-        <translation type="unfinished"/>
+        <translation>空的項目 uuid</translation>
     </message>
     <message>
         <source>Invalid entry icon number</source>
-        <translation type="unfinished"/>
+        <translation>無效的項目圖示編號</translation>
     </message>
     <message>
         <source>History element in history entry</source>
-        <translation type="unfinished"/>
+        <translation>歷史記錄項目中的歷史元素</translation>
     </message>
     <message>
         <source>No entry uuid found</source>
-        <translation type="unfinished"/>
+        <translation>找不到項目 uuid</translation>
     </message>
     <message>
         <source>History element with different uuid</source>
-        <translation type="unfinished"/>
+        <translation>具有不同 uuid 的歷史元素</translation>
     </message>
     <message>
         <source>Unable to decrypt entry string</source>
-        <translation type="unfinished"/>
+        <translation>無法解密項目字串</translation>
     </message>
     <message>
         <source>Duplicate custom attribute found</source>
-        <translation type="unfinished"/>
+        <translation>找到重複的自訂屬性</translation>
     </message>
     <message>
         <source>Entry string key or value missing</source>
-        <translation type="unfinished"/>
+        <translation>缺少項目字串或值</translation>
     </message>
     <message>
         <source>Duplicate attachment found</source>
-        <translation type="unfinished"/>
+        <translation>找到重複的附件</translation>
     </message>
     <message>
         <source>Entry binary key or value missing</source>
-        <translation type="unfinished"/>
+        <translation>缺少項目二進位金鑰或值</translation>
     </message>
     <message>
         <source>Auto-type association window or sequence missing</source>
-        <translation type="unfinished"/>
+        <translation>缺少自動輸入關聯視窗或序列</translation>
     </message>
     <message>
         <source>Invalid bool value</source>
-        <translation type="unfinished"/>
+        <translation>無效的布林值</translation>
     </message>
     <message>
         <source>Invalid date time value</source>
-        <translation type="unfinished"/>
+        <translation>無效的日期時間值</translation>
     </message>
     <message>
         <source>Invalid color value</source>
-        <translation type="unfinished"/>
+        <translation>無效的顏色值</translation>
     </message>
     <message>
         <source>Invalid color rgb part</source>
-        <translation type="unfinished"/>
+        <translation>無效的 rgb 顏色部分</translation>
     </message>
     <message>
         <source>Invalid number value</source>
-        <translation type="unfinished"/>
+        <translation>無效的數值</translation>
     </message>
     <message>
         <source>Invalid uuid value</source>
-        <translation type="unfinished"/>
+        <translation>無效的 uuid 值</translation>
     </message>
     <message>
         <source>Unable to decompress binary</source>
         <extracomment>Translator meant is a binary data inside an entry</extracomment>
-        <translation type="unfinished"/>
+        <translation>無法解壓縮二進位資料</translation>
     </message>
 </context>
 <context>
@@ -2269,31 +2442,31 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <message>
         <source>Unable to read encryption IV</source>
         <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation type="unfinished"/>
+        <translation>無法讀取加密 IV</translation>
     </message>
     <message>
         <source>Invalid number of groups</source>
-        <translation type="unfinished"/>
+        <translation>無效的群組數</translation>
     </message>
     <message>
         <source>Invalid number of entries</source>
-        <translation type="unfinished"/>
+        <translation>無效的項目數</translation>
     </message>
     <message>
         <source>Invalid content hash size</source>
-        <translation type="unfinished"/>
+        <translation>無效的內容雜湊大小</translation>
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation type="unfinished"/>
+        <translation>無效的轉換種子大小</translation>
     </message>
     <message>
         <source>Invalid number of transform rounds</source>
-        <translation type="unfinished"/>
+        <translation>無效的轉換回合數</translation>
     </message>
     <message>
         <source>Unable to construct group tree</source>
-        <translation type="unfinished"/>
+        <translation>無法構成群組樹</translation>
     </message>
     <message>
         <source>Root</source>
@@ -2309,102 +2482,102 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Key transformation failed</source>
-        <translation type="unfinished"/>
+        <translation>金鑰轉換失敗</translation>
     </message>
     <message>
         <source>Invalid group field type number</source>
-        <translation type="unfinished"/>
+        <translation>無效的群組欄位類型編號</translation>
     </message>
     <message>
         <source>Invalid group field size</source>
-        <translation type="unfinished"/>
+        <translation>無效的群組欄位大小</translation>
     </message>
     <message>
         <source>Read group field data doesn&apos;t match size</source>
-        <translation type="unfinished"/>
+        <translation>讀取群組欄位資料大小不相符</translation>
     </message>
     <message>
         <source>Incorrect group id field size</source>
-        <translation type="unfinished"/>
+        <translation>無效的群組 id 欄位大小</translation>
     </message>
     <message>
         <source>Incorrect group creation time field size</source>
-        <translation type="unfinished"/>
+        <translation>無效的群組建立時間欄位大小</translation>
     </message>
     <message>
         <source>Incorrect group modification time field size</source>
-        <translation type="unfinished"/>
+        <translation>無效的群組修改時間欄位大小</translation>
     </message>
     <message>
         <source>Incorrect group access time field size</source>
-        <translation type="unfinished"/>
+        <translation>無效的群組存取時間欄位大小</translation>
     </message>
     <message>
         <source>Incorrect group expiry time field size</source>
-        <translation type="unfinished"/>
+        <translation>無效的群組過期時間欄位大小</translation>
     </message>
     <message>
         <source>Incorrect group icon field size</source>
-        <translation type="unfinished"/>
+        <translation>無效的群組圖示欄位大小</translation>
     </message>
     <message>
         <source>Incorrect group level field size</source>
-        <translation type="unfinished"/>
+        <translation>無效的群組級別欄位大小</translation>
     </message>
     <message>
         <source>Invalid group field type</source>
-        <translation type="unfinished"/>
+        <translation>無效的群組欄位類型</translation>
     </message>
     <message>
         <source>Missing group id or level</source>
-        <translation type="unfinished"/>
+        <translation>缺少群組 id 或級別</translation>
     </message>
     <message>
         <source>Missing entry field type number</source>
-        <translation type="unfinished"/>
+        <translation>缺少項目欄位類型編號</translation>
     </message>
     <message>
         <source>Invalid entry field size</source>
-        <translation type="unfinished"/>
+        <translation>無效的項目欄位大小</translation>
     </message>
     <message>
         <source>Read entry field data doesn&apos;t match size</source>
-        <translation type="unfinished"/>
+        <translation>讀取的項目欄位資料與大小不相符</translation>
     </message>
     <message>
         <source>Invalid entry uuid field size</source>
-        <translation type="unfinished"/>
+        <translation>無效的項目 uuid 欄位大小</translation>
     </message>
     <message>
         <source>Invalid entry group id field size</source>
-        <translation type="unfinished"/>
+        <translation>無效的項目群組 id 欄位大小</translation>
     </message>
     <message>
         <source>Invalid entry icon field size</source>
-        <translation type="unfinished"/>
+        <translation>無效的項目圖示欄位大小</translation>
     </message>
     <message>
         <source>Invalid entry creation time field size</source>
-        <translation type="unfinished"/>
+        <translation>無效的項目建立時間欄位大小</translation>
     </message>
     <message>
         <source>Invalid entry modification time field size</source>
-        <translation type="unfinished"/>
+        <translation>無效的項目修改時間欄位大小</translation>
     </message>
     <message>
         <source>Invalid entry expiry time field size</source>
-        <translation type="unfinished"/>
+        <translation>無效的項目過期時間欄位大小</translation>
     </message>
     <message>
         <source>Invalid entry field type</source>
-        <translation type="unfinished"/>
+        <translation>無效的項目欄位類型</translation>
     </message>
 </context>
 <context>
     <name>Main</name>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
-        <translation type="unfinished"/>
+        <translation>現有的單實例鎖定檔無效。正在啟動新實例。</translation>
     </message>
     <message>
         <source>The lock file could not be created. Single-instance mode disabled.</source>
@@ -2451,7 +2624,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Time-based one-time password</source>
-        <translation type="unfinished"/>
+        <translation>限時單次密碼</translation>
     </message>
     <message>
         <source>&amp;Groups</source>
@@ -2579,7 +2752,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Copy title to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>將標題複製到剪貼簿</translation>
     </message>
     <message>
         <source>&amp;URL</source>
@@ -2587,7 +2760,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Copy URL to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>將 URL 複製到剪貼簿</translation>
     </message>
     <message>
         <source>&amp;Notes</source>
@@ -2595,7 +2768,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Copy notes to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>將備註複製到剪貼簿</translation>
     </message>
     <message>
         <source>&amp;Export to CSV file...</source>
@@ -2627,7 +2800,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>E&amp;mpty recycle bin</source>
-        <translation type="unfinished"/>
+        <translation>清空回收桶 (&amp;M)</translation>
     </message>
     <message>
         <source>Clear history</source>
@@ -2639,7 +2812,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&lt;p&gt;It looks like you are using KeePassHTTP for browser integration. This feature has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a class=&quot;link&quot;  href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt; (warning %1 of 3).&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;您似乎正在使用 KeePassHTTP 瀏覽器整合功能&gt;此功能已經棄用，未來我們將進行移除。&lt;br&gt;並請改用 KeePassXC-Browser 瀏覽器擴充功能！有關遷移的說明，請造訪我們的 &lt;a class=&quot;link&quot;  href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;遷移指南&lt;/a&gt; (警告 %1/3)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>read-only</source>
@@ -2681,99 +2854,111 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <source>Please touch the button on your YubiKey!</source>
         <translation>請觸摸你 YubiKey 上的按鈕！</translation>
     </message>
+    <message>
+        <source>WARNING: You are using an unstable build of KeePassXC!
+There is a high risk of corruption, maintain a backup of your databases.
+This version is not meant for production use.</source>
+        <translation>警告: 你正在使用非穩定版本的 KeePassXC!
+具有高風險的破壞可能, 請備份你的資料庫.
+這個版本不是給一般使用者使用.</translation>
+    </message>
 </context>
 <context>
     <name>OpenSSHKey</name>
     <message>
         <source>Invalid key file, expecting an OpenSSH key</source>
-        <translation type="unfinished"/>
+        <translation>無效的金鑰檔案，預期應是 OpenSSH 金鑰</translation>
     </message>
     <message>
         <source>PEM boundary mismatch</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>This is not an OpenSSH key, only modern keys are supported</source>
-        <translation type="unfinished"/>
+        <translation>PEM 邊界數量不對稱</translation>
     </message>
     <message>
         <source>Base64 decoding failed</source>
-        <translation type="unfinished"/>
+        <translation>Base64 解碼失敗</translation>
     </message>
     <message>
         <source>Key file way too small.</source>
-        <translation type="unfinished"/>
+        <translation>金鑰檔太小。</translation>
     </message>
     <message>
         <source>Key file magic header id invalid</source>
-        <translation type="unfinished"/>
+        <translation>金鑰檔魔術標頭 id 無效</translation>
     </message>
     <message>
         <source>Found zero keys</source>
-        <translation type="unfinished"/>
+        <translation>找到零個金鑰</translation>
     </message>
     <message>
         <source>Failed to read public key.</source>
-        <translation type="unfinished"/>
+        <translation>無法讀取公開金鑰。</translation>
     </message>
     <message>
         <source>Corrupted key file, reading private key failed</source>
-        <translation type="unfinished"/>
+        <translation>金鑰檔損壞，讀取私密金鑰失敗</translation>
     </message>
     <message>
         <source>No private key payload to decrypt</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unknown cipher: </source>
-        <translation type="unfinished"/>
+        <translation>私密金鑰中沒有載體可解密</translation>
     </message>
     <message>
         <source>Trying to run KDF without cipher</source>
-        <translation type="unfinished"/>
+        <translation>嘗試運行無加密的 KDF</translation>
     </message>
     <message>
         <source>Passphrase is required to decrypt this key</source>
-        <translation type="unfinished"/>
+        <translation>需要密碼短語以解密此金鑰</translation>
     </message>
     <message>
         <source>Key derivation failed, key file corrupted?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unknown KDF: </source>
-        <translation type="unfinished"/>
+        <translation>金鑰衍生失敗，金鑰檔已損壞？</translation>
     </message>
     <message>
         <source>Decryption failed, wrong passphrase?</source>
-        <translation type="unfinished"/>
+        <translation>解密失敗，密碼短語錯誤？</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading public key</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unknown key type: </source>
-        <translation type="unfinished"/>
+        <translation>讀取公開金鑰時出現意外的檔案結尾</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading private key</source>
-        <translation type="unfinished"/>
+        <translation>讀取私密金鑰時出現意外的檔案結尾</translation>
     </message>
     <message>
         <source>Can&apos;t write public key as it is empty</source>
-        <translation type="unfinished"/>
+        <translation>無法寫入公開金鑰，因為它是空的</translation>
     </message>
     <message>
         <source>Unexpected EOF when writing public key</source>
-        <translation type="unfinished"/>
+        <translation>編寫公開金鑰時出現意外的檔案結尾</translation>
     </message>
     <message>
         <source>Can&apos;t write private key as it is empty</source>
-        <translation type="unfinished"/>
+        <translation>無法寫入私密金鑰，因為它是空的</translation>
     </message>
     <message>
         <source>Unexpected EOF when writing private key</source>
+        <translation>編寫私密金鑰時出現意外的檔案結尾</translation>
+    </message>
+    <message>
+        <source>Unsupported key type: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unknown cipher: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cipher IV is too short for MD5 kdf</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unknown KDF: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unknown key type: %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2798,7 +2983,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <message>
         <source>Sh&amp;ow a notification when credentials are requested</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>要求憑證時顯示通知 (&amp;O)</translation>
+        <translation>要求認證時顯示通知 (&amp;O)</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
@@ -2882,11 +3067,11 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;警告：&lt;/b&gt;下列選項可能極具風險！</translation>
     </message>
     <message>
         <source>&lt;p&gt;KeePassHTTP has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>KeePassHTTP 已經棄用，未來我們將進行移除。&lt;br&gt;並請改用 KeePassXC-Browser 瀏覽器擴充功能！有關遷移的說明，請造訪我們的 &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;遷移指南&lt;/a&gt;。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Cannot bind to privileged ports</source>
@@ -3027,71 +3212,71 @@ Using default port 19455.</source>
     <name>QObject</name>
     <message>
         <source>Database not opened</source>
-        <translation type="unfinished"/>
+        <translation>資料庫未開啟</translation>
     </message>
     <message>
         <source>Database hash not available</source>
-        <translation type="unfinished"/>
+        <translation>資料庫雜湊不可用</translation>
     </message>
     <message>
         <source>Client public key not received</source>
-        <translation type="unfinished"/>
+        <translation>未收到用戶端公開金鑰</translation>
     </message>
     <message>
         <source>Cannot decrypt message</source>
-        <translation type="unfinished"/>
+        <translation>無法解密訊息</translation>
     </message>
     <message>
         <source>Timeout or cannot connect to KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>逾時或無法連接到 KeePassXC</translation>
     </message>
     <message>
         <source>Action cancelled or denied</source>
-        <translation type="unfinished"/>
+        <translation>操作被取消或被拒絕</translation>
     </message>
     <message>
         <source>Cannot encrypt message or public key not found. Is Native Messaging enabled in KeePassXC?</source>
-        <translation type="unfinished"/>
+        <translation>無法加密訊息或未找到公開金鑰。是否在 KeePassXC 中啟用了 native messaging 功能？</translation>
     </message>
     <message>
         <source>KeePassXC association failed, try again</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC 關聯失敗，請重試</translation>
     </message>
     <message>
         <source>Key change was not successful</source>
-        <translation type="unfinished"/>
+        <translation>金鑰更改不成功</translation>
     </message>
     <message>
         <source>Encryption key is not recognized</source>
-        <translation type="unfinished"/>
+        <translation>加密金鑰未被識別</translation>
     </message>
     <message>
         <source>No saved databases found</source>
-        <translation type="unfinished"/>
+        <translation>找不到已保存的資料庫</translation>
     </message>
     <message>
         <source>Incorrect action</source>
-        <translation type="unfinished"/>
+        <translation>錯誤的操作</translation>
     </message>
     <message>
         <source>Empty message received</source>
-        <translation type="unfinished"/>
+        <translation>收到空消息</translation>
     </message>
     <message>
         <source>No URL provided</source>
-        <translation type="unfinished"/>
+        <translation>未提供 URL</translation>
     </message>
     <message>
         <source>No logins found</source>
-        <translation type="unfinished"/>
+        <translation>找不到登入資訊</translation>
     </message>
     <message>
         <source>Unknown error</source>
-        <translation type="unfinished"/>
+        <translation>未知的錯誤</translation>
     </message>
     <message>
         <source>Add a new entry to a database.</source>
-        <translation type="unfinished"/>
+        <translation>新增項目到資料庫</translation>
     </message>
     <message>
         <source>Path of the database.</source>
@@ -3099,23 +3284,23 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Key file of the database.</source>
-        <translation type="unfinished"/>
+        <translation>資料庫的金鑰檔案。</translation>
     </message>
     <message>
         <source>path</source>
-        <translation type="unfinished"/>
+        <translation>路徑</translation>
     </message>
     <message>
         <source>Username for the entry.</source>
-        <translation type="unfinished"/>
+        <translation>此項目的使用者名稱。</translation>
     </message>
     <message>
         <source>username</source>
-        <translation type="unfinished"/>
+        <translation>使用者名稱</translation>
     </message>
     <message>
         <source>URL for the entry.</source>
-        <translation type="unfinished"/>
+        <translation>此項目的網址</translation>
     </message>
     <message>
         <source>URL</source>
@@ -3123,64 +3308,64 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Prompt for the entry&apos;s password.</source>
-        <translation type="unfinished"/>
+        <translation>提示此項目的密碼。</translation>
     </message>
     <message>
         <source>Generate a password for the entry.</source>
-        <translation type="unfinished"/>
+        <translation>產生此項目的密碼。</translation>
     </message>
     <message>
         <source>Length for the generated password.</source>
-        <translation type="unfinished"/>
+        <translation>欲產生的密碼長度。</translation>
     </message>
     <message>
         <source>length</source>
-        <translation type="unfinished"/>
+        <translation>長度</translation>
     </message>
     <message>
         <source>Path of the entry to add.</source>
-        <translation type="unfinished"/>
+        <translation>欲新增的項目路徑</translation>
     </message>
     <message>
         <source>Copy an entry&apos;s password to the clipboard.</source>
-        <translation type="unfinished"/>
+        <translation>將條目的密碼複製到剪貼簿。</translation>
     </message>
     <message>
         <source>Path of the entry to clip.</source>
         <comment>clip = copy to clipboard</comment>
-        <translation type="unfinished"/>
+        <translation>欲剪輯的項目路徑。</translation>
     </message>
     <message>
         <source>Timeout in seconds before clearing the clipboard.</source>
-        <translation type="unfinished"/>
+        <translation>清除剪貼簿之前保存多久 （秒）。</translation>
     </message>
     <message>
         <source>Edit an entry.</source>
-        <translation type="unfinished"/>
+        <translation>編輯項目。</translation>
     </message>
     <message>
         <source>Title for the entry.</source>
-        <translation type="unfinished"/>
+        <translation>項目標題。</translation>
     </message>
     <message>
         <source>title</source>
-        <translation type="unfinished"/>
+        <translation>標題</translation>
     </message>
     <message>
         <source>Path of the entry to edit.</source>
-        <translation type="unfinished"/>
+        <translation>欲編輯的項目路徑。</translation>
     </message>
     <message>
         <source>Estimate the entropy of a password.</source>
-        <translation type="unfinished"/>
+        <translation>估計密碼的 entropy。</translation>
     </message>
     <message>
         <source>Password for which to estimate the entropy.</source>
-        <translation type="unfinished"/>
+        <translation>用於估計 entropy 的密碼。</translation>
     </message>
     <message>
         <source>Perform advanced analysis on the password.</source>
-        <translation type="unfinished"/>
+        <translation>對密碼執行高級分析。</translation>
     </message>
     <message>
         <source>Extract and print the content of a database.</source>
@@ -3192,25 +3377,30 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Insert password to unlock %1: </source>
-        <translation type="unfinished"/>
+        <translation>插入密碼以解除鎖定 %1： </translation>
     </message>
     <message>
         <source>Failed to load key file %1 : %2</source>
-        <translation type="unfinished"/>
+        <translation>未能載入金鑰檔 %1：%2</translation>
     </message>
     <message>
         <source>WARNING: You are using a legacy key file format which may become
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>警告：你正在使用未來將不再支援的舊式金鑰檔案格式。
+
+請考慮產生新的金鑰。</translation>
     </message>
     <message>
         <source>
 
 Available commands:
 </source>
-        <translation type="unfinished"/>
+        <translation>
+
+可用命令：
+</translation>
     </message>
     <message>
         <source>Name of the command to execute.</source>
@@ -3226,11 +3416,11 @@ Available commands:
     </message>
     <message>
         <source>Find entries quickly.</source>
-        <translation type="unfinished"/>
+        <translation>快速尋找項目。</translation>
     </message>
     <message>
         <source>Search term.</source>
-        <translation type="unfinished"/>
+        <translation>搜尋字詞。</translation>
     </message>
     <message>
         <source>Merge two databases.</source>
@@ -3246,23 +3436,23 @@ Available commands:
     </message>
     <message>
         <source>Use the same credentials for both database files.</source>
-        <translation type="unfinished"/>
+        <translation>對兩個資料庫檔案使用相同的認證。</translation>
     </message>
     <message>
         <source>Key file of the database to merge from.</source>
-        <translation type="unfinished"/>
+        <translation>用於合併資料庫的金鑰檔案。</translation>
     </message>
     <message>
         <source>Show an entry&apos;s information.</source>
-        <translation type="unfinished"/>
+        <translation>顯示項目資訊。</translation>
     </message>
     <message>
         <source>Names of the attributes to show. This option can be specified more than once, with each attribute shown one-per-line in the given order. If no attributes are specified, a summary of the default attributes is given.</source>
-        <translation type="unfinished"/>
+        <translation>欲顯示的屬性名稱。此選項可以多次指定，每個屬性會照順序逐行顯示。如果未指定任何屬性，則會給出預設屬性的摘要。</translation>
     </message>
     <message>
         <source>attribute</source>
-        <translation type="unfinished"/>
+        <translation>屬性</translation>
     </message>
     <message>
         <source>Name of the entry to show.</source>
@@ -3292,27 +3482,27 @@ Available commands:
     </message>
     <message>
         <source>AES: 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>AES: 256 位元</translation>
     </message>
     <message>
         <source>Twofish: 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>Twofish: 256 位元</translation>
     </message>
     <message>
         <source>ChaCha20: 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>ChaCha20: 256 位元</translation>
     </message>
     <message>
         <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2 (KDBX 4 – 推薦)</translation>
     </message>
     <message>
         <source>AES-KDF (KDBX 4)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 4)</translation>
     </message>
     <message>
         <source>AES-KDF (KDBX 3.1)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 3.1)</translation>
     </message>
     <message>
         <source>Group</source>
@@ -3336,15 +3526,15 @@ Available commands:
     </message>
     <message>
         <source>Last Modified</source>
-        <translation type="unfinished"/>
+        <translation>最後編輯</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation type="unfinished"/>
+        <translation>已建立</translation>
     </message>
     <message>
         <source>Legacy Browser Integration</source>
-        <translation type="unfinished"/>
+        <translation>舊式瀏覽器整合</translation>
     </message>
     <message>
         <source>Browser Integration</source>
@@ -3352,18 +3542,63 @@ Available commands:
     </message>
     <message>
         <source>YubiKey[%1] Challenge Response - Slot %2 - %3</source>
-        <translation type="unfinished"/>
+        <translation>YubiKey[%1] 挑戰回應 - 插槽 %2 - %3</translation>
     </message>
     <message>
         <source>Press</source>
-        <translation type="unfinished"/>
+        <translation>按</translation>
     </message>
     <message>
         <source>Passive</source>
-        <translation type="unfinished"/>
+        <translation>被動</translation>
     </message>
     <message>
         <source>SSH Agent</source>
+        <translation>SSH 代理</translation>
+    </message>
+    <message>
+        <source>Generate a new random diceware passphrase.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Word count for the diceware passphrase.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>count</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Wordlist for the diceware generator.
+[Default: EFF English]</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Generate a new random password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Length of the generated password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use lowercase characters in the generated password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use uppercase characters in the generated password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use numbers in the generated password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use special characters in the generated password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use extended ASCII in the generated password.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3472,7 +3707,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption-key(s) from KeePassX/Http Settings.</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>成功從 KeePassX/Http Settings 移除 %n 加密金鑰。</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
@@ -3504,7 +3739,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entries.</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>成功從 %n 個項目中移除權限。</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -3542,7 +3777,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Start only a single instance of KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>只能啟動單一 KeePassXC 程式</translation>
     </message>
     <message>
         <source>Remember last databases</source>
@@ -3550,7 +3785,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Remember last key files and security dongles</source>
-        <translation>記住最近的金鑰檔案與安全鎖</translation>
+        <translation>記住最近的金鑰檔案與安全加密狗</translation>
     </message>
     <message>
         <source>Load previous databases on startup</source>
@@ -3586,7 +3821,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Hide the Details view</source>
-        <translation type="unfinished"/>
+        <translation>隱藏詳細資訊檢視</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
@@ -3602,7 +3837,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Dark system tray icon</source>
-        <translation type="unfinished"/>
+        <translation>深色系統列圖示</translation>
     </message>
     <message>
         <source>Language</source>
@@ -3614,11 +3849,11 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>使用項目標題來匹配全域自動輸入的視窗</translation>
     </message>
     <message>
         <source>Use entry URL to match windows for global Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>使用項目 URL 來匹配全域自動輸入的視窗</translation>
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
@@ -3635,7 +3870,31 @@ Please unlock the selected database or choose another one which is unlocked.</so
     <message>
         <source> ms</source>
         <comment>Milliseconds</comment>
-        <translation>毫秒</translation>
+        <translation> 毫秒</translation>
+    </message>
+    <message>
+        <source>Startup</source>
+        <translation>啟動</translation>
+    </message>
+    <message>
+        <source>File Management</source>
+        <translation>檔案管理</translation>
+    </message>
+    <message>
+        <source>Safely save database files (may be incompatible with Dropbox, etc)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Backup database file before saving</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry Management</source>
+        <translation>項目管理</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>一般</translation>
     </message>
 </context>
 <context>
@@ -3679,11 +3938,11 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Hide passwords in the preview panel</source>
-        <translation type="unfinished"/>
+        <translation>在預覽面板中隱藏密碼</translation>
     </message>
     <message>
         <source>Hide entry notes by default</source>
-        <translation type="unfinished"/>
+        <translation>預設隱藏項目備註</translation>
     </message>
     <message>
         <source>Privacy</source>
@@ -3692,6 +3951,10 @@ Please unlock the selected database or choose another one which is unlocked.</so
     <message>
         <source>Use Google as fallback for downloading website icons</source>
         <translation>使用 Google 搜尋作為下載網站圖示的備案</translation>
+    </message>
+    <message>
+        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3706,11 +3969,11 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Default RFC 6238 token settings</source>
-        <translation type="unfinished"/>
+        <translation>預設 RFC 6238 token 設定</translation>
     </message>
     <message>
         <source>Steam token settings</source>
-        <translation type="unfinished"/>
+        <translation>Steam token 設定</translation>
     </message>
     <message>
         <source>Use custom settings</source>
@@ -3775,10 +4038,6 @@ Please unlock the selected database or choose another one which is unlocked.</so
 <context>
     <name>WelcomeWidget</name>
     <message>
-        <source>Welcome to KeePassXC</source>
-        <translation>歡迎來到 KeePassXC</translation>
-    </message>
-    <message>
         <source>Start storing your passwords securely in a KeePassXC database</source>
         <translation>開始安全的保存你的密碼到 KeePassXC 資料庫</translation>
     </message>
@@ -3802,12 +4061,16 @@ Please unlock the selected database or choose another one which is unlocked.</so
         <source>Recent databases</source>
         <translation>近期的資料庫</translation>
     </message>
+    <message>
+        <source>Welcome to KeePassXC %1</source>
+        <translation>歡迎來到 KeePassXC %1</translation>
+    </message>
 </context>
 <context>
     <name>main</name>
     <message>
         <source>Remove an entry from the database.</source>
-        <translation type="unfinished"/>
+        <translation>從資料庫中移除項目。</translation>
     </message>
     <message>
         <source>Path of the database.</source>
@@ -3815,7 +4078,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Path of the entry to remove.</source>
-        <translation type="unfinished"/>
+        <translation>欲移除的項目路徑。</translation>
     </message>
     <message>
         <source>KeePassXC - cross-platform password manager</source>
@@ -3839,7 +4102,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Parent window handle</source>
-        <translation type="unfinished"/>
+        <translation>父層視窗控制</translation>
     </message>
 </context>
 </TS>

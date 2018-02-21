@@ -18,10 +18,6 @@
         <translation>KeePassXC GNU Genel Kamu Lisansı (GPL) sürüm 2 veya (isteğinize göre) sürüm 3 şartları altında dağıtılmıştır.</translation>
     </message>
     <message>
-        <source>Project Maintainers:</source>
-        <translation>Tasarı Bakımcıları:</translation>
-    </message>
-    <message>
         <source>Contributors</source>
         <translation>Katkıcılar</translation>
     </message>
@@ -70,6 +66,19 @@ MİB mimarisi: %2
     <message>
         <source>Enabled extensions:</source>
         <translation>Etkin eklentiler:</translation>
+    </message>
+    <message>
+        <source>Project Maintainers:</source>
+        <translation>Tasarı Bakımcıları:</translation>
+    </message>
+    <message>
+        <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Build Type: %1
+</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -148,6 +157,25 @@ Lütfen erişime izin vermek istediklerinizi seçin.</translation>
     <message>
         <source>Default sequence</source>
         <translation>Varsayılan sıra</translation>
+    </message>
+</context>
+<context>
+    <name>AutoTypeMatchModel</name>
+    <message>
+        <source>Group</source>
+        <translation>Küme</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Başlık</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Kullanıcı adı</translation>
+    </message>
+    <message>
+        <source>Sequence</source>
+        <translation>Sıra</translation>
     </message>
 </context>
 <context>
@@ -811,6 +839,16 @@ If you keep this number, your database may be too easy to crack!</source>
         <source>Failed to transform key with new KDF parameters; KDF unchanged.</source>
         <translation type="unfinished"/>
     </message>
+    <message numerus="yes">
+        <source> MiB</source>
+        <comment>Abbreviation for Mebibytes (KDF settings)</comment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source> thread(s)</source>
+        <comment>Threads for parallel execution (KDF settings)</comment>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetEncryption</name>
@@ -843,15 +881,7 @@ If you keep this number, your database may be too easy to crack!</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source> MB</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Parallelism:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source> thread</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -892,6 +922,14 @@ If you keep this number, your database may be too easy to crack!</source>
     <message>
         <source>Use recycle bin</source>
         <translation>Geri dönüşüm kutusunu kullan</translation>
+    </message>
+    <message>
+        <source>Additional Database Settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Enable &amp;compression (recommended)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1015,6 +1053,15 @@ Otherwise your changes are lost.</source>
 Kilitlemeden önce veri tabanını kaydetmek ister misiniz?
 Aksi halde değişiklikleriniz kaybolacak.</translation>
     </message>
+    <message>
+        <source>Disable safe saves?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
+Disable safe saves and try again?</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
@@ -1126,6 +1173,10 @@ Do you want to merge your changes?</source>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>Geri dönüşüm kutunuzdaki her şeyi kalıcı olarak silmek istediğinize emin misiniz?</translation>
+    </message>
+    <message>
+        <source>Entry updated successfully.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1313,6 +1364,18 @@ Do you want to merge your changes?</source>
         <source>1 year</source>
         <translation>1 yıl</translation>
     </message>
+    <message>
+        <source>Apply generated password?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to apply the generated password to this entry?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry updated successfully.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
@@ -1343,6 +1406,14 @@ Do you want to merge your changes?</source>
     <message>
         <source>Attachments</source>
         <translation>Ekler</translation>
+    </message>
+    <message>
+        <source>Foreground Color:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Background Color:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1376,12 +1447,8 @@ Do you want to merge your changes?</source>
         <translation>Pencere başlığı:</translation>
     </message>
     <message>
-        <source>Use default se&amp;quence</source>
-        <translation>Öntanımlı &amp;dizilişi kullan</translation>
-    </message>
-    <message>
-        <source>Set custo&amp;m sequence:</source>
-        <translation>Öze&amp;l diziliş belirle:</translation>
+        <source>Use a specific sequence for this association:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1661,6 +1728,31 @@ Do you want to merge your changes?</source>
         <source>Uuid:</source>
         <translation>Uuid:</translation>
     </message>
+    <message>
+        <source>Plugin Data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Kaldır</translation>
+    </message>
+    <message>
+        <source>Delete plugin data?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to delete the selected plugin data?
+This may cause the affected plugins to malfunction.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Entry</name>
@@ -1802,6 +1894,65 @@ Do you want to merge your changes?</source>
         <source>URL</source>
         <translation>URL</translation>
     </message>
+    <message>
+        <source>Never</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Parola</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation>Notlar</translation>
+    </message>
+    <message>
+        <source>Expires</source>
+        <translation>Biter</translation>
+    </message>
+    <message>
+        <source>Created</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Accessed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Attachments</source>
+        <translation>Ekler</translation>
+    </message>
+</context>
+<context>
+    <name>EntryView</name>
+    <message>
+        <source>Customize View</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide Usernames</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide Passwords</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fit to window</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fit to contents</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset to defaults</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Group</name>
@@ -1870,6 +2021,10 @@ Do you want to merge your changes?</source>
     <message>
         <source>Ensure that the password contains characters from every group</source>
         <translation>Parolanın her kümeden karakter içerdiğine emin ol</translation>
+    </message>
+    <message>
+        <source>Extended ASCII</source>
+        <translation>Genişletilmiş ASCII</translation>
     </message>
 </context>
 <context>
@@ -2682,6 +2837,12 @@ Bu tek yönlü bir yer değiştirmedir. İçe aktarılan veri tabanını eski Ke
         <source>Please touch the button on your YubiKey!</source>
         <translation>Lütfen YubiKey&apos;inizdeki düğmeye dokunun!</translation>
     </message>
+    <message>
+        <source>WARNING: You are using an unstable build of KeePassXC!
+There is a high risk of corruption, maintain a backup of your databases.
+This version is not meant for production use.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>OpenSSHKey</name>
@@ -2691,10 +2852,6 @@ Bu tek yönlü bir yer değiştirmedir. İçe aktarılan veri tabanını eski Ke
     </message>
     <message>
         <source>PEM boundary mismatch</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>This is not an OpenSSH key, only modern keys are supported</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2726,10 +2883,6 @@ Bu tek yönlü bir yer değiştirmedir. İçe aktarılan veri tabanını eski Ke
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Unknown cipher: </source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Trying to run KDF without cipher</source>
         <translation type="unfinished"/>
     </message>
@@ -2742,19 +2895,11 @@ Bu tek yönlü bir yer değiştirmedir. İçe aktarılan veri tabanını eski Ke
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Unknown KDF: </source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Decryption failed, wrong passphrase?</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Unexpected EOF while reading public key</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unknown key type: </source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2775,6 +2920,26 @@ Bu tek yönlü bir yer değiştirmedir. İçe aktarılan veri tabanını eski Ke
     </message>
     <message>
         <source>Unexpected EOF when writing private key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unsupported key type: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unknown cipher: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cipher IV is too short for MD5 kdf</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unknown KDF: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unknown key type: %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3293,27 +3458,27 @@ Available commands:
     </message>
     <message>
         <source>AES: 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>AES: 256-bit</translation>
     </message>
     <message>
         <source>Twofish: 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>Twofish: 256-bit</translation>
     </message>
     <message>
         <source>ChaCha20: 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>ChaCha20: 256-bit</translation>
     </message>
     <message>
         <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2 (KDBX 4 – önerilen)</translation>
     </message>
     <message>
         <source>AES-KDF (KDBX 4)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 4)</translation>
     </message>
     <message>
         <source>AES-KDF (KDBX 3.1)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 3.1)</translation>
     </message>
     <message>
         <source>Group</source>
@@ -3365,6 +3530,51 @@ Available commands:
     </message>
     <message>
         <source>SSH Agent</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Generate a new random diceware passphrase.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Word count for the diceware passphrase.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>count</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Wordlist for the diceware generator.
+[Default: EFF English]</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Generate a new random password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Length of the generated password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use lowercase characters in the generated password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use uppercase characters in the generated password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use numbers in the generated password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use special characters in the generated password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use extended ASCII in the generated password.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3638,6 +3848,30 @@ Lütfen seçilen veri tabanının kilidini kaldırın veya kilitli olmayan birin
         <comment>Milliseconds</comment>
         <translation>ms</translation>
     </message>
+    <message>
+        <source>Startup</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>File Management</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Safely save database files (may be incompatible with Dropbox, etc)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Backup database file before saving</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry Management</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>Genel</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>
@@ -3693,6 +3927,10 @@ Lütfen seçilen veri tabanının kilidini kaldırın veya kilitli olmayan birin
     <message>
         <source>Use Google as fallback for downloading website icons</source>
         <translation>Web site simgelerini indirmek için Google&apos;ı yedek olarak kullan</translation>
+    </message>
+    <message>
+        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3776,10 +4014,6 @@ Lütfen seçilen veri tabanının kilidini kaldırın veya kilitli olmayan birin
 <context>
     <name>WelcomeWidget</name>
     <message>
-        <source>Welcome to KeePassXC</source>
-        <translation>KeePassXC&apos;ye hoş geldiniz</translation>
-    </message>
-    <message>
         <source>Start storing your passwords securely in a KeePassXC database</source>
         <translation>Parolalarınızı KeePassXC veri tabanında güvenle depolamaya başlayın</translation>
     </message>
@@ -3802,6 +4036,10 @@ Lütfen seçilen veri tabanının kilidini kaldırın veya kilitli olmayan birin
     <message>
         <source>Recent databases</source>
         <translation>Son veri tabanları</translation>
+    </message>
+    <message>
+        <source>Welcome to KeePassXC %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

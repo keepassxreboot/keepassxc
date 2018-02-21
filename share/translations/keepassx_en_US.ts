@@ -11,40 +11,36 @@
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+        <translation>Báo cáo lỗi tại: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
         <translation>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</translation>
     </message>
     <message>
-        <source>Project Maintainers:</source>
-        <translation>Project Maintainers:</translation>
-    </message>
-    <message>
         <source>Contributors</source>
-        <translation>Contributors</translation>
+        <translation>Người đóng góp</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Xem Đóng góp tại GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>Debug Info</translation>
+        <translation>Thông Tin Sửa Lỗi</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>Include the following information whenever you report a bug:</translation>
+        <translation>Bao gồm những thông tin sau khi bạn báo lỗi:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>Copy to clipboard</translation>
+        <translation>Sao chép vào clipboard</translation>
     </message>
     <message>
         <source>Version %1
 </source>
-        <translation>Version %1
+        <translation>Phiên bản  %1
 </translation>
     </message>
     <message>
@@ -57,7 +53,7 @@
     </message>
     <message>
         <source>Libraries:</source>
-        <translation>Libraries:</translation>
+        <translation>Thư viện:</translation>
     </message>
     <message>
         <source>Operating system: %1
@@ -69,7 +65,21 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
-        <translation>Enabled extensions:</translation>
+        <translation>Phần mở rộng đã bật:</translation>
+    </message>
+    <message>
+        <source>Project Maintainers:</source>
+        <translation>Project Maintainers:</translation>
+    </message>
+    <message>
+        <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
+        <translation>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</translation>
+    </message>
+    <message>
+        <source>Build Type: %1
+</source>
+        <translation>Build Type: %1
+</translation>
     </message>
 </context>
 <context>
@@ -88,7 +98,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Deny</source>
-        <translation>Deny</translation>
+        <translation>Từ chối</translation>
     </message>
     <message>
         <source>%1 has requested access to passwords for the following item(s).
@@ -148,6 +158,25 @@ Please select whether you want to allow access.</translation>
     <message>
         <source>Default sequence</source>
         <translation>Default sequence</translation>
+    </message>
+</context>
+<context>
+    <name>AutoTypeMatchModel</name>
+    <message>
+        <source>Group</source>
+        <translation>Group</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Title</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Username</translation>
+    </message>
+    <message>
+        <source>Sequence</source>
+        <translation>Sequence</translation>
     </message>
 </context>
 <context>
@@ -825,6 +854,16 @@ If you keep this number, your database may be too easy to crack!</translation>
         <source>Failed to transform key with new KDF parameters; KDF unchanged.</source>
         <translation>Failed to transform key with new KDF parameters; KDF unchanged.</translation>
     </message>
+    <message numerus="yes">
+        <source> MiB</source>
+        <comment>Abbreviation for Mebibytes (KDF settings)</comment>
+        <translation><numerusform> MiB</numerusform><numerusform> MiB</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source> thread(s)</source>
+        <comment>Threads for parallel execution (KDF settings)</comment>
+        <translation><numerusform> thread</numerusform><numerusform> threads</numerusform></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetEncryption</name>
@@ -857,16 +896,8 @@ If you keep this number, your database may be too easy to crack!</translation>
         <translation>Memory Usage:</translation>
     </message>
     <message>
-        <source> MB</source>
-        <translation> MB</translation>
-    </message>
-    <message>
         <source>Parallelism:</source>
         <translation>Parallelism:</translation>
-    </message>
-    <message>
-        <source> thread</source>
-        <translation> thread</translation>
     </message>
 </context>
 <context>
@@ -906,6 +937,14 @@ If you keep this number, your database may be too easy to crack!</translation>
     <message>
         <source>Use recycle bin</source>
         <translation>Use recycle bin</translation>
+    </message>
+    <message>
+        <source>Additional Database Settings</source>
+        <translation>Additional Database Settings</translation>
+    </message>
+    <message>
+        <source>Enable &amp;compression (recommended)</source>
+        <translation>Enable &amp;compression (recommended)</translation>
     </message>
 </context>
 <context>
@@ -1029,6 +1068,16 @@ Otherwise your changes are lost.</source>
 Do you want to save the database before locking it?
 Otherwise your changes are lost.</translation>
     </message>
+    <message>
+        <source>Disable safe saves?</source>
+        <translation>Disable safe saves?</translation>
+    </message>
+    <message>
+        <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
+Disable safe saves and try again?</source>
+        <translation>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
+Disable safe saves and try again?</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
@@ -1141,6 +1190,10 @@ Do you want to merge your changes?</translation>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>Are you sure you want to permanently delete everything from your recycle bin?</translation>
+    </message>
+    <message>
+        <source>Entry updated successfully.</source>
+        <translation>Entry updated successfully.</translation>
     </message>
 </context>
 <context>
@@ -1328,6 +1381,18 @@ Do you want to merge your changes?</translation>
         <source>1 year</source>
         <translation>1 year</translation>
     </message>
+    <message>
+        <source>Apply generated password?</source>
+        <translation>Apply generated password?</translation>
+    </message>
+    <message>
+        <source>Do you want to apply the generated password to this entry?</source>
+        <translation>Do you want to apply the generated password to this entry?</translation>
+    </message>
+    <message>
+        <source>Entry updated successfully.</source>
+        <translation>Entry updated successfully.</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
@@ -1358,6 +1423,14 @@ Do you want to merge your changes?</translation>
     <message>
         <source>Attachments</source>
         <translation>Attachments</translation>
+    </message>
+    <message>
+        <source>Foreground Color:</source>
+        <translation>Foreground Color:</translation>
+    </message>
+    <message>
+        <source>Background Color:</source>
+        <translation>Background Color:</translation>
     </message>
 </context>
 <context>
@@ -1391,12 +1464,8 @@ Do you want to merge your changes?</translation>
         <translation>Window title:</translation>
     </message>
     <message>
-        <source>Use default se&amp;quence</source>
-        <translation>Use default se&amp;quence</translation>
-    </message>
-    <message>
-        <source>Set custo&amp;m sequence:</source>
-        <translation>Set custo&amp;m sequence:</translation>
+        <source>Use a specific sequence for this association:</source>
+        <translation>Use a specific sequence for this association:</translation>
     </message>
 </context>
 <context>
@@ -1676,6 +1745,32 @@ Do you want to merge your changes?</translation>
         <source>Uuid:</source>
         <translation>UUID:</translation>
     </message>
+    <message>
+        <source>Plugin Data</source>
+        <translation>Plugin Data</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Remove</translation>
+    </message>
+    <message>
+        <source>Delete plugin data?</source>
+        <translation>Delete plugin data?</translation>
+    </message>
+    <message>
+        <source>Do you really want to delete the selected plugin data?
+This may cause the affected plugins to malfunction.</source>
+        <translation>Do you really want to delete the selected plugin data?
+This may cause the affected plugins to malfunction.</translation>
+    </message>
+    <message>
+        <source>Key</source>
+        <translation>Key</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation>Value</translation>
+    </message>
 </context>
 <context>
     <name>Entry</name>
@@ -1822,6 +1917,65 @@ Do you want to merge your changes?</translation>
         <source>URL</source>
         <translation>URL</translation>
     </message>
+    <message>
+        <source>Never</source>
+        <translation>Never</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Password</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation>Notes</translation>
+    </message>
+    <message>
+        <source>Expires</source>
+        <translation>Expires</translation>
+    </message>
+    <message>
+        <source>Created</source>
+        <translation>Created</translation>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation>Modified</translation>
+    </message>
+    <message>
+        <source>Accessed</source>
+        <translation>Accessed</translation>
+    </message>
+    <message>
+        <source>Attachments</source>
+        <translation>Attachments</translation>
+    </message>
+</context>
+<context>
+    <name>EntryView</name>
+    <message>
+        <source>Customize View</source>
+        <translation>Customize View</translation>
+    </message>
+    <message>
+        <source>Hide Usernames</source>
+        <translation>Hide Usernames</translation>
+    </message>
+    <message>
+        <source>Hide Passwords</source>
+        <translation>Hide Passwords</translation>
+    </message>
+    <message>
+        <source>Fit to window</source>
+        <translation>Fit to window</translation>
+    </message>
+    <message>
+        <source>Fit to contents</source>
+        <translation>Fit to contents</translation>
+    </message>
+    <message>
+        <source>Reset to defaults</source>
+        <translation>Reset to defaults</translation>
+    </message>
 </context>
 <context>
     <name>Group</name>
@@ -1890,6 +2044,10 @@ Do you want to merge your changes?</translation>
     <message>
         <source>Ensure that the password contains characters from every group</source>
         <translation>Ensure that the password contains characters from every group</translation>
+    </message>
+    <message>
+        <source>Extended ASCII</source>
+        <translation>Extended ASCII</translation>
     </message>
 </context>
 <context>
@@ -2508,7 +2666,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Merge from KeePassX database</source>
-        <translation>Merge from KeePassX database</translation>
+        <translation>Merge from KeePassXC database</translation>
     </message>
     <message>
         <source>&amp;Add new entry</source>
@@ -2702,6 +2860,14 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <source>Please touch the button on your YubiKey!</source>
         <translation>Please touch the button on your YubiKey!</translation>
     </message>
+    <message>
+        <source>WARNING: You are using an unstable build of KeePassXC!
+There is a high risk of corruption, maintain a backup of your databases.
+This version is not meant for production use.</source>
+        <translation>WARNING: You are using an unstable build of KeePassXC!
+There is a high risk of corruption, maintain a backup of your databases.
+This version is not meant for production use.</translation>
+    </message>
 </context>
 <context>
     <name>OpenSSHKey</name>
@@ -2712,10 +2878,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <message>
         <source>PEM boundary mismatch</source>
         <translation>PEM boundary mismatch</translation>
-    </message>
-    <message>
-        <source>This is not an OpenSSH key, only modern keys are supported</source>
-        <translation>This is not an OpenSSH key, only modern keys are supported</translation>
     </message>
     <message>
         <source>Base64 decoding failed</source>
@@ -2746,10 +2908,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation>No private key payload to decrypt</translation>
     </message>
     <message>
-        <source>Unknown cipher: </source>
-        <translation>Unknown cipher: </translation>
-    </message>
-    <message>
         <source>Trying to run KDF without cipher</source>
         <translation>Trying to run KDF without cipher</translation>
     </message>
@@ -2762,20 +2920,12 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation>Key derivation failed, key file corrupted?</translation>
     </message>
     <message>
-        <source>Unknown KDF: </source>
-        <translation>Unknown KDF: </translation>
-    </message>
-    <message>
         <source>Decryption failed, wrong passphrase?</source>
         <translation>Decryption failed, wrong passphrase?</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading public key</source>
         <translation>Unexpected EOF while reading public key</translation>
-    </message>
-    <message>
-        <source>Unknown key type: </source>
-        <translation>Unknown key type: </translation>
     </message>
     <message>
         <source>Unexpected EOF while reading private key</source>
@@ -2796,6 +2946,26 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <message>
         <source>Unexpected EOF when writing private key</source>
         <translation>Unexpected EOF when writing private key</translation>
+    </message>
+    <message>
+        <source>Unsupported key type: %1</source>
+        <translation>Unsupported key type: %1</translation>
+    </message>
+    <message>
+        <source>Unknown cipher: %1</source>
+        <translation>Unknown cipher: %1</translation>
+    </message>
+    <message>
+        <source>Cipher IV is too short for MD5 kdf</source>
+        <translation>Cipher IV is too short for MD5 kdf</translation>
+    </message>
+    <message>
+        <source>Unknown KDF: %1</source>
+        <translation>Unknown KDF: %1</translation>
+    </message>
+    <message>
+        <source>Unknown key type: %1</source>
+        <translation>Unknown key type: %1</translation>
     </message>
 </context>
 <context>
@@ -3393,6 +3563,52 @@ Available commands:
         <source>SSH Agent</source>
         <translation>SSH Agent</translation>
     </message>
+    <message>
+        <source>Generate a new random diceware passphrase.</source>
+        <translation>Generate a new random diceware passphrase.</translation>
+    </message>
+    <message>
+        <source>Word count for the diceware passphrase.</source>
+        <translation>Word count for the diceware passphrase.</translation>
+    </message>
+    <message>
+        <source>count</source>
+        <translation>count</translation>
+    </message>
+    <message>
+        <source>Wordlist for the diceware generator.
+[Default: EFF English]</source>
+        <translation>Wordlist for the diceware generator.
+[Default: EFF English]</translation>
+    </message>
+    <message>
+        <source>Generate a new random password.</source>
+        <translation>Generate a new random password.</translation>
+    </message>
+    <message>
+        <source>Length of the generated password.</source>
+        <translation>Length of the generated password.</translation>
+    </message>
+    <message>
+        <source>Use lowercase characters in the generated password.</source>
+        <translation>Use lowercase characters in the generated password.</translation>
+    </message>
+    <message>
+        <source>Use uppercase characters in the generated password.</source>
+        <translation>Use uppercase characters in the generated password.</translation>
+    </message>
+    <message>
+        <source>Use numbers in the generated password.</source>
+        <translation>Use numbers in the generated password.</translation>
+    </message>
+    <message>
+        <source>Use special characters in the generated password.</source>
+        <translation>Use special characters in the generated password.</translation>
+    </message>
+    <message>
+        <source>Use extended ASCII in the generated password.</source>
+        <translation>Use extended ASCII in the generated password.</translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -3664,6 +3880,30 @@ Please unlock the selected database or choose another one which is unlocked.</tr
         <comment>Milliseconds</comment>
         <translation> ms</translation>
     </message>
+    <message>
+        <source>Startup</source>
+        <translation>Startup</translation>
+    </message>
+    <message>
+        <source>File Management</source>
+        <translation>File Management</translation>
+    </message>
+    <message>
+        <source>Safely save database files (may be incompatible with Dropbox, etc)</source>
+        <translation>Safely save database files (may be incompatible with Dropbox, etc)</translation>
+    </message>
+    <message>
+        <source>Backup database file before saving</source>
+        <translation>Backup database file before saving</translation>
+    </message>
+    <message>
+        <source>Entry Management</source>
+        <translation>Entry Management</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>General</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>
@@ -3719,6 +3959,10 @@ Please unlock the selected database or choose another one which is unlocked.</tr
     <message>
         <source>Use Google as fallback for downloading website icons</source>
         <translation>Use Google as fallback for downloading website icons</translation>
+    </message>
+    <message>
+        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <translation>Re-lock previously locked database after performing Auto-Type</translation>
     </message>
 </context>
 <context>
@@ -3802,10 +4046,6 @@ Please unlock the selected database or choose another one which is unlocked.</tr
 <context>
     <name>WelcomeWidget</name>
     <message>
-        <source>Welcome to KeePassXC</source>
-        <translation>Welcome to KeePassXC</translation>
-    </message>
-    <message>
         <source>Start storing your passwords securely in a KeePassXC database</source>
         <translation>Start storing your passwords securely in a KeePassXC database</translation>
     </message>
@@ -3828,6 +4068,10 @@ Please unlock the selected database or choose another one which is unlocked.</tr
     <message>
         <source>Recent databases</source>
         <translation>Recent databases</translation>
+    </message>
+    <message>
+        <source>Welcome to KeePassXC %1</source>
+        <translation>Welcome to KeePassXC %1</translation>
     </message>
 </context>
 <context>

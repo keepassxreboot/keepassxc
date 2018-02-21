@@ -18,10 +18,6 @@
         <translation>KeePassXC wird unter den Bedingungen der GNU General Public License (GPL) Version 2 oder Version 3 (je nach Ihrer Auswahl) vertrieben.</translation>
     </message>
     <message>
-        <source>Project Maintainers:</source>
-        <translation>Projekt-Maintainer:</translation>
-    </message>
-    <message>
         <source>Contributors</source>
         <translation>Mitwirkende</translation>
     </message>
@@ -39,7 +35,7 @@
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>In Zwischenablage kopieren</translation>
+        <translation>In die Zwischenablage kopieren</translation>
     </message>
     <message>
         <source>Version %1
@@ -70,6 +66,20 @@ Kernel: %3 %4</translation>
     <message>
         <source>Enabled extensions:</source>
         <translation>Aktivierte Erweiterungen:</translation>
+    </message>
+    <message>
+        <source>Project Maintainers:</source>
+        <translation>Projekt-Maintainer:</translation>
+    </message>
+    <message>
+        <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
+        <translation>Das KeePassXC-Team möchte ganz besonders debfx danken für die Entwicklung des ursprünglichen KeePassX.</translation>
+    </message>
+    <message>
+        <source>Build Type: %1
+</source>
+        <translation>Build-Typ: %1
+</translation>
     </message>
 </context>
 <context>
@@ -151,6 +161,25 @@ Bitte wählen Sie, ob Sie den Zugriff erlauben möchten.</translation>
     </message>
 </context>
 <context>
+    <name>AutoTypeMatchModel</name>
+    <message>
+        <source>Group</source>
+        <translation>Gruppe</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Titel</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Benutzername</translation>
+    </message>
+    <message>
+        <source>Sequence</source>
+        <translation>Sequenz</translation>
+    </message>
+</context>
+<context>
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassXC</source>
@@ -182,7 +211,7 @@ Bitte wählen Sie, ob Sie den Zugriff erlauben möchten.</translation>
     <message>
         <source>%1 has requested access to passwords for the following item(s).
 Please select whether you want to allow access.</source>
-        <translation>%1 hat Zugriff auf Passwörter für folgende Element(e) angefordert.
+        <translation>%1 hat Zugriff auf Passwörter für folgende Einträge angefordert.
 Bitte wählen Sie, ob Sie den Zugriff erlauben möchten.</translation>
     </message>
 </context>
@@ -257,7 +286,7 @@ Bitte wählen Sie, ob Sie den Zugriff erlauben möchten.</translation>
     <message>
         <source>Sort matching credentials by &amp;username</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Passende Anmeldedaten nach &amp;Nutzername sortieren</translation>
+        <translation>Passende Anmeldedaten nach &amp;Benutzernamen sortieren</translation>
     </message>
     <message>
         <source>&amp;Disconnect all browsers</source>
@@ -543,7 +572,7 @@ Bitte denken Sie darüber nach, eine neue Schlüsseldatei zu generieren.</transl
     </message>
     <message>
         <source>Replace username and password with references</source>
-        <translation>Benutzernamen und Passwort mit Referencen ersetzen</translation>
+        <translation>Benutzernamen und Passwort mit Referenzen ersetzen</translation>
     </message>
     <message>
         <source>Copy history</source>
@@ -821,6 +850,16 @@ Wenn Sie diese Anzahl beibehalten, könnte Ihre Datenbank zu einfach zu knacken 
         <source>Failed to transform key with new KDF parameters; KDF unchanged.</source>
         <translation>Konnte Schlüssel nicht mit den neuen KDF-Parametern transformieren; KDF unverändert.</translation>
     </message>
+    <message numerus="yes">
+        <source> MiB</source>
+        <comment>Abbreviation for Mebibytes (KDF settings)</comment>
+        <translation><numerusform> MiB</numerusform><numerusform> MiB</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source> thread(s)</source>
+        <comment>Threads for parallel execution (KDF settings)</comment>
+        <translation><numerusform> Thread</numerusform><numerusform> Threads</numerusform></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetEncryption</name>
@@ -853,16 +892,8 @@ Wenn Sie diese Anzahl beibehalten, könnte Ihre Datenbank zu einfach zu knacken 
         <translation>Speicher-Verbrauch</translation>
     </message>
     <message>
-        <source> MB</source>
-        <translation>MB</translation>
-    </message>
-    <message>
         <source>Parallelism:</source>
         <translation>Parallelität:</translation>
-    </message>
-    <message>
-        <source> thread</source>
-        <translation>Thread</translation>
     </message>
 </context>
 <context>
@@ -902,6 +933,14 @@ Wenn Sie diese Anzahl beibehalten, könnte Ihre Datenbank zu einfach zu knacken 
     <message>
         <source>Use recycle bin</source>
         <translation>Papierkorb verwenden</translation>
+    </message>
+    <message>
+        <source>Additional Database Settings</source>
+        <translation>Erweiterte Datenbankeinstellungen</translation>
+    </message>
+    <message>
+        <source>Enable &amp;compression (recommended)</source>
+        <translation>&amp;Kompression aktivieren (empfohlen)</translation>
     </message>
 </context>
 <context>
@@ -1025,6 +1064,16 @@ Otherwise your changes are lost.</source>
 Soll sie gespeichert werden bevor sie gesperrt wird?
 Anderenfalls gehen Ihre Änderungen verloren.</translation>
     </message>
+    <message>
+        <source>Disable safe saves?</source>
+        <translation>Sicheres Speichern deaktivieren?</translation>
+    </message>
+    <message>
+        <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
+Disable safe saves and try again?</source>
+        <translation>KeePassXC konnte die Datenbank nach mehrmaligem Versuch nicht erfolgreich speichern. Dies wird möglicherweise durch Synchronisierungsdienste verursacht, die die Datei geöffnet halten.
+Sicheres Speichern deaktivieren und erneut versuchen?</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
@@ -1137,6 +1186,10 @@ Möchten Sie Ihre Änderungen zusammenführen?</translation>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>Sind Sie sicher, dass Sie den Inhalt des Papierkorbs unwiederbringlich löschen wollen?</translation>
+    </message>
+    <message>
+        <source>Entry updated successfully.</source>
+        <translation>Eintrag erfolgreich aktualisiert.</translation>
     </message>
 </context>
 <context>
@@ -1324,6 +1377,18 @@ Möchten Sie Ihre Änderungen zusammenführen?</translation>
         <source>1 year</source>
         <translation>1 Jahr</translation>
     </message>
+    <message>
+        <source>Apply generated password?</source>
+        <translation>Erzeugtes Passwort anwenden?</translation>
+    </message>
+    <message>
+        <source>Do you want to apply the generated password to this entry?</source>
+        <translation>Möchten Sie das das erzeugte Passwort auf den Eintrag anwenden?</translation>
+    </message>
+    <message>
+        <source>Entry updated successfully.</source>
+        <translation>Eintrag erfolgreich aktualisiert.</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
@@ -1354,6 +1419,14 @@ Möchten Sie Ihre Änderungen zusammenführen?</translation>
     <message>
         <source>Attachments</source>
         <translation>Anhänge</translation>
+    </message>
+    <message>
+        <source>Foreground Color:</source>
+        <translation>Textfarbe</translation>
+    </message>
+    <message>
+        <source>Background Color:</source>
+        <translation>Hintergrundfarbe</translation>
     </message>
 </context>
 <context>
@@ -1387,12 +1460,8 @@ Möchten Sie Ihre Änderungen zusammenführen?</translation>
         <translation>Fenstertitel:</translation>
     </message>
     <message>
-        <source>Use default se&amp;quence</source>
-        <translation>Standardse&amp;quenz verwenden</translation>
-    </message>
-    <message>
-        <source>Set custo&amp;m sequence:</source>
-        <translation>B&amp;enutzerdefinierte Sequenz:</translation>
+        <source>Use a specific sequence for this association:</source>
+        <translation>Spezielle Auto-Type-Sequenz für dieses Fenster verwenden:</translation>
     </message>
 </context>
 <context>
@@ -1672,6 +1741,32 @@ Möchten Sie Ihre Änderungen zusammenführen?</translation>
         <source>Uuid:</source>
         <translation>UUID:</translation>
     </message>
+    <message>
+        <source>Plugin Data</source>
+        <translation>Plugin-Daten</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Entfernen</translation>
+    </message>
+    <message>
+        <source>Delete plugin data?</source>
+        <translation>Plugin-Daten löschen?</translation>
+    </message>
+    <message>
+        <source>Do you really want to delete the selected plugin data?
+This may cause the affected plugins to malfunction.</source>
+        <translation>Möchten Sie die ausgewählten Plugin-Daten wirklich löschen?
+Dies kann dazu führen, dass die jeweiligen Plugins nicht mehr richtig funktionieren.</translation>
+    </message>
+    <message>
+        <source>Key</source>
+        <translation>Schlüssel</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation>Wert</translation>
+    </message>
 </context>
 <context>
     <name>Entry</name>
@@ -1817,6 +1912,65 @@ Möchten Sie Ihre Änderungen zusammenführen?</translation>
         <source>URL</source>
         <translation>URL</translation>
     </message>
+    <message>
+        <source>Never</source>
+        <translation>Niemals</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Passwort</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation>Notizen</translation>
+    </message>
+    <message>
+        <source>Expires</source>
+        <translation>Verfällt</translation>
+    </message>
+    <message>
+        <source>Created</source>
+        <translation>Erstellt</translation>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation>Geändert</translation>
+    </message>
+    <message>
+        <source>Accessed</source>
+        <translation>Zuletzt zugegriffen</translation>
+    </message>
+    <message>
+        <source>Attachments</source>
+        <translation>Anhänge</translation>
+    </message>
+</context>
+<context>
+    <name>EntryView</name>
+    <message>
+        <source>Customize View</source>
+        <translation>Ansicht anpassen</translation>
+    </message>
+    <message>
+        <source>Hide Usernames</source>
+        <translation>Benutzernamen ausblenden</translation>
+    </message>
+    <message>
+        <source>Hide Passwords</source>
+        <translation>Passwörter ausblenden</translation>
+    </message>
+    <message>
+        <source>Fit to window</source>
+        <translation>An Fenster anpassen</translation>
+    </message>
+    <message>
+        <source>Fit to contents</source>
+        <translation>An Inhalt anpassen</translation>
+    </message>
+    <message>
+        <source>Reset to defaults</source>
+        <translation>Zurücksetzen</translation>
+    </message>
 </context>
 <context>
     <name>Group</name>
@@ -1885,6 +2039,10 @@ Möchten Sie Ihre Änderungen zusammenführen?</translation>
     <message>
         <source>Ensure that the password contains characters from every group</source>
         <translation>Sicherstellen, dass das Passwort Zeichen aus allen Gruppen enthält.</translation>
+    </message>
+    <message>
+        <source>Extended ASCII</source>
+        <translation>Erweitertes ASCII</translation>
     </message>
 </context>
 <context>
@@ -2503,7 +2661,7 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
     </message>
     <message>
         <source>Merge from KeePassX database</source>
-        <translation>Aus KeePassXC-Datenbank zusammenführen</translation>
+        <translation>Mit KeePassXC-Datenbank zusammenführen</translation>
     </message>
     <message>
         <source>&amp;Add new entry</source>
@@ -2559,7 +2717,7 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
     </message>
     <message>
         <source>Copy username to clipboard</source>
-        <translation>Benutzername in die Zwischenablage kopieren</translation>
+        <translation>Benutzernamen in die Zwischenablage kopieren</translation>
     </message>
     <message>
         <source>Cop&amp;y password</source>
@@ -2697,6 +2855,14 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
         <source>Please touch the button on your YubiKey!</source>
         <translation>Bitte drücken Sie den Button Ihres YubiKeys</translation>
     </message>
+    <message>
+        <source>WARNING: You are using an unstable build of KeePassXC!
+There is a high risk of corruption, maintain a backup of your databases.
+This version is not meant for production use.</source>
+        <translation>WARNUNG: Sie verwenden eine instabile Version von KeePassXC!
+Es besteht ein hohes Risiko für Datenkorruption, pflegen Sie ein Backup Ihrer Datenbank.
+Diese Version ist nicht für den Produktiveinsatz gedacht.</translation>
+    </message>
 </context>
 <context>
     <name>OpenSSHKey</name>
@@ -2707,10 +2873,6 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
     <message>
         <source>PEM boundary mismatch</source>
         <translation>Falsche PEM-Boundarys</translation>
-    </message>
-    <message>
-        <source>This is not an OpenSSH key, only modern keys are supported</source>
-        <translation>Dies ist kein OpenSSH-Schlüssel, nur moderne Schlüssel werden unterstützt</translation>
     </message>
     <message>
         <source>Base64 decoding failed</source>
@@ -2741,10 +2903,6 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
         <translation>Keine Privatschlüssel-Nutzdaten zum Entschlüsseln</translation>
     </message>
     <message>
-        <source>Unknown cipher: </source>
-        <translation>Unbekannter Verschlüsselungsalgorithmus:</translation>
-    </message>
-    <message>
         <source>Trying to run KDF without cipher</source>
         <translation>Versuche, KDF ohne Verschlüsselungsalgorithmus anzuwenden</translation>
     </message>
@@ -2757,20 +2915,12 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
         <translation>Schlüssel-Ableitung fehlgeschlagen, Schlüsseldatei korrupt?</translation>
     </message>
     <message>
-        <source>Unknown KDF: </source>
-        <translation>Unbekannte KDF:</translation>
-    </message>
-    <message>
         <source>Decryption failed, wrong passphrase?</source>
         <translation>Entschlüsselung fehlgeschlagen, falsche Passphrase?</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading public key</source>
         <translation>Unerwartetes EOF beim Lesen des öffentlichen Schlüssels</translation>
-    </message>
-    <message>
-        <source>Unknown key type: </source>
-        <translation>Unbekannte Schlüsseltyp:</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading private key</source>
@@ -2791,6 +2941,26 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
     <message>
         <source>Unexpected EOF when writing private key</source>
         <translation>Unerwartetes EOF beim Schreiben des Privatschlüssels</translation>
+    </message>
+    <message>
+        <source>Unsupported key type: %1</source>
+        <translation>Nicht unterstützter Schlüssel-Typ: %1</translation>
+    </message>
+    <message>
+        <source>Unknown cipher: %1</source>
+        <translation>Unbekannter Verschlüsselungsalgorithmus: %1</translation>
+    </message>
+    <message>
+        <source>Cipher IV is too short for MD5 kdf</source>
+        <translation>Verschlüsselungs-IV ist zur kurz für MD5-KDF</translation>
+    </message>
+    <message>
+        <source>Unknown KDF: %1</source>
+        <translation>Unbekannte Schlüssel-Ableitungs-Funktion: %1</translation>
+    </message>
+    <message>
+        <source>Unknown key type: %1</source>
+        <translation>Unbekannter Schlüssel-Typ: %1</translation>
     </message>
 </context>
 <context>
@@ -2838,7 +3008,7 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
     </message>
     <message>
         <source>Sort matching entries by &amp;username</source>
-        <translation>Sortiere gefundene Einträge nach &amp;Benutzername</translation>
+        <translation>Sortiere gefundene Einträge nach &amp;Benutzernamen</translation>
     </message>
     <message>
         <source>Sort &amp;matching entries by title</source>
@@ -3123,11 +3293,11 @@ Es wird der Standard-Port 19455 verwendet.</translation>
     </message>
     <message>
         <source>Username for the entry.</source>
-        <translation>Nutzername für den Eintrag</translation>
+        <translation>Benutzername für den Eintrag</translation>
     </message>
     <message>
         <source>username</source>
-        <translation>Nutzername</translation>
+        <translation>Benutzername</translation>
     </message>
     <message>
         <source>URL for the entry.</source>
@@ -3385,6 +3555,52 @@ Verfügbare Kommandos:
     <message>
         <source>SSH Agent</source>
         <translation>SSH-Agent</translation>
+    </message>
+    <message>
+        <source>Generate a new random diceware passphrase.</source>
+        <translation>Neue zufällige Diceware-Passphrase erzeugen.</translation>
+    </message>
+    <message>
+        <source>Word count for the diceware passphrase.</source>
+        <translation>Wort-Anzahl für die Diceware-Passphrase.</translation>
+    </message>
+    <message>
+        <source>count</source>
+        <translation>Anzahl</translation>
+    </message>
+    <message>
+        <source>Wordlist for the diceware generator.
+[Default: EFF English]</source>
+        <translation>Wortliste für den Diceware-Generator.
+[Standard: EFF Englisch]</translation>
+    </message>
+    <message>
+        <source>Generate a new random password.</source>
+        <translation>Neues zufälliges Passwort erzeugen.</translation>
+    </message>
+    <message>
+        <source>Length of the generated password.</source>
+        <translation>Länge des erzeugten Passworts.</translation>
+    </message>
+    <message>
+        <source>Use lowercase characters in the generated password.</source>
+        <translation>Kleinbuchstaben zur Passwort-Erzeugung verwenden.</translation>
+    </message>
+    <message>
+        <source>Use uppercase characters in the generated password.</source>
+        <translation>Großbuchstaben zur Passwort-Erzeugung verwenden.</translation>
+    </message>
+    <message>
+        <source>Use numbers in the generated password.</source>
+        <translation>Zahlen zur Passwort-Erzeugung verwenden.</translation>
+    </message>
+    <message>
+        <source>Use special characters in the generated password.</source>
+        <translation>Sonderzeichen zur Passwort-Erzeugung verwenden.</translation>
+    </message>
+    <message>
+        <source>Use extended ASCII in the generated password.</source>
+        <translation>Erweiterte ASCII-Zeichen zur Passwort-Erzeugung verwenden.</translation>
     </message>
 </context>
 <context>
@@ -3658,6 +3874,30 @@ Bitte entsperren Sie die ausgewählte Datenbank oder wählen Sie eine andere, di
         <comment>Milliseconds</comment>
         <translation>ms</translation>
     </message>
+    <message>
+        <source>Startup</source>
+        <translation>Programmstart</translation>
+    </message>
+    <message>
+        <source>File Management</source>
+        <translation>Datei-Management</translation>
+    </message>
+    <message>
+        <source>Safely save database files (may be incompatible with Dropbox, etc)</source>
+        <translation>Datenbankdatei sicher speichern (ggf. inkompatibel mit Dropbox etc.)</translation>
+    </message>
+    <message>
+        <source>Backup database file before saving</source>
+        <translation>Vor Speichern Backup der Datenbank erstellen</translation>
+    </message>
+    <message>
+        <source>Entry Management</source>
+        <translation>Eintrags-Management</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>Allgemein</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>
@@ -3713,6 +3953,10 @@ Bitte entsperren Sie die ausgewählte Datenbank oder wählen Sie eine andere, di
     <message>
         <source>Use Google as fallback for downloading website icons</source>
         <translation>Verwende Google als Fallback fürs Herunterladen von Website-Icons</translation>
+    </message>
+    <message>
+        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <translation>Datenbank nach Auto-Type automatisch wieder sperren.</translation>
     </message>
 </context>
 <context>
@@ -3796,10 +4040,6 @@ Bitte entsperren Sie die ausgewählte Datenbank oder wählen Sie eine andere, di
 <context>
     <name>WelcomeWidget</name>
     <message>
-        <source>Welcome to KeePassXC</source>
-        <translation>Willkommen bei KeePassXC</translation>
-    </message>
-    <message>
         <source>Start storing your passwords securely in a KeePassXC database</source>
         <translation>Speichern Sie Ihre Passwörter sicher in einer KeePassXC-Datenbank</translation>
     </message>
@@ -3822,6 +4062,10 @@ Bitte entsperren Sie die ausgewählte Datenbank oder wählen Sie eine andere, di
     <message>
         <source>Recent databases</source>
         <translation>Zuletzt verwendete Datenbanken</translation>
+    </message>
+    <message>
+        <source>Welcome to KeePassXC %1</source>
+        <translation>Willkommen in KeePassXC %1</translation>
     </message>
 </context>
 <context>
