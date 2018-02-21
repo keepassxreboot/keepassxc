@@ -74,7 +74,7 @@ signals:
 
 private slots:
     void acceptEntry();
-    void saveEntry();
+    bool commitEntry();
     void cancel();
     void togglePasswordGeneratorButton(bool checked);
     void setGeneratedPassword(const QString& password);
@@ -99,6 +99,7 @@ private slots:
     void updateHistoryButtons(const QModelIndex& current, const QModelIndex& previous);
     void useExpiryPreset(QAction* action);
     void toggleHideNotes(bool visible);
+    void pickColor();
 #ifdef WITH_XC_SSHAGENT
     void updateSSHAgent();
     void updateSSHAgentAttachment();
@@ -120,6 +121,7 @@ private:
 #endif
     void setupProperties();
     void setupHistory();
+    void setupColorButton(bool foreground, const QColor& color);
 
     bool passwordsEqual();
     void setForms(const Entry* entry, bool restore = false);

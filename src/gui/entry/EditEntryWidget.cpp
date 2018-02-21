@@ -31,6 +31,7 @@
 #include <QTemporaryFile>
 #include <QMimeData>
 #include <QEvent>
+#include <QColorDialog>
 
 #include "autotype/AutoType.h"
 #include "core/Config.h"
@@ -97,7 +98,7 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
 
     connect(this, SIGNAL(accepted()), SLOT(acceptEntry()));
     connect(this, SIGNAL(rejected()), SLOT(cancel()));
-    connect(this, SIGNAL(apply()), SLOT(saveEntry()));
+    connect(this, SIGNAL(apply()), SLOT(commitEntry()));
     connect(m_iconsWidget, SIGNAL(messageEditEntry(QString, MessageWidget::MessageType)), SLOT(showMessage(QString, MessageWidget::MessageType)));
     connect(m_iconsWidget, SIGNAL(messageEditEntryDismiss()), SLOT(hideMessage()));
     
@@ -127,7 +128,7 @@ void EditEntryWidget::setupMain()
 
     QAction *action = new QAction(this);
     action->setShortcut(Qt::CTRL | Qt::Key_Return);
-    connect(action, SIGNAL(triggered()), this, SLOT(saveEntry()));
+    connect(action, SIGNAL(triggered()), this, SLOT(commitEntry()));
     this->addAction(action);
 
     m_mainUi->passwordGenerator->hide();
@@ -156,6 +157,8 @@ void EditEntryWidget::setupAdvanced()
     connect(m_advancedUi->attributesView->selectionModel(),
             SIGNAL(currentChanged(QModelIndex,QModelIndex)),
             SLOT(updateCurrentAttribute()));
+    connect(m_advancedUi->fgColorButton, SIGNAL(clicked()), SLOT(pickColor()));
+    connect(m_advancedUi->bgColorButton, SIGNAL(clicked()), SLOT(pickColor()));
 }
 
 void EditEntryWidget::setupIcon()
@@ -187,6 +190,8 @@ void EditEntryWidget::setupAutoType()
             SLOT(loadCurrentAssoc(QModelIndex)));
     connect(m_autoTypeAssocModel, SIGNAL(modelReset()), SLOT(clearCurrentAssoc()));
     connect(m_autoTypeUi->windowTitleCombo, SIGNAL(editTextChanged(QString)),
+            SLOT(applyCurrentAssoc()));
+    connect(m_autoTypeUi->customWindowSequenceButton, SIGNAL(toggled(bool)),
             SLOT(applyCurrentAssoc()));
     connect(m_autoTypeUi->windowSequenceEdit, SIGNAL(textChanged(QString)),
             SLOT(applyCurrentAssoc()));
@@ -591,6 +596,8 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
         editTriggers = QAbstractItemView::DoubleClicked;
     }
     m_advancedUi->attributesView->setEditTriggers(editTriggers);
+    setupColorButton(true, entry->foregroundColor());
+    setupColorButton(false, entry->backgroundColor());
     m_iconsWidget->setEnabled(!m_history);
     m_autoTypeUi->sequenceEdit->setReadOnly(m_history);
     m_autoTypeUi->windowTitleCombo->lineEdit()->setReadOnly(m_history);
@@ -676,19 +683,38 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_mainUi->titleEdit->setFocus();
 }
 
-void EditEntryWidget::saveEntry()
+/**
+ * Commit the form values to in-memory database representation
+ *
+ * @return true is commit successful, otherwise false
+ */
+bool EditEntryWidget::commitEntry()
 {
     if (m_history) {
         clear();
         hideMessage();
         emit editFinished(false);
-        return;
+        return true;
     }
 
     if (!passwordsEqual()) {
         showMessage(tr("Different passwords supplied."), MessageWidget::Error);
-        return;
+        return false;
     }
+
+    // Ask the user to apply the generator password, if open
+    if (m_mainUi->togglePasswordGeneratorButton->isChecked() &&
+            m_mainUi->passwordGenerator->getGeneratedPassword() != m_mainUi->passwordEdit->text()) {
+        auto answer = MessageBox::question(this, tr("Apply generated password?"),
+                             tr("Do you want to apply the generated password to this entry?"),
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+        if (answer == QMessageBox::Yes) {
+            m_mainUi->passwordGenerator->applyPassword();
+        }
+    }
+
+    // Hide the password generator
+    m_mainUi->togglePasswordGeneratorButton->setChecked(false);
 
     if (m_advancedUi->attributesView->currentIndex().isValid() && m_advancedUi->attributesEdit->isEnabled()) {
         QString key = m_attributesModel->keyByIndex(m_advancedUi->attributesView->currentIndex());
@@ -727,19 +753,18 @@ void EditEntryWidget::saveEntry()
         updateSSHAgent();
     }
 #endif
+
+    showMessage(tr("Entry updated successfully."), MessageWidget::Positive);
+    return true;
 }
 
 void EditEntryWidget::acceptEntry()
 {
-    // Check if passwords are mismatched first to prevent saving
-    if (!passwordsEqual()) {
-        showMessage(tr("Different passwords supplied."), MessageWidget::Error);
-        return;
+    if (commitEntry()) {
+        clear();
+        hideMessage();
+        emit editFinished(true);
     }
-
-    saveEntry();
-    clear();
-    emit editFinished(true);
 }
 
 void EditEntryWidget::updateEntryData(Entry* entry) const
@@ -756,26 +781,35 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
 
     entry->setNotes(m_mainUi->notesEdit->toPlainText());
 
+    if (m_advancedUi->fgColorCheckBox->isChecked() &&
+            m_advancedUi->fgColorButton->property("color").isValid()) {
+        entry->setForegroundColor(QColor(m_advancedUi->fgColorButton->property("color").toString()));
+    } else {
+        entry->setForegroundColor(QColor());
+    }
+
+    if (m_advancedUi->bgColorCheckBox->isChecked() &&
+            m_advancedUi->bgColorButton->property("color").isValid()) {
+        entry->setBackgroundColor(QColor(m_advancedUi->bgColorButton->property("color").toString()));
+    } else {
+        entry->setBackgroundColor(QColor());
+    }
+
     IconStruct iconStruct = m_iconsWidget->state();
 
     if (iconStruct.number < 0) {
         entry->setIcon(Entry::DefaultIconNumber);
-    }
-    else if (iconStruct.uuid.isNull()) {
+    } else if (iconStruct.uuid.isNull()) {
         entry->setIcon(iconStruct.number);
-    }
-    else {
+    } else {
         entry->setIcon(iconStruct.uuid);
     }
 
     entry->setAutoTypeEnabled(m_autoTypeUi->enableButton->isChecked());
     if (m_autoTypeUi->inheritSequenceButton->isChecked()) {
         entry->setDefaultAutoTypeSequence(QString());
-    }
-    else {
-        if (AutoType::verifyAutoTypeSyntax(m_autoTypeUi->sequenceEdit->text())) {
-            entry->setDefaultAutoTypeSequence(m_autoTypeUi->sequenceEdit->text());
-        }
+    } else if (AutoType::verifyAutoTypeSyntax(m_autoTypeUi->sequenceEdit->text())) {
+        entry->setDefaultAutoTypeSequence(m_autoTypeUi->sequenceEdit->text());
     }
 
     entry->autoTypeAssociations()->copyDataFrom(m_autoTypeAssoc);
@@ -1119,4 +1153,39 @@ QMenu* EditEntryWidget::createPresetsMenu()
     expirePresetsMenu->addSeparator();
     expirePresetsMenu->addAction(tr("1 year"))->setData(QVariant::fromValue(TimeDelta::fromYears(1)));
     return expirePresetsMenu;
+}
+
+void EditEntryWidget::setupColorButton(bool foreground, const QColor& color)
+{
+    QWidget* button = m_advancedUi->fgColorButton;
+    QCheckBox* checkBox = m_advancedUi->fgColorCheckBox;
+    if (!foreground) {
+        button = m_advancedUi->bgColorButton;
+        checkBox = m_advancedUi->bgColorCheckBox;
+    }
+
+    if (color.isValid()) {
+        button->setStyleSheet(QString("background-color:%1").arg(color.name()));
+        button->setProperty("color", color.name());
+        checkBox->setChecked(true);
+    } else {
+        button->setStyleSheet("");
+        button->setProperty("color", QVariant());
+        checkBox->setChecked(false);
+    }
+}
+
+void EditEntryWidget::pickColor()
+{
+    bool isForeground = (sender() == m_advancedUi->fgColorButton);
+    QColor oldColor = QColor(m_advancedUi->fgColorButton->property("color").toString());
+    if (!isForeground) {
+        oldColor = QColor(m_advancedUi->bgColorButton->property("color").toString());
+    }
+
+    QColorDialog colorDialog(this);
+    QColor newColor = colorDialog.getColor(oldColor);
+    if (newColor.isValid()) {
+        setupColorButton(isForeground, newColor);
+    }
 }

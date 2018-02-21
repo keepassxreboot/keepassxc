@@ -148,6 +148,13 @@
         </spacer>
        </item>
        <item>
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>Project Maintainers:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QLabel" name="label_4">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -156,15 +163,29 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string notr="true">&lt;p&gt;Project Maintainers:&lt;/p&gt;
-&lt;ul&gt;
+          <string notr="true">&lt;ul&gt;
     &lt;li&gt;droidmonkey&lt;/li&gt;
     &lt;li&gt;phoerious&lt;/li&gt;
     &lt;li&gt;TheZ3ro&lt;/li&gt;
     &lt;li&gt;louib&lt;/li&gt;
     &lt;li&gt;weslly&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.&lt;/&gt;</string>
+&lt;/ul&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_7">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -198,8 +219,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>423</width>
-            <height>816</height>
+            <width>449</width>
+            <height>803</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_5">

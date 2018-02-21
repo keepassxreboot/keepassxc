@@ -772,23 +772,41 @@ QString Entry::resolveMultiplePlaceholdersRecursive(const QString& str, int maxD
 
 QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDepth) const
 {
+    if (maxDepth <= 0) {
+        qWarning("Maximum depth of replacement has been reached. Entry uuid: %s", qPrintable(uuid().toHex()));
+        return placeholder;
+    }
+
     const PlaceholderType typeOfPlaceholder = placeholderType(placeholder);
     switch (typeOfPlaceholder) {
     case PlaceholderType::NotPlaceholder:
     case PlaceholderType::Unknown:
         return placeholder;
     case PlaceholderType::Title:
-        return title();
+        if (placeholderType(title()) == PlaceholderType::Title) {
+            return title();
+        }
+        return resolvePlaceholderRecursive(title(), maxDepth - 1);
     case PlaceholderType::UserName:
-        return username();
+        if (placeholderType(username()) == PlaceholderType::UserName) {
+            return username();
+        }
+        return resolvePlaceholderRecursive(username(), maxDepth - 1);
     case PlaceholderType::Password:
-        return password();
+        if (placeholderType(password()) == PlaceholderType::Password) {
+            return password();
+        }
+        return resolvePlaceholderRecursive(password(), maxDepth - 1);
     case PlaceholderType::Notes:
-        return notes();
-    case PlaceholderType::Totp:
-        return totp();
+        if (placeholderType(notes()) == PlaceholderType::Notes) {
+            return notes();
+        }
+        return resolvePlaceholderRecursive(notes(), maxDepth - 1);
     case PlaceholderType::Url:
-        return url();
+        if (placeholderType(url()) == PlaceholderType::Url) {
+            return url();
+        }
+        return resolvePlaceholderRecursive(url(), maxDepth - 1);
     case PlaceholderType::UrlWithoutScheme:
     case PlaceholderType::UrlScheme:
     case PlaceholderType::UrlHost:
@@ -802,6 +820,9 @@ QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDe
         const QString strUrl = resolveMultiplePlaceholdersRecursive(url(), maxDepth - 1);
         return resolveUrlPlaceholder(strUrl, typeOfPlaceholder);
     }
+    case PlaceholderType::Totp:
+        // totp can't have placeholder inside
+        return totp();
     case PlaceholderType::CustomAttribute: {
         const QString key = placeholder.mid(3, placeholder.length() - 4); // {S:attr} => mid(3, len - 4)
         return attributes()->hasKey(key) ? attributes()->value(key) : QString();
@@ -815,6 +836,11 @@ QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDe
 
 QString Entry::resolveReferencePlaceholderRecursive(const QString& placeholder, int maxDepth) const
 {
+    if (maxDepth <= 0) {
+        qWarning("Maximum depth of replacement has been reached. Entry uuid: %s", qPrintable(uuid().toHex()));
+        return placeholder;
+    }
+
     // resolving references in format: {REF:<WantedField>@<SearchIn>:<SearchText>}
     // using format from http://keepass.info/help/base/fieldrefs.html at the time of writing
 
@@ -828,6 +854,9 @@ QString Entry::resolveReferencePlaceholderRecursive(const QString& placeholder, 
     const QString searchText = match.captured(EntryAttributes::SearchTextGroupName);
 
     const EntryReferenceType searchInType = Entry::referenceType(searchIn);
+
+    Q_ASSERT(m_group);
+    Q_ASSERT(m_group->database());
     const Entry* refEntry = m_group->database()->resolveEntry(searchText, searchInType);
 
     if (refEntry) {

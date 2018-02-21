@@ -26,6 +26,7 @@
 #include <QLabel>
 #include <QMimeData>
 #include <QPushButton>
+#include <QCheckBox>
 #include <QSpinBox>
 #include <QPlainTextEdit>
 #include <QComboBox>
@@ -61,6 +62,7 @@
 #include "gui/entry/EntryView.h"
 #include "gui/group/GroupModel.h"
 #include "gui/group/GroupView.h"
+#include "gui/group/EditGroupWidget.h"
 #include "keys/PasswordKey.h"
 
 void TestGui::initTestCase()
@@ -278,6 +280,7 @@ void TestGui::testTabs()
 void TestGui::testEditEntry()
 {
     QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
+    int editCount = 0;
 
     // Select the first entry in the database
     EntryView* entryView = m_dbWidget->findChild<EntryView*>("entryView");
@@ -304,7 +307,24 @@ void TestGui::testEditEntry()
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Apply), Qt::LeftButton);
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
     QCOMPARE(entry->title(), QString("Sample Entry_test"));
-    QCOMPARE(entry->historyItems().size(), 1);
+    QCOMPARE(entry->historyItems().size(), ++editCount);
+
+    // Test entry colors (simulate choosing a color)
+    editEntryWidget->setCurrentPage(1);
+    auto fgColor = QColor(Qt::red);
+    auto bgColor = QColor(Qt::blue);
+    // Set foreground color
+    auto colorButton = editEntryWidget->findChild<QPushButton*>("fgColorButton");
+    auto colorCheckBox = editEntryWidget->findChild<QCheckBox*>("fgColorCheckBox");
+    colorButton->setProperty("color", fgColor);
+    colorCheckBox->setChecked(true);
+    // Set background color
+    colorButton = editEntryWidget->findChild<QPushButton*>("bgColorButton");
+    colorCheckBox = editEntryWidget->findChild<QCheckBox*>("bgColorCheckBox");
+    colorButton->setProperty("color", bgColor);
+    colorCheckBox->setChecked(true);
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Apply), Qt::LeftButton);
+    QCOMPARE(entry->historyItems().size(), ++editCount);
 
     // Test protected attributes
     editEntryWidget->setCurrentPage(1);
@@ -336,10 +356,66 @@ void TestGui::testEditEntry()
     // Confirm edit was made
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::ViewMode);
     QCOMPARE(entry->title(), QString("Sample Entry_test"));
-    QCOMPARE(entry->historyItems().size(), 2);
+    QCOMPARE(entry->foregroundColor(), fgColor);
+    QCOMPARE(entryItem.data(Qt::ForegroundRole), QVariant(fgColor));
+    QCOMPARE(entry->backgroundColor(), bgColor);
+    QCOMPARE(entryItem.data(Qt::BackgroundRole), QVariant(bgColor));
+    QCOMPARE(entry->historyItems().size(), ++editCount);
 
     // Confirm modified indicator is showing
     QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("%1*").arg(m_dbFileName));
+}
+
+void TestGui::testSearchEditEntry()
+{
+    // Regression test for Issue #1447 -- Uses example from issue description
+
+    // Find buttons for group creation
+    EditGroupWidget* editGroupWidget = m_dbWidget->findChild<EditGroupWidget*>("editGroupWidget");
+    QLineEdit* nameEdit = editGroupWidget->findChild<QLineEdit*>("nameEdit");
+    QDialogButtonBox* editGroupWidgetButtonBox = editGroupWidget->findChild<QDialogButtonBox*>("buttonBox");
+
+    // Add groups "Good" and "Bad"
+    m_dbWidget->createGroup();
+    QTest::keyClicks(nameEdit, "Good");
+    QTest::mouseClick(editGroupWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    m_dbWidget->groupView()->setCurrentGroup(m_db->rootGroup()); // Makes "Good" and "Bad" on the same level
+    m_dbWidget->createGroup();
+    QTest::keyClicks(nameEdit, "Bad");
+    QTest::mouseClick(editGroupWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    m_dbWidget->groupView()->setCurrentGroup(m_db->rootGroup());
+
+    // Find buttons for entry creation
+    QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
+    QWidget* entryNewWidget = toolBar->widgetForAction(m_mainWindow->findChild<QAction*>("actionEntryNew"));
+    EditEntryWidget* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+    QLineEdit* titleEdit = editEntryWidget->findChild<QLineEdit*>("titleEdit");
+    QDialogButtonBox* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
+
+    // Create "Doggy" in "Good"
+    Group* goodGroup = m_dbWidget->currentGroup()->findChildByName(QString("Good"));
+    m_dbWidget->groupView()->setCurrentGroup(goodGroup);
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QTest::keyClicks(titleEdit, "Doggy");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    // Select "Bad" group in groupView
+    Group* badGroup = m_db->rootGroup()->findChildByName(QString("Bad"));
+    m_dbWidget->groupView()->setCurrentGroup(badGroup);
+
+    // Search for "Doggy" entry
+    SearchWidget* searchWidget = toolBar->findChild<SearchWidget*>("SearchWidget");
+    QLineEdit* searchTextEdit = searchWidget->findChild<QLineEdit*>("searchEdit");
+    QTest::mouseClick(searchTextEdit, Qt::LeftButton);
+    QTest::keyClicks(searchTextEdit, "Doggy");
+    QTRY_VERIFY(m_dbWidget->isInSearchMode());
+
+    // Goto "Doggy"'s edit view
+    QTest::keyClick(searchTextEdit, Qt::Key_Return);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+
+    // Check the path in header is "parent-group > entry"
+    QCOMPARE(m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget")->findChild<QLabel*>("headerLabel")->text(),
+             QString("Good > Doggy > Edit entry"));
 }
 
 void TestGui::testAddEntry()

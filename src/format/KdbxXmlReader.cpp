@@ -700,7 +700,8 @@ Entry* KdbxXmlReader::parseEntry(bool history)
                 entry->setIcon(uuid);
             }
             continue;
-        }if (m_xml.name() == "ForegroundColor") {
+        }
+        if (m_xml.name() == "ForegroundColor") {
             entry->setForegroundColor(readColor());
             continue;
         }

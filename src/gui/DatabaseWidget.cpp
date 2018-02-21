@@ -776,26 +776,27 @@ void DatabaseWidget::switchToView(bool accepted)
             m_newGroup->setParent(m_newParent);
             m_groupView->setCurrentGroup(m_newGroup);
             m_groupView->expandGroup(m_newParent);
-        }
-        else {
+        } else {
             delete m_newGroup;
         }
 
         m_newGroup = nullptr;
         m_newParent = nullptr;
-    }
-    else if (m_newEntry) {
+    } else if (m_newEntry) {
         if (accepted) {
             m_newEntry->setGroup(m_newParent);
             m_entryView->setFocus();
             m_entryView->setCurrentEntry(m_newEntry);
-        }
-        else {
+        } else {
             delete m_newEntry;
         }
 
         m_newEntry = nullptr;
         m_newParent = nullptr;
+    }
+
+    if (accepted) {
+        showMessage(tr("Entry updated successfully."), MessageWidget::Positive, false, 2000);
     }
 
     setCurrentWidget(m_mainWidget);
@@ -819,7 +820,16 @@ void DatabaseWidget::switchToEntryEdit(Entry* entry)
 
 void DatabaseWidget::switchToEntryEdit(Entry* entry, bool create)
 {
-    Group* group = currentGroup();
+    // If creating an entry, it will be in `currentGroup()` so it's
+    // okay to use but when editing, the entry may not be in
+    // `currentGroup()` so we get the entry's group.
+    Group* group;
+    if (create) {
+        group = currentGroup();
+    } else {
+        group = entry->group();
+    }
+
     Q_ASSERT(group);
 
     m_editEntryWidget->loadEntry(entry, create, false, group->name(), m_db);

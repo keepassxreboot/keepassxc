@@ -46,6 +46,7 @@ private slots:
     void testAutoreloadDatabase();
     void testTabs();
     void testEditEntry();
+    void testSearchEditEntry();
     void testAddEntry();
     void testPasswordEntryEntropy();
     void testDicewareEntryEntropy();
