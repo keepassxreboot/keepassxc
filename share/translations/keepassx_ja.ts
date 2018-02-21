@@ -15,11 +15,7 @@
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassXC は GNU General Public License (GPL) version 2 または version 3 (どちらかを選択)の条件で配布されます。</translation>
-    </message>
-    <message>
-        <source>Project Maintainers:</source>
-        <translation>プロジェクトメンテナ:</translation>
+        <translation>KeePassXC は GNU General Public License (GPL) version 2 または version 3 (どちらかを選択) の条件で配布されます。</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -70,6 +66,20 @@ CPU アーキテクチャ: %2
     <message>
         <source>Enabled extensions:</source>
         <translation>有効化された拡張機能:</translation>
+    </message>
+    <message>
+        <source>Project Maintainers:</source>
+        <translation>プロジェクトメンテナ:</translation>
+    </message>
+    <message>
+        <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
+        <translation>KeePassXC チームはオリジナルの KeePassX を作成した debfx に心から感謝します。</translation>
+    </message>
+    <message>
+        <source>Build Type: %1
+</source>
+        <translation>ビルド形式: %1
+</translation>
     </message>
 </context>
 <context>
@@ -132,7 +142,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
-        <translation type="unfinished"/>
+        <translation>この自動入力コマンドは何度も繰り返されている引数が含まれています。本当に続行しますか？</translation>
     </message>
 </context>
 <context>
@@ -148,6 +158,25 @@ Please select whether you want to allow access.</source>
     <message>
         <source>Default sequence</source>
         <translation>デフォルトのシーケンス</translation>
+    </message>
+</context>
+<context>
+    <name>AutoTypeMatchModel</name>
+    <message>
+        <source>Group</source>
+        <translation>グループ</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>タイトル</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>ユーザー名</translation>
+    </message>
+    <message>
+        <source>Sequence</source>
+        <translation>シーケンス</translation>
     </message>
 </context>
 <context>
@@ -279,7 +308,7 @@ Please select whether you want to allow access.</source>
     <message>
         <source>Never ask before &amp;updating credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>クレデンシャルをアップデートする前に確認しない(&amp;U)</translation>
+        <translation>クレデンシャルを更新する前に確認しない(&amp;U)</translation>
     </message>
     <message>
         <source>Only the selected database has to be connected with a client.</source>
@@ -300,11 +329,11 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
-        <translation>起動時に、KeePassXC または keepassxc-proxy のバイナリーパスを自動的に Native messaging スクリプトに更新します。</translation>
+        <translation>起動時に、KeePassXC または keepassxc-proxy のバイナリーパスを自動的に Native messaging スクリプトに更新します。</translation>
     </message>
     <message>
         <source>Update &amp;native messaging manifest files at startup</source>
-        <translation>起動時に Native messaging のマニフェストファイルを更新する(&amp;N)</translation>
+        <translation>起動時に Native messaging のマニフェストファイルを更新する(&amp;N)</translation>
     </message>
     <message>
         <source>Support a proxy application between KeePassXC and browser extension.</source>
@@ -316,7 +345,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Use a custom proxy location if you installed a proxy manually.</source>
-        <translation type="unfinished"/>
+        <translation>手動でプロキシをインストールした場合は、カスタムプロキシを使用します。</translation>
     </message>
     <message>
         <source>Use a &amp;custom proxy location</source>
@@ -431,7 +460,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>%n 個のエントリーから無事にアクセス許可が削除されました。</numerusform></translation>
+        <translation><numerusform>%n 個のエントリーからアクセス許可が無事に削除されました。</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -490,7 +519,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Unable to create Key File : </source>
-        <translation>キーファイルを作成できませんでした:</translation>
+        <translation>キーファイルを作成できません: </translation>
     </message>
     <message>
         <source>Select a key file</source>
@@ -624,7 +653,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Original data: </source>
-        <translation>元データ:</translation>
+        <translation>元データ: </translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file !</source>
@@ -699,7 +728,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>データベースを開けませんでした。</translation>
+        <translation>データベースを開けません。</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
@@ -752,7 +781,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>データベースを開けませんでした。</translation>
+        <translation>データベースを開けません。</translation>
     </message>
     <message>
         <source>Database opened fine. Nothing to do.</source>
@@ -770,7 +799,7 @@ You can now save it.</source>
     </message>
     <message>
         <source>Unable to repair the database.</source>
-        <translation>データベースを修復できませんでした。</translation>
+        <translation>データベースを修復できません。</translation>
     </message>
 </context>
 <context>
@@ -825,6 +854,16 @@ If you keep this number, your database may be too easy to crack!</source>
         <source>Failed to transform key with new KDF parameters; KDF unchanged.</source>
         <translation>新しい KDF のパラメーターでのキー変換に失敗しました。KDF は変更されません。</translation>
     </message>
+    <message numerus="yes">
+        <source> MiB</source>
+        <comment>Abbreviation for Mebibytes (KDF settings)</comment>
+        <translation><numerusform> MiB</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source> thread(s)</source>
+        <comment>Threads for parallel execution (KDF settings)</comment>
+        <translation><numerusform> スレッド</numerusform></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetEncryption</name>
@@ -850,23 +889,15 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Benchmark 1-second delay</source>
-        <translation type="unfinished"/>
+        <translation>ベンチマーク 1秒遅延</translation>
     </message>
     <message>
         <source>Memory Usage:</source>
         <translation>メモリ使用量:</translation>
     </message>
     <message>
-        <source> MB</source>
-        <translation> MB</translation>
-    </message>
-    <message>
         <source>Parallelism:</source>
         <translation>並列処理:</translation>
-    </message>
-    <message>
-        <source> thread</source>
-        <translation> スレッド</translation>
     </message>
 </context>
 <context>
@@ -907,6 +938,14 @@ If you keep this number, your database may be too easy to crack!</source>
         <source>Use recycle bin</source>
         <translation>ゴミ箱を使用する</translation>
     </message>
+    <message>
+        <source>Additional Database Settings</source>
+        <translation>追加のデータベース設定</translation>
+    </message>
+    <message>
+        <source>Enable &amp;compression (recommended)</source>
+        <translation>圧縮を有効にする (推奨)(&amp;C)</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseTabWidget</name>
@@ -933,7 +972,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>データベースを開けませんでした。</translation>
+        <translation>データベースを開けません。</translation>
     </message>
     <message>
         <source>File opened in read only mode.</source>
@@ -980,7 +1019,7 @@ Discard changes and close anyway?</source>
     <message>
         <source>&quot;%1&quot; was modified.
 Save changes?</source>
-        <translation>&quot;%1&quot; は編集されています。
+        <translation>&quot;%1&quot; は更新されています。
 変更を保存しますか？</translation>
     </message>
     <message>
@@ -1005,7 +1044,7 @@ Save changes?</source>
     </message>
     <message>
         <source>New database</source>
-        <translation>新規データベース</translation>
+        <translation>新しいデータベース</translation>
     </message>
     <message>
         <source>locked</source>
@@ -1028,6 +1067,16 @@ Otherwise your changes are lost.</source>
         <translation>このデータベースは変更されました。
 ロックを行う前にデータベースを保存しますか？
 保存しない場合には変更点は失われます。</translation>
+    </message>
+    <message>
+        <source>Disable safe saves?</source>
+        <translation>安全な保存を無効にしますか？</translation>
+    </message>
+    <message>
+        <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
+Disable safe saves and try again?</source>
+        <translation>KeePassXC はデータベースの多段階保存に失敗しました。これは恐らく、保存するファイルをロックしているファイル同期サービスが原因だと思われます。
+安全な保存を無効にして再試行しますか？</translation>
     </message>
 </context>
 <context>
@@ -1142,6 +1191,10 @@ Do you want to merge your changes?</source>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>ゴミ箱にある全項目を永久に削除してもよろしいですか？</translation>
     </message>
+    <message>
+        <source>Entry updated successfully.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DetailsWidget</name>
@@ -1179,7 +1232,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Searching</source>
-        <translation>検索</translation>
+        <translation>検索中</translation>
     </message>
     <message>
         <source>Attributes</source>
@@ -1258,7 +1311,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>n/a</source>
-        <translation type="unfinished"/>
+        <translation>N/A</translation>
     </message>
     <message>
         <source>(encrypted)</source>
@@ -1328,6 +1381,18 @@ Do you want to merge your changes?</source>
         <source>1 year</source>
         <translation>1年</translation>
     </message>
+    <message>
+        <source>Apply generated password?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to apply the generated password to this entry?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry updated successfully.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
@@ -1358,6 +1423,14 @@ Do you want to merge your changes?</source>
     <message>
         <source>Attachments</source>
         <translation>添付ファイル</translation>
+    </message>
+    <message>
+        <source>Foreground Color:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Background Color:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1391,12 +1464,8 @@ Do you want to merge your changes?</source>
         <translation>ウィンドウタイトル:</translation>
     </message>
     <message>
-        <source>Use default se&amp;quence</source>
-        <translation>デフォルトのシーケンスを使用する(&amp;Q)</translation>
-    </message>
-    <message>
-        <source>Set custo&amp;m sequence:</source>
-        <translation>カスタムしたシーケンスを設定する(&amp;M):</translation>
+        <source>Use a specific sequence for this association:</source>
+        <translation>このアソシエーションに特定のシーケンスを使用する:</translation>
     </message>
 </context>
 <context>
@@ -1446,7 +1515,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation>チェックボックスを切り替えるとメモを表示します。</translation>
+        <translation>チェックボックスにチェックを入れるとメモが表示されます。</translation>
     </message>
     <message>
         <source>Username:</source>
@@ -1461,7 +1530,7 @@ Do you want to merge your changes?</source>
     <name>EditEntryWidgetSSHAgent</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>フォーム</translation>
     </message>
     <message>
         <source>Remove key from agent after</source>
@@ -1497,7 +1566,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>n/a</source>
-        <translation type="unfinished"/>
+        <translation>N/A</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
@@ -1676,6 +1745,31 @@ Do you want to merge your changes?</source>
         <source>Uuid:</source>
         <translation>UUID:</translation>
     </message>
+    <message>
+        <source>Plugin Data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>削除</translation>
+    </message>
+    <message>
+        <source>Delete plugin data?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to delete the selected plugin data?
+This may cause the affected plugins to malfunction.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Entry</name>
@@ -1700,7 +1794,7 @@ Do you want to merge your changes?</source>
     <name>EntryAttachmentsWidget</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>フォーム</translation>
     </message>
     <message>
         <source>Add</source>
@@ -1724,7 +1818,7 @@ Do you want to merge your changes?</source>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>%n 個の添付を削除してもよろしいですか？</numerusform></translation>
+        <translation><numerusform>%n 個の添付ファイルを削除してもよろしいですか？</numerusform></translation>
     </message>
     <message>
         <source>Confirm Remove</source>
@@ -1732,12 +1826,12 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Save attachments</source>
-        <translation>添付を保存</translation>
+        <translation>添付ファイルを保存</translation>
     </message>
     <message>
         <source>Unable to create directory:
 %1</source>
-        <translation>ディレクトリを作成できませんでした:
+        <translation>ディレクトリを作成できません:
 %1</translation>
     </message>
     <message>
@@ -1751,25 +1845,25 @@ Do you want to merge your changes?</source>
     <message>
         <source>Unable to save attachments:
 %1</source>
-        <translation>添付を保存できませんでした:
+        <translation>添付ファイルを保存できません:
 %1</translation>
     </message>
     <message>
         <source>Unable to open attachment:
 %1</source>
-        <translation>添付を開けませんでした:
+        <translation>添付ファイルを開けません:
 %1</translation>
     </message>
     <message>
         <source>Unable to open attachments:
 %1</source>
-        <translation>添付を開けませんでした:
+        <translation>添付ファイルを開けません:
 %1</translation>
     </message>
     <message>
         <source>Unable to open files:
 %1</source>
-        <translation>ファイルを開けませんでした:
+        <translation>ファイルを開けません:
 %1</translation>
     </message>
 </context>
@@ -1804,7 +1898,7 @@ Do you want to merge your changes?</source>
     <message>
         <source>Ref: </source>
         <comment>Reference abbreviation</comment>
-        <translation>参照:</translation>
+        <translation>参照: </translation>
     </message>
     <message>
         <source>Group</source>
@@ -1821,6 +1915,65 @@ Do you want to merge your changes?</source>
     <message>
         <source>URL</source>
         <translation>URL</translation>
+    </message>
+    <message>
+        <source>Never</source>
+        <translation>なし</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>パスワード</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation>メモ</translation>
+    </message>
+    <message>
+        <source>Expires</source>
+        <translation>期限</translation>
+    </message>
+    <message>
+        <source>Created</source>
+        <translation>作成日時</translation>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation>編集日時</translation>
+    </message>
+    <message>
+        <source>Accessed</source>
+        <translation>アクセス日時</translation>
+    </message>
+    <message>
+        <source>Attachments</source>
+        <translation>添付ファイル</translation>
+    </message>
+</context>
+<context>
+    <name>EntryView</name>
+    <message>
+        <source>Customize View</source>
+        <translation>表示のカスタマイズ</translation>
+    </message>
+    <message>
+        <source>Hide Usernames</source>
+        <translation>ユーザー名を隠す</translation>
+    </message>
+    <message>
+        <source>Hide Passwords</source>
+        <translation>パスワードを隠す</translation>
+    </message>
+    <message>
+        <source>Fit to window</source>
+        <translation>ウィンドウに合わせる</translation>
+    </message>
+    <message>
+        <source>Fit to contents</source>
+        <translation>内容に合わせる</translation>
+    </message>
+    <message>
+        <source>Reset to defaults</source>
+        <translation>デフォルトにリセット</translation>
     </message>
 </context>
 <context>
@@ -1891,6 +2044,10 @@ Do you want to merge your changes?</source>
         <source>Ensure that the password contains characters from every group</source>
         <translation>使用する文字種の文字が必ず含まれるようにする</translation>
     </message>
+    <message>
+        <source>Extended ASCII</source>
+        <translation>拡張 ASCII</translation>
+    </message>
 </context>
 <context>
     <name>KMessageWidget</name>
@@ -1941,7 +2098,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Invalid header checksum size</source>
-        <translation>ヘッダーのチェックサムのサイズが不正です</translation>
+        <translation>ヘッダーのチェックサムサイズが不正です</translation>
     </message>
     <message>
         <source>Header SHA256 mismatch</source>
@@ -2162,7 +2319,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Invalid group icon number</source>
-        <translation>グループアイコン番号が不正です</translation>
+        <translation>グループのアイコン番号が不正です</translation>
     </message>
     <message>
         <source>Invalid EnableAutoType value</source>
@@ -2174,7 +2331,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>No group uuid found</source>
-        <translation>グループの UUID がありません</translation>
+        <translation>グループの UUID が見つかりません</translation>
     </message>
     <message>
         <source>Null DeleteObject uuid</source>
@@ -2190,11 +2347,11 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Invalid entry icon number</source>
-        <translation>エントリーアイコン番号が不正です</translation>
+        <translation>エントリーのアイコン番号が不正です</translation>
     </message>
     <message>
         <source>History element in history entry</source>
-        <translation type="unfinished"/>
+        <translation>履歴エントリー内に履歴要素が存在します</translation>
     </message>
     <message>
         <source>No entry uuid found</source>
@@ -2202,31 +2359,31 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>History element with different uuid</source>
-        <translation type="unfinished"/>
+        <translation>履歴要素の UUID が異なります</translation>
     </message>
     <message>
         <source>Unable to decrypt entry string</source>
-        <translation type="unfinished"/>
+        <translation>エントリーの文字列を復号できません</translation>
     </message>
     <message>
         <source>Duplicate custom attribute found</source>
-        <translation type="unfinished"/>
+        <translation>重複したカスタム属性が見つかりました</translation>
     </message>
     <message>
         <source>Entry string key or value missing</source>
-        <translation type="unfinished"/>
+        <translation>エントリーの文字列 Key または Value がありません</translation>
     </message>
     <message>
         <source>Duplicate attachment found</source>
-        <translation type="unfinished"/>
+        <translation>重複した添付ファイルが見つかりました</translation>
     </message>
     <message>
         <source>Entry binary key or value missing</source>
-        <translation type="unfinished"/>
+        <translation>エントリーのバイナリー Key または Value がありません</translation>
     </message>
     <message>
         <source>Auto-type association window or sequence missing</source>
-        <translation type="unfinished"/>
+        <translation>自動入力の関連付けウィンドウまたは自動入力シーケンスがありません</translation>
     </message>
     <message>
         <source>Invalid bool value</source>
@@ -2255,7 +2412,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <message>
         <source>Unable to decompress binary</source>
         <extracomment>Translator meant is a binary data inside an entry</extracomment>
-        <translation type="unfinished"/>
+        <translation>バイナリーを展開できません</translation>
     </message>
 </context>
 <context>
@@ -2266,14 +2423,14 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>データベースを開けませんでした。</translation>
+        <translation>データベースを開けません。</translation>
     </message>
 </context>
 <context>
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
-        <translation>キーファイルを読み込めませんでした。</translation>
+        <translation>キーファイルを読み込めません。</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
@@ -2290,7 +2447,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <message>
         <source>Unable to read encryption IV</source>
         <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation type="unfinished"/>
+        <translation>Encryption IV (暗号化初期化ベクトル) を読み取れません</translation>
     </message>
     <message>
         <source>Invalid number of groups</source>
@@ -2302,7 +2459,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Invalid content hash size</source>
-        <translation>コンテンツハッシュサイズが無効です</translation>
+        <translation>コンテンツハッシュサイズが不正です</translation>
     </message>
     <message>
         <source>Invalid transform seed size</source>
@@ -2314,7 +2471,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Unable to construct group tree</source>
-        <translation type="unfinished"/>
+        <translation>グループツリーを構成できません</translation>
     </message>
     <message>
         <source>Root</source>
@@ -2330,91 +2487,91 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Key transformation failed</source>
-        <translation type="unfinished"/>
+        <translation>キー変換に失敗しました</translation>
     </message>
     <message>
         <source>Invalid group field type number</source>
-        <translation>グループフィールドタイプの数が不正です</translation>
+        <translation>グループのフィールドタイプ数が不正です</translation>
     </message>
     <message>
         <source>Invalid group field size</source>
-        <translation>グループフィールドのサイズが不正です</translation>
+        <translation>グループのフィールドサイズが不正です</translation>
     </message>
     <message>
         <source>Read group field data doesn&apos;t match size</source>
-        <translation type="unfinished"/>
+        <translation>読み込んだグループのフィールドデータはサイズが一致しません</translation>
     </message>
     <message>
         <source>Incorrect group id field size</source>
-        <translation type="unfinished"/>
+        <translation>グループの ID フィールドサイズが正しくありません</translation>
     </message>
     <message>
         <source>Incorrect group creation time field size</source>
-        <translation type="unfinished"/>
+        <translation>グループの作成日時フィールドサイズが正しくありません</translation>
     </message>
     <message>
         <source>Incorrect group modification time field size</source>
-        <translation type="unfinished"/>
+        <translation>グループの編集日時フィールドサイズが正しくありません</translation>
     </message>
     <message>
         <source>Incorrect group access time field size</source>
-        <translation type="unfinished"/>
+        <translation>グループのアクセス日時フィールドサイズが正しくありません</translation>
     </message>
     <message>
         <source>Incorrect group expiry time field size</source>
-        <translation type="unfinished"/>
+        <translation>グループの有効期限フィールドサイズが正しくありません</translation>
     </message>
     <message>
         <source>Incorrect group icon field size</source>
-        <translation type="unfinished"/>
+        <translation>グループのアイコンフィールドサイズが正しくありません</translation>
     </message>
     <message>
         <source>Incorrect group level field size</source>
-        <translation type="unfinished"/>
+        <translation>グループのレベルフィールドサイズが正しくありません</translation>
     </message>
     <message>
         <source>Invalid group field type</source>
-        <translation>グループフィールドのタイプが不正です</translation>
+        <translation>グループのフィールドタイプが不正です</translation>
     </message>
     <message>
         <source>Missing group id or level</source>
-        <translation type="unfinished"/>
+        <translation>グループの ID またはレベルがありません</translation>
     </message>
     <message>
         <source>Missing entry field type number</source>
-        <translation type="unfinished"/>
+        <translation>エントリーのフィールドタイプ番号がありません</translation>
     </message>
     <message>
         <source>Invalid entry field size</source>
-        <translation>エントリーフィールドのサイズが不正です</translation>
+        <translation>エントリーのフィールドサイズが不正です</translation>
     </message>
     <message>
         <source>Read entry field data doesn&apos;t match size</source>
-        <translation type="unfinished"/>
+        <translation>読み込んだエントリーのフィールドデータはサイズが一致しません</translation>
     </message>
     <message>
         <source>Invalid entry uuid field size</source>
-        <translation>エントリーの UUID フィールドのサイズが不正です</translation>
+        <translation>エントリーの UUID フィールドサイズが不正です</translation>
     </message>
     <message>
         <source>Invalid entry group id field size</source>
-        <translation>エントリーのグループ ID フィールドのサイズが不正です</translation>
+        <translation>エントリーのグループ ID フィールドサイズが不正です</translation>
     </message>
     <message>
         <source>Invalid entry icon field size</source>
-        <translation>エントリーのアイコンフィールドのサイズが不正です</translation>
+        <translation>エントリーのアイコンフィールドサイズが不正です</translation>
     </message>
     <message>
         <source>Invalid entry creation time field size</source>
-        <translation>エントリーの作成日時フィールドのサイズが不正です</translation>
+        <translation>エントリーの作成日時フィールドサイズが不正です</translation>
     </message>
     <message>
         <source>Invalid entry modification time field size</source>
-        <translation>エントリーの編集日時フィールドのサイズが不正です</translation>
+        <translation>エントリーの編集日時フィールドサイズが不正です</translation>
     </message>
     <message>
         <source>Invalid entry expiry time field size</source>
-        <translation>エントリーの有効期限フィールドのサイズが不正です</translation>
+        <translation>エントリーの期限日時フィールドサイズが不正です</translation>
     </message>
     <message>
         <source>Invalid entry field type</source>
@@ -2472,7 +2629,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Time-based one-time password</source>
-        <translation type="unfinished"/>
+        <translation>タイムベースワンタイムパスワード</translation>
     </message>
     <message>
         <source>&amp;Groups</source>
@@ -2660,7 +2817,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&lt;p&gt;It looks like you are using KeePassHTTP for browser integration. This feature has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a class=&quot;link&quot;  href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt; (warning %1 of 3).&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;ブラウザ統合に KeePassHTTP を使用しています。この機能は将来的に廃止され、削除されます。&lt;br&gt;代わりに KeePassXC-Browser を使用してください。移行に関するヘルプは &lt;a class=&quot;link&quot;  href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt; を参照してください (%1 / 3 回目の警告)。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>read-only</source>
@@ -2702,6 +2859,14 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <source>Please touch the button on your YubiKey!</source>
         <translation>YubiKey のボタンにタッチしてください</translation>
     </message>
+    <message>
+        <source>WARNING: You are using an unstable build of KeePassXC!
+There is a high risk of corruption, maintain a backup of your databases.
+This version is not meant for production use.</source>
+        <translation>警告: KeePassXC の開発版を使用しています。
+データベース破損の危険性が高いため、バックアップを維持します。
+このバージョンは正式版ではありません。</translation>
+    </message>
 </context>
 <context>
     <name>OpenSSHKey</name>
@@ -2711,19 +2876,15 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>PEM boundary mismatch</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>This is not an OpenSSH key, only modern keys are supported</source>
-        <translation type="unfinished"/>
+        <translation>PEM のバウンダリーが不一致です</translation>
     </message>
     <message>
         <source>Base64 decoding failed</source>
-        <translation type="unfinished"/>
+        <translation>Base64 のデコードに失敗しました</translation>
     </message>
     <message>
         <source>Key file way too small.</source>
-        <translation type="unfinished"/>
+        <translation>キーファイルが小さすぎます。</translation>
     </message>
     <message>
         <source>Key file magic header id invalid</source>
@@ -2731,71 +2892,79 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Found zero keys</source>
-        <translation type="unfinished"/>
+        <translation>キーが 0 です</translation>
     </message>
     <message>
         <source>Failed to read public key.</source>
-        <translation type="unfinished"/>
+        <translation>公開鍵の読み取りに失敗しました。</translation>
     </message>
     <message>
         <source>Corrupted key file, reading private key failed</source>
-        <translation type="unfinished"/>
+        <translation>キーファイルが破損しているため私有鍵の読み取りに失敗しました</translation>
     </message>
     <message>
         <source>No private key payload to decrypt</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unknown cipher: </source>
-        <translation type="unfinished"/>
+        <translation>復号する私有鍵のペイロードがありません</translation>
     </message>
     <message>
         <source>Trying to run KDF without cipher</source>
-        <translation type="unfinished"/>
+        <translation>暗号なしで KDF を実行しようとしています</translation>
     </message>
     <message>
         <source>Passphrase is required to decrypt this key</source>
-        <translation type="unfinished"/>
+        <translation>この鍵を復号するパスフレーズが必要です</translation>
     </message>
     <message>
         <source>Key derivation failed, key file corrupted?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unknown KDF: </source>
-        <translation type="unfinished"/>
+        <translation>鍵の導出に失敗しました。キーファイルが壊れていませんか？</translation>
     </message>
     <message>
         <source>Decryption failed, wrong passphrase?</source>
-        <translation type="unfinished"/>
+        <translation>復号化に失敗しました。パスフレーズが間違っていませんか？</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading public key</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unknown key type: </source>
-        <translation type="unfinished"/>
+        <translation>公開鍵の読み取り中に予期しない EOF がありました</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading private key</source>
-        <translation type="unfinished"/>
+        <translation>私有鍵の読み取り中に予期しない EOF がありました</translation>
     </message>
     <message>
         <source>Can&apos;t write public key as it is empty</source>
-        <translation type="unfinished"/>
+        <translation>公開鍵が空のため書き込めません</translation>
     </message>
     <message>
         <source>Unexpected EOF when writing public key</source>
-        <translation type="unfinished"/>
+        <translation>公開鍵の書き込み中に予期しない EOF がありました</translation>
     </message>
     <message>
         <source>Can&apos;t write private key as it is empty</source>
-        <translation type="unfinished"/>
+        <translation>私有鍵が空のため書き込めません</translation>
     </message>
     <message>
         <source>Unexpected EOF when writing private key</source>
-        <translation type="unfinished"/>
+        <translation>私有鍵の書き込み中に予期しない EOF がありました</translation>
+    </message>
+    <message>
+        <source>Unsupported key type: %1</source>
+        <translation>サポートしていない鍵の種類です: %1</translation>
+    </message>
+    <message>
+        <source>Unknown cipher: %1</source>
+        <translation>不明な暗号です: %1</translation>
+    </message>
+    <message>
+        <source>Cipher IV is too short for MD5 kdf</source>
+        <translation>暗号初期化ベクトルが MD5 KDF に対して短すぎます</translation>
+    </message>
+    <message>
+        <source>Unknown KDF: %1</source>
+        <translation>不明な KDF です: %1</translation>
+    </message>
+    <message>
+        <source>Unknown key type: %1</source>
+        <translation>不明な鍵の種類です: %1</translation>
     </message>
 </context>
 <context>
@@ -2907,7 +3076,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&lt;p&gt;KeePassHTTP has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;KeePassHTTP は将来的に廃止され、削除されます。&lt;br&gt;代わりに KeePassXC-Browser を使用してください。移行に関するヘルプは &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt; を参照してください。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Cannot bind to privileged ports</source>
@@ -3048,71 +3217,71 @@ Using default port 19455.</source>
     <name>QObject</name>
     <message>
         <source>Database not opened</source>
-        <translation type="unfinished"/>
+        <translation>データベースが開かれていません</translation>
     </message>
     <message>
         <source>Database hash not available</source>
-        <translation type="unfinished"/>
+        <translation>データベースハッシュが利用できません</translation>
     </message>
     <message>
         <source>Client public key not received</source>
-        <translation type="unfinished"/>
+        <translation>クライアントの公開鍵を受信しませんでした</translation>
     </message>
     <message>
         <source>Cannot decrypt message</source>
-        <translation type="unfinished"/>
+        <translation>メッセージを復号できません</translation>
     </message>
     <message>
         <source>Timeout or cannot connect to KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC に接続できないかタイムアウトしました</translation>
     </message>
     <message>
         <source>Action cancelled or denied</source>
-        <translation type="unfinished"/>
+        <translation>アクションがキャンセルまたは拒否されました</translation>
     </message>
     <message>
         <source>Cannot encrypt message or public key not found. Is Native Messaging enabled in KeePassXC?</source>
-        <translation type="unfinished"/>
+        <translation>メッセージを暗号化できないか、公開鍵が見つかりません。Native Messaging は KeePassXC で有効化されていますか？</translation>
     </message>
     <message>
         <source>KeePassXC association failed, try again</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC のアソシエーションに失敗しました。再試行してください。</translation>
     </message>
     <message>
         <source>Key change was not successful</source>
-        <translation type="unfinished"/>
+        <translation>キーの変更は成功しませんでした</translation>
     </message>
     <message>
         <source>Encryption key is not recognized</source>
-        <translation type="unfinished"/>
+        <translation>暗号化キーが認識されません</translation>
     </message>
     <message>
         <source>No saved databases found</source>
-        <translation type="unfinished"/>
+        <translation>保存されたデータベースが見つかりません</translation>
     </message>
     <message>
         <source>Incorrect action</source>
-        <translation type="unfinished"/>
+        <translation>不正確なアクションです</translation>
     </message>
     <message>
         <source>Empty message received</source>
-        <translation type="unfinished"/>
+        <translation>空のメッセージを受信しました</translation>
     </message>
     <message>
         <source>No URL provided</source>
-        <translation type="unfinished"/>
+        <translation>URL がありません</translation>
     </message>
     <message>
         <source>No logins found</source>
-        <translation type="unfinished"/>
+        <translation>ログインしません</translation>
     </message>
     <message>
         <source>Unknown error</source>
-        <translation type="unfinished"/>
+        <translation>不明なエラーです</translation>
     </message>
     <message>
         <source>Add a new entry to a database.</source>
-        <translation type="unfinished"/>
+        <translation>データベースに新しいエントリーを追加する。</translation>
     </message>
     <message>
         <source>Path of the database.</source>
@@ -3120,7 +3289,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Key file of the database.</source>
-        <translation type="unfinished"/>
+        <translation>データベースのキーファイル。</translation>
     </message>
     <message>
         <source>path</source>
@@ -3164,12 +3333,12 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Copy an entry&apos;s password to the clipboard.</source>
-        <translation type="unfinished"/>
+        <translation>クリップボードにエントリーのパスワードをコピーする。</translation>
     </message>
     <message>
         <source>Path of the entry to clip.</source>
         <comment>clip = copy to clipboard</comment>
-        <translation>クリップするエントリーのパス。</translation>
+        <translation>クリップボードにコピーするエントリーのパス。</translation>
     </message>
     <message>
         <source>Timeout in seconds before clearing the clipboard.</source>
@@ -3177,7 +3346,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Edit an entry.</source>
-        <translation type="unfinished"/>
+        <translation>エントリーを編集する。</translation>
     </message>
     <message>
         <source>Title for the entry.</source>
@@ -3189,19 +3358,19 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Path of the entry to edit.</source>
-        <translation type="unfinished"/>
+        <translation>編集するエントリーのパス。</translation>
     </message>
     <message>
         <source>Estimate the entropy of a password.</source>
-        <translation type="unfinished"/>
+        <translation>パスワードのエントロピーの推定。</translation>
     </message>
     <message>
         <source>Password for which to estimate the entropy.</source>
-        <translation type="unfinished"/>
+        <translation>エントロピーを推定するパスワード。</translation>
     </message>
     <message>
         <source>Perform advanced analysis on the password.</source>
-        <translation type="unfinished"/>
+        <translation>パスワードの詳細な分析を実行する。</translation>
     </message>
     <message>
         <source>Extract and print the content of a database.</source>
@@ -3213,11 +3382,11 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Insert password to unlock %1: </source>
-        <translation type="unfinished"/>
+        <translation>%1 のロックを解除するパスワードを入力してください: </translation>
     </message>
     <message>
         <source>Failed to load key file %1 : %2</source>
-        <translation type="unfinished"/>
+        <translation>キーファイル %1 の読み込みに失敗しました: %2</translation>
     </message>
     <message>
         <source>WARNING: You are using a legacy key file format which may become
@@ -3234,7 +3403,10 @@ Please consider generating a new key file.</source>
 
 Available commands:
 </source>
-        <translation type="unfinished"/>
+        <translation>
+
+利用可能なコマンド:
+</translation>
     </message>
     <message>
         <source>Name of the command to execute.</source>
@@ -3250,11 +3422,11 @@ Available commands:
     </message>
     <message>
         <source>Find entries quickly.</source>
-        <translation type="unfinished"/>
+        <translation>素早くエントリーを見つけ出す。</translation>
     </message>
     <message>
         <source>Search term.</source>
-        <translation type="unfinished"/>
+        <translation>検索語。</translation>
     </message>
     <message>
         <source>Merge two databases.</source>
@@ -3278,15 +3450,15 @@ Available commands:
     </message>
     <message>
         <source>Show an entry&apos;s information.</source>
-        <translation type="unfinished"/>
+        <translation>エントリーの情報を表示する。</translation>
     </message>
     <message>
         <source>Names of the attributes to show. This option can be specified more than once, with each attribute shown one-per-line in the given order. If no attributes are specified, a summary of the default attributes is given.</source>
-        <translation type="unfinished"/>
+        <translation>表示する属性の名前。このオプションはいくつでも指定することができ、各属性は指定した順に1行に1つずつ表示されます。属性の指定がない場合は、デフォルトの属性の概要が表示されます。</translation>
     </message>
     <message>
         <source>attribute</source>
-        <translation type="unfinished"/>
+        <translation>属性</translation>
     </message>
     <message>
         <source>Name of the entry to show.</source>
@@ -3303,7 +3475,8 @@ Available commands:
     <message>
         <source>file empty !
 </source>
-        <translation>空ファイルです</translation>
+        <translation>空ファイルです
+</translation>
     </message>
     <message>
         <source>malformed string</source>
@@ -3315,27 +3488,27 @@ Available commands:
     </message>
     <message>
         <source>AES: 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>AES: 256 ビット</translation>
     </message>
     <message>
         <source>Twofish: 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>Twofish: 256 ビット</translation>
     </message>
     <message>
         <source>ChaCha20: 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>ChaCha20: 256 ビット</translation>
     </message>
     <message>
         <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2 (KDBX 4 – 推奨)</translation>
     </message>
     <message>
         <source>AES-KDF (KDBX 4)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 4)</translation>
     </message>
     <message>
         <source>AES-KDF (KDBX 3.1)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 3.1)</translation>
     </message>
     <message>
         <source>Group</source>
@@ -3367,7 +3540,7 @@ Available commands:
     </message>
     <message>
         <source>Legacy Browser Integration</source>
-        <translation type="unfinished"/>
+        <translation>レガシーなブラウザ統合</translation>
     </message>
     <message>
         <source>Browser Integration</source>
@@ -3389,6 +3562,52 @@ Available commands:
         <source>SSH Agent</source>
         <translation>SSH エージェント</translation>
     </message>
+    <message>
+        <source>Generate a new random diceware passphrase.</source>
+        <translation>新しいランダムなダイスウェアパスフレーズを生成する。</translation>
+    </message>
+    <message>
+        <source>Word count for the diceware passphrase.</source>
+        <translation>ダイスウェアパスフレーズの単語数。</translation>
+    </message>
+    <message>
+        <source>count</source>
+        <translation>カウント</translation>
+    </message>
+    <message>
+        <source>Wordlist for the diceware generator.
+[Default: EFF English]</source>
+        <translation>ダイスウェアジェネレーターの単語リスト。
+[デフォルト: EFF English]</translation>
+    </message>
+    <message>
+        <source>Generate a new random password.</source>
+        <translation>新しいランダムなパスワードを生成する。</translation>
+    </message>
+    <message>
+        <source>Length of the generated password.</source>
+        <translation>生成されるパスワードの長さ。</translation>
+    </message>
+    <message>
+        <source>Use lowercase characters in the generated password.</source>
+        <translation>小文字を使用したパスワードを生成する。</translation>
+    </message>
+    <message>
+        <source>Use uppercase characters in the generated password.</source>
+        <translation>大文字を使用したパスワードを生成する。</translation>
+    </message>
+    <message>
+        <source>Use numbers in the generated password.</source>
+        <translation>数字を使用したパスワードを生成する。</translation>
+    </message>
+    <message>
+        <source>Use special characters in the generated password.</source>
+        <translation>特殊な文字を使用したパスワードを生成する。</translation>
+    </message>
+    <message>
+        <source>Use extended ASCII in the generated password.</source>
+        <translation>拡張 ASCII を使用したパスワードを生成する。</translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -3398,15 +3617,15 @@ Available commands:
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>基本デバイスへの書き込み時にエラーが発生しました:</translation>
+        <translation>基本デバイスへの書き込み時にエラーが発生しました: </translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>基本デバイスを開く時にエラーが発生しました:</translation>
+        <translation>基本デバイスを開く際にエラーが発生しました: </translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation>基本デバイスから読み込み時にエラーが発生しました:</translation>
+        <translation>基本デバイスから読み込み時にエラーが発生しました: </translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
@@ -3421,7 +3640,7 @@ Available commands:
     </message>
     <message>
         <source>Internal zlib error: </source>
-        <translation>内部の zlib エラー:</translation>
+        <translation>内部 zlib エラー: </translation>
     </message>
 </context>
 <context>
@@ -3527,7 +3746,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entries.</source>
-        <translation><numerusform>%n 個のエントリーから無事にアクセス許可が削除されました。</numerusform></translation>
+        <translation><numerusform>%n 個のエントリーからアクセス許可が無事に削除されました。</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -3605,11 +3824,11 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Don&apos;t mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation>データ以外の変更（例えばグループの展開）に対して、データベースを修正済みとしてマークしないようにする</translation>
+        <translation>データ以外の変更 (例えばグループの展開) に対して、データベースを修正済みとしてマークしないようにする</translation>
     </message>
     <message>
         <source>Hide the Details view</source>
-        <translation>詳細を非表示にする</translation>
+        <translation>詳細ビューを非表示にする</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
@@ -3637,7 +3856,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
-        <translation>グローバル自動入力の際に、エントリーのタイトルとウィンドウのマッチングを行う</translation>
+        <translation>グローバル自動入力のウィンドウの照合にエントリーのタイトルを使用する</translation>
     </message>
     <message>
         <source>Use entry URL to match windows for global Auto-Type</source>
@@ -3659,6 +3878,30 @@ Please unlock the selected database or choose another one which is unlocked.</so
         <source> ms</source>
         <comment>Milliseconds</comment>
         <translation>ミリ秒</translation>
+    </message>
+    <message>
+        <source>Startup</source>
+        <translation>起動</translation>
+    </message>
+    <message>
+        <source>File Management</source>
+        <translation>ファイル管理</translation>
+    </message>
+    <message>
+        <source>Safely save database files (may be incompatible with Dropbox, etc)</source>
+        <translation>安全にデータベースファイルを保存する (Dropbox などのサービスでは動作しない可能性があります)</translation>
+    </message>
+    <message>
+        <source>Backup database file before saving</source>
+        <translation>保存する前にデータベースファイルをバックアップする</translation>
+    </message>
+    <message>
+        <source>Entry Management</source>
+        <translation>エントリー管理</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>一般</translation>
     </message>
 </context>
 <context>
@@ -3702,11 +3945,11 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Hide passwords in the preview panel</source>
-        <translation>プレビューパネルではパスワードを非表示にする</translation>
+        <translation>プレビューパネルのパスワードを非表示にする</translation>
     </message>
     <message>
         <source>Hide entry notes by default</source>
-        <translation>エントリーのメモはデフォルトで非表示にする</translation>
+        <translation>エントリーのメモをデフォルトで非表示にする</translation>
     </message>
     <message>
         <source>Privacy</source>
@@ -3715,6 +3958,10 @@ Please unlock the selected database or choose another one which is unlocked.</so
     <message>
         <source>Use Google as fallback for downloading website icons</source>
         <translation>ウェブサイトのアイコンをダウンロードするためのフォールバックとして Google を使用する</translation>
+    </message>
+    <message>
+        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <translation>自動入力実行後に以前ロックされたデータベースを再ロックする</translation>
     </message>
 </context>
 <context>
@@ -3729,11 +3976,11 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Default RFC 6238 token settings</source>
-        <translation type="unfinished"/>
+        <translation>デフォルトの RFC 6238 トークン設定</translation>
     </message>
     <message>
         <source>Steam token settings</source>
-        <translation type="unfinished"/>
+        <translation>Steam トークン設定</translation>
     </message>
     <message>
         <source>Use custom settings</source>
@@ -3798,10 +4045,6 @@ Please unlock the selected database or choose another one which is unlocked.</so
 <context>
     <name>WelcomeWidget</name>
     <message>
-        <source>Welcome to KeePassXC</source>
-        <translation>KeePassXC へようこそ</translation>
-    </message>
-    <message>
         <source>Start storing your passwords securely in a KeePassXC database</source>
         <translation>KeePassXC データベースに安全にパスワードを保管する</translation>
     </message>
@@ -3825,12 +4068,16 @@ Please unlock the selected database or choose another one which is unlocked.</so
         <source>Recent databases</source>
         <translation>最近使用したデータベース</translation>
     </message>
+    <message>
+        <source>Welcome to KeePassXC %1</source>
+        <translation>KeePassXC %1 へようこそ</translation>
+    </message>
 </context>
 <context>
     <name>main</name>
     <message>
         <source>Remove an entry from the database.</source>
-        <translation type="unfinished"/>
+        <translation>データベースからエントリーを削除する。</translation>
     </message>
     <message>
         <source>Path of the database.</source>
@@ -3862,7 +4109,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Parent window handle</source>
-        <translation type="unfinished"/>
+        <translation>親ウィンドウハンドル</translation>
     </message>
 </context>
 </TS>

@@ -67,7 +67,15 @@ Kernel: %3 %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Build Type: Snapshot
+        <source>Project Maintainers:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Build Type: %1
 </source>
         <translation type="unfinished"></translation>
     </message>
@@ -146,6 +154,25 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Default sequence</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AutoTypeMatchModel</name>
+    <message>
+        <source>Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sequence</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1159,6 +1186,10 @@ Do you want to merge your changes?</source>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Entry updated successfully.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DetailsWidget</name>
@@ -1351,6 +1382,18 @@ Do you want to merge your changes?</source>
         <source>1 year</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Apply generated password?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to apply the generated password to this entry?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Entry updated successfully.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
@@ -1380,6 +1423,14 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Attachments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Foreground Color:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Background Color:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1414,11 +1465,7 @@ Do you want to merge your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Use default se&amp;quence</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set custo&amp;m sequence:</source>
+        <source>Use a specific sequence for this association:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1699,6 +1746,31 @@ Do you want to merge your changes?</source>
         <source>Uuid:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Plugin Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete plugin data?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you really want to delete the selected plugin data?
+This may cause the affected plugins to malfunction.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Entry</name>
@@ -1969,6 +2041,10 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Ensure that the password contains characters from every group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extended ASCII</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2797,10 +2873,6 @@ This version is not meant for production use.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This is not an OpenSSH key, only modern keys are supported</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Base64 decoding failed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2829,10 +2901,6 @@ This version is not meant for production use.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unknown cipher: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Trying to run KDF without cipher</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2845,19 +2913,11 @@ This version is not meant for production use.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unknown KDF: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Decryption failed, wrong passphrase?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Unexpected EOF while reading public key</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unknown key type: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2878,6 +2938,26 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Unexpected EOF when writing private key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unsupported key type: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown cipher: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cipher IV is too short for MD5 kdf</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown KDF: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown key type: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3468,6 +3548,51 @@ Available commands:
         <source>SSH Agent</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Generate a new random diceware passphrase.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Word count for the diceware passphrase.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wordlist for the diceware generator.
+[Default: EFF English]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Generate a new random password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length of the generated password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use lowercase characters in the generated password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use uppercase characters in the generated password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use numbers in the generated password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use special characters in the generated password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use extended ASCII in the generated password.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -3819,6 +3944,10 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Use Google as fallback for downloading website icons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Re-lock previously locked database after performing Auto-Type</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
