@@ -298,6 +298,8 @@ if(Qt5Core_VERSION VERSION_LESS "5.2.0")
   message(FATAL_ERROR "Qt version 5.2.0 or higher is required")
 endif()
 
+get_filename_component(Qt5_PREFIX ${Qt5_DIR}/../../.. REALPATH)
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)

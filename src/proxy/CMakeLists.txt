@@ -42,13 +42,13 @@ if(WITH_XC_BROWSER)
 
         add_custom_command(TARGET keepassxc-proxy
                            POST_BUILD
-                           COMMAND ${CMAKE_INSTALL_NAME_TOOL} -change /usr/local/opt/qt/lib/QtCore.framework/Versions/5/QtCore "@executable_path/../Frameworks/QtCore.framework/Versions/5/QtCore" ${PROXY_APP_DIR}
+                           COMMAND ${CMAKE_INSTALL_NAME_TOOL} -change ${Qt5_PREFIX}/lib/QtCore.framework/Versions/5/QtCore "@executable_path/../Frameworks/QtCore.framework/Versions/5/QtCore" ${PROXY_APP_DIR}
                            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
                            COMMENT "Changing linking of keepassxc-proxy QtCore")
 
         add_custom_command(TARGET keepassxc-proxy
                            POST_BUILD
-                           COMMAND ${CMAKE_INSTALL_NAME_TOOL} -change /usr/local/opt/qt/lib/QtNetwork.framework/Versions/5/QtNetwork "@executable_path/../Frameworks/QtNetwork.framework/Versions/5/QtNetwork" ${PROXY_APP_DIR}
+                           COMMAND ${CMAKE_INSTALL_NAME_TOOL} -change ${Qt5_PREFIX}/lib/QtNetwork.framework/Versions/5/QtNetwork "@executable_path/../Frameworks/QtNetwork.framework/Versions/5/QtNetwork" ${PROXY_APP_DIR}
                            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
                            COMMENT "Changing linking of keepassxc-proxy QtNetwork")
     endif()
