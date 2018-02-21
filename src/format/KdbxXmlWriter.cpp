@@ -129,7 +129,9 @@ void KdbxXmlWriter::writeMetadata()
     if (m_kdbxVersion < KeePass2::FILE_VERSION_4) {
         writeBinaries();
     }
-    writeCustomData();
+    if (m_kdbxVersion >= KeePass2::FILE_VERSION_4) {
+        writeCustomData(m_meta->customData());
+    }
 
     m_xml.writeEndElement();
 }
@@ -218,14 +220,16 @@ void KdbxXmlWriter::writeBinaries()
     m_xml.writeEndElement();
 }
 
-void KdbxXmlWriter::writeCustomData()
+void KdbxXmlWriter::writeCustomData(const CustomData* customData)
 {
+    if (customData->isEmpty()) {
+        return;
+    }
     m_xml.writeStartElement("CustomData");
 
-    QHash<QString, QString> customFields = m_meta->customFields();
-    const QList<QString> keyList = customFields.keys();
+    const QList<QString> keyList = customData->keys();
     for (const QString& key : keyList) {
-        writeCustomDataItem(key, customFields.value(key));
+        writeCustomDataItem(key, customData->value(key));
     }
 
     m_xml.writeEndElement();
@@ -276,6 +280,10 @@ void KdbxXmlWriter::writeGroup(const Group* group)
     writeTriState("EnableSearching", group->searchingEnabled());
 
     writeUuid("LastTopVisibleEntry", group->lastTopVisibleEntry());
+
+    if (m_kdbxVersion >= KeePass2::FILE_VERSION_4) {
+        writeCustomData(group->customData());
+    }
 
     const QList<Entry*>& entryList = group->entries();
     for (const Entry* entry : entryList) {
@@ -401,6 +409,11 @@ void KdbxXmlWriter::writeEntry(const Entry* entry)
     }
 
     writeAutoType(entry);
+
+    if (m_kdbxVersion >= KeePass2::FILE_VERSION_4) {
+        writeCustomData(entry->customData());
+    }
+
     // write history only for entries that are not history items
     if (entry->parent()) {
         writeEntryHistory(entry);

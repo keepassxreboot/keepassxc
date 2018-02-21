@@ -223,8 +223,8 @@ Copyright: 2009-2010, Iowa State University
 License: Boost-1.0
 
 Files: src/zxcvbn/zxcvbn.*
-Copyright: 2015, Tony Evans
-License: BSD 3-clause
+Copyright: 2015-2017, Tony Evans
+License: MIT
 
 Files: src/http/qhttp/*
 Copyright: 2014, Amir Zamani

@@ -39,16 +39,6 @@
 			<Binary ID="0" Compressed="True">H4sIAAAAAAAEAO29B2AcSZYlJi9tynt/SvVK1+B0oQiAYBMk2JBAEOzBiM3mkuwdaUcjKasqgcplVmVdZhZAzO2dvPfee++999577733ujudTif33/8/XGZkAWz2zkrayZ4hgKrIHz9+fB8/InZ29+7t3//0wcHD/wfGx4SmCgAAAA==</Binary>
 			<Binary ID="1" Compressed="True">H4sIAAAAAAAEAO29B2AcSZYlJi9tynt/SvVK1+B0oQiAYBMk2JBAEOzBiM3mkuwdaUcjKasqgcplVmVdZhZAzO2dvPfee++999577733ujudTif33/8/XGZkAWz2zkrayZ4hgKrIHz9+fB8/IrLJdJafX8yLn377/wCfD1fOCwAAAA==</Binary>
 		</Binaries>
-		<CustomData>
-			<Item>
-				<Key>A Sample Test Key</Key>
-				<Value>valu</Value>
-			</Item>
-			<Item>
-				<Key>custom key</Key>
-				<Value>blub</Value>
-			</Item>
-		</CustomData>
 	</Meta>
 	<Root>
 		<Group>

@@ -545,15 +545,13 @@ void TestGui::testPasswordEntryEntropy()
 
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "YQC3kbXbjC652dTDH");
-    QCOMPARE(entropyLabel->text(),  QString("Entropy: 96.07 bit"));
+    QCOMPARE(entropyLabel->text(),  QString("Entropy: 95.83 bit"));
     QCOMPARE(strengthLabel->text(), QString("Password Quality: Good"));
 
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "Bs5ZFfthWzR8DGFEjaCM6bGqhmCT4km");
     QCOMPARE(entropyLabel->text(),  QString("Entropy: 174.59 bit"));
     QCOMPARE(strengthLabel->text(), QString("Password Quality: Excellent"));
-
-    // We are done
 }
 
 void TestGui::testDicewareEntryEntropy()

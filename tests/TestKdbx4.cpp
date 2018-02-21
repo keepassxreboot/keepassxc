@@ -131,6 +131,7 @@ void TestKdbx4::testFormat400Upgrade()
 {
     QFETCH(Uuid, kdfUuid);
     QFETCH(Uuid, cipherUuid);
+    QFETCH(bool, addCustomData);
     QFETCH(quint32, expectedVersion);
 
     QScopedPointer<Database> sourceDb(new Database());
@@ -147,6 +148,12 @@ void TestKdbx4::testFormat400Upgrade()
     // upgrade to KDBX 4 by changing KDF and Cipher
     sourceDb->changeKdf(KeePass2::uuidToKdf(kdfUuid));
     sourceDb->setCipher(cipherUuid);
+
+    if (addCustomData) {
+        sourceDb->metadata()->customData()->set("CustomPublicData", "Hey look, I turned myself into a pickle!");
+        sourceDb->rootGroup()->customData()->set("CustomGroupData", "I just killed my family! I don't care who they were!");
+    }
+
     KeePass2Writer writer;
     writer.writeDatabase(&buffer, sourceDb.data());
     if (writer.hasError()) {
@@ -165,26 +172,129 @@ void TestKdbx4::testFormat400Upgrade()
     QCOMPARE(targetDb->metadata()->name(), sourceDb->metadata()->name());
 
     QCOMPARE(reader.version(), expectedVersion);
-    QCOMPARE(targetDb->kdf()->uuid(), sourceDb->kdf()->uuid());
     QCOMPARE(targetDb->cipher(), cipherUuid);
+    QCOMPARE(*targetDb->metadata()->customData(), *sourceDb->metadata()->customData());
+    QCOMPARE(*targetDb->rootGroup()->customData(), *sourceDb->rootGroup()->customData());
 }
 
 void TestKdbx4::testFormat400Upgrade_data()
 {
     QTest::addColumn<Uuid>("kdfUuid");
     QTest::addColumn<Uuid>("cipherUuid");
+    QTest::addColumn<bool>("addCustomData");
     QTest::addColumn<quint32>("expectedVersion");
 
     auto constexpr kdbx3 = KeePass2::FILE_VERSION_3_1 & KeePass2::FILE_VERSION_CRITICAL_MASK;
     auto constexpr kdbx4 = KeePass2::FILE_VERSION_4   & KeePass2::FILE_VERSION_CRITICAL_MASK;
 
-    QTest::newRow("Argon2           + AES")      << KeePass2::KDF_ARGON2    << KeePass2::CIPHER_AES      << kdbx4;
-    QTest::newRow("AES-KDF          + AES")      << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_AES      << kdbx4;
-    QTest::newRow("AES-KDF (legacy) + AES")      << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_AES      << kdbx3;
-    QTest::newRow("Argon2           + ChaCha20") << KeePass2::KDF_ARGON2    << KeePass2::CIPHER_CHACHA20 << kdbx4;
-    QTest::newRow("AES-KDF          + ChaCha20") << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_CHACHA20 << kdbx4;
-    QTest::newRow("AES-KDF (legacy) + ChaCha20") << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_CHACHA20 << kdbx3;
-    QTest::newRow("Argon2           + Twofish")  << KeePass2::KDF_ARGON2    << KeePass2::CIPHER_TWOFISH  << kdbx4;
-    QTest::newRow("AES-KDF          + Twofish")  << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_TWOFISH  << kdbx4;
-    QTest::newRow("AES-KDF (legacy) + Twofish")  << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_TWOFISH  << kdbx3;
+    QTest::newRow("Argon2           + AES")                   << KeePass2::KDF_ARGON2    << KeePass2::CIPHER_AES       << false << kdbx4;
+    QTest::newRow("AES-KDF          + AES")                   << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_AES       << false << kdbx4;
+    QTest::newRow("AES-KDF (legacy) + AES")                   << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_AES       << false << kdbx3;
+    QTest::newRow("Argon2           + AES     + CustomData")  << KeePass2::KDF_ARGON2    << KeePass2::CIPHER_AES       << true  << kdbx4;
+    QTest::newRow("AES-KDF          + AES     + CustomData")  << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_AES       << true  << kdbx4;
+    QTest::newRow("AES-KDF (legacy) + AES     + CustomData")  << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_AES       << true  << kdbx4;
+
+    QTest::newRow("Argon2           + ChaCha20")              << KeePass2::KDF_ARGON2    << KeePass2::CIPHER_CHACHA20  << false << kdbx4;
+    QTest::newRow("AES-KDF          + ChaCha20")              << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_CHACHA20  << false << kdbx4;
+    QTest::newRow("AES-KDF (legacy) + ChaCha20")              << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_CHACHA20  << false << kdbx3;
+    QTest::newRow("Argon2           + ChaCha20 + CustomData") << KeePass2::KDF_ARGON2    << KeePass2::CIPHER_CHACHA20  << true  << kdbx4;
+    QTest::newRow("AES-KDF          + ChaCha20 + CustomData") << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_CHACHA20  << true  << kdbx4;
+    QTest::newRow("AES-KDF (legacy) + ChaCha20 + CustomData") << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_CHACHA20  << true  << kdbx4;
+
+    QTest::newRow("Argon2           + Twofish")               << KeePass2::KDF_ARGON2    << KeePass2::CIPHER_TWOFISH   << false << kdbx4;
+    QTest::newRow("AES-KDF          + Twofish")               << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_TWOFISH   << false << kdbx4;
+    QTest::newRow("AES-KDF (legacy) + Twofish")               << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_TWOFISH   << false << kdbx3;
+    QTest::newRow("Argon2           + Twofish  + CustomData") << KeePass2::KDF_ARGON2    << KeePass2::CIPHER_TWOFISH   << true  << kdbx4;
+    QTest::newRow("AES-KDF          + Twofish  + CustomData") << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_TWOFISH   << true  << kdbx4;
+    QTest::newRow("AES-KDF (legacy) + Twofish  + CustomData") << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_TWOFISH   << true  << kdbx4;
+}
+
+void TestKdbx4::testCustomData()
+{
+    Database db;
+
+    // test public custom data
+    QVariantMap publicCustomData;
+    publicCustomData.insert("CD1", 123);
+    publicCustomData.insert("CD2", true);
+    publicCustomData.insert("CD3", "abcäöü");
+    publicCustomData.insert("CD4", QByteArray::fromHex("ababa123ff"));
+    db.setPublicCustomData(publicCustomData);
+    QCOMPARE(db.publicCustomData(), publicCustomData);
+
+    const QString customDataKey1 = "CD1";
+    const QString customDataKey2 = "CD2";
+    const QString customData1 = "abcäöü";
+    const QString customData2 = "Hello World";
+    const int dataSize = customDataKey1.toUtf8().size() + customDataKey1.toUtf8().size() +
+            customData1.toUtf8().size() + customData2.toUtf8().size();
+
+    // test custom database data
+    db.metadata()->customData()->set(customDataKey1, customData1);
+    db.metadata()->customData()->set(customDataKey2, customData2);
+    QCOMPARE(db.metadata()->customData()->size(), 2);
+    QCOMPARE(db.metadata()->customData()->dataSize(), dataSize);
+
+    // test custom root group data
+    Group* root = db.rootGroup();
+    root->customData()->set(customDataKey1, customData1);
+    root->customData()->set(customDataKey2, customData2);
+    QCOMPARE(root->customData()->size(), 2);
+    QCOMPARE(root->customData()->dataSize(), dataSize);
+
+    // test copied custom group data
+    auto* group = new Group();
+    group->setParent(root);
+    group->setUuid(Uuid::random());
+    group->customData()->copyDataFrom(root->customData());
+    QCOMPARE(*group->customData(), *root->customData());
+
+    // test copied custom entry data
+    auto* entry = new Entry();
+    entry->setGroup(group);
+    entry->setUuid(Uuid::random());
+    entry->customData()->copyDataFrom(group->customData());
+    QCOMPARE(*entry->customData(), *root->customData());
+
+    // test custom data deletion
+    entry->customData()->set("additional item", "foobar");
+    QCOMPARE(entry->customData()->size(), 3);
+    entry->customData()->remove("additional item");
+    QCOMPARE(entry->customData()->size(), 2);
+    QCOMPARE(entry->customData()->dataSize(), dataSize);
+
+    // test custom data on cloned groups
+    QScopedPointer<Group> clonedGroup(group->clone());
+    QCOMPARE(*clonedGroup->customData(), *group->customData());
+
+    // test custom data on cloned entries
+    QScopedPointer<Entry> clonedEntry(entry->clone(Entry::CloneNoFlags));
+    QCOMPARE(*clonedEntry->customData(), *entry->customData());
+
+    QBuffer buffer;
+    buffer.open(QBuffer::ReadWrite);
+    KeePass2Writer writer;
+    writer.writeDatabase(&buffer, &db);
+
+    // read buffer back
+    buffer.seek(0);
+    KeePass2Reader reader;
+    QSharedPointer<Database> newDb(reader.readDatabase(&buffer, CompositeKey()));
+
+    // test all custom data are read back successfully from KDBX
+    QCOMPARE(newDb->publicCustomData(), publicCustomData);
+
+    QCOMPARE(newDb->metadata()->customData()->value(customDataKey1), customData1);
+    QCOMPARE(newDb->metadata()->customData()->value(customDataKey2), customData2);
+
+    QCOMPARE(newDb->rootGroup()->customData()->value(customDataKey1), customData1);
+    QCOMPARE(newDb->rootGroup()->customData()->value(customDataKey2), customData2);
+
+    auto* newGroup = newDb->rootGroup()->children()[0];
+    QCOMPARE(newGroup->customData()->value(customDataKey1), customData1);
+    QCOMPARE(newGroup->customData()->value(customDataKey2), customData2);
+
+    auto* newEntry = newDb->rootGroup()->children()[0]->entries()[0];
+    QCOMPARE(newEntry->customData()->value(customDataKey1), customData1);
+    QCOMPARE(newEntry->customData()->value(customDataKey2), customData2);
 }

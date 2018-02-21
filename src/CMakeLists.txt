@@ -29,7 +29,7 @@ endif()
 
 find_library(ZXCVBN_LIBRARIES zxcvbn)
 if(NOT ZXCVBN_LIBRARIES)
-  add_library(zxcvbn STATIC zxcvbn/zxcvbn.cpp)
+  add_library(zxcvbn STATIC zxcvbn/zxcvbn.c)
   include_directories(${CMAKE_CURRENT_SOURCE_DIR}/zxcvbn)
   set(ZXCVBN_LIBRARIES zxcvbn)
 endif(NOT ZXCVBN_LIBRARIES)
@@ -42,6 +42,7 @@ set(keepassx_SOURCES
     core/AutoTypeMatch.cpp
     core/Config.cpp
     core/CsvParser.cpp
+    core/CustomData.cpp
     core/Database.cpp
     core/DatabaseIcons.cpp
     core/Entry.cpp
