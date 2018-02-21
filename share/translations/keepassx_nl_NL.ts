@@ -1191,7 +1191,7 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
         <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
+        <translation>Het item is bijgewerkt.</translation>
     </message>
 </context>
 <context>
@@ -1381,15 +1381,15 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
         <source>Apply generated password?</source>
-        <translation type="unfinished"/>
+        <translation>Pas gegenereerde wachtwoord toe?</translation>
     </message>
     <message>
         <source>Do you want to apply the generated password to this entry?</source>
-        <translation type="unfinished"/>
+        <translation>Wil je het gegenereerde wachtwoord instellen voor dit item?</translation>
     </message>
     <message>
         <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
+        <translation>Het item is bijgewerkt.</translation>
     </message>
 </context>
 <context>
@@ -1424,11 +1424,11 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
         <source>Foreground Color:</source>
-        <translation type="unfinished"/>
+        <translation>Kleur voorgrond:</translation>
     </message>
     <message>
         <source>Background Color:</source>
-        <translation type="unfinished"/>
+        <translation>Kleur achtergrond:</translation>
     </message>
 </context>
 <context>
@@ -1745,7 +1745,7 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
         <source>Plugin Data</source>
-        <translation type="unfinished"/>
+        <translation>Plugingegevens:</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -1753,20 +1753,21 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
         <source>Delete plugin data?</source>
-        <translation type="unfinished"/>
+        <translation>Verwijder plugingegevens?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected plugin data?
 This may cause the affected plugins to malfunction.</source>
-        <translation type="unfinished"/>
+        <translation>Wil je echt de geselecteerde plugingegevens verwijderen?
+Hierdoor werken de plugins mogelijk niet meer goed.</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"/>
+        <translation>Sleutel</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Waarde</translation>
     </message>
 </context>
 <context>

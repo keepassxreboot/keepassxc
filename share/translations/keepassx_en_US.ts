@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>Báo cáo lỗi tại: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+        <translation>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
@@ -19,28 +19,28 @@
     </message>
     <message>
         <source>Contributors</source>
-        <translation>Người đóng góp</translation>
+        <translation>Contributors</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Xem Đóng góp tại GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>Thông Tin Sửa Lỗi</translation>
+        <translation>Debug Info</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>Bao gồm những thông tin sau khi bạn báo lỗi:</translation>
+        <translation>Include the following information whenever you report a bug:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>Sao chép vào clipboard</translation>
+        <translation>Copy to clipboard</translation>
     </message>
     <message>
         <source>Version %1
 </source>
-        <translation>Phiên bản  %1
+        <translation>Version %1
 </translation>
     </message>
     <message>
@@ -53,7 +53,7 @@
     </message>
     <message>
         <source>Libraries:</source>
-        <translation>Thư viện:</translation>
+        <translation>Libraries:</translation>
     </message>
     <message>
         <source>Operating system: %1
@@ -65,7 +65,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
-        <translation>Phần mở rộng đã bật:</translation>
+        <translation>Enabled extensions:</translation>
     </message>
     <message>
         <source>Project Maintainers:</source>
@@ -98,7 +98,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Deny</source>
-        <translation>Từ chối</translation>
+        <translation>Deny</translation>
     </message>
     <message>
         <source>%1 has requested access to passwords for the following item(s).
