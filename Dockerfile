@@ -1,5 +1,5 @@
 # KeePassXC Linux Release Build Dockerfile
-# Copyright (C) 2017 KeePassXC team <https://keepassxc.org/>
+# Copyright (C) 2017-2018 KeePassXC team <https://keepassxc.org/>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ FROM ubuntu:14.04
 ENV REBUILD_COUNTER=5
 
 ENV QT5_VERSION=59
-ENV QT5_PPA_VERSION=${QT5_VERSION}2
+ENV QT5_PPA_VERSION=${QT5_VERSION}4
 
 RUN set -x \
     && apt-get update -y \
