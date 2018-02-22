@@ -645,37 +645,38 @@ build() {
     
     if [ "" == "$DOCKER_IMAGE" ]; then
         if [ "$(uname -s)" == "Darwin" ]; then
-            # Building on OS X
-            local qt_vers="$(ls /usr/local/Cellar/qt5 2> /dev/null | sort -r | head -n1)"
+            # Building on macOS
+            local qt_vers="$(ls /usr/local/Cellar/qt 2> /dev/null | sort -r | head -n1)"
             if [ "" == "$qt_vers" ]; then
-                exitError "Couldn't find Qt5! Please make sure it is available in '/usr/local/Cellar/qt5'."
+                exitError "Couldn't find Qt5! Please make sure it is available in '/usr/local/Cellar/qt'."
             fi
-            export MACOSX_DEPLOYMENT_TARGET=10.7
-            
+
+            export MACOSX_DEPLOYMENT_TARGET=10.10
+
             logInfo "Configuring build..."
-            cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
-                -DCMAKE_OSX_ARCHITECTURES=x86_64 -DWITH_CXX11=OFF \
-                -DCMAKE_PREFIX_PATH="/usr/local/Cellar/qt5/${qt_vers}/lib/cmake" \
-                -DQT_BINARY_DIR="/usr/local/Cellar/qt5/${qt_vers}/bin" $CMAKE_OPTIONS "$SRC_DIR"
-            
+            cmake -DCMAKE_BUILD_TYPE=Release \
+              -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
+              -DCMAKE_PREFIX_PATH="/usr/local/Cellar/qt/${qt_vers}/lib/cmake" \
+              ${CMAKE_OPTIONS} "$SRC_DIR"
+
             logInfo "Compiling and packaging sources..."
-            make $MAKE_OPTIONS package
+            make ${MAKE_OPTIONS} package
             
             mv "./${APP_NAME}-${RELEASE_NAME}.dmg" ../
         elif [ "$(uname -o)" == "Msys" ]; then
-            # Building on Windows with Msys
+            # Building on Windows with Msys2
             logInfo "Configuring build..."
             cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off -G"MSYS Makefiles" \
                 -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" $CMAKE_OPTIONS "$SRC_DIR"
             
             logInfo "Compiling and packaging sources..."
-            mingw32-make $MAKE_OPTIONS preinstall
+            mingw32-make ${MAKE_OPTIONS} preinstall
             # Call cpack directly instead of calling make package.
             # This is important because we want to build the MSI when making a
             # release.
             cpack -G "NSIS;ZIP;${CPACK_GENERATORS}"
             
-            mv "./${APP_NAME}-${RELEASE_NAME}-"*.* ../
+            mv "./${APP_NAME}-"*.* ../
         else
             mkdir -p "${OUTPUT_DIR}/bin-release"
             
