@@ -48,7 +48,7 @@ public:
     bool isPasswordsHidden() const;
     void setPasswordsHidden(const bool hide);
     QByteArray viewState() const;
-    bool setViewState(const QByteArray& state) const;
+    bool setViewState(const QByteArray& state);
 
 public slots:
     void setGroup(Group* group);
@@ -74,6 +74,9 @@ private slots:
     void resetViewToDefaults();
 
 private:
+    void fillRemainingWidth(bool lastColumnOnly);
+    void resetFixedColumns();
+    
     EntryModel* const m_model;
     SortFilterHideProxyModel* const m_sortModel;
     bool m_inSearchMode;

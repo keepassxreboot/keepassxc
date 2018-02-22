@@ -41,8 +41,6 @@ EntryModel::EntryModel(QObject* parent)
     , m_group(nullptr)
     , m_hideUsernames(false)
     , m_hidePasswords(true)
-    , m_paperClipPixmap(16, 16)
-    , m_paperClipPixmapCentered(24, 16)
 {
 }
 
@@ -251,13 +249,13 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         case Title:
             if (entry->isExpired()) {
                 return databaseIcons()->iconPixmap(DatabaseIcons::ExpiredIconIndex);
-            } else {
-                return entry->iconScaledPixmap();
             }
+            return entry->iconScaledPixmap();
         case Paperclip:
             if (!entry->attachments()->isEmpty()) {
-                return m_paperClipPixmapCentered;
+                return m_paperClipPixmap;
             }
+            break;
         }
     } else if (role == Qt::FontRole) {
         QFont font;
@@ -504,8 +502,4 @@ void EntryModel::togglePasswordsHidden(const bool hide)
 void EntryModel::setPaperClipPixmap(const QPixmap& paperclip)
 {
     m_paperClipPixmap = paperclip;
-
-    m_paperClipPixmapCentered.fill(Qt::transparent);
-    QPainter painter2(&m_paperClipPixmapCentered);
-    painter2.drawPixmap(8, 0, paperclip);
 }

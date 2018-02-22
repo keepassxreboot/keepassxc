@@ -99,7 +99,6 @@ private:
     bool m_hidePasswords;
 
     QPixmap m_paperClipPixmap;
-    QPixmap m_paperClipPixmapCentered;
 
     static const QString HiddenContentDisplay;
     static const Qt::DateFormat DateFormat;
