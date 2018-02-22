@@ -110,6 +110,7 @@ void TestKeys::testFileKey()
     QCOMPARE(db->metadata()->name(), QString("%1 Database").arg(name));
 }
 
+// clang-format off
 void TestKeys::testFileKey_data()
 {
     QTest::addColumn<FileKey::Type>("type");
@@ -120,6 +121,7 @@ void TestKeys::testFileKey_data()
     QTest::newRow("Hex")             << FileKey::FixedBinaryHex << QString("Hex");
     QTest::newRow("Hashed")          << FileKey::Hashed         << QString("Hashed");
 }
+// clang-format on
 
 void TestKeys::testCreateFileKey()
 {

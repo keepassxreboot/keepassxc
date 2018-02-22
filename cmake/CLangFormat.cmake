@@ -16,7 +16,7 @@
 set(EXCLUDED_DIRS
     # third-party directories
     zxcvbn/
-    http/qhttp/
+    http/
     streams/QtIOCompressor
     # objective-c directories
     autotype/mac
@@ -28,6 +28,11 @@ set(EXCLUDED_FILES
     streams/qtiocompressor.h
     gui/KMessageWidget.h
     gui/KMessageWidget.cpp
+    gui/MainWindowAdaptor.h
+    gui/MainWindowAdaptor.cpp
+    sshagent/bcrypt_pbkdf.cpp
+    sshagent/blf.h
+    sshagent/blowfish.c
     tests/modeltest.cpp
     tests/modeltest.h
     # objective-c files

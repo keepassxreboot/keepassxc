@@ -182,6 +182,7 @@ void TestKdbx4::testFormat400Upgrade()
     QCOMPARE(*targetDb->rootGroup()->customData(), *sourceDb->rootGroup()->customData());
 }
 
+// clang-format off
 void TestKdbx4::testFormat400Upgrade_data()
 {
     QTest::addColumn<Uuid>("kdfUuid");
@@ -213,6 +214,7 @@ void TestKdbx4::testFormat400Upgrade_data()
     QTest::newRow("AES-KDF          + Twofish  + CustomData") << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_TWOFISH   << true  << kdbx4;
     QTest::newRow("AES-KDF (legacy) + Twofish  + CustomData") << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_TWOFISH   << true  << kdbx4;
 }
+// clang-format on
 
 void TestKdbx4::testUpgradeMasterKeyIntegrity()
 {

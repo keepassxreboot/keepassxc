@@ -357,6 +357,7 @@ void TestKeePass2Format::testXmlBroken()
     QCOMPARE(hasError, expectError);
 }
 
+// clang-format off
 void TestKeePass2Format::testXmlBroken_data()
 {
     QTest::addColumn<QString>("baseName");
@@ -381,6 +382,7 @@ void TestKeePass2Format::testXmlBroken_data()
     QTest::newRow("BrokenDifferentEntryHistoryUuid     (strict)") << "BrokenDifferentEntryHistoryUuid" << true  << true;
     QTest::newRow("BrokenDifferentEntryHistoryUuid (not strict)") << "BrokenDifferentEntryHistoryUuid" << false << false;
 }
+// clang-format on
 
 void TestKeePass2Format::testXmlEmptyUuids()
 {

@@ -173,6 +173,7 @@ void AutoTypePlatformWin::sendKey(Qt::Key key, bool isKeyDown)
     ::SendInput(1, &in, sizeof(INPUT));
 }
 
+// clang-format off
 //
 // Translate qt key code to windows virtual key code
 // see: https://msdn.microsoft.com/en-us/library/windows/desktop/dd375731%28v=vs.85%29.aspx
@@ -426,6 +427,7 @@ BOOL AutoTypePlatformWin::isExtendedKey(DWORD nativeKeyCode)
         return FALSE;
     }
 }
+// clang-format on
 
 //
 // Translate qt key modifiers to windows modifiers
