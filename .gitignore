@@ -10,3 +10,4 @@ release*/
 *.swp
 
 .DS_Store
+.version
