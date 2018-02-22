@@ -1,5 +1,5 @@
 name: keepassxc
-version: 2.2.4
+version: 2.3.0-beta1
 grade: stable
 summary: Community-driven port of the Windows application “KeePass Password Safe”
 description: |
@@ -16,6 +16,9 @@ apps:
   cli:
     command: keepassxc-cli
     plugs: [gsettings, home, removable-media, raw-usb]
+  proxy:
+    command: keepassxc-proxy
+    plugs: [home]
 
 parts:
   keepassxc:
@@ -26,10 +29,7 @@ parts:
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DKEEPASSXC_DIST_TYPE=Snap
       - -DWITH_TESTS=OFF
-      - -DWITH_XC_AUTOTYPE=ON
-      - -DWITH_XC_HTTP=ON
-      - -DWITH_XC_YUBIKEY=ON
-      - -DWITH_XC_BROWSER=ON
+      - -DWITH_XC_ALL=ON
     build-packages:
       - g++
       - libgcrypt20-dev

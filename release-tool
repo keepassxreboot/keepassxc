@@ -676,7 +676,7 @@ build() {
             # release.
             cpack -G "NSIS;ZIP;${CPACK_GENERATORS}"
             
-            mv "./${APP_NAME}-${RELEASE_NAME}-"*.* ../
+            mv "./${APP_NAME}-"*.* ../
         else
             mkdir -p "${OUTPUT_DIR}/bin-release"
             

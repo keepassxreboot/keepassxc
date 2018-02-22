@@ -45,8 +45,10 @@
 #endif
 
 /* For pre-compiled headers under windows */
+#ifndef __MINGW32__
 #ifdef _WIN32
 #include "stdafx.h"
+#endif
 #endif
 
 /* Minimum number of characters in a incrementing/decrementing sequence match */
