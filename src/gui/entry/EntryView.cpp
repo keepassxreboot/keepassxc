@@ -72,6 +72,10 @@ EntryView::EntryView(QWidget* parent)
     m_columnActions->setExclusive(false);
     for (int columnIndex = 1; columnIndex < header()->count(); ++columnIndex) {
         QString caption = m_model->headerData(columnIndex, Qt::Horizontal, Qt::DisplayRole).toString();
+        if (columnIndex == EntryModel::Paperclip) {
+            caption = tr("Attachments (icon)");
+        }
+
         QAction* action = m_headerMenu->addAction(caption);
         action->setCheckable(true);
         action->setData(columnIndex);

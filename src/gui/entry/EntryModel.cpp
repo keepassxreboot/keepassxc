@@ -22,12 +22,14 @@
 #include <QMimeData>
 #include <QPalette>
 #include <QDateTime>
+#include <QPainter>
 
 #include "core/DatabaseIcons.h"
 #include "core/Entry.h"
 #include "core/Global.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/FilePath.h"
 
 // String being displayed when hiding content
 const QString EntryModel::HiddenContentDisplay(QString("\u25cf").repeated(6));
@@ -35,15 +37,17 @@ const QString EntryModel::HiddenContentDisplay(QString("\u25cf").repeated(6));
 // Format used to display dates
 const Qt::DateFormat EntryModel::DateFormat = Qt::DefaultLocaleShortDate;
 
-// Paperclip symbol
-const QString EntryModel::PaperClipDisplay("\U0001f4ce");
-
 EntryModel::EntryModel(QObject* parent)
     : QAbstractTableModel(parent)
     , m_group(nullptr)
     , m_hideUsernames(false)
     , m_hidePasswords(true)
+    , m_paperClipPixmap(FilePath::instance()->icon("actions", "paperclip").pixmap(16))
+    , m_paperClipPixmapCentered(24, 16)
 {
+    m_paperClipPixmapCentered.fill(Qt::transparent);
+    QPainter painter(&m_paperClipPixmapCentered);
+    painter.drawPixmap(8, 0, m_paperClipPixmap);
 }
 
 Entry* EntryModel::entryFromIndex(const QModelIndex& index) const
@@ -205,9 +209,6 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         case Accessed:
             result = entry->timeInfo().lastAccessTime().toLocalTime().toString(EntryModel::DateFormat);
             return result;
-        case Paperclip:
-            result = entry->attachments()->keys().isEmpty() ? QString() : EntryModel::PaperClipDisplay;
-            return result;
         case Attachments:
             // Display comma-separated list of attachments
             QList<QString> attachments = entry->attachments()->keys();
@@ -238,7 +239,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         case Paperclip:
             // Display entries with attachments above those without when
             // sorting ascendingly (and vice versa when sorting descendingly)
-            return entry->attachments()->keys().isEmpty() ? 1 : 0;
+            return entry->attachments()->isEmpty() ? 1 : 0;
         default:
             // For all other columns, simply use data provided by Qt::Display-
             // Role for sorting
@@ -256,6 +257,10 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
                 return databaseIcons()->iconPixmap(DatabaseIcons::ExpiredIconIndex);
             } else {
                 return entry->iconScaledPixmap();
+            }
+        case Paperclip:
+            if (!entry->attachments()->isEmpty()) {
+                return m_paperClipPixmapCentered;
             }
         }
     } else if (role == Qt::FontRole) {
@@ -278,12 +283,6 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
     } else if (role == Qt::TextAlignmentRole) {
         if (index.column() == Paperclip) {
             return Qt::AlignCenter;
-        }
-    } else if (role == Qt::SizeHintRole) {
-        if (index.column() == Paperclip) {
-            QFont font;
-            QFontMetrics fm(font);
-            return fm.width(PaperClipDisplay) / 2;
         }
     }
 
@@ -316,15 +315,12 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
             return tr("Modified");
         case Accessed:
             return tr("Accessed");
-        case Paperclip:
-            return EntryModel::PaperClipDisplay;
         case Attachments:
             return tr("Attachments");
         }
-    } else if (role == Qt::TextAlignmentRole) {
-        switch (section) {
-        case Paperclip:
-            return Qt::AlignCenter;
+    } else if (role == Qt::DecorationRole) {
+        if (section == Paperclip) {
+            return m_paperClipPixmap;
         }
     }
 

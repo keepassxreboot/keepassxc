@@ -19,6 +19,7 @@
 #define KEEPASSX_ENTRYMODEL_H
 
 #include <QAbstractTableModel>
+#include <QPixmap>
 
 class Entry;
 class Group;
@@ -95,9 +96,11 @@ private:
     bool m_hideUsernames;
     bool m_hidePasswords;
 
+    QPixmap m_paperClipPixmap;
+    QPixmap m_paperClipPixmapCentered;
+
     static const QString HiddenContentDisplay;
     static const Qt::DateFormat DateFormat;
-    static const QString PaperClipDisplay;
 };
 
 #endif // KEEPASSX_ENTRYMODEL_H
