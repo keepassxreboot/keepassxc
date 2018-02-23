@@ -28,7 +28,8 @@ public:
     enum Algorithm
     {
         Sha256,
-        Sha512
+        Sha512,
+        Sha1
     };
 
     explicit CryptoHash(Algorithm algo, bool hmac = false);

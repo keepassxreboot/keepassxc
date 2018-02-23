@@ -36,6 +36,8 @@ set(cli_SOURCES
     Locate.h
     Merge.cpp
     Merge.h
+    Pawned.cpp
+    Pawned.h
     Remove.cpp
     Remove.h
     Show.cpp
