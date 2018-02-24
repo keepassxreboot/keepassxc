@@ -87,9 +87,6 @@ AboutDialog::AboutDialog(QWidget* parent)
 #ifdef WITH_XC_BROWSER
     extensions += "\n- " + tr("Browser Integration");
 #endif
-#ifdef WITH_XC_HTTP
-    extensions += "\n- " + tr("Legacy Browser Integration (KeePassHTTP)");
-#endif
 #ifdef WITH_XC_SSHAGENT
     extensions += "\n- " + tr("SSH Agent");
 #endif

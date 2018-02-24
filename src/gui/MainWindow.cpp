@@ -39,12 +39,6 @@
 #include "gui/MessageBox.h"
 #include "gui/SearchWidget.h"
 
-#ifdef WITH_XC_HTTP
-#include "http/Service.h"
-#include "http/HttpSettings.h"
-#include "http/OptionDialog.h"
-#endif
-
 #ifdef WITH_XC_SSHAGENT
 #include "sshagent/AgentSettingsPage.h"
 #include "sshagent/SSHAgent.h"
@@ -64,53 +58,6 @@
 
 #include "gui/SettingsWidget.h"
 #include "gui/PasswordGeneratorWidget.h"
-
-#ifdef WITH_XC_HTTP
-class HttpPlugin: public ISettingsPage
-{
-public:
-    HttpPlugin(DatabaseTabWidget* tabWidget)
-    {
-        m_service = new Service(tabWidget);
-    }
-
-    ~HttpPlugin() = default;
-
-    QString name() override
-    {
-        return QObject::tr("Legacy Browser Integration");
-    }
-
-    QIcon icon() override
-    {
-        return FilePath::instance()->icon("apps", "internet-web-browser");
-    }
-
-    QWidget * createWidget() override
-    {
-        OptionDialog* dlg = new OptionDialog();
-        QObject::connect(dlg, SIGNAL(removeSharedEncryptionKeys()), m_service, SLOT(removeSharedEncryptionKeys()));
-        QObject::connect(dlg, SIGNAL(removeStoredPermissions()), m_service, SLOT(removeStoredPermissions()));
-        return dlg;
-    }
-
-    void loadSettings(QWidget* widget) override
-    {
-        qobject_cast<OptionDialog*>(widget)->loadSettings();
-    }
-
-    void saveSettings(QWidget* widget) override
-    {
-        qobject_cast<OptionDialog*>(widget)->saveSettings();
-        if (HttpSettings::isEnabled())
-            m_service->start();
-        else
-            m_service->stop();
-    }
-private:
-    Service* m_service;
-};
-#endif
 
 #ifdef WITH_XC_BROWSER
 class BrowserPlugin: public ISettingsPage
@@ -192,9 +139,6 @@ MainWindow::MainWindow()
     restoreGeometry(config()->get("GUI/MainWindowGeometry").toByteArray());
 #ifdef WITH_XC_BROWSER
     m_ui->settingsWidget->addSettingsPage(new BrowserPlugin(m_ui->tabWidget));
-#endif
-#ifdef WITH_XC_HTTP
-    m_ui->settingsWidget->addSettingsPage(new HttpPlugin(m_ui->tabWidget));
 #endif
 #ifdef WITH_XC_SSHAGENT
     SSHAgent::init(this);
@@ -419,12 +363,6 @@ MainWindow::MainWindow()
         m_ui->globalMessageWidget->showMessage(
             tr("Access error for config file %1").arg(config()->getFileName()), MessageWidget::Error);
     }
-#ifdef WITH_XC_HTTP
-    if (config()->get("Http/Enabled", false).toBool() && config()->get("Http/DeprecationNoticeShown", 0).toInt() < 3) {
-        // show message after global widget dismissed all messages
-        connect(m_ui->globalMessageWidget, SIGNAL(hideAnimationFinished()), this, SLOT(showKeePassHTTPDeprecationNotice()));
-    }
-#endif
 
 #ifndef KEEPASSXC_BUILD_TYPE_RELEASE
     m_ui->globalMessageWidget->showMessage(tr("WARNING: You are using an unstable build of KeePassXC!\n"

@@ -197,11 +197,9 @@ set(keepassx_SOURCES_MAINEXE
 add_feature_info(Auto-Type WITH_XC_AUTOTYPE "Automatic password typing")
 add_feature_info(Networking WITH_XC_NETWORKING "Compile KeePassXC with network access code (e.g. for downloading website icons)")
 add_feature_info(KeePassXC-Browser WITH_XC_BROWSER "Browser integration with KeePassXC-Browser")
-add_feature_info(KeePassHTTP WITH_XC_HTTP "Browser integration compatible with ChromeIPass and PassIFox (deprecated, implies Networking)")
 add_feature_info(SSHAgent WITH_XC_SSHAGENT "SSH agent integration compatible with KeeAgent")
 add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
 
-add_subdirectory(http)
 if(WITH_XC_NETWORKING)
   find_package(CURL REQUIRED)
 endif()
@@ -254,7 +252,6 @@ add_library(keepassx_core STATIC ${keepassx_SOURCES})
 set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
 target_link_libraries(keepassx_core
                       autotype
-                      ${keepassxchttp_LIB}
                       ${keepassxcbrowser_LIB}
                       ${sshagent_LIB}
                       Qt5::Core
