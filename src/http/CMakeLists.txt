@@ -5,6 +5,7 @@ if(WITH_XC_HTTP)
     
     set(keepasshttp_SOURCES
         AccessControlDialog.cpp
+        KeyAcceptDialog.cpp
         EntryConfig.cpp
         HttpPasswordGeneratorWidget.cpp
         HttpSettings.cpp
