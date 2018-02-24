@@ -66,6 +66,8 @@ public:
     bool isPasswordsHidden() const;
     void setPasswordsHidden(const bool hide);
 
+    void setPaperClipPixmap(const QPixmap& paperclip);
+
 signals:
     void switchedToListMode();
     void switchedToSearchMode();

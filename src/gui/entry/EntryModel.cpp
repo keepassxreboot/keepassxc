@@ -29,7 +29,6 @@
 #include "core/Global.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
-#include "core/FilePath.h"
 
 // String being displayed when hiding content
 const QString EntryModel::HiddenContentDisplay(QString("\u25cf").repeated(6));
@@ -42,12 +41,9 @@ EntryModel::EntryModel(QObject* parent)
     , m_group(nullptr)
     , m_hideUsernames(false)
     , m_hidePasswords(true)
-    , m_paperClipPixmap(FilePath::instance()->icon("actions", "paperclip").pixmap(16))
+    , m_paperClipPixmap(16, 16)
     , m_paperClipPixmapCentered(24, 16)
 {
-    m_paperClipPixmapCentered.fill(Qt::transparent);
-    QPainter painter(&m_paperClipPixmapCentered);
-    painter.drawPixmap(8, 0, m_paperClipPixmap);
 }
 
 Entry* EntryModel::entryFromIndex(const QModelIndex& index) const
@@ -503,4 +499,13 @@ void EntryModel::toggleUsernamesHidden(const bool hide)
 void EntryModel::togglePasswordsHidden(const bool hide)
 {
     setPasswordsHidden(hide);
+}
+
+void EntryModel::setPaperClipPixmap(const QPixmap& paperclip)
+{
+    m_paperClipPixmap = paperclip;
+
+    m_paperClipPixmapCentered.fill(Qt::transparent);
+    QPainter painter2(&m_paperClipPixmapCentered);
+    painter2.drawPixmap(8, 0, paperclip);
 }

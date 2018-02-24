@@ -22,6 +22,7 @@
 #include <QKeyEvent>
 #include <QMenu>
 
+#include "core/FilePath.h"
 #include "gui/SortFilterHideProxyModel.h"
 
 EntryView::EntryView(QWidget* parent)
@@ -114,6 +115,8 @@ EntryView::EntryView(QWidget* parent)
     m_sortModel->sort(EntryModel::Title, Qt::AscendingOrder);
     sortByColumn(EntryModel::Title, Qt::AscendingOrder);
     m_defaultListViewState = header()->saveState();
+
+    m_model->setPaperClipPixmap(filePath()->icon("actions", "paperclip").pixmap(16));
 }
 
 void EntryView::keyPressEvent(QKeyEvent* event)
