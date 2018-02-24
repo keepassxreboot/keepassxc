@@ -3,6 +3,7 @@
 <?include "cpack_variables.wxi"?>
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+    xmlns:util="http://schemas.microsoft.com/wix/UtilExtension"
     RequiredVersion="3.6.3303.0">
 
     <Product Id="$(var.CPACK_WIX_PRODUCT_GUID)"
@@ -47,5 +48,20 @@
         <DirectoryRef Id="TARGETDIR">
             <Directory Id="ProgramMenuFolder" />
         </DirectoryRef>
+
+        <Property Id="WixSilentExecCmdLine" Value='"Taskkill" /IM KeePassXC.exe'/>
+        <CustomAction Id="KillKeePassXCInstall" BinaryKey="WixCA" DllEntry="WixSilentExec" Execute="immediate" Return="ignore"/>
+        <CustomAction Id="KillKeePassXCUninstall" BinaryKey="WixCA" DllEntry="WixSilentExec" Execute="immediate" Return="ignore"/>
+
+        <Property Id="WixQuietExecCmdLine" Value='"Taskkill" /IM keepassxc-proxy.exe /F'/>
+        <CustomAction Id="KillProxyInstall" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="immediate" Return="ignore"/>
+        <CustomAction Id="KillProxyUninstall" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="immediate" Return="ignore"/>
+
+        <InstallExecuteSequence>
+            <Custom Action="KillKeePassXCInstall" After="InstallInitialize"/>
+            <Custom Action="KillProxyInstall" After="InstallInitialize"/>
+            <Custom Action="KillKeePassXCUninstall" Before="InstallValidate">Installed</Custom>
+            <Custom Action="KillProxyUninstall" Before="InstallValidate">Installed</Custom>
+        </InstallExecuteSequence>
     </Product>
 </Wix>
