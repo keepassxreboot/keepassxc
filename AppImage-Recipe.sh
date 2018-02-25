@@ -88,6 +88,11 @@ unset XDG_DATA_DIRS
 if [ "\${1}" == "cli" ]; then
     shift
     exec keepassxc-cli "\$@"
+elif [ "\${1}" == "proxy" ]; then
+    shift
+    exec keepassxc-proxy "\$@"
+elif [ -v CHROME_WRAPPER ] || [ -v MOZ_LAUNCHED_CHILD ]; then
+    exec keepassxc-proxy "\$@"
 else
     exec keepassxc "\$@"
 fi
