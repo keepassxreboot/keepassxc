@@ -19,6 +19,7 @@
 
 #include "BrowserOptionDialog.h"
 #include "ui_BrowserOptionDialog.h"
+#include "config-keepassx.h"
 #include "BrowserSettings.h"
 #include "core/FilePath.h"
 
@@ -45,6 +46,11 @@ BrowserOptionDialog::BrowserOptionDialog(QWidget* parent) :
     connect(m_ui->useCustomProxy, SIGNAL(toggled(bool)), m_ui->customProxyLocation, SLOT(setEnabled(bool)));
     connect(m_ui->useCustomProxy, SIGNAL(toggled(bool)), m_ui->customProxyLocationBrowseButton, SLOT(setEnabled(bool)));
     connect(m_ui->customProxyLocationBrowseButton, SIGNAL(clicked()), this, SLOT(showProxyLocationFileDialog()));
+
+#ifdef KEEPASSXC_DIST_APPIMAGE
+    m_ui->supportBrowserProxy->setChecked(true);
+    m_ui->supportBrowserProxy->setEnabled(false);
+#endif
 }
 
 BrowserOptionDialog::~BrowserOptionDialog()
