@@ -795,10 +795,6 @@ void DatabaseWidget::switchToView(bool accepted)
         m_newParent = nullptr;
     }
 
-    if (accepted) {
-        showMessage(tr("Entry updated successfully."), MessageWidget::Positive, false, 2000);
-    }
-
     setCurrentWidget(m_mainWidget);
 }
 
