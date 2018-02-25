@@ -364,6 +364,22 @@ void TestGui::testEditEntry()
 
     // Confirm modified indicator is showing
     QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("%1*").arg(m_dbFileName));
+
+    // Test copy & paste newline sanitization
+    QTest::mouseClick(entryEditWidget, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+    titleEdit->setText("multiline\ntitle");
+    editEntryWidget->findChild<QLineEdit*>("usernameEdit")->setText("multiline\nusername");
+    editEntryWidget->findChild<QLineEdit*>("passwordEdit")->setText("multiline\npassword");
+    editEntryWidget->findChild<QLineEdit*>("passwordRepeatEdit")->setText("multiline\npassword");
+    editEntryWidget->findChild<QLineEdit*>("urlEdit")->setText("multiline\nurl");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+
+    QCOMPARE(entry->title(), QString("multiline title"));
+    QCOMPARE(entry->username(), QString("multiline username"));
+    // here we keep newlines, so users can't lock themselves out accidentally
+    QCOMPARE(entry->password(), QString("multiline\npassword"));
+    QCOMPARE(entry->url(), QString("multiline url"));
 }
 
 void TestGui::testSearchEditEntry()
