@@ -134,7 +134,7 @@ void DetailsWidget::updateEntryHeaderLine()
 {
     Q_ASSERT(m_currentEntry);
     const QString title = m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->title());
-    m_ui->entryTitleLabel->setText(hierarchy(m_currentEntry->group(), title));
+    m_ui->entryTitleLabel->setRawText(hierarchy(m_currentEntry->group(), title));
     m_ui->entryIcon->setPixmap(preparePixmap(m_currentEntry->iconPixmap(), 16));
 }
 
@@ -250,7 +250,7 @@ void DetailsWidget::updateEntryAutotypeTab()
 void DetailsWidget::updateGroupHeaderLine()
 {
     Q_ASSERT(m_currentGroup);
-    m_ui->groupTitleLabel->setText(hierarchy(m_currentGroup, {}));
+    m_ui->groupTitleLabel->setRawText(hierarchy(m_currentGroup, {}));
     m_ui->groupIcon->setPixmap(preparePixmap(m_currentGroup->iconPixmap(), 32));
 }
 
