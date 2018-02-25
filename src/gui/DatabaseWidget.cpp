@@ -76,7 +76,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_messageWidget = new MessageWidget(this);
     m_messageWidget->setHidden(true);
 
-    QVBoxLayout* mainLayout = new QVBoxLayout();
+    auto* mainLayout = new QVBoxLayout();
     QLayout* layout = new QHBoxLayout();
     mainLayout->addWidget(m_messageWidget);
     mainLayout->addLayout(layout);
@@ -119,7 +119,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_detailsView, SIGNAL(errorOccurred(QString)), this, SLOT(showErrorMessage(QString)));
 
 
-    QVBoxLayout* vLayout = new QVBoxLayout(rightHandSideWidget);
+    auto* vLayout = new QVBoxLayout(rightHandSideWidget);
     vLayout->setMargin(0);
     vLayout->addWidget(m_searchingLabel);
     vLayout->addWidget(m_detailSplitter);
@@ -127,8 +127,8 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_detailSplitter->addWidget(m_entryView);
     m_detailSplitter->addWidget(m_detailsView);
 
-    m_detailSplitter->setStretchFactor(0, 80);
-    m_detailSplitter->setStretchFactor(1, 20);
+    m_detailSplitter->setStretchFactor(0, 100);
+    m_detailSplitter->setStretchFactor(1, 0);
 
     m_searchingLabel->setVisible(false);
 
