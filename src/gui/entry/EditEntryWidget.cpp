@@ -755,6 +755,8 @@ bool EditEntryWidget::commitEntry()
     }
 #endif
 
+    m_historyModel->setEntries(m_entry->historyItems());
+
     showMessage(tr("Entry updated successfully."), MessageWidget::Positive);
     return true;
 }
