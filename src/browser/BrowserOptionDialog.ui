@@ -27,6 +27,9 @@
     <number>0</number>
    </property>
    <item>
+    <widget class="MessageWidget" name="browserGlobalWarningWidget" native="true"/>
+   </item>
+   <item>
     <widget class="QCheckBox" name="enableBrowserSupport">
      <property name="toolTip">
       <string>This is required for accessing your databases with KeePassXC-Browser</string>

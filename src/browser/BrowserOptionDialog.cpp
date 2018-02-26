@@ -47,10 +47,7 @@ BrowserOptionDialog::BrowserOptionDialog(QWidget* parent) :
     connect(m_ui->useCustomProxy, SIGNAL(toggled(bool)), m_ui->customProxyLocationBrowseButton, SLOT(setEnabled(bool)));
     connect(m_ui->customProxyLocationBrowseButton, SIGNAL(clicked()), this, SLOT(showProxyLocationFileDialog()));
 
-#ifdef KEEPASSXC_DIST_APPIMAGE
-    m_ui->supportBrowserProxy->setChecked(true);
-    m_ui->supportBrowserProxy->setEnabled(false);
-#endif
+    m_ui->browserGlobalWarningWidget->setVisible(false);
 }
 
 BrowserOptionDialog::~BrowserOptionDialog()
@@ -90,6 +87,18 @@ void BrowserOptionDialog::loadSettings()
     m_ui->chromiumSupport->setChecked(settings.chromiumSupport());
     m_ui->firefoxSupport->setChecked(settings.firefoxSupport());
     m_ui->vivaldiSupport->setChecked(settings.vivaldiSupport());
+
+#if defined(KEEPASSXC_DIST_APPIMAGE)
+    m_ui->supportBrowserProxy->setChecked(true);
+    m_ui->supportBrowserProxy->setEnabled(false);
+#elif defined(KEEPASSXC_DIST_SNAP)
+    m_ui->enableBrowserSupport->setChecked(false);
+    m_ui->enableBrowserSupport->setEnabled(false);
+    m_ui->browserGlobalWarningWidget->showMessage(
+        tr("We're sorry, but KeePassXC-Browser is not supported for Snap releases at the moment."), MessageWidget::Warning);
+    m_ui->browserGlobalWarningWidget->setCloseButtonVisible(false);
+    m_ui->browserGlobalWarningWidget->setAutoHideTimeout(-1);
+#endif
 }
 
 void BrowserOptionDialog::saveSettings()
