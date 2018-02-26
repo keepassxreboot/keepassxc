@@ -66,14 +66,18 @@ cp "$QXCB_PLUGIN" ".${QT_PLUGIN_PATH}/platforms/"
 
 get_apprun
 copy_deps
+
+# protect our libgpg-error from being deleted
+mv ./opt/gpg-error-127/lib/x86_64-linux-gnu/libgpg-error.so.0 ./protected.so
 delete_blacklisted
+mv ./protected.so ./opt/gpg-error-127/lib/x86_64-linux-gnu/libgpg-error.so.0
 
 get_desktop
 get_icon
 cat << EOF > ./usr/bin/keepassxc_env
 #!/usr/bin/env bash
-export LD_LIBRARY_PATH="/opt/libgcrypt20-18/lib/x86_64-linux-gnu:\${LD_LIBRARY_PATH}"
-export LD_LIBRARY_PATH="/opt/gpg-error-127/lib/x86_64-linux-gnu:\${LD_LIBRARY_PATH}"
+export LD_LIBRARY_PATH="../opt/libgcrypt20-18/lib/x86_64-linux-gnu:\${LD_LIBRARY_PATH}"
+export LD_LIBRARY_PATH="../opt/gpg-error-127/lib/x86_64-linux-gnu:\${LD_LIBRARY_PATH}"
 export LD_LIBRARY_PATH="..$(dirname ${QT_PLUGIN_PATH})/lib:\${LD_LIBRARY_PATH}"
 export QT_PLUGIN_PATH="..${QT_PLUGIN_PATH}:\${KPXC_QT_PLUGIN_PATH}"
 
@@ -84,6 +88,11 @@ unset XDG_DATA_DIRS
 if [ "\${1}" == "cli" ]; then
     shift
     exec keepassxc-cli "\$@"
+elif [ "\${1}" == "proxy" ]; then
+    shift
+    exec keepassxc-proxy "\$@"
+elif [ -v CHROME_WRAPPER ] || [ -v MOZ_LAUNCHED_CHILD ]; then
+    exec keepassxc-proxy "\$@"
 else
     exec keepassxc "\$@"
 fi

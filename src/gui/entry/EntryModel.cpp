@@ -22,6 +22,7 @@
 #include <QMimeData>
 #include <QPalette>
 #include <QDateTime>
+#include <QPainter>
 
 #include "core/DatabaseIcons.h"
 #include "core/Entry.h"
@@ -34,9 +35,6 @@ const QString EntryModel::HiddenContentDisplay(QString("\u25cf").repeated(6));
 
 // Format used to display dates
 const Qt::DateFormat EntryModel::DateFormat = Qt::DefaultLocaleShortDate;
-
-// Paperclip symbol
-const QString EntryModel::PaperClipDisplay("\U0001f4ce");
 
 EntryModel::EntryModel(QObject* parent)
     : QAbstractTableModel(parent)
@@ -205,9 +203,6 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         case Accessed:
             result = entry->timeInfo().lastAccessTime().toLocalTime().toString(EntryModel::DateFormat);
             return result;
-        case Paperclip:
-            result = entry->attachments()->keys().isEmpty() ? QString() : EntryModel::PaperClipDisplay;
-            return result;
         case Attachments:
             // Display comma-separated list of attachments
             QList<QString> attachments = entry->attachments()->keys();
@@ -238,7 +233,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         case Paperclip:
             // Display entries with attachments above those without when
             // sorting ascendingly (and vice versa when sorting descendingly)
-            return entry->attachments()->keys().isEmpty() ? 1 : 0;
+            return entry->attachments()->isEmpty() ? 1 : 0;
         default:
             // For all other columns, simply use data provided by Qt::Display-
             // Role for sorting
@@ -254,9 +249,13 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         case Title:
             if (entry->isExpired()) {
                 return databaseIcons()->iconPixmap(DatabaseIcons::ExpiredIconIndex);
-            } else {
-                return entry->iconScaledPixmap();
             }
+            return entry->iconScaledPixmap();
+        case Paperclip:
+            if (!entry->attachments()->isEmpty()) {
+                return m_paperClipPixmap;
+            }
+            break;
         }
     } else if (role == Qt::FontRole) {
         QFont font;
@@ -278,12 +277,6 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
     } else if (role == Qt::TextAlignmentRole) {
         if (index.column() == Paperclip) {
             return Qt::AlignCenter;
-        }
-    } else if (role == Qt::SizeHintRole) {
-        if (index.column() == Paperclip) {
-            QFont font;
-            QFontMetrics fm(font);
-            return fm.width(PaperClipDisplay) / 2;
         }
     }
 
@@ -316,15 +309,12 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
             return tr("Modified");
         case Accessed:
             return tr("Accessed");
-        case Paperclip:
-            return EntryModel::PaperClipDisplay;
         case Attachments:
             return tr("Attachments");
         }
-    } else if (role == Qt::TextAlignmentRole) {
-        switch (section) {
-        case Paperclip:
-            return Qt::AlignCenter;
+    } else if (role == Qt::DecorationRole) {
+        if (section == Paperclip) {
+            return m_paperClipPixmap;
         }
     }
 
@@ -507,4 +497,9 @@ void EntryModel::toggleUsernamesHidden(const bool hide)
 void EntryModel::togglePasswordsHidden(const bool hide)
 {
     setPasswordsHidden(hide);
+}
+
+void EntryModel::setPaperClipPixmap(const QPixmap& paperclip)
+{
+    m_paperClipPixmap = paperclip;
 }

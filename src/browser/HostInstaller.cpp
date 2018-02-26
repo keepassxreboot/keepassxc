@@ -17,12 +17,14 @@
 */
 
 #include "HostInstaller.h"
+#include "config-keepassx.h"
 #include <QDir>
 #include <QFile>
 #include <QStandardPaths>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QCoreApplication>
+#include <QProcessEnvironment>
 #include <QMessageBox>
 
 const QString HostInstaller::HOST_NAME = "org.keepassxc.keepassxc_browser";
@@ -161,6 +163,13 @@ QString HostInstaller::getInstallDir(SupportedBrowsers browser) const
 QJsonObject HostInstaller::constructFile(SupportedBrowsers browser, const bool& proxy, const QString& location)
 {
     QString path;
+#ifdef KEEPASSXC_DIST_APPIMAGE
+    if (proxy && !location.isEmpty()) {
+        path = location;
+    } else {
+        path = QProcessEnvironment::systemEnvironment().value("APPIMAGE");
+    }
+#else
     if (proxy) {
         if (!location.isEmpty()) {
             path = location;
@@ -177,6 +186,8 @@ QJsonObject HostInstaller::constructFile(SupportedBrowsers browser, const bool& 
 #ifdef Q_OS_WIN
     path.replace("/","\\");
 #endif
+
+#endif  // #ifdef KEEPASSXC_DIST_APPIMAGE
 
     QJsonObject script;
     script["name"]          = HostInstaller::HOST_NAME;

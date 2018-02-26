@@ -22,6 +22,7 @@
 #include <QKeyEvent>
 #include <QMenu>
 
+#include "core/FilePath.h"
 #include "gui/SortFilterHideProxyModel.h"
 
 EntryView::EntryView(QWidget* parent)
@@ -72,6 +73,10 @@ EntryView::EntryView(QWidget* parent)
     m_columnActions->setExclusive(false);
     for (int columnIndex = 1; columnIndex < header()->count(); ++columnIndex) {
         QString caption = m_model->headerData(columnIndex, Qt::Horizontal, Qt::DisplayRole).toString();
+        if (columnIndex == EntryModel::Paperclip) {
+            caption = tr("Attachments (icon)");
+        }
+
         QAction* action = m_headerMenu->addAction(caption);
         action->setCheckable(true);
         action->setData(columnIndex);
@@ -85,19 +90,18 @@ EntryView::EntryView(QWidget* parent)
     m_headerMenu->addSeparator();
     m_headerMenu->addAction(tr("Reset to defaults"), this, SLOT(resetViewToDefaults()));
 
+    header()->setMinimumSectionSize(24);
     header()->setDefaultSectionSize(100);
-    // Stretching of last section interferes with fitting columns to window
     header()->setStretchLastSection(false);
     header()->setContextMenuPolicy(Qt::CustomContextMenu);
+
     connect(header(), SIGNAL(customContextMenuRequested(QPoint)), SLOT(showHeaderMenu(QPoint)));
     connect(header(), SIGNAL(sectionCountChanged(int, int)), SIGNAL(viewStateChanged()));
     connect(header(), SIGNAL(sectionMoved(int, int, int)), SIGNAL(viewStateChanged()));
     connect(header(), SIGNAL(sectionResized(int, int, int)), SIGNAL(viewStateChanged()));
     connect(header(), SIGNAL(sortIndicatorChanged(int, Qt::SortOrder)), SIGNAL(viewStateChanged()));
 
-    // TODO: not working as expected, columns will end up being very small,
-    // most likely due to the widget not being sized properly at this time
-    //fitColumnsToWindow();
+    resetFixedColumns();
 
     // Configure default search view state and save for later use
     header()->showSection(EntryModel::ParentGroup);
@@ -110,6 +114,8 @@ EntryView::EntryView(QWidget* parent)
     m_sortModel->sort(EntryModel::Title, Qt::AscendingOrder);
     sortByColumn(EntryModel::Title, Qt::AscendingOrder);
     m_defaultListViewState = header()->saveState();
+
+    m_model->setPaperClipPixmap(filePath()->icon("actions", "paperclip").pixmap(16));
 }
 
 void EntryView::keyPressEvent(QKeyEvent* event)
@@ -292,9 +298,11 @@ QByteArray EntryView::viewState() const
 /**
  * Set view state
  */
-bool EntryView::setViewState(const QByteArray& state) const
+bool EntryView::setViewState(const QByteArray& state)
 {
-    return header()->restoreState(state);
+    bool status = header()->restoreState(state);
+    resetFixedColumns();
+    return status;
 }
 
 /**
@@ -367,6 +375,8 @@ void EntryView::toggleColumnVisibility(QAction *action)
 void EntryView::fitColumnsToWindow()
 {
     header()->resizeSections(QHeaderView::Stretch);
+    resetFixedColumns();
+    fillRemainingWidth(true);
     emit viewStateChanged();
 }
 
@@ -378,37 +388,8 @@ void EntryView::fitColumnsToContents()
 {
     // Resize columns to fit contents
     header()->resizeSections(QHeaderView::ResizeToContents);
-
-    // Determine total width of currently visible columns. If there is
-    // still some space available on the header, equally distribute it to
-    // visible columns and add remaining fraction to last visible column
-    int width = 0;
-    for (int columnIndex = 0; columnIndex < header()->count(); ++columnIndex) {
-        if (!header()->isSectionHidden(columnIndex)) {
-            width += header()->sectionSize(columnIndex);
-        }
-    }
-    int visible = header()->count() - header()->hiddenSectionCount();
-    int avail = header()->width() - width;
-    if ((visible <= 0) || (avail <= 0)) {
-        return;
-    }
-    int add = avail / visible;
-    width = 0;
-    int last = 0;
-    for (int columnIndex = 0; columnIndex < header()->count(); ++columnIndex) {
-        if (!header()->isSectionHidden(columnIndex)) {
-            header()->resizeSection(columnIndex, header()->sectionSize(columnIndex) + add);
-            width += header()->sectionSize(columnIndex);
-            if (header()->visualIndex(columnIndex) > last) {
-                last = header()->visualIndex(columnIndex);
-            }
-        }
-    }
-    header()->resizeSection(header()->logicalIndex(last), header()->sectionSize(last) + (header()->width() - width));
-
-    // Shouldn't be necessary due to use of header()->resizeSection, but
-    // lets just do it anyway for the sake of completeness
+    resetFixedColumns();
+    fillRemainingWidth(false);
     emit viewStateChanged();
 }
 
@@ -428,3 +409,46 @@ void EntryView::resetViewToDefaults()
 
     fitColumnsToWindow();
 }
+
+void EntryView::fillRemainingWidth(bool lastColumnOnly)
+{
+    // Determine total width of currently visible columns
+    int width = 0;
+    int lastColumnIndex = 0;
+    for (int columnIndex = 0; columnIndex < header()->count(); ++columnIndex) {
+        if (!header()->isSectionHidden(columnIndex)) {
+            width += header()->sectionSize(columnIndex);
+        }
+        if (header()->visualIndex(columnIndex) > lastColumnIndex) {
+            lastColumnIndex = header()->visualIndex(columnIndex);
+        }
+    }
+
+    int numColumns = header()->count() - header()->hiddenSectionCount();
+    int availWidth = header()->width() - width;
+    if ((numColumns <= 0) || (availWidth <= 0)) {
+        return;
+    }
+
+    if (!lastColumnOnly) {
+        // Equally distribute remaining width to visible columns
+        int add = availWidth / numColumns;
+        width = 0;
+        for (int columnIndex = 0; columnIndex < header()->count(); ++columnIndex) {
+            if (!header()->isSectionHidden(columnIndex)) {
+                header()->resizeSection(columnIndex, header()->sectionSize(columnIndex) + add);
+                width += header()->sectionSize(columnIndex);
+            }
+        }
+    }
+
+    // Add remaining width to last column
+    header()->resizeSection(header()->logicalIndex(lastColumnIndex), header()->sectionSize(lastColumnIndex) + (header()->width() - width));
+}
+
+void EntryView::resetFixedColumns()
+{
+    header()->setSectionResizeMode(EntryModel::Paperclip, QHeaderView::Fixed);
+    header()->resizeSection(EntryModel::Paperclip, header()->minimumSectionSize());
+}
+

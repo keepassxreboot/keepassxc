@@ -614,12 +614,24 @@ build() {
     if ${BUILD_SOURCE_TARBALL}; then
         logInfo "Creating source tarball..."
         local app_name_lower="$(echo "$APP_NAME" | tr '[:upper:]' '[:lower:]')"
-        TARBALL_NAME="${app_name_lower}-${RELEASE_NAME}-src.tar.xz"
-        git archive --format=tar "$TAG_NAME" --prefix="${app_name_lower}-${RELEASE_NAME}/" \
-            | xz -6 > "${OUTPUT_DIR}/${TARBALL_NAME}"
+        local prefix="${app_name_lower}-${RELEASE_NAME}"
+        local tarball_name="${prefix}-src.tar"
+
+        git archive --format=tar "$TAG_NAME" --prefix="${prefix}/" --output="${OUTPUT_DIR}/${tarball_name}"
+
+        if ! ${BUILD_SNAPSHOT}; then
+            # add .version file to tar
+            mkdir "${prefix}"
+            echo -n ${RELEASE_NAME} > "${prefix}/.version"
+            tar --append --file="${OUTPUT_DIR}/${tarball_name}" "${prefix}/.version"
+            rm "${prefix}/.version"
+            rmdir "${prefix}" 2> /dev/null
+        fi
+
+        xz -6 "${OUTPUT_DIR}/${tarball_name}"
     fi
 
-    if [ -e "${OUTPUT_DIR}/build-release" ]; then
+    if ! ${BUILD_SNAPSHOT} && [ -e "${OUTPUT_DIR}/build-release" ]; then
         logInfo "Cleaning existing build directory..."
         rm -r "${OUTPUT_DIR}/build-release" 2> /dev/null
         if [ $? -ne 0 ]; then

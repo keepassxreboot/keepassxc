@@ -19,6 +19,7 @@
 #define KEEPASSX_ENTRYMODEL_H
 
 #include <QAbstractTableModel>
+#include <QPixmap>
 
 class Entry;
 class Group;
@@ -65,6 +66,8 @@ public:
     bool isPasswordsHidden() const;
     void setPasswordsHidden(const bool hide);
 
+    void setPaperClipPixmap(const QPixmap& paperclip);
+
 signals:
     void switchedToListMode();
     void switchedToSearchMode();
@@ -95,9 +98,10 @@ private:
     bool m_hideUsernames;
     bool m_hidePasswords;
 
+    QPixmap m_paperClipPixmap;
+
     static const QString HiddenContentDisplay;
     static const Qt::DateFormat DateFormat;
-    static const QString PaperClipDisplay;
 };
 
 #endif // KEEPASSX_ENTRYMODEL_H
