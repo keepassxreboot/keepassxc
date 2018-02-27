@@ -373,6 +373,10 @@ Please select whether you want to allow access.</translation>
         <source>Select custom proxy location</source>
         <translation>Select custom proxy location</translation>
     </message>
+    <message>
+        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
+        <translation>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</translation>
+    </message>
 </context>
 <context>
     <name>BrowserService</name>
@@ -1119,7 +1123,7 @@ Disable safe saves and try again?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Do you really want to move %n entry to the recycle bin?</numerusform><numerusform>Do you really want to move %n entries to the recycle bin?</numerusform></translation>
+        <translation><numerusform>Do you really want to move %n entry(s) to the recycle bin?</numerusform><numerusform>Do you really want to move %n entry(s) to the recycle bin?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1190,10 +1194,6 @@ Do you want to merge your changes?</translation>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>Are you sure you want to permanently delete everything from your recycle bin?</translation>
-    </message>
-    <message>
-        <source>Entry updated successfully.</source>
-        <translation>Entry updated successfully.</translation>
     </message>
 </context>
 <context>
@@ -1371,11 +1371,11 @@ Do you want to merge your changes?</translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n week</numerusform><numerusform>%n weeks</numerusform></translation>
+        <translation><numerusform>%n week(s)</numerusform><numerusform>%n week(s)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n month</numerusform><numerusform>%n months</numerusform></translation>
+        <translation><numerusform>%n month(s)</numerusform><numerusform>%n month(s)</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1743,7 +1743,7 @@ Do you want to merge your changes?</translation>
     </message>
     <message>
         <source>Uuid:</source>
-        <translation>UUID:</translation>
+        <translation>Uuid:</translation>
     </message>
     <message>
         <source>Plugin Data</source>
@@ -1819,7 +1819,7 @@ This may cause the affected plugins to malfunction.</translation>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>Are you sure you want to remove %n attachment?</numerusform><numerusform>Are you sure you want to remove %n attachments?</numerusform></translation>
+        <translation><numerusform>Are you sure you want to remove %n attachments?</numerusform><numerusform>Are you sure you want to remove %n attachments?</numerusform></translation>
     </message>
     <message>
         <source>Confirm Remove</source>
@@ -1975,6 +1975,10 @@ This may cause the affected plugins to malfunction.</translation>
     <message>
         <source>Reset to defaults</source>
         <translation>Reset to defaults</translation>
+    </message>
+    <message>
+        <source>Attachments (icon)</source>
+        <translation>Attachments (icon)</translation>
     </message>
 </context>
 <context>
@@ -3715,7 +3719,7 @@ Please unlock the selected database or choose another one which is unlocked.</tr
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption-key(s) from KeePassX/Http Settings.</source>
-        <translation><numerusform>Successfully removed %n encryption key from KeePassXC/HTTP Settings.</numerusform><numerusform>Successfully removed %n encryption keys from KeePassXC/HTTP Settings.</numerusform></translation>
+        <translation><numerusform>Successfully removed %n encryption key from KeePassHTTP Settings.</numerusform><numerusform>Successfully removed %n encryption keys from KeePassHTTP Settings.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>

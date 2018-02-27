@@ -3,11 +3,11 @@
     <name>AboutDialog</name>
     <message>
         <source>About KeePassXC</source>
-        <translation>O KeePassXC</translation>
+        <translation>О KeePassXC</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>O aplikaciji</translation>
+        <translation>О апликацији</translation>
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
@@ -40,7 +40,8 @@
     <message>
         <source>Version %1
 </source>
-        <translation>Верзија %1</translation>
+        <translation>Верзија %1
+</translation>
     </message>
     <message>
         <source>Revision: %1</source>
@@ -101,7 +102,7 @@ Kernel: %3 %4</source>
     <message>
         <source>%1 has requested access to passwords for the following item(s).
 Please select whether you want to allow access.</source>
-        <translation>%1 тражи приступ лозинкама за следеће ставке.
+        <translation>%1 тражи приступ лозинкама за следећу ставку (или ставке).
 Молим вас одаберите да ли желите да одобрите приступ.</translation>
     </message>
 </context>
@@ -151,7 +152,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Секвенца</translation>
+        <translation>Редослед</translation>
     </message>
     <message>
         <source>Default sequence</source>
@@ -209,7 +210,7 @@ Please select whether you want to allow access.</source>
     <message>
         <source>%1 has requested access to passwords for the following item(s).
 Please select whether you want to allow access.</source>
-        <translation>%1 тражи приступ лозинкама за следеће ставке.
+        <translation>%1 тражи приступ лозинкама за следећу ставку (или ставке).
 Молим вас одаберите да ли желите да одобрите приступ.</translation>
     </message>
 </context>
@@ -371,6 +372,10 @@ Please select whether you want to allow access.</source>
         <source>Select custom proxy location</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>BrowserService</name>
@@ -484,7 +489,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Browse</source>
-        <translation>Разгледај</translation>
+        <translation>Преглед</translation>
     </message>
     <message>
         <source>Create</source>
@@ -500,7 +505,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Key files</source>
-        <translation>Датотеке са кључем</translation>
+        <translation>Кључ-Датотеке</translation>
     </message>
     <message>
         <source>All files</source>
@@ -508,15 +513,15 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Create Key File...</source>
-        <translation>Креирај датотеку са кључем...</translation>
+        <translation>Креирај Кључ-Датотеку...</translation>
     </message>
     <message>
         <source>Unable to create Key File : </source>
-        <translation>Није могуће креирати Датотеку са Кључем:</translation>
+        <translation>Није могуће креирати Кључ-Датотеку:</translation>
     </message>
     <message>
         <source>Select a key file</source>
-        <translation>Одаберите датотеку са кључем</translation>
+        <translation>Одаберите кључ-датотеку</translation>
     </message>
     <message>
         <source>Empty password</source>
@@ -533,7 +538,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     <message>
         <source>Failed to set %1 as the Key file:
 %2</source>
-        <translation>Неуспешно постављање %1 као Датотеке са Кључем:
+        <translation>Неуспешно постављање %1 као Кључ-Датотеку:
 %2</translation>
     </message>
     <message>
@@ -564,7 +569,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Replace username and password with references</source>
-        <translation>Замените корисничко име и лозинку са референцама</translation>
+        <translation>Замени корисничко име и лозинку са референцама</translation>
     </message>
     <message>
         <source>Copy history</source>
@@ -619,7 +624,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Preview</source>
-        <translation>Приказ</translation>
+        <translation>Преглед</translation>
     </message>
     <message>
         <source>Column layout</source>
@@ -679,15 +684,15 @@ Please consider generating a new key file.</source>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n byte(s), </source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n бајт(ова),</numerusform><numerusform>%n бајт(ова),</numerusform><numerusform>%n бајт(ова),</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n ред(ова),</numerusform><numerusform>%n ред(ова),</numerusform><numerusform>%n ред(ова),</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n колона</numerusform><numerusform>%n колона</numerusform><numerusform>%n колона</numerusform></translation>
     </message>
 </context>
 <context>
@@ -979,7 +984,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
-        <translation>Отвори KeePass 1  базу података</translation>
+        <translation>Отвори KeePass 1 базу података</translation>
     </message>
     <message>
         <source>KeePass 1 database</source>
@@ -1101,7 +1106,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Да ли сте сигурни да желите да преместите %n ставку у корпу за отпатке?</numerusform><numerusform>Да ли сте сигурни да желите да преместите %n ставке у корпу за отпатке?</numerusform><numerusform>Да ли сте сигурни да желите да преместите %n ставку(ставке) у корпу за отпатке?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1172,10 +1177,6 @@ Do you want to merge your changes?</source>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>Да ли сте сигурни да желите да желите да трајно обришете све ставке из корпе за отпатке?</translation>
     </message>
-    <message>
-        <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>DetailsWidget</name>
@@ -1233,7 +1234,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Секвенца</translation>
+        <translation>Редослед</translation>
     </message>
     <message>
         <source>Search</source>
@@ -1352,11 +1353,11 @@ Do you want to merge your changes?</source>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n недеља</numerusform><numerusform>%n недеље(а)</numerusform><numerusform>%n недеље(а)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n месец</numerusform><numerusform>%n месеца(и)</numerusform><numerusform>%n месеца(и)</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1646,7 +1647,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Set default Auto-Type se&amp;quence</source>
-        <translation>Унеси подразумевану секвенцу за Аутоматско-Куцање</translation>
+        <translation>Подеси као подразумевану секвенцу за Аутоматско-Куцање</translation>
     </message>
 </context>
 <context>
@@ -1661,19 +1662,19 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Add custom icon</source>
-        <translation>Додај посебну икону</translation>
+        <translation>Додај посебну иконицу</translation>
     </message>
     <message>
         <source>Delete custom icon</source>
-        <translation>Обриши посебну икону</translation>
+        <translation>Обриши посебну иконицу</translation>
     </message>
     <message>
         <source>Download favicon</source>
-        <translation>Преузми икону са сајта</translation>
+        <translation>Преузми иконицу са сајта</translation>
     </message>
     <message>
         <source>Unable to fetch favicon.</source>
-        <translation>Неуспело добављање иконе са сајта.</translation>
+        <translation>Није могуће добавити иконицу са сајта.</translation>
     </message>
     <message>
         <source>Hint: You can enable Google as a fallback under Tools&gt;Settings&gt;Security</source>
@@ -1950,6 +1951,10 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Reset to defaults</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Attachments (icon)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3125,7 +3130,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Wordlist:</source>
-        <translation>Листа речи:</translation>
+        <translation>Листа фраза:</translation>
     </message>
     <message>
         <source>Word Count:</source>
@@ -3166,7 +3171,7 @@ Using default port 19455.</source>
     <message>
         <source>Poor</source>
         <comment>Password quality</comment>
-        <translation>Слаб</translation>
+        <translation>Бедан</translation>
     </message>
     <message>
         <source>Weak</source>

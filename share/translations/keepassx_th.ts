@@ -371,6 +371,10 @@ Please select whether you want to allow access.</source>
         <source>Select custom proxy location</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>BrowserService</name>
@@ -408,7 +412,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>KeePassXC: Database locked!</source>
-        <translation>KeePassXC: ฐานข้อมูลล็อกอยู่!</translation>
+        <translation>KeePassXC: ฐานข้อมูลถูกล็อก!</translation>
     </message>
     <message>
         <source>The active database is locked!
@@ -433,7 +437,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>KeePassXC: Removed keys from database</source>
-        <translation>KeePassXC: เอากุญแจออกจากฐานข้อมูล</translation>
+        <translation>KeePassXC: กุญแจถูกนำออกจากฐานข้อมูล</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
@@ -678,15 +682,15 @@ Please consider generating a new key file.</source>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n byte(s), </source>
-        <translation><numerusform>%n ไบต์, </numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
-        <translation><numerusform>%n แถว, </numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation><numerusform>%n คอลัมน์</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -717,7 +721,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>ไม่สามารถเปิดฐานข้อมูลดังกล่าว</translation>
+        <translation>ไม่สามารถเปิดฐานข้อมูล</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
@@ -954,7 +958,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>ไม่สามารถเปิดฐานข้อมูลดังกล่าว</translation>
+        <translation>ไม่สามารถเปิดฐานข้อมูล</translation>
     </message>
     <message>
         <source>File opened in read only mode.</source>
@@ -1097,7 +1101,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>คุณต้องการจะย้ายรายการ %1 รายการไปยังถังขยะจริงๆ?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1166,10 +1170,6 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Entry updated successfully.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1951,6 +1951,10 @@ This may cause the affected plugins to malfunction.</source>
         <source>Reset to defaults</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Attachments (icon)</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Group</name>
@@ -2396,7 +2400,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>ไม่สามารถเปิดฐานข้อมูลดังกล่าว</translation>
+        <translation>ไม่สามารถเปิดฐานข้อมูล</translation>
     </message>
 </context>
 <context>
@@ -3088,7 +3092,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Upper Case Letters</source>
-        <translation>อักษรตัวพิมพ์ใหญ่</translation>
+        <translation>อักษรพิมพ์ใหญ่</translation>
     </message>
     <message>
         <source>Lower Case Letters</source>
@@ -3344,7 +3348,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Extract and print the content of a database.</source>
-        <translation>สกัดและพิมพ์เนื้อหาของฐานข้อมูล</translation>
+        <translation>สกัดและแสดงเนื้อหาของฐานข้อมูล</translation>
     </message>
     <message>
         <source>Path of the database to extract.</source>
@@ -3660,7 +3664,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>KeePassXC: Database locked!</source>
-        <translation>KeePassXC: ฐานข้อมูลล็อกอยู่!</translation>
+        <translation>KeePassXC: ฐานข้อมูลถูกล็อก!</translation>
     </message>
     <message>
         <source>The active database is locked!
@@ -3669,7 +3673,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>KeePassXC: Removed keys from database</source>
-        <translation>KeePassXC: เอากุญแจออกจากฐานข้อมูล</translation>
+        <translation>KeePassXC: กุญแจถูกนำออกจากฐานข้อมูล</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption-key(s) from KeePassX/Http Settings.</source>

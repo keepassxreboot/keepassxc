@@ -73,12 +73,13 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation type="unfinished"/>
+        <translation>Um agradecimento especial da equipa do KeePassXC a debfx por ter criado a aplicação KeePassX.</translation>
     </message>
     <message>
         <source>Build Type: %1
 </source>
-        <translation type="unfinished"/>
+        <translation>Tipo de compilação: %1
+</translation>
     </message>
 </context>
 <context>
@@ -372,6 +373,10 @@ Selecione se deseja permitir o acesso.</translation>
         <source>Select custom proxy location</source>
         <translation>Selecionar localização do proxy personalizado</translation>
     </message>
+    <message>
+        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
+        <translation>Lamentamos mas, no momento, o KeePassXC-Browser não tem suporte a versões Snap.</translation>
+    </message>
 </context>
 <context>
     <name>BrowserService</name>
@@ -518,7 +523,7 @@ Desbloqueie a base de dados selecionada ou escolha outra que esteja desbloqueada
     </message>
     <message>
         <source>Unable to create Key File : </source>
-        <translation>Não foi possível criar o ficheiro-chave:</translation>
+        <translation>Incapaz de criar o ficheiro-chave:</translation>
     </message>
     <message>
         <source>Select a key file</source>
@@ -632,7 +637,7 @@ Deve considerar a geração de uma novo ficheiro-chave.</translation>
     </message>
     <message>
         <source>Column layout</source>
-        <translation>Disposição de colunas</translation>
+        <translation>Disposição das colunas</translation>
     </message>
     <message>
         <source>Not present in CSV file</source>
@@ -681,14 +686,14 @@ Deve considerar a geração de uma novo ficheiro-chave.</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Não foi possível calcular a chave-mestre</translation>
+        <translation>Impossível de calcular a chave-mestre</translation>
     </message>
 </context>
 <context>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n byte(s), </source>
-        <translation><numerusform>%n byte,</numerusform><numerusform>%n byte(s), </numerusform></translation>
+        <translation><numerusform>%n bytes, </numerusform><numerusform>%n bytes, </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
@@ -727,7 +732,7 @@ Deve considerar a geração de uma novo ficheiro-chave.</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Não foi possível abrir a base de dados.</translation>
+        <translation>Incapaz de abrir a base de dados.</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
@@ -780,7 +785,7 @@ Deve considerar a geração de uma novo ficheiro-chave.</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Não foi possível abrir a base de dados.</translation>
+        <translation>Incapaz de abrir a base de dados.</translation>
     </message>
     <message>
         <source>Database opened fine. Nothing to do.</source>
@@ -798,7 +803,7 @@ Agora já a pode guardar.</translation>
     </message>
     <message>
         <source>Unable to repair the database.</source>
-        <translation>Não foi possível reparar a base de dados.</translation>
+        <translation>Incapaz de reparar a base de dados.</translation>
     </message>
 </context>
 <context>
@@ -971,7 +976,7 @@ Se mantiver este número, a sua base de dados pode ser desbloqueada muito facilm
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Não foi possível abrir a base de dados.</translation>
+        <translation>Incapaz de abrir a base de dados.</translation>
     </message>
     <message>
         <source>File opened in read only mode.</source>
@@ -1118,7 +1123,7 @@ Desativar salvaguardas e tentar novamente?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Deseja mesmo mover %n entrada para a reciclagem?</numerusform><numerusform>Deseja mesmo mover %n entradas para a reciclagem?</numerusform></translation>
+        <translation><numerusform>Pretende realmente mover a entrada(s) %n para a reciclagem ?</numerusform><numerusform>Deseja mesmo mover %n entrada(s) para a reciclagem?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1142,7 +1147,7 @@ Desativar salvaguardas e tentar novamente?</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Não foi possível calcular a chave-mestre</translation>
+        <translation>Impossível de calcular a chave-mestre</translation>
     </message>
     <message>
         <source>No current database.</source>
@@ -1189,10 +1194,6 @@ Deseja juntar as suas alterações?</translation>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>Tem a certeza de que deseja apagar permanentemente os itens da reciclagem?</translation>
-    </message>
-    <message>
-        <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1370,11 +1371,11 @@ Deseja juntar as suas alterações?</translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n semana</numerusform><numerusform>%n semanas</numerusform></translation>
+        <translation><numerusform>%n semana(s)</numerusform><numerusform>%n semana(s)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n mês</numerusform><numerusform>%n meses</numerusform></translation>
+        <translation><numerusform>%n mês</numerusform><numerusform>%n mês(es)</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1382,15 +1383,15 @@ Deseja juntar as suas alterações?</translation>
     </message>
     <message>
         <source>Apply generated password?</source>
-        <translation type="unfinished"/>
+        <translation>Aplicar palavra-passe gerada?</translation>
     </message>
     <message>
         <source>Do you want to apply the generated password to this entry?</source>
-        <translation type="unfinished"/>
+        <translation>Deseja aplicar a palavra-passe gerada para esta entrada?</translation>
     </message>
     <message>
         <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
+        <translation>Entrada atualizada com sucesso.</translation>
     </message>
 </context>
 <context>
@@ -1417,7 +1418,7 @@ Deseja juntar as suas alterações?</translation>
     </message>
     <message>
         <source>Reveal</source>
-        <translation>Mostrar</translation>
+        <translation>Revelar</translation>
     </message>
     <message>
         <source>Attachments</source>
@@ -1425,11 +1426,11 @@ Deseja juntar as suas alterações?</translation>
     </message>
     <message>
         <source>Foreground Color:</source>
-        <translation type="unfinished"/>
+        <translation>Cor principal:</translation>
     </message>
     <message>
         <source>Background Color:</source>
-        <translation type="unfinished"/>
+        <translation>Cor secundária:</translation>
     </message>
 </context>
 <context>
@@ -1652,7 +1653,7 @@ Deseja juntar as suas alterações?</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Pesquisa</translation>
+        <translation>Procurar</translation>
     </message>
     <message>
         <source>Auto-Type</source>
@@ -1691,7 +1692,7 @@ Deseja juntar as suas alterações?</translation>
     </message>
     <message>
         <source>Unable to fetch favicon.</source>
-        <translation>Não foi possível obter o &apos;favicon&apos;.</translation>
+        <translation>Incapaz de obter o &apos;favicon&apos;.</translation>
     </message>
     <message>
         <source>Hint: You can enable Google as a fallback under Tools&gt;Settings&gt;Security</source>
@@ -1746,7 +1747,7 @@ Deseja juntar as suas alterações?</translation>
     </message>
     <message>
         <source>Plugin Data</source>
-        <translation type="unfinished"/>
+        <translation>Dados do plugin</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -1754,20 +1755,21 @@ Deseja juntar as suas alterações?</translation>
     </message>
     <message>
         <source>Delete plugin data?</source>
-        <translation type="unfinished"/>
+        <translation>Apagar dados do plugin?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected plugin data?
 This may cause the affected plugins to malfunction.</source>
-        <translation type="unfinished"/>
+        <translation>Tem a certeza de que deseja apagar os dados do plugin?
+Esta ação pode implicar um funcionamento errático.</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"/>
+        <translation>Chave</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Valor</translation>
     </message>
 </context>
 <context>
@@ -1974,6 +1976,10 @@ This may cause the affected plugins to malfunction.</source>
         <source>Reset to defaults</source>
         <translation>Repor predefinições</translation>
     </message>
+    <message>
+        <source>Attachments (icon)</source>
+        <translation>Anexos (ícone)</translation>
+    </message>
 </context>
 <context>
     <name>Group</name>
@@ -2125,7 +2131,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
-        <translation type="unfinished"/>
+        <translation>Falha ao processar os parâmetros KDF no cabeçalho</translation>
     </message>
     <message>
         <source>Unsupported key derivation function (KDF) or invalid parameters</source>
@@ -2212,12 +2218,12 @@ This may cause the affected plugins to malfunction.</source>
     <name>Kdbx4Writer</name>
     <message>
         <source>Invalid symmetric cipher algorithm.</source>
-        <translation type="unfinished"/>
+        <translation>Algoritmo inválido de cifra simétrica.</translation>
     </message>
     <message>
         <source>Invalid symmetric cipher IV size.</source>
         <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation type="unfinished"/>
+        <translation>Algoritmo inválido de cifra simétrica IV.</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
@@ -2330,7 +2336,7 @@ Esta é uma migração unidirecional. Não será possível abrir a base de dados
     </message>
     <message>
         <source>No group uuid found</source>
-        <translation type="unfinished"/>
+        <translation>UUID de grupo não encontrado</translation>
     </message>
     <message>
         <source>Null DeleteObject uuid</source>
@@ -2382,7 +2388,7 @@ Esta é uma migração unidirecional. Não será possível abrir a base de dados
     </message>
     <message>
         <source>Auto-type association window or sequence missing</source>
-        <translation type="unfinished"/>
+        <translation>Associação de escrita automática ou sequência em falta</translation>
     </message>
     <message>
         <source>Invalid bool value</source>
@@ -2422,14 +2428,14 @@ Esta é uma migração unidirecional. Não será possível abrir a base de dados
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Não foi possível abrir a base de dados.</translation>
+        <translation>Incapaz de abrir a base de dados.</translation>
     </message>
 </context>
 <context>
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
-        <translation>Não foi possível ler o ficheiro-chave.</translation>
+        <translation>Incapaz de ler o ficheiro-chave.</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
@@ -2478,7 +2484,7 @@ Esta é uma migração unidirecional. Não será possível abrir a base de dados
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Não foi possível calcular a chave-mestre</translation>
+        <translation>Incapaz de calcular a chave-mestre</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
@@ -2736,7 +2742,7 @@ Esta é uma migração unidirecional. Não será possível abrir a base de dados
     </message>
     <message>
         <source>Password Generator</source>
-        <translation>Gerador de palavra-passe</translation>
+        <translation>Gerador de palavras-passe</translation>
     </message>
     <message>
         <source>&amp;Perform Auto-Type</source>
@@ -2955,7 +2961,7 @@ Esta versão não deve ser utilizada para uma utilização regular.</translation
     </message>
     <message>
         <source>Cipher IV is too short for MD5 kdf</source>
-        <translation type="unfinished"/>
+        <translation>Cifra IV é muito curta para MD kdf</translation>
     </message>
     <message>
         <source>Unknown KDF: %1</source>
@@ -3019,7 +3025,7 @@ Esta versão não deve ser utilizada para uma utilização regular.</translation
     </message>
     <message>
         <source>R&amp;emove all shared encryption keys from active database</source>
-        <translation>R&amp;emover todas as chaves de cifra partilhadas da base de dados ativa</translation>
+        <translation>R&amp;emover todas as chaves cifradas partilhadas da base de dados ativa</translation>
     </message>
     <message>
         <source>Re&amp;move all stored permissions from entries in active database</source>
@@ -3071,7 +3077,7 @@ Esta versão não deve ser utilizada para uma utilização regular.</translation
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Atenção&lt;/b&gt;: as opções seguintes podem ser perigosas!</translation>
+        <translation>&lt;b&gt;AVISO&lt;/b&gt;: as opções seguintes podem ser perigosas!</translation>
     </message>
     <message>
         <source>&lt;p&gt;KeePassHTTP has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt;.&lt;/p&gt;</source>
@@ -3129,7 +3135,7 @@ Será utilizada a porta 19455 (padrão).</translation>
     </message>
     <message>
         <source>Special Characters</source>
-        <translation>Caracteres especiais</translation>
+        <translation>Caracteres  especiais</translation>
     </message>
     <message>
         <source>Extended ASCII</source>
@@ -3687,7 +3693,7 @@ KeePassXC, atribua um nome único para a identificar e aceitar.</translation>
         <source>A shared encryption-key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
         <translation>Já existe uma chave de cifra partilhada com o nome &quot;%1&quot;.
-Deseja substituir a chave atual?</translation>
+Deseja substituir a chave de cifra?</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
@@ -3709,11 +3715,11 @@ Desbloqueie a base de dados selecionada ou escolha outra que esteja desbloqueada
     </message>
     <message>
         <source>KeePassXC: Removed keys from database</source>
-        <translation>KeePassXC: Chaves removidas da base de dados</translation>
+        <translation>KeePassXC: Remover chaves da base de dados</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption-key(s) from KeePassX/Http Settings.</source>
-        <translation><numerusform>Removidas com sucesso % chave de cifra das definições KeePassX/Http.</numerusform><numerusform>Removidas com sucesso % chaves de cifra das definições KeePassX/Http.</numerusform></translation>
+        <translation><numerusform>Removida com sucesso %n chave de cifra das definições KeePassX/Http.</numerusform><numerusform>Removidas com sucesso % chaves de cifra das definições KeePassX/Http.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
@@ -3721,7 +3727,7 @@ Desbloqueie a base de dados selecionada ou escolha outra que esteja desbloqueada
     </message>
     <message>
         <source>No shared encryption-keys found in KeePassHttp Settings.</source>
-        <translation>Não existem chaves de cifra partilhadas nas definições do KeePassHttp.</translation>
+        <translation>Nenhuma chaves de cifra partilhadas encontrada nas definições do KeePassHttp.</translation>
     </message>
     <message>
         <source>KeePassXC: Settings not available!</source>

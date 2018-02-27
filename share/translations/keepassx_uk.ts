@@ -35,7 +35,7 @@
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>Скопіювати в кишеню</translation>
+        <translation>Скопіювати у буфер обміну</translation>
     </message>
     <message>
         <source>Version %1
@@ -372,6 +372,10 @@ Please select whether you want to allow access.</source>
         <source>Select custom proxy location</source>
         <translation>Вибрати власне розташування посередника</translation>
     </message>
+    <message>
+        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>BrowserService</name>
@@ -443,7 +447,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation><numerusform>Успішно видалив %n шифрувальний ключ з налаштувань KeePassXC.</numerusform><numerusform>Успішно видалив %n шифрувальних ключі з налаштувань KeePassXC.</numerusform><numerusform>Успішно видалив %n шифрувальних ключів з налаштувань KeePassXC.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -459,7 +463,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>Успішно видалив привілеї для %n запису.</numerusform><numerusform>Успішно видалив привілеї для %n записів.</numerusform><numerusform>Успішно видалив привілеї для %n записів.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -688,7 +692,7 @@ Please consider generating a new key file.</source>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n byte(s), </source>
-        <translation><numerusform>%n байт, </numerusform><numerusform>%n байти, </numerusform><numerusform>%n байтів, </numerusform></translation>
+        <translation><numerusform>%n байт,%n byte(s), </numerusform><numerusform>%n байта, </numerusform><numerusform>%n байтів, </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
@@ -856,12 +860,12 @@ If you keep this number, your database may be too easy to crack!</source>
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation><numerusform>МіБ</numerusform><numerusform>МіБ</numerusform><numerusform>МіБ</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation><numerusform>потік</numerusform><numerusform>потоки</numerusform><numerusform>потоків</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -931,7 +935,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source> MiB</source>
-        <translation> МіБ</translation>
+        <translation>МіБ</translation>
     </message>
     <message>
         <source>Use recycle bin</source>
@@ -1118,7 +1122,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Ви дійсно хочете перемістити %n запис у кошик?</numerusform><numerusform>Ви дійсно хочете перемістити %n записи у кошик?</numerusform><numerusform>Ви дійсно хочете перемістити %n записів у кошик?</numerusform></translation>
+        <translation><numerusform>Ви дійсно хочете перемістити %n запис у смітник?</numerusform><numerusform>Ви дійсно хочете перемістити %n записи в смітник?</numerusform><numerusform>Ви дійсно хочете перемістити %n записів у смітник?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1189,10 +1193,6 @@ Do you want to merge your changes?</source>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>Ви дійсно бажаєте остаточно видалити все зі смітника?</translation>
-    </message>
-    <message>
-        <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1362,7 +1362,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Press reveal to view or edit</source>
-        <translation>Натисніть «показати» для перегляду або зміни</translation>
+        <translation>Натисніть «показати» для перегляду або редагування</translation>
     </message>
     <message>
         <source>Tomorrow</source>
@@ -1370,11 +1370,11 @@ Do you want to merge your changes?</source>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n тиждень</numerusform><numerusform>%n тижня</numerusform><numerusform>%n тижнів</numerusform></translation>
+        <translation><numerusform>%n тиждень</numerusform><numerusform>%n тижні</numerusform><numerusform>%n тижнів</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n місяць</numerusform><numerusform>%n місяця</numerusform><numerusform>%n місяців</numerusform></translation>
+        <translation><numerusform>%n місяць</numerusform><numerusform>%n місяці</numerusform><numerusform>%n місяців</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1569,7 +1569,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>Скопіювати в кишеню</translation>
+        <translation>Скопіювати у буфер обміну</translation>
     </message>
     <message>
         <source>Private key</source>
@@ -1707,7 +1707,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Select Image</source>
-        <translation>Вибрати зображення</translation>
+        <translation>Вибір зображення</translation>
     </message>
     <message>
         <source>Can&apos;t read icon</source>
@@ -1817,7 +1817,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>Ви дійсно бажаєте видалити %n вкладення?</numerusform><numerusform>Ви дійсно бажаєте видалити %n вкладення?</numerusform><numerusform>Ви дійсно бажаєте видалити %n вкладень?</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Confirm Remove</source>
@@ -1973,6 +1973,10 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Reset to defaults</source>
         <translation>Повернути до типових налаштувань</translation>
+    </message>
+    <message>
+        <source>Attachments (icon)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2433,15 +2437,15 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Не сховище KeePass.</translation>
+        <translation>Це не сховище KeePass.</translation>
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
-        <translation>Непідтримуваний алгоритм шифрування.</translation>
+        <translation>Алгоритм шифрування не підтримується.</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>Непідтримувана версія сховища KeePass.</translation>
+        <translation>Версія сховища KeePass не підтримується.</translation>
     </message>
     <message>
         <source>Unable to read encryption IV</source>
@@ -2624,7 +2628,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Copy att&amp;ribute to clipboard</source>
-        <translation>Скопіювати атрибут у кишеню</translation>
+        <translation>Копіювати атрибут до буферу обміну</translation>
     </message>
     <message>
         <source>Time-based one-time password</source>
@@ -2704,7 +2708,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Database settings</source>
-        <translation>Налаштування сховища</translation>
+        <translation>Параметри сховища</translation>
     </message>
     <message>
         <source>&amp;Clone entry</source>
@@ -2720,7 +2724,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Copy username to clipboard</source>
-        <translation>Скопіювати ім’я користувача в кишеню</translation>
+        <translation>Копіювати ім’я користувача в буфер обміну</translation>
     </message>
     <message>
         <source>Cop&amp;y password</source>
@@ -2728,7 +2732,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Copy password to clipboard</source>
-        <translation>Скопіювати гасло в кишеню</translation>
+        <translation>Копіювати гасло в буфер обміну</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
@@ -2756,7 +2760,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Copy title to clipboard</source>
-        <translation>Скопіювати заголовок у кишеню</translation>
+        <translation>Скопіювати заголовок до кишені</translation>
     </message>
     <message>
         <source>&amp;URL</source>
@@ -2764,7 +2768,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Copy URL to clipboard</source>
-        <translation>Скопіювати URL у кишеню</translation>
+        <translation>Скопіювати URL до кишені</translation>
     </message>
     <message>
         <source>&amp;Notes</source>
@@ -2772,7 +2776,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Copy notes to clipboard</source>
-        <translation>Скопіювати нотатки у кишеню</translation>
+        <translation>Скопіювати нотатки до кишені</translation>
     </message>
     <message>
         <source>&amp;Export to CSV file...</source>
@@ -2907,7 +2911,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Trying to run KDF without cipher</source>
-        <translation>Пробуємо запустити ФОК без шифрування</translation>
+        <translation>Пробуємо обчислити ФОК без шифру</translation>
     </message>
     <message>
         <source>Passphrase is required to decrypt this key</source>
@@ -3280,7 +3284,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Add a new entry to a database.</source>
-        <translation>Додати новий запис до сховища.</translation>
+        <translation>Додати новий запис до сховища</translation>
     </message>
     <message>
         <source>Path of the database.</source>
@@ -3341,7 +3345,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Timeout in seconds before clearing the clipboard.</source>
-        <translation>Час очікування у секундах перед очищенням кишені.</translation>
+        <translation>Час очікування у </translation>
     </message>
     <message>
         <source>Edit an entry.</source>
@@ -3611,7 +3615,7 @@ Available commands:
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
-        <translation>Внутрішня помилка zlib під час стиснення:</translation>
+        <translation>Внутрішня помилка zlib при стисненні:</translation>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
@@ -3627,7 +3631,7 @@ Available commands:
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation>Внутрішня помилка zlib під час розпакування:</translation>
+        <translation>Внутрішня помилка zlib при розпакуванні:</translation>
     </message>
 </context>
 <context>
@@ -3675,8 +3679,8 @@ Available commands:
 If you would like to allow it access to your KeePassXC database
 give it a unique name to identify and accept it.</source>
         <translation>Ви одержали запит на прив&apos;язку вказаного ключа.
-Якщо Ви бажаєте надати доступ до Вашого сховища KeePassXC,
-вкажіть унікальну назву та підтвердьте прив&apos;язку.</translation>
+Якщо Ви бажаєте надати доступ до Вашого сховища KeePassXC
+надайте унікальну назву та підтвердьте його. </translation>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
@@ -3759,7 +3763,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     <name>SettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>Налаштування застосунку</translation>
+        <translation>Параметри застосунку</translation>
     </message>
     <message>
         <source>General</source>
@@ -3810,7 +3814,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Minimize when copying to clipboard</source>
-        <translation>Згортати після копіювання до буфера обміну</translation>
+        <translation>Згортати при копіюванні до буфера обміну</translation>
     </message>
     <message>
         <source>Minimize window at application startup</source>
@@ -3830,11 +3834,11 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>Показувати значок у лотку</translation>
+        <translation>Показувати значок в треї</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation>Під час згортання ховати вікно у системний лоток</translation>
+        <translation>При згортанні ховати вікно в область системних повідомлень</translation>
     </message>
     <message>
         <source>Hide window to system tray instead of app exit</source>
@@ -3906,7 +3910,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     <name>SettingsWidgetSecurity</name>
     <message>
         <source>Timeouts</source>
-        <translation>Час очікування</translation>
+        <translation>Час очикування</translation>
     </message>
     <message>
         <source>Clear clipboard after</source>

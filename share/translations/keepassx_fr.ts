@@ -15,7 +15,7 @@
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassXC est distribué suivant les termes de la Licence Publique Générale GNU (GNU GPL), soit la version 2 de la Licence soit (à votre gré) la version 3.</translation>
+        <translation>KeePassXC est distribué suivant les termes de la GNU Licence Publique Générale (GNU GPL) version 2 ou version 3 de la licence (à votre choix).</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -23,7 +23,7 @@
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Voir les contributions sur GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Voir Contributions sur GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
@@ -31,7 +31,7 @@
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>Inclure les informations suivantes lorsque vous signaler un bug :</translation>
+        <translation>Inclure l&apos;information suivante lorsque vous signaler un bug :</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
@@ -45,11 +45,11 @@
     </message>
     <message>
         <source>Revision: %1</source>
-        <translation>Révision : %1</translation>
+        <translation>Révision: %1</translation>
     </message>
     <message>
         <source>Distribution: %1</source>
-        <translation>Distribution : %1</translation>
+        <translation>Distribution: %1</translation>
     </message>
     <message>
         <source>Libraries:</source>
@@ -61,7 +61,7 @@ CPU architecture: %2
 Kernel: %3 %4</source>
         <translation>Système d&apos;exploitation : %1
 Architecture CPU : %2
-Noyau : %3 %4</translation>
+Kernel : %3 %4</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
@@ -86,7 +86,7 @@ Noyau : %3 %4</translation>
     <name>AccessControlDialog</name>
     <message>
         <source>KeePassXC HTTP Confirm Access</source>
-        <translation>Confirmer l&apos;accès pour KeePassXC HTTP</translation>
+        <translation>Accès KeePassXC HTTP confirmé</translation>
     </message>
     <message>
         <source>Remember this decision</source>
@@ -103,7 +103,7 @@ Noyau : %3 %4</translation>
     <message>
         <source>%1 has requested access to passwords for the following item(s).
 Please select whether you want to allow access.</source>
-        <translation>%1 a demandé l’accès aux mots de passe pour le ou les élément(s) suivant(s).
+        <translation>%1 a demandé l’accès aux mots de passe pour l&apos;élément suivant (ou les éléments suivants).
 Veuillez sélectionner si vous souhaitez autoriser l’accès.</translation>
     </message>
 </context>
@@ -122,7 +122,7 @@ Veuillez sélectionner si vous souhaitez autoriser l’accès.</translation>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Saisie automatique - KeePassXC</translation>
+        <translation>Remplissage automatique - KeePassXC</translation>
     </message>
     <message>
         <source>Auto-Type</source>
@@ -183,11 +183,11 @@ Veuillez sélectionner si vous souhaitez autoriser l’accès.</translation>
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Saisie automatique - KeePassXC</translation>
+        <translation> Remplissage automatique - KeePassXC</translation>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>Sélectionner une entrée à saisir automatiquement :</translation>
+        <translation>Choisissez un champ pour Auto-Type :</translation>
     </message>
 </context>
 <context>
@@ -373,6 +373,10 @@ Veuillez sélectionner si vous souhaitez autoriser l’accès.</translation>
         <source>Select custom proxy location</source>
         <translation>Sélectionner un proxy personnalisé</translation>
     </message>
+    <message>
+        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>BrowserService</name>
@@ -444,7 +448,7 @@ Veuillez déverrouiller la base de données sélectionnée ou en choisir une qui
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation><numerusform>Cette clé de chiffrement a été retirée avec succès des paramètres de KeepassXC.</numerusform><numerusform>%n clés de chiffrement on été retirées avec succès des paramètres de KeePassXC.</numerusform></translation>
+        <translation><numerusform>%n clé(s) de chiffrement ont été retirées avec succès des paramètres de KeePassXC.</numerusform><numerusform>%n clé(s) de chiffrement ont été retirées avec succès des paramètres de KeePassXC.</numerusform></translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -460,7 +464,7 @@ Veuillez déverrouiller la base de données sélectionnée ou en choisir une qui
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>Les permissions de cette entrée ont été retirées avec succès.</numerusform><numerusform>Les permissions de %n entrées ont été retirées avec succès.</numerusform></translation>
+        <translation><numerusform>Les permissions de %n entrées ont été retirées avec succès.</numerusform><numerusform>Autorisations retirées avec succès de %s entrée(s)</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -487,11 +491,11 @@ Veuillez déverrouiller la base de données sélectionnée ou en choisir une qui
     </message>
     <message>
         <source>&amp;Key file</source>
-        <translation>Fichier clé</translation>
+        <translation>Fichier-clé</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Parcourir</translation>
+        <translation>Naviguer</translation>
     </message>
     <message>
         <source>Create</source>
@@ -507,7 +511,7 @@ Veuillez déverrouiller la base de données sélectionnée ou en choisir une qui
     </message>
     <message>
         <source>Key files</source>
-        <translation>Fichiers clés</translation>
+        <translation>Fichiers-clés</translation>
     </message>
     <message>
         <source>All files</source>
@@ -515,15 +519,15 @@ Veuillez déverrouiller la base de données sélectionnée ou en choisir une qui
     </message>
     <message>
         <source>Create Key File...</source>
-        <translation>Créer un fichier clé...</translation>
+        <translation>Créer un fichier-clé...</translation>
     </message>
     <message>
         <source>Unable to create Key File : </source>
-        <translation>Impossible de créer un fichier clé :</translation>
+        <translation>Impossible de créer un fichier-clé :</translation>
     </message>
     <message>
         <source>Select a key file</source>
-        <translation>Choisir un fichier clé</translation>
+        <translation>Choisir un fichier-clé</translation>
     </message>
     <message>
         <source>Empty password</source>
@@ -531,7 +535,7 @@ Veuillez déverrouiller la base de données sélectionnée ou en choisir une qui
     </message>
     <message>
         <source>Do you really want to use an empty string as password?</source>
-        <translation>Voulez-vous vraiment utiliser une chaîne de caractères vide comme mot de passe ?</translation>
+        <translation>Voulez-vous vraiment utiliser une chaîne vide comme mot de passe ?</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
@@ -540,7 +544,7 @@ Veuillez déverrouiller la base de données sélectionnée ou en choisir une qui
     <message>
         <source>Failed to set %1 as the Key file:
 %2</source>
-        <translation>Impossible de définir %1 comme fichier clé :
+        <translation>Impossible de définir %1 comme fichier-clé :
 %2</translation>
     </message>
     <message>
@@ -559,7 +563,7 @@ Veuillez envisager de générer un nouveau fichier clé.</translation>
     </message>
     <message>
         <source>Changing master key failed: no YubiKey inserted.</source>
-        <translation>Échec du changement de clé maître : pas de YubiKey insérée.</translation>
+        <translation>Échec du changement de clé maître: pas de YubiKey insérée.</translation>
     </message>
 </context>
 <context>
@@ -585,7 +589,7 @@ Veuillez envisager de générer un nouveau fichier clé.</translation>
     <name>CsvImportWidget</name>
     <message>
         <source>Import CSV fields</source>
-        <translation>Importer les champs du CSV</translation>
+        <translation>Importer les champs CSV</translation>
     </message>
     <message>
         <source>filename</source>
@@ -621,7 +625,7 @@ Veuillez envisager de générer un nouveau fichier clé.</translation>
     </message>
     <message>
         <source>Number of headers line to discard</source>
-        <translation>Nombre de lignes d&apos;en-têtes à ignorer</translation>
+        <translation>Nombre de lignes d&apos;en-tête à ignorer</translation>
     </message>
     <message>
         <source>Consider &apos;\&apos; an escape character</source>
@@ -649,7 +653,7 @@ Veuillez envisager de générer un nouveau fichier clé.</translation>
     </message>
     <message>
         <source>Imported from CSV file</source>
-        <translation>Importé depuis un fichier CSV</translation>
+        <translation>Importé du fichier CSV</translation>
     </message>
     <message>
         <source>Original data: </source>
@@ -657,7 +661,7 @@ Veuillez envisager de générer un nouveau fichier clé.</translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file !</source>
-        <translation>Erreur(s) détectée(s) dans le fichier CSV!</translation>
+        <translation>Erreur(s) détectées dans le fichier CSV!</translation>
     </message>
     <message>
         <source> more messages skipped]</source>
@@ -670,7 +674,7 @@ Veuillez envisager de générer un nouveau fichier clé.</translation>
     <message>
         <source>CSV import: writer has errors:
 </source>
-        <translation>Importation du CSV : erreurs d&apos;écriture:
+        <translation>Import CSV: erreurs d&apos;écriture:
 </translation>
     </message>
 </context>
@@ -689,15 +693,15 @@ Veuillez envisager de générer un nouveau fichier clé.</translation>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n byte(s), </source>
-        <translation><numerusform>%n octet(s)</numerusform><numerusform>%n octet(s)</numerusform></translation>
+        <translation><numerusform>%n octet (s), </numerusform><numerusform>%n octet(s), </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
-        <translation><numerusform>%n Row (s), </numerusform><numerusform>%n ligne(s), </numerusform></translation>
+        <translation><numerusform>%n Row (s), </numerusform><numerusform>%n rangée(s), </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation><numerusform>%n colonne</numerusform><numerusform>%n colonne(s)</numerusform></translation>
+        <translation><numerusform>%n/des colonnes</numerusform><numerusform>%n colonne(s)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -708,7 +712,7 @@ Veuillez envisager de générer un nouveau fichier clé.</translation>
     </message>
     <message>
         <source>Key File:</source>
-        <translation>Fichier clé :</translation>
+        <translation>Fichier-clé :</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -716,7 +720,7 @@ Veuillez envisager de générer un nouveau fichier clé.</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Parcourir</translation>
+        <translation>Naviguer</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -732,7 +736,7 @@ Veuillez envisager de générer un nouveau fichier clé.</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>Impossible d&apos;ouvrir le fichier clé</translation>
+        <translation>Impossible d&apos;ouvrir le fichier-clé</translation>
     </message>
     <message>
         <source>Legacy key file format</source>
@@ -758,11 +762,11 @@ Veuillez envisager de générer un nouveau fichier clé.</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Fichiers clés</translation>
+        <translation>Fichiers-clés</translation>
     </message>
     <message>
         <source>Select key file</source>
-        <translation>Choisissez un fichier clé</translation>
+        <translation>Choisissez un fichier-clé</translation>
     </message>
 </context>
 <context>
@@ -777,7 +781,7 @@ Veuillez envisager de générer un nouveau fichier clé.</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>Impossible d&apos;ouvrir le fichier clé</translation>
+        <translation>Impossible d&apos;ouvrir le fichier-clé</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
@@ -857,12 +861,12 @@ Si vous conservez ce nombre, la sécurité de votre base de données peut être 
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation><numerusform> MiB</numerusform><numerusform> MiB</numerusform></translation>
+        <translation><numerusform>Mio</numerusform><numerusform>Mio</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation><numerusform> fil(s) d&apos;exécution</numerusform><numerusform>fil(s) d&apos;exécution</numerusform></translation>
+        <translation><numerusform>fil(s) d&apos;exécution</numerusform><numerusform>fil(s) d&apos;exécution</numerusform></translation>
     </message>
 </context>
 <context>
@@ -956,7 +960,7 @@ Si vous conservez ce nombre, la sécurité de votre base de données peut être 
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>Base de données KeePass 2</translation>
+        <translation>Base de données Keepass 2</translation>
     </message>
     <message>
         <source>All files</source>
@@ -1000,7 +1004,7 @@ Si vous conservez ce nombre, la sécurité de votre base de données peut être 
     </message>
     <message>
         <source>KeePass 1 database</source>
-        <translation>Base de données KeePass 1</translation>
+        <translation>Base de données Keepass 1</translation>
     </message>
     <message>
         <source>Close?</source>
@@ -1032,7 +1036,7 @@ Enregistrer les modifications ?</translation>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Enregistrer la base de données sous</translation>
+        <translation>Enregistrer comme nouvelle base de données</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
@@ -1087,7 +1091,7 @@ Désactiver les sauvegardes sécurisées et essayer à nouveau?</translation>
     </message>
     <message>
         <source>Change master key</source>
-        <translation>Modifier la clé maître</translation>
+        <translation>Changer la clé maître</translation>
     </message>
     <message>
         <source>Delete entry?</source>
@@ -1115,11 +1119,11 @@ Désactiver les sauvegardes sécurisées et essayer à nouveau?</translation>
     </message>
     <message>
         <source>Move entries to recycle bin?</source>
-        <translation>Déplacer les entrées dans la corbeille ?</translation>
+        <translation>Déplacer les entrées vers la corbeille ?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Voulez-vous vraiment déplacer %n entrée vers la corbeille ?</numerusform><numerusform>Voulez-vous vraiment déplacer %n entrées dans la corbeille?</numerusform></translation>
+        <translation><numerusform>Voulez-vous déplacer %n entrée(s) vers la corbeille ?</numerusform><numerusform>Voulez-vous déplacer %n entrée(s) vers la corbeille ?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1189,11 +1193,7 @@ Voulez-vous fusionner vos modifications ?</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
-        <translation>Êtes-vous certain de vouloir vider définitivement la corbeille?</translation>
-    </message>
-    <message>
-        <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
+        <translation>Êtes-vous certain de vouloir vider définitivement votre corbeille?</translation>
     </message>
 </context>
 <context>
@@ -1268,7 +1268,7 @@ Voulez-vous fusionner vos modifications ?</translation>
     </message>
     <message>
         <source>[PROTECTED]</source>
-        <translation>[PROTÉGER]</translation>
+        <translation>[PROTÉGÉ]</translation>
     </message>
     <message>
         <source>Disabled</source>
@@ -1295,7 +1295,7 @@ Voulez-vous fusionner vos modifications ?</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Saisie automatique</translation>
+        <translation>Remplissage automatique</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -1343,7 +1343,7 @@ Voulez-vous fusionner vos modifications ?</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Les mots de passe insérés sont différents.</translation>
+        <translation>Les mots de passe ne sont pas identiques.</translation>
     </message>
     <message>
         <source>New attribute</source>
@@ -1351,7 +1351,7 @@ Voulez-vous fusionner vos modifications ?</translation>
     </message>
     <message>
         <source>Confirm Remove</source>
-        <translation>Confirmer la suppression</translation>
+        <translation>Confirmez la suppression</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this attribute?</source>
@@ -1383,15 +1383,15 @@ Voulez-vous fusionner vos modifications ?</translation>
     </message>
     <message>
         <source>Apply generated password?</source>
-        <translation type="unfinished"/>
+        <translation>Appliquer le mot de passe généré ?</translation>
     </message>
     <message>
         <source>Do you want to apply the generated password to this entry?</source>
-        <translation type="unfinished"/>
+        <translation>Souhaitez-vous appliquer le mot de passe généré à cette entrée ?</translation>
     </message>
     <message>
         <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
+        <translation>Entrée mise à jour avec succès.</translation>
     </message>
 </context>
 <context>
@@ -1422,30 +1422,30 @@ Voulez-vous fusionner vos modifications ?</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Fichiers attachés</translation>
+        <translation>Affichage</translation>
     </message>
     <message>
         <source>Foreground Color:</source>
-        <translation type="unfinished"/>
+        <translation>Couleur du texte :</translation>
     </message>
     <message>
         <source>Background Color:</source>
-        <translation type="unfinished"/>
+        <translation>Couleur du fond :</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation>Activer la saisie automatique pour cette entrée</translation>
+        <translation>Activer le remplissage automatique pour cette entrée</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the &amp;group</source>
-        <translation>Utiliser la séquence par défaut de saisie automatique du &amp;groupe</translation>
+        <translation>Utiliser la séquence de remplissage automatique par défaut du groupe</translation>
     </message>
     <message>
         <source>&amp;Use custom Auto-Type sequence:</source>
-        <translation>&amp;Utiliser une séquence personnalisée de saisie automatique :</translation>
+        <translation>Utiliser une séquence de remplissage automatique personnalisée :</translation>
     </message>
     <message>
         <source>Window Associations</source>
@@ -1653,19 +1653,19 @@ Voulez-vous fusionner vos modifications ?</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Recherche</translation>
+        <translation>Chercher</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Saisie automatique</translation>
+        <translation>Saisie-Automatique</translation>
     </message>
     <message>
         <source>&amp;Use default Auto-Type sequence of parent group</source>
-        <translation>&amp;Utiliser la séquence par défaut de saisie automatique du groupe parent</translation>
+        <translation>&amp;Utiliser la séquence de Saisie-Automatique du groupe parent</translation>
     </message>
     <message>
         <source>Set default Auto-Type se&amp;quence</source>
-        <translation>Définir la sé&amp;quence par défaut de la saisie automatique</translation>
+        <translation>Définir la sé&amp;quence par défaut de la Saisie-Automatique</translation>
     </message>
 </context>
 <context>
@@ -1696,7 +1696,7 @@ Voulez-vous fusionner vos modifications ?</translation>
     </message>
     <message>
         <source>Hint: You can enable Google as a fallback under Tools&gt;Settings&gt;Security</source>
-        <translation>Astuce : Vous pouvez activer Google en second recours sous Outils&gt;Paramètres&gt;Sécurité</translation>
+        <translation>Astuce : Vous pouvez activer Google en tant que repli sous Outils&gt;Paramètres&gt;Sécurité</translation>
     </message>
     <message>
         <source>Images</source>
@@ -1704,7 +1704,7 @@ Voulez-vous fusionner vos modifications ?</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Tous les fichiers</translation>
+        <translation>Tous les dossiers</translation>
     </message>
     <message>
         <source>Select Image</source>
@@ -1747,7 +1747,7 @@ Voulez-vous fusionner vos modifications ?</translation>
     </message>
     <message>
         <source>Plugin Data</source>
-        <translation type="unfinished"/>
+        <translation>Données de l&apos;extension</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -1755,20 +1755,20 @@ Voulez-vous fusionner vos modifications ?</translation>
     </message>
     <message>
         <source>Delete plugin data?</source>
-        <translation type="unfinished"/>
+        <translation>Supprimer les données de l&apos;extension ?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected plugin data?
 This may cause the affected plugins to malfunction.</source>
-        <translation type="unfinished"/>
+        <translation>Souhaitez-vous vraiment supprimer les données de l&apos;extension sélectionnée ? Cela peut causer un dysfonctionnement de l&apos;extension.</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"/>
+        <translation>Clé</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Valeur</translation>
     </message>
 </context>
 <context>
@@ -1818,7 +1818,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>Êtes-vous sûr de vouloir supprimer ce fichier attaché?</numerusform><numerusform>Êtes-vous sûr de vouloir supprimer ces %n fichiers attachés?</numerusform></translation>
+        <translation><numerusform>Êtes-vous sûr de vouloir supprimer ces %n fichiers attachés ?</numerusform><numerusform>Êtes-vous sûr de vouloir supprimer ces %n fichiers attachés ?</numerusform></translation>
     </message>
     <message>
         <source>Confirm Remove</source>
@@ -1953,27 +1953,31 @@ This may cause the affected plugins to malfunction.</source>
     <name>EntryView</name>
     <message>
         <source>Customize View</source>
-        <translation>Personnaliser l’affichage</translation>
+        <translation>Personnaliser la vue</translation>
     </message>
     <message>
         <source>Hide Usernames</source>
-        <translation>Masquer les noms d’utilisateur</translation>
+        <translation>Cacher les noms d&apos;utilisateurs</translation>
     </message>
     <message>
         <source>Hide Passwords</source>
-        <translation>Masquer les mots de passe</translation>
+        <translation>Cacher les mots de passe</translation>
     </message>
     <message>
         <source>Fit to window</source>
-        <translation>Ajuster à la fenêtre</translation>
+        <translation>Adapter à la fenêtre</translation>
     </message>
     <message>
         <source>Fit to contents</source>
-        <translation>Ajuster au contenu</translation>
+        <translation>Adapter au contenu</translation>
     </message>
     <message>
         <source>Reset to defaults</source>
-        <translation>Réinitialiser aux valeurs par défaut</translation>
+        <translation>Remettre les paramètres par défaut</translation>
+    </message>
+    <message>
+        <source>Attachments (icon)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1998,7 +2002,7 @@ This may cause the affected plugins to malfunction.</source>
     <name>HttpPasswordGeneratorWidget</name>
     <message>
         <source>Length:</source>
-        <translation>Longueur :</translation>
+        <translation>Longueur:</translation>
     </message>
     <message>
         <source>Character Types</source>
@@ -2419,7 +2423,7 @@ Il s&apos;agit d&apos;une migration à sens unique. Vous ne pourrez pas ouvrir l
     <name>KeePass1OpenWidget</name>
     <message>
         <source>Import KeePass1 database</source>
-        <translation>Importer une base de données au format KeePass 1</translation>
+        <translation>Importer une base de données au format KeePass1</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
@@ -2430,7 +2434,7 @@ Il s&apos;agit d&apos;une migration à sens unique. Vous ne pourrez pas ouvrir l
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
-        <translation>Impossible de lire le fichier clé.</translation>
+        <translation>Impossible de lire le fichier-clé.</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
@@ -2586,7 +2590,7 @@ Il s&apos;agit d&apos;une migration à sens unique. Vous ne pourrez pas ouvrir l
     </message>
     <message>
         <source>The lock file could not be created. Single-instance mode disabled.</source>
-        <translation>Le fichier de verrouillage ne peut pas être créé. Le mode d&apos;instance unique est désactivé.</translation>
+        <translation>Le fichier verrou ne peut pas être créé. Le mode instance-unique est désactivé.</translation>
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
@@ -2609,7 +2613,7 @@ Il s&apos;agit d&apos;une migration à sens unique. Vous ne pourrez pas ouvrir l
     </message>
     <message>
         <source>&amp;Recent databases</source>
-        <translation>&amp;Bases de données récentes</translation>
+        <translation>Bases de données récentes</translation>
     </message>
     <message>
         <source>Import</source>
@@ -2617,15 +2621,15 @@ Il s&apos;agit d&apos;une migration à sens unique. Vous ne pourrez pas ouvrir l
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>&amp;Aide</translation>
+        <translation>Aide</translation>
     </message>
     <message>
         <source>E&amp;ntries</source>
-        <translation>E&amp;ntrées</translation>
+        <translation>Entrées</translation>
     </message>
     <message>
         <source>Copy att&amp;ribute to clipboard</source>
-        <translation>Copier l&apos;att&amp;ribut dans le presse-papier</translation>
+        <translation>Copier l&apos;attribut dans le presse-papier</translation>
     </message>
     <message>
         <source>Time-based one-time password</source>
@@ -2633,7 +2637,7 @@ Il s&apos;agit d&apos;une migration à sens unique. Vous ne pourrez pas ouvrir l
     </message>
     <message>
         <source>&amp;Groups</source>
-        <translation>&amp;Groupes</translation>
+        <translation>Groupes</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
@@ -2653,11 +2657,11 @@ Il s&apos;agit d&apos;une migration à sens unique. Vous ne pourrez pas ouvrir l
     </message>
     <message>
         <source>&amp;Save database</source>
-        <translation>&amp;Enregistrer la base de données</translation>
+        <translation>Enregistrer la base de données</translation>
     </message>
     <message>
         <source>&amp;Close database</source>
-        <translation>&amp;Fermer la base de données</translation>
+        <translation>Fermer la base de données</translation>
     </message>
     <message>
         <source>&amp;New database</source>
@@ -2665,19 +2669,19 @@ Il s&apos;agit d&apos;une migration à sens unique. Vous ne pourrez pas ouvrir l
     </message>
     <message>
         <source>Merge from KeePassX database</source>
-        <translation>Fusionner avec la base de données de KeePassX...</translation>
+        <translation>Fusionner depuis la base de données KeePassX</translation>
     </message>
     <message>
         <source>&amp;Add new entry</source>
-        <translation>&amp;Ajouter une nouvelle entrée</translation>
+        <translation>Ajouter une nouvelle entrée</translation>
     </message>
     <message>
         <source>&amp;View/Edit entry</source>
-        <translation>&amp;Voir/Éditer l&apos;entrée</translation>
+        <translation>Voir/Editer l&apos;entrée</translation>
     </message>
     <message>
         <source>&amp;Delete entry</source>
-        <translation>&amp;Supprimer l&apos;entrée</translation>
+        <translation>Supprimer l&apos;entrée</translation>
     </message>
     <message>
         <source>&amp;Add new group</source>
@@ -2693,7 +2697,7 @@ Il s&apos;agit d&apos;une migration à sens unique. Vous ne pourrez pas ouvrir l
     </message>
     <message>
         <source>Sa&amp;ve database as...</source>
-        <translation>En&amp;registrer la base de données sous...</translation>
+        <translation>Sau&amp;ver la base de données sous...</translation>
     </message>
     <message>
         <source>Change &amp;master key...</source>
@@ -2701,7 +2705,7 @@ Il s&apos;agit d&apos;une migration à sens unique. Vous ne pourrez pas ouvrir l
     </message>
     <message>
         <source>&amp;Database settings</source>
-        <translation>&amp;Paramètres de la base de données</translation>
+        <translation>Paramètre de la base de &amp;données</translation>
     </message>
     <message>
         <source>Database settings</source>
@@ -2709,7 +2713,7 @@ Il s&apos;agit d&apos;une migration à sens unique. Vous ne pourrez pas ouvrir l
     </message>
     <message>
         <source>&amp;Clone entry</source>
-        <translation>&amp;Cloner l&apos;entrée</translation>
+        <translation>Cloner l&apos;entrée</translation>
     </message>
     <message>
         <source>&amp;Find</source>
@@ -2725,7 +2729,7 @@ Il s&apos;agit d&apos;une migration à sens unique. Vous ne pourrez pas ouvrir l
     </message>
     <message>
         <source>Cop&amp;y password</source>
-        <translation>Cop&amp;ier le mot de passe</translation>
+        <translation>Copier le mot de passe</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
@@ -2733,7 +2737,7 @@ Il s&apos;agit d&apos;une migration à sens unique. Vous ne pourrez pas ouvrir l
     </message>
     <message>
         <source>&amp;Settings</source>
-        <translation>&amp;Paramètres</translation>
+        <translation>Paramètres</translation>
     </message>
     <message>
         <source>Password Generator</source>
@@ -2741,7 +2745,7 @@ Il s&apos;agit d&apos;une migration à sens unique. Vous ne pourrez pas ouvrir l
     </message>
     <message>
         <source>&amp;Perform Auto-Type</source>
-        <translation>&amp;Exécuter la saisie automatique</translation>
+        <translation>Exécuter la saisie semi-automatique</translation>
     </message>
     <message>
         <source>&amp;Open URL</source>
@@ -2749,7 +2753,7 @@ Il s&apos;agit d&apos;une migration à sens unique. Vous ne pourrez pas ouvrir l
     </message>
     <message>
         <source>&amp;Lock databases</source>
-        <translation>&amp;Verrouiller les bases de données</translation>
+        <translation>Verrouiller les bases de données</translation>
     </message>
     <message>
         <source>&amp;Title</source>
@@ -2821,7 +2825,7 @@ Il s&apos;agit d&apos;une migration à sens unique. Vous ne pourrez pas ouvrir l
     </message>
     <message>
         <source>read-only</source>
-        <translation>Lecture seule</translation>
+        <translation>Lecture seulement</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -2833,7 +2837,7 @@ Il s&apos;agit d&apos;une migration à sens unique. Vous ne pourrez pas ouvrir l
     </message>
     <message>
         <source>Quit KeePassXC</source>
-        <translation>Quitter KeePassXC</translation>
+        <translation>Quitter KeePass XC</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
@@ -2845,7 +2849,7 @@ Il s&apos;agit d&apos;une migration à sens unique. Vous ne pourrez pas ouvrir l
     </message>
     <message>
         <source>Open database</source>
-        <translation>Ouvrir la base de données</translation>
+        <translation>Ouvrir une base de données</translation>
     </message>
     <message>
         <source>Save repaired database</source>
@@ -2988,7 +2992,7 @@ Cette version n’est pas destinée à la production.</translation>
     <message>
         <source>Sh&amp;ow a notification when credentials are requested</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Af&amp;ficher une notification quand les identifiants sont demandés</translation>
+        <translation>Montrer une notification quand les références sont demandées</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
@@ -3056,7 +3060,7 @@ Cette version n’est pas destinée à la production.</translation>
     </message>
     <message>
         <source>&amp;Return advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation>&amp; Retourne les champs avancés de chaîne de caractères qui commencent par &quot;KPH :&quot;</translation>
+        <translation>&amp; Retourne les champs avancés de type chaîne qui commencent par &quot;KPH :&quot;</translation>
     </message>
     <message>
         <source>HTTP Port:</source>
@@ -3068,7 +3072,7 @@ Cette version n’est pas destinée à la production.</translation>
     </message>
     <message>
         <source>KeePassXC will listen to this port on 127.0.0.1</source>
-        <translation>KeePassXC va écouter ce port sur 127.0.0.1</translation>
+        <translation>KeepassXC va écouter ce port sur 127.0.0.1</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
@@ -3114,7 +3118,7 @@ Restauration du port 19455 par défaut.</translation>
     </message>
     <message>
         <source>Character Types</source>
-        <translation>Types de caractères:</translation>
+        <translation>Types de caractères</translation>
     </message>
     <message>
         <source>Upper Case Letters</source>
@@ -3126,7 +3130,7 @@ Restauration du port 19455 par défaut.</translation>
     </message>
     <message>
         <source>Numbers</source>
-        <translation>Chiffres</translation>
+        <translation>Nombres</translation>
     </message>
     <message>
         <source>Special Characters</source>
@@ -3138,7 +3142,7 @@ Restauration du port 19455 par défaut.</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
-        <translation>Exclure les caractères qui se ressemblent</translation>
+        <translation>Exclure les caractères se ressemblant</translation>
     </message>
     <message>
         <source>Pick characters from every group</source>
@@ -3480,7 +3484,7 @@ Commandes disponibles :
     </message>
     <message>
         <source>malformed string</source>
-        <translation>chaîne de caractères malformée</translation>
+        <translation>chaîne malformée</translation>
     </message>
     <message>
         <source>missing closing quote</source>
@@ -3544,7 +3548,7 @@ Commandes disponibles :
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Intégration au navigateur web</translation>
+        <translation>Intégration Navigateur</translation>
     </message>
     <message>
         <source>YubiKey[%1] Challenge Response - Slot %2 - %3</source>
@@ -3651,7 +3655,7 @@ Commandes disponibles :
     </message>
     <message>
         <source>Search</source>
-        <translation>Recherche</translation>
+        <translation>Chercher</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -3714,7 +3718,7 @@ Veuillez déverrouiller la base de données sélectionnée ou en choisir une qui
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption-key(s) from KeePassX/Http Settings.</source>
-        <translation><numerusform>Cette clé de chiffrement a été retirée avec succès des paramètres de KeePassX/Http.</numerusform><numerusform>%n clés de chiffrement ont été retirées avec succès des paramètres de KeePassX/Http.</numerusform></translation>
+        <translation><numerusform>Réussi à retirer le chiffrement %n-clé (s) de paramètres KeePassX/Http.</numerusform><numerusform>%n-clé(s) chiffrement ont été retirées des paramètres KeePassX/Http.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
@@ -3726,7 +3730,7 @@ Veuillez déverrouiller la base de données sélectionnée ou en choisir une qui
     </message>
     <message>
         <source>KeePassXC: Settings not available!</source>
-        <translation>KeePassXC : Paramètres indisponibles !</translation>
+        <translation>KeePassXC: Paramètre indisponible !</translation>
     </message>
     <message>
         <source>The active database does not contain an entry of KeePassHttp Settings.</source>
@@ -3746,7 +3750,7 @@ Veuillez déverrouiller la base de données sélectionnée ou en choisir une qui
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entries.</source>
-        <translation><numerusform>Les permissions de l&apos;entrée ont été retirées avec succès.</numerusform><numerusform>Les permissions de %n entrées ont été retirées avec succès.</numerusform></translation>
+        <translation><numerusform>Correctement supprimé les autorisations de %n entrées.</numerusform><numerusform>Les autorisations de %n entrées ont été correctement supprimées.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -3852,7 +3856,7 @@ Veuillez déverrouiller la base de données sélectionnée ou en choisir une qui
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Saisie automatique</translation>
+        <translation>Saisie-Automatique</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
@@ -3864,15 +3868,15 @@ Veuillez déverrouiller la base de données sélectionnée ou en choisir une qui
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
-        <translation>Toujours demander avant de procéder à une saisie automatique</translation>
+        <translation>Toujours demander avant de procéder à une Saisie-Automatique</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut</source>
-        <translation>Raccourci de la saisie automatique</translation>
+        <translation>Raccourci de la Saisie-Automatique</translation>
     </message>
     <message>
         <source>Auto-Type delay</source>
-        <translation>Délais de remplissage de la saisie automatique</translation>
+        <translation>Délais de Remplissage de la Saisie-Automatique</translation>
     </message>
     <message>
         <source> ms</source>
@@ -3885,7 +3889,7 @@ Veuillez déverrouiller la base de données sélectionnée ou en choisir une qui
     </message>
     <message>
         <source>File Management</source>
-        <translation>Gestion des fichiers</translation>
+        <translation>Gestion de fichiers</translation>
     </message>
     <message>
         <source>Safely save database files (may be incompatible with Dropbox, etc)</source>
@@ -3908,7 +3912,7 @@ Veuillez déverrouiller la base de données sélectionnée ou en choisir une qui
     <name>SettingsWidgetSecurity</name>
     <message>
         <source>Timeouts</source>
-        <translation>Expirations</translation>
+        <translation>Timeouts</translation>
     </message>
     <message>
         <source>Clear clipboard after</source>
@@ -3929,11 +3933,11 @@ Veuillez déverrouiller la base de données sélectionnée ou en choisir une qui
     </message>
     <message>
         <source>Lock databases when session is locked or lid is closed</source>
-        <translation>Verrouiller les bases de données quand la session est verrouillée ou l&apos;écran rabattu</translation>
+        <translation>Verrouiller les bases de données quand la session est verrouillée ou le capot fermé</translation>
     </message>
     <message>
         <source>Lock databases after minimizing the window</source>
-        <translation>Verrouiller les bases de données lorsque la fenêtre est minimisée</translation>
+        <translation>Verrouiller la base de données lorsque la fenêtre est minimisée</translation>
     </message>
     <message>
         <source>Don&apos;t require password repeat when it is visible</source>
@@ -3957,7 +3961,7 @@ Veuillez déverrouiller la base de données sélectionnée ou en choisir une qui
     </message>
     <message>
         <source>Use Google as fallback for downloading website icons</source>
-        <translation>Utilisez Google en second recours pour télécharger les icônes des sites internet</translation>
+        <translation>Utilisez Google en secours pour télécharger des icônes de site web</translation>
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
@@ -4062,7 +4066,7 @@ Veuillez déverrouiller la base de données sélectionnée ou en choisir une qui
     </message>
     <message>
         <source>Import from CSV</source>
-        <translation>Importer depuis un CSV</translation>
+        <translation>Import depuis CSV</translation>
     </message>
     <message>
         <source>Recent databases</source>
@@ -4070,7 +4074,7 @@ Veuillez déverrouiller la base de données sélectionnée ou en choisir une qui
     </message>
     <message>
         <source>Welcome to KeePassXC %1</source>
-        <translation>Bienvenue sur KeePassXC %1</translation>
+        <translation>Bienvenue dans KeePassXC %1</translation>
     </message>
 </context>
 <context>
@@ -4101,7 +4105,7 @@ Veuillez déverrouiller la base de données sélectionnée ou en choisir une qui
     </message>
     <message>
         <source>key file of the database</source>
-        <translation>Fichier clé de la base de données</translation>
+        <translation>Fichier-clé de la base de données</translation>
     </message>
     <message>
         <source>read password of the database from stdin</source>

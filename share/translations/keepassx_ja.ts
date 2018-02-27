@@ -60,7 +60,7 @@
 CPU architecture: %2
 Kernel: %3 %4</source>
         <translation>オペレーティングシステム: %1
-CPU アーキテクチャ: %2
+CPU アーキテクチャー: %2
 カーネル: %3 %4</translation>
     </message>
     <message>
@@ -227,7 +227,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Enable KeepassXC browser integration</source>
-        <translation>KeepassXC のブラウザ統合を有効にする</translation>
+        <translation>KeepassXC のブラウザー統合を有効にする</translation>
     </message>
     <message>
         <source>General</source>
@@ -235,7 +235,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Enable integration for these browsers:</source>
-        <translation>これらのブラウザの統合を有効にする:</translation>
+        <translation>これらのブラウザーの統合を有効にする:</translation>
     </message>
     <message>
         <source>&amp;Google Chrome</source>
@@ -290,7 +290,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>&amp;Disconnect all browsers</source>
-        <translation>全てのブラウザの接続を断つ(&amp;D)</translation>
+        <translation>全てのブラウザーの接続を断つ(&amp;D)</translation>
     </message>
     <message>
         <source>Forget all remembered &amp;permissions</source>
@@ -337,11 +337,11 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Support a proxy application between KeePassXC and browser extension.</source>
-        <translation>KeePassXC とブラウザの拡張機能との間でプロキシアプリケーションをサポートします。</translation>
+        <translation>KeePassXC とブラウザーの拡張機能との間でプロキシアプリケーションをサポートします。</translation>
     </message>
     <message>
         <source>Use a &amp;proxy application between KeePassXC and browser extension</source>
-        <translation>KeePassXC とブラウザの拡張機能との間でプロキシアプリケーションを使用する(&amp;P)</translation>
+        <translation>KeePassXC とブラウザーの拡張機能との間でプロキシアプリケーションを使用する(&amp;P)</translation>
     </message>
     <message>
         <source>Use a custom proxy location if you installed a proxy manually.</source>
@@ -372,6 +372,10 @@ Please select whether you want to allow access.</source>
     <message>
         <source>Select custom proxy location</source>
         <translation>カスタムプロキシを選択する</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
+        <translation>申し訳ありませんが、今の所 KeePassXC-Browser は Snap リリースではサポートしていません。</translation>
     </message>
 </context>
 <context>
@@ -444,7 +448,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation><numerusform>KeePassXC の設定から %n 個の暗号化キーが無事に削除されました。</numerusform></translation>
+        <translation><numerusform>KeePassXC の設定から %n 個の暗号化キーが正常に削除されました。</numerusform></translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -460,7 +464,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>%n 個のエントリーからアクセス許可が無事に削除されました。</numerusform></translation>
+        <translation><numerusform>%n 個のエントリーからアクセス許可が正常に削除されました。</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -653,7 +657,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Original data: </source>
-        <translation>元データ: </translation>
+        <translation>元データ:</translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file !</source>
@@ -857,7 +861,7 @@ If you keep this number, your database may be too easy to crack!</source>
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation><numerusform> MiB</numerusform></translation>
+        <translation><numerusform>MiB</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
@@ -1019,7 +1023,7 @@ Discard changes and close anyway?</source>
     <message>
         <source>&quot;%1&quot; was modified.
 Save changes?</source>
-        <translation>&quot;%1&quot; は更新されています。
+        <translation>&quot;%1&quot; は編集されています。
 変更を保存しますか？</translation>
     </message>
     <message>
@@ -1032,7 +1036,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>ファイル名をつけてデータベースを保存</translation>
+        <translation>データベースを別名で保存</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
@@ -1191,10 +1195,6 @@ Do you want to merge your changes?</source>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>ゴミ箱にある全項目を永久に削除してもよろしいですか？</translation>
     </message>
-    <message>
-        <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>DetailsWidget</name>
@@ -1232,7 +1232,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Searching</source>
-        <translation>検索中</translation>
+        <translation>検索</translation>
     </message>
     <message>
         <source>Attributes</source>
@@ -1371,11 +1371,11 @@ Do you want to merge your changes?</source>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n 週間</numerusform></translation>
+        <translation><numerusform>%n週間</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n ヶ月</numerusform></translation>
+        <translation><numerusform>%nヶ月</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1383,15 +1383,15 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Apply generated password?</source>
-        <translation type="unfinished"/>
+        <translation>生成されたパスワードを適用しますか？</translation>
     </message>
     <message>
         <source>Do you want to apply the generated password to this entry?</source>
-        <translation type="unfinished"/>
+        <translation>生成されたパスワードをこのエントリーに適用しますか？</translation>
     </message>
     <message>
         <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
+        <translation>エントリーは正常に更新されました。</translation>
     </message>
 </context>
 <context>
@@ -1426,11 +1426,11 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Foreground Color:</source>
-        <translation type="unfinished"/>
+        <translation>文字色:</translation>
     </message>
     <message>
         <source>Background Color:</source>
-        <translation type="unfinished"/>
+        <translation>背景色:</translation>
     </message>
 </context>
 <context>
@@ -1465,7 +1465,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Use a specific sequence for this association:</source>
-        <translation>このアソシエーションに特定のシーケンスを使用する:</translation>
+        <translation>この関連付けに特定のシーケンスを使用する:</translation>
     </message>
 </context>
 <context>
@@ -1641,7 +1641,7 @@ Do you want to merge your changes?</source>
     <name>EditGroupWidgetMain</name>
     <message>
         <source>Name</source>
-        <translation>名前</translation>
+        <translation>グループ名</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -1747,7 +1747,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Plugin Data</source>
-        <translation type="unfinished"/>
+        <translation>プラグインデータ</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -1755,20 +1755,21 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Delete plugin data?</source>
-        <translation type="unfinished"/>
+        <translation>プラグインデータを削除しますか？</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected plugin data?
 This may cause the affected plugins to malfunction.</source>
-        <translation type="unfinished"/>
+        <translation>本当に選択したプラグインデータを削除しますか？
+プラグインの動作に影響を与える可能性があります。</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"/>
+        <translation>キー</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>値</translation>
     </message>
 </context>
 <context>
@@ -1898,7 +1899,7 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Ref: </source>
         <comment>Reference abbreviation</comment>
-        <translation>参照: </translation>
+        <translation>参照:</translation>
     </message>
     <message>
         <source>Group</source>
@@ -1974,6 +1975,10 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Reset to defaults</source>
         <translation>デフォルトにリセット</translation>
+    </message>
+    <message>
+        <source>Attachments (icon)</source>
+        <translation>添付ファイル (アイコン)</translation>
     </message>
 </context>
 <context>
@@ -2817,7 +2822,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&lt;p&gt;It looks like you are using KeePassHTTP for browser integration. This feature has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a class=&quot;link&quot;  href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt; (warning %1 of 3).&lt;/p&gt;</source>
-        <translation>&lt;p&gt;ブラウザ統合に KeePassHTTP を使用しています。この機能は将来的に廃止され、削除されます。&lt;br&gt;代わりに KeePassXC-Browser を使用してください。移行に関するヘルプは &lt;a class=&quot;link&quot;  href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt; を参照してください (%1 / 3 回目の警告)。&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;ブラウザー統合に KeePassHTTP を使用しています。この機能は将来的に廃止され、削除されます。&lt;br&gt;代わりに KeePassXC-Browser を使用してください。移行に関するヘルプは &lt;a class=&quot;link&quot;  href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt; を参照してください (%1 / 3 回目の警告)。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>read-only</source>
@@ -3540,11 +3545,11 @@ Available commands:
     </message>
     <message>
         <source>Legacy Browser Integration</source>
-        <translation>レガシーなブラウザ統合</translation>
+        <translation>レガシーなブラウザー統合</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>ブラウザ統合</translation>
+        <translation>ブラウザー統合</translation>
     </message>
     <message>
         <source>YubiKey[%1] Challenge Response - Slot %2 - %3</source>
@@ -3617,15 +3622,15 @@ Available commands:
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>基本デバイスへの書き込み時にエラーが発生しました: </translation>
+        <translation>基本デバイスへの書き込み時にエラーが発生しました:</translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>基本デバイスを開く際にエラーが発生しました: </translation>
+        <translation>基本デバイスを開く時にエラーが発生しました:</translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation>基本デバイスから読み込み時にエラーが発生しました: </translation>
+        <translation>基本デバイスから読み込み時にエラーが発生しました:</translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
@@ -3714,7 +3719,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption-key(s) from KeePassX/Http Settings.</source>
-        <translation><numerusform>KeePassX/Http の設定から %n 個の暗号化キーが無事に削除されました。</numerusform></translation>
+        <translation><numerusform>KeePassX/Http の設定から %n 個の暗号化キーが正常に削除されました。</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
@@ -3746,7 +3751,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entries.</source>
-        <translation><numerusform>%n 個のエントリーからアクセス許可が無事に削除されました。</numerusform></translation>
+        <translation><numerusform>%n 個のエントリーからアクセス許可が正常に削除されました。</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
