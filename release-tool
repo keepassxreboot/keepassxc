@@ -658,17 +658,12 @@ build() {
     if [ "" == "$DOCKER_IMAGE" ]; then
         if [ "$(uname -s)" == "Darwin" ]; then
             # Building on macOS
-            local qt_vers="$(ls /usr/local/Cellar/qt 2> /dev/null | sort -r | head -n1)"
-            if [ "" == "$qt_vers" ]; then
-                exitError "Couldn't find Qt5! Please make sure it is available in '/usr/local/Cellar/qt'."
-            fi
-
             export MACOSX_DEPLOYMENT_TARGET=10.10
 
             logInfo "Configuring build..."
             cmake -DCMAKE_BUILD_TYPE=Release \
               -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
-              -DCMAKE_PREFIX_PATH="/usr/local/Cellar/qt/${qt_vers}/lib/cmake" \
+              -DCMAKE_PREFIX_PATH="/usr/local/opt/qt/lib/cmake" \
               ${CMAKE_OPTIONS} "$SRC_DIR"
 
             logInfo "Compiling and packaging sources..."
